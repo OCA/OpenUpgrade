@@ -128,12 +128,10 @@ class openupgrade_analysis_wizard(TransientModel):
             remote_xml_records, local_xml_records)
 
         affected_modules = list(
-            set(
-                [
-                    record['module'] for record in
-                    remote_records + local_records +
-                    remote_xml_records + local_xml_records
-                    ]))
+            set(record['module'] for record in
+                remote_records + local_records +
+                remote_xml_records + local_xml_records
+                ))
 
         # reorder and output the result
         keys = ['general'] + affected_modules
