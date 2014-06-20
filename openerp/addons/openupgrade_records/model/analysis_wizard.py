@@ -106,8 +106,6 @@ class openupgrade_analysis_wizard(TransientModel):
         # Retrieve field representations and compare
         remote_records = remote_record_obj.field_dump(context)
         local_records = local_record_obj.field_dump(cr, uid, context)
-        modules_record = set([record['module']
-                              for record in remote_records + local_records])
         res = compare.compare_sets(remote_records, local_records)
 
         # Retrieve xml id representations and compare
@@ -126,14 +124,19 @@ class openupgrade_analysis_wizard(TransientModel):
             for x in remote_record_obj.read(
                 remote_xml_record_ids, fields)
             ]
-        modules_xml_records = set(
-            [record['module']
-             for record in remote_xml_records + local_xml_records])
         res_xml = compare.compare_xml_sets(
             remote_xml_records, local_xml_records)
 
+        affected_modules = list(
+            set(
+                [
+                    record['module'] for record in
+                    remote_records + local_records +
+                    remote_xml_records + local_xml_records
+                    ]))
+
         # reorder and output the result
-        keys = ['general'] + list(modules_record & modules_xml_records)
+        keys = ['general'] + affected_modules
         module_obj = self.pool.get('ir.module.module')
         module_ids = module_obj.search(
             cr, uid, [('state', '=', 'installed')])
