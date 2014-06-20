@@ -1,0 +1,7 @@
+---Fields in module 'portal_project_issue'---
+---XML records in module 'portal_project_issue'---
+NEW ir.model.access: portal_project_issue.access_issues_public
+DEL ir.model.access: portal_project_issue.access_issues_anonymous
+NEW ir.rule: portal_project_issue.issue_public_rule
+DEL ir.rule: portal_project_issue.issue_anonymous_rule
+NEW ir.ui.view: portal_project_issue.assets_backend

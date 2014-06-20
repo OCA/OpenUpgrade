@@ -1,0 +1,18 @@
+---Fields in module 'portal_project'---
+---XML records in module 'portal_project'---
+NEW ir.model.access: portal_project.access_account_analytic_account_public
+NEW ir.model.access: portal_project.access_project_category_public
+NEW ir.model.access: portal_project.access_project_public
+NEW ir.model.access: portal_project.access_task_public
+NEW ir.model.access: portal_project.access_task_type_public
+NEW ir.model.access: portal_project.access_task_work_public
+DEL ir.model.access: portal_project.access_account_analytic_account_anonymous
+DEL ir.model.access: portal_project.access_project_anonymous
+DEL ir.model.access: portal_project.access_project_category_anonymous
+DEL ir.model.access: portal_project.access_task_anonymous
+DEL ir.model.access: portal_project.access_task_type_anonymous
+DEL ir.model.access: portal_project.access_task_work_anonymous
+NEW ir.rule: portal_project.project_public_rule
+NEW ir.rule: portal_project.task_public_rule
+DEL ir.rule: portal_project.project_anonymous_rule
+DEL ir.rule: portal_project.task_anonymous_rule
