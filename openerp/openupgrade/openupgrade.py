@@ -51,7 +51,7 @@ __all__ = [
     'update_module_names',
     'add_ir_model_fields',
     'get_legacy_name',
-    'm2o_to_m2m',
+    'm2o_to_x2m',
     'float_to_integer',
     'message',
     'check_values_selection_field',
@@ -468,17 +468,17 @@ def get_legacy_name(original_name):
         map(str, release.version_info[0:2]))+'_'+original_name
 
 
-def m2o_to_m2m(cr, model, table, field, source_field):
+def m2o_to_x2m(cr, model, table, field, source_field):
     """
-    Recreate relations in many2many fields that were formerly
-    many2one fields. Use rename_columns in your pre-migrate
-    script to retain the column's old value, then call m2o_to_m2m
+    Transform many2one relations into one2many or many2many.
+    Use rename_columns in your pre-migrate
+    script to retain the column's old value, then call m2o_to_x2m
     in your post-migrate script.
 
-    :param model: The target model pool object
+    :param model: The target model registry object
     :param table: The source table
-    :param field: The field name of the target model
-    :param source_field: the many2one column on the source table.
+    :param field: The new field name on the target model
+    :param source_field: the (renamed) many2one column on the source table.
 
     .. versionadded:: 7.0
     """
@@ -490,6 +490,9 @@ def m2o_to_m2m(cr, model, table, field, source_field):
                    })
     for row in cr.fetchall():
         model.write(cr, SUPERUSER_ID, row[0], {field: [(4, row[1])]})
+
+# Backwards compatibility
+m2o_to_m2m = m2o_to_x2m
 
 
 def float_to_integer(cr, table, field):
