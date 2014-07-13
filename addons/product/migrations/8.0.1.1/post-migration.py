@@ -37,31 +37,9 @@ def move_fields(cr, pool):
                "          FROM product_product "
                "          WHERE product_product.id=product_supplierinfo.%s) " %
                openupgrade.get_legacy_name('product_id'),
-               #
-               "UPDATE product_template as pt "
-               "SET color=(SELECT pp1.%s "
-               "      FROM product_product as pp1 "
-               "      WHERE pp1.product_tmpl_id=pt.id ORDER BY pp1.id LIMIT 1), "
-               "    image=(SELECT pp2.image_variant "
-               "      FROM product_product as pp2 "
-               "      WHERE pp2.product_tmpl_id=pt.id ORDER BY pp2.id LIMIT 1)" %
-               openupgrade.get_legacy_name('color')
-               #
-
                ]
     for sql in queries:
         execute(cr, sql)
-
-
-def copy_fields(cr, pool):
-    product_tmpl = pool['product.template']
-    # copy the active field from product to template
-    ctx = {'active_test': False}
-    tmpl_ids = product_tmpl.search(cr, SUPERUSER_ID, [], context=ctx)
-    for template in product_tmpl.browse(cr, SUPERUSER_ID, tmpl_ids, context=ctx):
-        template.write({'active': any(variant.active
-                                      for variant in template.product_variant_ids)
-                        })
 
 
 def migrate_packaging(cr, pool):
@@ -151,11 +129,29 @@ def migrate_variants(cr, pool):
             attribute_line_obj.create(cr, SUPERUSER_ID, values)
 
 
+def active_field_template_func(cr, pool, id, vals):
+    return any(vals)
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
+    get_legacy_name = openupgrade.get_legacy_name
+    openupgrade.move_field_m2o(
+        cr, pool,
+        'product.product', get_legacy_name('color'), 'product_tmpl_id',
+        'product.template', 'color')
+    openupgrade.move_field_m2o(
+        cr, pool,
+        'product.product', 'image_variant', 'product_tmpl_id',
+        'product.template', 'image',
+        quick_request=False, binary_field=True)
+    openupgrade.move_field_m2o(
+        cr, pool,
+        'product.product', 'active', 'product_tmpl_id',
+        'product.template', 'active',
+        compute_func=active_field_template_func)
     move_fields(cr, pool)
-    copy_fields(cr, pool)
     migrate_packaging(cr, pool)
     create_properties(cr, pool)
     migrate_variants(cr, pool)

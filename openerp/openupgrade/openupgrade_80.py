@@ -59,15 +59,16 @@ def set_message_last_post(cr, uid, pool, models):
     :param cr: database cursor
     :param uid: user id, assumed to be openerp.SUPERUSER_ID
     :param pool: orm pool, assumed to be openerp.pooler.get_pool(cr.dbname)
-    :param models: a list of model names for which 'message_last_post' needs to \
-    be filled
+    :param models: a list of model names for which 'message_last_post' needs \
+    to be filled
     :return:
     """
     if type(models) is not list:
         models = [models]
     for model in models:
         model_pool = pool[model]
-        obj_ids = model_pool.search(cr, uid, [], context={'active_test': False})
+        obj_ids = model_pool.search(
+            cr, uid, [], context={'active_test': False})
         last_posts = get_last_post_for_model(cr, uid, obj_ids, model_pool)
         for i in obj_ids:
             model_pool.write(cr, uid, i, {'message_last_post': last_posts[i]})

@@ -55,6 +55,7 @@ __all__ = [
     'float_to_integer',
     'message',
     'check_values_selection_field',
+    'move_field_m2o',
 ]
 
 
@@ -584,3 +585,120 @@ def migrate(no_version=False):
                 raise
         return wrapped_function
     return wrap
+
+
+def move_field_m2o(
+        cr, pool,
+        registry_old_model, field_old_model, m2o_field_old_model,
+        registry_new_model, field_new_model,
+        quick_request=True, compute_func=None, binary_field=False):
+    """
+    Use that function in the following case:
+    A field moves from a model A to the model B with : A -> m2o -> B.
+    (For exemple product_product -> product_template)
+    This function manage the migration of this field.
+    available on post script migration.
+    :param registry_old_model: registry of the model A;
+    :param field_old_model: name of the field to move in model A;
+    :param m2o_field_old_model: name of the field of the table of the model A;
+        that link model A to model B;
+    :param registry_new_model: registry of the model B;
+    :param field_new_model: name of the field to move in model B;
+    :param quick_request: Set to False, if you want to use write function to
+        update value; Otherwise, the function will use UPDATE SQL request;
+    :param compute_func: This a function that receives 4 parameters:
+        cr, pool: common args;
+        id: id of the instance of Model B
+        vals:  list of different values.
+        This function must return a unique value that will be set to the
+        instance of Model B which id is 'id' param;
+        If compute_func is not set, the algorithm will take the value that
+        is the most present in vals.
+    :binary_field: Set to True if the migrated field is a binary field
+    .. versionadded:: 8.0
+    """
+    def default_func(cr, pool, id, vals):
+        """This function return the value the most present in vals."""
+        quantity = {}.fromkeys(set(vals), 0)
+        for val in vals:
+            quantity[val] += 1
+        res = vals[0]
+        for val in vals:
+            if quantity[res] < quantity[val]:
+                res = val
+        return res
+
+    table_old_model = pool[registry_old_model]._table
+    table_new_model = pool[registry_new_model]._table
+    # Manage regular case (all the value are identical)
+    cr.execute(
+        " SELECT %s"
+        " FROM %s"
+        " GROUP BY %s"
+        " HAVING count(*) = 1;" % (
+            m2o_field_old_model, table_old_model, m2o_field_old_model
+        ))
+    ok_ids = [x[0] for x in cr.fetchall()]
+    if quick_request:
+        query = (
+            " UPDATE %s as new_table"
+            " SET %s=("
+            "    SELECT old_table.%s"
+            "    FROM %s as old_table"
+            "    WHERE old_table.%s=new_table.id"
+            "    LIMIT 1) "
+            " WHERE id in %%s" % (
+                table_new_model, field_new_model, field_old_model,
+                table_old_model, m2o_field_old_model))
+        logged_query(cr, query, [tuple(ok_ids)])
+    else:
+        query = (
+            " SELECT %s, %s"
+            " FROM %s "
+            " WHERE %s in %%s"
+            " GROUP BY %s, %s" % (
+                m2o_field_old_model, field_old_model, table_old_model,
+                m2o_field_old_model, m2o_field_old_model, field_old_model))
+        cr.execute(query, [tuple(ok_ids)])
+        for res in cr.fetchall():
+            if res[1] and binary_field:
+                pool[registry_new_model].write(
+                    cr, SUPERUSER_ID, res[0],
+                    {field_new_model: res[1][:]})
+            else:
+                pool[registry_new_model].write(
+                    cr, SUPERUSER_ID, res[0],
+                    {field_new_model: res[1]})
+
+    # Manage non-determinist case (some values are different)
+    func = compute_func if compute_func else default_func
+    cr.execute(
+        " SELECT %s "
+        " FROM %s "
+        " GROUP BY %s having count(*) != 1;" % (
+            m2o_field_old_model, table_old_model, m2o_field_old_model
+        ))
+    ko_ids = [x[0] for x in cr.fetchall()]
+    for ko_id in ko_ids:
+        query = (
+            " SELECT %s"
+            " FROM %s"
+            " WHERE %s = %s;" % (
+                field_old_model, table_old_model, m2o_field_old_model, ko_id))
+        cr.execute(query)
+        if binary_field:
+            vals = [str(x[0][:]) for x in cr.fetchall()]
+        else:
+            vals = [x[0] for x in cr.fetchall()]
+        value = func(cr, pool, ko_id, vals)
+        if quick_request:
+            query = (
+                " UPDATE %s"
+                " SET %s=%%s"
+                " WHERE id = %%s" % (table_new_model, field_new_model))
+            logged_query(
+                cr, query, (value, ko_id))
+        else:
+            pool[registry_new_model].write(
+                cr, SUPERUSER_ID, [ko_id],
+                {field_new_model: value})
