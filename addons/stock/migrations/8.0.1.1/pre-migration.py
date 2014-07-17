@@ -48,10 +48,6 @@ column_renames = {
                             ('product_qty', 'product_uom_qty'),
                             ('tracking_id', None)
                     ],
-                'procurement_order': [
-#                        ('procure_method' , None)
-                         ('move_id' , None),
-                    ],
                 'stock_production_lot': [
                   ('company_id', None),
                   ('create_date', None),

@@ -121,13 +121,150 @@ def restore_move_inventory_rel(cr, pool):
     rows = cr.fetchall()
     for inv_id, move_id in rows:
         stock_move_obj.write(cr, uid, move_id, {'inventory_id': inv_id})
+        
+def migrate_stock_warehouse(cr):
+    '''
+    Addapt the default Warehouse to the new Warehouse functionality. Sequences, Picking types, Rules, Paths..
+    :param cr: Database cursor
+    '''
+    
+    uid = SUPERUSER_ID
+    pool = pooler.get_pool(cr.dbname)
+    vals = {}
+    
+    data_obj = pool['ir.model.data']
+    location_obj = pool['stock.location']
+    warehouse_obj = pool['stock.warehouse']
+    picking_type_obj = pool['stock.picking.type']
+    seq_obj = pool['ir.sequence']
+    
+    warehouse = data_obj.get_object(cr, uid, 'stock', 'warehouse0')
+    ## Update/Create locations
+    parent_location_id = data_obj.get_object_reference(cr, uid, 'stock', 'stock_location_locations')[1]
+    location_id = location_obj.search(cr, uid,[('location_id','=',parent_location_id),('usage','=','view')])
+    
+    vals['view_location_id'] = location_id[0]
+    
+    # All next sublocations should not be Active because of the default value for delivery and receptions fields
+    sub_locations = [
+            {'name': 'Input', 'active': warehouse.reception_steps != 'one_step', 'field': 'wh_input_stock_loc_id'},
+            {'name': 'Output', 'active': warehouse.delivery_steps != 'ship_only', 'field': 'wh_output_stock_loc_id'},
+            {'name': 'Quality Control', 'active': warehouse.reception_steps == 'three_steps', 'field': 'wh_qc_stock_loc_id'},
+            {'name': 'Packing Zone', 'active': warehouse.delivery_steps == 'pick_pack_ship', 'field': 'wh_pack_stock_loc_id'},
+    ]
+    
+    for values in sub_locations:
+        location_id = location_obj.create(cr, uid, {
+            'name': values['name'],
+            'usage': 'internal',
+            'location_id': vals['view_location_id'],
+            'active': values['active'],
+        })
+        vals[values['field']] = location_id
+    
+    #get the actual sequences values for pickings in, out and int
+    next_number_in = seq_obj.search_read(cr, uid, [('code', '=', 'stock.picking.in')], ['number_next'])
+    next_number_in_n = next_number_in and next_number_in[0]['number_next'] or 0
+    next_number_out = seq_obj.search_read(cr, uid, [('code', '=', 'stock.picking.out')], ['number_next'])
+    next_number_out_n = next_number_out and next_number_out[0]['number_next'] or 0
+    next_number_int = seq_obj.search_read(cr, uid, [('code', '=', 'stock.picking')], ['number_next'])
+    next_number_int_n = next_number_int and next_number_int[0]['number_next'] or 0
+        
+    #create new sequences
+    in_seq_id = seq_obj.create(cr, SUPERUSER_ID, values={'name': warehouse.name + ' Sequence in', 'prefix': 'WH' + '/IN/', 'padding': 5, 'number_next': next_number_in_n})
+    out_seq_id = seq_obj.create(cr, SUPERUSER_ID, values={'name': warehouse.name + ' Sequence out', 'prefix':  'WH' + '/OUT/', 'padding': 5, 'number_next': next_number_out_n})
+    int_seq_id = seq_obj.create(cr, SUPERUSER_ID, values={'name': warehouse.name + ' Sequence internal', 'prefix': 'WH' + '/INT/', 'padding': 5, 'number_next': next_number_int_n})
+    pack_seq_id = seq_obj.create(cr, SUPERUSER_ID, values={'name': warehouse.name + ' Sequence packing', 'prefix': 'WH' + '/PACK/', 'padding': 5})
+    pick_seq_id = seq_obj.create(cr, SUPERUSER_ID, values={'name': warehouse.name + ' Sequence picking', 'prefix': 'WH' + '/PICK/', 'padding': 5})
+        
+    #get default locations
+    wh_stock_loc = warehouse.lot_stock_id
+    wh_input_stock_loc = vals['wh_input_stock_loc_id']
+    wh_output_stock_loc = vals['wh_output_stock_loc_id']
+    wh_pack_stock_loc = vals['wh_pack_stock_loc_id']
+    customer_loc = data_obj.get_object_reference(cr, uid, 'stock', 'stock_location_customers')[1]
+    supplier_loc = data_obj.get_object_reference(cr, uid, 'stock', 'stock_location_suppliers')[1]
+    input_loc = wh_input_stock_loc
+    if warehouse.reception_steps == 'one_step':
+        input_loc = wh_stock_loc.id
+    output_loc = wh_output_stock_loc
+    if warehouse.delivery_steps == 'ship_only':
+        output_loc = wh_stock_loc.id
+
+    in_type_id = picking_type_obj.create(cr, uid, vals={
+            'name': 'Receptions',
+            'warehouse_id': warehouse.id,
+            'code': 'incoming',
+            'sequence_id': in_seq_id,
+            'default_location_src_id': supplier_loc,
+            'default_location_dest_id': input_loc,
+            'sequence': 1,
+            })
+    out_type_id = picking_type_obj.create(cr, uid, vals={
+            'name': 'Delivery Orders',
+            'warehouse_id': warehouse.id,
+            'code': 'outgoing',
+            'sequence_id': out_seq_id,
+            'return_picking_type_id': in_type_id,
+            'default_location_src_id': output_loc,
+            'default_location_dest_id': customer_loc,
+            'sequence': 4,
+            })
+    picking_type_obj.write(cr, uid, [in_type_id], {'return_picking_type_id': out_type_id})
+    
+    int_type_id = picking_type_obj.create(cr, uid, vals={
+            'name': 'Internal Transfers',
+            'warehouse_id': warehouse.id,
+            'code': 'internal',
+            'sequence_id': int_seq_id,
+            'default_location_src_id': wh_stock_loc.id,
+            'default_location_dest_id': wh_stock_loc.id,
+            'active': True,
+            'sequence': 2,
+            })
+    pack_type_id = picking_type_obj.create(cr, uid, vals={
+            'name': 'Pack',
+            'warehouse_id': warehouse.id,
+            'code': 'internal',
+            'sequence_id': pack_seq_id,
+            'default_location_src_id': wh_pack_stock_loc,
+            'default_location_dest_id': output_loc,
+            'active': warehouse.delivery_steps == 'pick_pack_ship',
+            'sequence': 3,
+            })
+    pick_type_id = picking_type_obj.create(cr, uid, vals={
+            'name': 'Pick',
+            'warehouse_id': warehouse.id,
+            'code': 'internal',
+            'sequence_id': pick_seq_id,
+            'default_location_src_id': wh_stock_loc.id,
+            'default_location_dest_id': wh_pack_stock_loc,
+            'active': warehouse.delivery_steps != 'ship_only',
+            'sequence': 2,
+            })
+    
+    vals['in_type_id'] = in_type_id
+    vals['out_type_id']= out_type_id
+    vals['pack_type_id'] = pack_type_id
+    vals['pick_type_id'] = pick_type_id
+    vals['int_type_id'] = int_type_id,
+    
+    #write picking types on WH
+    warehouse_obj.write(cr,uid, [warehouse.id], vals=vals)
+    
+    #TODO create routes and push/pull rules
+        # Push rules -> locations chained
+    
+    return True
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     uid = SUPERUSER_ID
-
+    
+    migrate_stock_warehouse(cr)
+    
     # Initiate defaults before filling.
     default_spec.update({'stock.inventory': default_stock_location(cr, pool, uid)})
     openupgrade.set_defaults(cr, pool, default_spec, force=False)
@@ -140,5 +277,4 @@ def migrate(cr, version):
         openupgrade.get_legacy_name('procurement_id'))
     swap_procurement_move_rel(cr, pool)
 #     procurement_obj = pool['procurement.order']
-    openupgrade_80.set_message_last_post(cr, SUPERUSER_ID, pool
-                                        ['stock.production.lot'])
+    openupgrade_80.set_message_last_post(cr, SUPERUSER_ID, pool, ['stock.production.lot','stock.picking'])
