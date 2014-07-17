@@ -14,6 +14,51 @@ except ImportError:
     print ('couldn\'t import bzrlib. You won\'t be able to run migrations '
            '<= 7.0!')
 
+
+def copy_database(conn_parms):
+    db_old = conn_parms['database']
+    db_new = '%s_migrated' % conn_parms['database']
+    print('copying database %(db_old)s to %(db_new)s...' % {'db_old': db_old,
+                                                            'db_new': db_new})
+    conn = psycopg2.connect(**conn_parms)
+    conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+    cur = conn.cursor()
+    cur.execute('drop database if exists "%(db)s"' % {'db': db_new})
+    try:
+        print "Copying the database using 'with template'"
+        cur.execute('create database "%(db_new)s" with template "%(db_old)s"' % {
+            'db_new': db_new, 'db_old': db_old})
+        cur.close()
+    except psycopg2.OperationalError:
+        print "Failed, fallback on creating empty database + loading a dump"
+        cur.execute('create database "%(db)s"' % {'db': db_new})
+        cur.close()
+
+        os.environ['PGUSER'] = conn_parms['user']
+        if ('host' in conn_parms and conn_parms['host']
+                and not os.environ.get('PGHOST')):
+            os.environ['PGHOST'] = conn_parms['host']
+
+        if ('port' in conn_parms and conn_parms['port']
+                and not os.environ.get('PGPORT')):
+            os.environ['PGPORT'] = conn_parms['port']
+
+        password_set = False
+        if ('password' in conn_parms and conn_parms['password']
+                and not os.environ.get('PGPASSWORD')):
+            os.environ['PGPASSWORD'] = conn_parms['password']
+            password_set = True
+
+        os.system(
+            ('pg_dump --format=custom --no-password %(db_old)s ' +
+             '| pg_restore --no-password --dbname=%(db_new)s') %
+            {'db_old': db_old, 'db_new': db_new}
+        )
+
+        if password_set:
+            del os.environ['PGPASSWORD']
+    return db_new
+
 migrations = {
     '8.0': {
         'addons': {
@@ -130,7 +175,6 @@ for parm in ('host', 'port', 'user', 'password'):
 if 'user' not in conn_parms:
     print 'No user found in configuration'
     sys.exit()
-db_user = conn_parms['user']
 
 db_name = options.database or config.get('options', 'db_name')
 
@@ -140,11 +184,6 @@ if not db_name or db_name == '' or db_name.isspace()\
     sys.exit()
 
 conn_parms['database'] = db_name
-
-if options.inplace:
-    db = db_name
-else:
-    db = db_name+'_migrated'
 
 if options.add:
     merge_migrations = {}
@@ -256,46 +295,9 @@ for version in options.migrations.split(','):
             else:
                 raise Exception('Unknown type %s' % addon_config_type)
 
+db_name = conn_parms['database']
 if not options.inplace:
-    print('copying database %(db_name)s to %(db)s...' % {'db_name': db_name,
-                                                         'db': db})
-    conn = psycopg2.connect(**conn_parms)
-    conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
-    cur = conn.cursor()
-    cur.execute('drop database if exists "%(db)s"' % {'db': db})
-    try:
-        print "Copying the database using 'with template'"
-        cur.execute('create database "%(db)s" with template "%(db_name)s"' % {
-            'db': db, 'db_name': db_name})
-        cur.close()
-    except psycopg2.OperationalError:
-        print "Failed, fallback on creating empty database + loading a dump"
-        cur.execute('create database "%(db)s"' % {'db': db})
-        cur.close()
-
-        os.environ['PGUSER'] = db_user
-        if 'host' in conn_parms and conn_parms['host']\
-                and not os.environ.get('PGHOST'):
-            os.environ['PGHOST'] = conn_parms['host']
-
-        if ('port' in conn_parms and conn_parms['port']
-                and not os.environ.get('PGPORT')):
-            os.environ['PGPORT'] = conn_parms['port']
-
-        password_set = False
-        if ('password' in conn_parms and conn_parms['password']
-                and not os.environ.get('PGPASSWORD')):
-            os.environ['PGPASSWORD'] = conn_parms['password']
-            password_set = True
-
-        os.system(
-            ('pg_dump --format=custom --no-password %(db_name)s ' +
-             '| pg_restore --no-password --dbname=%(db)s') %
-            {'db_name': db_name, 'db': db}
-        )
-
-        if password_set:
-            del os.environ['PGPASSWORD']
+    db_name = copy_database(conn_parms)
 
 for version in options.migrations.split(','):
     print 'running migration for '+version
@@ -331,13 +333,14 @@ for version in options.migrations.split(','):
     config.write(
         open(
             os.path.join(options.branch_dir, version, 'server.cfg'), 'w+'))
+
     os.system(
         os.path.join(
             options.branch_dir,
             version,
             'server',
             migrations[version]['server']['cmd'] % {
-                'db': db,
+                'db': db_name,
                 'config': os.path.join(options.branch_dir, version,
                                        'server.cfg')
             }))
