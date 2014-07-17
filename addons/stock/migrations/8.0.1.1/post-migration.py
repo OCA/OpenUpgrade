@@ -23,15 +23,18 @@ from openerp import pooler, SUPERUSER_ID
 
 default_spec = {
                 'procurement.rule': [
-                     ('procure_method', 'make_to_stock')
+                     ('procure_method', 'make_to_stock'),
                                    ],
                 'product.putaway': [
-                     ('method', 'fixed')
+                     ('method', 'fixed'),
                                    ],
                 'stock.inventory': [
                      ('filter', 'none'),
-                     ('location_id', False)
+                     ('location_id', False),
                                    ],
+                'stock.move': [
+                               ('procure_method', 'make_to_stock',),
+                               ],
                 }
 
 def default_stock_location(cr, pool, uid):
@@ -82,6 +85,22 @@ def migrate_product(cr, pool):
     for tmpl_id, ti, to, tp, valuation in rows:
         prod_tmpl_obj.write(cr, SUPERUSER_ID, tmpl_id, {'track_incoming': ti, 'track_outgoing': to, 'track_all': tp, 'valuation': valuation})
 
+def swap_procurement_move_rel(cr, pool):
+    """Procurement_order.move_id is swapped to stock_move.procurement_id.
+    So instead of a m2o from procurement_order, it is a m2o from
+    stock_move in version 8.
+    """
+    print "!!!! openupgrade_legacy_8_0_move_id exists: ", openupgrade.column_exists(cr, 'procurement_order', 'openupgrade_legacy_8_0_move_id')
+    move_legacy = openupgrade.get_legacy_name('move_id')
+    print "!!!! move_legacy exists: ", openupgrade.column_exists(cr, 'procurement_order', move_legacy)
+    stock_move_obj = pool['stock.move']
+    sql = """SELECT id, {} FROM {}
+    """.format(move_legacy, 'procurement_order')
+    cr.execute(sql)
+    proc_order_rows = cr.fetchall()
+    for move_id, proc_order_id in proc_order_rows:
+        stock_move_obj.write(cr, uid, move_id, {'procurement_id': proc_order_id})
+
 def migrate_procurement_sequences(cr, pool):
     pass
 
@@ -119,6 +138,7 @@ def migrate(cr, version):
         cr, pool['stock.warehouse.orderpoint'],
         'stock_warehouse_orderpoint', 'procurement_ids',
         openupgrade.get_legacy_name('procurement_id'))
+    swap_procurement_move_rel(cr, pool)
 #     procurement_obj = pool['procurement.order']
-#     openupgrade_80.set_message_last_post(cr, SUPERUSER_ID,
-#                                          [procurement_obj])
+    openupgrade_80.set_message_last_post(cr, SUPERUSER_ID, pool
+                                        ['stock.production.lot'])

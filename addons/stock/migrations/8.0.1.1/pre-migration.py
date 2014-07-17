@@ -42,16 +42,43 @@ column_renames = {
                     ],
                   'stock_move': [
                             ('auto_validate', None),
+                            ('price_currency_id', None),
+#                             ('procurement_id', None),
+                            ('prodlot_id', None),
+                            ('product_qty', 'product_uom_qty'),
+                            ('tracking_id', None)
                     ],
-                  'procurement_order' : [
-                       ('procure_method' , None)
-                 ]
+                'procurement_order': [
+#                        ('procure_method' , None)
+                         ('move_id' , None),
+                    ],
+                'stock_production_lot': [
+                  ('company_id', None),
+                  ('create_date', None),
+                  ('date', 'create_date'),
+                  ('prefix', None)
+                    ],
 
         }
 
 xmlid_renames = [
-      ('procurement.sequence_mrp_op_type',
-       'stock.sequence_mrp_op_type'),
+        ('procurement.sequence_mrp_op_type',
+         'stock.sequence_mrp_op_type'),
+        ('procurement.sequence_mrp_op',
+         'stock.sequence_mrp_op'),
+
+        ('stock.property_stock_account_input_categ',
+        'stock_account.property_stock_account_input_categ'),
+        ('stock.property_stock_account_input_prd',
+        'stock_account.property_stock_account_input_prd'),
+        ('stock.property_stock_account_output_categ',
+        'stock_account.property_stock_account_output_categ'),
+        ('stock.property_stock_account_output_prd',
+        'stock_account.property_stock_account_output_prd'),
+        ('stock.property_stock_journal',
+        'stock_account.property_stock_journal'),
+
+
     ]
 
 def save_rel_table(cr):
