@@ -14,6 +14,7 @@ except ImportError:
     print ('couldn\'t import bzrlib. You won\'t be able to run migrations '
            '<= 7.0!')
 
+
 def copy_database(conn_parms):
     db_old = conn_parms['database']
     db_new = '%s_migrated' % conn_parms['database']
