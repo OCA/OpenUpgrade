@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp import SUPERUSER_UID as uid
+from openerp import SUPERUSER_ID as uid
 from openerp.openupgrade import openupgrade, openupgrade_80
 
 
