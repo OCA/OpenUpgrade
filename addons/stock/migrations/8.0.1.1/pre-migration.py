@@ -54,7 +54,9 @@ column_renames = {
                   ('date', 'create_date'),
                   ('prefix', None)
                     ],
-
+                'stock_picking' : [
+                       ('type' , None),
+                ],
         }
 
 xmlid_renames = [

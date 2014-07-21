@@ -121,6 +121,31 @@ def restore_move_inventory_rel(cr, pool):
     rows = cr.fetchall()
     for inv_id, move_id in rows:
         stock_move_obj.write(cr, uid, move_id, {'inventory_id': inv_id})
+
+def migrate_stock_picking(cr):
+    '''
+    Update picking records with the correct picking_type_id and state  
+    :param cr:
+    '''
+    
+    uid = SUPERUSER_ID
+    pool = pooler.get_pool(cr.dbname)
+    
+    data_obj = pool.get('ir.model.data')
+    warehouse = data_obj.get_object(cr,uid,'stock','warehouse0')
+        
+    type_legacy = openupgrade.get_legacy_name('type')
+    in_id = warehouse.in_type_id.id
+    out_id = warehouse.out_type_id.id
+    int_id = warehouse.int_type_id.id
+    
+    # Fill picking_type_id required field
+    for type,type_id in (('in',in_id),('out',out_id),('internal',int_id)):
+        cr.execute('UPDATE stock_picking SET picking_type_id = %%s WHERE %s = %%s'%type_legacy,(type_id,type,))
+        
+    # state key auto -> waiting  
+    cr.execute('UPDATE stock_picking SET state = %s WHERE state = %s',('waiting','auto',))
+    
         
 def migrate_stock_warehouse(cr):
     '''
@@ -264,6 +289,7 @@ def migrate(cr, version):
     uid = SUPERUSER_ID
     
     migrate_stock_warehouse(cr)
+    migrate_stock_picking(cr)
     
     # Initiate defaults before filling.
     default_spec.update({'stock.inventory': default_stock_location(cr, pool, uid)})
