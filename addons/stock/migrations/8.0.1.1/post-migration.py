@@ -54,19 +54,23 @@ def default_stock_location(cr, pool, uid):
         result = default_spec['stock.inventory']
         return result
 
-def migrate_procure_method(cr, pool):
-    """Migrate from the legacy variants from procurement.order to
-    procurement.rule:
-    procure_method"""
+#===============================================================================
+# def migrate_procure_method(cr, pool):
+#     """Migrate from the legacy variants from procurement.order to
+#     procurement.rule:
+#     procure_method"""
+# 
+#     proc_rule_obj = pool['procurement.rule']
+#     procure_method_name = openupgrade.get_legacy_name('procure_method')
+#     sql = """SELECT rule_id, {} FROM procurement_order
+#     """.format(procure_method_name)
+#     cr.execute(sql)
+#     rows = cr.fetchall()
+#     for rule_id, proc_method in rows:
+#         proc_rule_obj.write(cr, SUPERUSER_ID, rule_id, {'procure_method': proc_method})
+#===============================================================================
 
-    proc_rule_obj = pool['procurement.rule']
-    procure_method_name = openupgrade.get_legacy_name('procure_method')
-    sql = """SELECT rule_id, {} FROM procurement_order
-    """.format(procure_method_name)
-    cr.execute(sql)
-    rows = cr.fetchall()
-    for rule_id, proc_method in rows:
-        proc_rule_obj.write(cr, SUPERUSER_ID, rule_id, {'procure_method': proc_method})
+
 
 def migrate_product(cr, pool):
     """Migrate the following:
@@ -90,15 +94,28 @@ def swap_procurement_move_rel(cr, pool):
     So instead of a m2o from procurement_order, it is a m2o from
     stock_move in version 8.
     """
+    
+    ### CHECK DUALITY procurement_order -> move_id
+    
+    #===============================================================================
+    #     select move_id, count(move_id)
+    # from procurement_order
+    # group by move_id
+    # having count(move_id) > 1;
+    #     
+    #===============================================================================
+    
+    uid = SUPERUSER_ID
+    stock_move_obj = pool['stock.move']
+    
     print "!!!! openupgrade_legacy_8_0_move_id exists: ", openupgrade.column_exists(cr, 'procurement_order', 'openupgrade_legacy_8_0_move_id')
     move_legacy = openupgrade.get_legacy_name('move_id')
     print "!!!! move_legacy exists: ", openupgrade.column_exists(cr, 'procurement_order', move_legacy)
-    stock_move_obj = pool['stock.move']
     sql = """SELECT id, {} FROM {}
     """.format(move_legacy, 'procurement_order')
     cr.execute(sql)
     proc_order_rows = cr.fetchall()
-    for move_id, proc_order_id in proc_order_rows:
+    for proc_order_id,move_id in proc_order_rows:
         stock_move_obj.write(cr, uid, move_id, {'procurement_id': proc_order_id})
 
 def migrate_procurement_sequences(cr, pool):
@@ -121,7 +138,55 @@ def restore_move_inventory_rel(cr, pool):
     rows = cr.fetchall()
     for inv_id, move_id in rows:
         stock_move_obj.write(cr, uid, move_id, {'inventory_id': inv_id})
+        
+def migrate_stock_location(cr):
+    '''
+    Create a Push rule for each pair of locations linked 
+    :param cr:
+    '''
+    
+    uid = SUPERUSER_ID
+    pool = pooler.get_pool(cr.dbname)
+    path_obj = pool.get('stock.location.path')
+    location_obj = pool.get('stock.location')
+    data_obj = pool.get('ir.model.data')
+    warehouse_obj = pool['stock.warehouse']
+   
+    head_sql = 'SELECT id, %s,  %s, %s, %s, name, %s FROM stock_location '%(openupgrade.get_legacy_name('chained_location_id'),
+                                                                        openupgrade.get_legacy_name('chained_auto_packing'),
+                                                                        openupgrade.get_legacy_name('chained_company_id'),
+                                                                        openupgrade.get_legacy_name('chained_delay'),
+                                                                        openupgrade.get_legacy_name('chained_picking_type'))
+    
+    tail_sql = 'WHERE %s is not null'%(openupgrade.get_legacy_name('chained_location_id'))
+    cr.execute(head_sql + tail_sql)
 
+    for location in cr.fetchall():
+        loc = location_obj.browse(cr,uid,location[1])
+        vals = {
+            'active': True,
+            'propagate': True,
+            'location_from_id': location[0],
+            'location_dest_id': location[1],
+            'auto': location[2],
+            'company_id': location[3],
+            'delay': location[4],
+            'name': location[5] + ' -> ' + loc.name,
+        }
+        
+        args = location[3] and [('company_id', '=', location[3])] or []
+        vals['warehouse_id'] = warehouse_obj.search(cr, uid, args)[0]
+        warehouse = warehouse_obj.browse(cr,uid,vals['warehouse_id'])
+        
+        if location[6] == 'in':
+            vals['picking_type_id'] = warehouse.in_type_id.id
+        elif location[6] == 'out':
+            vals['picking_type_id'] = warehouse.out_type_id.id
+        else:
+            vals['picking_type_id'] = warehouse.int_type_id.id
+            
+        path_obj.create(cr,uid,vals)
+            
 def migrate_stock_picking(cr):
     '''
     Update picking records with the correct picking_type_id and state  
@@ -156,6 +221,10 @@ def migrate_stock_warehouse(cr):
     uid = SUPERUSER_ID
     pool = pooler.get_pool(cr.dbname)
     vals = {}
+    
+    #Required field: Skip the ORM to write the code or Attribute Error
+    cr.execute("UPDATE stock_warehouse SET code = %s",('WH0',))
+    cr.commit()
     
     data_obj = pool['ir.model.data']
     location_obj = pool['stock.location']
@@ -276,13 +345,12 @@ def migrate_stock_warehouse(cr):
     
     #write picking types on WH
     warehouse_obj.write(cr,uid, [warehouse.id], vals=vals)
-    
-    #TODO create routes and push/pull rules
-        # Push rules -> locations chained
-    
-    return True
+    warehouse.refresh()
 
-
+    #create routes and push/pull rules
+    new_objects_dict = warehouse_obj.create_routes(cr, uid, warehouse.id, warehouse)
+    warehouse_obj.write(cr, uid, warehouse.id, new_objects_dict)
+       
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
@@ -290,12 +358,13 @@ def migrate(cr, version):
     
     migrate_stock_warehouse(cr)
     migrate_stock_picking(cr)
+    migrate_stock_location(cr)
     
     # Initiate defaults before filling.
     default_spec.update({'stock.inventory': default_stock_location(cr, pool, uid)})
     openupgrade.set_defaults(cr, pool, default_spec, force=False)
 
-    migrate_procure_method(cr, pool)
+    #migrate_procure_method(cr, pool)
     migrate_product(cr, pool)
     openupgrade.m2o_to_x2m(
         cr, pool['stock.warehouse.orderpoint'],

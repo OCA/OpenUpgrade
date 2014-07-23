@@ -29,9 +29,6 @@ column_renames = {
                          ('track_production', None),
                          ('valuation', None)
                     ],
-                  'stock_warehouse_orderpoint': [
-                         ('procurement_id', None),
-                    ],
                   'product_template': [
                     ],
                   'stock_inventory': [
@@ -56,6 +53,15 @@ column_renames = {
                     ],
                 'stock_picking' : [
                        ('type' , None),
+                ],
+                'stock_location' : [
+                       ('icon' , None),
+                       ('chained_journal_id' , None),
+                       ('chained_location_id' , None),
+                       ('chained_auto_packing' , None),
+                       ('chained_company_id' , None),
+                       ('chained_delay' , None),
+                       ('chained_picking_type' , None),
                 ],
         }
 
