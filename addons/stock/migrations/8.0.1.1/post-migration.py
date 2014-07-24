@@ -19,6 +19,7 @@
 ##############################################################################
 
 from openerp.openupgrade import openupgrade, openupgrade_80
+from openerp.modules.registry import RegistryManager
 from openerp import pooler, SUPERUSER_ID
 
 default_spec = {
@@ -117,16 +118,6 @@ def swap_procurement_move_rel(cr, pool):
     proc_order_rows = cr.fetchall()
     for proc_order_id,move_id in proc_order_rows:
         stock_move_obj.write(cr, uid, move_id, {'procurement_id': proc_order_id})
-
-def migrate_procurement_sequences(cr, pool):
-    pass
-
-# TODO
-# Migrate the following:
-# ('procurement.sequence_mrp_op',
-#      'stock.sequence_mrp_op'),
-#     ('procurement.sequence_mrp_op_type',
-#      'stock.sequence_mrp_op_type'),
 
 def restore_move_inventory_rel(cr, pool):
     uid = SUPERUSER_ID
@@ -346,11 +337,116 @@ def migrate_stock_warehouse(cr):
     #write picking types on WH
     warehouse_obj.write(cr,uid, [warehouse.id], vals=vals)
     warehouse.refresh()
-
+    
+    #update ir_model_data references
+    if in_type_id and out_type_id and int_type_id:
+        for name,res_id in (('picking_type_in',in_type_id),
+                            ('picking_type_out',out_type_id),
+                           ('picking_type_internal',int_type_id)):
+             cr.execute(
+            'UPDATE ir_model_data set res_id = %s where name = %s',(res_id,name,))
+        
     #create routes and push/pull rules
     new_objects_dict = warehouse_obj.create_routes(cr, uid, warehouse.id, warehouse)
     warehouse_obj.write(cr, uid, warehouse.id, new_objects_dict)
-       
+    
+def migrate_stock_warehouse_orderpoint(cr):
+    '''
+    procurement_id to procurement_ids
+    :param cr: database cursor
+    '''
+    registry = RegistryManager.get(cr.dbname)
+    openupgrade.m2o_to_x2m(
+        cr, registry['stock.warehouse.orderpoint'],
+        'stock_warehouse_orderpoint', 'procurement_ids',
+        openupgrade.get_legacy_name('procurement_id'))
+    
+def migrate_product_supply_method(cr):
+    '''
+    Procurements of products: change the supply_method for the matching route
+    make to stock -> MTS Rule: by default
+    make to order -> MTO Rule 
+    :param cr:
+    '''
+    uid = SUPERUSER_ID
+    pool = pooler.get_pool(cr.dbname)
+    route_obj = pool['stock.location.route']
+    template_obj = pool['product.template']
+    
+    mto_route_id = route_obj.search(cr, uid, [('name', 'like', 'Make To Order')])
+    mto_route_id = mto_route_id and mto_route_id[0] or False
+    
+    procure_method_legacy = openupgrade.get_legacy_name('procure_method')
+    if mto_route_id:
+        product_ids = []
+        cr.execute("SELECT id FROM product_template WHERE %s = %%s"%procure_method_legacy,('make_to_order',))
+        for res in cr.fetchall():
+            product_ids.append(res[0])
+            
+        template_obj.write(cr,uid, product_ids, {'route_ids': [(6,0, [mto_route_id])]})
+
+def migrate_procurement_order_method(cr):
+    '''
+    Procurements method: change the supply_method for the matching route
+    make to stock -> MTS Rule
+    make to order -> MTO Rule 
+    :param cr:
+    '''
+    uid = SUPERUSER_ID
+    pool = pooler.get_pool(cr.dbname)
+    route_obj = pool['stock.location.route']
+    procurement_obj = pool['procurement.order']
+    
+    # TODO: Get the mto and mts from the warehouse 
+    mto_route_id = route_obj.search(cr, uid, [('name', 'like', 'Make To Order')])
+    mto_route_id = mto_route_id and mto_route_id[0] or False
+    route = route_obj.browse(cr,uid,mto_route_id)
+    mto_rule_ids = [r.id for r in route.pull_ids]
+        
+    mts_route_id = route_obj.search(cr, uid, [('name', 'like', 'Make To Stock')])
+    mts_route_id = mts_route_id and mts_route_id[0] or False
+    route = route_obj.browse(cr,uid,mts_route_id)
+    mts_rule_ids = [r.id for r in route.pull_ids]
+    
+    procure_method_legacy = openupgrade.get_legacy_name('procure_method')
+    if mto_route_id and mts_route_id:
+        product_ids = []
+        cr.execute("SELECT id FROM procurement_order WHERE %s = %%s"%procure_method_legacy,('make_to_order',))
+        for res in cr.fetchall():
+            mto_ids.append(res[0])
+            
+        cr.execute("SELECT id FROM procurement_order WHERE %s = %%s"%procure_method_legacy,('make_to_stock',))
+        for res in cr.fetchall():
+            mts_ids.append(res[0])
+                    
+        procurement_obj.write(cr,uid, mto_ids, {'route_ids': [(6,0, [mto_route_id])], 'rule_id':mto_rule_ids[0]})
+        procurement_obj.write(cr,uid, mts_ids, {'route_ids': [(6,0, [mts_route_id])], 'rule_id':mts_rule_ids[0]})
+        
+def migrate_procurement_order(cr):
+    '''
+    Migrates procurement orders and the new fields warehouse, move_ids, partner_dest_id
+    :param cr:
+    '''
+    
+    uid = SUPERUSER_ID
+    pool = pooler.get_pool(cr.dbname)
+    
+    migrate_procurement_order_method(cr)
+    
+    #Reservation to move_ids
+    registry = RegistryManager.get(cr.dbname)
+    openupgrade.m2o_to_x2m(
+        cr, registry['procurement.order'],
+        'procurement_order', 'move_ids',
+        openupgrade.get_legacy_name('move_id'))
+    
+    #Warehouse, partner from the move
+    cr.execute("""UPDATE procurement_order AS po 
+            SET warehouse_id = sm.warehouse_id,
+            partner_dest_id = sm.partner_id
+            FROM stock_move AS sm
+            WHERE po.%s = sm.id"""%openupgrade.get_legacy_name('move_id')) 
+    
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
@@ -359,6 +455,9 @@ def migrate(cr, version):
     migrate_stock_warehouse(cr)
     migrate_stock_picking(cr)
     migrate_stock_location(cr)
+    migrate_stock_warehouse_orderpoint(cr)
+    migrate_product_supply_method(cr)
+    migrate_procurement_order(cr)
     
     # Initiate defaults before filling.
     default_spec.update({'stock.inventory': default_stock_location(cr, pool, uid)})
@@ -366,10 +465,7 @@ def migrate(cr, version):
 
     #migrate_procure_method(cr, pool)
     migrate_product(cr, pool)
-    openupgrade.m2o_to_x2m(
-        cr, pool['stock.warehouse.orderpoint'],
-        'stock_warehouse_orderpoint', 'procurement_ids',
-        openupgrade.get_legacy_name('procurement_id'))
+    
     swap_procurement_move_rel(cr, pool)
-#     procurement_obj = pool['procurement.order']
+    openupgrade.delete_model_workflow(cr, 'stock.picking')
     openupgrade_80.set_message_last_post(cr, SUPERUSER_ID, pool, ['stock.production.lot','stock.picking'])
