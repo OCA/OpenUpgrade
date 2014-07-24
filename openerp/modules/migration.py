@@ -89,6 +89,7 @@ class MigrationManager(object):
             'pre': '[>%s]',
             'post': '[%s>]',
         }
+
         # In openupgrade, remove 'or pkg.installed_version is None'
         # We want to always pass in pre and post migration files and use a new
         # argument in the migrate decorator (explained in the docstring)
@@ -186,6 +187,5 @@ class MigrationManager(object):
                         if mod:
                             del mod
                     # OpenUpgrade edit end
-
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

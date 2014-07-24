@@ -68,7 +68,7 @@ class mail_alias(osv.Model):
         'alias_name': fields.char('Alias Name',
             help="The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.my.openerp.com>",),
         'alias_model_id': fields.many2one('ir.model', 'Aliased Model', required=True, ondelete="cascade",
-                                          help="The model (OpenERP Document Kind) to which this alias "
+                                          help="The model (Odoo Document Kind) to which this alias "
                                                "corresponds. Any incoming email that does not reply to an "
                                                "existing record will cause the creation of a new record "
                                                "of this model (e.g. a Project Task)",
@@ -87,7 +87,7 @@ class mail_alias(osv.Model):
                                       help="Optional ID of a thread (record) to which all incoming "
                                            "messages will be attached, even if they did not reply to it. "
                                            "If set, this will disable the creation of new records completely."),
-        'alias_domain': fields.function(_get_alias_domain, string="Alias domain", type='char', size=None),
+        'alias_domain': fields.function(_get_alias_domain, string="Alias domain", type='char'),
         'alias_parent_model_id': fields.many2one('ir.model', 'Parent Model',
             help="Parent model holding the alias. The model holding the alias reference\n"
                     "is not necessarily the model given by alias_model_id\n"

@@ -135,11 +135,11 @@ HDD SH-1</field>
             <field name="name">Memory</field>
         </record>
         <record id="product_attribute_value_1" model="product.attribute.value">
-            <field name="name">16 Go</field>
+            <field name="name">16 GB</field>
             <field name="attribute_id" ref="product_attribute_1"/>
         </record>
         <record id="product_attribute_value_2" model="product.attribute.value">
-            <field name="name">32 Go</field>
+            <field name="name">32 GB</field>
             <field name="attribute_id" ref="product_attribute_1"/>
         </record>
 
@@ -211,6 +211,10 @@ FaceTime HD Camera, 1.2 MP Photos</field>
 
         <record id="product_product_4_product_template" model="product.template">
             <field name="attribute_line_ids" eval="[(6,0,[ref('product.product_attribute_line_1'), ref('product.product_attribute_line_2'), ref('product.product_attribute_line_3')])]"/>
+        </record>
+        
+        <record id="product_product_4d" model="product.product">
+            <field name="active" eval="False"/>
         </record>
         
         <record id="product_attribute_price_1" model="product.attribute.price">
