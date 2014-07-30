@@ -22,7 +22,7 @@
 from openerp.openupgrade import openupgrade
 
 column_renames = {
-    'sale.order.line': [('procurement_id', None)]}
+    'sale_order_line': [('procurement_id', None)]}
 
 
 @openupgrade.migrate()
