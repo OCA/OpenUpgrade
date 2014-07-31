@@ -40,7 +40,6 @@ column_renames = {
                   'stock_move': [
                             ('auto_validate', None),
                             ('price_currency_id', None),
-#                             ('procurement_id', None),
                             ('prodlot_id', None),
                             ('product_qty', 'product_uom_qty'),
                             ('tracking_id', None)
@@ -70,7 +69,6 @@ xmlid_renames = [
          'stock.sequence_mrp_op_type'),
         ('procurement.sequence_mrp_op',
          'stock.sequence_mrp_op'),
-
         ('stock.property_stock_account_input_categ',
         'stock_account.property_stock_account_input_categ'),
         ('stock.property_stock_account_input_prd',
@@ -97,5 +95,5 @@ def save_rel_table(cr):
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
-
+    
     save_rel_table(cr)
