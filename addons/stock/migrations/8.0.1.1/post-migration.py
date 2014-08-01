@@ -463,28 +463,59 @@ def delete_stock_account_journal(cr):
 
     if stock_journal_id:
         cr.execute("DELETE from account_journal where id = %s",(stock_journal_id,))
+        cr.execute("DELETE from ir_property WHERE name=%s",('property_stock_journal',))
+        cr.execute("DELETE from ir_model_data WHERE name=%s",('property_stock_journal',))
+
+def migrate_stock_production_lot(cr):
+    '''
+    :param cr:
+    '''
+    uid = SUPERUSER_ID
+    pool = pooler.get_pool(cr.dbname)
+    lot_obj = pool['stock.production.lot']
+    user_obj = pool['res.users']
+    
+    #Revisions to mail messages
+    cr.execute("SELECT lot_id,author_id,description FROM stock_production_lot_revision")
+    for lot,author,description in cr.fetchall():
+        user = user_obj.browse(cr,uid,author)
+        if user.email:
+            lot_obj.message_post(cr, author, lot, body=description)
+    
+    # Move:prodlot_id -> Quants lot_id
+    field_name = openupgrade.get_legacy_name('prodlot_id')
+    cr.execute("""select id, %s from stock_move where %s is not null"""%(field_name,field_name))
+    move_ids = {}
+    res1 = cr.fetchall()
+    for move,lot in res1:
+        cr.execute("""select quant_id from stock_quant_move_rel where move_id = %s"""%(move,))
+        res2 = cr.fetchall()
+        for quant in res2:
+            cr.execute("""UPDATE stock_quant SET lot_id = %s WHERE id = %s"""%(lot,quant[0],))
         cr.commit()
 
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     uid = SUPERUSER_ID
-
+    
     migrate_stock_warehouse(cr)
     migrate_stock_picking(cr)
     migrate_stock_location(cr)
-#     migrate_stock_warehouse_orderpoint(cr)  # Commented because requires procurement_id .. error for now
+    migrate_stock_warehouse_orderpoint(cr)
     migrate_product_supply_method(cr)
     migrate_procurement_order(cr)
-
+    migrate_stock_qty(cr, pool, uid)
+    migrate_stock_production_lot(cr)
+    
     # Initiate defaults before filling.
     default_spec.update({'stock.inventory': default_stock_location(cr, pool, uid)})
     openupgrade.set_defaults(cr, pool, default_spec, force=False)
 
     migrate_product(cr, pool)
-
+    
     delete_stock_account_journal(cr)
     openupgrade.delete_model_workflow(cr, 'stock.picking')
-    migrate_stock_qty(cr, pool, uid)
+    
 #     procurement_obj = pool['procurement.order']
     openupgrade_80.set_message_last_post(cr, SUPERUSER_ID, pool, ['stock.production.lot','stock.picking'])
