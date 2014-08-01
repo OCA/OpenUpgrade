@@ -22,7 +22,6 @@ from openerp.openupgrade import openupgrade
 
 column_renames = {
                   'procurement_order' : [
-                       ('message' , None),
                        ('note' , None),
                        ('move_id' , None),
                        ('procure_method', None),
@@ -31,6 +30,9 @@ column_renames = {
                        ('supply_method' , None),
                        ('procure_method', None),
                  ],
+                  'stock_warehouse_orderpoint' : [
+                       ('procurement_id' , None),
+                 ],
             }
 
 xmlid_renames = [
@@ -38,17 +40,13 @@ xmlid_renames = [
      'stock.access_stock_warehouse_orderpoint'),
     ('procurement.access_stock_warehouse_orderpoint_system',
      'stock.access_stock_warehouse_orderpoint_system'),
+    ('procurement.access_mrp_property',
+      'mrp.access_mrp_property'),
+    ('procurement.access_mrp_property_group',
+      'mrp.access_mrp_property_group'),
     ('procurement.stock_warehouse_orderpoint_rule',
      'stock.stock_warehouse_orderpoint_rule'),
-    ('procurement.access_mrp_property',
-     'mrp.access_mrp_property'),
-    ('procurement.access_mrp_property_group',
-     'mrp.access_mrp_property_group'),
-    ('procurement.sequence_mrp_op',
-     'stock.sequence_mrp_op'),
-    ('procurement.sequence_mrp_op_type',
-     'stock.sequence_mrp_op_type'),
-    ]
+]
 
 @openupgrade.migrate()
 def migrate(cr, version):
