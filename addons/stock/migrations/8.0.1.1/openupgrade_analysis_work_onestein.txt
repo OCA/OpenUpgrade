@@ -1,260 +1,187 @@
 ### EXTRA TODO
 
-	# In case of xml data. Check the load-data API function to load the data with noupdate="1".
-	# Search *.xml with noupdate and evaluate what to do
-	# TIME ( 2 hours) stock_security.xml stock_data.xml and stock_sequence
-
 ---Fields in module 'stock'---
 stock        / procurement.group        / partner_id (many2one)         : NEW relation: res.partner
+# NOTHING TO DO
 
+############# PROCUREMENT ORDER ##############
 stock        / procurement.order        / move_dest_id (many2one)       : NEW relation: stock.move
+# NOTHING TO DO
 stock        / procurement.order        / move_ids (one2many)           : NEW relation: stock.move
-# Coming from procurement as move_id, nothing to do.
-# OK However, below, write from procurement.order to procurement_id where move_id == stock_move.id
+# DONE
 
 stock        / procurement.order        / orderpoint_id (many2one)      : NEW relation: stock.warehouse.orderpoint
 stock        / procurement.order        / partner_dest_id (many2one)    : NEW relation: res.partner
 stock        / procurement.order        / route_ids (many2many)         : NEW relation: stock.location.route
 stock        / procurement.order        / warehouse_id (many2one)       : NEW relation: stock.warehouse
+# DONE
 
-stock        / procurement.rule         / delay (integer)               : NEW
+stock        / procurement.rule         / delay (integer)               : NEW 
 stock        / procurement.rule         / location_id (many2one)        : NEW relation: stock.location
 stock        / procurement.rule         / location_src_id (many2one)    : NEW relation: stock.location
 stock        / procurement.rule         / partner_address_id (many2one) : NEW relation: res.partner
 stock        / procurement.rule         / picking_type_id (many2one)    : NEW relation: stock.picking.type
 stock        / procurement.rule         / procure_method (selection)    : NEW required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: make_to_stock
-#OK procure_method field must be initialized
-#TIME ( 1 hour )
-### set to default
-### OK 15 min
-### OK Get from procument.order stored as legacy field. (If it was installed in OE7)
-### 1 hour (new, found in procurements)
-
-stock        / procurement.rule         / propagate (boolean)           : NEW
+stock        / procurement.rule         / propagate (boolean)           : NEW 
 stock        / procurement.rule         / propagate_warehouse_id (many2one): NEW relation: stock.warehouse
 stock        / procurement.rule         / route_id (many2one)           : NEW relation: stock.location.route
 stock        / procurement.rule         / warehouse_id (many2one)       : NEW relation: stock.warehouse
+# DONE created warehouse pull rules 
+#TODO procure_method field must be initialized
 
+############### PRODUCT CATEGORY
+
+stock        / product.category         / property_stock_journal (many2one): module is now 'stock_account' ('stock')
+# DONE deleted old property and forcecreated
 stock        / product.category         / property_stock_account_input_categ (many2one): module is now 'stock_account' ('stock')
 stock        / product.category         / property_stock_account_output_categ (many2one): module is now 'stock_account' ('stock')
-stock        / product.category         / property_stock_journal (many2one): module is now 'stock_account' ('stock')
 stock        / product.category         / property_stock_valuation_account_id (many2one): module is now 'stock_account' ('stock')
-# The first four fields have been moved to a different module. Probably these properties must be filled in the stock_account
-# migration script.
-#TIME (3 hours)
-### Save using rename_column (,None) so the values can be fetched from stock_account.
-### OK 30 min
-### note: MRP migration that it depends on stock_account, and it depends on this.
-
+# NOTHING TO DO are created because of the forcecreate
 stock        / product.category         / removal_strategy_id (many2one): NEW relation: product.removal
 stock        / product.category         / route_ids (many2many)         : NEW relation: stock.location.route
+# NOTHING TO DO
+# The first four fields have been moved to a different module. Probably these properties must be filled in the stock_account
+# migration script. 
 
-stock        / product.product          / track_incoming (boolean)      : DEL
-stock        / product.product          / track_outgoing (boolean)      : DEL
-stock        / product.product          / track_production (boolean)    : DEL
-stock        / product.template         / track_all (boolean)           : NEW
-stock        / product.template         / track_incoming (boolean)      : NEW
-stock        / product.template         / track_outgoing (boolean)      : NEW
-# The first three fields have been moved to product_template.
-# Check if track_production is all -> looks like it!
-#TIME (1 hour)
-# OK 1 hour
+stock        / product.product          / track_incoming (boolean)      : DEL 
+stock        / product.product          / track_outgoing (boolean)      : DEL 
+stock        / product.product          / track_production (boolean)    : DEL 
+stock        / product.template         / track_all (boolean)           : NEW 
+stock        / product.template         / track_incoming (boolean)      : NEW 
+stock        / product.template         / track_outgoing (boolean)      : NEW 
+# The first three fields have been moved to product_template. Valuation also has been moved to product_template
+# Check if track_production is all 
 
 stock        / product.product          / valuation (selection)         : module is now 'stock_account' ('stock')
 stock        / product.product          / valuation (selection)         : now a function
 stock        / product.template         / valuation (selection)         : NEW required: required, selection_keys: ['manual_periodic', 'real_time'], req_default: manual_periodic
-# Valuation has been moved to product_template
-# TODO Check Valuation properties, now a function??? and required..
-# Double move???
-# TIME (1 hour)
-### OK 30 min (move valuation)
+# DONE migrated
+# Check Valuation properties. 
 
 stock        / product.putaway          / fixed_location_ids (one2many) : NEW relation: stock.fixed.putaway.strat
-### New?
 stock        / product.putaway          / method (selection)            : NEW required: required, selection_keys: function, req_default: fixed
-# OK Set default
 stock        / product.putaway          / name (char)                   : NEW required: required
-### New?
-
 stock        / product.removal          / method (char)                 : NEW required: required
-### New?
 stock        / product.removal          / name (char)                   : NEW required: required
-### New?
-# TIME ( 0.5 hours )
-### OK 0.5 hours
 
+####### PRODUCT TEMPLATE ######
 stock        / product.template         / property_stock_account_input (many2one): module is now 'stock_account' ('stock')
 stock        / product.template         / property_stock_account_output (many2one): module is now 'stock_account' ('stock')
-# These fields are duplicated in product.category because they can be set
-# product specific as well as generally for a category.
-# OK 15 min
-
+# NOTHING TO DO
 stock        / product.template         / route_ids (many2many)         : NEW relation: stock.location.route
-### New?
+DONE
+
 # Migrate the data from stock to stock_account in the stock_acount and Check ROUTES
-# TIME ( 4 hours )
+###############################
 
 stock        / res.company              / internal_transit_location_id (many2one): NEW relation: stock.location
-stock        / res.company              / propagation_minimum_delta (integer): NEW
-# NOTHING TO DO ( Just check the functionality of the location )
-### "Technical field used for resupply routes between warehouses that belong to this company"
+stock        / res.company              / propagation_minimum_delta (integer): NEW 
+# NOTHING TO DO ( Just check the functionality of the location )  
 
 stock        / stock.fixed.putaway.strat / category_id (many2one)        : NEW relation: product.category, required: required
 stock        / stock.fixed.putaway.strat / fixed_location_id (many2one)  : NEW relation: stock.location, required: required
 stock        / stock.fixed.putaway.strat / putaway_id (many2one)         : NEW relation: product.putaway, required: required
 stock        / stock.fixed.putaway.strat / sequence (integer)            : NEW
 #Nothing to do
-
-
-stock        / stock.inventory          / date_done (datetime)          : DEL
-# OK Cannot find it, store as legacy field for now.
-
+ 
+stock        / stock.inventory          / date_done (datetime)          : DEL 
 stock        / stock.inventory          / filter (selection)            : NEW required: required, selection_keys: function, req_default: none
-# OK New? Set default (none)
-
 stock        / stock.inventory          / inventory_line_id (one2many)  : DEL relation: stock.inventory.line
 stock        / stock.inventory          / line_ids (one2many)           : NEW relation: stock.inventory.line
-# WRONG Renamed to line_ids
-# OK Nothing to do because its a renamed o2m and the m2o wasn't changed.
-
 stock        / stock.inventory          / location_id (many2one)        : NEW relation: stock.location, required: required, req_default: function
-# TODO
-# Temporary fix: set default to False in stock.py.
-# Ideas: load/insert data record id="warehouse0"
-
 stock        / stock.inventory          / lot_id (many2one)             : NEW relation: stock.production.lot
-# New? appears in many classes.
-
 stock        / stock.inventory          / move_ids (many2many)          : type is now 'one2many' ('many2many')
-### TODO: new relation inventory_id m2o o2m move_ids, used to be m2m
-# migrate the inventory_id side of the m2m table to stock_move.inventory_id
-# where move_id = the move_id in the m2m table...
-# Not sure of the best way to store it (pre-script), but we should use the orm
-# to write it (post-script)?
-# "stock_inventory_move_rel"
-# Store as a temporary table
-# CREATE TABLE stock_inventory_move_rel_ou80 AS TABLE stock_inventory_move_rel
-
 stock        / stock.inventory          / package_id (many2one)         : NEW relation: stock.quant.package
-# New?
 stock        / stock.inventory          / partner_id (many2one)         : NEW relation: res.partner
-# New? (old relations still there(warehouse, location, picking, move),
-# new: inventory, package, pack_operation, quant.)
-
 stock        / stock.inventory          / product_id (many2one)         : NEW relation: product.product
-# New?
-# 7: picking, production_lot, move, inventory_line
-# 8: quant, picking, production_lot, move, inventory, inventory_line, pack_operation, warehouse_orderpoint
-# "Specify Product to focus your inventory on a particular Product."
-
-# TODO: 0.5 Rename inventory_line_id with line_ids, check what to do with move_ids.
-#		0.5 Check the date_done deletion meaning
-#		1 Filter is required so call set_defaults with 'filter': 'none' also check filter functionality in 7
-#		2 Problem of one2many to many2many
-#		0.5  Think about setting the last three fields empty.
-# TIME ( 4.5 hours )
-
+# DONE: Rename inventory_line_id with line_ids, check what to do with move_ids.
+#		Check the date_done deletion meaning
+#		Filter is required so call set_defaults with 'filter': 'none' also check filter functionality in 7
+#		Problem of one2many to many2many 
+#		Think about setting the last three fields empty.
 
 stock        / stock.inventory.line     / package_id (many2one)         : NEW relation: stock.quant.package
-# New
 stock        / stock.inventory.line     / partner_id (many2one)         : NEW relation: res.partner
-# New?
 stock        / stock.inventory.line     / product_uom (many2one)        : DEL relation: product.uom, required: required
 stock        / stock.inventory.line     / product_uom_id (many2one)     : NEW relation: product.uom, required: required
-# OK TODO: 0.5 rename the field
-
-stock        / stock.inventory.line     / theoretical_qty (float)       : NEW
-# New?
-# TODO		1 hour consultan questions about the theoretical_qty, package_id, partner_id.
-# TIME (2 hours)
+stock        / stock.inventory.line     / theoretical_qty (float)       : NEW 
+# TODO: rename the field 
+# 		hour consultan questions about the theoretical_qty, package_id, partner_id. 
 
 
-# PEDRO is working on this
+##### STOCK LOCATION #######
+
 stock        / stock.location           / chained_auto_packing (selection): DEL required: required, selection_keys: ['auto', 'manual', 'transparent'], req_default: manual
 stock        / stock.location           / chained_company_id (many2one) : DEL relation: res.company
-stock        / stock.location           / chained_delay (integer)       : DEL
-stock        / stock.location           / chained_journal_id (many2one) : DEL relation: stock.journal
+stock        / stock.location           / chained_delay (integer)       : DEL 
 stock        / stock.location           / chained_location_id (many2one): DEL relation: stock.location
-stock        / stock.location           / chained_location_type (selection): DEL required: required, selection_keys: ['customer', 'fixed', 'none'], req_default: none
 stock        / stock.location           / chained_picking_type (selection): DEL selection_keys: ['in', 'internal', 'out']
+# DONE this functionality is now in stock.location.path
+
+stock        / stock.location           / chained_journal_id (many2one) : DEL relation: stock.journal
+stock        / stock.location           / chained_location_type (selection): DEL required: required, selection_keys: ['customer', 'fixed', 'none'], req_default: none
+
 stock        / stock.location           / icon (selection)              : DEL selection_keys: function
-stock        / stock.location           / loc_barcode (char)            : NEW
+# SAVED
+
+stock        / stock.location           / loc_barcode (char)            : NEW 
 stock        / stock.location           / putaway_strategy_id (many2one): NEW relation: product.putaway
 stock        / stock.location           / removal_strategy_id (many2one): NEW relation: product.removal
 stock        / stock.location           / valuation_in_account_id (many2one): module is now 'stock_account' ('stock')
 stock        / stock.location           / valuation_out_account_id (many2one): module is now 'stock_account' ('stock')
-# TODO:  2 legacy field for all the deleted fields
-		 1 hour to check the valuation fields
-# TIME:  3 hours
+# NOTHING TO DO
 
+# DONE:  legacy field for all the deleted fields
+		 hour to check the valuation fields
 
-stock        / stock.location.path      / active (boolean)              : NEW
+stock        / stock.location.path      / active (boolean)              : NEW 
 stock        / stock.location.path      / auto (selection)              : NEW required: required, selection_keys: ['auto', 'manual', 'transparent'], req_default: auto
 stock        / stock.location.path      / company_id (many2one)         : NEW relation: res.company
-stock        / stock.location.path      / delay (integer)               : NEW
+stock        / stock.location.path      / delay (integer)               : NEW 
 stock        / stock.location.path      / location_dest_id (many2one)   : NEW relation: stock.location, required: required
 stock        / stock.location.path      / location_from_id (many2one)   : NEW relation: stock.location, required: required
 stock        / stock.location.path      / name (char)                   : NEW required: required
 stock        / stock.location.path      / picking_type_id (many2one)    : NEW relation: stock.picking.type, required: required
-stock        / stock.location.path      / propagate (boolean)           : NEW
+stock        / stock.location.path      / propagate (boolean)           : NEW 
 stock        / stock.location.path      / route_id (many2one)           : NEW relation: stock.location.route
-stock        / stock.location.path      / sequence (integer)            : NEW
+stock        / stock.location.path      / sequence (integer)            : NEW 
 stock        / stock.location.path      / warehouse_id (many2one)       : NEW relation: stock.warehouse
+# DONE CREATED ALL THE PUSH/PULL
 # New fields in location path but check if some previous deleted fields are added here.
-# is stock location path a new obj?
-# is there something similar in the seven version?
-# TIME: 1 hour
 
-stock        / stock.location.route     / active (boolean)              : NEW
+stock        / stock.location.route     / active (boolean)              : NEW 
 stock        / stock.location.route     / company_id (many2one)         : NEW relation: res.company
 stock        / stock.location.route     / name (char)                   : NEW required: required
-stock        / stock.location.route     / product_categ_selectable (boolean): NEW
-stock        / stock.location.route     / product_selectable (boolean)  : NEW
+stock        / stock.location.route     / product_categ_selectable (boolean): NEW 
+stock        / stock.location.route     / product_selectable (boolean)  : NEW 
 stock        / stock.location.route     / pull_ids (one2many)           : NEW relation: procurement.rule
 stock        / stock.location.route     / push_ids (one2many)           : NEW relation: stock.location.path
-stock        / stock.location.route     / sequence (integer)            : NEW
+stock        / stock.location.route     / sequence (integer)            : NEW 
 stock        / stock.location.route     / supplied_wh_id (many2one)     : NEW relation: stock.warehouse
 stock        / stock.location.route     / supplier_wh_id (many2one)     : NEW relation: stock.warehouse
-stock        / stock.location.route     / warehouse_selectable (boolean): NEW
-#All new fields
-# is there something similar in the seven version?
-# TIME: 1 hour
+stock        / stock.location.route     / warehouse_selectable (boolean): NEW 
+# DONE created all the push/pull
+# All new fields
 
-
-stock        / stock.move               / auto_validate (boolean)       : DEL
-# OK Completely removed? -> legacy
+stock        / stock.move               / auto_validate (boolean)       : DEL 
 stock        / stock.move               / group_id (many2one)           : NEW relation: procurement.group
-# New? (procurement.group)
 stock        / stock.move               / inventory_id (many2one)       : NEW relation: stock.inventory
-# New?
 stock        / stock.move               / linked_move_operation_ids (one2many): NEW relation: stock.move.operation.link
-# New? (operation.link)
 stock        / stock.move               / move_history_ids (many2many)  : DEL relation: stock.move
 stock        / stock.move               / move_history_ids2 (many2many) : DEL relation: stock.move
 stock        / stock.move               / move_orig_ids (one2many)      : NEW relation: stock.move
-# TODO check functionality!
-
 stock        / stock.move               / origin (char)                 : not a function anymore
-# TODO check this
-
 stock        / stock.move               / origin_returned_move_id (many2one): NEW relation: stock.move
-
-
-stock        / stock.move               / partially_available (boolean) : NEW
+stock        / stock.move               / partially_available (boolean) : NEW 
 stock        / stock.move               / picking_type_id (many2one)    : NEW relation: stock.picking.type
 stock        / stock.move               / price_currency_id (many2one)  : DEL relation: res.currency
 stock        / stock.move               / priority (selection)          : selection_keys is now '['0', '1', '2', '3']' ('['0', '1']')
 stock        / stock.move               / procure_method (selection)    : NEW required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: make_to_stock
-
 stock        / stock.move               / procurement_id (many2one)     : NEW relation: procurement.order
-# TODO this is coming from procurements. It gets deleted in procurements, but
-# it is saved in the pre-migration script there using the legacy name.
-# So match the move_id from procurement.order to write procurement_id in stock.move
-
 stock        / stock.move               / prodlot_id (many2one)         : DEL relation: stock.production.lot
 stock        / stock.move               / product_qty (float)           : now a function
 stock        / stock.move               / product_uom_qty (float)       : NEW required: required, req_default: 1.0
-stock        / stock.move               / propagate (boolean)           : NEW
+stock        / stock.move               / propagate (boolean)           : NEW 
 stock        / stock.move               / push_rule_id (many2one)       : NEW relation: stock.location.path
 stock        / stock.move               / quant_ids (many2many)         : NEW relation: stock.quant
 stock        / stock.move               / reserved_quant_ids (one2many) : NEW relation: stock.quant
@@ -266,24 +193,16 @@ stock        / stock.move               / rule_id (many2one)            : NEW re
 stock        / stock.move               / split_from (many2one)         : NEW relation: stock.move
 stock        / stock.move               / tracking_id (many2one)        : DEL relation: stock.tracking
 stock        / stock.move               / warehouse_id (many2one)       : NEW relation: stock.warehouse
-# TODO
-# 2   Store data deleted ( 6 fields )
-# 0.5 Check move_history_ids* with the new field move_orig_ids
-# 0.5 origin look at the code and see what to do
-# 	1 procure_method ( we should get it from procurement ) and procurement_id
-# 0.5  prodlot_id rename restrict_lot_id ?
-# 0.5 product_qty and product_uom_qty
-# 0.5 push_rule_id (Check the pull/push functionality in OE7)
-# 0.5 warehouse_id check how to fill this field
-# TIME ( 8 hours )
+# DONE
+  
 
 stock        / stock.move.operation.link / move_id (many2one)            : NEW relation: stock.move, required: required
 stock        / stock.move.operation.link / operation_id (many2one)       : NEW relation: stock.pack.operation, required: required
-stock        / stock.move.operation.link / qty (float)                   : NEW
+stock        / stock.move.operation.link / qty (float)                   : NEW 
 stock        / stock.move.operation.link / reserved_quant_id (many2one)  : NEW relation: stock.quant
-# Nothing to do
+# Nothing to do 
 
-stock        / stock.pack.operation     / cost (float)                  : NEW
+stock        / stock.pack.operation     / cost (float)                  : NEW 
 stock        / stock.pack.operation     / currency (many2one)           : NEW relation: res.currency
 stock        / stock.pack.operation     / date (datetime)               : NEW required: required, req_default: function
 stock        / stock.pack.operation     / linked_move_operation_ids (one2many): NEW relation: stock.move.operation.link
@@ -297,65 +216,77 @@ stock        / stock.pack.operation     / processed (selection)         : NEW re
 stock        / stock.pack.operation     / product_id (many2one)         : NEW relation: product.product
 stock        / stock.pack.operation     / product_qty (float)           : NEW required: required
 stock        / stock.pack.operation     / product_uom_id (many2one)     : NEW relation: product.uom
-stock        / stock.pack.operation     / qty_done (float)              : NEW
+stock        / stock.pack.operation     / qty_done (float)              : NEW 
 stock        / stock.pack.operation     / result_package_id (many2one)  : NEW relation: stock.quant.package
 # Nothing to do
 
-## PEDRO IS WORKING ON THIS
-stock        / stock.picking            / auto_picking (boolean)        : DEL
-stock        / stock.picking            / invoice_state (selection)     : module is now 'stock_account' ('stock')
-stock        / stock.picking            / invoice_state (selection)     : now a function
+
+######## STOCK PICKING ########
+
+stock        / stock.picking            / auto_picking (boolean)        : DEL 
 stock        / stock.picking            / location_dest_id (many2one)   : now a function
 stock        / stock.picking            / location_id (many2one)        : now a function
+# NOTHING TO DO now related fields to move_lines
+
 stock        / stock.picking            / message_last_post (datetime)  : NEW
+# DONE 
+ 
+stock        / stock.picking            / recompute_pack_op (boolean)   : NEW 
 stock        / stock.picking            / owner_id (many2one)           : NEW relation: res.partner
 stock        / stock.picking            / pack_operation_ids (one2many) : NEW relation: stock.pack.operation
-stock        / stock.picking            / picking_type_id (many2one)    : NEW relation: stock.picking.type, required: required
-stock        / stock.picking            / recompute_pack_op (boolean)   : NEW
+stock        / stock.picking            / stock_journal_id (many2one)   : DEL relation: stock.journal
+stock        / stock.picking            / invoice_state (selection)     : module is now 'stock_account' ('stock')
+stock        / stock.picking            / invoice_state (selection)     : now a function
+# NOTHING TO DO
+
 stock        / stock.picking            / state (selection)             : now a function
 stock        / stock.picking            / state (selection)             : selection_keys is now '['assigned', 'cancel', 'confirmed', 'done', 'draft', 'partially_available', 'waiting']' ('['assigned', 'auto', 'cancel', 'confirmed', 'done', 'draft']')
-stock        / stock.picking            / stock_journal_id (many2one)   : DEL relation: stock.journal
+# DONE
+
 stock        / stock.picking            / type (selection)              : DEL required: required, selection_keys: ['in', 'internal', 'out'], req_default: internal
-# TODO  1 migrate field type to picking_type_id to type
-		1 save deleted fields
-		1 selection fields
-		1 now a function fields
-		0 message_last_post
-
-#TIME ( 4 hours )
-
-stock        / stock.picking.type       / active (boolean)              : NEW
+stock        / stock.picking            / picking_type_id (many2one)    : NEW relation: stock.picking.type, required: required
+# DONE MIGRATED type to picking_type_id in the post-migration
+				
+########## TIME STOCK.PICKING ( 4 hours )
+		
+stock        / stock.picking.type       / active (boolean)              : NEW 
 stock        / stock.picking.type       / code (selection)              : NEW required: required, selection_keys: ['incoming', 'internal', 'outgoing']
-stock        / stock.picking.type       / color (integer)               : NEW
+stock        / stock.picking.type       / color (integer)               : NEW 
 stock        / stock.picking.type       / default_location_dest_id (many2one): NEW relation: stock.location
 stock        / stock.picking.type       / default_location_src_id (many2one): NEW relation: stock.location
 stock        / stock.picking.type       / name (char)                   : NEW required: required
 stock        / stock.picking.type       / return_picking_type_id (many2one): NEW relation: stock.picking.type
-stock        / stock.picking.type       / sequence (integer)            : NEW
+stock        / stock.picking.type       / sequence (integer)            : NEW 
 stock        / stock.picking.type       / sequence_id (many2one)        : NEW relation: ir.sequence, required: required
 stock        / stock.picking.type       / warehouse_id (many2one)       : NEW relation: stock.warehouse
-# TIME 2 hour check data update
-
+# DONE
+ 
+########## STOCK PRODUCTION LOT: KEVIN #############
 stock        / stock.production.lot     / company_id (many2one)         : DEL relation: res.company
-stock        / stock.production.lot     / create_date (datetime)        : NEW
+# NOTHING TO DO
+stock        / stock.production.lot     / create_date (datetime)        : NEW 
 stock        / stock.production.lot     / date (datetime)               : DEL required: required, req_default: function
-stock        / stock.production.lot     / message_ids (one2many)        : NEW relation: mail.message
+# DONE RENAMED
+# NOTHING TO DO
 stock        / stock.production.lot     / message_last_post (datetime)  : NEW
-stock        / stock.production.lot     / move_ids (one2many)           : DEL relation: stock.move
-stock        / stock.production.lot     / prefix (char)                 : DEL
+# DONE 
+stock        / stock.production.lot     / prefix (char)                 : DEL 
+# NOTHING TO DO
+ 
 stock        / stock.production.lot     / quant_ids (one2many)          : NEW relation: stock.quant
+stock        / stock.production.lot     / move_ids (one2many)           : DEL relation: stock.move
+# DONE
 stock        / stock.production.lot     / revisions (one2many)          : DEL relation: stock.production.lot.revision
-#TODO
-#	0.5 message_last_post
-#	2 hours analyse the rest
-# TIME 3 hours
+stock        / stock.production.lot     / message_ids (one2many)        : NEW relation: mail.message
+# DONE
+################ STOCK PRODUCTION LOT ###################
 
 
 stock        / stock.quant              / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
-stock        / stock.quant              / cost (float)                  : NEW
-stock        / stock.quant              / create_date (datetime)        : NEW
+stock        / stock.quant              / cost (float)                  : NEW 
+stock        / stock.quant              / create_date (datetime)        : NEW 
 stock        / stock.quant              / history_ids (many2many)       : NEW relation: stock.move
-stock        / stock.quant              / in_date (datetime)            : NEW
+stock        / stock.quant              / in_date (datetime)            : NEW 
 stock        / stock.quant              / location_id (many2one)        : NEW relation: stock.location, required: required
 stock        / stock.quant              / lot_id (many2one)             : NEW relation: stock.production.lot
 stock        / stock.quant              / negative_move_id (many2one)   : NEW relation: stock.move
@@ -365,60 +296,62 @@ stock        / stock.quant              / product_id (many2one)         : NEW re
 stock        / stock.quant              / propagated_from_id (many2one) : NEW relation: stock.quant
 stock        / stock.quant              / qty (float)                   : NEW required: required
 stock        / stock.quant              / reservation_id (many2one)     : NEW relation: stock.move
-# NOTHING TO DO: Complete new object
-# TIME 	Just a relation in stock.production.lot
-
-
-
+# DONE
+ 
 stock        / stock.quant.package      / children_ids (one2many)       : NEW relation: stock.quant.package
-stock        / stock.quant.package      / name (char)                   : NEW
+stock        / stock.quant.package      / name (char)                   : NEW 
 stock        / stock.quant.package      / packaging_id (many2one)       : NEW relation: product.packaging
 stock        / stock.quant.package      / parent_id (many2one)          : NEW relation: stock.quant.package
-stock        / stock.quant.package      / parent_left (integer)         : NEW
-stock        / stock.quant.package      / parent_right (integer)        : NEW
+stock        / stock.quant.package      / parent_left (integer)         : NEW 
+stock        / stock.quant.package      / parent_right (integer)        : NEW 
 stock        / stock.quant.package      / quant_ids (one2many)          : NEW relation: stock.quant
 stock        / stock.quant.package      / ul_id (many2one)              : NEW relation: product.ul
 # NOTHING TO DO: Complete new object
 
-## SKIP, PEGS is working on this
-stock        / stock.warehouse          / code (char)                   : NEW required: required
+########## STOCK.WAREHOUSE #########
 stock        / stock.warehouse          / crossdock_route_id (many2one) : NEW relation: stock.location.route
 stock        / stock.warehouse          / default_resupply_wh_id (many2one): NEW relation: stock.warehouse
 stock        / stock.warehouse          / delivery_route_id (many2one)  : NEW relation: stock.location.route
-stock        / stock.warehouse          / delivery_steps (selection)    : NEW required: required, selection_keys: ['pick_pack_ship', 'pick_ship', 'ship_only'], req_default: ship_only
+
 stock        / stock.warehouse          / in_type_id (many2one)         : NEW relation: stock.picking.type
 stock        / stock.warehouse          / int_type_id (many2one)        : NEW relation: stock.picking.type
-stock        / stock.warehouse          / lot_input_id (many2one)       : DEL relation: stock.location, required: required, req_default: function
-stock        / stock.warehouse          / lot_output_id (many2one)      : DEL relation: stock.location, required: required, req_default: function
-stock        / stock.warehouse          / mto_pull_id (many2one)        : NEW relation: procurement.rule
 stock        / stock.warehouse          / out_type_id (many2one)        : NEW relation: stock.picking.type
 stock        / stock.warehouse          / pack_type_id (many2one)       : NEW relation: stock.picking.type
 stock        / stock.warehouse          / pick_type_id (many2one)       : NEW relation: stock.picking.type
-stock        / stock.warehouse          / reception_route_id (many2one) : NEW relation: stock.location.route
 stock        / stock.warehouse          / reception_steps (selection)   : NEW required: required, selection_keys: ['one_step', 'three_steps', 'two_steps'], req_default: one_step
-stock        / stock.warehouse          / resupply_from_wh (boolean)    : NEW
+stock        / stock.warehouse          / delivery_steps (selection)    : NEW required: required, selection_keys: ['pick_pack_ship', 'pick_ship', 'ship_only'], req_default: ship_only
+# DONE set defaults values in post-script
+
+stock        / stock.warehouse          / reception_route_id (many2one) : NEW relation: stock.location.route
+stock        / stock.warehouse          / resupply_from_wh (boolean)    : NEW 
 stock        / stock.warehouse          / resupply_route_ids (one2many) : NEW relation: stock.location.route
 stock        / stock.warehouse          / resupply_wh_ids (many2many)   : NEW relation: stock.warehouse
 stock        / stock.warehouse          / route_ids (many2many)         : NEW relation: stock.location.route
+# NOTHING TO DO
+
+stock        / stock.warehouse          / code (char)                   : NEW required: required
+stock        / stock.warehouse          / mto_pull_id (many2one)        : NEW relation: procurement.rule
+# TO DO
+
 stock        / stock.warehouse          / view_location_id (many2one)   : NEW relation: stock.location, required: required
+# DONE  
+
+stock        / stock.warehouse          / lot_input_id (many2one)       : DEL relation: stock.location, required: required, req_default: function
+stock        / stock.warehouse          / lot_output_id (many2one)      : DEL relation: stock.location, required: required, req_default: function
 stock        / stock.warehouse          / wh_input_stock_loc_id (many2one): NEW relation: stock.location
 stock        / stock.warehouse          / wh_output_stock_loc_id (many2one): NEW relation: stock.location
+# DONE 
+
 stock        / stock.warehouse          / wh_pack_stock_loc_id (many2one): NEW relation: stock.location
 stock        / stock.warehouse          / wh_qc_stock_loc_id (many2one) : NEW relation: stock.location
+# DONE 
+
+###### STOCK WAREHOUSE ORDERPOINT
 
 stock        / stock.warehouse.orderpoint / group_id (many2one)           : NEW relation: procurement.group
-### TODO check me, looks completely new.
+# NOTHING TO DO
 stock        / stock.warehouse.orderpoint / procurement_ids (one2many)    : NEW relation: procurement.order
-### Module for stock.warehouse.orderpoint has changed from procurement to stock.
-### or OK ? store using rename_fields and call m2o_to_x2m?
-### 2 hr
-
-# TODO: 0.5 code field must be filled so create a function
-		0.5 delivered_steps must be filled
-		0.5 reception_steps must be filled
-		1 hour to research about the rest of new fields
-# TIME ( 3 hours )
-
+# DONE
 
 ---XML records in module 'stock'---
 
@@ -428,7 +361,7 @@ stock        / stock.warehouse.orderpoint / procurement_ids (one2many)    : NEW 
 
 DEL account.journal: stock.stock_journal
 DEL decimal.precision: stock.decimal_shipping_delay
-# Analyse more
+# NOTHING TO DO 
 
 NEW ir.actions.act_window: stock.act_make_procurement
 NEW ir.actions.act_window: stock.act_stock_warehouse_2_stock_warehouse_orderpoint
@@ -509,7 +442,7 @@ DEL ir.actions.report.xml: stock.report_picking_list_in
 DEL ir.actions.report.xml: stock.report_picking_list_out
 DEL ir.actions.report.xml: stock.report_stock_inventory_move
 DEL ir.actions.server: stock.action_partial_move_server
-# Ignored ir.actions.*
+# IGNORED ir.actions.*
 
 NEW ir.model.access: stock.access_procurement_rule
 NEW ir.model.access: stock.access_procurement_rule_internal
@@ -573,30 +506,27 @@ DEL ir.property: stock.property_stock_account_input_prd
 DEL ir.property: stock.property_stock_account_output_categ
 DEL ir.property: stock.property_stock_account_output_prd
 DEL ir.property: stock.property_stock_journal
-# XML_ID RENAME properties must be now in the stock_account module
-# TIME ( 2 hours )
+# NOTHING TO DO moved to stock_account
 
 NEW ir.rule: stock.product_pulled_flow_comp_rule
 NEW ir.rule: stock.stock_location_path_comp_rule
 NEW ir.rule: stock.stock_warehouse_orderpoint_rule
-NEW ir.sequence: stock.seq_quant_package
+# NOTHING TO DO
 
 NEW ir.sequence: stock.sequence_mrp_op
-# TODO Coming from procurement (rename_xmlid)
+NEW ir.sequence.type: stock.sequence_mrp_op_type
+# DONE Renamed from procurement
+
+NEW ir.sequence.type: stock.seq_type_quant_package
+NEW ir.sequence: stock.seq_quant_package
+# NOTHINIG TO DO
 
 DEL ir.sequence: stock.seq_picking_in
 DEL ir.sequence: stock.seq_picking_out
+# DONE Sequences were migrated
+ 
 DEL ir.sequence: stock.stock_journal_sequence
-NEW ir.sequence.type: stock.seq_type_quant_package
-
-NEW ir.sequence.type: stock.sequence_mrp_op_type
-# OK? TODOComing from procurement (rename_xmlid)
-
-# TODO No info about this in the documentation
-#	   Research about it
-#	   Sequences for pickings are now in picking.type.sequence
-#      Sequences in new objects should be ignored
-# TIME ( 1 hours )
+# NOTHING TO DO
 
 NEW ir.ui.menu: stock.menu_action_picking_type_form
 NEW ir.ui.menu: stock.menu_package
@@ -720,26 +650,26 @@ DEL ir.values: stock.ir_act_product_location_open
 DEL ir.values: stock.ir_open_partial_move_wizard
 NEW product.removal: stock.removal_fifo
 NEW product.removal: stock.removal_lifo
-# TODO Check the ir.values
-# TIME (1 hour)
+# NOTHING TO DO
+# TODO Check the ir.values 
+	
 
 NEW res.groups: stock.group_adv_location
 NEW res.groups: stock.group_tracking_owner
 DEL res.groups: stock.group_inventory_valuation
-# TODO Researching
-# TIME (1 hour)
+# NOTHING TO DO
 
 DEL res.partner: base.main_partner
-# Probably ignored as it is res.country and res.currency
+# NOTHING TO DO
 
 DEL stock.journal: stock.journal_delivery
+# NOTHING TO DO
 NEW stock.location: stock.stock_location_inter_wh
 DEL stock.location: stock.stock_location_company
 DEL stock.location: stock.stock_location_output
 DEL stock.location: stock.stock_location_stock
 NEW stock.location.route: stock.route_warehouse0_mto
-# TODO Researching
-# TIME 1 hour
+# DONE creation of the pull/push rules
 
 DEL workflow: stock.wkf_picking
 DEL workflow.activity: stock.act_assigned
@@ -762,4 +692,4 @@ DEL workflow.transition: stock.trans_draft_confirmed
 DEL workflow.transition: stock.trans_move_confirmed
 DEL workflow.transition: stock.trans_move_done
 # TODO Check if this is the case to openupgrade.delete_model_workflow(cr, model)
-# TIME ( 3 hours )
+# DONE deleted workflow
