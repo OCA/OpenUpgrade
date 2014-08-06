@@ -62,6 +62,10 @@ column_renames = {
                        ('chained_delay' , None),
                        ('chained_picking_type' , None),
                 ],
+                'stock_warehouse':[
+                    ('lot_input_id','wh_input_stock_loc_id'),
+                    ('lot_output_id','wh_output_stock_loc_id'),
+                ],
         }
 
 xmlid_renames = [
@@ -79,8 +83,6 @@ xmlid_renames = [
         'stock_account.property_stock_account_output_prd'),
         ('stock.property_stock_journal',
         'stock_account.property_stock_journal'),
-
-
     ]
 
 def save_rel_table(cr):
@@ -95,5 +97,4 @@ def save_rel_table(cr):
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
-    
     save_rel_table(cr)
