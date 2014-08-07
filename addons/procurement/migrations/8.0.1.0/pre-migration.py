@@ -22,35 +22,30 @@ from openerp.openupgrade import openupgrade
 
 column_renames = {
                   'procurement_order' : [
-                       ('note' , None),
-                       ('move_id' , None),
+                       ('note', None),
+                       ('move_id', None),
                        ('procure_method', None),
-                 ],
+                       ('purchase_id', None),
+                       ],
                   'product_template' : [
-                       ('supply_method' , None),
+                       ('supply_method', None),
                        ('procure_method', None),
-                 ],
+                       ],
                   'stock_warehouse_orderpoint' : [
-                       ('procurement_id' , None),
-                 ],
-            }
+                       ('procurement_id', None),
+                       ],
+}
 
 xmlid_renames = [
-    ('procurement.access_stock_warehouse_orderpoint',
-     'stock.access_stock_warehouse_orderpoint'),
-    ('procurement.access_stock_warehouse_orderpoint_system',
-     'stock.access_stock_warehouse_orderpoint_system'),
-    ('procurement.access_mrp_property',
-      'mrp.access_mrp_property'),
-    ('procurement.access_mrp_property_group',
-      'mrp.access_mrp_property_group'),
-    ('procurement.stock_warehouse_orderpoint_rule',
-     'stock.stock_warehouse_orderpoint_rule'),
+    ('procurement.access_stock_warehouse_orderpoint', 'stock.access_stock_warehouse_orderpoint'),
+    ('procurement.access_stock_warehouse_orderpoint_system', 'stock.access_stock_warehouse_orderpoint_system'),
+    ('procurement.access_mrp_property', 'mrp.access_mrp_property'),
+    ('procurement.access_mrp_property_group', 'mrp.access_mrp_property_group'),
+    ('procurement.stock_warehouse_orderpoint_rule', 'stock.stock_warehouse_orderpoint_rule'),
 ]
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
-    # The workflow must be deleted because set_last_post_message() calls the ORM write method.
     openupgrade.delete_model_workflow(cr, 'procurement.order')
