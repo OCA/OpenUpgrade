@@ -19,17 +19,18 @@
 ##############################################################################
 
 from openerp.openupgrade import openupgrade
+from openerp import pooler, SUPERUSER_ID
 
 column_renames = {
-                  'product_product' : [                                      
-                         ('track_incoming', None),
-                         ('track_outgoing', None),
-                         ('track_production', None),
-                         ('valuation', None)
-                         ],
+                  'product_product' : [
+                        ('track_incoming', None),
+                        ('track_outgoing', None),
+                        ('track_production', None),
+                        ('valuation', None)
+                        ],
                   'stock_inventory': [
-                         ('date_done', None),
-                         ],
+                        ('date_done', None),
+                        ],
                   'stock_inventory_line': [
                         ('product_uom', 'product_uom_id'),
                         ],
@@ -50,14 +51,14 @@ column_renames = {
                         ('type' , None),
                         ],
                   'stock_location' : [
-                       ('icon' , None),
-                       ('chained_journal_id', None),
-                       ('chained_location_id', None),
-                       ('chained_auto_packing', None),
-                       ('chained_company_id', None),
-                       ('chained_delay', None),
-                       ('chained_picking_type', None),
-                       ],
+                        ('icon' , None),
+                        ('chained_journal_id', None),
+                        ('chained_location_id', None),
+                        ('chained_auto_packing', None),
+                        ('chained_company_id', None),
+                        ('chained_delay', None),
+                        ('chained_picking_type', None),
+                        ],
                   'stock_warehouse' : [
                         ('lot_input_id', 'wh_input_stock_loc_id'),
                         ('lot_output_id', 'wh_output_stock_loc_id'),
@@ -77,9 +78,33 @@ def save_rel_table(cr):
     simr_legacy = openupgrade.get_legacy_name('stock_inventory_move_rel')
     openupgrade.logged_query(cr, """CREATE TABLE {} AS TABLE stock_inventory_move_rel""".format(simr_legacy))
 
+def initialize_location_inventory(cr):
+    '''
+    Stock Inventory is upgraded before Stock Warehouse. The default value of the field location_id is searched
+    in the stock_warehouse table, asking for columns that has not been created yet because of the browse object.
+    So the query fails.
+    
+    This function is a proposal to solve this problem. It creates and assigns this field like the ORM does before 
+    the regular upgrade mechanism of Odoo. 
+    :param cr: Database cursor
+    '''
+    
+    uid = SUPERUSER_ID
+    pool = pooler.get_pool(cr.dbname)
+    data_obj = pool.get('ir.model.data')
+    
+    cr.execute("""SELECT res_id FROM ir_model_data WHERE name = %s""",('stock_location_stock',))
+    default_location = cr.fetchone()
+    default_location = default_location and default_location[0] or False
+
+    cr.execute("""ALTER TABLE stock_inventory ADD COLUMN location_id
+                INTEGER NOT NULL DEFAULT %s""",(default_location,))
+    
+    cr.execute("""COMMENT ON COLUMN stock_inventory.location_id IS %s""",('Inventoried Location',))
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
+    initialize_location_inventory(cr)
     save_rel_table(cr)

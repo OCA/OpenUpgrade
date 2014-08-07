@@ -27,19 +27,19 @@ logger = logging.getLogger('OpenUpgrade')
 
 default_spec = {
                 'procurement.rule': [
-                     ('procure_method', 'make_to_stock'),
-                ],
+                    ('procure_method', 'make_to_stock'),
+                    ],
                 'product.putaway': [
-                     ('method', 'fixed'),
-                ],
+                    ('method', 'fixed'),
+                    ],
                 'stock.inventory': [
-                     ('filter', 'none'),
-                     ('location_id', False),
-                ],
+                    ('filter', 'none'),
+                    ('location_id', False),
+                    ],
                 'stock.move': [
-                               ('procure_method', 'make_to_stock',),
-                ],
-}
+                    ('procure_method', 'make_to_stock',),
+                    ],
+                }
 
 def default_stock_location(cr, pool, uid):
     try:
@@ -86,7 +86,6 @@ def swap_procurement_move_rel(cr, pool):
     stock_move_obj = pool['stock.move']
 
     move_legacy = openupgrade.get_legacy_name('move_id')
-    print "!!!! move_legacy exists: ", openupgrade.column_exists(cr, 'procurement_order', move_legacy)
     sql = """SELECT id, {} FROM {}
         """.format(move_legacy, 'procurement_order')
     cr.execute(sql)
@@ -209,7 +208,7 @@ def _migrate_stock_warehouse(cr,id):
                     'name': warehouse.code,
                     'usage': 'view',
                     'location_id': data_obj.get_object_reference(cr, uid, 'stock', 'stock_location_locations')[1]
-                }, context=context)
+                })
         vals['view_location_id'] = wh_loc_id
     else:
         vals['view_location_id'] = warehouse.lot_stock_id.location_id.id
