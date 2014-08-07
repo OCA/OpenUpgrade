@@ -19,8 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.openupgrade import openupgrade
-from openerp import pooler
+from openerp.openupgrade import openupgrade, openupgrade_80
+from openerp import pooler, SUPERUSER_ID
 
 
 def move_fields(cr, pool):
@@ -40,3 +40,14 @@ def move_fields(cr, pool):
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     move_fields(cr, pool)
+    openupgrade.move_field_m2o(
+        cr, pool,
+        'mail.mail', 'reply_to', 'mail_message_id',
+        'mail.message', 'reply_to')
+    openupgrade.move_field_m2o(
+        cr, pool,
+        'mail.mail', 'mail_server_id', 'mail_message_id',
+        'mail.message', 'mail_server_id')
+    openupgrade_80.set_message_last_post(
+        cr, SUPERUSER_ID, pool, ['res.partner', 'mail.group']
+    )
