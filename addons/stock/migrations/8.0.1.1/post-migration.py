@@ -69,6 +69,10 @@ def migrate_product(cr, pool):
     track_production_name = openupgrade.get_legacy_name('track_production')
     valuation_name = openupgrade.get_legacy_name('valuation')
 
+    # valuation field cannot be null, so set default to 'manual_periodic'
+    sql = """UPDATE product_product SET %(f)s = 'manual_periodic' WHERE %(f)s is NULL""" % ({'f' : valuation_name})
+    cr.execute(sql)
+
     sql = """SELECT product_tmpl_id, {}, {}, {}, {} FROM product_product
         """.format(track_incoming_name, track_outgoing_name, track_production_name, valuation_name)
     cr.execute(sql)
