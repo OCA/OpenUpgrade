@@ -25,7 +25,6 @@ column_renames = {
         ('note', None),
         ('move_id', None),
         ('procure_method', None),
-        ('purchase_id', None),
     ],
     'product_template': [
         ('supply_method', None),
@@ -46,6 +45,8 @@ xmlid_renames = [
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    if openupgrade.column_exists(cr, 'procurement_order', 'purchase_id'):
+        column_renames['procurement_order'].append(('purchase_id', None))
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
     openupgrade.delete_model_workflow(cr, 'procurement.order')
