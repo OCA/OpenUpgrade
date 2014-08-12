@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2014 Onestein 
+#    Copyright 2014 ONESTEiN B.V.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,19 +21,19 @@
 from openerp.openupgrade import openupgrade
 
 column_renames = {
-                  'procurement_order' : [
-                       ('note', None),
-                       ('move_id', None),
-                       ('procure_method', None),
-                       ('purchase_id', None),
-                       ],
-                  'product_template' : [
-                       ('supply_method', None),
-                       ('procure_method', None),
-                       ],
-                  'stock_warehouse_orderpoint' : [
-                       ('procurement_id', None),
-                       ],
+    'procurement_order': [
+        ('note', None),
+        ('move_id', None),
+        ('procure_method', None),
+        ('purchase_id', None),
+    ],
+    'product_template': [
+        ('supply_method', None),
+        ('procure_method', None),
+    ],
+    'stock_warehouse_orderpoint': [
+        ('procurement_id', None),
+    ],
 }
 
 xmlid_renames = [

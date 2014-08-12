@@ -65,7 +65,8 @@ column_renames = {
     ],
 }
 
-xmlid_renames = [('procurement.sequence_mrp_op_type', 'stock.sequence_mrp_op_type'),
+xmlid_renames = [
+    ('procurement.sequence_mrp_op_type', 'stock.sequence_mrp_op_type'),
     ('procurement.sequence_mrp_op', 'stock.sequence_mrp_op'),
     ('stock.property_stock_account_input_categ', 'stock_account.property_stock_account_input_categ'),
     ('stock.property_stock_account_input_prd', 'stock_account.property_stock_account_input_prd'),
@@ -95,9 +96,7 @@ def initialize_location_inventory(cr):
     default_location = cr.fetchone()
     default_location = default_location and default_location[0] or False
 
-    cr.execute("""ALTER TABLE stock_inventory ADD COLUMN location_id
-                INTEGER NOT NULL DEFAULT %s""", (default_location,))
-
+    cr.execute("""ALTER TABLE stock_inventory ADD COLUMN location_id INTEGER NOT NULL DEFAULT %s""", (default_location,))
     cr.execute("""COMMENT ON COLUMN stock_inventory.location_id IS %s""", ('Inventoried Location',))
 
 @openupgrade.migrate()

@@ -57,8 +57,7 @@ def default_stock_location(cr, pool, uid):
 
 def migrate_product(cr, pool):
     """Migrate the following:
-    track_incoming, track_outgoing, track_production -> track_all,
-    valuation
+    track_incoming, track_outgoing, track_production -> track_all, valuation
     """
     prod_tmpl_obj = pool['product.template']
     track_incoming_name = openupgrade.get_legacy_name('track_incoming')
@@ -66,7 +65,7 @@ def migrate_product(cr, pool):
     track_production_name = openupgrade.get_legacy_name('track_production')
     valuation_name = openupgrade.get_legacy_name('valuation')
 
-    # valuation field cannot be null, so set default to 'manual_periodic'
+    # Valuation field cannot be null, so set default to 'manual_periodic'.
     sql = """UPDATE product_product SET %(f)s = 'manual_periodic' WHERE %(f)s is NULL""" % ({'f' : valuation_name})
     cr.execute(sql)
 
@@ -79,8 +78,7 @@ def migrate_product(cr, pool):
 
 def swap_procurement_move_rel(cr, pool):
     """Procurement_order.move_id is swapped to stock_move.procurement_id.
-    So instead of a m2o from procurement_order, it is a m2o from
-    stock_move in version 8.
+    So instead of a m2o from procurement_order, it is a m2o from stock_move in version 8.
     """
     uid = SUPERUSER_ID
     stock_move_obj = pool['stock.move']
@@ -169,7 +167,7 @@ def migrate_stock_picking(cr):
         cr.execute("""UPDATE stock_picking SET picking_type_id = %%s WHERE %s = %%s""" %type_legacy, (type_id, type,))
 
     # state key auto -> waiting
-    cr.execute("""UPDATE stock_picking SET state = %s WHERE state = %s""",('waiting','auto',))
+    cr.execute("""UPDATE stock_picking SET state = %s WHERE state = %s""", ('waiting', 'auto',))
 
 def _migrate_stock_warehouse(cr, id):
     """Warehouse adaptation to the new functionality. Sequences, Picking types, Rules, Paths..
@@ -180,7 +178,7 @@ def _migrate_stock_warehouse(cr, id):
     vals = {}
 
     #Required field: Code
-    cr.execute("""UPDATE stock_warehouse SET code = %s where id = %s""",('WH'+str(id), id,))
+    cr.execute("""UPDATE stock_warehouse SET code = %s where id = %s""", ('WH'+str(id), id,))
     cr.commit()
 
     data_obj = pool['ir.model.data']
@@ -302,16 +300,16 @@ def _migrate_stock_warehouse(cr, id):
     vals['pick_type_id'] = pick_type_id
     vals['int_type_id'] = int_type_id,
 
-    #write picking types on WH
+    # Write picking types on WH.
     warehouse_obj.write(cr, uid, [warehouse.id], vals=vals)
     warehouse.refresh()
 
-    #update ir_model_data references to the main warehouse
+    # Update ir_model_data references to the main warehouse.
     if warehouse.code == 'WH1' and in_type_id and out_type_id and int_type_id:
         for name, res_id in (('picking_type_in', in_type_id), ('picking_type_out', out_type_id), ('picking_type_internal', int_type_id)):
             cr.execute("""UPDATE ir_model_data set res_id = %s where name = %s""", (res_id, name,))
 
-    #create routes and push/pull rules
+    # Create routes and push/pull rules.
     new_objects_dict = warehouse_obj.create_routes(cr, uid, warehouse.id, warehouse)
     warehouse_obj.write(cr, uid, warehouse.id, new_objects_dict)
 
@@ -348,7 +346,7 @@ def migrate_product_supply_method(cr):
     procure_method_legacy = openupgrade.get_legacy_name('procure_method')
     if mto_route_id:
         product_ids = []
-        cr.execute("SELECT id FROM product_template WHERE %s = %%s" %procure_method_legacy,('make_to_order',))
+        cr.execute("SELECT id FROM product_template WHERE %s = %%s" %procure_method_legacy, ('make_to_order',))
         for res in cr.fetchall():
             product_ids.append(res[0])
 
@@ -398,7 +396,7 @@ def migrate_procurement_order(cr):
     pool = pooler.get_pool(cr.dbname)
 
     swap_procurement_move_rel(cr, pool)
-    #Move Reservation to move_ids
+    # Move Reservation to move_ids.
     registry = RegistryManager.get(cr.dbname)
     openupgrade.m2o_to_x2m(
         cr, registry['procurement.order'],
@@ -407,7 +405,7 @@ def migrate_procurement_order(cr):
 
     migrate_procurement_order_method(cr)
 
-    #Warehouse, partner from the move
+    # Warehouse, partner from the move.
     cr.execute("""UPDATE procurement_order AS po
         SET warehouse_id = sm.warehouse_id,
         partner_dest_id = sm.partner_id
@@ -460,7 +458,7 @@ def migrate_stock_production_lot(cr):
         if user.email:
             lot_obj.message_post(cr, author, lot, body=description)
 
-    # Move:prodlot_id -> Quants lot_id
+    # Move: prodlot_id -> Quants lot_id.
     field_name = openupgrade.get_legacy_name('prodlot_id')
     cr.execute("""select id, %s from stock_move where %s is not null""" %(field_name, field_name))
     move_ids = {}
