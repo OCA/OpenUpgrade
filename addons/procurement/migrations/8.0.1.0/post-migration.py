@@ -21,6 +21,7 @@
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp import pooler, SUPERUSER_ID
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)

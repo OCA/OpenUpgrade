@@ -19,7 +19,6 @@
 ##############################################################################
 
 from openerp.openupgrade import openupgrade
-from openerp import pooler, SUPERUSER_ID
 
 column_renames = {
     'product_product': [
@@ -48,10 +47,10 @@ column_renames = {
         ('prefix', None)
     ],
     'stock_picking': [
-        ('type' , None),
+        ('type', None),
     ],
     'stock_location': [
-        ('icon' , None),
+        ('icon', None),
         ('chained_journal_id', None),
         ('chained_location_id', None),
         ('chained_auto_packing', None),
@@ -75,9 +74,11 @@ xmlid_renames = [
     ('stock.property_stock_journal', 'stock_account.property_stock_journal'),
 ]
 
+
 def save_rel_table(cr):
     simr_legacy = openupgrade.get_legacy_name('stock_inventory_move_rel')
     openupgrade.logged_query(cr, """CREATE TABLE {} AS TABLE stock_inventory_move_rel""".format(simr_legacy))
+
 
 def initialize_location_inventory(cr):
     """Stock Inventory is upgraded before Stock Warehouse. The default value of the field location_id is searched
@@ -88,16 +89,15 @@ def initialize_location_inventory(cr):
     the regular upgrade mechanism of Odoo.
     :param cr: Database cursor
     """
-    uid = SUPERUSER_ID
-    pool = pooler.get_pool(cr.dbname)
-    data_obj = pool.get('ir.model.data')
 
     cr.execute("""SELECT res_id FROM ir_model_data WHERE name = %s""", ('stock_location_stock',))
     default_location = cr.fetchone()
     default_location = default_location and default_location[0] or False
 
-    cr.execute("""ALTER TABLE stock_inventory ADD COLUMN location_id INTEGER NOT NULL DEFAULT %s""", (default_location,))
+    cr.execute("""ALTER TABLE stock_inventory ADD COLUMN location_id INTEGER NOT NULL DEFAULT %s""",
+               (default_location,))
     cr.execute("""COMMENT ON COLUMN stock_inventory.location_id IS %s""", ('Inventoried Location',))
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

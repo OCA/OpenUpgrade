@@ -43,6 +43,7 @@ xmlid_renames = [
     ('procurement.stock_warehouse_orderpoint_rule', 'stock.stock_warehouse_orderpoint_rule'),
 ]
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     if openupgrade.column_exists(cr, 'procurement_order', 'purchase_id'):
