@@ -42,10 +42,11 @@ column_renames = {
         ('length', None),
         ('weight_ul', None),
         ('width', None),
-    ]
+    ],
 }
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
+
