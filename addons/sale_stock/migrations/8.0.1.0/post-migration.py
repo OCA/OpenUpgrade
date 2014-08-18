@@ -28,6 +28,7 @@ possible_dataloss_fields = [
     {'table': 'sale_order_line_property_rel', 'field': 'property_id', 'new_module': 'sale_mrp'}
 ]
 
+
 def migrate_warehouse_id(cr, pool, uid):
     # Get the sale_order id, warehouse_id.
     so_obj = pool['sale.order']
@@ -38,7 +39,8 @@ def migrate_warehouse_id(cr, pool, uid):
     for row in cr.dictfetchall():
         so_ids.append(row['id'])
     for so_id in so_ids:
-        sql = """SELECT warehouse_id FROM sale_shop WHERE id = (SELECT shop_id FROM sale_order WHERE id = {})""".format(so_id)
+        sql = """SELECT warehouse_id FROM sale_shop
+            WHERE id = (SELECT shop_id FROM sale_order WHERE id = {})""".format(so_id)
         cr.execute(sql)
         for row in cr.dictfetchall():
             so_obj.write(cr, uid, so_id, {'warehouse_id': row['warehouse_id']})
@@ -55,6 +57,6 @@ def migrate(cr, version):
     openupgrade.warn_possible_dataloss(cr, pool, 'sale_stock', possible_dataloss_fields)
 
     openupgrade.m2o_to_x2m(
-        cr, registry['sale.order.line'], 'sale_order_line', 'procurement_ids', openupgrade.get_legacy_name('procurement_id')
+        cr, registry['sale.order.line'], 'sale_order_line', 'procurement_ids',
+        openupgrade.get_legacy_name('procurement_id')
     )
-    

@@ -22,8 +22,8 @@
 
 from itertools import groupby
 
-from openerp import pooler, SUPERUSER_ID
-from openerp.openupgrade import openupgrade, openupgrade_80
+# from openerp import pooler, SUPERUSER_ID
+from openerp.openupgrade import openupgrade
 
 
 def update_link_to_moves(cr):
@@ -47,8 +47,7 @@ def update_link_to_moves(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    pool = pooler.get_pool(cr.dbname)
-    uid = SUPERUSER_ID
-#     openupgrade_80.set_message_last_post(cr, SUPERUSER_ID, pool, ['account.bank.statement', 'account.invoice'])
+    #    pool = pooler.get_pool(cr.dbname)
+    #    uid = SUPERUSER_ID
+    #     openupgrade_80.set_message_last_post(cr, SUPERUSER_ID, pool, ['account.bank.statement', 'account.invoice'])
     update_link_to_moves(cr)
-

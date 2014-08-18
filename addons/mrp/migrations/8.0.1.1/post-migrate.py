@@ -29,6 +29,7 @@ column_renames = {
     ]
 }
 
+
 def move_fields(cr, pool):
     execute = openupgrade.logged_query
     queries = [
@@ -73,10 +74,10 @@ def migrate_bom_line_property_rel(cr, uid, row, fields, new_line_id, bom_line_ob
 
     # fill new bom to property m2m table
     for values in bom_property_rel:
-        bom_line_obj.write(cr, uid, values['bom_id'],{'property_id': [(4, values['property_id'])]})
+        bom_line_obj.write(cr, uid, values['bom_id'], {'property_id': [(4, values['property_id'])]})
 
 
-## TODO check if mrp_bom property_ids needs migration
+# TODO check if mrp_bom property_ids needs migration
 def migrate_bom_property_rel(cr, pool, uid):
     """Copy mrp_bom_property_rel to mrp_bom_mrp_property_rel
     """
@@ -88,9 +89,9 @@ def migrate_bom_property_rel(cr, pool, uid):
 def migrate_bom_lines(cr, pool, uid):
     bom_line_obj = pool['mrp.bom.line']
     fields = {
-        'bom_id' : openupgrade.get_legacy_name('bom_id'),
-        'product_uos' : openupgrade.get_legacy_name('product_uos'),
-        'product_uos_qty' : openupgrade.get_legacy_name('product_uos_qty'),
+        'bom_id': openupgrade.get_legacy_name('bom_id'),
+        'product_uos': openupgrade.get_legacy_name('product_uos'),
+        'product_uos_qty': openupgrade.get_legacy_name('product_uos_qty'),
     }
     sql = \
         """
@@ -103,7 +104,7 @@ def migrate_bom_lines(cr, pool, uid):
     cr.execute(sql)
     ids = []
     for row in cr.dictfetchall():
-        new_line_id = bom_line_obj.create(cr, SUPERUSER_ID, {
+        bom_line_obj.create(cr, SUPERUSER_ID, {
             'bom_id': row[fields['bom_id']],
             'product_efficiency': row['product_efficiency'],
             'product_id': row['product_id'],
@@ -125,10 +126,12 @@ def migrate_bom_lines(cr, pool, uid):
     # Remove unneeded items
     cr.execute("DELETE FROM mrp_bom WHERE id in (%s)" % ','.join(ids))
 
+
 def fix_domains(cr, pool, uid):
     sql = """UPDATE ir_act_window SET domain = NULL WHERE domain = '[(''bom_id'',''='',False)]' AND context = '{}'"""
     cr.execute(sql)
     cr.commit()
+
 
 def update_stock_moves(cr, pool, uid):
     stock_move_obj = pool['stock.move']
@@ -139,10 +142,11 @@ def update_stock_moves(cr, pool, uid):
     for sm in stock_move_obj.browse(cr, uid, sm_ids):
         if 'MO' in sm.name and sm.location_dest_id.id == location_id[0]:
             prod_id = mrp_production_obj.search(cr, uid, [('name', '=', sm.name)])
-            sql = """UPDATE stock_move SET raw_material_production_id = %s WHERE id = % s""" % (prod_id[0],sm.id)
+            sql = """UPDATE stock_move SET raw_material_production_id = %s WHERE id = % s""" % (prod_id[0], sm.id)
             cr.execute(sql)
             cr.commit()
 #             sm.write(cr, uid, {'raw_material_production_id': prod_id[0]})
+
 
 def update_stock_picking_name(cr, pool, uid):
     picking_obj = pool['stock.picking']
@@ -153,15 +157,17 @@ def update_stock_picking_name(cr, pool, uid):
                 origin = sp.origin.split(":")[1]
             else:
                 origin = sp.origin
-            sql = """UPDATE stock_picking SET name = '%s' WHERE id = %s""" % (origin,sp.id)
+            sql = """UPDATE stock_picking SET name = '%s' WHERE id = %s""" % (origin, sp.id)
             picking_exists = picking_obj.search(cr, uid, [('name', '=', origin)])
             if not picking_exists:
                 cr.execute(sql)
             else:
-                sql = """UPDATE stock_picking SET name = '%s' WHERE id = %s""" % (origin+str(datetime.now().time()),sp.id)
+                sql = """UPDATE stock_picking SET name = '%s' WHERE id = %s""" % (
+                    origin + str(datetime.now().time()), sp.id
+                )
                 cr.execute(sql)
-                
-                
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
