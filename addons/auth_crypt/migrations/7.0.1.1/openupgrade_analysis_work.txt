@@ -1,0 +1,6 @@
+---Fields in module 'auth_crypt'---
+# hashed password is now stored in a separate column. Assume that all
+# passwords are hashed after installation of base_crypt in 6.1, so
+# rename the column
+auth_crypt   / res.users                / password_crypt (char)         : NEW 
+---XML records in module 'auth_crypt'---
