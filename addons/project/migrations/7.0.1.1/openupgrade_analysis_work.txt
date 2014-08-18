@@ -7,7 +7,7 @@ project      / project.task             / categ_ids (many2many)         : NEW re
 ### -> New complete model for categorizing tasks. It can be none category. (Nothing to do)
 
 project      / project.project          / state (selection)             : NEW required: required, selection_keys: ['cancelled', 'close', 'draft', 'open', 'pending', 'template'], req_default: open
-### -> This state field has been moved from analytic account to the project. Done.
+### -> This state field has been decoupled from the one on analytic account, but with the same selection -> copy its values
 
 project      / project.task             / stage_id (many2one)           : NEW relation: project.task.type
 project      / project.task             / type_id (many2one)            : DEL relation: project.task.type
