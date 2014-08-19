@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle
-#    Copyright 2014 Camptocamp SA
+#    Copyright (C) 2014 Akretion (http://www.akretion.com/)
+#    @author: Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,30 +22,31 @@
 from openerp.openupgrade import openupgrade
 
 column_renames = {
-    # Using magic None value to trigger call to get_legacy_name()
-    'product_supplierinfo': [
-        ('product_id', None),
-    ],
-    'product_product': [
-        ('color', None),
-        ('image', 'image_variant'),
-        ('variants', None),
-        ('price_extra', None),
-    ],
-    'product_template': [
-        ('produce_delay', None),  # need to handle in mrp migration
-        ('cost_method', None),  # need to handle in stock_account migration
-        ('standard_price', None),
-    ],
-    'product_packaging': [
-        ('height', None),
-        ('length', None),
-        ('weight_ul', None),
-        ('width', None),
-    ],
+    'account_bank_statement_line': [
+        ('account_id', None),
+        ('analytic_account_id', None),
+        ('type', None),
+    ]
 }
+
+tables_renames = [
+    (
+        'account_bank_statement_line_move_rel',
+        'bak_account_bank_statement_line_move_rel'
+    ),
+]
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    if not version:
+        return
+
+    cr.execute(
+        """SELECT id FROM account_analytic_journal WHERE type='purchase' """)
+    res = cr.fetchone()
+    if res:
+        openupgrade.add_xmlid(
+            cr, 'account', 'exp', 'account.analytic.journal', res[0], True)
     openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_tables(cr, tables_renames)

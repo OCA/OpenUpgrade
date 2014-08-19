@@ -43,7 +43,15 @@ def check_ir_actions_server_state(cr, pool):
                 ias.state, ias.id))
 
 
+def check_commercial_partner(cr, pool):
+    """ Test if the column is present (iow: if there exists a partner with a parent"""
+    if not openupgrade.column_exists(cr, "res_partner", "commercial_partner_id"):
+        sql = """ALTER TABLE res_partner ADD COLUMN commercial_partner_id int"""
+        cr.execute(sql)
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     check_ir_actions_server_state(cr, pool)
+    check_commercial_partner(cr, pool)
