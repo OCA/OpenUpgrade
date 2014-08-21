@@ -152,6 +152,8 @@ def rename_models(cr, model_spec):
                    'WHERE model = %s', (new, old,))
         cr.execute('UPDATE ir_model_fields SET relation = %s '
                    'WHERE relation = %s', (new, old,))
+        cr.execute('UPDATE ir_model_data SET model = %s '
+                   'WHERE model = %s', (new, old,))
     # TODO: signal where the model occurs in references to ir_model
 
 def rename_xmlids(cr, xmlids_spec):
