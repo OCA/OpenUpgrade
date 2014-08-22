@@ -168,6 +168,29 @@ def update_stock_picking_name(cr, pool, uid):
                 cr.execute(sql)
 
 
+def migrate_product_supply_method(cr, pool, uid):
+    '''
+    Procurements of products: change the supply_method for the matching route
+    produce -> Manufacture Rule
+    :param cr: Database cursor
+    '''
+    pool = pooler.get_pool(cr.dbname)
+    route_obj = pool['stock.location.route']
+    template_obj = pool['product.template']
+
+    mto_route_id = route_obj.search(cr, uid, [('name', 'like', 'Manufacture')])
+    mto_route_id = mto_route_id and mto_route_id[0] or False
+
+    supply_method_legacy = openupgrade.get_legacy_name('supply_method')
+    if mto_route_id:
+        product_ids = []
+        cr.execute("SELECT id FROM product_template WHERE %s = %%s" % supply_method_legacy, ('produce',))
+        for res in cr.fetchall():
+            product_ids.append(res[0])
+
+        template_obj.write(cr, uid, product_ids, {'route_ids': [(4, mto_route_id)]})
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
@@ -178,4 +201,5 @@ def migrate(cr, version):
     fix_domains(cr, pool, uid)
     update_stock_moves(cr, pool, uid)
     update_stock_picking_name(cr, pool, uid)
+    migrate_product_supply_method(cr, pool, uid)
     openupgrade.rename_columns(cr, column_renames)
