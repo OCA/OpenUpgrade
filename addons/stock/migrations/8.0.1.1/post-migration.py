@@ -329,17 +329,13 @@ def _migrate_stock_warehouse(cr, id):
     # Write picking types on WH.
     warehouse_obj.write(cr, uid, [warehouse.id], vals=vals)
     warehouse.refresh()
-
-    # Update ir_model_data references to the main warehouse.
-    if warehouse.code == 'WH1' and in_type_id and out_type_id and int_type_id:
-        for name, res_id in (
-            ('picking_type_in', in_type_id),
-            ('picking_type_out', out_type_id),
-            ('picking_type_internal', int_type_id)
-        ):
-            cr.execute("""UPDATE ir_model_data set res_id = %s where name = %s""", (res_id, name,))
-
-    # Create routes and push/pull rules.
+    
+    # update ir_model_data references to the main warehouse
+    # Reference used in the code for some default values
+    if warehouse.code == 'WH1' and in_type_id:
+        cr.execute("""UPDATE ir_model_data set noupdate = %s, res_id = %s where name = %s""",(True, in_type_id,'picking_type_in',))
+    
+    # create routes and push/pull rules
     new_objects_dict = warehouse_obj.create_routes(cr, uid, warehouse.id, warehouse)
     warehouse_obj.write(cr, uid, warehouse.id, new_objects_dict)
 
