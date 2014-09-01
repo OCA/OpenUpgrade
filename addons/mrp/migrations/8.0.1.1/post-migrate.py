@@ -128,7 +128,8 @@ def migrate_bom_lines(cr, pool, uid):
 
 
 def fix_domains(cr, pool, uid):
-    sql = """UPDATE ir_act_window SET domain = NULL WHERE domain = '[(''bom_id'',''='',False)]' AND res_model = 'mrp.bom'"""
+    sql = """UPDATE ir_act_window SET domain = NULL WHERE domain =
+'[(''bom_id'',''='',False)]' AND res_model = 'mrp.bom'"""
     cr.execute(sql)
     cr.commit()
 
