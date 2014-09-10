@@ -24,6 +24,17 @@
 
 from openupgrade import openupgrade
 
+obsolete_modules = (
+    'base_tools',
+    'base_contact',
+    'web_process',
+    'web_mobile',
+    'web_dashboard',
+    'fetchmail_crm_claim',
+    'fetchmail_crm',
+    'fetchmail_hr_recruitment',
+)
+ 
 module_namespec = [
     # This is a list of tuples (old module name, new module name)
     ('account_coda', 'l10n_be_coda'),
@@ -203,11 +214,7 @@ def create_users_partner(cr):
                 "VALUES(%s, 'res.partner', 'base', 'partner_root', TRUE) ",
                 (partner_id,))
 
-def remove_obsolete_modules(cr):
-    obsolete_modules = (
-        'base_tools',
-        'base_contact',
-        )
+def remove_obsolete_modules(cr, obsolete_modules):
     cr.execute(
         """
         UPDATE ir_module_module
@@ -229,4 +236,4 @@ def migrate(cr, version):
     openupgrade.rename_models(cr, model_renames)
     migrate_ir_attachment(cr)
     create_users_partner(cr)
-    remove_obsolete_modules(cr)
+    remove_obsolete_modules(cr, obsolete_modules)
