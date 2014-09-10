@@ -1,0 +1,23 @@
+---Fields in module 'sale_crm'---
+
+# Convert from m2o to m2m
+sale_crm     / sale.order               / categ_id (many2one)           : DEL relation: crm.case.categ
+sale_crm     / sale.order               / categ_ids (many2many)         : NEW relation: crm.case.categ
+
+sale_crm     / account.invoice          / section_id (many2one)         : NEW relation: crm.case.section
+sale_crm     / account.invoice.report   / section_id (many2one)         : NEW relation: crm.case.section
+sale_crm     / res.users                / default_section_id (many2one) : NEW relation: crm.case.section
+
+
+---XML records in module 'sale_crm'---
+DEL ir.ui.menu: base.menu_base_partner
+NEW ir.ui.view: sale_crm.account_invoice_form
+NEW ir.ui.view: sale_crm.account_invoice_groupby_inherit
+NEW ir.ui.view: sale_crm.account_invoice_report_tree
+NEW ir.ui.view: sale_crm.account_invoice_tree
+NEW ir.ui.view: sale_crm.res_user_form
+NEW ir.ui.view: sale_crm.view_users_form_preferences
+DEL ir.ui.view: sale_crm.board_crm_form_inherit_replace1
+DEL ir.ui.view: sale_crm.board_crm_form_inherit_replace3
+NEW mail.message.subtype: sale_crm.mt_salesteam_order_confirmed
+NEW mail.message.subtype: sale_crm.mt_salesteam_order_sent
