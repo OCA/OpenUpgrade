@@ -1,0 +1,14 @@
+---Fields in module 'mrp_byproduct'---
+# The DEL/NEW XMLIDs are caused by the name change of the module from
+# mrp_subproduct (6.1) to mrp_byproduct (7.0)
+# This change is declared in the base module and is fully handled by
+# the OpenUpgrade framework
+# So there is nothing to do !
+---XML records in module 'mrp_byproduct'---
+NEW ir.model.access: mrp_byproduct.access_mrp_subproduct_all
+NEW ir.model.access: mrp_byproduct.access_mrp_subproduct_manager
+NEW ir.model.access: mrp_byproduct.access_mrp_subproduct_user
+DEL ir.model.access: mrp_subproduct.access_mrp_subproduct_manager
+DEL ir.model.access: mrp_subproduct.access_mrp_subproduct_user
+NEW ir.ui.view: mrp_byproduct.mrp_subproduct_view
+DEL ir.ui.view: mrp_subproduct.mrp_subproduct_view
