@@ -25,6 +25,18 @@ from openerp import pooler, SUPERUSER_ID
 from openerp.openupgrade.openupgrade import logged_query
 
 
+def rename_model_wiki_groups(cr):
+    openupgrade.logged_query(cr, """\
+UPDATE ir_model_fields SET relation = 'document.page'
+WHERE relation = 'wiki.groups'""")
+    openupgrade.logged_query(cr, """\
+UPDATE ir_model_data SET model = 'document.page'
+WHERE model = 'wiki.groups'""")
+    openupgrade.logged_query(cr, """\
+DELETE FROM ir_model
+WHERE model = 'wiki.groups'""")
+
+
 def combine_wiki_groups_document_page(cr):
     """Put wiki_groups content into wiki_wiki, then delete wiki_groups, conserve parent_id"""
     logged_query(cr, """ALTER TABLE document_page ADD COLUMN old_id integer;""")
@@ -38,7 +50,13 @@ UPDATE document_page w
 SET parent_id = (SELECT id FROM document_page WHERE old_id = w.group_id LIMIT 1)
 WHERE group_id IS NOT null;\
 """)
+    logged_query(cr, """\
+UPDATE ir_model_data d
+SET res_id = (SELECT id FROM document_page WHERE old_id = d.res_id LIMIT 1)
+WHERE res_id IS NOT null and model = 'wiki.groups';\
+""")
     openupgrade.drop_columns(cr, [('document_page', 'group_id'), ('document_page', 'old_id')])
+    rename_model_wiki_groups(cr)
 
 
 def migrate_wiki_to_html(cr, pool):
