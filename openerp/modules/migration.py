@@ -171,17 +171,16 @@ class MigrationManager(object):
                     name, ext = os.path.splitext(os.path.basename(pyfile))
                     if ext.lower() != '.py':
                         continue
-                    mod = fp = fp2 = None
+                    # OpenUpgrade edit start:
+                    # Removed a copy of migration script to temp directory
+                    # Replaced call to load_source with load_module so frame isn't lost and breakpoints can be set
+                    mod = fp = None
                     try:
-                        fp = tools.file_open(pyfile)
-
-                        # imp.load_source need a real file object, so we create
-                        # one from the file-like object we get from file_open
-                        fp2 = os.tmpfile()
-                        fp2.write(fp.read())
-                        fp2.seek(0)
+                        fp, pathname = tools.file_open(pyfile, pathinfo=True)
                         try:
-                            mod = imp.load_source(name, pyfile, fp2)
+                            mod = imp.load_module(name, fp, pathname, ('.py', 'r', imp.PY_SOURCE))
+                            _logger.info('module %(addon)s: Running migration %(version)s %(name)s',
+                                         mergedict({'name': mod.__name__}, strfmt))
                         except ImportError:
                             _logger.error('module %(addon)s: Unable to load %(stage)s-migration file %(file)s' % mergedict({'file': pyfile}, strfmt))
                             raise
@@ -195,10 +194,9 @@ class MigrationManager(object):
                     finally:
                         if fp:
                             fp.close()
-                        if fp2:
-                            fp2.close()
                         if mod:
                             del mod
+                    # OpenUpgrade edit end
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
