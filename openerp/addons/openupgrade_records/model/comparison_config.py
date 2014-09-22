@@ -24,6 +24,8 @@
 ##############################################################################
 
 import openerplib
+import logging
+
 try:
     from openerp.osv.orm import Model, except_orm
     from openerp.osv import fields
@@ -101,6 +103,29 @@ class openupgrade_comparison_config(Model):
             'res_id': wizard_id,
             'nodestroy': True,
             }
+        return result
+
+    def install_modules(self, cr, uid, ids, context=None):
+        """
+        Install same modules as in source DB
+        """
+        connection = self.get_connection(cr, uid, [ids[0]], context)
+        module_r_obj = connection.get_model("ir.module.module")
+        r_ids = module_r_obj.search([("state", "=", "installed")])
+        modules = []
+        for id in r_ids:
+            mod = module_r_obj.read(id, ["name"])
+            modules.append(mod['name'])
+        _logger = logging.getLogger(__name__)
+        _logger.debug('FGF remote modules %s', modules)
+        module_l_obj = self.pool.get('ir.module.module')
+        l_ids = module_l_obj.search(cr, uid, [('name', 'in', modules),
+                                              ('state', '=', 'uninstalled')])
+        _logger.debug('FGF local modules %s', l_ids)
+        if l_ids:
+            module_l_obj.write(cr, uid, l_ids, {'state': 'to install'})
+
+        result = {}
         return result
 
 openupgrade_comparison_config()
