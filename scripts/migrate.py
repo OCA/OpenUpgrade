@@ -21,8 +21,8 @@ def copy_database(conn_parms):
     print('copying database %(db_old)s to %(db_new)s...' % {'db_old': db_old,
                                                             'db_new': db_new})
     if conn_parms['host'] == 'False':
-         del conn_parms['host'] 
-         del conn_parms['port'] 
+        del conn_parms['host'] 
+        del conn_parms['port'] 
     conn = psycopg2.connect(**conn_parms)
     conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
     cur = conn.cursor()
