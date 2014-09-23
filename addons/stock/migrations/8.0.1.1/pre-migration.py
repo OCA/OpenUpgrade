@@ -62,6 +62,9 @@ column_renames = {
         ('lot_input_id', 'wh_input_stock_loc_id'),
         ('lot_output_id', 'wh_output_stock_loc_id'),
     ],
+    'stock_warehouse_orderpoint': [
+        ('product_uom', None),
+    ],
 }
 
 xmlid_renames = [
