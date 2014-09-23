@@ -39,11 +39,11 @@ class crm_helpdesk_report(osv.osv):
     _auto = False
 
     _columns = {
-        'name': fields.char('Year', size=64, required=False, readonly=True),
+        'name': fields.char('Year', required=False, readonly=True),
         'user_id':fields.many2one('res.users', 'User', readonly=True),
         'section_id':fields.many2one('crm.case.section', 'Section', readonly=True),
         'nbr': fields.integer('# of Cases', readonly=True),
-        'state': fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
+        'state': fields.selection(AVAILABLE_STATES, 'Status', readonly=True),
         'month':fields.selection([('01', 'January'), ('02', 'February'), \
                                   ('03', 'March'), ('04', 'April'),\
                                   ('05', 'May'), ('06', 'June'), \
@@ -56,7 +56,7 @@ class crm_helpdesk_report(osv.osv):
         'date_deadline': fields.date('Deadline', select=True),
         'priority': fields.selection([('5', 'Lowest'), ('4', 'Low'), \
                     ('3', 'Normal'), ('2', 'High'), ('1', 'Highest')], 'Priority'),
-        'channel_id': fields.many2one('crm.case.channel', 'Channel'),
+        'channel_id': fields.many2one('crm.tracking.medium', 'Channel'),
         'categ_id': fields.many2one('crm.case.categ', 'Category', \
                             domain="[('section_id','=',section_id),\
                             ('object_id.model', '=', 'crm.helpdesk')]"),
