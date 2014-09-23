@@ -3,9 +3,6 @@
 account      / account.bank.statement   / message_last_post (datetime)  : NEW 
 # Field initialized
 
-account      / account.bank.statement.line / account_id (many2one)         : DEL relation: account.account, required: required
-# Kept as a legacy column
-
 account      / account.bank.statement.line / amount_currency (float)       : NEW 
 # Nothing to do : optional field in the case the bank statement is in another currency
 
