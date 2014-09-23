@@ -27,6 +27,11 @@ import openerplib
 import logging
 
 try:
+    from openerp.addons.openupgrade_records.lib import apriori
+except ImportError:
+    from openupgrade_records.lib import apriori
+
+try:
     from openerp.osv.orm import Model, except_orm
     from openerp.osv import fields
     from openerp.tools.translate import _
@@ -113,15 +118,19 @@ class openupgrade_comparison_config(Model):
         module_r_obj = connection.get_model("ir.module.module")
         r_ids = module_r_obj.search([("state", "=", "installed")])
         modules = []
+
         for id in r_ids:
             mod = module_r_obj.read(id, ["name"])
-            modules.append(mod['name'])
+            mod_name = mod['name']
+            if apriori.renamed_modules.get(mod_name):
+                mod_name = apriori.renamed_modules[mod_name]
+            modules.append(mod_name)
         _logger = logging.getLogger(__name__)
-        _logger.debug('FGF remote modules %s', modules)
+        _logger.debug('remote modules %s', modules)
         module_l_obj = self.pool.get('ir.module.module')
         l_ids = module_l_obj.search(cr, uid, [('name', 'in', modules),
                                               ('state', '=', 'uninstalled')])
-        _logger.debug('FGF local modules %s', l_ids)
+        _logger.debug('local modules %s', l_ids)
         if l_ids:
             module_l_obj.write(cr, uid, l_ids, {'state': 'to install'})
 
