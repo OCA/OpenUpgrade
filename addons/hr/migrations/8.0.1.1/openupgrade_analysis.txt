@@ -7,7 +7,6 @@ hr           / hr.job                   / message_last_post (datetime)  : NEW
 hr           / hr.job                   / no_of_employee (float)        : type is now 'integer' ('float')
 hr           / hr.job                   / no_of_hired_employee (integer): NEW 
 hr           / hr.job                   / no_of_recruitment (float)     : type is now 'integer' ('float')
-hr           / hr.job                   / write_date (datetime)         : NEW 
 hr           / res.users                / display_employees_suggestions (boolean): NEW 
 ---XML records in module 'hr'---
 DEL ir.actions.act_window: hr.open_board_hr

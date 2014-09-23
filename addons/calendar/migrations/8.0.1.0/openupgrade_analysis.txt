@@ -33,7 +33,6 @@ base_calendar / calendar.event           / alarm_id (many2one)           : DEL r
 base_calendar / calendar.event           / attendee_ids (many2many)      : type is now 'one2many' ('many2many')
 base_calendar / calendar.event           / base_calendar_alarm_id (many2one): DEL relation: calendar.alarm
 base_calendar / calendar.event           / base_calendar_url (char)      : DEL 
-base_calendar / calendar.event           / create_date (datetime)        : DEL 
 base_calendar / calendar.event           / date (datetime)               : DEL required: required
 base_calendar / calendar.event           / date_deadline (datetime)      : DEL required: required
 base_calendar / calendar.event           / end_date (date)               : DEL 

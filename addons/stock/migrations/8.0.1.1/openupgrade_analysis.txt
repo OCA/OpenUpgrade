@@ -165,7 +165,6 @@ stock        / stock.picking.type       / sequence (integer)            : NEW
 stock        / stock.picking.type       / sequence_id (many2one)        : NEW relation: ir.sequence, required: required
 stock        / stock.picking.type       / warehouse_id (many2one)       : NEW relation: stock.warehouse
 stock        / stock.production.lot     / company_id (many2one)         : DEL relation: res.company
-stock        / stock.production.lot     / create_date (datetime)        : NEW 
 stock        / stock.production.lot     / date (datetime)               : DEL required: required, req_default: function
 stock        / stock.production.lot     / message_ids (one2many)        : NEW relation: mail.message
 stock        / stock.production.lot     / message_last_post (datetime)  : NEW 
@@ -175,7 +174,6 @@ stock        / stock.production.lot     / quant_ids (one2many)          : NEW re
 stock        / stock.production.lot     / revisions (one2many)          : DEL relation: stock.production.lot.revision
 stock        / stock.quant              / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
 stock        / stock.quant              / cost (float)                  : NEW 
-stock        / stock.quant              / create_date (datetime)        : NEW 
 stock        / stock.quant              / history_ids (many2many)       : NEW relation: stock.move
 stock        / stock.quant              / in_date (datetime)            : NEW 
 stock        / stock.quant              / location_id (many2one)        : NEW relation: stock.location, required: required

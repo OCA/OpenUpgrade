@@ -14,8 +14,6 @@ website_forum / forum.post               / closed_date (datetime)        : NEW
 website_forum / forum.post               / closed_reason_id (many2one)   : NEW relation: forum.post.reason
 website_forum / forum.post               / closed_uid (many2one)         : NEW relation: res.users
 website_forum / forum.post               / content (html)                : NEW 
-website_forum / forum.post               / create_date (datetime)        : NEW 
-website_forum / forum.post               / create_uid (many2one)         : NEW relation: res.users
 website_forum / forum.post               / favourite_ids (many2many)     : NEW relation: res.users
 website_forum / forum.post               / forum_id (many2one)           : NEW relation: forum.forum, required: required
 website_forum / forum.post               / is_correct (boolean)          : NEW 
@@ -31,14 +29,10 @@ website_forum / forum.post               / website_message_ids (one2many): NEW r
 website_forum / forum.post               / website_meta_description (text): NEW 
 website_forum / forum.post               / website_meta_keywords (char)  : NEW 
 website_forum / forum.post               / website_meta_title (char)     : NEW 
-website_forum / forum.post               / write_date (datetime)         : NEW 
-website_forum / forum.post               / write_uid (many2one)          : NEW relation: res.users
 website_forum / forum.post.reason        / name (char)                   : NEW required: required
-website_forum / forum.post.vote          / create_date (datetime)        : NEW 
 website_forum / forum.post.vote          / post_id (many2one)            : NEW relation: forum.post, required: required
 website_forum / forum.post.vote          / user_id (many2one)            : NEW relation: res.users, required: required, req_default: function
 website_forum / forum.post.vote          / vote (selection)              : NEW required: required, selection_keys: ['-1', '0', '1'], req_default: function
-website_forum / forum.tag                / create_uid (many2one)         : NEW relation: res.users
 website_forum / forum.tag                / forum_id (many2one)           : NEW relation: forum.forum, required: required
 website_forum / forum.tag                / name (char)                   : NEW required: required
 website_forum / forum.tag                / post_ids (many2many)          : NEW relation: forum.post
@@ -47,7 +41,6 @@ website_forum / forum.tag                / website_meta_keywords (char)  : NEW
 website_forum / forum.tag                / website_meta_title (char)     : NEW 
 website_forum / gamification.badge       / level (selection)             : NEW selection_keys: ['bronze', 'gold', 'silver']
 website_forum / res.users                / badge_ids (one2many)          : NEW relation: gamification.badge.user
-website_forum / res.users                / create_date (datetime)        : NEW 
 website_forum / res.users                / karma (integer)               : NEW 
 ---XML records in module 'website_forum'---
 NEW forum.forum: website_forum.forum_help

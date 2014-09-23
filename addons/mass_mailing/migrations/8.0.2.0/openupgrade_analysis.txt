@@ -16,7 +16,6 @@ mass_mailing / mail.mass_mailing        / attachment_ids (many2many)    : NEW re
 mass_mailing / mail.mass_mailing        / body_html (html)              : NEW 
 mass_mailing / mail.mass_mailing        / contact_ab_pc (integer)       : NEW 
 mass_mailing / mail.mass_mailing        / contact_list_ids (many2many)  : NEW relation: mail.mass_mailing.list
-mass_mailing / mail.mass_mailing        / create_date (datetime)        : NEW 
 mass_mailing / mail.mass_mailing        / email_from (char)             : NEW required: required, req_default: function
 mass_mailing / mail.mass_mailing        / mailing_domain (char)         : NEW 
 mass_mailing / mail.mass_mailing        / mailing_model (selection)     : NEW required: required, selection_keys: function, req_default: mail.mass_mailing.contact
@@ -35,7 +34,6 @@ mass_mailing / mail.mass_mailing.campaign / stage_id (many2one)           : NEW 
 mass_mailing / mail.mass_mailing.campaign / unique_ab_testing (boolean)   : NEW 
 mass_mailing / mail.mass_mailing.campaign / user_id (many2one)            : NEW relation: res.users, required: required, req_default: function
 mass_mailing / mail.mass_mailing.category / name (char)                   : NEW required: required
-mass_mailing / mail.mass_mailing.contact / create_date (datetime)        : NEW 
 mass_mailing / mail.mass_mailing.contact / email (char)                  : NEW required: required
 mass_mailing / mail.mass_mailing.contact / list_id (many2one)            : NEW relation: mail.mass_mailing.list, required: required, req_default: function
 mass_mailing / mail.mass_mailing.contact / name (char)                   : NEW 

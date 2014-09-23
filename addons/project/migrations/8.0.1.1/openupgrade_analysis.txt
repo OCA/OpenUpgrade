@@ -5,7 +5,6 @@ project      / project.project          / task_ids (one2many)           : NEW re
 project      / project.task             / date_last_stage_update (datetime): NEW 
 project      / project.task             / message_last_post (datetime)  : NEW 
 project      / project.task             / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['0', '1', '2', '3', '4']')
-project      / project.task             / write_date (datetime)         : NEW 
 project      / project.task.history     / state (selection)             : DEL selection_keys: ['cancelled', 'done', 'draft', 'open', 'pending']
 project      / project.task.type        / state (selection)             : DEL required: required, selection_keys: ['cancelled', 'done', 'draft', 'open', 'pending'], req_default: open
 ---XML records in module 'project'---
