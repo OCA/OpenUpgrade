@@ -62,6 +62,14 @@ instance.web_kanban.KanbanView = instance.web.View.extend({
     },
     load_kanban: function(data) {
         this.fields_view = data;
+
+        // use default order if defined in xml description
+        var default_order = this.fields_view.arch.attrs.default_order,
+            unsorted = !this.dataset._sort.length;
+        if (unsorted && default_order) {
+            this.dataset.set_sort(default_order.split(','));
+        }
+
         this.$el.addClass(this.fields_view.arch.attrs['class']);
         this.$buttons = $(QWeb.render("KanbanView.buttons", {'widget': this}));
         if (this.options.$buttons) {
@@ -279,8 +287,10 @@ instance.web_kanban.KanbanView = instance.web.View.extend({
                         self.nb_records += records.length;
                         self.dataset.ids.push.apply(self.dataset.ids, dataset.ids);
                         groups_array[index] = new instance.web_kanban.KanbanGroup(self, records, group, dataset);
-                        if (!remaining--) {
+                        if (self.dataset.index >= records.length){
                             self.dataset.index = self.dataset.size() ? 0 : null;
+                        }
+                        if (!remaining--) {
                             return self.do_add_groups(groups_array);
                         }
                 });
@@ -300,6 +310,11 @@ instance.web_kanban.KanbanView = instance.web.View.extend({
             self.do_clear_groups();
             self.dataset.read_slice(self.fields_keys.concat(['__last_update']), { 'limit': self.limit }).done(function(records) {
                 var kgroup = new instance.web_kanban.KanbanGroup(self, records, null, self.dataset);
+                if (!_.isEmpty(self.dataset.ids) && (self.dataset.index === null || self.dataset.index >= self.dataset.ids.length)) {
+                    self.dataset.index = 0;
+                } else if (_.isEmpty(self.dataset.ids)){
+                    self.dataset.index = null;
+                }
                 self.do_add_groups([kgroup]).done(function() {
                     if (_.isEmpty(records)) {
                         self.no_result();
@@ -348,10 +363,14 @@ instance.web_kanban.KanbanView = instance.web.View.extend({
     },
     on_groups_started: function() {
         var self = this;
-        if (this.group_by) {
+        if (this.group_by || this.fields_keys.indexOf("sequence") !== -1) {
             // Kanban cards drag'n'drop
-            var prev_widget, is_folded, record;
-            var $columns = this.$el.find('.oe_kanban_column .oe_kanban_column_cards, .oe_kanban_column .oe_kanban_folded_column_cards');
+            var prev_widget, is_folded, record, $columns;
+            if (this.group_by) {
+                $columns = this.$el.find('.oe_kanban_column .oe_kanban_column_cards, .oe_kanban_column .oe_kanban_folded_column_cards');
+            } else {
+                $columns = this.$el.find('.oe_kanban_column_cards');
+            }
             $columns.sortable({
                 handle : '.oe_kanban_draghandle',
                 start: function(event, ui) {
@@ -417,8 +436,8 @@ instance.web_kanban.KanbanView = instance.web.View.extend({
                     stop: function(event, ui) {
                         var stop_index = ui.item.index();
                         if (start_index !== stop_index) {
-                            var $start_column = $('.oe_kanban_groups_records .oe_kanban_column').eq(start_index);
-                            var $stop_column = $('.oe_kanban_groups_records .oe_kanban_column').eq(stop_index);
+                            var $start_column = self.$('.oe_kanban_groups_records .oe_kanban_column').eq(start_index);
+                            var $stop_column = self.$('.oe_kanban_groups_records .oe_kanban_column').eq(stop_index);
                             var method = (start_index > stop_index) ? 'insertBefore' : 'insertAfter';
                             $start_column[method]($stop_column);
                             var tmp_group = self.groups.splice(start_index, 1)[0];
@@ -779,9 +798,9 @@ instance.web_kanban.KanbanGroup = instance.web.Widget.extend({
         });
         var am = instance.webclient.action_manager;
         var form = am.dialog_widget.views.form.controller;
-        form.on("on_button_cancel", am.dialog, am.dialog.close);
+        form.on("on_button_cancel", am.dialog, function() { return am.dialog.$dialog_box.modal('hide'); });
         form.on('record_saved', self, function() {
-            am.dialog.close();
+            am.dialog.$dialog_box.modal('hide');
             self.view.do_reload();
         });
     },
@@ -926,10 +945,6 @@ instance.web_kanban.KanbanRecord = instance.web.Widget.extend({
         var self = this;
         this.setup_color_picker();
         this.$el.find('[title]').each(function(){
-            //in case of kanban, attach tooltip to the element itself
-            //otherwise it might stay on screen when kanban view reload
-            //since default container is body.
-            //(when clicking on ready for next stage for example)
             $(this).tooltip({
                 delay: { show: 500, hide: 0},
                 container: $(this),
@@ -1144,7 +1159,7 @@ instance.web_kanban.KanbanRecord = instance.web.Widget.extend({
  */
 instance.web_kanban.QuickCreate = instance.web.Widget.extend({
     template: 'KanbanView.quick_create',
-    
+
     /**
      * close_btn: If true, the widget will display a "Close" button able to trigger
      * a "close" event.
@@ -1287,7 +1302,7 @@ instance.web_kanban.Priority = instance.web_kanban.AbstractField.extend({
         this.record_id = self.parent.id;
         this.priorities = self.prepare_priority();
         this.$el = $(QWeb.render("Priority", {'widget': this}));
-        this.$el.find('.oe_legend').click(self.do_action.bind(self));
+        this.$el.find('li').click(self.do_action.bind(self));
     },
     do_action: function(e) {
         var self = this;
@@ -1329,7 +1344,7 @@ instance.web_kanban.KanbanSelection = instance.web_kanban.AbstractField.extend({
         this.record_id = self.parent.id;
         this.states = self.prepare_dropdown_selection();;
         this.$el = $(QWeb.render("KanbanSelection", {'widget': self}));
-        this.$el.find('.oe_legend').click(self.do_action.bind(self));
+        this.$el.find('li').click(self.do_action.bind(self));
     },
     do_action: function(e) {
         var self = this;

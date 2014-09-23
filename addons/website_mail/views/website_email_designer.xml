@@ -5,9 +5,6 @@
 <!-- Template Choice page -->
 <template id="email_designer" name="Email Designer">
     <t t-call="website.layout">
-        <t t-set="head">
-            <script type="text/javascript" src="/website_mail/static/src/js/website_email_designer.js"></script>
-        </t>
         <div id="wrap" class="container" t-ignore="True">
             <div id="email_template" class="mb32" t-att-style="mode != 'email_template' and 'display: none' or ''">
                 <a class="mt16 btn btn-default pull-right" 
@@ -64,11 +61,11 @@
                 </div>
                 <hr/>
                 <!-- body fields -->
-                <div t-if="body_field == 'body_html'">
-                    <div t-field="record.body_html" id="email_body_html"/>
+                <div t-if="body_field == 'body_html'" class="col-sm-offset-2">
+                    <div t-field="record.body_html" id="email_body_html" class="o_mail_body"/>
                 </div>
-                <div t-if="body_field == 'body'">
-                    <div t-field="record.body" id="email_body"/>
+                <div t-if="body_field == 'body'" class="col-sm-offset-2">
+                    <div t-field="record.body" id="email_body" class="o_mail_body"/>
                 </div>
             </div>
         </div>
