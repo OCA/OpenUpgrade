@@ -16,8 +16,6 @@ gamification / gamification.badge       / rule_max_number (integer)     : NEW
 gamification / gamification.badge.user  / badge_id (many2one)           : NEW relation: gamification.badge, required: required
 gamification / gamification.badge.user  / challenge_id (many2one)       : NEW relation: gamification.challenge
 gamification / gamification.badge.user  / comment (text)                : NEW 
-gamification / gamification.badge.user  / create_date (datetime)        : NEW 
-gamification / gamification.badge.user  / create_uid (many2one)         : NEW relation: res.users
 gamification / gamification.badge.user  / sender_id (many2one)          : NEW relation: res.users
 gamification / gamification.badge.user  / user_id (many2one)            : NEW relation: res.users, required: required
 gamification / gamification.challenge   / category (selection)          : NEW required: required, selection_keys: function, req_default: hr

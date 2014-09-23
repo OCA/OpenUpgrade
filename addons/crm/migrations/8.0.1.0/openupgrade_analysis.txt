@@ -28,8 +28,6 @@ crm          / crm.lead                 / priority (selection)          : select
 crm          / crm.phonecall            / message_last_post (datetime)  : NEW 
 crm          / crm.phonecall            / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['1', '2', '3', '4', '5']')
 crm          / crm.phonecall            / state (selection)             : selection_keys is now '['cancel', 'done', 'open', 'pending']' ('['cancel', 'done', 'draft', 'open', 'pending']')
-crm          / res.partner              / create_date (datetime)        : NEW 
-crm          / res.partner              / id (integer)                  : NEW 
 crm          / res.partner              / meeting_ids (many2many)       : relation is now 'calendar.event' ('crm.meeting')
 crm          / res.partner              / section_id (many2one)         : module is now 'sales_team' ('crm')
 ---XML records in module 'crm'---

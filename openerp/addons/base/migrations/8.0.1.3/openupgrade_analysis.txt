@@ -29,8 +29,6 @@ base         / ir.actions.server        / use_relational_model (selection): NEW 
 base         / ir.actions.server        / use_write (selection)         : NEW required: required, selection_keys: ['current', 'expression', 'other'], req_default: current
 base         / ir.actions.server        / wkf_transition_id (many2one)  : NEW relation: workflow.transition
 base         / ir.actions.server        / write_id (char)               : was renamed to write_expression [nothing to to]
-base         / ir.logging               / create_date (datetime)        : NEW 
-base         / ir.logging               / create_uid (integer)          : NEW 
 base         / ir.logging               / dbname (char)                 : NEW 
 base         / ir.logging               / func (char)                   : NEW required: required
 base         / ir.logging               / level (char)                  : NEW 
@@ -44,13 +42,11 @@ base         / ir.property              / res_id (reference)            : type i
 base         / ir.property              / type (selection)              : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'many2one', 'selection', 'text']' ('['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'many2one', 'text']')
 base         / ir.property              / value_reference (reference)   : type is now 'char' ('reference')
 base         / ir.ui.view               / application (selection)       : NEW required: required, selection_keys: ['always', 'disabled', 'enabled'], req_default: always
-base         / ir.ui.view               / create_date (datetime)        : NEW 
 base         / ir.ui.view               / inherit_children_ids (one2many): NEW relation: ir.ui.view
 base         / ir.ui.view               / mode (selection)              : NEW required: required, selection_keys: ['extension', 'primary'], req_default: primary
 base         / ir.ui.view               / model_ids (one2many)          : NEW relation: ir.model.data
 base         / ir.ui.view               / type (selection)              : not a function anymore
 base         / ir.ui.view               / type (selection)              : selection_keys is now '['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'qweb', 'search', 'tree']' ('['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'mdx', 'search', 'tree']')
-base         / ir.ui.view               / write_date (datetime)         : NEW 
 base         / res.company              / font (many2one)               : NEW relation: res.font
 base         / res.company              / paper_format (selection)      : was renamed to rml_paper_format [nothing to to]
 base         / res.country              / image (binary)                : NEW 
