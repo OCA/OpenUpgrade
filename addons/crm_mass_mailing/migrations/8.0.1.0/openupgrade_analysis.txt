@@ -1,0 +1,6 @@
+---Fields in module 'crm_mass_mailing'---
+crm_mass_mailing / mail.mass_mailing        / campaign_id (many2one)        : NEW relation: crm.tracking.campaign
+crm_mass_mailing / mail.mass_mailing        / medium_id (many2one)          : NEW relation: crm.tracking.medium
+crm_mass_mailing / mail.mass_mailing        / source_id (many2one)          : NEW relation: crm.tracking.source
+---XML records in module 'crm_mass_mailing'---
+NEW ir.ui.view: crm_mass_mailing.view_tracking_mass_mailing_form

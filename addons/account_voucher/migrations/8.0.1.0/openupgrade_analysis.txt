@@ -4,8 +4,11 @@ account_voucher / account.voucher          / active (boolean)              : DEL
 account_voucher / account.voucher          / currency_id (many2one)        : now required, default = function
 account_voucher / account.voucher          / message_last_post (datetime)  : NEW 
 account_voucher / account.voucher          / website_message_ids (one2many): NEW relation: mail.message
+account_voucher / res.company              / expense_currency_exchange_account_id (many2one): module is now 'account' ('account_voucher')
+account_voucher / res.company              / income_currency_exchange_account_id (many2one): module is now 'account' ('account_voucher')
 ---XML records in module 'account_voucher'---
 DEL ir.actions.act_window: account_voucher.action_view_account_statement_from_invoice_lines
+DEL ir.ui.view: account_voucher.view_account_settings_currency_xchange_form
 DEL ir.ui.view: account_voucher.view_account_statement_from_invoice_lines
 DEL ir.ui.view: account_voucher.view_bank_statement_form_invoice
 DEL ir.ui.view: account_voucher.view_bank_statement_form_voucher

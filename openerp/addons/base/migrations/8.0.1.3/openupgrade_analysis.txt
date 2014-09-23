@@ -29,6 +29,8 @@ base         / ir.actions.server        / use_relational_model (selection): NEW 
 base         / ir.actions.server        / use_write (selection)         : NEW required: required, selection_keys: ['current', 'expression', 'other'], req_default: current
 base         / ir.actions.server        / wkf_transition_id (many2one)  : NEW relation: workflow.transition
 base         / ir.actions.server        / write_id (char)               : was renamed to write_expression [nothing to to]
+base         / ir.config_parameter      / group_ids (many2many)         : NEW relation: res.groups
+base         / ir.filters               / action_id (many2one)          : NEW relation: ir.actions.actions
 base         / ir.logging               / dbname (char)                 : NEW 
 base         / ir.logging               / func (char)                   : NEW required: required
 base         / ir.logging               / level (char)                  : NEW 
@@ -37,11 +39,13 @@ base         / ir.logging               / message (text)                : NEW re
 base         / ir.logging               / name (char)                   : NEW required: required
 base         / ir.logging               / path (char)                   : NEW required: required
 base         / ir.logging               / type (selection)              : NEW required: required, selection_keys: ['client', 'server']
+base         / ir.model.fields          / on_delete (selection)         : selection_keys is now '['cascade', 'restrict', 'set null']' ('['cascade', 'set null']')
 base         / ir.model.fields          / view_load (boolean)           : DEL 
 base         / ir.property              / res_id (reference)            : type is now 'char' ('reference')
 base         / ir.property              / type (selection)              : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'many2one', 'selection', 'text']' ('['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'integer', 'many2one', 'text']')
 base         / ir.property              / value_reference (reference)   : type is now 'char' ('reference')
-base         / ir.ui.view               / application (selection)       : NEW required: required, selection_keys: ['always', 'disabled', 'enabled'], req_default: always
+base         / ir.rule                  / domain (text)                 : type is now 'binary' ('text')
+base         / ir.ui.view               / active (boolean)              : NEW 
 base         / ir.ui.view               / inherit_children_ids (one2many): NEW relation: ir.ui.view
 base         / ir.ui.view               / mode (selection)              : NEW required: required, selection_keys: ['extension', 'primary'], req_default: primary
 base         / ir.ui.view               / model_ids (one2many)          : NEW relation: ir.model.data
@@ -50,22 +54,33 @@ base         / ir.ui.view               / type (selection)              : select
 base         / res.company              / font (many2one)               : NEW relation: res.font
 base         / res.company              / paper_format (selection)      : was renamed to rml_paper_format [nothing to to]
 base         / res.country              / image (binary)                : NEW 
+base         / res.country.group        / country_ids (many2many)       : NEW relation: res.country
+base         / res.country.group        / name (char)                   : NEW required: required
+base         / res.currency             / date (date)                   : DEL 
+base         / res.currency.rate        / currency_rate_type_id (many2one): DEL relation: res.currency.rate.type
 base         / res.currency.rate        / name (date)                   : type is now 'datetime' ('date')
 base         / res.font                 / family (char)                 : NEW required: required
 base         / res.font                 / mode (char)                   : NEW required: required
 base         / res.font                 / name (char)                   : NEW required: required
 base         / res.font                 / path (char)                   : NEW required: required
 base         / res.users                / menu_id (many2one)            : DEL relation: ir.actions.actions
+base         / res.users                / signature (text)              : type is now 'html' ('text')
 base         / workflow.instance        / transition_ids (many2many)    : NEW relation: workflow.transition
 base         / workflow.instance        / uid (integer)                 : NEW 
+base         / workflow.transition      / sequence (integer)            : NEW 
 ---XML records in module 'base'---
+NEW ir.actions.act_window: base.action_country_group
 NEW ir.actions.act_window: base.ir_logging_all_act
+DEL ir.actions.act_window: base.action_currency_rate_type_form
 DEL ir.actions.act_window: base.action_menu_admin
 DEL ir.actions.act_window: base.action_view_base_module_import
 DEL ir.actions.act_window: base.ir_action_wizard
+NEW ir.model.access: base.access_ir_config_parameter_system
 NEW ir.model.access: base.access_ir_logging
 NEW ir.model.access: base.access_ir_mail_server
 NEW ir.model.access: base.access_ir_model_data_user
+NEW ir.model.access: base.access_res_country_group_group_all
+NEW ir.model.access: base.access_res_country_group_group_user
 NEW ir.model.access: base.access_res_font_all
 NEW ir.model.access: base.access_res_font_group_user
 NEW ir.model.access: base.access_res_partner_portal
@@ -76,14 +91,19 @@ DEL ir.model.access: base.access_ir_filter employee
 DEL ir.model.access: base.access_ir_filters
 DEL ir.model.access: base.access_ir_mail_server_all
 DEL ir.model.access: base.access_ir_ui_view_sc_group_user
+DEL ir.model.access: base.access_res_currency_rate_type_group_all
 DEL ir.model.access: base.access_res_request_group_user
 DEL ir.model.access: base.access_res_request_group_user_all
 DEL ir.model.access: base.access_res_request_history_group_user
 DEL ir.model.access: base.access_res_request_history_group_user_all
 NEW ir.module.category: base.module_category_website
+NEW ir.rule: base.ir_config_parameter_rule
 NEW ir.rule: base.res_currency_rule
 NEW ir.rule: base.res_partner_portal_public_rule
 NEW ir.ui.menu: base.ir_logging_all_menu
+NEW ir.ui.menu: base.menu_automation
+NEW ir.ui.menu: base.menu_country_group
+DEL ir.ui.menu: base.menu_custom_multicompany
 DEL ir.ui.menu: base.menu_ir_action_wizard
 DEL ir.ui.menu: base.menu_ir_actions_todo
 DEL ir.ui.menu: base.menu_ir_cron
@@ -92,6 +112,8 @@ NEW ir.ui.view: base.contact
 NEW ir.ui.view: base.ir_logging_form_view
 NEW ir.ui.view: base.ir_logging_search_view
 NEW ir.ui.view: base.ir_logging_tree_view
+NEW ir.ui.view: base.view_country_group_form
+NEW ir.ui.view: base.view_country_group_tree
 DEL ir.ui.view: base.act_wizard_search_view
 DEL ir.ui.view: base.act_wizard_view
 DEL ir.ui.view: base.act_wizard_view_tree
@@ -99,9 +121,18 @@ DEL ir.ui.view: base.shortcut_form
 DEL ir.ui.view: base.shortcut_tree
 DEL ir.ui.view: base.view_base_module_import
 DEL ir.ui.view: base.view_config_wizard_form
+DEL ir.ui.view: base.view_currency_rate_type_form
+DEL ir.ui.view: base.view_currency_rate_type_search
 DEL ir.ui.view_sc: base.ir_ui_view_sc_partner0
+NEW res.country.group: base.europe
+NEW res.currency: base.GTQ
 DEL res.currency: base.EEK
+DEL res.currency: base.ROL
+DEL res.currency: base.UYP
+NEW res.currency.rate: base.rateGTQ
 DEL res.currency.rate: base.rateEEK
+DEL res.currency.rate: base.rateROL
+DEL res.currency.rate: base.rateUYP
 NEW res.font: base.font_courier
 NEW res.font: base.font_helvetica
 NEW res.font: base.font_times

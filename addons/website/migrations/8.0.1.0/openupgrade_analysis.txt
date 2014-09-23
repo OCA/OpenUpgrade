@@ -2,6 +2,7 @@
 website      / ir.actions.server        / website_path (char)           : NEW 
 website      / ir.actions.server        / website_published (boolean)   : NEW 
 website      / ir.attachment            / mimetype (char)               : NEW 
+website      / ir.ui.view               / customize_show (boolean)      : NEW 
 website      / ir.ui.view               / page (boolean)                : NEW 
 website      / ir.ui.view               / website_meta_description (text): NEW 
 website      / ir.ui.view               / website_meta_keywords (char)  : NEW 
@@ -73,16 +74,18 @@ NEW ir.ui.view: website.assets_editor
 NEW ir.ui.view: website.assets_frontend
 NEW ir.ui.view: website.company_description
 NEW ir.ui.view: website.contactus
-NEW ir.ui.view: website.debugger
 NEW ir.ui.view: website.default_page
 NEW ir.ui.view: website.editor_head
 NEW ir.ui.view: website.footer_custom
+NEW ir.ui.view: website.footer_default
 NEW ir.ui.view: website.homepage
 NEW ir.ui.view: website.http_error
 NEW ir.ui.view: website.http_error_debug
+NEW ir.ui.view: website.info
 NEW ir.ui.view: website.kanban
 NEW ir.ui.view: website.kanban_contain
 NEW ir.ui.view: website.layout
+NEW ir.ui.view: website.layout_footer_copyright
 NEW ir.ui.view: website.layout_logo_show
 NEW ir.ui.view: website.login_layout
 NEW ir.ui.view: website.menu_tree
@@ -112,6 +115,7 @@ NEW ir.ui.view: website.theme_spacelab
 NEW ir.ui.view: website.theme_united
 NEW ir.ui.view: website.theme_yeti
 NEW ir.ui.view: website.themes
+NEW ir.ui.view: website.user_navbar
 NEW ir.ui.view: website.view_base_language_install
 NEW ir.ui.view: website.view_server_action_form_website
 NEW ir.ui.view: website.view_server_action_search_website

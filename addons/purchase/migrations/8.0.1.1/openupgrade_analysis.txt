@@ -5,6 +5,7 @@ purchase     / procurement.order        / purchase_line_id (many2one)   : NEW re
 purchase     / purchase.order           / bid_date (date)               : NEW 
 purchase     / purchase.order           / bid_validity (date)           : NEW 
 purchase     / purchase.order           / currency_id (many2one)        : not a function anymore
+purchase     / purchase.order           / date_order (date)             : type is now 'datetime' ('date')
 purchase     / purchase.order           / incoterm_id (many2one)        : NEW relation: stock.incoterms
 purchase     / purchase.order           / message_last_post (datetime)  : NEW 
 purchase     / purchase.order           / picking_ids (one2many)        : now a function
@@ -13,6 +14,7 @@ purchase     / purchase.order           / picking_type_id (many2one)    : NEW re
 purchase     / purchase.order           / state (selection)             : selection_keys is now '['approved', 'bid', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'sent']' ('['approved', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'sent']')
 purchase     / purchase.order           / warehouse_id (many2one)       : DEL relation: stock.warehouse
 purchase     / purchase.order           / website_message_ids (one2many): NEW relation: mail.message
+purchase     / purchase.order.line      / date_order (date)             : type is now 'datetime' ('date')
 purchase     / purchase.order.line      / move_dest_id (many2one)       : DEL relation: stock.move
 purchase     / purchase.order.line      / procurement_ids (one2many)    : NEW relation: procurement.order
 purchase     / res.partner              / purchase_order_ids (one2many) : DEL relation: purchase.order
@@ -32,6 +34,9 @@ DEL ir.actions.act_window: purchase.open_board_purchase
 DEL ir.actions.act_window: purchase.purchase_draft
 NEW ir.actions.report.xml: purchase.action_report_purchase_order
 DEL ir.actions.report.xml: purchase.report_purchase_order
+NEW ir.filters: purchase.filter_purchase_order_average_delivery_time
+NEW ir.filters: purchase.filter_purchase_order_monthly_purchases
+NEW ir.filters: purchase.filter_purchase_order_price_per_supplier
 NEW ir.model.access: purchase.access_product_price_history_purchase_manager
 NEW ir.model.access: purchase.access_product_price_history_purchase_user
 DEL ir.model.access: purchase.access_report_stock_move
@@ -47,6 +52,9 @@ DEL ir.ui.menu: purchase.menu_board_purchase
 NEW ir.ui.view: purchase.product_template_search_view_purchase
 NEW ir.ui.view: purchase.report_purchaseorder
 NEW ir.ui.view: purchase.report_purchasequotation
+NEW ir.ui.view: purchase.res_partner_view_purchase_account_buttons
+NEW ir.ui.view: purchase.view_product_normal_purchase_buttons_from
+NEW ir.ui.view: purchase.view_product_template_purchase_buttons_from
 NEW ir.ui.view: purchase.view_warehouse_inherited
 DEL ir.ui.view: purchase.board_purchase_form
 DEL ir.ui.view: purchase.product_product_normal_form_procurement_help_view

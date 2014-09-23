@@ -24,9 +24,8 @@ stock        / product.category         / removal_strategy_id (many2one): NEW re
 stock        / product.category         / route_ids (many2many)         : NEW relation: stock.location.route
 stock        / product.product          / track_incoming (boolean)      : DEL 
 stock        / product.product          / track_outgoing (boolean)      : DEL 
-stock        / product.product          / track_production (boolean)    : module is now 'mrp' ('stock')
-stock        / product.product          / valuation (selection)         : module is now 'stock_account' ('stock')
-stock        / product.product          / valuation (selection)         : now a function
+stock        / product.product          / track_production (boolean)    : DEL 
+stock        / product.product          / valuation (selection)         : DEL required: required, selection_keys: ['manual_periodic', 'real_time'], req_default: manual_periodic
 stock        / product.putaway          / fixed_location_ids (one2many) : NEW relation: stock.fixed.putaway.strat
 stock        / product.putaway          / method (selection)            : NEW required: required, selection_keys: function, req_default: fixed
 stock        / product.putaway          / name (char)                   : NEW required: required
@@ -38,7 +37,6 @@ stock        / product.template         / route_ids (many2many)         : NEW re
 stock        / product.template         / track_all (boolean)           : NEW 
 stock        / product.template         / track_incoming (boolean)      : NEW 
 stock        / product.template         / track_outgoing (boolean)      : NEW 
-stock        / product.template         / valuation (selection)         : NEW required: required, selection_keys: ['manual_periodic', 'real_time'], req_default: manual_periodic
 stock        / res.company              / internal_transit_location_id (many2one): NEW relation: stock.location
 stock        / res.company              / propagation_minimum_delta (integer): NEW 
 stock        / stock.fixed.putaway.strat / category_id (many2one)        : NEW relation: product.category, required: required
@@ -236,6 +234,7 @@ NEW ir.actions.act_window: stock.action_picking_tree_waiting
 NEW ir.actions.act_window: stock.action_picking_type_form
 NEW ir.actions.act_window: stock.action_picking_type_list
 NEW ir.actions.act_window: stock.action_procurement_compute
+NEW ir.actions.act_window: stock.action_receipt_picking_move
 NEW ir.actions.act_window: stock.action_routes_form
 NEW ir.actions.act_window: stock.do_view_pickings
 NEW ir.actions.act_window: stock.location_open_quants
@@ -243,12 +242,13 @@ NEW ir.actions.act_window: stock.procrules
 NEW ir.actions.act_window: stock.product_open_orderpoint
 NEW ir.actions.act_window: stock.product_open_quants
 NEW ir.actions.act_window: stock.quantsact
-DEL ir.actions.act_window: stock.act_product_location_open
 DEL ir.actions.act_window: stock.act_product_stock_move_futur_open
 DEL ir.actions.act_window: stock.act_stock_product_location_open
 DEL ir.actions.act_window: stock.act_stock_return_picking_in
 DEL ir.actions.act_window: stock.act_stock_return_picking_out
 DEL ir.actions.act_window: stock.act_stock_tracking_lot_2_stock_report_tracklots
+DEL ir.actions.act_window: stock.action3
+DEL ir.actions.act_window: stock.action5
 DEL ir.actions.act_window: stock.action_inventory_form_draft
 DEL ir.actions.act_window: stock.action_location_tree
 DEL ir.actions.act_window: stock.action_out_picking_move
@@ -256,6 +256,7 @@ DEL ir.actions.act_window: stock.action_partial_picking
 DEL ir.actions.act_window: stock.action_picking_tree4
 DEL ir.actions.act_window: stock.action_picking_tree6
 DEL ir.actions.act_window: stock.action_picking_tree_out
+DEL ir.actions.act_window: stock.action_reception_picking_move
 DEL ir.actions.act_window: stock.action_stock_incoming_product_delay
 DEL ir.actions.act_window: stock.action_stock_inventory_report
 DEL ir.actions.act_window: stock.action_stock_invoice_onshipping
@@ -293,6 +294,7 @@ NEW ir.actions.report.xml: stock.action_report_location_barcode
 NEW ir.actions.report.xml: stock.action_report_lot_barcode
 NEW ir.actions.report.xml: stock.action_report_picking
 NEW ir.actions.report.xml: stock.action_report_quant_package_barcode
+NEW ir.actions.report.xml: stock.action_report_quant_package_barcode_small
 DEL ir.actions.report.xml: stock.report_location_overview
 DEL ir.actions.report.xml: stock.report_location_overview_all
 DEL ir.actions.report.xml: stock.report_move_labels
@@ -317,6 +319,7 @@ NEW ir.model.access: stock.access_stock_location_path_sale_manager
 NEW ir.model.access: stock.access_stock_location_path_stock_user
 NEW ir.model.access: stock.access_stock_location_path_user
 NEW ir.model.access: stock.access_stock_location_route
+NEW ir.model.access: stock.access_stock_location_route_stock_manager
 NEW ir.model.access: stock.access_stock_move_operation_link_all
 NEW ir.model.access: stock.access_stock_move_operation_link_manager
 NEW ir.model.access: stock.access_stock_move_operation_link_user
@@ -363,6 +366,7 @@ DEL ir.property: stock.property_stock_account_output_prd
 DEL ir.property: stock.property_stock_journal
 NEW ir.rule: stock.product_pulled_flow_comp_rule
 NEW ir.rule: stock.stock_location_path_comp_rule
+NEW ir.rule: stock.stock_picking_type_rule
 NEW ir.rule: stock.stock_warehouse_orderpoint_rule
 NEW ir.sequence: stock.seq_quant_package
 NEW ir.sequence: stock.sequence_mrp_op
@@ -397,10 +401,13 @@ DEL ir.ui.menu: stock.menu_action_stock_move_report
 DEL ir.ui.menu: stock.menu_action_tracking_form
 DEL ir.ui.menu: stock.menu_board_warehouse
 DEL ir.ui.menu: stock.menu_stock_products_moves
+DEL ir.ui.menu: stock.menu_warehouse_config
 NEW ir.ui.view: stock.assets_backend
+NEW ir.ui.view: stock.barcode_index
 NEW ir.ui.view: stock.procurement_group_form_view_herited
 NEW ir.ui.view: stock.product_category_form_view_inherit
 NEW ir.ui.view: stock.product_form_view_procurement_button
+NEW ir.ui.view: stock.product_template_form_view_procurement_button
 NEW ir.ui.view: stock.product_template_kanban_stock_view
 NEW ir.ui.view: stock.product_template_search_form_view_stock
 NEW ir.ui.view: stock.quant_package_search_view
@@ -409,6 +416,7 @@ NEW ir.ui.view: stock.report_inventory
 NEW ir.ui.view: stock.report_location_barcode
 NEW ir.ui.view: stock.report_lot_barcode
 NEW ir.ui.view: stock.report_package_barcode
+NEW ir.ui.view: stock.report_package_barcode_small
 NEW ir.ui.view: stock.report_picking
 NEW ir.ui.view: stock.stock_location_path_form
 NEW ir.ui.view: stock.stock_location_path_tree
@@ -419,6 +427,8 @@ NEW ir.ui.view: stock.stock_return_line_form_in
 NEW ir.ui.view: stock.stock_return_line_tree_in
 NEW ir.ui.view: stock.view_make_procurment_wizard
 NEW ir.ui.view: stock.view_move_graph
+NEW ir.ui.view: stock.view_move_tree_receipt_picking
+NEW ir.ui.view: stock.view_move_tree_receipt_picking_board
 NEW ir.ui.view: stock.view_picking_type_form
 NEW ir.ui.view: stock.view_picking_type_tree
 NEW ir.ui.view: stock.view_pickingtype_filter
@@ -431,6 +441,8 @@ NEW ir.ui.view: stock.view_putaway
 NEW ir.ui.view: stock.view_quant_package_form
 NEW ir.ui.view: stock.view_quant_package_tree
 NEW ir.ui.view: stock.view_removal
+NEW ir.ui.view: stock.view_stock_enter_transfer_details
+NEW ir.ui.view: stock.view_stock_product_template_tree
 NEW ir.ui.view: stock.view_stock_product_tree
 NEW ir.ui.view: stock.view_stock_quant_form
 NEW ir.ui.view: stock.view_stock_quant_graph_value
@@ -442,6 +454,7 @@ DEL ir.ui.view: stock.board_warehouse_form
 DEL ir.ui.view: stock.lot_line_tree
 DEL ir.ui.view: stock.name_form
 DEL ir.ui.view: stock.search_stock_packs
+DEL ir.ui.view: stock.stock_move_tree2
 DEL ir.ui.view: stock.stock_partial_move_form
 DEL ir.ui.view: stock.stock_partial_move_line_form
 DEL ir.ui.view: stock.stock_partial_move_line_list
@@ -457,6 +470,8 @@ DEL ir.ui.view: stock.view_change_standard_price
 DEL ir.ui.view: stock.view_inventory_line_form
 DEL ir.ui.view: stock.view_location_graph
 DEL ir.ui.view: stock.view_location_tree
+DEL ir.ui.view: stock.view_move_tree_reception_picking
+DEL ir.ui.view: stock.view_move_tree_reception_picking_board
 DEL ir.ui.view: stock.view_normal_procurement_locations_form
 DEL ir.ui.view: stock.view_normal_property_acc_form
 DEL ir.ui.view: stock.view_picking_in_form
@@ -488,6 +503,8 @@ DEL ir.ui.view: stock.view_stock_tree
 DEL ir.ui.view: stock.view_tracking_form
 DEL ir.ui.view: stock.view_tracking_tree
 DEL ir.values: stock.ir_act_product_location_open
+DEL ir.values: stock.ir_move_traceability_downstream
+DEL ir.values: stock.ir_move_traceability_upstream
 DEL ir.values: stock.ir_open_partial_move_wizard
 NEW product.removal: stock.removal_fifo
 NEW product.removal: stock.removal_lifo

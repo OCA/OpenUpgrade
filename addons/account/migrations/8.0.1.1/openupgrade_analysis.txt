@@ -1,22 +1,39 @@
 ---Fields in module 'account'---
 account      / account.bank.statement   / message_last_post (datetime)  : NEW 
-account      / account.bank.statement.line / account_id (many2one)         : DEL relation: account.account, required: required
 account      / account.bank.statement.line / amount_currency (float)       : NEW 
 account      / account.bank.statement.line / analytic_account_id (many2one): DEL relation: account.analytic.account
 account      / account.bank.statement.line / bank_account_id (many2one)    : NEW relation: res.partner.bank
 account      / account.bank.statement.line / currency_id (many2one)        : NEW relation: res.currency
 account      / account.bank.statement.line / journal_entry_id (many2one)   : NEW relation: account.move
 account      / account.bank.statement.line / move_ids (many2many)          : DEL relation: account.move
+account      / account.bank.statement.line / partner_name (char)           : NEW 
 account      / account.bank.statement.line / type (selection)              : DEL required: required, selection_keys: ['customer', 'general', 'supplier'], req_default: general
 account      / account.chart.template   / currency_id (many2one)        : NEW relation: res.currency
+account      / account.fiscal.position  / auto_apply (boolean)          : NEW 
+account      / account.fiscal.position  / country_group_id (many2one)   : NEW relation: res.country.group
+account      / account.fiscal.position  / country_id (many2one)         : NEW relation: res.country
+account      / account.fiscal.position  / sequence (integer)            : NEW 
+account      / account.fiscal.position  / vat_required (boolean)        : NEW 
+account      / account.invoice          / amount_tax (float)            : not a function anymore
+account      / account.invoice          / amount_total (float)          : not a function anymore
+account      / account.invoice          / amount_untaxed (float)        : not a function anymore
 account      / account.invoice          / message_last_post (datetime)  : NEW 
+account      / account.invoice          / number (char)                 : not a function anymore
+account      / account.invoice          / reconciled (boolean)          : not a function anymore
+account      / account.invoice          / residual (float)              : not a function anymore
+account      / account.invoice.line     / company_id (many2one)         : not a function anymore
+account      / account.invoice.line     / partner_id (many2one)         : not a function anymore
+account      / account.invoice.line     / price_subtotal (float)        : not a function anymore
+account      / account.invoice.tax      / company_id (many2one)         : not a function anymore
+account      / account.move.line        / reconcile (char)              : was renamed to reconcile_ref [nothing to to]
 account      / account.statement.operation.template / account_id (many2one)         : NEW relation: account.account
-account      / account.statement.operation.template / amount (float)                : NEW 
-account      / account.statement.operation.template / amount_type (selection)       : NEW required: required, selection_keys: ['fixed', 'percentage_of_balance', 'percentage_of_total'], req_default: fixed
+account      / account.statement.operation.template / amount (float)                : NEW required: required, req_default: 100.0
+account      / account.statement.operation.template / amount_type (selection)       : NEW required: required, selection_keys: ['fixed', 'percentage_of_balance', 'percentage_of_total'], req_default: percentage_of_balance
 account      / account.statement.operation.template / analytic_account_id (many2one): NEW relation: account.analytic.account
 account      / account.statement.operation.template / label (char)                  : NEW 
 account      / account.statement.operation.template / name (char)                   : NEW required: required
 account      / account.statement.operation.template / tax_id (many2one)             : NEW relation: account.tax
+account      / account.tax.code.template / sequence (integer)            : NEW 
 account      / res.partner              / invoice_ids (one2many)        : relation is now 'account.invoice' ('account.invoice.line')
 ---XML records in module 'account'---
 NEW account.analytic.journal: account.exp
@@ -67,7 +84,14 @@ DEL ir.actions.report.xml: account.account_journal_sale_purchase
 DEL ir.actions.report.xml: account.account_overdue
 DEL ir.actions.report.xml: account.account_vat_declaration
 DEL ir.actions.report.xml: account.analytic_journal_print
+NEW ir.filters: account.filter_invoice_country
+NEW ir.filters: account.filter_invoice_product
+NEW ir.filters: account.filter_invoice_product_category
+NEW ir.filters: account.filter_invoice_refund
+NEW ir.filters: account.filter_invoice_salespersons
 NEW ir.model.access: account.access_account_statement_operation_template
+DEL ir.model.access: account.access_res_currency_rate_type_account_manager
+NEW ir.rule: account.account_subscription_line_comp_rule
 NEW ir.ui.menu: account.menu_action_account_statement_operation_template
 NEW ir.ui.menu: account.menu_bank_reconcile_bank_statements
 DEL ir.ui.menu: account.menu_board_account
@@ -103,6 +127,7 @@ DEL ir.ui.view: account.board_account_form
 DEL ir.ui.view: account.product_normal_form_view
 DEL ir.ui.view: account.view_account_invoice_report_tree
 DEL ir.ui.view: account.view_analytic_entries_report_tree
+DEL ir.ui.view: account.view_bank_statement_form_journal_items
 DEL process.node: account.process_node_accountingentries0
 DEL process.node: account.process_node_accountingstatemententries0
 DEL process.node: account.process_node_analytic0

@@ -1,6 +1,36 @@
 ---Fields in module 'website_forum'---
 website_forum / forum.forum              / description (html)            : NEW 
 website_forum / forum.forum              / faq (html)                    : NEW 
+website_forum / forum.forum              / karma_answer (integer)        : NEW 
+website_forum / forum.forum              / karma_answer_accept_all (integer): NEW 
+website_forum / forum.forum              / karma_answer_accept_own (integer): NEW 
+website_forum / forum.forum              / karma_ask (integer)           : NEW 
+website_forum / forum.forum              / karma_close_all (integer)     : NEW 
+website_forum / forum.forum              / karma_close_own (integer)     : NEW 
+website_forum / forum.forum              / karma_comment_all (integer)   : NEW 
+website_forum / forum.forum              / karma_comment_convert_all (integer): NEW 
+website_forum / forum.forum              / karma_comment_convert_own (integer): NEW 
+website_forum / forum.forum              / karma_comment_own (integer)   : NEW 
+website_forum / forum.forum              / karma_comment_unlink_all (integer): NEW 
+website_forum / forum.forum              / karma_comment_unlink_own (integer): NEW 
+website_forum / forum.forum              / karma_downvote (integer)      : NEW 
+website_forum / forum.forum              / karma_edit_all (integer)      : NEW 
+website_forum / forum.forum              / karma_edit_own (integer)      : NEW 
+website_forum / forum.forum              / karma_editor_clickable_link (integer): NEW 
+website_forum / forum.forum              / karma_editor_link_files (integer): NEW 
+website_forum / forum.forum              / karma_flag (integer)          : NEW 
+website_forum / forum.forum              / karma_gen_answer_accept (integer): NEW 
+website_forum / forum.forum              / karma_gen_answer_accepted (integer): NEW 
+website_forum / forum.forum              / karma_gen_answer_downvote (integer): NEW 
+website_forum / forum.forum              / karma_gen_answer_flagged (integer): NEW 
+website_forum / forum.forum              / karma_gen_answer_upvote (integer): NEW 
+website_forum / forum.forum              / karma_gen_question_downvote (integer): NEW 
+website_forum / forum.forum              / karma_gen_question_new (integer): NEW 
+website_forum / forum.forum              / karma_gen_question_upvote (integer): NEW 
+website_forum / forum.forum              / karma_retag (integer)         : NEW 
+website_forum / forum.forum              / karma_unlink_all (integer)    : NEW 
+website_forum / forum.forum              / karma_unlink_own (integer)    : NEW 
+website_forum / forum.forum              / karma_upvote (integer)        : NEW 
 website_forum / forum.forum              / message_ids (one2many)        : NEW relation: mail.message
 website_forum / forum.forum              / message_last_post (datetime)  : NEW 
 website_forum / forum.forum              / name (char)                   : NEW required: required
@@ -186,15 +216,17 @@ NEW ir.ui.menu: website_forum.menu_forum_posts
 NEW ir.ui.menu: website_forum.menu_website_forum
 NEW ir.ui.view: website_forum.404
 NEW ir.ui.view: website_forum.ask_question
+NEW ir.ui.view: website_forum.assets_editor
+NEW ir.ui.view: website_forum.assets_frontend
 NEW ir.ui.view: website_forum.badge
 NEW ir.ui.view: website_forum.badge_user
 NEW ir.ui.view: website_forum.close_question
 NEW ir.ui.view: website_forum.contact
+NEW ir.ui.view: website_forum.content_new_forum
 NEW ir.ui.view: website_forum.display_post
 NEW ir.ui.view: website_forum.display_post_answer
 NEW ir.ui.view: website_forum.edit_post
 NEW ir.ui.view: website_forum.edit_profile
-NEW ir.ui.view: website_forum.editor_head
 NEW ir.ui.view: website_forum.faq
 NEW ir.ui.view: website_forum.forum_all
 NEW ir.ui.view: website_forum.forum_index
@@ -204,6 +236,7 @@ NEW ir.ui.view: website_forum.link_button
 NEW ir.ui.view: website_forum.post_answer
 NEW ir.ui.view: website_forum.post_comment
 NEW ir.ui.view: website_forum.post_description_full
+NEW ir.ui.view: website_forum.private_profile
 NEW ir.ui.view: website_forum.tag
 NEW ir.ui.view: website_forum.user_badges
 NEW ir.ui.view: website_forum.user_detail_full
@@ -215,6 +248,7 @@ NEW ir.ui.view: website_forum.view_forum_post_form
 NEW ir.ui.view: website_forum.view_forum_post_list
 NEW ir.ui.view: website_forum.view_forum_post_search
 NEW ir.ui.view: website_forum.view_users_form_forum
+NEW ir.ui.view: website_forum.view_users_form_simple_modif_forum
 NEW ir.ui.view: website_forum.vote
 NEW mail.message.subtype: website_forum.mt_answer_edit
 NEW mail.message.subtype: website_forum.mt_answer_new

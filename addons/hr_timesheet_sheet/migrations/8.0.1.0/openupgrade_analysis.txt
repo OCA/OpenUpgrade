@@ -2,9 +2,18 @@
 hr_timesheet_sheet / hr_timesheet_sheet.sheet / message_last_post (datetime)  : NEW 
 hr_timesheet_sheet / hr_timesheet_sheet.sheet / website_message_ids (one2many): NEW relation: mail.message
 ---XML records in module 'hr_timesheet_sheet'---
+DEL ir.actions.act_window: hr_timesheet_sheet.action_hr_timesheet_report_stat_all
+DEL ir.actions.act_window: hr_timesheet_sheet.action_timesheet_report_stat_all
 DEL ir.actions.act_window: hr_timesheet_sheet.action_week_attendance_graph
+NEW ir.filters: hr_timesheet_sheet.filter_hr_timesheet_report_external_timesheets
+NEW ir.filters: hr_timesheet_sheet.filter_hr_timesheet_report_internal_timesheets
+DEL ir.model.access: hr_timesheet_sheet.access_timesheet_report
+DEL ir.ui.menu: hr_timesheet_sheet.menu_hr_timesheet_report_all
+DEL ir.ui.menu: hr_timesheet_sheet.menu_timesheet_report_all
 NEW ir.ui.view: hr_timesheet_sheet.assets_backend
 DEL ir.ui.view: hr_timesheet_sheet.board_hr_week_attendace_form
+DEL ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_report_graph
+DEL ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_report_search
 DEL ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_report_tree
 DEL ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_sheet_graph
 DEL ir.ui.view: hr_timesheet_sheet.view_timesheet_report_tree

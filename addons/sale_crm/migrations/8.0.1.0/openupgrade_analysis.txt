@@ -1,7 +1,10 @@
 ---Fields in module 'sale_crm'---
 sale_crm     / account.invoice          / section_id (many2one)         : module is now 'sale' ('sale_crm')
 sale_crm     / res.users                / default_section_id (many2one) : module is now 'sales_team' ('sale_crm')
+sale_crm     / sale.order               / campaign_id (many2one)        : NEW relation: crm.tracking.campaign
+sale_crm     / sale.order               / medium_id (many2one)          : NEW relation: crm.tracking.medium
 sale_crm     / sale.order               / section_id (many2one)         : module is now 'sale' ('sale_crm')
+sale_crm     / sale.order               / source_id (many2one)          : NEW relation: crm.tracking.source
 ---XML records in module 'sale_crm'---
 DEL ir.ui.view: sale_crm.account_invoice_form
 DEL ir.ui.view: sale_crm.account_invoice_groupby_inherit

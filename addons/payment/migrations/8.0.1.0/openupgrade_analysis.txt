@@ -46,6 +46,8 @@ NEW ir.model.access: payment.payment_acquirer_user
 NEW ir.model.access: payment.payment_transaction_all
 NEW ir.model.access: payment.payment_transaction_system
 NEW ir.model.access: payment.payment_transaction_user
+NEW ir.rule: payment.payment_transaction_salesman_rule
+NEW ir.rule: payment.payment_transaction_user_rule
 NEW ir.ui.menu: payment.payment_acquirer_menu
 NEW ir.ui.menu: payment.payment_transaction_menu
 NEW ir.ui.menu: payment.root_payment_menu

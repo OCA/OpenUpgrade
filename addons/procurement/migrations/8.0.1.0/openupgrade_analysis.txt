@@ -43,7 +43,7 @@ procurement  / stock.warehouse.orderpoint / product_max_qty (float)       : modu
 procurement  / stock.warehouse.orderpoint / product_min_qty (float)       : module is now 'stock' ('procurement')
 procurement  / stock.warehouse.orderpoint / product_uom (many2one)        : module is now 'stock' ('procurement')
 procurement  / stock.warehouse.orderpoint / product_uom (many2one)        : now a function
-procurement  / stock.warehouse.orderpoint / qty_multiple (integer)        : module is now 'stock' ('procurement')
+procurement  / stock.warehouse.orderpoint / qty_multiple (integer)        : type is now 'float' ('integer')
 procurement  / stock.warehouse.orderpoint / warehouse_id (many2one)       : module is now 'stock' ('procurement')
 ---XML records in module 'procurement'---
 NEW ir.actions.act_window: procurement.do_view_procurements
