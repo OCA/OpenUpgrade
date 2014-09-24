@@ -71,4 +71,4 @@ def set_message_last_post(cr, uid, pool, models):
             cr, uid, [], context={'active_test': False})
         last_posts = get_last_post_for_model(cr, uid, obj_ids, model_pool)
         for i in obj_ids:
-            model_pool.write(cr, uid, i, {'message_last_post': last_posts[i]})
+            model_pool.write(cr, uid, [i], {'message_last_post': last_posts[i]})
