@@ -1,0 +1,29 @@
+---Fields in module 'delivery'---
+# Removed id field definition => nothing to do
+delivery     / sale.order               / id (integer)                  : DEL 
+
+# weight_uom_id is a new readonly field just to indicate kg in the form view of picking => nothing to to
+delivery     / stock.move               / weight_uom_id (many2one)      : NEW relation: product.uom, required: required, req_default: function
+
+# weight_uom_id is a new readonly field just to indicate kg in the form view of picking => nothing to do
+delivery     / stock.picking            / weight_uom_id (many2one)      : NEW relation: product.uom, required: required, req_default: function
+
+# These fields are NOT new ; they are just defined on stock.picking.out to solve the stock.picking.in/.out mess in v7
+delivery     / stock.picking.out        / carrier_id (many2one)         : NEW relation: delivery.carrier
+delivery     / stock.picking.out        / carrier_tracking_ref (char)   : NEW 
+delivery     / stock.picking.out        / number_of_packages (integer)  : NEW 
+delivery     / stock.picking.out        / volume (float)                : NEW 
+---XML records in module 'delivery'---
+DEL ir.actions.act_window: delivery.action_define_delivery_steps
+DEL ir.actions.act_window: delivery.action_delivery_carrier_form1
+DEL ir.actions.act_window: delivery.action_delivery_cost
+DEL ir.actions.todo: delivery.delivery_method_form_view_todo
+DEL ir.actions.todo: delivery.todo_define_delivery_steps
+NEW ir.ui.view: delivery.view_picking_withcarrier_in_form
+DEL ir.ui.view: delivery.define_delivery_steps_form
+DEL ir.ui.view: delivery.edit_project_multicompany
+DEL ir.ui.view: delivery.view_make_delivery_wizard
+DEL ir.ui.view: delivery.view_move_reception_picking_withweight_form
+DEL ir.ui.view: delivery.view_picking_withcarrier_out_move_form
+DEL ir.ui.view: delivery.view_picking_withweight_in_form
+DEL ir.ui.view: delivery.view_picking_withweight_in_move_form
