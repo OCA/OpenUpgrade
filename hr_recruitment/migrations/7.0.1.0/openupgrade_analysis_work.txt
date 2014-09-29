@@ -1,0 +1,41 @@
+---Fields in module 'hr_recruitment'---
+hr_recruitment / hr.applicant             / categ_ids (many2many)         : NEW relation: hr.applicant_category
+hr_recruitment / hr.applicant             / emp_id (many2one)             : NEW relation: hr.employee
+hr_recruitment / hr.applicant             / partner_address_id (many2one) : DEL relation: res.partner.address
+hr_recruitment / hr.applicant             / state (selection)             : now a function
+hr_recruitment / hr.applicant_category    / name (char)                   : NEW required: required
+hr_recruitment / hr.job                   / _inherits (False)             : NEW 
+hr_recruitment / hr.job                   / alias_id (many2one)           : NEW relation: mail.alias, required: required
+hr_recruitment / hr.recruitment.report    / delay_open (float)            : DEL 
+hr_recruitment / hr.recruitment.report    / partner_address_id (many2one) : DEL relation: res.partner.address
+hr_recruitment / hr.recruitment.report    / salary_exp_avg (float)        : NEW 
+hr_recruitment / hr.recruitment.stage     / fold (boolean)                : NEW 
+hr_recruitment / hr.recruitment.stage     / state (selection)             : NEW required: required, selection_keys: ['cancel', 'done', 'draft', 'open', 'pending'], req_default: draft
+
+---XML records in module 'hr_recruitment'---
+# Overwrite context of action of hr_recruitment.crm_case_categ0_act_job to be
+# {} as it is in 7.0
+
+
+NEW crm.meeting.type: hr_recruitment.categ_meet_interview
+NEW ir.actions.act_window: hr_recruitment.act_hr_applicant_to_meeting
+DEL ir.actions.act_window: hr_recruitment.action_hr_recruitment_phonecall
+DEL ir.actions.act_window: hr_recruitment.hr_job_categ_action
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: hr_recruitment.hr_recruitment_stage_form_todo
+NEW ir.model.access: hr_recruitment.access_hr_applicant_category
+NEW ir.model.access: hr_recruitment.access_hr_applicant_category_manager
+DEL ir.model.access: hr_recruitment.access_crm_phonecall_hruser
+DEL ir.model.access: hr_recruitment.access_mail_message_user
+DEL ir.model.access: hr_recruitment.access_res_partner_address_hr_user
+NEW ir.ui.menu: hr.menu_hr_job
+DEL ir.ui.menu: hr.menu_hr_reporting
+DEL ir.ui.menu: hr_recruitment.menu_hr_job
+NEW ir.ui.view: hr_recruitment.view_hr_apll_config_settings
+DEL ir.ui.view: hr_recruitment.view_hr_recruitment_phonecall
+NEW mail.alias: hr_recruitment.mail_alias_jobs
+NEW mail.message: hr_recruitment.module_install_notification
+NEW mail.message.subtype: hr_recruitment.mt_applicant_hired
+NEW mail.message.subtype: hr_recruitment.mt_applicant_refused
+NEW mail.message.subtype: hr_recruitment.mt_job_new_applicant
+NEW mail.message.subtype: hr_recruitment.mt_stage_changed
