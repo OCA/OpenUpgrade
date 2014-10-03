@@ -23,7 +23,6 @@ from openerp.openupgrade import openupgrade
 
 column_renames = {
     'account_bank_statement_line': [
-        ('account_id', None),
         ('analytic_account_id', None),
         ('type', None),
     ]

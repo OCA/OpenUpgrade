@@ -22,9 +22,8 @@
 from openerp.openupgrade import openupgrade
 
 column_renames = {
-    # Using magic None value to trigger call to get_legacy_name()
     'product_supplierinfo': [
-        ('product_id', None),
+        ('product_id', 'product_tmpl_id'),
     ],
     'product_product': [
         ('color', None),
@@ -33,8 +32,8 @@ column_renames = {
         ('price_extra', None),
     ],
     'product_template': [
-        ('produce_delay', None),  # need to handle in mrp migration
-        ('cost_method', None),  # need to handle in stock_account migration
+        ('produce_delay', None),    # data handled in mrp migration
+        ('cost_method', None),      # data handled in stock_account migration
         ('standard_price', None),
     ],
     'product_packaging': [
