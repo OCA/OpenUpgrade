@@ -2,5 +2,7 @@
 ---XML records in module 'report_intrastat'---
 NEW ir.actions.report.xml: report_intrastat.account_intrastatinvoices
 DEL ir.actions.report.xml: report_intrastat.invoice_intrastat_id
+NEW ir.ui.view: report_intrastat.product_template_form_view
 NEW ir.ui.view: report_intrastat.report_intrastatinvoice
 NEW ir.ui.view: report_intrastat.report_intrastatinvoice_document
+DEL ir.ui.view: report_intrastat.product_normal_form_view

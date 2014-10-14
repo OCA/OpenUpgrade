@@ -11,13 +11,14 @@ NEW ir.actions.act_url: website_event.action_open_website
 NEW ir.actions.todo: base.open_menu
 NEW ir.model.access: website_event.access_event_event_portal
 NEW ir.model.access: website_event.access_event_event_public
-NEW ir.model.access: website_event.access_event_type_portal
 NEW ir.model.access: website_event.access_event_type_public
 NEW ir.rule: website_event.event_event_public
+NEW ir.ui.view: website.layout_footer_copyright
 NEW ir.ui.view: website_event.404
+NEW ir.ui.view: website_event.assets_editor
+NEW ir.ui.view: website_event.content_new_event
 NEW ir.ui.view: website_event.country_events
 NEW ir.ui.view: website_event.country_events_list
-NEW ir.ui.view: website_event.editor_head
 NEW ir.ui.view: website_event.event_category
 NEW ir.ui.view: website_event.event_description_full
 NEW ir.ui.view: website_event.event_details

@@ -1,6 +1,8 @@
 ---Fields in module 'fleet'---
 fleet        / fleet.vehicle            / message_last_post (datetime)  : NEW 
 ---XML records in module 'fleet'---
+NEW fleet.vehicle.model.brand: fleet.brand_land rover
+DEL fleet.vehicle.model.brand: fleet.brand_lander rover
 DEL ir.actions.act_window: fleet.action_fleet_vehicle_costs_graph
 DEL ir.actions.act_window: fleet.action_fleet_vehicle_kanban
 DEL ir.actions.act_window: fleet.action_fleet_vehicle_log_contract_graph
@@ -9,7 +11,8 @@ DEL ir.actions.act_window: fleet.action_fleet_vehicle_log_services_graph
 DEL ir.actions.act_window: fleet.open_board_fleet
 DEL ir.ui.menu: fleet.menu_fleet_dashboard
 NEW ir.ui.view: fleet.fleet_vehicle_cost_tree
-NEW ir.ui.view: fleet.fleet_vehicle_costs_report
+NEW ir.ui.view: fleet.fleet_vehicle_effective_costs_report
+NEW ir.ui.view: fleet.fleet_vehicle_indicative_costs_report
 NEW ir.ui.view: fleet.fleet_vehicle_log_fuel_search
 NEW ir.ui.view: fleet.fleet_vehicle_log_services_search
 NEW ir.ui.view: fleet.fleet_vehicle_odometer_search

@@ -22,7 +22,6 @@ stock_landed_costs / stock.landed.cost.lines  / split_method (selection)      : 
 stock_landed_costs / stock.valuation.adjustment.lines / additional_landed_cost (float): NEW 
 stock_landed_costs / stock.valuation.adjustment.lines / cost_id (many2one)            : NEW relation: stock.landed.cost, required: required
 stock_landed_costs / stock.valuation.adjustment.lines / cost_line_id (many2one)       : NEW relation: stock.landed.cost.lines
-stock_landed_costs / stock.valuation.adjustment.lines / flag (selection)              : NEW selection_keys: ['duplicate', 'original']
 stock_landed_costs / stock.valuation.adjustment.lines / former_cost (float)           : NEW 
 stock_landed_costs / stock.valuation.adjustment.lines / move_id (many2one)            : NEW relation: stock.move
 stock_landed_costs / stock.valuation.adjustment.lines / product_id (many2one)         : NEW relation: product.product, required: required

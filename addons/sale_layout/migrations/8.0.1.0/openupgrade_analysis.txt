@@ -1,4 +1,5 @@
 ---Fields in module 'sale_layout'---
+sale_layout  / account.invoice.line     / categ_sequence (integer)      : NEW 
 sale_layout  / account.invoice.line     / sale_layout_cat_id (many2one) : NEW relation: sale_layout.category
 sale_layout  / sale.order.line          / sale_layout_cat_id (many2one) : NEW relation: sale_layout.category
 sale_layout  / sale_layout.category     / name (char)                   : NEW required: required

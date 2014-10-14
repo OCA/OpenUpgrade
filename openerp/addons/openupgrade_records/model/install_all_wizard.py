@@ -106,13 +106,15 @@ class install_all_wizard(TransientModel):
     def install_all(self, cr, uid, ids, context=None):
         """
         Main wizard step. Set all installable modules to install
-        and actually install them.
+        and actually install them. Exclude testing modules.
         """
         module_obj = self.pool.get('ir.module.module')
         module_ids = module_obj.search(
             cr, uid, [
                 ('state', 'not in',
-                 ['installed', 'uninstallable', 'unknown'])])
+                 ['installed', 'uninstallable', 'unknown']),
+                ('category_id.name', '!=', 'Tests'),
+                ])
         if module_ids:
             module_obj.write(
                 cr, uid, module_ids, {'state': 'to install'})

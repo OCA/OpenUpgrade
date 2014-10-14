@@ -1,4 +1,5 @@
 ---Fields in module 'website_quote'---
+website_quote / product.template         / quote_description (html)      : NEW 
 website_quote / product.template         / website_description (html)    : NEW 
 website_quote / sale.order               / access_token (char)           : NEW required: required, req_default: function
 website_quote / sale.order               / options (one2many)            : NEW relation: sale.order.option
@@ -23,7 +24,6 @@ website_quote / sale.quote.line          / product_id (many2one)         : NEW r
 website_quote / sale.quote.line          / product_uom_id (many2one)     : NEW relation: product.uom, required: required
 website_quote / sale.quote.line          / product_uom_qty (float)       : NEW required: required, req_default: 1
 website_quote / sale.quote.line          / quote_id (many2one)           : NEW relation: sale.quote.template, required: required
-website_quote / sale.quote.line          / website_description (html)    : NEW 
 website_quote / sale.quote.option        / discount (float)              : NEW 
 website_quote / sale.quote.option        / name (text)                   : NEW required: required
 website_quote / sale.quote.option        / price_unit (float)            : NEW required: required
@@ -50,6 +50,8 @@ NEW ir.model.access: website_quote.access_sale_quote_option_manager
 NEW ir.model.access: website_quote.access_sale_quote_template
 NEW ir.model.access: website_quote.access_sale_quote_template_manager
 NEW ir.ui.menu: website_quote.menu_sale_quote_template
+NEW ir.ui.view: website.layout_footer_copyright
+NEW ir.ui.view: website_quote.assets_frontend
 NEW ir.ui.view: website_quote.change_quantity
 NEW ir.ui.view: website_quote.chatter
 NEW ir.ui.view: website_quote.navigation_menu
@@ -58,6 +60,7 @@ NEW ir.ui.view: website_quote.opt_quotation_signature
 NEW ir.ui.view: website_quote.optional_products
 NEW ir.ui.view: website_quote.pricing
 NEW ir.ui.view: website_quote.quotation_toolbar
+NEW ir.ui.view: website_quote.report_saleorder_validity_date
 NEW ir.ui.view: website_quote.sale_order_form_quote
 NEW ir.ui.view: website_quote.so_quotation
 NEW ir.ui.view: website_quote.so_template

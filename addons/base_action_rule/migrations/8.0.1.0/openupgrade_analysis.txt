@@ -3,3 +3,4 @@ base_action_rule / base.action.rule         / kind (selection)              : NE
 base_action_rule / base.action.rule         / trg_date_calendar_id (many2one): NEW relation: resource.calendar
 ---XML records in module 'base_action_rule'---
 NEW ir.model.access: base_action_rule.access_base_action_rule_lead_test
+DEL ir.ui.menu: base.menu_base_action_rule_admin

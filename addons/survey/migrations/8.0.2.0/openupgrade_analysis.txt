@@ -98,7 +98,7 @@ survey       / survey.user_input        / token (char)                  : NEW re
 survey       / survey.user_input        / type (selection)              : NEW required: required, selection_keys: ['link', 'manually'], req_default: manually
 survey       / survey.user_input        / user_input_line_ids (one2many): NEW relation: survey.user_input_line
 survey       / survey.user_input_line   / answer_type (selection)       : NEW selection_keys: ['date', 'free_text', 'number', 'suggestion', 'text']
-survey       / survey.user_input_line   / date_create (datetime)        : NEW required: required, req_default: 2014-06-20 12:35:22
+survey       / survey.user_input_line   / date_create (datetime)        : NEW required: required, req_default: 2014-09-22 18:16:17
 survey       / survey.user_input_line   / question_id (many2one)        : NEW relation: survey.question, required: required
 survey       / survey.user_input_line   / quizz_mark (float)            : NEW 
 survey       / survey.user_input_line   / skipped (boolean)             : NEW 
@@ -172,9 +172,11 @@ DEL ir.model.access: survey.access_survey_response_user
 DEL ir.model.access: survey.access_survey_survey_user
 DEL ir.model.access: survey.access_survey_tbl_column_heading_manager
 DEL ir.model.access: survey.access_survey_type_manager
-NEW ir.rule: survey.survey_public_access
-NEW ir.rule: survey.survey_rule
-NEW ir.rule: survey.survey_rule_manager
+NEW ir.rule: survey.survey_input_manager_access
+NEW ir.rule: survey.survey_input_public_access
+NEW ir.rule: survey.survey_input_users_access
+NEW ir.rule: survey.survey_manager_access
+NEW ir.rule: survey.survey_users_access
 NEW ir.ui.menu: base.menu_marketing_config_root
 NEW ir.ui.menu: survey.menu_survey_label_form1
 NEW ir.ui.menu: survey.menu_survey_question_form1
@@ -188,6 +190,9 @@ DEL ir.ui.menu: survey.menu_print_survey_answer
 DEL ir.ui.menu: survey.menu_print_survey_form
 DEL ir.ui.menu: survey.menu_print_survey_statistics
 DEL ir.ui.menu: survey.menu_reporting
+NEW ir.ui.view: survey.assets_frontend
+NEW ir.ui.view: survey.assets_frontend_result
+NEW ir.ui.view: survey.auth_required
 NEW ir.ui.view: survey.datetime
 NEW ir.ui.view: survey.free_text
 NEW ir.ui.view: survey.matrix
@@ -200,6 +205,7 @@ NEW ir.ui.view: survey.page
 NEW ir.ui.view: survey.pagination
 NEW ir.ui.view: survey.result
 NEW ir.ui.view: survey.result_choice
+NEW ir.ui.view: survey.result_comments
 NEW ir.ui.view: survey.result_matrix
 NEW ir.ui.view: survey.result_number
 NEW ir.ui.view: survey.result_text
