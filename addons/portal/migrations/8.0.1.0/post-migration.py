@@ -26,6 +26,14 @@ from openerp.openupgrade import openupgrade
 logger = logging.getLogger('OpenUpgrade')
 
 
+def load_data(cr):
+    '''
+    Update the references to group_portal.
+    :param cr:
+    '''
+    openupgrade.load_data(cr, 'portal', 'portal_data.xml', mode='init')
+
+
 def migrate_group_users(cr, uid, pool):
     '''
     Migrate groups portal and anonymous
@@ -53,3 +61,4 @@ def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     user = SUPERUSER_ID
     migrate_group_users(cr, user, pool)
+    load_data(cr)
