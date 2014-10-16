@@ -29,6 +29,9 @@ NEW ir.actions.act_window: hr_recruitment.action_hr_job
 NEW ir.actions.act_window: hr_recruitment.action_hr_job_applications
 DEL ir.actions.act_window: hr_recruitment.action_applicants_status
 DEL ir.actions.act_window: hr_recruitment.action_hr_recruitment_hired_employee
+NEW ir.filters: hr_recruitment.filter_recruitment_report_departmnet
+NEW ir.filters: hr_recruitment.filter_recruitment_report_job
+NEW ir.filters: hr_recruitment.filter_recruitment_report_recruiter
 NEW ir.model.access: hr_recruitment.access_calendar_event_hruser
 NEW ir.model.access: hr_recruitment.access_calendar_event_type_hr_officer
 NEW ir.model.access: hr_recruitment.access_hr_recruitment_stage_manager

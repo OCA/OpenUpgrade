@@ -30,18 +30,6 @@ def load_data(cr):
                           mode='init')
 
 
-def move_fields(cr, pool):
-    execute = openupgrade.logged_query
-    queries = ["UPDATE product_supplierinfo "
-               "SET product_tmpl_id=(SELECT product_tmpl_id "
-               "          FROM product_product "
-               "          WHERE product_product.id=product_supplierinfo.%s) " %
-               openupgrade.get_legacy_name('product_id'),
-               ]
-    for sql in queries:
-        execute(cr, sql)
-
-
 def migrate_packaging(cr, pool):
     """create 1 product UL for each different product packaging dimension
     and link it to the packagings
@@ -151,7 +139,6 @@ def migrate(cr, version):
         'product.product', 'active', 'product_tmpl_id',
         'product.template', 'active',
         compute_func=active_field_template_func)
-    move_fields(cr, pool)
     migrate_packaging(cr, pool)
     create_properties(cr, pool)
     migrate_variants(cr, pool)

@@ -1,0 +1,9 @@
+---Fields in module 'website_sale_delivery'---
+website_sale_delivery / delivery.carrier         / website_description (text)    : NEW 
+website_sale_delivery / delivery.carrier         / website_published (boolean)   : NEW 
+---XML records in module 'website_sale_delivery'---
+NEW ir.model.access: website_sale_delivery.access_delivery_carrier_public
+NEW ir.ui.view: website_sale_delivery.assets_frontend
+NEW ir.ui.view: website_sale_delivery.cart_delivery
+NEW ir.ui.view: website_sale_delivery.payment_delivery
+NEW ir.ui.view: website_sale_delivery.view_delivery_carrier_form

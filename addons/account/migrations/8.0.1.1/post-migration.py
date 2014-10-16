@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OppenERP, Open Source Management Solution
+#    OpenERP, Open Source Management Solution
 #    This module copyright (C) 2014 Akretion
 #    (<http://www.akretion.com>).
 #
@@ -22,8 +22,8 @@
 
 from itertools import groupby
 
-# from openerp import pooler, SUPERUSER_ID
-from openerp.openupgrade import openupgrade
+from openerp import pooler, SUPERUSER_ID
+from openerp.openupgrade import openupgrade, openupgrade_80
 
 
 def update_link_to_moves(cr):
@@ -47,7 +47,9 @@ def update_link_to_moves(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    #    pool = pooler.get_pool(cr.dbname)
-    #    uid = SUPERUSER_ID
-    #     openupgrade_80.set_message_last_post(cr, SUPERUSER_ID, pool, ['account.bank.statement', 'account.invoice'])
+    pool = pooler.get_pool(cr.dbname)
+    uid = SUPERUSER_ID
+    openupgrade_80.set_message_last_post(
+        cr, uid, pool, ['account.bank.statement', 'account.invoice']
+    )
     update_link_to_moves(cr)

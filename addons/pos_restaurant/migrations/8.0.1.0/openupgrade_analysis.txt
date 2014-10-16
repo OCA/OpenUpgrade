@@ -1,0 +1,17 @@
+---Fields in module 'pos_restaurant'---
+pos_restaurant / pos.config               / iface_printbill (boolean)     : NEW 
+pos_restaurant / pos.config               / iface_splitbill (boolean)     : NEW 
+pos_restaurant / pos.config               / printer_ids (many2many)       : NEW relation: restaurant.printer
+pos_restaurant / restaurant.printer       / name (char)                   : NEW required: required, req_default: Printer
+pos_restaurant / restaurant.printer       / product_categories_ids (many2many): NEW relation: pos.category
+pos_restaurant / restaurant.printer       / proxy_ip (char)               : NEW 
+---XML records in module 'pos_restaurant'---
+NEW ir.actions.act_window: pos_restaurant.action_restaurant_printer_form
+NEW ir.model.access: pos_restaurant.access_restaurant_printer
+NEW ir.model.access: pos_restaurant.access_restaurant_printer_manager
+NEW ir.ui.menu: pos_restaurant.menu_restaurant_printer_all
+NEW ir.ui.view: pos_restaurant.assets_frontend
+NEW ir.ui.view: pos_restaurant.index
+NEW ir.ui.view: pos_restaurant.view_pos_config_form
+NEW ir.ui.view: pos_restaurant.view_restaurant_printer
+NEW ir.ui.view: pos_restaurant.view_restaurant_printer_form

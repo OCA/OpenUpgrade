@@ -14,6 +14,8 @@ product      / product.attribute.value  / product_ids (many2many)       : NEW re
 product      / product.attribute.value  / sequence (integer)            : NEW 
 product      / product.packaging        / height (float)                : DEL 
 product      / product.packaging        / length (float)                : DEL 
+product      / product.packaging        / product_id (many2one)         : DEL relation: product.product, required: required
+product      / product.packaging        / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
 product      / product.packaging        / ul_container (many2one)       : NEW relation: product.ul
 product      / product.packaging        / weight_ul (float)             : DEL 
 product      / product.packaging        / width (float)                 : DEL 
@@ -28,6 +30,7 @@ product      / product.product          / image_variant (binary)        : NEW
 product      / product.product          / incoming_qty (float)          : module is now 'stock' ('product')
 product      / product.product          / message_last_post (datetime)  : NEW 
 product      / product.product          / outgoing_qty (float)          : module is now 'stock' ('product')
+product      / product.product          / packaging (one2many)          : DEL relation: product.packaging
 product      / product.product          / price_extra (float)           : now a function
 product      / product.product          / price_margin (float)          : DEL 
 product      / product.product          / qty_available (float)         : module is now 'stock' ('product')
@@ -43,8 +46,8 @@ product      / product.template         / cost_method (selection)       : select
 product      / product.template         / image (binary)                : NEW 
 product      / product.template         / message_ids (one2many)        : NEW relation: mail.message
 product      / product.template         / message_last_post (datetime)  : NEW 
-product      / product.template         / packaging (one2many)          : NEW relation: product.packaging
-product      / product.template         / produce_delay (float)         : DEL 
+product      / product.template         / packaging_ids (one2many)      : NEW relation: product.packaging
+product      / product.template         / produce_delay (float)         : module is now 'mrp' ('product')
 product      / product.template         / product_variant_ids (one2many): NEW relation: product.product, required: required
 product      / product.template         / standard_price (float)        : now a function
 product      / product.ul               / height (float)                : NEW 
@@ -52,8 +55,10 @@ product      / product.ul               / length (float)                : NEW
 product      / product.ul               / weight (float)                : NEW 
 product      / product.ul               / width (float)                 : NEW 
 ---XML records in module 'product'---
+NEW ir.actions.act_window: product.attribute_action
 NEW ir.actions.act_window: product.product_template_action
 NEW ir.actions.act_window: product.product_variant_action
+NEW ir.actions.act_window: product.variants_action
 NEW ir.actions.act_window: product.variants_template_action
 DEL ir.actions.act_window: product.product_normal_action_puchased
 DEL ir.actions.act_window: product.product_template_action_tree
@@ -71,13 +76,18 @@ NEW ir.model.access: product.access_product_attribute_sale_manager
 NEW ir.model.access: product.access_product_attribute_value
 NEW ir.model.access: product.access_product_attribute_value_sale_manager
 NEW ir.model.access: product.access_product_price_history_employee
+NEW ir.ui.menu: product.menu_attribute_action
 NEW ir.ui.menu: product.menu_product_template_action
-NEW ir.ui.view: product.product_template_form_view_variant_button
+NEW ir.ui.menu: product.menu_variants_action
+NEW ir.ui.view: product.attribute_tree_view
+NEW ir.ui.view: product.product_packaging_form_view_without_product
+NEW ir.ui.view: product.product_packaging_tree_view_product
 NEW ir.ui.view: product.product_template_kanban_view
-NEW ir.ui.view: product.product_template_kanban_view_variant_button
+NEW ir.ui.view: product.product_template_only_form_view
 NEW ir.ui.view: product.product_template_search_view
 NEW ir.ui.view: product.report_pricelist
 NEW ir.ui.view: product.variants_template_tree_view
+NEW ir.ui.view: product.variants_tree_view
 DEL ir.ui.view: product.product_variant_form_view
 DEL ir.ui.view: product.product_variant_tree_view
 DEL ir.ui.view_sc: product.ir_ui_view_sc_product0

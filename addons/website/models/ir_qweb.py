@@ -15,6 +15,7 @@ import urllib2
 import urlparse
 import re
 
+import pytz
 import werkzeug.urls
 import werkzeug.utils
 from dateutil import parser
@@ -25,6 +26,7 @@ import openerp.modules
 import openerp
 from openerp.osv import orm, fields
 from openerp.tools import ustr, DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
+from openerp.tools import html_escape as escape
 from openerp.addons.web.http import request
 from openerp.addons.base.ir import ir_qweb
 
@@ -46,17 +48,17 @@ class QWeb(orm.AbstractModel):
     def add_template(self, qcontext, name, node):
         # preprocessing for multilang static urls
         if request.website:
-            for tag, attr in self.URL_ATTRS.items():
-                for e in node.getElementsByTagName(tag):
-                    url = e.getAttribute(attr)
+            for tag, attr in self.URL_ATTRS.iteritems():
+                for e in node.iterdescendants(tag=tag):
+                    url = e.get(attr)
                     if url:
-                        e.setAttribute(attr, qcontext.get('url_for')(url))
+                        e.set(attr, qcontext.get('url_for')(url))
         super(QWeb, self).add_template(qcontext, name, node)
 
     def render_att_att(self, element, attribute_name, attribute_value, qwebcontext):
         att, val = super(QWeb, self).render_att_att(element, attribute_name, attribute_value, qwebcontext)
 
-        if request.website and att == self.URL_ATTRS.get(element.nodeName) and isinstance(val, basestring):
+        if request.website and att == self.URL_ATTRS.get(element.tag) and isinstance(val, basestring):
             val = qwebcontext.get('url_for')(val)
         return att, val
 
@@ -76,7 +78,7 @@ class Field(orm.AbstractModel):
         attrs = [('data-oe-translate', 1 if column.translate else 0)]
 
         placeholder = options.get('placeholder') \
-                   or source_element.getAttribute('placeholder') \
+                   or source_element.get('placeholder') \
                    or getattr(column, 'placeholder', None)
         if placeholder:
             attrs.append(('placeholder', placeholder))
@@ -152,15 +154,15 @@ class DateTime(orm.AbstractModel):
     def attributes(self, cr, uid, field_name, record, options,
                    source_element, g_att, t_att, qweb_context,
                    context=None):
-        column = record._model._all_columns[field_name].column
         value = record[field_name]
         if isinstance(value, basestring):
             value = datetime.datetime.strptime(
                 value, DEFAULT_SERVER_DATETIME_FORMAT)
         if value:
+            # convert from UTC (server timezone) to user timezone
             value = fields.datetime.context_timestamp(
                 cr, uid, timestamp=value, context=context)
-            value = value.strftime(openerp.tools.DEFAULT_SERVER_DATETIME_FORMAT)
+            value = value.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
 
         attrs = super(DateTime, self).attributes(
             cr, uid, field_name, record, options, source_element, g_att, t_att,
@@ -170,11 +172,31 @@ class DateTime(orm.AbstractModel):
         ])
 
     def from_html(self, cr, uid, model, column, element, context=None):
+        if context is None: context = {}
         value = element.text_content().strip()
         if not value: return False
 
-        datetime.datetime.strptime(value, DEFAULT_SERVER_DATETIME_FORMAT)
-        return value
+        # parse from string to datetime
+        dt = datetime.datetime.strptime(value, DEFAULT_SERVER_DATETIME_FORMAT)
+
+        # convert back from user's timezone to UTC
+        tz_name = context.get('tz') \
+            or self.pool['res.users'].read(cr, openerp.SUPERUSER_ID, uid, ['tz'], context=context)['tz']
+        if tz_name:
+            try:
+                user_tz = pytz.timezone(tz_name)
+                utc = pytz.utc
+
+                dt = user_tz.localize(dt).astimezone(utc)
+            except Exception:
+                logger.warn(
+                    "Failed to convert the value for a field of the model"
+                    " %s back from the user's timezone (%s) to UTC",
+                    model, tz_name,
+                    exc_info=True)
+
+        # format back to string
+        return dt.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
 
 class Text(orm.AbstractModel):
     _name = 'website.qweb.field.text'
@@ -253,7 +275,7 @@ class Image(orm.AbstractModel):
 
     def to_html(self, cr, uid, field_name, record, options,
                 source_element, t_att, g_att, qweb_context, context=None):
-        assert source_element.nodeName != 'img',\
+        assert source_element.tag != 'img',\
             "Oddly enough, the root tag of an image field can not be img. " \
             "That is because the image goes into the tag, or it gets the " \
             "hose again."
@@ -264,32 +286,32 @@ class Image(orm.AbstractModel):
 
     def record_to_html(self, cr, uid, field_name, record, column, options=None, context=None):
         if options is None: options = {}
-        classes = ['img', 'img-responsive'] + options.get('class', '').split()
+        aclasses = ['img', 'img-responsive'] + options.get('class', '').split()
+        classes = ' '.join(itertools.imap(escape, aclasses))
 
-        url_params = {
-            'model': record._model._name,
-            'field': field_name,
-            'id': record.id,
-        }
-        for options_key in ['max_width', 'max_height']:
-            if options.get(options_key):
-                url_params[options_key] = options[options_key]
+        max_size = None
+        max_width, max_height = options.get('max_width', 0), options.get('max_height', 0)
+        if max_width or max_height:
+            max_size = '%sx%s' % (max_width, max_height)
 
-        return ir_qweb.HTMLSafe('<img class="%s" src="/website/image?%s"/>' % (
-            ' '.join(itertools.imap(werkzeug.utils.escape, classes)),
-            werkzeug.urls.url_encode(url_params)
-        ))
+        src = self.pool['website'].image_url(cr, uid, record, field_name, max_size)
+        img = '<img class="%s" src="%s"/>' % (classes, src)
+        return ir_qweb.HTMLSafe(img)
 
     local_url_re = re.compile(r'^/(?P<module>[^]]+)/static/(?P<rest>.+)$')
     def from_html(self, cr, uid, model, column, element, context=None):
         url = element.find('img').get('src')
 
         url_object = urlparse.urlsplit(url)
-        query = dict(urlparse.parse_qsl(url_object.query))
-        if url_object.path == '/website/image':
-            item = self.pool[query['model']].browse(
-                cr, uid, int(query['id']), context=context)
-            return item[query['field']]
+        if url_object.path.startswith('/website/image'):
+            # url might be /website/image/<model>/<id>[_<checksum>]/<field>[/<width>x<height>]
+            fragments = url_object.path.split('/')
+            query = dict(urlparse.parse_qsl(url_object.query))
+            model = query.get('model', fragments[3])
+            oid = query.get('id', fragments[4].split('_')[0])
+            field = query.get('field', fragments[5])
+            item = self.pool[model].browse(cr, uid, int(oid), context=context)
+            return item[field]
 
         if self.local_url_re.match(url_object.path):
             return self.load_local_url(url)

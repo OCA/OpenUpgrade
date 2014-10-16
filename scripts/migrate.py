@@ -20,14 +20,17 @@ def copy_database(conn_parms):
     db_new = '%s_migrated' % conn_parms['database']
     print('copying database %(db_old)s to %(db_new)s...' % {'db_old': db_old,
                                                             'db_new': db_new})
+    if conn_parms['host'] == 'False':
+        del conn_parms['host']
+        del conn_parms['port']
     conn = psycopg2.connect(**conn_parms)
     conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
     cur = conn.cursor()
     cur.execute('drop database if exists "%(db)s"' % {'db': db_new})
     try:
         print "Copying the database using 'with template'"
-        cur.execute('create database "%(db_new)s" with template "%(db_old)s"' % {
-            'db_new': db_new, 'db_old': db_old})
+        cur.execute('create database "%(db_new)s" with template "%(db_old)s"' %
+                    {'db_new': db_new, 'db_old': db_old})
         cur.close()
     except psycopg2.OperationalError:
         print "Failed, fallback on creating empty database + loading a dump"

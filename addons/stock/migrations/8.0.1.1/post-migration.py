@@ -359,6 +359,50 @@ def migrate_stock_warehouse_orderpoint(cr):
         'stock_warehouse_orderpoint',
         'procurement_ids',
         openupgrade.get_legacy_name('procurement_id'))
+    # Migrate move amounts to proper values
+    Q = '''SELECT o.id,
+                  o.%(product_uom)s move_uom,
+                  o.product_min_qty,
+                  o.product_max_qty,
+                  o.qty_multiple,
+                  t.name,
+                  t.uom_id uom
+           FROM stock_warehouse_orderpoint o
+           LEFT JOIN product_product p ON o.product_id = p.id
+           LEFT JOIN product_template t ON p.product_tmpl_id = t.id
+           WHERE t.uom_id != o.%(product_uom)s
+        ''' % {'product_uom': openupgrade.get_legacy_name('product_uom')}
+    cr.execute(Q)
+    if cr.rowcount == 0:
+        return
+    logger.warn("""Migrating %d stock orderpoint items""", cr.rowcount)
+    orderpoints = cr.dictfetchall()
+    # Gather uom data and store it in local caches for later conversions
+    cr.execute('''SELECT * from product_uom''')
+    uom_data = {}
+    for uom in cr.dictfetchall():
+        uom_data[uom['id']] = uom
+    # Migrate data
+    for op in orderpoints:
+        p_uom_id = op['uom']
+        m_uom_id = op['move_uom']
+        # Check whether uom's are in the same category
+        assert uom_data[p_uom_id]['category_id'] == uom_data[m_uom_id]['category_id']
+        factor = 1.0 / uom_data[m_uom_id]['factor'] * uom_data[p_uom_id]['factor']
+        _min = op['product_min_qty'] * factor
+        _max = op['product_max_qty'] * factor
+        _mul = op['qty_multiple'] * factor
+        logger.warn("""Converting move qty data from %s to %s, factor: %s""",
+                    uom_data[m_uom_id]['name'],
+                    uom_data[p_uom_id]['name'],
+                    factor)
+        Q = '''UPDATE stock_warehouse_orderpoint SET
+                product_min_qty = %s,
+                product_max_qty = %s,
+                qty_multiple = %s
+               WHERE id = %s'''
+        cr.execute(Q, (_min, _max, _mul, op['id']))
+        assert cr.rowcount == 1
 
 
 def migrate_product_supply_method(cr):

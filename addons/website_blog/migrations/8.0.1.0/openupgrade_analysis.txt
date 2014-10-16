@@ -12,8 +12,6 @@ website_blog / blog.post                / author_id (many2one)          : NEW re
 website_blog / blog.post                / background_image (binary)     : NEW 
 website_blog / blog.post                / blog_id (many2one)            : NEW relation: blog.blog, required: required
 website_blog / blog.post                / content (html)                : NEW 
-website_blog / blog.post                / create_date (datetime)        : NEW 
-website_blog / blog.post                / create_uid (many2one)         : NEW relation: res.users
 website_blog / blog.post                / history_ids (one2many)        : NEW relation: blog.post.history
 website_blog / blog.post                / message_ids (one2many)        : NEW relation: mail.message
 website_blog / blog.post                / message_last_post (datetime)  : NEW 
@@ -26,11 +24,7 @@ website_blog / blog.post                / website_meta_description (text): NEW
 website_blog / blog.post                / website_meta_keywords (char)  : NEW 
 website_blog / blog.post                / website_meta_title (char)     : NEW 
 website_blog / blog.post                / website_published (boolean)   : NEW 
-website_blog / blog.post                / write_date (datetime)         : NEW 
-website_blog / blog.post                / write_uid (many2one)          : NEW relation: res.users
 website_blog / blog.post.history        / content (text)                : NEW 
-website_blog / blog.post.history        / create_date (datetime)        : NEW 
-website_blog / blog.post.history        / create_uid (many2one)         : NEW relation: res.users
 website_blog / blog.post.history        / post_id (many2one)            : NEW relation: blog.post
 website_blog / blog.post.history        / summary (char)                : NEW 
 website_blog / blog.tag                 / name (char)                   : NEW required: required
@@ -61,9 +55,11 @@ NEW ir.ui.menu: website_blog.menu_page
 NEW ir.ui.menu: website_blog.menu_page_history
 NEW ir.ui.menu: website_blog.menu_wiki
 NEW ir.ui.view: website_blog.assets_editor
+NEW ir.ui.view: website_blog.assets_frontend
 NEW ir.ui.view: website_blog.blog_breadcrumb
 NEW ir.ui.view: website_blog.blog_post_complete
 NEW ir.ui.view: website_blog.blog_post_short
+NEW ir.ui.view: website_blog.content_new_blogpost
 NEW ir.ui.view: website_blog.header_footer_custom
 NEW ir.ui.view: website_blog.index
 NEW ir.ui.view: website_blog.index_right

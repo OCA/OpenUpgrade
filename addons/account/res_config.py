@@ -42,7 +42,7 @@ class account_config_settings(osv.osv_memory):
         'currency_id': fields.related('company_id', 'currency_id', type='many2one', relation='res.currency', required=True,
             string='Default company currency', help="Main currency of the company."),
         'paypal_account': fields.related('company_id', 'paypal_account', type='char', size=128,
-            string='Paypal account', help="Paypal account (email) for receiving online payments (credit card, etc.) If you set a paypal account, the customer  will be able to pay your invoices or quotations with a button \"Pay with  Paypal\" in automated emails or through the OpenERP portal."),
+            string='Paypal account', help="Paypal account (email) for receiving online payments (credit card, etc.) If you set a paypal account, the customer  will be able to pay your invoices or quotations with a button \"Pay with  Paypal\" in automated emails or through the Odoo portal."),
         'company_footer': fields.related('company_id', 'rml_footer', type='text', readonly=True,
             string='Bank accounts footer preview', help="Bank accounts as printed in the footer of each printed document"),
 
@@ -125,7 +125,29 @@ class account_config_settings(osv.osv_memory):
             help="Allows you to use the analytic accounting."),
         'group_check_supplier_invoice_total': fields.boolean('Check the total of supplier invoices', 
             implied_group="account.group_supplier_inv_check_total"),
+        'income_currency_exchange_account_id': fields.related(
+            'company_id', 'income_currency_exchange_account_id',
+            type='many2one',
+            relation='account.account',
+            string="Gain Exchange Rate Account", 
+            domain="[('type', '=', 'other')]"),
+        'expense_currency_exchange_account_id': fields.related(
+            'company_id', 'expense_currency_exchange_account_id',
+            type="many2one",
+            relation='account.account',
+            string="Loss Exchange Rate Account",
+            domain="[('type', '=', 'other')]"),
     }
+    def onchange_company_id(self, cr, uid, ids, company_id, context=None):
+        res = super(account_config_settings, self).onchange_company_id(cr, uid, ids, company_id, context=context)
+        if company_id:
+            company = self.pool.get('res.company').browse(cr, uid, company_id, context=context)
+            res['value'].update({'income_currency_exchange_account_id': company.income_currency_exchange_account_id and company.income_currency_exchange_account_id.id or False, 
+                                 'expense_currency_exchange_account_id': company.expense_currency_exchange_account_id and company.expense_currency_exchange_account_id.id or False})
+        else: 
+            res['value'].update({'income_currency_exchange_account_id': False, 
+                                 'expense_currency_exchange_account_id': False})
+        return res
 
     def _default_company(self, cr, uid, context=None):
         user = self.pool.get('res.users').browse(cr, uid, uid, context=context)

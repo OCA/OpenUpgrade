@@ -1,6 +1,6 @@
 ---Fields in module 'stock_account'---
-stock_account / procurement.order        / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
-stock_account / procurement.rule         / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: none
+stock_account / procurement.order        / invoice_state (selection)     : NEW selection_keys: ['2binvoiced', 'invoiced', 'none']
+stock_account / procurement.rule         / invoice_state (selection)     : NEW selection_keys: ['2binvoiced', 'invoiced', 'none']
 stock_account / stock.inventory          / period_id (many2one)          : NEW relation: account.period
 stock_account / stock.move               / invoice_state (selection)     : NEW required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: function
 ---XML records in module 'stock_account'---
@@ -32,16 +32,17 @@ NEW ir.ui.view: stock_account.view_change_standard_price
 NEW ir.ui.view: stock_account.view_inventory_form_inherit
 NEW ir.ui.view: stock_account.view_location_form_inherit
 NEW ir.ui.view: stock_account.view_move_form_inherit
-NEW ir.ui.view: stock_account.view_normal_property_acc_form
+NEW ir.ui.view: stock_account.view_move_picking_from_stockaccount_inherit
 NEW ir.ui.view: stock_account.view_picking_inherit_form2
+NEW ir.ui.view: stock_account.view_picking_inherit_tree2
 NEW ir.ui.view: stock_account.view_procurement_rule_form_stockaccount_inherit
-NEW ir.ui.view: stock_account.view_product_standard_price_form
 NEW ir.ui.view: stock_account.view_pusht_rule_form_stockaccount_inherit
 NEW ir.ui.view: stock_account.view_stock_config_settings_inherit
 NEW ir.ui.view: stock_account.view_stock_history_report_graph
 NEW ir.ui.view: stock_account.view_stock_history_report_search
 NEW ir.ui.view: stock_account.view_stock_history_report_tree
 NEW ir.ui.view: stock_account.view_stock_invoice_onshipping
+NEW ir.ui.view: stock_account.view_stock_return_picking_form_inherit
 NEW ir.ui.view: stock_account.view_template_property_form
 NEW ir.ui.view: stock_account.view_wizard_valuation_history
 NEW res.groups: stock.group_stock_manager

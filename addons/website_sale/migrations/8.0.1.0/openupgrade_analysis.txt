@@ -1,6 +1,6 @@
 ---Fields in module 'website_sale'---
 website_sale / payment.transaction      / sale_order_id (many2one)      : NEW relation: sale.order
-website_sale / product.attribute        / type (selection)              : NEW selection_keys: ['color', 'radio', 'select']
+website_sale / product.attribute        / type (selection)              : NEW selection_keys: ['color', 'hidden', 'radio', 'select']
 website_sale / product.attribute.value  / color (char)                  : NEW 
 website_sale / product.pricelist        / code (char)                   : NEW 
 website_sale / product.public.category  / child_id (one2many)           : NEW relation: product.public.category
@@ -48,14 +48,16 @@ NEW ir.model.access: website_sale.access_product_template_public
 NEW ir.rule: website_sale.product_supplierinfo_public
 NEW ir.rule: website_sale.product_template_public
 NEW ir.ui.menu: website_sale.menu_product_public_category
+NEW ir.ui.view: website.layout_footer_copyright
 NEW ir.ui.view: website_sale.404
 NEW ir.ui.view: website_sale.assets_editor
+NEW ir.ui.view: website_sale.assets_frontend
 NEW ir.ui.view: website_sale.cart
 NEW ir.ui.view: website_sale.categories_recursive
 NEW ir.ui.view: website_sale.checkout
 NEW ir.ui.view: website_sale.confirmation
+NEW ir.ui.view: website_sale.content_new_product
 NEW ir.ui.view: website_sale.continue_shopping
-NEW ir.ui.view: website_sale.debugger
 NEW ir.ui.view: website_sale.header
 NEW ir.ui.view: website_sale.payment
 NEW ir.ui.view: website_sale.product
@@ -65,6 +67,7 @@ NEW ir.ui.view: website_sale.product_price
 NEW ir.ui.view: website_sale.product_pricelist_view
 NEW ir.ui.view: website_sale.product_public_category_form_view
 NEW ir.ui.view: website_sale.product_public_category_tree_view
+NEW ir.ui.view: website_sale.product_quantity
 NEW ir.ui.view: website_sale.product_template_form_view
 NEW ir.ui.view: website_sale.product_variants
 NEW ir.ui.view: website_sale.products
@@ -80,7 +83,9 @@ NEW ir.ui.view: website_sale.search
 NEW ir.ui.view: website_sale.suggested_products_list
 NEW ir.ui.view: website_sale.total
 NEW ir.ui.view: website_sale.transaction_form_website_sale
+NEW ir.ui.view: website_sale.variants
 NEW ir.ui.view: website_sale.variants_template_tree_view
+NEW ir.ui.view: website_sale.variants_tree_view
 NEW ir.ui.view: website_sale.view_order_form_acquirer
 NEW product.public.category: website_sale.categ_others
 NEW product.style: website_sale.image_full

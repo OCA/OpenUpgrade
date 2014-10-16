@@ -2,6 +2,9 @@
 mrp_operations / mrp.production.workcenter.line / production_state (selection)  : selection_keys is now '['cancel', 'confirmed', 'done', 'draft', 'in_production', 'ready']' ('['cancel', 'confirmed', 'done', 'draft', 'in_production', 'picking_except', 'ready']')
 ---XML records in module 'mrp_operations'---
 DEL ir.actions.act_window.view: mrp_operations.action_report_mrp_workorder_tree
+NEW ir.filters: mrp_operations.filter_mrp_workorder_current_production
+NEW ir.filters: mrp_operations.filter_mrp_workorder_quantity_produced
+NEW ir.filters: mrp_operations.filter_mrp_workorder_workload
 DEL ir.ui.view: mrp_operations.view_report_mrp_workorder_tree
 DEL process.node: mrp_operations.process_node_canceloperation0
 DEL process.node: mrp_operations.process_node_doneoperation0

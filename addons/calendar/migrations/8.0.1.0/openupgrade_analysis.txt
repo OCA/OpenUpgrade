@@ -33,7 +33,6 @@ base_calendar / calendar.event           / alarm_id (many2one)           : DEL r
 base_calendar / calendar.event           / attendee_ids (many2many)      : type is now 'one2many' ('many2many')
 base_calendar / calendar.event           / base_calendar_alarm_id (many2one): DEL relation: calendar.alarm
 base_calendar / calendar.event           / base_calendar_url (char)      : DEL 
-base_calendar / calendar.event           / create_date (datetime)        : DEL 
 base_calendar / calendar.event           / date (datetime)               : DEL required: required
 base_calendar / calendar.event           / date_deadline (datetime)      : DEL required: required
 base_calendar / calendar.event           / end_date (date)               : DEL 
@@ -89,7 +88,6 @@ DEL crm.meeting.type: base_calendar.categ_meet5
 NEW email.template: calendar.calendar_template_meeting_changedate
 NEW email.template: calendar.calendar_template_meeting_invitation
 NEW email.template: calendar.calendar_template_meeting_reminder
-NEW ir.actions.act_window: calendar.action_calendar_contacts
 NEW ir.actions.act_window: calendar.action_calendar_event
 NEW ir.actions.act_window: calendar.action_calendar_event_notify
 NEW ir.actions.act_window: calendar.action_calendar_event_type
@@ -147,7 +145,6 @@ DEL ir.ui.menu: base_calendar.menu_crm_meeting_avail_alarm
 DEL ir.ui.menu: base_calendar.menu_crm_meeting_type
 DEL ir.ui.menu: base_calendar.menu_events
 NEW ir.ui.view: calendar.assets_backend
-NEW ir.ui.view: calendar.view_calendar_contacts
 NEW ir.ui.view: calendar.view_calendar_event_calendar
 NEW ir.ui.view: calendar.view_calendar_event_form
 NEW ir.ui.view: calendar.view_calendar_event_form_popup
