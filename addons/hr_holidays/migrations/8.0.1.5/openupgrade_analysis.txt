@@ -10,7 +10,9 @@ NEW ir.model.access: hr_holidays.access_calendar_event_type_manager
 NEW ir.model.access: hr_holidays.access_hr_holydays_status_manager
 DEL ir.model.access: hr_holidays.access_crm_meeting_type_manager
 DEL ir.model.access: hr_holidays.access_hr_holydays_status_user
+NEW ir.rule: hr_holidays.property_rule_holidays_employee_write
 NEW ir.rule: hr_holidays.resource_leaves_officer
+NEW ir.ui.view: hr_holidays.view_evaluation_report_graph
 NEW ir.ui.view: hr_holidays.view_holiday_graph
 DEL ir.ui.view: hr_holidays.allocation_leave_new
 DEL ir.ui.view: hr_holidays.board_hr_holidays_leave_by_month_form

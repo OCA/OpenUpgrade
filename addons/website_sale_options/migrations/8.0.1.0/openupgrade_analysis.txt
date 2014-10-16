@@ -1,0 +1,9 @@
+---Fields in module 'website_sale_options'---
+website_sale_options / product.template         / optional_product_ids (many2many): NEW relation: product.template
+website_sale_options / sale.order.line          / linked_line_id (many2one)     : NEW relation: sale.order.line
+website_sale_options / sale.order.line          / option_line_ids (one2many)    : NEW relation: sale.order.line
+---XML records in module 'website_sale_options'---
+NEW ir.ui.view: website_sale_options.assets_frontend
+NEW ir.ui.view: website_sale_options.modal
+NEW ir.ui.view: website_sale_options.optional_products
+NEW ir.ui.view: website_sale_options.product_template_form_view

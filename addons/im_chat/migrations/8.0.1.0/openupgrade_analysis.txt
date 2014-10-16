@@ -1,0 +1,29 @@
+---Fields in module 'im_chat'---
+im_chat      / im_chat.conversation_state / session_id (many2one)         : NEW relation: im_chat.session, required: required
+im_chat      / im_chat.conversation_state / state (selection)             : NEW selection_keys: ['closed', 'folded', 'open']
+im_chat      / im_chat.conversation_state / user_id (many2one)            : NEW relation: res.users, required: required
+im_chat      / im_chat.message          / from_id (many2one)            : NEW relation: res.users
+im_chat      / im_chat.message          / message (char)                : NEW 
+im_chat      / im_chat.message          / to_id (many2one)              : NEW relation: im_chat.session, required: required
+im_chat      / im_chat.message          / type (selection)              : NEW selection_keys: ['message', 'meta']
+im_chat      / im_chat.presence         / last_poll (datetime)          : NEW 
+im_chat      / im_chat.presence         / last_presence (datetime)      : NEW 
+im_chat      / im_chat.presence         / status (selection)            : NEW selection_keys: ['away', 'offline', 'online']
+im_chat      / im_chat.presence         / user_id (many2one)            : NEW relation: res.users, required: required
+im_chat      / im_chat.session          / message_ids (one2many)        : NEW relation: im_chat.message
+im_chat      / im_chat.session          / session_res_users_rel (one2many): NEW relation: im_chat.conversation_state
+im_chat      / im_chat.session          / user_ids (many2many)          : NEW relation: res.users
+im_chat      / im_chat.session          / uuid (char)                   : NEW 
+---XML records in module 'im_chat'---
+NEW ir.model.access: im_chat.access_im_chat_conversation_state
+NEW ir.model.access: im_chat.access_im_chat_conversation_state_portal
+NEW ir.model.access: im_chat.access_im_chat_message
+NEW ir.model.access: im_chat.access_im_chat_message_portal
+NEW ir.model.access: im_chat.access_im_chat_presence
+NEW ir.model.access: im_chat.access_im_chat_presence_portal
+NEW ir.model.access: im_chat.access_im_chat_session
+NEW ir.model.access: im_chat.access_im_chat_session_portal
+NEW ir.rule: im_chat.message_rule_1
+NEW ir.rule: im_chat.session_relation_rule_1
+NEW ir.rule: im_chat.users_rule_1
+NEW ir.ui.view: im_chat.assets_backend

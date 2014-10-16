@@ -2,5 +2,7 @@
 marketing_campaign / marketing.campaign       / segment_ids (one2many)        : NEW relation: marketing.campaign.segment
 marketing_campaign / res.partner              / workitem_ids (one2many)       : DEL relation: marketing.campaign.workitem
 ---XML records in module 'marketing_campaign'---
+DEL ir.ui.menu: base.menu_report_marketing
 DEL ir.ui.menu: marketing_campaign.menu_marketing_configuration
+NEW ir.ui.view: marketing_campaign.view_report_campaign_analysis_graph
 DEL ir.ui.view: marketing_campaign.view_workitem_partner_info_form

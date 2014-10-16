@@ -4,6 +4,7 @@ mass_mailing / mail.mail                / statistics_ids (one2many)     : NEW re
 mass_mailing / mail.mail.statistics     / bounced (datetime)            : NEW 
 mass_mailing / mail.mail.statistics     / exception (datetime)          : NEW 
 mass_mailing / mail.mail.statistics     / mail_mail_id (many2one)       : NEW relation: mail.mail
+mass_mailing / mail.mail.statistics     / mail_mail_id_int (integer)    : NEW 
 mass_mailing / mail.mail.statistics     / mass_mailing_id (many2one)    : NEW relation: mail.mass_mailing
 mass_mailing / mail.mail.statistics     / message_id (char)             : NEW 
 mass_mailing / mail.mail.statistics     / model (char)                  : NEW 
@@ -16,7 +17,6 @@ mass_mailing / mail.mass_mailing        / attachment_ids (many2many)    : NEW re
 mass_mailing / mail.mass_mailing        / body_html (html)              : NEW 
 mass_mailing / mail.mass_mailing        / contact_ab_pc (integer)       : NEW 
 mass_mailing / mail.mass_mailing        / contact_list_ids (many2many)  : NEW relation: mail.mass_mailing.list
-mass_mailing / mail.mass_mailing        / create_date (datetime)        : NEW 
 mass_mailing / mail.mass_mailing        / email_from (char)             : NEW required: required, req_default: function
 mass_mailing / mail.mass_mailing        / mailing_domain (char)         : NEW 
 mass_mailing / mail.mass_mailing        / mailing_model (selection)     : NEW required: required, selection_keys: function, req_default: mail.mass_mailing.contact
@@ -35,18 +35,22 @@ mass_mailing / mail.mass_mailing.campaign / stage_id (many2one)           : NEW 
 mass_mailing / mail.mass_mailing.campaign / unique_ab_testing (boolean)   : NEW 
 mass_mailing / mail.mass_mailing.campaign / user_id (many2one)            : NEW relation: res.users, required: required, req_default: function
 mass_mailing / mail.mass_mailing.category / name (char)                   : NEW required: required
-mass_mailing / mail.mass_mailing.contact / create_date (datetime)        : NEW 
 mass_mailing / mail.mass_mailing.contact / email (char)                  : NEW required: required
 mass_mailing / mail.mass_mailing.contact / list_id (many2one)            : NEW relation: mail.mass_mailing.list, required: required, req_default: function
+mass_mailing / mail.mass_mailing.contact / message_ids (one2many)        : NEW relation: mail.message
+mass_mailing / mail.mass_mailing.contact / message_last_post (datetime)  : NEW 
 mass_mailing / mail.mass_mailing.contact / name (char)                   : NEW 
 mass_mailing / mail.mass_mailing.contact / opt_out (boolean)             : NEW 
+mass_mailing / mail.mass_mailing.contact / website_message_ids (one2many): NEW relation: mail.message
 mass_mailing / mail.mass_mailing.list   / name (char)                   : NEW required: required
 mass_mailing / mail.mass_mailing.stage  / name (char)                   : NEW required: required
 mass_mailing / mail.mass_mailing.stage  / sequence (integer)            : NEW 
 ---XML records in module 'mass_mailing'---
 NEW ir.actions.act_window: mass_mailing.action_email_template_marketing
 NEW ir.actions.act_window: mass_mailing.action_mail_mass_mailing_test
+NEW ir.actions.act_window: mass_mailing.action_mail_statistics_report
 NEW ir.actions.act_window: mass_mailing.action_view_mail_mail_statistics
+NEW ir.actions.act_window: mass_mailing.action_view_mail_mail_statistics_mailing
 NEW ir.actions.act_window: mass_mailing.action_view_mass_mailing_campaigns
 NEW ir.actions.act_window: mass_mailing.action_view_mass_mailing_contacts
 NEW ir.actions.act_window: mass_mailing.action_view_mass_mailing_contacts_from_list
@@ -54,10 +58,12 @@ NEW ir.actions.act_window: mass_mailing.action_view_mass_mailing_lists
 NEW ir.actions.act_window: mass_mailing.action_view_mass_mailing_stages
 NEW ir.actions.act_window: mass_mailing.action_view_mass_mailings
 NEW ir.actions.act_window: mass_mailing.action_view_mass_mailings_from_campaign
+NEW ir.actions.act_window.view: mass_mailing.action_mail_mass_mailing_report_graph
 NEW ir.actions.client: mass_mailing.action_client_marketing_menu
 NEW ir.actions.todo: base.open_menu
 NEW ir.config_parameter: mass_mailing.icp_mail_bounce_alias
 NEW ir.model.access: mass_mailing.access_mail_mail_statistics
+NEW ir.model.access: mass_mailing.access_mail_statistics_report
 NEW ir.model.access: mass_mailing.access_mass_mailing
 NEW ir.model.access: mass_mailing.access_mass_mailing_campaign
 NEW ir.model.access: mass_mailing.access_mass_mailing_campaign_system
@@ -75,11 +81,13 @@ NEW ir.ui.menu: mass_mailing.menu_email_mass_mailing_lists
 NEW ir.ui.menu: mass_mailing.menu_email_mass_mailings
 NEW ir.ui.menu: mass_mailing.menu_email_statistics
 NEW ir.ui.menu: mass_mailing.menu_email_template
+NEW ir.ui.menu: mass_mailing.menu_mass_mailing_report
 NEW ir.ui.menu: mass_mailing.menu_view_mass_mailing_stages
 NEW ir.ui.view: mass_mailing.assets_backend
+NEW ir.ui.view: mass_mailing.assets_editor
+NEW ir.ui.view: mass_mailing.assets_frontend
 NEW ir.ui.view: mass_mailing.email_compose_form_mass_mailing
 NEW ir.ui.view: mass_mailing.email_template_form_minimal
-NEW ir.ui.view: mass_mailing.head
 NEW ir.ui.view: mass_mailing.mailing_list_subscribe
 NEW ir.ui.view: mass_mailing.view_email_template_kanban
 NEW ir.ui.view: mass_mailing.view_mail_mail_statistics_form
@@ -92,6 +100,7 @@ NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_campaign_tree
 NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_contact_search
 NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_contact_tree
 NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_form
+NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_graph
 NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_kanban
 NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_list_form
 NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_list_search
@@ -101,6 +110,8 @@ NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_stage_search
 NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_stage_tree
 NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_test_form
 NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_tree
+NEW ir.ui.view: mass_mailing.view_mail_statistics_report_graph
+NEW ir.ui.view: mass_mailing.view_mail_statistics_report_search
 NEW ir.ui.view: mass_mailing.view_marketing_configuration_mass_mailing
 NEW mail.mass_mailing.list: mass_mailing.mass_mail_list_1
 NEW mail.mass_mailing.stage: mass_mailing.campaign_stage_1

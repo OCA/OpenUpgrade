@@ -27,9 +27,11 @@ NEW ir.actions.act_window: website_forum_doc.action_forum_doc_post
 NEW ir.actions.todo: base.open_menu
 NEW ir.model.access: website_forum_doc.all_documentation_toc
 NEW ir.model.access: website_forum_doc.users_documentation_stage
+NEW ir.model.access: website_forum_doc.users_documentation_stage_all
 NEW ir.model.access: website_forum_doc.users_documentation_toc
 NEW ir.ui.menu: website_forum_doc.menu_documentation
 NEW ir.ui.menu: website_forum_doc.menu_forum_doc_posts
+NEW ir.ui.view: website_forum_doc.assets_frontend
 NEW ir.ui.view: website_forum_doc.breadcrumb
 NEW ir.ui.view: website_forum_doc.documentation
 NEW ir.ui.view: website_forum_doc.documentation_post
@@ -39,5 +41,6 @@ NEW ir.ui.view: website_forum_doc.promote_question
 NEW ir.ui.view: website_forum_doc.toc
 NEW ir.ui.view: website_forum_doc.view_documentation_toc_list
 NEW ir.ui.view: website_forum_doc.view_forum_post_doc_form
+NEW ir.ui.view: website_forum_doc.view_forum_post_doc_list
 NEW ir.ui.view: website_forum_doc.view_forum_post_kanban
 NEW website.menu: website_forum_doc.menu_questions

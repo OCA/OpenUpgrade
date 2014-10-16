@@ -1,17 +1,22 @@
 ---Fields in module 'project'---
 project      / project.project          / doc_count (int)               : type is now 'integer' ('int')
 project      / project.project          / message_last_post (datetime)  : NEW 
+project      / project.project          / priority (integer)            : DEL 
 project      / project.project          / task_ids (one2many)           : NEW relation: project.task
 project      / project.task             / date_last_stage_update (datetime): NEW 
 project      / project.task             / message_last_post (datetime)  : NEW 
 project      / project.task             / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['0', '1', '2', '3', '4']')
-project      / project.task             / write_date (datetime)         : NEW 
+project      / project.task             / reviewer_id (many2one)        : NEW relation: res.users
 project      / project.task.history     / state (selection)             : DEL selection_keys: ['cancelled', 'done', 'draft', 'open', 'pending']
 project      / project.task.type        / state (selection)             : DEL required: required, selection_keys: ['cancelled', 'done', 'draft', 'open', 'pending'], req_default: open
 ---XML records in module 'project'---
 DEL ir.actions.act_window: project.action_project_task_reevaluate
 DEL ir.actions.act_window: project.my_open_tasks_action
 DEL ir.actions.act_window: project.open_board_project
+NEW ir.filters: project.filter_task_report_responsible
+NEW ir.filters: project.filter_task_report_reviewer
+NEW ir.filters: project.filter_task_report_task_pipe
+NEW ir.filters: project.filter_task_report_workload
 NEW ir.model.access: project.access_mail_alias
 NEW ir.model.access: project.access_project_task_type_manager
 NEW ir.model.access: project.access_resource_calendar_leaves_user

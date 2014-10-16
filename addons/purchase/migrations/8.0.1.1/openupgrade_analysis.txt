@@ -5,8 +5,10 @@ purchase     / procurement.order        / purchase_id (many2one)        : now a 
 purchase     / procurement.order        / purchase_line_id (many2one)   : NEW relation: purchase.order.line
 # DONE
 
-purchase     / purchase.order           / bid_date (date)               : NEW 
-purchase     / purchase.order           / bid_validity (date)           : NEW 
+purchase     / purchase.order           / bid_date (date)               : NEW
+purchase     / purchase.order           / bid_validity (date)           : NEW
+purchase     / purchase.order           / currency_id (many2one)        : not a function anymore
+purchase     / purchase.order           / date_order (date)             : type is now 'datetime' ('date')
 purchase     / purchase.order           / incoterm_id (many2one)        : NEW relation: stock.incoterms
 # NOTHING TO DO
 
@@ -15,7 +17,7 @@ purchase     / purchase.order           / currency_id (many2one)        : not a 
 
 purchase     / purchase.order           / message_last_post (datetime)  : NEW
 # DONE
- 
+
 purchase     / purchase.order           / picking_ids (one2many)        : now a function
 purchase     / purchase.order           / picking_ids (one2many)        : relation is now 'stock.picking' ('stock.picking.in')
 # NOTHING TO DO
@@ -25,10 +27,10 @@ purchase     / purchase.order           / picking_type_id (many2one)    : NEW re
 
 purchase     / purchase.order           / state (selection)             : selection_keys is now '['approved', 'bid', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'sent']' ('['approved', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'sent']')
 purchase     / purchase.order           / warehouse_id (many2one)       : DEL relation: stock.warehouse
-# NOTHING TO DO: more specific states
-
+purchase     / purchase.order           / website_message_ids (one2many): NEW relation: mail.message
+purchase     / purchase.order.line      / date_order (date)             : type is now 'datetime' ('date')
 purchase     / purchase.order.line      / move_dest_id (many2one)       : DEL relation: stock.move
-# NOTHING TO DO 
+# NOTHING TO DO
 purchase     / purchase.order.line      / procurement_ids (one2many)    : NEW relation: procurement.order
 # DONE
 
@@ -38,7 +40,7 @@ purchase     / stock.picking            / purchase_id (many2one)        : DEL re
 
 purchase     / stock.warehouse          / buy_pull_id (many2one)        : NEW relation: procurement.rule
 purchase     / stock.warehouse          / buy_to_resupply (boolean)     : NEW
-# DONE by default 
+# DONE by default
 
 ---XML records in module 'purchase'---
 NEW email.template: purchase.email_template_edi_purchase_done
@@ -54,8 +56,9 @@ DEL ir.actions.act_window: purchase.open_board_purchase
 DEL ir.actions.act_window: purchase.purchase_draft
 NEW ir.actions.report.xml: purchase.action_report_purchase_order
 DEL ir.actions.report.xml: purchase.report_purchase_order
-# IGNORE
-
+NEW ir.filters: purchase.filter_purchase_order_average_delivery_time
+NEW ir.filters: purchase.filter_purchase_order_monthly_purchases
+NEW ir.filters: purchase.filter_purchase_order_price_per_supplier
 NEW ir.model.access: purchase.access_product_price_history_purchase_manager
 NEW ir.model.access: purchase.access_product_price_history_purchase_user
 DEL ir.model.access: purchase.access_report_stock_move
@@ -73,6 +76,9 @@ DEL ir.ui.menu: purchase.menu_board_purchase
 NEW ir.ui.view: purchase.product_template_search_view_purchase
 NEW ir.ui.view: purchase.report_purchaseorder
 NEW ir.ui.view: purchase.report_purchasequotation
+NEW ir.ui.view: purchase.res_partner_view_purchase_account_buttons
+NEW ir.ui.view: purchase.view_product_normal_purchase_buttons_from
+NEW ir.ui.view: purchase.view_product_template_purchase_buttons_from
 NEW ir.ui.view: purchase.view_warehouse_inherited
 DEL ir.ui.view: purchase.board_purchase_form
 DEL ir.ui.view: purchase.product_product_normal_form_procurement_help_view

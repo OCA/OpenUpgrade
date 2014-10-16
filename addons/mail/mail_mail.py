@@ -21,14 +21,14 @@
 
 import base64
 import logging
-import re
-from urllib import urlencode
+from email.utils import formataddr
 from urlparse import urljoin
 
-from openerp import tools
+from openerp import api, tools
 from openerp import SUPERUSER_ID
 from openerp.addons.base.ir.ir_mail_server import MailDeliveryException
 from openerp.osv import fields, osv
+from openerp.tools.safe_eval import safe_eval as eval
 from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
@@ -44,14 +44,14 @@ class mail_mail(osv.Model):
     _rec_name = 'subject'
 
     _columns = {
-        'mail_message_id': fields.many2one('mail.message', 'Message', required=True, ondelete='cascade'),
+        'mail_message_id': fields.many2one('mail.message', 'Message', required=True, ondelete='cascade', auto_join=True),
         'state': fields.selection([
             ('outgoing', 'Outgoing'),
             ('sent', 'Sent'),
             ('received', 'Received'),
             ('exception', 'Delivery Failed'),
             ('cancel', 'Cancelled'),
-        ], 'Status', readonly=True),
+        ], 'Status', readonly=True, copy=False),
         'auto_delete': fields.boolean('Auto Delete',
             help="Permanently delete this email after sending it, to save space"),
         'references': fields.text('References', help='Message references, such as identifiers of previous messages', readonly=1),
@@ -59,6 +59,7 @@ class mail_mail(osv.Model):
         'recipient_ids': fields.many2many('res.partner', string='To (Partners)'),
         'email_cc': fields.char('Cc', help='Carbon copy message recipients'),
         'body_html': fields.text('Rich-text Contents', help="Rich-text/HTML message"),
+        'headers': fields.text('Headers', copy=False),
         # Auto-detected based on create() - if 'mail_message_id' was passed then this mail is a notification
         # and during unlink() we will not cascade delete the parent and its attachments
         'notification': fields.boolean('Is Notification',
@@ -96,6 +97,7 @@ class mail_mail(osv.Model):
     def cancel(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
 
+    @api.cr_uid
     def process_email_queue(self, cr, uid, ids=None, context=None):
         """Send immediately queued messages, committing after each
            message is sent - this is not transactional and should
@@ -154,7 +156,11 @@ class mail_mail(osv.Model):
             base_url = self.pool.get('ir.config_parameter').get_param(cr, uid, 'web.base.url')
             mail_model = mail.model or 'mail.thread'
             url = urljoin(base_url, self.pool[mail_model]._get_access_link(cr, uid, mail, partner, context=context))
-            return _("""<span class='oe_mail_footer_access'><small>about <a style='color:inherit' href="%s">%s %s</a></small></span>""") % (url, context.get('model_name', ''), mail.record_name)
+            return "<span class='oe_mail_footer_access'><small>%(access_msg)s <a style='color:inherit' href='%(portal_link)s'>%(portal_msg)s</a></small></span>" % {
+                'access_msg': _('about') if mail.record_name else _('access'),
+                'portal_link': url,
+                'portal_msg': '%s %s' % (context.get('model_name', ''), mail.record_name) if mail.record_name else _('your messages'),
+            }
         else:
             return None
 
@@ -175,22 +181,20 @@ class mail_mail(osv.Model):
         is to be inherited to add custom content depending on some module."""
         body = mail.body_html
 
-        # generate footer
-        link = self._get_partner_access_link(cr, uid, mail, partner, context=context)
+        # generate access links for notifications or emails linked to a specific document with auto threading
+        link = None
+        if mail.notification or (mail.model and mail.res_id and not mail.no_auto_thread):
+            link = self._get_partner_access_link(cr, uid, mail, partner, context=context)
         if link:
             body = tools.append_content_to_html(body, link, plaintext=False, container_tag='div')
         return body
 
     def send_get_mail_to(self, cr, uid, mail, partner=None, context=None):
         """Forge the email_to with the following heuristic:
-          - if 'partner' and mail is a notification on a document: followers (Followers of 'Doc' <email>)
-          - elif 'partner', no notificatoin or no doc: recipient specific (Partner Name <email>)
+          - if 'partner', recipient specific (Partner Name <email>)
           - else fallback on mail.email_to splitting """
-        if partner and mail.notification and mail.record_name:
-            sanitized_record_name = re.sub(r'[^\w+.]+', '-', mail.record_name)
-            email_to = [_('"Followers of %s" <%s>') % (sanitized_record_name, partner.email)]
-        elif partner:
-            email_to = ['%s <%s>' % (partner.name, partner.email)]
+        if partner:
+            email_to = [formataddr((partner.name, partner.email))]
         else:
             email_to = tools.email_split(mail.email_to)
         return email_to
@@ -204,12 +208,13 @@ class mail_mail(osv.Model):
         """
         body = self.send_get_mail_body(cr, uid, mail, partner=partner, context=context)
         body_alternative = tools.html2plaintext(body)
-        return {
+        res = {
             'body': body,
             'body_alternative': body_alternative,
             'subject': self.send_get_mail_subject(cr, uid, mail, partner=partner, context=context),
             'email_to': self.send_get_mail_to(cr, uid, mail, partner=partner, context=context),
         }
+        return res
 
     def send(self, cr, uid, ids, auto_commit=False, raise_exception=False, context=None):
         """ Sends the selected emails immediately, ignoring their current
@@ -226,8 +231,7 @@ class mail_mail(osv.Model):
                 email sending process has failed
             :return: True
         """
-        if context is None:
-            context = {}
+        context = dict(context or {})
         ir_mail_server = self.pool.get('ir.mail_server')
         ir_attachment = self.pool['ir.attachment']
         for mail in self.browse(cr, SUPERUSER_ID, ids, context=context):
@@ -264,6 +268,17 @@ class mail_mail(osv.Model):
                         headers['Return-Path'] = '%s-%d-%s-%d@%s' % (bounce_alias, mail.id, mail.model, mail.res_id, catchall_domain)
                     else:
                         headers['Return-Path'] = '%s-%d@%s' % (bounce_alias, mail.id, catchall_domain)
+                if mail.headers:
+                    try:
+                        headers.update(eval(mail.headers))
+                    except Exception:
+                        pass
+
+                # Writing on the mail object may fail (e.g. lock on user) which
+                # would trigger a rollback *after* actually sending the email.
+                # To avoid sending twice the same email, provoke the failure earlier
+                mail.write({'state': 'exception'})
+                mail_sent = False
 
                 # build an RFC2822 email.message.Message object and send it without queuing
                 res = None
@@ -290,14 +305,12 @@ class mail_mail(osv.Model):
                 if res:
                     mail.write({'state': 'sent', 'message_id': res})
                     mail_sent = True
-                else:
-                    mail.write({'state': 'exception'})
-                    mail_sent = False
 
                 # /!\ can't use mail.state here, as mail.refresh() will cause an error
                 # see revid:odo@openerp.com-20120622152536-42b2s28lvdv3odyr in 6.1
+                if mail_sent:
+                    _logger.info('Mail with ID %r and Message-Id %r successfully sent', mail.id, mail.message_id)
                 self._postprocess_sent_message(cr, uid, mail, context=context, mail_sent=mail_sent)
-                _logger.info('Mail with ID %r and Message-Id %r successfully sent', mail.id, mail.message_id)
             except MemoryError:
                 # prevent catching transient MemoryErrors, bubble up to notify user or abort cron job
                 # instead of marking the mail as failed

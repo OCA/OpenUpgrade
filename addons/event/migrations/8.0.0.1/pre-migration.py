@@ -1,7 +1,8 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2014 Onestein
+#    Copyright (C) 2014 HBEE (http://www.hbee.eu)
+#    @author: Paulius Sladkevičius <paulius@hbee.eu>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,41 +22,12 @@
 from openerp.openupgrade import openupgrade
 
 column_renames = {
-#                   'procurement_order' : [
-#                        ('message' , None),
-#                        ('note' , None),
-#                        ('move_id' , None),
-#                        ('procure_method', None),
-#                  ],
-#                   'product_template' : [
-#                        ('supply_method' , None),
-#                        ('procure_method', None),
-#                  ],
-                    'event_event': [
-                        ('note', None),
-                    ],
-            }
+    'event_event': [
+        ('note', None),
+    ],
+}
 
-xmlid_renames = [
-    ('procurement.access_stock_warehouse_orderpoint',
-     'stock.access_stock_warehouse_orderpoint'),
-    ('procurement.access_stock_warehouse_orderpoint_system',
-     'stock.access_stock_warehouse_orderpoint_system'),
-    ('procurement.stock_warehouse_orderpoint_rule',
-     'stock.stock_warehouse_orderpoint_rule'),
-    ('procurement.access_mrp_property',
-     'mrp.access_mrp_property'),
-    ('procurement.access_mrp_property_group',
-     'mrp.access_mrp_property_group'),
-    ('procurement.sequence_mrp_op',
-     'stock.sequence_mrp_op'),
-    ('procurement.sequence_mrp_op_type',
-     'stock.sequence_mrp_op_type'),
-    ]
 
 @openupgrade.migrate()
 def migrate(cr, version):
-#     openupgrade.rename_columns(cr, column_renames)
-    openupgrade.rename_xmlids(cr, xmlid_renames)
-    # The workflow must be deleted because set_last_post_message() calls the ORM write method.
-    openupgrade.delete_model_workflow(cr, 'procurement.order')
+    openupgrade.rename_columns(cr, column_renames)

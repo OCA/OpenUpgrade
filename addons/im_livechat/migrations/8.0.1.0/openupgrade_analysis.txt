@@ -1,5 +1,6 @@
 ---Fields in module 'im_livechat'---
-im_livechat  / im.session               / channel_id (many2one)         : NEW relation: im_livechat.channel
+im_livechat  / im_chat.session          / anonymous_name (char)         : NEW 
+im_livechat  / im_chat.session          / channel_id (many2one)         : NEW relation: im_livechat.channel
 im_livechat  / im_livechat.channel      / button_text (char)            : NEW 
 im_livechat  / im_livechat.channel      / default_message (char)        : NEW 
 im_livechat  / im_livechat.channel      / image (binary)                : NEW 
@@ -9,8 +10,6 @@ im_livechat  / im_livechat.channel      / user_ids (many2many)          : NEW re
 ---XML records in module 'im_livechat'---
 NEW ir.actions.act_window: im_livechat.action_history
 NEW ir.actions.act_window: im_livechat.action_support_channels
-NEW ir.model.access: im_livechat.access_im_user
-NEW ir.model.access: im_livechat.access_im_user_portal
 NEW ir.model.access: im_livechat.access_ls_chann1
 NEW ir.model.access: im_livechat.access_ls_chann2
 NEW ir.model.access: im_livechat.access_ls_chann3
@@ -19,9 +18,15 @@ NEW ir.rule: im_livechat.message_rule_1
 NEW ir.ui.menu: im_livechat.history
 NEW ir.ui.menu: im_livechat.im_livechat
 NEW ir.ui.menu: im_livechat.support_channels
+NEW ir.ui.view: im_livechat.external_lib
+NEW ir.ui.view: im_livechat.external_loader
 NEW ir.ui.view: im_livechat.im_message_form
 NEW ir.ui.view: im_livechat.im_message_search
+NEW ir.ui.view: im_livechat.internal_lib
+NEW ir.ui.view: im_livechat.internal_loader
+NEW ir.ui.view: im_livechat.loader
 NEW ir.ui.view: im_livechat.support_channel_form
 NEW ir.ui.view: im_livechat.support_channel_kanban
+NEW ir.ui.view: im_livechat.support_page
 NEW res.groups: im_livechat.group_im_livechat
 NEW res.groups: im_livechat.group_im_livechat_manager

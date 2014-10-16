@@ -14,6 +14,7 @@ mrp_repair   / mrp.repair.line          / prodlot_id (many2one)         : DEL re
 ---XML records in module 'mrp_repair'---
 NEW ir.actions.report.xml: mrp_repair.action_report_mrp_repair_order
 DEL ir.actions.report.xml: mrp_repair.report_mrp_repair
+NEW ir.model.access: mrp_repair.access_account_invoice_tax_user
 DEL ir.model.access: mrp_repair.access_stock_production_lot_revision_manager
 DEL ir.model.access: mrp_repair.access_stock_production_lot_revision_user
 NEW ir.ui.view: mrp_repair.report_mrprepairorder

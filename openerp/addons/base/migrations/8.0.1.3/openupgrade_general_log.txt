@@ -1,23 +1,28 @@
 ---Fields in module 'general'---
-# 5051 fields matched,
-# Direct match: 3730
+# 5027 fields matched,
+# Direct match: 3695
 # Found in other module: 80
 # Found with different name: 0
-# Found with different type: 0
-# In obsolete models: 1241
-# New columns: 1568
-# Not matched: 266
+# Found with different type: 1
+# In obsolete models: 1251
+# New columns: 3636
+# Not matched: 290
 new model account.analytic.invoice.line
 new model account.statement.operation.template
 new model blog.blog
 new model blog.post
 new model blog.post.history
 new model blog.tag
+new model bus.bus
 new model calendar.contacts
 new model calendar.event.type
 new model certification.certification
 new model certification.type
+new model crm.tracking.campaign
+new model crm.tracking.medium
+new model crm.tracking.source
 new model decimal.precision.test
+new model document.storage
 new model event.event.ticket
 new model event.sponsor
 new model event.sponsor.type
@@ -26,31 +31,6 @@ new model event.track
 new model event.track.location
 new model event.track.stage
 new model event.track.tag
-new model export.boolean
-new model export.date
-new model export.datetime
-new model export.decimal
-new model export.float
-new model export.function
-new model export.integer
-new model export.many2many
-new model export.many2many.other
-new model export.many2one
-new model export.one2many
-new model export.one2many.child
-new model export.one2many.child.1
-new model export.one2many.child.2
-new model export.one2many.multiple
-new model export.one2many.multiple.child
-new model export.one2many.recursive
-new model export.selection
-new model export.selection.function
-new model export.selection.withdefault
-new model export.string
-new model export.string.bounded
-new model export.string.required
-new model export.text
-new model export.unique
 new model forum.documentation.stage
 new model forum.documentation.toc
 new model forum.forum
@@ -65,11 +45,15 @@ new model gamification.challenge.line
 new model gamification.goal
 new model gamification.goal.definition
 new model google.drive.config
-new model im.message
-new model im.session
-new model im.user
+new model im_chat.conversation_state
+new model im_chat.message
+new model im_chat.presence
+new model im_chat.session
 new model im_livechat.channel
+new model ir.fields.converter
 new model ir.logging
+new model lunch.cancel
+new model lunch.validation
 new model mail.mail.statistics
 new model mail.mass_mailing
 new model mail.mass_mailing.campaign
@@ -91,8 +75,11 @@ new model product.public.category
 new model product.putaway
 new model product.removal
 new model product.style
+new model report
 new model report.paperformat
+new model res.country.group
 new model res.font
+new model restaurant.printer
 new model sale.order.option
 new model sale.quote.line
 new model sale.quote.option
@@ -114,23 +101,7 @@ new model survey.stage
 new model survey.survey
 new model survey.user_input
 new model survey.user_input_line
-new model test.workflow.model.a
-new model test.workflow.model.b
-new model test.workflow.model.c
-new model test.workflow.model.d
-new model test.workflow.model.e
-new model test.workflow.model.f
-new model test.workflow.model.g
-new model test.workflow.model.h
-new model test.workflow.model.i
-new model test.workflow.model.j
-new model test.workflow.model.k
-new model test.workflow.model.l
-new model test.workflow.trigger
-new model test_converter.monetary
-new model test_converter.test_model
-new model test_converter.test_model.sub
-new model test_uninstall.model
+new model test_access_right.some_obj
 new model website
 new model website.converter.test
 new model website.converter.test.sub
@@ -152,6 +123,8 @@ obsolete model audittrail.log.line
 obsolete model audittrail.rule
 obsolete model calendar.todo
 obsolete model campaign.analysis
+obsolete model crm.case.channel
+obsolete model crm.case.resource.type
 obsolete model crm.claim.report
 obsolete model crm.helpdesk.report
 obsolete model crm.lead.report
@@ -177,6 +150,7 @@ obsolete model idea.category
 obsolete model idea.idea
 obsolete model ir.actions.wizard
 obsolete model ir.ui.view_sc
+obsolete model mail.thread
 obsolete model mrp.workorder
 obsolete model payment.advice.report
 obsolete model payslip.report
@@ -227,6 +201,7 @@ obsolete model report_timesheet.account.date
 obsolete model report_timesheet.invoice
 obsolete model report_timesheet.user
 obsolete model res.alarm
+obsolete model res.currency.rate.type
 obsolete model res.request
 obsolete model res.request.history
 obsolete model sale.receipt.report
@@ -263,6 +238,45 @@ DEL ir.ui.menu: document_ftp.menu_document_browse
 DEL ir.ui.view: document_ftp.ftp_browse_form
 DEL ir.ui.view: document_ftp.view_auto_config_form
 DEL ir.ui.view: document_ftp.view_document_ftp_configuration
+ERROR: module not in list of installed modules:
+---Fields in module 'plugin_thunderbird'---
+---XML records in module 'plugin_thunderbird'---
+DEL ir.actions.act_window: plugin_thunderbird.action_thunderbird_installer
+DEL ir.ui.menu: plugin_thunderbird.menu_base_config_plugins_thunderbird
+DEL ir.ui.view: plugin_thunderbird.view_config_thunderbird_installer
+DEL ir.ui.view: plugin_thunderbird.view_thunderbird_installer
+ERROR: module not in list of installed modules:
+---Fields in module 'project_mrp'---
+project_mrp  / procurement.order        / sale_line_id (many2one)       : module is now 'sale' ('project_mrp')
+project_mrp  / procurement.order        / task_id (many2one)            : module is now 'sale_service' ('project_mrp')
+project_mrp  / product.product          / project_id (many2one)         : DEL relation: project.project
+---XML records in module 'project_mrp'---
+DEL ir.ui.view: project_mrp.product_product_normal_form_supply_view
+DEL ir.ui.view: project_mrp.view_procurement_task_form
+DEL ir.ui.view: project_mrp.view_product_task_form
+DEL ir.ui.view: project_mrp.view_project_mrp_inherit_form2
+DEL process.node: project_mrp.process_node_mrptask0
+DEL process.node: project_mrp.process_node_procuretasktask0
+DEL process.node: project_mrp.process_node_saleordertask0
+DEL process.transition: project_mrp.process_transition_createtask0
+DEL process.transition: project_mrp.process_transition_ordertask0
+DEL process.transition: project_mrp.process_transition_procuretask0
+DEL workflow.activity: project_mrp.act_produce_service
+DEL workflow.transition: project_mrp.trans_make_done_done2
+DEL workflow.transition: project_mrp.trans_produce_service_cancel
+DEL workflow.transition: project_mrp.trans_produce_service_make_done
+DEL workflow.transition: project_mrp.trans_product_check_produce_service
+ERROR: module not in list of installed modules:
+---Fields in module 'product_manufacturer'---
+product_manufacturer / product.product          / attribute_ids (one2many)      : DEL relation: product.manufacturer.attribute
+product_manufacturer / product.product          / manufacturer (many2one)       : DEL relation: res.partner
+product_manufacturer / product.product          / manufacturer_pname (char)     : DEL 
+product_manufacturer / product.product          / manufacturer_pref (char)      : DEL 
+---XML records in module 'product_manufacturer'---
+DEL ir.model.access: product_manufacturer.access_product_manufacturer_attribute
+DEL ir.ui.view: product_manufacturer.product_manufacturer_attribute_form_view
+DEL ir.ui.view: product_manufacturer.product_manufacturer_attribute_tree_view
+DEL ir.ui.view: product_manufacturer.view_product_form_expiry
 ERROR: module not in list of installed modules:
 ---Fields in module 'mrp_jit'---
 ---XML records in module 'mrp_jit'---
@@ -1661,6 +1675,24 @@ DEL ir.ui.view: portal_hr_employees.portal_hr_kanban_view_employees
 DEL ir.ui.view: portal_hr_employees.portal_view_employee_filter
 DEL ir.ui.view: portal_hr_employees.view_employee_form
 ERROR: module not in list of installed modules:
+---Fields in module 'portal_project_long_term'---
+---XML records in module 'portal_project_long_term'---
+DEL ir.model.access: portal_project_long_term.access_issues
+DEL ir.model.access: portal_project_long_term.access_issues_anonymous
+DEL ir.rule: portal_project_long_term.portal_project_long_term_rule
+DEL ir.rule: portal_project_long_term.project_phase_anonymous_rule
+ERROR: module not in list of installed modules:
+---Fields in module 'portal_event'---
+portal_event / event.event              / visibility (selection)        : DEL selection_keys: ['private', 'public']
+---XML records in module 'portal_event'---
+DEL ir.actions.act_window: portal_event.action_event_view
+DEL ir.model.access: portal_event.access_event
+DEL ir.model.access: portal_event.access_registration
+DEL ir.rule: portal_event.portal_event_rule
+DEL ir.rule: portal_event.portal_registration_rule
+DEL ir.ui.menu: portal_event.portal_company_events
+DEL ir.ui.view: portal_event.view_event_form_portal
+ERROR: module not in list of installed modules:
 ---Fields in module 'project_long_term'---
 project_long_term / account.analytic.account / use_phases (boolean)          : DEL 
 project_long_term / project.project          / phase_ids (one2many)          : DEL relation: project.phase
@@ -1727,24 +1759,6 @@ DEL workflow.transition: project_long_term.t7
 DEL workflow.transition: project_long_term.t8
 DEL workflow.transition: project_long_term.t9
 ERROR: module not in list of installed modules:
----Fields in module 'portal_project_long_term'---
----XML records in module 'portal_project_long_term'---
-DEL ir.model.access: portal_project_long_term.access_issues
-DEL ir.model.access: portal_project_long_term.access_issues_anonymous
-DEL ir.rule: portal_project_long_term.portal_project_long_term_rule
-DEL ir.rule: portal_project_long_term.project_phase_anonymous_rule
-ERROR: module not in list of installed modules:
----Fields in module 'portal_event'---
-portal_event / event.event              / visibility (selection)        : DEL selection_keys: ['private', 'public']
----XML records in module 'portal_event'---
-DEL ir.actions.act_window: portal_event.action_event_view
-DEL ir.model.access: portal_event.access_event
-DEL ir.model.access: portal_event.access_registration
-DEL ir.rule: portal_event.portal_event_rule
-DEL ir.rule: portal_event.portal_registration_rule
-DEL ir.ui.menu: portal_event.portal_company_events
-DEL ir.ui.view: portal_event.view_event_form_portal
-ERROR: module not in list of installed modules:
 ---Fields in module 'idea'---
 ---XML records in module 'idea'---
 DEL ir.actions.act_window: idea.action_idea_category
@@ -1786,6 +1800,14 @@ DEL ir.ui.menu: event_moodle.wizard_moodle
 DEL ir.ui.view: event_moodle.create_moodle_config_view
 DEL ir.ui.view: event_moodle.moodle_information
 DEL ir.ui.view: event_moodle.moodle_information_event
+ERROR: module not in list of installed modules:
+---Fields in module 'plugin_outlook'---
+---XML records in module 'plugin_outlook'---
+DEL ir.actions.act_window: plugin_outlook.action_outlook_installer
+DEL ir.actions.act_window: plugin_outlook.action_outlook_wizard
+DEL ir.ui.menu: plugin_outlook.menu_base_config_plugins_outlook
+DEL ir.ui.view: plugin_outlook.view_config_outlook_installer
+DEL ir.ui.view: plugin_outlook.view_outlook_installer
 ERROR: module not in list of installed modules:
 ---Fields in module 'document_page'---
 ---XML records in module 'document_page'---
@@ -1878,22 +1900,6 @@ DEL ir.actions.act_window: google_base_account.act_google_login_form
 DEL ir.ui.view: google_base_account.view_google_login_form
 DEL ir.ui.view: google_base_account.view_users_gogole_form
 ERROR: module not in list of installed modules:
----Fields in module 'stock_no_autopicking'---
-stock_no_autopicking / product.product          / auto_pick (boolean)           : DEL 
----XML records in module 'stock_no_autopicking'---
-DEL ir.ui.view: stock_no_autopicking.view_product_form_auto_pick
-ERROR: module not in list of installed modules:
----Fields in module 'product_manufacturer'---
-product_manufacturer / product.product          / attribute_ids (one2many)      : DEL relation: product.manufacturer.attribute
-product_manufacturer / product.product          / manufacturer (many2one)       : DEL relation: res.partner
-product_manufacturer / product.product          / manufacturer_pname (char)     : DEL 
-product_manufacturer / product.product          / manufacturer_pref (char)      : DEL 
----XML records in module 'product_manufacturer'---
-DEL ir.model.access: product_manufacturer.access_product_manufacturer_attribute
-DEL ir.ui.view: product_manufacturer.product_manufacturer_attribute_form_view
-DEL ir.ui.view: product_manufacturer.product_manufacturer_attribute_tree_view
-DEL ir.ui.view: product_manufacturer.view_product_form_expiry
-ERROR: module not in list of installed modules:
 ---Fields in module 'process'---
 ---XML records in module 'process'---
 DEL ir.actions.act_window: process.action_process_form
@@ -1917,6 +1923,11 @@ DEL ir.ui.view: process.view_process_transition_filter
 DEL ir.ui.view: process.view_process_transition_form
 DEL ir.ui.view: process.view_process_transition_tree
 DEL ir.ui.view: process.view_process_tree
+ERROR: module not in list of installed modules:
+---Fields in module 'stock_no_autopicking'---
+stock_no_autopicking / product.product          / auto_pick (boolean)           : DEL 
+---XML records in module 'stock_no_autopicking'---
+DEL ir.ui.view: stock_no_autopicking.view_product_form_auto_pick
 ERROR: module not in list of installed modules:
 ---Fields in module 'portal_crm'---
 ---XML records in module 'portal_crm'---
@@ -1998,6 +2009,7 @@ DEL workflow.transition: stock_location.trans_confirm_mto_buy02
 ERROR: module not in list of installed modules:
 ---Fields in module 'account_report_company'---
 account_report_company / account.invoice          / commercial_partner_id (many2one): module is now 'account' ('account_report_company')
+account_report_company / account.invoice          / commercial_partner_id (many2one): not a function anymore
 account_report_company / res.partner              / display_name (char)           : module is now 'base' ('account_report_company')
 ---XML records in module 'account_report_company'---
 DEL ir.ui.view: account_report_company.account_report_company_invoice_report_search_view

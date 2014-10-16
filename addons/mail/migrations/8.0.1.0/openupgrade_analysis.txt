@@ -4,19 +4,17 @@ mail         / mail.alias               / alias_parent_model_id (many2one): NEW 
 mail         / mail.alias               / alias_parent_thread_id (integer): NEW 
 mail         / mail.group               / message_last_post (datetime)  : NEW 
 mail         / mail.mail                / email_from (char)             : DEL 
+mail         / mail.mail                / headers (text)                : NEW 
 mail         / mail.mail                / mail_server_id (many2one)     : DEL relation: ir.mail_server
 mail         / mail.mail                / recipient_ids (many2many)     : NEW relation: res.partner
 mail         / mail.mail                / reply_to (char)               : DEL 
 mail         / mail.message             / mail_server_id (many2one)     : NEW relation: ir.mail_server
+mail         / mail.message             / no_auto_thread (boolean)      : NEW 
 mail         / mail.message             / record_name (char)            : not a function anymore
 mail         / mail.message             / reply_to (char)               : NEW 
 mail         / mail.message.subtype     / hidden (boolean)              : NEW 
 mail         / mail.message.subtype     / sequence (integer)            : NEW 
-mail         / mail.thread              / message_follower_ids (many2many): module is now 'website_mail' ('mail')
-mail         / mail.thread              / message_ids (one2many)        : module is now 'website_mail' ('mail')
-mail         / mail.thread              / message_is_follower (boolean) : module is now 'website_mail' ('mail')
-mail         / mail.thread              / message_summary (text)        : module is now 'website_mail' ('mail')
-mail         / mail.thread              / message_unread (boolean)      : module is now 'website_mail' ('mail')
+mail         / mail.notification        / read (boolean)                : was renamed to is_read [nothing to to]
 mail         / res.partner              / message_last_post (datetime)  : NEW 
 mail         / res.partner              / notification_email_send (selection): selection_keys is now '['always', 'none']' ('['all', 'comment', 'email', 'none']')
 mail         / res.partner              / notification_email_send (selection): was renamed to notify_email [nothing to to]

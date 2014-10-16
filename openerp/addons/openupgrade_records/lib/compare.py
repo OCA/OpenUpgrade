@@ -41,6 +41,15 @@ def model_map(model):
     return apriori.renamed_models.get(model, model)
 
 
+IGNORE_FIELDS = [
+    'create_date',
+    'create_uid',
+    'id',
+    'write_date',
+    'write_uid',
+    ]
+
+
 def compare_records(dict_old, dict_new, fields):
     """
     Check equivalence of two OpenUpgrade field representations
@@ -83,7 +92,8 @@ def search(item, item_list, fields):
 
 def fieldprint(old, new, field, text, reprs):
     fieldrepr = "%s (%s)" % (old['field'], old['type'])
-    fullrepr = '%-12s / %-24s / %-30s' % (old['module'], old['model'], fieldrepr)
+    fullrepr = '%-12s / %-24s / %-30s' % (
+        old['module'], old['model'], fieldrepr)
     if not text:
         text = "%s is now '%s' ('%s')" % (field, new[field], old[field])
     reprs[module_map(old['module'])].append("%s: %s" % (fullrepr, text))
@@ -192,23 +202,25 @@ def compare_sets(old_records, new_records):
         ]
     for column in old_records:
         # we do not care about removed function fields
-        if not column['isfunction']:
-            if column['mode'] == 'create':
-                column['mode'] = ''
-            fieldprint(
-                column, None, None, "DEL " + ", ".join(
-                    [k + ': ' + str(column[k]) for k in printkeys if column[k]]
-                    ), reprs)
+        if column['isfunction'] or column['field'] in IGNORE_FIELDS:
+            continue
+        if column['mode'] == 'create':
+            column['mode'] = ''
+        fieldprint(
+            column, None, None, "DEL " + ", ".join(
+                [k + ': ' + str(column[k]) for k in printkeys if column[k]]
+                ), reprs)
 
     for column in new_records:
         # we do not care about newly added function fields
-        if not column['isfunction']:
-            if column['mode'] == 'create':
-                column['mode'] = ''
-            fieldprint(
-                column, None, None, "NEW " + ", ".join(
-                    [k + ': ' + str(column[k]) for k in printkeys if column[k]]
-                    ), reprs)
+        if column['isfunction'] or column['field'] in IGNORE_FIELDS:
+            continue
+        if column['mode'] == 'create':
+            column['mode'] = ''
+        fieldprint(
+            column, None, None, "NEW " + ", ".join(
+                [k + ': ' + str(column[k]) for k in printkeys if column[k]]
+                ), reprs)
 
     for line in [
             "# %d fields matched," % (origlen - len(old_records)),

@@ -1,4 +1,8 @@
 ---Fields in module 'auth_oauth'---
+auth_oauth   / auth.oauth.provider      / auth_endpoint (char)          : now required
+auth_oauth   / auth.oauth.provider      / body (char)                   : now required
+auth_oauth   / auth.oauth.provider      / name (char)                   : now required
+auth_oauth   / auth.oauth.provider      / validation_endpoint (char)    : now required
 ---XML records in module 'auth_oauth'---
 NEW ir.ui.view: auth_oauth.login
 NEW ir.ui.view: auth_oauth.providers

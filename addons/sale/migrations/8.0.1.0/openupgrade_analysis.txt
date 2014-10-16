@@ -26,6 +26,10 @@ DEL ir.actions.act_window: sale.action_turnover_by_month
 DEL ir.actions.act_window: sale.open_board_sales
 NEW ir.actions.act_window.view: sale.action_invoice_salesteams_view_form
 NEW ir.actions.act_window.view: sale.action_invoice_salesteams_view_tree
+NEW ir.filters: sale.filter_isale_report_product
+NEW ir.filters: sale.filter_sale_report_sales_funnel
+NEW ir.filters: sale.filter_sale_report_salespersons
+NEW ir.filters: sale.filter_sale_report_salesteam
 NEW ir.model.access: sale.access_product_price_history_account_user
 NEW ir.model.access: sale.access_product_price_history_sale_use
 NEW ir.model.access: sale.access_product_price_history_salemanager
@@ -38,6 +42,7 @@ NEW ir.rule: sale.sale_order_report_personal_rule
 NEW ir.rule: sale.sale_order_report_see_all
 DEL ir.rule: sale.sale_shop_comp_rule
 DEL ir.ui.menu: base.menu_invoiced
+DEL ir.ui.menu: base.next_id_64
 DEL ir.ui.menu: sale.menu_dashboard_sales
 DEL ir.ui.menu: sale.menu_invoicing_sales_order_lines
 NEW ir.ui.view: sale.account_invoice_form
@@ -46,6 +51,7 @@ NEW ir.ui.view: sale.account_invoice_tree
 NEW ir.ui.view: sale.crm_case_section_salesteams_view_form
 NEW ir.ui.view: sale.crm_case_section_salesteams_view_kanban
 NEW ir.ui.view: sale.product_form_view_sale_order_button
+NEW ir.ui.view: sale.product_template_form_view_sale_order_button
 NEW ir.ui.view: sale.report_saleorder
 NEW ir.ui.view: sale.report_saleorder_document
 NEW ir.ui.view: sale.view_company_inherit_form2
