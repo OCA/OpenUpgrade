@@ -20,7 +20,7 @@ def copy_database(conn_parms):
     db_new = '%s_migrated' % conn_parms['database']
     print('copying database %(db_old)s to %(db_new)s...' % {'db_old': db_old,
                                                             'db_new': db_new})
-    if conn_parms['host'] == 'False':
+    if conn_parms.get('host') == 'False':
         del conn_parms['host']
         del conn_parms['port']
     conn = psycopg2.connect(**conn_parms)
@@ -38,17 +38,14 @@ def copy_database(conn_parms):
         cur.close()
 
         os.environ['PGUSER'] = conn_parms['user']
-        if ('host' in conn_parms and conn_parms['host']
-                and not os.environ.get('PGHOST')):
+        if conn_parms.get('host') and not os.environ.get('PGHOST'):
             os.environ['PGHOST'] = conn_parms['host']
 
-        if ('port' in conn_parms and conn_parms['port']
-                and not os.environ.get('PGPORT')):
+        if conn_parms.get('port') and not os.environ.get('PGPORT'):
             os.environ['PGPORT'] = conn_parms['port']
 
         password_set = False
-        if ('password' in conn_parms and conn_parms['password']
-                and not os.environ.get('PGPASSWORD')):
+        if conn_parms.get('password') and not os.environ.get('PGPASSWORD'):
             os.environ['PGPASSWORD'] = conn_parms['password']
             password_set = True
 
