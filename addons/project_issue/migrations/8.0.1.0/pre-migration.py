@@ -3,6 +3,7 @@
 #
 # Odoo, a suite of business apps
 # This module Copyright (C) 2014 Therp BV (<http://therp.nl>).
+#    @author: Onestein <www.onestein.nl>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -21,7 +22,9 @@
 
 from openerp.openupgrade import openupgrade
 
-column_renames = {'project_issue': ['priority']}
+column_renames = {'project_issue': [
+    ('priority', None),
+]}
 
 xmlid_renames = [
     ('project_issue.mt_issue_closed', 'project_issue.mt_issue_ready'),
