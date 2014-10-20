@@ -111,9 +111,6 @@ re_ul_li = re.compile("^(\*+|##+):? ")
 re_ol_li = re.compile("^(\*\*+|#+):? ")
 re_ul_ol_li = re.compile("^(\*+|#+):? ")
 re_youtube = re.compile("^(https?://)?(www\.)?youtube.com/(watch\?(.*)v=|embed/)([^&]+)")
-re_b_i = re.compile("'''''(([^']|([^']('{1,4})?[^']))+)'''''")
-re_b = re.compile("'''(([^']|([^'](''?)?[^']))+)'''")
-re_i = re.compile("''(([^']|([^']'?[^']))+)''")
 
 
 class Wiky:
@@ -316,9 +313,36 @@ class Wiky:
                     break
 
         # Bold, Italics, Emphasis
-        wikitext = re_b_i.sub("<b><i>\1</i></b>", wikitext)
-        wikitext = re_b.sub("<b>\1</b>", wikitext)
-        wikitext = re_i.sub("<i>\1</i>", wikitext)
-
-        return wikitext
+        head = ''
+        tail = wikitext
+        while tail:
+            quote_pos = tail.find("'")
+            if quote_pos > -1:
+                head += tail[:quote_pos]
+                tail = tail[quote_pos:]
+                pos = 0
+                while pos < len(tail) and tail[pos] == "'":
+                    pos += 1
+                if pos == 2 or pos == 3 or pos == 5:
+                    endquote_pos = tail.find("'"*pos, pos)
+                    if endquote_pos > -1:
+                        text = tail[pos:endquote_pos]
+                        if pos == 2:
+                            text = '<i>%s</i>' % text
+                        elif pos == 3:
+                            text = '<b>%s</b>' % text
+                        elif pos == 5:
+                            text = '<b><i>%s</i></b>' % text
+                        head += text
+                        tail = tail[endquote_pos + pos:]
+                    else:
+                        head += tail[:pos]
+                        tail = tail[pos:]
+                else:
+                    head += tail[:pos]
+                    tail = tail[pos:]
+            else:
+                head += tail
+                tail = ''
+        return head
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
