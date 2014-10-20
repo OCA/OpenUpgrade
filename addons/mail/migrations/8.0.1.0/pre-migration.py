@@ -27,7 +27,7 @@ column_renames = {
     'res_partner': [
         ('notification_email_send', 'notify_email'),
     ],
-    'mail_mail':[
+    'mail_mail': [
         ('email_from', None),
 
         ('mail_server_id', None),
@@ -38,7 +38,4 @@ column_renames = {
 
 @openupgrade.migrate()
 def migrate(cr, version):
-#     if not version:
-#         return
-
     openupgrade.rename_columns(cr, column_renames)
