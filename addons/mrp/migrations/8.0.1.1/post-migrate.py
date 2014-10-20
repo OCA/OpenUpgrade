@@ -9,8 +9,8 @@ def move_fields(cr, pool):
         UPDATE product_product
         SET produce_delay = (
             SELECT pt.%s
-            FROM product_template
-            WHERE product_template.id = product_product.product_tmpl_id)
+            FROM product_template pt
+            WHERE pt.id = product_product.product_tmpl_id)
         """ % openupgrade.get_legacy_name('produce_delay'),
     ]
     for sql in queries:
