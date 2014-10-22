@@ -36,6 +36,13 @@
                         />
                     <newline/>
                     <button 
+                        name="install_modules"
+                        string="Mark uninstalled modules as in remote DB for installation, needs manual review and installation"
+                        type="object" icon="gtk-execute"
+                        colspan="4"
+                        />
+                    <newline/>
+                    <button 
                         name="analyze"
                         string="Perform Analysis"
                         type="object" icon="gtk-execute"
