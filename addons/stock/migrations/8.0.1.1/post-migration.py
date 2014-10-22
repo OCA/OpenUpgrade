@@ -334,7 +334,7 @@ def _migrate_stock_warehouse(cr, id):
     # Reference used in the code for some default values
     if warehouse.code == 'WH1' and in_type_id:
         cr.execute("""UPDATE ir_model_data set noupdate = %s, res_id = %s where name = %s""",
-            (True, in_type_id, 'picking_type_in',))
+                   (True, in_type_id, 'picking_type_in',))
 
     # create routes and push/pull rules
     new_objects_dict = warehouse_obj.create_routes(cr, uid, warehouse.id, warehouse)
