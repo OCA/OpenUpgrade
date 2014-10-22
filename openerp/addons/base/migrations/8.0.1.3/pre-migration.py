@@ -21,10 +21,14 @@
 ##############################################################################
 
 from openerp.openupgrade import openupgrade
+from openerp.addons.openupgrade_records.lib import apriori
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    openupgrade.update_module_names(
+        cr, apriori.renamed_modules.iteritems()
+    )
     openupgrade.check_values_selection_field(
         cr, 'ir_act_report_xml', 'report_type',
         ['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit'])
