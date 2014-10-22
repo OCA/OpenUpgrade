@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle
-#    Copyright 2014 Camptocamp SA
+#    Copyright 2014 ONESTEiN B.V.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,31 +19,16 @@
 ##############################################################################
 
 from openerp.openupgrade import openupgrade
+from openerp import pooler
 
-column_renames = {
-    'product_supplierinfo': [
-        ('product_id', 'product_tmpl_id'),
-    ],
-    'product_product': [
-        ('color', None),
-        ('image', 'image_variant'),
-        ('variants', None),
-        ('price_extra', None),
-    ],
-    'product_template': [
-        ('produce_delay', None),    # data handled in mrp migration
-        ('cost_method', None),      # data handled in stock_account migration
-        ('standard_price', None),
-    ],
-    'product_packaging': [
-        ('height', None),
-        ('length', None),
-        ('weight_ul', None),
-        ('width', None),
+default_spec = {
+    'delivery.grid.line': [
+        ('sequence', 1),
     ],
 }
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.rename_columns(cr, column_renames)
+    pool = pooler.get_pool(cr.dbname)
+    openupgrade.set_defaults(cr, pool, default_spec, force=False)

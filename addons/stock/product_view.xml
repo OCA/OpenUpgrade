@@ -225,13 +225,13 @@
                     <div><field name="qty_available_text"/></div>
                     </button>
                    <button class="oe_inline oe_stat_button" string="Moves" name= "%(act_product_stock_move_open)d" type="action" attrs="{'invisible':[('type', '=', 'service')]}" groups="stock.group_stock_user" icon="fa-arrows-v"/>
-                   <button class="oe_inline oe_stat_button" name="%(product_open_orderpoint)d" type="action" 
+                   <button class="oe_inline oe_stat_button" name="%(product_open_orderpoint)d" type="action"
                         attrs="{'invisible':[('type', '=', 'service')]}" icon="fa-refresh" string="Reordering Rules"/>
                    <button class="oe_inline oe_stat_button" name="action_view_routes" string="Routes" type="object" icon="fa-cogs" attrs="{'invisible':[('type', '=', 'service')]}" />
                 </xpath>
             </field>
         </record>
-        
+
         <record model="ir.ui.view" id="product_template_form_view_procurement_button">
             <field name="name">product.template_procurement</field>
             <field name="model">product.template</field>
@@ -245,7 +245,7 @@
                    <div><field name="qty_available_text"/></div>
                    </button>
                    <button class="oe_inline oe_stat_button" string="Moves" name= "action_view_stock_moves" type="object" attrs="{'invisible':[('type', '=', 'service')]}" groups="stock.group_stock_user" icon="fa-arrows-v"/>
-                   <button class="oe_inline oe_stat_button" name="action_view_orderpoints" type="object" 
+                   <button class="oe_inline oe_stat_button" name="action_view_orderpoints" type="object"
                         attrs="{'invisible':[('type', '=', 'service')]}" icon="fa-refresh" string="Reordering Rules"/>
                    <button class="oe_inline oe_stat_button" name="action_view_routes" string="Routes" type="object" icon="fa-cogs" attrs="{'invisible':[('type', '=', 'service')]}" />
                 </xpath>

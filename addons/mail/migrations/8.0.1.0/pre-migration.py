@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle
-#    Copyright 2014 Camptocamp SA
+#    Copyright (C) 2014 Akretion (http://www.akretion.com/)
+#    @author: Alexis de Lattre <alexis.delattre@akretion.com>
+#    (<http://www.savoirfairelinux.com>).
+#    @author: Onestein <www.onestein.nl>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,26 +24,15 @@
 from openerp.openupgrade import openupgrade
 
 column_renames = {
-    'product_supplierinfo': [
-        ('product_id', 'product_tmpl_id'),
+    'res_partner': [
+        ('notification_email_send', 'notify_email'),
     ],
-    'product_product': [
-        ('color', None),
-        ('image', 'image_variant'),
-        ('variants', None),
-        ('price_extra', None),
-    ],
-    'product_template': [
-        ('produce_delay', None),    # data handled in mrp migration
-        ('cost_method', None),      # data handled in stock_account migration
-        ('standard_price', None),
-    ],
-    'product_packaging': [
-        ('height', None),
-        ('length', None),
-        ('weight_ul', None),
-        ('width', None),
-    ],
+    'mail_mail': [
+        ('email_from', None),
+
+        ('mail_server_id', None),
+        ('reply_to', None),
+    ]
 }
 
 

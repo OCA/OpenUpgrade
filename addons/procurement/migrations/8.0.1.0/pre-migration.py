@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Alexandre Fayolle
-#    Copyright 2014 Camptocamp SA
+#    Copyright 2014 ONESTEiN B.V.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,29 +21,33 @@
 from openerp.openupgrade import openupgrade
 
 column_renames = {
-    'product_supplierinfo': [
-        ('product_id', 'product_tmpl_id'),
-    ],
-    'product_product': [
-        ('color', None),
-        ('image', 'image_variant'),
-        ('variants', None),
-        ('price_extra', None),
+    'procurement_order': [
+        ('note', None),
+        ('move_id', None),
+        ('procure_method', None),
     ],
     'product_template': [
-        ('produce_delay', None),    # data handled in mrp migration
-        ('cost_method', None),      # data handled in stock_account migration
-        ('standard_price', None),
+        ('supply_method', None),
+        ('procure_method', None),
     ],
-    'product_packaging': [
-        ('height', None),
-        ('length', None),
-        ('weight_ul', None),
-        ('width', None),
+    'stock_warehouse_orderpoint': [
+        ('procurement_id', None),
     ],
 }
+
+xmlid_renames = [
+    ('procurement.access_stock_warehouse_orderpoint', 'stock.access_stock_warehouse_orderpoint'),
+    ('procurement.access_stock_warehouse_orderpoint_system', 'stock.access_stock_warehouse_orderpoint_system'),
+    #     ('procurement.access_mrp_property', 'mrp.access_mrp_property'),
+    #     ('procurement.access_mrp_property_group', 'mrp.access_mrp_property_group'),
+    ('procurement.stock_warehouse_orderpoint_rule', 'stock.stock_warehouse_orderpoint_rule'),
+]
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    if openupgrade.column_exists(cr, 'procurement_order', 'purchase_id'):
+        column_renames['procurement_order'].append(('purchase_id', None))
     openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_xmlids(cr, xmlid_renames)
+    openupgrade.delete_model_workflow(cr, 'procurement.order')

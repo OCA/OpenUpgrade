@@ -3,6 +3,7 @@
 #
 # Odoo, a suite of business apps
 # This module Copyright (C) 2014 Therp BV (<http://therp.nl>).
+#    @author: Onestein <www.onestein.nl>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -19,21 +20,22 @@
 #
 ##############################################################################
 
-from openerp import SUPERUSER_ID as uid
+from openerp import pooler, SUPERUSER_ID as uid
 from openerp.openupgrade import openupgrade, openupgrade_80
 
 
-@openupgrade.migrate
+@openupgrade.migrate()
 def migrate(cr, version):
+    pool = pooler.get_pool(cr.dbname)
 
     openupgrade.map_values(
         cr,
         openupgrade.get_legacy_name('priority'),
         'priority',
-        [('5', '0'), ('4', '0'), ('3', '1'), ('2', '2'), ('1', '2')],
+        [('4', '0'), ('3', '0'), ('2', '1'), ('1', '2'), ('0', '2')],
         table='project_issue', write='sql')
 
-    openupgrade_80.set_message_last_post(cr, uid, ['project.issue'])
+    openupgrade_80.set_message_last_post(cr, uid, pool, ['project.issue'])
 
     openupgrade.load_data(
         cr, 'project_issue', 'migrations/8.0.1.0/noupdate_changes.xml')
