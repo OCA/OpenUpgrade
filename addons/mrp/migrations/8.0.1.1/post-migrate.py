@@ -34,13 +34,6 @@ def move_fields(cr, pool):
     execute = openupgrade.logged_query
     queries = [
         """
-UPDATE product_product
-SET produce_delay = (
-SELECT product_template.%s
-FROM product_template
-WHERE product_template.id = product_product.product_tmpl_id)
-""" % openupgrade.get_legacy_name('produce_delay'),
-        """
 UPDATE mrp_bom
 SET product_tmpl_id=(SELECT product_tmpl_id
 FROM product_product
