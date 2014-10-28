@@ -17,8 +17,8 @@ install:
     - for module in `cat openerp/openupgrade/doc/source/modules70-80.rst  | grep -i "|.*Done" | cut -d"|" -f2` ; do if [ -z "$ADDONS_LIST" ] ; then ADDONS_LIST=$module; else ADDONS_LIST=$ADDONS_LIST,$module; fi; done
     - echo "Installing Modules : "$ADDONS_LIST
     # Install Maintainer Tools
-  - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
-  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+    - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
+    - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
 
     # Install Old Version
     - git clone https://github.com/${ODOO_REPO}.git ${HOME}/old-version -b ${VERSION} --depth=1
