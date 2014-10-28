@@ -19,14 +19,11 @@ install:
     # Install Maintainer Tools
     - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
     - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
-    - echo "old version"
     # Install Old Version
     - git clone https://github.com/${ODOO_REPO}.git ${HOME}/old-version -b ${VERSION} --depth=1
     - travis_install_nightly
     # Install Module (old Version)
     - python ${HOME}/old-version/openerp-server --addons-path=${HOME}/old-version/addons --init=$ADDONS_LIST --stop-after-init
-
-    - echo "new version"
     # OpenUpgrade
     - python openerp-server --addons-path=./addons --database=test --update=all
 
