@@ -1,0 +1,40 @@
+---Fields in module 'portal'---
+---XML records in module 'portal'---
+DEL ir.actions.act_window: portal.action_acquirer_list
+DEL ir.actions.client: portal.action_jobs
+DEL ir.actions.client: portal.action_news
+# Ignore
+
+DEL ir.model.access: portal.access_acquirer
+DEL ir.model.access: portal.access_acquirer_all
+DEL ir.model.access: portal.access_res_partner
+# NOTHING TO DO
+
+DEL ir.rule: portal.portal_read_own_res_partner
+# NOTHING TO DO
+
+DEL ir.ui.menu: portal.portal_company
+DEL ir.ui.menu: portal.portal_company_news
+DEL ir.ui.menu: portal.portal_jobs
+NEW ir.ui.view: portal.assets_backend
+DEL ir.ui.view: portal.acquirer_form
+DEL ir.ui.view: portal.acquirer_list
+DEL ir.ui.view: portal.acquirer_search
+# IGNORE
+
+DEL mail.group: portal.company_jobs
+DEL mail.group: portal.company_news_feed
+# NOTHING TO DO
+
+# Check this
+DEL portal.payment.acquirer: portal.paypal_acquirer
+# NOTHING TO DO
+
+#Group delete:
+DEL res.groups: portal.group_anonymous
+# DONE
+
+# Group rename:
+NEW res.groups: base.group_portal
+DEL res.groups: portal.group_portal
+# DONE
