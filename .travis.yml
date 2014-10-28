@@ -3,9 +3,21 @@ language: python
 python:
   - "2.7"
 
+env:
+  - VERSION="7.0" ODOO_REPO="odoo/odoo"
+
+virtualenv:
+  system_site_packages: true
+
 # Need flake8 for pep8 testing
 install:
     - pip install flake8
+    - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
+    - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+    - git clone https://github.com/${ODOO_REPO}.git ${HOME}/old-version -b ${VERSION} --depth=1
+    - travis_install_nightly
+    - python ${HOME}/old-version/openerp-server --addons-path=${HOME}/old-version/addons --init=base --stop-after-init
+    - python openerp-server --addons-path=./addons --database=test --update=all
 
 # Test with flake for:
 #   * migration scripts
