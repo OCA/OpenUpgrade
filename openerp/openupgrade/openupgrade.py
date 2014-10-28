@@ -552,6 +552,11 @@ def map_values(
         if not model:
             logger.exception("map_values is called with no table and no model")
         table = model._table
+    if source_column == target_column:
+        logger.exception(
+            "map_values is called with the same value for source and old"
+            " columns : %s",
+            source_column)
     for old, new in mapping:
         values = {
             'table': table,
