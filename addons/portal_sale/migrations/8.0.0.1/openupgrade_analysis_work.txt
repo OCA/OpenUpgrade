@@ -1,0 +1,24 @@
+---Fields in module 'portal_sale'---
+---XML records in module 'portal_sale'---
+NEW ir.model.access: portal_sale.access_product_attribute_line_portal
+NEW ir.model.access: portal_sale.access_product_attribute_portal
+NEW ir.model.access: portal_sale.access_product_attribute_price_portal
+NEW ir.model.access: portal_sale.access_product_attribute_value_portal
+DEL ir.model.access: portal_sale.access_account_account
+DEL ir.model.access: portal_sale.access_account_fiscalyear
+DEL ir.model.access: portal_sale.access_account_move
+DEL ir.model.access: portal_sale.access_account_move_line
+DEL ir.model.access: portal_sale.access_account_move_reconcile
+DEL ir.model.access: portal_sale.access_account_period
+DEL ir.model.access: portal_sale.access_account_voucher
+DEL ir.model.access: portal_sale.access_account_voucher_line
+DEL ir.model.access: portal_sale.access_sale_shop
+NEW ir.rule: portal_sale.portal_account_invoice_line_rule
+NEW ir.rule: portal_sale.portal_sale_order_line_rule
+NEW ir.ui.view: portal_sale.invoice_form_portal
+
+NEW res.groups: base.group_portal
+DEL res.groups: portal.group_portal
+# DONE in base module
+# the group in custom no-update data.
+# DONE (post-migration) update the references to base.group_portal
