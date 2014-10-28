@@ -3,7 +3,7 @@
 #
 # Odoo, a suite of business apps
 # This module Copyright (C) 2014 Therp BV (<http://therp.nl>).
-#    @author: Onestein <www.onestein.nl>
+#    @contributor: Onestein <www.onestein.nl>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
