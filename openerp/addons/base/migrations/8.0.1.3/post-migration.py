@@ -44,12 +44,17 @@ def check_ir_actions_server_state(cr, pool):
 
 
 def remove_account_report_company_record(cr, pool):
-    """An ir_ui_view record from the discontinued module account_report_company is not removed and causes an
+    """An ir_ui_view record from the discontinued module """
+    """account_report_company is not removed and causes an
     AttributeError, remove it here to fix that error. """
-    view_obj = pool.get('ir.ui.view')
-    view_ids = view_obj.search(cr, SUPERUSER_ID,
-                               [('arch', 'like', '//templates//'), ('name', '=', 'res.partner kanban')])
-    view_obj.unlink(cr, SUPERUSER_ID, view_ids)
+    view_obj = pool['ir.ui.view']
+    try:
+        view_id = pool['ir.model.data'].get_object_reference(
+            cr, SUPERUSER_ID, 'account_report_company',
+            'account_report_copmany_partner_kanban_view')[1]
+        view_obj.unlink(cr, SUPERUSER_ID, [view_id])
+    except ValueError:
+        pass
 
 
 @openupgrade.migrate()
