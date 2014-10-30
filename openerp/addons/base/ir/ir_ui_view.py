@@ -1141,4 +1141,3 @@ class view(osv.osv):
                 self.raise_view_error(cr, uid, "Can't validate view", vid)
 
 # vim:et:
-
