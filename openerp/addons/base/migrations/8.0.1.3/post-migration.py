@@ -43,13 +43,6 @@ def check_ir_actions_server_state(cr, pool):
                 ias.state, ias.id))
 
 
-def check_commercial_partner(cr, pool):
-    """ Test if the column is present (iow: if there exists a partner with a parent"""
-    if not openupgrade.column_exists(cr, "res_partner", "commercial_partner_id"):
-        sql = """ALTER TABLE res_partner ADD COLUMN commercial_partner_id int"""
-        cr.execute(sql)
-
-
 def remove_account_report_company_record(cr, pool):
     """An ir_ui_view record from the discontinued module account_report_company is not removed and causes an
     AttributeError, remove it here to fix that error. """
@@ -63,5 +56,4 @@ def remove_account_report_company_record(cr, pool):
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     check_ir_actions_server_state(cr, pool)
-    check_commercial_partner(cr, pool)
     remove_account_report_company_record(cr, pool)
