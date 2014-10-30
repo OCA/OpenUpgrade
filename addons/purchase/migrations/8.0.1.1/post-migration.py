@@ -92,8 +92,7 @@ def migrate_product_supply_method(cr):
         product_ids = []
         cr.execute("""SELECT id FROM product_template WHERE %s = %%s""" % (
             procure_method_legacy, ('buy',)))
-        for res in cr.fetchall():
-            product_ids.append(res[0])
+        product_ids = [res[0] for res in cr.fetchall()]
 
         template_obj.write(
             cr, uid, product_ids, {'route_ids': [(4, mto_route_id)]})
