@@ -82,11 +82,10 @@ def migrate_product_supply_method(cr):
     :param cr: Database cursor
     """
     pool = pooler.get_pool(cr.dbname)
-    route_obj = pool['stock.location.route']
     template_obj = pool['product.template']
 
-    mto_route_id = route_obj.search(cr, uid, [('name', 'like', 'Buy')])
-    mto_route_id = mto_route_id and mto_route_id[0] or False
+    mto_route_id = pool['ir.model.data'].get_object_reference(
+        cr, uid, 'purchase', 'route_warehouse0_buy')[1]
 
     procure_method_legacy = openupgrade.get_legacy_name('supply_method')
     if mto_route_id:
