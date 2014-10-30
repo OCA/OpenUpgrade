@@ -17,9 +17,10 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################"
+##############################################################################
 from openerp.openupgrade import openupgrade
 from openerp.modules.registry import RegistryManager
+
 
 def import_crm_meeting(cr):
     '''
@@ -72,7 +73,8 @@ def import_crm_meeting(cr):
             openupgrade.get_legacy_name('crm_meeting_id'),
         )
     )
-    #TODO: get attendees from meeting_attendee_rel
+    # TODO: get attendees from meeting_attendee_rel
+
 
 def recompute_date_fields(cr):
     '''calculate stop_date{,time} from start_datetime + duration'''
@@ -81,6 +83,7 @@ def recompute_date_fields(cr):
         start_date = start_datetime,
         stop_date = start_datetime + interval '1 hour' * duration,
         stop_datetime = start_datetime + interval '1 hour' * duration''')
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
