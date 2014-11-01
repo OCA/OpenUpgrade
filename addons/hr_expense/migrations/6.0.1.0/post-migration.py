@@ -33,14 +33,14 @@ def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     openupgrade.set_defaults(cr, pool, defaults_force, force=True)
     openupgrade.load_xml(
-        cr, 'account',
+        cr, 'hr_expense',
         'migrations/6.0.1.0/data/hr_expense_workflow.xml')
     # Fix existing workflow instances
     openupgrade.logged_query(
-        cr, 
+        cr,
         """
             UPDATE wkf_instance SET state = 'active'
             WHERE res_type = 'hr.expense.expense'
-            AND res_id IN 
+            AND res_id IN
                 (select id from hr_expense_expense where state = 'cancelled');
         """)
