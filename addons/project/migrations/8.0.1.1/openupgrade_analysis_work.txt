@@ -1,0 +1,76 @@
+---Fields in module 'project'---
+# NTD cosmetic change
+project      / project.project          / doc_count (int)               : type is now 'integer' ('int')
+
+# Apply set_message_last_post
+project      / project.project          / message_last_post (datetime)  : NEW 
+project      / project.task             / message_last_post (datetime)  : NEW 
+
+# NTD Reverse relation of existing many2one on task model
+project      / project.project          / task_ids (one2many)           : NEW relation: project.task
+# NTD Tracking a write on the task stage_id. No meaningful value to apply during migration.
+project      / project.task             / date_last_stage_update (datetime): NEW 
+
+# Adapt to new semantics and range
+project      / project.task             / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['0', '1', '2', '3', '4']')
+
+# NTD Existing table column now referred in the model
+project      / project.task             / write_date (datetime)         : NEW 
+
+# NTD State is no longer available on task, therefore neither in the history.
+2project      / project.task.history     / state (selection)             : DEL selection_keys: ['cancelled', 'done', 'draft', 'open', 'pending']
+project      / project.task.history.cumulative / state (selection)             : DEL selection_keys: ['cancelled', 'done', 'draft', 'open', 'pending']
+project      / project.task.type        / state (selection)             : DEL required: required, selection_keys: ['cancelled', 'done', 'draft', 'open', 'pending'], req_default: open
+
+# NTD this report is a view, not table
+project      / report.project.task.user / date_last_stage_update (date) : NEW 
+project      / report.project.task.user / day (char)                    : DEL 
+project      / report.project.task.user / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+project      / report.project.task.user / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['0', '1', '2', '3', '4']')
+project      / report.project.task.user / stage_id (many2one)           : NEW relation: project.task.type
+project      / report.project.task.user / year (char)                   : DEL 
+
+# Additionally, take into account how project aliases are now configured
+# in the project's create() method. Adapt existing aliases.
+
+---XML records in module 'project'---
+# Regular updated data
+DEL ir.actions.act_window: project.action_project_task_reevaluate
+DEL ir.actions.act_window: project.my_open_tasks_action
+DEL ir.actions.act_window: project.open_board_project
+NEW ir.model.access: project.access_mail_alias
+NEW ir.model.access: project.access_project_task_type_manager
+NEW ir.model.access: project.access_resource_calendar_leaves_user
+DEL ir.ui.menu: project.menu_project_dashboard
+NEW ir.ui.view: project.assets_backend
+DEL ir.ui.view: project.board_project_form
+DEL ir.ui.view: project.view_project_task_reevaluate
+DEL ir.ui.view: project.view_task_history_tree
+DEL ir.ui.view: project.view_task_project_user_tree
+DEL ir.ui.view: project.view_task_tree
+
+# Rename functionally similar mail subtype ids
+DEL mail.message.subtype: project.mt_project_task_started
+NEW mail.message.subtype: project.mt_project_task_assigned
+DEL mail.message.subtype: project.mt_task_closed
+NEW mail.message.subtype: project.mt_task_assigned
+DEL mail.message.subtype: project.mt_task_started
+NEW mail.message.subtype: project.mt_task_ready
+
+# No more mail subtype for a project's task end of life
+DEL mail.message.subtype: project.mt_project_task_closed
+
+# Data for abandoned process module
+DEL process.node: project.process_node_donetask0
+DEL process.node: project.process_node_drafttask0
+DEL process.node: project.process_node_opentask0
+DEL process.node: project.process_node_taskbydelegate0
+DEL process.process: project.process_process_tasksprocess0
+DEL process.transition: project.process_transition_delegate0
+DEL process.transition: project.process_transition_draftopentask0
+DEL process.transition: project.process_transition_opendonetask0
+DEL process.transition.action: project.process_transition_action_draftcanceltask0
+DEL process.transition.action: project.process_transition_action_draftopentask0
+DEL process.transition.action: project.process_transition_action_opencanceltask0
+DEL process.transition.action: project.process_transition_action_opendrafttask0
+DEL process.transition.action: project.process_transition_action_openpendingtask0
