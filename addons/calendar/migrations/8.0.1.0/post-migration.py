@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.openupgrade import openupgrade
+from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID
 
@@ -28,6 +28,7 @@ def import_crm_meeting(cr):
     merge crm.meeting records into plain calendar events, record crm.meeting's
     id in get_legacy_name('crm_meeting_id') to correct references in modules
     using crm.meeting before.
+    Finally, update chatter.
     '''
     cr.execute(
         'alter table calendar_event add column %s int' % (
@@ -90,6 +91,17 @@ def import_crm_meeting(cr):
             openupgrade.get_legacy_name('crm_meeting_id'),
         )
     )
+    # and update chatter
+    cr.execute(
+        '''update mail_message
+        set model='calendar.event', res_id=calendar_event.id
+        from calendar_event
+        where model='crm.meeting' and res_id=%s''' % (
+            openupgrade.get_legacy_name('crm_meeting_id'),
+        )
+    )
+    openupgrade_80.set_message_last_post(
+        cr, SUPERUSER_ID, RegistryManager.get(cr.dbname), ['calendar.event'])
 
 
 def recompute_date_fields(cr):
