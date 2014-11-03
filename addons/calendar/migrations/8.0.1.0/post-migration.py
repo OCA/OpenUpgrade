@@ -146,3 +146,20 @@ def migrate(cr, version):
         calendar_event._update_store(cr, calendar_event._columns[field], field)
     migrate_attendees(cr)
     migrate_alarms(cr)
+    # map renamed and deprecated reminder actions to 'notification'
+    cr.execute(
+        '''update calendar_alarm
+        set type='notification'
+        where type in ('audio', 'display', 'procedure')'''
+    )
+    # map renamed event states
+    cr.execute(
+        '''update calendar_event
+        set state='draft' where state in ('cancelled', 'tentative')''')
+    cr.execute(
+        '''update calendar_event
+        set state='open' where state in ('confirmed')''')
+    # map renamed attendee states
+    cr.execute(
+        '''update calendar_attendee
+        set state='needsAction' where state in ('needs-action')''')
