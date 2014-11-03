@@ -20,6 +20,7 @@
 ##############################################################################
 from openerp.openupgrade import openupgrade
 from openerp.modules.registry import RegistryManager
+from openerp import SUPERUSER_ID
 
 
 def import_crm_meeting(cr):
@@ -110,6 +111,30 @@ def migrate_attendees(cr):
     )
 
 
+def migrate_alarms(cr):
+    '''now alarms are only defined in relation to the events they are attached
+    to'''
+    pool = RegistryManager.get(cr.dbname)
+    calendar_alarm_model_id = pool['ir.model.data'].xmlid_to_res_id(
+        cr, SUPERUSER_ID,
+        'calendar.model_calendar_alarm', raise_if_not_found=True)
+    cr.execute(
+        '''insert into calendar_alarm_calendar_event_rel
+        (calendar_event_id, calendar_alarm_id)
+        select
+        %s, calendar_alarm.id
+        from calendar_alarm join res_alarm
+        on %s=res_alarm.id
+        where %s=%s
+        ''' % (
+            openupgrade.get_legacy_name('res_id'),
+            openupgrade.get_legacy_name('alarm_id'),
+            openupgrade.get_legacy_name('model_id'),
+            calendar_alarm_model_id
+        )
+    )
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     recompute_date_fields(cr)
@@ -120,3 +145,4 @@ def migrate(cr, version):
     for field in ['start', 'stop', 'display_start']:
         calendar_event._update_store(cr, calendar_event._columns[field], field)
     migrate_attendees(cr)
+    migrate_alarms(cr)
