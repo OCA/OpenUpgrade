@@ -25,6 +25,9 @@
 # docs in the latest release.
 
 
+from openerp import SUPERUSER_ID
+
+
 def get_last_post_for_model(cr, uid, ids, model_pool):
     """
     Given a set of ids and a model pool, return a dict of each object ids with
@@ -72,3 +75,37 @@ def set_message_last_post(cr, uid, pool, models):
         last_posts = get_last_post_for_model(cr, uid, obj_ids, model_pool)
         for i in obj_ids:
             model_pool.write(cr, uid, [i], {'message_last_post': last_posts[i]})
+
+
+def update_aliases(
+        cr, registry, model_name, set_parent_thread_id,
+        alias_defaults=None, defaults_id_key=False):
+    """
+    Update a model's aliases according to how they are configured
+    in the model's create() method.
+
+    :param model_name: The name of the model whose aliases are to be updated. \
+    The model_id is also set as the aliases' alias_parent_model_id.
+    :param set_parent_thread_id': When set, set the ids of the resources as \
+    their alias' alias_parent_thread_id
+    :param alias_defaults: Static dictionary, recorded as a string on each \
+    alias
+    :param defaults_id_key: When defined, add this key to each alias' defaults \
+    dictionary with the resource id as its value.
+    """
+    model_id = registry['ir.model'].search(
+        cr, SUPERUSER_ID, [('model', '=', model_name)])[0]
+    vals = {'alias_parent_model_id': model_id}
+    if defaults_id_key and alias_defaults is None:
+        alias_defaults = {}
+    res_ids = registry[model_name].search(
+        cr, SUPERUSER_ID, [], context={'active_test': False})
+    for res in registry[model_name].browse(
+            cr, SUPERUSER_ID, res_ids):
+        if set_parent_thread_id:
+            vals['alias_parent_thread_id'] = res.id
+        if defaults_id_key:
+            alias_defaults[defaults_id_key] = res.id
+        if alias_defaults is not None:
+            vals['alias_defaults'] = str(alias_defaults)
+        res.alias_id.write(vals)

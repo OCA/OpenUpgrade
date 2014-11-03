@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record id="project_tt_merge" model="project.task.type"><field name="state"/><field name="sequence">14</field>
+            </record>
+    <record id="project_tt_cancel" model="project.task.type"><field name="state"/><field name="sequence">30</field>
+            </record>
+    <record id="task_visibility_rule" model="ir.rule"><field name="domain_force">['|',
+                                        ('project_id.privacy_visibility', 'in', ['public', 'employees']),
+                                        '&amp;',
+                                            ('project_id.privacy_visibility', '=', 'followers'),
+                                            ('message_follower_ids', 'in', [user.partner_id.id]),
+                                    ]</field>
+        <field name="name">Project/Task: employees: public or employee or (followers and following)</field>
+        </record>
+    <record id="project_tt_specification" model="project.task.type"><field name="state"/><field name="sequence">10</field>
+            </record>
+    <record id="project_tt_analysis" model="project.task.type"><field name="case_default" eval="True"/>
+        <field name="state"/></record>
+    <record id="all_projects_account" model="account.analytic.account"><field name="code">PP001</field>
+            </record>
+    <record id="project_tt_testing" model="project.task.type"><field name="state"/><field name="sequence">13</field>
+            </record>
+    <record id="project_tt_design" model="project.task.type"><field name="state"/><field name="sequence">11</field>
+            </record>
+    <record id="project_tt_development" model="project.task.type"><field name="state"/><field name="sequence">12</field>
+            </record>
+    <record id="project_tt_deployment" model="project.task.type"><field name="state"/><field name="sequence">20</field>
+            </record>
+  </data>
+</openerp>
+
