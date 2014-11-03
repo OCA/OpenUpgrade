@@ -20,20 +20,23 @@
 ##############################################################################
 
 from openerp import SUPERUSER_ID as uid
+from openerp import pooler
 from openerp.openupgrade import openupgrade, openupgrade_80
 
 
-@openupgrade.migrate
+@openupgrade.migrate()
 def migrate(cr, version):
 
-    openupgrade.map_values(
-        cr,
-        openupgrade.get_legacy_name('priority'),
-        'priority',
-        [('5', '0'), ('4', '0'), ('3', '1'), ('2', '2'), ('1', '2')],
-        table='project_issue', write='sql')
+    # map_values() does not exist
+    #openupgrade.map_values(
+    #    cr,
+    #    openupgrade.get_legacy_name('priority'),
+    #    'priority',
+    #    [('5', '0'), ('4', '0'), ('3', '1'), ('2', '2'), ('1', '2')],
+    #    table='project_issue', write='sql')
 
-    openupgrade_80.set_message_last_post(cr, uid, ['project.issue'])
+    pool = pooler.get_pool(cr.dbname)
+    openupgrade_80.set_message_last_post(cr, uid, pool, ['project.issue'])
 
     openupgrade.load_data(
         cr, 'project_issue', 'migrations/8.0.1.0/noupdate_changes.xml')

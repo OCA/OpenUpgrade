@@ -21,7 +21,7 @@
 
 from openerp.openupgrade import openupgrade
 
-column_renames = {'project_issue': ['priority']}
+#column_renames = {'project_issue': ['priority']}
 
 xmlid_renames = [
     ('project_issue.mt_issue_closed', 'project_issue.mt_issue_ready'),
@@ -33,5 +33,5 @@ xmlid_renames = [
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.rename_columns(cr, column_renames)
+    #openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
