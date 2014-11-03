@@ -29,6 +29,7 @@ def migrate(cr, version):
         cr,
         {
             'calendar_event': [
+                ('end_date', 'date_final'),
                 ('select1', 'month_by'),
                 ('date', 'start_datetime'),
             ]

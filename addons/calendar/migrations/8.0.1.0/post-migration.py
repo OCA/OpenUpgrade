@@ -66,14 +66,29 @@ def import_crm_meeting(cr):
         '''insert into calendar_event_res_partner_rel
         (calendar_event_id, res_partner_id)
         select
-        %s, partner_id
+        calendar_event.id, partner_id
         from crm_meeting_partner_rel join calendar_event
         on %s=crm_meeting_partner_rel.meeting_id''' % (
             openupgrade.get_legacy_name('crm_meeting_id'),
+        )
+    )
+    cr.execute(
+        '''update meeting_category_rel
+        set event_id=calendar_event.id
+        from calendar_event where event_id=%s''' % (
             openupgrade.get_legacy_name('crm_meeting_id'),
         )
     )
-    # TODO: get attendees from meeting_attendee_rel
+    cr.execute(
+        '''update calendar_attendee
+        set event_id=calendar_event.id
+        from meeting_attendee_rel
+        join calendar_event
+        on %s=meeting_attendee_rel.event_id
+        where attendee_id=calendar_attendee.id''' % (
+            openupgrade.get_legacy_name('crm_meeting_id'),
+        )
+    )
 
 
 def recompute_date_fields(cr):
@@ -89,7 +104,7 @@ def recompute_date_fields(cr):
 def migrate(cr, version):
     recompute_date_fields(cr)
     import_crm_meeting(cr)
-    # now we filled new field, recalculate some stored fields
+    # now we filled new fields, recalculate some stored fields
     pool = RegistryManager.get(cr.dbname)
     calendar_event = pool['calendar.event']
     for field in ['start', 'stop', 'display_start']:
