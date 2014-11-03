@@ -32,6 +32,17 @@ def migrate(cr, version):
                 ('end_date', 'date_final'),
                 ('select1', 'month_by'),
                 ('date', 'start_datetime'),
+                ('date_deadline', 'stop_datetime'),
+                ('alarm_id', None),
+                ('base_calendar_alarm_id', None),
+                ('base_calendar_url', None),
+                ('exdate', None),
+                ('exrule', None),
+                ('month_list', None),
+                ('organizer', None),
+                ('organizer_id', None),
+                ('sequence', None),
+                ('vtimezone', None),
             ],
             'calendar_alarm': [
                 ('action', 'type'),
@@ -53,4 +64,23 @@ def migrate(cr, version):
                 ('trigger_related', None),
                 ('user_id', None),
             ],
+            'calendar_attendee': [
+                ('cutype', None),
+                ('dir', None),
+                ('member', None),
+                ('ref', None),
+                ('role', None),
+                ('rsvp', None),
+                ('user_id', None),
+            ],
         })
+    # we create and prefill this fields (with bogus data, they will be
+    # recomputed during post-migrate in order to avoid errors when creating
+    # not null constraints
+    cr.execute(
+        '''alter table calendar_event
+        add column start timestamp without time zone,
+        add column stop timestamp without time zone''')
+    cr.execute(
+        '''update calendar_event
+        set start=start_datetime, stop=stop_datetime''')
