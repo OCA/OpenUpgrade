@@ -100,6 +100,16 @@ def recompute_date_fields(cr):
         stop_datetime = start_datetime + interval '1 hour' * duration''')
 
 
+def migrate_attendees(cr):
+    '''attendees were linked by a many2many relation before'''
+    cr.execute(
+        '''update calendar_attendee
+        set event_id=event_attendee_rel.event_id
+        from event_attendee_rel
+        where attendee_id=calendar_attendee.id'''
+    )
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     recompute_date_fields(cr)
@@ -109,3 +119,4 @@ def migrate(cr, version):
     calendar_event = pool['calendar.event']
     for field in ['start', 'stop', 'display_start']:
         calendar_event._update_store(cr, calendar_event._columns[field], field)
+    migrate_attendees(cr)
