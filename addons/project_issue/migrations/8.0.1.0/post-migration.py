@@ -23,7 +23,7 @@ from openerp import SUPERUSER_ID as uid
 from openerp.openupgrade import openupgrade, openupgrade_80
 
 
-@openupgrade.migrate
+@openupgrade.migrate()
 def migrate(cr, version):
 
     openupgrade.map_values(
