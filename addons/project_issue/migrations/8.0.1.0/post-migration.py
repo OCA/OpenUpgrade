@@ -19,14 +19,14 @@
 #
 ##############################################################################
 
-from openerp import pooler
 from openerp import SUPERUSER_ID as uid
+from openerp.modules.registry import RegistryManager
 from openerp.openupgrade import openupgrade, openupgrade_80
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    pool = pooler.get_pool(cr.dbname)
+    pool = RegistryManager.get(cr.dbname)
 
     openupgrade.map_values(
         cr,
