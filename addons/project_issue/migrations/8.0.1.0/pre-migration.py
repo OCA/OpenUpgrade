@@ -21,7 +21,7 @@
 
 from openerp.openupgrade import openupgrade
 
-column_renames = {'project_issue': ['priority']}
+column_renames = {'project_issue': [('priority', None)]}
 
 xmlid_renames = [
     ('project_issue.mt_issue_closed', 'project_issue.mt_issue_ready'),
