@@ -1,0 +1,24 @@
+---Fields in module 'hr_holidays'---
+hr_holidays  / hr.holidays              / meeting_id (many2one)         : relation is now 'calendar.event' ('crm.meeting')
+# correct references using get_lagacy_name('crm_meeting_id') provided by calendar migration
+hr_holidays  / hr.holidays              / message_last_post (datetime)  : NEW 
+# done by calling set_message_last_post
+hr_holidays  / hr.holidays.status       / categ_id (many2one)           : relation is now 'calendar.event.type' ('crm.meeting.type')
+# this table is renamed from crm.meeting.type in calendar migration, so nothing to do
+---XML records in module 'hr_holidays'---
+# nothing to do with those
+DEL ir.actions.act_window: hr_holidays.action_hr_holidays_leaves_by_month
+NEW ir.model.access: hr_holidays.access_calendar_attendee_hr_user
+NEW ir.model.access: hr_holidays.access_calendar_event_hr_user
+NEW ir.model.access: hr_holidays.access_calendar_event_type_manager
+NEW ir.model.access: hr_holidays.access_hr_holydays_status_manager
+DEL ir.model.access: hr_holidays.access_crm_meeting_type_manager
+DEL ir.model.access: hr_holidays.access_hr_holydays_status_user
+NEW ir.rule: hr_holidays.property_rule_holidays_employee_write
+NEW ir.rule: hr_holidays.resource_leaves_officer
+NEW ir.ui.view: hr_holidays.view_evaluation_report_graph
+NEW ir.ui.view: hr_holidays.view_holiday_graph
+DEL ir.ui.view: hr_holidays.allocation_leave_new
+DEL ir.ui.view: hr_holidays.board_hr_holidays_leave_by_month_form
+NEW workflow.transition: hr_holidays.holiday_confirm2draft
+NEW workflow.transition: hr_holidays.holiday_refuse2draft
