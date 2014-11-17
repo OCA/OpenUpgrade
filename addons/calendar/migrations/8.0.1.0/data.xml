@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record id="ir_cron_scheduler_alarm" model="ir.cron">
+            <field eval="False" name="active"/>
+            <field eval="'calendar.alarm_manager'" name="model"/>
+            <field name="args"/>
+            <field eval="'get_next_mail'" name="function"/>
+            <field name="interval_number">30</field>
+        </record>
+    </data>
+</openerp>

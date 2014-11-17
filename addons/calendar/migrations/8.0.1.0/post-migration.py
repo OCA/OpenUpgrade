@@ -175,3 +175,5 @@ def migrate(cr, version):
     cr.execute(
         '''update calendar_attendee
         set state='needsAction' where state in ('needs-action')''')
+    # load modified noupdate data
+    openupgrade.load_data(cr, 'calendar', 'migrations/8.0.1.0/data.xml')
