@@ -127,22 +127,38 @@ def migrate_alarms(cr):
     '''now alarms are only defined in relation to the events they are attached
     to'''
     pool = RegistryManager.get(cr.dbname)
-    calendar_alarm_model_id = pool['ir.model.data'].xmlid_to_res_id(
+    calendar_event_model_id = pool['ir.model.data'].xmlid_to_res_id(
         cr, SUPERUSER_ID,
-        'calendar.model_calendar_alarm', raise_if_not_found=True)
+        'calendar.model_calendar_event', raise_if_not_found=True)
     cr.execute(
         '''insert into calendar_alarm_calendar_event_rel
         (calendar_event_id, calendar_alarm_id)
         select
         %s, calendar_alarm.id
-        from calendar_alarm join res_alarm
-        on %s=res_alarm.id
+        from calendar_alarm
         where %s=%s
         ''' % (
             openupgrade.get_legacy_name('res_id'),
-            openupgrade.get_legacy_name('alarm_id'),
             openupgrade.get_legacy_name('model_id'),
-            calendar_alarm_model_id
+            calendar_event_model_id
+        )
+    )
+    crm_meeting_model_id = pool['ir.model.data'].xmlid_to_res_id(
+        cr, SUPERUSER_ID,
+        'calendar.model_crm_meeting', raise_if_not_found=True)
+    cr.execute(
+        '''insert into calendar_alarm_calendar_event_rel
+        (calendar_event_id, calendar_alarm_id)
+        select
+        calendar_event.id, calendar_alarm.id
+        from calendar_alarm join calendar_event
+        on %s=%s
+        where %s=%s
+        ''' % (
+            openupgrade.get_legacy_name('res_id'),
+            openupgrade.get_legacy_name('crm_meeting_id'),
+            openupgrade.get_legacy_name('model_id'),
+            crm_meeting_model_id
         )
     )
 
