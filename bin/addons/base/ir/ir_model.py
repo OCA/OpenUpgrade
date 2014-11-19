@@ -31,6 +31,8 @@ from tools import config
 from tools.translate import _
 import pooler
 
+from openupgrade import openupgrade_log
+
 def _get_fields_type(self, cr, uid, context=None):
     cr.execute('select distinct ttype,ttype from ir_model_fields')
     return cr.fetchall()
@@ -459,6 +461,10 @@ class ir_model_data(osv.osv):
         return id
 
     def _update(self,cr, uid, model, module, values, xml_id=False, store=True, noupdate=False, mode='init', res_id=False, context=None):
+        #OpenUpgrade: log entry (used in csv import)
+        if xml_id:
+            openupgrade_log.log_xml_id(cr, module, xml_id)
+
         warning = True
         model_obj = self.pool.get(model)
         if not context:

@@ -1671,7 +1671,15 @@ class orm_memory(orm_template):
     def exists(self, cr, uid, id, context=None):
         return id in self.datas
 
+# http://stackoverflow.com/questions/739882/iterating-over-object-instances-of-a-given-class-in-python
+class IterRegistry(type):
+    def __iter__(cls):
+        return iter(cls._registry)
+
 class orm(orm_template):
+    __metaclass__ = IterRegistry
+    _registry = []
+
     _sql_constraints = []
     _table = None
     _protected = ['read','write','create','default_get','perm_read','unlink','fields_get','fields_view_get','search','name_get','distinct_field_get','name_search','copy','import_data','search_count', 'exists']
@@ -2047,6 +2055,8 @@ class orm(orm_template):
 
     def __init__(self, cr):
         super(orm, self).__init__(cr)
+
+        self._registry.append(self)
 
         if not hasattr(self, '_log_access'):
             # if not access is not specify, it is the same value as _auto
