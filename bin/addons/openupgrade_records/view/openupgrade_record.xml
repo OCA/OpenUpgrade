@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Top level menu under 'Database structure' -->
+        <menuitem
+            id="menu_openupgrade"
+            name="OpenUpgrade Development"
+            parent="base.menu_administration"
+            sequence="99"
+            />
+        <record id="view_openupgrade_record_tree" model="ir.ui.view">
+            <field name="name">view.openupgrade.record.tree</field>
+            <field name="model">openupgrade.record</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="OpenUpgrade Records">
+                    <field name="module" select="1"/>
+                    <field name="model" select="1"/>
+                    <field name="field" select="1"/>
+                    <field name="name" select="1"/>
+                    <field name="type" select="1"/>
+                    <field name="mode" select="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_openupgrade_record_form" model="ir.ui.view">
+            <field name="name">view.openupgrade.record.form</field>
+            <field name="model">openupgrade.record</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="OpenUpgrade Record">
+                    <field name="module" select="1"/>
+                    <field name="model" select="1"/>
+                    <field name="field" select="1"/>
+                    <field name="name" select="1"/>
+                    <field name="type" select="1"/>
+                    <field name="mode" select="1"/>
+                    <separator string="Attributes" colspan="4"/>
+                    <field name="attribute_ids" mode="tree,form" nolabel="1" colspan="4">
+                        <tree string="Attributes">
+                            <field name="name"/>
+                            <field name="value"/>
+                        </tree>
+                        <form string="Attribute">
+                            <field name="name"/>
+                            <field name="value"/>
+                        </form>
+                    </field>
+                </form>
+            </field>
+        </record>
+        <record id="action_openupgrade_record_tree" model="ir.actions.act_window">
+            <field name="name">OpenUpgrade Records</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">openupgrade.record</field>
+            <field name="view_type">form</field>
+        </record>
+        <menuitem
+            action="action_openupgrade_record_tree"
+            id="menu_openupgrade_records"
+            name="Records"
+            parent="menu_openupgrade"
+            />
+    </data>
+</openerp>
