@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module Copyright (C) 2012 OpenUpgrade community
+#    This module Copyright (C) 2012-2014 OpenUpgrade community
 #    https://launchpad.net/~openupgrade-committers
 #
 #    Contributors:
@@ -24,21 +24,28 @@
 ##############################################################################
 
 import time
-import os
-from osv import osv, fields
-import pooler
+try:
+    from openerp.osv.orm import TransientModel
+    from openerp.osv import fields
+    from openerp import pooler
+except ImportError:
+    from osv.osv import osv_memory as TransientModel
+    from osv import fields
+    import pooler
 
-class install_all_wizard(osv.osv_memory):
+
+class install_all_wizard(TransientModel):
     _name = 'openupgrade.install.all.wizard'
     _description = 'OpenUpgrade Install All Wizard'
     _columns = {
-        'state': fields.selection([('init', 'init'), ('ready', 'ready')], 'State', readonly=True),
-        'to_install': fields.integer('Number of modules to install', readonly=True),
+        'state': fields.selection(
+            [('init', 'init'), ('ready', 'ready')], 'State', readonly=True),
+        'to_install': fields.integer(
+            'Number of modules to install', readonly=True),
         }
     _defaults = {
         'state': lambda *a: 'init',
         }
-
 
     def default_get(self, cr, uid, fields, context=None):
         """
@@ -51,18 +58,21 @@ class install_all_wizard(osv.osv_memory):
         update, add = module_obj.update_list(cr, uid,)
         print "%s modules added" % add
         module_ids = module_obj.search(
-            cr, uid, [('state', 'not in', ['installed', 'uninstallable', 'unknown'])])
+            cr, uid, [
+                ('state', 'not in',
+                 ['installed', 'uninstallable', 'unknown'])
+                ])
         res.update(
             {'to_install': module_ids and len(module_ids) or False}
             )
         return res
 
     def quirk_fiscalyear(self, cr, uid, ids, context=None):
-        """ 
+        """
         Install account module first and create a fiscal year,
         in order to prevent "No fiscal year defined" exception
         during an upgrade or reinstallation of the account module.
-        
+
         Refer to account_fiscalyear.find(), which is called as
         a default function by the orm upon module upgrade.
         """
@@ -87,20 +97,24 @@ class install_all_wizard(osv.osv_memory):
         fy_obj = pool.get('account.fiscalyear')
         if not fy_obj.find(cr, uid, False, exception=False, context=context):
             fy_obj.create(cr, uid, {
-                    'name': time.strftime('%Y'),
-                    'code': time.strftime('%Y'),
-                    'date_start': "%s-01-01" % time.strftime('%Y'),
-                    'date_stop': "%s-12-31" % time.strftime('%Y'),
-                    })
-        
+                'name': time.strftime('%Y'),
+                'code': time.strftime('%Y'),
+                'date_start': "%s-01-01" % time.strftime('%Y'),
+                'date_stop': "%s-12-31" % time.strftime('%Y'),
+                })
+
     def install_all(self, cr, uid, ids, context=None):
         """
         Main wizard step. Set all installable modules to install
-        and actually install them.
+        and actually install them. Exclude testing modules.
         """
         module_obj = self.pool.get('ir.module.module')
         module_ids = module_obj.search(
-            cr, uid, [('state', 'not in', ['installed', 'uninstallable', 'unknown'])])
+            cr, uid, [
+                ('state', 'not in',
+                 ['installed', 'uninstallable', 'unknown']),
+                ('category_id.name', '!=', 'Tests'),
+                ])
         if module_ids:
             module_obj.write(
                 cr, uid, module_ids, {'state': 'to install'})
@@ -110,4 +124,3 @@ class install_all_wizard(osv.osv_memory):
         return True
 
 install_all_wizard()
-
