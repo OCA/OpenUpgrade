@@ -582,25 +582,6 @@ def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True
     import string
                 
     local_registry = {}
-    def get_repr(properties, type='val'):
-        """ 
-        OpenUpgrade: Return the string representation of the model or field
-        for logging purposes 
-        """
-        if type == 'key':
-            props = ['model', 'field']
-        elif type == 'val':
-            props = [
-                'type', 'isfunction', 'relation', 'required', 'selection_keys',
-                'req_default', 'inherits'
-                ]
-        return ','.join([
-                '\"' + string.replace(
-                    string.replace(
-                        properties[prop], '\"', '\''), '\n','')
-                + '\"' for prop in props
-                ])
-
     def log_model(model):
         """                                                                                          
         OpenUpgrade: Store the characteristics of the BaseModel and its fields
