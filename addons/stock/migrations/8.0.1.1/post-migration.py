@@ -354,6 +354,13 @@ def migrate_stock_warehouse_orderpoint(cr):
     """procurement_id to procurement_ids
     :param cr: database cursor
     """
+    if not openupgrade.column_exists(
+            cr,
+            'stock_warehouse_orderpoint',
+            openupgrade.get_legacy_name('procurement_id')):
+        # in this case, there was no migration for the procurement module
+        # which can be okay if procurement was not installed in the 7.0 db
+        return
     registry = RegistryManager.get(cr.dbname)
     openupgrade.m2o_to_x2m(
         cr, registry['stock.warehouse.orderpoint'],
@@ -421,6 +428,13 @@ def migrate_product_supply_method(cr):
     mto_route_id = mto_route_id and mto_route_id[0] or False
 
     procure_method_legacy = openupgrade.get_legacy_name('procure_method')
+
+    if not openupgrade.column_exists(
+            cr, 'product_template', procure_method_legacy):
+        # in this case, there was no migration for the procurement module
+        # which can be okay if procurement was not installed in the 7.0 db
+        return
+
     if mto_route_id:
         product_ids = []
         cr.execute("SELECT id FROM product_template WHERE %s = %%s" % procure_method_legacy, ('make_to_order',))
@@ -442,6 +456,13 @@ def migrate_procurement_order_method(cr):
     rule_obj = pool['procurement.rule']
 
     procure_method_legacy = openupgrade.get_legacy_name('procure_method')
+
+    if not openupgrade.column_exists(
+            cr, 'product_template', procure_method_legacy):
+        # in this case, there was no migration for the procurement module
+        # which can be okay if procurement was not installed in the 7.0 db
+        return
+
     cr.execute("""SELECT id FROM procurement_order WHERE %s = %%s and state != %%s""" % procure_method_legacy,
                ('make_to_order', 'done',))
     for res in cr.fetchall():
