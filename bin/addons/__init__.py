@@ -22,6 +22,7 @@
 
 import os, sys, imp
 from os.path import join as opj
+import types
 import itertools
 import zipimport
 import osv
@@ -39,6 +40,15 @@ from cStringIO import StringIO
 from tools.safe_eval import safe_eval as eval
 
 logger = netsvc.Logger()
+
+### OpenUpgrade
+def table_exists(cr, table):
+    """ Check whether a certain table or view exists """
+    cr.execute(
+        'SELECT count(relname) FROM pg_class WHERE relname = %s',
+        (table,))
+    return cr.fetchone()[0] == 1
+### End of OpenUpgrade
 
 _ad = os.path.abspath(opj(tools.config['root_path'], 'addons'))     # default addons path (base)
 ad = os.path.abspath(tools.config['addons_path'])           # alternate addons path
@@ -554,8 +564,7 @@ class MigrationManager(object):
                         if mod:
                             del mod
 
-
-def load_module_graph(cr, graph, status=None, perform_checks=True, **kwargs):
+def load_module_graph(cr, graph, status=None, registry=None, perform_checks=True, **kwargs):
     # **kwargs is passed directly to convert_xml_import
     if not status:
         status = {}
@@ -570,11 +579,126 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, **kwargs):
     has_updates = False
     modobj = None
 
+    import string
+                
+    local_registry = {}
+    def log_model(model):
+        """                                                                                          
+        OpenUpgrade: Store the characteristics of the BaseModel and its fields
+        in the local registry, so that we can compare changes with the
+        main registry
+        """
+
+        # persistent models only
+        if isinstance(model, osv.osv.osv_memory):
+            return
+
+        model_registry = local_registry.setdefault(
+                model._name, {})
+        if model._inherits:
+            model_registry['_inherits'] = {'_inherits': unicode(model._inherits)}
+        for k, v in model._columns.items():
+            properties = { 
+                'type': v._type,
+                'isfunction': (
+                    isinstance(v, osv.fields.function) and 'function' or ''),
+                'relation': (
+                    v._type in ('many2many', 'many2one','one2many')
+                    and v._obj or ''
+                    ),
+                'required': v.required and 'required' or '',
+                'selection_keys': '',
+                'req_default': '',
+                'inherits': '',
+                }
+            if v._type == 'selection':
+                if hasattr(v.selection, "__iter__"):
+                    properties['selection_keys'] = unicode(
+                        sorted([x[0] for x in v.selection]))
+                else:
+                    properties['selection_keys'] = 'function'
+            if v.required and k in model._defaults:
+                if isinstance(model._defaults[k], types.FunctionType):
+                    # todo: in OpenERP 5 (and in 6 as well),
+                    # literals are wrapped in a lambda function.
+                    properties['req_default'] = 'function'
+                else:
+                    properties['req_default'] = unicode(model._defaults[k])
+            for key, value in properties.items():
+                if value:
+                    model_registry.setdefault(k, {})[key] = value
+
+    def get_record_id(cr, module, model, field, mode):
+        """
+        OpenUpgrade: get or create the id from the record table matching
+        the key parameter values
+        """
+        cr.execute(
+            "SELECT id FROM openupgrade_record "
+            "WHERE module = %s AND model = %s AND "
+            "field = %s AND mode = %s AND type = %s",
+            (module, model, field, mode, 'field')
+            )
+        record = cr.fetchone()
+        if record:
+            return record[0]
+        cr.execute(
+            "INSERT INTO openupgrade_record "
+            "(module, model, field, mode, type) "
+            "VALUES (%s, %s, %s, %s, %s)",
+            (module, model, field, mode, 'field')
+            )
+        cr.execute(
+            "SELECT id FROM openupgrade_record "
+            "WHERE module = %s AND model = %s AND "
+            "field = %s AND mode = %s AND type = %s",
+            (module, model, field, mode, 'field')
+            )
+        return cr.fetchone()[0]
+        
+    def compare_registries(cr, module):
+        """
+        OpenUpgrade: Compare the local registry with the global registry,
+        log any differences and merge the local registry with
+        the global one.
+        """
+        if not table_exists(cr, 'openupgrade_record'):
+            return
+        for model, fields in local_registry.items():
+            registry.setdefault(model, {})
+            for field, attributes in fields.items():
+                old_field = registry[model].setdefault(field, {})
+                mode = old_field and 'modify' or 'create'
+                record_id = False
+                for key, value in attributes.items():
+                    if key not in old_field or old_field[key] != value:
+                        if not record_id:
+                            record_id = get_record_id(
+                                cr, module, model, field, mode)
+                        cr.execute(
+                            "SELECT id FROM openupgrade_attribute "
+                            "WHERE name = %s AND value = %s AND "
+                            "record_id = %s",
+                            (key, value, record_id)
+                            )
+                        if not cr.fetchone():
+                            cr.execute(
+                                "INSERT INTO openupgrade_attribute "
+                                "(name, value, record_id) VALUES (%s, %s, %s)",
+                                (key, value, record_id)
+                                )
+                        old_field[key] = value
+
     for package in graph:
         logger.notifyChannel('init', netsvc.LOG_INFO, 'module %s: loading objects' % package.name)
         migrations.migrate_module(package, 'pre')
         register_class(package.name)
         modules = pool.instanciate(package.name, cr)
+
+        local_registry = {}
+        for model in modules:
+            log_model(model)
+        compare_registries(cr, package.name)
         if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
             init_module_objects(cr, package.name, modules)
         cr.commit()
@@ -685,13 +809,18 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
     if force_demo:
         force.append('demo')
     pool = pooler.get_pool(cr.dbname)
+    registry = {}
     try:
         report = tools.assertion_report()
         # NOTE: Try to also load the modules that have been marked as uninstallable previously...
         STATES_TO_LOAD = ['installed', 'to upgrade', 'uninstallable']
         graph = create_graph(cr, ['base'], force)
 
-        has_updates = load_module_graph(cr, graph, status, perform_checks=(not update_module), report=report)
+        try:
+            has_updates = load_module_graph(cr, graph, status, perform_checks=(not update_module), registry=registry, report=report)
+        except Exception, e:
+            print e
+            raise
 
         if update_module:
             modobj = pool.get('ir.module.module')
@@ -733,7 +862,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
                 # nothing to load
                 break
             logger.notifyChannel('init', netsvc.LOG_DEBUG, 'Updating graph with %d more modules' % (len(module_list)))
-            r = load_module_graph(cr, graph, status, report=report)
+            r = load_module_graph(cr, graph, status, registry=registry, report=report)
             has_updates = has_updates or r
 
         if has_updates:
