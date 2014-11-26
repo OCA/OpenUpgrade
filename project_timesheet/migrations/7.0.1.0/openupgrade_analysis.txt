@@ -1,0 +1,11 @@
+---Fields in module 'project_timesheet'---
+project_timesheet / report.timesheet.task.user / task_hrs (float)              : not a function anymore
+---XML records in module 'project_timesheet'---
+NEW ir.model.access: project_timesheet.access_sale_order_manager
+NEW ir.model.access: project_timesheet.access_sale_order_user
+DEL ir.ui.menu: base.menu_project_management_time_tracking
+DEL ir.ui.menu: project_timesheet.menu_act_project_management_timesheet_sheet_form
+DEL ir.ui.menu: project_timesheet.menu_project_working_hours
+NEW ir.ui.view: project_timesheet.view_project_kanban_inherited
+DEL ir.ui.view: project_timesheet.project_invoice_form_cutomer
+NEW res.groups: base.group_user

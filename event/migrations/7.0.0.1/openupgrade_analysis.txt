@@ -1,0 +1,94 @@
+---Fields in module 'event'---
+event        / event.event              / address_id (many2one)         : relation is now 'res.partner' ('res.partner.address')
+event        / event.event              / child_ids (one2many)          : DEL relation: event.event
+event        / event.event              / email_confirmation_id (many2one): NEW relation: email.template
+event        / event.event              / email_registration_id (many2one): NEW relation: email.template
+event        / event.event              / language (char)               : DEL 
+event        / event.event              / mail_auto_confirm (boolean)   : DEL 
+event        / event.event              / mail_auto_registr (boolean)   : DEL 
+event        / event.event              / mail_confirm (text)           : DEL 
+event        / event.event              / mail_registr (text)           : DEL 
+event        / event.event              / message_ids (one2many)        : NEW relation: mail.message
+event        / event.event              / parent_id (many2one)          : DEL relation: event.event
+event        / event.event              / pricelist_id (many2one)       : DEL relation: product.pricelist
+event        / event.event              / product_id (many2one)         : DEL relation: product.product, required: required
+event        / event.event              / section_id (many2one)         : DEL relation: crm.case.section
+event        / event.event              / speaker_ids (many2many)       : DEL relation: res.partner
+event        / event.registration       / active (boolean)              : DEL 
+event        / event.registration       / badge_ids (one2many)          : DEL relation: event.registration.badge
+event        / event.registration       / contact_id (many2one)         : DEL relation: res.partner.address
+event        / event.registration       / date_open (datetime)          : NEW 
+event        / event.registration       / description (text)            : DEL 
+event        / event.registration       / email (char)                  : NEW 
+event        / event.registration       / email_cc (text)               : DEL 
+event        / event.registration       / email_from (char)             : DEL 
+event        / event.registration       / event_product (char)          : DEL 
+event        / event.registration       / invoice_id (many2one)         : DEL relation: account.invoice
+event        / event.registration       / origin (char)                 : NEW 
+event        / event.registration       / partner_invoice_id (many2one) : DEL relation: res.partner
+event        / event.registration       / phone (char)                  : NEW 
+event        / event.registration       / ref (reference)               : DEL 
+event        / event.registration       / ref2 (reference)              : DEL 
+event        / event.registration       / tobe_invoiced (boolean)       : DEL 
+event        / event.registration       / unit_price (float)            : DEL required: required
+event        / event.registration       / write_date (datetime)         : DEL 
+event        / event.type               / default_email_event (many2one): NEW relation: email.template
+event        / event.type               / default_email_registration (many2one): NEW relation: email.template
+event        / event.type               / default_registration_max (integer): NEW 
+event        / event.type               / default_registration_min (integer): NEW 
+event        / event.type               / default_reply_to (char)       : NEW 
+event        / report.event.registration / date (date)                   : DEL 
+event        / report.event.registration / event_date (char)             : NEW 
+event        / report.event.registration / event_state (selection)       : NEW required: required, selection_keys: ['cancel', 'confirm', 'done', 'draft']
+event        / report.event.registration / event_type (many2one)         : NEW relation: event.type
+event        / report.event.registration / name_registration (char)      : NEW 
+event        / report.event.registration / product_id (many2one)         : DEL relation: product.product
+event        / report.event.registration / registration_state (selection): NEW required: required, selection_keys: ['cancel', 'confirm', 'done', 'draft']
+event        / report.event.registration / state (selection)             : DEL required: required, selection_keys: ['cancel', 'confirm', 'done', 'draft']
+event        / report.event.registration / total (float)                 : DEL 
+event        / report.event.registration / type (many2one)               : DEL relation: event.type
+event        / report.event.registration / user_id_registration (many2one): NEW relation: res.users
+---XML records in module 'event'---
+NEW email.template: event.confirmation_event
+NEW email.template: event.confirmation_registration
+NEW ir.actions.act_window: event.act_event_view_registration
+DEL ir.actions.act_window: event.action_event_confirm_registration
+DEL ir.actions.act_window: event.action_make_invoices
+DEL ir.actions.act_window: event.action_partner_event_registration
+NEW ir.actions.client: event.action_client_event_menu
+NEW ir.actions.todo: base.open_menu
+NEW ir.model.access: event.access_event_event_portal
+NEW ir.model.access: event.access_event_registration_portal
+DEL ir.model.access: event.access_account_account_invoice_manager
+DEL ir.model.access: event.access_crm_case_section_manager
+DEL ir.model.access: event.access_event_event_manager
+DEL ir.model.access: event.access_event_event_sale_salesman
+DEL ir.model.access: event.access_event_registration_badge
+DEL ir.model.access: event.access_event_registration_badge_manager
+DEL ir.model.access: event.access_event_registration_manager
+DEL ir.model.access: event.access_event_registration_sale_user
+DEL ir.model.access: event.access_product_product
+NEW ir.module.category: event.module_category_event_management
+NEW ir.rule: event.event_event_comp_rule
+NEW ir.rule: event.event_registration_comp_rule
+NEW ir.rule: event.report_event_registration_comp_rule
+NEW ir.ui.menu: event.event_main_menu
+NEW ir.ui.menu: event.menu_reporting_events
+DEL ir.ui.menu: base.marketing_menu
+DEL ir.ui.menu: base.menu_association
+DEL ir.ui.menu: base.menu_event_association
+DEL ir.ui.menu: base.menu_marketing_config_association
+DEL ir.ui.menu: event.menu_action_registration_association
+DEL ir.ui.menu: event.menu_event_event_assiciation
+DEL ir.ui.menu: event.menu_event_type_association
+NEW ir.ui.view: event.view_event_kanban
+DEL ir.ui.view: event.view_event_confirm_registration
+DEL ir.ui.view: event.view_event_graph
+DEL ir.ui.view: event.view_event_make_invoice
+DEL ir.ui.view: event.view_partner_event_registration
+DEL ir.ui.view: event.view_speaker_partner_info_form
+NEW ir.values: event.default_value_event_mail_confirmation
+NEW ir.values: event.default_value_registration_mail_confirmation
+NEW mail.message.subtype: event.mt_event_registration
+NEW res.groups: event.group_event_manager
+NEW res.groups: event.group_event_user

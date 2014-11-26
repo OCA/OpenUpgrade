@@ -1,0 +1,10 @@
+---Fields in module 'portal_event'---
+portal_event / event.event              / visibility (selection)        : NEW selection_keys: ['private', 'public']
+---XML records in module 'portal_event'---
+NEW ir.actions.act_window: portal_event.action_event_view
+NEW ir.model.access: portal_event.access_event
+NEW ir.model.access: portal_event.access_registration
+NEW ir.rule: portal_event.portal_event_rule
+NEW ir.rule: portal_event.portal_registration_rule
+NEW ir.ui.menu: portal_event.portal_company_events
+NEW ir.ui.view: portal_event.view_event_form_portal

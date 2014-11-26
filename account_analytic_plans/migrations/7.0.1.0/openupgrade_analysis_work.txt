@@ -1,0 +1,10 @@
+---Fields in module 'account_analytic_plans'---
+account_analytic_plans / account.analytic.plan.line / plan_id (many2one)            : now required
+### -> Created script for filling it for empty values
+
+---XML records in module 'account_analytic_plans'---
+DEL account.journal.column: account.journal_col11
+DEL ir.actions.act_window: account_analytic_plans.account_analytic_plan_form_action_installer
+DEL ir.actions.todo: account_analytic_plans.account_analytic_plan_installer_todo
+### -> Nothing to do
+

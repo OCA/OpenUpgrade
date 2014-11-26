@@ -1,0 +1,9 @@
+---Fields in module 'membership'---
+membership   / product.template         / member_price (float)          : DEL 
+---XML records in module 'membership'---
+NEW ir.actions.act_window.view: membership.action_membership_members_view_kanban
+DEL ir.ui.view: membership.view_product_form_inherit1
+DEL product.price.type: membership.product_price_type_memberprice
+DEL product.pricelist: membership.list1m
+DEL product.pricelist.item: membership.item1m
+DEL product.pricelist.version: membership.ver1m

@@ -1,0 +1,1098 @@
+# Mongolian translation for openobject-addons
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openobject-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-03-07 08:38+0000\n"
+"PO-Revision-Date: 2013-04-06 06:22+0000\n"
+"Last-Translator: gobi <Unknown>\n"
+"Language-Team: Mongolian <mn@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-04-07 06:00+0000\n"
+"X-Generator: Launchpad (build 16550)\n"
+
+#. module: marketing_campaign
+#: view:marketing.campaign:0
+msgid "Manual Mode"
+msgstr "Зааврын арга"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.transition,activity_from_id:0
+msgid "Previous Activity"
+msgstr "Өмнөх"
+
+#. module: marketing_campaign
+#: code:addons/marketing_campaign/marketing_campaign.py:819
+#, python-format
+msgid "The current step for this item has no email or report to preview."
+msgstr ""
+
+#. module: marketing_campaign
+#: constraint:marketing.campaign.transition:0
+msgid "The To/From Activity of transition must be of the same Campaign "
+msgstr "The To/From Activity of transition must be of the same Campaign "
+
+#. module: marketing_campaign
+#: selection:marketing.campaign.transition,trigger:0
+msgid "Time"
+msgstr "Цаг"
+
+#. module: marketing_campaign
+#: selection:marketing.campaign.activity,type:0
+msgid "Custom Action"
+msgstr "Custom Action"
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: view:marketing.campaign:0
+#: view:marketing.campaign.segment:0
+#: view:marketing.campaign.workitem:0
+msgid "Group By..."
+msgstr "Бүлэглэх..."
+
+#. module: marketing_campaign
+#: help:marketing.campaign.activity,revenue:0
+msgid ""
+"Set an expected revenue if you consider that every campaign item that has "
+"reached this point has generated a certain revenue. You can get revenue "
+"statistics in the Reporting section"
+msgstr ""
+"Set an expected revenue if you consider that every campaign item that has "
+"reached this point has generated a certain revenue. You can get revenue "
+"statistics in the Reporting section"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.transition,trigger:0
+msgid "Trigger"
+msgstr ""
+
+#. module: marketing_campaign
+#: view:marketing.campaign:0
+msgid "Follow-Up"
+msgstr "Мөшгөлт"
+
+#. module: marketing_campaign
+#: field:campaign.analysis,count:0
+msgid "# of Actions"
+msgstr "# Үйлдлийн"
+
+#. module: marketing_campaign
+#: view:marketing.campaign:0
+msgid "Campaign Editor"
+msgstr "Засварлах"
+
+#. module: marketing_campaign
+#: view:marketing.campaign:0
+#: selection:marketing.campaign,state:0
+#: view:marketing.campaign.segment:0
+#: selection:marketing.campaign.segment,state:0
+msgid "Running"
+msgstr "Ачааллаж байна"
+
+#. module: marketing_campaign
+#: model:email.template,body_html:marketing_campaign.email_template_3
+msgid ""
+"Hi, we are delighted to let you know that you have entered the select circle "
+"of our Gold Partners"
+msgstr ""
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,month:0
+msgid "March"
+msgstr "3 сар"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.activity,object_id:0
+msgid "Object"
+msgstr "Обьект"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.segment:0
+msgid "Sync mode: only records created after last sync"
+msgstr ""
+
+#. module: marketing_campaign
+#: help:marketing.campaign.activity,condition:0
+msgid ""
+"Python expression to decide whether the activity can be executed, otherwise "
+"it will be deleted or cancelled.The expression may use the following "
+"[browsable] variables:\n"
+"   - activity: the campaign activity\n"
+"   - workitem: the campaign workitem\n"
+"   - resource: the resource object this campaign item represents\n"
+"   - transitions: list of campaign transitions outgoing from this activity\n"
+"...- re: Python regular expression module"
+msgstr ""
+"Python expression to decide whether the activity can be executed, otherwise "
+"it will be deleted or cancelled.The expression may use the following "
+"[browsable] variables:\n"
+"   - activity: the campaign activity\n"
+"   - workitem: the campaign workitem\n"
+"   - resource: the resource object this campaign item represents\n"
+"   - transitions: list of campaign transitions outgoing from this activity\n"
+"...- re: Python regular expression module"
+
+#. module: marketing_campaign
+#: view:marketing.campaign:0
+#: view:marketing.campaign.segment:0
+msgid "Set to Draft"
+msgstr "Ноороглох"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.activity:0
+#: field:marketing.campaign.activity,to_ids:0
+msgid "Next Activities"
+msgstr "Дараагийн үйлдэл"
+
+#. module: marketing_campaign
+#: code:addons/marketing_campaign/marketing_campaign.py:148
+#, python-format
+msgid ""
+"The campaign cannot be started. It does not have any starting activity. "
+"Modify campaign's activities to mark one as the starting point."
+msgstr ""
+
+#. module: marketing_campaign
+#: help:marketing.campaign.activity,email_template_id:0
+msgid "The email to send when this activity is activated"
+msgstr ""
+
+#. module: marketing_campaign
+#: view:marketing.campaign.segment:0
+#: field:marketing.campaign.segment,date_run:0
+msgid "Launch Date"
+msgstr "Эхлэх огноо"
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: field:campaign.analysis,day:0
+msgid "Day"
+msgstr "Өдөр"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.activity:0
+msgid "Outgoing Transitions"
+msgstr ""
+
+#. module: marketing_campaign
+#: view:marketing.campaign.workitem:0
+msgid "Reset"
+msgstr ""
+
+#. module: marketing_campaign
+#: help:marketing.campaign,object_id:0
+msgid "Choose the resource on which you want this campaign to be run"
+msgstr ""
+
+#. module: marketing_campaign
+#: model:ir.actions.client,name:marketing_campaign.action_client_marketing_menu
+msgid "Open Marketing Menu"
+msgstr "Марктинг цэс нээх"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.segment,sync_last_date:0
+msgid "Last Synchronization"
+msgstr "Сүүлийн синхрончлол"
+
+#. module: marketing_campaign
+#: selection:marketing.campaign.transition,interval_type:0
+msgid "Year(s)"
+msgstr "Жил(үүд)"
+
+#. module: marketing_campaign
+#: help:marketing.campaign.segment,date_run:0
+msgid "Initial start date of this segment."
+msgstr ""
+
+#. module: marketing_campaign
+#: help:marketing.campaign.segment,sync_last_date:0
+msgid ""
+"Date on which this segment was synchronized last time (automatically or "
+"manually)"
+msgstr ""
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,state:0
+#: selection:marketing.campaign,state:0
+#: selection:marketing.campaign.segment,state:0
+#: selection:marketing.campaign.workitem,state:0
+msgid "Cancelled"
+msgstr "Цуцлагдсан"
+
+#. module: marketing_campaign
+#: selection:marketing.campaign.transition,trigger:0
+msgid "Automatic"
+msgstr "Автомат"
+
+#. module: marketing_campaign
+#: help:marketing.campaign,mode:0
+msgid ""
+"Test - It creates and process all the activities directly (without waiting "
+"for the delay on transitions) but does not send emails or produce reports.\n"
+"Test in Realtime - It creates and processes all the activities directly but "
+"does not send emails or produce reports.\n"
+"With Manual Confirmation - the campaigns runs normally, but the user has to "
+"validate all workitem manually.\n"
+"Normal - the campaign runs normally and automatically sends all emails and "
+"reports (be very careful with this mode, you're live!)"
+msgstr ""
+"Test - It creates and process all the activities directly (without waiting "
+"for the delay on transitions) but does not send emails or produce reports.\n"
+"Test in Realtime - It creates and processes all the activities directly but "
+"does not send emails or produce reports.\n"
+"With Manual Confirmation - the campaigns runs normally, but the user has to "
+"validate all workitem manually.\n"
+"Normal - the campaign runs normally and automatically sends all emails and "
+"reports (be very careful with this mode, you're live!)"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.segment:0
+msgid "Cancel Segment"
+msgstr ""
+
+#. module: marketing_campaign
+#: view:res.partner:0
+msgid "False"
+msgstr "Худал"
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: field:campaign.analysis,campaign_id:0
+#: view:marketing.campaign:0
+#: field:marketing.campaign.activity,campaign_id:0
+#: view:marketing.campaign.segment:0
+#: field:marketing.campaign.segment,campaign_id:0
+#: view:marketing.campaign.workitem:0
+#: field:marketing.campaign.workitem,campaign_id:0
+msgid "Campaign"
+msgstr "Компанит ажил"
+
+#. module: marketing_campaign
+#: model:email.template,body_html:marketing_campaign.email_template_1
+msgid "Hello, you will receive your welcome pack via email shortly."
+msgstr ""
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: field:campaign.analysis,segment_id:0
+#: view:marketing.campaign.segment:0
+#: view:marketing.campaign.workitem:0
+#: field:marketing.campaign.workitem,segment_id:0
+msgid "Segment"
+msgstr "Хуваалт"
+
+#. module: marketing_campaign
+#: code:addons/marketing_campaign/marketing_campaign.py:214
+#, python-format
+msgid "You cannot duplicate a campaign, Not supported yet."
+msgstr ""
+
+#. module: marketing_campaign
+#: help:marketing.campaign.activity,type:0
+msgid ""
+"The type of action to execute when an item enters this activity, such as:\n"
+"   - Email: send an email using a predefined email template\n"
+"   - Report: print an existing Report defined on the resource item and save "
+"it into a specific directory\n"
+"   - Custom Action: execute a predefined action, e.g. to modify the fields "
+"of the resource record\n"
+"  "
+msgstr ""
+"The type of action to execute when an item enters this activity, such as:\n"
+"   - Email: send an email using a predefined email template\n"
+"   - Report: print an existing Report defined on the resource item and save "
+"it into a specific directory\n"
+"   - Custom Action: execute a predefined action, e.g. to modify the fields "
+"of the resource record\n"
+"  "
+
+#. module: marketing_campaign
+#: help:marketing.campaign.segment,date_next_sync:0
+msgid "Next time the synchronization job is scheduled to run automatically"
+msgstr ""
+
+#. module: marketing_campaign
+#: selection:marketing.campaign.transition,interval_type:0
+msgid "Month(s)"
+msgstr "Сар(ууд)"
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: field:campaign.analysis,partner_id:0
+#: model:ir.model,name:marketing_campaign.model_res_partner
+#: field:marketing.campaign.workitem,partner_id:0
+msgid "Partner"
+msgstr "Харилцагч"
+
+#. module: marketing_campaign
+#: model:ir.filters,name:marketing_campaign.filter0
+msgid "Partners"
+msgstr ""
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+msgid "Marketing Reports"
+msgstr "Маркетингийн тайлан"
+
+#. module: marketing_campaign
+#: selection:marketing.campaign,state:0
+#: selection:marketing.campaign.segment,state:0
+msgid "New"
+msgstr "Шинэ"
+
+#. module: marketing_campaign
+#: sql_constraint:marketing.campaign.transition:0
+msgid "The interval must be positive or zero"
+msgstr ""
+
+#. module: marketing_campaign
+#: selection:marketing.campaign.activity,type:0
+msgid "Email"
+msgstr "Имэйл"
+
+#. module: marketing_campaign
+#: field:marketing.campaign,name:0
+#: field:marketing.campaign.activity,name:0
+#: field:marketing.campaign.segment,name:0
+#: field:marketing.campaign.transition,name:0
+msgid "Name"
+msgstr "Нэр"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.workitem,res_name:0
+msgid "Resource Name"
+msgstr "Нөөцийн нэр"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.segment,sync_mode:0
+msgid "Synchronization mode"
+msgstr "Синхрончлох арга"
+
+#. module: marketing_campaign
+#: view:marketing.campaign:0
+#: view:marketing.campaign.segment:0
+msgid "Run"
+msgstr "Ачааллах"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.activity:0
+#: field:marketing.campaign.activity,from_ids:0
+msgid "Previous Activities"
+msgstr "Өмнөх"
+
+#. module: marketing_campaign
+#: model:email.template,subject:marketing_campaign.email_template_2
+msgid "Congratulations! You are now a Silver Partner!"
+msgstr ""
+
+#. module: marketing_campaign
+#: help:marketing.campaign.segment,date_done:0
+msgid "Date this segment was last closed or cancelled."
+msgstr ""
+
+#. module: marketing_campaign
+#: view:marketing.campaign.workitem:0
+msgid "Marketing Campaign Activities"
+msgstr "Компанит ажлын маркетинг"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.workitem:0
+#: field:marketing.campaign.workitem,error_msg:0
+msgid "Error Message"
+msgstr "Алдааны мэссэж"
+
+#. module: marketing_campaign
+#: model:ir.actions.act_window,name:marketing_campaign.action_marketing_campaign_form
+#: model:ir.ui.menu,name:marketing_campaign.menu_marketing_campaign
+#: model:ir.ui.menu,name:marketing_campaign.menu_marketing_campaign_form
+#: view:marketing.campaign:0
+#: view:res.partner:0
+msgid "Campaigns"
+msgstr "Компанит ажил"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.transition,interval_type:0
+msgid "Interval Unit"
+msgstr ""
+
+#. module: marketing_campaign
+#: field:campaign.analysis,country_id:0
+msgid "Country"
+msgstr "Улс"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.activity,report_id:0
+#: selection:marketing.campaign.activity,type:0
+msgid "Report"
+msgstr "Мэдээлэл"
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,month:0
+msgid "July"
+msgstr "7 сар"
+
+#. module: marketing_campaign
+#: model:ir.ui.menu,name:marketing_campaign.menu_marketing_configuration
+msgid "Configuration"
+msgstr "Тохиргоо"
+
+#. module: marketing_campaign
+#: help:marketing.campaign.activity,variable_cost:0
+msgid ""
+"Set a variable cost if you consider that every campaign item that has "
+"reached this point has entailed a certain cost. You can get cost statistics "
+"in the Reporting section"
+msgstr ""
+
+#. module: marketing_campaign
+#: selection:marketing.campaign.transition,interval_type:0
+msgid "Hour(s)"
+msgstr "Хугацаа(ууд)"
+
+#. module: marketing_campaign
+#: model:ir.model,name:marketing_campaign.model_marketing_campaign_segment
+msgid "Campaign Segment"
+msgstr "Компанит ажлын хуваалт"
+
+#. module: marketing_campaign
+#: help:marketing.campaign.activity,keep_if_condition_not_met:0
+msgid ""
+"By activating this option, workitems that aren't executed because the "
+"condition is not met are marked as cancelled instead of being deleted."
+msgstr ""
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+msgid "Exceptions"
+msgstr ""
+
+#. module: marketing_campaign
+#: model:ir.actions.act_window,name:marketing_campaign.act_marketing_campaing_followup
+#: field:res.partner,workitem_ids:0
+msgid "Workitems"
+msgstr ""
+
+#. module: marketing_campaign
+#: field:marketing.campaign,fixed_cost:0
+msgid "Fixed Cost"
+msgstr "Үнэ тогтоох"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.segment:0
+msgid "Newly Modified"
+msgstr "Шинэ засвар"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.workitem:0
+msgid "Cancel Workitem"
+msgstr ""
+
+#. module: marketing_campaign
+#: model:ir.actions.act_window,help:marketing_campaign.action_marketing_campaign_form
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Click to create a marketing campaign.\n"
+"          </p><p>\n"
+"            OpenERP's marketing campaign allows you to automate "
+"communication\n"
+"            to your prospects. You can define a segment (set of conditions) "
+"on\n"
+"            your leads and partners to fullfil the campaign.\n"
+"          </p><p>\n"
+"            A campaign can have many activities like sending an email, "
+"printing\n"
+"            a letter, assigning to a team, etc. These activities are "
+"triggered\n"
+"            from specific situations; contact form, 10 days after first\n"
+"            contact, if a lead is not closed yet, etc.\n"
+"          </p>\n"
+"        "
+msgstr ""
+
+#. module: marketing_campaign
+#: field:marketing.campaign.transition,interval_nbr:0
+msgid "Interval Value"
+msgstr "Завсрын утга"
+
+#. module: marketing_campaign
+#: field:campaign.analysis,revenue:0
+#: field:marketing.campaign.activity,revenue:0
+msgid "Revenue"
+msgstr "Орлого"
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,month:0
+msgid "September"
+msgstr "9 сар"
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,month:0
+msgid "December"
+msgstr "12 сар"
+
+#. module: marketing_campaign
+#: help:marketing.campaign,partner_field_id:0
+msgid ""
+"The generated workitems will be linked to the partner related to the record. "
+"If the record is the partner itself leave this field empty. This is useful "
+"for reporting purposes, via the Campaign Analysis or Campaign Follow-up "
+"views."
+msgstr ""
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: field:campaign.analysis,month:0
+msgid "Month"
+msgstr "Сар"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.transition,activity_to_id:0
+msgid "Next Activity"
+msgstr "Дараагийн үйл ажиллагаа"
+
+#. module: marketing_campaign
+#: model:ir.actions.act_window,name:marketing_campaign.act_marketing_campaing_stat
+#: model:ir.actions.act_window,name:marketing_campaign.action_marketing_campaign_workitem
+#: model:ir.ui.menu,name:marketing_campaign.menu_action_marketing_campaign_workitem
+msgid "Campaign Follow-up"
+msgstr "Компанит ажлын мөшгөлт"
+
+#. module: marketing_campaign
+#: view:marketing.campaign:0
+msgid "Test Mode"
+msgstr "Тестийн арга"
+
+#. module: marketing_campaign
+#: selection:marketing.campaign.segment,sync_mode:0
+msgid "Only records modified after last sync (no duplicates)"
+msgstr "Зөвхөн бичлэгийг өөрчлөгдсөний дараа холбох(хуулбарлагдахгүй)"
+
+#. module: marketing_campaign
+#: model:ir.model,name:marketing_campaign.model_ir_actions_report_xml
+msgid "ir.actions.report.xml"
+msgstr "ir.actions.report.xml"
+
+#. module: marketing_campaign
+#: view:marketing.campaign:0
+msgid "Campaign Statistics"
+msgstr "Статистик"
+
+#. module: marketing_campaign
+#: help:marketing.campaign.activity,server_action_id:0
+msgid "The action to perform when this activity is activated"
+msgstr ""
+
+#. module: marketing_campaign
+#: field:marketing.campaign,partner_field_id:0
+msgid "Partner Field"
+msgstr "Харилцагч талбар"
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: model:ir.actions.act_window,name:marketing_campaign.action_campaign_analysis_all
+#: model:ir.model,name:marketing_campaign.model_campaign_analysis
+#: model:ir.ui.menu,name:marketing_campaign.menu_action_campaign_analysis_all
+msgid "Campaign Analysis"
+msgstr "Шинжилгээ"
+
+#. module: marketing_campaign
+#: help:marketing.campaign.segment,sync_mode:0
+msgid ""
+"Determines an additional criterion to add to the filter when selecting new "
+"records to inject in the campaign. \"No duplicates\" prevents selecting "
+"records which have already entered the campaign previously.If the campaign "
+"has a \"unique field\" set, \"no duplicates\" will also prevent selecting "
+"records which have the same value for the unique field as other records that "
+"already entered the campaign."
+msgstr ""
+
+#. module: marketing_campaign
+#: selection:marketing.campaign,mode:0
+msgid "Test in Realtime"
+msgstr "Бодит хугацааны тест"
+
+#. module: marketing_campaign
+#: selection:marketing.campaign,mode:0
+msgid "Test Directly"
+msgstr "Тестийн чиглэл"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.activity,report_directory_id:0
+msgid "Directory"
+msgstr "Хавтас"
+
+#. module: marketing_campaign
+#: view:marketing.campaign:0
+#: view:marketing.campaign.segment:0
+msgid "Draft"
+msgstr "Ноорог"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.workitem:0
+msgid "Marketing Campaign Activity"
+msgstr ""
+
+#. module: marketing_campaign
+#: view:marketing.campaign.workitem:0
+msgid "Preview"
+msgstr "Урьдчилж харах"
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: field:campaign.analysis,state:0
+#: view:marketing.campaign:0
+#: field:marketing.campaign,state:0
+#: view:marketing.campaign.segment:0
+#: field:marketing.campaign.segment,state:0
+#: view:marketing.campaign.workitem:0
+#: field:marketing.campaign.workitem,state:0
+msgid "Status"
+msgstr ""
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,month:0
+msgid "August"
+msgstr "8 сар"
+
+#. module: marketing_campaign
+#: selection:marketing.campaign,mode:0
+msgid "Normal"
+msgstr "Хэвийн"
+
+#. module: marketing_campaign
+#: help:marketing.campaign.activity,start:0
+msgid "This activity is launched when the campaign starts."
+msgstr ""
+
+#. module: marketing_campaign
+#: help:marketing.campaign.activity,signal:0
+msgid ""
+"An activity with a signal can be called programmatically. Be careful, the "
+"workitem is always created when a signal is sent"
+msgstr ""
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: selection:campaign.analysis,state:0
+#: view:marketing.campaign.workitem:0
+#: selection:marketing.campaign.workitem,state:0
+msgid "To Do"
+msgstr ""
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,month:0
+msgid "June"
+msgstr "6 сар"
+
+#. module: marketing_campaign
+#: model:ir.model,name:marketing_campaign.model_email_template
+msgid "Email Templates"
+msgstr "Имэйл Үлгэрүүд"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.segment:0
+msgid "Sync mode: all records"
+msgstr "Холыох горим: бүх бичлэгүүд"
+
+#. module: marketing_campaign
+#: selection:marketing.campaign.segment,sync_mode:0
+msgid "All records (no duplicates)"
+msgstr "Бүх бичлэг (хуулж болохгүй)"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.segment:0
+msgid "Newly Created"
+msgstr "Шинээр үүсгэсэн"
+
+#. module: marketing_campaign
+#: field:campaign.analysis,date:0
+msgid "Date"
+msgstr "Огноо"
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,month:0
+msgid "November"
+msgstr "11 сар"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.activity,condition:0
+msgid "Condition"
+msgstr "Болзол"
+
+#. module: marketing_campaign
+#: help:marketing.campaign.activity,report_id:0
+msgid "The report to generate when this activity is activated"
+msgstr ""
+
+#. module: marketing_campaign
+#: field:marketing.campaign,unique_field_id:0
+msgid "Unique Field"
+msgstr "Үл давхцах талбар"
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,state:0
+#: view:marketing.campaign.workitem:0
+#: selection:marketing.campaign.workitem,state:0
+msgid "Exception"
+msgstr ""
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,month:0
+msgid "October"
+msgstr "10 сар"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.activity,email_template_id:0
+msgid "Email Template"
+msgstr "Э-мэйл загвар"
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,month:0
+msgid "January"
+msgstr "1 сар"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.workitem:0
+#: field:marketing.campaign.workitem,date:0
+msgid "Execution Date"
+msgstr "Гүйцэтгэх огноо"
+
+#. module: marketing_campaign
+#: model:ir.model,name:marketing_campaign.model_marketing_campaign_workitem
+msgid "Campaign Workitem"
+msgstr ""
+
+#. module: marketing_campaign
+#: model:ir.model,name:marketing_campaign.model_marketing_campaign_activity
+msgid "Campaign Activity"
+msgstr "Идэвхтэй компанит ажил"
+
+#. module: marketing_campaign
+#: help:marketing.campaign.activity,report_directory_id:0
+msgid "This folder is used to store the generated reports"
+msgstr "Мэдээлэл нөөцлөхөд энэ хавтсыг хэрэглэсэн байна"
+
+#. module: marketing_campaign
+#: code:addons/marketing_campaign/marketing_campaign.py:136
+#: code:addons/marketing_campaign/marketing_campaign.py:148
+#: code:addons/marketing_campaign/marketing_campaign.py:158
+#, python-format
+msgid "Error"
+msgstr "Алдаа"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.activity,server_action_id:0
+msgid "Action"
+msgstr "Үйл ажиллагаа"
+
+#. module: marketing_campaign
+#: code:addons/marketing_campaign/marketing_campaign.py:528
+#, python-format
+msgid "Automatic transition"
+msgstr "Автомат өөрчлөлт"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.activity,start:0
+msgid "Start"
+msgstr "Эхлэх"
+
+#. module: marketing_campaign
+#: code:addons/marketing_campaign/marketing_campaign.py:819
+#, python-format
+msgid "No preview"
+msgstr "Урьдчилж харахгүй"
+
+#. module: marketing_campaign
+#: view:marketing.campaign:0
+msgid "Cancel Campaign"
+msgstr ""
+
+#. module: marketing_campaign
+#: view:marketing.campaign.workitem:0
+msgid "Process"
+msgstr ""
+
+#. module: marketing_campaign
+#: code:addons/marketing_campaign/marketing_campaign.py:530
+#: selection:marketing.campaign.transition,trigger:0
+#, python-format
+msgid "Cosmetic"
+msgstr "Гоо сайхны бараа"
+
+#. module: marketing_campaign
+#: help:marketing.campaign.transition,trigger:0
+msgid "How is the destination workitem triggered"
+msgstr ""
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: selection:campaign.analysis,state:0
+#: view:marketing.campaign:0
+#: selection:marketing.campaign,state:0
+#: selection:marketing.campaign.segment,state:0
+#: selection:marketing.campaign.workitem,state:0
+msgid "Done"
+msgstr "Дууссан"
+
+#. module: marketing_campaign
+#: code:addons/marketing_campaign/marketing_campaign.py:214
+#, python-format
+msgid "Operation not supported"
+msgstr "Системийн дэмжлэггүй"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.workitem:0
+msgid "Cancel"
+msgstr "Цуцлах"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.segment:0
+msgid "Close"
+msgstr "Хаах"
+
+#. module: marketing_campaign
+#: constraint:marketing.campaign.segment:0
+msgid "Model of filter must be same as resource model of Campaign "
+msgstr ""
+
+#. module: marketing_campaign
+#: view:marketing.campaign.segment:0
+msgid "Synchronize Manually"
+msgstr ""
+
+#. module: marketing_campaign
+#: view:marketing.campaign.workitem:0
+#: field:marketing.campaign.workitem,res_id:0
+msgid "Resource ID"
+msgstr "Нөөц ID"
+
+#. module: marketing_campaign
+#: model:ir.model,name:marketing_campaign.model_marketing_campaign_transition
+msgid "Campaign Transition"
+msgstr ""
+
+#. module: marketing_campaign
+#: view:marketing.campaign.segment:0
+msgid "Marketing Campaign Segment"
+msgstr ""
+
+#. module: marketing_campaign
+#: model:ir.actions.act_window,name:marketing_campaign.act_marketing_campaing_segment_opened
+#: model:ir.actions.act_window,name:marketing_campaign.action_marketing_campaign_segment_form
+#: model:ir.ui.menu,name:marketing_campaign.menu_marketing_campaign_segment_form
+#: view:marketing.campaign:0
+#: view:marketing.campaign.segment:0
+msgid "Segments"
+msgstr "Хуваалт"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.activity,keep_if_condition_not_met:0
+msgid "Don't Delete Workitems"
+msgstr ""
+
+#. module: marketing_campaign
+#: view:marketing.campaign.activity:0
+msgid "Incoming Transitions"
+msgstr ""
+
+#. module: marketing_campaign
+#: selection:marketing.campaign.transition,interval_type:0
+msgid "Day(s)"
+msgstr "Өдөр(үүд)"
+
+#. module: marketing_campaign
+#: view:marketing.campaign:0
+#: field:marketing.campaign,activity_ids:0
+#: view:marketing.campaign.activity:0
+msgid "Activities"
+msgstr "Ажлууд"
+
+#. module: marketing_campaign
+#: selection:marketing.campaign,mode:0
+msgid "With Manual Confirmation"
+msgstr ""
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,month:0
+msgid "May"
+msgstr "5 сар"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.activity,type:0
+msgid "Type"
+msgstr "Төрөл"
+
+#. module: marketing_campaign
+#: model:email.template,subject:marketing_campaign.email_template_3
+msgid "Congratulations! You are now one of our Gold Partners!"
+msgstr ""
+
+#. module: marketing_campaign
+#: help:marketing.campaign,unique_field_id:0
+msgid ""
+"If set, this field will help segments that work in \"no duplicates\" mode to "
+"avoid selecting similar records twice. Similar records are records that have "
+"the same value for this unique field. For example by choosing the "
+"\"email_from\" field for CRM Leads you would prevent sending the same "
+"campaign to the same email address again. If not set, the \"no duplicates\" "
+"segments will only avoid selecting the same record again if it entered the "
+"campaign previously. Only easily comparable fields like textfields, "
+"integers, selections or single relationships may be used."
+msgstr ""
+
+#. module: marketing_campaign
+#: code:addons/marketing_campaign/marketing_campaign.py:529
+#, python-format
+msgid "After %(interval_nbr)d %(interval_type)s"
+msgstr "Дараа %(interval_nbr)d %(interval_type)s"
+
+#. module: marketing_campaign
+#: model:ir.model,name:marketing_campaign.model_marketing_campaign
+#: view:marketing.campaign:0
+msgid "Marketing Campaign"
+msgstr "Маркетинг"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.segment,date_done:0
+msgid "End Date"
+msgstr "Дуусах огноо"
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,month:0
+msgid "February"
+msgstr "2 сар"
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: field:campaign.analysis,res_id:0
+#: view:marketing.campaign:0
+#: field:marketing.campaign,object_id:0
+#: field:marketing.campaign.segment,object_id:0
+#: view:marketing.campaign.workitem:0
+#: field:marketing.campaign.workitem,object_id:0
+msgid "Resource"
+msgstr "Нөөц"
+
+#. module: marketing_campaign
+#: help:marketing.campaign,fixed_cost:0
+msgid ""
+"Fixed cost for running this campaign. You may also specify variable cost and "
+"revenue on each campaign activity. Cost and Revenue statistics are included "
+"in Campaign Reporting."
+msgstr ""
+
+#. module: marketing_campaign
+#: view:marketing.campaign.segment:0
+msgid "Sync mode: only records updated after last sync"
+msgstr ""
+"Ижилтгэх горим: хамгийн сүүлчийн ижилтгэлээс хойшхи бичлэгүүд л шинэчлэгдэнэ"
+
+#. module: marketing_campaign
+#: code:addons/marketing_campaign/marketing_campaign.py:793
+#, python-format
+msgid "Email Preview"
+msgstr "Э-мэйл уридчлан харах"
+
+#. module: marketing_campaign
+#: field:marketing.campaign.activity,signal:0
+msgid "Signal"
+msgstr "Сигнал"
+
+#. module: marketing_campaign
+#: help:marketing.campaign.workitem,date:0
+msgid "If date is not set, this workitem has to be run manually"
+msgstr ""
+
+#. module: marketing_campaign
+#: selection:campaign.analysis,month:0
+msgid "April"
+msgstr "4 сар"
+
+#. module: marketing_campaign
+#: code:addons/marketing_campaign/marketing_campaign.py:158
+#, python-format
+msgid "The campaign cannot be marked as done before all segments are closed."
+msgstr ""
+
+#. module: marketing_campaign
+#: view:marketing.campaign:0
+#: field:marketing.campaign,mode:0
+msgid "Mode"
+msgstr "Арга"
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: field:campaign.analysis,activity_id:0
+#: view:marketing.campaign.workitem:0
+#: field:marketing.campaign.workitem,activity_id:0
+msgid "Activity"
+msgstr "Идэвхтэй"
+
+#. module: marketing_campaign
+#: help:marketing.campaign.segment,ir_filter_id:0
+msgid ""
+"Filter to select the matching resource records that belong to this segment. "
+"New filters can be created and saved using the advanced search on the list "
+"view of the Resource. If no filter is set, all records are selected without "
+"filtering. The synchronization mode may also add a criterion to the filter."
+msgstr ""
+
+#. module: marketing_campaign
+#: code:addons/marketing_campaign/marketing_campaign.py:136
+#, python-format
+msgid "The campaign cannot be started. There are no activities in it."
+msgstr ""
+
+#. module: marketing_campaign
+#: field:marketing.campaign.segment,date_next_sync:0
+msgid "Next Synchronization"
+msgstr "Дараагийн синхрончлол"
+
+#. module: marketing_campaign
+#: model:email.template,body_html:marketing_campaign.email_template_2
+msgid ""
+"Hi, we are delighted to welcome you among our Silver Partners as of today!"
+msgstr ""
+
+#. module: marketing_campaign
+#: field:marketing.campaign.segment,ir_filter_id:0
+msgid "Filter"
+msgstr "Шүүлтүүр"
+
+#. module: marketing_campaign
+#: view:marketing.campaign.segment:0
+msgid "All"
+msgstr "Бүх"
+
+#. module: marketing_campaign
+#: selection:marketing.campaign.segment,sync_mode:0
+msgid "Only records created after last sync"
+msgstr ""
+
+#. module: marketing_campaign
+#: field:marketing.campaign.activity,variable_cost:0
+msgid "Variable Cost"
+msgstr "Хувьсах үнэ"
+
+#. module: marketing_campaign
+#: model:email.template,subject:marketing_campaign.email_template_1
+msgid "Welcome to the OpenERP Partner Channel!"
+msgstr ""
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: field:campaign.analysis,total_cost:0
+msgid "Cost"
+msgstr "Үнэ"
+
+#. module: marketing_campaign
+#: view:campaign.analysis:0
+#: field:campaign.analysis,year:0
+msgid "Year"
+msgstr "Жил"

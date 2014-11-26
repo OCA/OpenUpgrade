@@ -1,0 +1,1149 @@
+# Chinese (Simplified) translation for openobject-addons
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openobject-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-03-07 08:38+0000\n"
+"PO-Revision-Date: 2012-12-21 23:00+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-03-28 05:38+0000\n"
+"X-Generator: Launchpad (build 16546)\n"
+
+#. module: event
+#: view:event.event:0
+#: view:report.event.registration:0
+msgid "My Events"
+msgstr "我的活动"
+
+#. module: event
+#: field:event.registration,nb_register:0
+msgid "Number of Participants"
+msgstr "参与者数目"
+
+#. module: event
+#: field:event.event,register_attended:0
+msgid "# of Participations"
+msgstr "参与编号#"
+
+#. module: event
+#: field:event.event,main_speaker_id:0
+msgid "Main Speaker"
+msgstr "主要关注者"
+
+#. module: event
+#: view:event.event:0
+#: view:event.registration:0
+#: view:report.event.registration:0
+msgid "Group By..."
+msgstr "分组..."
+
+#. module: event
+#: field:event.event,register_min:0
+msgid "Minimum Registrations"
+msgstr "最少的登记记录"
+
+#. module: event
+#: help:event.event,register_min:0
+msgid ""
+"You can for each event define a minimum registration level. If you do not "
+"enough registrations you are not able to confirm your event. (put 0 to "
+"ignore this rule )"
+msgstr ""
+
+#. module: event
+#: field:event.registration,date_open:0
+msgid "Registration Date"
+msgstr "活动日期"
+
+#. module: event
+#: field:event.event,type:0
+msgid "Type of Event"
+msgstr "活动类型"
+
+#. module: event
+#: model:event.event,name:event.event_0
+msgid "Concert of Bon Jovi"
+msgstr "Bon Jovi音乐会"
+
+#. module: event
+#: view:event.registration:0
+#: selection:event.registration,state:0
+#: selection:report.event.registration,registration_state:0
+msgid "Attended"
+msgstr "参加"
+
+#. module: event
+#: selection:report.event.registration,month:0
+msgid "March"
+msgstr "三月"
+
+#. module: event
+#: view:event.registration:0
+msgid "Send Email"
+msgstr "发送邮件"
+
+#. module: event
+#: field:event.event,company_id:0
+#: field:event.registration,company_id:0
+#: view:report.event.registration:0
+#: field:report.event.registration,company_id:0
+msgid "Company"
+msgstr "公司"
+
+#. module: event
+#: field:event.event,email_confirmation_id:0
+#: field:event.type,default_email_event:0
+msgid "Event Confirmation Email"
+msgstr "活动确认邮件"
+
+#. module: event
+#: field:event.type,default_registration_max:0
+msgid "Default Maximum Registration"
+msgstr "默认最多的注册者"
+
+#. module: event
+#: view:report.event.registration:0
+msgid "Display"
+msgstr "显示"
+
+#. module: event
+#: field:event.event,register_avail:0
+msgid "Available Registrations"
+msgstr "可参与活动"
+
+#. module: event
+#: view:event.registration:0
+#: model:ir.model,name:event.model_event_registration
+msgid "Event Registration"
+msgstr "活动登记记录"
+
+#. module: event
+#: model:ir.module.category,description:event.module_category_event_management
+msgid "Helps you manage your Events."
+msgstr "帮你管理你的活动"
+
+#. module: event
+#: view:report.event.registration:0
+msgid "Day"
+msgstr "日"
+
+#. module: event
+#: view:report.event.registration:0
+msgid "Event on Registration"
+msgstr "登记记录的活动"
+
+#. module: event
+#: view:event.event:0
+msgid "Confirmed events"
+msgstr "已确认的活动"
+
+#. module: event
+#: view:event.event:0
+msgid "ZIP"
+msgstr ""
+
+#. module: event
+#: view:report.event.registration:0
+msgid "Event Beginning Date"
+msgstr "活动开始日期"
+
+#. module: event
+#: model:ir.actions.act_window,name:event.action_report_event_registration
+#: model:ir.model,name:event.model_report_event_registration
+#: model:ir.ui.menu,name:event.menu_report_event_registration
+#: view:report.event.registration:0
+msgid "Events Analysis"
+msgstr "活动分析"
+
+#. module: event
+#: help:event.type,default_registration_max:0
+msgid "It will select this default maximum value when you choose this event"
+msgstr "当你选择这个活动，将选择默认最大值"
+
+#. module: event
+#: view:report.event.registration:0
+#: field:report.event.registration,user_id_registration:0
+msgid "Register"
+msgstr "发起者"
+
+#. module: event
+#: field:event.event,message_ids:0
+#: field:event.registration,message_ids:0
+msgid "Messages"
+msgstr "消息"
+
+#. module: event
+#: view:event.event:0
+#: field:event.event,registration_ids:0
+#: model:ir.actions.act_window,name:event.act_event_list_register_event
+#: model:ir.actions.act_window,name:event.action_registration
+#: model:ir.ui.menu,name:event.menu_action_registration
+#: view:res.partner:0
+msgid "Registrations"
+msgstr "登记记录"
+
+#. module: event
+#: code:addons/event/event.py:89
+#: code:addons/event/event.py:100
+#: code:addons/event/event.py:355
+#, python-format
+msgid "Error!"
+msgstr "错误!"
+
+#. module: event
+#: view:event.event:0
+msgid "Confirm Event"
+msgstr "确认活动"
+
+#. module: event
+#: view:board.board:0
+#: model:ir.actions.act_window,name:event.act_event_view
+msgid "Next Events"
+msgstr "下一个活动"
+
+#. module: event
+#: selection:event.event,state:0
+#: selection:event.registration,state:0
+#: selection:report.event.registration,event_state:0
+#: selection:report.event.registration,registration_state:0
+msgid "Cancelled"
+msgstr "已取消"
+
+#. module: event
+#: view:event.event:0
+msgid "ticket"
+msgstr "入场券"
+
+#. module: event
+#: model:event.event,name:event.event_1
+msgid "Opera of Verdi"
+msgstr "Verdi歌剧"
+
+#. module: event
+#: help:event.event,message_unread:0
+#: help:event.registration,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "如果要求你关注新消息，勾选此项"
+
+#. module: event
+#: view:report.event.registration:0
+#: field:report.event.registration,registration_state:0
+msgid "Registration State"
+msgstr "等级状态"
+
+#. module: event
+#: view:event.event:0
+msgid "tickets"
+msgstr "门票"
+
+#. module: event
+#: view:event.event:0
+msgid "Street..."
+msgstr ""
+
+#. module: event
+#: view:res.partner:0
+msgid "False"
+msgstr "False"
+
+#. module: event
+#: field:event.registration,event_end_date:0
+msgid "Event End Date"
+msgstr "活动结束日期"
+
+#. module: event
+#: help:event.event,message_summary:0
+#: help:event.registration,message_summary:0
+msgid ""
+"Holds the Chatter summary (number of messages, ...). This summary is "
+"directly in html format in order to be inserted in kanban views."
+msgstr "保存复杂的摘要(消息数量,……等)。为了插入到看板视图，这一摘要直接是是HTML格式。"
+
+#. module: event
+#: view:report.event.registration:0
+msgid "Registrations in confirmed or done state"
+msgstr "在已确认或已完成状态的报名者"
+
+#. module: event
+#: code:addons/event/event.py:106
+#: code:addons/event/event.py:108
+#, python-format
+msgid "Warning!"
+msgstr "警告！"
+
+#. module: event
+#: view:event.event:0
+#: view:event.registration:0
+msgid "Registration"
+msgstr "登记记录"
+
+#. module: event
+#: view:event.registration:0
+#: field:event.registration,partner_id:0
+#: model:ir.model,name:event.model_res_partner
+msgid "Partner"
+msgstr "业务伙伴"
+
+#. module: event
+#: help:event.type,default_registration_min:0
+msgid "It will select this default minimum value when you choose this event"
+msgstr "当你选择这个活动，将选择默认最小值"
+
+#. module: event
+#: model:ir.model,name:event.model_event_type
+msgid " Event Type "
+msgstr " 活动类型 "
+
+#. module: event
+#: view:event.registration:0
+#: field:event.registration,event_id:0
+#: model:ir.model,name:event.model_event_event
+#: view:report.event.registration:0
+#: field:report.event.registration,event_id:0
+#: view:res.partner:0
+msgid "Event"
+msgstr "活动"
+
+#. module: event
+#: view:event.event:0
+#: selection:event.event,state:0
+#: view:event.registration:0
+#: selection:event.registration,state:0
+#: selection:report.event.registration,event_state:0
+#: selection:report.event.registration,registration_state:0
+msgid "Confirmed"
+msgstr "已确认"
+
+#. module: event
+#: view:event.registration:0
+msgid "Participant"
+msgstr "参与者"
+
+#. module: event
+#: view:event.registration:0
+#: view:report.event.registration:0
+msgid "Confirm"
+msgstr "确定"
+
+#. module: event
+#: view:event.event:0
+msgid "Organized by"
+msgstr "组织"
+
+#. module: event
+#: view:event.event:0
+msgid "Register with this event"
+msgstr "注册这次活动"
+
+#. module: event
+#: help:event.type,default_email_registration:0
+msgid ""
+"It will select this default confirmation registration mail value when you "
+"choose this event"
+msgstr "当你选择这个活动，将选择确认登记邮件值"
+
+#. module: event
+#: view:event.event:0
+msgid "Only"
+msgstr "仅"
+
+#. module: event
+#: field:event.event,message_follower_ids:0
+#: field:event.registration,message_follower_ids:0
+msgid "Followers"
+msgstr "关注者"
+
+#. module: event
+#: view:event.event:0
+msgid "Location"
+msgstr "位置"
+
+#. module: event
+#: view:event.event:0
+#: field:event.event,message_unread:0
+#: view:event.registration:0
+#: field:event.registration,message_unread:0
+msgid "Unread Messages"
+msgstr "未读消息"
+
+#. module: event
+#: view:event.registration:0
+#: view:report.event.registration:0
+msgid "New"
+msgstr "新建"
+
+#. module: event
+#: field:event.event,register_current:0
+msgid "Confirmed Registrations"
+msgstr "确认登记记录"
+
+#. module: event
+#: field:event.registration,email:0
+msgid "Email"
+msgstr "电子邮件"
+
+#. module: event
+#: code:addons/event/event.py:329
+#, python-format
+msgid "New registration confirmed: %s."
+msgstr "已确认的登记: %s."
+
+#. module: event
+#: view:event.event:0
+msgid "Upcoming"
+msgstr "即将"
+
+#. module: event
+#: field:event.registration,create_date:0
+msgid "Creation Date"
+msgstr "创建日期"
+
+#. module: event
+#: view:report.event.registration:0
+#: field:report.event.registration,user_id:0
+msgid "Event Responsible"
+msgstr "活动负责人"
+
+#. module: event
+#: view:event.event:0
+#: view:event.registration:0
+#: view:res.partner:0
+msgid "Cancel Registration"
+msgstr "取消登记记录"
+
+#. module: event
+#: selection:report.event.registration,month:0
+msgid "July"
+msgstr "7月"
+
+#. module: event
+#: field:event.event,reply_to:0
+msgid "Reply-To Email"
+msgstr "回复Email"
+
+#. module: event
+#: view:event.registration:0
+msgid "Confirmed registrations"
+msgstr "确认报名者"
+
+#. module: event
+#: view:event.event:0
+msgid "Starting Date"
+msgstr "开始日期"
+
+#. module: event
+#: view:event.event:0
+msgid "Event Organization"
+msgstr "活动组织机构"
+
+#. module: event
+#: view:event.confirm:0
+msgid "Confirm Anyway"
+msgstr "总是确认"
+
+#. module: event
+#: field:report.event.registration,nbevent:0
+msgid "Number Of Events"
+msgstr "活动数量"
+
+#. module: event
+#: help:event.event,main_speaker_id:0
+msgid "Speaker who will be giving speech at the event."
+msgstr "要在这次活动上发言的演讲者"
+
+#. module: event
+#: view:event.event:0
+msgid "Cancel Event"
+msgstr "取消活动"
+
+#. module: event
+#: model:ir.actions.act_window,name:event.act_event_reg
+#: view:report.event.registration:0
+msgid "Events Filling Status"
+msgstr "活动填充状态"
+
+#. module: event
+#: view:event.event:0
+msgid "Event Category"
+msgstr "活动分类"
+
+#. module: event
+#: field:event.event,register_prospect:0
+msgid "Unconfirmed Registrations"
+msgstr "不确认登记记录"
+
+#. module: event
+#: model:ir.actions.client,name:event.action_client_event_menu
+msgid "Open Event Menu"
+msgstr "打开活动菜单"
+
+#. module: event
+#: view:report.event.registration:0
+#: field:report.event.registration,event_state:0
+msgid "Event State"
+msgstr "活动状态"
+
+#. module: event
+#: field:event.registration,log_ids:0
+msgid "Logs"
+msgstr "日志"
+
+#. module: event
+#: view:event.event:0
+#: field:event.event,state_id:0
+msgid "State"
+msgstr "状态"
+
+#. module: event
+#: selection:report.event.registration,month:0
+msgid "September"
+msgstr "9月"
+
+#. module: event
+#: selection:report.event.registration,month:0
+msgid "December"
+msgstr "12月"
+
+#. module: event
+#: help:event.registration,origin:0
+msgid "Reference of the sales order which created the registration"
+msgstr ""
+
+#. module: event
+#: field:report.event.registration,draft_state:0
+msgid " # No of Draft Registrations"
+msgstr " # 没草稿状态的登记记录"
+
+#. module: event
+#: field:event.event,email_registration_id:0
+#: field:event.type,default_email_registration:0
+msgid "Registration Confirmation Email"
+msgstr "登记确认Email"
+
+#. module: event
+#: view:report.event.registration:0
+#: field:report.event.registration,month:0
+msgid "Month"
+msgstr "月份"
+
+#. module: event
+#: field:event.registration,date_closed:0
+msgid "Attended Date"
+msgstr "参加日期"
+
+#. module: event
+#: view:event.event:0
+msgid "Finish Event"
+msgstr "结束活动"
+
+#. module: event
+#: view:event.registration:0
+msgid "Registrations in unconfirmed state"
+msgstr "未确认状态的报名者"
+
+#. module: event
+#: view:event.event:0
+msgid "Event Description"
+msgstr "活动描述"
+
+#. module: event
+#: field:event.event,date_begin:0
+msgid "Start Date"
+msgstr "开始日期"
+
+#. module: event
+#: view:event.confirm:0
+msgid "or"
+msgstr "or"
+
+#. module: event
+#: help:res.partner,speaker:0
+msgid "Check this box if this contact is a speaker."
+msgstr "如果联系人是演讲者，选中此项"
+
+#. module: event
+#: code:addons/event/event.py:108
+#, python-format
+msgid "No Tickets Available!"
+msgstr "没有可用的门票"
+
+#. module: event
+#: help:event.event,state:0
+msgid ""
+"If event is created, the status is 'Draft'.If event is confirmed for the "
+"particular dates the status is set to 'Confirmed'. If the event is over, the "
+"status is set to 'Done'.If event is cancelled the status is set to "
+"'Cancelled'."
+msgstr ""
+
+#. module: event
+#: model:ir.actions.act_window,help:event.action_event_view
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"               Click to add a new event.\n"
+"             </p><p>\n"
+"               OpenERP helps you schedule and efficiently organize your "
+"events:\n"
+"               track subscriptions and participations, automate the "
+"confirmation emails,\n"
+"               sell tickets, etc.\n"
+"             </p>\n"
+"           "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"               单击添加一个新的活动\n"
+"             </p><p>\n"
+"               OpenERP帮你排程并有效地组织活动：跟踪订阅和参与、自动确认邮件、卖票等等。\n"
+"             </p>\n"
+"           "
+
+#. module: event
+#: help:event.event,register_max:0
+msgid ""
+"You can for each event define a maximum registration level. If you have too "
+"much registrations you are not able to confirm your event. (put 0 to ignore "
+"this rule )"
+msgstr "你能为每个活动定义最大的登记水平。如果你有太多的登记，你不能确认你的活动。（输入0忽略这个规则）"
+
+#. module: event
+#: code:addons/event/event.py:106
+#, python-format
+msgid "Only %d Seats are Available!"
+msgstr "只有 %d 个座位可用！"
+
+#. module: event
+#: code:addons/event/event.py:100
+#, python-format
+msgid ""
+"The total of confirmed registration for the event '%s' does not meet the "
+"expected minimum/maximum. Please reconsider those limits before going "
+"further."
+msgstr "活动 '%s' 的确认登记合计没有遇到最小或最大值。进一步深入前请重新考虑这些限制。"
+
+#. module: event
+#: help:event.event,email_confirmation_id:0
+msgid ""
+"If you set an email template, each participant will receive this email "
+"announcing the confirmation of the event."
+msgstr "如果你设定了邮件模板，每个参与者将收到邮件公告确认次次活动。"
+
+#. module: event
+#: view:board.board:0
+msgid "Events Filling By Status"
+msgstr ""
+
+#. module: event
+#: selection:report.event.registration,event_state:0
+#: selection:report.event.registration,registration_state:0
+msgid "Draft"
+msgstr "草稿"
+
+#. module: event
+#: view:event.event:0
+msgid "Events in New state"
+msgstr "在新建状态的活动"
+
+#. module: event
+#: view:report.event.registration:0
+msgid "Events which are in New state"
+msgstr "新建状态的活动"
+
+#. module: event
+#: view:event.event:0
+#: model:ir.actions.act_window,name:event.action_event_view
+#: model:ir.actions.act_window,name:event.open_board_associations_manager
+#: model:ir.module.category,name:event.module_category_event_management
+#: model:ir.ui.menu,name:event.event_main_menu
+#: model:ir.ui.menu,name:event.menu_board_associations_manager
+#: model:ir.ui.menu,name:event.menu_event_event
+#: model:ir.ui.menu,name:event.menu_reporting_events
+#: view:res.partner:0
+msgid "Events"
+msgstr "活动"
+
+#. module: event
+#: view:event.event:0
+#: field:event.event,state:0
+#: view:event.registration:0
+#: field:event.registration,state:0
+msgid "Status"
+msgstr "状态"
+
+#. module: event
+#: field:event.event,city:0
+msgid "city"
+msgstr "城市"
+
+#. module: event
+#: selection:report.event.registration,month:0
+msgid "August"
+msgstr "8月"
+
+#. module: event
+#: field:event.event,zip:0
+msgid "zip"
+msgstr "邮政编码"
+
+#. module: event
+#: field:res.partner,event_ids:0
+#: field:res.partner,event_registration_ids:0
+msgid "unknown"
+msgstr "未知的"
+
+#. module: event
+#: field:event.event,street2:0
+msgid "Street2"
+msgstr "街区地址2"
+
+#. module: event
+#: selection:report.event.registration,month:0
+msgid "June"
+msgstr "6月"
+
+#. module: event
+#: help:event.type,default_reply_to:0
+msgid ""
+"The email address of the organizer which is put in the 'Reply-To' of all "
+"emails sent automatically at event or registrations confirmation. You can "
+"also put your email address of your mail gateway if you use one."
+msgstr "在自动发送的活动或者登记确认的email中，组织者的email地址放在'Reply-To' 。你也能放你用的邮件网关的Email地址"
+
+#. module: event
+#: help:event.event,message_ids:0
+#: help:event.registration,message_ids:0
+msgid "Messages and communication history"
+msgstr "消息和通信历史"
+
+#. module: event
+#: field:event.registration,phone:0
+msgid "Phone"
+msgstr "电话"
+
+#. module: event
+#: model:email.template,body_html:event.confirmation_event
+msgid ""
+"\n"
+"        <p>Hello ${object.name},</p>\n"
+"        <p>The event ${object.event_id.name} that you registered for is "
+"confirmed and will be held from ${object.event_id.date_begin} to "
+"${object.event_id.date_end}.\n"
+"        For any further information please contact our event "
+"department.</p>\n"
+"        <p>Thank you for your participation!</p>\n"
+"        <p>Best regards</p>"
+msgstr ""
+
+#. module: event
+#: field:event.event,message_is_follower:0
+#: field:event.registration,message_is_follower:0
+msgid "Is a Follower"
+msgstr "是一个关注者"
+
+#. module: event
+#: field:event.registration,user_id:0
+#: model:res.groups,name:event.group_event_user
+msgid "User"
+msgstr "用户"
+
+#. module: event
+#: view:event.confirm:0
+msgid ""
+"Warning: This Event has not reached its Minimum Registration Limit. Are you "
+"sure you want to confirm it?"
+msgstr "警告：这活动没有达到最低登记记录的规定，你肯定要确认它？"
+
+#. module: event
+#: view:event.event:0
+msgid "(confirmed:"
+msgstr ""
+
+#. module: event
+#: view:event.registration:0
+msgid "My Registrations"
+msgstr "我的登记记录"
+
+#. module: event
+#: selection:report.event.registration,month:0
+msgid "November"
+msgstr "11月"
+
+#. module: event
+#: view:report.event.registration:0
+msgid "Extended Filters..."
+msgstr "增加筛选条件"
+
+#. module: event
+#: selection:report.event.registration,month:0
+msgid "October"
+msgstr "10月"
+
+#. module: event
+#: selection:report.event.registration,month:0
+msgid "January"
+msgstr "1月"
+
+#. module: event
+#: view:event.event:0
+msgid "Set To Draft"
+msgstr "设为草稿"
+
+#. module: event
+#: view:event.event:0
+#: view:event.registration:0
+#: view:res.partner:0
+msgid "Confirm Registration"
+msgstr "确认登记记录"
+
+#. module: event
+#: code:addons/event/event.py:89
+#, python-format
+msgid ""
+"You have already set a registration for this event as 'Attended'. Please "
+"reset it to draft if you want to cancel this event."
+msgstr ""
+
+#. module: event
+#: view:res.partner:0
+msgid "Date"
+msgstr "日期"
+
+#. module: event
+#: view:event.event:0
+msgid "Email Configuration"
+msgstr "邮箱配置"
+
+#. module: event
+#: field:event.type,default_registration_min:0
+msgid "Default Minimum Registration"
+msgstr "默认最小登记数"
+
+#. module: event
+#: field:event.event,address_id:0
+msgid "Location Address"
+msgstr "地址"
+
+#. module: event
+#: model:ir.actions.act_window,name:event.action_event_type
+#: model:ir.ui.menu,name:event.menu_event_type
+msgid "Types of Events"
+msgstr "活动类型"
+
+#. module: event
+#: help:event.event,email_registration_id:0
+msgid ""
+"This field contains the template of the mail that will be automatically sent "
+"each time a registration for this event is confirmed."
+msgstr ""
+
+#. module: event
+#: view:event.event:0
+#: view:event.registration:0
+msgid "Attended the Event"
+msgstr "参加活动"
+
+#. module: event
+#: constraint:event.event:0
+msgid "Error ! Closing Date cannot be set before Beginning Date."
+msgstr "错误！结束日期不能在开始日期前。"
+
+#. module: event
+#: code:addons/event/event.py:355
+#, python-format
+msgid "You must wait for the starting day of the event to do this action."
+msgstr "你必须等待活动开始才能做这些动作"
+
+#. module: event
+#: field:event.event,user_id:0
+msgid "Responsible User"
+msgstr "责任用户"
+
+#. module: event
+#: selection:event.event,state:0
+#: selection:report.event.registration,event_state:0
+msgid "Done"
+msgstr "完成"
+
+#. module: event
+#: view:report.event.registration:0
+msgid "Show Confirmed Registrations"
+msgstr "显示确认的登记"
+
+#. module: event
+#: view:event.confirm:0
+msgid "Cancel"
+msgstr "取消"
+
+#. module: event
+#: field:event.registration,reply_to:0
+msgid "Reply-to Email"
+msgstr "回复email"
+
+#. module: event
+#: view:event.event:0
+msgid "City"
+msgstr ""
+
+#. module: event
+#: model:email.template,subject:event.confirmation_event
+#: model:email.template,subject:event.confirmation_registration
+msgid "Your registration at ${object.event_id.name}"
+msgstr "你的登记在${object.event_id.name}"
+
+#. module: event
+#: view:event.registration:0
+msgid "Set To Unconfirmed"
+msgstr "设置为未确认"
+
+#. module: event
+#: view:event.event:0
+#: field:event.event,is_subscribed:0
+msgid "Subscribed"
+msgstr "已订阅"
+
+#. module: event
+#: view:event.event:0
+msgid "Unsubscribe"
+msgstr "退订"
+
+#. module: event
+#: view:event.event:0
+#: view:event.registration:0
+msgid "Responsible"
+msgstr "负责人"
+
+#. module: event
+#: view:report.event.registration:0
+msgid "Registration contact"
+msgstr "登记联系人"
+
+#. module: event
+#: view:report.event.registration:0
+#: field:report.event.registration,speaker_id:0
+#: field:res.partner,speaker:0
+msgid "Speaker"
+msgstr "关注者"
+
+#. module: event
+#: view:event.event:0
+msgid "Upcoming events from today"
+msgstr "今天将开始的活动"
+
+#. module: event
+#: model:event.event,name:event.event_2
+msgid "Conference on ERP Business"
+msgstr "ERP 商务会议"
+
+#. module: event
+#: model:ir.actions.act_window,name:event.act_event_view_registration
+#: model:mail.message.subtype,name:event.mt_event_registration
+msgid "New Registration"
+msgstr "新的登记"
+
+#. module: event
+#: field:event.event,note:0
+msgid "Description"
+msgstr "描述"
+
+#. module: event
+#: field:report.event.registration,confirm_state:0
+msgid " # No of Confirmed Registrations"
+msgstr " # 没确认登记记录"
+
+#. module: event
+#: field:report.event.registration,name_registration:0
+msgid "Participant / Contact Name"
+msgstr "参与者/联系人名字"
+
+#. module: event
+#: selection:report.event.registration,month:0
+msgid "May"
+msgstr "5月"
+
+#. module: event
+#: view:res.partner:0
+msgid "Events Registration"
+msgstr "活动登记记录"
+
+#. module: event
+#: view:event.event:0
+msgid "No ticket available."
+msgstr "没有可用的入场券"
+
+#. module: event
+#: field:event.event,register_max:0
+#: field:report.event.registration,register_max:0
+msgid "Maximum Registrations"
+msgstr "最多的登记记录"
+
+#. module: event
+#: view:event.event:0
+#: selection:event.event,state:0
+#: selection:event.registration,state:0
+msgid "Unconfirmed"
+msgstr "未确认"
+
+#. module: event
+#: field:event.event,date_end:0
+msgid "End Date"
+msgstr "结束日期"
+
+#. module: event
+#: selection:report.event.registration,month:0
+msgid "February"
+msgstr "2月"
+
+#. module: event
+#: view:board.board:0
+msgid "Association Dashboard"
+msgstr "商会控制台"
+
+#. module: event
+#: view:event.event:0
+#: field:event.event,name:0
+#: field:event.registration,name:0
+msgid "Name"
+msgstr "名称"
+
+#. module: event
+#: view:event.event:0
+#: field:event.event,country_id:0
+msgid "Country"
+msgstr "国家"
+
+#. module: event
+#: view:res.partner:0
+msgid "Close Registration"
+msgstr "结束登记记录"
+
+#. module: event
+#: field:event.registration,origin:0
+msgid "Source Document"
+msgstr "源单据"
+
+#. module: event
+#: selection:report.event.registration,month:0
+msgid "April"
+msgstr "4月"
+
+#. module: event
+#: help:event.type,default_email_event:0
+msgid ""
+"It will select this default confirmation event mail value when you choose "
+"this event"
+msgstr ""
+
+#. module: event
+#: view:report.event.registration:0
+msgid "Events which are in confirm state"
+msgstr "已确认状态的活动"
+
+#. module: event
+#: view:event.event:0
+#: view:event.type:0
+#: field:event.type,name:0
+#: view:report.event.registration:0
+#: field:report.event.registration,event_type:0
+msgid "Event Type"
+msgstr "活动类型"
+
+#. module: event
+#: field:event.event,message_summary:0
+#: field:event.registration,message_summary:0
+msgid "Summary"
+msgstr "概要"
+
+#. module: event
+#: field:event.registration,id:0
+msgid "ID"
+msgstr "标识"
+
+#. module: event
+#: field:event.type,default_reply_to:0
+msgid "Default Reply-To"
+msgstr "默认回复给"
+
+#. module: event
+#: view:event.event:0
+msgid "available."
+msgstr "可用."
+
+#. module: event
+#: field:event.registration,event_begin_date:0
+#: field:report.event.registration,event_date:0
+msgid "Event Start Date"
+msgstr "活动开始日期"
+
+#. module: event
+#: view:report.event.registration:0
+msgid "Participant / Contact"
+msgstr "参与者/联系人"
+
+#. module: event
+#: view:event.event:0
+msgid "Current Registrations"
+msgstr "当前登记"
+
+#. module: event
+#: model:email.template,body_html:event.confirmation_registration
+msgid ""
+"\n"
+"        <p>Hello ${object.name},</p>\n"
+"        <p>We confirm that your registration to the event "
+"${object.event_id.name} has been recorded.\n"
+"        You will automatically receive an email providing you more practical "
+"information (such as the schedule, the agenda...) as soon as the event is "
+"confirmed.</p>\n"
+"        <p>Thank you for your participation!</p>\n"
+"        <p>Best regards</p>"
+msgstr ""
+
+#. module: event
+#: help:event.event,reply_to:0
+msgid ""
+"The email address of the organizer is likely to be put here, with the effect "
+"to be in the 'Reply-To' of the mails sent automatically at event or "
+"registrations confirmation. You can also put the email address of your mail "
+"gateway if you use one."
+msgstr ""
+
+#. module: event
+#: view:event.event:0
+#: model:ir.actions.act_window,name:event.act_register_event_partner
+msgid "Subscribe"
+msgstr "订阅"
+
+#. module: event
+#: model:res.groups,name:event.group_event_manager
+msgid "Manager"
+msgstr "主管"
+
+#. module: event
+#: field:event.event,street:0
+msgid "Street"
+msgstr "街区地址"
+
+#. module: event
+#: view:event.confirm:0
+#: model:ir.actions.act_window,name:event.action_event_confirm
+#: model:ir.model,name:event.model_event_confirm
+msgid "Event Confirmation"
+msgstr "活动确认"
+
+#. module: event
+#: view:report.event.registration:0
+#: field:report.event.registration,year:0
+msgid "Year"
+msgstr "年"
+
+#. module: event
+#: field:event.event,speaker_confirmed:0
+msgid "Speaker Confirmed"
+msgstr "关注者确认"

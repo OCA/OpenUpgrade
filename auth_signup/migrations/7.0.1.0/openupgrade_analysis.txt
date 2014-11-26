@@ -1,0 +1,12 @@
+---Fields in module 'auth_signup'---
+auth_signup  / res.partner              / signup_expiration (datetime)  : NEW 
+auth_signup  / res.partner              / signup_token (char)           : NEW 
+auth_signup  / res.partner              / signup_type (char)            : NEW 
+---XML records in module 'auth_signup'---
+NEW email.template: auth_signup.reset_password_email
+NEW email.template: auth_signup.set_password_email
+NEW ir.actions.act_window: base.action_res_users
+NEW ir.config_parameter: auth_signup.default_template_user_config
+NEW ir.ui.view: auth_signup.res_users_form_view
+NEW ir.ui.view: auth_signup.view_general_configuration
+NEW res.users: auth_signup.default_template_user

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- assign new name, as this is the primary key
+             by which precisions are retrieved -->
+        <record id="decimal_price" model="decimal.precision">
+            <field name="name">Product Price</field>
+        </record>
+    </data>
+</openerp>

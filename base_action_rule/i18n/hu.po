@@ -1,0 +1,342 @@
+# Hungarian translation for openobject-addons
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openobject-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-03-07 08:37+0000\n"
+"PO-Revision-Date: 2013-03-19 17:59+0000\n"
+"Last-Translator: krnkris <Unknown>\n"
+"Language-Team: Hungarian <hu@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-03-28 05:32+0000\n"
+"X-Generator: Launchpad (build 16546)\n"
+
+#. module: base_action_rule
+#: selection:base.action.rule.lead.test,state:0
+msgid "In Progress"
+msgstr "Folyamatban"
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid ""
+"- In this same \"Search\" view, select the menu \"Save Current Filter\", "
+"enter the name (Ex: Create the 01/01/2012) and add the option \"Share with "
+"all users\""
+msgstr ""
+"- Ugyanebben a \"Keresés\" nézetben, válassza ki a \"Jelenlegi szűrő "
+"elmentése\" menüt, írja be a nevet (Pl: Létrehoz 01/01/2012) és adja hozzá a "
+"\"Ossza meg az összes felhasználóval\" lehetőséget"
+
+#. module: base_action_rule
+#: model:ir.model,name:base_action_rule.model_base_action_rule
+msgid "Action Rules"
+msgstr "Műveleti előírások"
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid "Select a filter or a timer as condition."
+msgstr "Válasszon szűrőt vagy időzítőt mint lehetőséget."
+
+#. module: base_action_rule
+#: field:base.action.rule.lead.test,user_id:0
+msgid "Responsible"
+msgstr "Felelős"
+
+#. module: base_action_rule
+#: help:base.action.rule,server_action_ids:0
+msgid "Examples: email reminders, call object service, etc."
+msgstr "Példák: e-mail emlékeztetők, tárgyi szolgáltatás hívása, stb."
+
+#. module: base_action_rule
+#: field:base.action.rule,act_followers:0
+msgid "Add Followers"
+msgstr "Követők hozzáadása"
+
+#. module: base_action_rule
+#: field:base.action.rule,act_user_id:0
+msgid "Set Responsible"
+msgstr "Felelős beállítása"
+
+#. module: base_action_rule
+#: help:base.action.rule,trg_date_range:0
+msgid ""
+"Delay after the trigger date.You can put a negative number if you need a "
+"delay before thetrigger date, like sending a reminder 15 minutes before a "
+"meeting."
+msgstr ""
+"A emlékeztető dátumának késleltetése. Negatív számot is írhat ha az "
+"emlékeztető kapcsolására az emlékeztető ideje előtt van szüksége, mint "
+"emlékeztető küldése 15 perccel a találkozó előtt."
+
+#. module: base_action_rule
+#: model:ir.model,name:base_action_rule.model_base_action_rule_lead_test
+msgid "base.action.rule.lead.test"
+msgstr "base.action.rule.lead.test"
+
+#. module: base_action_rule
+#: selection:base.action.rule.lead.test,state:0
+msgid "Closed"
+msgstr "Lezárt"
+
+#. module: base_action_rule
+#: selection:base.action.rule.lead.test,state:0
+msgid "New"
+msgstr "Új"
+
+#. module: base_action_rule
+#: field:base.action.rule,trg_date_range:0
+msgid "Delay after trigger date"
+msgstr "Késedelem az indítás dátuma után"
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid "Conditions"
+msgstr "Feltételek"
+
+#. module: base_action_rule
+#: selection:base.action.rule.lead.test,state:0
+msgid "Pending"
+msgstr "Függőben lévő"
+
+#. module: base_action_rule
+#: field:base.action.rule.lead.test,state:0
+msgid "Status"
+msgstr "Állapot"
+
+#. module: base_action_rule
+#: field:base.action.rule,filter_pre_id:0
+msgid "Before Update Filter"
+msgstr "Szűró frissítése előtt"
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid "Action Rule"
+msgstr "Műveleti előírások"
+
+#. module: base_action_rule
+#: help:base.action.rule,filter_id:0
+msgid ""
+"If present, this condition must be satisfied after the update of the record."
+msgstr ""
+"Ha létezik, ennek a feltételnek teljesülni kell a rekord frissítése után."
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid "Fields to Change"
+msgstr "Mezők módosítása"
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid "The filter must therefore be available in this page."
+msgstr "A szűrőnek ezért elérhetőnek kell lennie ezen az oldalon."
+
+#. module: base_action_rule
+#: field:base.action.rule,filter_id:0
+msgid "After Update Filter"
+msgstr "Szűrő frissítése után"
+
+#. module: base_action_rule
+#: selection:base.action.rule,trg_date_range_type:0
+msgid "Hours"
+msgstr "Órák"
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid "To create a new filter:"
+msgstr "Új szűrő létrehozásához:"
+
+#. module: base_action_rule
+#: field:base.action.rule,active:0
+#: field:base.action.rule.lead.test,active:0
+msgid "Active"
+msgstr "aktív"
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid "Delay After Trigger Date"
+msgstr "Késedelem az indítás dátuma után"
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid ""
+"An action rule is checked when you create or modify the \"Related Document "
+"Model\". The precondition filter is checked right before the modification "
+"while the postcondition filter is checked after the modification. A "
+"precondition filter will therefore not work during a creation."
+msgstr ""
+"Egy műveleti szabály beállított, ha létrehozza vagy módosítja a \"Vonatkozó "
+"Dokumentum Modell\"-t. Az előszűrő feltétele beállítható a módosítást "
+"megelőzően, ugyanakkor az utófeltétel szűrő a módosítás után állítható be.  "
+"Az előfeltétel szűrő ezért nem működik a létrehozáskor."
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid "Filter Condition"
+msgstr "Feltételek szűrése"
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid ""
+"- Go to your \"Related Document Model\" page and set the filter parameters "
+"in the \"Search\" view (Example of filter based on Leads/Opportunities: "
+"Creation Date \"is equal to\" 01/01/2012)"
+msgstr ""
+"- Menjen a \"Vonatkozó Dokumentum Modell\" oldalra és állítsa be a szűrési "
+"paramétereket a \"Keresés\" nézetben (Például a szűrő az "
+"Érdeklődések/Lehetőségek alapján: Létrehozás dátuma \"egyenlő\" 01/01/2012)"
+
+#. module: base_action_rule
+#: field:base.action.rule,name:0
+msgid "Rule Name"
+msgstr "Előírás neve"
+
+#. module: base_action_rule
+#: model:ir.actions.act_window,name:base_action_rule.base_action_rule_act
+#: model:ir.ui.menu,name:base_action_rule.menu_base_action_rule_form
+msgid "Automated Actions"
+msgstr "Automatizált műveletek"
+
+#. module: base_action_rule
+#: help:base.action.rule,sequence:0
+msgid "Gives the sequence order when displaying a list of rules."
+msgstr ""
+"Adja meg a rendezési szempontot a szabályok listájának megjelenítésekor."
+
+#. module: base_action_rule
+#: selection:base.action.rule,trg_date_range_type:0
+msgid "Months"
+msgstr "Hónapok"
+
+#. module: base_action_rule
+#: selection:base.action.rule,trg_date_range_type:0
+msgid "Days"
+msgstr "Napok"
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid "Timer"
+msgstr "Időzítő"
+
+#. module: base_action_rule
+#: field:base.action.rule,trg_date_range_type:0
+msgid "Delay type"
+msgstr "Késedelem típusa"
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid "Server actions to run"
+msgstr "Szerver műveletének futtatása"
+
+#. module: base_action_rule
+#: help:base.action.rule,active:0
+msgid "When unchecked, the rule is hidden and will not be executed."
+msgstr "Ha nincs bejelölve, a szabály eltüntetett és nem végrehajtott."
+
+#. module: base_action_rule
+#: selection:base.action.rule.lead.test,state:0
+msgid "Cancelled"
+msgstr "Megszakítva"
+
+#. module: base_action_rule
+#: field:base.action.rule,model:0
+msgid "Model"
+msgstr "Modell"
+
+#. module: base_action_rule
+#: field:base.action.rule,last_run:0
+msgid "Last Run"
+msgstr "Utolsó futás"
+
+#. module: base_action_rule
+#: selection:base.action.rule,trg_date_range_type:0
+msgid "Minutes"
+msgstr "Percek"
+
+#. module: base_action_rule
+#: field:base.action.rule,model_id:0
+msgid "Related Document Model"
+msgstr "Ide vonatkozó dokumentum modell"
+
+#. module: base_action_rule
+#: help:base.action.rule,filter_pre_id:0
+msgid ""
+"If present, this condition must be satisfied before the update of the record."
+msgstr ""
+"Ha létezik, ennek a feltételnek teljesülnie kell a rekord frissítése előtt."
+
+#. module: base_action_rule
+#: field:base.action.rule,sequence:0
+msgid "Sequence"
+msgstr "Sorrend"
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+msgid "Actions"
+msgstr "Műveletek"
+
+#. module: base_action_rule
+#: model:ir.actions.act_window,help:base_action_rule.base_action_rule_act
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to setup a new automated action rule. \n"
+"              </p><p>\n"
+"                Use automated actions to automatically trigger actions for\n"
+"                various screens. Example: a lead created by a specific user "
+"may\n"
+"                be automatically set to a specific sales team, or an\n"
+"                opportunity which still has status pending after 14 days "
+"might\n"
+"                trigger an automatic reminder email.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Kattintson új automatikus művelet szabály létrehozásához. \n"
+"              </p><p>\n"
+"                Használjon automatikus műveleteket automatikus művelet "
+"indításához \n"
+"                különböző képernyőkön. Például: ha egy érdeklődést egy "
+"felhasználó létrehozott akkor\n"
+"                az automatikusan egy csoporthoz lesz iktatva, vagy egy\n"
+"                lehetőség, mely függőben van 14 nap után is el fog indítani "
+"\n"
+"                egy automatikus emlékeztető e-mailt.\n"
+"              </p>\n"
+"            "
+
+#. module: base_action_rule
+#: field:base.action.rule,create_date:0
+msgid "Create Date"
+msgstr "Dátum létrehozása"
+
+#. module: base_action_rule
+#: field:base.action.rule.lead.test,date_action_last:0
+msgid "Last Action"
+msgstr "Utolsó művelet"
+
+#. module: base_action_rule
+#: field:base.action.rule.lead.test,partner_id:0
+msgid "Partner"
+msgstr "Partner"
+
+#. module: base_action_rule
+#: field:base.action.rule,trg_date_id:0
+msgid "Trigger Date"
+msgstr "Indítás dátuma"
+
+#. module: base_action_rule
+#: view:base.action.rule:0
+#: field:base.action.rule,server_action_ids:0
+msgid "Server Actions"
+msgstr "Szerver műveletek"
+
+#. module: base_action_rule
+#: field:base.action.rule.lead.test,name:0
+msgid "Subject"
+msgstr "Tárgy"

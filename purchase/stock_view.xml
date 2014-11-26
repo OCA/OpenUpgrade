@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="stock_move_purchase" model="ir.ui.view">
+            <field name="name">stock.move.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//group[@name='destination_grp']" position="inside">
+                    <field name="purchase_line_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock_picking_in_inherit_purchase" model="ir.ui.view">
+            <field name="name">Incoming Picking Inherited</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date']" position="before">
+                    <field name="purchase_id" domain="[('invoice_method','=','picking')]"  context="{'search_default_partner_id':partner_id,'default_partner_id':partner_id, 'default_invoice_method':'picking'}"/>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="warehouse_id" groups="stock.group_locations"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_picking_in_search_picking_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.in.search.inherit</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_in_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="purchase_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- is it need ? we have another method "Receive Products"-->
+        <record id="purchase_order_2_stock_picking" model="ir.ui.view">
+            <field name="name">Purchase Picking Inherited</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//div[contains(@class, 'oe_title')]" position="before">
+                    <div class="oe_right oe_button_box" name="buttons">
+                        <button type="object"
+                            name="view_picking"
+                            string="Incoming Shipments" states="approved"/>
+                        <button type="object"  name="invoice_open"
+                            string="Invoices" attrs="{'invisible': [('state', '=', 'draft')]}"/> 
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_picking_tree4_picking_to_invoice" model="ir.actions.act_window">
+            <field name="name">On Incoming Shipments</field>
+            <field name="res_model">stock.picking.in</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('type','=','in'),('purchase_id.invoice_method','=','picking')]</field>
+            <field name="context">{"default_type": "in", "contact_display": "partner_address", "search_default_done": 1, "search_default_to_invoice": 1}</field>
+            <field name="search_view_id" ref="stock.view_picking_in_search"/>
+            <field name="help" type="html">
+              <p>
+                Here you can track all the product receptions of purchase
+                orders where the invoicing is "Based on Incoming Shipments",
+                and for which you have not received a supplier invoice yet.
+                You can generate a supplier invoice based on those receptions.
+              </p>
+            </field>
+       </record>
+
+        <menuitem action="action_picking_tree4_picking_to_invoice"
+            id="menu_action_picking_tree4_picking_to_invoice"
+            parent="purchase.menu_procurement_management_invoice" sequence="90"/>
+    </data>
+</openerp>

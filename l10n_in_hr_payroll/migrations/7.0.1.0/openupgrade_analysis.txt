@@ -1,0 +1,161 @@
+---Fields in module 'l10n_in_hr_payroll'---
+l10n_in_hr_payroll / hr.contract              / driver_salay (boolean)        : NEW 
+l10n_in_hr_payroll / hr.contract              / house_rent_allowance_metro_nonmetro (float): NEW 
+l10n_in_hr_payroll / hr.contract              / medical_insurance (float)     : NEW 
+l10n_in_hr_payroll / hr.contract              / supplementary_allowance (float): NEW 
+l10n_in_hr_payroll / hr.contract              / tds (float)                   : NEW 
+l10n_in_hr_payroll / hr.contract              / voluntary_provident_fund (float): NEW 
+l10n_in_hr_payroll / hr.payroll.advice        / bank_id (many2one)            : NEW relation: res.bank
+l10n_in_hr_payroll / hr.payroll.advice        / batch_id (many2one)           : NEW relation: hr.payslip.run
+l10n_in_hr_payroll / hr.payroll.advice        / chaque_nos (char)             : NEW 
+l10n_in_hr_payroll / hr.payroll.advice        / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+l10n_in_hr_payroll / hr.payroll.advice        / date (date)                   : NEW required: required, req_default: function
+l10n_in_hr_payroll / hr.payroll.advice        / line_ids (one2many)           : NEW relation: hr.payroll.advice.line
+l10n_in_hr_payroll / hr.payroll.advice        / name (char)                   : NEW required: required
+l10n_in_hr_payroll / hr.payroll.advice        / neft (boolean)                : NEW 
+l10n_in_hr_payroll / hr.payroll.advice        / note (text)                   : NEW 
+l10n_in_hr_payroll / hr.payroll.advice        / number (char)                 : NEW 
+l10n_in_hr_payroll / hr.payroll.advice        / state (selection)             : NEW selection_keys: ['cancel', 'confirm', 'draft']
+l10n_in_hr_payroll / hr.payroll.advice.line   / advice_id (many2one)          : NEW relation: hr.payroll.advice
+l10n_in_hr_payroll / hr.payroll.advice.line   / bysal (float)                 : NEW 
+l10n_in_hr_payroll / hr.payroll.advice.line   / debit_credit (char)           : NEW 
+l10n_in_hr_payroll / hr.payroll.advice.line   / employee_id (many2one)        : NEW relation: hr.employee, required: required
+l10n_in_hr_payroll / hr.payroll.advice.line   / ifsc_code (char)              : NEW 
+l10n_in_hr_payroll / hr.payroll.advice.line   / name (char)                   : NEW required: required
+l10n_in_hr_payroll / hr.payslip               / advice_id (many2one)          : NEW relation: hr.payroll.advice
+l10n_in_hr_payroll / hr.payslip.run           / available_advice (boolean)    : NEW 
+l10n_in_hr_payroll / payment.advice.report    / bank_id (many2one)            : NEW relation: res.bank
+l10n_in_hr_payroll / payment.advice.report    / bysal (float)                 : NEW 
+l10n_in_hr_payroll / payment.advice.report    / cheque_nos (char)             : NEW 
+l10n_in_hr_payroll / payment.advice.report    / company_id (many2one)         : NEW relation: res.company
+l10n_in_hr_payroll / payment.advice.report    / date (date)                   : NEW 
+l10n_in_hr_payroll / payment.advice.report    / day (char)                    : NEW 
+l10n_in_hr_payroll / payment.advice.report    / employee_bank_no (char)       : NEW required: required
+l10n_in_hr_payroll / payment.advice.report    / employee_id (many2one)        : NEW relation: hr.employee
+l10n_in_hr_payroll / payment.advice.report    / ifsc_code (char)              : NEW 
+l10n_in_hr_payroll / payment.advice.report    / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+l10n_in_hr_payroll / payment.advice.report    / name (char)                   : NEW 
+l10n_in_hr_payroll / payment.advice.report    / nbr (integer)                 : NEW 
+l10n_in_hr_payroll / payment.advice.report    / neft (boolean)                : NEW 
+l10n_in_hr_payroll / payment.advice.report    / number (char)                 : NEW 
+l10n_in_hr_payroll / payment.advice.report    / state (selection)             : NEW selection_keys: ['cancel', 'confirm', 'draft']
+l10n_in_hr_payroll / payment.advice.report    / year (char)                   : NEW 
+l10n_in_hr_payroll / payslip.report           / category_id (many2one)        : NEW relation: hr.salary.rule.category
+l10n_in_hr_payroll / payslip.report           / company_id (many2one)         : NEW relation: res.company
+l10n_in_hr_payroll / payslip.report           / date_from (date)              : NEW 
+l10n_in_hr_payroll / payslip.report           / date_to (date)                : NEW 
+l10n_in_hr_payroll / payslip.report           / day (char)                    : NEW 
+l10n_in_hr_payroll / payslip.report           / employee_id (many2one)        : NEW relation: hr.employee
+l10n_in_hr_payroll / payslip.report           / month (selection)             : NEW selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+l10n_in_hr_payroll / payslip.report           / name (char)                   : NEW 
+l10n_in_hr_payroll / payslip.report           / nbr (integer)                 : NEW 
+l10n_in_hr_payroll / payslip.report           / number (char)                 : NEW 
+l10n_in_hr_payroll / payslip.report           / paid (boolean)                : NEW 
+l10n_in_hr_payroll / payslip.report           / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft']
+l10n_in_hr_payroll / payslip.report           / struct_id (many2one)          : NEW relation: hr.payroll.structure
+l10n_in_hr_payroll / payslip.report           / total (float)                 : NEW 
+l10n_in_hr_payroll / payslip.report           / year (char)                   : NEW 
+l10n_in_hr_payroll / res.company              / dearness_allowance (boolean)  : NEW 
+---XML records in module 'l10n_in_hr_payroll'---
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_company_transport_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_food_coupen_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_group_term_insurance_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_houserent_allowance_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_labour_Welfare_fund_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_leave_availed_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_medical_insurance_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_nps_contribution_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_other_deduction_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_professional_tax_deduction_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_register_provident_fund
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_tds_register
+NEW hr.contribution.register: l10n_in_hr_payroll.hr_vpf_contribution_register
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_arrears
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_bonus
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_car
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_internet
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_journals
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_le
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_leave_avail
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_medical
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_performance
+NEW hr.rule.input: l10n_in_hr_payroll.hr_rule_input_telephone
+NEW hr.salary.rule: l10n_in_hr_payroll.1
+NEW hr.salary.rule: l10n_in_hr_payroll.2
+NEW hr.salary.rule: l10n_in_hr_payroll.3
+NEW hr.salary.rule: l10n_in_hr_payroll.4
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_car
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_child1
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_child2
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_city1
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_metrocity
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payroll_rule_nonmetrocity
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_line_professional_tax
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_cgti
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_cmt
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_cpt
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_dla
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_enps
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_epf
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_ernps
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_erpf
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_lwf_employee
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_lwf_employer
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_ode
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_tds
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_payslip_rule_vpf
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_arrears
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_bonus
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_da
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_driver
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_food_coupon
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_food_coupon_ded
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_houserentallowancemetro_nonmetro
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_internet
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_journals
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_le
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_lta
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_medical
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_medical_allow
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_performance
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_prof_develope
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_special
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_telephone
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_uniform_junior
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_rule_uniform_senior
+NEW hr.salary.rule: l10n_in_hr_payroll.hr_salary_trans_allownce
+NEW ir.actions.act_window: l10n_in_hr_payroll.act_hr_emp_payslip_list
+NEW ir.actions.act_window: l10n_in_hr_payroll.action_payment_advice_report_all
+NEW ir.actions.act_window: l10n_in_hr_payroll.action_payslip_report_all
+NEW ir.actions.act_window: l10n_in_hr_payroll.action_salary_employee_month
+NEW ir.actions.act_window: l10n_in_hr_payroll.action_view_hr_bank_advice_tree
+NEW ir.actions.act_window: l10n_in_hr_payroll.action_yearly_salary_detail
+NEW ir.actions.report.xml: l10n_in_hr_payroll.hr_salary_employee_bymonth
+NEW ir.actions.report.xml: l10n_in_hr_payroll.payroll_advice
+NEW ir.actions.report.xml: l10n_in_hr_payroll.payslip_details_report
+NEW ir.actions.report.xml: l10n_in_hr_payroll.yearly_salary
+NEW ir.model.access: l10n_in_hr_payroll.access_hr_payroll_advice_line_user
+NEW ir.model.access: l10n_in_hr_payroll.access_hr_payroll_advice_report_user
+NEW ir.model.access: l10n_in_hr_payroll.access_hr_payroll_advice_user
+NEW ir.model.access: l10n_in_hr_payroll.access_hr_payroll_payslip_report_user
+NEW ir.sequence: l10n_in_hr_payroll.seq_payment_advice
+NEW ir.sequence.type: l10n_in_hr_payroll.seq_type_payment_advice
+NEW ir.ui.menu: l10n_in_hr_payroll.hr_menu_payment_advice
+NEW ir.ui.menu: l10n_in_hr_payroll.menu_reporting_payment_advice
+NEW ir.ui.menu: l10n_in_hr_payroll.menu_reporting_payslip
+NEW ir.ui.menu: l10n_in_hr_payroll.menu_salary_employee_month
+NEW ir.ui.menu: l10n_in_hr_payroll.menu_yearly_salary_detail
+NEW ir.ui.view: l10n_in_hr_payroll.hr_contract_form_in_inherit
+NEW ir.ui.view: l10n_in_hr_payroll.hr_payslip_run_form_inherit
+NEW ir.ui.view: l10n_in_hr_payroll.hr_payslip_run_search_inherit
+NEW ir.ui.view: l10n_in_hr_payroll.view_advice_line_form
+NEW ir.ui.view: l10n_in_hr_payroll.view_hr_bank_advice_form
+NEW ir.ui.view: l10n_in_hr_payroll.view_hr_bank_advice_tree
+NEW ir.ui.view: l10n_in_hr_payroll.view_hr_payroll_advice_filter
+NEW ir.ui.view: l10n_in_hr_payroll.view_payment_advice_search
+NEW ir.ui.view: l10n_in_hr_payroll.view_payment_advice_tree
+NEW ir.ui.view: l10n_in_hr_payroll.view_payslip_search
+NEW ir.ui.view: l10n_in_hr_payroll.view_payslip_tree
+NEW ir.ui.view: l10n_in_hr_payroll.view_res_company_da
+NEW ir.ui.view: l10n_in_hr_payroll.view_salary_employee_month
+NEW ir.ui.view: l10n_in_hr_payroll.view_yearly_salary_detail

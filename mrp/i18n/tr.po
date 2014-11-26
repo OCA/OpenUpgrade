@@ -1,0 +1,2611 @@
+# Turkish translation for openobject-addons
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openobject-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-03-07 08:37+0000\n"
+"PO-Revision-Date: 2013-04-13 23:32+0000\n"
+"Last-Translator: Ayhan KIZILTAN <Unknown>\n"
+"Language-Team: Turkish <tr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-04-14 05:50+0000\n"
+"X-Generator: Launchpad (build 16564)\n"
+
+#. module: mrp
+#: help:mrp.config.settings,module_mrp_repair:0
+msgid ""
+"Allows to manage all product repairs.\n"
+"                    * Add/remove products in the reparation\n"
+"                    * Impact for stocks\n"
+"                    * Invoicing (products and/or services)\n"
+"                    * Warranty concept\n"
+"                    * Repair quotation report\n"
+"                    * Notes for the technician and for the final customer.\n"
+"                This installs the module mrp_repair."
+msgstr ""
+"Tüm ürün onarımlarını yönetmenizi sağlar.\n"
+"                    * Onarımda ürün Ekle/Kaldır\n"
+"                    * Stokları etkiler\n"
+"                    * Faturalama (ürün ve/veya hizmetler)\n"
+"                    * Garanti kavramı\n"
+"                    * Onarım teklif raporu\n"
+"                    * Teknisyen ve son müşteri için notlar.\n"
+"                Bu, mrp_repair modülünü kurar."
+
+#. module: mrp
+#: report:mrp.production.order:0
+msgid "No. Of Cycles"
+msgstr "Çevrim Sayısı"
+
+#. module: mrp
+#: help:mrp.production,location_src_id:0
+msgid "Location where the system will look for components."
+msgstr "Sistemin bileşenleri arayacağı konum."
+
+#. module: mrp
+#: field:mrp.production,workcenter_lines:0
+msgid "Work Centers Utilisation"
+msgstr "İş Merkezi Kullanımı"
+
+#. module: mrp
+#: view:mrp.routing.workcenter:0
+msgid "Routing Work Centers"
+msgstr "İş Merkezleri Yönlendirme"
+
+#. module: mrp
+#: field:mrp.production.workcenter.line,cycle:0
+#: field:mrp.routing.workcenter,cycle_nbr:0
+#: field:report.workcenter.load,cycle:0
+msgid "Number of Cycles"
+msgstr "Çevrim Sayısı"
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_minimumstockprocure0
+msgid ""
+"The 'Minimum stock rule' allows the system to create procurement orders "
+"automatically as soon as the minimum stock is reached."
+msgstr ""
+"'Enaz stok kuralı', enaz stok sayısına erişildiğinde sistemin satınalma "
+"emirlerini otomatik olarak oluşturmasına izin verir."
+
+#. module: mrp
+#: code:addons/mrp/report/price.py:130
+#, python-format
+msgid "Hourly Cost"
+msgstr "Saat Maliyeti"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Scrap Products"
+msgstr "Hurda Ürünler"
+
+#. module: mrp
+#: view:mrp.workcenter:0
+msgid "Mrp Workcenter"
+msgstr "Ürt İşmerkezi"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.mrp_routing_action
+#: model:ir.ui.menu,name:mrp.menu_mrp_routing_action
+msgid "Routings"
+msgstr "Rotalar"
+
+#. module: mrp
+#: view:mrp.bom:0
+msgid "Search Bill Of Material"
+msgstr "Ürün Ağacı Arama"
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_stockproduct1
+msgid "For stockable products and consumables"
+msgstr "Stoklanabilir ürünler ve sarf malzemeleri için"
+
+#. module: mrp
+#: help:mrp.bom,message_unread:0
+#: help:mrp.production,message_unread:0
+#: help:mrp.production.workcenter.line,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "Eğer seçilirse yeni mesajlar dikkat gerektirir."
+
+#. module: mrp
+#: help:mrp.routing.workcenter,cycle_nbr:0
+msgid ""
+"Number of iterations this work center has to do in the specified operation "
+"of the routing."
+msgstr ""
+"Belirtilen rota işlemi için bu iş merkezinin yapması gereken özyineleme "
+"sayısı."
+
+#. module: mrp
+#: view:product.product:0
+msgid "False"
+msgstr "Yanlış"
+
+#. module: mrp
+#: view:mrp.bom:0
+#: field:mrp.bom,code:0
+#: field:mrp.production,name:0
+msgid "Reference"
+msgstr "Kaynak"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Finished Products"
+msgstr "Bitmiş Ürünler"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Manufacturing Orders which are currently in production."
+msgstr "Şu an üretimde olan Üretim Emirleri"
+
+#. module: mrp
+#: help:mrp.bom,message_summary:0
+#: help:mrp.production,message_summary:0
+#: help:mrp.production.workcenter.line,message_summary:0
+msgid ""
+"Holds the Chatter summary (number of messages, ...). This summary is "
+"directly in html format in order to be inserted in kanban views."
+msgstr ""
+"Sohbetçi özetini tutar (mesajların sayısı, ...). Bu özet kanban ekranlarına "
+"eklenebilmesi için html biçimindedir."
+
+#. module: mrp
+#: model:process.transition,name:mrp.process_transition_servicerfq0
+#: model:process.transition,name:mrp.process_transition_stockrfq0
+msgid "To Buy"
+msgstr "Satınalınır"
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_purchaseprocure0
+msgid "The system launches automatically a RFQ to the preferred supplier."
+msgstr ""
+"Sistem tercih edilen tedarikçiye otomatik olarak bir Teklif İsteği yapar."
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Products to Finish"
+msgstr "Bitirilecek Ürünler"
+
+#. module: mrp
+#: selection:mrp.bom,method:0
+msgid "Set / Pack"
+msgstr "Takım / Paket"
+
+#. module: mrp
+#: field:mrp.workcenter,costs_hour:0
+msgid "Cost per hour"
+msgstr "Saat başına maliyet"
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_stockproduction0
+msgid ""
+"In case the Supply method of the product is Produce, the system creates a "
+"production order."
+msgstr ""
+"Ürünün Tedarik yönteminin Üretim olması durumunda, sistem bir üretim emri "
+"oluşturur."
+
+#. module: mrp
+#: field:change.production.qty,product_qty:0
+msgid "Product Qty"
+msgstr "Ürün Mik."
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Unit of Measure"
+msgstr "Ölçü Birimi"
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_purchaseprocure0
+msgid "For purchased material"
+msgstr "Satınalınan malzemeler için"
+
+#. module: mrp
+#: model:ir.ui.menu,name:mrp.menu_mrp_production_order_action
+msgid "Order Planning"
+msgstr "Sipariş Planlama"
+
+#. module: mrp
+#: field:mrp.config.settings,module_mrp_operations:0
+msgid "Allow detailed planning of work order"
+msgstr "Ayrıntılı iş emri planınına izin verir"
+
+#. module: mrp
+#: code:addons/mrp/mrp.py:633
+#, python-format
+msgid "Cannot cancel manufacturing order!"
+msgstr "Üretim emri iptal edilemiyor!"
+
+#. module: mrp
+#: field:mrp.workcenter,costs_cycle_account_id:0
+msgid "Cycle Account"
+msgstr "Çevrim Hesabı"
+
+#. module: mrp
+#: code:addons/mrp/report/price.py:130
+#, python-format
+msgid "Work Cost"
+msgstr "İş Maliyeti"
+
+#. module: mrp
+#: model:process.transition,name:mrp.process_transition_procureserviceproduct0
+msgid "Procurement of services"
+msgstr "Hizmet tedariki"
+
+#. module: mrp
+#: view:mrp.workcenter:0
+msgid "Capacity Information"
+msgstr "Kapasite Bilgisi"
+
+#. module: mrp
+#: field:mrp.routing,workcenter_lines:0
+msgid "Work Centers"
+msgstr "İş Merkezleri"
+
+#. module: mrp
+#: model:ir.actions.act_window,help:mrp.mrp_routing_action
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to create a routing.\n"
+"              </p><p>\n"
+"                Routings allow you to create and manage the manufacturing\n"
+"                operations that should be followed within your work centers "
+"in\n"
+"                order to produce a product.  They are attached to bills of\n"
+"                materials that will define the required raw materials.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Bir rota oluşturmak için tıklayın.\n"
+"              </p><p>\n"
+"                Rotalar, bir ürün üretmek için iş merkezlerinizde \n"
+"                izlenebilecek üretim işlemleri oluşturmanızı ve yönetmenizi "
+"\n"
+"                sağlar. Gerekli ham malzemelerin tanımlanacağı ürün \n"
+"                ağaçlarına eklidir.\n"
+"              </p>\n"
+"            "
+
+#. module: mrp
+#: view:mrp.production:0
+#: field:mrp.production,move_created_ids2:0
+msgid "Produced Products"
+msgstr "Üretilmiş Ürünler"
+
+#. module: mrp
+#: report:mrp.production.order:0
+msgid "Destination Location"
+msgstr "Hedef Konum"
+
+#. module: mrp
+#: view:mrp.config.settings:0
+msgid "Master Data"
+msgstr "Ana Veri"
+
+#. module: mrp
+#: field:mrp.config.settings,module_mrp_byproduct:0
+msgid "Produce several products from one manufacturing order"
+msgstr "Bir üretim emrinden birçok ürün üret"
+
+#. module: mrp
+#: help:mrp.config.settings,group_mrp_properties:0
+msgid ""
+"The selection of the right Bill of Material to use will depend on the "
+"properties specified on the sales order and the Bill of Material."
+msgstr ""
+"Kullanılacak doğru Ürün Ağacının seçimi satış siparişinde ve Ürün Ağacında "
+"belirtilen özelliklere bağlı olacaktır."
+
+#. module: mrp
+#: view:mrp.bom:0
+msgid ""
+"When processing a sales order for this product, the delivery order\n"
+"                                will contain the raw materials, instead of "
+"the finished product."
+msgstr ""
+"Bu ürün için bir satış siparişine işlem yaparken, teslimat emri\n"
+"                                bitmiş ürün yerine ham malzemeleri "
+"içerecektir."
+
+#. module: mrp
+#: report:mrp.production.order:0
+msgid "Partner Ref"
+msgstr "İş Ortağı Ref"
+
+#. module: mrp
+#: selection:mrp.workcenter.load,measure_unit:0
+msgid "Amount in hours"
+msgstr "Tutar saat cinsinden"
+
+#. module: mrp
+#: field:mrp.production,product_lines:0
+msgid "Scheduled goods"
+msgstr "Planlanmış mallar"
+
+#. module: mrp
+#: selection:mrp.bom,type:0
+msgid "Sets / Phantom"
+msgstr "Ayarlar / Görüntü"
+
+#. module: mrp
+#: view:mrp.production:0
+#: field:mrp.production,state:0
+msgid "Status"
+msgstr "Durumu"
+
+#. module: mrp
+#: help:mrp.bom,position:0
+msgid "Reference to a position in an external plan."
+msgstr "Dış bir plandaki duruma gönderme."
+
+#. module: mrp
+#: model:res.groups,name:mrp.group_mrp_routings
+msgid "Manage Routings"
+msgstr "Rotaları Yönet"
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_mrp_product_produce
+msgid "Product Produce"
+msgstr "Ürün Üretme"
+
+#. module: mrp
+#: constraint:mrp.bom:0
+msgid "Error ! You cannot create recursive BoM."
+msgstr "Hata ! Yinelemeli Ürün Ağacı oluşturamazsınız."
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_mrp_routing_workcenter
+msgid "Work Center Usage"
+msgstr "İş Merkezi Kullanımı"
+
+#. module: mrp
+#: model:process.transition,name:mrp.process_transition_procurestockableproduct0
+msgid "Procurement of stockable Product"
+msgstr "Stoklanabilir Ürün Tedariki"
+
+#. module: mrp
+#: model:ir.actions.act_window,help:mrp.mrp_production_action
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to create a manufacturing order. \n"
+"              </p><p>\n"
+"                A manufacuring order, based on a bill of materials, will\n"
+"                consume raw materials and produce finished products.\n"
+"              </p><p>\n"
+"                Manufacturing orders are usually proposed automatically "
+"based\n"
+"                on customer requirements or automated rules like the "
+"minimum\n"
+"                stock rule.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Bir üretim emri oluşturmak için tıklayın. \n"
+"              </p><p>\n"
+"                Bir üretim emri, ürün ağacı temellidir, ham\n"
+"                malzemeleri tüketir ve bitmiş ürünü üretir.\n"
+"              </p><p>\n"
+"                Üretim emirleri genelde müşteri gereksinimlerine  \n"
+"                ve enaz stok kuralı gibi otomatize kurallara göre \n"
+"                önerilir.\n"
+"              </p>\n"
+"            "
+
+#. module: mrp
+#: sql_constraint:mrp.production:0
+msgid "Reference must be unique per Company!"
+msgstr "Referans her firma için eşsiz olmalı!"
+
+#. module: mrp
+#: code:addons/mrp/report/price.py:139
+#: report:bom.structure:0
+#: view:mrp.bom:0
+#: field:mrp.product_price,number:0
+#: view:mrp.production:0
+#: report:mrp.production.order:0
+#, python-format
+msgid "Quantity"
+msgstr "Miktar"
+
+#. module: mrp
+#: help:mrp.workcenter,product_id:0
+msgid ""
+"Fill this product to easily track your production costs in the analytic "
+"accounting."
+msgstr ""
+"Analitik muhasebesinde üretim maliyetlerinizi kolayca izlemek için bu ürünü "
+"doldurun."
+
+#. module: mrp
+#: field:mrp.workcenter,product_id:0
+msgid "Work Center Product"
+msgstr "İş Merkezi Ürünü"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Confirm Production"
+msgstr "Üretimi Onayla"
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_stockproduct0
+msgid ""
+"The system creates an order (production or purchased) depending on the sold "
+"quantity and the products parameters."
+msgstr ""
+"Sistem satılan miktar ve ürün parametrelerine göre bir emir oluşturur "
+"(üretim veya satınalma)."
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_servicemts0
+msgid ""
+"This is used in case of a service without any impact in the system, a "
+"training session for instance."
+msgstr ""
+"Bu, sistem üzerinde herhangi bir etkisi olmayan bir hizmet durumunda "
+"kullanılır, örneğin bir eğitim oturumu sırasında kullanılır."
+
+#. module: mrp
+#: field:mrp.bom,product_qty:0
+#: field:mrp.production,product_qty:0
+#: field:mrp.production.product.line,product_qty:0
+msgid "Product Quantity"
+msgstr "Ürün Miktarı"
+
+#. module: mrp
+#: help:mrp.production,picking_id:0
+msgid ""
+"This is the Internal Picking List that brings the finished product to the "
+"production plan"
+msgstr "Bu, bitmiş ürünü üretim planına getiren İç Toplama Listesidir"
+
+#. module: mrp
+#: model:ir.ui.menu,name:mrp.menu_view_resource_calendar_search_mrp
+msgid "Working Time"
+msgstr "Çalışma Zamanı"
+
+#. module: mrp
+#: help:mrp.production,state:0
+msgid ""
+"When the production order is created the status is set to 'Draft'.\n"
+"                If the order is confirmed the status is set to 'Waiting "
+"Goods'.\n"
+"                If any exceptions are there, the status is set to 'Picking "
+"Exception'.\n"
+"                If the stock is available then the status is set to 'Ready "
+"to Produce'.\n"
+"                When the production gets started then the status is set to "
+"'In Production'.\n"
+"                When the production is over, the status is set to 'Done'."
+msgstr ""
+"Üretim emri oluşturulduğunda durumu 'Taslak' olarak ayarlıdır.\n"
+"                Eğer emir onaylanırsa durumu 'Malzeme Bekliyor' olarak "
+"ayarlanır.\n"
+"                Eğer hehangi bir istisna varsa, durumu 'Toplama İstisnası' "
+"olarak ayarlanır.\n"
+"                Eğer stok mevcutsa, durumu 'Üretilmeye Hazır' olarak "
+"ayarlanır.\n"
+"                Üretim başladığında durumu 'Üretimde' olarak ayarlanır.\n"
+"                Üretim bittiğinde durumu 'Yapıldı' olarak ayarlanır."
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.action_report_in_out_picking_tree
+msgid "Weekly Stock Value Variation"
+msgstr "Haftalık Stok Değeri Farkları"
+
+#. module: mrp
+#: model:ir.actions.act_window,help:mrp.mrp_property_action
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to create a new property.\n"
+"              </p><p>\n"
+"                The Properties in OpenERP are used to select the right bill "
+"of\n"
+"                materials for manufacturing a product when you have "
+"different\n"
+"                ways of building the same product.  You can assign several\n"
+"                properties to each bill of materials.  When a salesperson\n"
+"                creates a sales order, they can relate it to several "
+"properties\n"
+"                and OpenERP will automatically select the BoM to use "
+"according\n"
+"                the needs.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Yeni bir özellik oluşturmak için tıklayın.\n"
+"              </p><p>\n"
+"                OpenERP de özellikler, aynı ürünü farklı yollardan üretme  \n"
+"                yolları varken, üretim için doğru ürün ağacını seçmek için \n"
+"                kullanılır.  Her ürün ağacına birçok özellik "
+"atayabilirsiniz.\n"
+"                Bir satış temsilcisi bir satış siparişi oluşturduğunda, "
+"onları \n"
+"                birçok özellik ile ilişkilendirebilir ve OpenERP "
+"gereksinimlere\n"
+"                uygun olan Ürün Ağacını seçecektir.\n"
+"              </p>\n"
+"            "
+
+#. module: mrp
+#: view:mrp.production:0
+#: field:mrp.production,date_planned:0
+#: report:mrp.production.order:0
+msgid "Scheduled Date"
+msgstr "Planlanan Tarih"
+
+#. module: mrp
+#: code:addons/mrp/procurement.py:124
+#, python-format
+msgid "Manufacturing Order <em>%s</em> created."
+msgstr "Üretim Emri <em>%s</em> oluşturuldu."
+
+#. module: mrp
+#: view:mrp.bom:0
+#: report:mrp.production.order:0
+msgid "Bill Of Material"
+msgstr "Ürün Ağacı"
+
+#. module: mrp
+#: help:mrp.routing,location_id:0
+msgid ""
+"Keep empty if you produce at the location where the finished products are "
+"needed.Set a location if you produce at a fixed location. This can be a "
+"partner location if you subcontract the manufacturing operations."
+msgstr ""
+"Bitmiş ürünlerin gerekli olduğu konumda üretim yapıyorsanız boş bırakın. "
+"Sabit bir konumda üretim yapıyorsanız bir konum belirleyin. Üretim "
+"işlemlerini bir alt yükleniciye devrederseniz bu ortak bir konum olabilir."
+
+#. module: mrp
+#: view:board.board:0
+msgid "Stock Value Variation"
+msgstr "Stok Değeri Çeşitliliği"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.action2
+msgid "Bill of Materials Structure"
+msgstr "Ürün Ağacı Yapısı"
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_serviceproduct0
+msgid "Product type is service"
+msgstr "Ürün türü hizmettir"
+
+#. module: mrp
+#: help:mrp.workcenter,costs_cycle:0
+msgid "Specify Cost of Work Center per cycle."
+msgstr "Her döneme ait İş Merkezi Maliyetini Belirle"
+
+#. module: mrp
+#: model:process.transition,name:mrp.process_transition_bom0
+msgid "Manufacturing decomposition"
+msgstr "Üretim ayrıştırma"
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_serviceproduct1
+msgid "For Services."
+msgstr "Hizmetler için."
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_orderrfq0
+#: model:process.node,note:mrp.process_node_rfq0
+msgid "Request for Quotation."
+msgstr "Teklif İsteği"
+
+#. module: mrp
+#: view:change.production.qty:0
+#: view:mrp.config.settings:0
+#: view:mrp.product.produce:0
+#: view:mrp.product_price:0
+#: view:mrp.workcenter.load:0
+msgid "or"
+msgstr "veya"
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_billofmaterialrouting0
+msgid ""
+"The Bill of Material is linked to a routing, i.e. the succession of work "
+"centers."
+msgstr ""
+"Ürün Ağacı bir rotaya bağlıdır, örn. birbirini izleyen iş merkezleri."
+
+#. module: mrp
+#: view:mrp.production:0
+#: field:mrp.production,move_created_ids:0
+msgid "Products to Produce"
+msgstr "Üretilecek Ürünler"
+
+#. module: mrp
+#: view:mrp.config.settings:0
+msgid "Apply"
+msgstr "Uygula"
+
+#. module: mrp
+#: view:mrp.routing:0
+#: field:mrp.routing,location_id:0
+msgid "Production Location"
+msgstr "Üretim Konumu"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Force Reservation"
+msgstr "Rezerveye Zorla"
+
+#. module: mrp
+#: field:report.mrp.inout,value:0
+msgid "Stock value"
+msgstr "Stok değeri"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.action_product_bom_structure
+msgid "Product BoM Structure"
+msgstr "Ürünün Ürün Ağacı Yapısı"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Search Production"
+msgstr "Üretim Arama"
+
+#. module: mrp
+#: help:mrp.routing.workcenter,sequence:0
+msgid ""
+"Gives the sequence order when displaying a list of routing Work Centers."
+msgstr "Rota İş Merkezlerinin listesini gösterirken sıra numarası verir"
+
+#. module: mrp
+#: field:mrp.bom,child_complete_ids:0
+msgid "BoM Hierarchy"
+msgstr "Ürün Ağacı Sıradüzeni"
+
+#. module: mrp
+#: model:process.transition,name:mrp.process_transition_stockproduction0
+msgid "To Produce"
+msgstr "Üretilir"
+
+#. module: mrp
+#: help:mrp.config.settings,module_stock_no_autopicking:0
+msgid ""
+"This module allows an intermediate picking process to provide raw materials "
+"to production orders.\n"
+"                For example to manage production made by your suppliers (sub-"
+"contracting).\n"
+"                To achieve this, set the assembled product which is sub-"
+"contracted to \"No Auto-Picking\"\n"
+"                and put the location of the supplier in the routing of the "
+"assembly operation.\n"
+"                This installs the module stock_no_autopicking."
+msgstr ""
+"Bu modül, üretim emirlerine ham malzeme sağlamak için bir ara toplama "
+"işlemine izin verir.\n"
+"                Örneğin, üretimin tedarikçileriniz tarafından yürütülmesi "
+"(alt yüklenici).\n"
+"                Bunu başarmak için alt yükleniciye verilmiş ürün montajını "
+"\"Oto-Toplama Yok\"  olarak ayarlayın\n"
+"                tedarikçi konumunu montaj işleminin rotasına koyun.\n"
+"                Bu, stock_no_autopicking modülünü kurar."
+
+#. module: mrp
+#: selection:mrp.production,state:0
+msgid "Picking Exception"
+msgstr "Toplama İstisnası"
+
+#. module: mrp
+#: field:mrp.bom,bom_lines:0
+msgid "BoM Lines"
+msgstr "Ürün Ağacı Kalemleri"
+
+#. module: mrp
+#: field:mrp.workcenter,time_start:0
+msgid "Time before prod."
+msgstr "Üretim öncesi süre"
+
+#. module: mrp
+#: help:mrp.routing,active:0
+msgid ""
+"If the active field is set to False, it will allow you to hide the routing "
+"without removing it."
+msgstr ""
+"Etkin alan Yanlış olarak ayarlanırsa, rotayı kaldırmadan gizlemenize izin "
+"verecektir."
+
+#. module: mrp
+#: model:process.transition,name:mrp.process_transition_billofmaterialrouting0
+msgid "Material Routing"
+msgstr "Malzeme Rotası"
+
+#. module: mrp
+#: view:mrp.production:0
+#: field:mrp.production,move_lines2:0
+#: report:mrp.production.order:0
+msgid "Consumed Products"
+msgstr "Tüketilen Ürünler"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.action_mrp_workcenter_load_wizard
+#: model:ir.model,name:mrp.model_mrp_workcenter_load
+#: model:ir.model,name:mrp.model_report_workcenter_load
+msgid "Work Center Load"
+msgstr "İş Merkezi Yükü"
+
+#. module: mrp
+#: code:addons/mrp/procurement.py:50
+#, python-format
+msgid "No BoM defined for this product !"
+msgstr "Bu ürün için herhangi bir Ürün Ağacı tanımlanmadı !"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.mrp_bom_form_action2
+#: model:ir.ui.menu,name:mrp.menu_mrp_bom_form_action2
+msgid "Bill of Material Components"
+msgstr "Ürün Ağacı Bileşenleri"
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_stock_move
+msgid "Stock Move"
+msgstr "Stok Hareketi"
+
+#. module: mrp
+#: model:ir.ui.menu,name:mrp.menu_mrp_planning
+#: view:mrp.config.settings:0
+msgid "Planning"
+msgstr "Planlama"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Ready"
+msgstr "Hazır"
+
+#. module: mrp
+#: help:mrp.production,routing_id:0
+msgid ""
+"The list of operations (list of work centers) to produce the finished "
+"product. The routing is mainly used to compute work center costs during "
+"operations and to plan future loads on work centers based on production "
+"plannification."
+msgstr ""
+"Bitmiş ürünün üretimi için gereken işlemler listesi (iş merkezleri listesi). "
+"Rota, başlıca işlemler sırasında iş merkezi maliyetlerinin hesaplanması ve "
+"üretim planlamasına bağlı olarak iş merkezlerinin gelecekteki yükünü "
+"planlamak için kullanılır."
+
+#. module: mrp
+#: help:mrp.workcenter,time_cycle:0
+msgid "Time in hours for doing one cycle."
+msgstr "Bir çevrimin tamamlanması için saat olarak süre."
+
+#. module: mrp
+#: model:ir.actions.act_window,help:mrp.mrp_bom_form_action2
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to add a component to a bill of material.\n"
+"              </p><p>\n"
+"                Bills of materials components are components and by-"
+"products\n"
+"                used to create master bills of materials.  Use this menu to\n"
+"                search in which BoM a specific component is used.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Bir ürün ağacına bir bileşen eklemek için tıklayın.\n"
+"              </p><p>\n"
+"                Ürün ağacı bileşenleri ana ürün ağacını oluşturmak için "
+"kullanılan\n"
+"                bileşenler ve ya ürünlerdir.  Bu menüyü hangi Ürün Ağacında\n"
+"                özel bir bileşenin kullanıldığını aramak için kullanın.\n"
+"              </p>\n"
+"            "
+
+#. module: mrp
+#: constraint:mrp.bom:0
+msgid "BoM line product should not be same as BoM product."
+msgstr "Ürün Ağacı kalemindeki ürün, Ürün Ağacı ürünü ile aynı olamaz."
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "In Production"
+msgstr "Üretimde"
+
+#. module: mrp
+#: model:ir.ui.menu,name:mrp.menu_mrp_property
+msgid "Master Bill of Materials"
+msgstr "Ana Ürün Ağacı"
+
+#. module: mrp
+#: help:mrp.config.settings,module_product_manufacturer:0
+msgid ""
+"This allows you to define the following for a product:\n"
+"                    * Manufacturer\n"
+"                    * Manufacturer Product Name\n"
+"                    * Manufacturer Product Code\n"
+"                    * Product Attributes.\n"
+"                This installs the module product_manufacturer."
+msgstr ""
+"Bu, bir ürün için aşağıdakileri sağlar:\n"
+"                    * Üretici\n"
+"                    * Üretici Ürün Adı\n"
+"                    * Üretici Ürün Kodu\n"
+"                    * Ürün Öznitelikleri.\n"
+"                Bu, product_manufacturer modülünü kurar."
+
+#. module: mrp
+#: view:mrp.product_price:0
+#: view:mrp.workcenter.load:0
+msgid "Print"
+msgstr "Yazdır"
+
+#. module: mrp
+#: view:mrp.bom:0
+#: view:mrp.workcenter:0
+msgid "Type"
+msgstr "Türü"
+
+#. module: mrp
+#: model:ir.actions.act_window,help:mrp.mrp_workcenter_action
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to add a work center.\n"
+"              </p><p>\n"
+"                Work Centers allow you to create and manage manufacturing\n"
+"                units. They consist of workers and/or machines, which are\n"
+"                considered as units for task assignation as well as "
+"capacity\n"
+"                and planning forecast.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Bir iş merkezi eklemek için tıklayın.\n"
+"              </p><p>\n"
+"                İş Merkezleri, üretim üniteleri oluşturmanızı ve "
+"yürütmenizi\n"
+"                sağlar. Kapasite ve planlama öngörüsü olduğu kadar görev \n"
+"                atamalarında gözönüne alınacak işçileri ve/veya makineleri\n"
+"                kapsar\n"
+"              </p>\n"
+"            "
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_minimumstockrule0
+msgid "Linked to the 'Minimum stock rule' supplying method."
+msgstr "'Enaz stok kuralı' tedarik yöntemine bağlıdır."
+
+#. module: mrp
+#: selection:mrp.workcenter.load,time_unit:0
+msgid "Per month"
+msgstr "Ay başına"
+
+#. module: mrp
+#: help:mrp.bom,product_uom:0
+msgid ""
+"Unit of Measure (Unit of Measure) is the unit of measurement for the "
+"inventory control"
+msgstr ""
+"Ölçü Birimi (Ölçü Birimi) stok kontrolünde kullanılacak ölçü birimidir"
+
+#. module: mrp
+#: report:bom.structure:0
+msgid "Product Name"
+msgstr "Ürün Adı"
+
+#. module: mrp
+#: help:mrp.bom,product_efficiency:0
+msgid "A factor of 0.9 means a loss of 10% within the production process."
+msgstr ""
+"0,9 luk bir faktör üretim işleminde %10'luk bir kayıp anlamına gelir."
+
+#. module: mrp
+#: code:addons/mrp/mrp.py:737
+#: code:addons/mrp/mrp.py:765
+#, python-format
+msgid "Warning!"
+msgstr "Uyarı!"
+
+#. module: mrp
+#: report:mrp.production.order:0
+msgid "Printing date"
+msgstr "Yazdırma tarihi"
+
+#. module: mrp
+#: model:process.node,name:mrp.process_node_orderrfq0
+#: model:process.node,name:mrp.process_node_rfq0
+msgid "RFQ"
+msgstr "Teklif İsteği"
+
+#. module: mrp
+#: model:process.transition,name:mrp.process_transition_producttostockrules0
+msgid "Procurement rule"
+msgstr "Tedarik kuralı"
+
+#. module: mrp
+#: help:mrp.workcenter,costs_cycle_account_id:0
+#: help:mrp.workcenter,costs_hour_account_id:0
+msgid ""
+"Fill this only if you want automatic analytic accounting entries on "
+"production orders."
+msgstr ""
+"Bunu yalnızca üretim emirlerinde otomatik analitik muhasebe girişleri "
+"isterseniz doldurun."
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Mark as Started"
+msgstr "Başlatıldı olarak İşaretle"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Partial"
+msgstr "Kısmi"
+
+#. module: mrp
+#: report:mrp.production.order:0
+msgid "WorkCenter"
+msgstr "İş Merkezi"
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_procureserviceproduct0
+msgid ""
+"Depending on the chosen method to 'supply' the service, the procurement "
+"order creates a RFQ for a subcontracting purchase order or waits until the "
+"service is done (= the delivery of the products)."
+msgstr ""
+"Hizmeti 'tedarik' için seçilen yönteme bağlı olarak, tedarik emri bir fason "
+"satınalma emri için Teklif  İsteği oluşturur ya da hizmet sona erene kadar "
+"bekler (= ürünlerin teslimi)."
+
+#. module: mrp
+#: selection:mrp.production,priority:0
+msgid "Urgent"
+msgstr "Acil"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Manufacturing Orders which are waiting for raw materials."
+msgstr "Ham malzeme bekleyen Üretim Emirleri"
+
+#. module: mrp
+#: code:addons/mrp/mrp.py:285
+#, python-format
+msgid ""
+"The Product Unit of Measure you chose has a different category than in the "
+"product form."
+msgstr ""
+"Seçtiğiniz Ürün Ölçü Birimi, ürün formundakinden farklı bir kategoriye "
+"sahiptir."
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_mrp_production
+#: view:mrp.config.settings:0
+#: view:mrp.production:0
+#: field:mrp.production.workcenter.line,production_id:0
+#: field:procurement.order,production_id:0
+msgid "Manufacturing Order"
+msgstr "Üretim Emri"
+
+#. module: mrp
+#: model:process.transition,name:mrp.process_transition_productionprocureproducts0
+msgid "Procurement of raw material"
+msgstr "Ham malzeme tedariki"
+
+#. module: mrp
+#: sql_constraint:mrp.bom:0
+msgid ""
+"All product quantities must be greater than 0.\n"
+"You should install the mrp_byproduct module if you want to manage extra "
+"products on BoMs !"
+msgstr ""
+"Bütün ürün miktarları 0 dan büyük olmalıdır.\n"
+"Ürün Ağaçlarında ek ürünleri yönetmek isterseniz mrp_byproduct modülünü "
+"kurmalısınız !"
+
+#. module: mrp
+#: view:mrp.production:0
+#: field:mrp.production,cycle_total:0
+msgid "Total Cycles"
+msgstr "Toplam Çevrimler"
+
+#. module: mrp
+#: selection:mrp.production,state:0
+msgid "Ready to Produce"
+msgstr "Üretime Hazır"
+
+#. module: mrp
+#: field:mrp.bom,message_is_follower:0
+#: field:mrp.production,message_is_follower:0
+#: field:mrp.production.workcenter.line,message_is_follower:0
+msgid "Is a Follower"
+msgstr "Bir İzleyicidir"
+
+#. module: mrp
+#: view:mrp.bom:0
+#: view:mrp.production:0
+msgid "Date"
+msgstr "Tarih"
+
+#. module: mrp
+#: model:ir.actions.act_window,help:mrp.mrp_production_action_planning
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to start a new manufacturing order. \n"
+"              </p><p>\n"
+"                A manufacuring order, based on a bill of materials, will\n"
+"                consume raw materials and produce finished products.\n"
+"              </p><p>\n"
+"                Manufacturing orders are usually proposed automatically "
+"based\n"
+"                on customer requirements or automated rules like the "
+"minimum\n"
+"                stock rule.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Yeni bir üretim emri başlatmak için tıklayın. \n"
+"              </p><p>\n"
+"                Bir ürün ağacına dayalı bir üretim emri, ham malzeme\n"
+"                tüketir ve bitmiş ürünü üretir.\n"
+"              </p><p>\n"
+"                Üretim emirleri genelde müşteri gereksinimlerine \n"
+"                göre ya da enaz stok kuralı gibi kurallara göre \n"
+"                önerilir.\n"
+"              </p>\n"
+"            "
+
+#. module: mrp
+#: field:mrp.bom,type:0
+msgid "BoM Type"
+msgstr "Ürün Ağacı Türü"
+
+#. module: mrp
+#: code:addons/mrp/procurement.py:52
+#, python-format
+msgid ""
+"Procurement '%s' has an exception: 'No BoM defined for this product !'"
+msgstr ""
+"'%s' satınalmanın istisnası mevcuttur: 'Bu ürün için Ürün Ağacı "
+"tanımlanmamıştır !'"
+
+#. module: mrp
+#: view:mrp.property:0
+msgid "Search"
+msgstr "Ara"
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_billofmaterial0
+msgid "Product's structure"
+msgstr "Ürünün yapısı"
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_res_company
+msgid "Companies"
+msgstr "Şirketler"
+
+#. module: mrp
+#: code:addons/mrp/mrp.py:634
+#, python-format
+msgid ""
+"You must first cancel related internal picking attached to this "
+"manufacturing order."
+msgstr ""
+"Önce bu üretim emrine eklenmiş ilişkili iç toplamaları iptal etmelisiniz."
+
+#. module: mrp
+#: model:process.node,name:mrp.process_node_minimumstockrule0
+#: model:process.node,name:mrp.process_node_productminimumstockrule0
+msgid "Minimum Stock"
+msgstr "Enaz Stok"
+
+#. module: mrp
+#: code:addons/mrp/report/price.py:160
+#: code:addons/mrp/report/price.py:211
+#, python-format
+msgid "Total Cost of %s %s"
+msgstr "%s %s in Toplam Maliyeti"
+
+#. module: mrp
+#: model:process.node,name:mrp.process_node_stockproduct0
+#: model:process.node,name:mrp.process_node_stockproduct1
+#: model:process.process,name:mrp.process_process_stockableproductprocess0
+msgid "Stockable Product"
+msgstr "Stoklanabilir Ürün"
+
+#. module: mrp
+#: code:addons/mrp/report/price.py:130
+#, python-format
+msgid "Work Center name"
+msgstr "İş Merkezi adı"
+
+#. module: mrp
+#: field:mrp.routing,code:0
+msgid "Code"
+msgstr "Kodu"
+
+#. module: mrp
+#: report:mrp.production.order:0
+msgid "No. Of Hours"
+msgstr "Saat sayısı"
+
+#. module: mrp
+#: view:mrp.property:0
+msgid "Property Group"
+msgstr "Özellik Grubu"
+
+#. module: mrp
+#: field:mrp.config.settings,group_mrp_routings:0
+msgid "Manage routings and work orders "
+msgstr "Rotaları ve iş emirlerini yönet "
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_production0
+msgid "Manufacturing Plan."
+msgstr "Üretim Planı."
+
+#. module: mrp
+#: view:mrp.routing:0
+#: view:mrp.workcenter:0
+msgid "Inactive"
+msgstr "Etkin Değil"
+
+#. module: mrp
+#: view:change.production.qty:0
+#: view:mrp.config.settings:0
+#: view:mrp.product.produce:0
+#: view:mrp.product_price:0
+#: view:mrp.workcenter.load:0
+msgid "Cancel"
+msgstr "İptal"
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_servicerfq0
+msgid ""
+"If the service has a 'Buy' supply method, this creates a RFQ, a "
+"subcontracting demand for instance."
+msgstr ""
+"Hizmet bir 'Satın Alma' tedarik yöntemine sahipse, bu bir Teklif isteği, "
+"örnek olarak bir alt yüklenici sözleşmesi isteği oluşturur."
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Late"
+msgstr "Son"
+
+#. module: mrp
+#: model:process.node,name:mrp.process_node_servicemts0
+msgid "Make to stock"
+msgstr "Stoktan Al"
+
+#. module: mrp
+#: report:bom.structure:0
+msgid "BOM Name"
+msgstr "Ürün Ağacı Adı"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.act_product_manufacturing_open
+#: model:ir.actions.act_window,name:mrp.mrp_production_action
+#: model:ir.actions.act_window,name:mrp.mrp_production_action_planning
+#: model:ir.ui.menu,name:mrp.menu_mrp_production_action
+#: view:mrp.production:0
+msgid "Manufacturing Orders"
+msgstr "Üretim Emirleri"
+
+#. module: mrp
+#: selection:mrp.production,state:0
+msgid "Awaiting Raw Materials"
+msgstr "Ham malzeme Bekliyor"
+
+#. module: mrp
+#: field:mrp.bom,position:0
+msgid "Internal Reference"
+msgstr "İç Referans"
+
+#. module: mrp
+#: field:mrp.production,product_uos_qty:0
+msgid "Product UoS Quantity"
+msgstr "Ürün Hizmet Birimi Miktarı"
+
+#. module: mrp
+#: field:mrp.bom,name:0
+#: report:mrp.production.order:0
+#: field:mrp.production.product.line,name:0
+#: view:mrp.property:0
+#: field:mrp.routing,name:0
+#: field:mrp.routing.workcenter,name:0
+msgid "Name"
+msgstr "Adı"
+
+#. module: mrp
+#: report:mrp.production.order:0
+msgid "Production Order N° :"
+msgstr "Üretim Emri N° :"
+
+#. module: mrp
+#: field:mrp.product.produce,mode:0
+msgid "Mode"
+msgstr "Biçim"
+
+#. module: mrp
+#: help:mrp.bom,message_ids:0
+#: help:mrp.production,message_ids:0
+#: help:mrp.production.workcenter.line,message_ids:0
+msgid "Messages and communication history"
+msgstr "Mesajlar ve iletişim geçmişi"
+
+#. module: mrp
+#: field:mrp.workcenter.load,measure_unit:0
+msgid "Amount measuring unit"
+msgstr "Tutar ölçü birimi"
+
+#. module: mrp
+#: help:mrp.config.settings,module_mrp_jit:0
+msgid ""
+"This allows Just In Time computation of procurement orders.\n"
+"                All procurement orders will be processed immediately, which "
+"could in some\n"
+"                cases entail a small performance impact.\n"
+"                This installs the module mrp_jit."
+msgstr ""
+"Tedarik emirlerinin Tam Zamanında hesaplanmasını sağlar.\n"
+"                Bütün tedarik emirleri, bazı durumlarda küçük performans "
+"etkisi\n"
+"                yaratsa da derhal işlenecektir.\n"
+"                Bu, mrp_jit modülünü kurar."
+
+#. module: mrp
+#: help:mrp.workcenter,costs_hour:0
+msgid "Specify Cost of Work Center per hour."
+msgstr "İş Merkezinin saatlik maliyetini belirleyin"
+
+#. module: mrp
+#: help:mrp.workcenter,capacity_per_cycle:0
+msgid ""
+"Number of operations this Work Center can do in parallel. If this Work "
+"Center represents a team of 5 workers, the capacity per cycle is 5."
+msgstr ""
+"Bu İş Merkezinin paralel olarak yapacağı işlem sayısı. Bu İş Merkezi 5 "
+"kişilk bir takımı yansıtıyorsa her dönemin kapasitesi 5 tir."
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.mrp_production_action3
+msgid "Manufacturing Orders in Progress"
+msgstr "Süren Üretim Emirleri"
+
+#. module: mrp
+#: model:ir.actions.client,name:mrp.action_client_mrp_menu
+msgid "Open MRP Menu"
+msgstr "MRP Menüsünü Aç"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.mrp_production_action4
+msgid "Manufacturing Orders Waiting Products"
+msgstr "Ürün bekleyen Üretim Emirleri"
+
+#. module: mrp
+#: view:mrp.bom:0
+#: view:mrp.production:0
+#: view:mrp.property:0
+#: view:mrp.routing:0
+#: view:mrp.workcenter:0
+msgid "Group By..."
+msgstr "Gruplandır..."
+
+#. module: mrp
+#: code:addons/mrp/report/price.py:130
+#, python-format
+msgid "Cycles Cost"
+msgstr "Çevrim Maliyeti"
+
+#. module: mrp
+#: code:addons/mrp/wizard/change_production_qty.py:83
+#: code:addons/mrp/wizard/change_production_qty.py:88
+#, python-format
+msgid "Cannot find bill of material for this product."
+msgstr "Bu ürün için ürün ağacı bulunamıyor."
+
+#. module: mrp
+#: selection:mrp.workcenter.load,measure_unit:0
+msgid "Amount in cycles"
+msgstr "Çevrim tutarı"
+
+#. module: mrp
+#: field:mrp.production,location_dest_id:0
+msgid "Finished Products Location"
+msgstr "Bitmiş Ürün Konumu"
+
+#. module: mrp
+#: model:ir.ui.menu,name:mrp.menu_pm_resources_config
+msgid "Resources"
+msgstr "Kaynaklar"
+
+#. module: mrp
+#: help:mrp.routing.workcenter,hour_nbr:0
+msgid ""
+"Time in hours for this Work Center to achieve the operation of the specified "
+"routing."
+msgstr ""
+"Bu iş merkezinin belirlenen rotadaki işlemi yapması için gereken süre."
+
+#. module: mrp
+#: field:mrp.workcenter,costs_journal_id:0
+msgid "Analytic Journal"
+msgstr "Analitik Günlük"
+
+#. module: mrp
+#: code:addons/mrp/report/price.py:139
+#, python-format
+msgid "Supplier Price per Unit of Measure"
+msgstr "Ölçü Birimi başına Tedarikçi Fiyatı"
+
+#. module: mrp
+#: selection:mrp.workcenter.load,time_unit:0
+msgid "Per week"
+msgstr "Her hafta"
+
+#. module: mrp
+#: field:mrp.bom,message_unread:0
+#: field:mrp.production,message_unread:0
+#: field:mrp.production.workcenter.line,message_unread:0
+msgid "Unread Messages"
+msgstr "Okunmamış Mesajlar"
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_stockmts0
+msgid ""
+"The system waits for the products to be available in the stock. These "
+"products are typically procured manually or through a minimum stock rule."
+msgstr ""
+"Sistem ürünlerin stokta mevcut olmasını bekler. Bu ürünler normalde elle "
+"veya enaz stok kuralı aracılığıyla satın alınır."
+
+#. module: mrp
+#: view:mrp.routing:0
+msgid "Work Center Operations"
+msgstr "İş Merkezi İşlemleri"
+
+#. module: mrp
+#: view:mrp.routing:0
+msgid "Notes"
+msgstr "Notlar"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Manufacturing Orders which are ready to start production."
+msgstr "Üretimi başlatmaya hazır Üretim Emirleri"
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_mrp_bom
+#: view:mrp.bom:0
+#: field:mrp.production,bom_id:0
+#: model:process.node,name:mrp.process_node_billofmaterial0
+msgid "Bill of Material"
+msgstr "Ürün Ağacı"
+
+#. module: mrp
+#: view:mrp.workcenter.load:0
+msgid "Select time unit"
+msgstr "Zaman birimini seç"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.product_supply_method_produce
+#: model:ir.ui.menu,name:mrp.menu_mrp_bom
+#: model:ir.ui.menu,name:mrp.menu_mrp_product_form
+#: view:mrp.config.settings:0
+msgid "Products"
+msgstr "Ürünler"
+
+#. module: mrp
+#: view:report.workcenter.load:0
+msgid "Work Center load"
+msgstr "İş Merkezi yükü"
+
+#. module: mrp
+#: help:mrp.production,location_dest_id:0
+msgid "Location where the system will stock the finished products."
+msgstr "Sistemin bitmiş ürünleri stokladığı konum."
+
+#. module: mrp
+#: help:mrp.routing.workcenter,routing_id:0
+msgid ""
+"Routing indicates all the Work Centers used, for how long and/or cycles.If "
+"Routing is indicated then,the third tab of a production order (Work Centers) "
+"will be automatically pre-completed."
+msgstr ""
+"Rotalar, kullanılan bütün iş merkezlerinin ne kadar süre ve/ veya kaç döngü "
+"kullandığını gösterir. Eğer rotalar işaretlenirse üretim emrinin (iş "
+"merkezleri) üçüncü sekmesi otomatik olarak doldurulacaktır"
+
+#. module: mrp
+#: code:addons/mrp/mrp.py:505
+#, python-format
+msgid "Invalid Action!"
+msgstr "Geçersiz Eylem!"
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_producttostockrules0
+msgid ""
+"The Minimum Stock Rule is an automatic procurement rule based on a mini and "
+"maxi quantity. It's available in the Inventory management menu and "
+"configured by product."
+msgstr ""
+"Enaz Stok Kuralı, enaz ve ençok miktarı temel alan otomatik bir satınalma "
+"kuralıdır. Envanter yönetim menüsündedir ve ürün tarafından yapılandırılır."
+
+#. module: mrp
+#: code:addons/mrp/report/price.py:187
+#, python-format
+msgid "Components Cost of %s %s"
+msgstr "%s %s in Bileşen Maliyeti"
+
+#. module: mrp
+#: selection:mrp.workcenter.load,time_unit:0
+msgid "Day by day"
+msgstr "Günden güne"
+
+#. module: mrp
+#: field:mrp.production,priority:0
+msgid "Priority"
+msgstr "Öncelik"
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_stock_picking
+#: field:mrp.production,picking_id:0
+msgid "Picking List"
+msgstr "Toplama Listesi"
+
+#. module: mrp
+#: help:mrp.production,bom_id:0
+msgid ""
+"Bill of Materials allow you to define the list of required raw materials to "
+"make a finished product."
+msgstr ""
+"Ürün Ağaçları, bitmiş bir ürün yapmak için gerekli ham malzemeleri "
+"tanımlamanızı sağlar."
+
+#. module: mrp
+#: code:addons/mrp/mrp.py:375
+#, python-format
+msgid "%s (copy)"
+msgstr "%s (kopya)"
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_mrp_production_product_line
+msgid "Production Scheduled Product"
+msgstr "Planlı Ürün Üretimi"
+
+#. module: mrp
+#: code:addons/mrp/report/price.py:204
+#, python-format
+msgid "Work Cost of %s %s"
+msgstr "%s %s için İşçilik Maliyeti"
+
+#. module: mrp
+#: help:res.company,manufacturing_lead:0
+msgid "Security days for each manufacturing operation."
+msgstr "Her üretim işlemi için emniyet günleri."
+
+#. module: mrp
+#: model:process.node,name:mrp.process_node_mts0
+#: model:process.transition,name:mrp.process_transition_servicemts0
+#: model:process.transition,name:mrp.process_transition_stockmts0
+msgid "Make to Stock"
+msgstr "Stoktan Al"
+
+#. module: mrp
+#: constraint:mrp.production:0
+msgid "Order quantity cannot be negative or zero!"
+msgstr "Sipariş adedi eksi ya da sıfır olamaz!"
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_stockrfq0
+msgid ""
+"In case the Supply method of the product is Buy, the system creates a "
+"purchase order."
+msgstr ""
+"Ürünün Tedarik yöntemi Satınalma ise sistem bir satınalma emri oluşturur."
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_procurement_order
+msgid "Procurement"
+msgstr "Tedarik"
+
+#. module: mrp
+#: field:mrp.config.settings,module_product_manufacturer:0
+msgid "Define manufacturers on products "
+msgstr "Ürünlerin üreticilerini tanımla "
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.action_view_mrp_product_price_wizard
+#: view:mrp.product_price:0
+msgid "Product Cost Structure"
+msgstr "Ürün Maliyet Yapısı"
+
+#. module: mrp
+#: code:addons/mrp/report/price.py:139
+#, python-format
+msgid "Components suppliers"
+msgstr "Bileşen tedarikçileri"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Production Work Centers"
+msgstr "Üretimi İş Merkezi"
+
+#. module: mrp
+#: view:mrp.workcenter:0
+msgid "Search for mrp workcenter"
+msgstr "mrp iş merkezini ara"
+
+#. module: mrp
+#: view:mrp.bom:0
+msgid "BoM Structure"
+msgstr "Ürün Ağacı Yapısı"
+
+#. module: mrp
+#: field:mrp.production,date_start:0
+msgid "Start Date"
+msgstr "Başlama Tarihi"
+
+#. module: mrp
+#: field:mrp.workcenter,costs_hour_account_id:0
+msgid "Hour Account"
+msgstr "Saat Hesabı"
+
+#. module: mrp
+#: field:mrp.bom,product_uom:0
+#: field:mrp.production,product_uom:0
+#: field:mrp.production.product.line,product_uom:0
+msgid "Product Unit of Measure"
+msgstr "Ürün Ölçü Birimi"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Destination Loc."
+msgstr "Hedef Kon."
+
+#. module: mrp
+#: field:mrp.bom,method:0
+msgid "Method"
+msgstr "Yöntem"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Pending"
+msgstr "Bekleyen"
+
+#. module: mrp
+#: field:mrp.bom,active:0
+#: field:mrp.routing,active:0
+msgid "Active"
+msgstr "Etkin"
+
+#. module: mrp
+#: help:mrp.config.settings,group_mrp_routings:0
+msgid ""
+"Routings allow you to create and manage the manufacturing operations that "
+"should be followed\n"
+"                within your work centers in order to produce a product. They "
+"are attached to bills of materials\n"
+"                that will define the required raw materials."
+msgstr ""
+"Rotalar, bir ürünü üretmek için iş merkezlerinizden izleyeceğiniz üretim "
+"işlemlerini oluşturmanızı\n"
+"                ve yürütmenizi sağlar. Gerekli ham malzemeleri tanımlayan "
+"ürün ağaçlarına\n"
+"                eklidirler."
+
+#. module: mrp
+#: view:report.workcenter.load:0
+msgid "Work Center Loads"
+msgstr "İş Merkezi Yükleri"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.mrp_property_action
+#: model:ir.ui.menu,name:mrp.menu_mrp_property_action
+#: view:mrp.bom:0
+#: field:mrp.bom,property_ids:0
+#: view:mrp.property:0
+#: field:procurement.order,property_ids:0
+msgid "Properties"
+msgstr "Özellikler"
+
+#. module: mrp
+#: help:mrp.production,origin:0
+msgid ""
+"Reference of the document that generated this production order request."
+msgstr "Bu üretim emri isteğinde oluşturulan belge referansı."
+
+#. module: mrp
+#: model:process.transition,name:mrp.process_transition_minimumstockprocure0
+msgid "'Minimum stock rule' material"
+msgstr "'Minimum stok kuralı' malzemesi"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Extra Information"
+msgstr "Ek Bilgi"
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_change_production_qty
+msgid "Change Quantity of Products"
+msgstr "Ürün Miktarını Değiştir"
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_productionorder0
+msgid "Drives the procurement orders for raw material."
+msgstr "Ham malzeme için satınalma emirlerini yürütür."
+
+#. module: mrp
+#: field:mrp.production.product.line,product_uos_qty:0
+msgid "Product UOS Quantity"
+msgstr "Ürün Hizmet Birimi Miktarı"
+
+#. module: mrp
+#: field:mrp.workcenter,costs_general_account_id:0
+msgid "General Account"
+msgstr "Genel Hesap"
+
+#. module: mrp
+#: report:mrp.production.order:0
+msgid "SO Number"
+msgstr "Satış Sipariş No"
+
+#. module: mrp
+#: code:addons/mrp/mrp.py:505
+#, python-format
+msgid "Cannot delete a manufacturing order in state '%s'."
+msgstr "'%s' durumundaki bir üretim emri silinemez."
+
+#. module: mrp
+#: selection:mrp.production,state:0
+msgid "Done"
+msgstr "Yapıldı"
+
+#. module: mrp
+#: view:product.product:0
+msgid "When you sell this product, OpenERP will trigger"
+msgstr "Bu ürünü sattığınızda, OpenERP bunu tetikleyecek"
+
+#. module: mrp
+#: field:mrp.production,origin:0
+#: report:mrp.production.order:0
+msgid "Source Document"
+msgstr "Kaynak Belge"
+
+#. module: mrp
+#: selection:mrp.production,priority:0
+msgid "Not urgent"
+msgstr "Acil değil"
+
+#. module: mrp
+#: field:mrp.production,user_id:0
+msgid "Responsible"
+msgstr "Sorumlu"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.mrp_production_action2
+msgid "Manufacturing Orders To Start"
+msgstr "Başlatılacak Üretim Emirleri"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.mrp_workcenter_action
+#: model:ir.model,name:mrp.model_mrp_workcenter
+#: model:ir.ui.menu,name:mrp.menu_view_resource_search_mrp
+#: field:mrp.production.workcenter.line,workcenter_id:0
+#: field:mrp.routing.workcenter,workcenter_id:0
+#: view:mrp.workcenter:0
+#: field:report.workcenter.load,workcenter_id:0
+msgid "Work Center"
+msgstr "İş Merkezi"
+
+#. module: mrp
+#: model:ir.actions.act_window,help:mrp.mrp_property_group_action
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to create a group of properties.\n"
+"              </p><p>\n"
+"                Define specific property groups that can be assigned to "
+"your\n"
+"                bill of materials and sales orders. Properties allows "
+"OpenERP\n"
+"                to automatically select the right bill of materials "
+"according\n"
+"                to properties selected in the sales order by salesperson.\n"
+"              </p><p>\n"
+"                For instance, in the property group \"Warranty\", you an "
+"have\n"
+"                two properties: 1 year warranty, 3 years warranty. "
+"Depending\n"
+"                on the propoerties selected in the sales order, OpenERP "
+"will\n"
+"                schedule a production using the matching bill of materials.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Özelliler grubu oluşturmak için tıklayın.\n"
+"              </p><p>\n"
+"                Satış siparişlerinize ve ürün ağaçlarınıza atanabilecek "
+"belirli\n"
+"                özellik grupları tanımlayın. Özellikler, satış temsilcisi "
+"tarafından\n"
+"                satış siparişlerinde seçilen özelliklere uygun olan ürün "
+"ağaçlarının\n"
+"                kendiliğinden seçilmesini sağlar.\n"
+"              </p><p>\n"
+"                Örneğin, \"Garanti\" özellik grubunda iki özelliğiniz "
+"vardır:\n"
+"                1 yıl garanti, 3 yıl garanti. Satış siparişinde seçilen "
+"özelliklere\n"
+"                bağlı olarak, OpenERP uygun ürün ağacını kullanarak bir "
+"üretim\n"
+"                planlayacaktır.\n"
+"              </p>\n"
+"            "
+
+#. module: mrp
+#: field:mrp.workcenter,capacity_per_cycle:0
+msgid "Capacity per Cycle"
+msgstr "Çevrim başına Kapasite"
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_product_product
+#: view:mrp.bom:0
+#: field:mrp.bom,product_id:0
+#: view:mrp.production:0
+#: field:mrp.production,product_id:0
+#: report:mrp.production.order:0
+#: field:mrp.production.product.line,product_id:0
+msgid "Product"
+msgstr "Ürün"
+
+#. module: mrp
+#: view:mrp.production:0
+#: field:mrp.production,hour_total:0
+msgid "Total Hours"
+msgstr "Toplam Saat"
+
+#. module: mrp
+#: field:mrp.production,location_src_id:0
+msgid "Raw Materials Location"
+msgstr "Ham malzeme Konumu"
+
+#. module: mrp
+#: view:mrp.product_price:0
+msgid "Print Cost Structure of Product."
+msgstr "Ürünün Maliyet Yapısını Yazdır."
+
+#. module: mrp
+#: field:mrp.bom,product_uos:0
+#: field:mrp.production.product.line,product_uos:0
+msgid "Product UOS"
+msgstr "Ürün Hizmet Birimi"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Consume Products"
+msgstr "Ürünleri Tüket"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.act_mrp_product_produce
+#: view:mrp.product.produce:0
+#: view:mrp.production:0
+msgid "Produce"
+msgstr "Üret"
+
+#. module: mrp
+#: model:process.node,name:mrp.process_node_stock0
+#: model:process.transition,name:mrp.process_transition_servicemto0
+#: model:process.transition,name:mrp.process_transition_stockproduct0
+msgid "Make to Order"
+msgstr "Sipariş Ver"
+
+#. module: mrp
+#: help:mrp.workcenter,note:0
+msgid ""
+"Description of the Work Center. Explain here what's a cycle according to "
+"this Work Center."
+msgstr ""
+"İş Merkezinin Açıklaması. Bu alanda her döngünün bu iş merkezine göre ne "
+"olduğunu açıklayın."
+
+#. module: mrp
+#: field:mrp.production,date_finished:0
+msgid "End Date"
+msgstr "Bitiş Tarihi"
+
+#. module: mrp
+#: field:mrp.workcenter,resource_id:0
+msgid "Resource"
+msgstr "Kaynak"
+
+#. module: mrp
+#: help:mrp.bom,date_start:0
+#: help:mrp.bom,date_stop:0
+msgid "Validity of this BoM or component. Keep empty if it's always valid."
+msgstr ""
+"Bu Ürün Ağacının veya bileşeninin geçerliliği. Her zaman geçerliyse boş "
+"bırakın."
+
+#. module: mrp
+#: field:mrp.production,product_uos:0
+msgid "Product UoS"
+msgstr "Ürün Hizmet Birimi"
+
+#. module: mrp
+#: selection:mrp.production,priority:0
+msgid "Very Urgent"
+msgstr "Çok Acil"
+
+#. module: mrp
+#: help:mrp.bom,routing_id:0
+msgid ""
+"The list of operations (list of work centers) to produce the finished "
+"product. The routing is mainly used to compute work center costs during "
+"operations and to plan future loads on work centers based on production "
+"planning."
+msgstr ""
+"Bitmiş ürünün üretimi için gereken işlemler listesi (iş merkezleri listesi). "
+"Rota başlıca, işlemler sırasında iş merkezi maliyetlerinin hesaplanması ve "
+"üretim planlamasına bağlı olarak iş merkezlerinin gelecekteki yükünü "
+"planlamak için kullanılır."
+
+#. module: mrp
+#: view:change.production.qty:0
+msgid "Approve"
+msgstr "Onayla"
+
+#. module: mrp
+#: view:mrp.config.settings:0
+msgid "Order"
+msgstr "Sipariş"
+
+#. module: mrp
+#: view:mrp.property.group:0
+msgid "Properties categories"
+msgstr "Özellikler kategorisi"
+
+#. module: mrp
+#: help:mrp.production.workcenter.line,sequence:0
+msgid "Gives the sequence order when displaying a list of work orders."
+msgstr "Bir iş emri listesini gösterirken sıralamasını verir."
+
+#. module: mrp
+#: report:mrp.production.order:0
+msgid "Source Location"
+msgstr "Kaynak Konumu"
+
+#. module: mrp
+#: view:mrp.production:0
+#: view:mrp.production.product.line:0
+msgid "Scheduled Products"
+msgstr "Planlanan Ürünler"
+
+#. module: mrp
+#: model:res.groups,name:mrp.group_mrp_manager
+msgid "Manager"
+msgstr "Yönetici"
+
+#. module: mrp
+#: help:mrp.product.produce,mode:0
+msgid ""
+"'Consume only' mode will only consume the products with the quantity "
+"selected.\n"
+"'Consume & Produce' mode will consume as well as produce the products with "
+"the quantity selected and it will finish the production order when total "
+"ordered quantities are produced."
+msgstr ""
+"'Yalnızca tüket' modu yalnızca seçilen miktarda ürün tüketecektir.\n"
+"'Tüket ve Üret' modu, seçilen miktarda ürün tüketecek ve sipariş edilen "
+"toplam ürün miktarı üretildikten sonra üretim emrini sonlandıracaktır."
+
+#. module: mrp
+#: view:mrp.production:0
+#: report:mrp.production.order:0
+msgid "Work Orders"
+msgstr "İş Emirleri"
+
+#. module: mrp
+#: field:mrp.workcenter,costs_cycle:0
+msgid "Cost per cycle"
+msgstr "Çevrim başına Maliyet"
+
+#. module: mrp
+#: model:process.node,name:mrp.process_node_serviceproduct0
+#: model:process.node,name:mrp.process_node_serviceproduct1
+msgid "Service"
+msgstr "Hizmet"
+
+#. module: mrp
+#: selection:mrp.production,state:0
+msgid "Cancelled"
+msgstr "İptal edildi"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "(Update)"
+msgstr "(güncelle)"
+
+#. module: mrp
+#: help:mrp.config.settings,module_mrp_operations:0
+msgid ""
+"This allows to add state, date_start,date_stop in production order operation "
+"lines (in the \"Work Centers\" tab).\n"
+"                This installs the module mrp_operations."
+msgstr ""
+"Bu, üretim emri işlem kalemlerine tarih_başlama,tarih_bitme durumu "
+"eklemenizi sağlar(\"İş Merkezleri\" sekmesinde).\n"
+"                Bu, mrp_operations modülünü kurar."
+
+#. module: mrp
+#: code:addons/mrp/mrp.py:737
+#, python-format
+msgid ""
+"You are going to consume total %s quantities of \"%s\".\n"
+"But you can only consume up to total %s quantities."
+msgstr ""
+"%s te toplam \"%s\" kadar tüketeceksiniz.\n"
+"Ama ençok %s kadar tüketebilirsiniz."
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_bom0
+msgid ""
+"The Bill of Material is the product's decomposition. The components (that "
+"are products themselves) can also have their own Bill of Material (multi-"
+"level)."
+msgstr ""
+"Ürün Ağacı, ürünün ayrıştırılmasıdır. Bileşenler (kendileri bir de üründür) "
+"kendi Ürün Ağaçlarına sahip olabilirler (çok seviyeli)."
+
+#. module: mrp
+#: field:mrp.bom,company_id:0
+#: field:mrp.production,company_id:0
+#: field:mrp.routing,company_id:0
+#: field:mrp.routing.workcenter,company_id:0
+#: view:mrp.workcenter:0
+msgid "Company"
+msgstr "Şirket"
+
+#. module: mrp
+#: view:mrp.bom:0
+msgid "Default Unit of Measure"
+msgstr "Varsayılan Ölçü Birimi"
+
+#. module: mrp
+#: field:mrp.workcenter,time_cycle:0
+msgid "Time for 1 cycle (hour)"
+msgstr "1 Çevrim Süresi (saat)"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Cancel Production"
+msgstr "Üretim İptal et"
+
+#. module: mrp
+#: model:ir.actions.report.xml,name:mrp.report_mrp_production_report
+#: field:mrp.production.product.line,production_id:0
+#: model:process.node,name:mrp.process_node_production0
+#: model:process.node,name:mrp.process_node_productionorder0
+msgid "Production Order"
+msgstr "Üretim Emri"
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_productminimumstockrule0
+msgid "Automatic procurement rule"
+msgstr "Otomatik tedarik kuralı"
+
+#. module: mrp
+#: field:mrp.bom,message_ids:0
+#: field:mrp.production,message_ids:0
+#: field:mrp.production.workcenter.line,message_ids:0
+msgid "Messages"
+msgstr "Mesajlar"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Compute Data"
+msgstr "Veri Hesapla"
+
+#. module: mrp
+#: code:addons/mrp/mrp.py:610
+#: code:addons/mrp/wizard/change_production_qty.py:83
+#: code:addons/mrp/wizard/change_production_qty.py:88
+#, python-format
+msgid "Error!"
+msgstr "Hata!"
+
+#. module: mrp
+#: code:addons/mrp/report/price.py:139
+#: view:mrp.bom:0
+#, python-format
+msgid "Components"
+msgstr "Bileşenler"
+
+#. module: mrp
+#: report:bom.structure:0
+#: model:ir.actions.report.xml,name:mrp.report_bom_structure
+msgid "BOM Structure"
+msgstr "Ürün Ağacı Yapısı"
+
+#. module: mrp
+#: field:mrp.config.settings,module_mrp_jit:0
+msgid "Generate procurement in real time"
+msgstr "Gerçek zamanlı tedarik oluştur"
+
+#. module: mrp
+#: field:mrp.bom,date_stop:0
+msgid "Valid Until"
+msgstr "Geçerlilik sonu"
+
+#. module: mrp
+#: field:mrp.bom,date_start:0
+msgid "Valid From"
+msgstr "Geçerlilik Başlangıcı"
+
+#. module: mrp
+#: selection:mrp.bom,type:0
+msgid "Normal BoM"
+msgstr "Normal Ürün Ağacı"
+
+#. module: mrp
+#: field:res.company,manufacturing_lead:0
+msgid "Manufacturing Lead Time"
+msgstr "Üretim Teslimat Süresi"
+
+#. module: mrp
+#: code:addons/mrp/mrp.py:285
+#, python-format
+msgid "Warning"
+msgstr "Uyarı"
+
+#. module: mrp
+#: field:mrp.bom,product_uos_qty:0
+msgid "Product UOS Qty"
+msgstr "Ürün Hizmet Birimi Mik"
+
+#. module: mrp
+#: field:mrp.production,move_prod_id:0
+msgid "Product Move"
+msgstr "Ürün Hareketi"
+
+#. module: mrp
+#: model:ir.actions.act_window,help:mrp.action_report_in_out_picking_tree
+msgid ""
+"Weekly Stock Value Variation enables you to track the stock value evolution "
+"linked to manufacturing activities, receptions of products and delivery "
+"orders."
+msgstr ""
+"Haftalık Stok Değeri Değişimi, üretim faaliyetlerine, ürün kabulüne ve "
+"teslimat emirlerine bağlı stok değeri değişimini izlemenizi mümkün kılar."
+
+#. module: mrp
+#: view:mrp.product.produce:0
+msgid "Confirm"
+msgstr "Onayla"
+
+#. module: mrp
+#: field:mrp.bom,product_efficiency:0
+msgid "Manufacturing Efficiency"
+msgstr "Üretim Verimliliği"
+
+#. module: mrp
+#: field:mrp.bom,message_follower_ids:0
+#: field:mrp.production,message_follower_ids:0
+#: field:mrp.production.workcenter.line,message_follower_ids:0
+msgid "Followers"
+msgstr "İzleyiciler"
+
+#. module: mrp
+#: help:mrp.bom,active:0
+msgid ""
+"If the active field is set to False, it will allow you to hide the bills of "
+"material without removing it."
+msgstr ""
+"Etkin alan Yanlış olarak ayarlanırsa, ürün ağacını kaldırmadan gizlemenize "
+"izin verecektir."
+
+#. module: mrp
+#: field:mrp.bom,product_rounding:0
+msgid "Product Rounding"
+msgstr "Ürün Yuvarlama"
+
+#. module: mrp
+#: selection:mrp.production,state:0
+msgid "New"
+msgstr "Yeni"
+
+#. module: mrp
+#: selection:mrp.product.produce,mode:0
+msgid "Consume Only"
+msgstr "Yalnızca Tüket"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Recreate Picking"
+msgstr "Toplamayı Yeniden Oluştur"
+
+#. module: mrp
+#: selection:mrp.bom,method:0
+msgid "On Order"
+msgstr "Sipariş üzerine"
+
+#. module: mrp
+#: model:ir.ui.menu,name:mrp.menu_mrp_configuration
+msgid "Configuration"
+msgstr "Yapılandırma"
+
+#. module: mrp
+#: view:mrp.bom:0
+msgid "Starting Date"
+msgstr "Başlama Tarihi"
+
+#. module: mrp
+#: field:mrp.workcenter,time_stop:0
+msgid "Time after prod."
+msgstr "Üretim sonrası süre"
+
+#. module: mrp
+#: field:mrp.workcenter.load,time_unit:0
+msgid "Type of period"
+msgstr "Dönem Tipi"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Total Qty"
+msgstr "Toplam Mik."
+
+#. module: mrp
+#: field:mrp.production.workcenter.line,hour:0
+#: field:mrp.routing.workcenter,hour_nbr:0
+#: field:report.workcenter.load,hour:0
+msgid "Number of Hours"
+msgstr "Süre (Saat)"
+
+#. module: mrp
+#: view:mrp.workcenter:0
+msgid "Costing Information"
+msgstr "Maliyetlendirme Bilgisi"
+
+#. module: mrp
+#: model:process.node,name:mrp.process_node_purchaseprocure0
+msgid "Procurement Orders"
+msgstr "Tedarik Siparişleri"
+
+#. module: mrp
+#: help:mrp.bom,product_rounding:0
+msgid "Rounding applied on the product quantity."
+msgstr "Ürün miktarına yuvarlama uygulanmıştır."
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_stock0
+msgid "Assignment from Production or Purchase Order."
+msgstr "Üretim veya Satınalma Siparişinden atama."
+
+#. module: mrp
+#: model:ir.actions.act_window,help:mrp.mrp_bom_form_action
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to create a bill of material. \n"
+"              </p><p>\n"
+"                Bills of Materials allow you to define the list of required "
+"raw\n"
+"                materials used to make a finished product; through a "
+"manufacturing\n"
+"                order or a pack of products.\n"
+"              </p><p>\n"
+"                OpenERP uses these BoMs to automatically propose "
+"manufacturing\n"
+"                orders according to procurement needs.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Bir ürün ağacı oluşturmak için tıklayın. \n"
+"              </p><p>\n"
+"                Ürün Ağaçları, bir üretim emriyle ya da ürünler paketiyle \n"
+"                bir bitmiş ürünü yapmak için kullanılacak gerekli ham "
+"malzeme\n"
+"                listesi tanımlamanızı sağlar.\n"
+"              </p><p>\n"
+"                OpenERP bu ürün ağaçlarını tedarik gereksinimlerine göre \n"
+"                kendiliğinden üretim emirleri önermek için kullanır.\n"
+"              </p>\n"
+"            "
+
+#. module: mrp
+#: field:mrp.routing.workcenter,routing_id:0
+msgid "Parent Routing"
+msgstr "Üst Rota"
+
+#. module: mrp
+#: help:mrp.workcenter,time_start:0
+msgid "Time in hours for the setup."
+msgstr "Ayar için saat cinsinden süre."
+
+#. module: mrp
+#: field:mrp.config.settings,module_mrp_repair:0
+msgid "Manage repairs of products "
+msgstr "Ürün onarımı yürüt "
+
+#. module: mrp
+#: help:mrp.config.settings,module_mrp_byproduct:0
+msgid ""
+"You can configure by-products in the bill of material.\n"
+"                Without this module: A + B + C -> D.\n"
+"                With this module: A + B + C -> D + E.\n"
+"                This installs the module mrp_byproduct."
+msgstr ""
+"Yan ürünleri ürün ağaçlarında yapılandırabilirsiniz.\n"
+"                Bu modül olmadan: A + B + C -> D.\n"
+"                Bu modül ile: A + B + C -> D + E.\n"
+"                Bu, mrp_byproduct modülünü kurar."
+
+#. module: mrp
+#: field:procurement.order,bom_id:0
+msgid "BoM"
+msgstr "Ürün Ağacı"
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_report_mrp_inout
+#: view:report.mrp.inout:0
+msgid "Stock value variation"
+msgstr "Stok Değer Farkı"
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_mts0
+#: model:process.node,note:mrp.process_node_servicemts0
+msgid "Assignment from stock."
+msgstr "Stoktan atama."
+
+#. module: mrp
+#: code:addons/mrp/report/price.py:139
+#, python-format
+msgid "Cost Price per Unit of Measure"
+msgstr "Ölçü Birimi başına Maliyet Fiyatı"
+
+#. module: mrp
+#: field:report.mrp.inout,date:0
+#: view:report.workcenter.load:0
+#: field:report.workcenter.load,name:0
+msgid "Week"
+msgstr "Hafta"
+
+#. module: mrp
+#: selection:mrp.production,priority:0
+msgid "Normal"
+msgstr "Normal"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Production started late"
+msgstr "Üretim geç başladı"
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_routing0
+msgid "Manufacturing Steps."
+msgstr "Üretim Adımları."
+
+#. module: mrp
+#: code:addons/mrp/report/price.py:146
+#: model:ir.actions.report.xml,name:mrp.report_cost_structure
+#, python-format
+msgid "Cost Structure"
+msgstr "Maliyet Yapısı"
+
+#. module: mrp
+#: model:res.groups,name:mrp.group_mrp_user
+msgid "User"
+msgstr "Kullanıcı"
+
+#. module: mrp
+#: selection:mrp.product.produce,mode:0
+msgid "Consume & Produce"
+msgstr "Tüket & Üret"
+
+#. module: mrp
+#: field:mrp.bom,bom_id:0
+msgid "Parent BoM"
+msgstr "Ana Ürün Ağacı"
+
+#. module: mrp
+#: report:bom.structure:0
+msgid "BOM Ref"
+msgstr "Ürün Ağacı Ref"
+
+#. module: mrp
+#: code:addons/mrp/mrp.py:765
+#, python-format
+msgid ""
+"You are going to produce total %s quantities of \"%s\".\n"
+"But you can only produce up to total %s quantities."
+msgstr ""
+"%s te  toplam \"%s\" kadar tüketeceksiniz.\n"
+"Ama ençok %s kadar üretebilirsiniz."
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_stockproduct0
+msgid "Product type is Stockable or Consumable."
+msgstr "Ürün tipi Stoklanabilir veya Tüketilebilirdir."
+
+#. module: mrp
+#: selection:mrp.production,state:0
+msgid "Production Started"
+msgstr "Üretim Başladı"
+
+#. module: mrp
+#: model:process.node,name:mrp.process_node_procureproducts0
+msgid "Procure Products"
+msgstr "Ürünleri Tedarik et"
+
+#. module: mrp
+#: field:mrp.product.produce,product_qty:0
+msgid "Select Quantity"
+msgstr "Miktar Seç"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.mrp_bom_form_action
+#: model:ir.actions.act_window,name:mrp.product_open_bom
+#: model:ir.ui.menu,name:mrp.menu_mrp_bom_form_action
+#: view:mrp.bom:0
+#: view:product.product:0
+#: field:product.product,bom_ids:0
+msgid "Bill of Materials"
+msgstr "Ürün Ağaçları"
+
+#. module: mrp
+#: code:addons/mrp/mrp.py:610
+#, python-format
+msgid "Cannot find a bill of material for this product."
+msgstr "Bu ürün için ürün ağacı bulunamıyor."
+
+#. module: mrp
+#: view:product.product:0
+msgid ""
+"using the bill of materials assigned to this product.\n"
+"                        The delivery order will be ready once the production "
+"is done."
+msgstr ""
+"Bu ürüne atanmış ürün ağacını kullanıyor.\n"
+"                        Üretim tamamlandığında teslimat emri hazır olacaktır."
+
+#. module: mrp
+#: field:mrp.config.settings,module_stock_no_autopicking:0
+msgid "Manage manual picking to fulfill manufacturing orders "
+msgstr "Üretim emirlerini tamamlamak için ell toplama işlemi yapın "
+
+#. module: mrp
+#: view:mrp.routing.workcenter:0
+#: view:mrp.workcenter:0
+msgid "General Information"
+msgstr "Genel Bilgi"
+
+#. module: mrp
+#: view:mrp.production:0
+msgid "Productions"
+msgstr "Üretimler"
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_stock_move_split
+#: view:mrp.production:0
+msgid "Split in Serial Numbers"
+msgstr "Seri Numaralarına göre ayır"
+
+#. module: mrp
+#: help:mrp.bom,product_uos:0
+msgid ""
+"Product UOS (Unit of Sale) is the unit of measurement for the invoicing and "
+"promotion of stock."
+msgstr "Ürün UoS (Satış Birimi), fatura ve stok arttırımı ölçü birimidir."
+
+#. module: mrp
+#: view:mrp.production:0
+#: field:stock.move,production_id:0
+msgid "Production"
+msgstr "Üretim"
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_mrp_production_workcenter_line
+#: field:mrp.production.workcenter.line,name:0
+msgid "Work Order"
+msgstr "İş Emri"
+
+#. module: mrp
+#: view:board.board:0
+msgid "Procurements in Exception"
+msgstr "İstisnai Tedarikler"
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_mrp_product_price
+msgid "Product Price"
+msgstr "Ürün Fiyatı"
+
+#. module: mrp
+#: view:change.production.qty:0
+msgid "Change Quantity"
+msgstr "Miktarı Değiştir"
+
+#. module: mrp
+#: view:change.production.qty:0
+#: model:ir.actions.act_window,name:mrp.action_change_production_qty
+msgid "Change Product Qty"
+msgstr "Ürün Mik Değiştir"
+
+#. module: mrp
+#: field:mrp.routing,note:0
+#: field:mrp.routing.workcenter,note:0
+#: field:mrp.workcenter,note:0
+msgid "Description"
+msgstr "Açıklama"
+
+#. module: mrp
+#: view:board.board:0
+msgid "Manufacturing board"
+msgstr "Üretim panosu"
+
+#. module: mrp
+#: code:addons/mrp/wizard/change_production_qty.py:68
+#, python-format
+msgid "Active Id not found"
+msgstr "Etkin Id bulunamadı"
+
+#. module: mrp
+#: model:process.node,note:mrp.process_node_procureproducts0
+msgid "The way to procurement depends on the product type."
+msgstr "Tedarik yöntemi ürün tipine bağlıdır."
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.open_board_manufacturing
+#: model:ir.ui.menu,name:mrp.menu_board_manufacturing
+#: model:ir.ui.menu,name:mrp.menu_mrp_manufacturing
+#: model:ir.ui.menu,name:mrp.next_id_77
+msgid "Manufacturing"
+msgstr "Üretim"
+
+#. module: mrp
+#: help:mrp.bom,type:0
+msgid ""
+"If a by-product is used in several products, it can be useful to create its "
+"own BoM. Though if you don't want separated production orders for this by-"
+"product, select Set/Phantom as BoM type. If a Phantom BoM is used for a root "
+"product, it will be sold and shipped as a set of components, instead of "
+"being produced."
+msgstr ""
+"Eğer yan ürün birçok üründe kullanılıyorsa, kendi Ürün Ağacının "
+"oluşturulması kullanışlı olabilir. Yine de bu yan ürün için üretim "
+"emirlerini ayırmak istemezseniz, Takım/Görüntü Ürün Ağacı türünü seçin. Eğer "
+"bir Görüntü ürün Ağacı bir kök ürün için kullanılıyorsa, üretilme yerine "
+"bileşenler takımı olarak satılacak ve sevk edilecektir."
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.action_mrp_configuration
+#: view:mrp.config.settings:0
+msgid "Configure Manufacturing"
+msgstr "Üretimi Yapılandır"
+
+#. module: mrp
+#: view:product.product:0
+msgid ""
+"a manufacturing\n"
+"                        order"
+msgstr ""
+"bir üretim\n"
+"                        emri"
+
+#. module: mrp
+#: field:mrp.config.settings,group_mrp_properties:0
+msgid "Allow several bill of materials per products using properties"
+msgstr "Özellikleri kullanarak her ürün için birçok ürün ağacına izin ver"
+
+#. module: mrp
+#: model:ir.actions.act_window,name:mrp.mrp_property_group_action
+#: model:ir.ui.menu,name:mrp.menu_mrp_property_group_action
+msgid "Property Groups"
+msgstr "Özellik Grupları"
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_mrp_routing
+#: view:mrp.bom:0
+#: field:mrp.bom,routing_id:0
+#: view:mrp.production:0
+#: field:mrp.production,routing_id:0
+#: view:mrp.routing:0
+#: model:process.node,name:mrp.process_node_routing0
+msgid "Routing"
+msgstr "Rota"
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_procurestockableproduct0
+msgid ""
+"Depending on the chosen method to supply the stockable products, the "
+"procurement order creates a RFQ, a production order, ... "
+msgstr ""
+"Stoklanabilir ürünlerin tedariki için seçilen yönteme bağlı olarak, "
+"satınalma emri bir Teklif İsteği, bir üretim emri oluşturur. "
+
+#. module: mrp
+#: help:mrp.workcenter,time_stop:0
+msgid "Time in hours for the cleaning."
+msgstr "Temizlik için saat cinsinden süre."
+
+#. module: mrp
+#: field:mrp.bom,message_summary:0
+#: field:mrp.production,message_summary:0
+#: field:mrp.production.workcenter.line,message_summary:0
+msgid "Summary"
+msgstr "Özet"
+
+#. module: mrp
+#: model:process.transition,name:mrp.process_transition_purchaseprocure0
+msgid "Automatic RFQ"
+msgstr "Otomatik Teklif İsteği"
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_servicemto0
+msgid ""
+"If the service has a 'Produce' supply method, this creates a task in the "
+"project management module of OpenERP."
+msgstr ""
+"Hizmete ait tedarik yöntemi 'Üret' ise, bu OpenERP proje yönetim modülünde "
+"bir görev oluşturur."
+
+#. module: mrp
+#: model:process.transition,note:mrp.process_transition_productionprocureproducts0
+msgid ""
+"In order to supply raw material (to be purchased or produced), the "
+"production order creates as much procurement orders as components listed in "
+"the BOM, through a run of the schedulers (MRP)."
+msgstr ""
+"Ham malzeme tedariki için (satın alınacak veya üretilecek), planlayıcıların "
+"(MRP) çalıştırılmasıyla üretim emri, BOM içerisinde listelenen bileşenler "
+"kadar satınalma emri oluşturur."
+
+#. module: mrp
+#: help:mrp.product_price,number:0
+msgid ""
+"Specify quantity of products to produce or buy. Report of Cost structure "
+"will be displayed base on this quantity."
+msgstr ""
+"Üretilecek veya satın alınacak ürün miktarını belirtin. Bu miktarın altında "
+"Maliyet Raporu yapısı gösterilecektir."
+
+#. module: mrp
+#: selection:mrp.bom,method:0
+msgid "On Stock"
+msgstr "Stoğa"
+
+#. module: mrp
+#: field:mrp.bom,sequence:0
+#: report:mrp.production.order:0
+#: field:mrp.production.workcenter.line,sequence:0
+#: field:mrp.routing.workcenter,sequence:0
+msgid "Sequence"
+msgstr "Sıra"
+
+#. module: mrp
+#: model:ir.ui.menu,name:mrp.menu_view_resource_calendar_leaves_search_mrp
+msgid "Resource Leaves"
+msgstr "Kalan Kaynak"
+
+#. module: mrp
+#: help:mrp.bom,sequence:0
+msgid "Gives the sequence order when displaying a list of bills of material."
+msgstr "Bir ürün ağacı listesi görüntülenirken sıralamayı verir."
+
+#. module: mrp
+#: model:ir.model,name:mrp.model_mrp_config_settings
+msgid "mrp.config.settings"
+msgstr "mrp.config.settings"
+
+#. module: mrp
+#: view:mrp.production:0
+#: field:mrp.production,move_lines:0
+#: report:mrp.production.order:0
+msgid "Products to Consume"
+msgstr "Tüketilecek Ürünler"

@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="base.user_demo" model="res.users">
+            <field eval="[(4, ref('group_mrp_user'))]" name="groups_id"/>
+        </record>
+
+        <!-- Resource: res.company -->
+        <record id="stock.res_company_1" model="res.company">
+            <field eval="1.0" name="manufacturing_lead"/>
+        </record>
+
+        <record id="account_assembly_hours" model="account.analytic.account">
+            <field name="type">normal</field>
+            <field name="code">ASML - HOUR</field>
+            <field name="name">Costing Account For Hours of Assembly.</field>
+        </record>
+
+        <record id="account_assembly_cycle" model="account.analytic.account">
+            <field name="type">normal</field>
+            <field name="code">ASML - Cycle</field>
+            <field name="name">Costing Account For Cycle of Assembly.</field>
+        </record>
+
+        <record id="product.product_assembly" model="product.product">
+            <field name="standard_price">0.1</field>
+            <field name="uom_id" ref="product.product_uom_hour"/>
+            <field name="uom_po_id" ref="product.product_uom_hour"/>
+            <field name="type">service</field>
+            <field name="name">Assembly Service Cost</field>
+            <field name="categ_id" ref="product.product_category_5"/>
+            <field name="image">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</field>
+        </record>
+
+
+        <!-- Resource: mrp.workcenter -->
+
+        <record id="mrp_workcenter_0" model="mrp.workcenter">
+            <field name="name">Assembly workshop</field>
+            <field name="calendar_id" ref="resource.timesheet_group1"/>
+            <field name="capacity_per_cycle">5</field>
+            <field name="time_cycle">1</field>
+            <field name="time_start">0.1</field>
+            <field name="time_stop">0.1</field>
+            <field name="time_efficiency">0.87</field>
+            <field name="product_id" ref="product.product_assembly"/>
+            <field name="costs_hour">0.1</field>
+            <field name="costs_hour_account_id" ref="account_assembly_hours"/>
+            <field name="costs_cycle">0.05</field>
+            <field name="costs_cycle_account_id" ref="account_assembly_cycle"/>
+            <field name="costs_journal_id" ref="account.exp"/>
+            <field name="costs_general_account_id" ref="account.a_expense"/>
+            <field name="costs_general_account_id" ref="account.a_expense"/>
+            <field name="calendar_id" ref="resource.timesheet_group1"/>
+        </record>
+
+        <record id="mrp_workcenter_1" model="mrp.workcenter">
+            <field name="name">Repairs workshop</field>
+            <field name="calendar_id" ref="resource.timesheet_group1"/>
+            <field name="time_cycle">1</field>
+        </record>
+
+        <record id="mrp_workcenter_2" model="mrp.workcenter">
+            <field name="name">Assemble</field>
+            <field name="resource_type">user</field>
+            <field name="calendar_id" ref="resource.timesheet_group1"/>
+            <field name="time_cycle">0.75</field>
+        </record>
+
+        <!-- Resource: mrp.routing -->
+
+        <record id="mrp_routing_0" model="mrp.routing">
+            <field name="name">Assembly Line 1</field>
+        </record>
+
+        <record id="mrp_routing_1" model="mrp.routing">
+            <field name="name">Custom Assembly Line</field>
+        </record>
+
+        <record id="mrp_routing_2" model="mrp.routing">
+            <field name="name">Manual Component's Assembly</field>
+        </record>
+
+
+        <!-- Resource: mrp.routing.workcenter -->
+
+        <record id="mrp_routing_workcenter_0" model="mrp.routing.workcenter">
+            <field name="routing_id" ref="mrp_routing_0"/>
+            <field name="workcenter_id" ref="mrp_workcenter_0"/>
+            <field name="name">Manual Assembly</field>
+            <field name="hour_nbr">2</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="mrp_routing_workcenter_1" model="mrp.routing.workcenter">
+            <field name="routing_id" ref="mrp_routing_1"/>
+            <field name="workcenter_id" ref="mrp_workcenter_0"/>
+            <field name="name">Long time assembly</field>
+            <field name="hour_nbr">5</field>
+            <field name="cycle_nbr">2</field>
+            <field name="sequence">15</field>
+        </record>
+
+        <record id="mrp_routing_workcenter_3" model="mrp.routing.workcenter">
+            <field name="routing_id" ref="mrp_routing_1"/>
+            <field name="workcenter_id" ref="mrp_workcenter_0"/>
+            <field name="name">Testing</field>
+            <field name="hour_nbr">1</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="mrp_routing_workcenter_4" model="mrp.routing.workcenter">
+            <field name="routing_id" ref="mrp_routing_1"/>
+            <field name="workcenter_id" ref="mrp_workcenter_1"/>
+            <field name="name">Packing</field>
+            <field name="hour_nbr">0.5</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="mrp_routing_workcenter_2" model="mrp.routing.workcenter">
+            <field name="routing_id" ref="mrp_routing_2"/>
+            <field name="workcenter_id" ref="mrp_workcenter_2"/>
+            <field name="cycle_nbr">0.5</field>
+            <field name="hour_nbr">2</field>
+            <field name="sequence">5</field>
+            <field name="name">Manual Assembly</field>
+        </record>
+
+    <!-- Resource: mrp.property.group -->
+
+        <record id="mrp_property_group_1" model="mrp.property.group">
+            <field name="name">RAM</field>
+        </record>
+
+        <record id="mrp_property_group_2" model="mrp.property.group">
+            <field name="name">HDD</field>
+        </record>
+
+        <record id="mrp_property_group_3" model="mrp.property.group">
+            <field name="name">CPU</field>
+        </record>
+
+        <record id="mrp_property_group_4" model="mrp.property.group">
+            <field name="name">LAP</field>
+        </record>
+
+        <record id="mrp_property_group_5" model="mrp.property.group">
+            <field name="name">MOU</field>
+        </record>
+
+        <record id="mrp_property_group_6" model="mrp.property.group">
+            <field name="name">KEY</field>
+        </record>
+
+        <record id="mrp_property_group_7" model="mrp.property.group">
+            <field name="name">MB</field>
+        </record>
+
+        <record id="mrp_property_group_8" model="mrp.property.group">
+            <field name="name">CASE</field>
+        </record>
+
+
+        <!-- Resource: mrp.property -->
+
+        <record id="mrp_property_0" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_1"/>
+            <field name="name">DDR 512MB</field>
+        </record>
+
+        <record id="mrp_property_1" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_1"/>
+            <field name="name">DDR2 1GB</field>
+        </record>
+
+        <record id="mrp_property_2" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_2"/>
+            <field name="name">HDD 7200.8 320GB</field>
+        </record>
+
+        <record id="mrp_property_3" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_2"/>
+            <field name="name">HDD 7200.8 500GB</field>
+        </record>
+
+        <record id="mrp_property_4" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_3"/>
+            <field name="name">CPU Core i5 2.70 Ghz</field>
+        </record>
+
+        <record id="mrp_property_6" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_3"/>
+            <field name="name">CPU AMD 8-Core</field>
+        </record>
+
+        <record id="mrp_property_7" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_4"/>
+            <field name="name">Laptop 17" 1TB HDD</field>
+        </record>
+
+        <record id="mrp_property_8" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_5"/>
+            <field name="name">USB Mouse</field>
+        </record>
+
+        <record id="mrp_property_9" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_5"/>
+            <field name="name">Wireless Mouse</field>
+        </record>
+
+        <record id="mrp_property_10" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_6"/>
+            <field name="name">Keyboard QWERTY</field>
+        </record>
+
+        <record id="mrp_property_11" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_6"/>
+            <field name="name">Keyboard AZERTY</field>
+        </record>
+
+        <record id="mrp_property_12" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_7"/>
+            <field name="name">Motherboard A20Z7</field>
+        </record>
+
+        <record id="mrp_property_13" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_7"/>
+            <field name="name">Motherboard I9P57</field>
+        </record>
+
+        <record id="mrp_property_14" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_8"/>
+            <field name="name">Computer Case without Graphics Card</field>
+        </record>
+
+        <record id="mrp_property_15" model="mrp.property">
+            <field name="group_id" ref="mrp_property_group_8"/>
+            <field name="name">Computer Case with Graphics Card</field>
+        </record>
+
+
+        <!-- Resource: mrp.bom -->
+
+
+        <record id="mrp_bom_1" model="mrp.bom">
+            <field name="name">HDD 500GB</field>
+            <field name="product_id" ref="product.product_product_18"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>            
+            <field name="routing_id" ref="mrp_routing_0"/>
+            <field name="type">normal</field>
+        </record>
+
+        <record id="mrp_bom_2" model="mrp.bom">
+            <field name="name">320GB HDD</field>
+            <field name="product_id" ref="product.product_product_17"/>
+            <field name="product_qty">2</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_1"/>
+        </record>
+
+        <record id="mrp_bom_3" model="mrp.bom">
+            <field name="name">HDD 2TB on Demand</field>
+            <field name="product_id" ref="product.product_product_19"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>            
+            <field name="routing_id" ref="mrp_routing_1"/>
+            <field name="type">normal</field>
+        </record>
+
+        <record id="mrp_bom_4" model="mrp.bom">
+            <field name="name">HDD 500GB</field>
+            <field name="product_id" ref="product.product_product_18"/>
+            <field name="product_qty">4</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_3"/>
+        </record>
+
+        <record id="mrp_bom_5" model="mrp.bom">
+            <field name="name">HDD on Demand</field>
+            <field name="product_id" ref="product.product_product_19"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">10</field>            
+            <field name="type">normal</field>
+        </record>
+
+        <record id="mrp_bom_6" model="mrp.bom">
+            <field name="name">320GB HDD</field>
+            <field name="product_id" ref="product.product_product_17"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_5"/>
+        </record>
+
+        <record id="mrp_bom_7" model="mrp.bom">
+            <field name="name">Laptop Customized</field>
+            <field name="product_id" ref="product.product_product_27"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>            
+            <field name="routing_id" ref="mrp_routing_1"/>
+            <field name="type">normal</field>
+        </record>
+
+        <record id="mrp_bom_8" model="mrp.bom">
+            <field name="name">Windows 7 Professional</field>
+            <field name="product_id" ref="product.product_product_40"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">2</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_7"/>
+        </record>
+
+        <record id="mrp_bom_9" model="mrp.bom">
+            <field name="name">USB Keyboard, QWERTY</field>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">4</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_7"/>
+        </record>
+
+        <record id="mrp_bom_10" model="mrp.bom">
+            <field name="name">Mouse, Wireless</field>
+            <field name="product_id" ref="product.product_product_12"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">6</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_7"/>
+        </record>
+
+        <record id="mrp_bom_11" model="mrp.bom">
+            <field name="name">Laptop Customized + Azerty</field>
+            <field name="product_id" ref="product.product_product_27"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">10</field>            
+            <field name="type">normal</field>
+        </record>
+
+        <record id="mrp_bom_12" model="mrp.bom">
+            <field name="name">Windows 7 Professional</field>
+            <field name="product_id" ref="product.product_product_40"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">2</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_11"/>
+        </record>
+
+        <record id="mrp_bom_13" model="mrp.bom">
+            <field name="name">USB Keyboard, AZERTY</field>
+            <field name="product_id" ref="product.product_product_9"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">4</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_11"/>
+        </record>
+
+        <record id="mrp_bom_14" model="mrp.bom">
+            <field name="name">Mouse, Laser</field>
+            <field name="product_id" ref="product.product_product_11"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">6</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_11"/>
+        </record>
+
+        <record id="mrp_bom_15" model="mrp.bom">
+            <field name="name">Computer Case-1</field>
+            <field name="product_id" ref="product.product_product_16"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>            
+            <field name="type">normal</field>
+        </record>
+
+        <record id="mrp_bom_16" model="mrp.bom">
+            <field name="name">Processesor AMD 8-Core</field>
+            <field name="product_id" ref="product.product_product_23"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">4</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_15"/>
+        </record>
+
+        <record id="mrp_bom_17" model="mrp.bom">
+            <field name="name">Motherboard I9P57</field>
+            <field name="product_id" ref="product.product_product_20"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">6</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_15"/>
+        </record>
+
+        <record id="mrp_bom_18" model="mrp.bom">
+            <field name="name">HDD 320GB</field>
+            <field name="product_id" ref="product.product_product_17"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">8</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_15"/>
+        </record>
+
+        <record id="mrp_bom_19" model="mrp.bom">
+            <field name="name">Computer Case-2</field>
+            <field name="product_id" ref="product.product_product_16"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">10</field>            
+            <field name="type">normal</field>
+        </record>
+
+        <record id="mrp_bom_20" model="mrp.bom">
+            <field name="name">Processor Core i5 2.70 Ghz</field>
+            <field name="product_id" ref="product.product_product_22"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">2</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_19"/>
+        </record>
+
+        <record id="mrp_bom_21" model="mrp.bom">
+            <field name="name">Motherboard A20Z7</field>
+            <field name="product_id" ref="product.product_product_21"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">4</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_19"/>
+        </record>
+
+        <record id="mrp_bom_22" model="mrp.bom">
+            <field name="name">HDD 500GB</field>
+            <field name="product_id" ref="product.product_product_18"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">6</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_19"/>
+        </record>
+
+        <record id="mrp_bom_23" model="mrp.bom">
+            <field name="name">Graphics Card</field>
+            <field name="product_id" ref="product.product_product_24"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">10</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_19"/>
+        </record>
+
+        <record id="mrp_bom_24" model="mrp.bom">
+            <field name="name">PC Assemble + 2GB RAM</field>
+            <field name="product_id" ref="product.product_product_4"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>            
+            <field name="type">phantom</field>
+        </record>
+
+        <record id="mrp_bom_25" model="mrp.bom">
+            <field name="name">15" LCD Monitor </field>
+            <field name="product_id" ref="product.product_product_6"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">2</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_24"/>
+        </record>
+
+        <record id="mrp_bom_26" model="mrp.bom">
+            <field name="name">Computer Case-1</field>
+            <field name="product_id" ref="product.product_product_16"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">4</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_24"/>
+        </record>
+
+        <record id="mrp_bom_27" model="mrp.bom">
+            <field name="name">Mouse, Laser</field>
+            <field name="product_id" ref="product.product_product_11"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">6</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_24"/>
+        </record>
+
+        <record id="mrp_bom_28" model="mrp.bom">
+            <field name="name">USB Keyboard, QWERTY</field>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">8</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_24"/>
+        </record>
+
+        <record id="mrp_bom_29" model="mrp.bom">
+            <field name="name">RAM DDR2 1GB</field>
+            <field name="product_id" ref="product.product_product_15"/>
+            <field name="product_qty">2</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">10</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_24"/>
+        </record>
+
+        <record id="mrp_bom_30" model="mrp.bom">
+            <field name="name">PC Assemble + 512MB RAM</field>
+            <field name="product_id" ref="product.product_product_3"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>            
+            <field name="routing_id" ref="mrp_routing_2"/>
+            <field name="type">phantom</field>
+        </record>
+
+        <record id="mrp_bom_31" model="mrp.bom">
+            <field name="name">17" LCD Monitor</field>
+            <field name="product_id" ref="product.product_product_7"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">2</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_30"/>
+        </record>
+
+        <record id="mrp_bom_32" model="mrp.bom">
+            <field name="name">Computer Case-2</field>
+            <field name="product_id" ref="product.product_product_16"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">4</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_30"/>
+        </record>
+
+        <record id="mrp_bom_33" model="mrp.bom">
+            <field name="name">Mouse, Laser</field>
+            <field name="product_id" ref="product.product_product_11"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">6</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_30"/>
+        </record>
+
+        <record id="mrp_bom_34" model="mrp.bom">
+            <field name="name">USB Keyboard, QWERTY</field>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">8</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_30"/>
+        </record>
+
+        <record id="mrp_bom_35" model="mrp.bom">
+            <field name="name">RAM DDR 512MB</field>
+            <field name="product_id" ref="product.product_product_13"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">10</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_30"/>
+        </record>
+
+        <record id="mrp_bom_36" model="mrp.bom">
+            <field name="name">PC Assemble + Custom RAM (PC on Demand)</field>
+            <field name="product_id" ref="product.product_product_5"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">5</field>            
+            <field name="routing_id" ref="mrp_routing_2"/>
+            <field name="type">phantom</field>
+        </record>
+
+        <record id="mrp_bom_37" model="mrp.bom">
+            <field name="name">15" LCD Monitor </field>
+            <field name="product_id" ref="product.product_product_6"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">2</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_36"/>
+        </record>
+
+        <record id="mrp_bom_38" model="mrp.bom">
+            <field name="name">Computer Case-1</field>
+            <field name="product_id" ref="product.product_product_16"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">4</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_36"/>
+        </record>
+
+        <record id="mrp_bom_39" model="mrp.bom">
+            <field name="name">RAM DDR 512MB</field>
+            <field name="product_id" ref="product.product_product_13"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">6</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_36"/>
+        </record>
+
+        <record id="mrp_bom_40" model="mrp.bom">
+            <field name="name">Mouse, Laser</field>
+            <field name="product_id" ref="product.product_product_11"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">8</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_36"/>
+        </record>
+
+        <record id="mrp_bom_41" model="mrp.bom">
+            <field name="name">USB Keyboard, QWERTY</field>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom" ref="product.product_uom_unit"/>
+            <field name="sequence">10</field>            
+            <field name="type">normal</field>
+            <field name="bom_id" ref="mrp_bom_36"/>
+        </record>
+
+    <record id="mrp_production_1" model="mrp.production">
+        <field name="product_id" ref="product.product_product_4"/>
+        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_qty">3</field>
+        <field name="location_src_id" ref="stock.stock_location_stock"/>
+        <field name="location_dest_id" ref="stock.stock_location_output"/>
+        <field name="bom_id" ref="mrp_bom_24"/>
+        <field name="routing_id" ref="mrp.mrp_routing_2"/>
+    </record>
+
+    <record id="mrp_production_2" model="mrp.production">
+        <field name="product_id" ref="product.product_product_27"/>
+        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="location_src_id" ref="stock.stock_location_stock"/>
+        <field name="location_dest_id" ref="stock.stock_location_output"/>
+        <field name="bom_id" ref="mrp.mrp_bom_7"/>
+        <field name="routing_id" ref="mrp.mrp_routing_1"/>
+    </record>
+    <workflow action="button_confirm" model="mrp.production" ref="mrp_production_1"/>
+
+    <!-- Run Scheduler -->
+    <function model="procurement.order" name="run_scheduler"/>
+    </data>
+</openerp>

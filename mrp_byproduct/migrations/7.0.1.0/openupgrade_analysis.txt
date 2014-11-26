@@ -1,0 +1,9 @@
+---Fields in module 'mrp_byproduct'---
+---XML records in module 'mrp_byproduct'---
+NEW ir.model.access: mrp_byproduct.access_mrp_subproduct_all
+NEW ir.model.access: mrp_byproduct.access_mrp_subproduct_manager
+NEW ir.model.access: mrp_byproduct.access_mrp_subproduct_user
+DEL ir.model.access: mrp_subproduct.access_mrp_subproduct_manager
+DEL ir.model.access: mrp_subproduct.access_mrp_subproduct_user
+NEW ir.ui.view: mrp_byproduct.mrp_subproduct_view
+DEL ir.ui.view: mrp_subproduct.mrp_subproduct_view

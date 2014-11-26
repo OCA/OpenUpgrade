@@ -1,0 +1,60 @@
+---Fields in module 'hr_holidays'---
+hr_holidays  / hr.employee              / last_login (datetime)         : module is now 'hr' ('hr_holidays')
+### -> hr is a dependency, so this is not a problem
+
+hr_holidays  / hr.holidays              / case_id (many2one)            : DEL relation: crm.meeting
+hr_holidays  / hr.holidays              / meeting_id (many2one)         : NEW relation: crm.meeting
+### -> just renamed
+
+hr_holidays  / hr.holidays              / message_ids (one2many)        : NEW relation: mail.message
+### -> new functionality of mail module: nothing to do.
+
+hr_holidays  / hr.holidays.status       / categ_id (many2one)           : relation is now 'crm.meeting.type' ('crm.case.categ')
+### -> TODO: No easy migration path. Put a note in users_notes.txt
+
+---XML records in module 'hr_holidays'---
+NEW ir.actions.act_window: hr_holidays.act_hr_leave_request_to_meeting
+NEW ir.actions.act_window: hr_holidays.request_approve_allocation
+DEL ir.actions.act_window: hr_holidays.action_view_holiday_status_manager_board
+NEW ir.actions.act_window.view: hr_holidays.action_request_approve_allocation_form
+NEW ir.actions.act_window.view: hr_holidays.action_request_approve_allocation_tree
+### -> New act_window: Nothing to do
+
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: hr_holidays.hr_holidays_leaves_assign_form_view_todo
+### -> New configuration wizards: Nothing to do
+
+NEW ir.model.access: hr_holidays.access_crm_meeting_type_manager
+NEW ir.model.access: hr_holidays.access_resource_calendar_leaves_user
+DEL ir.model.access: hr_holidays.access_resource_calendar_leaves_manager
+NEW ir.rule: hr_holidays.property_rule_holidays_officer
+DEL ir.rule: hr_holidays.property_rule_holidays_manager
+### -> Change of rules and access. Nothing to do
+
+NEW ir.ui.menu: hr_holidays.menu_request_approve_allocation
+DEL ir.ui.menu: hr_holidays.menu_hr_reporting_holidays
+### -> New menus: Nothing to do
+
+DEL ir.ui.view: hr_holidays.board_hr_holidays_manager_form
+### -> New view: Nothing to do
+
+NEW mail.message: hr_holidays.module_install_notification
+NEW mail.message.subtype: hr_holidays.mt_holidays_approved
+NEW mail.message.subtype: hr_holidays.mt_holidays_confirmed
+NEW mail.message.subtype: hr_holidays.mt_holidays_refused
+### -> New messages from chatter: Nothing to do
+
+NEW workflow.transition: hr_holidays.holiday_confirm2refuse
+NEW workflow.transition: hr_holidays.holiday_confirm2validate
+NEW workflow.transition: hr_holidays.holiday_confirm2validate1
+NEW workflow.transition: hr_holidays.holiday_draft2confirm
+NEW workflow.transition: hr_holidays.holiday_validate1_refuse
+NEW workflow.transition: hr_holidays.holiday_validate1_validate
+NEW workflow.transition: hr_holidays.holiday_validate2refuse
+DEL workflow.transition: hr_holidays.t1
+DEL workflow.transition: hr_holidays.t11
+DEL workflow.transition: hr_holidays.t2
+DEL workflow.transition: hr_holidays.t3
+DEL workflow.transition: hr_holidays.t4
+DEL workflow.transition: hr_holidays.t8
+### -> New conditions for jump between activities: Nothing to do

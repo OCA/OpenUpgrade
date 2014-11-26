@@ -1,0 +1,56 @@
+---Fields in module 'base_calendar'---
+base_calendar / calendar.attendee        / partner_address_id (many2one) : DEL relation: res.partner.address
+base_calendar / calendar.attendee        / partner_id (many2one)         : not a function anymore
+base_calendar / calendar.event           / date (datetime)               : now required
+base_calendar / calendar.event           / date_deadline (datetime)      : now required
+base_calendar / calendar.event           / partner_ids (many2many)       : NEW relation: res.partner
+base_calendar / calendar.event           / recurrent_id (datetime)       : type is now 'integer' ('datetime')
+base_calendar / calendar.event           / recurrent_id_date (datetime)  : NEW 
+base_calendar / calendar.event           / recurrent_uid (integer)       : DEL 
+base_calendar / calendar.event           / rrule_type (selection)        : selection_keys is now '['daily', 'monthly', 'weekly', 'yearly']' ('['daily', 'monthly', 'none', 'weekly', 'yearly']')
+base_calendar / calendar.todo            / date_deadline (datetime)      : now required
+base_calendar / calendar.todo            / partner_ids (many2many)       : NEW relation: res.partner
+base_calendar / calendar.todo            / recurrent_id (datetime)       : type is now 'integer' ('datetime')
+base_calendar / calendar.todo            / recurrent_id_date (datetime)  : NEW 
+base_calendar / calendar.todo            / recurrent_uid (integer)       : DEL 
+base_calendar / calendar.todo            / rrule_type (selection)        : selection_keys is now '['daily', 'monthly', 'weekly', 'yearly']' ('['daily', 'monthly', 'none', 'weekly', 'yearly']')
+base_calendar / crm.meeting              / categ_ids (many2many)         : NEW relation: crm.meeting.type
+base_calendar / crm.meeting              / date_open (datetime)          : NEW 
+base_calendar / crm.meeting              / partner_ids (many2many)       : NEW relation: res.partner
+base_calendar / crm.meeting              / recurrent_id_date (datetime)  : NEW 
+base_calendar / crm.meeting.type         / name (char)                   : NEW required: required
+---XML records in module 'base_calendar'---
+NEW crm.meeting.type: base_calendar.categ_meet1
+NEW crm.meeting.type: base_calendar.categ_meet2
+NEW crm.meeting.type: base_calendar.categ_meet3
+NEW crm.meeting.type: base_calendar.categ_meet4
+NEW crm.meeting.type: base_calendar.categ_meet5
+NEW ir.actions.act_window: base_calendar.action_crm_meeting
+NEW ir.actions.act_window: base_calendar.action_crm_meeting_type
+DEL ir.actions.act_window: base_calendar.action_view_attendee_form
+DEL ir.actions.act_window: base_calendar.action_view_calendar_invite_attendee_wizard
+NEW ir.actions.act_window.view: base_calendar.action_view_crm_meeting_calendar
+NEW ir.actions.act_window.view: base_calendar.action_view_crm_meeting_form
+NEW ir.actions.act_window.view: base_calendar.action_view_crm_meeting_gantt
+NEW ir.actions.act_window.view: base_calendar.action_view_crm_meeting_tree
+NEW ir.model.access: base_calendar.access_crm_meeting
+NEW ir.model.access: base_calendar.access_crm_meeting_all
+NEW ir.model.access: base_calendar.access_crm_meeting_manager
+NEW ir.model.access: base_calendar.access_crm_meeting_partner_manager
+NEW ir.model.access: base_calendar.access_crm_meeting_type_manager
+NEW ir.model.access: base_calendar.access_crm_meeting_type_sale_manager
+NEW ir.model.access: base_calendar.access_crm_meeting_type_sale_user
+NEW ir.ui.menu: base_calendar.mail_menu_calendar
+NEW ir.ui.menu: base_calendar.menu_crm_meeting_type
+DEL ir.ui.menu: base_calendar.menu_attendee_invitations
+NEW ir.ui.view: base_calendar.view_crm_meeting_calendar
+NEW ir.ui.view: base_calendar.view_crm_meeting_form
+NEW ir.ui.view: base_calendar.view_crm_meeting_gantt
+NEW ir.ui.view: base_calendar.view_crm_meeting_search
+NEW ir.ui.view: base_calendar.view_crm_meeting_tree
+NEW ir.ui.view: base_calendar.view_crm_meeting_type_tree
+DEL ir.ui.view: base_calendar.base_calendar_attendee_form_view
+DEL ir.ui.view: base_calendar.base_calendar_attendee_search_view
+DEL ir.ui.view: base_calendar.base_calendar_attendee_tree_view
+DEL ir.ui.view: base_calendar.view_calendar_invite_attendee_wizard
+NEW res.request.link: base_calendar.request_link_event

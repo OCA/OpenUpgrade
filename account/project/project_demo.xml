@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="cose_journal_sale" model="account.analytic.journal">
+            <field name="code">SAL</field>
+            <field name="name">Sales</field>
+            <field name="type">sale</field>
+        </record>
+        <record id="exp" model="account.analytic.journal">
+            <field name="code">PUR</field>
+            <field name="name">Purchases</field>
+            <field name="type">purchase</field>
+        </record>
+        <record id="sit" model="account.analytic.journal">
+            <field name="code">START</field>
+            <field name="name">Miscellaneous Operation</field>
+            <field name="type">situation</field>
+        </record>
+    </data>
+</openerp>

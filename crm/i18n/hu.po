@@ -1,0 +1,3349 @@
+# Hungarian translation for openobject-addons
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openobject-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-03-07 08:36+0000\n"
+"PO-Revision-Date: 2013-03-14 10:27+0000\n"
+"Last-Translator: krnkris <Unknown>\n"
+"Language-Team: Hungarian <hu@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-03-28 05:35+0000\n"
+"X-Generator: Launchpad (build 16546)\n"
+
+#. module: crm
+#: view:crm.lead.report:0
+msgid "# Leads"
+msgstr "Érdeklődők száma"
+
+#. module: crm
+#: help:sale.config.settings,fetchmail_lead:0
+msgid ""
+"Allows you to configure your incoming mail server, and create leads from "
+"incoming emails."
+msgstr ""
+"Lehetővé teszi a bejövő email szerver beállítását, és érdeklődés "
+"létrehozását a bejövő levelekből."
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:881
+#: selection:crm.case.stage,type:0
+#: view:crm.lead:0
+#: selection:crm.lead,type:0
+#: view:crm.lead.report:0
+#: selection:crm.lead.report,type:0
+#, python-format
+msgid "Lead"
+msgstr "Érdeklődő"
+
+#. module: crm
+#: view:crm.lead:0
+#: field:crm.lead,title:0
+msgid "Title"
+msgstr "Pozíció"
+
+#. module: crm
+#: model:ir.actions.server,message:crm.action_email_reminder_lead
+msgid ""
+"Warning unprocessed incoming lead is more than 5 day old.\n"
+"Name: [[object.name ]]\n"
+"ID: [[object.id ]]\n"
+"Description: [[object.description]]\n"
+"            "
+msgstr ""
+"Figyelem a feldolgozatlan bejövő érdeklődés több mint 5 napos.\n"
+"Név: [[object.name ]]\n"
+"ID azonosító: [[object.id ]]\n"
+"Leírás: [[object.description]]\n"
+"            "
+
+#. module: crm
+#: field:crm.opportunity2phonecall,action:0
+#: field:crm.phonecall2phonecall,action:0
+msgid "Action"
+msgstr "Művelet"
+
+#. module: crm
+#: model:ir.actions.server,name:crm.action_set_team_sales_department
+msgid "Set team to Sales Department"
+msgstr "Csoport beállítása az értékesítési osztályhoz"
+
+#. module: crm
+#: view:crm.lead2opportunity.partner.mass:0
+msgid "Select Opportunities"
+msgstr "Lehetőségek kiválasztása"
+
+#. module: crm
+#: model:res.groups,name:crm.group_fund_raising
+#: field:sale.config.settings,group_fund_raising:0
+msgid "Manage Fund Raising"
+msgstr "Tőkebevonás kezelése"
+
+#. module: crm
+#: view:crm.lead.report:0
+#: field:crm.phonecall.report,delay_close:0
+msgid "Delay to close"
+msgstr "Késleltetés a zárásig"
+
+#. module: crm
+#: view:crm.case.stage:0
+#: field:crm.case.stage,name:0
+msgid "Stage Name"
+msgstr "Szakasz neve"
+
+#. module: crm
+#: view:crm.lead:0
+#: field:crm.lead,user_id:0
+#: view:crm.lead.report:0
+#: view:crm.phonecall.report:0
+msgid "Salesperson"
+msgstr "Értékesítő"
+
+#. module: crm
+#: model:ir.model,name:crm.model_crm_lead_report
+msgid "CRM Lead Analysis"
+msgstr "CRM érdeklődés elemzés"
+
+#. module: crm
+#: view:crm.lead.report:0
+#: view:crm.phonecall.report:0
+#: field:crm.phonecall.report,day:0
+msgid "Day"
+msgstr "Nap"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Company Name"
+msgstr "Cég neve"
+
+#. module: crm
+#: model:crm.case.categ,name:crm.categ_oppor6
+msgid "Training"
+msgstr "Képzés"
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.crm_lead_categ_action
+#: model:ir.ui.menu,name:crm.menu_crm_lead_categ
+msgid "Sales Tags"
+msgstr "Értékesítési címkék"
+
+#. module: crm
+#: view:crm.lead.report:0
+msgid "Exp. Closing"
+msgstr "Várh. zárás"
+
+#. module: crm
+#: view:crm.phonecall:0
+msgid "Cancel Call"
+msgstr "Hívás visszavonása"
+
+#. module: crm
+#: help:crm.lead.report,creation_day:0
+msgid "Creation day"
+msgstr "Létrehozás dátuma"
+
+#. module: crm
+#: field:crm.segmentation.line,name:0
+msgid "Rule Name"
+msgstr "Előírás neve"
+
+#. module: crm
+#: code:addons/crm/crm_phonecall.py:280
+#, python-format
+msgid "It's only possible to convert one phonecall at a time."
+msgstr "Egyszerre csak egy telefonhívást tud átalakítani."
+
+#. module: crm
+#: view:crm.case.resource.type:0
+#: view:crm.lead:0
+#: field:crm.lead,type_id:0
+#: view:crm.lead.report:0
+#: field:crm.lead.report,type_id:0
+#: model:ir.model,name:crm.model_crm_case_resource_type
+msgid "Campaign"
+msgstr "Kampány"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Search Opportunities"
+msgstr "Lehetőségek keresése"
+
+#. module: crm
+#: help:crm.lead.report,deadline_month:0
+msgid "Expected closing month"
+msgstr "Zárás várható hónapja"
+
+#. module: crm
+#: help:crm.case.section,message_summary:0
+#: help:crm.lead,message_summary:0
+#: help:crm.phonecall,message_summary:0
+msgid ""
+"Holds the Chatter summary (number of messages, ...). This summary is "
+"directly in html format in order to be inserted in kanban views."
+msgstr ""
+"A chettelés összegzést megállítja (üzenetek száma,...). Ez az összegzés "
+"direkt HTML formátumú ahhoz hogy beilleszthető legyen a kanban nézetekbe."
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:624
+#: code:addons/crm/crm_lead.py:744
+#: code:addons/crm/crm_phonecall.py:280
+#, python-format
+msgid "Warning!"
+msgstr "Vigyázat!"
+
+#. module: crm
+#: view:crm.lead:0
+#: field:crm.lead,partner_id:0
+#: view:crm.lead.report:0
+#: field:crm.lead.report,partner_id:0
+#: field:crm.opportunity2phonecall,partner_id:0
+#: view:crm.phonecall:0
+#: view:crm.phonecall.report:0
+#: field:crm.phonecall.report,partner_id:0
+#: field:crm.phonecall2phonecall,partner_id:0
+#: model:ir.model,name:crm.model_res_partner
+#: model:process.node,name:crm.process_node_partner0
+msgid "Partner"
+msgstr "Partner"
+
+#. module: crm
+#: view:crm.phonecall:0
+#: model:ir.actions.act_window,name:crm.phonecall_to_phonecall_act
+msgid "Schedule Other Call"
+msgstr "Egyéb hívások ütemezése"
+
+#. module: crm
+#: code:addons/crm/crm_phonecall.py:209
+#: view:crm.phonecall:0
+#, python-format
+msgid "Phone Call"
+msgstr "Telefonhívás"
+
+#. module: crm
+#: field:crm.lead,opt_out:0
+msgid "Opt-Out"
+msgstr "Kilép"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Opportunities that are assigned to me"
+msgstr "Hozzám iktatott lehetőségek"
+
+#. module: crm
+#: field:res.partner,meeting_count:0
+msgid "# Meetings"
+msgstr "# Találkozók"
+
+#. module: crm
+#: model:ir.actions.server,name:crm.action_email_reminder_lead
+msgid "Reminder to User"
+msgstr "Emlékeztő a felhasználónak"
+
+#. module: crm
+#: field:crm.segmentation,segmentation_line:0
+msgid "Criteria"
+msgstr "Kritériumok"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Assigned to My Team(s)"
+msgstr "A csoportomhoz/csoportjaimhoz csatolt"
+
+#. module: crm
+#: view:crm.segmentation:0
+msgid "Excluded Answers :"
+msgstr "Kizárt válaszok:"
+
+#. module: crm
+#: model:ir.model,name:crm.model_crm_merge_opportunity
+msgid "Merge opportunities"
+msgstr "Lehetőségek öszzefésülése"
+
+#. module: crm
+#: view:crm.lead.report:0
+#: model:ir.actions.act_window,name:crm.action_report_crm_lead
+#: model:ir.ui.menu,name:crm.menu_report_crm_leads_tree
+msgid "Leads Analysis"
+msgstr "Érdeklődők elemzése"
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.crm_case_resource_type_act
+#: model:ir.ui.menu,name:crm.menu_crm_case_resource_type_act
+msgid "Campaigns"
+msgstr "Kampányok"
+
+#. module: crm
+#: view:crm.lead:0
+#: field:crm.lead,state_id:0
+msgid "State"
+msgstr "Állapot"
+
+#. module: crm
+#: view:crm.lead:0
+#: field:crm.lead,categ_ids:0
+#: model:ir.ui.menu,name:crm.menu_crm_case_phonecall-act
+msgid "Categories"
+msgstr "Kategóriák"
+
+#. module: crm
+#: help:crm.lead,opt_out:0
+msgid ""
+"If opt-out is checked, this contact has refused to receive emails or "
+"unsubscribed to a campaign."
+msgstr ""
+"Ha a kilépés be van jelölve, akkor ez a kapcsolat  visszautasította az e-"
+"maileket vagy leiratkozott egy kampányról."
+
+#. module: crm
+#: model:process.transition,name:crm.process_transition_leadpartner0
+msgid "Prospect Partner"
+msgstr "Leendő partner"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:982
+#, python-format
+msgid "No Subject"
+msgstr "Nincs tárgy"
+
+#. module: crm
+#: field:crm.lead,contact_name:0
+msgid "Contact Name"
+msgstr "Kapcsolat neve"
+
+#. module: crm
+#: help:crm.segmentation,categ_id:0
+msgid ""
+"The partner category that will be added to partners that match the "
+"segmentation criterions after computation."
+msgstr ""
+"A partner kategóriák, melyek hozzá lesznek adva a kiosztási kritérium "
+"szerinti partnerekhez a futtatás után."
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.crm_segmentation_tree-act
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to define a new customer segmentation.\n"
+"              </p><p>\n"
+"                Create specific categories which you can assign to your\n"
+"                contacts to better manage your interactions with them. The\n"
+"                segmentation tool is able to assign categories to contacts\n"
+"                according to criteria you set.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Kattintson új vevő kiosztás meghatározásához.\n"
+"              </p><p>\n"
+"                Egyedi kategória meghatározása amit hozzá tud rendelni a\n"
+"                kapcsolataihoz a jobb kölcsönhatás biztosítására. A "
+"kiosztási\n"
+"                eszköz lehetővé teszi a kategóriák kapcsolatokhoz "
+"rendelését\n"
+"                a beállított kritériuma alapján.\n"
+"              </p>\n"
+"            "
+
+#. module: crm
+#: field:crm.opportunity2phonecall,contact_name:0
+#: field:crm.phonecall,partner_id:0
+#: field:crm.phonecall2phonecall,contact_name:0
+msgid "Contact"
+msgstr "Kapcsolat"
+
+#. module: crm
+#: help:crm.case.section,change_responsible:0
+msgid ""
+"When escalating to this team override the salesman with the team leader."
+msgstr ""
+"Ha feljebb lép erre a csoportra akkor felülírja az értékesítőt a csoport "
+"vezetővel."
+
+#. module: crm
+#: model:process.transition,name:crm.process_transition_opportunitymeeting0
+msgid "Opportunity Meeting"
+msgstr "Találkozó lehetőség"
+
+#. module: crm
+#: help:crm.lead.report,delay_close:0
+#: help:crm.phonecall.report,delay_close:0
+msgid "Number of Days to close the case"
+msgstr "Napok száma az eset lezárásáig"
+
+#. module: crm
+#: model:process.node,note:crm.process_node_opportunities0
+msgid "When a real project/opportunity is detected"
+msgstr "Ha egy valódi projektet/lehetőséget érzékel"
+
+#. module: crm
+#: field:res.partner,opportunity_ids:0
+msgid "Leads and Opportunities"
+msgstr "Érdeklődések és Lehetőségek"
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.relate_partner_opportunities
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to create an opportunity related to this customer.\n"
+"              </p><p>\n"
+"                Use opportunities to keep track of your sales pipeline, "
+"follow\n"
+"                up potential sales and better forecast your future "
+"revenues.\n"
+"              </p><p>\n"
+"                You will be able to plan meetings and phone calls from\n"
+"                opportunities, convert them into quotations, attach related\n"
+"                documents, track all discussions, and much more.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Kattintson ehhez a kapcsolathoz egy lehetőség "
+"létrehozásához.\n"
+"              </p><p>\n"
+"                Használja a lehetőségeket az értékesítési folyamatainak "
+"nyomon követéséhez,\n"
+"                kövesse nyomon a potenciális üzleteket és jelezze jobban "
+"előre a jövőbeni bevételeit.\n"
+"              </p><p>\n"
+"                Lehetősége lesz találkozókat és telefon hívásokat tervezni a "
+"\n"
+"                lehetőségekből, átalakíthatja azokat árajánlatokká, "
+"hozzáfűzheti az\n"
+"                idevonatkozó dokumentumokat, nyomon követheti a "
+"beszélgetéseket, és még sok minden más.\n"
+"              </p>\n"
+"            "
+
+#. module: crm
+#: model:crm.case.stage,name:crm.stage_lead7
+#: view:crm.lead:0
+msgid "Dead"
+msgstr "Sikertelen"
+
+#. module: crm
+#: field:crm.case.section,message_unread:0
+#: view:crm.lead:0
+#: field:crm.lead,message_unread:0
+#: field:crm.phonecall,message_unread:0
+msgid "Unread Messages"
+msgstr "Olvasatlan üzenetek"
+
+#. module: crm
+#: view:crm.segmentation:0
+#: field:crm.segmentation.line,segmentation_id:0
+#: model:ir.actions.act_window,name:crm.crm_segmentation-act
+msgid "Segmentation"
+msgstr "Kiosztás"
+
+#. module: crm
+#: selection:crm.lead2opportunity.partner,action:0
+#: selection:crm.lead2opportunity.partner.mass,action:0
+#: selection:crm.partner.binding,action:0
+msgid "Link to an existing customer"
+msgstr "Összekapcsolás egy meglévő vevőhöz"
+
+#. module: crm
+#: field:crm.lead,write_date:0
+msgid "Update Date"
+msgstr "Frissítés dátuma"
+
+#. module: crm
+#: field:crm.case.section,user_id:0
+msgid "Team Leader"
+msgstr "Csoportvezető"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:1032
+#, python-format
+msgid "%s a call for %s.%s"
+msgstr "%s egy hívás ide %s.%s"
+
+#. module: crm
+#: help:crm.case.stage,probability:0
+msgid ""
+"This percentage depicts the default/average probability of the Case for this "
+"stage to be a success"
+msgstr ""
+"Ez a százalék megadja az alapértelmezett/átlagos valószínűségét annak, hogy "
+"mennyire lesz sikeres az ebben a szakaszban lévő ügy"
+
+#. module: crm
+#: view:crm.lead:0
+#: field:crm.opportunity2phonecall,categ_id:0
+#: field:crm.phonecall,categ_id:0
+#: view:crm.phonecall.report:0
+#: field:crm.phonecall.report,categ_id:0
+#: field:crm.phonecall2phonecall,categ_id:0
+msgid "Category"
+msgstr "Kategória"
+
+#. module: crm
+#: view:crm.lead.report:0
+msgid "#Opportunities"
+msgstr "Lehetőségek száma"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:624
+#, python-format
+msgid ""
+"Please select more than one element (lead or opportunity) from the list view."
+msgstr ""
+"Kérem válaszon ki több mint egy elemet (érdeklődés vagy lehetőség) a lista "
+"nézetből."
+
+#. module: crm
+#: field:crm.lead,partner_address_email:0
+msgid "Partner Contact Email"
+msgstr "Partner kapcsolati Email"
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.crm_case_section_act
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to define a new sales team.\n"
+"              </p><p>\n"
+"                Use sales team to organize your different salespersons or\n"
+"                departments into separate teams. Each team will work in\n"
+"                its own list of opportunities.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Kattintson egy új értékesítési csoport meghatározásához.\n"
+"              </p><p>\n"
+"                Használja az értékesítési csoportokat a különböző "
+"értékesítők vagy \n"
+"                osztályok különálló csoportokba szervezéséhez. Mindegyik "
+"csoport\n"
+"                a saját lehetőség listáin dolgozik.\n"
+"              </p>\n"
+"            "
+
+#. module: crm
+#: model:process.transition,note:crm.process_transition_opportunitymeeting0
+msgid "Normal or phone meeting for opportunity"
+msgstr "Normál vagy telefonos találkozó lehetőségre"
+
+#. module: crm
+#: field:crm.lead,state:0
+#: field:crm.lead.report,state:0
+#: field:crm.phonecall,state:0
+#: view:crm.phonecall.report:0
+#: field:crm.phonecall.report,state:0
+msgid "Status"
+msgstr "Állapot"
+
+#. module: crm
+#: view:crm.lead2opportunity.partner:0
+msgid "Create Opportunity"
+msgstr "Lehetőség létrehozása"
+
+#. module: crm
+#: view:sale.config.settings:0
+msgid "Configure"
+msgstr "Beállítás"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Escalate"
+msgstr "Feljebb lépés"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Mailings"
+msgstr "Levelezések"
+
+#. module: crm
+#: model:mail.message.subtype,description:crm.mt_lead_stage
+msgid "Stage changed"
+msgstr "Szakasz megváltozott"
+
+#. module: crm
+#: selection:crm.lead.report,creation_month:0
+#: selection:crm.lead.report,deadline_month:0
+#: selection:crm.phonecall.report,month:0
+msgid "June"
+msgstr "Június"
+
+#. module: crm
+#: selection:crm.segmentation,state:0
+msgid "Not Running"
+msgstr "Nem fut"
+
+#. module: crm
+#: field:crm.lead.report,planned_revenue:0
+msgid "Planned Revenue"
+msgstr "Tervezett jövedelem"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:970
+#, python-format
+msgid "Customer Email"
+msgstr "Vevői e-mail"
+
+#. module: crm
+#: field:crm.lead,planned_revenue:0
+msgid "Expected Revenue"
+msgstr "Várható bevételek"
+
+#. module: crm
+#: selection:crm.lead.report,creation_month:0
+#: selection:crm.lead.report,deadline_month:0
+#: selection:crm.phonecall.report,month:0
+msgid "October"
+msgstr "Október"
+
+#. module: crm
+#: view:crm.segmentation:0
+msgid "Included Answers :"
+msgstr "Tartalmazott válaszok :"
+
+#. module: crm
+#: help:crm.phonecall,state:0
+msgid ""
+"The status is set to 'Todo', when a case is created.                         "
+"       If the case is in progress the status is set to 'Open'.               "
+"                 When the call is over, the status is set to 'Held'.         "
+"                       If the call needs to be done then the status is set "
+"to 'Not Held'."
+msgstr ""
+"Az állapot 'Tennivaló' állapotú, amikor az ügy létre lett hozva.             "
+"                   Ha az ügy folyamatban van akkor annak állapot be lesz "
+"állítva mint 'Nyitott'.                                Ha a hívásnak vége, "
+"akkor az állapota 'Tartásban'.                                Ha a hívást el "
+"kell végezni akkor az állapota 'Ne tartsd'."
+
+#. module: crm
+#: field:crm.case.section,message_summary:0
+#: field:crm.lead,message_summary:0
+#: field:crm.phonecall,message_summary:0
+msgid "Summary"
+msgstr "Összegzés"
+
+#. module: crm
+#: view:crm.merge.opportunity:0
+msgid "Merge"
+msgstr "Egyesít"
+
+#. module: crm
+#: view:crm.case.categ:0
+msgid "Case Category"
+msgstr "Eset kategória"
+
+#. module: crm
+#: field:crm.lead,partner_address_name:0
+msgid "Partner Contact Name"
+msgstr "Partner kapcsolattartó neve"
+
+#. module: crm
+#: model:ir.actions.server,subject:crm.action_email_reminder_lead
+msgid ""
+"Reminder on Lead: [[object.id ]] [[object.partner_id and 'of ' "
+"+object.partner_id.name or '']]"
+msgstr ""
+"Emlékeztető az érdeklődésre: [[object.id ]] [[object.partner_id and 'of ' "
+"+object.partner_id.name or '']]"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:745
+#, python-format
+msgid ""
+"No customer name defined. Please fill one of the following fields: Company "
+"Name, Contact Name or Email (\"Name <email@address>\")"
+msgstr ""
+"Nincs vevő név meghatározva. Kérem kitölteni egy mezőt ezek közül: Vállalat "
+"neve, Kapcsolat neve vagy e-mail címe (\"Name <email@address>\")"
+
+#. module: crm
+#: view:crm.segmentation:0
+msgid "Profiling Options"
+msgstr "Körvonalazási beállítások"
+
+#. module: crm
+#: view:crm.phonecall.report:0
+msgid "#Phone calls"
+msgstr "Telefonhívások száma"
+
+#. module: crm
+#: sql_constraint:crm.case.section:0
+msgid "The code of the sales team must be unique !"
+msgstr "Az értékesítési csapat kódjának egyedinek kell lennie !"
+
+#. module: crm
+#: help:crm.lead,email_from:0
+msgid "Email address of the contact"
+msgstr "A kapcsolat email címei"
+
+#. module: crm
+#: selection:crm.case.stage,state:0
+#: view:crm.lead:0
+#: selection:crm.lead,state:0
+msgid "In Progress"
+msgstr "Folyamatban"
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.crm_phonecall_categ_action
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Click to add a new category.\n"
+"          </p><p>\n"
+"            Create specific phone call categories to better define the type "
+"of\n"
+"            calls tracked in the system.\n"
+"          </p>\n"
+"        "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Kattintson új kategória hozzáadásához.\n"
+"          </p><p>\n"
+"            Sajátos telefon hívás kategóriát hoz létre a telefonhívás "
+"típusok jobb \n"
+"            meghatározásához a rendszerben való nyomonkövetéshez.\n"
+"          </p>\n"
+"        "
+
+#. module: crm
+#: help:crm.case.section,reply_to:0
+msgid ""
+"The email address put in the 'Reply-To' of all emails sent by OpenERP about "
+"cases in this sales team"
+msgstr ""
+"Az e-mail cím az összes OpenERP által kiküldött levélhez, amit ez az "
+"értékesítési csoport erre az ügyre használni fog  a 'Válasz erre a címre' e-"
+"mail címre mezőben."
+
+#. module: crm
+#: field:crm.lead.report,creation_month:0
+msgid "Creation Month"
+msgstr "Létrehozás hónapja"
+
+#. module: crm
+#: field:crm.case.section,resource_calendar_id:0
+#: model:ir.ui.menu,name:crm.menu_action_resource_calendar_form
+msgid "Working Time"
+msgstr "Munkaidő"
+
+#. module: crm
+#: view:crm.segmentation.line:0
+msgid "Partner Segmentation Lines"
+msgstr "Partner kiosztási sorok"
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.action_report_crm_phonecall
+#: model:ir.ui.menu,name:crm.menu_report_crm_phonecalls_tree
+msgid "Phone Calls Analysis"
+msgstr "Telefonhívás elemzése"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Leads Form"
+msgstr "Érdeklődők űrlapja"
+
+#. module: crm
+#: view:crm.segmentation:0
+#: model:ir.model,name:crm.model_crm_segmentation
+msgid "Partner Segmentation"
+msgstr "Partner kiosztás"
+
+#. module: crm
+#: field:crm.lead,company_currency:0
+msgid "Currency"
+msgstr "Pénznem"
+
+#. module: crm
+#: field:crm.lead.report,probable_revenue:0
+msgid "Probable Revenue"
+msgstr "Várható bevétel"
+
+#. module: crm
+#: help:crm.lead.report,creation_month:0
+msgid "Creation month"
+msgstr "Létrehozás hónapja"
+
+#. module: crm
+#: help:crm.segmentation,name:0
+msgid "The name of the segmentation."
+msgstr "A kiosztás neve."
+
+#. module: crm
+#: model:ir.filters,name:crm.filter_usa_lead
+msgid "Leads from USA"
+msgstr "Érdeklődés USA-ból"
+
+#. module: crm
+#: sql_constraint:crm.lead:0
+msgid "The probability of closing the deal should be between 0% and 100%!"
+msgstr ""
+"Az üzlet létrejöttének a lehetősége 0% és 100% közöttinek kell lennie!"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Leads Generation"
+msgstr "Érdeklődés generálása"
+
+#. module: crm
+#: view:board.board:0
+msgid "Statistics Dashboard"
+msgstr "Statisztika vezérlőpult"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:861
+#: model:crm.case.stage,name:crm.stage_lead2
+#: selection:crm.case.stage,type:0
+#: view:crm.lead:0
+#: selection:crm.lead,type:0
+#: view:crm.lead.report:0
+#: selection:crm.lead.report,type:0
+#: field:crm.meeting,opportunity_id:0
+#: field:res.partner,opportunity_count:0
+#, python-format
+msgid "Opportunity"
+msgstr "Lehetőség"
+
+#. module: crm
+#: model:crm.case.resource.type,name:crm.type_lead7
+msgid "Television"
+msgstr "Televízió"
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.action_crm_send_mass_convert
+msgid "Convert to opportunities"
+msgstr "Átalakít lehetőséggé"
+
+#. module: crm
+#: model:ir.model,name:crm.model_sale_config_settings
+msgid "sale.config.settings"
+msgstr "sale.config.settings"
+
+#. module: crm
+#: view:crm.segmentation:0
+msgid "Stop Process"
+msgstr "Folyamat megállítása"
+
+#. module: crm
+#: field:crm.case.section,alias_id:0
+msgid "Alias"
+msgstr "Álnév"
+
+#. module: crm
+#: view:crm.phonecall:0
+msgid "Search Phonecalls"
+msgstr "Telefonszámok közötti keresés"
+
+#. module: crm
+#: view:crm.lead.report:0
+msgid ""
+"Leads/Opportunities that are assigned to one of the sale teams I manage"
+msgstr ""
+"Érdeklődés/Lehetőség ami az általam vezetett értékesítési osztályhoz lett "
+"rendelve"
+
+#. module: crm
+#: field:crm.segmentation.line,expr_value:0
+msgid "Value"
+msgstr "Érték"
+
+#. module: crm
+#: field:calendar.attendee,categ_id:0
+msgid "Event Type"
+msgstr "Esemény típusa"
+
+#. module: crm
+#: field:crm.segmentation,exclusif:0
+msgid "Exclusive"
+msgstr "Kizárólagos"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:584
+#, python-format
+msgid "From %s : %s"
+msgstr "Ettől %s : %s"
+
+#. module: crm
+#: view:crm.lead2opportunity.partner.mass:0
+msgid "Convert to Opportunities"
+msgstr "Átalakít lehetőséggé"
+
+#. module: crm
+#: view:crm.lead2opportunity.partner:0
+#: view:crm.lead2opportunity.partner.mass:0
+#: view:crm.merge.opportunity:0
+#: view:crm.opportunity2phonecall:0
+#: view:crm.phonecall2phonecall:0
+msgid "or"
+msgstr "vagy"
+
+#. module: crm
+#: field:crm.lead.report,create_date:0
+#: field:crm.phonecall.report,create_date:0
+msgid "Create Date"
+msgstr "Dátum létrehozása"
+
+#. module: crm
+#: field:crm.lead,ref2:0
+msgid "Reference 2"
+msgstr "Hivatkozás 2"
+
+#. module: crm
+#: help:crm.case.stage,section_ids:0
+msgid ""
+"Link between stages and sales teams. When set, this limitate the current "
+"stage to the selected sales teams."
+msgstr ""
+"Kapcsolat a szakaaszok és az értékesítő csoportok között. Ha beállított, ez "
+"lehatárolja a jelenlegi szakaszra a kiválasztott értékesítési csoportot."
+
+#. module: crm
+#: view:crm.case.stage:0
+#: field:crm.case.stage,requirements:0
+msgid "Requirements"
+msgstr "Követelmények"
+
+#. module: crm
+#: field:crm.lead,zip:0
+msgid "Zip"
+msgstr "Irányítószám"
+
+#. module: crm
+#: view:crm.phonecall:0
+msgid "Unassigned Phonecalls"
+msgstr "Még ki nem osztott telefonhívások"
+
+#. module: crm
+#: view:crm.lead:0
+#: view:crm.lead2opportunity.partner:0
+#: field:crm.lead2opportunity.partner,opportunity_ids:0
+#: field:crm.lead2opportunity.partner.mass,opportunity_ids:0
+#: model:ir.actions.act_window,name:crm.crm_case_category_act_oppor11
+#: model:ir.actions.act_window,name:crm.relate_partner_opportunities
+#: model:ir.ui.menu,name:crm.menu_crm_opportunities
+#: model:process.node,name:crm.process_node_opportunities0
+#: view:res.partner:0
+msgid "Opportunities"
+msgstr "Lehetőségek"
+
+#. module: crm
+#: field:crm.segmentation,categ_id:0
+msgid "Partner Category"
+msgstr "Partner kategória"
+
+#. module: crm
+#: field:crm.lead,probability:0
+msgid "Success Rate (%)"
+msgstr "Siker mértéke  (%)"
+
+#. module: crm
+#: field:crm.segmentation,sales_purchase_active:0
+msgid "Use The Sales Purchase Rules"
+msgstr "Használja a beszerzési szabályt"
+
+#. module: crm
+#: model:crm.case.categ,name:crm.categ_phone2
+msgid "Outbound"
+msgstr "Kimenő"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Leads that are assigned to me"
+msgstr "Érdeklődés ami hozzám lett rendelve"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Mark Won"
+msgstr "Megnyertnek jelölje"
+
+#. module: crm
+#: field:crm.case.stage,probability:0
+msgid "Probability (%)"
+msgstr "Valószínűség (%)"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Mark Lost"
+msgstr "Elveszítettnek jelölje"
+
+#. module: crm
+#: model:ir.filters,name:crm.filter_draft_lead
+msgid "Draft Leads"
+msgstr "Érdeklődés tervezet"
+
+#. module: crm
+#: selection:crm.lead.report,creation_month:0
+#: selection:crm.lead.report,deadline_month:0
+#: selection:crm.phonecall.report,month:0
+msgid "March"
+msgstr "Március"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Send Email"
+msgstr "E-mail küldése"
+
+#. module: crm
+#: code:addons/crm/wizard/crm_lead_to_opportunity.py:89
+#, python-format
+msgid "Warning !"
+msgstr "Vigyázat !"
+
+#. module: crm
+#: help:crm.case.section,message_unread:0
+#: help:crm.lead,message_unread:0
+#: help:crm.phonecall,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "Ha be van jelölve, akkor figyelje az új üzeneteket."
+
+#. module: crm
+#: field:crm.lead,day_open:0
+msgid "Days to Open"
+msgstr "Megnyitásig hátralévő napok"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "ZIP"
+msgstr "Irányítószám"
+
+#. module: crm
+#: field:crm.lead,mobile:0
+#: field:crm.phonecall,partner_mobile:0
+msgid "Mobile"
+msgstr "Mobil"
+
+#. module: crm
+#: field:crm.lead,ref:0
+msgid "Reference"
+msgstr "Hivatkozás"
+
+#. module: crm
+#: help:crm.case.section,resource_calendar_id:0
+msgid "Used to compute open days"
+msgstr "A szabad napok számolására használt"
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.act_crm_opportunity_crm_meeting_new
+#: model:ir.actions.act_window,name:crm.crm_meeting_partner
+#: view:res.partner:0
+#: field:res.partner,meeting_ids:0
+msgid "Meetings"
+msgstr "Találkozók"
+
+#. module: crm
+#: field:crm.lead,date_action_next:0
+#: field:crm.lead,title_action:0
+#: field:crm.phonecall,date_action_next:0
+msgid "Next Action"
+msgstr "Következő művelet"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:763
+#, python-format
+msgid "<b>Partner</b> set to <em>%s</em>."
+msgstr "<b>Partner</b> beállítva mint <em>%s</em>."
+
+#. module: crm
+#: selection:crm.lead.report,state:0
+#: selection:crm.phonecall,state:0
+#: selection:crm.phonecall.report,state:0
+msgid "Draft"
+msgstr "Tervezet"
+
+#. module: crm
+#: view:crm.segmentation:0
+msgid "Partner Segmentations"
+msgstr "Partner kiosztás"
+
+#. module: crm
+#: view:crm.lead.report:0
+msgid "Show only opportunity"
+msgstr "Csak a lehetőségek mutatása"
+
+#. module: crm
+#: field:crm.lead,name:0
+msgid "Subject"
+msgstr "Tárgy"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Show Sales Team"
+msgstr "Értékesítési csoport mutatása"
+
+#. module: crm
+#: help:sale.config.settings,module_crm_claim:0
+msgid ""
+"Allows you to track your customers/suppliers claims and grievances.\n"
+"                    This installs the module crm_claim."
+msgstr ""
+"Lehetővé teszi a Vevők/Beszállítók Reklamációs igényeinek és panaszainak "
+"nyomon követését.\n"
+"                    Ez a crm_claim modult telepíti."
+
+#. module: crm
+#: model:crm.case.stage,name:crm.stage_lead6
+#: view:crm.lead:0
+msgid "Won"
+msgstr "Megnyert"
+
+#. module: crm
+#: field:crm.lead.report,delay_expected:0
+msgid "Overpassed Deadline"
+msgstr "Túllépett határidő"
+
+#. module: crm
+#: model:crm.case.section,name:crm.section_sales_department
+msgid "Sales Department"
+msgstr "Értékesítési osztály"
+
+#. module: crm
+#: field:crm.case.stage,type:0
+#: field:crm.lead,type:0
+#: field:crm.lead.report,type:0
+#: view:crm.opportunity2phonecall:0
+msgid "Type"
+msgstr "Típus"
+
+#. module: crm
+#: view:crm.segmentation:0
+msgid "Compute Segmentation"
+msgstr "Kiosztás számítása"
+
+#. module: crm
+#: selection:crm.lead,priority:0
+#: selection:crm.lead.report,priority:0
+#: selection:crm.phonecall,priority:0
+#: selection:crm.phonecall.report,priority:0
+msgid "Lowest"
+msgstr "Legalacsonyabb"
+
+#. module: crm
+#: field:crm.lead,create_date:0
+#: view:crm.phonecall:0
+#: field:crm.phonecall,create_date:0
+#: field:crm.phonecall.report,creation_date:0
+msgid "Creation Date"
+msgstr "Létrehozás dátuma"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:698
+#, python-format
+msgid "Lead <b>converted into an Opportunity</b>"
+msgstr "Tervezet <b>lehetőséggé átalakítva lehetőséggé</b>"
+
+#. module: crm
+#: selection:crm.segmentation.line,expr_name:0
+msgid "Purchase Amount"
+msgstr "Vásárlási összeg"
+
+#. module: crm
+#: view:crm.phonecall.report:0
+msgid "Year of call"
+msgstr "Hívás éve"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Open Leads"
+msgstr "Nyitott érdeklődések"
+
+#. module: crm
+#: view:crm.case.stage:0
+#: view:crm.lead:0
+#: field:crm.lead,stage_id:0
+#: view:crm.lead.report:0
+#: field:crm.lead.report,stage_id:0
+msgid "Stage"
+msgstr "Szakasz"
+
+#. module: crm
+#: view:crm.phonecall.report:0
+msgid "Phone Calls that are assigned to me"
+msgstr "Részemre kiosztott telefonhívások"
+
+#. module: crm
+#: field:crm.lead,user_login:0
+msgid "User Login"
+msgstr "Felhasználói belépés"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "No salesperson"
+msgstr "Nincs értékesítő"
+
+#. module: crm
+#: view:crm.phonecall.report:0
+msgid "Phone calls which are in pending state"
+msgstr "Függőben lévő telefonhívások"
+
+#. module: crm
+#: view:crm.case.section:0
+#: field:crm.case.section,stage_ids:0
+#: view:crm.case.stage:0
+#: model:ir.actions.act_window,name:crm.crm_case_stage_act
+#: model:ir.actions.act_window,name:crm.crm_lead_stage_act
+#: model:ir.ui.menu,name:crm.menu_crm_lead_stage_act
+msgid "Stages"
+msgstr "Szakaszok"
+
+#. module: crm
+#: help:sale.config.settings,module_crm_helpdesk:0
+msgid ""
+"Allows you to communicate with Customer,  process Customer query, and "
+"provide better help and support. This installs the module crm_helpdesk."
+msgstr ""
+"Lehetővé teszi a kommunikációt a vevőkkel, Vevői igény feldolgozását, és "
+"jobb segítség és támogatás ellátását. Ez a crm_helpdesk modult telepíti."
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Delete"
+msgstr "Törlés"
+
+#. module: crm
+#: model:mail.message.subtype,description:crm.mt_lead_create
+msgid "Opportunity created"
+msgstr "Lehetőség létrehozva"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "í"
+msgstr "í"
+
+#. module: crm
+#: view:crm.phonecall:0
+msgid "Description..."
+msgstr "Leírás..."
+
+#. module: crm
+#: selection:crm.lead.report,creation_month:0
+#: selection:crm.lead.report,deadline_month:0
+#: selection:crm.phonecall.report,month:0
+msgid "September"
+msgstr "Szeptember"
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.crm_case_category_act_oppor11
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"          Click to create a new opportunity.\n"
+"          </p><p>\n"
+"          OpenERP helps you keep track of your sales pipeline to follow\n"
+"          up potential sales and better forecast your future revenues.\n"
+"          </p><p>\n"
+"          You will be able to plan meetings and phone calls from\n"
+"          opportunities, convert them into quotations, attach related\n"
+"          documents, track all discussions, and much more.\n"
+"          </p>\n"
+"        "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"          Kattintson új lehetőség létrehozásához.\n"
+"          </p><p>\n"
+"          OpenERP segít az értékesítési folyamat nyomon követésében a\n"
+"          lehetséges értékesítések követésében és a jobb jövőbeni "
+"bevételeinek\n"
+"          előrejelzésében.\n"
+"          </p><p>\n"
+"          Lehetősége lesz találkozók, telefonhívások tervezésére a \n"
+"          lehetőségekből, azok átalakítására árajánlatokká, hozzáfűzni az "
+"ide\n"
+"          vonatkozó dokumentumokat, beszélgetések nyomon követésére, és még "
+"sok másra.\n"
+"          </p>\n"
+"        "
+
+#. module: crm
+#: field:crm.segmentation,partner_id:0
+msgid "Max Partner ID processed"
+msgstr "Max partner ID azonosító feldolgzva"
+
+#. module: crm
+#: help:crm.case.stage,on_change:0
+msgid ""
+"Setting this stage will change the probability automatically on the "
+"opportunity."
+msgstr ""
+"Ennek a szakasznak a beállítása automatikusan megváltoztatja ennek a "
+"lehetőségnek a valószínűségét ."
+
+#. module: crm
+#: view:crm.lead:0
+msgid "oe_kanban_text_red"
+msgstr "oe_kanban_text_red"
+
+#. module: crm
+#: model:ir.ui.menu,name:crm.menu_crm_payment_mode_act
+msgid "Payment Modes"
+msgstr "Fizetési módok"
+
+#. module: crm
+#: field:crm.lead.report,opening_date:0
+#: field:crm.phonecall.report,opening_date:0
+msgid "Opening Date"
+msgstr "Nyitó dátum"
+
+#. module: crm
+#: help:crm.phonecall,duration:0
+msgid "Duration in Minutes"
+msgstr "Időtartam percben"
+
+#. module: crm
+#: field:crm.case.channel,name:0
+msgid "Channel Name"
+msgstr "Csatorna neve"
+
+#. module: crm
+#: help:crm.lead.report,deadline_day:0
+msgid "Expected closing day"
+msgstr "Várható határidő"
+
+#. module: crm
+#: help:crm.case.section,active:0
+msgid ""
+"If the active field is set to true, it will allow you to hide the sales team "
+"without removing it."
+msgstr ""
+"Ha az aktív mező igazra van állítva, akkor lehetővé teszi az értékesítő "
+"csoport eltüntetését annak elvétele nélkül."
+
+#. module: crm
+#: help:crm.case.stage,case_default:0
+msgid ""
+"If you check this field, this stage will be proposed by default on each "
+"sales team. It will not assign this stage to existing teams."
+msgstr ""
+"Ha bejelölte ezt a mezőt, ez a szakasz lesz javasolva alapértelmezetten az "
+"összes értékesítő csoportnak. Meglévő csoportokhoz nem lesz hozzárendelve."
+
+#. module: crm
+#: help:crm.case.stage,type:0
+msgid ""
+"This field is used to distinguish stages related to Leads from stages "
+"related to Opportunities, or to specify stages available for both types."
+msgstr ""
+"Ez a mező az érdeklődéssel kapcsolatos szakaszokat különbözteti meg a  "
+"lehetőséggel kapcsolatos szakaszoktól, vagy meghatározza azokat a "
+"szakaszokat, melyek mindkét típushoz hozzátartoznak."
+
+#. module: crm
+#: model:mail.message.subtype,name:crm.mt_lead_create
+#: model:mail.message.subtype,name:crm.mt_salesteam_lead
+msgid "Lead Created"
+msgstr "Érdeklődés létrehozva"
+
+#. module: crm
+#: help:crm.segmentation,sales_purchase_active:0
+msgid ""
+"Check if you want to use this tab as part of the segmentation rule. If not "
+"checked, the criteria beneath will be ignored"
+msgstr ""
+"Jelölje ki, ha ezt a fület használni akarja a kijelölési szabály részeként. "
+"Ha nincs bejelölve, a kritérium alá eső rész figyelmen kívül lesz hagyva."
+
+#. module: crm
+#: field:crm.segmentation,state:0
+msgid "Execution Status"
+msgstr "Végrehajtási állapot"
+
+#. module: crm
+#: view:crm.opportunity2phonecall:0
+msgid "Log call"
+msgstr "Hívások naplózása"
+
+#. module: crm
+#: field:crm.lead,day_close:0
+msgid "Days to Close"
+msgstr "Lezárásig hátralévő napok"
+
+#. module: crm
+#: field:crm.case.section,complete_name:0
+msgid "unknown"
+msgstr "Ismeretlen"
+
+#. module: crm
+#: field:crm.case.section,message_is_follower:0
+#: field:crm.lead,message_is_follower:0
+#: field:crm.phonecall,message_is_follower:0
+msgid "Is a Follower"
+msgstr "Ez egy követő"
+
+#. module: crm
+#: field:crm.opportunity2phonecall,date:0
+#: view:crm.phonecall:0
+#: field:crm.phonecall,date:0
+#: field:crm.phonecall2phonecall,date:0
+msgid "Date"
+msgstr "Dátum"
+
+#. module: crm
+#: model:crm.case.section,name:crm.crm_case_section_4
+msgid "Online Support"
+msgstr "Online támogatás"
+
+#. module: crm
+#: view:crm.lead.report:0
+#: view:crm.phonecall.report:0
+msgid "Extended Filters..."
+msgstr "Kiterjesztett szűrők…"
+
+#. module: crm
+#: view:crm.phonecall.report:0
+msgid "Phone calls which are in closed state"
+msgstr "Lezárt állapotú telefonhívások"
+
+#. module: crm
+#: view:crm.phonecall.report:0
+msgid "Search"
+msgstr "Keresés"
+
+#. module: crm
+#: help:crm.lead,state:0
+msgid ""
+"The Status is set to 'Draft', when a case is created. If the case is in "
+"progress the Status is set to 'Open'. When the case is over, the Status is "
+"set to 'Done'. If the case needs to be reviewed then the Status is  set to "
+"'Pending'."
+msgstr ""
+"Az állapota be lesz állítva mint 'Terv', amikor az ügyet létrehozza. Ha az "
+"ügy feldolgozás alatt van akkor annak állapota be lesz állítva mint "
+"'Nyitott'. Ha az ügy teljesítve lett, az állapota 'Elvégezve' lesz. Ha az "
+"ügyet át kell nézni akkor annak állapota 'Függőben' lesz.."
+
+#. module: crm
+#: model:crm.case.section,name:crm.crm_case_section_1
+msgid "Sales Marketing Department"
+msgstr "Értékesítési kereskedelmi osztály"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:569
+#, python-format
+msgid "Merged lead"
+msgstr "Érdeklődés összefésülése"
+
+#. module: crm
+#: help:crm.lead,section_id:0
+msgid ""
+"When sending mails, the default email address is taken from the sales team."
+msgstr ""
+"Ha leveleket küld, az alapértelmezett email cím az értékesítő csoporttól "
+"lesz kiválasztva."
+
+#. module: crm
+#: view:crm.phonecall:0
+msgid ""
+"Phone Calls Assigned to the current user or with a team having the current "
+"user as team leader"
+msgstr ""
+"Telefonhívás a jelenlegi felhasználóhoz iktatva vagy ahhoz a csoporthoz, "
+"melynek a vezetője"
+
+#. module: crm
+#: view:crm.segmentation:0
+msgid "Segmentation Description"
+msgstr "Kiosztás leírása"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:565
+#, python-format
+msgid "Merged opportunities"
+msgstr "Lehetőségek összefésülése"
+
+#. module: crm
+#: model:crm.case.categ,name:crm.categ_oppor7
+msgid "Consulting"
+msgstr "Tanácsadó"
+
+#. module: crm
+#: field:crm.case.section,code:0
+msgid "Code"
+msgstr "Kód"
+
+#. module: crm
+#: view:sale.config.settings:0
+msgid "Features"
+msgstr "Jellemzők"
+
+#. module: crm
+#: field:crm.case.section,child_ids:0
+msgid "Child Teams"
+msgstr "Alcsoportok"
+
+#. module: crm
+#: view:crm.phonecall.report:0
+msgid "Phone calls which are in draft and open state"
+msgstr "Telefonhívások, melyek tervezet vagy nyitott állapotúak"
+
+#. module: crm
+#: field:crm.lead2opportunity.partner.mass,user_ids:0
+msgid "Salesmen"
+msgstr "Értékesítő"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "References"
+msgstr "Hivatkozások"
+
+#. module: crm
+#: view:crm.lead2opportunity.partner:0
+#: view:crm.lead2opportunity.partner.mass:0
+#: view:crm.merge.opportunity:0
+#: view:crm.opportunity2phonecall:0
+#: view:crm.phonecall:0
+#: view:crm.phonecall2phonecall:0
+msgid "Cancel"
+msgstr "Mégse"
+
+#. module: crm
+#: model:crm.case.categ,name:crm.categ_oppor4
+msgid "Information"
+msgstr "Információ"
+
+#. module: crm
+#: view:crm.lead.report:0
+msgid "Leads/Opportunities which are in pending state"
+msgstr "Függőben lévő Érdeklődések/Lehetőségek"
+
+#. module: crm
+#: view:crm.phonecall:0
+msgid "To Do"
+msgstr "Tennivaló"
+
+#. module: crm
+#: model:mail.message.subtype,description:crm.mt_lead_lost
+msgid "Opportunity lost"
+msgstr "Elveszített lehetőség"
+
+#. module: crm
+#: field:crm.lead2opportunity.partner,action:0
+#: field:crm.lead2opportunity.partner.mass,action:0
+#: field:crm.partner.binding,action:0
+msgid "Related Customer"
+msgstr "Ide vonatkozó vevő"
+
+#. module: crm
+#: model:crm.case.categ,name:crm.categ_oppor8
+msgid "Other"
+msgstr "Egyéb"
+
+#. module: crm
+#: field:crm.phonecall,opportunity_id:0
+#: model:ir.model,name:crm.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Érdeklődő/Lehetőség"
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.action_merge_opportunities
+#: model:ir.actions.act_window,name:crm.merge_opportunity_act
+msgid "Merge leads/opportunities"
+msgstr "Érdeklődés/Lehetőség eggyesítése"
+
+#. module: crm
+#: help:crm.case.stage,sequence:0
+msgid "Used to order stages. Lower is better."
+msgstr "Szakaszok rendszerezéséhez használt. Alacsonyabb érték a jobb."
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.crm_phonecall_categ_action
+msgid "Phonecall Categories"
+msgstr "Telefonhívás kategóriák"
+
+#. module: crm
+#: view:crm.lead.report:0
+msgid "Leads/Opportunities which are in open state"
+msgstr "Nyitott állapotú Érdeklődések/Lehetőségek"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Opportunities that are assigned to any sales teams I am member of"
+msgstr ""
+"Lehetőségek, melyek kiosztva bármely értékesítési csoportnak, melynek tagja "
+"vagyok"
+
+#. module: crm
+#: model:mail.message.subtype,name:crm.mt_lead_stage
+msgid "Stage Changed"
+msgstr "Szakasz megváltoztatva"
+
+#. module: crm
+#: field:crm.case.stage,section_ids:0
+msgid "Sections"
+msgstr "Szakaszok"
+
+#. module: crm
+#: constraint:crm.case.section:0
+msgid "Error ! You cannot create recursive Sales team."
+msgstr "Hiba ! Nem hozhat létre rekurzív értékesítési csapatot."
+
+#. module: crm
+#: selection:crm.opportunity2phonecall,action:0
+#: selection:crm.phonecall2phonecall,action:0
+msgid "Log a call"
+msgstr "Egy hívás naplózása"
+
+#. module: crm
+#: selection:crm.segmentation.line,expr_name:0
+msgid "Sale Amount"
+msgstr "Értékesítési összeg"
+
+#. module: crm
+#: view:crm.phonecall.report:0
+#: model:ir.actions.act_window,name:crm.act_crm_opportunity_crm_phonecall_new
+msgid "Phone calls"
+msgstr "Telefonhívások"
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.action_report_crm_opportunity
+msgid ""
+"Opportunities Analysis gives you an instant access to your opportunities "
+"with information such as the expected revenue, planned cost, missed "
+"deadlines or the number of interactions per opportunity. This report is "
+"mainly used by the sales manager in order to do the periodic review with the "
+"teams of the sales pipeline."
+msgstr ""
+"Lehetőség elemzés azonnali hozzáférést biztosít a lehetőségek "
+"információihoz, mint az elvárt árbevétel, tervezett költség, túlhaladt "
+"határidők vagy a lehetőségenkénti kölcsönhatások. Ezeket a jelentéseket "
+"főként az értékesítési vezetők használják az értékesítési folyamat "
+"csoportokkal történő időszaki árvizsgálatára."
+
+#. module: crm
+#: field:crm.case.categ,name:0
+#: field:crm.payment.mode,name:0
+#: field:crm.segmentation,name:0
+msgid "Name"
+msgstr "Név"
+
+#. module: crm
+#: view:crm.lead.report:0
+msgid "Leads/Opportunities that are assigned to me"
+msgstr "Hozzám rendelt Érdeklődések/Lehetőségek"
+
+#. module: crm
+#: view:crm.lead.report:0
+msgid "My Case(s)"
+msgstr "Eseteim"
+
+#. module: crm
+#: help:crm.case.section,message_ids:0
+#: help:crm.lead,message_ids:0
+#: help:crm.phonecall,message_ids:0
+msgid "Messages and communication history"
+msgstr "Üzenetek és kommunikáció történet"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Show Countries"
+msgstr "Országok mutatása"
+
+#. module: crm
+#: view:crm.phonecall.report:0
+msgid "Date of call"
+msgstr "Hívás dátuma"
+
+#. module: crm
+#: view:crm.lead:0
+#: view:crm.phonecall:0
+msgid "Creation"
+msgstr "Létrehozás"
+
+#. module: crm
+#: selection:crm.lead,priority:0
+#: selection:crm.lead.report,priority:0
+#: selection:crm.phonecall,priority:0
+#: selection:crm.phonecall.report,priority:0
+msgid "High"
+msgstr "Magas"
+
+#. module: crm
+#: model:process.node,note:crm.process_node_partner0
+msgid "Convert to prospect to business partner"
+msgstr "A leendő partner átalakítása üzleti partnerré"
+
+#. module: crm
+#: model:ir.model,name:crm.model_crm_payment_mode
+msgid "CRM Payment Mode"
+msgstr "CRM Fizetési mód"
+
+#. module: crm
+#: view:crm.lead.report:0
+msgid "Leads/Opportunities which are in done state"
+msgstr "Elvégzett állípotú Érdeklődések/Lehetőségek"
+
+#. module: crm
+#: field:crm.lead.report,delay_close:0
+msgid "Delay to Close"
+msgstr "Késleltetés a zárásig"
+
+#. module: crm
+#: view:crm.lead:0
+#: view:crm.lead.report:0
+#: view:crm.phonecall:0
+#: view:crm.phonecall.report:0
+msgid "Group By..."
+msgstr "Csoportosítás..."
+
+#. module: crm
+#: model:email.template,subject:crm.email_template_opportunity_mail
+msgid "${object.name}"
+msgstr "${object.name}"
+
+#. module: crm
+#: view:crm.merge.opportunity:0
+msgid "Merge Leads/Opportunities"
+msgstr "Érdeklődések/Lehetőségek  összefésülése"
+
+#. module: crm
+#: field:crm.case.section,parent_id:0
+msgid "Parent Team"
+msgstr "Főcsoport"
+
+#. module: crm
+#: selection:crm.lead2opportunity.partner,action:0
+#: selection:crm.lead2opportunity.partner.mass,action:0
+#: selection:crm.partner.binding,action:0
+msgid "Do not link to a customer"
+msgstr "Ne kapcsolja ügyfélhez"
+
+#. module: crm
+#: field:crm.lead,date_action:0
+msgid "Next Action Date"
+msgstr "Következő művelet időpontja"
+
+#. module: crm
+#: help:crm.case.stage,state:0
+msgid ""
+"The status of your document will automatically change regarding the selected "
+"stage. For example, if a stage is related to the status 'Close', when your "
+"document reaches this stage, it is automatically closed."
+msgstr ""
+"A dokumentuma állapota automatikusan változni fog a kiválasztott szakasz "
+"szerint. Például, a szakasza 'Lezárt' állapottal függ össze, és ezt a "
+"szakaszt eléri a dokumentuma, akkor az automatikusan le lesz zárva."
+
+#. module: crm
+#: view:crm.lead2opportunity.partner.mass:0
+msgid "Assign opportunities to"
+msgstr "Iktassa a lehetőséget neki"
+
+#. module: crm
+#: model:crm.case.categ,name:crm.categ_phone1
+msgid "Inbound"
+msgstr "Bejövő"
+
+#. module: crm
+#: view:crm.phonecall.report:0
+msgid "Month of call"
+msgstr "Hívás hónapja"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Describe the lead..."
+msgstr "Fejtse ki az Érdeklődést..."
+
+#. module: crm
+#: code:addons/crm/crm_phonecall.py:290
+#, python-format
+msgid "Partner has been <b>created</b>."
+msgstr "Partner <b>létrehozva</b>."
+
+#. module: crm
+#: field:sale.config.settings,module_crm_claim:0
+msgid "Manage Customer Claims"
+msgstr "Reklamációs ügyek intézése"
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.action_report_crm_lead
+msgid ""
+"Leads Analysis allows you to check different CRM related information like "
+"the treatment delays or number of leads per state. You can sort out your "
+"leads analysis by different groups to get accurate grained analysis."
+msgstr ""
+"Érdeklődési elemzés lehetővé teszi a CRM ügyfélkapcsolat kezelő rendszerrel "
+"kapcsolatos információk ellenőrzését, mint eljárás késedelem vagy a "
+"szakaszonkénti érdeklődések száma. Kiválaszthatja az érdeklődések "
+"elemzéséből a különböző csoportokat a pontos részletezett elemzésekhez."
+
+#. module: crm
+#: model:crm.case.categ,name:crm.categ_oppor3
+msgid "Services"
+msgstr "Szolgáltatások"
+
+#. module: crm
+#: selection:crm.lead,priority:0
+#: selection:crm.lead.report,priority:0
+#: selection:crm.phonecall,priority:0
+#: selection:crm.phonecall.report,priority:0
+msgid "Highest"
+msgstr "Legmagasabb"
+
+#. module: crm
+#: help:crm.lead.report,creation_year:0
+msgid "Creation year"
+msgstr "Létrehozás éve"
+
+#. module: crm
+#: view:crm.case.section:0
+#: field:crm.lead,description:0
+msgid "Notes"
+msgstr "Megjegyzések"
+
+#. module: crm
+#: view:crm.opportunity2phonecall:0
+msgid "Call Description"
+msgstr "Hívás leírása"
+
+#. module: crm
+#: field:crm.lead,partner_name:0
+msgid "Customer Name"
+msgstr "Vevő neve"
+
+#. module: crm
+#: field:crm.case.section,reply_to:0
+msgid "Reply-To"
+msgstr "Válasz"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Display"
+msgstr "Megjelenítés"
+
+#. module: crm
+#: view:board.board:0
+msgid "Opportunities by Stage"
+msgstr "Lehetőségek szakaszok szerint"
+
+#. module: crm
+#: model:process.transition,note:crm.process_transition_leadpartner0
+msgid "Prospect is converting to business partner"
+msgstr "A leendő partner átalakítása üzleti partnerré"
+
+#. module: crm
+#: view:crm.case.channel:0
+#: model:ir.actions.act_window,name:crm.crm_case_channel_action
+#: model:ir.model,name:crm.model_crm_case_channel
+#: model:ir.ui.menu,name:crm.menu_crm_case_channel
+msgid "Channels"
+msgstr "Csatornák"
+
+#. module: crm
+#: view:crm.phonecall:0
+#: selection:crm.phonecall,state:0
+#: view:crm.phonecall.report:0
+#: selection:crm.phonecall.report,state:0
+msgid "Held"
+msgstr "Tartott"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Extra Info"
+msgstr "Extra információ"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Fund Raising"
+msgstr "Tőkebevonás"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Edit..."
+msgstr "Szerkesztés..."
+
+#. module: crm
+#: model:crm.case.resource.type,name:crm.type_lead5
+msgid "Google Adwords"
+msgstr "Google hirdetési szavak"
+
+#. module: crm
+#: view:crm.case.section:0
+msgid "Select Stages for this Sales Team"
+msgstr "Szakasz kiválasztása ehhez az értékesítési csoporthoz"
+
+#. module: crm
+#: view:crm.lead:0
+#: field:crm.lead,priority:0
+#: view:crm.lead.report:0
+#: field:crm.lead.report,priority:0
+#: field:crm.phonecall,priority:0
+#: view:crm.phonecall.report:0
+#: field:crm.phonecall.report,priority:0
+msgid "Priority"
+msgstr "Prioritás"
+
+#. module: crm
+#: model:ir.model,name:crm.model_crm_lead2opportunity_partner
+msgid "Lead To Opportunity Partner"
+msgstr "Érdeklődés a partner lehetőségre"
+
+#. module: crm
+#: help:crm.lead,partner_id:0
+msgid "Linked partner (optional). Usually created when converting the lead."
+msgstr ""
+"Kapcsolat partner (választható). Rendszerint az érdeklődés átalakításánál "
+"lesz létrehozva."
+
+#. module: crm
+#: field:crm.lead,payment_mode:0
+#: view:crm.payment.mode:0
+#: model:ir.actions.act_window,name:crm.action_crm_payment_mode
+msgid "Payment Mode"
+msgstr "Fizetési mód"
+
+#. module: crm
+#: model:ir.model,name:crm.model_crm_lead2opportunity_partner_mass
+msgid "Mass Lead To Opportunity Partner"
+msgstr "Tömeges érdeklődés a partner lehetőségre"
+
+#. module: crm
+#: view:sale.config.settings:0
+msgid "On Mail Server"
+msgstr "Levelező szerveren"
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.open_board_statistical_dash
+#: model:ir.ui.menu,name:crm.menu_board_statistics_dash
+msgid "CRM"
+msgstr "CRM ügyfélkapcsolat-kezelő rendszer"
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.crm_segmentation_tree-act
+#: model:ir.ui.menu,name:crm.menu_crm_segmentation-act
+msgid "Contacts Segmentation"
+msgstr "Kapcsolatok kiosztása"
+
+#. module: crm
+#: model:process.node,note:crm.process_node_meeting0
+msgid "Schedule a normal or phone meeting"
+msgstr "Normál vagy telefonos találkozó ütemezése"
+
+#. module: crm
+#: model:crm.case.resource.type,name:crm.type_lead1
+msgid "Telesales"
+msgstr ""
+
+#. module: crm
+#: model:ir.model,name:crm.model_crm_segmentation_line
+msgid "Segmentation line"
+msgstr "Kiosztási sor"
+
+#. module: crm
+#: view:crm.opportunity2phonecall:0
+#: view:crm.phonecall2phonecall:0
+msgid "Planned Date"
+msgstr "Tervezett időpont"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Expected Revenues"
+msgstr "Elvárt árbevételek"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Referrer"
+msgstr "Hivatkozás"
+
+#. module: crm
+#: help:crm.lead,type:0
+#: help:crm.lead.report,type:0
+msgid "Type is used to separate Leads and Opportunities"
+msgstr "A típust az érdeklődők és a lehetőségek szétválasztására használja"
+
+#. module: crm
+#: selection:crm.lead.report,creation_month:0
+#: selection:crm.lead.report,deadline_month:0
+#: selection:crm.phonecall.report,month:0
+msgid "July"
+msgstr "Július"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Lead / Customer"
+msgstr "Érdeklődés / Vevő"
+
+#. module: crm
+#: model:crm.case.section,name:crm.crm_case_section_2
+msgid "Support Department"
+msgstr "Támogatási osztály"
+
+#. module: crm
+#: view:crm.lead.report:0
+msgid "Show only lead"
+msgstr "Csak az Érdeklődések mutatása"
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.crm_case_section_act
+#: model:ir.model,name:crm.model_crm_case_section
+#: model:ir.ui.menu,name:crm.menu_crm_case_section_act
+msgid "Sales Teams"
+msgstr "Értékesítési csapatok"
+
+#. module: crm
+#: field:crm.case.stage,case_default:0
+msgid "Default to New Sales Team"
+msgstr "Alapértelmezett az új értékesítési csoportnak"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Team"
+msgstr "Csapat"
+
+#. module: crm
+#: view:crm.lead.report:0
+msgid "Leads/Opportunities which are in New state"
+msgstr "Új állapotú Érdeklődések/Lehetőségek"
+
+#. module: crm
+#: selection:crm.phonecall,state:0
+#: view:crm.phonecall.report:0
+msgid "Not Held"
+msgstr "Nem tartott"
+
+#. module: crm
+#: field:crm.lead.report,probability:0
+msgid "Probability"
+msgstr "Valószínűség"
+
+#. module: crm
+#: view:crm.lead.report:0
+#: view:crm.phonecall.report:0
+#: field:crm.phonecall.report,month:0
+msgid "Month"
+msgstr "Hónap"
+
+#. module: crm
+#: view:crm.lead:0
+#: model:ir.actions.act_window,name:crm.crm_case_category_act_leads_all
+#: model:ir.ui.menu,name:crm.menu_crm_leads
+#: model:process.node,name:crm.process_node_leads0
+msgid "Leads"
+msgstr "Érdeklődők"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:563
+#, python-format
+msgid "Merged leads"
+msgstr "Össztefésült érdeklődések"
+
+#. module: crm
+#: model:crm.case.categ,name:crm.categ_oppor5
+msgid "Design"
+msgstr "Terv"
+
+#. module: crm
+#: selection:crm.lead2opportunity.partner,name:0
+#: selection:crm.lead2opportunity.partner.mass,name:0
+msgid "Merge with existing opportunities"
+msgstr "Egyesít meglévő lehetőséggel"
+
+#. module: crm
+#: view:crm.phonecall.report:0
+#: selection:crm.phonecall.report,state:0
+msgid "Todo"
+msgstr "Tennivaló"
+
+#. module: crm
+#: model:mail.message.subtype,name:crm.mt_lead_convert_to_opportunity
+#: model:mail.message.subtype,name:crm.mt_salesteam_lead_opportunity
+msgid "Lead to Opportunity"
+msgstr "Érdeklődés Lehetőséggé alakítása"
+
+#. module: crm
+#: field:crm.lead,user_email:0
+msgid "User Email"
+msgstr "Felhasználó  email címe"
+
+#. module: crm
+#: help:crm.lead,partner_name:0
+msgid ""
+"The name of the future partner company that will be created while converting "
+"the lead into opportunity"
+msgstr ""
+"A jövőben létrehozni kívánt partner vállalat neve, ami akkor lesz "
+"létrehozva, amikor az érdeklődő át lesz alakítva lehetőséggé"
+
+#. module: crm
+#: field:crm.opportunity2phonecall,note:0
+#: field:crm.phonecall2phonecall,note:0
+msgid "Note"
+msgstr "Megjegyzés"
+
+#. module: crm
+#: selection:crm.lead,priority:0
+#: selection:crm.lead.report,priority:0
+#: selection:crm.phonecall,priority:0
+#: selection:crm.phonecall.report,priority:0
+msgid "Low"
+msgstr "Alacsony"
+
+#. module: crm
+#: selection:crm.case.stage,state:0
+#: field:crm.lead,date_closed:0
+#: selection:crm.lead,state:0
+#: view:crm.lead.report:0
+#: selection:crm.lead.report,state:0
+#: field:crm.phonecall,date_closed:0
+msgid "Closed"
+msgstr "lezárt"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Open Opportunities"
+msgstr "Nyitott lehetőségek"
+
+#. module: crm
+#: model:crm.case.resource.type,name:crm.type_lead2
+msgid "Email Campaign - Services"
+msgstr "Email kampány - Szolgáltatások"
+
+#. module: crm
+#: selection:crm.case.stage,state:0
+#: selection:crm.lead,state:0
+#: view:crm.lead.report:0
+#: selection:crm.lead.report,state:0
+#: selection:crm.phonecall.report,state:0
+msgid "Pending"
+msgstr "Függőben lévő"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Assigned to Me"
+msgstr "Nekem iktatott"
+
+#. module: crm
+#: model:process.transition,name:crm.process_transition_leadopportunity0
+msgid "Prospect Opportunity"
+msgstr "Várható lehetőség"
+
+#. module: crm
+#: field:crm.lead,email_cc:0
+msgid "Global CC"
+msgstr "Globális CC /másolat/"
+
+#. module: crm
+#: view:crm.lead:0
+#: view:crm.phonecall:0
+#: model:ir.actions.act_window,name:crm.crm_case_categ_phone0
+#: model:ir.ui.menu,name:crm.menu_crm_case_phone
+#: model:ir.ui.menu,name:crm.menu_crm_config_phonecall
+msgid "Phone Calls"
+msgstr "Telefonhívások"
+
+#. module: crm
+#: view:crm.case.stage:0
+msgid "Stage Search"
+msgstr "Szakasz keresése"
+
+#. module: crm
+#: help:crm.lead.report,delay_open:0
+#: help:crm.phonecall.report,delay_open:0
+msgid "Number of Days to open the case"
+msgstr "Napok száma az eset megnyitásáig"
+
+#. module: crm
+#: field:crm.lead,phone:0
+#: field:crm.opportunity2phonecall,phone:0
+#: view:crm.phonecall:0
+#: field:crm.phonecall,partner_phone:0
+#: field:crm.phonecall2phonecall,phone:0
+msgid "Phone"
+msgstr "Telefon"
+
+#. module: crm
+#: field:crm.case.channel,active:0
+#: field:crm.case.section,active:0
+#: field:crm.lead,active:0
+#: field:crm.phonecall,active:0
+msgid "Active"
+msgstr "aktív"
+
+#. module: crm
+#: selection:crm.segmentation.line,operator:0
+msgid "Mandatory Expression"
+msgstr "Kötelező kifejezés"
+
+#. module: crm
+#: selection:crm.lead2opportunity.partner,action:0
+#: selection:crm.lead2opportunity.partner.mass,action:0
+#: selection:crm.partner.binding,action:0
+msgid "Create a new customer"
+msgstr "Új vevő létrehozása"
+
+#. module: crm
+#: field:crm.lead.report,deadline_day:0
+msgid "Exp. Closing Day"
+msgstr "Várh. határidő"
+
+#. module: crm
+#: model:crm.case.categ,name:crm.categ_oppor2
+msgid "Software"
+msgstr "Szoftver"
+
+#. module: crm
+#: field:crm.case.section,change_responsible:0
+msgid "Reassign Escalated"
+msgstr "Újraiktatás feljebbléptetve"
+
+#. module: crm
+#: view:crm.lead.report:0
+#: model:ir.actions.act_window,name:crm.action_report_crm_opportunity
+#: model:ir.ui.menu,name:crm.menu_report_crm_opportunities_tree
+msgid "Opportunities Analysis"
+msgstr "Lehetőségek elemzése"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Misc"
+msgstr "Vegyes"
+
+#. module: crm
+#: view:crm.lead:0
+#: view:crm.lead.report:0
+#: selection:crm.lead.report,state:0
+msgid "Open"
+msgstr "Nyitott"
+
+#. module: crm
+#: view:crm.lead:0
+#: field:crm.lead,city:0
+msgid "City"
+msgstr "Város"
+
+#. module: crm
+#: selection:crm.case.stage,type:0
+msgid "Both"
+msgstr "Mindkettő"
+
+#. module: crm
+#: view:crm.phonecall:0
+msgid "Call Done"
+msgstr "Hívás elvégezve"
+
+#. module: crm
+#: view:crm.phonecall:0
+#: field:crm.phonecall,user_id:0
+msgid "Responsible"
+msgstr "Felelős"
+
+#. module: crm
+#: model:crm.case.section,name:crm.crm_case_section_3
+msgid "Direct Marketing"
+msgstr "Direkt Marketing"
+
+#. module: crm
+#: model:crm.case.categ,name:crm.categ_oppor1
+msgid "Product"
+msgstr "Termék"
+
+#. module: crm
+#: field:crm.lead.report,creation_year:0
+msgid "Creation Year"
+msgstr "Létrehozás éve"
+
+#. module: crm
+#: view:crm.lead2opportunity.partner.mass:0
+msgid "Conversion Options"
+msgstr "Átállítási lehetőségek"
+
+#. module: crm
+#: view:crm.case.section:0
+msgid ""
+"Follow this salesteam to automatically track the events associated to users "
+"of this team."
+msgstr ""
+"Kövesse ezt az értékesítési csoportot a csoport felhasználókhoz kapcsolódó "
+"események nyomon követéséhez."
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Address"
+msgstr "Cím"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Leads that are assigned to any sales teams I am member of"
+msgstr ""
+"Érdeklődések, melyek bármely értékesítési csoporthoz iktatva vannak, melynek "
+"tagja vagyok"
+
+#. module: crm
+#: help:crm.case.section,alias_id:0
+msgid ""
+"The email address associated with this team. New emails received will "
+"automatically create new leads assigned to the team."
+msgstr ""
+"Az e-mail cím, mely ehhez a csoporthoz rendelt. Új erre a címre érkezett "
+"levél automatikusan Érdeklődést fog létrehozni ehhez a csoporthoz."
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Search Leads"
+msgstr "Potenciális ügyfelek közötti kezelés"
+
+#. module: crm
+#: view:crm.lead.report:0
+#: view:crm.phonecall.report:0
+#: field:crm.phonecall.report,delay_open:0
+msgid "Delay to open"
+msgstr "Késleltetés a nyitáshoz"
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.crm_case_categ_phone_outgoing0
+#: model:ir.ui.menu,name:crm.menu_crm_case_phone_outbound
+msgid "Scheduled Calls"
+msgstr "Ütemezett hívások"
+
+#. module: crm
+#: field:crm.lead,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: crm
+#: help:crm.lead,type_id:0
+msgid ""
+"From which campaign (seminar, marketing campaign, mass mailing, ...) did "
+"this contact come from?"
+msgstr ""
+"Melyik kampányból (szeminárium, értékesítési kampány, tömeges levélküldés, "
+"...) érkezett ez a kapcsolat?"
+
+#. module: crm
+#: model:ir.model,name:crm.model_calendar_attendee
+msgid "Attendee information"
+msgstr "Résztvevők információi"
+
+#. module: crm
+#: view:crm.segmentation:0
+msgid "Segmentation Test"
+msgstr "Kiosztás tesztelése"
+
+#. module: crm
+#: view:crm.segmentation:0
+msgid "Continue Process"
+msgstr "Feldolgozás folytatása"
+
+#. module: crm
+#: selection:crm.lead2opportunity.partner,name:0
+#: selection:crm.lead2opportunity.partner.mass,name:0
+#: model:ir.actions.act_window,name:crm.action_crm_lead2opportunity_partner
+msgid "Convert to opportunity"
+msgstr "Lehetőséggé alakít"
+
+#. module: crm
+#: field:crm.opportunity2phonecall,user_id:0
+#: field:crm.phonecall2phonecall,user_id:0
+msgid "Assign To"
+msgstr "Hozzárendel ehhez"
+
+#. module: crm
+#: field:crm.lead,date_action_last:0
+#: field:crm.phonecall,date_action_last:0
+msgid "Last Action"
+msgstr "Utolsó művelet"
+
+#. module: crm
+#: field:crm.phonecall,duration:0
+#: field:crm.phonecall.report,duration:0
+msgid "Duration"
+msgstr "Időtartam"
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.crm_case_categ_phone_outgoing0
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Click to schedule a call \n"
+"          </p><p>\n"
+"            OpenERP allows you to easily define all the calls to be done\n"
+"            by your sales team and follow up based on their summary.\n"
+"          </p><p>  \n"
+"            You can use the import feature to massively import a new list "
+"of\n"
+"            prospects to qualify.\n"
+"          </p>\n"
+"        "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Kattintson egy hívás ütemezéséhez.\n"
+"          </p><p>\n"
+"            OpenERP lehetővé teszi az értékesítési csoportja összes\n"
+"            telefonhívásának könnyű meghatározását és nyomon \n"
+"            követését az összefoglalója alapján.\n"
+"         </p><p>  \n"
+"            Az importálás használatával tömegesen importálhat új\n"
+"            listákat a leendő partnerek módosítására.\n"
+"          </p>\n"
+"        "
+
+#. module: crm
+#: help:crm.case.stage,fold:0
+msgid ""
+"This stage is not visible, for example in status bar or kanban view, when "
+"there are no records in that stage to display."
+msgstr ""
+"Ez a szakasz nem látható, például az állapot sorban vagy kanban nézetben, ha "
+"azon a szakaszon nem lehet rekordot kijelezni."
+
+#. module: crm
+#: field:crm.lead.report,nbr:0
+#: field:crm.phonecall.report,nbr:0
+msgid "# of Cases"
+msgstr "Esetek száma"
+
+#. module: crm
+#: help:crm.phonecall,section_id:0
+msgid "Sales team to which Case belongs to."
+msgstr "Értékesítési csoport aki az üggyel foglalkozik."
+
+#. module: crm
+#: model:crm.case.resource.type,name:crm.type_lead6
+msgid "Banner Ads"
+msgstr "Szallagcím hírdetés"
+
+#. module: crm
+#: field:crm.merge.opportunity,opportunity_ids:0
+msgid "Leads/Opportunities"
+msgstr "Érdeklődések/lehetőségek"
+
+#. module: crm
+#: field:crm.lead,fax:0
+msgid "Fax"
+msgstr "Fax"
+
+#. module: crm
+#: field:crm.lead,company_id:0
+#: view:crm.lead.report:0
+#: field:crm.lead.report,company_id:0
+#: field:crm.phonecall,company_id:0
+#: view:crm.phonecall.report:0
+#: field:crm.phonecall.report,company_id:0
+msgid "Company"
+msgstr "Vállalat"
+
+#. module: crm
+#: selection:crm.segmentation,state:0
+msgid "Running"
+msgstr "Futó"
+
+#. module: crm
+#: model:mail.message.subtype,description:crm.mt_lead_convert_to_opportunity
+msgid "Lead converted into an opportunity"
+msgstr "Érdeklődés átalakítva egy lehetőséggé"
+
+#. module: crm
+#: model:mail.message.subtype,description:crm.mt_lead_won
+msgid "Opportunity won"
+msgstr "Lehetőség megnyerve"
+
+#. module: crm
+#: field:crm.case.categ,object_id:0
+msgid "Object Name"
+msgstr "Tárgy neve"
+
+#. module: crm
+#: view:crm.phonecall:0
+msgid "Phone Calls Assigned to Me or My Team(s)"
+msgstr "Részemre vagy a csoportom részére iktatott telefonhívások"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Reset"
+msgstr "Visszaállítás"
+
+#. module: crm
+#: view:sale.config.settings:0
+msgid "After-Sale Services"
+msgstr "Értékesítés utáni szolgáltatások"
+
+#. module: crm
+#: field:crm.case.section,message_ids:0
+#: field:crm.lead,message_ids:0
+#: field:crm.phonecall,message_ids:0
+msgid "Messages"
+msgstr "Üzenetek"
+
+#. module: crm
+#: help:crm.lead,channel_id:0
+msgid "Communication channel (mail, direct, phone, ...)"
+msgstr "Communikéciós csatorna (levelezés, direkt, telefon, ...)"
+
+#. module: crm
+#: field:crm.opportunity2phonecall,name:0
+#: field:crm.phonecall2phonecall,name:0
+msgid "Call summary"
+msgstr "Hívás összefoglalása"
+
+#. module: crm
+#: selection:crm.case.stage,state:0
+#: selection:crm.lead,state:0
+#: selection:crm.lead.report,state:0
+#: selection:crm.phonecall,state:0
+#: selection:crm.phonecall.report,state:0
+msgid "Cancelled"
+msgstr "Törölt"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Street..."
+msgstr "Utca..."
+
+#. module: crm
+#: field:crm.lead.report,date_closed:0
+#: field:crm.phonecall.report,date_closed:0
+msgid "Close Date"
+msgstr "Zárás dátuma"
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.action_report_crm_phonecall
+msgid ""
+"From this report, you can analyse the performance of your sales team, based "
+"on their phone calls. You can group or filter the information according to "
+"several criteria and drill down the information, by adding more groups in "
+"the report."
+msgstr ""
+"Ebből a jelentésből, az értékesítési csoportjának a teljesítményét "
+"elemezheti, a telefonhívásaik alapján. Csoportosíthatja vagy szűrheti az "
+"információkat egy pár kritérium szerint és leáshat az információkban új "
+"csoportok hozzáadásával."
+
+#. module: crm
+#: field:crm.case.stage,fold:0
+msgid "Fold by Default"
+msgstr "Alapértelmezetten összehajtva"
+
+#. module: crm
+#: field:crm.case.stage,state:0
+msgid "Related Status"
+msgstr "Összefüggés állapot"
+
+#. module: crm
+#: field:crm.phonecall,name:0
+msgid "Call Summary"
+msgstr "Hívás összefoglalása"
+
+#. module: crm
+#: field:crm.lead,color:0
+msgid "Color Index"
+msgstr "Szín meghatározó"
+
+#. module: crm
+#: field:crm.segmentation.line,expr_operator:0
+msgid "Operator"
+msgstr "Operátor"
+
+#. module: crm
+#: view:crm.lead:0
+#: model:ir.actions.act_window,name:crm.opportunity2phonecall_act
+msgid "Schedule/Log Call"
+msgstr "Hívás Ütemezés/Naplózás"
+
+#. module: crm
+#: view:crm.merge.opportunity:0
+msgid "Select Leads/Opportunities"
+msgstr "Érdeklődések/lehetőségek kiválasztása"
+
+#. module: crm
+#: selection:crm.phonecall,state:0
+msgid "Confirmed"
+msgstr "Megerősítve"
+
+#. module: crm
+#: model:ir.model,name:crm.model_crm_partner_binding
+msgid "Handle partner binding or generation in CRM wizards."
+msgstr "Partner kikötés vagy létrehozás a CMR varázslókban."
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.act_oppor_stage_user
+msgid "Planned Revenue By User and Stage"
+msgstr "Tervezet árbevétel felhasználó és szakasz szerint"
+
+#. module: crm
+#: view:crm.phonecall:0
+msgid "Confirm"
+msgstr "Megerősítés"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Unread messages"
+msgstr "Olvasatlan üzenetek"
+
+#. module: crm
+#: field:crm.phonecall.report,section_id:0
+msgid "Section"
+msgstr "Szakasz"
+
+#. module: crm
+#: selection:crm.segmentation.line,operator:0
+msgid "Optional Expression"
+msgstr "Választható kifejezés"
+
+#. module: crm
+#: field:crm.case.section,message_follower_ids:0
+#: field:crm.lead,message_follower_ids:0
+#: field:crm.phonecall,message_follower_ids:0
+msgid "Followers"
+msgstr "Követők"
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.crm_case_category_act_leads_all
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Click to create an unqualified lead.\n"
+"          </p><p>\n"
+"            Use leads if you need a qualification step before creating an\n"
+"            opportunity or a customer. It can be a business card you "
+"received,\n"
+"            a contact form filled in your website, or a file of unqualified\n"
+"            prospects you import, etc.\n"
+"          </p><p>\n"
+"            Once qualified, the lead can be converted into a business\n"
+"            opportunity and/or a new customer in your address book.\n"
+"          </p>\n"
+"        "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Kattintson egy rögzítetlen érdeklődés létrehozásához.\n"
+"          </p><p>\n"
+"            Használja az érdeklődéseket, ha rögzítési lépésre van szüksége "
+"egy lehetőség\n"
+"            vagy egy vevő létrehozása előtt. Ez lehet egy kézhez kapott "
+"névjegykártya,\n"
+"            egy, a weboldalon kitöltött, kapcsolati űrlap, vagy egy ön által "
+"rögzítetlen\n"
+"            betöltött prospektus, stb.\n"
+"          </p><p>\n"
+"            Ha rögzítésre került, az érdeklődést át lehet alakítani üzleti "
+"lehetőségekké\n"
+"            és/vagy új vevővé a címjegyzékében.\n"
+"          </p>\n"
+"        "
+
+#. module: crm
+#: field:sale.config.settings,fetchmail_lead:0
+msgid "Create leads from incoming mails"
+msgstr "Érdeklődés létrehozáse beérkező levélből"
+
+#. module: crm
+#: view:crm.lead:0
+#: field:crm.lead,email_from:0
+#: field:crm.phonecall,email_from:0
+msgid "Email"
+msgstr "E-mail"
+
+#. module: crm
+#: view:crm.case.channel:0
+#: view:crm.lead:0
+#: field:crm.lead,channel_id:0
+#: view:crm.lead.report:0
+#: field:crm.lead.report,channel_id:0
+msgid "Channel"
+msgstr "Csatorna"
+
+#. module: crm
+#: view:crm.opportunity2phonecall:0
+#: view:crm.phonecall2phonecall:0
+msgid "Schedule Call"
+msgstr "Hívás ütemezése"
+
+#. module: crm
+#: view:crm.lead.report:0
+#: view:crm.phonecall.report:0
+msgid "My Sales Team(s)"
+msgstr "Az én értékesítő csapato(ai)m"
+
+#. module: crm
+#: help:crm.segmentation,exclusif:0
+msgid ""
+"Check if the category is limited to partners that match the segmentation "
+"criterions.                        \n"
+"If checked, remove the category from partners that doesn't match "
+"segmentation criterions"
+msgstr ""
+"Ellenőrizze ha a kategória limitálva van azokra a partnerekre akik egyeznek "
+"a kiosztási kritériumokkal.                        \n"
+"Ha be van jelölve, vegye le azokról a partnerekről a katagóriát akik nem "
+"egyeznek meg a kritériumokkal."
+
+#. module: crm
+#: model:process.transition,note:crm.process_transition_leadopportunity0
+msgid "Creating business opportunities from Leads"
+msgstr "Üzleti lehetőségek létrehozása a potenciális ügyfelekből"
+
+#. module: crm
+#: model:crm.case.resource.type,name:crm.type_lead3
+msgid "Email Campaign - Products"
+msgstr "Email kampány - Termékek"
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.crm_case_categ_phone_incoming0
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Click to log the summary of a phone call. \n"
+"          </p><p>\n"
+"            OpenERP allows you to log inbound calls on the fly to track the\n"
+"            history of the communication with a customer or to inform "
+"another\n"
+"            team member.\n"
+"          </p><p>\n"
+"            In order to follow up on the call, you can trigger a request "
+"for\n"
+"            another call, a meeting or an opportunity.\n"
+"          </p>\n"
+"        "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Kattintson egy telefonhívás összesítés naplózásához. \n"
+"          </p><p>\n"
+"            OpenERP lehetővé tesz a beérkező telefon hívások azonnali "
+"naplózását az\n"
+"            ügyféllel történt kommunikációs történet nyomon követéséhez vagy "
+"egy\n"
+"            másik csoport vezető értesítéséhez.\n"
+"          </p><p>\n"
+"            Ahhoz, hogy nyomon követhesse a hívásokat, kapcsolhat egy másik\n"
+"            hívást, találkozót vagy lehetőséget.\n"
+"          </p>\n"
+"        "
+
+#. module: crm
+#: model:process.node,note:crm.process_node_leads0
+msgid "Very first contact with new prospect"
+msgstr "Ellenőrizze az első partnert egy új leendővel"
+
+#. module: crm
+#: view:res.partner:0
+msgid "Calls"
+msgstr "Hívások"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Cancel Case"
+msgstr "Ügy visszavonása"
+
+#. module: crm
+#: field:crm.case.stage,on_change:0
+msgid "Change Probability Automatically"
+msgstr "Valószínűség automatikus változtatása"
+
+#. module: crm
+#: view:crm.phonecall.report:0
+msgid "My Phone Calls"
+msgstr "Telefonhívásaim"
+
+#. module: crm
+#: model:crm.case.stage,name:crm.stage_lead3
+msgid "Qualification"
+msgstr "Végzettség"
+
+#. module: crm
+#: field:crm.lead2opportunity.partner,name:0
+#: field:crm.lead2opportunity.partner.mass,name:0
+msgid "Conversion Action"
+msgstr "Átállítási művelet"
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.crm_lead_categ_action
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to define a new sales tag.\n"
+"              </p><p>\n"
+"                Create specific tags that fit your company's activities\n"
+"                to better classify and analyse your leads and "
+"opportunities.\n"
+"                Such categories could for instance reflect your product\n"
+"                structure or the different types of sales you do.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Kattintson új szakasz címke meghatározásához.\n"
+"              </p><p>\n"
+"                Jellemző címkék létrehozása a vállalata tevékenységeinek "
+"megfelelően\n"
+"                az érdeklődések és lehetőségek jobb csoportosításához és "
+"elemzéséhez.\n"
+"                Ilyen kategóriák például kifejezhetik a termék szerkezetét \n"
+"                vagy az Ön által létrehozott különböző típusú "
+"értékesítéseket.\n"
+"              </p>\n"
+"            "
+
+#. module: crm
+#: selection:crm.lead.report,creation_month:0
+#: selection:crm.lead.report,deadline_month:0
+#: selection:crm.phonecall.report,month:0
+msgid "August"
+msgstr "Augusztus"
+
+#. module: crm
+#: model:mail.message.subtype,name:crm.mt_lead_lost
+#: model:mail.message.subtype,name:crm.mt_salesteam_lead_lost
+msgid "Opportunity Lost"
+msgstr "Lehetőség elveszítve"
+
+#. module: crm
+#: field:crm.lead.report,deadline_month:0
+msgid "Exp. Closing Month"
+msgstr "Várh. lejárat hónapja"
+
+#. module: crm
+#: selection:crm.lead.report,creation_month:0
+#: selection:crm.lead.report,deadline_month:0
+#: selection:crm.phonecall.report,month:0
+msgid "December"
+msgstr "December"
+
+#. module: crm
+#: view:crm.phonecall:0
+msgid "Date of Call"
+msgstr "Hívás időpontja"
+
+#. module: crm
+#: view:crm.lead:0
+#: field:crm.lead,date_deadline:0
+msgid "Expected Closing"
+msgstr "Várható befejezése"
+
+#. module: crm
+#: model:ir.model,name:crm.model_crm_opportunity2phonecall
+msgid "Opportunity to Phonecall"
+msgstr "Lehetőség a telefonhíváshoz"
+
+#. module: crm
+#: view:crm.segmentation:0
+msgid "Sales Purchase"
+msgstr "Adás-vétel"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Schedule Meeting"
+msgstr "Találkozó ütemezése"
+
+#. module: crm
+#: field:crm.lead.report,deadline_year:0
+msgid "Ex. Closing Year"
+msgstr "Várh. lejárat éve"
+
+#. module: crm
+#: model:ir.actions.client,name:crm.action_client_crm_menu
+msgid "Open Sale Menu"
+msgstr "Értékesítési menü megnyitása"
+
+#. module: crm
+#: field:crm.lead,date_open:0
+#: field:crm.phonecall,date_open:0
+msgid "Opened"
+msgstr "Nyitott"
+
+#. module: crm
+#: view:crm.case.section:0
+#: field:crm.case.section,member_ids:0
+msgid "Team Members"
+msgstr "Csoport tag"
+
+#. module: crm
+#: view:crm.opportunity2phonecall:0
+#: view:crm.phonecall2phonecall:0
+msgid "Schedule/Log a Call"
+msgstr "Egy hívás Ütemezése/Naplózása"
+
+#. module: crm
+#: field:crm.lead,planned_cost:0
+msgid "Planned Costs"
+msgstr "Tervezett költségek"
+
+#. module: crm
+#: help:crm.lead,date_deadline:0
+msgid "Estimate of the date on which the opportunity will be won."
+msgstr "A lehetőség elnyerésének körülbelüli időpontja/dátuma."
+
+#. module: crm
+#: help:crm.lead,email_cc:0
+msgid ""
+"These email addresses will be added to the CC field of all inbound and "
+"outbound emails for this record before being sent. Separate multiple email "
+"addresses with a comma"
+msgstr ""
+"Ezek az email címek lesznek hozzáadva a CC /Carbon copy,másolat/ mezőhöz "
+"minden bejövő és kimenő email-hez amit ezzel a feljegyzéssel küld. Több "
+"email felsorolását vesszővel elválasztva adja meg."
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.crm_case_categ_phone_incoming0
+#: model:ir.ui.menu,name:crm.menu_crm_case_phone_inbound
+msgid "Logged Calls"
+msgstr "Naplózott hívások"
+
+#. module: crm
+#: model:mail.message.subtype,name:crm.mt_lead_won
+#: model:mail.message.subtype,name:crm.mt_salesteam_lead_won
+msgid "Opportunity Won"
+msgstr "Lehetőség elfogadva"
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.crm_case_section_act_tree
+msgid "Cases by Sales Team"
+msgstr "Esetek értékesítési csapatonként"
+
+#. module: crm
+#: view:crm.lead:0
+#: view:crm.phonecall:0
+#: model:ir.model,name:crm.model_crm_meeting
+#: model:process.node,name:crm.process_node_meeting0
+msgid "Meeting"
+msgstr "Találkozó"
+
+#. module: crm
+#: model:ir.model,name:crm.model_crm_case_categ
+msgid "Category of Case"
+msgstr "Eset kategóriája"
+
+#. module: crm
+#: view:board.board:0
+msgid "Planned Revenue by Stage and User"
+msgstr "Tervezet árbevétel szakasz és felhasználó szerint"
+
+#. module: crm
+#: selection:crm.lead,priority:0
+#: selection:crm.lead.report,priority:0
+#: selection:crm.phonecall,priority:0
+#: selection:crm.phonecall.report,priority:0
+msgid "Normal"
+msgstr "Normál"
+
+#. module: crm
+#: field:crm.lead,street2:0
+msgid "Street2"
+msgstr "Utca2"
+
+#. module: crm
+#: field:sale.config.settings,module_crm_helpdesk:0
+msgid "Manage Helpdesk and Support"
+msgstr "Ügyfélszolgálat és támogatás kezelése"
+
+#. module: crm
+#: field:crm.lead.report,delay_open:0
+msgid "Delay to Open"
+msgstr "Nyitás késleltetése"
+
+#. module: crm
+#: field:crm.lead.report,user_id:0
+#: field:crm.phonecall.report,user_id:0
+msgid "User"
+msgstr "Felhasználó"
+
+#. module: crm
+#: selection:crm.lead.report,creation_month:0
+#: selection:crm.lead.report,deadline_month:0
+#: selection:crm.phonecall.report,month:0
+msgid "November"
+msgstr "November"
+
+#. module: crm
+#: view:crm.lead.report:0
+#: model:ir.actions.act_window,name:crm.act_opportunity_stage
+msgid "Opportunities By Stage"
+msgstr "Lehetőségek szakaszonként"
+
+#. module: crm
+#: selection:crm.lead.report,creation_month:0
+#: selection:crm.lead.report,deadline_month:0
+#: selection:crm.phonecall.report,month:0
+msgid "January"
+msgstr "Január"
+
+#. module: crm
+#: model:process.process,name:crm.process_process_contractprocess0
+msgid "Contract"
+msgstr "Szerződés"
+
+#. module: crm
+#: model:crm.case.resource.type,name:crm.type_lead4
+msgid "Twitter Ads"
+msgstr "Twitter hirdetések"
+
+#. module: crm
+#: field:crm.lead.report,creation_day:0
+msgid "Creation Day"
+msgstr "Létrehozás napja"
+
+#. module: crm
+#: view:crm.lead.report:0
+msgid "Planned Revenues"
+msgstr "Tervezett bevételek"
+
+#. module: crm
+#: help:crm.lead.report,deadline_year:0
+msgid "Expected closing year"
+msgstr "Várható befejezés éve"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "e.g. Call for proposal"
+msgstr "pl.: Felhívás egy javaslattételre"
+
+#. module: crm
+#: model:ir.model,name:crm.model_crm_case_stage
+msgid "Stage of case"
+msgstr "Eset szakasza"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:569
+#, python-format
+msgid "Merged opportunity"
+msgstr "Egyesített lehetőség"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Unassigned"
+msgstr "Nem hozzárendelt"
+
+#. module: crm
+#: selection:crm.opportunity2phonecall,action:0
+#: selection:crm.phonecall2phonecall,action:0
+msgid "Schedule a call"
+msgstr "Hívás ütemezése"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Categorization"
+msgstr "Kategorizálás"
+
+#. module: crm
+#: view:crm.phonecall2phonecall:0
+msgid "Log Call"
+msgstr "Telefonhívás naplózása"
+
+#. module: crm
+#: help:sale.config.settings,group_fund_raising:0
+msgid "Allows you to trace and manage your activities for fund raising."
+msgstr ""
+"Lehetővé teszi a tőkebevonás műveletek kezelését és nyomon követését."
+
+#. module: crm
+#: field:crm.meeting,phonecall_id:0
+#: model:ir.model,name:crm.model_crm_phonecall
+msgid "Phonecall"
+msgstr "Telefonhívás"
+
+#. module: crm
+#: view:crm.phonecall.report:0
+msgid "Phone calls that are assigned to one of the sale teams I manage"
+msgstr ""
+"Telefon hívások melyeket az általam kezelt értékesítési csoporthoz iktattak"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "at"
+msgstr "ekkor"
+
+#. module: crm
+#: model:crm.case.stage,name:crm.stage_lead1
+#: selection:crm.case.stage,state:0
+#: view:crm.lead:0
+#: selection:crm.lead,state:0
+#: view:crm.lead.report:0
+msgid "New"
+msgstr "új"
+
+#. module: crm
+#: field:crm.lead,function:0
+msgid "Function"
+msgstr "Funkció"
+
+#. module: crm
+#: field:crm.case.section,note:0
+#: field:crm.phonecall,description:0
+#: field:crm.segmentation,description:0
+msgid "Description"
+msgstr "Leírás"
+
+#. module: crm
+#: field:crm.case.categ,section_id:0
+#: field:crm.case.resource.type,section_id:0
+#: view:crm.case.section:0
+#: field:crm.case.section,name:0
+#: field:crm.lead,section_id:0
+#: view:crm.lead.report:0
+#: field:crm.lead.report,section_id:0
+#: field:crm.lead2opportunity.partner.mass,section_id:0
+#: field:crm.opportunity2phonecall,section_id:0
+#: field:crm.payment.mode,section_id:0
+#: view:crm.phonecall:0
+#: field:crm.phonecall,section_id:0
+#: view:crm.phonecall.report:0
+#: field:crm.phonecall2phonecall,section_id:0
+#: field:res.partner,section_id:0
+msgid "Sales Team"
+msgstr "Értékesítési csapat"
+
+#. module: crm
+#: selection:crm.lead.report,creation_month:0
+#: selection:crm.lead.report,deadline_month:0
+#: selection:crm.phonecall.report,month:0
+msgid "May"
+msgstr "Május"
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.crm_case_channel_action
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to define a new channel.\n"
+"              </p><p>\n"
+"                Use channels to track the soure of your leads and "
+"opportunities. Channels\n"
+"                are mostly used in reporting to analyse sales performance\n"
+"                related to marketing efforts.\n"
+"              </p><p>\n"
+"                Some examples of channels: company website, phone call\n"
+"                campaign, reseller, etc.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Kattintson új csatorna meghatározásához.\n"
+"              </p><p>\n"
+"                Használja a csatornákat az érdeklődések és lehetőségek "
+"forrásainak\n"
+"                nyomon követéséhez. A csatornákat legtöbbször\n"
+"                az értékesítési törekvésekkel összefüggő eladási "
+"teljesítmények elemzésére\n"
+"                használják.\n"
+"              </p><p>\n"
+"                Pár példa a csatornákra: Vállalati weboldal, telefonos\n"
+"                kampány, viszonteladó, stb.\n"
+"              </p>\n"
+"            "
+
+#. module: crm
+#: view:crm.lead:0
+msgid "Internal Notes"
+msgstr "Belső megjegyzések"
+
+#. module: crm
+#: view:crm.lead:0
+msgid "New Opportunities"
+msgstr "Új lehetőségek"
+
+#. module: crm
+#: field:crm.segmentation.line,operator:0
+msgid "Mandatory / Optional"
+msgstr "Kötelező / Nem kötelező"
+
+#. module: crm
+#: field:crm.lead,street:0
+msgid "Street"
+msgstr "Utca"
+
+#. module: crm
+#: field:crm.lead,referred:0
+msgid "Referred By"
+msgstr "Előterjesztette"
+
+#. module: crm
+#: view:crm.phonecall:0
+msgid "Reset to Todo"
+msgstr "Tennivalók visszaállítása"
+
+#. module: crm
+#: field:crm.case.section,working_hours:0
+msgid "Working Hours"
+msgstr "Munkaórák"
+
+#. module: crm
+#: code:addons/crm/crm_lead.py:968
+#: view:crm.lead:0
+#: field:crm.lead2opportunity.partner,partner_id:0
+#: field:crm.lead2opportunity.partner.mass,partner_id:0
+#: field:crm.partner.binding,partner_id:0
+#, python-format
+msgid "Customer"
+msgstr "Vevő"
+
+#. module: crm
+#: selection:crm.lead.report,creation_month:0
+#: selection:crm.lead.report,deadline_month:0
+#: selection:crm.phonecall.report,month:0
+msgid "February"
+msgstr "Február"
+
+#. module: crm
+#: view:crm.phonecall:0
+msgid "Schedule a Meeting"
+msgstr "Találkozó ütemezése"
+
+#. module: crm
+#: model:crm.case.stage,name:crm.stage_lead8
+#: view:crm.lead:0
+msgid "Lost"
+msgstr "Elveszett"
+
+#. module: crm
+#: code:addons/crm/wizard/crm_lead_to_opportunity.py:89
+#, python-format
+msgid "Closed/Cancelled leads cannot be converted into opportunities."
+msgstr ""
+"Lezárt/Visszavont érdeklődéseket nem lehet átalakítani lehetőségekké ."
+
+#. module: crm
+#: view:crm.lead:0
+#: field:crm.lead,country_id:0
+#: view:crm.lead.report:0
+#: field:crm.lead.report,country_id:0
+msgid "Country"
+msgstr "Ország"
+
+#. module: crm
+#: view:crm.lead:0
+#: view:crm.lead2opportunity.partner:0
+#: view:crm.lead2opportunity.partner.mass:0
+#: view:crm.phonecall:0
+msgid "Convert to Opportunity"
+msgstr "Átalakítás lehetőséggé"
+
+#. module: crm
+#: help:crm.phonecall,email_from:0
+msgid "These people will receive email."
+msgstr "Ezek az emberek fogják megkapni az e-mailt."
+
+#. module: crm
+#: selection:crm.lead.report,creation_month:0
+#: selection:crm.lead.report,deadline_month:0
+#: selection:crm.phonecall.report,month:0
+msgid "April"
+msgstr "Április"
+
+#. module: crm
+#: field:crm.case.resource.type,name:0
+msgid "Campaign Name"
+msgstr "Kampány neve"
+
+#. module: crm
+#: view:crm.segmentation:0
+msgid "Profiling"
+msgstr "Profilozás"
+
+#. module: crm
+#: model:ir.model,name:crm.model_crm_phonecall_report
+msgid "Phone calls by user and section"
+msgstr "Telefonhívás felhasználónként és szakaszonként"
+
+#. module: crm
+#: model:crm.case.stage,name:crm.stage_lead5
+msgid "Negotiation"
+msgstr "Tárgyalás"
+
+#. module: crm
+#: model:ir.model,name:crm.model_crm_phonecall2phonecall
+msgid "Phonecall To Phonecall"
+msgstr "Telefonhívás a telefonhíváshoz"
+
+#. module: crm
+#: field:crm.case.stage,sequence:0
+msgid "Sequence"
+msgstr "Sorszám"
+
+#. module: crm
+#: field:crm.segmentation.line,expr_name:0
+msgid "Control Variable"
+msgstr "Változó irányítása"
+
+#. module: crm
+#: model:crm.case.stage,name:crm.stage_lead4
+msgid "Proposition"
+msgstr "Javaslat"
+
+#. module: crm
+#: view:crm.phonecall:0
+#: field:res.partner,phonecall_ids:0
+msgid "Phonecalls"
+msgstr "Telefonhívások"
+
+#. module: crm
+#: view:crm.lead.report:0
+#: view:crm.phonecall.report:0
+#: field:crm.phonecall.report,name:0
+msgid "Year"
+msgstr "Év"
+
+#. module: crm
+#: model:crm.case.resource.type,name:crm.type_lead8
+msgid "Newsletter"
+msgstr "Hírlevél"
+
+#. module: crm
+#: model:mail.message.subtype,name:crm.mt_salesteam_lead_stage
+msgid "Opportunity Stage Changed"
+msgstr "Lehetőség szakasza megváltozott"
+
+#. module: crm
+#: model:ir.actions.act_window,help:crm.crm_lead_stage_act
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Click to set a new stage in your lead/opportunity pipeline.\n"
+"              </p><p>\n"
+"                Stages will allow salespersons to easily track how a "
+"specific\n"
+"                lead or opportunity is positioned in the sales cycle.\n"
+"              </p>\n"
+"            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"                Kattintson új szakasz beállításához az érdeklődés/lehetőség "
+"folyamatában.\n"
+"              </p><p>\n"
+"                Szakaszok lehetővé teszik az értékesítő részére az nyomon\n"
+"                követni, hogyan illeszkedik az érdeklődés vagy a lehetőség\n"
+"                az értékesítési folyamatba.\n"
+"              </p>\n"
+"            "
+
+#~ msgid "Send Mail"
+#~ msgstr "Levél küldése"
+
+#~ msgid "Users"
+#~ msgstr "Felhasználók"
+
+#~ msgid "Leads that are assigned to one of the sale teams I manage, or to me"
+#~ msgstr ""
+#~ "Érdeklődések, melyek az én irányításom alatt lévő csoportnak, vagy nekem "
+#~ "lettek iktatva"
+
+#~ msgid "Lead Description"
+#~ msgstr "Érdeklődés leírása"
+
+#~ msgid "New Leads"
+#~ msgstr "Új érdeklődések"
+
+#~ msgid "Opportunity ${object.name | h})"
+#~ msgstr "Lehetőség ${object.name | h})"
+
+#~ msgid "Opportunities Assigned to Me or My Team(s)"
+#~ msgstr "Lehetőség, mely nekem vagy a csoportomnak lett iktatva"
+
+#~ msgid "Leads Assigned to Me or My Team(s)"
+#~ msgstr "Érdeklődés, mely részemre vagy a csoportomnak lett iktatva"
+
+#~ msgid "Unassigned Leads"
+#~ msgstr "Nem iktatott rdeklődések"
+
+#~ msgid "Unassigned Opportunities"
+#~ msgstr "Nem iktatott lehetőségek"
+
+#~ msgid ""
+#~ "Opportunities that are assigned to either me or one of the sale teams I "
+#~ "manage"
+#~ msgstr ""
+#~ "Lejhetőségek, melyek vagy részemre vagy az egyik általam vezetett csoporthoz "
+#~ "lett iktatva"
+
+#~ msgid "Exp.Closing"
+#~ msgstr "Elv. határidő"
+
+#~ msgid "Create date"
+#~ msgstr "Dátumot létrehoz"
+
+#, python-format
+#~ msgid "<b>%s a call</b> for the <em>%s</em>."
+#~ msgstr "<b>%s egy hívás</b> erre a <em>%s</em>."

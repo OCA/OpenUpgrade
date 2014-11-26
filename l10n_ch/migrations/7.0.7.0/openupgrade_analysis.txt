@@ -1,0 +1,86 @@
+---Fields in module 'l10n_ch'---
+l10n_ch      / res.bank                 / clearing (char)               : DEL 
+l10n_ch      / res.bank                 / code (char)                   : DEL 
+l10n_ch      / res.company              / bvr_background (boolean)      : DEL 
+l10n_ch      / res.company              / bvr_delta_horz (float)        : DEL 
+l10n_ch      / res.company              / bvr_delta_vert (float)        : DEL 
+l10n_ch      / res.company              / bvr_only (boolean)            : DEL 
+l10n_ch      / res.company              / bvr_scan_line_font_size (float): DEL 
+l10n_ch      / res.company              / bvr_scan_line_horz (float)    : DEL 
+l10n_ch      / res.company              / bvr_scan_line_letter_spacing (float): DEL 
+l10n_ch      / res.company              / bvr_scan_line_vert (float)    : DEL 
+l10n_ch      / res.company              / invoice_only (boolean)        : DEL 
+l10n_ch      / res.partner.bank         / bvr_adherent_num (char)       : DEL 
+l10n_ch      / res.partner.bank         / dta_code (char)               : DEL 
+l10n_ch      / res.partner.bank         / my_bank (boolean)             : DEL 
+l10n_ch      / res.partner.bank         / name (False)                  : DEL required: required, req_default: function, mode: modify
+l10n_ch      / res.partner.bank         / post_number (char)            : DEL 
+l10n_ch      / res.partner.bank         / print_account (boolean)       : DEL 
+l10n_ch      / res.partner.bank         / print_bank (boolean)          : DEL 
+---XML records in module 'l10n_ch'---
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_1
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_10
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_13
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_15
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_17
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_2
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_5
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_6
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_9
+DEL account.journal: l10n_ch.bank_euro_journal
+DEL account.journal: l10n_ch.bank_journal
+DEL account.journal: l10n_ch.bilan_journal
+DEL account.journal: l10n_ch.expenses_journal
+DEL account.journal: l10n_ch.petty_cash_journal
+DEL account.tax.code.template: l10n_ch.vat_code_due_24
+DEL account.tax.code.template: l10n_ch.vat_code_due_36
+DEL account.tax.code.template: l10n_ch.vat_code_due_76
+DEL account.tax.code.template: l10n_ch.vat_code_due_tva24
+DEL account.tax.code.template: l10n_ch.vat_code_due_tva36
+DEL account.tax.code.template: l10n_ch.vat_code_due_tva76
+DEL account.tax.code.template: l10n_ch.vat_code_receivable_base_24
+DEL account.tax.code.template: l10n_ch.vat_code_receivable_base_24_50%
+DEL account.tax.code.template: l10n_ch.vat_code_receivable_base_36
+DEL account.tax.code.template: l10n_ch.vat_code_receivable_base_36_50%
+DEL account.tax.code.template: l10n_ch.vat_code_receivable_base_76
+DEL account.tax.code.template: l10n_ch.vat_code_receivable_base_76_50%
+DEL account.tax.code.template: l10n_ch.vat_code_receivable_base_invest24
+DEL account.tax.code.template: l10n_ch.vat_code_receivable_base_invest36
+DEL account.tax.code.template: l10n_ch.vat_code_receivable_base_invest76
+DEL account.tax.template: l10n_ch.vat_24
+DEL account.tax.template: l10n_ch.vat_24_invest
+DEL account.tax.template: l10n_ch.vat_24_purchase
+DEL account.tax.template: l10n_ch.vat_36
+DEL account.tax.template: l10n_ch.vat_36_invest
+DEL account.tax.template: l10n_ch.vat_36_purchase
+DEL account.tax.template: l10n_ch.vat_76
+DEL account.tax.template: l10n_ch.vat_76_invest
+DEL account.tax.template: l10n_ch.vat_76_purchase
+DEL ir.actions.act_window: l10n_ch.action_dta_create
+DEL ir.actions.act_window: l10n_ch.wizard_bvr_import
+DEL ir.actions.report.xml: l10n_ch.report_bvr_invoice_html
+DEL ir.actions.todo: l10n_ch.config_call_account_template_l10n_ch
+DEL ir.header_webkit: l10n_ch.ir_header_webkit_bvr_invoice0
+DEL ir.ui.view: l10n_ch.bvr_import_view
+DEL ir.ui.view: l10n_ch.company_form_view
+DEL ir.ui.view: l10n_ch.dta_create_view
+DEL ir.ui.view: l10n_ch.invoice_form
+DEL ir.ui.view: l10n_ch.invoice_supplier_form6
+DEL ir.ui.view: l10n_ch.invoice_supplier_form8
+DEL ir.ui.view: l10n_ch.l10nch_view_partner_bank_details_list
+DEL ir.ui.view: l10n_ch.l10nch_view_partner_bank_invoice_tree
+DEL ir.ui.view: l10n_ch.l10nch_view_res_bank_tree
+DEL ir.ui.view: l10n_ch.l10nch_view_res_partner_bank_acc_number_hide_frominvoice
+DEL ir.ui.view: l10n_ch.l10nch_view_res_partner_bank_add_groups
+DEL ir.ui.view: l10n_ch.l10nch_view_res_partner_bank_from_invoice
+DEL ir.ui.view: l10n_ch.l10nch_view_res_partner_bank_hide_bank_frominvoice2
+DEL ir.ui.view: l10n_ch.l10nch_view_res_partner_bank_hide_f1
+DEL ir.ui.view: l10n_ch.l10nch_view_res_partner_bank_hide_f2
+DEL ir.ui.view: l10n_ch.view_bank_statement_form
+DEL ir.ui.view: l10n_ch.view_res_bank_form
+DEL ir.values: l10n_ch.action_account_dtr_create_values
+DEL res.partner.bank.type: l10n_ch.bank_dta
+DEL res.partner.bank.type: l10n_ch.bvbank
+DEL res.partner.bank.type: l10n_ch.bvpost
+DEL res.partner.bank.type: l10n_ch.bvrbank
+DEL res.partner.bank.type: l10n_ch.bvrpost

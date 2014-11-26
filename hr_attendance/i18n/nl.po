@@ -1,0 +1,477 @@
+# Dutch translation for openobject-addons
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openobject-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-03-07 08:38+0000\n"
+"PO-Revision-Date: 2012-12-22 21:48+0000\n"
+"Last-Translator: Erwin van der Ploeg (Endian Solutions) <Unknown>\n"
+"Language-Team: Dutch <nl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-03-28 05:40+0000\n"
+"X-Generator: Launchpad (build 16546)\n"
+
+#. module: hr_attendance
+#: model:ir.model,name:hr_attendance.model_hr_attendance_month
+msgid "Print Monthly Attendance Report"
+msgstr "Afdrukken maandelijks aanwezigheidsoverzicht"
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+msgid "Hr Attendance Search"
+msgstr "Pers. aanwezigheid zoeken"
+
+#. module: hr_attendance
+#: field:hr.employee,last_sign:0
+msgid "Last Sign"
+msgstr "Laatste inlog"
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+#: field:hr.employee,state:0
+#: model:ir.model,name:hr_attendance.model_hr_attendance
+msgid "Attendance"
+msgstr "Aanwezigheid"
+
+#. module: hr_attendance
+#. openerp-web
+#: code:addons/hr_attendance/static/src/js/attendance.js:34
+#, python-format
+msgid "Last sign in: %s,<br />%s.<br />Click to sign out."
+msgstr "Laatste inlog: %s,<br />%s.<br />Klik om uit te loggen"
+
+#. module: hr_attendance
+#: constraint:hr.attendance:0
+msgid "Error ! Sign in (resp. Sign out) must follow Sign out (resp. Sign in)"
+msgstr ""
+"Fout! Login (resp. Log uit) moet volgen na uitloggen (resp. Inloggen)"
+
+#. module: hr_attendance
+#: help:hr.action.reason,name:0
+msgid "Specifies the reason for Signing In/Signing Out."
+msgstr "Geeft de reden voor inklokken/uitklokken."
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid ""
+"(*) A positive delay means that the employee worked less than recorded."
+msgstr ""
+"(*) Een positieve vertraging betekent dat de werknemer minder heeft gewerkt "
+"dan geregistreerd."
+
+#. module: hr_attendance
+#: view:hr.attendance.month:0
+msgid "Print Attendance Report Monthly"
+msgstr "Maandelijks afdrukken aanwezigheidsoverzicht"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/report/timesheet.py:120
+#, python-format
+msgid "Attendances by Week"
+msgstr "Aanwezigheid per week"
+
+#. module: hr_attendance
+#: selection:hr.action.reason,action_type:0
+msgid "Sign out"
+msgstr "Uitklokken"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Delay"
+msgstr "Vertraging"
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+msgid "Group By..."
+msgstr "Groepeer op..."
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "October"
+msgstr "Oktober"
+
+#. module: hr_attendance
+#: field:hr.employee,attendance_access:0
+msgid "Attendance Access"
+msgstr "Aanwezigheid toegang"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/hr_attendance.py:154
+#: selection:hr.attendance,action:0
+#: view:hr.employee:0
+#, python-format
+msgid "Sign Out"
+msgstr "Uitklokken"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/wizard/hr_attendance_error.py:49
+#, python-format
+msgid "No records are found for your selection!"
+msgstr "Geen records gevonden binnen uw selectie!"
+
+#. module: hr_attendance
+#: view:hr.attendance.error:0
+#: view:hr.attendance.month:0
+#: view:hr.attendance.week:0
+msgid "Print"
+msgstr "Afdrukken"
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+#: field:hr.attendance,employee_id:0
+#: model:ir.model,name:hr_attendance.model_hr_employee
+msgid "Employee"
+msgstr "Werknemer"
+
+#. module: hr_attendance
+#: field:hr.attendance.month,month:0
+msgid "Month"
+msgstr "Maand"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Date Recorded"
+msgstr "Registratiedatum"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/hr_attendance.py:154
+#: selection:hr.attendance,action:0
+#: view:hr.employee:0
+#, python-format
+msgid "Sign In"
+msgstr "Inklokken"
+
+#. module: hr_attendance
+#: field:hr.attendance.error,init_date:0
+#: field:hr.attendance.week,init_date:0
+msgid "Starting Date"
+msgstr "Startdatum"
+
+#. module: hr_attendance
+#: model:ir.actions.act_window,name:hr_attendance.open_view_attendance
+#: model:ir.ui.menu,name:hr_attendance.menu_hr_attendance
+#: model:ir.ui.menu,name:hr_attendance.menu_open_view_attendance
+msgid "Attendances"
+msgstr "Aanwezigheid"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "March"
+msgstr "Maart"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "August"
+msgstr "Augustus"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/hr_attendance.py:161
+#, python-format
+msgid "Warning"
+msgstr "Waarschuwing"
+
+#. module: hr_attendance
+#: help:hr.config.settings,group_hr_attendance:0
+msgid "Allocates attendance group to all users."
+msgstr "Aanwezigheidsgroep toewijzen aan alle gebruikers."
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+msgid "My Attendance"
+msgstr "Mijn aanwezigheid"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "June"
+msgstr "Juni"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/report/attendance_by_month.py:190
+#, python-format
+msgid "Attendances by Month"
+msgstr "Aanwezigheid per maand"
+
+#. module: hr_attendance
+#: model:ir.actions.act_window,name:hr_attendance.action_hr_attendance_week
+msgid "Attendances By Week"
+msgstr "Aanwezigheid per week"
+
+#. module: hr_attendance
+#: model:ir.model,name:hr_attendance.model_hr_attendance_error
+msgid "Print Error Attendance Report"
+msgstr "Afdrukken aanwezigheidsfouten overzicht"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Total period:"
+msgstr "Totaal periode:"
+
+#. module: hr_attendance
+#: field:hr.action.reason,name:0
+msgid "Reason"
+msgstr "Reden"
+
+#. module: hr_attendance
+#: view:hr.attendance.error:0
+msgid "Print Attendance Report Error"
+msgstr "Fout bij afdruk aanwezigheidsoverzicht"
+
+#. module: hr_attendance
+#: model:ir.actions.act_window,help:hr_attendance.open_view_attendance
+msgid ""
+"The Time Tracking functionality aims to manage employee attendances from "
+"Sign in/Sign out actions. You can also link this feature to an attendance "
+"device using OpenERP's web service features."
+msgstr ""
+"De tijdregistratie functionaliteit beoogt werknemer aanwezigheid te beheren "
+"via aan-/afmeld acties. U kunt deze funktie ook koppelen met een prikklok "
+"apparaat via OpenERP's webservice mogelijkheden."
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+msgid "Today"
+msgstr "Vandaag"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Date Signed"
+msgstr "Dagtekening"
+
+#. module: hr_attendance
+#: field:hr.attendance,name:0
+msgid "Date"
+msgstr "Datum"
+
+#. module: hr_attendance
+#: field:hr.config.settings,group_hr_attendance:0
+msgid "Track attendances for all employees"
+msgstr "Volg de aanwezigheid van alle werknemers."
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "July"
+msgstr "Juli"
+
+#. module: hr_attendance
+#: model:ir.actions.act_window,name:hr_attendance.action_hr_attendance_error
+#: model:ir.actions.report.xml,name:hr_attendance.attendance_error_report
+msgid "Attendance Error Report"
+msgstr "Aanwezigh. foutmeldingen"
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+#: field:hr.attendance,day:0
+msgid "Day"
+msgstr "Dag"
+
+#. module: hr_attendance
+#: selection:hr.employee,state:0
+msgid "Present"
+msgstr "Aanwezig"
+
+#. module: hr_attendance
+#: selection:hr.employee,state:0
+msgid "Absent"
+msgstr "Afwezig"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "February"
+msgstr "Februari"
+
+#. module: hr_attendance
+#: field:hr.attendance,action_desc:0
+#: model:ir.model,name:hr_attendance.model_hr_action_reason
+msgid "Action Reason"
+msgstr "Reden actie"
+
+#. module: hr_attendance
+#: field:hr.attendance.month,year:0
+msgid "Year"
+msgstr "Jaar"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Min Delay"
+msgstr "Minimale vertraging"
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+msgid "Employee attendances"
+msgstr "Aanwezigheid werknemer"
+
+#. module: hr_attendance
+#: view:hr.action.reason:0
+msgid "Define attendance reason"
+msgstr "Aanwezigheidsreden definieren"
+
+#. module: hr_attendance
+#: selection:hr.action.reason,action_type:0
+msgid "Sign in"
+msgstr "Inklokken"
+
+#. module: hr_attendance
+#: view:hr.attendance.error:0
+msgid "Analysis Information"
+msgstr "Analyse-informatie"
+
+#. module: hr_attendance
+#: model:ir.actions.act_window,name:hr_attendance.action_hr_attendance_month
+msgid "Attendances By Month"
+msgstr "Aanwezigheid per maand"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "January"
+msgstr "Januari"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/wizard/hr_attendance_error.py:49
+#, python-format
+msgid "No Data Available !"
+msgstr "Geen gegevens beschikbaar!"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "April"
+msgstr "April"
+
+#. module: hr_attendance
+#: view:hr.attendance.week:0
+msgid "Print Attendance Report Weekly"
+msgstr "Afdrukken wekelijkse  aanwezigheidsrapportage"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Attendance Errors"
+msgstr "Aanwezigheidsfouten"
+
+#. module: hr_attendance
+#: field:hr.attendance,action:0
+#: selection:hr.attendance,action:0
+msgid "Action"
+msgstr "Actie"
+
+#. module: hr_attendance
+#: model:ir.ui.menu,name:hr_attendance.menu_hr_time_tracking
+msgid "Time Tracking"
+msgstr "Tijdregistratie"
+
+#. module: hr_attendance
+#: model:ir.actions.act_window,name:hr_attendance.open_view_attendance_reason
+#: model:ir.ui.menu,name:hr_attendance.menu_open_view_attendance_reason
+msgid "Attendance Reasons"
+msgstr "Aanwezigheidsredenen"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "November"
+msgstr "November"
+
+#. module: hr_attendance
+#: view:hr.attendance.error:0
+msgid "Bellow this delay, the error is considered to be voluntary"
+msgstr ""
+"Onder deze vertraging wordt de fout verondersteld vrijwillig te zijn."
+
+#. module: hr_attendance
+#: field:hr.attendance.error,max_delay:0
+msgid "Max. Delay (Min)"
+msgstr "Maximale vertraging (min)"
+
+#. module: hr_attendance
+#: field:hr.attendance.error,end_date:0
+#: field:hr.attendance.week,end_date:0
+msgid "Ending Date"
+msgstr "Einddatum"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "September"
+msgstr "September"
+
+#. module: hr_attendance
+#: view:hr.action.reason:0
+msgid "Attendance reasons"
+msgstr "Aanwezigheidsredenen"
+
+#. module: hr_attendance
+#: model:ir.model,name:hr_attendance.model_hr_attendance_week
+msgid "Print Week Attendance Report"
+msgstr "Afdrukken weekaanwezigheid overzicht"
+
+#. module: hr_attendance
+#: model:ir.model,name:hr_attendance.model_hr_config_settings
+msgid "hr.config.settings"
+msgstr "hr.config.settings"
+
+#. module: hr_attendance
+#. openerp-web
+#: code:addons/hr_attendance/static/src/js/attendance.js:36
+#, python-format
+msgid "Click to Sign In at %s."
+msgstr "Klik km in te loggen als %s."
+
+#. module: hr_attendance
+#: field:hr.action.reason,action_type:0
+msgid "Action Type"
+msgstr "Actiesoort"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "May"
+msgstr "Mei"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/hr_attendance.py:161
+#, python-format
+msgid ""
+"You tried to %s with a date anterior to another event !\n"
+"Try to contact the HR Manager to correct attendances."
+msgstr ""
+"U hebt geprobeerd om% s met een datum voorafgaand aan een ander evenement!\n"
+"Neem contact op met de HR-manager om de aanwezigheid te corrigeren."
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "December"
+msgstr "December"
+
+#. module: hr_attendance
+#: view:hr.attendance.error:0
+#: view:hr.attendance.month:0
+#: view:hr.attendance.week:0
+msgid "Cancel"
+msgstr "Annuleren"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Operation"
+msgstr "Handeling"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid ""
+"(*) A negative delay means that the employee worked more than encoded."
+msgstr ""
+"(*) A negatieve vertraging betekent dat de werknemer langer werkte dan "
+"vastgelegd."
+
+#. module: hr_attendance
+#: view:hr.attendance.error:0
+#: view:hr.attendance.month:0
+#: view:hr.attendance.week:0
+msgid "or"
+msgstr "of"
+
+#. module: hr_attendance
+#: help:hr.attendance,action_desc:0
+msgid ""
+"Specifies the reason for Signing In/Signing Out in case of extra hours."
+msgstr "Geeft de reden voor in-/uitklokken ingeval van overuren."

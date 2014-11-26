@@ -1,0 +1,52 @@
+---Fields in module 'idea'---
+idea         / idea.category            / child_ids (one2many)          : DEL relation: idea.category
+idea         / idea.category            / parent_id (many2one)          : DEL relation: idea.category
+idea         / idea.category            / summary (text)                : DEL 
+idea         / idea.category            / visibility (boolean)          : DEL 
+idea         / idea.idea                / category_id (many2one)        : DEL relation: idea.category, required: required
+idea         / idea.idea                / category_ids (many2many)      : NEW relation: idea.category
+idea         / idea.idea                / comment_ids (one2many)        : DEL relation: idea.comment
+idea         / idea.idea                / create_uid (many2one)         : NEW relation: res.users, required: required
+idea         / idea.idea                / created_date (datetime)       : DEL 
+idea         / idea.idea                / message_ids (one2many)        : NEW relation: mail.message
+idea         / idea.idea                / open_date (datetime)          : DEL 
+idea         / idea.idea                / stat_vote_ids (one2many)      : DEL relation: idea.vote.stat
+idea         / idea.idea                / user_id (many2one)            : DEL relation: res.users, required: required, req_default: function
+idea         / idea.idea                / visibility (boolean)          : DEL 
+idea         / idea.idea                / vote_ids (one2many)           : DEL relation: idea.vote
+idea         / idea.idea                / vote_limit (integer)          : DEL 
+---XML records in module 'idea'---
+DEL ir.actions.act_window: idea.action_idea_category_tree
+DEL ir.actions.act_window: idea.action_idea_idea_categ_open
+DEL ir.actions.act_window: idea.action_idea_idea_open
+DEL ir.actions.act_window: idea.action_idea_post_vote
+DEL ir.actions.act_window: idea.action_idea_select
+DEL ir.actions.act_window: idea.action_idea_vote
+DEL ir.actions.act_window: idea.action_idea_vote_stat
+DEL ir.actions.act_window: idea.action_report_vote_all
+DEL ir.model.access: idea.access_idea_comment_user
+DEL ir.model.access: idea.access_idea_vote_stat_user
+DEL ir.model.access: idea.access_idea_vote_user
+DEL ir.model.access: idea.access_report_vote_manager
+NEW ir.ui.menu: base.menu_tools
+DEL ir.ui.menu: base.menu_lunch_reporting
+DEL ir.ui.menu: idea.menu_give_vote
+DEL ir.ui.menu: idea.menu_idea_category_tree
+DEL ir.ui.menu: idea.menu_idea_reporting
+DEL ir.ui.menu: idea.menu_idea_vote
+DEL ir.ui.menu: idea.menu_idea_vote_stat
+DEL ir.ui.menu: idea.menu_ideas1
+DEL ir.ui.menu: idea.menu_report_vote_all
+DEL ir.ui.view: idea.view_idea_post_vote
+DEL ir.ui.view: idea.view_idea_select
+DEL ir.ui.view: idea.view_idea_stat_form
+DEL ir.ui.view: idea.view_idea_vote_form
+DEL ir.ui.view: idea.view_idea_vote_search
+DEL ir.ui.view: idea.view_idea_vote_stat_form
+DEL ir.ui.view: idea.view_idea_vote_stat_graph
+DEL ir.ui.view: idea.view_idea_vote_stat_tree
+DEL ir.ui.view: idea.view_idea_vote_tree
+DEL ir.ui.view: idea.view_report_vote_search
+DEL ir.ui.view: idea.view_report_vote_tree
+DEL ir.values: idea.action_idea_idea_categ_open_val
+DEL res.groups: base.group_tool_manager

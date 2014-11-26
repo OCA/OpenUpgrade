@@ -1,0 +1,40 @@
+********************************************************************************
+1/ Change in state selection of 'hr_expense_expense.state'
+
+In 6.1 : 
+- 'invoiced' state with associated activity 'act_invoice' (kind : sublow 'account.wkf')
+- 'paid' state that with associated activity 'act_paid' that is flagged with 'flow_stop'.
+
+In 7.0 : 
+- 'done' state with associated activity 'act_done'. (kind : function)
+- no 'flow_stop' in wkf_expenses.
+
+Script migration will assume that : 
+- 'invoiced' is now 'done' ; 
+- 'paid' is obsoleted and changed to 'done' ; 
+
+pre-migration script will do : 
+- backup the old state, using a legacy field 'state' ; 
+- rename 'act_invoice' to 'act_paid' ; 
+
+post-migration script will do : 
+- in 'hr_expense_expense' change 'invoiced' / 'paid' to 'done' ; 
+- in wkf_workitem : change items that are in state 'paid', setting act_id to act_done. (before act_paid) ; 
+- in wkf_workitem : change items that are in state 'invoiced', setting sublow to None and state to complete (old was running) ; (because there is no more subflow association) ; 
+- in wkf_instance : change instances that are complete to active, because there is no more flow_stop activity ; 
+
+********************************************************************************
+2/ in 'hr_expense_expense' 'account_move_id' was not filled in V6.1
+
+In 6.1, the account_move_id is present in model but unused ; 
+In 7.0, the account_move_id is present, and filled from 'done' state.
+
+Conclusion : it's like a "NEW field".
+
+So there is a bug after migration, by clicking on the button 'Open Accounting Entries' for 'done' expenses. (old 'invoiced' and 'paid').
+
+To fix that, script migration will get the move_id of the account_invoice of the hr_expense for expense in 'paid' state.
+The problem persists for old 'invoiced' expense because in this state there is no account_move created.
+
+********************************************************************************
+3/ expense has now a 'voucher_id' field, but this field seems to be unused in 'hr_expense' module. 

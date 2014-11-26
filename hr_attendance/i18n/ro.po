@@ -1,0 +1,481 @@
+# Romanian translation for openobject-addons
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openobject-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-03-07 08:38+0000\n"
+"PO-Revision-Date: 2013-01-24 18:09+0000\n"
+"Last-Translator: Fekete Mihai <mihai@erpsystems.ro>\n"
+"Language-Team: Romanian <ro@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-03-28 05:40+0000\n"
+"X-Generator: Launchpad (build 16546)\n"
+
+#. module: hr_attendance
+#: model:ir.model,name:hr_attendance.model_hr_attendance_month
+msgid "Print Monthly Attendance Report"
+msgstr "Tipariti Raportul lunar de prezenta"
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+msgid "Hr Attendance Search"
+msgstr "Cautare Prezenta RU"
+
+#. module: hr_attendance
+#: field:hr.employee,last_sign:0
+msgid "Last Sign"
+msgstr "Ultima Inregistrare"
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+#: field:hr.employee,state:0
+#: model:ir.model,name:hr_attendance.model_hr_attendance
+msgid "Attendance"
+msgstr "Prezenta"
+
+#. module: hr_attendance
+#. openerp-web
+#: code:addons/hr_attendance/static/src/js/attendance.js:34
+#, python-format
+msgid "Last sign in: %s,<br />%s.<br />Click to sign out."
+msgstr "Ultima inregistrare: %s,<br />%s.<br />Click pentru iesire."
+
+#. module: hr_attendance
+#: constraint:hr.attendance:0
+msgid "Error ! Sign in (resp. Sign out) must follow Sign out (resp. Sign in)"
+msgstr ""
+"Eroare ! Semnarea la intrare (resp. Semnarea la iesire) trebuie sa urmeze "
+"Semnarea la iesire (resp. Semnarea la intrare)"
+
+#. module: hr_attendance
+#: help:hr.action.reason,name:0
+msgid "Specifies the reason for Signing In/Signing Out."
+msgstr "Specifica motivul pentru Intrare/Ieșire"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid ""
+"(*) A positive delay means that the employee worked less than recorded."
+msgstr ""
+"(*) O intarziere pozitiva inseamna ca salariatul a lucrat mai putin decat s-"
+"a inregistrat."
+
+#. module: hr_attendance
+#: view:hr.attendance.month:0
+msgid "Print Attendance Report Monthly"
+msgstr "Tipariti Raportul Lunar de Prezenta"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/report/timesheet.py:120
+#, python-format
+msgid "Attendances by Week"
+msgstr "Prezenta pe Saptamani"
+
+#. module: hr_attendance
+#: selection:hr.action.reason,action_type:0
+msgid "Sign out"
+msgstr "Iesire"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Delay"
+msgstr "Intarziere"
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+msgid "Group By..."
+msgstr "Grupeaza dupa..."
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "October"
+msgstr "Octombrie"
+
+#. module: hr_attendance
+#: field:hr.employee,attendance_access:0
+msgid "Attendance Access"
+msgstr "Acces Prezenta"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/hr_attendance.py:154
+#: selection:hr.attendance,action:0
+#: view:hr.employee:0
+#, python-format
+msgid "Sign Out"
+msgstr "Iesire"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/wizard/hr_attendance_error.py:49
+#, python-format
+msgid "No records are found for your selection!"
+msgstr "Nu au fost gasite inregistrari pentru selectia dumneavoastra!"
+
+#. module: hr_attendance
+#: view:hr.attendance.error:0
+#: view:hr.attendance.month:0
+#: view:hr.attendance.week:0
+msgid "Print"
+msgstr "Tipariti"
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+#: field:hr.attendance,employee_id:0
+#: model:ir.model,name:hr_attendance.model_hr_employee
+msgid "Employee"
+msgstr "Salariat"
+
+#. module: hr_attendance
+#: field:hr.attendance.month,month:0
+msgid "Month"
+msgstr "Luna"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Date Recorded"
+msgstr "Data inregistrata"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/hr_attendance.py:154
+#: selection:hr.attendance,action:0
+#: view:hr.employee:0
+#, python-format
+msgid "Sign In"
+msgstr "Intrare"
+
+#. module: hr_attendance
+#: field:hr.attendance.error,init_date:0
+#: field:hr.attendance.week,init_date:0
+msgid "Starting Date"
+msgstr "Data de inceput"
+
+#. module: hr_attendance
+#: model:ir.actions.act_window,name:hr_attendance.open_view_attendance
+#: model:ir.ui.menu,name:hr_attendance.menu_hr_attendance
+#: model:ir.ui.menu,name:hr_attendance.menu_open_view_attendance
+msgid "Attendances"
+msgstr "Prezenta"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "March"
+msgstr "Martie"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "August"
+msgstr "August"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/hr_attendance.py:161
+#, python-format
+msgid "Warning"
+msgstr "Atentionare"
+
+#. module: hr_attendance
+#: help:hr.config.settings,group_hr_attendance:0
+msgid "Allocates attendance group to all users."
+msgstr "Aloca grupuri de prezenta tuturor utilizatorilor."
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+msgid "My Attendance"
+msgstr "Prezentele mele"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "June"
+msgstr "Iunie"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/report/attendance_by_month.py:190
+#, python-format
+msgid "Attendances by Month"
+msgstr "Prezenta pe Luni"
+
+#. module: hr_attendance
+#: model:ir.actions.act_window,name:hr_attendance.action_hr_attendance_week
+msgid "Attendances By Week"
+msgstr "Prezenta dupa Saptamana"
+
+#. module: hr_attendance
+#: model:ir.model,name:hr_attendance.model_hr_attendance_error
+msgid "Print Error Attendance Report"
+msgstr "Tipariti Raportul cu erorile de prezenta"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Total period:"
+msgstr "Perioada totala:"
+
+#. module: hr_attendance
+#: field:hr.action.reason,name:0
+msgid "Reason"
+msgstr "Motivul"
+
+#. module: hr_attendance
+#: view:hr.attendance.error:0
+msgid "Print Attendance Report Error"
+msgstr "Imprima Eroarea Raportului de Prezenta"
+
+#. module: hr_attendance
+#: model:ir.actions.act_window,help:hr_attendance.open_view_attendance
+msgid ""
+"The Time Tracking functionality aims to manage employee attendances from "
+"Sign in/Sign out actions. You can also link this feature to an attendance "
+"device using OpenERP's web service features."
+msgstr ""
+"Functionalitatea Tineti evidenta Orelor are drept scop gestionarea prezentei "
+"angajatilor din actiunile Semneza de intrare/Semneaza de iesire. De "
+"asemenea, puteti lega aceasta caracteristica de un dispozitiv de prezenta "
+"folosind caracteristicile serviciului web OpenERP."
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+msgid "Today"
+msgstr "Astazi"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Date Signed"
+msgstr "Data pontajului"
+
+#. module: hr_attendance
+#: field:hr.attendance,name:0
+msgid "Date"
+msgstr "Data"
+
+#. module: hr_attendance
+#: field:hr.config.settings,group_hr_attendance:0
+msgid "Track attendances for all employees"
+msgstr "Urmareste prezenta pentru toti angajatii"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "July"
+msgstr "Iulie"
+
+#. module: hr_attendance
+#: model:ir.actions.act_window,name:hr_attendance.action_hr_attendance_error
+#: model:ir.actions.report.xml,name:hr_attendance.attendance_error_report
+msgid "Attendance Error Report"
+msgstr "Raport Eroare de pontaj"
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+#: field:hr.attendance,day:0
+msgid "Day"
+msgstr "Zi"
+
+#. module: hr_attendance
+#: selection:hr.employee,state:0
+msgid "Present"
+msgstr "Prezent"
+
+#. module: hr_attendance
+#: selection:hr.employee,state:0
+msgid "Absent"
+msgstr "Absent"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "February"
+msgstr "Februarie"
+
+#. module: hr_attendance
+#: field:hr.attendance,action_desc:0
+#: model:ir.model,name:hr_attendance.model_hr_action_reason
+msgid "Action Reason"
+msgstr "Motivul actiunii"
+
+#. module: hr_attendance
+#: field:hr.attendance.month,year:0
+msgid "Year"
+msgstr "An"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Min Delay"
+msgstr "Min intarziere"
+
+#. module: hr_attendance
+#: view:hr.attendance:0
+msgid "Employee attendances"
+msgstr "Prezenta salariatilor"
+
+#. module: hr_attendance
+#: view:hr.action.reason:0
+msgid "Define attendance reason"
+msgstr "Definiti motivul prezentei"
+
+#. module: hr_attendance
+#: selection:hr.action.reason,action_type:0
+msgid "Sign in"
+msgstr "Intrare"
+
+#. module: hr_attendance
+#: view:hr.attendance.error:0
+msgid "Analysis Information"
+msgstr "Informatii analiza"
+
+#. module: hr_attendance
+#: model:ir.actions.act_window,name:hr_attendance.action_hr_attendance_month
+msgid "Attendances By Month"
+msgstr "Prezenta dupa Luna"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "January"
+msgstr "Ianuarie"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/wizard/hr_attendance_error.py:49
+#, python-format
+msgid "No Data Available !"
+msgstr "Nu exista Date Disponibile !"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "April"
+msgstr "Aprilie"
+
+#. module: hr_attendance
+#: view:hr.attendance.week:0
+msgid "Print Attendance Report Weekly"
+msgstr "Tipariti Saptamanal Raportul de Prezenta"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Attendance Errors"
+msgstr "Erori prezenta"
+
+#. module: hr_attendance
+#: field:hr.attendance,action:0
+#: selection:hr.attendance,action:0
+msgid "Action"
+msgstr "Actiune"
+
+#. module: hr_attendance
+#: model:ir.ui.menu,name:hr_attendance.menu_hr_time_tracking
+msgid "Time Tracking"
+msgstr "Tineti evidenta orelor"
+
+#. module: hr_attendance
+#: model:ir.actions.act_window,name:hr_attendance.open_view_attendance_reason
+#: model:ir.ui.menu,name:hr_attendance.menu_open_view_attendance_reason
+msgid "Attendance Reasons"
+msgstr "Motive Prezenta"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "November"
+msgstr "Noiembrie"
+
+#. module: hr_attendance
+#: view:hr.attendance.error:0
+msgid "Bellow this delay, the error is considered to be voluntary"
+msgstr ""
+"In afara de aceasta intarziere, eroarea este considerata ca fiind voluntara"
+
+#. module: hr_attendance
+#: field:hr.attendance.error,max_delay:0
+msgid "Max. Delay (Min)"
+msgstr "Intarzierea max. (Min)"
+
+#. module: hr_attendance
+#: field:hr.attendance.error,end_date:0
+#: field:hr.attendance.week,end_date:0
+msgid "Ending Date"
+msgstr "Data de sfarsit"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "September"
+msgstr "Septembrie"
+
+#. module: hr_attendance
+#: view:hr.action.reason:0
+msgid "Attendance reasons"
+msgstr "Motive prezenta"
+
+#. module: hr_attendance
+#: model:ir.model,name:hr_attendance.model_hr_attendance_week
+msgid "Print Week Attendance Report"
+msgstr "Tipariti Raportul Saptamanal de Prezenta"
+
+#. module: hr_attendance
+#: model:ir.model,name:hr_attendance.model_hr_config_settings
+msgid "hr.config.settings"
+msgstr "ru.config.setari"
+
+#. module: hr_attendance
+#. openerp-web
+#: code:addons/hr_attendance/static/src/js/attendance.js:36
+#, python-format
+msgid "Click to Sign In at %s."
+msgstr "Faceti click pentru a Semna de intrare la %s."
+
+#. module: hr_attendance
+#: field:hr.action.reason,action_type:0
+msgid "Action Type"
+msgstr "Tipul actiunii"
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "May"
+msgstr "Mai"
+
+#. module: hr_attendance
+#: code:addons/hr_attendance/hr_attendance.py:161
+#, python-format
+msgid ""
+"You tried to %s with a date anterior to another event !\n"
+"Try to contact the HR Manager to correct attendances."
+msgstr ""
+"Ati incercat sa %s cu o data anterioara unui alt eveniment !\n"
+"Incercati sa contactati Managerul Resurse Umane pentru a corecta prezenta."
+
+#. module: hr_attendance
+#: selection:hr.attendance.month,month:0
+msgid "December"
+msgstr "Decembrie"
+
+#. module: hr_attendance
+#: view:hr.attendance.error:0
+#: view:hr.attendance.month:0
+#: view:hr.attendance.week:0
+msgid "Cancel"
+msgstr "Anuleaza"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid "Operation"
+msgstr "Operatiune"
+
+#. module: hr_attendance
+#: report:report.hr.timesheet.attendance.error:0
+msgid ""
+"(*) A negative delay means that the employee worked more than encoded."
+msgstr ""
+"(*) O intarziere negativa inseamna ca angajatul a lucrat mai mult decat a "
+"codat."
+
+#. module: hr_attendance
+#: view:hr.attendance.error:0
+#: view:hr.attendance.month:0
+#: view:hr.attendance.week:0
+msgid "or"
+msgstr "sau"
+
+#. module: hr_attendance
+#: help:hr.attendance,action_desc:0
+msgid ""
+"Specifies the reason for Signing In/Signing Out in case of extra hours."
+msgstr ""
+"Specifica motivul pentru inregistrarea Intrarii/Iesirii in cazul orelor "
+"suplimentare."
