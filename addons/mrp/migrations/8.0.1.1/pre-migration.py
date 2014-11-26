@@ -38,6 +38,11 @@ table_spec = [
     ('mrp_bom_property_rel', 'mrp_bom_mrp_property_rel')
 ]
 
+xmlid_renames = [
+    ('procurement.access_mrp_property', 'mrp.access_mrp_property'),
+    ('procurement.access_mrp_property_group', 'mrp.access_mrp_property_group'),
+]
+
 
 def drop_report_mrp_view(cr):
     openupgrade.logged_query(cr, "DROP VIEW report_mrp_inout")
@@ -67,3 +72,4 @@ def migrate(cr, version):
     drop_report_mrp_view(cr)
     openupgrade.rename_tables(cr, table_spec)
     check_production_state(cr)
+    openupgrade.rename_xmlids(cr, xmlid_renames)
