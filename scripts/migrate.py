@@ -79,11 +79,15 @@ migrations = {
     },
     '7.0': {
         'addons': {
-            'addons': 'lp:openupgrade-addons/7.0',
-            'web': {'url': 'lp:openerp-web/7.0', 'addons_dir': 'addons'},
+            'addons': {
+                'type': 'link',
+                'url': os.path.join('server', 'addons'),
+            },
         },
         'server': {
-            'url': 'lp:openupgrade-server/7.0',
+            'type': 'git',
+            'url': 'git://github.com/OpenUpgrade/OpenUpgrade.git',
+            'branch': '7.0',
             'addons_dir': os.path.join('openerp', 'addons'),
             'root_dir': os.path.join(''),
             'cmd': 'openerp-server --update=all --database=%(db)s '
@@ -93,11 +97,15 @@ migrations = {
     },
     '6.1': {
         'addons': {
-            'addons': 'lp:openupgrade-addons/6.1',
-            'web': {'url': 'lp:openerp-web/6.1', 'addons_dir': 'addons'},
+            'addons': {
+                'type': 'link',
+                'url': os.path.join('server', 'addons'),
+            },
         },
         'server': {
-            'url': 'lp:openupgrade-server/6.1',
+            'type': 'git',
+            'url': 'git://github.com/OpenUpgrade/OpenUpgrade.git',
+            'branch': '6.1',
             'addons_dir': os.path.join('openerp', 'addons'),
             'root_dir': os.path.join(''),
             'cmd': 'openerp-server --update=all --database=%(db)s '
@@ -107,10 +115,15 @@ migrations = {
     },
     '6.0': {
         'addons': {
-            'addons': 'lp:openupgrade-addons/6.0',
+            'addons': {
+                'type': 'link',
+                'url': os.path.join('server', 'addons'),
+            },
         },
         'server': {
-            'url': 'lp:openupgrade-server/6.0',
+            'type': 'git',
+            'url': 'git://github.com/OpenUpgrade/OpenUpgrade.git',
+            'branch': '6.0',
             'addons_dir': os.path.join('bin', 'addons'),
             'root_dir': os.path.join('bin'),
             'cmd': 'bin/openerp-server.py --update=all --database=%(db)s '
