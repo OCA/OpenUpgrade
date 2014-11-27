@@ -11,8 +11,7 @@ try:
     import bzrlib.plugin
     import bzrlib.builtins
 except ImportError:
-    print ('couldn\'t import bzrlib. You won\'t be able to run migrations '
-           '<= 7.0!')
+    pass
 
 
 def copy_database(conn_parms):
