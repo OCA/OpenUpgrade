@@ -100,8 +100,6 @@ def import_crm_meeting(cr):
             openupgrade.get_legacy_name('crm_meeting_id'),
         )
     )
-    openupgrade_80.set_message_last_post(
-        cr, SUPERUSER_ID, RegistryManager.get(cr.dbname), ['calendar.event'])
 
 
 def recompute_date_fields(cr):
@@ -193,3 +191,5 @@ def migrate(cr, version):
         set state='needsAction' where state in ('needs-action')''')
     # load modified noupdate data
     openupgrade.load_data(cr, 'calendar', 'migrations/8.0.1.0/data.xml')
+    openupgrade_80.set_message_last_post(
+        cr, SUPERUSER_ID, pool, ['calendar.event'])
