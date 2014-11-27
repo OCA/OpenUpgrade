@@ -57,8 +57,8 @@ def import_crm_meeting(cr):
         day, week_list, byday, user_id, active,
         -- those are actually different
         date, date, date, date,
-        date + interval '1 hour' * duration,
-        date + interval '1 hour' * duration, end_date,
+        coalesce(date + interval '1 hour' * duration, date),
+        coalesce(date + interval '1 hour' * duration, date), end_date,
         select1
         from crm_meeting''' % (
             openupgrade.get_legacy_name('crm_meeting_id'),
