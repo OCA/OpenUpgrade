@@ -57,8 +57,17 @@ def remove_account_report_company_record(cr, pool):
         pass
 
 
+def ensure_admin_email(cr, pool):
+    """During migration, there are writes via the ORM to tracking
+    fields. This breaks if admin neither has a valid alias nor an email"""
+    admin = pool['res.users'].browse(cr, SUPERUSER_ID, SUPERUSER_ID)
+    if not admin.email and not (admin.alias_name and admin.alias_domain):
+        admin.write({'email': 'info@example.com'})
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     check_ir_actions_server_state(cr, pool)
     remove_account_report_company_record(cr, pool)
+    ensure_admin_email(cr, pool)
