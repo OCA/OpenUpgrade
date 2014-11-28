@@ -67,3 +67,5 @@ def migrate(cr, version):
     mail_mail_to_mail_message_migration(cr, uid, pool)
     openupgrade_80.set_message_last_post(cr, uid, pool, ['res.partner', 'mail.group'])
     openupgrade.set_defaults(cr, pool, default_spec, force=False)
+    openupgrade_80.update_aliases(cr, pool, 'mail.group', True)
+    openupgrade_80.update_aliases(cr, pool, 'res.users', True)
