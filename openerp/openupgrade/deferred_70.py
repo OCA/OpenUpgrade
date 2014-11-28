@@ -39,12 +39,15 @@ def sync_commercial_fields(cr, pool):
     in the new partner model.
     """
     partner_obj = pool.get('res.partner')
+    partner_ids = partner_obj.search(
+        cr, SUPERUSER_ID,
+        [('parent_id', '!=', False)],
+        context={'active_test': False})
+    logger.info(
+        "Syncing commercial fields between %s partners",
+        len(partner_ids))
     for partner in partner_obj.browse(
-            cr, SUPERUSER_ID,
-            partner_obj.search(
-                cr, SUPERUSER_ID,
-                [('parent_id', '!=', False)],
-                context={'active_test': False})):
+            cr, SUPERUSER_ID, partner_ids):
         partner_obj._commercial_sync_from_company(
             cr, SUPERUSER_ID, partner)
 
