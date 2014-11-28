@@ -61,7 +61,9 @@ def ensure_admin_email(cr, pool):
     """During migration, there are writes via the ORM to tracking
     fields. This breaks if admin neither has a valid alias nor an email"""
     admin = pool['res.users'].browse(cr, SUPERUSER_ID, SUPERUSER_ID)
-    if not admin.email and not (admin.alias_name and admin.alias_domain):
+    if not admin.email and not pool['ir.config_parameter'].get_param(
+            cr, SUPERUSER_ID, 'mail.catchall.domain'):
+        # that's the default value for new installations
         admin.write({'email': 'info@example.com'})
 
 
