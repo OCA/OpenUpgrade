@@ -39,18 +39,14 @@ def sync_commercial_fields(cr, pool):
     in the new partner model.
     """
     partner_obj = pool.get('res.partner')
-    partner_ids = partner_obj.search(
-        cr, SUPERUSER_ID,
-        [], 0, False, False, {'active_test': False})
-    logger.info("Syncing commercial fields between %s partners",
-                len(partner_ids))
-    for partner_id in partner_ids:
-        vals = partner_obj.read(
-            cr, SUPERUSER_ID, partner_id, [], load='_classic_write')
-        partner_obj._fields_sync(
+    for partner in partner_obj.browse(
             cr, SUPERUSER_ID,
-            partner_obj.browse(cr, SUPERUSER_ID, partner_id),
-            vals)
+            partner_obj.search(
+                cr, SUPERUSER_ID,
+                [('parent_id', '!=', False)],
+                context={'active_test': False})):
+        partner_obj._commercial_sync_from_company(
+            cr, SUPERUSER_ID, partner)
 
 
 def migrate_deferred(cr, pool):
