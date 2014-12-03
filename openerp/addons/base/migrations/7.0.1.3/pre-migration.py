@@ -34,7 +34,7 @@ obsolete_modules = (
     'fetchmail_crm',
     'fetchmail_hr_recruitment',
 )
- 
+
 module_namespec = [
     # This is a list of tuples (old module name, new module name)
     ('account_coda', 'l10n_be_coda'),
@@ -49,6 +49,8 @@ module_namespec = [
     ('wiki_health_safety_manual', 'document_page_health_safety_manual'),
     ('wiki_procedure', 'document_page_procedure'),
     ('wiki_work_instructions', 'document_page_work_instructions'),
+    # l10n-spain
+    ('nan_account_invoice_sequence', 'l10n_es_account_invoice_sequence'),
 ]
 
 column_renames = {
@@ -57,7 +59,7 @@ column_renames = {
     'res_users': [
         ('date', 'login_date'),
         ('user_email', None),
-        ], 
+        ],
     'res_company': [
         ('logo', None),
     ]
@@ -100,7 +102,7 @@ def update_base_sql(cr):
     Inject snippets of openerp/addons/base/base.sql, needed
     to upgrade the base module.
 
-    Also check existing inheritance of ir_act_client on ir_actions.    
+    Also check existing inheritance of ir_act_client on ir_actions.
     For ir_act_client to inherit ir_actions at table level
     is not new in 7.0, but this was not taken care of properly in
     OpenUpgrade 6.1 for a long time, so we do it again here.
@@ -132,7 +134,7 @@ CREATE TABLE ir_model_relation (
     module integer NOT NULL references ir_module_module on delete restrict,
     model integer NOT NULL references ir_model on delete restrict,
     name character varying(128) NOT NULL
-);  
+);
 """)
 
     cr.execute(
