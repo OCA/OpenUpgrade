@@ -375,11 +375,13 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
             previously_processed = len(processed_modules)
             processed_modules += load_marked_modules(cr, graph,
                 ['installed', 'to upgrade', 'to remove'],
-                force, status, report, loaded_modules, update_module)
+                force, status, report, loaded_modules, update_module,
+                registry)
             if update_module:
                 processed_modules += load_marked_modules(cr, graph,
                     ['to install'], force, status, report,
-                    loaded_modules, update_module)
+                    loaded_modules, update_module,
+                    registry)
 
         # load custom models
         cr.execute('select model from ir_model where state=%s', ('manual',))
