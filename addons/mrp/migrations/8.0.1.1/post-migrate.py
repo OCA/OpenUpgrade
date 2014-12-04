@@ -117,7 +117,8 @@ def migrate_bom_lines(cr, pool, uid):
         # attribute_value_ids - new in 8.0
         # TODO: property_ids
     # Remove unneeded items
-    cr.execute("DELETE FROM mrp_bom WHERE id in (%s)" % ','.join(ids))
+    if ids:
+        cr.execute("DELETE FROM mrp_bom WHERE id in (%s)" % ','.join(ids))
 
 
 def fix_domains(cr, pool, uid):
