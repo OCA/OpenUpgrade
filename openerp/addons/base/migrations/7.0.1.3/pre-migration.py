@@ -63,7 +63,9 @@ column_renames = {
     ]
 }
 
-xmlid_renames = []
+xmlid_renames = [
+    ('base.VEB', 'base.VUB'),
+]
 model_renames = [
     ('ir.actions.url', 'ir.actions.act_url'),
     ]
