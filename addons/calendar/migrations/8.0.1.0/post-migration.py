@@ -74,6 +74,11 @@ def import_crm_meeting(cr):
             openupgrade.get_legacy_name('crm_meeting_id'),
         )
     )
+    # there's a chance we still have the old constraint because
+    # the values we update now caused the new constrained to be invalid
+    cr.execute(
+        '''alter table meeting_category_rel
+        drop constraint meeting_category_rel_event_id_fkey''')
     cr.execute(
         '''update meeting_category_rel
         set event_id=calendar_event.id
@@ -81,6 +86,13 @@ def import_crm_meeting(cr):
             openupgrade.get_legacy_name('crm_meeting_id'),
         )
     )
+    # recreate the constraint as odoo would do it
+    cr.execute(
+        '''alter table meeting_category_rel
+        add constraint meeting_category_rel_event_id_fkey
+        foreign key (event_id) references calendar_event(id)
+        on delete cascade''')
+    # attendees now refer to their event in a m2o field
     cr.execute(
         '''update calendar_attendee
         set event_id=calendar_event.id
