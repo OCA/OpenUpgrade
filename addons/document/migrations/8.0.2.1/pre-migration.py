@@ -1,4 +1,4 @@
- # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 # This program is free software: you can redistribute it and/or modify
@@ -16,6 +16,7 @@
 #
 ##############################################################################
 from openerp.openupgrade import openupgrade
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
