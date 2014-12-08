@@ -1,0 +1,6 @@
+- alarms can now only be emails or notifications, other columns have been moved to their respective legacy fields
+- alarms of type 'audio' and 'procedure' have been mapped to type 'notification' (was 'display' in 7.0)
+- alarms can only occur before the start of an event now
+- alarms are set up for all attendees of an event
+- repetition rules for events can't have exclusion dates and rules any more
+- events are not connected to organizers any more
