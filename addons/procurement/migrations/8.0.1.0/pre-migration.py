@@ -38,8 +38,6 @@ column_renames = {
 xmlid_renames = [
     ('procurement.access_stock_warehouse_orderpoint', 'stock.access_stock_warehouse_orderpoint'),
     ('procurement.access_stock_warehouse_orderpoint_system', 'stock.access_stock_warehouse_orderpoint_system'),
-    #     ('procurement.access_mrp_property', 'mrp.access_mrp_property'),
-    #     ('procurement.access_mrp_property_group', 'mrp.access_mrp_property_group'),
     ('procurement.stock_warehouse_orderpoint_rule', 'stock.stock_warehouse_orderpoint_rule'),
 ]
 
