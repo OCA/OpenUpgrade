@@ -145,22 +145,26 @@ def update_stock_moves(cr, pool, uid):
 
 def update_stock_picking_name(cr, pool, uid):
     picking_obj = pool['stock.picking']
-    picking_ids = picking_obj.search(cr, uid, [])
+    picking_ids = picking_obj.search(
+        cr, uid, ['|', ('name', '=', False), ('name', '=', '')])
     for sp in picking_obj.browse(cr, uid, picking_ids):
-        if not sp.name:
+        if sp.origin:
             if ':' in sp.origin:
                 origin = sp.origin.split(":")[1]
             else:
                 origin = sp.origin
-            sql = """UPDATE stock_picking SET name = '%s' WHERE id = %s""" % (origin, sp.id)
-            picking_exists = picking_obj.search(cr, uid, [('name', '=', origin)])
-            if not picking_exists:
-                cr.execute(sql)
-            else:
-                sql = """UPDATE stock_picking SET name = '%s' WHERE id = %s""" % (
-                    origin + str(datetime.now().time()), sp.id
-                )
-                cr.execute(sql)
+        else:
+            origin = '/'
+        picking_exists = picking_obj.search(cr, uid, [('name', '=', origin)])
+        if not picking_exists:
+            cr.execute(
+                "UPDATE stock_picking SET name = %s WHERE id = %s",
+                (origin, sp.id))
+        else:
+            cr.execute(
+                "UPDATE stock_picking SET name = %s WHERE id = %s",
+                ('%s %s' % (origin, str(datetime.now().time())), sp.id)
+            )
 
 
 def migrate_product_supply_method(cr, pool, uid):
