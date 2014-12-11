@@ -326,7 +326,7 @@ def warn_possible_dataloss(cr, pool, old_module, fields):
             else:
                 # there is data loss after the migration.
                 message(
-                    cr, old_module,
+                    cr, old_module, None, None,
                     "Field '%s' was moved to module "
                     "'%s' which is not installed: "
                     "There were %s distinct values in this field.",
