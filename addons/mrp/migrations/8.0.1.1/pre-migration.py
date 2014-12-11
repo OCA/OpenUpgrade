@@ -39,8 +39,6 @@ table_spec = [
 ]
 
 xmlid_renames = [
-    ('procurement.access_mrp_property', 'mrp.access_mrp_property'),
-    ('procurement.access_mrp_property_group', 'mrp.access_mrp_property_group'),
 ]
 
 
