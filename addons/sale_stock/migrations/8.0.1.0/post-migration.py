@@ -21,7 +21,6 @@
 
 from openerp.modules.registry import RegistryManager
 from openerp.openupgrade import openupgrade
-from openerp import pooler, SUPERUSER_ID
 
 possible_dataloss_fields = [
     {
@@ -44,7 +43,6 @@ def migrate_warehouse_id(cr):
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = RegistryManager.get(cr.dbname)
-    uid = SUPERUSER_ID
 
     migrate_warehouse_id(cr)
     openupgrade.delete_model_workflow(cr, 'sale.shop')
