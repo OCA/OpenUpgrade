@@ -181,7 +181,7 @@ class sale_order(osv.osv):
         return res
 
     def action_ship_end(self, cr, uid, ids, context=None):
-#         super(sale_order, self).action_ship_end(cr, uid, ids, context=context)
+        super(sale_order, self).action_ship_end(cr, uid, ids, context=context)
         for order in self.browse(cr, uid, ids, context=context):
             val = {'shipped': True}
             if order.state == 'shipping_except':
