@@ -22,35 +22,8 @@ from openerp import pooler, SUPERUSER_ID
 from openerp.openupgrade import openupgrade, openupgrade_70
 
 def migrate_sale_order_addresses(cr, pool):
-    data_obj = pool.get("ir.model.data")
-    disable_transitions = [
-        # getting object from 'sale_stock' module because the pre-migration
-        # script has renamed xml_id from 'sale' to 'sale_stock' previously
-        ('sale_stock', 'trans_ship_ship_except'),
-        ('sale_stock', 'trans_ship_ship_end'),
-        ('sale_stock', 'trans_wait_ship_ship'),
-        ('sale_stock', 'trans_ship_except_ship'),
-    ]
-    transition_conditions = {}
-    for module, name in disable_transitions:
-        try:
-            transition_id = data_obj.get_object_reference(
-                cr, SUPERUSER_ID, module, name)[1]
-            transition_conditions[transition_id] = None
-        except ValueError:
-            continue
-
-    # backup values
-    cr.execute(
-        "SELECT id, condition FROM wkf_transition WHERE id in %s",
-        (tuple(transition_conditions.keys()),))
-    transition_conditions = dict(cr.fetchall())
-
     # disabling transitions during 'sale_order' update.
-    cr.execute(
-        "UPDATE wkf_transition SET condition = 'False' WHERE id in %s",
-        (tuple(transition_conditions.keys()),))
-
+    transitions = openupgrade.deactivate_workflow_transitions(cr, 'sale.order')
     # partner_address become partner
     openupgrade_70.set_partner_id_from_partner_address_id(
         cr, pool, 'sale.order',
@@ -63,12 +36,8 @@ def migrate_sale_order_addresses(cr, pool):
     openupgrade_70.set_partner_id_from_partner_address_id(
         cr, pool, 'sale.order',
         'partner_id', openupgrade.get_legacy_name('partner_order_id'))
-
     # Rewriting good values
-    for transition_id, condition in transition_conditions.iteritems():
-        cr.execute(
-            "update wkf_transition set condition = %s where id=%s",
-            (condition, transition_id))
+    openupgrade.reactivate_workflow_transitions(cr, transitions)
 
 def migrate_sale_order_line_addresses(cr, pool):
     # partner_address become partner
