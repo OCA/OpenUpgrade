@@ -459,7 +459,7 @@ def deactivate_workflow_transitions(cr, model, transitions=None):
     """
     transition_ids = []
     if transitions:
-        for module, name in disable_transitions:
+        for module, name in transitions:
             try:
                 transition_ids.append(
                     data_obj.get_object_reference(
