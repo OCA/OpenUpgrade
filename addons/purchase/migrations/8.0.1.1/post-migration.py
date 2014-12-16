@@ -91,7 +91,7 @@ def migrate_product_supply_method(cr):
     if mto_route_id:
         product_ids = []
         cr.execute("""SELECT id FROM product_template WHERE %s = %%s""" % (
-            procure_method_legacy, ('buy',)))
+            procure_method_legacy), ('buy',))
         product_ids = [res[0] for res in cr.fetchall()]
 
         template_obj.write(
