@@ -1,0 +1,12 @@
+---Fields in module 'warning'---
+warning      / product.product          / purchase_line_warn (selection): DEL required: required, selection_keys: ['block', 'no-message', 'warning'], req_default: no-message
+warning      / product.product          / purchase_line_warn_msg (text) : DEL 
+warning      / product.product          / sale_line_warn (selection)    : DEL required: required, selection_keys: ['block', 'no-message', 'warning'], req_default: no-message
+warning      / product.product          / sale_line_warn_msg (text)     : DEL 
+warning      / product.template         / purchase_line_warn (selection): NEW required: required, selection_keys: ['block', 'no-message', 'warning'], req_default: no-message
+warning      / product.template         / purchase_line_warn_msg (text) : NEW 
+warning      / product.template         / sale_line_warn (selection)    : NEW required: required, selection_keys: ['block', 'no-message', 'warning'], req_default: no-message
+warning      / product.template         / sale_line_warn_msg (text)     : NEW
+## OK fields moved up in template
+
+---XML records in module 'warning'---
