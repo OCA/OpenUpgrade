@@ -75,6 +75,7 @@ xmlid_renames = [
     ('stock.property_stock_account_output_categ', 'stock_account.property_stock_account_output_categ'),
     ('stock.property_stock_account_output_prd', 'stock_account.property_stock_account_output_prd'),
     ('stock.property_stock_journal', 'stock_account.property_stock_journal'),
+    ('stock.stock_journal', 'stock_account.stock_journal'),
 ]
 
 

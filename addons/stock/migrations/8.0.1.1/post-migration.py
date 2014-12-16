@@ -529,23 +529,6 @@ def migrate_stock_qty(cr, pool, uid):
     stock_move_obj.action_done(cr, uid, done_move_ids, context=None)
 
 
-def delete_stock_account_journal(cr):
-    """#TO COMPLETE A MIGRATION WITHOUT MODIFY __openerp.py__ DATA LOAD OF THE STOCK_ACCOUNT MODULE.
-    Avoid duplicated data error because of the stock journal forcecreate in stock_account module
-    :param cr:
-    """
-    uid = SUPERUSER_ID
-    pool = pooler.get_pool(cr.dbname)
-    data_obj = pool['ir.model.data']
-
-    stock_journal_id = data_obj.get_object_reference(cr, uid, 'stock', 'stock_journal')[1]
-
-    if stock_journal_id:
-        cr.execute("DELETE from account_journal where id = %s", (stock_journal_id,))
-        cr.execute("DELETE from ir_property WHERE name=%s", ('property_stock_journal',))
-        cr.execute("DELETE from ir_model_data WHERE name=%s", ('property_stock_journal',))
-
-
 def migrate_stock_production_lot(cr):
     """Serial numbers migration
     :param cr:
@@ -593,6 +576,5 @@ def migrate(cr, version):
     openupgrade.set_defaults(cr, pool, default_spec, force=False)
 
     migrate_product(cr, pool)
-    delete_stock_account_journal(cr)
     openupgrade.delete_model_workflow(cr, 'stock.picking')
     openupgrade_80.set_message_last_post(cr, SUPERUSER_ID, pool, ['stock.production.lot', 'stock.picking'])
