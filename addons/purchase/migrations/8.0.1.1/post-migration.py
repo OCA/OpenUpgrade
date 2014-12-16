@@ -47,7 +47,7 @@ def create_workitem_picking(cr, uid, pool):
         FROM stock_move
         WHERE purchase_line_id is not null
         AND state != %s""",
-        ('done'))
+        ('done',))
     for res in cr.fetchall():
         pol = pol_obj.browse(cr, uid, res[0])
 
