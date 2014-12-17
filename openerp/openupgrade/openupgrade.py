@@ -23,6 +23,7 @@ import os
 import inspect
 import logging
 from openerp import release, osv, pooler, tools, SUPERUSER_ID
+from openerp.modules.registry import RegistryManager
 import openupgrade_tools
 
 # The server log level has not been set at this point
@@ -459,6 +460,7 @@ def deactivate_workflow_transitions(cr, model, transitions=None):
     """
     transition_ids = []
     if transitions:
+        data_obj = RegistryManager.get(cr.dbname)['ir.model.data']
         for module, name in transitions:
             try:
                 transition_ids.append(
@@ -483,6 +485,7 @@ def deactivate_workflow_transitions(cr, model, transitions=None):
         "update wkf_transition set condition = 'False' WHERE id in %s",
         (tuple(transition_ids),))
     return transition_conditions
+
 
 def reactivate_workflow_transitions(cr, transition_conditions):
     """
