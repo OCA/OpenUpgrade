@@ -56,6 +56,7 @@ __all__ = [
     'reactivate_workflow_transitions',
 ]
 
+
 def load_data(cr, module_name, filename, idref=None, mode='init'):
     """
     Load an xml or csv data file from your post script. The usual case for \

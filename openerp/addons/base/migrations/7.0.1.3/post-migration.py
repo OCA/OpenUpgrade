@@ -307,9 +307,9 @@ def migrate_res_company_logo(cr, pool):
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     openupgrade.set_defaults(cr, pool, force_defaults, force=True)
-    #circumvent orm when writing to record rules as the orm needs the
-    #record rule's model to be instantiatable, which goes wrong at this
-    #point for most models
+    # circumvent orm when writing to record rules as the orm needs the
+    # record rule's model to be instantiatable, which goes wrong at this
+    # point for most models
     cr.execute('update ir_rule set active=True')
     migrate_ir_translation(cr)
     migrate_company(cr)

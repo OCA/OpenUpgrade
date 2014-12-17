@@ -52,6 +52,7 @@ def get_node_dict(element):
             res[key] = child
     return res
 
+
 def get_node_value(element):
     if 'eval' in element.attrib.keys():
         return element.attrib['eval']

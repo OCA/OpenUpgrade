@@ -34,7 +34,7 @@ def log_xml_id(cr, module, xml_id):
     """
     if not table_exists(cr, 'openupgrade_record'):
         return
-    if not '.' in xml_id:
+    if '.' not in xml_id:
         xml_id = '%s.%s' % (module, xml_id)
     cr.execute(
         "SELECT model FROM ir_model_data "
