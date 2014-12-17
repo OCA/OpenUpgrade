@@ -64,7 +64,12 @@ def ensure_admin_email(cr, pool):
     if not admin.email and not pool['ir.config_parameter'].get_param(
             cr, SUPERUSER_ID, 'mail.catchall.domain'):
         # that's the default value for new installations
-        admin.write({'email': 'info@example.com'})
+        default_email = 'info@example.com'
+        openupgrade.message(
+            'base', None, None,
+            'No email address for admin and no catchall domain defined - '
+            'setting admin\'s email address to %s', default_email)
+        admin.write({'email': default_email})
 
 
 @openupgrade.migrate()
