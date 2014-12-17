@@ -34,11 +34,11 @@ subtype_mapping = {
     'html': (openupgrade.get_legacy_name('body_html'), html_sanitize),
     }
 
+
 def convert_mail_bodies(cr, pool):
     """
     Convert plain and html bodies to sanitized html.
     """
-    message_obj = pool.get('mail.message')
     for subtype in subtype_mapping.keys():
         field, func = subtype_mapping[subtype]
         logger.info("converting %s messages", subtype)
@@ -51,7 +51,10 @@ def convert_mail_bodies(cr, pool):
                 })
         for row in cr.fetchall():
             body = func(row[1])
-            cr.execute("UPDATE mail_message SET body = %s WHERE id = %s", (body, row[0]))
+            cr.execute(
+                "UPDATE mail_message SET body = %s WHERE id = %s",
+                (body, row[0]))
+
 
 def create_mail_mail(cr, pool):
     """
@@ -65,23 +68,25 @@ def create_mail_mail(cr, pool):
         cr, SUPERUSER_ID, [('email_from', '!=', False)])
 
     cr.execute("SELECT id, %s FROM mail_message" % (
-            openupgrade.get_legacy_name('user_id')))
+        openupgrade.get_legacy_name('user_id')))
     user_ids = dict(cr.fetchall())
 
     for message_id in message_ids:
         message = message_obj.read(
-            cr, SUPERUSER_ID, message_id, ['model', 'res_id', 'user_id', 'email_from'])
-    
+            cr, SUPERUSER_ID, message_id,
+            ['model', 'res_id', 'user_id', 'email_from'])
+
         # Set message type to notification
         write_vals = {
             'type': 'notification',
             }
         # Convert user_id to author partner
         if user_ids[message['id']]:
-            write_vals['author_id'] = openupgrade_70.get_partner_id_from_user_id(
-                cr, user_ids[message['id']])
+            write_vals['author_id'] = \
+                openupgrade_70.get_partner_id_from_user_id(
+                    cr, user_ids[message['id']])
         message_obj.write(cr, SUPERUSER_ID, message['id'], write_vals)
-        
+
         # Set stored (but not recalculated) function field record_name
         if message['model'] and message['res_id']:
             model = pool.get(message['model'])
@@ -94,15 +99,16 @@ def create_mail_mail(cr, pool):
                     SET record_name = %s
                     WHERE id = %s
                     """, (name, message['id']))
-            
-        mail_id = mail_obj.create(
+
+        mail_obj.create(
             cr, SUPERUSER_ID, {
                 'mail_message_id': message['id'],
                 'email_from': message['email_from'],
                 })
 
     # Copy legacy fields from message table to mail table
-    openupgrade.logged_query(cr,
+    openupgrade.logged_query(
+        cr,
         """
         UPDATE mail_mail
         SET body_html = msg.body,
@@ -115,7 +121,8 @@ def create_mail_mail(cr, pool):
             auto_delete = msg.%(auto_delete)s
         FROM mail_mail mail, mail_message msg
         WHERE mail.mail_message_id = msg.id
-        """ % {
+        """ %
+        {
             'mail_server_id': openupgrade.get_legacy_name('mail_server_id'),
             'email_to': openupgrade.get_legacy_name('email_to'),
             'email_cc': openupgrade.get_legacy_name('email_cc'),
@@ -123,13 +130,13 @@ def create_mail_mail(cr, pool):
             'references': openupgrade.get_legacy_name('references'),
             'state': openupgrade.get_legacy_name('state'),
             'auto_delete': openupgrade.get_legacy_name('auto_delete'),
-            })
+        })
 
     # Migrate m2o partner_id to m2m partner_ids
     openupgrade.m2o_to_m2m(
         cr, pool.get('mail.message'), 'mail_message', 'partner_ids',
         openupgrade.get_legacy_name('partner_id'))
-            
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

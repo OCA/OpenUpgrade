@@ -22,6 +22,7 @@
 from openerp.tools import drop_view_if_exists
 from openerp.openupgrade import openupgrade
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     drop_view_if_exists(cr, 'res_log_report')

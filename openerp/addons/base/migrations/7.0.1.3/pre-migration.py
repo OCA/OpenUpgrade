@@ -34,7 +34,7 @@ obsolete_modules = (
     'fetchmail_crm',
     'fetchmail_hr_recruitment',
 )
- 
+
 module_namespec = [
     # This is a list of tuples (old module name, new module name)
     ('account_coda', 'l10n_be_coda'),
@@ -57,7 +57,7 @@ column_renames = {
     'res_users': [
         ('date', 'login_date'),
         ('user_email', None),
-        ], 
+        ],
     'res_company': [
         ('logo', None),
     ]
@@ -70,17 +70,21 @@ model_renames = [
     ('ir.actions.url', 'ir.actions.act_url'),
     ]
 
+
 def disable_demo_data(cr):
     """ Disables the renewed loading of demo data """
     openupgrade.logged_query(
         cr,
         "UPDATE ir_module_module SET demo = false")
 
+
 def rename_base_contact_columns(cr):
     """
     Rename columns only if res_partner_contact is installed
     """
-    cr.execute("SELECT * FROM information_schema.tables WHERE table_name = 'res_partner_contact';")
+    cr.execute(
+        "SELECT * FROM information_schema.tables "
+        "WHERE table_name = 'res_partner_contact';")
     if cr.fetchall():
         openupgrade.rename_columns(cr, {
             'res_partner_contact': [
@@ -88,6 +92,7 @@ def rename_base_contact_columns(cr):
                 ('mobile', 'phone'),
             ]
         })
+
 
 def migrate_ir_attachment(cr):
     # Data is now stored in db_datas column and datas is a function field
@@ -97,12 +102,13 @@ def migrate_ir_attachment(cr):
         openupgrade.rename_columns(
             cr, {'ir_attachment': [('datas', 'db_datas')]})
 
+
 def update_base_sql(cr):
     """
     Inject snippets of openerp/addons/base/base.sql, needed
     to upgrade the base module.
 
-    Also check existing inheritance of ir_act_client on ir_actions.    
+    Also check existing inheritance of ir_act_client on ir_actions.
     For ir_act_client to inherit ir_actions at table level
     is not new in 7.0, but this was not taken care of properly in
     OpenUpgrade 6.1 for a long time, so we do it again here.
@@ -134,7 +140,7 @@ CREATE TABLE ir_model_relation (
     module integer NOT NULL references ir_module_module on delete restrict,
     model integer NOT NULL references ir_model on delete restrict,
     name character varying(128) NOT NULL
-);  
+);
 """)
 
     cr.execute(
@@ -147,6 +153,7 @@ CREATE TABLE ir_model_relation (
     if not res[0]:
         cr.execute(
             "ALTER TABLE ir_act_client INHERIT ir_actions")
+
 
 def create_users_partner(cr):
     """
@@ -171,7 +178,7 @@ def create_users_partner(cr):
     similar behaviour for 6.1.
     """
     if not openupgrade.column_exists(
-        cr, 'res_users', 'partner_id'):
+            cr, 'res_users', 'partner_id'):
         cr.execute(
             "ALTER TABLE res_users "
             "ADD column partner_id "
@@ -216,6 +223,7 @@ def create_users_partner(cr):
                 "VALUES(%s, 'res.partner', 'base', 'partner_root', TRUE) ",
                 (partner_id,))
 
+
 def remove_obsolete_modules(cr, obsolete_modules):
     cr.execute(
         """
@@ -223,6 +231,7 @@ def remove_obsolete_modules(cr, obsolete_modules):
         SET state = 'to remove'
         WHERE name in %s AND state <> 'uninstalled'
         """, (obsolete_modules,))
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

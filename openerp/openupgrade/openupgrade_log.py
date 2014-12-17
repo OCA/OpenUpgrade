@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from openupgrade_tools import table_exists
 
+
 def log_xml_id(cr, module, xml_id):
     """
     Log xml_ids at load time in the records table.
@@ -11,10 +12,10 @@ def log_xml_id(cr, module, xml_id):
     won't be called. This can be brought about by installing the
     module or updating the 'state' field of the module to 'to install'
     or call the server with '--init <module>' and the database argument.
-    
+
     - Do you get the right results immediately when installing the module?
-    No, sorry. This method retrieves the model from the ir_model_table, but when
-    the xml id is encountered for the first time, this method is called
+    No, sorry. This method retrieves the model from the ir_model_table, but
+    when the xml id is encountered for the first time, this method is called
     before the item is present in this table. Therefore, you will not
     get any meaningful results until the *second* time that you 'init'
     the module.
@@ -33,7 +34,7 @@ def log_xml_id(cr, module, xml_id):
     """
     if not table_exists(cr, 'openupgrade_record'):
         return
-    if not '.' in xml_id:
+    if '.' not in xml_id:
         xml_id = '%s.%s' % (module, xml_id)
     cr.execute(
         "SELECT model FROM ir_model_data "
@@ -53,4 +54,3 @@ def log_xml_id(cr, module, xml_id):
                 "INSERT INTO openupgrade_record "
                 "(module, model, name, type) values(%s, %s, %s, %s)",
                 (module, record[0], xml_id, 'xmlid'))
-

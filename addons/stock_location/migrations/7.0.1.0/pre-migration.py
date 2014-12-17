@@ -22,10 +22,11 @@ from openerp.openupgrade import openupgrade
 
 column_renames = {
     # Using magic None value to trigger call to get_legacy_name()
-    'product_pulled_flow':[
+    'product_pulled_flow': [
         ('partner_address_id', None),
     ],
 }
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

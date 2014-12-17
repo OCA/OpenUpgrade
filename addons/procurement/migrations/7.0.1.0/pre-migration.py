@@ -25,6 +25,7 @@ xmlid_renames = [
     ('procurement.act_produce_service', 'project_mrp.act_produce_service'),
 ]
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_xmlids(cr, xmlid_renames)

@@ -23,19 +23,20 @@ from openerp.openupgrade import openupgrade
 
 column_renames = {
     # Using magic None value to trigger call to get_legacy_name()
-    'stock_warehouse':[
+    'stock_warehouse': [
         ('partner_address_id', None),
     ],
-    'stock_location':[
+    'stock_location': [
         ('address_id', None),
     ],
-    'stock_move':[
+    'stock_move': [
         ('address_id', None),
     ],
-    'stock_picking':[
+    'stock_picking': [
         ('address_id', None),
     ],
 }
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

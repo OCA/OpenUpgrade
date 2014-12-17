@@ -23,22 +23,26 @@ from openupgrade import openupgrade
 from openupgrade import openupgrade_70
 from openerp import pooler, SUPERUSER_ID
 
-def fill_manager_id(cr, pool): 
+
+def fill_manager_id(cr, pool):
     """
-    Fill the new field 'manager_id' depending on account_analytic_account.partner_id.user_id
+    Fill the new field 'manager_id' depending on
+    account_analytic_account.partner_id.user_id
     """
     analytic_obj = pool.get('account.analytic.account')
-    cr.execute("""SELECT 
+    cr.execute("""SELECT
         account_analytic_account.id as id,
         res_users.id as manager_id
-    FROM account_analytic_account 
-    INNER JOIN res_partner on res_partner.id = account_analytic_account.partner_id
+    FROM account_analytic_account
+    INNER JOIN res_partner
+        on res_partner.id = account_analytic_account.partner_id
     INNER JOIN res_users on res_partner.user_id = res_users.id; """)
     for row in cr.dictfetchall():
         vals = {
-            'manager_id' : row['manager_id'], 
+            'manager_id': row['manager_id'],
         }
         analytic_obj.write(cr, SUPERUSER_ID, row['id'], vals)
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

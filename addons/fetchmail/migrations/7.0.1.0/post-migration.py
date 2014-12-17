@@ -21,6 +21,7 @@
 
 from openerp.openupgrade import openupgrade
 
+
 def move_fetchmail_server_id(cr):
     """
     Fetchmail now relates to mail.mail, not mail.message
@@ -34,6 +35,7 @@ def move_fetchmail_server_id(cr):
             'fetchmail_server_id': openupgrade.get_legacy_name(
                 'fetchmail_server_id'),
             })
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

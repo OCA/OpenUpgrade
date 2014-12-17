@@ -21,6 +21,7 @@
 
 from openerp.openupgrade import openupgrade
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.load_data(cr, 'procurement', 'migrations/7.0.1.0/data.xml')

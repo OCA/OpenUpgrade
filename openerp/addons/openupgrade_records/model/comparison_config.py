@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module Copyright (C) 2012 OpenUpgrade community
+#    This module Copyright (C) 2012-2014 OpenUpgrade community
 #    https://launchpad.net/~openupgrade-committers
 #
 #    Contributors:
@@ -23,11 +23,25 @@
 #
 ##############################################################################
 
-from osv import osv, fields
 import openerplib
-from tools.translate import _
+import logging
 
-class openupgrade_comparison_config(osv.osv):
+try:
+    from openerp.addons.openupgrade_records.lib import apriori
+except ImportError:
+    from openupgrade_records.lib import apriori
+
+try:
+    from openerp.osv.orm import Model, except_orm
+    from openerp.osv import fields
+    from openerp.tools.translate import _
+except ImportError:
+    from osv.osv import osv as Model, except_osv as except_orm
+    from osv import fields
+    from tools.translate import _
+
+
+class openupgrade_comparison_config(Model):
     _name = 'openupgrade.comparison.config'
     _columns = {
         'name': fields.char('Name', size=64),
@@ -39,7 +53,8 @@ class openupgrade_comparison_config(osv.osv):
             'Protocol', required=True),
         'database': fields.char('Database', size=64, required=True),
         'username': fields.char('Username', size=24, required=True),
-        'password': fields.char('Password', size=24, required=True, password=True),
+        'password': fields.char('Password', size=24, required=True,
+                                password=True),
         'last_log': fields.text('Last log'),
         }
     _defaults = {
@@ -49,16 +64,16 @@ class openupgrade_comparison_config(osv.osv):
 
     def get_connection(self, cr, uid, ids, context=None):
         if not ids:
-            raise osv.except_osv(
+            raise except_orm(
                 _("Cannot connect"), _("Invalid id passed."))
         conf = self.read(cr, uid, ids[0], context=None)
         return openerplib.get_connection(
-           hostname=conf['server'],
-           database=conf['database'],
-           login=conf['username'],
-           password=conf['password'],
-           port=conf['port'],
-           )
+            hostname=conf['server'],
+            database=conf['database'],
+            login=conf['username'],
+            password=conf['password'],
+            port=conf['port'],
+            )
 
     def test_connection(self, cr, uid, ids, context=None):
         try:
@@ -67,13 +82,13 @@ class openupgrade_comparison_config(osv.osv):
             ids = user_model.search([("login", "=", "admin")])
             user_info = user_model.read(ids[0], ["name"])
         except Exception, e:
-            raise osv.except_osv(
+            raise except_orm(
                 _("Connection failed."), unicode(e))
-        raise osv.except_osv(
+        raise except_orm(
             _("Connection succesful."),
             _("%s is connected.") % user_info["name"]
             )
-    
+
     def analyze(self, cr, uid, ids, context=None):
         """
         Run the analysis wizard
@@ -93,6 +108,33 @@ class openupgrade_comparison_config(osv.osv):
             'res_id': wizard_id,
             'nodestroy': True,
             }
+        return result
+
+    def install_modules(self, cr, uid, ids, context=None):
+        """
+        Install same modules as in source DB
+        """
+        connection = self.get_connection(cr, uid, [ids[0]], context)
+        module_r_obj = connection.get_model("ir.module.module")
+        r_ids = module_r_obj.search([("state", "=", "installed")])
+        modules = []
+
+        for id in r_ids:
+            mod = module_r_obj.read(id, ["name"])
+            mod_name = mod['name']
+            if apriori.renamed_modules.get(mod_name):
+                mod_name = apriori.renamed_modules[mod_name]
+            modules.append(mod_name)
+        _logger = logging.getLogger(__name__)
+        _logger.debug('remote modules %s', modules)
+        module_l_obj = self.pool.get('ir.module.module')
+        l_ids = module_l_obj.search(cr, uid, [('name', 'in', modules),
+                                              ('state', '=', 'uninstalled')])
+        _logger.debug('local modules %s', l_ids)
+        if l_ids:
+            module_l_obj.write(cr, uid, l_ids, {'state': 'to install'})
+
+        result = {}
         return result
 
 openupgrade_comparison_config()

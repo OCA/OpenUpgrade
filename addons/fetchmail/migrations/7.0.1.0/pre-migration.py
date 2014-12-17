@@ -28,6 +28,7 @@ column_renames = {
         ('fetchmail_server_id', None),
         ]}
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)

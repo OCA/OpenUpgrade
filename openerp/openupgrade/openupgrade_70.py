@@ -23,8 +23,8 @@
 # This module provides simple tools for openupgrade migration, specific for the
 # 6.1 -> 7.0.
 
-from openerp.openupgrade import openupgrade
 from openerp import SUPERUSER_ID
+
 
 def set_partner_id_from_partner_address_id(
         cr, pool, model_name, partner_field, address_field, table=None):
@@ -36,7 +36,7 @@ def set_partner_id_from_partner_address_id(
                           that will store the new partner when found
     :param address_field: the legacy field in the model's table \
                     that contains the old address in the model's table
-    :param table: override the target model's table name in case it was renamed               
+    :param table: override the target model's table name in case it was renamed
     :returns: nothing
     """
     model = pool.get(model_name)
@@ -49,15 +49,17 @@ def set_partner_id_from_partner_address_id(
         WHERE address.id = target.%s""" % (table, address_field))
     for row in cr.fetchall():
         model.write(cr, SUPERUSER_ID, row[0], {partner_field: row[1]})
-    
+
+
 def get_partner_id_from_user_id(cr, user_id):
     """
         Get the new partner_id from user_id.
         :param user_id : user previously used.
     """
-    cr.execute("""
-        SELECT partner_id 
-        FROM res_users 
+    cr.execute(
+        """
+        SELECT partner_id
+        FROM res_users
         WHERE id=%s""",
         (user_id,))
     return cr.fetchone()[0]

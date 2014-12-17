@@ -22,7 +22,9 @@
 
 from openerp import pooler, SUPERUSER_ID
 from openupgrade import openupgrade
-from openupgrade.openupgrade_70 import set_partner_id_from_partner_address_id as fix_partner
+from openupgrade.openupgrade_70 import (
+    set_partner_id_from_partner_address_id as fix_partner)
+
 
 def migrate_partners(cr, pool):
     fix_partner(cr, pool, 'crm.meeting', 'partner_id',
@@ -31,6 +33,7 @@ def migrate_partners(cr, pool):
                 openupgrade.get_legacy_name('partner_address_id'))
     fix_partner(cr, pool, 'crm.phonecall', 'partner_id',
                 openupgrade.get_legacy_name('partner_address_id'))
+
 
 def create_section_mail_aliases(cr, pool, uid=SUPERUSER_ID):
     """
@@ -51,6 +54,7 @@ def create_section_mail_aliases(cr, pool, uid=SUPERUSER_ID):
         alias_id = mail_alias.create_unique_alias(cr, uid, fields,
                                                   model_name="crm.lead")
         crm_case_section.write(cr, uid, [id], {'alias_id': alias_id})
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

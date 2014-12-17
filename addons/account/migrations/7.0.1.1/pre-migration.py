@@ -24,25 +24,26 @@ from openerp.openupgrade import openupgrade
 column_renames = {
     # Using magic None value to trigger call to get_legacy_name()
     'account_invoice':
-        [
+    [
         ('address_contact_id', None),
         ('address_invoice_id', None),
-        ],
+    ],
     'account_invoice_line':
-        [
+    [
         ('note', None),
-        ],
+    ],
     'account_cashbox_line':
-        [
+    [
         ('ending_id', None),
         ('starting_id', None),
         ('number', None),
-        ]
+    ]
 }
 
 xmlid_renames = [
     ('account.account_payment_term_15days', 'account.account_payment_term'),
     ]
+
 
 def fix_move_line_currency(cr):
     """
@@ -60,6 +61,7 @@ def fix_move_line_currency(cr):
         WHERE l.company_id = c.id
               AND l.currency_id = c.currency_id;
         """)
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

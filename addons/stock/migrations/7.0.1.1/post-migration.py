@@ -22,6 +22,7 @@
 from openerp import pooler
 from openerp.openupgrade import openupgrade, openupgrade_70
 
+
 def migrate_partners(cr, pool):
     openupgrade_70.set_partner_id_from_partner_address_id(
         cr, pool, 'stock.warehouse',
@@ -35,6 +36,7 @@ def migrate_partners(cr, pool):
     openupgrade_70.set_partner_id_from_partner_address_id(
         cr, pool, 'stock.picking',
         'partner_id', openupgrade.get_legacy_name('address_id'))
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

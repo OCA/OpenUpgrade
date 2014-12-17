@@ -24,10 +24,13 @@ from openerp.openupgrade import openupgrade
 xmlid_renames = [
     ('l10n_fr.tva_acq_normale_inclue', 'l10n_fr.tva_acq_normale_TTC'),
     ('l10n_fr.tva_acq_specifique_inclue', 'l10n_fr.tva_acq_specifique_TTC'),
-    ('l10n_fr.tva_acq_specifique_1_inclue', 'l10n_fr.tva_acq_specifique_1_TTC'),
+    ('l10n_fr.tva_acq_specifique_1_inclue',
+     'l10n_fr.tva_acq_specifique_1_TTC'),
     ('l10n_fr.tva_acq_reduite_inclue', 'l10n_fr.tva_acq_reduite_TTC'),
-    ('l10n_fr.tva_acq_super_reduite_inclue', 'l10n_fr.tva_acq_super_reduite_TTC'),
+    ('l10n_fr.tva_acq_super_reduite_inclue',
+     'l10n_fr.tva_acq_super_reduite_TTC'),
 ]
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

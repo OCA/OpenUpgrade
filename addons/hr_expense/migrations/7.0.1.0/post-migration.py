@@ -21,6 +21,7 @@
 from openerp import pooler, SUPERUSER_ID
 from openerp.openupgrade import openupgrade
 
+
 def migrate_hr_expense_account_move(cr, pool):
     """
     Fill the field account_move_id with account_invoice information.
@@ -32,9 +33,8 @@ def migrate_hr_expense_account_move(cr, pool):
         SELECT id, {0}
         FROM hr_expense_expense
         WHERE {1} ='paid' AND account_move_id is Null
-        """.format(
-            openupgrade.get_legacy_name('invoice_id'),
-            openupgrade.get_legacy_name('state')))
+        """.format(openupgrade.get_legacy_name('invoice_id'),
+               openupgrade.get_legacy_name('state')))
     for (expense_id, invoice_id) in cr.fetchall():
         account_move_id = invoice_obj.browse(
             cr, SUPERUSER_ID, invoice_id, context=None).move_id.id
@@ -42,6 +42,7 @@ def migrate_hr_expense_account_move(cr, pool):
         expense_obj.write(
             cr, SUPERUSER_ID, [expense_id],
             {'account_move_id': account_move_id})
+
 
 def migrate_hr_expense_expense_ref(cr, pool):
     """
@@ -53,94 +54,96 @@ def migrate_hr_expense_expense_ref(cr, pool):
         SELECT id, {0}, {1}
         FROM hr_expense_expense
         WHERE {1} is not NULL AND {1} != ''
-        """.format(
-            'note',
-            openupgrade.get_legacy_name('ref')))
+        """.format('note',
+                   openupgrade.get_legacy_name('ref')))
     for (expense_id, note, ref) in cr.fetchall():
         note = note + '\n' if note else ''
         expense_obj.write(
             cr, SUPERUSER_ID, [expense_id],
             {'note': note + ref})
 
+
 def set_hr_expense_line_uom(cr, pool):
     line_obj = pool.get('hr.expense.line')
     product_obj = pool.get('product.product')
     cr.execute("""
         SELECT id, product_id
-        FROM hr_expense_line 
+        FROM hr_expense_line
         WHERE uom_id is Null
         """)
     for (line_id, product_id) in cr.fetchall():
-        if product_id: 
+        if product_id:
             uom_id = product_obj.browse(
                 cr, SUPERUSER_ID, product_id, context=None).uom_id.id
-        else: 
+        else:
             uom_id = line_obj._get_uom_id(cr, SUPERUSER_ID, context=None)
         line_obj.write(
             cr, SUPERUSER_ID, [line_id],
             {'uom_id': uom_id})
 
+
 def migrate_hr_expense_expense_state(cr, pool):
     """
-    Change obsolete 'state' values for hr_expense_expense.state ; 
+    Change obsolete 'state' values for hr_expense_expense.state;
     Manage workflow modifications.
     """
-    model_obj  = pool.get('ir.model.data')
-    
+    model_obj = pool.get('ir.model.data')
+
     # recover compatible states
     cr.execute("""
-        UPDATE hr_expense_expense 
-        SET state = {0} 
+        UPDATE hr_expense_expense
+        SET state = {0}
         WHERE {0} != 'invoiced' and {0} != 'paid'
         """.format(openupgrade.get_legacy_name('state')))
-    
-    # set 'done' state instead of 'invoiced' and 'paid' 
+
+    # set 'done' state instead of 'invoiced' and 'paid'
     cr.execute("""
-        UPDATE hr_expense_expense 
+        UPDATE hr_expense_expense
         SET state = 'done'
         WHERE {0} = 'invoiced' OR {0} = 'paid'
         """.format(openupgrade.get_legacy_name('state')))
-    
-    #change wkf items that are in state 'paid', 
-    # setting act_id to act_done id. (before was act_paid id) ; 
-    act_done_id = model_obj.get_object(cr, SUPERUSER_ID, 'hr_expense', 'act_done').id
+
+    # change wkf items that are in state 'paid',
+    # setting act_id to act_done id. (before was act_paid id);
+    act_done_id = model_obj.get_object(
+        cr, SUPERUSER_ID, 'hr_expense', 'act_done').id
     cr.execute("""
-        UPDATE wkf_workitem 
+        UPDATE wkf_workitem
         SET act_id = {0}
         WHERE inst_id IN (
-            SELECT id 
-            FROM wkf_instance 
+            SELECT id
+            FROM wkf_instance
             WHERE res_type='hr.expense.expense' AND res_id in (
-                SELECT id 
-                FROM hr_expense_expense 
+                SELECT id
+                FROM hr_expense_expense
                 WHERE {1}='paid'
             )
-        );""".format(
-            act_done_id, 
-            openupgrade.get_legacy_name('state')))
-    
+        );""".format(act_done_id,
+                     openupgrade.get_legacy_name('state')))
+
     # Change wkf workitems from sublow to function
     cr.execute("""
-        UPDATE wkf_workitem 
+        UPDATE wkf_workitem
         SET subflow_id = Null, state='complete'
         WHERE inst_id IN (
-            SELECT id 
-            FROM wkf_instance 
+            SELECT id
+            FROM wkf_instance
             WHERE res_type='hr.expense.expense' AND res_id in (
-                SELECT id 
-                FROM hr_expense_expense 
+                SELECT id
+                FROM hr_expense_expense
                 WHERE {0}='invoiced'
             )
         );""".format(openupgrade.get_legacy_name('state')))
 
     # No more flow_end in hr_expense worfklow
     cr.execute("""
-    UPDATE wkf_instance 
+    UPDATE wkf_instance
         SET state='active'
         WHERE res_type='hr.expense.expense' AND res_id in (
-            SELECT id 
-            FROM hr_expense_expense 
+            SELECT id
+            FROM hr_expense_expense
             WHERE {0}='paid');""".format(openupgrade.get_legacy_name('state')))
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

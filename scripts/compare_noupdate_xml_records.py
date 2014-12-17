@@ -20,14 +20,18 @@
 #
 ##############################################################################
 
-import sys, os, ast, argparse
+import os
+import ast
+import argparse
 from copy import deepcopy
 from lxml import etree
+
 
 def read_manifest(addon_dir):
     with open(os.path.join(addon_dir, '__openerp__.py'), 'r') as f:
         manifest_string = f.read()
     return ast.literal_eval(manifest_string)
+
 
 # from openerp.tools
 def nodeattr2bool(node, attr, default=False):
@@ -38,6 +42,7 @@ def nodeattr2bool(node, attr, default=False):
         return default
     return val.lower() not in ('0', 'false', 'off')
 
+
 def get_node_dict(element):
     res = {}
     for child in element:
@@ -47,6 +52,7 @@ def get_node_dict(element):
             res[key] = child
     return res
 
+
 def get_node_value(element):
     if 'eval' in element.attrib.keys():
         return element.attrib['eval']
@@ -55,6 +61,7 @@ def get_node_value(element):
     if not len(element):
         return element.text
     return etree.tostring(element)
+
 
 def update_node(target, source):
     for element in source:
@@ -68,12 +75,13 @@ def update_node(target, source):
             target.remove(existing)
         target.append(element)
 
+
 def get_records(addon_dir):
     addon_dir = addon_dir.rstrip(os.sep)
     addon_name = os.path.basename(addon_dir)
     manifest = read_manifest(addon_dir)
     # The order of the keys are important.
-    # Load files in the same order as in 
+    # Load files in the same order as in
     # module/loading.py:load_module_graph
     keys = ['init_xml', 'update_xml', 'data']
     records_update = {}
@@ -115,6 +123,7 @@ def get_records(addon_dir):
                 process_data_node(data_node)
     return records_update, records_noupdate
 
+
 def main(argv=None):
     """
     Attempt to represent the differences in data records flagged with
@@ -136,7 +145,7 @@ def main(argv=None):
       email templates)
     - Does not handle the shorthand records <menu>, <act_window> etc.,
       although that could be done using the same expansion logic as
-      is used in their parsers in openerp/tools/convert.py 
+      is used in their parsers in openerp/tools/convert.py
     """
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -156,7 +165,7 @@ def main(argv=None):
             record_old = old_update[xml_id]
         elif xml_id in old_noupdate:
             record_old = old_noupdate[xml_id]
-    
+
         if record_old is None:
             continue
 
@@ -174,11 +183,12 @@ def main(argv=None):
                 for attr in ['eval', 'ref']:
                     if attr in attribs:
                         del attribs[attr]
-                element.append(etree.Element(record_old_dict[key].tag, attribs))
+                element.append(
+                    etree.Element(record_old_dict[key].tag, attribs))
             else:
                 oldrepr = get_node_value(record_old_dict[key])
                 newrepr = get_node_value(record_new_dict[key])
-            
+
                 if oldrepr != newrepr:
                     element.append(deepcopy(record_new_dict[key]))
 
@@ -198,4 +208,3 @@ def main(argv=None):
 
 if __name__ == "__main__":
     main()
-

@@ -33,6 +33,7 @@ force_defaults = {
     'res.partner': [('is_company', True)],
 }
 
+
 def migrate_ir_translation(cr):
     openupgrade.logged_query(
         cr,
@@ -47,6 +48,7 @@ def migrate_ir_translation(cr):
             WHERE state is NULL;
         """)
 
+
 def migrate_company(cr):
     """
     Copy char value to new text column
@@ -56,11 +58,14 @@ def migrate_company(cr):
             SET rml_footer = rml_footer1
         """)
 
+
 def migrate_base_contact(cr):
     """
     Move entries of res_partner_contact into res_partner
     """
-    cr.execute("SELECT * FROM ir_module_module WHERE name = 'base_contact' and state = 'to remove';")
+    cr.execute(
+        "SELECT * FROM ir_module_module "
+        "WHERE name = 'base_contact' and state = 'to remove';")
     if not cr.fetchall():
         return
     fields = [
@@ -79,7 +84,10 @@ def migrate_base_contact(cr):
         'parent_id',
     ]
     # Add lang from lang_id
-    openupgrade.logged_query(cr, "ALTER TABLE res_partner_contact ADD COLUMN lang character varying(5);")
+    openupgrade.logged_query(
+        cr,
+        "ALTER TABLE res_partner_contact "
+        "ADD COLUMN lang character varying(5);")
     openupgrade.logged_query(cr, """
         UPDATE res_partner_contact
         SET lang = (SELECT code
@@ -87,7 +95,8 @@ def migrate_base_contact(cr):
                     WHERE lang_id = l.id
                     LIMIT 1);""")
     # Add parent_id
-    openupgrade.logged_query(cr, "ALTER TABLE res_partner_contact ADD COLUMN parent_id integer;")
+    openupgrade.logged_query(
+        cr, "ALTER TABLE res_partner_contact ADD COLUMN parent_id integer;")
     openupgrade.logged_query(cr, """
         UPDATE res_partner_contact
         SET parent_id = (SELECT openupgrade_7_migrated_to_partner_id
@@ -105,16 +114,19 @@ def migrate_base_contact(cr):
         openupgrade.logger.warning("""\
 The following columns are not present in the table of %s: %s.
 
-This can be the case if an additional module installed on your database changes the type of a 
-regular column to a non-stored function or related field.
+This can be the case if an additional module installed on your database changes
+the type of a regular column to a non-stored function or related field.
 """, 'res_partner_contact', ", ".join(lost_fields))
     fields = list(available_fields.intersection(fields))
     # Move data
-    openupgrade.logged_query(cr, """
+    openupgrade.logged_query(
+        cr, """
         INSERT INTO res_partner (%s)
         SELECT %s
-        FROM res_partner_contact;""" % (", ".join(fields + ['customer', 'is_company']),
-                                        ", ".join(fields + ['TRUE', 'FALSE'])))
+        FROM res_partner_contact;""" % (
+            ", ".join(fields + ['customer', 'is_company']),
+            ", ".join(fields + ['TRUE', 'FALSE'])))
+
 
 def migrate_partner_address(cr, pool):
     """ res.partner.address is obsolete. Move existing data to
@@ -151,8 +163,8 @@ def migrate_partner_address(cr, pool):
         openupgrade.logger.warning("""\
 The following columns are not present in the table of %s: %s.
 
-This can be the case if an additional module installed on your database changes the type of a 
-regular column to a non-stored function or related field.
+This can be the case if an additional module installed on your database changes
+ the type of a regular column to a non-stored function or related field.
 """, 'res_partner_address', ", ".join(lost_fields))
     fields = available_fields.intersection(fields)
 
@@ -181,7 +193,8 @@ regular column to a non-stored function or related field.
         """
         Migrate addresses to partners, based on sql WHERE clause
         """
-        openupgrade.logged_query(cr, "\n"
+        openupgrade.logged_query(
+            cr, "\n"
             "SELECT " + ', '.join(fields) + "\n"
             "FROM res_partner_address\n"
             "WHERE " + whereclause, args or ())
@@ -213,8 +226,8 @@ regular column to a non-stored function or related field.
                 else:
                     # any following address for an existing partner
                     partner_vals.update({
-                            'is_company': False,
-                            'parent_id': address['partner_id']})
+                        'is_company': False,
+                        'parent_id': address['partner_id']})
                     propagated_values = partner_obj.read(
                         cr, SUPERUSER_ID, address['partner_id'],
                         propagate_fields, load="_classic_write")
@@ -224,7 +237,7 @@ regular column to a non-stored function or related field.
                         address['id'], partner_vals, partner_defaults)
             processed_ids.append(address['id'])
 
-    # Process all addresses, default type first 
+    # Process all addresses, default type first
     process_address_type(cr, "type = 'default'")
     process_address_type(cr, "type IS NULL OR type = ''")
     process_address_type(cr, "id NOT IN %s", (tuple(processed_ids),))
@@ -235,8 +248,9 @@ regular column to a non-stored function or related field.
         "WHERE openupgrade_7_migrated_to_partner_id is NULL ")
     assert(not cr.fetchone()[0])
 
+
 def update_users_partner(cr, pool):
-    """ 
+    """
     Now that the fields exist on the model, finish
     the work of create_users_partner() in the pre script
     """
@@ -257,6 +271,7 @@ def update_users_partner(cr, pool):
             }
         partner_obj.write(cr, SUPERUSER_ID, row[1], partner_vals)
 
+
 def reset_currency_companies(cr, pool):
     """
     Having a company on currencies affects multicompany databases
@@ -269,30 +284,32 @@ def reset_currency_companies(cr, pool):
         cr, SUPERUSER_ID, currency_ids,
         {'company_id': False})
 
+
 def migrate_res_company_logo(cr, pool):
     """
-    Transfert logo from res_company to res_partner linked to the res_company, 
-    according to the new behaviour of V7 : 
+    Transfert logo from res_company to res_partner linked to the res_company,
+    according to the new behaviour of V7:
     'res_company.logo' is now a field reladed to 'res_partner.image'
     """
     partner_obj = pool.get('res.partner')
     cr.execute("""
-        SELECT partner_id, %s 
-        FROM res_company 
-        WHERE %s is not null""" %(
-        openupgrade.get_legacy_name('logo'), 
+        SELECT partner_id, %s
+        FROM res_company
+        WHERE %s is not null""" % (
+        openupgrade.get_legacy_name('logo'),
         openupgrade.get_legacy_name('logo')))
     for row in cr.fetchall():
         vals = {'image': row[1]}
         partner_obj.write(cr, SUPERUSER_ID, row[0], vals)
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     openupgrade.set_defaults(cr, pool, force_defaults, force=True)
-    #circumvent orm when writing to record rules as the orm needs the
-    #record rule's model to be instantiatable, which goes wrong at this
-    #point for most models
+    # circumvent orm when writing to record rules as the orm needs the
+    # record rule's model to be instantiatable, which goes wrong at this
+    # point for most models
     cr.execute('update ir_rule set active=True')
     migrate_ir_translation(cr)
     migrate_company(cr)

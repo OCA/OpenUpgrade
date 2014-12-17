@@ -22,14 +22,15 @@
 from openerp.openupgrade import openupgrade
 
 column_renames = {
-    'purchase_order':[
+    'purchase_order': [
         ('dest_address_id', None),
         ('partner_address_id', None),
     ],
-    'purchase_order_line':[
+    'purchase_order_line': [
         ('notes', None),
     ],
 }
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

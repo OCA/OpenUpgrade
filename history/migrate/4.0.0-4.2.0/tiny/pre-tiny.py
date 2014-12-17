@@ -18,6 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
 #
 ##############################################################################
+# Flake8: noqa
 
 __author__ = 'Cédric Krier, <ced@tinyerp.com>'
 __version__ = '0.1.0'

@@ -22,6 +22,7 @@
 
 from openupgrade import openupgrade
 
+
 column_renames = {
     'crm_case_section': [
         ('allow_unlink', None),
@@ -55,8 +56,7 @@ column_renames = {
     ],
 }
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

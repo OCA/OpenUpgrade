@@ -21,6 +21,7 @@
 ##############################################################################
 from openupgrade import openupgrade
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     # look for account.analytic.plan.line without plan_id
@@ -30,15 +31,15 @@ def migrate(cr, version):
         WHERE plan_id is NULL""")
     record = cr.fetchone()
     if record:
-        # Create support plan 
-        logged_query(cr, ("""
+        # Create support plan
+        openupgrade.logged_query(cr, ("""
             INSERT INTO account_analytic_plan ('name')
             FROM account_analytic_plan_line
             VALUES ('OpenUpgrade migration plan')"""))
         # Fill empty values with this new record value
-        logged_query(cr, ("""
+        openupgrade.logged_query(cr, ("""
             UPDATE account_analytic_plan_line
-            SET plan_id = 
-                (SELECT id FROM account_analytic_plan 
+            SET plan_id =
+                (SELECT id FROM account_analytic_plan
                  WHERE NAME='OpenUpgrade migration plan')
             WHERE plan_id is NULL"""))

@@ -24,6 +24,7 @@ from openerp.openupgrade import openupgrade, openupgrade_70
 
 logger = logging.getLogger('OpenUpgrade')
 
+
 def migrate_invoice_addresses(cr, pool):
     # Contact id takes precedence over old partner id
     openupgrade_70.set_partner_id_from_partner_address_id(
@@ -34,25 +35,27 @@ def migrate_invoice_addresses(cr, pool):
         cr, pool, 'account.invoice',
         'partner_id', openupgrade.get_legacy_name('address_invoice_id'))
 
+
 def migrate_invoice_names(cr, pool):
     """
     Join existing char values and obsolete note values into
     new text field name on the invoice line.
     """
     invoice_line_obj = pool.get('account.invoice.line')
-    
+
     cr.execute("""
         SELECT id, {0}, {1}
         FROM account_invoice_line
         WHERE {1} is not NULL AND {1} != ''
-        """.format(
-            'name',
-            openupgrade.get_legacy_name('note')))
+    """.format(
+        'name',
+        openupgrade.get_legacy_name('note')))
     for (invoice_line_id, name, note) in cr.fetchall():
         name = name + '\n' if name else ''
         invoice_line_obj.write(
             cr, SUPERUSER_ID, [invoice_line_id],
             {'name': name + note})
+
 
 def lock_closing_reconciliations(cr, pool):
     """
@@ -60,7 +63,6 @@ def lock_closing_reconciliations(cr, pool):
     for deletion. Therefore, lock existing closing entries.
     """
     fiscalyear_obj = pool.get('account.fiscalyear')
-    period_obj = pool.get('account.period')
     move_line_obj = pool.get('account.move.line')
     reconcile_obj = pool.get('account.move.reconcile')
     for fiscalyear_id in fiscalyear_obj.search(
@@ -76,6 +78,7 @@ def lock_closing_reconciliations(cr, pool):
             cr, SUPERUSER_ID, reconcile_ids,
             {'opening_reconciliation': True})
 
+
 def migrate_payment_term(cr, pool):
     partner_obj = pool.get('res.partner')
     field_id = pool.get('ir.model.fields').search(
@@ -83,7 +86,7 @@ def migrate_payment_term(cr, pool):
             ('name', '=', 'property_supplier_payment_term'),
             ('model', '=', 'res.partner'),
             ])[0]
-          
+
     cr.execute(
         """
         SELECT company_id, value_reference, res_id
@@ -116,7 +119,8 @@ def migrate_payment_term(cr, pool):
                     %s,
                     %s)
                 """, (SUPERUSER_ID, row[0], field_id, row[1], row[2]))
-        
+
+
 def merge_account_cashbox_line(cr, pool):
     # Check an unmanaged case by the migration script
     cr.execute("""
@@ -125,39 +129,41 @@ def merge_account_cashbox_line(cr, pool):
         FROM account_cashbox_line
         GROUP BY %s, %s, pieces) as tmp
         WHERE quantity1 > 1
-        """%(
-            openupgrade.get_legacy_name('starting_id'), 
-            openupgrade.get_legacy_name('ending_id'), 
-            ))
+    """ % (
+        openupgrade.get_legacy_name('starting_id'),
+        openupgrade.get_legacy_name('ending_id'),
+    ))
     count = cr.fetchone()[0]
-    if count>0:
-        logger.error('Some duplicated datas in account_cashbox_line (%s). This case is not covered.' %(count))
+    if count > 0:
+        logger.error(
+            'Some duplicated datas in account_cashbox_line (%s). '
+            'This case is not covered.' % (count))
 
     cashboxline_obj = pool.get('account.cashbox.line')
     # Getting all the row from cashbox_line (type "ending")
     cr.execute("""
         SELECT id as id_end, pieces, %s as ending_id, %s as number
-        FROM account_cashbox_line 
+        FROM account_cashbox_line
         WHERE %s is not NULL AND bank_statement_id is NULL
-        """ %(
-            openupgrade.get_legacy_name('ending_id'), 
-            openupgrade.get_legacy_name('number'), 
-            openupgrade.get_legacy_name('ending_id'), 
-            ))
+    """ % (
+        openupgrade.get_legacy_name('ending_id'),
+        openupgrade.get_legacy_name('number'),
+        openupgrade.get_legacy_name('ending_id'),
+    ))
     for (id_end, pieces, ending_id, number) in cr.fetchall():
-        # Check if there is some corresping cashbox_line (type "starting") 
+        # Check if there is some corresping cashbox_line (type "starting")
         cr.execute("""
             SELECT id, %s
             FROM account_cashbox_line
             WHERE %s=%s AND pieces=%s
-            """ %(
-                openupgrade.get_legacy_name('number'),
-                openupgrade.get_legacy_name('starting_id'),
-                ending_id,
-                pieces,
-                ))
+        """ % (
+            openupgrade.get_legacy_name('number'),
+            openupgrade.get_legacy_name('starting_id'),
+            ending_id,
+            pieces,
+        ))
 
-        if cr.rowcount==0: 
+        if cr.rowcount == 0:
             # "ending" cashbox_line becomes normal.
             cashboxline_obj.write(
                 cr, SUPERUSER_ID, [id_end],
@@ -167,9 +173,10 @@ def merge_account_cashbox_line(cr, pool):
                     'bank_statement_id': ending_id,
                 })
 
-        elif cr.rowcount==1:
+        elif cr.rowcount == 1:
             row = cr.fetchone()
-            # "starting" cashbox_line becomes normal with data of "ending" cashbox_line
+            # "starting" cashbox_line becomes normal
+            # with data of "ending" cashbox_line
             cashboxline_obj.write(
                 cr, SUPERUSER_ID, [row[0]],
                 {
@@ -179,21 +186,22 @@ def merge_account_cashbox_line(cr, pool):
                 })
             # delete the "ending" cashbox_line
             cashboxline_obj.unlink(cr, SUPERUSER_ID, [id_end])
-            
-        elif cr.rowcount>1:
+
+        elif cr.rowcount > 1:
             # there is duplicated datas in the 6.1 Database
             pass
 
-    # Getting all the rows from cashbox_line (type "starting") that didn't change
+    # Getting all the rows from cashbox_line (type "starting")
+    # that didn't change
     cr.execute("""
         SELECT id as id_start, %s as starting_id, %s as number
-        FROM account_cashbox_line 
+        FROM account_cashbox_line
         WHERE %s is not NULL AND bank_statement_id is NULL
-        """ %(
-            openupgrade.get_legacy_name('starting_id'), 
-            openupgrade.get_legacy_name('number'), 
-            openupgrade.get_legacy_name('starting_id'), 
-            ))
+    """ % (
+        openupgrade.get_legacy_name('starting_id'),
+        openupgrade.get_legacy_name('number'),
+        openupgrade.get_legacy_name('starting_id'),
+    ))
 
     for (id_start, starting_id, number) in cr.fetchall():
         cashboxline_obj.write(
