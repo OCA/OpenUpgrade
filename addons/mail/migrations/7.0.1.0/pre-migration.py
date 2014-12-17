@@ -43,6 +43,7 @@ column_renames = {
         ('auto_delete', None),
         ]}
 
+
 def precreate_author_id(cr):
     """
     Precreate the 'author_id' column so as to prevent an error
@@ -51,8 +52,8 @@ def precreate_author_id(cr):
     """
     cr.execute('ALTER TABLE "mail_message" ADD COLUMN "author_id" int4')
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     precreate_author_id(cr)
-    

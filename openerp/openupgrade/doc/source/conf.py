@@ -1,5 +1,5 @@
-
 # -*- coding: utf-8 -*-
+# Flake8: noqa
 #
 # OpenUpgrade documentation build configuration file, created by
 # sphinx-quickstart on Wed Nov 30 10:38:00 2011.

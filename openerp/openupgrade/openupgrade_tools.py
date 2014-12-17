@@ -5,4 +5,3 @@ def table_exists(cr, table):
         'SELECT count(relname) FROM pg_class WHERE relname = %s',
         (table,))
     return cr.fetchone()[0] == 1
-

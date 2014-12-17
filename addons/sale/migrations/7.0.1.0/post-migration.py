@@ -21,17 +21,20 @@
 from openerp import pooler, SUPERUSER_ID
 from openerp.openupgrade import openupgrade, openupgrade_70
 
+
 def migrate_sale_order_addresses(cr, pool):
     # disabling transitions during 'sale_order' update.
     transitions = openupgrade.deactivate_workflow_transitions(cr, 'sale.order')
     # partner_address become partner
     openupgrade_70.set_partner_id_from_partner_address_id(
         cr, pool, 'sale.order',
-        'partner_invoice_id', openupgrade.get_legacy_name('partner_invoice_id'))
+        'partner_invoice_id',
+        openupgrade.get_legacy_name('partner_invoice_id'))
     # partner_address become partner
     openupgrade_70.set_partner_id_from_partner_address_id(
         cr, pool, 'sale.order',
-        'partner_shipping_id', openupgrade.get_legacy_name('partner_shipping_id'))
+        'partner_shipping_id',
+        openupgrade.get_legacy_name('partner_shipping_id'))
     # order_id (partner_address) takes precedence over partner_id (partner)
     openupgrade_70.set_partner_id_from_partner_address_id(
         cr, pool, 'sale.order',
@@ -39,11 +42,14 @@ def migrate_sale_order_addresses(cr, pool):
     # Rewriting good values
     openupgrade.reactivate_workflow_transitions(cr, transitions)
 
+
 def migrate_sale_order_line_addresses(cr, pool):
     # partner_address become partner
     openupgrade_70.set_partner_id_from_partner_address_id(
         cr, pool, 'sale.order.line',
-        'address_allotment_id', openupgrade.get_legacy_name('address_allotment_id'))
+        'address_allotment_id',
+        openupgrade.get_legacy_name('address_allotment_id'))
+
 
 def migrate_sale_order_line_names(cr, pool):
     """
@@ -55,14 +61,14 @@ def migrate_sale_order_line_names(cr, pool):
         SELECT id, {0}, {1}
         FROM sale_order_line
         WHERE {1} is not NULL AND {1} != ''
-        """.format(
-            'name',
-            openupgrade.get_legacy_name('notes')))
+        """.format('name',
+                   openupgrade.get_legacy_name('notes')))
     for (sale_order_line_id, name, notes) in cr.fetchall():
         name = name + '\n' if name else ''
         sale_order_line_obj.write(
             cr, SUPERUSER_ID, [sale_order_line_id],
             {'name': name + notes})
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
@@ -70,4 +76,3 @@ def migrate(cr, version):
     migrate_sale_order_addresses(cr, pool)
     migrate_sale_order_line_addresses(cr, pool)
     migrate_sale_order_line_names(cr, pool)
-

@@ -22,7 +22,7 @@
 import os
 import inspect
 import logging
-from openerp import release, osv, pooler, tools, SUPERUSER_ID
+from openerp import release, osv, tools, SUPERUSER_ID
 from openerp.modules.registry import RegistryManager
 import openupgrade_tools
 
@@ -54,17 +54,18 @@ __all__ = [
     'message',
     'deactivate_workflow_transitions',
     'reactivate_workflow_transitions',
-]    
+]
 
 def load_data(cr, module_name, filename, idref=None, mode='init'):
     """
-    Load an xml or csv data file from your post script. The usual case for this is the
-    occurrence of newly added essential or useful data in the module that is
-    marked with "noupdate='1'" and without "forcecreate='1'" so that it will
-    not be loaded by the usual upgrade mechanism. Leaving the 'mode' argument to
-    its default 'init' will load the data from your migration script.
-    
-    Theoretically, you could simply load a stock file from the module, but be 
+    Load an xml or csv data file from your post script. The usual case for \
+    this is the occurrence of newly added essential or useful data in the \
+    module that is marked with "noupdate='1'" and without "forcecreate='1'" \
+    so that it will not be loaded by the usual upgrade mechanism. Leaving \
+    the 'mode' argument to its default 'init' will load the data from your \
+    migration script.
+
+    Theoretically, you could simply load a stock file from the module, but be
     careful not to reinitialize any data that could have been customized.
     Preferably, select only the newly added items. Copy these to a file
     in your migrations directory and load that file.
@@ -77,9 +78,9 @@ def load_data(cr, module_name, filename, idref=None, mode='init'):
     :param filename: the path to the filename, relative to the module \
     directory.
     :param idref: optional hash with ?id mapping cache?
-    :param mode: one of 'init', 'update', 'demo'. Always use 'init' for adding new items \
-    from files that are marked with 'noupdate'. Defaults to 'init'.
-
+    :param mode: one of 'init', 'update', 'demo'. Always use 'init' for \
+    adding new items from files that are marked with 'noupdate'. Defaults to \
+    'init'.
     """
 
     if idref is None:
@@ -91,7 +92,8 @@ def load_data(cr, module_name, filename, idref=None, mode='init'):
     try:
         if ext == '.csv':
             noupdate = True
-            tools.convert_csv_import(cr, module_name, pathname, fp.read(), idref, mode, noupdate)
+            tools.convert_csv_import(
+                cr, module_name, pathname, fp.read(), idref, mode, noupdate)
         else:
             tools.convert_xml_import(cr, module_name, fp, idref, mode=mode)
     finally:
@@ -101,22 +103,25 @@ def load_data(cr, module_name, filename, idref=None, mode='init'):
 load_xml = load_data
 table_exists = openupgrade_tools.table_exists
 
+
 def rename_columns(cr, column_spec):
     """
     Rename table columns. Typically called in the pre script.
 
-    :param column_spec: a hash with table keys, with lists of tuples as values. \
-    Tuples consist of (old_name, new_name). Use None for new_name to trigger a \
-    conversion of old_name using get_legacy_name()
+    :param column_spec: a hash with table keys, with lists of tuples as \
+    values. Tuples consist of (old_name, new_name). Use None for new_name \
+    to trigger a conversion of old_name using get_legacy_name()
     """
     for table in column_spec.keys():
         for (old, new) in column_spec[table]:
             if new is None:
                 new = get_legacy_name(old)
             logger.info("table %s, column %s: renaming to %s",
-                     table, old, new)
-            cr.execute('ALTER TABLE "%s" RENAME "%s" TO "%s"' % (table, old, new,))
+                        table, old, new)
+            cr.execute('ALTER TABLE "%s" RENAME "%s" TO "%s"' %
+                       (table, old, new,))
             cr.execute('DROP INDEX IF EXISTS "%s_%s_index"' % (table, old))
+
 
 def rename_tables(cr, table_spec):
     """
@@ -131,18 +136,19 @@ def rename_tables(cr, table_spec):
     to_rename = [x[0] for x in table_spec]
     for old, new in list(table_spec):
         if (table_exists(cr, old + '_id_seq') and
-            old + '_id_seq' not in to_rename): 
+                old + '_id_seq' not in to_rename):
             table_spec.append((old + '_id_seq', new + '_id_seq'))
     for (old, new) in table_spec:
         logger.info("table %s: renaming to %s",
                     old, new)
         cr.execute('ALTER TABLE "%s" RENAME TO "%s"' % (old, new,))
 
+
 def rename_models(cr, model_spec):
     """
     Rename models. Typically called in the pre script.
     :param model_spec: a list of tuples (old model name, new model name).
-    
+
     Use case: if a model changes name, but still implements equivalent
     functionality you will want to update references in for instance
     relation fields.
@@ -159,6 +165,7 @@ def rename_models(cr, model_spec):
                    'WHERE model = %s', (new, old,))
     # TODO: signal where the model occurs in references to ir_model
 
+
 def rename_xmlids(cr, xmlids_spec):
     """
     Rename XML IDs. Typically called in the pre script.
@@ -169,12 +176,13 @@ def rename_xmlids(cr, xmlids_spec):
     for (old, new) in xmlids_spec:
         if not old.split('.') or not new.split('.'):
             logger.error(
-            'Cannot rename XMLID %s to %s: need the module '
-            'reference to be specified in the IDs' % (old, new))
+                'Cannot rename XMLID %s to %s: need the module '
+                'reference to be specified in the IDs' % (old, new))
         else:
             query = ("UPDATE ir_model_data SET module = %s, name = %s "
                      "WHERE module = %s and name = %s")
             logged_query(cr, query, tuple(new.split('.') + old.split('.')))
+
 
 def drop_columns(cr, column_spec):
     """
@@ -189,14 +197,15 @@ def drop_columns(cr, column_spec):
         logger.info("table %s: drop column %s",
                     table, column)
         if column_exists(cr, table, column):
-            cr.execute('ALTER TABLE "%s" DROP COLUMN "%s"' % 
+            cr.execute('ALTER TABLE "%s" DROP COLUMN "%s"' %
                        (table, column))
         else:
             logger.warn("table %s: column %s did not exist",
-                    table, column)
+                        table, column)
+
 
 def delete_model_workflow(cr, model):
-    """ 
+    """
     Forcefully remove active workflows for obsolete models,
     to prevent foreign key issues when the orm deletes the model.
     """
@@ -212,44 +221,45 @@ def delete_model_workflow(cr, model):
         cr,
         "DELETE FROM wkf WHERE osv = %s", (model,))
 
+
 def warn_possible_dataloss(cr, pool, old_module, fields):
     """
-    Use that function in the following case : 
-    if a field of a model was moved from a 'A' module to a 'B' module. 
-    ('B' depend on 'A'), 
-    This function will test if 'B' is installed. 
+    Use that function in the following case:
+    if a field of a model was moved from a 'A' module to a 'B' module.
+    ('B' depend on 'A'),
+    This function will test if 'B' is installed.
     If not, count the number of different value and possibly warn the user.
     Use orm, so call from the post script.
-    
+
     :param old_module: name of the old module
-    :param fields: list of dictionary with the following keys :
+    :param fields: list of dictionary with the following keys:
         'table' : name of the table where the field is.
         'field' : name of the field that are moving.
-        'new_module' : name of the new module
+        'new_module' : name of the new module.
 
     .. versionadded:: 7.0
     """
     module_obj = pool.get('ir.module.module')
-    for field in fields: 
+    for field in fields:
         module_ids = module_obj.search(cr, SUPERUSER_ID, [
-                ('name', '=', field['new_module']),
-                ('state', 'in', ['installed', 'to upgrade', 'to install'])
-            ])
-        if not module_ids: 
+            ('name', '=', field['new_module']),
+            ('state', 'in', ['installed', 'to upgrade', 'to install'])
+        ])
+        if not module_ids:
             cr.execute(
                 "SELECT count(*) FROM (SELECT %s from %s group by %s) "
                 "as tmp" % (
                     field['field'], field['table'], field['field']))
             row = cr.fetchone()
-            if row[0] == 1: 
+            if row[0] == 1:
                 # not a problem, that field wasn't used.
                 # Just a loss of functionality
                 logger.info(
                     "Field '%s' from module '%s' was moved to module "
                     "'%s' which is not installed: "
                     "No dataloss detected, only loss of functionality"
-                    %(field['field'], old_module, field['new_module']))
-            else: 
+                    % (field['field'], old_module, field['new_module']))
+            else:
                 # there is data loss after the migration.
                 message(
                     cr, old_module,
@@ -258,15 +268,16 @@ def warn_possible_dataloss(cr, pool, old_module, fields):
                     "There were %s distinct values in this field.",
                     field['field'], field['new_module'], row[0])
 
+
 def set_defaults(cr, pool, default_spec, force=False):
     """
     Set default value. Useful for fields that are newly required. Uses orm, so
     call from the post script.
-    
+
     :param default_spec: a hash with model names as keys. Values are lists of \
     tuples (field, value). None as a value has a special meaning: it assigns \
-    the default value. If this value is provided by a function, the function is \
-    called as the user that created the resource.
+    the default value. If this value is provided by a function, the function \
+    is called as the user that created the resource.
     :param force: overwrite existing values. To be used for assigning a non- \
     default value (presumably in the case of a new column). The ORM assigns \
     the default value as declared in the model in an earlier stage of the \
@@ -276,8 +287,9 @@ def set_defaults(cr, pool, default_spec, force=False):
     """
 
     def write_value(ids, field, value):
-        logger.debug("model %s, field %s: setting default value of resources %s to %s",
-                 model, field, ids, unicode(value))
+        logger.debug(
+            "model %s, field %s: setting default value of resources %s to %s",
+            model, field, ids, unicode(value))
         for res_id in ids:
             # Iterating over ids here as a workaround for lp:1131653
             obj.write(cr, SUPERUSER_ID, [res_id], {field: value})
@@ -285,55 +297,61 @@ def set_defaults(cr, pool, default_spec, force=False):
     for model in default_spec.keys():
         obj = pool.get(model)
         if not obj:
-            raise osv.except_osv("Migration: error setting default, no such model: %s" % model, "")
+            raise osv.except_osv(
+                "Migration: error setting default, no such model: %s" %
+                model, "")
 
         for field, value in default_spec[model]:
             domain = not force and [(field, '=', False)] or []
             ids = obj.search(cr, SUPERUSER_ID, domain)
             if not ids:
                 continue
-            if value is None:
-                # Set the value by calling the _defaults of the object.
-                # Typically used for company_id on various models, and in that
-                # case the result depends on the user associated with the object.
-                # We retrieve create_uid for this purpose and need to call the _defaults
-                # function per resource. Otherwise, write all resources at once.
-                if field in obj._defaults:
-                    if not callable(obj._defaults[field]):
-                        write_value(ids, field, obj._defaults[field])
-                    else:
-                        # existence users is covered by foreign keys, so this is not needed
-                        # cr.execute("SELECT %s.id, res_users.id FROM %s LEFT OUTER JOIN res_users ON (%s.create_uid = res_users.id) WHERE %s.id IN %s" %
-                        #                     (obj._table, obj._table, obj._table, obj._table, tuple(ids),))
-                        cr.execute("SELECT id, COALESCE(create_uid, 1) FROM %s " % obj._table + "WHERE id in %s", (tuple(ids),))
-                        # Execute the function once per user_id
-                        user_id_map = {}
-                        for row in cr.fetchall():
-                            user_id_map.setdefault(row[1], []).append(row[0])
-                        for user_id in user_id_map:
-                            write_value(
-                                user_id_map[user_id], field,
-                                obj._defaults[field](obj, cr, user_id, None))
-                else:
-                    error = ("OpenUpgrade: error setting default, field %s with "
-                             "None default value not in %s' _defaults" % (
-                            field, model))
-                    logger.error(error)
-                    # this exeption seems to get lost in a higher up try block
-                    osv.except_osv("OpenUpgrade", error)
-            else:
+            if value is not None:
                 write_value(ids, field, value)
-    
+                continue
+            # So value is None.
+            # Set the value by calling the _defaults of the object.
+            # Typically used for company_id on various models, and in that
+            # case the result depends on the user associated with the
+            # object. We retrieve create_uid for this purpose and need to
+            # call the _defaults function per resource. Otherwise, write
+            # all resources at once.
+            if field in obj._defaults:
+                if not callable(obj._defaults[field]):
+                    write_value(ids, field, obj._defaults[field])
+                else:
+                    cr.execute(
+                        "SELECT id, COALESCE(create_uid, 1) FROM %s " %
+                        obj._table + "WHERE id in %s", (tuple(ids),))
+                    # Execute the function once per user_id
+                    user_id_map = {}
+                    for row in cr.fetchall():
+                        user_id_map.setdefault(row[1], []).append(row[0])
+                    for user_id in user_id_map:
+                        write_value(
+                            user_id_map[user_id], field,
+                            obj._defaults[field](obj, cr, user_id, None))
+            else:
+                error = (
+                    "OpenUpgrade: error setting default, field %s with "
+                    "None default value not in %s' _defaults" % (
+                        field, model))
+                logger.error(error)
+                # this exeption seems to get lost in a higher up try block
+                osv.except_osv("OpenUpgrade", error)
+
+
 def logged_query(cr, query, args=None):
     """
     Logs query and affected rows at level DEBUG
     """
     if args is None:
         args = []
-    res = cr.execute(query, args)
     logger.debug('Running %s', query % tuple(args))
+    cr.execute(query, args)
     logger.debug('%s rows affected', cr.rowcount)
     return cr.rowcount
+
 
 def column_exists(cr, table, column):
     """ Check whether a certain column exists """
@@ -342,8 +360,9 @@ def column_exists(cr, table, column):
         'WHERE attrelid = '
         '( SELECT oid FROM pg_class WHERE relname = %s ) '
         'AND attname = %s',
-        (table, column));
+        (table, column))
     return cr.fetchone()[0] == 1
+
 
 def update_module_names(cr, namespec):
     """
@@ -351,7 +370,7 @@ def update_module_names(cr, namespec):
     in order to prevent  'certificate not unique' error,
     as well as updating the module reference in the
     XML id.
-    
+
     :param namespec: tuple of (old name, new name)
     """
     for (old_name, new_name) in namespec:
@@ -365,6 +384,7 @@ def update_module_names(cr, namespec):
                  "WHERE name = %s")
         logged_query(cr, query, (new_name, old_name))
 
+
 def add_ir_model_fields(cr, columnspec):
     """
     Typically, new columns on ir_model_fields need to be added in a very
@@ -373,13 +393,14 @@ def add_ir_model_fields(cr, columnspec):
     Do not use for fields with additional SQL constraints, such as a
     reference to another table or the cascade constraint, but craft your
     own statement taking them into account.
-    
+
     :param columnspec: tuple of (column name, column type)
     """
     for column in columnspec:
         query = 'ALTER TABLE ir_model_fields ADD COLUMN %s %s' % (
             column)
         logged_query(cr, query, [])
+
 
 def get_legacy_name(original_name):
     """
@@ -392,6 +413,7 @@ def get_legacy_name(original_name):
     """
     return 'openupgrade_legacy_'+('_').join(
         map(str, release.version_info[0:2]))+'_'+original_name
+
 
 def m2o_to_m2m(cr, model, table, field, source_field):
     """
@@ -415,6 +437,7 @@ def m2o_to_m2m(cr, model, table, field, source_field):
                    })
     for row in cr.fetchall():
         model.write(cr, SUPERUSER_ID, row[0], {field: [(4, row[1])]})
+
 
 def message(cr, module, table, column,
             message, *args, **kwargs):
@@ -441,6 +464,7 @@ def message(cr, module, table, column,
     prefix = 'Module %s' + prefix
 
     logger.warn(prefix + message, *argslist, **kwargs)
+
 
 def deactivate_workflow_transitions(cr, model, transitions=None):
     """
@@ -502,6 +526,7 @@ def reactivate_workflow_transitions(cr, transition_conditions):
             'update wkf_transition set condition = %s where id = %s',
             (condition, transition_id))
 
+
 def migrate():
     """
     This is the decorator for the migrate() function
@@ -513,7 +538,7 @@ def migrate():
     """
     def wrap(func):
         def wrapped_function(cr, version):
-            stage =  'unknown'
+            stage = 'unknown'
             module = 'unknown'
             filename = 'unknown'
             try:
@@ -536,7 +561,7 @@ def migrate():
                 func(cr, version)
             except Exception, e:
                 logger.error(
-                    "%s: error in migration script %s: %s" % 
+                    "%s: error in migration script %s: %s" %
                     (module, filename, str(e).decode('utf8')))
                 logger.exception(e)
                 raise

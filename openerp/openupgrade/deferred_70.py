@@ -32,6 +32,7 @@ from openerp import SUPERUSER_ID
 
 logger = logging.getLogger("OpenUpgrade")
 
+
 def sync_commercial_fields(cr, pool):
     """
     Take care of propagating the commercial fields
@@ -47,9 +48,10 @@ def sync_commercial_fields(cr, pool):
         vals = partner_obj.read(
             cr, SUPERUSER_ID, partner_id, [], load='_classic_write')
         partner_obj._fields_sync(
-            cr, SUPERUSER_ID, 
+            cr, SUPERUSER_ID,
             partner_obj.browse(cr, SUPERUSER_ID, partner_id),
-            vals)                     
+            vals)
+
 
 def migrate_deferred(cr, pool):
     sync_commercial_fields(cr, pool)

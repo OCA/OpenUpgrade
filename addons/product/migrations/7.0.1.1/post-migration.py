@@ -21,6 +21,7 @@
 
 from openupgrade import openupgrade
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.load_xml(

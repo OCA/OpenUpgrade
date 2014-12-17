@@ -22,8 +22,9 @@
 from openupgrade import openupgrade, openupgrade_70
 from openerp import pooler, SUPERUSER_ID
 
+
 def migrate_hr_employee_addresses(cr, pool):
-    """ 
+    """
     Change reference to old res_partner_address to new res_partner
     """
     # 'address_home_id' is now a 'res.partner' object
@@ -35,13 +36,15 @@ def migrate_hr_employee_addresses(cr, pool):
         cr, pool, 'hr.employee',
         'address_id', openupgrade.get_legacy_name('address_id'))
 
+
 def migrate_hr_employee_department(cr, pool):
-    """ 
-    Update 'hr_employee.department_id' with value from deleted res_users.context_department_id.
-    """ 
+    """
+    Update 'hr_employee.department_id' with value from deleted
+    res_users.context_department_id.
+    """
     hr_employee_obj = pool.get('hr.employee')
     cr.execute("""
-        SELECT 
+        SELECT
             hr_emp.id as hr_emp_id,
             res_users.context_department_id as dep_id
         FROM hr_employee hr_emp
@@ -55,12 +58,14 @@ def migrate_hr_employee_department(cr, pool):
             }
         hr_employee_obj.write(cr, SUPERUSER_ID, hr_emp_id, vals)
 
+
 def migrate_hr_job(cr):
     """
     Change obsolete selection values for hr_job.state
     """
     openupgrade.logged_query(
         cr, "UPDATE hr_job SET state = 'open' WHERE state = 'old' ")
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

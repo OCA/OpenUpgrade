@@ -28,12 +28,13 @@ column_renames = {
 }
 
 xmlid_renames = [
-    ('product.decimal_sale', 'product.decimal_price'), 
-    ('product.cat0', 'product.product_category_all'), 
-    ('product.product_consultant', 'product.product_product_consultant'), 
-    ('product.uom_day', 'product.product_uom_day'), 
-    ('product.uom_hour', 'product.product_uom_hour'), 
+    ('product.decimal_sale', 'product.decimal_price'),
+    ('product.cat0', 'product.product_category_all'),
+    ('product.product_consultant', 'product.product_product_consultant'),
+    ('product.uom_day', 'product.product_uom_day'),
+    ('product.uom_hour', 'product.product_uom_hour'),
 ]
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

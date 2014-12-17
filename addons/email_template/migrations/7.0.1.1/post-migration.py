@@ -23,6 +23,7 @@
 from openerp.openupgrade import openupgrade
 from openerp.tools.mail import plaintext2html
 
+
 def convert_mail_bodies(cr):
     """
     Convert plain bodies to sanitized html.
@@ -85,7 +86,7 @@ def convert_mail_bodies(cr):
                     WHERE et.id = %s))
                 """, (lang, res_id, body, res_id))
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     convert_mail_bodies(cr)
-

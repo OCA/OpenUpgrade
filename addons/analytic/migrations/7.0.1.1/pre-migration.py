@@ -22,7 +22,8 @@
 from openupgrade import openupgrade
 
 xmlid_renames = [
-    ('account.seq_type_analytic_account', 'analytic.seq_type_analytic_account_main'),
+    ('account.seq_type_analytic_account',
+     'analytic.seq_type_analytic_account_main'),
     ('account.seq_analytic_account', 'analytic.seq_analytic_account_base'),
 ]
 
@@ -31,6 +32,7 @@ column_renames = {
         ('contact_id', openupgrade.get_legacy_name('contact_id'))
         ]
     }
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

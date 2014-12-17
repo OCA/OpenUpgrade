@@ -1,0 +1,21 @@
+language: python
+
+python:
+  - "2.7"
+
+# Need flake8 for pep8 testing
+install:
+    - pip install flake8
+
+# Test with flake for:
+#   * migration scripts
+#   * scripts/ directory
+#   * openerp/addons/openupgrade* directories
+#   * openerp/openupgrade/ directory
+# use a max length of 80
+script:
+    - flake8 scripts --max-line-length=80
+    - flake8 openerp/openupgrade --max-line-length=80
+    - flake8 openerp/addons/openupgrade* --max-line-length=80 --filename=__init__.py --ignore=F401
+    - flake8 openerp/addons/openupgrade* --max-line-length=80 --exclude=__init__.py
+    - flake8 . --max-line-length=80 --filename=pre-*.py,post-*.py

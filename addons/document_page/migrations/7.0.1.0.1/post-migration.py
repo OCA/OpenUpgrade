@@ -38,16 +38,21 @@ WHERE model = 'wiki.groups'""")
 
 
 def combine_wiki_groups_document_page(cr):
-    """Put wiki_groups content into wiki_wiki, then delete wiki_groups, conserve parent_id"""
-    logged_query(cr, """ALTER TABLE document_page ADD COLUMN old_id integer;""")
+    """Put wiki_groups content into wiki_wiki,
+    then delete wiki_groups, conserve parent_id"""
+    logged_query(
+        cr, """ALTER TABLE document_page ADD COLUMN old_id integer;""")
     logged_query(cr, """\
-INSERT INTO document_page(create_uid, create_date, write_date, name, content, type, old_id)
-SELECT create_uid, create_date, write_date, name, content, 'category' AS type, id
+INSERT INTO document_page(
+    create_uid, create_date, write_date, name, content, type, old_id)
+SELECT create_uid, create_date, write_date, name, content,
+    'category' AS type, id
 FROM wiki_groups
 ORDER BY id ASC;""")
     logged_query(cr, """\
 UPDATE document_page w
-SET parent_id = (SELECT id FROM document_page WHERE old_id = w.group_id LIMIT 1)
+SET parent_id =
+    (SELECT id FROM document_page WHERE old_id = w.group_id LIMIT 1)
 WHERE group_id IS NOT null;\
 """)
     logged_query(cr, """\
@@ -55,7 +60,8 @@ UPDATE ir_model_data d
 SET res_id = (SELECT id FROM document_page WHERE old_id = d.res_id LIMIT 1)
 WHERE res_id IS NOT null and model = 'wiki.groups';\
 """)
-    openupgrade.drop_columns(cr, [('document_page', 'group_id'), ('document_page', 'old_id')])
+    openupgrade.drop_columns(
+        cr, [('document_page', 'group_id'), ('document_page', 'old_id')])
     rename_model_wiki_groups(cr)
 
 
@@ -110,7 +116,8 @@ re_ul_ol = re.compile("^(\*+|#+) ")
 re_ul_li = re.compile("^(\*+|##+):? ")
 re_ol_li = re.compile("^(\*\*+|#+):? ")
 re_ul_ol_li = re.compile("^(\*+|#+):? ")
-re_youtube = re.compile("^(https?://)?(www\.)?youtube.com/(watch\?(.*)v=|embed/)([^&]+)")
+re_youtube = re.compile(
+    "^(https?://)?(www\.)?youtube.com/(watch\?(.*)v=|embed/)([^&]+)")
 
 
 class Wiky:
@@ -203,7 +210,8 @@ class Wiky:
                 if nested_count < this_count:
                     break
                 elif lines[j][nested_count] == ':':
-                    html += "<br/>" + self.process_normal(lines[j][nested_count + 2:])
+                    html += ("<br/>" +
+                             self.process_normal(lines[j][nested_count + 2:]))
                     nested_end = j
                 else:
                     break
@@ -274,7 +282,8 @@ class Wiky:
         if not m:
             return "<b>%s is an invalid YouTube URL</b>" % url
         url = "http://www.youtube.com/embed/" + m.group(5)
-        return '<iframe width="480" height="390" src="%s" frameborder="0" allowfullscreen=""></iframe>' % url
+        return ('<iframe width="480" height="390" src="%s" frameborder="0" '
+                'allowfullscreen=""></iframe>') % url
 
     def process_normal(self, wikitext):
         # Image
@@ -345,4 +354,3 @@ class Wiky:
                 head += tail
                 tail = ''
         return head
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

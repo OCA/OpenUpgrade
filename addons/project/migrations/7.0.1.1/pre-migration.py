@@ -22,13 +22,14 @@
 from openupgrade import openupgrade
 
 column_renames = {
-    'project_task':[
+    'project_task': [
         ('type_id', 'stage_id'),
     ],
-    'project_task_type':[
+    'project_task_type': [
         ('project_default', 'case_default'),
     ],
 }
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

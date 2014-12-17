@@ -22,9 +22,11 @@
 from openerp.openupgrade import openupgrade
 
 xmlid_renames = [
-    ('mrp.trans_product_check_produce', 'mrp.trans_confirm_mto_need_production'),
+    ('mrp.trans_product_check_produce',
+     'mrp.trans_confirm_mto_need_production'),
     ('procurement.trans_produce_make_done', 'mrp.trans_produce_finished_prod'),
 ]
+
 
 @openupgrade.migrate()
 def migrate(cr, version):

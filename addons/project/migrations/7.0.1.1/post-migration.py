@@ -22,6 +22,7 @@
 from openupgrade import openupgrade
 from openerp import pooler, SUPERUSER_ID
 
+
 def copy_state_from_analytic_account(cr):
     openupgrade.logged_query(cr, """
         UPDATE project_project pp
@@ -32,17 +33,19 @@ def copy_state_from_analytic_account(cr):
         WHERE pp.analytic_account_id is not NULL
         """)
 
+
 def short_name(name):
     """Keep first word(s) of name to make it small enough
        but distinctive"""
-    if not name: return name
+    if not name:
+        return name
     # keep 7 chars + end of the last word
     keep_words = name[:7].strip().split()
     return ' '.join(name.split()[:len(keep_words)])
 
+
 def createProjectAliases(cr, pool):
     alias_obj = pool.get('mail.alias')
-    project_obj = pool.get('project.project')
     cr.execute("""
     SELECT project_project.id, account_analytic_account.name
     FROM project_project, account_analytic_account
@@ -51,14 +54,16 @@ def createProjectAliases(cr, pool):
     AND project_project.analytic_account_id = account_analytic_account.id
     """)
     for (id, name) in cr.fetchall():
-        alias_id = alias_obj.create_unique_alias(cr, SUPERUSER_ID,
-                              {'alias_name': "project+" + short_name(name)},
-                              model_name='project.task')
+        alias_id = alias_obj.create_unique_alias(
+            cr, SUPERUSER_ID,
+            {'alias_name': "project+" + short_name(name)},
+            model_name='project.task')
         cr.execute("""
             UPDATE project_project
             SET alias_id=%s
             WHERE id=%s
             """, (alias_id, id))
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
@@ -67,5 +72,5 @@ def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     copy_state_from_analytic_account(cr)
     createProjectAliases(cr, pool)
-    openupgrade.logged_query(cr,'DROP VIEW project_vs_hours')
+    openupgrade.logged_query(cr, 'DROP VIEW project_vs_hours')
     openupgrade.load_data(cr, 'project', 'migrations/7.0.1.1/data.xml')

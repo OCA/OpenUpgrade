@@ -22,7 +22,7 @@
 from openerp.openupgrade import openupgrade
 
 column_renames = {
-    'hr_expense_expense':[
+    'hr_expense_expense': [
         ('invoice_id', None),
         ('state', None),
         ('ref', None),
@@ -32,6 +32,7 @@ column_renames = {
 xmlid_renames = [
     ('hr_expense.act_invoice', 'hr_expense.act_done'),
 ]
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
