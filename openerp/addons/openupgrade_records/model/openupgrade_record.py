@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module Copyright (C) 2012 OpenUpgrade community
+#    This module Copyright (C) 2012-2014 OpenUpgrade community
 #    https://launchpad.net/~openupgrade-committers
 #
 #    Contributors:
@@ -23,14 +23,21 @@
 #
 ##############################################################################
 
-from osv import osv, fields
+try:
+    from openerp.osv.orm import Model
+    from openerp.osv import fields
+except ImportError:
+    from osv.osv import osv as Model
+    from osv import fields
+
 
 # Cannot use forward references in 6.0
-class openupgrade_record(osv.osv):
+class openupgrade_record(Model):
     _name = 'openupgrade.record'
 openupgrade_record()
 
-class openupgrade_attribute(osv.osv):
+
+class openupgrade_attribute(Model):
     _name = 'openupgrade.attribute'
     _rec_name = 'name'
     _columns = {
@@ -50,7 +57,8 @@ class openupgrade_attribute(osv.osv):
         }
 openupgrade_attribute()
 
-class openupgrade_record(osv.osv):
+
+class openupgrade_record(Model):
     _inherit = 'openupgrade.record'
 
     _columns = {
@@ -65,7 +73,7 @@ class openupgrade_record(osv.osv):
             'in this module. If this module modifies an attribute of an '
             'exting field, set to Modify.',
             readonly=True,
-             ),
+            ),
         'type': fields.selection(
             [('field', 'Field'), ('xmlid', 'XML ID')],
             'Type',
@@ -76,6 +84,7 @@ class openupgrade_record(osv.osv):
             readonly=True,
             ),
         }
+
     def field_dump(self, cr, uid, context=None):
         keys = [
             'module',
@@ -98,11 +107,11 @@ class openupgrade_record(osv.osv):
         for record in records:
             repr = template.copy()
             repr.update({
-                    'module': record.module,
-                    'model': record.model,
-                    'field': record.field,
-                    'mode': record.mode,
-                    })
+                'module': record.module,
+                'model': record.model,
+                'field': record.field,
+                'mode': record.mode,
+                })
             repr.update(
                 dict([(x.name, x.value) for x in record.attribute_ids]))
             data.append(repr)

@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module Copyright (C) 2012 OpenUpgrade community
+#    This module Copyright (C) 2012-2014 OpenUpgrade community
 #    https://launchpad.net/~openupgrade-committers
 #
 #    Contributors:
@@ -28,7 +28,7 @@
     'name': 'OpenUpgrade Records',
     'version': '0.2',
     'category': 'Normal',
-    'description': """Allow OpenUpgrade records to be 
+    'description': """Allow OpenUpgrade records to be
 stored in the database and compare with other servers.
 
 This module depends on OpenERP client lib:
@@ -57,7 +57,7 @@ This module depends on OpenERP client lib:
     'installable': True,
     'auto_install': False,
     'external_dependencies': {
-        'python' : ['openerplib'],
+        'python': ['openerplib'],
         },
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

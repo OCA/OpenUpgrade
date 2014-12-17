@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module Copyright (C) 2012 OpenUpgrade community
+#    This module Copyright (C) 2012-2014 OpenUpgrade community
 #    https://launchpad.net/~openupgrade-committers
 #
 #    Contributors:
@@ -24,18 +24,27 @@
 ##############################################################################
 
 import os
-from osv import osv, fields
 
 try:
-    from openerp.addons.openupgrade_records.lib import compare
-    from openerp.openupgrade_records.lib import apriori
-    from openerp.addons import get_module_path
+    from openerp.modules import get_module_path  # 8.0
 except ImportError:
-    from openupgrade_records.lib import compare
-    from openupgrade_records.lib import apriori
-    from addons import get_module_path
+    try:
+        from openerp.addons import get_module_path  # 6.1, 7.0
+    except ImportError:
+        from addons import get_module_path  # 5.0
 
-class openupgrade_analysis_wizard(osv.osv_memory):
+
+try:
+    from openerp.osv.orm import TransientModel
+    from openerp.osv import fields
+    from openerp.addons.openupgrade_records.lib import compare
+except ImportError:
+    from osv.osv import osv_memory as TransientModel
+    from osv import fields
+    from openupgrade_records.lib import compare
+
+
+class openupgrade_analysis_wizard(TransientModel):
     _name = 'openupgrade.analysis.wizard'
     _description = 'OpenUpgrade Analysis Wizard'
     _columns = {
@@ -57,13 +66,16 @@ class openupgrade_analysis_wizard(osv.osv_memory):
         }
 
     def get_communication(self, cr, uid, ids, context=None):
-        """ 
+        """
         Retrieve both sets of database representations,
         perform the comparison and register the resulting
         change set
         """
-        def write_file(
-            module, version, contents, filename='openupgrade_analysis.txt'):
+        if context is None:
+            context = {}
+
+        def write_file(module, version, contents,
+                       filename='openupgrade_analysis.txt'):
             module_path = get_module_path(module)
             if not module_path:
                 return "ERROR: could not find module path:\n"
@@ -90,11 +102,10 @@ class openupgrade_analysis_wizard(osv.osv_memory):
             cr, uid, [wizard.server_config.id], context=context)
         remote_record_obj = connection.get_model('openupgrade.record')
         local_record_obj = self.pool.get('openupgrade.record')
-        
+
         # Retrieve field representations and compare
         remote_records = remote_record_obj.field_dump(context)
         local_records = local_record_obj.field_dump(cr, uid, context)
-        modules_record = set([record['module'] for record in remote_records + local_records])
         res = compare.compare_sets(remote_records, local_records)
 
         # Retrieve xml id representations and compare
@@ -113,21 +124,28 @@ class openupgrade_analysis_wizard(osv.osv_memory):
             for x in remote_record_obj.read(
                 remote_xml_record_ids, fields)
             ]
-        modules_xml_records = set([record['module'] for record in remote_xml_records + local_xml_records])
         res_xml = compare.compare_xml_sets(
             remote_xml_records, local_xml_records)
 
+        affected_modules = list(
+            set(record['module'] for record in
+                remote_records + local_records +
+                remote_xml_records + local_xml_records
+                ))
+
         # reorder and output the result
-        keys = ['general'] + list(modules_record & modules_xml_records)
+        keys = ['general'] + affected_modules
         module_obj = self.pool.get('ir.module.module')
         module_ids = module_obj.search(
             cr, uid, [('state', '=', 'installed')])
-        modules = dict([(x['name'], x) for x in module_obj.read(cr, uid, module_ids)])
+        modules = dict(
+            [(x['name'], x) for x in module_obj.read(cr, uid, module_ids)])
         general = ''
         for key in keys:
             contents = "---Fields in module '%s'---\n" % key
             if key in res:
-                contents += '\n'.join([unicode(line) for line in sorted(res[key])])
+                contents += '\n'.join(
+                    [unicode(line) for line in sorted(res[key])])
                 if res[key]:
                     contents += '\n'
             contents += "---XML records in module '%s'---\n" % key
@@ -153,7 +171,7 @@ class openupgrade_analysis_wizard(osv.osv_memory):
                     general += contents
             else:
                 general += contents
-        
+
         # Store the general log in as many places as possible ;-)
         if wizard.write and 'base' in modules:
             write_file(
@@ -172,10 +190,9 @@ class openupgrade_analysis_wizard(osv.osv_memory):
             'domain': [],
             'context': context,
             'type': 'ir.actions.act_window',
-            #'target': 'new',
+            # 'target': 'new',
             'res_id': ids[0],
             }
         return result
 
 openupgrade_analysis_wizard()
-
