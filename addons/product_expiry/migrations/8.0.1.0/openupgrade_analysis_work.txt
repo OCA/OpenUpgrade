@@ -1,0 +1,14 @@
+---Fields in module 'product_expiry'---
+product_expiry / product.product          / alert_time (integer)          : DEL 
+product_expiry / product.product          / life_time (integer)           : DEL 
+product_expiry / product.product          / removal_time (integer)        : DEL 
+product_expiry / product.product          / use_time (integer)            : DEL 
+product_expiry / product.template         / alert_time (integer)          : NEW 
+product_expiry / product.template         / life_time (integer)           : NEW 
+product_expiry / product.template         / removal_time (integer)        : NEW 
+product_expiry / product.template         / use_time (integer)            : NEW
+## OK fields moved up in template
+
+---XML records in module 'product_expiry'---
+NEW product.removal: product_expiry.removal_fefo
+## Nothing to do
