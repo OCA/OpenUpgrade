@@ -25,6 +25,7 @@ column_renames = {
     'account_bank_statement_line': [
         ('analytic_account_id', None),
         ('type', None),
+        ('account_id', None),
     ]
 }
 
