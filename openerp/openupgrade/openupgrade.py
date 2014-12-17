@@ -25,6 +25,7 @@ import logging
 from openerp import release, tools, SUPERUSER_ID
 from openerp.osv import orm
 from openerp.tools.mail import plaintext2html
+from openerp.modules.registry import RegistryManager
 import openupgrade_tools
 
 # The server log level has not been set at this point
@@ -59,6 +60,8 @@ __all__ = [
     'move_field_m2o',
     'convert_field_to_html',
     'map_values',
+    'deactivate_workflow_transitions',
+    'reactivate_workflow_transitions',
 ]
 
 
@@ -614,6 +617,67 @@ def message(cr, module, table, column,
     prefix = 'Module %s' + prefix
 
     logger.warn(prefix + message, *argslist, **kwargs)
+
+
+def deactivate_workflow_transitions(cr, model, transitions=None):
+    """
+    Disable workflow transitions for workflows on a given model.
+    This can be necessary for automatic workflow transitions when writing
+    to an object via the ORM in the post migration step.
+
+    Returns a dictionary to be used on reactivate_workflow_transitions
+
+    :param model: the model for which workflow transitions should be
+    deactivated
+    :param transitions: a list of ('module', 'name') xmlid tuples of
+    transitions to be deactivated. Don't pass this if there's no specific
+    reason to do so, the default is to deactivate all transitions
+
+    .. versionadded:: 7.0
+    """
+    transition_ids = []
+    if transitions:
+        data_obj = RegistryManager.get(cr.dbname)['ir.model.data']
+        for module, name in transitions:
+            try:
+                transition_ids.append(
+                    data_obj.get_object_reference(
+                        cr, SUPERUSER_ID, module, name)[1])
+            except ValueError:
+                continue
+    else:
+        cr.execute(
+            '''select distinct t.id
+            from wkf w
+            join wkf_activity a on a.wkf_id=w.id
+            join wkf_transition t
+                on t.act_from=a.id or t.act_to=a.id
+            where w.osv=%s''', (model,))
+        transition_ids = [i for i, in cr.fetchall()]
+    cr.execute(
+        'select id, condition from wkf_transition where id in %s',
+        (tuple(transition_ids),))
+    transition_conditions = dict(cr.fetchall())
+    cr.execute(
+        "update wkf_transition set condition = 'False' WHERE id in %s",
+        (tuple(transition_ids),))
+    return transition_conditions
+
+
+def reactivate_workflow_transitions(cr, transition_conditions):
+    """
+    Reactivate workflow transition previously deactivated by
+    deactivate_workflow_transitions.
+
+    :param transition_conditions: a dictionary returned by
+    deactivate_workflow_transitions
+
+    .. versionadded:: 7.0
+    """
+    for transition_id, condition in transition_conditions.iteritems():
+        cr.execute(
+            'update wkf_transition set condition = %s where id = %s',
+            (condition, transition_id))
 
 
 def migrate(no_version=False):
