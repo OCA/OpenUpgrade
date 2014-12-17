@@ -26,6 +26,9 @@ from openerp.addons.openupgrade_records.lib import apriori
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    # Drop view that inhibits changing field types. It will be recreated BTW
+    cr.execute('drop view if exists report_document_user cascade')
+
     openupgrade.update_module_names(
         cr, apriori.renamed_modules.iteritems()
     )
