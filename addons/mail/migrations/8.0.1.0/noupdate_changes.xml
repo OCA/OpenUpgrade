@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record model="ir.rule" id="mail_followers_read_write_own"><field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            </record>
+    <record model="mail.message.subtype" id="mt_comment"><field name="sequence" eval="0"/>
+        </record>
+  </data>
+</openerp>

@@ -1,0 +1,50 @@
+---Fields in module 'mail'---
+mail         / mail.alias               / alias_contact (selection)     : NEW required: required, selection_keys: ['everyone', 'followers', 'partners'], req_default: everyone
+# Nothing to do
+mail         / mail.alias               / alias_parent_model_id (many2one): NEW relation: ir.model
+mail         / mail.alias               / alias_parent_thread_id (integer): NEW
+# Done: populated using update_alias
+mail         / mail.mail                / recipient_ids (many2many)     : NEW relation: res.partner
+mail         / mail.message             / record_name (char)            : not a function anymore
+mail         / mail.message.subtype     / hidden (boolean)              : NEW
+mail         / mail.message.subtype     / sequence (integer)            : NEW
+# Nothing to do. Setting non-default sequence for mt_comment through data file.
+
+mail         / mail.group               / message_last_post (datetime)  : NEW
+# Done
+
+mail         / mail.mail                / email_from (char)             : DEL
+mail         / mail.mail                / mail_server_id (many2one)     : DEL relation: ir.mail_server
+mail         / mail.message             / mail_server_id (many2one)     : NEW relation: ir.mail_server
+mail         / mail.mail                / reply_to (char)               : DEL
+mail         / mail.message             / reply_to (char)               : NEW
+# Moved from mail.mail to mail.message
+
+mail         / mail.thread              / message_follower_ids (many2many): module is now 'website_mail' ('mail')
+mail         / mail.thread              / message_ids (one2many)        : module is now 'website_mail' ('mail')
+mail         / mail.thread              / message_is_follower (boolean) : module is now 'website_mail' ('mail')
+mail         / mail.thread              / message_summary (text)        : module is now 'website_mail' ('mail')
+mail         / mail.thread              / message_unread (boolean)      : module is now 'website_mail' ('mail')
+# Calculated function fields, nothing to do.
+
+mail         / res.partner              / message_last_post (datetime)  : NEW
+# Done
+
+mail         / res.partner              / notification_email_send (selection): selection_keys is now '['always', 'none']' ('['all', 'comment', 'email', 'none']')
+mail         / res.partner              / notification_email_send (selection): was renamed to notify_email [nothing to to]
+# Done
+
+mail         / res.users                / display_groups_suggestions (boolean): NEW
+# Nothing to do: default value is set automatically
+
+---XML records in module 'mail'---
+NEW ir.actions.act_window: base.action_attachment
+NEW ir.actions.client: mail.action_client_messaging_menu
+NEW ir.actions.server: mail.action_mail_redirect
+NEW ir.actions.todo: base.open_menu
+NEW ir.config_parameter: mail.icp_mail_catchall_alias
+NEW ir.rule: mail.mail_followers_read_write_others
+NEW ir.ui.view: mail.assets_backend
+NEW ir.ui.view: mail.view_document_file_kanban
+NEW res.partner: base.partner_root
+# Nothing to do
