@@ -176,21 +176,16 @@ def migrate_product_supply_method(cr, pool, uid):
     produce -> Manufacture Rule
     :param cr: Database cursor
     '''
-    pool = pooler.get_pool(cr.dbname)
-    route_obj = pool['stock.location.route']
-    template_obj = pool['product.template']
-
-    mto_route_id = route_obj.search(cr, uid, [('name', 'like', 'Manufacture')])
-    mto_route_id = mto_route_id and mto_route_id[0] or False
-
-    supply_method_legacy = openupgrade.get_legacy_name('supply_method')
-    if mto_route_id:
-        product_ids = []
-        cr.execute("SELECT id FROM product_template WHERE %s = %%s" % supply_method_legacy, ('produce',))
-        for res in cr.fetchall():
-            product_ids.append(res[0])
-
-        template_obj.write(cr, uid, product_ids, {'route_ids': [(4, mto_route_id)]})
+    mto_route_id = pool['ir.model.data'].get_object_reference(
+        cr, uid, 'mrp', 'route_warehouse0_manufacture')[1]
+    cr.execute(
+        "SELECT id FROM product_template WHERE {column} = %s".format(
+            column=openupgrade.get_legacy_name('supply_method')), ('produce',))
+    template_ids = [row[0] for row in cr.fetchall()]
+    logger.debug(
+        "Adding manufacture route to %s product templates", len(template_ids))
+    pool['product.template'].write(
+        cr, uid, template_ids, {'route_ids': [(4, mto_route_id)]})
 
 
 def migrate_product(cr, pool):
