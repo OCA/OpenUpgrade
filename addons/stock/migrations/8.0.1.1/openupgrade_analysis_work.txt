@@ -26,8 +26,7 @@ stock        / procurement.rule         / propagate (boolean)           : NEW
 stock        / procurement.rule         / propagate_warehouse_id (many2one): NEW relation: stock.warehouse
 stock        / procurement.rule         / route_id (many2one)           : NEW relation: stock.location.route
 stock        / procurement.rule         / warehouse_id (many2one)       : NEW relation: stock.warehouse
-# DONE created warehouse pull rules 
-#TODO procure_method field must be initialized
+# DONE created warehouse pull rules. Additional rules created in mrp and purchase
 
 ############### PRODUCT CATEGORY
 
@@ -40,7 +39,7 @@ stock        / product.category         / property_stock_valuation_account_id (m
 stock        / product.category         / removal_strategy_id (many2one): NEW relation: product.removal
 stock        / product.category         / route_ids (many2many)         : NEW relation: stock.location.route
 # NOTHING TO DO
-# The first four fields have been moved to a different module. Probably these properties must be filled in the stock_account
+# TODO: The first four fields have been moved to a different module. Probably these properties must be filled in the stock_account
 # migration script. 
 
 stock        / product.product          / track_incoming (boolean)      : DEL 
@@ -49,14 +48,14 @@ stock        / product.product          / track_production (boolean)    : DEL
 stock        / product.template         / track_all (boolean)           : NEW 
 stock        / product.template         / track_incoming (boolean)      : NEW 
 stock        / product.template         / track_outgoing (boolean)      : NEW 
-# The first three fields have been moved to product_template. Valuation also has been moved to product_template
-# Check if track_production is all 
+# DONE. Tracking fields have been moved to product_template. Track incoming/outgoing
+# is migrated in the post script. Track production is handled in mrp
 
 stock        / product.product          / valuation (selection)         : module is now 'stock_account' ('stock')
 stock        / product.product          / valuation (selection)         : now a function
 stock        / product.template         / valuation (selection)         : NEW required: required, selection_keys: ['manual_periodic', 'real_time'], req_default: manual_periodic
-# DONE migrated
-# Check Valuation properties. 
+# Done. Valuation also has been moved to model product_template, module stock_account
+# as a property field. This is migrated in openerp/openupgrade/deferred_80.py.
 
 stock        / product.putaway          / fixed_location_ids (one2many) : NEW relation: stock.fixed.putaway.strat
 stock        / product.putaway          / method (selection)            : NEW required: required, selection_keys: function, req_default: fixed

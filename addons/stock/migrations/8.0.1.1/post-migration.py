@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: ONESTEiN B.V.
+#    Copyright (C) 2014 ONESTEin B.V.
+#              (C) 2014 Therp B.V.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,13 +19,12 @@
 #
 ##############################################################################
 
+import logging
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp.modules.registry import RegistryManager
 from openerp import pooler, SUPERUSER_ID
 
-import logging
-logger = logging.getLogger('OpenUpgrade')
-
+logger = logging.getLogger('OpenUpgrade.stock')
 default_spec = {
     'procurement.rule': [
         ('procure_method', 'make_to_stock'),
@@ -58,26 +58,20 @@ def default_stock_location(cr, pool, uid):
 
 
 def migrate_product(cr, pool):
-    """Migrate the following:
-    track_incoming, track_outgoing, track_production -> track_all, valuation
-    """
+    """Migrate track_incoming, track_outgoing"""
     prod_tmpl_obj = pool['product.template']
-    track_incoming_name = openupgrade.get_legacy_name('track_incoming')
-    track_outgoing_name = openupgrade.get_legacy_name('track_outgoing')
-    track_production_name = openupgrade.get_legacy_name('track_production')
-    valuation_name = openupgrade.get_legacy_name('valuation')
-
-    # Valuation field cannot be null, so set default to 'manual_periodic'.
-    sql = """UPDATE product_product SET %(f)s = 'manual_periodic' WHERE %(f)s is NULL""" % ({'f': valuation_name})
-    cr.execute(sql)
-
-    sql = """SELECT product_tmpl_id, {}, {}, {}, {} FROM product_product
-        """.format(track_incoming_name, track_outgoing_name, track_production_name, valuation_name)
-    cr.execute(sql)
-    rows = cr.fetchall()
-    for tmpl_id, ti, to, tp, valuation in rows:
-        prod_tmpl_obj.write(cr, SUPERUSER_ID, tmpl_id, {
-            'track_incoming': ti, 'track_outgoing': to, 'track_all': tp, 'valuation': valuation})
+    for field in 'track_incoming', 'track_outgoing':
+        cr.execute(
+            """
+            SELECT product_tmpl_id FROM product_product
+            WHERE {} IS TRUE""".format(
+                openupgrade.get_legacy_name(field)))
+        template_ids = [row[0] for row in cr.fetchall()]
+        logger.debug(
+            "Setting %s to True for %s product templates",
+            field, len(template_ids))
+        prod_tmpl_obj.write(
+            cr, SUPERUSER_ID, template_ids, {field: True})
 
 
 def swap_procurement_move_rel(cr, pool):
@@ -444,52 +438,6 @@ def migrate_product_supply_method(cr):
         template_obj.write(cr, uid, product_ids, {'route_ids': [(6, 0, [mto_route_id])]})
 
 
-def migrate_procurement_order_method(cr):
-    """Procurements method: change the supply_method for the matching rule
-    make to stock -> MTS Rule
-    make to order -> MTO Rule
-    :param cr: Database cursor
-    """
-    uid = SUPERUSER_ID
-    pool = pooler.get_pool(cr.dbname)
-    procurement_obj = pool['procurement.order']
-    rule_obj = pool['procurement.rule']
-
-    procure_method_legacy = openupgrade.get_legacy_name('procure_method')
-
-    if not openupgrade.column_exists(
-            cr, 'product_template', procure_method_legacy):
-        # in this case, there was no migration for the procurement module
-        # which can be okay if procurement was not installed in the 7.0 db
-        return
-
-    cr.execute("""SELECT id FROM procurement_order WHERE %s = %%s and state != %%s""" % procure_method_legacy,
-               ('make_to_order', 'done',))
-    for res in cr.fetchall():
-        procurement = procurement_obj.browse(cr, uid, res[0])
-        location_id = procurement.location_id.id
-        mto_rule_id = rule_obj.search(cr, uid, [('procure_method', 'like', 'make_to_order'),
-                                                ('location_id', '=', location_id)])
-        if mto_rule_id:
-            procurement_obj.write(cr, uid, res[0], {'rule_id': mto_rule_id[0]})
-        else:
-            logger.warn("""Procurement Order Id:%s with procurement Location Id:%s hasn't any procurement rule,
-                please create and assign a new rule for this procurement""", res[0], location_id)
-
-    cr.execute("SELECT id FROM procurement_order WHERE %s = %%s and state != %%s" % procure_method_legacy,
-               ('make_to_stock', 'done',))
-    for res in cr.fetchall():
-        procurement = procurement_obj.browse(cr, uid, res[0])
-        location_id = procurement.location_id.id
-        mts_rule_id = rule_obj.search(cr, uid, [('procure_method', 'like', 'make_to_stock'),
-                                                ('location_id', '=', location_id)])
-        if mts_rule_id:
-            procurement_obj.write(cr, uid, res[0], {'rule_id': mts_rule_id[0]})
-        else:
-            logger.warn("""Procurement Order Id:%s with procurement Location Id:%s hasn't any procurement rule,
-                please create and assign a new rule for this procurement""", res[0], location_id)
-
-
 def migrate_procurement_order(cr):
     """Migrates procurement orders and the new fields warehouse, move_ids, partner_dest_id
     :param cr:
@@ -503,8 +451,6 @@ def migrate_procurement_order(cr):
         cr, registry['procurement.order'],
         'procurement_order', 'move_ids',
         openupgrade.get_legacy_name('move_id'))
-
-    migrate_procurement_order_method(cr)
 
     # Warehouse, partner from the move.
     cr.execute("""UPDATE procurement_order AS po
