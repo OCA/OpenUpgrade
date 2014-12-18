@@ -49,6 +49,8 @@ module_namespec = [
     ('wiki_health_safety_manual', 'document_page_health_safety_manual'),
     ('wiki_procedure', 'document_page_procedure'),
     ('wiki_work_instructions', 'document_page_work_instructions'),
+    # l10n-spain
+    ('nan_account_invoice_sequence', 'l10n_es_account_invoice_sequence'),
 ]
 
 column_renames = {
