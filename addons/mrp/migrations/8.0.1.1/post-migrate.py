@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Author: Priit Laes, Povi Software LLC
-#         Onestein BV
+# Copyright (C) 2014 Priit Laes, Povi Software LLC
+#           (C) 2014 Onestein BV
+#           (C) 2014 Therp BV
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
