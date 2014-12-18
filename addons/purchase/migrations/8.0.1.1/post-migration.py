@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2014 Camptocamp SA
+#    Author: Guewen Baconnier, Stefan Rijnhart
+#    Copyright (C) 2014 Camptocamp SA
+#              (C) 2014 Therp BV
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -125,10 +126,28 @@ def migrate_procurement_order(cr):
             procurement_obj.write(cr, uid, po_id, {'purchase_line_id': pol_id})
 
 
+def migrate_stock_warehouse(cr, pool):
+    """Enable manufacturing on all warehouses. This will trigger the creation
+    of the manufacture procurement rule"""
+    warehouse_obj = pool['stock.warehouse']
+    warehouse_ids = warehouse_obj.search(cr, uid, [])
+    warehouse_obj.write(
+        cr, uid, warehouse_ids, {'buy_to_resupply': True})
+    if len(warehouse_ids) > 1:
+        openupgrade.message(
+            cr, 'mrp', False, False,
+            "Manufacturing is now enabled on all your warehouses. If this is "
+            "not appropriate, disable the option 'Purchase to resupply this "
+            "Warehouse' on the warehouse settings. You need to have 'Manage "
+            "Push and Pull inventory flows' checked on your user record in "
+            "order to access this setting.")
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     create_workitem_picking(cr, uid, pool)
     migrate_product_supply_method(cr)
     migrate_procurement_order(cr)
+    migrate_stock_warehouse(cr, pool)
     openupgrade_80.set_message_last_post(cr, uid, pool, ['purchase.order'])
