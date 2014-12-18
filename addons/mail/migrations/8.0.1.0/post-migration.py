@@ -26,12 +26,6 @@
 from openerp import pooler, SUPERUSER_ID as uid
 from openerp.openupgrade import openupgrade, openupgrade_80
 
-default_spec = {
-    'res.users': [
-        ('display_groups_suggestions', True),
-    ],
-}
-
 
 def mail_mail_to_mail_message_migration(cr, uid, pool):
     """
@@ -53,9 +47,10 @@ FROM mail_message AS a JOIN mail_mail AS b ON a.id = b.mail_message_id
 def map_notify_email(cr):
     openupgrade.map_values(
         cr,
+        openupgrade.get_legacy_name('notification_email_send'),
         'notify_email',
-        'notify_email',
-        [('all', 'always'), ('comment', 'always'), ('email', 'always'), ('none', 'none')],
+        [('all', 'always'), ('comment', 'always'),
+         ('email', 'always'), ('none', 'none')],
         table='res_partner', write='sql')
 
 
@@ -65,7 +60,9 @@ def migrate(cr, version):
 
     map_notify_email(cr)
     mail_mail_to_mail_message_migration(cr, uid, pool)
-    openupgrade_80.set_message_last_post(cr, uid, pool, ['res.partner', 'mail.group'])
-    openupgrade.set_defaults(cr, pool, default_spec, force=False)
+    openupgrade_80.set_message_last_post(
+        cr, uid, pool, ['res.partner', 'mail.group'])
     openupgrade_80.update_aliases(cr, pool, 'mail.group', True)
     openupgrade_80.update_aliases(cr, pool, 'res.users', True)
+    openupgrade.load_data(
+        cr, 'mail', 'migrations/8.0.1.0/noupdate_changes.xml')

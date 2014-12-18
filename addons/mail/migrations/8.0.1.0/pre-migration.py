@@ -25,11 +25,10 @@ from openerp.openupgrade import openupgrade
 
 column_renames = {
     'res_partner': [
-        ('notification_email_send', 'notify_email'),
+        ('notification_email_send', None),
     ],
     'mail_mail': [
         ('email_from', None),
-
         ('mail_server_id', None),
         ('reply_to', None),
     ]
