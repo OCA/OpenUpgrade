@@ -18,10 +18,12 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import logging
 from openerp.openupgrade import openupgrade
 from openerp import pooler, SUPERUSER_ID
 from datetime import datetime
 
+logger = logging.getLogger('OpenUpgrade.mrp')
 column_renames = {
     'mrp_bom_mrp_property_rel': [
         ('bom_id', 'mrp_bom_id'),
@@ -190,6 +192,39 @@ def migrate_product_supply_method(cr, pool, uid):
         template_obj.write(cr, uid, product_ids, {'route_ids': [(4, mto_route_id)]})
 
 
+def migrate_product(cr, pool):
+    """Migrate track_production"""
+    prod_tmpl_obj = pool['product.template']
+    cr.execute(
+        """
+        SELECT product_tmpl_id FROM product_product
+        WHERE {} IS TRUE""".format(
+            openupgrade.get_legacy_name('track_production')))
+    template_ids = [row[0] for row in cr.fetchall()]
+    logger.debug(
+        "Setting track_production to True for %s product templates",
+        len(template_ids))
+    prod_tmpl_obj.write(
+        cr, SUPERUSER_ID, template_ids, {'track_incoming': True})
+
+
+def migrate_stock_warehouse(cr, pool):
+    """Enable manufacturing on all warehouses. This will trigger the creation
+    of the manufacture procurement rule"""
+    warehouse_obj = pool['stock.warehouse']
+    warehouse_ids = warehouse_obj.search(cr, SUPERUSER_ID, [])
+    warehouse_obj.write(
+        cr, SUPERUSER_ID, warehouse_ids, {'manufacture_to_resupply': True})
+    if len(warehouse_ids) > 1:
+        openupgrade.message(
+            cr, 'mrp', False, False,
+            "Manufacturing is now enabled on all your warehouses. If this is "
+            "not appropriate, disable the option 'Manufacture in this "
+            "Warehouse' on the warehouse settings. You need to have 'Manage "
+            "Push and Pull inventory flows' checked on your user record in "
+            "order to access this setting.")
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
@@ -201,4 +236,6 @@ def migrate(cr, version):
     update_stock_moves(cr, pool, uid)
     update_stock_picking_name(cr, pool, uid)
     migrate_product_supply_method(cr, pool, uid)
+    migrate_product(cr, pool)
     openupgrade.rename_columns(cr, column_renames)
+    migrate_stock_warehouse(cr, pool)
