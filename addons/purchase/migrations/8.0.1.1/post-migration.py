@@ -127,7 +127,7 @@ def migrate_procurement_order(cr):
 
 
 def migrate_stock_warehouse(cr, pool):
-    """Enable manufacturing on all warehouses. This will trigger the creation
+    """Enable purchasing on all warehouses. This will trigger the creation
     of the manufacture procurement rule"""
     warehouse_obj = pool['stock.warehouse']
     warehouse_ids = warehouse_obj.search(cr, uid, [])
@@ -136,7 +136,7 @@ def migrate_stock_warehouse(cr, pool):
     if len(warehouse_ids) > 1:
         openupgrade.message(
             cr, 'mrp', False, False,
-            "Manufacturing is now enabled on all your warehouses. If this is "
+            "Purchasing is now enabled on all your warehouses. If this is "
             "not appropriate, disable the option 'Purchase to resupply this "
             "Warehouse' on the warehouse settings. You need to have 'Manage "
             "Push and Pull inventory flows' checked on your user record in "
