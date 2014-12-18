@@ -22,6 +22,7 @@ from openerp.openupgrade import openupgrade
 
 column_renames = {
     'procurement_order': [
+        ('message', None),
         ('note', None),
         ('move_id', None),
         ('procure_method', None),
@@ -36,9 +37,12 @@ column_renames = {
 }
 
 xmlid_renames = [
-    ('procurement.access_stock_warehouse_orderpoint', 'stock.access_stock_warehouse_orderpoint'),
-    ('procurement.access_stock_warehouse_orderpoint_system', 'stock.access_stock_warehouse_orderpoint_system'),
-    ('procurement.stock_warehouse_orderpoint_rule', 'stock.stock_warehouse_orderpoint_rule'),
+    ('procurement.access_stock_warehouse_orderpoint',
+     'stock.access_stock_warehouse_orderpoint'),
+    ('procurement.access_stock_warehouse_orderpoint_system',
+     'stock.access_stock_warehouse_orderpoint_system'),
+    ('procurement.stock_warehouse_orderpoint_rule',
+     'stock.stock_warehouse_orderpoint_rule'),
 ]
 
 
