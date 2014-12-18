@@ -135,7 +135,7 @@ def migrate_stock_warehouse(cr, pool):
         cr, uid, warehouse_ids, {'buy_to_resupply': True})
     if len(warehouse_ids) > 1:
         openupgrade.message(
-            cr, 'mrp', False, False,
+            cr, 'purchase', False, False,
             "Purchasing is now enabled on all your warehouses. If this is "
             "not appropriate, disable the option 'Purchase to resupply this "
             "Warehouse' on the warehouse settings. You need to have 'Manage "
