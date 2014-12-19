@@ -357,7 +357,18 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
 
             mods = [k for k in tools.config['update'] if tools.config['update'][k]]
             if mods:
-                ids = modobj.search(cr, SUPERUSER_ID, ['&', ('state', '=', 'installed'), ('name', 'in', mods)])
+                # OpenUpgrade: in standard Odoo, '--update all' just means:
+                # '--update base + upward (installed) dependencies. This breaks
+                # the chain when new glue modules are encountered.
+                # E.g. purchase in 8.0 depends on stock_account and report,
+                # both of which are new. They may be installed, but purchase as
+                # an upward dependency is not selected for upgrade.
+                # Therefore, explicitely select all installed modules for
+                # upgrading in OpenUpgrade.
+                domain = [('state', '=', 'installed')]
+                if 'all' not in mods:
+                    domain.append(('name', 'in', mods))
+                ids = modobj.search(cr, SUPERUSER_ID, domain)
                 if ids:
                     modobj.button_upgrade(cr, SUPERUSER_ID, ids)
 
