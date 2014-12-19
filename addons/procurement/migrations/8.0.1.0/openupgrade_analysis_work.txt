@@ -31,8 +31,8 @@ procurement  / procurement.order        / rule_id (many2one)            : NEW re
 # DONE Procurement Order migrated in Stock
 
 procurement  / procurement.order        / state (selection)             : selection_keys is now '['cancel', 'confirmed', 'done', 'exception', 'running']' ('['cancel', 'confirmed', 'done', 'draft', 'exception', 'ready', 'running', 'waiting']')
-# DONE: Only manually created procurement orders could be considered to be in
-# the new state 'draft'. We'll only warn about these.
+# DONE: Only manually created procurement orders are likely to be in
+# the obsolete state 'draft'. We'll only warn about these.
 # States 'ready' and 'waiting' are mapped to 'running'. The procurement
 # scheduler will be able to determine if these procurements are actually done.
 
