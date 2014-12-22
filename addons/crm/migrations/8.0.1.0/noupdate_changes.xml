@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record model="mail.message.subtype" id="mt_salesteam_lead_stage"><field name="sequence">11</field>
+            </record>
+    <record model="mail.message.subtype" id="mt_salesteam_lead_lost"><field name="sequence">13</field>
+            </record>
+    <record model="mail.message.subtype" id="mt_lead_create"><field name="description">Lead created</field>
+        <field name="hidden" eval="True"/>
+            </record>
+    <record model="mail.message.subtype" id="mt_salesteam_lead_won"><field name="sequence">12</field>
+            </record>
+    <record model="email.template" id="email_template_opportunity_mail"><field name="subject"/><field name="name">Lead/Opportunity Mass Mail</field>
+            <field name="email_recipients"/><field name="partner_to">${object.partner_id != False and object.partner_id.id}</field>
+            <field name="ref_ir_act_window" ref="crm.action_lead_mass_mail"/>
+        <field name="email_to">${(not object.partner_id and object.email_from)|safe}</field>
+            </record>
+    <record model="mail.message.subtype" id="mt_salesteam_lead"><field name="sequence">10</field>
+            </record>
+  </data>
+</openerp>
+
