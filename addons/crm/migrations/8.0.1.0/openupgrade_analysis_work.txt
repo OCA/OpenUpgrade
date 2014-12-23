@@ -88,8 +88,9 @@ DEL crm.case.resource.type: crm.type_lead5
 DEL crm.case.resource.type: crm.type_lead6
 DEL crm.case.resource.type: crm.type_lead7
 DEL crm.case.resource.type: crm.type_lead8
-# Done: types are not replaced by campaign data. Defined with noupdate in 7.0, existing types
-# will be preserved.
+# Done: type data in 7.0 is not replaced by campaign data in 8.0, but only
+# removed from the module. Defined with noupdate in 7.0, existing types
+# will be preserved in the migrated database
 
 NEW crm.case.section: sales_team.section_sales_department
 DEL crm.case.section: crm.section_sales_department
