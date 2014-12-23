@@ -40,7 +40,7 @@ crm          / crm.lead                 / type_id (many2one)            : DEL re
 crm          / crm.lead                 / campaign_id (many2one)        : NEW relation: crm.tracking.campaign
 crm          / crm.tracking.campaign    / name (char)                   : NEW required: required
 crm          / crm.tracking.campaign    / section_id (many2one)         : NEW relation: crm.case.section
-# Done: type is now channel. Renamed model and columns
+# Done: type is now campaign. Renamed model and columns
 
 crm          / crm.lead                 / date_last_stage_update (datetime): NEW 
 # Done: get stage change date from related messages with the relevant subtypes
