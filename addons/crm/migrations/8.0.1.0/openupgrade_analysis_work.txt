@@ -34,7 +34,7 @@ crm          / crm.lead                 / channel_id (many2one)         : DEL re
 crm          / crm.lead                 / medium_id (many2one)          : NEW relation: crm.tracking.medium
 crm          / crm.tracking.medium      / active (boolean)              : NEW 
 crm          / crm.tracking.medium      / name (char)                   : NEW required: required
-# Done: channel is now medium. Renamed model and columns
+# Done: channel is now medium. Renamed model, tables, columns and foreign key constraints
 
 crm          / crm.lead                 / type_id (many2one)            : DEL relation: crm.case.resource.type
 crm          / crm.lead                 / campaign_id (many2one)        : NEW relation: crm.tracking.campaign
