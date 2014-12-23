@@ -54,10 +54,9 @@ def migrate(cr, version):
     openupgrade.rename_tables(
         cr, [('crm_case_channel', 'crm_tracking_medium'),
              ('crm_case_resource_type', 'crm_tracking_campaign')])
-    for old, new in [
-            ('crm_lead_channel_id_fkey', 'crm_lead_medium_id_fkey'),
-            ('crm_lead_type_id_fkey', 'crm_lead_campaign_id_fkey')]:
+    for constraint in [
+            'crm_lead_channel_id_fkey',
+            'crm_lead_type_id_fkey']:
         cr.execute(
-            "ALTER TABLE crm_lead RENAME CONSTRAINT {} TO {};".format(
-                old, new))
+            "ALTER TABLE crm_lead DROP CONSTRAINT {}".format(constraint))
     openupgrade.rename_xmlids(cr, xmlids)
