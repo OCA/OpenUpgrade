@@ -1,0 +1,182 @@
+---Fields in module 'procurement'---
+
+procurement  / procurement.group        / move_type (selection)         : NEW required: required, selection_keys: ['direct', 'one'], req_default: function
+procurement  / procurement.group        / name (char)                   : NEW required: required, req_default: function
+procurement  / procurement.group        / procurement_ids (one2many)    : NEW relation: procurement.order
+# NOTHING TO DO NEW FUNCTIONALITY.
+
+procurement  / procurement.order        / group_id (many2one)           : NEW relation: procurement.group
+# NOTHING TO DO: group_id in procurement.order seems optional in the system
+
+procurement  / procurement.order        / close_move (boolean)          : DEL 
+procurement  / procurement.order        / date_close (datetime)         : DEL
+# NOTHING TO DO
+
+procurement  / procurement.order        / location_id (many2one)        : module is now 'stock' ('procurement')
+procurement  / procurement.order        / message (char)                : DEL
+# DONE: Last message error is replaced by chatter posts. Posting last message during the migration
+
+procurement  / procurement.order        / note (text)                   : DEL 
+# DONE: posted on the chatter
+
+procurement  / procurement.order        / message_last_post (datetime)  : NEW 
+# DONE
+
+procurement  / procurement.order        / move_id (many2one)            : DEL relation: stock.move
+# DONE: STORED 
+# move_ids is now in STOCK MODULE procurement file, used in the stock migration
+
+procurement  / procurement.order        / procure_method (selection)    : DEL required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: make_to_order
+procurement  / procurement.order        / rule_id (many2one)            : NEW relation: procurement.rule
+# DONE Procurement Order migrated in Stock
+
+procurement  / procurement.order        / state (selection)             : selection_keys is now '['cancel', 'confirmed', 'done', 'exception', 'running']' ('['cancel', 'confirmed', 'done', 'draft', 'exception', 'ready', 'running', 'waiting']')
+# DONE: Only manually created procurement orders are likely to be in
+# the obsolete state 'draft'. We'll only warn about these.
+# States 'ready' and 'waiting' are mapped to 'running'. The procurement
+# scheduler will be able to determine if these procurements are actually done.
+
+procurement  / procurement.rule         / action (selection)            : NEW required: required, selection_keys: function
+procurement  / procurement.rule         / active (boolean)              : NEW 
+procurement  / procurement.rule         / company_id (many2one)         : NEW relation: res.company
+procurement  / procurement.rule         / group_id (many2one)           : NEW relation: procurement.group
+procurement  / procurement.rule         / group_propagation_option (selection): NEW selection_keys: ['fixed', 'none', 'propagate']
+procurement  / procurement.rule         / name (char)                   : NEW required: required
+procurement  / procurement.rule         / sequence (integer)            : NEW
+# NOTHING TO DO. Procurement rules are created in the stock/mrp/purchase
+# migration and assigned to the procurements in the deferred step
+
+procurement  / product.product          / orderpoint_ids (one2many)     : module is now 'stock' ('procurement')
+# NOTHING TO DO
+
+procurement  / product.template         / procure_method (selection)    : DEL required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: make_to_stock
+# DONE Covered in Stock  
+
+procurement  / product.template         / supply_method (selection)     : DEL required: required, selection_keys: ['buy', 'produce'], req_default: buy
+# DONE: Mapped to routes in stock and mrp
+
+procurement  / product.template         / type (False)                  : module is now 'stock' ('procurement')
+# NOTHING TO DO 
+
+procurement  / res.company              / schedule_range (float)        : DEL required: required, req_default: 730.0
+# NOTHING TO DO The scheduler of Procurements is no more limited to an expiration date of 2 years.
+
+procurement  / stock.move               / procurements (one2many)       : DEL relation: procurement.order
+# DONE IN STOCK Filled with the procurement_id of the object stock_move in module stock
+
+procurement  / stock.warehouse.orderpoint / active (boolean)              : module is now 'stock' ('procurement')
+procurement  / stock.warehouse.orderpoint / company_id (many2one)         : module is now 'stock' ('procurement')
+procurement  / stock.warehouse.orderpoint / location_id (many2one)        : module is now 'stock' ('procurement')
+procurement  / stock.warehouse.orderpoint / logic (selection)             : module is now 'stock' ('procurement')
+procurement  / stock.warehouse.orderpoint / name (char)                   : module is now 'stock' ('procurement')
+# NOTHING TO DO
+
+procurement  / stock.warehouse.orderpoint / procurement_id (many2one)     : DEL relation: procurement.order
+# DONE IN STOCK: Fill procurement_ids with this value
+
+procurement  / stock.warehouse.orderpoint / product_id (many2one)         : module is now 'stock' ('procurement')
+procurement  / stock.warehouse.orderpoint / product_max_qty (float)       : module is now 'stock' ('procurement')
+procurement  / stock.warehouse.orderpoint / product_min_qty (float)       : module is now 'stock' ('procurement')
+procurement  / stock.warehouse.orderpoint / product_uom (many2one)        : module is now 'stock' ('procurement')
+procurement  / stock.warehouse.orderpoint / product_uom (many2one)        : now a function
+procurement  / stock.warehouse.orderpoint / qty_multiple (integer)        : type is now 'float' ('integer')
+procurement  / stock.warehouse.orderpoint / warehouse_id (many2one)       : module is now 'stock' ('procurement')
+# DONE
+
+---XML records in module 'procurement'---
+NEW ir.actions.act_window: procurement.do_view_procurements
+DEL ir.actions.act_window: procurement.act_make_procurement
+DEL ir.actions.act_window: procurement.act_procurement_2_stock_warehouse_orderpoint
+DEL ir.actions.act_window: procurement.act_stock_warehouse_2_stock_warehouse_orderpoint
+DEL ir.actions.act_window: procurement.action_orderpoint_form
+DEL ir.actions.act_window: procurement.action_procurement_compute
+DEL ir.actions.act_window: procurement.procurement_action_board
+DEL ir.actions.act_window: procurement.product_open_orderpoint
+#IGNORED
+
+NEW ir.model.access: procurement.access_procurement_group
+NEW ir.model.access: procurement.access_procurement_rule
+# NOTHING TO DO new functionality
+
+DEL ir.model.access: procurement.access_mrp_property
+DEL ir.model.access: procurement.access_mrp_property_group
+# DONE renamed to mrp access rules
+
+DEL ir.model.access: procurement.access_procurement_stock_user
+# NOTHING TO DO
+
+DEL ir.model.access: procurement.access_stock_warehouse_orderpoint
+DEL ir.model.access: procurement.access_stock_warehouse_orderpoint_system
+# DONE access rules ( it could also also be done in premigration stock script )
+
+NEW ir.rule: procurement.product_pulled_flow_comp_rule
+# NOTHING TO DO
+
+DEL ir.rule: procurement.stock_warehouse_orderpoint_rule
+# DONE
+
+DEL ir.sequence: procurement.sequence_mrp_op
+DEL ir.sequence.type: procurement.sequence_mrp_op_type
+# DONE: moved to stock. Renamed XMLIDS in stock migration.
+
+NEW ir.sequence: procurement.sequence_proc_group
+NEW ir.sequence.type: procurement.sequence_proc_group_type
+# NOTHING TO DO. NEW OBJECT
+
+DEL ir.ui.menu: procurement.menu_stock_order_points
+DEL ir.ui.menu: procurement.menu_stock_proc_schedulers
+DEL ir.ui.menu: procurement.menu_stock_procurement
+DEL ir.ui.menu: procurement.menu_stock_procurement_action
+DEL ir.ui.menu: procurement.menu_stock_sched
+NEW ir.ui.view: procurement.procurement_group_form_view
+NEW ir.ui.view: procurement.view_procurement_rule_form
+NEW ir.ui.view: procurement.view_procurement_rule_tree
+DEL ir.ui.view: procurement.board_mrp_procurement_form
+DEL ir.ui.view: procurement.procurement_tree_view_board
+DEL ir.ui.view: procurement.product_form_view_procurement_button
+DEL ir.ui.view: procurement.product_search_form_view_procurment
+DEL ir.ui.view: procurement.product_template_form_view_procurement
+DEL ir.ui.view: procurement.view_compute_procurment_wizard
+DEL ir.ui.view: procurement.view_make_procurment_wizard
+DEL ir.ui.view: procurement.view_procurement_compute_wizard
+DEL ir.ui.view: procurement.view_warehouse_orderpoint_form
+DEL ir.ui.view: procurement.view_warehouse_orderpoint_tree
+DEL ir.ui.view: procurement.warehouse_orderpoint_search
+# IGNORED
+
+DEL process.node: procurement.process_node_procureproducts0
+DEL process.node: procurement.process_node_serviceonorder0
+DEL process.process: procurement.process_process_procurementprocess0
+DEL process.process: procurement.process_process_serviceproductprocess0
+# IGNORED
+
+DEL workflow: procurement.wkf_procurement
+DEL workflow.activity: procurement.act_cancel
+DEL workflow.activity: procurement.act_confirm
+DEL workflow.activity: procurement.act_confirm_mto
+DEL workflow.activity: procurement.act_confirm_mts
+DEL workflow.activity: procurement.act_confirm_wait
+DEL workflow.activity: procurement.act_done
+DEL workflow.activity: procurement.act_draft
+DEL workflow.activity: procurement.act_make_done
+DEL workflow.activity: procurement.act_make_to_stock
+DEL workflow.activity: procurement.act_wait_done
+DEL workflow.transition: procurement.trans_confirm_cancel
+DEL workflow.transition: procurement.trans_confirm_cancel2
+DEL workflow.transition: procurement.trans_confirm_confirm_wait
+DEL workflow.transition: procurement.trans_confirm_mto_cancel
+DEL workflow.transition: procurement.trans_confirm_mto_confirm
+DEL workflow.transition: procurement.trans_confirm_mto_make_done
+DEL workflow.transition: procurement.trans_confirm_mts_cancel
+DEL workflow.transition: procurement.trans_confirm_mts_confirm
+DEL workflow.transition: procurement.trans_confirm_mts_make_to_stock
+DEL workflow.transition: procurement.trans_confirm_wait_confirm_mto
+DEL workflow.transition: procurement.trans_confirm_wait_confirm_mts
+DEL workflow.transition: procurement.trans_confirm_wait_done
+DEL workflow.transition: procurement.trans_confirm_waiting_cancel
+DEL workflow.transition: procurement.trans_draft_cancel
+DEL workflow.transition: procurement.trans_draft_confirm
+DEL workflow.transition: procurement.trans_make_done_confirm
+DEL workflow.transition: procurement.trans_make_done_done
+DEL workflow.transition: procurement.trans_make_to_stock_make_done
+# THE WORKFLOW WAS REMOVED WITH THE DELETE WORKFLOW FUNCTION
