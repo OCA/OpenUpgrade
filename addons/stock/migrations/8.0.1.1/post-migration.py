@@ -74,22 +74,6 @@ def migrate_product(cr, pool):
             cr, SUPERUSER_ID, template_ids, {field: True})
 
 
-def swap_procurement_move_rel(cr, pool):
-    """Procurement_order.move_id is swapped to stock_move.procurement_id.
-    So instead of a m2o from procurement_order, it is a m2o from stock_move in version 8.
-    """
-    uid = SUPERUSER_ID
-    stock_move_obj = pool['stock.move']
-
-    move_legacy = openupgrade.get_legacy_name('move_id')
-    sql = """SELECT id, {} FROM {}""".format(move_legacy, 'procurement_order')
-    cr.execute(sql)
-    proc_order_rows = cr.fetchall()
-    for proc_order_id, move_id in proc_order_rows:
-        if move_id and proc_order_id:
-            stock_move_obj.write(cr, uid, move_id, {'procurement_id': proc_order_id})
-
-
 def restore_move_inventory_rel(cr, pool):
     uid = SUPERUSER_ID
     simr_legacy = openupgrade.get_legacy_name('stock_inventory_move_rel')
@@ -348,13 +332,6 @@ def migrate_stock_warehouse_orderpoint(cr):
     """procurement_id to procurement_ids
     :param cr: database cursor
     """
-    if not openupgrade.column_exists(
-            cr,
-            'stock_warehouse_orderpoint',
-            openupgrade.get_legacy_name('procurement_id')):
-        # in this case, there was no migration for the procurement module
-        # which can be okay if procurement was not installed in the 7.0 db
-        return
     registry = RegistryManager.get(cr.dbname)
     openupgrade.m2o_to_x2m(
         cr, registry['stock.warehouse.orderpoint'],
@@ -423,12 +400,6 @@ def migrate_product_supply_method(cr):
 
     procure_method_legacy = openupgrade.get_legacy_name('procure_method')
 
-    if not openupgrade.column_exists(
-            cr, 'product_template', procure_method_legacy):
-        # in this case, there was no migration for the procurement module
-        # which can be okay if procurement was not installed in the 7.0 db
-        return
-
     if mto_route_id:
         product_ids = []
         cr.execute("SELECT id FROM product_template WHERE %s = %%s" % procure_method_legacy, ('make_to_order',))
@@ -439,30 +410,15 @@ def migrate_product_supply_method(cr):
 
 
 def migrate_procurement_order(cr):
-    """Migrates procurement orders and the new fields warehouse, move_ids, partner_dest_id
-    :param cr:
-    """
-    pool = pooler.get_pool(cr.dbname)
-
-    swap_procurement_move_rel(cr, pool)
-    # Move Reservation to move_ids.
-    registry = RegistryManager.get(cr.dbname)
-    openupgrade.m2o_to_x2m(
-        cr, registry['procurement.order'],
-        'procurement_order', 'move_ids',
-        openupgrade.get_legacy_name('move_id'))
-
-    # Warehouse, partner from the move.
-    cr.execute("""UPDATE procurement_order AS po
+    """Set warehouse, partner from the move."""
+    cr.execute(
+        """
+        UPDATE procurement_order AS po
         SET warehouse_id = sm.warehouse_id,
-        partner_dest_id = sm.partner_id
+            partner_dest_id = sm.partner_id
         FROM stock_move AS sm
-        WHERE po.%s = sm.id""" % openupgrade.get_legacy_name('move_id'))
-
-    # state update
-    cr.execute('UPDATE procurement_order SET state = %s WHERE state = %s', ('confirmed', 'draft',))
-    cr.execute('UPDATE procurement_order SET state = %s WHERE state = %s', ('running', 'ready',))
-    cr.execute('UPDATE procurement_order SET state = %s WHERE state = %s', ('exception', 'waiting',))
+        WHERE po.move_dest_id = sm.id
+        """)
 
 
 def migrate_stock_qty(cr, pool, uid):
@@ -505,15 +461,26 @@ def migrate_stock_production_lot(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    """
+    It can be the case that procurement was not installed in the 7.0 database,
+    as in 7.0 stock was a dependency of procurement and not the other way
+    around like it is in 8.0. So we need to check if we are migrating a
+    database in which procurement related stuff needs to be migrated.
+    """
     pool = pooler.get_pool(cr.dbname)
     uid = SUPERUSER_ID
+    have_procurement = openupgrade.column_exists(
+        cr, 'product_template', openupgrade.get_legacy_name('procure_method'))
 
     migrate_stock_warehouse(cr)
     migrate_stock_picking(cr)
     migrate_stock_location(cr)
-    migrate_stock_warehouse_orderpoint(cr)
-    migrate_product_supply_method(cr)
-    migrate_procurement_order(cr)
+
+    if have_procurement:
+        migrate_stock_warehouse_orderpoint(cr)
+        migrate_product_supply_method(cr)
+        migrate_procurement_order(cr)
+
     migrate_stock_qty(cr, pool, uid)
     migrate_stock_production_lot(cr)
 

@@ -6,9 +6,9 @@ stock        / procurement.group        / partner_id (many2one)         : NEW re
 
 ############# PROCUREMENT ORDER ##############
 stock        / procurement.order        / move_dest_id (many2one)       : NEW relation: stock.move
-# NOTHING TO DO
+# DONE: rename old column move_id from the procurement module
 stock        / procurement.order        / move_ids (one2many)           : NEW relation: stock.move
-# DONE
+# TO DO in purchase, mrp
 
 stock        / procurement.order        / orderpoint_id (many2one)      : NEW relation: stock.warehouse.orderpoint
 stock        / procurement.order        / partner_dest_id (many2one)    : NEW relation: res.partner

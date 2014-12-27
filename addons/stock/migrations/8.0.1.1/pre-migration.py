@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: ONESTEiN B.V.
+#    Copyright (C) 2014 ONESTEiN B.V.
+#              (C) 2014 Therp B.V.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -103,9 +104,45 @@ def initialize_location_inventory(cr):
     cr.execute("""COMMENT ON COLUMN stock_inventory.location_id IS %s""", ('Inventoried Location',))
 
 
+def swap_procurement_move_rel(cr):
+    """
+    In 7.0:
+    procurement_order.move_id: the reservation for which the procurement
+    was generated. Counterpart field on the stock
+    move is stock_move.procurements. This is the move_dest_id on the
+    purchase order lines that are created for the procurement, which is
+    propagated as the move_dest_id on the move lines created for the incoming
+    products of the purchase order. The id(s) of these move lines are recorded
+    as the purchase line's move_ids (or stock_move.purchase_line_id).
+
+    Something similar occurs in mrp: stock_move.production_id vs. production_
+    order.move_created_ids(2), and procurement_order.production_id. The
+    procurement order's move_id is production_order.move_prod_id.
+
+    In 8.0:
+    procurement_order.move_dest_id: stock move that generated the procurement
+    order, e.g. a sold product from stock to customer location. Counterpart
+    field on the stock move does not seem to exist.
+    procurement_order.move_ids: moves that the procurement order has generated,
+    e.g. a purchased product from supplier to stock location. Counterpart field
+    on the stock move is stock_move.procurement_id.
+
+    Here, we only rename the move_id column. We need to gather the
+    procurement's move_ids in purchase and mrp.
+    """
+    move_id_column = openupgrade.get_legacy_name('move_id')
+    openupgrade.rename_columns(
+        cr, {'procurement_order': [(move_id_column, 'move_dest_id')]})
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
     initialize_location_inventory(cr)
     save_rel_table(cr)
+
+    have_procurement = openupgrade.column_exists(
+        cr, 'product_template', openupgrade.get_legacy_name('procure_method'))
+    if have_procurement:
+        swap_procurement_move_rel(cr)
