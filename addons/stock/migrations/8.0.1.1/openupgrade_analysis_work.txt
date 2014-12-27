@@ -2,7 +2,7 @@
 
 ---Fields in module 'stock'---
 stock        / procurement.group        / partner_id (many2one)         : NEW relation: res.partner
-# NOTHING TO DO
+# NOTHING TO DO, we don't even create procurement groups at this point
 
 ############# PROCUREMENT ORDER ##############
 stock        / procurement.order        / move_dest_id (many2one)       : NEW relation: stock.move
@@ -74,8 +74,9 @@ DONE
 ###############################
 
 stock        / res.company              / internal_transit_location_id (many2one): NEW relation: stock.location
+# NOTHING TO DO: created for every company in stock_data.yml
 stock        / res.company              / propagation_minimum_delta (integer): NEW 
-# NOTHING TO DO ( Just check the functionality of the location )  
+# NOTHING TO DO, has a sane default of 1
 
 stock        / stock.fixed.putaway.strat / category_id (many2one)        : NEW relation: product.category, required: required
 stock        / stock.fixed.putaway.strat / fixed_location_id (many2one)  : NEW relation: stock.location, required: required
