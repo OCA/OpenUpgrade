@@ -19,9 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+import logging
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp import pooler, SUPERUSER_ID as uid
+
+logger = logging.getLogger('OpenUpgrade.purchase')
 
 
 def create_workitem_picking(cr, uid, pool):
@@ -102,33 +104,68 @@ def migrate_product_supply_method(cr):
 def migrate_procurement_order(cr):
     """
     Switch the old purchase_id in Procurement Order for the new field
-    Purchase Order Line
-    :param cr: Database cursor
+    Purchase Order Line. Search by move_dest_id first, then by product_id.
     """
-    pool = pooler.get_pool(cr.dbname)
-    procurement_obj = pool['procurement.order']
-    purchase_legacy = openupgrade.get_legacy_name('purchase_id')
-    sql_head = """SELECT id, %s FROM procurement_order""" % (purchase_legacy)
-    sql_tail = """ WHERE %s is not null AND state != %%s""" % (purchase_legacy)
-    cr.execute(sql_head + sql_tail, ('done',))
-    res = cr.fetchall()
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE procurement_order proc
+        SET purchase_line_id = pol.id
+        FROM purchase_order_line pol
+        WHERE proc.{purchase_id} = pol.order_id
+             AND pol.{move_dest_id} IS NOT NULL
+             AND pol.{move_dest_id} = proc.{move_id}
+        """.format(
+            purchase_id=openupgrade.get_legacy_name('purchase_id'),
+            move_dest_id=openupgrade.get_legacy_name('move_dest_id'),
+            move_id=openupgrade.get_legacy_name('move_id')))
 
-    for po_id, purchase_id in res:
-        procurement = procurement_obj.browse(cr, uid, po_id)
-        cr.execute(
-            """SELECT id
-            FROM purchase_order_line
-            WHERE order_id = %s AND product_qty = %s AND product_id = %s""",
-            (purchase_id, procurement.product_qty, procurement.product_id.id))
-        res2 = cr.fetchone()
-        pol_id = res2 and res2[0] or False
-        if pol_id:
-            procurement_obj.write(cr, uid, po_id, {'purchase_line_id': pol_id})
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE procurement_order proc
+        SET purchase_line_id = pol.id
+        FROM purchase_order_line pol
+        WHERE proc.{purchase_id} = pol.order_id
+             AND pol.product_id = proc.product_id
+             AND pol.id NOT IN (
+                 SELECT purchase_line_id
+                 FROM procurement_order
+                 WHERE purchase_line_id IS NOT NULL)
+        """.format(
+            purchase_id=openupgrade.get_legacy_name('purchase_id')))
+
+    # Warn about dangling procurements
+    cr.execute(
+        """
+        SELECT count(*) FROM procurement_order
+        WHERE purchase_line_id IS NULL
+            AND {purchase_id} IS NOT NULL
+            AND state NOT IN ('done', 'exception')
+        """.format(
+            purchase_id=openupgrade.get_legacy_name('purchase_id')))
+    count = cr.fetchone()[0]
+    if count:
+        logger.warning(
+            "Failed to match the purchase order line for %s running "
+            "procurements.", count)
+
+    # Populate the moves generated from purchase procurements (the move_ids
+    # field on the procurement order)
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE stock_move sm
+        SET procurement_id = proc.id
+        FROM procurement_order proc
+        WHERE proc.purchase_line_id = sm.purchase_line_id
+            AND sm.purchase_line_id IS NOT NULL
+        """)
 
 
 def migrate_stock_warehouse(cr, pool):
     """Enable purchasing on all warehouses. This will trigger the creation
-    of the manufacture procurement rule"""
+    of the purchase procurement rule"""
     warehouse_obj = pool['stock.warehouse']
     warehouse_ids = warehouse_obj.search(cr, uid, [])
     warehouse_obj.write(

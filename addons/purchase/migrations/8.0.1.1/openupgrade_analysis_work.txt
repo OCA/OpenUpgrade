@@ -1,9 +1,11 @@
 ---Fields in module 'purchase'---
 purchase     / account.invoice.line     / purchase_line_id (many2one)   : NEW relation: purchase.order.line
 # NOTHING TO DO
+
 purchase     / procurement.order        / purchase_id (many2one)        : now a function
 purchase     / procurement.order        / purchase_line_id (many2one)   : NEW relation: purchase.order.line
-# DONE
+purchase     / purchase.order.line      / procurement_ids (one2many)    : NEW relation: procurement.order
+# DONE: match procurements with purchase order lines based on stock move connection or product_id
 
 purchase     / purchase.order           / bid_date (date)               : NEW
 purchase     / purchase.order           / bid_validity (date)           : NEW
@@ -16,7 +18,7 @@ purchase     / purchase.order           / currency_id (many2one)        : not a 
 # NOTHING TO DO from related to many2one
 
 purchase     / purchase.order           / message_last_post (datetime)  : NEW
-# DONE
+# DONE: populate using 8.0 api
 
 purchase     / purchase.order           / picking_ids (one2many)        : now a function
 purchase     / purchase.order           / picking_ids (one2many)        : relation is now 'stock.picking' ('stock.picking.in')
@@ -29,10 +31,11 @@ purchase     / purchase.order           / state (selection)             : select
 purchase     / purchase.order           / warehouse_id (many2one)       : DEL relation: stock.warehouse
 purchase     / purchase.order           / website_message_ids (one2many): NEW relation: mail.message
 purchase     / purchase.order.line      / date_order (date)             : type is now 'datetime' ('date')
-purchase     / purchase.order.line      / move_dest_id (many2one)       : DEL relation: stock.move
 # NOTHING TO DO
-purchase     / purchase.order.line      / procurement_ids (one2many)    : NEW relation: procurement.order
-# DONE
+
+purchase     / purchase.order.line      / move_dest_id (many2one)       : DEL relation: stock.move
+# NOTHING TO DO: after migration of the purchase order line on the procurement,
+# the originating move can be retrieved from the procurement itself
 
 purchase     / res.partner              / purchase_order_ids (one2many) : DEL relation: purchase.order
 purchase     / stock.picking            / purchase_id (many2one)        : DEL relation: purchase.order
