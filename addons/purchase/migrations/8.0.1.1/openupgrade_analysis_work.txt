@@ -35,7 +35,7 @@ purchase     / purchase.order.line      / date_order (date)             : type i
 
 purchase     / purchase.order.line      / move_dest_id (many2one)       : DEL relation: stock.move
 # NOTHING TO DO: after migration of the purchase order line on the procurement,
-# the originating move can be retrieved from the procurement itself
+# this field is redundant because the originating move is accessible through there.
 
 purchase     / res.partner              / purchase_order_ids (one2many) : DEL relation: purchase.order
 purchase     / stock.picking            / purchase_id (many2one)        : DEL relation: purchase.order

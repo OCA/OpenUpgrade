@@ -103,8 +103,15 @@ def migrate_product_supply_method(cr):
 
 def migrate_procurement_order(cr):
     """
-    Switch the old purchase_id in Procurement Order for the new field
-    Purchase Order Line. Search by move_dest_id first, then by product_id.
+    On procurements, purchase_id is replaced by purchase_line_id. We should be
+    able to match most purchase lines because they got the procurement's
+    move_id as their move_dest_id. Fallback on product_id, for presumably the
+    manually created procurements without a related move from a sale or
+    production order.
+
+    In Odoo 8.0, stock moves generated for the procurement (moves from the
+    supplier or production location to stock) are also recorded on the
+    procurement. For purchase procurements, gather them here.
     """
     openupgrade.logged_query(
         cr,
