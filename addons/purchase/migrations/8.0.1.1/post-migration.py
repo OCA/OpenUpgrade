@@ -127,6 +127,7 @@ def migrate_procurement_order(cr):
         SET purchase_line_id = pol.id
         FROM purchase_order_line pol
         WHERE proc.{purchase_id} = pol.order_id
+             AND proc.purchase_line_id IS NULL
              AND pol.product_id = proc.product_id
              AND pol.id NOT IN (
                  SELECT purchase_line_id
