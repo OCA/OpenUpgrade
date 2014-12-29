@@ -160,12 +160,15 @@ def rename_tables(cr, table_spec):
     This function also renames the id sequence if it exists and if it is
     not modified in the same run.
 
-    :param table_spec: a list of tuples (old table name, new table name).
-
+    :param table_spec: a list of tuples (old table name, new table name). Use \
+    None for new_name to trigger a conversion of old_name to the result of \
+    get_legacy_name()
     """
     # Append id sequences
     to_rename = [x[0] for x in table_spec]
     for old, new in list(table_spec):
+        if new is None:
+            new = get_legacy_name(old)
         if (table_exists(cr, old + '_id_seq') and
                 old + '_id_seq' not in to_rename):
             table_spec.append((old + '_id_seq', new + '_id_seq'))

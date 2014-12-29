@@ -8,7 +8,7 @@ stock        / procurement.group        / partner_id (many2one)         : NEW re
 stock        / procurement.order        / move_dest_id (many2one)       : NEW relation: stock.move
 # DONE: rename old column move_id from the procurement module
 stock        / procurement.order        / move_ids (one2many)           : NEW relation: stock.move
-# TO DO in purchase, mrp
+# DONE in purchase, TO DO in mrp
 
 stock        / procurement.order        / orderpoint_id (many2one)      : NEW relation: stock.warehouse.orderpoint
 stock        / procurement.order        / partner_dest_id (many2one)    : NEW relation: res.partner
@@ -91,10 +91,11 @@ stock        / stock.inventory          / line_ids (one2many)           : NEW re
 stock        / stock.inventory          / location_id (many2one)        : NEW relation: stock.location, required: required, req_default: function
 stock        / stock.inventory          / lot_id (many2one)             : NEW relation: stock.production.lot
 stock        / stock.inventory          / move_ids (many2many)          : type is now 'one2many' ('many2many')
+# DONE. Migrate m2m table to stock_move.inventory_id
 stock        / stock.inventory          / package_id (many2one)         : NEW relation: stock.quant.package
 stock        / stock.inventory          / partner_id (many2one)         : NEW relation: res.partner
 stock        / stock.inventory          / product_id (many2one)         : NEW relation: product.product
-# DONE: Rename inventory_line_id with line_ids, check what to do with move_ids.
+# DONE: Rename inventory_line_id with line_ids.
 #		Check the date_done deletion meaning
 #		Filter is required so call set_defaults with 'filter': 'none' also check filter functionality in 7
 #		Problem of one2many to many2many 

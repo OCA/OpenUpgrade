@@ -3,6 +3,7 @@
 #
 #    Copyright (C) 2014 ONESTEin B.V.
 #              (C) 2014 Therp B.V.
+#    Snippets from odoo/addons/stock/stock.py (C) 2014 Odoo S.A.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,7 +23,7 @@
 import logging
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp.modules.registry import RegistryManager
-from openerp import pooler, SUPERUSER_ID
+from openerp import SUPERUSER_ID as uid
 
 logger = logging.getLogger('OpenUpgrade.stock')
 default_spec = {
@@ -42,9 +43,10 @@ default_spec = {
 }
 
 
-def default_stock_location(cr, pool, uid):
+def default_stock_location(cr, registry):
+    # TODO: does this assume having only a single warehouse?
     try:
-        warehouse = pool['ir.model.data'].get_object(cr, uid, 'stock', 'warehouse0')
+        warehouse = registry['ir.model.data'].get_object(cr, uid, 'stock', 'warehouse0')
         result = default_spec['stock_inventory']
         result = [
             result[0], ('location_id', warehouse.lot_stock_id.id)
@@ -57,9 +59,9 @@ def default_stock_location(cr, pool, uid):
         return result
 
 
-def migrate_product(cr, pool):
+def migrate_product(cr, registry):
     """Migrate track_incoming, track_outgoing"""
-    prod_tmpl_obj = pool['product.template']
+    prod_tmpl_obj = registry['product.template']
     for field in 'track_incoming', 'track_outgoing':
         cr.execute(
             """
@@ -71,28 +73,33 @@ def migrate_product(cr, pool):
             "Setting %s to True for %s product templates",
             field, len(template_ids))
         prod_tmpl_obj.write(
-            cr, SUPERUSER_ID, template_ids, {field: True})
+            cr, uid, template_ids, {field: True})
 
 
-def restore_move_inventory_rel(cr, pool):
-    uid = SUPERUSER_ID
-    simr_legacy = openupgrade.get_legacy_name('stock_inventory_move_rel')
-    stock_move_obj = pool['stock.move']
-    cr.execute("""SELECT inventory_id, move_id FROM {}""".format(simr_legacy))
-    rows = cr.fetchall()
-    for inv_id, move_id in rows:
-        stock_move_obj.write(cr, uid, move_id, {'inventory_id': inv_id})
+def migrate_move_inventory(cr, registry):
+    """
+    Inventory's move_ids needs migration from many2many to one2many on the
+    stock move's inventory_id field. Should be safe to assume that a move
+    was always related to a single inventory anyway.
+    """
+    cr.execute(
+        """
+        UPDATE stock_move sm
+        SET inventory_id = rel.inventory_id
+        FROM {stock_inventory_move_rel} rel
+        WHERE sm.id = rel.move_id
+        """.format(
+            stock_inventory_move_rel=openupgrade.get_legacy_name(
+                'stock_inventory_move_rel')))
 
 
-def migrate_stock_location(cr):
+def migrate_stock_location(cr, registry):
     """Create a Push rule for each pair of locations linked
     :param cr:
     """
-    uid = SUPERUSER_ID
-    pool = pooler.get_pool(cr.dbname)
-    path_obj = pool.get('stock.location.path')
-    location_obj = pool.get('stock.location')
-    warehouse_obj = pool['stock.warehouse']
+    path_obj = registry['stock.location.path']
+    location_obj = registry['stock.location']
+    warehouse_obj = registry['stock.warehouse']
 
     head_sql = """SELECT id, %s, %s, %s, %s, name, %s
         FROM stock_location""" % (
@@ -132,15 +139,14 @@ def migrate_stock_location(cr):
         path_obj.create(cr, uid, vals)
 
 
-def migrate_stock_picking(cr):
+def migrate_stock_picking(cr, registry):
     """Update picking records with the correct picking_type_id and state
     :param cr:
-    """
-    uid = SUPERUSER_ID
-    pool = pooler.get_pool(cr.dbname)
 
-    data_obj = pool.get('ir.model.data')
-    warehouse = data_obj.get_object(cr, uid, 'stock', 'warehouse0')
+    TODO: cover multiple warehouses, each with its own types
+    """
+    warehouse = registry['ir.model.data'].get_object(
+        cr, uid, 'stock', 'warehouse0')
 
     type_legacy = openupgrade.get_legacy_name('type')
     in_id = warehouse.in_type_id.id
@@ -155,174 +161,248 @@ def migrate_stock_picking(cr):
     cr.execute("""UPDATE stock_picking SET state = %s WHERE state = %s""", ('waiting', 'auto',))
 
 
-def _migrate_stock_warehouse(cr, id):
+def set_warehouse_view_location(cr, registry, warehouse):
+    """
+    Getting the shared view locations of all existing locations which is
+    not the overall Physical locations view. Searching for parent
+    left/right explicitely for lack of a parent_of operator.
+    For parent left/right clarification, refer to
+    https://answers.launchpad.net/openobject-server/+question/186704
+
+    Known issue: we don't know if the found view location includes
+    locations of other warehouses and is thus not warehouse specific.
+    """
+    location_obj = registry['stock.location']
+    all_warehouse_view = registry['ir.model.data'].get_object_reference(
+        cr, uid, 'stock', 'stock_location_locations')[1]
+    location_ids = location_obj.search(
+        cr, uid,
+        [('parent_left', '<', warehouse.lot_stock_id.parent_left),
+         ('parent_left', '<', warehouse.lot_stock_id.parent_right),
+         ('parent_right', '>', warehouse.lot_stock_id.parent_left),
+         ('parent_right', '>', warehouse.lot_stock_id.parent_right),
+         ('parent_left', '<', warehouse.wh_input_stock_loc_id.parent_left),
+         ('parent_left', '<', warehouse.wh_input_stock_loc_id.parent_right),
+         ('parent_right', '>', warehouse.wh_input_stock_loc_id.parent_left),
+         ('parent_right', '>', warehouse.wh_input_stock_loc_id.parent_right),
+         ('parent_left', '<', warehouse.wh_output_stock_loc_id.parent_left),
+         ('parent_left', '<', warehouse.wh_output_stock_loc_id.parent_right),
+         ('parent_right', '>', warehouse.wh_output_stock_loc_id.parent_left),
+         ('parent_right', '>', warehouse.wh_output_stock_loc_id.parent_right),
+         ('id', 'child_of', all_warehouse_view),
+         ('id', '!=', all_warehouse_view),
+         ])
+    if location_ids:
+        warehouse_view_id = location_ids[0]
+    else:
+        warehouse_view_id = location_obj.create(
+            cr, uid, {
+                'name': warehouse.code,
+                'usage': 'view',
+                'location_id': all_warehouse_view,
+                })
+        location_obj.write(
+            cr, uid, [
+                warehouse.lot_stock_id.id,
+                warehouse.wh_input_stock_loc_id.id,
+                warehouse.wh_output_stock_loc_id.id],
+            {'location_id', '=', warehouse_view_id})
+    warehouse.write({'view_location_id': warehouse_view_id})
+    warehouse.refresh()
+
+
+def _migrate_stock_warehouse(cr, registry, res_id):
     """Warehouse adaptation to the new functionality. Sequences, Picking types, Rules, Paths..
     :param cr: Database cursor
     """
-    uid = SUPERUSER_ID
-    pool = pooler.get_pool(cr.dbname)
+    location_obj = registry['stock.location']
+    warehouse_obj = registry['stock.warehouse']
+    picking_type_obj = registry['stock.picking.type']
+    seq_obj = registry['ir.sequence']
+
+    warehouse = warehouse_obj.browse(cr, uid, res_id)
+    set_warehouse_view_location(cr, registry, warehouse)
     vals = {}
 
-    # Required field: Code
-    cr.execute("""UPDATE stock_warehouse SET code = %s where id = %s""", ('WH'+str(id), id,))
-    cr.commit()
+    # Create new locations, inactive as per default config. Changing the
+    # warehouse configuration makes them active automatically.
+    for name, field in [
+            ('Quality Control', 'wh_qc_stock_loc_id'),
+            ('Packing Zone', 'wh_pack_stock_loc_id')]:
+        vals[field] = location_obj.create(
+            cr, uid, {
+                'name': name,
+                'usage': 'internal',
+                'location_id': warehouse.view_location_id.id,
+                'active': False,
+                })
 
-    data_obj = pool['ir.model.data']
-    location_obj = pool['stock.location']
-    warehouse_obj = pool['stock.warehouse']
-    picking_type_obj = pool['stock.picking.type']
-    seq_obj = pool['ir.sequence']
+    # Create new sequences to guarantee separate sequences per warehouse.
+    # Transfer the number_next from the existing sequences.
+    def get_sequence_next(code, default=1):
+        sequence_ids = (
+            seq_obj.search(
+                cr, uid, [('company_id', '=', warehouse.company_id.id),
+                          ('code', '=', code)])
+            or seq_obj.search(
+                cr, uid, [('company_id', '=', False), ('code', '=', code)]))
+        if not sequence_ids:
+            return default
+        return seq_obj.browse(cr, uid, sequence_ids[0]).number_next
 
-    warehouse = warehouse_obj.browse(cr, uid, id)
-    warehouse.refresh()
-
-    # Parent View
-    if not warehouse.lot_stock_id.location_id:
-        wh_loc_id = location_obj.create(cr, uid, {
-            'name': warehouse.code,
-            'usage': 'view',
-            'location_id': data_obj.get_object_reference(cr, uid, 'stock', 'stock_location_locations')[1]
-        })
-        vals['view_location_id'] = wh_loc_id
-    else:
-        vals['view_location_id'] = warehouse.lot_stock_id.location_id.id
-
-    # Sub Locations
-    sub_locations = []
-    if not warehouse.wh_input_stock_loc_id:
-        sub_locations.append({
-            'name': 'Input', 'active': warehouse.reception_steps != 'one_step', 'field': 'wh_input_stock_loc_id'
-        })
-
-    if not warehouse.wh_output_stock_loc_id:
-        sub_locations.append({
-            'name': 'Output', 'active': warehouse.delivery_steps != 'ship_only', 'field': 'wh_output_stock_loc_id'
-        })
-
-    sub_locations.append({
-        'name': 'Quality Control', 'active': warehouse.reception_steps == 'three_steps', 'field': 'wh_qc_stock_loc_id'
-    })
-    sub_locations.append({
-        'name': 'Packing Zone', 'active': warehouse.delivery_steps == 'pick_pack_ship', 'field': 'wh_pack_stock_loc_id'
-    })
-
-    for values in sub_locations:
-        location_id = location_obj.create(cr, uid, {
-            'name': values['name'],
-            'usage': 'internal',
-            'location_id': vals['view_location_id'],
-            'active': values['active'],
-        })
-        vals[values['field']] = location_id
-
-    # create new sequences
     in_seq_id = seq_obj.create(cr, uid, values={
-        'name': warehouse.name + ' Sequence in', 'prefix': warehouse.code + '/IN/', 'padding': 5
+        'name': warehouse.name + ' Sequence in',
+        'prefix': warehouse.code + '/IN/', 'padding': 5,
+        'number_next': get_sequence_next('stock.picking.in'),
     })
     out_seq_id = seq_obj.create(cr, uid, values={
-        'name': warehouse.name + ' Sequence out', 'prefix':  warehouse.code + '/OUT/', 'padding': 5
+        'name': warehouse.name + ' Sequence out',
+        'prefix':  warehouse.code + '/OUT/', 'padding': 5,
+        'number_next': get_sequence_next('stock.picking.out'),
     })
     int_seq_id = seq_obj.create(cr, uid, values={
-        'name': warehouse.name + ' Sequence internal', 'prefix': warehouse.code + '/INT/', 'padding': 5
+        'name': warehouse.name + ' Sequence internal',
+        'prefix': warehouse.code + '/INT/', 'padding': 5,
+        # OCB has stock.picking.internal, Odoo has stock.picking
+        'number_next': get_sequence_next(
+            'stock.picking', default=0) or get_sequence_next(
+                'stock.picking.internal'),
     })
     pack_seq_id = seq_obj.create(cr, uid, values={
-        'name': warehouse.name + ' Sequence packing', 'prefix': warehouse.code + '/PACK/', 'padding': 5
+        'name': warehouse.name + ' Sequence packing',
+        'prefix': warehouse.code + '/PACK/', 'padding': 5
     })
     pick_seq_id = seq_obj.create(cr, uid, values={
-        'name': warehouse.name + ' Sequence picking', 'prefix': warehouse.code + '/PICK/', 'padding': 5
+        'name': warehouse.name + ' Sequence picking',
+        'prefix': warehouse.code + '/PICK/', 'padding': 5
     })
 
-    # get default locations
-    wh_stock_loc = warehouse.lot_stock_id
-    wh_input_stock_loc = warehouse.wh_input_stock_loc_id or vals['wh_input_stock_loc_id']
-    wh_output_stock_loc = warehouse.wh_output_stock_loc_id or vals['wh_output_stock_loc_id']
-    wh_pack_stock_loc = vals['wh_pack_stock_loc_id']
-    customer_loc = data_obj.get_object_reference(cr, uid, 'stock', 'stock_location_customers')[1]
-    supplier_loc = data_obj.get_object_reference(cr, uid, 'stock', 'stock_location_suppliers')[1]
-    input_loc = wh_input_stock_loc
-    if warehouse.reception_steps == 'one_step':
-        input_loc = wh_stock_loc.id
-    output_loc = wh_output_stock_loc
-    if warehouse.delivery_steps == 'ship_only':
-        output_loc = wh_stock_loc.id
+    def get_location_by_usage(usage):
+        """
+        Try to find a company specific location first. The fallback query
+        will always at least contain the customer or supplier location from
+        the module's data file which is noupdate nowadays.
+        """
+        location_ids = (
+            location_obj.search(
+                cr, uid, [('usage', '=', usage),
+                          ('company_id', '=', warehouse.company_id.id)])
+            or location_obj.search(
+                cr, uid, [('usage', '=', usage),
+                          ('company_id', '=', False)]))
+        return location_ids[0]
 
-    in_type_id = picking_type_obj.create(cr, uid, vals={
-        'name': 'Receptions',
-        'warehouse_id': warehouse.id,
-        'code': 'incoming',
-        'sequence_id': in_seq_id,
-        'default_location_src_id': supplier_loc,
-        'default_location_dest_id': input_loc,
-        'sequence': 1,
-    })
-    out_type_id = picking_type_obj.create(cr, uid, vals={
-        'name': 'Delivery Orders',
-        'warehouse_id': warehouse.id,
-        'code': 'outgoing',
-        'sequence_id': out_seq_id,
-        'return_picking_type_id': in_type_id,
-        'default_location_src_id': output_loc,
-        'default_location_dest_id': customer_loc,
-        'sequence': 4,
-    })
-    picking_type_obj.write(cr, uid, [in_type_id], {'return_picking_type_id': out_type_id})
+    customer_loc_id = get_location_by_usage('customer')
+    supplier_loc_id = get_location_by_usage('supplier')
 
-    int_type_id = picking_type_obj.create(cr, uid, vals={
-        'name': 'Internal Transfers',
-        'warehouse_id': warehouse.id,
-        'code': 'internal',
-        'sequence_id': int_seq_id,
-        'default_location_src_id': wh_stock_loc.id,
-        'default_location_dest_id': wh_stock_loc.id,
-        'active': True,
-        'sequence': 2,
-    })
-    pack_type_id = picking_type_obj.create(cr, uid, vals={
-        'name': 'Pack',
-        'warehouse_id': warehouse.id,
-        'code': 'internal',
-        'sequence_id': pack_seq_id,
-        'default_location_src_id': wh_pack_stock_loc,
-        'default_location_dest_id': output_loc,
-        'active': warehouse.delivery_steps == 'pick_pack_ship',
-        'sequence': 3,
-    })
-    pick_type_id = picking_type_obj.create(cr, uid, vals={
-        'name': 'Pick',
-        'warehouse_id': warehouse.id,
-        'code': 'internal',
-        'sequence_id': pick_seq_id,
-        'default_location_src_id': wh_stock_loc.id,
-        'default_location_dest_id': wh_pack_stock_loc,
-        'active': warehouse.delivery_steps != 'ship_only',
-        'sequence': 2,
-    })
+    # - Creation of sequence adapted from stock.py -
+    # Choose the next available color for the picking types of this warehouse
+    color = 0
+    available_colors = [c % 9 for c in range(3, 12)]
+    all_used_colors = picking_type_obj.search_read(
+        cr, uid, [('warehouse_id', '!=', False),
+                  ('color', '!=', False)], ['color'], order='color')
+    # Don't use sets to preserve the list order
+    for x in all_used_colors:
+        if x['color'] in available_colors:
+            available_colors.remove(x['color'])
+    if available_colors:
+        color = available_colors[0]
 
-    vals['in_type_id'] = in_type_id
-    vals['out_type_id'] = out_type_id
-    vals['pack_type_id'] = pack_type_id
-    vals['pick_type_id'] = pick_type_id
-    vals['int_type_id'] = int_type_id,
+    # Order the picking types with a sequence allowing to have the following
+    # suit for each warehouse: reception, internal, pick, pack, ship.
+    max_sequence = picking_type_obj.search_read(
+        cr, uid, [], ['sequence'], order='sequence desc')
+    max_sequence = max_sequence and max_sequence[0]['sequence'] or 0
+
+    # TODO: apply max_sequence below
+
+    in_type_id = picking_type_obj.create(
+        cr, uid, {
+            'name': 'Receptions',
+            'warehouse_id': warehouse.id,
+            'code': 'incoming',
+            'sequence_id': in_seq_id,
+            'default_location_src_id': supplier_loc_id,
+            'default_location_dest_id': warehouse.wh_input_stock_loc_id.id,
+            'sequence': max_sequence + 1,
+            'color': color,
+        })
+    out_type_id = picking_type_obj.create(
+        cr, uid, {
+            'name': 'Delivery Orders',
+            'warehouse_id': warehouse.id,
+            'code': 'outgoing',
+            'sequence_id': out_seq_id,
+            'return_picking_type_id': in_type_id,
+            'default_location_src_id': warehouse.wh_output_stock_loc_id.id,
+            'default_location_dest_id': customer_loc_id,
+            'sequence': max_sequence + 4,
+            'color': color,
+        })
+    picking_type_obj.write(
+        cr, uid, [in_type_id], {'return_picking_type_id': out_type_id})
+
+    int_type_id = picking_type_obj.create(
+        cr, uid, {
+            'name': 'Internal Transfers',
+            'warehouse_id': warehouse.id,
+            'code': 'internal',
+            'sequence_id': int_seq_id,
+            'default_location_src_id': warehouse.lot_stock_id.id,
+            'default_location_dest_id': warehouse.lot_stock_id.id,
+            'sequence': max_sequence + 2,
+            'color': color,
+        })
+    pack_type_id = picking_type_obj.create(
+        cr, uid, {
+            'name': 'Pack',
+            'warehouse_id': warehouse.id,
+            'code': 'internal',
+            'sequence_id': pack_seq_id,
+            'default_location_src_id': vals['wh_pack_stock_loc'],
+            'default_location_dest_id': warehouse.lot_stock_id.id,
+            'active': False,
+            'sequence': max_sequence + 3,
+            'color': color,
+        })
+    pick_type_id = picking_type_obj.create(
+        cr, uid, {
+            'name': 'Pick',
+            'warehouse_id': warehouse.id,
+            'code': 'internal',
+            'sequence_id': pick_seq_id,
+            'default_location_src_id': warehouse.lot_stock_id.id,
+            'default_location_dest_id': vals['wh_pack_stock_loc'],
+            'active': False,
+            'color': color,
+            'sequence': max_sequence + 2,
+        })
+
+    vals.update({
+        'in_type_id': in_type_id,
+        'out_type_id': out_type_id,
+        'pack_type_id': pack_type_id,
+        'pick_type_id': pick_type_id,
+        'int_type_id': int_type_id,
+        })
 
     # Write picking types on WH.
-    warehouse_obj.write(cr, uid, [warehouse.id], vals=vals)
+    warehouse_obj.write(cr, uid, [warehouse.id], vals)
     warehouse.refresh()
-
-    # update ir_model_data references to the main warehouse
-    # Reference used in the code for some default values
-    if warehouse.code == 'WH1' and in_type_id:
-        cr.execute("""UPDATE ir_model_data set noupdate = %s, res_id = %s where name = %s""",
-                   (True, in_type_id, 'picking_type_in',))
-
     # create routes and push/pull rules
-    new_objects_dict = warehouse_obj.create_routes(cr, uid, warehouse.id, warehouse)
-    warehouse_obj.write(cr, uid, warehouse.id, new_objects_dict)
+    warehouse_obj.write(
+        cr, uid,
+        warehouse_obj.create_routes(cr, uid, [warehouse.id], warehouse))
 
 
 def migrate_stock_warehouse(cr):
-    """Migrate all the warehouses
-    :param cr: Database cursor
-    """
+    """Migrate all the warehouses"""
+    # Set code
+    cr.execute(
+        """
+        UPDATE stock_warehouse SET code = 'WH'||id
+        WHERE code IS NULL OR code = ''""")
     cr.execute("""select id from stock_warehouse order by id asc""")
     for res in cr.fetchall():
         _migrate_stock_warehouse(cr, res[0])
@@ -384,16 +464,14 @@ def migrate_stock_warehouse_orderpoint(cr):
         assert cr.rowcount == 1
 
 
-def migrate_product_supply_method(cr):
+def migrate_product_supply_method(cr, registry):
     """Procurements of products: change the supply_method for the matching route
     make to stock -> MTS Rule: by default
     make to order -> MTO Rule
     :param cr:
     """
-    uid = SUPERUSER_ID
-    pool = pooler.get_pool(cr.dbname)
-    route_obj = pool['stock.location.route']
-    template_obj = pool['product.template']
+    route_obj = registry['stock.location.route']
+    template_obj = registry['product.template']
 
     mto_route_id = route_obj.search(cr, uid, [('name', 'like', 'Make To Order')])
     mto_route_id = mto_route_id and mto_route_id[0] or False
@@ -409,7 +487,7 @@ def migrate_product_supply_method(cr):
         template_obj.write(cr, uid, product_ids, {'route_ids': [(6, 0, [mto_route_id])]})
 
 
-def migrate_procurement_order(cr):
+def migrate_procurement_order(cr, registry):
     """Set warehouse, partner from the move."""
     cr.execute(
         """
@@ -421,9 +499,9 @@ def migrate_procurement_order(cr):
         """)
 
 
-def migrate_stock_qty(cr, pool, uid):
+def migrate_stock_qty(cr, registry):
     """Reprocess stock moves in state done to fill stock.quant."""
-    stock_move_obj = pool['stock.move']
+    stock_move_obj = registry['stock.move']
 
     done_move_ids = stock_move_obj.search(cr, uid, [('state', '=', 'done')])
     stock_move_obj.write(cr, uid, done_move_ids, {'state': 'draft'})
@@ -431,14 +509,12 @@ def migrate_stock_qty(cr, pool, uid):
     stock_move_obj.action_done(cr, uid, done_move_ids, context=None)
 
 
-def migrate_stock_production_lot(cr):
+def migrate_stock_production_lot(cr, registry):
     """Serial numbers migration
     :param cr:
     """
-    uid = SUPERUSER_ID
-    pool = pooler.get_pool(cr.dbname)
-    lot_obj = pool['stock.production.lot']
-    user_obj = pool['res.users']
+    lot_obj = registry['stock.production.lot']
+    user_obj = registry['res.users']
 
     # Revisions to mail messages
     cr.execute("SELECT lot_id, author_id, description FROM stock_production_lot_revision")
@@ -467,27 +543,29 @@ def migrate(cr, version):
     around like it is in 8.0. So we need to check if we are migrating a
     database in which procurement related stuff needs to be migrated.
     """
-    pool = pooler.get_pool(cr.dbname)
-    uid = SUPERUSER_ID
+    registry = RegistryManager.get(cr.dbname)
     have_procurement = openupgrade.column_exists(
         cr, 'product_template', openupgrade.get_legacy_name('procure_method'))
 
     migrate_stock_warehouse(cr)
-    migrate_stock_picking(cr)
-    migrate_stock_location(cr)
+    migrate_stock_picking(cr, registry)
+    migrate_stock_location(cr, registry)
 
     if have_procurement:
         migrate_stock_warehouse_orderpoint(cr)
-        migrate_product_supply_method(cr)
-        migrate_procurement_order(cr)
+        migrate_product_supply_method(cr, registry)
+        migrate_procurement_order(cr, registry)
 
-    migrate_stock_qty(cr, pool, uid)
-    migrate_stock_production_lot(cr)
+    migrate_stock_qty(cr, registry)
+    migrate_stock_production_lot(cr, registry)
 
     # Initiate defaults before filling.
-    default_spec.update({'stock.inventory': default_stock_location(cr, pool, uid)})
-    openupgrade.set_defaults(cr, pool, default_spec, force=False)
+    default_spec.update({'stock.inventory': default_stock_location(cr, registry)})
+    openupgrade.set_defaults(cr, registry, default_spec, force=False)
 
-    migrate_product(cr, pool)
+    migrate_product(cr, registry)
     openupgrade.delete_model_workflow(cr, 'stock.picking')
-    openupgrade_80.set_message_last_post(cr, SUPERUSER_ID, pool, ['stock.production.lot', 'stock.picking'])
+    openupgrade_80.set_message_last_post(
+        cr, uid, registry, ['stock.production.lot', 'stock.picking'])
+
+    migrate_move_inventory(cr, registry)

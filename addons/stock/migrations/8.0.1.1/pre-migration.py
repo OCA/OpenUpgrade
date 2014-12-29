@@ -80,11 +80,6 @@ xmlid_renames = [
 ]
 
 
-def save_rel_table(cr):
-    simr_legacy = openupgrade.get_legacy_name('stock_inventory_move_rel')
-    openupgrade.logged_query(cr, """CREATE TABLE {} AS TABLE stock_inventory_move_rel""".format(simr_legacy))
-
-
 def initialize_location_inventory(cr):
     """Stock Inventory is upgraded before Stock Warehouse. The default value of the field location_id is searched
     in the stock_warehouse table, asking for columns that has not been created yet because of the browse object.
@@ -140,7 +135,7 @@ def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
     initialize_location_inventory(cr)
-    save_rel_table(cr)
+    openupgrade.rename_tables(cr, [('stock_inventory_move_rel', None)])
 
     have_procurement = openupgrade.column_exists(
         cr, 'product_template', openupgrade.get_legacy_name('procure_method'))
