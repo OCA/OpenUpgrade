@@ -169,8 +169,9 @@ def set_warehouse_view_location(cr, registry, warehouse):
     For parent left/right clarification, refer to
     https://answers.launchpad.net/openobject-server/+question/186704
 
-    Known issue: we don't know if the found view location includes
-    locations of other warehouses and is thus not warehouse specific.
+    Known issue: we don't know if the found view location includes locations
+    of other warehouses and is thus not warehouse specific so we'll just warn
+    about the changes we make.
     """
     location_obj = registry['stock.location']
     all_warehouse_view = registry['ir.model.data'].get_object_reference(
@@ -194,7 +195,29 @@ def set_warehouse_view_location(cr, registry, warehouse):
          ])
     if location_ids:
         warehouse_view_id = location_ids[0]
+        location = location_obj.browse(
+            cr, uid, location_ids[0])
+        openupgrade.message(
+            cr, 'stock', 'stock_warehouse', 'view_location_id',
+            "Selecting location '%s' as the view location of warehouse %s",
+            location.name, warehouse.code)
     else:
+        openupgrade.message(
+            cr, 'stock', 'stock_warehouse', 'view_location_id',
+            "Creating new view location for warehouse %s",
+            warehouse.code)
+        for location in (
+                warehouse.lot_stock_id,
+                warehouse.wh_input_stock_loc_id,
+                warehouse.wh_output_stock_loc_id):
+            if (location.location_id and
+                    location.location_id.id != all_warehouse_view):
+                openupgrade.message(
+                    cr, 'stock', 'stock_location', 'location_id',
+                    "Overwriting existing parent location (%s) of location %s "
+                    "with the warehouse's new view location",
+                    location.location_id.name, location.name)
+
         warehouse_view_id = location_obj.create(
             cr, uid, {
                 'name': warehouse.code,
@@ -360,7 +383,7 @@ def _migrate_stock_warehouse(cr, registry, res_id):
             'warehouse_id': warehouse.id,
             'code': 'internal',
             'sequence_id': pack_seq_id,
-            'default_location_src_id': vals['wh_pack_stock_loc'],
+            'default_location_src_id': vals['wh_pack_stock_loc_id'],
             'default_location_dest_id': warehouse.lot_stock_id.id,
             'active': False,
             'sequence': max_sequence + 3,
@@ -373,7 +396,7 @@ def _migrate_stock_warehouse(cr, registry, res_id):
             'code': 'internal',
             'sequence_id': pick_seq_id,
             'default_location_src_id': warehouse.lot_stock_id.id,
-            'default_location_dest_id': vals['wh_pack_stock_loc'],
+            'default_location_dest_id': vals['wh_pack_stock_loc_id'],
             'active': False,
             'color': color,
             'sequence': max_sequence + 2,
@@ -388,15 +411,14 @@ def _migrate_stock_warehouse(cr, registry, res_id):
         })
 
     # Write picking types on WH.
-    warehouse_obj.write(cr, uid, [warehouse.id], vals)
+    warehouse.write(vals)
     warehouse.refresh()
     # create routes and push/pull rules
-    warehouse_obj.write(
-        cr, uid,
+    warehouse.write(
         warehouse_obj.create_routes(cr, uid, [warehouse.id], warehouse))
 
 
-def migrate_stock_warehouse(cr):
+def migrate_stock_warehouse(cr, registry):
     """Migrate all the warehouses"""
     # Set code
     cr.execute(
@@ -405,7 +427,7 @@ def migrate_stock_warehouse(cr):
         WHERE code IS NULL OR code = ''""")
     cr.execute("""select id from stock_warehouse order by id asc""")
     for res in cr.fetchall():
-        _migrate_stock_warehouse(cr, res[0])
+        _migrate_stock_warehouse(cr, registry, res[0])
 
 
 def migrate_stock_warehouse_orderpoint(cr):
@@ -547,7 +569,7 @@ def migrate(cr, version):
     have_procurement = openupgrade.column_exists(
         cr, 'product_template', openupgrade.get_legacy_name('procure_method'))
 
-    migrate_stock_warehouse(cr)
+    migrate_stock_warehouse(cr, registry)
     migrate_stock_picking(cr, registry)
     migrate_stock_location(cr, registry)
 

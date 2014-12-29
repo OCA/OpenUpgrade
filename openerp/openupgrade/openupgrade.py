@@ -173,6 +173,8 @@ def rename_tables(cr, table_spec):
                 old + '_id_seq' not in to_rename):
             table_spec.append((old + '_id_seq', new + '_id_seq'))
     for (old, new) in table_spec:
+        if new is None:
+            new = get_legacy_name(old)
         logger.info("table %s: renaming to %s",
                     old, new)
         cr.execute('ALTER TABLE "%s" RENAME TO "%s"' % (old, new,))
