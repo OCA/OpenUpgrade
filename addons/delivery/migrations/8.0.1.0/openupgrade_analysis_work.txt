@@ -1,0 +1,21 @@
+---Fields in module 'delivery'---
+delivery     / delivery.grid.line       / operator (selection)          : selection_keys is now '['<', '<=', '==', '>', '>=']' ('['<=', '==', '>=']')
+delivery     / delivery.grid.line       / type (selection)              : selection_keys is now '['price', 'quantity', 'volume', 'weight', 'wv']' ('['price', 'volume', 'weight', 'wv']')
+delivery     / delivery.grid.line       / variable_factor (selection)   : selection_keys is now '['price', 'quantity', 'volume', 'weight', 'wv']' ('['price', 'volume', 'weight', 'wv']')
+# Nothing to do. New selection values are a super-set of old ones
+
+delivery     / delivery.grid.line       / sequence (integer)            : NEW required: required, req_default: function
+# Nothing to do. It's set by default value.
+
+delivery     / sale.order.line          / is_delivery (boolean)         : NEW
+# Nothing to do. In v7, previous delivery order lines were not automatically removed
+
+---XML records in module 'delivery'---
+NEW ir.actions.act_window: delivery.action_picking_tree
+DEL ir.actions.act_window: delivery.action_picking_tree4
+DEL ir.actions.report.xml: delivery.report_shipping
+NEW ir.ui.view: delivery.report_shipping2
+DEL ir.ui.view: delivery.view_delivery_order_inherit_stock
+DEL ir.ui.view: delivery.view_picking_withcarrier_in_form
+DEL ir.ui.view: delivery.view_picking_withweight_internal_form
+# Nothing to do. Handled by standard update machinery
