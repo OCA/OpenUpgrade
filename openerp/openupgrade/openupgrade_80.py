@@ -72,8 +72,8 @@ def set_message_last_post(cr, uid, pool, models):
         models = [models]
     for model in models:
         model_pool = pool[model]
-        obj_ids = model_pool.search(
-            cr, uid, [], context={'active_test': False})
+        cr.execute('SELECT id FROM {table}'.format(table=model_pool._table))
+        obj_ids = [row[0] for row in cr.fetchall()]
         for res_id, value in get_last_post_for_model(
                 cr, uid, obj_ids, model_pool).iteritems():
             if not value:
