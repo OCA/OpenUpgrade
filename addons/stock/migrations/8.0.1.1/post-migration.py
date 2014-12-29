@@ -82,7 +82,8 @@ def migrate_move_inventory(cr, registry):
     stock move's inventory_id field. Should be safe to assume that a move
     was always related to a single inventory anyway.
     """
-    cr.execute(
+    openupgrade.logged_query(
+        cr,
         """
         UPDATE stock_move sm
         SET inventory_id = rel.inventory_id
@@ -591,3 +592,8 @@ def migrate(cr, version):
         cr, uid, registry, ['stock.production.lot', 'stock.picking'])
 
     migrate_move_inventory(cr, registry)
+
+    # Create some noupdate XML IDs based on the configuration of the main
+    # warehouse. Was already loaded, but the warehouse was not fully
+    # configured at that moment.
+    openupgrade.load_data(cr, 'stock', 'stock_data.yml')
