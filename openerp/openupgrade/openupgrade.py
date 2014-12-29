@@ -23,6 +23,7 @@ import os
 import inspect
 import logging
 from openerp import release, tools, SUPERUSER_ID
+from openerp.tools.yaml_import import yaml_import
 from openerp.osv import orm
 from openerp.tools.mail import plaintext2html
 from openerp.modules.registry import RegistryManager
@@ -89,7 +90,7 @@ def check_values_selection_field(cr, table_name, field_name, allowed_values):
 
 def load_data(cr, module_name, filename, idref=None, mode='init'):
     """
-    Load an xml or csv data file from your post script. The usual case for
+    Load an xml, csv or yml data file from your post script. The usual case for
     this is the
     occurrence of newly added essential or useful data in the module that is
     marked with "noupdate='1'" and without "forcecreate='1'" so that it will
@@ -125,6 +126,8 @@ def load_data(cr, module_name, filename, idref=None, mode='init'):
             noupdate = True
             tools.convert_csv_import(
                 cr, module_name, pathname, fp.read(), idref, mode, noupdate)
+        elif ext == '.yml':
+            yaml_import(cr, module_name, fp, None, idref=idref, mode=mode)
         else:
             tools.convert_xml_import(cr, module_name, fp, idref, mode=mode)
     finally:
