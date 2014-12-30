@@ -558,6 +558,34 @@ def migrate_stock_production_lot(cr, registry):
         cr.commit()
 
 
+def reset_warehouse_data_ids(cr, registry):
+    """ While stock_data.yml creates some noupdate XML IDs, they contain empty
+    res_ids because the main warehouse was not fully configured at that time.
+    Reset them here."""
+    data_model = registry['ir.model.data']
+    warehouse = data_model.xmlid_to_object(
+        cr, uid, 'stock.warehouse0')
+    for name, res_id in (
+            ('stock_location_stock', warehouse.lot_stock_id.id),
+            ('stock_location_company', warehouse.wh_input_stock_loc_id.id),
+            ('stock_location_output', warehouse.wh_output_stock_loc_id.id),
+            ('location_pack_zone', warehouse.wh_pack_stock_loc_id.id),
+            ('picking_type_internal', warehouse.int_type_id.id),
+            ('picking_type_in', warehouse.in_type_id.id),
+            ('picking_type_out', warehouse.out_type_id.id)):
+        assert data_model.search(
+            cr, uid, [('module', '=', 'stock'), ('name', '=', name)]), (
+            'XML name "stock.{}" does not exist. Was stock_data.yml loaded '
+            'correctly?'.format(name))
+        assert res_id, (
+            'New id for xml name {} is not valid. Something went wrong.'
+            ''.format(name))
+        cr.execute(
+            """UPDATE ir_model_data SET res_id = %s
+               WHERE module = 'stock' AND name = %s""",
+            (res_id, name))
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     """
@@ -590,10 +618,5 @@ def migrate(cr, version):
     openupgrade.delete_model_workflow(cr, 'stock.picking')
     openupgrade_80.set_message_last_post(
         cr, uid, registry, ['stock.production.lot', 'stock.picking'])
-
     migrate_move_inventory(cr, registry)
-
-    # Create some noupdate XML IDs based on the configuration of the main
-    # warehouse. Was already loaded, but the warehouse was not fully
-    # configured at that moment.
-    openupgrade.load_data(cr, 'stock', 'stock_data.yml')
+    reset_warehouse_data_ids(cr, registry)
