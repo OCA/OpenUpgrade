@@ -19,7 +19,11 @@
 #
 ##############################################################################
 
+import logging
 from openerp.openupgrade import openupgrade
+
+
+logger = logging.getLogger('OpenUpgrade.stock')
 
 column_renames = {
     'product_product': [
@@ -81,23 +85,34 @@ xmlid_renames = [
 
 
 def initialize_location_inventory(cr):
-    """Stock Inventory is upgraded before Stock Warehouse. The default value of the field location_id is searched
-    in the stock_warehouse table, asking for columns that has not been created yet because of the browse object.
-    So the query fails.
-
-    This function is a proposal to solve this problem. It creates and assigns this field like the ORM does before
-    the regular upgrade mechanism of Odoo.
-    :param cr: Database cursor
+    """Stock Inventory is upgraded before Stock Warehouse. The default value
+    of the field location_id (triggered by a missing NOT NULL constraint)
+    is searched in the stock_warehouse table, asking
+    for columns that has not been created yet because of the browse object.
+    Therefore, precreate the column and fill with values from its own lines.
+    Fallback on the stock location of the inventory's company's warehouse.
     """
-
-    cr.execute("""SELECT res_id FROM ir_model_data WHERE name = %s""", ('stock_location_stock',))
-    default_location = cr.fetchone()
-    default_location = default_location and default_location[0] or False
-
-    cr.execute("""ALTER TABLE stock_inventory ADD COLUMN location_id INTEGER NOT NULL DEFAULT %s""",
-               (default_location,))
-    cr.execute("""COMMENT ON COLUMN stock_inventory.location_id IS %s""", ('Inventoried Location',))
-
+    cr.execute("ALTER TABLE stock_inventory ADD COLUMN location_id INTEGER")
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE stock_inventory si
+        SET location_id = l.location_id
+        FROM stock_inventory_line l
+        WHERE l.inventory_id = si.id
+        """)
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE stock_inventory si
+        SET location_id = sw.lot_stock_id
+        FROM stock_warehouse sw
+        WHERE location_id is NULL
+            AND (si.company_id = sw.company_id
+                 OR sw.company_id is NULL)
+        """)
+    cr.execute("ALTER TABLE stock_inventory "
+               "ALTER COLUMN location_id SET NOT NULL")
 
 def swap_procurement_move_rel(cr):
     """

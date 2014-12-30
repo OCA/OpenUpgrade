@@ -81,6 +81,8 @@ def migrate_move_inventory(cr, registry):
     Inventory's move_ids needs migration from many2many to one2many on the
     stock move's inventory_id field. Should be safe to assume that a move
     was always related to a single inventory anyway.
+
+    Set product and filter for single product inventories.
     """
     openupgrade.logged_query(
         cr,
@@ -92,6 +94,19 @@ def migrate_move_inventory(cr, registry):
         """.format(
             stock_inventory_move_rel=openupgrade.get_legacy_name(
                 'stock_inventory_move_rel')))
+
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE stock_inventory si
+        SET product_id = l.product_id,
+            filter = 'product'
+        FROM stock_inventory_line l
+        WHERE l.inventory_id = si.id
+            AND (SELECT COUNT(*)
+                 FROM stock_inventory_line
+                 WHERE inventory_id = si.id) = 1;
+        """)
 
 
 def migrate_stock_location(cr, registry):

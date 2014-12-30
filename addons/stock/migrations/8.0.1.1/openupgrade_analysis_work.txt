@@ -85,30 +85,31 @@ stock        / stock.fixed.putaway.strat / sequence (integer)            : NEW
 #Nothing to do
  
 stock        / stock.inventory          / date_done (datetime)          : DEL 
+# NOTHING TO DO: this field was for reference only. The related stock moves
+# always carried the value of inventory.date, not inventory.date_done
 stock        / stock.inventory          / filter (selection)            : NEW required: required, selection_keys: function, req_default: none
+# DONE: set to 'product' if single product inventory, otherwise default to 'none'
 stock        / stock.inventory          / inventory_line_id (one2many)  : DEL relation: stock.inventory.line
 stock        / stock.inventory          / line_ids (one2many)           : NEW relation: stock.inventory.line
-stock        / stock.inventory          / location_id (many2one)        : NEW relation: stock.location, required: required, req_default: function
-stock        / stock.inventory          / lot_id (many2one)             : NEW relation: stock.production.lot
-stock        / stock.inventory          / move_ids (many2many)          : type is now 'one2many' ('many2many')
 # DONE. Migrate m2m table to stock_move.inventory_id
+stock        / stock.inventory          / location_id (many2one)        : NEW relation: stock.location, required: required, req_default: function
+# DONE. Take location from the inventory's lines or the company's warehouse
+stock        / stock.inventory          / lot_id (many2one)             : NEW relation: stock.production.lot
 stock        / stock.inventory          / package_id (many2one)         : NEW relation: stock.quant.package
 stock        / stock.inventory          / partner_id (many2one)         : NEW relation: res.partner
+# NOTHING TO DO: new functionality
+stock        / stock.inventory          / move_ids (many2many)          : type is now 'one2many' ('many2many')
+# DONE: migrate field type
 stock        / stock.inventory          / product_id (many2one)         : NEW relation: product.product
-# DONE: Rename inventory_line_id with line_ids.
-#		Check the date_done deletion meaning
-#		Filter is required so call set_defaults with 'filter': 'none' also check filter functionality in 7
-#		Problem of one2many to many2many 
-#		Think about setting the last three fields empty.
-
+# DONE: set to the inventory's line's product if single product inventory
 stock        / stock.inventory.line     / package_id (many2one)         : NEW relation: stock.quant.package
 stock        / stock.inventory.line     / partner_id (many2one)         : NEW relation: res.partner
+# NOTHING TO DO: new functionality
 stock        / stock.inventory.line     / product_uom (many2one)        : DEL relation: product.uom, required: required
 stock        / stock.inventory.line     / product_uom_id (many2one)     : NEW relation: product.uom, required: required
+# DONE: rename field
 stock        / stock.inventory.line     / theoretical_qty (float)       : NEW 
-# TODO: rename the field 
-# 		hour consultan questions about the theoretical_qty, package_id, partner_id. 
-
+# NOTHING TO DO: used to determine if a stock move needs to be created for prepopulated lines
 
 ##### STOCK LOCATION #######
 
