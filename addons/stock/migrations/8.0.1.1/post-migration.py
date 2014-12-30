@@ -43,22 +43,6 @@ default_spec = {
 }
 
 
-def default_stock_location(cr, registry):
-    # TODO: does this assume having only a single warehouse?
-    try:
-        warehouse = registry['ir.model.data'].get_object(cr, uid, 'stock', 'warehouse0')
-        result = default_spec['stock_inventory']
-        result = [
-            result[0], ('location_id', warehouse.lot_stock_id.id)
-        ]
-        return result
-    except:
-        message = "Failed to get the default warehouse, using default_spec."
-        openupgrade.message(cr, 'stock', 'stock_inventory', 'location_id', message)
-        result = default_spec['stock.inventory']
-        return result
-
-
 def migrate_product(cr, registry):
     """Migrate track_incoming, track_outgoing"""
     prod_tmpl_obj = registry['product.template']
@@ -110,9 +94,9 @@ def migrate_move_inventory(cr, registry):
 
 
 def migrate_stock_location(cr, registry):
-    """Create a Push rule for each pair of locations linked
-    :param cr:
-    """
+    """Create a Push rule for each pair of locations linked. Could be improved
+    with a more precise attempt at finding the associated warehouse. Until
+    that is the case, warn about the choices we make."""
     path_obj = registry['stock.location.path']
     location_obj = registry['stock.location']
     warehouse_obj = registry['stock.warehouse']
@@ -124,12 +108,13 @@ def migrate_stock_location(cr, registry):
         openupgrade.get_legacy_name('chained_company_id'),
         openupgrade.get_legacy_name('chained_delay'),
         openupgrade.get_legacy_name('chained_picking_type'))
-
-    tail_sql = """ WHERE %s is not null""" % (openupgrade.get_legacy_name('chained_location_id'))
+    tail_sql = """ WHERE %s is not null""" % (
+        openupgrade.get_legacy_name('chained_location_id'))
     cr.execute(head_sql + tail_sql)
 
     for location in cr.fetchall():
         loc = location_obj.browse(cr, uid, location[1])
+        name = '{} -> {}'.format(location[5], loc.name)
         vals = {
             'active': True,
             'propagate': True,
@@ -138,20 +123,22 @@ def migrate_stock_location(cr, registry):
             'auto': location[2],
             'company_id': location[3],
             'delay': location[4],
-            'name': location[5] + ' -> ' + loc.name,
+            'name': name,
         }
 
         args = location[3] and [('company_id', '=', location[3])] or []
         vals['warehouse_id'] = warehouse_obj.search(cr, uid, args)[0]
         warehouse = warehouse_obj.browse(cr, uid, vals['warehouse_id'])
-
+        openupgrade.message(
+            cr, 'stock', 'stock_location_path', 'warehouse_id',
+            'Assigning warehouse %s to location path %s. Please verify '
+            'in the case of multiple warehouses.', warehouse.name, name)
         if location[6] == 'in':
             vals['picking_type_id'] = warehouse.in_type_id.id
         elif location[6] == 'out':
             vals['picking_type_id'] = warehouse.out_type_id.id
         else:
             vals['picking_type_id'] = warehouse.int_type_id.id
-
         path_obj.create(cr, uid, vals)
 
 
@@ -251,8 +238,8 @@ def set_warehouse_view_location(cr, registry, warehouse):
 
 
 def _migrate_stock_warehouse(cr, registry, res_id):
-    """Warehouse adaptation to the new functionality. Sequences, Picking types, Rules, Paths..
-    :param cr: Database cursor
+    """Warehouse adaptation to the new functionality. Sequences, Picking types,
+    Rules.
     """
     location_obj = registry['stock.location']
     warehouse_obj = registry['stock.warehouse']
@@ -626,7 +613,6 @@ def migrate(cr, version):
     migrate_stock_production_lot(cr, registry)
 
     # Initiate defaults before filling.
-    default_spec.update({'stock.inventory': default_stock_location(cr, registry)})
     openupgrade.set_defaults(cr, registry, default_spec, force=False)
 
     migrate_product(cr, registry)

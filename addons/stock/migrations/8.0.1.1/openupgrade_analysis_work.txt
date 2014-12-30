@@ -118,7 +118,7 @@ stock        / stock.location           / chained_company_id (many2one) : DEL re
 stock        / stock.location           / chained_delay (integer)       : DEL 
 stock        / stock.location           / chained_location_id (many2one): DEL relation: stock.location
 stock        / stock.location           / chained_picking_type (selection): DEL selection_keys: ['in', 'internal', 'out']
-# DONE this functionality is now in stock.location.path
+# DONE: create stock.location.path records for any chained location
 
 stock        / stock.location           / chained_journal_id (many2one) : DEL relation: stock.journal
 stock        / stock.location           / chained_location_type (selection): DEL required: required, selection_keys: ['customer', 'fixed', 'none'], req_default: none

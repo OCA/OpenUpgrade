@@ -114,6 +114,7 @@ def initialize_location_inventory(cr):
     cr.execute("ALTER TABLE stock_inventory "
                "ALTER COLUMN location_id SET NOT NULL")
 
+
 def swap_procurement_move_rel(cr):
     """
     In 7.0:
