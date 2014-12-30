@@ -108,8 +108,8 @@ def migrate_stock_location(cr, registry):
         openupgrade.get_legacy_name('chained_company_id'),
         openupgrade.get_legacy_name('chained_delay'),
         openupgrade.get_legacy_name('chained_picking_type'))
-    tail_sql = """ WHERE %s is not null""" % (
-        openupgrade.get_legacy_name('chained_location_id'))
+    tail_sql = """ WHERE %s = 'fixed'""" % (
+        openupgrade.get_legacy_name('chained_location_type'))
     cr.execute(head_sql + tail_sql)
 
     for location in cr.fetchall():

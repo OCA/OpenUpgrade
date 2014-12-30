@@ -58,6 +58,7 @@ column_renames = {
         ('icon', None),
         ('chained_journal_id', None),
         ('chained_location_id', None),
+        ('chained_location_type', None),
         ('chained_auto_packing', None),
         ('chained_company_id', None),
         ('chained_delay', None),
