@@ -207,7 +207,7 @@ def rename_xmlids(cr, xmlids_spec):
     :param xmlids_spec: a list of tuples (old module.xmlid, new module.xmlid).
     """
     for (old, new) in xmlids_spec:
-        if not old.split('.') or not new.split('.'):
+        if '.' not in old or '.' not in new:
             logger.error(
                 'Cannot rename XMLID %s to %s: need the module '
                 'reference to be specified in the IDs' % (old, new))
