@@ -175,7 +175,7 @@ def rename_xmlids(cr, xmlids_spec):
     although they were still being defined in their respective module).
     """
     for (old, new) in xmlids_spec:
-        if not old.split('.') or not new.split('.'):
+        if '.' not in old or '.' not in new:
             logger.error(
                 'Cannot rename XMLID %s to %s: need the module '
                 'reference to be specified in the IDs' % (old, new))
