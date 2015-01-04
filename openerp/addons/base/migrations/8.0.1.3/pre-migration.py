@@ -23,11 +23,11 @@
 from openerp.openupgrade import openupgrade
 from openerp.addons.openupgrade_records.lib import apriori
 
-
 xml_ids = [
     ('portal.group_anonymous', 'base.group_public'),
     ('portal.group_portal', 'base.group_portal'),
     ]
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
