@@ -26,15 +26,14 @@ DEL mail.group: portal.company_jobs
 DEL mail.group: portal.company_news_feed
 # NOTHING TO DO
 
-# Check this
 DEL portal.payment.acquirer: portal.paypal_acquirer
 # NOTHING TO DO
 
 #Group delete:
 DEL res.groups: portal.group_anonymous
-# DONE
+# DONE: rename to base.group_public in base module migration
 
 # Group rename:
 NEW res.groups: base.group_portal
 DEL res.groups: portal.group_portal
-# DONE
+# DONE: rename in base module migration
