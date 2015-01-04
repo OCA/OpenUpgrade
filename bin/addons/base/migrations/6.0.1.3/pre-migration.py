@@ -30,6 +30,24 @@ module_namespec = [
     # This is a list of tuples (old module name, new module name)
     ('profile_association', 'association'),
     ('report_analytic_planning', 'project_planning'),
+    # l10n_es modules renaming
+    ('l10n_chart_ES', 'l10n_es'),
+    ('l10n_ES_account_balance_report', 'l10n_es_account_balance_report'),
+    ('l10n_ES_aeat_mod340', 'l10n_es_aeat_mod340'),
+    ('l10n_ES_aeat_mod347', 'l10n_es_aeat_mod347'),
+    ('l10n_ES_aeat_mod349', 'l10n_es_aeat_mod349'),
+    ('l10n_ES_cierre_ejercicio', 'l10n_es_fiscal_year_closing'),
+    ('l10n_ES_extractos_bancarios', 'l10n_es_bank_statement'),
+    ('l10n_ES_facturae', 'l10n_es_facturae'),
+    ('l10n_ES_hr_nominas', 'l10n_es_hr_nominas'),
+    ('l10n_ES_partner', 'l10n_es_partner'),
+    ('l10n_ES_partner_data', 'l10n_es_partner_data'),
+    ('l10n_ES_partner_mercantil', 'l10n_es_partner_mercantil'),
+    ('l10n_ES_partner_seq', 'l10n_es_partner_seq'),
+    ('l10n_ES_pyme_account', 'l10n_es_pyme_account'),
+    ('l10n_ES_remesas', 'l10n_es_payment_order'),
+    ('l10n_ES_toponyms', 'l10n_es_toponyms'),
+    ('l10n_ES_toponyms_region', 'l10n_es_toponyms_region'),
 ]
 
 renames = {
@@ -66,7 +84,7 @@ def mgr_company_id(cr):
     # using a model that is not instanciated at that point
     # (multi_company_default).
     for table in (
-        'ir_attachment', 'res_currency', 
+        'ir_attachment', 'res_currency',
         'res_partner_address', 'res_partner',
         'ir_sequence',
         ):
@@ -76,7 +94,7 @@ def mgr_company_id(cr):
 
 def mgr_fix_test_results(cr):
     cr.execute("UPDATE res_currency_rate SET rate = 59.9739 " +
-               "FROM ir_model_data " + 
+               "FROM ir_model_data " +
                "WHERE ir_model_data.res_id = res_currency_rate.id " +
                "AND ir_model_data.module = 'base' " +
                "AND ir_model_data.model = 'res.currency.rate' " +
