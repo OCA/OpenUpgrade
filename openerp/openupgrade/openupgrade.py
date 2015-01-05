@@ -51,7 +51,7 @@ __all__ = [
     'rename_models',
     'rename_xmlids',
     'get_legacy_name',
-]    
+]
 
 def load_data(cr, module_name, filename, idref=None, mode='init'):
     """
@@ -60,8 +60,8 @@ def load_data(cr, module_name, filename, idref=None, mode='init'):
     marked with "noupdate='1'" and without "forcecreate='1'" so that it will
     not be loaded by the usual upgrade mechanism. Leaving the 'mode' argument to
     its default 'init' will load the data from your migration script.
-    
-    Theoretically, you could simply load a stock file from the module, but be 
+
+    Theoretically, you could simply load a stock file from the module, but be
     careful not to reinitialize any data that could have been customized.
     Preferably, select only the newly added items. Copy these to a file
     in your migrations directory and load that file.
@@ -126,7 +126,7 @@ def rename_tables(cr, table_spec):
     to_rename = [x[0] for x in table_spec]
     for old, new in list(table_spec):
         if (table_exists(cr, old + '_id_seq') and
-            old + '_id_seq' not in to_rename): 
+            old + '_id_seq' not in to_rename):
             table_spec.append((old + '_id_seq', new + '_id_seq'))
     for (old, new) in table_spec:
         logger.info("table %s: renaming to %s",
@@ -137,7 +137,7 @@ def rename_models(cr, model_spec):
     """
     Rename models. Typically called in the pre script.
     :param model_spec: a list of tuples (old model name, new model name).
-    
+
     Use case: if a model changes name, but still implements equivalent
     functionality you will want to update references in for instance
     relation fields.
@@ -180,14 +180,14 @@ def drop_columns(cr, column_spec):
         logger.info("table %s: drop column %s",
                     table, column)
         if column_exists(cr, table, column):
-            cr.execute('ALTER TABLE "%s" DROP COLUMN "%s"' % 
+            cr.execute('ALTER TABLE "%s" DROP COLUMN "%s"' %
                        (table, column))
         else:
             logger.warn("table %s: column %s did not exist",
                     table, column)
 
 def delete_model_workflow(cr, model):
-    """ 
+    """
     Forcefully remove active workflows for obsolete models,
     to prevent foreign key issues when the orm deletes the model.
     """
@@ -207,7 +207,7 @@ def set_defaults(cr, pool, default_spec, force=False):
     """
     Set default value. Useful for fields that are newly required. Uses orm, so
     call from the post script.
-    
+
     :param default_spec: a hash with model names as keys. Values are lists of \
     tuples (field, value). None as a value has a special meaning: it assigns \
     the default value. If this value is provided by a function, the function is \
@@ -266,7 +266,7 @@ def set_defaults(cr, pool, default_spec, force=False):
                     osv.except_osv("OpenUpgrade", error)
             else:
                 write_value(ids, field, value)
-    
+
 def logged_query(cr, query, args=None):
     if args is None:
         args = []
@@ -291,7 +291,7 @@ def update_module_names(cr, namespec):
     in order to prevent  'certificate not unique' error,
     as well as updating the module reference in the
     XML id.
-    
+
     :param namespec: tuple of (old name, new name)
     """
     for (old_name, new_name) in namespec:
@@ -300,6 +300,9 @@ def update_module_names(cr, namespec):
         logged_query(cr, query, (new_name, old_name))
         query = ("UPDATE ir_model_data SET module = %s "
                  "WHERE module = %s ")
+        logged_query(cr, query, (new_name, old_name))
+        query = ("UPDATE ir_module_module_dependency SET name = %s "
+                 "WHERE name = %s")
         logged_query(cr, query, (new_name, old_name))
 
 def add_ir_model_fields(cr, columnspec):
@@ -310,7 +313,7 @@ def add_ir_model_fields(cr, columnspec):
     Do not use for fields with additional SQL constraints, such as a
     reference to another table or the cascade constraint, but craft your
     own statement taking them into account.
-    
+
     :param columnspec: tuple of (column name, column type)
     """
     for column in columnspec:
@@ -328,7 +331,7 @@ def get_legacy_name(original_name):
     :param version: current version as passed to migrate()
     """
     return 'openupgrade_legacy_'+('_').join(map(str, release.version_info))+'_'+original_name
-        
+
 def add_module_dependencies(cr, module_list):
     """
     Select (new) dependencies from the modules in the list
@@ -386,7 +389,7 @@ def migrate():
                 func(cr, version)
             except Exception, e:
                 logger.error(
-                    "%s: error in migration script %s: %s" % 
+                    "%s: error in migration script %s: %s" %
                     (module, filename, e))
                 raise
         return wrapped_function
