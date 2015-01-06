@@ -24,7 +24,8 @@ from openerp.openupgrade import openupgrade
 @openupgrade.migrate()
 def migrate(cr, version):
     cr.execute(
-        "ALTER TABLE hr_holidays DROP CONSTRAINT hr_holidays_meeting_id_fkey"
+        "ALTER TABLE hr_holidays DROP CONSTRAINT IF EXISTS "
+        "hr_holidays_meeting_id_fkey"
     )
     cr.execute(
         '''update hr_holidays
