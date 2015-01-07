@@ -105,7 +105,6 @@ def migrate(cr, version):
     pool = RegistryManager.get(cr.dbname)
 
     migrate_warehouse_id(cr)
-    openupgrade.delete_model_workflow(cr, 'sale.shop')
     openupgrade.warn_possible_dataloss(
         cr, pool, 'sale_stock', possible_dataloss_fields)
 
