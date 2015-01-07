@@ -23,7 +23,8 @@
 from openerp.openupgrade import openupgrade
 
 column_renames = {
-    'sale_order_line': [('procurement_id', None)]
+    'sale_order_line': [('procurement_id', None)],
+    'stock_picking': [('sale_id', None)],
 }
 
 

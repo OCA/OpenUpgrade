@@ -2,27 +2,41 @@
 # This module has not yet been migrated, except the one change below,
 # in preparation of the migration of the sale module
 
-# Now a one2many in sale. Migrated in this module.
 sale_stock   / sale.order.line          / procurement_id (many2one)     : DEL relation: procurement.order
-
-# TODO: process all other changes below
+# Now a one2many in sale. Migrated in this module.
 
 sale_stock   / sale.order               / invoice_quantity (False)      : DEL selection_keys: ['order', 'procurement'], mode: modify
+# Nothing to do: obsolete field
+
 sale_stock   / sale.order               / picking_ids (one2many)        : now a function
 sale_stock   / sale.order               / picking_ids (one2many)        : relation is now 'stock.picking' ('stock.picking.out')
+sale_stock   / stock.picking            / sale_id (many2one)            : now a function
+# Done: now linked through procurement groups, assigned in this module's migration script
+
 sale_stock   / sale.order               / shipped (boolean)             : now a function
+# Nothing to do: existing value preserved in stored function field
+
 sale_stock   / sale.order               / state (False)                 : DEL selection_keys: ['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'sent', 'shipping_except', 'waiting_date'], mode: modify
+# Nothing to do: all options are now included in the sale module's definition of this field
+
 sale_stock   / sale.order               / warehouse_id (many2one)       : NEW relation: stock.warehouse, required: required, req_default: function
+# Done: take warehouse from obsolete sale.shop
+
 sale_stock   / sale.order.line          / delay (float)                 : module is now 'sale' ('sale_stock')
-sale_stock   / sale.order.line          / move_ids (one2many)           : DEL relation: stock.move
-
-
 sale_stock   / sale.order.line          / property_ids (many2many)      : module is now 'sale_mrp' ('sale_stock')
+# Nothing to do
+
 sale_stock   / sale.order.line          / route_id (many2one)           : NEW relation: stock.location.route
 sale_stock   / sale.report              / warehouse_id (many2one)       : NEW relation: stock.warehouse
+# Nothing to do: _auto is False on this model
+
 sale_stock   / stock.location.route     / sale_selectable (boolean)     : NEW 
+# Nothing to do: only applies to new dropshipping functionality
+
+sale_stock   / sale.order.line          / move_ids (one2many)           : DEL relation: stock.move
 sale_stock   / stock.move               / sale_line_id (many2one)       : DEL relation: sale.order.line
-sale_stock   / stock.picking            / sale_id (many2one)            : now a function
+# Nothing to do. Functionality is replaced by procurement_ids
+
 ---XML records in module 'sale_stock'---
 DEL ir.model.access: sale_stock.access_report_stock_move_sales
 NEW ir.ui.menu: base.menu_invoiced
@@ -56,6 +70,8 @@ DEL process.transition.action: sale_stock.process_transition_action_forceassigna
 DEL process.transition.action: sale_stock.process_transition_action_validate0
 NEW res.groups: sale_stock.group_route_so_lines
 DEL sale.shop: sale.sale_shop_1
+# Nothing to do
+
 DEL workflow.activity: sale_stock.act_cancel3
 DEL workflow.activity: sale_stock.act_ship
 DEL workflow.activity: sale_stock.act_ship_cancel
@@ -73,3 +89,4 @@ DEL workflow.transition: sale_stock.trans_ship_ship_except
 DEL workflow.transition: sale_stock.trans_wait_invoice_invoice
 DEL workflow.transition: sale_stock.trans_wait_ship_cancel3
 DEL workflow.transition: sale_stock.trans_wait_ship_ship
+# Moved to sale. Migrate in that module.
