@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record model="email.template" id="email_template_edi_sale"><field name="subject">${object.company_id.name|safe} ${object.state in ('draft', 'sent') and 'Quotation' or 'Order'} (Ref ${object.name or 'n/a' })</field>
+            <field name="email_recipients"/><field name="partner_to">${object.partner_invoice_id.id}</field>
+            </record>
+    <record model="mail.message.subtype" id="mt_order_confirmed"><field name="default" eval="True"/>
+            </record>
+  </data>
+</openerp>
+

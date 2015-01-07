@@ -1,0 +1,124 @@
+---Fields in module 'sale'---
+sale         / crm.case.section         / invoiced_forecast (integer)   : NEW 
+sale         / crm.case.section         / invoiced_target (integer)     : NEW 
+sale         / crm.case.section         / use_quotations (boolean)      : NEW 
+sale         / res.company              / sale_note (text)              : NEW 
+# Nothing to do
+
+sale         / sale.order               / company_id (many2one)         : not a function anymore
+# Nothing to do. Stored related field on the order's shop in 7.0
+
+sale         / sale.order               / date_order (date)             : type is now 'datetime' ('date')
+# Recalculate datetime to be on the same date as the previous date value
+# taking the user's timezone into account.
+
+sale         / sale.order               / invoice_quantity (selection)  : DEL required: required, selection_keys: ['order'], req_default: order
+# Nothing to do: obsolete field
+
+sale         / sale.order               / message_last_post (datetime)  : NEW 
+# Done: call 8.0 api
+
+sale         / sale.order               / procurement_group_id (many2one): NEW relation: procurement.group
+# Done in sale_stock
+
+sale         / sale.order               / shop_id (many2one)            : DEL relation: sale.shop, required: required, req_default: function
+# Obsolete concept. Column is used in the sale_stock migration
+
+sale         / sale.order               / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'sent', 'shipping_except', 'waiting_date']' ('['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'sent', 'waiting_date']')
+# Nothing to do: state shipping_except used to live in the sale_stock module.
+
+sale         / sale.order               / website_message_ids (one2many): NEW relation: mail.message
+# Nothing to do: new functionality
+
+sale         / sale.order.line          / procurement_ids (one2many)    : NEW relation: procurement.order
+# Done: populated in sale_stock
+
+sale         / sale.order.line          / type (selection)              : DEL required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: make_to_stock
+# Nothing to do. Now on product routes
+
+---XML records in module 'sale'---
+NEW ir.actions.act_window: sale.action_account_invoice_report_salesteam
+NEW ir.actions.act_window: sale.action_invoice_salesteams
+NEW ir.actions.act_window: sale.action_order_report_quotation_salesteam
+NEW ir.actions.act_window: sale.action_order_report_so_salesteam
+NEW ir.actions.act_window: sale.action_orders_salesteams
+NEW ir.actions.act_window: sale.action_quotations_salesteams
+DEL ir.actions.act_window: sale.action_quotation_for_sale
+DEL ir.actions.act_window: sale.action_shop_form
+DEL ir.actions.act_window: sale.action_turnover_by_month
+DEL ir.actions.act_window: sale.open_board_sales
+NEW ir.actions.act_window.view: sale.action_invoice_salesteams_view_form
+NEW ir.actions.act_window.view: sale.action_invoice_salesteams_view_tree
+NEW ir.filters: sale.filter_isale_report_product
+NEW ir.filters: sale.filter_sale_report_sales_funnel
+NEW ir.filters: sale.filter_sale_report_salespersons
+NEW ir.filters: sale.filter_sale_report_salesteam
+NEW ir.model.access: sale.access_product_price_history_account_user
+NEW ir.model.access: sale.access_product_price_history_sale_use
+NEW ir.model.access: sale.access_product_price_history_salemanager
+DEL ir.model.access: sale.access_sale_shop
+DEL ir.model.access: sale.access_sale_shop_manager
+DEL ir.model.access: sale.access_sale_shop_sale_manager
+DEL ir.model.access: sale.access_sale_shop_sale_user
+NEW ir.rule: sale.sale_order_report_comp_rule
+NEW ir.rule: sale.sale_order_report_personal_rule
+NEW ir.rule: sale.sale_order_report_see_all
+DEL ir.rule: sale.sale_shop_comp_rule
+DEL ir.ui.menu: base.menu_invoiced
+DEL ir.ui.menu: base.next_id_64
+DEL ir.ui.menu: sale.menu_dashboard_sales
+DEL ir.ui.menu: sale.menu_invoicing_sales_order_lines
+NEW ir.ui.view: sale.account_invoice_form
+NEW ir.ui.view: sale.account_invoice_groupby_inherit
+NEW ir.ui.view: sale.account_invoice_tree
+NEW ir.ui.view: sale.crm_case_section_salesteams_view_form
+NEW ir.ui.view: sale.crm_case_section_salesteams_view_kanban
+NEW ir.ui.view: sale.product_form_view_sale_order_button
+NEW ir.ui.view: sale.product_template_form_view_sale_order_button
+NEW ir.ui.view: sale.report_saleorder
+NEW ir.ui.view: sale.report_saleorder_document
+NEW ir.ui.view: sale.view_company_inherit_form2
+DEL ir.ui.view: sale.board_sales_form
+DEL ir.ui.view: sale.view_order_product_tree
+DEL ir.ui.view: sale.view_shop_form
+DEL ir.ui.view: sale.view_shop_tree
+DEL ir.ui.view: sale.view_turnover_by_month_graph
+DEL ir.ui.view: sale.view_turnover_by_month_tree
+NEW mail.message.subtype: sale.mt_salesteam_order_confirmed
+NEW mail.message.subtype: sale.mt_salesteam_order_sent
+DEL process.node: sale.process_node_invoice0
+DEL process.node: sale.process_node_order0
+DEL process.node: sale.process_node_quotation0
+DEL process.node: sale.process_node_saleorder0
+DEL process.process: sale.process_process_salesprocess0
+DEL process.transition: sale.process_transition_confirmquotation0
+DEL process.transition: sale.process_transition_invoice0
+DEL process.transition: sale.process_transition_saleinvoice0
+DEL process.transition.action: sale.process_transition_action_cancel0
+DEL process.transition.action: sale.process_transition_action_cancelorder0
+DEL process.transition.action: sale.process_transition_action_confirm0
+DEL process.transition.action: sale.process_transition_action_createinvoice0
+DEL sale.shop: sale.sale_shop_1
+NEW workflow.activity: sale.act_cancel3
+NEW workflow.activity: sale.act_ship
+NEW workflow.activity: sale.act_ship_cancel
+NEW workflow.activity: sale.act_ship_end
+NEW workflow.activity: sale.act_ship_except
+NEW workflow.activity: sale.act_wait_ship
+NEW workflow.transition: sale.trans_router_wait_invoice_shipping
+NEW workflow.transition: sale.trans_router_wait_ship
+NEW workflow.transition: sale.trans_ship_end_done
+NEW workflow.transition: sale.trans_ship_except_ship
+NEW workflow.transition: sale.trans_ship_except_ship_cancel
+NEW workflow.transition: sale.trans_ship_except_ship_ignore
+NEW workflow.transition: sale.trans_ship_ignore_ship_end
+NEW workflow.transition: sale.trans_ship_ship_end
+NEW workflow.transition: sale.trans_ship_ship_except
+NEW workflow.transition: sale.trans_wait_invoice_invoice
+NEW workflow.transition: sale.trans_wait_ship_cancel3
+NEW workflow.transition: sale.trans_wait_ship_ship
+# Done: migrated xmlids
+
+NEW workflow.activity: sale.act_ship_ignore
+NEW workflow.transition: sale.trans_wait_ship_done
+# Nothing to do: new functionality
