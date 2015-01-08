@@ -184,7 +184,7 @@ def migrate_stock_move_warehouse(cr):
     cr.execute(
         "SELECT count(*) FROM ir_module_module WHERE name='stock' "
         "AND state='installed'")
-    if not cr.fetchone(): # No stock
+    if not cr.fetchone():  # No stock
         return
     openupgrade.logged_query(
         cr,

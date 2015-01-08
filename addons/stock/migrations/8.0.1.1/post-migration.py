@@ -92,11 +92,19 @@ def migrate_move_inventory(cr, registry):
                  WHERE inventory_id = si.id) = 1;
         """)
 
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE stock_inventory si
+        SET location_id = l.location_id
+        FROM stock_inventory_line l
+        WHERE l.inventory_id = si.id
+        """)
+
 
 def migrate_stock_location(cr, registry):
-    """Create a Push rule for each pair of locations linked. Could be improved
-    with a more precise attempt at finding the associated warehouse. Until
-    that is the case, warn about the choices we make."""
+    """Create a Push rule for each pair of locations linked. Will break if
+    there are multiple warehouses for the same company."""
     path_obj = registry['stock.location.path']
     location_obj = registry['stock.location']
     warehouse_obj = registry['stock.warehouse']
@@ -114,6 +122,7 @@ def migrate_stock_location(cr, registry):
 
     for location in cr.fetchall():
         loc = location_obj.browse(cr, uid, location[1])
+        loc_from = location_obj.browse(cr, uid, location[0])
         name = '{} -> {}'.format(location[5], loc.name)
         vals = {
             'active': True,
@@ -126,13 +135,24 @@ def migrate_stock_location(cr, registry):
             'name': name,
         }
 
-        args = location[3] and [('company_id', '=', location[3])] or []
-        vals['warehouse_id'] = warehouse_obj.search(cr, uid, args)[0]
+        company_id = location[3] or loc.company_id.id or loc_from.company_id.id
+        args = company_id and [('company_id', '=', company_id)] or []
+        warehouse_ids = warehouse_obj.search(cr, uid, args)
+        if not warehouse_ids:
+            warehouse_ids = [registry['ir.model.data'].xmlid_to_res_id(
+                cr, uid, 'stock.warehouse0', raise_if_not_found=True)]
+            openupgrade.message(
+                cr, 'stock', 'stock_location_path', 'warehouse_id',
+                'No warehouse found for company #%s, but this company does '
+                'have chained pickings. Taking the default warehouse.',
+                company_id)
+        vals['warehouse_id'] = warehouse_ids[0]
         warehouse = warehouse_obj.browse(cr, uid, vals['warehouse_id'])
-        openupgrade.message(
-            cr, 'stock', 'stock_location_path', 'warehouse_id',
-            'Assigning warehouse %s to location path %s. Please verify '
-            'in the case of multiple warehouses.', warehouse.name, name)
+        if len(warehouse_ids > 1):
+            openupgrade.message(
+                cr, 'stock', 'stock_location_path', 'warehouse_id',
+                'Multiple warehouses found for location path %s. Taking '
+                '%s. Please verify this setting.', name, warehouse.name)
         if location[6] == 'in':
             vals['picking_type_id'] = warehouse.in_type_id.id
         elif location[6] == 'out':
@@ -143,25 +163,54 @@ def migrate_stock_location(cr, registry):
 
 
 def migrate_stock_picking(cr, registry):
-    """Update picking records with the correct picking_type_id and state
-    :param cr:
-
-    TODO: cover multiple warehouses, each with its own types
+    """Update picking records with the correct picking_type_id and state.
+    As elsewhere, multiple warehouses with the same company pose a problem.
     """
-    warehouse = registry['ir.model.data'].get_object(
-        cr, uid, 'stock', 'warehouse0')
-
+    warehouse_obj = registry['stock.warehouse']
+    company_obj = registry['res.company']
+    picking_obj = registry['stock.picking']
     type_legacy = openupgrade.get_legacy_name('type')
-    in_id = warehouse.in_type_id.id
-    out_id = warehouse.out_type_id.id
-    int_id = warehouse.int_type_id.id
+    for company in company_obj.browse(
+            cr, uid, company_obj.search(
+                cr, uid, [])):
+        warehouse_ids = warehouse_obj.search(
+            cr, uid, [('company_id', '=', company.id)])
+        if not warehouse_ids:
+            picking_ids = picking_obj.search(
+                cr, uid, [('company_id', '=', company.id)])
+            if not picking_ids:
+                continue
+            warehouse_ids = [registry['ir.model.data'].xmlid_to_res_id(
+                cr, uid, 'stock.warehouse0', raise_if_not_found=True)]
+            openupgrade.message(
+                cr, 'stock', 'stock_picking', 'picking_type_id',
+                'No warehouse found for company %s, but this company does '
+                'have pickings. Taking the default warehouse.', company.name)
+        warehouse = warehouse_obj.browse(cr, uid, warehouse_ids[0])
+        if len(warehouse_ids) > 1:
+            openupgrade.message(
+                cr, 'stock', 'stock_picking', 'picking_type_id',
+                'Multiple warehouses found for company %s. Taking first'
+                'one found (%s) to determine the picking types for this '
+                'company\'s pickings. Please verify this setting.',
+                company.name, warehouse.name)
 
-    # Fill picking_type_id required field
-    for type, type_id in (('in', in_id), ('out', out_id), ('internal', int_id)):
-        cr.execute("""UPDATE stock_picking SET picking_type_id = %%s WHERE %s = %%s""" % type_legacy, (type_id, type,))
+        # Fill picking_type_id required field
+        for picking_type, type_id in (
+                ('in', warehouse.in_type_id.id),
+                ('out', warehouse.out_type_id.id),
+                ('internal', warehouse.int_type_id.id)):
+            openupgrade.logged_query(
+                cr,
+                """
+                UPDATE stock_picking SET picking_type_id = %s
+                WHERE {type_legacy} = %s
+                """.format(type_legacy=type_legacy),
+                (type_id, picking_type,))
 
     # state key auto -> waiting
-    cr.execute("""UPDATE stock_picking SET state = %s WHERE state = %s""", ('waiting', 'auto',))
+    cr.execute("UPDATE stock_picking SET state = %s WHERE state = %s",
+               ('waiting', 'auto',))
 
 
 def set_warehouse_view_location(cr, registry, warehouse):
@@ -459,10 +508,10 @@ def migrate_stock_warehouse_orderpoint(cr):
     cr.execute(Q)
     if cr.rowcount == 0:
         return
-    logger.warn("""Migrating %d stock orderpoint items""", cr.rowcount)
+    logger.warn("Migrating %d stock orderpoint items", cr.rowcount)
     orderpoints = cr.dictfetchall()
     # Gather uom data and store it in local caches for later conversions
-    cr.execute('''SELECT * from product_uom''')
+    cr.execute('SELECT * from product_uom')
     uom_data = {}
     for uom in cr.dictfetchall():
         uom_data[uom['id']] = uom
@@ -517,11 +566,39 @@ def migrate_procurement_order(cr, registry):
     cr.execute(
         """
         UPDATE procurement_order AS po
-        SET warehouse_id = sm.warehouse_id,
-            partner_dest_id = sm.partner_id
+        SET partner_dest_id = sm.partner_id
         FROM stock_move AS sm
         WHERE po.move_dest_id = sm.id
         """)
+    company_obj = registry['res.company']
+    warehouse_obj = registry['stock.warehouse']
+    procurement_obj = registry['stock.warehouse']
+    for company in company_obj.browse(
+            cr, uid, company_obj.search(cr, uid, [])):
+        procurement_ids = procurement_obj.search(
+            cr, uid, [('company_id', '=', company.id)])
+        if not procurement_ids:
+            continue
+        warehouse_ids = warehouse_obj.search(
+            cr, uid, [('company_id', '=', company.id)])
+        if not warehouse_ids:
+            # Warehouse_id is not required on procurements
+            openupgrade.message(
+                cr, 'stock', 'procurement_order', 'warehouse_id',
+                'No warehouse found for company %s, but this company does '
+                'have procurements. Not setting a warehouse on them.',
+                company.name)
+            continue
+        warehouse = warehouse_obj.browse(cr, uid, warehouse_ids[0])
+        if len(warehouse_ids) > 1:
+            openupgrade.message(
+                cr, 'stock', 'procurement_order', 'warehouse_id',
+                'Multiple warehouses found for company %s. Taking first'
+                'one found (%s) to append to this company\'s procurements. '
+                'Please verify this setting.',
+                company.name, warehouse.name)
+        procurement_obj.write(
+            cr, uid, procurement_ids, {'warehouse_id': warehouse.id})
 
 
 def migrate_stock_qty(cr, registry):

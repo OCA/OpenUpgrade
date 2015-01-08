@@ -35,12 +35,10 @@ stock        / product.category         / property_stock_journal (many2one): mod
 stock        / product.category         / property_stock_account_input_categ (many2one): module is now 'stock_account' ('stock')
 stock        / product.category         / property_stock_account_output_categ (many2one): module is now 'stock_account' ('stock')
 stock        / product.category         / property_stock_valuation_account_id (many2one): module is now 'stock_account' ('stock')
-# NOTHING TO DO are created because of the forcecreate
+# NOTHING TO DO
 stock        / product.category         / removal_strategy_id (many2one): NEW relation: product.removal
 stock        / product.category         / route_ids (many2many)         : NEW relation: stock.location.route
 # NOTHING TO DO
-# TODO: The first four fields have been moved to a different module. Probably these properties must be filled in the stock_account
-# migration script. 
 
 stock        / product.product          / track_incoming (boolean)      : DEL 
 stock        / product.product          / track_outgoing (boolean)      : DEL 
@@ -99,6 +97,7 @@ stock        / stock.inventory          / package_id (many2one)         : NEW re
 stock        / stock.inventory          / partner_id (many2one)         : NEW relation: res.partner
 # NOTHING TO DO: new functionality
 stock        / stock.inventory          / move_ids (many2many)          : type is now 'one2many' ('many2many')
+stock        / stock.move               / inventory_id (many2one)       : NEW relation: stock.inventory
 # DONE: migrate field type
 stock        / stock.inventory          / product_id (many2one)         : NEW relation: product.product
 # DONE: set to the inventory's line's product if single product inventory
@@ -118,13 +117,12 @@ stock        / stock.location           / chained_company_id (many2one) : DEL re
 stock        / stock.location           / chained_delay (integer)       : DEL 
 stock        / stock.location           / chained_location_id (many2one): DEL relation: stock.location
 stock        / stock.location           / chained_picking_type (selection): DEL selection_keys: ['in', 'internal', 'out']
+stock        / stock.location           / chained_location_type (selection): DEL required: required, selection_keys: ['customer', 'fixed', 'none'], req_default: none
 # DONE: create stock.location.path records for any chained location
 
 stock        / stock.location           / chained_journal_id (many2one) : DEL relation: stock.journal
-stock        / stock.location           / chained_location_type (selection): DEL required: required, selection_keys: ['customer', 'fixed', 'none'], req_default: none
-
 stock        / stock.location           / icon (selection)              : DEL selection_keys: function
-# SAVED
+# NOTHING TO DO, but preserved for future reference
 
 stock        / stock.location           / loc_barcode (char)            : NEW 
 stock        / stock.location           / putaway_strategy_id (many2one): NEW relation: product.putaway
@@ -132,9 +130,6 @@ stock        / stock.location           / removal_strategy_id (many2one): NEW re
 stock        / stock.location           / valuation_in_account_id (many2one): module is now 'stock_account' ('stock')
 stock        / stock.location           / valuation_out_account_id (many2one): module is now 'stock_account' ('stock')
 # NOTHING TO DO
-
-# DONE:  legacy field for all the deleted fields
-		 hour to check the valuation fields
 
 stock        / stock.location.path      / active (boolean)              : NEW 
 stock        / stock.location.path      / auto (selection)              : NEW required: required, selection_keys: ['auto', 'manual', 'transparent'], req_default: auto
@@ -149,7 +144,6 @@ stock        / stock.location.path      / route_id (many2one)           : NEW re
 stock        / stock.location.path      / sequence (integer)            : NEW 
 stock        / stock.location.path      / warehouse_id (many2one)       : NEW relation: stock.warehouse
 # DONE CREATED ALL THE PUSH/PULL
-# New fields in location path but check if some previous deleted fields are added here.
 
 stock        / stock.location.route     / active (boolean)              : NEW 
 stock        / stock.location.route     / company_id (many2one)         : NEW relation: res.company
@@ -163,21 +157,40 @@ stock        / stock.location.route     / supplied_wh_id (many2one)     : NEW re
 stock        / stock.location.route     / supplier_wh_id (many2one)     : NEW relation: stock.warehouse
 stock        / stock.location.route     / warehouse_selectable (boolean): NEW 
 # DONE created all the push/pull
+
+stock        / stock.move               / move_orig_ids (one2many)      : NEW relation: stock.move
+# NOTHING TO DO: the reverse of existing m2o stock_move.move_dest_id
+stock        / stock.move               / move_history_ids (many2many)  : DEL relation: stock.move
+stock        / stock.move               / move_history_ids2 (many2many) : DEL relation: stock.move
+# NOTHING TO DO: convoluted, earlier reverse of stock_move.move_dest_id 
+
 # All new fields
 
 stock        / stock.move               / auto_validate (boolean)       : DEL 
 stock        / stock.move               / group_id (many2one)           : NEW relation: procurement.group
-stock        / stock.move               / inventory_id (many2one)       : NEW relation: stock.inventory
+# Done: procurement groups are created for sale procurements in the sale module and propagated
+# to the associated moves
 stock        / stock.move               / linked_move_operation_ids (one2many): NEW relation: stock.move.operation.link
-stock        / stock.move               / move_history_ids (many2many)  : DEL relation: stock.move
-stock        / stock.move               / move_history_ids2 (many2many) : DEL relation: stock.move
-stock        / stock.move               / move_orig_ids (one2many)      : NEW relation: stock.move
+# Nothing to do: related to packing
+
+
 stock        / stock.move               / origin (char)                 : not a function anymore
+# NOTHING TO DO: function was stored
+
 stock        / stock.move               / origin_returned_move_id (many2one): NEW relation: stock.move
+# NOTHING TO DO: this restricts quants on returned moves to the quants going out originally
+
 stock        / stock.move               / partially_available (boolean) : NEW 
+# NOTHING TO DO: indicate that some quants have been reserved but not upto the full qty
+
 stock        / stock.move               / picking_type_id (many2one)    : NEW relation: stock.picking.type
+
+
 stock        / stock.move               / price_currency_id (many2one)  : DEL relation: res.currency
-stock        / stock.move               / priority (selection)          : selection_keys is now '['0', '1', '2', '3']' ('['0', '1']')
+stock        / stock.move               / priority (selection)          : selection_keys is now '['0', '1', '2', '3']'
+ ('['0', '1']')
+# NOTHING TO DO, new selection is a super set
+
 stock        / stock.move               / procure_method (selection)    : NEW required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: make_to_stock
 stock        / stock.move               / procurement_id (many2one)     : NEW relation: procurement.order
 stock        / stock.move               / prodlot_id (many2one)         : DEL relation: stock.production.lot
@@ -186,6 +199,8 @@ stock        / stock.move               / product_uom_qty (float)       : NEW re
 stock        / stock.move               / propagate (boolean)           : NEW 
 stock        / stock.move               / push_rule_id (many2one)       : NEW relation: stock.location.path
 stock        / stock.move               / quant_ids (many2many)         : NEW relation: stock.quant
+# DONE: let Odoo do this by reconfirming done moves
+
 stock        / stock.move               / reserved_quant_ids (one2many) : NEW relation: stock.quant
 stock        / stock.move               / restrict_lot_id (many2one)    : NEW relation: stock.production.lot
 stock        / stock.move               / restrict_partner_id (many2one): NEW relation: res.partner
@@ -243,7 +258,7 @@ stock        / stock.picking            / invoice_state (selection)     : now a 
 
 stock        / stock.picking            / state (selection)             : now a function
 stock        / stock.picking            / state (selection)             : selection_keys is now '['assigned', 'cancel', 'confirmed', 'done', 'draft', 'partially_available', 'waiting']' ('['assigned', 'auto', 'cancel', 'confirmed', 'done', 'draft']')
-# DONE
+# DONE: map auto to waiting
 
 stock        / stock.picking            / type (selection)              : DEL required: required, selection_keys: ['in', 'internal', 'out'], req_default: internal
 stock        / stock.picking            / picking_type_id (many2one)    : NEW relation: stock.picking.type, required: required
