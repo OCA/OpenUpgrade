@@ -173,6 +173,31 @@ def migrate_procurement_order_method(cr, pool):
                 procure_method, action)
 
 
+def migrate_stock_move_warehouse(cr):
+    """
+    If a database featured multiple shops with the same company but a
+    different warehouse, we can now propagate this warehouse to the
+    associated stock moves. The warehouses were written on the procurements
+    in the sale_stock module, while the moves were associated with the
+    procurements in various modules.
+    """
+    cr.execute(
+        "SELECT count(*) FROM ir_module_module WHERE name='stock' "
+        "AND state='installed'")
+    if not cr.fetchone(): # No stock
+        return
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE stock_move sm
+        SET warehouse_id = po.warehouse_id
+        FROM procurement_order po
+        WHERE sm.procurement_id = po.id
+            OR po.move_dest_id = sm.id
+        """)
+
+
 def migrate_deferred(cr, pool):
     migrate_product_valuation(cr, pool)
     migrate_procurement_order_method(cr, pool)
+    migrate_stock_move_warehouse(cr)
