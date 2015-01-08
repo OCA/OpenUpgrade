@@ -1,0 +1,6 @@
+---Fields in module 'account_anglo_saxon'---
+account_anglo_saxon / account.invoice.line     / move_id (many2one)            : NEW relation: stock.move
+# Nothing to do, only used in a dead code path
+
+---XML records in module 'account_anglo_saxon'---
+DEL ir.ui.view: account_anglo_saxon.product_normal_form_view
