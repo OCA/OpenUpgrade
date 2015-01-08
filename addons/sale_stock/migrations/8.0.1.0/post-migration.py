@@ -87,12 +87,16 @@ def set_procurement_groups(cr):
         WHERE sm.picking_id = sp.id
         """)
 
-    # Propagate sale procurement groups to the related procurements
+    # Propagate sale procurement groups, and the shop's warehouse
+    # to the related procurements. The warehouse is propagated
+    # to the the procurement's dest move and generated moves
+    # in the deferred step.
     openupgrade.logged_query(
         cr,
         """
         UPDATE procurement_order po
-        SET group_id = so.procurement_group_id
+        SET group_id = so.procurement_group_id,
+            warehouse_id = so.warehouse_id
         FROM sale_order so,
             sale_order_line sol
         WHERE po.sale_line_id = sol.id
