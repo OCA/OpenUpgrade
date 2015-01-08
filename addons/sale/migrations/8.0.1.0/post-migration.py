@@ -35,7 +35,7 @@ def migrate_date_order(cr):
             AND so.user_id=ru.id
             AND ru.partner_id=rp.id
         """)
-    for timezone in [row[0] for row in cr.fetchall()]:
+    for timezone, in cr.fetchall():
         cr.execute("SET TIMEZONE=%s", (timezone,))
         openupgrade.logged_query(
             cr,
