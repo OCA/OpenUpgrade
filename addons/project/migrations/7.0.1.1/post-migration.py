@@ -72,5 +72,7 @@ def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     copy_state_from_analytic_account(cr)
     createProjectAliases(cr, pool)
+    openupgrade.set_defaults(
+        cr, pool, {'project.project': [('use_tasks', None)]})
     openupgrade.logged_query(cr, 'DROP VIEW project_vs_hours')
     openupgrade.load_data(cr, 'project', 'migrations/7.0.1.1/data.xml')
