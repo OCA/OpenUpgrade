@@ -43,6 +43,9 @@ xmlid_renames = [
      'sale.trans_wait_invoice_invoice '),
     ('sale_stock.trans_wait_ship_cancel3', 'sale.trans_wait_ship_cancel3'),
     ('sale_stock.trans_wait_ship_ship', 'sale_stock.trans_wait_ship_ship'),
+    ('sale_crm.mt_salesteam_order_confirmed',
+     'sale.mt_salesteam_order_confirmed'),
+    ('sale_crm.mt_salesteam_order_sent', 'sale.mt_salesteam_order_sent'),
     ]
 
 

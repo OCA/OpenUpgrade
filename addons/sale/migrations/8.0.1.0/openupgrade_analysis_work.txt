@@ -84,8 +84,6 @@ DEL ir.ui.view: sale.view_shop_form
 DEL ir.ui.view: sale.view_shop_tree
 DEL ir.ui.view: sale.view_turnover_by_month_graph
 DEL ir.ui.view: sale.view_turnover_by_month_tree
-NEW mail.message.subtype: sale.mt_salesteam_order_confirmed
-NEW mail.message.subtype: sale.mt_salesteam_order_sent
 DEL process.node: sale.process_node_invoice0
 DEL process.node: sale.process_node_order0
 DEL process.node: sale.process_node_quotation0
@@ -99,6 +97,12 @@ DEL process.transition.action: sale.process_transition_action_cancelorder0
 DEL process.transition.action: sale.process_transition_action_confirm0
 DEL process.transition.action: sale.process_transition_action_createinvoice0
 DEL sale.shop: sale.sale_shop_1
+# Nothing to do
+
+NEW mail.message.subtype: sale.mt_salesteam_order_confirmed
+NEW mail.message.subtype: sale.mt_salesteam_order_sent
+# Done: migrated xmlids from sale_crm
+
 NEW workflow.activity: sale.act_cancel3
 NEW workflow.activity: sale.act_ship
 NEW workflow.activity: sale.act_ship_cancel
@@ -117,7 +121,7 @@ NEW workflow.transition: sale.trans_ship_ship_except
 NEW workflow.transition: sale.trans_wait_invoice_invoice
 NEW workflow.transition: sale.trans_wait_ship_cancel3
 NEW workflow.transition: sale.trans_wait_ship_ship
-# Done: migrated xmlids
+# Done: migrated xmlids from sale_stock
 
 NEW workflow.activity: sale.act_ship_ignore
 NEW workflow.transition: sale.trans_wait_ship_done
