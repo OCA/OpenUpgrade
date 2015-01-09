@@ -27,27 +27,19 @@ from datetime import datetime
 logger = logging.getLogger('OpenUpgrade.mrp')
 
 
-def move_fields(cr, pool):
-    execute = openupgrade.logged_query
-    queries = [
+def bom_product_template(cr):
+    openupgrade.logged_query(
         """
-UPDATE mrp_bom
-SET product_tmpl_id=(SELECT product_tmpl_id
-FROM product_product
-WHERE product_product.id=mrp_bom.product_id)
-""",
-        """
-ALTER TABLE mrp_bom ALTER COLUMN product_tmpl_id SET NOT NULL
-""",
-        """
-ALTER TABLE mrp_bom DROP CONSTRAINT mrp_bom_bom_id_fkey
-"""
-    ]
-    for sql in queries:
-        execute(cr, sql)
+        UPDATE mrp_bom
+        SET product_tmpl_id=pp.product_tmpl_id
+        FROM product_product pp
+        WHERE pp.id=mrp_bom.product_id
+        """)
+    cr.execute("ALTER TABLE mrp_bom ALTER COLUMN product_tmpl_id SET NOT NULL")
 
 
 def migrate_bom_lines(cr, pool):
+    cr.execute("ALTER TABLE mrp_bom DROP CONSTRAINT mrp_bom_bom_id_fkey")
     bom_line_obj = pool['mrp.bom.line']
     fields = {
         'bom_id': openupgrade.get_legacy_name('bom_id'),
@@ -209,7 +201,7 @@ def migrate_procurement_order(cr, pool):
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
-    move_fields(cr, pool)
+    bom_product_template(cr)
     migrate_bom_lines(cr, pool)
     fix_domains(cr, pool)
     update_stock_moves(cr, pool)
