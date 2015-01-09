@@ -20,8 +20,8 @@
 #
 ##############################################################################
 import logging
-from openerp.openupgrade import openupgrade
-from openerp import pooler, SUPERUSER_ID
+from openerp.openupgrade import openupgrade, openupgrade_80
+from openerp import pooler, SUPERUSER_ID as uid
 from datetime import datetime
 
 logger = logging.getLogger('OpenUpgrade.mrp')
@@ -47,7 +47,7 @@ ALTER TABLE mrp_bom DROP CONSTRAINT mrp_bom_bom_id_fkey
         execute(cr, sql)
 
 
-def migrate_bom_lines(cr, pool, uid):
+def migrate_bom_lines(cr, pool):
     bom_line_obj = pool['mrp.bom.line']
     fields = {
         'bom_id': openupgrade.get_legacy_name('bom_id'),
@@ -65,7 +65,7 @@ def migrate_bom_lines(cr, pool, uid):
     cr.execute(sql)
     ids = []
     for row in cr.dictfetchall():
-        bom_line_id = bom_line_obj.create(cr, SUPERUSER_ID, {
+        bom_line_id = bom_line_obj.create(cr, uid, {
             'bom_id': row[fields['bom_id']],
             'product_efficiency': row['product_efficiency'],
             'product_id': row['product_id'],
@@ -93,14 +93,14 @@ def migrate_bom_lines(cr, pool, uid):
         cr.execute("DELETE FROM mrp_bom WHERE id in (%s)" % ','.join(ids))
 
 
-def fix_domains(cr, pool, uid):
+def fix_domains(cr, pool):
     sql = """UPDATE ir_act_window SET domain = NULL WHERE domain =
 '[(''bom_id'',''='',False)]' AND res_model = 'mrp.bom'"""
     cr.execute(sql)
     cr.commit()
 
 
-def update_stock_moves(cr, pool, uid):
+def update_stock_moves(cr, pool):
     stock_move_obj = pool['stock.move']
     sm_ids = stock_move_obj.search(cr, uid, [])
     mrp_production_obj = pool['mrp.production']
@@ -115,7 +115,7 @@ def update_stock_moves(cr, pool, uid):
 #             sm.write(cr, uid, {'raw_material_production_id': prod_id[0]})
 
 
-def update_stock_picking_name(cr, pool, uid):
+def update_stock_picking_name(cr, pool):
     picking_obj = pool['stock.picking']
     picking_ids = picking_obj.search(
         cr, uid, ['|', ('name', '=', False), ('name', '=', '')])
@@ -139,7 +139,7 @@ def update_stock_picking_name(cr, pool, uid):
             )
 
 
-def migrate_product_supply_method(cr, pool, uid):
+def migrate_product_supply_method(cr, pool):
     '''
     Procurements of products: change the supply_method for the matching route
     produce -> Manufacture Rule
@@ -170,16 +170,16 @@ def migrate_product(cr, pool):
         "Setting track_production to True for %s product templates",
         len(template_ids))
     prod_tmpl_obj.write(
-        cr, SUPERUSER_ID, template_ids, {'track_incoming': True})
+        cr, uid, template_ids, {'track_incoming': True})
 
 
 def migrate_stock_warehouse(cr, pool):
     """Enable manufacturing on all warehouses. This will trigger the creation
     of the manufacture procurement rule"""
     warehouse_obj = pool['stock.warehouse']
-    warehouse_ids = warehouse_obj.search(cr, SUPERUSER_ID, [])
+    warehouse_ids = warehouse_obj.search(cr, uid, [])
     warehouse_obj.write(
-        cr, SUPERUSER_ID, warehouse_ids, {'manufacture_to_resupply': True})
+        cr, uid, warehouse_ids, {'manufacture_to_resupply': True})
     if len(warehouse_ids) > 1:
         openupgrade.message(
             cr, 'mrp', False, False,
@@ -210,12 +210,14 @@ def migrate_procurement_order(cr, pool):
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     move_fields(cr, pool)
-    uid = SUPERUSER_ID
-    migrate_bom_lines(cr, pool, uid)
-    fix_domains(cr, pool, uid)
-    update_stock_moves(cr, pool, uid)
-    update_stock_picking_name(cr, pool, uid)
-    migrate_product_supply_method(cr, pool, uid)
+    migrate_bom_lines(cr, pool)
+    fix_domains(cr, pool)
+    update_stock_moves(cr, pool)
+    update_stock_picking_name(cr, pool)
+    migrate_product_supply_method(cr, pool)
     migrate_product(cr, pool)
     migrate_stock_warehouse(cr, pool)
     migrate_procurement_order(cr, pool)
+    openupgrade_80.set_message_last_post(
+        cr, uid, pool,
+        ['mrp.bom', 'mrp.production', 'mrp.production.workcenter'])
