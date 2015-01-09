@@ -25,12 +25,6 @@ from openerp import pooler, SUPERUSER_ID
 from datetime import datetime
 
 logger = logging.getLogger('OpenUpgrade.mrp')
-column_renames = {
-    'mrp_bom_mrp_property_rel': [
-        ('bom_id', 'mrp_bom_id'),
-        ('property_id', 'mrp_property_id')
-    ]
-}
 
 
 def move_fields(cr, pool):
@@ -53,35 +47,6 @@ ALTER TABLE mrp_bom DROP CONSTRAINT mrp_bom_bom_id_fkey
         execute(cr, sql)
 
 
-def migrate_bom_line_property_rel(cr, uid, row, fields, new_line_id, bom_line_obj):
-
-    """Move from bom to bom_line"""
-#     cr2 = self.pool.db.cursor()
-    bom_property_rel = []
-    # Get the property_ids related to this row
-    sql = """SELECT property_id FROM mrp_bom_property_rel WHERE bom_id = {}""".format(row['id'])
-
-    cr.execute(sql)
-    for rel_row in cr.dictfetchall():
-        # fill temporary m2m bom_property_rel list
-        bom_property_rel.append({'bom_id': new_line_id, 'property_id': rel_row['property_id']})
-
-    # remove old mrp_bom_property_rel ?
-
-    # fill new bom to property m2m table
-    for values in bom_property_rel:
-        bom_line_obj.write(cr, uid, values['bom_id'], {'property_id': [(4, values['property_id'])]})
-
-
-# TODO check if mrp_bom property_ids needs migration
-def migrate_bom_property_rel(cr, pool, uid):
-    """Copy mrp_bom_property_rel to mrp_bom_mrp_property_rel
-    """
-    # Warning: assuming mrp_bom ids did not change!
-    # Try openupgrade.rename_tables(cr, table_spec) instead (pre-script)
-    pass
-
-
 def migrate_bom_lines(cr, pool, uid):
     bom_line_obj = pool['mrp.bom.line']
     fields = {
@@ -100,7 +65,7 @@ def migrate_bom_lines(cr, pool, uid):
     cr.execute(sql)
     ids = []
     for row in cr.dictfetchall():
-        bom_line_obj.create(cr, SUPERUSER_ID, {
+        bom_line_id = bom_line_obj.create(cr, SUPERUSER_ID, {
             'bom_id': row[fields['bom_id']],
             'product_efficiency': row['product_efficiency'],
             'product_id': row['product_id'],
@@ -114,12 +79,16 @@ def migrate_bom_lines(cr, pool, uid):
             'type': row['type']
             })
         ids.append(str(row['id']))
+        # Transfer properties from bom to bom line
+        cr.execute(
+            """
+            INSERT INTO mrp_bom_line_mrp_property_rel
+                (mrp_bom_line_id, mrp_property_id)
+                VALUES(%s, bom_rel.mrp_property_id)
+            FROM mrp_bom_mrp_property_rel bom_rel
+            WHERE bom_rel.mrp_bom_id = %s
+            """, (bom_line_id, row['id']))
 
-#         migrate_bom_line_property_rel(cr, uid, row, fields, new_line_id, bom_line_obj)
-
-        # attribute_value_ids - new in 8.0
-        # TODO: property_ids
-    # Remove unneeded items
     if ids:
         cr.execute("DELETE FROM mrp_bom WHERE id in (%s)" % ','.join(ids))
 
@@ -243,12 +212,10 @@ def migrate(cr, version):
     move_fields(cr, pool)
     uid = SUPERUSER_ID
     migrate_bom_lines(cr, pool, uid)
-    migrate_bom_property_rel(cr, pool, uid)
     fix_domains(cr, pool, uid)
     update_stock_moves(cr, pool, uid)
     update_stock_picking_name(cr, pool, uid)
     migrate_product_supply_method(cr, pool, uid)
     migrate_product(cr, pool)
-    openupgrade.rename_columns(cr, column_renames)
     migrate_stock_warehouse(cr, pool)
     migrate_procurement_order(cr, pool)

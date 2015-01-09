@@ -27,12 +27,14 @@ column_renames = {
         ('product_uos', None),
         ('product_uos_qty', None)
     ],
-    'mrp_bom_line': [],
+    'mrp_bom_property_rel': [
+        ('bom_id', 'mrp_bom_id'),
+        ('property_id', 'mrp_property_id'),
+    ],
     'mrp_production': [
         ('picking_id', None),
     ],
 }
-
 
 table_spec = [
     ('mrp_bom_property_rel', 'mrp_bom_mrp_property_rel')
