@@ -32,9 +32,10 @@ logger = logging.getLogger('OpenUpgrade.deferred')
 
 
 def migrate_product_valuation(cr, pool):
-    """Migrate the product valuation to a property field onproduct template.
-    This field also moved to a new module which is not installed when the
-    migration starts and thus not upgraded.
+    """Migrate the product valuation to a property field on product template.
+    This field was moved to a new module which is not installed when the
+    migration starts and thus not upgraded, which is why we do it here in the
+    deferred step.
 
     This method removes the preserved legacy column upon success, to prevent
     double runs which would be harmful.
@@ -179,7 +180,9 @@ def migrate_stock_move_warehouse(cr):
     different warehouse, we can now propagate this warehouse to the
     associated stock moves. The warehouses were written on the procurements
     in the sale_stock module, while the moves were associated with the
-    procurements in various modules.
+    procurements in purchase and mrp. The order of processing between
+    these modules seems to be independent, which is why we do this here
+    in the deferred step.
     """
     cr.execute(
         "SELECT count(*) FROM ir_module_module WHERE name='stock' "
