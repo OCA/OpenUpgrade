@@ -221,6 +221,22 @@ def migrate_stock_warehouse(cr, pool):
             "order to access this setting.")
 
 
+def migrate_procurement_order(cr, pool):
+    """ In Odoo 8.0, stock moves generated for the procurement (moves from
+    the supplier or production location to stock) are recorded on the
+    procurement. For mrp procurements, gather them here.
+    """
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE stock_move sm
+        SET procurement_id = proc.id
+        FROM procurement_order proc
+        WHERE proc.production_id = sm.production_id
+        AND sm.production_id IS NOT NULL
+        """)
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
@@ -235,3 +251,4 @@ def migrate(cr, version):
     migrate_product(cr, pool)
     openupgrade.rename_columns(cr, column_renames)
     migrate_stock_warehouse(cr, pool)
+    migrate_procurement_order(cr, pool)
