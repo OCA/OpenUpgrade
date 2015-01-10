@@ -43,8 +43,8 @@ account_types_mapping = [
 
 def map_account_types(cr):
     for old_value, new_value in account_types_mapping:
-        old_module, old_name = old_value.split['.']
-        new_module, new_name = new_value.split['.']
+        old_module, old_name = old_value.split('.')
+        new_module, new_name = new_value.split('.')
         cr.execute("SELECT * "
                    "FROM ir_model_data "
                    "WHERE module=%s AND name=%s "
