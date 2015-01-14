@@ -213,4 +213,4 @@ def migrate(cr, version):
     migrate_procurement_order(cr, pool)
     openupgrade_80.set_message_last_post(
         cr, uid, pool,
-        ['mrp.bom', 'mrp.production', 'mrp.production.workcenter'])
+        ['mrp.bom', 'mrp.production', 'mrp.production.workcenter.line'])
