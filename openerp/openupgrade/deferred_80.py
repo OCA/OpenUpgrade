@@ -158,11 +158,11 @@ def migrate_procurement_order_method(cr, pool):
                     action = 'manufacture'
                 else:
                     action = 'buy'
-                rule_id = rules.get(location_id).get(action)
+                rule_id = rules.get(location_id, {}).get(action)
             else:
-                rule_id = rules.get(location_id).get('make_to_order')
+                rule_id = rules.get(location_id, {}).get('make_to_order')
         else:
-            rule_id = rules.get(location_id).get('make_to_stock')
+            rule_id = rules.get(location_id, {}).get('make_to_stock')
         if rule_id:
             procurement.write({'rule_id': rule_id})
         else:
