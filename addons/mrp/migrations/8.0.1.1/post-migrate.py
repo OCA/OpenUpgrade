@@ -29,6 +29,7 @@ logger = logging.getLogger('OpenUpgrade.mrp')
 
 def bom_product_template(cr):
     openupgrade.logged_query(
+        cr,
         """
         UPDATE mrp_bom
         SET product_tmpl_id=pp.product_tmpl_id
