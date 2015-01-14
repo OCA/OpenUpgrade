@@ -35,3 +35,5 @@ column_renames = {
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
+    # Remove obsolete view, harmful in 8.0 migration
+    cr.execute("DROP VIEW IF EXISTS report_files_partner")
