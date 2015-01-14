@@ -58,5 +58,6 @@ def migrate(cr, version):
             'crm_lead_channel_id_fkey',
             'crm_lead_type_id_fkey']:
         cr.execute(
-            "ALTER TABLE crm_lead DROP CONSTRAINT {}".format(constraint))
+            "ALTER TABLE crm_lead DROP CONSTRAINT IF EXISTS {}".format(
+                constraint))
     openupgrade.rename_xmlids(cr, xmlids)
