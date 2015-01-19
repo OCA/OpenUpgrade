@@ -19,10 +19,12 @@
 #
 ##############################################################################
 
+import logging
 from openerp.modules.registry import RegistryManager
 from openerp.openupgrade import openupgrade
 from openerp import SUPERUSER_ID
 
+logger = logging.getLogger('OpenUpgrade.sale_stock')
 possible_dataloss_fields = [
     {
         'table': 'sale_order_line_property_rel',
@@ -48,23 +50,43 @@ def set_procurement_groups(cr):
     """
 
     # Create a procurement group for every sale order with at least one
-    # procurement
-    openupgrade.logged_query(
-        cr,
+    # procurement, and link the procurement group to the sale order.
+    cr.execute(
         """
-        INSERT INTO procurement_group
-        (create_date, create_uid, name, partner_id, move_type)
-        SELECT now(), %s, so.name,
-            so.partner_shipping_id, so.picking_policy
-        FROM sale_order so
+        SELECT id
+            FROM sale_order so
             WHERE (
                 SELECT COUNT(*) FROM sale_order_line sol
                 WHERE order_id = so.id
                 AND {procurement_id} IS NOT NULL
                 ) > 0
         """.format(
-            procurement_id=openupgrade.get_legacy_name('procurement_id')),
-        (SUPERUSER_ID,))
+            procurement_id=openupgrade.get_legacy_name('procurement_id')))
+
+    sale_order_ids = [row[0] for row in cr.fetchall()]
+    logger.debug(
+        "Creating procurement groups for %s sale order lines with "
+        "procurements.", len(sale_order_ids))
+
+    for sale_order_id in sale_order_ids:
+        cr.execute(
+            """
+            INSERT INTO procurement_group
+            (create_date, create_uid, name, partner_id, move_type)
+            SELECT now(), %s, so.name,
+                so.partner_shipping_id, so.picking_policy
+            FROM sale_order so
+            WHERE so.id = %s
+            RETURNING id""",
+            (SUPERUSER_ID, sale_order_id))
+
+        group_id = cr.fetchone()[0]
+        cr.execute(
+            """
+            UPDATE sale_order so
+            SET procurement_group_id = %s
+            WHERE so.id = %s
+            """, (group_id, sale_order_id))
 
     # Progagate sale procurement groups to the related pickings
     openupgrade.logged_query(
