@@ -230,7 +230,7 @@ def create_users_partner(cr):
             SELECT
             partner_id, 'res.partner', 'base', 'partner_root', TRUE
             FROM res_users where id=%s AND partner_id IS NOT NULL''',
-            user_root_id)
+            (user_root_id,))
 
     cr.execute(
         "SELECT id, name, active FROM res_users "
