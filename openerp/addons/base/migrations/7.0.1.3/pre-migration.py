@@ -207,31 +207,6 @@ def create_users_partner(cr):
         "WHERE module='base' and name='user_root'")
     user_root = cr.fetchone()
     user_root_id = user_root and user_root[0] or 0
-
-    if openupgrade.column_exists(
-            cr, 'hr_employee', 'address_id') and\
-            openupgrade.column_exists(
-                cr, 'resource_resource', 'user_id'):
-        # if hr is installed, get partners from there if possible
-        cr.execute(
-            '''UPDATE res_users SET partner_id=u.partner_id
-            FROM (
-                SELECT r.user_id, a.partner_id
-                FROM hr_employee e
-                JOIN resource_resource r ON e.resource_id=r.id
-                JOIN res_partner_address a ON COALESCE(
-                    e.address_id, e.address_home_id)=a.id
-                WHERE r.user_id IS NOT NULL AND a.partner_id IS NOT NULL) u
-            WHERE res_users.partner_id IS NULL and u.user_id=res_users.id''')
-        # inject xmlid for root partner if we set it above
-        cr.execute(
-            '''INSERT INTO ir_model_data
-            (res_id, model, module, name, noupdate)
-            SELECT
-            partner_id, 'res.partner', 'base', 'partner_root', TRUE
-            FROM res_users where id=%s AND partner_id IS NOT NULL''',
-            (user_root_id,))
-
     cr.execute(
         "SELECT id, name, active FROM res_users "
         "WHERE partner_id IS NULL")
