@@ -178,11 +178,6 @@ def create_users_partner(cr):
     to track the partners we create here. These are not necessarily
     the same, especially if you have a custom module implementing
     similar behaviour for 6.1.
-
-    For installations with hr installed, we need a different strategy
-    as the employee's data probably already lives in one of the addresses
-    linked with address_home_id and address_id. In this case, we simply
-    link the address' partner if it exists.
     """
     if not openupgrade.column_exists(
             cr, 'res_users', 'partner_id'):
