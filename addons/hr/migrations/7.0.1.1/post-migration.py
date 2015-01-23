@@ -77,7 +77,8 @@ def replace_user_partner(cr, pool):
     cr.execute(
         '''UPDATE res_users SET partner_id=u.partner_id
         FROM (
-            SELECT r.user_id, COALESCE(e.address_id, e.address_home_id)
+            SELECT
+            r.user_id, COALESCE(e.address_id, e.address_home_id) partner_id
             FROM hr_employee e
             JOIN resource_resource r ON e.resource_id=r.id
             WHERE r.user_id IS NOT NULL
