@@ -23,6 +23,7 @@
 # Ignored: removal of integer_big which openerp 6.1 claims is currently unused
 
 from openupgrade import openupgrade
+from openerp.addons.openupgrade_records.lib import apriori
 
 obsolete_modules = (
     'base_tools',
@@ -34,24 +35,6 @@ obsolete_modules = (
     'fetchmail_crm',
     'fetchmail_hr_recruitment',
 )
-
-module_namespec = [
-    # This is a list of tuples (old module name, new module name)
-    ('account_coda', 'l10n_be_coda'),
-    ('base_crypt', 'auth_crypt'),
-    ('mrp_subproduct', 'mrp_byproduct'),
-    ('users_ldap', 'auth_ldap'),
-    ('wiki', 'document_page'),
-    # mgmtsystem
-    ('wiki_environment_manual', 'document_page_environment_manual'),
-    ('wiki_environmental_aspect', 'document_page_environmental_aspect'),
-    ('wiki_quality_manual', 'document_page_quality_manual'),
-    ('wiki_health_safety_manual', 'document_page_health_safety_manual'),
-    ('wiki_procedure', 'document_page_procedure'),
-    ('wiki_work_instructions', 'document_page_work_instructions'),
-    # l10n-spain
-    ('nan_account_invoice_sequence', 'l10n_es_account_invoice_sequence'),
-]
 
 column_renames = {
     # login_date: field type changed as well, but
@@ -240,8 +223,8 @@ def migrate(cr, version):
     disable_demo_data(cr)
     update_base_sql(cr)
     openupgrade.update_module_names(
-        cr, module_namespec
-        )
+        cr, apriori.renamed_modules.iteritems()
+    )
     openupgrade.drop_columns(cr, [('ir_actions_todo', 'action_id')])
     openupgrade.rename_columns(cr, column_renames)
     rename_base_contact_columns(cr)
