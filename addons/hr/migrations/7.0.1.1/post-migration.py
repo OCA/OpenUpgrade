@@ -74,6 +74,8 @@ def replace_user_partner(cr, pool):
     address_id wins against address_home_id, and none of both is used if it
     points to a company's partner.
     """
+    root_partner_id = pool['ir.model.data'].get_object_reference(
+        cr, SUPERUSER_ID, 'base', 'partner_root')[1]
     cr.execute(
         '''UPDATE res_users SET partner_id=u.partner_id
         FROM (
@@ -90,21 +92,20 @@ def replace_user_partner(cr, pool):
             res_users.partner_id IS NULL or
             res_users.partner_id=openupgrade_7_created_partner_id
         )
-        AND u.user_id=res_users.id
-        RETURNING id''')
-    root_partner_id = pool['ir.model.data'].get_object_reference(
-        cr, SUPERUSER_ID, 'base', 'partner_root')[1]
-    updated_user_ids = [i for i, in cr.fetchall()]
+        AND u.user_id=res_users.id AND res_users.partner_id <> %s
+        RETURNING id, openupgrade_7_created_partner_id''',
+        (root_partner_id,))
+    updated_user_ids = dict((k, v) for k, v in cr.fetchall())
+    if not updated_user_ids:
+        return
     cr.execute(
         '''UPDATE res_users
         SET openupgrade_7_created_partner_id=NULL
         WHERE id in %s AND partner_id <> %s''',
-        (updated_user_ids, root_partner_id))
+        (tuple(updated_user_ids.keys()), root_partner_id))
     cr.execute(
-        '''DELETE FROM res_partner p
-        USING res_users u
-        WHERE u.partner_id=p.id AND u.id in %s AND p.id <> %s''',
-        (updated_user_ids, root_partner_id))
+        'DELETE FROM res_partner p where id in %s and id <> %s',
+        (tuple(updated_user_ids.values()), root_partner_id))
 
 
 @openupgrade.migrate()
