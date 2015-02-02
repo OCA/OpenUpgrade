@@ -1,0 +1,13 @@
+---Fields in module 'l10n_fr'---
+---XML records in module 'l10n_fr'---
+NEW ir.actions.report.xml: l10n_fr.action_report_report_l10nbilan
+NEW ir.actions.report.xml: l10n_fr.action_report_report_l10nresultat
+## New ir.actions.report.xml files, nothing to to
+
+NEW ir.ui.view: l10n_fr.report_l10nfrbilan
+NEW ir.ui.view: l10n_fr.report_l10nfrresultat
+## New ir.actions.report.xml files, nothing to to
+
+DEL ir.values: l10n_fr.l10n_fr_pcg_chart_template_value
+## In V7, The ir.values was for the currency of the account.chart.template.
+## In V8, The currency is now set directly in the account.chart.template, with the same value (Euro). Nothing to do.
