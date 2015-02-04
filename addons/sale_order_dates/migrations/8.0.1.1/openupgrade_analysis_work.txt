@@ -1,7 +1,8 @@
 ---Fields in module 'sale_order_dates'---
 sale_order_dates / sale.order               / commitment_date (date)        : type is now 'datetime' ('date')
 sale_order_dates / sale.order               / requested_date (date)         : type is now 'datetime' ('date')
-## Fields are more precise. Nothing to do.
+# Recalculate datetime to be on the same date as the previous date value
+# taking the user's timezone into account.
 
 ---XML records in module 'sale_order_dates'---
 NEW ir.ui.view: sale_order_dates.view_order_tree_date
