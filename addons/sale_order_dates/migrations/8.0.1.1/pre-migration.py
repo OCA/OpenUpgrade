@@ -24,8 +24,8 @@ from openerp.openupgrade import openupgrade
 
 column_copies = {
     'sale_order': [
-        ('commitment_date', None, 'date'),
-        ('requested_date', None, 'date'),
+        ('commitment_date', None, None),
+        ('requested_date', None, None),
     ],
 }
 

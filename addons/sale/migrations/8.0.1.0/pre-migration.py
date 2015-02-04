@@ -51,7 +51,7 @@ xmlid_renames = [
 
 column_copies = {
     'sale_order': [
-        ('date_order', None, 'date'),
+        ('date_order', None, None),
     ],
 }
 

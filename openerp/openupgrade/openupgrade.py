@@ -141,14 +141,23 @@ def copy_columns(cr, column_spec):
     """
     Copy table columns. Typically called in the pre script.
     :param column_spec: a hash with table keys, with lists of tuples as
-      values. Tuples consist of (old_name, new_name, type).  Use None for
+      values. Tuples consist of (old_name, new_name, type). Use None for
       new_name to trigger a conversion of old_name using get_legacy_name()
+      Use None for type to use type of old field
     .. versionadded:: 8.0
     """
     for table_name in column_spec.keys():
         for (old, new, field_type) in column_spec[table_name]:
             if new is None:
                 new = get_legacy_name(old)
+            if field_type is None:
+                cr.execute("""
+                    SELECT data_type
+                    FROM information_schema.columns
+                    WHERE table_name=%s
+                        AND column_name = %s;
+                    """, (table_name, old))
+                field_type = cr.fetchone()[0]
             logged_query(cr, """
                 ALTER TABLE %(table_name)s
                 ADD COLUMN %(new)s %(field_type)s;
