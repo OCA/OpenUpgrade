@@ -24,34 +24,6 @@ from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID
 
 
-def migrate_date_order(cr):
-    """ Take the related user's timezone into account when converting
-    date field to datetime."""
-    cr.execute(
-        """
-        SELECT distinct(rp.tz)
-        FROM sale_order so, res_users ru, res_partner rp
-        WHERE rp.tz IS NOT NULL
-            AND so.user_id=ru.id
-            AND ru.partner_id=rp.id
-        """)
-    for timezone, in cr.fetchall():
-        cr.execute("SET TIMEZONE=%s", (timezone,))
-        openupgrade.logged_query(
-            cr,
-            """
-            UPDATE sale_order so
-            SET date_order={date_order}::TIMESTAMP AT TIME ZONE 'UTC'
-            FROM res_partner rp, res_users ru
-            WHERE {date_order} IS NOT NULL
-                AND so.user_id=ru.id
-                AND ru.partner_id=rp.id
-                AND rp.tz=%s;
-            """.format(date_order=openupgrade.get_legacy_name('date_order')),
-            (timezone,))
-    cr.execute("RESET TIMEZONE")
-
-
 @openupgrade.migrate()
 def migrate(cr, version):
     registry = RegistryManager.get(cr.dbname)
@@ -59,4 +31,6 @@ def migrate(cr, version):
         cr, 'sale', 'migrations/8.0.1.0/noupdate_changes.xml')
     openupgrade_80.set_message_last_post(
         cr, SUPERUSER_ID, registry, ['sale.order'])
-    migrate_date_order(cr)
+    openupgrade.date_to_datetime_tz(
+        cr, 'sale_order', 'user_id', openupgrade.get_legacy_name('date_order'),
+        'date_order')
