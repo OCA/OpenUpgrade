@@ -38,6 +38,7 @@ logger.setLevel(logging.DEBUG)
 __all__ = [
     'migrate',
     'load_data',
+    'copy_columns',
     'rename_columns',
     'rename_tables',
     'rename_models',
@@ -62,6 +63,7 @@ __all__ = [
     'map_values',
     'deactivate_workflow_transitions',
     'reactivate_workflow_transitions',
+    'date_to_datetime_tz',
 ]
 
 
@@ -133,6 +135,31 @@ def load_data(cr, module_name, filename, idref=None, mode='init'):
 # for backwards compatibility
 load_xml = load_data
 table_exists = openupgrade_tools.table_exists
+
+
+def copy_columns(cr, column_spec):
+    """
+    Copy table columns. Typically called in the pre script.
+
+    :param column_spec: a hash with table keys, with lists of tuples as \
+    values. Tuples consist of (old_name, new_name, type).  Use None for \
+    new_name to trigger a conversion of old_name using get_legacy_name()
+    .. versionadded:: 8.0
+    """
+    for table_name in column_spec.keys():
+        for (old, new, field_type) in column_spec[table_name]:
+            if new is None:
+                new = get_legacy_name(old)
+            logged_query(cr, """
+                ALTER TABLE %(table_name)s
+                ADD COLUMN %(new)s %(field_type)s;
+                UPDATE %(table_name)s SET %(new)s=%(old)s;
+                """ % {
+                'table_name': table_name,
+                'old': old,
+                'field_type': field_type,
+                'new': new,
+            })
 
 
 def rename_columns(cr, column_spec):
@@ -858,3 +885,46 @@ def convert_field_to_html(cr, table, field_name, html_field_name):
                 'table': table,
             }, (plaintext2html(row[1]), row[0])
         )
+
+
+def date_to_datetime_tz(
+        cr, table_name, user_field_name, date_field_name, datetime_field_name):
+    """ Take the related user's timezone into account when converting
+    date field to datetime in a given table.
+    This function must be call in post migration script.
+    :param table_name : Name of the table where the field is;
+    :param user_field_name : The name of the user field (res.users);
+    :param date_field_name : The name of the old date field;
+        (Typically a legacy name, set in pre-migration script)
+    :param datetime_field_name : The name of the new date field;
+    .. versionadded:: 8.0
+    """
+    cr.execute(
+        """
+        SELECT distinct(rp.tz)
+        FROM %s my_table, res_users ru, res_partner rp
+        WHERE rp.tz IS NOT NULL
+            AND my_table.%s=ru.id
+            AND ru.partner_id=rp.id
+        """ % (table_name, user_field_name,))
+    for timezone, in cr.fetchall():
+        cr.execute("SET TIMEZONE=%s", (timezone,))
+        values = {
+            'table_name': table_name,
+            'date_field_name': date_field_name,
+            'datetime_field_name': datetime_field_name,
+            'timezone': timezone,
+        }
+        logged_query(
+            cr,
+            """
+            UPDATE %(table_name)s my_table
+            SET %(datetime_field_name)s =
+                my_table.%(date_field_name)s::TIMESTAMP AT TIME ZONE 'UTC'
+            FROM res_partner rp, res_users ru
+            WHERE my_table.%(date_field_name)s IS NOT NULL
+                AND my_table.user_id=ru.id
+                AND ru.partner_id=rp.id
+                AND rp.tz='%(timezone)s';
+            """ % values)
+    cr.execute("RESET TIMEZONE")
