@@ -140,10 +140,12 @@ table_exists = openupgrade_tools.table_exists
 def copy_columns(cr, column_spec):
     """
     Copy table columns. Typically called in the pre script.
-    :param column_spec: a hash with table keys, with lists of tuples as
-      values. Tuples consist of (old_name, new_name, type). Use None for
-      new_name to trigger a conversion of old_name using get_legacy_name()
-      Use None for type to use type of old field
+
+    :param column_spec: a hash with table keys, with lists of tuples as \
+    values. Tuples consist of (old_name, new_name, type). Use None for \
+    new_name to trigger a conversion of old_name using get_legacy_name() \
+    Use None for type to use type of old field
+
     .. versionadded:: 8.0
     """
     for table_name in column_spec.keys():
@@ -659,13 +661,12 @@ def deactivate_workflow_transitions(cr, model, transitions=None):
     Disable workflow transitions for workflows on a given model.
     This can be necessary for automatic workflow transitions when writing
     to an object via the ORM in the post migration step.
-
     Returns a dictionary to be used on reactivate_workflow_transitions
 
-    :param model: the model for which workflow transitions should be
+    :param model: the model for which workflow transitions should be \
     deactivated
-    :param transitions: a list of ('module', 'name') xmlid tuples of
-    transitions to be deactivated. Don't pass this if there's no specific
+    :param transitions: a list of ('module', 'name') xmlid tuples of \
+    transitions to be deactivated. Don't pass this if there's no specific \
     reason to do so, the default is to deactivate all transitions
 
     .. versionadded:: 7.0
@@ -704,7 +705,7 @@ def reactivate_workflow_transitions(cr, transition_conditions):
     Reactivate workflow transition previously deactivated by
     deactivate_workflow_transitions.
 
-    :param transition_conditions: a dictionary returned by
+    :param transition_conditions: a dictionary returned by \
     deactivate_workflow_transitions
 
     .. versionadded:: 7.0
@@ -772,21 +773,22 @@ def move_field_m2o(
     available on post script migration.
     :param registry_old_model: registry of the model A;
     :param field_old_model: name of the field to move in model A;
-    :param m2o_field_old_model: name of the field of the table of the model A;
-        that link model A to model B;
+    :param m2o_field_old_model: name of the field of the table of the model A \
+    that link model A to model B;
     :param registry_new_model: registry of the model B;
     :param field_new_model: name of the field to move in model B;
-    :param quick_request: Set to False, if you want to use write function to
-        update value; Otherwise, the function will use UPDATE SQL request;
-    :param compute_func: This a function that receives 4 parameters:
-        cr, pool: common args;
-        id: id of the instance of Model B
-        vals:  list of different values.
-        This function must return a unique value that will be set to the
-        instance of Model B which id is 'id' param;
-        If compute_func is not set, the algorithm will take the value that
-        is the most present in vals.
+    :param quick_request: Set to False, if you want to use write function to \
+    update value; Otherwise, the function will use UPDATE SQL request;
+    :param compute_func: This a function that receives 4 parameters: \
+    cr, pool: common args;\
+    id: id of the instance of Model B\
+    vals:  list of different values.\
+    This function must return a unique value that will be set to the\
+    instance of Model B which id is 'id' param;\
+    If compute_func is not set, the algorithm will take the value that\
+    is the most present in vals.\
     :binary_field: Set to True if the migrated field is a binary field
+
     .. versionadded:: 8.0
     """
     def default_func(cr, pool, id, vals):
@@ -900,11 +902,13 @@ def date_to_datetime_tz(
     """ Take the related user's timezone into account when converting
     date field to datetime in a given table.
     This function must be call in post migration script.
+
     :param table_name : Name of the table where the field is;
     :param user_field_name : The name of the user field (res.users);
-    :param date_field_name : The name of the old date field;
-      (Typically a legacy name, set in pre-migration script)
+    :param date_field_name : The name of the old date field; \
+    (Typically a legacy name, set in pre-migration script)
     :param datetime_field_name : The name of the new date field;
+
     .. versionadded:: 8.0
     """
     cr.execute(
