@@ -140,10 +140,9 @@ table_exists = openupgrade_tools.table_exists
 def copy_columns(cr, column_spec):
     """
     Copy table columns. Typically called in the pre script.
-
-    :param column_spec: a hash with table keys, with lists of tuples as \
-    values. Tuples consist of (old_name, new_name, type).  Use None for \
-    new_name to trigger a conversion of old_name using get_legacy_name()
+    :param column_spec: a hash with table keys, with lists of tuples as
+      values. Tuples consist of (old_name, new_name, type).  Use None for
+      new_name to trigger a conversion of old_name using get_legacy_name()
     .. versionadded:: 8.0
     """
     for table_name in column_spec.keys():
@@ -895,7 +894,7 @@ def date_to_datetime_tz(
     :param table_name : Name of the table where the field is;
     :param user_field_name : The name of the user field (res.users);
     :param date_field_name : The name of the old date field;
-        (Typically a legacy name, set in pre-migration script)
+      (Typically a legacy name, set in pre-migration script)
     :param datetime_field_name : The name of the new date field;
     .. versionadded:: 8.0
     """
