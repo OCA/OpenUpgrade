@@ -48,6 +48,10 @@ column_renames = {
     ]
 }
 
+table_renames = [
+    ('res_partner_category_rel', 'res_partner_res_partner_category_rel'),
+]
+
 xmlid_renames = [
     ('base.VEB', 'base.VUB'),
 ]
@@ -227,6 +231,7 @@ def migrate(cr, version):
     )
     openupgrade.drop_columns(cr, [('ir_actions_todo', 'action_id')])
     openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_tables(cr, table_renames)
     rename_base_contact_columns(cr)
     openupgrade.rename_xmlids(cr, xmlid_renames)
     openupgrade.rename_models(cr, model_renames)
