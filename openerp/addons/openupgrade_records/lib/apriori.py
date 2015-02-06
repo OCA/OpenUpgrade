@@ -21,6 +21,8 @@ renamed_modules = {
     # https://github.com/OCA/crm/tree/7.0/lettermgmt
     # this worked with 6.1 too and there's no specific 6.1 version
     'letter_mgmt_v6': 'lettermgmt',
+    # https://github.com/OCA/web/pull/79
+    'web_widget_classes': 'web_dom_model_classes',
 }
 
 renamed_models = {
