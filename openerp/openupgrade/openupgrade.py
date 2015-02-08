@@ -430,14 +430,27 @@ def m2o_to_m2m(cr, model, table, field, source_field):
 
     .. versionadded:: 7.0
     """
+    if not model._columns.get(field):
+        raise osv.except_osv(
+            "Error", "m2o_to_m2m: field %s doesn't exist in model %s" % (
+                field, model._name))
+    if not isinstance(model._columns[field], osv.fields.many2many):
+        raise osv.except_osv(
+            "Error", "m2o_to_m2m: field %s of model %s is not a many2many "
+                     "one" % (field, model._name))
     cr.execute('SELECT id, %(field)s '
                'FROM %(table)s '
                'WHERE %(field)s is not null' % {
                    'table': table,
                    'field': source_field,
                    })
+    rel, id1, id2 = osv.fields.many2many._sql_names(model._columns[field],
+                                                    model)
     for row in cr.fetchall():
-        model.write(cr, SUPERUSER_ID, row[0], {field: [(4, row[1])]})
+        cr.execute(
+            "INSERT INTO %s (%s, %s) "
+            "VALUES (%s, %s)" %
+            (rel, id1, id2, row[0], row[1]))
 
 
 def message(cr, module, table, column,
