@@ -41,8 +41,7 @@ This module depends on OpenERP client lib:
     'contributors': ['Therp BV'],
     'website': 'https://launchpad.net/~openupgrade-committers',
     'depends': [],
-    'init_xml': [],
-    'update_xml': [
+    'data': [
         'view/openupgrade_record.xml',
         'view/comparison_config.xml',
         'view/analysis_wizard.xml',
@@ -50,10 +49,9 @@ This module depends on OpenERP client lib:
         'view/install_all_wizard.xml',
         'security/ir.model.access.csv',
         ],
-    'demo_xml': [
-    ],
-    'test': [
-    ],
+    'external_dependencies': {
+        'python': ['openerplib'],
+    },
     'installable': True,
     'auto_install': False,
     'external_dependencies': {

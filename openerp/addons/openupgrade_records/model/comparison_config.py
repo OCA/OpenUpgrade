@@ -23,7 +23,6 @@
 #
 ##############################################################################
 
-import openerplib
 import logging
 
 try:
@@ -67,6 +66,7 @@ class openupgrade_comparison_config(Model):
             raise except_orm(
                 _("Cannot connect"), _("Invalid id passed."))
         conf = self.read(cr, uid, ids[0], context=None)
+        import openerplib
         return openerplib.get_connection(
             hostname=conf['server'],
             database=conf['database'],
