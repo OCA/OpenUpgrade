@@ -20,6 +20,7 @@
 #
 ##############################################################################
 
+import re
 from openerp.openupgrade import openupgrade
 from openerp import pooler, SUPERUSER_ID
 from openerp.openupgrade.openupgrade import logged_query
@@ -102,8 +103,6 @@ def migrate(cr, version):
 #    (http://creativecommons.org/licenses/by/3.0/legalcode)
 #
 ##############################################################################
-
-import re
 
 re_h3 = re.compile("^===[^=]+===$")
 re_h2 = re.compile("^==[^=]+==$")
