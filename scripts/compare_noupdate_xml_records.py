@@ -124,10 +124,19 @@ def get_records(addon_dir):
     return records_update, records_noupdate
 
 
+def check_blacklist(record, key):
+    """ Known deleted fields. Does not scale. """
+    if (key == "./field[@name='type']" and
+            record.get('model') == 'ir.ui.view'):
+        return False
+    return True
+
+
 def main(argv=None):
     """
     Attempt to represent the differences in data records flagged with
     'noupdate' between to different versions of the same OpenERP module.
+    Also detects removed tags from 'update' records.
 
     Print out a complete XML data file that can be loaded in a post-migration
     script using openupgrade::load_xml().
@@ -159,7 +168,7 @@ def main(argv=None):
 
     data = etree.Element("data")
 
-    for xml_id, record_new in new_noupdate.items():
+    def compare_record(xml_id, record_new, noupdate=True):
         record_old = None
         if xml_id in old_update:
             record_old = old_update[xml_id]
@@ -167,7 +176,7 @@ def main(argv=None):
             record_old = old_noupdate[xml_id]
 
         if record_old is None:
-            continue
+            return
 
         element = etree.Element(
             "record", id=xml_id, model=record_new.attrib['model'])
@@ -175,6 +184,8 @@ def main(argv=None):
         record_new_dict = get_node_dict(record_new)
         for key in record_old_dict.keys():
             if not record_new.xpath(key):
+                if not check_blacklist(record_new, key):
+                    continue
                 # The element is no longer present.
                 # Overwrite an existing value with an
                 # empty one. Of course, we do not know
@@ -185,19 +196,28 @@ def main(argv=None):
                         del attribs[attr]
                 element.append(
                     etree.Element(record_old_dict[key].tag, attribs))
-            else:
+            elif noupdate:
                 oldrepr = get_node_value(record_old_dict[key])
                 newrepr = get_node_value(record_new_dict[key])
 
                 if oldrepr != newrepr:
                     element.append(deepcopy(record_new_dict[key]))
 
-        for key in record_new_dict.keys():
-            if not record_old.xpath(key):
-                element.append(deepcopy(record_new_dict[key]))
+        if noupdate:
+            for key in record_new_dict.keys():
+                if not record_old.xpath(key):
+                    element.append(deepcopy(record_new_dict[key]))
 
         if len(element):
             data.append(element)
+
+    data.append(etree.Comment("Changes in noupdate data"))
+    for xml_id, record_new in new_noupdate.items():
+        compare_record(xml_id, record_new)
+
+    data.append(etree.Comment("Removed tags in update data"))
+    for xml_id, record_new in new_update.items():
+        compare_record(xml_id, record_new, noupdate=False)
 
     openerp = etree.Element("openerp")
     openerp.append(data)
