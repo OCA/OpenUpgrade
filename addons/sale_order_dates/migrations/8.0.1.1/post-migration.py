@@ -2,7 +2,8 @@
 ##############################################################################
 #
 # Odoo, an open source suite of business apps
-# This module copyright (C) 2014 Therp BV (<http://therp.nl>).
+# This module copyright (C) 2015-Today Akretion.
+# @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -19,18 +20,16 @@
 #
 ##############################################################################
 
-from openerp.openupgrade import openupgrade, openupgrade_80
-from openerp.modules.registry import RegistryManager
-from openerp import SUPERUSER_ID
+from openerp.openupgrade import openupgrade
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    registry = RegistryManager.get(cr.dbname)
-    openupgrade.load_data(
-        cr, 'sale', 'migrations/8.0.1.0/noupdate_changes.xml')
-    openupgrade_80.set_message_last_post(
-        cr, SUPERUSER_ID, registry, ['sale.order'])
     openupgrade.date_to_datetime_tz(
-        cr, 'sale_order', 'user_id', openupgrade.get_legacy_name('date_order'),
-        'date_order')
+        cr, 'sale_order', 'user_id',
+        openupgrade.get_legacy_name('commitment_date'),
+        'commitment_date')
+    openupgrade.date_to_datetime_tz(
+        cr, 'sale_order', 'user_id',
+        openupgrade.get_legacy_name('requested_date'),
+        'requested_date')

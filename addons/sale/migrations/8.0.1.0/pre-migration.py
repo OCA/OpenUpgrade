@@ -46,22 +46,17 @@ xmlid_renames = [
     ('sale_crm.mt_salesteam_order_confirmed',
      'sale.mt_salesteam_order_confirmed'),
     ('sale_crm.mt_salesteam_order_sent', 'sale.mt_salesteam_order_sent'),
-    ]
+]
 
 
-def preserve_date_order(cr):
-    """ Copy date_order column for access to the original data after migration
-    from date to datetime type."""
-    cr.execute(
-        """
-        ALTER TABLE sale_order
-        ADD COLUMN {date_order} date;
-        UPDATE sale_order SET {date_order}=date_order;
-        """.format(
-            date_order=openupgrade.get_legacy_name('date_order')))
+column_copies = {
+    'sale_order': [
+        ('date_order', None, None),
+    ],
+}
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_xmlids(cr, xmlid_renames)
-    preserve_date_order(cr)
+    openupgrade.copy_columns(cr, column_copies)
