@@ -32,5 +32,10 @@
         <field name="domain_force">[(1, '=', 1)]</field>
         <field name="name">Project/Task: project manager: see all</field>
     </record>
+
+    <!-- Changes not made in a certain field of a record by the omission of it in the new definition -->
+    <record id="action_view_task" model="ir.actions.act_window">
+        <field name="context">{}</field>
+    </record>
   </data>
 </openerp>
