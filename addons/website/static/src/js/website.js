@@ -1,6 +1,18 @@
 (function() {
     "use strict";
 
+    /* --- Set the browser into the dom for css selectors --- */
+    var browser;
+    if ($.browser.webkit) browser = "webkit";
+    else if ($.browser.safari) browser = "safari";
+    else if ($.browser.opera) browser = "opera";
+    else if ($.browser.msie || ($.browser.mozilla && +$.browser.version.replace(/^([0-9]+\.[0-9]+).*/, '\$1') < 20)) browser = "msie";
+    else if ($.browser.mozilla) browser = "mozilla";
+    browser += ","+$.browser.version;
+    if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase())) browser += ",mobile";
+    document.documentElement.setAttribute('data-browser', browser);
+    /* ---------------------------------------------------- */
+
     var website = {};
     openerp.website = website;
 
@@ -93,7 +105,7 @@
         options = _.extend({
             window_title: '',
             field_name: '',
-            default: '',
+            'default': '', // dict notation for IE<9
             init: function() {}
         }, options || {});
 
@@ -106,7 +118,7 @@
         var dialog = $(openerp.qweb.render('website.prompt', options)).appendTo("body");
         options.$dialog = dialog;
         var field = dialog.find(options.field_type).first();
-        field.val(options.default);
+        field.val(options['default']); // dict notation for IE<9
         field.fillWith = function (data) {
             if (field.is('select')) {
                 var select = field[0];
@@ -282,8 +294,12 @@
                 return templates_def;
             }).then(function () {
                 // display button if they are at least one editable zone in the page (check the branding)
-                var editable = $('html').data('website-id') && !!$('[data-oe-model]').size();
-                $("#oe_editzone").toggle(editable);
+                if (!!$('[data-oe-model]').size()) {
+                    $("#oe_editzone").show();
+
+                    //backwards compatibility with 8.0RC1 templates - Drop next line in master!
+                    $("#oe_editzone button").show();
+                }
 
                 if ($('html').data('website-id')) {
                     website.id = $('html').data('website-id');

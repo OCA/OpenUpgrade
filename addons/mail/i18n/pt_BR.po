@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-08-14 13:08+0000\n"
+"POT-Creation-Date: 2015-01-21 14:07+0000\n"
 "PO-Revision-Date: 2014-09-06 21:36+0000\n"
 "Last-Translator: Luiz Fernando M.França (Sig Informática) <Unknown>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-09-07 07:48+0000\n"
-"X-Generator: Launchpad (build 17196)\n"
+"X-Launchpad-Export-Date: 2015-01-22 07:54+0000\n"
+"X-Generator: Launchpad (build 17306)\n"
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:385
+#: code:addons/mail/mail_thread.py:384
 #, python-format
 msgid "%s created"
 msgstr "%s created"
@@ -62,7 +62,7 @@ msgstr ""
 "documento..</p></div>"
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:135
+#: code:addons/mail/mail_thread.py:134
 #, python-format
 msgid ""
 "<p class='oe_view_nocontent_create'>\n"
@@ -73,7 +73,7 @@ msgid ""
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:146
+#: code:addons/mail/mail_thread.py:145
 #, python-format
 msgid ""
 "<p class='oe_view_nocontent_create'>Click here to add new "
@@ -180,16 +180,6 @@ msgstr ""
 "            "
 
 #. module: mail
-#: code:addons/mail/mail_mail.py:159
-#, python-format
-msgid ""
-"<span class='oe_mail_footer_access'><small>about <a style='color:inherit' "
-"href=\"%s\">%s %s</a></small></span>"
-msgstr ""
-"<span class='oe_mail_footer_access'><small>sobre <a style='color:inherit' "
-"href=\"%s\">%s %s</a></small></span>"
-
-#. module: mail
 #: help:mail.alias,alias_defaults:0
 msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
@@ -199,7 +189,7 @@ msgstr ""
 "forem criados novos registros para este apelido."
 
 #. module: mail
-#: code:addons/mail/mail_message.py:755
+#: code:addons/mail/mail_message.py:763
 #, python-format
 msgid "Access Denied"
 msgstr "Acesso Negado"
@@ -333,7 +323,7 @@ msgstr ""
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:101
+#: code:addons/mail/static/src/js/mail_followers.js:102
 #, python-format
 msgid "Apply"
 msgstr "Aplicar"
@@ -434,7 +424,7 @@ msgstr "Corpo"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:105
+#: code:addons/mail/static/src/js/mail_followers.js:106
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
 #: view:mail.mail:mail.view_mail_form
 #: view:mail.wizard.invite:mail.mail_wizard_invite_form
@@ -477,7 +467,7 @@ msgstr "Comentário"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail.js:1970
+#: code:addons/mail/static/src/js/mail.js:1980
 #: model:ir.actions.act_window,name:mail.action_email_compose_message_wizard
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
 #, python-format
@@ -518,7 +508,6 @@ msgstr "Conteúdo"
 #: field:mail.message,create_uid:0
 #: field:mail.message.subtype,create_uid:0
 #: field:mail.wizard.invite,create_uid:0
-#: field:publisher_warranty.contract,create_uid:0
 msgid "Created by"
 msgstr "Criado por"
 
@@ -530,7 +519,6 @@ msgstr "Criado por"
 #: field:mail.message,create_date:0
 #: field:mail.message.subtype,create_date:0
 #: field:mail.wizard.invite,create_date:0
-#: field:publisher_warranty.contract,create_date:0
 msgid "Created on"
 msgstr "Criado em"
 
@@ -631,7 +619,7 @@ msgstr "Exibir as Sugestões de Grupo"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail.js:1021
+#: code:addons/mail/static/src/js/mail.js:1035
 #, python-format
 msgid "Do you really want to delete this message?"
 msgstr "Deseja realmente excluir esta mensagem?"
@@ -650,7 +638,7 @@ msgstr "Concluído"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:99
+#: code:addons/mail/static/src/js/mail_followers.js:100
 #, python-format
 msgid "Edit Subscription of "
 msgstr "Editar inscrição de "
@@ -737,13 +725,13 @@ msgid "Emails"
 msgstr "E-mails"
 
 #. module: mail
-#: code:addons/mail/update.py:93
+#: code:addons/mail/update.py:91
 #, python-format
 msgid "Error"
 msgstr "Erro"
 
 #. module: mail
-#: code:addons/mail/update.py:93
+#: code:addons/mail/update.py:91
 #, python-format
 msgid "Error during communication with the publisher warranty server."
 msgstr "Erro durante a comunicação com o servidor de garantia."
@@ -1010,7 +998,7 @@ msgstr ""
 "python como \"{'field': 'value'}\""
 
 #. module: mail
-#: code:addons/mail/wizard/invite.py:96
+#: code:addons/mail/wizard/invite.py:97
 #, python-format
 msgid "Invitation to follow %s: %s"
 msgstr "Convite para seguir %s: %s"
@@ -1061,7 +1049,6 @@ msgstr "Data da última mensagem"
 #: field:mail.message,write_uid:0
 #: field:mail.message.subtype,write_uid:0
 #: field:mail.wizard.invite,write_uid:0
-#: field:publisher_warranty.contract,write_uid:0
 msgid "Last Updated by"
 msgstr "Última atualização por"
 
@@ -1073,7 +1060,6 @@ msgstr "Última atualização por"
 #: field:mail.message,write_date:0
 #: field:mail.message.subtype,write_date:0
 #: field:mail.wizard.invite,write_date:0
-#: field:publisher_warranty.contract,write_date:0
 msgid "Last Updated on"
 msgstr "Última atualização em"
 
@@ -1105,7 +1091,7 @@ msgid "Log an internal note"
 msgstr "Registra uma nota interna"
 
 #. module: mail
-#: code:addons/mail/mail_mail.py:323
+#: code:addons/mail/mail_mail.py:340
 #, python-format
 msgid "Mail Delivery Failed"
 msgstr "Falhou a entrega da mensagem"
@@ -1334,14 +1320,14 @@ msgid "Never"
 msgstr "Nunca"
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:173
+#: code:addons/mail/mail_thread.py:172
 #, python-format
 msgid "New"
 msgstr "Nova"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:184
+#: code:addons/mail/static/src/js/mail_followers.js:205
 #, python-format
 msgid "No followers"
 msgstr "Sem seguidores"
@@ -1392,7 +1378,7 @@ msgstr "Notificar seguidores do documento"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:186
+#: code:addons/mail/static/src/js/mail_followers.js:207
 #, python-format
 msgid "One follower"
 msgstr "Um seguidor"
@@ -1533,7 +1519,7 @@ msgstr "Foto"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail.js:611
+#: code:addons/mail/static/src/js/mail.js:621
 #, python-format
 msgid "Please complete partner's informations"
 msgstr "Por favor complete as informações do parceiro"
@@ -1590,7 +1576,7 @@ msgid "R&D"
 msgstr "R&D"
 
 #. module: mail
-#: code:addons/mail/wizard/mail_compose_message.py:188
+#: code:addons/mail/wizard/mail_compose_message.py:191
 #, python-format
 msgid "Re:"
 msgstr "Re:"
@@ -1766,8 +1752,8 @@ msgstr "Enviada"
 #. module: mail
 #: code:addons/mail/mail_followers.py:155
 #, python-format
-msgid "Sent by %(company)s using %(odoo)s."
-msgstr "Enviar para %(company)s usando %(odoo)s."
+msgid "Sent by %(company)s using %(odoo)s"
+msgstr ""
 
 #. module: mail
 #: field:mail.message.subtype,sequence:0
@@ -1927,7 +1913,7 @@ msgstr ""
 "endereço."
 
 #. module: mail
-#: code:addons/mail/mail_message.py:756
+#: code:addons/mail/mail_message.py:764
 #, python-format
 msgid ""
 "The requested operation cannot be completed due to security restrictions. "
@@ -2111,7 +2097,7 @@ msgstr "Aviso!"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:140
+#: code:addons/mail/static/src/js/mail_followers.js:141
 #, python-format
 msgid ""
 "Warning! \n"
@@ -2124,7 +2110,7 @@ msgstr ""
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:309
+#: code:addons/mail/static/src/js/mail_followers.js:330
 #, python-format
 msgid ""
 "Warning! \n"
@@ -2146,6 +2132,16 @@ msgid "Whole Company"
 msgstr "Toda a Empresa"
 
 #. module: mail
+#. openerp-web
+#: code:addons/mail/static/src/js/mail.js:374
+#, python-format
+msgid ""
+"You are currently composing a message, your message will be discarded.\n"
+"\n"
+"Are you sure you want to leave this page ?"
+msgstr ""
+
+#. module: mail
 #: code:addons/mail/res_users.py:74
 #, python-format
 msgid ""
@@ -2165,16 +2161,28 @@ msgstr ""
 "Você não pode excluir estes grupos. Eles são necessários à outros módulos."
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:172
+#: code:addons/mail/mail_thread.py:171
 #, python-format
 msgid "You have %d unread messages"
 msgstr "Você possui %d mensagens não lidas"
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:172
+#: code:addons/mail/mail_thread.py:171
 #, python-format
 msgid "You have one unread message"
 msgstr "Você tem uma mensagem não lida"
+
+#. module: mail
+#: code:addons/mail/mail_mail.py:160
+#, python-format
+msgid "about"
+msgstr ""
+
+#. module: mail
+#: code:addons/mail/mail_mail.py:160
+#, python-format
+msgid "access"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -2185,14 +2193,19 @@ msgid "and"
 msgstr "e"
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:116
+#: view:mail.mail:mail.view_mail_form
+msgid "by"
+msgstr "por"
+
+#. module: mail
+#: code:addons/mail/mail_thread.py:115
 #, python-format
 msgid "document"
 msgstr "documento"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:188
+#: code:addons/mail/static/src/js/mail_followers.js:209
 #, python-format
 msgid "followers"
 msgstr "seguidores"
@@ -2245,8 +2258,16 @@ msgid "notified"
 msgstr "notificado"
 
 #. module: mail
+#: view:mail.compose.message:mail.email_compose_message_wizard_form
+#: view:mail.mail:mail.view_mail_form
+msgid "on"
+msgstr "em"
+
+#. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:56
+#: view:mail.compose.message:mail.email_compose_message_wizard_form
+#: view:mail.wizard.invite:mail.mail_wizard_invite_form
 #, python-format
 msgid "or"
 msgstr "ou"
@@ -2324,3 +2345,9 @@ msgstr "Documento atualizado"
 #, python-format
 msgid "uploading"
 msgstr "enviando"
+
+#. module: mail
+#: code:addons/mail/mail_mail.py:162
+#, python-format
+msgid "your messages"
+msgstr ""

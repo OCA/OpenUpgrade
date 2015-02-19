@@ -138,7 +138,7 @@ class view(osv.osv):
             ('search','Search'),
             ('qweb', 'QWeb')], string='View Type'),
         'arch': fields.text('View Architecture', required=True),
-        'inherit_id': fields.many2one('ir.ui.view', 'Inherited View', ondelete='cascade', select=True),
+        'inherit_id': fields.many2one('ir.ui.view', 'Inherited View', ondelete='restrict', select=True),
         'inherit_children_ids': fields.one2many('ir.ui.view','inherit_id', 'Inherit Views'),
         'field_parent': fields.char('Child Field'),
         'model_data_id': fields.function(_get_model_data, type='many2one', relation='ir.model.data', string="Model Data",
@@ -271,7 +271,7 @@ class view(osv.osv):
         return values
 
     def create(self, cr, uid, values, context=None):
-        if 'type' not in values:
+        if not values.get('type'):
             if values.get('inherit_id'):
                 values['type'] = self.browse(cr, uid, values['inherit_id'], context).type
             else:
@@ -721,10 +721,17 @@ class view(osv.osv):
             if node.get('string') and node.get('string').strip() and not result:
                 term = node.get('string').strip()
                 trans = Translations._get_source(cr, user, model, 'view', context['lang'], term)
-                if trans == term and ('base_model_name' in context):
-                    # If translation is same as source, perhaps we'd have more luck with the alternative model name
-                    # (in case we are in a mixed situation, such as an inherited view where parent_view.model != model
-                    trans = Translations._get_source(cr, user, context['base_model_name'], 'view', context['lang'], term)
+                if trans == term:
+                    if 'base_model_name' in context:
+                        # If translation is same as source, perhaps we'd have more luck with the alternative model name
+                        # (in case we are in a mixed situation, such as an inherited view where parent_view.model != model
+                        trans = Translations._get_source(cr, user, context['base_model_name'], 'view', context['lang'], term)
+                    else:
+                        inherit_model = self.browse(cr, user, view_id, context=context).inherit_id.model or model
+                        if inherit_model != model:
+                            # parent view has a different model, if the terms belongs to the parent view, the translation
+                            # should be checked on the parent model as well
+                            trans = Translations._get_source(cr, user, inherit_model, 'view', context['lang'], term)
                 if trans:
                     node.set('string', trans)
 
@@ -834,11 +841,11 @@ class view(osv.osv):
                 if not node.get(action) and not Model.check_access_rights(cr, user, operation, raise_exception=False):
                     node.set(action, 'false')
         if node.tag in ('kanban'):
-            group_by_field = node.get('default_group_by')
-            if group_by_field and Model._all_columns.get(group_by_field):
-                group_by_column = Model._all_columns[group_by_field].column
-                if group_by_column._type == 'many2one':
-                    group_by_model = Model.pool.get(group_by_column._obj)
+            group_by_name = node.get('default_group_by')
+            if group_by_name in Model._fields:
+                group_by_field = Model._fields[group_by_name]
+                if group_by_field.type == 'many2one':
+                    group_by_model = Model.pool[group_by_field.comodel_name]
                     for action, operation in (('group_create', 'create'), ('group_delete', 'unlink'), ('group_edit', 'write')):
                         if not node.get(action) and not group_by_model.check_access_rights(cr, user, operation, raise_exception=False):
                             node.set(action, 'false')
@@ -917,7 +924,7 @@ class view(osv.osv):
             e.set('data-oe-xpath', node_path)
         if not e.get('data-oe-model'): return
 
-        if set(('t-esc', 't-escf', 't-raw', 't-rawf')).intersection(e.attrib):
+        if {'t-esc', 't-raw'}.intersection(e.attrib):
             # nodes which fully generate their content and have no reason to
             # be branded because they can not sensibly be edited
             self._pop_view_branding(e)
@@ -1003,6 +1010,7 @@ class view(osv.osv):
         if values is None:
             values = dict()
         qcontext = dict(
+            env=api.Environment(cr, uid, context),
             keep_query=keep_query,
             request=request, # might be unbound if we're not in an httprequest context
             debug=request.debug if request else False,

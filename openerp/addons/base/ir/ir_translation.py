@@ -123,7 +123,12 @@ class ir_translation_import_cursor(object):
 
         find_expr = "irt.lang = ti.lang AND irt.type = ti.type " \
                     " AND irt.name = ti.name AND irt.src = ti.src " \
-                    " AND (ti.type != 'model' OR ti.res_id = irt.res_id) "
+                    " AND irt.module = ti.module " \
+                    " AND ( " \
+                    "      (ti.type NOT IN ('model', 'view')) " \
+                    "   OR (ti.type = 'model' AND ti.res_id = irt.res_id) " \
+                    "   OR (ti.type = 'view' AND irt.res_id IS NULL) " \
+                    "   OR (ti.type = 'view' AND irt.res_id IS NOT NULL AND ti.res_id = irt.res_id)) "
 
         # Step 2: update existing (matching) translations
         if self._overwrite:
@@ -397,15 +402,15 @@ class ir_translation(osv.osv):
         langs = [lg.code for lg in self.pool.get('res.lang').browse(cr, uid, langs_ids, context=context)]
         main_lang = 'en_US'
         translatable_fields = []
-        for f, info in trans_model._all_columns.items():
-            if info.column.translate:
-                if info.parent_model:
-                    parent_id = trans_model.read(cr, uid, [id], [info.parent_column], context=context)[0][info.parent_column][0]
-                    translatable_fields.append({ 'name': f, 'id': parent_id, 'model': info.parent_model })
+        for k, f in trans_model._fields.items():
+            if getattr(f, 'translate', False):
+                if f.inherited:
+                    parent_id = trans_model.read(cr, uid, [id], [f.related[0]], context=context)[0][f.related[0]][0]
+                    translatable_fields.append({'name': k, 'id': parent_id, 'model': f.base_field.model_name})
                     domain.insert(0, '|')
-                    domain.extend(['&', ('res_id', '=', parent_id), ('name', '=', "%s,%s" % (info.parent_model, f))])
+                    domain.extend(['&', ('res_id', '=', parent_id), ('name', '=', "%s,%s" % (f.base_field.model_name, k))])
                 else:
-                    translatable_fields.append({ 'name': f, 'id': id, 'model': model })
+                    translatable_fields.append({'name': k, 'id': id, 'model': model })
         if len(langs):
             fields = [f.get('name') for f in translatable_fields]
             record = trans_model.read(cr, uid, [id], fields, context={ 'lang': main_lang })[0]
@@ -430,9 +435,9 @@ class ir_translation(osv.osv):
             'domain': domain,
         }
         if field:
-            info = trans_model._all_columns[field]
+            f = trans_model._fields[field]
             action['context'] = {
-                'search_default_name': "%s,%s" % (info.parent_model or model, field)
+                'search_default_name': "%s,%s" % (f.base_field.model_name, field)
             }
         return action
 

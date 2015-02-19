@@ -7,19 +7,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-08-14 13:08+0000\n"
+"POT-Creation-Date: 2015-01-21 14:07+0000\n"
 "PO-Revision-Date: 2014-09-03 02:53+0000\n"
 "Last-Translator: Josh Kim <joshkkim@gmail.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-09-05 01:12+0000\n"
-"X-Generator: Launchpad (build 17196)\n"
+"X-Launchpad-Export-Date: 2015-01-22 07:53+0000\n"
+"X-Generator: Launchpad (build 17306)\n"
 "Language: ko\n"
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:385
+#: code:addons/mail/mail_thread.py:384
 #, python-format
 msgid "%s created"
 msgstr "%s을(를) 생성함"
@@ -59,7 +59,7 @@ msgid ""
 msgstr "<div><p>안녕하세요,</p><p>%s이(가) 새로운 문서를 팔로우하도록 초대했습니다.</p></div>"
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:135
+#: code:addons/mail/mail_thread.py:134
 #, python-format
 msgid ""
 "<p class='oe_view_nocontent_create'>\n"
@@ -70,7 +70,7 @@ msgid ""
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:146
+#: code:addons/mail/mail_thread.py:145
 #, python-format
 msgid ""
 "<p class='oe_view_nocontent_create'>Click here to add new "
@@ -144,16 +144,6 @@ msgstr ""
 "            "
 
 #. module: mail
-#: code:addons/mail/mail_mail.py:159
-#, python-format
-msgid ""
-"<span class='oe_mail_footer_access'><small>about <a style='color:inherit' "
-"href=\"%s\">%s %s</a></small></span>"
-msgstr ""
-"<span class='oe_mail_footer_access'><small> <a style='color:inherit' "
-"href=\"%s\">%s %s</a>정보</small></span>"
-
-#. module: mail
 #: help:mail.alias,alias_defaults:0
 msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
@@ -161,7 +151,7 @@ msgid ""
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/mail_message.py:755
+#: code:addons/mail/mail_message.py:763
 #, python-format
 msgid "Access Denied"
 msgstr "접근이 거부됨"
@@ -295,7 +285,7 @@ msgstr ""
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:101
+#: code:addons/mail/static/src/js/mail_followers.js:102
 #, python-format
 msgid "Apply"
 msgstr "적용"
@@ -394,7 +384,7 @@ msgstr "본문"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:105
+#: code:addons/mail/static/src/js/mail_followers.js:106
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
 #: view:mail.mail:mail.view_mail_form
 #: view:mail.wizard.invite:mail.mail_wizard_invite_form
@@ -437,7 +427,7 @@ msgstr "의견"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail.js:1970
+#: code:addons/mail/static/src/js/mail.js:1980
 #: model:ir.actions.act_window,name:mail.action_email_compose_message_wizard
 #: view:mail.compose.message:mail.email_compose_message_wizard_form
 #, python-format
@@ -478,7 +468,6 @@ msgstr "내용"
 #: field:mail.message,create_uid:0
 #: field:mail.message.subtype,create_uid:0
 #: field:mail.wizard.invite,create_uid:0
-#: field:publisher_warranty.contract,create_uid:0
 msgid "Created by"
 msgstr "작성자:"
 
@@ -490,7 +479,6 @@ msgstr "작성자:"
 #: field:mail.message,create_date:0
 #: field:mail.message.subtype,create_date:0
 #: field:mail.wizard.invite,create_date:0
-#: field:publisher_warranty.contract,create_date:0
 msgid "Created on"
 msgstr "작성일:"
 
@@ -589,7 +577,7 @@ msgstr "그룹 제안 표시"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail.js:1021
+#: code:addons/mail/static/src/js/mail.js:1035
 #, python-format
 msgid "Do you really want to delete this message?"
 msgstr "정말로 이 메시지를 삭제하시겠습니까?"
@@ -608,7 +596,7 @@ msgstr "완료"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:99
+#: code:addons/mail/static/src/js/mail_followers.js:100
 #, python-format
 msgid "Edit Subscription of "
 msgstr "다음에 대한 구독 편집 "
@@ -691,13 +679,13 @@ msgid "Emails"
 msgstr "이메일"
 
 #. module: mail
-#: code:addons/mail/update.py:93
+#: code:addons/mail/update.py:91
 #, python-format
 msgid "Error"
 msgstr "오류"
 
 #. module: mail
-#: code:addons/mail/update.py:93
+#: code:addons/mail/update.py:91
 #, python-format
 msgid "Error during communication with the publisher warranty server."
 msgstr "발행자 보증 서버와 통신 중 오류가 발생했습니다."
@@ -954,7 +942,7 @@ msgid ""
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/wizard/invite.py:96
+#: code:addons/mail/wizard/invite.py:97
 #, python-format
 msgid "Invitation to follow %s: %s"
 msgstr "%s을(를) 팔로우할 수 있도록 초대: %s"
@@ -1005,7 +993,6 @@ msgstr "최근 메시지 일자"
 #: field:mail.message,write_uid:0
 #: field:mail.message.subtype,write_uid:0
 #: field:mail.wizard.invite,write_uid:0
-#: field:publisher_warranty.contract,write_uid:0
 msgid "Last Updated by"
 msgstr "최근 업데이트한 사람:"
 
@@ -1017,7 +1004,6 @@ msgstr "최근 업데이트한 사람:"
 #: field:mail.message,write_date:0
 #: field:mail.message.subtype,write_date:0
 #: field:mail.wizard.invite,write_date:0
-#: field:publisher_warranty.contract,write_date:0
 msgid "Last Updated on"
 msgstr "최근 업데이트한 날짜:"
 
@@ -1048,7 +1034,7 @@ msgid "Log an internal note"
 msgstr "내부 메모 기록"
 
 #. module: mail
-#: code:addons/mail/mail_mail.py:323
+#: code:addons/mail/mail_mail.py:340
 #, python-format
 msgid "Mail Delivery Failed"
 msgstr "메일 전송에 실패함"
@@ -1259,14 +1245,14 @@ msgid "Never"
 msgstr "하지않음"
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:173
+#: code:addons/mail/mail_thread.py:172
 #, python-format
 msgid "New"
 msgstr "새로 만들기"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:184
+#: code:addons/mail/static/src/js/mail_followers.js:205
 #, python-format
 msgid "No followers"
 msgstr "팔로워가 없음"
@@ -1317,7 +1303,7 @@ msgstr "문서의 팔로워에에 알림 (공개글만)"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:186
+#: code:addons/mail/static/src/js/mail_followers.js:207
 #, python-format
 msgid "One follower"
 msgstr "한 명의 팔로워"
@@ -1450,7 +1436,7 @@ msgstr "사진"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail.js:611
+#: code:addons/mail/static/src/js/mail.js:621
 #, python-format
 msgid "Please complete partner's informations"
 msgstr ""
@@ -1507,7 +1493,7 @@ msgid "R&D"
 msgstr "연구개발"
 
 #. module: mail
-#: code:addons/mail/wizard/mail_compose_message.py:188
+#: code:addons/mail/wizard/mail_compose_message.py:191
 #, python-format
 msgid "Re:"
 msgstr "Re:"
@@ -1683,7 +1669,7 @@ msgstr "보냄"
 #. module: mail
 #: code:addons/mail/mail_followers.py:155
 #, python-format
-msgid "Sent by %(company)s using %(odoo)s."
+msgid "Sent by %(company)s using %(odoo)s"
 msgstr ""
 
 #. module: mail
@@ -1832,7 +1818,7 @@ msgid ""
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/mail_message.py:756
+#: code:addons/mail/mail_message.py:764
 #, python-format
 msgid ""
 "The requested operation cannot be completed due to security restrictions. "
@@ -2004,7 +1990,7 @@ msgstr "경고!"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:140
+#: code:addons/mail/static/src/js/mail_followers.js:141
 #, python-format
 msgid ""
 "Warning! \n"
@@ -2014,7 +2000,7 @@ msgstr ""
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:309
+#: code:addons/mail/static/src/js/mail_followers.js:330
 #, python-format
 msgid ""
 "Warning! \n"
@@ -2033,6 +2019,16 @@ msgid "Whole Company"
 msgstr "회사 전체"
 
 #. module: mail
+#. openerp-web
+#: code:addons/mail/static/src/js/mail.js:374
+#, python-format
+msgid ""
+"You are currently composing a message, your message will be discarded.\n"
+"\n"
+"Are you sure you want to leave this page ?"
+msgstr ""
+
+#. module: mail
 #: code:addons/mail/res_users.py:74
 #, python-format
 msgid ""
@@ -2049,16 +2045,28 @@ msgid ""
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:172
+#: code:addons/mail/mail_thread.py:171
 #, python-format
 msgid "You have %d unread messages"
 msgstr "%d개의 읽지 않은 메시지가 있습니다"
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:172
+#: code:addons/mail/mail_thread.py:171
 #, python-format
 msgid "You have one unread message"
 msgstr "한 개의 읽지 않은 메시지가 있습니다"
+
+#. module: mail
+#: code:addons/mail/mail_mail.py:160
+#, python-format
+msgid "about"
+msgstr ""
+
+#. module: mail
+#: code:addons/mail/mail_mail.py:160
+#, python-format
+msgid "access"
+msgstr ""
 
 #. module: mail
 #. openerp-web
@@ -2069,14 +2077,19 @@ msgid "and"
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/mail_thread.py:116
+#: view:mail.mail:mail.view_mail_form
+msgid "by"
+msgstr ""
+
+#. module: mail
+#: code:addons/mail/mail_thread.py:115
 #, python-format
 msgid "document"
 msgstr "문서"
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/mail_followers.js:188
+#: code:addons/mail/static/src/js/mail_followers.js:209
 #, python-format
 msgid "followers"
 msgstr "팔로워"
@@ -2129,8 +2142,16 @@ msgid "notified"
 msgstr "알림"
 
 #. module: mail
+#: view:mail.compose.message:mail.email_compose_message_wizard_form
+#: view:mail.mail:mail.view_mail_form
+msgid "on"
+msgstr ""
+
+#. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/xml/mail.xml:56
+#: view:mail.compose.message:mail.email_compose_message_wizard_form
+#: view:mail.wizard.invite:mail.mail_wizard_invite_form
 #, python-format
 msgid "or"
 msgstr ""
@@ -2208,3 +2229,9 @@ msgstr "업데이트된 문서"
 #, python-format
 msgid "uploading"
 msgstr "업로드하는 중"
+
+#. module: mail
+#: code:addons/mail/mail_mail.py:162
+#, python-format
+msgid "your messages"
+msgstr ""

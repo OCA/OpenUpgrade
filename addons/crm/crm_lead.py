@@ -160,6 +160,10 @@ class crm_lead(format_address, osv.osv):
         return result, fold
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+        if context and context.get('opportunity_id'):
+            action = self._get_formview_action(cr, user, context['opportunity_id'], context=context)
+            if action.get('views') and any(view_id for view_id in action['views'] if view_id[1] == view_type):
+                view_id = next(view_id[0] for view_id in action['views'] if view_id[1] == view_type)
         res = super(crm_lead, self).fields_view_get(cr, user, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
         if view_type == 'form':
             res['arch'] = self.fields_view_get_address(cr, user, res['arch'], context=context)
@@ -326,7 +330,7 @@ class crm_lead(format_address, osv.osv):
         """ When changing the user, also set a section_id or restrict section id
             to the ones user_id is member of. """
         section_id = self._get_default_section_id(cr, uid, user_id=user_id, context=context) or False
-        if user_id and not section_id:
+        if user_id and self.pool['res.users'].has_group(cr, uid, 'base.group_multi_salesteams') and not section_id:
             section_ids = self.pool.get('crm.case.section').search(cr, uid, ['|', ('user_id', '=', user_id), ('member_ids', '=', user_id)], context=context)
             if section_ids:
                 section_id = section_ids[0]
@@ -481,15 +485,14 @@ class crm_lead(format_address, osv.osv):
         # Process the fields' values
         data = {}
         for field_name in fields:
-            field_info = self._all_columns.get(field_name)
-            if field_info is None:
+            field = self._fields.get(field_name)
+            if field is None:
                 continue
-            field = field_info.column
-            if field._type in ('many2many', 'one2many'):
+            if field.type in ('many2many', 'one2many'):
                 continue
-            elif field._type == 'many2one':
+            elif field.type == 'many2one':
                 data[field_name] = _get_first_not_null_id(field_name)  # !!
-            elif field._type == 'text':
+            elif field.type == 'text':
                 data[field_name] = _concat_all(field_name)  #not lost
             else:
                 data[field_name] = _get_first_not_null(field_name)  #not lost
@@ -504,22 +507,21 @@ class crm_lead(format_address, osv.osv):
             body.append("%s\n" % (title))
 
         for field_name in fields:
-            field_info = self._all_columns.get(field_name)
-            if field_info is None:
+            field = self._fields.get(field_name)
+            if field is None:
                 continue
-            field = field_info.column
             value = ''
 
-            if field._type == 'selection':
-                if hasattr(field.selection, '__call__'):
+            if field.type == 'selection':
+                if callable(field.selection):
                     key = field.selection(self, cr, uid, context=context)
                 else:
                     key = field.selection
                 value = dict(key).get(lead[field_name], lead[field_name])
-            elif field._type == 'many2one':
+            elif field.type == 'many2one':
                 if lead[field_name]:
                     value = lead[field_name].name_get()[0][1]
-            elif field._type == 'many2many':
+            elif field.type == 'many2many':
                 if lead[field_name]:
                     for val in lead[field_name]:
                         field_value = val.name_get()[0][1]
@@ -586,6 +588,13 @@ class crm_lead(format_address, osv.osv):
                 attachment.write(values)
         return True
 
+    def _merge_opportunity_phonecalls(self, cr, uid, opportunity_id, opportunities, context=None):
+        phonecall_obj = self.pool['crm.phonecall']
+        for opportunity in opportunities:
+            for phonecall_id in phonecall_obj.search(cr, uid, [('opportunity_id', '=', opportunity.id)], context=context):
+                phonecall_obj.write(cr, uid, phonecall_id, {'opportunity_id': opportunity_id}, context=context)
+        return True
+
     def get_duplicated_leads(self, cr, uid, ids, partner_id, include_lost=False, context=None):
         """
         Search for opportunities that have the same partner and that arent done or cancelled
@@ -616,6 +625,7 @@ class crm_lead(format_address, osv.osv):
         self._merge_notify(cr, uid, highest, opportunities, context=context)
         self._merge_opportunity_history(cr, uid, highest, opportunities, context=context)
         self._merge_opportunity_attachments(cr, uid, highest, opportunities, context=context)
+        self._merge_opportunity_phonecalls(cr, uid, highest, opportunities, context=context)
 
     def merge_opportunity(self, cr, uid, ids, user_id=False, section_id=False, context=None):
         """
@@ -690,7 +700,6 @@ class crm_lead(format_address, osv.osv):
             'probability': lead.probability,
             'name': lead.name,
             'partner_id': customer and customer.id or False,
-            'user_id': (lead.user_id and lead.user_id.id),
             'type': 'opportunity',
             'date_action': fields.datetime.now(),
             'date_open': fields.datetime.now(),
@@ -784,7 +793,7 @@ class crm_lead(format_address, osv.osv):
                 partner_id = self._create_lead_partner(cr, uid, lead, context)
                 self.pool['res.partner'].write(cr, uid, partner_id, {'section_id': lead.section_id and lead.section_id.id or False})
             if partner_id:
-                lead.write({'partner_id': partner_id}, context=context)
+                lead.write({'partner_id': partner_id})
             partner_ids[lead.id] = partner_id
         return partner_ids
 
@@ -946,7 +955,7 @@ class crm_lead(format_address, osv.osv):
         lead = self.browse(cr, uid, id, context=context)
         local_context = dict(context)
         local_context.setdefault('default_type', lead.type)
-        local_context.setdefault('default_section_id', lead.section_id)
+        local_context.setdefault('default_section_id', lead.section_id.id)
         if lead.type == 'opportunity':
             default['date_open'] = fields.datetime.now()
         else:

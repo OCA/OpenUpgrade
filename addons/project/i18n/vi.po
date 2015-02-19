@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-08-14 13:08+0000\n"
+"POT-Creation-Date: 2015-01-21 14:07+0000\n"
 "PO-Revision-Date: 2014-08-14 16:10+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Vietnamese <vi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-08-15 07:41+0000\n"
-"X-Generator: Launchpad (build 17156)\n"
+"X-Launchpad-Export-Date: 2015-01-22 08:11+0000\n"
+"X-Generator: Launchpad (build 17306)\n"
 
 #. module: project
 #: field:res.partner,task_count:0
@@ -28,8 +28,9 @@ msgid "# of Days"
 msgstr ""
 
 #. module: project
+#: field:project.task.history.cumulative,nbr_tasks:0
 #: field:report.project.task.user,nbr:0
-msgid "# of tasks"
+msgid "# of Tasks"
 msgstr ""
 
 #. module: project
@@ -192,8 +193,9 @@ msgid "Assignation Date"
 msgstr ""
 
 #. module: project
+#: view:project.task:project.view_task_search_form
 #: view:report.project.task.user:project.view_task_project_user_search
-msgid "Assignation date"
+msgid "Assignation Month"
 msgstr ""
 
 #. module: project
@@ -207,7 +209,9 @@ msgid "Assigned To"
 msgstr "Phân công cho"
 
 #. module: project
+#: view:project.task:project.view_task_search_form
 #: field:project.task,user_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Assigned to"
 msgstr ""
@@ -228,6 +232,7 @@ msgstr ""
 #: selection:project.task.history,kanban_state:0
 #: view:project.task.history.cumulative:project.view_task_history_search
 #: selection:project.task.history.cumulative,kanban_state:0
+#: selection:report.project.task.user,state:0
 msgid "Blocked"
 msgstr ""
 
@@ -313,6 +318,7 @@ msgid "Companies"
 msgstr "Các công ty"
 
 #. module: project
+#: view:project.task:project.view_task_search_form
 #: field:project.task,company_id:0
 #: field:project.task.work,company_id:0
 #: view:report.project.task.user:project.view_task_project_user_search
@@ -346,7 +352,6 @@ msgstr ""
 #. module: project
 #: view:project.project:project.view_project
 #: view:project.project:project.view_project_project_filter
-#: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,partner_id:0
 msgid "Contact"
 msgstr ""
@@ -388,6 +393,8 @@ msgid "Created on"
 msgstr ""
 
 #. module: project
+#: view:project.task:project.view_task_search_form
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Creation Date"
 msgstr ""
@@ -399,6 +406,7 @@ msgid "Cumulative Flow"
 msgstr ""
 
 #. module: project
+#: view:project.project:project.edit_project
 #: field:project.task,partner_id:0
 msgid "Customer"
 msgstr "Khách hàng"
@@ -651,6 +659,7 @@ msgstr ""
 #. module: project
 #: view:project.project:project.view_project_project_filter
 #: view:project.task:project.view_task_search_form
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Group By"
 msgstr ""
@@ -757,6 +766,7 @@ msgstr ""
 #. module: project
 #: selection:project.project,state:0
 #: selection:project.task,kanban_state:0
+#: selection:report.project.task.user,state:0
 msgid "In Progress"
 msgstr "Đang thực hiện"
 
@@ -776,6 +786,12 @@ msgid ""
 "Internal email associated with this project. Incoming emails are "
 "automatically synchronizedwith Tasks (or optionally Issues if the Issue "
 "Tracker module is installed)."
+msgstr ""
+
+#. module: project
+#: code:addons/project/project.py:201
+#, python-format
+msgid "Internal project: all employees can access"
 msgstr ""
 
 #. module: project
@@ -824,9 +840,7 @@ msgid "Last Modification Date"
 msgstr ""
 
 #. module: project
-#: view:project.task:project.view_task_search_form
 #: field:project.task,date_last_stage_update:0
-#: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,date_last_stage_update:0
 msgid "Last Stage Update"
 msgstr ""
@@ -856,7 +870,7 @@ msgstr ""
 #: help:project.config.settings,module_pad:0
 msgid ""
 "Lets the company customize which Pad installation should be used to link to "
-"new pads (for example: http://ietherpad.com/).\n"
+"new pads (for example: http://etherpad.com/).\n"
 "-This installs the module pad."
 msgstr ""
 
@@ -916,6 +930,11 @@ msgstr ""
 #: view:project.project:project.edit_project
 msgid "Miscellaneous"
 msgstr ""
+
+#. module: project
+#: view:project.task.history.cumulative:project.view_task_history_search
+msgid "Month"
+msgstr "Tháng"
 
 #. module: project
 #: view:project.task.history.cumulative:project.view_task_history_search
@@ -1100,6 +1119,12 @@ msgid "Privacy / Visibility"
 msgstr ""
 
 #. module: project
+#: code:addons/project/project.py:202
+#, python-format
+msgid "Private project: followers Only"
+msgstr ""
+
+#. module: project
 #: field:project.project,progress_rate:0
 #: field:report.project.task.user,progress:0
 msgid "Progress"
@@ -1113,6 +1138,7 @@ msgstr ""
 #: view:project.task:project.view_task_search_form
 #: field:project.task,project_id:0
 #: field:project.task.delegate,project_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: field:project.task.history.cumulative,project_id:0
 #: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,project_id:0
@@ -1221,6 +1247,12 @@ msgid ""
 msgstr ""
 
 #. module: project
+#: code:addons/project/project.py:200
+#, python-format
+msgid "Public project"
+msgstr ""
+
+#. module: project
 #: view:project.project:project.edit_project
 msgid "Re-open project"
 msgstr ""
@@ -1234,6 +1266,7 @@ msgstr ""
 #: selection:project.task,kanban_state:0
 #: selection:project.task.history,kanban_state:0
 #: selection:project.task.history.cumulative,kanban_state:0
+#: selection:report.project.task.user,state:0
 msgid "Ready for next stage"
 msgstr ""
 
@@ -1284,11 +1317,6 @@ msgid "Reviewer"
 msgstr ""
 
 #. module: project
-#: view:project.task:project.view_task_search_form
-msgid "Reviewers"
-msgstr ""
-
-#. module: project
 #: view:project.project:project.view_project_project_filter
 msgid "Search Project"
 msgstr "Tìm kiếm Dự án"
@@ -1320,7 +1348,9 @@ msgstr ""
 #: view:project.task:project.view_task_search_form
 #: field:project.task,stage_id:0
 #: field:project.task.history,type_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: field:project.task.history.cumulative,type_id:0
+#: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,stage_id:0
 msgid "Stage"
 msgstr ""
@@ -1351,12 +1381,19 @@ msgid "Stages common to all projects"
 msgstr ""
 
 #. module: project
+#: view:project.project:project.edit_project
+msgid "Start Date"
+msgstr "Ngày bắt đầu"
+
+#. module: project
 #: field:project.task,date_start:0
 msgid "Starting Date"
 msgstr "Ngày bắt đầu"
 
 #. module: project
 #: field:project.project,state:0
+#: view:project.task.history.cumulative:project.view_task_history_search
+#: field:report.project.task.user,state:0
 msgid "Status"
 msgstr ""
 
@@ -1404,7 +1441,9 @@ msgstr ""
 #: model:ir.model,name:project.model_project_task
 #: view:project.config.settings:project.view_config_settings
 #: view:project.task:project.view_task_form2
+#: view:project.task:project.view_task_search_form
 #: field:project.task.history,task_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: field:project.task.history.cumulative,task_id:0
 #: field:project.task.work,task_id:0
 #: view:report.project.task.user:project.view_task_project_user_search
@@ -1443,6 +1482,11 @@ msgstr ""
 #. module: project
 #: model:res.groups,name:project.group_delegate_task
 msgid "Task Delegation"
+msgstr ""
+
+#. module: project
+#: model:ir.filters,name:project.filter_task_report_task_pipe
+msgid "Task Pipe"
 msgstr ""
 
 #. module: project
@@ -1703,6 +1747,11 @@ msgid "Usability"
 msgstr ""
 
 #. module: project
+#: view:project.project:project.edit_project
+msgid "Use Tasks"
+msgstr ""
+
+#. module: project
 #: field:project.config.settings,module_pad:0
 msgid "Use integrated collaborative note pads on task"
 msgstr ""
@@ -1721,11 +1770,6 @@ msgstr ""
 #: help:project.task.delegate,project_id:0
 #: help:project.task.delegate,user_id:0
 msgid "User you want to delegate this task to"
-msgstr ""
-
-#. module: project
-#: view:project.task:project.view_task_search_form
-msgid "Users"
 msgstr ""
 
 #. module: project
@@ -1777,6 +1821,11 @@ msgid "Working time unit"
 msgstr ""
 
 #. module: project
+#: model:ir.filters,name:project.filter_task_report_workload
+msgid "Workload"
+msgstr ""
+
+#. module: project
 #: code:addons/project/project.py:172
 #, python-format
 msgid ""
@@ -1803,6 +1852,12 @@ msgstr ""
 #. module: project
 #: view:project.task:project.view_task_kanban
 msgid "oe_kanban_text_red"
+msgstr ""
+
+#. module: project
+#: view:project.config.settings:project.view_config_settings
+#: view:project.task.delegate:project.view_project_task_delegate
+msgid "or"
 msgstr ""
 
 #. module: project

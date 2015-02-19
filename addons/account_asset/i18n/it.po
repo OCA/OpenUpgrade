@@ -7,20 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-08-14 13:08+0000\n"
-"PO-Revision-Date: 2014-08-14 16:10+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-01-21 14:07+0000\n"
+"PO-Revision-Date: 2014-10-02 20:11+0000\n"
+"Last-Translator: Alessandro Camilli <a.camilli@yahoo.it>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-08-15 06:49+0000\n"
-"X-Generator: Launchpad (build 17156)\n"
+"X-Launchpad-Export-Date: 2015-01-22 07:22+0000\n"
+"X-Generator: Launchpad (build 17306)\n"
 
 #. module: account_asset
 #: field:account.asset.asset,entry_count:0
 msgid "# Asset Entries"
-msgstr ""
+msgstr "# Voce cespite"
 
 #. module: account_asset
 #: field:asset.asset.report,nbr:0
@@ -129,6 +129,11 @@ msgstr "Gerarchia Immobilizzazioni"
 #: view:account.asset.history:account_asset.view_account_asset_history_form
 msgid "Asset History"
 msgstr "Storico Immobilizzazione"
+
+#. module: account_asset
+#: field:asset.modify,asset_method_time:0
+msgid "Asset Method Time"
+msgstr ""
 
 #. module: account_asset
 #: field:account.asset.asset,name:0
@@ -325,7 +330,7 @@ msgstr "Movimenti Immobilizzazioni Creati"
 #: field:asset.depreciation.confirmation.wizard,create_uid:0
 #: field:asset.modify,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: account_asset
 #: field:account.asset.asset,create_date:0
@@ -335,7 +340,7 @@ msgstr ""
 #: field:asset.depreciation.confirmation.wizard,create_date:0
 #: field:asset.modify,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: account_asset
 #: field:account.asset.asset,currency_id:0
@@ -424,7 +429,7 @@ msgstr "Metodo Ammortamento"
 #. module: account_asset
 #: view:asset.asset.report:account_asset.view_asset_asset_report_search
 msgid "Depreciation Month"
-msgstr ""
+msgstr "Mese deprezzamento"
 
 #. module: account_asset
 #: field:account.asset.depreciation.line,name:0
@@ -494,7 +499,7 @@ msgstr "Valore Iniziale"
 #. module: account_asset
 #: view:asset.asset.report:account_asset.view_asset_asset_report_search
 msgid "Group By"
-msgstr ""
+msgstr "Raggruppa per"
 
 #. module: account_asset
 #: view:account.asset.asset:account_asset.view_account_asset_asset_form
@@ -516,7 +521,7 @@ msgstr "Nome Storico"
 #: field:asset.depreciation.confirmation.wizard,id:0
 #: field:asset.modify,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_asset
 #: help:account.asset.asset,prorata:0
@@ -563,7 +568,7 @@ msgstr "Voci Sezionale"
 #: field:asset.depreciation.confirmation.wizard,write_uid:0
 #: field:asset.modify,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima modifica di"
 
 #. module: account_asset
 #: field:account.asset.asset,write_date:0
@@ -573,7 +578,7 @@ msgstr ""
 #: field:asset.depreciation.confirmation.wizard,write_date:0
 #: field:asset.modify,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: account_asset
 #: selection:account.asset.asset,method:0
@@ -699,7 +704,7 @@ msgstr "Data di Acquisto"
 #. module: account_asset
 #: view:asset.asset.report:account_asset.view_asset_asset_report_search
 msgid "Purchase Month"
-msgstr ""
+msgstr "Mese acquisto"
 
 #. module: account_asset
 #: field:asset.modify,name:0
@@ -726,7 +731,7 @@ msgstr "In esecuzione"
 #. module: account_asset
 #: field:account.asset.asset,salvage_value:0
 msgid "Salvage Value"
-msgstr "Valore di Realizzo"
+msgstr "Quota non deducibile"
 
 #. module: account_asset
 #: view:account.asset.category:account_asset.view_account_asset_category_search
@@ -853,3 +858,9 @@ msgstr ""
 #: view:asset.modify:account_asset.asset_modify_form
 msgid "months"
 msgstr "mesi"
+
+#. module: account_asset
+#: view:asset.depreciation.confirmation.wizard:account_asset.view_asset_depreciation_confirmation_wizard
+#: view:asset.modify:account_asset.asset_modify_form
+msgid "or"
+msgstr "o"
