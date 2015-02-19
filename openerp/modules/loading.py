@@ -167,6 +167,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
 
         loaded_modules.append(package.name)
         if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
+            registry.setup_models(cr, partial=True)
             # OpenUpgrade: add this module's models to the registry
             local_registry = {}
             for model in models:
@@ -175,8 +176,6 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                 openupgrade_loading.log_model(model, local_registry)
             openupgrade_loading.compare_registries(
                 cr, package.name, upg_registry, local_registry)
-
-            registry.setup_models(cr, partial=True)
             init_module_models(cr, package.name, models)
 
         idref = {}
