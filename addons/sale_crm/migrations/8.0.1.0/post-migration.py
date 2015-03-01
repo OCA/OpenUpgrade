@@ -32,8 +32,8 @@ logger = logging.getLogger('OpenUpgrade')
 def migrate_crm_lead_sale_order(cr, pool):
     """Get the id of the crm that had generated a sale.order
     If found:
-    - retrive crm_lead.type_id to set sale_order.campaign_id;
-    - retrive crm_lead.channel_id to set sale_order.medium_id;
+    - retrieve crm_lead.type_id to set sale_order.campaign_id;
+    - retrieve crm_lead.channel_id to set sale_order.medium_id;
     """
     execute = openupgrade.logged_query
 
@@ -57,7 +57,7 @@ def migrate_crm_lead_sale_order(cr, pool):
             res = cr.fetchone()
             if not res:
                 logger.warning(
-                    "Cannot retrive crm_lead.id '%s' "
+                    "Cannot retrieve crm_lead.id '%s' "
                     "found in sale_order origin '%s'" % (crm_id, origin))
             else:
                 execute(
