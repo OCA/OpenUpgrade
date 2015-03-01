@@ -310,7 +310,7 @@ def _migrate_stock_warehouse(cr, registry, res_id):
                 'usage': 'internal',
                 'location_id': warehouse.view_location_id.id,
                 'active': False,
-                })
+            })
 
     # Create new sequences to guarantee separate sequences per warehouse.
     # Transfer the number_next from the existing sequences.
@@ -318,8 +318,8 @@ def _migrate_stock_warehouse(cr, registry, res_id):
         sequence_ids = (
             seq_obj.search(
                 cr, uid, [('company_id', '=', warehouse.company_id.id),
-                          ('code', '=', code)])
-            or seq_obj.search(
+                          ('code', '=', code)]) or
+            seq_obj.search(
                 cr, uid, [('company_id', '=', False), ('code', '=', code)]))
         if not sequence_ids:
             return default
@@ -332,7 +332,7 @@ def _migrate_stock_warehouse(cr, registry, res_id):
     })
     out_seq_id = seq_obj.create(cr, uid, values={
         'name': warehouse.name + ' Sequence out',
-        'prefix':  warehouse.code + '/OUT/', 'padding': 5,
+        'prefix': warehouse.code + '/OUT/', 'padding': 5,
         'number_next': get_sequence_next('stock.picking.out'),
     })
     int_seq_id = seq_obj.create(cr, uid, values={
@@ -361,8 +361,8 @@ def _migrate_stock_warehouse(cr, registry, res_id):
         location_ids = (
             location_obj.search(
                 cr, uid, [('usage', '=', usage),
-                          ('company_id', '=', warehouse.company_id.id)])
-            or location_obj.search(
+                          ('company_id', '=', warehouse.company_id.id)]) or
+            location_obj.search(
                 cr, uid, [('usage', '=', usage),
                           ('company_id', '=', False)]))
         return location_ids[0]
