@@ -275,7 +275,7 @@ def set_warehouse_view_location(cr, registry, warehouse):
                 'name': warehouse.code,
                 'usage': 'view',
                 'location_id': all_warehouse_view,
-                })
+            })
         location_obj.write(
             cr, uid, [
                 warehouse.lot_stock_id.id,
@@ -460,7 +460,7 @@ def _migrate_stock_warehouse(cr, registry, res_id):
         'pack_type_id': pack_type_id,
         'pick_type_id': pick_type_id,
         'int_type_id': int_type_id,
-        })
+    })
 
     # Write picking types on WH.
     warehouse.write(vals)
@@ -520,8 +520,10 @@ def migrate_stock_warehouse_orderpoint(cr):
         p_uom_id = op['uom']
         m_uom_id = op['move_uom']
         # Check whether uom's are in the same category
-        assert uom_data[p_uom_id]['category_id'] == uom_data[m_uom_id]['category_id']
-        factor = 1.0 / uom_data[m_uom_id]['factor'] * uom_data[p_uom_id]['factor']
+        assert uom_data[p_uom_id]['category_id'] ==\
+            uom_data[m_uom_id]['category_id']
+        factor = 1.0 / uom_data[m_uom_id]['factor'] *\
+            uom_data[p_uom_id]['factor']
         _min = op['product_min_qty'] * factor
         _max = op['product_max_qty'] * factor
         _mul = op['qty_multiple'] * factor
@@ -547,18 +549,21 @@ def migrate_product_supply_method(cr, registry):
     route_obj = registry['stock.location.route']
     template_obj = registry['product.template']
 
-    mto_route_id = route_obj.search(cr, uid, [('name', 'like', 'Make To Order')])
+    mto_route_id = route_obj.search(
+        cr, uid, [('name', 'like', 'Make To Order')])
     mto_route_id = mto_route_id and mto_route_id[0] or False
 
     procure_method_legacy = openupgrade.get_legacy_name('procure_method')
 
     if mto_route_id:
         product_ids = []
-        cr.execute("SELECT id FROM product_template WHERE %s = %%s" % procure_method_legacy, ('make_to_order',))
+        cr.execute("SELECT id FROM product_template WHERE %s = %%s" % (
+            procure_method_legacy, ('make_to_order',)))
         for res in cr.fetchall():
             product_ids.append(res[0])
 
-        template_obj.write(cr, uid, product_ids, {'route_ids': [(6, 0, [mto_route_id])]})
+        template_obj.write(
+            cr, uid, product_ids, {'route_ids': [(6, 0, [mto_route_id])]})
 
 
 def migrate_procurement_order(cr, registry):
@@ -619,7 +624,9 @@ def migrate_stock_production_lot(cr, registry):
     user_obj = registry['res.users']
 
     # Revisions to mail messages
-    cr.execute("SELECT lot_id, author_id, description FROM stock_production_lot_revision")
+    cr.execute("""
+        SELECT lot_id, author_id, description
+        FROM stock_production_lot_revision""")
     for lot, author, description in cr.fetchall():
         user = user_obj.browse(cr, uid, author)
         if user.email:
@@ -627,13 +634,20 @@ def migrate_stock_production_lot(cr, registry):
 
     # Move: prodlot_id -> Quants lot_id.
     field_name = openupgrade.get_legacy_name('prodlot_id')
-    cr.execute("""select id, %s from stock_move where %s is not null""" % (field_name, field_name))
+    cr.execute("""select id, %s from stock_move where %s is not null""" % (
+        field_name, field_name))
     res1 = cr.fetchall()
     for move, lot in res1:
-        cr.execute("""select quant_id from stock_quant_move_rel where move_id = %s""" % (move,))
+        cr.execute("""
+            SELECT quant_id
+            FROM stock_quant_move_rel
+            WHERE move_id = %s""" % (move,))
         res2 = cr.fetchall()
         for quant in res2:
-            cr.execute("""UPDATE stock_quant SET lot_id = %s WHERE id = %s""" % (lot, quant[0],))
+            cr.execute("""
+                UPDATE stock_quant
+                SET lot_id = %s
+                WHERE id = %s""" % (lot, quant[0],))
         cr.commit()
 
 

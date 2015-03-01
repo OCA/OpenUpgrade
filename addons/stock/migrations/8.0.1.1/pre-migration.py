@@ -76,10 +76,14 @@ column_renames = {
 xmlid_renames = [
     ('procurement.sequence_mrp_op_type', 'stock.sequence_mrp_op_type'),
     ('procurement.sequence_mrp_op', 'stock.sequence_mrp_op'),
-    ('stock.property_stock_account_input_categ', 'stock_account.property_stock_account_input_categ'),
-    ('stock.property_stock_account_input_prd', 'stock_account.property_stock_account_input_prd'),
-    ('stock.property_stock_account_output_categ', 'stock_account.property_stock_account_output_categ'),
-    ('stock.property_stock_account_output_prd', 'stock_account.property_stock_account_output_prd'),
+    ('stock.property_stock_account_input_categ',
+        'stock_account.property_stock_account_input_categ'),
+    ('stock.property_stock_account_input_prd',
+        'stock_account.property_stock_account_input_prd'),
+    ('stock.property_stock_account_output_categ',
+        'stock_account.property_stock_account_output_categ'),
+    ('stock.property_stock_account_output_prd',
+        'stock_account.property_stock_account_output_prd'),
     ('stock.property_stock_journal', 'stock_account.property_stock_journal'),
     ('stock.stock_journal', 'stock_account.stock_journal'),
 ]
