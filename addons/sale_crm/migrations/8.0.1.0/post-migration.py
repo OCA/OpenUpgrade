@@ -29,7 +29,7 @@ from openerp.modules.registry import RegistryManager
 logger = logging.getLogger('OpenUpgrade')
 
 
-def migrate_crm_lead_sale_order(cr, pool):
+def migrate_crm_lead_sale_order(cr):
     """Get the id of the crm that had generated a sale.order
     If found:
     - retrieve crm_lead.type_id to set sale_order.campaign_id;
@@ -72,4 +72,4 @@ def migrate_crm_lead_sale_order(cr, pool):
 @openupgrade.migrate()
 def migrate(cr, version):
     registry = RegistryManager.get(cr.dbname)
-    migrate_crm_lead_sale_order(cr, registry)
+    migrate_crm_lead_sale_order(cr)
