@@ -1,0 +1,31 @@
+---Fields in module 'sale_crm'---
+sale_crm     / account.invoice          / section_id (many2one)         : module is now 'sale' ('sale_crm')
+sale_crm     / res.users                / default_section_id (many2one) : module is now 'sales_team' ('sale_crm')
+# Nothing to do - fields moved and not changed
+
+sale_crm     / sale.order               / campaign_id (many2one)        : NEW relation: crm.tracking.campaign
+# 'crm.tracking.medium' was 'crm.case.resource.type'. Try to get information from the old crm_lead.type_id (now campaign_id)
+sale_crm     / sale.order               / medium_id (many2one)          : NEW relation: crm.tracking.medium
+# 'crm.tracking.medium' was 'crm.case.channel'. Try to get information from the old crm_lead.channel_id (now medium_id)
+# for the both field above, we'll try to get a crm_lead by sale_order.origin char field
+# that is written as _('Opportunity: %s') % str(case.id).
+
+sale_crm     / sale.order               / section_id (many2one)         : module is now 'sale' ('sale_crm')
+# Nothing to do - fields moved and not changed
+
+sale_crm     / sale.order               / source_id (many2one)          : NEW relation: crm.tracking.source
+# New field. Nothing to do
+
+---XML records in module 'sale_crm'---
+DEL ir.ui.view: sale_crm.account_invoice_form
+DEL ir.ui.view: sale_crm.account_invoice_groupby_inherit
+DEL ir.ui.view: sale_crm.account_invoice_report_tree
+DEL ir.ui.view: sale_crm.account_invoice_tree
+DEL ir.ui.view: sale_crm.res_user_form
+DEL ir.ui.view: sale_crm.view_sales_order_filter_inherit
+DEL ir.ui.view: sale_crm.view_users_form_preferences
+# Nothing to do
+
+DEL mail.message.subtype: sale_crm.mt_salesteam_order_confirmed
+DEL mail.message.subtype: sale_crm.mt_salesteam_order_sent
+# Nothing to do - xmlids migration in addon sale
