@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2014 ONESTEiN B.V.
+#    OpenUpgrade module for Odoo
+#    Copyright (C) 2014 Onestein B.V. <http://www.onestein.nl>
+#    Copyright (C) 2015 Therp BV <http://therp.nl>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -17,37 +19,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 from openerp.openupgrade import openupgrade
-
-column_renames = {
-    'procurement_order': [
-        ('message', None),
-        ('note', None),
-        ('move_id', None),
-        ('procure_method', None),
-    ],
-    'product_template': [
-        ('supply_method', None),
-        ('procure_method', None),
-    ],
-    'stock_warehouse_orderpoint': [
-        ('procurement_id', None),
-    ],
-}
-
-xmlid_renames = [
-    ('procurement.access_stock_warehouse_orderpoint',
-     'stock.access_stock_warehouse_orderpoint'),
-    ('procurement.access_stock_warehouse_orderpoint_system',
-     'stock.access_stock_warehouse_orderpoint_system'),
-    ('procurement.stock_warehouse_orderpoint_rule',
-     'stock.stock_warehouse_orderpoint_rule'),
-]
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.rename_columns(cr, column_renames)
-    openupgrade.rename_xmlids(cr, xmlid_renames)
-    openupgrade.delete_model_workflow(cr, 'procurement.order')
+    openupgrade.load_data(cr, 'portal', 'portal_data.xml')

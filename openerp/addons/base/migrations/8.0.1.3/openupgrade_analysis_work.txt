@@ -183,7 +183,10 @@ DEL res.currency.rate: base.rateEEK
 NEW res.font: base.font_courier
 NEW res.font: base.font_helvetica
 NEW res.font: base.font_times
-NEW res.groups: base.group_portal
-NEW res.groups: base.group_public
 NEW res.partner: base.public_partner
 NEW res.users: base.public_user
+
+
+NEW res.groups: base.group_portal
+NEW res.groups: base.group_public
+#DONE: move groups from portal module to base using xml rename

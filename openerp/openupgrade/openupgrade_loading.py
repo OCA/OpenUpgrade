@@ -129,10 +129,8 @@ def log_model(model, local_registry):
             'type': v._type,
             'isfunction': (
                 isinstance(v, fields.function) and 'function' or ''),
-            'relation': (
-                v._type in ('many2many', 'many2one', 'one2many')
-                and v._obj or ''
-                ),
+            'relation':
+            v._type in ('many2many', 'many2one', 'one2many') and v._obj or '',
             'required': v.required and 'required' or '',
             'selection_keys': '',
             'req_default': '',
