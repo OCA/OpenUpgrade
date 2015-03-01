@@ -71,5 +71,4 @@ def migrate_crm_lead_sale_order(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    registry = RegistryManager.get(cr.dbname)
     migrate_crm_lead_sale_order(cr)
