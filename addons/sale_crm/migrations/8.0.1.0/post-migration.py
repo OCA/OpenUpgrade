@@ -24,7 +24,6 @@ import re
 import logging
 
 from openerp.openupgrade import openupgrade
-from openerp.modules.registry import RegistryManager
 
 logger = logging.getLogger('OpenUpgrade')
 
