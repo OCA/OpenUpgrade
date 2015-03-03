@@ -45,7 +45,7 @@ xmlid_renames = [
 
 
 def drop_report_mrp_view(cr):
-    openupgrade.logged_query(cr, "DROP VIEW report_mrp_inout")
+    openupgrade.logged_query(cr, "DROP VIEW IF EXISTS report_mrp_inout")
 
 
 def check_production_state(cr):
