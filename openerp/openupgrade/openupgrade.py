@@ -802,6 +802,10 @@ def move_field_m2o(
                 res = val
         return res
 
+    logger.info("Moving data from '%s'.'%s' to '%s'.%s" % (
+        registry_old_model, field_old_model,
+        registry_new_model, field_new_model))
+
     table_old_model = pool[registry_old_model]._table
     table_new_model = pool[registry_new_model]._table
     # Manage regular case (all the value are identical)
