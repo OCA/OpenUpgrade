@@ -861,7 +861,12 @@ def move_field_m2o(
                 field_old_model, table_old_model, m2o_field_old_model, ko_id))
         cr.execute(query)
         if binary_field:
-            vals = [str(x[0][:]) for x in cr.fetchall()]
+            vals = []
+            for x in cr.fetchall():
+                if x[0]:
+                    vals.append(x[0][:])
+                else:
+                    vals.append(False)
         else:
             vals = [x[0] for x in cr.fetchall()]
         value = func(cr, pool, ko_id, vals)
