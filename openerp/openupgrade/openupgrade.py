@@ -42,6 +42,7 @@ __all__ = [
     'rename_xmlids',
     'drop_columns',
     'delete_model_workflow',
+    'update_workflow_workitems',
     'warn_possible_dataloss',
     'set_defaults',
     'logged_query',
@@ -203,6 +204,36 @@ def drop_columns(cr, column_spec):
         else:
             logger.warn("table %s: column %s did not exist",
                         table, column)
+
+
+def update_workflow_workitems(cr, pool, ref_spec_actions):
+    """Find all the workflow items from the target state to set them to
+    the wanted state.
+
+    Remove a workflow action and move those to fallback state
+    (use in pre-migration)
+
+    :param ref_spec_actions: list of tuples with couple of workflow.action's
+        external ids. The first id is replaced to the second.
+    :return: None
+    """
+    workflow_workitems = pool['workflow.workitem']
+    ir_model_data_model = pool['ir.model.data']
+
+    for (target_external_id, wanted_external_id) in ref_spec_actions:
+        target_activity_id = ir_model_data_model.get_object(
+            cr, SUPERUSER_ID, target_external_id
+        ).id
+        wanted_activity_id = ir_model_data_model.get_object(
+            cr, SUPERUSER_ID, wanted_external_id
+        ).id
+
+        ids = workflow_workitems.search(
+            cr, SUPERUSER_ID, [('act_id', '=', target_activity_id)]
+        )
+        workflow_workitems.write(
+            cr, SUPERUSER_ID, ids, {'act_id': wanted_activity_id}
+        )
 
 
 def delete_model_workflow(cr, model):
