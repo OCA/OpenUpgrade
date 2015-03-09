@@ -222,10 +222,14 @@ def update_workflow_workitems(cr, pool, ref_spec_actions):
 
     for (target_external_id, wanted_external_id) in ref_spec_actions:
         target_activity_id = ir_model_data_model.get_object(
-            cr, SUPERUSER_ID, target_external_id
+            cr, SUPERUSER_ID,
+            target_external_id.split(".")[0],
+            target_external_id.split(".")[1],
         ).id
         wanted_activity_id = ir_model_data_model.get_object(
-            cr, SUPERUSER_ID, wanted_external_id
+            cr, SUPERUSER_ID,
+            wanted_external_id.split(".")[0],
+            wanted_external_id.split(".")[1],
         ).id
 
         ids = workflow_workitems.search(
