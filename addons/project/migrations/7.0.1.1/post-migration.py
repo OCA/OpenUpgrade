@@ -65,6 +65,27 @@ def createProjectAliases(cr, pool):
             """, (alias_id, id))
 
 
+def setStageFromState(cr):
+    cr.execute(
+        '''with task_types as
+        (select res_id, name
+        from ir_model_data where model='project.task.type')
+        update project_task set
+        stage_id=case
+        when state='draft' then
+            (select res_id from task_types where name='project_tt_analysis')
+        when state='cancelled' then
+            (select res_id from task_types where name='project_tt_cancel')
+        when state='done' then
+            (select res_id from task_types where name='project_tt_deployment')
+        when state='pending' then
+            (select res_id from task_types where
+            name='project_tt_specification')
+        when state='open' then
+            (select res_id from task_types where name='project_tt_development')
+        end where stage_id is null''')
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     if not version:
@@ -76,3 +97,4 @@ def migrate(cr, version):
         cr, pool, {'project.project': [('use_tasks', None)]})
     openupgrade.logged_query(cr, 'DROP VIEW project_vs_hours')
     openupgrade.load_data(cr, 'project', 'migrations/7.0.1.1/data.xml')
+    setStageFromState(cr)
