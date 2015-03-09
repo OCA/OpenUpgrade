@@ -225,24 +225,29 @@ def update_workflow_workitems(cr, pool, ref_spec_actions):
     workflow_workitems = pool['workflow.workitem']
     ir_model_data_model = pool['ir.model.data']
 
-    for (target_external_id, wanted_external_id) in ref_spec_actions:
-        target_activity_id = ir_model_data_model.get_object(
+    for (target_external_id, fallback_external_id) in ref_spec_actions:
+        target_activity = ir_model_data_model.get_object(
             cr, SUPERUSER_ID,
             target_external_id.split(".")[0],
             target_external_id.split(".")[1],
-        ).id
-        wanted_activity_id = ir_model_data_model.get_object(
+        )
+        fallback_activity = ir_model_data_model.get_object(
             cr, SUPERUSER_ID,
-            wanted_external_id.split(".")[0],
-            wanted_external_id.split(".")[1],
-        ).id
-
+            fallback_external_id.split(".")[0],
+            fallback_external_id.split(".")[1],
+        )
         ids = workflow_workitems.search(
-            cr, SUPERUSER_ID, [('act_id', '=', target_activity_id)]
+            cr, SUPERUSER_ID, [('act_id', '=', target_activity.id)]
         )
-        workflow_workitems.write(
-            cr, SUPERUSER_ID, ids, {'act_id': wanted_activity_id}
-        )
+        if ids:
+            logger.info(
+                "Moving %d items in the removed workflow action (%s) to a "
+                "fallback action (%s): %s",
+                len(ids), target_activity.name, fallback_activity.name, ids
+            )
+            workflow_workitems.write(
+                cr, SUPERUSER_ID, ids, {'act_id': fallback_activity.id}
+            )
 
 
 def delete_model_workflow(cr, model):
