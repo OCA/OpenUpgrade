@@ -210,12 +210,17 @@ def update_workflow_workitems(cr, pool, ref_spec_actions):
     """Find all the workflow items from the target state to set them to
     the wanted state.
 
-    Remove a workflow action and move those to fallback state
-    (use in pre-migration)
+    When a workflow action is removed, from model, the objects whose states
+    are in these actions need to be set to another to be able to continue the
+    workflow properly.
+
+    Run in pre-migration
 
     :param ref_spec_actions: list of tuples with couple of workflow.action's
-        external ids. The first id is replaced to the second.
+        external ids. The first id is replaced with the second.
     :return: None
+
+    .. versionadded:: 7.0
     """
     workflow_workitems = pool['workflow.workitem']
     ir_model_data_model = pool['ir.model.data']
