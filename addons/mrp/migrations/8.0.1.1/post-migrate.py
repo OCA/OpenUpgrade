@@ -77,7 +77,7 @@ def migrate_bom_lines(cr, pool):
             """
             INSERT INTO mrp_bom_line_mrp_property_rel
                 (mrp_bom_line_id, mrp_property_id)
-                VALUES(%s, bom_rel.mrp_property_id)
+                SELECT %s, bom_rel.mrp_property_id
             FROM mrp_bom_mrp_property_rel bom_rel
             WHERE bom_rel.mrp_bom_id = %s
             """, (bom_line_id, row['id']))
