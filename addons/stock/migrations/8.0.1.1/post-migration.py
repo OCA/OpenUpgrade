@@ -557,8 +557,8 @@ def migrate_product_supply_method(cr, registry):
 
     if mto_route_id:
         product_ids = []
-        cr.execute("SELECT id FROM product_template WHERE %s = '%s'" % (
-            procure_method_legacy, 'make_to_order'))
+        cr.execute("SELECT id FROM product_template WHERE %s = %%s" % (
+            procure_method_legacy,), ('make_to_order',))
         for res in cr.fetchall():
             product_ids.append(res[0])
 
