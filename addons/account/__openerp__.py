@@ -114,7 +114,7 @@ for a particular financial year and for preparation of vouchers there is a modul
         'project/wizard/account_analytic_chart_view.xml',
         'partner_view.xml',
         'product_view.xml',
-        'account_assert_test.xml',
+#        'account_assert_test.xml',
         'ir_sequence_view.xml',
         'company_view.xml',
         'edi/invoice_action_data.xml',
