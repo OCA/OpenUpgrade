@@ -29,7 +29,7 @@ The change description flags the following types of change:
     * A field is now a function or a related field. This might or might not call
       for any action of your upgrade script, as the value is now automatically
       determined. At the same time, this might cause data loss. An example is
-      the field employee's manager (hr module), which in OpenERP 6 is derived
+      the field employee's manager (hr module), which in Odoo 6 is derived
       from the employee's department.
 
       Without any action in the upgrade script, you will lose the manually
@@ -51,7 +51,7 @@ The change description flags the following types of change:
       then migrate the values in the post script. A typical instance of this
       change is when the field becomes a many2one lookup table, or the other way
       around. An example of these are the partner's function which became a char
-      field in OpenERP 6, and the partner's title which as a selection (thus
+      field in Odoo 6, and the partner's title which as a selection (thus
       char type database column) and had to be migrated to a many2one on
       res.partner.title.
 
@@ -80,7 +80,7 @@ The change description flags the following types of change:
 
     * A new model is introduced. Copy all access data from the access csv and
       security rules xml files and load them in your script. Also copy any
-      other data that may be introduced in this release of OpenERP. This may
+      other data that may be introduced in this release of Odoo. This may
       have consequences for other modules' migration scripts. TODO: create an
       overview of new or renamed modules.
 

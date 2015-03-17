@@ -33,13 +33,13 @@ Have a cup of tea now, it will take a while.  When it's done, the first thing
 you should do is to examine ``/var/tmp/openupgrade/migration.log``.
 Carefully read through eventual warnings, there will be a lot, most of them not
 fatal.  If nothing weird showed up there, enjoy using your new database with
-the target version of OpenERP.
+the target version of Odoo.
 
 
 Problems
 --------
 
-Please report problems to https://answers.launchpad.net/openupgrade-server
+Please report problems to https://github.com/openupgrade/openupgrade/issues
 (very often, it's not a bug but a specific issue with your database setup).
 Make sure to have read your ``migration.log`` file carefully to avoid posting
 about obvious issues.  Post relevant lines from the logfile, but don't post

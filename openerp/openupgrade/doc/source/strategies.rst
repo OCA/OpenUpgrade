@@ -18,6 +18,6 @@ rates). This is harmless and not a problem with your migration scripts.
 Skipping releases
 =================
 You *can* create an upgrade script that skips one or
-more major releases of OpenERP, but such a script will be useless for other
+more major releases of Odoo, but such a script will be useless for other
 users and developers of the OpenUpgrade distribution. If you can, please create
 all the intermediate scripts.
