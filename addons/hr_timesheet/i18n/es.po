@@ -7,20 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-08-14 13:08+0000\n"
-"PO-Revision-Date: 2014-08-18 14:38+0000\n"
-"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
+"POT-Creation-Date: 2015-01-21 14:07+0000\n"
+"PO-Revision-Date: 2015-01-27 03:49+0000\n"
+"Last-Translator: cubells <vicent@vcubells.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-08-19 07:05+0000\n"
-"X-Generator: Launchpad (build 17156)\n"
-
-#. module: hr_timesheet
-#: field:hr.timesheet.report,cost:0
-msgid "#Cost"
-msgstr "#Coste"
+"X-Launchpad-Export-Date: 2015-01-28 06:37+0000\n"
+"X-Generator: Launchpad (build 17306)\n"
 
 #. module: hr_timesheet
 #: view:hr.sign.in.project:hr_timesheet.view_hr_timesheet_sign_in
@@ -113,7 +108,6 @@ msgid "Accounting"
 msgstr "Contabilidad"
 
 #. module: hr_timesheet
-#: view:hr.timesheet.report:hr_timesheet.view_hr_timesheet_report_search
 #: field:hr.timesheet.report,account_id:0
 #: model:ir.model,name:hr_timesheet.model_account_analytic_account
 msgid "Analytic Account"
@@ -147,6 +141,16 @@ msgid "Change Work"
 msgstr "Cambiar trabajo"
 
 #. module: hr_timesheet
+#: code:addons/hr_timesheet/hr_timesheet.py:176
+#, python-format
+msgid ""
+"Changing the date will let this entry appear in the timesheet of the new "
+"date."
+msgstr ""
+"Al cambiar la fecha, dejarás que esta entrada aparezca en el parte de horas "
+"de la nueva fecha."
+
+#. module: hr_timesheet
 #: help:account.analytic.account,use_timesheets:0
 msgid "Check this field if this project manages timesheets"
 msgstr "Marque esta casilla si el proyecto se administra con partes de horas"
@@ -161,6 +165,11 @@ msgstr "Fecha límite"
 #: field:hr.timesheet.report,company_id:0
 msgid "Company"
 msgstr "Compañia"
+
+#. module: hr_timesheet
+#: field:hr.timesheet.report,cost:0
+msgid "Cost"
+msgstr "Coste"
 
 #. module: hr_timesheet
 #: view:account.analytic.account:hr_timesheet.account_analytic_account_timesheet_form
@@ -199,7 +208,6 @@ msgid "Current Status"
 msgstr "Estado actual"
 
 #. module: hr_timesheet
-#: view:hr.timesheet.report:hr_timesheet.view_hr_timesheet_report_search
 #: field:hr.timesheet.report,date:0
 msgid "Date"
 msgstr "Fecha"
@@ -279,7 +287,6 @@ msgid "Extended Filters..."
 msgstr "Filtros extendidos..."
 
 #. module: hr_timesheet
-#: view:hr.timesheet.report:hr_timesheet.view_hr_timesheet_report_search
 #: field:hr.timesheet.report,general_account_id:0
 msgid "General Account"
 msgstr "Cuenta general"
@@ -353,6 +360,11 @@ msgid "Minimum Analytic Amount"
 msgstr "Importe analítico mínimo"
 
 #. module: hr_timesheet
+#: view:hr.timesheet.report:hr_timesheet.view_hr_timesheet_report_search
+msgid "Month"
+msgstr "Mes"
+
+#. module: hr_timesheet
 #: code:addons/hr_timesheet/hr_timesheet.py:189
 #, python-format
 msgid ""
@@ -410,7 +422,6 @@ msgstr "Presente"
 #: view:hr.analytic.timesheet:hr_timesheet.hr_timesheet_line_form
 #: view:hr.analytic.timesheet:hr_timesheet.hr_timesheet_line_search
 #: field:hr.employee,product_id:0
-#: view:hr.timesheet.report:hr_timesheet.view_hr_timesheet_report_search
 #: field:hr.timesheet.report,product_id:0
 msgid "Product"
 msgstr "Producto"
@@ -553,6 +564,12 @@ msgid "User"
 msgstr "Usuario"
 
 #. module: hr_timesheet
+#: code:addons/hr_timesheet/hr_timesheet.py:176
+#, python-format
+msgid "User Alert!"
+msgstr "Alerta de usuario!"
+
+#. module: hr_timesheet
 #: code:addons/hr_timesheet/wizard/hr_timesheet_sign_in_out.py:77
 #: code:addons/hr_timesheet/wizard/hr_timesheet_sign_in_out.py:131
 #, python-format
@@ -597,3 +614,10 @@ msgstr ""
 #: view:hr.timesheet.report:hr_timesheet.view_hr_timesheet_report_search
 msgid "month"
 msgstr "mes"
+
+#. module: hr_timesheet
+#: view:hr.sign.in.project:hr_timesheet.view_hr_timesheet_sign_in
+#: view:hr.sign.in.project:hr_timesheet.view_hr_timesheet_sign_in_message
+#: view:hr.sign.out.project:hr_timesheet.view_hr_timesheet_sign_out
+msgid "or"
+msgstr "o"

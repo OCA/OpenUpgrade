@@ -467,7 +467,6 @@ class Home(http.Controller):
     @http.route('/web', type='http', auth="none")
     def web_client(self, s_action=None, **kw):
         ensure_db()
-
         if request.session.uid:
             if kw.get('redirect'):
                 return werkzeug.utils.redirect(kw.get('redirect'), 303)
@@ -478,6 +477,11 @@ class Home(http.Controller):
             return request.render('web.webclient_bootstrap', qcontext={'menu_data': menu_data})
         else:
             return login_redirect()
+
+    @http.route('/web/dbredirect', type='http', auth="none")
+    def web_db_redirect(self, redirect='/', **kw):
+        ensure_db()
+        return werkzeug.utils.redirect(redirect, 303)
 
     @http.route('/web/login', type='http', auth="none")
     def web_login(self, redirect=None, **kw):
@@ -720,21 +724,21 @@ class Database(http.Controller):
             return {'error': _('Could not drop database !'), 'title': _('Drop Database')}
 
     @http.route('/web/database/backup', type='http', auth="none")
-    def backup(self, backup_db, backup_pwd, token):
+    def backup(self, backup_db, backup_pwd, token, backup_format='zip'):
         try:
-            db_dump = base64.b64decode(
-                request.session.proxy("db").dump(backup_pwd, backup_db))
-            filename = "%(db)s_%(timestamp)s.dump" % {
-                'db': backup_db,
-                'timestamp': datetime.datetime.utcnow().strftime(
-                    "%Y-%m-%d_%H-%M-%SZ")
-            }
-            return request.make_response(db_dump,
-               [('Content-Type', 'application/octet-stream; charset=binary'),
-               ('Content-Disposition', content_disposition(filename))],
-               {'fileToken': token}
-            )
+            openerp.service.security.check_super(backup_pwd)
+            ts = datetime.datetime.utcnow().strftime("%Y-%m-%d_%H-%M-%S")
+            filename = "%s_%s.%s" % (backup_db, ts, backup_format)
+            headers = [
+                ('Content-Type', 'application/octet-stream; charset=binary'),
+                ('Content-Disposition', content_disposition(filename)),
+            ]
+            dump_stream = openerp.service.db.dump_db(backup_db, None, backup_format)
+            response = werkzeug.wrappers.Response(dump_stream, headers=headers, direct_passthrough=True)
+            response.set_cookie('fileToken', token)
+            return response
         except Exception, e:
+            _logger.exception('Database.backup')
             return simplejson.dumps([[],[{'error': openerp.tools.ustr(e), 'title': _('Backup Database')}]])
 
     @http.route('/web/database/restore', type='http', auth="none")
@@ -769,6 +773,7 @@ class Session(http.Controller):
             "user_context": request.session.get_context() if request.session.uid else {},
             "db": request.session.db,
             "username": request.session.login,
+            "company_id": request.env.user.company_id.id if request.session.uid else None,
         }
 
     @http.route('/web/session/get_session_info', type='json', auth="none")
@@ -1015,7 +1020,8 @@ class Binary(http.Controller):
     @http.route('/web/binary/image', type='http', auth="public")
     def image(self, model, id, field, **kw):
         last_update = '__last_update'
-        Model = request.session.model(model)
+        Model = request.registry[model]
+        cr, uid, context = request.cr, request.uid, request.context
         headers = [('Content-Type', 'image/png')]
         etag = request.httprequest.headers.get('If-None-Match')
         hashed_session = hashlib.md5(request.session_id).hexdigest()
@@ -1028,15 +1034,15 @@ class Binary(http.Controller):
                 if not id and hashed_session == etag:
                     return werkzeug.wrappers.Response(status=304)
                 else:
-                    date = Model.read([id], [last_update], request.context)[0].get(last_update)
+                    date = Model.read(cr, uid, [id], [last_update], context)[0].get(last_update)
                     if hashlib.md5(date).hexdigest() == etag:
                         return werkzeug.wrappers.Response(status=304)
 
             if not id:
-                res = Model.default_get([field], request.context).get(field)
+                res = Model.default_get(cr, uid, [field], context).get(field)
                 image_base64 = res
             else:
-                res = Model.read([id], [last_update, field], request.context)[0]
+                res = Model.read(cr, uid, [id], [last_update, field], context)[0]
                 retag = hashlib.md5(res.get(last_update)).hexdigest()
                 image_base64 = res.get(field)
 
@@ -1082,15 +1088,16 @@ class Binary(http.Controller):
         :param str filename_field: field holding the file's name, if any
         :returns: :class:`werkzeug.wrappers.Response`
         """
-        Model = request.session.model(model)
+        Model = request.registry[model]
+        cr, uid, context = request.cr, request.uid, request.context
         fields = [field]
         if filename_field:
             fields.append(filename_field)
         if id:
-            res = Model.read([int(id)], fields, request.context)[0]
+            res = Model.read(cr, uid, [int(id)], fields, context)[0]
         else:
-            res = Model.default_get(fields, request.context)
-        filecontent = base64.b64decode(res.get(field, ''))
+            res = Model.default_get(cr, uid, fields, context)
+        filecontent = base64.b64decode(res.get(field) or '')
         if not filecontent:
             return request.not_found()
         else:
@@ -1117,12 +1124,12 @@ class Binary(http.Controller):
         if filename_field:
             fields.append(filename_field)
         if data:
-            res = { field: data }
+            res = {field: data, filename_field: jdata.get('filename', None)}
         elif id:
             res = Model.read([int(id)], fields, context)[0]
         else:
             res = Model.default_get(fields, context)
-        filecontent = base64.b64decode(res.get(field, ''))
+        filecontent = base64.b64decode(res.get(field) or '')
         if not filecontent:
             raise ValueError(_("No content found for field '%s' on '%s:%s'") %
                 (field, model, id))
@@ -1179,7 +1186,7 @@ class Binary(http.Controller):
         '/web/binary/company_logo',
         '/logo',
         '/logo.png',
-    ], type='http', auth="none")
+    ], type='http', auth="none", cors="*")
     def company_logo(self, dbname=None, **kw):
         imgname = 'logo.png'
         placeholder = functools.partial(get_module_resource, 'web', 'static', 'src', 'img')
@@ -1233,7 +1240,7 @@ class Action(http.Controller):
             except Exception:
                 action_id = 0   # force failed read
 
-        base_action = Actions.read([action_id], ['type'], request.context)
+        base_action = Actions.read([action_id], ['name', 'type'], request.context)
         if base_action:
             ctx = request.context
             action_type = base_action[0]['type']
@@ -1243,7 +1250,7 @@ class Action(http.Controller):
                 ctx.update(additional_context)
             action = request.session.model(action_type).read([action_id], False, ctx)
             if action:
-                value = clean_action(action[0])
+                value = clean_action(dict(action[0], **base_action[0]))
         return value
 
     @http.route('/web/action/run', type='json', auth="user")

@@ -7,20 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-08-14 13:08+0000\n"
-"PO-Revision-Date: 2014-08-14 16:10+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-01-21 14:07+0000\n"
+"PO-Revision-Date: 2014-12-05 20:31+0000\n"
+"Last-Translator: Ayhan KIZILTAN <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-08-15 07:41+0000\n"
-"X-Generator: Launchpad (build 17156)\n"
+"X-Launchpad-Export-Date: 2015-01-22 08:11+0000\n"
+"X-Generator: Launchpad (build 17306)\n"
 
 #. module: project
 #: field:res.partner,task_count:0
 msgid "# Tasks"
-msgstr ""
+msgstr "# Görevler"
 
 #. module: project
 #: field:report.project.task.user,no_of_days:0
@@ -28,9 +28,10 @@ msgid "# of Days"
 msgstr "# nın Günleri"
 
 #. module: project
+#: field:project.task.history.cumulative,nbr_tasks:0
 #: field:report.project.task.user,nbr:0
-msgid "# of tasks"
-msgstr "# nın görevleri"
+msgid "# of Tasks"
+msgstr "# nın Görevleri"
 
 #. module: project
 #: code:addons/project/project.py:360
@@ -126,6 +127,14 @@ msgid ""
 "                </p>\n"
 "            "
 msgstr ""
+"<p>\n"
+"                    Odoo proje yönetimi, işlerin verimli bir şekilde "
+"yürütülmesi\n"
+"                    için görev kanallarını yönetmenizi sağlar. Süreci "
+"izler,\n"
+"                    görevleri tartışır, belge ekleyebilirsiniz.\n"
+"                </p>\n"
+"            "
 
 #. module: project
 #: help:project.task,kanban_state:0
@@ -145,7 +154,7 @@ msgstr ""
 #. module: project
 #: view:project.project:project.edit_project
 msgid "Accept Emails From"
-msgstr ""
+msgstr "Eposta Kabul Etme"
 
 #. module: project
 #: field:project.project,active:0
@@ -205,7 +214,7 @@ msgstr "Analiz"
 #. module: project
 #: model:ir.model,name:project.model_account_analytic_account
 msgid "Analytic Account"
-msgstr "Analitik Hesap"
+msgstr "Analiz Hesap"
 
 #. module: project
 #: view:project.project:project.edit_project
@@ -226,12 +235,13 @@ msgstr "Atanan"
 #. module: project
 #: field:report.project.task.user,date_start:0
 msgid "Assignation Date"
-msgstr ""
+msgstr "Atama Tarihi"
 
 #. module: project
+#: view:project.task:project.view_task_search_form
 #: view:report.project.task.user:project.view_task_project_user_search
-msgid "Assignation date"
-msgstr ""
+msgid "Assignation Month"
+msgstr "Atama Ayı"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.act_res_users_2_project_task_opened
@@ -244,7 +254,9 @@ msgid "Assigned To"
 msgstr "Atanan"
 
 #. module: project
+#: view:project.task:project.view_task_search_form
 #: field:project.task,user_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Assigned to"
 msgstr "Atanan"
@@ -265,18 +277,19 @@ msgstr "Ort. Plan.-Eff."
 #: selection:project.task.history,kanban_state:0
 #: view:project.task.history.cumulative:project.view_task_history_search
 #: selection:project.task.history.cumulative,kanban_state:0
+#: selection:report.project.task.user,state:0
 msgid "Blocked"
 msgstr "Engellendi"
 
 #. module: project
 #: model:ir.filters,name:project.filter_task_report_responsible
 msgid "By Responsible"
-msgstr ""
+msgstr "Sorumluya göre"
 
 #. module: project
 #: model:ir.filters,name:project.filter_task_report_reviewer
 msgid "By Reviewer"
-msgstr ""
+msgstr "İnceyene göre"
 
 #. module: project
 #: code:addons/project/wizard/project_task_delegate.py:69
@@ -302,13 +315,13 @@ msgstr "İptal"
 #. module: project
 #: view:project.project:project.edit_project
 msgid "Cancel Project"
-msgstr "Proje İptal et"
+msgstr "Projeyi İptal Et"
 
 #. module: project
 #: selection:project.project,state:0
 #: model:project.task.type,name:project.project_tt_cancel
 msgid "Cancelled"
-msgstr "İptalEdildi"
+msgstr "İptal Edilen"
 
 #. module: project
 #: model:ir.model,name:project.model_project_category
@@ -328,7 +341,7 @@ msgstr ""
 #. module: project
 #: view:project.project:project.edit_project
 msgid "Close Project"
-msgstr "Proje Kapat"
+msgstr "Projeyi Kapat"
 
 #. module: project
 #: selection:project.project,state:0
@@ -349,9 +362,10 @@ msgstr "Ortak"
 #. module: project
 #: model:ir.model,name:project.model_res_company
 msgid "Companies"
-msgstr "Şirketler"
+msgstr "Firmalar"
 
 #. module: project
+#: view:project.task:project.view_task_search_form
 #: field:project.task,company_id:0
 #: field:project.task.work,company_id:0
 #: view:report.project.task.user:project.view_task_project_user_search
@@ -387,7 +401,6 @@ msgstr "Proje Yapılandırma"
 #. module: project
 #: view:project.project:project.view_project
 #: view:project.project:project.view_project_project_filter
-#: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,partner_id:0
 msgid "Contact"
 msgstr "Kontak"
@@ -416,7 +429,7 @@ msgstr "Oluşturma Tarihi"
 #: field:project.task.type,create_uid:0
 #: field:project.task.work,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Oluşturan"
 
 #. module: project
 #: field:project.category,create_date:0
@@ -426,9 +439,11 @@ msgstr ""
 #: field:project.task.type,create_date:0
 #: field:project.task.work,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Oluşturulma"
 
 #. module: project
+#: view:project.task:project.view_task_search_form
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Creation Date"
 msgstr "Oluşturma Tarihi"
@@ -440,6 +455,7 @@ msgid "Cumulative Flow"
 msgstr "Kümülatif Akış"
 
 #. module: project
+#: view:project.project:project.edit_project
 #: field:project.task,partner_id:0
 msgid "Customer"
 msgstr "Müşteri"
@@ -455,12 +471,12 @@ msgstr "Tarih"
 #: help:project.project,message_last_post:0
 #: help:project.task,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Kayıta işlenmiş son mesajın tarihi."
 
 #. module: project
 #: field:report.project.task.user,opening_days:0
 msgid "Days to Assign"
-msgstr ""
+msgstr "Atama için Gün sayısı"
 
 #. module: project
 #: field:report.project.task.user,closing_days:0
@@ -476,7 +492,7 @@ msgstr "Zaman Sınırı"
 #. module: project
 #: field:project.task.type,case_default:0
 msgid "Default for New Projects"
-msgstr "Yeni Projeler için Varsayılan"
+msgstr "Yeni Projelerin Varsayılan"
 
 #. module: project
 #: field:project.task,delay_hours:0
@@ -491,7 +507,7 @@ msgstr "Yekilendirme"
 #. module: project
 #: view:project.task.delegate:project.view_project_task_delegate
 msgid "Delegated Task"
-msgstr "Yekilendirilmiş Görevler"
+msgstr "Yekilendirilmiş Görev"
 
 #. module: project
 #: field:project.task,child_ids:0
@@ -517,7 +533,7 @@ msgstr "Yetkili Kullanıcı belirtilmelidir"
 #. module: project
 #: view:project.task:project.view_task_form2
 msgid "Delegated tasks"
-msgstr "Yekilendirilen  görevler"
+msgstr "Yekilendirilen Görevler"
 
 #. module: project
 #: view:project.task:project.view_task_form2
@@ -577,7 +593,7 @@ msgstr "Efektif Saatleri"
 #. module: project
 #: view:project.project:project.edit_project
 msgid "Email Alias"
-msgstr ""
+msgstr "Eposta Rumuzu"
 
 #. module: project
 #: view:project.project:project.edit_project
@@ -614,6 +630,8 @@ msgid ""
 "Estimated time for you to validate the work done by the user to whom you "
 "delegate this task"
 msgstr ""
+"Bu görev için görevlendirdiğiniz kullanıcı tarafından bitirilen işleri "
+"doğrulamanız için tahmini süre"
 
 #. module: project
 #: help:project.task.delegate,planned_hours:0
@@ -639,7 +657,7 @@ msgstr "Deneme"
 #. module: project
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Extended Filters"
-msgstr ""
+msgstr "Genişletilmiş Filtreler"
 
 #. module: project
 #: view:project.task:project.view_task_form2
@@ -649,12 +667,12 @@ msgstr "Ekstra Bilgisi"
 #. module: project
 #: model:project.category,name:project.project_category_02
 msgid "Feature request"
-msgstr "Özellikli istek"
+msgstr "Özellik isteği"
 
 #. module: project
 #: field:project.task.type,fold:0
 msgid "Folded in Kanban View"
-msgstr ""
+msgstr "Kanban Görünümde Katlanmış"
 
 #. module: project
 #: view:project.project:project.edit_project
@@ -699,26 +717,27 @@ msgstr "Görevlerin bir listesini görüntülerken sırasını verir."
 #. module: project
 #: view:project.project:project.view_project_project_filter
 #: view:project.task:project.view_task_search_form
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Group By"
-msgstr ""
+msgstr "Guruplandır"
 
 #. module: project
 #: view:project.config.settings:project.view_config_settings
 msgid "Helpdesk & Support"
-msgstr "Yardım/Destek Masası"
+msgstr "Yardım & Destek Masası"
 
 #. module: project
 #: selection:project.task,priority:0
 #: selection:report.project.task.user,priority:0
 msgid "High"
-msgstr ""
+msgstr "Yüksek"
 
 #. module: project
 #: model:ir.model,name:project.model_project_task_history
 #: model:ir.model,name:project.model_project_task_history_cumulative
 msgid "History of Tasks"
-msgstr "Görev Geçmişi"
+msgstr "Görev Geçmişleri"
 
 #. module: project
 #: help:project.project,message_summary:0
@@ -745,6 +764,20 @@ msgid ""
 "portal\n"
 "   is activated, portal users see the followed tasks or issues."
 msgstr ""
+"Görevlerin ya da mevcut projeye ait sorunların görünürlüğünü düzenler:\n"
+"- Genel: herkes herşeyi görebilir; portal etkinse, portal kullanıcıları\n"
+"   bütün görev ve sorunları görebilir; anonim portal etkin ise, "
+"ziyaretçiler\n"
+"   bütün görev ve sorunları görür\n"
+"- Portal (yalnızca Portal kuruluysa kullanılabilir): personel her şeyi "
+"görür;\n"
+"   portal etkinse, portal kulanıcıları izledikleri ya da firmadan birinin "
+"izlediği\n"
+"   görev ya da sorunları görebilir\n"
+"- Yalnızca Personel: personel bütün görev ya da sorunları görebilir\n"
+"- Yalnızca İzleyiciler: personel yalnızca izlenen görev ya da sorunları "
+"görebilir; portal\n"
+"   etkinse, portal kullanıcıları izlenen görev ya da sorunları görebilir."
 
 #. module: project
 #: field:project.task,effective_hours:0
@@ -809,17 +842,20 @@ msgid ""
 "If you check this field, this stage will be proposed by default on each new "
 "project. It will not assign this stage to existing projects."
 msgstr ""
+"Bu alanı işaretlerseniz, bu aşama her yeni projede varsayılan olarak "
+"önerilecektir. Varolan projelere bu aşama atanmayacaktır."
 
 #. module: project
 #: selection:project.project,state:0
 #: selection:project.task,kanban_state:0
+#: selection:report.project.task.user,state:0
 msgid "In Progress"
 msgstr "Devam Eden"
 
 #. module: project
 #: view:project.project:project.edit_project
 msgid "Incoming Emails create"
-msgstr ""
+msgstr "Gelen Eposta'dan Oluşturma"
 
 #. module: project
 #: field:project.task,planned_hours:0
@@ -836,6 +872,12 @@ msgstr ""
 "Bu proje ile ilişkili iç eposta. Gelen epostalar Görevlerle kendiliğinden "
 "eşleştirilir (ya da eğer Sorun İzleme modülü kuruluysa seçmeli olarak "
 "Sorunlarla)."
+
+#. module: project
+#: code:addons/project/project.py:201
+#, python-format
+msgid "Internal project: all employees can access"
+msgstr ""
 
 #. module: project
 #: code:addons/project/project.py:171
@@ -869,26 +911,24 @@ msgstr "Kanban Durumu"
 #. module: project
 #: view:project.task:project.view_task_search_form
 msgid "Last Message"
-msgstr ""
+msgstr "Son Mesaj"
 
 #. module: project
 #: field:project.project,message_last_post:0
 #: field:project.task,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Son Mesaj Tarihi"
 
 #. module: project
 #: field:project.task,write_date:0
 msgid "Last Modification Date"
-msgstr ""
+msgstr "Son Değiştirme Tarihi"
 
 #. module: project
-#: view:project.task:project.view_task_search_form
 #: field:project.task,date_last_stage_update:0
-#: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,date_last_stage_update:0
 msgid "Last Stage Update"
-msgstr ""
+msgstr "Son Aşama Güncellemesi"
 
 #. module: project
 #: field:project.category,write_uid:0
@@ -899,7 +939,7 @@ msgstr ""
 #: field:project.task.type,write_uid:0
 #: field:project.task.work,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Son Güncelleyen"
 
 #. module: project
 #: field:project.category,write_date:0
@@ -909,15 +949,19 @@ msgstr ""
 #: field:project.task.type,write_date:0
 #: field:project.task.work,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Son Güncelleme"
 
 #. module: project
 #: help:project.config.settings,module_pad:0
 msgid ""
 "Lets the company customize which Pad installation should be used to link to "
-"new pads (for example: http://ietherpad.com/).\n"
+"new pads (for example: http://etherpad.com/).\n"
 "-This installs the module pad."
 msgstr ""
+"Firmanın hangi Pad kurulumunun yeni padlere bağlantı için "
+"kullanılabileceğini özelleştirmesine izin verir. (örneğin:  "
+"http://etherpad.com/).\n"
+"-pad Modülünü kurar"
 
 #. module: project
 #: help:project.project,analytic_account_id:0
@@ -981,6 +1025,11 @@ msgstr "Çeşitli"
 
 #. module: project
 #: view:project.task.history.cumulative:project.view_task_history_search
+msgid "Month"
+msgstr "Ay"
+
+#. module: project
+#: view:project.task.history.cumulative:project.view_task_history_search
 msgid "My Projects"
 msgstr "Projelerim"
 
@@ -1012,7 +1061,7 @@ msgstr "Yeni"
 #: view:project.project:project.view_project_project_filter
 #: view:project.task:project.view_task_search_form
 msgid "New Mail"
-msgstr ""
+msgstr "Yeni Posta"
 
 #. module: project
 #: view:project.project:project.edit_project
@@ -1126,13 +1175,13 @@ msgstr "Bekleyen"
 #. module: project
 #: help:project.project,progress_rate:0
 msgid "Percent of tasks closed according to the total of tasks todo."
-msgstr "Kapalı görevlerin yapılacak görevlerin toplamına oranı."
+msgstr "Kapanan görevlerin yapılacak görevlere toplam oranı."
 
 #. module: project
 #: field:project.task.delegate,planned_hours:0
 #: field:report.project.task.user,hours_planned:0
 msgid "Planned Hours"
-msgstr "Planlanan Süre"
+msgstr "Planlanan Saat"
 
 #. module: project
 #: field:project.project,planned_hours:0
@@ -1164,6 +1213,12 @@ msgid "Privacy / Visibility"
 msgstr "Gizlilik / Görünürlük"
 
 #. module: project
+#: code:addons/project/project.py:202
+#, python-format
+msgid "Private project: followers Only"
+msgstr ""
+
+#. module: project
 #: field:project.project,progress_rate:0
 #: field:report.project.task.user,progress:0
 msgid "Progress"
@@ -1177,6 +1232,7 @@ msgstr "İlerleme"
 #: view:project.task:project.view_task_search_form
 #: field:project.task,project_id:0
 #: field:project.task.delegate,project_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: field:project.task.history.cumulative,project_id:0
 #: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,project_id:0
@@ -1277,6 +1333,8 @@ msgid ""
 "Provides management of issues/bugs in projects.\n"
 "-This installs the module project_issue."
 msgstr ""
+"Projelerdeki sorunların/hataların yönetimini sağlar.\n"
+"-project_issue Modülünü kurar."
 
 #. module: project
 #: help:project.config.settings,module_project_issue_sheet:0
@@ -1284,11 +1342,19 @@ msgid ""
 "Provides timesheet support for the issues/bugs management in project.\n"
 "-This installs the module project_issue_sheet."
 msgstr ""
+"Prode sorun/hata yönetimi için zaman çizelgesi desteği sağlar.\n"
+"-project_issue_sheet Modülünü kurar."
+
+#. module: project
+#: code:addons/project/project.py:200
+#, python-format
+msgid "Public project"
+msgstr ""
 
 #. module: project
 #: view:project.project:project.edit_project
 msgid "Re-open project"
-msgstr "Projeyi Yeniden aç"
+msgstr "Projeyi Yeniden Aç"
 
 #. module: project
 #: view:project.task.history.cumulative:project.view_task_history_search
@@ -1299,13 +1365,14 @@ msgstr "Hazır"
 #: selection:project.task,kanban_state:0
 #: selection:project.task.history,kanban_state:0
 #: selection:project.task.history.cumulative,kanban_state:0
+#: selection:report.project.task.user,state:0
 msgid "Ready for next stage"
 msgstr "Sonraki aşaması için hazır"
 
 #. module: project
 #: field:project.config.settings,module_project_timesheet:0
 msgid "Record timesheet lines per tasks"
-msgstr "Görev başına  zamançizelge satırları"
+msgstr "Görev başına zamançizelge satırları"
 
 #. module: project
 #: help:project.task.delegate,new_task_description:0
@@ -1346,12 +1413,7 @@ msgstr "Sorumlu"
 #: field:project.task,reviewer_id:0
 #: field:report.project.task.user,reviewer_id:0
 msgid "Reviewer"
-msgstr ""
-
-#. module: project
-#: view:project.task:project.view_task_search_form
-msgid "Reviewers"
-msgstr ""
+msgstr "İnceleyen"
 
 #. module: project
 #: view:project.project:project.view_project_project_filter
@@ -1385,7 +1447,9 @@ msgstr "Harcanan Saatleri"
 #: view:project.task:project.view_task_search_form
 #: field:project.task,stage_id:0
 #: field:project.task.history,type_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: field:project.task.history.cumulative,type_id:0
+#: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,stage_id:0
 msgid "Stage"
 msgstr "Aşama"
@@ -1416,12 +1480,19 @@ msgid "Stages common to all projects"
 msgstr "Tüm projeler için ortak aşamalar"
 
 #. module: project
+#: view:project.project:project.edit_project
+msgid "Start Date"
+msgstr "Başlama Tarih"
+
+#. module: project
 #: field:project.task,date_start:0
 msgid "Starting Date"
 msgstr "Başlama Tarihi"
 
 #. module: project
 #: field:project.project,state:0
+#: view:project.task.history.cumulative:project.view_task_history_search
+#: field:report.project.task.user,state:0
 msgid "Status"
 msgstr "Durumu"
 
@@ -1475,7 +1546,9 @@ msgstr "Etiketler"
 #: model:ir.model,name:project.model_project_task
 #: view:project.config.settings:project.view_config_settings
 #: view:project.task:project.view_task_form2
+#: view:project.task:project.view_task_search_form
 #: field:project.task.history,task_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: field:project.task.history.cumulative,task_id:0
 #: field:project.task.work,task_id:0
 #: view:report.project.task.user:project.view_task_project_user_search
@@ -1492,7 +1565,7 @@ msgstr "Görev Etkinlikleri"
 #: model:mail.message.subtype,name:project.mt_project_task_assigned
 #: model:mail.message.subtype,name:project.mt_task_assigned
 msgid "Task Assigned"
-msgstr ""
+msgstr "Görev Verildi"
 
 #. module: project
 #: model:mail.message.subtype,name:project.mt_project_task_blocked
@@ -1517,10 +1590,15 @@ msgid "Task Delegation"
 msgstr "Görev Yetkilendirme"
 
 #. module: project
+#: model:ir.filters,name:project.filter_task_report_task_pipe
+msgid "Task Pipe"
+msgstr "Görev Kanalı"
+
+#. module: project
 #: model:mail.message.subtype,description:project.mt_task_ready
 #: model:mail.message.subtype,name:project.mt_task_ready
 msgid "Task Ready for Next Stage"
-msgstr ""
+msgstr "Görev Sonraki Aşamaya Hazır"
 
 #. module: project
 #: model:ir.model,name:project.model_project_task_type
@@ -1570,7 +1648,7 @@ msgstr "Görev özeti..."
 #. module: project
 #: view:project.task.history.cumulative:project.view_task_history_search
 msgid "Task's Analysis"
-msgstr "Görev Analizileri"
+msgstr "Görev Analizleri"
 
 #. module: project
 #: model:res.groups,name:project.group_tasks_work_on_tasks
@@ -1611,7 +1689,7 @@ msgstr "Görev Aşamaları"
 #. module: project
 #: model:ir.model,name:project.model_report_project_task_user
 msgid "Tasks by user and project"
-msgstr "Görevler Kullanıcı ve proje göre"
+msgstr "Kullanıcı ve proje göre görevler"
 
 #. module: project
 #: view:project.project:project.edit_project
@@ -1640,6 +1718,8 @@ msgid ""
 "The kind of document created when an email is received on this project's "
 "email alias"
 msgstr ""
+"Bu projenin e-posta rumuzu üzerinde gelen eposta ile çeşitli belgeler "
+"oluşturulur"
 
 #. module: project
 #: help:project.config.settings,module_project_timesheet:0
@@ -1649,6 +1729,10 @@ msgid ""
 "the effect of creating, editing and deleting either ways.\n"
 "-This installs the module project_timesheet."
 msgstr ""
+"Bu Proje için belirlenen görevler altında girişlerin aktarmanızı sağlar "
+"Özellikle tarih ve kullanıcı için zaman çizelgesi satırında girdilerin "
+"Yönetimi, oluşturma düzenleme ve silme özelliği ile diğer yöntem.\n"
+"-Project_timesheet modülünü yükleme.."
 
 #. module: project
 #: help:project.config.settings,module_sale_service:0
@@ -1659,6 +1743,11 @@ msgid ""
 "method 'Manufacture'.\n"
 "-This installs the module sale_service."
 msgstr ""
+"Bu özellik, otomatik satış hizmet ürünlerden proje görevleri oluşturur "
+"Siparişler. Daha doğrusu, görevler ürünü ile tedarik satırları için "
+"oluşturulan türü 'Hizmet', tedarik yöntemi 'Sipariş Yap' ve beslem yöntemi "
+"'Üretim'.\n"
+"-sale_service modüllünü yükler."
 
 #. module: project
 #: help:project.task,active:0
@@ -1689,6 +1778,8 @@ msgid ""
 "This stage is folded in the kanban view whenthere are no records in that "
 "stage to display."
 msgstr ""
+"Bu aşamada gösterilecek kayıt kalmadığında kanban görünümünde katlanmış "
+"aşamadır."
 
 #. module: project
 #: help:project.config.settings,time_unit:0
@@ -1733,8 +1824,7 @@ msgstr "Görev başlık doğrulama için"
 msgid ""
 "To invoice or setup invoicing and renewal options, go to the related "
 "contract:"
-msgstr ""
-"Faturlama veya fatura ayarları ve yenileme seçeneklerine gitsözleşme:"
+msgstr "Faturalama veya fatura ayarları ve yenileme seçenekleri sözleşmede:"
 
 #. module: project
 #: field:project.task,total_hours:0
@@ -1769,7 +1859,7 @@ msgstr "Sorunları ve hataları izleme"
 #: view:project.task:project.view_task_search_form
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Unassigned"
-msgstr ""
+msgstr "Atanmamış"
 
 #. module: project
 #: view:project.task.history.cumulative:project.view_task_history_search
@@ -1786,6 +1876,11 @@ msgstr "Okunmamış mesajlar"
 #: model:project.category,name:project.project_category_04
 msgid "Usability"
 msgstr "Kullanılabilirlik"
+
+#. module: project
+#: view:project.project:project.edit_project
+msgid "Use Tasks"
+msgstr ""
 
 #. module: project
 #: field:project.config.settings,module_pad:0
@@ -1807,11 +1902,6 @@ msgstr "Kullanıcı Email"
 #: help:project.task.delegate,user_id:0
 msgid "User you want to delegate this task to"
 msgstr "Bu görevide yetki vermek istediğiniz Kullanıcı"
-
-#. module: project
-#: view:project.task:project.view_task_search_form
-msgid "Users"
-msgstr "Kullanıcılar"
 
 #. module: project
 #: field:project.task.delegate,state:0
@@ -1854,12 +1944,17 @@ msgstr "Çalışılan Zaman"
 #. module: project
 #: field:project.task,progress:0
 msgid "Working Time Progress (%)"
-msgstr ""
+msgstr "Çalışılan Süre İlerlemesi (%)"
 
 #. module: project
 #: field:project.config.settings,time_unit:0
 msgid "Working time unit"
 msgstr "Çalışma zaman birimi"
+
+#. module: project
+#: model:ir.filters,name:project.filter_task_report_workload
+msgid "Workload"
+msgstr "İş Yükü"
 
 #. module: project
 #: code:addons/project/project.py:172
@@ -1876,7 +1971,7 @@ msgstr ""
 #: code:addons/project/project.py:435
 #, python-format
 msgid "You must assign members on the project '%s'!"
-msgstr ""
+msgstr "'%s' Projesine üye atamalısınız!"
 
 #. module: project
 #: field:project.task.delegate,prefix:0
@@ -1894,13 +1989,25 @@ msgid "oe_kanban_text_red"
 msgstr "oe_kanban_text_red"
 
 #. module: project
+#: view:project.config.settings:project.view_config_settings
+#: view:project.task.delegate:project.view_project_task_delegate
+msgid "or"
+msgstr "veya"
+
+#. module: project
 #: code:addons/project/project.py:878
 #, python-format
 msgid "tasks"
-msgstr ""
+msgstr "görevler"
 
 #. module: project
 #: field:account.analytic.account,company_uom_id:0
 #: field:project.project,task_ids:0
 msgid "unknown"
 msgstr "bilinmeyen"
+
+#~ msgid "Users"
+#~ msgstr "Kullanıcılar"
+
+#~ msgid "# of tasks"
+#~ msgstr "# nın görevleri"

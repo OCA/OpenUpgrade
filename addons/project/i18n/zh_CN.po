@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-08-14 13:08+0000\n"
+"POT-Creation-Date: 2015-01-21 14:07+0000\n"
 "PO-Revision-Date: 2014-08-14 16:10+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-08-15 07:41+0000\n"
-"X-Generator: Launchpad (build 17156)\n"
+"X-Launchpad-Export-Date: 2015-01-22 08:12+0000\n"
+"X-Generator: Launchpad (build 17306)\n"
 
 #. module: project
 #: field:res.partner,task_count:0
@@ -28,9 +28,10 @@ msgid "# of Days"
 msgstr "天数"
 
 #. module: project
+#: field:project.task.history.cumulative,nbr_tasks:0
 #: field:report.project.task.user,nbr:0
-msgid "# of tasks"
-msgstr "任务编号"
+msgid "# of Tasks"
+msgstr ""
 
 #. module: project
 #: code:addons/project/project.py:360
@@ -208,8 +209,9 @@ msgid "Assignation Date"
 msgstr ""
 
 #. module: project
+#: view:project.task:project.view_task_search_form
 #: view:report.project.task.user:project.view_task_project_user_search
-msgid "Assignation date"
+msgid "Assignation Month"
 msgstr ""
 
 #. module: project
@@ -223,7 +225,9 @@ msgid "Assigned To"
 msgstr "分配给"
 
 #. module: project
+#: view:project.task:project.view_task_search_form
 #: field:project.task,user_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Assigned to"
 msgstr "指派到"
@@ -244,6 +248,7 @@ msgstr "计划实际平均偏差"
 #: selection:project.task.history,kanban_state:0
 #: view:project.task.history.cumulative:project.view_task_history_search
 #: selection:project.task.history.cumulative,kanban_state:0
+#: selection:report.project.task.user,state:0
 msgid "Blocked"
 msgstr "受阻"
 
@@ -331,6 +336,7 @@ msgid "Companies"
 msgstr "公司"
 
 #. module: project
+#: view:project.task:project.view_task_search_form
 #: field:project.task,company_id:0
 #: field:project.task.work,company_id:0
 #: view:report.project.task.user:project.view_task_project_user_search
@@ -364,7 +370,6 @@ msgstr "配置项目"
 #. module: project
 #: view:project.project:project.view_project
 #: view:project.project:project.view_project_project_filter
-#: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,partner_id:0
 msgid "Contact"
 msgstr "联系"
@@ -406,6 +411,8 @@ msgid "Created on"
 msgstr ""
 
 #. module: project
+#: view:project.task:project.view_task_search_form
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Creation Date"
 msgstr "创建日期"
@@ -417,6 +424,7 @@ msgid "Cumulative Flow"
 msgstr "渐进过程"
 
 #. module: project
+#: view:project.project:project.edit_project
 #: field:project.task,partner_id:0
 msgid "Customer"
 msgstr "客户"
@@ -669,6 +677,7 @@ msgstr "指定显示任务列表的顺序号"
 #. module: project
 #: view:project.project:project.view_project_project_filter
 #: view:project.task:project.view_task_search_form
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Group By"
 msgstr ""
@@ -775,6 +784,7 @@ msgstr "如果勾了这里，这个阶段将作为每个新建项目的默认阶
 #. module: project
 #: selection:project.project,state:0
 #: selection:project.task,kanban_state:0
+#: selection:report.project.task.user,state:0
 msgid "In Progress"
 msgstr "进行中"
 
@@ -795,6 +805,12 @@ msgid ""
 "automatically synchronizedwith Tasks (or optionally Issues if the Issue "
 "Tracker module is installed)."
 msgstr "与此项目相关的内部电子邮件。传入的电子邮件会自动的同步任务（或选择性的问题，如果问题跟踪模块安装）。"
+
+#. module: project
+#: code:addons/project/project.py:201
+#, python-format
+msgid "Internal project: all employees can access"
+msgstr ""
 
 #. module: project
 #: code:addons/project/project.py:171
@@ -842,9 +858,7 @@ msgid "Last Modification Date"
 msgstr ""
 
 #. module: project
-#: view:project.task:project.view_task_search_form
 #: field:project.task,date_last_stage_update:0
-#: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,date_last_stage_update:0
 msgid "Last Stage Update"
 msgstr ""
@@ -874,7 +888,7 @@ msgstr ""
 #: help:project.config.settings,module_pad:0
 msgid ""
 "Lets the company customize which Pad installation should be used to link to "
-"new pads (for example: http://ietherpad.com/).\n"
+"new pads (for example: http://etherpad.com/).\n"
 "-This installs the module pad."
 msgstr ""
 
@@ -934,6 +948,11 @@ msgstr "信息和通信历史记录"
 #: view:project.project:project.edit_project
 msgid "Miscellaneous"
 msgstr "杂项"
+
+#. module: project
+#: view:project.task.history.cumulative:project.view_task_history_search
+msgid "Month"
+msgstr "月"
 
 #. module: project
 #: view:project.task.history.cumulative:project.view_task_history_search
@@ -1118,6 +1137,12 @@ msgid "Privacy / Visibility"
 msgstr "隐私/能见度"
 
 #. module: project
+#: code:addons/project/project.py:202
+#, python-format
+msgid "Private project: followers Only"
+msgstr ""
+
+#. module: project
 #: field:project.project,progress_rate:0
 #: field:report.project.task.user,progress:0
 msgid "Progress"
@@ -1131,6 +1156,7 @@ msgstr "进度"
 #: view:project.task:project.view_task_search_form
 #: field:project.task,project_id:0
 #: field:project.task.delegate,project_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: field:project.task.history.cumulative,project_id:0
 #: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,project_id:0
@@ -1239,6 +1265,12 @@ msgid ""
 msgstr ""
 
 #. module: project
+#: code:addons/project/project.py:200
+#, python-format
+msgid "Public project"
+msgstr ""
+
+#. module: project
 #: view:project.project:project.edit_project
 msgid "Re-open project"
 msgstr "重启项目"
@@ -1252,6 +1284,7 @@ msgstr "就绪"
 #: selection:project.task,kanban_state:0
 #: selection:project.task.history,kanban_state:0
 #: selection:project.task.history.cumulative,kanban_state:0
+#: selection:report.project.task.user,state:0
 msgid "Ready for next stage"
 msgstr "准备好下一个阶段"
 
@@ -1302,11 +1335,6 @@ msgid "Reviewer"
 msgstr ""
 
 #. module: project
-#: view:project.task:project.view_task_search_form
-msgid "Reviewers"
-msgstr ""
-
-#. module: project
 #: view:project.project:project.view_project_project_filter
 msgid "Search Project"
 msgstr "项目列表"
@@ -1338,7 +1366,9 @@ msgstr "花费时间"
 #: view:project.task:project.view_task_search_form
 #: field:project.task,stage_id:0
 #: field:project.task.history,type_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: field:project.task.history.cumulative,type_id:0
+#: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,stage_id:0
 msgid "Stage"
 msgstr "阶段"
@@ -1369,12 +1399,19 @@ msgid "Stages common to all projects"
 msgstr "适用于所有项目的公共阶段"
 
 #. module: project
+#: view:project.project:project.edit_project
+msgid "Start Date"
+msgstr "开始日期"
+
+#. module: project
 #: field:project.task,date_start:0
 msgid "Starting Date"
 msgstr "开始日期"
 
 #. module: project
 #: field:project.project,state:0
+#: view:project.task.history.cumulative:project.view_task_history_search
+#: field:report.project.task.user,state:0
 msgid "Status"
 msgstr "状态"
 
@@ -1422,7 +1459,9 @@ msgstr "标签"
 #: model:ir.model,name:project.model_project_task
 #: view:project.config.settings:project.view_config_settings
 #: view:project.task:project.view_task_form2
+#: view:project.task:project.view_task_search_form
 #: field:project.task.history,task_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: field:project.task.history.cumulative,task_id:0
 #: field:project.task.work,task_id:0
 #: view:report.project.task.user:project.view_task_project_user_search
@@ -1462,6 +1501,11 @@ msgstr "任务分派"
 #: model:res.groups,name:project.group_delegate_task
 msgid "Task Delegation"
 msgstr "任务委派"
+
+#. module: project
+#: model:ir.filters,name:project.filter_task_report_task_pipe
+msgid "Task Pipe"
+msgstr ""
 
 #. module: project
 #: model:mail.message.subtype,description:project.mt_task_ready
@@ -1723,6 +1767,11 @@ msgid "Usability"
 msgstr "可用性"
 
 #. module: project
+#: view:project.project:project.edit_project
+msgid "Use Tasks"
+msgstr ""
+
+#. module: project
 #: field:project.config.settings,module_pad:0
 msgid "Use integrated collaborative note pads on task"
 msgstr "使用集成的协作记事簿任务"
@@ -1742,11 +1791,6 @@ msgstr "用户电子邮件"
 #: help:project.task.delegate,user_id:0
 msgid "User you want to delegate this task to"
 msgstr "你要分派这个任务给哪个用户"
-
-#. module: project
-#: view:project.task:project.view_task_search_form
-msgid "Users"
-msgstr "用户"
 
 #. module: project
 #: field:project.task.delegate,state:0
@@ -1797,6 +1841,11 @@ msgid "Working time unit"
 msgstr "工作时间单位"
 
 #. module: project
+#: model:ir.filters,name:project.filter_task_report_workload
+msgid "Workload"
+msgstr ""
+
+#. module: project
 #: code:addons/project/project.py:172
 #, python-format
 msgid ""
@@ -1826,6 +1875,12 @@ msgid "oe_kanban_text_red"
 msgstr "oe_kanban_text_red"
 
 #. module: project
+#: view:project.config.settings:project.view_config_settings
+#: view:project.task.delegate:project.view_project_task_delegate
+msgid "or"
+msgstr "或者"
+
+#. module: project
 #: code:addons/project/project.py:878
 #, python-format
 msgid "tasks"
@@ -1836,3 +1891,9 @@ msgstr ""
 #: field:project.project,task_ids:0
 msgid "unknown"
 msgstr "未知"
+
+#~ msgid "# of tasks"
+#~ msgstr "任务编号"
+
+#~ msgid "Users"
+#~ msgstr "用户"

@@ -134,13 +134,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     migrations = openerp.modules.migration.MigrationManager(cr, graph)
     _logger.info('loading %d modules...', len(graph))
 
-    # Query manual fields for all models at once and save them on the registry
-    # so the initialization code for each model does not have to do it
-    # one model at a time.
-    registry.fields_by_model = {}
-    cr.execute('SELECT * FROM ir_model_fields WHERE state=%s', ('manual',))
-    for field in cr.dictfetchall():
-        registry.fields_by_model.setdefault(field['model'], []).append(field)
+    registry.clear_manual_fields()
 
     # suppress commits to have the upgrade of one module in just one transaction
     cr.commit_org = cr.commit
@@ -173,6 +167,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
 
         loaded_modules.append(package.name)
         if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
+            registry.setup_models(cr, partial=True)
             # OpenUpgrade: add this module's models to the registry
             local_registry = {}
             for model in models:
@@ -181,16 +176,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                 openupgrade_loading.log_model(model, local_registry)
             openupgrade_loading.compare_registries(
                 cr, package.name, upg_registry, local_registry)
-
-            registry.setup_models(cr, partial=True)
             init_module_models(cr, package.name, models)
-
-        # Can't put this line out of the loop: ir.module.module will be
-        # registered by init_module_models() above.
-        modobj = registry['ir.module.module']
-
-        if perform_checks:
-            modobj.check(cr, SUPERUSER_ID, [module_id])
 
         idref = {}
 
@@ -199,6 +185,13 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
             mode = 'init'
 
         if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
+            # Can't put this line out of the loop: ir.module.module will be
+            # registered by init_module_models() above.
+            modobj = registry['ir.module.module']
+
+            if perform_checks:
+                modobj.check(cr, SUPERUSER_ID, [module_id])
+
             if package.state=='to upgrade':
                 # upgrading the module information
                 modobj.write(cr, SUPERUSER_ID, [module_id], modobj.get_values_from_terp(package.data))
@@ -255,13 +248,9 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
         registry._init_modules.add(package.name)
         cr.commit_org()
 
-    registry.setup_models(cr, partial=True)
-
     _logger.log(25, "%s modules loaded in %.2fs, %s queries", len(graph), time.time() - t0, openerp.sql_db.sql_counter - t0_sql)
 
-    # The query won't be valid for models created later (i.e. custom model
-    # created after the registry has been loaded), so empty its result.
-    registry.fields_by_model = None
+    registry.clear_manual_fields()
 
     cr.commit = cr.commit_org
     cr.commit()
@@ -290,12 +279,15 @@ def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_m
         cr.execute("SELECT name from ir_module_module WHERE state IN %s" ,(tuple(states),))
         module_list = [name for (name,) in cr.fetchall() if name not in graph]
         module_list = openupgrade_loading.add_module_dependencies(cr, module_list)
+        if not module_list:
+            break
         graph.add_modules(cr, module_list, force)
         _logger.debug('Updating graph with %d more modules', len(module_list))
         loaded, processed = load_module_graph(cr, graph, progressdict, report=report, skip_modules=loaded_modules, perform_checks=perform_checks, upg_registry=upg_registry)
         processed_modules.extend(processed)
         loaded_modules.extend(loaded)
-        if not processed: break
+        if not processed:
+            break
     return processed_modules
 
 def load_modules(db, force_demo=False, status=None, update_module=False):
@@ -335,6 +327,10 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         # loaded_modules: to avoid double loading
         report = registry._assertion_report
         loaded_modules, processed_modules = load_module_graph(cr, graph, status, perform_checks=update_module, report=report, upg_registry=upg_registry)
+
+        if tools.config['load_language'] or update_module:
+            # some base models are used below, so make sure they are set up
+            registry.setup_models(cr, partial=True)
 
         if tools.config['load_language']:
             for lang in tools.config['load_language'].split(','):
@@ -401,10 +397,6 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
                     ['to install'], force, status, report,
                     loaded_modules, update_module, upg_registry)
 
-        # load custom models
-        cr.execute('select model from ir_model where state=%s', ('manual',))
-        for model in cr.dictfetchall():
-            registry['ir.model'].instanciate(cr, SUPERUSER_ID, model['model'], {})
         registry.setup_models(cr)
 
         # STEP 4: Finish and cleanup installations
@@ -480,6 +472,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
                 # modules to remove next time
                 cr.commit()
                 _logger.info('Reloading registry once more after uninstalling modules')
+                openerp.api.Environment.reset()
                 return openerp.modules.registry.RegistryManager.new(cr.dbname, force_demo, status, update_module)
 
         # STEP 7: verify custom views on every model

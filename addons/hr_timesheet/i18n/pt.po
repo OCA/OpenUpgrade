@@ -7,20 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-08-14 13:08+0000\n"
+"POT-Creation-Date: 2015-01-21 14:07+0000\n"
 "PO-Revision-Date: 2014-08-14 16:10+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-08-15 07:16+0000\n"
-"X-Generator: Launchpad (build 17156)\n"
-
-#. module: hr_timesheet
-#: field:hr.timesheet.report,cost:0
-msgid "#Cost"
-msgstr ""
+"X-Launchpad-Export-Date: 2015-01-22 07:50+0000\n"
+"X-Generator: Launchpad (build 17306)\n"
 
 #. module: hr_timesheet
 #: view:hr.sign.in.project:hr_timesheet.view_hr_timesheet_sign_in
@@ -87,7 +82,6 @@ msgid "Accounting"
 msgstr "Contabilidade"
 
 #. module: hr_timesheet
-#: view:hr.timesheet.report:hr_timesheet.view_hr_timesheet_report_search
 #: field:hr.timesheet.report,account_id:0
 #: model:ir.model,name:hr_timesheet.model_account_analytic_account
 msgid "Analytic Account"
@@ -121,6 +115,14 @@ msgid "Change Work"
 msgstr "Mudar Trabalho"
 
 #. module: hr_timesheet
+#: code:addons/hr_timesheet/hr_timesheet.py:176
+#, python-format
+msgid ""
+"Changing the date will let this entry appear in the timesheet of the new "
+"date."
+msgstr ""
+
+#. module: hr_timesheet
 #: help:account.analytic.account,use_timesheets:0
 msgid "Check this field if this project manages timesheets"
 msgstr ""
@@ -134,6 +136,11 @@ msgstr "Data de Fecho"
 #: view:hr.timesheet.report:hr_timesheet.view_hr_timesheet_report_search
 #: field:hr.timesheet.report,company_id:0
 msgid "Company"
+msgstr ""
+
+#. module: hr_timesheet
+#: field:hr.timesheet.report,cost:0
+msgid "Cost"
 msgstr ""
 
 #. module: hr_timesheet
@@ -173,7 +180,6 @@ msgid "Current Status"
 msgstr "Estado atual"
 
 #. module: hr_timesheet
-#: view:hr.timesheet.report:hr_timesheet.view_hr_timesheet_report_search
 #: field:hr.timesheet.report,date:0
 msgid "Date"
 msgstr "Data"
@@ -251,7 +257,6 @@ msgid "Extended Filters..."
 msgstr ""
 
 #. module: hr_timesheet
-#: view:hr.timesheet.report:hr_timesheet.view_hr_timesheet_report_search
 #: field:hr.timesheet.report,general_account_id:0
 msgid "General Account"
 msgstr ""
@@ -323,6 +328,11 @@ msgid "Minimum Analytic Amount"
 msgstr "Montante Mínimo Analítico"
 
 #. module: hr_timesheet
+#: view:hr.timesheet.report:hr_timesheet.view_hr_timesheet_report_search
+msgid "Month"
+msgstr "Mês"
+
+#. module: hr_timesheet
 #: code:addons/hr_timesheet/hr_timesheet.py:189
 #, python-format
 msgid ""
@@ -373,7 +383,6 @@ msgstr ""
 #: view:hr.analytic.timesheet:hr_timesheet.hr_timesheet_line_form
 #: view:hr.analytic.timesheet:hr_timesheet.hr_timesheet_line_search
 #: field:hr.employee,product_id:0
-#: view:hr.timesheet.report:hr_timesheet.view_hr_timesheet_report_search
 #: field:hr.timesheet.report,product_id:0
 msgid "Product"
 msgstr "Artigo"
@@ -516,6 +525,12 @@ msgid "User"
 msgstr "Utilizador"
 
 #. module: hr_timesheet
+#: code:addons/hr_timesheet/hr_timesheet.py:176
+#, python-format
+msgid "User Alert!"
+msgstr ""
+
+#. module: hr_timesheet
 #: code:addons/hr_timesheet/wizard/hr_timesheet_sign_in_out.py:77
 #: code:addons/hr_timesheet/wizard/hr_timesheet_sign_in_out.py:131
 #, python-format
@@ -557,3 +572,10 @@ msgstr ""
 #: view:hr.timesheet.report:hr_timesheet.view_hr_timesheet_report_search
 msgid "month"
 msgstr ""
+
+#. module: hr_timesheet
+#: view:hr.sign.in.project:hr_timesheet.view_hr_timesheet_sign_in
+#: view:hr.sign.in.project:hr_timesheet.view_hr_timesheet_sign_in_message
+#: view:hr.sign.out.project:hr_timesheet.view_hr_timesheet_sign_out
+msgid "or"
+msgstr "ou"

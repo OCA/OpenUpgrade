@@ -479,6 +479,19 @@
                  && this.day === other.day)
                 ? py.True : py.False;
         },
+        replace: function () {
+            var args = py.PY_parseArgs(arguments, [
+                ['year', py.None], ['month', py.None], ['day', py.None]
+            ]);
+            var params = {};
+            for(var key in args) {
+                if (!args.hasOwnProperty(key)) { continue; }
+
+                var arg = args[key];
+                params[key] = (arg === py.None ? this[key] : asJS(arg));
+            }
+            return py.PY_call(datetime.date, params);
+        },
         __add__: function (other) {
             if (!py.PY_isInstance(other, datetime.timedelta)) {
                 return py.NotImplemented;
@@ -503,6 +516,9 @@
         },
         toordinal: function () {
             return py.float.fromJSON(ymd2ord(this.year, this.month, this.day));
+        },
+        weekday: function () {
+            return  py.float.fromJSON((this.toordinal().toJSON()+6)%7);
         },
         fromJSON: function (year, month, day) {
             return py.PY_call(datetime.date, [year, month, day]);

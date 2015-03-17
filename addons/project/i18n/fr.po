@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-08-14 13:08+0000\n"
-"PO-Revision-Date: 2014-08-14 16:10+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-01-21 14:07+0000\n"
+"PO-Revision-Date: 2015-01-15 16:38+0000\n"
+"Last-Translator: Florian Hatat <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-08-15 07:40+0000\n"
-"X-Generator: Launchpad (build 17156)\n"
+"X-Launchpad-Export-Date: 2015-01-22 08:10+0000\n"
+"X-Generator: Launchpad (build 17306)\n"
 
 #. module: project
 #: field:res.partner,task_count:0
@@ -28,9 +28,10 @@ msgid "# of Days"
 msgstr "Nb de jours"
 
 #. module: project
+#: field:project.task.history.cumulative,nbr_tasks:0
 #: field:report.project.task.user,nbr:0
-msgid "# of tasks"
-msgstr "Nb de tâches"
+msgid "# of Tasks"
+msgstr ""
 
 #. module: project
 #: code:addons/project/project.py:360
@@ -229,8 +230,9 @@ msgid "Assignation Date"
 msgstr ""
 
 #. module: project
+#: view:project.task:project.view_task_search_form
 #: view:report.project.task.user:project.view_task_project_user_search
-msgid "Assignation date"
+msgid "Assignation Month"
 msgstr ""
 
 #. module: project
@@ -244,7 +246,9 @@ msgid "Assigned To"
 msgstr "Assigné à"
 
 #. module: project
+#: view:project.task:project.view_task_search_form
 #: field:project.task,user_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Assigned to"
 msgstr "Assigné à"
@@ -265,6 +269,7 @@ msgstr "Moy. Planif-Effect"
 #: selection:project.task.history,kanban_state:0
 #: view:project.task.history.cumulative:project.view_task_history_search
 #: selection:project.task.history.cumulative,kanban_state:0
+#: selection:report.project.task.user,state:0
 msgid "Blocked"
 msgstr "Bloqué"
 
@@ -352,6 +357,7 @@ msgid "Companies"
 msgstr "Sociétés"
 
 #. module: project
+#: view:project.task:project.view_task_search_form
 #: field:project.task,company_id:0
 #: field:project.task.work,company_id:0
 #: view:report.project.task.user:project.view_task_project_user_search
@@ -365,8 +371,8 @@ msgid ""
 "Computed as difference between planned hours by the project manager and the "
 "total hours of the task."
 msgstr ""
-"Calcul correspondant à la différence entre le temps estimé par le "
-"Responsable Projet et le temps réel pour fermer la tâche"
+"Calcul correspondant à la différence entre le temps estimé par le chef de "
+"projet et le nombre d'heures total pour la tâche."
 
 #. module: project
 #: help:project.task,total_hours:0
@@ -387,7 +393,6 @@ msgstr "Configurer le projet"
 #. module: project
 #: view:project.project:project.view_project
 #: view:project.project:project.view_project_project_filter
-#: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,partner_id:0
 msgid "Contact"
 msgstr "Contact"
@@ -416,7 +421,7 @@ msgstr "Date de création"
 #: field:project.task.type,create_uid:0
 #: field:project.task.work,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: project
 #: field:project.category,create_date:0
@@ -426,9 +431,11 @@ msgstr ""
 #: field:project.task.type,create_date:0
 #: field:project.task.work,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: project
+#: view:project.task:project.view_task_search_form
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Creation Date"
 msgstr "Date de création"
@@ -440,6 +447,7 @@ msgid "Cumulative Flow"
 msgstr "Flux cumulé"
 
 #. module: project
+#: view:project.project:project.edit_project
 #: field:project.task,partner_id:0
 msgid "Customer"
 msgstr "Client"
@@ -455,7 +463,7 @@ msgstr "Date"
 #: help:project.project,message_last_post:0
 #: help:project.task,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Date du dernier message posté sur cet enregistrement"
 
 #. module: project
 #: field:report.project.task.user,opening_days:0
@@ -632,8 +640,8 @@ msgid ""
 "Estimated time to do the task, usually set by the project manager when the "
 "task is in draft state."
 msgstr ""
-"Temps estimé pour réaliser la tâche, habituellement fixé par le responsable "
-"du projet quand la tâche est à l'état brouillon"
+"Temps estimé pour réaliser la tâche, habituellement fixé par le chef de "
+"projet quand la tâche est à l'état brouillon."
 
 #. module: project
 #: model:project.category,name:project.project_category_03
@@ -643,7 +651,7 @@ msgstr "Expérimentation"
 #. module: project
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Extended Filters"
-msgstr ""
+msgstr "Filtres étendus"
 
 #. module: project
 #: view:project.task:project.view_task_form2
@@ -666,8 +674,8 @@ msgid ""
 "Follow this project to automatically track the events associated to tasks "
 "and issues of this project."
 msgstr ""
-"Permet de suivre automatiquement les événements associés aux tâches et aux "
-"problèmes de ce projet."
+"Suivre automatiquement les événements associés aux tâches et aux problèmes "
+"de ce projet."
 
 #. module: project
 #: field:project.project,message_follower_ids:0
@@ -693,7 +701,7 @@ msgstr "Générer des tâches à partir des commandes de vente"
 #. module: project
 #: help:project.project,sequence:0
 msgid "Gives the sequence order when displaying a list of Projects."
-msgstr "Définit l'ordre utilisé pour afficher une liste de projets"
+msgstr "Définit l'ordre utilisé pour afficher une liste de projets."
 
 #. module: project
 #: help:project.task,sequence:0
@@ -703,9 +711,10 @@ msgstr "Donne la séquence (l'ordre) d'affichage d'une liste de tâches"
 #. module: project
 #: view:project.project:project.view_project_project_filter
 #: view:project.task:project.view_task_search_form
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: view:report.project.task.user:project.view_task_project_user_search
 msgid "Group By"
-msgstr ""
+msgstr "Grouper par"
 
 #. module: project
 #: view:project.config.settings:project.view_config_settings
@@ -813,12 +822,13 @@ msgid ""
 "If you check this field, this stage will be proposed by default on each new "
 "project. It will not assign this stage to existing projects."
 msgstr ""
-"Si vous cochez ce champ, cette étape sera proposée par défaut sur chaque "
-"nouveau projet. elle ne s'appliquera pas aux projets existants."
+"Si vous cochez cette case, cette étape sera proposée par défaut sur chaque "
+"nouveau projet. Elle ne s'appliquera pas aux projets existants."
 
 #. module: project
 #: selection:project.project,state:0
 #: selection:project.task,kanban_state:0
+#: selection:report.project.task.user,state:0
 msgid "In Progress"
 msgstr "En cours"
 
@@ -842,6 +852,12 @@ msgstr ""
 "Courriel interne associé à ce projet. Les courriels entrants sont "
 "automatiquement synchronisés avec les tâches (ou éventuellement bogue si le "
 "module Issue Tracker est installé)."
+
+#. module: project
+#: code:addons/project/project.py:201
+#, python-format
+msgid "Internal project: all employees can access"
+msgstr ""
 
 #. module: project
 #: code:addons/project/project.py:171
@@ -875,23 +891,21 @@ msgstr "État kanban"
 #. module: project
 #: view:project.task:project.view_task_search_form
 msgid "Last Message"
-msgstr ""
+msgstr "Dernier message"
 
 #. module: project
 #: field:project.project,message_last_post:0
 #: field:project.task,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Date du dernier message"
 
 #. module: project
 #: field:project.task,write_date:0
 msgid "Last Modification Date"
-msgstr ""
+msgstr "Date de dernière modification"
 
 #. module: project
-#: view:project.task:project.view_task_search_form
 #: field:project.task,date_last_stage_update:0
-#: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,date_last_stage_update:0
 msgid "Last Stage Update"
 msgstr ""
@@ -905,7 +919,7 @@ msgstr ""
 #: field:project.task.type,write_uid:0
 #: field:project.task.work,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière mise à jour par"
 
 #. module: project
 #: field:project.category,write_date:0
@@ -915,13 +929,13 @@ msgstr ""
 #: field:project.task.type,write_date:0
 #: field:project.task.work,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière mise à jour le"
 
 #. module: project
 #: help:project.config.settings,module_pad:0
 msgid ""
 "Lets the company customize which Pad installation should be used to link to "
-"new pads (for example: http://ietherpad.com/).\n"
+"new pads (for example: http://etherpad.com/).\n"
 "-This installs the module pad."
 msgstr ""
 
@@ -933,8 +947,8 @@ msgid ""
 "and revenue analysis, timesheets on projects, etc."
 msgstr ""
 "Associe ce projet à un compte analytique si vous avez besoin de la gestion "
-"financière des projets. Il vous permet de relier des projets aux budgets, la "
-"planification, l'analyse des coûts et des revenus, les feuilles de "
+"financière des projets. Cela vous permet de relier des projets aux budgets, "
+"à la planification, à l'analyse des coûts et des revenus, aux feuilles de "
 "prestations sur des projets, etc."
 
 #. module: project
@@ -985,6 +999,11 @@ msgstr "Historique des messages et des communications"
 #: view:project.project:project.edit_project
 msgid "Miscellaneous"
 msgstr "Divers"
+
+#. module: project
+#: view:project.task.history.cumulative:project.view_task_history_search
+msgid "Month"
+msgstr "Mois"
 
 #. module: project
 #: view:project.task.history.cumulative:project.view_task_history_search
@@ -1158,7 +1177,7 @@ msgstr "Planning"
 #: code:addons/project/project.py:1228
 #, python-format
 msgid "Please delete the project linked with this account first."
-msgstr "Supprimer d'abord le projet lié avec ce compte analytique."
+msgstr "Veuillez supprimer d'abord le projet lié à ce compte analytique."
 
 #. module: project
 #: field:project.task,priority:0
@@ -1170,6 +1189,12 @@ msgstr "Priorité"
 #: field:project.project,privacy_visibility:0
 msgid "Privacy / Visibility"
 msgstr "Confidentialité / visibilité"
+
+#. module: project
+#: code:addons/project/project.py:202
+#, python-format
+msgid "Private project: followers Only"
+msgstr ""
 
 #. module: project
 #: field:project.project,progress_rate:0
@@ -1185,6 +1210,7 @@ msgstr "Avancement"
 #: view:project.task:project.view_task_search_form
 #: field:project.task,project_id:0
 #: field:project.task.delegate,project_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: field:project.task.history.cumulative,project_id:0
 #: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,project_id:0
@@ -1242,7 +1268,7 @@ msgstr "Avancement sur une tâche de projet"
 #: view:project.task:project.view_project_task_graph
 #: view:project.task.history.cumulative:project.view_task_history_graph
 msgid "Project Tasks"
-msgstr "Tâche projet"
+msgstr "Tâches du projet"
 
 #. module: project
 #: field:res.company,project_time_mode_id:0
@@ -1266,7 +1292,7 @@ msgstr ""
 #. module: project
 #: model:ir.actions.act_window,name:project.dblc_proj
 msgid "Project's tasks"
-msgstr "Tâches de projet"
+msgstr "Tâches du projet"
 
 #. module: project
 #: code:addons/project/project.py:401
@@ -1295,6 +1321,12 @@ msgid ""
 msgstr ""
 
 #. module: project
+#: code:addons/project/project.py:200
+#, python-format
+msgid "Public project"
+msgstr ""
+
+#. module: project
 #: view:project.project:project.edit_project
 msgid "Re-open project"
 msgstr "Rouvrir le projet"
@@ -1308,6 +1340,7 @@ msgstr "Prêt"
 #: selection:project.task,kanban_state:0
 #: selection:project.task.history,kanban_state:0
 #: selection:project.task.history.cumulative,kanban_state:0
+#: selection:report.project.task.user,state:0
 msgid "Ready for next stage"
 msgstr "Prêt pour la prochaine étape"
 
@@ -1359,11 +1392,6 @@ msgid "Reviewer"
 msgstr ""
 
 #. module: project
-#: view:project.task:project.view_task_search_form
-msgid "Reviewers"
-msgstr ""
-
-#. module: project
 #: view:project.project:project.view_project_project_filter
 msgid "Search Project"
 msgstr "Chercher un projet"
@@ -1395,7 +1423,9 @@ msgstr "Heures consommées"
 #: view:project.task:project.view_task_search_form
 #: field:project.task,stage_id:0
 #: field:project.task.history,type_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: field:project.task.history.cumulative,type_id:0
+#: view:report.project.task.user:project.view_task_project_user_search
 #: field:report.project.task.user,stage_id:0
 msgid "Stage"
 msgstr "Étape"
@@ -1426,12 +1456,19 @@ msgid "Stages common to all projects"
 msgstr "Étapes communes à tous les projets"
 
 #. module: project
+#: view:project.project:project.edit_project
+msgid "Start Date"
+msgstr "Date de début"
+
+#. module: project
 #: field:project.task,date_start:0
 msgid "Starting Date"
 msgstr "Démarrage du projet"
 
 #. module: project
 #: field:project.project,state:0
+#: view:project.task.history.cumulative:project.view_task_history_search
+#: field:report.project.task.user,state:0
 msgid "Status"
 msgstr "État"
 
@@ -1484,7 +1521,9 @@ msgstr "Étiquettes"
 #: model:ir.model,name:project.model_project_task
 #: view:project.config.settings:project.view_config_settings
 #: view:project.task:project.view_task_form2
+#: view:project.task:project.view_task_search_form
 #: field:project.task.history,task_id:0
+#: view:project.task.history.cumulative:project.view_task_history_search
 #: field:project.task.history.cumulative,task_id:0
 #: field:project.task.work,task_id:0
 #: view:report.project.task.user:project.view_task_project_user_search
@@ -1524,6 +1563,11 @@ msgstr "Déléguer une tâche"
 #: model:res.groups,name:project.group_delegate_task
 msgid "Task Delegation"
 msgstr "Délégation de tâche"
+
+#. module: project
+#: model:ir.filters,name:project.filter_task_report_task_pipe
+msgid "Task Pipe"
+msgstr ""
 
 #. module: project
 #: model:mail.message.subtype,description:project.mt_task_ready
@@ -1649,8 +1693,8 @@ msgid ""
 "The kind of document created when an email is received on this project's "
 "email alias"
 msgstr ""
-"Le type de document créé quand un message est reçu sur un alias de "
-"messagerie de ce projet"
+"Le type de document créé quand un message est reçu sur l'alias de messagerie "
+"de ce projet"
 
 #. module: project
 #: help:project.config.settings,module_project_timesheet:0
@@ -1803,6 +1847,11 @@ msgid "Usability"
 msgstr "Accessibilité"
 
 #. module: project
+#: view:project.project:project.edit_project
+msgid "Use Tasks"
+msgstr ""
+
+#. module: project
 #: field:project.config.settings,module_pad:0
 msgid "Use integrated collaborative note pads on task"
 msgstr "Utiliser les blocs-notes collaboratifs intégrés sur les tâches"
@@ -1822,11 +1871,6 @@ msgstr "Courriel de l'utilisateur"
 #: help:project.task.delegate,user_id:0
 msgid "User you want to delegate this task to"
 msgstr "Utilisateur à qui vous voulez déléguer cette tâche"
-
-#. module: project
-#: view:project.task:project.view_task_search_form
-msgid "Users"
-msgstr "Utilisateurs"
 
 #. module: project
 #: field:project.task.delegate,state:0
@@ -1877,6 +1921,11 @@ msgid "Working time unit"
 msgstr "Unité de temps de travail"
 
 #. module: project
+#: model:ir.filters,name:project.filter_task_report_workload
+msgid "Workload"
+msgstr ""
+
+#. module: project
 #: code:addons/project/project.py:172
 #, python-format
 msgid ""
@@ -1884,14 +1933,14 @@ msgid ""
 "project's tasks and then delete the project or simply deactivate the project."
 msgstr ""
 "Vous ne pouvez pas supprimer un projet contenant des tâches. Vous pouvez "
-"soit supprimer toutes les tâches projet, puis supprimer le projet ou tout "
+"soit supprimer toutes les tâches projet puis supprimer le projet, soit tout "
 "simplement désactiver le projet."
 
 #. module: project
 #: code:addons/project/project.py:435
 #, python-format
 msgid "You must assign members on the project '%s'!"
-msgstr ""
+msgstr "Vous devez attribuer des membres au projet \"%s\" !"
 
 #. module: project
 #: field:project.task.delegate,prefix:0
@@ -1909,6 +1958,12 @@ msgid "oe_kanban_text_red"
 msgstr "oe_kanban_text_red"
 
 #. module: project
+#: view:project.config.settings:project.view_config_settings
+#: view:project.task.delegate:project.view_project_task_delegate
+msgid "or"
+msgstr "ou"
+
+#. module: project
 #: code:addons/project/project.py:878
 #, python-format
 msgid "tasks"
@@ -1919,3 +1974,9 @@ msgstr ""
 #: field:project.project,task_ids:0
 msgid "unknown"
 msgstr "inconnu"
+
+#~ msgid "# of tasks"
+#~ msgstr "Nb de tâches"
+
+#~ msgid "Users"
+#~ msgstr "Utilisateurs"
