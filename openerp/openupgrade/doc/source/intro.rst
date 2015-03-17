@@ -15,7 +15,7 @@ These branches are copies (forks in Git terminology) of the Odoo main project,
 but with extra commits that include migration scripts for each module.  One
 migration script updates that part of a database that is governed by the module
 for which it is written.  We use the native upgrade mechanism in Odoo, which
-was used in older versions of the Odoo/Odoo server and presumably is still
+was used in older versions of the Odoo server and presumably is still
 there for the proprietary upgrade path.
 
 This way, perfect modularity is achieved.  Any developer can contribute
