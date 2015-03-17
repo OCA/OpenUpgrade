@@ -65,7 +65,7 @@ def createProjectAliases(cr, pool):
             """, (alias_id, id))
 
 
-def setStageFromState(cr):
+def set_stage_from_state(cr):
     cr.execute(
         '''with task_types as
         (select res_id, name
@@ -97,4 +97,4 @@ def migrate(cr, version):
         cr, pool, {'project.project': [('use_tasks', None)]})
     openupgrade.logged_query(cr, 'DROP VIEW project_vs_hours')
     openupgrade.load_data(cr, 'project', 'migrations/7.0.1.1/data.xml')
-    setStageFromState(cr)
+    set_stage_from_state(cr)
