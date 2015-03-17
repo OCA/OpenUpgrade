@@ -7,7 +7,7 @@ Note, that if you run your own analysis on databases containing
 demo data, you will get a lot of noise here.
 
 XML IDs which do not occur in the updated version of all installed modules
-will be removed automatically by the OpenERP server, if they do not have
+will be removed automatically by the Odoo server, if they do not have
 the noupdate attribute.
 
 You can ignore most entries here, most notably
@@ -28,11 +28,11 @@ More interesting are
 
     * res.groups
       If a res groups has moved module (example: hr_manager moved from module
-      hr to base in OpenERP 6), implement this change in the pre-upgrade script
+      hr to base in Odoo 6), implement this change in the pre-upgrade script
       for the module from which it moved.
 
-    * res.roles (migrating from OpenERP 5 to 6 only)
-      These have been migrated to groups in OpenERP6. Find out which group has
+    * res.roles (migrating from Odoo 5 to 6 only)
+      These have been migrated to groups in Odoo 6. Find out which group has
       replaced this role and use the role migration function from openupgrade
       library module (TODO).
 

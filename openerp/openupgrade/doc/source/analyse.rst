@@ -3,7 +3,7 @@ How to run your own analysis
 If you do need to run your own analysis, you need to perform the following
 steps (the awkward processing of the server log file is now obsolete).
 
-* Set up two OpenUpgrade servers of subsequent OpenERP releases
+* Set up two OpenUpgrade servers of subsequent Odoo releases
 
 * On both instances, install a database without demo data and
   install the *openupgrade_records* module, which is included in the

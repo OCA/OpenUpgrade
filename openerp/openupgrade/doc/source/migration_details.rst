@@ -33,10 +33,10 @@ uncovered modules.
    your data, and try again. If necessary, ask for help or report bugs on
    Launchpad.
 
-6. Once the data migration is successful, run the official version of OpenERP
+6. Once the data migration is successful, run the official version of Odoo
    against it to test how the migrated data behaves under the new version.
    Remember that the OpenUpgrade version of the source code is only intended to
-   perform the migration, not run the OpenERP server.
+   perform the migration, not run the Odoo server.
 
 Configuration options
 +++++++++++++++++++++

@@ -4,13 +4,13 @@ Status of the components
 The following components have been foreseen in the design of the
 OpenUpgrade project:
 
-  * An OpenERP module *OpenUpgrade Records* to generate and compare
+  * An Odoo module *OpenUpgrade Records* to generate and compare
     representations of installed modules on different versions of
     OpenUpgrade server.  Status: stable.
 
-  * A logging facility that dumps the OpenERP database layout in a
+  * A logging facility that dumps the Odoo database layout in a
     format that can be processed further.  It is included in the server
-    distribution.  This functionality has been implemented for OpenERP 5,
+    distribution.  This functionality has been implemented for Odoo 5,
     6.0 and 6.1. Status: deprecated by the OpenUpgrade Records module.
 
   * A number of scripts to process the database dump.  The scripts are
@@ -35,7 +35,7 @@ Module coverage
 ===============
 
 For all official addons, migration scripts should be provided for
-migrating between subsequent major releases of OpenERP.  This is the goal
+migrating between subsequent major releases of Odoo.  This is the goal
 of the project.  The design is such that the effort can be distributed
 between different developing parties.
 See below for an overview of module coverage per version.

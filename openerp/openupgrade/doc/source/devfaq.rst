@@ -1,10 +1,10 @@
 Development FAQ
 +++++++++++++++
 
-How are new dependencies treated by the OpenERP migration manager?
+How are new dependencies treated by the Odoo migration manager?
    New dependencies (like the *edi* module is a new dependency of the
    *account* module) will be detected by the upgrade process.  The
-   OpenERP server code is slightly modified to loop over this part
+   Odoo server code is slightly modified to loop over this part
    of the process to install new dependencies and then return to
    upgrading the modules that depend on them, until no more modules
    are processed.

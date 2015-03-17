@@ -11,7 +11,7 @@ The analysis of the base module is included in the openupgrade-server
 distribution. This module includes an additional file,
 openupgrade_general_log.txt. This file contains some statistics as well
 as the analysis records of modules that could not be found in the target
-release of OpenERP.
+release of Odoo.
 
 .. toctree::
    :maxdepth: 2
