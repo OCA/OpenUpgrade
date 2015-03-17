@@ -802,6 +802,10 @@ def move_field_m2o(
                 res = val
         return res
 
+    logger.info("Moving data from '%s'.'%s' to '%s'.'%s'" % (
+        registry_old_model, field_old_model,
+        registry_new_model, field_new_model))
+
     table_old_model = pool[registry_old_model]._table
     table_new_model = pool[registry_new_model]._table
     # Manage regular case (all the value are identical)
@@ -861,7 +865,7 @@ def move_field_m2o(
                 field_old_model, table_old_model, m2o_field_old_model, ko_id))
         cr.execute(query)
         if binary_field:
-            vals = [str(x[0][:]) for x in cr.fetchall()]
+            vals = [str(x[0][:]) if x[0] else False for x in cr.fetchall()]
         else:
             vals = [x[0] for x in cr.fetchall()]
         value = func(cr, pool, ko_id, vals)
