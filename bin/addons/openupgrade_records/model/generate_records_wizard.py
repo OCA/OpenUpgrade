@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module Copyright (C) 2012 OpenUpgrade community
+#    This module Copyright (C) 2012-2014 OpenUpgrade community
 #    https://launchpad.net/~openupgrade-committers
 #
 #    Contributors:
@@ -23,19 +23,24 @@
 #
 ##############################################################################
 
-import os
-from osv import osv, fields
-import pooler
 try:
+    from openerp.osv.orm import TransientModel, except_orm
+    from openerp.osv import fields
     from openerp.openupgrade import openupgrade_tools
+    from openerp import pooler
 except ImportError:
+    from osv.osv import osv_memory as TransientModel, except_osv as except_orm
+    from osv import fields
     from openupgrade import openupgrade_tools
+    import pooler
 
-class generate_records_wizard(osv.osv_memory):
+
+class generate_records_wizard(TransientModel):
     _name = 'openupgrade.generate.records.wizard'
     _description = 'OpenUpgrade Generate Records Wizard'
     _columns = {
-        'state': fields.selection([('init', 'init'), ('ready', 'ready')], 'State'),
+        'state': fields.selection(
+            [('init', 'init'), ('ready', 'ready')], 'State'),
         }
     _defaults = {
         'state': lambda *a: 'init',
@@ -53,7 +58,7 @@ class generate_records_wizard(osv.osv_memory):
         """
         # Truncate the records table
         if (openupgrade_tools.table_exists(cr, 'openupgrade_attribute') and
-            openupgrade_tools.table_exists(cr, 'openupgrade_record')):
+                openupgrade_tools.table_exists(cr, 'openupgrade_record')):
             cr.execute(
                 'TRUNCATE openupgrade_attribute, openupgrade_record;'
                 )
@@ -71,8 +76,8 @@ class generate_records_wizard(osv.osv_memory):
         if module_ids:
             modules = module_obj.read(
                 cr, uid, module_ids, ['name'], context=context)
-            raise except_osv(
-                "Cannot reliably generate records", 
+            raise except_orm(
+                "Cannot reliably generate records",
                 ("Cannot seem to install or upgrade modules " +
                  ', '.join([x['name'] for x in modules])))
         # Now reinitialize all installed modules
@@ -87,4 +92,3 @@ class generate_records_wizard(osv.osv_memory):
         return True
 
 generate_records_wizard()
-
