@@ -67,9 +67,51 @@ def migrate_hr_job(cr):
         cr, "UPDATE hr_job SET state = 'open' WHERE state = 'old' ")
 
 
+def replace_user_partner(cr, pool):
+    """
+    If there's a sensible partner to use for the user record, do that instead
+    of using the newly created one.
+    address_id wins against address_home_id, and none of both is used if it
+    points to a company's partner.
+    """
+    root_partner_id = pool['ir.model.data'].get_object_reference(
+        cr, SUPERUSER_ID, 'base', 'partner_root')[1]
+    cr.execute(
+        '''UPDATE res_users SET partner_id=u.partner_id
+        FROM (
+            SELECT
+            r.user_id, COALESCE(e.address_id, e.address_home_id) partner_id
+            FROM hr_employee e
+            JOIN resource_resource r ON e.resource_id=r.id
+            WHERE r.user_id IS NOT NULL
+            AND COALESCE(e.address_id, e.address_home_id) IS NOT NULL
+            AND COALESCE(e.address_id, e.address_home_id) NOT IN
+                (SELECT partner_id FROM res_company)) u
+        WHERE
+        (
+            res_users.partner_id IS NULL or
+            res_users.partner_id=openupgrade_7_created_partner_id
+        )
+        AND u.user_id=res_users.id AND res_users.partner_id <> %s
+        RETURNING id, openupgrade_7_created_partner_id''',
+        (root_partner_id,))
+    updated_user_ids = dict((k, v) for k, v in cr.fetchall())
+    if not updated_user_ids:
+        return
+    cr.execute(
+        '''UPDATE res_users
+        SET openupgrade_7_created_partner_id=NULL
+        WHERE id in %s AND partner_id <> %s''',
+        (tuple(updated_user_ids.keys()), root_partner_id))
+    cr.execute(
+        'DELETE FROM res_partner p where id in %s and id <> %s',
+        (tuple(updated_user_ids.values()), root_partner_id))
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     migrate_hr_employee_addresses(cr, pool)
     migrate_hr_employee_department(cr, pool)
     migrate_hr_job(cr)
+    replace_user_partner(cr, pool)
