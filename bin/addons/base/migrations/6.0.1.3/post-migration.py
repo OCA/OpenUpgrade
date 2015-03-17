@@ -312,4 +312,4 @@ def migrate(cr, version):
     mgr_ir_module_module(cr)
     mgr_res_users(cr)
     mark_obsolete_modules(cr)
-
+    openupgrade.load_data(cr, 'base', 'migrations/6.0.1.3/base_data.xml')
