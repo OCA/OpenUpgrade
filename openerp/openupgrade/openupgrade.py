@@ -46,6 +46,7 @@ __all__ = [
     'add_xmlid',
     'drop_columns',
     'delete_model_workflow',
+    'update_workflow_workitems',
     'warn_possible_dataloss',
     'set_defaults',
     'logged_query',
@@ -305,6 +306,50 @@ def drop_columns(cr, column_spec):
         else:
             logger.warn("table %s: column %s did not exist",
                         table, column)
+
+
+def update_workflow_workitems(cr, pool, ref_spec_actions):
+    """Find all the workflow items from the target state to set them to
+    the wanted state.
+
+    When a workflow action is removed, from model, the objects whose states
+    are in these actions need to be set to another to be able to continue the
+    workflow properly.
+
+    Run in pre-migration
+
+    :param ref_spec_actions: list of tuples with couple of workflow.action's
+        external ids. The first id is replaced with the second.
+    :return: None
+
+    .. versionadded:: 7.0
+    """
+    workflow_workitems = pool['workflow.workitem']
+    ir_model_data_model = pool['ir.model.data']
+
+    for (target_external_id, fallback_external_id) in ref_spec_actions:
+        target_activity = ir_model_data_model.get_object(
+            cr, SUPERUSER_ID,
+            target_external_id.split(".")[0],
+            target_external_id.split(".")[1],
+        )
+        fallback_activity = ir_model_data_model.get_object(
+            cr, SUPERUSER_ID,
+            fallback_external_id.split(".")[0],
+            fallback_external_id.split(".")[1],
+        )
+        ids = workflow_workitems.search(
+            cr, SUPERUSER_ID, [('act_id', '=', target_activity.id)]
+        )
+        if ids:
+            logger.info(
+                "Moving %d items in the removed workflow action (%s) to a "
+                "fallback action (%s): %s",
+                len(ids), target_activity.name, fallback_activity.name, ids
+            )
+            workflow_workitems.write(
+                cr, SUPERUSER_ID, ids, {'act_id': fallback_activity.id}
+            )
 
 
 def delete_model_workflow(cr, model):
