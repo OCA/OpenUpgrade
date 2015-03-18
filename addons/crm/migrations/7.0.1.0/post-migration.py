@@ -27,8 +27,6 @@ from openupgrade.openupgrade_70 import (
 
 
 def migrate_partners(cr, pool):
-    fix_partner(cr, pool, 'crm.meeting', 'partner_id',
-                openupgrade.get_legacy_name('partner_address_id'))
     fix_partner(cr, pool, 'crm.lead', 'partner_id',
                 openupgrade.get_legacy_name('partner_address_id'))
     fix_partner(cr, pool, 'crm.phonecall', 'partner_id',
