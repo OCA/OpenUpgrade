@@ -18,10 +18,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import logging
+
 from itertools import groupby
 from operator import itemgetter
 from openerp.openupgrade import openupgrade
 from openerp import pooler, SUPERUSER_ID
+
+logger = logging.getLogger('OpenUpgrade.product')
 
 
 def load_data(cr):
@@ -57,17 +61,23 @@ def create_properties(cr, pool):
     Write using the ORM so the prices will be written as properties.
     """
     template_obj = pool['product.template']
-    company_obj = pool['res.company']
-    company_ids = company_obj.search(cr, SUPERUSER_ID, [])
     sql = ("SELECT id, %s FROM product_template" %
            openupgrade.get_legacy_name('standard_price'))
     cr.execute(sql)
+    logger.info(
+        "Creating product_template.standard_price properties"
+        " for %d products." % (cr.rowcount))
     for template_id, std_price in cr.fetchall():
-        for company_id in company_ids:
-            ctx = {'force_company': company_id}
-            template_obj.write(cr, SUPERUSER_ID, [template_id],
-                               {'standard_price': std_price},
-                               context=ctx)
+        template_obj.write(cr, SUPERUSER_ID, [template_id],
+                           {'standard_price': std_price})
+    # make properties global
+    sql = ("""
+        UPDATE ir_property
+        SET company_id = null
+        WHERE res_id like 'product.template,%%'
+        AND name = 'standard_price'""")
+    openupgrade.logged_query(cr, sql)
+
     # product.price.history entries have been generated with a value for
     # today, we want a value for the past as well, write a bogus date to
     # be sure that we have an historic value whenever we want
