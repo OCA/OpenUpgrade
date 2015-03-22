@@ -20,7 +20,6 @@
 #
 ##############################################################################
 
-import re
 import logging
 
 from openerp.openupgrade import openupgrade
@@ -29,43 +28,18 @@ logger = logging.getLogger('OpenUpgrade')
 
 
 def migrate_crm_lead_sale_order(cr):
-    """Get the id of the crm that had generated a sale.order
-    If found:
+    """Set new sale_order fields with value found in crm_lead, if
+    sale_order.origin field mentions the crm_lead;
     - retrieve crm_lead.type_id to set sale_order.campaign_id;
     - retrieve crm_lead.channel_id to set sale_order.medium_id;
     """
-    execute = openupgrade.logged_query
-
-    # Get all sale orders with an origin value
-    execute(cr,
-            'SELECT id as so_id, origin, partner_id'
-            ' FROM sale_order'
-            ' WHERE origin IS NOT NULL')
-
-    for so_id, origin, partner_id in cr.fetchall():
-        # Try to get the crm_id from origin value
-        crm_id = re.findall("([0-9]+)$", origin)
-        if crm_id:
-            crm_id = int(crm_id[-1])
-            # if found, get campaign_id and medium_id
-            execute(cr,
-                    'SELECT id, campaign_id, medium_id'
-                    ' FROM crm_lead'
-                    ' WHERE id=%s'
-                    ' AND partner_id=%s' % (crm_id, partner_id))
-            res = cr.fetchone()
-            if not res:
-                logger.warning(
-                    "Cannot retrieve crm_lead.id '%s' "
-                    "found in sale_order origin '%s'" % (crm_id, origin))
-            else:
-                execute(
-                    cr,
-                    'UPDATE sale_order'
-                    ' SET campaign_id = %s,'
-                    ' medium_id = %s'
-                    ' WHERE id = %s' % (
-                        res[1], res[2], so_id))
+    openupgrade.logged_query(cr, """
+        UPDATE sale_order sale
+        SET campaign_id = lead.campaign_id, medium_id = lead.medium_id
+        FROM crm_lead lead
+        WHERE sale.partner_id = lead.partner_id
+        AND sale.origin like '% '||lead.id;
+        """)
 
 
 @openupgrade.migrate()
