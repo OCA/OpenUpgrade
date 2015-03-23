@@ -483,19 +483,15 @@ def m2o_to_m2m(cr, model, table, field, source_field):
         raise osv.except_osv(
             "Error", "m2o_to_m2m: field %s of model %s is not a many2many "
                      "one" % (field, model._name))
-    cr.execute('SELECT id, %(field)s '
-               'FROM %(table)s '
-               'WHERE %(field)s is not null' % {
-                   'table': table,
-                   'field': source_field,
-                   })
     rel, id1, id2 = osv.fields.many2many._sql_names(model._columns[field],
                                                     model)
-    for row in cr.fetchall():
-        cr.execute(
-            "INSERT INTO %s (%s, %s) "
-            "VALUES (%s, %s)" %
-            (rel, id1, id2, row[0], row[1]))
+    logged_query(
+        cr,
+        "INSERT INTO %s (%s, %s) "
+        "    SELECT id, %s "
+        "    FROM %s "
+        "    WHERE %s is not null" %
+        (rel, id1, id2, source_field, table, source_field))
 
 
 def message(cr, module, table, column,
