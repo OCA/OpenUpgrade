@@ -577,7 +577,7 @@ def migrate_procurement_order(cr, registry):
         """)
     company_obj = registry['res.company']
     warehouse_obj = registry['stock.warehouse']
-    procurement_obj = registry['stock.warehouse']
+    procurement_obj = registry['procurement.order']
     for company in company_obj.browse(
             cr, uid, company_obj.search(cr, uid, [])):
         procurement_ids = procurement_obj.search(
