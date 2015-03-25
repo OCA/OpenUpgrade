@@ -784,7 +784,7 @@ def remove_sql_constraint_duplicates(cr, model, constraint_attrs):
                         'field_name': table[1],
                         'new_value': new_record_id,
                         'old_record_ids': len(old_record_ids) > 1 and
-                        'in %s' % tuple(old_record_ids) or '= %s' %
+                        'in %s' % (tuple(old_record_ids),) or '= %s' %
                         old_record_ids[0]
                     })
 

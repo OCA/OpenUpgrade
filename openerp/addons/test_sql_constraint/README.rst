@@ -1,0 +1,23 @@
+Test SQL Constraint Duplicate Remover
+=====================================
+
+This module tests the OpenUpgrade function remove_sql_constraint_duplicates
+
+The function allows to eliminate every duplicate record of any model
+given the list of attributes that form the unique sql constraint.
+
+Every records in the database of any models that refer to a removed duplicate
+will refer instead to the proper unique record that was kept.
+
+Credits
+=======
+
+Contributors
+------------
+
+* David Dufresne <david.dufresne@savoirfairelinux.com>
+
+Maintainer
+----------
+
+This module is maintained by the OpenUpgrade Community.
