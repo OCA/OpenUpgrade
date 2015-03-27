@@ -167,6 +167,10 @@ parser.add_option(
 parser.add_option("-I", "--inplace", action="store_true", dest="inplace",
                   help="don't copy database before attempting upgrade "
                   "(dangerous)")
+parser.add_option(
+    "-F", "--force-deps", action="store", dest="force_deps",
+    help="force dependencies from a dict of the form \"{'module_name': "
+    "['new_dependency1', 'new_dependency2']}\"")
 (options, args) = parser.parse_args()
 
 if not options.config or not options.migrations\
@@ -342,6 +346,10 @@ for version in options.migrations.split(','):
             version,
             'server',
             migrations[version]['server']['root_dir']))
+    if options.force_deps:
+        if not config.has_section('openupgrade'):
+            config.add_section('openupgrade')
+        config.set('openupgrade', 'force_deps', options.force_deps)
     config.write(
         open(
             os.path.join(options.branch_dir, version, 'server.cfg'), 'w+'))
