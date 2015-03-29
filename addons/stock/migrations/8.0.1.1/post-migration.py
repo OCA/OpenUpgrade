@@ -613,6 +613,10 @@ def migrate_stock_qty(cr, registry):
     stock_move_obj = registry['stock.move']
 
     done_move_ids = stock_move_obj.search(cr, uid, [('state', '=', 'done')])
+    openupgrade.message(
+        cr, 'stock', 'stock_move', 'state',
+        'Reprocess %s stock moves in state done to fill stock.quant',
+        len(done_move_ids))
     stock_move_obj.write(cr, uid, done_move_ids, {'state': 'draft'})
     # Process moves using action_done.
     stock_move_obj.action_done(cr, uid, done_move_ids, context=None)
