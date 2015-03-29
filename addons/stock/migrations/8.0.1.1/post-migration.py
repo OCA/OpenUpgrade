@@ -472,14 +472,16 @@ def _migrate_stock_warehouse(cr, registry, res_id):
 
 def migrate_stock_warehouse(cr, registry):
     """Migrate all the warehouses"""
+    warehouse_obj = registry['stock.warehouse']
     # Set code
-    cr.execute(
-        """
-        UPDATE stock_warehouse SET code = 'WH'||id
-        WHERE code IS NULL OR code = ''""")
-    cr.execute("""select id from stock_warehouse order by id asc""")
-    for res in cr.fetchall():
-        _migrate_stock_warehouse(cr, registry, res[0])
+    cr.execute("""select id, code from stock_warehouse order by id asc""")
+    res = cr.fetchall()
+    for wh in res:
+        if not wh[1]:
+            warehouse_obj.write(cr, uid, wh[0], {'code': 'WH%s' % (wh[0])})
+    # Migrate each warehouse
+    for wh in res:
+        _migrate_stock_warehouse(cr, registry, wh[0])
 
 
 def migrate_stock_warehouse_orderpoint(cr):
