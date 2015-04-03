@@ -148,7 +148,7 @@ def migrate_stock_location(cr, registry):
                 company_id)
         vals['warehouse_id'] = warehouse_ids[0]
         warehouse = warehouse_obj.browse(cr, uid, vals['warehouse_id'])
-        if len(warehouse_ids > 1):
+        if len(warehouse_ids) > 1:
             openupgrade.message(
                 cr, 'stock', 'stock_location_path', 'warehouse_id',
                 'Multiple warehouses found for location path %s. Taking '
