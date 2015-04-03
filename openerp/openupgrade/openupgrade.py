@@ -23,6 +23,7 @@ import os
 import inspect
 import logging
 from openerp import release, tools, SUPERUSER_ID
+from openerp.tools.yaml_import import yaml_import
 from openerp.osv import orm
 from openerp.tools.mail import plaintext2html
 from openerp.modules.registry import RegistryManager
@@ -92,7 +93,7 @@ def check_values_selection_field(cr, table_name, field_name, allowed_values):
 
 def load_data(cr, module_name, filename, idref=None, mode='init'):
     """
-    Load an xml or csv data file from your post script. The usual case for
+    Load an xml, csv or yml data file from your post script. The usual case for
     this is the
     occurrence of newly added essential or useful data in the module that is
     marked with "noupdate='1'" and without "forcecreate='1'" so that it will
@@ -128,6 +129,8 @@ def load_data(cr, module_name, filename, idref=None, mode='init'):
             noupdate = True
             tools.convert_csv_import(
                 cr, module_name, pathname, fp.read(), idref, mode, noupdate)
+        elif ext == '.yml':
+            yaml_import(cr, module_name, fp, None, idref=idref, mode=mode)
         else:
             tools.convert_xml_import(cr, module_name, fp, idref, mode=mode)
     finally:
@@ -198,16 +201,21 @@ def rename_tables(cr, table_spec):
     This function also renames the id sequence if it exists and if it is
     not modified in the same run.
 
-    :param table_spec: a list of tuples (old table name, new table name).
-
+    :param table_spec: a list of tuples (old table name, new table name). Use \
+    None for new_name to trigger a conversion of old_name to the result of \
+    get_legacy_name()
     """
     # Append id sequences
     to_rename = [x[0] for x in table_spec]
     for old, new in list(table_spec):
+        if new is None:
+            new = get_legacy_name(old)
         if (table_exists(cr, old + '_id_seq') and
                 old + '_id_seq' not in to_rename):
             table_spec.append((old + '_id_seq', new + '_id_seq'))
     for (old, new) in table_spec:
+        if new is None:
+            new = get_legacy_name(old)
         logger.info("table %s: renaming to %s",
                     old, new)
         cr.execute('ALTER TABLE "%s" RENAME TO "%s"' % (old, new,))

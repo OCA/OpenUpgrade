@@ -1,0 +1,712 @@
+### EXTRA TODO
+
+---Fields in module 'stock'---
+stock        / procurement.group        / partner_id (many2one)         : NEW relation: res.partner
+# NOTHING TO DO, we don't even create procurement groups at this point
+
+############# PROCUREMENT ORDER ##############
+stock        / procurement.order        / move_dest_id (many2one)       : NEW relation: stock.move
+# DONE: rename old column move_id from the procurement module
+stock        / procurement.order        / move_ids (one2many)           : NEW relation: stock.move
+# DONE in purchase, TO DO in mrp
+
+stock        / procurement.order        / orderpoint_id (many2one)      : NEW relation: stock.warehouse.orderpoint
+stock        / procurement.order        / partner_dest_id (many2one)    : NEW relation: res.partner
+stock        / procurement.order        / route_ids (many2many)         : NEW relation: stock.location.route
+stock        / procurement.order        / warehouse_id (many2one)       : NEW relation: stock.warehouse
+# DONE
+
+stock        / procurement.rule         / delay (integer)               : NEW 
+stock        / procurement.rule         / location_id (many2one)        : NEW relation: stock.location
+stock        / procurement.rule         / location_src_id (many2one)    : NEW relation: stock.location
+stock        / procurement.rule         / partner_address_id (many2one) : NEW relation: res.partner
+stock        / procurement.rule         / picking_type_id (many2one)    : NEW relation: stock.picking.type
+stock        / procurement.rule         / procure_method (selection)    : NEW required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: make_to_stock
+stock        / procurement.rule         / propagate (boolean)           : NEW 
+stock        / procurement.rule         / propagate_warehouse_id (many2one): NEW relation: stock.warehouse
+stock        / procurement.rule         / route_id (many2one)           : NEW relation: stock.location.route
+stock        / procurement.rule         / warehouse_id (many2one)       : NEW relation: stock.warehouse
+# DONE created warehouse pull rules. Additional rules created in mrp and purchase
+
+############### PRODUCT CATEGORY
+
+stock        / product.category         / property_stock_journal (many2one): module is now 'stock_account' ('stock')
+# DONE deleted old property and forcecreated
+stock        / product.category         / property_stock_account_input_categ (many2one): module is now 'stock_account' ('stock')
+stock        / product.category         / property_stock_account_output_categ (many2one): module is now 'stock_account' ('stock')
+stock        / product.category         / property_stock_valuation_account_id (many2one): module is now 'stock_account' ('stock')
+# NOTHING TO DO
+stock        / product.category         / removal_strategy_id (many2one): NEW relation: product.removal
+stock        / product.category         / route_ids (many2many)         : NEW relation: stock.location.route
+# NOTHING TO DO
+
+stock        / product.product          / track_incoming (boolean)      : DEL 
+stock        / product.product          / track_outgoing (boolean)      : DEL 
+stock        / product.product          / track_production (boolean)    : DEL 
+stock        / product.template         / track_all (boolean)           : NEW 
+stock        / product.template         / track_incoming (boolean)      : NEW 
+stock        / product.template         / track_outgoing (boolean)      : NEW 
+# DONE. Tracking fields have been moved to product_template. Track incoming/outgoing
+# is migrated in the post script. Track production is handled in mrp
+
+stock        / product.product          / valuation (selection)         : module is now 'stock_account' ('stock')
+stock        / product.product          / valuation (selection)         : now a function
+stock        / product.template         / valuation (selection)         : NEW required: required, selection_keys: ['manual_periodic', 'real_time'], req_default: manual_periodic
+# Done. Valuation also has been moved to model product_template, module stock_account
+# as a property field. This is migrated in openerp/openupgrade/deferred_80.py.
+
+stock        / product.putaway          / fixed_location_ids (one2many) : NEW relation: stock.fixed.putaway.strat
+stock        / product.putaway          / method (selection)            : NEW required: required, selection_keys: function, req_default: fixed
+stock        / product.putaway          / name (char)                   : NEW required: required
+stock        / product.removal          / method (char)                 : NEW required: required
+stock        / product.removal          / name (char)                   : NEW required: required
+
+####### PRODUCT TEMPLATE ######
+stock        / product.template         / property_stock_account_input (many2one): module is now 'stock_account' ('stock')
+stock        / product.template         / property_stock_account_output (many2one): module is now 'stock_account' ('stock')
+# NOTHING TO DO
+stock        / product.template         / route_ids (many2many)         : NEW relation: stock.location.route
+DONE
+
+# Migrate the data from stock to stock_account in the stock_acount and Check ROUTES
+###############################
+
+stock        / res.company              / internal_transit_location_id (many2one): NEW relation: stock.location
+# NOTHING TO DO: created for every company in stock_data.yml
+stock        / res.company              / propagation_minimum_delta (integer): NEW 
+# NOTHING TO DO, has a sane default of 1
+
+stock        / stock.fixed.putaway.strat / category_id (many2one)        : NEW relation: product.category, required: required
+stock        / stock.fixed.putaway.strat / fixed_location_id (many2one)  : NEW relation: stock.location, required: required
+stock        / stock.fixed.putaway.strat / putaway_id (many2one)         : NEW relation: product.putaway, required: required
+stock        / stock.fixed.putaway.strat / sequence (integer)            : NEW
+#Nothing to do
+ 
+stock        / stock.inventory          / date_done (datetime)          : DEL 
+# NOTHING TO DO: this field was for reference only. The related stock moves
+# always carried the value of inventory.date, not inventory.date_done
+stock        / stock.inventory          / filter (selection)            : NEW required: required, selection_keys: function, req_default: none
+# DONE: set to 'product' if single product inventory, otherwise default to 'none'
+stock        / stock.inventory          / inventory_line_id (one2many)  : DEL relation: stock.inventory.line
+stock        / stock.inventory          / line_ids (one2many)           : NEW relation: stock.inventory.line
+# DONE. Migrate m2m table to stock_move.inventory_id
+stock        / stock.inventory          / location_id (many2one)        : NEW relation: stock.location, required: required, req_default: function
+# DONE. Take location from the inventory's lines or the company's warehouse
+stock        / stock.inventory          / lot_id (many2one)             : NEW relation: stock.production.lot
+stock        / stock.inventory          / package_id (many2one)         : NEW relation: stock.quant.package
+stock        / stock.inventory          / partner_id (many2one)         : NEW relation: res.partner
+# NOTHING TO DO: new functionality
+stock        / stock.inventory          / move_ids (many2many)          : type is now 'one2many' ('many2many')
+stock        / stock.move               / inventory_id (many2one)       : NEW relation: stock.inventory
+# DONE: migrate field type
+stock        / stock.inventory          / product_id (many2one)         : NEW relation: product.product
+# DONE: set to the inventory's line's product if single product inventory
+stock        / stock.inventory.line     / package_id (many2one)         : NEW relation: stock.quant.package
+stock        / stock.inventory.line     / partner_id (many2one)         : NEW relation: res.partner
+# NOTHING TO DO: new functionality
+stock        / stock.inventory.line     / product_uom (many2one)        : DEL relation: product.uom, required: required
+stock        / stock.inventory.line     / product_uom_id (many2one)     : NEW relation: product.uom, required: required
+# DONE: rename field
+stock        / stock.inventory.line     / theoretical_qty (float)       : NEW 
+# NOTHING TO DO: used to determine if a stock move needs to be created for prepopulated lines
+
+##### STOCK LOCATION #######
+
+stock        / stock.location           / chained_auto_packing (selection): DEL required: required, selection_keys: ['auto', 'manual', 'transparent'], req_default: manual
+stock        / stock.location           / chained_company_id (many2one) : DEL relation: res.company
+stock        / stock.location           / chained_delay (integer)       : DEL 
+stock        / stock.location           / chained_location_id (many2one): DEL relation: stock.location
+stock        / stock.location           / chained_picking_type (selection): DEL selection_keys: ['in', 'internal', 'out']
+stock        / stock.location           / chained_location_type (selection): DEL required: required, selection_keys: ['customer', 'fixed', 'none'], req_default: none
+# DONE: create stock.location.path records for any chained location
+
+stock        / stock.location           / chained_journal_id (many2one) : DEL relation: stock.journal
+stock        / stock.location           / icon (selection)              : DEL selection_keys: function
+# NOTHING TO DO, but preserved for future reference
+
+stock        / stock.location           / loc_barcode (char)            : NEW 
+stock        / stock.location           / putaway_strategy_id (many2one): NEW relation: product.putaway
+stock        / stock.location           / removal_strategy_id (many2one): NEW relation: product.removal
+stock        / stock.location           / valuation_in_account_id (many2one): module is now 'stock_account' ('stock')
+stock        / stock.location           / valuation_out_account_id (many2one): module is now 'stock_account' ('stock')
+# NOTHING TO DO
+
+stock        / stock.location.path      / active (boolean)              : NEW 
+stock        / stock.location.path      / auto (selection)              : NEW required: required, selection_keys: ['auto', 'manual', 'transparent'], req_default: auto
+stock        / stock.location.path      / company_id (many2one)         : NEW relation: res.company
+stock        / stock.location.path      / delay (integer)               : NEW 
+stock        / stock.location.path      / location_dest_id (many2one)   : NEW relation: stock.location, required: required
+stock        / stock.location.path      / location_from_id (many2one)   : NEW relation: stock.location, required: required
+stock        / stock.location.path      / name (char)                   : NEW required: required
+stock        / stock.location.path      / picking_type_id (many2one)    : NEW relation: stock.picking.type, required: required
+stock        / stock.location.path      / propagate (boolean)           : NEW 
+stock        / stock.location.path      / route_id (many2one)           : NEW relation: stock.location.route
+stock        / stock.location.path      / sequence (integer)            : NEW 
+stock        / stock.location.path      / warehouse_id (many2one)       : NEW relation: stock.warehouse
+# DONE CREATED ALL THE PUSH/PULL
+
+stock        / stock.location.route     / active (boolean)              : NEW 
+stock        / stock.location.route     / company_id (many2one)         : NEW relation: res.company
+stock        / stock.location.route     / name (char)                   : NEW required: required
+stock        / stock.location.route     / product_categ_selectable (boolean): NEW 
+stock        / stock.location.route     / product_selectable (boolean)  : NEW 
+stock        / stock.location.route     / pull_ids (one2many)           : NEW relation: procurement.rule
+stock        / stock.location.route     / push_ids (one2many)           : NEW relation: stock.location.path
+stock        / stock.location.route     / sequence (integer)            : NEW 
+stock        / stock.location.route     / supplied_wh_id (many2one)     : NEW relation: stock.warehouse
+stock        / stock.location.route     / supplier_wh_id (many2one)     : NEW relation: stock.warehouse
+stock        / stock.location.route     / warehouse_selectable (boolean): NEW 
+# DONE created all the push/pull
+
+stock        / stock.move               / move_orig_ids (one2many)      : NEW relation: stock.move
+# NOTHING TO DO: the reverse of existing m2o stock_move.move_dest_id
+stock        / stock.move               / move_history_ids (many2many)  : DEL relation: stock.move
+stock        / stock.move               / move_history_ids2 (many2many) : DEL relation: stock.move
+# NOTHING TO DO: convoluted, earlier reverse of stock_move.move_dest_id 
+
+# All new fields
+
+stock        / stock.move               / auto_validate (boolean)       : DEL 
+stock        / stock.move               / group_id (many2one)           : NEW relation: procurement.group
+# Done: procurement groups are created for sale procurements in the sale module and propagated
+# to the associated moves
+stock        / stock.move               / linked_move_operation_ids (one2many): NEW relation: stock.move.operation.link
+# Nothing to do: related to packing
+
+
+stock        / stock.move               / origin (char)                 : not a function anymore
+# NOTHING TO DO: function was stored
+
+stock        / stock.move               / origin_returned_move_id (many2one): NEW relation: stock.move
+# NOTHING TO DO: this restricts quants on returned moves to the quants going out originally
+
+stock        / stock.move               / partially_available (boolean) : NEW 
+# NOTHING TO DO: indicate that some quants have been reserved but not upto the full qty
+
+stock        / stock.move               / picking_type_id (many2one)    : NEW relation: stock.picking.type
+
+
+stock        / stock.move               / price_currency_id (many2one)  : DEL relation: res.currency
+stock        / stock.move               / priority (selection)          : selection_keys is now '['0', '1', '2', '3']'
+ ('['0', '1']')
+# NOTHING TO DO, new selection is a super set
+
+stock        / stock.move               / procure_method (selection)    : NEW required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: make_to_stock
+stock        / stock.move               / procurement_id (many2one)     : NEW relation: procurement.order
+stock        / stock.move               / prodlot_id (many2one)         : DEL relation: stock.production.lot
+stock        / stock.move               / product_qty (float)           : now a function
+stock        / stock.move               / product_uom_qty (float)       : NEW required: required, req_default: 1.0
+stock        / stock.move               / propagate (boolean)           : NEW 
+stock        / stock.move               / push_rule_id (many2one)       : NEW relation: stock.location.path
+stock        / stock.move               / quant_ids (many2many)         : NEW relation: stock.quant
+# DONE: let Odoo do this by reconfirming done moves
+
+stock        / stock.move               / reserved_quant_ids (one2many) : NEW relation: stock.quant
+stock        / stock.move               / restrict_lot_id (many2one)    : NEW relation: stock.production.lot
+stock        / stock.move               / restrict_partner_id (many2one): NEW relation: res.partner
+stock        / stock.move               / returned_move_ids (one2many)  : NEW relation: stock.move
+stock        / stock.move               / route_ids (many2many)         : NEW relation: stock.location.route
+stock        / stock.move               / rule_id (many2one)            : NEW relation: procurement.rule
+stock        / stock.move               / split_from (many2one)         : NEW relation: stock.move
+stock        / stock.move               / tracking_id (many2one)        : DEL relation: stock.tracking
+stock        / stock.move               / warehouse_id (many2one)       : NEW relation: stock.warehouse
+# DONE
+  
+
+stock        / stock.move.operation.link / move_id (many2one)            : NEW relation: stock.move, required: required
+stock        / stock.move.operation.link / operation_id (many2one)       : NEW relation: stock.pack.operation, required: required
+stock        / stock.move.operation.link / qty (float)                   : NEW 
+stock        / stock.move.operation.link / reserved_quant_id (many2one)  : NEW relation: stock.quant
+# Nothing to do 
+
+stock        / stock.pack.operation     / cost (float)                  : NEW 
+stock        / stock.pack.operation     / currency (many2one)           : NEW relation: res.currency
+stock        / stock.pack.operation     / date (datetime)               : NEW required: required, req_default: function
+stock        / stock.pack.operation     / linked_move_operation_ids (one2many): NEW relation: stock.move.operation.link
+stock        / stock.pack.operation     / location_dest_id (many2one)   : NEW relation: stock.location, required: required
+stock        / stock.pack.operation     / location_id (many2one)        : NEW relation: stock.location, required: required
+stock        / stock.pack.operation     / lot_id (many2one)             : NEW relation: stock.production.lot
+stock        / stock.pack.operation     / owner_id (many2one)           : NEW relation: res.partner
+stock        / stock.pack.operation     / package_id (many2one)         : NEW relation: stock.quant.package
+stock        / stock.pack.operation     / picking_id (many2one)         : NEW relation: stock.picking, required: required
+stock        / stock.pack.operation     / processed (selection)         : NEW required: required, selection_keys: ['false', 'true'], req_default: function
+stock        / stock.pack.operation     / product_id (many2one)         : NEW relation: product.product
+stock        / stock.pack.operation     / product_qty (float)           : NEW required: required
+stock        / stock.pack.operation     / product_uom_id (many2one)     : NEW relation: product.uom
+stock        / stock.pack.operation     / qty_done (float)              : NEW 
+stock        / stock.pack.operation     / result_package_id (many2one)  : NEW relation: stock.quant.package
+# Nothing to do
+
+
+######## STOCK PICKING ########
+
+stock        / stock.picking            / auto_picking (boolean)        : DEL 
+stock        / stock.picking            / location_dest_id (many2one)   : now a function
+stock        / stock.picking            / location_id (many2one)        : now a function
+# NOTHING TO DO now related fields to move_lines
+
+stock        / stock.picking            / message_last_post (datetime)  : NEW
+# DONE 
+ 
+stock        / stock.picking            / recompute_pack_op (boolean)   : NEW 
+stock        / stock.picking            / owner_id (many2one)           : NEW relation: res.partner
+stock        / stock.picking            / pack_operation_ids (one2many) : NEW relation: stock.pack.operation
+stock        / stock.picking            / stock_journal_id (many2one)   : DEL relation: stock.journal
+stock        / stock.picking            / invoice_state (selection)     : module is now 'stock_account' ('stock')
+stock        / stock.picking            / invoice_state (selection)     : now a function
+# NOTHING TO DO
+
+stock        / stock.picking            / state (selection)             : now a function
+stock        / stock.picking            / state (selection)             : selection_keys is now '['assigned', 'cancel', 'confirmed', 'done', 'draft', 'partially_available', 'waiting']' ('['assigned', 'auto', 'cancel', 'confirmed', 'done', 'draft']')
+# DONE: map auto to waiting
+
+stock        / stock.picking            / type (selection)              : DEL required: required, selection_keys: ['in', 'internal', 'out'], req_default: internal
+stock        / stock.picking            / picking_type_id (many2one)    : NEW relation: stock.picking.type, required: required
+# DONE MIGRATED type to picking_type_id in the post-migration
+				
+########## TIME STOCK.PICKING ( 4 hours )
+		
+stock        / stock.picking.type       / active (boolean)              : NEW 
+stock        / stock.picking.type       / code (selection)              : NEW required: required, selection_keys: ['incoming', 'internal', 'outgoing']
+stock        / stock.picking.type       / color (integer)               : NEW 
+stock        / stock.picking.type       / default_location_dest_id (many2one): NEW relation: stock.location
+stock        / stock.picking.type       / default_location_src_id (many2one): NEW relation: stock.location
+stock        / stock.picking.type       / name (char)                   : NEW required: required
+stock        / stock.picking.type       / return_picking_type_id (many2one): NEW relation: stock.picking.type
+stock        / stock.picking.type       / sequence (integer)            : NEW 
+stock        / stock.picking.type       / sequence_id (many2one)        : NEW relation: ir.sequence, required: required
+stock        / stock.picking.type       / warehouse_id (many2one)       : NEW relation: stock.warehouse
+# DONE
+ 
+########## STOCK PRODUCTION LOT: KEVIN #############
+stock        / stock.production.lot     / company_id (many2one)         : DEL relation: res.company
+# NOTHING TO DO
+stock        / stock.production.lot     / create_date (datetime)        : NEW 
+stock        / stock.production.lot     / date (datetime)               : DEL required: required, req_default: function
+# DONE RENAMED
+# NOTHING TO DO
+stock        / stock.production.lot     / message_last_post (datetime)  : NEW
+# DONE 
+stock        / stock.production.lot     / prefix (char)                 : DEL 
+# NOTHING TO DO
+ 
+stock        / stock.production.lot     / quant_ids (one2many)          : NEW relation: stock.quant
+stock        / stock.production.lot     / move_ids (one2many)           : DEL relation: stock.move
+# DONE
+stock        / stock.production.lot     / revisions (one2many)          : DEL relation: stock.production.lot.revision
+stock        / stock.production.lot     / message_ids (one2many)        : NEW relation: mail.message
+# DONE
+################ STOCK PRODUCTION LOT ###################
+
+
+stock        / stock.quant              / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+stock        / stock.quant              / cost (float)                  : NEW 
+stock        / stock.quant              / create_date (datetime)        : NEW 
+stock        / stock.quant              / history_ids (many2many)       : NEW relation: stock.move
+stock        / stock.quant              / in_date (datetime)            : NEW 
+stock        / stock.quant              / location_id (many2one)        : NEW relation: stock.location, required: required
+stock        / stock.quant              / lot_id (many2one)             : NEW relation: stock.production.lot
+stock        / stock.quant              / negative_move_id (many2one)   : NEW relation: stock.move
+stock        / stock.quant              / owner_id (many2one)           : NEW relation: res.partner
+stock        / stock.quant              / package_id (many2one)         : NEW relation: stock.quant.package
+stock        / stock.quant              / product_id (many2one)         : NEW relation: product.product, required: required
+stock        / stock.quant              / propagated_from_id (many2one) : NEW relation: stock.quant
+stock        / stock.quant              / qty (float)                   : NEW required: required
+stock        / stock.quant              / reservation_id (many2one)     : NEW relation: stock.move
+# DONE
+ 
+stock        / stock.quant.package      / children_ids (one2many)       : NEW relation: stock.quant.package
+stock        / stock.quant.package      / name (char)                   : NEW 
+stock        / stock.quant.package      / packaging_id (many2one)       : NEW relation: product.packaging
+stock        / stock.quant.package      / parent_id (many2one)          : NEW relation: stock.quant.package
+stock        / stock.quant.package      / parent_left (integer)         : NEW 
+stock        / stock.quant.package      / parent_right (integer)        : NEW 
+stock        / stock.quant.package      / quant_ids (one2many)          : NEW relation: stock.quant
+stock        / stock.quant.package      / ul_id (many2one)              : NEW relation: product.ul
+# NOTHING TO DO: Complete new object
+
+########## STOCK.WAREHOUSE #########
+stock        / stock.warehouse          / crossdock_route_id (many2one) : NEW relation: stock.location.route
+stock        / stock.warehouse          / default_resupply_wh_id (many2one): NEW relation: stock.warehouse
+stock        / stock.warehouse          / delivery_route_id (many2one)  : NEW relation: stock.location.route
+
+stock        / stock.warehouse          / in_type_id (many2one)         : NEW relation: stock.picking.type
+stock        / stock.warehouse          / int_type_id (many2one)        : NEW relation: stock.picking.type
+stock        / stock.warehouse          / out_type_id (many2one)        : NEW relation: stock.picking.type
+stock        / stock.warehouse          / pack_type_id (many2one)       : NEW relation: stock.picking.type
+stock        / stock.warehouse          / pick_type_id (many2one)       : NEW relation: stock.picking.type
+stock        / stock.warehouse          / reception_steps (selection)   : NEW required: required, selection_keys: ['one_step', 'three_steps', 'two_steps'], req_default: one_step
+stock        / stock.warehouse          / delivery_steps (selection)    : NEW required: required, selection_keys: ['pick_pack_ship', 'pick_ship', 'ship_only'], req_default: ship_only
+# DONE set defaults values in post-script
+
+stock        / stock.warehouse          / reception_route_id (many2one) : NEW relation: stock.location.route
+stock        / stock.warehouse          / resupply_from_wh (boolean)    : NEW 
+stock        / stock.warehouse          / resupply_route_ids (one2many) : NEW relation: stock.location.route
+stock        / stock.warehouse          / resupply_wh_ids (many2many)   : NEW relation: stock.warehouse
+stock        / stock.warehouse          / route_ids (many2many)         : NEW relation: stock.location.route
+# NOTHING TO DO
+
+stock        / stock.warehouse          / code (char)                   : NEW required: required
+stock        / stock.warehouse          / mto_pull_id (many2one)        : NEW relation: procurement.rule
+# TO DO
+
+stock        / stock.warehouse          / view_location_id (many2one)   : NEW relation: stock.location, required: required
+# DONE  
+
+stock        / stock.warehouse          / lot_input_id (many2one)       : DEL relation: stock.location, required: required, req_default: function
+stock        / stock.warehouse          / lot_output_id (many2one)      : DEL relation: stock.location, required: required, req_default: function
+stock        / stock.warehouse          / wh_input_stock_loc_id (many2one): NEW relation: stock.location
+stock        / stock.warehouse          / wh_output_stock_loc_id (many2one): NEW relation: stock.location
+# DONE 
+
+stock        / stock.warehouse          / wh_pack_stock_loc_id (many2one): NEW relation: stock.location
+stock        / stock.warehouse          / wh_qc_stock_loc_id (many2one) : NEW relation: stock.location
+# DONE 
+
+###### STOCK WAREHOUSE ORDERPOINT
+
+stock        / stock.warehouse.orderpoint / group_id (many2one)           : NEW relation: procurement.group
+# NOTHING TO DO
+stock        / stock.warehouse.orderpoint / procurement_ids (one2many)    : NEW relation: procurement.order
+# DONE
+
+---XML records in module 'stock'---
+
+########################################################################
+# Discarded or not based on https://doc.therp.nl/openupgrade/xmlids.html
+########################################################################
+
+DEL account.journal: stock.stock_journal
+DEL decimal.precision: stock.decimal_shipping_delay
+# NOTHING TO DO 
+
+NEW ir.actions.act_window: stock.act_make_procurement
+NEW ir.actions.act_window: stock.act_stock_warehouse_2_stock_warehouse_orderpoint
+NEW ir.actions.act_window: stock.action_orderpoint_form
+NEW ir.actions.act_window: stock.action_package_view
+NEW ir.actions.act_window: stock.action_picking_tree_all
+NEW ir.actions.act_window: stock.action_picking_tree_backorder
+NEW ir.actions.act_window: stock.action_picking_tree_done
+NEW ir.actions.act_window: stock.action_picking_tree_done_grouped
+NEW ir.actions.act_window: stock.action_picking_tree_late
+NEW ir.actions.act_window: stock.action_picking_tree_ready
+NEW ir.actions.act_window: stock.action_picking_tree_waiting
+NEW ir.actions.act_window: stock.action_picking_type_form
+NEW ir.actions.act_window: stock.action_picking_type_list
+NEW ir.actions.act_window: stock.action_procurement_compute
+NEW ir.actions.act_window: stock.action_routes_form
+NEW ir.actions.act_window: stock.do_view_pickings
+NEW ir.actions.act_window: stock.location_open_quants
+NEW ir.actions.act_window: stock.procrules
+NEW ir.actions.act_window: stock.product_open_orderpoint
+NEW ir.actions.act_window: stock.product_open_quants
+NEW ir.actions.act_window: stock.quantsact
+DEL ir.actions.act_window: stock.act_product_location_open
+DEL ir.actions.act_window: stock.act_product_stock_move_futur_open
+DEL ir.actions.act_window: stock.act_stock_product_location_open
+DEL ir.actions.act_window: stock.act_stock_return_picking_in
+DEL ir.actions.act_window: stock.act_stock_return_picking_out
+DEL ir.actions.act_window: stock.act_stock_tracking_lot_2_stock_report_tracklots
+DEL ir.actions.act_window: stock.action_inventory_form_draft
+DEL ir.actions.act_window: stock.action_location_tree
+DEL ir.actions.act_window: stock.action_out_picking_move
+DEL ir.actions.act_window: stock.action_partial_picking
+DEL ir.actions.act_window: stock.action_picking_tree4
+DEL ir.actions.act_window: stock.action_picking_tree6
+DEL ir.actions.act_window: stock.action_picking_tree_out
+DEL ir.actions.act_window: stock.action_stock_incoming_product_delay
+DEL ir.actions.act_window: stock.action_stock_inventory_report
+DEL ir.actions.act_window: stock.action_stock_invoice_onshipping
+DEL ir.actions.act_window: stock.action_stock_journal_form
+DEL ir.actions.act_window: stock.action_stock_move_report
+DEL ir.actions.act_window: stock.action_stock_outgoing_product_delay
+DEL ir.actions.act_window: stock.action_tracking_form
+DEL ir.actions.act_window: stock.action_view_change_standard_price
+DEL ir.actions.act_window: stock.action_view_stock_fill_inventory
+DEL ir.actions.act_window: stock.action_view_stock_inventory_line_split
+DEL ir.actions.act_window: stock.action_view_stock_location_product
+DEL ir.actions.act_window: stock.action_view_stock_merge_inventories
+DEL ir.actions.act_window: stock.move_consume
+DEL ir.actions.act_window: stock.open_board_warehouse
+DEL ir.actions.act_window: stock.split_into
+DEL ir.actions.act_window: stock.track_line
+NEW ir.actions.act_window.view: stock.action_stock_move_graph_all
+DEL ir.actions.act_window.view: stock.action_invoice_tree5_out
+DEL ir.actions.act_window.view: stock.action_invoice_tree5_view1
+DEL ir.actions.act_window.view: stock.action_invoice_tree5_view2
+DEL ir.actions.act_window.view: stock.action_invoice_tree5_view2_cal
+DEL ir.actions.act_window.view: stock.action_invoice_tree5_view2_out
+DEL ir.actions.act_window.view: stock.action_invoice_tree5_viewout_cal
+DEL ir.actions.act_window.view: stock.action_move_out_picking_form
+DEL ir.actions.act_window.view: stock.action_move_out_picking_tree
+DEL ir.actions.act_window.view: stock.action_move_reception_picking_form
+DEL ir.actions.act_window.view: stock.action_move_reception_picking_tree
+DEL ir.actions.act_window.view: stock.action_picking_tree6_form_view
+DEL ir.actions.act_window.view: stock.action_picking_tree6_tree_view
+DEL ir.actions.act_window.view: stock.action_picking_tree_out_view1_waiting
+DEL ir.actions.act_window.view: stock.action_picking_tree_out_view2_waiting
+DEL ir.actions.act_window.view: stock.action_picking_tree_out_view2_waiting_cal
+NEW ir.actions.report.xml: stock.action_report_inventory
+NEW ir.actions.report.xml: stock.action_report_location_barcode
+NEW ir.actions.report.xml: stock.action_report_lot_barcode
+NEW ir.actions.report.xml: stock.action_report_picking
+NEW ir.actions.report.xml: stock.action_report_quant_package_barcode
+DEL ir.actions.report.xml: stock.report_location_overview
+DEL ir.actions.report.xml: stock.report_location_overview_all
+DEL ir.actions.report.xml: stock.report_move_labels
+DEL ir.actions.report.xml: stock.report_picking_list
+DEL ir.actions.report.xml: stock.report_picking_list_in
+DEL ir.actions.report.xml: stock.report_picking_list_out
+DEL ir.actions.report.xml: stock.report_stock_inventory_move
+DEL ir.actions.server: stock.action_partial_move_server
+# IGNORED ir.actions.*
+
+NEW ir.model.access: stock.access_procurement_rule
+NEW ir.model.access: stock.access_procurement_rule_internal
+NEW ir.model.access: stock.access_procurement_rule_manager
+NEW ir.model.access: stock.access_procurement_rule_salemanager
+NEW ir.model.access: stock.access_procurement_rule_stock_manager
+NEW ir.model.access: stock.access_procurement_rule_user
+NEW ir.model.access: stock.access_product_price_history_stock_manager
+NEW ir.model.access: stock.access_product_price_history_stock_user
+NEW ir.model.access: stock.access_product_putaway_all
+NEW ir.model.access: stock.access_stock_fixed_putaway_strat
+NEW ir.model.access: stock.access_stock_location_path
+NEW ir.model.access: stock.access_stock_location_path_internal_user
+NEW ir.model.access: stock.access_stock_location_path_sale_manager
+NEW ir.model.access: stock.access_stock_location_path_stock_user
+NEW ir.model.access: stock.access_stock_location_path_user
+NEW ir.model.access: stock.access_stock_location_route
+NEW ir.model.access: stock.access_stock_move_operation_link_all
+NEW ir.model.access: stock.access_stock_move_operation_link_manager
+NEW ir.model.access: stock.access_stock_move_operation_link_user
+NEW ir.model.access: stock.access_stock_pack_operation_all
+NEW ir.model.access: stock.access_stock_pack_operation_manager
+NEW ir.model.access: stock.access_stock_pack_operation_user
+NEW ir.model.access: stock.access_stock_picking_type_all
+NEW ir.model.access: stock.access_stock_picking_type_manager
+NEW ir.model.access: stock.access_stock_picking_type_user
+NEW ir.model.access: stock.access_stock_quant_all
+NEW ir.model.access: stock.access_stock_quant_manager
+NEW ir.model.access: stock.access_stock_quant_package_all
+NEW ir.model.access: stock.access_stock_quant_package_stock_manager
+NEW ir.model.access: stock.access_stock_quant_package_stock_user
+NEW ir.model.access: stock.access_stock_quant_user
+NEW ir.model.access: stock.access_stock_removal_all
+NEW ir.model.access: stock.access_stock_warehouse_orderpoint
+NEW ir.model.access: stock.access_stock_warehouse_orderpoint_system
+DEL ir.model.access: stock.access_account_account_stock_manager
+DEL ir.model.access: stock.access_account_fiscalyear
+DEL ir.model.access: stock.access_account_invoice_line_user
+DEL ir.model.access: stock.access_account_invoice_tax_user
+DEL ir.model.access: stock.access_account_invoice_user
+DEL ir.model.access: stock.access_account_journal_user
+DEL ir.model.access: stock.access_report_stock_inventory_user
+DEL ir.model.access: stock.access_report_stock_move_manager
+DEL ir.model.access: stock.access_report_stock_move_user
+DEL ir.model.access: stock.access_stock_journal_manager
+DEL ir.model.access: stock.access_stock_journal_user
+DEL ir.model.access: stock.access_stock_picking_in_manager
+DEL ir.model.access: stock.access_stock_picking_in_user
+DEL ir.model.access: stock.access_stock_picking_out_manager
+DEL ir.model.access: stock.access_stock_picking_out_user
+DEL ir.model.access: stock.access_stock_production_lot_revision
+DEL ir.model.access: stock.access_stock_report_prodlots
+DEL ir.model.access: stock.access_stock_report_tracklots
+DEL ir.model.access: stock.access_stock_tracking_manager
+DEL ir.model.access: stock.access_stock_tracking_sales_user
+DEL ir.model.access: stock.access_stock_tracking_user
+# IGNORED
+
+DEL ir.property: stock.property_stock_account_input_categ
+DEL ir.property: stock.property_stock_account_input_prd
+DEL ir.property: stock.property_stock_account_output_categ
+DEL ir.property: stock.property_stock_account_output_prd
+DEL ir.property: stock.property_stock_journal
+# NOTHING TO DO moved to stock_account
+
+NEW ir.rule: stock.product_pulled_flow_comp_rule
+NEW ir.rule: stock.stock_location_path_comp_rule
+NEW ir.rule: stock.stock_warehouse_orderpoint_rule
+# NOTHING TO DO
+
+NEW ir.sequence: stock.sequence_mrp_op
+NEW ir.sequence.type: stock.sequence_mrp_op_type
+# DONE Renamed from procurement
+
+NEW ir.sequence.type: stock.seq_type_quant_package
+NEW ir.sequence: stock.seq_quant_package
+# NOTHINIG TO DO
+
+DEL ir.sequence: stock.seq_picking_in
+DEL ir.sequence: stock.seq_picking_out
+# DONE Sequences were migrated
+ 
+DEL ir.sequence: stock.stock_journal_sequence
+# NOTHING TO DO
+
+NEW ir.ui.menu: stock.menu_action_picking_type_form
+NEW ir.ui.menu: stock.menu_package
+NEW ir.ui.menu: stock.menu_pickingtype
+NEW ir.ui.menu: stock.menu_procurement_compute
+NEW ir.ui.menu: stock.menu_procurement_rules
+NEW ir.ui.menu: stock.menu_product_template_config_stock
+NEW ir.ui.menu: stock.menu_product_variant_config_stock
+NEW ir.ui.menu: stock.menu_quants
+NEW ir.ui.menu: stock.menu_stock_order_points
+NEW ir.ui.menu: stock.menu_stock_proc_schedulers
+NEW ir.ui.menu: stock.menu_stock_procurement
+NEW ir.ui.menu: stock.menu_stock_procurement_action
+NEW ir.ui.menu: stock.menu_stock_routes
+NEW ir.ui.menu: stock.menu_stock_sched
+DEL ir.ui.menu: stock.menu_action_location_tree
+DEL ir.ui.menu: stock.menu_action_pdct_in
+DEL ir.ui.menu: stock.menu_action_pdct_out
+DEL ir.ui.menu: stock.menu_action_picking_tree
+DEL ir.ui.menu: stock.menu_action_picking_tree4
+DEL ir.ui.menu: stock.menu_action_picking_tree6
+DEL ir.ui.menu: stock.menu_action_stock_inventory_report
+DEL ir.ui.menu: stock.menu_action_stock_journal_form
+DEL ir.ui.menu: stock.menu_action_stock_move_report
+DEL ir.ui.menu: stock.menu_action_tracking_form
+DEL ir.ui.menu: stock.menu_board_warehouse
+DEL ir.ui.menu: stock.menu_stock_products_moves
+NEW ir.ui.view: stock.assets_backend
+NEW ir.ui.view: stock.procurement_group_form_view_herited
+NEW ir.ui.view: stock.product_category_form_view_inherit
+NEW ir.ui.view: stock.product_form_view_procurement_button
+NEW ir.ui.view: stock.product_template_kanban_stock_view
+NEW ir.ui.view: stock.product_template_search_form_view_stock
+NEW ir.ui.view: stock.quant_package_search_view
+NEW ir.ui.view: stock.quant_search_view
+NEW ir.ui.view: stock.report_inventory
+NEW ir.ui.view: stock.report_location_barcode
+NEW ir.ui.view: stock.report_lot_barcode
+NEW ir.ui.view: stock.report_package_barcode
+NEW ir.ui.view: stock.report_picking
+NEW ir.ui.view: stock.stock_location_path_form
+NEW ir.ui.view: stock.stock_location_path_tree
+NEW ir.ui.view: stock.stock_location_route_form_view
+NEW ir.ui.view: stock.stock_location_route_tree
+NEW ir.ui.view: stock.stock_picking_type_kanban
+NEW ir.ui.view: stock.stock_return_line_form_in
+NEW ir.ui.view: stock.stock_return_line_tree_in
+NEW ir.ui.view: stock.view_make_procurment_wizard
+NEW ir.ui.view: stock.view_move_graph
+NEW ir.ui.view: stock.view_picking_type_form
+NEW ir.ui.view: stock.view_picking_type_tree
+NEW ir.ui.view: stock.view_pickingtype_filter
+NEW ir.ui.view: stock.view_procurement_compute_wizard
+NEW ir.ui.view: stock.view_procurement_form_stock_inherit
+NEW ir.ui.view: stock.view_procurement_rule_form_stock_inherit
+NEW ir.ui.view: stock.view_procurement_rule_tree_stock_inherit
+NEW ir.ui.view: stock.view_procurement_tree_stock_inherit
+NEW ir.ui.view: stock.view_putaway
+NEW ir.ui.view: stock.view_quant_package_form
+NEW ir.ui.view: stock.view_quant_package_tree
+NEW ir.ui.view: stock.view_removal
+NEW ir.ui.view: stock.view_stock_product_tree
+NEW ir.ui.view: stock.view_stock_quant_form
+NEW ir.ui.view: stock.view_stock_quant_graph_value
+NEW ir.ui.view: stock.view_stock_quant_tree
+NEW ir.ui.view: stock.view_warehouse_orderpoint_form
+NEW ir.ui.view: stock.view_warehouse_orderpoint_tree
+NEW ir.ui.view: stock.warehouse_orderpoint_search
+DEL ir.ui.view: stock.board_warehouse_form
+DEL ir.ui.view: stock.lot_line_tree
+DEL ir.ui.view: stock.name_form
+DEL ir.ui.view: stock.search_stock_packs
+DEL ir.ui.view: stock.stock_partial_move_form
+DEL ir.ui.view: stock.stock_partial_move_line_form
+DEL ir.ui.view: stock.stock_partial_move_line_list
+DEL ir.ui.view: stock.stock_partial_picking_form
+DEL ir.ui.view: stock.stock_partial_picking_line_form
+DEL ir.ui.view: stock.stock_partial_picking_line_list
+DEL ir.ui.view: stock.stock_picking_in_calendar
+DEL ir.ui.view: stock.stock_picking_out_calendar
+DEL ir.ui.view: stock.stock_return_memory_form_in
+DEL ir.ui.view: stock.stock_return_memory_tree_in
+DEL ir.ui.view: stock.view_category_property_form
+DEL ir.ui.view: stock.view_change_standard_price
+DEL ir.ui.view: stock.view_inventory_line_form
+DEL ir.ui.view: stock.view_location_graph
+DEL ir.ui.view: stock.view_location_tree
+DEL ir.ui.view: stock.view_normal_procurement_locations_form
+DEL ir.ui.view: stock.view_normal_property_acc_form
+DEL ir.ui.view: stock.view_picking_in_form
+DEL ir.ui.view: stock.view_picking_in_search
+DEL ir.ui.view: stock.view_picking_in_tree
+DEL ir.ui.view: stock.view_picking_out_form
+DEL ir.ui.view: stock.view_picking_out_search
+DEL ir.ui.view: stock.view_picking_out_tree
+DEL ir.ui.view: stock.view_product_standard_price_form
+DEL ir.ui.view: stock.view_production_lot_revision_form
+DEL ir.ui.view: stock.view_production_lot_revision_tree
+DEL ir.ui.view: stock.view_split_in_lots
+DEL ir.ui.view: stock.view_split_in_lots_inherit
+DEL ir.ui.view: stock.view_stock_fill_inventory
+DEL ir.ui.view: stock.view_stock_graph
+DEL ir.ui.view: stock.view_stock_graph_board
+DEL ir.ui.view: stock.view_stock_inventory_graph
+DEL ir.ui.view: stock.view_stock_inventory_search
+DEL ir.ui.view: stock.view_stock_inventory_tree
+DEL ir.ui.view: stock.view_stock_invoice_onshipping
+DEL ir.ui.view: stock.view_stock_journal_filter
+DEL ir.ui.view: stock.view_stock_journal_form
+DEL ir.ui.view: stock.view_stock_journal_tree
+DEL ir.ui.view: stock.view_stock_location_product
+DEL ir.ui.view: stock.view_stock_move_consume_wizard
+DEL ir.ui.view: stock.view_stock_move_split_wizard
+DEL ir.ui.view: stock.view_stock_search
+DEL ir.ui.view: stock.view_stock_tree
+DEL ir.ui.view: stock.view_tracking_form
+DEL ir.ui.view: stock.view_tracking_tree
+# IGNORED ir.ui.*
+
+DEL ir.values: stock.ir_act_product_location_open
+DEL ir.values: stock.ir_open_partial_move_wizard
+NEW product.removal: stock.removal_fifo
+NEW product.removal: stock.removal_lifo
+# NOTHING TO DO
+# TODO Check the ir.values 
+	
+
+NEW res.groups: stock.group_adv_location
+NEW res.groups: stock.group_tracking_owner
+DEL res.groups: stock.group_inventory_valuation
+# NOTHING TO DO
+
+DEL res.partner: base.main_partner
+# NOTHING TO DO
+
+DEL stock.journal: stock.journal_delivery
+# NOTHING TO DO
+NEW stock.location: stock.stock_location_inter_wh
+DEL stock.location: stock.stock_location_company
+DEL stock.location: stock.stock_location_output
+DEL stock.location: stock.stock_location_stock
+NEW stock.location.route: stock.route_warehouse0_mto
+# DONE creation of the pull/push rules
+
+DEL workflow: stock.wkf_picking
+DEL workflow.activity: stock.act_assigned
+DEL workflow.activity: stock.act_cancel
+DEL workflow.activity: stock.act_confirmed
+DEL workflow.activity: stock.act_done
+DEL workflow.activity: stock.act_draft
+DEL workflow.activity: stock.act_move
+DEL workflow.transition: stock.trans_assigned_cancel
+DEL workflow.transition: stock.trans_assigned_cancel_auto
+DEL workflow.transition: stock.trans_assigned_move
+DEL workflow.transition: stock.trans_assigned_move2
+DEL workflow.transition: stock.trans_assigned_move_done
+DEL workflow.transition: stock.trans_confirmed_assigned
+DEL workflow.transition: stock.trans_confirmed_assigned_back
+DEL workflow.transition: stock.trans_confirmed_cancel
+DEL workflow.transition: stock.trans_confirmed_cancel_auto
+DEL workflow.transition: stock.trans_draft_cancel
+DEL workflow.transition: stock.trans_draft_confirmed
+DEL workflow.transition: stock.trans_move_confirmed
+DEL workflow.transition: stock.trans_move_done
+# TODO Check if this is the case to openupgrade.delete_model_workflow(cr, model)
+# DONE deleted workflow
