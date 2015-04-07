@@ -19,14 +19,123 @@
 #
 ##############################################################################
 
+import logging
 from openerp.modules.registry import RegistryManager
 from openerp.openupgrade import openupgrade
+from openerp import SUPERUSER_ID
+
+logger = logging.getLogger('OpenUpgrade.sale_stock')
+possible_dataloss_fields = [
+    {
+        'table': 'sale_order_line_property_rel',
+        'field': 'order_id', 'new_module': 'sale_mrp',
+    },
+    {
+        'table': 'sale_order_line_property_rel',
+        'field': 'property_id', 'new_module': 'sale_mrp',
+    }
+]
+
+
+def migrate_warehouse_id(cr):
+    cr.execute(
+        '''update sale_order so set warehouse_id=ss.warehouse_id
+        from sale_shop ss where so.shop_id=ss.id''')
+
+
+def set_procurement_groups(cr):
+    """
+    Create and propagate the sale order's procurement groups, because this is
+    the only way that sale orders and pickings are linked.
+    """
+
+    # Create a procurement group for every sale order with at least one
+    # procurement, and link the procurement group to the sale order.
+    cr.execute(
+        """
+        SELECT id
+            FROM sale_order so
+            WHERE (
+                SELECT COUNT(*) FROM sale_order_line sol
+                WHERE order_id = so.id
+                AND {procurement_id} IS NOT NULL
+                ) > 0
+        """.format(
+            procurement_id=openupgrade.get_legacy_name('procurement_id')))
+
+    sale_order_ids = [row[0] for row in cr.fetchall()]
+    logger.debug(
+        "Creating procurement groups for %s sale order lines with "
+        "procurements.", len(sale_order_ids))
+
+    for sale_order_id in sale_order_ids:
+        cr.execute(
+            """
+            INSERT INTO procurement_group
+            (create_date, create_uid, name, partner_id, move_type)
+            SELECT now(), %s, so.name,
+                so.partner_shipping_id, so.picking_policy
+            FROM sale_order so
+            WHERE so.id = %s
+            RETURNING id""",
+            (SUPERUSER_ID, sale_order_id))
+
+        group_id = cr.fetchone()[0]
+        cr.execute(
+            """
+            UPDATE sale_order so
+            SET procurement_group_id = %s
+            WHERE so.id = %s
+            """, (group_id, sale_order_id))
+
+    # Progagate sale procurement groups to the related pickings
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE stock_picking sp
+        SET group_id = so.procurement_group_id
+        FROM sale_order so
+        WHERE sp.{sale_id} = so.id
+        """.format(
+            sale_id=openupgrade.get_legacy_name('sale_id')))
+
+    # Propagate picking procurement groups to the related stock moves
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE stock_move sm
+        SET group_id = sp.group_id
+        FROM stock_picking sp
+        WHERE sm.picking_id = sp.id
+        """)
+
+    # Propagate sale procurement groups, and the shop's warehouse
+    # to the related procurements. The warehouse is propagated
+    # to the the procurement's dest move and generated moves
+    # in the deferred step.
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE procurement_order po
+        SET group_id = so.procurement_group_id,
+            warehouse_id = so.warehouse_id
+        FROM sale_order so,
+            sale_order_line sol
+        WHERE po.sale_line_id = sol.id
+            AND sol.order_id = so.id
+        """)
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    registry = RegistryManager.get(cr.dbname)
+    pool = RegistryManager.get(cr.dbname)
+
+    migrate_warehouse_id(cr)
+    openupgrade.warn_possible_dataloss(
+        cr, pool, 'sale_stock', possible_dataloss_fields)
+
     openupgrade.m2o_to_x2m(
-        cr, registry['sale.order.line'],
-        'sale_order_line', 'procurement_ids',
-        openupgrade.get_legacy_name('procurement_id'))
+        cr, pool['sale.order.line'], 'sale_order_line', 'procurement_ids',
+        openupgrade.get_legacy_name('procurement_id')
+    )
+    set_procurement_groups(cr)
