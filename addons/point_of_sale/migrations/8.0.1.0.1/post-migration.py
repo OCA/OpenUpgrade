@@ -21,6 +21,9 @@
 ##############################################################################
 
 from openerp.openupgrade import openupgrade
+from openerp.modules.registry import RegistryManager
+from openerp import SUPERUSER_ID
+
 
 def set_stock_location_id(cr, pool):
     for pc in pc_obj.browse(cr, SUPERUSER_ID, pc_ids):
@@ -68,27 +71,26 @@ def set_proxy_ip(cr, pool):
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    pool = pooler.get_pool(cr.dbname)
-    get_legacy_name = openupgrade.get_legacy_name
-    openupgrade.move_field_many_values_to_one(
+    pool = RegistryManager.get(cr.dbname)
+    openupgrade.move_field_m2o(
         cr, pool,
         'product.product', openupgrade.get_legacy_name('available_in_pos'),
         'product_tmpl_id', 'product.template', 'available_in_pos',
         compute_func=available_in_pos_field_func)
-    openupgrade.move_field_many_values_to_one(
+    openupgrade.move_field_m2o(
         cr, pool,
         'product.product', openupgrade.get_legacy_name('expense_pdt'),
         'product_tmpl_id', 'product.template', 'expense_pdt',
         compute_func=expense_pdt_field_func)
-    openupgrade.move_field_many_values_to_one(
+    openupgrade.move_field_m2o(
         cr, pool, 'product.product', openupgrade.get_legacy_name('income_pdt'),
         'product_tmpl_id', 'product.template', 'income_pdt',
         compute_func=income_pdt_field_func)
-    openupgrade.move_field_many_values_to_one(
+    openupgrade.move_field_m2o(
         cr, pool,
         'product.product', openupgrade.get_legacy_name('pos_categ_id'),
         'product_tmpl_id', 'product.template', 'pos_categ_id')
-    openupgrade.move_field_many_values_to_one(
+    openupgrade.move_field_m2o(
         cr, pool, 'product.product', openupgrade.get_legacy_name('to_weight'),
         'product_tmpl_id', 'product.template', 'to_weight',
         compute_func=to_weight_field_func)
