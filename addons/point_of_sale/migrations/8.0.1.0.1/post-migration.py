@@ -26,11 +26,28 @@ from openerp import SUPERUSER_ID
 
 
 def set_stock_location_id(cr, pool):
+    """
+        Select the stock_location_id (internal) on pos.config
+        to be that of the stock_warehouse of the old shop_id
+    """
+    pc_obj = pool['pos.config']
+    wh_obj = pool['stock.warehouse']
+    pc_ids = pc_obj.search(cr, SUPERUSER_ID, [])
     for pc in pc_obj.browse(cr, SUPERUSER_ID, pc_ids):
+        cr.execute("""
+            SELECT %s
+            FROM pos_config
+            WHERE id = %d
+        """ % (openupgrade.get_legacy_name('shop_id'), pc.id))
+        shop_id = cr.fetchone()[0]
         cr.execute(
-            "SELECT 
-            pc.write({'proxy_ip': 'http://localhost:8069'})
-
+            "SELECT warehouse_id FROM sale_shop WHERE id=%s", (shop_id,))
+        wh_id = cr.fetchone()[0]
+        pc.write({
+            'stock_location_id': wh_obj.read(
+                cr, SUPERUSER_ID, [wh_id],
+                ['lot_stock_id'])[0]['lot_stock_id'][0]
+        })
 
 
 def available_in_pos_field_func(cr, pool, id, vals):
@@ -69,6 +86,7 @@ def set_proxy_ip(cr, pool):
             or pc.iface_electronic_scale or pc.iface_print_via_proxy:
             pc.write({'proxy_ip': 'http://localhost:8069'})
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = RegistryManager.get(cr.dbname)
@@ -95,4 +113,4 @@ def migrate(cr, version):
         'product_tmpl_id', 'product.template', 'to_weight',
         compute_func=to_weight_field_func)
     set_proxy_ip(cr, pool)
-
+    set_stock_location_id(cr, pool)

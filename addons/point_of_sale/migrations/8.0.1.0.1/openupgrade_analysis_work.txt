@@ -17,7 +17,7 @@ point_of_sale / pos.config               / proxy_ip (char)               : NEW
 # [2 lines] 'receipt_footer' and 'receipt_header'. New text field. NTD.
 point_of_sale / pos.config               / receipt_footer (text)         : NEW 
 point_of_sale / pos.config               / receipt_header (text)         : NEW 
-# TODO: Select the stock_location_id (internal) of the stock_warehouse of the old shop_id;
+# Select the stock_location_id (internal) of the stock_warehouse of the old shop_id; --> Done.
 point_of_sale / pos.config               / shop_id (many2one)            : DEL relation: sale.shop, required: required, req_default: function
 point_of_sale / pos.config               / stock_location_id (many2one)  : NEW relation: stock.location, required: required, req_default: function
 
