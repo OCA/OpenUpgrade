@@ -1,7 +1,7 @@
 ---Fields in module 'point_of_sale'---
-# In V7, there was a shop_id with a company_id (optional) TODO
+# In V7, there was a shop_id with a company_id (optional) --> Done.
 # - if company_id is set in V7 on shop_id -> OpenUpgrade will take the company_id of the old shop_id;
-# - if company_id is not set in V7 on shop_id -> Openupgrade will raise a non blocking error by log;
+# - if company_id is not set in V7 on shop_id -> Openupgrade will raise a non blocking error by log and set it to a random res.company record;
 point_of_sale / pos.config               / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
 
 # [3 lines] 'iface_big_scrollbars', 'iface_invoicing', 'iface_scan_via_proxy' :. New feature. NTD

@@ -25,30 +25,50 @@ from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID
 
 
-def set_stock_location_id(cr, pool):
+def get_stock_location_id(cr, pool, shop_id):
     """
         Select the stock_location_id (internal) on pos.config
         to be that of the stock_warehouse of the old shop_id
     """
-    pc_obj = pool['pos.config']
     wh_obj = pool['stock.warehouse']
+    cr.execute(
+        "SELECT warehouse_id FROM sale_shop WHERE id=%s", (shop_id,))
+    wh_id = cr.fetchone()[0]
+    return wh_obj.read(cr, SUPERUSER_ID, [wh_id],
+        ['lot_stock_id'])[0]['lot_stock_id'][0]
+
+
+def get_company_id(cr, pool, shop_id, pc):
+    """
+        Try to get company_id from sale.shop
+        or set it to any res.company record
+    """
+    cr.execute(
+        "SELECT company_id FROM sale_shop WHERE id=%s", (shop_id,))
+    comp_id = cr.fetchone()
+    if not comp_id:
+        comp_obj = pool['res.company']
+        logger.warning(
+            "Could not determine exactly company_id for pos.config with id=%s (%s)." % (pc.id, pc.name))
+        comp_id = comp_obj.search(cr, SUPERUSER_ID, [])
+    return comp_id[0]
+
+
+def migrate_pos_config(cr, pool):
+    pc_obj = pool['pos.config']
     pc_ids = pc_obj.search(cr, SUPERUSER_ID, [])
     for pc in pc_obj.browse(cr, SUPERUSER_ID, pc_ids):
+        vals = {}
         cr.execute("""
             SELECT %s
             FROM pos_config
             WHERE id = %d
         """ % (openupgrade.get_legacy_name('shop_id'), pc.id))
         shop_id = cr.fetchone()[0]
-        cr.execute(
-            "SELECT warehouse_id FROM sale_shop WHERE id=%s", (shop_id,))
-        wh_id = cr.fetchone()[0]
-        pc.write({
-            'stock_location_id': wh_obj.read(
-                cr, SUPERUSER_ID, [wh_id],
-                ['lot_stock_id'])[0]['lot_stock_id'][0]
-        })
-
+        vals.update({'stock_location_id': get_stock_location_id(cr, pool, shop_id)})
+        vals.update({'company_id': get_company_id(cr, pool, shop_id, pc)})
+        pc.write(vals)
+        
 
 def available_in_pos_field_func(cr, pool, id, vals):
     logger.warning(
@@ -113,4 +133,4 @@ def migrate(cr, version):
         'product_tmpl_id', 'product.template', 'to_weight',
         compute_func=to_weight_field_func)
     set_proxy_ip(cr, pool)
-    set_stock_location_id(cr, pool)
+    migrate_pos_config(cr, pool)
