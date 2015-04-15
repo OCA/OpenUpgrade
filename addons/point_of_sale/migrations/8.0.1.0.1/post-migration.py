@@ -54,19 +54,37 @@ def get_company_id(cr, pool, shop_id, pc):
     return comp_id[0]
 
 
+def get_pricelist_id(cr, pool, shop_id, pc):
+    """
+        Get the pricelist_id of the old sale_shop.
+    """
+    cr.execute(
+        "SELECT pricelist_id FROM sale_shop WHERE id=%s", (shop_id,))
+    pricelist_id = cr.fetchone()
+    if not pricelist_id:
+        logger.warning(
+            "Could not determine pricelist_id for pos.config with id=%s (%s)." % (pc.id, pc.name))
+        return False
+    return pricelist_id[0]
+
+
 def migrate_pos_config(cr, pool):
     pc_obj = pool['pos.config']
     pc_ids = pc_obj.search(cr, SUPERUSER_ID, [])
     for pc in pc_obj.browse(cr, SUPERUSER_ID, pc_ids):
-        vals = {}
         cr.execute("""
             SELECT %s
             FROM pos_config
             WHERE id = %d
         """ % (openupgrade.get_legacy_name('shop_id'), pc.id))
         shop_id = cr.fetchone()[0]
-        vals.update({'stock_location_id': get_stock_location_id(cr, pool, shop_id)})
-        vals.update({'company_id': get_company_id(cr, pool, shop_id, pc)})
+        vals = {
+            'stock_location_id': get_stock_location_id(cr, pool, shop_id),
+            'company_id': get_company_id(cr, pool, shop_id, pc),
+        }
+        pricelist_id = get_pricelist_id(cr, pool, shop_id, pc)
+        if pricelist_id:
+            vals.update({'pricelist_id': pricelist_id})
         pc.write(vals)
         
 

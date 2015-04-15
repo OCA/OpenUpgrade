@@ -10,7 +10,7 @@ point_of_sale / pos.config               / iface_invoicing (boolean)     : NEW
 point_of_sale / pos.config               / iface_scan_via_proxy (boolean): NEW 
 # TODO: Create a new picking_type_id for each active pos_config.
 point_of_sale / pos.config               / picking_type_id (many2one)    : NEW relation: stock.picking.type
-# TODO: keep the pricelist_id of the old sale_shop.
+# keep the pricelist_id of the old sale_shop. --> Done
 point_of_sale / pos.config               / pricelist_id (many2one)       : NEW relation: product.pricelist, required: required, req_default: function
 # In v7. Value was hardcoded with http://localhost:8069. Done.
 point_of_sale / pos.config               / proxy_ip (char)               : NEW 
