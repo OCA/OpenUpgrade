@@ -11,7 +11,7 @@
                     <field name="state"/>
                     <field name="log" colspan="4"
                            attrs="{'invisible': [('state', '!=', 'ready')]}"/>
-                    <field name="write"                           
+                    <field name="write_files"                           
                            attrs="{'readonly': [('state', '!=', 'init')]}"/>
                     <button icon="gtk-close"
                             special="cancel"

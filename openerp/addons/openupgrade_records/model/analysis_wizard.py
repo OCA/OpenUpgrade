@@ -55,14 +55,14 @@ class openupgrade_analysis_wizard(TransientModel):
             [('init', 'Init'), ('ready', 'Ready')], 'State',
             readonly=True),
         'log': fields.text('Log'),
-        'write': fields.boolean(
+        'write_files': fields.boolean(
             'Write files',
             help='Write analysis files to the module directories'
             ),
         }
     _defaults = {
-        'state': lambda *a: 'init',
-        'write': lambda *a: True,
+        'state': 'init',
+        'write_files': True,
         }
 
     def get_communication(self, cr, uid, ids, context=None):
@@ -163,7 +163,7 @@ class openupgrade_analysis_wizard(TransientModel):
                     "ERROR: module not in list of installed modules:\n" +
                     contents)
                 continue
-            if wizard.write:
+            if wizard.write_files:
                 error = write_file(
                     key, modules[key]['installed_version'], contents)
                 if error:
@@ -173,7 +173,7 @@ class openupgrade_analysis_wizard(TransientModel):
                 general += contents
 
         # Store the general log in as many places as possible ;-)
-        if wizard.write and 'base' in modules:
+        if wizard.write_files and 'base' in modules:
             write_file(
                 'base', modules['base']['installed_version'], general,
                 'openupgrade_general_log.txt')
