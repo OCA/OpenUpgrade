@@ -50,8 +50,7 @@ def migrate_product(cr, registry):
         cr.execute(
             """
             SELECT product_tmpl_id FROM product_product
-            WHERE {} IS TRUE""".format(
-                openupgrade.get_legacy_name(field)))
+            WHERE {} IS TRUE""".format(openupgrade.get_legacy_name(field)))
         template_ids = [row[0] for row in cr.fetchall()]
         logger.debug(
             "Setting %s to True for %s product templates",
@@ -76,8 +75,8 @@ def migrate_move_inventory(cr, registry):
         FROM {stock_inventory_move_rel} rel
         WHERE sm.id = rel.move_id
         """.format(
-            stock_inventory_move_rel=openupgrade.get_legacy_name(
-                'stock_inventory_move_rel')))
+        stock_inventory_move_rel=openupgrade.get_legacy_name(
+            'stock_inventory_move_rel')))
 
     openupgrade.logged_query(
         cr,
@@ -341,7 +340,7 @@ def _migrate_stock_warehouse(cr, registry, res_id):
         # OCB has stock.picking.internal, Odoo has stock.picking
         'number_next': get_sequence_next(
             'stock.picking', default=0) or get_sequence_next(
-                'stock.picking.internal'),
+            'stock.picking.internal'),
     })
     pack_seq_id = seq_obj.create(cr, uid, values={
         'name': warehouse.name + ' Sequence packing',
@@ -543,7 +542,8 @@ def migrate_stock_warehouse_orderpoint(cr):
 
 
 def migrate_product_supply_method(cr, registry):
-    """Procurements of products: change the supply_method for the matching route
+    """Procurements of products: change the supply_method for the matching
+    route.
     make to stock -> MTS Rule: by default
     make to order -> MTO Rule
     :param cr:
