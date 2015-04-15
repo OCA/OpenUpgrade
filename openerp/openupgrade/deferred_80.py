@@ -185,7 +185,7 @@ def migrate_stock_move_warehouse(cr):
     in the deferred step.
     """
     cr.execute(
-        "SELECT count(*) FROM ir_module_module WHERE name='stock' "
+        "SELECT * FROM ir_module_module WHERE name='stock' "
         "AND state='installed'")
     if not cr.fetchone():  # No stock
         return
