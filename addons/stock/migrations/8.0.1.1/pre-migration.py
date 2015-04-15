@@ -151,6 +151,51 @@ def swap_procurement_move_rel(cr):
         cr, {'procurement_order': [(move_id_column, 'move_dest_id')]})
 
 
+def create_stock_picking_fields(cr):
+    """ This function reduce creation time of the stock_picking fields
+    """
+    logger.info("Fast creation of the field stock_picking.priority")
+    cr.execute("""
+        ALTER TABLE stock_picking
+        ADD COLUMN "priority" VARCHAR DEFAULT '1'""")
+    # This request do the same as stock_picking.get_min_max_date but faster
+    openupgrade.logged_query(cr, """
+        UPDATE stock_picking sp set priority = res.priority
+        FROM (
+            SELECT picking_id, max(priority) as priority
+            FROM stock_move
+            WHERE priority > '1'
+            GROUP BY picking_id) as res
+        WHERE sp.id = res.picking_id""")
+    logger.info("Fast creation of the field stock_picking.group_id")
+    cr.execute("""
+        ALTER TABLE stock_picking
+        ADD COLUMN "group_id" integer""")
+    # Note, we don't set values because stock_picking group_id is a fields
+    # related to stock_move group_id that is a new field.
+
+
+def create_stock_move_fields(cr):
+    """ This function reduce creation time of the stock_move fields
+       This part of the function (pre) just create the field and let
+       the other function in post script fill the value, because orm is needed
+    """
+    logger.info("Fast creation of the field stock_move.product_qty (pre)")
+    # This field is a functional field, the value will be set at the
+    # beginning of the post script;
+    cr.execute("""
+        ALTER TABLE stock_move
+        ADD COLUMN "product_qty" NUMERIC""")
+    logger.info("Fast creation of the field stock_move.propagate")
+    cr.execute("""
+        ALTER TABLE "stock_move"
+        ADD COLUMN "propagate" bool DEFAULT True""")
+    logger.info("Fast creation of the field stock_move.procure_method")
+    cr.execute("""
+        ALTER TABLE "stock_move"
+        ADD COLUMN "procure_method" VARCHAR DEFAULT 'make_to_stock'""")
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
@@ -162,3 +207,6 @@ def migrate(cr, version):
         cr, 'product_template', openupgrade.get_legacy_name('procure_method'))
     if have_procurement:
         swap_procurement_move_rel(cr)
+
+    create_stock_picking_fields(cr)
+    create_stock_move_fields(cr)

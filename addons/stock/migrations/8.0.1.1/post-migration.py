@@ -685,6 +685,36 @@ def reset_warehouse_data_ids(cr, registry):
             (res_id, name))
 
 
+def create_stock_move_fields(cr, registry):
+    """ This function reduce creation time of the stock_move fields
+       (See pre script, for more information)
+    """
+    sm_obj = registry['stock.move']
+    logger.info("Fast creation of the field stock_move.product_qty (post)")
+    # Set product_qty = product_uom_qty if uom_id of stock move
+    # is the same as uom_id of product. (Main case)
+    openupgrade.logged_query(cr, """
+        UPDATE stock_move sm1
+        SET product_qty = product_uom_qty
+        FROM
+            (SELECT sm2.id from stock_move sm2
+            INNER join product_product pp on sm2.product_id = pp.id
+            INNER join product_template pt on pp.product_tmpl_id = pt.id
+            where pt.uom_id = sm2.product_uom) as res
+        WHERE sm1.id = res.id""")
+    # Use ORM if uom id are different
+    cr.execute(
+        """SELECT sm2.id from stock_move sm2
+        INNER join product_product pp on sm2.product_id = pp.id
+        INNER join product_template pt on pp.product_tmpl_id = pt.id
+        where pt.uom_id != sm2.product_uom""")
+    sm_ids = [row[0] for row in cr.fetchall()]
+    qty_vals = sm_obj._quantity_normalize(cr, uid, sm_ids, None, None)
+    for id, qty in qty_vals.iteritems():
+        cr.execute("UPDATE stock_move set product_qty = '%s' where id=%s" % (
+            qty, id))
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     """
@@ -694,6 +724,7 @@ def migrate(cr, version):
     database in which procurement related stuff needs to be migrated.
     """
     registry = RegistryManager.get(cr.dbname)
+    create_stock_move_fields(cr, registry)
     have_procurement = openupgrade.column_exists(
         cr, 'product_template', openupgrade.get_legacy_name('procure_method'))
 
