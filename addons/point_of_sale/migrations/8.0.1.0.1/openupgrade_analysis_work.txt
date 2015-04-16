@@ -41,7 +41,7 @@ point_of_sale / report.pos.order         / shop_id (many2one)            : DEL r
 point_of_sale / report.pos.order         / year (char)                   : DEL 
 
 
----XML records in module 'point_of_sale'---
+---XML records in module 'point_of_sale'--- NTD
 NEW ir.actions.act_url: point_of_sale.action_pos_pos
 NEW ir.actions.act_window: point_of_sale.product_pos_category_action
 DEL ir.actions.act_window: point_of_sale.action_pos_payment_report
@@ -101,10 +101,7 @@ DEL ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_month_form
 DEL ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_month_graph
 DEL ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_month_tree
 DEL ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_tree
-# TODO
 DEL pos.category: point_of_sale.categ_others
-# TODO
 DEL product.product: point_of_sale.unreferenced_product
 NEW report.paperformat: point_of_sale.paperformat_posreceipt
-# TODO
 NEW stock.picking.type: point_of_sale.picking_type_posout
