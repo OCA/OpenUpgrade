@@ -20,9 +20,22 @@
 #
 ##############################################################################
 
+import logging
 from openerp.openupgrade import openupgrade
 from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID
+
+
+logger = logging.getLogger('OpenUpgrade.point_of_sale')
+
+
+def get_warehouse_id(cr, pool, shop_id):
+    """
+        Get the sale.shop warehouse_id
+    """
+    cr.execute(
+        "SELECT warehouse_id FROM sale_shop WHERE id=%s", (shop_id,))
+    return cr.fetchone()[0]
 
 
 def get_stock_location_id(cr, pool, shop_id):
@@ -31,10 +44,8 @@ def get_stock_location_id(cr, pool, shop_id):
         to be that of the stock_warehouse of the old shop_id
     """
     wh_obj = pool['stock.warehouse']
-    cr.execute(
-        "SELECT warehouse_id FROM sale_shop WHERE id=%s", (shop_id,))
-    wh_id = cr.fetchone()[0]
-    return wh_obj.read(cr, SUPERUSER_ID, [wh_id],
+    return wh_obj.read(cr, SUPERUSER_ID,
+        [get_warehouse_id(cr, pool, shop_id)],
         ['lot_stock_id'])[0]['lot_stock_id'][0]
 
 
@@ -68,6 +79,25 @@ def get_pricelist_id(cr, pool, shop_id, pc):
     return pricelist_id[0]
 
 
+def get_picking_type_id(cr, pool, shop_id, pc):
+    """
+        Create a new picking_type_id using shop info
+    """
+    pt_obj = pool['stock.picking.type']
+    wh = pool['stock.warehouse'].browse(
+        cr, SUPERUSER_ID, get_warehouse_id(cr, pool, shop_id))
+    return pt_obj.create(cr, SUPERUSER_ID, {
+        'name': pc.name,
+        'sequence_id': pool['ir.model.data'].xmlid_to_res_id(
+            cr, SUPERUSER_ID, 'point_of_sale.seq_picking_type_posout'),
+        'code': 'outgoing',
+        'warehouse_id': wh.id,
+        'default_location_src_id': wh.wh_output_stock_loc_id.id,
+        'default_location_dest_id': pool['ir.model.data'].xmlid_to_res_id(
+            cr, SUPERUSER_ID, 'stock.stock_location_customers'),
+    })
+
+
 def migrate_pos_config(cr, pool):
     pc_obj = pool['pos.config']
     pc_ids = pc_obj.search(cr, SUPERUSER_ID, [])
@@ -81,12 +111,13 @@ def migrate_pos_config(cr, pool):
         vals = {
             'stock_location_id': get_stock_location_id(cr, pool, shop_id),
             'company_id': get_company_id(cr, pool, shop_id, pc),
+            'picking_type_id': get_picking_type_id(cr, pool, shop_id, pc),
         }
         pricelist_id = get_pricelist_id(cr, pool, shop_id, pc)
         if pricelist_id:
             vals.update({'pricelist_id': pricelist_id})
         pc.write(vals)
-        
+
 
 def available_in_pos_field_func(cr, pool, id, vals):
     logger.warning(
