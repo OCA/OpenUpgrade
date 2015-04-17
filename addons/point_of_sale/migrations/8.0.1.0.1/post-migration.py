@@ -49,20 +49,37 @@ def get_stock_location_id(cr, pool, shop_id):
         ['lot_stock_id'])[0]['lot_stock_id'][0]
 
 
-def get_company_id(cr, pool, shop_id, pc):
+def get_company_id(cr, pool, shop_id, pc, stock_loc_id):
     """
-        Try to get company_id from sale.shop
-        or set it to any res.company record
+        Try to get company_id from sale.shop.
+        If that fails try to get from the related journal_id
+        or the newly added stock_location_id.
+        In the end set it to any res.company record.
     """
     cr.execute(
         "SELECT company_id FROM sale_shop WHERE id=%s", (shop_id,))
-    comp_id = cr.fetchone()
+    comp_id = cr.fetchone()[0]
     if not comp_id:
         comp_obj = pool['res.company']
-        logger.warning(
-            "Could not determine exactly company_id for pos.config with id=%s (%s)." % (pc.id, pc.name))
         comp_id = comp_obj.search(cr, SUPERUSER_ID, [])
-    return comp_id[0]
+        if len(comp_id) > 1:
+            if pc.journal_id:
+                comp_id = pc.journal_id.company_id.id
+            else:
+                stock_loc_obj = pool['stock.location']
+                stock_loc_comp_id = stock_loc_obj.read(
+                    cr, SUPERUSER_ID, [stock_loc_id], ['company_id'])[0]['company_id'][0]
+                if stock_loc_comp_id:
+                    comp_id = stock_loc_comp_id
+                else:
+                    comp_id = comp_id[0]
+                    comp_name = comp_obj.read(cr, SUPERUSER_ID, [comp_id], ['name'])[0]['name']
+                    logger.error(
+                        "Could not determine exactly company_id for pos.config with (%s, %s). "
+                        "Setting it randomly to (%s, %s)." % (pc.id, pc.name, comp_id[0], comp_name))
+        else:
+            comp_id = comp_id[0]
+    return comp_id
 
 
 def get_pricelist_id(cr, pool, shop_id, pc):
@@ -108,9 +125,10 @@ def migrate_pos_config(cr, pool):
             WHERE id = %d
         """ % (openupgrade.get_legacy_name('shop_id'), pc.id))
         shop_id = cr.fetchone()[0]
+        stock_loc_id = get_stock_location_id(cr, pool, shop_id)
         vals = {
-            'stock_location_id': get_stock_location_id(cr, pool, shop_id),
-            'company_id': get_company_id(cr, pool, shop_id, pc),
+            'stock_location_id': stock_loc_id,
+            'company_id': get_company_id(cr, pool, shop_id, pc, stock_loc_id),
             'picking_type_id': get_picking_type_id(cr, pool, shop_id, pc),
         }
         pricelist_id = get_pricelist_id(cr, pool, shop_id, pc)
