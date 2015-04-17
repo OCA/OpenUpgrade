@@ -74,9 +74,8 @@ def migrate_move_inventory(cr, registry):
         SET inventory_id = rel.inventory_id
         FROM {stock_inventory_move_rel} rel
         WHERE sm.id = rel.move_id
-        """.format(
-        stock_inventory_move_rel=openupgrade.get_legacy_name(
-            'stock_inventory_move_rel')))
+        """.format(stock_inventory_move_rel=openupgrade.get_legacy_name(
+        'stock_inventory_move_rel')))
 
     openupgrade.logged_query(
         cr,
