@@ -38,7 +38,7 @@ def migrate_crm_lead_sale_order(cr):
         SET campaign_id = lead.campaign_id, medium_id = lead.medium_id
         FROM crm_lead lead
         WHERE sale.partner_id = lead.partner_id
-        AND sale.origin like '% '||lead.id;
+        AND sale.origin like '%% '||lead.id;
         """)
 
 
