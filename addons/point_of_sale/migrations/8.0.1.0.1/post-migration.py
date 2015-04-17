@@ -44,8 +44,8 @@ def get_stock_location_id(cr, pool, shop_id):
         to be that of the stock_warehouse of the old shop_id
     """
     wh_obj = pool['stock.warehouse']
-    return wh_obj.read(cr, SUPERUSER_ID,
-        [get_warehouse_id(cr, pool, shop_id)],
+    return wh_obj.read(
+        cr, SUPERUSER_ID, [get_warehouse_id(cr, pool, shop_id)],
         ['lot_stock_id'])[0]['lot_stock_id'][0]
 
 
@@ -68,15 +68,19 @@ def get_company_id(cr, pool, shop_id, pc, stock_loc_id):
             else:
                 stock_loc_obj = pool['stock.location']
                 stock_loc_comp_id = stock_loc_obj.read(
-                    cr, SUPERUSER_ID, [stock_loc_id], ['company_id'])[0]['company_id'][0]
+                    cr, SUPERUSER_ID, [stock_loc_id],
+                    ['company_id'])[0]['company_id'][0]
                 if stock_loc_comp_id:
                     comp_id = stock_loc_comp_id
                 else:
                     comp_id = comp_id[0]
-                    comp_name = comp_obj.read(cr, SUPERUSER_ID, [comp_id], ['name'])[0]['name']
+                    comp_name = comp_obj.read(
+                        cr, SUPERUSER_ID, [comp_id], ['name'])[0]['name']
                     logger.error(
-                        "Could not determine exactly company_id for pos.config with (%s, %s). "
-                        "Setting it randomly to (%s, %s)." % (pc.id, pc.name, comp_id[0], comp_name))
+                        "Could not determine exactly company_id "
+                        "for pos.config with (%s, %s). "
+                        "Setting it randomly to (%s, %s)."
+                        % (pc.id, pc.name, comp_id[0], comp_name))
         else:
             comp_id = comp_id[0]
     return comp_id
@@ -91,7 +95,8 @@ def get_pricelist_id(cr, pool, shop_id, pc):
     pricelist_id = cr.fetchone()
     if not pricelist_id:
         logger.warning(
-            "Could not determine pricelist_id for pos.config with id=%s (%s)." % (pc.id, pc.name))
+            "Could not determine pricelist_id "
+            "for pos.config with id=%s (%s)." % (pc.id, pc.name))
         return False
     return pricelist_id[0]
 
@@ -169,8 +174,10 @@ def set_proxy_ip(cr, pool):
     pc_obj = pool['pos.config']
     pc_ids = pc_obj.search(cr, SUPERUSER_ID, [])
     for pc in pc_obj.browse(cr, SUPERUSER_ID, pc_ids):
-        if pc.iface_cashdrawer or pc.iface_payment_terminal \
-            or pc.iface_electronic_scale or pc.iface_print_via_proxy:
+        if (
+            pc.iface_cashdrawer or pc.iface_payment_terminal
+            or pc.iface_electronic_scale or pc.iface_print_via_proxy
+        ):
             pc.write({'proxy_ip': 'http://localhost:8069'})
 
 
