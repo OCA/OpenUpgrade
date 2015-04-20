@@ -201,6 +201,13 @@ if not db_name or db_name == '' or db_name.isspace()\
 
 conn_parms['database'] = db_name
 
+if options.force_deps:
+    try:
+        eval(options.force_deps)
+    except:
+        parser.print_help()
+        sys.exit()
+
 if options.add:
     merge_migrations = {}
     if os.path.isfile(options.add):
@@ -209,7 +216,11 @@ if options.add:
                                                options.add)
         merge_migrations = merge_migrations_mod.migrations
     else:
-        merge_migrations = eval(options.add)
+        try:
+            merge_migrations = eval(options.add)
+        except:
+            parser.print_help()
+            sys.exit()
 
     def deep_update(dict1, dict2):
         result = {}
