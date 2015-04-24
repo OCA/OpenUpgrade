@@ -651,6 +651,7 @@ def m2o_to_m2m(cr, model, table, field, source_field):
 
     .. versionadded:: 7.0
     .. deprecated:: 8.0
+       Use :func:`m2o_to_x2m` instead.
     """
     return m2o_to_x2m(cr, model, table, field, source_field)
 
