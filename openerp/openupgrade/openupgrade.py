@@ -28,6 +28,8 @@ from openerp.osv import orm
 from openerp.tools.mail import plaintext2html
 from openerp.modules.registry import RegistryManager
 import openupgrade_tools
+import openerp.osv.fields
+import openerp.fields
 
 # The server log level has not been set at this point
 # so to log at loglevel debug we need to set it
@@ -579,28 +581,87 @@ def get_legacy_name(original_name):
 def m2o_to_x2m(cr, model, table, field, source_field):
     """
     Transform many2one relations into one2many or many2many.
-    Use rename_columns in your pre-migrate
-    script to retain the column's old value, then call m2o_to_x2m
-    in your post-migrate script.
+    Use rename_columns in your pre-migrate script to retain the column's old
+    value, then call m2o_to_x2m in your post-migrate script.
+
+    WARNING: If converting to one2many, there can be data loss, because only
+    one inverse record can be mapped in a one2many, but you can have multiple
+    many2one pointing to the same target. Use it when the use case allows this
+    conversion.
 
     :param model: The target model registry object
     :param table: The source table
     :param field: The new field name on the target model
     :param source_field: the (renamed) many2one column on the source table.
 
-    .. versionadded:: 7.0
+    .. versionadded:: 8.0
     """
-    cr.execute('SELECT id, %(field)s '
-               'FROM %(table)s '
-               'WHERE %(field)s is not null' % {
-                   'table': table,
-                   'field': source_field,
-                   })
-    for row in cr.fetchall():
-        model.write(cr, SUPERUSER_ID, row[0], {field: [(4, row[1])]})
+    if not model._columns.get(field):
+        raise orm.except_orm(
+            "Error", "m2o_to_x2m: field %s doesn't exist in model %s" % (
+                field, model._name))
+    if isinstance(model._columns[field], (openerp.osv.fields.many2many,
+                                          openerp.fields.Many2many)):
+        rel, id1, id2 = openerp.osv.fields.many2many._sql_names(
+            model._columns[field], model)
+        logged_query(
+            cr,
+            """
+            INSERT INTO %s (%s, %s)
+            SELECT id, %s
+            FROM %s
+            WHERE %s is not null
+            """ %
+            (rel, id1, id2, source_field, table, source_field))
+    elif isinstance(model._columns[field], (openerp.fields.one2many,
+                                            openerp.osv.fields.one2many)):
+        if isinstance(model._columns[field], openerp.fields.one2many):
+            target_table = (
+                model.pool[model._columns[field].comodel_name]._table)
+            target_field = model._columns[field].inverse_name
+        else:
+            target_table = model.pool[model._columns[field]._obj]._table
+            target_field = model._columns[field]._fields_id
+        logged_query(
+            cr,
+            """
+            UPDATE %(target_table)s t
+            SET %(target_field)s=src.id
+            FROM (
+                  SELECT s.id, s.%(source_field)s
+                  FROM %(target_table)s as target, %(source_table)s as s
+                  WHERE s.%(source_field)s=target.id
+                  LIMIT 1
+            ) src
+            WHERE t.id=src.%(source_field)s
+            """ % {'target_table': target_table,
+                   'target_field': target_field,
+                   'source_field': source_field,
+                   'source_table': table})
+    else:
+        raise orm.except_orm(
+            "Error", "m2o_to_x2m: field %s of model %s is not a "
+                     "many2many/one2many one" % (field, model._name))
+
 
 # Backwards compatibility
-m2o_to_m2m = m2o_to_x2m
+def m2o_to_m2m(cr, model, table, field, source_field):
+    """
+    Recreate relations in many2many fields that were formerly
+    many2one fields. Use rename_columns in your pre-migrate
+    script to retain the column's old value, then call m2o_to_m2m
+    in your post-migrate script.
+
+    :param model: The target model registry object
+    :param table: The source table
+    :param field: The field name of the target model
+    :param source_field: the many2one column on the source table.
+
+    .. versionadded:: 7.0
+    .. deprecated:: 8.0
+       Use :func:`m2o_to_x2m` instead.
+    """
+    return m2o_to_x2m(cr, model, table, field, source_field)
 
 
 def float_to_integer(cr, table, field):
