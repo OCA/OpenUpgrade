@@ -613,9 +613,9 @@ def m2o_to_x2m(cr, model, table, field, source_field):
             WHERE %s is not null
             """ %
             (rel, id1, id2, source_field, table, source_field))
-    elif isinstance(model._columns[field], (openerp.fields.one2many,
+    elif isinstance(model._columns[field], (openerp.fields.One2many,
                                             openerp.osv.fields.one2many)):
-        if isinstance(model._columns[field], openerp.fields.one2many):
+        if isinstance(model._columns[field], openerp.fields.One2many):
             target_table = (
                 model.pool[model._columns[field].comodel_name]._table)
             target_field = model._columns[field].inverse_name
