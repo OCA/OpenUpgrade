@@ -99,6 +99,12 @@ def replace_user_partner(cr, pool):
     if not updated_user_ids:
         return
     cr.execute(
+        '''UPDATE res_partner
+        SET lang=p.lang, tz=p.tz
+        FROM res_partner p, res_users u
+        WHERE p.id=u.openupgrade_7_created_partner_id AND
+        u.partner_id=res_partner.id''')
+    cr.execute(
         '''UPDATE res_users
         SET openupgrade_7_created_partner_id=NULL
         WHERE id in %s AND partner_id <> %s''',
