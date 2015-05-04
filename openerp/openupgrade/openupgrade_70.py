@@ -22,6 +22,7 @@
 
 # This module provides simple tools for openupgrade migration, specific for the
 # 6.1 -> 7.0.
+import openupgrade
 
 
 def set_partner_id_from_partner_address_id(
@@ -39,16 +40,18 @@ def set_partner_id_from_partner_address_id(
     """
     model = pool.get(model_name)
     table = table or model._table
-    # Cannot use cursor's string substitution for table names
-    cr.execute("""
-        SELECT target.id, address.openupgrade_7_migrated_to_partner_id
-        FROM %s as target,
-             res_partner_address as address
-        WHERE address.id = target.%s""" % (table, address_field))
-    for row in cr.fetchall():
-        cr.execute("UPDATE %s "
-                   "SET %s=%%s "
-                   "WHERE id=%%s" % (table, partner_field), (row[1], row[0]))
+    openupgrade.logged_query(
+        cr, """
+        UPDATE %s t
+        SET %s=src.partner_id
+        FROM (
+            SELECT target.id as id,
+                   address.openupgrade_7_migrated_to_partner_id as partner_id
+            FROM %s as target, res_partner_address as address
+            WHERE address.id = target.%s
+        ) src
+        WHERE t.id=src.id""" %
+        (table, partner_field, table, address_field))
 
 
 def get_partner_id_from_user_id(cr, user_id):
