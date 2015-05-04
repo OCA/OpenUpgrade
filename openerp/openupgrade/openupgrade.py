@@ -646,8 +646,8 @@ def remove_sql_constraint_duplicates(cr, model, constraint_attrs):
                                 form the uniq key
     """
     pool = pooler.get_pool(cr.dbname)
-    model_table = model.replace('.', '_')
     model_pool = pool[model]
+    model_table = model_pool._table
 
     # Get all fields with the given model as many2one relation
     field_pool = pool['ir.model.fields']
@@ -659,7 +659,7 @@ def remove_sql_constraint_duplicates(cr, model, constraint_attrs):
     # This is trivial for many2one relations
     tables_to_lookup = [
         (
-            field.model_id.model.replace('.', '_'),
+            pool[field.model_id.model]._table,
             field.name, 'many2one'
         ) for field in field_pool.browse(cr, SUPERUSER_ID, field_m2o_ids)
     ]
@@ -676,7 +676,7 @@ def remove_sql_constraint_duplicates(cr, model, constraint_attrs):
 
     for field in fields_m2m:
 
-        other_model_table = field.model_id.model.replace('.', '_')
+        other_model_table = pool[field.model_id.model]._table
 
         # Get all primary key constraints for the given table
         query = "SELECT " \
