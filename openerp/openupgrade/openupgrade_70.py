@@ -41,17 +41,15 @@ def set_partner_id_from_partner_address_id(
     model = pool.get(model_name)
     table = table or model._table
     openupgrade.logged_query(
-        cr, """
-        UPDATE %s t
-        SET %s=src.partner_id
-        FROM (
-            SELECT target.id as id,
-                   address.openupgrade_7_migrated_to_partner_id as partner_id
-            FROM %s as target, res_partner_address as address
-            WHERE address.id = target.%s
-        ) src
-        WHERE t.id=src.id""" %
-        (table, partner_field, table, address_field))
+        cr,
+        """
+        UPDATE %(table)s
+        SET %(partner_field)s=address.openupgrade_7_migrated_to_partner_id
+        FROM res_partner_address address
+        WHERE %(table)s.%(address_field)s=address.id
+        """ % {'table': table,
+               'partner_field': partner_field,
+               'address_field': address_field})
 
 
 def get_partner_id_from_user_id(cr, user_id):
