@@ -53,11 +53,9 @@ def set_procurement_groups(cr):
     # and link the procurement group to the sale order.
     cr.execute(
         """
-        SELECT DISTINCT so.id
-            FROM sale_order so
-            JOIN stock_picking sp
-            ON
-            so.id=sp.{sale_id}
+        SELECT DISTINCT {sale_id}
+            FROM stock_picking
+            WHERE {sale_id} IS NOT NULL
         """.format(
             sale_id=openupgrade.get_legacy_name('sale_id')))
 
