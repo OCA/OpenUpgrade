@@ -49,26 +49,23 @@ def set_procurement_groups(cr):
     the only way that sale orders and pickings are linked.
     """
 
-    # Create a procurement group for every sale order with at least one
-    # procurement, and link the procurement group to the sale order.
+    # Create a procurement group for every sale order pointed to by a picking,
+    # and link the procurement group to the sale order.
     cr.execute(
         """
-        SELECT id
+        SELECT DISTINCT so.id
             FROM sale_order so
-            WHERE (
-                SELECT COUNT(*) FROM sale_order_line sol
-                WHERE order_id = so.id
-                AND {procurement_id} IS NOT NULL
-                ) > 0
+            JOIN stock_picking sp
+            ON
+            so.id=sp.{sale_id}
         """.format(
-            procurement_id=openupgrade.get_legacy_name('procurement_id')))
+            sale_id=openupgrade.get_legacy_name('sale_id')))
 
-    sale_order_ids = [row[0] for row in cr.fetchall()]
     logger.debug(
-        "Creating procurement groups for %s sale order lines with "
-        "procurements.", len(sale_order_ids))
+        "Creating procurement groups for %s sale orders with "
+        "pickings.", cr.rowcount)
 
-    for sale_order_id in sale_order_ids:
+    for sale_order_id, in cr.fetchall():
         cr.execute(
             """
             INSERT INTO procurement_group
