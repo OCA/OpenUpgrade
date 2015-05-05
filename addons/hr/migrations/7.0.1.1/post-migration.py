@@ -69,10 +69,9 @@ def migrate_hr_job(cr):
 
 def replace_user_partner(cr, pool):
     """
-    If there's a sensible partner to use for the user record, do that instead
-    of using the newly created one.
-    address_id wins against address_home_id, and none of both is used if it
-    points to a company's partner.
+    If there's a sensible partner (address_id) to use for the user record,
+    do that instead of using the newly created one.
+    Don't use address_id if it points to a company's partner.
     """
     root_partner_id = pool['ir.model.data'].get_object_reference(
         cr, SUPERUSER_ID, 'base', 'partner_root')[1]
@@ -80,12 +79,12 @@ def replace_user_partner(cr, pool):
         '''UPDATE res_users SET partner_id=u.partner_id
         FROM (
             SELECT
-            r.user_id, COALESCE(e.address_id, e.address_home_id) partner_id
+            r.user_id, e.address_id partner_id
             FROM hr_employee e
             JOIN resource_resource r ON e.resource_id=r.id
             WHERE r.user_id IS NOT NULL
-            AND COALESCE(e.address_id, e.address_home_id) IS NOT NULL
-            AND COALESCE(e.address_id, e.address_home_id) NOT IN
+            AND e.address_id IS NOT NULL
+            AND e.address_id NOT IN
                 (SELECT partner_id FROM res_company)) u
         WHERE
         (
@@ -108,6 +107,27 @@ def replace_user_partner(cr, pool):
         (tuple(updated_user_ids.values()), root_partner_id))
 
 
+def amend_user_partner(cr, pool):
+    """
+    For newly created user partners, amend some data from the employee record
+    if available
+    """
+    cr.execute(
+        '''UPDATE res_partner p SET
+        mobile=e.mobile_phone,
+        phone=e.work_phone,
+        email=e.work_email,
+        image=e.image,
+        name=r.name
+        FROM
+        hr_employee e
+        JOIN resource_resource r ON e.resource_id=r.id
+        JOIN res_users u ON r.user_id=u.id
+        WHERE
+        u.partner_id=p.id AND
+        u.partner_id=u.openupgrade_7_created_partner_id''')
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
@@ -115,3 +135,4 @@ def migrate(cr, version):
     migrate_hr_employee_department(cr, pool)
     migrate_hr_job(cr)
     replace_user_partner(cr, pool)
+    amend_user_partner(cr, pool)
