@@ -50,8 +50,7 @@ def migrate_product(cr, registry):
         cr.execute(
             """
             SELECT product_tmpl_id FROM product_product
-            WHERE {} IS TRUE""".format(
-                openupgrade.get_legacy_name(field)))
+            WHERE {} IS TRUE""".format(openupgrade.get_legacy_name(field)))
         template_ids = [row[0] for row in cr.fetchall()]
         logger.debug(
             "Setting %s to True for %s product templates",
@@ -75,9 +74,8 @@ def migrate_move_inventory(cr, registry):
         SET inventory_id = rel.inventory_id
         FROM {stock_inventory_move_rel} rel
         WHERE sm.id = rel.move_id
-        """.format(
-            stock_inventory_move_rel=openupgrade.get_legacy_name(
-                'stock_inventory_move_rel')))
+        """.format(stock_inventory_move_rel=openupgrade.get_legacy_name(
+            'stock_inventory_move_rel')))
 
     openupgrade.logged_query(
         cr,
@@ -341,7 +339,7 @@ def _migrate_stock_warehouse(cr, registry, res_id):
         # OCB has stock.picking.internal, Odoo has stock.picking
         'number_next': get_sequence_next(
             'stock.picking', default=0) or get_sequence_next(
-                'stock.picking.internal'),
+            'stock.picking.internal'),
     })
     pack_seq_id = seq_obj.create(cr, uid, values={
         'name': warehouse.name + ' Sequence packing',
@@ -543,7 +541,8 @@ def migrate_stock_warehouse_orderpoint(cr):
 
 
 def migrate_product_supply_method(cr, registry):
-    """Procurements of products: change the supply_method for the matching route
+    """Procurements of products: change the supply_method for the matching
+    route.
     make to stock -> MTS Rule: by default
     make to order -> MTO Rule
     :param cr:
@@ -685,6 +684,36 @@ def reset_warehouse_data_ids(cr, registry):
             (res_id, name))
 
 
+def create_stock_move_fields(cr, registry):
+    """ This function reduce creation time of the stock_move fields
+       (See pre script, for more information)
+    """
+    sm_obj = registry['stock.move']
+    logger.info("Fast creation of the field stock_move.product_qty (post)")
+    # Set product_qty = product_uom_qty if uom_id of stock move
+    # is the same as uom_id of product. (Main case)
+    openupgrade.logged_query(cr, """
+        UPDATE stock_move sm1
+        SET product_qty = product_uom_qty
+        FROM
+            (SELECT sm2.id from stock_move sm2
+            INNER join product_product pp on sm2.product_id = pp.id
+            INNER join product_template pt on pp.product_tmpl_id = pt.id
+            where pt.uom_id = sm2.product_uom) as res
+        WHERE sm1.id = res.id""")
+    # Use ORM if uom id are different
+    cr.execute(
+        """SELECT sm2.id from stock_move sm2
+        INNER join product_product pp on sm2.product_id = pp.id
+        INNER join product_template pt on pp.product_tmpl_id = pt.id
+        where pt.uom_id != sm2.product_uom""")
+    sm_ids = [row[0] for row in cr.fetchall()]
+    qty_vals = sm_obj._quantity_normalize(cr, uid, sm_ids, None, None)
+    for id, qty in qty_vals.iteritems():
+        cr.execute("UPDATE stock_move set product_qty = '%s' where id=%s" % (
+            qty, id))
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     """
@@ -694,6 +723,7 @@ def migrate(cr, version):
     database in which procurement related stuff needs to be migrated.
     """
     registry = RegistryManager.get(cr.dbname)
+    create_stock_move_fields(cr, registry)
     have_procurement = openupgrade.column_exists(
         cr, 'product_template', openupgrade.get_legacy_name('procure_method'))
 
