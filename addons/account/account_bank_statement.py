@@ -20,6 +20,7 @@
 ##############################################################################
 
 from openerp.osv import fields, osv
+from openerp.tools import float_is_zero
 from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
 from openerp.report import report_sxw
@@ -161,7 +162,7 @@ class account_bank_statement(osv.osv):
     }
 
     _defaults = {
-        'name': '/', 
+        'name': '/',
         'date': fields.date.context_today,
         'state': 'draft',
         'journal_id': _default_journal_id,
@@ -242,7 +243,7 @@ class account_bank_statement(osv.osv):
 
     def _prepare_bank_move_line(self, cr, uid, st_line, move_id, amount, company_currency_id, context=None):
         """Compute the args to build the dict of values to create the counter part move line from a
-           statement line by calling the _prepare_move_line_vals. 
+           statement line by calling the _prepare_move_line_vals.
 
            :param browse_record st_line: account.bank.statement.line record to create the move from.
            :param int/long move_id: ID of the account.move to link the move line
@@ -388,7 +389,7 @@ class account_bank_statement(osv.osv):
         for item in self.browse(cr, uid, ids, context=context):
             if item.state != 'draft':
                 raise osv.except_osv(
-                    _('Invalid Action!'), 
+                    _('Invalid Action!'),
                     _('In order to delete a bank statement, you must first cancel it to delete related journal items.')
                 )
             # Explicitly unlink bank statement lines
@@ -436,7 +437,7 @@ class account_bank_statement_line(osv.osv):
         for item in self.browse(cr, uid, ids, context=context):
             if item.journal_entry_id:
                 raise osv.except_osv(
-                    _('Invalid Action!'), 
+                    _('Invalid Action!'),
                     _('In order to delete a bank statement line, you must first cancel it to delete related journal items.')
                 )
         return super(account_bank_statement_line, self).unlink(cr, uid, ids, context=context)
@@ -540,8 +541,8 @@ class account_bank_statement_line(osv.osv):
         # Look for structured communication
         if st_line.name:
             domain = self._domain_reconciliation_proposition(cr, uid, st_line, excluded_ids=excluded_ids, context=context)
-            match_id = mv_line_pool.search(cr, uid, domain, offset=0, limit=1, context=context)
-            if match_id:
+            match_id = mv_line_pool.search(cr, uid, domain, offset=0, limit=2, context=context)
+            if match_id and len(match_id) == 1:
                 mv_line_br = mv_line_pool.browse(cr, uid, match_id, context=context)
                 target_currency = st_line.currency_id or st_line.journal_id.currency or st_line.journal_id.company_id.currency_id
                 mv_line = mv_line_pool.prepare_move_lines_for_reconciliation_widget(cr, uid, mv_line_br, target_currency=target_currency, target_date=st_line.date, context=context)[0]
@@ -571,8 +572,8 @@ class account_bank_statement_line(osv.osv):
 
         # Look for a matching amount
         domain_exact_amount = domain + [(amount_field, '=', float_round(sign * amount, precision_digits=precision_digits))]
-        match_id = self.get_move_lines_for_reconciliation(cr, uid, st_line, excluded_ids=excluded_ids, offset=0, limit=1, additional_domain=domain_exact_amount)
-        if match_id:
+        match_id = self.get_move_lines_for_reconciliation(cr, uid, st_line, excluded_ids=excluded_ids, offset=0, limit=2, additional_domain=domain_exact_amount)
+        if match_id and len(match_id) == 1:
             return match_id
 
         if not st_line.partner_id.id:
@@ -646,7 +647,7 @@ class account_bank_statement_line(osv.osv):
         """
         mv_line_pool = self.pool.get('account.move.line')
         domain = self._domain_move_lines_for_reconciliation(cr, uid, st_line, excluded_ids=excluded_ids, str=str, additional_domain=additional_domain, context=context)
-        
+
         # Get move lines ; in case of a partial reconciliation, only keep one line (the first whose amount is greater than
         # the residual amount because it is presumably the invoice, which is the relevant item in this situation)
         filtered_lines = []
@@ -793,8 +794,13 @@ class account_bank_statement_line(osv.osv):
                 if mv_line_dict.get('counterpart_move_line_id'):
                     #post an account line that use the same currency rate than the counterpart (to balance the account) and post the difference in another line
                     ctx['date'] = mv_line.date
-                    debit_at_old_rate = currency_obj.compute(cr, uid, st_line_currency.id, company_currency.id, mv_line_dict['debit'], context=ctx)
-                    credit_at_old_rate = currency_obj.compute(cr, uid, st_line_currency.id, company_currency.id, mv_line_dict['credit'], context=ctx)
+                    if mv_line.currency_id.id == mv_line_dict['currency_id'] \
+                            and float_is_zero(mv_line.amount_currency - abs(mv_line_dict['amount_currency']), precision_rounding=mv_line.currency_id.rounding):
+                        debit_at_old_rate = mv_line.credit
+                        credit_at_old_rate = mv_line.debit
+                    else:
+                        debit_at_old_rate = currency_obj.compute(cr, uid, st_line_currency.id, company_currency.id, mv_line_dict['debit'], context=ctx)
+                        credit_at_old_rate = currency_obj.compute(cr, uid, st_line_currency.id, company_currency.id, mv_line_dict['credit'], context=ctx)
                     mv_line_dict['credit'] = credit_at_old_rate
                     mv_line_dict['debit'] = debit_at_old_rate
                     if debit_at_old_rate - debit_at_current_rate:
@@ -811,6 +817,15 @@ class account_bank_statement_line(osv.osv):
                 prorata_factor = (mv_line_dict['debit'] - mv_line_dict['credit']) / st_line.amount_currency
                 mv_line_dict['amount_currency'] = prorata_factor * st_line.amount
             to_create.append(mv_line_dict)
+        # If the reconciliation is performed in another currency than the company currency, the amounts are converted to get the right debit/credit.
+        # If there is more than 1 debit and 1 credit, this can induce a rounding error, which we put in the foreign exchane gain/loss account.
+        if st_line_currency.id != company_currency.id:
+            diff_amount = bank_st_move_vals['debit'] - bank_st_move_vals['credit'] \
+                + sum(aml['debit'] for aml in to_create) - sum(aml['credit'] for aml in to_create)
+            if not company_currency.is_zero(diff_amount):
+                diff_aml = self.get_currency_rate_line(cr, uid, st_line, diff_amount, move_id, context=context)
+                diff_aml['name'] = _('Rounding error from currency conversion')
+                to_create.append(diff_aml)
         # Create move lines
         move_line_pairs_to_reconcile = []
         for mv_line_dict in to_create:

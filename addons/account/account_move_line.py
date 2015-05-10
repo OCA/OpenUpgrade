@@ -305,7 +305,8 @@ class account_move_line(osv.osv):
         if not id:
             return []
         ml = self.browse(cr, uid, id, context=context)
-        return map(lambda x: x.id, ml.move_id.line_id)
+        domain = (context or {}).get('on_write_domain', [])
+        return self.pool.get('account.move.line').search(cr, uid, domain + [['id', 'in', [l.id for l in ml.move_id.line_id]]], context=context)
 
     def _balance(self, cr, uid, ids, name, arg, context=None):
         if context is None:
@@ -451,7 +452,7 @@ class account_move_line(osv.osv):
         'debit': fields.float('Debit', digits_compute=dp.get_precision('Account')),
         'credit': fields.float('Credit', digits_compute=dp.get_precision('Account')),
         'account_id': fields.many2one('account.account', 'Account', required=True, ondelete="cascade", domain=[('type','<>','view'), ('type', '<>', 'closed')], select=2),
-        'move_id': fields.many2one('account.move', 'Journal Entry', ondelete="cascade", help="The move of this entry line.", select=2, required=True),
+        'move_id': fields.many2one('account.move', 'Journal Entry', ondelete="cascade", help="The move of this entry line.", select=2, required=True, auto_join=True),
         'narration': fields.related('move_id','narration', type='text', relation='account.move', string='Internal Note'),
         'ref': fields.related('move_id', 'ref', string='Reference', type='char', store=True),
         'statement_id': fields.many2one('account.bank.statement', 'Statement', help="The bank statement used for bank reconciliation", select=1, copy=False),
@@ -824,12 +825,17 @@ class account_move_line(osv.osv):
                 total_amount_currency_str = rml_parser.formatLang(total_amount, currency_obj=line_currency)
                 ret_line['credit_currency'] = actual_credit
                 ret_line['debit_currency'] = actual_debit
-                ctx = context.copy()
-                if target_date:
-                    ctx.update({'date': target_date})
-                total_amount = currency_obj.compute(cr, uid, line_currency.id, target_currency.id, total_amount, context=ctx)
-                actual_debit = currency_obj.compute(cr, uid, line_currency.id, target_currency.id, actual_debit, context=ctx)
-                actual_credit = currency_obj.compute(cr, uid, line_currency.id, target_currency.id, actual_credit, context=ctx)
+                if target_currency == company_currency:
+                    actual_debit = debit
+                    actual_credit = credit
+                    total_amount = debit or credit
+                else:
+                    ctx = context.copy()
+                    if target_date:
+                        ctx.update({'date': target_date})
+                    total_amount = currency_obj.compute(cr, uid, line_currency.id, target_currency.id, total_amount, context=ctx)
+                    actual_debit = currency_obj.compute(cr, uid, line_currency.id, target_currency.id, actual_debit, context=ctx)
+                    actual_credit = currency_obj.compute(cr, uid, line_currency.id, target_currency.id, actual_credit, context=ctx)
             amount_str = rml_parser.formatLang(actual_debit or actual_credit, currency_obj=target_currency)
             total_amount_str = rml_parser.formatLang(total_amount, currency_obj=target_currency)
 
@@ -842,7 +848,12 @@ class account_move_line(osv.osv):
             ret.append(ret_line)
         return ret
 
-    def list_partners_to_reconcile(self, cr, uid, context=None):
+
+    def list_partners_to_reconcile(self, cr, uid, context=None, filter_domain=False):
+        line_ids = []
+        if filter_domain:
+            line_ids = self.search(cr, uid, filter_domain, context=context)
+        where_clause = filter_domain and "AND l.id = ANY(%s)" or ""
         cr.execute(
              """SELECT partner_id FROM (
                 SELECT l.partner_id, p.last_reconciliation_date, SUM(l.debit) AS debit, SUM(l.credit) AS credit, MAX(l.create_date) AS max_date
@@ -852,10 +863,12 @@ class account_move_line(osv.osv):
                     WHERE a.reconcile IS TRUE
                     AND l.reconcile_id IS NULL
                     AND l.state <> 'draft'
+                    %s
                     GROUP BY l.partner_id, p.last_reconciliation_date
                 ) AS s
                 WHERE debit > 0 AND credit > 0 AND (last_reconciliation_date IS NULL OR max_date > last_reconciliation_date)
-                ORDER BY last_reconciliation_date""")
+                ORDER BY last_reconciliation_date"""
+            % where_clause, (line_ids,))
         ids = [x[0] for x in cr.fetchall()]
         if not ids:
             return []
@@ -1172,9 +1185,11 @@ class account_move_line(osv.osv):
             raise osv.except_osv(_('Unable to change tax!'), _('You cannot change the tax, you should remove and recreate lines.'))
         if ('account_id' in vals) and not account_obj.read(cr, uid, vals['account_id'], ['active'])['active']:
             raise osv.except_osv(_('Bad Account!'), _('You cannot use an inactive account.'))
-        if update_check:
-            if ('account_id' in vals) or ('journal_id' in vals) or ('period_id' in vals) or ('move_id' in vals) or ('debit' in vals) or ('credit' in vals) or ('date' in vals):
-                self._update_check(cr, uid, ids, context)
+
+        affects_move = any(f in vals for f in ('account_id', 'journal_id', 'period_id', 'move_id', 'debit', 'credit', 'date'))
+
+        if update_check and affects_move:
+            self._update_check(cr, uid, ids, context)
 
         todo_date = None
         if vals.get('date', False):
@@ -1198,7 +1213,8 @@ class account_move_line(osv.osv):
             if journal.centralisation:
                 self._check_moves(cr, uid, context=ctx)
         result = super(account_move_line, self).write(cr, uid, ids, vals, context)
-        if check and not context.get('novalidate'):
+
+        if affects_move and check and not context.get('novalidate'):
             done = []
             for line in self.browse(cr, uid, ids):
                 if line.move_id.id not in done:
@@ -1374,7 +1390,7 @@ class account_move_line(osv.osv):
                     }
                     self.create(cr, uid, data, context)
                 #create the Tax movement
-                if not tax['amount']:
+                if not tax['amount'] and not tax[tax_code]:
                     continue
                 data = {
                     'move_id': vals['move_id'],
