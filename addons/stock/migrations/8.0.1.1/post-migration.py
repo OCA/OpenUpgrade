@@ -277,10 +277,10 @@ def set_warehouse_view_location(cr, registry, warehouse):
                 'location_id': all_warehouse_view,
             })
         location_obj.write(
-            cr, uid, set(
+            cr, uid, set([
                 warehouse.lot_stock_id.id,
                 warehouse.wh_input_stock_loc_id.id,
-                warehouse.wh_output_stock_loc_id.id),
+                warehouse.wh_output_stock_loc_id.id]),
             {'location_id': warehouse_view_id})
     warehouse.write({'view_location_id': warehouse_view_id})
     warehouse.refresh()
