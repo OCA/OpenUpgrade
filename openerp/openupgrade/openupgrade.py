@@ -625,15 +625,10 @@ def m2o_to_x2m(cr, model, table, field, source_field):
         logged_query(
             cr,
             """
-            UPDATE %(target_table)s t
-            SET %(target_field)s=src.id
-            FROM (
-                  SELECT s.id, s.%(source_field)s
-                  FROM %(target_table)s as target, %(source_table)s as s
-                  WHERE s.%(source_field)s=target.id
-                  LIMIT 1
-            ) src
-            WHERE t.id=src.%(source_field)s
+            UPDATE %(target_table)s AS target
+            SET %(target_field)s=source.id
+            FROM %(source_table)s AS source
+            WHERE source.%(source_field)s=target.id
             """ % {'target_table': target_table,
                    'target_field': target_field,
                    'source_field': source_field,
