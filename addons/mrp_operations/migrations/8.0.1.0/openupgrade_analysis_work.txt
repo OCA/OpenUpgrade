@@ -1,0 +1,24 @@
+---Fields in module 'mrp_operations'---
+mrp_operations / mrp.production.workcenter.line / production_state (selection)  : selection_keys is now '['cancel', 'confirmed', 'done', 'draft', 'in_production', 'ready']' ('['cancel', 'confirmed', 'done', 'draft', 'in_production', 'picking_except', 'ready']')
+# 'picking_except' key has been deleted. This key was unused in previous V7 version : Nothing to do
+# (rgrep on mrp_operations in V7)
+
+---XML records in module 'mrp_operations'---
+DEL ir.actions.act_window.view: mrp_operations.action_report_mrp_workorder_tree
+NEW ir.filters: mrp_operations.filter_mrp_workorder_current_production
+NEW ir.filters: mrp_operations.filter_mrp_workorder_quantity_produced
+NEW ir.filters: mrp_operations.filter_mrp_workorder_workload
+DEL ir.ui.view: mrp_operations.view_report_mrp_workorder_tree
+# Changes in 'ir.actions.act_window.view', 'ir.filters' and 'ir.ui.view' Models : Nothing to do
+
+DEL process.node: mrp_operations.process_node_canceloperation0
+DEL process.node: mrp_operations.process_node_doneoperation0
+DEL process.node: mrp_operations.process_node_productionorder0
+DEL process.node: mrp_operations.process_node_startoperation0
+DEL process.node: mrp_operations.process_node_workorder0
+DEL process.process: mrp_operations.process_process_mrpoperationprocess0
+DEL process.transition: mrp_operations.process_transition_productionstart0
+DEL process.transition: mrp_operations.process_transition_startcanceloperation0
+DEL process.transition: mrp_operations.process_transition_startdoneoperation0
+DEL process.transition: mrp_operations.process_transition_workstartoperation0
+# The whole process has been deleted and not moved into another module. (nothing to do)
