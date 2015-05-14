@@ -38,9 +38,9 @@ def mail_mail_to_mail_message_migration(cr, uid, pool):
     legacy_server_id = openupgrade.get_legacy_name('mail_server_id')
     legacy_reply_to = openupgrade.get_legacy_name('reply_to')
     openupgrade.logged_query(cr, """
-UPDATE mail_message
+UPDATE mail_message AS a
 SET %s = %s, %s = %s
-FROM mail_message AS a JOIN mail_mail AS b ON a.id = b.mail_message_id
+FROM mail_mail AS b WHERE a.id = b.mail_message_id
 """ % ('mail_server_id', legacy_server_id, 'reply_to', legacy_reply_to, ))
 
 
