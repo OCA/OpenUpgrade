@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2014 Camptocamp SA
+#    Copyright (C) 2014 Camptocamp SA
+#              (C) 2015 Therp BV
+#
+#    Authors: Guewen Baconnier, Stefan Rijnhart
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -42,7 +44,65 @@ def create_properties(cr, pool):
                                context=ctx)
 
 
-@openupgrade.migrate()
+def propagate_invoice_state(cr):
+    """ Invoice state is now propagated from sale order to procurement to
+    stock move and picking. We trace it back from the picking and update
+    stock moves and procurements. """
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE stock_move sm
+        SET invoice_state = (
+            SELECT sp.invoice_state FROM stock_picking sp
+            WHERE sm.picking_id = sp.id)
+        WHERE picking_id IN (
+            SELECT id FROM stock_picking sp
+            WHERE sm.picking_id = sp.id
+            AND sm.invoice_state <> sp.invoice_state)
+    """)
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE procurement_order po
+        SET invoice_state = sm.invoice_state
+        FROM stock_move sm
+        WHERE sm.procurement_id = po.id
+    """)
+
+
+def inventory_period_id(cr, pool):
+    period_obj = pool['account.period']
+    inventory_obj = pool['stock.inventory']
+    date_done = openupgrade.get_legacy_name('date_done')
+    cr.execute(
+        """
+        SELECT id, company_id, {date_done}
+        FROM stock_inventory
+        WHERE {date_done} IS NOT NULL
+        """.format(
+            date_done=date_done))
+    for inv_id, company_id, date in cr.fetchall():
+        period_ids = period_obj.find(
+            cr, SUPERUSER_ID, dt=date[:10], context={'company_id': company_id})
+        inventory_obj.write(
+            cr, SUPERUSER_ID, inv_id, {'period_id': period_ids[0]})
+    # Drop column as a marker that this script has run
+    openupgrade.drop_columns(cr, [('stock_inventory', date_done)])
+
+
+@openupgrade.migrate(no_version=True)
 def migrate(cr, version):
+    """
+    Run upon a fresh installation because this is a new glue module between
+    stock and account in Odoo 8.0.
+    Check for ourselves if the migration script applies by checking for a
+    specific legacy column that is migrated here and then removed.
+    """
+    if not openupgrade.column_exists(
+            cr, 'stock_inventory',
+            openupgrade.get_legacy_name('date_done')):
+        return
     pool = pooler.get_pool(cr.dbname)
+    inventory_period_id(cr, pool)
     create_properties(cr, pool)
+    propagate_invoice_state(cr)
