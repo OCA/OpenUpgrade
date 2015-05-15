@@ -47,7 +47,12 @@ def create_properties(cr, pool):
 def propagate_invoice_state(cr):
     """ Invoice state is now propagated from sale order to procurement to
     stock move and picking. We trace it back from the picking and update
-    stock moves and procurements. """
+    stock moves and procurements.
+
+    First query courtesy of Ronald Portier. Postgres' explain analyse function
+    showed that using subqueries are more performant than using UPDATE...FROM,
+    at least in this case.
+    """
     openupgrade.logged_query(
         cr,
         """
