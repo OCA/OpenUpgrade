@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+B1;2802;0c# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2014 Camptocamp SA
@@ -71,6 +71,10 @@ def propagate_invoice_state(cr):
 
 
 def inventory_period_id(cr, pool):
+    """
+    Replacing the confirmation date of the inventory with the accounting
+    period of the associated company.
+    """
     period_obj = pool['account.period']
     inventory_obj = pool['stock.inventory']
     date_done = openupgrade.get_legacy_name('date_done')
