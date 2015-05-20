@@ -56,3 +56,11 @@ def migrate(cr, version):
             'analytic_entries_report', 'account_entries_report',
             'report_invoice_created', 'report_aged_receivable']:
         cr.execute('drop view if exists %s cascade' % view)
+
+    # delete a view from obsolete module account_report_company that causes
+    # migration of the account module not to happen cleanly
+    cr.execute(
+        "delete from ir_ui_view v "
+        "using ir_model_data d where "
+        "v.id=d.res_id and d.model='ir.ui.view' and "
+        "d.name='account_report_company_invoice_report_tree_view'")
