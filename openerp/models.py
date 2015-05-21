@@ -406,12 +406,18 @@ class BaseModel(object):
         cols = {}
         for rec in cr.dictfetchall():
             # OpenUpgrade start:
-            if rec['name'] in self._columns.keys() and\
+            if 'module' in context and\
+                    rec['name'] in self._columns.keys() and\
                     rec['module'] != context.get('module') and\
                     rec['module'] not in self.pool._init_modules:
-                cr.execute("DELETE FROM ir_model_fields WHERE id=%(id)s", rec)
-                cr.execute("DELETE FROM ir_model_data WHERE id=%(xmlid_id)s", rec)
-                continue
+                _logger.info(
+                    'Moving XMLID for ir.model.fields record of %s#%s '
+                    'from %s to %s',
+                    self._name, rec['name'], rec['module'], context['module'])
+                cr.execute(
+                    "UPDATE ir_model_data SET module=%(module)s "
+                    "WHERE id=%(xmlid_id)s",
+                    dict(rec, module=context['module']))
             # OpenUpgrade end
             cols[rec['name']] = rec
 
