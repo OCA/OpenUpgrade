@@ -395,8 +395,7 @@ class BaseModel(object):
         # module
         # Given that we arrive here in order of inheritance, we simply check
         # if the field's xmlid belongs to a module already loaded, and if not,
-        # drop the record to let the following standard code create it for the
-        # correct module.
+        # update the record with the correct module name.
         cr.execute(
             "SELECT f.*, d.module, d.id as xmlid_id "
             "FROM ir_model_fields f LEFT JOIN ir_model_data d "
