@@ -23,6 +23,9 @@ renamed_modules = {
     'letter_mgmt_v6': 'lettermgmt',
     # https://github.com/OCA/web/pull/79
     'web_widget_classes': 'web_dom_model_classes',
+    # https://github.com/Therp/Therp-Addons/blob/6.1/account_report_alt/
+    # __openerp__.py#L31
+    'account_report_alt': 'account_financial_report_horizontal',
 }
 
 renamed_models = {
