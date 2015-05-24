@@ -202,14 +202,25 @@ This can be the case if an additional module installed on your database changes
             row_cleaned = [val or False for val in row]
             address = dict(zip(fields, row_cleaned))
             partner_vals = address.copy()
+            # Try to compose an understandable name
+            if address['name']:
+                name = address['name']
+            else:
+                name = address['street'] or ''
+                if address['city']:
+                    name += ' - %s' % address['city']
+                if address['zip']:
+                    name += " (%s)" % address['zip']
+                if not name:
+                    name = '/'
             partner_defaults = {
                 # list of values that we should not overwrite
                 # in existing partners
                 'customer': False,
                 'is_company': address['type'] != 'contact',
                 'type': address['type'],
-                'name': address['name'] or '/',
-                }
+                'name': name,
+            }
             for f in ['name', 'id', 'type', 'partner_id']:
                 del partner_vals[f]
             if not address['partner_id']:
