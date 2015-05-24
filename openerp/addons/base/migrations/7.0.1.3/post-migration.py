@@ -147,8 +147,8 @@ def migrate_partner_address(cr, pool):
         'partner_id', 'name', 'company_id'
         ]
     propagate_fields = [
-        'lang', 'tz',
-        ]
+        'lang', 'tz', 'customer', 'supplier',
+    ]
     partner_found = []
     processed_ids = []
 
