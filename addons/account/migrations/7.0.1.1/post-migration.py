@@ -95,9 +95,9 @@ def migrate_payment_term(cr, pool):
         AND res_id like 'res.partner,%'
         """)
     for row in cr.fetchall():
-        if partner_obj.read(
-                cr, SUPERUSER_ID, int(row[2][12:]), ['supplier']
-                )['supplier']:
+        partner = partner_obj.read(
+            cr, SUPERUSER_ID, int(row[2][12:]), ['supplier'])
+        if partner and partner['supplier']:
             cr.execute(
                 """
                 INSERT INTO ir_property (
