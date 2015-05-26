@@ -6,7 +6,8 @@ stock        / procurement.group        / partner_id (many2one)         : NEW re
 
 ############# PROCUREMENT ORDER ##############
 stock        / procurement.order        / move_dest_id (many2one)       : NEW relation: stock.move
-# DONE: rename old column move_id from the procurement module
+# DONE: copy values from related stock moves
+
 stock        / procurement.order        / move_ids (one2many)           : NEW relation: stock.move
 # DONE in purchase, TO DO in mrp
 
@@ -193,6 +194,8 @@ stock        / stock.move               / priority (selection)          : select
 
 stock        / stock.move               / procure_method (selection)    : NEW required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: make_to_stock
 stock        / stock.move               / procurement_id (many2one)     : NEW relation: procurement.order
+# Done: reverse link between procurements and the stock moves that satisfy them
+
 stock        / stock.move               / prodlot_id (many2one)         : DEL relation: stock.production.lot
 stock        / stock.move               / product_qty (float)           : now a function
 stock        / stock.move               / product_uom_qty (float)       : NEW required: required, req_default: 1.0
@@ -523,7 +526,9 @@ DEL ir.property: stock.property_stock_account_input_prd
 DEL ir.property: stock.property_stock_account_output_categ
 DEL ir.property: stock.property_stock_account_output_prd
 DEL ir.property: stock.property_stock_journal
-# NOTHING TO DO moved to stock_account
+DEL res.groups: stock.group_inventory_valuation
+DEL ir.sequence: stock.stock_journal_sequence
+# Done: moved to stock_account, updated XML IDs
 
 NEW ir.rule: stock.product_pulled_flow_comp_rule
 NEW ir.rule: stock.stock_location_path_comp_rule
@@ -542,9 +547,6 @@ DEL ir.sequence: stock.seq_picking_in
 DEL ir.sequence: stock.seq_picking_out
 # DONE Sequences were migrated
  
-DEL ir.sequence: stock.stock_journal_sequence
-# NOTHING TO DO
-
 NEW ir.ui.menu: stock.menu_action_picking_type_form
 NEW ir.ui.menu: stock.menu_package
 NEW ir.ui.menu: stock.menu_pickingtype
@@ -673,7 +675,6 @@ NEW product.removal: stock.removal_lifo
 
 NEW res.groups: stock.group_adv_location
 NEW res.groups: stock.group_tracking_owner
-DEL res.groups: stock.group_inventory_valuation
 # NOTHING TO DO
 
 DEL res.partner: base.main_partner

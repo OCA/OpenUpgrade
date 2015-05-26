@@ -568,14 +568,56 @@ def migrate_product_supply_method(cr, registry):
 
 
 def migrate_procurement_order(cr, registry):
-    """Set warehouse, partner from the move."""
+    """
+    In 7.0:
+    procurement_order.move_id: the reservation for which the procurement
+    was generated. Counterpart field on the stock
+    move is stock_move.procurements. This is the move_dest_id on the
+    purchase order lines that are created for the procurement, which is
+    propagated as the move_dest_id on the move lines created for the incoming
+    products of the purchase order. The id(s) of these move lines are recorded
+    as the purchase line's move_ids (or stock_move.purchase_line_id).
+
+    Something similar occurs in mrp: stock_move.production_id vs. production_
+    order.move_created_ids(2), and procurement_order.production_id. The
+    procurement order's move_id is production_order.move_prod_id.
+
+    In 8.0:
+    procurement_order.move_dest_id: stock move that generated the procurement
+    order, e.g. a sold product from stock to customer location. Counterpart
+    field on the stock move does not seem to exist.
+    procurement_order.move_ids: moves that the procurement order has generated,
+    e.g. a purchased product from supplier to stock location. Counterpart field
+    on the stock move is stock_move.procurement_id.
+    """
+    # Reverse the link between procurement orders and the stock moves that
+    # satisfy them.
+    cr.execute(
+        """
+        UPDATE stock_move sm
+        SET procurement_id = po.id
+        FROM procurement_order po
+        WHERE po.{move_id} = sm.id
+        """.format(move_id=openupgrade.get_legacy_name('move_id')))
+    # Sync the destination move, if any
+    cr.execute(
+        """
+        UPDATE procurement_order po
+        SET move_dest_id = sm.move_dest_id
+        FROM stock_move sm
+        WHERE sm.procurement_id = po.id
+            AND sm.move_dest_id IS NOT NULL
+        """)
+    # Set partner from the destination move.
     cr.execute(
         """
         UPDATE procurement_order AS po
         SET partner_dest_id = sm.partner_id
         FROM stock_move AS sm
         WHERE po.move_dest_id = sm.id
+            AND sm.partner_id IS NOT NULL
         """)
+    # Set warehouse
     company_obj = registry['res.company']
     warehouse_obj = registry['stock.warehouse']
     procurement_obj = registry['procurement.order']
