@@ -385,9 +385,39 @@ class BaseModel(object):
                     (name_id, context['module'], 'ir.model', model_id)
                 )
 
-        cr.execute("SELECT * FROM ir_model_fields WHERE model=%s", (self._name,))
+        # OpenUpgrade edit start: In rare cases, an old module defined a field
+        # on a model that is not defined in another module earlier in the
+        # chain of inheritance. Then we need to assign the ir.model.fields'
+        # xmlid to this other module, otherwise the column would be dropped
+        # when uninstalling the first module.
+        # An example is res.partner#display_name defined in 7.0 by
+        # account_report_company, but now the field belongs to the base
+        # module
+        # Given that we arrive here in order of inheritance, we simply check
+        # if the field's xmlid belongs to a module already loaded, and if not,
+        # update the record with the correct module name.
+        cr.execute(
+            "SELECT f.*, d.module, d.id as xmlid_id "
+            "FROM ir_model_fields f LEFT JOIN ir_model_data d "
+            "ON f.id=d.res_id and d.model='ir.model.fields' WHERE f.model=%s",
+            (self._name,))
+        # OpenUpgrade edit end
         cols = {}
         for rec in cr.dictfetchall():
+            # OpenUpgrade start:
+            if 'module' in context and\
+                    rec['name'] in self._columns.keys() and\
+                    rec['module'] != context.get('module') and\
+                    rec['module'] not in self.pool._init_modules:
+                _logger.info(
+                    'Moving XMLID for ir.model.fields record of %s#%s '
+                    'from %s to %s',
+                    self._name, rec['name'], rec['module'], context['module'])
+                cr.execute(
+                    "UPDATE ir_model_data SET module=%(module)s "
+                    "WHERE id=%(xmlid_id)s",
+                    dict(rec, module=context['module']))
+            # OpenUpgrade end
             cols[rec['name']] = rec
 
         ir_model_fields_obj = self.pool.get('ir.model.fields')

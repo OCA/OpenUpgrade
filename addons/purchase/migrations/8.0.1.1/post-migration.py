@@ -112,10 +112,6 @@ def migrate_procurement_order(cr):
     In Odoo 8.0, stock moves generated for the procurement (moves from the
     supplier or production location to stock) are also recorded on the
     procurement. For purchase procurements, gather them here.
-
-    Note that procurement_order.move_dest_id was proc.move_id in 7.0, renamed
-    to legacy in the 8.0 procurement migration script and then renamed again
-    to move_dest_id in the stock migration script.
     """
     openupgrade.logged_query(
         cr,

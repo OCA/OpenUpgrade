@@ -1,0 +1,20 @@
+---Fields in module 'account_analytic_analysis'---
+account_analytic_analysis / account.analytic.account / recurring_interval (integer)  : NEW 
+account_analytic_analysis / account.analytic.account / recurring_invoice_line_ids (one2many): NEW relation: account.analytic.invoice.line
+account_analytic_analysis / account.analytic.account / recurring_invoices (boolean)  : NEW 
+account_analytic_analysis / account.analytic.account / recurring_next_date (date)    : NEW 
+account_analytic_analysis / account.analytic.account / recurring_rule_type (selection): NEW selection_keys: ['daily', 'monthly', 'weekly', 'yearly']
+account_analytic_analysis / account.analytic.invoice.line / analytic_account_id (many2one): NEW relation: account.analytic.account
+account_analytic_analysis / account.analytic.invoice.line / name (text)                   : NEW required: required
+account_analytic_analysis / account.analytic.invoice.line / price_unit (float)            : NEW required: required
+account_analytic_analysis / account.analytic.invoice.line / product_id (many2one)         : NEW relation: product.product, required: required
+account_analytic_analysis / account.analytic.invoice.line / quantity (float)              : NEW required: required, req_default: 1
+account_analytic_analysis / account.analytic.invoice.line / uom_id (many2one)             : NEW relation: product.uom, required: required
+
+# all of the above are used to implement the new functionality 'recurring invoices' on analytic accounts, nothing to do
+
+---XML records in module 'account_analytic_analysis'---
+NEW ir.cron: account_analytic_analysis.account_analytic_cron_for_invoice
+NEW ir.model.access: account_analytic_analysis.access_account_analytic_invoice_line
+NEW ir.model.access: account_analytic_analysis.access_edi_edi
+NEW ir.ui.view: account_analytic_analysis.assets_backend
