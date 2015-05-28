@@ -21,7 +21,7 @@
 from openerp.openupgrade import openupgrade
 
 
-@openupgrade.migrate
+@openupgrade.migrate()
 def migrate(cr, version):
     # if account_analytic_analysis_recurring is installed, uninstall it and
     # move relevant xmlids to this module
