@@ -22,7 +22,7 @@
 import os
 import inspect
 import logging
-from openerp import release, osv, tools, SUPERUSER_ID, pooler
+from openerp import release, osv, tools, SUPERUSER_ID
 from openerp.modules.registry import RegistryManager
 import openupgrade_tools
 from itertools import groupby
@@ -634,18 +634,21 @@ def remove_sql_constraint_duplicates(cr, model, constraint_attrs):
     For every field many2one and many2many with the given model as relation,
     change the duplicate ids with the id of the record kept.
 
-    This script must be called in post-migration so that the model being
+    This method must be called in post-migration so that the model being
     edited can be accessed through the orm.
 
     When upgrading the module, if there are duplicates, integrity errors
-    will be raised before the script is run but this will not prevent
-    the script from running.
+    will be raised before the method is run but this will not prevent
+    the method from running.
 
-    :param model: the model on witch the constraint is applied
-    :param constraint_attrs: a list of string containing the fields that
+    Use with care, this method will keep one record for each set of duplicates
+    and it might keep the wrong record.
+
+    :param model: the model on which the constraint is applied
+    :param constraint_attrs: a list of strings containing the fields that
                                 form the uniq key
     """
-    pool = pooler.get_pool(cr.dbname)
+    pool = RegistryManager.get(cr.dbname)
     model_pool = pool[model]
     model_table = model_pool._table
 
@@ -788,4 +791,6 @@ def remove_sql_constraint_duplicates(cr, model, constraint_attrs):
                         old_record_ids[0]
                     })
 
+            logger.info('Unlinking the following ids from table %s: %s' % (
+                model_table, old_record_ids))
             model_pool.unlink(cr, SUPERUSER_ID, old_record_ids)
