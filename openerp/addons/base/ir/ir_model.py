@@ -1207,6 +1207,10 @@ class ir_model_data(osv.osv):
                         _logger.info('Deleting orphan external_ids %s', external_ids)
                         self.unlink(cr, uid, external_ids)
                         continue
+                    # OpenUpgrade specific start
+                    if not self.pool.get(field.model):
+                        continue
+                    # OpenUpgrade specific end
                     if field.name in openerp.models.LOG_ACCESS_COLUMNS and self.pool[field.model]._log_access:
                         continue
                     if field.name == 'id':
