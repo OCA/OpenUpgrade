@@ -406,6 +406,7 @@ class BaseModel(object):
         for rec in cr.dictfetchall():
             # OpenUpgrade start:
             if 'module' in context and\
+                    rec['module'] and\
                     rec['name'] in self._columns.keys() and\
                     rec['module'] != context.get('module') and\
                     rec['module'] not in self.pool._init_modules:
