@@ -263,15 +263,14 @@ for version in options.migrations.split(','):
             if isinstance(addon_config, dict)\
             else {'url': addon_config}
         addon_config_type = addon_config.get('type', 'bzr')
-        if os.path.exists(os.path.join(options.branch_dir, version, name)):
+        target = os.path.join(options.branch_dir, version, 'rep_addons', name)
+        if os.path.exists(target):
             if addon_config_type == 'link':
                 continue
             elif addon_config_type == 'bzr':
                 cmd_revno = bzrlib.builtins.cmd_revno()
                 cmd_revno.outf = StringIO.StringIO()
-                cmd_revno.run(location=os.path.join(options.branch_dir,
-                                                    version,
-                                                    name))
+                cmd_revno.run(location=target)
                 print 'updating %s rev%s' % (
                     os.path.join(version, name),
                     cmd_revno.outf.getvalue().strip())
@@ -279,34 +278,28 @@ for version in options.migrations.split(','):
                 cmd_update.outf = StringIO.StringIO()
                 cmd_update.outf.encoding = 'utf8'
                 cmd_update.run(
-                    dir=os.path.join(options.branch_dir, version, name))
+                    dir=target)
                 if hasattr(cmd_update, '_operation'):
                     cmd_update.cleanup_now()
                 print 'now at rev' + cmd_revno.outf.getvalue().strip()
             elif addon_config_type == 'git':
                 os.system('cd %(location)s; git pull origin %(branch)s' % {
                     'branch': addon_config.get('branch', 'master'),
-                    'location': os.path.join(options.branch_dir,
-                                             version,
-                                             name),
+                    'location': target,
                 })
             else:
                 raise Exception('Unknown type %s' % addon_config_type)
         else:
             if addon_config_type == 'link':
-                print 'linking %s to %s' % (addon_config['url'],
-                                            os.path.join(options.branch_dir,
-                                                         version,
-                                                         name))
-                os.symlink(addon_config['url'],
-                           os.path.join(options.branch_dir, version, name))
+                print 'linking %s to %s' % (addon_config['url'], target)
+                os.symlink(addon_config['url'], target)
             elif addon_config_type == 'bzr':
                 print 'getting ' + addon_config['url']
                 cmd_checkout = bzrlib.builtins.cmd_checkout()
                 cmd_checkout.outf = StringIO.StringIO()
                 cmd_checkout.run(
                     addon_config['url'],
-                    os.path.join(options.branch_dir, version, name),
+                    target,
                     lightweight=True)
             elif addon_config_type == 'git':
                 print 'getting ' + addon_config['url']
@@ -315,12 +308,20 @@ for version in options.migrations.split(','):
                           {
                               'branch': addon_config.get('branch', 'master'),
                               'url': addon_config['url'],
-                              'target': os.path.join(options.branch_dir,
-                                                     version,
-                                                     name),
+                              'target': target,
                           })
             else:
                 raise Exception('Unknown type %s' % addon_config_type)
+
+        realtarget = os.path.realpath(target)
+        for root, dirs, files in os.walk(realtarget):
+            for file in files:
+                if file == "__openerp__.py":
+                    linkpath = os.path.join(options.branch_dir,
+                                            version, 'addons', name)
+                    if os.path.exists(linkpath):
+                        os.remove(linkpath)
+                    os.symlink(root, linkpath)
 
 db_name = conn_parms['database']
 if not options.inplace:
@@ -338,17 +339,10 @@ for version in options.migrations.split(','):
         'options',
         'addons_path',
         ','.join(
-            [os.path.join(options.branch_dir,
+            [os.path.realpath(os.path.join(options.branch_dir,
                           version,
-                          'server',
-                          migrations[version]['server']['addons_dir'])] +
-            [os.path.join(options.branch_dir,
-                          version,
-                          name,
-                          addon_conf.get('addons_dir', '')
-                          if isinstance(addon_conf, dict) else '')
-             for (name, addon_conf)
-             in migrations[version]['addons'].iteritems()]))
+                          'addons'))] +
+            []))
     config.set(
         'options',
         'root_path',
