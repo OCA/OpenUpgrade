@@ -340,8 +340,8 @@ for version in options.migrations.split(','):
         'addons_path',
         ','.join(
             [os.path.realpath(os.path.join(options.branch_dir,
-                          version,
-                          'addons'))] +
+                                           version,
+                                           'addons'))] +
             []))
     config.set(
         'options',
