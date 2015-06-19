@@ -63,8 +63,26 @@ def fix_move_line_currency(cr):
         """)
 
 
+def sanitize_account_invoice_lines(cr):
+    """This method prevents that partner_id information on account invoice
+    lines is desynchronized with account invoice, and avoid possible foreign
+    key errors. This can be due to https://github.com/odoo/odoo/issues/6942 -
+    Stored related fields without recompute triggers are never recomputed.
+    """
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE account_invoice_line ail
+        SET partner_id=ai.partner_id
+        FROM account_invoice ai
+        WHERE ail.invoice_id=ai.id
+        AND ail.partner_id != ai.partner_id;
+        """)
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
     fix_move_line_currency(cr)
+    sanitize_account_invoice_lines(cr)
