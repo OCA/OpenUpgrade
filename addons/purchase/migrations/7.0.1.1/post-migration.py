@@ -20,6 +20,10 @@
 ##############################################################################
 from openerp import pooler, SUPERUSER_ID
 from openerp.openupgrade import openupgrade, openupgrade_70
+import logging
+
+
+_logger = logging.getLogger(__name__)
 
 
 def migrate_purchase_order_addresses(cr, pool):
@@ -49,36 +53,36 @@ def migrate_purchase_order_line_names(cr, pool):
 
 
 def set_purchase_order_payment_term(cr, pool):
+    """Set a payment_term_id for each purchase_order, using the payment term
+    associated to the purchase order supplier (that it's a property field).
     """
-    Set a journal_id for each purchase_order, using the script similar to
-    the function _get_journal_id, used in V7 when creating a new purchase
-    order.
-    """
-    partner_obj = pool.get('res.partner')
-    purchase_order_obj = pool.get('purchase.order')
-    res_user_obj = pool.get('res.users')
-    cr.execute(
-        "SELECT id, partner_id, create_uid, write_uid FROM purchase_order")
-
-    for (purchase_order_id, partner_id, create_uid, write_uid) in \
-            cr.fetchall():
-        # get the property as viewed by the partner who created / modified
-        # the purchase order.
-        if write_uid:
-            uid = write_uid
-        else:
-            uid = create_uid
-        my_user = res_user_obj.browse(cr, SUPERUSER_ID, uid)
-        partner_company_id = partner_obj.browse(
-            cr, SUPERUSER_ID, partner_id).company_id.id
-        if my_user.company_id.id != partner_company_id:
-            res_user_obj.write(
-                cr, SUPERUSER_ID, uid, {'company_id': partner_company_id})
-        supplier = partner_obj.browse(cr, uid, partner_id)
-        purchase_order_obj.write(
-            cr, SUPERUSER_ID, [purchase_order_id],
-            {'payment_term_id':
-             supplier.property_supplier_payment_term.id})
+    _logger.info("Setting payment term on purchase orders...")
+    # This SQL handles the priority in searching for the proper ir_property:
+    # 1. res_id and company_id set (partner value)
+    # 2. res_id not set but company_id set (company value)
+    # 3. res_id and company_id not set (global value)
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE purchase_order
+        SET payment_term_id = ir.value
+        FROM (
+            SELECT
+                po.id as id,
+                substring(ir_property.value_reference from 22)::integer AS
+                    value
+            FROM ir_property, purchase_order po
+            WHERE
+                ir_property.name = 'property_supplier_payment_term' AND
+                (ir_property.company_id = po.company_id OR
+                 ir_property.company_id IS NULL) AND
+                (ir_property.res_id = 'res.partner,' || po.partner_id::text OR
+                 ir_property.res_id IS NULL)
+            ORDER BY ir_property.res_id, ir_property.company_id NULLS LAST
+        ) AS ir
+        WHERE
+            ir.id = purchase_order.id;
+        """)
 
 
 @openupgrade.migrate()
