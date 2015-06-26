@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import pooler, netsvc, SUPERUSER_ID
+from openerp import pooler, SUPERUSER_ID
 from openerp.openupgrade import openupgrade
 
 
