@@ -26,8 +26,6 @@ def migrate_hr_expense_account_move(cr, pool):
     """
     Fill the field account_move_id with account_invoice information.
     """
-    invoice_obj = pool.get('account.invoice')
-    expense_obj = pool.get('hr.expense.expense')
     cr.execute("""
         UPDATE hr_expense_expense e
         SET account_move_id=i.move_id
