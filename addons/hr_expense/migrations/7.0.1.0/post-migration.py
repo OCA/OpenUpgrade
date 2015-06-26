@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import pooler, SUPERUSER_ID
+from openerp import pooler, netsvc, SUPERUSER_ID
 from openerp.openupgrade import openupgrade
 
 
@@ -26,22 +26,14 @@ def migrate_hr_expense_account_move(cr, pool):
     """
     Fill the field account_move_id with account_invoice information.
     """
-    # (Cf. user_notes.txt #2)
     invoice_obj = pool.get('account.invoice')
     expense_obj = pool.get('hr.expense.expense')
     cr.execute("""
-        SELECT id, {0}
-        FROM hr_expense_expense
-        WHERE {1} ='paid' AND account_move_id is Null
-        """.format(openupgrade.get_legacy_name('invoice_id'),
-               openupgrade.get_legacy_name('state')))
-    for (expense_id, invoice_id) in cr.fetchall():
-        account_move_id = invoice_obj.browse(
-            cr, SUPERUSER_ID, invoice_id, context=None).move_id.id
-        expense_obj = pool.get('hr.expense.expense')
-        expense_obj.write(
-            cr, SUPERUSER_ID, [expense_id],
-            {'account_move_id': account_move_id})
+        UPDATE hr_expense_expense e
+        SET account_move_id=i.move_id
+        FROM account_invoice i
+        WHERE e.account_move_id is Null AND e.{0}=i.id
+        """.format(openupgrade.get_legacy_name('invoice_id')))
 
 
 def migrate_hr_expense_expense_ref(cr, pool):
@@ -93,17 +85,17 @@ def migrate_hr_expense_expense_state(cr, pool):
     cr.execute("""
         UPDATE hr_expense_expense
         SET state = {0}
-        WHERE {0} != 'invoiced' and {0} != 'paid'
+        WHERE {0} != 'invoiced'
         """.format(openupgrade.get_legacy_name('state')))
 
-    # set 'done' state instead of 'invoiced' and 'paid'
+    # set 'done' state instead of 'invoiced'
     cr.execute("""
         UPDATE hr_expense_expense
         SET state = 'done'
-        WHERE {0} = 'invoiced' OR {0} = 'paid'
+        WHERE {0} = 'invoiced'
         """.format(openupgrade.get_legacy_name('state')))
 
-    # change wkf items that are in state 'paid',
+    # change wkf items that are in state 'paid' and 'invoiced',
     # setting act_id to act_done id. (before was act_paid id);
     act_done_id = model_obj.get_object(
         cr, SUPERUSER_ID, 'hr_expense', 'act_done').id
@@ -116,12 +108,12 @@ def migrate_hr_expense_expense_state(cr, pool):
             WHERE res_type='hr.expense.expense' AND res_id in (
                 SELECT id
                 FROM hr_expense_expense
-                WHERE {1}='paid'
+                WHERE {1} in ('paid', 'invoiced')
             )
         );""".format(act_done_id,
                      openupgrade.get_legacy_name('state')))
 
-    # Change wkf workitems from sublow to function
+    # Change wkf workitems from subflow to function
     cr.execute("""
         UPDATE wkf_workitem
         SET subflow_id = Null, state='complete'
@@ -143,6 +135,30 @@ def migrate_hr_expense_expense_state(cr, pool):
             SELECT id
             FROM hr_expense_expense
             WHERE {0}='paid');""".format(openupgrade.get_legacy_name('state')))
+
+    # Demote state of formerly 'invoiced' expenses for which no move was found
+    # above
+    cr.execute("""
+    UPDATE hr_expense_expense
+    SET state='accepted'
+    WHERE account_move_id IS NULL AND {0}='invoiced'""".format(
+        openupgrade.get_legacy_name('state')))
+    # And adjust their workflow items in order to be able to do something
+    # useful with them afterwards
+    act_accepted_id = model_obj.get_object(
+        cr, SUPERUSER_ID, 'hr_expense', 'act_accepted').id
+    cr.execute("""
+        UPDATE wkf_workitem
+        SET act_id = {0}
+        WHERE inst_id IN (
+            SELECT id
+            FROM wkf_instance
+            WHERE res_type='hr.expense.expense' AND res_id in (
+                SELECT id
+                FROM hr_expense_expense
+                WHERE {1}='invoiced' AND account_move_id IS NULL
+            )
+        );""".format(act_accepted_id, openupgrade.get_legacy_name('state')))
 
 
 @openupgrade.migrate()
