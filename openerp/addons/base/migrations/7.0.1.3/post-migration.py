@@ -78,24 +78,39 @@ def migrate_base_contact(cr):
     In v7, now that we remove res.partner.contact, we should copy
     res.partner.contact information on each linked address (that has been
     converted also to a res.partner record), but not create a new res.partner
-    for each res.partner.contact.
+    for each res.partner.contact. There's a special case where
+    res.partner.address has been merged with main res.partner because it's
+    the first available address. In that case, we still have to create a new
+    res.partner.
     """
     cr.execute(
         "SELECT * FROM ir_module_module "
         "WHERE name = 'base_contact' and state = 'to remove';")
     if not cr.fetchall():
         return
+    # Add a column to reference the contact
+    cr.execute(
+        "ALTER TABLE res_partner "
+        "ADD column openupgrade_7_migrated_from_contact_id "
+        " INTEGER")
+    cr.execute(
+        "ALTER TABLE res_partner ADD FOREIGN KEY "
+        "(openupgrade_7_migrated_from_contact_id) "
+        "REFERENCES res_partner_contact ON DELETE SET NULL")
     # Add non-existing columns that can be used with partner_lastname module
     cr.execute("ALTER TABLE res_partner "
                "ADD COLUMN firstname character varying;")
     cr.execute("ALTER TABLE res_partner "
                "ADD COLUMN lastname character varying;")
-    # Update addresses with contact information
+    # Update addresses that are still "contacts" with the contact information
     openupgrade.logged_query(
         cr,
         """
-        UPDATE res_partner
-        SET lastname=contact.last_name,
+        UPDATE
+            res_partner
+        SET
+            name=contact.name,
+            lastname=contact.last_name,
             firstname=contact.first_name,
             mobile=contact.mobile,
             image=contact.photo,
@@ -105,7 +120,8 @@ def migrate_base_contact(cr):
             comment=contact.comment,
             country_id=contact.country_id,
             email=contact.email,
-            birthdate=contact.birthdate
+            birthdate=contact.birthdate,
+            openupgrade_7_migrated_from_contact_id=contact.id
         FROM
             res_lang,
             res_partner_contact contact,
@@ -113,8 +129,53 @@ def migrate_base_contact(cr):
         WHERE
             res_lang.id = contact.lang_id AND
             res_partner.id =
-            res_partner_address.openupgrade_7_migrated_to_partner_id AND
-            contact.id = res_partner_address.contact_id
+                res_partner_address.openupgrade_7_migrated_to_partner_id AND
+            contact.id = res_partner_address.contact_id AND
+            res_partner.parent_id IS NOT NULL;
+        """)
+    # Create the rest of the contacts as res.partner records
+    openupgrade.logged_query(
+        cr,
+        """
+        INSERT INTO res_partner
+            (name, lastname, firstname, mobile, image, website, lang, active,
+             comment, country_id, email, birthdate, parent_id, street, street2,
+             city, zip, state_id, customer, supplier, function,
+             openupgrade_7_migrated_from_contact_id)
+        SELECT
+            contact.name,
+            contact.last_name,
+            contact.first_name,
+            contact.mobile,
+            contact.photo,
+            contact.website,
+            res_lang.code,
+            contact.active,
+            contact.comment,
+            contact.country_id,
+            contact.email,
+            contact.birthdate,
+            res_partner.id,
+            res_partner.street,
+            res_partner.street2,
+            res_partner.city,
+            res_partner.zip,
+            res_partner.state_id,
+            res_partner.customer,
+            res_partner.supplier,
+            res_partner_address.function,
+            contact.id
+        FROM
+            res_partner,
+            res_partner_contact contact,
+            res_partner_address,
+            res_lang
+        WHERE
+            res_lang.id = contact.lang_id AND
+            res_partner.id =
+                res_partner_address.openupgrade_7_migrated_to_partner_id AND
+            contact.id = res_partner_address.contact_id AND
+            res_partner.parent_id IS NULL;
         """)
 
 
