@@ -95,7 +95,7 @@ def migrate_variants(cr, pool):
               'price': openupgrade.get_legacy_name('price_extra')}
     sql = ("SELECT id, %(variant)s, %(price)s, product_tmpl_id "
            "FROM product_product "
-           "WHERE %(variant)s IS NOT NULL "
+           "WHERE %(variant)s IS NOT NULL AND %(variant)s != '' "
            "OR %(price)s IS NOT NULL AND %(price)s <> 0"
            "ORDER BY product_tmpl_id, id" % fields)
     cr.execute(sql)
