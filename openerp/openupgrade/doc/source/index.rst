@@ -5,7 +5,7 @@
 Welcome to OpenUpgrade's documentation!
 +++++++++++++++++++++++++++++++++++++++
 
-.. image:: images/openupgrade-square.png
+.. image:: images/OpenUpgrade.png
 
 **If you just want to migrate your database and don't care about the technical details, refer to** :doc:`migrate.py`
 
