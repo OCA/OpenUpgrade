@@ -723,7 +723,7 @@ def remove_sql_constraint_duplicates(cr, model, constraint_attrs):
     records.sort(key=attrgetter(*constraint_attrs))
 
     for key, group in groupby(records, key=lambda x: tuple(
-        x[attr] for attr in constraint_attrs)
+        x[attr] or False for attr in constraint_attrs)
     ):
         grouped_records = list(group)
 
