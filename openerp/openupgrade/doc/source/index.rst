@@ -2,11 +2,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. image:: images/OpenUpgrade.png
+
+
 Welcome to OpenUpgrade's documentation!
 +++++++++++++++++++++++++++++++++++++++
 
-.. image:: images/OpenUpgrade.png
-
+  
 **If you just want to migrate your database and don't care about the technical details, refer to** :doc:`migrate.py`
 
 Contents:
