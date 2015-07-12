@@ -3,6 +3,8 @@
 #
 #    Copyright (C) 2014 ONESTEin B.V.
 #              (C) 2014 Therp B.V.
+#              (C) 2015 Pedro M. Baeza
+#                       Antiun Ingenería, S.L.
 #    Snippets from odoo/addons/stock/stock.py (C) 2014 Odoo S.A.
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -652,15 +654,39 @@ def migrate_procurement_order(cr, registry):
 def migrate_stock_qty(cr, registry):
     """Reprocess stock moves in state done to fill stock.quant."""
     stock_move_obj = registry['stock.move']
-
+    stock_picking_obj = registry['stock.picking']
     done_move_ids = stock_move_obj.search(cr, uid, [('state', '=', 'done')])
     openupgrade.message(
         cr, 'stock', 'stock_move', 'state',
         'Reprocess %s stock moves in state done to fill stock.quant',
         len(done_move_ids))
+    # Recreate stock.pack.operation
+    openupgrade.logged_query(
+        cr,
+        """
+        INSERT INTO stock_pack_operation
+        (picking_id, product_id, product_uom_id, product_qty, qty_done,
+         lot_id, date, location_id, location_dest_id, processed)
+        SELECT
+            picking_id, product_id, product_uom, product_uom_qty,
+            product_uom_qty, %s, date, location_id, location_dest_id, 'true'
+        FROM stock_move
+        WHERE
+            id IN %%s
+            AND picking_id IS NOT NULL
+        """ % openupgrade.get_legacy_name('prodlot_id'),
+        (tuple(done_move_ids), ))
     stock_move_obj.write(cr, uid, done_move_ids, {'state': 'draft'})
-    # Process moves using action_done.
-    stock_move_obj.action_done(cr, uid, done_move_ids, context=None)
+    cr.execute(
+        """
+        SELECT DISTINCT(picking_id)
+        FROM stock_pack_operation
+        """)
+    picking_ids = [x[0] for x in cr.fetchall()]
+    # Transfer pickings to recreate all quants correctly (must redo move links
+    # to operations and re-create quants)
+    logger.info("Creating quants processing pickings")
+    stock_picking_obj.do_transfer(cr, uid, picking_ids)
 
 
 def migrate_stock_production_lot(cr, registry):
@@ -678,24 +704,6 @@ def migrate_stock_production_lot(cr, registry):
         user = user_obj.browse(cr, uid, author)
         if user.email:
             lot_obj.message_post(cr, author, lot, body=description)
-
-    # Move: prodlot_id -> Quants lot_id.
-    field_name = openupgrade.get_legacy_name('prodlot_id')
-    cr.execute("""select id, %s from stock_move where %s is not null""" % (
-        field_name, field_name))
-    res1 = cr.fetchall()
-    for move, lot in res1:
-        cr.execute("""
-            SELECT quant_id
-            FROM stock_quant_move_rel
-            WHERE move_id = %s""" % (move,))
-        res2 = cr.fetchall()
-        for quant in res2:
-            cr.execute("""
-                UPDATE stock_quant
-                SET lot_id = %s
-                WHERE id = %s""" % (lot, quant[0],))
-        cr.commit()
 
 
 def reset_warehouse_data_ids(cr, registry):

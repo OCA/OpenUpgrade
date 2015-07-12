@@ -202,7 +202,7 @@ stock        / stock.move               / product_uom_qty (float)       : NEW re
 stock        / stock.move               / propagate (boolean)           : NEW 
 stock        / stock.move               / push_rule_id (many2one)       : NEW relation: stock.location.path
 stock        / stock.move               / quant_ids (many2many)         : NEW relation: stock.quant
-# DONE: let Odoo do this by reconfirming done moves
+# DONE: let Odoo do this by creating stock.pack.operation records and doing picking transfer
 
 stock        / stock.move               / reserved_quant_ids (one2many) : NEW relation: stock.quant
 stock        / stock.move               / restrict_lot_id (many2one)    : NEW relation: stock.production.lot
