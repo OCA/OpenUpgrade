@@ -19,7 +19,19 @@
 #
 ##############################################################################
 from openupgrade import openupgrade
-from openerp import pooler
+from openerp import pooler, SUPERUSER_ID
+
+
+def migrate_categories(cr, pool):
+    category_ids = pool['crm.case.categ'].search(
+        cr, SUPERUSER_ID, [('object_id.model', '=', 'project.issue')])
+    for category in pool['crm.case.categ'].browse(
+            cr, SUPERUSER_ID, category_ids):
+        pool['project.category'].create(
+            cr, SUPERUSER_ID, {
+                'name': category.name,
+            })
+    pool['crm.case.categ'].unlink(cr, SUPERUSER_ID, category_ids)
 
 
 @openupgrade.migrate()
@@ -29,3 +41,4 @@ def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     openupgrade.set_defaults(
         cr, pool, {'project.project': [('use_issues', None)]})
+    migrate_categories(cr, pool)
