@@ -27,10 +27,16 @@ def migrate_categories(cr, pool):
         cr, SUPERUSER_ID, [('object_id.model', '=', 'project.issue')])
     for category in pool['crm.case.categ'].browse(
             cr, SUPERUSER_ID, category_ids):
-        pool['project.category'].create(
+        new_category_id = pool['project.category'].create(
             cr, SUPERUSER_ID, {
                 'name': category.name,
             })
+        cr.execute('select id from project_issue where categ_id=%s',
+                   (category.id,))
+        pool['project.issue'].write(
+            cr, SUPERUSER_ID, [i for i, in cr.fetchall()],
+            {'categ_ids': [(6, 0, [new_category_id])]})
+
     pool['crm.case.categ'].unlink(cr, SUPERUSER_ID, category_ids)
 
 
