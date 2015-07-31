@@ -35,7 +35,7 @@ def migrate_categories(cr, pool):
         crm_category2project_category[category.id] = new_category_id
 
     for category_id, new_category_id in crm_category2project_category\
-                                        .iteritems():
+            .iteritems():
         cr.execute(
             'insert into %s (%s, %s) '
             'select id, %%s from project_issue where categ_id=%%s' %
