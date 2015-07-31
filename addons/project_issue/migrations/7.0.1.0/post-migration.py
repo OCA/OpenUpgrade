@@ -41,7 +41,7 @@ def migrate_categories(cr, pool):
             'select id, %%s from project_issue where categ_id=%%s' %
             pool['project.issue']._columns['categ_ids']._sql_names(
                 pool['project.issue']),
-            (new_category_id, category.id,))
+            (new_category_id, category_id,))
 
     pool['crm.case.categ'].unlink(cr, SUPERUSER_ID, category_ids)
 
