@@ -25,17 +25,23 @@ from openerp import pooler, SUPERUSER_ID
 def migrate_categories(cr, pool):
     category_ids = pool['crm.case.categ'].search(
         cr, SUPERUSER_ID, [('object_id.model', '=', 'project.issue')])
+    crm_category2project_category = {}
     for category in pool['crm.case.categ'].browse(
             cr, SUPERUSER_ID, category_ids):
         new_category_id = pool['project.category'].create(
             cr, SUPERUSER_ID, {
                 'name': category.name,
             })
-        cr.execute('select id from project_issue where categ_id=%s',
-                   (category.id,))
-        pool['project.issue'].write(
-            cr, SUPERUSER_ID, [i for i, in cr.fetchall()],
-            {'categ_ids': [(6, 0, [new_category_id])]})
+        crm_category2project_category[category.id] = new_category_id
+
+    for category_id, new_category_id in crm_category2project_category\
+                                        .iteritems():
+        cr.execute(
+            'insert into %s (%s, %s) '
+            'select id, %%s from project_issue where categ_id=%%s' %
+            pool['project.issue']._columns['categ_ids']._sql_names(
+                pool['project.issue']),
+            (new_category_id, category.id,))
 
     pool['crm.case.categ'].unlink(cr, SUPERUSER_ID, category_ids)
 
