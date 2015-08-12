@@ -34,6 +34,9 @@ def migrate_categories(cr, pool):
             })
         crm_category2project_category[category.id] = new_category_id
 
+    cr.execute('alter table crm_case_categ add column %s integer' %
+               openupgrade.get_legacy_name('project_category_id'))
+
     for category_id, new_category_id in crm_category2project_category\
             .iteritems():
         cr.execute(
@@ -42,8 +45,10 @@ def migrate_categories(cr, pool):
             pool['project.issue']._columns['categ_ids']._sql_names(
                 pool['project.issue']),
             (new_category_id, category_id,))
-
-    pool['crm.case.categ'].unlink(cr, SUPERUSER_ID, category_ids)
+        cr.execute(
+            'update crm_case_categ set %s=%%s where id=%%s' %
+            openupgrade.get_legacy_name('project_category_id'),
+            (new_category_id, category_id))
 
 
 @openupgrade.migrate()
