@@ -7,6 +7,7 @@ renamed_modules = {
     'mrp_jit': 'procurement_jit',
     # OCA/account-invoicing
     'invoice_validation_wkfl': 'account_invoice_validation_workflow',
+    'account_invoice_zero': 'account_invoice_zero_autopay',
     # OCA/server-tools
     'audittrail': 'auditlog',
     # OCA/bank-statement-import
