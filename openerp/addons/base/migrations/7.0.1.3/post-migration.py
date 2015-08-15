@@ -61,71 +61,122 @@ def migrate_company(cr):
 
 def migrate_base_contact(cr):
     """
-    Move entries of res_partner_contact into res_partner
+    In v6.1, base_contact module has this structure:
+
+    res.partner
+    |
+    |-> res.partner.address -|
+    |-> res.partner.address -|
+                             |-> res.partner.contact
+    res.partner              |
+    |                        |
+    |-> res.partner.address -|
+
+    And res.partner.contact contains information that is shared to linked
+    res.partner.address via related fields.
+
+    In v7, now that we remove res.partner.contact, we should copy
+    res.partner.contact information on each linked address (that has been
+    converted also to a res.partner record), but not create a new res.partner
+    for each res.partner.contact. There's a special case where
+    res.partner.address has been merged with main res.partner because it's
+    the first available address. In that case, we still have to create a new
+    res.partner.
     """
     cr.execute(
         "SELECT * FROM ir_module_module "
         "WHERE name = 'base_contact' and state = 'to remove';")
     if not cr.fetchall():
         return
-    fields = [
-        'create_date',
-        'name',
-        'website',
-        'image',
-        'active',
-        'comment',
-        'title',
-        'phone',
-        'country_id',
-        'email',
-        'birthdate',
-        'lang',
-        'parent_id',
-    ]
-    # Add lang from lang_id
+    # Add a column to reference the contact
+    cr.execute(
+        "ALTER TABLE res_partner "
+        "ADD column openupgrade_7_migrated_from_contact_id "
+        " INTEGER")
+    cr.execute(
+        "ALTER TABLE res_partner ADD FOREIGN KEY "
+        "(openupgrade_7_migrated_from_contact_id) "
+        "REFERENCES res_partner_contact ON DELETE SET NULL")
+    # Add non-existing columns that can be used with partner_lastname module
+    cr.execute("ALTER TABLE res_partner "
+               "ADD COLUMN firstname character varying;")
+    cr.execute("ALTER TABLE res_partner "
+               "ADD COLUMN lastname character varying;")
+    # Update addresses that are still "contacts" with the contact information
     openupgrade.logged_query(
         cr,
-        "ALTER TABLE res_partner_contact "
-        "ADD COLUMN lang character varying(5);")
-    openupgrade.logged_query(cr, """
-        UPDATE res_partner_contact
-        SET lang = (SELECT code
-                    FROM res_lang l
-                    WHERE lang_id = l.id
-                    LIMIT 1);""")
-    # Add parent_id
+        """
+        UPDATE
+            res_partner
+        SET
+            name=contact.name,
+            lastname=contact.last_name,
+            firstname=contact.first_name,
+            mobile=contact.mobile,
+            image=contact.photo,
+            website=contact.website,
+            lang=res_lang.code,
+            active=contact.active,
+            comment=contact.comment,
+            country_id=contact.country_id,
+            email=contact.email,
+            birthdate=contact.birthdate,
+            openupgrade_7_migrated_from_contact_id=contact.id
+        FROM
+            res_lang,
+            res_partner_contact contact,
+            res_partner_address
+        WHERE
+            res_lang.id = contact.lang_id AND
+            res_partner.id =
+                res_partner_address.openupgrade_7_migrated_to_partner_id AND
+            contact.id = res_partner_address.contact_id AND
+            res_partner.parent_id IS NOT NULL;
+        """)
+    # Create the rest of the contacts as res.partner records
     openupgrade.logged_query(
-        cr, "ALTER TABLE res_partner_contact ADD COLUMN parent_id integer;")
-    openupgrade.logged_query(cr, """
-        UPDATE res_partner_contact
-        SET parent_id = (SELECT openupgrade_7_migrated_to_partner_id
-                         FROM res_partner_address a
-                         WHERE id = a.contact_id
-                         LIMIT 1);""")
-    # Make sure fields exist
-    cr.execute(
-        "SELECT column_name "
-        "FROM information_schema.columns "
-        "WHERE table_name = 'res_partner_contact';")
-    available_fields = set(i[0] for i in cr.fetchall())
-    lost_fields = set(fields) - available_fields
-    if lost_fields:
-        openupgrade.logger.warning("""\
-The following columns are not present in the table of %s: %s.
-
-This can be the case if an additional module installed on your database changes
-the type of a regular column to a non-stored function or related field.
-""", 'res_partner_contact', ", ".join(lost_fields))
-    fields = list(available_fields.intersection(fields))
-    # Move data
-    openupgrade.logged_query(
-        cr, """
-        INSERT INTO res_partner (%s)
-        SELECT %s
-        FROM res_partner_contact;""" % (
-            ", ".join(fields + ['customer', 'is_company']),
-            ", ".join(fields + ['TRUE', 'FALSE'])))
+        cr,
+        """
+        INSERT INTO res_partner
+            (name, lastname, firstname, mobile, image, website, lang, active,
+             comment, country_id, email, birthdate, parent_id, street, street2,
+             city, zip, state_id, customer, supplier, function,
+             openupgrade_7_migrated_from_contact_id)
+        SELECT
+            contact.name,
+            contact.last_name,
+            contact.first_name,
+            contact.mobile,
+            contact.photo,
+            contact.website,
+            res_lang.code,
+            contact.active,
+            contact.comment,
+            contact.country_id,
+            contact.email,
+            contact.birthdate,
+            res_partner.id,
+            res_partner.street,
+            res_partner.street2,
+            res_partner.city,
+            res_partner.zip,
+            res_partner.state_id,
+            res_partner.customer,
+            res_partner.supplier,
+            res_partner_address.function,
+            contact.id
+        FROM
+            res_partner,
+            res_partner_contact contact,
+            res_partner_address,
+            res_lang
+        WHERE
+            res_lang.id = contact.lang_id AND
+            res_partner.id =
+                res_partner_address.openupgrade_7_migrated_to_partner_id AND
+            contact.id = res_partner_address.contact_id AND
+            res_partner.parent_id IS NULL;
+        """)
 
 
 def migrate_partner_address(cr, pool):

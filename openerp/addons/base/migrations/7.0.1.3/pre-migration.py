@@ -67,22 +67,6 @@ def disable_demo_data(cr):
         "UPDATE ir_module_module SET demo = false")
 
 
-def rename_base_contact_columns(cr):
-    """
-    Rename columns only if res_partner_contact is installed
-    """
-    cr.execute(
-        "SELECT * FROM information_schema.tables "
-        "WHERE table_name = 'res_partner_contact';")
-    if cr.fetchall():
-        openupgrade.rename_columns(cr, {
-            'res_partner_contact': [
-                ('photo', 'image'),
-                ('mobile', 'phone'),
-            ]
-        })
-
-
 def migrate_ir_attachment(cr):
     # Data is now stored in db_datas column and datas is a function field
     # like in the document module in 6.1. If the db_datas column already
@@ -232,7 +216,6 @@ def migrate(cr, version):
     openupgrade.drop_columns(cr, [('ir_actions_todo', 'action_id')])
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_tables(cr, table_renames)
-    rename_base_contact_columns(cr)
     openupgrade.rename_xmlids(cr, xmlid_renames)
     openupgrade.rename_models(cr, model_renames)
     migrate_ir_attachment(cr)
