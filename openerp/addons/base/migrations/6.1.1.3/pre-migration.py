@@ -98,12 +98,14 @@ def disable_demo_data(cr):
 
 def migrate_timestamps(cr):
     cr.execute("""
-        select attname,relname from pg_class join pg_attribute 
-            on pg_class.oid=pg_attribute.attrelid 
+        select attname,relname from pg_class
+            join pg_attribute on pg_class.oid=pg_attribute.attrelid
+            join pg_namespace on pg_class.relnamespace=pg_namespace.oid
         where pg_attribute.atttypid in 
             (select oid from pg_type where typname='timestamp')
             and relkind='r'
             and not (relname='project_task_work' and attname='date')
+            and nspname=current_schema()
         order by relname, attname='date_to'
     """)
     for row in cr.fetchall():
