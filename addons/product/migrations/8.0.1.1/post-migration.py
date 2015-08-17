@@ -93,7 +93,7 @@ def migrate_variants(cr, pool):
     attribute_line_obj = pool['product.attribute.line']
     fields = {'variant': openupgrade.get_legacy_name('variants'),
               'price': openupgrade.get_legacy_name('price_extra')}
-    sql = ("SELECT id, %(variant)s, %(price)s, product_tmpl_id "
+    sql = ("SELECT id, %(variant)s, %(price)s, default_code, product_tmpl_id "
            "FROM product_product "
            "WHERE %(variant)s IS NOT NULL "
            "OR %(price)s IS NOT NULL AND %(price)s <> 0"
@@ -112,7 +112,8 @@ def migrate_variants(cr, pool):
             # active_id needed to create the 'product.attribute.price'
             ctx = {'active_id': tmpl_id}
             values = {
-                'name': name or '%.2f' % price_extra,
+                'name': name or variant['default_code'] or
+                    '%.2f' % price_extra,
                 'attribute_id': attr_id,
                 'product_ids': [(6, 0, [variant['id']])],
                 # a 'product.attribute.price' is created when we write
