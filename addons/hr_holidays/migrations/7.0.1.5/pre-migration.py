@@ -24,8 +24,10 @@ from openupgrade import openupgrade
 column_renames = {
     'hr_holidays': [
         ('case_id', 'meeting_id'),
+    ],
+    'hr_holidays_status': [
         ('categ_id', None),
-    ]
+    ],
 }
 
 

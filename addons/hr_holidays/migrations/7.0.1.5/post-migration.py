@@ -24,7 +24,7 @@ from openupgrade import openupgrade
 @openupgrade.migrate()
 def migrate(cr, version):
     # write categories from crm.case.categ
-    cr.execute('alter table crm_meeting_type add column %s integer',
+    cr.execute('alter table crm_meeting_type add column %s integer' %
                openupgrade.get_legacy_name('crm_meeting_type_id'))
     cr.execute(
         'insert into crm_meeting_type (name, %s) '
