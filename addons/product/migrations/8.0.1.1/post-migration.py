@@ -113,7 +113,7 @@ def migrate_variants(cr, pool):
             ctx = {'active_id': tmpl_id}
             values = {
                 'name': name or variant['default_code'] or
-                    '%.2f' % price_extra,
+                '%.2f' % price_extra,
                 'attribute_id': attr_id,
                 'product_ids': [(6, 0, [variant['id']])],
                 # a 'product.attribute.price' is created when we write
