@@ -1,0 +1,107 @@
+---Fields in module 'point_of_sale'---
+# In V7, there was a shop_id with a company_id (optional) --> Done.
+# - if company_id is set in V7 on shop_id -> OpenUpgrade will take the company_id of the old shop_id;
+# - if company_id is not set in V7 on shop_id -> Openupgrade will raise a non blocking error by log and set it to a random res.company record;
+point_of_sale / pos.config               / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+
+# [3 lines] 'iface_big_scrollbars', 'iface_invoicing', 'iface_scan_via_proxy' :. New feature. NTD
+point_of_sale / pos.config               / iface_big_scrollbars (boolean): NEW 
+point_of_sale / pos.config               / iface_invoicing (boolean)     : NEW 
+point_of_sale / pos.config               / iface_scan_via_proxy (boolean): NEW 
+# Create a new picking_type_id for each active pos_config. --> Done.
+point_of_sale / pos.config               / picking_type_id (many2one)    : NEW relation: stock.picking.type
+# keep the pricelist_id of the old sale_shop. --> Done
+point_of_sale / pos.config               / pricelist_id (many2one)       : NEW relation: product.pricelist, required: required, req_default: function
+# In v7. Value was hardcoded with http://localhost:8069. Done.
+point_of_sale / pos.config               / proxy_ip (char)               : NEW 
+# [2 lines] 'receipt_footer' and 'receipt_header'. New text field. NTD.
+point_of_sale / pos.config               / receipt_footer (text)         : NEW 
+point_of_sale / pos.config               / receipt_header (text)         : NEW 
+# Select the stock_location_id (internal) of the stock_warehouse of the old shop_id; --> Done.
+point_of_sale / pos.config               / shop_id (many2one)            : DEL relation: sale.shop, required: required, req_default: function
+point_of_sale / pos.config               / stock_location_id (many2one)  : NEW relation: stock.location, required: required, req_default: function
+
+# [10 lines] 5 fields have move from product.product to product.template. --> Done.
+point_of_sale / product.product          / available_in_pos (boolean)    : DEL 
+point_of_sale / product.product          / expense_pdt (boolean)         : DEL 
+point_of_sale / product.product          / income_pdt (boolean)          : DEL 
+point_of_sale / product.product          / pos_categ_id (many2one)       : DEL relation: pos.category
+point_of_sale / product.product          / to_weight (boolean)           : DEL 
+point_of_sale / product.template         / available_in_pos (boolean)    : NEW 
+point_of_sale / product.template         / expense_pdt (boolean)         : NEW 
+point_of_sale / product.template         / income_pdt (boolean)          : NEW 
+point_of_sale / product.template         / pos_categ_id (many2one)       : NEW relation: pos.category
+point_of_sale / product.template         / to_weight (boolean)           : NEW 
+
+# [5 lines] transient model. NTD
+point_of_sale / report.pos.order         / day (char)                    : DEL 
+point_of_sale / report.pos.order         / location_id (many2one)        : NEW relation: stock.location
+point_of_sale / report.pos.order         / month (selection)             : DEL selection_keys: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+point_of_sale / report.pos.order         / shop_id (many2one)            : DEL relation: sale.shop
+point_of_sale / report.pos.order         / year (char)                   : DEL 
+
+
+---XML records in module 'point_of_sale'--- NTD
+NEW ir.actions.act_url: point_of_sale.action_pos_pos
+NEW ir.actions.act_window: point_of_sale.product_pos_category_action
+DEL ir.actions.act_window: point_of_sale.action_pos_payment_report
+DEL ir.actions.act_window: point_of_sale.action_report_pos_payment
+DEL ir.actions.act_window: point_of_sale.action_report_pos_payment_report_user
+DEL ir.actions.act_window: point_of_sale.action_report_pos_receipt
+DEL ir.actions.act_window: point_of_sale.action_report_pos_sale_user
+DEL ir.actions.act_window: point_of_sale.action_report_sales_by_margin_pos_month
+DEL ir.actions.act_window: point_of_sale.action_report_sales_by_margin_pos_today
+DEL ir.actions.act_window: point_of_sale.pos_category_action
+DEL ir.actions.client: point_of_sale.action_pos_pos
+NEW ir.actions.report.xml: point_of_sale.action_report_account_statement
+NEW ir.actions.report.xml: point_of_sale.action_report_pos_receipt
+NEW ir.actions.report.xml: point_of_sale.action_report_pos_session_summary
+NEW ir.actions.report.xml: point_of_sale.action_report_pos_users_product
+NEW ir.actions.report.xml: point_of_sale.pos_payment_report
+DEL ir.actions.report.xml: point_of_sale.account_statement
+DEL ir.actions.report.xml: point_of_sale.all_closed_cashbox_of_the_day
+DEL ir.actions.report.xml: point_of_sale.pos_details_summary
+DEL ir.actions.report.xml: point_of_sale.pos_payment_report_user
+DEL ir.actions.report.xml: point_of_sale.pos_sales_user
+DEL ir.actions.report.xml: point_of_sale.pos_sales_user_today
+DEL ir.actions.report.xml: point_of_sale.pos_users_product_re
+NEW ir.model.access: point_of_sale.access_stock_warehouse_pos_user
+DEL ir.model.access: point_of_sale.access_report_sales_by_margin_pos
+DEL ir.model.access: point_of_sale.access_report_sales_by_margin_pos_month
+DEL ir.model.access: point_of_sale.access_sale_shop_pos_user
+NEW ir.rule: point_of_sale.rule_pos_config_multi_company
+NEW ir.sequence: point_of_sale.seq_picking_type_posout
+NEW ir.ui.menu: point_of_sale.menu_product_pos_category
+DEL ir.ui.menu: point_of_sale.menu_pos_category
+NEW ir.ui.view: point_of_sale.assets_backend
+NEW ir.ui.view: point_of_sale.product_pos_category_form_view
+NEW ir.ui.view: point_of_sale.product_pos_category_tree_view
+NEW ir.ui.view: point_of_sale.product_template_form_view
+NEW ir.ui.view: point_of_sale.report_detailsofsales
+NEW ir.ui.view: point_of_sale.report_payment
+NEW ir.ui.view: point_of_sale.report_receipt
+NEW ir.ui.view: point_of_sale.report_saleslines
+NEW ir.ui.view: point_of_sale.report_sessionsummary
+NEW ir.ui.view: point_of_sale.report_statement
+NEW ir.ui.view: point_of_sale.report_usersproduct
+NEW ir.ui.view: point_of_sale.view_report_pos_order_graph
+DEL ir.ui.view: point_of_sale.pos_category_form_view
+DEL ir.ui.view: point_of_sale.pos_category_tree_view
+DEL ir.ui.view: point_of_sale.pos_payment_report_user_form
+DEL ir.ui.view: point_of_sale.product_normal_form_view
+DEL ir.ui.view: point_of_sale.view_pos_payment_report
+DEL ir.ui.view: point_of_sale.view_pos_receipt
+DEL ir.ui.view: point_of_sale.view_pos_sale_user
+DEL ir.ui.view: point_of_sale.view_report_pos_order_tree
+DEL ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_calendar
+DEL ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_form
+DEL ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_graph
+DEL ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_month_calendar
+DEL ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_month_form
+DEL ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_month_graph
+DEL ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_month_tree
+DEL ir.ui.view: point_of_sale.view_report_sales_by_margin_pos_tree
+DEL pos.category: point_of_sale.categ_others
+DEL product.product: point_of_sale.unreferenced_product
+NEW report.paperformat: point_of_sale.paperformat_posreceipt
+NEW stock.picking.type: point_of_sale.picking_type_posout
