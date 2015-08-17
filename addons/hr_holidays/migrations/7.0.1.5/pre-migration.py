@@ -31,3 +31,7 @@ column_renames = {
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
+    # drop constraint with wrong name, will be recreated if applicable
+    cr.execute(
+        "ALTER TABLE hr_holidays DROP CONSTRAINT IF EXISTS "
+        "hr_holidays_case_id_fkey")
