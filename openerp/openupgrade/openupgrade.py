@@ -346,12 +346,33 @@ def set_defaults(cr, pool, default_spec, force=False, use_orm=False):
                 # Iterating over ids here as a workaround for lp:1131653
                 obj.write(cr, SUPERUSER_ID, [res_id], {field: value})
         else:
-            cr.execute(
-                """
-                UPDATE %s
-                SET %s = %%s
-                WHERE id IN %%s
-                """ % (obj._table, field), (value, tuple(ids)))
+            query, params = "UPDATE %s SET %s = %%s WHERE id IN %%s" % (
+                obj._table, field), (value, tuple(ids))
+            # handle fields inherited from somewhere else
+            if field not in obj._columns:
+                query, params = None, None
+                for table in obj._inherits:
+                    if obj._inherit_fields[field][0] != table:
+                        continue
+                    col = obj._inherits[table]
+                    # this is blatantly stolen and adapted from
+                    # https://github.com/OCA/OCB/blob/def7db0b93e45eda7b51b3b61
+                    # bae1e975d07968b/openerp/osv/orm.py#L4307
+                    nids = []
+                    for sub_ids in cr.split_for_in_conditions(ids):
+                        cr.execute(
+                            'SELECT DISTINCT %s FROM %s WHERE id IN %%s' % (
+                                col, obj._table), (sub_ids,))
+                        nids.extend(x for x, in cr.fetchall())
+                    query, params = "UPDATE %s SET %s = %%s WHERE id IN %%s" %\
+                        (pool[table]._table, field), (value, tuple(nids))
+            if not query:
+                raise Exception("Can't set default for %s on %s!",
+                                field, obj._name)
+            # cope with really big tables
+            for sub_ids in cr.split_for_in_conditions(params[1]):
+                cr.execute(query, (params[0], sub_ids))
+
 
     for model in default_spec.keys():
         obj = pool.get(model)
