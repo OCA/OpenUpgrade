@@ -373,7 +373,6 @@ def set_defaults(cr, pool, default_spec, force=False, use_orm=False):
             for sub_ids in cr.split_for_in_conditions(params[1]):
                 cr.execute(query, (params[0], sub_ids))
 
-
     for model in default_spec.keys():
         obj = pool.get(model)
         if not obj:
