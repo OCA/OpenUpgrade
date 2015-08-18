@@ -25,17 +25,17 @@ from openupgrade import openupgrade
 def migrate(cr, version):
     # write categories from crm.case.categ
     cr.execute('alter table crm_meeting_type add column %s integer' %
-               openupgrade.get_legacy_name('crm_meeting_type_id'))
+               openupgrade.get_legacy_name('crm_case_categ_id'))
     cr.execute(
         'insert into crm_meeting_type (name, %s) '
         'select name, id from crm_case_categ where object_id='
         "(select id from ir_model where model='crm.meeting')" %
-        openupgrade.get_legacy_name('crm_meeting_type_id'))
+        openupgrade.get_legacy_name('crm_case_categ_id'))
     cr.execute(
         'update hr_holidays_status s '
         'set categ_id=t.id '
         'from crm_meeting_type t '
         'where t.%s=s.%s' % (
-            openupgrade.get_legacy_name('crm_meeting_type_id'),
+            openupgrade.get_legacy_name('crm_case_categ_id'),
             openupgrade.get_legacy_name('categ_id'),
         ))
