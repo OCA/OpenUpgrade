@@ -122,6 +122,12 @@ def migrate_templates(cr, pool):
                     "'default_template_id' : %d, "
                     "'default_use_template': True}" % template_id, row[13]))
 
+        # if this template has an xmlid, its owner will be happy about this
+        cr.execute(
+            "UPDATE ir_model_data SET model='email.template', res_id=%s "
+            "WHERE model='poweremail.templates' and res_id=%s",
+            (template_id, row[0]))
+
 
 def migrate_emails(cr, pool):
     """
