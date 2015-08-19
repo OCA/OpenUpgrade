@@ -351,10 +351,10 @@ def set_defaults(cr, pool, default_spec, force=False, use_orm=False):
             # handle fields inherited from somewhere else
             if field not in obj._columns:
                 query, params = None, None
-                for table in obj._inherits:
-                    if obj._inherit_fields[field][0] != table:
+                for model in obj._inherits:
+                    if obj._inherit_fields[field][0] != model:
                         continue
-                    col = obj._inherits[table]
+                    col = obj._inherits[model]
                     # this is blatantly stolen and adapted from
                     # https://github.com/OCA/OCB/blob/def7db0b93e45eda7b51b3b61
                     # bae1e975d07968b/openerp/osv/orm.py#L4307
@@ -365,7 +365,7 @@ def set_defaults(cr, pool, default_spec, force=False, use_orm=False):
                                 col, obj._table), (sub_ids,))
                         nids.extend(x for x, in cr.fetchall())
                     query, params = "UPDATE %s SET %s = %%s WHERE id IN %%s" %\
-                        (pool[table]._table, field), (value, tuple(nids))
+                        (pool[model]._table, field), (value, tuple(nids))
             if not query:
                 raise Exception("Can't set default for %s on %s!",
                                 field, obj._name)
