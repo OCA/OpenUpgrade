@@ -77,9 +77,9 @@ def migrate_templates(cr, pool):
         template_id = pool['email.template'].create(
             cr, SUPERUSER_ID, vals)
 
-        cr.execute('UPDATE poweremail_templates SET %s=%%s' %
+        cr.execute('UPDATE poweremail_templates SET %s=%%s WHERE id=%%s' %
                    openupgrade.get_legacy_name('email_template_id'),
-                   (template_id,))
+                   (template_id, row[0]))
 
         # Update translations
         for old_name, name in [
