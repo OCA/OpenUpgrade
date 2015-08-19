@@ -30,6 +30,8 @@ def migrate_templates(cr, pool):
     """
     Migrate poweremail templates to OpenERP email templates.
     """
+    cr.execute("ALTER TABLE poweremail_templates ADD COLUMN %s INTEGER" %
+               openupgrade.get_legacy_name('email_template_id'))
     cr.execute(
         """
         SELECT
@@ -74,6 +76,10 @@ def migrate_templates(cr, pool):
 
         template_id = pool['email.template'].create(
             cr, SUPERUSER_ID, vals)
+
+        cr.execute('UPDATE poweremail_templates SET %s=%%s' %
+                   openupgrade.get_legacy_name('email_template_id'),
+                   (template_id,))
 
         # Update translations
         for old_name, name in [
