@@ -96,19 +96,23 @@ def migrate_templates(cr, pool):
                 """, ('email.template,' + name, template_id,
                       'poweremail.templates,' + old_name, row[0]))
 
-        # Convert text body translations to html
-        cr.execute(
-            """
-            SELECT id, value FROM ir_translation
-            WHERE name = 'poweremail.templates,def_body_text'
-                AND res_id = %s AND value IS NOT NULL AND value != ''
-            """, (row[0],))
-        for trans in cr.fetchall():
-            pool['ir.translation'].write(
-                cr, SUPERUSER_ID, [trans[0]],
-                {
-                    'value': plaintext2html(trans[1]),
-                    'name': 'email.template,body_html',
+        # Convert text body translations to html, but only if we didn't write
+        # a html body
+        if not row[3]:
+            cr.execute(
+                """
+                SELECT id, value FROM ir_translation
+                WHERE name = 'poweremail.templates,def_body_text'
+                    AND type = 'model'
+                    AND res_id = %s AND value IS NOT NULL AND value != ''
+                """, (row[0],))
+            for trans in cr.fetchall():
+                pool['ir.translation'].write(
+                    cr, SUPERUSER_ID, [trans[0]],
+                    {
+                        'value': plaintext2html(trans[1]),
+                        'name': 'email.template,body_html',
+                        'res_id': template_id,
                     })
 
         # adapt window action
