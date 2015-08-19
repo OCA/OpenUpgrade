@@ -1,18 +1,19 @@
 OpenUpgrade API
 +++++++++++++++
 
-In OpenUpgrade you can use the following functions in your pre and
-post scripts. Use the following import from OpenUpgrade 6.1 on.
+The OpenUpgrade library contains all kinds of helper functions for your pre and
+post scripts, in OpenUpgrade itself or in the migration scripts of your own
+module (in either major or minor version upgrades). It can be installed with
+
+.. code-block:: bash
+
+   pip install openupgradelib
+
+and then used in your scripts as
 
 .. code-block:: python
 
-   from openerp.openupgrade import openupgrade
-
-In OpenUpgrade 5.0 and 6.0, the import is slightly different.
-
-.. code-block:: python
-
-   from openupgrade import openupgrade
+   from openupgradelib import openupgrade
 
 General methods
 ---------------

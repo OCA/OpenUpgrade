@@ -11,7 +11,7 @@ Status :
   * 'Nothing to do' : Analyse has been done, and there is nothing to do;
 
   * 'Work in progress' : Analyse / Work in progress.  Please review the
-    merge proposals at https://github.com/OpenUpgrade/OpenUpgrade/pulls
+    merge proposals at https://github.com/OCA/OpenUpgrade/pulls
 
   * 'Done' : Analyse has been done & work has been merged into trunk project ;
 
