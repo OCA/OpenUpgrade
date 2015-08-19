@@ -24,7 +24,7 @@ import logging
 from openerp import release
 from openerp.osv.orm import TransientModel
 from openerp.osv import fields
-from openerp.openupgrade.openupgrade import table_exists
+from openupgradelib.openupgrade_tools import table_exists
 from openerp.tools import config, safe_eval
 
 # A collection of functions used in
