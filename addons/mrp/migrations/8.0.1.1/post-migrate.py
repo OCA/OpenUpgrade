@@ -95,17 +95,35 @@ def fix_domains(cr, pool):
 
 def update_stock_moves(cr, pool):
     stock_move_obj = pool['stock.move']
-    sm_ids = stock_move_obj.search(cr, uid, [])
     mrp_production_obj = pool['mrp.production']
-    location_obj = pool['stock.location']
-    location_id = location_obj.search(cr, uid, [('name', '=', 'Production')])
-    for sm in stock_move_obj.browse(cr, uid, sm_ids):
-        if 'MO' in sm.name and sm.location_dest_id.id == location_id[0]:
-            prod_id = mrp_production_obj.search(cr, uid, [('name', '=', sm.name)])
-            sql = """UPDATE stock_move SET raw_material_production_id = %s WHERE id = % s""" % (prod_id[0], sm.id)
-            cr.execute(sql)
-            cr.commit()
-#             sm.write(cr, uid, {'raw_material_production_id': prod_id[0]})
+    ir_property_obj = pool['ir.property']
+    # find all locations that are used as production location
+    location_ids = [
+        ir_property_obj.get_by_record(cr, uid, p).id
+        for p in ir_property_obj.browse(
+            cr, uid,
+            ir_property_obj.search(
+                cr, uid, [('name', '=', 'property_stock_production')]))
+    ]
+    for move_id in stock_move_obj.search(
+            cr, uid, [
+                ('location_dest_id', 'in', location_ids),
+            ]):
+        production_ids = mrp_production_obj.search(
+            cr, uid, [
+                '|',
+                # don't rely on many2manys with domain ignoring it on search
+                ('move_lines', '=', move_id),
+                ('move_lines2', '=', move_id),
+            ])
+        if production_ids and len(production_ids) == 1:
+            cr.execute(
+                'UPDATE stock_move SET raw_material_production_id=%s '
+                'WHERE id=%s', (production_ids[0], move_id))
+        else:
+            logger.warning("Couldn't find unique production order for %s "
+                           "(candidates are %s)",
+                           move_id, production_ids)
 
 
 def update_stock_picking_name(cr, pool):
