@@ -21,6 +21,7 @@
 from openerp.openupgrade import openupgrade
 
 
+@openupgrade.migrate()
 def migrate(cr, version):
     """move project_id from product.product to product.template, and if this
     is set, also set auto_create_task=True which is the old behavior"""
