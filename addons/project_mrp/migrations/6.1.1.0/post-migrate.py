@@ -34,6 +34,7 @@ def migrate(cr, version):
             'update project_task set sale_line_id = '
             '(select l.id from sale_order_line l '
             'join product_product p on l.product_id=p.id '
-            'where sale_line_id is null and l.order_id=%s and '
-            'p.project_id=%s) where id=%s',
+            'where '
+            'not exists (select id from project_task where sale_line_id=l.id) '
+            'and l.order_id=%s and p.project_id=%s) where id=%s',
             (sale_id, project_id, task_id))
