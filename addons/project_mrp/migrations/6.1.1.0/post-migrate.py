@@ -36,5 +36,5 @@ def migrate(cr, version):
             'join product_product p on l.product_id=p.id '
             'where '
             'not exists (select id from project_task where sale_line_id=l.id) '
-            'and l.order_id=%s and p.project_id=%s) where id=%s',
+            'and l.order_id=%s and p.project_id=%s limit 1) where id=%s',
             (sale_id, project_id, task_id))
