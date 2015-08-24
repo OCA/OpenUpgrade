@@ -23,8 +23,8 @@ from openerp.openupgrade import openupgrade
 
 def migrate_sale_order_lines(env):
     env.cr.execute(
-            "select id, layout_type from sale_order_line "
-            "where layout_type not in ('article', 'text')")
+        "select id, layout_type from sale_order_line "
+        "where layout_type not in ('article', 'text')")
     line_layouts = dict(env.cr.fetchall())
 
     for sale_order in env['sale.order'].search(
@@ -58,10 +58,11 @@ def migrate_sale_order_lines(env):
                 if not line.product_id and line.state in ('draft', 'cancel'):
                     line.unlink()
 
+
 def migrate_invoice_lines(env):
     env.cr.execute(
-            "select id, state from account_invoice_line "
-            "where state not in ('article', 'text')")
+        "select id, state from account_invoice_line "
+        "where state not in ('article', 'text')")
 
     line_layouts = dict(env.cr.fetchall())
 
@@ -95,6 +96,7 @@ def migrate_invoice_lines(env):
                 current_section.write({field: True})
                 if not line.product_id:
                     line.unlink()
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
