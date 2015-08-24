@@ -38,3 +38,17 @@ def migrate(cr, version):
             'not exists (select id from project_task where sale_line_id=l.id) '
             'and l.order_id=%s and p.project_id=%s limit 1) where id=%s',
             (sale_id, project_id, task_id))
+        if project_id or cr.rowcount:
+            continue
+        # if this didn't work, don't restrict to project and use just any line
+        # with a service product
+        cr.execute(
+            'update project_task set sale_line_id = '
+            '(select l.id from sale_order_line l '
+            'left outer join product_product p on l.product_id=p.id '
+            'left outer join product_template t on p.product_tmpl_id=t.id '
+            'where '
+            'not exists (select id from project_task where sale_line_id=l.id) '
+            "and (l.product_id is null or t.type='service') "
+            'and l.order_id=%s limit 1) where id=%s',
+            (sale_id, task_id))
