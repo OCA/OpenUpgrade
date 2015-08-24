@@ -54,6 +54,7 @@ import openerp.release as release
 import openerp.tools as tools
 import openerp.tools.osutil as osutil
 
+from openerp.openupgrade import openupgrade_loading
 from openerp.tools.safe_eval import safe_eval as eval
 from openerp.tools.translate import _
 from openerp.modules.module import \
@@ -411,7 +412,7 @@ def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_m
     while True:
         cr.execute("SELECT name from ir_module_module WHERE state IN %s" ,(tuple(states),))
         module_list = [name for (name,) in cr.fetchall() if name not in graph]
-        module_list = openupgrade.add_module_dependencies(cr, module_list)
+        module_list = openupgrade_loading.add_module_dependencies(cr, module_list)
         graph.add_modules(cr, module_list, force)
         _logger.debug('Updating graph with %d more modules', len(module_list))
         loaded, processed = load_module_graph(cr, graph, progressdict, report=report, skip_modules=loaded_modules, registry=registry)
