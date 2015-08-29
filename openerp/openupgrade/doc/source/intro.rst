@@ -8,11 +8,17 @@ does not support migrations from one major release to another. Instead,
 migrations are part of a support package sold by Odoo SA. Note that the name
 of the project refers to the old name of Odoo, *OpenERP*.
 
-The project is hosted as GitHub branches:
-https://github.com/OpenUpgrade/OpenUpgrade
+The project is hosted as two separate GitHub projects:
 
-These branches are copies (forks in Git terminology) of the Odoo main project,
-but with extra commits that include migration scripts for each module.  One
+* https://github.com/OCA/openupgrade
+* https://github.com/OCA/openupgradelib
+
+The branches in the first project are copies (forks in Git terminology) of the
+Odoo main project, but with extra commits that include migration scripts for
+each module. The second project contains a library with helper functions. It
+can be used in the migration of any Odoo module.
+
+One
 migration script updates that part of a database that is governed by the module
 for which it is written.  We use the native upgrade mechanism in Odoo, which
 was used in older versions of the Odoo server and presumably is still

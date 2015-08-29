@@ -11,7 +11,12 @@ OpenUpgrade server.
 
 Download it from github_.
 
-It accepts a couple of parameters, the mandatory ones are
+The script assumes that all python libraries that are required by Odoo are
+installed in the current environment. Note that you need OpenUpgrade's
+additional dependency `openupgradelib
+<https://pypi.python.org/pypi/openupgradelib>`_.
+
+The script accepts a couple of parameters, the mandatory ones are
 
 ``--config=[your original config file]``
   this file will be used to craft a new config file for the migration process
@@ -39,7 +44,7 @@ the target version of Odoo.
 Problems
 --------
 
-Please report problems to https://github.com/openupgrade/openupgrade/issues
+Please report problems to https://github.com/OCA/openupgrade/issues
 (very often, it's not a bug but a specific issue with your database setup).
 Make sure to have read your ``migration.log`` file carefully to avoid posting
 about obvious issues.  Post relevant lines from the logfile, but don't post
@@ -52,7 +57,7 @@ In a nutshell
 
 ::
 
-  wget https://raw.githubusercontent.com/OpenUpgrade/OpenUpgrade/HEAD/scripts/migrate.py
+  wget https://raw.githubusercontent.com/OCA/OpenUpgrade/HEAD/scripts/migrate.py
   python migrate.py --config=[your openerp.conf] --database=[your database] --run-migrations=[your migrations]
 
-.. _github: https://github.com/OpenUpgrade/OpenUpgrade/blob/8.0/scripts/migrate.py
+.. _github: https://github.com/OCA/OpenUpgrade/blob/8.0/scripts/migrate.py
