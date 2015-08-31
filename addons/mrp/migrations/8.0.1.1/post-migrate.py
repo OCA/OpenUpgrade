@@ -87,10 +87,12 @@ def migrate_bom_lines(cr, pool):
 
 
 def fix_domains(cr, pool):
-    sql = """UPDATE ir_act_window SET domain = NULL WHERE domain =
-'[(''bom_id'',''='',False)]' AND res_model = 'mrp.bom'"""
-    cr.execute(sql)
-    cr.commit()
+    sql = """
+    UPDATE ir_act_window
+    SET domain = NULL
+    WHERE domain = '[(''bom_id'',''='',False)]' AND res_model = 'mrp.bom'
+    """
+    openupgrade.logged_query(cr, sql)
 
 
 def update_stock_moves(cr, pool):
@@ -151,11 +153,10 @@ def update_stock_picking_name(cr, pool):
 
 
 def migrate_product_supply_method(cr, pool):
-    '''
-    Procurements of products: change the supply_method for the matching route
-    produce -> Manufacture Rule
+    """Procurements of products: change the supply_method for the matching
+    route produce -> Manufacture Rule
     :param cr: Database cursor
-    '''
+    """
     mto_route_id = pool['ir.model.data'].get_object_reference(
         cr, uid, 'mrp', 'route_warehouse0_manufacture')[1]
     cr.execute(
@@ -173,8 +174,10 @@ def migrate_product(cr, pool):
     prod_tmpl_obj = pool['product.template']
     cr.execute(
         """
-        SELECT product_tmpl_id FROM product_product
-        WHERE {} IS TRUE""".format(
+        SELECT product_tmpl_id
+        FROM product_product
+        WHERE {} IS TRUE
+        """.format(
             openupgrade.get_legacy_name('track_production')))
     template_ids = [row[0] for row in cr.fetchall()]
     logger.debug(
