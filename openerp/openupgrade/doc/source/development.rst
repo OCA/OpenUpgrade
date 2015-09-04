@@ -10,7 +10,8 @@ Migration Scrips consist of two main files in every module's migration directory
 - pre-migration.py
 - post-migration.py
 
-What they do is derived from their names, you should check the API Documentation of the openupgradelib for details of standard methods available.
+What they do is derived from their names, you should check the API Documentation of the openupgradelib_ for details of standard methods available.
+.. _openupgradelib: https://github.com/OCA/openupgradelib/releases
 
 The general purpose of those scripts is to manipulate directly the database entries of the source database *copy* and change them in a way so that they are compatible with the target database source code. Note, that when running Odoo's '--update-all' flag on your *target source code* but on top of your *source database*, Odoo's internal updating mechanism will use your migrating scripts to manipulate your database in a way, so that it can be start up properly on the underlying (target) source code. If this succeeds, chances are, that your scripts are working, if not, you have to go over the scripts and make a new test run on a fresh copy (@Reviewer: or is a falling migration reverted?) of your source database.
 
