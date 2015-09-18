@@ -6,7 +6,7 @@
             <field name="model">openupgrade.install.all.wizard</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="OpenUpgrade Install All Modules Wizard">
+                <form string="OpenUpgrade Install All Modules Wizard" version="6.1">
                     <group states="init" colspan="4">
                         <label string="This will install all modules on the database. Do not continue if you use this database in production." colspan="4"
                                />

@@ -6,7 +6,7 @@
             <field name="model">openupgrade.generate.records.wizard</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="OpenUpgrade Generate Records Wizard">
+                <form string="OpenUpgrade Generate Records Wizard" version="6.1">
                     <group states="init" colspan="4">
                         <label string="This will reinitialize all the modules installed on this database. Do not continue if you use this database in production."
                                />
