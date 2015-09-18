@@ -25,7 +25,7 @@ from openerp.modules.module import initialize_sys_path, \
     load_openerp_module, init_module_models, adapt_version
 from module import runs_post_install
 
-from openerp.openupgrade import openupgrade_loading, deferred_80
+from openerp.openupgrade import openupgrade_loading, deferred_90
 
 _logger = logging.getLogger(__name__)
 _test_logger = logging.getLogger('openerp.tests')
@@ -408,7 +408,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
 
             # OpenUpgrade: call deferred migration steps
             if update_module:
-                deferred_80.migrate_deferred(cr, registry)
+                deferred_90.migrate_deferred(cr, registry)
 
         for kind in ('init', 'demo', 'update'):
             tools.config[kind] = {}

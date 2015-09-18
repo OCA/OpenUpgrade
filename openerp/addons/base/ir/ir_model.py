@@ -18,7 +18,8 @@ from openerp.tools import config
 from openerp.tools.safe_eval import safe_eval as eval
 from openerp.tools.translate import _
 
-from openerp.openupgrade import openupgrade_log, openupgrade
+from openerp.openupgrade import openupgrade_log
+from openupgradelib import openupgrade
 
 _logger = logging.getLogger(__name__)
 
