@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
-#    This module Copyright (C) 2012-2014 OpenUpgrade community
-#    https://launchpad.net/~openupgrade-committers
+#    Copyright (C) 2012-2015 Odoo Community Association (OCA)
+#    (<http://odoo-community.org>)
 #
 #    Contributors:
 #    Therp BV <http://therp.nl>
@@ -26,12 +25,12 @@
 try:
     from openerp.osv.orm import TransientModel, except_orm
     from openerp.osv import fields
-    from openerp.openupgrade import openupgrade_tools
+    from openupgradelib import openupgrade_tools
     from openerp import pooler
 except ImportError:
     from osv.osv import osv_memory as TransientModel, except_osv as except_orm
     from osv import fields
-    from openupgrade import openupgrade_tools
+    from openupgradelib import openupgrade_tools
     import pooler
 
 
