@@ -131,7 +131,7 @@ CREATE TABLE ir_model_relation (
 def is_module_installed(cr, module):
     cr.execute(
         "SELECT id FROM ir_module_module "
-        "WHERE name=%s and state='installed'", (module,))
+        "WHERE name=%s and state IN ('installed', 'to upgrade')", (module,))
     return bool(cr.fetchone())
 
 
