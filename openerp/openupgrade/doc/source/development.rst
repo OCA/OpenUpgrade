@@ -34,7 +34,7 @@ Special Case: deferred upgrades
 In some cases, you need to defer some operations until the rest of the migration of the individual modules has terminated. The deferred_80.py_ is responsible for that. Note, that OpenUpgrade at that point_ cannot see if migrations was successful so it executes this script every time regardless of success of the migration. Therefore this script must be robust against repeating execution (include checks!)
 
 .. _migration: https://doc.therp.nl/openupgrade/intro.html#migrating-your-database
-.. _Documentation: https://doc.therp.nl/openupgrade/API.html
+.. _Documentation: API.rst
 .. _openupgradelib: https://github.com/OCA/openupgradelib/releases
 .. _deferred_80.py: https://github.com/OCA/OpenUpgrade/blob/8.0/openerp/openupgrade
 .. apriori.py_: https://github.com/OCA/OpenUpgrade/blob/e2726bff62cf5929f028fe3922f80a664f129179/openerp/addons/openupgrade_records/lib/apriori.py
