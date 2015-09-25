@@ -6,7 +6,7 @@ def move_fields(cr, pool):
     execute = openupgrade.logged_query
     queries = [
         """
-        UPDATE product_product
+        UPDATE product_template
         SET produce_delay = (
             SELECT pt.%s
             FROM product_template pt
