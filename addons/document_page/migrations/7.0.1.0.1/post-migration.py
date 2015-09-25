@@ -117,6 +117,7 @@ re_ol_li = re.compile("^(\*\*+|#+):? ")
 re_ul_ol_li = re.compile("^(\*+|#+):? ")
 re_youtube = re.compile(
     "^(https?://)?(www\.)?youtube.com/(watch\?(.*)v=|embed/)([^&]+)")
+re_pre = re.compile("^ +")
 
 
 class Wiky:
@@ -155,6 +156,12 @@ class Wiky:
                     i += 1
                 i -= 1
                 html += self.process_bullet_point(lines[start: i + 1])
+            elif re_pre.match(line):
+                start = i
+                while i < len(lines) and re_pre.match(lines[i]):
+                    i += 1
+                i -= 1
+                html += self.process_pre(lines[start:i + 1])
             else:
                 html += self.process_normal(line)
             html += "<br/>\n"
@@ -251,6 +258,9 @@ class Wiky:
         html += "</ul>" if lines[0][0] == "*" else "</ol>"
         html += '\n'
         return html
+
+    def process_pre(self, lines):
+        return '<pre>%s</pre>' % '\n'.join(line[1:] for line in lines)
 
     def process_url(self, txt):
         css = ('style="background: url(\"%s\") no-repeat scroll '
