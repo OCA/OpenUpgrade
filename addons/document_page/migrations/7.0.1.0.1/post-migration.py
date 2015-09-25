@@ -63,9 +63,8 @@ WHERE res_id IS NOT null and model = 'wiki.groups';\
 """)
     logged_query(cr, """\
 UPDATE ir_attachment
-SET res_model='document.page', res_id=document_page.id
-FROM document_page
-WHERE res_model='wiki.wiki' and ir_attachment.res_id=document_page.old_id""")
+SET res_model='document.page'
+WHERE res_model='wiki.wiki'""")
     openupgrade.drop_columns(
         cr, [('document_page', 'group_id'), ('document_page', 'old_id')])
     rename_model_wiki_groups(cr)
