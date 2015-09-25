@@ -118,6 +118,11 @@ re_ul_ol_li = re.compile("^(\*+|#+):? ")
 re_youtube = re.compile(
     "^(https?://)?(www\.)?youtube.com/(watch\?(.*)v=|embed/)([^&]+)")
 re_pre = re.compile("^ +")
+re_table_start = re.compile(r"^\{\|")
+re_table_end = re.compile(r"^\|\}")
+re_table_caption = re.compile(r"^\|\+")
+re_table_row = re.compile(r"^\|-")
+re_table_cell = re.compile(r"^\||!")
 
 
 class Wiky:
@@ -162,6 +167,16 @@ class Wiky:
                     i += 1
                 i -= 1
                 html += self.process_pre(lines[start:i + 1])
+            elif re_table_start.match(line):
+                i += 1
+                start = i
+                while i < len(lines) and (
+                        not line or re_table_cell.match(lines[i])):
+                    i += 1
+                    if re_table_end.match(lines[i]):
+                        break
+                html += self.process_table(lines[start:i])
+                i -= 1
             else:
                 html += self.process_normal(line)
             html += "<br/>\n"
@@ -261,6 +276,35 @@ class Wiky:
 
     def process_pre(self, lines):
         return '<pre>%s</pre>' % '\n'.join(line[1:] for line in lines)
+
+    def process_table(self, lines):
+        caption = ''
+        rows = []
+        current_row = []
+        rows.append(current_row)
+        for line in lines:
+            if not line:
+                continue
+            elif re_table_caption.match(line):
+                caption = line[2:]
+            elif re_table_row.match(line):
+                current_row = []
+                rows.append(current_row)
+            else:
+                # the calling code above guarantees this maches re_table_cell
+                is_header = line[0] == '!'
+                for cell_text in line[1:].split('!!' if is_header else '||'):
+                    cell_text = cell_text.strip()
+                    current_row.append(
+                        ('<th>%s</th>' if is_header else '<td>%s</td>')
+                        % self.process(cell_text) if cell_text else ''
+                    )
+        return '<table>%s%s</table>' % (
+            ('<caption>%s</caption>' % caption) if caption else '',
+            '\n'.join(
+                '<tr>%s</tr>' % '\n'.join(row)
+                for row in rows if row),
+        )
 
     def process_url(self, txt):
         css = ('style="background: url(\"%s\") no-repeat scroll '
