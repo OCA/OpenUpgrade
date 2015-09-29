@@ -128,13 +128,6 @@ CREATE TABLE ir_model_relation (
             "ALTER TABLE ir_act_client INHERIT ir_actions")
 
 
-def is_module_installed(cr, module):
-    cr.execute(
-        "SELECT id FROM ir_module_module "
-        "WHERE name=%s and state IN ('installed', 'to upgrade')", (module,))
-    return bool(cr.fetchone())
-
-
 def create_users_partner(cr):
     """
     Users now have an inherits on res.partner.
@@ -180,7 +173,7 @@ def create_users_partner(cr):
         "WHERE module='base' and name='user_root'")
     user_root = cr.fetchone()
     user_root_id = user_root and user_root[0] or 0
-    warning_installed = is_module_installed(cr, 'warning')
+    warning_installed = openupgrade.is_module_installed(cr, 'warning')
     cr.execute(
         "SELECT id, name, active FROM res_users "
         "WHERE partner_id IS NULL")
