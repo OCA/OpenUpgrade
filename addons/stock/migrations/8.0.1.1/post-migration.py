@@ -192,7 +192,6 @@ def migrate_stock_picking(cr, registry):
                 'one found (%s) to determine the picking types for this '
                 'company\'s pickings. Please verify this setting.',
                 company.name, warehouse.name)
-
         # Fill picking_type_id required field
         for picking_type, type_id in (
                 ('in', warehouse.in_type_id.id),
@@ -205,10 +204,43 @@ def migrate_stock_picking(cr, registry):
                 WHERE {type_legacy} = %s
                 """.format(type_legacy=type_legacy),
                 (type_id, picking_type,))
-
     # state key auto -> waiting
     cr.execute("UPDATE stock_picking SET state = %s WHERE state = %s",
                ('waiting', 'auto',))
+    # Add a column for referring stock moves in stock pack operation
+    cr.execute("""
+        ALTER TABLE stock_pack_operation
+        ADD COLUMN %s INTEGER
+        """ % openupgrade.get_legacy_name('move_id'))
+    # Recreate stock.pack.operation (only for moves that belongs to a picking)
+    stock_move_obj = registry['stock.move']
+    done_move_ids = stock_move_obj.search(cr, uid, [('state', '=', 'done')])
+    openupgrade.logged_query(
+        cr,
+        """
+        INSERT INTO stock_pack_operation
+            (%s, picking_id, product_id, product_uom_id, product_qty, qty_done,
+            lot_id, date, location_id, location_dest_id, processed)
+        SELECT
+            id, picking_id, product_id, product_uom, product_uom_qty,
+            product_uom_qty, %s, date, location_id, location_dest_id, 'true'
+        FROM stock_move
+        WHERE
+            id IN %%s
+            AND picking_id IS NOT NULL
+        """ % (openupgrade.get_legacy_name('move_id'),
+               openupgrade.get_legacy_name('prodlot_id')),
+        (tuple(done_move_ids), ))
+    # And link it with moves creating stock.move.operation.link records
+    openupgrade.logged_query(
+        cr,
+        """
+        INSERT INTO stock_move_operation_link
+            (move_id, operation_id, qty)
+        SELECT
+            %s, id, product_qty
+        FROM stock_pack_operation
+        """ % openupgrade.get_legacy_name('move_id'))
 
 
 def set_warehouse_view_location(cr, registry, warehouse):
@@ -468,7 +500,7 @@ def _migrate_stock_warehouse(cr, registry, res_id):
         warehouse_obj.create_routes(cr, uid, [warehouse.id], warehouse))
 
 
-def migrate_stock_warehouse(cr, registry):
+def migrate_stock_warehouses(cr, registry):
     """Migrate all the warehouses"""
     warehouse_obj = registry['stock.warehouse']
     # Set code
@@ -653,7 +685,8 @@ def migrate_stock_qty(cr, registry):
     """Reprocess stock moves in state done to fill stock.quant."""
     stock_move_obj = registry['stock.move']
 
-    done_move_ids = stock_move_obj.search(cr, uid, [('state', '=', 'done')])
+    done_move_ids = stock_move_obj.search(
+        cr, uid, [('state', '=', 'done')], order="date")
     openupgrade.message(
         cr, 'stock', 'stock_move', 'state',
         'Reprocess %s stock moves in state done to fill stock.quant',
@@ -680,8 +713,15 @@ def migrate_stock_production_lot(cr, registry):
             lot_obj.message_post(cr, author, lot, body=description)
 
     # Move: prodlot_id -> Quants lot_id.
+    # Only on dangling/inventory moves, because the other (from pickings) had
+    # stock.pack.operation linked with related lot before creating the quant
     field_name = openupgrade.get_legacy_name('prodlot_id')
-    cr.execute("""select id, %s from stock_move where %s is not null""" % (
+    cr.execute("""
+        SELECT id, %s
+        FROM stock_move
+        WHERE
+            %s IS NOT NULL AND
+            picking_id IS NULL""" % (
         field_name, field_name))
     res1 = cr.fetchall()
     for move, lot in res1:
@@ -726,7 +766,7 @@ def reset_warehouse_data_ids(cr, registry):
             (res_id, name))
 
 
-def create_stock_move_fields(cr, registry):
+def populate_stock_move_fields(cr, registry):
     """ This function reduce creation time of the stock_move fields
        (See pre script, for more information)
     """
@@ -765,11 +805,11 @@ def migrate(cr, version):
     database in which procurement related stuff needs to be migrated.
     """
     registry = RegistryManager.get(cr.dbname)
-    create_stock_move_fields(cr, registry)
+    populate_stock_move_fields(cr, registry)
     have_procurement = openupgrade.column_exists(
         cr, 'product_template', openupgrade.get_legacy_name('procure_method'))
 
-    migrate_stock_warehouse(cr, registry)
+    migrate_stock_warehouses(cr, registry)
     migrate_stock_picking(cr, registry)
     migrate_stock_location(cr, registry)
 
