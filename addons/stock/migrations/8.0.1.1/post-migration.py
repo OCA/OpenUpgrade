@@ -215,6 +215,8 @@ def migrate_stock_picking(cr, registry):
     # Recreate stock.pack.operation (only for moves that belongs to a picking)
     stock_move_obj = registry['stock.move']
     done_move_ids = stock_move_obj.search(cr, uid, [('state', '=', 'done')])
+    if not done_move_ids:
+        return
     openupgrade.logged_query(
         cr,
         """
