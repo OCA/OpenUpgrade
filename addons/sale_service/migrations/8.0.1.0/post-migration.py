@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.openupgrade import openupgrade
+from openupgradelib import openupgrade
 
 
 @openupgrade.migrate()
