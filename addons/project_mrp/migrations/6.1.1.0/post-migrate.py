@@ -18,8 +18,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp.openupgrade import openupgrade
 
 
+@openupgrade.migrate()
 def migrate(cr, version):
     """compute project.task's sale_line_id"""
     cr.execute(
