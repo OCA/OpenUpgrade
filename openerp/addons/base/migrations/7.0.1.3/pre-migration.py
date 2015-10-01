@@ -173,14 +173,24 @@ def create_users_partner(cr):
         "WHERE module='base' and name='user_root'")
     user_root = cr.fetchone()
     user_root_id = user_root and user_root[0] or 0
+    warning_installed = openupgrade.is_module_installed(cr, 'warning')
     cr.execute(
         "SELECT id, name, active FROM res_users "
         "WHERE partner_id IS NULL")
-    for row in cr.fetchall():
-        cr.execute(
+    sql_insert_partner = (
+        "INSERT INTO res_partner "
+        "(name, active) "
+        "VALUES(%s,%s) RETURNING id")
+    if warning_installed:
+        sql_insert_partner = (
             "INSERT INTO res_partner "
-            "(name, active) "
-            "VALUES(%s,%s) RETURNING id", row[1:])
+            "(name, active,picking_warn,sale_warn,"
+            "invoice_warn,purchase_warn) "
+            "VALUES("
+            "%s,%s,'no-message','no-message','no-message','no-message') "
+            "RETURNING id")
+    for row in cr.fetchall():
+        cr.execute(sql_insert_partner, row[1:])
         partner_id = cr.fetchone()[0]
         cr.execute(
             "UPDATE res_users "
