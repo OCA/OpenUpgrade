@@ -28,10 +28,12 @@ try:
     from openerp.osv.orm import TransientModel
     from openerp.osv import fields
     from openerp import pooler
+    from openerp.addons.openupgrade_records.blacklist import BLACKLIST_MODULES
 except ImportError:
     from osv.osv import osv_memory as TransientModel
     from osv import fields
     import pooler
+    from openupgrade_records.blacklist import BLACKLIST_MODULES
 
 
 class install_all_wizard(TransientModel):
@@ -114,13 +116,14 @@ class install_all_wizard(TransientModel):
                 ('state', 'not in',
                  ['installed', 'uninstallable', 'unknown']),
                 ('category_id.name', '!=', 'Tests'),
-                ])
+                ('name', 'not in', BLACKLIST_MODULES),
+                ], context=context)
         if module_ids:
             module_obj.write(
-                cr, uid, module_ids, {'state': 'to install'})
+                cr, uid, module_ids, {'state': 'to install'}, context=context)
             cr.commit()
             _db, pool = pooler.restart_pool(cr.dbname, update_module=True)
-            self.write(cr, uid, ids, {'state': 'ready'})
+            self.write(cr, uid, ids, {'state': 'ready'}, context)
         return True
 
 install_all_wizard()
