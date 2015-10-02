@@ -28,10 +28,12 @@ try:
     from openerp.osv.orm import TransientModel
     from openerp.osv import fields
     from openerp import pooler
+    from openerp.addons.openupgrade_records.blacklist import BLACKLIST_MODULES
 except ImportError:
     from osv.osv import osv_memory as TransientModel
     from osv import fields
     import pooler
+    from openupgrade_records.blacklist import BLACKLIST_MODULES
 
 
 class install_all_wizard(TransientModel):
@@ -66,22 +68,6 @@ class install_all_wizard(TransientModel):
             {'to_install': module_ids and len(module_ids) or False}
             )
         return res
-
-    BLACKLIST_MODULES = [
-        # l10n_be cannot be reinstalled as the module's yaml data installs
-        # the chart of accounts at installation time, and the other modules
-        # depend on this module and the chart installation itself.
-        'l10n_be',
-        'l10n_be_intrastat',
-        'l10n_be_hr_payroll_account',
-        # the hw_* modules are not affected by a migration as they don't
-        # contain any ORM functionality, but they do start up threads that
-        # delay the process and spit out annoying log messages continously.
-        'hw_escpos',
-        'hw_proxy',
-        'hw_scale',
-        'hw_scanner',
-    ]
 
     def quirk_fiscalyear(self, cr, uid, ids, context=None):
         """
@@ -130,7 +116,7 @@ class install_all_wizard(TransientModel):
                 ('state', 'not in',
                  ['installed', 'uninstallable', 'unknown']),
                 ('category_id.name', '!=', 'Tests'),
-                ('name', 'not in', self.BLACKLIST_MODULES),
+                ('name', 'not in', BLACKLIST_MODULES),
                 ], context=context)
         if module_ids:
             module_obj.write(
