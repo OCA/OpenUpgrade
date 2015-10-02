@@ -67,6 +67,22 @@ class install_all_wizard(TransientModel):
             )
         return res
 
+    BLACKLIST_MODULES = [
+        # l10n_be cannot be reinstalled as the module's yaml data installs
+        # the chart of accounts at installation time, and the other modules
+        # depend on this module and the chart installation itself.
+        'l10n_be',
+        'l10n_be_intrastat',
+        'l10n_be_hr_payroll_account',
+        # the hw_* modules are not affected by a migration as they don't
+        # contain any ORM functionality, but they do start up threads that
+        # delay the process and spit out annoying log messages continously.
+        'hw_escpos',
+        'hw_proxy',
+        'hw_scale',
+        'hw_scanner',
+    ]
+
     def quirk_fiscalyear(self, cr, uid, ids, context=None):
         """
         Install account module first and create a fiscal year,
@@ -114,13 +130,14 @@ class install_all_wizard(TransientModel):
                 ('state', 'not in',
                  ['installed', 'uninstallable', 'unknown']),
                 ('category_id.name', '!=', 'Tests'),
-                ])
+                ('name', 'not in', self.BLACKLIST_MODULES),
+                ], context=context)
         if module_ids:
             module_obj.write(
-                cr, uid, module_ids, {'state': 'to install'})
+                cr, uid, module_ids, {'state': 'to install'}, context=context)
             cr.commit()
             _db, pool = pooler.restart_pool(cr.dbname, update_module=True)
-            self.write(cr, uid, ids, {'state': 'ready'})
+            self.write(cr, uid, ids, {'state': 'ready'}, context=context)
         return True
 
 install_all_wizard()

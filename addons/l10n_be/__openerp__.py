@@ -81,7 +81,7 @@ Wizards provided by this module:
         'views/report_vatpartnerlisting.xml',
     ],
     'demo': [],
-    'installable': False,
+    'installable': True,
     'website': 'https://www.odoo.com/page/accounting',
 }
 
