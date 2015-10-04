@@ -57,7 +57,7 @@ This module depends on OpenERP client lib:
     'installable': True,
     'auto_install': False,
     'external_dependencies': {
-        'python': ['openerplib'],
+        'python': ['openerplib', 'openupgradelib'],
         },
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
