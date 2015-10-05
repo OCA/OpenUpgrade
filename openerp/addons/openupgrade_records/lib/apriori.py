@@ -5,6 +5,7 @@ to help the matching process
 renamed_modules = {
     'base_calendar': 'calendar',
     'mrp_jit': 'procurement_jit',
+    'project_mrp': 'sale_service',
     # OCA/account-invoicing
     'invoice_validation_wkfl': 'account_invoice_validation_workflow',
     'account_invoice_zero': 'account_invoice_zero_autopay',

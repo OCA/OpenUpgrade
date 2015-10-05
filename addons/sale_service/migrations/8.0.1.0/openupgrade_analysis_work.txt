@@ -1,0 +1,12 @@
+---Fields in module 'sale_service'---
+sale_service / product.template         / auto_create_task (boolean)    : NEW 
+-> set to True for existing records (old behavior)
+sale_service / product.template         / project_id (many2one)         : NEW relation: project.project
+-> filled from linked products
+sale_service / project.task.type        / closed (boolean)              : NEW 
+-> nothing to do
+---XML records in module 'sale_service'---
+NEW ir.ui.view: sale_service.task_type_edit_mrp_inherit
+NEW ir.ui.view: sale_service.view_procurement_task_form
+NEW ir.ui.view: sale_service.view_product_task_form
+NEW ir.ui.view: sale_service.view_sale_service_inherit_form2
