@@ -315,13 +315,12 @@ for version in options.migrations.split(','):
 
         realtarget = os.path.realpath(target)
         for root, dirs, files in os.walk(realtarget):
-            for file in files:
-                if file == "__openerp__.py":
-                    linkpath = os.path.join(options.branch_dir,
-                                            version, 'addons', name)
-                    if os.path.exists(linkpath):
-                        os.remove(linkpath)
-                    os.symlink(root, linkpath)
+            if "__openerp__.py" in files:
+                linkpath = os.path.join(options.branch_dir,
+                                        version, 'addons', name)
+                if os.path.exists(linkpath):
+                    os.remove(linkpath)
+                os.symlink(root, linkpath)
 
 db_name = conn_parms['database']
 if not options.inplace:
