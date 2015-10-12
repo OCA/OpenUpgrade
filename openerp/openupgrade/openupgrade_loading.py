@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2011-2012 Therp BV (<http://therp.nl>)
+#    Copyright (C) 2011 - 2014 Therp BV (<http://therp.nl>)
+#              (C) 2015 Opener B.V. (<https://opener.am>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,12 +19,12 @@
 #
 ##############################################################################
 
-import logging
 import types
+import logging
 from openerp import release
 from openerp.osv.orm import TransientModel
 from openerp.osv import fields
-from openerp.openupgrade.openupgrade import table_exists
+from openupgradelib.openupgrade_tools import table_exists
 from openerp.tools import config, safe_eval
 
 # A collection of functions used in
@@ -118,6 +118,23 @@ def log_model(model, local_registry):
     if isinstance(model, TransientModel):
         return
 
+    def isfunction(model, k):
+        if (isinstance(model._columns[k], fields.function) and
+            not isinstance(model._columns[k],
+                           (fields.property, fields.related))):
+            return 'function'
+        return ''
+
+    def isproperty(model, k):
+        if isinstance(model._columns[k], fields.property):
+            return 'property'
+        return ''
+
+    def isrelated(model, k):
+        if isinstance(model._columns[k], fields.related):
+            return 'property'
+        return ''
+
     model_registry = local_registry.setdefault(
         model._name, {})
     if model._inherits:
@@ -125,12 +142,11 @@ def log_model(model, local_registry):
     for k, v in model._columns.items():
         properties = {
             'type': v._type,
-            'isfunction': (
-                isinstance(v, fields.function) and 'function' or ''),
-            'relation': (
-                v._type in ('many2many', 'many2one', 'one2many')
-                and v._obj or ''
-                ),
+            'isfunction': isfunction(model, k),
+            'isproperty': isproperty(model, k),
+            'isrelated': isrelated(model, k),
+            'relation':
+            v._type in ('many2many', 'many2one', 'one2many') and v._obj or '',
             'required': v.required and 'required' or '',
             'selection_keys': '',
             'req_default': '',
