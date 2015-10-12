@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2014 Therp BV (<http://therp.nl>)
+#    Copyright (C) 2014 Therp BV (<http://therp.nl>)
+#              (C) 2015 Opener B.V. (<https://opener.am>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,7 +22,8 @@
 import types
 import logging
 from openerp import release
-from openerp.osv.orm import TransientModel
+from openerp.osv import orm
+from openerp import models
 from openerp.osv import fields
 from openupgradelib.openupgrade_tools import table_exists
 from openerp.tools import config, safe_eval
@@ -117,8 +118,28 @@ def log_model(model, local_registry):
         return
 
     # persistent models only
-    if isinstance(model, TransientModel):
+    if isinstance(model, (orm.TransientModel, models.TransientModel)):
         return
+
+    def isfunction(model, k):
+        if ((isinstance(model._columns[k], fields.function) and
+             not isinstance(model._columns[k],
+                            (fields.property, fields.related))) or
+                (model._fields[k].compute and not model._fields[k].related)):
+            return 'function'
+        return ''
+
+    def isproperty(model, k):
+        if (isinstance(model._columns[k], fields.property) or
+                model._fields[k].company_dependent):
+            return 'property'
+        return ''
+
+    def isrelated(model, k):
+        if (isinstance(model._columns[k], fields.related) or
+                model._fields[k].related):
+            return 'property'
+        return ''
 
     model_registry = local_registry.setdefault(
         model._name, {})
@@ -127,8 +148,9 @@ def log_model(model, local_registry):
     for k, v in model._columns.items():
         properties = {
             'type': v._type,
-            'isfunction': (
-                isinstance(v, fields.function) and 'function' or ''),
+            'isfunction': isfunction(model, k),
+            'isproperty': isproperty(model, k),
+            'isrelated': isrelated(model, k),
             'relation':
             v._type in ('many2many', 'many2one', 'one2many') and v._obj or '',
             'required': v.required and 'required' or '',
