@@ -59,6 +59,23 @@ def copy_database(conn_parms):
     return db_new
 
 migrations = {
+    '9.0': {
+        'addons': {
+            'addons': {
+                'type': 'link',
+                'url': os.path.join('server', 'addons'),
+            },
+        },
+        'server': {
+            'type': 'git',
+            'url': 'git://github.com/OpenUpgrade/OpenUpgrade.git',
+            'branch': '9.0',
+            'addons_dir': os.path.join('openerp', 'addons'),
+            'root_dir': os.path.join(''),
+            'cmd': 'openerp-server --update=all --database=%(db)s '
+                   '--config=%(config)s --stop-after-init --no-xmlrpc',
+            },
+    },
     '8.0': {
         'addons': {
             'addons': {
