@@ -13,9 +13,13 @@ renamed_modules = {
     'audittrail': 'auditlog',
     # OCA/bank-statement-import
     'account_banking': 'account_bank_statement_import',
-    'account_banking_camt': 'bank_statement_parse_camt',
-    'account_banking_nl_ing_mt940': 'bank_statement_parse_nl_ing_mt940',
-    'account_banking_nl_rabo_mt940': 'bank_statement_parse_nl_rabo_mt940',
+    'account_banking_camt': 'account_bank_statement_import_camt',
+    'account_banking_mt940':
+        'account_bank_statement_import_mt940_base',
+    'account_banking_nl_ing_mt940':
+        'account_bank_statement_import_mt940_nl_ing',
+    'account_banking_nl_rabo_mt940':
+        'account_bank_statement_import_mt940_nl_rabo',
 }
 
 renamed_models = {
