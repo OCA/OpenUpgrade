@@ -93,6 +93,8 @@ class openupgrade_record(Model):
             'field',
             'type',
             'isfunction',
+            'isproperty',
+            'isrelated',
             'relation',
             'required',
             'selection_keys',
