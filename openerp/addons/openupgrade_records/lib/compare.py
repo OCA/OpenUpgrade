@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2011 Therp BV (<http://therp.nl>).
+#    Copyright (C) 2011 Therp BV (<http://therp.nl>).
+#              (C) 2015 Opener B.V. (<https://opener.am>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -104,11 +104,25 @@ def report_generic(new, old, attrs, reprs):
                     text += ', default = %s' % new['req_default']
                 fieldprint(old, new, None, text, reprs)
         elif attr == 'isfunction':
-            if old['isfunction'] != new['isfunction']:
+            if old[attr] != new[attr]:
                 if new['isfunction']:
                     text = "now a function"
                 else:
                     text = "not a function anymore"
+                fieldprint(old, new, None, text, reprs)
+        elif attr == 'isproperty':
+            if old[attr] != new[attr]:
+                if new[attr]:
+                    text = "now a property"
+                else:
+                    text = "not a property anymore"
+                fieldprint(old, new, None, text, reprs)
+        elif attr == 'isrelated':
+            if old[attr] != new[attr]:
+                if new[attr]:
+                    text = "now related"
+                else:
+                    text = "not related anymore"
                 fieldprint(old, new, None, text, reprs)
         elif attr == 'oldname':
             if new.get('oldname') == old['field']:
@@ -198,7 +212,8 @@ def compare_sets(old_records, new_records):
         ]
     for column in old_records:
         # we do not care about removed function fields
-        if column['isfunction'] or column['field'] in IGNORE_FIELDS:
+        if (column['isfunction'] or column['isrelated'] or
+                column['field'] in IGNORE_FIELDS):
             continue
         if column['mode'] == 'create':
             column['mode'] = ''
@@ -209,7 +224,8 @@ def compare_sets(old_records, new_records):
 
     for column in new_records:
         # we do not care about newly added function fields
-        if column['isfunction'] or column['field'] in IGNORE_FIELDS:
+        if (column['isfunction'] or column['isrelated'] or
+                column['field'] in IGNORE_FIELDS):
             continue
         if column['mode'] == 'create':
             column['mode'] = ''
