@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-29 10:24+0000\n"
-"PO-Revision-Date: 2015-09-30 09:23+0000\n"
+"POT-Creation-Date: 2015-10-09 09:17+0000\n"
+"PO-Revision-Date: 2015-10-10 09:47+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Bulgarian (http://www.transifex.com/odoo/odoo-9/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -1013,7 +1013,7 @@ msgstr ""
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
 msgid "Congratulations, you're done!"
-msgstr ""
+msgstr "Поздравления, Вие приключихте!"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -1355,7 +1355,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:crm.field_crm_partner_binding_display_name
 #: model:ir.model.fields,field_description:crm.field_crm_stage_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Име за показване"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -1552,7 +1552,7 @@ msgstr ""
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_opportunity_report_view_search
 msgid "Extended Filters"
-msgstr ""
+msgstr "Разширени филтри"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_case_form_view_leads
@@ -1641,6 +1641,13 @@ msgid ""
 msgstr ""
 
 #. module: crm
+#: model:ir.ui.view,arch_db:crm.crm_planner
+msgid ""
+"For the Odoo Team,<br/>\n"
+"                          Fabien Pinckaers, Founder"
+msgstr ""
+
+#. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead2opportunity_partner_mass_force_assignation
 msgid "Force assignation"
 msgstr ""
@@ -1649,13 +1656,6 @@ msgstr ""
 #: code:addons/crm/crm_lead.py:558
 #, python-format
 msgid "From %s : %s"
-msgstr ""
-
-#. module: crm
-#: model:ir.ui.view,arch_db:crm.crm_planner
-msgid ""
-"From the Odoo Team,<br/>\n"
-"                          Fabien Pinckaers, Founder"
 msgstr ""
 
 #. module: crm
@@ -1756,7 +1756,7 @@ msgstr ""
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_activity_hidden
 msgid "Hidden"
-msgstr ""
+msgstr "Скрит"
 
 #. module: crm
 #: model:ir.model.fields,help:crm.field_crm_activity_hidden
@@ -1858,7 +1858,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:crm.view_crm_case_leads_filter
 #: model:ir.ui.view,arch_db:crm.view_crm_case_opportunities_filter
 msgid "Important Messages"
-msgstr ""
+msgstr "Важни съобщения"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -1880,7 +1880,7 @@ msgstr ""
 #: code:addons/crm/sales_team.py:15
 #, python-format
 msgid "Incoming"
-msgstr ""
+msgstr "Входящи"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -1892,6 +1892,11 @@ msgstr ""
 msgid ""
 "Incoming email create leads automatically when a new prospect contacts you.\n"
 "                        That's the easiest way to integrate Odoo with third party apps."
+msgstr ""
+
+#. module: crm
+#: model:ir.model.fields,help:crm.field_sale_config_settings_module_crm_voip
+msgid "Integration with Asterisk"
 msgstr ""
 
 #. module: crm
@@ -1961,7 +1966,7 @@ msgstr "Дата на последното съобщение"
 #: model:ir.model.fields,field_description:crm.field_crm_partner_binding___last_update
 #: model:ir.model.fields,field_description:crm.field_crm_stage___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Последно променено на"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_date_last_stage_update
@@ -2581,11 +2586,17 @@ msgstr ""
 #. module: crm
 #: model:ir.model.fields,help:crm.field_crm_lead_message_unread_counter
 msgid "Number of unread messages"
-msgstr ""
+msgstr "Брой непрочетени съобщения"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
 msgid "Odoo Default"
+msgstr ""
+
+#. module: crm
+#: model:ir.model.fields,field_description:crm.field_sale_config_settings_module_website_sign
+#: model:ir.ui.view,arch_db:crm.view_sale_config_settings
+msgid "Odoo Sign"
 msgstr ""
 
 #. module: crm
@@ -3039,7 +3050,7 @@ msgstr ""
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
 msgid "Reporting"
-msgstr ""
+msgstr "Справки"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_stage_requirements
@@ -3360,7 +3371,7 @@ msgstr "Улица"
 #: model:ir.ui.view,arch_db:crm.crm_case_form_view_leads
 #: model:ir.ui.view,arch_db:crm.crm_case_form_view_oppor
 msgid "Street 2..."
-msgstr ""
+msgstr "Улица 2"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_case_form_view_leads
@@ -3793,6 +3804,11 @@ msgid "Very High"
 msgstr ""
 
 #. module: crm
+#: model:ir.model.fields,field_description:crm.field_sale_config_settings_module_crm_voip
+msgid "VoIP integration"
+msgstr ""
+
+#. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
 msgid ""
 "We are here to help you. If you get stuck, do not hesitate to\n"
@@ -3850,12 +3866,12 @@ msgstr ""
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Съобщения от уебсайта"
 
 #. module: crm
 #: model:ir.model.fields,help:crm.field_crm_lead_website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "История на комуникацията в уебсайта"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner

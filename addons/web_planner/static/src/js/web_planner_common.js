@@ -403,6 +403,10 @@ var PlannerDialog = Widget.extend({
         ev.preventDefault();
         this.$el.modal('hide');
         this.$el.detach();
+    },
+    destroy: function() {
+        this.$el.modal('hide');
+        return this._super.apply(this, arguments);
     }
 });
 
@@ -432,7 +436,7 @@ var PlannerHelpMixin = {
         } else if (menu === 'planner') {
             if (this.dialog) this.show_dialog();
         } else if (menu === 'support') {
-            window.open('https://www.odoo.com/pricing?noredirect=1', '_blank');
+            window.open('https://www.odoo.com/buy', '_blank');
         }
     },
 }

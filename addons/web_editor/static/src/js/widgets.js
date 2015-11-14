@@ -268,6 +268,7 @@ var ImageDialog = Widget.extend({
         this.accept = this.options.accept || this.options.document ? "*/*" : "image/*";
         this.domain = this.options.domain || ['|', ['mimetype', '=', false], ['mimetype', this.options.document ? 'not in' : 'in', ['image/gif', 'image/jpe', 'image/jpeg', 'image/jpg', 'image/gif', 'image/png']]];
         this.parent = parent;
+        this.old_media = media;
         this.media = media;
         this.images = [];
         this.page = 0;
@@ -285,6 +286,9 @@ var ImageDialog = Widget.extend({
             o.id = +o.url.match(/\/web\/content\/([0-9]*)/, '')[1];
         }
         this.parent.$(".pager > li").click(function (e) {
+            if(!self.$el.is(':visible')) {
+                return;
+            }
             e.preventDefault();
             var $target = $(e.currentTarget);
             if ($target.hasClass('disabled')) {
@@ -303,7 +307,6 @@ var ImageDialog = Widget.extend({
             var img = _.select(this.images, function (v) { return v.id == attachment.id;});
             if (img.length) {
                 this.images.splice(this.images.indexOf(img[0]),1);
-                return;
             }
         } else {
             this.images = [];
@@ -324,11 +327,14 @@ var ImageDialog = Widget.extend({
         }
 
         if (!img.is_document) {
+            if (this.media.tagName !== "IMG" || !this.old_media) {
+                this.add_class = "pull-left";
+                this.style = {"width": "100%"};
+            }
             if(this.media.tagName !== "IMG") {
                 var media = document.createElement('img');
                 $(this.media).replaceWith(media);
                 this.media = media;
-                this.add_class = "img-responsive pull-left";
             }
             this.media.setAttribute('src', img.src);
         } else {
@@ -344,7 +350,7 @@ var ImageDialog = Widget.extend({
 
         $(this.media).attr('alt', img.alt);
         var style = this.style;
-        if (style) { this.media.addClass(style); }
+        if (style) { $(this.media).css(style); }
 
         return this.media;
     },
@@ -418,11 +424,11 @@ var ImageDialog = Widget.extend({
         var $button = this.$('button.filepicker');
         if (!error) {
             $button.addClass('btn-success');
+            this.set_image(attachment);
         } else {
             this.$('form').addClass('has-error')
                 .find('.help-block').text(error);
             $button.addClass('btn-danger');
-            this.set_image(attachment, error);
         }
 
         if (!this.options.select_images) {
@@ -592,7 +598,16 @@ rte.Class.include({
     init: function (EditorBar) {
         this._super.apply(this, arguments);
         computeFonts();
-    }
+    },
+    onEnableEditableArea: function ($editable) {
+        if ($editable.data('oe-type') === "monetary") {
+            $editable.attr('contenteditable', false);
+            $editable.find('.oe_currency_value').attr('contenteditable', true);
+        }
+        if ($editable.is('[data-oe-model]') && !$editable.is('[data-oe-model="ir.ui.view"]') && !$editable.is('[data-oe-type="html"]')) {
+            $editable.data('layoutInfo').popover().find('.btn-group:not(.note-history)').remove();
+        }
+    },
 });
 
 /* list of font icons to load by editor. The icons are displayed in the media editor and

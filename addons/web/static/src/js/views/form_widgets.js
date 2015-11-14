@@ -96,10 +96,16 @@ var WidgetButton = common.FormWidget.extend({
         this.$el.css('color', disabled ? 'grey' : '');
     },
     show_wow: function() {
+        var class_to_add = 'o_wow_thumbs';
+        if (Math.random() > 0.9) {
+            var other_classes = ['o_wow_peace', 'o_wow_heart'];
+            class_to_add = other_classes[Math.floor(Math.random()*other_classes.length)];
+        }
+
         var $body = $('body');
-        $body.addClass('o_wow_marked');
+        $body.addClass(class_to_add);
         setTimeout(function() {
-            $body.removeClass('o_wow_marked');
+            $body.removeClass(class_to_add);
         }, 1000);
     }
 });
@@ -732,9 +738,10 @@ var FieldPercentPie = common.AbstractField.extend({
                 .donut(true) 
                 .showLegend(false)
                 .showLabels(false)
-                .tooltips(false)
                 .color(['#7C7BAD','#DDD'])
                 .donutRatio(0.62);
+
+            chart.tooltip.enabled(false);
    
             d3.select(svg)
                 .datum([{'x': 'value', 'y': value}, {'x': 'complement', 'y': 100 - value}])
@@ -772,12 +779,13 @@ var FieldBarChart = common.AbstractField.extend({
                 .width(width)
                 .height(height)
                 .margin({top: 0, right: 0, bottom: 0, left: 0})
-                .tooltips(false)
                 .showValues(false)
-                .transitionDuration(350)
+                .transition(350)
                 .showXAxis(false)
                 .showYAxis(false);
-   
+
+            chart.tooltip.enabled(false);
+
             d3.select(svg)
                 .datum([{key: 'values', values: value}])
                 .transition()
@@ -1649,7 +1657,7 @@ var AbstractFieldUpgrade = {
     },
     
     open_dialog: function() {
-        var message = _t('You need to upgrade to Odoo Enterprise to activate this feature.');
+        var message = _t('Upgrade to <a href="https://www.odoo.com/editions">Odoo Enterprise</a> to activate this feature.');
         var buttons = [
             {
                 text: _t("Upgrade now"),
@@ -1667,7 +1675,7 @@ var AbstractFieldUpgrade = {
             size: 'medium',
             buttons: buttons,
             $content: $('<div>', {
-                text: message,
+                html: message,
             }),
             title: _t("Odoo Enterprise"),
         }).open();

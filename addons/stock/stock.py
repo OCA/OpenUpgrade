@@ -452,6 +452,7 @@ class stock_quant(osv.osv):
         '''
         context = context or {}
         domain = domain or [('qty', '>', 0.0)]
+        domain = list(domain)
         quants = [(None, qty)]
         if ops:
             restrict_lot_id = lot_id
@@ -459,8 +460,10 @@ class stock_quant(osv.osv):
             domain += [('owner_id', '=', ops.owner_id.id)]
             if ops.package_id and not ops.product_id:
                 domain += [('package_id', 'child_of', ops.package_id.id)]
-            else:
+            elif ops.package_id and ops.product_id:
                 domain += [('package_id', '=', ops.package_id.id)]
+            else:
+                domain += [('package_id', '=', False)]
             domain += [('location_id', '=', ops.location_id.id)]
         else:
             restrict_lot_id = move.restrict_lot_id.id
@@ -2341,20 +2344,21 @@ class stock_move(osv.osv):
         context = context or {}
         quant_obj = self.pool.get("stock.quant")
         uom_obj = self.pool['product.uom']
-        to_assign_moves = []
+        to_assign_moves = set()
         main_domain = {}
         todo_moves = []
         operations = set()
+        self.do_unreserve(cr, uid, [x.id for x in self.browse(cr, uid, ids, context=context) if x.reserved_quant_ids and x.state in ['confirmed', 'waiting', 'assigned']], context=context)
         for move in self.browse(cr, uid, ids, context=context):
             if move.state not in ('confirmed', 'waiting', 'assigned'):
                 continue
             if move.location_id.usage in ('supplier', 'inventory', 'production'):
-                to_assign_moves.append(move.id)
+                to_assign_moves.add(move.id)
                 #in case the move is returned, we want to try to find quants before forcing the assignment
                 if not move.origin_returned_move_id:
                     continue
             if move.product_id.type == 'consu':
-                to_assign_moves.append(move.id)
+                to_assign_moves.add(move.id)
                 continue
             else:
                 todo_moves.append(move)
@@ -2419,7 +2423,7 @@ class stock_move(osv.osv):
         #force assignation of consumable products and incoming from supplier/inventory/production
         # Do not take force_assign as it would create pack operations
         if to_assign_moves:
-            self.write(cr, uid, to_assign_moves, {'state': 'assigned'}, context=context)
+            self.write(cr, uid, list(to_assign_moves), {'state': 'assigned'}, context=context)
         if not no_prepare:
             self.check_recompute_pack_op(cr, uid, ids, context=context)
 
@@ -2548,7 +2552,8 @@ class stock_move(osv.osv):
                                                     dest_package_id=quant_dest_package_id, context=context)
                     if redo_false_quants:
                         move_rec = self.pool['stock.move'].browse(cr, uid, move, context=context)
-                        false_quants_move = [(x, x.qty) for x in move_rec.reserved_quant_ids if not x.lot_id]
+                        false_quants_move = [x for x in move_rec.reserved_quant_ids if (not x.lot_id) and (x.owner_id.id == ops.owner_id.id) \
+                                             and (x.location_id.id == ops.location_id.id) and (x.package_id.id != ops.package_id.id)]
 
     def action_done(self, cr, uid, ids, context=None):
         """ Process completely the moves given as ids and if all moves are done, it will finish the picking.
@@ -2624,6 +2629,9 @@ class stock_move(osv.osv):
                     qty_on_link = move_qty_ops[move]
                     rounding = ops.product_id.uom_id.rounding
                     for reserved_quant in move.reserved_quant_ids:
+                        if (reserved_quant.owner_id.id != ops.owner_id.id) or (reserved_quant.location_id.id != ops.location_id.id) or \
+                                (reserved_quant.package_id.id != ops.package_id.id):
+                            continue
                         if not reserved_quant.lot_id:
                             false_quants += [reserved_quant]
                         elif float_compare(lot_qty.get(reserved_quant.lot_id.id, 0), 0, precision_rounding=rounding) > 0:
@@ -2783,12 +2791,15 @@ class stock_move(osv.osv):
             'product_uom_qty': uom_qty,
             'procure_method': 'make_to_stock',
             'restrict_lot_id': restrict_lot_id,
-            'restrict_partner_id': restrict_partner_id,
             'split_from': move.id,
             'procurement_id': move.procurement_id.id,
             'move_dest_id': move.move_dest_id.id,
             'origin_returned_move_id': move.origin_returned_move_id.id,
         }
+
+        if restrict_partner_id:
+            defaults['restrict_partner_id'] = restrict_partner_id
+
         if context.get('source_location_id'):
             defaults['location_id'] = context['source_location_id']
         new_move = self.copy(cr, uid, move.id, defaults, context=context)

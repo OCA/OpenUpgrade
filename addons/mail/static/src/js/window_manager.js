@@ -11,6 +11,7 @@ var web_client = require('web.web_client');
 // chat window management
 //----------------------------------------------------------------
 var chat_sessions = [];
+var CHAT_WINDOW_WIDTH = 260;
 
 function open_chat (session) {
     if (!_.findWhere(chat_sessions, {id: session.id})) {
@@ -66,7 +67,7 @@ function toggle_fold_chat (channel) {
 
 function reposition_windows () {
     _.each(chat_sessions, function (session, index) {
-        session.window.$el.css({right: 245 * index, bottom: 0});
+        session.window.$el.css({right: (CHAT_WINDOW_WIDTH + 5) * index, bottom: 0});
     });
 }
 
@@ -105,10 +106,20 @@ core.bus.on('web_client_ready', null, function () {
         });
     });
 
-    _.each(chat_manager.get_channels(), function (channel) {
-        if (channel.is_detached) {
-            open_chat(channel);
-        }
+    chat_manager.bus.on('unsubscribe_from_channel', null, function (channel_id) {
+        _.each(chat_sessions, function (session) {
+            if (channel_id === session.id) {
+                close_chat(session);
+            }
+        });
+    });
+
+    chat_manager.is_ready.then(function() {
+        _.each(chat_manager.get_channels(), function (channel) {
+            if (channel.is_detached) {
+                open_chat(channel);
+            }
+        });
     });
 });
 

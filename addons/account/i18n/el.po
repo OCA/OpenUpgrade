@@ -1,15 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#   * account
+# * account
 # 
 # Translators:
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012
+# Goutoudis Kostas <goutoudis@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-28 12:22+0000\n"
-"PO-Revision-Date: 2015-09-29 09:33+0000\n"
-"Last-Translator: Martin Trigaux\n"
+"POT-Creation-Date: 2015-10-09 09:18+0000\n"
+"PO-Revision-Date: 2015-11-02 20:41+0000\n"
+"Last-Translator: Goutoudis Kostas <goutoudis@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/odoo/odoo-9/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,18 +59,7 @@ msgid ""
 "    </div>\n"
 "    <div style=\"width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;\">\n"
 "        <span style=\"color: #222; margin-bottom: 5px; display: block; \">\n"
-"        % if object.company_id.street:\n"
-"            ${object.company_id.street}<br/>\n"
-"        % endif\n"
-"        % if object.company_id.street2:\n"
-"            ${object.company_id.street2}<br/>\n"
-"        % endif\n"
-"        % if object.company_id.city or object.company_id.zip:\n"
-"            ${object.company_id.zip} ${object.company_id.city}<br/>\n"
-"        % endif\n"
-"        % if object.company_id.country_id:\n"
-"            ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>\n"
-"        % endif\n"
+"            ${object.company_id.partner_id.sudo().with_context(show_address=True, html_format=True).name_get()[0][1] | safe}\n"
 "        </span>\n"
 "        % if object.company_id.phone:\n"
 "            <div style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; \">\n"
@@ -132,15 +123,15 @@ msgid "%d transactions were automatically reconciled."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account.py:521
+#: code:addons/account/models/account.py:528
 #, python-format
 msgid "%s (Copy)"
 msgstr ""
 
 #. module: account
 #: code:addons/account/models/account.py:152
-#: code:addons/account/models/account.py:288
-#: code:addons/account/models/account.py:289
+#: code:addons/account/models/account.py:295
+#: code:addons/account/models/account.py:296
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (αντίγραφο)"
@@ -721,19 +712,19 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_invoice.py:1205
+#: code:addons/account/models/account_invoice.py:1206
 #, python-format
 msgid "A Payment Term should have its last line of type Balance."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_invoice.py:1208
+#: code:addons/account/models/account_invoice.py:1209
 #, python-format
 msgid "A Payment Term should have only one line of type Balance."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account.py:462
+#: code:addons/account/models/account.py:469
 #, python-format
 msgid "A bank account can anly belong to one journal."
 msgstr ""
@@ -784,7 +775,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:683
+#: code:addons/account/models/account_move.py:685
 #, python-format
 msgid "A reconciliation must involve at least 2 move lines."
 msgstr ""
@@ -831,6 +822,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_invoice_account_id
 #: model:ir.model.fields,field_description:account.field_account_invoice_line_account_id
 #: model:ir.model.fields,field_description:account.field_account_invoice_report_account_id
+#: model:ir.model.fields,field_description:account.field_account_move_dummy_account_id
 #: model:ir.model.fields,field_description:account.field_account_move_line_account_id
 #: model:ir.model.fields,field_description:account.field_account_operation_template_account_id
 #: model:ir.model.fields,field_description:account.field_account_operation_template_second_account_id
@@ -956,12 +948,10 @@ msgstr ""
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_accounting_report_account_report_id
-#: model:ir.ui.menu,name:account.menu_account_financial_reports_tree
 msgid "Account Reports"
 msgstr ""
 
 #. module: account
-#: model:ir.ui.menu,name:account.menu_account_report_tree_hierarchy
 #: model:ir.ui.view,arch_db:account.view_account_report_tree_hierarchy
 msgid "Account Reports Hierarchy"
 msgstr ""
@@ -1120,7 +1110,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.product_template_form_view
 #: model:ir.ui.view,arch_db:account.view_partner_property_form
 msgid "Accounting"
-msgstr "Logistik;h"
+msgstr "Λογιστική"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_config_settings
@@ -1200,7 +1190,7 @@ msgstr "Χαρτογράφηση Λογαριασμών"
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_message_needaction
 #: model:ir.model.fields,field_description:account.field_account_invoice_message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Απαιτείται ενέργεια"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -1279,10 +1269,9 @@ msgstr ""
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_aged_balance_view
 #: model:ir.actions.report.xml,name:account.action_report_aged_partner_balance
-#: model:ir.ui.menu,name:account.menu_aged_trial_balance
 #: model:ir.ui.view,arch_db:account.account_aged_balance_view
 msgid "Aged Partner Balance"
-msgstr ""
+msgstr "Ενηλικιωμένο ισοζύγιο Συνεργάτη"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_aged_balance_view
@@ -1298,7 +1287,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_agedpartnerbalance
 msgid "Aged Trial Balance"
-msgstr ""
+msgstr "Δοκιμαστικό Ισοζύγιο Χρονολογικά"
 
 #. module: account
 #. openerp-web
@@ -1323,7 +1312,7 @@ msgstr "Όλα"
 #: model:ir.ui.view,arch_db:account.report_generalledger
 #: model:ir.ui.view,arch_db:account.report_trialbalance
 msgid "All Entries"
-msgstr ""
+msgstr "Όλες οι Εγγραφές"
 
 #. module: account
 #: selection:account.aged.trial.balance,target_move:0
@@ -1338,7 +1327,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.report_generalledger
 #: model:ir.ui.view,arch_db:account.report_trialbalance
 msgid "All Posted Entries"
-msgstr ""
+msgstr "Όλες οι Αποθηκευμένες Εγγραφές"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_trialbalance
@@ -1408,6 +1397,11 @@ msgstr "Να Επιτραπεί Συμφωνία"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_config_settings_module_account_tax_cash_basis
 msgid "Allow Tax Cash Basis"
+msgstr ""
+
+#. module: account
+#: model:ir.model.fields,field_description:account.field_account_config_settings_module_l10n_us_check_printing
+msgid "Allow check printing and deposits"
 msgstr ""
 
 #. module: account
@@ -1546,7 +1540,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_operation_template_analytic_account_id
 #: model:ir.model.fields,field_description:account.field_account_operation_template_second_analytic_account_id
 msgid "Analytic Account"
-msgstr "Αναλυτική Λογαριασμού"
+msgstr "Λογαριασμός Αναλυτικής"
 
 #. module: account
 #: model:ir.ui.menu,name:account.menu_analytic_accounting
@@ -1650,7 +1644,7 @@ msgstr ""
 #. module: account
 #: model:account.financial.report,name:account.account_financial_report_assets0
 msgid "Assets"
-msgstr ""
+msgstr "Ενεργό"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_config_settings_module_account_asset
@@ -1683,6 +1677,11 @@ msgid "Auto-detect"
 msgstr ""
 
 #. module: account
+#: model:ir.ui.view,arch_db:account.view_account_config_settings
+msgid "Automate Payments"
+msgstr ""
+
+#. module: account
 #: selection:account.financial.report,style_overwrite:0
 msgid "Automatic formatting"
 msgstr ""
@@ -1705,7 +1704,7 @@ msgid "Awaiting payments"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/chart_template.py:153
+#: code:addons/account/models/chart_template.py:156
 #, python-format
 msgid "BILL"
 msgstr ""
@@ -1717,12 +1716,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.report_generalledger
 #: model:ir.ui.view,arch_db:account.report_trialbalance
 msgid "Balance"
-msgstr "Ισοζύγιο"
+msgstr "Υπόλοιπο"
 
 #. module: account
 #: model:account.financial.report,name:account.account_financial_report_balancesheet0
 #: model:ir.actions.act_window,name:account.action_account_report_bs
-#: model:ir.ui.menu,name:account.menu_account_report_bs
 #: model:ir.ui.view,arch_db:account.view_account_form
 msgid "Balance Sheet"
 msgstr "Υπόλοιπο"
@@ -1739,8 +1737,8 @@ msgstr ""
 
 #. module: account
 #: selection:account.bank.accounts.wizard,account_type:0
-#: selection:account.journal,type:0 code:addons/account/models/account.py:386
-#: code:addons/account/models/chart_template.py:603
+#: selection:account.journal,type:0 code:addons/account/models/account.py:393
+#: code:addons/account/models/chart_template.py:606
 #: model:ir.model.fields,field_description:account.field_account_journal_bank_id
 #: model:ir.model.fields,field_description:account.field_res_partner_bank_account_count
 #, python-format
@@ -1761,7 +1759,7 @@ msgstr "Τράπεζες & Μετρητά"
 #: model:ir.ui.view,arch_db:account.view_account_bank_journal_form
 #: model:ir.ui.view,arch_db:account.view_account_journal_form
 msgid "Bank Account"
-msgstr "Λογαριασμός Τραπέζης"
+msgstr "Τραπεζικός Λογαριασμός"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_partner_bank_id
@@ -1787,6 +1785,11 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_journal_bank_statements_source
 msgid "Bank Feeds"
+msgstr ""
+
+#. module: account
+#: model:ir.model.fields,field_description:account.field_account_config_settings_module_account_yodlee
+msgid "Bank Interface - Sync your bank feeds automatically"
 msgstr ""
 
 #. module: account
@@ -1821,7 +1824,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_bank_statement_form
 #: model:ir.ui.view,arch_db:account.view_bank_statement_search
 msgid "Bank Statement"
-msgstr "Κατάσταση Κίνησης Τραπεζικού Λογαριασμού"
+msgstr "Δήλωση Τραπέζης"
 
 #. module: account
 #: model:ir.model,name:account.model_account_bank_statement_line
@@ -1836,7 +1839,13 @@ msgstr ""
 #. module: account
 #: model:ir.actions.act_window,name:account.action_bank_statement_tree
 #: model:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
+#: model:ir.ui.view,arch_db:account.view_account_config_settings
 msgid "Bank Statements"
+msgstr ""
+
+#. module: account
+#: selection:account.journal,bank_statements_source:0
+msgid "Bank Synchronization"
 msgstr ""
 
 #. module: account
@@ -1867,7 +1876,7 @@ msgstr ""
 #. module: account
 #: model:ir.actions.act_window,name:account.act_account_journal_2_account_bank_statement
 msgid "Bank statements"
-msgstr "Κατάσταση Κίνησης Τραπεζικού Λογαριασμού"
+msgstr "Δηλώσεις Τράπεζας"
 
 #. module: account
 #. openerp-web
@@ -2007,7 +2016,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_payment_from_invoices
 #: model:ir.ui.view,arch_db:account.view_account_payment_invoice_form
 msgid "Cancel"
-msgstr "Ακύρωση"
+msgstr "Ακύρωση"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.invoice_supplier_form
@@ -2053,7 +2062,7 @@ msgstr ""
 #. module: account
 #: selection:account.invoice,state:0 selection:account.invoice.report,state:0
 msgid "Cancelled"
-msgstr "Ακυρωμένο"
+msgstr "Ακυρώθηκε"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_invoice_document
@@ -2061,7 +2070,7 @@ msgid "Cancelled Invoice"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:911
+#: code:addons/account/models/account_move.py:913
 #, python-format
 msgid ""
 "Cannot create an automatic sequence for this piece.\n"
@@ -2069,13 +2078,13 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:162
+#: code:addons/account/models/account_move.py:164
 #, python-format
 msgid "Cannot create moves for different companies."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:190
+#: code:addons/account/models/account_move.py:192
 #, python-format
 msgid "Cannot create unbalanced journal entry."
 msgstr ""
@@ -2089,7 +2098,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:279
+#: code:addons/account/models/account_move.py:281
 #, python-format
 msgid ""
 "Cannot find any account journal of \"%s\" type for this company, You should create one.\n"
@@ -2097,13 +2106,13 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account.py:369
+#: code:addons/account/models/account.py:376
 #, python-format
 msgid "Cannot generate an unused account code."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account.py:398
+#: code:addons/account/models/account.py:405
 #, python-format
 msgid ""
 "Cannot generate an unused journal code. Please fill the 'Shortcode' field."
@@ -2126,7 +2135,7 @@ msgstr ""
 #. module: account
 #: selection:account.bank.accounts.wizard,account_type:0
 #: selection:account.journal,type:0
-#: code:addons/account/models/chart_template.py:603
+#: code:addons/account/models/chart_template.py:606
 #, python-format
 msgid "Cash"
 msgstr "Μετρητά"
@@ -2318,7 +2327,7 @@ msgid "Children Taxes"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/chart_template.py:116
+#: code:addons/account/models/chart_template.py:119
 #: model:ir.actions.act_window,name:account.action_wizard_multi_chart
 #, python-format
 msgid "Choose Accounting Template"
@@ -2326,7 +2335,7 @@ msgstr ""
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1871
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1864
 #, python-format
 msgid "Choose counterpart"
 msgstr ""
@@ -2436,7 +2445,7 @@ msgstr "Χρωματισμός Δείκτη"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_accounting_report_label_filter
 msgid "Column Label"
-msgstr ""
+msgstr "Ετικέτα Στήλης"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line_reconcile_writeoff_comment
@@ -2457,7 +2466,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_overdue_document
 msgid "Communication"
-msgstr ""
+msgstr "Επικοινωνία"
 
 #. module: account
 #: model:ir.model,name:account.model_res_company
@@ -2563,8 +2572,8 @@ msgid "Configuration"
 msgstr "Ρυθμίσεις"
 
 #. module: account
-#: code:addons/account/models/account_payment.py:427
-#: code:addons/account/models/account_payment.py:429
+#: code:addons/account/models/account_payment.py:412
+#: code:addons/account/models/account_payment.py:414
 #, python-format
 msgid "Configuration Error !"
 msgstr ""
@@ -2720,7 +2729,7 @@ msgstr ""
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1868
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1861
 #, python-format
 msgid "Create Write-off"
 msgstr ""
@@ -2744,7 +2753,7 @@ msgstr ""
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2474
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2462
 #, python-format
 msgid "Create writeoff"
 msgstr ""
@@ -2929,7 +2938,7 @@ msgstr "Νόμισμα"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_report_currency_rate
 msgid "Currency Rate"
-msgstr "Ισοτιμία Νομίσματος"
+msgstr "Ισοτιμία"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_wizard_multi_charts_accounts_currency_id
@@ -2937,8 +2946,8 @@ msgid "Currency as per company's country."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:1166
-#: code:addons/account/models/account_move.py:1174
+#: code:addons/account/models/account_move.py:1168
+#: code:addons/account/models/account_move.py:1176
 #, python-format
 msgid "Currency exchange rate difference"
 msgstr ""
@@ -2990,7 +2999,7 @@ msgid "Customer Invoice"
 msgstr "Τιμολόγιο Πελάτη"
 
 #. module: account
-#: code:addons/account/models/chart_template.py:152
+#: code:addons/account/models/chart_template.py:155
 #: model:ir.actions.act_window,name:account.action_invoice_tree1
 #: model:ir.ui.menu,name:account.menu_action_invoice_tree1
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -2999,7 +3008,7 @@ msgid "Customer Invoices"
 msgstr "Παραστατικά πελάτη"
 
 #. module: account
-#: code:addons/account/models/account_payment.py:458
+#: code:addons/account/models/account_payment.py:443
 #, python-format
 msgid "Customer Payment"
 msgstr ""
@@ -3007,11 +3016,11 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_partner_property_payment_term_id
 msgid "Customer Payment Term"
-msgstr "Όροι Πληρωμής Πελάτη"
+msgstr "Όροι Πληρωμής Πελάτη "
 
 #. module: account
 #: selection:account.invoice,type:0 selection:account.invoice.report,type:0
-#: code:addons/account/models/account_payment.py:460
+#: code:addons/account/models/account_payment.py:445
 #, python-format
 msgid "Customer Refund"
 msgstr "Επιστροφή Χρημάτων Πελάτη"
@@ -3059,13 +3068,13 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_bank_statement_search
 #, python-format
 msgid "Date"
-msgstr "Ημερ/νία"
+msgstr "Ημερομηνία"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_bank_statement_message_last_post
 #: model:ir.model.fields,help:account.field_account_invoice_message_last_post
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Ημερομηνία του τελευταίου μηνύματος "
 
 #. module: account
 #. openerp-web
@@ -3356,7 +3365,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_validate_account_move_display_name
 #: model:ir.model.fields,field_description:account.field_wizard_multi_charts_accounts_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Όνομα εμφάνισης"
 
 #. module: account
 #: selection:account.financial.report,display_detail:0
@@ -3400,10 +3409,10 @@ msgstr ""
 #. module: account
 #. openerp-web
 #: selection:account.invoice.report,state:0
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2461
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2449
 #, python-format
 msgid "Done"
-msgstr "Ολοκληρωμένο"
+msgstr "Ολοκληρώθηκε"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -3454,7 +3463,7 @@ msgstr "Πρόχειρες κινήσεις"
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_overdue_document
 msgid "Due"
-msgstr ""
+msgstr "Λήξη"
 
 #. module: account
 #. openerp-web
@@ -3475,11 +3484,6 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_invoice_report_search
 msgid "Due Month"
-msgstr ""
-
-#. module: account
-#: model:ir.actions.report.xml,name:account.action_report_print_overdue
-msgid "Due Payments"
 msgstr ""
 
 #. module: account
@@ -3506,9 +3510,9 @@ msgid "Duplicates"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/chart_template.py:132
-#: code:addons/account/models/chart_template.py:145
-#: code:addons/account/models/chart_template.py:155
+#: code:addons/account/models/chart_template.py:135
+#: code:addons/account/models/chart_template.py:148
+#: code:addons/account/models/chart_template.py:158
 #, python-format
 msgid "EXCH"
 msgstr ""
@@ -3521,7 +3525,7 @@ msgid "Efficiency at its finest"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:802
+#: code:addons/account/models/account_move.py:804
 #, python-format
 msgid "Either pass both debit and credit or none."
 msgstr ""
@@ -3534,6 +3538,11 @@ msgstr "Οδηγός Σύνταξης Email"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_accounting_report_enable_filter
 msgid "Enable Comparison"
+msgstr ""
+
+#. module: account
+#: model:ir.model.fields,field_description:account.field_account_config_settings_module_account_reports_followup
+msgid "Enable payment followup management"
 msgstr ""
 
 #. module: account
@@ -3551,7 +3560,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_accounting_report_date_to
 #: model:ir.model.fields,field_description:account.field_accounting_report_date_to_cmp
 msgid "End Date"
-msgstr ""
+msgstr "Ημερομηνία Λήξης"
 
 #. module: account
 #: model:account.payment.term,name:account.account_payment_term
@@ -3574,7 +3583,7 @@ msgid "Entries"
 msgstr "Καταχωρήσεις"
 
 #. module: account
-#: code:addons/account/models/account_move.py:776
+#: code:addons/account/models/account_move.py:778
 #, python-format
 msgid "Entries are not of the same account!"
 msgstr ""
@@ -3593,7 +3602,7 @@ msgstr "Εγγραφές: "
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_generalledger
 msgid "Entry Label"
-msgstr ""
+msgstr "Ετικέτα Εγγραφής"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_journal_sequence_id
@@ -3612,7 +3621,7 @@ msgid "Equity"
 msgstr "Ισότητα"
 
 #. module: account
-#: code:addons/account/models/account_move.py:683
+#: code:addons/account/models/account_move.py:685
 #: code:addons/account/wizard/account_report_common.py:28
 #, python-format
 msgid "Error!"
@@ -3624,7 +3633,7 @@ msgid "Excel template"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/chart_template.py:155
+#: code:addons/account/models/chart_template.py:158
 #, python-format
 msgid "Exchange Difference"
 msgstr ""
@@ -3654,7 +3663,7 @@ msgstr ""
 #. module: account
 #: model:account.financial.report,name:account.account_financial_report_expense0
 msgid "Expense"
-msgstr ""
+msgstr "Έξοδα"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_product_category_property_account_expense_categ_id
@@ -3740,11 +3749,6 @@ msgid "Financial Account"
 msgstr ""
 
 #. module: account
-#: model:ir.ui.menu,name:account.menu_account_report
-msgid "Financial Report"
-msgstr ""
-
-#. module: account
 #: model:ir.model.fields,field_description:account.field_account_financial_report_style_overwrite
 msgid "Financial Report Style"
 msgstr ""
@@ -3752,7 +3756,6 @@ msgstr ""
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_financial_report_tree
 #: model:ir.actions.act_window,name:account.action_account_report
-#: model:ir.ui.menu,name:account.menu_account_reports
 msgid "Financial Reports"
 msgstr ""
 
@@ -3763,6 +3766,7 @@ msgstr ""
 
 #. module: account
 #: model:ir.actions.report.xml,name:account.action_report_financial
+#: model:ir.ui.menu,name:account.menu_account_report
 msgid "Financial report"
 msgstr ""
 
@@ -3874,13 +3878,13 @@ msgstr "Ακόλουθοι"
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_message_channel_ids
 #: model:ir.model.fields,field_description:account.field_account_invoice_message_channel_ids
 msgid "Followers (Channels)"
-msgstr ""
+msgstr "Ακόλουθοι (Κανάλια)"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_message_partner_ids
 #: model:ir.model.fields,field_description:account.field_account_invoice_message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Ακόλουθοι (Συνεργάτες)"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_financial_report_sign
@@ -3895,6 +3899,13 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,help:account.field_account_payment_term_line_value_amount
 msgid "For percent enter a ratio between 0-100."
+msgstr ""
+
+#. module: account
+#: model:ir.ui.view,arch_db:account.account_planner
+msgid ""
+"For the Odoo Team,<br/>\n"
+"                            Fabien Pinckaers, Founder"
 msgstr ""
 
 #. module: account
@@ -3913,13 +3924,6 @@ msgstr ""
 #, python-format
 msgid "Free Reference"
 msgstr "Ελεύθερη Παραπομπή"
-
-#. module: account
-#: model:ir.ui.view,arch_db:account.account_planner
-msgid ""
-"From the Odoo Team,<br/>\n"
-"                            Fabien Pinckaers, Founder"
-msgstr ""
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_account_invoice_report_all_supp
@@ -3969,14 +3973,13 @@ msgstr "Γενικές Πληροφορίες"
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_general_ledger_menu
 #: model:ir.actions.report.xml,name:account.action_report_general_ledger
-#: model:ir.ui.menu,name:account.menu_general_ledger
 msgid "General Ledger"
-msgstr ""
+msgstr "Γενικό Καθολικό"
 
 #. module: account
 #: model:ir.model,name:account.model_account_report_general_ledger
 msgid "General Ledger Report"
-msgstr ""
+msgstr "Αναφορά Γενικού Καθολικού"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_config_settings_module_account_tax_cash_basis
@@ -3984,8 +3987,41 @@ msgid "Generate tax cash basis entrie when reconciliating entries"
 msgstr ""
 
 #. module: account
+#: model:ir.model.fields,field_description:account.field_account_config_settings_module_account_reports
+msgid "Get dynamic accounting reports"
+msgstr ""
+
+#. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "Get started"
+msgstr ""
+
+#. module: account
+#: model:ir.model.fields,help:account.field_account_config_settings_module_account_plaid
+msgid ""
+"Get your bank statements from you bank and import them through plaid.com.\n"
+"-that installs the module account_plaid."
+msgstr ""
+
+#. module: account
+#: model:ir.model.fields,help:account.field_account_config_settings_module_account_bank_statement_import_ofx
+msgid ""
+"Get your bank statements from your bank and import them in Odoo in the .OFX format.\n"
+"This installs the module account_bank_statement_import_ofx."
+msgstr ""
+
+#. module: account
+#: model:ir.model.fields,help:account.field_account_config_settings_module_account_bank_statement_import_qif
+msgid ""
+"Get your bank statements from your bank and import them in Odoo in the .QIF format.\n"
+"This installs the module account_bank_statement_import_qif."
+msgstr ""
+
+#. module: account
+#: model:ir.model.fields,help:account.field_account_config_settings_module_account_yodlee
+msgid ""
+"Get your bank statements from your bank and import them through yodlee.com.\n"
+"-that installs the module account_yodlee."
 msgstr ""
 
 #. module: account
@@ -4018,7 +4054,7 @@ msgstr ""
 
 #. module: account
 #: code:addons/account/models/account_invoice.py:447
-#: code:addons/account/models/account_move.py:280
+#: code:addons/account/models/account_move.py:282
 #, python-format
 msgid "Go to the configuration panel"
 msgstr "Μετάβαση στον πίνακα διαμόρφωσης"
@@ -4044,7 +4080,7 @@ msgstr "Μπράβο!"
 #: model:ir.ui.view,arch_db:account.view_account_template_search
 #: model:ir.ui.view,arch_db:account.view_bank_statement_search
 msgid "Group By"
-msgstr "Ομαδοποίηση Ανά"
+msgstr "Ομαδοποίηση Κατά"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_journal_group_invoice_lines
@@ -4154,7 +4190,7 @@ msgid "ID"
 msgstr "ID"
 
 #. module: account
-#: code:addons/account/models/chart_template.py:152
+#: code:addons/account/models/chart_template.py:155
 #, python-format
 msgid "INV"
 msgstr ""
@@ -4175,7 +4211,7 @@ msgstr "Εάν επιλεγεί τα νέα μηνύματα χρειάζοντ�
 #: model:ir.model.fields,help:account.field_account_bank_statement_message_needaction
 #: model:ir.model.fields,help:account.field_account_invoice_message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Εάν επιλεγεί τα νέα μηνύματα χρειάζονται την προσοχή σας."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_account_template_nocreate
@@ -4217,6 +4253,13 @@ msgid ""
 "If this box is checked, the system will try to group the accounting lines "
 "when generating them from invoices."
 msgstr "Αν αυτό το κουτί είναι επιλεγμένο το σύστημα θα προσπαθήσει να ομαδοποιήσει τις λογισιτικές γραμμές όταν τις δημιουργεί από τα τιμολόγια."
+
+#. module: account
+#: model:ir.model.fields,help:account.field_account_config_settings_module_account_sepa
+msgid ""
+"If you check this box, you will be able to register your payment using SEPA.\n"
+"-This installs the module account_sepa."
+msgstr ""
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_config_settings_module_account_accountant
@@ -4324,6 +4367,16 @@ msgid "Immediate Payment"
 msgstr ""
 
 #. module: account
+#: model:ir.model.fields,field_description:account.field_account_config_settings_module_account_bank_statement_import_qif
+msgid "Import .qif files"
+msgstr ""
+
+#. module: account
+#: model:ir.model.fields,field_description:account.field_account_config_settings_module_account_bank_statement_import_ofx
+msgid "Import in .ofx format"
+msgstr ""
+
+#. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "Import using the \"Import\" button on the top left corner of"
 msgstr ""
@@ -4418,7 +4471,7 @@ msgstr "Λογαριασμός Εσόδων στο Πρότυπο Προϊόντ
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1793
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1787
 #, python-format
 msgid "Incorrect Operation"
 msgstr ""
@@ -4427,7 +4480,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_move_line_form
 #: model:ir.ui.view,arch_db:account.view_move_line_form2
 msgid "Information"
-msgstr "Πληροφορίες"
+msgstr "Πληροφορία"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_move_line_reconcile_writeoff
@@ -4514,7 +4567,7 @@ msgstr ""
 #: model:res.request.link,name:account.req_link_invoice
 #, python-format
 msgid "Invoice"
-msgstr "Τιμολόγιο"
+msgstr "Παραστατικό"
 
 #. module: account
 #: model:mail.message.subtype,description:account.mt_invoice_created
@@ -4526,7 +4579,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_invoice_date_invoice
 #: model:ir.ui.view,arch_db:account.view_account_invoice_filter
 msgid "Invoice Date"
-msgstr "Ημερομηνία Τιμολόγησης"
+msgstr "Ημερομηνία Παραστατικού"
 
 #. module: account
 #: model:ir.model,name:account.model_account_invoice_line
@@ -4569,7 +4622,7 @@ msgstr "Φόρος Τιμολογίου"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line_invoice_id
 msgid "Invoice id"
-msgstr ""
+msgstr "ID Παραστατικού"
 
 #. module: account
 #: model:mail.message.subtype,description:account.mt_invoice_paid
@@ -4583,7 +4636,7 @@ msgid "Invoice refund"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_invoice.py:1290
+#: code:addons/account/models/account_invoice.py:1291
 #, python-format
 msgid "Invoice sent"
 msgstr ""
@@ -4623,7 +4676,7 @@ msgstr "Τιμολόγια"
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2107
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2095
 #, python-format
 msgid "Invoices & Payments Matching"
 msgstr ""
@@ -4662,13 +4715,18 @@ msgstr ""
 #. module: account
 #: model:ir.ui.menu,name:account.menu_finance
 msgid "Invoicing"
+msgstr "Τιμολόγηση"
+
+#. module: account
+#: model:ir.ui.view,arch_db:account.view_account_config_settings
+msgid "Invoicing & Payments"
 msgstr ""
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_message_is_follower
 #: model:ir.model.fields,field_description:account.field_account_invoice_message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Είναι Ακόλουθος"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_journal_default_credit_account_id
@@ -4695,7 +4753,7 @@ msgid "It indicates that the invoice has been sent."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:800
+#: code:addons/account/models/account_move.py:802
 #, python-format
 msgid ""
 "It is mandatory to specify an account and a journal to create a write-off."
@@ -4738,7 +4796,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_generalledger
 msgid "JRNL"
-msgstr ""
+msgstr "Ημερολόγιο"
 
 #. module: account
 #: selection:res.company,fiscalyear_last_month:0
@@ -4747,8 +4805,8 @@ msgstr "Ιανουάριος"
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2143
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2148
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2131
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2136
 #: code:addons/account/static/src/xml/account_reconciliation.xml:141
 #: model:ir.model,name:account.model_account_journal
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_journal_id
@@ -4811,7 +4869,7 @@ msgstr ""
 
 #. module: account
 #: code:addons/account/models/account_bank_statement.py:259
-#: code:addons/account/models/account_payment.py:274
+#: code:addons/account/models/account_payment.py:259
 #: model:ir.actions.act_window,name:account.act_account_journal_2_account_move_line
 #: model:ir.actions.act_window,name:account.act_account_move_to_account_move_line_open
 #: model:ir.actions.act_window,name:account.action_account_moves_all_a
@@ -4839,7 +4897,7 @@ msgstr "Στοιχεία Ημερολογίου"
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2106
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2094
 #: model:ir.actions.client,name:account.action_manual_reconcile
 #, python-format
 msgid "Journal Items to Reconcile"
@@ -4995,7 +5053,7 @@ msgstr "Τελευταία ημερομηνία μηνύματος"
 #: model:ir.model.fields,field_description:account.field_validate_account_move___last_update
 #: model:ir.model.fields,field_description:account.field_wizard_multi_charts_accounts___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Τελευταία αλλαγή στις"
 
 #. module: account
 #. openerp-web
@@ -5195,7 +5253,7 @@ msgstr "Επίπεδο"
 #: model:account.financial.report,name:account.account_financial_report_liability0
 #: model:account.financial.report,name:account.account_financial_report_liabilitysum0
 msgid "Liability"
-msgstr ""
+msgstr "Παθητικό"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_move_id
@@ -5258,7 +5316,7 @@ msgid "Loss Exchange Rate Account"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/chart_template.py:154
+#: code:addons/account/models/chart_template.py:157
 #, python-format
 msgid "MISC"
 msgstr ""
@@ -5311,13 +5369,13 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_tax_manual
 msgid "Manual"
-msgstr ""
+msgstr "Χειροκίνητα"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_invoice_tax_form
 #: model:ir.ui.view,arch_db:account.view_invoice_tax_tree
 msgid "Manual Invoice Taxes"
-msgstr ""
+msgstr "Μη Αυτόματοι Φόροι Τιμολόγησης"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -5384,13 +5442,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_message_ids
 #: model:ir.model.fields,field_description:account.field_account_invoice_message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Μυνήματα"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_bank_statement_message_ids
 #: model:ir.model.fields,help:account.field_account_invoice_message_ids
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Μηνύματα και ιστορικότητα επικοινωνίας"
 
 #. module: account
 #: selection:account.journal,type:0
@@ -5400,7 +5458,7 @@ msgid "Miscellaneous"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/chart_template.py:154
+#: code:addons/account/models/chart_template.py:157
 #: model:ir.ui.view,arch_db:account.view_account_move_filter
 #, python-format
 msgid "Miscellaneous Operations"
@@ -5428,7 +5486,7 @@ msgstr ""
 #: code:addons/account/static/src/xml/account_reconciliation.xml:104
 #, python-format
 msgid "More"
-msgstr ""
+msgstr "Περισσότερα"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
@@ -5448,12 +5506,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_move_filter
 #: model:ir.ui.view,arch_db:account.view_account_move_line_filter
 msgid "Move"
-msgstr ""
+msgstr "Μετακίνηση"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_analytic_line_move_id
 msgid "Move Line"
-msgstr ""
+msgstr "Μετακίνηση Γραμμής"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_payment_move_line_ids
@@ -5461,7 +5519,7 @@ msgid "Move line ids"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:1024
+#: code:addons/account/models/account_move.py:1026
 #, python-format
 msgid "Move name (id): %s (%s)"
 msgstr ""
@@ -5501,14 +5559,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_tax_group_name
 #: model:ir.ui.view,arch_db:account.report_financial
 msgid "Name"
-msgstr ""
+msgstr "Όνομα"
 
 #. module: account
 #. openerp-web
 #: code:addons/account/static/src/xml/account_payment.xml:52
 #, python-format
 msgid "Name:"
-msgstr ""
+msgstr "Όνομα:"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.act_account_tax_net
@@ -5519,7 +5577,7 @@ msgstr ""
 #. module: account
 #: selection:account.bank.statement,state:0
 msgid "New"
-msgstr ""
+msgstr "Νέo"
 
 #. module: account
 #. openerp-web
@@ -5539,7 +5597,7 @@ msgid "New Transactions"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:1002
+#: code:addons/account/models/account_move.py:1004
 #, python-format
 msgid "New expected payment date: "
 msgstr ""
@@ -5596,7 +5654,7 @@ msgstr ""
 #: model:ir.model.fields,help:account.field_account_chart_template_code_digits
 #: model:ir.model.fields,help:account.field_wizard_multi_charts_accounts_code_digits
 msgid "No. of Digits to use for account code"
-msgstr ""
+msgstr "Αριθμός Ψηφίων που θα χρησιμοποιηθούν στον κωδικό λογαριασμού"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_config_settings_code_digits
@@ -5617,7 +5675,7 @@ msgstr ""
 #: selection:account.tax,type_tax_use:0
 #: selection:account.tax.template,type_tax_use:0
 msgid "None"
-msgstr ""
+msgstr "Κανένα"
 
 #. module: account
 #: selection:account.financial.report,style_overwrite:0
@@ -5641,7 +5699,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_account_template_note
 #, python-format
 msgid "Note"
-msgstr ""
+msgstr "Σημείωση"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line_note
@@ -5649,7 +5707,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_fiscal_position_template_note
 #: model:ir.ui.view,arch_db:account.view_account_template_form
 msgid "Notes"
-msgstr ""
+msgstr "Σημειώσεις"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
@@ -5659,13 +5717,13 @@ msgstr ""
 #. module: account
 #: selection:res.company,fiscalyear_last_month:0
 msgid "November"
-msgstr ""
+msgstr "Νοέμβριος"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_number
 #: model:ir.model.fields,field_description:account.field_account_move_name
 msgid "Number"
-msgstr ""
+msgstr "Αριθμός"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_move_line_filter
@@ -5676,7 +5734,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_message_needaction_counter
 #: model:ir.model.fields,field_description:account.field_account_invoice_message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Αριθμός ενεργειών"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_cashbox_line_number
@@ -5686,7 +5744,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_payment_term_line_days
 msgid "Number of Days"
-msgstr ""
+msgstr "Αριθμός Ημερών"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_company_accounts_code_digits
@@ -5697,20 +5755,20 @@ msgstr ""
 #: model:ir.model.fields,help:account.field_account_bank_statement_message_needaction_counter
 #: model:ir.model.fields,help:account.field_account_invoice_message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr ""
+msgstr "Πλήθος μηνυμάτων που απαιτούν ενέργεια"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_bank_statement_message_unread_counter
 #: model:ir.model.fields,help:account.field_account_invoice_message_unread_counter
 msgid "Number of unread messages"
-msgstr ""
+msgstr "Πλήθος μη αναγνωσμένων μηνυμάτων"
 
 #. module: account
 #. openerp-web
 #: code:addons/account/static/src/xml/account_reconciliation.xml:192
 #, python-format
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. module: account
 #: selection:res.company,fiscalyear_last_month:0
@@ -5816,14 +5874,14 @@ msgid "Only One Chart Template Available"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_payment.py:326
+#: code:addons/account/models/account_payment.py:311
 #, python-format
 msgid ""
 "Only a draft payment can be posted. Trying to post a payment in state %s."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/chart_template.py:691
+#: code:addons/account/models/chart_template.py:699
 #, python-format
 msgid "Only administrators can change the settings"
 msgstr ""
@@ -5847,7 +5905,7 @@ msgstr ""
 #. module: account
 #: selection:account.invoice,state:0 selection:account.invoice.report,state:0
 msgid "Open"
-msgstr ""
+msgstr "Ανοικτά"
 
 #. module: account
 #. openerp-web
@@ -5863,9 +5921,9 @@ msgstr ""
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1874
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1906
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2045
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1867
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1898
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2033
 #, python-format
 msgid "Open balance"
 msgstr ""
@@ -5888,7 +5946,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_move_line_form2
 msgid "Optional Information"
-msgstr ""
+msgstr "Προαιρετική Πληροφορία"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_account_tag_ids
@@ -5902,7 +5960,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_payment_term_line_option
 #: model:ir.ui.view,arch_db:account.view_account_config_settings
 msgid "Options"
-msgstr ""
+msgstr "Επιλογές"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line_payment_id
@@ -5923,7 +5981,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.invoice_form
 #: model:ir.ui.view,arch_db:account.invoice_supplier_form
 msgid "Other Info"
-msgstr ""
+msgstr "Λοιπές Πληροφορίες"
 
 #. module: account
 #. openerp-web
@@ -5973,13 +6031,13 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_company_inherit_form
 msgid "Overdue Payments"
-msgstr ""
+msgstr "Ληξιπρόθεσμες Οφειλές"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_company_overdue_msg
 #: model:ir.ui.view,arch_db:account.view_company_inherit_form
 msgid "Overdue Payments Message"
-msgstr ""
+msgstr "Μήνυμα καθυστερημένων πληρωμών"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_invoice_filter
@@ -5995,17 +6053,17 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.invoice_form
 #: model:ir.ui.view,arch_db:account.report_invoice_document
 msgid "PRO-FORMA"
-msgstr ""
+msgstr "PRO-FORMA"
 
 #. module: account
 #: selection:account.invoice,state:0
 #: model:ir.ui.view,arch_db:account.report_overdue_document
 #: model:mail.message.subtype,name:account.mt_invoice_paid
 msgid "Paid"
-msgstr ""
+msgstr "Εξοφλημένο"
 
 #. module: account
-#: code:addons/account/models/account_payment.py:286
+#: code:addons/account/models/account_payment.py:271
 #, python-format
 msgid "Paid Invoices"
 msgstr ""
@@ -6020,12 +6078,12 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_reconciled
 msgid "Paid/Reconciled"
-msgstr ""
+msgstr "Πληρωμένο/Συμφωνημένο"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_financial_report_parent_id
 msgid "Parent"
-msgstr ""
+msgstr "Μητρικός"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_chart_template_parent_id
@@ -6041,11 +6099,11 @@ msgstr ""
 #: model:ir.model,name:account.model_account_partial_reconcile
 #: model:ir.ui.view,arch_db:account.view_account_move_line_reconcile_full
 msgid "Partial Reconcile"
-msgstr ""
+msgstr "Μερική Συμφωνία"
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1734
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1728
 #: code:addons/account/static/src/xml/account_reconciliation.xml:262
 #: model:ir.model,name:account.model_res_partner
 #: model:ir.model.fields,field_description:account.field_account_abstract_payment_partner_id
@@ -6066,7 +6124,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_payment_search
 #, python-format
 msgid "Partner"
-msgstr ""
+msgstr "Συνεργάτης"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_report_commercial_partner_id
@@ -6094,31 +6152,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_aged_trial_balance_result_selection
 #: model:ir.model.fields,field_description:account.field_account_common_partner_report_result_selection
 msgid "Partner's"
-msgstr ""
+msgstr "Του Συνεργάτη"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_agedpartnerbalance
 msgid "Partners"
-msgstr ""
+msgstr "Συνεργάτες"
 
 #. module: account
 #: code:addons/account/models/account_journal_dashboard.py:96
 #, python-format
 msgid "Past"
-msgstr ""
+msgstr "Περασμένο"
 
 #. module: account
 #: model:account.account.type,name:account.data_account_type_payable
 #: selection:account.account.type,type:0
 #: model:ir.ui.view,arch_db:account.view_account_payment_search
 msgid "Payable"
-msgstr ""
+msgstr "Πληρωτέο"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_chart_template_property_account_payable_id
 #: model:ir.ui.view,arch_db:account.view_account_chart_template_seacrh
 msgid "Payable Account"
-msgstr ""
+msgstr "Πληρωτέος Λογαριασμός"
 
 #. module: account
 #: selection:account.aged.trial.balance,result_selection:0
@@ -6126,12 +6184,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.report_agedpartnerbalance
 #: model:ir.ui.view,arch_db:account.view_account_search
 msgid "Payable Accounts"
-msgstr ""
+msgstr "Λογαριασμοί Πληρωτέοι"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_partner_debit_limit
 msgid "Payable Limit"
-msgstr ""
+msgstr "Πληρωτέο Όριο"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_abstract_payment_amount
@@ -6171,7 +6229,7 @@ msgstr ""
 #: model:ir.model,name:account.model_account_payment_method
 #: model:ir.model.fields,field_description:account.field_account_journal_outbound_payment_method_ids
 msgid "Payment Methods"
-msgstr ""
+msgstr "Τρόποι Πληρωμής"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_reference_type
@@ -6189,19 +6247,19 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_payment_term_line_tree
 #: model:ir.ui.view,arch_db:account.view_payment_term_search
 msgid "Payment Term"
-msgstr ""
+msgstr "Όρος Πληρωμής"
 
 #. module: account
 #: model:ir.model,name:account.model_account_payment_term_line
 msgid "Payment Term Line"
-msgstr ""
+msgstr "Γραμμή Όρων Πληρωμής"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_payment_term_form
 #: model:ir.ui.menu,name:account.menu_action_payment_term_form
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "Payment Terms"
-msgstr ""
+msgstr "Όροι Πληρωμής"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_abstract_payment_payment_method_id
@@ -6272,9 +6330,10 @@ msgstr ""
 #: model:ir.ui.menu,name:account.menu_action_account_payments_payable
 #: model:ir.ui.menu,name:account.menu_action_account_payments_receivable
 #: model:ir.ui.view,arch_db:account.partner_view_buttons
+#: model:ir.ui.view,arch_db:account.view_account_config_settings
 #: model:ir.ui.view,arch_db:account.view_account_payment_search
 msgid "Payments"
-msgstr ""
+msgstr "Πληρωμές"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
@@ -6330,7 +6389,7 @@ msgstr ""
 #. module: account
 #: selection:account.payment.term.line,value:0
 msgid "Percent"
-msgstr ""
+msgstr "Ποσοστό"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_matched_percentage
@@ -6360,7 +6419,7 @@ msgid "Percentage of balance"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_invoice.py:1272
+#: code:addons/account/models/account_invoice.py:1273
 #, python-format
 msgid "Percentages for Payment Term Line must be between 0 and 100."
 msgstr ""
@@ -6368,11 +6427,16 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_invoice_filter
 msgid "Period"
-msgstr ""
+msgstr "Περίοδος"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_aged_trial_balance_period_length
 msgid "Period Length (days)"
+msgstr ""
+
+#. module: account
+#: model:ir.model.fields,field_description:account.field_account_config_settings_module_account_plaid
+msgid "Plaid Connector"
 msgstr ""
 
 #. module: account
@@ -6399,7 +6463,7 @@ msgid "Please create some invoice lines."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:131
+#: code:addons/account/models/account_move.py:133
 #, python-format
 msgid "Please define a sequence on the journal."
 msgstr ""
@@ -6438,7 +6502,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_move_form
 msgid "Post"
-msgstr ""
+msgstr "Δημοσίευση"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
@@ -6462,7 +6526,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_move_line_filter
 #: model:ir.ui.view,arch_db:account.view_account_payment_search
 msgid "Posted"
-msgstr ""
+msgstr "Αποθηεκευμένη"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_move_filter
@@ -6510,14 +6574,14 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_invoice_document
 msgid "Price"
-msgstr ""
+msgstr "Τιμή"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_aged_balance_view
 #: model:ir.ui.view,arch_db:account.account_common_report_view
 #: model:ir.ui.view,arch_db:account.invoice_form
 msgid "Print"
-msgstr ""
+msgstr "Εκτύπωση"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.invoice_form
@@ -6533,7 +6597,7 @@ msgstr ""
 #: selection:account.invoice,state:0 selection:account.invoice.report,state:0
 #: model:ir.ui.view,arch_db:account.view_account_invoice_report_search
 msgid "Pro-forma"
-msgstr ""
+msgstr "Pro-forma"
 
 #. module: account
 #: model:res.groups,name:account.group_proforma_invoices
@@ -6547,14 +6611,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_move_line_product_id
 #: model:ir.ui.view,arch_db:account.view_account_analytic_line_filter_inherit_account
 msgid "Product"
-msgstr ""
+msgstr "Προϊόν"
 
 #. module: account
 #: model:ir.model,name:account.model_product_category
 #: model:ir.model.fields,field_description:account.field_account_invoice_report_categ_id
 #: model:ir.ui.view,arch_db:account.view_account_invoice_report_search
 msgid "Product Category"
-msgstr ""
+msgstr "Κατηγορία Προϊόντος"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_report_product_qty
@@ -6564,7 +6628,7 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Πρότυπο Προϊόντος"
 
 #. module: account
 #: code:addons/account/models/account_bank_statement.py:168
@@ -6588,13 +6652,9 @@ msgid "Profit Account"
 msgstr ""
 
 #. module: account
-#: model:ir.ui.menu,name:account.menu_account_report_pl
-msgid "Profit And Loss"
-msgstr ""
-
-#. module: account
 #: model:account.financial.report,name:account.account_financial_report_profitandloss0
 #: model:ir.actions.act_window,name:account.action_account_report_pl
+#: model:ir.ui.menu,name:account.menu_account_report_pl
 msgid "Profit and Loss"
 msgstr ""
 
@@ -6630,7 +6690,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_chart_template_form
 msgid "Properties"
-msgstr ""
+msgstr "Ιδιότητες"
 
 #. module: account
 #: selection:account.journal,type:0
@@ -6640,7 +6700,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_tax_template_search
 #: model:ir.ui.view,arch_db:account.view_partner_property_form
 msgid "Purchase"
-msgstr ""
+msgstr "Αγορά"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_wizard_multi_chart
@@ -6648,7 +6708,7 @@ msgid "Purchase Tax"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/chart_template.py:680
+#: code:addons/account/models/chart_template.py:683
 #, python-format
 msgid "Purchase Tax %.2f%%"
 msgstr ""
@@ -6669,7 +6729,7 @@ msgstr ""
 #: model:ir.ui.menu,name:account.menu_finance_payables
 #: model:ir.ui.view,arch_db:account.view_account_move_filter
 msgid "Purchases"
-msgstr ""
+msgstr "Αγορές"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_cash_box_in
@@ -6681,14 +6741,14 @@ msgstr ""
 #: selection:account.tax,amount_type:0
 #: selection:account.tax.template,amount_type:0
 msgid "Python Code"
-msgstr ""
+msgstr "Python Code"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_line_quantity
 #: model:ir.model.fields,field_description:account.field_account_move_line_quantity
 #: model:ir.ui.view,arch_db:account.report_invoice_document
 msgid "Quantity"
-msgstr ""
+msgstr "Ποσότητα"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_config_settings_currency_exchange_journal_id
@@ -6707,13 +6767,13 @@ msgstr ""
 #: selection:account.account.type,type:0
 #: model:ir.ui.view,arch_db:account.view_account_payment_search
 msgid "Receivable"
-msgstr ""
+msgstr "Εισπρακτέα"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_chart_template_property_account_receivable_id
 #: model:ir.ui.view,arch_db:account.view_account_chart_template_seacrh
 msgid "Receivable Account"
-msgstr ""
+msgstr "Εισπρακτέος Λογαριασμός"
 
 #. module: account
 #: selection:account.aged.trial.balance,result_selection:0
@@ -6722,14 +6782,14 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_form
 #: model:ir.ui.view,arch_db:account.view_account_search
 msgid "Receivable Accounts"
-msgstr ""
+msgstr "Λογαριασμοί Εισπρακτέοι"
 
 #. module: account
 #: selection:account.aged.trial.balance,result_selection:0
 #: selection:account.common.partner.report,result_selection:0
 #: model:ir.ui.view,arch_db:account.report_agedpartnerbalance
 msgid "Receivable and Payable Accounts"
-msgstr ""
+msgstr "Εισπρακτέοι και Πληρωτέοι Λογαριασμοί"
 
 #. module: account
 #: selection:account.abstract.payment,payment_type:0
@@ -6741,8 +6801,8 @@ msgstr ""
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1855
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2458
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1849
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2446
 #: code:addons/account/static/src/xml/account_reconciliation.xml:322
 #: model:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
 #: model:ir.ui.view,arch_db:account.account_move_line_reconcile_writeoff
@@ -6750,17 +6810,17 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_bank_statement_form
 #, python-format
 msgid "Reconcile"
-msgstr ""
+msgstr "Συμψηφισμός"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_view_account_move_line_reconcile
 msgid "Reconcile Entries"
-msgstr ""
+msgstr "Συμφωνία Εγγραφών"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_move_line_reconcile_full
 msgid "Reconcile With Write-Off"
-msgstr ""
+msgstr "Συμφωνία με Παραγραφή"
 
 #. module: account
 #: code:addons/account/wizard/account_reconcile.py:79
@@ -6786,7 +6846,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_move_line_reconcile_full
 #: model:ir.ui.view,arch_db:account.view_move_line_form
 msgid "Reconciliation"
-msgstr ""
+msgstr "Συμφωνία"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_operation_template
@@ -6797,7 +6857,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_move_line_reconcile_full
 msgid "Reconciliation Transactions"
-msgstr ""
+msgstr "Συναλλαγές συμφωνίας"
 
 #. module: account
 #: model:ir.actions.client,name:account.action_bank_reconcile
@@ -6807,7 +6867,7 @@ msgstr ""
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2171
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:2159
 #, python-format
 msgid "Reconciling "
 msgstr ""
@@ -6830,12 +6890,12 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_generalledger
 msgid "Ref"
-msgstr ""
+msgstr "Παραπομπή"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_analytic_line_ref
 msgid "Ref."
-msgstr ""
+msgstr "Παρ."
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line_ref
@@ -6843,7 +6903,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_move_ref
 #: model:ir.model.fields,field_description:account.field_cash_box_in_ref
 msgid "Reference"
-msgstr ""
+msgstr "Παραπομπή"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_report_uom_name
@@ -6859,7 +6919,7 @@ msgstr ""
 #: model:ir.model.fields,help:account.field_account_invoice_line_origin
 #: model:ir.model.fields,help:account.field_account_invoice_origin
 msgid "Reference of the document that produced this invoice."
-msgstr ""
+msgstr "Παραπομπή στο έγγραφο που δημιούργησε αυτό το τιμολόγιο."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_payment_payment_reference
@@ -6882,7 +6942,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_invoice_report_search
 #, python-format
 msgid "Refund"
-msgstr ""
+msgstr "Επιστροφή"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_refund_date_invoice
@@ -6898,7 +6958,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:account.action_account_invoice_refund
 #: model:ir.ui.view,arch_db:account.invoice_form
 msgid "Refund Invoice"
-msgstr ""
+msgstr "Επιστροφή Τιμολογίου"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_refund_filter_refund
@@ -6955,7 +7015,7 @@ msgstr ""
 #. module: account
 #: selection:account.account.type,type:0
 msgid "Regular"
-msgstr ""
+msgstr "Σύνηθες"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_residual_company_signed
@@ -6970,17 +7030,17 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_residual
 msgid "Remaining amount due."
-msgstr ""
+msgstr "Οφειλόμενο Υπόλοιπο"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_fiscal_position_tax_template_tax_dest_id
 msgid "Replacement Tax"
-msgstr ""
+msgstr "Φόρος Αντικατάστασης"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_financial_report_form
 msgid "Report"
-msgstr ""
+msgstr "Αναφορά"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_financial_report_name
@@ -6991,12 +7051,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.account_aged_balance_view
 #: model:ir.ui.view,arch_db:account.account_common_report_view
 msgid "Report Options"
-msgstr ""
+msgstr "Επιλογές Αναφοράς"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_financial_report_search
 msgid "Report Type"
-msgstr ""
+msgstr "Τύπος Αναφοράς"
 
 #. module: account
 #: selection:account.financial.report,type:0
@@ -7007,24 +7067,24 @@ msgstr ""
 #. module: account
 #: model:ir.ui.menu,name:account.menu_finance_reports
 msgid "Reporting"
-msgstr ""
+msgstr "Αναφορές"
 
 #. module: account
 #: model:ir.ui.menu,name:account.account_report_folder
 msgid "Reports"
-msgstr ""
+msgstr "Αναφορές"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.invoice_form
 msgid "Reset to Draft"
-msgstr ""
+msgstr "Επαναφορά σε Πρόχειρο"
 
 #. module: account
 #. openerp-web
 #: code:addons/account/static/src/xml/account_reconciliation.xml:149
 #, python-format
 msgid "Residual"
-msgstr ""
+msgstr "Υπόλοιπο"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line_amount_residual
@@ -7040,7 +7100,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_user_id
 #: model:ir.ui.view,arch_db:account.invoice_supplier_form
 msgid "Responsible"
-msgstr ""
+msgstr "Υπεύθυνος"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_reversal_date
@@ -7108,7 +7168,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_tax_template_search
 #: model:ir.ui.view,arch_db:account.view_partner_property_form
 msgid "Sale"
-msgstr ""
+msgstr "Πώληση"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_wizard_multi_chart
@@ -7121,7 +7181,7 @@ msgstr ""
 #: model:ir.ui.menu,name:account.menu_finance_receivables
 #: model:ir.ui.view,arch_db:account.view_account_move_filter
 msgid "Sales"
-msgstr ""
+msgstr "Πωλήσεις"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_wizard_multi_charts_accounts_sale_tax_rate
@@ -7131,7 +7191,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_invoice_report_search
 msgid "Sales Team"
-msgstr ""
+msgstr "Ομάδα Πώλησης"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_config_settings_sale_tax_rate
@@ -7144,7 +7204,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_invoice_filter
 #: model:ir.ui.view,arch_db:account.view_account_invoice_report_search
 msgid "Salesperson"
-msgstr ""
+msgstr "Πωλητής"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_journal_search
@@ -7154,12 +7214,12 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_template_search
 msgid "Search Account Templates"
-msgstr ""
+msgstr "Αναζήτηση Προτύπων Λογιστικής"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_bank_statement_search
 msgid "Search Bank Statements"
-msgstr ""
+msgstr "Αναζήτηση Δηλώσεων Τραπέζης"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_bank_statement_line_search
@@ -7174,12 +7234,12 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_invoice_filter
 msgid "Search Invoice"
-msgstr ""
+msgstr "Αναζήτηση Τιμολογίου"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_move_line_filter
 msgid "Search Journal Items"
-msgstr ""
+msgstr "Αναζήτηση εγγραφών Ημερολογίου"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_move_filter
@@ -7199,7 +7259,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_tax_search
 msgid "Search Taxes"
-msgstr ""
+msgstr "Αναζήτηση Φόρων"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_journal_type
@@ -7213,7 +7273,7 @@ msgstr ""
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1762
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1756
 #, python-format
 msgid "Select Partner"
 msgstr ""
@@ -7257,7 +7317,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.invoice_form
 msgid "Send by Email"
-msgstr ""
+msgstr "Αποστολή με Email"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -7276,7 +7336,7 @@ msgstr ""
 #. module: account
 #: selection:res.company,fiscalyear_last_month:0
 msgid "September"
-msgstr ""
+msgstr "Σεπτέμβριος"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line_sequence
@@ -7291,7 +7351,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_tax_sequence
 #: model:ir.model.fields,field_description:account.field_account_tax_template_sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Ιεράρχηση"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_tax_active
@@ -7316,7 +7376,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.invoice_supplier_form
 msgid "Set to Draft"
-msgstr ""
+msgstr "Ορισμός σε προσωρινή"
 
 #. module: account
 #: model:ir.ui.menu,name:account.menu_account_config
@@ -7361,7 +7421,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_financial_report_sign
 msgid "Sign on Reports"
-msgstr ""
+msgstr "Πρόσημο στις Αναφορές"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -7384,7 +7444,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_invoice_line_origin
 #: model:ir.model.fields,field_description:account.field_account_invoice_origin
 msgid "Source Document"
-msgstr ""
+msgstr "Έγγραφο Πηγή"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_aged_trial_balance_date_from
@@ -7396,23 +7456,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_accounting_report_date_from
 #: model:ir.model.fields,field_description:account.field_accounting_report_date_from_cmp
 msgid "Start Date"
-msgstr ""
+msgstr "Ημερ/νία Έναρξης"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_balance_start
 msgid "Starting Balance"
-msgstr ""
+msgstr "Ισοζύγιο Έναρξης"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_payment_search
 msgid "State"
-msgstr ""
+msgstr "Κατάσταση"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line_statement_id
 #: model:ir.model.fields,field_description:account.field_account_move_line_statement_id
 msgid "Statement"
-msgstr ""
+msgstr "Κίνηση"
 
 #. module: account
 #: code:addons/account/models/account_bank_statement.py:250
@@ -7430,18 +7490,18 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_bank_statement_form
 #: model:ir.ui.view,arch_db:account.view_bank_statement_line_tree
 msgid "Statement lines"
-msgstr ""
+msgstr "Γραμμές κίνησης"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_bank_statement_tree
 msgid "Statements"
-msgstr ""
+msgstr "Καταστάσεις Αποτελεσμάτων"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_move_filter
 #: model:ir.ui.view,arch_db:account.view_move_line_form
 msgid "States"
-msgstr ""
+msgstr "Καταστάσεις"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_fiscal_position_states_count
@@ -7458,7 +7518,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_bank_statement_search
 #: model:ir.ui.view,arch_db:account.view_move_line_form2
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_cashbox_line_subtotal
@@ -7508,7 +7568,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_report_general_ledger_target_move
 #: model:ir.model.fields,field_description:account.field_accounting_report_target_move
 msgid "Target Moves"
-msgstr ""
+msgstr "Επιλεγμένες Κινήσεις"
 
 #. module: account
 #. openerp-web
@@ -7522,10 +7582,10 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_tax_search
 #, python-format
 msgid "Tax"
-msgstr ""
+msgstr "Φόρος"
 
 #. module: account
-#: code:addons/account/models/chart_template.py:677
+#: code:addons/account/models/chart_template.py:680
 #, python-format
 msgid "Tax %.2f%%"
 msgstr ""
@@ -7535,7 +7595,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_tax_account_id
 #: model:ir.model.fields,field_description:account.field_account_tax_template_account_id
 msgid "Tax Account"
-msgstr ""
+msgstr "Λογαριασμός Φόρων"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_tax_refund_account_id
@@ -7546,7 +7606,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_tax_search
 msgid "Tax Application"
-msgstr ""
+msgstr "Εφαρμογή Φόρου"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_company_tax_calculation_rounding_method
@@ -7562,7 +7622,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_tax_name
 msgid "Tax Description"
-msgstr ""
+msgstr "Περιγραφή Φόρου"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_tax_tax_group_id
@@ -7579,20 +7639,20 @@ msgstr ""
 #: model:ir.actions.act_window,name:account.act_account_tax_tax_posted
 #: model:ir.model.fields,field_description:account.field_account_invoice_tax_line_ids
 msgid "Tax Lines"
-msgstr ""
+msgstr "Γραμμές Φόρου"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_fiscal_position_tax_ids
 #: model:ir.model.fields,field_description:account.field_account_fiscal_position_template_tax_ids
 #: model:ir.ui.view,arch_db:account.view_account_position_form
 msgid "Tax Mapping"
-msgstr ""
+msgstr "Χάρτης Φόρων"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_tax_name
 #: model:ir.model.fields,field_description:account.field_account_tax_template_name
 msgid "Tax Name"
-msgstr ""
+msgstr "Όνομα Φόρου"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_tax_template_type_tax_use
@@ -7603,7 +7663,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_fiscal_position_tax_template_tax_src_id
 msgid "Tax Source"
-msgstr ""
+msgstr "Πηγή Φόρου"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_tax_template_search
@@ -7613,12 +7673,12 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_chart_template_tax_template_ids
 msgid "Tax Template List"
-msgstr ""
+msgstr "Λίστα Προτύπων Φόρου"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_tax_template_form
 msgid "Tax Templates"
-msgstr ""
+msgstr "Πρότυπα Φόρων"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_config_settings_tax_calculation_rounding_method
@@ -7654,7 +7714,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_config_settings
 #: model:ir.ui.view,arch_db:account.view_move_line_form
 msgid "Taxes"
-msgstr ""
+msgstr "Φόροι"
 
 #. module: account
 #: model:ir.model,name:account.model_account_fiscal_position_tax
@@ -7664,7 +7724,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_position_template_form
 msgid "Taxes Mapping"
-msgstr ""
+msgstr "Χαρτογράφηση Φόρων"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_tax_template_search
@@ -7753,7 +7813,7 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_account_fiscal_position_account_template
 msgid "Template Account Fiscal Mapping"
-msgstr ""
+msgstr "Πρότυπο Φορολογικής Απεικόνισης Λογαριασμού"
 
 #. module: account
 #: model:ir.model,name:account.model_account_fiscal_position_tax_template
@@ -7763,7 +7823,7 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_account_fiscal_position_template
 msgid "Template for Fiscal Position"
-msgstr ""
+msgstr "Πρότυπο για Φορολογική Θέση"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_config_settings_template_transfer_account_id
@@ -7773,12 +7833,12 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_account_chart_template
 msgid "Templates for Account Chart"
-msgstr ""
+msgstr "Πρότυπα για Λογιστικά Σχέδια"
 
 #. module: account
 #: model:ir.model,name:account.model_account_account_template
 msgid "Templates for Accounts"
-msgstr ""
+msgstr "Πρότυπα για Λογαριασμούς"
 
 #. module: account
 #: model:ir.model,name:account.model_account_tax_template
@@ -7794,7 +7854,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_payment_term_line_ids
 #: model:ir.ui.view,arch_db:account.view_payment_term_form
 msgid "Terms"
-msgstr ""
+msgstr "Όροι"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -7837,7 +7897,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:778
+#: code:addons/account/models/account_move.py:780
 #, python-format
 msgid "The account %s (%s) is not marked as reconciliable !"
 msgstr ""
@@ -7853,7 +7913,7 @@ msgstr ""
 msgid ""
 "The amount expressed in an optional other currency if it is a multi-currency"
 " entry."
-msgstr ""
+msgstr "Το ποσό, εκφρασμένο σε ένα (προαιρετικό) διαφορετικό νόμισμα αν πρόκειται για εγγαρφή πολλαπλών νομισμάτων."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_analytic_line_amount_currency
@@ -7863,7 +7923,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:385
+#: code:addons/account/models/account_move.py:387
 #, python-format
 msgid ""
 "The amount expressed in the secondary currency must be positive when account"
@@ -7871,7 +7931,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account.py:517
+#: code:addons/account/models/account.py:524
 #, python-format
 msgid ""
 "The application scope of taxes in a group must be either the same as the "
@@ -7894,7 +7954,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,help:account.field_account_move_line_statement_id
 msgid "The bank statement used for bank reconciliation"
-msgstr ""
+msgstr "Η κατάσταση Κίνησης Τραπεζικού Λογαριασμού που χρησιμοποιείται στην συμφωνία τραπεζών"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_res_company_chart_template_id
@@ -7914,7 +7974,7 @@ msgstr ""
 #. module: account
 #: sql_constraint:account.account:0
 msgid "The code of the account must be unique per company !"
-msgstr ""
+msgstr "Ο κωδικός αυτού του λογαριασμού πρέπει να είναι μοναδικός για κάθε εταιρία !"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_commercial_partner_id
@@ -7925,7 +7985,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,help:account.field_account_journal_currency_id
 msgid "The currency used to enter statement"
-msgstr ""
+msgstr "Νόμισμα Δήλωσης"
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_invoice_tree1
@@ -7964,10 +8024,10 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_line_account_id
 msgid "The income or expense account related to the selected product."
-msgstr ""
+msgstr "Ο λογαριασμός εσόδων ή εξόδων που σχετίζεται με το επιλεγμένο προϊόν."
 
 #. module: account
-#: code:addons/account/models/account_payment.py:427
+#: code:addons/account/models/account_payment.py:412
 #, python-format
 msgid "The journal %s does not have a sequence, please specify one."
 msgstr ""
@@ -7987,7 +8047,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,help:account.field_account_move_line_move_id
 msgid "The move of this entry line."
-msgstr ""
+msgstr "Η κίνηση της γραμμής εγγραφής"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -8006,7 +8066,7 @@ msgstr ""
 #: model:ir.model.fields,help:account.field_account_bank_statement_line_currency_id
 #: model:ir.model.fields,help:account.field_account_move_line_currency_id
 msgid "The optional other currency if it is a multi-currency entry."
-msgstr ""
+msgstr "Το προαιρετικό νόμισμα αν πρόκειται για εγγραφή πολλαπλών νομισμάτων."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_move_line_quantity
@@ -8018,7 +8078,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_account_id
 msgid "The partner account used for this invoice."
-msgstr ""
+msgstr "Ο λογαριασμός συνεργάτη που χρησιμοποιήθηκε στο τιμολόγιο αυτό."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_res_partner_has_unreconciled_entries
@@ -8028,7 +8088,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:780
+#: code:addons/account/models/account_move.py:782
 #, python-format
 msgid ""
 "The partner has to be the same on all lines for receivable and payable "
@@ -8038,10 +8098,10 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_reference
 msgid "The partner reference of this invoice."
-msgstr ""
+msgstr "Παραπομπή συνεργατη για το τιμολόγιο"
 
 #. module: account
-#: code:addons/account/models/account_payment.py:329
+#: code:addons/account/models/account_payment.py:314
 #, python-format
 msgid "The payment cannot be processed because the invoice is not open!"
 msgstr ""
@@ -8060,7 +8120,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:370
+#: code:addons/account/models/account_move.py:372
 #, python-format
 msgid ""
 "The selected account of your Journal Entry forces to provide a secondary "
@@ -8069,7 +8129,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_invoice.py:1161
+#: code:addons/account/models/account_invoice.py:1162
 #, python-format
 msgid ""
 "The selected unit of measure is not compatible with the unit of measure of "
@@ -8085,7 +8145,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_payment.py:429
+#: code:addons/account/models/account_payment.py:414
 #, python-format
 msgid "The sequence of journal %s is deactivated."
 msgstr ""
@@ -8171,20 +8231,34 @@ msgstr ""
 msgid ""
 "This account will be used instead of the default one as the payable account "
 "for the current partner"
-msgstr ""
+msgstr "Αυτός ο λογαριασμός θα χρησιμοποιηθεί σαν λογαριασμός πληρωτέος για τον παρών συνεργάτη αντί του προεπιλεγμένου."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_res_partner_property_account_receivable_id
 msgid ""
 "This account will be used instead of the default one as the receivable "
 "account for the current partner"
-msgstr ""
+msgstr "Αυτός ο λογαριασμός θα χρησιμοποιηθεί για το συγκεκριμένο συνεργάτη ως λογαριασμός εισπρακτέων αντί του προεπιλεγμένου."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_config_settings_module_account_budget
 msgid ""
 "This allows accountants to manage analytic and crossovered budgets. Once the master budgets and the budgets are defined, the project managers can set the planned amount on each analytic account.\n"
 "-This installs the module account_budget."
+msgstr ""
+
+#. module: account
+#: model:ir.model.fields,help:account.field_account_config_settings_module_account_reports_followup
+msgid ""
+"This allows to automate letters for unpaid invoices, with multi-level recalls.\n"
+"-This installs the module account_reports_followup."
+msgstr ""
+
+#. module: account
+#: model:ir.model.fields,help:account.field_account_config_settings_module_account_batch_deposit
+msgid ""
+"This allows you to group received checks before you deposit them to the bank.\n"
+"-This installs the module account_batch_deposit."
 msgstr ""
 
 #. module: account
@@ -8267,7 +8341,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account.py:297
+#: code:addons/account/models/account.py:304
 #, python-format
 msgid ""
 "This journal already contains items, therefore you cannot modify its "
@@ -8275,7 +8349,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account.py:300
+#: code:addons/account/models/account.py:307
 #, python-format
 msgid ""
 "This journal already contains items, therefore you cannot modify its short "
@@ -8395,7 +8469,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_invoice_report_search
 msgid "To Invoice"
-msgstr ""
+msgstr "Για Τιμολόγηση"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.invoice_supplier_tree
@@ -8411,7 +8485,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:774
+#: code:addons/account/models/account_move.py:776
 #, python-format
 msgid "To reconcile the entries company should be the same for all entries!"
 msgstr ""
@@ -8431,24 +8505,24 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_bnk_stmt_cashbox
 #, python-format
 msgid "Total"
-msgstr ""
+msgstr "Σύνολο"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_move_tree
 msgid "Total Amount"
-msgstr ""
+msgstr "Σύνολο"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_move_form
 #: model:ir.ui.view,arch_db:account.view_move_line_tree
 msgid "Total Credit"
-msgstr ""
+msgstr "Πιστωτικό Σύνολο"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_move_form
 #: model:ir.ui.view,arch_db:account.view_move_line_tree
 msgid "Total Debit"
-msgstr ""
+msgstr "Χρεωστικό Σύνολο"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_partner_total_invoiced
@@ -8458,12 +8532,12 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_partner_debit
 msgid "Total Payable"
-msgstr ""
+msgstr "Πληρωτέο Σύνολο"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_partner_credit
 msgid "Total Receivable"
-msgstr ""
+msgstr "Σύνολο Εισπρακτέων"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_report_residual
@@ -8475,7 +8549,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_invoice_report_price_total
 #: model:ir.model.fields,field_description:account.field_account_invoice_report_user_currency_price_total
 msgid "Total Without Tax"
-msgstr ""
+msgstr "Σύνολο χωρίς Φόρο"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_amount_total_company_signed
@@ -8493,7 +8567,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,help:account.field_res_partner_credit
 msgid "Total amount this customer owes you."
-msgstr ""
+msgstr "Συνολικό οφειλόμενο ποσό πελάτη"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_res_partner_debit
@@ -8541,13 +8615,13 @@ msgid "Transfer account not defined on the company."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_payment.py:400
+#: code:addons/account/models/account_payment.py:385
 #, python-format
 msgid "Transfer from %s"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_payment.py:482
+#: code:addons/account/models/account_payment.py:467
 #, python-format
 msgid "Transfer to %s"
 msgstr ""
@@ -8555,7 +8629,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_payment_search
 msgid "Transfers"
-msgstr ""
+msgstr "Μεταφορές"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_balance_menu
@@ -8582,10 +8656,10 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_move_line_user_type_id
 #: model:ir.model.fields,field_description:account.field_account_payment_term_line_value
 msgid "Type"
-msgstr ""
+msgstr "Τύπος"
 
 #. module: account
-#: code:addons/account/models/chart_template.py:730
+#: code:addons/account/models/chart_template.py:738
 #, python-format
 msgid "Undistributed Profits/Losses"
 msgstr ""
@@ -8594,14 +8668,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_invoice_line_price_unit
 #: model:ir.ui.view,arch_db:account.report_invoice_document
 msgid "Unit Price"
-msgstr ""
+msgstr "Τιμή Μονάδας"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_analytic_line_product_uom_id
 #: model:ir.model.fields,field_description:account.field_account_invoice_line_uom_id
 #: model:ir.model.fields,field_description:account.field_account_move_line_product_uom_id
 msgid "Unit of Measure"
-msgstr ""
+msgstr "Μονάδα Μέτρησης"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -8636,13 +8710,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_message_unread
 #: model:ir.model.fields,field_description:account.field_account_invoice_message_unread
 msgid "Unread Messages"
-msgstr ""
+msgstr "Αδιάβαστο Μύνημα"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_message_unread_counter
 #: model:ir.model.fields,field_description:account.field_account_invoice_message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
+msgstr "Μετρητής μη αναγνωσμένων μηνυμάτων"
 
 #. module: account
 #. openerp-web
@@ -8650,12 +8724,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.account_unreconcile_view
 #, python-format
 msgid "Unreconcile"
-msgstr ""
+msgstr "Ακύρωση Συμφωνίας"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_unreconcile
 msgid "Unreconcile Entries"
-msgstr ""
+msgstr "Ακύρωση Συμφωνίας Εγγραφών"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_unreconcile_view
@@ -8665,7 +8739,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_move_line_filter
 msgid "Unreconciled"
-msgstr ""
+msgstr "Μη συμφωνημένα"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.act_account_acount_move_line_open_unreconciled
@@ -8681,7 +8755,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_invoice_amount_untaxed
 #: model:ir.model.fields,field_description:account.field_account_invoice_amount_untaxed_signed
 msgid "Untaxed Amount"
-msgstr ""
+msgstr "Αφορολόγητο Ποσό"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -8700,6 +8774,11 @@ msgid "Use Anglo-Saxon accounting"
 msgstr ""
 
 #. module: account
+#: model:ir.model.fields,field_description:account.field_account_config_settings_module_account_sepa
+msgid "Use SEPA payments"
+msgstr ""
+
+#. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_reversal_journal_id
 msgid "Use Specific Journal"
 msgstr ""
@@ -8707,6 +8786,11 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_company_anglo_saxon_accounting
 msgid "Use anglo-saxon accounting"
+msgstr ""
+
+#. module: account
+#: model:ir.model.fields,field_description:account.field_account_config_settings_module_account_batch_deposit
+msgid "Use batch deposit"
 msgstr ""
 
 #. module: account
@@ -8776,7 +8860,7 @@ msgstr ""
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1873
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1866
 #: model:ir.ui.view,arch_db:account.invoice_form
 #: model:ir.ui.view,arch_db:account.invoice_supplier_form
 #: model:ir.ui.view,arch_db:account.view_account_payment_from_invoices
@@ -8784,7 +8868,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_bank_statement_form
 #, python-format
 msgid "Validate"
-msgstr ""
+msgstr "Επικύρωση"
 
 #. module: account
 #: model:ir.model,name:account.model_validate_account_move
@@ -8805,7 +8889,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_payment_term_line_value_amount
 msgid "Value"
-msgstr ""
+msgstr "Τιμή"
 
 #. module: account
 #: selection:account.abstract.payment,partner_type:0
@@ -8828,7 +8912,7 @@ msgid "Vendor Bill"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/chart_template.py:153
+#: code:addons/account/models/chart_template.py:156
 #: model:ir.actions.act_window,name:account.action_invoice_tree2
 #: model:ir.ui.menu,name:account.menu_action_invoice_tree2
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -8842,7 +8926,7 @@ msgid "Vendor Flow"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_payment.py:465
+#: code:addons/account/models/account_payment.py:450
 #, python-format
 msgid "Vendor Payment"
 msgstr ""
@@ -8861,7 +8945,7 @@ msgstr ""
 #. module: account
 #: selection:account.invoice,type:0 selection:account.invoice.report,type:0
 #: code:addons/account/models/account_invoice.py:810
-#: code:addons/account/models/account_payment.py:463
+#: code:addons/account/models/account_payment.py:448
 #: model:ir.ui.view,arch_db:account.report_invoice_document
 #, python-format
 msgid "Vendor Refund"
@@ -8883,14 +8967,19 @@ msgstr ""
 #. module: account
 #: selection:account.financial.report,type:0
 msgid "View"
+msgstr "Όψη"
+
+#. module: account
+#: model:ir.ui.view,arch_db:account.view_account_config_settings
+msgid "View supported banks"
 msgstr ""
 
 #. module: account
 #: code:addons/account/models/account_invoice.py:1096
-#: code:addons/account/models/account_invoice.py:1160
+#: code:addons/account/models/account_invoice.py:1161
 #, python-format
 msgid "Warning!"
-msgstr ""
+msgstr "Προειδοποίηση"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -8919,13 +9008,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_website_message_ids
 #: model:ir.model.fields,field_description:account.field_account_invoice_website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Μηνύματα Ιστότοπου"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_bank_statement_website_message_ids
 #: model:ir.model.fields,help:account.field_account_invoice_website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Ιστορικό επικοινωνίας ιστότοπου"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -8956,7 +9045,7 @@ msgstr ""
 #: selection:account.common.account.report,display_account:0
 #: selection:account.report.general.ledger,display_account:0
 msgid "With balance is not equal to 0"
-msgstr ""
+msgstr "Με υπόλοιπο δάιφορο του 0"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_generalledger
@@ -8971,7 +9060,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.report_generalledger
 #: model:ir.ui.view,arch_db:account.report_trialbalance
 msgid "With movements"
-msgstr ""
+msgstr "Με κινήσεις"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_operation_template_search
@@ -8979,31 +9068,31 @@ msgid "With tax"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:806
+#: code:addons/account/models/account_move.py:808
 #: model:ir.ui.view,arch_db:account.view_account_move_line_reconcile_full
 #, python-format
 msgid "Write-Off"
-msgstr ""
+msgstr "Παραγραφή"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line_reconcile_writeoff_journal_id
 msgid "Write-Off Journal"
-msgstr ""
+msgstr "Ημερολόγιο Παραγραφών"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_move_line_reconcile_writeoff
 msgid "Write-Off Move"
-msgstr ""
+msgstr "Κίνηση Παραγραφής"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line_reconcile_writeoff_writeoff_acc_id
 msgid "Write-Off account"
-msgstr ""
+msgstr "Λογαριασμός παραγραφών"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line_reconcile_writeoff
 msgid "Write-Off amount"
-msgstr ""
+msgstr "Ποσό Παραγραφής"
 
 #. module: account
 #: sql_constraint:account.move.line:0
@@ -9011,7 +9100,7 @@ msgid "Wrong credit or debit value in accounting entry !"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:772
+#: code:addons/account/models/account_move.py:774
 #, python-format
 msgid "You are trying to reconcile some entries that are already reconciled!"
 msgstr ""
@@ -9031,7 +9120,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/res_config.py:202
+#: code:addons/account/models/res_config.py:229
 #, python-format
 msgid ""
 "You can not change a company chart of account once it has been installed"
@@ -9047,7 +9136,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_payment.py:312
+#: code:addons/account/models/account_payment.py:297
 #, python-format
 msgid "You can not delete a payment that is already posted"
 msgstr ""
@@ -9067,7 +9156,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:173
+#: code:addons/account/models/account_move.py:175
 #, python-format
 msgid ""
 "You cannot add/modify entries prior to and inclusive of the lock date %s. "
@@ -9091,13 +9180,13 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:995
+#: code:addons/account/models/account_move.py:997
 #, python-format
 msgid "You cannot change the tax, you should remove and recreate lines."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:377
+#: code:addons/account/models/account_move.py:379
 #, python-format
 msgid ""
 "You cannot create journal items with a secondary currency without filling "
@@ -9128,7 +9217,7 @@ msgid "You cannot do that on an account that contains journal items."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:1026
+#: code:addons/account/models/account_move.py:1028
 #, python-format
 msgid ""
 "You cannot do this modification on a posted journal entry, you can just change some non legal fields. You must revert the journal entry to cancel it.\n"
@@ -9136,7 +9225,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:1028
+#: code:addons/account/models/account_move.py:1030
 #, python-format
 msgid ""
 "You cannot do this modification on a reconciled entry. You can just change some non legal fields or you must unreconcile first.\n"
@@ -9159,13 +9248,13 @@ msgstr ""
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1794
+#: code:addons/account/static/src/js/account_reconciliation_widgets.js:1788
 #, python-format
 msgid "You cannot mix items from receivable and payable accounts."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:141
+#: code:addons/account/models/account_move.py:143
 #, python-format
 msgid ""
 "You cannot modify a posted entry of this journal.\n"
@@ -9187,14 +9276,14 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:879
-#: code:addons/account/models/account_move.py:997
+#: code:addons/account/models/account_move.py:881
+#: code:addons/account/models/account_move.py:999
 #, python-format
 msgid "You cannot use deprecated account."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:935
+#: code:addons/account/models/account_move.py:937
 #, python-format
 msgid ""
 "You cannot use this general account in this journal, check the tab 'Entry "
@@ -9232,7 +9321,7 @@ msgid "You must set a start date."
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:1158
+#: code:addons/account/models/account_move.py:1160
 #, python-format
 msgid ""
 "You should configure the 'Exchange Rate Journal' in the accounting settings,"
@@ -9241,7 +9330,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:1160
+#: code:addons/account/models/account_move.py:1162
 #, python-format
 msgid ""
 "You should configure the 'Gain Exchange Rate Account' in the accounting "
@@ -9250,7 +9339,7 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:1162
+#: code:addons/account/models/account_move.py:1164
 #, python-format
 msgid ""
 "You should configure the 'Loss Exchange Rate Account' in the accounting "
@@ -9284,13 +9373,6 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: model:ir.ui.view,arch_db:account.view_account_config_settings
-msgid ""
-"You will find more options in your company details: address for the header "
-"and footer, overdue payments texts, etc."
-msgstr "Θα βρείτε περισσότερες δυνατότητες στις λεπτομέρειες της εταιρίας σας: διεύθυνση για την επικεφαλίδα και το υποσέλιδο, κείμενα καθυστερούμενων υπολοίπων , κλπ."
-
-#. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "Your Bank Accounts"
 msgstr ""
@@ -9298,7 +9380,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "Your Company"
-msgstr ""
+msgstr "Η Εταιρία σας"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -9343,7 +9425,7 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_account_bank_accounts_wizard
 msgid "account.bank.accounts.wizard"
-msgstr ""
+msgstr "account.bank.accounts.wizard"
 
 #. module: account
 #: model:ir.model,name:account.model_account_config_settings
@@ -9382,12 +9464,12 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_cash_box_in
 msgid "cash.box.in"
-msgstr ""
+msgstr "Ταμείο.Μετρητών.Είσοδος"
 
 #. module: account
 #: model:ir.model,name:account.model_cash_box_out
 msgid "cash.box.out"
-msgstr ""
+msgstr "Ταμείο.Μετρητών.Έξοδος"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_form
@@ -9445,7 +9527,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.account_aged_balance_view
 #: model:ir.ui.view,arch_db:account.account_common_report_view
 msgid "or"
-msgstr ""
+msgstr "ή"
 
 #. module: account
 #. openerp-web
@@ -9504,7 +9586,7 @@ msgid "report.account.report_trialbalance"
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:200
+#: code:addons/account/models/account_move.py:202
 #, python-format
 msgid "reversal of: "
 msgstr ""
@@ -9546,7 +9628,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_partner_property_form
 msgid "the parent company"
-msgstr ""
+msgstr "η μητρική εταιρία"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -9575,7 +9657,7 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_wizard_multi_charts_accounts
 msgid "wizard.multi.charts.accounts"
-msgstr ""
+msgstr "wizard.multi.charts.accounts"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_bank_statement_form

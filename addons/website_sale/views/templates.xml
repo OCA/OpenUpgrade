@@ -93,16 +93,16 @@
                 <del class="text-danger mr8" style="white-space: nowrap;" t-field="product.lst_price" t-field-options='{
                   "widget": "monetary",
                   "from_currency": "product.company_id.currency_id",
-                  "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                  "display_currency": "website.currency_id"
                 }'/>
               </t>
               <span t-field="product.price" style="white-space: nowrap;"  t-field-options='{
                    "widget": "monetary",
-                   "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                   "display_currency": "website.currency_id"
                }'>
               </span>
               <span itemprop="price" style="display:none;" t-esc="product.price"/>
-              <span itemprop="priceCurrency" style="display:none;" t-esc="user_id.partner_id.property_product_pricelist.currency_id.name"/>
+              <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
           </b>
       </div>
   </section>
@@ -423,16 +423,16 @@
             t-field-options='{
               "widget": "monetary",
               "from_currency": "product.company_id.currency_id",
-              "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+              "display_currency": "website.currency_id"
            }'/>
           <b class="oe_price" style="white-space: nowrap;"
             t-field="product.price"
             t-field-options='{
                "widget": "monetary",
-               "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+               "display_currency": "website.currency_id"
            }'/>
           <span itemprop="price" style="display:none;" t-esc="product.price"/>
-          <span itemprop="priceCurrency" style="display:none;" t-esc="user_id.partner_id.property_product_pricelist.currency_id.name"/>
+          <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
       </h4>
       <h4 class="css_non_editable_mode_hidden">
         <span t-field="product.lst_price"
@@ -456,7 +456,7 @@
           <t t-esc="variant_id.price_extra > 0 and '+' or ''"/><span t-field="variant_id.price_extra" style="white-space: nowrap;" t-field-options='{
                 "widget": "monetary",
                 "from_currency": "product.company_id.currency_id",
-                "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                "display_currency": "website.currency_id"
               }'/>
         </span>
       </label>
@@ -481,7 +481,7 @@
                       <t t-esc="value_id.price_extra > 0 and '+' or ''"/><span t-field="value_id.price_extra" style="white-space: nowrap;" t-field-options='{
                                "widget": "monetary",
                                 "from_currency": "product.company_id.currency_id",
-                               "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                               "display_currency": "website.currency_id"
                            }'/>
                   </span>
               </option>
@@ -501,7 +501,7 @@
                               <t t-esc="value_id.price_extra > 0 and '+' or ''"/><span t-field="value_id.price_extra" style="white-space: nowrap;" t-field-options='{
                                       "widget": "monetary",
                                       "from_currency": "product.company_id.currency_id",
-                                      "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                      "display_currency": "website.currency_id"
                                    }'/>
                           </span>
                       </label>
@@ -705,11 +705,11 @@
     <li t-att-class="(step==40 and 'text-primary') or 'text-muted'" id="step40">
       <t t-if="step&gt;40 and step&lt;50">
         <a href="/shop/payment"  class='text-success'>
-          <t t-if="not website_sale_order or not website_sale_order.website_order_line or not website_sale_order.only_services">Payment</t><span class="chevron"></span>
+          Payment<span class="chevron"></span>
         </a>
       </t>
       <t t-if="not (step&gt;40 and step&lt;50)">
-          <t t-if="not website_sale_order or not website_sale_order.website_order_line or not website_sale_order.only_services">Payment</t><span class="chevron"></span>
+          Payment<span class="chevron"></span>
       </t>
     </li>
   </xpath>
@@ -718,11 +718,11 @@
     <li t-att-class="(step==30 and 'text-primary') or 'text-muted'" id="step30">
       <t t-if="step&gt;30 and step&lt;50">
         <a href="/shop/extra_info"  class='text-success'>
-          <t t-if="not website_sale_order or not website_sale_order.website_order_line or not website_sale_order.only_services">Extra Info</t><span class="chevron"></span>
+          Extra Info<span class="chevron"></span>
         </a>
       </t>
       <t t-if="not (step&gt;30 and step&lt;50)">
-          <t t-if="not website_sale_order or not website_sale_order.website_order_line or not website_sale_order.only_services">Extra Info</t><span class="chevron"></span>
+          Extra Info<span class="chevron"></span>
       </t>
     </li>
   </xpath>
@@ -772,16 +772,15 @@
                   </div>
               </td>
               <td class="text-center" id="td-price" name="price">
-                  <del t-attf-class="text-danger #{compute_currency(line.product_id.lst_price) - line.price_reduce &lt; 1 and 'hidden' or ''}" style="text-decoration: line-through; white-space: nowrap;"
+                  <del t-attf-class="text-danger #{'' if (compute_currency(line.product_id.lst_price) - line.price_unit) &gt; 0.1 else 'hidden'}" style="text-decoration: line-through; white-space: nowrap;"
                     t-field="line.product_id.lst_price" t-field-options='{
                         "widget": "monetary",
                         "from_currency": "line.company_id.currency_id",
-                        "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                        "display_currency": "website.currency_id"
                     }'/>
-                <span t-field="line.price_reduce" style="white-space: nowrap;" t-field-options='{
+                <span t-field="line.price_unit" style="white-space: nowrap;" t-field-options='{
                      "widget": "monetary",
-                     "from_currency": "website_sale_order.pricelist_id.currency_id",
-                     "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                     "display_currency": "website.currency_id"
                  }'/>
               </td>
           </tr>
@@ -898,12 +897,12 @@
                           t-field="product.lst_price" t-field-options='{
                               "widget": "monetary",
                               "from_currency": "product.company_id.currency_id",
-                              "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                              "display_currency": "website.currency_id"
                           }'/>
                       </t>
                       <span t-field="product.price" style="white-space: nowrap;" t-field-options='{
                            "widget": "monetary",
-                           "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                           "display_currency": "website.currency_id"
                        }'/>
                   </td>
                   <td class="text-center">
@@ -1153,7 +1152,7 @@
                              <span t-field="line.price_unit" style="white-space: nowrap;" t-field-options='{
                                  "widget": "monetary",
                                  "from_currency": "website_sale_order.pricelist_id.currency_id",
-                                 "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                 "display_currency": "website.currency_id"
                              }'/>
                           </td>
                       </tr>
@@ -1235,7 +1234,7 @@
 
 <template id="payment_sale_note" inherit_id="payment" name="Display Sale Note" customize_show="True" active="False">
   <xpath expr="//t[@id='acquirers_list']" position="before">
-    <t t-set="sale_note" t-value="website_sale_order.get_salenote(website_sale_order.partner_id.id)"/>
+    <t t-set="sale_note" t-value="website_sale_order.note"/>
     <t t-if="sale_note and sale_note != ''">
       <div class="oe_accept_cgv_button">
         <label><input type="checkbox" checked="checked" id="checkbox_cgv"/> <t t-esc="sale_note"/></label>
@@ -1394,7 +1393,7 @@
                   <span t-field="website_sale_order.amount_untaxed" style="white-space: nowrap;" t-field-options='{
                           "widget": "monetary",
                           "from_currency": "website_sale_order.pricelist_id.currency_id",
-                          "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                          "display_currency": "website.currency_id"
                       }'/>
               </span>
         </div>
@@ -1404,7 +1403,7 @@
                   <span t-field="website_sale_order.amount_tax" style="white-space: nowrap;" t-field-options='{
                           "widget": "monetary",
                           "from_currency": "website_sale_order.pricelist_id.currency_id",
-                          "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                          "display_currency": "website.currency_id"
                       }'/>
               </span>
         </div>
@@ -1414,7 +1413,7 @@
                   <span t-field="website_sale_order.amount_total" style="white-space: nowrap;" t-field-options='{
                           "widget": "monetary",
                           "from_currency": "website_sale_order.pricelist_id.currency_id",
-                          "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                          "display_currency": "website.currency_id"
                       }'/>
               </span>
         </div>

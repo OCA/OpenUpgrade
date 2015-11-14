@@ -757,6 +757,7 @@ class product_template(osv.osv):
             template_ids.add(p.product_tmpl_id.id)
         while (results and len(template_ids) < limit):
             domain = [('product_tmpl_id', 'not in', list(template_ids))]
+            args = args if args is not None else []
             results = product_product.name_search(
                 cr, user, name, args+domain, operator=operator, context=context, limit=limit)
             product_ids = [p[0] for p in results]
@@ -922,7 +923,7 @@ class product_product(osv.osv):
                 continue
             if seller.date_end and seller.date_end < date:
                 continue
-            if partner_id and seller.name != partner_id:
+            if partner_id and seller.name not in [partner_id, partner_id.parent_id]:
                 continue
             if quantity_uom_seller and quantity_uom_seller < seller.qty:
                 continue

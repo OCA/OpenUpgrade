@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-29 10:25+0000\n"
-"PO-Revision-Date: 2015-09-30 13:19+0000\n"
+"POT-Creation-Date: 2015-10-09 09:18+0000\n"
+"PO-Revision-Date: 2015-11-03 11:06+0000\n"
 "Last-Translator: Aleksandar Vangelovski <aleksandarv@hbee.eu>\n"
 "Language-Team: Macedonian (http://www.transifex.com/odoo/odoo-9/language/mk/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgid ""
 "\n"
 "Allow cashier to reprint receipts\n"
 "\n"
-msgstr ""
+msgstr "\n\n====================================\n\nОвозможи му на касиерот да преиспечатува сметко-потврди\n\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_pos_restaurant
@@ -66,7 +66,7 @@ msgid ""
 "the point of sale, where the customers earn loyalty points\n"
 "and get rewards.\n"
 "\n"
-msgstr ""
+msgstr "\n\n=================================\n\nОвој модул овозможува да дефинирате програма на лојалност во \nPOS, каде што муштериите се здобиваат со поени на лојалност \nи добиваат награди.\n\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_hu
@@ -131,7 +131,7 @@ msgid ""
 "Keeps track of the revenue recognition installments, and creates corresponding journal entries.\n"
 "\n"
 "    "
-msgstr ""
+msgstr "\n\nПрепознавање на приход\n============================\nУправувај со приходни препознавања на продажбите на производи.\nВоди грижа на следењето на приходните следења, и создава соодветни внесови во дневник."
 
 #. module: base
 #: code:addons/base/res/res_config.py:360
@@ -149,7 +149,7 @@ msgid ""
 "\n"
 "\n"
 "[object with reference: %s - %s]"
-msgstr ""
+msgstr "\n\n[object with reference: %s - %s]"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_be_invoice_bba
@@ -187,7 +187,7 @@ msgid ""
 "\n"
 "        \"Python Code\" defines the amount of the tax.\n"
 "        "
-msgstr ""
+msgstr "\nДанок, дефиниран како Python код, се состои од 2 snippets на Python код, кои се егзекутираат во локална средина, содржејќи информации како што се: цена на производ, производ или партнер.\n\n\"Апликативен код\" дефинира дали ќе биде данокот аплициран.\n\n\"Python код\" го дефинира износот на данокот."
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_be_reports
@@ -281,32 +281,32 @@ msgstr ""
 #: model:ir.module.module,description:base.module_account_extension
 msgid ""
 "\n"
-"        Add to res_config of account modules the possibility to install extra accounting modules\n"
+"        Adapt base accounting module for Enterprise Edition.\n"
 "\n"
-"        This module will be auto installed if account module and enterprise version are present\n"
+"        This module will be auto installed if account module and enterprise edition are present\n"
 "    "
-msgstr ""
+msgstr "\nАдаптиран базичен модул на сметководство за Enterprise Edition.\n\nОвој модул ќе биде автоматски инсталиран доколку сметководство модулот и enterprise edition се присутни"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_account_tax_python
 msgid ""
 "\n"
 "        Allows to use python code to define taxes"
-msgstr ""
+msgstr "\nГо овозможува користењето на python код за дефинирање на даноци"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_crm_voip
 msgid ""
 "\n"
 "        Automate calls transfers, logs and emails"
-msgstr ""
+msgstr "\nАвтоматизирај телефонски префрлања, логови и е-пораки"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_cache
 msgid ""
 "\n"
 "        Enable a cache on products for a lower POS loading time."
-msgstr ""
+msgstr "\nОвозможи кеширање на производи за пократко време на POS вчитувањето."
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_sepa
@@ -325,7 +325,7 @@ msgid ""
 "\n"
 "        Long description of module's purpose\n"
 "    "
-msgstr ""
+msgstr "\nШирок опис за целта на модулот"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_voip
@@ -385,14 +385,14 @@ msgid ""
 "\n"
 "        This module adds support for barcodes scanning to the warehouse management system.\n"
 "    "
-msgstr ""
+msgstr "\nОвој модул додава поддршка за баркод скенирање на системот за магацинско управување."
 
 #. module: base
 #: model:ir.module.module,summary:base.module_account_online_sync
 msgid ""
 "\n"
 "        This module is used for Online bank synchronization."
-msgstr ""
+msgstr "\nОвој модул се користи за онлајн банкарска синхронизација."
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_online_sync
@@ -400,21 +400,21 @@ msgid ""
 "\n"
 "        This module is used for Online bank synchronization. It provides basic methods to synchronize bank statement.\n"
 "    "
-msgstr ""
+msgstr "\nОвој модул се користи за онлајн банкарска синхронизација. Овозможува базични методи на синхронизацијата на банкарските изводи."
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_equipment
 msgid ""
 "\n"
 "        Track employees' equipment and manage maintenance requests."
-msgstr ""
+msgstr "\nСледете ја опремата на вработените и управувајте со барањата за одржување."
 
 #. module: base
 #: model:ir.module.module,summary:base.module_account_plaid
 msgid ""
 "\n"
 "        Use Plaid.com to retrieve bank statements"
-msgstr ""
+msgstr "\nКористете Plaid.com за подигање на банкарски изводи"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_plaid
@@ -422,7 +422,7 @@ msgid ""
 "\n"
 "        Use Plaid.com to retrieve bank statements.\n"
 "    "
-msgstr ""
+msgstr "\nКористете Plaid.com за подигање на банкарски изводи."
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_multilang
@@ -460,7 +460,7 @@ msgstr "\nСодржи делови од код кои можат да се ис
 msgid ""
 "\n"
 "    Display delivery orders (picking) infos on the website\n"
-msgstr ""
+msgstr "\nПрикажи информации за испратница (пренос) на веб страната\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_holidays_gantt
@@ -468,7 +468,7 @@ msgid ""
 "\n"
 "    Gantt view for Leaves Dashboard\n"
 "    "
-msgstr ""
+msgstr "\nGantt приказ за отсуства табелата"
 
 #. module: base
 #: model:ir.module.module,description:base.module_project_forecast
@@ -476,14 +476,14 @@ msgid ""
 "\n"
 "    Ressource management for Project\n"
 "    "
-msgstr ""
+msgstr "\nМенаџирање со ресурси за проект"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_ebay
 msgid ""
 "\n"
 "  Publish your products on eBay"
-msgstr ""
+msgstr "\nОбјавете го вашите производи на eBay"
 
 #. module: base
 #: model:ir.module.module,description:base.module_report_intrastat
@@ -517,7 +517,7 @@ msgid ""
 "1) Analyse the recurrent revenue and other metrics for contracts\n"
 "2) Analyse the contracts modifications by salesman and compute their value.\n"
 "    "
-msgstr ""
+msgstr "\nКомандни табли за договори во сметководство\n=========================================\nДодава командни табли за:\n1) Анализирање на повторливиот приход и други мерки за договори\n2) Анализирање на модификациите на договорите направени од продавач и компјутирање на нивната вредност."
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_be_hr_payroll_account
@@ -535,7 +535,7 @@ msgid ""
 "Accounting Reports\n"
 "====================\n"
 "    "
-msgstr ""
+msgstr "\nСметководствени извештаи\n==========================="
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_ar_reports
@@ -741,7 +741,7 @@ msgid ""
 "With this module, link your products to a template to send complete information and tools to your customer.\n"
 "For instance when invoicing a training, the training agenda and materials will automatically be sent to your customers.'\n"
 "    "
-msgstr ""
+msgstr "\nДодадете урнеци на е-пошта на продуктите кои ќе бидат пратени при потврдувањето на фактурата.\n==================================================================\n\nСо овој модул, поврзете ги вашите производи со урнек за да пратите целосни информации и алатки на вашиот клиент.\nНа пример кога фактурирате обука, планот на обуката и материјалите автоматски ќе бидат испратени на вашите клиенти."
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_project_issue_sheet
@@ -750,7 +750,7 @@ msgid ""
 "Add timesheet support on issue in the frontend.\n"
 "==================================================================================================\n"
 "    "
-msgstr ""
+msgstr "\nДодади поддршка за временски таблици на теми/проблеми во frontend-от.\n=================================================================================================="
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_portal_sale
@@ -758,7 +758,7 @@ msgid ""
 "\n"
 "Add your sales document in the frontend portal. Your customers will be able to connect to their portal to see the list (and the state) of their invoices (pdf report), sales orders and quotations (web pages).\n"
 "        "
-msgstr ""
+msgstr "\nДодајте ги вашите документи на продажба во frontend порталот. Вашите клиенти ќе бидат во можност да се конектираат на својот портал за да ја видат листата (и состојбата) на нивните фактури (pdf извештаи), налози за продажба и понуди (веб страни)."
 
 #. module: base
 #: model:ir.module.module,description:base.module_product_margin
@@ -799,7 +799,7 @@ msgid ""
 "* Cashback\n"
 "* Supported cards: Visa, MasterCard, American Express, Discover\n"
 "    "
-msgstr ""
+msgstr "\nДозволи уплати со кредитна картичка при POS плаќања\n=====================================================\n\nОвој модул им дозволува на клиентите да ги плаќаат своите нарачки со кредитни картички.\nТрансакциите се процесирани од \"Mercury\" (создаден од Wells\nFargo Bank).\nМеркури трговски профил е неопходен. Го овозможува \nследното:\n\n*Брзо уплаќање, со само лизгање на кредитната картичка додека е на наплатниот екран\n*Комбинирање на плаќање во готовина со плаќање со кредитна картичка\n*Поврат на готовина\n*Поддржани картички: Visa, MasterCard, American Express, Discover"
 
 #. module: base
 #: model:ir.module.module,description:base.module_auth_oauth
@@ -840,7 +840,7 @@ msgid ""
 "This module set the right product on all timesheet lines\n"
 "according to the order/contract you work on. This allows to\n"
 "have real delivered quantities in sales orders.\n"
-msgstr ""
+msgstr "\nОвозможува да се продаваат временски таблици во вашите налози за продажба\n=============================================================================\n\nОвој модул го подесува правилниот производ на сите ставки од временските таблици,\nсоодветно со налогот/договорот со кој што работите. Ова ви овозможува да имате вистински испорачани залихи во налозите за продажба.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_delivery
@@ -851,7 +851,7 @@ msgid ""
 "\n"
 "You can define your own carrier for prices. When creating\n"
 "invoices from picking, the system is able to add and compute the shipping line.\n"
-msgstr ""
+msgstr "\nДозволува додавање на начини на испорака во налозите за продажба и преносите.\n===================================================================\n\nМожете да дефинирате сопствен превозник и мрежи на достава. Кога генерирате\nфактури од пренос, Odoo може да ја додаде и пресмета ставката за превоз.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_portal
@@ -859,7 +859,7 @@ msgid ""
 "\n"
 "Allows your customers to manage their account from a beautiful web interface.\n"
 "        "
-msgstr ""
+msgstr "\nИм овозможува на вашите клиенти да управуваат со својот профил од преубавиот веб кориснички интерфејс."
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_ar
@@ -904,7 +904,7 @@ msgid ""
 "Keeps track of depreciations, and creates corresponding journal entries.\n"
 "\n"
 "    "
-msgstr ""
+msgstr "\nУправување со средства\n========================\nУправувај со средства поседувани од компанија или лице.\nВоди сметка за амортизација, и создавање на соодветни внесови во дневник."
 
 #. module: base
 #: model:ir.module.module,description:base.module_document
@@ -914,6 +914,21 @@ msgid ""
 "========================================\n"
 "* Show attachment on the top of the forms\n"
 "* Document Indexation: odt\n"
+msgstr "\nЛиста на прикачени документи и документна индексација\n=======================================================\n* Прикажи ги прикачените документи на врвот од формуларите\n* Документна индексација: odt\n"
+
+#. module: base
+#: model:ir.module.module,description:base.module_l10n_au
+msgid ""
+"\n"
+"Australian Accounting Module\n"
+"============================\n"
+"\n"
+"Australian accounting basic charts and localizations.\n"
+"\n"
+"Also:\n"
+"    - activates a number of regional currencies.\n"
+"    - sets up Australian taxes.\n"
+"    "
 msgstr ""
 
 #. module: base
@@ -955,7 +970,7 @@ msgid ""
 "is updated accordingly. For example, if this procurement corresponds to a sale\n"
 "order line, the sale order line will be considered delivered when the task is\n"
 "completed.\n"
-msgstr ""
+msgstr "\nАвтоматски креира проектни задачи од ставките за набавка.\n===========================================================\n\nОвој модул автоматски ќе креира нова задача за секоја ставка од нарачката за набавка\n(на пр. за ставките на налогот за продажба), ако соодветниот производ ги исполнува следните\nкарактеристики:\n\n* Тип на производ = Услуга\n* Автоматско создавање на задача = Точно\n\nАко покрај тоа, имаме проект кој е означен на формата на производот (во панелот Набавки),\nтогаш новата задача ќе биде креирана во тој зададен проект. Инаку,\nновата задача нема да припаѓа на ниеден проект, но може рачно да се додаде на проект\nподоцна.\n\nКога проектната задача е завршена или откажана, соодветната набавка\nе соодветно ажурирана. На пр., ако оваа набавка соодветствува со ставка на налог\nза продажба, ставката на налогот за продажба ќе се смета за испратена кога задачата ќе биде\nзавршена.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hw_scanner
@@ -1036,7 +1051,7 @@ msgid ""
 "The amount deposited to your bank will then appear as a single transaction on your bank statement.\n"
 "When you proceed with the reconciliation, simply select the corresponding batch deposit to reconcile the payments.\n"
 "    "
-msgstr ""
+msgstr "\nГрупен депозит\n================\nГрупните депозити ви овозможуваат да ги групирате добиените уплатници пред да ги депозирате во банка.\nИзносот депозиран во вашата банка тогаш ќе биде прикажан како единечна трансакција на вашиот извод од банка.\nКога ќе продолжете со порамнувањето, едноставно одберете го соодветниот групен депозит за да се порамни со плаќањата."
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_be_hr_payroll
@@ -1089,7 +1104,7 @@ msgid ""
 "* Relies on the global outgoing mail server - an integrated email management system - allowing to send emails with a configurable scheduler-based processing engine\n"
 "* Includes an extensible generic email composition assistant, that can turn into a mass-mailing assistant and is capable of interpreting simple *placeholder expressions* that will be replaced with dynamic data when each email is actually sent.\n"
 "    "
-msgstr ""
+msgstr "\nБизнис ориентирана социјална мрежа\n===================================\nМодулот \"Социјална Мрежа\" нуди обединувачка социјално мрежна подлога која им овозможува на апликациите да прикажат ја комплетната\nисторија на комуникација на документите со целосно интегриран систем на менаџирање на пораки и е-маил.\n\nИм овозможува на корисниците да читаат и праќаат пораки и е-пораки. Исто така нуди страна за новости комбинирана со механизам на зачленување кој овозможува следење на документи и постојани известувања за новостите.\n\nГлавни функции\n-------------\n* Јасна и обновувана историја на комуникација за секој документ на Odoo што може да служи како тема на дискусија\n* Механизам на зачленување со кој се добива известување за нови пораки/промени на некој документ\n* Унифицирана страна на новости за следење на најнови пораки и активности на документите кои се следат\n* Комуникација на корисниците преку страната за новости\n* Оформен дизајн на дискусијата на документите\n* Зависи од глобалниот излезен сервер на пораки - интегриран е-поштенски управувачки систем - овозможува праќање на е-пораки со подесувачки \"scheduler-based processing engine\"\n* Includes an extensible generic email composition assistant, that can turn into a mass-mailing assistant and is capable of interpreting simple *placeholder expressions* that will be replaced with dynamic data when each email is actually sent."
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_ve
@@ -1224,7 +1239,7 @@ msgid ""
 "=====================================================\n"
 "\n"
 "        "
-msgstr ""
+msgstr "\nКреирај кратки и лесни за пронаоѓање URL адреси.\n================================================="
 
 #. module: base
 #: model:ir.module.module,description:base.module_event_sale
@@ -1317,7 +1332,7 @@ msgid ""
 "\n"
 "Design gorgeous mails with 8 high quality themes\n"
 "    "
-msgstr ""
+msgstr "\nДизајнирај прекрасни мејлови со помош на 8 високо квалитетни теми"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_de
@@ -1534,7 +1549,7 @@ msgid ""
 "Generates Intrastat XML report for declaration\n"
 "Based on invoices.\n"
 "    "
-msgstr ""
+msgstr "\nГенерира \"Intrastat XML\" извештај за декларирање\nЗаснован според фактури."
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_payroll_account
@@ -1680,7 +1695,7 @@ msgid ""
 "\n"
 "You could use this simplified accounting in case you work with an (external) account to keep your books, and you still want to keep track of payments. This module also offers you an easy method of registering payments, without having to encode complete abstracts of account.\n"
 "    "
-msgstr ""
+msgstr "\nФактурирање и плаќање\n============================================\nИнтуитивниот и едноставен за користење фактурирачки систем на Odoo, Ви овозможува да го следете Вашето сметководство, дури и да не сте сметководител и имате било какво искуство во тоа. Нуди едноставен начин на следење на вашите добавувачи и клиенти.\n\nМожете да го користете ова едноставено сметководство во случај да работите со надворешно \nсметководење и водите записи во книга, но сепак сакате да имате увид на вашата сметка на електронски начин.\n\nСистемот вклучува сметкопотврди и ваучери (едноставен начин за следење на продажби и набавки). Исто така Ви нуди едноставен начин за регистрирање на плаќања, без да составувате целосни формулари од сметката."
 
 #. module: base
 #: model:ir.module.module,description:base.module_stock_landed_costs
@@ -1730,7 +1745,7 @@ msgid ""
 "going through the retailer's warehouse. In this case no\n"
 "internal transfer document is needed.\n"
 "\n"
-msgstr ""
+msgstr "\nУправувајте ги нарачките со достава\n===================================\n\nОвој модул додава пре-конфигуриран доставувачки тип \nи исто така и набавна мрежа што овозможува конфигурирање \nна производите со достава и на нарачките.\n\nКога имаме користење на достава, средствата се директно префрлени \nод добавувачи до клиенти (директна испорака) без \nпрегледот на магацинот на добавувачот. Во овој случај нема \nпотреба од користење на документ за внатрешен пренос.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_expense
@@ -1752,7 +1767,7 @@ msgid ""
 "\n"
 "This module also uses analytic accounting and is compatible with the invoice on timesheet module so that you are able to automatically re-invoice your customers' expenses if your work by project.\n"
 "    "
-msgstr ""
+msgstr "\nУправувај со трошоците на вработените\n=====================================\n\nОваа апликација Ви овозможува да управувате со секојдневните трошоци на вашите вработени. Ви дава пристап до белешките/сметките на вашите вработени и Ви дава право да ги комплетирате и да ги одобрете или откажете белешките. После одобрувањето, се генерира фактура за вработениот. \nРаботникот може да ги внесе сопствените трошоци и одобрувачкиот тек се става автоматски во сметководствениот оддел после одобрувањето од управителот.\n\n\nЦелосниот тек е имплементиран како: \n----------------------------------------------\n* Започнување/план на трошок\n* Потврдување на документот од страна на вработениот\n* Одобрување од управителот/неговиот менаџер\n* Одобрување од сметководителот и креирање на внес во книгата\n\nОвој модул исто така користи аналитичко сметководство и е компатибилен со фактурирање од модулот за временски таблици. Така што можете автоматски повторно да ги фактурирате вашите трошоци на клиентите доколку сте работеле по проекти."
 
 #. module: base
 #: model:ir.module.module,description:base.module_purchase
@@ -1774,7 +1789,7 @@ msgid ""
 "* Receipt Analysis\n"
 "* Purchase Analysis\n"
 "    "
-msgstr ""
+msgstr "\nУправувај со барањата на средства преку нарачките за набавка, на едноставен начин\n========================================================\n\nУправувањето со купувањата Ви овозможува да ги следите цените на понудите на вашиот добавувач и да ги конвертирате во набавни нарачки ако е потребно.\nOdoo има неколку методи на прегледување на фактури и следењето на сметките на нарачаните средства. Можеш да управуваш со делумни испораки во Odoo, со цел да можеш да следиш предмети што се во тек да бидат испорачани во вашите нарачки, и можете да издавате потсетници автоматски.\n\nОбновувачките менаџирачки правила на Odoo му овозможуваат на системот да генерира почетни набавни нарачки автоматски, или можете да го конфигурирате да води чист процес, целосно преку тековните производствени потреби.\n\nРаботната табела/Извештаи за набавниот менаџмент ќе вклучува:\n----------------------------------------------------------------------------------------------\n* Барање на понуди\n* Набавни нарачки кои што чекаат одобрување\n* Месечни набавки по категорија\n* Сметковни анализи\n* Набавни анализи"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_recruitment
@@ -1807,7 +1822,7 @@ msgid ""
 "* Leaves Analysis\n"
 "\n"
 "A synchronization with an internal agenda (Meetings of the CRM module) is also possible in order to automatically create a meeting when a leave request is accepted by setting up a type of meeting in Leave Type.\n"
-msgstr ""
+msgstr "\nМенаџирај отсуства и барања за распределба\n=====================================\n\nОваа апликација го контролира распоредот на одмори на вашата компанија. Потоа, менаџерите може да ги прегледаар барањата за одмори и да ги одобрат или одбијат истите. На овој начин можете да го контролирате целокупното планирање за одмори за компанијата или одделението.\n\nМожете да конфигурирате неколку видови на отсуства (болест, одмор, платени денови, ...) и  брзо да ги распределите отсуствата на вработен или одделение со користење на барањата за распределба. Вработениот исто така може да направи барање за повеќе слободни денови со правење на нова Алокација. Тоа ќе ја зголеми вкупната сума на расположливи денови за тој тип на отсуство (доколку барањето е прифатено)\n\nМожете да ги следите отсуствата на различни начини преку следниве извештаи: \n\n* Резиме на отсуства\n* Отсуства по Одделение\n* Анализи на отсуства\n\nСинхронизацијата со внатрешната агенда (Состаноци на CRM модул) исто така е можно со цел автоматски да се креира состанок кога барањето за одмор е прифатено преку подесување на типот на состанок во Тип на отсуство.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_stock
@@ -1838,7 +1853,7 @@ msgid ""
 "* Last Product Inventories\n"
 "* Moves Analysis\n"
 "    "
-msgstr ""
+msgstr "\nМенаџирај со повеќе магацини, повеќе- и структуирани залихни локации\n===================================================================\n\nМагацинското и инвентарско менаџирање е базирано врз структурата на хиерархната локација, од магацините до складиштата.\nДвојниот инвентарски систем овозможува да менаџирате со клиентите, добавувачите и исто така со производствените инвентари.\n\nOdoo has the capacity to manage lots and serial numbers ensuring compliance with the traceability requirements imposed by the majority of industries.\n\nKey Features\n ------------\n * Moves history and planning,\n * Minimum stock rules\n * Support for barcodes\n * Rapid detection of mistakes through double entry system\n * Traceability (Serial Numbers, Packages, ...)\n \n Dashboard / Reports for Warehouse Management will include:\n ----------------------------------------------------------\n * Incoming Products (Graph)\n * Outgoing Products (Graph)\n * Procurement in Exception\n * Inventory Analysis\n * Last Product Inventories\n * Moves Analysis"
 
 #. module: base
 #: model:ir.module.module,description:base.module_sale
@@ -1908,7 +1923,7 @@ msgid ""
 "Sell products in one unit of measure that is different from the one\n"
 "you manage the inventory.\n"
 "    "
-msgstr ""
+msgstr "\nУправувај со секундарни единици за продажба\n=============================================\n\nПродавајте производи во една единица мерка што е различна од таа \nсо која управувате со инвентарот."
 
 #. module: base
 #: model:ir.module.module,description:base.module_mrp
@@ -1936,7 +1951,7 @@ msgid ""
 "* Stock Value Variation (Graph)\n"
 "* Work Order Analysis\n"
 "    "
-msgstr ""
+msgstr "\nУправувајте со процесот на производство во Odoo\n===============================================\n\nПроизводствениот модул Ви овозможува да ги покривате операциите како што се планирање, нарачување, залихи и произведувањето или составување на продукти од генерички материјали и компоненти. Овој модул управува со потрошувачката и производството на продуктите според листата на материјали и неопходните операции на машинериите, алати и исто така човечките ресурси во зависност од поврзувањата.\n\nПоддршка на целосна интеграција со другите модули и планирањето на залихните средства, потрошниот материјал или услугите. Услугите се целосно интегрирани со остатокот од софтверот. На пример, можете да подесите набавна услуга да работи со листата на материјали, со цел да имате автоматско регулирање на набавките на материјали за составот во Вашата продукција.\n\nКлучни функции\n---------------------------\n* Направи за залиха/Направи за нарачка\n* Multi-level сметка за материјали, без лимит\n* Multi-level поврзување, без лимит\n* Поврзување и работен центар интегриран со аналитичкото сметководство\n* Периодичен распоредувач на сметка\n* Овозможува прегледност на сметките на материјали во комплетна структура што содржи и \"child\" и \"phantom\" сметки на материјали\n\nТаблата на забелешки во модулот за производство содржи:\n-------------------------------------------------------------------------------------\n* Набавки во \"Исклучителна (графа)\"\n* Залихни вредносни варијации (графа)\n* Анализа на работни нарачки"
 
 #. module: base
 #: model:ir.module.module,description:base.module_sale_layout
@@ -2194,10 +2209,10 @@ msgid ""
 "Odoo Live Support\n"
 "=================\n"
 "\n"
-"Ask your functionnal question directly to the Odoo Operators with the livechat support.\n"
+"Ask your functional question directly to the Odoo Operators with the livechat support.\n"
 "\n"
 "        "
-msgstr "\nOdoo онлајн поддршка во живо\n============================\n\nРазрешете го било кое прашање директно со Odoo операторите користејќи ја оваа опција за комуникација во живо."
+msgstr ""
 
 #. module: base
 #: model:ir.module.module,description:base.module_web_editor
@@ -2217,7 +2232,7 @@ msgid ""
 "For website built with Odoo CMS, this module include a chat button on your Website, and allow your visitors to chat with your collabarators.\n"
 "It also will include the feedback tool for the livechat, and web pages to display your channel and its ratings on the website.\n"
 "        "
-msgstr ""
+msgstr "\nOdoo чат во живо на веб страна\n===============================\nПравено за веб страна со Odoo CMS, овој модул вклучува чат копче на вашата веб страна, им овозможува на посетителите на вашата веб страна да комуницираат со вашите соработници.\nИсто така ќе го содржи алатот за оценка на чатот, и веб страни за прикажување на вашиот канал и неговите оцени на веб страната."
 
 #. module: base
 #: model:ir.module.module,description:base.module_web_settings_dashboard
@@ -2231,7 +2246,7 @@ msgid ""
 "* Quick access to the `App Store` and `Theme Store`\n"
 "\n"
 "        "
-msgstr ""
+msgstr "\nOdoo командна табла\n=====================\n* Брз пристап за инсталација на апликации\n* Брзо додавање на корисници\n* Подреди ги сите планери на едно место\n* Брз пристап до `App Store` и `Theme Store`"
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_event_track
@@ -2501,7 +2516,7 @@ msgid ""
 "* Manager, colleague, collaborator, and employee himself/herself receives email to perform a periodical appraisal.\n"
 "* Every Appraisal Form filled by employees, colleague, collaborator, can be viewed in a PDF form.\n"
 "* Meeting Requests are created manually according to employees appraisals.\n"
-msgstr ""
+msgstr "\nПериодично евалуирање и оценување на вработените\n===================================================\n\nСо користењето на оваа апликација одржувајте го нивото на мотивација кај вработените со имплементирањето на периодични евалуации на вработените, да ги извршат за да се оценат нивните работни перформанси. Редовното испитување на хуманите ресурси може да е од голема бенефиција за Вашата компанија и за вработените.\n\nПлан на евалуација може да биде назначен на секој работник. Овие планови ја дефинираат фреквенцијата и начинот на кој што ги менаџирате Вашите периодични лични евалуации. Ќе можете да дефинирате чекори и да прикачувате интервју форми на секој чекор.\n\nПостојат неколку вида на евалуирање: од дно до врв, од врв до дно, само евалуирање, и крајно евалуирање од страна на менаџерот.\n\nКлучни функции\n------------------------\n* Создавање на евалуации за вработените.()\n* Евалуација може да биде креирана од страна на вработено лице кон друго лице.\n* Евалуацијата е создадена според план според кој исто така можат да се создаваат различни анкети. Некои анкети можат само да се одговорат доколку вработениот има пристап според одреден ранг во хиерархијата на вработените. Крајниот увид на евалуирањето му припаѓа на менаџерот.\n* Секоја пополнета евалуација од вработениот може да биде прегледана во PDF формат на документ.\n* Интервју барањата се генерираат автоматски преку Odoo спрема планот за евалуација на вработените. Секој корисник добива автоматски е-пошти, барања за да изврши евалуација на своите колеги.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_pe
@@ -2591,7 +2606,7 @@ msgid ""
 "* Automatic creation of sales order and invoices\n"
 "\n"
 "  "
-msgstr ""
+msgstr "\nОбјавете ги вашите производи на eBay\n===============================================\n\neBay интеграторот ви овозможува да управувате со вашите производи од Odoo на eBay.\n\nКлучни функции\n------------------\n* Објавувај производи на eBay\n* Revise, relist, end items on eBay\n* Интеграција со залихни движења\n* Автоматско креирање на налози за продажба и фактури"
 
 #. module: base
 #: model:ir.module.module,description:base.module_point_of_sale
@@ -2617,7 +2632,7 @@ msgid ""
 "* Allows the user to create an invoice automatically\n"
 "* Refund previous sales\n"
 "    "
-msgstr ""
+msgstr "\nБрз и едноставен процес на продажба\n======================================\n\nОвој модул ви овозможува да управувате со вашите продажби на многу едноставен начин со целосно веб базиран тач екран интерфејс.\nКомпатибилен е со сите PC таблети и со IPad, кој нуди повеќе видни начини за плаќање.\nСелекцијата на продукти може да биде обавена на неколку начини.\n\n- Со користење на баркод читач\n- Со пребарување на категории од продукти или преку текст пребарувач.\n\nГлавни функции\n---------------\n- Брзо шифрирање на продажбите\n- Избери еден начин на плаќање (брзиот начин) или подели го плаќањето на неколку начини на плаќање\n- Пресметка на износот од пари кој што треба да биде вратен\n- Генерирај и потврди ја листата на одбирање аутоматски\n- Овозможува на корисникот да оствари фактура аутоматски\n- Поврат на пари на претходни продажби"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_timesheet_sheet
@@ -2687,7 +2702,7 @@ msgstr "\nПревземи ги доаѓачките е-пораки на POP/IM
 msgid ""
 "\n"
 "Sell digital product using attachments to virtual products\n"
-msgstr ""
+msgstr "\nПродавајте дигитални производи користејќи прикачени документи на виртуелните производи\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_analytic_default
@@ -2719,7 +2734,7 @@ msgid ""
 " * Statistics of Presentation\n"
 " * Channel Subscription\n"
 " * Supported document types : PDF, images, YouTube videos and Google Drive documents)\n"
-msgstr ""
+msgstr "\nСподелувај и објавувај видеа, презентации и документации\n=========================================================\n\n* Апликација на вебстрана\n* Управување на канал\n* Filters and Tagging\n* Статистики на презентација\n* Претплата на канал\n* Поддржан тип на документи: PDF, images, YouTube videos and Google Drive documents)\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_sign
@@ -2868,7 +2883,7 @@ msgid ""
 "* Voucher Receipt [Sales & Purchase]\n"
 "* Voucher Payment [Customer & Vendors]\n"
 "    "
-msgstr ""
+msgstr "\nФактурирање и плаќање преку сметководствен ваучер и сметкопотврди\n=======================================================================\nИнтуитивниот и едноставен за користење фактурирачки систем на Odoo, Ви овозможува да го следете Вашето сметководство, дури и да не сте сметководител и имате било какво искуство во тоа. Нуди едноставен начин на следење на вашите добавувачи и клиенти.\n\nМожете да го користете ова едноставено сметководство во случај да работите со (надворешно) \nсметководење и водите записи во книга, но сепак сакате да имате увид на вашата сметка на електронски начин.\n\nСистемот вклучува сметкопотврди и ваучери (едноставен начин за следење на продажби и набавки). Исто така Ви нуди едноставен начин за регистрирање на плаќања, без да составувате целосни формулари од сметката.\n\nСо овој модул менаџирајте:\n\n* Ваучер внесови\n* Ваучер сметкопотврди [продажби и набавки]\n* Ваучер плаќања [клиент и добавувач]"
 
 #. module: base
 #: model:ir.module.module,description:base.module_lunch
@@ -2887,7 +2902,7 @@ msgid ""
 "\n"
 "If you want to save your employees' time and avoid them to always have coins in their pockets, this module is essential.\n"
 "    "
-msgstr ""
+msgstr "\nОсновниот модул за менаџирање со оброци.\n============================================\n\nМногу компании порачуваат сендвичи, пици и други видови на оброци на работното место, од одредени набавувачки прехранбени компании, со цел на подобрување на работната способност на вработените во таа компанија.\n\nМеѓутоа менаџирањето со оброци во компанијата наложува на најпогодна администрација посебно кога зависи од бројот на вработени или/и добавувачи.\n\n“Оброк нарачка“ модулот е создаден за ја олесни оваа задача но исто така да обезбеди поголема практичност кај вработените кога станува збор за исто така нивното користење на овој модул.\n\nВо склоп на менаџирањето со оброците и добавувачите, овој модул исто така Ви ја нуди можноста да ги следите известувањата на екран и овозможува брза селекција на нарачки според определбите на вработените.\n\nАко сакате да им ја сочувате енергијата и времето на вашите вработени и да им намалите на грижите за каде да се исхрануваат секојдневно, тогаш овој модул Ви е од голема неопходност."
 
 #. module: base
 #: model:ir.module.module,description:base.module_crm
@@ -2911,7 +2926,7 @@ msgid ""
 "-------------------------------\n"
 "* Planned Revenue by Stage and User (graph)\n"
 "* Opportunities by Stage (graph)\n"
-msgstr ""
+msgstr "\nГенеричниот Odoo \"менаџмент со клиентски односи\" \"CRM\"\n==================================================\n\nОваа апликација им овозможува на вработените, групно да менаџираат со трагите, можностите, состаноците и телефонските повици.\n\nМенаџира со клучни задачи како што се комуникација, идентификација, приоритизација, доделување на должност, одлука/решение, објави/известувања.\n\nOdoo ветува дека сите случаеви ќе можат да бидат следени/евидентирани од страна на корисниците, клиентите и добавувачите. Возможно е и да автоматски се испраќаат потсетници, да се ескалираат барањата, да се активираат специфични методи и многу други акции базирани на Вашите сопствени предефинирани правила.\n\nНајдобрата работа за овој систем е дека корисниците не треба да направат било што комплицирано. CRM модулот има емаил gateway за синхронизацијата на интерфејсот помеѓу мејловите и Odoo. На тој начин, корисниците можат само да праќат мејлови до побарувачкиот tracker.\n\nOdoo ќе се погрижи за нивното заблагодарување за нивната порака, автоматски поврзувајки ја со соодветниот вработен и ќе се погрижи за сите идни слични наредби да пристигаат на правилните места.\n\n\nТабeлата на CRM ќе го содржи следното:\n-----------------------------------------------------------------\n* Планирани приходи по стази и корисници (графикон)\n* Можности по стази (графикон)\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_base
@@ -2993,7 +3008,7 @@ msgid ""
 "\n"
 "Print product labels with barcode.\n"
 "    "
-msgstr ""
+msgstr "\nОва е основниот модул за менаџирање на производи и ценовници во OpenERP.\n========================================================================\n\nВаријанти за поддршка на производи, различни методи за формирање на цена, информации за добавувачи,\nнаправи го залиха/налог, различни единици мерки, пакување и својства.\n\nПоддршка на ценовници:\n-------------------\n    * Повеќекратно ниво на попуст (по производ, категорија, количина)\n    * Пресметај цена врз основа на различен критериум:\n        * Друг ценовник\n        * Цена на чинење\n        * Листа на цени\n        * Набавна цена\n\nПредности на ценовници по производ и/или партнери.\n\nПечати етикети на производ со баркод.\n    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_be
@@ -3339,7 +3354,7 @@ msgid ""
 "This module adds a PAD in all project form views.\n"
 "=================================================\n"
 "    "
-msgstr ""
+msgstr "\nОвој модул Ви додава PAD во сите проектни прегледи.\n========================================================="
 
 #. module: base
 #: model:ir.module.module,description:base.module_portal_sale
@@ -3583,14 +3598,14 @@ msgstr "\nОвој модул има за цел да ги менаџира пр
 msgid ""
 "\n"
 "This module allows a customer to give rating on Project Issue.\n"
-msgstr ""
+msgstr "\nОвој модул им овозможува на клиентите да даваат оцена на проектни изјави.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_rating
 msgid ""
 "\n"
 "This module allows a customer to give rating.\n"
-msgstr ""
+msgstr "\nОвој модул им овозможува на клиентите да даваат оцена.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_budget
@@ -3711,7 +3726,7 @@ msgid ""
 "    - Create & edit susbcriptions\n"
 "    - Modify subscriptions with sales orders\n"
 "    - Generate invoice automatically at fixed intervals\n"
-msgstr ""
+msgstr "\nОвој модул ви дозволува да управувате со претплати.\nФункции:\n- Креирај и подесувај претплати\n- Модификувај претплати кај налози за продажба\n- Генерирај фактура автоматски на фиксни временски интервали\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_purchase_requisition
@@ -3758,7 +3773,7 @@ msgstr ""
 msgid ""
 "\n"
 "This module allows you to set a deferred revenue on your subscription contracts.\n"
-msgstr ""
+msgstr "\nОвој модул ви овозможува да подесите одложен приход на вашите договори за претплата.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_rating_project_issue
@@ -3767,7 +3782,7 @@ msgid ""
 "This module display project customer satisfaction on your website.\n"
 "==================================================================================================\n"
 "    "
-msgstr ""
+msgstr "\nОвој модул прикажува задоволност на проект од клиент на вашата вебстрана.\n==========================================================================="
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_setup
@@ -3828,7 +3843,7 @@ msgid ""
 "The ability to extract the correctly represented local accounts from IBAN accounts\n"
 "with a single statement.\n"
 "    "
-msgstr ""
+msgstr "\nОвој модул ја инсталира основата за IBAN (International Bank Account Number) банкарски сметки и врши нивна проверка.\n======================================================================================================================\n\nМожност за екстрактирање на локални сметки од IBAN сметки\nсо единечен извод.\n    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_association
@@ -4050,7 +4065,7 @@ msgid ""
 "    - Generate invoice and credit card payments automatically at fixed intervals\n"
 "    - Let your customer edit their subscriptions themselves (options, close their contract) with granular control\n"
 "        "
-msgstr ""
+msgstr "\nКористете ја оваа апликација за раководење на претплати.\nГлавни карактеристики и се:\n- Креирај и ажурирај претплати со налозите за продажба (автоматско создавање при утврдување)\n- Генерирај фактура и плаќања со кредитна картичка, автоматски по фиксни интервали\n- Овозможете му на вашиот клиент, самиот да ја ажурира својата претплата (опции, затвори го нивниот договор) со привремена контрола."
 
 #. module: base
 #: model:ir.module.module,description:base.module_sales_team
@@ -4158,7 +4173,7 @@ msgid ""
 "Help your customers with this chat, and analyse their feedback.\n"
 "\n"
 "        "
-msgstr ""
+msgstr "\nПоддршка за комуникација во живо на веб страна\n================================================\n\nОвозможи да се пуштаат инстантни виџети на пораките на секоја веб страна што ќе комуницира \nсо тековниот сервер и доделувај ги побарувањата на посетителите помеѓу\n чат операторите во живо.\nПомогнете им на вашите клиенти на овој начин така што ќе го анализирате нивниот фидбек."
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_membership
@@ -4211,7 +4226,7 @@ msgid ""
 "    - Assign score on lead: sort your lead automatically and consider the more important at first.\n"
 "    - Assign lead to salesteams: define your own filters and sort automatically your leads by saleteam.\n"
 "    - Assign lead to salesmen: define filter by saleman and dispatch automatically your leads to the right saleman.\n"
-msgstr ""
+msgstr "Оценување на траги\n====================\nОвој модул ви овозможува:\n- Да следите специфичен приказ на вашата веб страна.\n- Назначите оцена на трага: подредувајте ги трагите автоматски и превземете ги поприоритетните прво.\n- Назначи трага кон продажни тимови: дефинирајте ги вашите сопствени филтери и сортирајте ги автоматски вашите траги по продажен тим.\n- Назначи трага на продавач: дефинирај филтер по продавач и предади ги автоматски трагите на правилниот продавач.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_inter_company_rules
@@ -4219,7 +4234,7 @@ msgid ""
 " Module for synchronization of Documents between several companies. For example, this allow you to have a Sale Order created automatically when a Purchase Order is validated with another company of the system as vendor, and inversely.\n"
 "\n"
 "    Supported documents are SO, PO and invoices/refunds.\n"
-msgstr ""
+msgstr "Модул за синхронизација на документи помеѓу неколку компании. На пример, ова ви овозможува да ви се креира налог за продажба автоматски кога налог за набавка ќе биде валидиран со друга компанија од системот како добавувач, и обратно.\n\nПоддржани документи се SO, PO и фактури/поврати.\n"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
@@ -4289,15 +4304,15 @@ msgstr "%p - еквивалент на AM или PM."
 #. module: base
 #: code:addons/base/ir/ir_filters.py:18
 #: code:addons/base/res/res_currency.py:112
-#: code:addons/base/res/res_partner.py:353
-#: code:addons/base/res/res_users.py:110 code:addons/base/res/res_users.py:403
-#: code:addons/base/res/res_users.py:405
+#: code:addons/base/res/res_partner.py:354
+#: code:addons/base/res/res_users.py:110 code:addons/base/res/res_users.py:405
+#: code:addons/base/res/res_users.py:407
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (копија)"
 
 #. module: base
-#: code:addons/models.py:6144
+#: code:addons/models.py:6163
 #, python-format
 msgid ""
 "%s This might be '%s' in the current model, or a field of the same name in "
@@ -4372,7 +4387,7 @@ msgid ""
 "    * Warranty concept\n"
 "    * Repair quotation report\n"
 "    * Notes for the technician and for the final customer\n"
-msgstr ""
+msgstr ",\n\"кратка содржина\": \"Поправај нефункционални или оштетени производи\",\nЦелта е да се има комплетен модул за менаџирање со сите поправки на производите.\n===============================================================================\n\nСледниве проблематики би требало да се покриени од овој модул:\n------------------------------------------------------------------------------------------------------\n* Додај/оттргни производи во репарација\n* Импакт за залихи\n* Фактурирање (производи и/или услуги)\n* Концепт за гаранција\n* Извештај на понуда за поправка\n* Белешки за техничарот и за крајниот клиент\n"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.wizard_lang_export
@@ -4382,12 +4397,12 @@ msgstr ", или друг текст едитор"
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodulereference
 msgid ", readonly"
-msgstr ""
+msgstr ", само за читање"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodulereference
 msgid ", required"
-msgstr ""
+msgstr ", потребен"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_values_key
@@ -4399,17 +4414,17 @@ msgstr "- Акција: акција прикачена на едно поле �
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "- domain ="
-msgstr ""
+msgstr "- домен ="
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "- field ="
-msgstr ""
+msgstr "- поле ="
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "- groups ="
-msgstr ""
+msgstr "- групи ="
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -4419,17 +4434,17 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "- relation ="
-msgstr ""
+msgstr "- врска ="
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "- selection ="
-msgstr ""
+msgstr "- селекција ="
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "- size ="
-msgstr ""
+msgstr "- големина ="
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.module_form
@@ -4519,7 +4534,7 @@ msgstr ""
 #. module: base
 #: model:ir.actions.act_window,help:base.open_module_tree
 msgid "<b>No module found!</b>"
-msgstr ""
+msgstr "<b>Модулот не е пронајден!</b>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_server_action_form
@@ -4534,7 +4549,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base.view_model_fields_form
 #: model:ir.ui.view,arch_db:base.view_model_form
 msgid "<code>datetime</code> (Python module)"
-msgstr ""
+msgstr "<code>датум</code> (Python модул)"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_model_fields_form
@@ -4552,27 +4567,27 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base.view_model_fields_form
 #: model:ir.ui.view,arch_db:base.view_model_form
 msgid "<code>time</code> (Python module)"
-msgstr ""
+msgstr "<code>време</code> (Python модул)"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "<strong>Apps</strong>"
-msgstr ""
+msgstr "<strong>Апликации</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "<strong>Attribute</strong>"
-msgstr ""
+msgstr "<strong>Атрибут</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodulereference
 msgid "<strong>Dependencies :</strong>"
-msgstr ""
+msgstr "<strong>Зависности :</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "<strong>Group</strong>"
-msgstr ""
+msgstr "<strong>Група</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -4582,27 +4597,27 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "<strong>Inherited</strong>"
-msgstr ""
+msgstr "<strong>Наследено</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "<strong>Label</strong>"
-msgstr ""
+msgstr "<strong>Ознака</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodulereference
 msgid "<strong>Menu :</strong>"
-msgstr ""
+msgstr "<strong>Мени :</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "<strong>Name</strong>"
-msgstr ""
+msgstr "<strong>Име</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodulereference
 msgid "<strong>Reports :</strong>"
-msgstr ""
+msgstr "<strong>Извештаи :</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -4624,7 +4639,7 @@ msgstr ""
 msgid ""
 "<strong>This operation will permanently erase all data currently stored by "
 "the modules!</strong>"
-msgstr ""
+msgstr "<strong>Оваа операција ќе ја избрише перманентно целосната информација моментално содржана од модулите!</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -4634,12 +4649,12 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "<strong>Type</strong>"
-msgstr ""
+msgstr "<strong>Тип</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodulereference
 msgid "<strong>View :</strong>"
-msgstr ""
+msgstr "<strong>Приказ :</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -4649,23 +4664,23 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "<u><strong>Fields</strong></u>"
-msgstr ""
+msgstr "<u><strong>Полиња</strong></u>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "<u><strong>Security</strong></u>"
-msgstr ""
+msgstr "<u><strong>Безбедност</strong></u>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "<u><strong>Views</strong></u>"
-msgstr ""
+msgstr "<u><strong>Прикази</strong></u>"
 
 #. module: base
-#: code:addons/models.py:3479
+#: code:addons/models.py:3480
 #, python-format
 msgid "A document was modified since you last viewed it (%s:%d)"
-msgstr ""
+msgstr "После последниот преглед документот бил модифициран (%s:%d)"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_res_groups
@@ -4701,7 +4716,7 @@ msgstr "Модул за тестирање на импорт/експорт."
 #. module: base
 #: model:ir.module.module,description:base.module_test_new_api
 msgid "A module to test the API."
-msgstr ""
+msgstr "Модул за тестирање на API."
 
 #. module: base
 #: model:ir.module.module,description:base.module_test_uninstall
@@ -4711,7 +4726,7 @@ msgstr "Модул за тестирање на функцијата за де-�
 #. module: base
 #: model:ir.module.module,description:base.module_test_inherits
 msgid "A module to verify the inheritance using _inherits."
-msgstr ""
+msgstr "Модул за верификација на наследството користејќи _inherits."
 
 #. module: base
 #: model:ir.module.module,description:base.module_test_inherit
@@ -4809,7 +4824,7 @@ msgstr "Стандардни поставки на аналитички смет
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_bank_statement_import
 msgid "Account Bank Statement Import"
-msgstr ""
+msgstr "Импортирање на банкарски извод на сметка"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_localization_account_charts
@@ -4819,17 +4834,17 @@ msgstr "Сметководствени планови"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_contract_dashboard
 msgid "Account Contract Dashboard"
-msgstr ""
+msgstr "Табела на сметковен договор"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_extension
 msgid "Account Extension"
-msgstr ""
+msgstr "Проширување на сметка"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_partner_bank_partner_id
 msgid "Account Holder"
-msgstr ""
+msgstr "Сметковен подносител"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_portal
@@ -4849,7 +4864,7 @@ msgstr "Број на сметка"
 #. module: base
 #: sql_constraint:res.partner.bank:0
 msgid "Account Number must be unique"
-msgstr ""
+msgstr "Бројот на сметка мора да биде единствен"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_localization_account_report
@@ -5072,17 +5087,12 @@ msgstr "Додај во \"Повеќе\" менито"
 #. module: base
 #: model:ir.ui.view,arch_db:base.act_report_xml_view
 msgid "Add in the 'Print' menu"
-msgstr ""
+msgstr "Додај во \"Print\" менито"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_act_report_xml_header
 msgid "Add or not the corporate RML header"
 msgstr "Додади го или не корпорациското RML поглавје"
-
-#. module: base
-#: model:ir.module.module,summary:base.module_account_extension
-msgid "Add some extension to account modules for enterprise version"
-msgstr ""
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_twitter
@@ -5094,7 +5104,7 @@ msgstr "Додади twitter scroller snippet во веб-страна креа�
 msgid ""
 "Add your sales document in the frontend portal (sales order, quotations, "
 "invoices)"
-msgstr ""
+msgstr "Додај го твојот документ на продажба во frontend порталот ( налози за продажба, понуди, фактури)"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_company_form
@@ -5218,7 +5228,7 @@ msgstr "Напредни настани"
 #: model:ir.ui.view,arch_db:base.view_model_fields_form
 #: model:ir.ui.view,arch_db:base.view_model_form
 msgid "Advanced Properties"
-msgstr ""
+msgstr "Дополнителни својства"
 
 #. module: base
 #: model:ir.module.module,description:base.module_payment_adyen
@@ -5244,7 +5254,7 @@ msgstr "После износ"
 #. module: base
 #: model:ir.ui.menu,name:base.menu_aftersale
 msgid "After-Sale"
-msgstr ""
+msgstr "Пост-продажба"
 
 #. module: base
 #: model:res.country,name:base.al
@@ -5271,7 +5281,7 @@ msgstr "Сите нерешени конфигурациски волшебни�
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_reprint
 msgid "Allow cashier to reprint receipts"
-msgstr ""
+msgstr "Овозможи му на касиерот да преиспечатува сметко-потврди"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_account_tax_cash_basis
@@ -5379,7 +5389,7 @@ msgid ""
 msgstr "Стандардно се појавува на горниот десен агол на печатените документи(заглавие)"
 
 #. module: base
-#: code:addons/base/res/res_users.py:779
+#: code:addons/base/res/res_users.py:760
 #: model:ir.model,name:base.model_ir_module_category
 #: model:ir.model.fields,field_description:base.field_ir_module_module_application
 #: model:ir.model.fields,field_description:base.field_res_groups_category_id
@@ -5391,7 +5401,7 @@ msgstr "Апликација"
 #. module: base
 #: model:ir.module.module,description:base.module_web_planner
 msgid "Application Planner"
-msgstr ""
+msgstr "Планер на апликации"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_translation_app
@@ -5451,17 +5461,17 @@ msgstr "Апликации"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_base_language_export_modules
 msgid "Apps To Export"
-msgstr ""
+msgstr "Апликации за експортирање"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_base_module_upgrade_module_info
 msgid "Apps to Update"
-msgstr ""
+msgstr "Апликации за ажурирање"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "Apps:"
-msgstr ""
+msgstr "Апликации:"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -5592,6 +5602,11 @@ msgstr "Присуства"
 #: model:res.country,name:base.au
 msgid "Australia"
 msgstr "Австралија"
+
+#. module: base
+#: model:ir.module.module,shortdesc:base.module_l10n_au
+msgid "Australian - Accounting"
+msgstr ""
 
 #. module: base
 #: model:res.country,name:base.at
@@ -5766,7 +5781,7 @@ msgstr "Хардверски драјвери за баркод читач"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_barcodes
 msgid "Barcodes"
-msgstr ""
+msgstr "Баркодови"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_barcodes
@@ -5852,7 +5867,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_batch_deposit
 msgid "Batch Deposit"
-msgstr ""
+msgstr "Групен депозит"
 
 #. module: base
 #: selection:res.currency,position:0
@@ -6115,12 +6130,12 @@ msgstr "Календар"
 #. module: base
 #: model:ir.module.module,summary:base.module_stock_calendar
 msgid "Calendars "
-msgstr ""
+msgstr "Календари"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_calendar
 msgid "Calendars on Orderpoints"
-msgstr ""
+msgstr "Календари на Точки за нарачување"
 
 #. module: base
 #: model:res.country,name:base.kh
@@ -6149,7 +6164,7 @@ msgstr "Не може да се ажурира модулот '%s'. Не е ин
 #: code:addons/base/ir/ir_model.py:518
 #, python-format
 msgid "Can only rename one field at a time!"
-msgstr ""
+msgstr "Може да се преименува само едно поле од еднаш!"
 
 #. module: base
 #: model:res.country,name:base.ca
@@ -6288,7 +6303,7 @@ msgid "Change the user password."
 msgstr "Промени ја корисничката лозинка"
 
 #. module: base
-#: code:addons/base/res/res_partner.py:368
+#: code:addons/base/res/res_partner.py:369
 #, python-format
 msgid ""
 "Changing the company of a contact should only be done if it was never "
@@ -6335,7 +6350,7 @@ msgstr "Чат/Разговарајте со Odoo колабораторите"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_check_printing
 msgid "Check Printing Base"
-msgstr ""
+msgstr "Провери основа за принтање"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_partner_is_company
@@ -6360,7 +6375,7 @@ msgstr "Штиклирај доколку овој контакт е купув�
 msgid ""
 "Check this box if this contact is a vendor. If it's not checked, purchase "
 "people will not see it when encoding a purchase order."
-msgstr ""
+msgstr "Чекирајте го ова поле ако овој контакт ви е добавувач. Ако не го чекирате, вработените во продажба нема да го видат кога ќе генерираат налози за набавка."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_partner_employee
@@ -6392,7 +6407,7 @@ msgstr "Чекирајте за да го прикачете ново созда
 #. module: base
 #: model:ir.module.category,name:base.module_category_localization_checks_printing
 msgid "Checks Printing"
-msgstr ""
+msgstr "Прави проверка на принтањето"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_attachment_checksum
@@ -6522,12 +6537,12 @@ msgstr "Бара управување"
 #. module: base
 #: model:ir.actions.act_window,help:base.action_attachment
 msgid "Click here to attach a new document."
-msgstr ""
+msgstr "Кликнете овде да прикачите нов документ."
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_ui_view_custom
 msgid "Click here to create a customized view"
-msgstr ""
+msgstr "Кликнете овде за да креирате костумизиран приказ"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_base_module_update
@@ -6539,22 +6554,22 @@ msgstr "Кликнете на 'надгради' доле, за да го зап
 #: model:ir.actions.act_window,help:base.action_partner_form
 #: model:ir.actions.act_window,help:base.action_partner_supplier_form
 msgid "Click to add a contact in your address book."
-msgstr ""
+msgstr "Кликнете за да додадете контакт во вашата книга на контакти."
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_res_partner_bank_account_form
 msgid "Click to create a bank account."
-msgstr ""
+msgstr "Кликнете за да креирате банкарска сметка."
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_res_bank_form
 msgid "Click to create a new bank."
-msgstr ""
+msgstr "Кликнете за да креирате нова банка."
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_partner_category_form
 msgid "Click to create a new partner tag."
-msgstr ""
+msgstr "Кликнете за да креирате нов таг на партнер."
 
 #. module: base
 #: selection:ir.logging,type:0
@@ -6755,7 +6770,7 @@ msgstr "Мото на компанијата"
 #: model:ir.model.fields,field_description:base.field_res_partner_company_type
 #: model:ir.model.fields,field_description:base.field_res_users_company_type
 msgid "Company Type"
-msgstr ""
+msgstr "Тип на компанија"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_partner_contact_address
@@ -6962,12 +6977,12 @@ msgstr "Контакти"
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_partner_form
 msgid "Contacts & Addresses"
-msgstr ""
+msgstr "Контакти и адреси"
 
 #. module: base
 #: sql_constraint:res.partner:0
 msgid "Contacts require a name."
-msgstr ""
+msgstr "На контактите им е потребно име."
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_filters_context
@@ -7023,7 +7038,7 @@ msgid "Costa Rica - Accounting"
 msgstr "Костарика - Сметководство"
 
 #. module: base
-#: code:addons/base/res/res_partner.py:626
+#: code:addons/base/res/res_partner.py:629
 #, python-format
 msgid "Couldn't create contact without email address!"
 msgstr "Контакт лицето не може да се креира без емаил адреса!"
@@ -7209,6 +7224,7 @@ msgstr "Креирај прегледи"
 #: model:ir.model.fields,field_description:base.field_ir_actions_create_uid
 #: model:ir.model.fields,field_description:base.field_ir_actions_create_uid_297
 #: model:ir.model.fields,field_description:base.field_ir_actions_todo_create_uid
+#: model:ir.model.fields,field_description:base.field_ir_autovacuum_create_uid
 #: model:ir.model.fields,field_description:base.field_ir_config_parameter_create_uid
 #: model:ir.model.fields,field_description:base.field_ir_cron_create_uid
 #: model:ir.model.fields,field_description:base.field_ir_exports_create_uid
@@ -7233,7 +7249,6 @@ msgstr "Креирај прегледи"
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_create_uid
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_custom_create_uid
 #: model:ir.model.fields,field_description:base.field_ir_values_create_uid
-#: model:ir.model.fields,field_description:base.field_osv_memory_autovacuum_create_uid
 #: model:ir.model.fields,field_description:base.field_res_bank_create_uid
 #: model:ir.model.fields,field_description:base.field_res_company_create_uid
 #: model:ir.model.fields,field_description:base.field_res_config_create_uid
@@ -7253,6 +7268,7 @@ msgstr "Креирај прегледи"
 #: model:ir.model.fields,field_description:base.field_res_partner_title_create_uid
 #: model:ir.model.fields,field_description:base.field_res_request_link_create_uid
 #: model:ir.model.fields,field_description:base.field_res_users_create_uid
+#: model:ir.model.fields,field_description:base.field_res_users_log_create_uid
 #: model:ir.model.fields,field_description:base.field_wizard_ir_model_menu_create_create_uid
 #: model:ir.model.fields,field_description:base.field_wkf_activity_create_uid
 #: model:ir.model.fields,field_description:base.field_wkf_create_uid
@@ -7279,6 +7295,7 @@ msgstr "Креирано од"
 #: model:ir.model.fields,field_description:base.field_ir_actions_create_date
 #: model:ir.model.fields,field_description:base.field_ir_actions_create_date_305
 #: model:ir.model.fields,field_description:base.field_ir_actions_todo_create_date
+#: model:ir.model.fields,field_description:base.field_ir_autovacuum_create_date
 #: model:ir.model.fields,field_description:base.field_ir_config_parameter_create_date
 #: model:ir.model.fields,field_description:base.field_ir_cron_create_date
 #: model:ir.model.fields,field_description:base.field_ir_exports_create_date
@@ -7302,7 +7319,6 @@ msgstr "Креирано од"
 #: model:ir.model.fields,field_description:base.field_ir_ui_menu_create_date
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_custom_create_date
 #: model:ir.model.fields,field_description:base.field_ir_values_create_date
-#: model:ir.model.fields,field_description:base.field_osv_memory_autovacuum_create_date
 #: model:ir.model.fields,field_description:base.field_res_bank_create_date
 #: model:ir.model.fields,field_description:base.field_res_company_create_date
 #: model:ir.model.fields,field_description:base.field_res_config_create_date
@@ -7320,6 +7336,7 @@ msgstr "Креирано од"
 #: model:ir.model.fields,field_description:base.field_res_partner_category_create_date
 #: model:ir.model.fields,field_description:base.field_res_partner_title_create_date
 #: model:ir.model.fields,field_description:base.field_res_request_link_create_date
+#: model:ir.model.fields,field_description:base.field_res_users_log_create_date
 #: model:ir.model.fields,field_description:base.field_wizard_ir_model_menu_create_create_date
 #: model:ir.model.fields,field_description:base.field_wkf_activity_create_date
 #: model:ir.model.fields,field_description:base.field_wkf_create_date
@@ -7351,7 +7368,7 @@ msgstr "Кредитен лимит"
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_mercury
 msgid "Credit card support for Point Of Sale"
-msgstr ""
+msgstr "Поддршка на кредитна картичка за POS "
 
 #. module: base
 #: model:res.country,name:base.hr
@@ -7418,7 +7435,7 @@ msgstr "Валутен курс"
 #: model:ir.ui.view,arch_db:base.view_currency_rate_search
 #: model:ir.ui.view,arch_db:base.view_currency_rate_tree
 msgid "Currency Rates"
-msgstr ""
+msgstr "Валути"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_currency_symbol
@@ -7428,7 +7445,7 @@ msgstr "Знак на валута што ќе биде користен при 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_users_form
 msgid "Current Company"
-msgstr ""
+msgstr "Тековна компанија"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_currency_rate
@@ -7490,7 +7507,7 @@ msgstr "Прилагодените полиња мора да имаат име 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_rating
 msgid "Customer Rating"
-msgstr ""
+msgstr "Оцена на клиент"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_customer
@@ -7542,6 +7559,11 @@ msgid "Czech Republic"
 msgstr "Чешка република"
 
 #. module: base
+#: model:ir.module.module,shortdesc:base.module_delivery_dhl
+msgid "DHL Shipping"
+msgstr ""
+
+#. module: base
 #: selection:base.language.install,lang:0
 msgid "Danish / Dansk"
 msgstr "Дански / Dansk"
@@ -7591,7 +7613,7 @@ msgid "Database Structure"
 msgstr "Структура на датабазата"
 
 #. module: base
-#: code:addons/models.py:3406
+#: code:addons/models.py:3407
 #, python-format
 msgid ""
 "Database fetch misses ids ({}) and has extra ids ({}), may be caused by a "
@@ -7759,7 +7781,7 @@ msgid "Delete Access Right"
 msgstr "Избриши го правото на пристап"
 
 #. module: base
-#: code:addons/base/ir/ir_actions.py:175 code:addons/base/ir/ir_actions.py:891
+#: code:addons/base/ir/ir_actions.py:175 code:addons/base/ir/ir_actions.py:896
 #, python-format
 msgid "Deletion of the action record failed."
 msgstr "Бришење на неуспешно зачувување на акција."
@@ -7822,7 +7844,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_mass_mailing
 msgid "Design, send and track emails"
-msgstr ""
+msgstr "Креирај, праќај и следи ги е-пораките"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_wkf_transition_act_to
@@ -7838,19 +7860,19 @@ msgstr "Дестинацииски објект"
 #: model:ir.model.fields,field_description:base.field_ir_act_client_res_model
 #: model:ir.model.fields,field_description:base.field_ir_act_window_res_model
 msgid "Destination Model"
-msgstr ""
+msgstr "Одредишен модел"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_rule_form
 msgid "Detailed algorithm:"
-msgstr ""
+msgstr "Детален алгоритам:"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_currency_position
 msgid ""
 "Determines where the currency symbol should be placed after or before the "
 "amount."
-msgstr ""
+msgstr "Одредува каде паричниот симбол ќе биде сместен, после или пред сумата."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_de
@@ -7880,22 +7902,22 @@ msgstr ""
 #. module: base
 #: selection:ir.ui.view,type:0
 msgid "Diagram"
-msgstr ""
+msgstr "Дијаграм"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sign
 msgid "Digital Signatures"
-msgstr ""
+msgstr "Дигитални потписи"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_lang_direction
 msgid "Direction"
-msgstr ""
+msgstr "Насока"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodulereference
 msgid "Directory"
-msgstr ""
+msgstr "Директориум"
 
 #. module: base
 #: code:addons/base/res/res_config.py:467
@@ -7903,17 +7925,23 @@ msgstr ""
 msgid ""
 "Disabling this option will also uninstall the following modules \n"
 "%s"
+msgstr "Деактивирање на оваа опција ќе Ви ги избрише следните модули\n%s"
+
+#. module: base
+#: model:ir.module.category,name:base.module_category_discuss
+#: model:ir.module.module,shortdesc:base.module_mail
+msgid "Discuss"
 msgstr ""
 
 #. module: base
 #: model:ir.module.module,summary:base.module_mail
 msgid "Discussions, Mailing Lists, News"
-msgstr ""
+msgstr "Дискусии, листи за пошта, вести"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_currency_form
 msgid "Display"
-msgstr ""
+msgstr "Прикажи"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field__unknown_display_name
@@ -7936,6 +7964,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_ir_actions_display_name_299
 #: model:ir.model.fields,field_description:base.field_ir_actions_todo_display_name
 #: model:ir.model.fields,field_description:base.field_ir_attachment_display_name
+#: model:ir.model.fields,field_description:base.field_ir_autovacuum_display_name
 #: model:ir.model.fields,field_description:base.field_ir_config_parameter_display_name
 #: model:ir.model.fields,field_description:base.field_ir_cron_display_name
 #: model:ir.model.fields,field_description:base.field_ir_exports_display_name
@@ -7983,7 +8012,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_custom_display_name
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_display_name
 #: model:ir.model.fields,field_description:base.field_ir_values_display_name
-#: model:ir.model.fields,field_description:base.field_osv_memory_autovacuum_display_name
 #: model:ir.model.fields,field_description:base.field_report_base_report_irmodulereference_display_name
 #: model:ir.model.fields,field_description:base.field_res_bank_display_name
 #: model:ir.model.fields,field_description:base.field_res_company_display_name
@@ -8003,6 +8031,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_res_partner_title_display_name
 #: model:ir.model.fields,field_description:base.field_res_request_link_display_name
 #: model:ir.model.fields,field_description:base.field_res_users_display_name
+#: model:ir.model.fields,field_description:base.field_res_users_log_display_name
 #: model:ir.model.fields,field_description:base.field_wizard_ir_model_menu_create_display_name
 #: model:ir.model.fields,field_description:base.field_wkf_activity_display_name
 #: model:ir.model.fields,field_description:base.field_wkf_display_name
@@ -8011,24 +8040,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_wkf_triggers_display_name
 #: model:ir.model.fields,field_description:base.field_wkf_workitem_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Прикажи име"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.act_report_xml_view
 msgid "Display an option on related documents to print this report"
-msgstr ""
+msgstr "Прикажи опција на соодветните документи да го испечатат овој извештај"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_server_action_form
 msgid "Display an option on related documents to run this sever action"
-msgstr ""
+msgstr "Прикажи опција на соодветните документи да ја уклучат оваа серверска акција"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_country_group
 msgid ""
 "Display and manage the list of all countries group. You can create or delete"
 " country group to make sure the ones you are working on will be maintained."
-msgstr ""
+msgstr "Прикажи и менаџирај ги листите на групите од сите држави. Можете да креирате или избришете група на држава за да бидете сигурни во тоа на тие што работите Вие дека ќе Ви бидат одржувани."
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_country
@@ -8036,12 +8065,12 @@ msgid ""
 "Display and manage the list of all countries that can be assigned to your "
 "partner records. You can create or delete countries to make sure the ones "
 "you are working on will be maintained."
-msgstr ""
+msgstr "Прикажи и менаџирај со листите на сите држави што можат да бидат одредени на вашите записи на партнери. Можете да креирате или бришете држави за да се осигурате на тие со кои што работите дека ќе ви бидат одржувани."
 
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_13
 msgid "Distributor"
-msgstr ""
+msgstr "Дистрибутер"
 
 #. module: base
 #: model:res.country,name:base.dj
@@ -8051,23 +8080,23 @@ msgstr ""
 #. module: base
 #: model:res.partner.title,name:base.res_partner_title_doctor
 msgid "Doctor"
-msgstr ""
+msgstr "Доктор"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:824 code:addons/base/ir/ir_model.py:827
 #, python-format
 msgid "Document model"
-msgstr ""
+msgstr "Модел на документ"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_forum_doc
 msgid "Documentation"
-msgstr ""
+msgstr "Документација"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_documentation_examples
 msgid "Documentation examples test"
-msgstr ""
+msgstr "Тест на документациски примери"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_filters_domain
@@ -8075,12 +8104,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_ir_rule_domain
 #: model:ir.model.fields,field_description:base.field_ir_rule_domain_force
 msgid "Domain"
-msgstr ""
+msgstr "Домен"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_act_window_domain
 msgid "Domain Value"
-msgstr ""
+msgstr "Вредност на домен"
 
 #. module: base
 #: model:res.country,name:base.dm
@@ -8101,12 +8130,12 @@ msgstr ""
 #. module: base
 #: selection:ir.actions.todo,state:0
 msgid "Done"
-msgstr ""
+msgstr "Завршено"
 
 #. module: base
 #: model:res.partner.title,shortcut:base.res_partner_title_doctor
 msgid "Dr."
-msgstr ""
+msgstr "Др."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_dropshipping
@@ -8117,19 +8146,19 @@ msgstr "Достава"
 #. module: base
 #: selection:workflow.activity,kind:0
 msgid "Dummy"
-msgstr ""
+msgstr "Макета"
 
 #. module: base
 #: code:addons/base/workflow/workflow.py:24
 #, python-format
 msgid "Duplicating workflows is not possible, please create a new workflow"
-msgstr ""
+msgstr "Дуплицирањето на работните текови не е возможно, Ве молиме креирајте нов работен тек"
 
 #. module: base
 #: code:addons/base/ir/ir_qweb.py:930
 #, python-format
 msgid "Durations can't be negative"
-msgstr ""
+msgstr "Времетраењата не можат да бидат негативни"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -8144,7 +8173,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_server_action_form
 msgid "Dynamic expression builder"
-msgstr ""
+msgstr "Динамичен надоградувач на expression"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hw_escpos
@@ -8202,7 +8231,7 @@ msgid "El Salvador"
 msgstr ""
 
 #. module: base
-#: code:addons/base/ir/ir_ui_view.py:592
+#: code:addons/base/ir/ir_ui_view.py:585
 #, python-format
 msgid "Element '%s' cannot be located in parent view"
 msgstr "Елементот '%s' не може да биде лоциран во parent приказот"
@@ -8271,7 +8300,7 @@ msgstr ""
 #: code:addons/base/res/res_config.py:479
 #, python-format
 msgid ""
-"Enabling this feature you will install following paying application(s) \n"
+"Enabling this feature will install the following paying application(s) : \n"
 "%s"
 msgstr ""
 
@@ -8333,7 +8362,7 @@ msgid "Error ! You can not create recursive tags."
 msgstr ""
 
 #. module: base
-#: code:addons/base/ir/ir_ui_view.py:456
+#: code:addons/base/ir/ir_ui_view.py:449
 #, python-format
 msgid ""
 "Error context:\n"
@@ -8665,7 +8694,7 @@ msgid "Field Type"
 msgstr ""
 
 #. module: base
-#: code:addons/base/ir/ir_ui_view.py:916
+#: code:addons/base/ir/ir_ui_view.py:909
 #, python-format
 msgid "Field `%(field_name)s` does not exist"
 msgstr ""
@@ -8907,7 +8936,7 @@ msgid "For selection fields, the Selection Options must be given!"
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:3539
+#: code:addons/models.py:3540
 #, python-format
 msgid ""
 "For this kind of document, you may only access records you created yourself.\n"
@@ -9662,6 +9691,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_ir_actions_id_307
 #: model:ir.model.fields,field_description:base.field_ir_actions_todo_id
 #: model:ir.model.fields,field_description:base.field_ir_attachment_id
+#: model:ir.model.fields,field_description:base.field_ir_autovacuum_id
 #: model:ir.model.fields,field_description:base.field_ir_config_parameter_id
 #: model:ir.model.fields,field_description:base.field_ir_cron_id
 #: model:ir.model.fields,field_description:base.field_ir_exports_id
@@ -9709,7 +9739,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_custom_id
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_id
 #: model:ir.model.fields,field_description:base.field_ir_values_id
-#: model:ir.model.fields,field_description:base.field_osv_memory_autovacuum_id
 #: model:ir.model.fields,field_description:base.field_report_base_report_irmodulereference_id
 #: model:ir.model.fields,field_description:base.field_res_bank_id
 #: model:ir.model.fields,field_description:base.field_res_company_id
@@ -9730,6 +9759,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_res_partner_title_id
 #: model:ir.model.fields,field_description:base.field_res_request_link_id
 #: model:ir.model.fields,field_description:base.field_res_users_id
+#: model:ir.model.fields,field_description:base.field_res_users_log_id
 #: model:ir.model.fields,field_description:base.field_wizard_ir_model_menu_create_id
 #: model:ir.model.fields,field_description:base.field_wkf_activity_id
 #: model:ir.model.fields,field_description:base.field_wkf_id
@@ -10019,17 +10049,6 @@ msgid "Incorrect Write Record Expression"
 msgstr ""
 
 #. module: base
-#: model:ir.model.fields,field_description:base.field_ir_sequence_number_increment
-msgid "Increment Number"
-msgstr ""
-
-#. module: base
-#: code:addons/base/ir/ir_sequence.py:20 code:addons/base/ir/ir_sequence.py:43
-#, python-format
-msgid "Increment number must not be zero."
-msgstr ""
-
-#. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_fields_index
 msgid "Indexed"
 msgstr ""
@@ -10241,6 +10260,11 @@ msgid "Internal Reference"
 msgstr ""
 
 #. module: base
+#: model:ir.model.fields,field_description:base.field_ir_translation_src
+msgid "Internal Source"
+msgstr ""
+
+#. module: base
 #: model:ir.ui.view,arch_db:base.view_users_search
 msgid "Internal Users"
 msgstr ""
@@ -10271,7 +10295,7 @@ msgid "Introspection report on objects"
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:4520
+#: code:addons/models.py:4516
 #, python-format
 msgid ""
 "Invalid \"order\" specified. A valid \"order\" specification is a comma-"
@@ -10285,7 +10309,7 @@ msgid "Invalid arguments"
 msgstr ""
 
 #. module: base
-#: code:addons/base/res/res_users.py:898
+#: code:addons/base/res/res_users.py:879
 #, python-format
 msgid "Invalid context default_groups_ref value (model.name_id) : \"%s\""
 msgstr ""
@@ -10333,7 +10357,7 @@ msgid "Invalid model name in the action definition."
 msgstr ""
 
 #. module: base
-#: code:addons/base/ir/ir_ui_view.py:584
+#: code:addons/base/ir/ir_ui_view.py:577
 #, python-format
 msgid "Invalid position attribute: '%s'"
 msgstr ""
@@ -10390,12 +10414,12 @@ msgstr ""
 #: model:ir.module.module,shortdesc:base.module_account
 #: model:ir.ui.menu,name:base.menu_invoiced
 msgid "Invoicing"
-msgstr ""
+msgstr "Фактурирање"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_account_voucher
 msgid "Invoicing & Payments"
-msgstr ""
+msgstr "Фактурирање и плаќања"
 
 #. module: base
 #: model:res.country,name:base.ir
@@ -10707,6 +10731,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_ir_actions___last_update_301
 #: model:ir.model.fields,field_description:base.field_ir_actions_todo___last_update
 #: model:ir.model.fields,field_description:base.field_ir_attachment___last_update
+#: model:ir.model.fields,field_description:base.field_ir_autovacuum___last_update
 #: model:ir.model.fields,field_description:base.field_ir_config_parameter___last_update
 #: model:ir.model.fields,field_description:base.field_ir_cron___last_update
 #: model:ir.model.fields,field_description:base.field_ir_exports___last_update
@@ -10754,7 +10779,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_ir_ui_view___last_update
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_custom___last_update
 #: model:ir.model.fields,field_description:base.field_ir_values___last_update
-#: model:ir.model.fields,field_description:base.field_osv_memory_autovacuum___last_update
 #: model:ir.model.fields,field_description:base.field_report_base_report_irmodulereference___last_update
 #: model:ir.model.fields,field_description:base.field_res_bank___last_update
 #: model:ir.model.fields,field_description:base.field_res_company___last_update
@@ -10775,6 +10799,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_res_partner_title___last_update
 #: model:ir.model.fields,field_description:base.field_res_request_link___last_update
 #: model:ir.model.fields,field_description:base.field_res_users___last_update
+#: model:ir.model.fields,field_description:base.field_res_users_log___last_update
 #: model:ir.model.fields,field_description:base.field_wizard_ir_model_menu_create___last_update
 #: model:ir.model.fields,field_description:base.field_wkf___last_update
 #: model:ir.model.fields,field_description:base.field_wkf_activity___last_update
@@ -10805,6 +10830,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_ir_actions_write_uid
 #: model:ir.model.fields,field_description:base.field_ir_actions_write_uid_302
 #: model:ir.model.fields,field_description:base.field_ir_attachment_write_uid
+#: model:ir.model.fields,field_description:base.field_ir_autovacuum_write_uid
 #: model:ir.model.fields,field_description:base.field_ir_config_parameter_write_uid
 #: model:ir.model.fields,field_description:base.field_ir_cron_write_uid
 #: model:ir.model.fields,field_description:base.field_ir_exports_line_write_uid
@@ -10830,7 +10856,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_custom_write_uid
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_write_uid
 #: model:ir.model.fields,field_description:base.field_ir_values_write_uid
-#: model:ir.model.fields,field_description:base.field_osv_memory_autovacuum_write_uid
 #: model:ir.model.fields,field_description:base.field_res_bank_write_uid
 #: model:ir.model.fields,field_description:base.field_res_company_write_uid
 #: model:ir.model.fields,field_description:base.field_res_config_installer_write_uid
@@ -10849,6 +10874,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_res_partner_title_write_uid
 #: model:ir.model.fields,field_description:base.field_res_partner_write_uid
 #: model:ir.model.fields,field_description:base.field_res_request_link_write_uid
+#: model:ir.model.fields,field_description:base.field_res_users_log_write_uid
 #: model:ir.model.fields,field_description:base.field_res_users_write_uid
 #: model:ir.model.fields,field_description:base.field_wizard_ir_model_menu_create_write_uid
 #: model:ir.model.fields,field_description:base.field_wkf_activity_write_uid
@@ -10877,6 +10903,7 @@ msgstr "Последно ажурирање од"
 #: model:ir.model.fields,field_description:base.field_ir_actions_write_date
 #: model:ir.model.fields,field_description:base.field_ir_actions_write_date_303
 #: model:ir.model.fields,field_description:base.field_ir_attachment_write_date
+#: model:ir.model.fields,field_description:base.field_ir_autovacuum_write_date
 #: model:ir.model.fields,field_description:base.field_ir_config_parameter_write_date
 #: model:ir.model.fields,field_description:base.field_ir_cron_write_date
 #: model:ir.model.fields,field_description:base.field_ir_exports_line_write_date
@@ -10901,7 +10928,6 @@ msgstr "Последно ажурирање од"
 #: model:ir.model.fields,field_description:base.field_ir_ui_menu_write_date
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_custom_write_date
 #: model:ir.model.fields,field_description:base.field_ir_values_write_date
-#: model:ir.model.fields,field_description:base.field_osv_memory_autovacuum_write_date
 #: model:ir.model.fields,field_description:base.field_res_bank_write_date
 #: model:ir.model.fields,field_description:base.field_res_company_write_date
 #: model:ir.model.fields,field_description:base.field_res_config_installer_write_date
@@ -10920,6 +10946,7 @@ msgstr "Последно ажурирање од"
 #: model:ir.model.fields,field_description:base.field_res_partner_title_write_date
 #: model:ir.model.fields,field_description:base.field_res_partner_write_date
 #: model:ir.model.fields,field_description:base.field_res_request_link_write_date
+#: model:ir.model.fields,field_description:base.field_res_users_log_write_date
 #: model:ir.model.fields,field_description:base.field_res_users_write_date
 #: model:ir.model.fields,field_description:base.field_wizard_ir_model_menu_create_write_date
 #: model:ir.model.fields,field_description:base.field_wkf_activity_write_date
@@ -11391,7 +11418,7 @@ msgid "Manufacturing Orders, Bill of Materials, Routings"
 msgstr "Налози за изработка, Нормативи, Насочување"
 
 #. module: base
-#: code:addons/models.py:2787
+#: code:addons/models.py:2788
 #, python-format
 msgid "Many2Many destination model does not exist: `%s`"
 msgstr ""
@@ -11627,19 +11654,19 @@ msgid "Missing SMTP Server"
 msgstr "Недостасува SMTP сервер"
 
 #. module: base
-#: code:addons/models.py:3509
+#: code:addons/models.py:3510
 #, python-format
 msgid "Missing document(s)"
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:6129
+#: code:addons/models.py:6148
 #, python-format
 msgid "Missing required value for the field '%s' (%s)"
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:6126
+#: code:addons/models.py:6145
 #, python-format
 msgid "Missing required value for the field '%s'."
 msgstr ""
@@ -11748,7 +11775,7 @@ msgid ""
 msgstr "Име на моделот во којшто се наоѓа методот што треба да се повика, нпр. 'res.partner'"
 
 #. module: base
-#: code:addons/base/ir/ir_ui_view.py:692 code:addons/base/ir/ir_ui_view.py:870
+#: code:addons/base/ir/ir_ui_view.py:685 code:addons/base/ir/ir_ui_view.py:863
 #, python-format
 msgid "Model not found: %(model)s"
 msgstr "Модулот не е пронајден: %(model)s"
@@ -12230,11 +12257,6 @@ msgid "Notes"
 msgstr "Белешки"
 
 #. module: base
-#: model:ir.model.fields,field_description:base.field_ir_sequence_padding
-msgid "Number Padding"
-msgstr "Поместување на број"
-
-#. module: base
 #: model:ir.model.fields,field_description:base.field_ir_module_category_module_nr
 msgid "Number of Apps"
 msgstr "Број на апликации"
@@ -12370,11 +12392,6 @@ msgid "Ogone Payment Acquirer"
 msgstr ""
 
 #. module: base
-#: model:ir.model.fields,field_description:base.field_ir_translation_src
-msgid "Old source"
-msgstr "Стар извор"
-
-#. module: base
 #: model:res.country,name:base.om
 msgid "Oman"
 msgstr "Оман"
@@ -12401,7 +12418,7 @@ msgid "On delete property for many2one fields"
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:3509
+#: code:addons/models.py:3510
 #, python-format
 msgid ""
 "One of the documents you are trying to access has been deleted, please try "
@@ -12409,7 +12426,7 @@ msgid ""
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:3918
+#: code:addons/models.py:3915
 #, python-format
 msgid ""
 "One of the records you are trying to modify has already been deleted "
@@ -12556,7 +12573,7 @@ msgid "Original View"
 msgstr "Оригинален приказ"
 
 #. module: base
-#: code:addons/base/res/res_users.py:790 code:addons/base/res/res_users.py:952
+#: code:addons/base/res/res_users.py:771 code:addons/base/res/res_users.py:933
 #, python-format
 msgid "Other"
 msgstr "Друго"
@@ -12817,7 +12834,7 @@ msgid "Partners Geo-Localization"
 msgstr "Географска локализација на партнери"
 
 #. module: base
-#: code:addons/base/res/res_partner.py:769
+#: code:addons/base/res/res_partner.py:772
 #, python-format
 msgid "Partners: "
 msgstr "Партнери:"
@@ -13019,13 +13036,13 @@ msgid ""
 msgstr ""
 
 #. module: base
-#: code:addons/base/ir/ir_actions.py:896
+#: code:addons/base/ir/ir_actions.py:901
 #, python-format
 msgid "Please specify an action to launch!"
 msgstr ""
 
 #. module: base
-#: code:addons/base/res/res_users.py:148
+#: code:addons/base/res/res_users.py:153
 #, python-format
 msgid ""
 "Please use the change password wizard (in User Preferences or User menu) to "
@@ -13270,8 +13287,8 @@ msgstr "Производи и ценовници"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_product_expiry
-msgid "Products Expiry Date"
-msgstr "Истек на рок на производи"
+msgid "Products Expiration Date"
+msgstr ""
 
 #. module: base
 #: model:res.partner.title,shortcut:base.res_partner_title_prof
@@ -13317,7 +13334,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_workflow_activity_form
 msgid "Properties"
-msgstr ""
+msgstr "Својства"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:501
@@ -13384,7 +13401,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_partner_form
 msgid "Purchase"
-msgstr ""
+msgstr "Набавка"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_purchase
@@ -13405,7 +13422,7 @@ msgstr ""
 #: model:ir.module.category,name:base.module_category_purchase_management
 #: model:ir.ui.menu,name:base.menu_purchase_root
 msgid "Purchases"
-msgstr ""
+msgstr "Набавки"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_wkf_activity_action
@@ -13536,7 +13553,7 @@ msgid "Record"
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:4831
+#: code:addons/models.py:4827
 #, python-format
 msgid "Record #%d of %s not found, cannot copy!"
 msgstr ""
@@ -13571,7 +13588,7 @@ msgid ""
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:4956
+#: code:addons/base/ir/ir_actions.py:407 code:addons/models.py:4952
 #, python-format
 msgid "Record does not exist or has been deleted."
 msgstr ""
@@ -13604,7 +13621,7 @@ msgid "Recursion found in child server actions"
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:4030
+#: code:addons/models.py:4026
 #, python-format
 msgid "Recursivity Detected."
 msgstr ""
@@ -13774,7 +13791,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.category,name:base.module_category_reporting
 msgid "Reporting"
-msgstr ""
+msgstr "Известување"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.ir_action_report_xml
@@ -13784,7 +13801,7 @@ msgstr ""
 #: model:ir.ui.menu,name:base.menu_sale_report
 #: model:ir.ui.menu,name:base.purchase_report
 msgid "Reports"
-msgstr ""
+msgstr "Извештаи"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_request_link-view
@@ -13948,7 +13965,7 @@ msgid "Rules can not be applied on the Record Rules model."
 msgstr ""
 
 #. module: base
-#: code:addons/base/ir/ir_actions.py:873
+#: code:addons/base/ir/ir_actions.py:878
 #, python-format
 msgid "Run %s"
 msgstr ""
@@ -14063,7 +14080,7 @@ msgstr ""
 #: model:ir.module.category,name:base.module_category_sale
 #: model:ir.ui.view,arch_db:base.view_partner_form
 msgid "Sale"
-msgstr ""
+msgstr "Продажба"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_voucher
@@ -14098,7 +14115,7 @@ msgstr ""
 #: model:ir.ui.menu,name:base.menu_sales
 #: model:ir.ui.menu,name:base.menu_sales_config
 msgid "Sales"
-msgstr ""
+msgstr "Продажби"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_partner_form
@@ -14118,7 +14135,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_sales_team
 msgid "Sales Team"
-msgstr ""
+msgstr "Продажен тим"
 
 #. module: base
 #: selection:ir.ui.view,type:0
@@ -14151,7 +14168,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_res_users_user_id
 #: model:ir.ui.view,arch_db:base.view_res_partner_filter
 msgid "Salesperson"
-msgstr ""
+msgstr "Продавач"
 
 #. module: base
 #: model:res.country,name:base.ws
@@ -14349,8 +14366,28 @@ msgid ""
 msgstr ""
 
 #. module: base
+#: model:ir.module.module,description:base.module_delivery_dhl
+msgid "Send your shippings through DHL and track them online"
+msgstr ""
+
+#. module: base
 #: model:ir.module.module,description:base.module_delivery_fedex
 msgid "Send your shippings through Fedex and track them online"
+msgstr ""
+
+#. module: base
+#: model:ir.module.module,description:base.module_delivery_temando
+msgid "Send your shippings through Temando and track them online"
+msgstr ""
+
+#. module: base
+#: model:ir.module.module,description:base.module_delivery_ups
+msgid "Send your shippings through UPS and track them online"
+msgstr ""
+
+#. module: base
+#: model:ir.module.module,description:base.module_delivery_usps
+msgid "Send your shippings through USPS and track them online"
 msgstr ""
 
 #. module: base
@@ -14378,11 +14415,16 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base.view_sequence_search
 #: model:ir.ui.view,arch_db:base.view_view_tree
 msgid "Sequence"
-msgstr ""
+msgstr "Секвенца"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_sequence_code
 msgid "Sequence Code"
+msgstr ""
+
+#. module: base
+#: model:ir.model.fields,field_description:base.field_ir_sequence_padding
+msgid "Sequence Size"
 msgstr ""
 
 #. module: base
@@ -14480,7 +14522,7 @@ msgid ""
 msgstr ""
 
 #. module: base
-#: code:addons/base/res/res_users.py:538
+#: code:addons/base/res/res_users.py:519
 #, python-format
 msgid "Setting empty passwords is not allowed for security reasons!"
 msgstr ""
@@ -14492,7 +14534,7 @@ msgstr ""
 #: model:ir.ui.menu,name:base.menu_sale_general_settings
 #: model:res.groups,name:base.group_system
 msgid "Settings"
-msgstr ""
+msgstr "Подесувања"
 
 #. module: base
 #: model:res.country,name:base.sc
@@ -14666,12 +14708,6 @@ msgid ""
 msgstr ""
 
 #. module: base
-#: model:ir.module.category,name:base.module_category_social_network
-#: model:ir.module.module,shortdesc:base.module_mail
-msgid "Social Network"
-msgstr ""
-
-#. module: base
 #: model:res.country,name:base.sb
 msgid "Solomon Islands"
 msgstr ""
@@ -14718,14 +14754,9 @@ msgid "Sort"
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:4679
+#: code:addons/models.py:4675
 #, python-format
 msgid "Sorting field %s not found on model %s"
-msgstr ""
-
-#. module: base
-#: model:ir.model.fields,field_description:base.field_ir_translation_source
-msgid "Source"
 msgstr ""
 
 #. module: base
@@ -14754,6 +14785,11 @@ msgid ""
 "Source activity. When this activity is over, the condition is tested to "
 "determine if we can start the ACT_TO activity."
 msgstr "Изворна активност. Кога оваа активност ќе биде завршена, состојбата се тестира за да се одреди дали ќе можеме да ја започнеме ACT_TO активноста."
+
+#. module: base
+#: model:ir.model.fields,field_description:base.field_ir_translation_source
+msgid "Source term"
+msgstr ""
 
 #. module: base
 #: model:res.country,name:base.za
@@ -14931,7 +14967,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base.view_res_bank_form
 #, python-format
 msgid "State"
-msgstr ""
+msgstr "Земја"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_country_state_code
@@ -14946,7 +14982,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_country_state_ids
 msgid "States"
-msgstr ""
+msgstr "Состојби"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_base_language_install_state
@@ -14959,6 +14995,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_wkf_workitem_state
 #: model:ir.ui.view,arch_db:base.view_workflow_workitem_search
 msgid "Status"
+msgstr "Статус"
+
+#. module: base
+#: model:ir.model.fields,field_description:base.field_ir_sequence_number_increment
+msgid "Step"
+msgstr ""
+
+#. module: base
+#: code:addons/base/ir/ir_sequence.py:20 code:addons/base/ir/ir_sequence.py:43
+#, python-format
+msgid "Step must not be zero."
 msgstr ""
 
 #. module: base
@@ -15355,6 +15402,11 @@ msgid "Telugu / తెలుగు"
 msgstr ""
 
 #. module: base
+#: model:ir.module.module,shortdesc:base.module_delivery_temando
+msgid "Temando Shipping"
+msgstr ""
+
+#. module: base
 #: model:ir.model.fields,field_description:base.field_ir_act_report_xml_report_name
 msgid "Template Name"
 msgstr ""
@@ -15720,8 +15772,8 @@ msgid "The record id this is attached to"
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:3157 code:addons/models.py:3415
-#: code:addons/models.py:3499
+#: code:addons/models.py:3158 code:addons/models.py:3416
+#: code:addons/models.py:3500
 #, python-format
 msgid ""
 "The requested operation cannot be completed due to security restrictions. Please contact your system administrator.\n"
@@ -15786,7 +15838,7 @@ msgid "The user will be able to manage equipments."
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:6141
+#: code:addons/models.py:6160
 #, python-format
 msgid "The value for the field '%s' already exists."
 msgstr ""
@@ -15811,7 +15863,7 @@ msgid "There is no reference available for %s"
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:2772
+#: code:addons/models.py:2773
 #, python-format
 msgid "There is no reference field '%s' found for '%s'"
 msgstr ""
@@ -16106,7 +16158,7 @@ msgid "Translation comments"
 msgstr ""
 
 #. module: base
-#: code:addons/base/ir/ir_translation.py:572
+#: code:addons/base/ir/ir_translation.py:582
 #, python-format
 msgid ""
 "Translation features are unavailable until you install an extra translation."
@@ -16209,7 +16261,7 @@ msgstr "Два секвенцни објектни имплементации с
 #: model:ir.ui.view,arch_db:base.view_attachment_search
 #: model:ir.ui.view,arch_db:base.view_view_search
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_act_server_state
@@ -16248,6 +16300,11 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_uk_reports
 msgid "UK - Accounting Reports"
+msgstr ""
+
+#. module: base
+#: model:ir.module.module,shortdesc:base.module_delivery_ups
+msgid "UPS Shipping"
 msgstr ""
 
 #. module: base
@@ -16298,7 +16355,7 @@ msgid "Ukrainian / українська"
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:3626
+#: code:addons/models.py:3627
 #, python-format
 msgid ""
 "Unable to delete this document because it is used as a default property"
@@ -16368,6 +16425,11 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_us
 msgid "United States - Accounting"
+msgstr ""
+
+#. module: base
+#: model:ir.module.module,shortdesc:base.module_delivery_usps
+msgid "United States Postal Service (USPS) Shipping"
 msgstr ""
 
 #. module: base
@@ -16604,6 +16666,11 @@ msgid "User Login"
 msgstr ""
 
 #. module: base
+#: model:ir.model.fields,field_description:base.field_res_users_log_ids
+msgid "User log entries"
+msgstr ""
+
+#. module: base
 #: model:ir.actions.act_window,name:base.act_values_form_defaults
 #: model:ir.ui.menu,name:base.menu_values_form_defaults
 #: model:ir.ui.view,arch_db:base.values_view_form_defaults
@@ -16677,7 +16744,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_ir_values_value
 #: selection:ir.server.object.lines,type:0
 msgid "Value"
-msgstr ""
+msgstr "Вредност"
 
 #. module: base
 #: code:addons/base/ir/ir_fields.py:278
@@ -16710,14 +16777,14 @@ msgstr ""
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_1
 msgid "Vendor"
-msgstr ""
+msgstr "Добавувачи"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_partner_supplier_form
 #: model:ir.ui.menu,name:base.menu_procurement_management_supplier_name
 #: model:ir.ui.view,arch_db:base.view_res_partner_filter
 msgid "Vendors"
-msgstr ""
+msgstr "Добавувачи"
 
 #. module: base
 #: model:res.country,name:base.ve
@@ -16759,7 +16826,7 @@ msgstr ""
 #: selection:ir.translation,type:0
 #: model:ir.ui.view,arch_db:base.view_view_search
 msgid "View"
-msgstr ""
+msgstr "Приказ"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_arch
@@ -16892,7 +16959,7 @@ msgstr "Менаџмент на магацин: Бранови"
 #. module: base
 #: code:addons/base/ir/ir_mail_server.py:490
 #: code:addons/base/ir/ir_model.py:327 code:addons/base/ir/ir_model.py:381
-#: code:addons/base/res/res_partner.py:367
+#: code:addons/base/res/res_partner.py:368
 #, python-format
 msgid "Warning"
 msgstr ""
@@ -16907,6 +16974,12 @@ msgstr ""
 #: code:addons/base/res/res_config.py:478
 #, python-format
 msgid "Warning!"
+msgstr "Внимание!"
+
+#. module: base
+#: code:addons/models.py:5855 code:addons/models.py:5905
+#, python-format
+msgid "Warnings"
 msgstr ""
 
 #. module: base
@@ -17355,7 +17428,7 @@ msgid ""
 msgstr ""
 
 #. module: base
-#: code:addons/base/res/res_partner.py:526
+#: code:addons/base/res/res_partner.py:527
 #, python-format
 msgid ""
 "You can not change the company as the partner/user has multiple user linked "
@@ -17373,7 +17446,7 @@ msgid "You can not register two fonts with the same name"
 msgstr ""
 
 #. module: base
-#: code:addons/base/res/res_users.py:379
+#: code:addons/base/res/res_users.py:381
 #, python-format
 msgid ""
 "You can not remove the admin user as it is used internally for resources "
@@ -17416,21 +17489,15 @@ msgid "You cannot delete the language which is User's Preferred Language!"
 msgstr ""
 
 #. module: base
-#: code:addons/base/res/res_users.py:341
+#: code:addons/base/res/res_users.py:343
 #, python-format
 msgid "You cannot unactivate the admin user."
 msgstr ""
 
 #. module: base
-#: code:addons/base/res/res_users.py:343
+#: code:addons/base/res/res_users.py:345
 #, python-format
 msgid "You cannot unactivate the user you're currently logged in as."
-msgstr ""
-
-#. module: base
-#: code:addons/models.py:3894
-#, python-format
-msgid "You cannot update the translated value of field '%s'"
 msgstr ""
 
 #. module: base
@@ -17594,7 +17661,7 @@ msgid "cr: database cursor"
 msgstr ""
 
 #. module: base
-#: code:addons/models.py:4334
+#: code:addons/models.py:4330
 #, python-format
 msgid "created."
 msgstr ""
@@ -17763,6 +17830,11 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_ir_attachment
 msgid "ir.attachment"
+msgstr ""
+
+#. module: base
+#: model:ir.model,name:base.model_ir_autovacuum
+msgid "ir.autovacuum"
 msgstr ""
 
 #. module: base
@@ -17967,7 +18039,7 @@ msgid ""
 msgstr ""
 
 #. module: base
-#: code:addons/base/ir/ir_ui_view.py:454
+#: code:addons/base/ir/ir_ui_view.py:447
 #, python-format
 msgid "n/a"
 msgstr ""
@@ -18009,11 +18081,6 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_attachment_form
 msgid "on"
-msgstr ""
-
-#. module: base
-#: model:ir.model,name:base.model_osv_memory_autovacuum
-msgid "osv_memory.autovacuum"
 msgstr ""
 
 #. module: base
@@ -18060,6 +18127,11 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_res_request_link
 msgid "res.request.link"
+msgstr ""
+
+#. module: base
+#: model:ir.model,name:base.model_res_users_log
+msgid "res.users.log"
 msgstr ""
 
 #. module: base
