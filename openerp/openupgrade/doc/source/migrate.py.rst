@@ -12,9 +12,7 @@ OpenUpgrade server.
 Download it from github_.
 
 The script assumes that all python libraries that are required by Odoo are
-installed in the current environment. Note that you need OpenUpgrade's
-additional dependency `openupgradelib
-<https://pypi.python.org/pypi/openupgradelib>`_.
+installed in the current environment.
 
 The script accepts a couple of parameters, the mandatory ones are
 

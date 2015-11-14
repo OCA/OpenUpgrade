@@ -322,6 +322,20 @@ for version in options.migrations.split(','):
             else:
                 raise Exception('Unknown type %s' % addon_config_type)
 
+openupgradelib = os.path.join(options.branch_dir, 'openupgradelib')
+if os.path.exists(openupgradelib):
+    os.system('cd %(location)s; git pull origin master' % {
+        'location': openupgradelib,
+        })
+else:
+    os.system(
+        'git clone --single-branch --depth=1 %(url)s %(target)s' % {
+            'url': 'https://github.com/OCA/openupgradelib',
+            'target': openupgradelib,
+            })
+os.environ['PYTHONPATH'] = ':'.join([
+    openupgradelib, os.environ.get('PYTHONPATH')])
+
 db_name = conn_parms['database']
 if not options.inplace:
     db_name = copy_database(conn_parms)
