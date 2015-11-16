@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# This migration script is part of the Odoo distribution, and is not Flake8
+# compliant.
+# flake8: noqa
 
 def convert_field(cr, model, field, target_model):
     table = model.replace('.', '_')
