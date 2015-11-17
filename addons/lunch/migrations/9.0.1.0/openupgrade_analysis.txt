@@ -1,0 +1,102 @@
+---Fields in module 'lunch'---
+lunch        / lunch.alert              / active_from (float)           : was renamed to start_hour [nothing to to]
+lunch        / lunch.alert              / active_to (float)             : was renamed to end_hour [nothing to to]
+lunch        / lunch.alert              / alert_type (selection)        : NEW required: required, selection_keys: ['days', 'specific', 'week'], req_default: specific
+lunch        / lunch.alert              / alter_type (selection)        : DEL required: required, selection_keys: ['days', 'specific', 'week'], req_default: specific
+lunch        / lunch.order              / state (selection)             : now a function
+lunch        / lunch.order              / state (selection)             : selection_keys is now '['cancelled', 'confirmed', 'new']' ('['cancelled', 'confirmed', 'new', 'partially']')
+lunch        / lunch.order.line         / order_id (many2one)           : now required
+---XML records in module 'lunch'---
+NEW ir.actions.act_window: lunch.action_lunch_order_line_lucky
+NEW ir.actions.act_window: lunch.lunch_alert_action
+NEW ir.actions.act_window: lunch.lunch_cashmove_action_account
+NEW ir.actions.act_window: lunch.lunch_cashmove_action_control_accounts
+NEW ir.actions.act_window: lunch.lunch_cashmove_action_payment
+NEW ir.actions.act_window: lunch.lunch_order_action_form
+NEW ir.actions.act_window: lunch.lunch_order_action_tree
+NEW ir.actions.act_window: lunch.lunch_order_line_action_by_supplier
+NEW ir.actions.act_window: lunch.lunch_order_line_action_control_suppliers
+NEW ir.actions.act_window: lunch.lunch_product_action
+NEW ir.actions.act_window: lunch.lunch_product_category_action
+DEL ir.actions.act_window: lunch.action_lunch_alert
+DEL ir.actions.act_window: lunch.action_lunch_cashmove
+DEL ir.actions.act_window: lunch.action_lunch_cashmove_form
+DEL ir.actions.act_window: lunch.action_lunch_control_accounts
+DEL ir.actions.act_window: lunch.action_lunch_control_suppliers
+DEL ir.actions.act_window: lunch.action_lunch_order_by_supplier_form
+DEL ir.actions.act_window: lunch.action_lunch_order_form
+DEL ir.actions.act_window: lunch.action_lunch_order_tree
+DEL ir.actions.act_window: lunch.action_lunch_product_categories
+DEL ir.actions.act_window: lunch.action_lunch_products
+DEL ir.actions.act_window: lunch.cancel_order_lines
+DEL ir.actions.act_window: lunch.order_order_lines
+DEL ir.actions.act_window: lunch.validate_order_lines
+NEW ir.actions.server: lunch.lunch_order_line_action_cancel
+NEW ir.actions.server: lunch.lunch_order_line_action_confirm
+NEW ir.actions.server: lunch.lunch_order_line_action_order
+DEL ir.model.access: lunch.access_lunch_cancel
+DEL ir.model.access: lunch.access_lunch_validation
+DEL ir.model.access: lunch.access_report_order_line
+NEW ir.ui.menu: lunch.lunch_alert_menu
+NEW ir.ui.menu: lunch.lunch_cashmove_menu_control_accounts
+NEW ir.ui.menu: lunch.lunch_cashmove_menu_form
+NEW ir.ui.menu: lunch.lunch_cashmove_menu_payment
+NEW ir.ui.menu: lunch.lunch_order_line_menu_by_supplier
+NEW ir.ui.menu: lunch.lunch_order_line_menu_control_suppliers
+NEW ir.ui.menu: lunch.lunch_order_menu_form
+NEW ir.ui.menu: lunch.lunch_order_menu_tree
+NEW ir.ui.menu: lunch.lunch_product_category_menu
+NEW ir.ui.menu: lunch.lunch_product_menu
+DEL ir.ui.menu: lunch.menu_lunch_alert
+DEL ir.ui.menu: lunch.menu_lunch_cash
+DEL ir.ui.menu: lunch.menu_lunch_cashmove
+DEL ir.ui.menu: lunch.menu_lunch_cashmove_form
+DEL ir.ui.menu: lunch.menu_lunch_control_accounts
+DEL ir.ui.menu: lunch.menu_lunch_control_suppliers
+DEL ir.ui.menu: lunch.menu_lunch_order_by_supplier_form
+DEL ir.ui.menu: lunch.menu_lunch_order_form
+DEL ir.ui.menu: lunch.menu_lunch_order_tree
+DEL ir.ui.menu: lunch.menu_lunch_product_categories
+DEL ir.ui.menu: lunch.menu_lunch_products
+NEW ir.ui.view: lunch.lunch_alert_view_form
+NEW ir.ui.view: lunch.lunch_alert_view_search
+NEW ir.ui.view: lunch.lunch_alert_view_tree
+NEW ir.ui.view: lunch.lunch_cashmove_view_form
+NEW ir.ui.view: lunch.lunch_cashmove_view_search
+NEW ir.ui.view: lunch.lunch_cashmove_view_search_2
+NEW ir.ui.view: lunch.lunch_cashmove_view_tree
+NEW ir.ui.view: lunch.lunch_cashmove_view_tree_2
+NEW ir.ui.view: lunch.lunch_order_line_view_search
+NEW ir.ui.view: lunch.lunch_order_line_view_tree
+NEW ir.ui.view: lunch.lunch_order_view_form
+NEW ir.ui.view: lunch.lunch_order_view_search
+NEW ir.ui.view: lunch.lunch_order_view_tree
+NEW ir.ui.view: lunch.lunch_product_category_view_form
+NEW ir.ui.view: lunch.lunch_product_view_form
+NEW ir.ui.view: lunch.lunch_product_view_search
+NEW ir.ui.view: lunch.lunch_product_view_tree
+NEW ir.ui.view: lunch.report_lunch_order
+NEW ir.ui.view: lunch.view_lunch_order_line_lucky
+DEL ir.ui.view: lunch.alert_form_view
+DEL ir.ui.view: lunch.alert_search_view
+DEL ir.ui.view: lunch.alert_tree_view
+DEL ir.ui.view: lunch.cancel_order_lines_view
+DEL ir.ui.view: lunch.casmove_form_view
+DEL ir.ui.view: lunch.casmove_tree
+DEL ir.ui.view: lunch.casmove_tree_view
+DEL ir.ui.view: lunch.lunch_order_line_search_view
+DEL ir.ui.view: lunch.order_order_lines_view
+DEL ir.ui.view: lunch.orders_form_view
+DEL ir.ui.view: lunch.orders_order_lines_tree_view
+DEL ir.ui.view: lunch.orders_tree_view
+DEL ir.ui.view: lunch.product_category_form_view
+DEL ir.ui.view: lunch.products_form_view
+DEL ir.ui.view: lunch.products_tree_view
+DEL ir.ui.view: lunch.report_lunchorder
+DEL ir.ui.view: lunch.validate_order_lines_view
+DEL ir.ui.view: lunch.view_lunch_cashmove_filter
+DEL ir.ui.view: lunch.view_lunch_employee_payment_filter
+DEL ir.ui.view: lunch.view_search_my_order
+NEW ir.values: lunch.ir_lunch_order_line_action_cancel
+NEW ir.values: lunch.ir_lunch_order_line_action_confirm
+NEW ir.values: lunch.ir_lunch_order_line_action_order

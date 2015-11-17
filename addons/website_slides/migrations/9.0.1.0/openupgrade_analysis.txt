@@ -1,0 +1,124 @@
+---Fields in module 'website_slides'---
+website_slides / slide.category           / channel_id (many2one)         : NEW relation: slide.channel, required: required
+website_slides / slide.category           / name (char)                   : NEW required: required
+website_slides / slide.category           / sequence (integer)            : NEW 
+website_slides / slide.category           / slide_ids (one2many)          : NEW relation: slide.slide
+website_slides / slide.channel            / access_error_msg (html)       : NEW 
+website_slides / slide.channel            / category_ids (one2many)       : NEW relation: slide.category
+website_slides / slide.channel            / custom_slide_id (many2one)    : NEW relation: slide.slide
+website_slides / slide.channel            / description (html)            : NEW 
+website_slides / slide.channel            / group_ids (many2many)         : NEW relation: res.groups
+website_slides / slide.channel            / message_follower_ids (one2many): NEW relation: mail.followers
+website_slides / slide.channel            / message_ids (one2many)        : NEW relation: mail.message
+website_slides / slide.channel            / message_last_post (datetime)  : NEW 
+website_slides / slide.channel            / name (char)                   : NEW required: required
+website_slides / slide.channel            / promote_strategy (selection)  : NEW required: required, selection_keys: ['custom', 'latest', 'most_viewed', 'most_voted', 'none'], req_default: most_voted
+website_slides / slide.channel            / publish_template_id (many2one): NEW relation: mail.template
+website_slides / slide.channel            / sequence (integer)            : NEW 
+website_slides / slide.channel            / share_template_id (many2one)  : NEW relation: mail.template
+website_slides / slide.channel            / slide_ids (one2many)          : NEW relation: slide.slide
+website_slides / slide.channel            / upload_group_ids (many2many)  : NEW relation: res.groups
+website_slides / slide.channel            / visibility (selection)        : NEW required: required, selection_keys: ['partial', 'private', 'public'], req_default: public
+website_slides / slide.channel            / website_message_ids (one2many): NEW relation: mail.message
+website_slides / slide.channel            / website_meta_description (text): NEW 
+website_slides / slide.channel            / website_meta_keywords (char)  : NEW 
+website_slides / slide.channel            / website_meta_title (char)     : NEW 
+website_slides / slide.channel            / website_published (boolean)   : NEW 
+website_slides / slide.embed              / count_views (integer)         : NEW 
+website_slides / slide.embed              / slide_id (many2one)           : NEW relation: slide.slide, required: required
+website_slides / slide.embed              / url (char)                    : NEW required: required
+website_slides / slide.slide              / category_id (many2one)        : NEW relation: slide.category
+website_slides / slide.slide              / channel_id (many2one)         : NEW relation: slide.channel, required: required
+website_slides / slide.slide              / datas (binary)                : NEW 
+website_slides / slide.slide              / date_published (datetime)     : NEW 
+website_slides / slide.slide              / description (text)            : NEW 
+website_slides / slide.slide              / dislikes (integer)            : NEW 
+website_slides / slide.slide              / document_id (char)            : NEW 
+website_slides / slide.slide              / download_security (selection) : NEW required: required, selection_keys: ['none', 'public', 'user'], req_default: user
+website_slides / slide.slide              / embed_views (integer)         : NEW 
+website_slides / slide.slide              / embedcount_ids (one2many)     : NEW relation: slide.embed
+website_slides / slide.slide              / image (binary)                : NEW 
+website_slides / slide.slide              / index_content (text)          : NEW 
+website_slides / slide.slide              / likes (integer)               : NEW 
+website_slides / slide.slide              / message_follower_ids (one2many): NEW relation: mail.followers
+website_slides / slide.slide              / message_ids (one2many)        : NEW relation: mail.message
+website_slides / slide.slide              / message_last_post (datetime)  : NEW 
+website_slides / slide.slide              / mime_type (char)              : NEW 
+website_slides / slide.slide              / name (char)                   : NEW required: required
+website_slides / slide.slide              / slide_type (selection)        : NEW required: required, selection_keys: ['document', 'infographic', 'presentation', 'video'], req_default: document
+website_slides / slide.slide              / slide_views (integer)         : NEW 
+website_slides / slide.slide              / tag_ids (many2many)           : NEW relation: slide.tag
+website_slides / slide.slide              / url (char)                    : NEW 
+website_slides / slide.slide              / website_message_ids (one2many): NEW relation: mail.message
+website_slides / slide.slide              / website_meta_description (text): NEW 
+website_slides / slide.slide              / website_meta_keywords (char)  : NEW 
+website_slides / slide.slide              / website_meta_title (char)     : NEW 
+website_slides / slide.slide              / website_published (boolean)   : NEW 
+website_slides / slide.tag                / name (char)                   : NEW required: required
+---XML records in module 'website_slides'---
+NEW ir.actions.act_url: website_slides.action_open_channels
+NEW ir.actions.act_window: website_slides.action_ir_slide_category
+NEW ir.actions.act_window: website_slides.action_slide_channels
+NEW ir.actions.act_window: website_slides.action_slide_tag
+NEW ir.actions.act_window: website_slides.action_slides_slides
+NEW ir.actions.todo: base.open_menu_channels
+NEW ir.config_parameter: website_slides.google_app_key
+NEW ir.model.access: website_slides.access_slide_category_portal
+NEW ir.model.access: website_slides.access_slide_category_public
+NEW ir.model.access: website_slides.access_slide_category_user
+NEW ir.model.access: website_slides.access_slide_channel_portal
+NEW ir.model.access: website_slides.access_slide_channel_public
+NEW ir.model.access: website_slides.access_slide_channel_user
+NEW ir.model.access: website_slides.access_slide_embed_all
+NEW ir.model.access: website_slides.access_slide_embed_user
+NEW ir.model.access: website_slides.access_slide_slide_portal
+NEW ir.model.access: website_slides.access_slide_slide_public
+NEW ir.model.access: website_slides.access_slide_slide_user
+NEW ir.model.access: website_slides.access_slide_tag_portal
+NEW ir.model.access: website_slides.access_slide_tag_public
+NEW ir.model.access: website_slides.access_slide_tag_user
+NEW ir.rule: website_slides.rule_slide_channel_global
+NEW ir.rule: website_slides.rule_slide_channel_public
+NEW ir.rule: website_slides.rule_slide_slide_global
+NEW ir.rule: website_slides.rule_slide_slide_public
+NEW ir.ui.menu: website_slides.menu_action_ir_slide_category
+NEW ir.ui.menu: website_slides.menu_action_slide_channels
+NEW ir.ui.menu: website_slides.menu_slide_tag
+NEW ir.ui.menu: website_slides.menu_website_slides_root
+NEW ir.ui.menu: website_slides.submenu_action_slides_slides
+NEW ir.ui.view: website_slides.assets_frontend
+NEW ir.ui.view: website_slides.channel_not_found
+NEW ir.ui.view: website_slides.channels
+NEW ir.ui.view: website_slides.embed_slide
+NEW ir.ui.view: website_slides.embed_slide_forbidden
+NEW ir.ui.view: website_slides.home
+NEW ir.ui.view: website_slides.opt_subscription_on_channels
+NEW ir.ui.view: website_slides.related_slides
+NEW ir.ui.view: website_slides.slide_detail_view
+NEW ir.ui.view: website_slides.slide_embed_assets
+NEW ir.ui.view: website_slides.slide_footer
+NEW ir.ui.view: website_slides.slide_social_email
+NEW ir.ui.view: website_slides.slide_social_embed
+NEW ir.ui.view: website_slides.slide_social_media
+NEW ir.ui.view: website_slides.slides_channel_header
+NEW ir.ui.view: website_slides.slides_grid_view
+NEW ir.ui.view: website_slides.slides_search
+NEW ir.ui.view: website_slides.slides_share
+NEW ir.ui.view: website_slides.view_slide_channel_form
+NEW ir.ui.view: website_slides.view_slide_channel_tree
+NEW ir.ui.view: website_slides.view_slide_slide_form
+NEW ir.ui.view: website_slides.view_slide_slide_graph
+NEW ir.ui.view: website_slides.view_slide_slide_search
+NEW ir.ui.view: website_slides.view_slide_slide_tree
+NEW ir.ui.view: website_slides.view_slide_tag_form
+NEW ir.ui.view: website_slides.view_slide_tag_tree
+NEW ir.ui.view: website_slides.view_slides_category_form
+NEW ir.ui.view: website_slides.view_slides_category_tree
+NEW ir.ui.view: website_slides.view_website_config_settings
+NEW mail.message.subtype: website_slides.mt_channel_slide_published
+NEW mail.template: website_slides.slide_template_published
+NEW mail.template: website_slides.slide_template_shared
+NEW slide.channel: website_slides.channel_partial
+NEW slide.channel: website_slides.channel_private
+NEW slide.channel: website_slides.channel_public
+NEW website.menu: website_slides.website_menu_slides

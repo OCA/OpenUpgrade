@@ -1,0 +1,13 @@
+---Fields in module 'hr_payroll'---
+---XML records in module 'hr_payroll'---
+NEW ir.actions.act_window: hr_payroll.action_hr_payroll_configuration
+NEW ir.actions.act_window: hr_payroll.open_payroll_modules
+DEL ir.sequence.type: hr_payroll.seq_type_salary_slip
+NEW ir.ui.menu: hr_payroll.menu_hr_payroll_configuration
+NEW ir.ui.menu: hr_payroll.menu_hr_payroll_global_settings
+NEW ir.ui.menu: hr_payroll.menu_hr_payroll_root
+DEL ir.ui.menu: hr_payroll.menu_hr_payroll_reporting
+DEL ir.ui.menu: hr_payroll.menu_hr_root_payroll
+DEL ir.ui.menu: hr_payroll.payroll_configure
+NEW ir.ui.view: hr_payroll.view_hr_payroll_configuration
+DEL ir.ui.view: hr_payroll.view_hr_config_inherit

@@ -1,0 +1,5 @@
+---Fields in module 'hr_payroll_account'---
+hr_payroll_account / hr.payslip               / date (date)                   : NEW 
+hr_payroll_account / hr.payslip               / period_id (many2one)          : DEL relation: account.period
+hr_payroll_account / hr.salary.rule           / account_tax_id (many2one)     : relation is now 'account.tax' ('account.tax.code')
+---XML records in module 'hr_payroll_account'---

@@ -1,0 +1,143 @@
+---Fields in module 'stock'---
+stock        / product.template         / description_picking (text)    : NEW 
+stock        / product.template         / loc_case (char)               : DEL 
+stock        / product.template         / loc_rack (char)               : DEL 
+stock        / product.template         / loc_row (char)                : DEL 
+stock        / product.template         / track_all (boolean)           : DEL 
+stock        / product.template         / track_incoming (boolean)      : DEL 
+stock        / product.template         / track_outgoing (boolean)      : DEL 
+stock        / product.template         / tracking (selection)          : NEW required: required, selection_keys: ['lot', 'none', 'serial'], req_default: none
+stock        / product.template         / type (False)                  : DEL selection_keys: ['consu', 'product', 'service'], mode: modify
+stock        / stock.location           / loc_barcode (char)            : was renamed to barcode [nothing to to]
+stock        / stock.location           / return_location (boolean)     : NEW 
+stock        / stock.location.route     / categ_ids (many2many)         : NEW relation: product.category
+stock        / stock.location.route     / product_ids (many2many)       : NEW relation: product.template
+stock        / stock.location.route     / warehouse_ids (many2many)     : NEW relation: stock.warehouse
+stock        / stock.move               / product_uos (many2one)        : DEL relation: product.uom
+stock        / stock.move               / product_uos_qty (float)       : DEL 
+stock        / stock.move               / sequence (integer)            : NEW 
+stock        / stock.pack.operation     / cost (float)                  : DEL 
+stock        / stock.pack.operation     / currency (many2one)           : DEL relation: res.currency
+stock        / stock.pack.operation     / fresh_record (boolean)        : NEW 
+stock        / stock.pack.operation     / lot_id (many2one)             : DEL relation: stock.production.lot
+stock        / stock.pack.operation     / pack_lot_ids (one2many)       : NEW relation: stock.pack.operation.lot
+stock        / stock.pack.operation     / processed (selection)         : DEL required: required, selection_keys: ['false', 'true'], req_default: function
+stock        / stock.pack.operation.lot / lot_id (many2one)             : NEW relation: stock.production.lot
+stock        / stock.pack.operation.lot / lot_name (char)               : NEW 
+stock        / stock.pack.operation.lot / operation_id (many2one)       : NEW relation: stock.pack.operation
+stock        / stock.pack.operation.lot / qty (float)                   : NEW 
+stock        / stock.pack.operation.lot / qty_todo (float)              : NEW 
+stock        / stock.picking            / launch_pack_operations (boolean): NEW 
+stock        / stock.picking            / location_dest_id (many2one)   : now required, default = function
+stock        / stock.picking            / location_id (many2one)        : now required, default = function
+stock        / stock.picking            / message_follower_ids (many2many): not a function anymore
+stock        / stock.picking            / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+stock        / stock.picking            / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+stock        / stock.picking            / pack_operation_pack_ids (one2many): NEW relation: stock.pack.operation
+stock        / stock.picking            / pack_operation_product_ids (one2many): NEW relation: stock.pack.operation
+stock        / stock.picking            / picking_type_code (char)      : selection_keys is now '['incoming', 'internal', 'outgoing']' ('False')
+stock        / stock.picking            / picking_type_code (char)      : type is now 'selection' ('char')
+stock        / stock.picking            / printed (boolean)             : NEW 
+stock        / stock.picking            / website_message_ids (one2many): NEW relation: mail.message
+stock        / stock.picking.type       / barcode_nomenclature_id (many2one): NEW relation: barcode.nomenclature
+stock        / stock.picking.type       / show_entire_packs (boolean)   : NEW 
+stock        / stock.picking.type       / use_create_lots (boolean)     : NEW 
+stock        / stock.picking.type       / use_existing_lots (boolean)   : NEW 
+stock        / stock.production.lot     / message_follower_ids (many2many): not a function anymore
+stock        / stock.production.lot     / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+stock        / stock.production.lot     / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+stock        / stock.production.lot     / website_message_ids (one2many): NEW relation: mail.message
+stock        / stock.quant.package      / ul_id (many2one)              : DEL relation: product.ul
+stock        / stock.warehouse.orderpoint / lead_days (integer)           : NEW 
+stock        / stock.warehouse.orderpoint / lead_type (selection)         : NEW required: required, selection_keys: ['net', 'supplier'], req_default: function
+stock        / stock.warehouse.orderpoint / logic (selection)             : DEL required: required, selection_keys: ['max', 'price'], req_default: function
+---XML records in module 'stock'---
+NEW barcode.rule: stock.barcode_rule_location
+NEW barcode.rule: stock.barcode_rule_lot
+NEW barcode.rule: stock.barcode_rule_package
+NEW barcode.rule: stock.barcode_rule_weight_three_dec
+NEW ir.actions.act_window: stock.action_picking_form
+NEW ir.actions.act_window: stock.action_stock_level_forecast_report_product
+NEW ir.actions.act_window: stock.action_stock_level_forecast_report_template
+NEW ir.actions.act_window: stock.do_view_procurement_op
+NEW ir.actions.act_window: stock.pack_details
+NEW ir.actions.act_window: stock.product_template_open_quants
+NEW ir.actions.act_window: stock.stock_picking_action_picking_type
+NEW ir.actions.act_window: stock.stock_picking_type_action
+NEW ir.actions.act_window: stock.stolocpath
+DEL ir.actions.act_window: stock.action_picking_type_form
+NEW ir.actions.act_window.view: stock.action_stock_move_pivot_all
+NEW ir.actions.report.xml: stock.action_report_delivery
+DEL ir.actions.report.xml: stock.report_product_history
+NEW ir.model.access: stock.access_barcode_nomenclature_stock_manager
+NEW ir.model.access: stock.access_barcode_nomenclature_stock_user
+NEW ir.model.access: stock.access_barcode_rule_stock_manager
+NEW ir.model.access: stock.access_barcode_rule_stock_user
+NEW ir.model.access: stock.access_stock_forecast_manager
+NEW ir.model.access: stock.access_stock_forecast_user
+NEW ir.model.access: stock.access_stock_pack_operation_lot_all
+NEW ir.model.access: stock.access_stock_pack_operation_lot_manager
+NEW ir.model.access: stock.access_stock_pack_operation_lot_user
+DEL ir.model.access: stock.access_board_stock_user
+DEL ir.model.access: stock.access_pricelist_partnerinfo_stock_manager
+DEL ir.model.access: stock.access_product_price_type_stock_manager
+DEL ir.model.access: stock.access_product_pricelist_type_stock_manager
+DEL ir.model.access: stock.access_product_pricelist_version_stock_manager
+DEL ir.model.access: stock.access_product_ul_stock_manager
+DEL ir.sequence.type: stock.seq_type_picking_in
+DEL ir.sequence.type: stock.seq_type_picking_internal
+DEL ir.sequence.type: stock.seq_type_picking_out
+DEL ir.sequence.type: stock.seq_type_quant_package
+DEL ir.sequence.type: stock.sequence_mrp_op_type
+DEL ir.sequence.type: stock.sequence_type_serial
+DEL ir.sequence.type: stock.sequence_type_tracking
+NEW ir.ui.menu: stock.all_picking
+NEW ir.ui.menu: stock.menu_packagings
+NEW ir.ui.menu: stock.menu_reordering_rules_config
+NEW ir.ui.menu: stock.menu_routes_config
+NEW ir.ui.menu: stock.menu_stock_general_settings
+NEW ir.ui.menu: stock.menu_stock_location_path
+NEW ir.ui.menu: stock.menu_warehouse_config
+NEW ir.ui.menu: stock.menu_warehouse_report
+NEW ir.ui.menu: stock.menu_wms_barcode_nomenclature_all
+NEW ir.ui.menu: stock.stock_picking_type_config
+NEW ir.ui.menu: stock.stock_picking_type_menu
+DEL ir.ui.menu: stock.menu_action_picking_type_form
+DEL ir.ui.menu: stock.menu_product_by_category_stock_form
+DEL ir.ui.menu: stock.menu_product_packaging_stock_action
+DEL ir.ui.menu: stock.menu_product_template_config_stock
+DEL ir.ui.menu: stock.menu_stock_configuration
+DEL ir.ui.menu: stock.menu_stock_order_points
+DEL ir.ui.menu: stock.menu_stock_product
+DEL ir.ui.menu: stock.menu_stock_products_menu
+DEL ir.ui.menu: stock.menu_traceability
+DEL ir.ui.menu: stock.next_id_61
+NEW ir.ui.view: stock.assets_common
+NEW ir.ui.view: stock.external_layout_barcode_right
+NEW ir.ui.view: stock.external_layout_header_barcode_right
+NEW ir.ui.view: stock.inventory_planner
+NEW ir.ui.view: stock.product_product_view_form_easy_inherit_stock
+NEW ir.ui.view: stock.report_delivery_document
+NEW ir.ui.view: stock.report_deliveryslip
+NEW ir.ui.view: stock.stock_location_path_filter
+NEW ir.ui.view: stock.stock_picking_kanban
+NEW ir.ui.view: stock.view_backorder_confirmation
+NEW ir.ui.view: stock.view_immediate_transfer
+NEW ir.ui.view: stock.view_move_pivot
+NEW ir.ui.view: stock.view_pack_operation_details_form
+NEW ir.ui.view: stock.view_pack_operation_details_form_save
+NEW ir.ui.view: stock.view_pack_operation_lot_form
+NEW ir.ui.view: stock.view_pack_operation_lot_lot_form
+NEW ir.ui.view: stock.view_partner_stock_form
+NEW ir.ui.view: stock.view_picking_type_list
+NEW ir.ui.view: stock.view_stock_level_forecast_filter
+NEW ir.ui.view: stock.view_stock_level_forecast_graph
+NEW ir.ui.view: stock.view_stock_level_forecast_pivot
+NEW ir.ui.view: stock.view_stock_quant_pivot
+DEL ir.ui.view: stock.assets_backend
+DEL ir.ui.view: stock.barcode_index
+DEL ir.ui.view: stock.stock_return_line_form_in
+DEL ir.ui.view: stock.stock_return_line_tree_in
+DEL ir.ui.view: stock.view_partner_property_form
+DEL ir.ui.view: stock.view_stock_enter_transfer_details
+NEW web.planner: stock.planner_inventory

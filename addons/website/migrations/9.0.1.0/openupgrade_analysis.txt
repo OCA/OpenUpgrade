@@ -1,0 +1,67 @@
+---Fields in module 'website'---
+website      / ir.actions.server        / xml_id (char)                 : module is now 'base' ('website')
+website      / ir.attachment            / mimetype (char)               : module is now 'base' ('website')
+website      / ir.attachment            / website_url (char)            : not a function anymore
+website      / ir.ui.view               / website_id (many2one)         : NEW relation: website
+website      / website                  / cdn_activated (boolean)       : NEW 
+website      / website                  / cdn_filters (text)            : NEW 
+website      / website                  / cdn_url (char)                : NEW 
+website      / website                  / compress_html (boolean)       : NEW 
+website      / website                  / domain (char)                 : NEW 
+---XML records in module 'website'---
+NEW ir.actions.act_window: website.action_module_theme
+NEW ir.attachment: website.business_conference
+DEL ir.model.access: website.access_website_converter_test
+DEL ir.model.access: website.access_website_converter_test_sub
+NEW ir.ui.menu: website.menu_website_global_configuration
+NEW ir.ui.view: website.assets_common
+NEW ir.ui.view: website.language_selector
+NEW ir.ui.view: website.layout_editor
+NEW ir.ui.view: website.menu_search
+NEW ir.ui.view: website.pdf_js_lib
+NEW ir.ui.view: website.s_banner
+NEW ir.ui.view: website.s_big_message
+NEW ir.ui.view: website.s_big_picture
+NEW ir.ui.view: website.s_button
+NEW ir.ui.view: website.s_comparisons
+NEW ir.ui.view: website.s_faq
+NEW ir.ui.view: website.s_faq_collapse
+NEW ir.ui.view: website.s_feature_grid
+NEW ir.ui.view: website.s_features
+NEW ir.ui.view: website.s_image_floating
+NEW ir.ui.view: website.s_image_gallery
+NEW ir.ui.view: website.s_image_text
+NEW ir.ui.view: website.s_panel
+NEW ir.ui.view: website.s_parallax
+NEW ir.ui.view: website.s_parallax_slider
+NEW ir.ui.view: website.s_quote
+NEW ir.ui.view: website.s_quotes_slider
+NEW ir.ui.view: website.s_references
+NEW ir.ui.view: website.s_separator
+NEW ir.ui.view: website.s_share
+NEW ir.ui.view: website.s_text_block
+NEW ir.ui.view: website.s_text_image
+NEW ir.ui.view: website.s_text_image_floating
+NEW ir.ui.view: website.s_three_columns
+NEW ir.ui.view: website.s_title
+NEW ir.ui.view: website.s_well
+NEW ir.ui.view: website.theme_customize
+NEW ir.ui.view: website.view_view_form_extend
+NEW ir.ui.view: website.website_planner
+NEW ir.ui.view: website.website_search_box
+DEL ir.ui.view: website.editor_head
+DEL ir.ui.view: website.theme
+DEL ir.ui.view: website.theme_amelia
+DEL ir.ui.view: website.theme_cerulean
+DEL ir.ui.view: website.theme_cosmo
+DEL ir.ui.view: website.theme_cyborg
+DEL ir.ui.view: website.theme_flatly
+DEL ir.ui.view: website.theme_journal
+DEL ir.ui.view: website.theme_readable
+DEL ir.ui.view: website.theme_simplex
+DEL ir.ui.view: website.theme_slate
+DEL ir.ui.view: website.theme_spacelab
+DEL ir.ui.view: website.theme_united
+DEL ir.ui.view: website.theme_yeti
+DEL ir.ui.view: website.themes
+NEW web.planner: website.planner_website

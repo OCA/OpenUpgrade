@@ -1,0 +1,8 @@
+---Fields in module 'stock_landed_costs'---
+stock_landed_costs / stock.landed.cost        / message_follower_ids (many2many): not a function anymore
+stock_landed_costs / stock.landed.cost        / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+stock_landed_costs / stock.landed.cost        / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+---XML records in module 'stock_landed_costs'---
+DEL ir.sequence.type: stock_landed_costs.seq_type_stock_landed_costs
+DEL ir.ui.menu: stock_landed_costs.menu_stock_landed_cost_main
+NEW res.groups: base.group_user

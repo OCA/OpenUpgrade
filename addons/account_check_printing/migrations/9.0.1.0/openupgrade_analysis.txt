@@ -1,0 +1,16 @@
+---Fields in module 'account_check_printing'---
+account_check_printing / account.journal          / check_manual_sequencing (boolean): NEW 
+account_check_printing / account.journal          / check_sequence_id (many2one)  : NEW relation: ir.sequence
+account_check_printing / account.payment          / check_amount_in_words (char)  : NEW 
+account_check_printing / account.payment          / check_number (integer)        : NEW 
+---XML records in module 'account_check_printing'---
+NEW account.payment.method: account_check_printing.account_payment_method_check
+NEW ir.actions.server: account_check_printing.action_account_print_checks
+NEW ir.ui.view: account_check_printing.account_journal_dashboard_kanban_view_inherited
+NEW ir.ui.view: account_check_printing.print_pre_numbered_checks_view
+NEW ir.ui.view: account_check_printing.view_account_journal_form_inherited
+NEW ir.ui.view: account_check_printing.view_account_payment_form_inherited
+NEW ir.ui.view: account_check_printing.view_account_payment_from_invoices_inherited
+NEW ir.ui.view: account_check_printing.view_account_payment_invoice_form_inherited
+NEW ir.ui.view: account_check_printing.view_payment_check_printing_search
+NEW ir.values: account_check_printing.account_print_checks

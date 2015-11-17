@@ -1,0 +1,50 @@
+---Fields in module 'sales_team'---
+sales_team   / crm.team                 / active (boolean)              : NEW 
+sales_team   / crm.team                 / code (char)                   : NEW 
+sales_team   / crm.team                 / color (integer)               : NEW 
+sales_team   / crm.team                 / company_id (many2one)         : NEW relation: res.company
+sales_team   / crm.team                 / member_ids (one2many)         : NEW relation: res.users
+sales_team   / crm.team                 / message_follower_ids (one2many): NEW relation: mail.followers
+sales_team   / crm.team                 / message_ids (one2many)        : NEW relation: mail.message
+sales_team   / crm.team                 / message_last_post (datetime)  : NEW 
+sales_team   / crm.team                 / name (char)                   : NEW required: required
+sales_team   / crm.team                 / reply_to (char)               : NEW 
+sales_team   / crm.team                 / user_id (many2one)            : NEW relation: res.users
+sales_team   / crm.team                 / working_hours (float)         : NEW 
+sales_team   / res.partner              / section_id (many2one)         : relation is now 'crm.team' ('crm.case.section')
+sales_team   / res.partner              / section_id (many2one)         : was renamed to team_id [nothing to to]
+sales_team   / res.users                / default_section_id (many2one) : DEL relation: crm.case.section
+sales_team   / res.users                / sale_team_id (many2one)       : NEW relation: crm.team
+---XML records in module 'sales_team'---
+DEL crm.case.section: sales_team.section_sales_department
+NEW crm.team: sales_team.team_sales_department
+NEW ir.actions.act_window: sales_team.crm_team_act
+NEW ir.actions.act_window: sales_team.crm_team_salesteams_act
+NEW ir.actions.act_window: sales_team.sales_team_config_action
+DEL ir.actions.act_window: sales_team.crm_case_section_act
+DEL ir.actions.act_window: sales_team.crm_case_section_salesteams_act
+NEW ir.model.access: sales_team.access_crm_team
+NEW ir.model.access: sales_team.access_crm_team_manager
+NEW ir.model.access: sales_team.access_crm_team_user
+DEL ir.model.access: sales_team.access_crm_case_section
+DEL ir.model.access: sales_team.access_crm_case_section_manager
+DEL ir.model.access: sales_team.access_crm_case_section_user
+NEW ir.rule: sales_team.sale_team_comp_rule
+NEW ir.ui.menu: base.menu_sale_report
+NEW ir.ui.menu: base.sales_team_config
+DEL ir.ui.menu: base.menu_sale_config
+DEL ir.ui.menu: base.next_id_64
+NEW ir.ui.view: sales_team.crm_team_salesteams_search
+NEW ir.ui.view: sales_team.crm_team_salesteams_view_kanban
+NEW ir.ui.view: sales_team.crm_team_view_form
+NEW ir.ui.view: sales_team.crm_team_view_tree
+DEL ir.ui.view: sales_team.crm_case_section_salesteams_search
+DEL ir.ui.view: sales_team.crm_case_section_salesteams_view_kanban
+DEL ir.ui.view: sales_team.crm_case_section_view_form
+DEL ir.ui.view: sales_team.crm_case_section_view_tree
+DEL ir.ui.view: sales_team.res_user_form
+DEL ir.ui.view: sales_team.view_sale_config_settings
+DEL ir.ui.view: sales_team.view_users_form_preferences
+DEL res.groups: base.group_mono_salesteams
+DEL res.groups: base.group_multi_salesteams
+DEL res.groups: base.group_user

@@ -1,0 +1,27 @@
+---Fields in module 'sale_stock'---
+sale_stock   / account.invoice          / incoterms_id (many2one)       : NEW relation: stock.incoterms
+sale_stock   / sale.order               / order_policy (False)          : DEL selection_keys: ['manual', 'picking', 'prepaid'], mode: modify
+---XML records in module 'sale_stock'---
+DEL ir.actions.act_window: sale_stock.outgoing_picking_list_to_invoice
+DEL ir.actions.act_window: sale_stock.res_partner_rule_children
+NEW ir.model.access: sale_stock.access_account_journal
+NEW ir.model.access: sale_stock.access_account_partial_reconcile
+NEW ir.ui.menu: base.menu_aftersale
+DEL ir.ui.menu: sale_stock.menu_action_picking_list_to_invoice
+NEW ir.ui.view: sale_stock.invoice_form_inherit_sale_stock
+NEW ir.ui.view: sale_stock.report_invoice_document_inherit_sale_stock
+NEW ir.ui.view: sale_stock.report_saleorder_document_inherit_sale_stock
+NEW ir.ui.view: sale_stock.stock_location_route_form_view_inherit_sale_stock
+NEW ir.ui.view: sale_stock.view_company_form_inherit_sale_stock
+NEW ir.ui.view: sale_stock.view_order_form_inherit_sale_stock
+NEW ir.ui.view: sale_stock.view_order_line_tree_inherit_sale_stock
+NEW ir.ui.view: sale_stock.view_sales_config_inherit_sale_stock
+DEL ir.ui.view: sale_stock.mrp_company
+DEL ir.ui.view: sale_stock.stock_location_route_form_view_inherit
+DEL ir.ui.view: sale_stock.view_order_form_inherit
+DEL ir.ui.view: sale_stock.view_order_form_inherit2
+DEL ir.ui.view: sale_stock.view_order_line_tree_inherit
+DEL ir.ui.view: sale_stock.view_picking_internal_search_inherit
+DEL ir.ui.view: sale_stock.view_res_partner_tree_type
+DEL ir.ui.view: sale_stock.view_sales_config_sale_stock
+DEL res.groups: sale_stock.group_invoice_deli_orders

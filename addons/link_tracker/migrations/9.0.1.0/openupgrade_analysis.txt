@@ -1,0 +1,38 @@
+---Fields in module 'link_tracker'---
+link_tracker / link.tracker             / campaign_id (many2one)        : NEW relation: utm.campaign
+link_tracker / link.tracker             / link_click_ids (one2many)     : NEW relation: link.tracker.click
+link_tracker / link.tracker             / link_code_ids (one2many)      : NEW relation: link.tracker.code
+link_tracker / link.tracker             / medium_id (many2one)          : NEW relation: utm.medium
+link_tracker / link.tracker             / source_id (many2one)          : NEW relation: utm.source
+link_tracker / link.tracker             / title (char)                  : NEW 
+link_tracker / link.tracker             / url (char)                    : NEW required: required
+link_tracker / link.tracker.click       / click_date (date)             : NEW 
+link_tracker / link.tracker.click       / country_id (many2one)         : NEW relation: res.country
+link_tracker / link.tracker.click       / ip (char)                     : NEW 
+link_tracker / link.tracker.click       / link_id (many2one)            : NEW relation: link.tracker, required: required
+link_tracker / link.tracker.code        / code (char)                   : NEW 
+link_tracker / link.tracker.code        / link_id (many2one)            : NEW relation: link.tracker, required: required
+---XML records in module 'link_tracker'---
+NEW ir.actions.act_window: link_tracker.action_link_tracker
+NEW ir.actions.act_window: link_tracker.action_link_tracker_click
+NEW ir.actions.act_window: link_tracker.action_link_tracker_stats
+NEW ir.actions.act_window: link_tracker.action_view_click_statistics
+NEW ir.model.access: link_tracker.access_link_tracker_click_manager
+NEW ir.model.access: link_tracker.access_link_tracker_click_public
+NEW ir.model.access: link_tracker.access_link_tracker_click_user
+NEW ir.model.access: link_tracker.access_link_tracker_code_manager
+NEW ir.model.access: link_tracker.access_link_tracker_code_public
+NEW ir.model.access: link_tracker.access_link_tracker_code_user
+NEW ir.model.access: link_tracker.access_link_tracker_manager
+NEW ir.model.access: link_tracker.access_link_tracker_public
+NEW ir.model.access: link_tracker.access_link_tracker_user
+NEW ir.ui.menu: link_tracker.menu_url_shortener_links
+NEW ir.ui.menu: link_tracker.menu_url_shortener_main
+NEW ir.ui.view: link_tracker.view_link_tracker_click_form
+NEW ir.ui.view: link_tracker.view_link_tracker_click_graph
+NEW ir.ui.view: link_tracker.view_link_tracker_click_tree
+NEW ir.ui.view: link_tracker.view_link_tracker_filter
+NEW ir.ui.view: link_tracker.view_link_tracker_form
+NEW ir.ui.view: link_tracker.view_link_tracker_form_stats
+NEW ir.ui.view: link_tracker.view_link_tracker_graph
+NEW ir.ui.view: link_tracker.view_link_tracker_tree

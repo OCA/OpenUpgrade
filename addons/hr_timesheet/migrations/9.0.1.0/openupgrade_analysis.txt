@@ -1,0 +1,33 @@
+---Fields in module 'hr_timesheet'---
+hr_timesheet / account.analytic.line    / is_timesheet (boolean)        : NEW 
+hr_timesheet / hr.employee              / journal_id (many2one)         : DEL relation: account.analytic.journal
+hr_timesheet / hr.employee              / product_id (many2one)         : DEL relation: product.product
+---XML records in module 'hr_timesheet'---
+DEL account.analytic.journal: hr_timesheet.analytic_journal
+DEL hr.employee: hr.employee
+NEW ir.actions.act_window: hr_timesheet.action_hr_timesheet_report_stat_filtered
+DEL ir.actions.act_window: hr_timesheet.act_analytic_cost_revenue
+DEL ir.actions.act_window: hr_timesheet.action_hr_timesheet_sign_in
+DEL ir.actions.act_window: hr_timesheet.action_hr_timesheet_sign_out
+NEW ir.actions.act_window.view: hr_timesheet.action_open_timesheet_tree
+NEW ir.model.access: hr_timesheet.access_account_analytic_line_user
+DEL ir.model.access: hr_timesheet.access_account_analytic_journal
+DEL ir.model.access: hr_timesheet.access_account_analytic_journal_user
+DEL ir.model.access: hr_timesheet.access_account_fiscalyear_hr_user
+DEL ir.model.access: hr_timesheet.access_hr_analytic_timesheet
+DEL ir.model.access: hr_timesheet.access_hr_analytic_timesheet_employee
+DEL ir.model.access: hr_timesheet.access_hr_analytic_timesheet_user
+DEL ir.rule: hr_timesheet.property_rule_timesheet_employee
+DEL ir.rule: hr_timesheet.property_rule_timesheet_manager
+NEW ir.ui.menu: hr_timesheet.menu_hr_timesheet_config
+NEW ir.ui.menu: hr_timesheet.menu_timesheets_reports
+DEL ir.ui.menu: hr_timesheet.menu_hr_timesheet_reports
+DEL ir.ui.menu: hr_timesheet.menu_timesheet_accounts
+NEW ir.ui.view: hr_timesheet.hr_department_view_kanban
+NEW ir.ui.view: hr_timesheet.view_hr_timesheet_report_pivot
+DEL ir.ui.view: hr_timesheet.account_analytic_account_timesheet_form
+DEL ir.ui.view: hr_timesheet.hr_timesheet_employee_extd_form
+DEL ir.ui.view: hr_timesheet.view_hr_timesheet_sign_in
+DEL ir.ui.view: hr_timesheet.view_hr_timesheet_sign_in_message
+DEL ir.ui.view: hr_timesheet.view_hr_timesheet_sign_out
+DEL product.product: product.product_product_consultant

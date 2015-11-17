@@ -1,0 +1,9 @@
+---Fields in module 'payment_ogone'---
+payment_ogone / payment.acquirer         / ogone_alias_usage (char)      : NEW 
+payment_ogone / payment.transaction      / ogone_3ds (boolean)           : DEL 
+payment_ogone / payment.transaction      / ogone_3ds_html (html)         : DEL 
+payment_ogone / payment.transaction      / ogone_complus (char)          : DEL 
+payment_ogone / payment.transaction      / ogone_payid (char)            : DEL 
+---XML records in module 'payment_ogone'---
+NEW ir.ui.view: payment_ogone.ogone_s2s_form
+DEL ir.ui.view: payment_ogone.transaction_form_ogone

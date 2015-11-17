@@ -1,0 +1,8 @@
+---Fields in module 'stock_picking_wave'---
+stock_picking_wave / stock.picking.wave       / message_follower_ids (one2many): NEW relation: mail.followers
+stock_picking_wave / stock.picking.wave       / message_ids (one2many)        : NEW relation: mail.message
+stock_picking_wave / stock.picking.wave       / message_last_post (datetime)  : NEW 
+stock_picking_wave / stock.picking.wave       / website_message_ids (one2many): NEW relation: mail.message
+---XML records in module 'stock_picking_wave'---
+DEL ir.sequence.type: stock_picking_wave.seq_type_picking_wave
+NEW mail.message.subtype: stock_picking_wave.mt_wave_state

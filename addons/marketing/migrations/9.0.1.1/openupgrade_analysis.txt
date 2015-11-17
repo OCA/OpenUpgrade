@@ -1,0 +1,9 @@
+---Fields in module 'marketing'---
+---XML records in module 'marketing'---
+NEW ir.ui.menu: base.menu_marketing_config_root
+DEL ir.ui.menu: base.marketing_reporting_menu
+DEL ir.ui.menu: marketing.menu_marketing_configuration
+NEW res.groups: marketing.group_lead_automation_manager
+NEW res.groups: marketing.group_lead_automation_user
+DEL res.groups: marketing.group_marketing_manager
+DEL res.groups: marketing.group_marketing_user

@@ -1,0 +1,12 @@
+---Fields in module 'stock_calendar'---
+stock_calendar / procurement.order        / next_delivery_date (datetime) : NEW 
+stock_calendar / procurement.order        / next_purchase_date (datetime) : NEW 
+stock_calendar / resource.calendar.attendance / group_id (many2one)           : NEW relation: procurement.group
+stock_calendar / resource.calendar.leaves / group_id (many2one)           : NEW relation: procurement.group
+stock_calendar / stock.warehouse.orderpoint / calendar_id (many2one)        : NEW relation: resource.calendar
+stock_calendar / stock.warehouse.orderpoint / last_execution_date (datetime): NEW 
+stock_calendar / stock.warehouse.orderpoint / purchase_calendar_id (many2one): NEW relation: resource.calendar
+---XML records in module 'stock_calendar'---
+NEW ir.ui.view: stock_calendar.view_procurement_form_stock_inherit
+NEW ir.ui.view: stock_calendar.view_resource_calendar_attendance_tree_procurement_group
+NEW ir.ui.view: stock_calendar.view_warehouse_orderpoint_form_inherit

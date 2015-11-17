@@ -1,0 +1,16 @@
+---Fields in module 'event_sale'---
+event_sale   / event.event              / badge_back (html)             : module is now 'event' ('event_sale')
+event_sale   / event.event              / badge_innerleft (html)        : module is now 'event' ('event_sale')
+event_sale   / event.event              / badge_innerright (html)       : module is now 'event' ('event_sale')
+event_sale   / event.registration       / sale_order_id (many2one)      : NEW relation: sale.order
+event_sale   / event.registration       / sale_order_line_id (many2one) : NEW relation: sale.order.line
+---XML records in module 'event_sale'---
+NEW ir.actions.act_window: event_sale.action_sale_order_event_registration
+DEL ir.actions.report.xml: event_sale.action_report_registrationbadge
+NEW ir.ui.view: event_sale.event_event_report_template_badge
+NEW ir.ui.view: event_sale.event_registration_report_template_badge
+NEW ir.ui.view: event_sale.view_event_form_inherit_ticket
+NEW ir.ui.view: event_sale.view_event_registration_editor_form
+DEL ir.ui.view: event_sale.report_registrationbadge
+DEL ir.ui.view: event_sale.view_event_form
+DEL report.paperformat: event_sale.paperformat_euro_lowmargin

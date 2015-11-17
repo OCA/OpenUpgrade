@@ -1,0 +1,11 @@
+---Fields in module 'website_mail'---
+---XML records in module 'website_mail'---
+NEW ir.ui.view: website_mail.message_thread
+DEL ir.ui.view: website_mail.editor
+DEL ir.ui.view: website_mail.email_designer
+DEL ir.ui.view: website_mail.email_designer_snippets
+DEL ir.ui.view: website_mail.email_template_form_inherit_website_link
+NEW mail.channel: website_mail.channel_public
+DEL mail.group: website_mail.group_all_employees
+DEL res.groups: base.group_user
+DEL res.groups: website_mail.group_comment

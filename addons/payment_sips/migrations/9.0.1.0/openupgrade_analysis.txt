@@ -1,0 +1,7 @@
+---Fields in module 'payment_sips'---
+payment_sips / payment.acquirer         / sips_merchant_id (char)       : NEW 
+payment_sips / payment.acquirer         / sips_secret (char)            : NEW 
+---XML records in module 'payment_sips'---
+NEW ir.ui.view: payment_sips.acquirer_form_sips
+NEW ir.ui.view: payment_sips.sips_acquirer_button
+NEW payment.acquirer: payment_sips.payment_acquirer_sips

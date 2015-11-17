@@ -1,0 +1,23 @@
+---Fields in module 'rating'---
+rating       / rating.rating            / access_token (char)           : NEW 
+rating       / rating.rating            / feedback (text)               : NEW 
+rating       / rating.rating            / message_id (many2one)         : NEW relation: mail.message
+rating       / rating.rating            / partner_id (many2one)         : NEW relation: res.partner
+rating       / rating.rating            / rated_partner_id (many2one)   : NEW relation: res.partner
+rating       / rating.rating            / rating (float)                : NEW 
+rating       / rating.rating            / res_id (integer)              : NEW required: required
+rating       / rating.rating            / res_model (char)              : NEW required: required
+---XML records in module 'rating'---
+NEW ir.actions.act_window: rating.action_view_rating
+NEW ir.model.access: rating.access_rating_portal
+NEW ir.model.access: rating.access_rating_public
+NEW ir.model.access: rating.access_rating_user
+NEW ir.ui.view: rating.assets_backend
+NEW ir.ui.view: rating.assets_common
+NEW ir.ui.view: rating.rating_card
+NEW ir.ui.view: rating.rating_external_page_view
+NEW ir.ui.view: rating.rating_star_card
+NEW ir.ui.view: rating.view_rating_rating_graph
+NEW ir.ui.view: rating.view_rating_rating_kanban
+NEW ir.ui.view: rating.view_rating_rating_pivot
+NEW ir.ui.view: rating.view_rating_rating_search

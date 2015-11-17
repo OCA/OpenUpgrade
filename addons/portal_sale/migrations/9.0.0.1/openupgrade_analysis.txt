@@ -1,0 +1,13 @@
+---Fields in module 'portal_sale'---
+---XML records in module 'portal_sale'---
+DEL email.template: portal_sale.email_template_edi_invoice
+DEL email.template: portal_sale.email_template_edi_sale
+NEW ir.ui.view: portal_sale.view_order_form_portal_sale
+DEL ir.ui.view: portal_sale.invoice_form_payment
+DEL ir.ui.view: portal_sale.invoice_form_portal
+DEL ir.ui.view: portal_sale.portal_sale_payment_option_config
+DEL ir.ui.view: portal_sale.sale_order_form_payment
+NEW mail.template: portal_sale.email_template_edi_invoice
+NEW mail.template: portal_sale.email_template_edi_sale
+DEL res.groups: base.group_portal
+DEL res.groups: portal_sale.group_payment_options

@@ -1,0 +1,22 @@
+---Fields in module 'portal'---
+---XML records in module 'portal'---
+DEL ir.actions.client: portal.action_mail_archives_feeds_portal
+DEL ir.actions.client: portal.action_mail_inbox_feeds_portal
+DEL ir.actions.client: portal.action_mail_star_feeds_portal
+NEW ir.model.access: portal.access_ir_attachment_portal
+NEW ir.model.access: portal.access_ir_ui_menu_portal
+DEL ir.model.access: portal.access_ir_attachment_group_portal
+DEL ir.model.access: portal.access_ir_ui_menu_group_portal
+DEL ir.model.access: portal.access_mail_followers_portal
+DEL ir.model.access: portal.access_mail_mail_portal
+DEL ir.model.access: portal.access_mail_message_portal
+DEL ir.model.access: portal.access_mail_notification_portal
+DEL ir.ui.menu: portal.portal_inbox
+DEL ir.ui.menu: portal.portal_mail_archivesfeeds
+DEL ir.ui.menu: portal.portal_mail_starfeeds
+DEL ir.ui.menu: portal.portal_messages
+DEL ir.ui.view: portal.assets_backend
+DEL ir.ui.view: portal.share_step1_form_portal
+DEL ir.ui.view: portal.share_step2_form_portal
+DEL ir.ui.view: portal.wizard_user_tree_view
+NEW mail.template: portal.mail_template_data_portal_welcome

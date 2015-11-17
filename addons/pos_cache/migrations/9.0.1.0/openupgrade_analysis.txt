@@ -1,0 +1,12 @@
+---Fields in module 'pos_cache'---
+pos_cache    / pos.cache                / cache (binary)                : NEW 
+pos_cache    / pos.cache                / compute_user_id (many2one)    : NEW relation: res.users, required: required
+pos_cache    / pos.cache                / config_id (many2one)          : NEW relation: pos.config, required: required
+pos_cache    / pos.cache                / product_domain (text)         : NEW required: required
+pos_cache    / pos.cache                / product_fields (text)         : NEW required: required
+pos_cache    / pos.config               / cache_ids (one2many)          : NEW relation: pos.cache
+---XML records in module 'pos_cache'---
+NEW ir.cron: pos_cache.refresh_pos_cache_cron
+NEW ir.model.access: pos_cache.access_pos_cache
+NEW ir.ui.view: pos_cache.assets
+NEW ir.ui.view: pos_cache.view_pos_config_form

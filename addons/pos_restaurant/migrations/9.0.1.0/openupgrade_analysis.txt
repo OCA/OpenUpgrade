@@ -1,0 +1,36 @@
+---Fields in module 'pos_restaurant'---
+pos_restaurant / pos.config               / floor_ids (one2many)          : NEW relation: restaurant.floor
+pos_restaurant / pos.config               / iface_orderline_notes (boolean): NEW 
+pos_restaurant / pos.order                / customer_count (integer)      : NEW 
+pos_restaurant / pos.order                / table_id (many2one)           : NEW relation: restaurant.table
+pos_restaurant / restaurant.floor         / background_color (char)       : NEW 
+pos_restaurant / restaurant.floor         / background_image (binary)     : NEW 
+pos_restaurant / restaurant.floor         / name (char)                   : NEW required: required
+pos_restaurant / restaurant.floor         / pos_config_id (many2one)      : NEW relation: pos.config
+pos_restaurant / restaurant.floor         / sequence (integer)            : NEW 
+pos_restaurant / restaurant.floor         / table_ids (one2many)          : NEW relation: restaurant.table
+pos_restaurant / restaurant.table         / active (boolean)              : NEW 
+pos_restaurant / restaurant.table         / color (char)                  : NEW 
+pos_restaurant / restaurant.table         / floor_id (many2one)           : NEW relation: restaurant.floor
+pos_restaurant / restaurant.table         / height (float)                : NEW 
+pos_restaurant / restaurant.table         / name (char)                   : NEW required: required
+pos_restaurant / restaurant.table         / pos_order_ids (one2many)      : NEW relation: pos.order
+pos_restaurant / restaurant.table         / position_h (float)            : NEW 
+pos_restaurant / restaurant.table         / position_v (float)            : NEW 
+pos_restaurant / restaurant.table         / seats (integer)               : NEW 
+pos_restaurant / restaurant.table         / shape (selection)             : NEW required: required, selection_keys: ['round', 'square'], req_default: square
+pos_restaurant / restaurant.table         / width (float)                 : NEW 
+---XML records in module 'pos_restaurant'---
+NEW ir.actions.act_window: pos_restaurant.action_restaurant_floor_form
+NEW ir.model.access: pos_restaurant.access_restaurant_floor
+NEW ir.model.access: pos_restaurant.access_restaurant_floor_manager
+NEW ir.model.access: pos_restaurant.access_restaurant_table
+NEW ir.model.access: pos_restaurant.access_restaurant_table_manager
+NEW ir.ui.menu: pos_restaurant.menu_restaurant_floor_all
+NEW ir.ui.view: pos_restaurant.assets
+NEW ir.ui.view: pos_restaurant.view_pos_pos_form
+NEW ir.ui.view: pos_restaurant.view_restaurant_floor_form
+NEW ir.ui.view: pos_restaurant.view_restaurant_floor_tree
+NEW ir.ui.view: pos_restaurant.view_restaurant_table_form
+DEL ir.ui.view: pos_restaurant.assets_frontend
+DEL ir.ui.view: pos_restaurant.index

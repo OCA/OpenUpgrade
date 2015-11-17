@@ -1,0 +1,27 @@
+---Fields in module 'pos_mercury'---
+pos_mercury  / account.bank.statement.line / mercury_card_brand (char)     : NEW 
+pos_mercury  / account.bank.statement.line / mercury_card_number (char)    : NEW 
+pos_mercury  / account.bank.statement.line / mercury_card_owner_name (char): NEW 
+pos_mercury  / account.bank.statement.line / mercury_invoice_no (integer)  : NEW 
+pos_mercury  / account.bank.statement.line / mercury_record_no (char)      : NEW 
+pos_mercury  / account.bank.statement.line / mercury_ref_no (char)         : NEW 
+pos_mercury  / account.journal          / pos_mercury_config_id (many2one): NEW relation: pos_mercury.configuration
+pos_mercury  / pos_mercury.configuration / merchant_id (char)            : NEW required: required
+pos_mercury  / pos_mercury.configuration / merchant_pwd (char)           : NEW required: required
+pos_mercury  / pos_mercury.configuration / name (char)                   : NEW required: required
+---XML records in module 'pos_mercury'---
+NEW barcode.rule: pos_mercury.barcode_rule_credit
+NEW ir.actions.act_window: pos_mercury.action_configuration_form
+NEW ir.cron: pos_mercury.ir_cron_mercury_cleanup
+NEW ir.model.access: pos_mercury.access_pos_mercury_configuration
+NEW ir.model.access: pos_mercury.access_pos_mercury_mercury_transaction
+NEW ir.ui.menu: pos_mercury.menu_pos_pos_mercury_config
+NEW ir.ui.view: pos_mercury.assets
+NEW ir.ui.view: pos_mercury.mercury_common
+NEW ir.ui.view: pos_mercury.mercury_return
+NEW ir.ui.view: pos_mercury.mercury_transaction
+NEW ir.ui.view: pos_mercury.mercury_voidsale
+NEW ir.ui.view: pos_mercury.view_account_journal_pos_user_form
+NEW ir.ui.view: pos_mercury.view_pos_mercury_configuration_form
+NEW ir.ui.view: pos_mercury.view_pos_mercury_configuration_tree
+NEW ir.ui.view: pos_mercury.view_pos_order

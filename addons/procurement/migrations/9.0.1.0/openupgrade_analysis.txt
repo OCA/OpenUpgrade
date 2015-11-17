@@ -1,0 +1,18 @@
+---Fields in module 'procurement'---
+procurement  / procurement.order        / message_follower_ids (many2many): not a function anymore
+procurement  / procurement.order        / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+procurement  / procurement.order        / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+procurement  / procurement.order        / product_uos (many2one)        : DEL relation: product.uom
+procurement  / procurement.order        / product_uos_qty (float)       : DEL 
+procurement  / procurement.order        / website_message_ids (one2many): NEW relation: mail.message
+---XML records in module 'procurement'---
+NEW ir.actions.act_window: procurement.procurement_order_action_exceptions
+NEW ir.actions.act_window: procurement.procurement_order_action_product_product_stat
+NEW ir.actions.act_window: procurement.procurement_order_action_product_template_stat
+DEL ir.actions.act_window: procurement.procurement_exceptions
+NEW ir.actions.server: procurement.procurement_order_server_action
+DEL ir.sequence.type: procurement.sequence_proc_group_type
+NEW ir.ui.view: procurement.product_product_view_form_procurement_button
+NEW ir.ui.view: procurement.product_template_view_form_procurement_button
+NEW ir.ui.view: procurement.view_procurement_rule_filter
+NEW ir.values: procurement.run_procurement_order_action

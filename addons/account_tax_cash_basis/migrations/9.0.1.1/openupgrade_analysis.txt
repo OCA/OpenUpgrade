@@ -1,0 +1,8 @@
+---Fields in module 'account_tax_cash_basis'---
+account_tax_cash_basis / account.move             / tax_cash_basis_rec_id (many2one): NEW relation: account.partial.reconcile
+account_tax_cash_basis / account.tax              / cash_basis_account (many2one) : NEW relation: account.account
+account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : NEW 
+account_tax_cash_basis / res.company              / tax_cash_basis_journal_id (many2one): NEW relation: account.journal
+---XML records in module 'account_tax_cash_basis'---
+NEW ir.ui.view: account_tax_cash_basis.view_account_config_cash_basis_inherit_form
+NEW ir.ui.view: account_tax_cash_basis.view_tax_form_cash_basis_inherit

@@ -1,0 +1,1135 @@
+---Fields in module 'general'---
+# 6690 fields matched,
+# Direct match: 5548
+# Found in other module: 26
+# Found with different name: 0
+# Found with different type: 0
+# In obsolete models: 1116
+# New columns: 1436
+# Not matched: 745
+new model account.account.tag
+new model account.analytic.tag
+new model account.bank.statement.cashbox
+new model account.operation.template
+new model account.partial.reconcile
+new model account.payment
+new model account.payment.method
+new model account.tax.group
+new model barcode.nomenclature
+new model barcode.rule
+new model bus.presence
+new model crm.activity
+new model crm.claim.category
+new model crm.lead.tag
+new model crm.lost.reason
+new model crm.stage
+new model crm.team
+new model delivery.price.rule
+new model event.answer
+new model event.mail
+new model event.mail.registration
+new model event.question
+new model event.registration.answer
+new model hr.applicant.category
+new model hr.equipment
+new model hr.equipment.category
+new model hr.equipment.request
+new model hr.equipment.stage
+new model hr.expense
+new model im_livechat.channel.rule
+new model ir.sequence.date_range
+new model l10n_be_intrastat.region
+new model l10n_be_intrastat.transaction
+new model l10n_be_intrastat.transport_mode
+new model link.tracker
+new model link.tracker.click
+new model link.tracker.code
+new model mail.channel
+new model mail.channel.partner
+new model mail.mass_mailing.tag
+new model mail.shortcode
+new model mail.template
+new model mail.tracking.value
+new model payment.method
+new model pos.cache
+new model pos_mercury.configuration
+new model pos_mercury.mercury_transaction
+new model project.tags
+new model rating.rating
+new model res.partner.tag
+new model res.users.log
+new model restaurant.floor
+new model restaurant.table
+new model slide.category
+new model slide.channel
+new model slide.embed
+new model slide.slide
+new model slide.tag
+new model stock.pack.operation.lot
+new model utm.campaign
+new model utm.medium
+new model utm.source
+new model web.planner
+new model web.tip
+new model web_editor.converter.test
+new model web_editor.converter.test.sub
+new model website_pricelist
+obsolete model account.analytic.invoice.line
+obsolete model account.analytic.journal
+obsolete model account.analytic.plan
+obsolete model account.analytic.plan.instance
+obsolete model account.analytic.plan.instance.line
+obsolete model account.analytic.plan.line
+obsolete model account.asset.history
+obsolete model account.bank.statement.line.global
+obsolete model account.fiscalyear
+obsolete model account.journal.cashbox.line
+obsolete model account.journal.period
+obsolete model account.model
+obsolete model account.model.line
+obsolete model account.move.reconcile
+obsolete model account.period
+obsolete model account.sequence.fiscalyear
+obsolete model account.statement.operation.template
+obsolete model account.subscription
+obsolete model account.subscription.line
+obsolete model account.tax.code
+obsolete model account.tax.code.template
+obsolete model account_followup.followup
+obsolete model account_followup.followup.line
+obsolete model analytic.user.funct.grid
+obsolete model blog.post.history
+obsolete model certification.certification
+obsolete model certification.type
+obsolete model crm.case.categ
+obsolete model crm.case.section
+obsolete model crm.case.stage
+obsolete model crm.helpdesk
+obsolete model crm.payment.mode
+obsolete model crm.phonecall
+obsolete model crm.segmentation
+obsolete model crm.segmentation.line
+obsolete model crm.tracking.campaign
+obsolete model crm.tracking.medium
+obsolete model crm.tracking.source
+obsolete model crm_profiling.answer
+obsolete model crm_profiling.question
+obsolete model crm_profiling.questionnaire
+obsolete model delivery.grid
+obsolete model delivery.grid.line
+obsolete model document.directory
+obsolete model document.directory.content
+obsolete model document.directory.content.type
+obsolete model document.directory.dctx
+obsolete model document.storage
+obsolete model email.template
+obsolete model event.tag
+obsolete model event.track.stage
+obsolete model hr.analytic.timesheet
+obsolete model hr.applicant_category
+obsolete model hr.evaluation.interview
+obsolete model hr.expense.expense
+obsolete model hr.expense.line
+obsolete model hr_evaluation.evaluation
+obsolete model hr_evaluation.plan
+obsolete model hr_evaluation.plan.phase
+obsolete model hr_timesheet_invoice.factor
+obsolete model im_chat.conversation_state
+obsolete model im_chat.message
+obsolete model im_chat.presence
+obsolete model im_chat.session
+obsolete model ir.default
+obsolete model ir.fields.converter
+obsolete model ir.sequence.type
+obsolete model l10n.fr.line
+obsolete model l10n.fr.report
+obsolete model l10n.ma.line
+obsolete model l10n.ma.report
+obsolete model lunch.cancel
+obsolete model lunch.validation
+obsolete model mail.group
+obsolete model mail.mass_mailing.category
+obsolete model mail.notification
+obsolete model multi_company.default
+obsolete model payment.line
+obsolete model payment.mode
+obsolete model payment.order
+obsolete model pricelist.partnerinfo
+obsolete model product.price.type
+obsolete model product.pricelist.type
+obsolete model product.pricelist.version
+obsolete model product.ul
+obsolete model project.category
+obsolete model project.issue.version
+obsolete model project.task.work
+obsolete model res.partner.bank.type
+obsolete model res.partner.bank.type.field
+obsolete model sale_journal.invoice.type
+obsolete model temp.range
+obsolete model website.converter.test
+obsolete model website.converter.test.sub
+---XML records in module 'general'---
+ERROR: module not in list of installed modules:
+---Fields in module 'analytic_contract_hr_expense'---
+analytic_contract_hr_expense / account.analytic.account / charge_expenses (boolean)     : DEL 
+analytic_contract_hr_expense / account.analytic.account / est_expenses (float)          : DEL 
+---XML records in module 'analytic_contract_hr_expense'---
+DEL ir.ui.view: analytic_contract_hr_expense.account_analytic_account_form_expense_form
+ERROR: module not in list of installed modules:
+---Fields in module 'knowledge'---
+---XML records in module 'knowledge'---
+DEL ir.actions.act_window: knowledge.action_knowledge_configuration
+DEL ir.model.access: knowledge.access_ir_attachment_partner_manager
+DEL ir.model.access: knowledge.access_ir_attachment_sale_manager
+DEL ir.ui.menu: knowledge.menu_document
+DEL ir.ui.menu: knowledge.menu_document2
+DEL ir.ui.menu: knowledge.menu_document_configuration
+DEL ir.ui.menu: knowledge.menu_knowledge_configuration
+DEL ir.ui.view: knowledge.view_knowledge_configuration
+DEL res.groups: base.group_document_user
+ERROR: module not in list of installed modules:
+---Fields in module 'web_linkedin'---
+web_linkedin / res.partner              / linkedin_id (char)            : DEL 
+web_linkedin / res.partner              / linkedin_url (char)           : DEL 
+---XML records in module 'web_linkedin'---
+DEL ir.ui.view: web_linkedin.assets_backend
+DEL ir.ui.view: web_linkedin.view_linkedin_config_settings
+DEL ir.ui.view: web_linkedin.view_linkedin_partner_form
+ERROR: module not in list of installed modules:
+---Fields in module 'website_project'---
+website_project / project.project          / website_meta_description (text): DEL 
+website_project / project.project          / website_meta_keywords (char)  : DEL 
+website_project / project.project          / website_meta_title (char)     : DEL 
+---XML records in module 'website_project'---
+DEL ir.ui.view: website_project.index
+DEL ir.ui.view: website_project.task_kanban_card
+ERROR: module not in list of installed modules:
+---Fields in module 'web_kanban_sparkline'---
+---XML records in module 'web_kanban_sparkline'---
+DEL ir.ui.view: web_kanban_sparkline.assets_backend
+ERROR: module not in list of installed modules:
+---Fields in module 'edi'---
+---XML records in module 'edi'---
+DEL ir.ui.view: edi.assets_backend
+ERROR: module not in list of installed modules:
+---Fields in module 'account_analytic_analysis'---
+account_analytic_analysis / account.analytic.account / fix_price_invoices (boolean)  : DEL 
+account_analytic_analysis / account.analytic.account / hours_qtt_est (float)         : DEL 
+account_analytic_analysis / account.analytic.account / invoice_on_timesheets (boolean): DEL 
+account_analytic_analysis / account.analytic.account / recurring_interval (integer)  : DEL 
+account_analytic_analysis / account.analytic.account / recurring_invoice_line_ids (one2many): DEL relation: account.analytic.invoice.line
+account_analytic_analysis / account.analytic.account / recurring_invoices (boolean)  : DEL 
+account_analytic_analysis / account.analytic.account / recurring_next_date (date)    : DEL 
+account_analytic_analysis / account.analytic.account / recurring_rule_type (selection): DEL selection_keys: ['daily', 'monthly', 'weekly', 'yearly']
+---XML records in module 'account_analytic_analysis'---
+DEL email.template: account_analytic_analysis.account_analytic_cron_email_template
+DEL ir.actions.act_window: account_analytic_analysis.action_account_analytic_overdue
+DEL ir.actions.act_window: account_analytic_analysis.action_account_analytic_overdue_all
+DEL ir.actions.act_window: account_analytic_analysis.action_hr_tree_invoiced_all
+DEL ir.actions.act_window: account_analytic_analysis.action_sales_order
+DEL ir.actions.act_window: account_analytic_analysis.template_of_contract_action
+DEL ir.cron: account_analytic_analysis.account_analytic_cron
+DEL ir.cron: account_analytic_analysis.account_analytic_cron_for_invoice
+DEL ir.model.access: account_analytic_analysis.access_account_analytic_analysis_summary_month
+DEL ir.model.access: account_analytic_analysis.access_account_analytic_analysis_summary_month_sale
+DEL ir.model.access: account_analytic_analysis.access_account_analytic_analysis_summary_user
+DEL ir.model.access: account_analytic_analysis.access_account_analytic_analysis_summary_user_sale
+DEL ir.model.access: account_analytic_analysis.access_account_analytic_invoice_line
+DEL ir.model.access: account_analytic_analysis.access_edi_edi
+DEL ir.ui.menu: account_analytic_analysis.menu_action_account_analytic_overdue
+DEL ir.ui.menu: account_analytic_analysis.menu_action_account_analytic_overdue_all
+DEL ir.ui.menu: account_analytic_analysis.menu_action_hr_tree_invoiced_all
+DEL ir.ui.menu: account_analytic_analysis.menu_template_of_contract_action
+DEL ir.ui.menu: base.menu_invoiced
+DEL ir.ui.menu: base.menu_sales
+DEL ir.ui.view: account_analytic_analysis.account_analytic_account_form_form
+DEL ir.ui.view: account_analytic_analysis.assets_backend
+DEL ir.ui.view: account_analytic_analysis.view_account_analytic_account_overdue_search
+DEL ir.ui.view: account_analytic_analysis.view_account_analytic_account_template_required
+DEL ir.ui.view: account_analytic_analysis.view_account_analytic_account_tree_c2c_3
+DEL ir.ui.view: account_analytic_analysis.view_sales_config
+DEL res.groups: account_analytic_analysis.group_template_required
+DEL res.users: base.user_root
+ERROR: module not in list of installed modules:
+---Fields in module 'account_bank_statement_extensions'---
+account_bank_statement_extensions / account.bank.statement.line / counterparty_bic (char)       : DEL 
+account_bank_statement_extensions / account.bank.statement.line / counterparty_currency (char)  : DEL 
+account_bank_statement_extensions / account.bank.statement.line / counterparty_name (char)      : DEL 
+account_bank_statement_extensions / account.bank.statement.line / counterparty_number (char)    : DEL 
+account_bank_statement_extensions / account.bank.statement.line / globalisation_id (many2one)   : DEL relation: account.bank.statement.line.global
+account_bank_statement_extensions / account.bank.statement.line / state (selection)             : DEL required: required, selection_keys: ['confirm', 'draft'], req_default: draft
+account_bank_statement_extensions / account.bank.statement.line / val_date (date)               : DEL 
+---XML records in module 'account_bank_statement_extensions'---
+DEL ir.actions.act_window: account_bank_statement_extensions.action_bank_statement_line
+DEL ir.actions.act_window: account_bank_statement_extensions.action_cancel_statement_line
+DEL ir.actions.act_window: account_bank_statement_extensions.action_confirm_statement_line
+DEL ir.actions.report.xml: account_bank_statement_extensions.action_bank_statement_balance_report
+DEL ir.model.access: account_bank_statement_extensions.access_bank_statement_line_global_manager
+DEL ir.model.access: account_bank_statement_extensions.access_bank_statement_line_global_user
+DEL ir.sequence: account_bank_statement_extensions.sequence_reconcile_seq
+DEL ir.sequence.type: account_bank_statement_extensions.sequence_reconcile
+DEL ir.ui.menu: account_bank_statement_extensions.bank_statement_line
+DEL ir.ui.view: account_bank_statement_extensions.report_bankstatementbalance
+DEL ir.ui.view: account_bank_statement_extensions.view_bank_statement_form_add_fields
+DEL ir.ui.view: account_bank_statement_extensions.view_bank_statement_line_filter
+DEL ir.ui.view: account_bank_statement_extensions.view_bank_statement_line_form
+DEL ir.ui.view: account_bank_statement_extensions.view_bank_statement_line_list
+DEL ir.ui.view: account_bank_statement_extensions.view_cancel_statement_line
+DEL ir.ui.view: account_bank_statement_extensions.view_confirm_statement_line
+DEL ir.ui.view: account_bank_statement_extensions.view_statement_line_global_form
+DEL ir.values: account_bank_statement_extensions.action_cancel_statement_line_values
+DEL ir.values: account_bank_statement_extensions.action_confirm_statement_line_values
+ERROR: module not in list of installed modules:
+---Fields in module 'crm_profiling'---
+crm_profiling / res.partner              / answers_ids (many2many)       : DEL relation: crm_profiling.answer
+---XML records in module 'crm_profiling'---
+DEL ir.actions.act_window: crm_profiling.action_open_questionnaire
+DEL ir.actions.act_window: crm_profiling.open_questionnaires
+DEL ir.actions.act_window: crm_profiling.open_questions
+DEL ir.model.access: crm_profiling.access_crm_profiling_answer_manager
+DEL ir.model.access: crm_profiling.access_crm_profiling_answer_salesman
+DEL ir.model.access: crm_profiling.access_crm_profiling_answer_user
+DEL ir.model.access: crm_profiling.access_crm_profiling_question_manager
+DEL ir.model.access: crm_profiling.access_crm_profiling_question_salesman
+DEL ir.model.access: crm_profiling.access_crm_profiling_questionnarie_manager
+DEL ir.model.access: crm_profiling.access_crm_profiling_questionnarie_salesman
+DEL ir.ui.menu: crm_profiling.menu_segm_answer
+DEL ir.ui.menu: crm_profiling.menu_segm_questionnaire
+DEL ir.ui.view: crm.crm_segmentation-view
+DEL ir.ui.view: crm_profiling.open_questionnaire_form
+DEL ir.ui.view: crm_profiling.view_answer
+DEL ir.ui.view: crm_profiling.view_answer_form
+DEL ir.ui.view: crm_profiling.view_open_questionnaire_form
+DEL ir.ui.view: crm_profiling.view_open_questionnaire_line_form
+DEL ir.ui.view: crm_profiling.view_open_questionnaire_line_tree
+DEL ir.ui.view: crm_profiling.view_partner_crm_segmentation_tree
+DEL ir.ui.view: crm_profiling.view_partner_form
+DEL ir.ui.view: crm_profiling.view_question_form
+DEL ir.ui.view: crm_profiling.view_question_tree
+DEL ir.ui.view: crm_profiling.view_questionnaire_form
+DEL ir.ui.view: crm_profiling.view_questionnaire_tree
+ERROR: module not in list of installed modules:
+---Fields in module 'portal_project'---
+---XML records in module 'portal_project'---
+DEL ir.actions.act_window: portal_project.open_view_project
+DEL ir.model.access: portal_project.access_account_analytic_account
+DEL ir.model.access: portal_project.access_account_analytic_account_public
+DEL ir.model.access: portal_project.access_project
+DEL ir.model.access: portal_project.access_project_category
+DEL ir.model.access: portal_project.access_project_category_public
+DEL ir.model.access: portal_project.access_project_public
+DEL ir.model.access: portal_project.access_task
+DEL ir.model.access: portal_project.access_task_public
+DEL ir.model.access: portal_project.access_task_type
+DEL ir.model.access: portal_project.access_task_type_public
+DEL ir.model.access: portal_project.access_task_work
+DEL ir.model.access: portal_project.access_task_work_public
+DEL ir.rule: portal_project.portal_project_rule
+DEL ir.rule: portal_project.portal_task_rule
+DEL ir.rule: portal_project.project_public_rule
+DEL ir.rule: portal_project.task_public_rule
+DEL ir.rule: project.project_public_members_rule
+DEL ir.rule: project.task_visibility_rule
+DEL ir.ui.menu: portal_project.portal_services_projects
+ERROR: module not in list of installed modules:
+---Fields in module 'account_check_writing'---
+account_check_writing / account.journal          / allow_check_writing (boolean) : DEL 
+account_check_writing / account.journal          / use_preprint_check (boolean)  : DEL 
+account_check_writing / account.voucher          / amount_in_word (char)         : DEL 
+account_check_writing / res.company              / check_layout (selection)      : DEL selection_keys: ['bottom', 'middle', 'top']
+---XML records in module 'account_check_writing'---
+DEL ir.actions.act_window: account_check_writing.action_account_check_write
+DEL ir.actions.act_window: account_check_writing.action_write_check
+DEL ir.actions.act_window.view: account_check_writing.action_write_check_form
+DEL ir.actions.act_window.view: account_check_writing.action_write_check_tree
+DEL ir.actions.report.xml: account_check_writing.action_report_check
+DEL ir.sequence: account_check_writing.sequence_check_number
+DEL ir.sequence.type: account_check_writing.sequence_type_check_number
+DEL ir.ui.menu: account_check_writing.menu_action_write_check
+DEL ir.ui.view: account_check_writing.check_format_company
+DEL ir.ui.view: account_check_writing.report_check
+DEL ir.ui.view: account_check_writing.view_account_check_write
+DEL ir.ui.view: account_check_writing.view_account_journal_form
+DEL ir.ui.view: account_check_writing.view_vendor_payment_check_form
+DEL report.paperformat: account_check_writing.paperformat_frenchcheck
+ERROR: module not in list of installed modules:
+---Fields in module 'website_mail_group'---
+---XML records in module 'website_mail_group'---
+DEL ir.ui.view: website_mail_group.editor
+DEL ir.ui.view: website_mail_group.footer_mailing_list
+DEL ir.ui.view: website_mail_group.group_message
+DEL ir.ui.view: website_mail_group.group_messages
+DEL ir.ui.view: website_mail_group.head
+DEL ir.ui.view: website_mail_group.mail_groups
+DEL ir.ui.view: website_mail_group.messages_short
+DEL ir.ui.view: website_mail_group.subscribe
+ERROR: module not in list of installed modules:
+---Fields in module 'crm_helpdesk'---
+---XML records in module 'crm_helpdesk'---
+DEL ir.actions.act_window: crm_helpdesk.action_report_crm_helpdesk
+DEL ir.actions.act_window: crm_helpdesk.crm_case_helpdesk_act111
+DEL ir.actions.act_window: crm_helpdesk.crm_helpdesk_categ_action
+DEL ir.actions.act_window.view: crm_helpdesk.action_crm_sec_calendar_view_act111
+DEL ir.actions.act_window.view: crm_helpdesk.action_crm_sec_form_view_act111
+DEL ir.actions.act_window.view: crm_helpdesk.action_crm_sec_tree_view_act111
+DEL ir.actions.act_window.view: crm_helpdesk.action_report_crm_helpdesk_graph
+DEL ir.model.access: crm_helpdesk.access_crm_helpdesk_manager
+DEL ir.model.access: crm_helpdesk.access_crm_helpdesk_user
+DEL ir.model.access: crm_helpdesk.access_report_crm_helpdesk_manager
+DEL ir.ui.menu: base.menu_aftersale
+DEL ir.ui.menu: base.menu_base_partner
+DEL ir.ui.menu: crm_helpdesk.menu_config_helpdesk
+DEL ir.ui.menu: crm_helpdesk.menu_crm_case_helpdesk-act
+DEL ir.ui.menu: crm_helpdesk.menu_help_support_main
+DEL ir.ui.menu: crm_helpdesk.menu_report_crm_helpdesks_tree
+DEL ir.ui.view: crm_helpdesk.crm_case_form_view_helpdesk
+DEL ir.ui.view: crm_helpdesk.crm_case_helpdesk_calendar_view
+DEL ir.ui.view: crm_helpdesk.crm_case_tree_view_helpdesk
+DEL ir.ui.view: crm_helpdesk.view_crm_case_helpdesk_filter
+DEL ir.ui.view: crm_helpdesk.view_report_crm_helpdesk_filter
+DEL ir.ui.view: crm_helpdesk.view_report_crm_helpdesk_graph
+ERROR: module not in list of installed modules:
+---Fields in module 'account_analytic_plans'---
+account_analytic_plans / account.analytic.default / analytics_id (many2one)       : DEL relation: account.analytic.plan.instance
+account_analytic_plans / account.analytic.line    / percentage (float)            : DEL 
+account_analytic_plans / account.bank.statement.line / analytics_id (many2one)       : DEL relation: account.analytic.plan.instance
+account_analytic_plans / account.invoice.line     / analytics_id (many2one)       : DEL relation: account.analytic.plan.instance
+account_analytic_plans / account.journal          / plan_id (many2one)            : DEL relation: account.analytic.plan
+account_analytic_plans / account.move.line        / analytics_id (many2one)       : DEL relation: account.analytic.plan.instance
+---XML records in module 'account_analytic_plans'---
+DEL ir.actions.act_window: account_analytic_plans.account_analytic_instance_model_open
+DEL ir.actions.act_window: account_analytic_plans.account_analytic_plan_form_action
+DEL ir.actions.act_window: account_analytic_plans.account_analytic_plan_instance_action
+DEL ir.actions.act_window: account_analytic_plans.action_account_crossovered_analytic
+DEL ir.actions.act_window: account_analytic_plans.action_analytic_plan_create_model
+DEL ir.actions.report.xml: account_analytic_plans.action_account_analytic_account_crossovered_analytic
+DEL ir.model.access: account_analytic_plans.access_account_analytic_plan
+DEL ir.model.access: account_analytic_plans.access_account_analytic_plan_instance
+DEL ir.model.access: account_analytic_plans.access_account_analytic_plan_instance_line
+DEL ir.model.access: account_analytic_plans.access_account_analytic_plan_line
+DEL ir.model.access: account_analytic_plans.access_account_analytic_plan_line_invoice
+DEL ir.ui.menu: account_analytic_plans.menu_account_analytic_multi_plan_action
+DEL ir.ui.menu: account_analytic_plans.menu_account_analytic_plan_action
+DEL ir.ui.view: account_analytic_plans.account_analytic_plan_form
+DEL ir.ui.view: account_analytic_plans.account_analytic_plan_instance_form
+DEL ir.ui.view: account_analytic_plans.account_analytic_plan_instance_line_form
+DEL ir.ui.view: account_analytic_plans.account_analytic_plan_instance_line_tree
+DEL ir.ui.view: account_analytic_plans.account_analytic_plan_instance_tree
+DEL ir.ui.view: account_analytic_plans.account_analytic_plan_line_form
+DEL ir.ui.view: account_analytic_plans.account_analytic_plan_line_tree
+DEL ir.ui.view: account_analytic_plans.account_analytic_plan_search
+DEL ir.ui.view: account_analytic_plans.account_analytic_plan_tree
+DEL ir.ui.view: account_analytic_plans.assets_backend
+DEL ir.ui.view: account_analytic_plans.report_crossoveredanalyticplans
+DEL ir.ui.view: account_analytic_plans.view_account_crossovered_analytic
+DEL ir.ui.view: account_analytic_plans.view_account_journal_form_inherit
+DEL ir.ui.view: account_analytic_plans.view_analytic_plan_create_model
+DEL ir.ui.view: account_analytic_plans.view_analytic_plan_create_model_msg
+DEL ir.ui.view: account_analytic_plans.view_default_inherit_form
+DEL ir.ui.view: account_analytic_plans.view_default_inherit_tree
+DEL ir.ui.view: account_analytic_plans.view_move_form_inherit
+DEL ir.ui.view: account_analytic_plans.view_move_line_form_1_inherit
+DEL ir.ui.view: account_analytic_plans.view_move_line_form_inherit
+DEL ir.ui.view: account_analytic_plans.view_move_line_tree_inherit
+DEL ir.values: account_analytic_plans.account_crossovered_analytic_values
+DEL res.users: base.user_root
+ERROR: module not in list of installed modules:
+---Fields in module 'hr_timesheet_invoice'---
+hr_timesheet_invoice / account.analytic.account / amount_max (float)            : DEL 
+hr_timesheet_invoice / account.analytic.account / pricelist_id (many2one)       : DEL relation: product.pricelist
+hr_timesheet_invoice / account.analytic.account / to_invoice (many2one)         : DEL relation: hr_timesheet_invoice.factor
+hr_timesheet_invoice / account.analytic.line    / general_account_id (False)    : DEL req_default: function, mode: modify
+hr_timesheet_invoice / account.analytic.line    / invoice_id (many2one)         : DEL relation: account.invoice
+hr_timesheet_invoice / account.analytic.line    / journal_id (False)            : DEL req_default: function, mode: modify
+hr_timesheet_invoice / account.analytic.line    / to_invoice (many2one)         : DEL relation: hr_timesheet_invoice.factor
+---XML records in module 'hr_timesheet_invoice'---
+DEL hr_timesheet_invoice.factor: hr_timesheet_invoice.timesheet_invoice_factor1
+DEL hr_timesheet_invoice.factor: hr_timesheet_invoice.timesheet_invoice_factor2
+DEL hr_timesheet_invoice.factor: hr_timesheet_invoice.timesheet_invoice_factor3
+DEL hr_timesheet_invoice.factor: hr_timesheet_invoice.timesheet_invoice_factor4
+DEL ir.actions.act_window: hr_timesheet_invoice.act_acc_analytic_acc_2_report_acc_analytic_line_to_invoice
+DEL ir.actions.act_window: hr_timesheet_invoice.act_res_users_2_report_timehsheet_account
+DEL ir.actions.act_window: hr_timesheet_invoice.act_res_users_2_report_timesheet_invoice
+DEL ir.actions.act_window: hr_timesheet_invoice.act_res_users_2_report_timesheet_user
+DEL ir.actions.act_window: hr_timesheet_invoice.action_account_analytic_line_to_invoice
+DEL ir.actions.act_window: hr_timesheet_invoice.action_analytic_account_tree
+DEL ir.actions.act_window: hr_timesheet_invoice.action_hr_timesheet_analytic_profit
+DEL ir.actions.act_window: hr_timesheet_invoice.action_hr_timesheet_invoice_create
+DEL ir.actions.act_window: hr_timesheet_invoice.action_hr_timesheet_invoice_create_final
+DEL ir.actions.act_window: hr_timesheet_invoice.action_hr_timesheet_invoice_factor_form
+DEL ir.actions.act_window: hr_timesheet_invoice.action_timesheet_account_date_stat_all
+DEL ir.actions.act_window: hr_timesheet_invoice.action_timesheet_account_stat_all
+DEL ir.actions.act_window: hr_timesheet_invoice.action_timesheet_invoice_stat_all
+DEL ir.actions.act_window: hr_timesheet_invoice.action_timesheet_line_stat_all
+DEL ir.actions.act_window: hr_timesheet_invoice.action_timesheet_user_stat_all
+DEL ir.actions.report.xml: hr_timesheet_invoice.action_report_analytic_profit
+DEL ir.model.access: hr_timesheet_invoice.access_account_invoice_hr_user
+DEL ir.model.access: hr_timesheet_invoice.access_account_invoice_tax_hr_manager
+DEL ir.model.access: hr_timesheet_invoice.access_hr_timesheet_invoice_factor_acc_inv
+DEL ir.model.access: hr_timesheet_invoice.access_hr_timesheet_invoice_factor_employee
+DEL ir.model.access: hr_timesheet_invoice.access_hr_timesheet_invoice_factor_hr_user
+DEL ir.model.access: hr_timesheet_invoice.access_report_account_analytic_line_to_invoice
+DEL ir.model.access: hr_timesheet_invoice.access_report_account_analytic_line_to_invoice_manager
+DEL ir.model.access: hr_timesheet_invoice.access_report_analytic_account_close
+DEL ir.model.access: hr_timesheet_invoice.access_report_analytic_account_close_manager
+DEL ir.model.access: hr_timesheet_invoice.access_report_timesheet_account
+DEL ir.model.access: hr_timesheet_invoice.access_report_timesheet_account_date
+DEL ir.model.access: hr_timesheet_invoice.access_report_timesheet_invoice
+DEL ir.model.access: hr_timesheet_invoice.access_report_timesheet_line_employee
+DEL ir.model.access: hr_timesheet_invoice.access_report_timesheet_line_employee_user
+DEL ir.model.access: hr_timesheet_invoice.access_report_timesheet_user
+DEL ir.ui.menu: hr.menu_hr_reporting
+DEL ir.ui.menu: hr_timesheet_invoice.hr_timesheet_invoice_factor_view
+DEL ir.ui.menu: hr_timesheet_invoice.menu_hr_timesheet_analytic_profit
+DEL ir.ui.view: hr_timesheet_invoice.account_analytic_account_form_form
+DEL ir.ui.view: hr_timesheet_invoice.account_analytic_line_to_invoice_view_filter
+DEL ir.ui.view: hr_timesheet_invoice.account_analytic_line_to_invoice_view_form
+DEL ir.ui.view: hr_timesheet_invoice.account_analytic_line_to_invoice_view_graph
+DEL ir.ui.view: hr_timesheet_invoice.account_analytic_line_to_invoice_view_tree
+DEL ir.ui.view: hr_timesheet_invoice.hr_timesheet_line_form
+DEL ir.ui.view: hr_timesheet_invoice.hr_timesheet_line_form2
+DEL ir.ui.view: hr_timesheet_invoice.hr_timesheet_line_tree
+DEL ir.ui.view: hr_timesheet_invoice.hr_timesheet_line_tree2
+DEL ir.ui.view: hr_timesheet_invoice.report_analyticprofit
+DEL ir.ui.view: hr_timesheet_invoice.view_account_analytic_line_form_inherit
+DEL ir.ui.view: hr_timesheet_invoice.view_account_analytic_line_search_inherit
+DEL ir.ui.view: hr_timesheet_invoice.view_account_analytic_line_tree_inherit
+DEL ir.ui.view: hr_timesheet_invoice.view_analytic_account_close_form
+DEL ir.ui.view: hr_timesheet_invoice.view_analytic_account_close_tree
+DEL ir.ui.view: hr_timesheet_invoice.view_analytic_account_graph
+DEL ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_analytic_profit
+DEL ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_invoice_create
+DEL ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_invoice_create_final
+DEL ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_invoice_factor_form
+DEL ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_invoice_factor_search
+DEL ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_invoice_factor_tree
+DEL ir.ui.view: hr_timesheet_invoice.view_hr_timesheet_line_search_to_invoice
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_account_date_form
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_account_date_graph
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_account_date_graph_account
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_account_date_search
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_account_date_tree
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_account_form
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_account_graph
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_account_search
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_account_tree
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_invoice_form
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_invoice_graph
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_invoice_search
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_invoice_tree
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_line_graph
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_line_search
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_line_tree
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_user_form
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_user_graph
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_user_search
+DEL ir.ui.view: hr_timesheet_invoice.view_timesheet_user_tree
+DEL ir.values: hr_timesheet_invoice.hr_timesheet_invoice_create_final_values
+DEL ir.values: hr_timesheet_invoice.hr_timesheet_invoice_create_values
+ERROR: module not in list of installed modules:
+---Fields in module 'base_report_designer'---
+---XML records in module 'base_report_designer'---
+DEL ir.actions.act_window: base_report_designer.action_report_designer_installer
+DEL ir.actions.act_window: base_report_designer.action_report_designer_wizard
+DEL ir.actions.act_window: base_report_designer.action_view_base_report_sxw
+DEL ir.actions.todo: base_report_designer.report_designer_installer_todo
+DEL ir.ui.menu: base_report_designer.menu_action_report_designer_wizard
+DEL ir.ui.view: base_report_designer.view_base_report_file_rml
+DEL ir.ui.view: base_report_designer.view_base_report_file_sxw
+DEL ir.ui.view: base_report_designer.view_base_report_sxw
+DEL ir.ui.view: base_report_designer.view_report_designer_installer
+ERROR: module not in list of installed modules:
+---Fields in module 'portal_project_issue'---
+---XML records in module 'portal_project_issue'---
+DEL ir.actions.act_window: portal_project_issue.project_issue_categ_act0
+DEL ir.model.access: portal_project_issue.access_case_section
+DEL ir.model.access: portal_project_issue.access_issues
+DEL ir.model.access: portal_project_issue.access_issues_public
+DEL ir.rule: portal_project_issue.issue_public_rule
+DEL ir.rule: portal_project_issue.portal_issue_rule
+DEL ir.rule: project_issue.issue_user_rule
+DEL ir.ui.view: portal_project_issue.assets_backend
+DEL ir.ui.view: portal_project_issue.portal_project_issue_kanban_view
+ERROR: module not in list of installed modules:
+---Fields in module 'account_payment'---
+---XML records in module 'account_payment'---
+DEL ir.actions.act_window: account_payment.action_account_payment_make_payment
+DEL ir.actions.act_window: account_payment.action_account_payment_populate_statement
+DEL ir.actions.act_window: account_payment.action_account_populate_statement_confirm
+DEL ir.actions.act_window: account_payment.action_create_payment_order
+DEL ir.actions.act_window: account_payment.action_payment_line_form
+DEL ir.actions.act_window: account_payment.action_payment_mode_form
+DEL ir.actions.act_window: account_payment.action_payment_order_tree
+DEL ir.actions.act_window: account_payment.action_payment_order_tree_new
+DEL ir.actions.report.xml: account_payment.action_report_payment_order
+DEL ir.model.access: account_payment.access_account_invoice_payment
+DEL ir.model.access: account_payment.access_account_journal_payement
+DEL ir.model.access: account_payment.access_account_move_line_payment
+DEL ir.model.access: account_payment.access_payment_line
+DEL ir.model.access: account_payment.access_payment_mode
+DEL ir.model.access: account_payment.access_payment_order
+DEL ir.model.access: account_payment.access_payment_order_manager
+DEL ir.rule: account_payment.payment_line_comp_rule
+DEL ir.rule: account_payment.payment_mode_comp_rule
+DEL ir.rule: account_payment.payment_order_comp_rule
+DEL ir.sequence: account_payment.seq_payment_line
+DEL ir.sequence: account_payment.seq_payment_order
+DEL ir.sequence.type: account_payment.seq_type_payment_line
+DEL ir.sequence.type: account_payment.seq_type_payment_order
+DEL ir.ui.menu: account_payment.menu_action_payment_mode_form
+DEL ir.ui.menu: account_payment.menu_action_payment_order_form
+DEL ir.ui.menu: account_payment.menu_main_payment
+DEL ir.ui.view: account_payment.account_payment_make_payment_view
+DEL ir.ui.view: account_payment.account_payment_populate_statement_view
+DEL ir.ui.view: account_payment.report_paymentorder
+DEL ir.ui.view: account_payment.view_bank_statement_form
+DEL ir.ui.view: account_payment.view_create_payment_order
+DEL ir.ui.view: account_payment.view_create_payment_order_lines
+DEL ir.ui.view: account_payment.view_payment_line_form
+DEL ir.ui.view: account_payment.view_payment_line_tree
+DEL ir.ui.view: account_payment.view_payment_mode_form
+DEL ir.ui.view: account_payment.view_payment_mode_search
+DEL ir.ui.view: account_payment.view_payment_mode_tree
+DEL ir.ui.view: account_payment.view_payment_order_form
+DEL ir.ui.view: account_payment.view_payment_order_search
+DEL ir.ui.view: account_payment.view_payment_order_tree
+DEL res.groups: account.group_account_invoice
+DEL res.groups: account_payment.group_account_payment
+DEL workflow: account_payment.wkf_payment_order
+DEL workflow.activity: account_payment.act_cancel
+DEL workflow.activity: account_payment.act_done
+DEL workflow.activity: account_payment.act_draft
+DEL workflow.activity: account_payment.act_open
+DEL workflow.transition: account_payment.trans_draft_cancel
+DEL workflow.transition: account_payment.trans_draft_open
+DEL workflow.transition: account_payment.trans_open_cancel
+DEL workflow.transition: account_payment.trans_open_done
+ERROR: module not in list of installed modules:
+---Fields in module 'analytic_user_function'---
+analytic_user_function / account.analytic.account / user_product_ids (one2many)   : DEL relation: analytic.user.funct.grid
+---XML records in module 'analytic_user_function'---
+DEL ir.model.access: analytic_user_function.access_analytic_user_funct_account_manager
+DEL ir.model.access: analytic_user_function.access_analytic_user_funct_grid_all
+DEL ir.model.access: analytic_user_function.access_analytic_user_funct_grid_hr_manager
+DEL ir.model.access: analytic_user_function.access_analytic_user_funct_grid_hr_user
+DEL ir.model.access: analytic_user_function.access_analytic_user_funct_manager
+DEL ir.model.access: analytic_user_function.access_analytic_user_funct_user
+DEL ir.ui.view: analytic_user_function.analytic_user_funct_grid_form
+DEL ir.ui.view: analytic_user_function.analytic_user_funct_grid_tree
+DEL ir.ui.view: analytic_user_function.hr_timesheet_line_form_inherit
+DEL ir.ui.view: analytic_user_function.hr_timesheet_line_form_inherit_2
+DEL ir.ui.view: analytic_user_function.hr_timesheet_line_tree_inherit
+DEL ir.ui.view: analytic_user_function.hr_timesheet_line_tree_inherit_2
+DEL ir.ui.view: analytic_user_function.hr_timesheet_sheet_form_inherit
+DEL ir.ui.view: analytic_user_function.hr_timesheet_sheet_form_inherit1
+DEL ir.ui.view: analytic_user_function.view_account_analytic_account_form_inherit
+ERROR: module not in list of installed modules:
+---Fields in module 'web_gantt'---
+---XML records in module 'web_gantt'---
+DEL ir.ui.view: web_gantt.assets_backend
+ERROR: module not in list of installed modules:
+---Fields in module 'web_graph'---
+---XML records in module 'web_graph'---
+DEL ir.ui.view: web_graph.assets_backend
+ERROR: module not in list of installed modules:
+---Fields in module 'website_certification'---
+---XML records in module 'website_certification'---
+DEL ir.actions.act_window: website_certification.action_certifications_list
+DEL ir.model.access: website_certification.access_certifications_marketing
+DEL ir.model.access: website_certification.access_certifications_public
+DEL ir.model.access: website_certification.access_certifications_types_marketing
+DEL ir.model.access: website_certification.access_certifications_types_public
+DEL ir.model.access: website_certification.access_certifications_types_users
+DEL ir.model.access: website_certification.access_certifications_users
+DEL ir.ui.menu: website_certification.menu_certifications
+DEL ir.ui.menu: website_certification.menu_certifications_list
+DEL ir.ui.view: website_certification.certification_certification_form
+DEL ir.ui.view: website_certification.certification_certification_search
+DEL ir.ui.view: website_certification.certification_certification_tree
+DEL ir.ui.view: website_certification.certified_partners
+ERROR: module not in list of installed modules:
+---Fields in module 'hr_applicant_document'---
+---XML records in module 'hr_applicant_document'---
+DEL ir.actions.act_window: hr_applicant_document.hr_applicant_resumes
+DEL ir.ui.menu: hr_applicant_document.menu_crm_case_categ0_act_job02
+DEL ir.ui.view: hr_applicant_document.view_crm_case_jobs_filter_inherit
+ERROR: module not in list of installed modules:
+---Fields in module 'sale_analytic_plans'---
+sale_analytic_plans / sale.order.line          / analytics_id (many2one)       : DEL relation: account.analytic.plan.instance
+---XML records in module 'sale_analytic_plans'---
+DEL ir.ui.view: sale.view_order_form_editable_list
+DEL ir.ui.view: sale_analytic_plans.view_invoice_form_analytic_inherit
+DEL ir.ui.view: sale_analytic_plans.view_invoice_line_form_inherit
+DEL ir.ui.view: sale_analytic_plans.view_order_form_inherit2
+DEL ir.ui.view: sale_analytic_plans.view_order_line_form2_inherit
+ERROR: module not in list of installed modules:
+---Fields in module 'purchase_analytic_plans'---
+purchase_analytic_plans / purchase.order.line      / analytics_id (many2one)       : DEL relation: account.analytic.plan.instance
+---XML records in module 'purchase_analytic_plans'---
+DEL ir.ui.view: purchase_analytic_plans.invoice_supplier_form_inherit
+DEL ir.ui.view: purchase_analytic_plans.purchase_order_form_analytic_inherit
+DEL ir.ui.view: purchase_analytic_plans.purchase_order_line_form_inherit
+DEL ir.ui.view: purchase_analytic_plans.view_purchase_order_form_editable_list
+ERROR: module not in list of installed modules:
+---Fields in module 'web_tests'---
+---XML records in module 'web_tests'---
+DEL ir.ui.view: web_tests.assets_backend
+ERROR: module not in list of installed modules:
+---Fields in module 'email_template'---
+email_template / ir.actions.server        / template_id (many2one)        : module is now 'mail' ('email_template')
+email_template / ir.actions.server        / template_id (many2one)        : relation is now 'mail.template' ('email.template')
+email_template / res.partner              / opt_out (boolean)             : module is now 'mail' ('email_template')
+---XML records in module 'email_template'---
+DEL email.template: email_template.email_template_partner
+DEL ir.actions.act_window: base.action_partner_mass_mail
+DEL ir.actions.act_window: email_template.action_email_template_tree_all
+DEL ir.actions.act_window: email_template.wizard_email_template_preview
+DEL ir.model.access: email_template.access_email_template
+DEL ir.model.access: email_template.access_email_template_system
+DEL ir.ui.menu: email_template.menu_email_templates
+DEL ir.ui.view: email_template.email_compose_message_wizard_inherit_form
+DEL ir.ui.view: email_template.email_template_form
+DEL ir.ui.view: email_template.email_template_preview_form
+DEL ir.ui.view: email_template.email_template_tree
+DEL ir.ui.view: email_template.res_partner_opt_out_form
+DEL ir.ui.view: email_template.res_partner_opt_out_search
+DEL ir.ui.view: email_template.view_email_template_search
+DEL ir.ui.view: email_template.view_server_action_form_template
+ERROR: module not in list of installed modules:
+---Fields in module 'l10n_fr_rib'---
+l10n_fr_rib  / res.bank                 / rib_code (char)               : DEL 
+l10n_fr_rib  / res.partner.bank         / bank_code (char)              : DEL 
+l10n_fr_rib  / res.partner.bank         / key (char)                    : DEL 
+l10n_fr_rib  / res.partner.bank         / office (char)                 : DEL 
+l10n_fr_rib  / res.partner.bank         / rib_acc_number (char)         : DEL 
+---XML records in module 'l10n_fr_rib'---
+DEL ir.ui.view: l10n_fr_rib.view_partner_bank_rib_form
+DEL ir.ui.view: l10n_fr_rib.view_partner_bank_rib_tree
+DEL ir.ui.view: l10n_fr_rib.view_partner_rib1_form
+DEL ir.ui.view: l10n_fr_rib.view_res_bank_form
+DEL res.partner.bank.type: l10n_fr_rib.bank_rib
+DEL res.partner.bank.type.field: l10n_fr_rib.rib_acc_number_field
+DEL res.partner.bank.type.field: l10n_fr_rib.rib_bank_code_field
+DEL res.partner.bank.type.field: l10n_fr_rib.rib_bic_field
+DEL res.partner.bank.type.field: l10n_fr_rib.rib_key_field
+DEL res.partner.bank.type.field: l10n_fr_rib.rib_office_field
+DEL res.partner.bank.type.field: l10n_fr_rib.rib_rib_acc_number_field
+ERROR: module not in list of installed modules:
+---Fields in module 'website_report'---
+---XML records in module 'website_report'---
+DEL ir.ui.view: website_report.layout
+DEL ir.ui.view: website_report.website_html_container
+ERROR: module not in list of installed modules:
+---Fields in module 'sale_journal'---
+sale_journal / res.partner              / property_invoice_type (many2one): DEL relation: sale_journal.invoice.type
+sale_journal / sale.order               / invoice_type_id (many2one)    : DEL relation: sale_journal.invoice.type
+sale_journal / stock.picking            / invoice_type_id (many2one)    : DEL relation: sale_journal.invoice.type
+---XML records in module 'sale_journal'---
+DEL ir.actions.act_window: sale_journal.action_definition_journal_invoice_type
+DEL ir.model.access: sale_journal.access_sale_journal_invoice_type_finance_invoice
+DEL ir.model.access: sale_journal.access_sale_journal_invoice_type_manager
+DEL ir.model.access: sale_journal.access_sale_journal_invoice_type_partner_manager
+DEL ir.model.access: sale_journal.access_sale_journal_invoice_type_salesman
+DEL ir.model.access: sale_journal.access_sale_journal_invoice_type_stock_worker
+DEL ir.property: sale_journal.property_invoice_type_def
+DEL ir.ui.menu: sale_journal.menu_definition_journal_invoice_type
+DEL ir.ui.view: sale_journal.sale_journal_picking_order
+DEL ir.ui.view: sale_journal.sale_journal_sale_order
+DEL ir.ui.view: sale_journal.sale_journal_sale_order_tree
+DEL ir.ui.view: sale_journal.view_partner_property_form
+DEL ir.ui.view: sale_journal.view_picking_internal_search
+DEL ir.ui.view: sale_journal.view_sale_journal_invoice_type_form
+DEL ir.ui.view: sale_journal.view_sale_journal_invoice_type_tree
+DEL ir.ui.view: sale_journal.view_sales_order_search
+ERROR: module not in list of installed modules:
+---Fields in module 'account_followup'---
+account_followup / account.move.line        / followup_date (date)          : DEL 
+account_followup / account.move.line        / followup_line_id (many2one)   : DEL relation: account_followup.followup.line
+account_followup / res.partner              / payment_next_action (text)    : DEL 
+account_followup / res.partner              / payment_next_action_date (date): DEL 
+account_followup / res.partner              / payment_note (text)           : DEL 
+account_followup / res.partner              / payment_responsible_id (many2one): DEL relation: res.users
+account_followup / res.partner              / unreconciled_aml_ids (one2many): DEL relation: account.move.line
+---XML records in module 'account_followup'---
+DEL account_followup.followup: account_followup.demo_followup1
+DEL account_followup.followup.line: account_followup.demo_followup_line1
+DEL account_followup.followup.line: account_followup.demo_followup_line2
+DEL account_followup.followup.line: account_followup.demo_followup_line3
+DEL email.template: account_followup.email_template_account_followup_default
+DEL email.template: account_followup.email_template_account_followup_level0
+DEL email.template: account_followup.email_template_account_followup_level1
+DEL email.template: account_followup.email_template_account_followup_level2
+DEL ir.actions.act_window: account_followup.action_account_followup_definition_form
+DEL ir.actions.act_window: account_followup.action_account_followup_print
+DEL ir.actions.act_window: account_followup.action_customer_followup
+DEL ir.actions.act_window: account_followup.action_customer_my_followup
+DEL ir.actions.act_window: account_followup.action_followup_stat
+DEL ir.actions.act_window.view: account_followup.action_view_customer_followup_form
+DEL ir.actions.act_window.view: account_followup.action_view_customer_followup_tree
+DEL ir.actions.report.xml: account_followup.action_report_followup
+DEL ir.model.access: account_followup.access_account_followup_followup_accountant
+DEL ir.model.access: account_followup.access_account_followup_followup_line
+DEL ir.model.access: account_followup.access_account_followup_followup_line_manager
+DEL ir.model.access: account_followup.access_account_followup_followup_manager
+DEL ir.model.access: account_followup.access_account_followup_stat_by_partner_manager
+DEL ir.model.access: account_followup.access_account_followup_stat_invoice
+DEL ir.rule: account_followup.account_followup_comp_rule
+DEL ir.rule: account_followup.account_followup_stat_by_partner_comp_rule
+DEL ir.ui.menu: account_followup.account_followup_main_menu
+DEL ir.ui.menu: account_followup.account_followup_menu
+DEL ir.ui.menu: account_followup.account_followup_print_menu
+DEL ir.ui.menu: account_followup.account_followup_s
+DEL ir.ui.menu: account_followup.menu_action_followup_stat_follow
+DEL ir.ui.menu: account_followup.menu_finance_followup
+DEL ir.ui.menu: account_followup.menu_manual_reconcile_followup
+DEL ir.ui.menu: account_followup.menu_sale_followup
+DEL ir.ui.menu: base.menu_sales_followup
+DEL ir.ui.view: account_followup.account_followup_stat_by_partner_search
+DEL ir.ui.view: account_followup.account_followup_stat_by_partner_tree
+DEL ir.ui.view: account_followup.account_move_line_partner_tree
+DEL ir.ui.view: account_followup.customer_followup_search_view
+DEL ir.ui.view: account_followup.customer_followup_tree
+DEL ir.ui.view: account_followup.report_followup
+DEL ir.ui.view: account_followup.view_account_config_settings_inherit
+DEL ir.ui.view: account_followup.view_account_followup_filter
+DEL ir.ui.view: account_followup.view_account_followup_followup_form
+DEL ir.ui.view: account_followup.view_account_followup_followup_line_form
+DEL ir.ui.view: account_followup.view_account_followup_followup_line_tree
+DEL ir.ui.view: account_followup.view_account_followup_followup_tree
+DEL ir.ui.view: account_followup.view_account_followup_print
+DEL ir.ui.view: account_followup.view_account_followup_sending_results
+DEL ir.ui.view: account_followup.view_account_followup_stat_graph
+DEL ir.ui.view: account_followup.view_account_followup_stat_search
+DEL ir.ui.view: account_followup.view_move_line_form
+DEL ir.ui.view: account_followup.view_partner_inherit_customer_followup_tree
+DEL ir.ui.view: account_followup.view_partner_inherit_followup_form
+ERROR: module not in list of installed modules:
+---Fields in module 'share'---
+share        / res.groups               / share (boolean)               : module is now 'base' ('share')
+share        / res.users                / share (boolean)               : module is now 'base' ('share')
+---XML records in module 'share'---
+DEL ir.actions.act_window: base.action_res_groups
+DEL ir.actions.act_window: base.action_res_users
+DEL ir.actions.act_window: share.action_share_wizard
+DEL ir.actions.act_window: share.action_share_wizard_step1
+DEL ir.model.access: share.access_ir_ui_menu_group_shared
+DEL ir.module.category: share.module_category_share
+DEL ir.ui.view: share.assets_backend
+DEL ir.ui.view: share.res_groups_search_sharing
+DEL ir.ui.view: share.res_users_search_sharing
+DEL ir.ui.view: share.share_step0_form
+DEL ir.ui.view: share.share_step1_form
+DEL ir.ui.view: share.share_step2_form
+DEL ir.ui.view: share.view_groups_form_share
+DEL ir.ui.view: share.webclient_bootstrap
+DEL res.groups: share.group_share_user
+DEL res.groups: share.group_shared
+DEL res.users: base.public_user
+ERROR: module not in list of installed modules:
+---Fields in module 'hr_evaluation'---
+hr_evaluation / hr.employee              / evaluation_date (date)        : DEL 
+hr_evaluation / hr.employee              / evaluation_plan_id (many2one) : DEL relation: hr_evaluation.plan
+---XML records in module 'hr_evaluation'---
+DEL hr.employee: hr.employee
+DEL hr_evaluation.plan: hr_evaluation.hr_evaluation_plan_managersevaluationplan0
+DEL hr_evaluation.plan.phase: hr_evaluation.hr_evaluation_plan_phase_sendtoemployee0
+DEL ir.actions.act_window: hr_evaluation.act_hr_employee_2_hr__evaluation_interview
+DEL ir.actions.act_window: hr_evaluation.action_evaluation_plans_installer
+DEL ir.actions.act_window: hr_evaluation.action_evaluation_report_all
+DEL ir.actions.act_window: hr_evaluation.action_hr_evaluation_interview_tree
+DEL ir.actions.act_window: hr_evaluation.evaluation_reminders
+DEL ir.actions.act_window: hr_evaluation.open_view_hr_evaluation_plan_tree
+DEL ir.actions.act_window: hr_evaluation.open_view_hr_evaluation_tree
+DEL ir.actions.act_window.view: hr_evaluation.action_view_evaluation_calendar
+DEL ir.actions.act_window.view: hr_evaluation.hr_evaluation_interview_form
+DEL ir.actions.act_window.view: hr_evaluation.hr_evaluation_interview_tree
+DEL ir.actions.todo: base.open_menu
+DEL ir.cron: hr_evaluation.ir_cron_scheduler_evaluation
+DEL ir.model.access: hr_evaluation.access_calendar_attendee_survey_user
+DEL ir.model.access: hr_evaluation.access_hr_evaluation_evaluation_employee
+DEL ir.model.access: hr_evaluation.access_hr_evaluation_evaluation_user
+DEL ir.model.access: hr_evaluation.access_hr_evaluation_interview_employee
+DEL ir.model.access: hr_evaluation.access_hr_evaluation_interview_user
+DEL ir.model.access: hr_evaluation.access_hr_evaluation_plan_phase_user
+DEL ir.model.access: hr_evaluation.access_hr_evaluation_plan_user
+DEL ir.model.access: hr_evaluation.access_hr_evaluation_report
+DEL ir.model.access: hr_evaluation.access_survey_hr_employee
+DEL ir.model.access: hr_evaluation.access_survey_hr_manager
+DEL ir.model.access: hr_evaluation.access_survey_page_hr_employee
+DEL ir.model.access: hr_evaluation.access_survey_page_hr_user
+DEL ir.model.access: hr_evaluation.access_survey_question_column_heading_hr_employee
+DEL ir.model.access: hr_evaluation.access_survey_question_column_heading_hr_manager
+DEL ir.model.access: hr_evaluation.access_survey_question_column_heading_hr_user
+DEL ir.model.access: hr_evaluation.access_survey_question_hr_employee
+DEL ir.model.access: hr_evaluation.access_survey_question_hr_manager
+DEL ir.model.access: hr_evaluation.access_survey_question_hr_user
+DEL ir.model.access: hr_evaluation.access_survey_response_hr_employee
+DEL ir.model.access: hr_evaluation.access_survey_response_hr_manager
+DEL ir.model.access: hr_evaluation.access_survey_response_hr_user
+DEL ir.model.access: hr_evaluation.access_survey_response_line_hr_employee
+DEL ir.model.access: hr_evaluation.access_survey_response_line_hr_manager
+DEL ir.model.access: hr_evaluation.access_survey_response_line_hr_user
+DEL ir.rule: hr_evaluation.hr_employee_interview
+DEL ir.rule: hr_evaluation.hr_employee_interview_hr
+DEL ir.rule: hr_evaluation.hr_evaluation_plan_comp_rule
+DEL ir.rule: hr_evaluation.hr_evaluation_plan_phase_comp_rule
+DEL ir.ui.menu: hr_evaluation.menu_eval_hr
+DEL ir.ui.menu: hr_evaluation.menu_eval_hr_config
+DEL ir.ui.menu: hr_evaluation.menu_evaluation_report_all
+DEL ir.ui.menu: hr_evaluation.menu_open_hr_evaluation_interview_requests
+DEL ir.ui.menu: hr_evaluation.menu_open_view_hr_evaluation_plan_tree
+DEL ir.ui.menu: hr_evaluation.menu_open_view_hr_evaluation_tree
+DEL ir.ui.menu: survey.menu_surveys
+DEL ir.ui.menu: survey.menu_surveys_configuration
+DEL ir.ui.view: hr_evaluation.evaluation_search
+DEL ir.ui.view: hr_evaluation.hr_hr_employee_view_form
+DEL ir.ui.view: hr_evaluation.view_evaluation_calendar
+DEL ir.ui.view: hr_evaluation.view_evaluation_report_graph
+DEL ir.ui.view: hr_evaluation.view_evaluation_report_search
+DEL ir.ui.view: hr_evaluation.view_hr_evaluation_form
+DEL ir.ui.view: hr_evaluation.view_hr_evaluation_interview_form
+DEL ir.ui.view: hr_evaluation.view_hr_evaluation_interview_search
+DEL ir.ui.view: hr_evaluation.view_hr_evaluation_interview_tree
+DEL ir.ui.view: hr_evaluation.view_hr_evaluation_plan_form
+DEL ir.ui.view: hr_evaluation.view_hr_evaluation_plan_phase_form
+DEL ir.ui.view: hr_evaluation.view_hr_evaluation_plan_phase_tree
+DEL ir.ui.view: hr_evaluation.view_hr_evaluation_plan_search
+DEL ir.ui.view: hr_evaluation.view_hr_evaluation_plan_tree
+DEL ir.ui.view: hr_evaluation.view_hr_evaluation_tree
+DEL mail.message: hr_evaluation.module_install_notification
+DEL res.groups: base.group_user
+DEL survey.label: hr_evaluation.acol_3_1_1
+DEL survey.label: hr_evaluation.acol_3_1_2
+DEL survey.label: hr_evaluation.acol_3_1_3
+DEL survey.label: hr_evaluation.acol_3_1_4
+DEL survey.label: hr_evaluation.acol_3_1_5
+DEL survey.label: hr_evaluation.acol_3_2_1
+DEL survey.label: hr_evaluation.acol_3_2_2
+DEL survey.label: hr_evaluation.acol_3_2_3
+DEL survey.label: hr_evaluation.acol_3_2_4
+DEL survey.label: hr_evaluation.acol_3_2_5
+DEL survey.label: hr_evaluation.arow_3_1_1
+DEL survey.label: hr_evaluation.arow_3_1_10
+DEL survey.label: hr_evaluation.arow_3_1_11
+DEL survey.label: hr_evaluation.arow_3_1_12
+DEL survey.label: hr_evaluation.arow_3_1_13
+DEL survey.label: hr_evaluation.arow_3_1_14
+DEL survey.label: hr_evaluation.arow_3_1_15
+DEL survey.label: hr_evaluation.arow_3_1_2
+DEL survey.label: hr_evaluation.arow_3_1_3
+DEL survey.label: hr_evaluation.arow_3_1_4
+DEL survey.label: hr_evaluation.arow_3_1_5
+DEL survey.label: hr_evaluation.arow_3_1_6
+DEL survey.label: hr_evaluation.arow_3_1_7
+DEL survey.label: hr_evaluation.arow_3_1_8
+DEL survey.label: hr_evaluation.arow_3_1_9
+DEL survey.label: hr_evaluation.arow_3_2_1
+DEL survey.label: hr_evaluation.arow_3_2_2
+DEL survey.label: hr_evaluation.arow_3_2_3
+DEL survey.label: hr_evaluation.arow_3_2_4
+DEL survey.label: hr_evaluation.arow_3_2_5
+DEL survey.label: hr_evaluation.opcol_2_1_1
+DEL survey.label: hr_evaluation.opcol_2_1_2
+DEL survey.label: hr_evaluation.opcol_2_1_3
+DEL survey.label: hr_evaluation.opcol_2_1_4
+DEL survey.label: hr_evaluation.opcol_2_1_5
+DEL survey.label: hr_evaluation.opcol_2_2_1
+DEL survey.label: hr_evaluation.opcol_2_2_2
+DEL survey.label: hr_evaluation.opcol_2_2_3
+DEL survey.label: hr_evaluation.opcol_2_2_4
+DEL survey.label: hr_evaluation.opcol_2_2_5
+DEL survey.label: hr_evaluation.opcol_2_3_1
+DEL survey.label: hr_evaluation.opcol_2_3_2
+DEL survey.label: hr_evaluation.opcol_2_3_3
+DEL survey.label: hr_evaluation.opcol_2_3_4
+DEL survey.label: hr_evaluation.opcol_2_3_5
+DEL survey.label: hr_evaluation.opcol_2_4_1
+DEL survey.label: hr_evaluation.opcol_2_4_2
+DEL survey.label: hr_evaluation.opcol_2_4_3
+DEL survey.label: hr_evaluation.opcol_2_4_4
+DEL survey.label: hr_evaluation.opcol_2_4_5
+DEL survey.label: hr_evaluation.opcol_2_5_1
+DEL survey.label: hr_evaluation.opcol_2_5_2
+DEL survey.label: hr_evaluation.opcol_2_5_3
+DEL survey.label: hr_evaluation.opcol_2_5_4
+DEL survey.label: hr_evaluation.opcol_2_5_5
+DEL survey.label: hr_evaluation.opcol_2_6_1
+DEL survey.label: hr_evaluation.opcol_2_6_2
+DEL survey.label: hr_evaluation.opcol_2_6_3
+DEL survey.label: hr_evaluation.opcol_2_6_4
+DEL survey.label: hr_evaluation.opcol_2_6_5
+DEL survey.label: hr_evaluation.oprow_2_1_1
+DEL survey.label: hr_evaluation.oprow_2_1_2
+DEL survey.label: hr_evaluation.oprow_2_1_3
+DEL survey.label: hr_evaluation.oprow_2_1_4
+DEL survey.label: hr_evaluation.oprow_2_1_5
+DEL survey.label: hr_evaluation.oprow_2_2_1
+DEL survey.label: hr_evaluation.oprow_2_2_2
+DEL survey.label: hr_evaluation.oprow_2_2_3
+DEL survey.label: hr_evaluation.oprow_2_2_4
+DEL survey.label: hr_evaluation.oprow_2_3_1
+DEL survey.label: hr_evaluation.oprow_2_3_2
+DEL survey.label: hr_evaluation.oprow_2_3_3
+DEL survey.label: hr_evaluation.oprow_2_4_1
+DEL survey.label: hr_evaluation.oprow_2_4_2
+DEL survey.label: hr_evaluation.oprow_2_4_3
+DEL survey.label: hr_evaluation.oprow_2_4_4
+DEL survey.label: hr_evaluation.oprow_2_5_1
+DEL survey.label: hr_evaluation.oprow_2_5_2
+DEL survey.label: hr_evaluation.oprow_2_6_1
+DEL survey.label: hr_evaluation.oprow_2_6_2
+DEL survey.label: hr_evaluation.oprow_2_6_3
+DEL survey.label: hr_evaluation.oprow_2_6_4
+DEL survey.page: hr_evaluation.appraisal_1
+DEL survey.page: hr_evaluation.appraisal_2
+DEL survey.page: hr_evaluation.appraisal_3
+DEL survey.page: hr_evaluation.appraisal_4
+DEL survey.page: hr_evaluation.appraisal_5
+DEL survey.page: hr_evaluation.opinion_1
+DEL survey.page: hr_evaluation.opinion_2
+DEL survey.question: hr_evaluation.appraisal_1_1
+DEL survey.question: hr_evaluation.appraisal_1_2
+DEL survey.question: hr_evaluation.appraisal_1_3
+DEL survey.question: hr_evaluation.appraisal_1_4
+DEL survey.question: hr_evaluation.appraisal_1_5
+DEL survey.question: hr_evaluation.appraisal_2_1
+DEL survey.question: hr_evaluation.appraisal_2_2
+DEL survey.question: hr_evaluation.appraisal_2_3
+DEL survey.question: hr_evaluation.appraisal_3_1
+DEL survey.question: hr_evaluation.appraisal_3_2
+DEL survey.question: hr_evaluation.appraisal_4_1
+DEL survey.question: hr_evaluation.appraisal_4_2
+DEL survey.question: hr_evaluation.appraisal_4_3
+DEL survey.question: hr_evaluation.appraisal_5_1
+DEL survey.question: hr_evaluation.opinion_1_1
+DEL survey.question: hr_evaluation.opinion_1_2
+DEL survey.question: hr_evaluation.opinion_2_1
+DEL survey.question: hr_evaluation.opinion_2_2
+DEL survey.question: hr_evaluation.opinion_2_3
+DEL survey.question: hr_evaluation.opinion_2_4
+DEL survey.question: hr_evaluation.opinion_2_5
+DEL survey.question: hr_evaluation.opinion_2_6
+DEL survey.question: hr_evaluation.opinion_2_7
+DEL survey.survey: hr_evaluation.appraisal_form
+DEL survey.survey: hr_evaluation.opinion_form
+ERROR: module not in list of installed modules:
+---Fields in module 'account_sequence'---
+account_sequence / account.journal          / internal_sequence_id (many2one): DEL relation: ir.sequence
+account_sequence / account.move             / internal_sequence_number (char): DEL 
+---XML records in module 'account_sequence'---
+DEL ir.actions.act_window: account_sequence.action_account_seq_installer
+DEL ir.actions.todo: account_sequence.account_seq_installer_todo
+DEL ir.sequence: account_sequence.sequence_journal_seq
+DEL ir.sequence.type: account_sequence.sequence_journal
+DEL ir.ui.view: account_sequence.view_account_journal_form_inherit
+DEL ir.ui.view: account_sequence.view_account_move_form_inherit
+DEL ir.ui.view: account_sequence.view_account_move_tree_inherit
+DEL ir.ui.view: account_sequence.view_account_sequence_installer
+DEL ir.ui.view: account_sequence.view_move_line_form_inherit
+DEL ir.ui.view: account_sequence.view_move_line_search_inherit
+DEL ir.ui.view: account_sequence.view_move_search_inherit
+ERROR: module not in list of installed modules:
+---Fields in module 'web_tests_demo'---
+---XML records in module 'web_tests_demo'---
+DEL ir.ui.view: web_tests_demo.assets_backend
+DEL ir.ui.view: web_tests_demo.qunit_suite
+ERROR: module not in list of installed modules:
+---Fields in module 'auth_openid'---
+auth_openid  / res.users                / openid_email (char)           : DEL 
+auth_openid  / res.users                / openid_key (char)             : DEL 
+auth_openid  / res.users                / openid_url (char)             : DEL 
+---XML records in module 'auth_openid'---
+DEL ir.ui.view: auth_openid.assets_backend
+DEL ir.ui.view: auth_openid.view_users_form
+ERROR: module not in list of installed modules:
+---Fields in module 'website_instantclick'---
+---XML records in module 'website_instantclick'---
+DEL ir.ui.view: website_instantclick.assets_frontend
+DEL ir.ui.view: website_instantclick.instant_click_init
+ERROR: module not in list of installed modules:
+---Fields in module 'purchase_double_validation'---
+---XML records in module 'purchase_double_validation'---
+DEL ir.ui.view: purchase_double_validation.purchase_order_search_inherit
+DEL ir.ui.view: purchase_double_validation.view_double_purchase_configuration
+DEL workflow.activity: purchase_double_validation.act_double_check
+DEL workflow.activity: purchase_double_validation.act_double_wait
+DEL workflow.transition: purchase_double_validation.trans_confirmed_double_check
+DEL workflow.transition: purchase_double_validation.trans_confirmed_double_gt
+DEL workflow.transition: purchase_double_validation.trans_confirmed_double_lt
+DEL workflow.transition: purchase_double_validation.trans_double_app_conf
+ERROR: module not in list of installed modules:
+---Fields in module 'im_chat'---
+---XML records in module 'im_chat'---
+DEL ir.model.access: im_chat.access_im_chat_conversation_state
+DEL ir.model.access: im_chat.access_im_chat_conversation_state_portal
+DEL ir.model.access: im_chat.access_im_chat_message
+DEL ir.model.access: im_chat.access_im_chat_message_portal
+DEL ir.model.access: im_chat.access_im_chat_presence
+DEL ir.model.access: im_chat.access_im_chat_presence_portal
+DEL ir.model.access: im_chat.access_im_chat_session
+DEL ir.model.access: im_chat.access_im_chat_session_portal
+DEL ir.rule: im_chat.message_rule_1
+DEL ir.rule: im_chat.session_relation_rule_1
+DEL ir.rule: im_chat.users_rule_1
+DEL ir.ui.view: im_chat.assets_backend
+ERROR: module not in list of installed modules:
+---Fields in module 'crm_mass_mailing'---
+crm_mass_mailing / mail.mass_mailing        / campaign_id (many2one)        : module is now 'mass_mailing' ('crm_mass_mailing')
+crm_mass_mailing / mail.mass_mailing        / campaign_id (many2one)        : relation is now 'utm.campaign' ('crm.tracking.campaign')
+crm_mass_mailing / mail.mass_mailing        / medium_id (many2one)          : module is now 'mass_mailing' ('crm_mass_mailing')
+crm_mass_mailing / mail.mass_mailing        / medium_id (many2one)          : relation is now 'utm.medium' ('crm.tracking.medium')
+crm_mass_mailing / mail.mass_mailing        / source_id (many2one)          : module is now 'mass_mailing' ('crm_mass_mailing')
+crm_mass_mailing / mail.mass_mailing        / source_id (many2one)          : relation is now 'utm.source' ('crm.tracking.source')
+---XML records in module 'crm_mass_mailing'---
+DEL ir.ui.view: crm_mass_mailing.view_tracking_mass_mailing_form
+ERROR: module not in list of installed modules:
+---Fields in module 'multi_company'---
+---XML records in module 'multi_company'---
+DEL ir.actions.act_window: multi_company.action_inventory_form
+DEL ir.ui.menu: base.menu_action_inventory_form
+DEL ir.ui.view: multi_company.view_inventory_form
+DEL ir.ui.view: multi_company.view_inventory_search
+DEL ir.ui.view: multi_company.view_inventory_tree
+ERROR: module not in list of installed modules:
+---Fields in module 'portal_claim'---
+---XML records in module 'portal_claim'---
+DEL ir.actions.act_window: portal_claim.crm_case_categ_claim0
+DEL ir.model.access: portal_claim.access_crm_claim
+DEL ir.model.access: portal_claim.access_crm_claim_stage
+DEL ir.rule: portal_claim.portal_claim_rule
+DEL ir.ui.menu: portal_claim.portal_after_sales_claims
+ERROR: module not in list of installed modules:
+---Fields in module 'account_anglo_saxon'---
+account_anglo_saxon / account.invoice.line     / move_id (many2one)            : DEL relation: stock.move
+account_anglo_saxon / product.category         / property_account_creditor_price_difference_categ (many2one): module is now 'purchase' ('account_anglo_saxon')
+account_anglo_saxon / product.template         / property_account_creditor_price_difference (many2one): module is now 'purchase' ('account_anglo_saxon')
+---XML records in module 'account_anglo_saxon'---
+DEL ir.ui.view: account_anglo_saxon.product_template_form_view
+DEL ir.ui.view: account_anglo_saxon.view_category_property_form
+ERROR: module not in list of installed modules:
+---Fields in module 'contacts'---
+---XML records in module 'contacts'---
+DEL ir.actions.act_window: contacts.action_contacts
+DEL ir.actions.act_window.view: contacts.action_contacts_view_form
+DEL ir.actions.act_window.view: contacts.action_contacts_view_kanban
+DEL ir.actions.act_window.view: contacts.action_contacts_view_tree
+DEL ir.ui.menu: contacts.menu_contacts
+ERROR: module not in list of installed modules:
+---Fields in module 'marketing_crm'---
+---XML records in module 'marketing_crm'---
+DEL ir.ui.view: marketing_crm.view_crm_lead_form
+DEL ir.ui.view: marketing_crm.view_crm_opportunity_form
+DEL ir.ui.view: marketing_crm.view_marketing_configuration
+ERROR: module not in list of installed modules:
+---Fields in module 'l10n_be_coda'---
+l10n_be_coda / account.bank.statement   / coda_note (text)              : DEL 
+---XML records in module 'l10n_be_coda'---
+DEL ir.actions.act_window: l10n_be_coda.action_account_bank_statement_line_coda
+DEL ir.actions.act_window: l10n_be_coda.action_account_coda_import
+DEL ir.ui.menu: l10n_be_coda.menu_account_bank_statement_line_coda
+DEL ir.ui.menu: l10n_be_coda.menu_account_coda_import
+DEL ir.ui.view: l10n_be_coda.account_coda_import_view
+DEL ir.ui.view: l10n_be_coda.view_account_bank_statement_line_coda_tree
+DEL ir.ui.view: l10n_be_coda.view_bank_statement_coda_form
+DEL ir.ui.view: l10n_be_coda.view_bank_statement_line_coda_filter
+DEL ir.ui.view: l10n_be_coda.view_bank_statement_line_coda_form

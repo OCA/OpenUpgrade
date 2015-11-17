@@ -1,0 +1,8 @@
+---Fields in module 'account_bank_statement_import'---
+account_bank_statement_import / account.bank.statement.line / unique_import_id (char)       : NEW 
+account_bank_statement_import / account.journal          / bank_statements_source (False): NEW selection_keys: ['file_import', 'manual'], mode: modify
+---XML records in module 'account_bank_statement_import'---
+NEW ir.actions.act_window: account_bank_statement_import.action_account_bank_statement_import
+NEW ir.ui.view: account_bank_statement_import.account_bank_statement_import_journal_creation_view
+NEW ir.ui.view: account_bank_statement_import.account_bank_statement_import_view
+NEW ir.ui.view: account_bank_statement_import.journal_dashboard_view_inherit

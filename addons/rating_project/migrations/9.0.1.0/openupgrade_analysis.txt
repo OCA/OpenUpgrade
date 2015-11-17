@@ -1,0 +1,9 @@
+---Fields in module 'rating_project'---
+rating_project / project.project          / is_visible_happy_customer (boolean): NEW 
+rating_project / project.task.type        / auto_validation_kanban_state (boolean): NEW 
+rating_project / project.task.type        / rating_template_id (many2one) : NEW relation: mail.template
+---XML records in module 'rating_project'---
+NEW ir.ui.view: rating_project.view_project_project_rating_form
+NEW ir.ui.view: rating_project.view_project_project_rating_kanban
+NEW ir.ui.view: rating_project.view_project_task_type_rating_form
+NEW mail.template: rating_project.rating_project_request_email_template

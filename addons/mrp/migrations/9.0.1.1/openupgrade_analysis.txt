@@ -1,0 +1,53 @@
+---Fields in module 'mrp'---
+mrp          / mrp.bom                  / message_follower_ids (many2many): not a function anymore
+mrp          / mrp.bom                  / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+mrp          / mrp.bom                  / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+mrp          / mrp.bom                  / name (char)                   : DEL 
+mrp          / mrp.bom.line             / product_uos (many2one)        : DEL relation: product.uom
+mrp          / mrp.bom.line             / product_uos_qty (float)       : DEL 
+mrp          / mrp.bom.line             / type (selection)              : DEL required: required, selection_keys: ['normal', 'phantom'], req_default: function
+mrp          / mrp.production           / message_follower_ids (many2many): not a function anymore
+mrp          / mrp.production           / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+mrp          / mrp.production           / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+mrp          / mrp.production           / product_uos (many2one)        : DEL relation: product.uom
+mrp          / mrp.production           / product_uos_qty (float)       : DEL 
+mrp          / mrp.production.product.line / product_uos (many2one)        : DEL relation: product.uom
+mrp          / mrp.production.product.line / product_uos_qty (float)       : DEL 
+mrp          / mrp.production.workcenter.line / message_follower_ids (many2many): not a function anymore
+mrp          / mrp.production.workcenter.line / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+mrp          / mrp.production.workcenter.line / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+mrp          / mrp.workcenter           / costs_journal_id (many2one)   : DEL relation: account.analytic.journal
+mrp          / product.template         / track_production (boolean)    : DEL 
+---XML records in module 'mrp'---
+DEL ir.actions.act_window: mrp.action_mrp_workcenter_load_wizard
+DEL ir.actions.act_window: mrp.action_view_mrp_product_price_wizard
+DEL ir.actions.act_window: mrp.mrp_bom_form_action2
+DEL ir.actions.act_window: mrp.mrp_production_action2
+DEL ir.actions.act_window: mrp.mrp_production_action3
+DEL ir.actions.act_window: mrp.mrp_production_action4
+DEL ir.actions.report.xml: mrp.report_cost_structure
+NEW ir.model.access: mrp.access_mrp_bom_invoicing_payment
+NEW ir.model.access: mrp.access_mrp_production_invoicing_payment
+NEW ir.model.access: mrp.access_mrp_resource_manager
+NEW ir.model.access: mrp.access_resource_resource_manager
+DEL ir.model.access: mrp.access_account_analytic_journal_mrp_worker
+DEL ir.model.access: mrp.access_account_sequence_fiscalyear
+DEL ir.model.access: mrp.access_account_sequence_fiscalyear_manager
+DEL ir.model.access: mrp.access_account_sequence_fiscalyear_system
+DEL ir.model.access: mrp.access_board_board_user
+DEL ir.model.access: mrp.access_pricelist_partnerinfo_mrp_manager
+DEL ir.model.access: mrp.access_product_price_type_mrp_manager
+DEL ir.model.access: mrp.access_product_pricelist_type_mrp_manager
+DEL ir.model.access: mrp.access_product_pricelist_version_mrp_manager
+DEL ir.model.access: mrp.access_product_ul_mrp_manager
+DEL ir.sequence.type: mrp.sequence_mrp_prod_type
+DEL ir.ui.menu: mrp.menu_mrp_bom_form_action2
+DEL ir.ui.menu: mrp.menu_mrp_property
+DEL ir.ui.menu: mrp.next_id_77
+NEW ir.ui.view: mrp.mrp_bom_line_tree_view
+NEW ir.ui.view: mrp.mrp_production_kanban_view
+NEW ir.ui.view: mrp.view_procurement_rule_form_stock_inherit_mrp
+NEW ir.ui.view: mrp.view_production_pivot
+DEL ir.ui.view: mrp.view_mrp_product_price_wizard
+DEL ir.ui.view: mrp.view_mrp_workcenter_load_wizard
+NEW res.groups: mrp.group_rounding_efficiency

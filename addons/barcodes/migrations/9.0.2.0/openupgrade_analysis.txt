@@ -1,0 +1,23 @@
+---Fields in module 'barcodes'---
+barcodes     / barcode.nomenclature     / name (char)                   : NEW required: required
+barcodes     / barcode.nomenclature     / rule_ids (one2many)           : NEW relation: barcode.rule
+barcodes     / barcode.nomenclature     / upc_ean_conv (selection)      : NEW required: required, selection_keys: ['always', 'ean2upc', 'none', 'upc2ean'], req_default: always
+barcodes     / barcode.rule             / alias (char)                  : NEW required: required, req_default: 0
+barcodes     / barcode.rule             / barcode_nomenclature_id (many2one): NEW relation: barcode.nomenclature
+barcodes     / barcode.rule             / encoding (selection)          : NEW required: required, selection_keys: function, req_default: any
+barcodes     / barcode.rule             / name (char)                   : NEW required: required
+barcodes     / barcode.rule             / pattern (char)                : NEW required: required, req_default: .*
+barcodes     / barcode.rule             / sequence (integer)            : NEW 
+barcodes     / barcode.rule             / type (selection)              : NEW required: required, selection_keys: function, req_default: product
+---XML records in module 'barcodes'---
+NEW barcode.nomenclature: barcodes.default_barcode_nomenclature
+NEW barcode.rule: barcodes.barcode_rule_product
+NEW ir.actions.act_window: barcodes.action_barcode_nomenclature_form
+NEW ir.model.access: barcodes.access_barcode_nomenclature_manager
+NEW ir.model.access: barcodes.access_barcode_nomenclature_user
+NEW ir.model.access: barcodes.access_barcode_rule_manager
+NEW ir.model.access: barcodes.access_barcode_rule_user
+NEW ir.ui.view: barcodes.assets_backend
+NEW ir.ui.view: barcodes.view_barcode_nomenclature_form
+NEW ir.ui.view: barcodes.view_barcode_nomenclature_tree
+NEW ir.ui.view: barcodes.view_barcode_rule_form

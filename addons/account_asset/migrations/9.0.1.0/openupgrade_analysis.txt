@@ -1,0 +1,49 @@
+---Fields in module 'account_asset'---
+account_asset / account.asset.asset      / account_move_ids (one2many)   : NEW relation: account.move
+account_asset / account.asset.asset      / account_move_line_ids (one2many): DEL relation: account.move.line
+account_asset / account.asset.asset      / child_ids (one2many)          : DEL relation: account.asset.asset
+account_asset / account.asset.asset      / history_ids (one2many)        : DEL relation: account.asset.history
+account_asset / account.asset.asset      / invoice_id (many2one)         : NEW relation: account.invoice
+account_asset / account.asset.asset      / message_follower_ids (one2many): NEW relation: mail.followers
+account_asset / account.asset.asset      / message_ids (one2many)        : NEW relation: mail.message
+account_asset / account.asset.asset      / message_last_post (datetime)  : NEW 
+account_asset / account.asset.asset      / parent_id (many2one)          : DEL relation: account.asset.asset
+account_asset / account.asset.asset      / purchase_date (date)          : was renamed to date [nothing to to]
+account_asset / account.asset.asset      / purchase_value (float)        : was renamed to value [nothing to to]
+account_asset / account.asset.asset      / website_message_ids (one2many): NEW relation: mail.message
+account_asset / account.asset.category   / account_expense_depreciation_id (many2one): was renamed to account_income_recognition_id [nothing to to]
+account_asset / account.asset.category   / active (boolean)              : NEW 
+account_asset / account.asset.category   / note (text)                   : DEL 
+account_asset / account.asset.category   / type (selection)              : NEW required: required, selection_keys: ['purchase', 'sale'], req_default: purchase
+account_asset / account.move             / asset_id (many2one)           : NEW relation: account.asset.asset
+account_asset / account.move.line        / asset_id (many2one)           : DEL relation: account.asset.asset
+account_asset / product.template         / asset_category_id (many2one)  : NEW relation: account.asset.category
+account_asset / product.template         / deferred_revenue_category_id (many2one): NEW relation: account.asset.category
+---XML records in module 'account_asset'---
+NEW ir.actions.act_window: account_asset.action_account_asset_asset_list_normal_purchase
+DEL ir.actions.act_window: account_asset.act_entries_open
+DEL ir.actions.act_window: account_asset.action_account_asset_asset_list_normal
+DEL ir.actions.act_window: account_asset.action_account_asset_asset_tree
+NEW ir.cron: account_asset.account_asset_cron
+NEW ir.model.access: account_asset.access_account_asset_asset_invoicing_payment
+NEW ir.model.access: account_asset.access_account_asset_category_invoicing_payment
+NEW ir.model.access: account_asset.access_account_asset_depreciation_line_invoicing_payment
+DEL ir.model.access: account_asset.access_account_asset_history
+DEL ir.model.access: account_asset.access_account_asset_history_manager
+NEW ir.ui.menu: account_asset.menu_action_account_asset_asset_list_normal_purchase
+DEL ir.ui.menu: account_asset.menu_action_account_asset_asset_list_normal
+DEL ir.ui.menu: account_asset.menu_action_account_asset_asset_tree
+DEL ir.ui.menu: account_asset.menu_finance_assets
+NEW ir.ui.view: account_asset.action_account_asset_report_pivot
+NEW ir.ui.view: account_asset.assets_backend
+NEW ir.ui.view: account_asset.view_account_asset_asset_purchase_tree
+NEW ir.ui.view: account_asset.view_account_move_filter_asset_inherit
+NEW ir.ui.view: account_asset.view_account_move_form_asset_inherit
+NEW ir.ui.view: account_asset.view_product_template_form_inherit
+DEL ir.ui.view: account_asset.view_account_asset_asset_hierarchy_tree
+DEL ir.ui.view: account_asset.view_account_asset_asset_tree
+DEL ir.ui.view: account_asset.view_account_asset_history_form
+DEL ir.ui.view: account_asset.view_account_asset_history_tree
+DEL ir.ui.view: account_asset.view_account_invoice_asset_form
+DEL ir.ui.view: account_asset.view_account_move_line_filter_inherit
+DEL ir.ui.view: account_asset.view_account_move_line_form_inherit

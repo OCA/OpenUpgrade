@@ -1,0 +1,70 @@
+---Fields in module 'im_livechat'---
+im_livechat  / im_livechat.channel      / channel_ids (one2many)        : NEW relation: mail.channel
+im_livechat  / im_livechat.channel      / rule_ids (one2many)           : NEW relation: im_livechat.channel.rule
+im_livechat  / im_livechat.channel.rule / action (selection)            : NEW required: required, selection_keys: ['auto_popup', 'display_button', 'hide_button'], req_default: display_button
+im_livechat  / im_livechat.channel.rule / auto_popup_timer (integer)    : NEW 
+im_livechat  / im_livechat.channel.rule / channel_id (many2one)         : NEW relation: im_livechat.channel
+im_livechat  / im_livechat.channel.rule / country_ids (many2many)       : NEW relation: res.country
+im_livechat  / im_livechat.channel.rule / regex_url (char)              : NEW 
+im_livechat  / im_livechat.channel.rule / sequence (integer)            : NEW 
+im_livechat  / mail.channel             / anonymous_name (char)         : NEW 
+im_livechat  / mail.channel             / channel_type (False)          : NEW selection_keys: ['channel', 'chat', 'livechat'], mode: modify
+im_livechat  / mail.channel             / livechat_channel_id (many2one): NEW relation: im_livechat.channel
+im_livechat  / mail.channel             / rating_ids (one2many)         : NEW relation: rating.rating
+---XML records in module 'im_livechat'---
+NEW ir.actions.act_window: im_livechat.im_livechat_channel_action
+NEW ir.actions.act_window: im_livechat.im_livechat_report_channel_action
+NEW ir.actions.act_window: im_livechat.im_livechat_report_operator_action
+NEW ir.actions.act_window: im_livechat.mail_channel_action
+NEW ir.actions.act_window: im_livechat.mail_channel_action_from_livechat_channel
+DEL ir.actions.act_window: im_livechat.action_history
+DEL ir.actions.act_window: im_livechat.action_support_channels
+NEW ir.actions.client: im_livechat.ir_action_client_open_livechat_menu
+NEW ir.actions.todo: base.open_menu
+NEW ir.cron: im_livechat.ir_cron_remove_empty_session
+NEW ir.model.access: im_livechat.access_livechat_channel
+NEW ir.model.access: im_livechat.access_livechat_channel_manager
+NEW ir.model.access: im_livechat.access_livechat_channel_rule
+NEW ir.model.access: im_livechat.access_livechat_channel_rule_manager
+NEW ir.model.access: im_livechat.access_livechat_channel_rule_user
+NEW ir.model.access: im_livechat.access_livechat_channel_user
+NEW ir.model.access: im_livechat.access_livechat_support_report_channel
+NEW ir.model.access: im_livechat.access_livechat_support_report_operator
+DEL ir.model.access: im_livechat.access_ls_chann1
+DEL ir.model.access: im_livechat.access_ls_chann2
+DEL ir.model.access: im_livechat.access_ls_chann3
+DEL ir.rule: im_livechat.message_rule_1
+NEW ir.ui.menu: im_livechat.menu_livechat_root
+NEW ir.ui.menu: im_livechat.menu_reporting_livechat
+NEW ir.ui.menu: im_livechat.menu_reporting_livechat_channel
+NEW ir.ui.menu: im_livechat.menu_reporting_livechat_operator
+NEW ir.ui.menu: im_livechat.session_history
+DEL ir.ui.menu: im_livechat.history
+DEL ir.ui.menu: im_livechat.im_livechat
+NEW ir.ui.view: im_livechat.assets_backend
+NEW ir.ui.view: im_livechat.im_livechat_channel_rule_view_form
+NEW ir.ui.view: im_livechat.im_livechat_channel_rule_view_tree
+NEW ir.ui.view: im_livechat.im_livechat_channel_view_form
+NEW ir.ui.view: im_livechat.im_livechat_channel_view_kanban
+NEW ir.ui.view: im_livechat.im_livechat_report_channel_view_graph
+NEW ir.ui.view: im_livechat.im_livechat_report_channel_view_pivot
+NEW ir.ui.view: im_livechat.im_livechat_report_channel_view_search
+NEW ir.ui.view: im_livechat.im_livechat_report_operator_view_graph
+NEW ir.ui.view: im_livechat.im_livechat_report_operator_view_pivot
+NEW ir.ui.view: im_livechat.im_livechat_report_operator_view_search
+NEW ir.ui.view: im_livechat.mail_channel_view_form
+NEW ir.ui.view: im_livechat.mail_channel_view_search
+NEW ir.ui.view: im_livechat.mail_channel_view_tree
+DEL ir.ui.view: im_livechat.im_message_form
+DEL ir.ui.view: im_livechat.im_message_search
+DEL ir.ui.view: im_livechat.internal_lib
+DEL ir.ui.view: im_livechat.internal_loader
+DEL ir.ui.view: im_livechat.support_channel_form
+DEL ir.ui.view: im_livechat.support_channel_kanban
+NEW mail.shortcode: im_livechat.mail_shorcode_rating_10
+NEW mail.shortcode: im_livechat.mail_shortcode_rating_0
+NEW mail.shortcode: im_livechat.mail_shortcode_rating_5
+NEW res.groups: im_livechat.im_livechat_group_manager
+NEW res.groups: im_livechat.im_livechat_group_user
+DEL res.groups: im_livechat.group_im_livechat
+DEL res.groups: im_livechat.group_im_livechat_manager

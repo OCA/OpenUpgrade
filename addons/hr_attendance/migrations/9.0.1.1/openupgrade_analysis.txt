@@ -1,0 +1,17 @@
+---Fields in module 'hr_attendance'---
+---XML records in module 'hr_attendance'---
+NEW ir.actions.act_window: hr_attendance.action_hr_attendance_graph_filtered
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_config
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_report
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_root
+NEW ir.ui.menu: hr_attendance.timesheet_menu_root
+DEL ir.ui.menu: hr.menu_open_view_attendance_reason_new_config
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance_graph
+DEL ir.ui.menu: hr_attendance.menu_open_view_attendance_reason
+NEW ir.ui.view: hr_attendance.hr_department_view_kanban
+NEW ir.ui.view: hr_attendance.view_hr_attendance_pivot
+DEL ir.ui.view: hr_attendance.hr_attendace_group
+DEL ir.ui.view: hr_attendance.hr_attendance_employee
+NEW res.groups: base.group_hr_manager
+DEL res.groups: base.group_hr_attendance

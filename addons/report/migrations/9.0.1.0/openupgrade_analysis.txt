@@ -1,0 +1,14 @@
+---Fields in module 'report'---
+report       / report.paperformat       / margin_bottom (integer)       : type is now 'float' ('integer')
+report       / report.paperformat       / margin_left (integer)         : type is now 'float' ('integer')
+report       / report.paperformat       / margin_right (integer)        : type is now 'float' ('integer')
+report       / report.paperformat       / margin_top (integer)          : type is now 'float' ('integer')
+---XML records in module 'report'---
+NEW ir.actions.report.xml: report.action_report_externalpreview
+NEW ir.actions.report.xml: report.action_report_internalpreview
+NEW ir.ui.view: report.assets_common
+NEW ir.ui.view: report.assets_editor
+NEW ir.ui.view: report.assets_pdf
+NEW ir.ui.view: report.preview_externalreport
+NEW ir.ui.view: report.preview_internalreport
+DEL ir.ui.view: report.style

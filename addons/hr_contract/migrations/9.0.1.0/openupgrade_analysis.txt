@@ -1,0 +1,19 @@
+---Fields in module 'hr_contract'---
+hr_contract  / hr.contract              / message_follower_ids (one2many): NEW relation: mail.followers
+hr_contract  / hr.contract              / message_ids (one2many)        : NEW relation: mail.message
+hr_contract  / hr.contract              / message_last_post (datetime)  : NEW 
+hr_contract  / hr.contract              / state (selection)             : NEW selection_keys: ['close', 'draft', 'open', 'pending']
+hr_contract  / hr.contract              / website_message_ids (one2many): NEW relation: mail.message
+hr_contract  / hr.contract.type         / sequence (integer)            : NEW 
+---XML records in module 'hr_contract'---
+NEW base.action.rule: hr_contract.rule_contract_1_set_as_pending
+NEW base.action.rule: hr_contract.rule_contract_2_set_as_pending
+NEW base.action.rule: hr_contract.rule_contract_3_set_as_close
+NEW base.action.rule: hr_contract.rule_contract_4_set_as_close
+NEW ir.actions.server: hr_contract.contract_set_as_close
+NEW ir.actions.server: hr_contract.contract_set_as_pending
+NEW ir.filters: hr_contract.contract_open
+DEL ir.ui.menu: hr_contract.next_id_56
+NEW mail.message.subtype: hr_contract.mt_contract_close
+NEW mail.message.subtype: hr_contract.mt_contract_pending
+NEW mail.message.subtype: hr_contract.mt_department_contract_pending

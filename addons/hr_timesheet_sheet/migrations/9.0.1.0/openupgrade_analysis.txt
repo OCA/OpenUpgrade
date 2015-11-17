@@ -1,0 +1,16 @@
+---Fields in module 'hr_timesheet_sheet'---
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / message_follower_ids (many2many): not a function anymore
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / timesheet_ids (one2many)      : relation is now 'account.analytic.line' ('hr.analytic.timesheet')
+---XML records in module 'hr_timesheet_sheet'---
+NEW ir.actions.act_window: hr_timesheet_sheet.hr_timesheet_action_from_department
+NEW ir.actions.act_window.view: hr_timesheet_sheet.action_open_timesheet_sheet_holidays_tree
+NEW ir.actions.client: hr_timesheet_sheet.action_client_hr_timesheet_sheet_menu
+DEL ir.model.access: hr_timesheet_sheet.access_hr_analytic_timesheet_system_user
+NEW ir.ui.view: hr_timesheet_sheet.hr_department_view_kanban
+DEL ir.ui.view: hr_timesheet_sheet.view_hr_timehseet_config_settings
+NEW mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_approved
+NEW mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_confirmed
+NEW mail.message.subtype: hr_timesheet_sheet.mt_timesheet_approved
+NEW mail.message.subtype: hr_timesheet_sheet.mt_timesheet_confirmed
