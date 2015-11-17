@@ -1,0 +1,40 @@
+---Fields in module 'project_issue'---
+project_issue / project.issue            / categ_ids (many2many)         : DEL relation: project.category
+project_issue / project.issue            / kanban_state (selection)      : now required, default = normal
+project_issue / project.issue            / message_follower_ids (many2many): not a function anymore
+project_issue / project.issue            / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+project_issue / project.issue            / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+project_issue / project.issue            / progress (float)              : module is now 'project_issue_sheet' ('project_issue')
+project_issue / project.issue            / section_id (many2one)         : relation is now 'crm.team' ('crm.case.section')
+project_issue / project.issue            / section_id (many2one)         : was renamed to team_id [nothing to to]
+project_issue / project.issue            / tag_ids (many2many)           : NEW relation: project.tags
+project_issue / project.issue            / version_id (many2one)         : DEL relation: project.issue.version
+project_issue / project.issue            / website_message_ids (one2many): NEW relation: mail.message
+project_issue / project.project          / label_issues (char)           : NEW 
+project_issue / project.project          / project_escalation_id (many2one): DEL relation: project.project
+---XML records in module 'project_issue'---
+NEW ir.actions.act_window: project_issue.action_project_issue_report_filtered
+NEW ir.actions.act_window: project_issue.open_view_issue
+DEL ir.actions.act_window: project_issue.project_issue_version_action
+DEL ir.actions.act_window.view: project_issue.action_project_issue_report_graph
+DEL ir.actions.todo: base.open_menu
+NEW ir.model.access: project_issue.access_crm_team
+NEW ir.model.access: project_issue.access_project_issue_portal
+DEL ir.model.access: project_issue.access_crm_case_section
+DEL ir.model.access: project_issue.access_project_issue_version_project
+DEL ir.model.access: project_issue.access_project_issue_version_project_user
+NEW ir.rule: project_issue.portal_issue_rule
+NEW ir.ui.menu: project_issue.portal_services_issues
+DEL ir.ui.menu: project_issue.menu_project_confi
+DEL ir.ui.menu: project_issue.menu_project_issue_version_act
+NEW ir.ui.view: project_issue.project_issue_pivot_view
+NEW ir.ui.view: project_issue.view_project_issue_report_pivot
+DEL ir.ui.view: project_issue.project_issue_version_form_view
+DEL ir.ui.view: project_issue.project_issue_version_search_view
+DEL ir.ui.view: project_issue.view_config_settings
+NEW mail.message.subtype: project_issue.mt_project_issue_ready
+DEL mail.message.subtype: project_issue.mt_issue_assigned
+DEL mail.message.subtype: project_issue.mt_project_issue_assigned
+DEL project.issue.version: project_issue.type1
+DEL project.issue.version: project_issue.type2
+DEL project.issue.version: project_issue.type3

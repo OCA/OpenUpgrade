@@ -1,0 +1,56 @@
+---Fields in module 'website_forum'---
+website_forum / forum.forum              / allow_bump (boolean)          : NEW 
+website_forum / forum.forum              / allow_discussion (boolean)    : NEW 
+website_forum / forum.forum              / allow_link (boolean)          : NEW 
+website_forum / forum.forum              / allow_question (boolean)      : NEW 
+website_forum / forum.forum              / allow_share (boolean)         : NEW 
+website_forum / forum.forum              / default_order (selection)     : NEW required: required, selection_keys: ['child_count desc', 'create_date desc', 'relevancy desc', 'vote_count desc', 'write_date desc'], req_default: write_date desc
+website_forum / forum.forum              / default_post_type (selection) : NEW required: required, selection_keys: ['discussion', 'link', 'question'], req_default: question
+website_forum / forum.forum              / description (html)            : type is now 'text' ('html')
+website_forum / forum.forum              / karma_dofollow (integer)      : NEW 
+website_forum / forum.forum              / karma_editor_clickable_link (integer): DEL 
+website_forum / forum.forum              / karma_editor_link_files (integer): was renamed to karma_editor [nothing to to]
+website_forum / forum.forum              / karma_moderate (integer)      : NEW 
+website_forum / forum.forum              / karma_post (integer)          : NEW 
+website_forum / forum.forum              / karma_user_bio (integer)      : NEW 
+website_forum / forum.forum              / message_follower_ids (many2many): not a function anymore
+website_forum / forum.forum              / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+website_forum / forum.forum              / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+website_forum / forum.forum              / relevancy_post_vote (float)   : NEW 
+website_forum / forum.forum              / relevancy_time_decay (float)  : NEW 
+website_forum / forum.forum              / welcome_message (html)        : NEW 
+website_forum / forum.post               / bump_date (datetime)          : NEW 
+website_forum / forum.post               / content_link (char)           : NEW 
+website_forum / forum.post               / flag_user_id (many2one)       : NEW relation: res.users
+website_forum / forum.post               / message_follower_ids (many2many): not a function anymore
+website_forum / forum.post               / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+website_forum / forum.post               / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+website_forum / forum.post               / moderator_id (many2one)       : NEW relation: res.users
+website_forum / forum.post               / post_type (selection)         : NEW required: required, selection_keys: ['discussion', 'link', 'question'], req_default: question
+website_forum / forum.post               / state (selection)             : selection_keys is now '['active', 'close', 'flagged', 'offensive', 'pending']' ('['active', 'close', 'offensive']')
+website_forum / forum.post.reason        / reason_type (char)            : NEW 
+---XML records in module 'website_forum'---
+DEL email.template: website_forum.validation_email
+NEW forum.post.reason: website_forum.reason_11
+NEW forum.post.reason: website_forum.reason_12
+NEW forum.post.reason: website_forum.reason_13
+NEW forum.post.reason: website_forum.reason_14
+NEW forum.post.reason: website_forum.reason_15
+NEW ir.ui.view: website_forum.close_post
+NEW ir.ui.view: website_forum.display_post_question_block
+NEW ir.ui.view: website_forum.edit_welcome_message
+NEW ir.ui.view: website_forum.forum_user_tooltip
+NEW ir.ui.view: website_forum.moderation_display_post_answer
+NEW ir.ui.view: website_forum.moderation_display_post_question_block
+NEW ir.ui.view: website_forum.moderation_queue
+NEW ir.ui.view: website_forum.new_discussion
+NEW ir.ui.view: website_forum.new_link
+NEW ir.ui.view: website_forum.new_question
+NEW ir.ui.view: website_forum.post_answers
+NEW ir.ui.view: website_forum.post_reply
+NEW ir.ui.view: website_forum.view_forum_post_graph
+DEL ir.ui.view: website_forum.ask_question
+DEL ir.ui.view: website_forum.close_question
+DEL ir.ui.view: website_forum.view_users_form_simple_modif_forum
+NEW mail.template: website_forum.validation_email
+NEW res.users: base.user_root

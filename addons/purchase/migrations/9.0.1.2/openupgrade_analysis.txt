@@ -1,0 +1,136 @@
+---Fields in module 'purchase'---
+purchase     / account.invoice          / purchase_id (many2one)        : NEW relation: purchase.order
+purchase     / product.template         / purchase_method (selection)   : NEW selection_keys: ['purchase', 'receive']
+purchase     / purchase.order           / bid_date (date)               : DEL 
+purchase     / purchase.order           / bid_validity (date)           : DEL 
+purchase     / purchase.order           / fiscal_position (many2one)    : was renamed to fiscal_position_id [nothing to to]
+purchase     / purchase.order           / group_id (many2one)           : NEW relation: procurement.group
+purchase     / purchase.order           / invoice_ids (many2many)       : DEL relation: account.invoice
+purchase     / purchase.order           / invoice_method (selection)    : DEL required: required, selection_keys: ['manual', 'order', 'picking'], req_default: order
+purchase     / purchase.order           / journal_id (many2one)         : DEL relation: account.journal
+purchase     / purchase.order           / location_id (many2one)        : DEL relation: stock.location, required: required
+purchase     / purchase.order           / message_follower_ids (many2many): not a function anymore
+purchase     / purchase.order           / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+purchase     / purchase.order           / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+purchase     / purchase.order           / pricelist_id (many2one)       : DEL relation: product.pricelist, required: required, req_default: function
+purchase     / purchase.order           / shipped (boolean)             : DEL 
+purchase     / purchase.order           / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'purchase', 'sent', 'to approve']' ('['approved', 'bid', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'sent']')
+purchase     / purchase.order           / validator (many2one)          : DEL relation: res.users
+purchase     / purchase.order.line      / date_planned (date)           : type is now 'datetime' ('date')
+purchase     / purchase.order.line      / invoice_lines (many2many)     : type is now 'one2many' ('many2many')
+purchase     / purchase.order.line      / invoiced (boolean)            : DEL 
+purchase     / purchase.order.line      / product_id (many2one)         : now required
+purchase     / purchase.order.line      / state (selection)             : DEL required: required, selection_keys: ['cancel', 'confirmed', 'done', 'draft'], req_default: function
+purchase     / res.company              / po_double_validation (selection): NEW selection_keys: ['one_step', 'two_step']
+purchase     / res.company              / po_double_validation_amount (float): NEW 
+purchase     / res.partner              / property_product_pricelist_purchase (many2one): DEL relation: product.pricelist
+purchase     / res.partner              / property_purchase_currency_id (many2one): NEW relation: res.currency
+---XML records in module 'purchase'---
+DEL email.template: purchase.email_template_edi_purchase
+DEL email.template: purchase.email_template_edi_purchase_done
+NEW ir.actions.act_window: purchase.purchase_open_invoice
+NEW ir.actions.act_window: purchase.purchase_open_picking
+DEL ir.actions.act_window: purchase.action_email_templates
+DEL ir.actions.act_window: purchase.action_picking_tree_picking_to_invoice
+DEL ir.actions.act_window: purchase.action_view_purchase_line_invoice
+DEL ir.actions.act_window: purchase.action_view_purchase_order_group
+DEL ir.actions.act_window: purchase.purchase_line_form_action2
+DEL ir.actions.act_window: purchase.purchase_pricelist_version_action
+NEW ir.actions.act_window.view: purchase.action_invoice__supplier_tree1_view2
+NEW ir.actions.act_window.view: purchase.action_invoice_supplier_tree1_view1
+DEL ir.actions.act_window.view: purchase.purchase_line_form_action_form2
+DEL ir.actions.act_window.view: purchase.purchase_line_form_action_tree2
+NEW ir.model.access: purchase.access_purchase_order_invoicing_payments
+NEW ir.model.access: purchase.access_purchase_order_line_invoicing_payments
+DEL ir.model.access: purchase.access_account_fiscalyear
+DEL ir.model.access: purchase.access_account_journal_period
+DEL ir.model.access: purchase.access_account_move_reconcile
+DEL ir.model.access: purchase.access_account_period
+DEL ir.model.access: purchase.access_account_sequence_fiscalyear_purchase_user
+DEL ir.model.access: purchase.access_ir_property_group_purchase_manager
+DEL ir.model.access: purchase.access_pricelist_partnerinfo_purchase_manager
+DEL ir.model.access: purchase.access_product_price_type_purchase_manager
+DEL ir.model.access: purchase.access_product_pricelist_purchase_manager
+DEL ir.model.access: purchase.access_product_pricelist_type_purchase_manager
+DEL ir.model.access: purchase.access_product_pricelist_version_purchase_manager
+DEL ir.model.access: purchase.access_product_ul_purchase_manager
+DEL ir.property: purchase.property_product_pricelist_purchase
+DEL ir.sequence.type: purchase.seq_type_purchase_order
+NEW ir.ui.menu: base.purchase_report
+NEW ir.ui.menu: purchase.menu_purchase_control
+NEW ir.ui.menu: purchase.menu_purchase_general_settings
+DEL ir.ui.menu: base.next_id_73
+DEL ir.ui.menu: purchase.menu_action_picking_tree_picking_to_invoice
+DEL ir.ui.menu: purchase.menu_action_purchase_order_report_all
+DEL ir.ui.menu: purchase.menu_partner_categories_in_form
+DEL ir.ui.menu: purchase.menu_procurement_management_inventory
+DEL ir.ui.menu: purchase.menu_procurement_management_invoice
+DEL ir.ui.menu: purchase.menu_procurement_management_product
+DEL ir.ui.menu: purchase.menu_product_by_category_purchase_form
+DEL ir.ui.menu: purchase.menu_product_pricelist_action2_purchase_type
+DEL ir.ui.menu: purchase.menu_purchase_config_purchase
+DEL ir.ui.menu: purchase.menu_purchase_line_order_draft
+DEL ir.ui.menu: purchase.menu_purchase_partner_cat
+DEL ir.ui.menu: purchase.menu_purchase_pricelist_version_action
+NEW ir.ui.view: purchase.product_template_form_view
+NEW ir.ui.view: purchase.purchase_order_pivot
+NEW ir.ui.view: purchase.view_category_property_form
+NEW ir.ui.view: purchase.view_invoice_line_form_inherit_purchase
+NEW ir.ui.view: purchase.view_invoice_supplier_purchase_form
+NEW ir.ui.view: purchase.view_purchase_order_kanban
+NEW ir.ui.view: purchase.view_purchase_order_pivot
+DEL ir.ui.view: purchase.purchase_order_2_stock_picking
+DEL ir.ui.view: purchase.purchase_order_line_form
+DEL ir.ui.view: purchase.view_product_normal_purchase_buttons_from
+DEL ir.ui.view: purchase.view_purchase_line_invoice
+DEL ir.ui.view: purchase.view_purchase_order_group
+DEL ir.ui.view: purchase.view_request_for_quotation_filter
+NEW mail.template: purchase.email_template_edi_purchase
+NEW mail.template: purchase.email_template_edi_purchase_done
+DEL product.pricelist: purchase.list0
+DEL product.pricelist.item: purchase.item0
+DEL product.pricelist.type: purchase.pricelist_type_purchase
+DEL product.pricelist.version: purchase.ver0
+NEW res.groups: purchase.group_manage_vendor_price
+NEW web.tip: purchase.purchase_tip_1
+NEW web.tip: purchase.purchase_tip_2
+NEW web.tip: purchase.purchase_tip_3
+DEL workflow: purchase.purchase_order
+DEL workflow.activity: purchase.act_bid
+DEL workflow.activity: purchase.act_cancel
+DEL workflow.activity: purchase.act_confirmed
+DEL workflow.activity: purchase.act_done
+DEL workflow.activity: purchase.act_draft
+DEL workflow.activity: purchase.act_except_invoice
+DEL workflow.activity: purchase.act_except_picking
+DEL workflow.activity: purchase.act_invoice
+DEL workflow.activity: purchase.act_invoice_done
+DEL workflow.activity: purchase.act_invoice_end
+DEL workflow.activity: purchase.act_picking
+DEL workflow.activity: purchase.act_picking_done
+DEL workflow.activity: purchase.act_router
+DEL workflow.activity: purchase.act_sent
+DEL workflow.transition: purchase.trans_bid_cancel
+DEL workflow.transition: purchase.trans_bid_confirmed
+DEL workflow.transition: purchase.trans_confirmed_cancel
+DEL workflow.transition: purchase.trans_confirmed_router
+DEL workflow.transition: purchase.trans_draft_cancel
+DEL workflow.transition: purchase.trans_draft_confirmed
+DEL workflow.transition: purchase.trans_draft_sent
+DEL workflow.transition: purchase.trans_except_invoice
+DEL workflow.transition: purchase.trans_except_invoice_invoice_done
+DEL workflow.transition: purchase.trans_except_picking
+DEL workflow.transition: purchase.trans_except_picking_picking_done
+DEL workflow.transition: purchase.trans_invoice_done_done
+DEL workflow.transition: purchase.trans_invoice_end_done
+DEL workflow.transition: purchase.trans_invoice_except_invoice
+DEL workflow.transition: purchase.trans_invoice_invoice_done
+DEL workflow.transition: purchase.trans_picking_done_done
+DEL workflow.transition: purchase.trans_picking_except_picking
+DEL workflow.transition: purchase.trans_picking_picking_done
+DEL workflow.transition: purchase.trans_router_invoice
+DEL workflow.transition: purchase.trans_router_invoice_no_order
+DEL workflow.transition: purchase.trans_router_picking
+DEL workflow.transition: purchase.trans_router_picking_done
+DEL workflow.transition: purchase.trans_sent_bid
+DEL workflow.transition: purchase.trans_sent_cancel

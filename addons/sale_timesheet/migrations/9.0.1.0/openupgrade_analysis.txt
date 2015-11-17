@@ -1,0 +1,7 @@
+---Fields in module 'sale_timesheet'---
+sale_timesheet / hr.employee              / timesheet_cost (float)        : NEW 
+sale_timesheet / product.template         / track_service (False)         : NEW selection_keys: ['manual', 'timesheet'], mode: modify
+---XML records in module 'sale_timesheet'---
+NEW ir.ui.view: sale_timesheet.hr_timesheet_employee_extd_form
+NEW ir.ui.view: sale_timesheet.view_order_form_inherit_sale_timesheet
+NEW ir.ui.view: sale_timesheet.view_product_timesheet_form

@@ -1,0 +1,8 @@
+---Fields in module 'website_form'---
+website_form / ir.model                 / website_form_access (boolean) : NEW 
+website_form / ir.model                 / website_form_default_field_id (many2one): NEW relation: ir.model.fields
+website_form / ir.model                 / website_form_label (char)     : NEW 
+website_form / ir.model.fields          / website_form_blacklisted (boolean): NEW 
+website_form / website                  / website_form_enable_metadata (boolean): NEW 
+---XML records in module 'website_form'---
+NEW ir.ui.view: website_form.assets_frontend

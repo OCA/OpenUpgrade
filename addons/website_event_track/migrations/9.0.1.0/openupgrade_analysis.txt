@@ -1,0 +1,45 @@
+---Fields in module 'website_event_track'---
+website_event_track / event.event              / show_track_proposal (boolean) : now a function
+website_event_track / event.event              / show_tracks (boolean)         : now a function
+website_event_track / event.event              / tag_ids (many2many)           : DEL relation: event.tag
+website_event_track / event.event              / timezone_of_event (selection) : DEL selection_keys: function
+website_event_track / event.event              / tracks_tag_ids (one2many)     : type is now 'many2many' ('one2many')
+website_event_track / event.sponsor            / sequence (float)              : type is now 'integer' ('float')
+website_event_track / event.sponsor            / url (text)                    : type is now 'char' ('text')
+website_event_track / event.track              / image (binary)                : now a function
+website_event_track / event.track              / message_follower_ids (many2many): not a function anymore
+website_event_track / event.track              / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+website_event_track / event.track              / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+website_event_track / event.track              / partner_biography (html)      : NEW 
+website_event_track / event.track              / partner_email (char)          : NEW 
+website_event_track / event.track              / partner_id (many2one)         : NEW relation: res.partner
+website_event_track / event.track              / partner_name (char)           : NEW 
+website_event_track / event.track              / partner_phone (char)          : NEW 
+website_event_track / event.track              / stage_id (many2one)           : DEL relation: event.track.stage
+website_event_track / event.track              / state (selection)             : NEW required: required, selection_keys: ['announced', 'cancel', 'confirmed', 'draft', 'published', 'refused'], req_default: draft
+website_event_track / event.track.tag          / track_ids (many2many)         : NEW relation: event.track
+---XML records in module 'website_event_track'---
+DEL event.track.stage: website_event_track.event_track_stage1
+DEL event.track.stage: website_event_track.event_track_stage2
+DEL event.track.stage: website_event_track.event_track_stage3
+DEL event.track.stage: website_event_track.event_track_stage4
+DEL event.track.stage: website_event_track.event_track_stage5
+NEW ir.actions.act_window: website_event_track.action_event_sponsor_from_event
+NEW ir.actions.act_window: website_event_track.action_event_track_from_event
+DEL ir.actions.act_window: website_event_track.act_event_list_tracks
+DEL ir.actions.act_window: website_event_track.action_event_tag
+DEL ir.actions.act_window: website_event_track.action_event_track_stage
+DEL ir.model.access: website_event_track.access_event_tag_manager
+DEL ir.model.access: website_event_track.access_event_tag_public
+DEL ir.model.access: website_event_track.access_event_track_stage_manager
+DEL ir.model.access: website_event_track.access_event_track_stage_public
+DEL ir.ui.menu: website_event_track.menu_event_tag
+DEL ir.ui.menu: website_event_track.menu_event_track_stage
+NEW ir.ui.view: website_event_track.view_event_sponsor_search
+NEW ir.ui.view: website_event_track.view_event_sponsor_tree
+DEL ir.ui.view: website_event_track.view_event_tag_form
+DEL ir.ui.view: website_event_track.view_event_tag_tree
+DEL ir.ui.view: website_event_track.view_event_track_stage_form
+DEL ir.ui.view: website_event_track.view_event_track_stage_tree
+NEW mail.message.subtype: website_event_track.mt_event_track
+NEW web.tip: website_event_track.event_track_tip_1

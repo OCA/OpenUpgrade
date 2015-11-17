@@ -1,0 +1,7 @@
+---Fields in module 'mrp_operations'---
+---XML records in module 'mrp_operations'---
+DEL ir.actions.act_window.view: mrp_operations.action_report_mrp_workorder_graph
+DEL ir.actions.report.xml: mrp_operations.report_code_barcode
+NEW ir.ui.view: mrp_operations.report_wcbarcode
+NEW ir.ui.view: mrp_operations.view_report_mrp_workorder_pivot
+NEW report.paperformat: mrp_operations.paperformat_wcbarcode

@@ -1,0 +1,16 @@
+---Fields in module 'project_issue_sheet'---
+project_issue_sheet / account.analytic.line    / issue_id (many2one)           : NEW relation: project.issue
+project_issue_sheet / project.issue            / timesheet_ids (one2many)      : relation is now 'account.analytic.line' ('hr.analytic.timesheet')
+---XML records in module 'project_issue_sheet'---
+NEW ir.model.access: project_issue_sheet.access_account_analytic_line_project_manager
+NEW ir.model.access: project_issue_sheet.access_account_analytic_line_project_user
+DEL ir.model.access: project_issue_sheet.access_account_analytic_journal_project_manager
+DEL ir.model.access: project_issue_sheet.access_account_analytic_journal_project_user
+DEL ir.model.access: project_issue_sheet.access_account_fiscalyear_project_manager
+DEL ir.model.access: project_issue_sheet.access_account_fiscalyear_project_user
+DEL ir.model.access: project_issue_sheet.access_hr_analytic_timesheet_project_manager
+DEL ir.model.access: project_issue_sheet.access_hr_analytic_timesheet_project_user
+DEL ir.model.access: project_issue_sheet.access_hr_timesheet_invoice_factor_project_manager
+DEL ir.model.access: project_issue_sheet.access_hr_timesheet_invoice_factor_project_user
+NEW ir.rule: project_issue_sheet.portal_issue_sheet_rule
+NEW ir.ui.view: project_issue_sheet.project_issue_tree_view_inherited

@@ -1,0 +1,17 @@
+---Fields in module 'website_customer'---
+website_customer / res.partner              / website_tag_ids (many2many)   : NEW relation: res.partner.tag
+website_customer / res.partner.tag          / active (boolean)              : NEW 
+website_customer / res.partner.tag          / classname (selection)         : NEW required: required, selection_keys: function, req_default: default
+website_customer / res.partner.tag          / name (char)                   : NEW required: required
+website_customer / res.partner.tag          / partner_ids (many2many)       : NEW relation: res.partner
+website_customer / res.partner.tag          / website_published (boolean)   : NEW 
+---XML records in module 'website_customer'---
+NEW ir.actions.act_window: website_customer.action_partner_tag_form
+NEW ir.model.access: website_customer.res_partner_tag_sale_manager
+NEW ir.model.access: website_customer.res_partner_tag_sale_manager_edition
+NEW ir.rule: website_customer.website_customer_res_partner_tag_public
+NEW ir.ui.menu: website_customer.menu_partner_tag_form
+NEW ir.ui.view: website_customer.opt_tag_list
+NEW ir.ui.view: website_customer.view_partner_tag_form
+NEW ir.ui.view: website_customer.view_partner_tag_list
+NEW ir.ui.view: website_customer.view_partners_form_website

@@ -1,0 +1,24 @@
+---Fields in module 'web_planner'---
+web_planner  / web.planner              / active (boolean)              : NEW 
+web_planner  / web.planner              / data (text)                   : NEW 
+web_planner  / web.planner              / menu_id (many2one)            : NEW relation: ir.ui.menu, required: required
+web_planner  / web.planner              / name (char)                   : NEW required: required
+web_planner  / web.planner              / planner_application (selection): NEW required: required, selection_keys: function
+web_planner  / web.planner              / progress (integer)            : NEW 
+web_planner  / web.planner              / tooltip_planner (html)        : NEW 
+web_planner  / web.planner              / view_id (many2one)            : NEW relation: ir.ui.view, required: required
+---XML records in module 'web_planner'---
+NEW ir.actions.act_window: web_planner.web_planner_action
+NEW ir.model.access: web_planner.access_planner_emp
+NEW ir.model.access: web_planner.access_planner_manager
+NEW ir.model.access: web_planner.access_planner_portal
+NEW ir.rule: web_planner.planner_rule_all
+NEW ir.rule: web_planner.web_planner_rule_portal
+NEW ir.ui.menu: web_planner.web_planner_menu
+NEW ir.ui.view: web_planner.assets_backend
+NEW ir.ui.view: web_planner.assets_common
+NEW ir.ui.view: web_planner.category
+NEW ir.ui.view: web_planner.page
+NEW ir.ui.view: web_planner.pages
+NEW ir.ui.view: web_planner.web_planner_view_search
+NEW ir.ui.view: web_planner.web_planner_view_tree

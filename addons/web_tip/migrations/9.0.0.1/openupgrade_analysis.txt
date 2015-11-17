@@ -1,0 +1,25 @@
+---Fields in module 'web_tip'---
+web_tip      / web.tip                  / action_id (many2one)          : NEW relation: ir.actions.act_window
+web_tip      / web.tip                  / description (html)            : NEW required: required
+web_tip      / web.tip                  / end_event (char)              : NEW 
+web_tip      / web.tip                  / end_selector (char)           : NEW 
+web_tip      / web.tip                  / highlight_selector (char)     : NEW 
+web_tip      / web.tip                  / mode (char)                   : NEW 
+web_tip      / web.tip                  / model (char)                  : NEW 
+web_tip      / web.tip                  / placement (char)              : NEW 
+web_tip      / web.tip                  / title (char)                  : NEW 
+web_tip      / web.tip                  / trigger_selector (char)       : NEW 
+web_tip      / web.tip                  / type (char)                   : NEW 
+web_tip      / web.tip                  / user_ids (many2many)          : NEW relation: res.users
+---XML records in module 'web_tip'---
+NEW ir.actions.act_window: web_tip.edit_tip_action
+NEW ir.model.access: web_tip.access_web_tip
+NEW ir.ui.menu: web_tip.menu_tip_action
+NEW ir.ui.view: web_tip.assets_backend
+NEW ir.ui.view: web_tip.edit_tip_form
+NEW ir.ui.view: web_tip.edit_tip_list
+NEW ir.ui.view: web_tip.edit_tip_search
+NEW web.tip: web_tip.web_tip_1
+NEW web.tip: web_tip.web_tip_2
+NEW web.tip: web_tip.web_tip_3
+NEW web.tip: web_tip.web_tip_4

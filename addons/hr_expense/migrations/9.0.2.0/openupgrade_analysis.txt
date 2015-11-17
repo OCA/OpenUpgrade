@@ -1,0 +1,92 @@
+---Fields in module 'hr_expense'---
+hr_expense   / hr.expense               / account_move_id (many2one)    : NEW relation: account.move
+hr_expense   / hr.expense               / analytic_account_id (many2one): NEW relation: account.analytic.account
+hr_expense   / hr.expense               / bank_journal_id (many2one)    : NEW relation: account.journal
+hr_expense   / hr.expense               / company_id (many2one)         : NEW relation: res.company
+hr_expense   / hr.expense               / currency_id (many2one)        : NEW relation: res.currency
+hr_expense   / hr.expense               / date (date)                   : NEW 
+hr_expense   / hr.expense               / department_id (many2one)      : NEW relation: hr.department
+hr_expense   / hr.expense               / description (text)            : NEW 
+hr_expense   / hr.expense               / employee_id (many2one)        : NEW relation: hr.employee, required: required, req_default: function
+hr_expense   / hr.expense               / journal_id (many2one)         : NEW relation: account.journal
+hr_expense   / hr.expense               / message_follower_ids (one2many): NEW relation: mail.followers
+hr_expense   / hr.expense               / message_ids (one2many)        : NEW relation: mail.message
+hr_expense   / hr.expense               / message_last_post (datetime)  : NEW 
+hr_expense   / hr.expense               / name (char)                   : NEW required: required
+hr_expense   / hr.expense               / payment_mode (selection)      : NEW selection_keys: ['company_account', 'own_account']
+hr_expense   / hr.expense               / product_id (many2one)         : NEW relation: product.product, required: required
+hr_expense   / hr.expense               / product_uom_id (many2one)     : NEW relation: product.uom, required: required, req_default: function
+hr_expense   / hr.expense               / quantity (float)              : NEW required: required, req_default: 1
+hr_expense   / hr.expense               / state (selection)             : NEW required: required, selection_keys: ['approve', 'cancel', 'done', 'draft', 'post', 'submit'], req_default: draft
+hr_expense   / hr.expense               / tax_ids (many2many)           : NEW relation: account.tax
+hr_expense   / hr.expense               / unit_amount (float)           : NEW required: required
+hr_expense   / hr.expense               / website_message_ids (one2many): NEW relation: mail.message
+hr_expense   / product.template         / can_be_expensed (boolean)     : NEW 
+hr_expense   / product.template         / hr_expense_ok (boolean)       : DEL 
+---XML records in module 'hr_expense'---
+NEW ir.actions.act_window: hr_expense.action_approved_expense
+NEW ir.actions.act_window: hr_expense.action_hr_expense_report_filtered
+NEW ir.actions.act_window: hr_expense.action_request_approve_expense
+NEW ir.actions.act_window: hr_expense.hr_expense_action
+NEW ir.actions.act_window: hr_expense.hr_expense_action_from_department
+NEW ir.actions.act_window: hr_expense.hr_expense_refuse_wizard_action
+DEL ir.actions.act_window: hr_expense.action_hr_expense_report_all
+DEL ir.actions.act_window: hr_expense.product_normal_form_view_installer
+NEW ir.actions.act_window.view: hr_expense.hr_expense_form_action
+NEW ir.actions.act_window.view: hr_expense.hr_expense_kanban_action
+NEW ir.actions.act_window.view: hr_expense.hr_expense_tree_action
+NEW ir.actions.client: hr_expense.action_client_expense_menu
+NEW ir.actions.server: hr_expense.hr_expense_entry_action_server
+NEW ir.actions.server: hr_expense.hr_expense_submit_action_server
+NEW ir.model.access: hr_expense.access_hr_expense_employee
+NEW ir.model.access: hr_expense.access_hr_expense_user
+DEL ir.model.access: hr_expense.access_account_analytic_journal_user
+DEL ir.model.access: hr_expense.access_account_fiscalyear_user
+DEL ir.model.access: hr_expense.access_account_journal_period_manager
+DEL ir.model.access: hr_expense.access_account_period_user
+DEL ir.model.access: hr_expense.access_hr_expense_expense_employee
+DEL ir.model.access: hr_expense.access_hr_expense_expense_user
+DEL ir.model.access: hr_expense.access_hr_expense_line_employee
+DEL ir.model.access: hr_expense.access_hr_expense_line_user
+DEL ir.model.access: hr_expense.access_hr_expense_report_manager
+DEL ir.model.access: hr_expense.access_product_price_type_user
+DEL ir.sequence.type: hr_expense.seq_type_hr_expense_invoice
+NEW ir.ui.menu: hr_expense.menu_expense_approved
+NEW ir.ui.menu: hr_expense.menu_expense_to_approve
+NEW ir.ui.menu: hr_expense.menu_hr_expense
+NEW ir.ui.menu: hr_expense.menu_hr_expense_configuration
+NEW ir.ui.menu: hr_expense.menu_hr_expense_root
+DEL ir.ui.menu: hr_expense.menu_hr_expense_report_all
+DEL ir.ui.menu: hr_expense.next_id_49
+NEW ir.ui.view: hr_expense.hr_department_view_kanban
+NEW ir.ui.view: hr_expense.hr_expense_form_view
+NEW ir.ui.view: hr_expense.hr_expense_kanban_view
+NEW ir.ui.view: hr_expense.hr_expense_my_tree
+NEW ir.ui.view: hr_expense.hr_expense_refuse_wizard_view_form
+NEW ir.ui.view: hr_expense.hr_expense_view_graph
+NEW ir.ui.view: hr_expense.hr_expense_view_pivot
+DEL ir.ui.view: hr_expense.product_expense_installer_tree_view
+DEL ir.ui.view: hr_expense.view_editable_expenses_tree
+DEL ir.ui.view: hr_expense.view_expenses_form
+DEL ir.ui.view: hr_expense.view_expenses_line_tree
+DEL ir.ui.view: hr_expense.view_hr_expense_report_graph
+DEL ir.ui.view: hr_expense.view_hr_expense_report_search
+NEW ir.values: hr_expense.action_hr_expense_account_entry
+NEW ir.values: hr_expense.action_hr_expense_submit
+NEW mail.message.subtype: hr_expense.mt_department_expense_confirmed
+NEW web.tip: hr_expense.expense_tip_1
+NEW web.tip: hr_expense.expense_tip_2
+NEW web.tip: hr_expense.expense_tip_3
+DEL workflow: hr_expense.wkf_expenses
+DEL workflow.activity: hr_expense.act_accepted
+DEL workflow.activity: hr_expense.act_confirm
+DEL workflow.activity: hr_expense.act_done
+DEL workflow.activity: hr_expense.act_draft
+DEL workflow.activity: hr_expense.act_refused
+DEL workflow.transition: hr_expense.t1
+DEL workflow.transition: hr_expense.t10
+DEL workflow.transition: hr_expense.t2
+DEL workflow.transition: hr_expense.t4
+DEL workflow.transition: hr_expense.t6
+DEL workflow.transition: hr_expense.t7
+DEL workflow.transition: hr_expense.t8

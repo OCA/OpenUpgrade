@@ -1,0 +1,12 @@
+---Fields in module 'crm_partner_assign'---
+crm_partner_assign / res.partner              / opportunity_assigned_ids (one2many): DEL relation: crm.lead
+---XML records in module 'crm_partner_assign'---
+DEL crm.case.stage: crm_partner_assign.stage_portal_lead_assigned
+DEL crm.case.stage: crm_partner_assign.stage_portal_lead_recycle
+NEW crm.stage: crm_partner_assign.stage_portal_lead_assigned
+NEW crm.stage: crm_partner_assign.stage_portal_lead_recycle
+DEL email.template: crm_partner_assign.email_template_lead_forward_mail
+DEL ir.actions.act_window.view: crm_partner_assign.action_report_crm_lead_assign_graph
+NEW ir.model.access: crm_partner_assign.access_res_partner_grade_invoicing_payment
+NEW ir.ui.view: crm_partner_assign.view_report_crm_lead_assign_pivot
+NEW mail.template: crm_partner_assign.email_template_lead_forward_mail

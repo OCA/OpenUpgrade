@@ -1,0 +1,70 @@
+---Fields in module 'document'---
+document     / ir.attachment            / index_content (text)          : module is now 'base' ('document')
+document     / ir.attachment            / parent_id (many2one)          : DEL relation: document.directory
+document     / ir.attachment            / partner_id (many2one)         : DEL relation: res.partner
+document     / ir.attachment            / user_id (many2one)            : DEL relation: res.users
+---XML records in module 'document'---
+DEL document.directory: document.dir_my_folder
+DEL document.directory: document.dir_partner
+DEL document.directory: document.dir_personnal_folder
+DEL document.directory: document.dir_product
+DEL document.directory: document.dir_project
+DEL document.directory: document.dir_root
+DEL document.directory: document.dir_sale_order
+DEL document.directory: document.dir_sale_order_all
+DEL document.directory: document.dir_sale_order_quote
+DEL document.directory.content.type: document.pdf
+DEL ir.actions.act_window: document.act_res_partner_document
+DEL ir.actions.act_window: document.action_config_auto_directory
+DEL ir.actions.act_window: document.action_document_directory_form
+DEL ir.actions.act_window: document.action_document_directory_tree
+DEL ir.actions.act_window: document.action_document_file_directory_form
+DEL ir.actions.act_window: document.action_document_file_form
+DEL ir.actions.act_window: document.action_view_all_document_tree1
+DEL ir.actions.act_window: document.action_view_files_by_month_graph
+DEL ir.actions.act_window: document.action_view_files_by_user_graph
+DEL ir.actions.act_window: document.action_view_size_month
+DEL ir.actions.act_window: document.zoom_directory
+DEL ir.actions.act_window.view: document.action_dir_view1
+DEL ir.actions.act_window.view: document.action_dir_view2
+DEL ir.actions.todo: document.config_auto_directory
+DEL ir.model.access: document.access_document_directory_all
+DEL ir.model.access: document.access_document_directory_content_all
+DEL ir.model.access: document.access_document_directory_content_group_document_manager
+DEL ir.model.access: document.access_document_directory_content_type_group_document_manager
+DEL ir.model.access: document.access_document_directory_content_type_group_system
+DEL ir.model.access: document.access_document_directory_dctx_all
+DEL ir.model.access: document.access_document_directory_dctx_group_document_manager
+DEL ir.model.access: document.access_document_directory_group_document_manager
+DEL ir.model.access: document.access_document_directory_group_knowledge
+DEL ir.model.access: document.access_document_storage
+DEL ir.model.access: document.access_ir_attachment_group_system
+DEL ir.model.access: document.access_ir_attachment_group_user
+DEL ir.model.access: document.access_report_document_file_group_document
+DEL ir.model.access: document.access_report_document_file_group_document_manager
+DEL ir.model.access: document.access_report_document_user_group_document_manager
+DEL ir.model.access: document.access_report_document_user_knowledgeuser
+DEL ir.model.access: document.access_res_partner_group_user
+DEL ir.rule: document.ir_rule_documentmodifyowndirectories0
+DEL ir.rule: document.ir_rule_readpublicdirectories0
+DEL ir.ui.menu: document.menu_document_directories
+DEL ir.ui.menu: document.menu_document_directories_tree
+DEL ir.ui.menu: document.menu_document_management_configuration
+DEL ir.ui.view: document.view_attach_filter_inherit0
+DEL ir.ui.view: document.view_attach_filter_inherit2
+DEL ir.ui.view: document.view_auto_config_form
+DEL ir.ui.view: document.view_document_directory_filter
+DEL ir.ui.view: document.view_document_directory_form
+DEL ir.ui.view: document.view_document_directory_tree
+DEL ir.ui.view: document.view_document_file_form
+DEL ir.ui.view: document.view_document_file_tree
+DEL ir.ui.view: document.view_document_user_form
+DEL ir.ui.view: document.view_document_user_tree
+DEL ir.ui.view: document.view_files_by_month_graph
+DEL ir.ui.view: document.view_files_by_month_tree
+DEL ir.ui.view: document.view_files_by_user_graph
+DEL ir.ui.view: document.view_report_document_user_search
+DEL ir.ui.view: document.view_size_month
+DEL ir.ui.view: document.view_size_month_tree
+DEL ir.values: document.ir_action_document_file_directory_form
+DEL res.groups: base.group_document_user

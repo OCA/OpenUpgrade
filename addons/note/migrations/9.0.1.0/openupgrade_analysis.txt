@@ -1,0 +1,10 @@
+---Fields in module 'note'---
+note         / note.note                / message_follower_ids (many2many): not a function anymore
+note         / note.note                / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+note         / note.note                / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+note         / note.tag                 / color (integer)               : NEW 
+---XML records in module 'note'---
+NEW ir.ui.menu: note.menu_note_configuration
+DEL ir.ui.view: note.view_general_settings_note_form
+DEL res.groups: base.group_user
+DEL res.groups: note.group_note_fancy

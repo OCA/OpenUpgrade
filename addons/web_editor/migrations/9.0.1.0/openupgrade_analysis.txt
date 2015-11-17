@@ -1,0 +1,27 @@
+---Fields in module 'web_editor'---
+web_editor   / web_editor.converter.test / binary (binary)               : NEW 
+web_editor   / web_editor.converter.test / char (char)                   : NEW 
+web_editor   / web_editor.converter.test / date (date)                   : NEW 
+web_editor   / web_editor.converter.test / datetime (datetime)           : NEW 
+web_editor   / web_editor.converter.test / float (float)                 : NEW 
+web_editor   / web_editor.converter.test / html (html)                   : NEW 
+web_editor   / web_editor.converter.test / integer (integer)             : NEW 
+web_editor   / web_editor.converter.test / many2one (many2one)           : NEW relation: web_editor.converter.test.sub
+web_editor   / web_editor.converter.test / numeric (float)               : NEW 
+web_editor   / web_editor.converter.test / selection (selection)         : NEW selection_keys: [1, 2, 3, 4]
+web_editor   / web_editor.converter.test / selection_str (selection)     : NEW selection_keys: ['A', 'B', 'C', 'D']
+web_editor   / web_editor.converter.test / text (text)                   : NEW 
+web_editor   / web_editor.converter.test.sub / name (char)                   : NEW 
+---XML records in module 'web_editor'---
+NEW ir.model.access: web_editor.access_web_editor_converter_test
+NEW ir.model.access: web_editor.access_web_editor_converter_test_sub
+NEW ir.ui.view: web_editor.FieldTextHtml
+NEW ir.ui.view: web_editor.assets_backend
+NEW ir.ui.view: web_editor.assets_common
+NEW ir.ui.view: web_editor.assets_editor
+NEW ir.ui.view: web_editor.colorpicker
+NEW ir.ui.view: web_editor.editor
+NEW ir.ui.view: web_editor.layout
+NEW ir.ui.view: web_editor.snippet_options
+NEW ir.ui.view: web_editor.snippets
+NEW ir.ui.view: web_editor.summernote

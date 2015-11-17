@@ -1,0 +1,7 @@
+---Fields in module 'portal_stock'---
+---XML records in module 'portal_stock'---
+NEW ir.model.access: portal_stock.access_stock_pack_operation_portal
+NEW ir.model.access: portal_stock.access_stock_picking_type_portal
+NEW ir.rule: portal_stock.portal_stock_pack_operation_portal_user_rule
+NEW ir.rule: portal_stock.portal_stock_picking_portal_user_rule
+DEL ir.rule: portal_stock.portal_stock_picking_user_rule

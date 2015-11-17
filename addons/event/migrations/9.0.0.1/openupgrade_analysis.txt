@@ -1,0 +1,73 @@
+---Fields in module 'event'---
+event        / event.event              / active (boolean)              : NEW 
+event        / event.event              / badge_front (html)            : NEW 
+event        / event.event              / color (integer)               : NEW 
+event        / event.event              / country_id (many2one)         : not a function anymore
+event        / event.event              / email_confirmation_id (many2one): DEL relation: email.template
+event        / event.event              / email_registration_id (many2one): DEL relation: email.template
+event        / event.event              / event_logo (html)             : NEW 
+event        / event.event              / event_mail_ids (one2many)     : NEW relation: event.mail
+event        / event.event              / message_follower_ids (many2many): not a function anymore
+event        / event.event              / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+event        / event.event              / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+event        / event.event              / seats_availability (selection): NEW required: required, selection_keys: ['limited', 'unlimited'], req_default: unlimited
+event        / event.event              / type (many2one)               : was renamed to event_type_id [nothing to to]
+event        / event.mail               / event_id (many2one)           : NEW relation: event.event, required: required
+event        / event.mail               / interval_nbr (integer)        : NEW 
+event        / event.mail               / interval_type (selection)     : NEW required: required, selection_keys: ['after_event', 'after_sub', 'before_event'], req_default: before_event
+event        / event.mail               / interval_unit (selection)     : NEW required: required, selection_keys: ['days', 'hours', 'months', 'now', 'weeks'], req_default: hours
+event        / event.mail               / mail_registration_ids (one2many): NEW relation: event.mail.registration
+event        / event.mail               / mail_sent (boolean)           : NEW 
+event        / event.mail               / sequence (integer)            : NEW 
+event        / event.mail               / template_id (many2one)        : NEW relation: mail.template, required: required
+event        / event.mail.registration  / mail_sent (boolean)           : NEW 
+event        / event.mail.registration  / registration_id (many2one)    : NEW relation: event.registration, required: required
+event        / event.mail.registration  / scheduler_id (many2one)       : NEW relation: event.mail, required: required
+event        / event.registration       / log_ids (one2many)            : DEL relation: mail.message
+event        / event.registration       / message_follower_ids (many2many): not a function anymore
+event        / event.registration       / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+event        / event.registration       / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+event        / event.registration       / nb_register (integer)         : DEL required: required, req_default: 1
+event        / event.registration       / user_id (many2one)            : DEL relation: res.users
+event        / event.type               / default_email_event (many2one): DEL relation: email.template
+event        / event.type               / default_email_registration (many2one): DEL relation: email.template
+event        / res.partner              / speaker (boolean)             : DEL 
+---XML records in module 'event'---
+DEL email.template: event.confirmation_event
+DEL email.template: event.confirmation_registration
+NEW ir.actions.act_window: event.act_event_registration_from_event
+NEW ir.actions.act_window: event.action_event_configuration
+NEW ir.actions.act_window: event.action_event_mail
+DEL ir.actions.act_window: event.act_event_list_register_event
+DEL ir.actions.act_window.view: event.action_report_event_registration_graph
+NEW ir.actions.report.xml: event.report_event_event_badge
+NEW ir.actions.report.xml: event.report_event_registration_badge
+NEW ir.cron: event.event_mail_scheduler
+NEW ir.model.access: event.access_event_mail
+NEW ir.model.access: event.access_event_mail_manager
+NEW ir.model.access: event.access_event_mail_registration
+NEW ir.model.access: event.access_event_mail_registration_manager
+DEL ir.module.category: event.module_category_event_management
+NEW ir.ui.menu: event.menu_event_configuration
+NEW ir.ui.menu: event.menu_event_global_settings
+DEL ir.ui.menu: base.menu_marketing_config_root
+DEL ir.ui.menu: base.menu_report_association
+DEL ir.ui.menu: event.event_configuration
+NEW ir.ui.view: event.event_event_report_template_badge
+NEW ir.ui.view: event.event_registration_report_template_badge
+NEW ir.ui.view: event.report_event_registration_pivot
+NEW ir.ui.view: event.view_event_configuration
+NEW ir.ui.view: event.view_event_mail_form
+NEW ir.ui.view: event.view_event_mail_tree
+NEW ir.ui.view: event.view_event_registration_pivot
+DEL ir.ui.view: event.view_event_partner_info_form
+DEL ir.values: event.default_value_event_mail_confirmation
+DEL ir.values: event.default_value_registration_mail_confirmation
+DEL mail.message.subtype: event.mt_event_registration
+NEW mail.template: event.event_registration_mail_template_badge
+NEW mail.template: event.event_reminder
+NEW mail.template: event.event_subscription
+NEW mail.template: event.event_thanks
+NEW report.paperformat: event.paperformat_euro_lowmargin
+NEW res.groups: event.group_email_scheduling
+NEW web.tip: event.event_tip_1

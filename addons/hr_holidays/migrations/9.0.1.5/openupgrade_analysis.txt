@@ -1,0 +1,50 @@
+---Fields in module 'hr_holidays'---
+hr_holidays  / hr.holidays              / message_follower_ids (many2many): not a function anymore
+hr_holidays  / hr.holidays              / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+hr_holidays  / hr.holidays              / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+hr_holidays  / hr.holidays              / payslip_status (boolean)      : NEW 
+hr_holidays  / hr.holidays              / report_note (text)            : NEW 
+hr_holidays  / hr.holidays              / website_message_ids (one2many): NEW relation: mail.message
+hr_holidays  / hr.holidays.status       / company_id (many2one)         : NEW relation: res.company
+---XML records in module 'hr_holidays'---
+NEW ir.actions.act_window: hr_holidays.act_hr_employee_holiday_request_approved
+NEW ir.actions.act_window: hr_holidays.action_hr_holidays_dashboard
+NEW ir.actions.act_window: hr_holidays.action_hr_holidays_leaves_analysis
+NEW ir.actions.act_window: hr_holidays.action_hr_holidays_leaves_analysis_filtered
+NEW ir.actions.act_window: hr_holidays.hr_employee_action_from_department
+NEW ir.actions.act_window: hr_holidays.hr_holidays_action_allocation_from_department
+NEW ir.actions.act_window: hr_holidays.hr_holidays_action_request_from_department
+NEW ir.actions.act_window: hr_holidays.open_department_holidays_allocation_approve
+NEW ir.actions.act_window: hr_holidays.open_department_holidays_approve
+NEW ir.actions.act_window: hr_holidays.open_employee_leaves
+NEW ir.actions.act_window.view: hr_holidays.action_window_leave_graph
+NEW ir.actions.act_window.view: hr_holidays.action_window_leave_pivot
+NEW ir.actions.client: hr_holidays.action_client_hr_holidays_menu
+NEW ir.rule: hr_holidays.hr_holidays_status_rule_multi_company
+NEW ir.ui.menu: hr_holidays.menu_hr_holidays_approvals
+NEW ir.ui.menu: hr_holidays.menu_hr_holidays_configuration
+NEW ir.ui.menu: hr_holidays.menu_hr_holidays_dashboard
+NEW ir.ui.menu: hr_holidays.menu_hr_holidays_my_leaves
+NEW ir.ui.menu: hr_holidays.menu_hr_holidays_report
+NEW ir.ui.menu: hr_holidays.menu_hr_holidays_root
+NEW ir.ui.menu: hr_holidays.menu_open_department_leave_allocation_approve
+NEW ir.ui.menu: hr_holidays.menu_open_department_leave_approve
+NEW ir.ui.menu: hr_holidays.menu_open_employee_leave
+DEL ir.ui.menu: hr.menu_open_view_attendance_reason_config
+DEL ir.ui.menu: hr_holidays.menu_open_ask_holidays
+DEL ir.ui.menu: hr_holidays.menu_open_view_holiday_status
+DEL ir.ui.menu: hr_holidays.menu_request_approve_allocation
+DEL ir.ui.menu: hr_holidays.menu_request_approve_holidays
+NEW ir.ui.view: hr_holidays.hr_department_view_kanban
+NEW ir.ui.view: hr_holidays.hr_employee_view_search
+NEW ir.ui.view: hr_holidays.report_holidayssummary
+NEW ir.ui.view: hr_holidays.view_holiday_allocation_tree_customize
+NEW ir.ui.view: hr_holidays.view_holiday_employee
+NEW ir.ui.view: hr_holidays.view_holiday_pivot
+DEL ir.ui.view: hr_holidays.allocation_company_new
+NEW mail.message.subtype: hr_holidays.mt_department_holidays_approved
+NEW mail.message.subtype: hr_holidays.mt_department_holidays_confirmed
+NEW mail.message.subtype: hr_holidays.mt_department_holidays_first_validated
+NEW mail.message.subtype: hr_holidays.mt_department_holidays_refused
+NEW mail.message.subtype: hr_holidays.mt_holidays_first_validated
+NEW report.paperformat: hr_holidays.paperformat_hrsummary

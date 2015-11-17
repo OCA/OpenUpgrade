@@ -1,0 +1,32 @@
+---Fields in module 'crm_claim'---
+crm_claim    / crm.claim                / categ_id (many2one)           : relation is now 'crm.claim.category' ('crm.case.categ')
+crm_claim    / crm.claim                / message_follower_ids (many2many): not a function anymore
+crm_claim    / crm.claim                / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+crm_claim    / crm.claim                / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+crm_claim    / crm.claim                / section_id (many2one)         : relation is now 'crm.team' ('crm.case.section')
+crm_claim    / crm.claim                / section_id (many2one)         : was renamed to team_id [nothing to to]
+crm_claim    / crm.claim.category       / name (char)                   : NEW required: required
+crm_claim    / crm.claim.category       / team_id (many2one)            : NEW relation: crm.team
+crm_claim    / crm.claim.stage          / section_ids (many2many)       : DEL relation: crm.case.section
+crm_claim    / crm.claim.stage          / team_ids (many2many)          : NEW relation: crm.team
+---XML records in module 'crm_claim'---
+DEL crm.case.categ: crm_claim.categ_claim1
+DEL crm.case.categ: crm_claim.categ_claim2
+DEL crm.case.categ: crm_claim.categ_claim3
+NEW crm.claim.category: crm_claim.categ_claim1
+NEW crm.claim.category: crm_claim.categ_claim2
+NEW crm.claim.category: crm_claim.categ_claim3
+DEL crm.tracking.campaign: crm_claim.claim_source1
+DEL crm.tracking.campaign: crm_claim.claim_source2
+NEW ir.actions.act_window: crm_claim.crm_claim_category_claim0
+DEL ir.actions.act_window: crm_claim.crm_case_categ_claim0
+DEL ir.actions.act_window.view: crm_claim.action_report_crm_claim_graph
+NEW ir.model.access: crm_claim.access_crm_claim_category
+NEW ir.model.access: crm_claim.access_crm_claim_category_manager
+NEW ir.model.access: crm_claim.access_crm_claim_category_salesman
+NEW ir.ui.menu: base.menu_services
+NEW ir.ui.view: crm_claim.crm_claim_category_form
+NEW ir.ui.view: crm_claim.crm_claim_category_tree
+NEW ir.ui.view: crm_claim.view_report_crm_claim_pivot
+NEW utm.campaign: crm_claim.claim_source1
+NEW utm.campaign: crm_claim.claim_source2

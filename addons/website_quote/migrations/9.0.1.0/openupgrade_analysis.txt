@@ -1,0 +1,22 @@
+---Fields in module 'website_quote'---
+website_quote / sale.order               / quote_viewed (boolean)        : NEW 
+website_quote / sale.order               / require_payment (selection)   : NEW selection_keys: [0, 1]
+website_quote / sale.order               / validity_date (date)          : module is now 'sale' ('website_quote')
+website_quote / sale.quote.line          / sequence (integer)            : NEW 
+website_quote / sale.quote.template      / require_payment (selection)   : NEW selection_keys: [0, 1]
+---XML records in module 'website_quote'---
+DEL email.template: sale.email_template_edi_sale
+DEL email.template: website_quote.email_template_edi_sale
+NEW ir.actions.act_window: sale.action_quotations
+NEW ir.actions.client: website_quote.open_quotation_menu
+NEW ir.actions.report.xml: website_quote.report_web_quote
+NEW ir.actions.todo: base.open_menu
+NEW ir.ui.view: website_quote.quotations
+NEW ir.ui.view: website_quote.report_quote
+NEW ir.ui.view: website_quote.so_quotation_content
+DEL ir.ui.view: website_quote.opt_quotation_chatter_post_complete_comment
+DEL ir.ui.view: website_quote.quotation_toolbar
+NEW mail.template: sale.email_template_edi_sale
+NEW mail.template: website_quote.email_template_edi_sale
+NEW sale.quote.template: website_quote.website_quote_template_default
+NEW web.tip: website_quote.quotation_tip_1

@@ -1,0 +1,15 @@
+---Fields in module 'website_livechat'---
+website_livechat / im_livechat.channel      / website_description (html)    : NEW 
+website_livechat / im_livechat.channel      / website_published (boolean)   : NEW 
+---XML records in module 'website_livechat'---
+NEW im_livechat.channel: website_livechat.im_livechat_channel_data_website
+DEL im_livechat.channel: website_livechat.channel_website
+NEW ir.model.access: website_livechat.access_im_livechat_channel_public
+NEW ir.rule: website_livechat.im_livechat_channel_rule_public
+NEW ir.ui.view: website_livechat.assets_frontend
+NEW ir.ui.view: website_livechat.channel_list_page
+NEW ir.ui.view: website_livechat.channel_page
+NEW ir.ui.view: website_livechat.header_footer_custom
+NEW ir.ui.view: website_livechat.im_livechat_channel_form_view
+NEW ir.ui.view: website_livechat.loader
+DEL ir.ui.view: website_livechat.header

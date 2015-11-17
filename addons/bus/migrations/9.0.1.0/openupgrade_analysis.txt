@@ -1,0 +1,8 @@
+---Fields in module 'bus'---
+bus          / bus.presence             / last_poll (datetime)          : NEW 
+bus          / bus.presence             / last_presence (datetime)      : NEW 
+bus          / bus.presence             / status (selection)            : NEW selection_keys: ['away', 'offline', 'online']
+bus          / bus.presence             / user_id (many2one)            : NEW relation: res.users, required: required
+---XML records in module 'bus'---
+NEW ir.model.access: bus.access_bus_presence
+NEW ir.model.access: bus.access_bus_presence_portal

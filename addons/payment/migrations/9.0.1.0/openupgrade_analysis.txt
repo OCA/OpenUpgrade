@@ -1,0 +1,43 @@
+---Fields in module 'payment'---
+payment      / payment.acquirer         / auto_confirm (selection)      : NEW required: required, selection_keys: ['at_pay_confirm', 'at_pay_now', 'none'], req_default: at_pay_confirm
+payment      / payment.acquirer         / cancel_msg (html)             : NEW 
+payment      / payment.acquirer         / done_msg (html)               : NEW 
+payment      / payment.acquirer         / error_msg (html)              : NEW 
+payment      / payment.acquirer         / image (binary)                : NEW 
+payment      / payment.acquirer         / pending_msg (html)            : NEW 
+payment      / payment.acquirer         / registration_view_template_id (many2one): NEW relation: ir.ui.view
+payment      / payment.acquirer         / sequence (integer)            : NEW 
+payment      / payment.acquirer         / validation (selection)        : DEL selection_keys: ['automatic', 'manual']
+payment      / payment.method           / acquirer_id (many2one)        : NEW relation: payment.acquirer, required: required
+payment      / payment.method           / acquirer_ref (char)           : NEW required: required
+payment      / payment.method           / active (boolean)              : NEW 
+payment      / payment.method           / name (char)                   : NEW 
+payment      / payment.method           / partner_id (many2one)         : NEW relation: res.partner, required: required
+payment      / payment.method           / payment_ids (one2many)        : NEW relation: payment.transaction
+payment      / payment.transaction      / callback_eval (char)          : NEW 
+payment      / payment.transaction      / date_create (datetime)        : DEL required: required, req_default: function
+payment      / payment.transaction      / html_3ds (char)               : NEW 
+payment      / payment.transaction      / message_ids (one2many)        : DEL relation: mail.message
+payment      / payment.transaction      / message_last_post (datetime)  : DEL 
+payment      / payment.transaction      / partner_lang (char)           : selection_keys is now 'function' ('False')
+payment      / payment.transaction      / partner_lang (char)           : type is now 'selection' ('char')
+payment      / payment.transaction      / partner_reference (char)      : DEL 
+payment      / payment.transaction      / payment_method_id (many2one)  : NEW relation: payment.method
+payment      / payment.transaction      / type (selection)              : selection_keys is now '['form', 'form_save', 'server2server']' ('['form', 'server2server']')
+payment      / payment.transaction      / website_message_ids (one2many): DEL relation: mail.message
+payment      / res.partner              / payment_method_ids (one2many) : NEW relation: payment.method
+---XML records in module 'payment'---
+NEW ir.actions.act_window: payment.action_payment_tx_ids
+NEW ir.actions.act_window: payment.payment_method_action
+NEW ir.actions.act_window: payment.payment_transaction_action_child
+NEW ir.model.access: payment.payment_method_all
+NEW ir.model.access: payment.payment_method_portal
+NEW ir.model.access: payment.payment_method_system
+NEW ir.model.access: payment.payment_method_user
+NEW ir.rule: payment.payment_method_salesman_rule
+NEW ir.rule: payment.payment_method_user_rule
+NEW ir.ui.menu: payment.payment_method_menu
+NEW ir.ui.view: payment.payment_method_form_view
+NEW ir.ui.view: payment.payment_method_tree_view
+NEW ir.ui.view: payment.payment_method_view_search
+NEW ir.ui.view: payment.view_partners_form_payment_defaultcreditcard

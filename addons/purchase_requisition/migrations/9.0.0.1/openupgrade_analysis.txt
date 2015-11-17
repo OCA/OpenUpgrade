@@ -1,0 +1,12 @@
+---Fields in module 'purchase_requisition'---
+purchase_requisition / product.template         / purchase_requisition (boolean): selection_keys is now '['rfq', 'tenders']' ('False')
+purchase_requisition / product.template         / purchase_requisition (boolean): type is now 'selection' ('boolean')
+purchase_requisition / purchase.order.line      / quantity_bid (float)          : was renamed to quantity_tendered [nothing to to]
+purchase_requisition / purchase.requisition     / message_follower_ids (many2many): not a function anymore
+purchase_requisition / purchase.requisition     / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+purchase_requisition / purchase.requisition     / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+---XML records in module 'purchase_requisition'---
+DEL ir.module.category: purchase_requisition.module_category_purchase_requisition
+DEL ir.sequence.type: purchase_requisition.seq_type_purchase_requisition
+DEL res.groups: purchase_requisition.group_purchase_requisition_manager
+DEL res.groups: purchase_requisition.group_purchase_requisition_user

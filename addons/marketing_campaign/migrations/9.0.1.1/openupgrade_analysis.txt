@@ -1,0 +1,9 @@
+---Fields in module 'marketing_campaign'---
+marketing_campaign / marketing.campaign.activity / email_template_id (many2one)  : relation is now 'mail.template' ('email.template')
+marketing_campaign / marketing.campaign.activity / report_directory_id (many2one): DEL relation: document.directory
+---XML records in module 'marketing_campaign'---
+NEW ir.ui.menu: marketing_campaign.menu_marketing_campaign_campaigns
+NEW ir.ui.menu: marketing_campaign.menu_marketing_campaign_root
+NEW ir.ui.menu: marketing_campaign.report_marketing_campaign
+DEL ir.ui.menu: marketing_campaign.menu_marketing_campaign
+NEW ir.ui.view: marketing_campaign.view_report_campaign_analysis_pivot

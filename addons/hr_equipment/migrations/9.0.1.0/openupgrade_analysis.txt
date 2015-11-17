@@ -1,0 +1,117 @@
+---Fields in module 'hr_equipment'---
+hr_equipment / hr.equipment             / assign_date (date)            : NEW 
+hr_equipment / hr.equipment             / category_id (many2one)        : NEW relation: hr.equipment.category
+hr_equipment / hr.equipment             / color (integer)               : NEW 
+hr_equipment / hr.equipment             / cost (float)                  : NEW 
+hr_equipment / hr.equipment             / department_id (many2one)      : NEW relation: hr.department
+hr_equipment / hr.equipment             / employee_id (many2one)        : NEW relation: hr.employee
+hr_equipment / hr.equipment             / equipment_assign_to (selection): NEW required: required, selection_keys: ['department', 'employee'], req_default: employee
+hr_equipment / hr.equipment             / location (char)               : NEW 
+hr_equipment / hr.equipment             / maintenance_ids (one2many)    : NEW relation: hr.equipment.request
+hr_equipment / hr.equipment             / message_follower_ids (one2many): NEW relation: mail.followers
+hr_equipment / hr.equipment             / message_ids (one2many)        : NEW relation: mail.message
+hr_equipment / hr.equipment             / message_last_post (datetime)  : NEW 
+hr_equipment / hr.equipment             / model (char)                  : NEW 
+hr_equipment / hr.equipment             / name (char)                   : NEW required: required
+hr_equipment / hr.equipment             / note (text)                   : NEW 
+hr_equipment / hr.equipment             / partner_id (many2one)         : NEW relation: res.partner
+hr_equipment / hr.equipment             / partner_ref (char)            : NEW 
+hr_equipment / hr.equipment             / scrap_date (date)             : NEW 
+hr_equipment / hr.equipment             / serial_no (char)              : NEW 
+hr_equipment / hr.equipment             / user_id (many2one)            : NEW relation: res.users
+hr_equipment / hr.equipment             / warranty (date)               : NEW 
+hr_equipment / hr.equipment             / website_message_ids (one2many): NEW relation: mail.message
+hr_equipment / hr.equipment.category    / _inherits (False)             : NEW 
+hr_equipment / hr.equipment.category    / alias_id (many2one)           : NEW relation: mail.alias, required: required
+hr_equipment / hr.equipment.category    / color (integer)               : NEW 
+hr_equipment / hr.equipment.category    / equipment_ids (one2many)      : NEW relation: hr.equipment
+hr_equipment / hr.equipment.category    / maintenance_ids (one2many)    : NEW relation: hr.equipment.request
+hr_equipment / hr.equipment.category    / message_follower_ids (one2many): NEW relation: mail.followers
+hr_equipment / hr.equipment.category    / message_ids (one2many)        : NEW relation: mail.message
+hr_equipment / hr.equipment.category    / message_last_post (datetime)  : NEW 
+hr_equipment / hr.equipment.category    / name (char)                   : NEW required: required
+hr_equipment / hr.equipment.category    / note (text)                   : NEW 
+hr_equipment / hr.equipment.category    / user_id (many2one)            : NEW relation: res.users
+hr_equipment / hr.equipment.category    / website_message_ids (one2many): NEW relation: mail.message
+hr_equipment / hr.equipment.request     / active (boolean)              : NEW 
+hr_equipment / hr.equipment.request     / category_id (many2one)        : NEW relation: hr.equipment.category
+hr_equipment / hr.equipment.request     / close_date (date)             : NEW 
+hr_equipment / hr.equipment.request     / color (integer)               : NEW 
+hr_equipment / hr.equipment.request     / department_id (many2one)      : NEW relation: hr.department
+hr_equipment / hr.equipment.request     / description (text)            : NEW 
+hr_equipment / hr.equipment.request     / employee_id (many2one)        : NEW relation: hr.employee
+hr_equipment / hr.equipment.request     / equipment_id (many2one)       : NEW relation: hr.equipment
+hr_equipment / hr.equipment.request     / kanban_state (selection)      : NEW required: required, selection_keys: ['blocked', 'done', 'normal'], req_default: normal
+hr_equipment / hr.equipment.request     / message_follower_ids (one2many): NEW relation: mail.followers
+hr_equipment / hr.equipment.request     / message_ids (one2many)        : NEW relation: mail.message
+hr_equipment / hr.equipment.request     / message_last_post (datetime)  : NEW 
+hr_equipment / hr.equipment.request     / name (char)                   : NEW required: required
+hr_equipment / hr.equipment.request     / priority (selection)          : NEW selection_keys: ['0', '1', '2', '3']
+hr_equipment / hr.equipment.request     / request_date (date)           : NEW 
+hr_equipment / hr.equipment.request     / stage_id (many2one)           : NEW relation: hr.equipment.stage
+hr_equipment / hr.equipment.request     / user_id (many2one)            : NEW relation: res.users
+hr_equipment / hr.equipment.request     / website_message_ids (one2many): NEW relation: mail.message
+hr_equipment / hr.equipment.stage       / done (boolean)                : NEW 
+hr_equipment / hr.equipment.stage       / fold (boolean)                : NEW 
+hr_equipment / hr.equipment.stage       / name (char)                   : NEW required: required
+hr_equipment / hr.equipment.stage       / sequence (integer)            : NEW 
+---XML records in module 'hr_equipment'---
+NEW hr.equipment.category: hr_equipment.hr_equipment_computer
+NEW hr.equipment.category: hr_equipment.hr_equipment_printer
+NEW hr.equipment.category: hr_equipment.hr_equipment_software
+NEW hr.equipment.stage: hr_equipment.stage_0
+NEW hr.equipment.stage: hr_equipment.stage_1
+NEW hr.equipment.stage: hr_equipment.stage_3
+NEW hr.equipment.stage: hr_equipment.stage_4
+NEW ir.actions.act_window: hr_equipment.action_hr_equipment_configuration
+NEW ir.actions.act_window: hr_equipment.hr_equipment_action
+NEW ir.actions.act_window: hr_equipment.hr_equipment_action_from_category_form
+NEW ir.actions.act_window: hr_equipment.hr_equipment_category_action
+NEW ir.actions.act_window: hr_equipment.hr_equipment_request_action
+NEW ir.actions.act_window: hr_equipment.hr_equipment_request_action_from_equipment
+NEW ir.actions.act_window: hr_equipment.hr_equipment_request_action_link
+NEW ir.actions.act_window: hr_equipment.hr_equipment_stage_action
+NEW ir.actions.client: hr_equipment.action_client_hr_equipment_menu
+NEW ir.actions.todo: base.open_menu
+NEW ir.model.access: hr_equipment.access_hr_equipment_admin_user
+NEW ir.model.access: hr_equipment.access_hr_equipment_category_employee
+NEW ir.model.access: hr_equipment.access_hr_equipment_category_user
+NEW ir.model.access: hr_equipment.access_hr_equipment_emp
+NEW ir.model.access: hr_equipment.access_hr_equipment_user
+NEW ir.model.access: hr_equipment.access_hr_maintenance_system_user
+NEW ir.model.access: hr_equipment.access_hr_maintenance_user
+NEW ir.model.access: hr_equipment.access_maintenance_request_stage_employee
+NEW ir.model.access: hr_equipment.access_maintenance_request_stage_user
+NEW ir.rule: hr_equipment.hr_equipment_request_rule_admin_user
+NEW ir.rule: hr_equipment.hr_equipment_request_rule_user
+NEW ir.rule: hr_equipment.hr_equipment_rule_admin_user
+NEW ir.rule: hr_equipment.hr_equipment_rule_user
+NEW ir.ui.menu: hr_equipment.menu_equipment_cat
+NEW ir.ui.menu: hr_equipment.menu_equipment_configuration
+NEW ir.ui.menu: hr_equipment.menu_equipment_global_settings
+NEW ir.ui.menu: hr_equipment.menu_equipment_stage_configuration
+NEW ir.ui.menu: hr_equipment.menu_equipment_title
+NEW ir.ui.menu: hr_equipment.menu_hr_equipment_form
+NEW ir.ui.menu: hr_equipment.menu_m_request_form
+NEW ir.ui.view: hr_equipment.hr_equipment_category_view_form
+NEW ir.ui.view: hr_equipment.hr_equipment_category_view_search
+NEW ir.ui.view: hr_equipment.hr_equipment_category_view_tree
+NEW ir.ui.view: hr_equipment.hr_equipment_config_settings_view_form
+NEW ir.ui.view: hr_equipment.hr_equipment_request_view_form
+NEW ir.ui.view: hr_equipment.hr_equipment_request_view_kanban
+NEW ir.ui.view: hr_equipment.hr_equipment_request_view_search
+NEW ir.ui.view: hr_equipment.hr_equipment_request_view_tree
+NEW ir.ui.view: hr_equipment.hr_equipment_stage_view_search
+NEW ir.ui.view: hr_equipment.hr_equipment_stage_view_tree
+NEW ir.ui.view: hr_equipment.hr_equipment_view_form
+NEW ir.ui.view: hr_equipment.hr_equipment_view_kanban
+NEW ir.ui.view: hr_equipment.hr_equipment_view_search
+NEW ir.ui.view: hr_equipment.hr_equipment_view_tree
+NEW mail.alias: hr_equipment.mail_alias_equipment
+NEW mail.message.subtype: hr_equipment.mt_cat_mat_assign
+NEW mail.message.subtype: hr_equipment.mt_cat_req_created
+NEW mail.message.subtype: hr_equipment.mt_mat_assign
+NEW mail.message.subtype: hr_equipment.mt_req_created
+NEW mail.message.subtype: hr_equipment.mt_req_status
+NEW res.groups: base.group_equipment_manager
+NEW res.groups: base.group_hr_user

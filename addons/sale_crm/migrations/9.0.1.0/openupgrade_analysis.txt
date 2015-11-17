@@ -1,0 +1,18 @@
+---Fields in module 'sale_crm'---
+sale_crm     / crm.lead                 / order_ids (one2many)          : NEW relation: sale.order
+sale_crm     / res.users                / target_sales_invoiced (integer): NEW 
+sale_crm     / sale.order               / campaign_id (many2one)        : relation is now 'utm.campaign' ('crm.tracking.campaign')
+sale_crm     / sale.order               / categ_ids (many2many)         : DEL relation: crm.case.categ
+sale_crm     / sale.order               / medium_id (many2one)          : relation is now 'utm.medium' ('crm.tracking.medium')
+sale_crm     / sale.order               / opportunity_id (many2one)     : NEW relation: crm.lead
+sale_crm     / sale.order               / source_id (many2one)          : relation is now 'utm.source' ('crm.tracking.source')
+sale_crm     / sale.order               / tag_ids (many2many)           : NEW relation: crm.lead.tag
+---XML records in module 'sale_crm'---
+NEW ir.actions.act_window: crm.crm_lead_opportunities
+NEW ir.actions.act_window: sale_crm.sale_action_quotations
+NEW ir.actions.act_window: sale_crm.sale_action_quotations_new
+DEL ir.actions.act_window: crm.crm_case_category_act_oppor11
+DEL ir.actions.act_window: sale_crm.action_crm_make_sale
+NEW ir.ui.view: sale_crm.crm_team_salesteams_view_kanban
+NEW ir.ui.view: sale_crm.res_partner_address_type
+DEL ir.ui.view: sale_crm.view_crm_make_sale

@@ -1,0 +1,12 @@
+---Fields in module 'account_budget'---
+account_budget / account.budget.post      / code (char)                   : DEL required: required
+account_budget / crossovered.budget       / code (char)                   : DEL required: required
+account_budget / crossovered.budget       / message_follower_ids (one2many): NEW relation: mail.followers
+account_budget / crossovered.budget       / message_ids (one2many)        : NEW relation: mail.message
+account_budget / crossovered.budget       / message_last_post (datetime)  : NEW 
+account_budget / crossovered.budget       / validating_user_id (many2one) : DEL relation: res.users
+account_budget / crossovered.budget       / website_message_ids (one2many): NEW relation: mail.message
+---XML records in module 'account_budget'---
+DEL ir.ui.menu: account_budget.menu_action_account_budget_post_tree
+DEL ir.ui.menu: account_budget.next_id_31
+DEL ir.ui.menu: account_budget.next_id_pos

@@ -1,0 +1,80 @@
+---Fields in module 'hr_recruitment'---
+hr_recruitment / hr.applicant             / attachment_ids (one2many)     : NEW relation: ir.attachment
+hr_recruitment / hr.applicant             / availability (integer)        : type is now 'date' ('integer')
+hr_recruitment / hr.applicant             / campaign_id (many2one)        : NEW relation: utm.campaign
+hr_recruitment / hr.applicant             / categ_ids (many2many)         : relation is now 'hr.applicant.category' ('hr.applicant_category')
+hr_recruitment / hr.applicant             / medium_id (many2one)          : NEW relation: utm.medium
+hr_recruitment / hr.applicant             / message_follower_ids (many2many): not a function anymore
+hr_recruitment / hr.applicant             / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+hr_recruitment / hr.applicant             / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+hr_recruitment / hr.applicant             / priority (selection)          : selection_keys is now '['0', '1', '2', '3']' ('['0', '1', '2', '3', '4']')
+hr_recruitment / hr.applicant             / source_id (many2one)          : relation is now 'utm.source' ('hr.recruitment.source')
+hr_recruitment / hr.applicant.category    / name (char)                   : NEW required: required
+hr_recruitment / hr.job                   / stage_ids (many2many)         : NEW relation: hr.recruitment.stage
+hr_recruitment / hr.recruitment.source    / _inherits (False)             : NEW 
+hr_recruitment / hr.recruitment.source    / alias_id (many2one)           : NEW relation: mail.alias
+hr_recruitment / hr.recruitment.source    / job_id (many2one)             : NEW relation: hr.job
+hr_recruitment / hr.recruitment.source    / name (char)                   : DEL required: required
+hr_recruitment / hr.recruitment.source    / source_id (many2one)          : NEW relation: utm.source, required: required
+hr_recruitment / hr.recruitment.stage     / department_id (many2one)      : DEL relation: hr.department
+hr_recruitment / hr.recruitment.stage     / job_ids (many2many)           : NEW relation: hr.job
+hr_recruitment / hr.recruitment.stage     / template_id (many2one)        : relation is now 'mail.template' ('email.template')
+---XML records in module 'hr_recruitment'---
+DEL email.template: hr_recruitment.applicant_interest
+DEL email.template: hr_recruitment.applicant_refuse
+NEW hr.applicant.category: hr_recruitment.tag_applicant_it
+NEW hr.applicant.category: hr_recruitment.tag_applicant_manager
+NEW hr.applicant.category: hr_recruitment.tag_applicant_reserve
+NEW hr.applicant.category: hr_recruitment.tag_applicant_sales
+DEL hr.applicant_category: hr_recruitment.tag_applicant_it
+DEL hr.applicant_category: hr_recruitment.tag_applicant_manager
+DEL hr.applicant_category: hr_recruitment.tag_applicant_reserve
+DEL hr.applicant_category: hr_recruitment.tag_applicant_sales
+DEL hr.recruitment.source: hr_recruitment.source_linkedin
+DEL hr.recruitment.source: hr_recruitment.source_monster
+DEL hr.recruitment.source: hr_recruitment.source_website_company
+DEL hr.recruitment.source: hr_recruitment.source_word
+DEL hr.recruitment.stage: hr_recruitment.stage_job1
+DEL hr.recruitment.stage: hr_recruitment.stage_job2
+DEL hr.recruitment.stage: hr_recruitment.stage_job3
+DEL hr.recruitment.stage: hr_recruitment.stage_job4
+DEL hr.recruitment.stage: hr_recruitment.stage_job5
+DEL hr.recruitment.stage: hr_recruitment.stage_job6
+NEW ir.actions.act_window: hr_recruitment.action_hr_job_config
+NEW ir.actions.act_window: hr_recruitment.action_hr_job_new_application
+NEW ir.actions.act_window: hr_recruitment.action_hr_job_no_employee
+NEW ir.actions.act_window: hr_recruitment.action_hr_job_sources
+NEW ir.actions.act_window: hr_recruitment.action_hr_recruitment_configuration
+NEW ir.actions.act_window: hr_recruitment.action_hr_recruitment_report_filtered_department
+NEW ir.actions.act_window: hr_recruitment.action_hr_recruitment_report_filtered_job
+NEW ir.actions.act_window: hr_recruitment.hr_applicant_action_from_department
+NEW ir.actions.act_window: hr_recruitment.hr_applicant_resumes
+NEW ir.actions.act_window: hr_recruitment.hr_employee_action_from_department
+DEL ir.actions.act_window: hr_recruitment.act_hr_applicant_to_meeting
+DEL ir.actions.act_window: hr_recruitment.action_hr_recruitment_partner_create
+DEL ir.actions.act_window: hr_recruitment.hr_recruitment_stage_form_installer
+NEW ir.actions.client: hr_recruitment.action_client_hr_recruitment_menu
+NEW ir.ui.menu: hr.menu_hr_job_position_config
+NEW ir.ui.menu: hr_recruitment.menu_crm_case_categ0_act_job02
+NEW ir.ui.menu: hr_recruitment.menu_hr_recruitment_configuration
+NEW ir.ui.menu: hr_recruitment.menu_hr_recruitment_global_settings
+NEW ir.ui.menu: hr_recruitment.menu_hr_recruitment_root
+NEW ir.ui.menu: hr_recruitment.report_hr_recruitment
+DEL ir.ui.menu: base.menu_crm_case_job_req_main
+DEL ir.ui.menu: hr_recruitment.menu_hr_recruitment_recruitment
+DEL ir.ui.menu: hr_recruitment.menu_hr_recruitment_report_all
+NEW ir.ui.view: hr_recruitment.crm_case_pivot_view_job
+NEW ir.ui.view: hr_recruitment.hr_department_view_kanban
+NEW ir.ui.view: hr_recruitment.hr_employee_view_search
+NEW ir.ui.view: hr_recruitment.view_hr_recruitment_configuration
+NEW ir.ui.view: hr_recruitment.view_hr_recruitment_report_pivot
+DEL ir.ui.view: hr_recruitment.hr_recruitment_source_form
+DEL ir.ui.view: hr_recruitment.view_hr_apll_config_settings
+DEL ir.ui.view: hr_recruitment.view_hr_recruitment_partner_create
+NEW mail.message.subtype: hr_recruitment.mt_department_new
+NEW mail.message.subtype: hr_recruitment.mt_job_new
+DEL mail.message.subtype: hr_recruitment.mt_job_applicant_new
+NEW mail.template: hr_recruitment.applicant_interest
+NEW mail.template: hr_recruitment.applicant_refuse
+NEW mail.template: hr_recruitment.hr_welcome_new_employee
+NEW utm.campaign: hr_recruitment.utm_campaign_job

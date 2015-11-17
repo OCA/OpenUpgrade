@@ -1,0 +1,26 @@
+---Fields in module 'website_blog'---
+website_blog / blog.blog                / description (text)            : DEL 
+website_blog / blog.blog                / message_follower_ids (many2many): not a function anymore
+website_blog / blog.blog                / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+website_blog / blog.blog                / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+website_blog / blog.post                / background_image (binary)     : DEL 
+website_blog / blog.post                / cover_properties (text)       : NEW 
+website_blog / blog.post                / history_ids (one2many)        : DEL relation: blog.post.history
+website_blog / blog.post                / message_follower_ids (many2many): not a function anymore
+website_blog / blog.post                / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+website_blog / blog.post                / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+---XML records in module 'website_blog'---
+DEL ir.actions.act_window: website_blog.action_history
+DEL ir.actions.act_window: website_blog.action_related_page_history
+DEL ir.actions.act_window: website_blog.action_view_wiki_show_diff
+DEL ir.actions.act_window: website_blog.action_view_wiki_show_diff_values
+DEL ir.model.access: website_blog.blog_post_history
+NEW ir.ui.menu: website_blog.menu_website_blog_root
+DEL ir.ui.menu: knowledge.menu_document
+DEL ir.ui.menu: website_blog.menu_page_history
+DEL ir.ui.menu: website_blog.menu_wiki
+NEW ir.ui.view: website_blog.blog_feed
+NEW ir.ui.view: website_blog.website_blog
+DEL ir.ui.view: website_blog.view_blog_history_form
+DEL ir.ui.view: website_blog.view_blog_history_tree
+DEL ir.ui.view: website_blog.view_wiki_show_diff

@@ -1,0 +1,90 @@
+---Fields in module 'account_voucher'---
+account_voucher / account.voucher          / amount (float)                : now a function
+account_voucher / account.voucher          / analytic_id (many2one)        : DEL relation: account.analytic.account
+account_voucher / account.voucher          / comment (char)                : DEL required: required, req_default: Write-Off
+account_voucher / account.voucher          / is_multi_currency (boolean)   : DEL 
+account_voucher / account.voucher          / line_cr_ids (one2many)        : DEL relation: account.voucher.line
+account_voucher / account.voucher          / line_dr_ids (one2many)        : DEL relation: account.voucher.line
+account_voucher / account.voucher          / message_follower_ids (many2many): not a function anymore
+account_voucher / account.voucher          / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+account_voucher / account.voucher          / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+account_voucher / account.voucher          / payment_option (selection)    : DEL required: required, selection_keys: ['with_writeoff', 'without_writeoff'], req_default: without_writeoff
+account_voucher / account.voucher          / payment_rate (float)          : DEL required: required, req_default: 1.0
+account_voucher / account.voucher          / payment_rate_currency_id (many2one): DEL relation: res.currency, required: required, req_default: function
+account_voucher / account.voucher          / period_id (many2one)          : DEL relation: account.period, required: required, req_default: function
+account_voucher / account.voucher          / pre_line (boolean)            : DEL 
+account_voucher / account.voucher          / tax_amount (float)            : now a function
+account_voucher / account.voucher          / tax_correction (float)        : NEW 
+account_voucher / account.voucher          / tax_id (many2one)             : DEL relation: account.tax
+account_voucher / account.voucher          / type (selection)              : selection_keys is now '['purchase', 'sale']' ('['payment', 'purchase', 'receipt', 'sale']')
+account_voucher / account.voucher          / type (selection)              : was renamed to voucher_type [nothing to to]
+account_voucher / account.voucher          / writeoff_acc_id (many2one)    : DEL relation: account.account
+account_voucher / account.voucher.line     / amount (float)                : now required
+account_voucher / account.voucher.line     / amount (float)                : was renamed to price_unit [nothing to to]
+account_voucher / account.voucher.line     / move_line_id (many2one)       : DEL relation: account.move.line
+account_voucher / account.voucher.line     / name (char)                   : now required
+account_voucher / account.voucher.line     / name (char)                   : type is now 'text' ('char')
+account_voucher / account.voucher.line     / product_id (many2one)         : NEW relation: product.product
+account_voucher / account.voucher.line     / quantity (float)              : NEW required: required, req_default: 1
+account_voucher / account.voucher.line     / reconcile (boolean)           : DEL 
+account_voucher / account.voucher.line     / sequence (integer)            : NEW 
+account_voucher / account.voucher.line     / tax_ids (many2many)           : NEW relation: account.tax
+account_voucher / account.voucher.line     / type (selection)              : DEL selection_keys: ['cr', 'dr']
+account_voucher / account.voucher.line     / untax_amount (float)          : DEL 
+---XML records in module 'account_voucher'---
+DEL ir.actions.act_window: account_voucher.act_pay_bills
+DEL ir.actions.act_window: account_voucher.act_pay_voucher
+DEL ir.actions.act_window: account_voucher.action_sale_receipt_report_all
+DEL ir.actions.act_window: account_voucher.action_vendor_payment
+DEL ir.actions.act_window: account_voucher.action_vendor_receipt
+DEL ir.actions.act_window: account_voucher.action_voucher_list
+DEL ir.actions.act_window.view: account_voucher.action_journal_voucher_form
+DEL ir.actions.act_window.view: account_voucher.action_journal_voucher_tree
+DEL ir.actions.act_window.view: account_voucher.action_vendor_payment_form
+DEL ir.actions.act_window.view: account_voucher.action_vendor_payment_tree
+DEL ir.actions.act_window.view: account_voucher.action_vendor_receipt_form
+DEL ir.actions.act_window.view: account_voucher.action_vendor_receipt_tree
+DEL ir.model.access: account_voucher.access_sale_receipt_report_manager
+DEL ir.model.access: account_voucher.access_sale_receipt_report_user
+DEL ir.sequence: account_voucher.seq_bank_pay_voucher
+DEL ir.sequence: account_voucher.seq_bank_rec_voucher
+DEL ir.sequence: account_voucher.seq_cash_pay_voucher
+DEL ir.sequence: account_voucher.seq_cash_rec_voucher
+DEL ir.sequence: account_voucher.seq_contra_voucher
+DEL ir.sequence: account_voucher.seq_jou_pur_voucher
+DEL ir.sequence: account_voucher.seq_jou_sale_voucher
+DEL ir.sequence.type: account_voucher.seq_type_bank_pay_voucher
+DEL ir.sequence.type: account_voucher.seq_type_bank_rec_voucher
+DEL ir.sequence.type: account_voucher.seq_type_cash_pay_voucher
+DEL ir.sequence.type: account_voucher.seq_type_cash_rec_voucher
+DEL ir.sequence.type: account_voucher.seq_type_contra_voucher
+DEL ir.sequence.type: account_voucher.seq_type_jou_pur_voucher
+DEL ir.sequence.type: account_voucher.seq_type_jou_sale_voucher
+DEL ir.ui.menu: account_voucher.menu_action_sale_receipt_report_all
+DEL ir.ui.menu: account_voucher.menu_action_vendor_payment
+DEL ir.ui.menu: account_voucher.menu_action_vendor_receipt
+DEL ir.ui.menu: account_voucher.menu_encode_entries_by_voucher
+NEW ir.ui.view: account_voucher.view_voucher_kanban
+NEW ir.ui.view: account_voucher.view_voucher_line_tree
+NEW ir.ui.view: account_voucher.view_voucher_tree_purchase
+DEL ir.ui.view: account_voucher.view_invoice_customer
+DEL ir.ui.view: account_voucher.view_invoice_supplier
+DEL ir.ui.view: account_voucher.view_low_priority_payment_form
+DEL ir.ui.view: account_voucher.view_sale_receipt_report_graph
+DEL ir.ui.view: account_voucher.view_sale_receipt_report_search
+DEL ir.ui.view: account_voucher.view_vendor_payment_form
+DEL ir.ui.view: account_voucher.view_vendor_receipt_dialog_form
+DEL ir.ui.view: account_voucher.view_vendor_receipt_form
+DEL ir.ui.view: account_voucher.view_voucher_filter_customer_pay
+DEL ir.ui.view: account_voucher.view_voucher_filter_vendor_pay
+DEL ir.ui.view: account_voucher.view_voucher_form
+DEL ir.ui.view: account_voucher.view_voucher_tree_nocreate
+DEL res.request.link: account_voucher.req_link_voucher
+DEL workflow: account_voucher.wkf
+DEL workflow.activity: account_voucher.act_cancel
+DEL workflow.activity: account_voucher.act_done
+DEL workflow.activity: account_voucher.act_proforma
+DEL workflow.transition: account_voucher.t2
+DEL workflow.transition: account_voucher.t6
+DEL workflow.transition: account_voucher.t7
+DEL workflow.transition: account_voucher.t8

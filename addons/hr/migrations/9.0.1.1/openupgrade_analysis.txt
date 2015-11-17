@@ -1,0 +1,40 @@
+---Fields in module 'hr'---
+hr           / hr.department            / color (integer)               : NEW 
+hr           / hr.department            / message_follower_ids (one2many): NEW relation: mail.followers
+hr           / hr.department            / message_ids (one2many)        : NEW relation: mail.message
+hr           / hr.department            / message_last_post (datetime)  : NEW 
+hr           / hr.employee              / gender (selection)            : selection_keys is now '['female', 'male', 'other']' ('['female', 'male']')
+hr           / hr.employee              / message_follower_ids (many2many): not a function anymore
+hr           / hr.employee              / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+hr           / hr.employee              / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+hr           / hr.employee              / otherid (char)                : DEL 
+hr           / hr.employee.category     / child_ids (one2many)          : DEL relation: hr.employee.category
+hr           / hr.employee.category     / color (integer)               : NEW 
+hr           / hr.employee.category     / parent_id (many2one)          : DEL relation: hr.employee.category
+hr           / hr.job                   / message_follower_ids (many2many): not a function anymore
+hr           / hr.job                   / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+hr           / hr.job                   / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+hr           / res.users                / display_employees_suggestions (boolean): DEL 
+---XML records in module 'hr'---
+NEW hr.department: hr.dep_administration
+NEW hr.department: hr.dep_sales
+DEL hr.employee: hr.employee
+NEW ir.actions.act_window: hr.act_employee_from_department
+NEW ir.actions.act_window: hr.hr_employee_action_subordinate_hierachy
+DEL ir.actions.act_window: hr.action2
+DEL ir.actions.act_window: hr.action_human_resources_configuration
+DEL ir.actions.act_window: hr.hr_employee_normal_action_tree
+DEL ir.actions.act_window: hr.open_payroll_modules
+DEL ir.actions.client: mail.action_mail_inbox_feeds
+DEL ir.ui.menu: base.menu_crm_case_job_req_main
+DEL ir.ui.menu: hr.menu_hr_configuration
+DEL ir.ui.menu: hr.menu_hr_reporting
+NEW ir.ui.view: hr.hr_department_view_kanban
+DEL ir.ui.view: hr.view_employee_category_tree
+DEL ir.ui.view: hr.view_human_resources_configuration
+DEL ir.ui.view: hr.view_users_form_mail
+NEW ir.values: hr.hr_employee_action_subordinate_hierachy_mutli
+DEL ir.values: hr.hr_employee_category_open
+NEW res.groups: base.group_hr_attendance
+NEW web.tip: hr.hr_tip_1
+NEW web.tip: hr.hr_tip_2

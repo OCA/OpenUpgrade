@@ -1,0 +1,57 @@
+---Fields in module 'delivery'---
+delivery     / delivery.carrier         / _inherits (False)             : NEW 
+delivery     / delivery.carrier         / active (boolean)              : DEL 
+delivery     / delivery.carrier         / country_ids (many2many)       : NEW relation: res.country
+delivery     / delivery.carrier         / delivery_type (selection)     : NEW required: required, selection_keys: ['base_on_rule', 'fixed'], req_default: fixed
+delivery     / delivery.carrier         / grids_id (one2many)           : DEL relation: delivery.grid
+delivery     / delivery.carrier         / name (char)                   : DEL required: required
+delivery     / delivery.carrier         / normal_price (float)          : DEL 
+delivery     / delivery.carrier         / price_rule_ids (one2many)     : NEW relation: delivery.price.rule
+delivery     / delivery.carrier         / pricelist_ids (one2many)      : DEL relation: delivery.grid
+delivery     / delivery.carrier         / sequence (integer)            : NEW 
+delivery     / delivery.carrier         / shipping_enabled (boolean)    : NEW 
+delivery     / delivery.carrier         / state_ids (many2many)         : NEW relation: res.country.state
+delivery     / delivery.carrier         / use_detailed_pricelist (boolean): DEL 
+delivery     / delivery.carrier         / zip_from (char)               : NEW 
+delivery     / delivery.carrier         / zip_to (char)                 : NEW 
+delivery     / delivery.price.rule      / carrier_id (many2one)         : NEW relation: delivery.carrier, required: required
+delivery     / delivery.price.rule      / list_base_price (float)       : NEW required: required, req_default: function
+delivery     / delivery.price.rule      / list_price (float)            : NEW required: required, req_default: function
+delivery     / delivery.price.rule      / max_value (float)             : NEW required: required
+delivery     / delivery.price.rule      / operator (selection)          : NEW required: required, selection_keys: ['<', '<=', '==', '>', '>='], req_default: <=
+delivery     / delivery.price.rule      / sequence (integer)            : NEW required: required, req_default: 10
+delivery     / delivery.price.rule      / standard_price (float)        : NEW required: required, req_default: function
+delivery     / delivery.price.rule      / variable (selection)          : NEW required: required, selection_keys: ['price', 'quantity', 'volume', 'weight', 'wv'], req_default: weight
+delivery     / delivery.price.rule      / variable_factor (selection)   : NEW required: required, selection_keys: ['price', 'quantity', 'volume', 'weight', 'wv'], req_default: weight
+delivery     / res.partner              / property_delivery_carrier (many2one): DEL relation: delivery.carrier
+delivery     / res.partner              / property_delivery_carrier_id (many2one): NEW relation: delivery.carrier
+delivery     / sale.order               / invoice_shipping_on_delivery (boolean): NEW 
+delivery     / stock.picking            / carrier_price (float)         : NEW 
+---XML records in module 'delivery'---
+NEW delivery.carrier: delivery.free_delivery_carrier
+DEL ir.actions.act_window: delivery.action_delivery_grid_form
+DEL ir.actions.act_window: delivery.action_picking_tree
+NEW ir.model.access: delivery.access_delivery_carrier_stock_manager
+NEW ir.model.access: delivery.access_delivery_carrier_stock_user
+NEW ir.model.access: delivery.access_delivery_price_rule
+NEW ir.model.access: delivery.access_delivery_price_rule_manager
+NEW ir.model.access: delivery.access_delivery_price_rule_stock_manager
+DEL ir.model.access: delivery.access_delivery_grid
+DEL ir.model.access: delivery.access_delivery_grid_line
+DEL ir.model.access: delivery.access_delivery_grid_line_manager
+DEL ir.model.access: delivery.access_delivery_grid_manager
+NEW ir.ui.menu: delivery.sale_menu_action_delivery_carrier_form
+NEW ir.ui.menu: delivery.sale_menu_delivery
+DEL ir.ui.menu: delivery.menu_action_delivery_grid_form
+NEW ir.ui.view: delivery.report_delivery_document2
+NEW ir.ui.view: delivery.view_delivery_price_rule_form
+NEW ir.ui.view: delivery.view_delivery_price_rule_tree
+NEW ir.ui.view: delivery.view_order_form_with_carrier
+NEW ir.ui.view: delivery.view_picking_withcarrier_out_form_shipping
+NEW ir.ui.view: delivery.view_quant_package_weight_form
+DEL ir.ui.view: delivery.view_delivery_grid_form
+DEL ir.ui.view: delivery.view_delivery_grid_line_form
+DEL ir.ui.view: delivery.view_delivery_grid_line_tree
+DEL ir.ui.view: delivery.view_delivery_grid_tree
+DEL ir.ui.view: delivery.view_order_withcarrier_form
+NEW res.partner: delivery.res_partner_delivery

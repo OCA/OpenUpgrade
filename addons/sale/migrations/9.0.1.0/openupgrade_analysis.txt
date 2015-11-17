@@ -1,0 +1,135 @@
+---Fields in module 'sale'---
+sale         / account.analytic.line    / so_line (many2one)            : NEW relation: sale.order.line
+sale         / account.invoice          / section_id (many2one)         : DEL relation: crm.case.section
+sale         / account.invoice          / team_id (many2one)            : NEW relation: crm.team
+sale         / account.invoice.line     / sale_line_ids (many2many)     : NEW relation: sale.order.line
+sale         / crm.team                 / invoiced_target (integer)     : NEW 
+sale         / crm.team                 / use_invoices (boolean)        : NEW 
+sale         / crm.team                 / use_quotations (boolean)      : NEW 
+sale         / product.template         / invoice_policy (selection)    : NEW selection_keys: ['cost', 'delivery', 'order']
+sale         / product.template         / track_service (selection)     : NEW selection_keys: ['manual']
+sale         / sale.order               / date_confirm (date)           : DEL 
+sale         / sale.order               / fiscal_position (many2one)    : was renamed to fiscal_position_id [nothing to to]
+sale         / sale.order               / invoice_ids (many2many)       : DEL relation: account.invoice
+sale         / sale.order               / message_follower_ids (many2many): not a function anymore
+sale         / sale.order               / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+sale         / sale.order               / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+sale         / sale.order               / order_policy (selection)      : DEL required: required, selection_keys: ['manual'], req_default: manual
+sale         / sale.order               / payment_term (many2one)       : was renamed to payment_term_id [nothing to to]
+sale         / sale.order               / section_id (many2one)         : DEL relation: crm.case.section
+sale         / sale.order               / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'sale', 'sent']' ('['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'sent', 'shipping_except', 'waiting_date']')
+sale         / sale.order               / team_id (many2one)            : NEW relation: crm.team
+sale         / sale.order.line          / address_allotment_id (many2one): DEL relation: res.partner
+sale         / sale.order.line          / delay (float)                 : was renamed to customer_lead [nothing to to]
+sale         / sale.order.line          / product_id (many2one)         : now required
+sale         / sale.order.line          / product_uos (many2one)        : DEL relation: product.uom
+sale         / sale.order.line          / product_uos_qty (float)       : DEL 
+sale         / sale.order.line          / qty_delivered (float)         : NEW 
+sale         / sale.order.line          / state (selection)             : selection_keys is now 'function' ('['cancel', 'confirmed', 'done', 'draft', 'exception']')
+sale         / sale.order.line          / th_weight (float)             : DEL 
+---XML records in module 'sale'---
+DEL email.template: sale.email_template_edi_sale
+NEW ir.actions.act_window: sale.action_orders_to_invoice
+NEW ir.actions.act_window: sale.action_orders_to_invoice_salesteams
+NEW ir.actions.act_window: sale.action_orders_upselling
+NEW ir.actions.act_window: sale.action_product_sale_list
+NEW ir.actions.act_window: sale.action_quotation_form
+DEL ir.actions.act_window: sale.action_email_templates
+DEL ir.actions.act_window: sale.action_order_line_product_tree
+DEL ir.actions.act_window: sale.action_order_line_tree2
+DEL ir.actions.act_window: sale.action_order_line_tree3
+DEL ir.actions.act_window: sale.action_order_tree
+DEL ir.actions.act_window: sale.action_orders_exception
+DEL ir.actions.act_window: sale.action_orders_in_progress
+DEL ir.actions.act_window: sale.action_sale_order_make_invoice
+DEL ir.actions.act_window: sale.action_view_sale_order_line_make_invoice
+NEW ir.model.access: sale.access_account_analytic_tag_sale_salesman
+NEW ir.model.access: sale.access_sale_order_invoicing_payments
+NEW ir.model.access: sale.access_sale_order_line_invoicing_payments
+DEL ir.model.access: sale.access_account_fiscalyear_user
+DEL ir.model.access: sale.access_account_invoice_report_salesman
+DEL ir.model.access: sale.access_pricelist_partnerinfo_sale_manager
+DEL ir.model.access: sale.access_product_price_type_sale_manager
+DEL ir.model.access: sale.access_product_pricelist_type_sale_manager
+DEL ir.model.access: sale.access_product_pricelist_version_sale_manager
+DEL ir.model.access: sale.access_product_ul_sale_manager
+DEL ir.model.access: sale.access_res_partner_bank_type_field_user
+DEL ir.model.access: sale.access_res_partner_bank_type_user
+DEL ir.sequence.type: sale.seq_type_sale_order
+NEW ir.ui.menu: base.menu_sale_general_settings
+NEW ir.ui.menu: base.menu_sales_config
+NEW ir.ui.menu: sale.menu_sale_invoicing
+NEW ir.ui.menu: sale.menu_sale_order_invoice
+NEW ir.ui.menu: sale.menu_sale_order_upselling
+DEL ir.ui.menu: base.menu_base_config
+DEL ir.ui.menu: base.menu_product
+NEW ir.ui.view: sale.assets_backend
+NEW ir.ui.view: sale.crm_team_salesteams_view_form
+NEW ir.ui.view: sale.crm_team_salesteams_view_kanban
+NEW ir.ui.view: sale.product_template_form_view_invoice_policy
+NEW ir.ui.view: sale.view_order_product_pivot
+NEW ir.ui.view: sale.view_sale_order_kanban
+NEW ir.ui.view: sale.view_sale_order_pivot
+DEL ir.ui.view: sale.account_invoice_tree
+DEL ir.ui.view: sale.crm_case_section_salesteams_view_form
+DEL ir.ui.view: sale.crm_case_section_salesteams_view_kanban
+DEL ir.ui.view: sale.res_partner_address_type
+DEL ir.ui.view: sale.view_order_line_form2
+DEL ir.ui.view: sale.view_sale_order_line_make_invoice
+DEL ir.ui.view: sale.view_sale_order_make_invoice
+DEL ir.ui.view: sale.view_sales_order_uninvoiced_line_filter
+DEL ir.values: sale.sale_order_make_invoice
+NEW mail.message.subtype: sale.mt_salesteam_invoice_confirmed
+NEW mail.message.subtype: sale.mt_salesteam_invoice_created
+NEW mail.template: sale.email_template_edi_sale
+NEW res.groups: sale.group_display_incoterm
+DEL res.groups: sale.group_invoice_so_lines
+NEW web.tip: sale.sale_tip_1
+NEW web.tip: sale.sale_tip_2
+DEL workflow: sale.wkf_sale
+DEL workflow.activity: sale.act_cancel
+DEL workflow.activity: sale.act_cancel2
+DEL workflow.activity: sale.act_cancel3
+DEL workflow.activity: sale.act_done
+DEL workflow.activity: sale.act_draft
+DEL workflow.activity: sale.act_invoice
+DEL workflow.activity: sale.act_invoice_cancel
+DEL workflow.activity: sale.act_invoice_end
+DEL workflow.activity: sale.act_invoice_except
+DEL workflow.activity: sale.act_router
+DEL workflow.activity: sale.act_sent
+DEL workflow.activity: sale.act_ship
+DEL workflow.activity: sale.act_ship_cancel
+DEL workflow.activity: sale.act_ship_end
+DEL workflow.activity: sale.act_ship_except
+DEL workflow.activity: sale.act_ship_ignore
+DEL workflow.activity: sale.act_wait_invoice
+DEL workflow.activity: sale.act_wait_ship
+DEL workflow.transition: sale.trans_draft_cancel
+DEL workflow.transition: sale.trans_draft_router
+DEL workflow.transition: sale.trans_draft_sent
+DEL workflow.transition: sale.trans_invoice_end_done
+DEL workflow.transition: sale.trans_invoice_except_invoice
+DEL workflow.transition: sale.trans_invoice_except_invoice_cancel
+DEL workflow.transition: sale.trans_invoice_except_invoice_end
+DEL workflow.transition: sale.trans_invoice_invoice_end
+DEL workflow.transition: sale.trans_invoice_invoice_except
+DEL workflow.transition: sale.trans_router_wait_invoice
+DEL workflow.transition: sale.trans_router_wait_invoice_shipping
+DEL workflow.transition: sale.trans_router_wait_ship
+DEL workflow.transition: sale.trans_sent_cancel
+DEL workflow.transition: sale.trans_sent_router
+DEL workflow.transition: sale.trans_ship_end_done
+DEL workflow.transition: sale.trans_ship_except_ship
+DEL workflow.transition: sale.trans_ship_except_ship_cancel
+DEL workflow.transition: sale.trans_ship_except_ship_ignore
+DEL workflow.transition: sale.trans_ship_ignore_ship_end
+DEL workflow.transition: sale.trans_ship_ship_end
+DEL workflow.transition: sale.trans_ship_ship_except
+DEL workflow.transition: sale.trans_wait_invoice_all_lines_invoiced
+DEL workflow.transition: sale.trans_wait_invoice_cancel2
+DEL workflow.transition: sale.trans_wait_invoice_invoice
+DEL workflow.transition: sale.trans_wait_invoice_invoice_manual
+DEL workflow.transition: sale.trans_wait_ship_cancel3
+DEL workflow.transition: sale.trans_wait_ship_done
+DEL workflow.transition: sale.trans_wait_ship_ship
