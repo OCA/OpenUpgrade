@@ -333,8 +333,8 @@ else:
             'url': 'https://github.com/OCA/openupgradelib',
             'target': openupgradelib,
             })
-os.environ['PYTHONPATH'] = ':'.join([
-    openupgradelib, os.environ.get('PYTHONPATH')])
+os.environ['PYTHONPATH'] = ':'.join(filter(None, [
+    openupgradelib, os.environ.get('PYTHONPATH')]))
 
 db_name = conn_parms['database']
 if not options.inplace:
