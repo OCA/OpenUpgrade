@@ -5,13 +5,21 @@ project      / project.project          / label_tasks (char)            : NEW
 # New fields ---> Nothing to do
 
 project      / project.project          / members (many2many)           : DEL relation: res.users
+# Field removed ---> Nothing to do
+
 project      / project.project          / message_follower_ids (many2many): not a function anymore
 project      / project.project          / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
 project      / project.project          / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+# Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
+
 project      / project.project          / state (selection)             : selection_keys is now '['cancelled', 'close', 'draft', 'open', 'pending']' ('['cancelled', 'close', 'draft', 'open', 'pending', 'template']')
+# TODO - template was removed
+
 project      / project.project          / user_id (many2one)            : NEW relation: res.users
+# TODO - à montrer à SLC
+
 project      / project.project          / website_message_ids (one2many): NEW relation: mail.message
-# TODO
+# Field doesn't exist neither in v8 or in v9...weird! ---> Nothing to do
 
 project      / project.tags             / color (integer)               : NEW
 project      / project.tags             / name (char)                   : NEW required: required
@@ -21,10 +29,10 @@ project      / project.task             / active (boolean)              : not a 
 # Field content is still a boolean ---> Nothing to do
 
 project      / project.task             / attachment_ids (one2many)     : NEW relation: ir.attachment
-# TODO à voir avec SLC
+# Nothing to do
 
 project      / project.task             / categ_ids (many2many)         : relation is now 'project.tags' ('project.category')
-# TODO - Needs to convert ids from project.category to project.tags
+# Renamed project_category to project_tags (note: column color is missing from project_category but should be created automatically)
 
 project      / project.task             / categ_ids (many2many)         : was renamed to tag_ids [nothing to to]
 # Field was renamed (has oldname) ---> Nothing to do
@@ -47,7 +55,7 @@ project      / project.task             / message_follower_ids (many2many): type
 # Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
 
 project      / project.task             / priority (selection)          : selection_keys is now '['0', '1']' ('['0', '1', '2']')
-# TODO with SQL
+# TODO with SQL (in v8 = [('0','Low'), ('1','Normal'), ('2','High')] and in v9 = ('0','Normal'), ('1','High'))
 
 project      / project.task             / reviewer_id (many2one)        : DEL relation: res.users
 # Field removed, no more task reviewers ---> Nothing to do

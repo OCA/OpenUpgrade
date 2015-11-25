@@ -30,14 +30,9 @@ column_copies = {
     ],
 }
 
-column_renames = {
-    'res_partner_bank': [
-        ('bank', 'bank_id'),
-    ],
-}
-
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.copy_columns(cr, column_copies)
-    openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_tables(
+        cr, [('project_category', 'project_tags')])
