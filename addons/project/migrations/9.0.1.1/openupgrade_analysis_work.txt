@@ -13,7 +13,8 @@ project      / project.project          / message_follower_ids (many2many): type
 # Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
 
 project      / project.project          / state (selection)             : selection_keys is now '['cancelled', 'close', 'draft', 'open', 'pending']' ('['cancelled', 'close', 'draft', 'open', 'pending', 'template']')
-# TODO - template was removed
+# Done ---> 'template' is converted to 'draft'
+# TODO - does this behavior make sense on the functional level?
 
 project      / project.project          / user_id (many2one)            : NEW relation: res.users
 # TODO - à montrer à SLC
@@ -55,7 +56,7 @@ project      / project.task             / message_follower_ids (many2many): type
 # Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
 
 project      / project.task             / priority (selection)          : selection_keys is now '['0', '1']' ('['0', '1', '2']')
-# Done ('2' is converted to '1' and '1' is converted to '0')
+# Done ---> '2' is converted to '1' and '1' is converted to '0'
 # (legend: in v8 = [('0','Low'), ('1','Normal'), ('2','High')] and in v9 = ('0','Normal'), ('1','High'))
 
 project      / project.task             / reviewer_id (many2one)        : DEL relation: res.users

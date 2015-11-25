@@ -38,14 +38,24 @@ def map_priority(cr):
         cr,
         openupgrade.get_legacy_name('priority'),
         'priority',
-        [('2', '1'), ('1', '0')],
+        [('1', '0'), ('2', '1')],
         table='project_task', write='sql')
+
+
+def map_template_state(cr):
+    openupgrade.map_values(
+        cr,
+        openupgrade.get_legacy_name('state'),
+        'state',
+        [('template', 'draft')],
+        table='project_project', write='sql')
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     map_priority(cr)
+    map_template_state(cr)
     for table_name in column_spec.keys():
         for (old, new, field_type) in column_spec[table_name]:
             convert_field_to_html(cr, table_name, get_legacy_name(old), old)
