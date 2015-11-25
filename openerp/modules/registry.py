@@ -65,6 +65,9 @@ class Registry(Mapping):
         if openerp.tools.config['unaccent'] and not has_unaccent:
             _logger.warning("The option --unaccent was given but no unaccent() function was found in database.")
         self.has_unaccent = openerp.tools.config['unaccent'] and has_unaccent
+
+        # ir_model must be in 9.0 format before continuing
+        self.patch_migrate_9(cr)
         cr.close()
 
     #
@@ -207,9 +210,6 @@ class Registry(Mapping):
             :param partial: ``True`` if all models have not been loaded yet.
         """
         lazy_property.reset_all(self)
-
-        # ir_model must be in 9.0 format before continuing
-        self.patch_migrate_9(cr)
 
         # load custom models
         ir_model = self['ir.model']
