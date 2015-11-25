@@ -17,7 +17,7 @@ project      / project.project          / state (selection)             : select
 # TODO - does this behavior make sense on the functional level?
 
 project      / project.project          / user_id (many2one)            : NEW relation: res.users
-# TODO - à montrer à SLC
+# TODO - does someone know where user_id comes from?
 
 project      / project.project          / website_message_ids (one2many): NEW relation: mail.message
 # Field doesn't exist neither in v8 or in v9...weird! ---> Nothing to do
