@@ -33,18 +33,20 @@ column_copies = {
 }
 
 
-# TODO - match company_type to is_company
-def match_company_type_to_is_company(cr):
-    cr.execute("""
-        UPDATE res_partner
-        SET company_type = (CASE WHEN is_company THEN 'company' ELSE 'person' END)
-        """)
+def map_priority(cr):
+    openupgrade.map_values(
+        cr,
+        openupgrade.get_legacy_name('priority'),
+        'priority',
+        [('2', '1'), ('1', '0')],
+        table='project_task', write='sql')
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
+    map_priority(cr)
     for table_name in column_spec.keys():
         for (old, new, field_type) in column_spec[table_name]:
             convert_field_to_html(cr, table_name, get_legacy_name(old), old)
-    match_company_type_to_is_company(cr)
+
