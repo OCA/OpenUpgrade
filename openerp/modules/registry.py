@@ -172,6 +172,34 @@ class Registry(Mapping):
 
         return [self.models[m] for m in models_to_load]
 
+    def patch_migrate_9(self, cr):
+        cr.execute("""SELECT 1 FROM information_schema.columns
+                      WHERE table_name='ir_model' AND column_name='transient'
+                      """)
+        found = cr.fetchone()
+        if not found:
+            # ir_model needs to be updated
+            cr.execute("""ALTER TABLE ir_model
+                          ADD COLUMN transient boolean
+                          """)
+
+            # we assume ir_model_fields needs fixing too
+            cr.execute("""ALTER TABLE ir_model_fields
+                          ADD COLUMN help varchar,
+                          ADD COLUMN index boolean,
+                          ADD COLUMN copy boolean,
+                          ADD COLUMN related varchar,
+                          ADD COLUMN relation_table varchar,
+                          ADD COLUMN column1 varchar,
+                          ADD COLUMN column2 varchar,
+                          ALTER COLUMN select_level SET DEFAULT '0'
+                          """)
+            
+            # ir_model needs to be updated
+            cr.execute("""ALTER TABLE ir_model_constraint
+                          ADD COLUMN definition varchar
+                          """)
+
     def setup_models(self, cr, partial=False):
         """ Complete the setup of models.
             This must be called after loading modules and before using the ORM.
@@ -179,6 +207,9 @@ class Registry(Mapping):
             :param partial: ``True`` if all models have not been loaded yet.
         """
         lazy_property.reset_all(self)
+
+        # ir_model must be in 9.0 format before continuing
+        self.patch_migrate_9(cr)
 
         # load custom models
         ir_model = self['ir.model']
