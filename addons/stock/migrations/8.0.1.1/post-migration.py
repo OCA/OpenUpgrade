@@ -21,6 +21,7 @@
 ##############################################################################
 
 import logging
+from openerp import api, SUPERUSER_ID
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID as uid
@@ -684,18 +685,26 @@ def migrate_procurement_order(cr, registry):
 
 
 def migrate_stock_qty(cr, registry):
-    """Reprocess stock moves in state done to fill stock.quant."""
-    stock_move_obj = registry['stock.move']
-
-    done_move_ids = stock_move_obj.search(
-        cr, uid, [('state', '=', 'done')], order="date")
-    openupgrade.message(
-        cr, 'stock', 'stock_move', 'state',
-        'Reprocess %s stock moves in state done to fill stock.quant',
-        len(done_move_ids))
-    stock_move_obj.write(cr, uid, done_move_ids, {'state': 'draft'})
-    # Process moves using action_done.
-    stock_move_obj.action_done(cr, uid, done_move_ids, context=None)
+    """Reprocess stock moves in done state to fill stock.quant."""
+    with api.Environment.manage():
+        env = api.Environment(cr, SUPERUSER_ID, {})
+        done_moves = env['stock.move'].search(
+            [('state', '=', 'done')], order="date")
+        openupgrade.message(
+            cr, 'stock', 'stock_move', 'state',
+            'Reprocess %s stock moves in state done to fill stock.quant',
+            len(done_moves.ids))
+        done_moves.write({'state': 'draft'})
+        # Process moves using action_done.
+        for move in done_moves:
+            date_done = move.date
+            move.action_done()
+            # Rewrite date to keep old data
+            move.date = date_done
+            # Assign the same date for the created quants (not the existing)
+            quants_to_rewrite = move.quant_ids.filtered(
+                lambda x: x.in_date > date_done)
+            quants_to_rewrite.write({'in_date': date_done})
 
 
 def migrate_stock_production_lot(cr, registry):
