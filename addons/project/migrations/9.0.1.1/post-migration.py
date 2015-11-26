@@ -2,8 +2,7 @@
 ##############################################################################
 #
 #    OpenUpgrade module for Odoo
-#    @copyright 2014-Today: Odoo Community Association
-#    @author: Sylvain LE GAL <https://twitter.com/legalsylvain>
+#    @copyright 2014-Today: Odoo Community Association, Microcom
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,7 +21,7 @@
 
 import logging
 from openerp import pooler, SUPERUSER_ID
-from openerp.openupgrade import openupgrade
+from openupgradelib import openupgrade
 logger = logging.getLogger('OpenUpgrade')
 
 # copied from pre-migration
