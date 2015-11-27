@@ -5,7 +5,7 @@ project      / project.project          / label_tasks (char)            : NEW
 # New fields ---> Nothing to do
 
 project      / project.project          / members (many2many)           : DEL relation: res.users
-# Field removed ---> Nothing to do
+# Done ---> Field removed, no more project team, so renamed column to None to allow recovery with a future OCA module
 
 project      / project.project          / message_follower_ids (many2many): not a function anymore
 project      / project.project          / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
@@ -60,7 +60,7 @@ project      / project.task             / priority (selection)          : select
 # (legend: in v8 = [('0','Low'), ('1','Normal'), ('2','High')] and in v9 = ('0','Normal'), ('1','High'))
 
 project      / project.task             / reviewer_id (many2one)        : DEL relation: res.users
-# Done ---> Field removed, no more task reviewers, so renamed column to 'none' to allow recovery with a future OCA module
+# Done ---> Field removed, no more task reviewers, so renamed column to None to allow recovery with a future OCA module
 
 project      / project.task             / website_message_ids (one2many): NEW relation: mail.message
 # Field doesn't exist neither in v8 or in v9...weird! ---> Nothing to do

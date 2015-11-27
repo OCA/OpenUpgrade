@@ -28,10 +28,13 @@ column_copies = {
     ],
 }
 
-# Column is kept even though it was removed in v9, as to allow recovery by a future OCA module
+# These columns are kept even though they were removed in v9, in order to allow recovery by a future OCA module
 column_renames = {
     'project.task': [
         ('reviewer_id', None),
+    ],
+    'project.project': [
+        ('members', None),
     ],
 }
 
