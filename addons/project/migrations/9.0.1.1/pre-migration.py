@@ -28,9 +28,17 @@ column_copies = {
     ],
 }
 
+# Column is kept even though it was removed in v9, as to allow recovery by a future OCA module
+column_renames = {
+    'project.task': [
+        ('reviewer_id', None),
+    ],
+}
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.copy_columns(cr, column_copies)
+    openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_tables(
         cr, [('project_category', 'project_tags')])

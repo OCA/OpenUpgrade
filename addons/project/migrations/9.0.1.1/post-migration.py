@@ -37,7 +37,7 @@ def map_priority(cr):
         cr,
         openupgrade.get_legacy_name('priority'),
         'priority',
-        [('1', '0'), ('2', '1')],
+        [('2', '1')],
         table='project_task', write='sql')
 
 
