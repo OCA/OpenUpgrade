@@ -20,33 +20,26 @@
 #
 ##############################################################################
 
-from openerp.openupgrade import openupgrade
-from openerp.addons.openupgrade_records.lib import apriori
+from openupgradelib import openupgrade
 
 
 column_copies = {
-    'ir_actions_act_url': [
+    'ir_act_url': [
         ('help', None, None),
     ],
-    'ir_actions_act_window': [
+    # 'ir_act_window': [
+    #     ('help', None, None),
+    # ],
+    'ir_actions': [
         ('help', None, None),
     ],
-    'ir_actions_act_window_close': [
+    # 'ir_act_client': [
+    #     ('help', None, None),
+    # ],
+    'ir_act_report_xml': [
         ('help', None, None),
     ],
-    'ir_actions_actions': [
-        ('help', None, None),
-    ],
-    'ir_actions_client': [
-        ('help', None, None),
-    ],
-    'ir_actions_report_xml': [
-        ('help', None, None),
-    ],
-    'ir_actions_server': [
-        ('help', None, None),
-    ],
-    'ir_actions_server': [
+    'ir_act_server': [
         ('help', None, None),
     ],
     'ir_ui_view': [

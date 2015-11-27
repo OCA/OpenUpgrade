@@ -23,6 +23,8 @@ base         / ir.attachment            / public (boolean)              : NEW
 base         / ir.attachment            / res_field (char)              : NEW 
 base         / ir.filters               / active (boolean)              : NEW 
 base         / ir.filters               / sort (text)                   : NEW required: required, req_default: []
+# Nothing to do
+
 base         / ir.model                 / transient (boolean)           : NEW 
 base         / ir.model.constraint      / definition (char)             : NEW 
 base         / ir.model.fields          / column1 (char)                : NEW 
@@ -35,6 +37,8 @@ base         / ir.model.fields          / index (boolean)               : NEW
 base         / ir.model.fields          / related (char)                : NEW 
 base         / ir.model.fields          / relation_table (char)         : NEW 
 base         / ir.model.fields          / select_level (selection)      : DEL required: required, selection_keys: ['0', '1', '2'], req_default: 0
+# must patch setup_models()
+
 base         / ir.module.module         / license (selection)           : selection_keys is now '['AGPL-3', 'GPL-2', 'GPL-2 or any later version', 'GPL-3', 'GPL-3 or any later version', 'LGPL-3', 'OEEL-1', 'Other OSI approved licence', 'Other proprietary']' ('['AGPL-3', 'GPL-2', 'GPL-2 or any later version', 'GPL-3', 'GPL-3 or any later version', 'Other OSI approved licence', 'Other proprietary']')
 base         / ir.sequence              / code (selection)              : selection_keys is now 'False' ('function')
 base         / ir.sequence              / code (selection)              : type is now 'char' ('selection')
