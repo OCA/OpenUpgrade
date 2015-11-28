@@ -263,8 +263,6 @@ for version in options.migrations.split(','):
             version,
             ','.join(sorted([a for a in migrations])))
 
-bzrlib.plugin.load_plugins()
-bzrlib.trace.enable_default_logging()
 logfile = os.path.join(options.branch_dir, 'migration.log')
 
 if not os.path.exists(options.branch_dir):
@@ -284,6 +282,8 @@ for version in options.migrations.split(','):
             if addon_config_type == 'link':
                 continue
             elif addon_config_type == 'bzr':
+                bzrlib.plugin.load_plugins()
+                bzrlib.trace.enable_default_logging()
                 cmd_revno = bzrlib.builtins.cmd_revno()
                 cmd_revno.outf = StringIO.StringIO()
                 cmd_revno.run(location=os.path.join(options.branch_dir,
@@ -318,6 +318,8 @@ for version in options.migrations.split(','):
                 os.symlink(addon_config['url'],
                            os.path.join(options.branch_dir, version, name))
             elif addon_config_type == 'bzr':
+                bzrlib.plugin.load_plugins()
+                bzrlib.trace.enable_default_logging()
                 print 'getting ' + addon_config['url']
                 cmd_checkout = bzrlib.builtins.cmd_checkout()
                 cmd_checkout.outf = StringIO.StringIO()
