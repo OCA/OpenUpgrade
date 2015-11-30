@@ -79,15 +79,23 @@ project      / project.task.type        / legend_priority (char)        : NEW
 
 ---XML records in module 'project'---
 DEL account.analytic.account: project.all_projects_account
+# Removed ---> Nothing to do
+
 NEW ir.actions.act_window: project.action_project_task_user_tree_filtered
 NEW ir.actions.act_window: project.action_view_task_history_cumulative_filter
 NEW ir.actions.act_window: project.open_view_project_all_config
 NEW ir.actions.act_window: project.project_tags_action
 DEL ir.actions.act_window: project.action_project_task_delegate
 DEL ir.actions.act_window: project.project_category_action
+# ir.actions.* ---> Nothing to do
+
 NEW ir.attachment: project.msg_task_data_14_attach
 NEW ir.attachment: project.msg_task_data_8_attach
+# Data to show new features ---> Nothing to do
+
 DEL ir.filters: project.filter_task_report_reviewer
+# Task reviewer is gone in v9 ---> Nothing to do
+
 NEW ir.model.access: project.access_account_analytic_account_manager
 NEW ir.model.access: project.access_account_analytic_account_portal
 NEW ir.model.access: project.access_project_portal
@@ -101,9 +109,13 @@ DEL ir.model.access: project.access_account_analytic_account
 DEL ir.model.access: project.access_project_category
 DEL ir.model.access: project.access_project_category_manager
 DEL ir.model.access: project.access_project_task_work
+# TODO - ir.model.access - analysis needed
+
 NEW ir.rule: project.portal_project_rule
 NEW ir.rule: project.portal_task_rule
 NEW ir.rule: project.report_project_task_user_report_comp_rule
+# New rules ---> Nothing to do
+
 NEW ir.ui.menu: base.menu_project_general_settings
 NEW ir.ui.menu: project.menu_project_config
 NEW ir.ui.menu: project.menu_project_tags_act
@@ -126,12 +138,16 @@ DEL ir.ui.view: project.view_project_task_delegate
 DEL ir.ui.view: project.view_task_gantt
 DEL ir.ui.view: project.view_task_work_form
 DEL ir.ui.view: project.view_task_work_tree
+# ir.ui.* ---> Nothing to do
+
 NEW mail.message: project.msg_task_4
 NEW mail.message: project.msg_task_data_14
 NEW mail.message: project.msg_task_data_8
 NEW mail.message.subtype: project.mt_project_task_ready
 DEL mail.message.subtype: project.mt_project_task_assigned
 DEL mail.message.subtype: project.mt_task_assigned
+# Related to mail module changes ---> Nothing to do
+
 NEW project.project: project.project_project_data
 NEW project.tags: project.project_tag_data
 NEW project.task: project.project_task_data_0
@@ -158,7 +174,14 @@ DEL project.task.type: project.project_tt_development
 DEL project.task.type: project.project_tt_merge
 DEL project.task.type: project.project_tt_specification
 DEL project.task.type: project.project_tt_testing
+# TODO - project and task related stuff - analysis needed
+
 DEL res.groups: project.group_delegate_task
+# TODO - res.groups - has it moved in another module? - analysis needed
+
 NEW web.planner: project.planner_project
+# New feature (Project Planner = guide for new users) ---> Nothing to do
+
 NEW web.tip: project.project_tip_1
 NEW web.tip: project.project_tip_3
+# New features (project tips) ---> Nothing to do
