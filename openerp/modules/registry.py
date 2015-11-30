@@ -13,6 +13,7 @@ import openerp
 from .. import SUPERUSER_ID
 from openerp.tools import assertion_report, lazy_property, classproperty, config, topological_sort
 from openerp.tools.lru import LRU
+from openerp.openupgrade import openupgrade_loading_90
 
 _logger = logging.getLogger(__name__)
 
@@ -66,8 +67,8 @@ class Registry(Mapping):
             _logger.warning("The option --unaccent was given but no unaccent() function was found in database.")
         self.has_unaccent = openerp.tools.config['unaccent'] and has_unaccent
 
-        # ir_model must be in 9.0 format before continuing
-        self.patch_migrate_9(cr)
+        #OpenUpgrade: ir_model must be in 9.0 format before continuing
+        openupgrade_loading_90.migrate_model_tables(cr)
         cr.close()
 
     #
@@ -174,34 +175,6 @@ class Registry(Mapping):
                 models_to_load.append(model._name)
 
         return [self.models[m] for m in models_to_load]
-
-    def patch_migrate_9(self, cr):
-        cr.execute("""SELECT 1 FROM information_schema.columns
-                      WHERE table_name='ir_model' AND column_name='transient'
-                      """)
-        found = cr.fetchone()
-        if not found:
-            # ir_model needs to be updated
-            cr.execute("""ALTER TABLE ir_model
-                          ADD COLUMN transient boolean
-                          """)
-
-            # we assume ir_model_fields needs fixing too
-            cr.execute("""ALTER TABLE ir_model_fields
-                          ADD COLUMN help varchar,
-                          ADD COLUMN index boolean,
-                          ADD COLUMN copy boolean,
-                          ADD COLUMN related varchar,
-                          ADD COLUMN relation_table varchar,
-                          ADD COLUMN column1 varchar,
-                          ADD COLUMN column2 varchar,
-                          ALTER COLUMN select_level SET DEFAULT '0'
-                          """)
-            
-            # ir_model needs to be updated
-            cr.execute("""ALTER TABLE ir_model_constraint
-                          ADD COLUMN definition varchar
-                          """)
 
     def setup_models(self, cr, partial=False):
         """ Complete the setup of models.
