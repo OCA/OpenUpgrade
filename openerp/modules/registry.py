@@ -13,6 +13,7 @@ import openerp
 from .. import SUPERUSER_ID
 from openerp.tools import assertion_report, lazy_property, classproperty, config, topological_sort
 from openerp.tools.lru import LRU
+from openerp.openupgrade import openupgrade_loading_90
 
 _logger = logging.getLogger(__name__)
 
@@ -65,6 +66,9 @@ class Registry(Mapping):
         if openerp.tools.config['unaccent'] and not has_unaccent:
             _logger.warning("The option --unaccent was given but no unaccent() function was found in database.")
         self.has_unaccent = openerp.tools.config['unaccent'] and has_unaccent
+
+        #OpenUpgrade: ir_model must be in 9.0 format before continuing
+        openupgrade_loading_90.migrate_model_tables(cr)
         cr.close()
 
     #
