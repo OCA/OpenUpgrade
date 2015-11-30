@@ -47,7 +47,7 @@ def migrate_model_tables(cr):
                       ADD COLUMN column2 varchar,
                       ALTER COLUMN select_level SET DEFAULT '0'
                       """)
-        
+
         # ir_model needs to be updated
         cr.execute("""ALTER TABLE ir_model_constraint
                       ADD COLUMN definition varchar
