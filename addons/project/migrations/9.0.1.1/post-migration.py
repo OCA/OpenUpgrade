@@ -20,7 +20,6 @@
 ##############################################################################
 
 import logging
-from openerp import pooler, SUPERUSER_ID
 from openupgradelib import openupgrade
 logger = logging.getLogger('OpenUpgrade')
 
@@ -52,10 +51,8 @@ def map_template_state(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    pool = pooler.get_pool(cr.dbname)
     map_priority(cr)
     map_template_state(cr)
-    for table_name in column_spec.keys():
-        for (old, new, field_type) in column_spec[table_name]:
-            convert_field_to_html(cr, table_name, get_legacy_name(old), old)
-
+    for table_name in column_copies.keys():
+        for (old, new, field_type) in column_copies[table_name]:
+            openupgrade.convert_field_to_html(cr, table_name, openupgrade.get_legacy_name(old), old)
