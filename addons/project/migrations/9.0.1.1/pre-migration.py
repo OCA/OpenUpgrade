@@ -23,17 +23,17 @@ from openupgradelib import openupgrade
 
 
 column_copies = {
-    'project.task': [
+    'project_task': [
         ('description', None, None),
     ],
 }
 
 # These columns are kept even though they were removed in v9, in order to allow recovery by a future OCA module
 column_renames = {
-    'project.task': [
+    'project_task': [
         ('reviewer_id', None),
     ],
-    'project.project': [
+    'project_project': [
         ('members', None),
     ],
 }

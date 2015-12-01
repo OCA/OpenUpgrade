@@ -25,7 +25,7 @@ logger = logging.getLogger('OpenUpgrade')
 
 # copied from pre-migration
 column_copies = {
-    'project.task': [
+    'project_task': [
         ('description', None, None),
     ],
 }
