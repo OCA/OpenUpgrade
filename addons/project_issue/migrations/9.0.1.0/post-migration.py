@@ -21,15 +21,14 @@
 
 from openupgradelib import openupgrade
 
-column_renames = {
+column_defaults = {
     'project.issue': [
-        ('categ_ids', 'tag_ids'),
-        ('version_id', None),
-        ('project_escalation_id', None)
-    ],
+        ('kanban_state', 'normal')
+    ]
 }
-
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.rename_columns(cr, column_renames)
+    registry = RegistryManager.get(cr.dbname)
+
+    openupgrade.set_defaults(cr, registry, column_defaults, force=False)

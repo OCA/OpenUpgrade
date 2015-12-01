@@ -9,13 +9,13 @@ project_issue / project.issue            / kanban_state (selection)      : now r
 project_issue / project.issue            / message_follower_ids (many2many): not a function anymore
 project_issue / project.issue            / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
 project_issue / project.issue            / message_follower_ids (many2many): type is now 'one2many' ('many2many')
-# Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
+# Done in mail migration script ---> Nothing to do
 
 project_issue / project.issue            / progress (float)              : module is now 'project_issue_sheet' ('project_issue')
 # Nothing to do
 
 project_issue / project.issue            / section_id (many2one)         : relation is now 'crm.team' ('crm.case.section')
-project_issue / project.issue            / section_id (many2one)         : was renamed to team_id [nothing to to]
+project_issue / project.issue            / section_id (many2one)
 # Nothing to do
 
 project_issue / project.issue            / version_id (many2one)         : DEL relation: project.issue.version
