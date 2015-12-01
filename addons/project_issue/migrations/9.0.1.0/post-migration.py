@@ -20,12 +20,14 @@
 ##############################################################################
 
 from openupgradelib import openupgrade
+from openerp.modules.registry import RegistryManager
 
 column_defaults = {
     'project.issue': [
         ('kanban_state', 'normal')
     ]
 }
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
