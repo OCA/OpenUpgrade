@@ -1,21 +1,24 @@
-# Japanese translation for openerp-web
-# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
-# This file is distributed under the same license as the openerp-web package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
-#
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web
+# 
+# Translators:
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
+# Manami Hashi <manami@roomsfor.hk>, 2015
+# Yoshi Tashiro <tashiro@roomsfor.hk>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: openerp-web\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: Odoo 8.0\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:08+0000\n"
-"PO-Revision-Date: 2014-08-14 16:14+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Japanese <ja@li.org>\n"
+"PO-Revision-Date: 2015-11-09 05:04+0000\n"
+"Last-Translator: Yoshi Tashiro <tashiro@roomsfor.hk>\n"
+"Language-Team: Japanese (http://www.transifex.com/odoo/odoo-8/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-01-22 08:53+0000\n"
-"X-Generator: Launchpad (build 17306)\n"
+"Content-Transfer-Encoding: \n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: web
 #. openerp-web
@@ -23,14 +26,14 @@ msgstr ""
 #: code:addons/web/static/src/js/search.js:2305
 #, python-format
 msgid "%(field)s %(operator)s"
-msgstr ""
+msgstr "%(field) %(operator)"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/search.js:2139
 #, python-format
 msgid "%(field)s %(operator)s \"%(value)s\""
-msgstr ""
+msgstr "%(field)s %(operator)s \"%(value)s\""
 
 #. module: web
 #. openerp-web
@@ -44,14 +47,14 @@ msgstr "%(page)d / %(page_count)d"
 #: code:addons/web/static/src/js/views.js:596
 #, python-format
 msgid "%(view_type)s view"
-msgstr ""
+msgstr "%(view_type)s view"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:434
 #, python-format
 msgid "%d / %d"
-msgstr ""
+msgstr "%d / %d"
 
 #. module: web
 #. openerp-web
@@ -93,63 +96,63 @@ msgstr "%d年前"
 #: code:addons/web/static/src/js/view_list.js:422
 #, python-format
 msgid "%d-%d of %d"
-msgstr ""
+msgstr "%d-%d of %d"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_list.js:1426
 #, python-format
 msgid "%s (%d)"
-msgstr ""
+msgstr "%s (%d)"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/formats.js:302
 #, python-format
 msgid "'%s' is not a correct date"
-msgstr ""
+msgstr "'%s' は正しい日付ではありません"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/formats.js:325
 #, python-format
 msgid "'%s' is not a correct date, datetime nor time"
-msgstr ""
+msgstr "'%s' は正しい日付、日時、時間ではありません"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/formats.js:289
 #, python-format
 msgid "'%s' is not a correct datetime"
-msgstr ""
+msgstr "'%s' は正しい日時ではありません"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/formats.js:253
 #, python-format
 msgid "'%s' is not a correct float"
-msgstr ""
+msgstr "'%s' は正しいフロートではありません"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/formats.js:238
 #, python-format
 msgid "'%s' is not a correct integer"
-msgstr ""
+msgstr "'%s' は正しいインテジャー（integer）ではありません"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/formats.js:310
 #, python-format
 msgid "'%s' is not a correct time"
-msgstr ""
+msgstr "'%s' は正しい時間ではありません"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/formats.js:337
 #, python-format
 msgid "'%s' is not convertible to date, datetime nor time"
-msgstr ""
+msgstr "'%s' は変換可能な日付、日時、時間ではありません"
 
 #. module: web
 #. openerp-web
@@ -170,7 +173,7 @@ msgstr "（同じ名前の既存のフィルタは置き換えられます）"
 #: code:addons/web/static/src/xml/base.xml:390
 #, python-format
 msgid "(Formerly OpenERP)"
-msgstr ""
+msgstr "（以前はOpenERP）"
 
 #. module: web
 #. openerp-web
@@ -212,7 +215,7 @@ msgstr "---インポートなし---"
 #: code:addons/web/static/src/xml/base.xml:1400
 #, python-format
 msgid "...Upload in progress..."
-msgstr ""
+msgstr "...アップロード中..."
 
 #. module: web
 #. openerp-web
@@ -254,7 +257,7 @@ msgstr "概要"
 #: code:addons/web/static/src/xml/base.xml:369
 #, python-format
 msgid "About Odoo"
-msgstr ""
+msgstr "Odooについて"
 
 #. module: web
 #. openerp-web
@@ -268,7 +271,7 @@ msgstr "アクセスが拒否されました。"
 #: code:addons/web/static/src/js/view_form.js:4500
 #, python-format
 msgid "Action Button"
-msgstr ""
+msgstr "アクションボタン"
 
 #. module: web
 #. openerp-web
@@ -420,14 +423,14 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:229
 #, python-format
 msgid "Backup format:"
-msgstr ""
+msgstr "バックアップのフォーマット："
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:428
 #, python-format
 msgid "Belgium"
-msgstr ""
+msgstr "ベルギー"
 
 #. module: web
 #. openerp-web
@@ -464,7 +467,7 @@ msgstr ""
 #: code:addons/web/static/src/js/formats.js:117
 #, python-format
 msgid "Bytes,Kb,Mb,Gb,Tb,Pb,Eb,Zb,Yb"
-msgstr ""
+msgstr "バイト、キロバイト、メガバイト、ギガバイト、テラバイト、ペタバイト、エクサバイト、ゼッタバイト、ヨッタバイト"
 
 #. module: web
 #. openerp-web
@@ -478,14 +481,14 @@ msgstr "CSVファイル："
 #: code:addons/web/static/src/js/view_list.js:1874
 #, python-format
 msgid "Can't convert value %s to context"
-msgstr ""
+msgstr "値 %s をコンテクストに変換できません"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:2482
 #, python-format
 msgid "Can't send email to invalid e-mail address"
-msgstr ""
+msgstr "有効でないEメールアドレスにメール送信できません"
 
 #. module: web
 #. openerp-web
@@ -531,7 +534,7 @@ msgstr "デフォルトの変更："
 #: code:addons/web/static/src/js/chrome.js:606
 #, python-format
 msgid "Changed Password"
-msgstr ""
+msgstr "変更されたパスワード"
 
 #. module: web
 #. openerp-web
@@ -600,7 +603,7 @@ msgstr "閉じる"
 #: code:addons/web/static/src/js/view_form.js:2646
 #, python-format
 msgid "Close without change"
-msgstr ""
+msgstr "変更せずに閉じる"
 
 #. module: web
 #. openerp-web
@@ -621,7 +624,7 @@ msgstr "確認"
 #: code:addons/web/static/src/xml/base.xml:337
 #, python-format
 msgid "Confirm New Password:"
-msgstr ""
+msgstr "新しいパスワードの確認:"
 
 #. module: web
 #. openerp-web
@@ -649,7 +652,7 @@ msgstr "コンテキスト："
 #: code:addons/web/static/src/xml/base.xml:271
 #, python-format
 msgid "Copy of an existing database"
-msgstr ""
+msgstr "既存のデータベースの複製"
 
 #. module: web
 #. openerp-web
@@ -663,7 +666,7 @@ msgstr "Copyright © 2004-TODAY OpenERP SA. All Rights Reserved."
 #: code:addons/web/static/src/js/view_form.js:5763
 #, python-format
 msgid "Could not display the selected image."
-msgstr ""
+msgstr "選択されたイメージを表示できませんでした"
 
 #. module: web
 #: code:addons/web/controllers/main.py:724
@@ -676,7 +679,7 @@ msgstr ""
 #: code:addons/web/static/src/js/view_list.js:1051
 #, python-format
 msgid "Could not find id in dataset"
-msgstr ""
+msgstr "データセットにidが見つかりませんでした"
 
 #. module: web
 #. openerp-web
@@ -690,7 +693,7 @@ msgstr ""
 #: code:addons/web/static/src/js/views.js:1693
 #, python-format
 msgid "Could not serialize XML"
-msgstr ""
+msgstr "XMLをシリアライズできませんでした"
 
 #. module: web
 #. openerp-web
@@ -709,28 +712,28 @@ msgstr "作成"
 #: code:addons/web/static/src/js/view_form.js:3379
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
-msgstr ""
+msgstr "\"<strong>%s</strong>\" を作成"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:141
 #, python-format
 msgid "Create Database"
-msgstr ""
+msgstr "データベースを作成"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:3467
 #, python-format
 msgid "Create a %s"
-msgstr ""
+msgstr "%s を作成"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:82
 #, python-format
 msgid "Create a New Database"
-msgstr ""
+msgstr "新しいデータベースを作成"
 
 #. module: web
 #. openerp-web
@@ -744,7 +747,7 @@ msgstr "登録・編集..."
 #: code:addons/web/static/src/xml/base.xml:2005
 #, python-format
 msgid "Create and edit"
-msgstr ""
+msgstr "作成・編集"
 
 #. module: web
 #. openerp-web
@@ -759,7 +762,7 @@ msgstr "作成: "
 #: code:addons/web/static/src/xml/base.xml:635
 #, python-format
 msgid "Created by :"
-msgstr ""
+msgstr "作成者："
 
 #. module: web
 #. openerp-web
@@ -780,12 +783,12 @@ msgstr "ユーザの作成："
 #: code:addons/web/static/src/js/search.js:1778
 #, python-format
 msgid "Custom Filter"
-msgstr ""
+msgstr "カスタムフィルター"
 
 #. module: web
 #: view:website:web.database_select
 msgid "Database"
-msgstr ""
+msgstr "データベース"
 
 #. module: web
 #. openerp-web
@@ -858,7 +861,7 @@ msgstr "この添付の削除"
 #: code:addons/web/static/src/xml/base.xml:1407
 #, python-format
 msgid "Delete this file"
-msgstr ""
+msgstr "このファイルを削除"
 
 #. module: web
 #. openerp-web
@@ -969,7 +972,7 @@ msgstr "削除"
 #: code:addons/web/static/src/xml/base.xml:176
 #, python-format
 msgid "Drop Database"
-msgstr ""
+msgstr "データベースを削除"
 
 #. module: web
 #. openerp-web
@@ -992,7 +995,7 @@ msgstr "複製"
 #: code:addons/web/static/src/xml/base.xml:150
 #, python-format
 msgid "Duplicate Database"
-msgstr ""
+msgstr "データベースを複製"
 
 #. module: web
 #. openerp-web
@@ -1006,7 +1009,7 @@ msgstr ""
 #: code:addons/web/static/src/js/view_form.js:2482
 #, python-format
 msgid "E-mail Error"
-msgstr ""
+msgstr "Eメールエラー"
 
 #. module: web
 #. openerp-web
@@ -1046,7 +1049,7 @@ msgstr "ワークフローを編集"
 #. module: web
 #: view:website:web.login
 msgid "Email"
-msgstr ""
+msgstr "Eメール"
 
 #. module: web
 #. openerp-web
@@ -1060,7 +1063,7 @@ msgstr "エンコード："
 #: code:addons/web/static/src/xml/website.tour.xml:25
 #, python-format
 msgid "End This Tutorial"
-msgstr ""
+msgstr "本チュートリアルの終了"
 
 #. module: web
 #. openerp-web
@@ -1074,21 +1077,21 @@ msgstr ""
 #: code:addons/web/static/src/js/search.js:1886
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "エラー"
 
 #. module: web
 #: code:addons/web/controllers/main.py:764
 #: code:addons/web/controllers/main.py:805
 #, python-format
 msgid "Error, password not changed !"
-msgstr ""
+msgstr "エラー、パスワードは変更されませんでした！"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/pyeval.js:912
 #, python-format
 msgid "Evaluation Error"
-msgstr ""
+msgstr "エバリュエーションエラー"
 
 #. module: web
 #. openerp-web
@@ -1138,21 +1141,21 @@ msgstr "全てのデータをエクスポート"
 #: code:addons/web/static/src/js/views.js:852
 #, python-format
 msgid "Failed to evaluate search criterions"
-msgstr ""
+msgstr "検索条件の評価に失敗しました"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:1732
 #, python-format
 msgid "Favorites"
-msgstr ""
+msgstr "フェイバリット"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:1245
 #, python-format
 msgid "Field '%s' specified in view could not be found."
-msgstr ""
+msgstr "'%s' フィールドはそのビューで見つかりませんでした。"
 
 #. module: web
 #. openerp-web
@@ -1181,14 +1184,14 @@ msgstr "エクスポートする項目"
 #: code:addons/web/static/src/js/view_form.js:5622
 #, python-format
 msgid "File Upload"
-msgstr ""
+msgstr "ファイルのアップロード"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:5602
 #, python-format
 msgid "File upload"
-msgstr ""
+msgstr "ファイルのアップロード"
 
 #. module: web
 #. openerp-web
@@ -1203,12 +1206,10 @@ msgstr "ファイル:"
 #, python-format
 msgid ""
 "Fill in this form to create an Odoo database. You can\n"
-"                    create databases for different companies or for "
-"different\n"
-"                    goals (testing, production). Once the database is "
-"created,\n"
+"                    create databases for different companies or for different\n"
+"                    goals (testing, production). Once the database is created,\n"
 "                    you will be able to install your first application."
-msgstr ""
+msgstr "Odooデータベース作成のため、フォームに入力してください。\nここでは異なる会社や異なる目的（テスト用・本番用’）ごとにデータベースを作成することができます。\nデータベース作成後、アプリケーションをインストールしてください。"
 
 #. module: web
 #. openerp-web
@@ -1236,7 +1237,7 @@ msgstr "フィルタ名"
 #: code:addons/web/static/src/js/search.js:1886
 #, python-format
 msgid "Filter name is required."
-msgstr ""
+msgstr "フィルター名が必要です。"
 
 #. module: web
 #. openerp-web
@@ -1272,8 +1273,8 @@ msgstr "詳細の確認はこちらにて："
 #: code:addons/web/static/src/xml/base.xml:1953
 #, python-format
 msgid ""
-"For use if CSV files have titles on multiple lines, skips more than a single "
-"line during import"
+"For use if CSV files have titles on multiple lines, skips more than a single"
+" line during import"
 msgstr "CVSファイルが複数行であり、タイトルを持っていた場合、インポートの際に１行以上をスキップするために使用します"
 
 #. module: web
@@ -1331,7 +1332,7 @@ msgstr "インポートできなかったファイルのプレビュー："
 #: code:addons/web/static/src/js/view_form.js:2671
 #, python-format
 msgid "Hour"
-msgstr ""
+msgstr "時"
 
 #. module: web
 #. openerp-web
@@ -1345,7 +1346,7 @@ msgstr "ID："
 #: code:addons/web/static/src/js/view_form.js:5763
 #, python-format
 msgid "Image"
-msgstr ""
+msgstr "イメージ"
 
 #. module: web
 #. openerp-web
@@ -1366,7 +1367,7 @@ msgstr "インポートオプション"
 #: code:addons/web/static/src/xml/base.xml:1816
 #, python-format
 msgid "Import-Compatible Export"
-msgstr ""
+msgstr "インポート互換のエクスポート"
 
 #. module: web
 #. openerp-web
@@ -1408,7 +1409,7 @@ msgstr "JSテスト"
 #: code:addons/web/controllers/main.py:812
 #, python-format
 msgid "Languages"
-msgstr ""
+msgstr "言語"
 
 #. module: web
 #. openerp-web
@@ -1465,7 +1466,7 @@ msgstr ""
 #: code:addons/web/static/src/js/chrome.js:394
 #, python-format
 msgid "Loading"
-msgstr ""
+msgstr "ロード中"
 
 #. module: web
 #. openerp-web
@@ -1491,7 +1492,7 @@ msgid ""
 "%s\n"
 "\n"
 "%s"
-msgstr ""
+msgstr "ローカルエバリュエーション失敗\n%s\n\n%s"
 
 #. module: web
 #: view:website:web.login
@@ -1555,14 +1556,14 @@ msgstr "マスタパスワード："
 #: code:addons/web/static/src/js/core.js:707
 #, python-format
 msgid "Maybe you should consider reloading the application by pressing F5..."
-msgstr ""
+msgstr "F5キーを押してアプリケーションを再ロードすることを検討した方が良いかもしれません。。"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/views.js:990
 #, python-format
 msgid "Metadata (%s)"
-msgstr ""
+msgstr "メタデータ (%s)"
 
 #. module: web
 #. openerp-web
@@ -1597,7 +1598,7 @@ msgstr "モデル %s 項目"
 #: code:addons/web/static/src/xml/base.xml:640
 #, python-format
 msgid "Modified by :"
-msgstr ""
+msgstr "修正者："
 
 #. module: web
 #. openerp-web
@@ -1609,8 +1610,7 @@ msgstr "修飾："
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/views.js:1166
-#: code:addons/web/static/src/xml/base.xml:1289
-#: view:website:web.menu
+#: code:addons/web/static/src/xml/base.xml:1289 view:website:web.menu
 #, python-format
 msgid "More"
 msgstr "さらに"
@@ -1620,7 +1620,7 @@ msgstr "さらに"
 #: code:addons/web/static/src/xml/base.xml:368
 #, python-format
 msgid "My Odoo.com account"
-msgstr ""
+msgstr "Odoo.comアカウント"
 
 #. module: web
 #. openerp-web
@@ -1634,14 +1634,14 @@ msgstr "名前"
 #: code:addons/web/static/src/xml/base.xml:1999
 #, python-format
 msgid "Name:"
-msgstr ""
+msgstr "名前："
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:330
 #, python-format
 msgid "New"
-msgstr ""
+msgstr "新規"
 
 #. module: web
 #. openerp-web
@@ -1728,18 +1728,17 @@ msgid "Object:"
 msgstr "オブジェクト:"
 
 #. module: web
-#: view:website:web.layout
-#: view:website:web.login_layout
+#: view:website:web.layout view:website:web.login_layout
 #: view:website:web.menu_secondary
 msgid "Odoo"
-msgstr ""
+msgstr "Odoo"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:386
 #, python-format
 msgid "Odoo (Formerly OpenERP)"
-msgstr ""
+msgstr "Odoo（旧称OpenERP）"
 
 #. module: web
 #: view:website:web.qunit_suite
@@ -1758,7 +1757,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:422
 #, python-format
 msgid "Odoo.com"
-msgstr ""
+msgstr "Odoo.com"
 
 #. module: web
 #. openerp-web
@@ -1843,8 +1842,7 @@ msgstr ""
 
 #. module: web
 #. openerp-web
-#: code:addons/web/static/src/xml/base.xml:318
-#: view:website:web.login
+#: code:addons/web/static/src/xml/base.xml:318 view:website:web.login
 #, python-format
 msgid "Password"
 msgstr "パスワード"
@@ -1915,8 +1913,7 @@ msgid "Please select fields to save export list..."
 msgstr "エクスポートリストに保存する項目を選んでください"
 
 #. module: web
-#: view:website:web.login_layout
-#: view:website:web.menu_secondary
+#: view:website:web.login_layout view:website:web.menu_secondary
 msgid "Powered by"
 msgstr "Powered by"
 
@@ -2108,7 +2105,7 @@ msgstr "%(field)s を検索：%(value)s"
 #: code:addons/web/static/src/xml/base.xml:1564
 #, python-format
 msgid "Search Again"
-msgstr ""
+msgstr "もう一度検索する"
 
 #. module: web
 #. openerp-web
@@ -2129,7 +2126,7 @@ msgstr "検索: "
 #: code:addons/web/static/src/js/view_form.js:2673
 #, python-format
 msgid "Second"
-msgstr ""
+msgstr "秒"
 
 #. module: web
 #. openerp-web
@@ -2153,9 +2150,7 @@ msgstr ""
 msgid ""
 "Select a .CSV file to import. If you need a sample of file to import,\n"
 "       you should use the export tool with the \"Import Compatible\" option."
-msgstr ""
-"インポートするファイルのサンプルが必要ならば、インポートするCSVファイルを選択します。\n"
-"　　　　　　エクスポートツールでインポート互換オプションを使って下さい。"
+msgstr "インポートするファイルのサンプルが必要ならば、インポートするCSVファイルを選択します。\n　　　　　　エクスポートツールでインポート互換オプションを使って下さい。"
 
 #. module: web
 #. openerp-web
@@ -2295,7 +2290,7 @@ msgstr "引き続き読込中...<br />今しばらくお待ちください。"
 #: code:addons/web/static/src/js/core.js:706
 #, python-format
 msgid "Take a minute to get a coffee,<br />because it's loading..."
-msgstr ""
+msgstr "ロード中です。<br />コーヒーでも飲んでお待ちください。"
 
 #. module: web
 #. openerp-web
@@ -2408,7 +2403,7 @@ msgstr ""
 #: code:addons/web/static/src/js/view_form.js:5622
 #, python-format
 msgid "There was a problem while uploading your file"
-msgstr ""
+msgstr "ファイルのアップロード中に問題が発生しました"
 
 #. module: web
 #. openerp-web
@@ -2430,20 +2425,16 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:1807
 #, python-format
 msgid ""
-"This wizard will export all data that matches the current search criteria to "
-"a CSV file.\n"
-"            You can export all data or only the fields that can be "
-"reimported after modification."
-msgstr ""
-"このウィザードは，現在の検索条件に合致した全てのデータをCSVファイルとしてエクスポートします。\n"
-"　　　　　　　　　　　　全てのデータ，または変更後に再インポートした項目のみをエクスポートできます。"
+"This wizard will export all data that matches the current search criteria to a CSV file.\n"
+"            You can export all data or only the fields that can be reimported after modification."
+msgstr "このウィザードより、現在の検索条件に合致した全てのデータをCSVファイルにエクスポートできます。\n全てのデータ項目、もしくは再インポート可能な項目のみを対象としてエクスポートできます。"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:2670
 #, python-format
 msgid "Time"
-msgstr ""
+msgstr "時刻"
 
 #. module: web
 #. openerp-web
@@ -2522,7 +2513,7 @@ msgstr "処理されないウィジェット"
 #: code:addons/web/static/src/js/view_form.js:3175
 #, python-format
 msgid "Unknown"
-msgstr ""
+msgstr "不明"
 
 #. module: web
 #. openerp-web
@@ -2655,10 +2646,7 @@ msgid ""
 "Warning, the record has been modified, your changes will be discarded.\n"
 "\n"
 "Are you sure you want to leave this page ?"
-msgstr ""
-"警告：このレコードは変更されていますが、変更した内容は破棄されます。\n"
-"\n"
-"このページを離れてもよろしいですか？"
+msgstr "警告：このレコードは変更されていますが、変更した内容は破棄されます。\n\nこのページを離れてもよろしいですか？"
 
 #. module: web
 #. openerp-web

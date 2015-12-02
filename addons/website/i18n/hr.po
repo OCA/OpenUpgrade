@@ -1,21 +1,22 @@
-# Croatian translation for openobject-addons
-# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
-# This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
-#
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * website
+# 
+# Translators:
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-01-21 14:08+0000\n"
-"PO-Revision-Date: 2015-01-22 09:45+0000\n"
-"Last-Translator: Davor Bojkić <bole@dajmi5.com>\n"
-"Language-Team: Croatian <hr@li.org>\n"
+"Project-Id-Version: Odoo 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-22 08:25+0000\n"
+"PO-Revision-Date: 2015-10-26 14:25+0000\n"
+"Last-Translator: Martin Trigaux\n"
+"Language-Team: Croatian (http://www.transifex.com/odoo/odoo-8/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-01-23 06:52+0000\n"
-"X-Generator: Launchpad (build 17306)\n"
+"Content-Transfer-Encoding: \n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: website
 #: view:website:website.snippets
@@ -32,10 +33,9 @@ msgid "&nbsp;"
 msgstr "&nbsp;"
 
 #. module: website
-#: view:website:website.info
-#: view:website:website.themes
+#: view:website:website.info view:website:website.themes
 msgid "&times;"
-msgstr ""
+msgstr "&times;"
 
 #. module: website
 #: view:website:website.500
@@ -61,6 +61,20 @@ msgstr ""
 msgid ""
 ",\n"
 "                the #1"
+msgstr ",\nbroj 1"
+
+#. module: website
+#: view:website:website.layout
+msgid ""
+",\n"
+"                  an awesome"
+msgstr ""
+
+#. module: website
+#: view:website:website.layout
+msgid ""
+",\n"
+"            Try the"
 msgstr ""
 
 #. module: website
@@ -151,8 +165,8 @@ msgstr ""
 #: help:ir.actions.server,website_published:0
 msgid ""
 "A code server action can be executed from the website, using a "
-"dedicatedcontroller. The address is <base>/website/action/<website_path>.Set "
-"this field as True to allow users to run this action. If itset to is False "
+"dedicatedcontroller. The address is <base>/website/action/<website_path>.Set"
+" this field as True to allow users to run this action. If itset to is False "
 "the action cannot be run through the website."
 msgstr ""
 
@@ -170,8 +184,7 @@ msgstr "Neki podnaslov"
 #: view:website:website.snippets
 msgid ""
 "A great way to catch your reader's attention is to tell a story.\n"
-"                            Everything you consider writing can be told as a "
-"story."
+"                            Everything you consider writing can be told as a story."
 msgstr "Dobar način da zapljenite pažnju čitatelja je kvalitetan članak."
 
 #. module: website
@@ -187,8 +200,7 @@ msgid "A small explanation of this great"
 msgstr "Kratko objašnjenje ovog velikog"
 
 #. module: website
-#: view:website:website.aboutus
-#: view:website:website.layout
+#: view:website:website.aboutus view:website:website.layout
 msgid "About us"
 msgstr "O nama"
 
@@ -196,10 +208,8 @@ msgstr "O nama"
 #: view:website:website.snippets
 msgid ""
 "Adapt these three columns to fit you design need.\n"
-"                            To duplicate, delete or move columns, select "
-"the\n"
-"                            column and use the top icons to perform your "
-"action."
+"                            To duplicate, delete or move columns, select the\n"
+"                            column and use the top icons to perform your action."
 msgstr ""
 
 #. module: website
@@ -271,7 +281,8 @@ msgstr "Dodaj stranicu u izbornik"
 #. module: website
 #: view:website:website.snippets
 msgid ""
-"All these icons are licensed under creative commons so that you can use them."
+"All these icons are licensed under creative commons so that you can use "
+"them."
 msgstr ""
 
 #. module: website
@@ -302,8 +313,7 @@ msgid "And a great subtitle too"
 msgstr "I uočljiv podnaslov"
 
 #. module: website
-#: view:website:website.themes
-#: view:website:website.view_website_form
+#: view:website:website.themes view:website:website.view_website_form
 #: view:website.config.settings:website.view_website_config_settings
 msgid "Apply"
 msgstr "Primjeni"
@@ -328,7 +338,7 @@ msgstr "Autor ovog citata"
 #: code:addons/website/static/src/xml/website.snippets.xml:44
 #, python-format
 msgid "Auto Resize"
-msgstr ""
+msgstr "Automatska promjena veličine"
 
 #. module: website
 #. openerp-web
@@ -365,7 +375,7 @@ msgstr "Natpis"
 #. module: website
 #: view:website:website.snippets
 msgid "Banner Odoo Image"
-msgstr ""
+msgstr "Slika banner Odoo"
 
 #. module: website
 #. openerp-web
@@ -457,8 +467,7 @@ msgstr ""
 #. openerp-web
 #: code:addons/website/static/src/xml/website.editor.xml:310
 #: code:addons/website/static/src/xml/website.translator.xml:46
-#: code:addons/website/static/src/xml/website.xml:74
-#: view:website:website.500
+#: code:addons/website/static/src/xml/website.xml:74 view:website:website.500
 #: view:website:website.view_website_form
 #: view:website.config.settings:website.view_website_config_settings
 #, python-format
@@ -530,8 +539,7 @@ msgstr "Podizbornici"
 #: view:website:website.snippets
 msgid ""
 "Choose a vibrant image and write an inspiring paragraph\n"
-"                            about it. It does not have to be long, but it "
-"should\n"
+"                            about it. It does not have to be long, but it should\n"
 "                            reinforce your image."
 msgstr ""
 
@@ -599,14 +607,14 @@ msgstr "Zatvori tutorial"
 #. module: website
 #: view:website:website.snippet_options
 msgid "Color Splash"
-msgstr ""
+msgstr "Raspon boja"
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.editor.xml:86
 #, python-format
 msgid "Color Style"
-msgstr ""
+msgstr "Stil boje"
 
 #. module: website
 #: model:ir.model,name:website.model_res_company
@@ -647,20 +655,15 @@ msgstr "Povežite se s nama"
 #: view:website:website.snippets
 msgid ""
 "Consider telling\n"
-"                            a great story that provides personality. Writing "
-"a story\n"
-"                            with personality for potential clients will "
-"asist with\n"
-"                            making a relationship connection. This shows up "
-"in small\n"
-"                            quirks like word choices or phrases. Write from "
-"your point\n"
+"                            a great story that provides personality. Writing a story\n"
+"                            with personality for potential clients will asist with\n"
+"                            making a relationship connection. This shows up in small\n"
+"                            quirks like word choices or phrases. Write from your point\n"
 "                            of view, not from someone else's experience."
 msgstr ""
 
 #. module: website
-#: view:website:website.403
-#: view:website:website.404
+#: view:website:website.403 view:website:website.404
 msgid "Contact Us"
 msgstr "Kontaktirajte nas"
 
@@ -670,8 +673,7 @@ msgid "Contact Us Now"
 msgstr "Kontaktirajte nas sada"
 
 #. module: website
-#: view:website:website.contactus
-#: view:website:website.layout
+#: view:website:website.contactus view:website:website.layout
 #: view:website:website.snippets
 #: model:website.menu,name:website.menu_contactus
 msgid "Contact us"
@@ -688,8 +690,7 @@ msgid "Contact us »"
 msgstr "Kontaktirajte nas"
 
 #. module: website
-#: view:website:website.layout
-#: view:website:website.snippets
+#: view:website:website.layout view:website:website.snippets
 msgid "Content"
 msgstr "Sadržaj"
 
@@ -733,20 +734,16 @@ msgid "Create page '%s'"
 msgstr "Kreiraj stranicu '%s'"
 
 #. module: website
-#: field:website,create_uid:0
-#: field:website.config.settings,create_uid:0
+#: field:website,create_uid:0 field:website.config.settings,create_uid:0
 #: field:website.converter.test.sub,create_uid:0
-#: field:website.menu,create_uid:0
-#: field:website.seo.metadata,create_uid:0
+#: field:website.menu,create_uid:0 field:website.seo.metadata,create_uid:0
 msgid "Created by"
 msgstr "Kreirao"
 
 #. module: website
-#: field:website,create_date:0
-#: field:website.config.settings,create_date:0
+#: field:website,create_date:0 field:website.config.settings,create_date:0
 #: field:website.converter.test.sub,create_date:0
-#: field:website.menu,create_date:0
-#: field:website.seo.metadata,create_date:0
+#: field:website.menu,create_date:0 field:website.seo.metadata,create_date:0
 msgid "Created on"
 msgstr "Datum kreiranja"
 
@@ -771,9 +768,7 @@ msgstr "Prilagodi"
 msgid ""
 "Customize any block through this menu. Try to change the background of the "
 "banner."
-msgstr ""
-"Prilagodi bilokoji blok korz ovaj izbornik. Probajte izmijeniti pozadinu "
-"ovog banera."
+msgstr "Prilagodi bilokoji blok korz ovaj izbornik. Probajte izmijeniti pozadinu ovog banera."
 
 #. module: website
 #. openerp-web
@@ -850,8 +845,7 @@ msgstr "Izbriši blokove"
 #: view:website:website.snippets
 msgid ""
 "Delete the above image or replace it with a picture\n"
-"                            that illustrates your message. Click on the "
-"picture to\n"
+"                            that illustrates your message. Click on the picture to\n"
 "                            change it's"
 msgstr ""
 
@@ -859,8 +853,7 @@ msgstr ""
 #: view:website:website.snippets
 msgid ""
 "Deploy new stores with just an internet connection: no\n"
-"                    installation, no specific hardware required. It works "
-"with any\n"
+"                    installation, no specific hardware required. It works with any\n"
 "                    iPad, Tablet PC, laptop or industrial POS machine."
 msgstr ""
 
@@ -900,28 +893,27 @@ msgstr "Odbaci uređivano"
 #. module: website
 #: view:website:website.snippets
 msgid "Discover more about Odoo"
-msgstr ""
+msgstr "Otkrij više o Odoo"
 
 #. module: website
 #: view:website:website.template_partner_comment
 msgid "Discuss and Comments"
-msgstr ""
+msgstr "Raspravite i komentirajte"
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.translator.xml:41
 #, python-format
 msgid "Do not show this dialog later."
-msgstr ""
+msgstr "Ne prikazuj kasnije dijaloški okvir."
 
 #. module: website
 #: view:website:website.snippets
 msgid "Does it works offline?"
-msgstr ""
+msgstr "Da li radi offline?"
 
 #. module: website
-#: view:website:website.view_website_form
-#: field:website,name:0
+#: view:website:website.view_website_form field:website,name:0
 #: view:website.config.settings:website.view_website_config_settings
 msgid "Domain"
 msgstr "Domena"
@@ -945,7 +937,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.contentMenu.xml:34
 #, python-format
 msgid "Drag a menu to the right to create a sub-menu"
-msgstr ""
+msgstr "Povucite izbornik na desno kako biste kreirali podizbornik"
 
 #. module: website
 #. openerp-web
@@ -966,7 +958,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.snippets.xml:34
 #, python-format
 msgid "Drag to Move"
-msgstr ""
+msgstr "Povuci za pomicanje"
 
 #. module: website
 #: view:website:website.snippets
@@ -986,8 +978,7 @@ msgid "Duplicate blocks to add more features."
 msgstr ""
 
 #. module: website
-#: view:website:website.layout
-#: view:website:website.publish_management
+#: view:website:website.layout view:website:website.publish_management
 msgid "Edit"
 msgstr "Uredi"
 
@@ -1014,7 +1005,7 @@ msgstr "Uredi gornji izbornik"
 #. module: website
 #: view:website:website.publish_management
 msgid "Edit in backend"
-msgstr ""
+msgstr "Uredi u pozadini"
 
 #. module: website
 #: view:website:website.page_404
@@ -1063,7 +1054,7 @@ msgstr "Poruka greške:"
 #, python-format
 msgid ""
 "Every page of your website can be modified through the <i>Edit</i> button."
-msgstr ""
+msgstr "Svaka stranica vaše web stranice se može mijenjati kroz <i>Uredi</i> gumb."
 
 #. module: website
 #: view:website:website.snippets
@@ -1075,7 +1066,7 @@ msgstr "Ekspert"
 msgid ""
 "Explain the benefits you offer. Don't write about products or\n"
 "            services here, write about solutions."
-msgstr ""
+msgstr "Objasnite prednosti koje nudite. Ne pišite o proizvodima ili \nuslugama ovdje, pišite o rješenjima."
 
 #. module: website
 #: field:ir.actions.server,xml_id:0
@@ -1087,12 +1078,12 @@ msgstr "Vanjski ID"
 #: code:addons/website/static/src/xml/website.editor.xml:117
 #, python-format
 msgid "Extra Small"
-msgstr ""
+msgstr "Extra malo"
 
 #. module: website
 #: view:website:website.snippet_options
 msgid "Extra-Large"
-msgstr ""
+msgstr "Ekstra veliko"
 
 #. module: website
 #: view:website:website.snippets
@@ -1103,7 +1094,7 @@ msgstr "ČPP"
 #: field:website,social_facebook:0
 #: field:website.config.settings,social_facebook:0
 msgid "Facebook Account"
-msgstr ""
+msgstr "Facebook račun"
 
 #. module: website
 #: view:website:website.snippet_options
@@ -1118,22 +1109,22 @@ msgstr ""
 #. module: website
 #: view:website:website.snippets
 msgid "Feature One"
-msgstr ""
+msgstr "Prva značajka"
 
 #. module: website
 #: view:website:website.snippets
 msgid "Feature Three"
-msgstr ""
+msgstr "Značajka tri"
 
 #. module: website
 #: view:website:website.snippets
 msgid "Feature Title"
-msgstr ""
+msgstr "Naslov značajke"
 
 #. module: website
 #: view:website:website.snippets
 msgid "Feature Two"
-msgstr ""
+msgstr "Značajka dva"
 
 #. module: website
 #: view:website:website.snippets
@@ -1143,7 +1134,7 @@ msgstr "Značajke"
 #. module: website
 #: view:website:website.snippets
 msgid "First Feature"
-msgstr ""
+msgstr "Prve značajke"
 
 #. module: website
 #: view:website:website.snippet_options
@@ -1163,7 +1154,7 @@ msgstr ""
 #. module: website
 #: view:website:website.snippet_options
 msgid "Float"
-msgstr ""
+msgstr "Decimalni"
 
 #. module: website
 #: view:website:website.snippet_options
@@ -1185,15 +1176,16 @@ msgstr ""
 #. module: website
 #: view:website:website.snippets
 msgid ""
-"From the main container, you can change the background to highlight features."
-msgstr ""
+"From the main container, you can change the background to highlight "
+"features."
+msgstr "Iz glavnog izbornika, možete promijeniti pozadinu kako biste istaknuli značajke."
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/js/website.tour.banner.js:52
 #, python-format
 msgid "Get banner properties"
-msgstr ""
+msgstr "Nabavite svojstva bannera"
 
 #. module: website
 #. openerp-web
@@ -1204,8 +1196,7 @@ msgid ""
 msgstr ""
 
 #. module: website
-#: field:website,social_github:0
-#: field:website.config.settings,social_github:0
+#: field:website,social_github:0 field:website.config.settings,social_github:0
 msgid "GitHub Account"
 msgstr ""
 
@@ -1214,7 +1205,7 @@ msgstr ""
 #: code:addons/website/static/src/js/website.tour.banner.js:88
 #, python-format
 msgid "Good Job!"
-msgstr ""
+msgstr "Dobar posao!"
 
 #. module: website
 #: field:website,google_analytics_key:0
@@ -1226,12 +1217,12 @@ msgstr ""
 #: field:website,social_googleplus:0
 #: field:website.config.settings,social_googleplus:0
 msgid "Google+ Account"
-msgstr ""
+msgstr "Google+ Account"
 
 #. module: website
 #: view:website:website.snippets
 msgid "Great Value"
-msgstr ""
+msgstr "Velika vrijednost"
 
 #. module: website
 #: view:website:website.aboutus
@@ -1273,7 +1264,7 @@ msgstr "HTML uređivač"
 #. module: website
 #: model:ir.model,name:website.model_ir_http
 msgid "HTTP routing"
-msgstr ""
+msgstr "HTTP usmjeravanje"
 
 #. module: website
 #: view:website:website.themes
@@ -1290,7 +1281,7 @@ msgstr "Pomoć"
 #: code:addons/website/static/src/xml/website.translator.xml:19
 #, python-format
 msgid "Here are the visuals used to help you translate efficiently:"
-msgstr ""
+msgstr "Vizuali koji se koriste za učinkovito prevođenje:"
 
 #. module: website
 #: view:website:website.snippet_options
@@ -1298,15 +1289,13 @@ msgid "Hide link"
 msgstr "Sakrij poveznicu"
 
 #. module: website
-#: view:website:website.500
-#: view:website:website.layout
+#: view:website:website.500 view:website:website.layout
 #: model:website.menu,name:website.menu_homepage
 msgid "Home"
 msgstr "Glavna"
 
 #. module: website
-#: view:website:website.403
-#: view:website:website.404
+#: view:website:website.403 view:website:website.404
 #: view:website:website.layout
 msgid "Homepage"
 msgstr "Početna stranica"
@@ -1319,26 +1308,18 @@ msgid "Horizontal flip"
 msgstr ""
 
 #. module: website
-#: field:website,id:0
-#: field:website.config.settings,id:0
-#: field:website.converter.test.sub,id:0
-#: field:website.menu,id:0
-#: field:website.qweb,id:0
-#: field:website.qweb.field,id:0
-#: field:website.qweb.field.contact,id:0
-#: field:website.qweb.field.date,id:0
+#: field:website,id:0 field:website.config.settings,id:0
+#: field:website.converter.test.sub,id:0 field:website.menu,id:0
+#: field:website.qweb,id:0 field:website.qweb.field,id:0
+#: field:website.qweb.field.contact,id:0 field:website.qweb.field.date,id:0
 #: field:website.qweb.field.datetime,id:0
-#: field:website.qweb.field.duration,id:0
-#: field:website.qweb.field.float,id:0
-#: field:website.qweb.field.html,id:0
-#: field:website.qweb.field.image,id:0
+#: field:website.qweb.field.duration,id:0 field:website.qweb.field.float,id:0
+#: field:website.qweb.field.html,id:0 field:website.qweb.field.image,id:0
 #: field:website.qweb.field.integer,id:0
 #: field:website.qweb.field.many2one,id:0
-#: field:website.qweb.field.monetary,id:0
-#: field:website.qweb.field.qweb,id:0
+#: field:website.qweb.field.monetary,id:0 field:website.qweb.field.qweb,id:0
 #: field:website.qweb.field.relative,id:0
-#: field:website.qweb.field.selection,id:0
-#: field:website.qweb.field.text,id:0
+#: field:website.qweb.field.selection,id:0 field:website.qweb.field.text,id:0
 #: field:website.seo.metadata,id:0
 msgid "ID"
 msgstr "ID"
@@ -1366,10 +1347,8 @@ msgstr "Ukoliko otkažete trenutno uređivanje,"
 #: view:website:website.snippets
 msgid ""
 "If you try to write with a wide general\n"
-"                            audience in mind, your story will ring false and "
-"be bland.\n"
-"                            No one will be interested. Write for one person. "
-"If it’s genuine for the one, it’s genuine for the rest."
+"                            audience in mind, your story will ring false and be bland.\n"
+"                            No one will be interested. Write for one person. If it’s genuine for the one, it’s genuine for the rest."
 msgstr ""
 
 #. module: website
@@ -1405,10 +1384,8 @@ msgstr "Slika-Tekst"
 #, python-format
 msgid ""
 "In this mode, you can only translate texts.  To\n"
-"                            change the structure of the page, you must edit "
-"the\n"
-"                            master page. Each modification on the master "
-"page\n"
+"                            change the structure of the page, you must edit the\n"
+"                            master page. Each modification on the master page\n"
 "                            is automatically applied to all translated\n"
 "                            versions."
 msgstr ""
@@ -1471,7 +1448,7 @@ msgstr "Greška na poslužitelju"
 msgid ""
 "It might be possible to edit the relevant items\n"
 "                                or fix the issue in"
-msgstr ""
+msgstr "Moguće je urediti relevantne stavke\nili popraviti problem u"
 
 #. module: website
 #: view:website:website.themes
@@ -1486,7 +1463,7 @@ msgstr ""
 #. module: website
 #: view:website:website.snippets
 msgid "Join us and make your company a better place."
-msgstr ""
+msgstr "Pridružite nam se i učinite vaše poduzeće boljim mjestom."
 
 #. module: website
 #: view:website:website.themes
@@ -1504,8 +1481,7 @@ msgid "Language"
 msgstr "Jezik"
 
 #. module: website
-#: field:website,language_ids:0
-#: field:website.config.settings,language_ids:0
+#: field:website,language_ids:0 field:website.config.settings,language_ids:0
 msgid "Languages"
 msgstr "Jezici"
 
@@ -1518,20 +1494,16 @@ msgid "Large"
 msgstr "Veliko"
 
 #. module: website
-#: field:website,write_uid:0
-#: field:website.config.settings,write_uid:0
-#: field:website.converter.test.sub,write_uid:0
-#: field:website.menu,write_uid:0
+#: field:website,write_uid:0 field:website.config.settings,write_uid:0
+#: field:website.converter.test.sub,write_uid:0 field:website.menu,write_uid:0
 #: field:website.seo.metadata,write_uid:0
 msgid "Last Updated by"
 msgstr "Zadnji promjenio"
 
 #. module: website
-#: field:website,write_date:0
-#: field:website.config.settings,write_date:0
+#: field:website,write_date:0 field:website.config.settings,write_date:0
 #: field:website.converter.test.sub,write_date:0
-#: field:website.menu,write_date:0
-#: field:website.seo.metadata,write_date:0
+#: field:website.menu,write_date:0 field:website.seo.metadata,write_date:0
 msgid "Last Updated on"
 msgstr "Vrijeme zadnje promijene"
 
@@ -1552,7 +1524,7 @@ msgstr "Dodajmo još jedan konstrukcijski blok na vašu stranicu"
 #: code:addons/website/static/src/js/website.tour.banner.js:97
 #, python-format
 msgid "Let's check how your homepage looks like on mobile devices."
-msgstr ""
+msgstr "Pogledajmo kako vaša stranica izgleda na mobilnim uređajima."
 
 #. module: website
 #: view:website:website.snippets
@@ -1584,12 +1556,12 @@ msgstr "Poveznica na"
 #: field:website,social_linkedin:0
 #: field:website.config.settings,social_linkedin:0
 msgid "LinkedIn Account"
-msgstr ""
+msgstr "LinkedIn račun"
 
 #. module: website
 #: view:website:website.snippets
 msgid "List of Features"
-msgstr ""
+msgstr "Popis značajki"
 
 #. module: website
 #: view:website:website.layout
@@ -1604,7 +1576,7 @@ msgstr "Glavni izbornik"
 #. module: website
 #: view:website:website.snippet_options
 msgid "Mango"
-msgstr ""
+msgstr "Mango"
 
 #. module: website
 #: view:website:website.snippet_options
@@ -1619,10 +1591,9 @@ msgid "Margin resize"
 msgstr "Promjena margina"
 
 #. module: website
-#: view:website:website.403
-#: view:website:website.404
+#: view:website:website.403 view:website:website.404
 msgid "Maybe you were looking for one of these popular pages ?"
-msgstr ""
+msgstr "Možda ste tražili jednu od onih popularnih stranica?"
 
 #. module: website
 #: view:website:website.snippet_options
@@ -1695,7 +1666,7 @@ msgstr "Moj korisnički račun"
 #. module: website
 #: view:website:website.snippet_options
 msgid "Narrow"
-msgstr ""
+msgstr "Uzak"
 
 #. module: website
 #. openerp-web
@@ -1718,10 +1689,9 @@ msgid "New or existing page"
 msgstr "Nova ili postojeća stranica"
 
 #. module: website
-#: view:website:website.kanban_contain
-#: view:website:website.pager
+#: view:website:website.kanban_contain view:website:website.pager
 msgid "Next"
-msgstr ""
+msgstr "Sljedeći"
 
 #. module: website
 #. openerp-web
@@ -1743,8 +1713,7 @@ msgstr "Ništa"
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.backend.xml:10
-#: view:website:website.publish_management
-#: view:website:website.publish_short
+#: view:website:website.publish_management view:website:website.publish_short
 #, python-format
 msgid "Not Published"
 msgstr "Nije objavljeno"
@@ -1752,41 +1721,37 @@ msgstr "Nije objavljeno"
 #. module: website
 #: view:website:website.info
 msgid "Note: To hide this page, uncheck it from the top Customize menu."
-msgstr ""
+msgstr "Napomena: Da biste sakrili ovu stranicu, isključite ju u gornjem izborniku Prilagodba."
 
 #. module: website
-#: view:website:website.layout
-#: view:website:website.snippets
+#: view:website:website.layout view:website:website.snippets
 msgid "Odoo"
-msgstr ""
+msgstr "Odoo"
 
 #. module: website
 #: view:website:website.info
 msgid "Odoo Version"
+msgstr "Odoo verzija"
+
+#. module: website
+#: view:website:website.snippets
+msgid ""
+"Odoo provides essential platform for our project management.\n"
+"                                                    Things are better organized and more visible with it."
 msgstr ""
 
 #. module: website
 #: view:website:website.snippets
 msgid ""
 "Odoo provides essential platform for our project management.\n"
-"                                                    Things are better "
-"organized and more visible with it."
+"                                            Things are better organized and more visible with it."
 msgstr ""
 
 #. module: website
 #: view:website:website.snippets
 msgid ""
 "Odoo provides essential platform for our project management.\n"
-"                                            Things are better organized and "
-"more visible with it."
-msgstr ""
-
-#. module: website
-#: view:website:website.snippets
-msgid ""
-"Odoo provides essential platform for our project management.\n"
-"                                Things are better organized and more visible "
-"with it."
+"                                Things are better organized and more visible with it."
 msgstr ""
 
 #. module: website
@@ -1806,11 +1771,21 @@ msgstr "Ok"
 #. module: website
 #: view:website:website.info
 msgid "Open Source ERP"
-msgstr ""
+msgstr "Otvoreni izvor ERP"
 
 #. module: website
 #: view:website:website.layout
 msgid "Open Source eCommerce"
+msgstr ""
+
+#. module: website
+#: view:website:website.layout
+msgid "Open Source CRM"
+msgstr ""
+
+#. module: website
+#: view:website:website.layout
+msgid "open source website builder"
 msgstr ""
 
 #. module: website
@@ -1873,18 +1848,16 @@ msgstr "Naši proizvodi i usluge"
 #. module: website
 #: view:website:website.aboutus
 msgid ""
-"Our products are designed for small to medium size companies willing to "
-"optimize\n"
+"Our products are designed for small to medium size companies willing to optimize\n"
 "                                      their performance."
-msgstr ""
+msgstr "Naši proizvodi su dizajnirani za mala i srednje velika poduzeća koja su spremna optimizirati\nsvoj učinak."
 
 #. module: website
 #: view:website:website.layout
 msgid ""
-"Our products are designed for small to medium size companies willing to "
-"optimize\n"
+"Our products are designed for small to medium size companies willing to optimize\n"
 "                            their performance."
-msgstr ""
+msgstr "Naši proizvodi su dizajnirani za mala i srednje velika poduzeća koja su spremna optimizirati\nsvoj učinak."
 
 #. module: website
 #. openerp-web
@@ -1910,7 +1883,7 @@ msgstr "Ploča"
 msgid ""
 "Panels are a great tool to compare offers or to emphasize on\n"
 "                key features. To compare products, use the inside columns."
-msgstr ""
+msgstr "Paneli su odličan način za usporedbu ponuda ili naglasku na\nključnim značajkama. Za usporedbu proizvoda, koristite unutar stupaca."
 
 #. module: website
 #: view:website:website.snippets
@@ -1925,7 +1898,7 @@ msgstr "Paralax klizač"
 #. module: website
 #: field:website.menu,parent_left:0
 msgid "Parent Left"
-msgstr ""
+msgstr "Roditelj lijevo"
 
 #. module: website
 #: field:website.menu,parent_id:0
@@ -1935,7 +1908,7 @@ msgstr "Nadređeni izbornik"
 #. module: website
 #: field:website.menu,parent_right:0
 msgid "Parent Right"
-msgstr ""
+msgstr "Roditelj desno"
 
 #. module: website
 #: model:ir.model,name:website.model_res_partner
@@ -1962,7 +1935,7 @@ msgstr "Osobe"
 #: code:addons/website/static/src/xml/website.editor.xml:157
 #, python-format
 msgid "Pictogram"
-msgstr ""
+msgstr "Piktogram"
 
 #. module: website
 #: view:website:website.snippets
@@ -1971,14 +1944,28 @@ msgstr ""
 
 #. module: website
 #: view:website:website.layout
+msgid "Create a"
+msgstr ""
+
+#. module: website
+#: view:website:website.layout
+msgid "free website"
+msgstr ""
+
+#. module: website
+#: view:website:website.layout
+msgid "with"
+msgstr ""
+
+#. module: website
+#: view:website:website.layout
 msgid "Powered by"
 msgstr "Powered by"
 
 #. module: website
-#: view:website:website.kanban_contain
-#: view:website:website.pager
+#: view:website:website.kanban_contain view:website:website.pager
 msgid "Prev"
-msgstr ""
+msgstr "Prethodna"
 
 #. module: website
 #. openerp-web
@@ -1999,7 +1986,7 @@ msgstr "Primarno"
 #. module: website
 #: view:website:website.snippets
 msgid "Professional"
-msgstr ""
+msgstr "Stručni"
 
 #. module: website
 #: view:website:website.snippets
@@ -2032,12 +2019,12 @@ msgstr "Promoviraj ovu stranicu na webu"
 #. module: website
 #: field:website,partner_id:0
 msgid "Public Partner"
-msgstr ""
+msgstr "Javni parnter"
 
 #. module: website
 #: field:website,user_id:0
 msgid "Public User"
-msgstr ""
+msgstr "Javni korisnik"
 
 #. module: website
 #: view:website:website.publish_management
@@ -2049,13 +2036,12 @@ msgstr "Objavi"
 #: code:addons/website/static/src/js/website.tour.banner.js:83
 #, python-format
 msgid "Publish your page by clicking on the <em>'Save'</em> button."
-msgstr ""
+msgstr "Objavi stranicu klikom na <em>'Spremi'</em>  gumb."
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.backend.xml:11
-#: view:website:website.publish_management
-#: view:website:website.publish_short
+#: view:website:website.publish_management view:website:website.publish_short
 #, python-format
 msgid "Published"
 msgstr "Objavljeno"
@@ -2068,16 +2054,15 @@ msgstr ""
 #. module: website
 #: view:website:website.snippet_options
 msgid "Purple"
-msgstr ""
+msgstr "Ljubičasta"
 
 #. module: website
 #: view:website:website.http_error_debug
 msgid "QWeb"
-msgstr ""
+msgstr "QWeb"
 
 #. module: website
-#: view:website:website.snippet_options
-#: view:website:website.snippets
+#: view:website:website.snippet_options view:website:website.snippets
 msgid "Quote"
 msgstr "Citat"
 
@@ -2099,7 +2084,7 @@ msgstr "Primatelj"
 #. module: website
 #: view:website:website.snippet_options
 msgid "Red"
-msgstr ""
+msgstr "Crveno"
 
 #. module: website
 #: view:website:website.snippets
@@ -2133,12 +2118,12 @@ msgstr "Poništi transformaciju"
 #. module: website
 #: view:website:website.500
 msgid "Reset selected templates"
-msgstr ""
+msgstr "Reset odabranog predloška"
 
 #. module: website
 #: view:website:website.500
 msgid "Reset templates"
-msgstr ""
+msgstr "Reset predloška"
 
 #. module: website
 #. openerp-web
@@ -2177,7 +2162,7 @@ msgstr "SEO metapodaci"
 #. module: website
 #: view:website:website.snippets
 msgid "Sample images"
-msgstr ""
+msgstr "Uzorak slike"
 
 #. module: website
 #. openerp-web
@@ -2222,12 +2207,12 @@ msgstr ""
 #. module: website
 #: view:website:website.snippets
 msgid "Second Feature"
-msgstr ""
+msgstr "Druga značajka"
 
 #. module: website
 #: view:website:website.snippets
 msgid "Second List"
-msgstr ""
+msgstr "Drugi popis"
 
 #. module: website
 #. openerp-web
@@ -2241,7 +2226,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.editor.xml:152
 #, python-format
 msgid "Select a Media"
-msgstr ""
+msgstr "Odaberite medij"
 
 #. module: website
 #. openerp-web
@@ -2265,7 +2250,7 @@ msgstr ""
 #. module: website
 #: view:website:website.snippets
 msgid "Sell Online. Easily."
-msgstr ""
+msgstr "Online prodaja. Jednostavno."
 
 #. module: website
 #: view:website:website.template_partner_comment
@@ -2275,7 +2260,7 @@ msgstr "Pošalji"
 #. module: website
 #: view:website:website.template_partner_comment
 msgid "Send a Message to our Partners"
-msgstr ""
+msgstr "Pošalji poruku našim partnerima"
 
 #. module: website
 #: view:website:website.contactus
@@ -2297,7 +2282,7 @@ msgstr "Redoslijed"
 #: code:addons/website/static/src/xml/website.editor.xml:367
 #, python-format
 msgid "Set a video URL"
-msgstr ""
+msgstr "Odaberi URL video"
 
 #. module: website
 #: view:website:website.themes
@@ -2370,7 +2355,7 @@ msgstr "Malo"
 #: view:website:website.view_website_form
 #: view:website.config.settings:website.view_website_config_settings
 msgid "Social Media"
-msgstr ""
+msgstr "Društveni mediji"
 
 #. module: website
 #: view:website:website.themes
@@ -2464,7 +2449,7 @@ msgstr "Tehnički naziv"
 #: view:website:website.snippets
 msgid ""
 "Tell features the visitor would like to know, not what you'd like to say."
-msgstr ""
+msgstr "Recite značajke koje posjetitelji žele znati, ne one koje vi želite reći."
 
 #. module: website
 #: view:website:website.snippets
@@ -2476,7 +2461,7 @@ msgstr ""
 #: code:addons/website/static/src/js/website.ace.js:234
 #, python-format
 msgid "Template ID: %s"
-msgstr ""
+msgstr "ID predloška: %s"
 
 #. module: website
 #: view:website:website.500
@@ -2488,7 +2473,7 @@ msgstr ""
 #: code:addons/website/static/src/js/website.tour.banner.js:96
 #, python-format
 msgid "Test Your Mobile Version"
-msgstr ""
+msgstr "Testirajte mobilnu verziju"
 
 #. module: website
 #: view:website:website.snippets
@@ -2503,28 +2488,27 @@ msgstr "Tekst-Slika"
 #. module: website
 #: view:website:website.template_partner_post
 msgid "Thank you for posting a message !"
-msgstr ""
+msgstr "Zahvaljujemo na ostavljenoj poruci!"
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/js/website.tour.banner.js:112
 #, python-format
 msgid "The 'Content' menu allows you to add pages or add the top menu."
-msgstr ""
+msgstr "Izbornik 'Sadžaj' vam omogućuje dodavanje stranice ili gornjeg izbornika."
 
 #. module: website
 #: view:website:website.snippets
 msgid ""
 "The Point of Sale works perfectly on any kind of touch enabled\n"
-"                    device, whether it's multi-touch tablets like an iPad "
-"or\n"
+"                    device, whether it's multi-touch tablets like an iPad or\n"
 "                    keyboardless resistive touchscreen terminals."
 msgstr ""
 
 #. module: website
 #: view:website:website.http_error_debug
 msgid "The error occured while rendering the template"
-msgstr ""
+msgstr "Došlo je do pogreške u pružanju predloška"
 
 #. module: website
 #: view:website:website.http_error_debug
@@ -2543,7 +2527,7 @@ msgstr ""
 msgid ""
 "The image could not be deleted because it is used in the\n"
 "               following pages or views:"
-msgstr ""
+msgstr "Slika se ne može obrisati jer se koristi u\nsljedećim stranicama ili pregledima:"
 
 #. module: website
 #: view:website:website.403
@@ -2554,8 +2538,7 @@ msgstr ""
 #: view:website:website.404
 msgid ""
 "The page you were looking for could not be found; it is possible you have\n"
-"                        typed the address incorrectly, but it has most "
-"probably been removed due\n"
+"                        typed the address incorrectly, but it has most probably been removed due\n"
 "                        to the recent website reorganisation."
 msgstr ""
 
@@ -2574,7 +2557,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.xml:34
 #, python-format
 msgid "The web site has encountered an error."
-msgstr ""
+msgstr "Web stranica je naišla na pogrešku."
 
 #. module: website
 #: view:website:website.themes
@@ -2584,14 +2567,14 @@ msgstr "Tema promijenjana!"
 #. module: website
 #: view:website:website.snippets
 msgid "Third Feature"
-msgstr ""
+msgstr "Treća značajka"
 
 #. module: website
 #: view:website:website.page_404
 msgid ""
-"This page does not exists, but you can create it as you are administrator of "
-"this site."
-msgstr ""
+"This page does not exists, but you can create it as you are administrator of"
+" this site."
+msgstr "Stranica ne postoji, ali možete ju kreirati jer ste administrator stranice."
 
 #. module: website
 #. openerp-web
@@ -2619,10 +2602,8 @@ msgstr "Naslov"
 #: view:website:website.snippets
 msgid ""
 "To add a fourth column, reduce the size of these\n"
-"                            three columns using the right icon of each "
-"block.\n"
-"                            Then, duplicate one of the column to create a "
-"new\n"
+"                            three columns using the right icon of each block.\n"
+"                            Then, duplicate one of the column to create a new\n"
 "                            one as a copy."
 msgstr ""
 
@@ -2685,7 +2666,7 @@ msgstr ""
 #: view:website:website.view_website_form
 #: view:website.config.settings:website.view_website_config_settings
 msgid "UA-XXXXXXXX-Y"
-msgstr ""
+msgstr "UA-XXXXXXXX-Y"
 
 #. module: website
 #. openerp-web
@@ -2724,7 +2705,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.editor.xml:209
 #, python-format
 msgid "Upload an image from your computer"
-msgstr ""
+msgstr "Učitaj sliku sa svog računala"
 
 #. module: website
 #. openerp-web
@@ -2753,7 +2734,7 @@ msgstr "Razno"
 #. module: website
 #: view:website:website.snippet_options
 msgid "Velour"
-msgstr ""
+msgstr "Velur"
 
 #. module: website
 #. openerp-web
@@ -2797,8 +2778,7 @@ msgstr "Upozorenje"
 #: view:website:website.aboutus
 msgid ""
 "We are a team of passionate people whose goal is to improve everyone's\n"
-"                                      life through disruptive products. We "
-"build great products to solve your\n"
+"                                      life through disruptive products. We build great products to solve your\n"
 "                                      business problems."
 msgstr ""
 
@@ -2806,15 +2786,14 @@ msgstr ""
 #: view:website:website.layout
 msgid ""
 "We are a team of passionate people whose goal is to improve everyone's\n"
-"                            life through disruptive products. We build great "
-"products to solve your\n"
+"                            life through disruptive products. We build great products to solve your\n"
 "                            business problems."
 msgstr ""
 
 #. module: website
 #: view:website:website.contactus
 msgid "We'll do our best to get back to you as soon as possible."
-msgstr ""
+msgstr "Potruditi ćemo se da vam se javimo u najkraćem  mogućem roku."
 
 #. module: website
 #. openerp-web
@@ -2822,8 +2801,7 @@ msgstr ""
 #: model:ir.actions.act_url,name:website.action_website
 #: view:ir.actions.server:website.view_server_action_search_website
 #: model:ir.model,name:website.model_website
-#: model:ir.ui.menu,name:website.menu_website
-#: view:website:website.layout
+#: model:ir.ui.menu,name:website.menu_website view:website:website.layout
 #: field:website.menu,website_id:0
 #, python-format
 msgid "Website"
@@ -2837,7 +2815,7 @@ msgstr "Website aplikacije"
 #. module: website
 #: model:ir.actions.act_url,name:website.action_website_homepage
 msgid "Website Homepage"
-msgstr ""
+msgstr "Web naslovnica"
 
 #. module: website
 #: model:ir.actions.act_window,name:website.action_website_menu
@@ -2963,20 +2941,16 @@ msgstr ""
 #: view:website:website.snippets
 msgid ""
 "While an internet connection is required to start the Point of\n"
-"                    Sale, it will stay operational even after a complete "
-"disconnection."
+"                    Sale, it will stay operational even after a complete disconnection."
 msgstr ""
 
 #. module: website
 #: view:website:website.snippets
 msgid ""
 "With Odoo's fully integrated software, you can easily manage your\n"
-"                            meetings, schedule business calls, create "
-"recurring meetings,\n"
-"                            synchronize your agenda and easily keep in touch "
-"with your colleagues,\n"
-"                            partners and other people involved in projects "
-"or business discussions."
+"                            meetings, schedule business calls, create recurring meetings,\n"
+"                            synchronize your agenda and easily keep in touch with your colleagues,\n"
+"                            partners and other people involved in projects or business discussions."
 msgstr ""
 
 #. module: website
@@ -2988,24 +2962,21 @@ msgstr "Drvo"
 #: view:website:website.snippets
 msgid ""
 "Write a quote here from one of your customers. Quotes are a\n"
-"                                                    great way to build "
-"confidence in your products or services."
+"                                                    great way to build confidence in your products or services."
 msgstr ""
 
 #. module: website
 #: view:website:website.snippets
 msgid ""
 "Write a quote here from one of your customers. Quotes are a\n"
-"                                            great way to build confidence in "
-"your products or services."
+"                                            great way to build confidence in your products or services."
 msgstr ""
 
 #. module: website
 #: view:website:website.snippets
 msgid ""
 "Write a quote here from one of your customers. Quotes are a\n"
-"                                great way to build confidence in your "
-"products or services."
+"                                great way to build confidence in your products or services."
 msgstr ""
 
 #. module: website
@@ -3019,8 +2990,7 @@ msgstr ""
 #: view:website:website.snippets
 msgid ""
 "Write one or two paragraphs describing your product or\n"
-"                            services. To be successful your content needs to "
-"be\n"
+"                            services. To be successful your content needs to be\n"
 "                            useful to your readers."
 msgstr ""
 
@@ -3028,8 +2998,7 @@ msgstr ""
 #: view:website:website.snippets
 msgid ""
 "Write one or two paragraphs describing your product,\n"
-"                            services or a specific feature. To be "
-"successful\n"
+"                            services or a specific feature. To be successful\n"
 "                            your content needs to be useful to your readers."
 msgstr ""
 
@@ -3094,7 +3063,7 @@ msgstr "Naslov vaše webstranice"
 #: field:website,social_youtube:0
 #: field:website.config.settings,social_youtube:0
 msgid "Youtube Account"
-msgstr ""
+msgstr "Youtube račun"
 
 #. module: website
 #. openerp-web
@@ -3154,14 +3123,14 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.editor.xml:66
 #, python-format
 msgid "http://openerp.com"
-msgstr ""
+msgstr "http://openerp.com"
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.editor.xml:224
 #, python-format
 msgid "http://openerp.com/logo.png"
-msgstr ""
+msgstr "http://openerp.com/logo.png"
 
 #. module: website
 #: view:website:website.view_website_form
@@ -3191,7 +3160,7 @@ msgstr ""
 #. module: website
 #: view:website:website.view_website_form
 msgid "https://plus.google.com/+Odooapps"
-msgstr ""
+msgstr "https://plus.google.com/+Odooapps"
 
 #. module: website
 #: view:website.config.settings:website.view_website_config_settings
@@ -3217,12 +3186,12 @@ msgstr ""
 #: view:website:website.view_website_form
 #: view:website.config.settings:website.view_website_config_settings
 msgid "https://youraccount.github.io"
-msgstr ""
+msgstr "https://youraccount.github.io"
 
 #. module: website
 #: view:website:website.info
 msgid "instance of Odoo, the"
-msgstr ""
+msgstr "primjer Odoo-a, na"
 
 #. module: website
 #: view:website:website.snippets
@@ -3241,7 +3210,7 @@ msgstr ""
 #: view:website.config.settings:website.view_website_config_settings
 #, python-format
 msgid "or"
-msgstr ""
+msgstr "ili"
 
 #. module: website
 #. openerp-web
@@ -3273,7 +3242,7 @@ msgstr ""
 #. module: website
 #: view:website:website.robots
 msgid "sitemap.xml"
-msgstr ""
+msgstr "sitemap.xml"
 
 #. module: website
 #: view:website:website.snippets
@@ -3285,36 +3254,36 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.xml:37
 #, python-format
 msgid "the classic Odoo interface"
-msgstr ""
+msgstr "klasično Odoo sučelje"
 
 #. module: website
 #: field:website.converter.test.sub,name:0
 msgid "unknown"
-msgstr ""
+msgstr "nepoznato"
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.editor.xml:302
 #, python-format
 msgid "unsaved changes will be lost."
-msgstr ""
+msgstr "nespremljene promjene će biti izgubljene."
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.seo.xml:40
 #, python-format
 msgid "using above suggested keywords"
-msgstr ""
+msgstr "pomoću gore predložene ključne riječi"
 
 #. module: website
 #: field:website.config.settings,website_id:0
 msgid "website"
-msgstr ""
+msgstr "web stranica"
 
 #. module: website
 #: view:website:website.500
 msgid "yes"
-msgstr ""
+msgstr "da"
 
 #. module: website
 #: view:website:website.themes
@@ -3327,11 +3296,11 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.editor.xml:378
 #, python-format
 msgid "— or —"
-msgstr ""
+msgstr "— ili —"
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.editor.xml:161
 #, python-format
 msgid "← Previous"
-msgstr ""
+msgstr "← Prethodni"

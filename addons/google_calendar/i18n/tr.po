@@ -1,47 +1,44 @@
-# Turkish translation for openobject-addons
-# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
-# This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
-#
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * google_calendar
+# 
+# Translators:
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
+# gezgin biri <gezginbiri@hotmail.com>, 2015
+# Murat Kaplan <muratk@projetgrup.com>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-01-21 14:08+0000\n"
-"PO-Revision-Date: 2015-05-06 23:39+0000\n"
-"Last-Translator: Murat Kaplan <muratk@projetgrup.com>\n"
-"Language-Team: Turkish <tr@li.org>\n"
+"Project-Id-Version: Odoo 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-07 12:39+0000\n"
+"PO-Revision-Date: 2015-11-02 16:40+0000\n"
+"Last-Translator: gezgin biri <gezginbiri@hotmail.com>\n"
+"Language-Team: Turkish (http://www.transifex.com/odoo/odoo-8/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-05-08 05:33+0000\n"
-"X-Generator: Launchpad (build 17474)\n"
+"Content-Transfer-Encoding: \n"
 "Language: tr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "\"/google_account/authentication\""
-msgstr "/google_account/doğrulama"
+msgid "\"Authorized redirect URI\""
+msgstr "\"Yetkili Yönlendirme URI\""
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "\"Calendar API\""
-msgstr "Takvim API"
+msgid "'/google_account/authentication'"
+msgstr "'/google_account/authentication'"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "\"Consent Screen\""
-msgstr "\"Onay Ekran\""
+msgid "'Calendar API'"
+msgstr "'Takvim API'"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "\"Create Project\""
-msgstr "\"Proje Oluşturma\""
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "\"Redirect RI\""
-msgstr "\"Yönlendirme RI\""
+msgid "'Configure consent screen'"
+msgstr "'Onay ekranını ayarla'"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
@@ -50,13 +47,23 @@ msgstr "'Müşteri Kimliği Oluştur'"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "'Create New Client ID'"
-msgstr "Yeni İstemci ID Oluştur"
+msgid "'Create Project'"
+msgstr "\"Proje Oluşturma\""
+
+#. module: google_calendar
+#: view:base.config.settings:google_calendar.view_calendar_config_settings
+msgid "'Create new Client ID'"
+msgstr "'Yeni İstemci ID Oluştur'"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
 msgid "'Credentials'"
 msgstr "'Kimlik'"
+
+#. module: google_calendar
+#: view:base.config.settings:google_calendar.view_calendar_config_settings
+msgid "'Enable API'"
+msgstr "'API Etkin'"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
@@ -70,8 +77,13 @@ msgstr "Gözat düğmesine tıklayın"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid ") that you need to insert in the 2 fields below !"
-msgstr "Alan Ekle"
+msgid ") that you need to insert in the 2 fields below!"
+msgstr ") aşağıdaki 2 alanı eklemelisiniz!"
+
+#. module: google_calendar
+#: view:base.config.settings:google_calendar.view_calendar_config_settings
+msgid ", then click on"
+msgstr ", şuna tıklayın"
 
 #. module: google_calendar
 #: model:ir.actions.act_window,name:google_calendar.action_config_settings_google_calendar
@@ -84,15 +96,18 @@ msgid "API Credentials"
 msgstr "API Kimlik"
 
 #. module: google_calendar
+#: view:base.config.settings:google_calendar.view_calendar_config_settings
+msgid "Activate the Calendar API by clicking on the blue button"
+msgstr "Mavi düğmeye basarak Takvim API'sini etkinleştirin"
+
+#. module: google_calendar
 #. openerp-web
 #: code:addons/google_calendar/static/src/js/calendar_sync.js:55
 #, python-format
 msgid ""
 "All events have been disconnected from your previous account. You can now "
 "restart the synchronization"
-msgstr ""
-"Tüm olayları önceki hesabınızdan kesilmiş. Eşitlemeyi yeniden "
-"çalıştırabilirsiniz."
+msgstr "Tüm olayları önceki hesabınızdan kesilmiş. Eşitlemeyi yeniden çalıştırabilirsiniz."
 
 #. module: google_calendar
 #. openerp-web
@@ -101,9 +116,7 @@ msgstr ""
 msgid ""
 "An administrator needs to configure Google Synchronization before you can "
 "use it!"
-msgstr ""
-"<strong>Hesap askıda</strong>: Hesabınız şu anda etkin değil. Önce "
-"hesabınızı etkinleştirmek bir yöneticinin onaylaması gerekir."
+msgstr "<strong>Hesap askıda</strong>: Hesabınız şu anda etkin değil. Önce hesabınızı etkinleştirmek bir yöneticinin onaylaması gerekir."
 
 #. module: google_calendar
 #. openerp-web
@@ -112,9 +125,7 @@ msgstr ""
 msgid ""
 "An error occured while disconnecting events from your previous account. "
 "Please retry or contact your administrator."
-msgstr ""
-"Önceki hesabınız etkinliklerinde bağlantısını kesmeden bir hata oluştu. "
-"Yeniden deneyin veya yöneticinizle iletişim kurun."
+msgstr "Önceki hesabınız etkinliklerinde bağlantısını kesmeden bir hata oluştu. Yeniden deneyin veya yöneticinizle iletişim kurun."
 
 #. module: google_calendar
 #: model:ir.model,name:google_calendar.model_calendar_attendee
@@ -130,6 +141,11 @@ msgstr "Takvim"
 #: field:res.users,google_calendar_cal_id:0
 msgid "Calendar ID"
 msgstr "Takvim Kimliği"
+
+#. module: google_calendar
+#: view:base.config.settings:google_calendar.view_calendar_config_settings
+msgid "Check that the Application type is set on"
+msgstr "Uygulama tipinin ayarlandığını kontrol ediniz"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
@@ -174,13 +190,6 @@ msgid "Event"
 msgstr "Etkinlik"
 
 #. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid ""
-"Fill in the Name of application and check that the platform is well on"
-msgstr ""
-"Uygulama adına doldurun ve platform üzerinde iyi olup olmadığını kontrol edin"
-
-#. module: google_calendar
 #. openerp-web
 #: code:addons/google_calendar/static/src/xml/web_calendar.xml:8
 #, python-format
@@ -219,8 +228,7 @@ msgstr "ID"
 msgid ""
 "In order to do this, you first need to disconnect all existing events from "
 "the old account."
-msgstr ""
-"Bunu yapmak için önce tüm varolan olayların eski hesaptan kesmek gerekir."
+msgstr "Bunu yapmak için önce tüm varolan olayların eski hesaptan kesmek gerekir."
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
@@ -230,20 +238,16 @@ msgstr "Menüde sol alt menü seçeneğini seçin."
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
 msgid ""
-"In the menu on left side, select the sub menu APIs (from menu APIs and auth) "
-"and activate"
-msgstr ""
-"Sol taraftaki menüde API'leri alt menü (Menü API ve kimlik doğrulama) seçin "
-"ve Etkinleştir"
+"In the menu on left side, select the sub menu APIs (from menu APIs and auth)"
+" and click on"
+msgstr "Sol tarafdaki menüden, (menü API'ler ve auth) alt menü API'leri seçin ve üzerine tıklayın"
 
 #. module: google_calendar
 #: help:res.users,google_calendar_cal_id:0
 msgid ""
 "Last Calendar ID who has been synchronized. If it is changed, we remove all "
 "links between GoogleID and Odoo Google Internal ID"
-msgstr ""
-"Kim eşitlenmemiş son takvim kimliği. Değiştirilirse, biz GoogleID ve Odoo "
-"Google iç kimlik arasındaki tüm bağlantıları Kaldır"
+msgstr "Kim eşitlenmemiş son takvim kimliği. Değiştirilirse, biz GoogleID ve Odoo Google iç kimlik arasındaki tüm bağlantıları Kaldır"
 
 #. module: google_calendar
 #: field:res.users,google_calendar_last_sync_date:0
@@ -277,9 +281,13 @@ msgstr "Yukarı Dön"
 
 #. module: google_calendar
 #: field:base.config.settings,google_cal_sync:0
-msgid ""
-"Show tutorial to know how to get my 'Client ID' and my 'Client Secret'"
+msgid "Show tutorial to know how to get my 'Client ID' and my 'Client Secret'"
 msgstr "'Müşteri Kimliği' ve 'İstemci Şifrsini' almak için yardımı göster"
+
+#. module: google_calendar
+#: view:base.config.settings:google_calendar.view_calendar_config_settings
+msgid "Specify an email address and a product name, then save."
+msgstr "Bir e-posta adresi ve ürün adı belirtip, sonra kaydediniz."
 
 #. module: google_calendar
 #. openerp-web
@@ -295,9 +303,7 @@ msgstr "Eşitle"
 msgid ""
 "The Google Synchronization needs to be configured before you can use it, do "
 "you want to do it now?"
-msgstr ""
-"Google eşitleme kullanılabilmesi için önce yapılandırılması gerekir, şimdi "
-"yapmak istiyor musunuz?"
+msgstr "Google eşitleme kullanılabilmesi için önce yapılandırılması gerekir, şimdi yapmak istiyor musunuz?"
 
 #. module: google_calendar
 #. openerp-web
@@ -306,23 +312,14 @@ msgstr ""
 msgid ""
 "The account you are trying to synchronize (%s) is not the same as the last "
 "one used (%s)!"
-msgstr ""
-"(%s) eşitlemeye çalıştığınız hesap son kullanılan (%s) ile aynı değil!"
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid ""
-"To finish, you just need to create a \"consent screen\" by clicking on"
-msgstr "Bitirmek için sadece onay ekran tıklayarak oluşturmanız gerekir"
+msgstr "(%s) eşitlemeye çalıştığınız hesap son kullanılan (%s) ile aynı değil!"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
 msgid ""
 "To setup the signin process with Google, first you have to perform the "
 "following steps"
-msgstr ""
-"Kur Google ile oturum işlemi için öncelikle aşağıdaki adımları "
-"gerçekleştirmek gerekiyor"
+msgstr "Kur Google ile oturum işlemi için öncelikle aşağıdaki adımları gerçekleştirmek gerekiyor"
 
 #. module: google_calendar
 #: field:res.users,google_calendar_token_validity:0
@@ -346,8 +343,8 @@ msgstr "Kullanıcılar"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "When it's done, check that the button of"
-msgstr "Bitince, kontrol düğmesi"
+msgid "When it's done, the Calendar API overview will be available"
+msgstr "Bittiğinde, Takvim API genel görünümü hazır olacak"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
@@ -359,26 +356,14 @@ msgstr "Bunu şimdi yapmak istiyor musunuz?"
 msgid ""
 "You should now configure the allowed pages on which you will be redirected. "
 "To do it, you need to complete the field"
-msgstr ""
-"Şimdi, izin verilen sayfa üzerinde yönlendirileceksiniz yapılandırmalısınız. "
-"Yapmak için alanı doldurmanız gerekir."
+msgstr "Şimdi, izin verilen sayfa üzerinde yönlendirileceksiniz yapılandırmalısınız. Yapmak için alanı doldurmanız gerekir."
 
 #. module: google_calendar
 #. openerp-web
 #: code:addons/google_calendar/static/src/js/calendar_sync.js:28
 #, python-format
-msgid ""
-"You will be redirected to Google to authorize access to your calendar!"
+msgid "You will be redirected to Google to authorize access to your calendar!"
 msgstr "Google Takvim erişimi yetkilendirmek için yönlendirileceksiniz!"
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid ""
-"You will need to accept again the \"Google APIs Terms of services\" and "
-"\"Calendar API Terms of service\""
-msgstr ""
-"Yine \"Google API Koşullarını Hizmetleri\" ve \"hizmet takvim API "
-"koşulları\" kabul etmek gerekir"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
@@ -390,9 +375,7 @@ msgstr "ve"
 msgid ""
 "and enter a project name and change your id if you want. Don't forget to "
 "accept the Terms of Services"
-msgstr ""
-"ve proje adını girin ve eğer sen istemek senin kimliğini değiştirin. Hizmet "
-"koşullarını kabul etmeyi unutmayın"
+msgstr "ve proje adını girin ve eğer sen istemek senin kimliğini değiştirin. Hizmet koşullarını kabul etmeyi unutmayın"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
@@ -401,20 +384,5 @@ msgstr "ve değeri (ardından kendi etki alanı olarak ayarlayın"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "by clicking on button \"OFF\"."
-msgstr "\"OFF\" düğmesine tıklayarak."
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "https://cloud.google.com/console"
-msgstr "https://Cloud.Google.com/Console"
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "in the left menu."
-msgstr "sol menüde."
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "is well in green and with text \"ON\""
-msgstr "Peki yeşil ve metin \"ON\" ile"
+msgid "https://console.developers.google.com/"
+msgstr "https://console.developers.google.com/"

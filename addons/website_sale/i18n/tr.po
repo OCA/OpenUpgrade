@@ -1,26 +1,26 @@
-# Turkish translation for openobject-addons
-# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
-# This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
-#
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * website_sale
+# 
+# Translators:
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
+# Saban Yildiz <sabany@projetgrup.com>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: Odoo 8.0\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:09+0000\n"
-"PO-Revision-Date: 2015-05-19 17:31+0000\n"
-"Last-Translator: Murat Kaplan <muratk@projetgrup.com>\n"
-"Language-Team: Turkish <tr@li.org>\n"
+"PO-Revision-Date: 2015-07-31 09:26+0000\n"
+"Last-Translator: Martin Trigaux\n"
+"Language-Team: Turkish (http://www.transifex.com/odoo/odoo-8/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-05-20 05:31+0000\n"
-"X-Generator: Launchpad (build 17508)\n"
+"Content-Transfer-Encoding: \n"
 "Language: tr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: website_sale
-#: view:website:website_sale.cart
-#: view:website:website_sale.products_item
+#: view:website:website_sale.cart view:website:website_sale.products_item
 msgid "&nbsp;"
 msgstr "&nbsp;"
 
@@ -53,7 +53,7 @@ msgid ""
 "            a photo on categories for small (1024x768) screens.\n"
 "          </p>\n"
 "        "
-msgstr ""
+msgstr "<p class=\"oe_view_nocontent_create\">\nYeni bir kategori tanımlamak için tıklayınız.\n</p><p>\nKategoriler dokunmatik ara yüz aracılığıyla\n ürünlerinize göz atmak için kullanılır.\n</p><p>\nEğer kategoriye bir fotoğraf koyarsanız, dokunmatik yüzeyin ekranı\notomatik olarak değişecektir. Küçük ekranlar için (1024x768) kategori\nfotoğrafı konulmasını önermiyoruz.\n</p>"
 
 #. module: website_sale
 #: field:product.template,accessory_product_ids:0
@@ -61,8 +61,7 @@ msgid "Accessory Products"
 msgstr "Ürün Aksesuar"
 
 #. module: website_sale
-#: view:website:website_sale.cart
-#: view:website:website_sale.product
+#: view:website:website_sale.cart view:website:website_sale.product
 msgid "Add to Cart"
 msgstr "Sepete Ekle"
 
@@ -97,8 +96,7 @@ msgid "Available in the website"
 msgstr "Websitesinde mevcuttur"
 
 #. module: website_sale
-#: view:website:website_sale.confirmation
-#: view:website:website_sale.payment
+#: view:website:website_sale.confirmation view:website:website_sale.payment
 msgid "Bill To:"
 msgstr "Fatura Adresi:"
 
@@ -179,9 +177,7 @@ msgstr "Ürün açıklama sayfasına resim eklemek için kaydet tuşuna basın."
 #: code:addons/website_sale/static/src/js/website_sale_tour_shop.js:104
 #, python-format
 msgid "Click to publish your product so your customers can see it."
-msgstr ""
-"Ürünlerinizi müşterilerinizin görebileceği şekilde web'de yayınlamak için "
-"tıklayın."
+msgstr "Ürünlerinizi müşterilerinizin görebileceği şekilde web'de yayınlamak için tıklayın."
 
 #. module: website_sale
 #. openerp-web
@@ -206,10 +202,8 @@ msgid "Confirm"
 msgstr "Doğrula"
 
 #. module: website_sale
-#: view:website:website_sale.cart
-#: view:website:website_sale.checkout
-#: view:website:website_sale.confirmation
-#: view:website:website_sale.payment
+#: view:website:website_sale.cart view:website:website_sale.checkout
+#: view:website:website_sale.confirmation view:website:website_sale.payment
 msgid "Confirmation"
 msgstr "Doğrulama"
 
@@ -288,8 +282,7 @@ msgid "Create your first product"
 msgstr "İlk ürünü tanımlayın"
 
 #. module: website_sale
-#: field:product.public.category,create_uid:0
-#: field:product.style,create_uid:0
+#: field:product.public.category,create_uid:0 field:product.style,create_uid:0
 msgid "Created by"
 msgstr "Oluşturan"
 
@@ -366,8 +359,7 @@ msgstr "Amerika içine kargo ücretsiz"
 
 #. module: website_sale
 #: help:product.public.category,sequence:0
-msgid ""
-"Gives the sequence order when displaying a list of product categories."
+msgid "Gives the sequence order when displaying a list of product categories."
 msgstr "Ürün kategorilerini gösterirken sıra numarası verir"
 
 #. module: website_sale
@@ -390,9 +382,7 @@ msgstr "Bir kupon kodunuz mu var? Buraya yazın."
 msgid ""
 "Here you can set a specific HTML color index (e.g. #ff0000) to display the "
 "color on the website if the attibute type is 'Color'."
-msgstr ""
-"Burada, attibute bir tür 'Renk' ise renk Web sitesinde görüntülemek için bir "
-"belirli HTML renk dizini (örneğin #ff0000) ayarlayabilirsiniz."
+msgstr "Burada, attibute bir tür 'Renk' ise renk Web sitesinde görüntülemek için bir belirli HTML renk dizini (örneğin #ff0000) ayarlayabilirsiniz."
 
 #. module: website_sale
 #: selection:product.attribute,type:0
@@ -400,8 +390,7 @@ msgid "Hidden"
 msgstr "Gizli"
 
 #. module: website_sale
-#: field:product.public.category,id:0
-#: field:product.style,id:0
+#: field:product.public.category,id:0 field:product.style,id:0
 msgid "ID"
 msgstr "ID"
 
@@ -416,19 +405,15 @@ msgstr "Resim"
 #, python-format
 msgid ""
 "Insert blocks like text-image, or gallery to fully describe the product."
-msgstr ""
-"Blokları metin resim veya ürünü tam olarak açıklamak için Galeri gibi "
-"yerleştirin."
+msgstr "Blokları metin resim veya ürünü tam olarak açıklamak için Galeri gibi yerleştirin."
 
 #. module: website_sale
-#: field:product.public.category,write_uid:0
-#: field:product.style,write_uid:0
+#: field:product.public.category,write_uid:0 field:product.style,write_uid:0
 msgid "Last Updated by"
 msgstr "Son Güncelleyen"
 
 #. module: website_sale
-#: field:product.public.category,write_date:0
-#: field:product.style,write_date:0
+#: field:product.public.category,write_date:0 field:product.style,write_date:0
 msgid "Last Updated on"
 msgstr "Son Güncellenen"
 
@@ -450,10 +435,7 @@ msgid ""
 "Medium-sized image of the category. It is automatically resized as a "
 "128x128px image, with aspect ratio preserved. Use this field in form views "
 "or some kanban views."
-msgstr ""
-"Kategorinin orta boyutlu görüntü. Otomatik olarak korunmuş en boy oranına "
-"sahip, bir 128x128px görüntü olarak yeniden boyutlandırılır. Form "
-"görünümleri ya da kanban görünümlerinde bu alanı kullanın."
+msgstr "Kategorinin orta boyutlu görüntü. Otomatik olarak korunmuş en boy oranına sahip, bir 128x128px görüntü olarak yeniden boyutlandırılır. Form görünümleri ya da kanban görünümlerinde bu alanı kullanın."
 
 #. module: website_sale
 #: view:website:website.layout
@@ -502,7 +484,7 @@ msgstr "Kaydet'e tıkladığınızda etkinlik güncellenmiş olacak."
 #. module: website_sale
 #: view:website:website_sale.products
 msgid "Options"
-msgstr "Seçenekler"
+msgstr "Şeçenekler"
 
 #. module: website_sale
 #: view:website:website_sale.confirmation
@@ -519,9 +501,7 @@ msgstr "Web sitesinde görüntülenen sipariş satırları"
 msgid ""
 "Order Lines to be displayed on the website. They should not be used for "
 "computation purpose."
-msgstr ""
-"Sipariş satırları web sitesinde görüntülenecek. Bunlar hesaplama amacıyla "
-"kullanılmamalıdır."
+msgstr "Sipariş satırları web sitesinde görüntülenecek. Bunlar hesaplama amacıyla kullanılmamalıdır."
 
 #. module: website_sale
 #: model:product.public.category,name:website_sale.categ_others
@@ -541,10 +521,8 @@ msgid "Pay Now"
 msgstr "Şimdi Öde"
 
 #. module: website_sale
-#: view:website:website_sale.cart
-#: view:website:website_sale.checkout
-#: view:website:website_sale.confirmation
-#: view:website:website_sale.payment
+#: view:website:website_sale.cart view:website:website_sale.checkout
+#: view:website:website_sale.confirmation view:website:website_sale.payment
 msgid "Payment"
 msgstr "Ödeme"
 
@@ -579,8 +557,7 @@ msgid "Post"
 msgstr "İşle"
 
 #. module: website_sale
-#: view:website:website_sale.cart
-#: view:website:website_sale.payment
+#: view:website:website_sale.cart view:website:website_sale.payment
 msgid "Price"
 msgstr "Fiyat"
 
@@ -596,8 +573,7 @@ msgstr "Checkout"
 
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_product_product
-#: view:website:website_sale.cart
-#: view:website:website_sale.payment
+#: view:website:website_sale.cart view:website:website_sale.payment
 msgid "Product"
 msgstr "Ürün"
 
@@ -622,8 +598,7 @@ msgid "Product Template"
 msgstr "Ürün Şablonu"
 
 #. module: website_sale
-#: view:website:website_sale.product
-#: view:website:website_sale.product_price
+#: view:website:website_sale.product view:website:website_sale.product_price
 msgid "Product not available"
 msgstr "Ürün mevcut değil"
 
@@ -692,8 +667,7 @@ msgid "Push up"
 msgstr "Yukarı doğru it"
 
 #. module: website_sale
-#: view:website:website_sale.cart
-#: view:website:website_sale.payment
+#: view:website:website_sale.cart view:website:website_sale.payment
 msgid "Quantity"
 msgstr "Miktar"
 
@@ -713,10 +687,8 @@ msgid "Return to the product list."
 msgstr "Ürün listesine dön."
 
 #. module: website_sale
-#: view:website:website_sale.cart
-#: view:website:website_sale.checkout
-#: view:website:website_sale.confirmation
-#: view:website:website_sale.payment
+#: view:website:website_sale.cart view:website:website_sale.checkout
+#: view:website:website_sale.confirmation view:website:website_sale.payment
 msgid "Review Order"
 msgstr "Siparişi İncele"
 
@@ -771,9 +743,7 @@ msgstr "Seçin"
 msgid ""
 "Select 'New Product' to create it and manage its properties to boost your "
 "sales."
-msgstr ""
-"'Yeni ürün' oluşturun ve özelliklerini satış artırmak için yönetmek için "
-"seçin."
+msgstr "'Yeni ürün' oluşturun ve özelliklerini satış artırmak için yönetmek için seçin."
 
 #. module: website_sale
 #. openerp-web
@@ -789,14 +759,12 @@ msgid "Sequence"
 msgstr "Sıralama"
 
 #. module: website_sale
-#: view:website:website_sale.confirmation
-#: view:website:website_sale.payment
+#: view:website:website_sale.confirmation view:website:website_sale.payment
 msgid "Ship To:"
 msgstr "Sevk Et:"
 
 #. module: website_sale
-#: view:website:website_sale.checkout
-#: view:website:website_sale.confirmation
+#: view:website:website_sale.checkout view:website:website_sale.confirmation
 #: view:website:website_sale.payment
 msgid "Ship to the same address"
 msgstr "Aynı adrese sevk et"
@@ -807,10 +775,8 @@ msgid "Shipping"
 msgstr "Sevkiyat"
 
 #. module: website_sale
-#: view:website:website_sale.cart
-#: view:website:website_sale.checkout
-#: view:website:website_sale.confirmation
-#: view:website:website_sale.payment
+#: view:website:website_sale.cart view:website:website_sale.checkout
+#: view:website:website_sale.confirmation view:website:website_sale.payment
 msgid "Shipping & Billing"
 msgstr "Nakliye & Faturalandırma"
 
@@ -881,12 +847,9 @@ msgstr "Küçük boy resim"
 #: help:product.public.category,image_small:0
 msgid ""
 "Small-sized image of the category. It is automatically resized as a 64x64px "
-"image, with aspect ratio preserved. Use this field anywhere a small image is "
-"required."
-msgstr ""
-"Kategorinin küçük boyutlu görüntü. Otomatik olarak bir 64x64px olarak "
-"yeniden boyutlandırılır korunmuş boy oranı ile görüntü,. Her yerde küçük bir "
-"görüntüdür bu alanı kullanın gereklidir."
+"image, with aspect ratio preserved. Use this field anywhere a small image is"
+" required."
+msgstr "Kategorinin küçük boyutlu görüntü. Otomatik olarak bir 64x64px olarak yeniden boyutlandırılır korunmuş boy oranı ile görüntü,. Her yerde küçük bir görüntüdür bu alanı kullanın gereklidir."
 
 #. module: website_sale
 #: view:website:website_sale.404
@@ -947,8 +910,7 @@ msgid "Taxes may be updated after providing shipping address"
 msgstr "Vergiler sevkıyat adresi sağladıktan sonra güncellenmiş olabilir"
 
 #. module: website_sale
-#: view:website:website_sale.checkout
-#: view:website:website_sale.total
+#: view:website:website_sale.checkout view:website:website_sale.total
 msgid "Taxes:"
 msgstr "Vergiler:"
 
@@ -975,9 +937,7 @@ msgstr "Gönderiminizde bir hata oluştu"
 msgid ""
 "This field holds the image used as image for the category, limited to "
 "1024x1024px."
-msgstr ""
-"Bu alan 1024x1024px sınırlı kategori için görüntü olarak kullanılan bir "
-"görüntü tutar."
+msgstr "Bu alan 1024x1024px sınırlı kategori için görüntü olarak kullanılan bir görüntü tutar."
 
 #. module: website_sale
 #. openerp-web
@@ -989,8 +949,7 @@ msgstr "Bu sayfa, yeni ürün ile ilgili tüm bilgileri içermektedir."
 #. module: website_sale
 #: help:product.template,public_categ_ids:0
 msgid "Those categories are used to group similar products for e-commerce."
-msgstr ""
-"Bu kategoriler, e-ticaret için benzer ürünler gruplandırmak için kullanılır."
+msgstr "Bu kategoriler, e-ticaret için benzer ürünler gruplandırmak için kullanılır."
 
 #. module: website_sale
 #: view:website:website_sale.checkout
@@ -1066,8 +1025,7 @@ msgid "Website meta title"
 msgstr "Websitesi meta başlık"
 
 #. module: website_sale
-#: field:product.product,website_url:0
-#: field:product.template,website_url:0
+#: field:product.product,website_url:0 field:product.template,website_url:0
 msgid "Website url"
 msgstr "Website URL"
 
@@ -1090,9 +1048,7 @@ msgstr "Yorum Yazın..."
 msgid ""
 "You successfully installed the e-commerce. This guide will help you to "
 "create your product and promote your sales."
-msgstr ""
-"E-ticaret başarıyla yüklendi. Bu kılavuz, ürün oluşturma ve satış teşvik "
-"yardımcı olacaktır."
+msgstr "E-ticaret başarıyla yüklendi. Bu kılavuz, ürün oluşturma ve satış teşvik yardımcı olacaktır."
 
 #. module: website_sale
 #: view:website:website_sale.checkout
@@ -1143,16 +1099,6 @@ msgid "code..."
 msgstr "Kod"
 
 #. module: website_sale
-#: view:website:website_sale.products
-msgid "col-md-3 hidden-xs"
-msgstr "col-md-3 hidden-xs"
-
-#. module: website_sale
-#: view:website:website_sale.products
-msgid "col-md-9"
-msgstr "Col-MD-9"
-
-#. module: website_sale
 #: view:website:website_sale.product
 msgid "comment"
 msgstr "Yorum"
@@ -1165,22 +1111,12 @@ msgstr "Yorumlar"
 #. module: website_sale
 #: view:website:website_sale.product
 msgid "on"
-msgstr ""
+msgstr "bunda"
 
 #. module: website_sale
 #: view:website:website_sale.checkout
 msgid "or"
 msgstr "veya"
-
-#. module: website_sale
-#: view:website:website_sale.products
-msgid "pagination form-inline col-md-3"
-msgstr "pagination form-inline col-md-3"
-
-#. module: website_sale
-#: view:website:website_sale.product
-msgid "pull-right"
-msgstr "sağa-çek"
 
 #. module: website_sale
 #: view:website:website_sale.checkout

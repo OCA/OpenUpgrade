@@ -1,21 +1,22 @@
-# Spanish (Ecuador) translation for openerp-web
-# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
-# This file is distributed under the same license as the openerp-web package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
-#
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web
+# 
+# Translators:
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: openerp-web\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: Odoo 8.0\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:08+0000\n"
-"PO-Revision-Date: 2014-08-14 16:14+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Spanish (Ecuador) <es_EC@li.org>\n"
+"PO-Revision-Date: 2015-11-16 07:38+0000\n"
+"Last-Translator: Martin Trigaux\n"
+"Language-Team: Spanish (Ecuador) (http://www.transifex.com/odoo/odoo-8/language/es_EC/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-01-22 08:55+0000\n"
-"X-Generator: Launchpad (build 17306)\n"
+"Content-Transfer-Encoding: \n"
+"Language: es_EC\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web
 #. openerp-web
@@ -23,7 +24,7 @@ msgstr ""
 #: code:addons/web/static/src/js/search.js:2305
 #, python-format
 msgid "%(field)s %(operator)s"
-msgstr ""
+msgstr "%(campos)s %(operador)s"
 
 #. module: web
 #. openerp-web
@@ -427,7 +428,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:428
 #, python-format
 msgid "Belgium"
-msgstr ""
+msgstr "Bélgica"
 
 #. module: web
 #. openerp-web
@@ -723,7 +724,7 @@ msgstr "Crear Base de Datos"
 #: code:addons/web/static/src/js/view_form.js:3467
 #, python-format
 msgid "Create a %s"
-msgstr ""
+msgstr "Crear un %s"
 
 #. module: web
 #. openerp-web
@@ -744,7 +745,7 @@ msgstr "Crear y Editar..."
 #: code:addons/web/static/src/xml/base.xml:2005
 #, python-format
 msgid "Create and edit"
-msgstr ""
+msgstr "Crear y editar"
 
 #. module: web
 #. openerp-web
@@ -785,7 +786,7 @@ msgstr "Filtro Personalizado"
 #. module: web
 #: view:website:web.database_select
 msgid "Database"
-msgstr ""
+msgstr "Base de datos"
 
 #. module: web
 #. openerp-web
@@ -1006,7 +1007,7 @@ msgstr "Duplicando base de datos"
 #: code:addons/web/static/src/js/view_form.js:2482
 #, python-format
 msgid "E-mail Error"
-msgstr ""
+msgstr "Error en Correo electrónico"
 
 #. module: web
 #. openerp-web
@@ -1046,7 +1047,7 @@ msgstr "Editar Flujo de trabajo"
 #. module: web
 #: view:website:web.login
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: web
 #. openerp-web
@@ -1060,7 +1061,7 @@ msgstr "Codificación:"
 #: code:addons/web/static/src/xml/website.tour.xml:25
 #, python-format
 msgid "End This Tutorial"
-msgstr ""
+msgstr "Finaliza este tutorial"
 
 #. module: web
 #. openerp-web
@@ -1074,7 +1075,7 @@ msgstr "Borrar la fecha actual"
 #: code:addons/web/static/src/js/search.js:1886
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #. module: web
 #: code:addons/web/controllers/main.py:764
@@ -1138,14 +1139,14 @@ msgstr "Exportar todos los datos"
 #: code:addons/web/static/src/js/views.js:852
 #, python-format
 msgid "Failed to evaluate search criterions"
-msgstr ""
+msgstr "Falla al evaluar los criterios de búsqueda"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:1732
 #, python-format
 msgid "Favorites"
-msgstr ""
+msgstr "Favoritos"
 
 #. module: web
 #. openerp-web
@@ -1203,10 +1204,8 @@ msgstr "Archivo:"
 #, python-format
 msgid ""
 "Fill in this form to create an Odoo database. You can\n"
-"                    create databases for different companies or for "
-"different\n"
-"                    goals (testing, production). Once the database is "
-"created,\n"
+"                    create databases for different companies or for different\n"
+"                    goals (testing, production). Once the database is created,\n"
 "                    you will be able to install your first application."
 msgstr ""
 
@@ -1236,7 +1235,7 @@ msgstr "Nombre del filtro"
 #: code:addons/web/static/src/js/search.js:1886
 #, python-format
 msgid "Filter name is required."
-msgstr ""
+msgstr "Nombre de filtro es requerido."
 
 #. module: web
 #. openerp-web
@@ -1272,11 +1271,9 @@ msgstr "Para más información visite"
 #: code:addons/web/static/src/xml/base.xml:1953
 #, python-format
 msgid ""
-"For use if CSV files have titles on multiple lines, skips more than a single "
-"line during import"
-msgstr ""
-"Para su uso si los archivos CSV tienen títulos en varias líneas, se omiten "
-"más de una sola línea durante la importación"
+"For use if CSV files have titles on multiple lines, skips more than a single"
+" line during import"
+msgstr "Para su uso si los archivos CSV tienen títulos en varias líneas, se omiten más de una sola línea durante la importación"
 
 #. module: web
 #. openerp-web
@@ -1319,7 +1316,7 @@ msgstr "Agrupar por"
 #: code:addons/web/static/src/xml/base.xml:370
 #, python-format
 msgid "Help"
-msgstr ""
+msgstr "Ayuda"
 
 #. module: web
 #. openerp-web
@@ -1382,8 +1379,7 @@ msgstr "Contraseña de super-administrador incorrecta"
 #: code:addons/web/static/src/js/search.js:952
 #, python-format
 msgid "Incorrect value for field %(fieldname)s: [%(value)s] is %(message)s"
-msgstr ""
-"Valor incorrecto para campo %(fieldname)s: [%(value)s] is %(message)s"
+msgstr "Valor incorrecto para campo %(fieldname)s: [%(value)s] is %(message)s"
 
 #. module: web
 #. openerp-web
@@ -1494,11 +1490,7 @@ msgid ""
 "%s\n"
 "\n"
 "%s"
-msgstr ""
-"Fallo de la evaluación local\n"
-"%s\n"
-"\n"
-"%s"
+msgstr "Fallo de la evaluación local\n%s\n\n%s"
 
 #. module: web
 #: view:website:web.login
@@ -1562,16 +1554,14 @@ msgstr "Master password:"
 #: code:addons/web/static/src/js/core.js:707
 #, python-format
 msgid "Maybe you should consider reloading the application by pressing F5..."
-msgstr ""
-"Tal vez usted podría considerar volver a cargar la aplicación presionando F5 "
-"..."
+msgstr "Tal vez usted podría considerar volver a cargar la aplicación presionando F5 ..."
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/views.js:990
 #, python-format
 msgid "Metadata (%s)"
-msgstr ""
+msgstr "Metadatos (%s)"
 
 #. module: web
 #. openerp-web
@@ -1618,8 +1608,7 @@ msgstr "Modificadores:"
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/views.js:1166
-#: code:addons/web/static/src/xml/base.xml:1289
-#: view:website:web.menu
+#: code:addons/web/static/src/xml/base.xml:1289 view:website:web.menu
 #, python-format
 msgid "More"
 msgstr "Más"
@@ -1629,7 +1618,7 @@ msgstr "Más"
 #: code:addons/web/static/src/xml/base.xml:368
 #, python-format
 msgid "My Odoo.com account"
-msgstr ""
+msgstr "Mi cuenta Odoo.com"
 
 #. module: web
 #. openerp-web
@@ -1706,14 +1695,14 @@ msgstr "No se han facilitado datos"
 #: code:addons/web/static/src/js/view_form.js:3399
 #, python-format
 msgid "No results to show..."
-msgstr ""
+msgstr "Sin resultados que mostrar..."
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:3775
 #, python-format
 msgid "No value found for the field  for value "
-msgstr ""
+msgstr "No se encuentran valores para el campo"
 
 #. module: web
 #. openerp-web
@@ -1737,23 +1726,22 @@ msgid "Object:"
 msgstr "Objeto:"
 
 #. module: web
-#: view:website:web.layout
-#: view:website:web.login_layout
+#: view:website:web.layout view:website:web.login_layout
 #: view:website:web.menu_secondary
 msgid "Odoo"
-msgstr ""
+msgstr "Odoo"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:386
 #, python-format
 msgid "Odoo (Formerly OpenERP)"
-msgstr ""
+msgstr "Odoo (antiguamente OpenERP)"
 
 #. module: web
 #: view:website:web.qunit_suite
 msgid "Odoo Web Tests"
-msgstr ""
+msgstr "Test Web para Odoo"
 
 #. module: web
 #. openerp-web
@@ -1767,7 +1755,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:422
 #, python-format
 msgid "Odoo.com"
-msgstr ""
+msgstr "Odoo.com"
 
 #. module: web
 #. openerp-web
@@ -1852,8 +1840,7 @@ msgstr ""
 
 #. module: web
 #. openerp-web
-#: code:addons/web/static/src/xml/base.xml:318
-#: view:website:web.login
+#: code:addons/web/static/src/xml/base.xml:318 view:website:web.login
 #, python-format
 msgid "Password"
 msgstr "Contraseña"
@@ -1898,7 +1885,7 @@ msgstr "Por favor ingrese su contraseña anterior"
 #: code:addons/web/static/src/xml/base.xml:1857
 #, python-format
 msgid "Please note that only the selected ids will be exported."
-msgstr ""
+msgstr "Por favor, solo los registros seleccionados serán exportados."
 
 #. module: web
 #. openerp-web
@@ -1907,7 +1894,7 @@ msgstr ""
 msgid ""
 "Please pay attention that all records matching your search filter will be "
 "exported. Not only the selected ids."
-msgstr ""
+msgstr "Recuerde que todos los registros que coincidan con su filtro de búsqueda serán exportados. No solo los registros seleccionados."
 
 #. module: web
 #. openerp-web
@@ -1924,8 +1911,7 @@ msgid "Please select fields to save export list..."
 msgstr "Por favor seleccione los campos de la lista para exportar"
 
 #. module: web
-#: view:website:web.login_layout
-#: view:website:web.menu_secondary
+#: view:website:web.login_layout view:website:web.menu_secondary
 msgid "Powered by"
 msgstr "Powered by"
 
@@ -1976,14 +1962,14 @@ msgstr "Borrar todo"
 #: code:addons/web/static/src/js/view_form.js:3775
 #, python-format
 msgid "Render"
-msgstr ""
+msgstr "Render"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/view_form.js:2512
 #, python-format
 msgid "Resource Error"
-msgstr ""
+msgstr "Error de recurso"
 
 #. module: web
 #. openerp-web
@@ -2162,11 +2148,7 @@ msgstr "Seleccionar D, M d"
 msgid ""
 "Select a .CSV file to import. If you need a sample of file to import,\n"
 "       you should use the export tool with the \"Import Compatible\" option."
-msgstr ""
-"Seleccionar un .archivo CSV para importar. Si necesitas un ejemplo de un "
-"archivo para importar,\n"
-"       you podrías usar la herramienta de exportar con la opción de "
-"\"Compatible con Importación\"."
+msgstr "Seleccionar un .archivo CSV para importar. Si necesitas un ejemplo de un archivo para importar,\n       you podrías usar la herramienta de exportar con la opción de \"Compatible con Importación\"."
 
 #. module: web
 #. openerp-web
@@ -2382,16 +2364,14 @@ msgstr "La nueva contraseña y su confirmación deben ser idénticas."
 #: code:addons/web/static/src/js/view_form.js:4501
 #, python-format
 msgid "The o2m record must be saved before an action can be used"
-msgstr ""
-"El registro O2M debe guardarse antes que una acción pueda ser utilizada"
+msgstr "El registro O2M debe guardarse antes que una acción pueda ser utilizada"
 
 #. module: web
 #: code:addons/web/controllers/main.py:804
 #, python-format
 msgid ""
 "The old password you provided is incorrect, your password was not changed."
-msgstr ""
-"El password anterior ingresado es incorrecto, su password no fue cambiado."
+msgstr "El password anterior ingresado es incorrecto, su password no fue cambiado."
 
 #. module: web
 #. openerp-web
@@ -2414,9 +2394,7 @@ msgstr "El archivo seleccionado supera el tamaño máximo de% s."
 msgid ""
 "The type of the field '%s' must be a many2many field with a relation to "
 "'ir.attachment' model."
-msgstr ""
-"El tipo de campo '%s' debe ser un campo many2many con una relación a "
-"'ir.attachment' model."
+msgstr "El tipo de campo '%s' debe ser un campo many2many con una relación a 'ir.attachment' model."
 
 #. module: web
 #. openerp-web
@@ -2431,7 +2409,7 @@ msgstr "Hubo un problema mientras se cargaba su archivo"
 #, python-format
 msgid ""
 "This filter is global and will be removed for everybody if you continue."
-msgstr ""
+msgstr "El filtro es global y será removido para todos si usted continúa."
 
 #. module: web
 #. openerp-web
@@ -2445,15 +2423,9 @@ msgstr "El recurso esta vacío"
 #: code:addons/web/static/src/xml/base.xml:1807
 #, python-format
 msgid ""
-"This wizard will export all data that matches the current search criteria to "
-"a CSV file.\n"
-"            You can export all data or only the fields that can be "
-"reimported after modification."
-msgstr ""
-"Este asistente exportará todos los datos que coincidan con el criterio de "
-"búsqueda actual a un archivo CSV.\n"
-"            Tu puedes exportar todos los datos o solo los campos que serán "
-"reimportados después de la modificación."
+"This wizard will export all data that matches the current search criteria to a CSV file.\n"
+"            You can export all data or only the fields that can be reimported after modification."
+msgstr "Este asistente exportará todos los datos que coincidan con el criterio de búsqueda actual a un archivo CSV.\n            Tu puedes exportar todos los datos o solo los campos que serán reimportados después de la modificación."
 
 #. module: web
 #. openerp-web
@@ -2539,7 +2511,7 @@ msgstr "Wdiget no controlado"
 #: code:addons/web/static/src/js/view_form.js:3175
 #, python-format
 msgid "Unknown"
-msgstr ""
+msgstr "Desconocido"
 
 #. module: web
 #. openerp-web
@@ -2597,7 +2569,7 @@ msgstr "Subiendo..."
 #: code:addons/web/static/src/js/views.js:1310
 #, python-format
 msgid "Uploading Error"
-msgstr ""
+msgstr "Error de Carga"
 
 #. module: web
 #. openerp-web
@@ -2647,7 +2619,7 @@ msgstr "Ver Campos"
 #: code:addons/web/static/src/xml/base.xml:539
 #, python-format
 msgid "View Metadata"
-msgstr ""
+msgstr "Ver Metadatos"
 
 #. module: web
 #. openerp-web
@@ -2672,10 +2644,7 @@ msgid ""
 "Warning, the record has been modified, your changes will be discarded.\n"
 "\n"
 "Are you sure you want to leave this page ?"
-msgstr ""
-"Aviso, el registro ha sido modificado. Sus cambios se perderán.\n"
-"\n"
-"¿Está seguro de que quiere abandonar la página?"
+msgstr "Aviso, el registro ha sido modificado. Sus cambios se perderán.\n\n¿Está seguro de que quiere abandonar la página?"
 
 #. module: web
 #. openerp-web
@@ -2725,7 +2694,7 @@ msgstr "Si"
 #: code:addons/web/static/src/js/view_form.js:3473
 #, python-format
 msgid "You are creating a new %s, are you sure it does not exist yet?"
-msgstr ""
+msgstr "Usted ha creado un nuevo %s, ¿estás seguro que no existe?"
 
 #. module: web
 #: code:addons/web/controllers/main.py:796
@@ -2739,8 +2708,7 @@ msgstr "No puede dejar vacía ninguna contraseña"
 #, python-format
 msgid ""
 "You may not believe it,<br />but the application is actually loading..."
-msgstr ""
-"Usted no lo creerá,<br />pero la aplicación actualmente está cargando ..."
+msgstr "Usted no lo creerá,<br />pero la aplicación actualmente está cargando ..."
 
 #. module: web
 #. openerp-web
@@ -2761,16 +2729,14 @@ msgstr "Debe seleccionar al menos un registro."
 #: code:addons/web/static/src/js/chrome.js:259
 #, python-format
 msgid "Your Odoo session expired. Please refresh the current web page."
-msgstr ""
+msgstr "Su sesión Odoo ha expirado. Por favor, actualice su página web."
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/xml/base.xml:456
 #, python-format
 msgid "Your user's preference timezone does not match your browser timezone:"
-msgstr ""
-"La preferencia de zona horaria de su usuario no coincide con la de su "
-"navegador:"
+msgstr "La preferencia de zona horaria de su usuario no coincide con la de su navegador:"
 
 #. module: web
 #. openerp-web

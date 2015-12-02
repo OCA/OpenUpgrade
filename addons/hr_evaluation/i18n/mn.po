@@ -1,21 +1,22 @@
-# Mongolian translation for openobject-addons
-# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
-# This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
-#
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * hr_evaluation
+# 
+# Translators:
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: Odoo 8.0\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:07+0000\n"
-"PO-Revision-Date: 2015-05-15 14:56+0000\n"
-"Last-Translator: gobi <Unknown>\n"
-"Language-Team: Mongolian <mn@li.org>\n"
+"PO-Revision-Date: 2015-07-17 07:15+0000\n"
+"Last-Translator: Otgonbayar Agvaan <gobi.mn@gmail.com>\n"
+"Language-Team: Mongolian (http://www.transifex.com/odoo/odoo-8/language/mn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-05-16 05:44+0000\n"
-"X-Generator: Launchpad (build 17493)\n"
+"Content-Transfer-Encoding: \n"
+"Language: mn\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: hr_evaluation
 #: code:addons/hr_evaluation/hr_evaluation.py:84
@@ -36,22 +37,7 @@ msgid ""
 "%(user_signature)s\n"
 "\n"
 "        "
-msgstr ""
-"\n"
-"Огноо: %(date)s\n"
-"\n"
-"Эрхэм %(employee_name)s,\n"
-"\n"
-"%(eval_name)s -н дүгнэлт би хийж байна.\n"
-"\n"
-"Та хариу илгээнэ үү.\n"
-"\n"
-"\n"
-"Баярлалаа,\n"
-"--\n"
-"%(user_signature)s\n"
-"\n"
-"        "
+msgstr "\nОгноо: %(date)s\n\nЭрхэм %(employee_name)s,\n\n%(eval_name)s -н дүгнэлт би хийж байна.\n\nТа хариу илгээнэ үү.\n\n\nБаярлалаа,\n--\n%(user_signature)s\n\n        "
 
 #. module: hr_evaluation
 #: field:hr.evaluation.report,nbr:0
@@ -82,108 +68,42 @@ msgstr "(Хэрэглэгчийн гарын үсэг) :  Хэрэглэгчий
 #: model:survey.page,description:hr_evaluation.opinion_1
 msgid ""
 "<h2>At the supervisor's appraisal date</h2>\n"
-"<p>His direct reports will be invited through Odoo to express a feedback on "
-"their supervisor's leadership and to give their opinion about their own "
-"engagement and effectiveness, the continuous improvement and openness in "
-"action in thecompany...</p>\n"
-"<p>The employees will send back their anonymous answers to Odoo. The data "
-"will be handled by the HR manager and a brief summary of the data will be "
-"sent to the concerned supervisor, to his team and to the supervisor's "
-"supervisor.</p>\n"
-"<p>The appraiser should rate the employee's major work accomplishments and "
-"performance according to the metric provided below\n"
+"<p>His direct reports will be invited through Odoo to express a feedback on their supervisor's leadership and to give their opinion about their own engagement and effectiveness, the continuous improvement and openness in action in thecompany...</p>\n"
+"<p>The employees will send back their anonymous answers to Odoo. The data will be handled by the HR manager and a brief summary of the data will be sent to the concerned supervisor, to his team and to the supervisor's supervisor.</p>\n"
+"<p>The appraiser should rate the employee's major work accomplishments and performance according to the metric provided below\n"
 "</p><ol>\n"
-"<li>Significantly exceeds standards and expectations required of the "
-"position</li>\n"
+"<li>Significantly exceeds standards and expectations required of the position</li>\n"
 "<li>Exceeds standards and expectations</li>\n"
 "<li>Meet standards and expectations</li>\n"
 "<li>Did not meet standards and expectations</li>\n"
 "<li>Significantly below standards and expectations</li>\n"
 "</ol>"
-msgstr ""
-"<h2>Удирдагчийн үнэлгээний огноонд</h2>\n"
-"<p>Түүний шууд тайлангуудад удирдагчийн манлайлал, тэдгээрийн оролцоо, "
-"оновчтой байдлын талаар сэтгэгдлээ илэрхийлж компани доторх нээлттэй байдал, "
-"тогтмол сайжруулалтыг дэмжих зорилгоор Odoo нь урилга илгээдэг.\n"
-"\n"
-"\n"
-"<p>Ажилчид нь өөрсдийн нэргүй хариултыг Odoo-д өгнө. Өгөгдлийн хүний нөөцийн "
-"менежер боловсруулж хураангуйлсан дүгнэлтийг хамаарах удирдагч, түүний баг, "
-"удирдагчийн удирдагчид илгээгдэнэ.</p>\n"
-"<p>\n"
-"Үнэлэгч нь ажилчны ажлын гол үр дүн, гүйцэтгэлийг доорх хэмжүүрээр үнэлнэ.\n"
-"</p><ol>\n"
-"<li>Ажлын байрны стандарт болон хүлээлтийг онцгой давуулан биелүүлдэг</li>\n"
-"<li>Стандарт болон хүлээлтийг давуулан биелүүлдэг</li>\n"
-"<li>Стандарт болон хүлээлтийг хангадаг</li>\n"
-"<li>Стандарт болон хүлээлтийг хангадаггүй</li>\n"
-"<li>Стандарт болон хүлээлтээс хэт доогуур</li>\n"
-"</ol>"
+msgstr "<h2>Удирдагчийн үнэлгээний огноонд</h2>\n<p>Түүний шууд тайлангуудад удирдагчийн манлайлал, тэдгээрийн оролцоо, оновчтой байдлын талаар сэтгэгдлээ илэрхийлж компани доторх нээлттэй байдал, тогтмол сайжруулалтыг дэмжих зорилгоор Odoo нь урилга илгээдэг.\n\n\n<p>Ажилчид нь өөрсдийн нэргүй хариултыг Odoo-д өгнө. Өгөгдлийн хүний нөөцийн менежер боловсруулж хураангуйлсан дүгнэлтийг хамаарах удирдагч, түүний баг, удирдагчийн удирдагчид илгээгдэнэ.</p>\n<p>\nҮнэлэгч нь ажилчны ажлын гол үр дүн, гүйцэтгэлийг доорх хэмжүүрээр үнэлнэ.\n</p><ol>\n<li>Ажлын байрны стандарт болон хүлээлтийг онцгой давуулан биелүүлдэг</li>\n<li>Стандарт болон хүлээлтийг давуулан биелүүлдэг</li>\n<li>Стандарт болон хүлээлтийг хангадаг</li>\n<li>Стандарт болон хүлээлтийг хангадаггүй</li>\n<li>Стандарт болон хүлээлтээс хэт доогуур</li>\n</ol>"
 
 #. module: hr_evaluation
 #: model:survey.page,description:hr_evaluation.appraisal_1
 msgid ""
 "<h2>Overall Purpose Of Employee Appraisal</h2>\n"
-"<ul><li>To initiate a clear and open communication of performance "
-"expectations\n"
-"</li><li>To assist employees in their professional growth, through the "
-"identification of strengths and opportunities for\n"
+"<ul><li>To initiate a clear and open communication of performance expectations\n"
+"</li><li>To assist employees in their professional growth, through the identification of strengths and opportunities for\n"
 "development</li></ul>\n"
 "<h2>At the outset of the appraisal time period</h2>\n"
-"<ul><li>It is the joint responsibility of the employee and the supervisor "
-"(appraiser) to establish a feasible work plan for the\n"
-"coming year, including major employee responsibilities and corresponding "
-"benchmarks against which results will be\n"
+"<ul><li>It is the joint responsibility of the employee and the supervisor (appraiser) to establish a feasible work plan for the\n"
+"coming year, including major employee responsibilities and corresponding benchmarks against which results will be\n"
 "evaluated.\n"
-"</li><li>Critical or key elements of performance and professional "
-"development needs (if any), should also be noted at this time</li></ul>\n"
+"</li><li>Critical or key elements of performance and professional development needs (if any), should also be noted at this time</li></ul>\n"
 "<h2>At the conclusion of the appraisal time period</h2>\n"
-"<ul><li>The employee will be responsible for completing a draft of the "
-"Appraisal Form as a tool for self-appraisal and a starting\n"
-"point for the supervisor’s evaluation. The employee can add examples of "
-"achievements for each criterion.\n"
+"<ul><li>The employee will be responsible for completing a draft of the Appraisal Form as a tool for self-appraisal and a starting\n"
+"point for the supervisor’s evaluation. The employee can add examples of achievements for each criterion.\n"
 "Once the form had been filled, the employee send it to his supervisor.\n"
-"</li><li>It is the primary responsibility of the supervisor to gather the "
-"necessary input from the appropriate sources of feedback\n"
-"(internal and/or external customers, peers). In case of collaboration with "
-"Odoo SA Belgium, the supervisor must\n"
-"receive completed evaluation form from the employee's Belgian project "
-"manager.\n"
-"</li><li>The supervisor synthesizes and integrates all input into the "
-"completed appraisal. He motivates his evaluation in the ad\n"
+"</li><li>It is the primary responsibility of the supervisor to gather the necessary input from the appropriate sources of feedback\n"
+"(internal and/or external customers, peers). In case of collaboration with Odoo SA Belgium, the supervisor must\n"
+"receive completed evaluation form from the employee's Belgian project manager.\n"
+"</li><li>The supervisor synthesizes and integrates all input into the completed appraisal. He motivates his evaluation in the ad\n"
 "hoc fields.\n"
-"</li><li>The employee may choose to offer comments or explanation regarding "
-"the completed review.\n"
-"</li><li>The supervisor send the form to the HR department in India and in "
-"Belgium</li></ul>"
-msgstr ""
-"<h2>Ажилтны үнэлгээний эцсийн зорилго</h2>\n"
-"<ul>\n"
-"<li>Гүйцэтгэлийн хүлээлтийн талаар ил тод, нээлттэй харилцааг үүсгэх</li>\n"
-"<li>Ажилтны мэргэжлийн давуу тал, боломж зэрэгийг олж тогтоох замаар "
-"мэргэжлийн хөгжилд нь туслах</li>\n"
-"</ul>\n"
-"<h2>Үнэлгээний хугацааны мөчлөгийн цогц</h2>\n"
-"<ul><li>Энэ нь ажилтан болон удирдагчийн хамтдаа ирэх жилдээ боломжтой "
-"төлөвлөгөө гаргах хамтарсан хариуцлага юм. Ажилтны үндсэн хариуцлагууд болон "
-"үр дүнг үнэлэх тухай тусгана.\n"
-"</li><li>Гүйцэтгэл болон мэргэжлийн хөгжлийн чухал болон түлхүүр элементүүд "
-"нь энд мөн тэмгдэглэгдэх ёстой.</li></ul>\n"
-"<h2>Үнэлгээний хугацааны мөгчлөгийн дүгнэлтэнд</h2>\n"
-"<ul><li>Ажилтан нь Үнэлгээний маягтын ноорогийг бөглөх ёстой бөгөөд өөрийн "
-"үнэлгээг хийх багаж байдлаар хийн удирдагчийн үнэлгээний эхлэл цэг "
-"болгодог.Ажилтан нь үзүүлэлт бүрт хүрэх үр дүнгийн жишээг нэмж болно. "
-"Маягтыг бөглөж дуусгаад ажилтан нь удирагдчдаа илгээнэ.\n"
-"</li><li>Удирдагчийн үндсэн үүрэг нь зохих сэтгэглүүдээс шаардлагатай "
-"оролтыг цуглуулах явдал юм. \n"
-"(дотоод/гадаад захиалагч, хамтран ажиллагчид). Odoo SA Белгитай хамтран "
-"ажиллах тохиолдолд удирдагч нь Белгийн төслийн менежерээс үнэлгээний "
-"бөглөгдсөн маягтыг хүлээн авах ёстой.\n"
-"</li><li>Удирдагч нь бүх оролтыг ижилтгэн нэгтгэж гүйцэд үнэлгээг үүсгэнэ. "
-"Тэр өөрийн үнэлгээг ad-hoc талбарт идэвхжүүлдэг.\n"
-"</li><li>Ажилтан нь гүйцэд шүүмжинд сэтгэгдэл эсвэл тайлбарыг сонгож болно.\n"
-"</li><li>Удирдагч нь Энэтхэг болон Белгийн хүний нөөцийн албанд маягтыг "
-"илгээнэ.</li></ul>"
+"</li><li>The employee may choose to offer comments or explanation regarding the completed review.\n"
+"</li><li>The supervisor send the form to the HR department in India and in Belgium</li></ul>"
+msgstr "<h2>Ажилтны үнэлгээний эцсийн зорилго</h2>\n<ul>\n<li>Гүйцэтгэлийн хүлээлтийн талаар ил тод, нээлттэй харилцааг үүсгэх</li>\n<li>Ажилтны мэргэжлийн давуу тал, боломж зэрэгийг олж тогтоох замаар мэргэжлийн хөгжилд нь туслах</li>\n</ul>\n<h2>Үнэлгээний хугацааны мөчлөгийн цогц</h2>\n<ul><li>Энэ нь ажилтан болон удирдагчийн хамтдаа ирэх жилдээ боломжтой төлөвлөгөө гаргах хамтарсан хариуцлага юм. Ажилтны үндсэн хариуцлагууд болон үр дүнг үнэлэх тухай тусгана.\n</li><li>Гүйцэтгэл болон мэргэжлийн хөгжлийн чухал болон түлхүүр элементүүд нь энд мөн тэмгдэглэгдэх ёстой.</li></ul>\n<h2>Үнэлгээний хугацааны мөгчлөгийн дүгнэлтэнд</h2>\n<ul><li>Ажилтан нь Үнэлгээний маягтын ноорогийг бөглөх ёстой бөгөөд өөрийн үнэлгээг хийх багаж байдлаар хийн удирдагчийн үнэлгээний эхлэл цэг болгодог.Ажилтан нь үзүүлэлт бүрт хүрэх үр дүнгийн жишээг нэмж болно. Маягтыг бөглөж дуусгаад ажилтан нь удирагдчдаа илгээнэ.\n</li><li>Удирдагчийн үндсэн үүрэг нь зохих сэтгэглүүдээс шаардлагатай оролтыг цуглуулах явдал юм. \n(дотоод/гадаад захиалагч, хамтран ажиллагчид). Odoo SA Белгитай хамтран ажиллах тохиолдолд удирдагч нь Белгийн төслийн менежерээс үнэлгээний бөглөгдсөн маягтыг хүлээн авах ёстой.\n</li><li>Удирдагч нь бүх оролтыг ижилтгэн нэгтгэж гүйцэд үнэлгээг үүсгэнэ. Тэр өөрийн үнэлгээг ad-hoc талбарт идэвхжүүлдэг.\n</li><li>Ажилтан нь гүйцэд шүүмжинд сэтгэгдэл эсвэл тайлбарыг сонгож болно.\n</li><li>Удирдагч нь Энэтхэг болон Белгийн хүний нөөцийн албанд маягтыг илгээнэ.</li></ul>"
 
 #. module: hr_evaluation
 #: model:ir.actions.act_window,help:hr_evaluation.open_view_hr_evaluation_tree
@@ -191,8 +111,7 @@ msgid ""
 "<p class=\"oe_view_nocontent_create\">\n"
 "                Click to create a new appraisal.\n"
 "              </p><p>\n"
-"                Each employee may be assigned an Appraisal Plan. Such a "
-"plan\n"
+"                Each employee may be assigned an Appraisal Plan. Such a plan\n"
 "                defines the frequency and the way you manage your periodic\n"
 "                personnel evaluation. You will be able to define steps and\n"
 "                attach interviews to each step. Odoo manages all kinds of\n"
@@ -200,27 +119,13 @@ msgid ""
 "                evaluation by the manager.\n"
 "              </p>\n"
 "            "
-msgstr ""
-"<p class=\"oe_view_nocontent_create\">\n"
-"                Шинэ үнэлгээг үүсгэхдээ дарна уу.\n"
-"              </p><p>\n"
-"                Ажилтан бүр нь үнэлгээний төлөвлөгөөнд оноогдож болно. \n"
-"                Энэ төлөвлөгөө нь хувийн үнэлгээний арга болон давтамжийг "
-"тодорхойлдог.\n"
-"                Алхамуудыг тодоройлох болон ярилцлагын алхам бүрийг "
-"тодорхойлон хавсаргах боломжтой.\n"
-"                Odoo нь бүх төрлийн үнэлгээг зохион байгуулдаг: доороос "
-"дээш, дээрээс доош, өөрийн үнэлгээ, \n"
-"                менежерийн эцсийн үнэлгээ.\n"
-"              </p>\n"
-"            "
+msgstr "<p class=\"oe_view_nocontent_create\">\n                Шинэ үнэлгээг үүсгэхдээ дарна уу.\n              </p><p>\n                Ажилтан бүр нь үнэлгээний төлөвлөгөөнд оноогдож болно. \n                Энэ төлөвлөгөө нь хувийн үнэлгээний арга болон давтамжийг тодорхойлдог.\n                Алхамуудыг тодоройлох болон ярилцлагын алхам бүрийг тодорхойлон хавсаргах боломжтой.\n                Odoo нь бүх төрлийн үнэлгээг зохион байгуулдаг: доороос дээш, дээрээс доош, өөрийн үнэлгээ, \n                менежерийн эцсийн үнэлгээ.\n              </p>\n            "
 
 #. module: hr_evaluation
 #: model:ir.actions.act_window,help:hr_evaluation.action_hr_evaluation_interview_tree
 msgid ""
 "<p class=\"oe_view_nocontent_create\">\n"
-"                Click to create a new interview request related to a "
-"personal evaluation.\n"
+"                Click to create a new interview request related to a personal evaluation.\n"
 "              </p><p>\n"
 "                Interview requests are usually generated automatically by\n"
 "                Odoo according to an employee's appraisal plan. Each user\n"
@@ -228,18 +133,7 @@ msgid ""
 "                colleagues periodically.\n"
 "              </p>\n"
 "            "
-msgstr ""
-"<p class=\"oe_view_nocontent_create\">\n"
-"                Хувийн үнэлгээнд холбогдох шинэ ярилцлагын хүсэлтийг "
-"үүсгэхдээ дарна уу.\n"
-"              </p><p>\n"
-"                Ярилцлагын хүсэлт нь ихэнхдээ үнэлгээний төлөвлөгөөний "
-"дагууд Odoo-р автоматаар үүсгэгддэг.\n"
-"                Хэрэглэгч бүр нь хамтран ажиллагсдаа үнэлэх хүсэлтийн "
-"эмэйлийг автоматаар тогтмол хугацаатайгаар\n"
-"                хүлээн авна.\n"
-"              </p>\n"
-"            "
+msgstr "<p class=\"oe_view_nocontent_create\">\n                Хувийн үнэлгээнд холбогдох шинэ ярилцлагын хүсэлтийг үүсгэхдээ дарна уу.\n              </p><p>\n                Ярилцлагын хүсэлт нь ихэнхдээ үнэлгээний төлөвлөгөөний дагууд Odoo-р автоматаар үүсгэгддэг.\n                Хэрэглэгч бүр нь хамтран ажиллагсдаа үнэлэх хүсэлтийн эмэйлийг автоматаар тогтмол хугацаатайгаар\n                хүлээн авна.\n              </p>\n            "
 
 #. module: hr_evaluation
 #: model:ir.actions.act_window,help:hr_evaluation.action_evaluation_plans_installer
@@ -248,25 +142,12 @@ msgid ""
 "                Click to define a new appraisal plan.\n"
 "              </p><p>\n"
 "                You can define appraisal plans (ex: first interview after 6\n"
-"                months, then every year). Then, each employee can be linked "
-"to\n"
+"                months, then every year). Then, each employee can be linked to\n"
 "                an appraisal plan so that Odoo can automatically generate\n"
 "                interview requests to managers and/or subordinates.\n"
 "              </p>\n"
 "            "
-msgstr ""
-"<p class=\"oe_view_nocontent_create\">\n"
-"                Шинэ үнэлгээний төлөвлөгөө үүсгэхдээ дарна уу.\n"
-"              </p><p>\n"
-"                Үнэлгээний төлөвлөгөөг тодорхойлох боломжтой\n"
-"                (ж: эхний ярилцлага 6 сарын дараа, дараа нь жил бүр). \n"
-"                Дараа нь ажилтан үнэлгээний төлөвлөгөөтэй холбогдож болох "
-"бөгөөд\n"
-"                ингэснээр Odoo нь автоматаар ярилцлагын хүсэлтийг менежерүүд "
-"эсвэл\n"
-"                доор ажиллагсад руу нь автоматаар үүсгэдэг.\n"
-"              </p>\n"
-"            "
+msgstr "<p class=\"oe_view_nocontent_create\">\n                Шинэ үнэлгээний төлөвлөгөө үүсгэхдээ дарна уу.\n              </p><p>\n                Үнэлгээний төлөвлөгөөг тодорхойлох боломжтой\n                (ж: эхний ярилцлага 6 сарын дараа, дараа нь жил бүр). \n                Дараа нь ажилтан үнэлгээний төлөвлөгөөтэй холбогдож болох бөгөөд\n                ингэснээр Odoo нь автоматаар ярилцлагын хүсэлтийг менежерүүд эсвэл\n                доор ажиллагсад руу нь автоматаар үүсгэдэг.\n              </p>\n            "
 
 #. module: hr_evaluation
 #: model:survey.page,description:hr_evaluation.appraisal_2
@@ -286,33 +167,21 @@ msgstr "<p></p>"
 #. module: hr_evaluation
 #: model:survey.page,description:hr_evaluation.appraisal_4
 msgid ""
-"<p>Identify professional, performance, or project objectives you recommend "
-"for employee’s continued career development\n"
+"<p>Identify professional, performance, or project objectives you recommend for employee’s continued career development\n"
 "over the coming year.</p>"
-msgstr ""
-"<p>Ирэх жилд карерийн хөгжилийн зорилгыг мэргэжлийн, гүйцэтгэлийн, төслийн "
-"зорилтийн ямар зорилт тавихыг тогтооно.</p>"
+msgstr "<p>Ирэх жилд карерийн хөгжилийн зорилгыг мэргэжлийн, гүйцэтгэлийн, төслийн зорилтийн ямар зорилт тавихыг тогтооно.</p>"
 
 #. module: hr_evaluation
 #: model:survey.page,description:hr_evaluation.appraisal_3
 msgid ""
-"<p>The appraiser should rate the employee’s major work accomplishments and "
-"performance according to the metric provided\n"
+"<p>The appraiser should rate the employee’s major work accomplishments and performance according to the metric provided\n"
 "below:</p><ol>\n"
-"<li> Significantly exceeds standards and expectations required of the "
-"position\n"
+"<li> Significantly exceeds standards and expectations required of the position\n"
 "</li><li> Exceeds standards and expectations\n"
 "</li><li> Meet standards and expectations\n"
 "</li><li> Did not meet standards and expectations\n"
 "</li><li> Significantly below standards and expectations</li></ol>"
-msgstr ""
-"<p>Үнэлэгч нь ажилтны ажлын үр дүн, гүйцэтгэлийг доорх хэмжүүрийн дагууд "
-"үнэлнэ:</p><ol>\n"
-"<li> Ажлын байрны стандарт болон хүлээлтийг онцгой давуулдаг\n"
-"</li><li> Стандарт болон хүлээлдэг давуулдаг\n"
-"</li><li> Стандарт болон хүлээлтийг хангадаг\n"
-"</li><li> Стандарт болон хүлээлтийг биелүүлдэггүй\n"
-"</li><li> Стандарт болон хүлээлтээс хэт доогуур</li></ol>"
+msgstr "<p>Үнэлэгч нь ажилтны ажлын үр дүн, гүйцэтгэлийг доорх хэмжүүрийн дагууд үнэлнэ:</p><ol>\n<li> Ажлын байрны стандарт болон хүлээлтийг онцгой давуулдаг\n</li><li> Стандарт болон хүлээлдэг давуулдаг\n</li><li> Стандарт болон хүлээлтийг хангадаг\n</li><li> Стандарт болон хүлээлтийг биелүүлдэггүй\n</li><li> Стандарт болон хүлээлтээс хэт доогуур</li></ol>"
 
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.arow_3_1_1
@@ -366,9 +235,7 @@ msgstr "Идэвхитэй"
 msgid ""
 "Adaptability: Ability to adapt oneself to organizational changes while "
 "keeping efficiency"
-msgstr ""
-"Дасан зохицох чадвар: Оновчтой ажиллах байдлаа алдалгүйгээр байгууллагын "
-"өөрчлөлтөнд өөрийгөө дасгах чадвар"
+msgstr "Дасан зохицох чадвар: Оновчтой ажиллах байдлаа алдалгүйгээр байгууллагын өөрчлөлтөнд өөрийгөө дасгах чадвар"
 
 #. module: hr_evaluation
 #: model:survey.question,question:hr_evaluation.appraisal_2_3
@@ -464,8 +331,7 @@ msgstr "Үнэлгээний шатууд"
 #: view:hr_evaluation.plan:hr_evaluation.view_hr_evaluation_plan_form
 #: view:hr_evaluation.plan:hr_evaluation.view_hr_evaluation_plan_search
 #: view:hr_evaluation.plan:hr_evaluation.view_hr_evaluation_plan_tree
-#: field:hr_evaluation.plan,name:0
-#: field:hr_evaluation.plan.phase,plan_id:0
+#: field:hr_evaluation.plan,name:0 field:hr_evaluation.plan.phase,plan_id:0
 #: model:ir.model,name:hr_evaluation.model_hr_evaluation_plan
 msgid "Appraisal Plan"
 msgstr "Үнэлгээний төлөвлөгөө"
@@ -576,17 +442,14 @@ msgstr "Цуцлагдсан"
 #: help:hr_evaluation.plan.phase,mail_feature:0
 msgid ""
 "Check this box if you want to send mail to employees coming under this phase"
-msgstr ""
-"Энэ шатанд ирсэн ажилчдад э-мэйл илгээхийг хүсвэл энэ талбарыг сонгоно уу!"
+msgstr "Энэ шатанд ирсэн ажилчдад э-мэйл илгээхийг хүсвэл энэ талбарыг сонгоно уу!"
 
 #. module: hr_evaluation
 #: help:hr_evaluation.plan.phase,wait:0
 msgid ""
 "Check this box if you want to wait that all preceding phases are finished "
 "before launching this phase."
-msgstr ""
-"Энэ шат эхлэхээс өмнө түүнээс өмнөх бүх шат дуустал нь хүлээхийг хүсвэл энэ "
-"талбарыг сонгоорой."
+msgstr "Энэ шат эхлэхээс өмнө түүнээс өмнөх бүх шат дуустал нь хүлээхийг хүсвэл энэ талбарыг сонгоорой."
 
 #. module: hr_evaluation
 #: field:hr.evaluation.report,closed:0
@@ -611,16 +474,13 @@ msgstr "Компани"
 msgid ""
 "Compared to similar jobs in other companies where I could work, my total "
 "compensation..."
-msgstr ""
-"Миний ажиллаж чадах өөр компани дахь ижил ажлын цалинтай миний цалинг "
-"харьцуулбал..."
+msgstr "Миний ажиллаж чадах өөр компани дахь ижил ажлын цалинтай миний цалинг харьцуулбал..."
 
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.arow_3_1_3
 msgid ""
 "Compliance to internal rules and processes (timesheets completion, etc.)"
-msgstr ""
-"Дотоод дүрэм болон процесстой нийцэх байдал (цагийн хуудас бөглөх, гм)"
+msgstr "Дотоод дүрэм болон процесстой нийцэх байдал (цагийн хуудас бөглөх, гм)"
 
 #. module: hr_evaluation
 #: model:survey.question,question:hr_evaluation.opinion_2_4
@@ -873,9 +733,7 @@ msgstr "Бүлэглэх..."
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
-"Чаатлагчийн хураангуйг агуулна (зурвасын тоо,...). Энэ хураангуй нь шууд "
-"html форматтай бөгөөд канбан харагдацад шууд орж харагдах боломжтой."
+msgstr "Чаатлагчийн хураангуйг агуулна (зурвасын тоо,...). Энэ хураангуй нь шууд html форматтай бөгөөд канбан харагдацад шууд орж харагдах боломжтой."
 
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.oprow_2_1_1
@@ -887,9 +745,7 @@ msgstr "Би бусдад энд ажилладагаа хэлэхдээ бах�
 msgid ""
 "I am willing to put in a great deal of effort beyond what is expected to "
 "help my workgroup succeed"
-msgstr ""
-"Миний ажлын хэсгийн амжилтанд хувь нэмрээ оруулахаар хүлээлтээс хэтэрсэн их "
-"хэмжээний хүч хөдөлмөрөө оруулах хүсэл сонирхолтой байдаг"
+msgstr "Миний ажлын хэсгийн амжилтанд хувь нэмрээ оруулахаар хүлээлтээс хэтэрсэн их хэмжээний хүч хөдөлмөрөө оруулах хүсэл сонирхолтой байдаг"
 
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.oprow_2_2_4
@@ -901,10 +757,7 @@ msgstr "Би тайлагнадаг хүнээсээ авдаг мэдээлэл
 msgid ""
 "I consistently acquire new knowledge, skills or understanding through "
 "contact with my supervisor. He helps me growing my compete"
-msgstr ""
-"Би тогтмол шинэ мэдлэг, ур чадвар, ойлголтыг удирдагчтайгаа харилцахдаа олж "
-"авч байдаг. Тэр миний өсөлт, хөгжилтөнд туслаж өрсөлдөх чадварыг "
-"нэмэгдүүлдэг."
+msgstr "Би тогтмол шинэ мэдлэг, ур чадвар, ойлголтыг удирдагчтайгаа харилцахдаа олж авч байдаг. Тэр миний өсөлт, хөгжилтөнд туслаж өрсөлдөх чадварыг нэмэгдүүлдэг."
 
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.oprow_2_3_2
@@ -916,9 +769,7 @@ msgstr "Надад хангалттай ажил бий"
 msgid ""
 "I have the same opportunity to succeed as others with similar experiences, "
 "performance and educational background"
-msgstr ""
-"Надтай ижил туршлага, гүйцэтгэл, боловсролын суурьтай хүмүүстэй ижил боломж "
-"надад бий"
+msgstr "Надтай ижил туршлага, гүйцэтгэл, боловсролын суурьтай хүмүүстэй ижил боломж надад бий"
 
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.oprow_2_5_1
@@ -930,36 +781,28 @@ msgstr "Компанийн үнэт зүйлийг би мэддэг, мөрдд
 msgid ""
 "I mostly work on value-added tasks for the company, the products or the "
 "services"
-msgstr ""
-"Компанийн, бүтээгдэхүүний, үйлчилгээний нэмүү өртөгт ажлууд дээр би голдуу "
-"ажилладаг"
+msgstr "Компанийн, бүтээгдэхүүний, үйлчилгээний нэмүү өртөгт ажлууд дээр би голдуу ажилладаг"
 
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.oprow_2_6_4
 msgid "I understand the company strategy and how my workgroup supports it"
-msgstr ""
-"Би компанийн стратегийг ойлгодог, манай ажлын хэсэг яаж үүнийг дэмждэгийг "
-"мөн ойлгодог"
+msgstr "Би компанийн стратегийг ойлгодог, манай ажлын хэсэг яаж үүнийг дэмждэгийг мөн ойлгодог"
 
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.oprow_2_1_3
 msgid ""
 "I would prefer to remain with this company even if a comparable job were "
 "available in another company"
-msgstr ""
-"Өөр компанид ижил төстэй ажил байсан ч би энэ компанидаа үлдэхийг илүүд үзнэ"
+msgstr "Өөр компанид ижил төстэй ажил байсан ч би энэ компанидаа үлдэхийг илүүд үзнэ"
 
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.oprow_2_3_1
 msgid "I'm efficient at work and my achievements are successful"
-msgstr ""
-"Би ажил дээрээ үр бүтээлтэй байдаг бөгөөд миний хүрэх үр дүн амжилттай байдаг"
+msgstr "Би ажил дээрээ үр бүтээлтэй байдаг бөгөөд миний хүрэх үр дүн амжилттай байдаг"
 
 #. module: hr_evaluation
-#: field:hr.evaluation.interview,id:0
-#: field:hr.evaluation.report,id:0
-#: field:hr_evaluation.evaluation,id:0
-#: field:hr_evaluation.plan,id:0
+#: field:hr.evaluation.interview,id:0 field:hr.evaluation.report,id:0
+#: field:hr_evaluation.evaluation,id:0 field:hr_evaluation.plan,id:0
 #: field:hr_evaluation.plan.phase,id:0
 msgid "ID"
 msgstr "ID"
@@ -1002,9 +845,7 @@ msgstr "Хэрэв бусад бол тодорхой:"
 msgid ""
 "If the evaluation does not meet the expectations, you can propose an action "
 "plan"
-msgstr ""
-"Хэрэв үнэлгээ хүлээлтэнд хүрээгүй бол авах арга хэмжээний төлөвлөгөөг та "
-"санал болгож болно"
+msgstr "Хэрэв үнэлгээ хүлээлтэнд хүрээгүй бол авах арга хэмжээний төлөвлөгөөг та санал болгож болно"
 
 #. module: hr_evaluation
 #: view:hr.evaluation.report:hr_evaluation.view_evaluation_report_search
@@ -1100,9 +941,7 @@ msgstr "Манлайлал"
 msgid ""
 "Leadership: create a challenging and motivating work environment aligned "
 "with the company's strategy"
-msgstr ""
-"Манлайлал: компаний стратегитай нийцсэн сорилттой бөгөөд өдөөлттэй ажлын "
-"орчинг үүсгэх"
+msgstr "Манлайлал: компаний стратегитай нийцсэн сорилттой бөгөөд өдөөлттэй ажлын орчинг үүсгэх"
 
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.arow_3_2_4
@@ -1117,11 +956,9 @@ msgstr "Ялгах тэмдэг"
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.oprow_2_2_3
 msgid ""
-"Listens and takes into account all ideas and do his best to put in place the "
-"best of these"
-msgstr ""
-"Бүх санааг сонсож анхааралдаа авдаг бөгөөд үүний шилдгийг хэрэгжүүлэхээр "
-"чадах бүхнээ хийдэг"
+"Listens and takes into account all ideas and do his best to put in place the"
+" best of these"
+msgstr "Бүх санааг сонсож анхааралдаа авдаг бөгөөд үүний шилдгийг хэрэгжүүлэхээр чадах бүхнээ хийдэг"
 
 #. module: hr_evaluation
 #: view:hr_evaluation.plan.phase:hr_evaluation.view_hr_evaluation_plan_phase_form
@@ -1166,9 +1003,7 @@ msgstr "Сар"
 msgid ""
 "My best achievements have been communicated to the community, internally or "
 "to customers"
-msgstr ""
-"Миний хамгийн сайн хүрсэн үр дүн коммюнити болон дотоод гадаад захиалагчдад "
-"дамжуулагдан хүрсэн."
+msgstr "Миний хамгийн сайн хүрсэн үр дүн коммюнити болон дотоод гадаад захиалагчдад дамжуулагдан хүрсэн."
 
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.oprow_2_1_2
@@ -1180,9 +1015,7 @@ msgstr "Миний ажил хувийн амжилтын утгыг өгдөг.
 msgid ""
 "My work contributes towards the continuous improvement of the company, our "
 "services or products"
-msgstr ""
-"Миний ажил компанийн, бүтээгдэхүү үйлчилгээний сайжруулалтад тогтмол хувь "
-"нэмэр болдог."
+msgstr "Миний ажил компанийн, бүтээгдэхүү үйлчилгээний сайжруулалтад тогтмол хувь нэмэр болдог."
 
 #. module: hr_evaluation
 #: model:survey.question,question:hr_evaluation.appraisal_1_1
@@ -1219,9 +1052,7 @@ msgstr "Нээлттэй байдал"
 msgid ""
 "Our workgroup identifies and reduces waste of time in our activities and "
 "processes"
-msgstr ""
-"Манай ажлын бүлэг үйл ажиллагааны болон процессийн үргүй цагийг илрүүлж "
-"багасгаж байдаг"
+msgstr "Манай ажлын бүлэг үйл ажиллагааны болон процессийн үргүй цагийг илрүүлж багасгаж байдаг"
 
 #. module: hr_evaluation
 #: field:hr.evaluation.report,rating:0
@@ -1233,9 +1064,7 @@ msgstr "Нийт үнэлгээний зэрэг"
 msgid ""
 "Overall, I believe the quality of products and/or services my workgroup "
 "delivers is improving"
-msgstr ""
-"Эцсийн эцэст бүтээгдэхүүний чанар, үйлчилгээний чанарт итгэдэг бөгөөд манай "
-"ажлын хэсэг сайжруулалт хийдэг гэдэгт итгэдэг."
+msgstr "Эцсийн эцэст бүтээгдэхүүний чанар, үйлчилгээний чанарт итгэдэг бөгөөд манай ажлын хэсэг сайжруулалт хийдэг гэдэгт итгэдэг."
 
 #. module: hr_evaluation
 #: field:hr.evaluation.report,overpass_delay:0
@@ -1343,9 +1172,7 @@ msgstr "Үр дүн"
 msgid ""
 "Results of the bottom-up survey and mitigation actions to face technical, "
 "organizational, structural and/or relational issues"
-msgstr ""
-"Доороос дээш судалгааний үр дүн болон технкийн, байгууллагын, бүтэцийн, "
-"харилцааны асуудлуудыг залруулах арга хэмжээнүүд"
+msgstr "Доороос дээш судалгааний үр дүн болон технкийн, байгууллагын, бүтэцийн, харилцааны асуудлуудыг залруулах арга хэмжээнүүд"
 
 #. module: hr_evaluation
 #: model:ir.actions.act_window,name:hr_evaluation.action_evaluation_plans_installer
@@ -1481,17 +1308,14 @@ msgstr "Судалгааны хүсэлт"
 #: model:survey.label,value:hr_evaluation.oprow_2_1_4
 msgid ""
 "Taking everything into account, how satisfied are you with your current job?"
-msgstr ""
-"Бүх зүйлийг анхааралдаа авч одоогийн ажилдаа хэр сэтгэл ханамжтай байна вэ?"
+msgstr "Бүх зүйлийг анхааралдаа авч одоогийн ажилдаа хэр сэтгэл ханамжтай байна вэ?"
 
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.arow_3_1_4
 msgid ""
 "Team spirit: ability to work efficiently with peers, manage the conflicts "
 "with diplomacy"
-msgstr ""
-"Багийн сэтгэл: хамтран ажиллагстайгаа үр бүтээлтэй ажиллаж зөрчлийг дипломат "
-"аргаар шийдвэрлэдэг"
+msgstr "Багийн сэтгэл: хамтран ажиллагстайгаа үр бүтээлтэй ажиллаж зөрчлийг дипломат аргаар шийдвэрлэдэг"
 
 #. module: hr_evaluation
 #: model:survey.label,value:hr_evaluation.arow_3_1_10
@@ -1530,18 +1354,14 @@ msgstr "Таны оруулсан хариулт буруу форматтай �
 msgid ""
 "The date of the next appraisal is computed by the appraisal plan's dates "
 "(first appraisal + periodicity)."
-msgstr ""
-"Үнэлгээний төлөвлөгөөний огноогоор тооцоологдсон дараагийн үнэлгээний огноо "
-"(анхны үнэлгээ + тогмол хугацаа)"
+msgstr "Үнэлгээний төлөвлөгөөний огноогоор тооцоологдсон дараагийн үнэлгээний огноо (анхны үнэлгээ + тогмол хугацаа)"
 
 #. module: hr_evaluation
 #: help:hr_evaluation.plan,month_next:0
 msgid ""
 "The number of month that depicts the delay between each evaluation of this "
 "plan (after the first one)."
-msgstr ""
-"Энэ төлөвлөгөөний дүгнэлтүүдийн хоорондох сарын тоог илэрхийлнэ (эхний "
-"үнэлгээс хойших)"
+msgstr "Энэ төлөвлөгөөний дүгнэлтүүдийн хоорондох сарын тоог илэрхийлнэ (эхний үнэлгээс хойших)"
 
 #. module: hr_evaluation
 #: help:hr_evaluation.evaluation,rating:0
@@ -1553,9 +1373,7 @@ msgstr "Энэ нь үнэлгээ нэгтгэгдсэний талархал."
 msgid ""
 "This number of months will be used to schedule the first evaluation date of "
 "the employee when selecting an evaluation plan. "
-msgstr ""
-"Дүгнэлтийн төлөвлөгөөг сонгосон үед ажилтны анхны дүгнэлтийг ийм тооны сар "
-"хэрэгтэй байна. "
+msgstr "Дүгнэлтийн төлөвлөгөөг сонгосон үед ажилтны анхны дүгнэлтийг ийм тооны сар хэрэгтэй байна. "
 
 #. module: hr_evaluation
 #: model:survey.question,constr_error_msg:hr_evaluation.appraisal_1_1
@@ -1608,11 +1426,9 @@ msgstr "Уншаагүй Зурвасууд"
 #. module: hr_evaluation
 #: model:survey.question,question:hr_evaluation.appraisal_5_1
 msgid ""
-"Use the following space to make any comments regarding the above performance "
-"evaluation."
-msgstr ""
-"Дээрх гүйцэтгэлийн үнэлгээний дагууд ямарваа сэтгэгдэл байгаа бол доорх зайд "
-"бичнэ үү."
+"Use the following space to make any comments regarding the above performance"
+" evaluation."
+msgstr "Дээрх гүйцэтгэлийн үнэлгээний дагууд ямарваа сэтгэгдэл байгаа бол доорх зайд бичнэ үү."
 
 #. module: hr_evaluation
 #: view:hr_evaluation.evaluation:hr_evaluation.view_hr_evaluation_form
@@ -1653,9 +1469,7 @@ msgstr "Вебсайтын харилцааны түүх"
 msgid ""
 "What I did several months ago is still of use to the company, the services "
 "or the products today"
-msgstr ""
-"Миний хэдэн сарын өмнө хийсэн зүйл маань одоо ч компани, бүтээгдэхүүн "
-"үйлчилгээнд хэрэглэгдсээр байгаа"
+msgstr "Миний хэдэн сарын өмнө хийсэн зүйл маань одоо ч компани, бүтээгдэхүүн үйлчилгээнд хэрэглэгдсээр байгаа"
 
 #. module: hr_evaluation
 #: model:survey.page,title:hr_evaluation.appraisal_2
@@ -1668,21 +1482,10 @@ msgstr "Ажлын Төлөвлөгөө"
 msgid ""
 "You cannot change state, because some appraisal forms have not been "
 "completed."
-msgstr ""
-"Та төлөвийг өөрчлөх боломжгүй, учир нь үнэлгээний зарим маягтууд гүйцэд "
-"бөглөгдөөгүй байна."
+msgstr "Та төлөвийг өөрчлөх боломжгүй, учир нь үнэлгээний зарим маягтууд гүйцэд бөглөгдөөгүй байна."
 
 #. module: hr_evaluation
 #: code:addons/hr_evaluation/hr_evaluation.py:339
 #, python-format
 msgid "You cannot start evaluation without Appraisal."
 msgstr "Үнэлгээгээр дүгнэлтийг эхлүүлж болохгүй."
-
-#~ msgid "Request_id"
-#~ msgstr "Хүсэлтийн дугаар"
-
-#~ msgid "closed"
-#~ msgstr "Хаасан"
-
-#~ msgid "Creation Date"
-#~ msgstr "Үүсгэсэн огноо"

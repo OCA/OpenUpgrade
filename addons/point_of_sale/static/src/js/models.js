@@ -151,6 +151,7 @@ function openerp_pos_models(instance, module){ //module is instance.point_of_sal
             model:  'product.uom',
             fields: [],
             domain: null,
+            context: function(self){ return { active_test: false }; },
             loaded: function(self,units){
                 self.units = units;
                 var units_by_id = {};
@@ -252,7 +253,7 @@ function openerp_pos_models(instance, module){ //module is instance.point_of_sal
             loaded: function(self, pricelists){ self.pricelist = pricelists[0]; },
         },{
             model: 'res.currency',
-            fields: ['symbol','position','rounding','accuracy'],
+            fields: ['name','symbol','position','rounding','accuracy'],
             ids:    function(self){ return [self.pricelist.currency_id[0]]; },
             loaded: function(self, currencies){
                 self.currency = currencies[0];
@@ -666,8 +667,7 @@ function openerp_pos_models(instance, module){ //module is instance.point_of_sal
             this.order = options.order;
             this.product = options.product;
             this.price   = options.product.price;
-            this.quantity = 1;
-            this.quantityStr = '1';
+            this.set_quantity(1);
             this.discount = 0;
             this.discountStr = '0';
             this.type = 'unit';
@@ -718,7 +718,8 @@ function openerp_pos_models(instance, module){ //module is instance.point_of_sal
                 if(unit){
                     if (unit.rounding) {
                         this.quantity    = round_pr(quant, unit.rounding);
-                        this.quantityStr = this.quantity.toFixed(Math.ceil(Math.log(1.0 / unit.rounding) / Math.log(10)));
+                        var decimals = Math.ceil(Math.log(1.0 / unit.rounding) / Math.log(10));
+                        this.quantityStr = openerp.instances[this.pos.session.name].web.format_value(this.quantity, { type: 'float', digits: [69, decimals]});
                     } else {
                         this.quantity    = round_pr(quant, 1);
                         this.quantityStr = this.quantity.toFixed(0);
@@ -872,7 +873,7 @@ function openerp_pos_models(instance, module){ //module is instance.point_of_sal
                         data = {amount:tmp, price_include:true, id: tax.id};
                         res.push(data);
                     } else if (tax.type === "fixed") {
-                        tmp = round_pr(tax.amount * self.get_quantity(),currency_rounding);
+                        tmp = tax.amount * self.get_quantity();
                         data = {amount:tmp, price_include:true, id: tax.id};
                         res.push(data);
                     } else {
@@ -884,7 +885,7 @@ function openerp_pos_models(instance, module){ //module is instance.point_of_sal
                         data = {amount:tmp, price_include:false, id: tax.id};
                         res.push(data);
                     } else if (tax.type === "fixed") {
-                        tmp = round_pr(tax.amount * self.get_quantity(), currency_rounding);
+                        tmp = tax.amount * self.get_quantity();
                         data = {amount:tmp, price_include:false, id: tax.id};
                         res.push(data);
                     } else {
@@ -937,6 +938,7 @@ function openerp_pos_models(instance, module){ //module is instance.point_of_sal
                 taxtotal += tax.amount;
                 taxdetail[tax.id] = tax.amount;
             });
+            totalNoTax = round_pr(totalNoTax, this.pos.currency.rounding);
 
             return {
                 "priceWithTax": totalTax,
@@ -1051,13 +1053,17 @@ function openerp_pos_models(instance, module){ //module is instance.point_of_sal
         },
         addOrderline: function(line){
             if(line.order){
-                order.removeOrderline(line);
+                line.order.removeOrderline(line);
             }
             line.order = this;
             this.get('orderLines').add(line);
             this.selectLine(this.getLastOrderline());
         },
         addProduct: function(product, options){
+            if(this._printed){
+                this.destroy();
+                return this.pos.get('selectedOrder').addProduct(product, options);
+            }
             options = options || {};
             var attr = JSON.parse(JSON.stringify(product));
             attr.pos = this.pos;
@@ -1123,9 +1129,7 @@ function openerp_pos_models(instance, module){ //module is instance.point_of_sal
             }), 0), this.pos.currency.rounding);
         },
         getTotalTaxIncluded: function() {
-            return round_pr((this.get('orderLines')).reduce((function(sum, orderLine) {
-                return sum + orderLine.get_price_with_tax();
-            }), 0), this.pos.currency.rounding);
+            return this.getTotalTaxExcluded() + this.getTax();
         },
         getDiscountTotal: function() {
             return round_pr((this.get('orderLines')).reduce((function(sum, orderLine) {

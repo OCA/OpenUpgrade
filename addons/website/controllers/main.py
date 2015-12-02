@@ -40,9 +40,9 @@ class Website(openerp.addons.web.controllers.main.Home):
         else:
             first_menu = main_menu.child_id and main_menu.child_id[0]
             if first_menu:
-                if not (first_menu.url.startswith(('/page/', '/?', '/#')) or (first_menu.url=='/')):
+                if first_menu.url and (not (first_menu.url.startswith(('/page/', '/?', '/#')) or (first_menu.url == '/'))):
                     return request.redirect(first_menu.url)
-                if first_menu.url.startswith('/page/'):
+                if first_menu.url and first_menu.url.startswith('/page/'):
                     return request.registry['ir.http'].reroute(first_menu.url)
         return self.page(page)
 
@@ -120,7 +120,7 @@ class Website(openerp.addons.web.controllers.main.Home):
 
             pages = 0
             first_page = None
-            locs = request.website.enumerate_pages()
+            locs = request.website.sudo(user=request.website.user_id.id).enumerate_pages()
             while True:
                 start = pages * LOC_PER_SITEMAP
                 values = {
@@ -176,7 +176,7 @@ class Website(openerp.addons.web.controllers.main.Home):
             model, id  = request.registry["ir.model.data"].get_object_reference(request.cr, request.uid, 'website', 'main_menu')
             request.registry['website.menu'].create(request.cr, request.uid, {
                     'name': path,
-                    'url': "/page/" + xml_id,
+                    'url': "/page/" + xml_id[8:],
                     'parent_id': id,
                 }, context=request.context)
         # Reverse action in order to allow shortcut for /page/<website_xml_id>
@@ -378,7 +378,7 @@ class Website(openerp.addons.web.controllers.main.Home):
         '/website/image',
         '/website/image/<model>/<id>/<field>',
         '/website/image/<model>/<id>/<field>/<int:max_width>x<int:max_height>'
-        ], auth="public", website=True)
+        ], auth="public", website=True, multilang=False)
     def website_image(self, model, id, field, max_width=None, max_height=None):
         """ Fetches the requested field and ensures it does not go above
         (max_width, max_height), resizing it if necessary.
