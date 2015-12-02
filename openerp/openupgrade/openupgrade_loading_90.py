@@ -52,3 +52,5 @@ def migrate_model_tables(cr):
         cr.execute("""ALTER TABLE ir_model_constraint
                       ADD COLUMN definition varchar
                       """)
+
+        cr.commit()
