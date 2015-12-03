@@ -1,0 +1,51 @@
+---Fields in module 'hr_timesheet_sheet'---
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / message_last_post (datetime)  : NEW
+# Field initialized
+
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / website_message_ids (one2many): NEW relation: mail.message
+# Nothing to do
+
+---XML records in module 'hr_timesheet_sheet'---
+DEL ir.actions.act_window: hr_timesheet_sheet.action_hr_timesheet_report_stat_all
+DEL ir.actions.act_window: hr_timesheet_sheet.action_timesheet_report_stat_all
+DEL ir.actions.act_window: hr_timesheet_sheet.action_week_attendance_graph
+# Nothing to do: removed window actions
+
+NEW ir.filters: hr_timesheet_sheet.filter_hr_timesheet_report_external_timesheets
+NEW ir.filters: hr_timesheet_sheet.filter_hr_timesheet_report_internal_timesheets
+# Nothing to do: new filters
+
+DEL ir.model.access: hr_timesheet_sheet.access_timesheet_report
+# Nothing to do: removed ACL
+
+DEL ir.ui.menu: hr_timesheet_sheet.menu_hr_timesheet_report_all
+DEL ir.ui.menu: hr_timesheet_sheet.menu_timesheet_report_all
+# Nothing to do: removed menus
+
+NEW ir.ui.view: hr_timesheet_sheet.assets_backend
+DEL ir.ui.view: hr_timesheet_sheet.board_hr_week_attendace_form
+DEL ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_report_graph
+DEL ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_report_search
+DEL ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_report_tree
+DEL ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_sheet_graph
+DEL ir.ui.view: hr_timesheet_sheet.view_timesheet_report_tree
+# Nothing to do: new/removed views
+
+DEL process.node: hr_timesheet_sheet.process_node_attendance0
+DEL process.node: hr_timesheet_sheet.process_node_confirmedtimesheet0
+DEL process.node: hr_timesheet_sheet.process_node_drafttimesheetsheet0
+DEL process.node: hr_timesheet_sheet.process_node_invoiceonwork0
+DEL process.node: hr_timesheet_sheet.process_node_timesheet0
+DEL process.node: hr_timesheet_sheet.process_node_validatedtimesheet0
+DEL process.node: hr_timesheet_sheet.process_node_workontask0
+DEL process.process: hr_timesheet_sheet.process_process_hrtimesheetprocess0
+DEL process.transition: hr_timesheet_sheet.process_transition_attendancetimesheet0
+DEL process.transition: hr_timesheet_sheet.process_transition_confirmtimesheet0
+DEL process.transition: hr_timesheet_sheet.process_transition_invoiceontimesheet0
+DEL process.transition: hr_timesheet_sheet.process_transition_tasktimesheet0
+DEL process.transition: hr_timesheet_sheet.process_transition_timesheetdraft0
+DEL process.transition: hr_timesheet_sheet.process_transition_validatetimesheet0
+DEL process.transition.action: hr_timesheet_sheet.process_transition_action_draftconfirmtimesheet0
+DEL process.transition.action: hr_timesheet_sheet.process_transition_action_refusetimesheet0
+DEL process.transition.action: hr_timesheet_sheet.process_transition_action_validatetimesheet0
+# Nothing to do: Old process module data
