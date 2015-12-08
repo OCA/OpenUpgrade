@@ -49,7 +49,7 @@ column_copies = {
 
 # company_type must match is_company
 def match_company_type_to_is_company(cr):
-    cr.execute("""
+    openupgrade.logged_query(cr, """
         UPDATE res_partner
         SET company_type = (CASE WHEN is_company THEN 'company' ELSE 'person' END)
         """)
@@ -57,12 +57,24 @@ def match_company_type_to_is_company(cr):
 
 # updates to ir_ui_view will not clear inherit_id
 def clear_inherit_id(cr):
-    cr.execute("""
+    openupgrade.logged_query(cr, """
         UPDATE ir_ui_view v
         SET inherit_id = null
         FROM ir_model_data d
         WHERE d.res_id = v.id
         AND d.module = 'report' AND d.name = 'layout'
+        """)
+
+
+# updates to ir_ui_view will not clear inherit_id
+def rename_your_company(cr):
+    openupgrade.logged_query(cr, """
+        UPDATE res_company r
+        SET name = 'My Company'
+        FROM ir_model_data d
+        WHERE d.res_id = r.id
+        AND d.module = 'base' AND d.name = 'main_company'
+        AND r.name = 'Your Company'
         """)
 
 
@@ -73,3 +85,4 @@ def migrate(cr, version):
             openupgrade.convert_field_to_html(cr, table_name, openupgrade.get_legacy_name(old), old)
     match_company_type_to_is_company(cr)
     clear_inherit_id(cr)
+    rename_your_company(cr)
