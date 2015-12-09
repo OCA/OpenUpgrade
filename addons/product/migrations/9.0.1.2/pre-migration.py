@@ -33,6 +33,10 @@ def convert_template_id_to_product_id(cr):
 @openupgrade.migrate()
 def migrate(cr, version):
     cr.execute("""ALTER TABLE product_price_history
-              ADD COLUMN product_id INTEGER
+              ADD COLUMN product_id integer
               """)
     convert_template_id_to_product_id(cr)
+    logged_query(cr, """
+        ALTER TABLE product_pricelist_item
+        ALTER COLUMN base
+        TYPE integer""")
