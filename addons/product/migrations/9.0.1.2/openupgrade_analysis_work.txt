@@ -16,28 +16,40 @@ product      / product.packaging        / weight (float)                : DEL
 
 product      / product.price.history    / product_id (many2one)         : NEW relation: product.product, required: required
 product      / product.price.history    / product_template_id (many2one): DEL relation: product.template, required: required
-# TODO
+# Done ---> product_template_id converted to product_id
 
 product      / product.pricelist        / item_ids (one2many)           : NEW relation: product.pricelist.item
-#
+# TODO
 
 product      / product.pricelist        / type (selection)              : DEL required: required, selection_keys: function
 # Selection keys are still the same in the wrapper used ---> Nothing to do
 
 product      / product.pricelist        / version_id (one2many)         : DEL relation: product.pricelist.version
-# TODO
+# TODO - more analysis needed - versions may have been moved to product.pricelist.item (date_start, date_end, etc.)? see below
 
 product      / product.pricelist.item   / applied_on (selection)        : NEW required: required, selection_keys: ['0_product_variant', '1_product', '2_product_category', '3_global'], req_default: 3_global
+# Nothing to do
+
 product      / product.pricelist.item   / base (selection)              : selection_keys is now '['list_price', 'pricelist', 'standard_price']' ('function')
+# Done ---> '1' (which is 'Other Pricelist') is converted to 'pricelist' (which is ''Other Pricelist'),
+# '2' (which is 'Supplier Prices on the product form') is converted to 'list_price' (which is 'Public Price')
+# Note: nothing is done with 'standard_price' (which is 'Cost') because it was not there in v8
+
 product      / product.pricelist.item   / compute_price (selection)     : NEW selection_keys: ['fixed', 'formula', 'percentage']
-product      / product.pricelist.item   / date_end (date)               : NEW 
-product      / product.pricelist.item   / date_start (date)             : NEW 
-product      / product.pricelist.item   / fixed_price (float)           : NEW 
-product      / product.pricelist.item   / name (char)                   : DEL 
-product      / product.pricelist.item   / percent_price (float)         : NEW 
+# TODO
+
+product      / product.pricelist.item   / date_end (date)               : NEW
+product      / product.pricelist.item   / date_start (date)             : NEW
 product      / product.pricelist.item   / price_version_id (many2one)   : DEL relation: product.pricelist.version, required: required
 product      / product.pricelist.item   / pricelist_id (many2one)       : NEW relation: product.pricelist
-# TODO
+# TODO - more analysis needed - versions may have been moved to product.pricelist.item (date_start, date_end, etc.)?
+
+product      / product.pricelist.item   / fixed_price (float)           : NEW
+product      / product.pricelist.item   / percent_price (float)         : NEW
+ # TODO
+
+product      / product.pricelist.item   / name (char)                   : DEL
+# Nothing to do
 
 product      / product.product          / ean13 (char)                  : was renamed to barcode [nothing to to]
 # Nothing to do
