@@ -40,3 +40,4 @@ def migrate(cr, version):
         ALTER TABLE product_pricelist_item
         ALTER COLUMN base
         TYPE VARCHAR""")
+    openupgrade.rename_xmlids(cr, ('product.variants_template_tree_view', 'product.product_attribute_value_view_tree'))
