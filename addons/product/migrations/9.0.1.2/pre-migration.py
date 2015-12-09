@@ -39,4 +39,4 @@ def migrate(cr, version):
     openupgrade.logged_query(cr, """
         ALTER TABLE product_pricelist_item
         ALTER COLUMN base
-        TYPE integer""")
+        TYPE VARCHAR""")
