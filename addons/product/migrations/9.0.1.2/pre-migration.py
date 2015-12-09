@@ -36,7 +36,7 @@ def migrate(cr, version):
               ADD COLUMN product_id integer
               """)
     convert_template_id_to_product_id(cr)
-    logged_query(cr, """
+    openupgrade.logged_query(cr, """
         ALTER TABLE product_pricelist_item
         ALTER COLUMN base
         TYPE integer""")
