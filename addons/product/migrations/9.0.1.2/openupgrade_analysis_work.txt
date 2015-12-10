@@ -31,7 +31,8 @@ product      / product.pricelist.item   / applied_on (selection)        : NEW re
 # Nothing to do
 
 product      / product.pricelist.item   / base (selection)              : selection_keys is now '['list_price', 'pricelist', 'standard_price']' ('function')
-# Done ---> '1' (which is 'Other Pricelist') is converted to 'pricelist' (which is ''Other Pricelist'),
+# Done ---> field converted from INTEGER to VARCHAR
+# '1' (which is 'Other Pricelist') is converted to 'pricelist' (which is 'Other Pricelist'),
 # '2' (which is 'Supplier Prices on the product form') is converted to 'list_price' (which is 'Public Price')
 # Note: nothing is done with 'standard_price' (which is 'Cost') because it was not there in v8
 

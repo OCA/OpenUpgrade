@@ -23,7 +23,7 @@ from openupgradelib import openupgrade
 
 
 def convert_template_id_to_product_id(cr):
-    cr.execute("""
+    openupgrade.logged_query("""
         UPDATE product_price_history ph
         SET product_id = p.id
         FROM product_product p
@@ -32,12 +32,14 @@ def convert_template_id_to_product_id(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    cr.execute("""ALTER TABLE product_price_history
+    openupgrade.logged_query("""ALTER TABLE product_price_history
               ADD COLUMN product_id integer
               """)
     convert_template_id_to_product_id(cr)
     openupgrade.logged_query(cr, """
         ALTER TABLE product_pricelist_item
         ALTER COLUMN base
-        TYPE VARCHAR""")
+        TYPE VARCHAR
+        """)
+    # unsure if this xml rename is needed here, trying to resolve product_view.xml loading
     openupgrade.rename_xmlids(cr, [('product.variants_template_tree_view', 'product.product_attribute_value_view_tree')])
