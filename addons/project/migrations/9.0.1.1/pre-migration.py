@@ -33,6 +33,13 @@ column_renames = {
     'project_task': [
         ('reviewer_id', None),
     ],
+    'project_task': [
+        ('priority', None),
+    ],
+    'project_project': [
+        ('state', None),
+    ],
+    # TODO (fix) - this makes the migration crash if the column 'members' is not present in source db...
     'project_project': [
         ('members', None),
     ],
