@@ -1,0 +1,160 @@
+---Fields in module 'product'---
+product      / product.attribute        / attribute_line_ids (one2many) : NEW relation: product.attribute.line
+product      / product.attribute        / sequence (integer)            : NEW 
+# New fields ---> Nothing to do
+
+product      / product.packaging        / code (char)                   : DEL
+product      / product.packaging        / ean (char)                    : DEL 
+product      / product.packaging        / name (text)                   : now required
+product      / product.packaging        / name (text)                   : type is now 'char' ('text')
+product      / product.packaging        / rows (integer)                : DEL required: required, req_default: 3
+product      / product.packaging        / ul (many2one)                 : DEL relation: product.ul, required: required, req_default: function
+product      / product.packaging        / ul_container (many2one)       : DEL relation: product.ul
+product      / product.packaging        / ul_qty (integer)              : DEL 
+product      / product.packaging        / weight (float)                : DEL 
+# Seems like almost all packaging's fields were removed, they can't seem to be found anywhere else ---> Nothing to do
+
+product      / product.price.history    / product_id (many2one)         : NEW relation: product.product, required: required
+product      / product.price.history    / product_template_id (many2one): DEL relation: product.template, required: required
+# Done ---> product_template_id converted to product_id
+
+product      / product.pricelist        / type (selection)              : DEL required: required, selection_keys: function
+# Selection keys are still the same in the wrapper used ---> Nothing to do
+
+product      / product.pricelist        / item_ids (one2many)           : NEW relation: product.pricelist.item
+# TODO - analysis needed
+
+product      / product.pricelist        / version_id (one2many)         : DEL relation: product.pricelist.version
+# TODO - more analysis needed - versions may have been moved to product.pricelist.item (date_start, date_end, etc.)? see below
+
+product      / product.pricelist.item   / date_end (date)               : NEW
+product      / product.pricelist.item   / date_start (date)             : NEW
+product      / product.pricelist.item   / price_version_id (many2one)   : DEL relation: product.pricelist.version, required: required
+product      / product.pricelist.item   / pricelist_id (many2one)       : NEW relation: product.pricelist
+# TODO - more analysis needed - versions may have been moved to product.pricelist.item (date_start, date_end, etc.)?
+
+product      / product.pricelist.item   / applied_on (selection)        : NEW required: required, selection_keys: ['0_product_variant', '1_product', '2_product_category', '3_global'], req_default: 3_global
+# Nothing to do
+
+product      / product.pricelist.item   / base (selection)              : selection_keys is now '['list_price', 'pricelist', 'standard_price']' ('function')
+# Done ---> field converted from INTEGER to VARCHAR
+# '1' (which is 'Other Pricelist') is converted to 'pricelist' (which is 'Other Pricelist'),
+# '2' (which is 'Supplier Prices on the product form') is converted to 'list_price' (which is 'Public Price')
+# Note: nothing is done with 'standard_price' (which is 'Cost') because it was not there in v8
+
+product      / product.pricelist.item   / compute_price (selection)     : NEW selection_keys: ['fixed', 'formula', 'percentage']
+product      / product.pricelist.item   / fixed_price (float)           : NEW
+product      / product.pricelist.item   / percent_price (float)         : NEW
+# TODO - analysis needed
+
+product      / product.pricelist.item   / name (char)                   : DEL
+# Nothing to do
+
+product      / product.product          / ean13 (char)                  : was renamed to barcode [nothing to to]
+# Nothing to do
+
+product      / product.product          / message_follower_ids (many2many): not a function anymore
+product      / product.product          / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+product      / product.product          / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+# Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
+
+product      / product.product          / standard_price (float)        : NEW
+product      / product.product          / volume (float)                : NEW
+product      / product.product          / weight (float)                : NEW
+# TODO - analysis needed
+
+product      / product.supplierinfo     / currency_id (many2one)        : NEW relation: res.currency, required: required, req_default: function
+product      / product.supplierinfo     / date_end (date)               : NEW 
+product      / product.supplierinfo     / date_start (date)             : NEW 
+product      / product.supplierinfo     / price (float)                 : NEW required: required, req_default: function
+product      / product.supplierinfo     / pricelist_ids (one2many)      : DEL relation: pricelist.partnerinfo
+product      / product.supplierinfo     / product_id (many2one)         : NEW relation: product.product
+# TODO - analysis needed
+
+product      / product.template         / item_ids (one2many)           : NEW relation: product.pricelist.item
+product      / product.template         / mes_type (selection)          : DEL selection_keys: ['fixed', 'variable']
+product      / product.template         / sequence (integer)            : NEW
+product      / product.template         / standard_price (float)        : now a function
+product      / product.template         / state (selection)             : selection_keys is now '['draft', 'end', 'obsolete', 'sellable']' ('['', 'draft', 'end', 'obsolete', 'sellable']')
+product      / product.template         / type (selection)              : selection_keys is now 'function' ('['consu', 'service']')
+product      / product.template         / uos_coeff (float)             : module is now 'product_uos' ('product')
+product      / product.template         / uos_id (many2one)             : module is now 'product_uos' ('product')
+product      / product.template         / volume (float)                : now a function
+product      / product.template         / weight (float)                : now a function
+product      / product.template         / weight_net (float)            : DEL
+# TODO - analysis needed
+
+product      / product.template         / message_follower_ids (many2many): not a function anymore
+product      / product.template         / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+product      / product.template         / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+# Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
+
+product      / product.template         / ean13 (char)                  : was renamed to barcode [nothing to to]
+# Nothing to do
+
+
+---XML records in module 'product'---
+
+DEL decimal.precision: product.decimal_account
+DEL decimal.precision: product.decimal_product_uos
+# Nothing to do, seems to have been moved to 'product_uos' module
+
+NEW ir.actions.act_window: product.action_packaging_view
+NEW ir.actions.act_window: product.product_attribute_value_action
+NEW ir.actions.act_window: product.product_supplierinfo_type_action
+NEW ir.actions.act_window: product.product_template_action_product
+DEL ir.actions.act_window: product.product_category_action
+DEL ir.actions.act_window: product.product_normal_action_tree
+DEL ir.actions.act_window: product.product_price_type_action
+DEL ir.actions.act_window: product.product_pricelist_action
+DEL ir.actions.act_window: product.product_pricelist_action_for_purchase
+DEL ir.actions.act_window: product.product_ul_form_action
+DEL ir.actions.act_window: product.variants_template_action
+# ir.actions.* ---> Nothing to do
+
+DEL ir.model.access: product.access_pricelist_partnerinfo_user
+DEL ir.model.access: product.access_product_price_type_user
+DEL ir.model.access: product.access_product_pricelist_type_partner_manager
+DEL ir.model.access: product.access_product_pricelist_type_user
+DEL ir.model.access: product.access_product_pricelist_version_user
+DEL ir.model.access: product.access_product_ul_user
+# ir.model.access removed ---> Nothing to do
+
+DEL ir.rule: product.product_pricelist_version_comp_rule
+# Rule removed in v9 ---> Nothing to do
+
+NEW ir.ui.menu: base.menu_sales
+DEL ir.ui.menu: product.menu_product_price_type
+DEL ir.ui.menu: product.menu_product_pricelist_action
+DEL ir.ui.menu: product.menu_product_ul_form_action
+DEL ir.ui.menu: product.menu_products_category
+NEW ir.ui.view: product.inherit_view_general_configuration
+NEW ir.ui.view: product.product_attribute_value_view_tree
+NEW ir.ui.view: product.product_variant_easy_edit_view
+NEW ir.ui.view: product.report_productlabel
+DEL ir.ui.view: product.product_category_tree_view
+DEL ir.ui.view: product.product_packaging_form_view_without_product
+DEL ir.ui.view: product.product_packaging_tree_view_product
+DEL ir.ui.view: product.product_price_type_view
+DEL ir.ui.view: product.product_pricelist_version_form_view
+DEL ir.ui.view: product.product_pricelist_version_tree_view
+DEL ir.ui.view: product.product_ul_form_view
+DEL ir.ui.view: product.product_ul_tree
+DEL ir.ui.view: product.variants_template_tree_view
+# ir.ui.* ---> Nothing to do
+
+DEL ir.values: product.ir_product_category_open
+# Nothing to do
+
+DEL product.price.type: product.list_price
+DEL product.price.type: product.standard_price
+DEL product.pricelist.type: product.pricelist_type_sale
+DEL product.pricelist.version: product.ver0
+DEL product.product: product.product_product_consultant
+# Nothing to do
+
+NEW res.groups: product.group_pricelist_item
+NEW res.groups: product.group_product_pricelist
+NEW res.groups: product.group_product_variant
+DEL res.groups: product.group_purchase_pricelist
+# Nothing to do
