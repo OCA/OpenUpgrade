@@ -1,45 +1,41 @@
-# Romanian translation for openobject-addons
-# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
-# This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
-#
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * google_calendar
+# 
+# Translators:
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-01-21 14:08+0000\n"
-"PO-Revision-Date: 2015-04-11 15:49+0000\n"
-"Last-Translator: Dorin <dhongu@gmail.com>\n"
-"Language-Team: Romanian <ro@li.org>\n"
+"Project-Id-Version: Odoo 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-07 12:39+0000\n"
+"PO-Revision-Date: 2015-09-08 08:57+0000\n"
+"Last-Translator: Martin Trigaux\n"
+"Language-Team: Romanian (http://www.transifex.com/odoo/odoo-8/language/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-04-12 06:03+0000\n"
-"X-Generator: Launchpad (build 17423)\n"
+"Content-Transfer-Encoding: \n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "\"/google_account/authentication\""
-msgstr "\"/google_account/authentication\""
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "\"Calendar API\""
-msgstr "\"Calendar API\""
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "\"Consent Screen\""
+msgid "\"Authorized redirect URI\""
 msgstr ""
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "\"Create Project\""
+msgid "'/google_account/authentication'"
 msgstr ""
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "\"Redirect RI\""
+msgid "'Calendar API'"
+msgstr ""
+
+#. module: google_calendar
+#: view:base.config.settings:google_calendar.view_calendar_config_settings
+msgid "'Configure consent screen'"
 msgstr ""
 
 #. module: google_calendar
@@ -49,12 +45,22 @@ msgstr ""
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "'Create New Client ID'"
+msgid "'Create Project'"
+msgstr ""
+
+#. module: google_calendar
+#: view:base.config.settings:google_calendar.view_calendar_config_settings
+msgid "'Create new Client ID'"
 msgstr ""
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
 msgid "'Credentials'"
+msgstr ""
+
+#. module: google_calendar
+#: view:base.config.settings:google_calendar.view_calendar_config_settings
+msgid "'Enable API'"
 msgstr ""
 
 #. module: google_calendar
@@ -69,7 +75,12 @@ msgstr ""
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid ") that you need to insert in the 2 fields below !"
+msgid ") that you need to insert in the 2 fields below!"
+msgstr ""
+
+#. module: google_calendar
+#: view:base.config.settings:google_calendar.view_calendar_config_settings
+msgid ", then click on"
 msgstr ""
 
 #. module: google_calendar
@@ -80,6 +91,11 @@ msgstr "Configurare API"
 #. module: google_calendar
 #: model:ir.ui.menu,name:google_calendar.menu_calendar_google_tech_config
 msgid "API Credentials"
+msgstr ""
+
+#. module: google_calendar
+#: view:base.config.settings:google_calendar.view_calendar_config_settings
+msgid "Activate the Calendar API by clicking on the blue button"
 msgstr ""
 
 #. module: google_calendar
@@ -112,7 +128,7 @@ msgstr ""
 #. module: google_calendar
 #: model:ir.model,name:google_calendar.model_calendar_attendee
 msgid "Attendee information"
-msgstr ""
+msgstr "Informații participant"
 
 #. module: google_calendar
 #: view:res.users:google_calendar.view_users_form
@@ -123,6 +139,11 @@ msgstr "Calendar"
 #: field:res.users,google_calendar_cal_id:0
 msgid "Calendar ID"
 msgstr "Calendar ID"
+
+#. module: google_calendar
+#: view:base.config.settings:google_calendar.view_calendar_config_settings
+msgid "Check that the Application type is set on"
+msgstr ""
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
@@ -164,13 +185,7 @@ msgstr ""
 #. module: google_calendar
 #: model:ir.model,name:google_calendar.model_calendar_event
 msgid "Event"
-msgstr ""
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid ""
-"Fill in the Name of application and check that the platform is well on"
-msgstr ""
+msgstr "Eveniment"
 
 #. module: google_calendar
 #. openerp-web
@@ -202,7 +217,7 @@ msgstr ""
 #. module: google_calendar
 #: field:google.calendar,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: google_calendar
 #. openerp-web
@@ -221,8 +236,8 @@ msgstr ""
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
 msgid ""
-"In the menu on left side, select the sub menu APIs (from menu APIs and auth) "
-"and activate"
+"In the menu on left side, select the sub menu APIs (from menu APIs and auth)"
+" and click on"
 msgstr ""
 
 #. module: google_calendar
@@ -264,8 +279,12 @@ msgstr ""
 
 #. module: google_calendar
 #: field:base.config.settings,google_cal_sync:0
-msgid ""
-"Show tutorial to know how to get my 'Client ID' and my 'Client Secret'"
+msgid "Show tutorial to know how to get my 'Client ID' and my 'Client Secret'"
+msgstr ""
+
+#. module: google_calendar
+#: view:base.config.settings:google_calendar.view_calendar_config_settings
+msgid "Specify an email address and a product name, then save."
 msgstr ""
 
 #. module: google_calendar
@@ -296,12 +315,6 @@ msgstr ""
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
 msgid ""
-"To finish, you just need to create a \"consent screen\" by clicking on"
-msgstr ""
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid ""
 "To setup the signin process with Google, first you have to perform the "
 "following steps"
 msgstr ""
@@ -324,11 +337,11 @@ msgstr ""
 #. module: google_calendar
 #: model:ir.model,name:google_calendar.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Utilizatori"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "When it's done, check that the button of"
+msgid "When it's done, the Calendar API overview will be available"
 msgstr ""
 
 #. module: google_calendar
@@ -347,21 +360,13 @@ msgstr ""
 #. openerp-web
 #: code:addons/google_calendar/static/src/js/calendar_sync.js:28
 #, python-format
-msgid ""
-"You will be redirected to Google to authorize access to your calendar!"
-msgstr ""
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid ""
-"You will need to accept again the \"Google APIs Terms of services\" and "
-"\"Calendar API Terms of service\""
+msgid "You will be redirected to Google to authorize access to your calendar!"
 msgstr ""
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
 msgid "and"
-msgstr ""
+msgstr "și"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
@@ -377,20 +382,5 @@ msgstr ""
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "by clicking on button \"OFF\"."
-msgstr ""
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "https://cloud.google.com/console"
-msgstr ""
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "in the left menu."
-msgstr ""
-
-#. module: google_calendar
-#: view:base.config.settings:google_calendar.view_calendar_config_settings
-msgid "is well in green and with text \"ON\""
+msgid "https://console.developers.google.com/"
 msgstr ""

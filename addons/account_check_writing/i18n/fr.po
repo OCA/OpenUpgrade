@@ -1,21 +1,26 @@
-# French translation for openobject-addons
-# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
-# This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
-#
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_check_writing
+# 
+# Translators:
+# Clo <clo@odoo.com>, 2015
+# Fabien Pinckaers <fp@openerp.com>, 2015
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
+# Florian Hatat, 2015
+# Quentin THEURET <quentin@theuret.net>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: Odoo 8.0\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:07+0000\n"
-"PO-Revision-Date: 2015-05-20 22:27+0000\n"
-"Last-Translator: Florian Hatat <Unknown>\n"
-"Language-Team: French <fr@li.org>\n"
+"PO-Revision-Date: 2015-08-05 09:26+0000\n"
+"Last-Translator: Clo <clo@odoo.com>\n"
+"Language-Team: French (http://www.transifex.com/odoo/odoo-8/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-05-22 05:11+0000\n"
-"X-Generator: Launchpad (build 17514)\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: account_check_writing
 #: model:ir.actions.act_window,help:account_check_writing.action_write_check
@@ -23,16 +28,14 @@ msgid ""
 "<p class=\"oe_view_nocontent_create\">\n"
 "                Click to create a new check. \n"
 "              </p><p>\n"
-"                The check payment form allows you to track the payment you "
-"do\n"
-"                to your suppliers using checks. When you select a supplier, "
-"the\n"
+"                The check payment form allows you to track the payment you do\n"
+"                to your suppliers using checks. When you select a supplier, the\n"
 "                payment method and an amount for the payment, Odoo will\n"
 "                propose to reconcile your payment with the open supplier\n"
 "                invoices or bills.\n"
 "              </p>\n"
 "            "
-msgstr ""
+msgstr "<p class=\"oe_view_nocontent_create\">\nCliquez pour créer un nouveau chèque.\n              </p><p>\nLe formulaire de paiement par chèque vous permet de suivre les paiements effectués à vos fournisseurs par ce moyen. Après avoir choisi le fournisseur, le moyen de paiement et le montant, Odoo vous proposera de faire la réconciliation bancaire de votre paiement avec les factures encore non-payées du fournisseur correspondant.\n              </p>"
 
 #. module: account_check_writing
 #: model:ir.model,name:account_check_writing.model_account_voucher
@@ -68,12 +71,12 @@ msgstr "Chèque"
 #. module: account_check_writing
 #: field:res.company,check_layout:0
 msgid "Check Layout"
-msgstr "Mise en page du chèque"
+msgstr "Format du chèque"
 
 #. module: account_check_writing
 #: help:account.journal,use_preprint_check:0
 msgid "Check if you use a preformated sheet for check"
-msgstr ""
+msgstr "Vérifie si vous utilisez un papier pré-formaté pour les chèques"
 
 #. module: account_check_writing
 #: selection:res.company,check_layout:0
@@ -96,11 +99,7 @@ msgid ""
 "Check on top is compatible with Quicken, QuickBooks and Microsoft Money. "
 "Check in middle is compatible with Peachtree, ACCPAC and DacEasy. Check on "
 "bottom is compatible with Peachtree, ACCPAC and DacEasy only"
-msgstr ""
-"Chèque en haut est compatible avec Quicken, QuickBooks et Microsoft Money. "
-"\r\n"
-"Chèque  au milieu est compatible avec Peachtree, ACCPAC et DacEasy. \r\n"
-"Chèque en bas est compatible with Peachtree, ACCPAC et DacEasy only"
+msgstr "Chèque en haut est compatible avec Quicken, QuickBooks et Microsoft Money. \r\nChèque  au milieu est compatible avec Peachtree, ACCPAC et DacEasy. \r\nChèque en bas est compatible with Peachtree, ACCPAC et DacEasy only"
 
 #. module: account_check_writing
 #: help:account.journal,allow_check_writing:0
@@ -147,7 +146,7 @@ msgstr "Erreur !"
 #: field:account.check.write,id:0
 #: field:report.account_check_writing.report_check,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_check_writing
 #: model:ir.model,name:account_check_writing.model_account_journal
@@ -173,7 +172,7 @@ msgstr "Numéro de chèque suivant"
 #: code:addons/account_check_writing/account_voucher.py:77
 #, python-format
 msgid "No check selected "
-msgstr ""
+msgstr "Aucun chèque n'est sélectionné"
 
 #. module: account_check_writing
 #: code:addons/account_check_writing/wizard/account_check_batch_printing.py:59
@@ -216,7 +215,7 @@ msgstr "Imprimer des chèques par lots"
 #: code:addons/account_check_writing/account_voucher.py:77
 #, python-format
 msgid "Printing error"
-msgstr ""
+msgstr "Erreur d'impression"
 
 #. module: account_check_writing
 #: help:account.check.write,check_number:0

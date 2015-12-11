@@ -95,7 +95,7 @@ class calendar_attendee(osv.Model):
         'email': fields.char('Email', help="Email of Invited Person"),
         'availability': fields.selection([('free', 'Free'), ('busy', 'Busy')], 'Free/Busy', readonly="True"),
         'access_token': fields.char('Invitation Token'),
-        'event_id': fields.many2one('calendar.event', 'Meeting linked'),
+        'event_id': fields.many2one('calendar.event', 'Meeting linked', ondelete='cascade'),
     }
     _defaults = {
         'state': 'needsAction',
@@ -573,7 +573,7 @@ class calendar_alarm(osv.Model):
         'type': fields.selection([('notification', 'Notification'), ('email', 'Email')], 'Type', required=True),
         'duration': fields.integer('Amount', required=True),
         'interval': fields.selection([('minutes', 'Minutes'), ('hours', 'Hours'), ('days', 'Days')], 'Unit', required=True),
-        'duration_minutes': fields.function(_get_duration, type='integer', string='duration_minutes', store=True),
+        'duration_minutes': fields.function(_get_duration, type='integer', string='Duration in minutes', store=True),
     }
 
     _defaults = {
@@ -656,18 +656,18 @@ class ir_model(osv.Model):
 original_exp_report = openerp.service.report.exp_report
 
 
-def exp_report(db, uid, object, ids, data=None, context=None):
+def exp_report(db, uid, object, ids, datas=None, context=None):
     """
     Export Report
     """
     if object == 'printscreen.list':
-        original_exp_report(db, uid, object, ids, data, context)
+        original_exp_report(db, uid, object, ids, datas, context)
     new_ids = []
     for id in ids:
         new_ids.append(calendar_id2real_id(id))
-    if data.get('id', False):
-        data['id'] = calendar_id2real_id(data['id'])
-    return original_exp_report(db, uid, object, new_ids, data, context)
+    if datas.get('id', False):
+        datas['id'] = calendar_id2real_id(datas['id'])
+    return original_exp_report(db, uid, object, new_ids, datas, context)
 
 
 openerp.service.report.exp_report = exp_report
@@ -797,9 +797,9 @@ class calendar_event(osv.Model):
             time = _("AllDay , %s") % (event_date)
         elif zduration < 24:
             duration = date + timedelta(hours=zduration)
-            time = ("%s at (%s To %s) (%s)") % (event_date, display_time, duration.strftime(format_time), tz)
+            time = _("%s at (%s To %s) (%s)") % (event_date, display_time, duration.strftime(format_time), tz)
         else:
-            time = ("%s at %s To\n %s at %s (%s)") % (event_date, display_time, date_deadline.strftime(format_date), date_deadline.strftime(format_time), tz)
+            time = _("%s at %s To\n %s at %s (%s)") % (event_date, display_time, date_deadline.strftime(format_date), date_deadline.strftime(format_time), tz)
         return time
 
     def _compute(self, cr, uid, ids, fields, arg, context=None):
@@ -960,7 +960,7 @@ class calendar_event(osv.Model):
 
         'user_id': fields.many2one('res.users', 'Responsible', states={'done': [('readonly', True)]}),
         'color_partner_id': fields.related('user_id', 'partner_id', 'id', type="integer", string="colorize", store=False),  # Color of creator
-        'active': fields.boolean('Active', help="If the active field is set to true, it will allow you to hide the event alarm information without removing it."),
+        'active': fields.boolean('Active', help="If the active field is set to false, it will allow you to hide the event alarm information without removing it."),
         'categ_ids': fields.many2many('calendar.event.type', 'meeting_category_rel', 'event_id', 'type_id', 'Tags'),
         'attendee_ids': fields.one2many('calendar.attendee', 'event_id', 'Attendees', ondelete='cascade'),
         'partner_ids': fields.many2many('res.partner', 'calendar_event_res_partner_rel', string='Attendees', states={'done': [('readonly', True)]}),
@@ -1654,6 +1654,14 @@ class calendar_event(osv.Model):
         self.create_attendees(cr, uid, [res], context=context)
         return res
 
+    def export_data(self, cr, uid, ids, *args, **kwargs):
+        """ Override to convert virtual ids to ids """
+        real_ids = []
+        for real_id in get_real_ids(ids):
+            if real_id not in real_ids:
+                real_ids.append(real_id)
+        return super(calendar_event, self).export_data(cr, uid, real_ids, *args, **kwargs)
+
     def read_group(self, cr, uid, domain, fields, groupby, offset=0, limit=None, context=None, orderby=False, lazy=True):
         context = dict(context or {})
 
@@ -1662,12 +1670,6 @@ class calendar_event(osv.Model):
         virtual_id = context.get('virtual_id', True)
         context.update({'virtual_id': False})
         res = super(calendar_event, self).read_group(cr, uid, domain, fields, groupby, offset=offset, limit=limit, context=context, orderby=orderby, lazy=lazy)
-        for result in res:
-            #remove the count, since the value is not consistent with the result of the search when expand the group
-            for groupname in groupby:
-                if result.get(groupname + "_count"):
-                    del result[groupname + "_count"]
-            result.get('__context', {}).update({'virtual_id': virtual_id})
         return res
 
     def read(self, cr, uid, ids, fields=None, context=None, load='_classic_read'):

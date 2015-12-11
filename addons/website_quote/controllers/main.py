@@ -64,6 +64,8 @@ class sale_quote(http.Controller):
         order = order_obj.browse(request.cr, SUPERUSER_ID, order_id)
         if token != order.access_token:
             return request.website.render('website.404')
+        if order.state != 'sent':
+            return False
         attachments=sign and [('signature.png', sign.decode('base64'))] or []
         order_obj.signal_workflow(request.cr, SUPERUSER_ID, [order_id], 'order_confirm', context=request.context)
         message = _('Order signed by %s') % (signer,)
@@ -76,6 +78,8 @@ class sale_quote(http.Controller):
         order = order_obj.browse(request.cr, SUPERUSER_ID, order_id)
         if token != order.access_token:
             return request.website.render('website.404')
+        if order.state != 'sent':
+            return werkzeug.utils.redirect("/quote/%s/%s?message=4" % (order_id, token))
         request.registry.get('sale.order').action_cancel(request.cr, SUPERUSER_ID, [order_id])
         message = post.get('decline_message')
         if message:
@@ -148,7 +152,7 @@ class sale_quote(http.Controller):
         res = request.registry.get('sale.order.line').product_id_change(request.cr, SUPERUSER_ID, order_id,
             False, option.product_id.id, option.quantity, option.uom_id.id, option.quantity, option.uom_id.id,
             option.name, order.partner_id.id, False, True, time.strftime('%Y-%m-%d'),
-            False, order.fiscal_position.id, True, request.context)
+            False, order.fiscal_position.id, True, dict(request.context or {}, company_id=order.company_id.id))
         vals = res.get('value', {})
         if 'tax_id' in vals:
             vals['tax_id'] = [(6, 0, vals['tax_id'])]

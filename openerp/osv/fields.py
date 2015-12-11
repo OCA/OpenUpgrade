@@ -56,19 +56,8 @@ from openerp import SUPERUSER_ID, registry
 @contextmanager
 def _get_cursor():
     # yield a valid cursor from any environment or create a new one if none found
-    from openerp.api import Environment
-    from openerp.http import request
-    try:
-        request.env     # force request's env to be computed
-    except RuntimeError:
-        pass    # ignore if not in a request
-    for env in Environment.envs:
-        if not env.cr.closed:
-            yield env.cr
-            break
-    else:
-        with registry().cursor() as cr:
-            yield cr
+    with registry().cursor() as cr:
+        yield cr
 
 EMPTY_DICT = frozendict()
 
@@ -211,8 +200,6 @@ class _column(object):
         """ return a dictionary with all the arguments to pass to the field """
         base_items = [
             ('copy', self.copy),
-        ]
-        truthy_items = filter(itemgetter(1), [
             ('index', self.select),
             ('manual', self.manual),
             ('string', self.string),
@@ -223,6 +210,8 @@ class _column(object):
             ('groups', self.groups),
             ('change_default', self.change_default),
             ('deprecated', self.deprecated),
+        ]
+        truthy_items = filter(itemgetter(1), [
             ('group_operator', self.group_operator),
             ('size', self.size),
             ('ondelete', self.ondelete),
@@ -385,6 +374,7 @@ class html(text):
     def to_field_args(self):
         args = super(html, self).to_field_args()
         args['sanitize'] = self._sanitize
+        args['strip_style'] = self._strip_style
         return args
 
 import __builtin__
@@ -823,12 +813,9 @@ class one2many(_column):
                     else:
                         cr.execute('update '+_table+' set '+self._fields_id+'=null where id=%s', (act[1],))
                 elif act[0] == 4:
-                    # table of the field (parent_model in case of inherit)
-                    field = obj.pool[self._obj]._fields[self._fields_id]
-                    field_model = field.base_field.model_name
-                    field_table = obj.pool[field_model]._table
-                    cr.execute("select 1 from {0} where id=%s and {1}=%s".format(field_table, self._fields_id), (act[1], id))
-                    if not cr.fetchone():
+                    # check whether the given record is already linked
+                    rec = obj.browse(cr, SUPERUSER_ID, act[1], {'prefetch_fields': False})
+                    if int(rec[self._fields_id]) != id:
                         # Must use write() to recompute parent_store structure if needed and check access rules
                         obj.write(cr, user, [act[1]], {self._fields_id:id}, context=context or {})
                 elif act[0] == 5:
@@ -988,11 +975,10 @@ class many2many(_column):
 
         wquery = obj._where_calc(cr, user, domain, context=context)
         obj._apply_ir_rules(cr, user, wquery, 'read', context=context)
+        order_by = obj._generate_order_by(None, wquery)
         from_c, where_c, where_params = wquery.get_sql()
         if where_c:
             where_c = ' AND ' + where_c
-
-        order_by = ' ORDER BY "%s".%s' %(obj._table, obj._order.split(',')[0])
 
         limit_str = ''
         if self._limit is not None:
@@ -1069,6 +1055,8 @@ def get_nice_size(value):
         size = value
     elif value: # this is supposed to be a string
         size = len(value)
+        if size < 12:  # suppose human size
+            return value
     return tools.human_size(size)
 
 # See http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char
@@ -1411,6 +1399,7 @@ class function(_column):
     def to_field_args(self):
         args = super(function, self).to_field_args()
         args['store'] = bool(self.store)
+        args['company_dependent'] = False
         if self._type in ('float',):
             args['digits'] = self._digits_compute or self._digits
         elif self._type in ('selection', 'reference'):
@@ -1591,6 +1580,8 @@ class sparse(function):
         """
 
         if self._type == 'many2many':
+            if not value:
+                return []
             assert value[0][0] == 6, 'Unsupported m2m value for sparse field: %s' % value
             return value[0][2]
 

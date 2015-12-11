@@ -1,3 +1,5 @@
+:banner: banners/build_a_module.jpg
+
 .. queue:: backend/series
 
 =================
@@ -621,12 +623,12 @@ instead of a single view its ``arch`` field is composed of any number of
     <!-- improved idea categories list -->
     <record id="idea_category_list2" model="ir.ui.view">
         <field name="name">id.category.list2</field>
-        <field name="model">ir.ui.view</field>
+        <field name="model">idea.category</field>
         <field name="inherit_id" ref="id_category_list"/>
         <field name="arch" type="xml">
-            <!-- find field description inside tree, and add the field
+            <!-- find field description and add the field
                  idea_ids after it -->
-            <xpath expr="/tree/field[@name='description']" position="after">
+            <xpath expr="//field[@name='description']" position="after">
               <field name="idea_ids" string="Number of ideas"/>
             </xpath>
         </field>
@@ -649,6 +651,22 @@ instead of a single view its ``arch`` field is composed of any number of
     ``attributes``
         alters the attributes of the matched element using special
         ``attribute`` elements in the ``xpath``'s body
+
+.. tip::
+
+    When matching a single element, the ``position`` attribute can be set directly
+    on the element to be found. Both inheritances below will give the same result.
+
+    .. code-block:: xml
+
+        <xpath expr="//field[@name='description']" position="after">
+            <field name="idea_ids" />
+        </xpath>
+
+        <field name="description" position="after">
+            <field name="idea_ids" />
+        </field>
+
 
 .. exercise:: Alter existing content
 
@@ -769,13 +787,6 @@ method should simply set the value of the field to compute on every record in
             for record in self:
                 record.name = str(random.randint(1, 1e6))
 
-Our compute method is very simple: it loops over ``self`` and performs the same
-operation on every record. We can make it slightly simpler by using the
-decorator :func:`~openerp.api.one` to automatically loop on the collection::
-
-        @api.one
-        def _compute_name(self):
-            self.name = str(random.randint(1, 1e6))
 
 Dependencies
 ------------
@@ -794,10 +805,10 @@ field whenever some of its dependencies have been modified::
         name = fields.Char(compute='_compute_name')
         value = fields.Integer()
 
-        @api.one
         @api.depends('value')
         def _compute_name(self):
-            self.name = "Record with value %s" % self.value
+            for record in self:
+                self.name = "Record with value %s" % self.value
 
 .. exercise:: Computed fields
 
@@ -1074,7 +1085,7 @@ predefined searches. Filters must have one of the following attributes:
                 domain="[('inventor_id', '=', uid)]"/>
         <group string="Group By">
             <filter name="group_by_inventor" string="Inventor"
-                    context="{'group_by': 'inventor'}"/>
+                    context="{'group_by': 'inventor_id'}"/>
         </group>
     </search>
 
@@ -1611,6 +1622,30 @@ http://localhost:8069/report/html/account.report_invoice/1 (if ``account`` is
 installed) and the PDF version through
 http://localhost:8069/report/pdf/account.report_invoice/1.
 
+.. _reference/backend/reporting/printed-reports/pdf-without-styles:
+
+.. danger::
+
+    If it appears that your PDF report is missing the styles (i.e. the text
+    appears but the style/layout is different from the html version), probably
+    your wkhtmltopdf_ process cannot reach your web server to download them.
+
+    If you check your server logs and see that the CSS styles are not being
+    downloaded when generating a PDF report, most surely this is the problem.
+
+    The wkhtmltopdf_ process will use the ``web.base.url`` system parameter as
+    the *root path* to all linked files, but this parameter is automatically
+    updated each time the Administrator is logged in. If your server resides
+    behind some kind of proxy, that could not be reachable. You can fix this by
+    adding one of these system parameters:
+
+    - ``report.url``, pointing to an URL reachable from your server
+      (probably ``http://localhost:8069`` or something similar). It will be
+      used for this particular purpose only.
+
+    - ``web.base.url.freeze``, when set to ``True``, will stop the
+      automatic updates to ``web.base.url``.
+
 .. exercise:: Create a report for the Session model
 
    For each session, it should display session's name, its start and end,
@@ -1772,7 +1807,7 @@ with the standard Python libraries ``urllib2`` and ``json``::
     note_id = call(url, "object", "execute", DB, uid, PASS, 'note.note', 'create', args)
 
 Here is the same program, using the library
-`jsonrpclib <https://pypi.python.org/pypi/jsonrpclib>`::
+`jsonrpclib <https://pypi.python.org/pypi/jsonrpclib>`_::
 
     import jsonrpclib
 

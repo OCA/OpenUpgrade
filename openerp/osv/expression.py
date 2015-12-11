@@ -135,9 +135,11 @@ import collections
 
 import logging
 import traceback
+from zlib import crc32
 
 import openerp.modules
 from . import fields
+from .. import SUPERUSER_ID
 from ..models import MAGIC_COLUMNS, BaseModel
 import openerp.tools as tools
 
@@ -164,6 +166,26 @@ TERM_OPERATORS = ('=', '!=', '<=', '<', '>', '>=', '=?', '=like', '=ilike',
 # below, this doesn't necessarily mean that any of those NEGATIVE_TERM_OPERATORS is
 # legal in the processed term.
 NEGATIVE_TERM_OPERATORS = ('!=', 'not like', 'not ilike', 'not in')
+
+# Negation of domain expressions
+DOMAIN_OPERATORS_NEGATION = {
+    AND_OPERATOR: OR_OPERATOR,
+    OR_OPERATOR: AND_OPERATOR,
+}
+TERM_OPERATORS_NEGATION = {
+    '<': '>=',
+    '>': '<=',
+    '<=': '>',
+    '>=': '<',
+    '=': '!=',
+    '!=': '=',
+    'in': 'not in',
+    'like': 'not like',
+    'ilike': 'not ilike',
+    'not in': 'in',
+    'not like': 'like',
+    'not ilike': 'ilike',
+}
 
 TRUE_LEAF = (1, '=', 1)
 FALSE_LEAF = (0, '=', 1)
@@ -261,51 +283,36 @@ def distribute_not(domain):
          ['|',('user_id','!=',4),('partner_id','not in',[1,2])]
 
     """
-    def negate(leaf):
-        """Negates and returns a single domain leaf term,
-        using the opposite operator if possible"""
-        left, operator, right = leaf
-        mapping = {
-            '<': '>=',
-            '>': '<=',
-            '<=': '>',
-            '>=': '<',
-            '=': '!=',
-            '!=': '=',
-        }
-        if operator in ('in', 'like', 'ilike'):
-            operator = 'not ' + operator
-            return [(left, operator, right)]
-        if operator in ('not in', 'not like', 'not ilike'):
-            operator = operator[4:]
-            return [(left, operator, right)]
-        if operator in mapping:
-            operator = mapping[operator]
-            return [(left, operator, right)]
-        return [NOT_OPERATOR, (left, operator, right)]
 
-    def distribute_negate(domain):
-        """Negate the domain ``subtree`` rooted at domain[0],
-        leaving the rest of the domain intact, and return
-        (negated_subtree, untouched_domain_rest)
-        """
-        if is_leaf(domain[0]):
-            return negate(domain[0]), domain[1:]
-        if domain[0] == AND_OPERATOR:
-            done1, todo1 = distribute_negate(domain[1:])
-            done2, todo2 = distribute_negate(todo1)
-            return [OR_OPERATOR] + done1 + done2, todo2
-        if domain[0] == OR_OPERATOR:
-            done1, todo1 = distribute_negate(domain[1:])
-            done2, todo2 = distribute_negate(todo1)
-            return [AND_OPERATOR] + done1 + done2, todo2
-    if not domain:
-        return []
-    if domain[0] != NOT_OPERATOR:
-        return [domain[0]] + distribute_not(domain[1:])
-    if domain[0] == NOT_OPERATOR:
-        done, todo = distribute_negate(domain[1:])
-        return done + distribute_not(todo)
+    # This is an iterative version of a recursive function that split domain
+    # into subdomains, processes them and combine the results. The "stack" below
+    # represents the recursive calls to be done.
+    result = []
+    stack = [False]
+
+    for token in domain:
+        negate = stack.pop()
+        # negate tells whether the subdomain starting with token must be negated
+        if is_leaf(token):
+            if negate:
+                left, operator, right = token
+                if operator in TERM_OPERATORS_NEGATION:
+                    result.append((left, TERM_OPERATORS_NEGATION[operator], right))
+                else:
+                    result.append(NOT_OPERATOR)
+                    result.append(token)
+            else:
+                result.append(token)
+        elif token == NOT_OPERATOR:
+            stack.append(not negate)
+        elif token in DOMAIN_OPERATORS_NEGATION:
+            result.append(DOMAIN_OPERATORS_NEGATION[token] if negate else token)
+            stack.append(negate)
+            stack.append(negate)
+        else:
+            result.append(token)
+
+    return result
 
 
 # --------------------------------------------------
@@ -342,7 +349,16 @@ def generate_table_alias(src_table_alias, joined_tables=[]):
         return '%s' % alias, '%s' % _quote(alias)
     for link in joined_tables:
         alias += '__' + link[1]
-    assert len(alias) < 64, 'Table alias name %s is longer than the 64 characters size accepted by default in postgresql.' % alias
+    # Use an alternate alias scheme if length exceeds the PostgreSQL limit
+    # of 63 characters.
+    if len(alias) >= 64:
+        # We have to fit a crc32 hash and one underscore
+        # into a 63 character alias. The remaining space we can use to add
+        # a human readable prefix.
+        alias_hash = hex(crc32(alias))[2:]
+        ALIAS_PREFIX_LENGTH = 63 - len(alias_hash) - 1
+        alias = "%s_%s" % (
+            alias[:ALIAS_PREFIX_LENGTH], alias_hash)
     return '%s' % alias, '%s as %s' % (_quote(joined_tables[-1][0]), _quote(alias))
 
 
@@ -490,7 +506,7 @@ class ExtendedLeaf(object):
     #       i.e.: many2one: 'state_id': current field name
     # --------------------------------------------------
 
-    def __init__(self, leaf, model, join_context=None):
+    def __init__(self, leaf, model, join_context=None, internal=False):
         """ Initialize the ExtendedLeaf
 
             :attr [string, tuple] leaf: operator or tuple-formatted domain
@@ -529,7 +545,7 @@ class ExtendedLeaf(object):
             self._models.append(item[0])
         self._models.append(model)
         # check validity
-        self.check_leaf()
+        self.check_leaf(internal)
 
     def __str__(self):
         return '<osv.ExtendedLeaf: %s on %s (ctx: %s)>' % (str(self.leaf), self.model._table, ','.join(self._get_context_debug()))
@@ -575,7 +591,7 @@ class ExtendedLeaf(object):
     # Leaf manipulation
     # --------------------------------------------------
 
-    def check_leaf(self):
+    def check_leaf(self, internal=False):
         """ Leaf validity rules:
             - a valid leaf is an operator or a leaf
             - a valid leaf has a field objects unless
@@ -584,7 +600,7 @@ class ExtendedLeaf(object):
                 - left is id, operator is 'child_of'
                 - left is in MAGIC_COLUMNS
         """
-        if not is_operator(self.leaf) and not is_leaf(self.leaf, True):
+        if not is_operator(self.leaf) and not is_leaf(self.leaf, internal):
             raise ValueError("Invalid leaf %s" % str(self.leaf))
 
     def is_operator(self):
@@ -603,14 +619,14 @@ class ExtendedLeaf(object):
         self.leaf = normalize_leaf(self.leaf)
         return True
 
-def create_substitution_leaf(leaf, new_elements, new_model=None):
+def create_substitution_leaf(leaf, new_elements, new_model=None, internal=False):
     """ From a leaf, create a new leaf (based on the new_elements tuple
         and new_model), that will have the same join context. Used to
         insert equivalent leafs in the processing stack. """
     if new_model is None:
         new_model = leaf.model
     new_join_context = [tuple(context) for context in leaf.join_context]
-    new_leaf = ExtendedLeaf(new_elements, new_model, join_context=new_join_context)
+    new_leaf = ExtendedLeaf(new_elements, new_model, join_context=new_join_context, internal=internal)
     return new_leaf
 
 class expression(object):
@@ -713,6 +729,8 @@ class expression(object):
             """ Return a domain implementing the child_of operator for [(left,child_of,ids)],
                 either as a range using the parent_left/right tree lookup fields
                 (when available), or as an expanded [(left,in,child_ids)] """
+            if not ids:
+                return FALSE_DOMAIN
             if left_model._parent_store and (not left_model.pool._init):
                 # TODO: Improve where joins are implemented for many with '.', replace by:
                 # doms += ['&',(prefix+'.parent_left','<',o.parent_right),(prefix+'.parent_left','>=',o.parent_left)]
@@ -941,11 +959,16 @@ class expression(object):
                             call_null = False
                             push(create_substitution_leaf(leaf, FALSE_LEAF, model))
                     else:
-                        ids2 = select_from_where(cr, column._fields_id, comodel._table, 'id', ids2, operator)
-                        if ids2:
+                        # determine ids1 <-- column._fields_id --- ids2
+                        if comodel._fields[column._fields_id].store:
+                            ids1 = select_from_where(cr, column._fields_id, comodel._table, 'id', ids2, operator)
+                        else:
+                            recs = comodel.browse(cr, SUPERUSER_ID, ids2, {'prefetch_fields': False})
+                            ids1 = recs.mapped(column._fields_id).ids
+                        if ids1:
                             call_null = False
                             o2m_op = 'not in' if operator in NEGATIVE_TERM_OPERATORS else 'in'
-                            push(create_substitution_leaf(leaf, ('id', o2m_op, ids2), model))
+                            push(create_substitution_leaf(leaf, ('id', o2m_op, ids1), model))
 
                 if call_null:
                     o2m_op = 'in' if operator in NEGATIVE_TERM_OPERATORS else 'not in'
@@ -1083,7 +1106,7 @@ class expression(object):
                         'model',
                         right,
                     )
-                    push(create_substitution_leaf(leaf, ('id', inselect_operator, (subselect, params)), model))
+                    push(create_substitution_leaf(leaf, ('id', inselect_operator, (subselect, params)), model, internal=True))
 
                 else:
                     push_result(leaf)

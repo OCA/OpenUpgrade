@@ -190,7 +190,7 @@ class account_move_line(osv.osv):
                 'journal_id': obj_line.journal_id.analytic_journal_id.id,
                 'ref': obj_line.ref,
                 'move_id': obj_line.id,
-                'user_id': uid,
+                'user_id': obj_line.invoice.user_id.id or uid,
                }
 
     def create_analytic_lines(self, cr, uid, ids, context=None):
@@ -371,9 +371,15 @@ class account_move_line(osv.osv):
             context = {}
         if not args:
             return []
-        where = ' AND '.join(map(lambda x: '(abs(sum(debit-credit))'+x[1]+str(x[2])+')',args))
+
+        where = ' AND '.join(
+            '(abs(sum(debit-credit)) %s %%s)' % operator
+            for field, operator, value in args
+        )
+        params = tuple(value for field, operator, value in args)
+
         cursor.execute('SELECT id, SUM(debit-credit) FROM account_move_line \
-                     GROUP BY id, debit, credit having '+where)
+                     GROUP BY id, debit, credit having '+where, params)
         res = cursor.fetchall()
         if not res:
             return [('id', '=', '0')]
@@ -589,7 +595,8 @@ class account_move_line(osv.osv):
         res = super(account_move_line, self)._auto_init(cr, context=context)
         cr.execute('SELECT indexname FROM pg_indexes WHERE indexname = \'account_move_line_journal_id_period_id_index\'')
         if not cr.fetchone():
-            cr.execute('CREATE INDEX account_move_line_journal_id_period_id_index ON account_move_line (journal_id, period_id)')
+            cr.execute('CREATE INDEX account_move_line_journal_id_period_id_index '
+                       'ON account_move_line (journal_id, period_id, state, create_uid, id DESC)')
         cr.execute('SELECT indexname FROM pg_indexes WHERE indexname = %s', ('account_move_line_date_id_index',))
         if not cr.fetchone():
             cr.execute('CREATE INDEX account_move_line_date_id_index ON account_move_line (date DESC, id desc)')
@@ -835,13 +842,12 @@ class account_move_line(osv.osv):
                 ret_line['credit_currency'] = actual_credit
                 ret_line['debit_currency'] = actual_debit
                 if target_currency == company_currency:
-                    actual_debit = debit
-                    actual_credit = credit
-                    total_amount = debit or credit
+                    actual_debit = debit > 0 and amount or 0.0
+                    actual_credit = credit > 0 and amount or 0.0
+                    total_amount = abs(debit - credit)
                 else:
                     ctx = context.copy()
-                    if target_date:
-                        ctx.update({'date': target_date})
+                    ctx.update({'date': line.date})
                     total_amount = currency_obj.compute(cr, uid, line_currency.id, target_currency.id, total_amount, context=ctx)
                     actual_debit = currency_obj.compute(cr, uid, line_currency.id, target_currency.id, actual_debit, context=ctx)
                     actual_credit = currency_obj.compute(cr, uid, line_currency.id, target_currency.id, actual_credit, context=ctx)
@@ -954,7 +960,7 @@ class account_move_line(osv.osv):
         if context is None:
             context = {}
         company_list = []
-        for line in self.browse(cr, uid, ids, context=context):
+        for line in lines:
             if company_list and not line.company_id.id in company_list:
                 raise osv.except_osv(_('Warning!'), _('To reconcile the entries company should be the same for all entries.'))
             company_list.append(line.company_id.id)
