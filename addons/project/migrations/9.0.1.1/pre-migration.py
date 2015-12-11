@@ -39,10 +39,6 @@ column_renames = {
     'project_project': [
         ('state', None),
     ],
-    # TODO (fix) - this makes the migration crash if the column 'members' is not present in source db...
-    'project_project': [
-        ('members', None),
-    ],
 }
 
 
@@ -52,3 +48,6 @@ def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_tables(
         cr, [('project_category', 'project_tags')])
+    if openupgrade.column_exists(cr, 'project_project', 'members'):
+        openupgrade.rename_columns(cr, {'project_project': [('members', None)]})
+
