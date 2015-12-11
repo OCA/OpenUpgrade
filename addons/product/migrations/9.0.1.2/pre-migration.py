@@ -29,6 +29,7 @@ column_renames = {
     ],
 }
 
+
 def convert_template_id_to_product_id(cr):
     openupgrade.logged_query(cr, """
         UPDATE product_price_history ph
@@ -36,6 +37,7 @@ def convert_template_id_to_product_id(cr):
         FROM product_product p
         WHERE ph.product_template_id = p.id
         """)
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
@@ -49,4 +51,5 @@ def migrate(cr, version):
         TYPE VARCHAR
         """)
     # unsure if this xml rename is needed here, trying to resolve product_view.xml not loading when migrating
-    openupgrade.rename_xmlids(cr, [('product.variants_template_tree_view', 'product.product_attribute_value_view_tree')])
+    openupgrade.rename_xmlids(cr, [('product.variants_template_tree_view',
+                                    'product.product_attribute_value_view_tree')])
