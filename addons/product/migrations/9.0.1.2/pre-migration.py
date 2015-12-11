@@ -22,6 +22,13 @@
 from openupgradelib import openupgrade
 
 
+# For 'base' map_values in post-migration
+column_renames = {
+    'product_pricelist_item': [
+        ('base', None),
+    ],
+}
+
 def convert_template_id_to_product_id(cr):
     openupgrade.logged_query(cr, """
         UPDATE product_price_history ph
@@ -41,5 +48,5 @@ def migrate(cr, version):
         ALTER COLUMN base
         TYPE VARCHAR
         """)
-    # unsure if this xml rename is needed here, trying to resolve product_view.xml loading
+    # unsure if this xml rename is needed here, trying to resolve product_view.xml not loading when migrating
     openupgrade.rename_xmlids(cr, [('product.variants_template_tree_view', 'product.product_attribute_value_view_tree')])
