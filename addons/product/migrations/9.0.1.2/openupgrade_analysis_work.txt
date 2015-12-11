@@ -12,20 +12,26 @@ product      / product.packaging        / ul (many2one)                 : DEL re
 product      / product.packaging        / ul_container (many2one)       : DEL relation: product.ul
 product      / product.packaging        / ul_qty (integer)              : DEL 
 product      / product.packaging        / weight (float)                : DEL 
-# Seems almost all packaging's fields were removed, they can't seem to be found anywhere else ---> Nothing to do
+# Seems like almost all packaging's fields were removed, they can't seem to be found anywhere else ---> Nothing to do
 
 product      / product.price.history    / product_id (many2one)         : NEW relation: product.product, required: required
 product      / product.price.history    / product_template_id (many2one): DEL relation: product.template, required: required
 # Done ---> product_template_id converted to product_id
 
-product      / product.pricelist        / item_ids (one2many)           : NEW relation: product.pricelist.item
-# TODO
-
 product      / product.pricelist        / type (selection)              : DEL required: required, selection_keys: function
 # Selection keys are still the same in the wrapper used ---> Nothing to do
 
+product      / product.pricelist        / item_ids (one2many)           : NEW relation: product.pricelist.item
+# TODO - analysis needed
+
 product      / product.pricelist        / version_id (one2many)         : DEL relation: product.pricelist.version
 # TODO - more analysis needed - versions may have been moved to product.pricelist.item (date_start, date_end, etc.)? see below
+
+product      / product.pricelist.item   / date_end (date)               : NEW
+product      / product.pricelist.item   / date_start (date)             : NEW
+product      / product.pricelist.item   / price_version_id (many2one)   : DEL relation: product.pricelist.version, required: required
+product      / product.pricelist.item   / pricelist_id (many2one)       : NEW relation: product.pricelist
+# TODO - more analysis needed - versions may have been moved to product.pricelist.item (date_start, date_end, etc.)?
 
 product      / product.pricelist.item   / applied_on (selection)        : NEW required: required, selection_keys: ['0_product_variant', '1_product', '2_product_category', '3_global'], req_default: 3_global
 # Nothing to do
@@ -37,17 +43,9 @@ product      / product.pricelist.item   / base (selection)              : select
 # Note: nothing is done with 'standard_price' (which is 'Cost') because it was not there in v8
 
 product      / product.pricelist.item   / compute_price (selection)     : NEW selection_keys: ['fixed', 'formula', 'percentage']
-# TODO
-
-product      / product.pricelist.item   / date_end (date)               : NEW
-product      / product.pricelist.item   / date_start (date)             : NEW
-product      / product.pricelist.item   / price_version_id (many2one)   : DEL relation: product.pricelist.version, required: required
-product      / product.pricelist.item   / pricelist_id (many2one)       : NEW relation: product.pricelist
-# TODO - more analysis needed - versions may have been moved to product.pricelist.item (date_start, date_end, etc.)?
-
 product      / product.pricelist.item   / fixed_price (float)           : NEW
 product      / product.pricelist.item   / percent_price (float)         : NEW
- # TODO
+# TODO - analysis needed
 
 product      / product.pricelist.item   / name (char)                   : DEL
 # Nothing to do
@@ -60,10 +58,10 @@ product      / product.product          / message_follower_ids (many2many): rela
 product      / product.product          / message_follower_ids (many2many): type is now 'one2many' ('many2many')
 # Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
 
-product      / product.product          / standard_price (float)        : NEW 
-product      / product.product          / volume (float)                : NEW 
-product      / product.product          / weight (float)                : NEW 
-# TODO
+product      / product.product          / standard_price (float)        : NEW
+product      / product.product          / volume (float)                : NEW
+product      / product.product          / weight (float)                : NEW
+# TODO - analysis needed
 
 product      / product.supplierinfo     / currency_id (many2one)        : NEW relation: res.currency, required: required, req_default: function
 product      / product.supplierinfo     / date_end (date)               : NEW 
@@ -71,20 +69,10 @@ product      / product.supplierinfo     / date_start (date)             : NEW
 product      / product.supplierinfo     / price (float)                 : NEW required: required, req_default: function
 product      / product.supplierinfo     / pricelist_ids (one2many)      : DEL relation: pricelist.partnerinfo
 product      / product.supplierinfo     / product_id (many2one)         : NEW relation: product.product
-# TODO
-
-product      / product.template         / ean13 (char)                  : was renamed to barcode [nothing to to]
-# Nothing to do
+# TODO - analysis needed
 
 product      / product.template         / item_ids (one2many)           : NEW relation: product.pricelist.item
 product      / product.template         / mes_type (selection)          : DEL selection_keys: ['fixed', 'variable']
-# TODO
-
-product      / product.template         / message_follower_ids (many2many): not a function anymore
-product      / product.template         / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
-product      / product.template         / message_follower_ids (many2many): type is now 'one2many' ('many2many')
-# Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
-
 product      / product.template         / sequence (integer)            : NEW
 product      / product.template         / standard_price (float)        : now a function
 product      / product.template         / state (selection)             : selection_keys is now '['draft', 'end', 'obsolete', 'sellable']' ('['', 'draft', 'end', 'obsolete', 'sellable']')
@@ -93,8 +81,16 @@ product      / product.template         / uos_coeff (float)             : module
 product      / product.template         / uos_id (many2one)             : module is now 'product_uos' ('product')
 product      / product.template         / volume (float)                : now a function
 product      / product.template         / weight (float)                : now a function
-product      / product.template         / weight_net (float)            : DEL 
-# TODO
+product      / product.template         / weight_net (float)            : DEL
+# TODO - analysis needed
+
+product      / product.template         / message_follower_ids (many2many): not a function anymore
+product      / product.template         / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+product      / product.template         / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+# Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
+
+product      / product.template         / ean13 (char)                  : was renamed to barcode [nothing to to]
+# Nothing to do
 
 
 ---XML records in module 'product'---
