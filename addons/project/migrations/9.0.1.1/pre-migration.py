@@ -50,4 +50,3 @@ def migrate(cr, version):
         cr, [('project_category', 'project_tags')])
     if openupgrade.column_exists(cr, 'project_project', 'members'):
         openupgrade.rename_columns(cr, {'project_project': [('members', None)]})
-
