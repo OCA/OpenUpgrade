@@ -41,23 +41,12 @@ column_renames = {
     ],
 }
 
-column_drops = {
-    'project_config_settings': [
-        'module_sale_service',
-    ],
-    'project_config_settings': [
-        'module_pad',
-    ],
-    'project_config_settings': [
-        'module_project_issue_sheet',
-    ],
-    'project_config_settings': [
-        'group_time_work_estimation_tasks',
-    ],
-    'project_config_settings': [
-        'module_project_timesheet',
-    ],
-}
+column_drops = [('project_config_settings', 'module_sale_service'),
+                ('project_config_settings', 'module_pad'),
+                ('project_config_settings', 'module_project_issue_sheet'),
+                ('project_config_settings', 'group_time_work_estimation_tasks'),
+                ('project_config_settings', 'module_project_timesheet'),
+                ]
 
 
 @openupgrade.migrate()
