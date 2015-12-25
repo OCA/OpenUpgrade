@@ -214,8 +214,6 @@ def migrate_stock_picking(cr, registry):
         ADD COLUMN %s INTEGER
         """ % openupgrade.get_legacy_name('move_id'))
     # Recreate stock.pack.operation (only for moves that belongs to a picking)
-    stock_move_obj = registry['stock.move']
-    done_move_ids = stock_move_obj.search(cr, uid, [('state', '=', 'done')])
     if not done_move_ids:
         return
     openupgrade.logged_query(
@@ -229,11 +227,11 @@ def migrate_stock_picking(cr, registry):
             product_uom_qty, %s, date, location_id, location_dest_id, 'true'
         FROM stock_move
         WHERE
-            id IN %%s
+            state = 'done'
             AND picking_id IS NOT NULL
         """ % (openupgrade.get_legacy_name('move_id'),
-               openupgrade.get_legacy_name('prodlot_id')),
-        (tuple(done_move_ids), ))
+               openupgrade.get_legacy_name('prodlot_id')), )
+
     # And link it with moves creating stock.move.operation.link records
     openupgrade.logged_query(
         cr,
