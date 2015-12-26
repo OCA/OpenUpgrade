@@ -214,8 +214,6 @@ def migrate_stock_picking(cr, registry):
         ADD COLUMN %s INTEGER
         """ % openupgrade.get_legacy_name('move_id'))
     # Recreate stock.pack.operation (only for moves that belongs to a picking)
-    if not done_move_ids:
-        return
     openupgrade.logged_query(
         cr,
         """
@@ -684,6 +682,12 @@ def migrate_procurement_order(cr, registry):
 
 def migrate_stock_qty(cr, registry):
     """Reprocess stock moves in done state to fill stock.quant."""
+    # First set restrict_lot_id so that quants point to correct moves
+    sql = '''
+        UPDATE stock_move SET restrict_lot_id = {}
+    '''.format(openupgrade.get_legacy_name('prodlot_id'))
+    openupgrade.logged_query(cr,sql)
+
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
         done_moves = env['stock.move'].search(
