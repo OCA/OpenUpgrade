@@ -686,7 +686,7 @@ def migrate_stock_qty(cr, registry):
     sql = '''
         UPDATE stock_move SET restrict_lot_id = {}
     '''.format(openupgrade.get_legacy_name('prodlot_id'))
-    openupgrade.logged_query(cr,sql)
+    openupgrade.logged_query(cr, sql)
 
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
