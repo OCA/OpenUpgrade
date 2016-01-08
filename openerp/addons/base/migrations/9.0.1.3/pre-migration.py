@@ -54,16 +54,7 @@ column_renames = {
 }
 
 
-def remove_obsolete_modules(cr, modules):
-    openupgrade.logged_query(cr, """
-        update ir_module_module set state='to remove'
-        where name in %s
-        and state in ('installed', 'to install', 'to upgrade')
-        """ % (modules,))
-
-
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_columns(cr, column_renames)
-    remove_obsolete_modules(cr, ('web_gantt', 'web_graph', 'web_tests'))

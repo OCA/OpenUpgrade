@@ -22,7 +22,12 @@
 
 import logging
 from openupgradelib import openupgrade
+from openerp.modules.registry import RegistryManager
+from openerp import SUPERUSER_ID
+
+
 logger = logging.getLogger('OpenUpgrade')
+
 
 # copied from pre-migration
 column_copies = {
@@ -57,6 +62,7 @@ def match_company_type_to_is_company(cr):
 
 # updates to ir_ui_view will not clear inherit_id
 def clear_inherit_id(cr):
+    "report.layout used to inherit from web.layout, we must explicitely clear this now"
     openupgrade.logged_query(cr, """
         UPDATE ir_ui_view v
         SET inherit_id = null
@@ -78,6 +84,15 @@ def rename_your_company(cr):
         """)
 
 
+def remove_obsolete_modules(cr, modules_to_remove):
+    pool = RegistryManager.get(cr.dbname)
+    ir_module_module = pool['ir.module.module']
+    domain = [('name', 'in', modules_to_remove),
+              ('state', 'in', ('installed', 'to install', 'to upgrade'))]
+    ids = ir_module_module.search(cr, SUPERUSER_ID, domain)
+    ir_module_module.module_uninstall(cr, SUPERUSER_ID, ids)
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     for table_name in column_copies.keys():
@@ -86,3 +101,4 @@ def migrate(cr, version):
     match_company_type_to_is_company(cr)
     clear_inherit_id(cr)
     rename_your_company(cr)
+    remove_obsolete_modules(cr, ('web_gantt', 'web_graph', 'web_tests'))
