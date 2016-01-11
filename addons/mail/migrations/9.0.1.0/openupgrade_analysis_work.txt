@@ -1,0 +1,211 @@
+---Fields in module 'mail'---
+mail         / ir.ui.menu               / mail_group_id (many2one)      : DEL relation: mail.group
+mail         / mail.channel             / _inherits (False)             : NEW 
+mail         / mail.channel             / alias_id (many2one)           : NEW relation: mail.alias, required: required
+mail         / mail.channel             / channel_last_seen_partner_ids (one2many): NEW relation: mail.channel.partner
+mail         / mail.channel             / channel_message_ids (many2many): NEW relation: mail.message
+mail         / mail.channel             / channel_partner_ids (many2many): NEW relation: res.partner
+mail         / mail.channel             / channel_type (selection)      : NEW selection_keys: ['channel', 'chat']
+mail         / mail.channel             / description (text)            : NEW 
+mail         / mail.channel             / email_send (boolean)          : NEW 
+mail         / mail.channel             / group_ids (many2many)         : NEW relation: res.groups
+mail         / mail.channel             / group_public_id (many2one)    : NEW relation: res.groups
+mail         / mail.channel             / image (binary)                : NEW 
+mail         / mail.channel             / message_follower_ids (one2many): NEW relation: mail.followers
+mail         / mail.channel             / message_ids (one2many)        : NEW relation: mail.message
+mail         / mail.channel             / message_last_post (datetime)  : NEW 
+mail         / mail.channel             / name (char)                   : NEW required: required
+mail         / mail.channel             / public (selection)            : NEW required: required, selection_keys: ['groups', 'private', 'public'], req_default: groups
+mail         / mail.channel             / uuid (char)                   : NEW 
+mail         / mail.channel.partner     / channel_id (many2one)         : NEW relation: mail.channel
+mail         / mail.channel.partner     / fold_state (selection)        : NEW selection_keys: ['closed', 'folded', 'open']
+mail         / mail.channel.partner     / is_minimized (boolean)        : NEW 
+mail         / mail.channel.partner     / is_pinned (boolean)           : NEW 
+mail         / mail.channel.partner     / partner_id (many2one)         : NEW relation: res.partner
+mail         / mail.channel.partner     / seen_message_id (many2one)    : NEW relation: mail.message
+mail         / mail.followers           / channel_id (many2one)         : NEW relation: mail.channel
+mail         / mail.mail                / failure_reason (text)         : NEW 
+mail         / mail.message             / channel_ids (many2many)       : NEW relation: mail.channel
+mail         / mail.message             / needaction_partner_ids (many2many): NEW relation: res.partner
+mail         / mail.message             / notification_ids (one2many)   : DEL relation: mail.notification
+mail         / mail.message             / notified_partner_ids (many2many): DEL relation: res.partner
+mail         / mail.message             / starred_partner_ids (many2many): NEW relation: res.partner
+mail         / mail.message             / tracking_value_ids (one2many) : NEW relation: mail.tracking.value
+mail         / mail.message             / type (selection)              : now required, default = email
+mail         / mail.message             / type (selection)              : was renamed to message_type [nothing to to]
+mail         / mail.message             / vote_user_ids (many2many)     : DEL relation: res.users
+mail         / mail.message.subtype     / internal (boolean)            : NEW 
+mail         / mail.shortcode           / description (char)            : NEW 
+mail         / mail.shortcode           / shortcode_type (selection)    : NEW required: required, selection_keys: ['image', 'text'], req_default: text
+mail         / mail.shortcode           / source (char)                 : NEW required: required
+mail         / mail.shortcode           / substitution (char)           : NEW required: required
+# Nothing to do
+
+mail         / mail.template            / attachment_ids (many2many)    : NEW relation: ir.attachment
+mail         / mail.template            / auto_delete (boolean)         : NEW 
+mail         / mail.template            / body_html (html)              : NEW 
+mail         / mail.template            / copyvalue (char)              : NEW 
+mail         / mail.template            / email_cc (char)               : NEW 
+mail         / mail.template            / email_from (char)             : NEW 
+mail         / mail.template            / email_to (char)               : NEW 
+mail         / mail.template            / lang (char)                   : NEW 
+mail         / mail.template            / mail_server_id (many2one)     : NEW relation: ir.mail_server
+mail         / mail.template            / model_id (many2one)           : NEW relation: ir.model
+mail         / mail.template            / model_object_field (many2one) : NEW relation: ir.model.fields
+mail         / mail.template            / name (char)                   : NEW 
+mail         / mail.template            / null_value (char)             : NEW 
+mail         / mail.template            / partner_to (char)             : NEW 
+mail         / mail.template            / ref_ir_act_window (many2one)  : NEW relation: ir.actions.act_window
+mail         / mail.template            / ref_ir_value (many2one)       : NEW relation: ir.values
+mail         / mail.template            / reply_to (char)               : NEW 
+mail         / mail.template            / report_name (char)            : NEW 
+mail         / mail.template            / report_template (many2one)    : NEW relation: ir.actions.report.xml
+mail         / mail.template            / sub_model_object_field (many2one): NEW relation: ir.model.fields
+mail         / mail.template            / sub_object (many2one)         : NEW relation: ir.model
+mail         / mail.template            / subject (char)                : NEW 
+mail         / mail.template            / use_default_to (boolean)      : NEW 
+mail         / mail.template            / user_signature (boolean)      : NEW 
+# Moved from email.template
+
+mail         / mail.tracking.value      / field (char)                  : NEW required: required
+mail         / mail.tracking.value      / field_desc (char)             : NEW required: required
+mail         / mail.tracking.value      / field_type (char)             : NEW 
+mail         / mail.tracking.value      / mail_message_id (many2one)    : NEW relation: mail.message, required: required
+mail         / mail.tracking.value      / new_value_char (char)         : NEW 
+mail         / mail.tracking.value      / new_value_datetime (datetime) : NEW 
+mail         / mail.tracking.value      / new_value_float (float)       : NEW 
+mail         / mail.tracking.value      / new_value_integer (integer)   : NEW 
+mail         / mail.tracking.value      / new_value_monetary (float)    : NEW 
+mail         / mail.tracking.value      / new_value_text (text)         : NEW 
+mail         / mail.tracking.value      / old_value_char (char)         : NEW 
+mail         / mail.tracking.value      / old_value_datetime (datetime) : NEW 
+mail         / mail.tracking.value      / old_value_float (float)       : NEW 
+mail         / mail.tracking.value      / old_value_integer (integer)   : NEW 
+mail         / mail.tracking.value      / old_value_monetary (float)    : NEW 
+mail         / mail.tracking.value      / old_value_text (text)         : NEW 
+mail         / res.partner              / channel_ids (many2many)       : NEW relation: mail.channel
+mail         / res.partner              / message_follower_ids (many2many): not a function anymore
+mail         / res.partner              / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+mail         / res.partner              / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+mail         / res.users                / chatter_needaction_auto (boolean): NEW 
+mail         / res.users                / display_groups_suggestions (boolean): DEL 
+# Nothing to do
+
+---XML records in module 'mail'---
+NEW ir.actions.act_window: mail.action_contacts
+NEW ir.actions.act_window: mail.action_email_template_tree_all
+NEW ir.actions.act_window: mail.action_view_mail_tracking_value
+NEW ir.actions.act_window: mail.mail_channel_action_view
+NEW ir.actions.act_window: mail.mail_channel_partner_action
+NEW ir.actions.act_window: mail.mail_shortcode_action
+NEW ir.actions.act_window: mail.wizard_email_template_preview
+DEL ir.actions.act_window: mail.action_view_groups
+DEL ir.actions.act_window: mail.action_view_notifications
+NEW ir.actions.act_window.view: mail.action_contacts_view_form
+NEW ir.actions.act_window.view: mail.action_contacts_view_kanban
+NEW ir.actions.act_window.view: mail.action_contacts_view_tree
+NEW ir.actions.client: mail.mail_channel_action_client_chat
+DEL ir.actions.client: mail.action_client_messaging_menu
+DEL ir.actions.client: mail.action_mail_archives_feeds
+DEL ir.actions.client: mail.action_mail_group_feeds
+DEL ir.actions.client: mail.action_mail_inbox_feeds
+DEL ir.actions.client: mail.action_mail_star_feeds
+DEL ir.actions.client: mail.action_mail_to_me_feeds
+DEL ir.actions.server: mail.action_mail_redirect
+DEL ir.actions.todo: base.open_menu
+DEL ir.cron: mail.ir_cron_mail_garbage_collect_attachments
+NEW ir.model.access: mail.access mail_channel_partner_user
+NEW ir.model.access: mail.access_mail_channel_all
+NEW ir.model.access: mail.access_mail_channel_partner_portal
+NEW ir.model.access: mail.access_mail_channel_partner_public
+NEW ir.model.access: mail.access_mail_channel_user
+NEW ir.model.access: mail.access_mail_followers_portal
+NEW ir.model.access: mail.access_mail_mail_portal
+NEW ir.model.access: mail.access_mail_message_portal
+NEW ir.model.access: mail.access_mail_message_subtype_user
+NEW ir.model.access: mail.access_mail_shortcode
+NEW ir.model.access: mail.access_mail_shortcode_portal
+NEW ir.model.access: mail.access_mail_template
+NEW ir.model.access: mail.access_mail_template_system
+NEW ir.model.access: mail.access_mail_tracking_value_all
+NEW ir.model.access: mail.access_mail_tracking_value_portal
+NEW ir.model.access: mail.access_mail_tracking_value_system
+NEW ir.model.access: mail.access_mail_tracking_value_user
+DEL ir.model.access: mail.access_mail_group_all
+DEL ir.model.access: mail.access_mail_group_user
+DEL ir.model.access: mail.access_mail_message_subtype_system
+DEL ir.model.access: mail.access_mail_notification_all
+DEL ir.model.access: mail.access_mail_notification_system
+DEL ir.model.access: mail.access_mail_notification_user
+NEW ir.rule: mail.mail_channel_rule
+NEW ir.rule: mail.mail_message_subtype_rule_public
+DEL ir.rule: mail.mail_followers_read_write_others
+DEL ir.rule: mail.mail_group_public_and_joined
+DEL ir.rule: mail.mail_notification_read_write_own
+NEW ir.ui.menu: mail.mail_channel_menu_root_chat
+NEW ir.ui.menu: mail.mail_channel_menu_settings
+NEW ir.ui.menu: mail.mail_channel_partner_menu
+NEW ir.ui.menu: mail.menu_contacts
+NEW ir.ui.menu: mail.menu_email_templates
+NEW ir.ui.menu: mail.menu_mail_tracking_value
+DEL ir.ui.menu: mail.mail_allgroups
+DEL ir.ui.menu: mail.mail_archivesfeeds
+DEL ir.ui.menu: mail.mail_feeds
+DEL ir.ui.menu: mail.mail_feeds_main
+DEL ir.ui.menu: mail.mail_group_root
+DEL ir.ui.menu: mail.mail_inboxfeeds
+DEL ir.ui.menu: mail.mail_my_stuff
+DEL ir.ui.menu: mail.mail_starfeeds
+DEL ir.ui.menu: mail.mail_tomefeeds
+DEL ir.ui.menu: mail.menu_email_notifications
+NEW ir.ui.view: mail.email_template_form
+NEW ir.ui.view: mail.email_template_preview_form
+NEW ir.ui.view: mail.email_template_tree
+NEW ir.ui.view: mail.mail_channel_partner_view_form
+NEW ir.ui.view: mail.mail_channel_partner_view_tree
+NEW ir.ui.view: mail.mail_channel_view_form
+NEW ir.ui.view: mail.mail_channel_view_kanban
+NEW ir.ui.view: mail.mail_channel_view_search
+NEW ir.ui.view: mail.mail_channel_view_tree
+NEW ir.ui.view: mail.mail_shortcode_view_form
+NEW ir.ui.view: mail.mail_shortcode_view_tree
+NEW ir.ui.view: mail.res_partner_opt_out_search
+NEW ir.ui.view: mail.view_email_template_search
+NEW ir.ui.view: mail.view_mail_tracking_value_form
+NEW ir.ui.view: mail.view_mail_tracking_value_tree
+NEW ir.ui.view: mail.view_server_action_form_template
+DEL ir.ui.view: mail.view_group_form
+DEL ir.ui.view: mail.view_group_kanban
+DEL ir.ui.view: mail.view_group_search
+DEL ir.ui.view: mail.view_group_tree
+DEL ir.ui.view: mail.view_notification_tree
+NEW mail.channel: mail.channel_all_employees
+DEL mail.group: mail.group_all_employees
+NEW mail.message.subtype: mail.mt_note
+NEW mail.shortcode: mail.mail_smiley_beer
+NEW mail.shortcode: mail.mail_smiley_boar
+NEW mail.shortcode: mail.mail_smiley_cheeky
+NEW mail.shortcode: mail.mail_smiley_confused
+NEW mail.shortcode: mail.mail_smiley_cookie
+NEW mail.shortcode: mail.mail_smiley_ghost
+NEW mail.shortcode: mail.mail_smiley_heart
+NEW mail.shortcode: mail.mail_smiley_kitten
+NEW mail.shortcode: mail.mail_smiley_laugh
+NEW mail.shortcode: mail.mail_smiley_man
+NEW mail.shortcode: mail.mail_smiley_man_with_turban
+NEW mail.shortcode: mail.mail_smiley_musti
+NEW mail.shortcode: mail.mail_smiley_neutral
+NEW mail.shortcode: mail.mail_smiley_open_mouth
+NEW mail.shortcode: mail.mail_smiley_pinky
+NEW mail.shortcode: mail.mail_smiley_poop
+NEW mail.shortcode: mail.mail_smiley_postal_horn
+NEW mail.shortcode: mail.mail_smiley_sad
+NEW mail.shortcode: mail.mail_smiley_scream
+NEW mail.shortcode: mail.mail_smiley_smile
+NEW mail.shortcode: mail.mail_smiley_stuck
+NEW mail.shortcode: mail.mail_smiley_thumbsdown
+NEW mail.shortcode: mail.mail_smiley_thumbsup
+NEW mail.shortcode: mail.mail_smiley_troll
+NEW mail.shortcode: mail.mail_smiley_wink
+NEW mail.template: mail.email_template_partner
+NEW mail.template: mail.mail_template_data_notification_email_default
