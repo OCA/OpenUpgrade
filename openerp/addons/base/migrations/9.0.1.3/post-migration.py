@@ -84,6 +84,25 @@ def rename_your_company(cr):
         """)
 
 
+# updates to ir_ui_view will not clear inherit_id
+def set_filter_active(cr):
+    openupgrade.logged_query(cr, """
+        UPDATE ir_filters
+        SET active = True
+        """)
+
+
+def precalculate_checksum(cr):
+    pool = RegistryManager.get(cr.dbname)
+    ir_attachment = pool['ir.attachment']
+    for attach_id in ir_attachment.search(cr, SUPERUSER_ID, []):
+        attach = ir_attachment.browse(cr, SUPERUSER_ID, attach_id)
+        # as done in ir_attachment._data_set()
+        value = attach.db_datas
+        bin_data = value and value.decode('base64') or ''  # empty string to compute its hash
+        attach.checksum = attach._compute_checksum(bin_data)
+
+
 def remove_obsolete_modules(cr, modules_to_remove):
     pool = RegistryManager.get(cr.dbname)
     ir_module_module = pool['ir.module.module']
@@ -101,4 +120,6 @@ def migrate(cr, version):
     match_company_type_to_is_company(cr)
     clear_inherit_id(cr)
     rename_your_company(cr)
+    set_filter_active(cr)
+    precalculate_checksum(cr)
     remove_obsolete_modules(cr, ('web_gantt', 'web_graph', 'web_tests'))
