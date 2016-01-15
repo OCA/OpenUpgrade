@@ -35,7 +35,7 @@ def convert_template_id_to_product_id(cr):
         UPDATE product_price_history ph
         SET product_id = p.id
         FROM product_product p
-        WHERE ph.product_template_id = p.id
+        WHERE ph.product_template_id = p.product_tmpl_id
         """)
 
 
