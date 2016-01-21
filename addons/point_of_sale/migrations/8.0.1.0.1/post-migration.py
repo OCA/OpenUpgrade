@@ -175,8 +175,8 @@ def set_proxy_ip(cr, pool):
     pc_ids = pc_obj.search(cr, SUPERUSER_ID, [])
     for pc in pc_obj.browse(cr, SUPERUSER_ID, pc_ids):
         if (
-            pc.iface_cashdrawer or pc.iface_payment_terminal
-            or pc.iface_electronic_scale or pc.iface_print_via_proxy
+            pc.iface_cashdrawer or pc.iface_payment_terminal or
+            pc.iface_electronic_scale or pc.iface_print_via_proxy
         ):
             pc.write({'proxy_ip': 'http://localhost:8069'})
 
