@@ -2,8 +2,8 @@
 ##############################################################################
 #
 #    OpenUpgrade module for Odoo
-#    @copyright 2014-Today: Odoo Community Association
-#    @author: Sylvain LE GAL <https://twitter.com/legalsylvain>
+#    @copyright 2015-Today: Odoo Community Association
+#    @author: Stephane LE CORNEC
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
