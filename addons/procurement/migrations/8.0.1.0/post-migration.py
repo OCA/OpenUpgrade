@@ -26,16 +26,29 @@ from openerp import pooler, SUPERUSER_ID
 def post_messages(cr, pool):
     """ The obsolete message and note fields on procurements are replaced
     by posting messages on the chatter. Posting existing messages here."""
-    procurement_obj = pool['procurement.order']
-    for field in ('note', 'message'):
-        cr.execute(
-            """
-            SELECT id, {column} FROM procurement_order
-            WHERE {column} IS NOT NULL AND {column} != ''
-            """.format(column=openupgrade.get_legacy_name(field)))
-        for proc_id, message in cr.fetchall():
-            procurement_obj.message_post(
-                cr, SUPERUSER_ID, [proc_id], body=message)
+    admin_user = pool['res.users'].browse(cr, SUPERUSER_ID, SUPERUSER_ID)
+    admin_partner_id = admin_user.partner_id.id
+
+    # bypass message_post because it's forbiddingly slow
+    cr.execute(
+        """
+        INSERT INTO mail_message
+        (create_uid, create_date, author_id, model, res_id, body, type)
+        SELECT %s, now(), %s, 'procurement.order', id,
+        '<p>'||replace(replace({note}, '<', '&lt;'), '&', '&quot;')||'</p>',
+        'notification'
+        FROM procurement_order WHERE {note} IS NOT NULL AND {note} <> ''
+        UNION
+        SELECT %s, now(), %s, 'procurement.order', id,
+        '<p>'||replace(replace({message}, '<', '&lt;'), '&', '&quot;')||'</p>',
+        'notification'
+        FROM procurement_order WHERE {message} IS NOT NULL AND {message} <> ''
+        """.format(
+            note=openupgrade.get_legacy_name('note'),
+            message=openupgrade.get_legacy_name('message'),
+        ),
+        (SUPERUSER_ID, admin_partner_id, SUPERUSER_ID, admin_partner_id)
+    )
 
 
 def process_states(cr):
