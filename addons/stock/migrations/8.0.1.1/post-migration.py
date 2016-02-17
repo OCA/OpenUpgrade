@@ -21,7 +21,7 @@
 ##############################################################################
 
 import logging
-from openerp import api, SUPERUSER_ID
+from openerp import api, models, SUPERUSER_ID
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID as uid
@@ -697,8 +697,10 @@ def migrate_stock_qty(cr, registry):
             'Reprocess %s stock moves in state done to fill stock.quant',
             len(done_moves.ids))
         done_moves.write({'state': 'draft'})
-        transitions = openupgrade.deactivate_workflow_transitions(
-            cr, 'stock.picking')
+        # disable all workflow steps - massive performance boost, no side
+        # effects of workflow transitions with yet unknown condition
+        set_workflow_org = models.BaseModel.step_workflow
+        models.BaseModel.step_workflow = lambda *args, **kwargs: None
         # Process moves using action_done.
         for move in done_moves:
             date_done = move.date
@@ -709,7 +711,7 @@ def migrate_stock_qty(cr, registry):
             quants_to_rewrite = move.quant_ids.filtered(
                 lambda x: x.in_date > date_done)
             quants_to_rewrite.write({'in_date': date_done})
-        openupgrade.reactivate_workflow_transitions(cr, transitions)
+        models.BaseModel.step_workflow = set_workflow_org
 
 
 def migrate_stock_production_lot(cr, registry):
