@@ -50,6 +50,4 @@ def migrate(cr, version):
         ALTER COLUMN base
         TYPE VARCHAR
         """)
-    # unsure if this xml rename is needed here, trying to resolve product_view.xml not loading when migrating
-    openupgrade.rename_xmlids(cr, [('product.variants_template_tree_view',
-                                    'product.product_attribute_value_view_tree')])
+    openupgrade.rename_columns(cr, column_renames)
