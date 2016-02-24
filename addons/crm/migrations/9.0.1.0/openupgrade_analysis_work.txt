@@ -1,0 +1,287 @@
+---Fields in module 'crm'---
+crm          / calendar.event           / phonecall_id (many2one)       : DEL relation: crm.phonecall
+crm          / crm.activity             / _inherits (False)             : NEW 
+crm          / crm.activity             / activity_1_id (many2one)      : NEW relation: crm.activity
+crm          / crm.activity             / activity_2_id (many2one)      : NEW relation: crm.activity
+crm          / crm.activity             / activity_3_id (many2one)      : NEW relation: crm.activity
+crm          / crm.activity             / days (integer)                : NEW 
+crm          / crm.activity             / sequence (integer)            : NEW 
+crm          / crm.activity             / subtype_id (many2one)         : NEW relation: mail.message.subtype, required: required
+crm          / crm.activity             / team_id (many2one)            : NEW relation: crm.team
+crm          / crm.lead                 / campaign_id (many2one)        : relation is now 'utm.campaign' ('crm.tracking.campaign')
+crm          / crm.lead                 / categ_ids (many2many)         : DEL relation: crm.case.categ
+crm          / crm.lead                 / date_conversion (datetime)    : NEW 
+crm          / crm.lead                 / last_activity_id (many2one)   : NEW relation: crm.activity
+crm          / crm.lead                 / lost_reason (many2one)        : NEW relation: crm.lost.reason
+crm          / crm.lead                 / medium_id (many2one)          : relation is now 'utm.medium' ('crm.tracking.medium')
+crm          / crm.lead                 / message_follower_ids (many2many): not a function anymore
+crm          / crm.lead                 / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+crm          / crm.lead                 / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+crm          / crm.lead                 / next_activity_id (many2one)   : NEW relation: crm.activity
+crm          / crm.lead                 / payment_mode (many2one)       : DEL relation: crm.payment.mode
+crm          / crm.lead                 / planned_cost (float)          : DEL 
+crm          / crm.lead                 / priority (selection)          : selection_keys is now '['0', '1', '2', '3']' ('['0', '1', '2', '3', '4']')
+crm          / crm.lead                 / ref (reference)               : DEL 
+crm          / crm.lead                 / ref2 (reference)              : DEL 
+# Not checked
+
+crm          / crm.lead                 / section_id (many2one)         : relation is now 'crm.team' ('crm.case.section')
+crm          / crm.lead                 / section_id (many2one)         : was renamed to team_id [nothing to to]
+# TODO - rename table crm.case.section to crm.team ** must be done in sales_team
+
+
+crm          / crm.lead                 / source_id (many2one)          : relation is now 'utm.source' ('crm.tracking.source')
+crm          / crm.lead                 / stage_id (many2one)           : relation is now 'crm.stage' ('crm.case.stage')
+crm          / crm.lead                 / tag_ids (many2many)           : NEW relation: crm.lead.tag
+crm          / crm.lead                 / type (selection)              : now required, default = function
+crm          / crm.lead                 / website_message_ids (one2many): NEW relation: mail.message
+crm          / crm.lead.tag             / color (integer)               : NEW 
+crm          / crm.lead.tag             / name (char)                   : NEW required: required
+crm          / crm.lead.tag             / team_id (many2one)            : NEW relation: crm.team
+crm          / crm.lost.reason          / active (boolean)              : NEW 
+crm          / crm.lost.reason          / name (char)                   : NEW required: required
+crm          / crm.stage                / fold (boolean)                : NEW 
+crm          / crm.stage                / legend_priority (text)        : NEW 
+crm          / crm.stage                / name (char)                   : NEW required: required
+crm          / crm.stage                / on_change (boolean)           : NEW 
+crm          / crm.stage                / probability (float)           : NEW required: required, req_default: 10.0
+crm          / crm.stage                / requirements (text)           : NEW 
+crm          / crm.stage                / sequence (integer)            : NEW 
+crm          / crm.stage                / team_ids (many2many)          : NEW relation: crm.team
+crm          / crm.stage                / type (selection)              : NEW required: required, selection_keys: ['both', 'lead', 'opportunity'], req_default: both
+crm          / crm.team                 / _inherits (False)             : NEW 
+crm          / crm.team                 / alias_id (many2one)           : NEW relation: mail.alias, required: required
+crm          / crm.team                 / resource_calendar_id (many2one): NEW relation: resource.calendar
+crm          / crm.team                 / stage_ids (many2many)         : NEW relation: crm.stage
+crm          / crm.team                 / use_leads (boolean)           : NEW 
+crm          / crm.team                 / use_opportunities (boolean)   : NEW 
+crm          / res.partner              / phonecall_ids (one2many)      : DEL relation: crm.phonecall
+crm          / res.users                / target_sales_done (integer)   : NEW 
+crm          / res.users                / target_sales_won (integer)    : NEW 
+---XML records in module 'crm'---
+NEW crm.activity: crm.crm_activity_data_call
+NEW crm.activity: crm.crm_activity_data_email
+NEW crm.activity: crm.crm_activity_data_meeting
+DEL crm.case.categ: crm.categ_oppor1
+DEL crm.case.categ: crm.categ_oppor2
+DEL crm.case.categ: crm.categ_oppor3
+DEL crm.case.categ: crm.categ_oppor4
+DEL crm.case.categ: crm.categ_oppor5
+DEL crm.case.categ: crm.categ_oppor6
+DEL crm.case.categ: crm.categ_oppor7
+DEL crm.case.categ: crm.categ_oppor8
+DEL crm.case.categ: crm.categ_phone1
+DEL crm.case.categ: crm.categ_phone2
+DEL crm.case.section: sales_team.section_sales_department
+DEL crm.case.stage: crm.stage_lead1
+DEL crm.case.stage: crm.stage_lead2
+DEL crm.case.stage: crm.stage_lead3
+DEL crm.case.stage: crm.stage_lead4
+DEL crm.case.stage: crm.stage_lead5
+DEL crm.case.stage: crm.stage_lead6
+DEL crm.case.stage: crm.stage_lead7
+NEW crm.lost.reason: crm.lost_reason_1
+NEW crm.lost.reason: crm.lost_reason_2
+NEW crm.lost.reason: crm.lost_reason_3
+DEL crm.payment.mode: crm.payment_mode_1
+DEL crm.payment.mode: crm.payment_mode_2
+DEL crm.payment.mode: crm.payment_mode_3
+DEL crm.payment.mode: crm.payment_mode_4
+NEW crm.stage: crm.stage_lead1
+NEW crm.stage: crm.stage_lead2
+NEW crm.stage: crm.stage_lead3
+NEW crm.stage: crm.stage_lead5
+NEW crm.team: sales_team.team_sales_department
+DEL crm.tracking.medium: crm.crm_medium_banner
+DEL crm.tracking.medium: crm.crm_medium_direct
+DEL crm.tracking.medium: crm.crm_medium_email
+DEL crm.tracking.medium: crm.crm_medium_phone
+DEL crm.tracking.medium: crm.crm_medium_website
+DEL crm.tracking.source: crm.crm_source_mailing
+DEL crm.tracking.source: crm.crm_source_newsletter
+DEL crm.tracking.source: crm.crm_source_search_engine
+DEL email.template: crm.email_template_opportunity_mail
+DEL email.template: crm.email_template_opportunity_reminder_mail
+NEW ir.actions.act_window: crm.action_opportunity_form
+NEW ir.actions.act_window: crm.action_partner_deduplicate
+NEW ir.actions.act_window: crm.crm_activity_action
+NEW ir.actions.act_window: crm.crm_activity_report_action
+NEW ir.actions.act_window: crm.crm_activity_report_action_team
+NEW ir.actions.act_window: crm.crm_lead_action_activities
+NEW ir.actions.act_window: crm.crm_lead_all_leads
+NEW ir.actions.act_window: crm.crm_lead_lost_action
+NEW ir.actions.act_window: crm.crm_lead_opportunities
+NEW ir.actions.act_window: crm.crm_lead_opportunities_tree_view
+NEW ir.actions.act_window: crm.crm_lead_tag_action
+NEW ir.actions.act_window: crm.crm_lost_reason_action
+NEW ir.actions.act_window: crm.crm_opportunity_report_action
+NEW ir.actions.act_window: crm.crm_opportunity_report_action_graph
+NEW ir.actions.act_window: crm.crm_opportunity_report_action_lead
+NEW ir.actions.act_window: crm.crm_stage_act
+NEW ir.actions.act_window: crm.crm_team_act_tree
+DEL ir.actions.act_window: crm.act_crm_opportunity_crm_phonecall_new
+DEL ir.actions.act_window: crm.action_crm_payment_mode
+DEL ir.actions.act_window: crm.action_report_crm_lead
+DEL ir.actions.act_window: crm.action_report_crm_opportunity
+DEL ir.actions.act_window: crm.action_report_crm_phonecall
+DEL ir.actions.act_window: crm.base_partner_merge_automatic_act
+DEL ir.actions.act_window: crm.crm_case_categ_phone0
+DEL ir.actions.act_window: crm.crm_case_categ_phone_incoming0
+DEL ir.actions.act_window: crm.crm_case_categ_phone_outgoing0
+DEL ir.actions.act_window: crm.crm_case_category_act_leads_all
+DEL ir.actions.act_window: crm.crm_case_category_act_oppor11
+DEL ir.actions.act_window: crm.crm_case_section_act_tree
+DEL ir.actions.act_window: crm.crm_case_stage_act
+DEL ir.actions.act_window: crm.crm_lead_categ_action
+DEL ir.actions.act_window: crm.crm_phonecall_categ_action
+DEL ir.actions.act_window: crm.crm_segmentation-act
+DEL ir.actions.act_window: crm.crm_segmentation_tree-act
+DEL ir.actions.act_window: crm.crm_tracking_campaign_act
+DEL ir.actions.act_window: crm.crm_tracking_medium_action
+DEL ir.actions.act_window: crm.crm_tracking_source_action
+DEL ir.actions.act_window: crm.phonecall_to_phonecall_act
+DEL ir.actions.act_window.view: crm.action_crm_tag_calendar_phone0
+DEL ir.actions.act_window.view: crm.action_crm_tag_calendar_phone_incoming0
+DEL ir.actions.act_window.view: crm.action_crm_tag_calendar_phone_outgoing0
+DEL ir.actions.act_window.view: crm.action_crm_tag_form_phone0
+DEL ir.actions.act_window.view: crm.action_crm_tag_form_phone_incoming0
+DEL ir.actions.act_window.view: crm.action_crm_tag_form_phone_outgoing0
+DEL ir.actions.act_window.view: crm.action_crm_tag_tree_phone0
+DEL ir.actions.act_window.view: crm.action_crm_tag_tree_phone_incoming0
+DEL ir.actions.act_window.view: crm.action_crm_tag_tree_phone_outgoing0
+DEL ir.actions.act_window.view: crm.action_report_crm_lead_graph
+DEL ir.actions.act_window.view: crm.action_report_crm_opportunity_graph
+DEL ir.actions.act_window.view: crm.action_report_crm_phonecall_graph
+NEW ir.actions.server: crm.action_your_pipeline
+NEW ir.filters: crm.ir_filters_crm_opportunity_report_next_action
+DEL ir.filters: crm.filter_crm_phonecall_delay_to_close
+DEL ir.filters: crm.filter_crm_phonecall_phone_call_to_do
+DEL ir.filters: crm.filter_crm_phonecall_sales_team
+DEL ir.filters: crm.filter_leads_country
+DEL ir.filters: crm.filter_leads_long_term_revenue
+DEL ir.filters: crm.filter_leads_overpassed_deadline
+DEL ir.filters: crm.filter_leads_revenue_per_lead
+DEL ir.filters: crm.filter_leads_salesperson
+DEL ir.filters: crm.filter_opportunity_top_opportunities
+NEW ir.model.access: crm.access_crm_activity_manager
+NEW ir.model.access: crm.access_crm_activity_report_user
+NEW ir.model.access: crm.access_crm_activity_salesman
+NEW ir.model.access: crm.access_crm_activity_user
+NEW ir.model.access: crm.access_crm_lead_tag
+NEW ir.model.access: crm.access_crm_lead_tag_manager
+NEW ir.model.access: crm.access_crm_lead_tag_salesman
+NEW ir.model.access: crm.access_crm_lost_reason_manager
+NEW ir.model.access: crm.access_crm_lost_reason_salesman
+NEW ir.model.access: crm.access_crm_lost_reason_user
+NEW ir.model.access: crm.access_crm_stage
+NEW ir.model.access: crm.access_crm_stage_manager
+DEL ir.model.access: crm.access_crm_case_categ
+DEL ir.model.access: crm.access_crm_case_categ_manager
+DEL ir.model.access: crm.access_crm_case_stage
+DEL ir.model.access: crm.access_crm_case_stage_manager
+DEL ir.model.access: crm.access_crm_lead_report_user
+DEL ir.model.access: crm.access_crm_payment_mode
+DEL ir.model.access: crm.access_crm_payment_mode_user
+DEL ir.model.access: crm.access_crm_phonecall
+DEL ir.model.access: crm.access_crm_phonecall_manager
+DEL ir.model.access: crm.access_crm_phonecall_partner_manager
+DEL ir.model.access: crm.access_crm_phonecall_report_manager
+DEL ir.model.access: crm.access_crm_phonecall_report_user
+DEL ir.model.access: crm.access_crm_segmentation
+DEL ir.model.access: crm.access_crm_segmentation_line
+DEL ir.model.access: crm.access_crm_segmentation_line_user
+DEL ir.model.access: crm.access_crm_segmentation_user
+DEL ir.model.access: crm.access_crm_tracking_campaign_manager
+DEL ir.model.access: crm.access_crm_tracking_campaign_user
+DEL ir.model.access: crm.access_crm_tracking_medium_manager
+DEL ir.model.access: crm.access_crm_tracking_medium_user
+DEL ir.model.access: crm.access_crm_tracking_source_manager
+DEL ir.model.access: crm.access_crm_tracking_source_user
+DEL ir.model.access: crm.access_res_partner_bank_type_crm_user
+DEL ir.rule: crm.crm_rule_all_phones
+DEL ir.rule: crm.crm_rule_personal_phonecall
+NEW ir.ui.menu: base.menu_sale_general_settings
+NEW ir.ui.menu: crm.crm_activity_menu
+NEW ir.ui.menu: crm.crm_activity_report_menu
+NEW ir.ui.menu: crm.crm_lead_menu_activities
+NEW ir.ui.menu: crm.crm_opportunity_report_menu
+NEW ir.ui.menu: crm.crm_opportunity_report_menu_lead
+NEW ir.ui.menu: crm.menu_crm_lost_reason
+DEL ir.ui.menu: base.menu_base_config
+DEL ir.ui.menu: crm.menu_crm_case_phone
+DEL ir.ui.menu: crm.menu_crm_case_phone_inbound
+DEL ir.ui.menu: crm.menu_crm_case_phone_outbound
+DEL ir.ui.menu: crm.menu_crm_case_phonecall-act
+DEL ir.ui.menu: crm.menu_crm_config_phonecall
+DEL ir.ui.menu: crm.menu_crm_payment_mode_act
+DEL ir.ui.menu: crm.menu_crm_segmentation-act
+DEL ir.ui.menu: crm.menu_crm_tracking_campaign_act
+DEL ir.ui.menu: crm.menu_crm_tracking_source
+DEL ir.ui.menu: crm.menu_report_crm_leads_tree
+DEL ir.ui.menu: crm.menu_report_crm_opportunities_tree
+DEL ir.ui.menu: crm.menu_report_crm_phonecalls_tree
+DEL ir.ui.menu: crm.partner_merge_automatic_menu
+DEL ir.ui.menu: crm.root_menu
+NEW ir.ui.view: crm.assets_backend
+NEW ir.ui.view: crm.crm_activity_report_view_graph
+NEW ir.ui.view: crm.crm_activity_report_view_pivot
+NEW ir.ui.view: crm.crm_activity_report_view_search
+NEW ir.ui.view: crm.crm_activity_view_form
+NEW ir.ui.view: crm.crm_activity_view_search
+NEW ir.ui.view: crm.crm_activity_view_tree
+NEW ir.ui.view: crm.crm_case_pivot_view_leads
+NEW ir.ui.view: crm.crm_lead_lost_view_form
+NEW ir.ui.view: crm.crm_lead_tag_form
+NEW ir.ui.view: crm.crm_lead_tag_tree
+NEW ir.ui.view: crm.crm_lead_view_tree_activity
+NEW ir.ui.view: crm.crm_lost_reason_view_form
+NEW ir.ui.view: crm.crm_lost_reason_view_search
+NEW ir.ui.view: crm.crm_opportunity_report_view_graph
+NEW ir.ui.view: crm.crm_opportunity_report_view_graph_lead
+NEW ir.ui.view: crm.crm_opportunity_report_view_pivot
+NEW ir.ui.view: crm.crm_opportunity_report_view_pivot_lead
+NEW ir.ui.view: crm.crm_opportunity_report_view_search
+NEW ir.ui.view: crm.crm_planner
+NEW ir.ui.view: crm.crm_stage_form
+NEW ir.ui.view: crm.crm_stage_tree
+NEW ir.ui.view: crm.crm_team_salesteams_view_kanban
+DEL ir.ui.view: crm.crm_case_categ-view
+DEL ir.ui.view: crm.crm_case_categ_tree-view
+DEL ir.ui.view: crm.crm_case_inbound_phone_tree_view
+DEL ir.ui.view: crm.crm_case_phone_calendar_view
+DEL ir.ui.view: crm.crm_case_phone_form_view
+DEL ir.ui.view: crm.crm_case_phone_tree_view
+DEL ir.ui.view: crm.crm_case_section_salesteams_view_kanban
+DEL ir.ui.view: crm.crm_case_stage_form
+DEL ir.ui.view: crm.crm_case_stage_tree
+DEL ir.ui.view: crm.crm_segmentation-view
+DEL ir.ui.view: crm.crm_segmentation_line-view
+DEL ir.ui.view: crm.crm_segmentation_line_tree-view
+DEL ir.ui.view: crm.crm_segmentation_tree-view
+DEL ir.ui.view: crm.crm_tracking_campaign_form
+DEL ir.ui.view: crm.crm_tracking_campaign_tree
+DEL ir.ui.view: crm.crm_tracking_medium_view_form
+DEL ir.ui.view: crm.crm_tracking_medium_view_tree
+DEL ir.ui.view: crm.crm_tracking_source_view_form
+DEL ir.ui.view: crm.crm_tracking_source_view_tree
+DEL ir.ui.view: crm.phonecall_to_phonecall_view
+DEL ir.ui.view: crm.view_crm_case_phonecalls_filter
+DEL ir.ui.view: crm.view_crm_payment_mode_form
+DEL ir.ui.view: crm.view_crm_payment_mode_tree
+DEL ir.ui.view: crm.view_report_crm_lead_filter
+DEL ir.ui.view: crm.view_report_crm_lead_graph
+DEL ir.ui.view: crm.view_report_crm_lead_graph_two
+DEL ir.ui.view: crm.view_report_crm_opportunity_filter
+DEL ir.ui.view: crm.view_report_crm_opportunity_graph
+DEL ir.ui.view: crm.view_report_crm_phonecall_filter
+DEL ir.ui.view: crm.view_report_crm_phonecall_graph
+NEW mail.template: crm.email_template_opportunity_mail
+NEW mail.template: crm.email_template_opportunity_reminder_mail
+NEW res.groups: crm.group_use_lead
+DEL res.groups: crm.group_fund_raising
+DEL res.groups: crm.group_scheduled_calls
+NEW web.planner: crm.planner_crm
+NEW web.tip: crm.crm_tip_2
+NEW web.tip: crm.crm_tip_4
+NEW web.tip: crm.crm_tip_5
+NEW web.tip: crm.crm_tip_6
