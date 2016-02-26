@@ -46,6 +46,10 @@ def update_xmlids(cr):
         where name in {0}
         and module = 'email_template'
         """.format(shared_xmlids))
+    openupgrade.logged_query(cr, """
+        update ir_model_data set model='mail.template'
+        where model = 'email.template'
+        """)
 
 
 @openupgrade.migrate()
