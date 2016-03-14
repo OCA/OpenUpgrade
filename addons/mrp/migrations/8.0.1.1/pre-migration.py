@@ -52,24 +52,12 @@ def check_production_state(cr):
     """Check if a record with a state that is no longer supported
     (picking_except) exists in mrp_production and adjust it (to draft).
     """
-    if openupgrade.check_values_selection_field(
-            cr, 'mrp_production', 'state',
-            ['cancel', 'confirmed', 'done', 'draft', 'in_production',
-             'ready']):
-        # if selection value doesn't exist, perform nothing
-        return
     # Set picking_except to draft
-    sql = """
-        SELECT id
-        FROM mrp_production
-        WHERE state = 'picking_except'"""
-    cr.execute(sql)
-    prod_ids = tuple([x for x, in tuple(cr.fetchall())])
     sql = """
         UPDATE mrp_production
         SET state = 'draft'
-        WHERE id in %s"""
-    openupgrade.logged_query(cr, sql, (tuple(prod_ids), ))
+        WHERE state = 'picking_except'"""
+    openupgrade.logged_query(cr, sql)
 
 
 @openupgrade.migrate()
