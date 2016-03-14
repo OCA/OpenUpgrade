@@ -190,8 +190,14 @@ def create_users_partner(cr):
             "%s,%s,'no-message','no-message','no-message','no-message') "
             "RETURNING id")
     for row in cr.fetchall():
-        cr.execute(sql_insert_partner, row[1:])
-        partner_id = cr.fetchone()[0]
+        cr.execute(
+            "SELECT id FROM res_partner "
+            "WHERE name = %s LIMIT 1", (row[1],))
+        partner_id = cr.fetchone()
+        partner_id = partner_id and partner_id[0] or None
+        if not partner_id:
+            cr.execute(sql_insert_partner, row[1:])
+            partner_id = cr.fetchone()[0]
         cr.execute(
             "UPDATE res_users "
             "SET partner_id = %s, "
