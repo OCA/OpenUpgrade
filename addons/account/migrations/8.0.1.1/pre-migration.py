@@ -1,25 +1,10 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright (C) 2014 Akretion (http://www.akretion.com/)
-#    @author: Alexis de Lattre <alexis.delattre@akretion.com>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2014 Alexis de Lattre <alexis.delattre@akretion.com>
+# © 2016 Pedro M. Baeza
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.openupgrade import openupgrade
+from openupgradelib import openupgrade
+
 
 column_renames = {
     'account_bank_statement_line': [
@@ -56,7 +41,17 @@ def migrate(cr, version):
             'analytic_entries_report', 'account_entries_report',
             'report_invoice_created', 'report_aged_receivable']:
         cr.execute('drop view if exists %s cascade' % view)
-
+    # Avoid inconsistencies between partner_id in account_invoice_line and
+    # account invoice
+    openupgrade.logged_query(
+        cr, """
+        UPDATE account_invoice_line ail
+        SET partner_id=ai.partner_id
+        FROM account_invoice ai
+        WHERE
+            ail.invoice_id = ai.id AND
+            ail.partner_id != ai.partner_id;
+        """)
     # delete a view from obsolete module account_report_company that causes
     # migration of the account module not to happen cleanly
     cr.execute(
