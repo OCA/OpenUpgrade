@@ -78,13 +78,13 @@ def import_crm_meeting(cr):
     # the values we update now caused the new constrained to be invalid
     cr.execute(
         '''alter table meeting_category_rel
-        drop constraint meeting_category_rel_event_id_fkey''')
+        drop constraint if exists meeting_category_rel_event_id_fkey''')
     # we need to disable this constraint temporarily because some new event_id
     # might collide during the update with the old event_id of another row
     # to be updated yet
     cr.execute(
         '''alter table meeting_category_rel
-        drop constraint meeting_category_rel_event_id_type_id_key''')
+        drop constraint if exists meeting_category_rel_event_id_type_id_key''')
     cr.execute(
         '''update meeting_category_rel
         set event_id=calendar_event.id
