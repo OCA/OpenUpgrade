@@ -1,0 +1,18 @@
+---Fields in module 'crm_helpdesk'---
+crm_helpdesk / crm.helpdesk             / channel_id (many2one)         : relation is now 'crm.tracking.medium' ('crm.case.channel')
+# Field renamed
+
+crm_helpdesk / crm.helpdesk             / message_last_post (datetime)  : NEW
+# Field initialized
+
+crm_helpdesk / crm.helpdesk             / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['1', '2', '3', '4', '5']')
+# Values mapped
+
+crm_helpdesk / crm.helpdesk             / website_message_ids (one2many): NEW relation: mail.message
+# Nothing to do
+
+---XML records in module 'crm_helpdesk'---
+DEL ir.actions.act_window.view: crm_helpdesk.action_report_crm_helpdesk_tree
+DEL ir.ui.menu: base.menu_project_report
+DEL ir.ui.view: crm_helpdesk.view_report_crm_helpdesk_tree
+# Deleted views and menus - Nothing to do
