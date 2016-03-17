@@ -160,8 +160,8 @@ class openupgrade_analysis_wizard(TransientModel):
                 continue
             if key not in modules:
                 general += (
-                    "ERROR: module not in list of installed modules:\n"
-                    + contents)
+                    "ERROR: module not in list of installed modules:\n" +
+                    contents)
                 continue
             if wizard.write:
                 error = write_file(
