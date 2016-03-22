@@ -21,7 +21,7 @@
 ##############################################################################
 import logging
 from openerp.openupgrade import openupgrade, openupgrade_80
-from openerp import pooler, SUPERUSER_ID as uid
+from openerp import pooler, SUPERUSER_ID
 from datetime import datetime
 
 logger = logging.getLogger('OpenUpgrade.mrp')
@@ -58,7 +58,7 @@ def migrate_bom_lines(cr, pool):
     cr.execute(sql)
     ids = []
     for row in cr.dictfetchall():
-        bom_line_id = bom_line_obj.create(cr, uid, {
+        bom_line_id = bom_line_obj.create(cr, SUPERUSER_ID, {
             'bom_id': row[fields['bom_id']],
             'product_efficiency': row['product_efficiency'],
             'product_id': row['product_id'],
@@ -101,18 +101,19 @@ def update_stock_moves(cr, pool):
     ir_property_obj = pool['ir.property']
     # find all locations that are used as production location
     location_ids = [
-        ir_property_obj.get_by_record(cr, uid, p).id
+        ir_property_obj.get_by_record(cr, SUPERUSER_ID, p).id
         for p in ir_property_obj.browse(
-            cr, uid,
+            cr, SUPERUSER_ID,
             ir_property_obj.search(
-                cr, uid, [('name', '=', 'property_stock_production')]))
+                cr, SUPERUSER_ID,
+                [('name', '=', 'property_stock_production')]))
     ]
     for move_id in stock_move_obj.search(
-            cr, uid, [
+            cr, SUPERUSER_ID, [
                 ('location_dest_id', 'in', location_ids),
             ]):
         production_ids = mrp_production_obj.search(
-            cr, uid, [
+            cr, SUPERUSER_ID, [
                 '|',
                 # don't rely on many2manys with domain ignoring it on search
                 ('move_lines', '=', move_id),
@@ -131,8 +132,8 @@ def update_stock_moves(cr, pool):
 def update_stock_picking_name(cr, pool):
     picking_obj = pool['stock.picking']
     picking_ids = picking_obj.search(
-        cr, uid, ['|', ('name', '=', False), ('name', '=', '')])
-    for sp in picking_obj.browse(cr, uid, picking_ids):
+        cr, SUPERUSER_ID, ['|', ('name', '=', False), ('name', '=', '')])
+    for sp in picking_obj.browse(cr, SUPERUSER_ID, picking_ids):
         if sp.origin:
             if ':' in sp.origin:
                 origin = sp.origin.split(":")[1]
@@ -140,7 +141,8 @@ def update_stock_picking_name(cr, pool):
                 origin = sp.origin
         else:
             origin = '/'
-        picking_exists = picking_obj.search(cr, uid, [('name', '=', origin)])
+        picking_exists = picking_obj.search(
+            cr, SUPERUSER_ID, [('name', '=', origin)])
         if not picking_exists:
             cr.execute(
                 "UPDATE stock_picking SET name = %s WHERE id = %s",
@@ -158,7 +160,7 @@ def migrate_product_supply_method(cr, pool):
     :param cr: Database cursor
     """
     mto_route_id = pool['ir.model.data'].get_object_reference(
-        cr, uid, 'mrp', 'route_warehouse0_manufacture')[1]
+        cr, SUPERUSER_ID, 'mrp', 'route_warehouse0_manufacture')[1]
     cr.execute(
         "SELECT id FROM product_template WHERE {column} = %s".format(
             column=openupgrade.get_legacy_name('supply_method')), ('produce',))
@@ -166,7 +168,7 @@ def migrate_product_supply_method(cr, pool):
     logger.debug(
         "Adding manufacture route to %s product templates", len(template_ids))
     pool['product.template'].write(
-        cr, uid, template_ids, {'route_ids': [(4, mto_route_id)]})
+        cr, SUPERUSER_ID, template_ids, {'route_ids': [(4, mto_route_id)]})
 
 
 def migrate_product(cr, pool):
@@ -184,16 +186,16 @@ def migrate_product(cr, pool):
         "Setting track_production to True for %s product templates",
         len(template_ids))
     prod_tmpl_obj.write(
-        cr, uid, template_ids, {'track_incoming': True})
+        cr, SUPERUSER_ID, template_ids, {'track_incoming': True})
 
 
 def migrate_stock_warehouse(cr, pool):
     """Enable manufacturing on all warehouses. This will trigger the creation
     of the manufacture procurement rule"""
     warehouse_obj = pool['stock.warehouse']
-    warehouse_ids = warehouse_obj.search(cr, uid, [])
+    warehouse_ids = warehouse_obj.search(cr, SUPERUSER_ID, [])
     warehouse_obj.write(
-        cr, uid, warehouse_ids, {'manufacture_to_resupply': True})
+        cr, SUPERUSER_ID, warehouse_ids, {'manufacture_to_resupply': True})
     if len(warehouse_ids) > 1:
         openupgrade.message(
             cr, 'mrp', False, False,
@@ -233,5 +235,5 @@ def migrate(cr, version):
     migrate_stock_warehouse(cr, pool)
     migrate_procurement_order(cr, pool)
     openupgrade_80.set_message_last_post(
-        cr, uid, pool,
+        cr, SUPERUSER_ID, pool,
         ['mrp.bom', 'mrp.production', 'mrp.production.workcenter.line'])
