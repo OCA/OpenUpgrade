@@ -23,7 +23,50 @@
 from openupgradelib import openupgrade
 
 
+OBSOLETE_VIEWS = (
+    'crm_case_section_salesteams_search',
+    'crm_case_section_salesteams_view_kanban',
+    'crm_case_section_view_form',
+    'crm_case_section_view_tree',
+    'res_user_form',
+    'view_sale_config_settings',
+    'view_users_form_preferences',
+)
+
+
+def recursive_delete(cr):
+    """
+    cannot delete because inherit_id
+    cannot stitch when mode is extension
+    """
+    # openupgrade.logged_query(cr, """
+    #     delete from ir_ui_view v
+    #     using ir_model_data d where v.id=d.res_id
+    #     and d.model = 'ir.ui.view' and d.module = 'sales_team'
+    #     and d.name in {}
+    #     """.format(OBSOLETE_VIEWS))
+    cr.execute("""
+        select res_id from ir_model_data d
+        where d.model = 'ir.ui.view' and d.module = 'sales_team'
+        and d.name in {}
+        """.format(OBSOLETE_VIEWS))
+    all_delete_ids = tuple()
+    new_delete_ids = tuple(row[0] for row in cr.fetchall())
+    while len(new_delete_ids) > 0:
+        all_delete_ids += new_delete_ids
+        cr.execute("""
+            select id from ir_ui_view v
+            where v.inherit_id in {}
+            """.format(new_delete_ids))
+        new_delete_ids = tuple(row[0] for row in cr.fetchall())
+    openupgrade.logged_query(cr, """
+        delete from ir_ui_view v
+        where v.id in {}
+        """.format(all_delete_ids))
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
-	# done here because res_partner.team_id must be valid
+    # done here because res_partner.team_id must be valid
     openupgrade.rename_tables(cr, [('crm_case_section', 'crm_team'), ('crm_case_stage', 'crm_stage')])
+    recursive_delete(cr)
