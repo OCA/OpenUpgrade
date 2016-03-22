@@ -302,7 +302,7 @@ def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     set_defaults_on_act_window(cr)
     set_defaults_on_ir_attachment(cr)
-    openupgrade.set_defaults(cr, pool, defaults,False,True)
+    openupgrade.set_defaults(cr, pool, defaults, force=False, use_orm=True)    
     mgr_ir_rule(cr, pool)
     mgr_res_partner_address(cr, pool)
     mgr_res_partner(cr, pool)
