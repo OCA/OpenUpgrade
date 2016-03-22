@@ -29,7 +29,7 @@ import pooler
 try:
     from openerp.openupgrade import openupgrade_tools
 except ImportError:
-    from openupgrade import openupgrade_tools
+    from openupgradelib import openupgrade_tools
 
 class generate_records_wizard(osv.osv_memory):
     _name = 'openupgrade.generate.records.wizard'

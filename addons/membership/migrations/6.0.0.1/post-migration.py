@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openupgrade import openupgrade
+from openupgradelib import openupgrade
 
 @openupgrade.migrate()
 def migrate(cr, version):

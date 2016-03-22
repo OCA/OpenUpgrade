@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openupgrade import openupgrade
+from openupgradelib import openupgrade
 
 def set_timesheet_id(cr):
     """

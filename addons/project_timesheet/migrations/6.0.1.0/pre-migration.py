@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openupgrade import openupgrade
+from openupgradelib import openupgrade
 
 column_renames = {
     'project_task_work': [

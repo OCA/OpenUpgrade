@@ -24,7 +24,7 @@
 # e.g. report_analytic_line (incorporated in hr_timesheet_invoice)
 
 import pooler
-from openupgrade import openupgrade
+from openupgradelib import openupgrade
 
 module_namespec = [
     # This is a list of tuples (old module name, new module name)
