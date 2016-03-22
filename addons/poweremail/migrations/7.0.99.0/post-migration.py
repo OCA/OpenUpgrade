@@ -68,10 +68,10 @@ def migrate_templates(cr, pool):
             'body_html': row[3] if row[3] else plaintext2html(row[1] or '')
             }
 
-        if row[11]:
+        if row[12]:
             cr.execute(
                 "SELECT name, email_id FROM poweremail_core_accounts "
-                "WHERE id = %s", (row[11],))
+                "WHERE id = %s", (row[12],))
             vals['email_from'] = "%s <%s>" % cr.fetchone()
 
         template_id = pool['email.template'].create(
