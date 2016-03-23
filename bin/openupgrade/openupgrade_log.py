@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from openupgradelib import openupgrade_tools
 from openupgradelib.openupgrade_tools import table_exists
 
 def log_xml_id(cr, module, xml_id):

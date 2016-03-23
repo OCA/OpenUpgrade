@@ -746,10 +746,7 @@ class product_supplierinfo(osv.osv):
     def _check_uom(self, cr, uid, ids, context=None):
         for supplier_info in self.browse(cr, uid, ids, context=context):
             if supplier_info.product_uom and supplier_info.product_uom.category_id.id <> supplier_info.product_id.uom_id.category_id.id:
-                cr.execute('select uom_id from product_template where id = %s',(supplier_info.product_id.id,))
-                res = cr.fetchone()                
-                cr.execute('update product_supplierinfo set product_uom = %s where product_id = %s ',(res[0],supplier_info.product_id.id,))
-                return True
+                return False
         return True
 
     _constraints = [
