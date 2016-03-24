@@ -52,6 +52,17 @@ def _create_workflows_for_requisitions(cr):
                 """, (id_new, activities[requisition.state].id, instance_id))
 
 
+def _fill_procurement_id_from_requisition(cr):
+    """Fills the counterpart of the requisition from the procurement order."""
+    openupgrade.logged_query(
+        cr, """
+        UPDATE purchase_requisition pr
+        SET procurement_id=po.id
+        FROM procurement_order po
+        WHERE po.requisition_id = pr.id
+        """)
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
@@ -69,5 +80,6 @@ def migrate(cr, version):
             ],
         })
     _create_workflows_for_requisitions(cr)
+    _fill_procurement_id_from_requisition(cr)
     openupgrade.load_data(
         cr, 'purchase_requisition', 'migrations/8.0.1.0/noupdate_changes.xml')

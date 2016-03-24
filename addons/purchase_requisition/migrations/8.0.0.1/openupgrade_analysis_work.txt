@@ -6,10 +6,12 @@ purchase_requisition / product.template         / purchase_requisition (boolean)
 purchase_requisition / purchase.order.line      / quantity_bid (float)          : NEW
 # Duplicated value from current purchase order line quantity
 
+purchase_requisition / purchase.requisition     / procurement_id (many2one)     : NEW relation: procurement.order
+# Counterpart of the requisition_id field on procurement.order model - Filled
+
 purchase_requisition / purchase.requisition     / account_analytic_id (many2one): NEW relation: account.analytic.account
 purchase_requisition / purchase.requisition     / multiple_rfq_per_supplier (boolean): NEW
 purchase_requisition / purchase.requisition     / ordering_date (date)          : NEW
-purchase_requisition / purchase.requisition     / procurement_id (many2one)     : NEW relation: procurement.order
 purchase_requisition / purchase.requisition     / schedule_date (date)          : NEW
 purchase_requisition / purchase.requisition.line / account_analytic_id (many2one): NEW relation: account.analytic.account
 purchase_requisition / purchase.requisition.line / schedule_date (date)          : NEW
