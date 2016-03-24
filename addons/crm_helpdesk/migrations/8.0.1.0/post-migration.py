@@ -13,4 +13,4 @@ def migrate(cr, version):
     openupgrade_80.set_message_last_post(cr, uid, pool, ['crm.helpdesk'])
     openupgrade.map_values(
         cr, 'priority', openupgrade.get_legacy_name('priority'),
-        [('1', '0'), ('2', '1'), ('3', '2'), ('4', '2')], table='crm_helpdesk')
+        [('1', '2'), ('3', '1'), ('4', '0'), ('5', '0')], table='crm_helpdesk')
