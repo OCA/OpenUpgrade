@@ -1,0 +1,7 @@
+<openerp>
+<data>
+    <record id="group_purchase_requisition_user" model="res.groups">
+        <field name="implied_ids" eval="[(3, ref('purchase.group_purchase_user'))]"/>
+    </record>
+</data>
+</openerp>

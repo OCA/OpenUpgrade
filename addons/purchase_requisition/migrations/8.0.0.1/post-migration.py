@@ -69,3 +69,5 @@ def migrate(cr, version):
             ],
         })
     _create_workflows_for_requisitions(cr)
+    openupgrade.load_data(
+        cr, 'purchase_requisition', 'migrations/8.0.1.0/noupdate_changes.xml')
