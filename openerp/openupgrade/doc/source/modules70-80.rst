@@ -118,6 +118,8 @@ Status :
 +-----------------------------------+-----------------------------------+
 |document                           | Nothing to do                     |
 +-----------------------------------+-----------------------------------+
+|document_page                      | Moved to OCA [#document_page]_    |
++-----------------------------------+-----------------------------------+
 |edi                                | Nothing to do                     |
 +-----------------------------------+-----------------------------------+
 |email_template                     | Done                              |
@@ -510,6 +512,8 @@ Status :
 +-----------------------------------+-----------------------------------+
 |website_sale_delivery              | Nothing to do                     |
 +-----------------------------------+-----------------------------------+
+|web_shortcuts                      | Moved to OCA [#web_shortcuts]_    |
++-----------------------------------+-----------------------------------+
 |website_twitter                    | Nothing to do                     |
 +-----------------------------------+-----------------------------------+
 |web_tests                          | Nothing to do                     |
@@ -521,3 +525,9 @@ Status :
 
 .. [#sale_layout] Note that this module was removed in 7.0 and readded in 8.0.
     The migration covered is between 6.1 and 8.0.
+
+.. [#document_page] 'Document Page' Module is now under Odoo Community Association Umbrella:
+    See : https://github.com/OCA/knowledge/tree/8.0/document_page
+
+.. [#web_shortcuts] 'Web Shortcuts' Module is now under Odoo Community Association Umbrella:
+    See : https://github.com/OCA/web/tree/8.0/web_shortcuts
