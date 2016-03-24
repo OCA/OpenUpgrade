@@ -3,17 +3,17 @@ Module coverage 7.0 -> 8.0
 
 Status :
 
-  * Empty : No information available : Please see the
-    'openupgrade_analysis.txt' file of the module and share your analyse;
+* Empty : No information available : Please see the
+  'openupgrade_analysis.txt' file of the module and share your analyse;
 
-  * 'No change' : No change between 7.0 and 8.0;
+* 'No change' : No change between 7.0 and 8.0;
 
-  * 'Nothing to do' : Analyse has been done, and there is nothing to do;
+* 'Nothing to do' : Analyse has been done, and there is nothing to do;
 
-  * 'Work in progress' : Analyse / Work in progress.  Please review the
-    merge proposals at https://github.com/OCA/OpenUpgrade/pulls
+* 'Work in progress' : Analyse / Work in progress.  Please review the
+  merge proposals at https://github.com/OCA/OpenUpgrade/pulls
 
-  * 'Done' : Analyse has been done & work has been merged into trunk project ;
+* 'Done' : Analyse has been done & work has been merged into trunk project ;
 
 +-----------------------------------+-----------------------------------+
 |Module                             |Status                             |
