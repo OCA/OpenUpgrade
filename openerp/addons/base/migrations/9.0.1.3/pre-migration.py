@@ -54,7 +54,23 @@ column_renames = {
 }
 
 
+OBSOLETE_RULES = (
+    'multi_company_default_rule',
+    'res_currency_rule',
+)
+
+
+def remove_obsolete(cr):
+    openupgrade.logged_query(cr, """
+        delete from ir_rule rr
+        using ir_model_data d where rr.id=d.res_id
+        and d.model = 'ir.rule' and d.module = 'base'
+        and d.name in {}
+        """.format(OBSOLETE_RULES))
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_columns(cr, column_renames)
+    remove_obsolete(cr)
