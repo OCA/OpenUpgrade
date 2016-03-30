@@ -163,6 +163,8 @@ DEL ir.filters: crm.filter_leads_overpassed_deadline
 DEL ir.filters: crm.filter_leads_revenue_per_lead
 DEL ir.filters: crm.filter_leads_salesperson
 DEL ir.filters: crm.filter_opportunity_top_opportunities
+# TODO - delete as it refers to nbr_cases
+
 NEW ir.model.access: crm.access_crm_activity_manager
 NEW ir.model.access: crm.access_crm_activity_report_user
 NEW ir.model.access: crm.access_crm_activity_salesman
