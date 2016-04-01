@@ -1,7 +1,8 @@
 ---Fields in module 'product'---
 product      / product.attribute        / attribute_line_ids (one2many) : NEW relation: product.attribute.line
+# New link to counterpart of existing many2many relation
 product      / product.attribute        / sequence (integer)            : NEW 
-# New fields ---> Nothing to do
+# New field ---> Nothing to do
 
 product      / product.packaging        / code (char)                   : DEL
 product      / product.packaging        / ean (char)                    : DEL 
@@ -10,6 +11,7 @@ product      / product.packaging        / name (text)                   : type i
 product      / product.packaging        / rows (integer)                : DEL required: required, req_default: 3
 product      / product.packaging        / ul (many2one)                 : DEL relation: product.ul, required: required, req_default: function
 product      / product.packaging        / ul_container (many2one)       : DEL relation: product.ul
+# TODO: remove NOT NULL constraint on these obsolete fields
 product      / product.packaging        / ul_qty (integer)              : DEL 
 product      / product.packaging        / weight (float)                : DEL 
 # Seems almost all packaging's fields were removed, they can't seem to be found anywhere else ---> Nothing to do
@@ -17,35 +19,34 @@ product      / product.packaging        / weight (float)                : DEL
 product      / product.price.history    / product_id (many2one)         : NEW relation: product.product, required: required
 product      / product.price.history    / product_template_id (many2one): DEL relation: product.template, required: required
 # Done ---> product_template_id converted to product_id
-
-product      / product.pricelist        / item_ids (one2many)           : NEW relation: product.pricelist.item
-# Nothing to do
+# TODO:
+# - Rename template column in the pre script, remove NOT NULL constraint
+# - move conversion to post script
+# - create price history for all existing variants, not just one
 
 product      / product.pricelist        / type (selection)              : DEL required: required, selection_keys: function
-# Selection keys are still the same in the wrapper used ---> Nothing to do
+# Purchase pricelists are no longer supported. Deactivate these.
 
+product      / product.pricelist        / item_ids (one2many)           : NEW relation: product.pricelist.item
 product      / product.pricelist        / version_id (one2many)         : DEL relation: product.pricelist.version
-# TODO - more analysis needed - versions may have been moved to product.pricelist.item (date_start, date_end, etc.)? see below
-
-product      / product.pricelist.item   / applied_on (selection)        : NEW required: required, selection_keys: ['0_product_variant', '1_product', '2_product_category', '3_global'], req_default: 3_global
-# Nothing to do
-
-product      / product.pricelist.item   / base (selection)              : selection_keys is now '['list_price', 'pricelist', 'standard_price']' ('function')
-# Done ---> field converted from INTEGER to VARCHAR
-# '1' (which is 'Other Pricelist') is converted to 'pricelist' (which is 'Other Pricelist'),
-# '2' (which is 'Supplier Prices on the product form') is converted to 'list_price' (which is 'Public Price')
-# Note: nothing is done with 'standard_price' (which is 'Cost') because it was not there in v8
-
-product      / product.pricelist.item   / compute_price (selection)     : NEW selection_keys: ['fixed', 'formula', 'percentage']
-product      / product.pricelist.item   / fixed_price (float)           : NEW
-product      / product.pricelist.item   / percent_price (float)         : NEW
-# TODO - more analysis needed - those fields may have been moved here from product.template, see comment below
-
 product      / product.pricelist.item   / date_end (date)               : NEW
 product      / product.pricelist.item   / date_start (date)             : NEW
 product      / product.pricelist.item   / price_version_id (many2one)   : DEL relation: product.pricelist.version, required: required
 product      / product.pricelist.item   / pricelist_id (many2one)       : NEW relation: product.pricelist
-# TODO - more analysis needed - versions may have been moved to product.pricelist.item (date_start, date_end, etc.)?
+# Remove obsolete version level, applying date ranges on the item level
+
+product      / product.pricelist.item   / applied_on (selection)        : NEW required: required, selection_keys: ['0_product_variant', '1_product', '2_product_category', '3_global'], req_default: 3_global
+# TODO: determine value based on whether categ_id, product_id or product_tmpl_id is filled in (or none)
+
+product      / product.pricelist.item   / base (selection)              : selection_keys is now '['list_price', 'pricelist', 'standard_price']' ('function')
+# Done ---> field converted from INTEGER to VARCHAR
+# TODO: map positive integers to obsolete price list type. Then, map these to new values 'list_price' and 'standard_price'.
+# Map old value -1 to 'pricelist'. That still leaves old value -2 which meant 'supplier prices'.
+
+product      / product.pricelist.item   / compute_price (selection)     : NEW selection_keys: ['fixed', 'formula', 'percentage']
+# TODO: set to 'formula' for existing records (default is 'fixed')
+product      / product.pricelist.item   / fixed_price (float)           : NEW
+product      / product.pricelist.item   / percent_price (float)         : NEW
 
 product      / product.pricelist.item   / name (char)                   : DEL
 # Nothing to do
@@ -70,19 +71,20 @@ product      / product.supplierinfo     / date_end (date)               : NEW
 product      / product.supplierinfo     / date_start (date)             : NEW
 # TODO - more analysis needed - should they be retrieved from product_pricelist_version ?
 
-product      / product.supplierinfo     / price (float)                 : NEW required: required, req_default: function
-# TODO - more analysis needed - 'price' field should probably be recovered from pricelist_partnerinfo table with
-
 product      / product.supplierinfo     / pricelist_ids (one2many)      : DEL relation: pricelist.partnerinfo
+product      / product.supplierinfo     / price (float)                 : NEW required: required, req_default: function
+# TODO price to be recovered from obsolete pricelist_partnerinfo table
+
 product      / product.supplierinfo     / product_id (many2one)         : NEW relation: product.product
-# TODO - more analysis needed
+# New option to link supplierinfo to product instead of template, nothing to do
 
 product      / product.template         / ean13 (char)                  : was renamed to barcode [nothing to to]
 # Nothing to do
 
 product      / product.template         / item_ids (one2many)           : NEW relation: product.pricelist.item
+# Reverse of pricelist item field, nothing to do
 product      / product.template         / mes_type (selection)          : DEL selection_keys: ['fixed', 'variable']
-# TODO - more analysis needed - those fields may have been moved to product.pricelist.item, see comment above
+# Obsolete field, nothing to do
 
 product      / product.template         / message_follower_ids (many2many): not a function anymore
 product      / product.template         / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
@@ -93,20 +95,23 @@ product      / product.template         / sequence (integer)            : NEW
 # Nothing to do
 
 product      / product.template         / standard_price (float)        : now a function
-# TODO - more analysis needed, this field will have to be retrieved from ir_property
+# TODO: migrate ir.property records from templates to their variants
 
 product      / product.template         / state (selection)             : selection_keys is now '['draft', 'end', 'obsolete', 'sellable']' ('['', 'draft', 'end', 'obsolete', 'sellable']')
-# TODO - this field is not required and only selection removed is '', so probably nothing to do, need confirmation
+# Empty option removed from non-required selection field: nothing to do
 
 product      / product.template         / type (selection)              : selection_keys is now 'function' ('['consu', 'service']')
 # Nothing to do (function returns the same 2 values as before)
 
 product      / product.template         / uos_coeff (float)             : module is now 'product_uos' ('product')
 product      / product.template         / uos_id (many2one)             : module is now 'product_uos' ('product')
-# TODO - help needed! - module 'product_uos' doesn't exist in Odoo 8... How can we do this?
+# TODO - mark this module for installation if these fields are in use.
 
 product      / product.template         / volume (float)                : now a function
 product      / product.template         / weight (float)                : now a function
+# TODO: copy these values to new fields on the product (fields moving down the inheritance chain are not properly
+detected). On the template, set to 0.0 on templates with more than one (active?) variant as per _compute_product_template_field.
+
 product      / product.template         / weight_net (float)            : DEL 
 # Nothing to do
 
@@ -115,7 +120,7 @@ product      / product.template         / weight_net (float)            : DEL
 
 DEL decimal.precision: product.decimal_account
 DEL decimal.precision: product.decimal_product_uos
-# Nothing to do, seems to have been moved to 'product_uos' module
+# TODO: update module in ir_model_data for these entries
 
 NEW ir.actions.act_window: product.action_packaging_view
 NEW ir.actions.act_window: product.product_attribute_value_action
