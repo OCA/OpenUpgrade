@@ -18,7 +18,7 @@ and then used in your scripts as
 General methods
 ---------------
 
-.. automodule:: openupgrade
+.. automodule:: openupgradelib.openupgrade
    :members:
 
 Methods for OpenUpgrade 7.0
@@ -28,7 +28,7 @@ The following specific methods for 7.0 are available. These have been
 developed to cover specific needs as per data model changes in that
 release.
 
-.. automodule:: openupgrade_70
+.. automodule:: openupgradelib.openupgrade_70
    :members:
 
 Methods for OpenUpgrade 8.0
@@ -38,6 +38,6 @@ The following specific methods for 8.0 are available. These have been
 developed to cover specific needs as per data model changes in that
 release.
 
-.. automodule:: openupgrade_80
+.. automodule:: openupgradelib.openupgrade_80
    :members:
 
