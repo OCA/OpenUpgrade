@@ -47,3 +47,4 @@ See below for an overview of module coverage per version.
    modules60-61
    modules61-70
    modules70-80
+   modules80-90
