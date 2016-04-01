@@ -1,0 +1,35 @@
+#!/bin/sh
+
+DOC_BUILD_BASE_DIR=/var/tmp/openupgrade
+DOC_PARTS="6.0|bin/openupgrade/doc
+6.1|openerp/openupgrade/doc
+7.0|openerp/openupgrade/doc
+8.0|openerp/openupgrade/doc
+9.0|openerp/openupgrade/doc"
+OUTPUT_DIR=${OUTPUT_DIR:-$DOC_BUILD_BASE_DIR/doc}
+DOC_BUILD_DIR=$(mktemp -d)
+REPO_URL=https://github.com/OCA/OpenUpgrade.git
+OPENUPGRADELIB=https://github.com/OCA/openupgradelib.git
+
+for line in $DOC_PARTS; do
+    branch=$(echo $line | cut -d'|' -f1)
+    path=$(echo $line | cut -d'|' -f2)
+    SERVER_DIR=$DOC_BUILD_BASE_DIR/$branch/server
+    if [ ! -d $SERVER_DIR ]; then
+        mkdir -p $DOC_BUILD_BASE_DIR/$branch/server
+        git clone --single-branch --depth=1 -b $branch $REPO_URL $SERVER_DIR
+    else
+        git -C $SERVER_DIR pull --quiet
+    fi
+    OPENUPGRADE_PYTHON_PATH=$DOC_BUILD_BASE_DIR/$branch/server
+    cp -rf $SERVER_DIR/$path/* $DOC_BUILD_DIR
+done
+if [ ! -d $DOC_BUILD_BASE_DIR/openupgradelib ]; then
+    git clone --single-branch --depth=1 $OPENUPGRADELIB $DOC_BUILD_BASE_DIR/openupgradelib
+else
+    git -C $DOC_BUILD_BASE_DIR/openupgradelib pull --quiet
+fi
+export PYTHONPATH=$PYTHONPATH:$OPENUPGRADE_PYTHON_PATH:$DOC_BUILD_BASE_DIR/openupgradelib
+mkdir -p $DOC_BUILD_DIR/source/.static
+sphinx-build -q -d $DOC_BUILD_DIR/.doctrees -D latex_paper_size=a4 $DOC_BUILD_DIR/source $OUTPUT_DIR
+rm -rf $DOC_BUILD_DIR
