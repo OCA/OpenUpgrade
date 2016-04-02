@@ -20,7 +20,7 @@
 ##############################################################################
 
 import pooler
-from openupgrade import openupgrade
+from openupgradelib import openupgrade
 
 defaults_force = {
     'product.category': [('type', 'normal')],

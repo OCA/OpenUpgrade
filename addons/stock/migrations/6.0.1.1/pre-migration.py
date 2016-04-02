@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openupgrade import openupgrade
+from openupgradelib import openupgrade
 
 renamed_columns = {
     'stock_move': [

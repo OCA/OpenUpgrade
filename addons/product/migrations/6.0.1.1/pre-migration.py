@@ -20,7 +20,7 @@
 ##############################################################################
 
 import logging
-from openupgrade import openupgrade
+from openupgradelib import openupgrade
 
 logger = logging.getLogger('OpenUpgrade: product')
 

@@ -50,7 +50,7 @@ import logging
 
 logger = netsvc.Logger()
 
-from openupgrade import openupgrade
+from openupgradelib import openupgrade
 
 _ad = os.path.abspath(opj(tools.ustr(tools.config['root_path']), u'addons'))     # default addons path (base)
 ad_paths= map(lambda m: os.path.abspath(tools.ustr(m.strip())), tools.config['addons_path'].split(','))

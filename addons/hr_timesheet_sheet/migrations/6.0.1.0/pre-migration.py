@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openupgrade import openupgrade
+from openupgradelib import openupgrade
 
 column_renames = {
     # this is a mapping per table from old column name

@@ -28,7 +28,7 @@ warnings.warn(
         'short_name': _short_name,
     }, DeprecationWarning, stacklevel=2)
 
-_new_name = "openupgradelib.%s" % _short_name
+_new_name = "openupgradelib.%s" % _short_name
 
 _modules = __import__(_new_name, globals(), locals(), ['*'])
 for _i in dir(_modules):

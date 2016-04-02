@@ -20,7 +20,7 @@
 ##############################################################################
 
 import pooler
-from openupgrade import openupgrade
+from openupgradelib import openupgrade
 
 MODULE='account_budget'
 
