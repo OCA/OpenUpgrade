@@ -483,6 +483,47 @@ def _migrate_stock_warehouse(cr, registry, res_id):
             'sequence': max_sequence + 2,
         })
 
+    # If warehouse is main warehouse, we have to create records in
+    # ir_model_data, because these are used in testing:
+    def create_missing(cr, xml_id, res_id):
+        """Add missing record to ir_model_data."""
+        model_data_obj = registry['ir.model.data']
+        expected_record = model_data_obj.search(
+            cr, uid, [('module', '=', 'stock'), ('name', '=', xml_id)]
+        )
+        if not expected_record:
+            model_data_obj.create(
+                cr, uid, {
+                    'module': 'stock',
+                    'model': 'stock.picking.type',
+                    'name': xml_id,
+                    'res_id': res_id,
+                }
+            )
+        else:
+            if res_id != expected_record[0].res_id:
+                # autocorrect existing ir_model_data:
+                model_data_obj.write(
+                    cr, uid, [expected_record[0].id], {'res_id': res_id}
+                )
+                logger.warn(
+                    "xml_id %s now points to res_id %d, no longer to %d.",
+                    xml_id, res_id, existing_id
+                )
+
+    model_data_obj = registry['ir.model.data']
+    main_warehouse = model_data_obj.search(
+        cr, uid, [('module', '=', 'stock'), ('name', '=', 'warehouse0')]
+    )
+    if not main_warehouse:
+        logger.error("Main warehouse not found in ir_model_data!")
+    else:
+        main_warehouse_id = main_warehouse[0].res_id
+        if warehouse_id == main_warehouse_id:
+            create_missing(cr, uid, 'picking_type_in', in_type_id)
+            create_missing(cr, uid, 'picking_type_out', out_type_id)
+            create_missing(cr, uid, 'picking_type_internal', int_type_id)
+
     vals.update({
         'in_type_id': in_type_id,
         'out_type_id': out_type_id,
