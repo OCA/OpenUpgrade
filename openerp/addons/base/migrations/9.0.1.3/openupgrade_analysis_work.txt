@@ -361,6 +361,8 @@ DEL res.currency.rate: base.rateZMK
 DEL res.currency.rate: base.rateZRZ
 DEL res.currency.rate: base.rateZWD
 NEW res.groups: base.group_configuration
+# TODO - give to group_system users
+
 NEW res.groups: base.group_light_multi_company
 DEL res.partner.bank.type: base.bank_normal
 DEL res.partner.bank.type.field: base.bank_normal_field_bic
