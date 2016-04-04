@@ -23,9 +23,33 @@
 from openupgradelib import openupgrade
 
 
+PROPERTY_FIELDS = {
+    ('product.category', 'property_account_expense_categ', 'property_account_expense_categ_id'),
+    ('product.category', 'property_account_income_categ', 'property_account_income_categ_id'),
+    ('res.partner', 'property_account_payable', 'property_account_payable_id'),
+    ('res.partner', 'property_account_receivable', 'property_account_receivable_id'),
+}
+
+
+def migrate_properties(cr):
+    for model, name_v8, name_v9 in PROPERTY_FIELDS:
+        openupgrade.logged_query(cr, """
+            update ir_model_fields
+            set name = '{name_v9}'
+            where name = '{name_v8}'
+            and model = '{model}'
+            """.format(model=model, name_v8=name_v8, name_v9=name_v9))
+        openupgrade.logged_query(cr, """
+            update ir_property
+            set name = '{name_v9}'
+            where name = '{name_v8}'
+            """.format(name_v8=name_v8, name_v9=name_v9))
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_tables(cr, [('account_tax_code', 'account_tax_group')])
+    migrate_properties(cr)
     cr.execute("""
         delete from ir_ui_view v
         using ir_model_data d where
