@@ -179,35 +179,48 @@ account      / account.journal          / refund_sequence (boolean)     : NEW
 account      / account.journal          / refund_sequence_id (many2one) : NEW relation: ir.sequence
 # NOTHING TO DO 
 account      / account.journal          / sequence (integer)            : NEW 
-
+# NOTHING TO DO
 account      / account.journal          / show_on_dashboard (boolean)   : NEW 
+# NOTHING TO DO
 account      / account.journal          / type (selection)              : selection_keys is now '['bank', 'cash', 'general', 'purchase', 'sale']' ('['bank', 'cash', 'general', 'purchase', 'purchase_refund', 'sale', 'sale_refund', 'situation']')
+# TODO: Post-migration script:
+purchase_refund -> purchase + refund_sequence=True
+sale_refund => sale + refund_sequence=True
+situation => Remove records that have this set? 
 account      / account.journal          / user_id (many2one)            : DEL relation: res.users
 account      / account.journal          / with_last_closing_balance (boolean): DEL 
 account      / account.move             / balance (float)               : DEL 
 account      / account.move             / line_id (one2many)            : DEL relation: account.move.line
 account      / account.move             / line_ids (one2many)           : NEW relation: account.move.line
+# TODO: Post migration script: Migrate from line_id (the field was renamed)
 account      / account.move             / period_id (many2one)          : DEL relation: account.period, required: required, req_default: function
 account      / account.move             / rate_diff_partial_rec_id (many2one): NEW relation: account.partial.reconcile
 account      / account.move             / statement_line_id (many2one)  : NEW relation: account.bank.statement.line
+# TODO: Post migration script: Search what account_bank_statement_line had this move
 account      / account.move             / to_check (boolean)            : DEL 
 account      / account.move.line        / account_tax_id (many2one)     : DEL relation: account.tax
 account      / account.move.line        / analytic_lines (one2many)     : was renamed to analytic_line_ids [nothing to to]
 account      / account.move.line        / centralisation (selection)    : DEL selection_keys: ['credit', 'currency', 'debit', 'normal']
 account      / account.move.line        / date_created (date)           : DEL 
 account      / account.move.line        / date_maturity (date)          : now required
+# TODO: If not set, use current date or move date?
 account      / account.move.line        / invoice (many2one)            : not a function anymore
 account      / account.move.line        / invoice (many2one)            : was renamed to invoice_id [nothing to to]
 account      / account.move.line        / matched_credit_ids (one2many) : NEW relation: account.partial.reconcile
+# TODO: ??
 account      / account.move.line        / matched_debit_ids (one2many)  : NEW relation: account.partial.reconcile
+# TODO: ??
 account      / account.move.line        / payment_id (many2one)         : NEW relation: account.payment
+# TODO: Related to logic explained above to determine the creation of account.payment
 account      / account.move.line        / reconcile_id (many2one)       : DEL relation: account.move.reconcile
 account      / account.move.line        / reconcile_partial_id (many2one): DEL relation: account.move.reconcile
 account      / account.move.line        / state (selection)             : DEL selection_keys: ['draft', 'valid']
 account      / account.move.line        / tax_amount (float)            : DEL 
 account      / account.move.line        / tax_code_id (many2one)        : DEL relation: account.tax.code
 account      / account.move.line        / tax_ids (many2many)           : NEW relation: account.tax
+# TODO: ??
 account      / account.move.line        / tax_line_id (many2one)        : NEW relation: account.tax
+# TODO: ??
 account      / account.operation.template / account_id (many2one)         : NEW relation: account.account
 account      / account.operation.template / amount (float)                : NEW required: required, req_default: 100.0
 account      / account.operation.template / amount_type (selection)       : NEW required: required, selection_keys: ['fixed', 'percentage'], req_default: percentage
