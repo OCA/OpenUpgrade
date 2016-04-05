@@ -269,6 +269,9 @@ account      / account.payment.term.line / days2 (integer)               : DEL r
 account      / account.payment.term.line / option (selection)            : NEW required: required, selection_keys: ['day_after_invoice_date', 'fix_day_following_month', 'last_day_current_month', 'last_day_following_month'], req_default: day_after_invoice_date
 account      / account.payment.term.line / sequence (integer)            : NEW 
 account      / account.payment.term.line / value (selection)             : selection_keys is now '['balance', 'fixed', 'percent']' ('['balance', 'fixed', 'procent']')
+#### ACCOUNT TAX ###
+#TODO: amount field is multiplied by 100 in this version. 8.0: 0.21. 9.0: 21
+
 account      / account.tax              / account_analytic_collected_id (many2one): DEL relation: account.analytic.account
 account      / account.tax              / account_analytic_paid_id (many2one): DEL relation: account.analytic.account
 account      / account.tax              / account_collected_id (many2one): was renamed to account_id [nothing to to]
@@ -295,6 +298,7 @@ account      / account.tax              / tax_group_id (many2one)       : NEW re
 account      / account.tax              / tax_sign (float)              : DEL 
 account      / account.tax              / type (selection)              : selection_keys is now '['division', 'fixed', 'group', 'percent']' ('['balance', 'code', 'fixed', 'none', 'percent']')
 account      / account.tax              / type (selection)              : was renamed to amount_type [nothing to to]
+# TODO: Post migration script: In v8, if child_depend == True, then in v9, amount_type='group'
 account      / account.tax              / type_tax_use (selection)      : selection_keys is now '['none', 'purchase', 'sale']' ('['all', 'purchase', 'sale']')
 account      / account.tax.group        / name (char)                   : NEW required: required
 account      / account.tax.group        / sequence (integer)            : NEW 
@@ -302,6 +306,7 @@ account      / account.tax.template     / account_collected_id (many2one): was r
 account      / account.tax.template     / account_paid_id (many2one)    : was renamed to refund_account_id [nothing to to]
 account      / account.tax.template     / active (boolean)              : NEW 
 account      / account.tax.template     / amount_type (selection)       : NEW required: required, selection_keys: ['division', 'fixed', 'group', 'percent'], req_default: percent
+# TODO: Post migration script: In v8, if child_depend == True, then in v9, amount_type='group'
 account      / account.tax.template     / analytic (boolean)            : NEW 
 account      / account.tax.template     / applicable_type (selection)   : DEL required: required, selection_keys: ['code', 'true'], req_default: true
 account      / account.tax.template     / base_code_id (many2one)       : DEL relation: account.tax.code.template
