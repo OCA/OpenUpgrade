@@ -53,37 +53,56 @@ account      / account.analytic.line    / journal_id (many2one)         : DEL re
 account      / account.bank.statement   / account_id (many2one)         : module is now 'point_of_sale' ('account')
 # TODO: Will have to deal with it in the point_of_sale module
 account      / account.bank.statement   / cashbox_end_id (many2one)     : NEW relation: account.bank.statement.cashbox
+# TODO:
 account      / account.bank.statement   / cashbox_start_id (many2one)   : NEW relation: account.bank.statement.cashbox
+# TODO:
 account      / account.bank.statement   / closing_date (datetime)       : DEL 
 account      / account.bank.statement   / closing_details_ids (one2many): DEL relation: account.cashbox.line
 account      / account.bank.statement   / date_done (datetime)          : NEW 
+# TODO: post-migration script. Move from field 'closing_date'
 account      / account.bank.statement   / details_ids (one2many)        : DEL relation: account.cashbox.line
 account      / account.bank.statement   / message_follower_ids (many2many): not a function anymore
 account      / account.bank.statement   / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+# TODO: ?
 account      / account.bank.statement   / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+# TODO: ?
 account      / account.bank.statement   / opening_details_ids (one2many): DEL relation: account.cashbox.line
-account      / account.bank.statement   / period_id (many2one)          : DEL relation: account.period, required: required, req_default: function
+account      / account.bank.statement   / period_id (many2one)          : DEL relation: account.period, required: requirOed, req_default: function
 account      / account.bank.statement   / state (selection)             : selection_keys is now '['confirm', 'open']' ('['confirm', 'draft', 'open']')
+# TODO: move values 'draft' to 'open'
 account      / account.bank.statement   / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO
 account      / account.bank.statement.cashbox / cashbox_lines_ids (one2many)  : NEW relation: account.cashbox.line
+# TODO: Combine records from opening_details_ids, closing_details_ids
 account      / account.bank.statement.line / journal_entry_id (many2one)   : DEL relation: account.move
 account      / account.bank.statement.line / journal_entry_ids (one2many)  : NEW relation: account.move
+# TODO: Post migration script: Update the move lines involved in bank statement lines with the statement
 account      / account.cashbox.line     / bank_statement_id (many2one)  : DEL relation: account.bank.statement
 account      / account.cashbox.line     / cashbox_id (many2one)         : NEW relation: account.bank.statement.cashbox
+# NOTHING TO DO: Because we updated the relation in the side of account.bank.statement.cashbox / cashbox_lines_ids
 account      / account.cashbox.line     / coin_value (float)            : NEW required: required
+# TODO: Post migration script: Move from field 'pieces'.
 account      / account.cashbox.line     / number (integer)              : NEW 
+# TODO: Post migration script: Move from field 'number_opening' or 'number_closing'
 account      / account.cashbox.line     / number_closing (integer)      : DEL 
 account      / account.cashbox.line     / number_opening (integer)      : DEL 
 account      / account.cashbox.line     / pieces (float)                : DEL 
 account      / account.chart.template   / account_ids (one2many)        : NEW relation: account.account.template
+# NOTHING TO DO
 account      / account.chart.template   / account_root_id (many2one)    : DEL relation: account.account.template
 account      / account.chart.template   / bank_account_code_prefix (char): NEW 
+# NOTHING TO DO: The values need to be migrated in each l10n accounting module
 account      / account.chart.template   / bank_account_view_id (many2one): DEL relation: account.account.template
 account      / account.chart.template   / cash_account_code_prefix (char): NEW 
+# NOTHING TO DO: The values need to be migrated in each l10n accounting module
 account      / account.chart.template   / company_id (many2one)         : NEW relation: res.company
+# NOTHING TO DO: The values need to be migrated in each l10n accounting module
 account      / account.chart.template   / currency_id (many2one)        : now required
+# NOTHING TO DO: The values need to be migrated in each l10n accounting module
 account      / account.chart.template   / expense_currency_exchange_account_id (many2one): NEW relation: account.account.template
+# NOTHING TO DO: The values need to be migrated in each l10n accounting module
 account      / account.chart.template   / income_currency_exchange_account_id (many2one): NEW relation: account.account.template
+# NOTHING TO DO: The values need to be migrated in each l10n accounting module
 account      / account.chart.template   / property_account_expense (many2one): was renamed to property_account_expense_id [nothing to to]
 account      / account.chart.template   / property_account_expense_categ (many2one): was renamed to property_account_expense_categ_id [nothing to to]
 account      / account.chart.template   / property_account_expense_opening (many2one): DEL relation: account.account.template
@@ -93,16 +112,25 @@ account      / account.chart.template   / property_account_income_opening (many2
 account      / account.chart.template   / property_account_payable (many2one): was renamed to property_account_payable_id [nothing to to]
 account      / account.chart.template   / property_account_receivable (many2one): was renamed to property_account_receivable_id [nothing to to]
 account      / account.chart.template   / property_stock_account_input_categ_id (many2one): NEW relation: account.account.template
+# NOTHING TO DO: The values need to be migrated in each l10n accounting module
 account      / account.chart.template   / property_stock_account_output_categ_id (many2one): NEW relation: account.account.template
+# NOTHING TO DO: The values need to be migrated in each l10n accounting module
 account      / account.chart.template   / property_stock_valuation_account_id (many2one): NEW relation: account.account.template
+# NOTHING TO DO: The values need to be migrated in each l10n accounting module
 account      / account.chart.template   / tax_code_root_id (many2one)   : DEL relation: account.tax.code.template
 account      / account.chart.template   / transfer_account_id (many2one): NEW relation: account.account.template, required: required
+# NOTHING TO DO: The values need to be migrated in each l10n accounting module
 account      / account.chart.template   / use_anglo_saxon (boolean)     : NEW 
+# TODO: Determine if module 'account_anglo_saxon' was installed, and then set to True. Otherwise set to False.
 account      / account.fiscal.position  / state_ids (many2many)         : NEW relation: res.country.state
+# NOTHING TO DO: The values need to be migrated in each l10n accounting module
 account      / account.fiscal.position  / zip_from (integer)            : NEW 
+# NOTHING TO DO: The values need to be migrated in each l10n accounting module
 account      / account.fiscal.position  / zip_to (integer)              : NEW 
+# NOTHING TO DO: The values need to be migrated in each l10n accounting module
 account      / account.invoice          / check_total (float)           : DEL 
 account      / account.invoice          / date (date)                   : NEW 
+# TODO: Post migration script: Determine, the journal entry of the invoice, and fetch the date it was posted. This is the accounting date to use.
 account      / account.invoice          / fiscal_position (many2one)    : was renamed to fiscal_position_id [nothing to to]
 account      / account.invoice          / internal_number (char)        : DEL 
 account      / account.invoice          / invoice_line (one2many)       : was renamed to invoice_line_ids [nothing to to]
@@ -110,11 +138,14 @@ account      / account.invoice          / message_follower_ids (many2many): not 
 account      / account.invoice          / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
 account      / account.invoice          / message_follower_ids (many2many): type is now 'one2many' ('many2many')
 account      / account.invoice          / payment_ids (many2many)       : NEW relation: account.payment
+# TODO: Post migration script: 
+In general, seems to me that a payment should be created for each journal entry that contains an AP/AR and a liquidity account. The account.payment then becomes the wrapper. This account.payment may in turn be related to one or more invoices. So we need to first migrate the account.payment, and then only look at invoices. In order to determine what is a payment linked to that invoice, we might need to look into the moves associated to invoices, then look at the move line that corresponded to the AP/AR, and find what move line was it reconciled to. If that move is linked to a new account.payment, then we can link that account.payment with the invoice. 
 account      / account.invoice          / payment_term (many2one)       : was renamed to payment_term_id [nothing to to]
 account      / account.invoice          / period_id (many2one)          : DEL relation: account.period
 account      / account.invoice          / supplier_invoice_number (char): DEL 
 account      / account.invoice          / tax_line (one2many)           : was renamed to tax_line_ids [nothing to to]
 account      / account.invoice          / website_message_ids (one2many): NEW relation: mail.message
+# TODO: ?
 account      / account.invoice.line     / invoice_line_tax_id (many2many): was renamed to invoice_line_tax_ids [nothing to to]
 account      / account.invoice.line     / uos_id (many2one)             : was renamed to uom_id [nothing to to]
 account      / account.invoice.tax      / base (float)                  : DEL 
@@ -123,23 +154,32 @@ account      / account.invoice.tax      / base_code_id (many2one)       : DEL re
 account      / account.invoice.tax      / tax_amount (float)            : DEL 
 account      / account.invoice.tax      / tax_code_id (many2one)        : DEL relation: account.tax.code
 account      / account.invoice.tax      / tax_id (many2one)             : NEW relation: account.tax
+# TODO: ?
 account      / account.journal          / allow_date (boolean)          : DEL 
 account      / account.journal          / analytic_journal_id (many2one): DEL relation: account.analytic.journal
 account      / account.journal          / bank_account_id (many2one)    : NEW relation: res.partner.bank
+# TODO: ?
 account      / account.journal          / bank_statements_source (selection): NEW selection_keys: ['manual']
+# TODO: Post migration script: Default to 'manual'
 account      / account.journal          / cash_control (boolean)        : DEL 
 account      / account.journal          / cashbox_line_ids (one2many)   : DEL relation: account.journal.cashbox.line
 account      / account.journal          / centralisation (boolean)      : DEL 
 account      / account.journal          / currency (many2one)           : was renamed to currency_id [nothing to to]
 account      / account.journal          / display_on_footer (boolean)   : NEW 
+# TODO: Post migration script: Default to 'False'
 account      / account.journal          / entry_posted (boolean)        : DEL 
 account      / account.journal          / groups_id (many2many)         : DEL relation: res.groups
 account      / account.journal          / inbound_payment_method_ids (many2many): NEW relation: account.payment.method
+# TODO: Post migration script: Set 'manual'
 account      / account.journal          / internal_account_id (many2one): DEL relation: account.account
 account      / account.journal          / outbound_payment_method_ids (many2many): NEW relation: account.payment.method
+# TODO: Post migration script: Set 'manual' and 'check'
 account      / account.journal          / refund_sequence (boolean)     : NEW 
+# NOTHING TO DO
 account      / account.journal          / refund_sequence_id (many2one) : NEW relation: ir.sequence
+# NOTHING TO DO 
 account      / account.journal          / sequence (integer)            : NEW 
+
 account      / account.journal          / show_on_dashboard (boolean)   : NEW 
 account      / account.journal          / type (selection)              : selection_keys is now '['bank', 'cash', 'general', 'purchase', 'sale']' ('['bank', 'cash', 'general', 'purchase', 'purchase_refund', 'sale', 'sale_refund', 'situation']')
 account      / account.journal          / user_id (many2one)            : DEL relation: res.users
