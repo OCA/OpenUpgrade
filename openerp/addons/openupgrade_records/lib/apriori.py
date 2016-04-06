@@ -7,6 +7,10 @@ renamed_modules = {
     'product_m2m_categories': 'product_multi_category',
     # OCA/e-commerce
     'product_links': 'product_multi_link',
+    # OCA/sale-workflow
+    'sale_exceptions': 'sale_exception',
+    # OCA/partner-contact
+    'partner_external_maps': 'partner_external_map',
 }
 
 renamed_models = {
