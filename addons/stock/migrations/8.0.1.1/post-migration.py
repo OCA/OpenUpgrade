@@ -488,10 +488,10 @@ def _migrate_stock_warehouse(cr, registry, res_id):
     def create_missing(cr, xml_id, res_id):
         """Add missing record to ir_model_data."""
         model_data_obj = registry['ir.model.data']
-        expected_record = model_data_obj.search(
+        model_data_ids = model_data_obj.search(
             cr, uid, [('module', '=', 'stock'), ('name', '=', xml_id)]
         )
-        if not expected_record:
+        if not model_data_ids:
             model_data_obj.create(
                 cr, uid, {
                     'module': 'stock',
@@ -501,10 +501,14 @@ def _migrate_stock_warehouse(cr, registry, res_id):
                 }
             )
         else:
-            if res_id != expected_record[0].res_id:
+            # If there already is a model_data record, check wether it
+            # points to the right record, and modify if not:
+            model_data_id = model_data_ids[0]
+            model_data_record = model_data_obj.browse(cr, uid, model_data_id)
+            if res_id != model_data_record.res_id:
                 # autocorrect existing ir_model_data:
                 model_data_obj.write(
-                    cr, uid, [expected_record[0].id], {'res_id': res_id}
+                    cr, uid, [model_data_id], {'res_id': res_id}
                 )
                 logger.warn(
                     "xml_id %s now points to res_id %d, no longer to %d.",
@@ -512,14 +516,13 @@ def _migrate_stock_warehouse(cr, registry, res_id):
                 )
 
     model_data_obj = registry['ir.model.data']
-    main_warehouse = model_data_obj.search(
+    main_warehouse_ids = model_data_obj.search(
         cr, uid, [('module', '=', 'stock'), ('name', '=', 'warehouse0')]
     )
-    if not main_warehouse:
+    if not main_warehouse_ids:
         logger.error("Main warehouse not found in ir_model_data!")
     else:
-        main_warehouse_id = main_warehouse[0].res_id
-        if warehouse_id == main_warehouse_id:
+        if warehouse.id == main_warehouse_ids[0]:
             create_missing(cr, uid, 'picking_type_in', in_type_id)
             create_missing(cr, uid, 'picking_type_out', out_type_id)
             create_missing(cr, uid, 'picking_type_internal', int_type_id)
