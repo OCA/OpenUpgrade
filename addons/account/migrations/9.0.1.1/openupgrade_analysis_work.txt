@@ -77,11 +77,11 @@ account      / account.account.type     / include_initial_balance (boolean): NEW
 account      / account.account.type     / type (selection)              : NEW required: required, selection_keys: ['liquidity', 'other', 'payable', 'receivable'], req_default: other
 # TODO: see generic methods: 'Compute type'
 
-#### FIELDS IN MODULE ACCOUNT.ANALYTIC.LINE ####
+#### FIELDS IN MODEL ACCOUNT.ANALYTIC.LINE ####
 
 account      / account.analytic.line    / journal_id (many2one)         : DEL relation: account.analytic.journal, required: required
 
-#### FIELDS IN MODULE ACCOUNT.BANK.STATEMENT ####
+#### FIELDS IN MODEL ACCOUNT.BANK.STATEMENT ####
 
 account      / account.bank.statement   / account_id (many2one)         : module is now 'point_of_sale' ('account')
 # TODO: Will have to deal with it in the point_of_sale module
@@ -112,19 +112,19 @@ account      / account.bank.statement   / website_message_ids (one2many): NEW re
 # NOTHING TO DO
 
 
-#### FIELDS IN MODULE ACCOUNT.BANK.STATEMENT.CASHBOX ####
+#### FIELDS IN MODEL ACCOUNT.BANK.STATEMENT.CASHBOX ####
 
 account      / account.bank.statement.cashbox / cashbox_lines_ids (one2many)  : NEW relation: account.cashbox.line
 # TODO: Combine records from opening_details_ids, closing_details_ids
 
 
-#### FIELDS IN MODULE ACCOUNT.BANK.STATEMENT.LINE ####
+#### FIELDS IN MODEL ACCOUNT.BANK.STATEMENT.LINE ####
 
 account      / account.bank.statement.line / journal_entry_id (many2one)   : DEL relation: account.move
 account      / account.bank.statement.line / journal_entry_ids (one2many)  : NEW relation: account.move
 # TODO: Post migration script: Update the move lines involved in bank statement lines with the statement
 
-#### FIELDS IN MODULE ACCOUNT.CASHBOX.LINE ####
+#### FIELDS IN MODEL ACCOUNT.CASHBOX.LINE ####
 
 account      / account.cashbox.line     / bank_statement_id (many2one)  : DEL relation: account.bank.statement
 account      / account.cashbox.line     / cashbox_id (many2one)         : NEW relation: account.bank.statement.cashbox
@@ -138,7 +138,7 @@ account      / account.cashbox.line     / number_opening (integer)      : DEL
 account      / account.cashbox.line     / pieces (float)                : DEL 
 
 
-#### FIELDS IN MODULE ACCOUNT.CHART.TEMPLATE ####
+#### FIELDS IN MODEL ACCOUNT.CHART.TEMPLATE ####
 The chart template is now company-specific. We may need to replicate all the installed chart templates for each installed company.
 
 account      / account.chart.template   / account_ids (one2many)        : NEW relation: account.account.template
@@ -189,7 +189,7 @@ account      / account.chart.template   / use_anglo_saxon (boolean)     : NEW
 # TODO: Determine if module 'account_anglo_saxon' was installed, and then set to True. Otherwise set to False.
 
 
-#### FIELDS IN MODULE ACCOUNT.FISCAL.POSITION ####
+#### FIELDS IN MODEL ACCOUNT.FISCAL.POSITION ####
 
 account      / account.fiscal.position  / state_ids (many2many)         : NEW relation: res.country.state
 # NOTHING TO DO
@@ -201,7 +201,7 @@ account      / account.fiscal.position  / zip_to (integer)              : NEW
 # NOTHING TO DO
 
 
-#### FIELDS IN MODULE ACCOUNT.INVOICE ####
+#### FIELDS IN MODEL ACCOUNT.INVOICE ####
 
 account      / account.invoice          / check_total (float)           : DEL 
 
@@ -228,13 +228,13 @@ account      / account.invoice          / tax_line (one2many)           : was re
 account      / account.invoice          / website_message_ids (one2many): NEW relation: mail.message
 # TODO: ?
 
-#### FIELDS IN MODULE ACCOUNT.INVOICE.LINE ####
+#### FIELDS IN MODEL ACCOUNT.INVOICE.LINE ####
 
 account      / account.invoice.line     / invoice_line_tax_id (many2many): was renamed to invoice_line_tax_ids [nothing to to]
 account      / account.invoice.line     / uos_id (many2one)             : was renamed to uom_id [nothing to to]
 
 
-#### FIELDS IN MODULE ACCOUNT.INVOICE.TAX ####
+#### FIELDS IN MODEL ACCOUNT.INVOICE.TAX ####
 
 account      / account.invoice.tax      / base (float)                  : DEL 
 account      / account.invoice.tax      / base_amount (float)           : DEL 
@@ -246,7 +246,7 @@ account      / account.invoice.tax      / tax_id (many2one)             : NEW re
 # TODO: ?
 
 
-#### FIELDS IN MODULE ACCOUNT.JOURNAL ####
+#### FIELDS IN MODEL ACCOUNT.JOURNAL ####
 
 account      / account.journal          / allow_date (boolean)          : DEL 
 account      / account.journal          / analytic_journal_id (many2one): DEL relation: account.analytic.journal
@@ -289,7 +289,7 @@ account      / account.journal          / user_id (many2one)            : DEL re
 account      / account.journal          / with_last_closing_balance (boolean): DEL 
 
 
-#### FIELDS IN MODULE ACCOUNT.MOVE ####
+#### FIELDS IN MODEL ACCOUNT.MOVE ####
 
 account      / account.move             / balance (float)               : DEL 
 account      / account.move             / line_id (one2many)            : DEL relation: account.move.line
@@ -336,7 +336,7 @@ account      / account.move.line        / tax_ids (many2many)           : NEW re
 account      / account.move.line        / tax_line_id (many2one)        : NEW relation: account.tax
 # TODO: ??
 
-#### FIELDS IN MODULE ACCOUNT.OPERATION.TEMPLATE ####
+#### FIELDS IN MODEL ACCOUNT.OPERATION.TEMPLATE ####
 Comes from model 'account.statement.operation.template'
 Now this model is company dependent. So will need to duplicate the records for each company
 
@@ -374,7 +374,8 @@ account      / account.operation.template / tax_id (many2one)             : NEW 
 # TODO: Move from 'account.statement.operation.template'.
 
 
-#### FIELDS IN MODULE ACCOUNT.PARTIAL.RECONCILE ####
+#### FIELDS IN MODEL ACCOUNT.PARTIAL.RECONCILE ####
+This is a new model in Odoo 9.
 
 account      / account.partial.reconcile / amount (float)                : NEW 
 account      / account.partial.reconcile / amount_currency (float)       : NEW 
@@ -383,7 +384,7 @@ account      / account.partial.reconcile / currency_id (many2one)        : NEW r
 account      / account.partial.reconcile / debit_move_id (many2one)      : NEW relation: account.move.line
 
 
-#### FIELDS IN MODULE ACCOUNT.PAYMENT ####
+#### FIELDS IN MODEL ACCOUNT.PAYMENT ####
 
 account      / account.payment          / amount (float)                : NEW required: required
 account      / account.payment          / communication (char)          : NEW 
@@ -411,7 +412,8 @@ account      / account.payment.term.line / option (selection)            : NEW r
 account      / account.payment.term.line / sequence (integer)            : NEW 
 account      / account.payment.term.line / value (selection)             : selection_keys is now '['balance', 'fixed', 'percent']' ('['balance', 'fixed', 'procent']')
 
-#### ACCOUNT TAX ####
+
+#### FIELDS IN MODEL ACCOUNT.TAX ####
 
 #TODO: amount field is multiplied by 100 in this version. 8.0: 0.21. 9.0: 21
 
@@ -447,25 +449,41 @@ account      / account.tax              / type (selection)              : was re
 account      / account.tax              / type_tax_use (selection)      : selection_keys is now '['none', 'purchase', 'sale']' ('['all', 'purchase', 'sale']')
 # TODO: post-migration script: convert 'none' to 'all'
 
-#### ACCOUNT TAX GROUP ####
+#### FIELDS IN MODEL ACCOUNT.TAX.GROUP ####
+This is a new model in Odoo 9. Not used at all, except in l10n_co.
 
 account      / account.tax.group        / name (char)                   : NEW required: required
 account      / account.tax.group        / sequence (integer)            : NEW 
 
-#### ACCOUNT TAX TEMPLATE ####
+
+#### FIELDS IN MODEL ACCOUNT.TAX.TEMPLATE ####
+The tax template now depends on company. So in case of multiple companies, it is necessary to replicate the account.tax.template for every record.
+Generic methods applicable for account.account and account.template, to do in post-migration
+- Compute tag_ids:
+We should provide a generic method that converts parent taxes into tags, and tag leaf taxes with these tags. Then assign these tags to the tax being migrated.
 
 account      / account.tax.template     / account_collected_id (many2one): was renamed to account_id [nothing to to]
 account      / account.tax.template     / account_paid_id (many2one)    : was renamed to refund_account_id [nothing to to]
 account      / account.tax.template     / active (boolean)              : NEW 
+# NOTHING TO DO
+
 account      / account.tax.template     / amount_type (selection)       : NEW required: required, selection_keys: ['division', 'fixed', 'group', 'percent'], req_default: percent
 # TODO: Post migration script: In v8, if child_depend == True, then in v9, amount_type='group'
+
 account      / account.tax.template     / analytic (boolean)            : NEW 
+# NOTHING TO DO
+
 account      / account.tax.template     / applicable_type (selection)   : DEL required: required, selection_keys: ['code', 'true'], req_default: true
 account      / account.tax.template     / base_code_id (many2one)       : DEL relation: account.tax.code.template
 account      / account.tax.template     / base_sign (float)             : DEL 
 account      / account.tax.template     / child_depend (boolean)        : DEL 
+
 account      / account.tax.template     / children_tax_ids (many2many)  : NEW relation: account.tax.template
+#TODO: Post-migration script: Look for any records that have the current as parent_id. These will be the children
+
 account      / account.tax.template     / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+#TODO: See initial notes.
+
 account      / account.tax.template     / domain (char)                 : DEL 
 account      / account.tax.template     / parent_id (many2one)          : DEL relation: account.tax.template
 account      / account.tax.template     / python_applicable (text)      : module is now 'account_tax_python' ('account')
@@ -475,33 +493,83 @@ account      / account.tax.template     / ref_base_code_id (many2one)   : DEL re
 account      / account.tax.template     / ref_base_sign (float)         : DEL 
 account      / account.tax.template     / ref_tax_code_id (many2one)    : DEL relation: account.tax.code.template
 account      / account.tax.template     / ref_tax_sign (float)          : DEL 
+
 account      / account.tax.template     / tag_ids (many2many)           : NEW relation: account.account.tag
+#TODO: Call method Compute tag_ids as described above
+
 account      / account.tax.template     / tax_code_id (many2one)        : DEL relation: account.tax.code.template
 account      / account.tax.template     / tax_sign (float)              : DEL 
 account      / account.tax.template     / type (selection)              : DEL required: required, selection_keys: ['balance', 'code', 'fixed', 'none', 'percent'], req_default: percent
 account      / account.tax.template     / type_tax_use (selection)      : selection_keys is now '['none', 'purchase', 'sale']' ('['all', 'purchase', 'sale']')
+#TODO: 'none' -> 'all'
+
+#### FIELDS IN MODEL IR.SEQUENCE ####
+
 account      / ir.sequence              / fiscal_ids (one2many)         : DEL relation: account.sequence.fiscalyear
+
+#### FIELDS IN MODEL PRODUCT.CATEGORY ####
 account      / product.category         / property_account_expense_categ (many2one): was renamed to property_account_expense_categ_id [nothing to to]
 account      / product.category         / property_account_income_categ (many2one): was renamed to property_account_income_categ_id [nothing to to]
 account      / product.template         / property_account_expense (many2one): was renamed to property_account_expense_id [nothing to to]
 account      / product.template         / property_account_income (many2one): was renamed to property_account_income_id [nothing to to]
+
+
+#### FIELDS IN MODEL RES.COMPANY ####
+
 account      / res.company              / accounts_code_digits (integer): NEW 
+# TODO: May need to read what is the longest length in the accounts beloning to that company, to determine the number of digits.
+
 account      / res.company              / anglo_saxon_accounting (boolean): NEW 
+# TODO: Need to determine if the anglo_saxon_accounting module was installed in the previous version, then set it to True.
+
 account      / res.company              / bank_account_code_prefix (char): NEW 
+# NOTHING TO DO
+
 account      / res.company              / bank_journal_ids (one2many)   : NEW relation: account.journal
+# NOTHING TO DO. Will be set in the other side of the relation
+
 account      / res.company              / cash_account_code_prefix (char): NEW 
+# NOTHING TO DO
+
 account      / res.company              / chart_template_id (many2one)  : NEW relation: account.chart.template
+# ISSUE: Previously the account.chart.template was not company specific. How will we know which one applies now, if multiple are installed in the system?
+
 account      / res.company              / currency_exchange_journal_id (many2one): NEW relation: account.journal
+# NOTHING TO DO
+
 account      / res.company              / expense_currency_exchange_account_id (many2one): DEL relation: account.account
+# NOTHING TO DO
+
 account      / res.company              / fiscalyear_last_day (integer) : NEW required: required, req_default: 31
+# NOTHING TO DO
+
 account      / res.company              / fiscalyear_last_month (selection): NEW required: required, selection_keys: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], req_default: 12
+# NOTHING TO DO
+
 account      / res.company              / fiscalyear_lock_date (date)   : NEW 
+# NOTHING TO DO
+
 account      / res.company              / income_currency_exchange_account_id (many2one): DEL relation: account.account
+# NOTHING TO DO
+
 account      / res.company              / period_lock_date (date)       : NEW 
+# NOTHING TO DO
+
 account      / res.company              / property_stock_account_input_categ_id (many2one): NEW relation: account.account
+# NOTHING TO DO
+
 account      / res.company              / property_stock_account_output_categ_id (many2one): NEW relation: account.account
+# NOTHING TO DO
+
 account      / res.company              / property_stock_valuation_account_id (many2one): NEW relation: account.account
+# NOTHING TO DO
+
 account      / res.company              / transfer_account_id (many2one): NEW relation: account.account
+# NOTHING TO DO
+
+
+#### FIELDS IN MODEL RES.PARTNER ####
+
 account      / res.partner              / last_reconciliation_date (datetime): was renamed to last_time_entries_checked [nothing to to]
 account      / res.partner              / property_account_payable (many2one): was renamed to property_account_payable_id [nothing to to]
 account      / res.partner              / property_account_position (many2one): was renamed to property_account_position_id [nothing to to]
@@ -512,7 +580,11 @@ account      / res.partner              / ref_companies (one2many)      : was re
 account      / res.partner              / vat_subjected (boolean)       : DEL 
 account      / res.partner.bank         / currency_id (many2one)        : module is now 'base' ('account')
 account      / res.partner.bank         / journal_id (many2one)         : type is now 'one2many' ('many2one')
+
+
+
 ---XML records in module 'account'---
+
 NEW account.account.tag: account.account_tag_financing
 NEW account.account.tag: account.account_tag_investing
 NEW account.account.tag: account.account_tag_operating
