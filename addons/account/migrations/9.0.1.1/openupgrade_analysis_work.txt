@@ -27,7 +27,7 @@ account      / account.account.template / financial_report_ids (many2many): DEL 
 account      / account.account.template / parent_id (many2one)          : DEL relation: account.account.template
 account      / account.account.template / shortcut (char)               : DEL 
 account      / account.account.template / tag_ids (many2many)           : NEW relation: account.account.tag
-# NOTHING TO DO: The migration of tags should be provided by the l10n account modules 
+# NOTHING TO DO: We should provide a generic method that converts parent accounts into tags, and tag leaf accounts with these tags. Then assign these tags to the account being migrated.
 account      / account.account.template / type (selection)              : DEL required: required, selection_keys: ['closed', 'consolidation', 'liquidity', 'other', 'payable', 'receivable', 'view'], req_default: view
 account      / account.account.template / user_type (many2one)          : was renamed to user_type_id [nothing to to]
 account      / account.account.type     / close_method (selection)      : DEL required: required, selection_keys: ['balance', 'detail', 'none', 'unreconciled'], req_default: none
