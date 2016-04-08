@@ -24,12 +24,12 @@ account      / account.account          / child_parent_ids (one2many)   : DEL re
 account      / account.account          / currency_mode (selection)     : DEL required: required, selection_keys: ['average', 'current'], req_default: current
 
 account      / account.account          / deprecated (boolean)          : NEW 
-# TODO: in post-migration, if the active field is False, set it to True
+# TODO: If the active field is False, set it to True
 
 account      / account.account          / financial_report_ids (many2many): DEL relation: account.financial.report
 
 account      / account.account          / last_time_entries_checked (datetime): NEW 
-# The code in account module that uses this field is commented... So seems that it has no purpose (and no motivation to build a migration script)
+# NOTHING TO DO: The code in account module that uses this field is commented... So seems that it has no purpose (and no motivation to build a migration script)
 
 account      / account.account          / parent_id (many2one)          : DEL relation: account.account
 account      / account.account          / parent_left (integer)         : DEL 
@@ -41,8 +41,8 @@ account      / account.account          / tag_ids (many2many)           : NEW re
 
 account      / account.account          / type (selection)              : DEL required: required, selection_keys: ['closed', 'consolidation', 'liquidity', 'other', 'payable', 'receivable', 'view'], req_default: other
 # TODO: see generic methods: 'Compute type'
-
 account      / account.account          / user_type (many2one)          : was renamed to user_type_id [nothing to to]
+
 
 #### FIELDS IN MODEL ACCOUNT.TAG ####
 This is a new model. So no need to migrate anything.
@@ -72,14 +72,16 @@ account      / account.account.type     / close_method (selection)      : DEL re
 account      / account.account.type     / code (char)                   : DEL required: required
 
 account      / account.account.type     / include_initial_balance (boolean): NEW 
-# TODO: Post migration script: If the close_method was 'none', then set to 'False', otherwise set to 'True'
+# TODO: If the close_method was 'none', then set to 'False', otherwise set to 'True'
 
 account      / account.account.type     / type (selection)              : NEW required: required, selection_keys: ['liquidity', 'other', 'payable', 'receivable'], req_default: other
 # TODO: see generic methods: 'Compute type'
 
+
 #### FIELDS IN MODEL ACCOUNT.ANALYTIC.LINE ####
 
 account      / account.analytic.line    / journal_id (many2one)         : DEL relation: account.analytic.journal, required: required
+
 
 #### FIELDS IN MODEL ACCOUNT.BANK.STATEMENT ####
 
@@ -87,10 +89,10 @@ account      / account.bank.statement   / account_id (many2one)         : module
 # TODO: Will have to deal with it in the point_of_sale module
 
 account      / account.bank.statement   / cashbox_end_id (many2one)     : NEW relation: account.bank.statement.cashbox
-# TODO: ?
+# TODO: see FIELDS IN MODEL ACCOUNT.BANK.STATEMENT.CASHBOX
 
 account      / account.bank.statement   / cashbox_start_id (many2one)   : NEW relation: account.bank.statement.cashbox
-# TODO: ?
+# TODO: see FIELDS IN MODEL ACCOUNT.BANK.STATEMENT.CASHBOX
 
 account      / account.bank.statement   / closing_date (datetime)       : DEL 
 account      / account.bank.statement   / closing_details_ids (one2many): DEL relation: account.cashbox.line
@@ -113,6 +115,11 @@ account      / account.bank.statement   / website_message_ids (one2many): NEW re
 
 
 #### FIELDS IN MODEL ACCOUNT.BANK.STATEMENT.CASHBOX ####
+This is a new model. In Odoo 8 the account.bank.statement would contain the opening and closing cash entries as a direct link to account.casbox.line using opening_details_ids and closing_details_ids. In Odoo 9 this model groups these lines, so that each account.bank.statement points to a single one cashbox_end_id and cashbox_start_id.
+
+TODO: 
+- Create one record for each record in account.bank.statement where opening_details_ids has content. Then associate the new account.bank.statement.cashbox record in account.bank.statement  field 'cashbox_start_id'
+- Create one record for each record in account.bank.statement where closing_details_ids has content. Then associate the new account.bank.statement.cashbox record in account.bank.statement  field 'cashbox_end_id'
 
 account      / account.bank.statement.cashbox / cashbox_lines_ids (one2many)  : NEW relation: account.cashbox.line
 # TODO: Combine records from opening_details_ids, closing_details_ids
@@ -122,7 +129,8 @@ account      / account.bank.statement.cashbox / cashbox_lines_ids (one2many)  : 
 
 account      / account.bank.statement.line / journal_entry_id (many2one)   : DEL relation: account.move
 account      / account.bank.statement.line / journal_entry_ids (one2many)  : NEW relation: account.move
-# TODO: Post migration script: Update the move lines involved in bank statement lines with the statement
+# TODO: Update the move lines involved in bank statement lines with the statement. This changes from many2one to one2many, so the statement_id is now in the move line.
+
 
 #### FIELDS IN MODEL ACCOUNT.CASHBOX.LINE ####
 
@@ -190,6 +198,7 @@ account      / account.chart.template   / use_anglo_saxon (boolean)     : NEW
 
 
 #### FIELDS IN MODEL ACCOUNT.FISCAL.POSITION ####
+# The changes introduced are specific to handling taxes in countries such as the US, where tax may differ based on the jurisdiction (state/county/city).
 
 account      / account.fiscal.position  / state_ids (many2many)         : NEW relation: res.country.state
 # NOTHING TO DO
@@ -217,8 +226,7 @@ account      / account.invoice          / message_follower_ids (many2many): rela
 account      / account.invoice          / message_follower_ids (many2many): type is now 'one2many' ('many2many')
 
 account      / account.invoice          / payment_ids (many2many)       : NEW relation: account.payment
-# TODO: Post migration script: 
-In general, seems to me that a payment should be created for each journal entry that contains an AP/AR and a liquidity account. The account.payment then becomes the wrapper. This account.payment may in turn be related to one or more invoices. So we need to first migrate the account.payment, and then only look at invoices. In order to determine what is a payment linked to that invoice, we might need to look into the moves associated to invoices, then look at the move line that corresponded to the AP/AR, and find what move line was it reconciled to. If that move is linked to a new account.payment, then we can link that account.payment with the invoice. 
+# NOTHING TO DO: account.payment is a new model, and there's no need to migrate records into this new model.
 
 account      / account.invoice          / payment_term (many2one)       : was renamed to payment_term_id [nothing to to]
 account      / account.invoice          / period_id (many2one)          : DEL relation: account.period
@@ -227,6 +235,7 @@ account      / account.invoice          / tax_line (one2many)           : was re
 
 account      / account.invoice          / website_message_ids (one2many): NEW relation: mail.message
 # TODO: ?
+
 
 #### FIELDS IN MODEL ACCOUNT.INVOICE.LINE ####
 
@@ -243,16 +252,19 @@ account      / account.invoice.tax      / tax_amount (float)            : DEL
 account      / account.invoice.tax      / tax_code_id (many2one)        : DEL relation: account.tax.code
 
 account      / account.invoice.tax      / tax_id (many2one)             : NEW relation: account.tax
-# TODO: ?
+# TODO: A mapping function should provide the transition from tax_code_ids to tax_ids. Use this function to get the new tax_id from the old tax_code_id.
 
 
 #### FIELDS IN MODEL ACCOUNT.JOURNAL ####
+In odoo 9 the customer/supplier refunds use the same journal as the invoices. You can define a separate sequence for refunds. 
+We assume that in Odoo 9 the default will be for refunds to use the same sequence as invoices.
+The old journals will stay for consistency purposes, but should not be used anymore. Seems hard to devise a strategy to remove the refund journals, and re-direction the account moves to sales journals. Probably in the case of the Odoo default provided sales and refund journals we could do so, but if there are new sales and refund journals we could not possibly know how to map them. To be discussed...
 
 account      / account.journal          / allow_date (boolean)          : DEL 
 account      / account.journal          / analytic_journal_id (many2one): DEL relation: account.analytic.journal
 
 account      / account.journal          / bank_account_id (many2one)    : NEW relation: res.partner.bank
-# TODO: ?
+# TODO: This is new in Odoo 9. We can't migrate any data from Odoo 8.
 
 account      / account.journal          / bank_statements_source (selection): NEW selection_keys: ['manual']
 # TODO: Post migration script: Default to 'manual'
@@ -267,24 +279,34 @@ account      / account.journal          / display_on_footer (boolean)   : NEW
 
 account      / account.journal          / entry_posted (boolean)        : DEL 
 account      / account.journal          / groups_id (many2many)         : DEL relation: res.groups
+
 account      / account.journal          / inbound_payment_method_ids (many2many): NEW relation: account.payment.method
 # TODO: Post migration script: Set 'manual'
+
 account      / account.journal          / internal_account_id (many2one): DEL relation: account.account
+
 account      / account.journal          / outbound_payment_method_ids (many2many): NEW relation: account.payment.method
-# TODO: Post migration script: Set 'manual' and 'check'
+# TODO: Post migration script: Set 'manual' and 'check' if the value of tield 'type' in v8 was 'cash', 'bank'
+
 account      / account.journal          / refund_sequence (boolean)     : NEW 
 # NOTHING TO DO
+
 account      / account.journal          / refund_sequence_id (many2one) : NEW relation: ir.sequence
 # NOTHING TO DO 
+
 account      / account.journal          / sequence (integer)            : NEW 
 # NOTHING TO DO
+
 account      / account.journal          / show_on_dashboard (boolean)   : NEW 
 # NOTHING TO DO
+
 account      / account.journal          / type (selection)              : selection_keys is now '['bank', 'cash', 'general', 'purchase', 'sale']' ('['bank', 'cash', 'general', 'purchase', 'purchase_refund', 'sale', 'sale_refund', 'situation']')
 # TODO: Post-migration script:
-purchase_refund -> purchase + refund_sequence=True
-sale_refund => sale + refund_sequence=True
-situation => Remove records that have this set? 
+purchase_refund -> purchase
+sale_refund => sale
+situation => general
+# This can be confusing, becasue in reality these journals are not useful anymore in Odoo 9.
+
 account      / account.journal          / user_id (many2one)            : DEL relation: res.users
 account      / account.journal          / with_last_closing_balance (boolean): DEL 
 
@@ -336,6 +358,7 @@ account      / account.move.line        / tax_ids (many2many)           : NEW re
 account      / account.move.line        / tax_line_id (many2one)        : NEW relation: account.tax
 # TODO: ??
 
+
 #### FIELDS IN MODEL ACCOUNT.OPERATION.TEMPLATE ####
 Comes from model 'account.statement.operation.template'
 Now this model is company dependent. So will need to duplicate the records for each company
@@ -385,6 +408,9 @@ account      / account.partial.reconcile / debit_move_id (many2one)      : NEW r
 
 
 #### FIELDS IN MODEL ACCOUNT.PAYMENT ####
+This a new model in Odoo 9. We do not need to migrate anything from 8 to convert it to an account payment. 
+In Odoo 8 the payments to customers or suppliers could be done in different ways, such as using vouchers or manual journal entries. 
+It is fine to just migrate the journal entries corresponding to payments, not creating account.payment records, because Odoo 9 will recognize two AR/AP reconciled entries as a payment in the invoice.
 
 account      / account.payment          / amount (float)                : NEW required: required
 account      / account.payment          / communication (char)          : NEW 
