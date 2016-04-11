@@ -1,0 +1,32 @@
+---Fields in module 'crm_claim'---
+crm_claim    / crm.claim                / message_last_post (datetime)  : NEW
+# Field initialized
+
+crm_claim    / crm.claim                / priority (selection)          : selection_keys is now '['0', '1', '2']' ('['1', '2', '3', '4', '5']')
+# Values mapped
+
+crm_claim    / crm.claim                / website_message_ids (one2many): NEW relation: mail.message
+# Nothing to do
+
+crm_claim    / crm.claim.stage          / case_refused (boolean)        : DEL
+crm_claim    / crm.claim.stage          / fold (boolean)                : DEL 
+crm_claim    / crm.claim.stage          / state (selection)             : DEL required: required, selection_keys: ['cancel', 'done', 'draft', 'open', 'pending'], req_default: draft
+crm_claim    / res.partner              / claims_ids (one2many)         : DEL relation: crm.claim
+# Deleted fields - Nothing to do
+
+---XML records in module 'crm_claim'---
+DEL crm.case.resource.type: crm_claim.type_claim1
+DEL crm.case.resource.type: crm_claim.type_claim2
+NEW crm.tracking.campaign: crm_claim.claim_source1
+NEW crm.tracking.campaign: crm_claim.claim_source2
+DEL ir.actions.act_window: crm_claim.act_claim_partner
+DEL ir.actions.act_window.view: crm_claim.action_report_crm_claim_tree
+# noupdate data - Loaded
+
+NEW ir.filters: crm_claim.filter_report_crm_claim_workload
+DEL ir.ui.menu: base.menu_project_report
+NEW ir.ui.view: crm_claim.view_claim_res_partner_info_form
+DEL ir.ui.view: crm_claim.view_claim_partner_info_form1
+DEL ir.ui.view: crm_claim.view_project_config_claim
+DEL ir.ui.view: crm_claim.view_report_crm_claim_tree
+# Views and menus changes - Nothing to do

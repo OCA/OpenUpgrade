@@ -1,0 +1,16 @@
+<openerp>
+  <data>
+    <record id="stage_claim1" model="crm.claim.stage"><field name="state"/>
+        <field name="sequence">1</field>
+    </record>
+    <record id="categ_claim3" model="crm.case.categ">
+        <field name="section_id" ref="sales_team.section_sales_department"/>
+    </record>
+    <record id="categ_claim2" model="crm.case.categ">
+        <field name="section_id" ref="sales_team.section_sales_department"/>
+    </record>
+    <record id="categ_claim1" model="crm.case.categ">
+        <field name="section_id" ref="sales_team.section_sales_department"/>
+    </record>
+  </data>
+</openerp>
