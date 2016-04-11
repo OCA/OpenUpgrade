@@ -170,6 +170,7 @@ def migrate_stock_picking(cr, registry):
     warehouse_obj = registry['stock.warehouse']
     company_obj = registry['res.company']
     picking_obj = registry['stock.picking']
+    location_obj = registry['stock.location']
     type_legacy = openupgrade.get_legacy_name('type')
     for company in company_obj.browse(
             cr, uid, company_obj.search(
@@ -187,26 +188,116 @@ def migrate_stock_picking(cr, registry):
                 cr, 'stock', 'stock_picking', 'picking_type_id',
                 'No warehouse found for company %s, but this company does '
                 'have pickings. Taking the default warehouse.', company.name)
-        warehouse = warehouse_obj.browse(cr, uid, warehouse_ids[0])
-        if len(warehouse_ids) > 1:
-            openupgrade.message(
-                cr, 'stock', 'stock_picking', 'picking_type_id',
-                'Multiple warehouses found for company %s. Taking first'
-                'one found (%s) to determine the picking types for this '
-                'company\'s pickings. Please verify this setting.',
-                company.name, warehouse.name)
-        # Fill picking_type_id required field
-        for picking_type, type_id in (
-                ('in', warehouse.in_type_id.id),
-                ('out', warehouse.out_type_id.id),
-                ('internal', warehouse.int_type_id.id)):
+        for warehouse in warehouse_obj.browse(cr, uid, warehouse_ids):
+            # Select all the child locations of this Warehouse
+            location_ids = location_obj.search(
+                cr, uid,
+                [('parent_left', '<', warehouse.lot_stock_id.parent_left),
+                 ('parent_left', '<', warehouse.lot_stock_id.parent_right),
+                 ('parent_right', '>', warehouse.lot_stock_id.parent_left),
+                 ('parent_right', '>', warehouse.lot_stock_id.parent_right),
+                 ('parent_left', '<',
+                  warehouse.wh_input_stock_loc_id.parent_left),
+                 ('parent_left', '<',
+                  warehouse.wh_input_stock_loc_id.parent_right),
+                 ('parent_right', '>',
+                  warehouse.wh_input_stock_loc_id.parent_left),
+                 ('parent_right', '>',
+                  warehouse.wh_input_stock_loc_id.parent_right),
+                 ('parent_left', '<',
+                  warehouse.wh_output_stock_loc_id.parent_left),
+                 ('parent_left', '<',
+                  warehouse.wh_output_stock_loc_id.parent_right),
+                 ('parent_right', '>',
+                  warehouse.wh_output_stock_loc_id.parent_left),
+                 ('parent_right', '>',
+                  warehouse.wh_output_stock_loc_id.parent_right),
+                 ('id', 'child_of', warehouse.view_location_id.id),
+                 ])
+
+            # Fill picking_type_id required field
+
+            # Incoming shipments. Look for pickings that have as
+            # destination location one that is child location of the
+            #  default warehouse location.
+            picking_type = 'in'
+            type_id = warehouse.in_type_id.id
             openupgrade.logged_query(
                 cr,
                 """
-                UPDATE stock_picking SET picking_type_id = %s
-                WHERE {type_legacy} = %s
+                UPDATE stock_picking AS sp
+                SET picking_type_id = %s
+                WHERE sp.id IN
+                ( SELECT sp1.id
+                  FROM stock_picking AS sp1
+                  INNER JOIN stock_move AS sm1
+                  ON sm1.picking_id = sp1.id
+                  WHERE sm1.location_dest_id in %s
+                  AND sp.{type_legacy} = %s
+                )
                 """.format(type_legacy=type_legacy),
-                (type_id, picking_type,))
+                (type_id, tuple(location_ids), picking_type,))
+
+            # Delivery Orders. Look for pickings that have as
+            # source location one that is child location of the
+            #  default warehouse location.
+            picking_type = 'out'
+            type_id = warehouse.out_type_id.id
+            openupgrade.logged_query(
+                cr,
+                """
+                UPDATE stock_picking AS sp
+                SET picking_type_id = %s
+                WHERE sp.id IN
+                ( SELECT sp1.id
+                  FROM stock_picking AS sp1
+                  INNER JOIN stock_move AS sm1
+                  ON sm1.picking_id = sp1.id
+                  WHERE sm1.location_id in %s
+                  AND sp.{type_legacy} = %s
+                )
+                """.format(type_legacy=type_legacy),
+                (type_id, tuple(location_ids), picking_type,))
+
+            picking_type = 'transfer'
+            type_id = warehouse.int_type_id.id
+            # Internal transfers. Look for pickings that have as
+            # source location one that is child location of the
+            #  default warehouse location.
+            openupgrade.logged_query(
+                cr,
+                """
+                UPDATE stock_picking AS sp
+                SET picking_type_id = %s
+                WHERE sp.id IN
+                ( SELECT sp1.id
+                  FROM stock_picking AS sp1
+                  INNER JOIN stock_move AS sm1
+                  ON sm1.picking_id = sp1.id
+                  WHERE sm1.location_id in %s
+                  AND sp.{type_legacy} = %s
+                )
+                """.format(type_legacy=type_legacy),
+                (type_id, tuple(location_ids), picking_type,))
+
+        if warehouse_ids:
+            warehouse = warehouse_obj.browse(cr, uid, warehouse_ids[0])
+            # For other stock pickings that were associated to no warehouse
+            # at all, just take the picking from the main warehouse.
+            for picking_type, type_id in (
+                    ('in', warehouse.in_type_id.id),
+                    ('out', warehouse.out_type_id.id),
+                    ('internal', warehouse.int_type_id.id)):
+                openupgrade.logged_query(
+                    cr,
+                    """
+                    UPDATE stock_picking as sp
+                    SET picking_type_id = %s
+                    WHERE picking_type_id IS NULL
+                    AND sp.{type_legacy} = %s
+                    """.format(type_legacy=type_legacy),
+                    (type_id, picking_type,))
+
     # state key auto -> waiting
     cr.execute("UPDATE stock_picking SET state = %s WHERE state = %s",
                ('waiting', 'auto',))
