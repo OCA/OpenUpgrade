@@ -28,9 +28,9 @@ from openerp.openupgrade import openupgrade, openupgrade_80
 
 def update_link_to_moves(cr):
     cr.execute('''
-        SELECT statement_line_id, move_id
+        SELECT statement_id, move_id
         FROM bak_account_bank_statement_line_move_rel
-        ORDER BY statement_line_id;
+        ORDER BY statement_id;
     ''')
     rows = cr.fetchall()
     for k, v in groupby(rows, key=lambda r: r[0]):
