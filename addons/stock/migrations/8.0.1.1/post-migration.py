@@ -515,17 +515,11 @@ def _migrate_stock_warehouse(cr, registry, res_id):
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
         model_data_obj = env['ir.model.data']
-        main_warehouse = model_data_obj.search([
-            ('module', '=', 'stock'),
-            ('name', '=', 'warehouse0')
-        ], limit=1)
-        if not main_warehouse:
-            logger.error("Main warehouse not found in ir_model_data!")
-        else:
-            if warehouse.id == main_warehouse.id:
-                create_missing(env, 'picking_type_in', in_type_id)
-                create_missing(env, 'picking_type_out', out_type_id)
-                create_missing(env, 'picking_type_internal', int_type_id)
+        main_warehouse = env.ref('stock.warehouse0')
+        if warehouse.id == main_warehouse.id:
+            create_missing(env, 'picking_type_in', in_type_id)
+            create_missing(env, 'picking_type_out', out_type_id)
+            create_missing(env, 'picking_type_internal', int_type_id)
 
     vals.update({
         'in_type_id': in_type_id,
