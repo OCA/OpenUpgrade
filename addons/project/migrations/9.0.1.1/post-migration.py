@@ -49,10 +49,20 @@ def map_template_state(cr):
         table='project_project', write='sql')
 
 
+def copy_user_id(cr):
+    openupgrade.logged_query(cr, """
+        UPDATE project_project
+        SET user_id = aaa.user_id
+        FROM account_analytic_account aaa
+        WHERE aaa.id = project_project.analytic_account_id
+        """)
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     map_priority(cr)
     map_template_state(cr)
+    copy_user_id(cr)
     for table_name in column_copies.keys():
         for (old, new, field_type) in column_copies[table_name]:
             openupgrade.convert_field_to_html(cr, table_name, openupgrade.get_legacy_name(old), old)
