@@ -60,7 +60,7 @@ def copy_user_id(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    map_priority(cr)
+    # map_priority(cr)
     map_template_state(cr)
     copy_user_id(cr)
     for table_name in column_copies.keys():
