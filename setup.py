@@ -75,7 +75,7 @@ def py2exe_options():
                     "skip_archive": 1,
                     "optimize": 0, # keep the assert running, because the integrated tests rely on them.
                     "dist_dir": 'dist',
-                    "packages": [ "DAV", "HTMLParser", "PIL", "asynchat", "asyncore", "commands", "dateutil", "decimal", "docutils", "email", "encodings", "imaplib", "jinja2", "lxml", "lxml._elementpath", "lxml.builder", "lxml.etree", "lxml.objectify", "mako", "openerp", "poplib", "pychart", "pydot", "pyparsing", "pytz", "reportlab", "select", "simplejson", "smtplib", "uuid", "vatnumber", "vobject", "xml", "xml.dom", "yaml", ],
+                    "packages": [ "DAV", "HTMLParser", "pillow", "asynchat", "asyncore", "commands", "dateutil", "decimal", "docutils", "email", "encodings", "imaplib", "jinja2", "lxml", "lxml._elementpath", "lxml.builder", "lxml.etree", "lxml.objectify", "mako", "openerp", "poplib", "pychart", "pydot", "pyparsing", "pytz", "reportlab", "select", "simplejson", "smtplib", "uuid", "vatnumber", "vobject", "xml", "xml.dom", "yaml", ],
                     "excludes" : ["Tkconstants","Tkinter","tcl"],
                 }
             }
@@ -123,7 +123,7 @@ setuptools.setup(
           'lxml', # windows binary http://www.lfd.uci.edu/~gohlke/pythonlibs/
           'mako',
           'mock',
-          'PIL', # windows binary http://www.lfd.uci.edu/~gohlke/pythonlibs/
+          'pillow', # windows binary http://www.lfd.uci.edu/~gohlke/pythonlibs/
           'psutil', # windows binary code.google.com/p/psutil/downloads/list
           'psycopg2 >= 2.2',
           'pydot',
