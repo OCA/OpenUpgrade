@@ -118,6 +118,7 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
             "footer_to_buttons": false,
         });
         this.is_initialized = $.Deferred();
+        this.record_loaded = $.Deferred();
         this.mutating_mutex = new $.Mutex();
         this.save_list = [];
         this.render_value_defs = [];
@@ -329,6 +330,7 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
         this._actualize_mode();
         this.set({ 'title' : record.id ? record.display_name : _t("New") });
 
+        this.record_loaded = $.Deferred();
         _(this.fields).each(function (field, f) {
             field._dirty_flag = false;
             field._inhibit_on_change_flag = true;
@@ -344,6 +346,7 @@ instance.web.FormView = instance.web.View.extend(instance.web.form.FieldManagerM
             self.on_form_changed();
             self.rendering_engine.init_fields();
             self.is_initialized.resolve();
+            self.record_loaded.resolve();
             self.do_update_pager(record.id === null || record.id === undefined);
             if (self.sidebar) {
                self.sidebar.do_attachement_update(self.dataset, self.datarecord.id);
@@ -2566,6 +2569,15 @@ instance.web.form.FieldCharDomain = instance.web.form.AbstractField.extend(insta
         this.on("change:effective_readonly", this, function () {
             this.display_field();
         });
+        if (this.options.model_field){
+            this.field_manager.fields[this.options.model_field].on("change:value", this, function(){
+                if (self.view && self.view.record_loaded.state == "resolved" && self.view.onchanges_mutex){
+                    self.view.onchanges_mutex.def.then(function(){
+                        self.display_field();
+                    });
+                }
+            });
+        }
         this.display_field();
         return this._super();
     },
@@ -2582,7 +2594,7 @@ instance.web.form.FieldCharDomain = instance.web.form.AbstractField.extend(insta
             var domain = instance.web.pyeval.eval('domain', this.get('value'));
             var ds = new instance.web.DataSetStatic(self, model, self.build_context());
             ds.call('search_count', [domain, self.build_context()]).then(function (results) {
-                $('.oe_domain_count', self.$el).text(results + ' records selected');
+                $('.oe_domain_count', self.$el).text(results + _t(' records selected'));
                 if (self.get('effective_readonly')) {
                     $('button span', self.$el).text(' See selection');
                 }
@@ -4350,7 +4362,6 @@ instance.web.form.FieldOne2Many = instance.web.form.AbstractField.extend({
 });
 
 instance.web.form.One2ManyViewManager = instance.web.ViewManager.extend({
-    template: 'One2Many.viewmanager',
     init: function(parent, dataset, views, flags) {
         this._super(parent, dataset, views, _.extend({}, flags, {$sidebar: false}));
         this.registry = this.registry.extend({
@@ -4597,7 +4608,14 @@ instance.web.form.One2ManyListView = instance.web.ListView.extend({
         this.dataset.evict_record(record.get('id'));
 
         return this._super(record);
-    }
+    },
+    reload_content: function () {
+        this.page = Math.max(0, Math.min(
+            this.page,
+            Math.ceil(this.dataset.size() / this.limit()) - 1
+        ));
+        return this._super.apply(this, arguments);
+    },
 });
 instance.web.form.One2ManyGroups = instance.web.ListView.Groups.extend({
     setup_resequence_rows: function () {
@@ -5796,6 +5814,7 @@ instance.web.form.FieldBinaryImage = instance.web.form.FieldBinary.extend({
             $img.css("max-height", "" + self.options.size[1] + "px");
         });
         $img.on('error', function() {
+            self.on_clear();
             $img.attr('src', self.placeholder);
             instance.webclient.notification.warn(_t("Image"), _t("Could not display the selected image."));
         });
@@ -6126,13 +6145,20 @@ instance.web.form.FieldStatus = instance.web.form.AbstractField.extend({
             val = $li.data("id");
         }
         if (val != self.get('value')) {
-            this.view.recursive_save().done(function() {
-                var change = {};
-                change[self.name] = val;
-                self.view.dataset.write(self.view.datarecord.id, change).done(function() {
-                    self.view.reload();
+            if(!this.view.datarecord.id ||
+               this.view.datarecord.id.toString().match(instance.web.BufferedDataSet.virtual_id_regex)) {
+                // don't save, only set value for not-yet-saved many2ones
+                self.set_value(val);
+            }
+            else {
+                this.view.recursive_save().done(function() {
+                    var change = {};
+                    change[self.name] = val;
+                    self.view.dataset.write(self.view.datarecord.id, change).done(function() {
+                        self.view.reload();
+                    });
                 });
-            });
+            }
         }
     },
 });

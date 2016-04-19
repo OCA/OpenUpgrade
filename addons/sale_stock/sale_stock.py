@@ -290,6 +290,13 @@ class sale_order_line(osv.osv):
                     if product_route.id == mto_route_id:
                         is_available = True
                         break
+        if not is_available:
+            product_routes = product.route_ids + product.categ_id.total_route_ids
+            for pull_rule in product_routes.mapped('pull_ids'):
+                if pull_rule.picking_type_id.sudo().default_location_src_id.usage == 'supplier' and\
+                        pull_rule.picking_type_id.sudo().default_location_dest_id.usage == 'customer':
+                    is_available = True
+                    break
         return is_available
 
     def product_id_change_with_wh(self, cr, uid, ids, pricelist, product, qty=0,
@@ -447,12 +454,13 @@ class stock_picking(osv.osv):
         """ Inherit the original function of the 'stock' module
             We select the partner of the sales order as the partner of the customer invoice
         """
-        if picking.sale_id:
-            saleorder_ids = self.pool['sale.order'].search(cr, uid, [('procurement_group_id' ,'=', picking.group_id.id)], context=context)
-            saleorders = self.pool['sale.order'].browse(cr, uid, saleorder_ids, context=context)
-            if saleorders and saleorders[0] and saleorders[0].order_policy == 'picking':
-                saleorder = saleorders[0]
-                return saleorder.partner_invoice_id.id
+        if context.get('inv_type') and context['inv_type'] in ('out_invoice', 'out_refund'):
+            if picking.sale_id:
+                saleorder_ids = self.pool['sale.order'].search(cr, uid, [('procurement_group_id' ,'=', picking.group_id.id)], context=context)
+                saleorders = self.pool['sale.order'].browse(cr, uid, saleorder_ids, context=context)
+                if saleorders and saleorders[0] and saleorders[0].order_policy == 'picking':
+                    saleorder = saleorders[0]
+                    return saleorder.partner_invoice_id.id
         return super(stock_picking, self)._get_partner_to_invoice(cr, uid, picking, context=context)
     
     def _get_sale_id(self, cr, uid, ids, name, args, context=None):

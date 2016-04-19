@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-21 14:07+0000\n"
-"PO-Revision-Date: 2015-08-22 14:13+0000\n"
+"POT-Creation-Date: 2015-12-16 13:15+0000\n"
+"PO-Revision-Date: 2016-02-28 13:25+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Ukrainian (http://www.transifex.com/odoo/odoo-8/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -94,7 +94,13 @@ msgid ""
 msgstr ""
 
 #. module: auth_signup
-#: code:addons/auth_signup/controllers/main.py:125
+#: code:addons/auth_signup/controllers/main.py:58
+#, python-format
+msgid "Another user is already registered using this email address."
+msgstr ""
+
+#. module: auth_signup
+#: code:addons/auth_signup/controllers/main.py:130
 #, python-format
 msgid "Authentification Failed."
 msgstr ""
@@ -102,7 +108,7 @@ msgstr ""
 #. module: auth_signup
 #: view:website:auth_signup.reset_password view:website:auth_signup.signup
 msgid "Back to Login"
-msgstr ""
+msgstr "Назад до входу"
 
 #. module: auth_signup
 #: code:addons/auth_signup/res_users.py:294
@@ -113,10 +119,16 @@ msgstr ""
 #. module: auth_signup
 #: view:website:auth_signup.fields
 msgid "Confirm Password"
+msgstr "Підтвердити пароль"
+
+#. module: auth_signup
+#: code:addons/auth_signup/controllers/main.py:61
+#, python-format
+msgid "Could not create a new account."
 msgstr ""
 
 #. module: auth_signup
-#: code:addons/auth_signup/controllers/main.py:80
+#: code:addons/auth_signup/controllers/main.py:84
 #, python-format
 msgid "Could not reset your password"
 msgstr ""
@@ -168,6 +180,12 @@ msgid "Reset password"
 msgstr ""
 
 #. module: auth_signup
+#: code:addons/auth_signup/res_users.py:267
+#, python-format
+msgid "Reset password: invalid username or email"
+msgstr ""
+
+#. module: auth_signup
 #: view:res.users:auth_signup.res_users_form_view
 msgid "Send Reset Password Instructions"
 msgstr ""
@@ -180,7 +198,7 @@ msgstr ""
 #. module: auth_signup
 #: view:website:auth_signup.signup view:website:web.login
 msgid "Sign up"
-msgstr ""
+msgstr "Реєстрація"
 
 #. module: auth_signup
 #: field:res.partner,signup_expiration:0
@@ -230,12 +248,12 @@ msgstr "Користувачі"
 #. module: auth_signup
 #: view:website:auth_signup.fields view:website:auth_signup.reset_password
 msgid "Your Email"
-msgstr ""
+msgstr "Ваш Email"
 
 #. module: auth_signup
 #: view:website:auth_signup.fields
 msgid "Your Name"
-msgstr ""
+msgstr "Ваше ім’я"
 
 #. module: auth_signup
 #: view:website:auth_signup.fields

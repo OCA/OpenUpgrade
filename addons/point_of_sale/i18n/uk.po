@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:07+0000\n"
-"PO-Revision-Date: 2015-11-27 12:43+0000\n"
+"PO-Revision-Date: 2016-03-18 20:40+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Ukrainian (http://www.transifex.com/odoo/odoo-8/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr "К-сть рядків"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:954
 #, python-format
 msgid "% discount"
-msgstr ""
+msgstr "% знижки"
 
 #. module: point_of_sale
 #. openerp-web
@@ -357,7 +357,7 @@ msgstr ""
 #. module: point_of_sale
 #: field:product.template,available_in_pos:0
 msgid "Available in the Point of Sale"
-msgstr ""
+msgstr "Використовувати у касовому терміналі"
 
 #. module: point_of_sale
 #: field:report.pos.order,average_price:0
@@ -503,7 +503,7 @@ msgstr "Каса"
 #. module: point_of_sale
 #: field:pos.session,details_ids:0
 msgid "Cash Control"
-msgstr ""
+msgstr "Контроль готівки"
 
 #. module: point_of_sale
 #: field:pos.session,cash_journal_id:0
@@ -525,7 +525,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:point_of_sale.action_new_bank_statement_all_tree
 #: view:pos.session:point_of_sale.view_pos_session_form
 msgid "Cash Registers"
-msgstr ""
+msgstr "Касові аппарати"
 
 #. module: point_of_sale
 #: view:account.bank.statement:point_of_sale.view_pos_confirm_cash_statement_filter
@@ -597,12 +597,12 @@ msgstr ""
 #: help:product.template,to_weight:0
 msgid ""
 "Check if the product should be weighted using the hardware scale integration"
-msgstr ""
+msgstr "Позначте, якщо товар треба зважити на вагах з апаратною інтеграцією"
 
 #. module: point_of_sale
 #: help:product.template,available_in_pos:0
 msgid "Check if you want this product to appear in the Point of Sale"
-msgstr ""
+msgstr "Позначте, якщо хочете, щоб цей товар з’явився у касовому терміналі"
 
 #. module: point_of_sale
 #: help:product.template,income_pdt:0
@@ -1055,7 +1055,7 @@ msgstr ""
 #. module: point_of_sale
 #: selection:pos.config,state:0
 msgid "Deprecated"
-msgstr ""
+msgstr "Не використовується"
 
 #. module: point_of_sale
 #: view:website:point_of_sale.report_receipt
@@ -1342,7 +1342,7 @@ msgstr "Помилка"
 #. module: point_of_sale
 #: constraint:pos.category:0
 msgid "Error ! You cannot create recursive categories."
-msgstr ""
+msgstr "Помилка! Ви не можете створювати рекурсивні категорії."
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/point_of_sale.py:383
@@ -1486,7 +1486,7 @@ msgstr ""
 #. module: point_of_sale
 #: view:pos.confirm:point_of_sale.view_pos_confirm
 msgid "Generate Journal Entries"
-msgstr ""
+msgstr "Згенерувати записи в журналі"
 
 #. module: point_of_sale
 #: view:pos.confirm:point_of_sale.view_pos_confirm
@@ -1544,7 +1544,7 @@ msgstr "Групувати За"
 #. module: point_of_sale
 #: field:pos.config,group_by:0
 msgid "Group Journal Items"
-msgstr ""
+msgstr "Згрупувати проведення"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1941,7 +1941,7 @@ msgstr ""
 #: code:addons/point_of_sale/static/src/xml/pos.xml:405
 #, python-format
 msgid "N/A"
-msgstr ""
+msgstr "Дані відсутні"
 
 #. module: point_of_sale
 #. openerp-web
@@ -2191,7 +2191,7 @@ msgstr ""
 #: view:website:point_of_sale.report_detailsofsales
 #, python-format
 msgid "Order"
-msgstr ""
+msgstr "Замовлення"
 
 #. module: point_of_sale
 #. openerp-web
@@ -2377,7 +2377,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:point_of_sale.action_account_journal_form
 #: model:ir.ui.menu,name:point_of_sale.menu_action_account_journal_form_open
 msgid "Payment Methods"
-msgstr ""
+msgstr "Способи оплати"
 
 #. module: point_of_sale
 #: field:pos.make.payment,journal_id:0
@@ -2399,7 +2399,7 @@ msgstr ""
 #: view:pos.order:point_of_sale.view_pos_pos_form
 #: field:pos.order,statement_ids:0
 msgid "Payments"
-msgstr ""
+msgstr "Платежі"
 
 #. module: point_of_sale
 #: model:product.template,name:point_of_sale.nectarine_product_template
@@ -2566,7 +2566,7 @@ msgstr ""
 #: view:res.users:point_of_sale.res_users_form_view
 #: view:website:point_of_sale.report_sessionsummary
 msgid "Point of Sale"
-msgstr ""
+msgstr "Касовий термінал"
 
 #. module: point_of_sale
 #: view:report.pos.order:point_of_sale.view_report_pos_order_graph
@@ -2598,7 +2598,7 @@ msgstr ""
 #: view:pos.config:point_of_sale.view_pos_config_form
 #: view:pos.config:point_of_sale.view_pos_config_tree
 msgid "Point of Sale Configuration"
-msgstr ""
+msgstr "Налаштування точки продажу"
 
 #. module: point_of_sale
 #: field:pos.config,name:0
@@ -3187,7 +3187,7 @@ msgstr ""
 #. module: point_of_sale
 #: view:pos.config:point_of_sale.view_pos_config_form
 msgid "Set to Deprecated"
-msgstr ""
+msgstr "Позначити як застарілий"
 
 #. module: point_of_sale
 #: view:pos.config:point_of_sale.view_pos_config_form
@@ -3346,7 +3346,7 @@ msgstr "Рядки банківської виписки"
 #. module: point_of_sale
 #: view:pos.session:point_of_sale.view_pos_session_form
 msgid "Statements"
-msgstr ""
+msgstr "Виписки"
 
 #. module: point_of_sale
 #: view:account.bank.statement:point_of_sale.view_pos_confirm_cash_statement_filter
@@ -3462,7 +3462,7 @@ msgstr "ПДВ"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:400
 #, python-format
 msgid "Tax ID"
-msgstr ""
+msgstr "ІПН"
 
 #. module: point_of_sale
 #: field:pos.order,amount_tax:0
