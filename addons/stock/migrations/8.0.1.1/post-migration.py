@@ -511,10 +511,8 @@ def _migrate_stock_warehouse(cr, registry, res_id):
                     xml_id, res_id, old_res_id
                 )
 
-    # TODO: environment might be used to put complete method in v8 api:
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
-        model_data_obj = env['ir.model.data']
         main_warehouse = env.ref('stock.warehouse0')
         if warehouse.id == main_warehouse.id:
             create_missing(env, 'picking_type_in', in_type_id)
