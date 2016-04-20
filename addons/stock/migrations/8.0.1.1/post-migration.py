@@ -483,6 +483,42 @@ def _migrate_stock_warehouse(cr, registry, res_id):
             'sequence': max_sequence + 2,
         })
 
+    # If warehouse is main warehouse, we have to create records in
+    # ir_model_data, because these are used in testing:
+    def create_missing(env, xml_id, res_id):
+        """Add missing record to ir_model_data."""
+        model_data_obj = env['ir.model.data']
+        model_data_record = model_data_obj.search([
+            ('module', '=', 'stock'),
+            ('name', '=', xml_id),
+        ], limit=1)
+        if not model_data_record:
+            model_data_obj.create({
+                'module': 'stock',
+                'model': 'stock.picking.type',
+                'name': xml_id,
+                'res_id': res_id,
+            })
+        else:
+            # If there already is a model_data record, check wether it
+            # points to the right record, and modify if not:
+            old_res_id = model_data_record.res_id
+            if res_id != old_res_id:
+                # autocorrect existing ir_model_data:
+                model_data_record.write({'res_id': res_id})
+                logger.warn(
+                    "xml_id %s now points to res_id %d, no longer to %d.",
+                    xml_id, res_id, old_res_id
+                )
+
+    with api.Environment.manage():
+        env = api.Environment(cr, SUPERUSER_ID, {})
+        main_warehouse = env.ref('stock.warehouse0')
+        if warehouse.id == main_warehouse.id:
+            create_missing(env, 'picking_type_in', in_type_id)
+            create_missing(env, 'picking_type_out', out_type_id)
+            create_missing(env, 'picking_type_internal', int_type_id)
+
     vals.update({
         'in_type_id': in_type_id,
         'out_type_id': out_type_id,
