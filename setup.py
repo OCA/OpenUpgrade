@@ -112,7 +112,6 @@ setuptools.setup(
           'vobject',
           'werkzeug',
           'xlwt',
-          'zsi',
       ],
       extras_require = {
           'SSL' : ['pyopenssl'],
