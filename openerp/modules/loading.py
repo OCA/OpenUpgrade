@@ -121,6 +121,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     cr.commit = lambda *args: None
     cr.rollback_org = cr.rollback
     cr.rollback = lambda *args: None
+    openerp.osv.fields.set_migration_cursor(cr)
 
     # register, instantiate and initialize models for each modules
     t0 = time.time()
@@ -236,6 +237,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
 
     cr.commit = cr.commit_org
     cr.commit()
+    openerp.osv.fields.set_migration_cursor()
 
     return loaded_modules, processed_modules
 
