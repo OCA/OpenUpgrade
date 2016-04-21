@@ -1,0 +1,59 @@
+---Fields in module 'purchase_requisition'---
+purchase_requisition / product.product          / purchase_requisition (boolean): DEL 
+purchase_requisition / product.template         / purchase_requisition (boolean): NEW
+# Field moved
+
+purchase_requisition / purchase.order.line      / quantity_bid (float)          : NEW
+# Duplicated value from current purchase order line quantity
+
+purchase_requisition / purchase.requisition     / procurement_id (many2one)     : NEW relation: procurement.order
+# Counterpart of the requisition_id field on procurement.order model - Filled
+
+purchase_requisition / purchase.requisition     / account_analytic_id (many2one): NEW relation: account.analytic.account
+purchase_requisition / purchase.requisition     / multiple_rfq_per_supplier (boolean): NEW
+purchase_requisition / purchase.requisition     / ordering_date (date)          : NEW
+purchase_requisition / purchase.requisition     / schedule_date (date)          : NEW
+purchase_requisition / purchase.requisition.line / account_analytic_id (many2one): NEW relation: account.analytic.account
+purchase_requisition / purchase.requisition.line / schedule_date (date)          : NEW
+# New features: Nothing to do
+
+purchase_requisition / purchase.requisition     / date_start (datetime)         : DEL
+# There's no equivalent field in v8: Nothing to do
+
+purchase_requisition / purchase.requisition     / message_last_post (datetime)  : NEW
+# Field initialized
+
+purchase_requisition / purchase.requisition     / picking_type_id (many2one)    : NEW relation: stock.picking.type, required: required, req_default: function
+# Default value set
+
+purchase_requisition / purchase.requisition     / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'in_progress', 'open']' ('['cancel', 'done', 'draft', 'in_progress']')
+# New state can be reached from 'in_progress' state: Nothing to do
+
+purchase_requisition / purchase.requisition     / website_message_ids (one2many): NEW relation: mail.message
+# Nothing to do
+
+---XML records in module 'purchase_requisition'---
+NEW ir.actions.act_window: purchase_requisition.action_bid_line_qty
+NEW ir.actions.act_window: purchase_requisition.purchase_line_tree
+NEW ir.actions.report.xml: purchase_requisition.action_report_purchase_requisitions
+DEL ir.actions.report.xml: purchase_requisition.report_purchase_requisition
+NEW ir.ui.view: purchase_requisition.assets_backend
+NEW ir.ui.view: purchase_requisition.product_template_form_view_inherit
+NEW ir.ui.view: purchase_requisition.purchase_order_line_tree_tender
+NEW ir.ui.view: purchase_requisition.report_purchaserequisitions
+NEW ir.ui.view: purchase_requisition.view_bid_line_qty
+DEL ir.ui.view: purchase_requisition.product_normal_form_view_inherit
+# Changed views, action windows and report definition: Nothing to do
+
+NEW workflow: purchase_requisition.purchase_requisition_workflow
+NEW workflow.activity: purchase_requisition.act_cancel
+NEW workflow.activity: purchase_requisition.act_done
+NEW workflow.activity: purchase_requisition.act_draft
+NEW workflow.activity: purchase_requisition.act_open
+NEW workflow.activity: purchase_requisition.act_sent
+NEW workflow.transition: purchase_requisition.trans_draft_cancel
+NEW workflow.transition: purchase_requisition.trans_draft_sent
+NEW workflow.transition: purchase_requisition.trans_open_done
+NEW workflow.transition: purchase_requisition.trans_sent_cancel
+NEW workflow.transition: purchase_requisition.trans_sent_open
+# Workflow instances created
