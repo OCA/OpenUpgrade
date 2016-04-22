@@ -24,9 +24,10 @@ import logging
 import pytz
 import re
 import xmlrpclib
+import threading
 from operator import itemgetter
 from contextlib import contextmanager
-from psycopg2 import Binary
+from psycopg2 import Binary, OperationalError
 
 import openerp
 import openerp.tools as tools
@@ -34,6 +35,31 @@ from openerp.tools.translate import _
 from openerp.tools import float_repr, float_round, frozendict, html_sanitize
 import json
 from openerp import SUPERUSER_ID, registry
+
+# OpenUpgrade start
+migration_cursors = {}
+
+
+def set_migration_cursor(cr=None):
+    """ Store or unset the current migration's cursor per database """
+    if cr:
+        migration_cursors[cr.dbname] = cr
+    else:
+        migration_cursors[threading.currentThread().dbname] = False
+
+
+def get_migration_cursor():
+    """ During migration, return a valid cursor for this thread's database,
+    if any """
+    cursor = migration_cursors.get(threading.currentThread().dbname)
+    if cursor:
+        try:
+            cursor.execute('SELECT 1')
+        except OperationalError:
+            return False
+    return cursor
+# OpenUpgrade end
+
 
 @contextmanager
 def _get_cursor():
@@ -378,6 +404,11 @@ class float(_column):
     @property
     def digits(self):
         if self._digits_compute:
+            # OpenUpgrade: try to reuse the migration cursor, to prevent
+            # transaction locks
+            migration_cursor = get_migration_cursor()
+            if migration_cursor:
+                return self._digits_compute(migration_cursor)
             with _get_cursor() as cr:
                 return self._digits_compute(cr)
         else:
@@ -1346,6 +1377,11 @@ class function(_column):
     @property
     def digits(self):
         if self._digits_compute:
+            # OpenUpgrade: try to reuse the migration cursor, to prevent
+            # transaction locks
+            migration_cursor = get_migration_cursor()
+            if migration_cursor:
+                return self._digits_compute(migration_cursor)
             with _get_cursor() as cr:
                 return self._digits_compute(cr)
         else:

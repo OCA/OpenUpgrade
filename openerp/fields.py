@@ -11,6 +11,7 @@ from types import NoneType
 import logging
 import pytz
 import xmlrpclib
+from psycopg2 import OperationalError
 
 from openerp.tools import float_round, frozendict, html_sanitize, ustr, OrderedSet
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT
@@ -1071,6 +1072,11 @@ class Float(Field):
     @property
     def digits(self):
         if callable(self._digits):
+            # OpenUpgrade: try to reuse the migration cursor, to prevent
+            # transaction locks
+            migration_cursor = fields.get_migration_cursor()
+            if migration_cursor:
+                return self._digits(migration_cursor)
             with fields._get_cursor() as cr:
                 return self._digits(cr)
         else:
