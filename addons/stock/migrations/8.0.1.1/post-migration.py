@@ -510,6 +510,9 @@ def _migrate_stock_warehouse(cr, registry, res_id):
                     "xml_id %s now points to res_id %d, no longer to %d.",
                     xml_id, res_id, old_res_id
                 )
+        # Avoid the xml id and the associated resource being dropped by the
+        # orm by manually making a hit on it:
+        model_data_obj._update_dummy('stock.picking.type', 'stock', xml_id)
 
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
