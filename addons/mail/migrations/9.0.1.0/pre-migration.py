@@ -21,8 +21,6 @@
 ##############################################################################
 
 from openupgradelib import openupgrade
-from openerp.modules.registry import RegistryManager
-from openerp import SUPERUSER_ID
 
 # must be a tuple to output as valid SQL
 shared_xmlids = (
