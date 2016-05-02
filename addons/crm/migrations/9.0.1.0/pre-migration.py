@@ -74,13 +74,13 @@ OBSOLETE_VIEWS = (
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.logged_query(cr, """
-        delete from ir_ui_view v 
+        delete from ir_ui_view v
         using ir_model_data d where v.id=d.res_id
         and d.model = 'ir.filters' and d.module = 'crm'
         and d.name in {}
         """.format(OBSOLETE_FILTERS))
     openupgrade.logged_query(cr, """
-        delete from ir_ui_view v 
+        delete from ir_ui_view v
         using ir_model_data d where v.id=d.res_id
         and d.model = 'ir.ui.view' and d.module = 'crm'
         and d.name in {}
