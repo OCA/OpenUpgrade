@@ -26,18 +26,18 @@ from openerp import SUPERUSER_ID
 
 # must be a tuple to output as valid SQL
 shared_xmlids = (
-	'action_email_template_tree_all',
-	# need to migrate changes to those mail.template
-	# 'email_template_form',
-	# 'email_template_partner',
-	# 'email_template_preview_form',
-	# 'email_template_tree',
-	'menu_email_templates',
-	'res_partner_opt_out_search',
-	'view_email_template_search',
-	'view_server_action_form_template',
-	'wizard_email_template_preview',
-	)
+    'action_email_template_tree_all',
+    # need to migrate changes to those mail.template
+    # 'email_template_form',
+    # 'email_template_partner',
+    # 'email_template_preview_form',
+    # 'email_template_tree',
+    'menu_email_templates',
+    'res_partner_opt_out_search',
+    'view_email_template_search',
+    'view_server_action_form_template',
+    'wizard_email_template_preview',
+    )
 
 
 def update_xmlids(cr):
