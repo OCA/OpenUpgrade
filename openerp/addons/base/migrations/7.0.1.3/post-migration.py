@@ -334,6 +334,19 @@ This can be the case if an additional module installed on your database changes
         _insert_partners(cr, pool, partner_store_insert)
         _update_partners(cr, pool, partner_store_update)
 
+        # Update propagate_fields from partner parent
+        # TODO Use propagate_fields = [ 'lang', 'tz', 'customer', 'supplier',]
+        # to generate this query
+        openupgrade.logged_query(
+            cr, "\n"
+            "UPDATE res_partner part "
+            "SET lang = parent.lang, "
+            "tz = parent.tz,"
+            "customer = parent.customer,"
+            "supplier = parent.supplier"
+            "FROM res_partner parent "
+            "WHERE part.parent_id = parent.id"
+            " AND part.parent_id IS NOT NULL")
         # set_address_partner by mass update
         openupgrade.logged_query(
             cr, "\n"
