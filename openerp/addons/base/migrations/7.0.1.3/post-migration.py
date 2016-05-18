@@ -202,7 +202,7 @@ def migrate_partner_address(cr, pool):
         "ALTER TABLE res_partner_address "
         "ADD column openupgrade_7_address_processed "
         " BOOLEAN")
-    #To fix bug where category_id is not yet created after module update 
+    # To fix bug where category_id is not yet created after module update
     cr.execute(
         "ALTER TABLE res_partner "
         "ADD column category_id "
@@ -212,9 +212,9 @@ def migrate_partner_address(cr, pool):
         'mobile', 'phone', 'state_id', 'street', 'street2', 'type', 'zip',
         'partner_id', 'name', 'company_id'
     ]
-    propagate_fields = [
-        'lang', 'tz', 'customer', 'supplier',
-    ]
+    # propagate_fields = [
+    #     'lang', 'tz', 'customer', 'supplier',
+    # ]
     partner_found = []
     processed_ids = []
 
