@@ -341,11 +341,11 @@ This can be the case if an additional module installed on your database changes
             cr, "\n"
             "UPDATE res_partner part "
             "SET lang = parent.lang, "
-            "tz = parent.tz,"
-            "customer = parent.customer,"
-            "supplier = parent.supplier"
+            "tz = parent.tz, "
+            "customer = parent.customer, "
+            "supplier = parent.supplier "
             "FROM res_partner parent "
-            "WHERE part.parent_id = parent.id"
+            "WHERE part.parent_id = parent.id "
             " AND part.parent_id IS NOT NULL")
         # set_address_partner by mass update
         openupgrade.logged_query(
