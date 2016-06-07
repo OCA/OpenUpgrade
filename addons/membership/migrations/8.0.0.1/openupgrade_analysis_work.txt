@@ -1,0 +1,28 @@
+---Fields in module 'membership'---
+membership   / product.product          / membership (boolean)          : DEL 
+membership   / product.product          / membership_date_from (date)   : DEL 
+membership   / product.product          / membership_date_to (date)     : DEL 
+## moved to approprite field below
+membership   / product.template         / membership (boolean)          : NEW 
+membership   / product.template         / membership_date_from (date)   : NEW 
+membership   / product.template         / membership_date_to (date)     : NEW 
+---XML records in module 'membership'---
+## nothing to do for the following
+DEL ir.actions.act_window.view: membership.action_report_membership_tree_view1
+DEL ir.actions.act_window.view: membership.action_report_membership_tree_view2
+NEW ir.ui.view: membership.product_template_form_view
+DEL ir.ui.view: membership.product_normal_form_view
+DEL ir.ui.view: membership.view_report_membership_tree1
+DEL process.node: membership.process_node_associatedmember0
+DEL process.node: membership.process_node_invoicedmember0
+DEL process.node: membership.process_node_membershipproduct0
+DEL process.node: membership.process_node_paidmember0
+DEL process.node: membership.process_node_setassociation0
+DEL process.node: membership.process_node_waitingmember0
+DEL process.process: membership.process_process_membershipprocess0
+DEL process.transition: membership.process_transition_associationpartner0
+DEL process.transition: membership.process_transition_invoicetoassociate0
+DEL process.transition: membership.process_transition_invoicetopaid0
+DEL process.transition: membership.process_transition_producttomember0
+DEL process.transition: membership.process_transition_waitingtoinvoice0
+DEL process.transition.action: membership.process_transition_action_create0
