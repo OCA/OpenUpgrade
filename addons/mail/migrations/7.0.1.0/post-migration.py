@@ -119,8 +119,8 @@ def create_mail_mail(cr, pool):
             "references" = msg.%(references)s,
             state = msg.%(state)s,
             auto_delete = msg.%(auto_delete)s
-        FROM mail_mail mail, mail_message msg
-        WHERE mail.mail_message_id = msg.id
+        FROM mail_message msg
+        WHERE mail_mail.mail_message_id = msg.id
         """ %
         {
             'mail_server_id': openupgrade.get_legacy_name('mail_server_id'),
