@@ -13,8 +13,3 @@ def migrate(cr, version):
         membership_date_to = p.membership_date_to
         from product_product p
         where p.product_tmpl_id = product_template.id''')
-    cr.execute(
-        '''alter table product_product
-        drop column membership,
-        drop column membership_date_from,
-        drop column membership_date_to''')
