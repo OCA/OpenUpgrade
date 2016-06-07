@@ -26,7 +26,10 @@ renamed_modules = {
     # https://github.com/Therp/Therp-Addons/blob/6.1/account_report_alt/
     # __openerp__.py#L31
     'account_report_alt': 'account_financial_report_horizontal',
+    # https://github.com/OCA/product-attribute/commit/
+    # 85980852ae07c4ab1b5ef6fb4c486576a427b471
+    'product_images_olbs': 'product_images',
 }
 
 renamed_models = {
-    }
+}
