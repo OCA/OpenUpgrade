@@ -26,7 +26,7 @@ column_renames = {
         ('email_recipients', 'partner_to'),
     ],
     'ir_act_server': [
-        ('subject', 'old_subject'),
+        ('subject', 'openupgrade_legacy_subject'),
     ]
 }
 

@@ -45,7 +45,9 @@ def convert_action_mail_server_email(env):
 
         env.cr.execute(
             """
-            SELECT email, old_subject, message
+            SELECT openupgrade_legacy_email
+                , openupgrade_legacy_subject
+                , openupgrade_legacy_message
             FROM ir_act_server
             WHERE id = %s
             """, (action.id, ))
