@@ -61,9 +61,3 @@ def convert_action_mail_server_email(env):
         })
 
         action.template_id = email_template.id
-
-    openupgrade.drop_columns(env.cr, [
-        ('ir_act_server', 'email'),
-        ('ir_act_server', 'old_subject'),
-        ('ir_act_server', 'message'),
-    ])
