@@ -231,6 +231,32 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
         registry._init_modules.add(package.name)
         cr.commit_org()
 
+        # OpenUpgrade edit start:
+        # if there's a tests directory, run those if tests are enabled
+        tests_dir = os.path.join(
+            openerp.modules.module.get_module_path(package.name),
+            'migrations',
+            adapt_version(package.data['version']),
+            'tests',
+        )
+        # check for an environment variable because we don't want to mess
+        # with odoo's config.py, but we also don't want to run existing
+        # tests
+        if os.environ.get('OPENUPGRADE_TESTS') and os.path.exists(
+            tests_dir
+        ):
+            import unittest
+            threading.currentThread().testing = True
+            tests = unittest.defaultTestLoader.discover(tests_dir)
+            report.record_result(
+                unittest.TextTestRunner(
+                    verbosity=2,
+                    stream=openerp.modules.module.TestStream(package.name),
+                ).run(tests)
+            )
+            threading.currentThread().testing = False
+        # OpenUpgrade edit end
+
     _logger.log(25, "%s modules loaded in %.2fs, %s queries", len(graph), time.time() - t0, openerp.sql_db.sql_counter - t0_sql)
 
     registry.clear_manual_fields()
