@@ -158,6 +158,8 @@ def migrate_stock_location(cr, registry):
             vals['picking_type_id'] = warehouse.out_type_id.id
         else:
             vals['picking_type_id'] = warehouse.int_type_id.id
+        if warehouse and warehouse[0].company_id:
+            vals['company_id'] = warehouse[0].company_id.id
         path_obj.create(cr, uid, vals)
 
 
