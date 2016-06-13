@@ -4,6 +4,7 @@
 
 import logging
 
+from psycopg2.extensions import AsIs
 from openerp.openupgrade import openupgrade
 
 from openerp import SUPERUSER_ID
@@ -43,19 +44,14 @@ def convert_action_mail_server_email(env):
 
     for action in actions:
 
+        subject_column = openupgrade.get_legacy_name('subject')
+
         env.cr.execute(
             """
-            SELECT openupgrade_legacy_email
-                , openupgrade_legacy_subject
-                , openupgrade_legacy_message
+            SELECT email, %s, message
             FROM ir_act_server
             WHERE id = %s
-            """, (
-                openupgrade.get_legacy_name('email'),
-                openupgrade.get_legacy_name('subject'),
-                openupgrade.get_legacy_name('message'),
-                action.id,
-            ))
+            """, (AsIs(subject_column), action.id, ))
 
         (email, subject, message) = env.cr.fetchone()
 
