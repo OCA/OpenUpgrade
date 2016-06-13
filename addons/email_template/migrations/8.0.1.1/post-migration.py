@@ -50,7 +50,12 @@ def convert_action_mail_server_email(env):
                 , openupgrade_legacy_message
             FROM ir_act_server
             WHERE id = %s
-            """, (action.id, ))
+            """, (
+                openupgrade.get_legacy_name('email'),
+                openupgrade.get_legacy_name('subject'),
+                openupgrade.get_legacy_name('message'),
+                action.id,
+            ))
 
         (email, subject, message) = env.cr.fetchone()
 
