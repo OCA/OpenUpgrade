@@ -50,10 +50,3 @@ def migrate_properties(cr):
 def migrate(cr, version):
     openupgrade.rename_tables(cr, [('account_tax_code', 'account_tax_group')])
     migrate_properties(cr)
-    cr.execute("""
-        delete from ir_ui_view v
-        using ir_model_data d where
-        v.id=d.res_id and d.model='ir.ui.view' and
-        d.module='sales_team' and
-        d.name='view_sale_config_settings'
-        """)
