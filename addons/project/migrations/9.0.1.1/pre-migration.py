@@ -57,12 +57,20 @@ column_drops = [
     ('project_config_settings', 'module_project_timesheet'),
     ]
 
+xmlid_renames = [
+    ('project.project_category_01', 'project.project_tags_00'),
+    ('project.project_category_02', 'project.project_tags_01'),
+    ('project.project_category_03', 'project.project_tags_02'),
+    ('project.project_category_04', 'project.project_tags_03'),
+]
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_xmlids(cr, xmlid_renames)
     if openupgrade.column_exists(cr, 'project_project', 'members'):
         openupgrade.rename_columns(cr, {'project_project': [('members', None)]})
     # Removing transient tables to get rid of warnings
