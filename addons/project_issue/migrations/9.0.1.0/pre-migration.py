@@ -22,7 +22,7 @@
 from openupgradelib import openupgrade
 
 column_renames = {
-    'project.issue': [
+    'project_issue': [
         ('categ_ids', 'tag_ids'),
         ('version_id', None),
         ('project_escalation_id', None)
