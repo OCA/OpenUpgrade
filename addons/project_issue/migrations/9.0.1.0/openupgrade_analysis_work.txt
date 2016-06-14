@@ -1,7 +1,7 @@
 ---Fields in module 'project_issue'---
 project_issue / project.issue            / categ_ids (many2many)         : DEL relation: project.category
 project_issue / project.issue            / tag_ids (many2many)           : NEW relation: project.tags
-# TODO DONE
+# DONE
 
 project_issue / project.issue            / kanban_state (selection)      : now required, default = normal
 # Nothing to do
