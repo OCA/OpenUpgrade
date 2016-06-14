@@ -20,6 +20,7 @@
 ##############################################################################
 from openupgradelib import openupgrade
 
+
 def map_priority(cr):
     openupgrade.map_values(
         cr,
