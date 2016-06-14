@@ -37,8 +37,24 @@ table_renames = [
     ),
 ]
 
+xmlid_renames = [
+    (
+        'project_issue.project_issue_category_01',
+        'project_issue.project_issue_tags_00'
+    ),
+    (
+        'project_issue.project_issue_category_02',
+        'project_issue.project_issue_tags_01'
+    ),
+    (
+        'project_issue.project_issue_category_03',
+        'project_issue.project_issue_tags_02'
+    ),
+]
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    openupgrade.rename_xmlids(cr, xmlid_renames)
     openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
