@@ -21,6 +21,8 @@
 
 from openupgrade import openupgrade
 from openerp import pooler, SUPERUSER_ID
+from openerp.osv import osv
+import psycopg2
 
 force_defaults = {
     'ir.mail_server': [('active', True)],
@@ -189,17 +191,30 @@ def migrate_partner_address(cr, pool):
         "ADD column openupgrade_7_migrated_to_partner_id "
         " INTEGER")
     cr.execute(
+        "ALTER TABLE res_partner "
+        "ADD column openupgrade_7_migrated_from_address_id "
+        " INTEGER")
+    cr.execute(
         "ALTER TABLE res_partner_address ADD FOREIGN KEY "
         "(openupgrade_7_migrated_to_partner_id) "
         "REFERENCES res_partner ON DELETE SET NULL")
+    cr.execute(
+        "ALTER TABLE res_partner_address "
+        "ADD column openupgrade_7_address_processed "
+        " BOOLEAN")
+    # To fix bug where category_id is not yet created after module update
+    cr.execute(
+        "ALTER TABLE res_partner "
+        "ADD column category_id "
+        " INTEGER")
     fields = [
         'id', 'birthdate', 'city', 'country_id', 'email', 'fax', 'function',
         'mobile', 'phone', 'state_id', 'street', 'street2', 'type', 'zip',
         'partner_id', 'name', 'company_id'
-        ]
-    propagate_fields = [
-        'lang', 'tz', 'customer', 'supplier',
     ]
+    # propagate_fields = [
+    #     'lang', 'tz', 'customer', 'supplier',
+    # ]
     partner_found = []
     processed_ids = []
 
@@ -226,6 +241,15 @@ This can be the case if an additional module installed on your database changes
             "WHERE id = %s",
             (partner_id, address_id))
 
+    def set_address_processed(processed_ids):
+        while processed_ids:
+            ids = processed_ids[:2000]
+            del processed_ids[:2000]
+            cr.execute(
+                "UPDATE res_partner_address "
+                "SET openupgrade_7_address_processed = True "
+                "WHERE id in %s", (tuple(ids),))
+
     def create_partner(address_id, vals, defaults):
         """
         Create a partner from an address. Update the vals
@@ -240,58 +264,108 @@ This can be the case if an additional module installed on your database changes
         partner_id = partner_obj.create(cr, SUPERUSER_ID, vals)
         set_address_partner(address_id, partner_id)
 
-    def process_address_type(cr, whereclause, args=None):
+    def process_address_type(cr, pool, fields, whereclause, args=None):
         """
         Migrate addresses to partners, based on sql WHERE clause
         """
+        # Mass process Dangling addresses, create with not is_company
+        # not supplier and not customer
+
+        # Select distinct must be a first column
+        fields.remove('partner_id')
+        fields = list(fields)
+        fields[:0] = ["partner_id"]
         openupgrade.logged_query(
             cr, "\n"
             "SELECT " + ', '.join(fields) + "\n"
             "FROM res_partner_address\n"
             "WHERE " + whereclause, args or ())
-        for row in cr.fetchall():
+        rows_values = cr.fetchall()
+        partner_store_update = []
+        partner_store_insert = []
+        for row in rows_values:
             row_cleaned = [val or False for val in row]
-            address = dict(zip(fields, row_cleaned))
-            partner_vals = address.copy()
+            dict_values = dict(zip(fields, row_cleaned))
+
+            dict_values['openupgrade_7_migrated_from_address_id'] = \
+                dict_values['id']
+            values = {}
             partner_defaults = {
                 # list of values that we should not overwrite
                 # in existing partners
                 'customer': False,
-                'is_company': address['type'] != 'contact',
-                'type': address['type'],
-                'name': address['name'] or '/',
-                }
-            for f in ['name', 'id', 'type', 'partner_id']:
-                del partner_vals[f]
-            if not address['partner_id']:
-                # Dangling addresses, create with not is_company,
-                # not supplier and not customer
-                create_partner(address['id'], partner_vals, partner_defaults)
+                'is_company': dict_values['type'] != 'contact',
+                'type': dict_values['type'],
+                'name': dict_values['name'] or '/',
+                'parent_id': dict_values['partner_id'],
+            }
+
+            if not dict_values['partner_id']:
+                for f in ['name', 'id', 'type', 'partner_id']:
+                    del dict_values[f]
+                for key in partner_defaults:
+                    if key not in dict_values:
+                        dict_values[key] = partner_defaults[key]
+                values = partner_obj._add_missing_default_values(
+                    cr, SUPERUSER_ID, dict_values)
+                partner_store_insert.append(values)
             else:
-                if address['partner_id'] not in partner_found:
-                    # Main partner address
-                    partner_obj.write(
-                        cr, SUPERUSER_ID, address['partner_id'], partner_vals)
-                    partner_found.append(address['partner_id'])
-                    set_address_partner(address['id'], address['partner_id'])
+                if dict_values['partner_id'] not in partner_found:
+                    for f in ['name', 'id', 'type']:
+                        del dict_values[f]
+                    dict_values['id'] = dict_values['partner_id']
+                    del dict_values['partner_id']
+                    values = dict_values
+                    partner_found.append(values['id'])
+                    partner_store_update.append(values)
                 else:
-                    # any following address for an existing partner
-                    partner_vals.update({
-                        'is_company': False,
-                        'parent_id': address['partner_id']})
-                    propagated_values = partner_obj.read(
-                        cr, SUPERUSER_ID, address['partner_id'],
-                        propagate_fields, load="_classic_write")
-                    propagated_values.pop('id')
-                    partner_vals.update(propagated_values)
-                    create_partner(
-                        address['id'], partner_vals, partner_defaults)
-            processed_ids.append(address['id'])
+                    dict_values.update({'is_company': False})
+                    for f in ['name', 'id', 'type', 'partner_id']:
+                        del dict_values[f]
+                    for key in partner_defaults:
+                        if key not in dict_values:
+                            dict_values[key] = partner_defaults[key]
+                    values = partner_obj._add_missing_default_values(
+                        cr, SUPERUSER_ID, dict_values)
+                    partner_store_insert.append(values)
+            processed_ids.append(
+                values['openupgrade_7_migrated_from_address_id'])
+
+        _insert_partners(cr, pool, partner_store_insert)
+        _update_partners(cr, pool, partner_store_update)
+
+        # Update propagate_fields from partner parent
+        # TODO Use propagate_fields = [ 'lang', 'tz', 'customer', 'supplier',]
+        # to generate this query
+        openupgrade.logged_query(
+            cr, "\n"
+            "UPDATE res_partner part "
+            "SET lang = parent.lang, "
+            "tz = parent.tz, "
+            "customer = parent.customer, "
+            "supplier = parent.supplier "
+            "FROM res_partner parent "
+            "WHERE part.parent_id = parent.id "
+            " AND part.parent_id IS NOT NULL"
+            " AND part.openupgrade_7_migrated_from_address_id IS NOT NULL")
+        # set_address_partner by mass update
+        openupgrade.logged_query(
+            cr, "\n"
+            "UPDATE res_partner_address addr "
+            "SET openupgrade_7_migrated_to_partner_id = part.id "
+            "FROM res_partner part "
+            "WHERE addr.id = part.openupgrade_7_migrated_from_address_id"
+            " AND openupgrade_7_migrated_to_partner_id IS NULL")
 
     # Process all addresses, default type first
-    process_address_type(cr, "type = 'default'")
-    process_address_type(cr, "type IS NULL OR type = ''")
-    process_address_type(cr, "id NOT IN %s", (tuple(processed_ids),))
+    process_address_type(cr, pool, fields.copy(), "type = 'default'")
+    process_address_type(
+        cr, pool, fields.copy(), "(type IS NULL OR type = '')")
+    # Not in clause is very slow. we replace them by an ubptade on a new column
+    set_address_processed(processed_ids)
+    process_address_type(
+        cr, pool, fields.copy(),
+        "openupgrade_7_address_processed IS NULL ")
 
     # Check that all addresses have been migrated
     cr.execute(
@@ -319,7 +393,7 @@ def update_users_partner(cr, pool):
             'lang': row[2] or False,
             'tz': row[3] or False,
             'email': row[4] or False,
-            }
+        }
         partner_obj.write(cr, SUPERUSER_ID, row[1], partner_vals)
 
 
@@ -352,6 +426,80 @@ def migrate_res_company_logo(cr, pool):
     for row in cr.fetchall():
         vals = {'image': row[1]}
         partner_obj.write(cr, SUPERUSER_ID, row[0], vals)
+
+
+def _prepare_insert(pool, partner_val, cols):
+        """ Apply column formating to prepare data for SQL inserting
+        Return a copy of partner
+        """
+        partner_obj = pool.get('res.partner')
+        st_copy = partner_val
+        for k, col in st_copy.iteritems():
+            if k in cols:
+                if k not in ['id', 'openupgrade_7_migrated_from_address_id']:
+                    st_copy[k] = partner_obj._columns[k]._symbol_set[1](col)
+        return st_copy
+
+
+def _prepare_manyinsert(pool, partner_store, cols):
+    """ Apply column formating to prepare multiple SQL inserts
+    Return a copy of partner_store
+    """
+    values = []
+    for partner_val in partner_store:
+        values.append(_prepare_insert(pool, partner_val, cols))
+    return values
+
+
+def _insert_partners(cr, pool, partner_store):
+    """ Do raw insert into database because ORM is awfully slow
+        when doing batch write. It is a shame that batch function
+        does not exist"""
+    fields = partner_store and partner_store[0].keys() or []
+    partner_store = _prepare_manyinsert(pool, partner_store, fields)
+    tmp_vals = (', '.join(fields), ', '.join(['%%(%s)s' % i for i in fields]))
+    sql = "INSERT INTO res_partner (%s) " \
+          "VALUES (%s);" % tmp_vals
+    try:
+        cr.execute('SAVEPOINT insert_partner')
+
+        cr.executemany(sql, tuple(partner_store))
+        # openupgrade.logger.debug('Running %s', sql % tuple(partner_store))
+        openupgrade.logger.debug(
+            '%s rows inserted into res_partner', cr.rowcount)
+        # TODO handle serialized fields
+        # sql, tuple(self._serialize_sparse_fields(cols, partner_store)))
+    except psycopg2.Error as sql_err:
+        cr.execute('ROLLBACK TO SAVEPOINT insert_partner')
+        cr.rollback()
+        raise osv.except_osv("ORM bypass error", sql_err.pgerror)
+
+
+def _update_partners(cr, pool, vals):
+    """ Do raw update into database because ORM is awfully slow
+        when cheking security.
+    TODO / WARM: sparse fields are skipped by the method. IOW, if your
+    completion rule update an sparse field, the updated value will never
+    be stored in the database. It would be safer to call the update method
+    from the ORM for records updating this kind of fields.
+    """
+
+    fields = vals and vals[0].keys() or []
+    vals = _prepare_manyinsert(pool, vals, fields)
+    tmp_vals = (', '.join(['%s = %%(%s)s' % (i, i) for i in fields]))
+    sql = "UPDATE res_partner " \
+          "SET %s where id = %%(id)s;" % tmp_vals
+    try:
+        cr.execute('SAVEPOINT update_partner')
+        not_null_id_vals = [v for v in vals if v['id'] is not False]
+        cr.executemany(sql, tuple(not_null_id_vals))
+        # openupgrade.logger.debug('Running %s', sql % tuple(partner_store))
+        openupgrade.logger.debug(
+            '%s rows updated into res_partner', cr.rowcount)
+    except psycopg2.Error as sql_err:
+        cr.execute('ROLLBACK TO SAVEPOINT update_partner')
+        cr.rollback()
+        raise osv.except_osv("ORM bypass error", sql_err.pgerror)
 
 
 @openupgrade.migrate()
