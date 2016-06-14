@@ -72,7 +72,6 @@ def clear_inherit_id(cr):
         """)
 
 
-# updates to ir_ui_view will not clear inherit_id
 def rename_your_company(cr):
     openupgrade.logged_query(cr, """
         UPDATE res_company r
@@ -84,7 +83,6 @@ def rename_your_company(cr):
         """)
 
 
-# updates to ir_ui_view will not clear inherit_id
 def set_filter_active(cr):
     openupgrade.logged_query(cr, """
         UPDATE ir_filters
