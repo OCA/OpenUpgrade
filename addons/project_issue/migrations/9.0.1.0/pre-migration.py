@@ -2,8 +2,7 @@
 ##############################################################################
 #
 #    OpenUpgrade module for Odoo
-#    @copyright 2015-Today: Odoo Community Association
-#    @author: Stephane LE CORNEC
+#    @copyright 2014-Today: Odoo Community Association, Microcom
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,55 +21,40 @@
 
 from openupgradelib import openupgrade
 
-
-column_copies = {
-    'ir_act_url': [
-        ('help', None, None),
-    ],
-    # 'ir_act_window': [
-    #     ('help', None, None),
-    # ],
-    'ir_actions': [
-        ('help', None, None),
-    ],
-    # 'ir_act_client': [
-    #     ('help', None, None),
-    # ],
-    'ir_act_report_xml': [
-        ('help', None, None),
-    ],
-    'ir_act_server': [
-        ('help', None, None),
-    ],
-    'ir_ui_view': [
-        ('arch', 'arch_db', None),
-    ],
-}
-
 column_renames = {
-    'res_partner_bank': [
-        ('bank', 'bank_id'),
+    'project_issue': [
+        ('version_id', None),
+    ],
+    'project_issue_project_tags_rel': [
+        ('project_category_id', 'project_tags_id'),
     ],
 }
 
+table_renames = [
+    (
+        'project_category_project_issue_rel',
+        'project_issue_project_tags_rel',
+    ),
+]
 
-OBSOLETE_RULES = (
-    'multi_company_default_rule',
-    'res_currency_rule',
-)
-
-
-def remove_obsolete(cr):
-    openupgrade.logged_query(cr, """
-        delete from ir_rule rr
-        using ir_model_data d where rr.id=d.res_id
-        and d.model = 'ir.rule' and d.module = 'base'
-        and d.name in {}
-        """.format(OBSOLETE_RULES))
+xmlid_renames = [
+    (
+        'project_issue.project_issue_category_01',
+        'project_issue.project_issue_tags_00'
+    ),
+    (
+        'project_issue.project_issue_category_02',
+        'project_issue.project_issue_tags_01'
+    ),
+    (
+        'project_issue.project_issue_category_03',
+        'project_issue.project_issue_tags_02'
+    ),
+]
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.copy_columns(cr, column_copies)
+    openupgrade.rename_xmlids(cr, xmlid_renames)
+    openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
-    remove_obsolete(cr)
