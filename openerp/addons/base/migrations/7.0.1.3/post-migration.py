@@ -346,7 +346,8 @@ This can be the case if an additional module installed on your database changes
             "supplier = parent.supplier "
             "FROM res_partner parent "
             "WHERE part.parent_id = parent.id "
-            " AND part.parent_id IS NOT NULL")
+            " AND part.parent_id IS NOT NULL"
+            " AND part.openupgrade_7_migrated_from_address_id IS NOT NULL")
         # set_address_partner by mass update
         openupgrade.logged_query(
             cr, "\n"
