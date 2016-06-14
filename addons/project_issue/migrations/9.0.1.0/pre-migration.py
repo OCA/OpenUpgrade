@@ -23,13 +23,23 @@ from openupgradelib import openupgrade
 
 column_renames = {
     'project_issue': [
-        ('categ_ids', 'tag_ids'),
         ('version_id', None),
         ('project_escalation_id', None)
     ],
+    'project_issue_project_tags_rel': [
+        ('project_category_id', 'project_tags_id'),
+    ],
 }
+
+table_renames = [
+    (
+        'project_category_project_issue_rel',
+        'project_issue_project_tags_rel',
+    ),
+]
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
