@@ -18,18 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-import logging
 from openupgradelib import openupgrade
-logger = logging.getLogger('OpenUpgrade')
-
-# copied from pre-migration
-column_copies = {
-    'project_task': [
-        ('description', None, None),
-    ],
-}
-
 
 def map_priority(cr):
     openupgrade.map_values(
@@ -63,6 +52,8 @@ def migrate(cr, version):
     # map_priority(cr)
     map_template_state(cr)
     copy_user_id(cr)
-    for table_name in column_copies.keys():
-        for (old, new, field_type) in column_copies[table_name]:
-            openupgrade.convert_field_to_html(cr, table_name, openupgrade.get_legacy_name(old), old)
+    map_priority(cr)
+    openupgrade.convert_field_to_html(
+        cr, 'project_task', openupgrade.get_legacy_name('description'),
+        'description'
+    )

@@ -18,7 +18,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 from openupgradelib import openupgrade
 
 
@@ -71,7 +70,5 @@ def migrate(cr, version):
     openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
-    if openupgrade.column_exists(cr, 'project_project', 'members'):
-        openupgrade.rename_columns(cr, {'project_project': [('members', None)]})
     # Removing transient tables to get rid of warnings
     openupgrade.drop_columns(cr, column_drops)
