@@ -203,7 +203,9 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                     getattr(py_module, post_init)(cr, registry)
 
             # validate all the views at a whole
-            registry['ir.ui.view']._validate_module_views(cr, SUPERUSER_ID, module_name)
+            # OpenUpgrade: Don't validate views, otherwise we'll have to delete
+            # a lot of them manually
+            # registry['ir.ui.view']._validate_module_views(cr, SUPERUSER_ID, module_name)
 
             if has_demo:
                 # launch tests only in demo mode, allowing tests to use demo data.
