@@ -24,9 +24,14 @@ from openerp.openupgrade import openupgrade
 
 xmlid_renames = [
     ('crm.section_sales_department', 'sales_team.section_sales_department'),
-    ]
+]
 
 
 @openupgrade.migrate(no_version=True)
 def migrate(cr, version):
     openupgrade.rename_xmlids(cr, xmlid_renames)
+
+    # Test fixup: there is a demo section in 7.0 with the same code as a
+    # section that is included in this module, violating the uniqueness
+    # constraint.
+    cr.execute("UPDATE crm_case_section SET code = '_DM' WHERE code = 'DM'")
