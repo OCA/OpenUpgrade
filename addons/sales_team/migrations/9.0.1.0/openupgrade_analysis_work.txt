@@ -15,6 +15,20 @@ sales_team   / res.partner              / section_id (many2one)         : relati
 sales_team   / res.partner              / section_id (many2one)         : was renamed to team_id [nothing to to]
 sales_team   / res.users                / default_section_id (many2one) : DEL relation: crm.case.section
 sales_team   / res.users                / sale_team_id (many2one)       : NEW relation: crm.team
+=======
+
+=> All of those is caused by renamed crm.case.section
+
+sales_team   / res.partner              / section_id (many2one)         : relation is now 'crm.team' ('crm.case.section')
+sales_team   / res.partner              / section_id (many2one)         : was renamed to team_id [nothing to to]
+
+=> Has oldname=, nothing to do
+
+sales_team   / res.users                / default_section_id (many2one) : DEL relation: crm.case.section
+sales_team   / res.users                / sale_team_id (many2one)       : NEW relation: crm.team
+
+=> Column was renamed
+
 ---XML records in module 'sales_team'---
 DEL crm.case.section: sales_team.section_sales_department
 NEW crm.team: sales_team.team_sales_department
@@ -45,8 +59,6 @@ DEL ir.ui.view: sales_team.crm_case_section_view_tree
 DEL ir.ui.view: sales_team.res_user_form
 DEL ir.ui.view: sales_team.view_sale_config_settings
 DEL ir.ui.view: sales_team.view_users_form_preferences
-# TODO - delete as it refers to default_section_id
-
 DEL res.groups: base.group_mono_salesteams
 DEL res.groups: base.group_multi_salesteams
 DEL res.groups: base.group_user
