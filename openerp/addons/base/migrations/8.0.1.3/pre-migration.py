@@ -26,7 +26,9 @@ from openerp.addons.openupgrade_records.lib import apriori
 xml_ids = [
     ('portal.group_anonymous', 'base.group_public'),
     ('portal.group_portal', 'base.group_portal'),
-    ]
+    ('l10n_gt.GTQ', 'base.GTQ'),
+    ('l10n_gt.rateGTQ', 'base.rateGTQ'),
+]
 
 
 @openupgrade.migrate()
