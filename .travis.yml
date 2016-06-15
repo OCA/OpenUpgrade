@@ -39,7 +39,7 @@ script:
     - pip uninstall -q --yes openupgradelib
     - pip install -q git+https://github.com/OCA/openupgradelib.git@master
     - createdb $DB
-    - wget -q -O- $(wget -q -O- https://doc.therp.nl/openupgrade/databases/for/$($ODOO --version | awk '{print $3}')) | pg_restore -d $DB --no-owner
+    - wget -q -O- https://github.com/OCA/OpenUpgrade/releases/download/databases/7.0.psql | pg_restore -d $DB --no-owner
     - MODULES=base,$(sed -n '/^+========/,$p'  openerp/openupgrade/doc/source/modules70-80.rst | grep Done | sed -n '/^|/ s/^|\([0-9a-z_]*\) *|.*$/\1/g p' | paste -d, -s)
     - psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES | sed -e "s/,/','/g")')"
     - echo Testing modules $MODULES
