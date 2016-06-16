@@ -23,6 +23,8 @@ from openerp.openupgrade import openupgrade
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    openupgrade.rename_models(
+        cr, [('crm.meeting.type', 'calendar.event.type')])
     openupgrade.rename_tables(
         cr, [('crm_meeting_type', 'calendar_event_type')])
     openupgrade.rename_columns(
