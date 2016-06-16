@@ -37,6 +37,7 @@ from openerp.tools.translate import _
 
 import zipfile
 import openerp.release as release
+from openupgradelib import openupgrade
 
 import re
 import base64
@@ -80,6 +81,15 @@ class Graph(dict):
 
         ## and we update the default values with values from the database
         additional_data.update((x['name'], x) for x in cr.dictfetchall())
+
+        # OpenUpgrade:
+        # Prevent reloading of demo data from the new version on major upgrade
+        if ('base' in self and additional_data['base']['dbdemo'] and
+                additional_data['base']['installed_version'] <
+                release.major_version):
+            openupgrade.logged_query(cr, "UPDATE ir_module_module SET demo = false")
+            for data in additional_data.values():
+                data['dbdemo'] = False
 
         for package in self.values():
             for k, v in additional_data[package.name].items():
