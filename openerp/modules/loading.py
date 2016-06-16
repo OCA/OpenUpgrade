@@ -264,7 +264,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
         ):
             import unittest
             threading.currentThread().testing = True
-            tests = unittest.defaultTestLoader.discover(tests_dir)
+            tests = unittest.defaultTestLoader.discover(tests_dir, top_level_dir=tests_dir)
             report.record_result(
                 unittest.TextTestRunner(
                     verbosity=2,
