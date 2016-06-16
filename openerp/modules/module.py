@@ -303,7 +303,14 @@ def init_module_models(cr, module_name, obj_list):
     for t in todo:
         t[1](cr, *t[2])
     if obj_list:
+        # OpenUpgrade: Don't trigger workflows on recomputation
+        set_workflow_org = openerp.models.BaseModel.step_workflow
+        openerp.models.BaseModel.step_workflow = lambda *args, **kwargs: None
+        # end OpenUpgrade
         obj_list[0].recompute(cr, openerp.SUPERUSER_ID, {})
+        # OpenUpgrade: reenable workflow triggers
+        openerp.models.BaseModel.step_workflow = set_workflow_org
+        # end OpenUpgrade
     cr.commit()
 
 def load_openerp_module(module_name):
