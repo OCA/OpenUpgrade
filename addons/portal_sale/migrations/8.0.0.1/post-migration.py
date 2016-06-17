@@ -1,8 +1,7 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Sales_team migration module for Odoo
-#    copyright: 2014-Today GRAP
+#    Copyright: 2016 GRAP
 #    @author: Sylvain LE GAL <https://twitter.com/legalsylvain>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,19 +18,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 from openerp.openupgrade import openupgrade
 
-xmlid_renames = [
-    ('crm.section_sales_department', 'sales_team.section_sales_department'),
-]
+
+def load_data(cr):
+    '''
+    Update the references to base.group_portal
+    :param cr:
+    '''
+    openupgrade.load_data(
+        cr, 'portal_sale', 'migrations/8.0.0.1/modified_data.xml', mode='init')
 
 
-@openupgrade.migrate(no_version=True)
+@openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.rename_xmlids(cr, xmlid_renames)
-
-    # Test fixup: there is a demo section in 7.0 with the same code as a
-    # section that is included in this module, violating the uniqueness
-    # constraint.
-    cr.execute("UPDATE crm_case_section SET code = '_DM' WHERE code = 'DM'")
+    load_data(cr)

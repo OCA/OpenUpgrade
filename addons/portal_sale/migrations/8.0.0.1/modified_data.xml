@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record id="portal_sale_order_line_rule" model="ir.rule">
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[('order_id.message_follower_ids','child_of',[user.commercial_partner_id.id])]</field>
+        </record>
+        <record id="portal_sale_order_user_rule" model="ir.rule">
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[('message_follower_ids','child_of',[user.commercial_partner_id.id])]</field>
+        </record>
+        <record id="portal_personal_contact" model="ir.rule">
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[('message_follower_ids','in',[user.commercial_partner_id.id])]</field>
+        </record>
+        <record id="portal_account_invoice_line_rule" model="ir.rule">
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[('invoice_id.message_follower_ids','child_of',[user.commercial_partner_id.id])]</field>
+        </record>
+        <record id="email_template_edi_sale" model="email.template">
+            <field name="email_recipients"/><field name="partner_to">${object.partner_invoice_id.id}</field>
+            <field name="user_signature" eval="True"/>
+        </record>
+        <record id="portal_account_invoice_user_rule" model="ir.rule">
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[('message_follower_ids','child_of',[user.commercial_partner_id.id])]</field>
+        </record>
+        <record id="email_template_edi_invoice" model="email.template">
+            <field name="email_recipients"/><field name="partner_to">${object.partner_id.id}</field>
+        </record>
+    </data>
+</openerp>

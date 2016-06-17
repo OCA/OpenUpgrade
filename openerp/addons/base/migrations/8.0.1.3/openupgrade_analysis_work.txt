@@ -178,12 +178,18 @@ DEL ir.ui.view: base.shortcut_tree
 DEL ir.ui.view: base.view_base_module_import
 DEL ir.ui.view: base.view_config_wizard_form
 DEL ir.ui.view_sc: base.ir_ui_view_sc_partner0
+NEW res.country.group: base.europe
+
+# Migrated from l10n_gt
+NEW res.currency: base.GTQ
+NEW res.currency.rate: base.rateGTQ
+
 DEL res.currency: base.EEK
+DEL res.currency: base.ROL
+DEL res.currency: base.UYP
 DEL res.currency.rate: base.rateEEK
-NEW res.font: base.font_courier
-NEW res.font: base.font_helvetica
-NEW res.font: base.font_times
-NEW res.partner: base.public_partner
+DEL res.currency.rate: base.rateROL
+DEL res.currency.rate: base.rateUYP
 NEW res.users: base.public_user
 
 

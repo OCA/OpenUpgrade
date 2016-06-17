@@ -26,6 +26,13 @@ from openerp import pooler
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
+    cr.execute(
+        """
+        UPDATE product_product SET purchase_line_warn = 'no-message'
+        WHERE purchase_line_warn is NULL OR purchase_line_warn = '';
+        UPDATE product_product SET sale_line_warn = 'no-message'
+        WHERE sale_line_warn is NULL OR sale_line_warn = '';
+        """)
     openupgrade.move_field_m2o(
         cr, pool,
         'product.product', 'purchase_line_warn', 'product_tmpl_id',
