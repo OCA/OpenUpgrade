@@ -1,49 +1,94 @@
 ---Fields in module 'project'---
 project      / project.project          / date (date)                   : NEW 
 project      / project.project          / date_start (date)             : NEW 
+# Nothing to do : new fields
+
 project      / project.project          / label_tasks (char)            : NEW 
+# Nothing to do : string to this field is already supplied in xml.
+
 project      / project.project          / members (many2many)           : DEL relation: res.users
+# Nothing to do : no longer needed.
+
 project      / project.project          / message_follower_ids (many2many): not a function anymore
 project      / project.project          / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
 project      / project.project          / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+# TODO : ???  # Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
+
 project      / project.project          / state (selection)             : selection_keys is now '['cancelled', 'close', 'draft', 'open', 'pending']' ('['cancelled', 'close', 'draft', 'open', 'pending', 'template']')
+# TODO : template state is removed. (map the values)
+
 project      / project.project          / user_id (many2one)            : NEW relation: res.users
-project      / project.tags             / color (integer)               : NEW 
+# TODO : get user_id from analytic table.
+
 project      / project.tags             / name (char)                   : NEW required: required
+project      / project.tags             / color (integer)               : NEW 
+# Nothing to do : new field added.
+
 project      / project.task             / active (boolean)              : not a function anymore
+# Nothing to do : as the field value will be of type boolean there will be no issues.
+
 project      / project.task             / attachment_ids (one2many)     : NEW relation: ir.attachment
+# Nothing to do : new field added.
+
 project      / project.task             / categ_ids (many2many)         : relation is now 'project.tags' ('project.category')
 project      / project.task             / categ_ids (many2many)         : was renamed to tag_ids [nothing to to]
+# TODO : Renamed project_category to project_tags (note: column color is missing from project_category but should be created automatically)
+
 project      / project.task             / date_assign (datetime)        : NEW 
-project      / project.task             / delay_hours (float)           : module is now 'project_timesheet' ('project')
+# Nothing to do : new field added.
+
 project      / project.task             / description (text)            : type is now 'html' ('text')
+# Nothing to do : type change from text to html.
+
 project      / project.task             / displayed_image_id (many2one) : NEW relation: ir.attachment
-project      / project.task             / effective_hours (float)       : module is now 'project_timesheet' ('project')
+# Nothing to do : new field added.
+
 project      / project.task             / kanban_state (selection)      : now required, default = normal
+# TODO : Field is required so need to get values for null values and default is already normal so no change in that.
+
 project      / project.task             / message_follower_ids (many2many): not a function anymore
 project      / project.task             / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
 project      / project.task             / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+# Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
+
 project      / project.task             / priority (selection)          : selection_keys is now '['0', '1']' ('['0', '1', '2']')
-project      / project.task             / progress (float)              : module is now 'project_timesheet' ('project')
+# TODO ---> Map the new values using map_values method in post-migration script where '2' will be converted to '1'.
+
 project      / project.task             / reviewer_id (many2one)        : DEL relation: res.users
-project      / project.task             / total_hours (float)           : module is now 'project_timesheet' ('project')
+# Nothing to do ---> Field removed (but can rename the column to None to retrieve its value for later use.)
+
 project      / project.task             / work_ids (one2many)           : DEL relation: project.task.work
+# TODO - Task Work is now in Timesheet so we might need migration script for that.
+# Done - Task work records are inserted into analytic line. (Will be able to see once project_timesheet is installed.)
+
 project      / project.task.type        / case_default (boolean)        : DEL 
+# Nothing to do : This boolean field not needed anymore because the task stages are retrieved from its default_method itself.
+
 project      / project.task.type        / legend_blocked (char)         : NEW 
 project      / project.task.type        / legend_done (char)            : NEW 
 project      / project.task.type        / legend_normal (char)          : NEW 
 project      / project.task.type        / legend_priority (char)        : NEW 
+# Nothing to do : Char fields to change kanban state field display text.
+
 ---XML records in module 'project'---
 DEL account.analytic.account: project.all_projects_account
+# Removed ---> Nothing to do
+
 NEW ir.actions.act_window: project.action_project_task_user_tree_filtered
 NEW ir.actions.act_window: project.action_view_task_history_cumulative_filter
 NEW ir.actions.act_window: project.open_view_project_all_config
 NEW ir.actions.act_window: project.project_tags_action
 DEL ir.actions.act_window: project.action_project_task_delegate
 DEL ir.actions.act_window: project.project_category_action
+# ir.actions.* ---> Nothing to do
+
 NEW ir.attachment: project.msg_task_data_14_attach
 NEW ir.attachment: project.msg_task_data_8_attach
+# Data to show new features ---> Nothing to do
+
 DEL ir.filters: project.filter_task_report_reviewer
+# Task reviewer is gone in v9 ---> Nothing to do
+
 NEW ir.model.access: project.access_account_analytic_account_manager
 NEW ir.model.access: project.access_account_analytic_account_portal
 NEW ir.model.access: project.access_project_portal
@@ -57,8 +102,13 @@ DEL ir.model.access: project.access_account_analytic_account
 DEL ir.model.access: project.access_project_category
 DEL ir.model.access: project.access_project_category_manager
 DEL ir.model.access: project.access_project_task_work
+# TODO - ir.model.access - analysis needed
+
 NEW ir.rule: project.portal_project_rule
 NEW ir.rule: project.portal_task_rule
+NEW ir.rule: project.report_project_task_user_report_comp_rule
+# New rules ---> Nothing to do
+
 NEW ir.ui.menu: base.menu_project_general_settings
 NEW ir.ui.menu: project.menu_project_config
 NEW ir.ui.menu: project.menu_project_tags_act
@@ -81,12 +131,16 @@ DEL ir.ui.view: project.view_project_task_delegate
 DEL ir.ui.view: project.view_task_gantt
 DEL ir.ui.view: project.view_task_work_form
 DEL ir.ui.view: project.view_task_work_tree
+# ir.ui.* ---> Nothing to do
+
 NEW mail.message: project.msg_task_4
 NEW mail.message: project.msg_task_data_14
 NEW mail.message: project.msg_task_data_8
 NEW mail.message.subtype: project.mt_project_task_ready
 DEL mail.message.subtype: project.mt_project_task_assigned
 DEL mail.message.subtype: project.mt_task_assigned
+# Related to mail module changes ---> Nothing to do
+
 NEW project.project: project.project_project_data
 NEW project.tags: project.project_tag_data
 NEW project.task: project.project_task_data_0
@@ -105,6 +159,25 @@ NEW project.task: project.project_task_data_9
 NEW project.task.type: project.project_stage_data_0
 NEW project.task.type: project.project_stage_data_1
 NEW project.task.type: project.project_stage_data_2
+DEL project.task.type: project.project_tt_analysis
+DEL project.task.type: project.project_tt_cancel
+DEL project.task.type: project.project_tt_deployment
+DEL project.task.type: project.project_tt_design
+DEL project.task.type: project.project_tt_development
+DEL project.task.type: project.project_tt_merge
+DEL project.task.type: project.project_tt_specification
+DEL project.task.type: project.project_tt_testing
+# TODO - project and task related stuff - analysis needed
+
+DEL res.groups: project.group_delegate_task
+# TODO - res.groups - has it moved in another module? - analysis needed
+
+NEW web.planner: project.planner_project
+# New feature (Project Planner = guide for new users) ---> Nothing to do
+
+NEW web.tip: project.project_tip_1
+NEW web.tip: project.project_tip_3
+# New features (project tips) ---> Nothing to do
 DEL project.task.type: project.project_tt_analysis
 DEL project.task.type: project.project_tt_cancel
 DEL project.task.type: project.project_tt_deployment
