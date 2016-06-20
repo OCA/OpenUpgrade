@@ -481,7 +481,8 @@ class view(osv.osv):
                           'msg': message,
                         }
         _logger.info(message)
-        raise AttributeError(message)
+        # OpenUpgrade we want to ignore view errors
+        # raise AttributeError(message)
 
     def locate_node(self, arch, spec):
         """ Locate a node in a source (parent) architecture.

@@ -16,4 +16,6 @@ Are migration scripts fired when installing new modules?
    running against a database that it does not apply to, in anticipation
    of any unknown unknowns.  Also another argument for not running the
    OpenUpgrade server in production, even though we both know that you
-   would never ever do so anyway.
+   would never ever do so anyway. Developers are free to corrupt the regular
+   workings of Odoo if it helps the migration. For instance, from Openupgrade
+   9.0 on, the workflow engine is disabled during field recomputation.

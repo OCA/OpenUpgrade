@@ -2,8 +2,7 @@
 ##############################################################################
 #
 #    OpenUpgrade module for Odoo
-#    @copyright 2015-Today: Odoo Community Association
-#    @author: Stephane LE CORNEC
+#    @copyright 2014-Today: Odoo Community Association, Microcom
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -23,54 +22,32 @@
 from openupgradelib import openupgrade
 
 
-column_copies = {
-    'ir_act_url': [
-        ('help', None, None),
-    ],
-    # 'ir_act_window': [
-    #     ('help', None, None),
-    # ],
-    'ir_actions': [
-        ('help', None, None),
-    ],
-    # 'ir_act_client': [
-    #     ('help', None, None),
-    # ],
-    'ir_act_report_xml': [
-        ('help', None, None),
-    ],
-    'ir_act_server': [
-        ('help', None, None),
-    ],
-    'ir_ui_view': [
-        ('arch', 'arch_db', None),
-    ],
-}
-
+# For 'base' map_values in post-migration
 column_renames = {
-    'res_partner_bank': [
-        ('bank', 'bank_id'),
+    'product_pricelist_item': [
+        ('base', None),
     ],
 }
 
 
-OBSOLETE_RULES = (
-    'multi_company_default_rule',
-    'res_currency_rule',
-)
-
-
-def remove_obsolete(cr):
+def convert_template_id_to_product_id(cr):
     openupgrade.logged_query(cr, """
-        delete from ir_rule rr
-        using ir_model_data d where rr.id=d.res_id
-        and d.model = 'ir.rule' and d.module = 'base'
-        and d.name in {}
-        """.format(OBSOLETE_RULES))
+        UPDATE product_price_history ph
+        SET product_id = p.id
+        FROM product_product p
+        WHERE ph.product_template_id = p.product_tmpl_id
+        """)
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.copy_columns(cr, column_copies)
+    openupgrade.logged_query(cr, """ALTER TABLE product_price_history
+              ADD COLUMN product_id integer
+              """)
+    convert_template_id_to_product_id(cr)
+    openupgrade.logged_query(cr, """
+        ALTER TABLE product_pricelist_item
+        ALTER COLUMN base
+        TYPE VARCHAR
+        """)
     openupgrade.rename_columns(cr, column_renames)
-    remove_obsolete(cr)

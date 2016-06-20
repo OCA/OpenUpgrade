@@ -4,9 +4,22 @@ sudo: false
 python:
   - "2.7"
 
+addons:
+    apt:
+        packages:
+            - expect-dev  # provides unbuffer utility
+            - python-lxml  # because pip installation is slow
+            - python-simplejson
+            - python-serial
+            - python-yaml
+    postgresql: "9.4"
+
+env:
+  - DB=openupgrade ODOO=./openerp-server OPENUPGRADE_TESTS=1
+
 # Need flake8 for pep8 testing
 install:
-    - pip install flake8
+    - pip install flake8 coveralls
 
 # Test with flake for:
 #   * migration scripts
@@ -20,3 +33,20 @@ script:
     - flake8 openerp/addons/openupgrade* --max-line-length=120 --filename=__init__.py --ignore=F401
     - flake8 openerp/addons/openupgrade* --max-line-length=120 --exclude=__init__.py
     - flake8 . --max-line-length=120 --filename=pre-*.py,post-*.py
+    - flake8 openerp/addons/*/migrations/*/tests/ --max-line-length=120
+    - flake8 addons/*/migrations/*/tests/ --max-line-length=120
+    - npm install -g less less-plugin-clean-css
+    - pip install -q -r requirements.txt
+# don't use pypi's openupgradelib, but the one from source to avoid choking
+# on unreleased features in openupgradelib
+    - pip uninstall -q --yes openupgradelib
+    - pip install -q git+https://github.com/OCA/openupgradelib.git@master
+    - createdb $DB
+    - wget -q -O- https://github.com/OCA/OpenUpgrade/releases/download/databases/8.0.psql | pg_restore -d $DB --no-owner
+    - MODULES=base,$(sed -n '/^+========/,$p'  openerp/openupgrade/doc/source/modules80-90.rst | grep "Done\|Partial" | sed -n '/^|/ s/^|\([0-9a-z_]*\) *|.*$/\1/g p' | paste -d, -s)
+    - psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES | sed -e "s/,/','/g")')"
+    - echo Testing modules $MODULES
+    - coverage run $ODOO --database=$DB --update=$MODULES --stop-after-init
+
+after_success:
+    coveralls

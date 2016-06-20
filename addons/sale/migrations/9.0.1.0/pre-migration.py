@@ -2,8 +2,8 @@
 ##############################################################################
 #
 #    OpenUpgrade module for Odoo
-#    @copyright 2015-Today: Odoo Community Association
-#    @author: Stephane LE CORNEC
+#    @copyright 2014-Today: Odoo Community Association
+#    @author: Sylvain LE GAL <https://twitter.com/legalsylvain>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -23,54 +23,14 @@
 from openupgradelib import openupgrade
 
 
-column_copies = {
-    'ir_act_url': [
-        ('help', None, None),
-    ],
-    # 'ir_act_window': [
-    #     ('help', None, None),
-    # ],
-    'ir_actions': [
-        ('help', None, None),
-    ],
-    # 'ir_act_client': [
-    #     ('help', None, None),
-    # ],
-    'ir_act_report_xml': [
-        ('help', None, None),
-    ],
-    'ir_act_server': [
-        ('help', None, None),
-    ],
-    'ir_ui_view': [
-        ('arch', 'arch_db', None),
-    ],
-}
-
 column_renames = {
-    'res_partner_bank': [
-        ('bank', 'bank_id'),
+    'sale_order_line_invoice_rel': [
+        ('invoice_id', 'invoice_line_id'),
     ],
 }
-
-
-OBSOLETE_RULES = (
-    'multi_company_default_rule',
-    'res_currency_rule',
-)
-
-
-def remove_obsolete(cr):
-    openupgrade.logged_query(cr, """
-        delete from ir_rule rr
-        using ir_model_data d where rr.id=d.res_id
-        and d.model = 'ir.rule' and d.module = 'base'
-        and d.name in {}
-        """.format(OBSOLETE_RULES))
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_columns(cr, column_renames)
-    remove_obsolete(cr)
+    openupgrade.delete_model_workflow(cr, 'sale.order')
