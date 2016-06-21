@@ -576,7 +576,8 @@ account      / product.template         / property_account_income (many2one): wa
 #### FIELDS IN MODEL RES.COMPANY ####
 
 account      / res.company              / accounts_code_digits (integer): NEW 
-# TODO: May need to read what is the longest length in the accounts belonging to that company, to determine the number of digits.
+
+# Done, uses max charlen of the company's accounts.
 
 account      / res.company              / anglo_saxon_accounting (boolean): NEW 
 # TODO: Need to determine if the anglo_saxon_accounting module was installed in the previous version, then set it to True.
@@ -592,8 +593,8 @@ account      / res.company              / cash_account_code_prefix (char): NEW
 # NOTHING TO DO
 
 account      / res.company              / chart_template_id (many2one)  : NEW relation: account.chart.template
-# ISSUE: Previously the account.chart.template was not company specific. 
-How will we know which one applies now, if multiple are installed in the system?
+
+=> assign the most probable account template installed in the database
 
 account      / res.company              / currency_exchange_journal_id (many2one): NEW relation: account.journal
 # NOTHING TO DO
@@ -626,7 +627,9 @@ account      / res.company              / property_stock_valuation_account_id (m
 # NOTHING TO DO
 
 account      / res.company              / transfer_account_id (many2one): NEW relation: account.account
-# NOTHING TO DO
+
+=> needs to be reassigned in the localization's migration because it probably
+sets it in the first place
 
 
 #### FIELDS IN MODEL RES.PARTNER ####
