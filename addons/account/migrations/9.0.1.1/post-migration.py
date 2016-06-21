@@ -91,6 +91,11 @@ def parent_id_to_m2m(cr):
         'select id, parent_id from account_tax_template '
         'where parent_id is not null'
     )
+    cr.execute(
+        'insert into account_tax_filiation_rel '
+        '(parent_tax, child_tax) '
+        'select id, parent_id from account_tax where parent_id is not null'
+    )
 
 def cashbox(cr):
 
