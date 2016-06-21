@@ -85,43 +85,12 @@ def account_templates(cr):
         })
 
 def parent_id_to_m2m(cr):
-
-    # Get list of taxes having parent tax. 
-    cr.execute("""
-    SELECT id, parent_id FROM account_tax_template WHERE parent_id IS NOT NULL
-    """)
-
-    list_of_taxes = cr.dictfetchall()
-
-    child_tax_ids = []
-    parent_tax_ids = []
-
-    for m in list_of_taxes:
-        # Retrieving child tax templates.
-        cr.execute("""
-        SELECT id, company_id FROM account_tax_template WHERE name = (SELECT name FROM account_tax_template WHERE id=%(child)s) 
-        AND id <> %(child)s ORDER BY company_id
-        """ % {'child' : m['id']})
-
-        child_tax = cr.dictfetchall()
-        child_tax_ids.append(child_tax)
-
-        # Retrieving parent tax templates. 
-        cr.execute("""
-        SELECT id, company_id FROM account_tax_template WHERE name = (SELECT name FROM account_tax_template WHERE id=%(parent)s) 
-        AND id <> %(parent)s ORDER BY company_id
-        """% {'parent' : m['parent_id']})
-
-        parent_tax = cr.dictfetchall()
-        parent_tax_ids.append(parent_tax)
-
-    # Inserting parent and child tax records into m2m relationship 
-    for a in range(len(child_tax_ids)):
-        for x,y in zip(child_tax_ids[a],parent_tax_ids[a]):
-            cr.execute("""
-            INSERT INTO account_tax_template_filiation_rel (parent_tax, child_tax) 
-            VALUES (%(parent_id)s, %(child_id)s)
-            """ %{'parent_id' : y['id'], 'child_id' : x['id']})
+    cr.execute(
+        'insert into account_tax_template_filiation_rel '
+        '(parent_tax, child_tax) '
+        'select id, parent_id from account_tax_template '
+        'where parent_id is not null'
+    )
 
 def cashbox(cr):
 
