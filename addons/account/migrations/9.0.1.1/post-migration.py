@@ -97,6 +97,30 @@ def parent_id_to_m2m(cr):
         'select id, parent_id from account_tax where parent_id is not null'
     )
 
+def parent_id_to_tag(cr, model, tags_field='tag_ids'):
+    """Convert all parents of model to tags stored in tags_field"""
+    # TODO: This might be moved to openupgradelib
+    env = api.Environment(cr, SUPERUSER_ID, {})
+    model = env[model]
+    tags_model = env[model._fields[tags_field].comodel_name]
+    parent2tag = {}
+    cr.execute(
+        'select id, %(parent_field)s from %(table)s where %(parent_field)s '
+        'is not null' % {
+            'parent_field': model._parent_name,
+            'table': model._table,
+        }
+    )
+    for child_id, parent_id in cr.fetchall():
+        if parent_id not in parent2tag:
+            parent2tag[parent_id] = tags_model.name_create(
+                model.browse(parent_id).display_name
+            )[0]
+        model.browse(child_id).write(dict([
+            (tags_field, [(4, parent2tag[parent_id])]),
+        ]))
+
+
 def cashbox(cr):
 
     cr.execute("""
@@ -246,3 +270,5 @@ def migrate(cr, version):
     'account_bank_statement_line',
     'journal_entry_ids',
     openupgrade.get_legacy_name('journal_entry_id'))
+
+    parent_id_to_tag(cr, 'account.tax')
