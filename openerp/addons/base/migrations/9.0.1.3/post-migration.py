@@ -72,6 +72,7 @@ def clear_inherit_id(cr):
         """)
 
 
+# updates to ir_ui_view will not clear inherit_id
 def rename_your_company(cr):
     openupgrade.logged_query(cr, """
         UPDATE res_company r
@@ -83,6 +84,18 @@ def rename_your_company(cr):
         """)
 
 
+def update_res_currency(cr):
+    openupgrade.logged_query(cr, """
+        DELETE FROM ir_rule
+        WHERE model_id IN (
+            SELECT id from ir_model
+            WHERE model = 'res.currency'
+        )
+        AND domain_force like '%%company_id%%'
+        """)
+
+
+# updates to ir_ui_view will not clear inherit_id
 def set_filter_active(cr):
     openupgrade.logged_query(cr, """
         UPDATE ir_filters
@@ -118,6 +131,7 @@ def migrate(cr, version):
     match_company_type_to_is_company(cr)
     clear_inherit_id(cr)
     rename_your_company(cr)
+    update_res_currency(cr)
     set_filter_active(cr)
     precalculate_checksum(cr)
     remove_obsolete_modules(cr, ('web_gantt', 'web_graph', 'web_tests'))

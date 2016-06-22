@@ -9,6 +9,8 @@ base         / ir.actions.report.xml    / help (text)                   : type i
 base         / ir.actions.report.xml    / ir_values_id (many2one)       : NEW relation: ir.values
 base         / ir.actions.server        / help (text)                   : type is now 'html' ('text')
 base         / ir.attachment            / checksum (char)               : NEW 
+base         / ir.attachment            / index_content (text)          : NEW 
+base         / ir.attachment            / mimetype (char)               : NEW 
 base         / ir.attachment            / public (boolean)              : NEW 
 base         / ir.attachment            / res_field (char)              : NEW 
 base         / ir.filters               / active (boolean)              : NEW 
@@ -25,7 +27,7 @@ base         / ir.model.fields          / index (boolean)               : NEW
 base         / ir.model.fields          / related (char)                : NEW 
 base         / ir.model.fields          / relation_table (char)         : NEW 
 base         / ir.model.fields          / select_level (selection)      : DEL required: required, selection_keys: ['0', '1', '2'], req_default: 0
-base         / ir.module.module         / license (selection)           : selection_keys is now '['AGPL-3', 'GPL-2', 'GPL-2 or any later version', 'GPL-3', 'GPL-3 or any later version', 'LGPL-3', 'OEEL-1', 'Other OSI approved licence', 'Other proprietary']' ('['AGPL-3', 'GPL-2', 'GPL-2 or any later version', 'GPL-3', 'GPL-3 or any later version', 'Other OSI approved licence', 'Other proprietary']')
+base         / ir.module.module         / license (selection)           : selection_keys is now '['AGPL-3', 'GPL-2', 'GPL-2 or any later version', 'GPL-3', 'GPL-3 or any later version', 'LGPL-3', 'OEEL-1', 'Other OSI approved licence', 'Other proprietary']' ('['AGPL-3', 'GPL-2', 'GPL-2 or any later version', 'GPL-3', 'GPL-3 or any later version', 'LGPL-3', 'Other OSI approved licence', 'Other proprietary']')
 base         / ir.sequence              / code (selection)              : selection_keys is now 'False' ('function')
 base         / ir.sequence              / code (selection)              : type is now 'char' ('selection')
 base         / ir.sequence              / date_range_ids (one2many)     : NEW relation: ir.sequence.date_range
@@ -52,6 +54,7 @@ base         / res.currency             / base (boolean)                : DEL
 base         / res.currency             / company_id (many2one)         : DEL relation: res.company
 base         / res.currency.rate        / company_id (many2one)         : NEW relation: res.company
 base         / res.groups               / color (integer)               : NEW 
+base         / res.groups               / share (boolean)               : NEW 
 base         / res.partner              / company_type (selection)      : NEW selection_keys: ['company', 'person']
 base         / res.partner              / ean13 (char)                  : was renamed to barcode [nothing to to]
 base         / res.partner              / type (selection)              : selection_keys is now '['contact', 'delivery', 'invoice', 'other']' ('['contact', 'default', 'delivery', 'invoice', 'other']')
@@ -61,6 +64,7 @@ base         / res.partner.bank         / bank_id (many2one)            : NEW re
 base         / res.partner.bank         / bank_name (char)              : DEL 
 base         / res.partner.bank         / city (char)                   : DEL 
 base         / res.partner.bank         / country_id (many2one)         : DEL relation: res.country
+base         / res.partner.bank         / currency_id (many2one)        : NEW relation: res.currency
 base         / res.partner.bank         / footer (boolean)              : DEL 
 base         / res.partner.bank         / name (char)                   : DEL 
 base         / res.partner.bank         / owner_name (char)             : DEL 
