@@ -157,8 +157,6 @@ NEW ir.rule: base.res_currency_rate_rule
 NEW ir.rule: base.res_users_log_rule
 DEL ir.rule: base.multi_company_default_rule
 DEL ir.rule: base.res_currency_rule
-# TODO - moved to res_currency_rate_rule
-
 NEW ir.ui.menu: base.menu_board_root
 NEW ir.ui.menu: base.menu_config_bank_accounts
 NEW ir.ui.menu: base.menu_sale_config
@@ -361,8 +359,6 @@ DEL res.currency.rate: base.rateZMK
 DEL res.currency.rate: base.rateZRZ
 DEL res.currency.rate: base.rateZWD
 NEW res.groups: base.group_configuration
-# TODO - give to group_system users
-
 NEW res.groups: base.group_light_multi_company
 DEL res.partner.bank.type: base.bank_normal
 DEL res.partner.bank.type.field: base.bank_normal_field_bic

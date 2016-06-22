@@ -53,24 +53,35 @@ column_renames = {
     ],
 }
 
-
-OBSOLETE_RULES = (
-    'multi_company_default_rule',
-    'res_currency_rule',
-)
-
-
-def remove_obsolete(cr):
-    openupgrade.logged_query(cr, """
-        delete from ir_rule rr
-        using ir_model_data d where rr.id=d.res_id
-        and d.model = 'ir.rule' and d.module = 'base'
-        and d.name in {}
-        """.format(OBSOLETE_RULES))
-
-
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_columns(cr, column_renames)
-    remove_obsolete(cr)
+    # purchase double validation migraion
+    cr.execute("""
+    select condition from wkf_transition wkf join ir_model_data ir 
+    on wkf.id = ir.res_id and ir.name = 'trans_confirmed_double_gt' 
+    and ir.module = 'purchase_double_validation'
+    """)
+#    amount = cr.dictfetchone()
+#    double_validation_amount = str(amount['condition']).split(" ")[-1]
+
+    # delete purchase order workflow
+    openupgrade.delete_model_workflow(cr, 'purchase.order')
+#    transitions = openupgrade.deactivate_workflow_transitions(cr, 'purchase.order')
+#    openupgrade.reactivate_workflow_transitions(cr, transitions)
+
+    # Inherited Views that encountered errors while running the migration.
+    cr.execute("""
+        UPDATE ir_ui_view
+        SET active = FALSE
+        WHERE name in ('res.partner.view.address_type', 'crm settings',
+        'partner.view.button.journal_item_count','res.partner.stock.property.form.inherit',
+        'res.users.form.hr')
+    """)
+    cr.execute("""
+        UPDATE ir_ui_view SET active=false WHERE inherit_id in 
+        (SELECT id FROM ir_ui_view WHERE name in 
+        ('res.partner.view.address_type','crm settings',
+        'partner.view.button.journal_item_count'))
+    """)
