@@ -6,8 +6,10 @@
 
 from openupgradelib import openupgrade
 
-table_renames = [('crm_case_section', 'crm_team'),]
-
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.rename_tables(cr, table_renames)
+    # Converts the m2m to o2m (but there would be data loss)
+    cr.execute("""UPDATE res_users SET 
+    sale_team_id = r.section_id FROM 
+    sale_member_rel r WHERE id = r.member_id
+    """)
