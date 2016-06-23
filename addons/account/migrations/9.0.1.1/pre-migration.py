@@ -67,12 +67,12 @@ def migrate_properties(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.rename_tables(cr, table_renames)
-    openupgrade.rename_columns(cr, column_renames)
-    openupgrade.copy_columns(cr, column_copies)
-    migrate_properties(cr)
     # 9.0 introduces a constraint enforcing this
     cr.execute(
         "update account_account set reconcile=True "
         "where type in ('receivable', 'payable')"
     )
+    openupgrade.rename_tables(cr, table_renames)
+    openupgrade.rename_columns(cr, column_renames)
+    openupgrade.copy_columns(cr, column_copies)
+    migrate_properties(cr)
