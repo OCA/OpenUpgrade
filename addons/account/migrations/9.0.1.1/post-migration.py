@@ -2,6 +2,7 @@
 # © 2016 Serpent Consulting Services Pvt. Ltd.
 # © 2016 Eficent Business and IT Consulting Services S.L.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+import operator
 from openerp import api, SUPERUSER_ID
 from openupgradelib import openupgrade
 from openerp.modules.registry import RegistryManager
@@ -197,6 +198,49 @@ def account_properties(cr):
             'res.partner%' or res_id is null)
             """)
 
+def account_internal_type(cr):
+    """type on accounts was replaced by internal_type which is a related field
+    to the user type's type field"""
+    env = api.Environment(cr, SUPERUSER_ID, {})
+    possible_types = map(
+        env['account.account.type']._fields['type'].selection,
+        operator.itemgetter(0),
+    )
+    for account_type in env['account.account.type'].search([]):
+        cr.execute(
+            'select %(type)s, array_agg(id) from account_account '
+            'where user_type_id=%%s group by %(type)s '
+            'order by array_length(array_agg(id), 1) desc' % {
+                'type': openupgrade.get_legacy_name('type'),
+            },
+            (account_type.id,)
+        )
+        type2ids = dict(cr.fetchall())
+        if not type2ids:
+            continue
+        if account_type.type not in type2ids:
+            account_type.write({
+                'type': tupe2ids.keys()[0],
+            })
+        for legacy_type, ids in type2ids:
+            if legacy_type == account_type.type:
+                continue
+            default = {
+                'type': legacy_type,
+            }
+            if legacy_type not in possible_types:
+                default.update({
+                    'name': '%s (%s)' % (
+                        account_type.name,
+                        legacy_type,
+                    ),
+                    'type': 'other',
+                })
+            env['account.account'].browse(ids).write({
+                'user_type_id': account_type.copy(defaut=default).id,
+            })
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     map_bank_state(cr)
@@ -272,3 +316,4 @@ def migrate(cr, version):
     openupgrade.get_legacy_name('journal_entry_id'))
 
     parent_id_to_tag(cr, 'account.tax')
+    account_internal_type(cr)
