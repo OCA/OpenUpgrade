@@ -81,7 +81,7 @@ def account_templates(cr):
         company.write({
             'chart_template_id': best_template.id,
             'accounts_code_digits': accounts_code_digits,
-            'transfer_account_id': account_templates.transfer_account_id.id
+            'transfer_account_id': best_template.transfer_account_id.id
         })
 
 def parent_id_to_m2m(cr):
