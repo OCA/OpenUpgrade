@@ -109,8 +109,9 @@ def parent_id_to_m2m(cr):
     )
 
 
-def parent_id_to_tag(cr, model, tags_field='tag_ids'):
-    """Convert all parents of model to tags stored in tags_field"""
+def parent_id_to_tag(cr, model, tags_field='tag_ids', recursive=False):
+    """Convert all parents of model to tags stored in tags_field.
+    If recursive is true, create and assign tags for indirect parents too"""
     # TODO: This might be moved to openupgradelib
     env = api.Environment(cr, SUPERUSER_ID, {})
     model = env[model]
@@ -123,14 +124,30 @@ def parent_id_to_tag(cr, model, tags_field='tag_ids'):
             'table': model._table,
         }
     )
-    for child_id, parent_id in cr.fetchall():
-        if parent_id not in parent2tag:
-            parent2tag[parent_id] = tags_model.name_create(
-                model.browse(parent_id).display_name
+
+    def handle_parent_for_child(child, parent):
+        if parent.id not in parent2tag:
+            parent2tag[parent.id] = tags_model.name_create(
+                parent.display_name
             )[0]
-        model.browse(child_id).write(dict([
-            (tags_field, [(4, parent2tag[parent_id])]),
+        child.write(dict([
+            (tags_field, [(4, parent2tag[parent.id])]),
         ]))
+        if recursive:
+            cr.execute(
+                'select %(parent_field)s from account_account where id=%%s' % {
+                    'parent_field': model._parent_name,
+                },
+                (parent.id,),
+            )
+            parent_ids = [p for p, in cr.fetchall() if p]
+            if parent_ids:
+                handle_parent_for_child(child, model.browse(parent_ids))
+
+    for child_id, parent_id in cr.fetchall():
+        handle_parent_for_child(
+            model.browse(child_id), model.browse(parent_id)
+        )
 
 
 def cashbox(cr):
@@ -359,4 +376,5 @@ def migrate(cr, version):
     )
 
     parent_id_to_tag(cr, 'account.tax')
+    parent_id_to_tag(cr, 'account.account', recursive=True)
     account_internal_type(cr)
