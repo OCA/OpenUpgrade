@@ -232,31 +232,41 @@ def account_internal_type(cr):
     to the user type's type field"""
     env = api.Environment(cr, SUPERUSER_ID, {})
     possible_types = map(
-        env['account.account.type']._fields['type'].selection,
         operator.itemgetter(0),
+        env['account.account.type']._fields['type'].selection,
     )
     for account_type in env['account.account.type'].search([]):
         cr.execute(
             'select %(type)s, array_agg(id) from account_account '
             'where user_type_id=%%s group by %(type)s '
-            'order by array_length(array_agg(id), 1) desc' % {
+            'order by %(type)s in %%s desc, '
+            'array_length(array_agg(id), 1) desc' % {
                 'type': openupgrade.get_legacy_name('type'),
             },
-            (account_type.id,)
+            (
+                account_type.id,
+                tuple(possible_types),
+            )
         )
         type2ids = dict(cr.fetchall())
         if not type2ids:
             continue
+        # type has default 'other', be sure that's a type actually used
+        # in the existing accounts. The sorting above makes sure we pick
+        # the type with most accounts
         if account_type.type not in type2ids:
+            first_type = type2ids.keys()[0]
             account_type.write({
-                'type': type2ids.keys()[0],
+                'type': first_type if first_type in possible_types else 'other'
             })
-        for legacy_type, ids in type2ids:
+        for legacy_type, ids in type2ids.iteritems():
             if legacy_type == account_type.type:
                 continue
             default = {
                 'type': legacy_type,
             }
+            # for one of the deprecated types, use other but create a new
+            # account type pointing to the deprecated type
             if legacy_type not in possible_types:
                 default.update({
                     'name': '%s (%s)' % (
@@ -266,7 +276,7 @@ def account_internal_type(cr):
                     'type': 'other',
                 })
             env['account.account'].browse(ids).write({
-                'user_type_id': account_type.copy(defaut=default).id,
+                'user_type_id': account_type.copy(default=default).id,
             })
 
 
