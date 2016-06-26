@@ -17,6 +17,12 @@ column_renames = {
     ],
     'account_account': [
         ('type', None),
+    ],
+    'account_cashbox_line': [
+        ('pieces', 'coin_value'),
+        ('number_opening', None),
+        ('number_closing', None),
+        ('bank_statement_id', None),
     ]
 }
 

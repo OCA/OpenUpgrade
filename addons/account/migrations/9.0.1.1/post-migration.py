@@ -53,7 +53,7 @@ def account_templates(cr):
     account_templates -= configurable_template
     cr.execute('select distinct company_id from account_account where active')
     for company in env['res.company'].browse([i for i, in cr.fetchall()]):
-        if company.chart_template_id:
+        if company.chart_template_id:  # pragma: no cover
             # probably never happens, but we need to be sure not to overwrite
             # this anyways
             continue
@@ -61,7 +61,7 @@ def account_templates(cr):
             'select max(char_length(code)) from account_account '
             'where company_id=%s and parent_id is null', (company.id,))
         accounts_code_digits = cr.fetchall()[0][0]
-        if len(account_templates) == 1:
+        if len(account_templates) == 1:  # pragma: no cover
             # if there's only one template, we can be quite sure that's the
             # right one
             company.write({
@@ -151,78 +151,64 @@ def parent_id_to_tag(cr, model, tags_field='tag_ids', recursive=False):
 
 
 def cashbox(cr):
-
-    cr.execute("""
-    SELECT distinct bank_statement_id FROM account_cashbox_line
-    """)
-
-    bank_statement = cr.dictfetchall()
-
-    for m in range(len(bank_statement)):
-
-        bank_statement_id = bank_statement[m]['bank_statement_id']
-
-        cr.execute("""
-        SELECT pieces, number_opening FROM account_cashbox_line
-        WHERE number_opening IS NOT NULL AND number_opening != 0
-        AND bank_statement_id  = %s
-        """ % bank_statement_id)
-
-        opening_cashbox = cr.dictfetchall()
-
-        cr.execute("""
-        INSERT INTO account_bank_statement_cashbox (create_date)
-        VALUES (NULL) RETURNING id
-        """)
-
-        cashbox_id = cr.fetchone()[0]
-
-        for x in opening_cashbox:
-            opening_number = x['number_opening']
-            pieces = x['pieces']
-            cr.execute("""
-            INSERT INTO account_cashbox_line
-            (cashbox_id, number, coin_value) VALUES
-            (%(cash_id)s, %(opening_number)s, %(pieces)s)
-            """ % {
-                'opening_number': opening_number,
-                'pieces': pieces,
-                'cash_id': cashbox_id,
-            })
-
-        cr.execute("""
-        UPDATE account_bank_statement SET cashbox_start_id = %s WHERE id = %s
-        """ % (cashbox_id, bank_statement_id))
-
-        cr.execute("""
-        SELECT pieces, number_closing FROM account_cashbox_line
-        WHERE number_closing IS NOT NULL AND bank_statement_id  = %s
-        """ % bank_statement_id)
-
-        closing_cashbox = cr.dictfetchall()
-
-        cr.execute("""
-        INSERT INTO account_bank_statement_cashbox (create_date)
-        VALUES (NULL) RETURNING id
-        """)
-
-        cashbox_id = cr.fetchone()[0]
-
-        for x in closing_cashbox:
-            closing_number = x['number_closing']
-            pieces = x['pieces']
-            cr.execute("""
-            INSERT INTO account_cashbox_line (cashbox_id, number, coin_value)
-            VALUES (%(cash_id)s, %(closing_number)s, %(pieces)s)
-            """ % {
-                'closing_number': closing_number,
-                'pieces': pieces,
-                'cash_id': cashbox_id,
-            })
-
-        cr.execute("""
-        UPDATE account_bank_statement SET cashbox_end_id = %s WHERE id = %s
-        """ % (cashbox_id, bank_statement_id))
+    # new cashbox lines are agnostic on whether they're opening or closing
+    # lines
+    cr.execute(
+        'update account_cashbox_line set '
+        'number=coalesce(%(number_closing)s, %(number_opening)s, 0)' % {
+            'number_closing': openupgrade.get_legacy_name('number_closing'),
+            'number_opening': openupgrade.get_legacy_name('number_opening'),
+        }
+    )
+    # create a cashbox record per statement and old opening/closing state
+    # first, create a temporary field to hold references
+    cr.execute(
+        'alter table account_bank_statement_cashbox '
+        'add column %(cashbox_line_ids)s int[]' % {
+            'cashbox_line_ids': openupgrade.get_legacy_name('cashbox_line_ids')
+        }
+    )
+    cr.execute(
+        'insert into account_bank_statement_cashbox '
+        '(create_uid, create_date, write_uid, write_date, '
+        '%(cashbox_line_ids)s) '
+        'select s.create_uid, s.create_date, s.write_uid, s.write_date, '
+        'array_agg(s.id) '
+        'from account_cashbox_line l '
+        'join account_bank_statement s '
+        'on l.%(bank_statement_id)s=s.id '
+        'group by s.id, l.%(number_closing)s is null, '
+        'l.%(number_opening)s is null, '
+        's.create_uid, s.create_date, s.write_uid, s.write_date' % {
+            'number_closing': openupgrade.get_legacy_name('number_closing'),
+            'number_opening': openupgrade.get_legacy_name('number_opening'),
+            'bank_statement_id':
+            openupgrade.get_legacy_name('bank_statement_id'),
+            'cashbox_line_ids': openupgrade.get_legacy_name('cashbox_line_ids')
+        }
+    )
+    # assign those to the cashbox lines they derive from
+    cr.execute(
+        'update account_cashbox_line l set cashbox_id='
+        '(select id from account_bank_statement_cashbox where l.id='
+        'any(%(cashbox_line_ids)s))' % {
+            'cashbox_line_ids': openupgrade.get_legacy_name('cashbox_line_ids')
+        }
+    )
+    # and now assign the proper cashbox_{start,end}_id values
+    cr.execute(
+        'update account_bank_statement s set '
+        'cashbox_start_id=(select cashbox_id from account_cashbox_line where '
+        '%(bank_statement_id)s=s.id and %(number_closing)s is null limit 1),'
+        'cashbox_end_id=(select cashbox_id from account_cashbox_line where '
+        '%(bank_statement_id)s=s.id and %(number_opening)s is null limit 1)' %
+        {
+            'number_closing': openupgrade.get_legacy_name('number_closing'),
+            'number_opening': openupgrade.get_legacy_name('number_opening'),
+            'bank_statement_id':
+            openupgrade.get_legacy_name('bank_statement_id'),
+        }
+    )
 
 
 def account_properties(cr):
@@ -328,12 +314,11 @@ def migrate(cr, version):
     WHERE amount_type = 'percentage_of_total'
     """)
 
-    anglo_saxon_installed = openupgrade.is_module_installed(
-        cr, 'account_anglo_saxon')
-    if anglo_saxon_installed:
-        cr.execute("""
-        UPDATE res_company SET anglo_saxon_accounting = True
-        """)
+    # Set up anglosaxon accounting
+    cr.execute(
+        "UPDATE res_company SET anglo_saxon_accounting = %s",
+        (openupgrade.is_module_installed(cr, 'account_anglo_saxon'), ),
+    )
 
     # deprecate accounts where active is False
     cr.execute("""
