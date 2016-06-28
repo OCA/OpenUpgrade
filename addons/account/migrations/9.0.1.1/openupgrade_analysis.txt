@@ -28,7 +28,6 @@ account      / account.account.type     / code (char)                   : DEL re
 account      / account.account.type     / include_initial_balance (boolean): NEW 
 account      / account.account.type     / type (selection)              : NEW required: required, selection_keys: ['liquidity', 'other', 'payable', 'receivable'], req_default: other
 account      / account.analytic.line    / journal_id (many2one)         : DEL relation: account.analytic.journal, required: required
-account      / account.bank.statement   / account_id (many2one)         : module is now 'point_of_sale' ('account')
 account      / account.bank.statement   / cashbox_end_id (many2one)     : NEW relation: account.bank.statement.cashbox
 account      / account.bank.statement   / cashbox_start_id (many2one)   : NEW relation: account.bank.statement.cashbox
 account      / account.bank.statement   / closing_date (datetime)       : DEL 
@@ -41,7 +40,6 @@ account      / account.bank.statement   / message_follower_ids (many2many): type
 account      / account.bank.statement   / opening_details_ids (one2many): DEL relation: account.cashbox.line
 account      / account.bank.statement   / period_id (many2one)          : DEL relation: account.period, required: required, req_default: function
 account      / account.bank.statement   / state (selection)             : selection_keys is now '['confirm', 'open']' ('['confirm', 'draft', 'open']')
-account      / account.bank.statement   / website_message_ids (one2many): NEW relation: mail.message
 account      / account.bank.statement.cashbox / cashbox_lines_ids (one2many)  : NEW relation: account.cashbox.line
 account      / account.bank.statement.line / journal_entry_id (many2one)   : DEL relation: account.move
 account      / account.bank.statement.line / journal_entry_ids (one2many)  : NEW relation: account.move
@@ -91,7 +89,6 @@ account      / account.invoice          / payment_term (many2one)       : was re
 account      / account.invoice          / period_id (many2one)          : DEL relation: account.period
 account      / account.invoice          / supplier_invoice_number (char): DEL 
 account      / account.invoice          / tax_line (one2many)           : was renamed to tax_line_ids [nothing to to]
-account      / account.invoice          / website_message_ids (one2many): NEW relation: mail.message
 account      / account.invoice.line     / invoice_line_tax_id (many2many): was renamed to invoice_line_tax_ids [nothing to to]
 account      / account.invoice.line     / uos_id (many2one)             : was renamed to uom_id [nothing to to]
 account      / account.invoice.tax      / base (float)                  : DEL 
@@ -206,8 +203,8 @@ account      / account.tax              / child_ids (one2many)          : DEL re
 account      / account.tax              / children_tax_ids (many2many)  : NEW relation: account.tax
 account      / account.tax              / domain (char)                 : DEL 
 account      / account.tax              / parent_id (many2one)          : DEL relation: account.tax
-account      / account.tax              / python_applicable (text)      : module is now 'account_tax_python' ('account')
-account      / account.tax              / python_compute (text)         : module is now 'account_tax_python' ('account')
+account      / account.tax              / python_applicable (text)      : DEL 
+account      / account.tax              / python_compute (text)         : DEL 
 account      / account.tax              / python_compute_inv (text)     : DEL 
 account      / account.tax              / ref_base_code_id (many2one)   : DEL relation: account.tax.code
 account      / account.tax              / ref_base_sign (float)         : DEL 
@@ -235,8 +232,8 @@ account      / account.tax.template     / children_tax_ids (many2many)  : NEW re
 account      / account.tax.template     / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
 account      / account.tax.template     / domain (char)                 : DEL 
 account      / account.tax.template     / parent_id (many2one)          : DEL relation: account.tax.template
-account      / account.tax.template     / python_applicable (text)      : module is now 'account_tax_python' ('account')
-account      / account.tax.template     / python_compute (text)         : module is now 'account_tax_python' ('account')
+account      / account.tax.template     / python_applicable (text)      : DEL 
+account      / account.tax.template     / python_compute (text)         : DEL 
 account      / account.tax.template     / python_compute_inv (text)     : DEL 
 account      / account.tax.template     / ref_base_code_id (many2one)   : DEL relation: account.tax.code.template
 account      / account.tax.template     / ref_base_sign (float)         : DEL 
