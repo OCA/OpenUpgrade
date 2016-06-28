@@ -6,8 +6,8 @@ We should provide a generic method that converts parent accounts into tags, and 
 ---Fields in module 'account'---
 
 account      / account.account          / deprecated (boolean)          : NEW 
-# TODO: If the active field is False, set it to True
-# Done : done in post-migration script
+# If the active field is False, set it to True
+# done in post-migration script
 
 account      / account.account          / financial_report_ids (many2many): DEL relation: account.financial.report
 
@@ -23,8 +23,6 @@ account      / account.account          / tag_ids (many2many)           : NEW re
 # NOTHING TO DO: New functionality added.
 
 account      / account.account          / type (selection)              : DEL required: required, selection_keys: ['closed', 'consolidation', 'liquidity', 'other', 'payable', 'receivable', 'view'], req_default: other
-# TODO: delete accounts type having 'view'
- 
 account      / account.account          / user_type (many2one)          : was renamed to user_type_id [nothing to to]
 
 
@@ -50,20 +48,18 @@ account      / account.account.template / user_type (many2one)          : was re
 
 
 #### FIELDS IN MODEL ACCOUNT.ACCOUNT.TYPE ####
-# TODO: Create new account.account.type. One for each combination of account.account-type + account.account-user_type.
 
 account      / account.account.type     / close_method (selection)      : DEL required: required, selection_keys: ['balance', 'detail', 'none', 'unreconciled'], req_default: none
-# TODO: Rename to 'None' in order to avoid losing the values.
-# Done : done in pre-migration script
+# Rename to 'None' in order to avoid losing the values.
+# done in pre-migration script
 
 account      / account.account.type     / code (char)                   : DEL required: required
 
 account      / account.account.type     / include_initial_balance (boolean): NEW 
-# TODO: If the close_method was 'none', then set to 'False', otherwise set to 'True'
-# Done : done in post-migration script
+# If the close_method was 'none', then set to 'False', otherwise set to 'True'
+# done in post-migration script
 
 account      / account.account.type     / type (selection)              : NEW required: required, selection_keys: ['liquidity', 'other', 'payable', 'receivable'], req_default: other
-# TODO: Based on the combination used (see above)
 
 
 #### FIELDS IN MODEL ACCOUNT.ANALYTIC.LINE ####
@@ -74,17 +70,14 @@ account      / account.analytic.line    / journal_id (many2one)         : DEL re
 #### FIELDS IN MODEL ACCOUNT.BANK.STATEMENT ####
 
 account      / account.bank.statement   / account_id (many2one)         : module is now 'point_of_sale' ('account')
-# TODO: Will have to deal with it in the point_of_sale module. Rename it to 'None'. 
-(It is a related field with Store = False so there would be no account_id in table)
 
 account      / account.bank.statement   / cashbox_end_id (many2one)     : NEW relation: account.bank.statement.cashbox
 account      / account.bank.statement   / cashbox_start_id (many2one)   : NEW relation: account.bank.statement.cashbox
-# TODO: see FIELDS IN MODEL ACCOUNT.BANK.STATEMENT.CASHBOX
 
 account      / account.bank.statement   / closing_date (datetime)       : DEL 
 account      / account.bank.statement   / date_done (datetime)          : NEW 
-# TODO: Column rename
-# Done : done in pre-migration script
+# Column rename
+# done in pre-migration script
 
 account      / account.bank.statement   / closing_details_ids (one2many): DEL relation: account.cashbox.line
 account      / account.bank.statement   / details_ids (one2many)        : DEL relation: account.cashbox.line
@@ -93,13 +86,12 @@ account      / account.bank.statement   / message_follower_ids (many2many): not 
 account      / account.bank.statement   / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
 account      / account.bank.statement   / message_follower_ids (many2many): type is now 'one2many' ('many2many')
 account      / account.bank.statement   / website_message_ids (one2many): NEW relation: mail.message
-# TODO: To be dealt in the mail module migration, or using a generic method in openupgrade_90.py
 
 account      / account.bank.statement   / opening_details_ids (one2many): DEL relation: account.cashbox.line
 account      / account.bank.statement   / period_id (many2one)          : DEL relation: account.period, required: requirOed, req_default: function
 account      / account.bank.statement   / state (selection)             : selection_keys is now '['confirm', 'open']' ('['confirm', 'draft', 'open']')
-# TODO: move values 'draft' to 'open'
-# Done : done in post-migration script
+# move values 'draft' to 'open'
+# done in post-migration script
 
 
 #### FIELDS IN MODEL ACCOUNT.BANK.STATEMENT.CASHBOX ####
@@ -108,28 +100,18 @@ This is a new model. In Odoo 8 the account.bank.statement would contain the open
  In Odoo 9 this model groups these lines, so that each account.bank.statement points to a 
  single one cashbox_end_id and cashbox_start_id.
 
-TODO: 
-- Create one account.bank.statement.cashbox record for each record in account.bank.statement where opening_details_ids has content. 
-Then associate the new account.bank.statement.cashbox record in account.bank.statement field 'cashbox_start_id'
-- Create one account.bank.statement.cashbox record for each record in account.bank.statement where closing_details_ids has content. 
-Then associate the new account.bank.statement.cashbox record in account.bank.statement field 'cashbox_end_id'
-
 account      / account.bank.statement.cashbox / cashbox_lines_ids (one2many)  : NEW relation: account.cashbox.line
-# TODO: Take the records from opening_details_ids, and associate the entries to the new 
 account.bank.statement.cashbox created before. The records in opening_details_ids should 
 be related to cashbox_start_id in account.bank.statement and the records in 
 closing_details_ids should be related to cashbox_end_id in account.bank.statement.
-# Done : done in post-migration script
+# done in post-migration script
 
 
 #### FIELDS IN MODEL ACCOUNT.BANK.STATEMENT.LINE ####
 
 account      / account.bank.statement.line / journal_entry_id (many2one)   : DEL relation: account.move
 account      / account.bank.statement.line / journal_entry_ids (one2many)  : NEW relation: account.move
-# TODO: Update the move lines involved in bank statement lines with the statement. 
-# This changes from many2one to one2many, so the statement_id is now in the move line. 
-# In PRE, rename journal_entry_id to 'None'. In POS, use method m2o_to_x2m to translate many2one to one2many.
-# Done : done with using the method m2o_to_x2m method
+# done with using the method m2o_to_x2m method
 
 #### FIELDS IN MODEL ACCOUNT.CASHBOX.LINE ####
 
@@ -139,12 +121,11 @@ account      / account.cashbox.line     / cashbox_id (many2one)         : NEW re
 
 account      / account.cashbox.line     / pieces (float)                : DEL 
 account      / account.cashbox.line     / coin_value (float)            : NEW required: required
-# TODO: Rename
+# Renamed in post migration
 
 account      / account.cashbox.line     / number_closing (integer)      : DEL 
 account      / account.cashbox.line     / number_opening (integer)      : DEL 
 account      / account.cashbox.line     / number (integer)              : NEW 
-# TODO: Rename to 'None'. In POST, UPDATE WITH COALESCE(openupgrade.get_legacy_name('number_opening'),openupgrade.get_legacy_name('number_closing'))
 
 
 #### FIELDS IN MODEL ACCOUNT.CHART.TEMPLATE ####
@@ -161,12 +142,9 @@ account      / account.chart.template   / cash_account_code_prefix (char): NEW
 # Nothing to do
 
 account      / account.chart.template   / company_id (many2one)         : NEW relation: res.company
-# TODO: See initial notes.
-# Done : done in post-migration script
 
 
 account      / account.chart.template   / currency_id (many2one)        : now required
-# TODO: For those that are not set, obtain the currency of the first company.
 
 account      / account.chart.template   / expense_currency_exchange_account_id (many2one): NEW relation: account.account.template
 account      / account.chart.template   / income_currency_exchange_account_id (many2one): NEW relation: account.account.template
@@ -180,7 +158,7 @@ account      / account.chart.template   / property_account_income_categ (many2on
 account      / account.chart.template   / property_account_income_opening (many2one): DEL relation: account.account.template
 account      / account.chart.template   / property_account_payable (many2one): was renamed to property_account_payable_id [nothing to to]
 account      / account.chart.template   / property_account_receivable (many2one): was renamed to property_account_receivable_id [nothing to to]
-# TODO - fix ir_property entries
+# done in pre-migration
 
 
 account      / account.chart.template   / property_stock_account_input_categ_id (many2one): NEW relation: account.account.template
@@ -192,7 +170,7 @@ account      / account.chart.template   / tax_code_root_id (many2one)   : DEL re
 # Nothing to do
 
 account      / account.chart.template   / transfer_account_id (many2one): NEW relation: account.account.template, required: required
-# TODO: create a dummy transfer account, set as deprecated, that will be replaced when updating l10n_xx.
+# Nothing to do - localization have to deal with this
 
 account      / account.chart.template   / use_anglo_saxon (boolean)     : NEW 
 # Nothing to do.
@@ -237,7 +215,6 @@ account      / account.invoice          / supplier_invoice_number (char): DEL
 account      / account.invoice          / tax_line (one2many)           : was renamed to tax_line_ids [nothing to to]
 
 account      / account.invoice          / website_message_ids (one2many): NEW relation: mail.message
-# TODO: ?
 
 
 #### FIELDS IN MODEL ACCOUNT.INVOICE.LINE ####
@@ -269,11 +246,10 @@ account      / account.journal          / allow_date (boolean)          : DEL
 account      / account.journal          / analytic_journal_id (many2one): DEL relation: account.analytic.journal
 
 account      / account.journal          / bank_account_id (many2one)    : NEW relation: res.partner.bank
-# TODO: This is new in Odoo 9. We can't migrate any data from Odoo 8.
 
 account      / account.journal          / bank_statements_source (selection): NEW selection_keys: ['manual']
-# TODO: Post migration script: Default to 'manual'
-# Done : set to 'manual' in Post migration script.
+# Post migration script: Default to 'manual'
+# set to 'manual' in Post migration script.
 
 account      / account.journal          / cash_control (boolean)        : DEL 
 account      / account.journal          / cashbox_line_ids (one2many)   : DEL relation: account.journal.cashbox.line
@@ -281,8 +257,8 @@ account      / account.journal          / centralisation (boolean)      : DEL
 account      / account.journal          / currency (many2one)           : was renamed to currency_id [nothing to to]
 
 account      / account.journal          / display_on_footer (boolean)   : NEW 
-# TODO: Post migration script: Default to 'False'
-# Done : set to false in Post migration script.
+# Post migration script: Default to 'False'
+# set to false in Post migration script.
 
 account      / account.journal          / entry_posted (boolean)        : DEL 
 account      / account.journal          / groups_id (many2many)         : DEL relation: res.groups
@@ -309,12 +285,12 @@ account      / account.journal          / show_on_dashboard (boolean)   : NEW
 # NOTHING TO DO
 
 account      / account.journal          / type (selection)              : selection_keys is now '['bank', 'cash', 'general', 'purchase', 'sale']' ('['bank', 'cash', 'general', 'purchase', 'purchase_refund', 'sale', 'sale_refund', 'situation']')
-# TODO: Post-migration script:
+# Post-migration script:
 purchase_refund -> purchase
 sale_refund => sale
 situation => general
 # This can be confusing, becasue in reality these journals are not useful anymore in Odoo 9.
-# Done : done in post script
+# done in post script
 
 account      / account.journal          / user_id (many2one)            : DEL relation: res.users
 account      / account.journal          / with_last_closing_balance (boolean): DEL 
@@ -379,8 +355,8 @@ account      / account.operation.template / amount (float)                : NEW 
 # TODO: Move from 'account.statement.operation.template'
 
 account      / account.operation.template / amount_type (selection)       : NEW required: required, selection_keys: ['fixed', 'percentage'], req_default: percentage
-# TODO: Move from 'account.statement.operation.template'. Value 'percentage_of_total' => 'percentage'
-# Done : done in post script
+# Move from 'account.statement.operation.template'. Value 'percentage_of_total' => 'percentage'
+# done in post script
 
 account      / account.operation.template / analytic_account_id (many2one): NEW relation: account.analytic.account
 # TODO: Move from 'account.statement.operation.template'.
@@ -472,8 +448,8 @@ account      / account.tax              / child_depend (boolean)        : DEL
 
 account      / account.tax              / child_ids (one2many)          : DEL relation: account.tax
 account      / account.tax              / children_tax_ids (many2many)  : NEW relation: account.tax
-# TODO: Logic to move from child_ids to children_tax_ids
-# Done : done in post-migration script
+# Logic to move from child_ids to children_tax_ids
+# done in post-migration script
 
 account      / account.tax              / domain (char)                 : DEL 
 account      / account.tax              / parent_id (many2one)          : DEL relation: account.tax
@@ -485,20 +461,20 @@ account      / account.tax              / ref_base_sign (float)         : DEL
 account      / account.tax              / ref_tax_code_id (many2one)    : DEL relation: account.tax.code
 account      / account.tax              / ref_tax_sign (float)          : DEL 
 account      / account.tax              / tag_ids (many2many)           : NEW relation: account.account.tag
+# done in post migration
 
-# TODO: In previous versions the taxes had a hierarchy. Build a generic method that converts the old hierarchies into tags, and then associates them.
 account      / account.tax              / tax_code_id (many2one)        : DEL relation: account.tax.code
 account      / account.tax              / tax_group_id (many2one)       : NEW relation: account.tax.group, required: required, req_default: function
 account      / account.tax              / tax_sign (float)              : DEL 
 account      / account.tax              / type (selection)              : selection_keys is now '['division', 'fixed', 'group', 'percent']' ('['balance', 'code', 'fixed', 'none', 'percent']')
 account      / account.tax              / type (selection)              : was renamed to amount_type [nothing to to]
 
-# TODO: Post migration script: In v8, if child_depend == True, then in v9, amount_type='group'
-# Done : done in post-migration script
+# Post migration script: In v8, if child_depend == True, then in v9, amount_type='group'
+# done in post-migration script
 
 account      / account.tax              / type_tax_use (selection)      : selection_keys is now '['none', 'purchase', 'sale']' ('['all', 'purchase', 'sale']')
-# TODO: post-migration script: convert 'all' to 'none'
-# Done : done in post-migration script
+# post-migration script: convert 'all' to 'none'
+# done in post-migration script
 
 #### FIELDS IN MODEL ACCOUNT.TAX.GROUP ####
 This is a new model in Odoo 9. Not used at all, except in l10n_co.
@@ -522,8 +498,8 @@ account      / account.tax.template     / active (boolean)              : NEW
 # NOTHING TO DO
 
 account      / account.tax.template     / amount_type (selection)       : NEW required: required, selection_keys: ['division', 'fixed', 'group', 'percent'], req_default: percent
-# TODO: Post migration script: In v8, if child_depend == True, then in v9, amount_type='group'
-# Done : done in post-migration script
+# Post migration script: In v8, if child_depend == True, then in v9, amount_type='group'
+# done in post-migration script
 
 account      / account.tax.template     / analytic (boolean)            : NEW 
 # NOTHING TO DO
@@ -534,12 +510,10 @@ account      / account.tax.template     / base_sign (float)             : DEL
 account      / account.tax.template     / child_depend (boolean)        : DEL
 
 account      / account.tax.template     / children_tax_ids (many2many)  : NEW relation: account.tax.template
-#TODO: Post-migration script: Look for any records that have the current as parent_id. These will be the children
-# Done : done in post-migration script
+# done in post-migration script
 
 account      / account.tax.template     / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
-# TODO: See initial notes.
-# Done : done in post-migration script
+# Nothing to do
 
 account      / account.tax.template     / domain (char)                 : DEL 
 account      / account.tax.template     / parent_id (many2one)          : DEL relation: account.tax.template
@@ -559,8 +533,8 @@ account      / account.tax.template     / tax_sign (float)              : DEL
 account      / account.tax.template     / type (selection)              : DEL required: required, selection_keys: ['balance', 'code', 'fixed', 'none', 'percent'], req_default: percent
 account      / account.tax.template     / type_tax_use (selection)      : selection_keys is now '['none', 'purchase', 'sale']' ('['all', 'purchase', 'sale']')
 
-#TODO: 'all' -> 'none'
-# Done : done in post-migration script
+# 'all' -> 'none'
+# done in post-migration script
 
 #### FIELDS IN MODEL IR.SEQUENCE ####
 
@@ -580,8 +554,8 @@ account      / res.company              / accounts_code_digits (integer): NEW
 # Done, uses max charlen of the company's accounts.
 
 account      / res.company              / anglo_saxon_accounting (boolean): NEW 
-# TODO: Need to determine if the anglo_saxon_accounting module was installed in the previous version, then set it to True.
-# Done : done in post-migration script
+# Need to determine if the anglo_saxon_accounting module was installed in the previous version, then set it to True.
+# done in post-migration script
 
 account      / res.company              / bank_account_code_prefix (char): NEW 
 # NOTHING TO DO
