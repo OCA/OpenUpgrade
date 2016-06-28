@@ -1,0 +1,79 @@
+---Fields in module 'analytic'---
+analytic     / account.analytic.account / account_type (selection)      : NEW required: required, selection_keys: ['normal'], req_default: normal
+
+analytic     / account.analytic.account / child_ids (one2many)          : DEL relation: account.analytic.account
+#Nothing to do : No longer needed.
+
+analytic     / account.analytic.account / company_id (many2one)         : now required, default = function
+#Nothing to do : already set in default.
+
+analytic     / account.analytic.account / date (date)                   : DEL 
+analytic     / account.analytic.account / date_start (date)             : DEL 
+#Nothing to do : Fields removed (where used in contract or template type of analytic account but both these types does no longer exists)
+
+analytic     / account.analytic.account / description (text)            : DEL 
+#Nothing to do : No longer needed.
+
+analytic     / account.analytic.account / manager_id (many2one)         : DEL relation: res.users
+#Nothing to do : No longer needed.
+
+analytic     / account.analytic.account / message_follower_ids (many2many): not a function anymore
+analytic     / account.analytic.account / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+analytic     / account.analytic.account / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+#Nothing to do : Concerns module Mail (has to be done in another migration script specifically for that module)
+
+analytic     / account.analytic.account / parent_id (many2one)          : DEL relation: account.analytic.account
+# TODO: when parent_id_to_tag from account is merged, use this to
+# convert to tags
+
+analytic     / account.analytic.account / quantity_max (float)          : DEL
+#Nothing to do : No longer needed.
+
+analytic     / account.analytic.account / state (selection)             : DEL required: required, selection_keys: ['cancelled', 'close', 'draft', 'open', 'pending', 'template'], req_default: open
+# Converted to tags
+
+analytic     / account.analytic.account / tag_ids (many2many)           : NEW relation: account.analytic.tag
+#Nothing to do : New field added
+
+analytic     / account.analytic.account / template_id (many2one)        : DEL relation: account.analytic.account
+#Nothing to do : No longer needed.
+
+analytic     / account.analytic.account / type (selection)              : DEL required: required, selection_keys: ['contract', 'normal', 'template', 'view'], req_default: normal
+# Converted to tags
+
+analytic     / account.analytic.account / user_id (many2one)            : DEL relation: res.users
+#Nothing to do : No longer needed.
+
+analytic     / account.analytic.line    / partner_id (many2one)         : NEW relation: res.partner
+# get partner from user and set it to partner_id field in post-migration.
+# Done in post-migration script.
+
+analytic     / account.analytic.line    / tag_ids (many2many)           : NEW relation: account.analytic.tag
+#Nothing to do : New field added
+
+analytic     / account.analytic.tag     / color (integer)               : NEW 
+analytic     / account.analytic.tag     / name (char)                   : NEW required: required
+#Nothing to do : New field added
+
+---XML records in module 'analytic'---
+NEW ir.actions.act_window: analytic.account_analytic_line_action
+NEW ir.actions.act_window: analytic.account_analytic_line_action_entries
+NEW ir.actions.act_window: analytic.action_account_analytic_account_form
+NEW ir.actions.act_window: analytic.action_account_analytic_chart
+NEW ir.actions.act_window: analytic.action_analytic_account_form
+NEW ir.model.access: analytic.access_account_analytic_account
+NEW ir.model.access: analytic.access_account_analytic_line
+NEW ir.model.access: analytic.access_account_analytic_tag
+DEL ir.sequence: analytic.seq_analytic_account_base
+DEL ir.sequence.type: analytic.seq_type_analytic_account_main
+NEW ir.ui.view: analytic.account_analytic_chart_view
+NEW ir.ui.view: analytic.view_account_analytic_account_list
+NEW ir.ui.view: analytic.view_account_analytic_account_search
+NEW ir.ui.view: analytic.view_account_analytic_line_filter
+NEW ir.ui.view: analytic.view_account_analytic_line_form
+NEW ir.ui.view: analytic.view_account_analytic_line_graph
+NEW ir.ui.view: analytic.view_account_analytic_line_pivot
+NEW ir.ui.view: analytic.view_account_analytic_line_tree
+DEL mail.message.subtype: analytic.mt_account_closed
+DEL mail.message.subtype: analytic.mt_account_opened
+DEL mail.message.subtype: analytic.mt_account_pending
