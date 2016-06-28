@@ -22,16 +22,16 @@ def create_tags(cr):
     env = api.Environment(cr, SUPERUSER_ID, {})
     cr.execute(
         "select 'state', %(state)s, array_agg(id) "
-        'from account_analytic_account group by %(state)s '
+        'from account_analytic_account '
+        'where %(state)s is not null group by %(state)s '
         "union select 'type', %(type)s, array_agg(id) "
-        'from account_analytic_account group by %(type)s ' % {
+        'from account_analytic_account '
+        'where %(type)s is not null group by %(type)s ' % {
             'type': openupgrade.get_legacy_name('type'),
             'state': openupgrade.get_legacy_name('state'),
         }
     )
     for prefix, name, ids in cr.fetchall():
-        if not name:
-            continue
         tag = env['account.analytic.tag'].create({
             'name': '%s - %s' % (prefix, name)
         })
