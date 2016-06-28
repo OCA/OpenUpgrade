@@ -2,40 +2,36 @@
 sales_team   / crm.team                 / active (boolean)              : NEW 
 sales_team   / crm.team                 / code (char)                   : NEW 
 sales_team   / crm.team                 / color (integer)               : NEW 
-#TODO : Rename the table from crm_case_section to crm_team
+sales_team   / crm.team                 / name (char)                   : NEW required: required
+sales_team   / crm.team                 / reply_to (char)               : NEW
+sales_team   / crm.team                 / user_id (many2one)            : NEW relation: res.users
+sales_team   / crm.team                 / working_hours (float)         : NEW
+#Done: Rename model and table from crm_case_section to crm_team
 
 sales_team   / crm.team                 / company_id (many2one)         : NEW relation: res.company
 #Nothing To Do : New functionality added.
 
 sales_team   / crm.team                 / member_ids (one2many)         : NEW relation: res.users
-#TODO : Convert m2m to o2m.
-#Done : Done in Post-migraion script
+#Done: use existing default section field on user model
 
 sales_team   / crm.team                 / message_follower_ids (one2many): NEW relation: mail.followers
 sales_team   / crm.team                 / message_ids (one2many)        : NEW relation: mail.message
 sales_team   / crm.team                 / message_last_post (datetime)  : NEW 
 #Nothing To Do : New functionality added.
 
-sales_team   / crm.team                 / name (char)                   : NEW required: required
-sales_team   / crm.team                 / reply_to (char)               : NEW 
-sales_team   / crm.team                 / user_id (many2one)            : NEW relation: res.users
-sales_team   / crm.team                 / working_hours (float)         : NEW 
-#TODO : Rename the table from crm_case_section to crm_team
 
 sales_team   / res.partner              / section_id (many2one)         : relation is now 'crm.team' ('crm.case.section')
 sales_team   / res.partner              / section_id (many2one)         : was renamed to team_id [nothing to to]
 #Nothing To Do : ORM will change the name automatically.
 
 sales_team   / res.users                / default_section_id (many2one) : DEL relation: crm.case.section
-#Nothing To Do : Functionality removed now no longer needed.
-
 sales_team   / res.users                / sale_team_id (many2one)       : NEW relation: crm.team
-#TODO : Convert m2m records to o2m (data loss expected)
-#Done : Done in Pre-migraion script
+#Done: the default section is now the user's team
 
 ---XML records in module 'sales_team'---
 DEL crm.case.section: sales_team.section_sales_department
 NEW crm.team: sales_team.team_sales_department
+# Done: renamed xml id
 NEW ir.actions.act_window: sales_team.crm_team_act
 NEW ir.actions.act_window: sales_team.crm_team_salesteams_act
 NEW ir.actions.act_window: sales_team.sales_team_config_action
