@@ -173,7 +173,7 @@ def cashbox(cr):
         '(create_uid, create_date, write_uid, write_date, '
         '%(cashbox_line_ids)s) '
         'select s.create_uid, s.create_date, s.write_uid, s.write_date, '
-        'array_agg(s.id) '
+        'array_agg(l.id) '
         'from account_cashbox_line l '
         'join account_bank_statement s '
         'on l.%(bank_statement_id)s=s.id '
