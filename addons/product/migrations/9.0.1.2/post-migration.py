@@ -131,7 +131,7 @@ def update_product_template(cr):
             WHERE active
             GROUP BY product_tmpl_id
         ) as q
-        WHERE q.id = product_template.id AND q.count > 1
+        WHERE q.product_tmpl_id = product_template.id AND q.count > 1
         """)
 
 
