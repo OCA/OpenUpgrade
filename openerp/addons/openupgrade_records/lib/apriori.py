@@ -11,6 +11,8 @@ renamed_modules = {
     'sale_exceptions': 'sale_exception',
     # OCA/partner-contact
     'partner_external_maps': 'partner_external_map',
+    # OCA/server-tools
+    'disable_openerp_online': 'disable_odoo_online',
 }
 
 renamed_models = {
