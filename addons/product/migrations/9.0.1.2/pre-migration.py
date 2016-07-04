@@ -20,24 +20,11 @@ column_renames = {
 
 @openupgrade.migrate()
 def migrate(cr, version):
-
-    # Add the column product_id, because we need it in the post-migration
-    # script
-    openupgrade.logged_query(cr, """ALTER TABLE product_price_history
-              ADD COLUMN product_id integer
-              """)
     # Remove NOT NULL constraint on these obsolete required fields
     openupgrade.logged_query(cr, """
         ALTER TABLE product_price_history
         ALTER COLUMN product_template_id DROP NOT NULL
         """)
-
-    openupgrade.logged_query(cr, """
-        ALTER TABLE product_pricelist_item
-        ALTER COLUMN base
-        TYPE VARCHAR
-        """)
-
     # Remove NOT NULL constraint on these obsolete required fields
     openupgrade.logged_query(cr, """
         ALTER TABLE product_packaging ALTER COLUMN rows DROP NOT NULL
@@ -87,8 +74,11 @@ def migrate(cr, version):
             SELECT True as to_install
             FROM product_template as pt
             WHERE uos_id is not NULL
+            AND uos_id <> uom_id
             LIMIT 1
         ) AS q
         WHERE name = 'product_uos'
         and q.to_install = True
         """)
+
+    cr.execute("update product_template set state=NULL where state=''")
