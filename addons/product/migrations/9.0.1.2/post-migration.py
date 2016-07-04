@@ -84,7 +84,8 @@ def update_product_pricelist_item(cr):
         WHEN categ_id IS NOT NULL then '2_product_category'
         WHEN product_tmpl_id IS NOT NULL then '1_product'
         WHEN product_id IS NOT NULL then '0_product_variant'
-        ELSE applied_on""")
+        ELSE applied_on
+        END""")
 
     # compute_price: set to 'formula' for existing records (default is 'fixed')
     openupgrade.logged_query(cr, """
