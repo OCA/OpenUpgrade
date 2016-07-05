@@ -1,23 +1,8 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenUpgrade module for Odoo
-#    @copyright 2014-Today: Odoo Community Association, Microcom
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2014-Today Microcom
+# © 2016 Serpent Consulting Services Pvt. Ltd.
+# © 2016 Eficent Business and IT Consulting Services S.L.
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
 
@@ -26,28 +11,75 @@ from openupgradelib import openupgrade
 column_renames = {
     'product_pricelist_item': [
         ('base', None),
+        ('price_version_id', None)
+    ],
+    'product_price_history': [
+        ('product_template_id', None)
     ],
 }
 
 
-def convert_template_id_to_product_id(cr):
-    openupgrade.logged_query(cr, """
-        UPDATE product_price_history ph
-        SET product_id = p.id
-        FROM product_product p
-        WHERE ph.product_template_id = p.product_tmpl_id
-        """)
-
-
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.logged_query(cr, """ALTER TABLE product_price_history
-              ADD COLUMN product_id integer
-              """)
-    convert_template_id_to_product_id(cr)
+    # Remove NOT NULL constraint on these obsolete required fields
+    openupgrade.logged_query(cr, """
+        ALTER TABLE product_price_history
+        ALTER COLUMN product_template_id DROP NOT NULL
+        """)
+    # Remove NOT NULL constraint on these obsolete required fields
+    openupgrade.logged_query(cr, """
+        ALTER TABLE product_packaging ALTER COLUMN rows DROP NOT NULL
+        """)
+
+    # Remove NOT NULL constraint on these obsolete required fields
+    openupgrade.logged_query(cr, """
+        ALTER TABLE product_packaging ALTER COLUMN ul DROP NOT NULL
+        """)
+
+    # Remove NOT NULL constraint on these obsolete required fields
+    openupgrade.logged_query(cr, """
+        ALTER TABLE product_pricelist ALTER COLUMN type DROP NOT NULL
+        """)
+
+    # Remove NOT NULL constraint on these obsolete required fields
     openupgrade.logged_query(cr, """
         ALTER TABLE product_pricelist_item
-        ALTER COLUMN base
-        TYPE VARCHAR
+        ALTER COLUMN price_version_id DROP NOT NULL
         """)
+
     openupgrade.rename_columns(cr, column_renames)
+
+    # Add default value when it is null, as Product name / Package Logistic
+    # Unit name
+    openupgrade.logged_query(cr, """
+        WITH q as (
+        SELECT pp.id, pt.name as product_name, pu.name as ul_name
+        FROM product_packaging as pp
+        INNER JOIN product_template as pt
+        ON pp.product_tmpl_id = pt.id
+        INNER JOIN product_ul as pu
+        ON pu.id = pp.ul)
+        UPDATE product_packaging as pp
+        SET name = q.product_name || '/' || q.ul_name
+        FROM q
+        WHERE pp.name IS NULL
+        AND pp.id = q.id
+        """)
+
+    # Install module 'product_uos' if field 'uos_id' has a
+    # value in the product.template.
+    openupgrade.logged_query(cr, """
+        UPDATE ir_module_module
+        SET state = 'to install'
+        FROM (
+            SELECT True as to_install
+            FROM product_template as pt
+            WHERE uos_id is not NULL
+            AND uos_id <> uom_id
+            LIMIT 1
+        ) AS q
+        WHERE name = 'product_uos'
+        and q.to_install = True
+        """)
+
+    cr.execute("update product_template set state=NULL where state=''")

@@ -1,27 +1,9 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenUpgrade module for Odoo
-#    @copyright 2014-Today: Odoo Community Association, Microcom
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-
-import logging
+# © 2014-Today Microcom
+# © 2015 Eficent Business and IT Consulting Services S.L. -
+# Jordi Ballester Alomar
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
-logger = logging.getLogger('OpenUpgrade')
 
 
 def map_base(cr):
@@ -29,10 +11,145 @@ def map_base(cr):
         cr,
         openupgrade.get_legacy_name('base'),
         'base',
-        [('1', 'pricelist'), ('2', 'list_price')],
+        [('-1', 'pricelist'), ('-2', 'standard_price')],
         table='product_pricelist_item', write='sql')
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE product_pricelist_item ppi
+        SET base = ppt.field
+        FROM product_price_type AS ppt
+        WHERE ppt.id = %(base)s
+        AND ppt.field in ('list_price', 'standard_price')""" % {
+            'base': openupgrade.get_legacy_name('base'),
+        })
+
+
+def update_price_history(cr):
+    # Create price history for all existing variants
+    openupgrade.logged_query(
+        cr,
+        """
+        INSERT INTO product_price_history
+        (company_id, product_id, datetime, cost, write_date, write_uid,
+        create_date, create_uid)
+        SELECT pph.company_id, pr.id, pph.datetime, pph.cost, pph.write_date,
+        pph.write_uid, pph.create_date, pph.create_uid
+        FROM product_price_history as pph
+        INNER JOIN product_template as pt
+        ON pt.id = pph.%(product_tmpl_id)s
+        LEFT JOIN product_product pr
+        ON pr.product_tmpl_id = pt.id
+        """ % {
+            'product_tmpl_id': openupgrade.get_legacy_name(
+                'product_template_id')
+        })
+
+    # Delete the records that refer to the product template
+    openupgrade.logged_query(
+        cr,
+        """
+        DELETE FROM product_price_history
+        WHERE %(product_tmpl_id)s IS NOT NULL
+        """ % {
+            'product_tmpl_id': openupgrade.get_legacy_name(
+                'product_template_id')
+        })
+
+
+def update_product_pricelist_item(cr):
+
+    # Determine the pricelist_id looking at the previous link with pricelist
+    # version
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE product_pricelist_item as ppi
+        SET pricelist_id = ppv.pricelist_id,
+        date_end = ppv.date_end,
+        date_start = ppv.date_start
+        FROM product_pricelist_version as ppv
+        WHERE ppv.id = ppi.%(price_version_id)s
+        """ % {
+            'price_version_id': openupgrade.get_legacy_name(
+                'price_version_id')
+        })
+
+    # Determine value of applied_on field, based on whether categ_id,
+    # product_id or product_tmpl_id is filled in (or none). We go from more
+    # generic to more specific.
+    openupgrade.logged_query(cr, """
+        UPDATE product_pricelist_item
+        SET applied_on = CASE
+        WHEN categ_id IS NOT NULL then '2_product_category'
+        WHEN product_tmpl_id IS NOT NULL then '1_product'
+        WHEN product_id IS NOT NULL then '0_product_variant'
+        ELSE applied_on
+        END""")
+
+    # compute_price: set to 'formula' for existing records (default is 'fixed')
+    openupgrade.logged_query(cr, """
+        UPDATE product_pricelist_item
+        SET compute_price = 'formula'""")
+
+
+def update_product_template(cr):
+
+    # make ir.property records associated to 'standard_price' applicable to
+    # product.product instead of product.template.
+    openupgrade.logged_query(cr, """
+        INSERT INTO ir_property
+        (name, res_id, company_id, fields_id, value_float, value_integer,
+        value_text, value_binary, value_reference, value_datetime, type)
+        SELECT ip.name, CONCAT('product.product,', pp.id), ip.company_id,
+        ip.fields_id, ip.value_float, ip.value_integer, ip.value_text,
+        ip.value_binary, ip.value_reference, ip.value_datetime, ip.type
+        FROM product_product AS pp
+        INNER JOIN product_template AS pt
+        ON pp.product_tmpl_id = pt.id
+        INNER JOIN ir_property AS ip
+        ON ip.res_id = CONCAT('product.template,', pt.id)
+        WHERE ip.name = 'standard_price'
+        """)
+
+    # Remove ir.property records associated to 'standard_price' for model
+    # 'product.template'.
+    openupgrade.logged_query(cr, """
+        DELETE FROM ir_property
+        WHERE name = 'standard_price'
+        AND res_id like 'product.template%%'
+        """)
+
+    # On the template, set weight and volume to 0.0 on templates with more
+    # than one (active?) variant as per _compute_product_template_field.
+    openupgrade.logged_query(cr, """
+        UPDATE product_template
+        SET volume = 0.0, weight = 0.0
+        FROM (
+            SELECT product_tmpl_id, count(id) as count
+            FROM product_product
+            WHERE active
+            GROUP BY product_tmpl_id
+        ) as q
+        WHERE q.product_tmpl_id = product_template.id AND q.count > 1
+        """)
+
+
+def update_product_product(cr):
+    # Move field values from product.template to product.product
+    openupgrade.logged_query(cr, """
+        UPDATE product_product
+        SET volume = pt.volume,
+        weight = pt.weight
+        FROM product_template as pt
+        WHERE pt.id = product_tmpl_id
+        """)
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
     map_base(cr)
+    update_price_history(cr)
+    update_product_pricelist_item(cr)
+    update_product_product(cr)
+    update_product_template(cr)
