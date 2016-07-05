@@ -45,3 +45,9 @@ def migrate(cr, version):
     openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
+    cr.execute(
+        '''update ir_module_module set state='to install'
+        where name='project_timesheet' and
+        state in ('uninstalled', 'to remove') and
+        exists (select id from ir_module_module where name='hr_timesheet'
+        and state in ('to upgrade', 'to_install', 'installed'))''')
