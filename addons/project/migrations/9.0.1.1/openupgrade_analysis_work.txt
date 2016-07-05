@@ -5,7 +5,7 @@ project      / project.project          / label_tasks (char)            : NEW
 # New fields ---> Nothing to do
 
 project      / project.project          / members (many2many)           : DEL relation: res.users
-# Done ---> Field removed, no more project team, so renamed column to None to allow recovery with a future OCA module
+# Nothing to do
 
 project      / project.project          / message_follower_ids (many2many): not a function anymore
 project      / project.project          / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
@@ -14,20 +14,19 @@ project      / project.project          / message_follower_ids (many2many): type
 
 project      / project.project          / state (selection)             : selection_keys is now '['cancelled', 'close', 'draft', 'open', 'pending']' ('['cancelled', 'close', 'draft', 'open', 'pending', 'template']')
 # Done ---> 'template' is converted to 'draft'
-# TODO - does this behavior make sense on the functional level?
 
 project      / project.project          / user_id (many2one)            : NEW relation: res.users
-# TODO - copy from account_analytic_account
+# Done - copy from account_analytic_account
 
 project      / project.project          / website_message_ids (one2many): NEW relation: mail.message
-# Field doesn't exist neither in v8 or in v9 (probably related to Mail module) ---> Nothing to do
+# Nothing to do
 
 project      / project.tags             / color (integer)               : NEW
 project      / project.tags             / name (char)                   : NEW required: required
 # New fields ---> Nothing to do
 
 project      / project.task             / active (boolean)              : not a function anymore
-# Field content is still a boolean ---> Nothing to do
+# Field was stored and is still a boolean ---> Nothing to do
 
 project      / project.task             / attachment_ids (one2many)     : NEW relation: ir.attachment
 # Nothing to do
@@ -185,3 +184,15 @@ NEW web.planner: project.planner_project
 NEW web.tip: project.project_tip_1
 NEW web.tip: project.project_tip_3
 # New features (project tips) ---> Nothing to do
+DEL project.task.type: project.project_tt_analysis
+DEL project.task.type: project.project_tt_cancel
+DEL project.task.type: project.project_tt_deployment
+DEL project.task.type: project.project_tt_design
+DEL project.task.type: project.project_tt_development
+DEL project.task.type: project.project_tt_merge
+DEL project.task.type: project.project_tt_specification
+DEL project.task.type: project.project_tt_testing
+DEL res.groups: project.group_delegate_task
+NEW web.planner: project.planner_project
+NEW web.tip: project.project_tip_1
+NEW web.tip: project.project_tip_3
