@@ -13,6 +13,8 @@ renamed_modules = {
     'partner_external_maps': 'partner_external_map',
     # OCA/server-tools
     'disable_openerp_online': 'disable_odoo_online',
+    # OCA/runbot-addons
+    'runbot_secure': 'runbot_relative',
 }
 
 renamed_models = {
