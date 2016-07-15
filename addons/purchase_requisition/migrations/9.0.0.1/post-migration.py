@@ -7,11 +7,10 @@
 from openupgradelib import openupgrade
 
 
-
 @openupgrade.migrate()
 def migrate(cr, version):
     # Mapping new values for purchase_requisition
     openupgrade.map_values(
-        cr, openupgrade.get_legacy_name('purchase_requisition'), 'purchase_requisition',
-        [(True, 'tenders'),(False, 'rfq'),],
+        cr, openupgrade.get_legacy_name('purchase_requisition'),
+        'purchase_requisition', [(True, 'tenders'), (False, 'rfq')],
         table='product_template')
