@@ -4,30 +4,25 @@ sale         / account.analytic.line    / so_line (many2one)            : NEW re
 
 sale         / account.invoice          / section_id (many2one)         : DEL relation: crm.case.section
 sale         / account.invoice          / team_id (many2one)            : NEW relation: crm.team
-#TODO : section_id is now team_id
 #Done : renamed the column to new column team_id.
 
 sale         / account.invoice.line     / sale_line_ids (many2many)     : NEW relation: sale.order.line
 #Nothing To Do : New Functionality added. 
 
 sale         / crm.team                 / invoiced_target (integer)     : NEW
-#TODO : to get it from crm.case.section
-#Done : In Sales Team migration script.
+#Nothing to do: existing field on renamed crm.case.section model
 
 sale         / crm.team                 / use_invoices (boolean)        : NEW
 #Nothing To Do : New Functionality added.
 
 sale         / crm.team                 / use_quotations (boolean)      : NEW 
-#TODO : to get it from crm.case.section
-#Done : In Sales Team migration script.
+#Nothing to do: existing field on renamed crm.case.section model
 
 sale         / product.template         / invoice_policy (selection)    : NEW selection_keys: ['cost', 'delivery', 'order']
-#TODO : (used to generate the invoice, maybe we can set it to 'order')
-#Done : Set all to 'order'. (Will invoiced the ordered qty.)
+#Done: set to default policy as per sale.config.settings::default_order_policy from sale_stock in 8.0
 
 sale         / product.template         / track_service (selection)     : NEW selection_keys: ['manual']
-#TODO : Set all records to manual.
-#Done : Set all to 'manual'.
+#Done : set to 'manual'. Timesheet and project modules add their own values and logic.
 
 sale         / sale.order               / date_confirm (date)           : DEL
 #Nothing to do : Functionality removed so now no longer needed.
@@ -36,26 +31,24 @@ sale         / sale.order               / fiscal_position (many2one)    : was re
 #Nothing To Do : ORM will change the name automatically.
 
 sale         / sale.order               / invoice_ids (many2many)       : DEL relation: account.invoice
-#Nothing to do : Functionality removed now no longer needed.
+#Nothing to do: Odoo now relies on the existing mapping between sale lines and invoice lines
 
 sale         / sale.order               / message_follower_ids (many2many): not a function anymore
 sale         / sale.order               / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
 sale         / sale.order               / message_follower_ids (many2many): type is now 'one2many' ('many2many')
-# TODO : ???  # Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
+# Covered in mail module
 
 sale         / sale.order               / order_policy (selection)      : DEL required: required, selection_keys: ['manual'], req_default: manual
-#Nothing To Do : Functionality removed now no longer needed.
+# Now on product level. To be covered in the stock module migration
 
 sale         / sale.order               / payment_term (many2one)       : was renamed to payment_term_id [nothing to to]
-#Nothing To Do : ORM will change the name automatically.
+#Nothing to do
 
 sale         / sale.order               / section_id (many2one)         : DEL relation: crm.case.section
 sale         / sale.order               / team_id (many2one)            : NEW relation: crm.team
-#TODO : section_id is now team_id
 #Done : renamed the column to new column team_id.
 
 sale         / sale.order               / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'sale', 'sent']' ('['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'sent', 'shipping_except', 'waiting_date']')
-TODO : To map the state values as per new values. 
 #Done : Mapped the values as per new state values
 
 sale         / sale.order               / validity_date (date)          : NEW
@@ -65,30 +58,29 @@ sale         / sale.order.line          / address_allotment_id (many2one): DEL r
 #Nothing To Do : Functionality removed now no longer needed.
 
 sale         / sale.order.line          / delay (float)                 : was renamed to customer_lead [nothing to to]
-#Nothing To Do : ORM will change the name automatically.
+#Nothing to do
 
 sale         / sale.order.line          / product_id (many2one)         : now required
-#TODO : Maybe To create product from description. (need more analysis on this) 
 #Done : Created Service type product and assigned sale.order.line where product_id is null
 
 sale         / sale.order.line          / product_uos (many2one)        : DEL relation: product.uom
-#TODO : Moved to product_uos module (so saved it for later use.)
-
 sale         / sale.order.line          / product_uos_qty (float)       : DEL 
-#TODO : Moved to product_uos module (so saved it for later use.)
+#Moved to product_uos module
 
 sale         / sale.order.line          / qty_delivered (float)         : NEW 
 #Nothing To Do : New Functionality added.
 
 sale         / sale.order.line          / state (selection)             : selection_keys is now 'function' ('['cancel', 'confirmed', 'done', 'draft', 'exception']')
-TODO : To map the state values as per new values. 
-#Done : Mapped the values as per new state values
+#Done : calculated related field to order state
 
 sale         / sale.order.line          / th_weight (float)             : DEL 
 #Nothing To Do : Functionality removed now no longer needed.
 
 ---XML records in module 'sale'---
 DEL email.template: sale.email_template_edi_sale
+NEW mail.template: sale.email_template_edi_sale
+# Done: covered in mail module
+
 NEW ir.actions.act_window: sale.action_orders_to_invoice
 NEW ir.actions.act_window: sale.action_orders_to_invoice_salesteams
 NEW ir.actions.act_window: sale.action_orders_upselling
@@ -115,7 +107,6 @@ DEL ir.model.access: sale.access_product_pricelist_version_sale_manager
 DEL ir.model.access: sale.access_product_ul_sale_manager
 DEL ir.model.access: sale.access_res_partner_bank_type_field_user
 DEL ir.model.access: sale.access_res_partner_bank_type_user
-DEL ir.sequence.type: sale.seq_type_sale_order
 NEW ir.ui.menu: base.menu_sale_general_settings
 NEW ir.ui.menu: base.menu_sales_config
 NEW ir.ui.menu: sale.menu_sale_invoicing
@@ -139,14 +130,22 @@ DEL ir.ui.view: sale.view_sale_order_line_make_invoice
 DEL ir.ui.view: sale.view_sale_order_make_invoice
 DEL ir.ui.view: sale.view_sales_order_uninvoiced_line_filter
 DEL ir.values: sale.sale_order_make_invoice
-NEW mail.message.subtype: sale.mt_salesteam_invoice_confirmed
-NEW mail.message.subtype: sale.mt_salesteam_invoice_created
-NEW mail.template: sale.email_template_edi_sale
-NEW res.groups: sale.group_display_incoterm
-DEL res.groups: sale.group_invoice_so_lines
 NEW web.tip: sale.sale_tip_1
 NEW web.tip: sale.sale_tip_2
+# Nothing to do: updated data elements
 
+DEL ir.sequence.type: sale.seq_type_sale_order
+# Nothing to do: obsolete concept to provide a value for the sequence' code field
+
+NEW mail.message.subtype: sale.mt_salesteam_invoice_confirmed
+NEW mail.message.subtype: sale.mt_salesteam_invoice_created
+# Done: as these are default subtypes, add to existing subscriptions at least on the sales teams (if not on existing invoices)
+
+NEW res.groups: sale.group_display_incoterm
+# Done: check if incoterms are used. If so, add implied group to Employee group as per res_config
+
+DEL res.groups: sale.group_invoice_so_lines
+# Nothing to do: every sale user can now access this data
 
 DEL workflow: sale.wkf_sale
 DEL workflow.activity: sale.act_cancel
@@ -195,5 +194,4 @@ DEL workflow.transition: sale.trans_wait_invoice_invoice_manual
 DEL workflow.transition: sale.trans_wait_ship_cancel3
 DEL workflow.transition: sale.trans_wait_ship_done
 DEL workflow.transition: sale.trans_wait_ship_ship
-
-#Done : THE WORKFLOW IS REMOVED WITH THE DELETE WORKFLOW FUNCTION
+#Nothing to do. Workflow is left for further reference in other modules
