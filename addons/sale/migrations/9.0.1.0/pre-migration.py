@@ -1,35 +1,42 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenUpgrade module for Odoo
-#    @copyright 2014-Today: Odoo Community Association, Microcom
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2014 Microcom
+# © 2015 Eficent Business and IT Consulting Services S.L. -
+# Jordi Ballester Alomar
+# © 2015 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
 
-
 column_renames = {
+    'sale_order': [
+        ('section_id', 'team_id'),
+    ],
+    'account_invoice': [
+        ('section_id', 'team_id'),
+    ],
     'sale_order_line_invoice_rel': [
         ('invoice_id', 'invoice_line_id'),
     ],
+    # These columns are moved to product_uos module so they are kept to be recovered later.
+    'sale_order_line': [
+        ('product_uos', None),
+    ],
+    'sale_order_line': [
+        ('product_uos_qty', None),
+    ]
 }
 
+column_copies = {
+    'sale_order': [
+        ('state', None, None),
+    ],
+    'sale_order_line': [
+        ('state', None, None),
+    ],
+}
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.rename_columns(cr, column_renames)
     openupgrade.delete_model_workflow(cr, 'sale.order')
+    openupgrade.rename_columns(cr, column_renames)
+    openupgrade.copy_columns(cr, column_copies)
