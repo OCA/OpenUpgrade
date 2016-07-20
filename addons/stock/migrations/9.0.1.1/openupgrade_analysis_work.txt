@@ -86,8 +86,12 @@ stock        / stock.picking            / printed (boolean)             : NEW
 stock        / stock.picking            / website_message_ids (one2many): NEW relation: mail.message
 stock        / stock.picking.type       / barcode_nomenclature_id (many2one): NEW relation: barcode.nomenclature
 stock        / stock.picking.type       / show_entire_packs (boolean)   : NEW 
+# Nothing to do
+
 stock        / stock.picking.type       / use_create_lots (boolean)     : NEW 
 stock        / stock.picking.type       / use_existing_lots (boolean)   : NEW 
+# Done: set values based on code
+
 stock        / stock.production.lot     / message_follower_ids (many2many): not a function anymore
 stock        / stock.production.lot     / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
 stock        / stock.production.lot     / message_follower_ids (many2many): type is now 'one2many' ('many2many')

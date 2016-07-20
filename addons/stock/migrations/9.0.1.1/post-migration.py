@@ -61,9 +61,19 @@ def _migrate_stock_picking(cr):
         "(location_id is null or location_dest_id is null)")
 
 
+def _set_lot_params(cr):
+    cr.execute(
+        "UPDATE stock_picking_type SET use_create_lots = "
+        "code = 'incoming')")
+    cr.execute(
+        "UPDATE stock_picking_type SET use_existing_lots = "
+        "code IN ('outgoing', 'internal')")
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     env = api.Environment(cr, SUPERUSER_ID, {})
     _migrate_tracking(cr)
     _migrate_pack_operation(env)
     _migrate_stock_picking(cr)
+    _set_lot_params(cr)
