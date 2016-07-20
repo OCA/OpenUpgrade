@@ -1,32 +1,29 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenUpgrade module for Odoo
-#    @copyright 2014-Today: Odoo Community Association, Microcom
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-
+# @copyright 2014-Today: Odoo Community Association, Microcom, Therp BV
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
-
 
 xmlids = [
     ('stock.view_partner_property_form', 'stock.view_partner_stock_form'),
 ]
 
+column_renames = {
+    'product_template': [
+        ('loc_case', None),
+        ('loc_rack', None),
+        ('loc_row', None),
+        ('type', None),
+    ],
+    'stock_pack_operation': [
+        ('cost', None),
+        ('currency', None),
+        ('lot_id', None),
+        ('processed', None),
+    ],
+}
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_xmlids(cr, xmlids)
+    openupgrade.rename_columns(cr, column_renames)
