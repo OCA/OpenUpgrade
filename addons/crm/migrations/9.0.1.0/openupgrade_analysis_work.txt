@@ -8,38 +8,78 @@ crm          / crm.activity             / days (integer)                : NEW
 crm          / crm.activity             / sequence (integer)            : NEW 
 crm          / crm.activity             / subtype_id (many2one)         : NEW relation: mail.message.subtype, required: required
 crm          / crm.activity             / team_id (many2one)            : NEW relation: crm.team
+
+# New model replacing phone calls et al. We create a message for every phone call on the lead/partner (or user if not set) with crm_activity_data_call's message type
+
 crm          / crm.lead                 / campaign_id (many2one)        : relation is now 'utm.campaign' ('crm.tracking.campaign')
+
+# Data is moved to utm_campaign and ids updated
+
 crm          / crm.lead                 / categ_ids (many2many)         : DEL relation: crm.case.categ
+crm          / crm.lead                 / tag_ids (many2many)           : NEW relation: crm.lead.tag
+
+# renamed categ_ids to tag_ids and crm.case.categ to crm.lead.tag
+
 crm          / crm.lead                 / date_conversion (datetime)    : NEW 
 crm          / crm.lead                 / last_activity_id (many2one)   : NEW relation: crm.activity
 crm          / crm.lead                 / lost_reason (many2one)        : NEW relation: crm.lost.reason
+
+# nothing to do
+
 crm          / crm.lead                 / medium_id (many2one)          : relation is now 'utm.medium' ('crm.tracking.medium')
+
+# Data is moved to utm_medium and ids updates
+
 crm          / crm.lead                 / message_follower_ids (many2many): not a function anymore
 crm          / crm.lead                 / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
 crm          / crm.lead                 / message_follower_ids (many2many): type is now 'one2many' ('many2many')
 crm          / crm.lead                 / next_activity_id (many2one)   : NEW relation: crm.activity
 crm          / crm.lead                 / payment_mode (many2one)       : DEL relation: crm.payment.mode
-crm          / crm.lead                 / planned_cost (float)          : DEL 
+crm          / crm.lead                 / planned_cost (float)          : DEL
+
+# Nothing to do
+
 crm          / crm.lead                 / priority (selection)          : selection_keys is now '['0', '1', '2', '3']' ('['0', '1', '2', '3', '4']')
+
+# 4 is mapped to 3
+
 crm          / crm.lead                 / ref (reference)               : DEL 
 crm          / crm.lead                 / ref2 (reference)              : DEL 
-# Not checked
+
+# Nothing to do
 
 crm          / crm.lead                 / section_id (many2one)         : relation is now 'crm.team' ('crm.case.section')
 crm          / crm.lead                 / section_id (many2one)         : was renamed to team_id [nothing to to]
-# TODO - rename table crm.case.section to crm.team ** must be done in sales_team
 
+# Nothing to do (model is renamed in sales_team migration)
 
 crm          / crm.lead                 / source_id (many2one)          : relation is now 'utm.source' ('crm.tracking.source')
+
+# Data is moved to utm_source and ids updated
+
 crm          / crm.lead                 / stage_id (many2one)           : relation is now 'crm.stage' ('crm.case.stage')
-crm          / crm.lead                 / tag_ids (many2many)           : NEW relation: crm.lead.tag
+
+# renamed crm.case.stage to crm.stage
+
 crm          / crm.lead                 / type (selection)              : now required, default = function
+
+# set to 'opportunity' if null
+
 crm          / crm.lead                 / website_message_ids (one2many): NEW relation: mail.message
+
+# nothing to do
+
 crm          / crm.lead.tag             / color (integer)               : NEW 
 crm          / crm.lead.tag             / name (char)                   : NEW required: required
 crm          / crm.lead.tag             / team_id (many2one)            : NEW relation: crm.team
+
+# renamed from crm.case.categ
+
 crm          / crm.lost.reason          / active (boolean)              : NEW 
 crm          / crm.lost.reason          / name (char)                   : NEW required: required
+
+# nothing to do
+
 crm          / crm.stage                / fold (boolean)                : NEW 
 crm          / crm.stage                / legend_priority (text)        : NEW 
 crm          / crm.stage                / name (char)                   : NEW required: required
@@ -49,15 +89,24 @@ crm          / crm.stage                / requirements (text)           : NEW
 crm          / crm.stage                / sequence (integer)            : NEW 
 crm          / crm.stage                / team_ids (many2many)          : NEW relation: crm.team
 crm          / crm.stage                / type (selection)              : NEW required: required, selection_keys: ['both', 'lead', 'opportunity'], req_default: both
+
+# renamed from crm.case.stage, renamed pivot table for team_ids
+
 crm          / crm.team                 / _inherits (False)             : NEW 
 crm          / crm.team                 / alias_id (many2one)           : NEW relation: mail.alias, required: required
 crm          / crm.team                 / resource_calendar_id (many2one): NEW relation: resource.calendar
 crm          / crm.team                 / stage_ids (many2many)         : NEW relation: crm.stage
 crm          / crm.team                 / use_leads (boolean)           : NEW 
 crm          / crm.team                 / use_opportunities (boolean)   : NEW 
+
+# nothing to do (crm.team#stage_ids is the inverse of crm.team#team_ids)
+
 crm          / res.partner              / phonecall_ids (one2many)      : DEL relation: crm.phonecall
 crm          / res.users                / target_sales_done (integer)   : NEW 
 crm          / res.users                / target_sales_won (integer)    : NEW 
+
+# nothing to do
+
 ---XML records in module 'crm'---
 NEW crm.activity: crm.crm_activity_data_call
 NEW crm.activity: crm.crm_activity_data_email
@@ -163,8 +212,6 @@ DEL ir.filters: crm.filter_leads_overpassed_deadline
 DEL ir.filters: crm.filter_leads_revenue_per_lead
 DEL ir.filters: crm.filter_leads_salesperson
 DEL ir.filters: crm.filter_opportunity_top_opportunities
-# TODO - delete as it refers to nbr_cases
-
 NEW ir.model.access: crm.access_crm_activity_manager
 NEW ir.model.access: crm.access_crm_activity_report_user
 NEW ir.model.access: crm.access_crm_activity_salesman
