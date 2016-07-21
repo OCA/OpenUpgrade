@@ -5,6 +5,7 @@ from openerp.tests import common
 
 
 class TestBase(common.TransactionCase):
+
     def test_is_company(self):
         # check if some partners are migrated the way we expect
         self.assertTrue(self.env.ref('base.main_partner').is_company)
@@ -13,3 +14,9 @@ class TestBase(common.TransactionCase):
         self.assertFalse(self.env.ref('base.user_root').is_company)
         self.assertEqual(
             self.env.ref('base.user_root').company_type, 'person')
+
+    def test_technical_features(self):
+        """ Check that the admin user can access technical features """
+        self.assertIn(
+            self.env.ref('base.user_root'),
+            self.env.ref('base.group_no_one').users)
