@@ -9,6 +9,7 @@ from openerp import SUPERUSER_ID
 from openerp.addons.website.models.website import slug
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
+from openerp.tools.translate import html_translate
 
 
 class Blog(osv.Model):
@@ -103,7 +104,7 @@ class BlogPost(osv.Model):
         'tag_ids': fields.many2many(
             'blog.tag', string='Tags',
         ),
-        'content': fields.html('Content', translate=True, sanitize=False),
+        'content': fields.html('Content', translate=html_translate, sanitize=False),
         'website_message_ids': fields.one2many(
             'mail.message', 'res_id',
             domain=lambda self: [
@@ -261,7 +262,7 @@ class BlogPost(osv.Model):
         on their notification email. It will lead on the website view of the
         post. """
         res = super(BlogPost, self)._notification_get_recipient_groups(cr, uid, ids, message, recipients, context=context)
-        access_action = self._notification_link_helper('view', model=message.model, res_id=message.res_id)
+        access_action = self._notification_link_helper(cr, uid, ids, 'view', model=message.model, res_id=message.res_id)
         for category, data in res.iteritems():
             res[category]['button_access'] = {'url': access_action, 'title': _('View Blog Post')}
         return res
@@ -288,7 +289,7 @@ class Website(osv.Model):
             dep[page_key] = []
         for p in post_obj.browse(cr, uid, posts, context=context):
             dep[page_key].append({
-                'text': _('Blog Post <b>%s</b> seems to have a link to this page !' % p.name),
+                'text': _('Blog Post <b>%s</b> seems to have a link to this page !') % p.name,
                 'link': p.website_url
             })
 

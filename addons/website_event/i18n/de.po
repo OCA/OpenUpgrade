@@ -3,12 +3,14 @@
 # * website_event
 # 
 # Translators:
+# Thorsten Vocks <thorsten.vocks@openbig.org>, 2016
+# Wolfgang Taferner, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-29 10:27+0000\n"
-"PO-Revision-Date: 2015-11-05 09:31+0000\n"
+"PO-Revision-Date: 2016-07-01 09:20+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: German (http://www.transifex.com/odoo/odoo-9/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -21,35 +23,35 @@ msgstr ""
 #: code:addons/website_event/controllers/main.py:210
 #, python-format
 msgid "%(month)s %(start_day)s%(end_day)s"
-msgstr ""
+msgstr "%(month)s %(start_day)s%(end_day)s"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.country_events_list
 msgid "<b>Upcoming Events</b>"
-msgstr ""
+msgstr "<b>Anstehende Events</b>"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.event_description_full
 msgid ""
 "<br/>\n"
 "                    <i class=\"fa fa-clock-o\"/> To"
-msgstr ""
+msgstr "<br/>\n                    <i class=\"fa fa-clock-o\"/> An"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_template
 msgid "<em>Configure and Launch Event Registration</em>"
-msgstr ""
+msgstr "<em>Event Registrierung konfigurieren und veröffentlichen</em>"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.event_description_full
 msgid "<i class=\"fa fa-clock-o\"/> From"
-msgstr ""
+msgstr "<i class=\"fa fa-clock-o\"/> Von"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.index
 #: model:ir.ui.view,arch_db:website_event.registration_complete
 msgid "<i>to</i>"
-msgstr ""
+msgstr "<i>an</i>"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.event_right_quotes
@@ -64,7 +66,7 @@ msgstr ""
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.event_location
 msgid "<span>Online Events</span>"
-msgstr ""
+msgstr "<span>Online Events</span>"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_template
@@ -74,7 +76,7 @@ msgstr "<span>Unbegrenzt</span>"
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_attendee_details
 msgid "<strong>Attendees</strong>"
-msgstr ""
+msgstr "<strong>Teilnehmer</strong>"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_attendee_details
@@ -94,7 +96,7 @@ msgstr ""
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_attendee_details
 msgid "<strong>Phone</strong> <span class=\"text-muted\">(Optional)</span>"
-msgstr ""
+msgstr "<strong>Telefon</strong> <span class=\"text-muted\">(Optional)</span>"
 
 #. module: website_event
 #. openerp-web
@@ -119,6 +121,11 @@ msgstr "Alle Länder"
 #: model:ir.ui.view,arch_db:website_event.layout
 msgid "All Events"
 msgstr "Alle Veranstaltungen"
+
+#. module: website_event
+#: model:ir.ui.view,arch_db:website_event.registration_attendee_details
+msgid "Attendee #%s"
+msgstr ""
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_attendee_details
@@ -357,7 +364,7 @@ msgstr "Lassen Sie uns den ersten Schritt zur Erstellung einer neuen Veranstaltu
 #: code:addons/website_event/models/event.py:45
 #, python-format
 msgid "Location"
-msgstr "Lagerort"
+msgstr "Veranstaltungsort"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_complete
@@ -477,7 +484,7 @@ msgstr "Anzahl"
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_complete
 msgid "Reference"
-msgstr "Kundennummer"
+msgstr "Referenz"
 
 #. module: website_event
 #: code:addons/website_event/models/event.py:53
@@ -618,7 +625,7 @@ msgstr ""
 #. module: website_event
 #: model:ir.actions.act_url,name:website_event.action_open_website
 msgid "Website Home"
-msgstr "Webseite Homepage"
+msgstr "Website Homepage"
 
 #. module: website_event
 #: model:ir.model.fields,field_description:website_event.field_event_event_website_message_ids
