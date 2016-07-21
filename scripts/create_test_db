@@ -43,7 +43,7 @@ $(cat $ODOO_DIR/addons/stock/stock_demo.yml)
         self.force_assign()
         self.do_transfer()
 EOF
-$ODOO --log-handler=:INFO --database=$DBNAME --test-file=$EXTRA_DATA --test-commit --stop-after-init
+$ODOO --log-handler=:CRITICAL --database=$DBNAME --test-file=$EXTRA_DATA --test-commit --stop-after-init
 pg_dump --no-owner --format=custom $DBNAME > $DUMP
 dropdb $DBNAME
 rm $EXTRA_DATA
