@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 09:17+0000\n"
-"PO-Revision-Date: 2015-11-04 12:01+0000\n"
+"PO-Revision-Date: 2016-06-27 15:58+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Georgian (http://www.transifex.com/odoo/odoo-9/language/ka/)\n"
 "MIME-Version: 1.0\n"
@@ -302,6 +302,22 @@ msgstr ""
 msgid ""
 "<span class=\"panel-title\"><span data-icon=\"&#57463;\"/><strong> Exercise 2</strong></span>\n"
 "                                    <span>(Sales Manager)</span>"
+msgstr ""
+
+#. module: crm
+#: model:web.tip,description:crm.crm_tip_4
+msgid ""
+"<span><b>This is a business opportunity.</b> Drag and drop it to another "
+"column while you move forward in the sales cycle. Click to zoom in the "
+"opportunity.</span>"
+msgstr ""
+
+#. module: crm
+#: model:web.tip,description:crm.crm_tip_6
+msgid ""
+"<span><strong>Click to register a new business opportunity</strong>. Once "
+"the opportunity is created, you will be able to drag and drop it in your "
+"sales pipeline.</span>"
 msgstr ""
 
 #. module: crm
@@ -896,7 +912,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:crm.view_crm_case_leads_filter
 #: model:ir.ui.view,arch_db:crm.view_crm_case_opportunities_filter
 msgid "Channel"
-msgstr ""
+msgstr "არხი"
 
 #. module: crm
 #: model:ir.model.fields,help:crm.field_crm_team_use_opportunities
@@ -954,6 +970,11 @@ msgid "Click to set a new stage in your lead/opportunity pipeline."
 msgstr ""
 
 #. module: crm
+#: model:web.tip,description:crm.crm_tip_2
+msgid "Click to view the opportunities related to this customer."
+msgstr ""
+
+#. module: crm
 #: model:ir.ui.view,arch_db:crm.base_partner_merge_automatic_wizard_form
 msgid "Close"
 msgstr "დახურვა"
@@ -961,7 +982,7 @@ msgstr "დახურვა"
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_opportunity_report_date_closed
 msgid "Close Date"
-msgstr ""
+msgstr "დახურვის თარიღი"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_date_closed
@@ -1018,6 +1039,11 @@ msgstr ""
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
 msgid "Consumers"
+msgstr ""
+
+#. module: crm
+#: model:ir.ui.view,arch_db:crm.crm_case_form_view_oppor
+msgid "Contact Information"
 msgstr ""
 
 #. module: crm
@@ -1118,7 +1144,7 @@ msgstr ""
 #: selection:crm.lead2opportunity.partner,action:0
 #: selection:crm.partner.binding,action:0
 msgid "Create a new customer"
-msgstr ""
+msgstr "შექმენით ახალი კლიენტი"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -1185,7 +1211,7 @@ msgstr "შექმნის თარიღი"
 #: model:ir.model.fields,field_description:crm.field_crm_lead_create_date
 #: model:ir.model.fields,field_description:crm.field_crm_opportunity_report_create_date
 msgid "Creation Date"
-msgstr ""
+msgstr "შექმნის თარიღი"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_opportunity_report_view_search
@@ -1207,7 +1233,7 @@ msgstr ""
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_base_partner_merge_automatic_wizard_current_line_id
 msgid "Current Line"
-msgstr ""
+msgstr "მიმდინარე ხაზი"
 
 #. module: crm
 #: code:addons/crm/crm_lead.py:996
@@ -1227,12 +1253,12 @@ msgstr "კლიენტი"
 #: code:addons/crm/crm_lead.py:998
 #, python-format
 msgid "Customer Email"
-msgstr ""
+msgstr "კლიენტის ელ. ფოსტა"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_partner_name
 msgid "Customer Name"
-msgstr ""
+msgstr "კლიენტის სახელი"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.view_crm_lead2opportunity_partner
@@ -1355,7 +1381,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:crm.field_crm_partner_binding_display_name
 #: model:ir.model.fields,field_description:crm.field_crm_stage_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "სახელი"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -1471,7 +1497,7 @@ msgstr ""
 #. module: crm
 #: model:ir.model,name:crm.model_calendar_event
 msgid "Event"
-msgstr ""
+msgstr "მოვლენა"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -1557,7 +1583,7 @@ msgstr ""
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_case_form_view_leads
 msgid "Extra Info"
-msgstr ""
+msgstr "დამატებითი ინფორმაცია"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_fax
@@ -1575,7 +1601,7 @@ msgstr ""
 #. module: crm
 #: selection:base.partner.merge.automatic.wizard,state:0
 msgid "Finished"
-msgstr ""
+msgstr "დასრულებული"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_stage_fold
@@ -1608,7 +1634,7 @@ msgstr ""
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "მიმდევრები"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_message_channel_ids
@@ -1661,7 +1687,7 @@ msgstr ""
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_function
 msgid "Function"
-msgstr ""
+msgstr "ფუნქცია"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -1854,13 +1880,6 @@ msgid "Import using the top left button in"
 msgstr ""
 
 #. module: crm
-#: model:ir.ui.view,arch_db:crm.crm_case_kanban_view_leads
-#: model:ir.ui.view,arch_db:crm.view_crm_case_leads_filter
-#: model:ir.ui.view,arch_db:crm.view_crm_case_opportunities_filter
-msgid "Important Messages"
-msgstr ""
-
-#. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
 msgid "Improve average revenue per salesperson"
 msgstr ""
@@ -1918,7 +1937,7 @@ msgstr ""
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_base_partner_merge_automatic_wizard_group_by_is_company
 msgid "Is Company"
-msgstr ""
+msgstr "არის კომპანია"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_message_is_follower
@@ -1938,7 +1957,7 @@ msgstr ""
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_date_action_last
 msgid "Last Action"
-msgstr ""
+msgstr "ბოლო ქმედება"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_last_activity_id
@@ -1948,7 +1967,7 @@ msgstr ""
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_message_last_post
 msgid "Last Message Date"
-msgstr ""
+msgstr "ბოლო შეტყობინების თარიღი"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_base_partner_merge_automatic_wizard___last_update
@@ -1966,7 +1985,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:crm.field_crm_partner_binding___last_update
 #: model:ir.model.fields,field_description:crm.field_crm_stage___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "ბოლოს განახლებულია"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_date_last_stage_update
@@ -2027,6 +2046,14 @@ msgstr ""
 #: model:mail.message.subtype,name:crm.mt_lead_create
 #: model:mail.message.subtype,name:crm.mt_salesteam_lead
 msgid "Lead Created"
+msgstr ""
+
+#. module: crm
+#: model:ir.actions.act_window,name:crm.crm_lead_tag_action
+#: model:ir.ui.menu,name:crm.menu_crm_lead_categ
+#: model:ir.ui.view,arch_db:crm.crm_lead_tag_form
+#: model:ir.ui.view,arch_db:crm.crm_lead_tag_tree
+msgid "Lead Tags"
 msgstr ""
 
 #. module: crm
@@ -2152,7 +2179,7 @@ msgstr ""
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_base_partner_merge_automatic_wizard_line_ids
 msgid "Lines"
-msgstr ""
+msgstr "ხაზები"
 
 #. module: crm
 #: model:ir.model.fields,help:crm.field_crm_stage_team_ids
@@ -2184,7 +2211,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:crm.crm_opportunity_report_view_search
 #: model:ir.ui.view,arch_db:crm.view_crm_case_opportunities_filter
 msgid "Lost"
-msgstr ""
+msgstr "დაკარგული"
 
 #. module: crm
 #: model:ir.actions.act_window,name:crm.crm_lead_lost_action
@@ -2206,7 +2233,7 @@ msgstr ""
 #. module: crm
 #: selection:crm.lead,priority:0 selection:crm.opportunity.report,priority:0
 msgid "Low"
-msgstr ""
+msgstr "დაბალი"
 
 #. module: crm
 #: model:crm.activity,name:crm.crm_activity_demo_make_quote
@@ -2249,6 +2276,8 @@ msgstr ""
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_medium_id
 #: model:ir.model.fields,field_description:crm.field_crm_opportunity_report_medium_id
+#: model:ir.ui.view,arch_db:crm.view_crm_case_leads_filter
+#: model:ir.ui.view,arch_db:crm.view_crm_case_opportunities_filter
 msgid "Medium"
 msgstr "საშუალო"
 
@@ -2265,7 +2294,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:crm.field_res_users_meeting_ids
 #: model:ir.ui.view,arch_db:crm.view_partners_form_crm1
 msgid "Meetings"
-msgstr ""
+msgstr "შეხვედრები"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.merge_opportunity_form
@@ -2382,7 +2411,7 @@ msgstr ""
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_message_ids
 msgid "Messages"
-msgstr ""
+msgstr "მესიჯები"
 
 #. module: crm
 #: model:ir.model.fields,help:crm.field_crm_lead_message_ids
@@ -2433,6 +2462,11 @@ msgid "Motivation letter from the management"
 msgstr ""
 
 #. module: crm
+#: model:ir.ui.view,arch_db:crm.view_crm_case_leads_filter
+msgid "My Leads"
+msgstr ""
+
+#. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_opportunity_report_view_search
 #: model:ir.ui.view,arch_db:crm.view_crm_case_leads_filter
 #: model:ir.ui.view,arch_db:crm.view_crm_case_opportunities_filter
@@ -2451,7 +2485,7 @@ msgstr "სახელი"
 #: model:crm.stage,name:crm.stage_lead4
 #, python-format
 msgid "Negotiation"
-msgstr ""
+msgstr "მოლაპარაკება"
 
 #. module: crm
 #: model:crm.stage,name:crm.crm_stage_2_1 model:crm.stage,name:crm.stage_lead1
@@ -2518,7 +2552,7 @@ msgstr ""
 #: code:addons/crm/crm_lead.py:1011
 #, python-format
 msgid "No Subject"
-msgstr ""
+msgstr "თემის გარეშე"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.view_crm_case_leads_filter
@@ -2780,7 +2814,7 @@ msgstr ""
 #. module: crm
 #: selection:base.partner.merge.automatic.wizard,state:0
 msgid "Option"
-msgstr ""
+msgstr "ოფცია"
 
 #. module: crm
 #: model:ir.model.fields,help:crm.field_crm_team_alias_force_thread_id
@@ -2793,7 +2827,7 @@ msgstr ""
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.base_partner_merge_automatic_wizard_form
 msgid "Options"
-msgstr ""
+msgstr "ოფციები"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.view_crm_case_opportunities_filter
@@ -2968,12 +3002,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:crm.field_crm_lead_probability
 #: model:ir.model.fields,field_description:crm.field_crm_opportunity_report_probability
 msgid "Probability"
-msgstr ""
+msgstr "ალბათობა"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_stage_probability
 msgid "Probability (%)"
-msgstr ""
+msgstr "ალბათობა (%)"
 
 #. module: crm
 #: code:addons/crm/sales_team.py:31
@@ -2984,12 +3018,12 @@ msgstr ""
 #. module: crm
 #: model:crm.stage,name:crm.stage_lead3
 msgid "Proposition"
-msgstr ""
+msgstr "შეთავაზება"
 
 #. module: crm
 #: model:crm.stage,name:crm.crm_stage_2_2 model:crm.stage,name:crm.stage_lead2
 msgid "Qualification"
-msgstr ""
+msgstr "კვალიფიკაცია"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -3056,12 +3090,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:crm.field_crm_stage_requirements
 #: model:ir.ui.view,arch_db:crm.crm_stage_form
 msgid "Requirements"
-msgstr ""
+msgstr "მოთხოვნები"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_activity_report_user_id
 msgid "Responsible"
-msgstr ""
+msgstr "პასუხისმგებელი"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -3309,28 +3343,28 @@ msgstr "წყარო"
 #: model:ir.ui.view,arch_db:crm.view_crm_case_leads_filter
 #: model:ir.ui.view,arch_db:crm.view_crm_case_opportunities_filter
 msgid "Stage"
-msgstr ""
+msgstr "ეტაპი"
 
 #. module: crm
 #: model:mail.message.subtype,name:crm.mt_lead_stage
 msgid "Stage Changed"
-msgstr ""
+msgstr "შეიცვალა ეტაპი"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_opportunity_report_stage_name
 #: model:ir.model.fields,field_description:crm.field_crm_stage_name
 msgid "Stage Name"
-msgstr ""
+msgstr "ეტაპის სახელი"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_lead_stage_search
 msgid "Stage Search"
-msgstr ""
+msgstr "ეტაპიც ძებნა"
 
 #. module: crm
 #: model:mail.message.subtype,description:crm.mt_lead_stage
 msgid "Stage changed"
-msgstr ""
+msgstr "შეიცვალა ეტაპი"
 
 #. module: crm
 #: model:ir.model,name:crm.model_crm_stage
@@ -3345,7 +3379,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:crm.crm_stage_tree
 #: model:ir.ui.view,arch_db:crm.sales_team_form_view_in_crm
 msgid "Stages"
-msgstr ""
+msgstr "ეტაპები"
 
 #. module: crm
 #: model:ir.actions.act_window,help:crm.crm_lead_stage_act
@@ -3392,6 +3426,13 @@ msgstr ""
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
 msgid "Subscription Management"
+msgstr ""
+
+#. module: crm
+#: model:web.tip,description:crm.crm_tip_5
+msgid ""
+"Switch to the graph view to get a clear reporting on your opportunities "
+"pipeline."
 msgstr ""
 
 #. module: crm
@@ -3679,6 +3720,9 @@ msgstr ""
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_message_unread
+#: model:ir.ui.view,arch_db:crm.crm_case_kanban_view_leads
+#: model:ir.ui.view,arch_db:crm.view_crm_case_leads_filter
+#: model:ir.ui.view,arch_db:crm.view_crm_case_opportunities_filter
 msgid "Unread Messages"
 msgstr "წაუკითხავი შეტყობინებები"
 
@@ -3929,7 +3973,7 @@ msgstr "ვიზარდი"
 #: model:ir.ui.view,arch_db:crm.view_crm_case_opportunities_filter
 #, python-format
 msgid "Won"
-msgstr ""
+msgstr " მოგებული"
 
 #. module: crm
 #: model:ir.filters,name:crm.filter_opportunity_country

@@ -18,10 +18,10 @@
 #
 ##############################################################################
 {
-    'name': 'Worldline SIPS Payment Acquiring  for online payments',
+    'name': 'Worldline SIPS',
     'version': '1.0',
     'author': 'Eezee-It',
-    'category': 'Hidden',
+    'category': 'Accounting',
     'description': """
 Worldline SIPS Payment Acquirer for online payments
 
