@@ -295,11 +295,12 @@ eventHandler.modules.handle.update = function ($handle, oStyle, isAirMode) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* hack for image and link editor */
 
-function getImgTarget () {
-  return $(".note-control-selection").data('target');
+function getImgTarget ($editable) {
+    var $handle = $editable ? dom.makeLayoutInfo($editable).handle() : undefined;
+    return $(".note-control-selection", $handle).data('target');
 }
 eventHandler.modules.editor.padding = function ($editable, sValue) {
-    var $target = $(getImgTarget());
+    var $target = $(getImgTarget($editable));
     var paddings = "small medium large xl".split(/\s+/);
     $editable.data('NoteHistory').recordUndo();
     if (sValue.length) {
@@ -309,16 +310,16 @@ eventHandler.modules.editor.padding = function ($editable, sValue) {
     $target.removeClass("padding-" + paddings.join(" padding-"));
 };
 eventHandler.modules.editor.resize = function ($editable, sValue) {
-    var $target = $(getImgTarget());
+    var $target = $(getImgTarget($editable));
     $editable.data('NoteHistory').recordUndo();
     var width = ($target.attr('style') || '').match(/(^|;|\s)width:\s*([0-9]+)%/);
     if (width) {
         width = width[2]/100;
     }
-    $(getImgTarget()).css('width', width != sValue ? (sValue * 100) + '%' : '');
+    $target.css('width', width != sValue ? (sValue * 100) + '%' : '');
 };
 eventHandler.modules.editor.resizefa = function ($editable, sValue) {
-    var $target = $(getImgTarget());
+    var $target = $(getImgTarget($editable));
     $editable.data('NoteHistory').recordUndo();
     $target.attr('class', $target.attr('class').replace(/\s*fa-[0-9]+x/g, ''));
     if (+sValue > 1) {
@@ -326,7 +327,7 @@ eventHandler.modules.editor.resizefa = function ($editable, sValue) {
     }
 };
 eventHandler.modules.editor.floatMe = function ($editable, sValue) {
-    var $target = $(getImgTarget());
+    var $target = $(getImgTarget($editable));
     $editable.data('NoteHistory').recordUndo();
     switch (sValue) {
         case 'center': $target.toggleClass('center-block').removeClass('pull-right pull-left'); break;
@@ -335,7 +336,7 @@ eventHandler.modules.editor.floatMe = function ($editable, sValue) {
     }
 };
 eventHandler.modules.editor.imageShape = function ($editable, sValue) {
-    var $target = $(getImgTarget());
+    var $target = $(getImgTarget($editable));
     $editable.data('NoteHistory').recordUndo();
     $target.toggleClass(sValue);
 };
@@ -427,6 +428,105 @@ $.summernote.pluginEvents.visible = function (event, editor, layoutInfo) {
     return res;
 };
 
+function prettify_html(html) {
+    html = html.trim();
+    var result = '',
+        level = 0,
+        get_space = function (level) {
+            var i = level, space = '';
+            while (i--) space += '  ';
+            return space;
+        },
+        reg = /^<\/?(a|span|font|strong|u|i|strong|b)(\s|>)/i,
+        inline_level = Infinity,
+        tokens = _.compact(_.flatten(_.map(html.split(/</), function (value) {
+            value = value.replace(/\s+/g, ' ').split(/>/);
+            value[0] = /\S/.test(value[0]) ? '<' + value[0] + '>' : '';
+            return value;
+        })));
+
+    // reduce => merge inline style + text
+
+    for (var i = 0, l = tokens.length; i < l; i++) {
+        var token = tokens[i];
+        var inline_tag = reg.test(token);
+        var inline = inline_tag || inline_level <= level;
+
+        if (token[0] === '<' && token[1] === '/') {
+            if (inline_tag && inline_level === level) {
+                inline_level = Infinity;
+            }
+            level--;
+        }
+
+        if (!inline && !/\S/.test(token)) {
+            continue;
+        }
+        if (!inline || (token[1] !== '/' && inline_level > level)) {
+            result += get_space(level);
+        }
+
+        if (token[0] === '<' && token[1] !== '/') {
+            level++;
+            if (inline_tag && inline_level > level) {
+                inline_level = level;
+            }
+        }
+
+        if (token.match(/^<(img|hr|br)/)) {
+            level--;
+        }
+
+        result += token.trim().replace(/\s+/, ' ');
+
+        if (inline_level > level) {
+            result += '\n';
+        }
+    }
+    return result;
+}
+$.summernote.pluginEvents.codeview = function (event, editor, layoutInfo) {
+    if (layoutInfo.toolbar) {
+        return eventHandler.modules.codeview.toggle(layoutInfo);
+    } else {
+        var $editor = layoutInfo.editor();
+        var $textarea = $editor.prev('textarea');
+
+        if (!$textarea.length) {
+            // init and create texarea
+            var html = prettify_html($editor.prop("innerHTML"));
+            $editor.parent().css({
+                'position': 'absolute',
+                'top': 0,
+                'bottom': 0,
+                'left': 0,
+                'right': 0
+            });
+            $textarea = $('<textarea/>').css({
+                'margin': '0 -4px',
+                'padding': '0 4px',
+                'border': 0,
+                'top': '51px',
+                'left': '620px',
+                'width': '100%',
+                'font-family': 'sans-serif',
+                'font-size': '13px',
+                'height': '98%',
+                'white-space': 'pre',
+                'word-wrap': 'normal'
+            }).val(html).data('init', html);
+            $editor.before($textarea);
+            $editor.hide();
+        } else {
+            // save changes
+            $editor.prop('innerHTML', $textarea.val().replace(/\s*\n\s*/g, '')).trigger('content_changed');
+            $textarea.remove();
+            $editor.show();
+        }
+    }
+};
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* fix ie and re-range to don't break snippet*/
 
@@ -466,8 +566,8 @@ function summernote_mouseup (event) {
     }
     // don't rerange if simple click
     if (initial_data.event) {
-        var dx = event.clientX - (event.shiftKey ? initial_data.rect.left : initial_data.event.clientX);
-        var dy = event.clientY - (event.shiftKey ? initial_data.rect.top : initial_data.event.clientY);
+        var dx = event.clientX - (event.shiftKey && initial_data.rect ? initial_data.rect.left : initial_data.event.clientX);
+        var dy = event.clientY - (event.shiftKey && initial_data.rect ? initial_data.rect.top : initial_data.event.clientY);
         if (10 < Math.pow(dx, 2)+Math.pow(dy, 2)) {
             reRangeSelect(event, dx, dy);
         }
@@ -665,7 +765,7 @@ eventHandler.attach = function (oLayoutInfo, options) {
         .add(oLayoutInfo.handle())
         .add(oLayoutInfo.popover())
         .add(custom_toolbar)
-        .on('click keyup', function () {
+        .on('click content_changed', function () {
             $('button[data-event="undo"]', $toolbar).attr('disabled', !oLayoutInfo.editable().data('NoteHistory').hasUndo());
             $('button[data-event="redo"]', $toolbar).attr('disabled', !oLayoutInfo.editable().data('NoteHistory').hasRedo());
         });
@@ -673,6 +773,7 @@ eventHandler.attach = function (oLayoutInfo, options) {
 var fn_detach = eventHandler.detach;
 eventHandler.detach = function (oLayoutInfo, options) {
     fn_detach.call(this, oLayoutInfo, options);
+    oLayoutInfo.editable().off('mousedown');
     oLayoutInfo.editor().off("dragstart");
     oLayoutInfo.editor().off('click');
     $(document).off('mousedown', summernote_mousedown);
