@@ -3,19 +3,20 @@
 # * base
 # 
 # Translators:
-# Davor Bojkić <bole@dajmi5.com>, 2015
+# Bole <bole@dajmi5.com>, 2015-2016
 # Davor Bojkić <davor.bojkic@storm.hr>, 2015
 # Đurđica Žarković <durdica.zarkovic@storm.hr>, 2015
 # Ivica Dimjašević <ivica.dimjasevic@storm.hr>, 2015
 # Karolina Tonković <karolina.tonkovic@storm.hr>, 2015
+# Mario Jureša <mario.juresa@uvid.hr>, 2016
 # Vladimir Olujić <olujic.vladimir@storm.hr>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 09:18+0000\n"
-"PO-Revision-Date: 2015-11-06 08:45+0000\n"
-"Last-Translator: Davor Bojkić <bole@dajmi5.com>\n"
+"PO-Revision-Date: 2016-06-01 14:13+0000\n"
+"Last-Translator: Mario Jureša <mario.juresa@uvid.hr>\n"
 "Language-Team: Croatian (http://www.transifex.com/odoo/odoo-9/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -473,7 +474,7 @@ msgid ""
 "\n"
 "    Gantt view for Leaves Dashboard\n"
 "    "
-msgstr ""
+msgstr "\n    Gantogram za nadzornu ploču odsustava\n    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_project_forecast
@@ -746,7 +747,7 @@ msgid ""
 "With this module, link your products to a template to send complete information and tools to your customer.\n"
 "For instance when invoicing a training, the training agenda and materials will automatically be sent to your customers.'\n"
 "    "
-msgstr "\nDodajte email predloške proizvodima koji će biti poslani na potvrdi fakture\n==================================================================\n\nSa ovim modulom, povežite proizvode sa predloškom kako biste poslali kompletnu informaciju i upute svojim kupcima.\nNpr. kada fakturirate obuku, dnevni red obuke i literatura biti će automatski poslani vašim kupcima.'\n    "
+msgstr "\nDodajte email predloške proizvodima koji će biti poslani prilikm potvrđivanja računa\n==================================================================\n\nSa ovim modulom, povežite proizvode sa predloškom kako biste poslali kompletnu informaciju i upute svojim kupcima.\nNpr. kada fakturirate obuku, dnevni red obuke i literatura biti će automatski poslani vašim kupcima.'\n    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_project_issue_sheet
@@ -763,7 +764,7 @@ msgid ""
 "\n"
 "Add your sales document in the frontend portal. Your customers will be able to connect to their portal to see the list (and the state) of their invoices (pdf report), sales orders and quotations (web pages).\n"
 "        "
-msgstr "\nDodajte svoje prodajne dokumente na frontend portal. Vaši kupci moći će se spojiti na svoj portal da vide listu (i status) svojih faktura (u pdf formatu), prodajne naloge i upite (na web stranicama).\n        "
+msgstr "\nDodajte svoje prodajne dokumente na frontend portal. Vaši kupci moći će se spojiti na svoj portal da vide listu (i status) svojih računa (u pdf formatu), prodajne naloge i upite (na web stranicama).\n        "
 
 #. module: base
 #: model:ir.module.module,description:base.module_product_margin
@@ -773,7 +774,7 @@ msgid ""
 "=============================================================================================================================\n"
 "\n"
 "The wizard to launch the report has several options to help you get the data you need.\n"
-msgstr "\nDodaje izbornik izvješća na proizvode kojima će pratiti prodaju, nabavu, maržu i ostale zanimljive pokazatelje bazirane na fakturama.\n=============================================================================================================================\n\nČarobnjak za pokretanje izvješća ima nekoliko opcija koje će vam pomoći da dobijete željene podatke.\n"
+msgstr "\nDodaje izbornik izvješća na proizvode kojima će pratiti prodaju, nabavu, maržu i ostale zanimljive pokazatelje bazirane na računima.\n=============================================================================================================================\n\nČarobnjak za pokretanje izvješća ima nekoliko opcija koje će vam pomoći da dobijete željene podatke.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_pad
@@ -833,7 +834,7 @@ msgid ""
 "This module adds 'Allow Canceling Entries' field on form view of account journal.\n"
 "If set to true it allows user to cancel entries & invoices.\n"
 "    "
-msgstr "\nOmogućava poništavanje stavaka.\n====================================\n\nOvaj modul dodaje polje 'Omogući poništavanje stavaka' na formu temeljnice uplata.\nAko je podešen kao istinit, omogućava korisniku da otkaže stavke & fakture.\n    "
+msgstr "\nOmogućava poništavanje stavaka.\n====================================\n\nOvaj modul dodaje polje 'Omogući poništavanje stavaka' na formu temeljnice uplata.\nAko je podešen kao istinit, omogućava korisniku da otkaže stavke i račune.\n    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_sale_timesheet
@@ -856,7 +857,7 @@ msgid ""
 "\n"
 "You can define your own carrier for prices. When creating\n"
 "invoices from picking, the system is able to add and compute the shipping line.\n"
-msgstr "\nDopušta da dodate načine otpreme u prodajne naloge i naloge za preuzimanje.\n==============================================================\n\nMožete definirati cijene svojih prijevoznika. Kada kreirate fakture iz naloga za preuzimanje, sustav može dodati i izračunati troškove dostave.\n"
+msgstr "\nDopušta da dodate načine otpreme u prodajne naloge i naloge za preuzimanje.\n==============================================================\n\nMožete definirati cijene svojih prijevoznika. Kada kreirate račune iz naloga za preuzimanje, sustav može dodati i izračunati troškove dostave.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_portal
@@ -1554,7 +1555,7 @@ msgid ""
 "Generates Intrastat XML report for declaration\n"
 "Based on invoices.\n"
 "    "
-msgstr "\nGenerira XML izvješće za Intrastat \nTemeljem faktura.\n    "
+msgstr "\nGenerira XML izvješće za Intrastat \nTemeljeno na računima.\n    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_payroll_account
@@ -1967,7 +1968,7 @@ msgid ""
 "With this module you can personnalize the sale order and invoice report with\n"
 "separators, page-breaks or subtotals.\n"
 "    "
-msgstr "\nUpravljanje izvješćima prodaje =========================\nOvim modulom možete personalizirati prodajnu narudžbu i fakturu sa\nseparatorima, stranicama prijelomnice ili sumama.\n    "
+msgstr "\nUpravljanje izvješćima prodaje =========================\nOvim modulom možete personalizirati prodajnu narudžbu i račun sa\nseparatorima, stranicama prijelomnice ili sumama.\n    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_marketing
@@ -2205,7 +2206,7 @@ msgid ""
 "\n"
 "Allows you to build web forms on the website using the website builder.\n"
 "        "
-msgstr ""
+msgstr "\nOdoo Form Editor\n====================\n\nOmogućuje sastavljanje web formi na webstranicama korištenjem website-builder alata.\n        "
 
 #. module: base
 #: model:ir.module.module,description:base.module_im_odoo_support
@@ -2327,7 +2328,7 @@ msgid ""
 "==================\n"
 "\n"
 "        "
-msgstr ""
+msgstr "\nOpenERP E-Commerce\n==================\n\n        "
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_mail_channel
@@ -4374,7 +4375,7 @@ msgstr "(uredi)"
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_company_form
 msgid "(reload fonts)"
-msgstr ""
+msgstr "(ponovo učitaj fontove)"
 
 #. module: base
 #: model:ir.module.module,description:base.module_mrp_repair
@@ -5291,7 +5292,7 @@ msgstr "Odobri blagajniku ponovljeni ispis računa"
 #. module: base
 #: model:ir.module.module,summary:base.module_account_tax_cash_basis
 msgid "Allow to have cash basis on tax"
-msgstr ""
+msgstr "Omogući princip blagajne na porezu"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_version
@@ -5872,7 +5873,7 @@ msgstr "Baskijski / Euskara"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_batch_deposit
 msgid "Batch Deposit"
-msgstr ""
+msgstr "Skupni depozit"
 
 #. module: base
 #: selection:res.currency,position:0
@@ -6100,7 +6101,7 @@ msgstr "Burundi"
 #. module: base
 #: model:ir.ui.view,arch_db:base.module_form
 msgid "By"
-msgstr "Mimo"
+msgstr "Od"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_crm
@@ -6422,7 +6423,7 @@ msgstr "Kontrolni zbroj/SHA1"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_act_server_child_ids
 msgid "Child Actions"
-msgstr ""
+msgstr "Podređene radnje"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_module_category_child_ids
@@ -7496,7 +7497,7 @@ msgstr "Dodatni objekt"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_act_report_xml_auto
 msgid "Custom Python Parser"
-msgstr ""
+msgstr "Prilagođeni python parser"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_administration_shortcut
@@ -7763,7 +7764,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_tax_python
 msgid "Define Taxes as Python Code"
-msgstr ""
+msgstr "Definiranje poreza kroz python kod"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.module_form
@@ -8188,7 +8189,7 @@ msgstr "ESC/POS Hardware Driver"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_eu_service
 msgid "EU Mini One Stop Shop (MOSS)"
-msgstr ""
+msgstr "EU Mini One Stop Shop (MOSS)"
 
 #. module: base
 #: sql_constraint:ir.model:0
@@ -8300,14 +8301,6 @@ msgstr "Zaposlenici"
 #: model:res.groups,name:base.group_light_multi_company
 msgid "Enable Light Multi Company"
 msgstr "Omogućuje Light Multi Company"
-
-#. module: base
-#: code:addons/base/res/res_config.py:479
-#, python-format
-msgid ""
-"Enabling this feature will install the following paying application(s) : \n"
-"%s"
-msgstr ""
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -9096,7 +9089,7 @@ msgstr "Gambija"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_gamification
 msgid "Gamification"
-msgstr ""
+msgstr "Gamifikacija"
 
 #. module: base
 #: selection:ir.actions.act_window.view,view_mode:0
@@ -9436,17 +9429,17 @@ msgstr "Haiti"
 #. module: base
 #: model:ir.module.module,summary:base.module_hw_scanner
 msgid "Hardware Driver for Barcode Scanners"
-msgstr ""
+msgstr "Hardware driver za barcode scanere"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_hw_escpos
 msgid "Hardware Driver for ESC/POS Printers and Cashdrawers"
-msgstr ""
+msgstr "Hardware driver za ESC/POS printere i ladice za novac"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_hw_scale
 msgid "Hardware Driver for Weighting Scales"
-msgstr ""
+msgstr "Hardware driver za razne vage"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_hardware_drivers
@@ -10087,7 +10080,7 @@ msgstr ""
 #. module: base
 #: selection:res.partner,company_type:0
 msgid "Individual"
-msgstr "Pojedinačno"
+msgstr "Osoba"
 
 #. module: base
 #: model:res.country,name:base.id
@@ -10413,18 +10406,18 @@ msgstr "Inventar, Logistika, Skladištenje"
 #. module: base
 #: selection:res.partner,type:0
 msgid "Invoice address"
-msgstr "Adresa fakture"
+msgstr "Adresa za račun"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account
 #: model:ir.ui.menu,name:base.menu_invoiced
 msgid "Invoicing"
-msgstr "Fakturiranje"
+msgstr "Izdavanje računa"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_account_voucher
 msgid "Invoicing & Payments"
-msgstr "Fakturiranje i Plaćanje"
+msgstr "Računi i plaćanja"
 
 #. module: base
 #: model:res.country,name:base.ir
@@ -10573,7 +10566,7 @@ msgstr "Jordan"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_procurement_jit
 msgid "Just In Time Scheduling"
-msgstr "Zakazivanje baš na vrijeme"
+msgstr "Nabava - Just In Time "
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -11359,14 +11352,14 @@ msgstr ""
 #. module: base
 #: model:ir.actions.act_window,help:base.action_res_bank_form
 msgid "Manage bank records you want to be used in the system."
-msgstr ""
+msgstr "Upravljajte bankovnim izvodima koje želite koristiti u sustavu"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_partner_category_form
 msgid ""
 "Manage partner tags to better classify them for tracking and analysis purposes.\n"
 "                    A partner may have several categories and categories have a hierarchical structure: a partner with a categorie has also the parent categorie."
-msgstr ""
+msgstr "Definirajte kategorije partnera kako bi ih mogli kvalitetnije pratiti i analizirati. Partner može pripadati u nekoliko kategorija, a kategorije imaju hijerarhijsku strukturu: partner koji pripada određenoj kategoriji, također pripada i nadređenoj kategoriji."
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_partner_title_contact
@@ -11379,7 +11372,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_account_voucher
 msgid "Manage your debts and credits thanks to simple sale/purchase receipts"
-msgstr ""
+msgstr "Upravljajte dugavnjima i potraživanjima jednostavno, izradom računa prodaje ili nabave"
 
 #. module: base
 #: model:res.groups,name:base.group_hr_manager
@@ -13063,12 +13056,12 @@ msgstr "POS blagajna"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pos_discount
 msgid "Point of Sale Discounts"
-msgstr ""
+msgstr "POS popusti"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pos_reprint
 msgid "Point of Sale Receipt Reprinting"
-msgstr ""
+msgstr "POS ponovno ispisivanje računa"
 
 #. module: base
 #: model:res.country,name:base.pl
@@ -13193,7 +13186,7 @@ msgstr "Predstavite Vaš tim"
 #: model:ir.actions.report.xml,name:base.preview_rml_report
 #: model:ir.ui.view,arch_db:base.view_company_form
 msgid "Preview RML Report"
-msgstr ""
+msgstr "Predpogled RML izvještaja"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_currency_form
@@ -13273,7 +13266,7 @@ msgstr "Nabava"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_product_email_template
 msgid "Product Email Template"
-msgstr ""
+msgstr "Predložak maila za proizvod"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_product
@@ -13508,7 +13501,7 @@ msgstr "RML Interno zaglavlje"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_company_rml_header3
 msgid "RML Internal Header for Landscape Reports"
-msgstr ""
+msgstr "RML interno zaglavlje za položeni ispis"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.act_report_xml_view
@@ -13623,7 +13616,7 @@ msgstr "Rekurzivna greška u zavisnosti modula !"
 #. module: base
 #: constraint:ir.actions.server:0
 msgid "Recursion found in child server actions"
-msgstr ""
+msgstr "Rekurzija se pojavila u podređenim serverskim akcijama"
 
 #. module: base
 #: code:addons/models.py:4026
@@ -13662,12 +13655,12 @@ msgstr "Relacijsko polje"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_users_partner_id
 msgid "Related Partner"
-msgstr "Relacijski partner"
+msgstr "Povezani partner"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_server_object_lines_server_id
 msgid "Related Server Action"
-msgstr ""
+msgstr "Povezana serverska radnja"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:319
@@ -13983,7 +13976,7 @@ msgstr "Pokreni ručno"
 #. module: base
 #: model:ir.actions.server,name:base.action_run_ir_action_todo
 msgid "Run Remaining Action Todo"
-msgstr ""
+msgstr "Pokreni preostale zakazane radnje"
 
 #. module: base
 #: selection:base.language.install,lang:0
@@ -14145,7 +14138,7 @@ msgstr "Prodajni tim"
 #. module: base
 #: selection:ir.ui.view,type:0
 msgid "Sales Team Dashboard"
-msgstr ""
+msgstr "Nazdorna ploča prodajnog tima"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sales_team
@@ -14161,12 +14154,12 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_mrp
 msgid "Sales and MRP Management"
-msgstr ""
+msgstr "Upravljanje Prodajom i Proizvodnjom"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_stock
 msgid "Sales and Warehouse Management"
-msgstr ""
+msgstr "Upravljanje Prodajom i Skladištem"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_partner_user_id
@@ -15026,7 +15019,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.category,name:base.module_category_stock_management
 msgid "Stock Management"
-msgstr ""
+msgstr "Upravljanje skladištem"
 
 #. module: base
 #: selection:workflow.activity,kind:0
@@ -15072,12 +15065,12 @@ msgstr "Ulica2"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_act_server_sub_model_object_field
 msgid "Sub-field"
-msgstr ""
+msgstr "Podređeno polje"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_act_server_sub_object
 msgid "Sub-model"
-msgstr ""
+msgstr "Podređeni model"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_wkf_activity_subflow_id
@@ -15166,7 +15159,7 @@ msgstr "Anketa"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_survey_crm
 msgid "Survey CRM"
-msgstr ""
+msgstr "CRM Ankete"
 
 #. module: base
 #: model:res.country,name:base.sj
@@ -15216,7 +15209,7 @@ msgstr "Pozicija oznake"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_project_timesheet_synchro
 msgid "Synchronization with the external timesheet application"
-msgstr ""
+msgstr "Sinhronizacija sa vanjskom aplikacijom za evidenciju vremena"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_wizard_update_translations
@@ -15419,7 +15412,7 @@ msgstr "Naziv predloška"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_new_api
 msgid "Test API"
-msgstr ""
+msgstr "Test API"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.ir_mail_server_form
@@ -15479,7 +15472,7 @@ msgstr ""
 #, python-format
 msgid ""
 "The Object name must start with x_ and not contain any special character !"
-msgstr ""
+msgstr "Naziv objekta mora početi s x_ i ne smije sadržavati posebne znakove !"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:287
@@ -15513,7 +15506,7 @@ msgstr ""
 msgid ""
 "The `%s` module appears to be unavailable at the moment, please try again "
 "later."
-msgstr ""
+msgstr "Izgleda da je modul  `%s`  trenutno nedostupan, molimo pokušajte ponovo kasnije."
 
 #. module: base
 #: code:addons/base/module/module.py:558
@@ -15579,7 +15572,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,help:base.field_wkf_transition_act_to
 msgid "The destination activity."
-msgstr ""
+msgstr "Ciljna aktivnost"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_model_form
@@ -15668,7 +15661,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_model_fields_model_id
 msgid "The model this field belongs to"
-msgstr ""
+msgstr "Model kojem ovo polje pripada"
 
 #. module: base
 #: sql_constraint:res.country:0
@@ -15700,12 +15693,12 @@ msgstr "Naziv modula mora biti jedinstven !"
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_sequence_number_increment
 msgid "The next number of the sequence will be incremented by this number"
-msgstr ""
+msgstr "Korak uvećanja brojača. 1 će uvećavati brojač za jedan, 10 za 10."
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.wizard_lang_export
 msgid "The next step depends on the file format:"
-msgstr ""
+msgstr "Sljedeći korak ovisi o formatu datoteke:"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_model_fields_form
@@ -15764,7 +15757,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,help:base.field_res_currency_rate_rate
 msgid "The rate of the currency to the currency of rate 1"
-msgstr ""
+msgstr "Tečaj valute u odnosu na valutu sa tečajem 1."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_currency_rate
@@ -15809,7 +15802,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,help:base.field_res_country_state_code
 msgid "The state code in max. three chars."
-msgstr ""
+msgstr "Oznaka županije , max 3 slova"
 
 #. module: base
 #: code:addons/custom.py:536
@@ -16083,22 +16076,22 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_model_search
 msgid "Transient"
-msgstr ""
+msgstr "Prolazni"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_transient
 msgid "Transient Model"
-msgstr ""
+msgstr "Prolazni model"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "Transient: False"
-msgstr ""
+msgstr "Prolazno: NE"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "Transient: True"
-msgstr ""
+msgstr "Prolazno: DA"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_workflow_transition_form
@@ -16140,12 +16133,12 @@ msgstr "Prevedeno"
 #: model:ir.actions.act_window,name:base.action_translation
 #: model:ir.ui.menu,name:base.menu_action_translation
 msgid "Translated Terms"
-msgstr ""
+msgstr "Prevedeni izrazi"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_translation_name
 msgid "Translated field"
-msgstr ""
+msgstr "Prevedeno polje"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_translation_form
@@ -16160,14 +16153,14 @@ msgstr "Prevedeno"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_translation_comments
 msgid "Translation comments"
-msgstr ""
+msgstr "Komentari prijevoda"
 
 #. module: base
 #: code:addons/base/ir/ir_translation.py:582
 #, python-format
 msgid ""
 "Translation features are unavailable until you install an extra translation."
-msgstr ""
+msgstr "Mogućnosti prevođenja nisu dostupne dok ne instalirate dodatni jezik."
 
 #. module: base
 #: selection:ir.translation,state:0
@@ -16285,7 +16278,7 @@ msgstr ""
 #: model:ir.model.fields,help:base.field_ir_model_constraint_type
 msgid ""
 "Type of the constraint: `f` for a foreign key, `u` for other constraints."
-msgstr ""
+msgstr "Tip ograničenja: 'f' za id druge tablice-foreign key, 'u' za ostala ograničenja."
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -16393,14 +16386,14 @@ msgstr ""
 #. module: base
 #: model:ir.module.category,name:base.module_category_uncategorized
 msgid "Uncategorized"
-msgstr ""
+msgstr "Ne kategorizirano"
 
 #. module: base
 #: code:addons/base/module/module.py:561
 #: model:ir.ui.view,arch_db:base.module_form
 #, python-format
 msgid "Uninstall"
-msgstr ""
+msgstr "Deinstaliraj"
 
 #. module: base
 #: selection:ir.module.module.dependency,state:0
@@ -16446,7 +16439,7 @@ msgstr "Nepoznato"
 #: code:addons/models.py:1228
 #, python-format
 msgid "Unknown database identifier '%s'"
-msgstr ""
+msgstr "Nepoznati identifikator baze '%s'"
 
 #. module: base
 #: code:addons/models.py:1081
@@ -17314,7 +17307,7 @@ msgstr "Instance radnog tijeka"
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_workflow_transition_search
 msgid "Workflow Transition"
-msgstr ""
+msgstr "Prijelazi tijeka procesa"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_workflow_workitem_form
@@ -17339,11 +17332,11 @@ msgstr ""
 #: model:ir.actions.act_window,name:base.action_workflow_workitem_form
 #: model:ir.ui.menu,name:base.menu_workflow_workitem
 msgid "Workitems"
-msgstr ""
+msgstr "Stavke"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_payment_sips
-msgid "Worldline SIPS Payment Acquiring  for online payments"
+msgid "Worldline SIPS"
 msgstr ""
 
 #. module: base

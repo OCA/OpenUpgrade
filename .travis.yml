@@ -32,7 +32,9 @@ script:
     - flake8 openerp/openupgrade --max-line-length=120
     - flake8 openerp/addons/openupgrade* --max-line-length=120 --filename=__init__.py --ignore=F401
     - flake8 openerp/addons/openupgrade* --max-line-length=120 --exclude=__init__.py
-    - flake8 . --max-line-length=120 --filename=pre-*.py,post-*.py
+# only flake8 migration scripts from the openupgrade project, presumably
+# identifyable by using the openupgrade helpers
+    - flake8 --max-line-length=120 $(find . -name 'pre-*.py' -or -name 'post-*.py' -exec grep -q openupgrade {} \; -print)
     - flake8 openerp/addons/*/migrations/*/tests/ --max-line-length=120
     - flake8 addons/*/migrations/*/tests/ --max-line-length=120
     - npm install -g less less-plugin-clean-css

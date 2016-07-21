@@ -64,7 +64,7 @@ def _migrate_stock_picking(cr):
 def _set_lot_params(cr):
     cr.execute(
         "UPDATE stock_picking_type SET use_create_lots = "
-        "code = 'incoming')")
+        "code = 'incoming'")
     cr.execute(
         "UPDATE stock_picking_type SET use_existing_lots = "
         "code IN ('outgoing', 'internal')")
