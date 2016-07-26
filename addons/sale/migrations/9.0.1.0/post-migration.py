@@ -50,11 +50,15 @@ def set_dummy_product(env):
 def set_incoterm(env):
     """ Set the new Incoterm configuration option if incoterms
     are used at all in this database. """
+
+    if not openupgrade.is_module_installed(env.cr, 'sale_stock'):
+        return
     env.cr.execute("SELECT incoterm FROM sale_order "
                    "WHERE incoterm IS NOT NULL")
     if env.cr.fetchone():
         env.ref('base.group_employee').write({
-            'implied_ids': [(4, env.ref('sale.group_display_incoterm').id)]})
+            'implied_ids': [(4, env.ref('sale.group_display_incoterm').id)
+                            ]})
 
 
 def set_crm_team_message_types(env):
