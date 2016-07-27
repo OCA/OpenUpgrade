@@ -10,41 +10,36 @@ from openerp import api, pooler, SUPERUSER_ID
 from datetime import datetime
 
 
-def map_order_state(cr):
-    # Mapping values of state field for purchase.order
-    openupgrade.map_values(
-        cr, openupgrade.get_legacy_name('state'), 'state', 
-        [('approved', 'purchase'), ('bid', 'sent'), 
-         ('confirmed', 'to approve'), ('draft', 'draft'),
-         ('except_invoice', 'purchase'), ('except_picking', 'purchase')],
-        table='purchase_order')
+def set_dummy_product(env):
+    products = env['product.product'].search(['name', '=', 'Any product'])
+    if not products:
+        product = env['product.product'].create({
+            'name': 'Any product',
+            'type': 'service',
+            'order_policy': 'manual',
+        })
+    else:
+        product = products[0]
 
-def map_order_line_state(cr):
-    cr.execute("""
-    UPDATE purchase_order_line l SET state = o.state FROM purchase_order o WHERE l.order_id = o.id
-    """)
+    env.cr.execute(
+        """UPDATE purchase_order_line
+        SET product_id = %s WHERE product_id IS NULL""",
+        (product.id,))
 
-def product_id_env(env):
-    # Assign product where it is NULL
-    product = env['product.product'].create({'name': 'Service Product', 
-                                             'type': 'service'})
-    env.cr.execute("""
-        update purchase_order_line set product_id = %s where
-        product_id is null""" % product.id)
 
 def pricelist_property(cr, env):
     # Created res.currency properties from Purchase Pricelist 
     property_rec = env['ir.property'].\
         search([('name', '=', 'property_product_pricelist_purchase'),
-                '|',('res_id', 'like', 'res.partner%'), ('res_id', '=',
-                                                         False)])
+                '|', ('res_id', 'like', 'res.partner%'), ('res_id', '=',
+                                                          False)])
     pricelist = []
     partner = []
     currency = []
-    for property in property_rec:
-        if property.value_reference:
-            product_pricelist = property.value_reference
-            res_partner = property.res_id
+    for prop in property_rec:
+        if prop.value_reference:
+            product_pricelist = prop.value_reference
+            res_partner = prop.res_id
             pricelist_id = product_pricelist.split(',')[1]
             pricelist_id = int(pricelist_id)
             currency_rec = env['product.pricelist'].\
@@ -56,14 +51,23 @@ def pricelist_property(cr, env):
                 partner_id = int(partner_id)
                 partner.append(partner_id)
                 cr.execute("""
-                insert into ir_property (name, type, company_id, fields_id, value_reference, res_id)
-                values ('property_purchase_currency_id', 'many2one', 1, (select id from ir_model_fields where model = 'res.partner' and name = 'property_purchase_currency_id'), 'res.currency,%(currency)s', 'res.partner,%(partner)s')
-                """ %{'currency' : currency[-1], 'partner' : partner[-1]})
+                insert into ir_property (name, type, company_id, fields_id,
+                value_reference, res_id)
+                values ('property_purchase_currency_id', 'many2one', 1,
+                (select id from ir_model_fields where model = 'res.partner'
+                and name = 'property_purchase_currency_id'),
+                'res.currency,%(currency)s', 'res.partner,%(partner)s')
+                """ % {'currency': currency[-1], 'partner': partner[-1]})
             else:
                 cr.execute("""
-                insert into ir_property (name, type, company_id, fields_id, value_reference)
-                values ('property_purchase_currency_id', 'many2one', 1, (select id from ir_model_fields where model = 'res.partner' and name = 'property_purchase_currency_id'), 'res.currency,%(currency)s')
-                """ %{'currency' : currency[-1]})
+                insert into ir_property (name, type, company_id, fields_id,
+                value_reference)
+                values ('property_purchase_currency_id', 'many2one', 1,
+                (select id from ir_model_fields where model = 'res.partner'
+                and name = 'property_purchase_currency_id'),
+                 'res.currency,%(currency)s')
+                """ % {'currency': currency[-1]})
+
 
 def account_properties(cr):
     # Handle account properties as their names are changed.
@@ -83,12 +87,10 @@ def account_properties(cr):
             'res.partner%' or res_id is null)
             """)
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     env = api.Environment(cr, SUPERUSER_ID, {})
-    map_order_state(cr)
-    map_order_line_state(cr)
-    product_id_env(env)
+    set_dummy_product(env)
     pricelist_property(cr, env)
     account_properties(cr)
-

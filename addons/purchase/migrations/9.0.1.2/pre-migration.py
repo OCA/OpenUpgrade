@@ -12,6 +12,26 @@ column_copies = {
     ],
 }
 
+
+def map_order_state(cr):
+    """ Map values for state field in purchase.order and purchase.order.line.
+    Do this in the pre script because it influences the automatic calculation
+    of the computed fields wrt. invoicing """
+    openupgrade.map_values(
+        cr, openupgrade.get_legacy_name('state'), 'state',
+        [('approved', 'purchase'), ('bid', 'sent'),
+         ('confirmed', 'to approve'), ('draft', 'draft'),
+         ('except_invoice', 'purchase'), ('except_picking', 'purchase')],
+        table='purchase_order')
+
+    cr.execute("""
+        UPDATE purchase_order_line l
+        SET state = o.state
+        FROM purchase_order o
+        WHERE l.order_id = o.id""")
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.copy_columns(cr, column_copies)
+    map_order_state(cr)
