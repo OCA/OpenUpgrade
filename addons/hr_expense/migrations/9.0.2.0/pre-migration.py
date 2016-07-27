@@ -26,6 +26,7 @@ table_renames = [
     ('hr_expense_expense', 'hr_expense'),
     ]
 
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_tables(cr, table_renames)
