@@ -9,11 +9,42 @@ VERSION=$($ODOO --version | awk '{ print $3 }')
 DBNAME="openupgrade-test-$VERSION-$(date +%F)"
 ADDONS=$(echo $(ls $ODOO_DIR/addons | grep --invert-match -E $IGNORE_ADDONS) | tr ' ' ,)
 DUMP=/tmp/openupgrade-test-$VERSION
-dropdb $DBNAME || true
+dropdb --if-exists $DBNAME
 createdb $DBNAME
 $ODOO --log-handler=:CRITICAL --database=$DBNAME --init=base --stop-after-init
 $ODOO --log-handler=:CRITICAL --load-language=fr_FR --database=$DBNAME --stop-after-init
 $ODOO --log-handler=:CRITICAL --database=$DBNAME --init=$ADDONS --stop-after-init
+EXTRA_DATA=$(mktemp --suffix=.yml)
+cat > $EXTRA_DATA <<EOF
+-
+    Add here whatever extra demo data you need
+    or if you're lucky, you can just recycle some existing yml file
+    but then, you'll probably have to trick the yaml engine into thinking
+    the current module is the one you grabbed the file from because those
+    usually contain partial xmlids, and this file is run with base as current
+    module
+-
+    !python {model: ir.module.module}: |
+        log.__self__.module = 'stock'
+$(cat $ODOO_DIR/addons/stock/stock_demo.yml)
+-
+    # we need a confirmed picking with stock operations
+    !record {model: stock.picking, id: incomming_shipment}:
+        pack_operation_ids:
+        - product_id: product_icecream
+          product_qty: 10
+          product_uom_id: product.product_uom_kgm
+          location_id: stock.stock_location_suppliers
+          location_dest_id: stock_location_14
+          lot_id: lot_icecream_0
+-
+    !python {model: stock.picking, id: incomming_shipment}: |
+        self.action_confirm()
+        self.force_assign()
+        self.do_transfer()
+EOF
+$ODOO --log-handler=:CRITICAL --database=$DBNAME --test-file=$EXTRA_DATA --test-commit --stop-after-init
 pg_dump --no-owner --format=custom $DBNAME > $DUMP
 dropdb $DBNAME
+rm $EXTRA_DATA
 echo database dumped to $DUMP
