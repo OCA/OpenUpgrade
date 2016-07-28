@@ -21,4 +21,3 @@ def set_timesheet(cr):
 @openupgrade.migrate()
 def migrate(cr, version):
     set_timesheet(cr)
-

@@ -1,7 +1,6 @@
 ---Fields in module 'hr_timesheet'---
 hr_timesheet / account.analytic.line    / is_timesheet (boolean)        : NEW 
-#TODO : Set all analytic line to true where its analytic account use_timesheet is true.
-#Done : done in post-migration script
+#Done : Set all analytic line to true where its analytic account use_timesheet is true.
 
 hr_timesheet / hr.employee              / journal_id (many2one)         : DEL relation: account.analytic.journal
 hr_timesheet / hr.employee              / product_id (many2one)         : DEL relation: product.product
