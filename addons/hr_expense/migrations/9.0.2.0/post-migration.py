@@ -11,7 +11,7 @@ logger = logging.getLogger('OpenUpgrade')
 def map_expense_state(cr):
     # Mapping values of state field for hr_expense
     openupgrade.map_values(
-        cr, openupgrade.get_legacy_name('state'), 'state', 
+        cr, openupgrade.get_legacy_name('state'), 'state',
         [('confirm', 'submit'), ('accepted', 'approve'), ('done', 'post'),
          ('paid', 'done'), ('cancelled', 'cancel')],
         table='hr_expense')
