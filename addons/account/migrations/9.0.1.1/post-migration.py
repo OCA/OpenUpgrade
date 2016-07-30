@@ -66,9 +66,14 @@ def account_templates(cr):
             # right one
             company.write({
                 'chart_template_id': account_templates.id,
-                'accounts_code_digits': accounts_code_digits,
                 'transfer_account_id': account_templates.transfer_account_id.id
             })
+            # we need to write accounts_code_digits via sql because the orm
+            # would try to renumber existing accounts which we don't want
+            env.cr.execute(
+                'update res_company set accounts_code_digits=%s '
+                'where id in %s',
+                (accounts_code_digits, tuple(company.ids)))
             continue
         # when there are multiple charts of accounts, things get messy.
         # we assign the chart of accounts with the most matches concerning
