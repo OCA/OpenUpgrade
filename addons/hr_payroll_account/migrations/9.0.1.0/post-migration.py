@@ -12,9 +12,9 @@ def set_tax_from_tax_code(cr, table, tax_column, tax_code_column=None):
     # TODO: propose to openupgradelib
     cr.execute(
         "update %(table)s t set %(tax_column)s=tax.id "
-        "from account_tax_group group "
-        "join account_tax tax on tax.tax_group_id=group.id "
-        "where group.id=%(tax_code_column)s",
+        "from account_tax_group g "
+        "join account_tax tax on tax.tax_group_id=g.id "
+        "where g.id=%(tax_code_column)s",
         {
             'table': AsIs(table),
             'tax_column': AsIs(tax_column),
