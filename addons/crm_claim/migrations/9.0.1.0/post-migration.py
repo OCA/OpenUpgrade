@@ -20,3 +20,11 @@ def migrate(cr, version):
         {
             'categ_id': AsIs(openupgrade.get_legacy_name('categ_id')),
         })
+    openupgrade.logged_query(
+        cr,
+        "UPDATE ir_model_data imd "
+        "SET res_id = ccc.id, model = 'crm.claim.category' "
+        "FROM crm_claim_category ccc "
+        "WHERE res_id = ccc.lead_tag_id "
+        "AND module = 'crm_claim' "
+        "AND imd.name LIKE 'categ_claim%%'")
