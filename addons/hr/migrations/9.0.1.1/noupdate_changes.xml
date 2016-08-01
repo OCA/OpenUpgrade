@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record id="module_install_notification" model="mail.message">
+            <field name="type"/>
+            <field name="model">mail.channel</field>
+            <field name="res_id" ref="mail.channel_all_employees"/>
+            <field name="message_type">notification</field>
+        </record>
+    </data>
+</openerp>
