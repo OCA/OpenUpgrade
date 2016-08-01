@@ -7,7 +7,7 @@ from openupgradelib import openupgrade
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.map_values(
-        cr, 'voucher_type', 'voucher_type',
+        cr, openupgrade.get_legacy_name('voucher_type'), 'voucher_type',
         [('receipt', 'sale'), ('payment', 'purchase')],
         table='account_voucher')
     cr.execute(
