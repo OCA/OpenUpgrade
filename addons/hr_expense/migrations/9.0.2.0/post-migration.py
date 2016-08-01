@@ -42,7 +42,7 @@ def hr_expense(cr):
             """ % expense)
         expense_line_ids = cr.fetchall()
         line_ids = [n[0] for n in expense_line_ids[1:]]
-        for z, p in zip(range(no_of_expense-1), line_ids):
+        for z, p in zip(range(no_of_expense - 1), line_ids):
             cr.execute("""
             INSERT INTO hr_expense
                 (company_id, currency_id, journal_id, employee_id, state,
@@ -51,7 +51,7 @@ def hr_expense(cr):
                 create_date, write_date, create_uid, write_uid,
                 product_uom_id, unit_amount, quantity, product_id)
                 SELECT company_id, currency_id, journal_id, employee_id,
-                state, date, account_move_id, name, bank_journal_id, 0.00.
+                state, date, account_move_id, name, bank_journal_id, 0.00,
                 'own_account',
                 (select analytic_account from hr_expense_line where id =
                 %(a)s),
