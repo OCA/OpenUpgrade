@@ -253,6 +253,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                     verbosity=2,
                     stream=openerp.modules.module.TestStream(package.name),
                 ).run(tests)
+                .wasSuccessful()
             )
             threading.currentThread().testing = False
         # OpenUpgrade edit end
