@@ -15,6 +15,8 @@ renamed_modules = {
     'disable_openerp_online': 'disable_odoo_online',
     # OCA/runbot-addons
     'runbot_secure': 'runbot_relative',
+    # not exactly a module rename, but they do the same
+    'account_check_writing': 'account_check_printing',
 }
 
 renamed_models = {
