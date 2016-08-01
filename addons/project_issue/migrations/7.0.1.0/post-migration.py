@@ -59,3 +59,9 @@ def migrate(cr, version):
     openupgrade.set_defaults(
         cr, pool, {'project.project': [('use_issues', None)]})
     migrate_categories(cr, pool)
+    # reset issue action's context
+    cr.execute(
+        "update ir_act_window set context='{}' "
+        "where id in "
+        "(select res_id from ir_model_data "
+        "where module='project_issue' and name='project_issue_categ_act0')")
