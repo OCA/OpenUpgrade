@@ -2,7 +2,7 @@
 # © 2016 Eficent Business and IT Consulting Services S.L.
 # © 2016 Serpent Consulting Services Pvt. Ltd.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-
+from openerp import SUPERUSER_ID, api
 import logging
 from openupgradelib import openupgrade
 logger = logging.getLogger('OpenUpgrade')
@@ -17,7 +17,7 @@ def map_expense_state(cr):
         table='hr_expense')
 
 
-def hr_expense(cr):
+def hr_expense(cr, env):
     # Sets hr_expense_line product values to hr_expense
     cr.execute("""
     UPDATE hr_expense h SET product_id = l.product_id, unit_amount =
@@ -65,14 +65,13 @@ def hr_expense(cr):
                 (select product_id from hr_expense_line where id = %(a)s)
                 FROM hr_expense where id = %(b)s
             """ % {'a': p, 'b': expense})
-    cr.execute("""
-        UPDATE hr_expense h SET total_amount =
-        (select cast(round(unit_amount*quantity) as
-        decimal(18,2)) from hr_expense e where e.id=h.id)
-    """)
+    expenses = env['hr.expense'].search([])
+    env.add_todo(env['hr.expense']._fields['total_amount'], expenses)
+    env['hr.expense'].recompute()
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    env = api.Environment(cr, SUPERUSER_ID, {})
     map_expense_state(cr)
-    hr_expense(cr)
+    hr_expense(cr, env)
