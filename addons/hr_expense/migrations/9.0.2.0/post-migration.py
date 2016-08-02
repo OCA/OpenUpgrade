@@ -51,7 +51,7 @@ def hr_expense(cr):
                 create_date, write_date, create_uid, write_uid,
                 product_uom_id, unit_amount, quantity, product_id)
                 SELECT company_id, currency_id, journal_id, employee_id,
-                state, date, account_move_id, name, bank_journal_id, 0.00.
+                state, date, account_move_id, name, bank_journal_id, 0.00,
                 'own_account',
                 (select analytic_account from hr_expense_line where id =
                 %(a)s),
