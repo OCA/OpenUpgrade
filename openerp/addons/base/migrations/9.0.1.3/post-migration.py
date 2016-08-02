@@ -21,6 +21,7 @@
 ##############################################################################
 
 import logging
+import base64
 from openupgradelib import openupgrade
 from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID
@@ -90,14 +91,28 @@ def set_filter_active(cr):
         """)
 
 
+def decode_base64(data):
+    """Decode base64, padding being optional.
+
+    :param data: Base64 data as an ASCII byte string
+    :returns: The decoded byte string.
+
+    """
+    missing_padding = len(data) % 4
+    if missing_padding != 0:
+        data += b'=' * (4 - missing_padding)
+    return base64.decodestring(data)
+
+
 def precalculate_checksum(cr):
     pool = RegistryManager.get(cr.dbname)
     ir_attachment = pool['ir.attachment']
+
     for attach_id in ir_attachment.search(cr, SUPERUSER_ID, []):
         attach = ir_attachment.browse(cr, SUPERUSER_ID, attach_id)
         # as done in ir_attachment._data_set()
         value = attach.db_datas
-        bin_data = value and value.decode('base64') or ''  # empty string to compute its hash
+        bin_data = value and decode_base64(value) or ''  # empty string to compute its hash
         attach.checksum = attach._compute_checksum(bin_data)
 
 
