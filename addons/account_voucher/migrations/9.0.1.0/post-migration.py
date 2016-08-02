@@ -7,7 +7,7 @@ from openupgradelib import openupgrade
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.map_values(
-        cr, 'voucher_type', 'voucher_type',
+        cr, openupgrade.get_legacy_name('type'), 'voucher_type',
         [('receipt', 'sale'), ('payment', 'purchase')],
         table='account_voucher')
     cr.execute(
@@ -15,4 +15,5 @@ def migrate(cr, version):
         "(account_tax_id, account_voucher_line_id) "
         "select v.tax_id, l.id "
         "from account_voucher v "
-        "join account_voucher_line l on l.voucher_id=v.id")
+        "join account_voucher_line l on l.voucher_id=v.id "
+        "where v.tax_id is not null")
