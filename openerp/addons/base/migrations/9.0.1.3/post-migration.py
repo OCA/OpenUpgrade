@@ -134,5 +134,5 @@ def migrate(cr, version):
     clear_inherit_id(cr)
     rename_your_company(cr)
     set_filter_active(cr)
-    precalculate_checksum(cr)
+    # precalculate_checksum(cr)
     remove_obsolete_modules(cr, ('web_gantt', 'web_graph', 'web_tests'))
