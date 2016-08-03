@@ -5,7 +5,7 @@ from openupgradelib import openupgrade
 
 column_copies = {
     'account_voucher': [
-        ('voucher_type', None, None),
+        ('type', None, None),
     ],
 }
 
