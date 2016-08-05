@@ -305,7 +305,6 @@ account      / account.move             / line_ids (one2many)           : NEW re
 # Nothing To Do : ORM will handle it.
 
 account      / account.move             / period_id (many2one)          : DEL relation: account.period, required: required, req_default: function
-account      / account.move             / rate_diff_partial_rec_id (many2one): NEW relation: account.partial.reconcile
 
 account      / account.move             / statement_line_id (many2one)  : NEW relation: account.bank.statement.line
 # TODO: Post migration script: Search what account_bank_statement_line had this move
@@ -322,11 +321,10 @@ account      / account.move.line        / date_maturity (date)          : now re
 account      / account.move.line        / invoice (many2one)            : not a function anymore
 account      / account.move.line        / invoice (many2one)            : was renamed to invoice_id [nothing to to]
 
+account      / account.move             / rate_diff_partial_rec_id (many2one): NEW relation: account.partial.reconcile
 account      / account.move.line        / matched_credit_ids (one2many) : NEW relation: account.partial.reconcile
-# TODO: ??
-
 account      / account.move.line        / matched_debit_ids (one2many)  : NEW relation: account.partial.reconcile
-# TODO: ??
+# Nothing to do.
 
 account      / account.move.line        / payment_id (many2one)         : NEW relation: account.payment
 # TODO: Related to logic explained above to determine the creation of account.payment
@@ -397,6 +395,9 @@ account      / account.partial.reconcile / amount_currency (float)       : NEW
 account      / account.partial.reconcile / credit_move_id (many2one)     : NEW relation: account.move.line
 account      / account.partial.reconcile / currency_id (many2one)        : NEW relation: res.currency
 account      / account.partial.reconcile / debit_move_id (many2one)      : NEW relation: account.move.line
+# Done: We build this new model looking at the moves in old model account.move.reconcile and calling
+# to the account move line method 'auto_reconcile_lines', for all move lines reconciled in the same group.
+# This reconstructs the reconciliations, in the new model.
 
 
 #### FIELDS IN MODEL ACCOUNT.PAYMENT ####
