@@ -3,7 +3,7 @@
 # © 2016 Eficent Business and IT Consulting Services S.L.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import operator
-from openerp import api, SUPERUSER_ID
+from openerp import models
 from openupgradelib import openupgrade
 from openerp.modules.registry import RegistryManager
 
@@ -44,10 +44,10 @@ def map_journal_state(cr):
         table='account_journal', write='sql')
 
 
-def account_templates(cr):
+def account_templates(env):
     # assign a chart template to configured companies in order not to
     # have the localization try to generate a new chart of accounts
-    env = api.Environment(cr, SUPERUSER_ID, {})
+    cr = env.cr
     account_templates = env['account.chart.template'].search([])
     configurable_template = env.ref('account.configurable_chart_template')
     account_templates -= configurable_template
@@ -118,11 +118,11 @@ def parent_id_to_m2m(cr):
     )
 
 
-def parent_id_to_tag(cr, model, tags_field='tag_ids', recursive=False):
+def parent_id_to_tag(env, model, tags_field='tag_ids', recursive=False):
     """Convert all parents of model to tags stored in tags_field.
     If recursive is true, create and assign tags for indirect parents too"""
     # TODO: This might be moved to openupgradelib
-    env = api.Environment(cr, SUPERUSER_ID, {})
+    cr = env.cr
     model = env[model]
     tags_model = env[model._fields[tags_field].comodel_name]
     parent2tag = {}
@@ -239,10 +239,10 @@ def account_properties(cr):
             """)
 
 
-def account_internal_type(cr):
+def account_internal_type(env):
     """type on accounts was replaced by internal_type which is a related field
     to the user type's type field"""
-    env = api.Environment(cr, SUPERUSER_ID, {})
+    cr = env.cr
     possible_types = map(
         operator.itemgetter(0),
         env['account.account.type']._fields['type'].selection,
@@ -292,17 +292,55 @@ def account_internal_type(cr):
             })
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+def account_partial_reconcile(env):
+    # disable all workflow steps
+    set_workflow_org = models.BaseModel.step_workflow
+    models.BaseModel.step_workflow = lambda *args, **kwargs: None
+    cr = env.cr
+    move_line_ids = {}
+    cr.execute("SELECT reconcile_id, id FROM account_move_line WHERE "
+               "reconcile_id IS NOT null")
+    for rec_id, move_line_id in cr.fetchall():
+        if rec_id not in move_line_ids.keys():
+            move_line_ids[rec_id] = [move_line_id]
+        else:
+            move_line_ids[rec_id] += [move_line_id]
+    move_lines_1 = env['account.move.line']
+    for rec_id in move_line_ids.keys():
+        move_lines_1 = env['account.move.line'].browse(
+            [i for i in move_line_ids[rec_id]])
+        move_lines_1.auto_reconcile_lines()
+    move_line_ids = {}
+    cr.execute("SELECT reconcile_partial_id, id FROM account_move_line WHERE "
+               "reconcile_partial_id IS NOT null")
+    for rec_id, move_line_id in cr.fetchall():
+        if rec_id not in move_line_ids.keys():
+            move_line_ids[rec_id] = [move_line_id]
+        else:
+            move_line_ids[rec_id] += [move_line_id]
+    move_lines_2 = env['account.move.line']
+    for rec_id in move_line_ids.keys():
+        move_lines_2 = env['account.move.line'].browse(
+            [i for i in move_line_ids[rec_id]])
+        move_lines_2.auto_reconcile_lines()
+    for field in ['amount_residual', 'amount_residual_currency', 'reconciled']:
+        env.add_todo(env['account.move.line']._fields[field],
+                     move_lines_1 + move_lines_2)
+    env['account.move.line'].recompute()
+    models.BaseModel.step_workflow = set_workflow_org
+
+
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     map_bank_state(cr)
     map_type_tax_use(cr)
     map_type_tax_use_template(cr)
     map_journal_state(cr)
-    account_templates(cr)
+    account_templates(env)
     parent_id_to_m2m(cr)
     cashbox(cr)
     account_properties(cr)
-
     # If the close_method is 'none', then set to 'False', otherwise set to
     # 'True'
     cr.execute("""
@@ -369,6 +407,7 @@ def migrate(cr, version):
         openupgrade.get_legacy_name('journal_entry_id'),
     )
 
-    parent_id_to_tag(cr, 'account.tax')
-    parent_id_to_tag(cr, 'account.account', recursive=True)
-    account_internal_type(cr)
+    parent_id_to_tag(env, 'account.tax')
+    parent_id_to_tag(env, 'account.account', recursive=True)
+    account_internal_type(env)
+    account_partial_reconcile(env)

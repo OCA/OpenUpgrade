@@ -41,6 +41,7 @@ def hr_expense(env):
             """ % expense)
         expense_line_ids = env.cr.fetchall()
         line_ids = [n[0] for n in expense_line_ids[1:]]
+
         for z, p in zip(range(no_of_expense-1), line_ids):
             env.cr.execute("""
             INSERT INTO hr_expense
