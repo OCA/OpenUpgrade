@@ -8,7 +8,7 @@ logger = logging.getLogger('OpenUpgrade')
 
 
 def map_expense_state(env):
-    # Mapping values of state field for hr_expense
+    # Mapping values of state field for hr_expense.
     openupgrade.map_values(
         env.cr, openupgrade.get_legacy_name('state'), 'state',
         [('confirm', 'submit'), ('accepted', 'approve'), ('done', 'post'),
