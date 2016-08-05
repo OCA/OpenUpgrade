@@ -2,7 +2,6 @@
 # © 2016 Eficent Business and IT Consulting Services S.L.
 # © 2016 Serpent Consulting Services Pvt. Ltd.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-from openerp import SUPERUSER_ID, api
 import logging
 from openupgradelib import openupgrade
 logger = logging.getLogger('OpenUpgrade')
