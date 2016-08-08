@@ -293,39 +293,29 @@ def account_internal_type(env):
 
 
 def account_partial_reconcile(env):
-    # disable all workflow steps
+    """ Create new entries of model account.partial.reconcile that replace the
+    obsolete account.move.reconcile model. Note that an additional model
+    'account.full.reconcile' was introduced after the release of 9.0 in its own
+    automatically installed module.
+
+    Disable all workflow steps that are meant to run on new reconciliations
+    """
     set_workflow_org = models.BaseModel.step_workflow
     models.BaseModel.step_workflow = lambda *args, **kwargs: None
     cr = env.cr
-    move_line_ids = {}
-    cr.execute("SELECT reconcile_id, id FROM account_move_line WHERE "
-               "reconcile_id IS NOT null")
+    move_line_map = {}
+    cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
+               "FROM account_move_line WHERE "
+               "reconcile_id IS NOT NULL or reconcile_partial_id IS NOT NULL")
     for rec_id, move_line_id in cr.fetchall():
-        if rec_id not in move_line_ids.keys():
-            move_line_ids[rec_id] = [move_line_id]
-        else:
-            move_line_ids[rec_id] += [move_line_id]
-    move_lines_1 = env['account.move.line']
-    for rec_id in move_line_ids.keys():
-        move_lines_1 = env['account.move.line'].browse(
-            [i for i in move_line_ids[rec_id]])
-        move_lines_1.auto_reconcile_lines()
-    move_line_ids = {}
-    cr.execute("SELECT reconcile_partial_id, id FROM account_move_line WHERE "
-               "reconcile_partial_id IS NOT null")
-    for rec_id, move_line_id in cr.fetchall():
-        if rec_id not in move_line_ids.keys():
-            move_line_ids[rec_id] = [move_line_id]
-        else:
-            move_line_ids[rec_id] += [move_line_id]
-    move_lines_2 = env['account.move.line']
-    for rec_id in move_line_ids.keys():
-        move_lines_2 = env['account.move.line'].browse(
-            [i for i in move_line_ids[rec_id]])
-        move_lines_2.auto_reconcile_lines()
+        move_line_map.setdefault(rec_id, []).append(move_line_id)
+    to_recompute = env['account.move.line']
+    for _rec_id, move_line_ids in move_line_map.iteritems():
+        move_lines = env['account.move.line'].browse(move_line_ids)
+        move_lines.auto_reconcile_lines()
+        to_recompute += move_lines
     for field in ['amount_residual', 'amount_residual_currency', 'reconciled']:
-        env.add_todo(env['account.move.line']._fields[field],
-                     move_lines_1 + move_lines_2)
+        env.add_todo(env['account.move.line']._fields[field], to_recompute)
     env['account.move.line'].recompute()
     models.BaseModel.step_workflow = set_workflow_org
 
