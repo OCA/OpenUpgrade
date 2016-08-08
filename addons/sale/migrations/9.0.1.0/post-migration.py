@@ -47,20 +47,6 @@ def set_dummy_product(env):
         (product.id,))
 
 
-def set_incoterm(env):
-    """ Set the new Incoterm configuration option if incoterms
-    are used at all in this database. """
-
-    if not openupgrade.is_module_installed(env.cr, 'sale_stock'):
-        return
-    env.cr.execute("SELECT incoterm FROM sale_order "
-                   "WHERE incoterm IS NOT NULL")
-    if env.cr.fetchone():
-        env.ref('base.group_employee').write({
-            'implied_ids': [(4, env.ref('sale.group_display_incoterm').id)
-                            ]})
-
-
 def set_crm_team_message_types(env):
     """ Add two new default message types to existing subscriptions """
     env['mail.followers'].search([('res_model', '=', 'crm.team')]).write(
@@ -75,7 +61,6 @@ def migrate(cr, version):
     set_dummy_product(env)
     set_invoice_policy(env)
     set_track_service(cr)
-    set_incoterm(env)
     set_crm_team_message_types(env)
     openupgrade.load_data(
         cr, 'sale', 'migrations/9.0.1.0/noupdate_changes.xml')
