@@ -20,7 +20,7 @@ stock_account / stock.inventory          / period_id (many2one)          : DEL r
 # set to first date of old period
 stock_account / stock.location.path      / invoice_state (selection)     : DEL selection_keys: ['2binvoiced', 'invoiced', 'none']
 stock_account / stock.move               / invoice_state (selection)     : DEL required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: function
-# nothing to do
+# Replaced by product template setting. Migrated in sale_stock
 ---XML records in module 'stock_account'---
 DEL account.journal: stock_account.stock_journal
 DEL ir.actions.act_window: stock_account.action_history_tree
