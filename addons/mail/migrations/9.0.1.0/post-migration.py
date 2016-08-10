@@ -34,10 +34,10 @@ def migrate(cr, version):
     cr.execute(
         'insert into mail_message_res_partner_needaction_rel '
         '(mail_message_id, res_partner_id) '
-        'select message_id, partner_id from mail_notification '
+        'select distinct message_id, partner_id from mail_notification '
         'where not is_read')
     cr.execute(
         'insert into mail_message_res_partner_starred_rel '
         '(mail_message_id, res_partner_id) '
-        'select message_id, partner_id from mail_notification '
+        'select distinct message_id, partner_id from mail_notification '
         'where starred')
