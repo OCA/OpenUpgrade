@@ -74,3 +74,9 @@ def migrate(cr, version):
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_columns(cr, column_renames)
     remove_obsolete(cr)
+    pre_create_columns(cr)
+
+
+def pre_create_columns(cr):
+    openupgrade.logged_query(cr, """
+        alter table ir_model_fields add column compute text""")

@@ -34,3 +34,5 @@ def migrate(cr, version):
     registry = RegistryManager.get(cr.dbname)
 
     openupgrade.set_defaults(cr, registry, column_defaults, force=False)
+    openupgrade.load_data(
+        cr, 'project_issue', 'migrations/9.0.1.0/noupdate_changes.xml')

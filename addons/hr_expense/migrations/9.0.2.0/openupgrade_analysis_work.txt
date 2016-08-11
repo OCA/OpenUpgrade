@@ -1,27 +1,49 @@
 ---Fields in module 'hr_expense'---
-hr_expense   / hr.expense               / account_move_id (many2one)    : NEW relation: account.move
-hr_expense   / hr.expense               / analytic_account_id (many2one): NEW relation: account.analytic.account
 hr_expense   / hr.expense               / bank_journal_id (many2one)    : NEW relation: account.journal
+# Nothing to do : new fields
+
+hr_expense   / hr.expense               / analytic_account_id (many2one): NEW relation: account.analytic.account
+# TODO : get the value from hr.expense.line
+
+hr_expense   / hr.expense               / account_move_id (many2one)    : NEW relation: account.move
 hr_expense   / hr.expense               / company_id (many2one)         : NEW relation: res.company
 hr_expense   / hr.expense               / currency_id (many2one)        : NEW relation: res.currency
 hr_expense   / hr.expense               / date (date)                   : NEW 
 hr_expense   / hr.expense               / department_id (many2one)      : NEW relation: hr.department
-hr_expense   / hr.expense               / description (text)            : NEW 
 hr_expense   / hr.expense               / employee_id (many2one)        : NEW relation: hr.employee, required: required, req_default: function
 hr_expense   / hr.expense               / journal_id (many2one)         : NEW relation: account.journal
+hr_expense   / hr.expense               / name (char)                   : NEW required: required
+# Nothing To Do : Renaming the table will solve this. 
+
+hr_expense   / hr.expense               / description (text)            : NEW 
+# TODO : rename the field
+# Done : done in post-migration script
+
 hr_expense   / hr.expense               / message_follower_ids (one2many): NEW relation: mail.followers
 hr_expense   / hr.expense               / message_ids (one2many)        : NEW relation: mail.message
-hr_expense   / hr.expense               / message_last_post (datetime)  : NEW 
-hr_expense   / hr.expense               / name (char)                   : NEW required: required
+hr_expense   / hr.expense               / message_last_post (datetime)  : NEW
+# TODO : ???  # Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
+
 hr_expense   / hr.expense               / payment_mode (selection)      : NEW selection_keys: ['company_account', 'own_account']
 hr_expense   / hr.expense               / product_id (many2one)         : NEW relation: product.product, required: required
 hr_expense   / hr.expense               / product_uom_id (many2one)     : NEW relation: product.uom, required: required, req_default: function
 hr_expense   / hr.expense               / quantity (float)              : NEW required: required, req_default: 1
-hr_expense   / hr.expense               / state (selection)             : NEW required: required, selection_keys: ['approve', 'cancel', 'done', 'draft', 'post', 'submit'], req_default: draft
-hr_expense   / hr.expense               / tax_ids (many2many)           : NEW relation: account.tax
 hr_expense   / hr.expense               / unit_amount (float)           : NEW required: required
+# TODO : create new hr.expense record for each hr.expense.line (product)
+
+hr_expense   / hr.expense               / state (selection)             : NEW required: required, selection_keys: ['approve', 'cancel', 'done', 'draft', 'post', 'submit'], req_default: draft
+# TODO : Need to map the values the new values 
+#Done : done in post-migration script
+
+hr_expense   / hr.expense               / tax_ids (many2many)           : NEW relation: account.tax
+# Nothing to do : new field
+
 hr_expense   / product.template         / can_be_expensed (boolean)     : NEW 
 hr_expense   / product.template         / hr_expense_ok (boolean)       : DEL
+# TODO : rename the field
+# Done : done in post-migration script
+
+ 
 ---XML records in module 'hr_expense'---
 NEW ir.actions.act_window: hr_expense.action_approved_expense
 NEW ir.actions.act_window: hr_expense.action_hr_expense_report_filtered

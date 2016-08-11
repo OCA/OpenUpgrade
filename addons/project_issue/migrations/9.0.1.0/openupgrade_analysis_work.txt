@@ -4,7 +4,7 @@ project_issue / project.issue            / tag_ids (many2many)           : NEW r
 # DONE
 
 project_issue / project.issue            / kanban_state (selection)      : now required, default = normal
-# Nothing to do
+# set default value
 
 project_issue / project.issue            / message_follower_ids (many2many): not a function anymore
 project_issue / project.issue            / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')

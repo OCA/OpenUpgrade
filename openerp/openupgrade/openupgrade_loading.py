@@ -50,6 +50,7 @@ def add_module_dependencies(cr, module_list):
     if not module_list:
         return module_list
 
+    modules_in = list(module_list)
     forced_deps = safe_eval.safe_eval(
         config.get_misc(
             'openupgrade', 'forced_deps_' + release.version,
@@ -104,6 +105,11 @@ def add_module_dependencies(cr, module_list):
             "Selecting autoinstallable modules %s", ','.join(auto_modules))
         module_list += auto_modules
 
+    # Set proper state for new dependencies so that any init scripts are run
+    cr.execute("""
+        UPDATE ir_module_module SET state = 'to install'
+        WHERE name IN %s AND name NOT IN %s AND state = 'uninstalled'
+        """, (tuple(module_list), tuple(modules_in)))
     return module_list
 
 

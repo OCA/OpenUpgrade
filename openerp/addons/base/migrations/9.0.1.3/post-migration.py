@@ -121,3 +121,4 @@ def migrate(cr, version):
     set_filter_active(cr)
     precalculate_checksum(cr)
     remove_obsolete_modules(cr, ('web_gantt', 'web_graph', 'web_tests'))
+    openupgrade.load_data(cr, 'base', 'migrations/9.0.1.3/noupdate_changes.xml')

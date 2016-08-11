@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record id="module_install_notification" model="mail.message">
+            <field name="type"/>
+            <field name="model">mail.channel</field>
+            <field name="res_id" ref="mail.channel_all_employees"/>
+            <field name="message_type">notification</field>
+        </record>
+        <record id="holiday_status_cl" model="hr.holidays.status">
+            <field name="limit" eval="False"/>
+        </record>
+        <record id="holiday_status_comp" model="hr.holidays.status">
+            <field name="limit" eval="False"/>
+        </record>
+        <record id="mt_holidays_confirmed" model="mail.message.subtype">
+            <field name="description">Request created and waiting confirmation</field>
+            <field name="name">Confirmed</field>
+        </record>
+    </data>
+</openerp>
