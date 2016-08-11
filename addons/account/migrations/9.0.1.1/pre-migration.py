@@ -35,9 +35,11 @@ column_copies = {
     ],
     'account_tax': [
         ('type_tax_use', None, None),
+        ('type', None, None),
     ],
     'account_tax_template': [
         ('type_tax_use', None, None),
+        ('type', None, None),
     ],
 }
 
@@ -71,6 +73,38 @@ def migrate_properties(cr):
             """.format(name_v8=name_v8, name_v9=name_v9))
 
 
+def install_account_tax_python(cr):
+    """ Type tax type 'code' is in v9 introduced by module
+    'account_tax_python. So, if we find an existing tax using this type,
+    we know that we have to install the module."""
+    openupgrade.logged_query(
+        cr, "update ir_module_module set state='to install' "
+        "where name='account_tax_python' "
+        "and state in ('uninstalled', 'to remove') "
+        "and exists (select id FROM account_tax where type = 'code')")
+
+
+def map_account_tax_type(cr):
+    """ The tax type 'code' is not an option in the account module for v9.
+    We need to assign a temporary 'dummy' value until module
+    account_tax_python is installed. In post-migration we will
+    restore the original value."""
+    openupgrade.map_values(
+        cr,
+        openupgrade.get_legacy_name('type'), 'type',
+        [('code', 'group')],
+        table='account_tax', write='sql')
+
+
+def map_account_tax_template_type(cr):
+    """Same comments as in map_account_tax_type"""
+    openupgrade.map_values(
+        cr,
+        openupgrade.get_legacy_name('type'), 'type',
+        [('code', 'group')],
+        table='account_tax_template', write='sql')
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     # 9.0 introduces a constraint enforcing this
@@ -82,3 +116,6 @@ def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.copy_columns(cr, column_copies)
     migrate_properties(cr)
+    install_account_tax_python(cr)
+    map_account_tax_type(cr)
+    map_account_tax_template_type(cr)

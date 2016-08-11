@@ -320,6 +320,34 @@ def account_partial_reconcile(env):
     models.BaseModel.step_workflow = set_workflow_org
 
 
+def map_account_tax_type(cr):
+    """ See comments in method map_account_tax_type in the pre-migration
+    script."""
+    if not openupgrade.logged_query(cr, """
+        select id FROM account_tax where {name_v8} = 'code'
+    """.format(name_v8=openupgrade.get_legacy_name('type'))):
+        return
+    openupgrade.map_values(
+        cr,
+        openupgrade.get_legacy_name('type'), 'amount_type',
+        [('code', 'code')],
+        table='account_tax', write='sql')
+
+
+def map_account_tax_template_type(cr):
+    """ See comments in method map_account_tax_type in the pre-migration
+    script."""
+    if not openupgrade.logged_query(cr, """
+        select id FROM account_tax where {name_v8} = 'code'
+    """.format(name_v8=openupgrade.get_legacy_name('type'))):
+        return
+    openupgrade.map_values(
+        cr,
+        openupgrade.get_legacy_name('type'), 'amount_type',
+        [('code', 'code')],
+        table='account_tax_template', write='sql')
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -401,3 +429,5 @@ def migrate(env, version):
     parent_id_to_tag(env, 'account.account', recursive=True)
     account_internal_type(env)
     account_partial_reconcile(env)
+    map_account_tax_type(cr)
+    map_account_tax_template_type(cr)
