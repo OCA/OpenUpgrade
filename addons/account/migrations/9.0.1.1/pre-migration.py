@@ -71,6 +71,46 @@ def migrate_properties(cr):
             """.format(name_v8=name_v8, name_v9=name_v9))
 
 
+def remove_account_moves_from_special_periods(cr):
+    """We first search for journal entries in a special period, in the
+    first reported fiscal year of the company, and we take them out of the
+    special period, into a normal period, because we assume that this is
+    the starting balance of the company, and should be maintained.
+    Then we delete all the moves associated to special periods."""
+    cr.execute("""
+        SELECT id FROM account_move
+        WHERE period_id in (SELECT id FROM account_period WHERE special = True
+        AND fiscalyear_id = (SELECT id FROM account_fiscalyear
+        ORDER BY date_start ASC LIMIT 1) ORDER BY date_start ASC LIMIT 1)
+    """)
+    move_ids = [i for i, in cr.fetchall()]
+
+    cr.execute("""
+        SELECT id FROM account_period WHERE special = False
+        AND fiscalyear_id = (SELECT id FROM account_fiscalyear
+        ORDER BY date_start ASC LIMIT 1) ORDER BY date_start ASC LIMIT 1
+    """)
+    first_nsp_id = cr.fetchone()[0] or False
+
+    if first_nsp_id and move_ids:
+        openupgrade.logged_query(cr, """
+            UPDATE account_move
+            SET period_id = %s
+            where id in %s
+            """, (first_nsp_id, tuple(move_ids)))
+
+    openupgrade.logged_query(cr, """
+        DELETE FROM account_move_line
+        WHERE move_id IN (SELECT id FROM account_move WHERE period_id IN (
+        SELECT id FROM account_period WHERE special = True))
+    """)
+
+    openupgrade.logged_query(cr, """
+        DELETE FROM account_move
+        WHERE period_id IN (SELECT id FROM account_period WHERE special = True)
+    """)
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     # 9.0 introduces a constraint enforcing this
@@ -82,3 +122,4 @@ def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.copy_columns(cr, column_copies)
     migrate_properties(cr)
+    remove_account_moves_from_special_periods(cr)
