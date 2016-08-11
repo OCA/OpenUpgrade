@@ -35,9 +35,11 @@ column_copies = {
     ],
     'account_tax': [
         ('type_tax_use', None, None),
+        ('type', None, None),
     ],
     'account_tax_template': [
         ('type_tax_use', None, None),
+        ('type', None, None),
     ],
 }
 
