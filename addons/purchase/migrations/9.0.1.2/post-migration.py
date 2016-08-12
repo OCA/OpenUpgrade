@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-# © 2015 Eficent Business and IT Consulting Services S.L. -
-# Jordi Ballester Alomar
-# © 2015 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
+# © 2015 Eficent Business and IT Consulting Services S.L.
+# © 2015 Serpent Consulting Services Pvt. Ltd.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
@@ -11,7 +10,7 @@ from datetime import datetime
 
 
 def set_dummy_product(env):
-    products = env['product.product'].search(['name', '=', 'Any product'])
+    products = env['product.product'].search([('name', '=', 'Any product')])
     if not products:
         product = env['product.product'].create({
             'name': 'Any product',
