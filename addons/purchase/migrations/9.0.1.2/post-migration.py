@@ -4,9 +4,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
-import logging
-from openerp import api, pooler, SUPERUSER_ID
-from datetime import datetime
+from openerp import api, SUPERUSER_ID
 
 
 def set_dummy_product(env):
@@ -27,7 +25,7 @@ def set_dummy_product(env):
 
 
 def pricelist_property(cr, env):
-    # Created res.currency properties from Purchase Pricelist 
+    # Created res.currency properties from Purchase Pricelist
     property_rec = env['ir.property'].\
         search([('name', '=', 'property_product_pricelist_purchase'),
                 '|', ('res_id', 'like', 'res.partner%'), ('res_id', '=',
@@ -71,18 +69,18 @@ def pricelist_property(cr, env):
 def account_properties(cr):
     # Handle account properties as their names are changed.
     cr.execute("""
-            update ir_property set name = 'property_account_payable_id', 
-            fields_id = (select id from ir_model_fields where model 
-            = 'res.partner' and name = 'property_account_payable_id') 
-            where name = 'property_account_payable' and (res_id like 
+            update ir_property set name = 'property_account_payable_id',
+            fields_id = (select id from ir_model_fields where model
+            = 'res.partner' and name = 'property_account_payable_id')
+            where name = 'property_account_payable' and (res_id like
             'res.partner%' or res_id is null)
             """)
     cr.execute("""
-            update ir_property set fields_id = (select id from 
-            ir_model_fields where model = 'res.partner' and 
-            name = 'property_account_receivable_id'), name = 
-            'property_account_receivable_id' where 
-            name = 'property_account_receivable' and (res_id like 
+            update ir_property set fields_id = (select id from
+            ir_model_fields where model = 'res.partner' and
+            name = 'property_account_receivable_id'), name =
+            'property_account_receivable_id' where
+            name = 'property_account_receivable' and (res_id like
             'res.partner%' or res_id is null)
             """)
 
