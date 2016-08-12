@@ -303,16 +303,99 @@ def account_partial_reconcile(env):
     set_workflow_org = models.BaseModel.step_workflow
     models.BaseModel.step_workflow = lambda *args, **kwargs: None
     cr = env.cr
+
+    # Execute a direct reconciliation for the most common and easiest use
+    # case, that involves reconciling two moves, for the full amount, and in
+    # the company currency. This will dramatically improve the overall
+    # performance of the migration of reconciliations.
+    openupgrade.logged_query(cr, """
+        WITH Q1 AS (
+            SELECT reconcile_id, sum(debit-credit) as balance,
+            count(id) as num_moves, count(currency_id) as num_currencies
+            FROM account_move_line
+            WHERE reconcile_id IS NOT NULL
+            GROUP BY reconcile_id, currency_id
+        ),
+        Q2 AS (
+            SELECT reconcile_id
+            FROM Q1
+            WHERE balance = 0.0
+            AND num_moves = 2
+            AND num_currencies = 0
+        ),
+        Q3 AS (
+            SELECT aml.reconcile_id, aml.id, aml.debit,
+            aml.credit, aml.company_id
+            FROM account_move_line AS aml
+            INNER JOIN Q2
+            ON Q2.reconcile_id = aml.reconcile_id
+        ),
+        Q4 AS (
+            SELECT reconcile_id,
+            CASE WHEN debit > 0.0
+            THEN id ELSE Null END as debit_move_id, CASE WHEN credit > 0.0
+            THEN id ELSE Null END as credit_move_id,
+            CASE WHEN debit > 0.0 THEN debit END as amount, company_id
+            FROM Q3
+            GROUP BY reconcile_id, debit_move_id, credit_move_id, amount,
+            company_id
+        ),
+        Q5 AS (
+            SELECT reconcile_id, sum(debit_move_id) as debit_move_id,
+            sum(credit_move_id) as credit_move_id, sum(amount) as amount,
+            company_id
+            FROM Q4
+            GROUP BY reconcile_id, company_id
+        )
+        SELECT debit_move_id, credit_move_id, amount, company_id
+            FROM Q5
+            WHERE debit_move_id > 0 AND credit_move_id > 0
+    """)
+
+    # We want to exclude the moves that were included in the step above from
+    # the next reconciliation step.
+    cr.execute("""
+        WITH Q1 AS (
+            SELECT reconcile_id, sum(debit-credit) as balance,
+            count(id) as num_moves, count(currency_id) as num_currencies
+            FROM account_move_line
+            WHERE reconcile_id IS NOT NULL
+            GROUP BY reconcile_id, currency_id
+        ),
+        Q2 AS (
+            SELECT reconcile_id
+            FROM Q1
+            WHERE balance = 0.0
+            AND num_moves = 2
+            AND num_currencies = 0
+        )
+        SELECT aml.id
+        FROM account_move_line AS aml
+        INNER JOIN Q2
+        ON Q2.reconcile_id = aml.reconcile_id
+    """)
+    move_line_ids = [move_line_id for move_line_id, in cr.fetchall()]
+
     move_line_map = {}
     cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
-               "FROM account_move_line WHERE "
-               "reconcile_id IS NOT NULL or reconcile_partial_id IS NOT NULL")
+               "FROM account_move_line "
+               "WHERE (reconcile_id IS NOT NULL "
+               "OR reconcile_partial_id IS NOT NULL) "
+               "AND id NOT IN %s" % (tuple(move_line_ids), ))
+    rec_l = {}
     for rec_id, move_line_id in cr.fetchall():
         move_line_map.setdefault(rec_id, []).append(move_line_id)
+        rec_l[rec_id] = True
+    num_recs = len(rec_l.keys())
     to_recompute = env['account.move.line']
+    i = 1
     for _rec_id, move_line_ids in move_line_map.iteritems():
         move_lines = env['account.move.line'].browse(move_line_ids)
         move_lines.auto_reconcile_lines()
+        msg = 'Reconciling %s of %s' % (i, num_recs)
+        openupgrade.message(cr, 'account', 'account_partial_reconcile',
+                            'id', msg)
+        i += 1
         to_recompute += move_lines
     for field in ['amount_residual', 'amount_residual_currency', 'reconciled']:
         env.add_todo(env['account.move.line']._fields[field], to_recompute)
