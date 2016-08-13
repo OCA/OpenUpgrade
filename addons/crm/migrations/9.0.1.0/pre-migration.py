@@ -19,6 +19,8 @@ column_renames = {
     ],
     'crm_lead': [
         ('section_id', 'team_id'),
+        ('ref', None),
+        ('ref2', None),
     ],
     'section_stage_rel': [
         ('section_id', 'team_id'),

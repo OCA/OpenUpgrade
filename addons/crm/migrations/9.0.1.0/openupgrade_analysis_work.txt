@@ -46,7 +46,7 @@ crm          / crm.lead                 / priority (selection)          : select
 crm          / crm.lead                 / ref (reference)               : DEL 
 crm          / crm.lead                 / ref2 (reference)              : DEL 
 
-# Nothing to do
+# Migrated to sale order's opportunity field in sale_crm where applicable
 
 crm          / crm.lead                 / section_id (many2one)         : relation is now 'crm.team' ('crm.case.section')
 crm          / crm.lead                 / section_id (many2one)         : was renamed to team_id [nothing to to]
