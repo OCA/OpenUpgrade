@@ -113,7 +113,9 @@ def check(f):
         tries = 0
         while True:
             try:
-                if openerp.registry(dbname)._init and not openerp.tools.config['test_enable']:
+                # OpenUpgrade: test_file does not imply test_enable as it does in upstream Odoo
+                test_mode = openerp.tools.config['test_enable'] or openerp.tools.config['test_file']
+                if openerp.registry(dbname)._init and not test_mode:
                     raise openerp.exceptions.Warning('Currently, this database is not fully loaded and can not be used.')
                 return f(dbname, *args, **kwargs)
             except OperationalError, e:
