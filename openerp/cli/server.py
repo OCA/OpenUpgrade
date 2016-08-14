@@ -134,8 +134,10 @@ def main(args):
         except openerp.service.db.DatabaseExists:
             pass
 
-    if config["test_file"]:
-        config["test_enable"] = True
+    # OpenUpgrade: don't run post tests if --test-enable is not specified
+    # explicitely (problematic when loading test_data with --test-commit)
+    # if config["test_file"]:
+    #     config["test_enable"] = True
 
     if config["translate_out"]:
         export_translation()
