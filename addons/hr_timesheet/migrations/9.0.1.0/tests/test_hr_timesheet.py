@@ -9,3 +9,6 @@ class TestHrTimesheet(TransactionCase):
         line_id, = self.env.cr.fetchone()
         line = self.env['account.analytic.line'].browse(line_id)
         self.assertTrue(line.is_timesheet)
+
+        self.assertFalse(
+            self.env.ref('analytic.ou_analytic_line').is_timesheet)

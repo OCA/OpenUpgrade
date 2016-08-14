@@ -1,0 +1,18 @@
+-
+  This file contains test data for automated testing on Travis of the migration scripts included in OpenUpgrade
+-
+  Test data for the migration of hr_timesheet
+  Create an analytic line that is not a timesheet
+-
+  !record {model: account.analytic.account, id: analytic.ou_analytic_account}:
+    name: 'OU Test account'
+    type: 'normal'
+-
+  !record {model: account.analytic.journal, id: analytic.ou_analytic_journal}:
+    name: 'OU Analytic journal'
+-
+  !record {model: account.analytic.line, id: analytic.ou_analytic_line}:
+    name: 'OU Test line'
+    account_id: analytic.ou_analytic_account
+    journal_id: analytic.ou_analytic_journal
+    general_account_id: account.a_expense
