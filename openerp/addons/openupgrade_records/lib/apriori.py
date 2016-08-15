@@ -17,6 +17,8 @@ renamed_modules = {
     'runbot_secure': 'runbot_relative',
     # not exactly a module rename, but they do the same
     'account_check_writing': 'account_check_printing',
+    # OCA/account-invoicing
+    'account_refund_original': 'account_invoice_refund_link',
 }
 
 renamed_models = {
