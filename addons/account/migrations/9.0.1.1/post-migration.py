@@ -313,7 +313,7 @@ def account_partial_reconcile(env):
     for _rec_id, move_line_ids in move_line_map.iteritems():
         move_lines = env['account.move.line'].browse(move_line_ids)
         move_lines.auto_reconcile_lines()
-        msg = 'Reconciling %s with moves: %s', (_rec_id, ','.join(map(
+        msg = 'Reconciling %s with moves: %s' % (_rec_id, ','.join(map(
             str, move_line_ids)))
         openupgrade.message(cr, 'account', 'account_partial_reconcile',
                             'id', msg)
