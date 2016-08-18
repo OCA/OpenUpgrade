@@ -331,21 +331,24 @@ def account_partial_reconcile(env):
             ON Q2.reconcile_id = aml.reconcile_id
         ),
         Q4 AS (
-            SELECT reconcile_id, CASE WHEN debit > 0.0
+            SELECT reconcile_id,
+            CASE WHEN debit > 0.0
             THEN id ELSE Null END as debit_move_id, CASE WHEN credit > 0.0
-            THEN id ELSE Null END as credit_move_id, company_id
+            THEN id ELSE Null END as credit_move_id,
+            CASE WHEN debit > 0.0 THEN debit WHEN credit > 0.0
+            THEN credit END as amount, company_id
             FROM Q3
-            GROUP BY reconcile_id, debit_move_id, credit_move_id, company_id
+            GROUP BY reconcile_id, debit_move_id, credit_move_id, amount,
+            company_id
         ),
         Q5 AS (
             SELECT reconcile_id, sum(debit_move_id) as debit_move_id,
-            sum(credit_move_id) as credit_move_id, company_id
+            sum(credit_move_id) as credit_move_id, sum(amount) as amount,
+            company_id
             FROM Q4
             GROUP BY reconcile_id, company_id
         )
-        INSERT INTO account_partial_reconcile (debit_move_id, credit_move_id,
-        amount, company_id) (
-            SELECT debit_move_id, credit_move_id, company_id
+        SELECT debit_move_id, credit_move_id, amount, company_id
             FROM Q5
             WHERE debit_move_id > 0 AND credit_move_id > 0
         )
