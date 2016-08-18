@@ -335,8 +335,7 @@ def account_partial_reconcile(env):
             CASE WHEN debit > 0.0
             THEN id ELSE Null END as debit_move_id, CASE WHEN credit > 0.0
             THEN id ELSE Null END as credit_move_id,
-            CASE WHEN debit > 0.0 THEN debit WHEN credit > 0.0
-            THEN credit END as amount, company_id
+            CASE WHEN debit > 0.0 THEN debit END as amount, company_id
             FROM Q3
             GROUP BY reconcile_id, debit_move_id, credit_move_id, amount,
             company_id
