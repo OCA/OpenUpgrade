@@ -309,35 +309,46 @@ def account_partial_reconcile(env):
     # the company currency. This will dramatically improve the overall
     # performance of the migration of reconciliations.
     openupgrade.logged_query(cr, """
-        WITH Q1 AS (SELECT reconcile_id, sum(debit-credit) as balance,
-        count(id) as num_moves
-        FROM account_move_line
-        where reconcile_id IS NOT NULL
-        AND currency_id IS NULL
-        GROUP BY reconcile_id, currency_id),
-        Q2 AS (SELECT reconcile_id
-        FROM Q1
-        WHERE balance = 0.0
-        AND num_moves = 2),
-        Q3 AS (SELECT aml.reconcile_id, aml.id, aml.debit,
-        aml.credit, aml.company_id
-        FROM account_move_line AS aml
-        INNER JOIN Q2
-        ON Q2.reconcile_id = aml.reconcile_id),
-        Q5 AS (SELECT reconcile_id, CASE WHEN debit > 0.0
-        THEN id ELSE Null END as debit_move_id, CASE WHEN credit > 0.0
-        THEN id ELSE Null END as credit_move_id, company_id
-        FROM Q3
-        GROUP BY reconcile_id, debit_move_id, credit_move_id, company_id),
-        Q6 AS (SELECT reconcile_id, sum(debit_move_id) as debit_move_id,
-        sum(credit_move_id) as credit_move_id, company_id
-        FROM Q5
-        GROUP BY reconcile_id, company_id)
+        WITH Q1 AS (
+            SELECT reconcile_id, sum(debit-credit) as balance,
+            count(id) as num_moves
+            FROM account_move_line
+            WHERE reconcile_id IS NOT NULL
+            AND currency_id IS NULL
+            GROUP BY reconcile_id, currency_id
+        ),
+        Q2 AS (
+            SELECT reconcile_id
+            FROM Q1
+            WHERE balance = 0.0
+            AND num_moves = 2
+        ),
+        Q3 AS (
+            SELECT aml.reconcile_id, aml.id, aml.debit,
+            aml.credit, aml.company_id
+            FROM account_move_line AS aml
+            INNER JOIN Q2
+            ON Q2.reconcile_id = aml.reconcile_id
+        ),
+        Q4 AS (
+            SELECT reconcile_id, CASE WHEN debit > 0.0
+            THEN id ELSE Null END as debit_move_id, CASE WHEN credit > 0.0
+            THEN id ELSE Null END as credit_move_id, company_id
+            FROM Q3
+            GROUP BY reconcile_id, debit_move_id, credit_move_id, company_id
+        ),
+        Q5 AS (
+            SELECT reconcile_id, sum(debit_move_id) as debit_move_id,
+            sum(credit_move_id) as credit_move_id, company_id
+            FROM Q4
+            GROUP BY reconcile_id, company_id
+        )
         INSERT INTO account_partial_reconcile (debit_move_id, credit_move_id,
-        amount, company_id)
-        VALUES (SELECT debit_move_id, credit_move_id, company_id
-        FROM Q6
-        WHERE debit_move_id > 0 AND credit_move_id > 0)
+        amount, company_id) (
+            SELECT debit_move_id, credit_move_id, company_id
+            FROM Q6
+            WHERE debit_move_id > 0 AND credit_move_id > 0
+        )
     """)
 
     # We want to exclude the moves that were included in the step above from
