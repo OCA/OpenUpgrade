@@ -382,14 +382,16 @@ def account_partial_reconcile(env):
                "WHERE (reconcile_id IS NOT NULL "
                "OR reconcile_partial_id IS NOT NULL) "
                "AND id NOT IN %s" % (tuple(move_line_ids), ))
+    recs = [rec_id for rec_id, move_line_id in cr.fetchall()]
+    num_recs = len(recs)
+    i = 1
     for rec_id, move_line_id in cr.fetchall():
         move_line_map.setdefault(rec_id, []).append(move_line_id)
     to_recompute = env['account.move.line']
     for _rec_id, move_line_ids in move_line_map.iteritems():
         move_lines = env['account.move.line'].browse(move_line_ids)
         move_lines.auto_reconcile_lines()
-        msg = 'Reconciling %s with moves: %s' % (_rec_id, ','.join(map(
-            str, move_line_ids)))
+        msg = 'Reconciling %s of %s' % (i, num_recs)
         openupgrade.message(cr, 'account', 'account_partial_reconcile',
                             'id', msg)
         to_recompute += move_lines
