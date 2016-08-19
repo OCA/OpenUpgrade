@@ -355,16 +355,20 @@ def account_partial_reconcile(env):
     # We want to exclude the moves that were included in the step above from
     # the next reconciliation step.
     cr.execute("""
-        WITH Q1 AS (SELECT reconcile_id, sum(debit-credit) as balance,
-        count(id) as num_moves
-        FROM account_move_line
-        where reconcile_id IS NOT NULL
-        AND currency_id IS NULL
-        GROUP BY reconcile_id, currency_id),
-        Q2 AS (SELECT reconcile_id
-        FROM Q1
-        WHERE balance = 0.0
-        AND num_moves = 2)
+        WITH Q1 AS (
+            SELECT reconcile_id, sum(debit-credit) as balance,
+            count(id) as num_moves, count(currency_id) as num_currencies
+            FROM account_move_line
+            WHERE reconcile_id IS NOT NULL
+            GROUP BY reconcile_id, currency_id
+        ),
+        Q2 AS (
+            SELECT reconcile_id
+            FROM Q1
+            WHERE balance = 0.0
+            AND num_moves = 2
+            AND num_currencies = 0
+        )
         SELECT aml.id
         FROM account_move_line AS aml
         INNER JOIN Q2
@@ -375,8 +379,8 @@ def account_partial_reconcile(env):
     move_line_map = {}
     cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
                "FROM account_move_line "
-               "WHERE reconcile_id IS NOT NULL "
-               "OR reconcile_partial_id IS NOT NULL "
+               "WHERE (reconcile_id IS NOT NULL "
+               "OR reconcile_partial_id IS NOT NULL) "
                "AND id NOT IN %s" % (tuple(move_line_ids), ))
     for rec_id, move_line_id in cr.fetchall():
         move_line_map.setdefault(rec_id, []).append(move_line_id)
