@@ -377,7 +377,7 @@ def account_partial_reconcile(env):
                "FROM account_move_line "
                "WHERE reconcile_id IS NOT NULL "
                "OR reconcile_partial_id IS NOT NULL "
-               "AND id NOT IN %s" % (tuple(move_line_ids)))
+               "AND id NOT IN %s" % (tuple(move_line_ids), ))
     for rec_id, move_line_id in cr.fetchall():
         move_line_map.setdefault(rec_id, []).append(move_line_id)
     to_recompute = env['account.move.line']
