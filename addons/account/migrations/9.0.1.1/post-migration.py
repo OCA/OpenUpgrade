@@ -311,10 +311,9 @@ def account_partial_reconcile(env):
     openupgrade.logged_query(cr, """
         WITH Q1 AS (
             SELECT reconcile_id, sum(debit-credit) as balance,
-            count(id) as num_moves
+            count(id) as num_moves, count(currency_id) as num_currencies
             FROM account_move_line
             WHERE reconcile_id IS NOT NULL
-            AND currency_id IS NULL
             GROUP BY reconcile_id, currency_id
         ),
         Q2 AS (
@@ -322,6 +321,7 @@ def account_partial_reconcile(env):
             FROM Q1
             WHERE balance = 0.0
             AND num_moves = 2
+            AND num_currencies = 0
         ),
         Q3 AS (
             SELECT aml.reconcile_id, aml.id, aml.debit,
