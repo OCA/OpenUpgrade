@@ -394,6 +394,7 @@ def account_partial_reconcile(env):
         msg = 'Reconciling %s of %s' % (i, num_recs)
         openupgrade.message(cr, 'account', 'account_partial_reconcile',
                             'id', msg)
+        i += 1
         to_recompute += move_lines
     for field in ['amount_residual', 'amount_residual_currency', 'reconciled']:
         env.add_todo(env['account.move.line']._fields[field], to_recompute)
