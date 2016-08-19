@@ -350,7 +350,6 @@ def account_partial_reconcile(env):
         SELECT debit_move_id, credit_move_id, amount, company_id
             FROM Q5
             WHERE debit_move_id > 0 AND credit_move_id > 0
-        )
     """)
 
     # We want to exclude the moves that were included in the step above from
