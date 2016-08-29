@@ -13,6 +13,7 @@ renamed_modules = {
     'partner_external_maps': 'partner_external_map',
     # OCA/server-tools
     'disable_openerp_online': 'disable_odoo_online',
+    'inactive_session_timeout': 'auth_session_timeout',
     # OCA/runbot-addons
     'runbot_secure': 'runbot_relative',
     # not exactly a module rename, but they do the same
