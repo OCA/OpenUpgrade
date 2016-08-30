@@ -1,32 +1,79 @@
 ---Fields in module 'purchase'---
 purchase     / account.invoice          / purchase_id (many2one)        : NEW relation: purchase.order
+#Nothing To Do : New Functionality added.
+
 purchase     / product.category         / property_account_creditor_price_difference_categ (many2one): NEW relation: account.account
 purchase     / product.template         / property_account_creditor_price_difference (many2one): NEW relation: account.account
+#Nothing To Do : New Functionality added.
+
 purchase     / product.template         / purchase_method (selection)   : NEW selection_keys: ['purchase', 'receive']
+#Nothing To Do : New Functionality added, default is receive (which will be automatically set to all products)
+
 purchase     / purchase.order           / bid_date (date)               : DEL 
 purchase     / purchase.order           / bid_validity (date)           : DEL 
+#Nothing To Do : Functionality removed now no longer needed.
+
 purchase     / purchase.order           / fiscal_position (many2one)    : was renamed to fiscal_position_id [nothing to to]
+#Nothing To Do : ORM will change the name automatically.
+
 purchase     / purchase.order           / group_id (many2one)           : NEW relation: procurement.group
+#Nothing To Do : New Functionality added.
+
 purchase     / purchase.order           / invoice_ids (many2many)       : DEL relation: account.invoice
+#Nothing To Do : Functionality removed now no longer needed.
+
 purchase     / purchase.order           / invoice_method (selection)    : DEL required: required, selection_keys: ['manual', 'order', 'picking'], req_default: order
 purchase     / purchase.order           / journal_id (many2one)         : DEL relation: account.journal
+#Nothing To Do : Functionality removed now no longer needed.
+
 purchase     / purchase.order           / location_id (many2one)        : DEL relation: stock.location, required: required
+#Nothing To Do : As picking type with default destination is already there.
+
 purchase     / purchase.order           / message_follower_ids (many2many): not a function anymore
 purchase     / purchase.order           / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
 purchase     / purchase.order           / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+# TODO : ???  # Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
+
 purchase     / purchase.order           / pricelist_id (many2one)       : DEL relation: product.pricelist, required: required, req_default: function
+#Nothing To Do : Functionality removed now no longer needed. 
+
 purchase     / purchase.order           / shipped (boolean)             : DEL 
+#Nothing To Do : Functionality removed now no longer needed.
+
 purchase     / purchase.order           / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'purchase', 'sent', 'to approve']' ('['approved', 'bid', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'sent']')
+TODO : To map the state values as per new values. 
+#Done : Mapped the values as per new state values 
+
 purchase     / purchase.order           / validator (many2one)          : DEL relation: res.users
+#Nothing To Do : Functionality removed now no longer needed.
+
 purchase     / purchase.order.line      / date_planned (date)           : type is now 'datetime' ('date')
+#Nothing To Do : will get datetime automatically.
+
 purchase     / purchase.order.line      / invoice_lines (many2many)     : type is now 'one2many' ('many2many')
+#Nothing To Do : As there is already m2o (purchase_line_id) for purchase.order.line in account.invoice.line.
+
 purchase     / purchase.order.line      / invoiced (boolean)            : DEL 
+#Nothing To Do : Functionality removed now no longer needed.
+
 purchase     / purchase.order.line      / product_id (many2one)         : now required
+#TODO : Maybe To create product from description. (need more analysis on this)
+#Done : Created Service type product and assigned purchase.order.line where product_id is null. 
+
 purchase     / purchase.order.line      / state (selection)             : DEL required: required, selection_keys: ['cancel', 'confirmed', 'done', 'draft'], req_default: function
+TODO : To map the state values as per new values. 
+#Done : Mapped the values as per new state values, done in pre-migration script.
+
 purchase     / res.company              / po_double_validation (selection): NEW selection_keys: ['one_step', 'two_step']
 purchase     / res.company              / po_double_validation_amount (float): NEW 
+#TODO : Saved it for later use (moved to purchase module in v9 from purchase_double_validation module in v8).
+#Done : need some help (the value is retrieved but need to delete the workflow at the same time)
+
 purchase     / res.partner              / property_product_pricelist_purchase (many2one): DEL relation: product.pricelist
 purchase     / res.partner              / property_purchase_currency_id (many2one): NEW relation: res.currency
+#TODO : To get currency from the purchase Pricelist property.
+#Done : Done in post-migration script
+
 ---XML records in module 'purchase'---
 DEL email.template: purchase.email_template_edi_purchase
 DEL email.template: purchase.email_template_edi_purchase_done
