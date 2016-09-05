@@ -97,7 +97,7 @@ def set_sale_order_qty_delivered(env):
     for line_id, move_id in env.cr.fetchall():
         line = env['sale.order.line'].browse(line_id)
         move = env['stock.move'].browse(move_id)
-        so_qty_map.set_default(line_id, line.qty_delivered)
+        so_qty_map.setdefault(line_id, line.qty_delivered)
         so_qty_map[line_id] += uom_obj._compute_qty_obj(
             move.product_uom, move.product_uom_qty, line.product_uom)
 
