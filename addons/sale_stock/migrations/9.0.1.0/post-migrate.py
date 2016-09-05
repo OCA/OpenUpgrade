@@ -21,7 +21,7 @@ def set_incoterm_group(env):
     env.cr.execute("SELECT incoterm FROM sale_order "
                    "WHERE incoterm IS NOT NULL LIMIT 1")
     if env.cr.fetchone():
-        env.ref('base.group_employee').write({
+        env.ref('base.group_user').write({
             'implied_ids': [(4, env.ref('sale.group_display_incoterm').id)]
         })
 
