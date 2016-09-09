@@ -21,7 +21,7 @@ def set_incoterm_group(env):
     env.cr.execute("SELECT incoterm FROM sale_order "
                    "WHERE incoterm IS NOT NULL LIMIT 1")
     if env.cr.fetchone():
-        env.ref('base.group_employee').write({
+        env.ref('base.group_user').write({
             'implied_ids': [(4, env.ref('sale.group_display_incoterm').id)]
         })
 
@@ -97,7 +97,7 @@ def set_sale_order_qty_delivered(env):
     for line_id, move_id in env.cr.fetchall():
         line = env['sale.order.line'].browse(line_id)
         move = env['stock.move'].browse(move_id)
-        so_qty_map.set_default(line_id, line.qty_delivered)
+        so_qty_map.setdefault(line_id, line.qty_delivered)
         so_qty_map[line_id] += uom_obj._compute_qty_obj(
             move.product_uom, move.product_uom_qty, line.product_uom)
 
