@@ -21,7 +21,6 @@
 ##############################################################################
 
 import logging
-import base64
 from openupgradelib import openupgrade
 from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID
