@@ -91,31 +91,6 @@ def set_filter_active(cr):
         """)
 
 
-def decode_base64(data):
-    """Decode base64, padding being optional.
-
-    :param data: Base64 data as an ASCII byte string
-    :returns: The decoded byte string.
-
-    """
-    missing_padding = len(data) % 4
-    if missing_padding != 0:
-        data += b'=' * (4 - missing_padding)
-    return base64.decodestring(data)
-
-
-def precalculate_checksum(cr):
-    pool = RegistryManager.get(cr.dbname)
-    ir_attachment = pool['ir.attachment']
-
-    for attach_id in ir_attachment.search(cr, SUPERUSER_ID, []):
-        attach = ir_attachment.browse(cr, SUPERUSER_ID, attach_id)
-        # as done in ir_attachment._data_set()
-        value = attach.db_datas
-        bin_data = value and decode_base64(value) or ''  # empty string to compute its hash
-        attach.checksum = attach._compute_checksum(bin_data)
-
-
 def remove_obsolete_modules(cr, modules_to_remove):
     pool = RegistryManager.get(cr.dbname)
     ir_module_module = pool['ir.module.module']
@@ -134,5 +109,4 @@ def migrate(cr, version):
     clear_inherit_id(cr)
     rename_your_company(cr)
     set_filter_active(cr)
-    # precalculate_checksum(cr)
     remove_obsolete_modules(cr, ('web_gantt', 'web_graph', 'web_tests'))
