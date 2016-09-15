@@ -20,6 +20,8 @@ renamed_modules = {
         'account_bank_statement_import_mt940_nl_ing',
     'account_banking_nl_rabo_mt940':
         'account_bank_statement_import_mt940_nl_rabo',
+    # OCA/product-attribute
+    'product_images': 'product_multi_image',
 }
 
 renamed_models = {
