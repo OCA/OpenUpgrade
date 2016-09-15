@@ -325,7 +325,7 @@ def account_partial_reconcile(env):
         ),
         Q3 AS (
             SELECT aml.reconcile_id, aml.id, aml.debit,
-            aml.credit, aml.company_id, aml.company_currency_id
+            aml.credit, aml.company_id
             FROM account_move_line AS aml
             INNER JOIN Q2
             ON Q2.reconcile_id = aml.reconcile_id
@@ -335,23 +335,21 @@ def account_partial_reconcile(env):
             CASE WHEN debit > 0.0
             THEN id ELSE Null END as debit_move_id, CASE WHEN credit > 0.0
             THEN id ELSE Null END as credit_move_id,
-            CASE WHEN debit > 0.0 THEN debit END as amount, company_id,
-            company_currency_id
+            CASE WHEN debit > 0.0 THEN debit END as amount, company_id
             FROM Q3
             GROUP BY reconcile_id, debit_move_id, credit_move_id, amount,
-            company_id, company_currency_id
+            company_id
         ),
         Q5 AS (
             SELECT reconcile_id, sum(debit_move_id) as debit_move_id,
             sum(credit_move_id) as credit_move_id, sum(amount) as amount,
-            company_id, company_currency_id
+            company_id
             FROM Q4
-            GROUP BY reconcile_id, company_id, company_currency_id
+            GROUP BY reconcile_id, company_id
         )
         INSERT INTO account_partial_reconcile
-        (debit_move_id, credit_move_id, amount, company_id, currency_id)
-        SELECT debit_move_id, credit_move_id, amount, company_id,
-        company_currency_id
+        (debit_move_id, credit_move_id, amount, company_id, amount_currency)
+        SELECT debit_move_id, credit_move_id, amount, company_id, 0.0
             FROM Q5
             WHERE debit_move_id > 0 AND credit_move_id > 0
     """)
