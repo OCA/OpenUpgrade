@@ -393,12 +393,11 @@ def account_partial_reconcile(env):
         (account_invoice_id, account_move_line_id)
         SELECT ai.id, apr.debit_move_id
         FROM account_partial_reconcile AS apr
-        INNER JOIN account_invoice AS ai
-        ON apr.credit_move_id = ai.move_id
-        WHERE ai.move_id in (
-            SELECT DISTINCT move_id
-            FROM account_move_line
-            WHERE id IN %s)
+        INNER JOIN account_move_line as aml
+        ON aml.id = apr.credit_move_id
+        INNER JOIN account_invoice as ai
+        ON ai.move_id = aml.move_id
+        WHERE apr.credit_move_id IN %s
     """ % (tuple(move_line_ids), ))
 
     openupgrade.logged_query(cr, """
@@ -406,12 +405,11 @@ def account_partial_reconcile(env):
         (account_invoice_id, account_move_line_id)
         SELECT ai.id, apr.credit_move_id
         FROM account_partial_reconcile AS apr
-        INNER JOIN account_invoice AS ai
-        ON apr.debit_move_id = ai.move_id
-        WHERE ai.move_id in (
-            SELECT DISTINCT move_id
-            FROM account_move_line
-            WHERE id IN %s)
+        INNER JOIN account_move_line as aml
+        ON aml.id = apr.debit_move_id
+        INNER JOIN account_invoice as ai
+        ON ai.move_id = aml.move_id
+        WHERE apr.debit_move_id IN %s
     """ % (tuple(move_line_ids), ))
 
     move_line_map = {}
