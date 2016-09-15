@@ -397,10 +397,16 @@ def account_partial_reconcile(env):
     """ % (tuple(move_line_ids), ))
 
     invoice_ids = [invoice_id for invoice_id, in cr.fetchall()]
-    to_recompute = env['account.invoice'].browse(invoice_ids)
-    for field in ['payment_move_line_ids']:
-        env.add_todo(env['account.invoice']._fields[field], to_recompute)
-    env['account.invoice'].recompute()
+    invoices = env['account.invoice'].browse(invoice_ids)
+    payment_lines = []
+    for invoice in invoices:
+        for line in invoice.move_id.line_ids:
+            payment_lines.extend(filter(None, [rp.credit_move_id.id for rp in
+                                               line.matched_credit_ids]))
+            payment_lines.extend(filter(None, [rp.debit_move_id.id for rp in
+                                               line.matched_debit_ids]))
+        invoice.payment_move_line_ids = env['account.move.line'].browse(
+            list(set(payment_lines)))
 
     move_line_map = {}
     cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
