@@ -386,27 +386,33 @@ def account_partial_reconcile(env):
         WHERE id IN %s
     """ % (tuple(move_line_ids), ))
 
-    # Recompute the payment_move_line_ids in associated invoices
+    # Update the table that relates invoices with payments made
+
     cr.execute("""
-        SELECT id
-        FROM account_invoice
-        WHERE move_id IN (
+        INSERT INTO account_invoice_account_move_line_rel
+        (account_invoice_id, account_move_line_id)
+        SELECT ai.id, apr.debit_move_id
+        FROM account_partial_reconcile AS apr
+        INNER JOIN account_invoice AS ai
+        ON apr.credit_move_id = ai.move_id
+        WHERE ai.move_id in (
             SELECT DISTINCT move_id
             FROM account_move_line
             WHERE id IN %s)
     """ % (tuple(move_line_ids), ))
 
-    invoice_ids = [invoice_id for invoice_id, in cr.fetchall()]
-    invoices = env['account.invoice'].browse(invoice_ids)
-    payment_lines = []
-    for invoice in invoices:
-        for line in invoice.move_id.line_ids:
-            payment_lines.extend(filter(None, [rp.credit_move_id.id for rp in
-                                               line.matched_credit_ids]))
-            payment_lines.extend(filter(None, [rp.debit_move_id.id for rp in
-                                               line.matched_debit_ids]))
-        invoice.payment_move_line_ids = env['account.move.line'].browse(
-            list(set(payment_lines)))
+    cr.execute("""
+        INSERT INTO account_invoice_account_move_line_rel
+        (account_invoice_id, account_move_line_id)
+        SELECT ai.id, apr.credit_move_id
+        FROM account_partial_reconcile AS apr
+        INNER JOIN account_invoice AS ai
+        ON apr.debit_move_id = ai.move_id
+        WHERE ai.move_id in (
+            SELECT DISTINCT move_id
+            FROM account_move_line
+            WHERE id IN %s)
+    """ % (tuple(move_line_ids), ))
 
     move_line_map = {}
     cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
