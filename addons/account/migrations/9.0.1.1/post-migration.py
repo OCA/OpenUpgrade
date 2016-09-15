@@ -390,7 +390,10 @@ def account_partial_reconcile(env):
     cr.execute(cr, """
         SELECT id
         FROM account_invoice
-        WHERE move_id IN %s
+        WHERE move_id IN (
+            SELECT DISTINCT move_id
+            FROM account_move_line
+            WHERE id in %s)
     """ % (tuple(move_line_ids), ))
     invoice_ids = [move_line_id for move_line_id, in cr.fetchall()]
     to_recompute = env['account.invoice'].browse(invoice_ids)
