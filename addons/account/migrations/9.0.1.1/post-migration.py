@@ -396,7 +396,7 @@ def account_partial_reconcile(env):
             WHERE id IN %s)
     """ % (tuple(move_line_ids), ))
 
-    invoice_ids = [move_line_id for move_line_id, in cr.fetchall()]
+    invoice_ids = [invoice_id for invoice_id, in cr.fetchall()]
     to_recompute = env['account.invoice'].browse(invoice_ids)
     for field in ['payment_move_line_ids']:
         env.add_todo(env['account.invoice']._fields[field], to_recompute)
