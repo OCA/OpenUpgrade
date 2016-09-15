@@ -376,7 +376,15 @@ def account_partial_reconcile(env):
         INNER JOIN Q2
         ON Q2.reconcile_id = aml.reconcile_id
     """)
+
     move_line_ids = [move_line_id for move_line_id, in cr.fetchall()]
+
+    # The previous move lines must be flagged as reconciled
+    openupgrade.logged_query(cr, """
+        UPDATE account_move_line
+        SET reconciled = True
+        WHERE id IN %s
+    """ % (tuple(move_line_ids)))
 
     move_line_map = {}
     cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
