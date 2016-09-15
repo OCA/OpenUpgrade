@@ -355,7 +355,7 @@ def account_partial_reconcile(env):
         Q5.company_id, 0.0
         FROM Q5
         INNER JOIN account_move_reconcile AS amr
-        ON amr.reconcile_id = amr.id
+        ON Q5.reconcile_id = amr.id
         WHERE debit_move_id > 0 AND credit_move_id > 0
     """)
 
