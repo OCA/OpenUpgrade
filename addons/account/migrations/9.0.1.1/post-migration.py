@@ -348,10 +348,15 @@ def account_partial_reconcile(env):
             GROUP BY reconcile_id, company_id
         )
         INSERT INTO account_partial_reconcile
-        (debit_move_id, credit_move_id, amount, company_id, amount_currency)
-        SELECT debit_move_id, credit_move_id, amount, company_id, 0.0
-            FROM Q5
-            WHERE debit_move_id > 0 AND credit_move_id > 0
+        (create_uid, create_date, write_uid, write_date, debit_move_id,
+        credit_move_id, amount, company_id, amount_currency)
+        SELECT amr.create_uid, amr.create_date, amr.write_uid,
+        amr.write_date, Q5.debit_move_id, Q5.credit_move_id, Q5.amount,
+        Q5.company_id, 0.0
+        FROM Q5
+        INNER JOIN account_move_reconcile AS amr
+        ON amr.reconcile_id = amr.id
+        WHERE debit_move_id > 0 AND credit_move_id > 0
     """)
 
     # We want to exclude the moves that were included in the step above from
