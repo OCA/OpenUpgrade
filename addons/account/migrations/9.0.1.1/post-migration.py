@@ -339,7 +339,7 @@ def account_partial_reconcile(env):
             company_currency_id
             FROM Q3
             GROUP BY reconcile_id, debit_move_id, credit_move_id, amount,
-            company_id
+            company_id, company_currency_id
         ),
         Q5 AS (
             SELECT reconcile_id, sum(debit_move_id) as debit_move_id,
