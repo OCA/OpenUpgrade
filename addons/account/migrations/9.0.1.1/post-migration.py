@@ -388,7 +388,7 @@ def account_partial_reconcile(env):
 
     # Update the table that relates invoices with payments made
 
-    cr.execute("""
+    openupgrade.logged_query(cr, """
         INSERT INTO account_invoice_account_move_line_rel
         (account_invoice_id, account_move_line_id)
         SELECT ai.id, apr.debit_move_id
@@ -401,7 +401,7 @@ def account_partial_reconcile(env):
             WHERE id IN %s)
     """ % (tuple(move_line_ids), ))
 
-    cr.execute("""
+    openupgrade.logged_query(cr, """
         INSERT INTO account_invoice_account_move_line_rel
         (account_invoice_id, account_move_line_id)
         SELECT ai.id, apr.credit_move_id
