@@ -346,7 +346,7 @@ def account_partial_reconcile(env):
             sum(credit_move_id) as credit_move_id, sum(amount) as amount,
             company_id, company_currency_id
             FROM Q4
-            GROUP BY reconcile_id, company_id
+            GROUP BY reconcile_id, company_id, company_currency_id
         )
         INSERT INTO account_partial_reconcile
         (debit_move_id, credit_move_id, amount, company_id, currency_id)
