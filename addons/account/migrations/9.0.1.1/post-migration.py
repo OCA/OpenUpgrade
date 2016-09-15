@@ -348,7 +348,7 @@ def account_partial_reconcile(env):
             GROUP BY reconcile_id, company_id
         )
         INSERT INTO account_partial_reconcile
-        (debit_move_id, credit_move_id, amount, currency_id)
+        (debit_move_id, credit_move_id, amount, company_id)
         SELECT debit_move_id, credit_move_id, amount, company_id
             FROM Q5
             WHERE debit_move_id > 0 AND credit_move_id > 0
