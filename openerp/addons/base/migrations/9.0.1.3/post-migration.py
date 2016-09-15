@@ -90,17 +90,6 @@ def set_filter_active(cr):
         """)
 
 
-def precalculate_checksum(cr):
-    pool = RegistryManager.get(cr.dbname)
-    ir_attachment = pool['ir.attachment']
-    for attach_id in ir_attachment.search(cr, SUPERUSER_ID, []):
-        attach = ir_attachment.browse(cr, SUPERUSER_ID, attach_id)
-        # as done in ir_attachment._data_set()
-        value = attach.db_datas
-        bin_data = value and value.decode('base64') or ''  # empty string to compute its hash
-        attach.checksum = attach._compute_checksum(bin_data)
-
-
 def remove_obsolete_modules(cr, modules_to_remove):
     pool = RegistryManager.get(cr.dbname)
     ir_module_module = pool['ir.module.module']
@@ -119,6 +108,5 @@ def migrate(cr, version):
     clear_inherit_id(cr)
     rename_your_company(cr)
     set_filter_active(cr)
-    precalculate_checksum(cr)
     remove_obsolete_modules(cr, ('web_gantt', 'web_graph', 'web_tests'))
     openupgrade.load_data(cr, 'base', 'migrations/9.0.1.3/noupdate_changes.xml')
