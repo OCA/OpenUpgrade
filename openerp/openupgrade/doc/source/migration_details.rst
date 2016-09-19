@@ -49,7 +49,7 @@ to a separate stanza in the server configuration file under a header
   as values. If a key module is installed on your database, the modules from
   the value (and their dependencies) are selected for installation as well.
 
-* *forced_deps* - A dictionary with module name keys and lists of module names
+* *force_deps* - A dictionary with module name keys and lists of module names
   as values. If a key module is installed on your database, the modules from
   the value will be treated as a module dependency. With this directive, you
   can manipulate the order in which the modules are migrated. If the modules
