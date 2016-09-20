@@ -495,6 +495,11 @@ def account_partial_reconcile(env):
     num_recs = len(rec_l.keys())
     i = 1
     for _rec_id, move_line_ids in move_line_map.iteritems():
+        msg = 'Reconciliation step 2 (%s of %s). ' \
+              'Resolving account.move.reconcile %s.' % \
+              (i, num_recs, _rec_id)
+        openupgrade.message(cr, 'account', 'account_partial_reconcile',
+                            'id', msg)
         move_lines = env['account.move.line'].browse(move_line_ids)
         amount_residual_d = {}
         for move_line in move_lines:
@@ -510,11 +515,6 @@ def account_partial_reconcile(env):
                 move_line.currency_id and move_line.currency_id.round(
                     amount_residual_currency * sign) or 0.0
         auto_reconcile_lines(env, move_lines, amount_residual_d)
-        msg = 'Reconciliation step 2 (%s of %s). ' \
-              'Resolving account.move.reconcile %s.' % \
-              (i, num_recs, _rec_id)
-        openupgrade.message(cr, 'account', 'account_partial_reconcile',
-                            'id', msg)
         i += 1
         move_line_ids_reconciled += move_line_ids
 
@@ -565,12 +565,12 @@ def account_partial_reconcile(env):
     to_recompute = env['account.move.line']
     i = 1
     for _rec_id, move_line_ids in move_line_map.iteritems():
-        move_lines = env['account.move.line'].browse(move_line_ids)
-        move_lines.auto_reconcile_lines()
-        msg = 'SReconciliation step 3 (%s of %s). ' \
+        msg = 'Reconciliation step 3 (%s of %s). ' \
               'Resolving account.move.reconcile %s.' % (i, num_recs, _rec_id)
         openupgrade.message(cr, 'account', 'account_partial_reconcile',
                             'id', msg)
+        move_lines = env['account.move.line'].browse(move_line_ids)
+        move_lines.auto_reconcile_lines()
         i += 1
         to_recompute += move_lines
     for field in ['amount_residual', 'amount_residual_currency', 'reconciled']:
