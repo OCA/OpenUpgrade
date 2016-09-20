@@ -295,13 +295,15 @@ def account_internal_type(env):
 
 def _get_pair_to_reconcile(moves, amount_residual):
 
-    #field is either 'amount_residual' or 'amount_residual_currency'
+    # field is either 'amount_residual' or 'amount_residual_currency'
     # (if the reconciled account has a secondary currency set)
     field = moves[0].account_id.currency_id \
             and 'amount_residual_currency' or 'amount_residual'
     rounding = moves[0].company_id.currency_id.rounding
-    if moves[0].currency_id and all([x.amount_currency and x.currency_id ==
-            moves[0].currency_id for x in moves]):
+    if moves[0].currency_id \
+            and all([x.amount_currency and
+                    x.currency_id == moves[0].currency_id
+                     for x in moves]):
         # or if all lines share the same currency
         field = 'amount_residual_currency'
         rounding = moves[0].currency_id.rounding
