@@ -6,6 +6,7 @@ import operator
 from openerp import models
 from openupgradelib import openupgrade
 from openerp.modules.registry import RegistryManager
+from openerp.tools import float_compare
 
 
 def map_bank_state(cr):
@@ -292,6 +293,101 @@ def account_internal_type(env):
             })
 
 
+def _get_pair_to_reconcile(moves, amount_residual):
+
+    #field is either 'amount_residual' or 'amount_residual_currency'
+    # (if the reconciled account has a secondary currency set)
+    field = moves[0].account_id.currency_id \
+            and 'amount_residual_currency' or 'amount_residual'
+    rounding = moves[0].company_id.currency_id.rounding
+    if moves[0].currency_id and all([x.amount_currency and x.currency_id ==
+            moves[0].currency_id for x in moves]):
+        # or if all lines share the same currency
+        field = 'amount_residual_currency'
+        rounding = moves[0].currency_id.rounding
+    # target the pair of move in self that are the oldest
+    sorted_moves = sorted(moves, key=lambda a: a.date)
+    debit = credit = False
+    for aml in sorted_moves:
+        if credit and debit:
+            break
+        if float_compare(amount_residual[aml.id][field], 0,
+                         precision_rounding=rounding) == 1 \
+                and not debit:
+            debit = aml
+        elif float_compare(amount_residual[aml.id][field], 0,
+                           precision_rounding=rounding) == -1 \
+                and not credit:
+            credit = aml
+    return debit, credit
+
+
+def auto_reconcile_lines(env, move_lines, amount_residual):
+
+    if not move_lines:
+        return move_lines
+
+    sm_debit_move, sm_credit_move = _get_pair_to_reconcile(move_lines,
+                                                           amount_residual)
+    # there is no more pair to reconcile so return what move_line are left
+    if not sm_credit_move or not sm_debit_move:
+        return move_lines
+
+    field = move_lines[0].account_id.currency_id \
+        and 'amount_residual_currency' or 'amount_residual'
+    if not sm_debit_move.debit and not sm_debit_move.credit:
+        # both debit and credit field are 0, consider
+        # the amount_residual_currency field because it's an
+        # exchange difference entry
+        field = 'amount_residual_currency'
+    if move_lines[0].currency_id and all(
+            [x.currency_id == move_lines[0].currency_id for x in move_lines]):
+        # all the lines have the same currency, so we consider
+        # the amount_residual_currency field
+        field = 'amount_residual_currency'
+    # Reconcile the pair together
+    amount_reconcile = \
+        min(amount_residual[sm_debit_move.id][field],
+            -amount_residual[sm_credit_move.id][field])
+    # Remove from recordset the one(s) that will be totally reconciled
+    if amount_reconcile == amount_residual[sm_debit_move.id][field]:
+        move_lines -= sm_debit_move
+    if amount_reconcile == -amount_residual[sm_credit_move.id][field]:
+        move_lines -= sm_credit_move
+
+    # Check for the currency and amount_currency we can set
+    currency = False
+    amount_reconcile_currency = 0
+    if sm_debit_move.currency_id == sm_credit_move.currency_id and \
+            sm_debit_move.currency_id.id:
+        currency = sm_credit_move.currency_id.id
+        amount_reconcile_currency = min(
+            amount_residual[sm_debit_move.id]['amount_residual_currency'],
+            -amount_residual[sm_credit_move.id]['amount_residual_currency'])
+        amount_residual[sm_debit_move.id][
+            'amount_residual_currency'] -= amount_reconcile
+        amount_residual[sm_credit_move.id][
+            'amount_residual_currency'] -= amount_reconcile
+
+    amount_reconcile = min(amount_residual[sm_debit_move.id][
+                               'amount_residual'],
+                           -amount_residual[sm_credit_move.id][
+                               'amount_residual'])
+    amount_residual[sm_debit_move.id]['amount_residual'] -= amount_reconcile
+    amount_residual[sm_credit_move.id]['amount_residual'] -= amount_reconcile
+
+    env['account.partial.reconcile'].with_context(recompute=False).create({
+        'debit_move_id': sm_debit_move.id,
+        'credit_move_id': sm_credit_move.id,
+        'amount': amount_reconcile,
+        'amount_currency': amount_reconcile_currency,
+        'currency_id': currency,
+    })
+
+    # Iterate process again on self
+    return auto_reconcile_lines(env, move_lines, amount_residual)
+
+
 def account_partial_reconcile(env):
     """ Create new entries of model account.partial.reconcile that replace the
     obsolete account.move.reconcile model. Note that an additional model
@@ -382,14 +478,47 @@ def account_partial_reconcile(env):
         ON Q2.reconcile_id = aml.reconcile_id
     """)
 
-    move_line_ids = [move_line_id for move_line_id, in cr.fetchall()]
+    move_line_ids_reconciled = [move_line_id for move_line_id,
+                                in cr.fetchall()]
+
+    move_line_map = {}
+    cr.execute("SELECT reconcile_id, id "
+               "FROM account_move_line "
+               "WHERE reconcile_id IS NOT NULL "
+               "AND id NOT IN %s" % (tuple(move_line_ids_reconciled), ))
+    rec_l = {}
+    for rec_id, move_line_id in cr.fetchall():
+        move_line_map.setdefault(rec_id, []).append(move_line_id)
+        rec_l[rec_id] = True
+    num_recs = len(rec_l.keys())
+    i = 1
+    for _rec_id, move_line_ids in move_line_map.iteritems():
+        move_lines = env['account.move.line'].browse(move_line_ids)
+        amount_residual_d = {}
+        for move_line in move_lines:
+            amount = abs(move_line.debit - move_line.credit)
+            amount_residual_currency = abs(move_line.amount_currency) or 0.0
+            sign = 1 if (move_line.debit - move_line.credit) > 0 else -1
+            amount_residual = move_line.company_id.currency_id.round(
+                amount * sign)
+            amount_residual_d[move_line.id] = {}
+            amount_residual_d[move_line.id]['amount_residual'] = \
+                amount_residual
+            amount_residual_d[move_line.id]['amount_residual_currency'] = \
+                move_line.currency_id and move_line.currency_id.round(
+                    amount_residual_currency * sign) or 0.0
+        auto_reconcile_lines(env, move_lines, amount_residual_d)
+        msg = 'Step 2. Reconciling %s of %s' % (i, num_recs)
+        openupgrade.message(cr, 'account', 'account_partial_reconcile',
+                            'id', msg)
+        move_line_ids_reconciled += move_line_ids
 
     # The previous move lines must be flagged as reconciled
     openupgrade.logged_query(cr, """
         UPDATE account_move_line
         SET reconciled = True
         WHERE id IN %s
-    """ % (tuple(move_line_ids), ))
+    """ % (tuple(move_line_ids_reconciled), ))
 
     # Update the table that relates invoices with payments made
 
@@ -403,7 +532,7 @@ def account_partial_reconcile(env):
         INNER JOIN account_invoice as ai
         ON ai.move_id = aml.move_id
         WHERE apr.credit_move_id IN %s
-    """ % (tuple(move_line_ids), ))
+    """ % (tuple(move_line_ids_reconciled), ))
 
     openupgrade.logged_query(cr, """
         INSERT INTO account_invoice_account_move_line_rel
@@ -415,14 +544,14 @@ def account_partial_reconcile(env):
         INNER JOIN account_invoice as ai
         ON ai.move_id = aml.move_id
         WHERE apr.debit_move_id IN %s
-    """ % (tuple(move_line_ids), ))
+    """ % (tuple(move_line_ids_reconciled), ))
 
     move_line_map = {}
     cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
                "FROM account_move_line "
                "WHERE (reconcile_id IS NOT NULL "
                "OR reconcile_partial_id IS NOT NULL) "
-               "AND id NOT IN %s" % (tuple(move_line_ids), ))
+               "AND id NOT IN %s" % (tuple(move_line_ids_reconciled), ))
     rec_l = {}
     for rec_id, move_line_id in cr.fetchall():
         move_line_map.setdefault(rec_id, []).append(move_line_id)
@@ -433,7 +562,7 @@ def account_partial_reconcile(env):
     for _rec_id, move_line_ids in move_line_map.iteritems():
         move_lines = env['account.move.line'].browse(move_line_ids)
         move_lines.auto_reconcile_lines()
-        msg = 'Reconciling %s of %s' % (i, num_recs)
+        msg = 'Step 3. Reconciling %s of %s' % (i, num_recs)
         openupgrade.message(cr, 'account', 'account_partial_reconcile',
                             'id', msg)
         i += 1
