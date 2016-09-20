@@ -510,7 +510,9 @@ def account_partial_reconcile(env):
                 move_line.currency_id and move_line.currency_id.round(
                     amount_residual_currency * sign) or 0.0
         auto_reconcile_lines(env, move_lines, amount_residual_d)
-        msg = 'Step 2. Reconciling %s of %s' % (i, num_recs)
+        msg = 'Reconciliation step 2 (%s of %s). ' \
+              'Resolving account.move.reconcile %s.' % \
+              (i, num_recs, _rec_id)
         openupgrade.message(cr, 'account', 'account_partial_reconcile',
                             'id', msg)
         i += 1
@@ -565,7 +567,8 @@ def account_partial_reconcile(env):
     for _rec_id, move_line_ids in move_line_map.iteritems():
         move_lines = env['account.move.line'].browse(move_line_ids)
         move_lines.auto_reconcile_lines()
-        msg = 'Step 3. Reconciling %s of %s' % (i, num_recs)
+        msg = 'SReconciliation step 3 (%s of %s). ' \
+              'Resolving account.move.reconcile %s.' % (i, num_recs, _rec_id)
         openupgrade.message(cr, 'account', 'account_partial_reconcile',
                             'id', msg)
         i += 1
