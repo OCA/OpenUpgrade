@@ -513,6 +513,7 @@ def account_partial_reconcile(env):
         msg = 'Step 2. Reconciling %s of %s' % (i, num_recs)
         openupgrade.message(cr, 'account', 'account_partial_reconcile',
                             'id', msg)
+        i += 1
         move_line_ids_reconciled += move_line_ids
 
     # The previous move lines must be flagged as reconciled
