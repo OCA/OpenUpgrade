@@ -526,7 +526,6 @@ def account_partial_reconcile(env):
     """ % (tuple(move_line_ids_reconciled), ))
 
     # Update the table that relates invoices with payments made
-
     openupgrade.logged_query(cr, """
         INSERT INTO account_invoice_account_move_line_rel
         (account_invoice_id, account_move_line_id)
@@ -537,7 +536,11 @@ def account_partial_reconcile(env):
         INNER JOIN account_invoice as ai
         ON ai.move_id = aml.move_id
         WHERE apr.credit_move_id IN %s
-    """ % (tuple(move_line_ids_reconciled), ))
+        AND NOT EXISTS (
+            SELECT account_move_line_id
+            FROM account_invoice_account_move_line_rel
+            WHERE account_move_line_id IN %s)
+    """ % (tuple(move_line_ids_reconciled), tuple(move_line_ids_reconciled)))
 
     openupgrade.logged_query(cr, """
         INSERT INTO account_invoice_account_move_line_rel
@@ -549,7 +552,11 @@ def account_partial_reconcile(env):
         INNER JOIN account_invoice as ai
         ON ai.move_id = aml.move_id
         WHERE apr.debit_move_id IN %s
-    """ % (tuple(move_line_ids_reconciled), ))
+        AND NOT EXISTS (
+            SELECT account_move_line_id
+            FROM account_invoice_account_move_line_rel
+            WHERE account_move_line_id IN %s)
+    """ % (tuple(move_line_ids_reconciled), tuple(move_line_ids_reconciled)))
 
     move_line_map = {}
     cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
