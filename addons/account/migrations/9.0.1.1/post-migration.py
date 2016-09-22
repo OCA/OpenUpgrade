@@ -546,7 +546,7 @@ def account_partial_reconcile(env):
     openupgrade.logged_query(cr, """
         INSERT INTO account_invoice_account_move_line_rel
         (account_invoice_id, account_move_line_id)
-        SELECT ai.id, apr.debit_move_id
+        SELECT DISTINCT ai.id, apr.debit_move_id
         FROM account_partial_reconcile AS apr
         INNER JOIN account_move_line as aml
         ON aml.id = apr.credit_move_id
@@ -570,7 +570,7 @@ def account_partial_reconcile(env):
     openupgrade.logged_query(cr, """
         INSERT INTO account_invoice_account_move_line_rel
         (account_invoice_id, account_move_line_id)
-        SELECT ai.id, apr.credit_move_id
+        SELECT DISTINCT ai.id, apr.credit_move_id
         FROM account_partial_reconcile AS apr
         INNER JOIN account_move_line as aml
         ON aml.id = apr.debit_move_id
