@@ -579,23 +579,6 @@ def account_partial_reconcile(env):
         WHERE apr.debit_move_id IN %s
     """ % (tuple(inv_move_to_link_ids), ))
 
-    # Set the residual amount to 0 for the corresponding invoices
-    cr.execute("""
-        SELECT DISTINCT account_invoice_id
-        FROM account_invoice_account_move_line_rel
-        WHERE account_move_line_id in %s
-    """ % (tuple(move_line_ids_reconciled), ))
-    invoice_ids = [inv_id for inv_id, in cr.fetchall()]
-
-    openupgrade.logged_query(cr, """
-        UPDATE account_invoice
-        SET
-            residual = 0.0,
-            residual_signed = 0.0,
-            residual_company_signed = 0.0
-        WHERE id IN %s
-    """ % (tuple(invoice_ids), ))
-
     # Migrate partially reconciled items
     move_line_map = {}
     cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
