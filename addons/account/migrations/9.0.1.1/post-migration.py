@@ -486,9 +486,10 @@ def account_partial_reconcile(env):
     # The previous move lines must be flagged as reconciled. The residual
     # amount is 0.
     move_lines = env['account.move.line'].browse(move_line_ids_reconciled)
-    move_lines.reconciled = True
-    move_lines.amount_residual = 0.0
-    move_lines.amount_residual_currency = 0.0
+    for move_line in move_lines:
+        move_line.reconciled = True
+        move_line.amount_residual = 0.0
+        move_line.amount_residual_currency = 0.0
 
     move_line_map = {}
     cr.execute("SELECT reconcile_id, id "
