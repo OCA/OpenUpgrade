@@ -608,6 +608,14 @@ def account_partial_reconcile(env):
     models.BaseModel.step_workflow = set_workflow_org
 
 
+def invoice_recompute(env):
+    invoice_ids = env['account.invoice'].search([])
+    to_recompute = env['account.invoice'].browse(invoice_ids)
+    for field in ['residual', 'residual_signed', 'residual_company_signed']:
+        env.add_todo(env['account.invoice']._fields[field], to_recompute)
+    env['account.move.line'].recompute()
+
+
 def map_account_tax_type(cr):
     """ See comments in method map_account_tax_type in the pre-migration
     script."""
@@ -717,5 +725,6 @@ def migrate(env, version):
     parent_id_to_tag(env, 'account.account', recursive=True)
     account_internal_type(env)
     account_partial_reconcile(env)
+    invoice_recompute(env)
     map_account_tax_type(cr)
     map_account_tax_template_type(cr)
