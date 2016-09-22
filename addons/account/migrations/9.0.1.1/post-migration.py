@@ -579,11 +579,13 @@ def account_partial_reconcile(env):
         WHERE apr.debit_move_id IN %s
     """ % (tuple(inv_move_to_link_ids), ))
 
+    # Recompute the corresponding invoices
     cr.execute("""
         SELECT account_invoice_id
         FROM account_invoice_account_move_line_rel
         WHERE account_move_line_id in %s
-    """ % (tuple(move_line_ids_reconciled,)))
+    """ % (tuple(move_line_ids_reconciled, )))
+
     invoice_ids = [invoice_id for invoice_id, in cr.fetchall()]
     to_recompute_invoices = env['account.invoice'].browse(invoice_ids)
     for field in ['reconciled']:
