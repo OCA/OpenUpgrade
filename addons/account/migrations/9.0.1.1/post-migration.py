@@ -588,7 +588,8 @@ def account_partial_reconcile(env):
 
     invoice_ids = [invoice_id for invoice_id, in cr.fetchall()]
     to_recompute_invoices = env['account.invoice'].browse(invoice_ids)
-    for field in ['reconciled']:
+    for field in ['reconciled', 'residual', 'residual_signed',
+                  'residual_company_signed']:
         env.add_todo(env['account.invoice']._fields[field],
                      to_recompute_invoices)
     env['account.invoice'].recompute()
