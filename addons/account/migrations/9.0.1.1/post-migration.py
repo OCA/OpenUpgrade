@@ -483,6 +483,17 @@ def account_partial_reconcile(env):
     move_line_ids_reconciled = [move_line_id for move_line_id,
                                 in cr.fetchall()]
 
+    # The previous move lines must be flagged as reconciled. The residual
+    # amount is 0.
+    openupgrade.logged_query(cr, """
+        UPDATE account_move_line
+        SET
+            reconciled = True,
+            amount_residual = 0.0,
+            amount_residual_currency = 0.0
+        WHERE id IN %s
+    """ % (tuple(move_line_ids_reconciled), ))
+
     move_line_map = {}
     cr.execute("SELECT reconcile_id, id "
                "FROM account_move_line "
@@ -517,13 +528,6 @@ def account_partial_reconcile(env):
         auto_reconcile_lines(env, move_lines, amount_residual_d)
         i += 1
         move_line_ids_reconciled += move_line_ids
-
-    # The previous move lines must be flagged as reconciled
-    openupgrade.logged_query(cr, """
-        UPDATE account_move_line
-        SET reconciled = True
-        WHERE id IN %s
-    """ % (tuple(move_line_ids_reconciled), ))
 
     # Update the table that relates invoices with payments made
 
@@ -574,7 +578,20 @@ def account_partial_reconcile(env):
         ON ai.move_id = aml.move_id
         WHERE apr.debit_move_id IN %s
     """ % (tuple(inv_move_to_link_ids), ))
-    to_recompute = env['account.move.line'].browse(move_line_ids_reconciled)
+
+    cr.execute("""
+        SELECT account_invoice_id
+        FROM account_invoice_account_move_line_rel
+        WHERE account_move_line_id in %s
+    """ % (tuple(move_line_ids_reconciled,)))
+    invoice_ids = [invoice_id for invoice_id, in cr.fetchall()]
+    to_recompute_invoices = env['account.invoice'].browse(invoice_ids)
+    for field in ['reconciled']:
+        env.add_todo(env['account.invoice']._fields[field],
+                     to_recompute_invoices)
+    env['account.invoice'].recompute()
+
+    # Migrate partially reconciled items
     move_line_map = {}
     cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
                "FROM account_move_line "
@@ -586,6 +603,7 @@ def account_partial_reconcile(env):
         move_line_map.setdefault(rec_id, []).append(move_line_id)
         rec_l[rec_id] = True
     num_recs = len(rec_l.keys())
+    to_recompute = env['account.move.line']
     i = 1
     for _rec_id, move_line_ids in move_line_map.iteritems():
         msg = 'Reconciliation step 3 (%s of %s). ' \
