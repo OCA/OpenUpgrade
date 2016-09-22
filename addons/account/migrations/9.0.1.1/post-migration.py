@@ -586,13 +586,14 @@ def account_partial_reconcile(env):
         WHERE account_move_line_id in %s
     """ % (tuple(move_line_ids_reconciled), ))
 
-    invoice_ids = [invoice_id for invoice_id, in cr.fetchall()]
-    to_recompute_invoices = env['account.invoice'].browse(invoice_ids)
-    for field in ['reconciled', 'residual', 'residual_signed',
-                  'residual_company_signed']:
-        env.add_todo(env['account.invoice']._fields[field],
-                     to_recompute_invoices)
-    env['account.invoice'].recompute()
+    openupgrade.logged_query(cr, """
+        UPDATE account_invoice_id
+        SET
+            residual = 0.0,
+            residual_signed = 0.0,
+            residual_company_signed = 0.0
+        WHERE id IN %s
+    """ % (tuple(move_line_ids_reconciled), ))
 
     # Migrate partially reconciled items
     move_line_map = {}
