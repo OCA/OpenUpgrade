@@ -587,7 +587,7 @@ def account_partial_reconcile(env):
     """ % (tuple(move_line_ids_reconciled), ))
 
     openupgrade.logged_query(cr, """
-        UPDATE account_invoice_id
+        UPDATE account_invoice
         SET
             residual = 0.0,
             residual_signed = 0.0,
