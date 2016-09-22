@@ -612,7 +612,7 @@ def invoice_recompute(env):
     to_recompute = env['account.invoice'].search([])
     for field in ['residual', 'residual_signed', 'residual_company_signed']:
         env.add_todo(env['account.invoice']._fields[field], to_recompute)
-    env['account.move.line'].recompute()
+    env['account.invoice'].recompute()
 
 
 def map_account_tax_type(cr):
