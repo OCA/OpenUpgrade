@@ -527,19 +527,6 @@ def account_partial_reconcile(env):
         move_line_ids_reconciled += move_line_ids
 
     # Update the table that relates invoices with payments made
-
-    # Exclude from the query the records that are already contained in the
-    # table account_invoice_account_move_line_rel
-    cr.execute("""
-        SELECT DISTINCT account_move_line_id
-        FROM account_invoice_account_move_line_rel
-        WHERE account_move_line_id IN %s
-    """ % (tuple(move_line_ids_reconciled),))
-    inv_move_linked_ids = [move_id for move_id, in cr.fetchall()]
-    inv_move_to_link_ids = \
-        [move_id for move_id in move_line_ids_reconciled
-         if move_id not in inv_move_linked_ids]
-
     openupgrade.logged_query(cr, """
         INSERT INTO account_invoice_account_move_line_rel
         (account_invoice_id, account_move_line_id)
@@ -550,19 +537,7 @@ def account_partial_reconcile(env):
         INNER JOIN account_invoice as ai
         ON ai.move_id = aml.move_id
         WHERE apr.credit_move_id IN %s
-    """ % (tuple(inv_move_to_link_ids),))
-
-    # Exclude from the query the records that are already contained in the
-    # table account_invoice_account_move_line_rel
-    cr.execute("""
-        SELECT DISTINCT account_move_line_id
-        FROM account_invoice_account_move_line_rel
-        WHERE account_move_line_id IN %s
     """ % (tuple(move_line_ids_reconciled),))
-    inv_move_linked_ids = [move_id for move_id, in cr.fetchall()]
-    inv_move_to_link_ids = \
-        [move_id for move_id in move_line_ids_reconciled
-         if move_id not in inv_move_linked_ids]
 
     openupgrade.logged_query(cr, """
         INSERT INTO account_invoice_account_move_line_rel
@@ -574,7 +549,7 @@ def account_partial_reconcile(env):
         INNER JOIN account_invoice as ai
         ON ai.move_id = aml.move_id
         WHERE apr.debit_move_id IN %s
-    """ % (tuple(inv_move_to_link_ids), ))
+    """ % (tuple(move_line_ids_reconciled), ))
 
     # Migrate partially reconciled items
     move_line_map = {}
