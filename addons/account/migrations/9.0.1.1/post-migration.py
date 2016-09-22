@@ -574,7 +574,7 @@ def account_partial_reconcile(env):
         ON ai.move_id = aml.move_id
         WHERE apr.debit_move_id IN %s
     """ % (tuple(inv_move_to_link_ids), ))
-
+    to_recompute = env['account.move.line'].browse(move_line_ids_reconciled)
     move_line_map = {}
     cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
                "FROM account_move_line "
@@ -586,7 +586,6 @@ def account_partial_reconcile(env):
         move_line_map.setdefault(rec_id, []).append(move_line_id)
         rec_l[rec_id] = True
     num_recs = len(rec_l.keys())
-    to_recompute = env['account.move.line']
     i = 1
     for _rec_id, move_line_ids in move_line_map.iteritems():
         msg = 'Reconciliation step 3 (%s of %s). ' \
