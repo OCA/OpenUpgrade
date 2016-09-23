@@ -581,10 +581,13 @@ def account_partial_reconcile(env):
 
 
 def invoice_recompute(env):
+    set_workflow_org = models.BaseModel.step_workflow
+    models.BaseModel.step_workflow = lambda *args, **kwargs: None
     to_recompute = env['account.invoice'].search([])
     for field in ['residual', 'residual_signed', 'residual_company_signed']:
         env.add_todo(env['account.invoice']._fields[field], to_recompute)
     env['account.invoice'].recompute()
+    models.BaseModel.step_workflow = set_workflow_org
 
 
 def map_account_tax_type(cr):
