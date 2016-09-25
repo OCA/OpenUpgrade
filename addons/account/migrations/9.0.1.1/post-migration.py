@@ -380,7 +380,7 @@ def auto_reconcile_lines(env, move_lines, amount_residual):
 
     openupgrade.logged_query(env.cr, """
         INSERT INTO account_partial_reconcile
-        SET (debit_move_id, credit_move_id, amount, amount_currency,
+        (debit_move_id, credit_move_id, amount, amount_currency,
         currency_id)
         VALUES (%s, %s, %s, %s, %s)
     """ % (sm_debit_move.id, sm_credit_move.id, amount_reconcile,
