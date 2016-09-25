@@ -484,15 +484,6 @@ def account_partial_reconcile(env):
     move_line_ids_reconciled = [move_line_id for move_line_id,
                                 in cr.fetchall()]
 
-    # The previous move lines must be flagged as reconciled. The residual
-    # amount is 0.
-    move_lines = env['account.move.line'].with_context(recompute=False).browse(
-        move_line_ids_reconciled)
-    for move_line in move_lines:
-        move_line.reconciled = True
-        move_line.amount_residual = 0.0
-        move_line.amount_residual_currency = 0.0
-
     move_line_map = {}
     cr.execute("SELECT reconcile_id, id "
                "FROM account_move_line "
@@ -527,6 +518,15 @@ def account_partial_reconcile(env):
         auto_reconcile_lines(env, move_lines, amount_residual_d)
         i += 1
         move_line_ids_reconciled += move_line_ids
+
+    # The previous move lines must be flagged as reconciled. The residual
+    # amount is 0.
+    move_lines = env['account.move.line'].with_context(recompute=False).browse(
+        move_line_ids_reconciled)
+    for move_line in move_lines:
+        move_line.reconciled = True
+        move_line.amount_residual = 0.0
+        move_line.amount_residual_currency = 0.0
 
     # Update the table that relates invoices with payments made
     openupgrade.logged_query(cr, """
