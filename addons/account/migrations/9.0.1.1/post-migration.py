@@ -384,7 +384,7 @@ def auto_reconcile_lines(env, move_lines, amount_residual):
         currency_id, company_id)
         VALUES (%s, %s, %s, %s, %s, %s)
     """ % (sm_debit_move.id, sm_credit_move.id, amount_reconcile,
-           amount_reconcile_currency, currency or None,
+           amount_reconcile_currency, currency or 'null',
            sm_debit_move.company_id.id))
 
     # Iterate process again on self
