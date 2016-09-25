@@ -378,13 +378,12 @@ def auto_reconcile_lines(env, move_lines, amount_residual):
     amount_residual[sm_debit_move.id]['amount_residual'] -= amount_reconcile
     amount_residual[sm_credit_move.id]['amount_residual'] -= amount_reconcile
 
-    env['account.partial.reconcile'].with_context(recompute=False).create({
-        'debit_move_id': sm_debit_move.id,
-        'credit_move_id': sm_credit_move.id,
-        'amount': amount_reconcile,
-        'amount_currency': amount_reconcile_currency,
-        'currency_id': currency,
-    })
+    openupgrade.logged_query(env.cr, """
+        INSERT INTO account_partial_reconcile
+        SET debit_move_id, credit_move_id, amount, amount_currency, currency_id
+        VALUES (%s, %s, %s, %s, %s)
+    """ % (sm_debit_move.id, sm_credit_move.id, amount_reconcile,
+           amount_reconcile_currency, currency))
 
     # Iterate process again on self
     return auto_reconcile_lines(env, move_lines, amount_residual)
