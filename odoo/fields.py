@@ -1182,7 +1182,7 @@ class Float(Field):
         if callable(self._digits):
             # OpenUpgrade: try to reuse the migration cursor, to prevent
             # transaction locks
-            migration_cursor = fields.get_migration_cursor()
+            migration_cursor = get_migration_cursor()
             if migration_cursor:
                 return self._digits(migration_cursor)
             with LazyCursor() as cr:

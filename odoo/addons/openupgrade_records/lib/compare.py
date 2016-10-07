@@ -1,23 +1,7 @@
-# -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright (C) 2011 Therp BV (<http://therp.nl>).
-#              (C) 2015 Opener B.V. (<https://opener.am>).
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# coding: utf-8
+# Copyright 2011-2015 Therp BV <https://therp.nl>
+# Copyright 2015-2016 Opener B.V. <https://opener.am>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 #####################################################################
 #   library providing a function to analyse two progressive database
@@ -27,10 +11,7 @@
 import collections
 import copy
 
-try:
-    from openerp.addons.openupgrade_records.lib import apriori
-except ImportError:
-    from openupgrade_records.lib import apriori
+from odoo.addons.openupgrade_records.lib import apriori
 
 
 def module_map(module):
@@ -85,7 +66,8 @@ def search(item, item_list, fields):
         for other in item_list:
             if not item['field'] or item['field'] != other.get('oldname'):
                 continue
-            if compare_records(dict(item, field=other['field']), other, fields):
+            if compare_records(
+                    dict(item, field=other['field']), other, fields):
                 return other
     return None
 
