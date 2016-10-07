@@ -282,7 +282,18 @@ actual arch.
             if view.type != 'qweb':
                 view_doc = etree.fromstring(view_arch_utf8)
                 # verify that all fields used are valid, etc.
-                self.postprocess_and_fields(view.model, view_doc, view.id)
+                # OpenUpgrade: never break on view rendering
+                try:
+                    self.postprocess_and_fields(view.model, view_doc, view.id)
+                except Exception:
+                    # OpenUpgrade: We ignore all view errors as they are
+                    # caused by views introduced by models not year loaded
+                    _logger.warn(
+                        "Can't render view %s for model: %s. If you are "
+                        "migrating between major versions of OpenERP, "
+                        "this is to be expected (otherwise, do not run "
+                        "OpenUpgrade server).", view.xml_id, view.model)
+                # /OpenUpgrade
                 # RNG-based validation is not possible anymore with 7.0 forms
                 view_docs = [view_doc]
                 if view_docs[0].tag == 'data':
@@ -294,9 +305,22 @@ actual arch.
                     if parse_version(version) < parse_version('7.0') and validator and not validator.validate(view_arch):
                         for error in validator.error_log:
                             _logger.error(tools.ustr(error))
-                        raise ValidationError(_('Invalid view definition'))
+                        # OpenUpgrade: We ignore all view errors as they are
+                        # caused by views introduced by models not year loaded
+                        _logger.warn(
+                            "Can't render view %s for model: %s. If you are "
+                            "migrating between major versions of OpenERP, "
+                            "this is to be expected (otherwise, do not run "
+                            "OpenUpgrade server).", view.xml_id, view.model)
+                        # /OpenUpgrade
                     if not valid_view(view_arch):
-                        raise ValidationError(_('Invalid view definition'))
+                        # OpenUpgrade: We ignore all view errors as they are
+                        # caused by views introduced by models not year loaded
+                        _logger.warn(
+                            "Can't render view %s for model: %s. If you are "
+                            "migrating between major versions of OpenERP, "
+                            "this is to be expected (otherwise, do not run "
+                            "OpenUpgrade server).", view.xml_id, view.model)
         return True
 
     @api.constrains('type', 'groups_id')
@@ -442,7 +466,8 @@ actual arch.
             'msg': message,
         }
         _logger.info(message)
-        raise ValueError(message)
+        # OpenUpgrade we want to ignore view errors
+        # raise ValueError(message)
 
     def locate_node(self, arch, spec):
         """ Locate a node in a source (parent) architecture.

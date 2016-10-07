@@ -12,8 +12,10 @@ import json
 import logging
 import pytz
 import xmlrpclib
+from psycopg2 import OperationalError
 
 import psycopg2
+import threading
 
 from odoo.sql_db import LazyCursor
 from odoo.tools import float_precision, float_repr, float_round, frozendict, \
@@ -30,6 +32,31 @@ _logger = logging.getLogger(__name__)
 _schema = logging.getLogger(__name__[:-7] + '.schema')
 
 Default = object()                      # default value for __init__() methods
+
+# OpenUpgrade start
+migration_cursors = {}
+
+
+def set_migration_cursor(cr=None):
+    """ Store or unset the current migration's cursor per database """
+    if cr:
+        migration_cursors[cr.dbname] = cr
+    else:
+        migration_cursors[threading.currentThread().dbname] = False
+
+
+def get_migration_cursor():
+    """ During migration, return a valid cursor for this thread's database,
+    if any """
+    cursor = migration_cursors.get(threading.currentThread().dbname)
+    if cursor:
+        try:
+            cursor.execute('SELECT 1')
+        except OperationalError:
+            return False
+    return cursor
+# OpenUpgrade end
+
 
 class SpecialValue(object):
     """ Encapsulates a value in the cache in place of a normal value. """
@@ -1153,6 +1180,11 @@ class Float(Field):
     @property
     def digits(self):
         if callable(self._digits):
+            # OpenUpgrade: try to reuse the migration cursor, to prevent
+            # transaction locks
+            migration_cursor = fields.get_migration_cursor()
+            if migration_cursor:
+                return self._digits(migration_cursor)
             with LazyCursor() as cr:
                 return self._digits(cr)
         else:

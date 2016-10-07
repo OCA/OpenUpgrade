@@ -11,6 +11,9 @@ from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.modules.registry import Registry
 from odoo.tools.safe_eval import safe_eval
 
+from odoo.openupgrade import openupgrade_log
+from openupgradelib import openupgrade
+
 _logger = logging.getLogger(__name__)
 
 MODULE_UNINSTALL_FLAG = '_force_unlink'
@@ -114,6 +117,11 @@ class IrModel(models.Model):
 
     def _drop_table(self):
         for model in self:
+            # OpenUpgrade: do not run the new table cleanup
+            openupgrade.message(
+                cr, 'Unknown', False, False,
+                "Not dropping the table or view of model %s", model.model)
+            continue
             table = self.env[model.model]._table
             self._cr.execute('select relkind from pg_class where relname=%s', (table,))
             result = self._cr.fetchone()
@@ -396,6 +404,11 @@ class IrModelFields(models.Model):
         for field in self:
             if field.name in models.MAGIC_COLUMNS:
                 continue
+            # OpenUpgrade: do not drop columns
+            openupgrade.message(
+                cr, 'Unknown', False, False,
+                "Not dropping the column of field %s of model %s", field.name, field.model)
+            continue
             model = self.env[field.model]
             self._cr.execute('SELECT relkind FROM pg_class WHERE relname=%s', (model._table,))
             relkind = self._cr.fetchone()
@@ -1085,6 +1098,10 @@ class IrModelData(models.Model):
 
     @api.model
     def _update(self, model, module, values, xml_id=False, store=True, noupdate=False, mode='init', res_id=False):
+        #OpenUpgrade: log entry (used in csv import)
+        if xml_id:
+            openupgrade_log.log_xml_id(self.env.cr, module, xml_id)
+
         # records created during module install should not display the messages of OpenChatter
         self = self.with_context(install_mode=True)
         current_module = module
@@ -1237,6 +1254,10 @@ class IrModelData(models.Model):
                 if external_ids - datas:
                     # if other modules have defined this record, we must not delete it
                     continue
+                    # OpenUpgrade specific start
+                    if not self.env.get(field.model):
+                        continue
+                    # OpenUpgrade specific end
                 if model == 'ir.model.fields':
                     # Don't remove the LOG_ACCESS_COLUMNS unless _log_access
                     # has been turned off on the model.
@@ -1300,12 +1321,20 @@ class IrModelData(models.Model):
         for (id, name, model, res_id, module) in self._cr.fetchall():
             if (module, name) not in self.loads:
                 if model in self.env:
+                    # OpenUpgrade: never break on unlink of obsolete records
                     _logger.info('Deleting %s@%s (%s.%s)', res_id, model, module, name)
-                    record = self.env[model].browse(res_id)
-                    if record.exists():
-                        record.unlink()
-                    else:
+                    try:
+                        self.env.cr.execute('SAVEPOINT ir_model_data_delete');
+                        self.env[model].browse(res_id).unlink()
+                        self.env.cr.execute('RELEASE SAVEPOINT ir_model_data_delete')
+                    except Exception:
+                        self.env.cr.execute('ROLLBACK TO SAVEPOINT ir_model_data_delete');
+                        _logger.warning(
+                            'Could not delete obsolete record with id: %d of model %s\n'
+                            'Please refer to the log message right above',
+                            res_id, model)
                         bad_imd_ids.append(id)
+                    # /OpenUpgrade
         if bad_imd_ids:
             self.browse(bad_imd_ids).unlink()
         self.loads.clear()
