@@ -315,7 +315,7 @@ class BaseModel(object):
         # if the field's xmlid belongs to a module already loaded, and if not,
         # update the record with the correct module name.
         cr.execute(
-            "SELECT f.*, d.module, d.id as xmlid_id "
+            "SELECT f.*, d.module, d.id as xmlid_id, d.name as xmlid "
             "FROM ir_model_fields f LEFT JOIN ir_model_data d "
             "ON f.id=d.res_id and d.model='ir.model.fields' WHERE f.model=%s",
             (self._name,))
@@ -330,9 +330,16 @@ class BaseModel(object):
                     'from %s to %s',
                     self._name, rec['name'], rec['module'], self.env.context['module'])
                 cr.execute(
-                    "UPDATE ir_model_data SET module=%(module)s "
-                    "WHERE id=%(xmlid_id)s",
+                    "SELECT id FROM ir_model_data WHERE module=%(module)s "
+                    "AND name=%(xmlid)s",
                     dict(rec, module=self.env.context['module']))
+                if cr.fetchone():
+                    _logger.info('Aborting, an XMLID for this module already exists.')
+                else:
+                    cr.execute(
+                        "UPDATE ir_model_data SET module=%(module)s "
+                        "WHERE id=%(xmlid_id)s",
+                        dict(rec, module=self.env.context['module']))
         # OpenUpgrade edit end
 
         # create/update the entries in 'ir.model.fields' and 'ir.model.data'
