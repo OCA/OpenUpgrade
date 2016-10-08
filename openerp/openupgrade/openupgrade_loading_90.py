@@ -23,14 +23,12 @@
 # This module provides simple tools for OpenUpgrade migration, specific for
 # the 8.0 -> 9.0 migration. It is kept in later editions to keep all the API
 # docs in the latest release.
+from openupgradelib.openupgrade_tools import table_exists, column_exists
 
 
 def migrate_model_tables(cr):
-    cr.execute("""SELECT 1 FROM information_schema.columns
-                  WHERE table_name='ir_model' AND column_name='transient'
-                  """)
-    found = cr.fetchone()
-    if not found:
+    if table_exists(cr, 'ir_model') and not column_exists(
+            cr, 'ir_model', 'transient'):
         # ir_model needs to be updated
         cr.execute("""ALTER TABLE ir_model
                       ADD COLUMN transient boolean
