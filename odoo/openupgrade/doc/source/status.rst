@@ -38,7 +38,8 @@ For all official addons, migration scripts should be provided for
 migrating between subsequent major releases of Odoo.  This is the goal
 of the project.  The design is such that the effort can be distributed
 between different developing parties.
-See below for an overview of module coverage per version.
+See below for an overview of module coverage per version for this release. For
+earlier editions, see `<https://doc.therp.nl/openupgrade/status.html>`_
 
 .. toctree::
    :maxdepth: 2
@@ -48,3 +49,4 @@ See below for an overview of module coverage per version.
    modules61-70
    modules70-80
    modules80-90
+   modules90-100
