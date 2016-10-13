@@ -112,7 +112,7 @@ def report_generic(new, old, attrs, reprs):
                 fieldprint(old, new, None, text, reprs)
         elif attr == 'oldname':
             if new.get('oldname') == old['field']:
-                text = 'was renamed to %s [nothing to to]' % new['field']
+                text = 'was renamed to %s [nothing to do]' % new['field']
                 fieldprint(old, new, None, text, reprs)
         elif old[attr] != new[attr]:
             fieldprint(old, new, attr, None, reprs)
