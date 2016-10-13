@@ -301,6 +301,47 @@ class BaseModel(object):
                                VALUES (%s, (now() at time zone 'UTC'), (now() at time zone 'UTC'), %s, %s, %s) """,
                            (xmlid, self._context['module'], 'ir.model', model.id))
 
+        # OpenUpgrade edit start
+        # create/update the entries in 'ir.model.fields' and 'ir.model.data'
+        # OpenUpgrade edit start: In rare cases, an old module defined a field
+        # on a model that is not defined in another module earlier in the
+        # chain of inheritance. Then we need to assign the ir.model.fields'
+        # xmlid to this other module, otherwise the column would be dropped
+        # when uninstalling the first module.
+        # An example is res.partner#display_name defined in 7.0 by
+        # account_report_company, but now the field belongs to the base
+        # module
+        # Given that we arrive here in order of inheritance, we simply check
+        # if the field's xmlid belongs to a module already loaded, and if not,
+        # update the record with the correct module name.
+        cr.execute(
+            "SELECT f.*, d.module, d.id as xmlid_id, d.name as xmlid "
+            "FROM ir_model_fields f LEFT JOIN ir_model_data d "
+            "ON f.id=d.res_id and d.model='ir.model.fields' WHERE f.model=%s",
+            (self._name,))
+        for rec in cr.dictfetchall():
+            if 'module' in self.env.context and\
+                    rec['module'] and\
+                    rec['name'] in self._fields.keys() and\
+                    rec['module'] != self.env.context['module'] and\
+                    rec['module'] not in self.env.registry._init_modules:
+                _logger.info(
+                    'Moving XMLID for ir.model.fields record of %s#%s '
+                    'from %s to %s',
+                    self._name, rec['name'], rec['module'], self.env.context['module'])
+                cr.execute(
+                    "SELECT id FROM ir_model_data WHERE module=%(module)s "
+                    "AND name=%(xmlid)s",
+                    dict(rec, module=self.env.context['module']))
+                if cr.fetchone():
+                    _logger.info('Aborting, an XMLID for this module already exists.')
+                else:
+                    cr.execute(
+                        "UPDATE ir_model_data SET module=%(module)s "
+                        "WHERE id=%(xmlid_id)s",
+                        dict(rec, module=self.env.context['module']))
+        # OpenUpgrade edit end
+
         # create/update the entries in 'ir.model.fields' and 'ir.model.data'
         cr.execute("SELECT * FROM ir_model_fields WHERE model=%s", (self._name,))
         cols = {rec['name']: rec for rec in cr.dictfetchall()}
@@ -2439,11 +2480,14 @@ class BaseModel(object):
                                     self._init_column(name)
                                 # add the NOT NULL constraint
                                 try:
-                                    cr.commit()
+                                    # use savepoints for openupgrade instead of transactions
+                                    cr.execute('SAVEPOINT add_constraint')
                                     cr.execute('ALTER TABLE "%s" ALTER COLUMN "%s" SET NOT NULL' % (self._table, name), log_exceptions=False)
+                                    cr.execute('RELEASE SAVEPOINT add_constraint')
                                     _schema.debug("Table '%s': column '%s': added NOT NULL constraint",
                                                   self._table, name)
                                 except Exception:
+                                    cr.execute('ROLLBACK TO SAVEPOINT add_constraint')
                                     msg = "Table '%s': unable to set a NOT NULL constraint on column '%s' !\n"\
                                         "If you want to have it, you should update the records and execute manually:\n"\
                                         "ALTER TABLE %s ALTER COLUMN %s SET NOT NULL"
@@ -2506,11 +2550,14 @@ class BaseModel(object):
                             cr.execute('CREATE INDEX "%s_%s_index" ON "%s" ("%s")' % (self._table, name, self._table, name))
                         if field.required:
                             try:
-                                cr.commit()
+                                #use savepoints for openupgrade instead of transactions
+                                cr.execute('SAVEPOINT add_constraint')
                                 cr.execute('ALTER TABLE "%s" ALTER COLUMN "%s" SET NOT NULL' % (self._table, name))
                                 _schema.debug("Table '%s': column '%s': added a NOT NULL constraint",
                                               self._table, name)
+                                cr.execute('RELEASE SAVEPOINT add_constraint')
                             except Exception:
+                                cr.execute('ROLLBACK TO SAVEPOINT add_constraint')
                                 msg = "WARNING: unable to set column %s of table %s not null !\n"\
                                     "Try to re-run: openerp-server --update=module\n"\
                                     "If it doesn't work, update records and execute manually:\n"\
@@ -2630,26 +2677,30 @@ class BaseModel(object):
 
         def drop(name, definition, old_definition):
             try:
+                # use savepoints for openupgrade instead of transactions
+                cr.execute('SAVEPOINT add_constraint2')
                 cr.execute('ALTER TABLE "%s" DROP CONSTRAINT "%s"' % (self._table, name))
-                cr.commit()
+                cr.execute('RELEASE SAVEPOINT add_constraint2')
                 _schema.debug("Table '%s': dropped constraint '%s'. Reason: its definition changed from '%s' to '%s'",
                               self._table, name, old_definition, definition)
             except Exception:
                 _schema.warning("Table '%s': unable to drop constraint '%s'!", self._table, definition)
-                cr.rollback()
+                cr.execute('ROLLBACK TO SAVEPOINT add_constraint2')
 
         def add(name, definition):
+            # use savepoints for openupgrade instead of transactions
+            cr.execute('SAVEPOINT add_constraint2')
             query = 'ALTER TABLE "%s" ADD CONSTRAINT "%s" %s' % (self._table, name, definition)
             try:
                 cr.execute(query)
-                cr.commit()
+                cr.execute('RELEASE SAVEPOINT add_constraint2')
                 _schema.debug("Table '%s': added constraint '%s' with definition=%s",
                               self._table, name, definition)
             except Exception:
                 _schema.warning("Table '%s': unable to add constraint '%s'!\n"
                                 "If you want to have it, you should update the records and execute manually:\n%s",
                                 self._table, definition, query)
-                cr.rollback()
+                cr.execute('ROLLBACK TO SAVEPOINT add_constraint2')
 
         # map each constraint on the name of the module where it is defined
         constraint_module = {

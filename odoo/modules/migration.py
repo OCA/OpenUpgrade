@@ -70,8 +70,12 @@ class MigrationManager(object):
             'pre': '[>%s]',
             'post': '[%s>]',
         }
-
-        if not (hasattr(pkg, 'update') or pkg.state == 'to upgrade') or pkg.state == 'to install':
+        # In openupgrade, remove 'or pkg.installed_version is None'
+        # We want to always pass in pre and post migration files and use a new
+        # argument in the migrate decorator (explained in the docstring)
+        # to decide if we want to do something if a new module is installed
+        # during the migration.
+        if not (hasattr(pkg, 'update') or pkg.state == 'to upgrade'):
             return
 
         def convert_version(version):
@@ -112,6 +116,11 @@ class MigrationManager(object):
             lst.sort()
             return lst
 
+        def mergedict(a, b):
+            a = a.copy()
+            a.update(b)
+            return a
+
         parsed_installed_version = parse_version(pkg.installed_version or '')
         current_version = parse_version(convert_version(pkg.data['version']))
 
@@ -129,31 +138,32 @@ class MigrationManager(object):
                     name, ext = os.path.splitext(os.path.basename(pyfile))
                     if ext.lower() != '.py':
                         continue
-                    mod = fp = fp2 = None
+                    # OpenUpgrade edit start:
+                    # Removed a copy of migration script to temp directory
+                    # Replaced call to load_source with load_module so frame isn't lost and breakpoints can be set
+                    mod = fp = None
                     try:
-                        fp, fname = tools.file_open(pyfile, pathinfo=True)
-
-                        if not isinstance(fp, file):
-                            # imp.load_source need a real file object, so we create
-                            # one from the file-like object we get from file_open
-                            fp2 = os.tmpfile()
-                            fp2.write(fp.read())
-                            fp2.seek(0)
+                        fp, pathname = tools.file_open(pyfile, pathinfo=True)
                         try:
-                            mod = imp.load_source(name, fname, fp2 or fp)
-                            _logger.info('module %(addon)s: Running migration %(version)s %(name)s' % dict(strfmt, name=mod.__name__))
-                            migrate = mod.migrate
+                            mod = imp.load_module(name, fp, pathname, ('.py', 'r', imp.PY_SOURCE))
+                            _logger.info('module %(addon)s: Running migration %(version)s %(name)s',
+                                         mergedict({'name': mod.__name__}, strfmt))
                         except ImportError:
-                            _logger.exception('module %(addon)s: Unable to load %(stage)s-migration file %(file)s' % dict(strfmt, file=pyfile))
+                            _logger.exception('module %(addon)s: Unable to load %(stage)s-migration file %(file)s',
+                                              mergedict({'file': pyfile}, strfmt))
                             raise
-                        except AttributeError:
-                            _logger.error('module %(addon)s: Each %(stage)s-migration file must have a "migrate(cr, installed_version)" function' % strfmt)
+
+                        _logger.info('module %(addon)s: Running migration %(version)s %(name)s',
+                                     mergedict({'name': mod.__name__}, strfmt))
+
+                        if hasattr(mod, 'migrate'):
+                            mod.migrate(self.cr, pkg.installed_version)
                         else:
-                            migrate(self.cr, pkg.installed_version)
+                            _logger.error('module %(addon)s: Each %(stage)s-migration file must have a "migrate(cr, installed_version)" function',
+                                          strfmt)
                     finally:
                         if fp:
                             fp.close()
-                        if fp2:
-                            fp2.close()
                         if mod:
                             del mod
+                    # OpenUpgrade edit end

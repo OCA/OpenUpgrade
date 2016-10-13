@@ -1374,6 +1374,8 @@ class AccountPaymentTerm(models.Model):
     @api.constrains('line_ids')
     @api.one
     def _check_lines(self):
+        # OpenUpgrade: disable so that we can reinstall this module when generating records
+        return True
         payment_term_lines = self.line_ids.sorted()
         if payment_term_lines and payment_term_lines[-1].value != 'balance':
             raise ValidationError(_('A Payment Term should have its last line of type Balance.'))

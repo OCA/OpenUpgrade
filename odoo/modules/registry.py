@@ -324,7 +324,14 @@ class Registry(Mapping):
             func(*args)
 
         if models:
+            # OpenUpgrade: Don't trigger workflows on recomputation
+            set_workflow_org = odoo.models.BaseModel.step_workflow
+            odoo.models.BaseModel.step_workflow = lambda *args, **kwargs: None
+            # end OpenUpgrade
             models[0].recompute()
+            # OpenUpgrade: reenable workflow triggers
+            odoo.models.BaseModel.step_workflow = set_workflow_org
+            # end OpenUpgrade
         cr.commit()
 
     def clear_caches(self):
