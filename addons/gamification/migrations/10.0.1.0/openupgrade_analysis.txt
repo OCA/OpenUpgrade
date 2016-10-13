@@ -1,0 +1,14 @@
+---Fields in module 'gamification'---
+gamification / gamification.challenge   / category (selection)          : selection_keys is now '['hr', 'other']' ('function')
+gamification / gamification.challenge.line / condition (selection)         : selection_keys is now 'function' ('['higher', 'lower']')
+gamification / gamification.goal        / computation_mode (char)       : selection_keys is now 'function' ('False')
+gamification / gamification.goal        / computation_mode (char)       : type is now 'selection' ('char')
+gamification / gamification.goal        / definition_condition (char)   : selection_keys is now 'function' ('False')
+gamification / gamification.goal        / definition_condition (char)   : type is now 'selection' ('char')
+gamification / gamification.goal        / definition_description (char) : type is now 'text' ('char')
+gamification / gamification.goal        / definition_display (char)     : selection_keys is now 'function' ('False')
+gamification / gamification.goal        / definition_display (char)     : type is now 'selection' ('char')
+---XML records in module 'gamification'---
+DEL ir.actions.act_window: gamification.challenge_wizard
+DEL ir.ui.view: gamification.view_challenge_wizard
+DEL res.groups: base.group_hr_manager

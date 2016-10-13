@@ -1,0 +1,8 @@
+---Fields in module 'sale_timesheet'---
+sale_timesheet / hr.employee              / account_id (many2one)         : NEW relation: account.account
+sale_timesheet / product.template         / track_service (False)         : selection_keys is now '['manual', 'task', 'timesheet']' ('['manual', 'timesheet']')
+sale_timesheet / project.task             / procurement_id (many2one)     : NEW relation: procurement.order
+---XML records in module 'sale_timesheet'---
+NEW ir.model.data: sale_timesheet.duplicate_field_xmlid
+NEW ir.ui.view: sale_timesheet.view_procurement_task_form
+NEW ir.ui.view: sale_timesheet.view_sale_service_inherit_form2

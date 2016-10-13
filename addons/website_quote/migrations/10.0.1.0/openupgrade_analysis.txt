@@ -1,0 +1,15 @@
+---Fields in module 'website_quote'---
+website_quote / payment.transaction      / sale_order_id (many2one)      : module is now 'website_portal_sale' ('website_quote')
+website_quote / sale.order               / require_payment (selection)   : selection_keys is now '[0, 1, 2]' ('[0, 1]')
+website_quote / sale.order.option        / layout_category_id (many2one) : NEW relation: sale.layout_category
+website_quote / sale.order.option        / sequence (integer)            : NEW 
+website_quote / sale.quote.line          / layout_category_id (many2one) : NEW relation: sale.layout_category
+website_quote / sale.quote.option        / layout_category_id (many2one) : NEW relation: sale.layout_category
+website_quote / sale.quote.template      / mail_template_id (many2one)   : NEW relation: mail.template
+website_quote / sale.quote.template      / require_payment (selection)   : selection_keys is now '[0, 1, 2]' ('[0, 1]')
+---XML records in module 'website_quote'---
+DEL ir.actions.client: website_quote.open_quotation_menu
+DEL ir.actions.todo: base.open_menu
+NEW mail.template: website_quote.confirmation_mail
+DEL mail.template: website_quote.email_template_edi_sale
+DEL web.tip: website_quote.quotation_tip_1

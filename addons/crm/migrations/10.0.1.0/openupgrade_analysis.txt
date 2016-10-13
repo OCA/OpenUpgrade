@@ -1,0 +1,60 @@
+---Fields in module 'crm'---
+crm          / crm.activity             / activity_1_id (many2one)      : DEL relation: crm.activity
+crm          / crm.activity             / activity_2_id (many2one)      : DEL relation: crm.activity
+crm          / crm.activity             / activity_3_id (many2one)      : DEL relation: crm.activity
+crm          / crm.activity             / preceding_activity_ids (many2many): NEW relation: crm.activity
+crm          / crm.activity             / recommended_activity_ids (many2many): NEW relation: crm.activity
+crm          / crm.lead                 / last_activity_id (many2one)   : DEL relation: crm.activity
+crm          / crm.lead                 / website_message_ids (one2many): DEL relation: mail.message
+crm          / crm.lead.tag             / team_id (many2one)            : DEL relation: crm.team
+crm          / crm.stage                / team_id (many2one)            : NEW relation: crm.team
+crm          / crm.stage                / team_ids (many2many)          : DEL relation: crm.team
+crm          / crm.stage                / type (selection)              : DEL required: required, selection_keys: ['both', 'lead', 'opportunity'], req_default: both
+crm          / crm.team                 / stage_ids (many2many)         : DEL relation: crm.stage
+crm          / res.partner              / team_id (False)               : NEW mode: modify
+crm          / res.users                / team_id (False)               : NEW mode: modify
+---XML records in module 'crm'---
+NEW crm.stage: crm.stage_lead4
+DEL crm.stage: crm.stage_lead5
+NEW ir.actions.act_window: crm.create_opportunity_simplified
+NEW ir.actions.act_window: crm.crm_activity_log_action
+NEW ir.actions.act_window: crm.crm_activity_report_action_tree
+NEW ir.actions.act_window: crm.crm_activity_schedule_action
+NEW ir.actions.act_window: crm.crm_stage_action
+DEL ir.actions.act_window: crm.crm_lead_stage_act
+DEL ir.actions.act_window: crm.crm_stage_act
+DEL ir.actions.client: crm.action_client_crm_menu
+DEL ir.actions.todo: base.open_menu
+NEW ir.model.access: crm.access_calendar_event
+NEW ir.model.access: crm.access_calendar_event_manager
+NEW ir.model.access: crm.access_calendar_event_type_sale_manager
+NEW ir.model.access: crm.access_calendar_event_type_sale_user
+NEW ir.rule: crm.crm_activity_report_rule_all_activities
+NEW ir.rule: crm.crm_activity_report_rule_personal_activities
+NEW ir.ui.menu: base.menu_administration
+NEW ir.ui.menu: crm.menu_crm_config_lead
+NEW ir.ui.menu: crm.menu_crm_config_opportunity
+NEW ir.ui.menu: crm.menu_import_crm
+NEW ir.ui.menu: sales_team.menu_base_partner
+NEW ir.ui.menu: sales_team.menu_sale_config
+NEW ir.ui.menu: sales_team.menu_sales
+DEL ir.ui.menu: base.menu_base_partner
+DEL ir.ui.menu: base.menu_crm_config_lead
+DEL ir.ui.menu: base.menu_crm_config_opportunity
+DEL ir.ui.menu: base.menu_import_crm
+DEL ir.ui.menu: base.menu_sale_config
+DEL ir.ui.menu: base.menu_sale_config_sales
+DEL ir.ui.menu: base.menu_sale_general_settings
+DEL ir.ui.menu: base.menu_sales
+NEW ir.ui.view: crm.crm_activity_log_view_form
+NEW ir.ui.view: crm.crm_activity_log_view_form_schedule
+NEW ir.ui.view: crm.crm_activity_report_view_tree
+NEW ir.ui.view: crm.view_create_opportunity_simplified
+NEW mail.template: crm.mail_template_data_module_install_crm
+DEL res.groups: base.group_sale_manager
+DEL res.groups: base.group_sale_salesman
+DEL res.groups: base.group_sale_salesman_all_leads
+DEL web.tip: crm.crm_tip_2
+DEL web.tip: crm.crm_tip_4
+DEL web.tip: crm.crm_tip_5
+DEL web.tip: crm.crm_tip_6

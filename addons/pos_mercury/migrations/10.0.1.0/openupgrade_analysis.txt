@@ -1,0 +1,5 @@
+---Fields in module 'pos_mercury'---
+pos_mercury  / account.bank.statement.line / mercury_invoice_no (float)    : type is now 'char' ('float')
+pos_mercury  / barcode.rule             / type (False)                  : NEW selection_keys: ['alias', 'cashier', 'client', 'credit', 'discount', 'location', 'lot', 'package', 'price', 'product', 'weight'], mode: modify
+---XML records in module 'pos_mercury'---
+DEL ir.cron: pos_mercury.ir_cron_mercury_cleanup

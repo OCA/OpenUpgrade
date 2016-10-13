@@ -1,0 +1,21 @@
+---Fields in module 'website_forum'---
+website_forum / forum.forum              / active (boolean)              : NEW 
+website_forum / forum.forum              / karma_retag (integer)         : was renamed to karma_edit_retag [nothing to do]
+website_forum / forum.forum              / karma_tag_create (integer)    : NEW 
+website_forum / forum.forum              / website_message_ids (one2many): DEL relation: mail.message
+website_forum / forum.tag                / message_follower_ids (one2many): NEW relation: mail.followers
+website_forum / forum.tag                / message_ids (one2many)        : NEW relation: mail.message
+website_forum / forum.tag                / message_last_post (datetime)  : NEW 
+website_forum / gamification.challenge   / category (False)              : NEW selection_keys: ['forum', 'hr', 'other'], mode: modify
+website_forum / res.users                / badge_ids (one2many)          : module is now 'hr_gamification' ('website_forum')
+---XML records in module 'website_forum'---
+NEW ir.actions.act_window: website_forum.forum_tag_action
+NEW ir.ui.menu: website_forum.menu_forum_tag
+NEW ir.ui.view: website_forum.forum_post_template_new_answer
+NEW ir.ui.view: website_forum.forum_post_template_new_question
+NEW ir.ui.view: website_forum.forum_post_template_validation
+NEW ir.ui.view: website_forum.forum_tag_view_form
+NEW ir.ui.view: website_forum.forum_tag_view_list
+NEW ir.ui.view: website_forum.forum_view_search
+NEW ir.ui.view: website_forum.layout
+DEL ir.ui.view: website_forum.badge_user

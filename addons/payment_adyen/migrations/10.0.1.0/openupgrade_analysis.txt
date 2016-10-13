@@ -1,0 +1,5 @@
+---Fields in module 'payment_adyen'---
+payment_adyen / payment.acquirer         / provider (False)              : NEW selection_keys: ['adyen', 'manual'], mode: modify
+---XML records in module 'payment_adyen'---
+NEW payment.acquirer: payment.payment_acquirer_adyen
+DEL payment.acquirer: payment_adyen.payment_acquirer_adyen

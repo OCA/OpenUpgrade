@@ -1,0 +1,49 @@
+---Fields in module 'product'---
+product      / product.attribute        / create_variant (boolean)      : NEW 
+product      / product.category         / sequence (integer)            : DEL 
+product      / product.pricelist        / country_group_ids (many2many) : NEW relation: res.country.group
+product      / product.pricelist        / sequence (integer)            : NEW 
+product      / product.product          / item_ids (many2many)          : not a function anymore
+product      / product.product          / item_ids (many2many)          : type is now 'one2many' ('many2many')
+product      / product.template         / default_code (char)           : now a function
+product      / product.template         / pricelist_id (many2one)       : not a function anymore
+product      / product.template         / product_manager (many2one)    : DEL relation: res.users
+product      / product.template         / state (selection)             : DEL selection_keys: ['draft', 'end', 'obsolete', 'sellable']
+product      / product.template         / type (selection)              : selection_keys is now '['consu', 'service']' ('function')
+product      / res.country.group        / pricelist_ids (many2many)     : NEW relation: product.pricelist
+product      / res.partner              / property_product_pricelist (many2one): now a function
+---XML records in module 'product'---
+NEW ir.actions.act_window: product.product_template_action_all
+DEL ir.actions.act_window: product.product_template_action_product
+NEW ir.actions.report.xml: product.report_product_template_label
+DEL ir.model.access: product.access_product_attribute_line_sale_manager
+DEL ir.model.access: product.access_product_attribute_price_sale_manager
+DEL ir.model.access: product.access_product_attribute_sale_manager
+DEL ir.model.access: product.access_product_attribute_value_sale_manager
+DEL ir.model.access: product.access_product_category_sale_manager
+DEL ir.model.access: product.access_product_price_history_salemanager
+DEL ir.model.access: product.access_product_pricelist_item_sale_manager
+DEL ir.model.access: product.access_product_product_sale_manager
+DEL ir.model.access: product.access_product_template_sale_manager
+DEL ir.property: product.property_product_pricelist
+DEL ir.ui.menu: base.menu_product
+DEL ir.ui.menu: base.menu_sale_config_sales
+DEL ir.ui.menu: base.menu_sales
+DEL ir.ui.menu: product.menu_attribute_action
+DEL ir.ui.menu: product.menu_product_category_action_form
+DEL ir.ui.menu: product.menu_product_pricelist_action2
+DEL ir.ui.menu: product.menu_product_pricelist_main
+DEL ir.ui.menu: product.menu_product_template_action
+DEL ir.ui.menu: product.menu_product_uom_categ_form_action
+DEL ir.ui.menu: product.menu_product_uom_form_action
+DEL ir.ui.menu: product.menu_products
+DEL ir.ui.menu: product.menu_variants_action
+DEL ir.ui.menu: product.next_id_16
+DEL ir.ui.menu: product.prod_config_main
+NEW ir.ui.view: product.inherits_website_sale_country_group_form
+NEW ir.ui.view: product.product_attribute_line_form
+NEW ir.ui.view: product.product_attribute_view_form
+NEW ir.ui.view: product.product_supplierinfo_search_view
+NEW ir.ui.view: product.report_producttemplatelabel
+NEW ir.ui.view: product.report_simple_label
+DEL res.groups: product.group_uos

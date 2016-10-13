@@ -1,0 +1,6 @@
+---Fields in module 'hr_payroll_account'---
+hr_payroll_account / hr.payslip.line          / account_credit (many2one)     : NEW relation: account.account
+hr_payroll_account / hr.payslip.line          / account_debit (many2one)      : NEW relation: account.account
+hr_payroll_account / hr.payslip.line          / account_tax_id (many2one)     : NEW relation: account.tax
+hr_payroll_account / hr.payslip.line          / analytic_account_id (many2one): NEW relation: account.analytic.account
+---XML records in module 'hr_payroll_account'---

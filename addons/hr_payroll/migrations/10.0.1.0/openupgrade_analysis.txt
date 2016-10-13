@@ -1,0 +1,16 @@
+---Fields in module 'hr_payroll'---
+---XML records in module 'hr_payroll'---
+DEL ir.rule: hr_payroll.property_rule_employee_payslip
+NEW res.groups: hr_payroll.group_hr_payroll_manager
+NEW res.groups: hr_payroll.group_hr_payroll_user
+NEW res.users: base.default_user
+DEL workflow: hr_payroll.wkf
+DEL workflow.activity: hr_payroll.act_cancel
+DEL workflow.activity: hr_payroll.act_done
+DEL workflow.activity: hr_payroll.act_draft
+DEL workflow.activity: hr_payroll.act_verify
+DEL workflow.transition: hr_payroll.t1
+DEL workflow.transition: hr_payroll.t2
+DEL workflow.transition: hr_payroll.t3
+DEL workflow.transition: hr_payroll.t4
+DEL workflow.transition: hr_payroll.t5

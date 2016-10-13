@@ -1,0 +1,132 @@
+---Fields in module 'maintenance'---
+maintenance  / maintenance.equipment    / active (boolean)              : NEW 
+maintenance  / maintenance.equipment    / assign_date (date)            : NEW 
+maintenance  / maintenance.equipment    / category_id (many2one)        : NEW relation: maintenance.equipment.category
+maintenance  / maintenance.equipment    / color (integer)               : NEW 
+maintenance  / maintenance.equipment    / cost (float)                  : NEW 
+maintenance  / maintenance.equipment    / location (char)               : NEW 
+maintenance  / maintenance.equipment    / maintenance_duration (float)  : NEW 
+maintenance  / maintenance.equipment    / maintenance_ids (one2many)    : NEW relation: maintenance.request
+maintenance  / maintenance.equipment    / maintenance_team_id (many2one): NEW relation: maintenance.team
+maintenance  / maintenance.equipment    / message_follower_ids (one2many): NEW relation: mail.followers
+maintenance  / maintenance.equipment    / message_ids (one2many)        : NEW relation: mail.message
+maintenance  / maintenance.equipment    / message_last_post (datetime)  : NEW 
+maintenance  / maintenance.equipment    / model (char)                  : NEW 
+maintenance  / maintenance.equipment    / name (char)                   : NEW required: required
+maintenance  / maintenance.equipment    / note (text)                   : NEW 
+maintenance  / maintenance.equipment    / owner_user_id (many2one)      : NEW relation: res.users
+maintenance  / maintenance.equipment    / partner_id (many2one)         : NEW relation: res.partner
+maintenance  / maintenance.equipment    / partner_ref (char)            : NEW 
+maintenance  / maintenance.equipment    / period (integer)              : NEW 
+maintenance  / maintenance.equipment    / scrap_date (date)             : NEW 
+maintenance  / maintenance.equipment    / serial_no (char)              : NEW 
+maintenance  / maintenance.equipment    / technician_user_id (many2one) : NEW relation: res.users
+maintenance  / maintenance.equipment    / warranty (date)               : NEW 
+maintenance  / maintenance.equipment.category / _inherits (False)             : NEW 
+maintenance  / maintenance.equipment.category / alias_id (many2one)           : NEW relation: mail.alias, required: required
+maintenance  / maintenance.equipment.category / color (integer)               : NEW 
+maintenance  / maintenance.equipment.category / equipment_ids (one2many)      : NEW relation: maintenance.equipment
+maintenance  / maintenance.equipment.category / maintenance_ids (one2many)    : NEW relation: maintenance.request
+maintenance  / maintenance.equipment.category / message_follower_ids (one2many): NEW relation: mail.followers
+maintenance  / maintenance.equipment.category / message_ids (one2many)        : NEW relation: mail.message
+maintenance  / maintenance.equipment.category / message_last_post (datetime)  : NEW 
+maintenance  / maintenance.equipment.category / name (char)                   : NEW required: required
+maintenance  / maintenance.equipment.category / note (text)                   : NEW 
+maintenance  / maintenance.equipment.category / technician_user_id (many2one) : NEW relation: res.users
+maintenance  / maintenance.request      / archive (boolean)             : NEW 
+maintenance  / maintenance.request      / close_date (date)             : NEW 
+maintenance  / maintenance.request      / color (integer)               : NEW 
+maintenance  / maintenance.request      / description (text)            : NEW 
+maintenance  / maintenance.request      / duration (float)              : NEW 
+maintenance  / maintenance.request      / equipment_id (many2one)       : NEW relation: maintenance.equipment
+maintenance  / maintenance.request      / kanban_state (selection)      : NEW required: required, selection_keys: ['blocked', 'done', 'normal'], req_default: function
+maintenance  / maintenance.request      / maintenance_team_id (many2one): NEW relation: maintenance.team, required: required, req_default: function
+maintenance  / maintenance.request      / maintenance_type (selection)  : NEW selection_keys: ['corrective', 'preventive']
+maintenance  / maintenance.request      / message_follower_ids (one2many): NEW relation: mail.followers
+maintenance  / maintenance.request      / message_ids (one2many)        : NEW relation: mail.message
+maintenance  / maintenance.request      / message_last_post (datetime)  : NEW 
+maintenance  / maintenance.request      / name (char)                   : NEW required: required
+maintenance  / maintenance.request      / owner_user_id (many2one)      : NEW relation: res.users
+maintenance  / maintenance.request      / priority (selection)          : NEW selection_keys: ['0', '1', '2', '3']
+maintenance  / maintenance.request      / request_date (date)           : NEW 
+maintenance  / maintenance.request      / schedule_date (datetime)      : NEW 
+maintenance  / maintenance.request      / stage_id (many2one)           : NEW relation: maintenance.stage
+maintenance  / maintenance.request      / technician_user_id (many2one) : NEW relation: res.users
+maintenance  / maintenance.stage        / done (boolean)                : NEW 
+maintenance  / maintenance.stage        / fold (boolean)                : NEW 
+maintenance  / maintenance.stage        / name (char)                   : NEW required: required
+maintenance  / maintenance.stage        / sequence (integer)            : NEW 
+maintenance  / maintenance.team         / color (integer)               : NEW 
+maintenance  / maintenance.team         / equipment_ids (one2many)      : NEW relation: maintenance.equipment
+maintenance  / maintenance.team         / name (char)                   : NEW required: required
+maintenance  / maintenance.team         / partner_id (many2one)         : NEW relation: res.partner
+maintenance  / maintenance.team         / request_ids (one2many)        : NEW relation: maintenance.request
+---XML records in module 'maintenance'---
+NEW ir.actions.act_window: maintenance.hr_equipment_action
+NEW ir.actions.act_window: maintenance.hr_equipment_action_from_category_form
+NEW ir.actions.act_window: maintenance.hr_equipment_category_action
+NEW ir.actions.act_window: maintenance.hr_equipment_request_action
+NEW ir.actions.act_window: maintenance.hr_equipment_request_action_cal
+NEW ir.actions.act_window: maintenance.hr_equipment_request_action_from_equipment
+NEW ir.actions.act_window: maintenance.hr_equipment_request_action_link
+NEW ir.actions.act_window: maintenance.hr_equipment_stage_action
+NEW ir.actions.act_window: maintenance.hr_equipment_todo_request_action_from_dashboard
+NEW ir.actions.act_window: maintenance.maintenance_dashboard_action
+NEW ir.actions.act_window: maintenance.maintenance_team_action_settings
+NEW ir.model.access: maintenance.access_equipment_admin_user
+NEW ir.model.access: maintenance.access_equipment_category_admin_user
+NEW ir.model.access: maintenance.access_equipment_category_user
+NEW ir.model.access: maintenance.access_equipment_user
+NEW ir.model.access: maintenance.access_maintenance_stage_admin_user
+NEW ir.model.access: maintenance.access_maintenance_stage_user
+NEW ir.model.access: maintenance.access_maintenance_system_user
+NEW ir.model.access: maintenance.access_maintenance_team_user
+NEW ir.rule: maintenance.equipment_request_rule_admin_user
+NEW ir.rule: maintenance.equipment_request_rule_user
+NEW ir.rule: maintenance.equipment_rule_admin_user
+NEW ir.rule: maintenance.equipment_rule_user
+NEW ir.ui.menu: maintenance.menu_equipment_form
+NEW ir.ui.menu: maintenance.menu_m_dashboard
+NEW ir.ui.menu: maintenance.menu_m_reports
+NEW ir.ui.menu: maintenance.menu_m_reports_losses
+NEW ir.ui.menu: maintenance.menu_m_reports_oee
+NEW ir.ui.menu: maintenance.menu_m_request
+NEW ir.ui.menu: maintenance.menu_m_request_calendar
+NEW ir.ui.menu: maintenance.menu_m_request_form
+NEW ir.ui.menu: maintenance.menu_maintenance_cat
+NEW ir.ui.menu: maintenance.menu_maintenance_configuration
+NEW ir.ui.menu: maintenance.menu_maintenance_stage_configuration
+NEW ir.ui.menu: maintenance.menu_maintenance_teams
+NEW ir.ui.menu: maintenance.menu_maintenance_title
+NEW ir.ui.view: maintenance.assets_backend
+NEW ir.ui.view: maintenance.hr_equipment_category_view_form
+NEW ir.ui.view: maintenance.hr_equipment_category_view_search
+NEW ir.ui.view: maintenance.hr_equipment_category_view_tree
+NEW ir.ui.view: maintenance.hr_equipment_request_view_form
+NEW ir.ui.view: maintenance.hr_equipment_request_view_graph
+NEW ir.ui.view: maintenance.hr_equipment_request_view_kanban
+NEW ir.ui.view: maintenance.hr_equipment_request_view_pivot
+NEW ir.ui.view: maintenance.hr_equipment_request_view_search
+NEW ir.ui.view: maintenance.hr_equipment_request_view_tree
+NEW ir.ui.view: maintenance.hr_equipment_stage_view_search
+NEW ir.ui.view: maintenance.hr_equipment_stage_view_tree
+NEW ir.ui.view: maintenance.hr_equipment_view_calendar
+NEW ir.ui.view: maintenance.hr_equipment_view_form
+NEW ir.ui.view: maintenance.hr_equipment_view_kanban
+NEW ir.ui.view: maintenance.hr_equipment_view_search
+NEW ir.ui.view: maintenance.hr_equipment_view_tree
+NEW ir.ui.view: maintenance.maintenance_team_kanban
+NEW ir.ui.view: maintenance.maintenance_team_view_form
+NEW ir.ui.view: maintenance.maintenance_team_view_tree
+NEW mail.alias: maintenance.mail_alias_equipment
+NEW mail.message.subtype: maintenance.mt_cat_mat_assign
+NEW mail.message.subtype: maintenance.mt_cat_req_created
+NEW mail.message.subtype: maintenance.mt_mat_assign
+NEW mail.message.subtype: maintenance.mt_req_created
+NEW mail.message.subtype: maintenance.mt_req_status
+NEW maintenance.stage: maintenance.stage_0
+NEW maintenance.stage: maintenance.stage_1
+NEW maintenance.stage: maintenance.stage_3
+NEW maintenance.stage: maintenance.stage_4
+NEW maintenance.team: maintenance.equipment_team_maintenance
+NEW res.groups: maintenance.group_equipment_manager

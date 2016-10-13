@@ -1,0 +1,7 @@
+---Fields in module 'sale_crm'---
+sale_crm     / account.invoice          / campaign_id (many2one)        : NEW relation: utm.campaign
+sale_crm     / account.invoice          / medium_id (many2one)          : NEW relation: utm.medium
+sale_crm     / account.invoice          / source_id (many2one)          : NEW relation: utm.source
+---XML records in module 'sale_crm'---
+NEW ir.ui.menu: sales_team.menu_base_partner
+NEW ir.ui.view: sale_crm.assets_backend

@@ -1,0 +1,14 @@
+---Fields in module 'rating_project'---
+rating_project / project.project          / is_visible_happy_customer (boolean): DEL 
+rating_project / project.project          / rating_status (selection)     : NEW required: required, selection_keys: ['no', 'periodic', 'stage'], req_default: function
+rating_project / project.project          / rating_status_period (selection): NEW selection_keys: ['bimonthly', 'daily', 'monthly', 'quarterly', 'weekly', 'yearly']
+rating_project / project.task             / rating_ids (one2many)         : NEW relation: rating.rating
+---XML records in module 'rating_project'---
+NEW ir.actions.act_window: rating_project.rating_rating_action_project
+NEW ir.actions.act_window: rating_project.rating_rating_action_task
+NEW ir.cron: rating_project.ir_cron_rating_project
+NEW ir.ui.menu: rating_project.rating_rating_menu_project
+NEW ir.ui.view: rating_project.project_task_view_form_inherit_rating
+NEW ir.ui.view: rating_project.project_task_view_kanban_inherit_rating
+NEW mail.message.subtype: rating_project.mt_project_task_rating
+NEW mail.message.subtype: rating_project.mt_task_rating

@@ -1,0 +1,15 @@
+---Fields in module 'hr_maintenance'---
+hr_maintenance / maintenance.equipment    / department_id (many2one)      : NEW relation: hr.department
+hr_maintenance / maintenance.equipment    / employee_id (many2one)        : NEW relation: hr.employee
+hr_maintenance / maintenance.equipment    / equipment_assign_to (selection): NEW required: required, selection_keys: ['department', 'employee', 'other'], req_default: function
+hr_maintenance / maintenance.request      / department_id (many2one)      : NEW relation: hr.department
+hr_maintenance / maintenance.request      / employee_id (many2one)        : NEW relation: hr.employee
+---XML records in module 'hr_maintenance'---
+NEW ir.ui.view: hr_maintenance.maintenance_equipment_view_form_inherit_hr
+NEW ir.ui.view: hr_maintenance.maintenance_equipment_view_kanban_inherit_hr
+NEW ir.ui.view: hr_maintenance.maintenance_equipment_view_tree_inherit_hr
+NEW ir.ui.view: hr_maintenance.maintenance_request_view_form_inherit_hr
+NEW ir.ui.view: hr_maintenance.maintenance_request_view_kanban_inherit_hr
+NEW ir.ui.view: hr_maintenance.maintenance_request_view_search_inherit_hr
+NEW ir.ui.view: hr_maintenance.maintenance_request_view_tree_inherit_hr
+NEW res.groups: hr.group_hr_user

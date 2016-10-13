@@ -1,0 +1,14 @@
+---Fields in module 'survey'---
+survey       / survey.survey            / active (boolean)              : NEW 
+---XML records in module 'survey'---
+DEL ir.actions.client: survey.action_client_survey_menu
+NEW ir.actions.server: survey.survey_action_server_clean_test_answers
+DEL ir.actions.todo: base.open_menu
+DEL ir.cron: survey.ir_cron_clean_empty_surveys
+NEW ir.ui.view: survey.survey_survey_view_search
+NEW ir.values: survey.survey_values_action_clean_test_answers
+NEW res.groups: survey.group_survey_manager
+NEW res.groups: survey.group_survey_user
+DEL res.groups: base.group_survey_manager
+DEL res.groups: base.group_survey_user
+NEW res.users: base.default_user
