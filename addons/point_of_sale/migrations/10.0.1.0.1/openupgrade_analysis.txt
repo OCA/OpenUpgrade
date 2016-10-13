@@ -1,0 +1,92 @@
+---Fields in module 'point_of_sale'---
+point_of_sale / account.cashbox.line     / default_pos_id (many2one)     : NEW relation: pos.config
+point_of_sale / barcode.rule             / type (False)                  : NEW selection_keys: ['alias', 'cashier', 'client', 'discount', 'location', 'lot', 'package', 'price', 'product', 'weight'], mode: modify
+point_of_sale / pos.config               / active (boolean)              : NEW 
+point_of_sale / pos.config               / default_cashbox_lines_ids (one2many): NEW relation: account.cashbox.line
+point_of_sale / pos.config               / default_fiscal_position_id (many2one): NEW relation: account.fiscal.position
+point_of_sale / pos.config               / iface_fullscreen (boolean)    : DEL 
+point_of_sale / pos.config               / invoice_journal_id (many2one) : NEW relation: account.journal
+point_of_sale / pos.config               / state (selection)             : DEL required: required, selection_keys: ['active', 'deprecated', 'inactive'], req_default: active
+point_of_sale / pos.order.line           / pack_lot_ids (one2many)       : NEW relation: pos.pack.operation.lot
+point_of_sale / pos.pack.operation.lot   / lot_name (char)               : NEW 
+point_of_sale / pos.pack.operation.lot   / pos_order_line_id (many2one)  : NEW relation: pos.order.line
+point_of_sale / pos.session              / rescue (boolean)              : DEL 
+point_of_sale / res.users                / pos_config (many2one)         : DEL relation: pos.config
+---XML records in module 'point_of_sale'---
+NEW account.journal: point_of_sale.pos_sale_journal
+DEL ir.actions.act_url: point_of_sale.action_pos_pos
+NEW ir.actions.act_window: point_of_sale.product_product_action
+DEL ir.actions.act_window: point_of_sale.action_pos_invoice
+DEL ir.actions.act_window: point_of_sale.action_report_sales_by_user_pos_month
+DEL ir.actions.act_window: point_of_sale.action_report_sales_by_user_pos_today
+DEL ir.actions.act_window: point_of_sale.action_trans_pos_tree
+DEL ir.actions.act_window: point_of_sale.action_trans_pos_tree_month
+DEL ir.actions.act_window: point_of_sale.action_trans_pos_tree_today
+DEL ir.actions.act_window: point_of_sale.product_template_action
+NEW ir.actions.report.xml: point_of_sale.sale_details_report
+DEL ir.actions.report.xml: point_of_sale.action_report_pos_receipt
+DEL ir.actions.report.xml: point_of_sale.action_report_pos_session_summary
+DEL ir.actions.report.xml: point_of_sale.action_report_pos_users_product
+DEL ir.actions.report.xml: point_of_sale.pos_lines_detail
+DEL ir.actions.report.xml: point_of_sale.pos_lines_report
+DEL ir.actions.report.xml: point_of_sale.pos_payment_report
+DEL ir.actions.todo: base.open_menu
+NEW ir.filters: point_of_sale.filter_orders_per_session
+NEW ir.model.access: point_of_sale.access_pos_pack_operation_lot
+DEL ir.model.access: point_of_sale.access_report_sales_by_user_pos
+DEL ir.model.access: point_of_sale.access_report_sales_by_user_pos_month
+DEL ir.model.access: point_of_sale.access_report_transaction_pos
+DEL ir.rule: point_of_sale.rule_pos_cashbox_line_user
+NEW ir.ui.menu: point_of_sale.menu_report_order_details
+DEL ir.ui.menu: point_of_sale.menu_pos_details
+NEW ir.ui.view: point_of_sale.product_template_search_view_pos
+NEW ir.ui.view: point_of_sale.report_saledetails
+NEW ir.ui.view: point_of_sale.view_partner_pos_kanban
+NEW ir.ui.view: point_of_sale.view_pos_details_wizard
+DEL ir.ui.view: point_of_sale.product_template_tree_view
+DEL ir.ui.view: point_of_sale.report_detailsofsales
+DEL ir.ui.view: point_of_sale.report_payment
+DEL ir.ui.view: point_of_sale.report_receipt
+DEL ir.ui.view: point_of_sale.report_saleslines
+DEL ir.ui.view: point_of_sale.report_sessionsummary
+DEL ir.ui.view: point_of_sale.report_usersproduct
+DEL ir.ui.view: point_of_sale.res_users_form_preference_view
+DEL ir.ui.view: point_of_sale.view_pos_confirm
+DEL ir.ui.view: point_of_sale.view_pos_details
+DEL ir.ui.view: point_of_sale.view_pos_trans_user_form
+DEL ir.ui.view: point_of_sale.view_report_sales_by_user_pos_calendar
+DEL ir.ui.view: point_of_sale.view_report_sales_by_user_pos_form
+DEL ir.ui.view: point_of_sale.view_report_sales_by_user_pos_graph
+DEL ir.ui.view: point_of_sale.view_report_sales_by_user_pos_month_calendar
+DEL ir.ui.view: point_of_sale.view_report_sales_by_user_pos_month_form
+DEL ir.ui.view: point_of_sale.view_report_sales_by_user_pos_month_graph
+DEL ir.ui.view: point_of_sale.view_report_sales_by_user_pos_month_tree
+DEL ir.ui.view: point_of_sale.view_report_sales_by_user_pos_tree
+DEL ir.ui.view: point_of_sale.view_report_transaction_pos_calendar
+DEL ir.ui.view: point_of_sale.view_report_transaction_pos_graph
+DEL ir.ui.view: point_of_sale.view_trans_pos_user_tree
+DEL report.paperformat: point_of_sale.paperformat_posreceipt
+NEW res.users: base.default_user
+DEL workflow: point_of_sale.wkf_pos
+DEL workflow: point_of_sale.wkf_pos_session
+DEL workflow.activity: point_of_sale.act_cancel
+DEL workflow.activity: point_of_sale.act_close
+DEL workflow.activity: point_of_sale.act_closing_control
+DEL workflow.activity: point_of_sale.act_done
+DEL workflow.activity: point_of_sale.act_draft
+DEL workflow.activity: point_of_sale.act_invoiced
+DEL workflow.activity: point_of_sale.act_open
+DEL workflow.activity: point_of_sale.act_opening_control
+DEL workflow.activity: point_of_sale.act_paid
+DEL workflow.activity: point_of_sale.act_start
+DEL workflow.transition: point_of_sale.trans_closing_control_to_close
+DEL workflow.transition: point_of_sale.trans_closing_control_to_close_no_control
+DEL workflow.transition: point_of_sale.trans_draft_paid
+DEL workflow.transition: point_of_sale.trans_open_to_close
+DEL workflow.transition: point_of_sale.trans_open_to_closing_control
+DEL workflow.transition: point_of_sale.trans_opening_control_to_open
+DEL workflow.transition: point_of_sale.trans_paid_cancel
+DEL workflow.transition: point_of_sale.trans_paid_done
+DEL workflow.transition: point_of_sale.trans_paid_invoice
+DEL workflow.transition: point_of_sale.trans_start_to_open
+DEL workflow.transition: point_of_sale.trans_start_to_opening_control

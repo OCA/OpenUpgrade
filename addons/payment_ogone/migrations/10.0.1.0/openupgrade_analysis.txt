@@ -1,0 +1,5 @@
+---Fields in module 'payment_ogone'---
+payment_ogone / payment.acquirer         / provider (False)              : NEW selection_keys: ['adyen', 'authorize', 'buckaroo', 'manual', 'ogone'], mode: modify
+---XML records in module 'payment_ogone'---
+NEW payment.acquirer: payment.payment_acquirer_ogone
+DEL payment.acquirer: payment_ogone.payment_acquirer_ogone

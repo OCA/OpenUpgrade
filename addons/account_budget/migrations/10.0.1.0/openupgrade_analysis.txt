@@ -1,0 +1,33 @@
+---Fields in module 'account_budget'---
+account_budget / crossovered.budget       / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'account_budget'---
+DEL ir.actions.act_window: account_budget.action_account_budget_analytic
+DEL ir.actions.act_window: account_budget.action_account_budget_crossvered_report
+DEL ir.actions.act_window: account_budget.action_account_budget_crossvered_summary_report
+DEL ir.actions.act_window: account_budget.action_account_budget_report
+DEL ir.actions.report.xml: account_budget.action_report_analytic_account_budget
+DEL ir.actions.report.xml: account_budget.action_report_budget
+DEL ir.actions.report.xml: account_budget.action_report_crossovered_budget
+DEL ir.ui.view: account_budget.account_budget_analytic_view
+DEL ir.ui.view: account_budget.account_budget_crossvered_report_view
+DEL ir.ui.view: account_budget.account_budget_crossvered_summary_report_view
+DEL ir.ui.view: account_budget.account_budget_report_view
+DEL ir.ui.view: account_budget.report_analyticaccountbudget
+DEL ir.ui.view: account_budget.report_budget
+DEL ir.ui.view: account_budget.report_crossoveredbudget
+DEL ir.values: account_budget.account_budget_analytic_values
+DEL ir.values: account_budget.account_budget_crossvered_report_values
+DEL ir.values: account_budget.account_budget_crossvered_summary_report_values
+DEL ir.values: account_budget.account_budget_report_values
+DEL workflow: account_budget.wkf_crossovered_budget
+DEL workflow.activity: account_budget.act_cancel
+DEL workflow.activity: account_budget.act_confirm
+DEL workflow.activity: account_budget.act_done
+DEL workflow.activity: account_budget.act_draft
+DEL workflow.activity: account_budget.act_validate
+DEL workflow.transition: account_budget.t1
+DEL workflow.transition: account_budget.t2
+DEL workflow.transition: account_budget.t3
+DEL workflow.transition: account_budget.t4
+DEL workflow.transition: account_budget.t5
+DEL workflow.transition: account_budget.t6

@@ -1,0 +1,11 @@
+---Fields in module 'lunch'---
+lunch        / lunch.alert              / active (boolean)              : NEW 
+lunch        / lunch.product            / active (boolean)              : NEW 
+---XML records in module 'lunch'---
+NEW ir.actions.act_window: lunch.lunch_order_line_action
+DEL ir.actions.act_window: lunch.lunch_order_action_tree
+NEW ir.actions.server: lunch.action_server_lunch_archive_product
+NEW ir.rule: lunch.lunch_order_line_rule_delete
+DEL ir.ui.view: lunch.lunch_order_view_search
+NEW ir.values: lunch.ir_values_lunch_archive_product
+NEW res.users: base.default_user

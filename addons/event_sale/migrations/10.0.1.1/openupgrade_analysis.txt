@@ -1,0 +1,6 @@
+---Fields in module 'event_sale'---
+event_sale   / product.template         / event_type_id (many2one)      : DEL relation: event.type
+---XML records in module 'event_sale'---
+NEW ir.ui.view: event_sale.event_ticket_form_view
+NEW ir.ui.view: event_sale.view_sale_order_form_inherit_event
+DEL ir.ui.view: event_sale.event_order_line

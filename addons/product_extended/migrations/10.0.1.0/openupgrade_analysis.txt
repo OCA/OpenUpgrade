@@ -1,0 +1,7 @@
+---Fields in module 'product_extended'---
+---XML records in module 'product_extended'---
+DEL ir.actions.act_window: product_extended.action_view_compute_price_wizard
+DEL ir.model.access: product_extended.access_wizard_price_all
+NEW ir.ui.view: product_extended.product_product_view_form_normal_inherit_extended
+DEL ir.ui.view: product_extended.mrp_bom_form_view_product_extended
+DEL ir.ui.view: product_extended.view_compute_price_wizard

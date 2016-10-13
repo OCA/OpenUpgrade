@@ -1,0 +1,6 @@
+---Fields in module 'account_voucher'---
+account_voucher / account.voucher          / account_date (date)           : NEW 
+account_voucher / account.voucher          / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'account_voucher'---
+DEL ir.actions.client: account_voucher.action_client_invoice_menu
+DEL ir.actions.todo: base.open_menu

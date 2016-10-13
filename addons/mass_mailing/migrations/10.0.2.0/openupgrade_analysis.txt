@@ -1,0 +1,43 @@
+---Fields in module 'mass_mailing'---
+mass_mailing / mail.mass_mailing        / _inherits (False)             : NEW 
+mass_mailing / mail.mass_mailing        / source_id (many2one)          : now required
+mass_mailing / mail.mass_mailing.contact / website_message_ids (one2many): DEL relation: mail.message
+mass_mailing / mail.mass_mailing.list   / popup_content (html)          : module is now 'website_mass_mailing' ('mass_mailing')
+mass_mailing / mail.mass_mailing.list   / popup_redirect_url (char)     : module is now 'website_mass_mailing' ('mass_mailing')
+---XML records in module 'mass_mailing'---
+NEW ir.actions.act_window: mass_mailing.mass_mailing_tag_action
+DEL ir.actions.client: mass_mailing.action_client_mass_mailing_menu
+DEL ir.actions.todo: base.open_menu
+DEL ir.config_parameter: mass_mailing.icp_mail_bounce_alias
+NEW ir.model.access: mass_mailing.access_mail_mail_statistics_mass_mailing_user
+NEW ir.model.access: mass_mailing.access_mail_mail_statistics_user
+DEL ir.model.access: mass_mailing.access_mail_mail_statistics
+NEW ir.ui.menu: mass_mailing.mass_mailing_tag_menu
+NEW ir.ui.view: mass_mailing.assets_editor
+NEW ir.ui.view: mass_mailing.assets_mail_themes
+NEW ir.ui.view: mass_mailing.mail_mass_mailing_tag_view_form
+NEW ir.ui.view: mass_mailing.s_mail_block_banner
+NEW ir.ui.view: mass_mailing.s_mail_block_comparison_table
+NEW ir.ui.view: mass_mailing.s_mail_block_discount1
+NEW ir.ui.view: mass_mailing.s_mail_block_discount2
+NEW ir.ui.view: mass_mailing.s_mail_block_event
+NEW ir.ui.view: mass_mailing.s_mail_block_footer_separator
+NEW ir.ui.view: mass_mailing.s_mail_block_footer_social
+NEW ir.ui.view: mass_mailing.s_mail_block_footer_social_left
+NEW ir.ui.view: mass_mailing.s_mail_block_footer_tag_line
+NEW ir.ui.view: mass_mailing.s_mail_block_header_logo
+NEW ir.ui.view: mass_mailing.s_mail_block_header_social
+NEW ir.ui.view: mass_mailing.s_mail_block_header_text_social
+NEW ir.ui.view: mass_mailing.s_mail_block_image
+NEW ir.ui.view: mass_mailing.s_mail_block_image_text
+NEW ir.ui.view: mass_mailing.s_mail_block_paragraph
+NEW ir.ui.view: mass_mailing.s_mail_block_steps
+NEW ir.ui.view: mass_mailing.s_mail_block_text_image
+NEW ir.ui.view: mass_mailing.s_mail_block_three_cols
+NEW ir.ui.view: mass_mailing.s_mail_block_title_sub
+NEW ir.ui.view: mass_mailing.s_mail_block_title_text
+NEW ir.ui.view: mass_mailing.s_mail_block_two_cols
+NEW ir.ui.view: mass_mailing.theme_default_template
+DEL ir.ui.view: mass_mailing.mass_mail_theme_list
+DEL res.groups: mass_mailing.group_website_popup_on_exit
+NEW res.users: base.default_user

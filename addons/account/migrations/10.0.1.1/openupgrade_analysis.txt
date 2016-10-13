@@ -1,0 +1,129 @@
+---Fields in module 'account'---
+account      / account.analytic.line    / currency_id (many2one)        : module is now 'analytic' ('account')
+account      / account.bank.statement   / reference (char)              : NEW 
+account      / account.bank.statement   / website_message_ids (one2many): DEL relation: mail.message
+account      / account.bank.statement.line / move_name (char)              : NEW 
+account      / account.full.reconcile   / exchange_move_id (many2one)   : NEW relation: account.move
+account      / account.full.reconcile   / exchange_partial_rec_id (many2one): NEW relation: account.partial.reconcile
+account      / account.invoice          / refund_invoice_id (many2one)  : NEW relation: account.invoice
+account      / account.invoice          / website_message_ids (one2many): DEL relation: mail.message
+account      / account.invoice.line     / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+account      / account.move             / rate_diff_partial_rec_id (many2one): DEL relation: account.partial.reconcile
+account      / account.move.line        / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+account      / account.payment          / move_name (char)              : NEW 
+account      / account.reconcile.model  / account_id (many2one)         : NEW relation: account.account
+account      / account.reconcile.model  / amount (float)                : NEW required: required, req_default: function
+account      / account.reconcile.model  / amount_type (selection)       : NEW required: required, selection_keys: ['fixed', 'percentage'], req_default: function
+account      / account.reconcile.model  / analytic_account_id (many2one): NEW relation: account.analytic.account
+account      / account.reconcile.model  / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+account      / account.reconcile.model  / has_second_line (boolean)     : NEW 
+account      / account.reconcile.model  / journal_id (many2one)         : NEW relation: account.journal
+account      / account.reconcile.model  / label (char)                  : NEW 
+account      / account.reconcile.model  / name (char)                   : NEW required: required
+account      / account.reconcile.model  / second_account_id (many2one)  : NEW relation: account.account
+account      / account.reconcile.model  / second_amount (float)         : NEW required: required, req_default: function
+account      / account.reconcile.model  / second_amount_type (selection): NEW required: required, selection_keys: ['fixed', 'percentage'], req_default: function
+account      / account.reconcile.model  / second_analytic_account_id (many2one): NEW relation: account.analytic.account
+account      / account.reconcile.model  / second_journal_id (many2one)  : NEW relation: account.journal
+account      / account.reconcile.model  / second_label (char)           : NEW 
+account      / account.reconcile.model  / second_tax_id (many2one)      : NEW relation: account.tax
+account      / account.reconcile.model  / sequence (integer)            : NEW required: required, req_default: function
+account      / account.reconcile.model  / tax_id (many2one)             : NEW relation: account.tax
+account      / account.reconcile.model.template / account_id (many2one)         : NEW relation: account.account.template
+account      / account.reconcile.model.template / amount (float)                : NEW required: required, req_default: function
+account      / account.reconcile.model.template / amount_type (selection)       : NEW required: required, selection_keys: ['fixed', 'percentage'], req_default: function
+account      / account.reconcile.model.template / has_second_line (boolean)     : NEW 
+account      / account.reconcile.model.template / label (char)                  : NEW 
+account      / account.reconcile.model.template / name (char)                   : NEW required: required
+account      / account.reconcile.model.template / second_account_id (many2one)  : NEW relation: account.account.template
+account      / account.reconcile.model.template / second_amount (float)         : NEW required: required, req_default: function
+account      / account.reconcile.model.template / second_amount_type (selection): NEW required: required, selection_keys: ['fixed', 'percentage'], req_default: function
+account      / account.reconcile.model.template / second_label (char)           : NEW 
+account      / account.reconcile.model.template / second_tax_id (many2one)      : NEW relation: account.tax.template
+account      / account.reconcile.model.template / sequence (integer)            : NEW required: required, req_default: function
+account      / account.reconcile.model.template / tax_id (many2one)             : NEW relation: account.tax.template
+account      / account.tax              / tax_adjustment (boolean)      : NEW 
+account      / account.tax.template     / tax_adjustment (boolean)      : NEW 
+account      / account.tax.template     / tax_group_id (many2one)       : NEW relation: account.tax.group
+account      / res.company              / paypal_account (char)         : DEL 
+account      / res.partner              / trust (selection)             : NEW selection_keys: ['bad', 'good', 'normal']
+---XML records in module 'account'---
+NEW account.account.type: account.data_account_type_credit_card
+NEW ir.actions.act_window: account.account_tag_action
+NEW ir.actions.act_window: account.act_account_partner_ledger_payable
+NEW ir.actions.act_window: account.act_account_partner_ledger_payable_no_partner
+NEW ir.actions.act_window: account.act_account_partner_ledger_receivable
+NEW ir.actions.act_window: account.act_account_partner_ledger_receivable_no_partner
+NEW ir.actions.act_window: account.action_account_partner_ledger_menu
+NEW ir.actions.act_window: account.action_account_print_journal_menu
+NEW ir.actions.act_window: account.action_account_reconcile_model
+NEW ir.actions.act_window: account.action_move_select
+NEW ir.actions.act_window: account.analytic_line_reporting_pivot
+NEW ir.actions.act_window: account.tax_adjustments_form
+DEL ir.actions.act_window: account.action_account_operation_template
+DEL ir.actions.act_window: account.action_move_line_select_posted
+NEW ir.actions.client: account.action_manual_reconciliation
+DEL ir.actions.client: account.action_client_account_menu
+NEW ir.actions.report.xml: account.action_report_journal
+NEW ir.actions.report.xml: account.action_report_partnerledger
+DEL ir.actions.todo: base.open_menu
+NEW ir.model.access: account.access_account_full_reconcile
+NEW ir.model.access: account.access_account_full_reconcile_group_invoice
+NEW ir.model.access: account.access_account_invoice_report_billing
+NEW ir.model.access: account.access_account_reconcile_model
+NEW ir.model.access: account.access_account_reconcile_model_template
+DEL ir.model.access: account.access_account_account_sale_manager
+DEL ir.model.access: account.access_account_invoice_tax_sale_manager
+DEL ir.model.access: account.access_account_journal_sale_manager
+DEL ir.model.access: account.access_account_operation_template
+DEL ir.model.access: account.access_account_tax_group_sale_manager
+DEL ir.model.access: account.access_account_tax_sale_manager
+NEW ir.property: account.default_followup_trust
+NEW ir.rule: account.account_reconcile_model_template_comp_rule
+DEL ir.rule: account.account_operation_template_comp_rule
+NEW ir.ui.menu: account.account_analytic_tag_menu
+NEW ir.ui.menu: account.account_tag_menu
+NEW ir.ui.menu: account.menu_action_analytic_lines_reporting
+NEW ir.ui.menu: account.menu_action_currency_form
+NEW ir.ui.menu: account.menu_action_manual_reconciliation
+NEW ir.ui.menu: account.menu_action_tax_adjustment
+NEW ir.ui.menu: account.menu_partner_ledger
+NEW ir.ui.menu: account.menu_print_journal
+NEW ir.ui.menu: account.menu_product_template_action
+DEL ir.ui.menu: base.menu_action_currency_form
+NEW ir.ui.view: account.account_report_partner_ledger_view
+NEW ir.ui.view: account.account_report_print_journal_view
+NEW ir.ui.view: account.account_tag_view_form
+NEW ir.ui.view: account.report_journal
+NEW ir.ui.view: account.report_partnerledger
+NEW ir.ui.view: account.tax_adjustments_wizard
+NEW ir.ui.view: account.view_account_reconcile_model_form
+NEW ir.ui.view: account.view_account_reconcile_model_search
+NEW ir.ui.view: account.view_account_reconcile_model_tree
+NEW ir.ui.view: account.view_full_reconcile_form
+NEW ir.ui.view: account.view_move_line_pivot
+DEL ir.ui.view: account.view_account_operation_template_form
+DEL ir.ui.view: account.view_account_operation_template_search
+DEL ir.ui.view: account.view_account_operation_template_tree
+DEL ir.ui.view: account.view_company_inherit_form
+NEW ir.values: account.action_account_partner_ledger_values
+NEW mail.template: account.mail_template_data_notification_email_account_invoice
+NEW res.groups: account.group_warning_account
+NEW res.users: base.default_user
+DEL workflow: account.wkf
+DEL workflow.activity: account.act_cancel
+DEL workflow.activity: account.act_draft
+DEL workflow.activity: account.act_open
+DEL workflow.activity: account.act_open_test
+DEL workflow.activity: account.act_paid
+DEL workflow.activity: account.act_proforma2
+DEL workflow.transition: account.draft_to_pro2
+DEL workflow.transition: account.open_test_to_paid
+DEL workflow.transition: account.pro2_to_cancel
+DEL workflow.transition: account.pro2_to_open
+DEL workflow.transition: account.t12
+DEL workflow.transition: account.t13
+DEL workflow.transition: account.t14
+DEL workflow.transition: account.t4
+DEL workflow.transition: account.t8
+DEL workflow.transition: account.t9

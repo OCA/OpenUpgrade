@@ -1,0 +1,9 @@
+---Fields in module 'website_event_track'---
+website_event_track / event.event              / blog_id (many2one)            : DEL relation: blog.blog
+website_event_track / event.event              / show_blog (boolean)           : DEL 
+website_event_track / event.track              / active (boolean)              : NEW 
+website_event_track / event.track              / website_message_ids (one2many): DEL relation: mail.message
+website_event_track / event.track.tag          / color (integer)               : NEW 
+---XML records in module 'website_event_track'---
+NEW ir.ui.view: website_event_track.event_track_template_new
+DEL web.tip: website_event_track.event_track_tip_1

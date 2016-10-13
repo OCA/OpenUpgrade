@@ -1,0 +1,30 @@
+---Fields in module 'mrp_repair'---
+mrp_repair   / mrp.repair               / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'mrp_repair'---
+DEL workflow: mrp_repair.wkf_repair
+DEL workflow.activity: mrp_repair.act_cancel
+DEL workflow.activity: mrp_repair.act_cancel2
+DEL workflow.activity: mrp_repair.act_cancel3
+DEL workflow.activity: mrp_repair.act_confirm
+DEL workflow.activity: mrp_repair.act_done
+DEL workflow.activity: mrp_repair.act_draft
+DEL workflow.activity: mrp_repair.act_invoice_end
+DEL workflow.activity: mrp_repair.act_repair_end
+DEL workflow.activity: mrp_repair.act_repair_ready
+DEL workflow.activity: mrp_repair.act_repair_start
+DEL workflow.activity: mrp_repair.act_wait_invoice
+DEL workflow.activity: mrp_repair.act_wait_repair
+DEL workflow.transition: mrp_repair.trans_confirm_wait_invoice
+DEL workflow.transition: mrp_repair.trans_confirm_wait_ship
+DEL workflow.transition: mrp_repair.trans_draft_cancel
+DEL workflow.transition: mrp_repair.trans_draft_confirm
+DEL workflow.transition: mrp_repair.trans_invoice_end_done
+DEL workflow.transition: mrp_repair.trans_invoice_start_repair
+DEL workflow.transition: mrp_repair.trans_ready_repair_start
+DEL workflow.transition: mrp_repair.trans_reapir_end_done
+DEL workflow.transition: mrp_repair.trans_reapir_end_invoice
+DEL workflow.transition: mrp_repair.trans_repair_repair_end
+DEL workflow.transition: mrp_repair.trans_wait_invoice_cancel2
+DEL workflow.transition: mrp_repair.trans_wait_invoice_invoice
+DEL workflow.transition: mrp_repair.trans_wait_repair_cancel3
+DEL workflow.transition: mrp_repair.trans_wait_repair_start
