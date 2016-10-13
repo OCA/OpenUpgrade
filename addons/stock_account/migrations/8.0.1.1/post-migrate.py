@@ -22,6 +22,7 @@
 ##############################################################################
 
 from openerp.openupgrade import openupgrade
+from openerp.exceptions import RedirectWarning
 from openerp import pooler, SUPERUSER_ID
 
 
@@ -91,10 +92,15 @@ def inventory_period_id(cr, pool):
         """.format(
             date_done=date_done))
     for inv_id, company_id, date in cr.fetchall():
-        period_ids = period_obj.find(
-            cr, SUPERUSER_ID, dt=date[:10], context={'company_id': company_id})
-        inventory_obj.write(
-            cr, SUPERUSER_ID, inv_id, {'period_id': period_ids[0]})
+        try:
+            period_ids = period_obj.find(
+                cr, SUPERUSER_ID, dt=date[:10],
+                context={'company_id': company_id})
+            inventory_obj.write(
+                cr, SUPERUSER_ID, inv_id, {'period_id': period_ids[0]})
+        except RedirectWarning:
+            # Don't fill inventories made outside any valid account period
+            pass
     # Drop column as a marker that this script has run
     openupgrade.drop_columns(cr, [('stock_inventory', date_done)])
 
