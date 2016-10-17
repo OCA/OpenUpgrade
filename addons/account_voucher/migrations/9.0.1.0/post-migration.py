@@ -53,7 +53,8 @@ def create_payments_from_vouchers(env):
         WHERE av.voucher_type IN ('receipt', 'payment')
         AND av.state in ('draft', 'posted')
         """,
-        (receipt_method.id, payment_method.id)
+        (receipt_method.id,
+         payment_method.id)
     )
     env.cr.execute(
         """SELECT COALESCE(MAX(id), 0) AS max_id FROM account_payment"""
@@ -85,16 +86,6 @@ def create_payments_from_vouchers(env):
     )
 
 
-def delete_payment_vouchers(env):
-    """Delete payment_vouchers. Info is now in account_payment."""
-    env.cr.execute(
-        """\
-        DELETE from account_voucher
-        WHERE voucher_type IN ('receipt', 'payment')
-        """
-    )
-
-
 def create_voucher_line_tax_lines(env):
     """Migrate tax information on voucher lines to m2m relation."""
     env.cr.execute(
@@ -110,5 +101,4 @@ def create_voucher_line_tax_lines(env):
 def migrate(env, version):
     """Control function for account_voucher migration."""
     create_payments_from_vouchers(env)
-    delete_payment_vouchers(env)
     create_voucher_line_tax_lines(env)

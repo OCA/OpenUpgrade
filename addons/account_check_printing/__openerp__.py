@@ -10,7 +10,10 @@ It must be used as a dependency for modules that provide country-specific check 
 The check settings are located in the accounting journals configuration page.
     """,
     'website': 'https://www.odoo.com/page/accounting',
-    'depends' : ['account'],
+    'depends' : [
+        'account',
+        'account_voucher',  # Not for normal Odoo, but needed for migration
+    ],
     'data': [
         'data/check_printing.xml',
         'views/account_journal_dashboard_view.xml',
