@@ -12,7 +12,8 @@ column_copies = {
 
 def delete_payment_views(cr):
     """Delete account.voucher payment views that hinder upgrade."""
-    cr.execute("""
+    cr.execute(
+        """\
         DELETE FROM ir_ui_view
         WHERE name like '%account.voucher.payment%'
         """
