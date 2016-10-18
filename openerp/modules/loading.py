@@ -282,40 +282,6 @@ def _check_module_names(cr, module_names):
             incorrect_names = mod_names.difference([x['name'] for x in cr.dictfetchall()])
             _logger.warning('invalid module names, ignored: %s', ", ".join(incorrect_names))
 
-
-def handle_module_renames(cr, module_list):
-    """If relevant modules have been renamed, process renames.""" 
-    # Imports here, because we need initialized system path 
-    try:
-        from openerp.addons.openupgrade_records.lib import apriori
-    except ImportError:
-        from openupgrade_records.lib import apriori
-    for index, module_name in enumerate(module_list):
-        # Handle renames:
-        if module_name in apriori.renamed_modules:
-            new_name = apriori.renamed_modules[module_name]
-            module_list[index] = new_name
-            cr.execute(
-                """\
-                UPDATE ir_module_module
-                SET state = (
-                    SELECT state from ir_module_module
-                    WHERE name = %s
-                )
-                WHERE name = %s
-                """,
-                (module_name, new_name, )
-            )
-            cr.execute(
-                """\
-                UPDATE ir_module_module
-                SET state = 'uninstalled'
-                WHERE name = %s
-                """,
-                (module_name, )
-            )
-
-
 def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_modules, perform_checks, upg_registry):
     """Loads modules marked with ``states``, adding them to ``graph`` and
        ``loaded_modules`` and returns a list of installed/upgraded modules."""
@@ -326,7 +292,6 @@ def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_m
         module_list = openupgrade_loading.add_module_dependencies(cr, module_list)
         if not module_list:
             break
-        handle_module_renames(cr, module_list)
         graph.add_modules(cr, module_list, force)
         _logger.debug('Updating graph with %d more modules', len(module_list))
         loaded, processed = load_module_graph(cr, graph, progressdict, report=report, skip_modules=loaded_modules, perform_checks=perform_checks, upg_registry=upg_registry)
