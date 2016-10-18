@@ -21,6 +21,7 @@
 ##############################################################################
 
 from openupgradelib import openupgrade
+from openerp.addons.openupgrade_records.lib import apriori
 
 
 column_copies = {
@@ -71,6 +72,9 @@ def remove_obsolete(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    openupgrade.update_module_names(
+        cr, apriori.renamed_modules.iteritems()
+    )
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_columns(cr, column_renames)
     remove_obsolete(cr)
