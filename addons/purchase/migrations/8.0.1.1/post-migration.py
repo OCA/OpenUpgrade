@@ -78,6 +78,21 @@ def create_workitem_picking(cr, uid, pool):
                 (wkf_activity, wkf_instance, 'complete',))
 
 
+def migrate_purchase_order(cr):
+    """Copy currency_id from pricelist, as the field was a related non-stored
+    one.
+    :param cr: Database cursor
+    """
+    openupgrade.logged_query(
+        cr, """
+            UPDATE purchase_order po
+            SET currency_id = pp.currency_id
+            FROM product_pricelist pp
+            WHERE pp.id = po.pricelist_id
+            AND pp.currency_id != po.currency_id
+        """)
+
+
 def migrate_product_supply_method(cr):
     """
     Procurements of products: change the supply_method for the matching route
@@ -191,6 +206,7 @@ def migrate_stock_warehouse(cr, pool):
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
     create_workitem_picking(cr, uid, pool)
+    migrate_purchase_order(cr)
     migrate_product_supply_method(cr)
     migrate_procurement_order(cr)
     migrate_stock_warehouse(cr, pool)
