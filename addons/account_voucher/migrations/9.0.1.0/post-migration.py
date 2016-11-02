@@ -68,20 +68,12 @@ def create_payments_from_vouchers(env):
     env.cr.execute(
         """\
         UPDATE account_move_line aml
-        SET payment_id = (
-            SELECT av.id
-            FROM account_voucher_line avl
-            JOIN account_voucher av ON av.id = avl.voucher_id
-            WHERE avl.move_line_id = aml.id
-        )
-        WHERE aml.id IN (
-            SELECT avl.move_line_id
-            FROM account_voucher_line avl
-            JOIN account_voucher av ON av.id = avl.voucher_id
-            WHERE av.voucher_type IN ('receipt', 'payment')
-              AND NOT avl.move_line_id IS NULL
-              AND NOT av.move_id IS NULL
-        )
+        SET payment_id = av.id
+        FROM account_voucher_line avl
+        JOIN account_voucher av ON av.id = avl.voucher_id
+        WHERE avl.move_line_id=aml.id
+        AND av.voucher_type IN ('receipt', 'payment')
+        AND av.state in ('draft', 'posted')
         """
     )
 
