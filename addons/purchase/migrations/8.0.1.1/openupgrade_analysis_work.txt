@@ -7,9 +7,11 @@ purchase     / procurement.order        / purchase_line_id (many2one)   : NEW re
 purchase     / purchase.order.line      / procurement_ids (one2many)    : NEW relation: procurement.order
 # DONE: match procurements with purchase order lines based on stock move connection or product_id
 
+purchase     / purchase.order           / currency_id (many2one)        : not a function anymore
+# DONE: Fill currency_id from related pricelist
+
 purchase     / purchase.order           / bid_date (date)               : NEW
 purchase     / purchase.order           / bid_validity (date)           : NEW
-purchase     / purchase.order           / currency_id (many2one)        : not a function anymore
 purchase     / purchase.order           / date_order (date)             : type is now 'datetime' ('date')
 purchase     / purchase.order           / incoterm_id (many2one)        : NEW relation: stock.incoterms
 # NOTHING TO DO
