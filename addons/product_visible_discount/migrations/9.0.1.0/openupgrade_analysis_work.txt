@@ -1,0 +1,7 @@
+---Fields in module 'product_visible_discount'---
+product_visible_discount / product.pricelist        / discount_policy (selection)   : NEW selection_keys: ['with_discount', 'without_discount']
+product_visible_discount / product.pricelist        / visible_discount (boolean)    : DEL 
+
+# as the default is `with_discount`, we set `without_discount` for pricelists where the former flag is unset
+
+---XML records in module 'product_visible_discount'---
