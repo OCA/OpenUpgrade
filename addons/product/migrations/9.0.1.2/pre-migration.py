@@ -18,6 +18,24 @@ column_renames = {
     ],
 }
 
+column_copies = {
+    'product_template': [
+        ('type', None, None),
+    ],
+}
+
+
+def map_product_template_type(cr):
+    """ The product template type value 'stockable' is not an option in the
+    product module for v9. We need to assign a temporary 'dummy' value
+    until module stock is installed. In post-migration we will
+    restore the original value."""
+    openupgrade.map_values(
+        cr,
+        openupgrade.get_legacy_name('type'), 'type',
+        [('product', 'consu')],
+        table='account_tax', write='sql')
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
@@ -83,3 +101,5 @@ def migrate(cr, version):
         """)
 
     cr.execute("update product_template set state=NULL where state=''")
+
+    map_product_template_type(cr)

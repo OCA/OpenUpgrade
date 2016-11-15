@@ -146,6 +146,20 @@ def update_product_product(cr):
         """)
 
 
+def map_product_template_type(cr):
+    """ See comments in method map_product_template_type in the pre-migration
+    script."""
+    if not openupgrade.logged_query(cr, """
+        select id FROM product_template where {name_v8} = 'product'
+    """.format(name_v8=openupgrade.get_legacy_name('type'))):
+        return
+    openupgrade.map_values(
+        cr,
+        openupgrade.get_legacy_name('type'), 'type',
+        [('product', 'product')],
+        table='product_template', write='sql')
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     map_base(cr)
@@ -153,3 +167,4 @@ def migrate(cr, version):
     update_product_pricelist_item(cr)
     update_product_product(cr)
     update_product_template(cr)
+    map_product_template_type(cr)
