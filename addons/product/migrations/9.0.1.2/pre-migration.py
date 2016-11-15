@@ -66,6 +66,7 @@ def migrate(cr, version):
         """)
 
     openupgrade.rename_columns(cr, column_renames)
+    openupgrade.copy_columns(cr, column_copies)
 
     # Add default value when it is null, as Product name / Package Logistic
     # Unit name
