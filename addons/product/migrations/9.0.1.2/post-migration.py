@@ -99,7 +99,7 @@ def update_product_template(cr):
     # product.product instead of product.template.
 
     cr.execute("""
-        SELECT id
+        SELECT imf.id
         FROM ir_model_fields as imf
         INNER JOIN ir_model as im
         ON imf.model_id = im.id
