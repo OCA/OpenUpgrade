@@ -34,7 +34,7 @@ def map_product_template_type(cr):
         cr,
         openupgrade.get_legacy_name('type'), 'type',
         [('product', 'consu')],
-        table='account_tax', write='sql')
+        table='product_template', write='sql')
 
 
 @openupgrade.migrate()
