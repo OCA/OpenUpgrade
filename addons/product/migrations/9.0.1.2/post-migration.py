@@ -97,12 +97,25 @@ def update_product_template(cr):
 
     # make ir.property records associated to 'standard_price' applicable to
     # product.product instead of product.template.
+
+    cr.execute("""
+        SELECT id
+        FROM ir_model_fields as imf
+        INNER JOIN ir_model as im
+        ON imf.model_id = im.id
+        WHERE im.model = 'product.product'
+        AND imf.name = 'standard_price'
+        LIMIT 1
+    """)
+
+    standard_price_field = cr.fetchone()[0] or False
+
     openupgrade.logged_query(cr, """
         INSERT INTO ir_property
         (name, res_id, company_id, fields_id, value_float, value_integer,
         value_text, value_binary, value_reference, value_datetime, type)
         SELECT ip.name, CONCAT('product.product,', pp.id), ip.company_id,
-        ip.fields_id, ip.value_float, ip.value_integer, ip.value_text,
+        %s, ip.value_float, ip.value_integer, ip.value_text,
         ip.value_binary, ip.value_reference, ip.value_datetime, ip.type
         FROM product_product AS pp
         INNER JOIN product_template AS pt
@@ -110,7 +123,7 @@ def update_product_template(cr):
         INNER JOIN ir_property AS ip
         ON ip.res_id = CONCAT('product.template,', pt.id)
         WHERE ip.name = 'standard_price'
-        """)
+        """ % standard_price_field)
 
     # Remove ir.property records associated to 'standard_price' for model
     # 'product.template'.
