@@ -19,7 +19,15 @@ column_renames = {
     'sale_order_line_invoice_rel': [
         ('invoice_id', 'invoice_line_id'),
     ],
+    'sale_order_tax': [
+        ('order_line_id', 'sale_order_line_id'),
+        ('tax_id', 'account_tax_id'),
+    ],
 }
+
+table_renames = [
+    ('sale_order_tax', 'account_tax_sale_order_line_rel'),
+]
 
 column_copies = {
     'sale_order': [
@@ -52,4 +60,5 @@ def map_order_state(cr):
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.copy_columns(cr, column_copies)
+    openupgrade.rename_tables(cr, table_renames)
     map_order_state(cr)
