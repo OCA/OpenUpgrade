@@ -34,7 +34,6 @@ except ImportError:
 # Cannot use forward references in 6.0
 class openupgrade_record(Model):
     _name = 'openupgrade.record'
-openupgrade_record()
 
 
 class openupgrade_attribute(Model):
@@ -55,7 +54,6 @@ class openupgrade_attribute(Model):
             readonly=True,
             ),
         }
-openupgrade_attribute()
 
 
 class openupgrade_record(Model):
@@ -118,5 +116,3 @@ class openupgrade_record(Model):
                 dict([(x.name, x.value) for x in record.attribute_ids]))
             data.append(repr)
         return data
-
-openupgrade_record()

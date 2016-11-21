@@ -136,5 +136,3 @@ class openupgrade_comparison_config(Model):
 
         result = {}
         return result
-
-openupgrade_comparison_config()
