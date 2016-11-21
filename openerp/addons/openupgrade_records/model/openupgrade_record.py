@@ -31,11 +31,6 @@ except ImportError:
     from osv import fields
 
 
-# Cannot use forward references in 6.0
-class openupgrade_record(Model):
-    _name = 'openupgrade.record'
-
-
 class openupgrade_attribute(Model):
     _name = 'openupgrade.attribute'
     _rec_name = 'name'
@@ -57,7 +52,7 @@ class openupgrade_attribute(Model):
 
 
 class openupgrade_record(Model):
-    _inherit = 'openupgrade.record'
+    _name = 'openupgrade.record'
 
     _columns = {
         'name': fields.char('Name', size=256, readonly=True),
