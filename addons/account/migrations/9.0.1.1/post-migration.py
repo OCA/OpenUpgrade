@@ -417,6 +417,10 @@ def migrate(env, version):
     WHERE child_depend IS True
     """)
 
+    # In v9, percentages are expressed as percentage
+    cr.execute('UPDATE account_tax set amount=amount*100 '
+               "WHERE amount_type='percent'")
+
     registry = RegistryManager.get(cr.dbname)
     openupgrade.m2o_to_x2m(
         cr, registry['account.bank.statement.line'],
