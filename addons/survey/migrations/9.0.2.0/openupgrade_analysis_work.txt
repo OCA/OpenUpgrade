@@ -1,0 +1,32 @@
+---Fields in module 'survey'---
+survey       / survey.survey            / description (html)            : was renamed to description [nothing to do]
+#nothing to do
+
+survey       / survey.survey            / email_template_id (many2one)  : relation is now 'mail.template' ('email.template')
+#nothing to do
+
+survey       / survey.survey            / message_follower_ids (many2many): not a function anymore
+survey       / survey.survey            / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+survey       / survey.survey            / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+# Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
+
+survey       / survey.survey            / res_model (char)              : DEL
+#nothing to do
+ 
+---XML records in module 'survey'---
+DEL email.template: survey.email_template_survey
+#nothing to do
+
+NEW ir.actions.client: survey.action_client_survey_menu
+NEW ir.actions.todo: base.open_menu
+# ir.actions.* ---> Nothing to do
+
+DEL ir.ui.menu: base.menu_marketing_config_root
+NEW ir.ui.view: survey.assets_backend
+NEW ir.ui.view: survey.assets_frontend_survey
+NEW ir.ui.view: survey.back
+# ir.ui.* ---> Nothing to do
+
+NEW mail.template: survey.email_template_survey
+#nothing to do
+
