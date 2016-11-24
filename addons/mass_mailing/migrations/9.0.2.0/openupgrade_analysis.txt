@@ -1,30 +1,76 @@
 ---Fields in module 'mass_mailing'---
 mass_mailing / link.tracker             / mass_mailing_campaign_id (many2one): NEW relation: mail.mass_mailing.campaign
+# Nothing to do
+
 mass_mailing / link.tracker             / mass_mailing_id (many2one)    : NEW relation: mail.mass_mailing
+# Nothing to do
+
 mass_mailing / link.tracker.click       / mail_stat_id (many2one)       : NEW relation: mail.mail.statistics
+# Nothing to do
+
 mass_mailing / link.tracker.click       / mass_mailing_campaign_id (many2one): NEW relation: mail.mass_mailing.campaign
+# Nothing to do
+
 mass_mailing / link.tracker.click       / mass_mailing_id (many2one)    : NEW relation: mail.mass_mailing
+# Nothing to do
 mass_mailing / mail.mail.statistics     / links_click_ids (one2many)    : NEW relation: link.tracker.click
-mass_mailing / mail.mass_mailing        / active (boolean)              : NEW 
-mass_mailing / mail.mass_mailing        / keep_archives (boolean)       : NEW 
-mass_mailing / mail.mass_mailing        / schedule_date (datetime)      : NEW 
+# Nothing to do
+
+mass_mailing / mail.mass_mailing        / active (boolean)              : NEW
+# Nothing to do
+
+mass_mailing / mail.mass_mailing        / keep_archives (boolean)       : NEW
+# Nothing to do
+
+mass_mailing / mail.mass_mailing        / schedule_date (datetime)      : NEW
+# Nothing to do
+
 mass_mailing / mail.mass_mailing        / state (selection)             : selection_keys is now '['done', 'draft', 'in_queue', 'sending']' ('['done', 'draft', 'test']')
-mass_mailing / mail.mass_mailing.campaign / _inherits (False)             : NEW 
+# Done ---> 'test' is converted to 'draft'
+
+mass_mailing / mail.mass_mailing.campaign / _inherits (False)             : NEW
+# Nothing to do
+
 mass_mailing / mail.mass_mailing.campaign / campaign_id (many2one)        : NEW relation: utm.campaign, required: required, req_default: function
+# Nothing to do
+
 mass_mailing / mail.mass_mailing.campaign / category_ids (many2many)      : DEL relation: mail.mass_mailing.category
+# Nothing to do
+
 mass_mailing / mail.mass_mailing.campaign / medium_id (many2one)          : NEW relation: utm.medium
+# Nothing to do
+
 mass_mailing / mail.mass_mailing.campaign / source_id (many2one)          : NEW relation: utm.source
+# Nothing to do
+
 mass_mailing / mail.mass_mailing.campaign / tag_ids (many2many)           : NEW relation: mail.mass_mailing.tag
-mass_mailing / mail.mass_mailing.contact / message_bounce (integer)      : NEW 
+# Nothing to do
+
+mass_mailing / mail.mass_mailing.contact / message_bounce (integer)      : NEW
+# Nothing to do
+
 mass_mailing / mail.mass_mailing.contact / message_follower_ids (many2many): not a function anymore
 mass_mailing / mail.mass_mailing.contact / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
 mass_mailing / mail.mass_mailing.contact / message_follower_ids (many2many): type is now 'one2many' ('many2many')
-mass_mailing / mail.mass_mailing.contact / unsubscription_date (datetime): NEW 
-mass_mailing / mail.mass_mailing.list   / active (boolean)              : NEW 
+
+mass_mailing / mail.mass_mailing.contact / unsubscription_date (datetime): NEW
+# Nothing to do
+
+mass_mailing / mail.mass_mailing.list   / active (boolean)              : NEW
+# Nothing to do
+
 mass_mailing / mail.mass_mailing.list   / popup_content (html)          : NEW required: required, req_default: function
-mass_mailing / mail.mass_mailing.list   / popup_redirect_url (char)     : NEW 
-mass_mailing / mail.mass_mailing.tag    / color (integer)               : NEW 
+# Nothing to do
+
+mass_mailing / mail.mass_mailing.list   / popup_redirect_url (char)     : NEW
+# Nothing to do
+
+mass_mailing / mail.mass_mailing.tag    / color (integer)               : NEW
+# Nothing to do
+
 mass_mailing / mail.mass_mailing.tag    / name (char)                   : NEW required: required
+# Nothing to do
+
 ---XML records in module 'mass_mailing'---
 NEW ir.actions.act_window: mass_mailing.action_create_ab_mass_mailings_from_campaign
 NEW ir.actions.act_window: mass_mailing.action_create_mass_mailings_from_campaign
