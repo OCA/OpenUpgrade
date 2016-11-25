@@ -21,6 +21,8 @@ renamed_modules = {
     'account_check_writing': 'account_check_printing',
     # OCA/account-invoicing
     'account_refund_original': 'account_invoice_refund_link',
+    # OCA/social
+    'marketing_security_group': 'mass_mailing_security_group',
 }
 
 renamed_models = {
