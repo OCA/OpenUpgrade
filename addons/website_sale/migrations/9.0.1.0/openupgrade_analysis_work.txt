@@ -18,7 +18,7 @@ website_sale / res.country.group        / website_pricelist_ids (many2many): NEW
 # Nothing to do
 
 website_sale / res.partner              / last_website_so_id (many2one) : NEW relation: sale.order
-# Nothing to do
+# Done in post-migration script
 
 website_sale / website                  / pricelist_id (many2one)       : now a function
 # Nothing to do -> return pricelist of website or pricelist of user
