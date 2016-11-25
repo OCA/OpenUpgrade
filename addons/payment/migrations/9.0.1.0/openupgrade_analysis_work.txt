@@ -39,10 +39,10 @@ payment      / payment.method           / name (char)                   : NEW
 # Nothing to do
 
 payment      / payment.method           / partner_id (many2one)         : NEW relation: res.partner, required: required
-#NOTHING TO DO, we can't set partner_id at this point due to model changes -> table renamed
+#NOTHING TO DO, we can't set partner_id at this point due to model changes
 
 payment      / payment.method           / payment_ids (one2many)        : NEW relation: payment.transaction
-#NOTHING TO DO, we can't set payment_ids at this point -> table renamed
+#NOTHING TO DO, we can't set payment_ids at this point
 
 payment      / payment.transaction      / callback_eval (char)          : NEW
 # Nothing to do

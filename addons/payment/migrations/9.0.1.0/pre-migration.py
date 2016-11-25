@@ -13,12 +13,7 @@ column_renames = {
     ],
 }
 
-table_renames = [
-    ('payment_method', None),
-]
-
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
-    openupgrade.rename_tables(cr, table_renames)
