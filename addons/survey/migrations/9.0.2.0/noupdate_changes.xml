@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record id="base.group_survey_manager" model="res.groups"><field name="name">Manager</field>
+            <field name="category_id" ref="base.module_category_survey"/>
+            </record>
+    <record id="survey_input_users_access" model="ir.rule"><field name="domain_force">['|', ('create_uid', '=', user.id), ('partner_id', '=', user.partner_id.id)]</field>
+            </record>
+    <record id="base.group_survey_user" model="res.groups"><field name="name">User</field>
+            <field name="category_id" ref="base.module_category_survey"/>
+        </record>
+  </data>
+</openerp>
+
