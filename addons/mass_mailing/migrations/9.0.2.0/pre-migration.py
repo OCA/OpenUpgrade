@@ -11,7 +11,6 @@ column_copies = {
 
 table_renames = [
     ('mail_mass_mailing_category', None),
-    ('mail_mass_mailing_campaign', None),
 ]
 
 
