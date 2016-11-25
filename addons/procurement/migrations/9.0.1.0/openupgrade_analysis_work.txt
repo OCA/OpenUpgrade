@@ -1,0 +1,50 @@
+---Fields in module 'procurement'---
+procurement  / procurement.order        / message_follower_ids (many2many)      : not a function anymore
+procurement  / procurement.order        / message_follower_ids (many2many)      : relation is now 'mail.followers' ('res.partner')
+procurement  / procurement.order        / message_follower_ids (many2many)      : type is now 'one2many' ('many2many')
+# Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
+
+procurement  / procurement.order        / message_channel_ids (many2many)       : NEW relation: mail.channel
+# New field ---> Nothing to do
+
+procurement  / procurement.order        / message_needaction (boolean)          : NEW
+# New field ---> Nothing to do
+
+procurement  / procurement.order        / message_needaction_counter (integer)  : NEW
+# New field ---> Nothing to do
+
+procurement  / procurement.order        / message_partner_ids (many2many)       : NEW relation: res.partner
+# New field ---> Nothing to do
+
+procurement  / procurement.order        / message_summary (text)                : DEL
+# Nothing to do
+
+procurement  / procurement.order        / message_unread_counter (integer)      : NEW
+# New field ---> Nothing to do
+
+procurement  / procurement.order        / product_uos (many2one)                : DEL relation: product.uom
+procurement  / procurement.order        / product_uos_qty (float)               : DEL
+# Nothing to do
+
+procurement  / procurement.order        / website_message_ids (one2many)        : NEW relation: mail.message
+# New field ---> Nothing to do
+
+---XML records in module 'procurement'---
+NEW ir.actions.act_window: procurement.procurement_order_action_exceptions
+NEW ir.actions.act_window: procurement.procurement_order_action_product_product_stat
+NEW ir.actions.act_window: procurement.procurement_order_action_product_template_stat
+DEL ir.actions.act_window: procurement.procurement_exceptions
+NEW ir.actions.server: procurement.procurement_order_server_action
+# ir.actions.* ---> Nothing to do
+
+DEL ir.sequence.type: procurement.sequence_proc_group_type
+# Nothing to do
+
+NEW ir.ui.view: procurement.product_product_view_form_procurement_button
+NEW ir.ui.view: procurement.product_template_view_form_procurement_button
+NEW ir.ui.view: procurement.view_procurement_rule_filter
+# ir.ui.* ---> Nothing to do
+
+NEW ir.values: procurement.run_procurement_order_action
+# Nothing to do
+
