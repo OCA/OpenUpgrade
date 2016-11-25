@@ -9,14 +9,9 @@ column_copies = {
     ],
 }
 
-column_renames = {
-    'mail_mass_mailing_campaign': [
-        ('category_ids', None),
-    ]
-}
-
 table_renames = [
     ('mail_mass_mailing_category', None),
+    ('mail_mass_mailing_campaign', None),
 ]
 
 
@@ -24,4 +19,3 @@ table_renames = [
 def migrate(cr, version):
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_tables(cr, table_renames)
-    openupgrade.rename_columns(cr, column_renames)
