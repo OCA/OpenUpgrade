@@ -55,6 +55,10 @@ PROPERTY_FIELDS = {
     ('res.partner', 'property_account_payable', 'property_account_payable_id'),
     ('res.partner', 'property_account_receivable',
      'property_account_receivable_id'),
+    ('res.partner', 'property_account_position',
+     'property_account_position_id'),
+    ('res.partner', 'property_payment_term', 'property_payment_term_id'),
+    ('res.partner', 'property_supplier_payment_term', 'property_supplier_payment_term_id'),
 }
 
 
