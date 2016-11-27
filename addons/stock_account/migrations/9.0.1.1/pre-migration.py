@@ -30,3 +30,9 @@ def migrate(cr, version):
         cr, 'product.template', 'cost_method', 'property_cost_method')
     rename_property(
         cr, 'product.template', 'valuation', 'property_valuation')
+    rename_property(
+        cr, 'product.category', 'property_stock_account_input_categ',
+        'property_stock_account_input_categ_id')
+    rename_property(
+        cr, 'product.category', 'property_stock_account_output_categ',
+        'property_stock_account_output_categ_id')
