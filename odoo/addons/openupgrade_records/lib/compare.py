@@ -64,7 +64,8 @@ def search(item, item_list, fields):
     # search for renamed fields
     if 'field' in fields:
         for other in item_list:
-            if not item['field'] or item['field'] != other.get('oldname'):
+            if not item['field'] or item['field'] != other.get('oldname') or\
+               item['isproperty']:
                 continue
             if compare_records(
                     dict(item, field=other['field']), other, fields):
@@ -111,7 +112,8 @@ def report_generic(new, old, attrs, reprs):
                     text = "not related anymore"
                 fieldprint(old, new, None, text, reprs)
         elif attr == 'oldname':
-            if new.get('oldname') == old['field']:
+            if new.get('oldname') == old['field'] and\
+               not new.get('isproperty'):
                 text = 'was renamed to %s [nothing to do]' % new['field']
                 fieldprint(old, new, None, text, reprs)
         elif old[attr] != new[attr]:
