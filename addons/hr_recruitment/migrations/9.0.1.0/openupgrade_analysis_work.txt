@@ -3,7 +3,7 @@ hr_recruitment / hr.applicant             / attachment_ids (one2many)     : NEW 
 # Nothing to do
 
 hr_recruitment / hr.applicant             / availability (integer)        : type is now 'date' ('integer')
-# Unable to calculate date form a integer --> Nothing to do
+# Done: calculated availability with create_date + availability days
 
 hr_recruitment / hr.applicant             / campaign_id (many2one)        : NEW relation: utm.campaign
 # Nothing to do
@@ -23,7 +23,7 @@ hr_recruitment / hr.applicant             / priority (selection)          : sele
 # Done: Adapt to new range
 
 hr_recruitment / hr.applicant             / source_id (many2one)          : relation is now 'utm.source' ('hr.recruitment.source')
-# Nothing to do
+# Done: created new utm.source from source_id and updated records
 
 hr_recruitment / hr.applicant.category    / name (char)                   : NEW required: required
 # Nothing to do
