@@ -22,8 +22,8 @@ def update_applicant_availability(cr):
             cr,
             """
             UPDATE hr_applicant SET availability = %s
-            WHERE id = '%s'
-            """ % (new_date, applicant[0]))
+            WHERE id = %s
+            """, (new_date, applicant[0]))
 
 
 def migrate_applicant_source(cr):
