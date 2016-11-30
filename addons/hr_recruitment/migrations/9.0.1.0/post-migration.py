@@ -52,7 +52,7 @@ def migrate(cr, version):
         cr,
         openupgrade.get_legacy_name('priority'),
         'priority',
-        [('4', '3'), ('3', '1'), ('2', '0'), ('1', '0')],
+        [('1', '0'), ('2', '0'), ('3', '1'), ('4', '3')],
         table='hr_applicant', write='sql')
     update_applicant_availability(cr)
     migrate_applicant_source(cr)
