@@ -46,7 +46,7 @@ def migrate_applicant_source(cr):
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.load_data(cr, 'survey',
+    openupgrade.load_data(cr, 'hr_recruitment',
                           'migrations/9.0.1.0/noupdate_changes.xml')
     openupgrade.map_values(
         cr,
