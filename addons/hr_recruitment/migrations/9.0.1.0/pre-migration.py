@@ -10,7 +10,12 @@ column_renames = {
         ('availability', None),
     ]}
 
+table_renames = [
+    ('hr_recruitment_source', None),
+]
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_tables(cr, table_renames)
