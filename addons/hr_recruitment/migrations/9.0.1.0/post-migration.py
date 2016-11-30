@@ -33,7 +33,7 @@ def migrate_applicant_source(cr):
             FROM hr_recruitment_source
         """)
     for old_id in cr.fetchall():
-        cr.execute("INSERT_INTO utm_source (name) "
+        cr.execute("INSERT INTO utm_source (name) "
                    "SELECT name "
                    "FROM hr_recruitment_source "
                    "RETURNING id")
