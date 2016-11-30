@@ -33,8 +33,7 @@ def migrate(cr, version):
     if record:
         # Create support plan
         openupgrade.logged_query(cr, ("""
-            INSERT INTO account_analytic_plan ('name')
-            FROM account_analytic_plan_line
+            INSERT INTO account_analytic_plan (name)
             VALUES ('OpenUpgrade migration plan')"""))
         # Fill empty values with this new record value
         openupgrade.logged_query(cr, ("""
