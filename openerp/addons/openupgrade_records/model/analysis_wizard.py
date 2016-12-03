@@ -194,5 +194,3 @@ class openupgrade_analysis_wizard(TransientModel):
             'res_id': ids[0],
             }
         return result
-
-openupgrade_analysis_wizard()

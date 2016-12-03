@@ -122,5 +122,3 @@ class install_all_wizard(TransientModel):
             _db, pool = pooler.restart_pool(cr.dbname, update_module=True)
             self.write(cr, uid, ids, {'state': 'ready'})
         return True
-
-install_all_wizard()

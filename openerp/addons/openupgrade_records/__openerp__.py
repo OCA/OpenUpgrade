@@ -35,7 +35,7 @@ This module depends on OpenERP client lib:
 
     easy_install openerp-client-lib
 
-""",
+    """,
     'author': 'OpenUpgrade Community',
     'maintainer': 'OpenUpgrade Community',
     'contributors': ['Therp BV'],
@@ -50,12 +50,10 @@ This module depends on OpenERP client lib:
         'security/ir.model.access.csv',
         ],
     'external_dependencies': {
-        'python': ['openerplib'],
+        'python': [
+            'openerplib',
+        ],
     },
     'installable': True,
     'auto_install': False,
-    'external_dependencies': {
-        'python': ['openerplib'],
-        },
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

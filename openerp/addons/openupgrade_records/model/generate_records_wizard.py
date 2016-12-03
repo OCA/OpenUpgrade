@@ -90,5 +90,3 @@ class generate_records_wizard(TransientModel):
         self.write(cr, uid, ids, {'state': 'ready'})
         # and we are done
         return True
-
-generate_records_wizard()
