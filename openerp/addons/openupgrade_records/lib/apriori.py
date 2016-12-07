@@ -23,6 +23,11 @@ renamed_modules = {
     'account_refund_original': 'account_invoice_refund_link',
     # OCA/social
     'marketing_security_group': 'mass_mailing_security_group',
+    # odoomrp/odoomrp-wip
+    'product_variants_no_automatic_creation': 'product_variant_configurator',
+    'sale_product_variants': 'sale_variant_configurator',
+    'sale_stock_product_variants': 'sale_stock_variant_configurator',
+    'purchase_product_variants': 'purchase_variant_configurator',
 }
 
 renamed_models = {
