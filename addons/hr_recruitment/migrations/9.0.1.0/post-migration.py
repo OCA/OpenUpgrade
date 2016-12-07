@@ -11,7 +11,7 @@ def update_applicant_availability(cr):
         """
             SELECT id, create_date, %s
             FROM hr_applicant
-        """ % (openupgrade.get_legacy_name('availability'),)
+        """, (openupgrade.get_legacy_name('availability'),)
     )
     for applicant in cr.fetchall():
         new_date = fields.Date.from_string(applicant[1])
@@ -35,8 +35,9 @@ def migrate_applicant_source(cr):
     for old_id in cr.fetchall():
         cr.execute("INSERT INTO utm_source (name) "
                    "SELECT name "
-                   "FROM hr_recruitment_source "
-                   "RETURNING id")
+                   "FROM %s "
+                   "RETURNING id",
+                   (openupgrade.get_legacy_name('hr_recruitment_source'),))
         new_id = cr.fetchone()[0]
         cr.execute("UPDATE hr_applicant "
                    "SET source_id = %s "
