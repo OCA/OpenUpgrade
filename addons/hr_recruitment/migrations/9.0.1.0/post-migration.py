@@ -16,7 +16,7 @@ def update_applicant_availability(cr):
     for applicant in cr.fetchall():
         new_date = fields.Date.from_string(applicant[1])
         if applicant[2]:
-            new_date += timedelta(days=applicant[2])
+            new_date += timedelta(days=int(applicant[2]))
         new_date = fields.Date.to_string(new_date)
         openupgrade.logged_query(
             cr,
