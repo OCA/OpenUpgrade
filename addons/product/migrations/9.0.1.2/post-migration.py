@@ -183,5 +183,5 @@ def migrate(cr, version):
     map_product_template_type(cr)
     # this field's semantics was updated to its name
     cr.execute(
-        'update product_pricelist_item set price_discount=-price_discount'
+        'update product_pricelist_item set price_discount=-price_discount*100'
     )
