@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record id="mt_job_applicant_stage_changed" model="mail.message.subtype"><field name="default" eval="False"/>
+        </record>
+    <record id="base.open_menu" model="ir.actions.todo"><field name="action_id" ref="action_client_hr_recruitment_menu"/>
+            </record>
+    <record id="mt_applicant_hired" model="mail.message.subtype"><field name="default" eval="True"/>
+        </record>
+    <record id="mt_applicant_new" model="mail.message.subtype"><field name="hidden" eval="True"/>
+        </record>
+    <record id="module_install_notification" model="mail.message"><field name="type"/><field name="model">mail.channel</field>
+            <field name="res_id" ref="mail.channel_all_employees"/>
+            <field name="message_type">notification</field>
+            </record>
+  </data>
+</openerp>
+
