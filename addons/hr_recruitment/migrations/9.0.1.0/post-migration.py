@@ -11,7 +11,7 @@ def update_applicant_availability(cr):
         """
             SELECT id, create_date, %s
             FROM hr_applicant
-        """, (openupgrade.get_legacy_name('availability'),)
+        """ % (openupgrade.get_legacy_name('availability'),)
     )
     for applicant in cr.fetchall():
         new_date = fields.Date.from_string(applicant[1])
