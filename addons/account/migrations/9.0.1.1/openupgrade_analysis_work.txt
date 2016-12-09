@@ -435,8 +435,6 @@ account      / account.payment.term.line / value (selection)             : selec
 
 #### FIELDS IN MODEL ACCOUNT.TAX ####
 
-#TODO: amount field is multiplied by 100 in this version. 8.0: 0.21. 9.0: 21
-
 account      / account.tax              / account_analytic_collected_id (many2one): DEL relation: account.analytic.account
 account      / account.tax              / account_analytic_paid_id (many2one): DEL relation: account.analytic.account
 account      / account.tax              / account_collected_id (many2one): was renamed to account_id [nothing to to]
