@@ -417,7 +417,8 @@ def migrate(env, version):
     WHERE child_depend IS True
     """)
 
-    # In v9, percentages are expressed as percentage
+    # In v9, percentages are expressed as hundred-based percentage, 
+    # not one-based percentage
     cr.execute('UPDATE account_tax set amount=amount*100 '
                "WHERE amount_type='percent'")
 
