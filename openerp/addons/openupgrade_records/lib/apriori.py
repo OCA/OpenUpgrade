@@ -28,7 +28,7 @@ renamed_modules = {
     'sale_product_variants': 'sale_variant_configurator',
     'sale_stock_product_variants': 'sale_stock_variant_configurator',
     'purchase_product_variants': 'purchase_variant_configurator',
-    # OCA/account-payment
+    # OCA/account-payment - Module merged in OCA/account-financial-tools
     'account_payment_term_multi_day': 'account_payment_term_extension',
 }
 
