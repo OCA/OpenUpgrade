@@ -21,7 +21,7 @@
 ##############################################################################
 
 import logging
-from openerp import api, models, SUPERUSER_ID
+from openerp import api, SUPERUSER_ID
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID as uid
@@ -571,7 +571,6 @@ def _migrate_stock_warehouse(cr, registry, res_id):
 
 def migrate_stock_warehouses(cr, registry):
     """Migrate all the warehouses"""
-    warehouse_obj = registry['stock.warehouse']
     # Add a code to all warehouses that have no code
     openupgrade.logged_query(
         cr, """
@@ -806,8 +805,8 @@ def _move_assign(env, move):
     # then operations with lot then the rest
     operations = list(operations)
     operations.sort(
-        key=lambda x: ((x.package_id and not x.product_id) and -4 or 0) + (
-        x.package_id and -2 or 0) + (x.lot_id and -1 or 0))
+        key=lambda x: ((x.package_id and not x.product_id) and -4 or 0) +
+                      (x.package_id and -2 or 0) + (x.lot_id and -1 or 0))
     for ops in operations:
         # first try to find quants based on specific domains given by
         # linked operations
@@ -1052,7 +1051,6 @@ def populate_stock_move_fields(cr, registry):
             and sm2.state = 'confirmed'
             ) as res
         WHERE sm1.id = res.id""")
-
 
 
 @openupgrade.migrate()
