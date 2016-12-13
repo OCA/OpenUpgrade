@@ -22,6 +22,9 @@ column_renames = {
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    openupgrade.update_module_names(
+        cr, [('email_template', 'mail')], merge_modules=True,
+    )
     openupgrade.rename_models(cr, model_renames)
     openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
