@@ -30,6 +30,8 @@ renamed_modules = {
     'purchase_product_variants': 'purchase_variant_configurator',
     # OCA/account-payment - Module merged in OCA/account-financial-tools
     'account_payment_term_multi_day': 'account_payment_term_extension',
+    # OCA/account-financial-reporting
+    'account_financial_report_webkit': 'account_financial_report_qweb',
 }
 
 renamed_models = {
