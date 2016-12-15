@@ -28,7 +28,7 @@ def migrate(cr, version):
     cr.execute("""
     INSERT INTO mail_channel_partner (channel_id, partner_id)
     SELECT res_id, partner_id from mail_followers
-    WHERE res_model = 'mail.channel'
+    WHERE res_model = 'mail.channel' AND res_id IN (SELECT id FROM mail_channel);
     """)
     # notifications and stars are plain many2many fields by now
     cr.execute(
