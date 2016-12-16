@@ -48,7 +48,8 @@ def migrate(cr, version):
             'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban',
             'qweb', 'search', 'tree'])
     
-    #The tables stock.picking.in and stock.picking.out are merged into stock.picking
+    # The tables stock.picking.in and stock.picking.out are merged into 
+    # stock.picking
     openupgrade.logged_query(
         cr, """
         UPDATE ir_attachment
