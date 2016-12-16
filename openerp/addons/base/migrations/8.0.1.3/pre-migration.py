@@ -54,6 +54,5 @@ def migrate(cr, version):
         cr, """
         UPDATE ir_attachment
         SET res_model = 'stock.picking'
-        WHERE res_model = 'stock.picking.in' OR 
-        res_model = 'stock.picking.out';
+        WHERE res_model in ('stock.picking.in', 'stock.picking.out');
         """)
