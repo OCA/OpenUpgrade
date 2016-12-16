@@ -53,11 +53,6 @@ def migrate(cr, version):
         cr, """
         UPDATE ir_attachment
         SET res_model = 'stock.picking'
-        WHERE res_model = 'stock.picking.out';
-        """)
-    openupgrade.logged_query(
-        cr, """
-        UPDATE ir_attachment
-        SET res_model = 'stock.picking'
-        WHERE res_model = 'stock.picking.in';
+        WHERE res_model = 'stock.picking.in' OR 
+        res_model = 'stock.picking.out';
         """)
