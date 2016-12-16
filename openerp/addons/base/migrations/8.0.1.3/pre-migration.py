@@ -47,3 +47,17 @@ def migrate(cr, version):
         cr, 'ir_ui_view', 'type', [
             'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban',
             'qweb', 'search', 'tree'])
+    
+    #The tables stock.picking.in and stock.picking.out are merged into stock.picking
+    openupgrade.logged_query(
+        cr, """
+        UPDATE ir_attachment
+        SET res_model = 'stock.picking'
+        WHERE res_model = 'stock.picking.out';
+        """)
+    openupgrade.logged_query(
+        cr, """
+        UPDATE ir_attachment
+        SET res_model = 'stock.picking'
+        WHERE res_model = 'stock.picking.in';
+        """)
