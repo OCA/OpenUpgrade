@@ -10,6 +10,7 @@ column_renames = {
     'account_analytic_account': [
         ('type', None),
         ('state', None),
+        ('date_start', None),
     ],
 }
 
