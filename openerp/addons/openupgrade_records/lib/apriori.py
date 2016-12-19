@@ -32,6 +32,8 @@ renamed_modules = {
     'account_payment_term_multi_day': 'account_payment_term_extension',
     # OCA/account-financial-reporting
     'account_financial_report_webkit': 'account_financial_report_qweb',
+    # OCA/contract
+    'account_analytic_analysis': 'contract',
 }
 
 renamed_models = {
