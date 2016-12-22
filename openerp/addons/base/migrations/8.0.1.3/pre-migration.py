@@ -56,3 +56,13 @@ def migrate(cr, version):
         SET res_model = 'stock.picking'
         WHERE res_model in ('stock.picking.in', 'stock.picking.out');
         """)
+    
+    # Product.template is used for non variant product in v7 this was
+    # product.product
+    openupgrade.logged_query(
+        cr, """
+        UPDATE ir_attachment
+        SET res_model = 'product.template'
+        WHERE res_model = 'product.product';
+        """)
+    
