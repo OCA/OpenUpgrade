@@ -34,6 +34,8 @@ renamed_modules = {
     'account_financial_report_webkit': 'account_financial_report_qweb',
     # OCA/contract
     'account_analytic_analysis': 'contract',
+    # OCA/website
+    'website_disable_odoo': 'website_odoo_debranding',
 }
 
 renamed_models = {
