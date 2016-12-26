@@ -68,8 +68,10 @@ base         / ir.ui.view               / arch (text)                   : now a 
 base         / ir.ui.view               / arch_db (text)                : NEW 
 # Done: arch is now arch_db.
 
+base         / ir.ui.view               / key (char)                    : NEW
+# Done: assign xml_id for views of type 'qweb'
+
 base         / ir.ui.view               / arch_fs (char)                : NEW 
-base         / ir.ui.view               / key (char)                    : NEW 
 base         / ir.ui.view               / type (selection)              : selection_keys is now '['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'sales_team_dashboard', 'search', 'tree']' ('['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'qweb', 'search', 'tree']')
 base         / res.company              / bank_ids (one2many)           : DEL relation: res.partner.bank
 base         / res.company              / currency_ids (one2many)       : DEL relation: res.currency

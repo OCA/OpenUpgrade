@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="base.group_website_designer" model="res.groups">
+        <field name="name">Editor and Designer</field>
+    </record>
+    <record id="base.group_website_publisher" model="res.groups">
+        <field name="name">Editor</field>
+    </record>
+    <record id="menu_homepage" model="website.menu">
+        <field name="website_id" ref="default_website"/>
+    </record>
+    <record id="main_menu" model="website.menu">
+        <field name="website_id" ref="default_website"/>
+    </record>
+    <record id="menu_contactus" model="website.menu">
+        <field name="website_id" ref="default_website"/>
+    </record>
+</odoo>
