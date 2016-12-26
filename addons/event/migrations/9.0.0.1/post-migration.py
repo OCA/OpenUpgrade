@@ -7,12 +7,12 @@ from openupgradelib import openupgrade
 def update_seats_availability(cr):
     cr.execute("""
                 UPDATE event_event
-                SET seats_availability = 'limited',
+                SET seats_availability = 'limited'
                 WHERE seats_max IS NOT NULL
                 """)
     cr.execute("""
                 UPDATE event_event
-                SET seats_availability = 'unlimited',
+                SET seats_availability = 'unlimited'
                 WHERE seats_max IS NULL
                 """)
 
