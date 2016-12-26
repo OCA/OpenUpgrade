@@ -99,14 +99,31 @@ def remove_obsolete_modules(cr, modules_to_remove):
     ir_module_module.module_uninstall(cr, SUPERUSER_ID, ids)
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+def assign_view_keys(env):
+    """This is needed for website. Done through ORM as xml_id is a computed
+    field, so no o(1) process can be done easily, and the number of these
+    views is limited."""
+    views = env['ir.ui.view'].search([
+        ('type', '=', 'qweb'),
+        ('key', '=', False),
+    ])
+    for view in views:
+        view.key = view.xml_id
+
+
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
     for table_name in column_copies.keys():
         for (old, new, field_type) in column_copies[table_name]:
-            openupgrade.convert_field_to_html(cr, table_name, openupgrade.get_legacy_name(old), old)
-    match_company_type_to_is_company(cr)
-    clear_inherit_id(cr)
-    rename_your_company(cr)
-    set_filter_active(cr)
-    remove_obsolete_modules(cr, ('web_gantt', 'web_graph', 'web_tests'))
-    openupgrade.load_data(cr, 'base', 'migrations/9.0.1.3/noupdate_changes.xml')
+            openupgrade.convert_field_to_html(
+                env.cr, table_name, openupgrade.get_legacy_name(old), old
+            )
+    match_company_type_to_is_company(env.cr)
+    clear_inherit_id(env.cr)
+    rename_your_company(env.cr)
+    set_filter_active(env.cr)
+    remove_obsolete_modules(env.cr, ('web_gantt', 'web_graph', 'web_tests'))
+    openupgrade.load_data(
+        env.cr, 'base', 'migrations/9.0.1.3/noupdate_changes.xml',
+    )
+    assign_view_keys(env)
