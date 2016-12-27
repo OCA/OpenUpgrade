@@ -530,44 +530,48 @@ def account_partial_reconcile(env):
         move_line.amount_residual = 0.0
         move_line.amount_residual_currency = 0.0
 
-    # Update the table that relates invoices with payments made
-    openupgrade.logged_query(cr, """
-        INSERT INTO account_invoice_account_move_line_rel
-        (account_invoice_id, account_move_line_id)
-        SELECT DISTINCT ai.id, apr.debit_move_id
-        FROM account_partial_reconcile AS apr
-        INNER JOIN account_move_line as aml
-        ON aml.id = apr.credit_move_id
-        INNER JOIN account_invoice as ai
-        ON ai.move_id = aml.move_id
-        WHERE apr.credit_move_id IN %s
-    """ % (tuple(move_line_ids_reconciled),))
+    if move_line_ids_reconciled:
+        # Update the table that relates invoices with payments made
+        openupgrade.logged_query(cr, """
+            INSERT INTO account_invoice_account_move_line_rel
+            (account_invoice_id, account_move_line_id)
+            SELECT DISTINCT ai.id, apr.debit_move_id
+            FROM account_partial_reconcile AS apr
+            INNER JOIN account_move_line as aml
+            ON aml.id = apr.credit_move_id
+            INNER JOIN account_invoice as ai
+            ON ai.move_id = aml.move_id
+            WHERE apr.credit_move_id IN %s
+        """ % (tuple(move_line_ids_reconciled),))
 
-    openupgrade.logged_query(cr, """
-        INSERT INTO account_invoice_account_move_line_rel
-        (account_invoice_id, account_move_line_id)
-        SELECT DISTINCT ai.id, apr.credit_move_id
-        FROM account_partial_reconcile AS apr
-        INNER JOIN account_move_line as aml
-        ON aml.id = apr.debit_move_id
-        INNER JOIN account_invoice as ai
-        ON ai.move_id = aml.move_id
-        WHERE apr.debit_move_id IN %s
-    """ % (tuple(move_line_ids_reconciled), ))
+    if move_line_ids_reconciled:
+        openupgrade.logged_query(cr, """
+            INSERT INTO account_invoice_account_move_line_rel
+            (account_invoice_id, account_move_line_id)
+            SELECT DISTINCT ai.id, apr.credit_move_id
+            FROM account_partial_reconcile AS apr
+            INNER JOIN account_move_line as aml
+            ON aml.id = apr.debit_move_id
+            INNER JOIN account_invoice as ai
+            ON ai.move_id = aml.move_id
+            WHERE apr.debit_move_id IN %s
+        """ % (tuple(move_line_ids_reconciled), ))
 
     # Migrate partially reconciled items
     move_line_map = {}
-    cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
-               "FROM account_move_line "
-               "WHERE (reconcile_id IS NOT NULL "
-               "OR reconcile_partial_id IS NOT NULL) "
-               "AND id NOT IN %s" % (tuple(move_line_ids_reconciled), ))
-    rec_l = {}
-    for rec_id, move_line_id in cr.fetchall():
-        move_line_map.setdefault(rec_id, []).append(move_line_id)
-        rec_l[rec_id] = True
-    num_recs = len(rec_l.keys())
     to_recompute = env['account.move.line']
+    if move_line_ids_reconciled:
+        cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
+                   "FROM account_move_line "
+                   "WHERE (reconcile_id IS NOT NULL "
+                   "OR reconcile_partial_id IS NOT NULL) "
+                   "AND id NOT IN %s" % (tuple(move_line_ids_reconciled), ))
+        rec_l = {}
+        for rec_id, move_line_id in cr.fetchall():
+            move_line_map.setdefault(rec_id, []).append(move_line_id)
+            rec_l[rec_id] = True
+        num_recs = len(rec_l.keys())
+
     i = 1
     for _rec_id, move_line_ids in move_line_map.iteritems():
         msg = 'Reconciliation step 3 (%s of %s). ' \
