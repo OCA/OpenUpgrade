@@ -21,10 +21,11 @@
 ##############################################################################
 
 import logging
-from openerp import api, models, SUPERUSER_ID
+from openerp import api, SUPERUSER_ID
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID as uid
+from openerp.tools.float_utils import float_compare
 
 logger = logging.getLogger('OpenUpgrade.stock')
 default_spec = {
@@ -170,6 +171,7 @@ def migrate_stock_picking(cr, registry):
     warehouse_obj = registry['stock.warehouse']
     company_obj = registry['res.company']
     picking_obj = registry['stock.picking']
+    location_obj = registry['stock.location']
     type_legacy = openupgrade.get_legacy_name('type')
     for company in company_obj.browse(
             cr, uid, company_obj.search(
@@ -187,26 +189,53 @@ def migrate_stock_picking(cr, registry):
                 cr, 'stock', 'stock_picking', 'picking_type_id',
                 'No warehouse found for company %s, but this company does '
                 'have pickings. Taking the default warehouse.', company.name)
-        warehouse = warehouse_obj.browse(cr, uid, warehouse_ids[0])
-        if len(warehouse_ids) > 1:
-            openupgrade.message(
-                cr, 'stock', 'stock_picking', 'picking_type_id',
-                'Multiple warehouses found for company %s. Taking first'
-                'one found (%s) to determine the picking types for this '
-                'company\'s pickings. Please verify this setting.',
-                company.name, warehouse.name)
-        # Fill picking_type_id required field
-        for picking_type, type_id in (
-                ('in', warehouse.in_type_id.id),
-                ('out', warehouse.out_type_id.id),
-                ('internal', warehouse.int_type_id.id)):
-            openupgrade.logged_query(
-                cr,
-                """
-                UPDATE stock_picking SET picking_type_id = %s
-                WHERE {type_legacy} = %s
-                """.format(type_legacy=type_legacy),
-                (type_id, picking_type,))
+        for warehouse in warehouse_obj.browse(cr, uid, warehouse_ids):
+            # Select all the child locations of this Warehouse
+            location_ids = location_obj.search(
+                cr, uid,
+                [('id', 'child_of', warehouse.view_location_id.id)])
+
+            # Fill picking_type_id required field
+            for picking_type, type_id in (
+                    ('in', warehouse.in_type_id.id),
+                    ('out', warehouse.out_type_id.id),
+                    ('internal', warehouse.int_type_id.id)):
+                openupgrade.logged_query(
+                    cr,
+                    """
+                    UPDATE stock_picking AS sp
+                    SET picking_type_id = %s
+                    WHERE sp.id IN
+                    ( SELECT sp1.id
+                      FROM stock_picking AS sp1
+                      INNER JOIN stock_move AS sm1
+                      ON sm1.picking_id = sp1.id
+                      WHERE ( sm1.location_dest_id in %s
+                      OR sm1.location_id in %s )
+                      AND sp1.{type_legacy} = %s
+                    )
+                    """.format(type_legacy=type_legacy),
+                    (type_id, tuple(location_ids), tuple(location_ids),
+                     picking_type,))
+
+        if warehouse_ids:
+            warehouse = warehouse_obj.browse(cr, uid, warehouse_ids[0])
+            # For other stock pickings that were associated to no warehouse
+            # at all, just take the picking from the main warehouse.
+            for picking_type, type_id in (
+                    ('in', warehouse.in_type_id.id),
+                    ('out', warehouse.out_type_id.id),
+                    ('internal', warehouse.int_type_id.id)):
+                openupgrade.logged_query(
+                    cr,
+                    """
+                    UPDATE stock_picking as sp
+                    SET picking_type_id = %s
+                    WHERE picking_type_id IS NULL
+                    AND sp.{type_legacy} = %s
+                    """.format(type_legacy=type_legacy),
+                    (type_id, picking_type,))
+
     # state key auto -> waiting
     cr.execute("UPDATE stock_picking SET state = %s WHERE state = %s",
                ('waiting', 'auto',))
@@ -542,13 +571,19 @@ def _migrate_stock_warehouse(cr, registry, res_id):
 
 def migrate_stock_warehouses(cr, registry):
     """Migrate all the warehouses"""
-    warehouse_obj = registry['stock.warehouse']
+    # Add a code to all warehouses that have no code
+    openupgrade.logged_query(
+        cr, """
+        UPDATE stock_warehouse SET code= 'WH' || to_char(id, 'FM999MI')
+        WHERE code IS NULL;
+        """)
+
     # Set code
     cr.execute("""select id, code from stock_warehouse order by id asc""")
     res = cr.fetchall()
-    for wh in res:
-        if not wh[1]:
-            warehouse_obj.write(cr, uid, wh[0], {'code': 'WH%s' % (wh[0])})
+    # for wh in res:
+    #     if not wh[1]:
+    #         warehouse_obj.write(cr, uid, wh[0], {'code': 'WH%s' % (wh[0])})
     # Migrate each warehouse
     for wh in res:
         _migrate_stock_warehouse(cr, registry, wh[0])
@@ -721,6 +756,169 @@ def migrate_procurement_order(cr, registry):
             cr, uid, procurement_ids, {'warehouse_id': warehouse.id})
 
 
+def _move_assign(env, move):
+
+    quant_obj = env["stock.quant"]
+    move_obj = env["stock.move"]
+    to_assign_moves = set()
+    main_domain = {}
+    operations = set()
+    todo_moves = []
+
+    if move.state not in ('confirmed', 'waiting', 'assigned'):
+        return True
+    if move.location_id.usage in ('supplier', 'inventory', 'production'):
+        to_assign_moves.add(move.id)
+        # in case the move is returned, we want to try to find
+        # quants before forcing the assignment
+        if not move.origin_returned_move_id:
+            return True
+    if move.product_id.type == 'consu':
+        to_assign_moves.add(move.id)
+        return True
+    else:
+        todo_moves.append(move)
+
+        # we always keep the quants already assigned and try to
+        # find the remaining quantity on quants not assigned only
+        main_domain[move.id] = [('reservation_id', '=', False),
+                                ('qty', '>', 0)]
+
+        # if the move is preceeded, restrict the choice of quants
+        # in the ones moved previously in original move
+        ancestors = move_obj.find_move_ancestors(move)
+        if move.state == 'waiting' and not ancestors:
+            # if the waiting move hasn't yet any ancestor (PO/MO not
+            # confirmed yet), don't find any quant available in stock
+            main_domain[move.id] += [('id', '=', False)]
+        elif ancestors:
+            main_domain[move.id] += [('history_ids', 'in', ancestors)]
+
+        # if the move is returned from another, restrict the choice of
+        # quants to the ones that follow the returned move
+        if move.origin_returned_move_id:
+            main_domain[move.id] += [
+                ('history_ids', 'in', move.origin_returned_move_id.id)]
+        for link in move.linked_move_operation_ids:
+            operations.add(link.operation_id)
+    # Check all ops and sort them: we want to process first the packages,
+    # then operations with lot then the rest
+    operations = list(operations)
+    operations.sort(
+        key=lambda x: ((x.package_id and not x.product_id) and -4 or 0) +
+                      (x.package_id and -2 or 0) + (x.lot_id and -1 or 0))
+    for ops in operations:
+        # first try to find quants based on specific domains given by
+        # linked operations
+        for record in ops.linked_move_operation_ids:
+            move = record.move_id
+            if move.id in main_domain:
+                domain = main_domain[move.id] + record.get_specific_domain()
+                qty = record.qty
+                if qty:
+                    quants = quant_obj.quants_get_prefered_domain(
+                        ops.location_id, move.product_id, qty, domain=domain,
+                        prefered_domain_list=[],
+                        restrict_lot_id=move.restrict_lot_id.id,
+                        restrict_partner_id=move.restrict_partner_id.id)
+                    quant_obj.quants_reserve(quants, move, record)
+    for move in todo_moves:
+        # then if the move isn't totally assigned,
+        # try to find quants without any specific domain
+        if move.state != 'assigned':
+            qty_already_assigned = move.reserved_availability
+            qty = move.product_qty - qty_already_assigned
+            quants = quant_obj.quants_get_prefered_domain(
+                move.location_id, move.product_id, qty,
+                domain=main_domain[move.id], prefered_domain_list=[],
+                restrict_lot_id=move.restrict_lot_id.id,
+                restrict_partner_id=move.restrict_partner_id.id)
+            quant_obj.quants_reserve(quants, move)
+
+
+def _move_done(env, move):
+
+    quant_obj = env["stock.quant"]
+    move_qty = {}
+    pickings = set()
+    # Search operations that are linked to the moves
+    operations = set()
+    move_qty[move.id] = move.product_qty
+    for link in move.linked_move_operation_ids:
+        operations.add(link.operation_id)
+
+    # Sort operations according to entire packages first,
+    # then package + lot, package only, lot only
+    operations = list(operations)
+    operations.sort(
+        key=lambda x: ((x.package_id and not x.product_id) and -4 or 0) + (
+            x.package_id and -2 or 0) + (x.lot_id and -1 or 0))
+
+    for ops in operations:
+        if ops.picking_id:
+            pickings.add(ops.picking_id.id)
+        main_domain = [('qty', '>', 0)]
+        for record in ops.linked_move_operation_ids:
+            move = record.move_id
+
+            prefered_domain = [('reservation_id', '=', move.id)]
+            fallback_domain = [('reservation_id', '=', False)]
+            fallback_domain2 = ['&', ('reservation_id', '!=', move.id),
+                                ('reservation_id', '!=', False)]
+            prefered_domain_list = [prefered_domain] + [fallback_domain] + \
+                                   [fallback_domain2]
+            dom = main_domain + env[
+                'stock.move.operation.link'].get_specific_domain(record)
+            quants = quant_obj.quants_get_prefered_domain(
+                ops.location_id, move.product_id, record.qty,
+                domain=dom, prefered_domain_list=prefered_domain_list,
+                restrict_lot_id=move.restrict_lot_id.id,
+                restrict_partner_id=move.restrict_partner_id.id)
+
+            if ops.product_id:
+                # If a product is given, the result is always
+                # put immediately in the result package
+                # (if it is False, they are without package)
+                quant_dest_package_id = ops.result_package_id.id
+            else:
+                # When a pack is moved entirely,
+                # the quants should not be written
+                # anything for the destination package
+                quant_dest_package_id = False
+                quant_obj = quant_obj.with_context(entire_pack=True)
+            quant_obj.quants_move(
+                quants, move, ops.location_dest_id,
+                location_from=ops.location_id, lot_id=ops.lot_id.id,
+                owner_id=ops.owner_id.id,
+                src_package_id=ops.package_id.id,
+                dest_package_id=quant_dest_package_id)
+            move_qty[move.id] -= record.qty
+    # Check for remaining qtys and unreserve/check move_dest_id in
+    move_qty_cmp = float_compare(
+        move_qty[move.id], 0,
+        precision_rounding=move.product_id.uom_id.rounding)
+    if move_qty_cmp > 0:  # (=In case no pack operations in picking)
+        main_domain = [('qty', '>', 0)]
+        prefered_domain = [('reservation_id', '=', move.id)]
+        fallback_domain = [('reservation_id', '=', False)]
+        fallback_domain2 = ['&', ('reservation_id', '!=', move.id),
+                            ('reservation_id', '!=', False)]
+        prefered_domain_list = [prefered_domain] + \
+                               [fallback_domain] + [fallback_domain2]
+        qty = move_qty[move.id]
+        quants = quant_obj.quants_get_prefered_domain(
+            move.location_id, move.product_id, qty, domain=main_domain,
+            prefered_domain_list=prefered_domain_list,
+            restrict_lot_id=move.restrict_lot_id.id,
+            restrict_partner_id=move.restrict_partner_id.id)
+        quant_obj.quants_move(quants, move, move.location_dest_id,
+                              lot_id=move.restrict_lot_id.id,
+                              owner_id=move.restrict_partner_id.id)
+
+    # unreserve the quants and make them available for other operations/moves
+    quant_obj.quants_unreserve(move)
+
+
 def migrate_stock_qty(cr, registry):
     """Reprocess stock moves in done state to fill stock.quant."""
     # First set restrict_lot_id so that quants point to correct moves
@@ -731,28 +929,13 @@ def migrate_stock_qty(cr, registry):
 
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
-        done_moves = env['stock.move'].search(
-            [('state', '=', 'done')], order="date")
-        openupgrade.message(
-            cr, 'stock', 'stock_move', 'state',
-            'Reprocess %s stock moves in state done to fill stock.quant',
-            len(done_moves.ids))
-        done_moves.write({'state': 'draft'})
-        # disable all workflow steps - massive performance boost, no side
-        # effects of workflow transitions with yet unknown condition
-        set_workflow_org = models.BaseModel.step_workflow
-        models.BaseModel.step_workflow = lambda *args, **kwargs: None
-        # Process moves using action_done.
-        for move in done_moves:
-            date_done = move.date
-            move.action_done()
-            # Rewrite date to keep old data
-            move.date = date_done
-            # Assign the same date for the created quants (not the existing)
-            quants_to_rewrite = move.quant_ids.filtered(
-                lambda x: x.in_date > date_done)
-            quants_to_rewrite.write({'in_date': date_done})
-        models.BaseModel.step_workflow = set_workflow_org
+        moves = env['stock.move'].search(
+            [('state', 'in', ['assign', 'done'])], order="date")
+        for move in moves:
+            if move.state == 'assign':
+                _move_assign(env, move)
+            else:
+                _move_done(env, move)
 
 
 def migrate_stock_production_lot(cr, registry):
@@ -853,6 +1036,21 @@ def populate_stock_move_fields(cr, registry):
     for id, qty in qty_vals.iteritems():
         cr.execute("UPDATE stock_move set product_qty = '%s' where id=%s" % (
             qty, id))
+
+    # If a stock move is Waiting availability ('confirmed'), but the source
+    # location is 'supplier', 'inventory' or 'production', then set it as
+    # Available ('assigned').
+    openupgrade.logged_query(cr, """
+        UPDATE stock_move sm1
+        SET state = 'assigned'
+        FROM
+            (SELECT sm2.id from stock_move sm2
+            INNER JOIN stock_location sl
+            ON sm2.location_id = sl.id
+            where sl.usage in ('supplier', 'inventory', 'production')
+            and sm2.state = 'confirmed'
+            ) as res
+        WHERE sm1.id = res.id""")
 
 
 @openupgrade.migrate()
