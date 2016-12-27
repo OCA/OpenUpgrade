@@ -348,6 +348,28 @@ def map_account_tax_template_type(cr):
         table='account_tax_template', write='sql')
 
 
+def migrate_account_auto_fy_sequence(env):
+    """As now Odoo implements a feature for having several sequence numbers
+    per date range, we don't need anymore this module. This handles a smooth
+    transition from v8 having it installed to v9 properly configured and
+    without the module.
+    """
+    if not openupgrade.is_module_installed(env.cr, 'account_auto_fy_sequence'):
+        return
+    # Merge with the main module for avoid uninstallation of dependent modules
+    openupgrade.update_module_names(
+        env.cr, [('account_auto_fy_sequence', 'account')], merge_modules=True,
+    )
+    query = """
+        UPDATE ir_sequence
+        SET {0}=replace({0}, '%(fy)s', '%(year)s'),
+            use_date_range=True
+        WHERE {0} like '%\%(fy)s%'
+        """
+    env.cr.execute(query.format('prefix'))
+    env.cr.execute(query.format('suffix'))
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -436,3 +458,5 @@ def migrate(env, version):
     account_partial_reconcile(env)
     map_account_tax_type(cr)
     map_account_tax_template_type(cr)
+
+    migrate_account_auto_fy_sequence(env)
