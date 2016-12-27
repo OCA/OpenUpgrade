@@ -485,15 +485,17 @@ def account_partial_reconcile(env):
                                 in cr.fetchall()]
 
     move_line_map = {}
-    cr.execute("SELECT reconcile_id, id "
-               "FROM account_move_line "
-               "WHERE reconcile_id IS NOT NULL "
-               "AND id NOT IN %s" % (tuple(move_line_ids_reconciled), ))
-    rec_l = {}
-    for rec_id, move_line_id in cr.fetchall():
-        move_line_map.setdefault(rec_id, []).append(move_line_id)
-        rec_l[rec_id] = True
-    num_recs = len(rec_l.keys())
+    num_recs = 0
+    if move_line_ids_reconciled:
+        cr.execute("SELECT reconcile_id, id "
+                   "FROM account_move_line "
+                   "WHERE reconcile_id IS NOT NULL "
+                   "AND id NOT IN %s" % (tuple(move_line_ids_reconciled), ))
+        rec_l = {}
+        for rec_id, move_line_id in cr.fetchall():
+            move_line_map.setdefault(rec_id, []).append(move_line_id)
+            rec_l[rec_id] = True
+        num_recs = len(rec_l.keys())
     i = 1
     for _rec_id, move_line_ids in move_line_map.iteritems():
         msg = 'Reconciliation step 2 (%s of %s). ' \
