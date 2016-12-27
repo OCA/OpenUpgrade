@@ -22,8 +22,6 @@
 
 import logging
 from openupgradelib import openupgrade
-from openerp.modules.registry import RegistryManager
-from openerp import SUPERUSER_ID
 
 
 logger = logging.getLogger('OpenUpgrade')
@@ -90,15 +88,6 @@ def set_filter_active(cr):
         """)
 
 
-def remove_obsolete_modules(cr, modules_to_remove):
-    pool = RegistryManager.get(cr.dbname)
-    ir_module_module = pool['ir.module.module']
-    domain = [('name', 'in', modules_to_remove),
-              ('state', 'in', ('installed', 'to install', 'to upgrade'))]
-    ids = ir_module_module.search(cr, SUPERUSER_ID, domain)
-    ir_module_module.module_uninstall(cr, SUPERUSER_ID, ids)
-
-
 def assign_view_keys(env):
     """This is needed for website. Done through ORM as xml_id is a computed
     field, so no o(1) process can be done easily, and the number of these
@@ -122,7 +111,6 @@ def migrate(env, version):
     clear_inherit_id(env.cr)
     rename_your_company(env.cr)
     set_filter_active(env.cr)
-    remove_obsolete_modules(env.cr, ('web_gantt', 'web_graph', 'web_tests'))
     openupgrade.load_data(
         env.cr, 'base', 'migrations/9.0.1.3/noupdate_changes.xml',
     )
