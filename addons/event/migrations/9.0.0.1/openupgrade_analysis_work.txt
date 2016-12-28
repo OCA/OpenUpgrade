@@ -16,7 +16,7 @@ event        / event.event              / email_registration_id (many2one): DEL 
 
 
 event        / event.event              / event_logo (html)             : NEW
-# Noting to do
+# Nothing to do
 
 event        / event.event              / event_mail_ids (one2many)     : NEW relation: event.mail
 # Nothing to do
@@ -124,4 +124,4 @@ NEW mail.template: event.event_thanks
 NEW report.paperformat: event.paperformat_euro_lowmargin
 NEW res.groups: event.group_email_scheduling
 NEW web.tip: event.event_tip_1
-# Noting to do
+# Nothing to do
