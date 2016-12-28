@@ -9,10 +9,10 @@ event_sale   / event.event              / badge_innerright (html)       : module
 # Nothing to do
 
 event_sale   / event.registration       / sale_order_id (many2one)      : NEW relation: sale.order
-# Nothing to do
+# Updated from event_id field of sale order lines
 
 event_sale   / event.registration       / sale_order_line_id (many2one) : NEW relation: sale.order.line
-#Nothing to do
+# Updated from event_id field of sale order lines
 
 ---XML records in module 'event_sale'---
 NEW ir.actions.act_window: event_sale.action_sale_order_event_registration
