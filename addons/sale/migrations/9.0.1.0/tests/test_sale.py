@@ -19,9 +19,9 @@ class TestSale(TransactionCase):
         )
         self.assertEqual(
             self.env.ref('sale.sale_order_4').order_line[0].invoice_status,
-            'to invoice'
+            'invoiced'
         )
         self.assertEqual(
             self.env.ref('sale.sale_order_4').order_line[0].invoice_status,
-            'to invoice'
+            'invoiced'
         )

@@ -60,32 +60,33 @@ def prepopulate_fields(cr):
     """ Recomputing a fields will be very expensive via the ORM, so do it
     here for fields where the computation is trivial"""
     cr.execute('alter table sale_order_line add column qty_invoiced numeric')
-    cr.execute("update sale_order_line set qty_invoiced=0")
     cr.execute(
         """\
         with line2qty_invoiced(id, qty_invoiced) as (
             select l.id, sum(
                 case
-                when i.type='out_invoice' then il.quantity
-                when i.type='out_refund' then -il.quantity end
+                    when i.type='out_invoice' then il.quantity
+                    when i.type='out_refund' then -il.quantity
+                end * uom_invoice.factor / uom_sale.factor
             ) s
             from sale_order_line l
             join sale_order_line_invoice_rel r on r.order_line_id=l.id
             join account_invoice_line il on r.invoice_line_id=il.id
             join account_invoice i on i.id=il.invoice_id
-            where l.product_uom=il.uom_id group by l.id
+            join product_uom uom_invoice on il.uom_id=uom_invoice.id
+            join product_uom uom_sale on l.product_uom=uom_sale.id
+            group by l.id
         )
         update sale_order_line
         set qty_invoiced=line2qty_invoiced.qty_invoiced
         from line2qty_invoiced where line2qty_invoiced.id=sale_order_line.id
         """)
     cr.execute('alter table sale_order_line add column qty_to_invoice numeric')
-    cr.execute("update sale_order_line set qty_to_invoice=0")
     cr.execute(
         """\
         update sale_order_line
         set qty_to_invoice=product_uom_qty - qty_invoiced
-        where qty_invoiced<>0
+        where qty_invoiced is not null
         """)
     cr.execute('alter table sale_order_line add column currency_id integer')
     cr.execute(
@@ -100,8 +101,8 @@ def prepopulate_fields(cr):
         """\
         update sale_order_line
         set invoice_status=(
-            case when qty_to_invoice=0 then 'to invoice'
-            else 'invoiced' end
+            case when qty_to_invoice<=0 then 'invoiced'
+            else 'to invoice' end
         )
         where state in ('sale', 'done')
         """)
@@ -118,7 +119,10 @@ def prepopulate_fields(cr):
         """\
         update sale_order o
         set invoice_status='invoiced'
-        where not exists (
+        where exists (
+            select id from sale_order_line
+            where invoice_status='invoiced' and order_id=o.id
+        ) and not exists (
             select id from sale_order_line
             where invoice_status<>'invoiced' and order_id=o.id
         )

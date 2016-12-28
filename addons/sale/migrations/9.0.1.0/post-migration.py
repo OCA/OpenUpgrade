@@ -55,22 +55,6 @@ def set_crm_team_message_types(env):
             (4, env.ref('sale.mt_salesteam_invoice_created').id)]})
 
 
-def recalculate_prepopulated_fields(env):
-    """ We prepopulated only lines with uom=product_uom, trigger a recompute
-    for the rest here"""
-    env.cr.execute(
-        """select l.id
-        from sale_order_line l
-        join sale_order_line_invoice_rel r on r.order_line_id=l.id
-        join account_invoice_line il on r.invoice_line_id=il.id
-        where l.product_uom<>il.uom_id
-        """)
-    env['sale.order.line'].invalidate_cache(
-        fnames=['invoice_status', 'qty_invoiced', 'qty_to_invoice'],
-        ids=[x for x, in env.cr.fetchall()]
-    )
-
-
 @openupgrade.migrate()
 def migrate(cr, version):
     env = api.Environment(cr, SUPERUSER_ID, {})
@@ -80,4 +64,3 @@ def migrate(cr, version):
     set_crm_team_message_types(env)
     openupgrade.load_data(
         cr, 'sale', 'migrations/9.0.1.0/noupdate_changes.xml')
-    recalculate_prepopulated_fields(env)
