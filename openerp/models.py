@@ -5901,8 +5901,8 @@ class BaseModel(object):
             # determine the fields to recompute
             fs = self.env[field.model_name]._field_computed[field]
             _logger.info(
-                "Actual recompute of field %s in model %s." %
-                (field.model_name, field)
+                "Actual recompute of field %s in model %s. for %d recs" %
+                (field.model_name, field, len(recs))
             )
             ns = [f.name for f in fs if f.store]
             # evaluate fields, and group record ids by update
