@@ -2,6 +2,7 @@
 # © 2016 Serpent Consulting Services Pvt. Ltd.
 # © 2016 Eficent Business and IT Consulting Services S.L.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+import inspect
 import operator
 from openerp import models
 from openupgradelib import openupgrade
@@ -460,3 +461,17 @@ def migrate(env, version):
     map_account_tax_template_type(cr)
 
     migrate_account_auto_fy_sequence(env)
+    # pretend that account_full_reconcile is not a new install but an
+    # upgrade in order to circumvent this module's init hook, which is
+    # partially orthogonal to what OpenUpgrade needs to do
+    cr.execute(
+        "update ir_module_module set "
+        "state='to upgrade', latest_version='8.0.0.0' "
+        "where name='account_full_reconcile'"
+    )
+    for frame, filename, lineno, funcname, line, index in inspect.stack():
+        if 'graph' in frame.f_locals:
+            frame.f_locals['graph']['account_full_reconcile'].update(
+                state='to upgrade'
+            )
+            break

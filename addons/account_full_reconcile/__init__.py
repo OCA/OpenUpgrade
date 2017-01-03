@@ -8,6 +8,7 @@ from collections import OrderedDict
 from openerp.tools import float_compare
 
 def _migrate_full_reconcile(cr, registry):
+    raise "I shouldn't be called any more"
     #avoid doing anything if the table has already something in it (already migrated)
     cr.execute("""SELECT count(id) FROM account_full_reconcile""")
     res = cr.fetchone()[0]
