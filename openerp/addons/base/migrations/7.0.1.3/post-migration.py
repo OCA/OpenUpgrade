@@ -359,8 +359,14 @@ This can be the case if an additional module installed on your database changes
 
     # Process all addresses, default type first
     process_address_type(cr, pool, fields.copy(), "type = 'default'")
+    # then try the ones without type and without name
     process_address_type(
-        cr, pool, fields.copy(), "(type IS NULL OR type = '')")
+        cr, pool, fields.copy(),
+        "(type IS NULL OR type = '') AND (name IS NULL OR name = '')")
+    # and only then just without type
+    process_address_type(
+        cr, pool, fields.copy(),
+        "(type IS NULL OR type = '') AND name <> ''")
     # Not in clause is very slow. we replace them by an ubptade on a new column
     set_address_processed(processed_ids)
     process_address_type(
