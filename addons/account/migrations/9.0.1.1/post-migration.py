@@ -471,7 +471,8 @@ def migrate(env, version):
     )
     for frame, filename, lineno, funcname, line, index in inspect.stack():
         if 'graph' in frame.f_locals:
-            frame.f_locals['graph']['account_full_reconcile'].update(
-                state='to upgrade'
+            setattr(
+                frame.f_locals['graph']['account_full_reconcile'],
+                'state', 'to upgrade',
             )
             break
