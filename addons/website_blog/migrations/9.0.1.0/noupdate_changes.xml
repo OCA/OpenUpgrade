@@ -1,0 +1,10 @@
+<odoo>
+    <record id="menu_news" model="website.menu">
+        <field name="name">Blog</field>
+        <field name="website_id" ref="website.default_website"/>
+    </record>
+    <record id="blog_blog_1" model="blog.blog">
+        <field name="subtitle">Get in touch with us</field>
+        <field name="name">Our Blog</field>
+    </record>
+</odoo>
