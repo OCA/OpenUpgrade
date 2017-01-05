@@ -70,6 +70,25 @@ def remove_obsolete(cr):
         """.format(OBSOLETE_RULES))
 
 
+def cleanup_modules(cr):
+    """Don't report as missing these modules, as they are integrated in
+    other modules."""
+    openupgrade.update_module_names(
+        cr, [
+            ('marketing_crm', 'crm'),
+            ('web_gantt', 'web'),
+            ('web_graph', 'web'),
+            ('web_kanban_sparkline', 'web'),
+            ('web_tests', 'web'),
+            # from OCA/server-tools - features included now in core
+            ('base_concurrency', 'base'),
+            ('base_debug4all', 'base'),
+            ('cron_run_manually', 'base'),
+            ('shell', 'base'),
+        ], merge_modules=True,
+    )
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.update_module_names(
@@ -79,6 +98,7 @@ def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     remove_obsolete(cr)
     pre_create_columns(cr)
+    cleanup_modules(cr)
 
 
 def pre_create_columns(cr):
