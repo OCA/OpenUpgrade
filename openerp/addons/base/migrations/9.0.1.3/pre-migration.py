@@ -80,6 +80,7 @@ def cleanup_modules(cr):
             ('web_graph', 'web'),
             ('web_kanban_sparkline', 'web'),
             ('web_tests', 'web'),
+            ('website_report', 'report'),
             # from OCA/server-tools - features included now in core
             ('base_concurrency', 'base'),
             ('base_debug4all', 'base'),
