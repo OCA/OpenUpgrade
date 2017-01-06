@@ -12,8 +12,10 @@ event        / event.event              / country_id (many2one)         : not a 
 # Nothing to do as country_id is now a related field from address_id
 
 event        / event.event              / email_confirmation_id (many2one): DEL relation: email.template
-event        / event.event              / email_registration_id (many2one): DEL relation: email.template
+# Column renamed to None to be preserved -> done
 
+event        / event.event              / email_registration_id (many2one): DEL relation: email.template
+# Done: created event.mail line for each email confirmation template
 
 event        / event.event              / event_logo (html)             : NEW
 # Nothing to do

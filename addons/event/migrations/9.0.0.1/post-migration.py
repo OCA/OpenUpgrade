@@ -17,6 +17,20 @@ def update_seats_availability(cr):
     """)
 
 
+def insert_confirmation_email(cr):
+    # Insert and save at least email registration templates although relations
+    # and models are changed in version 9.0
+    cr.execute("""
+        INSERT INTO event_mail
+        (event_id, interval_nbr, interval_unit, interval_type, template_id)
+        SELECT id, 1, 'now', 'after_sub', %(template_id)s
+        FROM event_event
+        WHERE %(template_id)s IS NOT NULL
+    """ % {'template_id': openupgrade.get_legacy_name('email_registration_id')}
+    )
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     update_seats_availability(cr)
+    insert_confirmation_email(cr)
