@@ -22,7 +22,8 @@ def update_barcodes_nomenclatures(env):
     for pos_config in pos_configs:
         barcode_nomenclature = env['barcode.nomenclature'].create({
             'name': pos_config.name,
-            'upc_ean_conv': 'always'
+            'upc_ean_conv': 'always',
+            'rule_ids': [(6, 0, [1])]
         })
         old_barcode_product = openupgrade.get_legacy_name('barcode_product')
         old_barcode_cashier = openupgrade.get_legacy_name('barcode_cashier')
