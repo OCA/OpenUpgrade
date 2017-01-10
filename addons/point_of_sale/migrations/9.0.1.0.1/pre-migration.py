@@ -8,7 +8,7 @@ column_renames = {
     'account_journal': [
         ('self_checkout_payment_method', None),
     ],
-    'pos.config': [
+    'pos_config': [
         ('barcode_cashier', None),
         ('barcode_customer', None),
         ('barcode_discount', None),
