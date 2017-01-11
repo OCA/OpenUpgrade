@@ -12,6 +12,14 @@ column_defaults = {
         ('session_id', None)
     ],
 }
+barcode_rule_types_map = {
+    openupgrade.get_legacy_name('barcode_weight'): 'weight',
+    openupgrade.get_legacy_name('barcode_price'): 'price',
+    openupgrade.get_legacy_name('barcode_discount'): 'discount',
+    openupgrade.get_legacy_name('barcode_customer'): 'client',
+    openupgrade.get_legacy_name('barcode_cashier'): 'cashier',
+    openupgrade.get_legacy_name('barcode_product'): 'product'
+}
 
 
 def update_barcodes_nomenclatures(env):
@@ -43,16 +51,14 @@ def update_barcodes_nomenclatures(env):
         for field, value in barcodes.iteritems():
             if not value:
                 continue
-            field_name = field.split('_')[-1]
-            env.cr.execute(
-                """INSERT INTO barcode_rule (
-                    name, barcode_nomenclature_id, sequence, type, encoding,
-                    pattern) VALUES (%s, %s, %s, %s, %s, %s)
-                """ % (
-                    field_name + 'Barcode', barcode_nomenclature.id, 50,
-                    field_name, 'any', value
-                )
-            )
+            env['barcode.rule'].create({
+                'name': barcode_rule_types_map[field] + 'Barcode',
+                'barcode_nomenclature_id': barcode_nomenclature.id,
+                'sequence': 50,
+                'type': barcode_rule_types_map[field],
+                'encoding': 'any',
+                'pattern': value.replace('*', '.*')
+            })
         pos_config.barcode_nomenclature_id = barcode_nomenclature.id
 
 
