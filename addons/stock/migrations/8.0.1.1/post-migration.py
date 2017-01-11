@@ -926,9 +926,7 @@ def migrate_stock_qty(cr, registry):
     '''.format(openupgrade.get_legacy_name('prodlot_id'))
     openupgrade.logged_query(cr, sql)
 
-    # TODO use an extra config option to allow openupgrade user to switch
-    # between both method
-    if False:
+    if not tools.config.get('sql_quants_creation', False):
         orm_migrate_stock_qty(cr, registry)
     else:
         sql_migrate_stock_qty(cr, registry)
@@ -952,6 +950,8 @@ def orm_migrate_stock_qty(cr, registry):
 
 def sql_migrate_stock_qty(cr, registry):
     """Reprocess stock moves in done state to fill stock.quant by SQL script.
+    To activate this feature, please set a new key in your configuration file:
+    sql_quants_creation = True
     """
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
