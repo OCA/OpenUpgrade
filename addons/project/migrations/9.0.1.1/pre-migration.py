@@ -78,7 +78,7 @@ def migrate(cr, version):
     openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
-    if not openupgrade.is_module_installed('project_timesheet'):
+    if not openupgrade.is_module_installed(cr, 'project_timesheet'):
         recreate_analytic_lines(cr)
     cr.execute(
         '''update ir_module_module set state='to install'
