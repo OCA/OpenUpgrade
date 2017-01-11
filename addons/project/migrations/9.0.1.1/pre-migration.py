@@ -39,12 +39,47 @@ xmlid_renames = [
 ]
 
 
+def recreate_analytic_lines(cr):
+    """If the module project_timesheet is not installed, we need to convert
+    project.task.work elements, or we will lose this history.
+
+    This is done inserting new records in account_analytic_line, and adding one
+    extra column work_id in case other modules need to fill some fields for
+    each created line.
+    """
+    cr.execute("ALTER TABLE account_analytic_line ADD task_id integer")
+    cr.execute("ALTER TABLE account_analytic_line ADD work_id")
+    cr.execute("ALTER TABLE account_analytic_line ADD is_timesheet boolean")
+    # TODO: Calculate line cost according employee data
+    openupgrade.logged_query(
+        cr,
+        """
+        INSERT INTO account_analytic_line
+        (company_id, date, name, task_id, user_id, unit_amount, account_id,
+         amount, is_timesheet, work_id)
+        SELECT
+            w.company_id, COALESCE(w.date, w.create_date),
+            COALESCE(w.name, '(migrated line)'), w.task_id, w.user_id,
+            w.hours, p.analytic_account_id, 0, True, w.id
+        FROM
+            project_task_work w,
+            project_task t,
+            project_project p
+        WHERE
+            w.task_id = t.id AND
+            t.project_id = p.id
+        """
+    )
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
+    if not openupgrade.is_module_installed('project_timesheet'):
+        recreate_analytic_lines(cr)
     cr.execute(
         '''update ir_module_module set state='to install'
         where name='project_timesheet' and
