@@ -20,12 +20,19 @@
 #
 ##############################################################################
 
+import logging
 from openerp import pooler, SUPERUSER_ID
 from openerp.openupgrade import openupgrade, openupgrade_80
+
+logger = logging.getLogger('OpenUpgrade.sales_team')
 
 
 @openupgrade.migrate(no_version=True)
 def migrate(cr, version):
+    if not openupgrade.is_module_installed(cr, 'crm'):
+        logger.info(
+            "sales_team post-migration skipped, because crm is not installed")
+        return
     pool = pooler.get_pool(cr.dbname)
     uid = SUPERUSER_ID
     openupgrade_80.set_message_last_post(
