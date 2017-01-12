@@ -20,8 +20,10 @@
 #
 ##############################################################################
 
+import logging
 from openerp.openupgrade import openupgrade
 
+logger = logging.getLogger('OpenUpgrade.sales_team')
 xmlid_renames = [
     ('crm.section_sales_department', 'sales_team.section_sales_department'),
 ]
@@ -29,6 +31,10 @@ xmlid_renames = [
 
 @openupgrade.migrate(no_version=True)
 def migrate(cr, version):
+    if not openupgrade.is_module_installed(cr, 'crm'):
+        logger.info(
+            "sales_team pre-migration skipped, because crm is not installed")
+        return
     openupgrade.rename_xmlids(cr, xmlid_renames)
 
     # Test fixup: there is a demo section in 7.0 with the same code as a
