@@ -963,6 +963,14 @@ def sql_migrate_stock_qty(cr, registry):
             moves_qty))
     f = tools.file_open('stock/migrations/8.0.1.1/quants_creation.sql')
     cr.execute(f.read())
+    error_qty = cr.fetchone()
+    if error_qty:
+        logger.error(
+            "%d / %d stock moves failed. Please see the table"
+            " 'stock_quants_openupgrade_8_log' for more details." % (
+                error_qty, moves_qty))
+    else:
+        logger.info("%d done moves processed by SQL." % (moves_qty))
 
 
 def migrate_stock_production_lot(cr, registry):

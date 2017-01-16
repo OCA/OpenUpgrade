@@ -41,7 +41,8 @@ RETURNS float AS $$
         END IF;
         amount := rounded_value * rounding;
 
-        RETURN amount; END;
+        RETURN amount;
+    END;
     $$ LANGUAGE plpgsql;
 
 DROP FUNCTION IF EXISTS compute_qty_obj(from_uom product_uom, qty float, to_unit product_uom, rounding_method varchar);
@@ -63,7 +64,8 @@ RETURNS float AS $$
             SELECT float_round(amount, to_unit.rounding, rounding_method) INTO amount;
         END IF;
 
-        RETURN amount; END;
+        RETURN amount;
+    END;
     $$ LANGUAGE plpgsql;
 
 
@@ -94,7 +96,8 @@ RETURNS integer[] AS $$
             WHERE
                 source_location = ANY(tree.ancestors) OR
                 id = source_location) AS a;
-        RETURN returned; END;
+        RETURN returned;
+    END;
     $$ LANGUAGE plpgsql;
 
 
@@ -141,7 +144,8 @@ RETURNS float[] AS $$
         END IF;
 
 
-        RETURN returned; END;
+        RETURN returned;
+    END;
     $$ LANGUAGE plpgsql;
 
 DROP FUNCTION IF EXISTS create_quant(move stock_move, quantity float);
@@ -185,7 +189,8 @@ RETURNS integer AS $$
             INSERT INTO stock_quant_move_rel (quant_id, move_id)
                                       VALUES (quant, move.id);
 
-        RETURN quant; END;
+        RETURN quant;
+    END;
     $$ LANGUAGE plpgsql;
 
 DROP FUNCTION IF EXISTS quant_split(quant integer, quantity float);
@@ -247,7 +252,8 @@ RETURNS integer AS $$
         END IF;
 
 
-        RETURN copy_quant; END;
+        RETURN copy_quant;
+    END;
     $$ LANGUAGE plpgsql;
 
 
@@ -364,7 +370,8 @@ RETURNS integer AS $$
             solving_quant := remaining_solving_quant;
         END LOOP;
 
-        RETURN solving_quant; END;
+        RETURN solving_quant;
+    END;
     $$ LANGUAGE plpgsql;
 
 DROP FUNCTION IF EXISTS quants_move(move stock_move, quants float[]);
@@ -417,14 +424,24 @@ RETURNS integer[] AS $$
                 END IF;
             END IF;
 
-        RETURN quants_reconcile; END;
+        RETURN quants_reconcile;
+    END;
     $$ LANGUAGE plpgsql;
 
+-- Create a Log table that will be populated if the
+-- treatment of a move fail.
+DROP TABLE IF EXISTS stock_quants_openupgrade_8_log;
 
+CREATE TABLE stock_quants_openupgrade_8_log(
+    stock_move_id integer NOT NULL
+);
+
+-- Main Function
 DROP FUNCTION IF EXISTS action_done();
 CREATE OR REPLACE FUNCTION action_done()
-RETURNS void AS $$
+RETURNS integer AS $$
     DECLARE
+        error_qty integer;
         quants_used integer[];
         quants_to_use float[];
         from_uom product_uom%rowtype;
@@ -433,17 +450,25 @@ RETURNS void AS $$
         template integer;
         current_qty float;
     BEGIN
+        error_qty := 0;
         FOR move IN SELECT * FROM stock_move WHERE state='done' AND product_uom_qty > 0 ORDER BY date ASC LOOP
-            template := (SELECT product_tmpl_id FROM product_product WHERE id=move.product_id);
-            SELECT * INTO from_uom FROM product_uom WHERE id=move.product_uom;
-            SELECT * INTO to_uom FROM product_uom WHERE id IN (SELECT uom_id FROM product_template WHERE id = template);
-            SELECT compute_qty_obj(from_uom, move.product_uom_qty, to_uom, 'HALF-UP') INTO current_qty;
-            SELECT quants_get(move, current_qty, ' AND qty > 0', move.location_id) INTO quants_to_use;
-            SELECT quants_move(move, quants_to_use) INTO quants_used;
-        END LOOP;
+            BEGIN
+                template := (SELECT product_tmpl_id FROM product_product WHERE id=move.product_id);
+                SELECT * INTO from_uom FROM product_uom WHERE id=move.product_uom;
+                SELECT * INTO to_uom FROM product_uom WHERE id IN (SELECT uom_id FROM product_template WHERE id = template);
+                SELECT compute_qty_obj(from_uom, move.product_uom_qty, to_uom, 'HALF-UP') INTO current_qty;
+                SELECT quants_get(move, current_qty, ' AND qty > 0', move.location_id) INTO quants_to_use;
+                SELECT quants_move(move, quants_to_use) INTO quants_used;
 
+            EXCEPTION WHEN others THEN
+                error_qty := error_qty +1;
+                INSERT INTO stock_quants_openupgrade_8_log(stock_move_id, sql_code, sql_message)
+                    VALUES (move.id, SQLSTATE, SQLERRM);
+
+            END;
+        END LOOP;
+        RETURN error_qty;
     END;
     $$ LANGUAGE plpgsql;
 
 SELECT action_done();
-
