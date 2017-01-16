@@ -433,7 +433,9 @@ RETURNS integer[] AS $$
 DROP TABLE IF EXISTS stock_quants_openupgrade_8_log;
 
 CREATE TABLE stock_quants_openupgrade_8_log(
-    stock_move_id integer NOT NULL
+    stock_move_id integer NOT NULL,
+    sql_code character varying NOT NULL,
+    sql_message text
 );
 
 -- Main Function
