@@ -41,8 +41,3 @@ def migrate(cr, version):
         '(mail_message_id, res_partner_id) '
         'select distinct message_id, partner_id from mail_notification '
         'where starred')
-    # with this, the rule and the xmlid will be cleaned up at the end of
-    # the migration
-    cr.execute(
-        'update ir_model_data set noupdate=False where '
-        "module='mail' and name='mail_group_public_and_joined'")
