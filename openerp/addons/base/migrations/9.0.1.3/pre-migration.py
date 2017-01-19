@@ -86,6 +86,8 @@ def cleanup_modules(cr):
             ('base_debug4all', 'base'),
             ('cron_run_manually', 'base'),
             ('shell', 'base'),
+            # from OCA/social - included in core
+            ('website_mail_snippet_table_edit', 'mass_mailing'),
         ], merge_modules=True,
     )
 
