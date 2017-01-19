@@ -48,7 +48,7 @@ def recreate_analytic_lines(cr):
     each created line.
     """
     cr.execute("ALTER TABLE account_analytic_line ADD task_id integer")
-    cr.execute("ALTER TABLE account_analytic_line ADD work_id")
+    cr.execute("ALTER TABLE account_analytic_line ADD work_id integer")
     cr.execute("ALTER TABLE account_analytic_line ADD is_timesheet boolean")
     # TODO: Calculate line cost according employee data
     openupgrade.logged_query(
