@@ -89,3 +89,6 @@ def migrate(cr, version):
         [('4', '3')], table='crm_lead',
     )
     cr.execute("update crm_lead set type='opportunity' where type is null")
+    # Needed for crm_lead_lost_reason migration
+    cr.execute("ALTER TABLE IF EXISTS crm_lead_lost_reason "
+               "RENAME TO crm_lost_reason")
