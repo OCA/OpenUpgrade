@@ -5897,6 +5897,9 @@ class BaseModel(object):
         """ Recompute stored function fields. The fields and records to
             recompute have been determined by method :meth:`modified`.
         """
+        # OpenUpgrade start:
+        openupgrade_models_with_blacklist = {}
+        # OpenUpgrade end
         while self.env.has_todo():
             field, recs = self.env.get_todo()
             # determine the fields to recompute
@@ -5911,6 +5914,7 @@ class BaseModel(object):
                     (field_key, len(recs))
                 )
                 map(recs._recompute_done, fs)
+                openupgrade_models_with_blacklist[model_name] = recs[0]
                 continue
             _logger.info(
                 "Actual recompute of field %s for %d recs." %
@@ -5929,6 +5933,10 @@ class BaseModel(object):
                     recs.browse(ids)._write(dict(vals))
             # mark computed fields as done
             map(recs._recompute_done, fs)
+        # OpenUpgrade start, reset blacklists:
+        for model_obj in openupgrade_models_with_blacklist.itervalues():
+            model_obj._openupgrade_recompute_fields_blacklist = []
+        # OpenUpgrade end
 
     #
     # Generic onchange method
