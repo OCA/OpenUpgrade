@@ -342,6 +342,7 @@ class BaseModel(object):
 
     _table = None
     _sql_constraints = []
+    _openupgrade_recompute_fields_blacklist = []
 
     # model dependencies, for models backed up by sql views:
     # {model_name: field_names, ...}
@@ -5901,9 +5902,19 @@ class BaseModel(object):
             # determine the fields to recompute
             fs = self.env[field.model_name]._field_computed[field]
             # OpenUpgrade start:
+            blacklist = recs[0]._openupgrade_recompute_fields_blacklist
+            field_key = '%s' % field
+            model_name, field_name = field_key.rsplit('.', 1)
+            if field_name in blacklist:
+                _logger.info(
+                    "Recompute of field %s for %d recs blacklisted." %
+                    (field_key, len(recs))
+                )
+                map(recs._recompute_done, fs)
+                continue
             _logger.info(
                 "Actual recompute of field %s for %d recs." %
-                (field, len(recs))
+                (field_key, len(recs))
             )
             # OpenUpgrade end
             ns = [f.name for f in fs if f.store]
