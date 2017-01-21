@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-# © 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
+# Copyright 2016 Sergio Teruel <sergio.teruel@tecnativa.com>
+# Copyright 2017 Tecnativa - Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from openupgradelib import openupgrade
+from openupgradelib import openupgrade_90
 
 column_defaults = {
     'pos.config': [
@@ -10,6 +12,14 @@ column_defaults = {
     ],
     'pos.order': [
         ('session_id', None)
+    ],
+}
+
+attachment_fields = {
+    'pos.category': [
+        ('image', None),
+        ('image_medium', None),
+        ('image_small', None),
     ],
 }
 
@@ -62,3 +72,4 @@ def migrate(env, version):
     update_barcodes_nomenclatures(env)
     openupgrade.load_data(
         env.cr, 'point_of_sale', 'migrations/9.0.1.0.1/noupdate_changes.xml')
+    openupgrade_90.convert_binary_field_to_attachment(env, attachment_fields)

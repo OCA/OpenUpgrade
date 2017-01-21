@@ -1,9 +1,22 @@
 # -*- coding: utf-8 -*-
-# © 2014-Today Microcom
-# © 2015 Eficent Business and IT Consulting Services S.L. -
-# Jordi Ballester Alomar
+# © 2014-2015 Microcom
+# © 2015 Eficent Business and IT Consulting Services S.L. - Jordi Ballester
+# Copyright 2017 Tecnativa - Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
 from openupgradelib import openupgrade
+from openupgradelib import openupgrade_90
+
+attachment_fields = {
+    'product.template': [
+        ('image', None),
+        ('image_medium', None),
+        ('image_small', None),
+    ],
+    'product.product': [
+        ('image_variant', None),
+    ],
+}
 
 
 def map_base(cr):
@@ -173,15 +186,16 @@ def map_product_template_type(cr):
         table='product_template', write='sql')
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
-    map_base(cr)
-    update_price_history(cr)
-    update_product_pricelist_item(cr)
-    update_product_product(cr)
-    update_product_template(cr)
-    map_product_template_type(cr)
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    map_base(env.cr)
+    update_price_history(env.cr)
+    update_product_pricelist_item(env.cr)
+    update_product_product(env.cr)
+    update_product_template(env.cr)
+    map_product_template_type(env.cr)
     # this field's semantics was updated to its name
-    cr.execute(
+    env.cr.execute(
         'update product_pricelist_item set price_discount=-price_discount*100'
     )
+    openupgrade_90.convert_binary_field_to_attachment(env, attachment_fields)

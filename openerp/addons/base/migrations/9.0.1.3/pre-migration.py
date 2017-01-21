@@ -1,24 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenUpgrade module for Odoo
-#    @copyright 2015-Today: Odoo Community Association
-#    @author: Stephane LE CORNEC
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright Stephane LE CORNEC
+# Copyright 2017 Tecnativa - Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
 from openerp.addons.openupgrade_records.lib import apriori
@@ -52,6 +35,17 @@ column_renames = {
     'res_partner_bank': [
         ('bank', 'bank_id'),
     ],
+    'res_partner': [
+        ('image', None),
+        ('image_medium', None),
+        ('image_small', None),
+    ],
+    'res_country': [
+        ('image', None),
+    ],
+    'ir_ui_menu': [
+        ('web_icon_data', None),
+    ],
 }
 
 
@@ -59,7 +53,6 @@ OBSOLETE_RULES = (
     'multi_company_default_rule',
     'res_currency_rule',
 )
-
 
 def remove_obsolete(cr):
     openupgrade.logged_query(cr, """
