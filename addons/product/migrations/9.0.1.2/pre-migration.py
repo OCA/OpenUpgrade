@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# © 2014-Today Microcom
+# © 2014-2015 Microcom
 # © 2016 Serpent Consulting Services Pvt. Ltd.
 # © 2016 Eficent Business and IT Consulting Services S.L.
+# Copyright 2017 Tecnativa - Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
-
 
 # For 'base' map_values in post-migration
 column_renames = {
@@ -15,6 +15,14 @@ column_renames = {
     ],
     'product_price_history': [
         ('product_template_id', None)
+    ],
+    'product_product': [
+        ('image_variant', None),
+    ],
+    'product_template': [
+        ('image', None),
+        ('image_medium', None),
+        ('image_small', None),
     ],
 }
 

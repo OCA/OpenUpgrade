@@ -1,27 +1,11 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenUpgrade module for Odoo
-#    @copyright 2015-Today: Odoo Community Association
-#    @author: Stephane LE CORNEC
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright Stephane LE CORNEC
+# Copyright 2017 Tecnativa - Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import logging
 from openupgradelib import openupgrade
+from openupgradelib import openupgrade_90
 
 
 logger = logging.getLogger('OpenUpgrade')
@@ -46,6 +30,20 @@ column_copies = {
     ],
     'ir_act_server': [
         ('help', None, None),
+    ],
+}
+
+attachment_fields = {
+    'res.partner': [
+        ('image', None),
+        ('image_medium', None),
+        ('image_small', None),
+    ],
+    'res.country': [
+        ('image', None),
+    ],
+    'ir.ui.menu': [
+        ('web_icon_data', None),
     ],
 }
 
@@ -115,3 +113,4 @@ def migrate(env, version):
         env.cr, 'base', 'migrations/9.0.1.3/noupdate_changes.xml',
     )
     assign_view_keys(env)
+    openupgrade_90.convert_binary_field_to_attachment(env, attachment_fields)
