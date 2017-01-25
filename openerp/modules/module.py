@@ -315,6 +315,14 @@ def init_module_models(cr, module_name, obj_list):
         openerp.models.BaseModel.step_workflow = lambda *args, **kwargs: None
         # end OpenUpgrade
         obj_list[0].recompute(cr, openerp.SUPERUSER_ID, {})
+        # OpenUpgrade start, reset blacklists:
+        for obj in obj_list:
+            if obj._openupgrade_recompute_fields_blacklist:
+                obj._openupgrade_recompute_fields_blacklist = []
+                _logger.info(
+                    "Blacklist reset for model %s." % obj._name
+                )
+        # OpenUpgrade end
         # OpenUpgrade: reenable workflow triggers
         openerp.models.BaseModel.step_workflow = set_workflow_org
         # end OpenUpgrade
