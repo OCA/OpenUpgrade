@@ -3,7 +3,6 @@
 # © 2016 Eficent Business and IT Consulting Services S.L.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import operator
-from openerp import models
 from openupgradelib import openupgrade
 from openerp.modules.registry import RegistryManager
 
@@ -292,34 +291,6 @@ def account_internal_type(env):
             })
 
 
-def account_partial_reconcile(env):
-    """ Create new entries of model account.partial.reconcile that replace the
-    obsolete account.move.reconcile model. Note that an additional model
-    'account.full.reconcile' was introduced after the release of 9.0 in its own
-    automatically installed module.
-
-    Disable all workflow steps that are meant to run on new reconciliations
-    """
-    set_workflow_org = models.BaseModel.step_workflow
-    models.BaseModel.step_workflow = lambda *args, **kwargs: None
-    cr = env.cr
-    move_line_map = {}
-    cr.execute("SELECT COALESCE(reconcile_id, reconcile_partial_id), id "
-               "FROM account_move_line WHERE "
-               "reconcile_id IS NOT NULL or reconcile_partial_id IS NOT NULL")
-    for rec_id, move_line_id in cr.fetchall():
-        move_line_map.setdefault(rec_id, []).append(move_line_id)
-    to_recompute = env['account.move.line']
-    for _rec_id, move_line_ids in move_line_map.iteritems():
-        move_lines = env['account.move.line'].browse(move_line_ids)
-        move_lines.auto_reconcile_lines()
-        to_recompute += move_lines
-    for field in ['amount_residual', 'amount_residual_currency', 'reconciled']:
-        env.add_todo(env['account.move.line']._fields[field], to_recompute)
-    env['account.move.line'].recompute()
-    models.BaseModel.step_workflow = set_workflow_org
-
-
 def map_account_tax_type(cr):
     """ See comments in method map_account_tax_type in the pre-migration
     script."""
@@ -368,6 +339,144 @@ def migrate_account_auto_fy_sequence(env):
         """
     env.cr.execute(query.format('prefix'))
     env.cr.execute(query.format('suffix'))
+
+
+def fill_blacklisted_fields(cr):
+    """Fill data of fields for which recomputation was surpressed."""
+    # Set fields on account_move
+    # matched_percentage will be set to 0.0, but be filled in migration
+    #     of reconciliations.
+    openupgrade.logged_query(
+        cr,
+        """\
+        UPDATE account_move
+         SET currency_id = subquery.currency_id,
+             amount = subquery.amount,
+             matched_percentage = 0.0
+         FROM (SELECT
+                am.id as id,
+                rc.currency_id as currency_id,
+               sum(aml.debit) as amount
+            FROM account_move am
+            JOIN res_company rc ON rc.id = am.company_id
+            LEFT OUTER JOIN account_move_line aml ON aml.move_id = am.id
+            GROUP BY am.id, rc.currency_id
+        ) as subquery
+        WHERE account_move.id = subquery.id
+        """
+    )
+    # cash basis fields depend om matched_percentage, which will be filled
+    # by reconciliation migration. For now will be filled with values that
+    # are correct if associated journal is not for sale or purchase.
+    openupgrade.logged_query(
+        cr,
+        """\
+        UPDATE account_move_line
+        SET amount_residual = 0.0,
+            amount_residual_currency = 0.0,
+            reconciled = False,
+            company_currency_id = subquery.company_currency_id,
+            balance = subquery.balance,
+            debit_cash_basis = subquery.debit,
+            credit_cash_basis = subquery.credit,
+            balance_cash_basis = subquery.balance,
+            user_type_id = subquery.user_type_id
+        FROM (
+            SELECT
+                aml.id as id,
+                rc.currency_id as company_currency_id,
+                (aml.debit - aml.credit) as balance,
+                aml.debit as debit,
+                aml.credit as credit,
+                aa.user_type_id as user_type_id
+            FROM account_move_line aml
+            JOIN res_company rc ON rc.id = aml.company_id
+            JOIN account_account aa ON aa.id = aml.account_id
+        ) as subquery
+        WHERE account_move_line.id = subquery.id
+        """
+    )
+    # Set fields on account_invoice_line
+    # For the moment use practical rounding of result to 2 decimals,
+    # no currency that I know of has more precision at the moment.
+    openupgrade.logged_query(
+        cr,
+        """\
+        WITH company_rate_selection AS (
+            SELECT
+                ai.id, com_cur.currency_id as company_currency_id,
+                max(com_cur.name) as rate_date
+            FROM account_invoice ai
+            JOIN res_company com on ai.company_id = com.id
+            LEFT OUTER JOIN res_currency_rate com_cur
+                ON com.currency_id = com_cur.id
+                    AND ai.company_id =
+                        COALESCE(com_cur.company_id, ai.company_id)
+                    AND COALESCE(ai.date_invoice, date(ai.create_date)) >=
+                        date(com_cur.name)
+            GROUP BY ai.id, com_cur.currency_id
+        )
+        , invoice_rate_selection AS (
+            SELECT
+                ai.id, inv_cur.currency_id as invoice_currency_id,
+                max(inv_cur.name) as rate_date
+            FROM account_invoice ai
+            JOIN res_company com on ai.company_id = com.id
+            LEFT OUTER JOIN res_currency_rate inv_cur
+                ON COALESCE(ai.currency_id, com.currency_id) = inv_cur.id
+                    AND ai.company_id =
+                        COALESCE(inv_cur.company_id, ai.company_id)
+                    AND COALESCE(ai.date_invoice, date(ai.create_date)) >=
+                        date(inv_cur.name)
+            GROUP BY ai.id, inv_cur.currency_id
+        )
+        , effective_rates AS (
+            SELECT
+                ai.id as invoice_id,
+                com_cur.rate as company_currency_rate,
+                inv_cur.rate as invoice_currency_rate,
+                (inv_cur.rate / com_cur.rate) as effective_rate
+            FROM account_invoice ai
+            JOIN company_rate_selection crs ON ai.id = crs.id
+            JOIN res_currency_rate com_cur
+                ON crs.company_currency_id = com_cur.currency_id
+                    AND crs.rate_date = com_cur.name
+            JOIN invoice_rate_selection irs ON ai.id = irs.id
+            JOIN res_currency_rate inv_cur
+                ON irs.invoice_currency_id = inv_cur.currency_id
+                    AND irs.rate_date = inv_cur.name)
+        , subquery(id, price_subtotal_signed) AS (
+            SELECT
+                ail.id,
+                CASE
+                    WHEN ai.type IN ('in_refund', 'out_refund')
+                    THEN ROUND(-ail.price_subtotal * er.effective_rate, 2)
+                    ELSE ROUND(ail.price_subtotal  * er.effective_rate, 2)
+                END
+            FROM account_invoice_line ail
+            JOIN account_invoice ai ON ail.invoice_id = ai.id
+            JOIN effective_rates er ON ai.id = er.invoice_id
+        )
+        UPDATE account_invoice_line
+        SET price_subtotal_signed = subquery.price_subtotal_signed
+        FROM subquery
+        WHERE account_invoice_line.id = subquery.id
+        """
+    )
+
+
+def reset_blacklist_field_recomputation():
+    """Make sure blacklists are disabled, to prevent problems in other
+    modules.
+    """
+    from openerp.addons.account.models.account_move import \
+        AccountMove, AccountMoveLine
+    AccountMove._openupgrade_recompute_fields_blacklist = []
+    AccountMoveLine._openupgrade_recompute_fields_blacklist = []
+    from openerp.addons.account.models.account_invoice import \
+        AccountInvoice, AccountInvoiceLine
+    AccountInvoice._openupgrade_recompute_fields_blacklist = []
+    AccountInvoiceLine._openupgrade_recompute_fields_blacklist = []
 
 
 @openupgrade.migrate(use_env=True)
@@ -455,8 +564,8 @@ def migrate(env, version):
     parent_id_to_tag(env, 'account.tax')
     parent_id_to_tag(env, 'account.account', recursive=True)
     account_internal_type(env)
-    account_partial_reconcile(env)
     map_account_tax_type(cr)
     map_account_tax_template_type(cr)
-
     migrate_account_auto_fy_sequence(env)
+    fill_blacklisted_fields(cr)
+    reset_blacklist_field_recomputation()

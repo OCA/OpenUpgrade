@@ -17,5 +17,5 @@ Add the concept of full reconciliation back into the accounting.
     'demo': [],
     'installable': True,
     'auto_install': True,
-    'post_init_hook': '_migrate_full_reconcile',
+    # OpenUgrade: disable: 'post_init_hook': '_migrate_full_reconcile',
 }
