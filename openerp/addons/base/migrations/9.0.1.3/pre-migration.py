@@ -81,6 +81,7 @@ def cleanup_modules(cr):
             ('shell', 'base'),
             # from OCA/social - included in core
             ('website_mail_snippet_table_edit', 'mass_mailing'),
+            ('mass_mailing_sending_queue', 'mass_mailing'),
             # from OCA/crm - included in core
             ('crm_lead_lost_reason', 'crm'),
         ], merge_modules=True,
