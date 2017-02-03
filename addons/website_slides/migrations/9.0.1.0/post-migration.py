@@ -9,7 +9,7 @@ attachment_fields = {
     'slide.slide': [
         ('image', None),
         ('image_medium', None),
-        ('image_small', None),
+        ('image_thumb', None),
     ],
 }
 
