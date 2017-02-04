@@ -8,4 +8,4 @@ class TestAccount(common.SavepointCase):
             ('name', '=', 'The Future of Emails'),
         ])
         self.assertTrue(post.cover_properties)
-        self.assertIn('/web/image', post.cover_properties)
+        self.assertIn('url(', post.cover_properties)
