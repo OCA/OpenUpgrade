@@ -8,8 +8,4 @@ class TestAccount(common.SavepointCase):
             ('name', '=', 'The Future of Emails'),
         ])
         self.assertTrue(post.cover_properties)
-        self.assertIn('/web/image', post.cover_properties)
-        attachment = self.env['ir.attachment'].search([
-            ('name', '=', 'blog_post_{}_cover'.format(post.id)),
-        ])
-        self.assertTrue(attachment)
+        self.assertIn('url(', post.cover_properties)

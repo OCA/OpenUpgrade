@@ -6,29 +6,32 @@ from openupgradelib import openupgrade
 
 
 def convert_blog_post_cover(env):
-    """Upload image as attachment and change cover_properties for using it."""
-    attachment_obj = env['ir.attachment']
-    base_url = env['ir.config_parameter'].get_param('web.base.url')
-    for post in env['blog.post'].search([]):
-        env.cr.execute(
-            """SELECT {} FROM blog_post WHERE id=%s""".format(
-                openupgrade.get_legacy_name('background_image')
-            ), (post.id, )
+    """Put default value for posts without cover image and put URL of the
+    cover in field cover_properties for using it for the rest."""
+    post_obj = env['blog.post']
+    # Without cover image
+    env.cr.execute(
+        "SELECT id FROM blog_post WHERE {} IS NULL".format(
+            openupgrade.get_legacy_name('background_image')
         )
-        row = env.cr.fetchone()
-        attachment = attachment_obj.create({
-            'name': 'blog_post_{}_cover'.format(post.id),
-            'type': 'binary',
-            'db_datas': row[0],
-            'res_model': 'ir.ui.view',
-            'public': True,
-        })
+    )
+    posts = post_obj.browse([x[0] for x in env.cr.fetchall()])
+    posts.write({'cover_properties': post_obj._defaults['cover_properties']})
+    # With cover image
+    env.cr.execute(
+        "SELECT id, {0} FROM blog_post WHERE {0} IS NOT NULL".format(
+            openupgrade.get_legacy_name('background_image')
+        )
+    )
+    for row in env.cr.fetchall():
+        post = post_obj.browse(row[0])
         post.cover_properties = (
-            '{{"background-image": "url({}/web/image/{})",'
+            '{{"background-image": "url({})",'
             ' "opacity": "1",'
             ' "background-color": "oe_none",'
             ' "resize_class": "cover cover_full"}}'
-        ).format(base_url, attachment.id)
+        ).format(row[1])
+        break
 
 
 @openupgrade.migrate(use_env=True)
