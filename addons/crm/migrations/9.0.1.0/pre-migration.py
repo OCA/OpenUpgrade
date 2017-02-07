@@ -25,6 +25,9 @@ column_renames = {
     'section_stage_rel': [
         ('section_id', 'team_id'),
     ],
+    'calendar_event': [
+        ('phonecall_id', None),
+    ],
 }
 
 column_copys = {
