@@ -76,6 +76,17 @@ def create_payments_from_vouchers(env):
         AND av.state in ('draft', 'posted')
         """
     )
+    # Also recreate link from invoice to payment
+    env.cr.execute(
+        """\
+        INSERT INTO account_invoice_payment_rel (payment_id, invoice_id)
+        SELECT aml.payment_id, ai.id
+        FROM account_move_line aml
+        JOIN account_invoice ai ON aml.move_id = ai.move_id
+        WHERE NOT aml.payment_id IS NULL
+        GROUP BY aml.payment_id, ai.id
+        """
+    )
 
 
 def create_voucher_line_tax_lines(env):
