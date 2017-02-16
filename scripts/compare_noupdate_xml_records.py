@@ -11,11 +11,11 @@ from lxml import etree
 
 
 def read_manifest(addon_dir):
-    for manifest in ('__manifest__.py', '__openerp__.py'):
-        path = os.path.join(addon_dir, manifest)
-        if os.path.isfile(path):
-            break
-    with open(path, 'r') as f:
+    # this script should be compatible with 9.0 and 10.0
+    manifest_name = '__openerp__.py'
+    if os.access(os.path.join(addon_dir, '__manifest__.py'), os.R_OK):
+        manifest_name = '__manifest__.py'
+    with open(os.path.join(addon_dir, manifest_name), 'r') as f:
         manifest_string = f.read()
     return ast.literal_eval(manifest_string)
 
@@ -74,29 +74,32 @@ def get_records(addon_dir):
     records_update = {}
     records_noupdate = {}
 
+    def process_record_node(record, noupdate):
+        xml_id = record.get("id")
+        if not xml_id:
+            return
+        if '.' in xml_id and xml_id.startswith(addon_name + '.'):
+            xml_id = xml_id[len(addon_name) + 1:]
+        for records in records_noupdate, records_update:
+            # records can occur multiple times in the same module
+            # with different noupdate settings
+            if xml_id in records:
+                # merge records (overwriting an existing element
+                # with the same tag). The order processing the
+                # various directives from the manifest is
+                # important here
+                update_node(records[xml_id], record)
+                break
+        else:
+            target_dict = (
+                records_noupdate if noupdate else records_update)
+            target_dict[xml_id] = record
+        
     def process_data_node(data_node):
         noupdate = nodeattr2bool(data_node, 'noupdate', False)
         record_nodes = data_node.xpath("./record")
         for record in record_nodes:
-            xml_id = record.get("id")
-            if not xml_id:
-                continue
-            if '.' in xml_id and xml_id.startswith(addon_name + '.'):
-                xml_id = xml_id[len(addon_name) + 1:]
-            for records in records_noupdate, records_update:
-                # records can occur multiple times in the same module
-                # with different noupdate settings
-                if xml_id in records:
-                    # merge records (overwriting an existing element
-                    # with the same tag). The order processing the
-                    # various directives from the manifest is
-                    # important here
-                    update_node(records[xml_id], record)
-                    break
-            else:
-                target_dict = (
-                    records_noupdate if noupdate else records_update)
-                target_dict[xml_id] = record
+            process_record_node(record, noupdate)
 
     for key in keys:
         if not manifest.get(key):
@@ -107,8 +110,18 @@ def get_records(addon_dir):
                 tree = etree.parse(os.path.join(addon_dir, *xml_path))
             except etree.XMLSyntaxError:
                 continue
-            for data_node in tree.xpath("/openerp/data"):
-                process_data_node(data_node)
+            # Support xml files with root Element either odoo or openerp, supporting v9.0 and v1.0
+            # Condition: each xml file should have only one root element {<odoo> or <openerp>};
+            root_node = tree.getroot()
+            root_node_noupdate = nodeattr2bool(root_node, 'noupdate', False)
+            if root_node.tag not in ('openerp', 'odoo'):
+                raise Exception, 'Unexpected root Element: %s in file: %s' % (tree.getroot(), xml_path)
+            for node in root_node:
+                if node.tag == 'data':
+                    process_data_node(node)
+                elif node.tag == 'record':
+                    process_record_node(node, root_node_noupdate)
+
     return records_update, records_noupdate
 
 
@@ -187,9 +200,9 @@ def main(argv=None):
         if len(element):
             data.append(element)
 
-    openerp = etree.Element("openerp")
-    openerp.append(data)
-    document = etree.ElementTree(openerp)
+    odoo = etree.Element("odoo")
+    odoo.append(data)
+    document = etree.ElementTree(odoo)
 
     print etree.tostring(
         document, pretty_print=True, xml_declaration=True, encoding='utf-8')
