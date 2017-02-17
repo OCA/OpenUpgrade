@@ -50,8 +50,8 @@ def _migrate_pack_operation(env):
         {'processed': AsIs(openupgrade.get_legacy_name('processed'))})
 
 
-def _migrate_stock_picking(cr):
-    cr.execute(
+def _migrate_stock_picking(env):
+    env.cr.execute(
         "update stock_picking p set "
         "location_id=coalesce(location_id, default_location_src_id), "
         "location_dest_id=coalesce(location_dest_id, "
@@ -59,6 +59,16 @@ def _migrate_stock_picking(cr):
         "from stock_picking_type t "
         "where p.picking_type_id=t.id and "
         "(location_id is null or location_dest_id is null)")
+
+    env.cr.execute(
+        "update stock_picking set "
+        "recompute_pack_op = False "
+        "where state in ('done', 'cancel')")
+
+    moves = env['stock.move'].search([
+        ('picking_id', '!=', False),
+        ('picking_id.state', 'not in', ('draft', 'done', 'cancel'))])
+    moves.check_recompute_pack_op()
 
 
 def _set_lot_params(cr):
@@ -75,5 +85,5 @@ def migrate(cr, version):
     env = api.Environment(cr, SUPERUSER_ID, {})
     _migrate_tracking(cr)
     _migrate_pack_operation(env)
-    _migrate_stock_picking(cr)
+    _migrate_stock_picking(env)
     _set_lot_params(cr)
