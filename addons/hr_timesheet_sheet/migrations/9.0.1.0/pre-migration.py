@@ -6,8 +6,38 @@
 from openupgradelib import openupgrade
 
 
+def prepopulate_fields(cr):
+
+    cr.execute("""SELECT column_name
+    FROM information_schema.columns
+    WHERE table_name='account_analytic_line' AND
+    column_name='sheet_id'""")
+
+    if not cr.fetchone():
+        cr.execute(
+            """
+            ALTER TABLE account_analytic_line ADD COLUMN sheet_id
+            integer;
+            COMMENT ON COLUMN account_analytic_line.sheet_id IS
+            'Sheet';
+            """)
+        table = 'account_analytic_line'
+        column = 'sheet_id'
+        cr.execute("""
+            CREATE INDEX "%s_%s_index" ON "%s" ("%s")
+        """ % (table, column, table, column))
+
+    cr.execute("""
+        UPDATE account_analytic_line aal
+        SET sheet_id = hat.sheet_id
+        FROM hr_analytic_timesheet hat
+        WHERE hat.line_id = aal.id
+    """)
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     cr.execute("""
     DROP VIEW IF EXISTS hr_timesheet_sheet_sheet_account;
     """)
+    prepopulate_fields(cr)
