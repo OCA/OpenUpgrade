@@ -21,6 +21,11 @@ def prepopulate_fields(cr):
             COMMENT ON COLUMN account_analytic_line.sheet_id IS
             'Sheet';
             """)
+        table = 'account_analytic_line'
+        column = 'sheet_id'
+        cr.execute("""
+            CREATE INDEX "%s_%s_index" ON "%s" ("%s")
+        """ % (table, column, table, column))
 
     cr.execute("""
         UPDATE account_analytic_line aal
