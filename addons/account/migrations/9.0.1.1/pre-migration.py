@@ -122,14 +122,17 @@ def remove_account_moves_from_special_periods(cr):
             """, (first_nsp_id, tuple(move_ids)))
 
     openupgrade.logged_query(cr, """
-        DELETE FROM account_move_line
-        WHERE move_id IN (SELECT id FROM account_move WHERE period_id IN (
-        SELECT id FROM account_period WHERE special = True))
+        DELETE FROM account_move_line l
+        USING account_period p, account_journal j
+        WHERE l.period_id=p.id AND l.journal_id=j.id
+        AND p.special AND j.centralisation
     """)
 
     openupgrade.logged_query(cr, """
-        DELETE FROM account_move
-        WHERE period_id IN (SELECT id FROM account_period WHERE special = True)
+        DELETE FROM account_move m
+        USING account_period p, account_journal j
+        WHERE m.period_id=p.id AND m.journal_id=j.id
+        AND p.special AND j.centralisation
     """)
 
 
