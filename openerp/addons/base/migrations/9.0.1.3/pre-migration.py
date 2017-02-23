@@ -8,27 +8,15 @@ from openerp.addons.openupgrade_records.lib import apriori
 
 
 column_copies = {
-    'ir_act_url': [
-        ('help', None, None),
-    ],
-    # 'ir_act_window': [
-    #     ('help', None, None),
-    # ],
     'ir_actions': [
-        ('help', None, None),
-    ],
-    # 'ir_act_client': [
-    #     ('help', None, None),
-    # ],
-    'ir_act_report_xml': [
-        ('help', None, None),
-    ],
-    'ir_act_server': [
         ('help', None, None),
     ],
     'ir_ui_view': [
         ('arch', 'arch_db', None),
     ],
+    'res_partner': [
+        ('type', None, None),
+    ]
 }
 
 column_renames = {
@@ -53,6 +41,7 @@ OBSOLETE_RULES = (
     'multi_company_default_rule',
     'res_currency_rule',
 )
+
 
 def remove_obsolete(cr):
     openupgrade.logged_query(cr, """
@@ -88,6 +77,17 @@ def cleanup_modules(cr):
     )
 
 
+def map_res_partner_type(cr):
+    """ The type 'default' is not an option in v9.
+        By default we map it to 'contact'.
+    """
+    openupgrade.map_values(
+        cr,
+        openupgrade.get_legacy_name('type'), 'type',
+        [('default', 'contact')],
+        table='res_partner', write='sql')
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.update_module_names(
@@ -98,6 +98,7 @@ def migrate(cr, version):
     remove_obsolete(cr)
     pre_create_columns(cr)
     cleanup_modules(cr)
+    map_res_partner_type(cr)
 
 
 def pre_create_columns(cr):
