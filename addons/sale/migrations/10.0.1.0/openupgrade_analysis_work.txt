@@ -1,0 +1,94 @@
+---Fields in module 'sale'---
+sale         / account.invoice          / partner_shipping_id (many2one): NEW relation: res.partner
+sale         / account.invoice.line     / layout_category_id (many2one) : NEW relation: sale.layout_category
+# NOTHING TO DO
+sale         / product.template         / invoice_policy (selection)    : selection_keys is now '['delivery', 'order']' ('['cost', 'delivery', 'order']')
+# TODO: pre-migration: copy column
+# TODO: post-migration: map value 'cost' to new value
+
+##### NEW MODEL SALE.LAYOUT.CATEGORY ####
+sale         / sale.layout_category     / name (char)                   : NEW required: required
+sale         / sale.layout_category     / pagebreak (boolean)           : NEW 
+sale         / sale.layout_category     / sequence (integer)            : NEW required: required, req_default: function
+sale         / sale.layout_category     / subtotal (boolean)            : NEW 
+# NOTHING TO DO
+
+sale         / sale.order               / confirmation_date (datetime)  : NEW
+sale         / sale.order               / website_message_ids (one2many): DEL relation: mail.message
+# NOTHING TO DO
+
+sale         / sale.order.line          / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+sale         / sale.order.line          / layout_category_id (many2one) : NEW relation: sale.layout_category
+# NOTHING TO DO
+
+---XML records in module 'sale'---
+NEW ir.actions.act_window: sale.report_configuration_action
+DEL ir.actions.client: sale.action_client_sale_menu
+DEL ir.actions.todo: base.open_menu
+NEW ir.model.access: sale.access_account_account_sale_manager
+NEW ir.model.access: sale.access_account_invoice_tax_sale_manager
+NEW ir.model.access: sale.access_account_journal_sale_manager
+NEW ir.model.access: sale.access_account_tax_group_sale_manager
+NEW ir.model.access: sale.access_account_tax_sale_manager
+NEW ir.model.access: sale.access_product_attribute_line_sale_manager
+NEW ir.model.access: sale.access_product_attribute_price_sale_manager
+NEW ir.model.access: sale.access_product_attribute_sale_manager
+NEW ir.model.access: sale.access_product_attribute_value_sale_manager
+NEW ir.model.access: sale.access_product_price_history_salemanager
+NEW ir.model.access: sale.access_product_pricelist_item_sale_manager
+NEW ir.model.access: sale.access_product_product_sale_manager
+NEW ir.model.access: sale.access_product_template_sale_manager
+NEW ir.model.access: sale.report_layout_category_1
+NEW ir.model.access: sale.report_layout_category_2
+NEW ir.model.access: sale.report_layout_category_3
+NEW ir.model.access: sale.report_layout_category_4
+NEW ir.model.access: sale.report_layout_category_5
+NEW ir.ui.menu: base.menu_administration
+NEW ir.ui.menu: sale.Report_configuration
+NEW ir.ui.menu: sale.menu_attribute_action
+NEW ir.ui.menu: sale.menu_product
+NEW ir.ui.menu: sale.menu_product_category_action_form
+NEW ir.ui.menu: sale.menu_product_pricelist_action2
+NEW ir.ui.menu: sale.menu_product_pricelist_main
+NEW ir.ui.menu: sale.menu_product_template_action
+NEW ir.ui.menu: sale.menu_product_uom_categ_form_action
+NEW ir.ui.menu: sale.menu_product_uom_form_action
+NEW ir.ui.menu: sale.menu_products
+NEW ir.ui.menu: sale.menu_sales_config
+NEW ir.ui.menu: sale.menu_variants_action
+NEW ir.ui.menu: sale.next_id_16
+NEW ir.ui.menu: sale.prod_config_main
+NEW ir.ui.menu: sales_team.menu_base_partner
+NEW ir.ui.menu: sales_team.menu_sale_config
+NEW ir.ui.menu: sales_team.menu_sales
+DEL ir.ui.menu: base.menu_base_partner
+DEL ir.ui.menu: base.menu_sale_config
+DEL ir.ui.menu: base.menu_sale_general_settings
+DEL ir.ui.menu: base.menu_sales_config
+NEW ir.ui.view: sale.account_invoice_line_form
+NEW ir.ui.view: sale.product_pricelist_view_form
+NEW ir.ui.view: sale.product_pricelist_view_tree
+NEW ir.ui.view: sale.report_configuration_form_view
+NEW ir.ui.view: sale.report_configuration_search_view
+NEW ir.ui.view: sale.report_configuration_tree_view
+NEW ir.ui.view: sale.report_invoice_document_inherit_sale
+NEW ir.ui.view: sale.report_invoice_layouted
+NEW ir.ui.view: sale.sale_order_view_search_inherit_quotation
+NEW ir.ui.view: sale.sale_order_view_search_inherit_sale
+DEL ir.ui.view: sale.view_account_config
+DEL ir.ui.view: sale.view_company_inherit_form2
+NEW mail.template: sale.mail_template_data_notification_email_sale_order
+NEW res.groups: base.group_portal
+NEW res.groups: base.group_public
+NEW res.groups: base.group_user
+NEW res.groups: sale.group_sale_layout
+NEW res.groups: sale.group_show_price_subtotal
+NEW res.groups: sale.group_show_price_total
+NEW res.groups: sale.group_warning_sale
+DEL res.groups: base.group_sale_manager
+DEL res.groups: base.group_sale_salesman
+DEL res.groups: base.group_sale_salesman_all_leads
+NEW sale.layout_category: sale.sale_layout_cat_1
+NEW sale.layout_category: sale.sale_layout_cat_2
+DEL web.tip: sale.sale_tip_1
+DEL web.tip: sale.sale_tip_2

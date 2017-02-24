@@ -1,0 +1,35 @@
+---Fields in module 'sales_team'---
+sales_team   / crm.team                 / code (char)                   : DEL 
+sales_team   / crm.team                 / working_hours (float)         : DEL
+# NOTHING TO DO
+---XML records in module 'sales_team'---
+NEW crm.team: sales_team.salesteam_website_sales
+NEW ir.actions.act_window: sales_team.action_sale_config
+NEW ir.rule: sales_team.crm_rule_all_salesteam
+NEW ir.rule: sales_team.crm_rule_own_salesteam
+NEW ir.ui.menu: sales_team.menu_action_currency_form
+NEW ir.ui.menu: sales_team.menu_action_res_bank_form
+NEW ir.ui.menu: sales_team.menu_action_res_partner_bank_form
+NEW ir.ui.menu: sales_team.menu_base_partner
+NEW ir.ui.menu: sales_team.menu_config_address_book
+NEW ir.ui.menu: sales_team.menu_config_bank_accounts
+NEW ir.ui.menu: sales_team.menu_country_group
+NEW ir.ui.menu: sales_team.menu_country_partner
+NEW ir.ui.menu: sales_team.menu_country_state_partner
+NEW ir.ui.menu: sales_team.menu_localisation
+NEW ir.ui.menu: sales_team.menu_partner_category_form
+NEW ir.ui.menu: sales_team.menu_partner_form
+NEW ir.ui.menu: sales_team.menu_partner_title_contact
+NEW ir.ui.menu: sales_team.menu_sale_config
+NEW ir.ui.menu: sales_team.menu_sale_general_settings
+NEW ir.ui.menu: sales_team.menu_sale_report
+NEW ir.ui.menu: sales_team.menu_sales
+NEW ir.ui.menu: sales_team.sales_team_config
+DEL ir.ui.menu: base.menu_base_partner
+DEL ir.ui.menu: base.menu_sale_report
+DEL ir.ui.menu: base.sales_team_config
+NEW ir.ui.view: sales_team.view_sale_config_settings
+NEW res.groups: sales_team.group_sale_manager
+NEW res.groups: sales_team.group_sale_salesman
+NEW res.groups: sales_team.group_sale_salesman_all_leads
+NEW res.users: base.default_user

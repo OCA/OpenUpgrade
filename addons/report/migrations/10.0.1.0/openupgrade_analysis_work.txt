@@ -1,0 +1,7 @@
+---Fields in module 'report'---
+report       / ir.actions.report.xml    / print_report_name (char)      : NEW
+# NOTHING TO DO
+---XML records in module 'report'---
+NEW ir.ui.view: report.act_report_xml_view_inherit_report
+NEW ir.ui.view: report.base_config_settings_inherited
+DEL ir.ui.view: report.reporting_settings_form_inherited

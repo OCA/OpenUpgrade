@@ -1,0 +1,64 @@
+---Fields in module 'project'---
+project      / project.project          / favorite_user_ids (many2many) : NEW relation: res.users
+project      / project.project          / privacy_visibility (selection): selection_keys is now '['employees', 'followers', 'portal']' ('function')
+project      / project.project          / state (selection)             : DEL required: required, selection_keys: ['cancelled', 'close', 'draft', 'open', 'pending'], req_default: open
+project      / project.project          / website_message_ids (one2many): DEL relation: mail.message
+# NOTHING TO DO
+
+project      / project.task             / child_ids (many2many)         : type is now 'one2many' ('many2many')
+project      / project.task             / parent_ids (many2many)        : DEL relation: project.task
+# NOTHING TO DO. Relationships are removed
+
+project      / project.task             / website_message_ids (one2many): DEL relation: mail.message
+# NOTHING TO DO.
+
+project      / project.task.type        / mail_template_id (many2one)   : NEW relation: mail.template
+# NOTHING TO DO.
+
+---XML records in module 'project'---
+NEW ir.actions.act_window: project.open_create_project
+DEL ir.actions.act_window: project.action_view_task_history_cumulative
+DEL ir.actions.act_window: project.action_view_task_history_cumulative_filter
+DEL ir.actions.act_window: project.open_view_template_project
+DEL ir.actions.client: project.action_client_project_menu
+NEW ir.actions.server: project.activate_sample_project
+DEL ir.actions.todo: base.open_menu
+NEW ir.filters: project.filter_task_report_cumulative_flow
+DEL ir.model.access: project.access_account_analytic_account_portal
+DEL ir.model.access: project.access_project_portal
+DEL ir.model.access: project.access_project_project_sale_user
+DEL ir.model.access: project.access_project_tags_portal
+DEL ir.model.access: project.access_project_task_history
+DEL ir.model.access: project.access_project_task_history_cumulative
+DEL ir.model.access: project.access_project_task_history_sale_user
+DEL ir.model.access: project.access_project_task_sale_user
+DEL ir.model.access: project.access_project_task_type_sale_user
+DEL ir.model.access: project.access_task_portal
+DEL ir.model.access: project.access_task_type_portal
+NEW ir.model.data: project.duplicate_field_xmlid
+DEL ir.rule: project.portal_project_rule
+DEL ir.rule: project.portal_task_rule
+NEW ir.ui.menu: base.menu_administration
+NEW ir.ui.menu: project.menu_main_pm
+NEW ir.ui.menu: project.menu_project_config_project
+NEW ir.ui.menu: project.menu_project_general_settings
+NEW ir.ui.menu: project.menu_project_report
+NEW ir.ui.menu: project.menu_project_report_task_analysis
+DEL ir.ui.menu: base.menu_main_pm
+DEL ir.ui.menu: base.menu_project_config_project
+DEL ir.ui.menu: base.menu_project_general_settings
+DEL ir.ui.menu: base.menu_project_report
+DEL ir.ui.menu: project.menu_action_view_task_history_cumulative
+DEL ir.ui.menu: project.menu_project_task_user_tree
+DEL ir.ui.menu: project.portal_services_projects
+NEW ir.ui.view: project.project_project_view_form_simplified
+DEL ir.ui.view: project.task_company
+DEL ir.ui.view: project.view_task_history_graph
+DEL ir.ui.view: project.view_task_history_pivot
+DEL ir.ui.view: project.view_task_history_search
+NEW mail.template: project.mail_template_data_module_install_project
+DEL res.groups: project.group_tasks_work_on_tasks
+NEW res.users: base.default_user
+DEL web.tip: project.project_tip_1
+DEL web.tip: project.project_tip_3
+# NOTHING TO DO.

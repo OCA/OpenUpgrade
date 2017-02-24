@@ -1,0 +1,64 @@
+---Fields in module 'payment'---
+payment      / account.payment          / payment_token_id (many2one)   : NEW relation: payment.token
+payment      / account.payment          / payment_transaction_id (many2one): NEW relation: payment.transaction
+# NOTHING TO DO
+payment      / payment.acquirer         / auto_confirm (selection)      : selection_keys is now '['authorize', 'confirm_so', 'generate_and_pay_invoice', 'none']' ('['at_pay_confirm', 'at_pay_now', 'none']')
+# TODO: pre-migration. Map values
+
+payment      / payment.acquirer         / description (html)            : NEW 
+payment      / payment.acquirer         / environment (selection)       : now required, default = function
+payment      / payment.acquirer         / journal_id (many2one)         : NEW relation: account.journal
+payment      / payment.acquirer         / module_id (many2one)          : NEW relation: ir.module.module
+payment      / payment.acquirer         / provider (selection)          : selection_keys is now '['manual']' ('function')
+payment      / payment.acquirer         / save_token (selection)        : NEW selection_keys: ['always', 'ask', 'none']
+# NOTHING TO DO
+
+#### NEW MODEL PAYMENT.TOKEN #####
+payment      / payment.token            / acquirer_id (many2one)        : NEW relation: payment.acquirer, required: required
+payment      / payment.token            / acquirer_ref (char)           : NEW required: required
+payment      / payment.token            / active (boolean)              : NEW 
+payment      / payment.token            / name (char)                   : NEW 
+payment      / payment.token            / partner_id (many2one)         : NEW relation: res.partner, required: required
+payment      / payment.token            / payment_ids (one2many)        : NEW relation: payment.transaction
+
+payment      / payment.transaction      / payment_method_id (many2one)  : DEL relation: payment.method
+payment      / payment.transaction      / payment_token_id (many2one)   : NEW relation: payment.token
+# NOTHING TO DO
+payment      / payment.transaction      / state (selection)             : selection_keys is now '['authorized', 'cancel', 'done', 'draft', 'error', 'pending']' ('['cancel', 'done', 'draft', 'error', 'pending']')
+# TODO: pre-migration. Map values
+
+payment      / res.partner              / payment_method_ids (one2many) : DEL relation: payment.method
+payment      / res.partner              / payment_token_ids (one2many)  : NEW relation: payment.token
+# NOTHING TO DO
+
+---XML records in module 'payment'---
+NEW account.payment.method: payment.account_payment_method_electronic_in
+NEW ir.actions.act_window: payment.payment_token_action
+DEL ir.actions.act_window: payment.payment_method_action
+NEW ir.rule: payment.payment_token_user_rule
+DEL ir.rule: payment.payment_method_salesman_rule
+DEL ir.rule: payment.payment_method_user_rule
+DEL ir.rule: payment.payment_transaction_salesman_rule
+NEW ir.ui.menu: payment.payment_token_menu
+DEL ir.ui.menu: payment.payment_method_menu
+NEW ir.ui.view: payment.acquirer_kanban
+NEW ir.ui.view: payment.assets_backend
+NEW ir.ui.view: payment.default_acquirer_button
+NEW ir.ui.view: payment.payment_token_form_view
+NEW ir.ui.view: payment.payment_token_tree_view
+NEW ir.ui.view: payment.payment_token_view_search
+NEW ir.ui.view: payment.view_account_payment_form_inherit_payment
+NEW ir.ui.view: payment.view_account_payment_invoice_form_inherit_payment
+DEL ir.ui.view: payment.payment_method_form_view
+DEL ir.ui.view: payment.payment_method_tree_view
+DEL ir.ui.view: payment.payment_method_view_search
+NEW payment.acquirer: payment.payment_acquirer_adyen
+NEW payment.acquirer: payment.payment_acquirer_authorize
+NEW payment.acquirer: payment.payment_acquirer_buckaroo
+NEW payment.acquirer: payment.payment_acquirer_custom
+NEW payment.acquirer: payment.payment_acquirer_ogone
+NEW payment.acquirer: payment.payment_acquirer_paypal
+NEW payment.acquirer: payment.payment_acquirer_payu
+NEW payment.acquirer: payment.payment_acquirer_sips
+NEW payment.acquirer: payment.payment_acquirer_stripe
+NEW payment.acquirer: payment.payment_acquirer_transfer

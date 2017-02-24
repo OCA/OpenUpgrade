@@ -1,0 +1,20 @@
+---Fields in module 'project_issue'---
+project_issue / project.issue            / team_id (many2one)            : DEL relation: crm.team
+project_issue / project.issue            / website_message_ids (one2many): DEL relation: mail.message
+# NOTHING TO DO
+
+---XML records in module 'project_issue'---
+DEL ir.actions.act_window: project_issue.open_view_issue
+DEL ir.actions.act_window.view: project_issue.action_crm_tag_calendar_view0
+DEL ir.actions.act_window.view: project_issue.action_crm_tag_form_view0
+DEL ir.actions.act_window.view: project_issue.action_crm_tag_graph_view0
+DEL ir.actions.act_window.view: project_issue.action_crm_tag_kanban_view0
+DEL ir.actions.act_window.view: project_issue.action_crm_tag_tree_view0
+DEL ir.model.access: project_issue.access_crm_team
+DEL ir.model.access: project_issue.access_project_issue_manager
+DEL ir.model.access: project_issue.access_project_issue_salesman
+DEL ir.rule: project_issue.portal_issue_rule
+DEL ir.ui.menu: project_issue.portal_services_issues
+NEW ir.ui.view: project_issue.project_config_settings_view_form_inherit_project_issue
+NEW ir.ui.view: project_issue.project_issue_view_kanban_inherit_no_group_create
+NEW ir.ui.view: project_issue.project_project_view_form_simplified_inherit_issue

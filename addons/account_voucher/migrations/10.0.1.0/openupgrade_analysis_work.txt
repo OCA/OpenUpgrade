@@ -1,0 +1,10 @@
+---Fields in module 'account_voucher'---
+account_voucher / account.voucher          / account_date (date)           : NEW 
+# TODO: post-migration: Copy from date of move_id
+account_voucher / account.voucher          / website_message_ids (one2many): DEL relation: mail.message
+# NOTHING TO DO
+
+---XML records in module 'account_voucher'---
+DEL ir.actions.client: account_voucher.action_client_invoice_menu
+DEL ir.actions.todo: base.open_menu
+# NOTHING TO DO

@@ -1,0 +1,116 @@
+---Fields in module 'stock'---
+stock        / barcode.rule             / type (False)                  : NEW selection_keys: ['alias', 'location', 'lot', 'package', 'product', 'weight'], mode: modify
+# NOTHING TO DO
+
+stock        / procurement.rule         / picking_type_id (many2one)    : now required
+# TODO: pre-migration. Default to some value, guessing by looking at source
+# and destination locations, and warehouse.
+stock        / procurement.rule         / route_sequence (float)        : type is now 'integer' ('float')
+# TODO: pre-migration: copy column
+# TODO: post-migration: move values from old column
+
+stock        / product.product          / stock_move_ids (one2many)     : NEW relation: stock.move
+stock        / product.product          / stock_quant_ids (one2many)    : NEW relation: stock.quant
+# NOTHING TO DO
+
+stock        / product.template         / location_id (many2one)        : not a function anymore
+stock        / product.template         / warehouse_id (many2one)       : not a function anymore
+# TODO: ??? IN V9 were defined as fields.dummy
+
+stock        / product.template         / type (False)                  : NEW selection_keys: ['consu', 'product', 'service'], mode: modify
+# NOTHING TO DO
+
+stock        / stock.inventory          / category_id (many2one)        : NEW relation: product.category
+stock        / stock.inventory          / exhausted (boolean)           : NEW
+# NOTHING TO DO
+
+stock        / stock.inventory.line     / state (char)                  : selection_keys is now 'function' ('False')
+stock        / stock.inventory.line     / state (char)                  : type is now 'selection' ('char')
+# NOTHING TO DO
+
+stock        / stock.location.path      / auto (selection)              : selection_keys is now '['manual', 'transparent']' ('['auto', 'manual', 'transparent']')
+# TODO: pre-migration. copy column
+# TODO: post-migration. Move 'auto' to some other value
+
+stock        / stock.location.path      / route_sequence (float)        : type is now 'integer' ('float')
+# TODO: pre-migration. copy column
+# TODO: post-migration. copy values to new field converting to integer
+
+stock        / stock.move               / ordered_qty (float)           : NEW
+# TODO: post-migration. Default to product_uom_qty
+stock        / stock.pack.operation     / ordered_qty (float)           : NEW
+# TODO: post-migration. Default to product_uom_qty
+
+stock        / stock.pack.operation     / processed_boolean (boolean)   : was renamed to is_done [nothing to do]
+# NOTHING TO DO
+
+stock        / stock.pack.operation     / state (selection)             : selection_keys is now 'function' ('['assigned', 'cancel', 'confirmed', 'done', 'draft', 'partially_available', 'waiting']')
+# NOTHING TO DO
+
+stock        / stock.picking            / picking_type_code (selection) : selection_keys is now 'function' ('['incoming', 'internal', 'outgoing']')
+stock        / stock.picking            / website_message_ids (one2many): DEL relation: mail.message
+# NOTHING TO DO
+
+stock        / stock.production.lot     / website_message_ids (one2many): DEL relation: mail.message
+# NOTHING TO DO
+
+##### NEW MODEL stock.scrap ########
+stock        / stock.scrap              / date_expected (datetime)      : NEW 
+stock        / stock.scrap              / location_id (many2one)        : NEW relation: stock.location, required: required, req_default: function
+stock        / stock.scrap              / lot_id (many2one)             : NEW relation: stock.production.lot
+stock        / stock.scrap              / move_id (many2one)            : NEW relation: stock.move
+stock        / stock.scrap              / name (char)                   : NEW required: required, req_default: function
+stock        / stock.scrap              / origin (char)                 : NEW 
+stock        / stock.scrap              / owner_id (many2one)           : NEW relation: res.partner
+stock        / stock.scrap              / package_id (many2one)         : NEW relation: stock.quant.package
+stock        / stock.scrap              / picking_id (many2one)         : NEW relation: stock.picking
+stock        / stock.scrap              / product_id (many2one)         : NEW relation: product.product, required: required
+stock        / stock.scrap              / product_uom_id (many2one)     : NEW relation: product.uom, required: required
+stock        / stock.scrap              / scrap_location_id (many2one)  : NEW relation: stock.location
+stock        / stock.scrap              / scrap_qty (float)             : NEW required: required, req_default: function
+stock        / stock.scrap              / state (selection)             : NEW selection_keys: ['done', 'draft']
+# TODO: Create one record for each move that had as destionation a scrap
+# location
+
+stock        / stock.warehouse          / active (boolean)              : NEW
+stock        / stock.warehouse          / resupply_from_wh (boolean)    : DEL
+# NOTHING TO DO
+
+---XML records in module 'stock'---
+NEW ir.actions.act_window: stock.action_stock_scrap
+NEW ir.actions.act_window: stock.lot_open_quants
+NEW ir.actions.act_window: stock.product_template_action_product
+NEW ir.actions.act_window: stock.stock_move_action
+DEL ir.actions.act_window: stock.action_move_form2
+DEL ir.actions.act_window: stock.move_scrap
+DEL ir.actions.client: stock.action_client_warehouse_menu
+DEL ir.actions.todo: base.open_menu
+NEW ir.model.access: stock.access_stock_scrap_user
+DEL ir.model.access: stock.access_procurement_rule
+DEL ir.model.access: stock.access_procurement_rule_salemanager
+DEL ir.model.access: stock.access_stock_location_path
+DEL ir.model.access: stock.access_stock_location_path_sale_manager
+DEL ir.model.access: stock.access_stock_location_sale_manager
+NEW ir.sequence: stock.sequence_stock_scrap
+NEW ir.ui.menu: stock.menu_attribute_action
+NEW ir.ui.menu: stock.menu_packages_config
+NEW ir.ui.menu: stock.menu_stock_scrap
+NEW ir.ui.menu: stock.menu_variants_action
+NEW ir.ui.menu: stock.product_product_menu
+NEW ir.ui.menu: stock.stock_move_menu
+DEL ir.ui.menu: stock.menu_action_move_form2
+DEL ir.ui.menu: stock.stock_picking_type_config
+NEW ir.ui.view: stock.stock_incoterms_view_search
+NEW ir.ui.view: stock.stock_location_route_view_search
+NEW ir.ui.view: stock.stock_scrap_form_view
+NEW ir.ui.view: stock.stock_scrap_form_view2
+NEW ir.ui.view: stock.stock_scrap_search_view
+NEW ir.ui.view: stock.stock_scrap_tree_view
+NEW ir.ui.view: stock.stock_warehouse_view_search
+NEW ir.ui.view: stock.view_partner_stock_warnings_form
+DEL ir.ui.view: stock.view_stock_move_scrap_wizard
+NEW res.groups: stock.group_stock_multi_locations
+NEW res.groups: stock.group_stock_multi_warehouses
+NEW res.groups: stock.group_warning_stock
+DEL res.groups: stock.group_locations
+NEW res.users: base.default_user
