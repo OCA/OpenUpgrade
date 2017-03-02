@@ -193,9 +193,9 @@ def update_product_supplierinfo(env):
         psi.sequence, ppi.min_quantity, ppi.price,  psi.product_tmpl_id,
         psi.delay, psi.company_id
         FROM product_supplierinfo AS psi
-        INNER JOIN %s AS ppi
+        INNER JOIN pricelist_partnerinfo AS ppi
         ON ppi.suppinfo_id = psi.id
-    """ % openupgrade.get_legacy_name('pricelist_partnerinfo'))
+    """)
     to_delete_ids = []
     for id, name, product_name, product_code, sequence, min_quantity, price, \
             product_tmpl_id, delay, company_id in env.cr.fetchall():
