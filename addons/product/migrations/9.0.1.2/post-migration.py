@@ -219,10 +219,11 @@ def update_product_supplierinfo(env):
                 'company_id': company_id,
                 'currency_id': currency_id
         })
-    env.cr.execute("""
-        DELETE FROM product_supplierinfo
-        WHERE id IN %s
-    """, (tuple(to_delete_ids),))
+    if to_delete_ids:
+        env.cr.execute("""
+            DELETE FROM product_supplierinfo
+            WHERE id IN %s
+        """, (tuple(to_delete_ids),))
 
 
 @openupgrade.migrate(use_env=True)
