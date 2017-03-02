@@ -47,6 +47,12 @@ table_renames = [
     ('account_statement_operation_template', 'account_operation_template'),
     ('account_tax_code', 'account_tax_group')]
 
+xmlid_renames = [
+    ('account.conf_account_type_equity', 'account.data_account_type_equity'), 
+    ('account.data_account_type_income', 'account.data_account_type_revenue'),
+    ('account.data_account_type_bank', 'account.data_account_type_liquidity'),
+]
+
 PROPERTY_FIELDS = {
     ('product.category', 'property_account_expense_categ',
      'property_account_expense_categ_id'),
@@ -174,6 +180,7 @@ def migrate(cr, version):
     )
     openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_xmlids(cr, xmlid_renames)
     openupgrade.copy_columns(cr, column_copies)
     migrate_properties(cr)
     install_account_tax_python(cr)
