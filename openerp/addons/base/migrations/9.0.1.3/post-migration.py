@@ -13,22 +13,7 @@ logger = logging.getLogger('OpenUpgrade')
 
 # copied from pre-migration
 column_copies = {
-    'ir_act_url': [
-        ('help', None, None),
-    ],
-    'ir_act_window': [
-        ('help', None, None),
-    ],
     'ir_actions': [
-        ('help', None, None),
-    ],
-    'ir_act_client': [
-        ('help', None, None),
-    ],
-    'ir_act_report_xml': [
-        ('help', None, None),
-    ],
-    'ir_act_server': [
         ('help', None, None),
     ],
 }
