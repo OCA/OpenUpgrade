@@ -20,6 +20,28 @@ def update_payments_from_vouchers(env):
         WHERE ap.id = av.id
         """
     )
+    check_method = env.ref(
+        'account_check_printing.account_payment_method_check')
+
+    env.cr.execute("""SELECT column_name
+        FROM information_schema.columns
+        WHERE table_name='account_journal' AND
+        column_name='allow_check_writing'""")
+    if env.cr.fetchone():
+        env.cr.execute(
+            """\
+            UPDATE account_payment ap
+            SET
+                payment_method_id = %s
+            FROM account_voucher av
+            INNER JOIN account_journal aj
+            ON aj.id = av.journal_id
+            WHERE ap.id = av.id
+            AND aj.allow_check_writing = True
+            AND ap.payment_type = 'outbound'
+            """,
+            (check_method.id,)
+        )
 
 
 @openupgrade.migrate(use_env=True)
