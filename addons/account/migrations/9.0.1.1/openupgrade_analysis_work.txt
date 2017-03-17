@@ -652,32 +652,35 @@ DEL account.account.template: account.conf_ovr
 DEL account.account.template: account.conf_rev
 DEL account.account.template: account.conf_stk
 DEL account.account.template: account.conf_xfa
+
+# map renamed xmlids
+DEL account.account.type: account.conf_account_type_equity
+NEW account.account.type: account.data_account_type_equity
+DEL account.account.type: account.data_account_type_income
+NEW account.account.type: account.data_account_type_revenue
+DEL account.account.type: account.data_account_type_bank
+NEW account.account.type: account.data_account_type_liquidity
+
 NEW account.account.type: account.data_account_type_current_assets
 NEW account.account.type: account.data_account_type_current_liabilities
 NEW account.account.type: account.data_account_type_depreciation
 NEW account.account.type: account.data_account_type_direct_costs
-NEW account.account.type: account.data_account_type_equity
 NEW account.account.type: account.data_account_type_expenses
 NEW account.account.type: account.data_account_type_fixed_assets
-NEW account.account.type: account.data_account_type_liquidity
 NEW account.account.type: account.data_account_type_non_current_assets
 NEW account.account.type: account.data_account_type_non_current_liabilities
 NEW account.account.type: account.data_account_type_other_income
 NEW account.account.type: account.data_account_type_prepayments
-NEW account.account.type: account.data_account_type_revenue
 NEW account.account.type: account.data_unaffected_earnings
 DEL account.account.type: account.account_type_asset_view1
 DEL account.account.type: account.account_type_expense_view1
 DEL account.account.type: account.account_type_income_view1
 DEL account.account.type: account.account_type_liability_view1
 DEL account.account.type: account.conf_account_type_chk
-DEL account.account.type: account.conf_account_type_equity
 DEL account.account.type: account.conf_account_type_tax
 DEL account.account.type: account.data_account_type_asset
-DEL account.account.type: account.data_account_type_bank
 DEL account.account.type: account.data_account_type_cash
 DEL account.account.type: account.data_account_type_expense
-DEL account.account.type: account.data_account_type_income
 DEL account.account.type: account.data_account_type_liability
 DEL account.account.type: account.data_account_type_view
 DEL account.analytic.journal: account.analytic_journal_sale
