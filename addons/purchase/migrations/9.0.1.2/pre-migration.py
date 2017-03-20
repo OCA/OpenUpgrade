@@ -31,19 +31,19 @@ def map_order_state(cr):
         WHERE l.order_id = o.id""")
 
 
-def pre_create_po_double_validation(cr, env):
+def pre_create_po_double_validation(env):
     """ In v8 when you install the module 'purchase_double_validation'
     the po workflow is altered to put conditions to change the po status to
     waiting approval if a condition is met. In v9 this is handled without
     workflow."""
 
-    cr.execute("""SELECT column_name
+    env.cr.execute("""SELECT column_name
     FROM information_schema.columns
     WHERE table_name='res_company' AND
     column_name='po_double_validation'""")
 
-    if not cr.fetchone():
-        cr.execute(
+    if not env.cr.fetchone():
+        env.cr.execute(
             """
             ALTER TABLE res_company ADD COLUMN po_double_validation
             character varying;
@@ -51,13 +51,13 @@ def pre_create_po_double_validation(cr, env):
             'Levels of Approvals';
             """)
 
-    cr.execute("""SELECT column_name
+    env.cr.execute("""SELECT column_name
     FROM information_schema.columns
     WHERE table_name='res_company' AND
     column_name='po_double_validation_amount'""")
 
-    if not cr.fetchone():
-        cr.execute(
+    if not env.cr.fetchone():
+        env.cr.execute(
             """
             ALTER TABLE res_company ADD COLUMN po_double_validation_amount
             float;
@@ -78,7 +78,7 @@ def pre_create_po_double_validation(cr, env):
     else:
         po_double_validation = 'one_step'
 
-    cr.execute("""
+    env.cr.execute("""
         UPDATE res_company
         SET po_double_validation = '%s',
             po_double_validation_amount = %s
@@ -90,4 +90,4 @@ def migrate(env, version):
     cr = env.cr
     openupgrade.copy_columns(cr, column_copies)
     map_order_state(cr)
-    pre_create_po_double_validation(cr, env)
+    pre_create_po_double_validation(env)
