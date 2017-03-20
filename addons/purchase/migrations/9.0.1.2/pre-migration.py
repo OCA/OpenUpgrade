@@ -65,7 +65,7 @@ def pre_create_po_double_validation(cr, env):
             'Double validation amount';
             """)
 
-    double_validation_transition = env['ir.model.data'].ref(
+    double_validation_transition = env.ref(
         'purchase_double_validation.trans_confirmed_double_gt')
     po_double_validation_amount = 5000.0
     if double_validation_transition:
