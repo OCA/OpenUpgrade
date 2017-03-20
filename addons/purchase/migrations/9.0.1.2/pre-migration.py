@@ -73,14 +73,8 @@ def pre_create_po_double_validation(cr, env):
     po_double_validation_amount = 5000.0
     if double_validation_transition:
         po_double_validation = 'two_step'
-        condition = False
-        if double_validation_transition.condition.find('>=') >= 0:
-            condition = '>='
-        elif double_validation_transition.condition.find('>=') >= 0:
-            condition = '<'
-        if condition:
-            po_double_validation_amount = (
-                double_validation_transition.condition.split(condition, 1)[1])
+        po_double_validation_amount = (
+            double_validation_transition.condition.split('>=', 1)[1])
     else:
         po_double_validation = 'one_step'
 
