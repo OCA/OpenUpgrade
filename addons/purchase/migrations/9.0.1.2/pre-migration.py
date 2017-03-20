@@ -46,7 +46,7 @@ def pre_create_po_double_validation(cr, env):
         cr.execute(
             """
             ALTER TABLE res_company ADD COLUMN po_double_validation
-            boolean;
+            character varying;
             COMMENT ON COLUMN res_company.po_double_validation IS
             'Levels of Approvals';
             """)
