@@ -83,7 +83,7 @@ def pre_create_po_double_validation(cr, env):
 
     cr.execute("""
         UPDATE res_company
-        SET po_double_validation = %s,
+        SET po_double_validation = '%s',
             po_double_validation_amount = %s
     """ % (po_double_validation, po_double_validation_amount))
 
