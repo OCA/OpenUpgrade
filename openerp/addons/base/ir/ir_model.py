@@ -554,7 +554,10 @@ class ir_model_constraint(Model):
         ids.reverse()
         for data in self.browse(cr, uid, ids, context):
             model = data.model.model
-            model_obj = self.pool[model]
+            try:
+                model_obj = self.pool[model]
+            except Exception:
+                continue
             name = openerp.tools.ustr(data.name)
             typ = data.type
 
