@@ -40,7 +40,7 @@ script:
     - npm install -g less less-plugin-clean-css
     - createdb $DB
     - wget -q -O- https://github.com/OCA/OpenUpgrade/releases/download/databases/8.0.psql | pg_restore -d $DB --no-owner
-    - cp scripts/test_data80.yml ../test_data80.yml
+    - cat openerp/addons/base/migrations/*/tests/*.yml addons/*/migrations/*/tests/*.yml > ../test_data80.yml
     # Roundtrip to previous release to update the test database with additional test data
     # Loading and committing test data without triggering post tests needs https://github.com/odoo/odoo/pull/13146. This is now included in OpenUpgrade.
     - git fetch --depth 2 origin 8.0
