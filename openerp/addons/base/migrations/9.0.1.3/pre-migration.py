@@ -73,6 +73,8 @@ def cleanup_modules(cr):
             ('mass_mailing_sending_queue', 'mass_mailing'),
             # from OCA/crm - included in core
             ('crm_lead_lost_reason', 'crm'),
+            # from OCA/sale-workflow - included in core
+            ('sale_order_back2draft', 'sale'),
         ], merge_modules=True,
     )
 
