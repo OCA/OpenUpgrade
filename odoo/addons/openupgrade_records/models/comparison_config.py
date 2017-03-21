@@ -48,10 +48,9 @@ class openupgrade_comparison_config(models.Model):
             user_info = user_model.read(ids[0], ["name"])
         except Exception, e:
             raise UserError(
-                _("Connection failed."), unicode(e))
+                _("Connection failed: %s") % unicode(e))
         raise UserError(
-            _("Connection succesful."),
-            _("%s is connected.") % user_info["name"])
+            _("Connection succesful: %s is connected.") % user_info["name"])
 
     @api.multi
     def analyze(self):
