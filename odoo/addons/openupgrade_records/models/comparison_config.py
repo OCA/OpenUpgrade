@@ -48,10 +48,9 @@ class openupgrade_comparison_config(models.Model):
             user_info = user_model.read(ids[0], ["name"])
         except Exception, e:
             raise UserError(
-                _("Connection failed."), unicode(e))
+                _("Connection failed: %s") % unicode(e))
         raise UserError(
-            _("Connection succesful."),
-            _("%s is connected.") % user_info["name"])
+            _("Connection succesful: %s is connected.") % user_info["name"])
 
     @api.multi
     def analyze(self):
@@ -60,7 +59,7 @@ class openupgrade_comparison_config(models.Model):
         wizard = self.env['openupgrade.analysis.wizard'].create(
             {'server_config': self.id})
         return {
-            'name': wizard.description,
+            'name': wizard._description,
             'view_type': 'form',
             'view_mode': 'form',
             'res_model': wizard._name,
