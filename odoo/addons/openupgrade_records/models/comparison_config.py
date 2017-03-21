@@ -59,7 +59,7 @@ class openupgrade_comparison_config(models.Model):
         wizard = self.env['openupgrade.analysis.wizard'].create(
             {'server_config': self.id})
         return {
-            'name': wizard.description,
+            'name': wizard._description,
             'view_type': 'form',
             'view_mode': 'form',
             'res_model': wizard._name,
