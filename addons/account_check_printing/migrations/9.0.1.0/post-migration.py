@@ -23,11 +23,7 @@ def update_payments_from_vouchers(env):
     check_method = env.ref(
         'account_check_printing.account_payment_method_check')
 
-    env.cr.execute("""SELECT column_name
-        FROM information_schema.columns
-        WHERE table_name='account_journal' AND
-        column_name='allow_check_writing'""")
-    if env.cr.fetchone():
+    if openupgrade.column_exists(cr, 'account_journal', 'allow_check_writing'):
         env.cr.execute(
             """\
             UPDATE account_payment ap
