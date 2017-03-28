@@ -23,7 +23,7 @@ from odoo import api, fields, SUPERUSER_ID
 from odoo.modules.module import adapt_version, initialize_sys_path, \
                                 load_openerp_module, runs_post_install
 
-from odoo.openupgrade import openupgrade_loading, deferred_100 as deferred
+from odoo.openupgrade import openupgrade_loading
 
 _logger = logging.getLogger(__name__)
 _test_logger = logging.getLogger('odoo.tests')
@@ -436,10 +436,6 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
 
             # Cleanup orphan records
             env['ir.model.data']._process_end(processed_modules)
-
-            # OpenUpgrade: call deferred migration steps
-            if update_module:
-                deferred.migrate_deferred(cr, registry)
 
         for kind in ('init', 'demo', 'update'):
             tools.config[kind] = {}
