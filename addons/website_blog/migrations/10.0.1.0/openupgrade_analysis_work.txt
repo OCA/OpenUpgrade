@@ -1,0 +1,26 @@
+---Fields in module 'website_blog'---
+website_blog / blog.blog                / active (boolean)              : NEW 
+website_blog / blog.blog                / website_message_ids (one2many): DEL relation: mail.message
+# NOTHING TO DO
+
+website_blog / blog.post                / active (boolean)              : NEW
+website_blog / blog.post                / published_date (datetime)     : NEW 
+website_blog / blog.post                / teaser_manual (text)          : NEW
+# NOTHING TO DO
+
+---XML records in module 'website_blog'---
+NEW ir.attachment: website_blog.blog_post_cover_01
+NEW ir.attachment: website_blog.blog_post_cover_02
+NEW ir.ui.view: website_blog.blog_blog_view_search
+NEW ir.ui.view: website_blog.blog_cover
+NEW ir.ui.view: website_blog.blog_post_template_new_post
+NEW ir.ui.view: website_blog.opt_blog_post_author_avatar
+NEW ir.ui.view: website_blog.opt_blog_post_author_avatar_display
+NEW ir.ui.view: website_blog.opt_blog_post_complete_read_next
+NEW ir.ui.view: website_blog.opt_blog_post_cover_image
+NEW ir.ui.view: website_blog.opt_blog_post_grid_layout
+NEW ir.ui.view: website_blog.opt_blog_post_select_to_comment
+NEW ir.ui.view: website_blog.opt_blog_rc_status
+DEL ir.ui.view: website_blog.opt_blog_post_complete_tags
+DEL ir.ui.view: website_blog.opt_blog_post_inline_discussion
+DEL ir.ui.view: website_blog.opt_blog_post_short_tags

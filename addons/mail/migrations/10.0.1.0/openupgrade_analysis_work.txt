@@ -1,0 +1,49 @@
+---Fields in module 'mail'---
+mail         / mail.mail                / scheduled_date (char)         : NEW \
+# NOTHING TO DO
+
+mail         / mail.message             / notification_ids (one2many)   : NEW relation: mail.notification
+mail         / mail.notification        / mail_message_id (many2one)    : NEW relation: mail.message, required: required
+mail         / mail.notification        / email_status (selection)      : NEW selection_keys: ['bounce', 'exception', 'ready', 'sent']
+mail         / mail.notification        / is_email (boolean)            : NEW 
+mail         / mail.notification        / is_read (boolean)             : NEW
+mail         / mail.notification        / res_partner_id (many2one)     : NEW relation: res.partner, required: required
+# TODO: Migrate from table table mail_message_res_partner_needaction_rel
+
+mail         / mail.shortcode           / substitution (char)           : type is now 'text' ('char')
+# TODO: pre-migration. copy column
+# TODO: post-migration. Move from old column converting to text
+
+mail         / mail.template            / scheduled_date (char)         : NEW
+# NOTHING TO DO
+
+mail         / mail.test                / alias_id (many2one)           : NEW relation: mail.alias
+mail         / mail.test                / message_follower_ids (one2many): NEW relation: mail.followers
+mail         / mail.test                / message_ids (one2many)        : NEW relation: mail.message
+mail         / mail.test                / message_last_post (datetime)  : NEW 
+mail         / mail.test                / name (char)                   : NEW 
+# nothing to do
+
+mail         / res.partner              / message_bounce (integer)      : NEW
+# NOTHING TO DO
+
+mail         / res.users                / _inherits (False)             : DEL mode: modify
+mail         / res.users                / chatter_needaction_auto (boolean): DEL
+# NOTHING TO DO
+
+---XML records in module 'mail'---
+NEW ir.actions.act_window: mail.action_partner_mass_mail
+DEL ir.actions.act_window: base.action_partner_mass_mail
+DEL ir.actions.act_window: mail.action_contacts
+DEL ir.actions.act_window.view: mail.action_contacts_view_form
+DEL ir.actions.act_window.view: mail.action_contacts_view_kanban
+DEL ir.actions.act_window.view: mail.action_contacts_view_tree
+NEW ir.config_parameter: mail.icp_mail_bounce_alias
+NEW ir.model.access: mail.access_mail_notification_portal
+NEW ir.model.access: mail.access_mail_notification_system
+NEW ir.model.access: mail.access_mail_notification_user
+NEW ir.model.access: mail.access_mail_test_all
+NEW ir.rule: mail.ir_rule_mail_notifications_group_user
+DEL ir.ui.menu: mail.menu_contacts
+NEW ir.ui.view: mail.message_origin_link
+NEW ir.ui.view: mail.message_user_assigned
