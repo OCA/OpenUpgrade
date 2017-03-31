@@ -75,6 +75,8 @@ def cleanup_modules(cr):
             ('crm_lead_lost_reason', 'crm'),
             # from OCA/sale-workflow - included in core
             ('sale_order_back2draft', 'sale'),
+            # from OCA/bank-payment
+            ('account_payment_sale_stock', 'account_payment_sale'),
         ], merge_modules=True,
     )
 
