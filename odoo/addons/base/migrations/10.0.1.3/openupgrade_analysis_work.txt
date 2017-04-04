@@ -1,26 +1,26 @@
 ---Fields in module 'base'---
 base         / ir.actions.act_window    / auto_refresh (integer)        : DEL 
 base         / ir.actions.act_window    / target (selection)            : selection_keys is now '['current', 'fullscreen', 'inline', 'main', 'new']' ('['current', 'inline', 'inlineview', 'new']')
-# TODO: pre-migration: copy column
-# TODO: post-migration: map values
+# inlineview => inline
 base         / ir.actions.client        / target (selection)            : NEW selection_keys: ['current', 'fullscreen', 'main', 'new']
 # NOTHING TO DO
 
 base         / ir.model.fields          / store (boolean)               : NEW
-# NOTHING TO DO
+# created in pre_migrate
+
 base         / ir.module.module         / license (selection)           : selection_keys is now '['AGPL-3', 'GPL-2', 'GPL-2 or any later version', 'GPL-3', 'GPL-3 or any later version', 'LGPL-3', 'OEEL-1', 'OPL-1', 'Other OSI approved licence', 'Other proprietary']' ('['AGPL-3', 'GPL-2', 'GPL-2 or any later version', 'GPL-3', 'GPL-3 or any later version', 'LGPL-3', 'OEEL-1', 'Other OSI approved licence', 'Other proprietary']')
 base         / ir.ui.menu               / active (boolean)              : NEW
 # NOTHING TO DO
 
 base         / ir.ui.view               / type (selection)              : selection_keys is now '['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']' ('['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'sales_team_dashboard', 'search', 'tree']')
-# TODO: pre-migration. Map the values that are obsolete to new valid ones.
+# sales_team_dashboard => kanban
 
 base         / res.company              / bank_ids (one2many)           : NEW relation: res.partner.bank
 base         / res.company              / sequence (integer)            : NEW
 # NOTHING TO DO
 
 base         / res.currency             / symbol (char)                 : now required
-# TODO: pre-migration: Use the value of name if symbol is blank
+# Use the value of name if symbol is blank
 base         / res.partner              / birthdate (char)              : DEL 
 base         / res.partner              / company_name (char)           : NEW
 base         / res.partner              / company_type (selection)      : now a function
