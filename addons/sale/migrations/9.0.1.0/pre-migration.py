@@ -85,8 +85,15 @@ def prepopulate_fields(cr):
     cr.execute(
         """\
         update sale_order_line
-        set qty_to_invoice=product_uom_qty - qty_invoiced
-        where qty_invoiced is not null
+        set qty_to_invoice=case
+            when pt.invoice_policy = 'order' then
+                product_uom_qty - coalesce(qty_invoiced, 0)
+            else
+                qty_delivered - coalesce(qty_invoiced, 0)
+        end
+        from product_product p
+        join product_template pt on p.product_tmpl_id=pt.id
+        where sale_order_line.product_id=p.id
         """)
     cr.execute('alter table sale_order_line add column currency_id integer')
     cr.execute(
@@ -101,7 +108,7 @@ def prepopulate_fields(cr):
         """\
         update sale_order_line
         set invoice_status=(
-            case when qty_to_invoice<=0 then 'invoiced'
+            case when coalesce(qty_to_invoice, 0)<=0 then 'invoiced'
             else 'to invoice' end
         )
         where state in ('sale', 'done')
