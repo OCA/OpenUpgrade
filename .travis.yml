@@ -40,13 +40,14 @@ script:
     - npm install -g less less-plugin-clean-css
     - createdb $DB
     - wget -q -O- https://github.com/OCA/OpenUpgrade/releases/download/databases/9.0.psql | pg_restore -d $DB --no-owner
-    - cat odoo/addons/base/migrations/*/tests/*.yml addons/*/migrations/*/tests/*.yml || true > ../test_data90.yml
+    - cat odoo/addons/base/migrations/*/tests/*.yml addons/*/migrations/*/tests/*.yml > ../test_data90.yml || true
     # Roundtrip to previous release to update the test database with additional test data
     # Loading and committing test data without triggering post tests needs https://github.com/odoo/odoo/pull/13146. This is now included in OpenUpgrade.
     - git fetch --depth 2 origin 9.0
     - git reset --hard `git ls-remote |grep refs/heads/9.0 |awk '{print $1}'`
     - pip install -q -r requirements.txt
-    - ./openerp-server --database=$DB --test-file=`readlink -f ../test_data90.yml` --test-commit --stop-after-init
+    # this crashes if there is no test data
+    - if [ -s ../test_data90.yml ]; then ./openerp-server --database=$DB --test-file=`readlink -f ../test_data90.yml` --test-commit --stop-after-init; fi
     - git reset -q --hard $TRAVIS_COMMIT
     # Install Python requirements of target release
     - pip install -q -r requirements.txt
