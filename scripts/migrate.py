@@ -58,6 +58,7 @@ def copy_database(conn_parms):
             del os.environ['PGPASSWORD']
     return db_new
 
+
 migrations = {
     '10.0': {
         'addons': {
