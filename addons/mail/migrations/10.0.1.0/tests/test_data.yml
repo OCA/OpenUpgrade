@@ -1,0 +1,14 @@
+-
+    Test data to test email notifications
+-
+    !record {model: mail.mail, id: mail.test_mail_outgoing}:
+        state: 'outgoing'
+-
+    !record {model: mail.mail, id: mail.test_mail_outgoing}:
+        needaction_partner_ids: [base.res_partner_1]
+-
+    !record {model: mail.mail, id: mail.test_mail_exception}:
+        state: 'exception'
+-
+    !record {model: mail.mail, id: mail.test_mail_exception}:
+        needaction_partner_ids: [base.res_partner_1]
