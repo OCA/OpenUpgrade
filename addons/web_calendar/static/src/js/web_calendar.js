@@ -332,7 +332,7 @@ var CalendarView = View.extend({
                 self.proxy('update_record')(event._id, data);
             },
             eventRender: function (event, element, view) {
-                element.find('.fc-event-title').html(event.title);
+                element.find('.fc-event-title').html(event.title + event.attendee_avatars);
             },
             eventAfterRender: function (event, element, view) {
                 if ((view.name !== 'month') && (((event.end-event.start)/60000)<=30)) {
@@ -633,7 +633,6 @@ var CalendarView = View.extend({
                 if (attendee_other.length>2) {
                     the_title_avatar += '<span class="o_attendee_head" title="' + attendee_other.slice(0, -2) + '">+</span>';
                 }
-                the_title = the_title_avatar + the_title;
             }
         }
         
@@ -642,9 +641,10 @@ var CalendarView = View.extend({
             date_stop = m_start.toDate();
         }
         var r = {
-            'start': moment(date_start).format('YYYY-MM-DD HH:mm:ss'),
-            'end': moment(date_stop).format('YYYY-MM-DD HH:mm:ss'),
+            'start': moment(date_start).toString(),
+            'end': moment(date_stop).toString(),
             'title': the_title,
+            'attendee_avatars': the_title_avatar,
             'allDay': (this.fields[this.date_start].type == 'date' || (this.all_day && evt[this.all_day]) || false),
             'id': evt.id,
             'attendees':attendees
@@ -911,9 +911,9 @@ var CalendarView = View.extend({
             var index = this.dataset.get_id_index(id);
             this.dataset.index = index;
             if (this.write_right) {
-                this.do_switch_view('form', null, { mode: "edit" });
+                this.do_switch_view('form', { mode: "edit" });
             } else {
-                this.do_switch_view('form', null, { mode: "view" });
+                this.do_switch_view('form', { mode: "view" });
             }
         }
         else {
@@ -927,7 +927,7 @@ var CalendarView = View.extend({
                 buttons: [
                     {text: _t("Edit"), classes: 'btn-primary', close: true, click: function() {
                         self.dataset.index = self.dataset.get_id_index(id);
-                        self.do_switch_view('form', null, { mode: "edit" });
+                        self.do_switch_view('form', { mode: "edit" });
                     }},
 
                     {text: _t("Delete"), close: true, click: function() {

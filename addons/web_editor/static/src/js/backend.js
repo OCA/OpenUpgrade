@@ -113,11 +113,16 @@ var FieldTextHtmlSimple = widget.extend({
     },
     text_to_html: function (text) {
         var value = text || "";
-        if (value.match(/^\s*$/)) {
-            value = '<p><br/></p>';
-        } else {
-            value = "<p>"+value.split(/<br\/?>/).join("<br/></p><p>")+"</p>";
-            value = value.replace(/<p><\/p>/g, '').replace('<p><p>', '<p>').replace('<p><p ', '<p ').replace('</p></p>', '</p>');
+        try {
+            $(text)[0].innerHTML;
+            return text;
+        } catch (e) {
+            if (value.match(/^\s*$/)) {
+                value = '<p><br/></p>';
+            } else {
+                value = "<p>"+value.split(/<br\/?>/).join("<br/></p><p>")+"</p>";
+                value = value.replace(/<p><\/p>/g, '').replace('<p><p>', '<p>').replace('<p><p ', '<p ').replace('</p></p>', '</p>');
+            }
         }
         return value;
     },
@@ -156,6 +161,11 @@ var FieldTextHtmlSimple = widget.extend({
         return !this.get('value') || this.get('value') === "<p><br/></p>" || !this.get('value').match(/\S/);
     },
     commit_value: function () {
+        /* Switch to WYSIWYG mode if currently in code view */
+        if (session.debug) {
+            var layoutInfo = this.$textarea.data('layoutInfo');
+            $.summernote.pluginEvents.codeview(undefined, undefined, layoutInfo, false);
+        }
         if (this.options['style-inline']) {
             transcoder.class_to_style(this.$content);
             transcoder.font_to_img(this.$content);
@@ -216,7 +226,7 @@ var FieldTextHtml = widget.extend({
                 self.$iframe.css("height", (self.$body.find("#oe_snippets").length ? 500 : 300) + "px");
             }
         };
-        $(window).on('resize', self.resize);
+        $(window).on('resize', this.resize);
 
         var def = this._super.apply(this, arguments);
         this.$translate.remove();
@@ -278,6 +288,7 @@ var FieldTextHtml = widget.extend({
         return src;
     },
     initialize_content: function () {
+        var self = this;
         this.$el.closest('.modal-body').css('max-height', 'none');
         this.$iframe = this.$el.find('iframe');
         this.document = null;
@@ -286,6 +297,14 @@ var FieldTextHtml = widget.extend({
         this.editor = false;
         window.odoo[this.callback+"_updown"] = null;
         this.$iframe.attr("src", this.get_url());
+        this.view.on("load_record", this, function(r){
+            if (!self.$body.find('.o_dirty').length){
+                var url = self.get_url();
+                if(url !== self.$iframe.attr("src")){
+                    self.$iframe.attr("src", url);
+                }
+            }
+        });
     },
     on_content_loaded: function () {
         var self = this;
@@ -335,7 +354,7 @@ var FieldTextHtml = widget.extend({
                 $("body").toggleClass("o_form_FieldTextHtml_fullscreen");
                 var full = $("body").hasClass("o_form_FieldTextHtml_fullscreen");
                 self.$iframe.parents().toggleClass('o_form_fullscreen_ancestor', full);
-                self.resize();
+                $(window).trigger("resize"); // induce a resize() call and let other backend elements know (the navbar extra items management relies on this)
             });
 
         this.$body.on('click', '[data-action="cancel"]', function (event) {
@@ -372,12 +391,17 @@ var FieldTextHtml = widget.extend({
             this._dirty_flag = false;
             return this.editor.save();
         } else if (this._dirty_flag && this.editor && this.editor.buildingBlock) {
+            /* Switch to WYSIWYG mode if currently in code view */
+            if (session.debug) {
+                var layoutInfo = this.editor.rte.editable().data('layoutInfo');
+                $.summernote.pluginEvents.codeview(undefined, undefined, layoutInfo, false);
+            }
             this.editor.buildingBlock.clean_for_save();
             this.internal_set_value( this.$content.html() );
         }
     },
     destroy: function () {
-        $(window).off('resize', self.resize);
+        $(window).off('resize', this.resize);
         delete window.odoo[this.callback+"_editor"];
         delete window.odoo[this.callback+"_content"];
         delete window.odoo[this.callback+"_updown"];

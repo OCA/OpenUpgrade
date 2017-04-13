@@ -3,7 +3,7 @@
 
 from odoo import api, exceptions, fields, models, _
 from odoo.exceptions import UserError
-from odoo.tools import float_compare
+from odoo.tools import float_compare, float_round
 from odoo.addons import decimal_precision as dp
 
 
@@ -27,6 +27,18 @@ class StockMoveLots(models.Model):
     done_wo = fields.Boolean('Done for Work Order', default=True, help="Technical Field which is False when temporarily filled in in work order")  # TDE FIXME: naming
     done_move = fields.Boolean('Move Done', related='move_id.is_done', store=True)  # TDE FIXME: naming
     plus_visible = fields.Boolean("Plus Visible", compute='_compute_plus')
+
+    @api.one
+    @api.constrains('lot_id', 'quantity_done')
+    def _check_lot_id(self):
+        if self.move_id.product_id.tracking == 'serial':
+            lots = set([])
+            for move_lot in self.move_id.active_move_lot_ids.filtered(lambda r: not r.lot_produced_id and r.lot_id):
+                if move_lot.lot_id in lots:
+                    raise exceptions.UserError(_('You cannot use the same serial number in two different lines.'))
+                if float_compare(move_lot.quantity_done, 1.0, precision_rounding=move_lot.product_id.uom_id.rounding) == 1:
+                    raise exceptions.UserError(_('You can only produce 1.0 %s for products with unique serial number.') % move_lot.product_id.uom_id.name)
+                lots.add(move_lot.lot_id)
 
     def _compute_plus(self):
         for movelot in self:
@@ -81,14 +93,14 @@ class StockMove(models.Model):
         store=True,
         help='Technical Field to order moves')  # TDE: what ?
 
-    @api.multi
+    @api.depends('state', 'product_uom_qty', 'reserved_availability')
     def _qty_available(self):
         for move in self:
             # For consumables, state is available so availability = qty to do
             if move.state == 'assigned':
                 move.quantity_available = move.product_uom_qty
-            else:
-                move.quantity_available = move.reserved_availability
+            elif move.product_id.uom_id and move.product_uom:
+                move.quantity_available = move.product_id.uom_id._compute_quantity(move.reserved_availability, move.product_uom)
 
     @api.multi
     @api.depends('move_lot_ids', 'move_lot_ids.quantity_done', 'quantity_done_store')
@@ -170,21 +182,31 @@ class StockMove(models.Model):
         ''' Creates an extra move if necessary depending on extra quantities than foreseen or extra moves'''
         self.ensure_one()
         quantity_to_split = 0
+        uom_qty_to_split = 0
         extra_move = self.env['stock.move']
         rounding = self.product_uom.rounding
         link_procurement = False
+        # If more produced than the procurement linked, you should create an extra move
         if self.procurement_id and self.production_id and float_compare(self.production_id.qty_produced, self.procurement_id.product_qty, precision_rounding=rounding) > 0:
             done_moves_total = sum(self.production_id.move_finished_ids.filtered(lambda x: x.product_id == self.product_id and x.state == 'done').mapped('product_uom_qty'))
+            # If you depassed the quantity before, you don't need to split anymore, but adapt the quantities
             if float_compare(done_moves_total, self.procurement_id.product_qty, precision_rounding=rounding) >= 0:
                 quantity_to_split = 0
-                self.product_uom_qty = self.quantity_done #TODO: could change qty on move_dest_id also (in case of 2-step in/out)
+                if float_compare(self.product_uom_qty, self.quantity_done, precision_rounding=rounding) < 0:
+                    self.product_uom_qty = self.quantity_done #TODO: could change qty on move_dest_id also (in case of 2-step in/out)
             else:
                 quantity_to_split = done_moves_total + self.quantity_done - self.procurement_id.product_qty
+                uom_qty_to_split = self.product_uom_qty - (self.quantity_done - quantity_to_split)#self.product_uom_qty - (self.procurement_id.product_qty + done_moves_total)
+                if float_compare(uom_qty_to_split, quantity_to_split, precision_rounding=rounding) < 0:
+                    uom_qty_to_split = quantity_to_split
+                self.product_uom_qty = self.quantity_done - quantity_to_split
+        # You split also simply  when the quantity done is bigger than foreseen
         elif float_compare(self.quantity_done, self.product_uom_qty, precision_rounding=rounding) > 0:
-            quantity_to_split = self.quantity_done - self.product_uom_qty 
+            quantity_to_split = self.quantity_done - self.product_uom_qty
+            uom_qty_to_split = quantity_to_split # + no need to change existing self.product_uom_qty 
             link_procurement = True
         if quantity_to_split:
-            extra_move = self.copy(default={'quantity_done': quantity_to_split, 'product_uom_qty': quantity_to_split, 'production_id': self.production_id.id, 
+            extra_move = self.copy(default={'quantity_done': quantity_to_split, 'product_uom_qty': uom_qty_to_split, 'production_id': self.production_id.id, 
                                             'raw_material_production_id': self.raw_material_production_id.id, 
                                             'procurement_id': link_procurement and self.procurement_id.id or False})
             extra_move.action_confirm()
@@ -203,8 +225,7 @@ class StockMove(models.Model):
                         else:
                             movelot.move_id = extra_move.id
             else:
-                self.quantity_done = self.product_uom_qty
-            self.product_uom_qty = self.quantity_done - quantity_to_split
+                self.quantity_done -= quantity_to_split
         return extra_move
 
     @api.multi
@@ -216,8 +237,14 @@ class StockMove(models.Model):
         moves_to_unreserve = self.env['stock.move']
         # Create extra moves where necessary
         for move in moves:
+            # Here, the `quantity_done` was already rounded to the product UOM by the `do_produce` wizard. However,
+            # it is possible that the user changed the value before posting the inventory by a value that should be
+            # rounded according to the move's UOM. In this specific case, we chose to round up the value, because it
+            # is what is expected by the user (if i consumed/produced a little more, the whole UOM unit should be
+            # consumed/produced and the moves are split correctly).
             rounding = move.product_uom.rounding
-            if float_compare(move.quantity_done, 0.0, precision_rounding=rounding) <= 0:
+            move.quantity_done = float_round(move.quantity_done, precision_rounding=rounding, rounding_method ='UP')
+            if move.quantity_done <= 0:
                 continue
             moves_todo |= move
             moves_todo |= move._create_extra_move()

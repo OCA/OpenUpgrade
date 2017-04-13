@@ -23,7 +23,7 @@ class AccountInvoice(models.Model):
     def _get_reference_type(self):
         """Add BBA Structured Communication Type and change labels from 'reference' into 'communication' """
         res = super(AccountInvoice, self)._get_reference_type()
-        res[[i for i, x in enumerate(res) if x[0] == 'none'][0]] = ('none', 'Free Communication')
+        res[[i for i, x in enumerate(res) if x[0] == 'none'][0]] = ('none', _('Free Communication'))
         res.append(('bba', 'BBA Structured Communication'))
         return res
 
@@ -48,7 +48,7 @@ class AccountInvoice(models.Model):
             if mod == int(bbacomm[-2:]):
                 return True
 
-    @api.onchange('partner_id')
+    @api.onchange('partner_id', 'type')
     def _onchange_partner_id(self):
         result = super(AccountInvoice, self)._onchange_partner_id()
         reference = False

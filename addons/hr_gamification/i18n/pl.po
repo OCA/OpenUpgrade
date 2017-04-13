@@ -6,19 +6,20 @@
 # Marcin Młynarczyk <mlynarczyk@gmail.com>, 2016
 # Martin Trigaux <mat@odoo.com>, 2016
 # Piotr Szlązak <szlazakpiotr@gmail.com>, 2016
+# Grzegorz Grzelak <grzegorz.grzelak@openglobe.pl>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 08:57+0000\n"
 "PO-Revision-Date: 2016-09-07 08:57+0000\n"
-"Last-Translator: Piotr Szlązak <szlazakpiotr@gmail.com>, 2016\n"
+"Last-Translator: Grzegorz Grzelak <grzegorz.grzelak@openglobe.pl>, 2016\n"
 "Language-Team: Polish (https://www.transifex.com/odoo/teams/41243/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: pl\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>=14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
 #. module: hr_gamification
 #: model:ir.actions.act_window,help:hr_gamification.goals_menu_groupby_action2
@@ -26,7 +27,7 @@ msgid ""
 "A goal is defined by a user and a goal type.\n"
 "                    Goals can be created automatically by using challenges."
 msgstr ""
-"Cel jest zdefiniowany przez użytkownika i wpisany.\n"
+"Cel i typ jest zdefiniowany przez użytkownika.\n"
 "                    Cele mogą być utworzone automatycznie przez używanie wyzwań."
 
 #. module: hr_gamification
@@ -78,17 +79,17 @@ msgstr "Wyzwania"
 #. module: hr_gamification
 #: model:ir.actions.act_window,help:hr_gamification.challenge_list_action2
 msgid "Click to create a challenge."
-msgstr "Kliknij aby stworzyć wyzwanie."
+msgstr "Kliknij, aby utworzyć wyzwanie."
 
 #. module: hr_gamification
 #: model:ir.actions.act_window,help:hr_gamification.goals_menu_groupby_action2
 msgid "Click to create a goal."
-msgstr "Kliknij, aby stworzyć cel."
+msgstr "Kliknij, aby utworzyć cel."
 
 #. module: hr_gamification
 #: model:ir.ui.view,arch_db:hr_gamification.hr_hr_employee_view_form
 msgid "Click to grant this employee his first badge"
-msgstr "Kliknij by przyznać pracownikowi pierwszą odznakę"
+msgstr "Kliknij, by przyznać pracownikowi pierwszą odznakę"
 
 #. module: hr_gamification
 #: model:ir.ui.view,arch_db:hr_gamification.view_badge_wizard_reward

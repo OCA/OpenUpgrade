@@ -5,20 +5,26 @@
 # Translators:
 # Martin Trigaux <mat@odoo.com>, 2016
 # Mateus Lopes <mateus1@gmail.com>, 2016
-# grazziano <g.negocios@outlook.com.br>, 2016
+# grazziano <gra.negocia@gmail.com>, 2016
+# Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0alpha1c\n"
+"Project-Id-Version: Odoo Server 10.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-26 10:26+0000\n"
-"PO-Revision-Date: 2016-08-26 10:26+0000\n"
-"Last-Translator: grazziano <g.negocios@outlook.com.br>, 2016\n"
+"POT-Creation-Date: 2016-09-19 12:36+0000\n"
+"PO-Revision-Date: 2016-09-19 12:36+0000\n"
+"Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>, 2016\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/41243/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: sale_timesheet
+#: model:ir.model.fields,field_description:sale_timesheet.field_hr_employee_account_id
+msgid "Account"
+msgstr "Conta"
 
 #. module: sale_timesheet
 #: model:ir.model,name:sale_timesheet.model_account_analytic_line
@@ -37,6 +43,8 @@ msgid ""
 "Create a task under this project on sale order validation. This setting must"
 " be set for each company."
 msgstr ""
+"Crie uma tarefa sob este projeto na validação da ordem de venda. Essa "
+"configuração deve ser definida para cada empresa."
 
 #. module: sale_timesheet
 #: model:ir.model,name:sale_timesheet.model_hr_employee
@@ -94,7 +102,7 @@ msgstr "Projeto"
 #. module: sale_timesheet
 #: model:ir.model.fields,field_description:sale_timesheet.field_sale_order_project_project_id
 msgid "Project associated to this sale"
-msgstr ""
+msgstr "Projeto associado a esta venda"
 
 #. module: sale_timesheet
 #: model:ir.model,name:sale_timesheet.model_sale_order
@@ -115,11 +123,11 @@ msgid "Task"
 msgstr "Tarefa"
 
 #. module: sale_timesheet
-#: code:addons/sale_timesheet/models/procurement.py:72
-#: code:addons/sale_timesheet/models/procurement.py:74
+#: code:addons/sale_timesheet/models/procurement.py:80
 #, python-format
-msgid "Task created"
-msgstr "Tarefa criada"
+msgid ""
+"Task Created (%s): <a href=# data-oe-model=project.task data-oe-id=%d>%s</a>"
+msgstr ""
 
 #. module: sale_timesheet
 #: model:ir.model.fields,field_description:sale_timesheet.field_sale_order_tasks_count
@@ -133,11 +141,21 @@ msgid "Tasks associated to this sale"
 msgstr "Tarefas associadas a esta venda"
 
 #. module: sale_timesheet
+#: code:addons/sale_timesheet/models/procurement.py:84
+#, python-format
+msgid ""
+"This task has been created from: <a href=# data-oe-model=sale.order data-oe-"
+"id=%d>%s</a> (%s)"
+msgstr ""
+
+#. module: sale_timesheet
 #: model:ir.model.fields,help:sale_timesheet.project_time_mode_id_duplicate_xmlid
 msgid ""
 "This will set the unit of measure used in projects and tasks.\n"
 "If you use the timesheet linked to projects, don't forget to setup the right unit of measure in your employees."
 msgstr ""
+"Isto irá definir a unidade de medida utilizada em projetos e tarefas.\n"
+"Se você usar o quadro de horários vinculado a projetos, não se esqueça de configurar a unidade de medida certa em seus funcionários."
 
 #. module: sale_timesheet
 #: model:ir.model.fields,field_description:sale_timesheet.field_hr_employee_timesheet_cost
@@ -147,7 +165,7 @@ msgstr "Custo do Quadro de Horários"
 #. module: sale_timesheet
 #: model:ir.model.fields,field_description:sale_timesheet.project_time_mode_id_duplicate_xmlid
 msgid "Timesheet UoM"
-msgstr ""
+msgstr "Planilha de Horas UoM"
 
 #. module: sale_timesheet
 #: model:ir.model.fields,field_description:sale_timesheet.field_sale_order_timesheet_count

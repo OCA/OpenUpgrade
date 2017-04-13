@@ -86,8 +86,11 @@ var Session = core.Class.extend(mixins.EventDispatcherMixin, {
      * Init a session, reloads from cookie, if it exists
      */
     session_init: function () {
+        var def = this.session_reload();
+        if (this.is_frontend) return def;
+
         var self = this;
-        return this.session_reload().then(function() {
+        return def.then(function() {
             var modules = self.module_list.join(',');
             var deferred = self.load_qweb(modules);
             if(self.session_is_valid()) {
@@ -141,9 +144,12 @@ var Session = core.Class.extend(mixins.EventDispatcherMixin, {
         }
         var def = this._groups_def[group];
         if (!def) {
-            var Model = window.openerp.web.Model;
-            var Users = new Model('res.users');
-            def = this._groups_def[group] = Users.call('has_group', [group]);
+            def = this._groups_def[group] = this.rpc('/web/dataset/call_kw/res.users/has_group', {
+                "model": "res.users",
+                "method": "has_group",
+                "args": [group],
+                "kwargs": {}
+            });
         }
         return def;
     },

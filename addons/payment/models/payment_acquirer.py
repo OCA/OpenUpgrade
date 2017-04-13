@@ -429,7 +429,7 @@ class PaymentTransaction(models.Model):
     # duplicate partner / transaction data to store the values at transaction time
     partner_id = fields.Many2one('res.partner', 'Partner', track_visibility='onchange')
     partner_name = fields.Char('Partner Name')
-    partner_lang = fields.Selection(_lang_get, 'Language', default='en_US')
+    partner_lang = fields.Selection(_lang_get, 'Language', default=lambda self: self.env.lang)
     partner_email = fields.Char('Email')
     partner_zip = fields.Char('Zip')
     partner_address = fields.Char('Address')
@@ -460,7 +460,7 @@ class PaymentTransaction(models.Model):
                 'partner_zip': partner and partner.zip or False,
                 'partner_address': _partner_format_address(partner and partner.street or '', partner and partner.street2 or ''),
                 'partner_city': partner and partner.city or False,
-                'partner_country_id': partner and partner.country_id.id or self._default_partner_country_id(),
+                'partner_country_id': partner and partner.country_id.id or self._get_default_partner_country_id(),
                 'partner_phone': partner and partner.phone or False,
             }}
         return {}
@@ -630,7 +630,7 @@ class PaymentTransaction(models.Model):
 
 class PaymentToken(models.Model):
     _name = 'payment.token'
-    _order = 'partner_id'
+    _order = 'partner_id, id desc'
 
     name = fields.Char('Name', help='Name of the payment token')
     short_name = fields.Char('Short name', compute='_compute_short_name')
@@ -652,8 +652,8 @@ class PaymentToken(models.Model):
                 values.update(getattr(self, custom_method_name)(values))
                 # remove all non-model fields used by (provider)_create method to avoid warning
                 fields_wl = set(self._fields.keys()) & set(values.keys())
-                clean_vals = {field: values[field] for field in fields_wl}
-        return super(PaymentToken, self).create(clean_vals)
+                values = {field: values[field] for field in fields_wl}
+        return super(PaymentToken, self).create(values)
 
     @api.multi
     @api.depends('name')

@@ -30,6 +30,35 @@ class AccountInvoice(models.Model):
             ]}
         return result
 
+    def _prepare_invoice_line_from_po_line(self, line):
+        if line.product_id.purchase_method == 'purchase':
+            qty = line.product_qty - line.qty_invoiced
+        else:
+            qty = line.qty_received - line.qty_invoiced
+        if float_compare(qty, 0.0, precision_rounding=line.product_uom.rounding) <= 0:
+            qty = 0.0
+        taxes = line.taxes_id
+        invoice_line_tax_ids = line.order_id.fiscal_position_id.map_tax(taxes)
+        invoice_line = self.env['account.invoice.line']
+        data = {
+            'purchase_line_id': line.id,
+            'name': line.order_id.name+': '+line.name,
+            'origin': line.order_id.origin,
+            'uom_id': line.product_uom.id,
+            'product_id': line.product_id.id,
+            'account_id': invoice_line.with_context({'journal_id': self.journal_id.id, 'type': 'in_invoice'})._default_account(),
+            'price_unit': line.order_id.currency_id.compute(line.price_unit, self.currency_id, round=False),
+            'quantity': qty,
+            'discount': 0.0,
+            'account_analytic_id': line.account_analytic_id.id,
+            'analytic_tag_ids': line.analytic_tag_ids.ids,
+            'invoice_line_tax_ids': invoice_line_tax_ids.ids
+        }
+        account = invoice_line.get_invoice_line_account('in_invoice', line.product_id, line.order_id.fiscal_position_id, self.env.user.company_id)
+        if account:
+            data['account_id'] = account.id
+        return data
+
     # Load all unsold PO lines
     @api.onchange('purchase_id')
     def purchase_order_change(self):
@@ -43,31 +72,7 @@ class AccountInvoice(models.Model):
             # Load a PO line only once
             if line in self.invoice_line_ids.mapped('purchase_line_id'):
                 continue
-            if line.product_id.purchase_method == 'purchase':
-                qty = line.product_qty - line.qty_invoiced
-            else:
-                qty = line.qty_received - line.qty_invoiced
-            if float_compare(qty, 0.0, precision_rounding=line.product_uom.rounding) <= 0:
-                qty = 0.0
-            taxes = line.taxes_id
-            invoice_line_tax_ids = self.purchase_id.fiscal_position_id.map_tax(taxes)
-            data = {
-                'purchase_line_id': line.id,
-                'name': self.purchase_id.name+': '+line.name,
-                'origin': self.purchase_id.origin,
-                'uom_id': line.product_uom.id,
-                'product_id': line.product_id.id,
-                'account_id': self.env['account.invoice.line'].with_context({'journal_id': self.journal_id.id, 'type': 'in_invoice'})._default_account(),
-                'price_unit': line.order_id.currency_id.compute(line.price_unit, self.currency_id, round=False),
-                'quantity': qty,
-                'discount': 0.0,
-                'account_analytic_id': line.account_analytic_id.id,
-                'analytic_tag_ids': line.analytic_tag_ids.ids,
-                'invoice_line_tax_ids': invoice_line_tax_ids.ids
-            }
-            account = new_lines.get_invoice_line_account('in_invoice', line.product_id, self.purchase_id.fiscal_position_id, self.env.user.company_id)
-            if account:
-                data['account_id'] = account.id
+            data = self._prepare_invoice_line_from_po_line(line)
             new_line = new_lines.new(data)
             new_line._set_additional_fields(self)
             new_lines += new_line
@@ -151,15 +156,22 @@ class AccountInvoice(models.Model):
                                 valuation_price_unit_total += val_stock_move.price_unit * val_stock_move.product_qty
                                 valuation_total_qty += val_stock_move.product_qty
                             valuation_price_unit = valuation_price_unit_total / valuation_total_qty
+                            valuation_price_unit = i_line.product_id.uom_id._compute_price(valuation_price_unit, i_line.uom_id)
                     if inv.currency_id.id != company_currency.id:
                             valuation_price_unit = company_currency.with_context(date=inv.date_invoice).compute(valuation_price_unit, inv.currency_id)
                     if valuation_price_unit != i_line.price_unit and line['price_unit'] == i_line.price_unit and acc:
                         # price with discount and without tax included
                         price_unit = i_line.price_unit * (1 - (i_line.discount or 0.0) / 100.0)
+                        tax_ids = []
                         if line['tax_ids']:
                             #line['tax_ids'] is like [(4, tax_id, None), (4, tax_id2, None)...]
                             taxes = self.env['account.tax'].browse([x[1] for x in line['tax_ids']])
                             price_unit = taxes.compute_all(price_unit, currency=inv.currency_id, quantity=1.0)['total_excluded']
+                            for tax in taxes:
+                                tax_ids.append((4, tax.id, None))
+                                for child in tax.children_tax_ids:
+                                    if child.type_tax_use != 'none':
+                                        tax_ids.append((4, child.id, None))
                         price_before = line.get('price', 0.0)
                         line.update({'price': round(valuation_price_unit * line['quantity'], account_prec)})
                         diff_res.append({
@@ -172,6 +184,7 @@ class AccountInvoice(models.Model):
                             'product_id': line['product_id'],
                             'uom_id': line['uom_id'],
                             'account_analytic_id': line['account_analytic_id'],
+                            'tax_ids': tax_ids,
                             })
             return diff_res
         return []

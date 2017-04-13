@@ -9,6 +9,7 @@ from collections import defaultdict
 from odoo import api, fields, models, SUPERUSER_ID, tools,  _
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.modules.registry import Registry
+from odoo.osv import expression
 from odoo.tools.safe_eval import safe_eval
 
 from odoo.openupgrade import openupgrade_log
@@ -59,11 +60,16 @@ class IrModel(models.Model):
     _description = "Models"
     _order = 'model'
 
+    def _default_field_id(self):
+        if self.env.context.get('install_mode'):
+            return []                   # no default field when importing
+        return [(0, 0, {'name': 'x_name', 'field_description': 'Name', 'ttype': 'char'})]
+
     name = fields.Char(string='Model Description', translate=True, required=True)
     model = fields.Char(default='x_', required=True, index=True)
     info = fields.Text(string='Information')
     field_id = fields.One2many('ir.model.fields', 'model_id', string='Fields', required=True, copy=True,
-        default=lambda self: [(0, 0, {'name': 'x_name', 'field_description': 'Name', 'ttype': 'char'})])
+                               default=_default_field_id)
     inherited_model_ids = fields.Many2many('ir.model', compute='_inherited_models', string="Inherited models",
                                            help="The list of models that extends the current model.")
     state = fields.Selection([('manual', 'Custom Object'), ('base', 'Base Object')], string='Type', default='manual', readonly=True)
@@ -138,6 +144,11 @@ class IrModel(models.Model):
             for model in self:
                 if model.state != 'manual':
                     raise UserError(_("Model '%s' contains module data and cannot be removed!") % model.name)
+                # prevent screwing up fields that depend on these models' fields
+                model.field_id._prepare_update()
+
+        imc = self.env['ir.model.constraint'].search([('model', 'in', self.ids)])
+        imc.unlink()
 
         self._drop_table()
         res = super(IrModel, self).unlink()
@@ -156,11 +167,11 @@ class IrModel(models.Model):
     def write(self, vals):
         if '__last_update' in self._context:
             self = self.with_context({k: v for k, v in self._context.iteritems() if k != '__last_update'})
-        if 'model' in vals:
+        if 'model' in vals and any(rec.model != vals['model'] for rec in self):
             raise UserError(_('Field "Model" cannot be modified on models.'))
-        if 'state' in vals:
+        if 'state' in vals and any(rec.state != vals['state'] for rec in self):
             raise UserError(_('Field "Type" cannot be modified on models.'))
-        if 'transient' in vals:
+        if 'transient' in vals and any(rec.transient != vals['transient'] for rec in self):
             raise UserError(_('Field "Transient Model" cannot be modified on models.'))
         # Filter out operations 4 from field id, because the web client always
         # writes (4,id,False) even for non dirty items.
@@ -283,6 +294,25 @@ class IrModelFields(models.Model):
             _logger.info('Invalid selection list definition for fields.selection', exc_info=True)
             raise UserError(_("The Selection Options expression is not a valid Pythonic expression."
                               "Please provide an expression in the [('key','Label'), ...] format."))
+
+    @api.constrains('name', 'state')
+    def _check_name(self):
+        for field in self:
+            if field.state == 'manual' and not field.name.startswith('x_'):
+                raise ValidationError(_("Custom fields must have a name that starts with 'x_' !"))
+            try:
+                models.check_pg_name(field.name)
+            except ValidationError:
+                msg = _("Field names can only contain characters, digits and underscores (up to 63).")
+                raise ValidationError(msg)
+
+    @api.constrains('model', 'name')
+    def _unique_name(self):
+        # fix on stable branch (to be converted into an SQL constraint)
+        for field in self:
+            count = self.search_count([('model', '=', field.model), ('name', '=', field.name)])
+            if count > 1:
+                raise ValidationError(_("Field names must be unique per model."))
 
     _sql_constraints = [
         ('size_gt_zero', 'CHECK (size>=0)', 'Size of the field cannot be negative.'),
@@ -435,6 +465,46 @@ class IrModelFields(models.Model):
         return True
 
     @api.multi
+    def _prepare_update(self):
+        """ Check whether the fields in ``self`` may be modified or removed.
+            This method prevents the modification/deletion of many2one fields
+            that have an inverse one2many, for instance.
+        """
+        self = self.filtered(lambda record: record.state == 'manual')
+        if not self:
+            return
+
+        for record in self:
+            model = self.env[record.model]
+            field = model._fields[record.name]
+            if field.type == 'many2one' and model._field_inverses.get(field):
+                if self._context.get(MODULE_UNINSTALL_FLAG):
+                    # automatically unlink the corresponding one2many field(s)
+                    inverses = self.search([('relation', '=', field.model_name),
+                                            ('relation_field', '=', field.name)])
+                    inverses.unlink()
+                    continue
+                msg = _("The field '%s' cannot be removed because the field '%s' depends on it.")
+                raise UserError(msg % (field, model._field_inverses[field][0]))
+
+        # remove fields from registry, and check that views are not broken
+        fields = [self.env[record.model]._pop_field(record.name) for record in self]
+        domain = expression.OR([('arch_db', 'like', record.name)] for record in self)
+        views = self.env['ir.ui.view'].search(domain)
+        try:
+            for view in views:
+                view._check_xml()
+        except Exception:
+            raise UserError("\n".join([
+                _("Cannot rename/delete fields that are still present in views:"),
+                _("Fields:") + " " + ", ".join(map(str, fields)),
+                _("View:") + " " + view.name,
+            ]))
+        finally:
+            # the registry has been modified, restore it
+            self.pool.setup_models(self._cr)
+
+    @api.multi
     def unlink(self):
         if not self:
             return True
@@ -443,6 +513,9 @@ class IrModelFields(models.Model):
         if not self._context.get(MODULE_UNINSTALL_FLAG) and \
                 any(field.state != 'manual' for field in self):
             raise UserError(_("This column contains module data and cannot be removed!"))
+
+        # prevent screwing up fields that depend on these fields
+        self._prepare_update()
 
         model_names = self.mapped('model')
         self._drop_column()
@@ -473,9 +546,6 @@ class IrModelFields(models.Model):
         res = super(IrModelFields, self).create(vals)
 
         if vals.get('state', 'manual') == 'manual':
-            if not vals['name'].startswith('x_'):
-                raise UserError(_("Custom fields must have a name that starts with 'x_' !"))
-
             if vals.get('relation') and not self.env['ir.model'].search([('model', '=', vals['relation'])]):
                 raise UserError(_("Model %s does not exist!") % vals['relation'])
 
@@ -535,14 +605,9 @@ class IrModelFields(models.Model):
 
                 if vals.get('name', item.name) != item.name:
                     # We need to rename the column
+                    item._prepare_update()
                     if column_rename:
                         raise UserError(_('Can only rename one field at a time!'))
-                    if vals['name'] in obj._fields:
-                        raise UserError(_('Cannot rename field to %s, because that field already exists!') % vals['name'])
-                    if vals.get('state', 'manual') == 'manual' and not vals['name'].startswith('x_'):
-                        raise UserError(_('New field name must still start with x_ , because it is a custom field!'))
-                    if '\'' in vals['name'] or '"' in vals['name'] or ';' in vals['name']:
-                        raise ValueError('Invalid character in column name')
                     column_rename = (obj._table, item.name, vals['name'], item.index)
 
                 # We don't check the 'state', because it might come from the context
@@ -706,6 +771,12 @@ class IrModelConstraint(models.Model):
 
         self.unlink()
 
+    @api.multi
+    def copy(self, default=None):
+        default = dict(default or {})
+        default['name'] = self.name + '_copy'
+        return super(IrModelConstraint, self).copy(default)
+
 
 class IrModelRelation(models.Model):
     """
@@ -751,8 +822,6 @@ class IrModelRelation(models.Model):
         for table in to_drop:
             self._cr.execute('DROP TABLE %s CASCADE' % table,)
             _logger.info('Dropped table %s', table)
-
-        self._cr.commit()
 
 
 class IrModelAccess(models.Model):
@@ -1225,6 +1294,7 @@ class IrModelData(models.Model):
         datas = self.search([('module', 'in', modules_to_remove)])
         wkf_todo = []
         to_unlink = tools.OrderedSet()
+        undeletable = self.browse([])
 
         for data in datas.sorted(key='id', reverse=True):
             model = data.model
@@ -1249,6 +1319,7 @@ class IrModelData(models.Model):
                 _logger.info('Unable to force processing of workflow for item %s@%s in order to leave activity to be deleted', res_id, model, exc_info=True)
 
         def unlink_if_refcount(to_unlink):
+            undeletable = self.browse()
             for model, res_id in to_unlink:
                 external_ids = self.search([('model', '=', model), ('res_id', '=', res_id)])
                 if external_ids - datas:
@@ -1276,28 +1347,29 @@ class IrModelData(models.Model):
                     self.env[model].browse(res_id).unlink()
                 except Exception:
                     _logger.info('Unable to delete %s@%s', res_id, model, exc_info=True)
+                    undeletable += external_ids
                     self._cr.execute('ROLLBACK TO SAVEPOINT record_unlink_save')
                 else:
                     self._cr.execute('RELEASE SAVEPOINT record_unlink_save')
+            return undeletable
 
         # Remove non-model records first, then model fields, and finish with models
-        unlink_if_refcount(item for item in to_unlink if item[0] not in ('ir.model', 'ir.model.fields', 'ir.model.constraint'))
-        unlink_if_refcount(item for item in to_unlink if item[0] == 'ir.model.constraint')
+        undeletable += unlink_if_refcount(item for item in to_unlink if item[0] not in ('ir.model', 'ir.model.fields', 'ir.model.constraint'))
+        undeletable += unlink_if_refcount(item for item in to_unlink if item[0] == 'ir.model.constraint')
 
         modules = self.env['ir.module.module'].search([('name', 'in', modules_to_remove)])
         constraints = self.env['ir.model.constraint'].search([('module', 'in', modules.ids)])
         constraints._module_data_uninstall()
 
-        unlink_if_refcount(item for item in to_unlink if item[0] == 'ir.model.fields')
+        undeletable += unlink_if_refcount(item for item in to_unlink if item[0] == 'ir.model.fields')
 
         relations = self.env['ir.model.relation'].search([('module', 'in', modules.ids)])
         relations._module_data_uninstall()
 
-        unlink_if_refcount(item for item in to_unlink if item[0] == 'ir.model')
+        undeletable += unlink_if_refcount(item for item in to_unlink if item[0] == 'ir.model')
 
-        self._cr.commit()
 
-        datas.unlink()
+        (datas - undeletable).unlink()
 
     @api.model
     def _process_end(self, modules):
@@ -1343,7 +1415,7 @@ class IrModelData(models.Model):
 class WizardModelMenu(models.TransientModel):
     _name = 'wizard.ir.model.menu.create'
 
-    menu_id = fields.Many2one('ir.ui.menu', string='Parent Menu', required=True)
+    menu_id = fields.Many2one('ir.ui.menu', string='Parent Menu', required=True, ondelete='cascade')
     name = fields.Char(string='Menu Name', required=True)
 
     @api.multi

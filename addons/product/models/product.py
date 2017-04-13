@@ -96,7 +96,7 @@ class ProductPriceHistory(models.Model):
 
     company_id = fields.Many2one('res.company', default=_get_default_company_id, required=True)
     product_id = fields.Many2one('product.product', 'Product', ondelete='cascade', required=True)
-    datetime = fields.Datetime('Date', default=fields.Datetime.now())
+    datetime = fields.Datetime('Date', default=fields.Datetime.now)
     cost = fields.Float('Cost', digits=dp.get_precision('Product Price'))
 
 
@@ -105,7 +105,7 @@ class ProductProduct(models.Model):
     _description = "Product"
     _inherits = {'product.template': 'product_tmpl_id'}
     _inherit = ['mail.thread']
-    _order = 'default_code'
+    _order = 'default_code, id'
 
     price = fields.Float(
         'Price', compute='_compute_product_price',
@@ -133,7 +133,7 @@ class ProductProduct(models.Model):
         'Barcode', copy=False, oldname='ean13',
         help="International Article Number used for product identification.")
     attribute_value_ids = fields.Many2many(
-        'product.attribute.value', id1='prod_id', id2='att_id', string='Attributes', ondelete='restrict')
+        'product.attribute.value', string='Attributes', ondelete='restrict')
     # image: all image fields are base64 encoded and PIL-supported
     image_variant = fields.Binary(
         "Variant Image", attachment=True,
@@ -177,7 +177,9 @@ class ProductProduct(models.Model):
 
             # Support context pricelists specified as display_name or ID for compatibility
             if isinstance(pricelist_id_or_name, basestring):
-                pricelist = self.env['product.pricelist'].name_search(pricelist_id_or_name, operator='=', limit=1)
+                pricelist_name_search = self.env['product.pricelist'].name_search(pricelist_id_or_name, operator='=', limit=1)
+                if pricelist_name_search:
+                    pricelist = self.env['product.pricelist'].browse([pricelist_name_search[0][0]])
             elif isinstance(pricelist_id_or_name, (int, long)):
                 pricelist = self.env['product.pricelist'].browse(pricelist_id_or_name)
 
@@ -392,8 +394,7 @@ class ProductProduct(models.Model):
             name = variant and "%s (%s)" % (product.name, variant) or product.name
             sellers = []
             if partner_ids:
-                if variant:
-                    sellers = [x for x in product.seller_ids if (x.name.id in partner_ids) and (x.product_id == product)]
+                sellers = [x for x in product.seller_ids if (x.name.id in partner_ids) and (x.product_id == product)]
                 if not sellers:
                     sellers = [x for x in product.seller_ids if (x.name.id in partner_ids) and not x.product_id]
             if sellers:
@@ -549,7 +550,7 @@ class ProductProduct(models.Model):
             PriceHistory.create({
                 'product_id': product.id,
                 'cost': value,
-                'company_id': self._context.get('force_compay', self.env.user.company_id.id),
+                'company_id': self._context.get('force_company', self.env.user.company_id.id),
             })
 
     @api.multi

@@ -153,14 +153,15 @@ var QWeb2 = {
         foreach: function(context, enu, as, old_dict, callback) {
             if (enu != null) {
                 var index, jlen, cur;
-                var size, new_dict = this.extend({}, old_dict);
+                var new_dict = this.extend({}, old_dict);
                 new_dict[as + "_all"] = enu;
                 var as_value = as + "_value",
                     as_index = as + "_index",
                     as_first = as + "_first",
                     as_last = as + "_last",
                     as_parity = as + "_parity";
-                if (size = enu.length) {
+                if (enu instanceof Array) {
+                    var size = enu.length;
                     new_dict[as + "_size"] = size;
                     for (index = 0, jlen = enu.length; index < jlen; index++) {
                         cur = enu[index];
@@ -326,7 +327,8 @@ QWeb2.Engine = (function() {
                         if (self.tools.trim(text_node.nodeValue)) {
                             return self.tools.exception("Error: text is not allowed between branching directives");
                         }
-                        text_node.remove();
+                        // IE <= 11.0 doesn't support ChildNode.remove
+                        text_node.parentNode.removeChild(text_node);
                     }
                 } else {
                     return self.tools.exception("Error: t-elif and t-else directives must be preceded by a t-if or t-elif directive");
