@@ -26,3 +26,5 @@ def migrate(cr, version):
         from mail_mail m
         where rel.mail_message_id=m.mail_message_id"""
     )
+    openupgrade.load_data(
+        env.cr, 'mail', 'migrations/10.0.1.0/noupdate_changes.xml')
