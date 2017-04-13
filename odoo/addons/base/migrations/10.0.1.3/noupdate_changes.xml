@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="gw" model="res.country">
+        <field name="currency_id" ref="XOF"/>
+    </record>
+    <record id="tp" model="res.country">
+        <field name="currency_id" ref="USD"/>
+    </record>
+    <record id="tj" model="res.country">
+        <field name="currency_id" ref="TJS"/>
+    </record>
+    <record id="TRY" model="res.currency">
+        <field name="symbol">₺</field>
+    </record>
+</odoo>
