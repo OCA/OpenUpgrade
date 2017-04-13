@@ -10,13 +10,16 @@
 # Antonio Trueba <atgayol@gmail.com>, 2016
 # Javier Ramirez <elbomba887@gmail.com>, 2016
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2016
+# Miguel Orueta <mo@landoo.es>, 2016
+# Yeison Vargas <yeison.vargas@megaterios.co>, 2017
+# Gelo Joga Landoo <gj@landoo.es>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0alpha1c\n"
+"Project-Id-Version: Odoo Server 10.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-26 10:26+0000\n"
-"PO-Revision-Date: 2016-08-26 10:26+0000\n"
-"Last-Translator: Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2016\n"
+"POT-Creation-Date: 2016-09-07 08:57+0000\n"
+"PO-Revision-Date: 2016-09-07 08:57+0000\n"
+"Last-Translator: Gelo Joga Landoo <gj@landoo.es>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,6 +53,8 @@ msgid ""
 "A member with whom you want to associate your membership. It will consider "
 "the membership state of the associated member."
 msgstr ""
+"Un miembro con el que desea asociar su afiliación. Se considerará como "
+"estado de la afiliación el del miembro asociado."
 
 #. module: sale_crm
 #: model:ir.model.fields,field_description:sale_crm.field_res_users_associate_member
@@ -63,10 +68,10 @@ msgstr "Cancelar fecha de asociación"
 
 #. module: sale_crm
 #. openerp-web
-#: code:addons/sale_crm/static/src/js/tour.js:14
+#: code:addons/sale_crm/static/src/js/tour.js:16
 #, python-format
 msgid "Click here to see more options."
-msgstr ""
+msgstr "Clic aquí para ver más opciones."
 
 #. module: sale_crm
 #: model:ir.model.fields,field_description:sale_crm.field_res_users_payment_token_count
@@ -139,10 +144,10 @@ msgstr "Iniciativa/Oportunidad"
 
 #. module: sale_crm
 #. openerp-web
-#: code:addons/sale_crm/static/src/js/tour.js:18
+#: code:addons/sale_crm/static/src/js/tour.js:20
 #, python-format
 msgid "Let's have a look at the quotations of this sales team."
-msgstr ""
+msgstr "Echemos un vistazo a los presupuestos de este equipo de ventas."
 
 #. module: sale_crm
 #: model:ir.ui.view,arch_db:sale_crm.sale_view_inherit123
@@ -219,7 +224,7 @@ msgstr "Presupuestos"
 #: model:ir.model.fields,field_description:sale_crm.field_res_users_sale_order_ids
 #: model:ir.model.fields,field_description:sale_crm.field_res_users_sale_warn
 msgid "Sales Order"
-msgstr "Aviso para pedido de venta"
+msgstr "Pedido de venta"
 
 #. module: sale_crm
 #: model:ir.model.fields,help:sale_crm.field_res_users_free_member

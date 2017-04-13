@@ -209,7 +209,7 @@ class Repair(models.Model):
         to_confirm = self - before_repair
         to_confirm_operations = to_confirm.mapped('operations')
         for operation in to_confirm_operations:
-            if operation.product_id.tracking != 'none' and not operation.lot_id :
+            if operation.product_id.tracking != 'none' and not operation.lot_id:
                 raise UserError(_("Serial number is required for operation line with product '%s'") % (operation.product_id.name))
         to_confirm_operations.write({'state': 'confirmed'})
         to_confirm.write({'state': 'confirmed'})
@@ -230,7 +230,7 @@ class Repair(models.Model):
         if self.invoice_method == 'b4repair':
             self.action_repair_ready()
         elif self.invoice_method == 'after_repair':
-            self.action_repair_done()
+            self.write({'state': 'done'})
         return True
 
     @api.multi
@@ -352,13 +352,13 @@ class Repair(models.Model):
         """
         if self.filtered(lambda repair: repair.state != 'under_repair'):
             raise UserError(_("Repair must be under repair in order to end reparation."))
-        for order in self:
-            vals = {'repaired': True, 'state': 'done'}
-            if not order.invoiced and order.invoice_method == 'after_repair':
+        for repair in self:
+            repair.write({'repaired': True})
+            vals = {'state': 'done'}
+            vals['move_id'] = repair.action_repair_done().get(repair.id)
+            if not repair.invoiced and repair.invoice_method == 'after_repair':
                 vals['state'] = '2binvoiced'
-            elif not order.invoiced and order.invoice_method == 'b4repair':
-                vals['state'] = 'ready'
-            order.write(vals)
+            repair.write(vals)
         return True
 
     @api.multi
@@ -368,9 +368,7 @@ class Repair(models.Model):
 
         """
         if self.filtered(lambda repair: not repair.repaired):
-            raise UserError(_("Repair must be repaired in order to finalize it."))
-        if self.filtered(lambda repair: not repair.invoiced and repair.invoice_method != 'none'):
-            raise UserError(_("Repair must be invoiced in order to finalize it."))
+            raise UserError(_("Repair must be repaired in order to make the product moves."))
         res = {}
         Move = self.env['stock.move']
         for repair in self:
@@ -400,7 +398,6 @@ class Repair(models.Model):
             })
             moves |= move
             moves.action_done()
-            repair.write({'state': 'done', 'move_id': move.id})
             res[repair.id] = move.id
         return res
 
@@ -408,7 +405,6 @@ class Repair(models.Model):
 class RepairLine(models.Model):
     _name = 'mrp.repair.line'
     _description = 'Repair Line'
-
 
     name = fields.Char('Description', required=True)
     repair_id = fields.Many2one(
@@ -457,7 +453,7 @@ class RepairLine(models.Model):
         if not self.to_invoice:
             self.price_subtotal = 0.0
         else:
-            taxes = self.env['account.tax'].compute_all(self.price_unit, self.repair_id.pricelist_id.currency_id, self.product_uom_qty, self.product_id, self.repair_id.partner_id)
+            taxes = self.tax_id.compute_all(self.price_unit, self.repair_id.pricelist_id.currency_id, self.product_uom_qty, self.product_id, self.repair_id.partner_id)
             self.price_subtotal = taxes['total_excluded']
 
     @api.onchange('type', 'repair_id')
@@ -473,8 +469,8 @@ class RepairLine(models.Model):
             self.Location_dest_id = False
         elif self.type == 'add':
             args = self.repair_id.company_id and [('company_id', '=', self.repair_id.company_id.id)] or []
-            warehouses = self.env['stock.warehouse'].search(args)
-            self.location_id = warehouses.lot_stock_id
+            warehouse = self.env['stock.warehouse'].search(args, limit=1)
+            self.location_id = warehouse.lot_stock_id
             self.location_dest_id = self.env['stock.location'].search([('usage', '=', 'production')], limit=1).id
             self.to_invoice = self.repair_id.guarantee_limit and datetime.strptime(self.repair_id.guarantee_limit, '%Y-%m-%d') < datetime.now()
         else:
@@ -492,9 +488,12 @@ class RepairLine(models.Model):
         if not self.product_id or not self.product_uom_qty:
             return
         if partner and self.product_id:
-            self.tax_id = partner.property_account_position_id.map_tax(self.product_id.taxes_id).ids
+            self.tax_id = partner.property_account_position_id.map_tax(self.product_id.taxes_id, self.product_id, partner).ids
         if self.product_id:
-            self.name = self.product_id.display_name
+            if partner:
+                self.name = self.product_id.with_context(lang=partner.lang).display_name
+            else:
+                self.name = self.product_id.display_name
             self.product_uom = self.product_id.uom_id.id
 
         warning = False
@@ -525,7 +524,7 @@ class RepairFee(models.Model):
         index=True, ondelete='cascade', required=True)
     name = fields.Char('Description', index=True, required=True)
     product_id = fields.Many2one('product.product', 'Product')
-    product_uom_qty = fields.Float('Quantity', digits=dp.get_precision('Product Unit of Measure'), required=True)
+    product_uom_qty = fields.Float('Quantity', digits=dp.get_precision('Product Unit of Measure'), required=True, default=1.0)
     price_unit = fields.Float('Unit Price', required=True)
     product_uom = fields.Many2one('product.uom', 'Product Unit of Measure', required=True)
     price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', digits=0)
@@ -540,7 +539,7 @@ class RepairFee(models.Model):
         if not self.to_invoice:
             self.price_subtotal = 0.0
         else:
-            taxes = self.env['account.tax'].compute_all(self.price_unit, self.repair_id.pricelist_id.currency_id, self.product_uom_qty, self.product_id, self.repair_id.partner_id)
+            taxes = self.tax_id.compute_all(self.price_unit, self.repair_id.pricelist_id.currency_id, self.product_uom_qty, self.product_id, self.repair_id.partner_id)
             self.price_subtotal = taxes['total_excluded']
 
     @api.onchange('repair_id', 'product_id', 'product_uom_qty')
@@ -554,7 +553,7 @@ class RepairFee(models.Model):
         pricelist = self.repair_id.pricelist_id
 
         if partner and self.product_id:
-            self.tax_id = partner.property_account_position_id.map_tax(self.product_id.taxes_id).ids
+            self.tax_id = partner.property_account_position_id.map_tax(self.product_id.taxes_id, self.product_id, partner).ids
         if self.product_id:
             self.name = self.product_id.display_name
             self.product_uom = self.product_id.uom_id.id

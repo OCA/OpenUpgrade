@@ -10,6 +10,9 @@ from odoo import api, fields, models, registry, _
 from odoo.osv import expression
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_compare, float_round
 
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class ProcurementGroup(models.Model):
     _inherit = 'procurement.group'
@@ -172,8 +175,11 @@ class ProcurementOrder(models.Model):
             'propagate': self.rule_id.propagate,
             'priority': self.priority,
         }
-    # compatibility
-    _run_move_create = _get_stock_move_values
+
+    def _run_move_create(self):
+        # FIXME - remove me in master/saas-14
+        _logger.warning("'_run_move_create' has been renamed into '_get_stock_move_values'... Overrides are ignored")
+        return self._get_stock_move_values()
 
     @api.multi
     def _run(self):
@@ -276,23 +282,27 @@ class ProcurementOrder(models.Model):
     @api.model
     def _procure_orderpoint_confirm(self, use_new_cursor=False, company_id=False):
         """ Create procurements based on orderpoints.
-        :param bool use_new_cursor: if set, use a dedicated cursor and auto-commit after processing each procurement.
+        :param bool use_new_cursor: if set, use a dedicated cursor and auto-commit after processing
+            1000 orderpoints.
             This is appropriate for batch jobs only.
         """
-        if use_new_cursor:
-            cr = registry(self._cr.dbname).cursor()
-            self = self.with_env(self.env(cr=cr))
 
         OrderPoint = self.env['stock.warehouse.orderpoint']
-        Procurement = self.env['procurement.order']
-        ProcurementAutorundefer = Procurement.with_context(procurement_autorun_defer=True)
-        procurement_list = []
 
-        orderpoints_noprefetch = OrderPoint.with_context(prefetch_fields=False).search(
-            company_id and [('company_id', '=', company_id)] or [],
-            order=self._procurement_from_orderpoint_get_order())
+        domain = [('company_id', '=', company_id)] if company_id else []
+        domain += [('product_id.active', '=', True)]
+        orderpoints_noprefetch = OrderPoint.with_context(prefetch_fields=False).search(domain,
+            order=self._procurement_from_orderpoint_get_order()).ids
         while orderpoints_noprefetch:
-            orderpoints = OrderPoint.browse(orderpoints_noprefetch[:1000].ids)
+            if use_new_cursor:
+                cr = registry(self._cr.dbname).cursor()
+                self = self.with_env(self.env(cr=cr))
+            OrderPoint = self.env['stock.warehouse.orderpoint']
+            Procurement = self.env['procurement.order']
+            ProcurementAutorundefer = Procurement.with_context(procurement_autorun_defer=True)
+            procurement_list = []
+
+            orderpoints = OrderPoint.browse(orderpoints_noprefetch[:1000])
             orderpoints_noprefetch = orderpoints_noprefetch[1000:]
 
             # Calculate groups that can be executed together
@@ -342,7 +352,7 @@ class ProcurementOrder(models.Model):
 
                         except OperationalError:
                             if use_new_cursor:
-                                orderpoints_noprefetch += orderpoint.id
+                                orderpoints_noprefetch += [orderpoint.id]
                                 cr.rollback()
                                 continue
                             else:
@@ -366,8 +376,6 @@ class ProcurementOrder(models.Model):
 
             if use_new_cursor:
                 cr.commit()
+                cr.close()
 
-        if use_new_cursor:
-            cr.commit()
-            cr.close()
         return {}

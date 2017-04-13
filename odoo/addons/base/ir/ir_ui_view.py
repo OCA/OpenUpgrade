@@ -131,7 +131,7 @@ TRANSLATED_ATTRS_RE = re.compile(r"@(%s)\b" % "|".join(TRANSLATED_ATTRS))
 
 class View(models.Model):
     _name = 'ir.ui.view'
-    _order = "priority,name"
+    _order = "priority,name,id"
 
     # Holds the RNG schema
     _relaxng_validator = None
@@ -229,10 +229,11 @@ actual arch.
         for view, view_wo_lang in zip(self, self.with_context(lang=None)):
             view_wo_lang.arch = view.arch_base
 
+    @api.depends('write_date')
     def _compute_model_data_id(self):
-        # get the last ir_model_data record corresponding to self
+        # get the first ir_model_data record corresponding to self
         domain = [('model', '=', 'ir.ui.view'), ('res_id', 'in', self.ids)]
-        for data in self.env['ir.model.data'].search_read(domain, ['res_id']):
+        for data in self.env['ir.model.data'].search_read(domain, ['res_id'], order='id desc'):
             view = self.browse(data['res_id'])
             view.model_data_id = data['id']
 
@@ -270,7 +271,7 @@ actual arch.
                         self.raise_view_error(message, self.id)
         return True
 
-    @api.constrains('arch', 'arch_base')
+    @api.constrains('arch_db')
     def _check_xml(self):
         # Sanity checks: the view should not break anything upon rendering!
         # Any exception raised below will cause a transaction rollback.
@@ -329,6 +330,13 @@ actual arch.
             if view.type == 'qweb' and view.groups_id:
                 raise ValidationError(_("Qweb view cannot have 'Groups' define on the record. Use 'groups' attributes inside the view definition"))
 
+    @api.constrains('inherit_id')
+    def _check_000_inheritance(self):
+        # NOTE: constraints methods are check alphabetically. Always ensure this method will be
+        #       called before other constraint metheods to avoid infinite loop in `read_combined`.
+        if not self._check_recursion(parent='inherit_id'):
+            raise ValidationError(_('You cannot create recursive inherited views.'))
+
     _sql_constraints = [
         ('inheritance_mode',
          "CHECK (mode != 'extension' OR inherit_id IS NOT NULL)",
@@ -367,7 +375,15 @@ actual arch.
             values['name'] = "%s %s" % (values.get('model'), values['type'])
 
         self.clear_caches()
-        return super(View, self).create(self._compute_defaults(values))
+
+        if 'install_mode_data' in self._context:
+            # the view is created from a data file by installing a module; delay
+            # the recomputation of field 'model_data_id' until its xmlid record
+            # is created
+            with self.env.norecompute():
+                return super(View, self).create(self._compute_defaults(values))
+        else:
+            return super(View, self).create(self._compute_defaults(values))
 
     @api.multi
     def write(self, vals):
@@ -1154,7 +1170,7 @@ actual arch.
         query = """SELECT max(v.id)
                      FROM ir_ui_view v
                 LEFT JOIN ir_model_data md ON (md.model = 'ir.ui.view' AND md.res_id = v.id)
-                    WHERE md.module IS NULL
+                    WHERE md.module NOT IN (SELECT name FROM ir_module_module)
                       AND v.model = %s
                       AND v.active = true
                  GROUP BY coalesce(v.inherit_id, v.id)"""

@@ -66,8 +66,7 @@ class Channel(models.Model):
     group_public_id = fields.Many2one('res.groups', string='Authorized Group',
                                       default=lambda self: self.env.ref('base.group_user'))
     group_ids = fields.Many2many(
-        'res.groups', rel='mail_channel_res_group_rel',
-        id1='mail_channel_id', id2='groups_id', string='Auto Subscription',
+        'res.groups', string='Auto Subscription',
         help="Members of those groups will automatically added as followers. "
              "Note that they will be able to manage their subscription manually "
              "if necessary.")
@@ -210,8 +209,9 @@ class Channel(models.Model):
     @api.multi
     def message_receive_bounce(self, email, partner, mail_id=None):
         """ Override bounce management to unsubscribe bouncing addresses """
-        if partner.message_bounce >= self.MAX_BOUNCE_LIMIT:
-            self._action_unfollow(partner)
+        for p in partner:
+            if p.message_bounce >= self.MAX_BOUNCE_LIMIT:
+                self._action_unfollow(p)
         return super(Channel, self).message_receive_bounce(email, partner, mail_id=mail_id)
 
     @api.multi

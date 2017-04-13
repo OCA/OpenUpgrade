@@ -139,7 +139,11 @@ var DashBoard = form_common.FormWidget.extend({
     },
     on_close_action: function(e) {
         if (confirm(_t("Are you sure you want to remove this item ?"))) {
-            $(e.currentTarget).parents('.oe_action:first').remove();
+            var $container = $(e.currentTarget).parents('.oe_action:first');
+            var am = _.findWhere(this.action_managers, { am_id: $container.data('am_id') });
+            am.destroy();
+            this.action_managers.splice(_.indexOf(this.action_managers, am), 1);
+            $container.remove();
             this.do_save_dashboard();
         }
     },
@@ -176,6 +180,8 @@ var DashBoard = form_common.FormWidget.extend({
         var self = this,
             action = result,
             view_mode = action_attrs.view_mode;
+
+        if (!action) { return; }
 
         // evaluate action_attrs context and domain
         action_attrs.context_string = action_attrs.context;
@@ -223,7 +229,13 @@ var DashBoard = form_common.FormWidget.extend({
         var am = new ActionManager(this),
             // FIXME: ideally the dashboard view shall be refactored like kanban.
             $action = $('#' + this.view.element_id + '_action_' + index);
-        $action.parent().data('action_attrs', action_attrs);
+        var $action_container = $action.closest('.oe_action');
+        var am_id = _.uniqueId('action_manager_');
+        am.am_id = am_id;
+        $action_container.data({
+            action_attrs: action_attrs,
+            am_id: am_id,
+        });
         this.action_managers.push(am);
         am.appendTo($action).then(function () {
             am.do_action(action).then(function () {
@@ -338,6 +350,9 @@ core.form_tag_registry
 FavoriteMenu.include({
     start: function () {
         var self = this;
+        if(this.action_id === undefined) {
+            return this._super();
+        }
         var am = this.findAncestor(function (a) {
             return a instanceof ActionManager;
         });
@@ -400,7 +415,7 @@ FavoriteMenu.include({
             name = self.$add_dashboard_input.val();
         
         return self.rpc('/board/add_to_dashboard', {
-            action_id: self.action_id,
+            action_id: self.action_id || false,
             context_to_save: c,
             domain: d,
             view_mode: self.view_manager.active_view.type,

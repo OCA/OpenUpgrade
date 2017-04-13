@@ -24,6 +24,10 @@ from odoo.addons.website.models.website import slug, url_for, _UNSLUG_RE
 
 logger = logging.getLogger(__name__)
 
+# global resolver (GeoIP API is thread-safe, for multithreaded workers)
+# This avoids blowing up open files limit
+odoo._geoip_resolver = None
+
 
 class RequestUID(object):
     def __init__(self, **kw):
@@ -34,7 +38,7 @@ class Http(models.AbstractModel):
     _inherit = 'ir.http'
 
     rerouting_limit = 10
-    _geoip_resolver = None
+    _geoip_resolver = None  # backwards-compatibility
 
     @classmethod
     def _get_converters(cls):
@@ -90,26 +94,31 @@ class Http(models.AbstractModel):
 
     @classmethod
     def _geoip_setup_resolver(cls):
-        if cls._geoip_resolver is None:
-            try:
-                import GeoIP
-                # updated database can be downloaded on MaxMind website
-                # http://dev.maxmind.com/geoip/legacy/install/city/
-                geofile = config.get('geoip_database')
-                if os.path.exists(geofile):
-                    cls._geoip_resolver = GeoIP.open(geofile, GeoIP.GEOIP_STANDARD)
-                else:
-                    cls._geoip_resolver = False
-                    logger.warning('GeoIP database file %r does not exists, apt-get install geoip-database-contrib or download it from http://dev.maxmind.com/geoip/legacy/install/city/', geofile)
-            except ImportError:
-                cls._geoip_resolver = False
+        # Lazy init of GeoIP resolver
+        if cls._geoip_resolver is not None:
+            return
+        if odoo._geoip_resolver is not None:
+            cls._geoip_resolver = odoo._geoip_resolver
+            return
+        try:
+            import GeoIP
+            # updated database can be downloaded on MaxMind website
+            # http://dev.maxmind.com/geoip/legacy/install/city/
+            geofile = config.get('geoip_database')
+            if os.path.exists(geofile):
+                odoo._geoip_resolver = GeoIP.open(geofile, GeoIP.GEOIP_STANDARD)
+            else:
+                odoo._geoip_resolver = False
+                logger.warning('GeoIP database file %r does not exists, apt-get install geoip-database-contrib or download it from http://dev.maxmind.com/geoip/legacy/install/city/', geofile)
+        except ImportError:
+            odoo._geoip_resolver = False
 
     @classmethod
     def _geoip_resolve(cls):
         if 'geoip' not in request.session:
             record = {}
-            if cls._geoip_resolver and request.httprequest.remote_addr:
-                record = cls._geoip_resolver.record_by_addr(request.httprequest.remote_addr) or {}
+            if odoo._geoip_resolver and request.httprequest.remote_addr:
+                record = odoo._geoip_resolver.record_by_addr(request.httprequest.remote_addr) or {}
             request.session['geoip'] = record
 
     @classmethod
@@ -166,13 +175,12 @@ class Http(models.AbstractModel):
             langs = [lg[0] for lg in request.website.get_languages()]
             path = request.httprequest.path.split('/')
             if first_pass:
+                is_a_bot = cls.is_a_bot()
                 nearest_lang = not func and cls.get_nearest_lang(path[1])
                 url_lang = nearest_lang and path[1]
                 preferred_lang = ((cook_lang if cook_lang in langs else False)
-                                  or cls.get_nearest_lang(request.lang)
+                                  or (not is_a_bot and cls.get_nearest_lang(request.lang))
                                   or request.website.default_lang_code)
-
-                is_a_bot = cls.is_a_bot()
 
                 request.lang = context['lang'] = nearest_lang or preferred_lang
                 # if lang in url but not the displayed or default language --> change or remove
@@ -188,9 +196,9 @@ class Http(models.AbstractModel):
                     if request.lang != request.website.default_lang_code:
                         path.insert(1, request.lang)
                     path = '/'.join(path) or '/'
+                    request.context = context
                     redirect = request.redirect(path + '?' + request.httprequest.query_string)
                     redirect.set_cookie('website_lang', request.lang)
-                    request.context = context
                     return redirect
                 elif url_lang:
                     request.uid = None
@@ -355,6 +363,8 @@ class ModelConverter(ir.ir_http.ModelConverter):
 
     def generate(self, query=None, args=None):
         Model = request.env[self.model]
+        if request.context.get('use_public_user'):
+            Model = Model.sudo(request.website.user_id.id)
         domain = safe_eval(self.domain, (args or {}).copy())
         if query:
             domain.append((Model._rec_name, 'ilike', '%' + query + '%'))
@@ -372,6 +382,8 @@ class PageConverter(werkzeug.routing.PathConverter):
         query = query and query.startswith('website.') and query[8:] or query
         if query:
             domain += [('key', 'like', query)]
+        website_id = request.context.get('website_id') or request.env['website'].search([], limit=1).id
+        domain += ['|', ('website_id', '=', website_id), ('website_id', '=', False)]
 
         views = View.search_read(domain, fields=['key', 'priority', 'write_date'], order='name')
         for view in views:

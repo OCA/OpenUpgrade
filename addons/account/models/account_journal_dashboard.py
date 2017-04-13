@@ -261,11 +261,11 @@ class account_journal(models.Model):
             return {
                 'type': 'ir.actions.client',
                 'tag': 'bank_statement_reconciliation_view',
-                'context': {'statement_ids': bank_stmt.ids},
+                'context': {'statement_ids': bank_stmt.ids, 'company_ids': self.mapped('company_id').ids},
             }
         else:
             # Open reconciliation view for customers/suppliers
-            action_context = {'show_mode_selector': False}
+            action_context = {'show_mode_selector': False, 'company_ids': self.mapped('company_id').ids}
             if self.type == 'sale':
                 action_context.update({'mode': 'customers'})
             elif self.type == 'purchase':
@@ -312,9 +312,13 @@ class account_journal(models.Model):
             'default_type': invoice_type,
             'type': invoice_type
         })
+
         [action] = self.env.ref('account.%s' % action_name).read()
         action['context'] = ctx
         action['domain'] = self._context.get('use_domain', [])
+        if action_name in ['action_bank_statement_tree', 'action_view_bank_statement_tree']:
+            action['views'] = False
+            action['view_id'] = False
         return action
 
     @api.multi

@@ -30,10 +30,10 @@ class AccountVoucher(models.Model):
     name = fields.Char('Payment Reference',
         readonly=True, states={'draft': [('readonly', False)]}, default='')
     date = fields.Date("Bill Date", readonly=True,
-        select=True, states={'draft': [('readonly', False)]},
+        index=True, states={'draft': [('readonly', False)]},
         copy=False, default=fields.Date.context_today)
     account_date = fields.Date("Accounting Date",
-        readonly=True, select=True, states={'draft': [('readonly', False)]},
+        readonly=True, index=True, states={'draft': [('readonly', False)]},
         help="Effective date for accounting entries", copy=False, default=fields.Date.context_today)
     journal_id = fields.Many2one('account.journal', 'Journal',
         required=True, readonly=True, states={'draft': [('readonly', False)]}, default=_default_journal)
@@ -257,6 +257,7 @@ class AccountVoucher(models.Model):
                 'date': self.account_date,
                 'tax_ids': [(4,t.id) for t in line.tax_ids],
                 'amount_currency': line.price_subtotal if current_currency != company_currency else 0.0,
+                'currency_id': company_currency != current_currency and current_currency or False,
             }
 
             self.env['account.move.line'].with_context(apply_taxes=True).create(move_line)
@@ -282,7 +283,7 @@ class AccountVoucher(models.Model):
             move = self.env['account.move'].create(voucher.account_move_get())
             # Get the name of the account_move just created
             # Create the first line of the voucher
-            move_line = self.env['account.move.line'].with_context(ctx).create(voucher.first_move_line_get(move.id, company_currency, current_currency))
+            move_line = self.env['account.move.line'].with_context(ctx).create(voucher.with_context(ctx).first_move_line_get(move.id, company_currency, current_currency))
             line_total = move_line.debit - move_line.credit
             if voucher.voucher_type == 'sale':
                 line_total = line_total - voucher._convert_amount(voucher.tax_amount)
@@ -345,6 +346,20 @@ class AccountVoucherLine(models.Model):
             taxes = self.tax_ids.compute_all(self.price_unit, self.voucher_id.currency_id, self.quantity, product=self.product_id, partner=self.voucher_id.partner_id)
             self.price_subtotal = taxes['total_excluded']
 
+    @api.onchange('product_id', 'voucher_id', 'price_unit', 'company_id')
+    def _onchange_line_details(self):
+        if not self.voucher_id or not self.product_id or not self.voucher_id.partner_id:
+            return
+        onchange_res = self.product_id_change(
+            self.product_id.id,
+            self.voucher_id.partner_id.id,
+            self.price_unit,
+            self.company_id.id,
+            self.voucher_id.currency_id.id,
+            self.voucher_id.voucher_type)
+        for fname, fvalue in onchange_res['value'].iteritems():
+            setattr(self, fname, fvalue)
+
     def _get_account(self, product, fpos, type):
         accounts = product.product_tmpl_id.get_product_accounts(fpos)
         if type == 'sale':
@@ -353,6 +368,7 @@ class AccountVoucherLine(models.Model):
 
     @api.multi
     def product_id_change(self, product_id, partner_id=False, price_unit=False, company_id=None, currency_id=None, type=None):
+        # TDE note: mix of old and new onchange badly written in 9, multi but does not use record set
         context = self._context
         company_id = company_id if company_id is not None else context.get('company_id', False)
         company = self.env['res.company'].browse(company_id)

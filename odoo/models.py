@@ -290,9 +290,10 @@ class BaseModel(object):
                            VALUES (%(model)s, %(name)s, %(info)s, %(state)s, %(transient)s)
                            RETURNING id """, params)
         model = self.env['ir.model'].browse(cr.fetchone()[0])
-        self._context['todo'].append((10, model.modified, [list(params)]))
+        self._context['todo'].append((10, model.modified, [['name', 'info', 'transient']]))
 
-        if 'module' in self._context:
+        if self._module == self._context.get('module'):
+            # self._module is the name of the module that last extended self
             xmlid = 'model_' + self._name.replace('.', '_')
             cr.execute("SELECT * FROM ir_model_data WHERE name=%s AND module=%s",
                        (xmlid, self._context['module']))
@@ -349,7 +350,7 @@ class BaseModel(object):
         Fields = self.env['ir.model.fields']
 
         # sparse fields should be created at the end, as they depend on their serialized field
-        model_fields = sorted(self._fields.itervalues(), key=lambda field: field.type == 'sparse')
+        model_fields = sorted(self._fields.itervalues(), key=lambda field: bool(field.sparse))
         for field in model_fields:
             vals = {
                 'model_id': model.id,
@@ -373,11 +374,11 @@ class BaseModel(object):
                 'column1': field.column1 if field.type == 'many2many' else None,
                 'column2': field.column2 if field.type == 'many2many' else None,
             }
-            if getattr(field, 'serialization_field', None):
+            if field.sparse:
                 # resolve link to serialization_field if specified by name
-                serialization_field = Fields.search([('model', '=', vals['model']), ('name', '=', field.serialization_field)])
+                serialization_field = Fields.search([('model', '=', vals['model']), ('name', '=', field.sparse)])
                 if not serialization_field:
-                    raise UserError(_("Serialization field `%s` not found for sparse field `%s`!") % (field.serialization_field, field.name))
+                    raise UserError(_("Serialization field `%s` not found for sparse field `%s`!") % (field.sparse, field.name))
                 vals['serialization_field_id'] = serialization_field.id
 
             if field.name not in cols:
@@ -705,8 +706,12 @@ class BaseModel(object):
         cls = type(self)
         methods = []
         for attr, func in getmembers(cls, is_constraint):
-            if not all(name in cls._fields for name in func._constrains):
-                _logger.warning("@constrains%r parameters must be field names", func._constrains)
+            for name in func._constrains:
+                field = cls._fields.get(name)
+                if not field:
+                    _logger.warning("method %s.%s: @constrains parameter %r is not a field name", cls._name, attr, name)
+                elif not (field.store or field.inverse):
+                    _logger.warning("method %s.%s: @constrains parameter %r is not writeable", cls._name, attr, name)
             methods.append(func)
 
         # optimization: memoize result on cls, it will not be recomputed
@@ -779,7 +784,7 @@ class BaseModel(object):
             return '__export__.' + name
 
     @api.multi
-    def __export_rows(self, fields):
+    def _export_rows(self, fields):
         """ Export fields of the records in ``self``.
 
             :param fields: list of lists of fields to traverse
@@ -826,7 +831,7 @@ class BaseModel(object):
 
                         # recursively export the fields that follow name
                         fields2 = [(p[1:] if p and p[0] == name else []) for p in fields]
-                        lines2 = value.__export_rows(fields2)
+                        lines2 = value._export_rows(fields2)
                         if lines2:
                             # merge first line with record's main line
                             for j, val in enumerate(lines2[0]):
@@ -845,6 +850,9 @@ class BaseModel(object):
 
         return lines
 
+    # backward compatibility
+    __export_rows = _export_rows
+
     @api.multi
     def export_data(self, fields_to_export, raw_data=False):
         """ Export fields for selected objects
@@ -858,7 +866,7 @@ class BaseModel(object):
         fields_to_export = map(fix_import_export_id_paths, fields_to_export)
         if raw_data:
             self = self.with_context(export_raw_data=True)
-        return {'datas': self.__export_rows(fields_to_export)}
+        return {'datas': self._export_rows(fields_to_export)}
 
     @api.model
     def load(self, fields, data):
@@ -2025,7 +2033,7 @@ class BaseModel(object):
         prefix_term = lambda prefix, term: ('%s %s' % (prefix, term)) if term else ''
 
         query = """
-            SELECT min(%(table)s.id) AS id, count(%(table)s.id) AS %(count_field)s %(extra_fields)s
+            SELECT min("%(table)s".id) AS id, count("%(table)s".id) AS "%(count_field)s" %(extra_fields)s
             FROM %(from)s
             %(where)s
             %(groupby)s
@@ -2897,6 +2905,11 @@ class BaseModel(object):
             if field.compute:
                 cls._field_computed[field] = group = groups[field.compute]
                 group.append(field)
+        for fields in groups.itervalues():
+            compute_sudo = fields[0].compute_sudo
+            if not all(field.compute_sudo == compute_sudo for field in fields):
+                _logger.warning("%s: inconsistent 'compute_sudo' for computed fields: %s",
+                                self._name, ", ".join(field.name for field in fields))
 
     @api.model
     def _setup_complete(self):
@@ -3556,8 +3569,7 @@ class BaseModel(object):
           ``(6, _, ids)``
               replaces all existing records in the set by the ``ids`` list,
               equivalent to using the command ``5`` followed by a command
-              ``4`` for each ``id`` in ``ids``. Can not be used on
-              :class:`~odoo.fields.One2many`.
+              ``4`` for each ``id`` in ``ids``.
 
           .. note:: Values marked as ``_`` in the list above are ignored and
                     can be anything, generally ``0`` or ``False``.
@@ -3595,10 +3607,17 @@ class BaseModel(object):
 
             if new_vals:
                 # put the values of pure new-style fields into cache, and inverse them
+                self.modified(set(new_vals) - set(old_vals))
                 for record in self:
                     record._cache.update(record._convert_to_cache(new_vals, update=True))
                 for key in new_vals:
                     self._fields[key].determine_inverse(self)
+                self.modified(set(new_vals) - set(old_vals))
+                # check Python constraints for inversed fields
+                self._validate_fields(set(new_vals) - set(old_vals))
+                # recompute new-style fields
+                if self.env.recompute and self._context.get('recompute', True):
+                    self.recompute()
 
         return True
 
@@ -3852,12 +3871,19 @@ class BaseModel(object):
         # create record with old-style fields
         record = self.browse(self._create(old_vals))
 
-        # put the values of pure new-style fields into cache, and inverse them
-        record._cache.update(record._convert_to_cache(new_vals))
         protected_fields = map(self._fields.get, new_vals)
         with self.env.protecting(protected_fields, record):
+            # put the values of pure new-style fields into cache, and inverse them
+            record.modified(set(new_vals) - set(old_vals))
+            record._cache.update(record._convert_to_cache(new_vals))
             for key in new_vals:
                 self._fields[key].determine_inverse(record)
+            record.modified(set(new_vals) - set(old_vals))
+            # check Python constraints for inversed fields
+            record._validate_fields(set(new_vals) - set(old_vals))
+            # recompute new-style fields
+            if self.env.recompute and self._context.get('recompute', True):
+                self.recompute()
 
         return record
 
@@ -4404,7 +4430,8 @@ class BaseModel(object):
         """
         self.ensure_one()
         vals = self.copy_data(default)[0]
-        new = self.create(vals)
+        # To avoid to create a translation in the lang of the user, copy_translation will do it
+        new = self.with_context(lang=None).create(vals)
         self.copy_translations(new)
         return new
 
