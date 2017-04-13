@@ -192,5 +192,6 @@ def main(argv=None):
     print etree.tostring(
         document, pretty_print=True, xml_declaration=True, encoding='utf-8')
 
+
 if __name__ == "__main__":
     main()
