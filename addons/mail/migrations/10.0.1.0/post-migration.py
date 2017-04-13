@@ -4,7 +4,7 @@
 from openupgradelib import openupgrade
 
 
-@openupgrade.migrate()
+@openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     # the table exists already, so the ORM doesn't create an id column
     cr.execute(
@@ -27,4 +27,4 @@ def migrate(cr, version):
         where rel.mail_message_id=m.mail_message_id"""
     )
     openupgrade.load_data(
-        env.cr, 'mail', 'migrations/10.0.1.0/noupdate_changes.xml')
+        cr, 'mail', 'migrations/10.0.1.0/noupdate_changes.xml')

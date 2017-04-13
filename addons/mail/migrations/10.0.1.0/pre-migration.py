@@ -4,7 +4,7 @@
 from openupgradelib import openupgrade
 
 
-@openupgrade.migrate()
+@openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     # create an xmlid for mail.bounce.alias is it exists
     cr.execute(
