@@ -21,11 +21,13 @@ base         / res.company              / sequence (integer)            : NEW
 
 base         / res.currency             / symbol (char)                 : now required
 # Use the value of name if symbol is blank
-base         / res.partner              / birthdate (char)              : DEL 
 base         / res.partner              / company_name (char)           : NEW
 base         / res.partner              / company_type (selection)      : now a function
 base         / res.partner              / use_parent_address (boolean)  : DEL
 # NOTHING TO DO
+
+base         / res.partner              / birthdate (char)              : DEL
+# Done: Preserve field in case of being needed
 
 ---XML records in module 'base'---
 NEW ir.actions.act_url: base.action_open_website
