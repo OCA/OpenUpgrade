@@ -8,11 +8,10 @@ mail         / mail.notification        / email_status (selection)      : NEW se
 mail         / mail.notification        / is_email (boolean)            : NEW 
 mail         / mail.notification        / is_read (boolean)             : NEW
 mail         / mail.notification        / res_partner_id (many2one)     : NEW relation: res.partner, required: required
-# TODO: Migrate from table table mail_message_res_partner_needaction_rel
+# set email_status, is_email, is_read in post migration
 
 mail         / mail.shortcode           / substitution (char)           : type is now 'text' ('char')
-# TODO: pre-migration. copy column
-# TODO: post-migration. Move from old column converting to text
+# NOTHING TO DO
 
 mail         / mail.template            / scheduled_date (char)         : NEW
 # NOTHING TO DO
@@ -39,6 +38,7 @@ DEL ir.actions.act_window.view: mail.action_contacts_view_form
 DEL ir.actions.act_window.view: mail.action_contacts_view_kanban
 DEL ir.actions.act_window.view: mail.action_contacts_view_tree
 NEW ir.config_parameter: mail.icp_mail_bounce_alias
+# create an xmlid if this one already exists
 NEW ir.model.access: mail.access_mail_notification_portal
 NEW ir.model.access: mail.access_mail_notification_system
 NEW ir.model.access: mail.access_mail_notification_user
