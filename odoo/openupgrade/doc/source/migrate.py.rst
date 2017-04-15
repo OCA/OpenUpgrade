@@ -4,6 +4,11 @@ Automated migration script
 Introduction
 ------------
 
+**note that the original maintainer of this script deprecated this in favor
+of a dedicated buildout as described in
+https://github.com/OCA/OpenUpgrade/issues/502, at the moment, this script
+won't be able to migrate to versions above 9.0**
+
 For users who just want to run a migration, there is the convenience script
 migrate.py that takes care of downloading the necessary branches, set up a
 configuration for the migration and passing the correct parameters to the
