@@ -1,0 +1,13 @@
+---Fields in module 'base_setup'---
+---XML records in module 'base_setup'---
+DEL ir.actions.act_window: base_setup.action_partner_terminology_config_form
+DEL ir.actions.act_window: base_setup.action_sale_config
+# Nothing to do
+
+NEW ir.ui.menu: base_setup.menu_config
+DEL ir.ui.menu: base.menu_config
+# Done: Rename XML-ID to avoid possible problems with rewritten attributes
+
+DEL ir.ui.view: base_setup.base_setup_terminology_form
+DEL ir.ui.view: base_setup.view_sale_config_settings
+# Nothing to do
