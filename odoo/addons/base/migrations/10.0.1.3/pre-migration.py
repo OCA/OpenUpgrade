@@ -3,9 +3,16 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
+_column_renames = {
+    'res_partner': [
+        ('birthdate', None),
+    ],
+}
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
+    openupgrade.rename_columns(cr, _column_renames)
     cr.execute(
         # we rely on the ORM to write this value
         'alter table ir_model_fields add column store boolean'
