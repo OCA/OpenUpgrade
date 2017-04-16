@@ -30,6 +30,10 @@ xml_ids = [
     ('l10n_gt.rateGTQ', 'base.rateGTQ'),
 ]
 
+tables = [
+    ('res_partner_category_rel', 'res_partner_res_partner_category_rel'),
+]
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
@@ -40,6 +44,7 @@ def migrate(cr, version):
         cr, apriori.renamed_modules.iteritems()
     )
     openupgrade.rename_xmlids(cr, xml_ids)
+    openupgrade.rename_tables(cr, tables)
     openupgrade.check_values_selection_field(
         cr, 'ir_act_report_xml', 'report_type',
         ['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit'])
