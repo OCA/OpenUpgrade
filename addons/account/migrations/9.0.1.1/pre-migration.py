@@ -18,6 +18,9 @@ column_renames = {
     'account_account': [
         ('type', None),
     ],
+    'account_invoice_line': [
+        ('uos_id', 'uom_id'),
+    ],
     'account_cashbox_line': [
         ('pieces', 'coin_value'),
         ('number_opening', None),
