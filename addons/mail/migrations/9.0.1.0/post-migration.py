@@ -1,23 +1,8 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenUpgrade module for Odoo
-#    @copyright 2014-Today: Odoo Community Association, Microcom
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright 2014 Microcom
+# Copyright 2017 Tecnativa - Pedro M. Baeza
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 from openupgradelib import openupgrade
 
 
@@ -28,7 +13,8 @@ def migrate(cr, version):
     cr.execute("""
     INSERT INTO mail_channel_partner (channel_id, partner_id)
     SELECT res_id, partner_id from mail_followers
-    WHERE res_model = 'mail.channel' AND res_id IN (SELECT id FROM mail_channel);
+    WHERE res_model = 'mail.channel'
+    AND res_id IN (SELECT id FROM mail_channel);
     """)
     # notifications and stars are plain many2many fields by now
     cr.execute(
@@ -41,3 +27,6 @@ def migrate(cr, version):
         '(mail_message_id, res_partner_id) '
         'select distinct message_id, partner_id from mail_notification '
         'where starred')
+    openupgrade.load_data(
+        cr, 'mail', 'migrations/9.0.1.0/noupdate_changes.xml',
+    )
