@@ -1,6 +1,7 @@
 ---Fields in module 'base_action_rule'---
 base_action_rule / base.action.rule         / kind (selection)              : now required
-# TODO: pre-migration: if blank default to 'on_create' (or any other)
+# Done: Disable and set to "on_time" rules with this field not filled.
+  This is very uncommon, as in view, the field was already required.
 ---XML records in module 'base_action_rule'---
 NEW ir.ui.view: base_action_rule.view_base_action_rule_search
 # NOTHING TO DO
