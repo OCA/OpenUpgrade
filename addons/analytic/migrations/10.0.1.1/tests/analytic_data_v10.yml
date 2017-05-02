@@ -1,0 +1,19 @@
+-
+this file contains data for automated testing the migration on travis
+-
+
+-
+ create some account_analytic_account that have type == 'closed',  in casde the db does not have them in order to verify that the script works and that it will transform those in v10.0  bool ean field  active = False
+-
+  !record {model: account.analytic.account, id: analytic.ou_analytic_account}:
+          name: 'OU Test closed'
+              type: 'closed'
+-
+  !record {model: account.analytic.account, id: analytic.ou_analytic_account}:
+          name: 'OU Test closed 2'
+              type: 'closed'
+-
+  !record {model: account.analytic.account, id: analytic.ou_analytic_account}:
+          name: 'OU Test normal 2'
+              type: 'normal'
+-
