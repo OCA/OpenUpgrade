@@ -100,6 +100,9 @@ mail         / res.users                / display_groups_suggestions (boolean): 
 # Nothing to do
 
 ---XML records in module 'mail'---
+DEL ir.rule: mail.mail_group_public_and_joined
+# Done: Remove rule as it's a noupdate record that is not automatically removed
+
 NEW ir.actions.act_window: mail.action_contacts
 NEW ir.actions.act_window: mail.action_email_template_tree_all
 NEW ir.actions.act_window: mail.action_view_mail_tracking_value
@@ -148,7 +151,6 @@ DEL ir.model.access: mail.access_mail_notification_user
 NEW ir.rule: mail.mail_channel_rule
 NEW ir.rule: mail.mail_message_subtype_rule_public
 DEL ir.rule: mail.mail_followers_read_write_others
-DEL ir.rule: mail.mail_group_public_and_joined
 DEL ir.rule: mail.mail_notification_read_write_own
 NEW ir.ui.menu: mail.mail_channel_menu_root_chat
 NEW ir.ui.menu: mail.mail_channel_menu_settings

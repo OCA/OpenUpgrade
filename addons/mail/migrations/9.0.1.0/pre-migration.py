@@ -20,11 +20,14 @@ column_renames = {
 }
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
     openupgrade.update_module_names(
-        cr, [('email_template', 'mail')], merge_modules=True,
+        env.cr, [('email_template', 'mail')], merge_modules=True,
     )
-    openupgrade.rename_models(cr, model_renames)
-    openupgrade.rename_tables(cr, table_renames)
-    openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_models(env.cr, model_renames)
+    openupgrade.rename_tables(env.cr, table_renames)
+    openupgrade.rename_columns(env.cr, column_renames)
+    # Remove noupdate ir.rule
+    rule = env.ref('mail.mail_group_public_and_joined')
+    rule.unlink()
