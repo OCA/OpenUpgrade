@@ -75,11 +75,10 @@ def create_payments_from_vouchers(env):
         JOIN account_move_line aml
         ON am.id = aml.move_id
         WHERE av.voucher_type IN ('receipt', 'payment')
-        AND (av.writeoff_acc_id != aml.account_id 
+        AND (av.writeoff_acc_id != aml.account_id
              OR av.writeoff_acc_id IS NULL)
         AND av.state in ('draft', 'posted')
-        AND aml.id = aml2.id        
-        
+        AND aml.id = aml2.id
         """
     )
     # Also recreate link from invoice to payment
