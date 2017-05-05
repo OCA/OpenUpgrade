@@ -12,6 +12,7 @@ def deactivate_closed_accounts(cr):
         write='sql'
     )
 
-@openupgrade.migrate(use_env=False)
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     deactivate_closed_accounts(cr)
