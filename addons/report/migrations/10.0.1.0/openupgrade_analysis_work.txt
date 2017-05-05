@@ -1,7 +1,12 @@
 ---Fields in module 'report'---
 report       / ir.actions.report.xml    / print_report_name (char)      : NEW
-# NOTHING TO DO
+# Replacement for OCA/reporting-engine report_custom_filename, but syntax
+  is different:
+  * Jinja2 (OCA) against Python eval (v10)
+  * `o` record variable (OCA) against `object` (v10)
+
 ---XML records in module 'report'---
 NEW ir.ui.view: report.act_report_xml_view_inherit_report
 NEW ir.ui.view: report.base_config_settings_inherited
 DEL ir.ui.view: report.reporting_settings_form_inherited
+# Nothing to do
