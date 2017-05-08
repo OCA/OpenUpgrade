@@ -63,6 +63,9 @@ def cleanup_modules(cr):
             ('web_kanban_sparkline', 'web'),
             ('web_tests', 'web'),
             ('website_report', 'report'),
+            # from OCA/account-financial-tools - Features changed
+            ('account_move_line_no_default_search', 'account'),
+            ('account_tax_chart_interval', 'account'),
             # from OCA/server-tools - features included now in core
             ('base_concurrency', 'base'),
             ('base_debug4all', 'base'),
