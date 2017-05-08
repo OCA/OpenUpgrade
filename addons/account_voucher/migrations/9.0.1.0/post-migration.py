@@ -67,34 +67,18 @@ def create_payments_from_vouchers(env):
     # Statement below works because new payments have same id as old vouchers
     env.cr.execute(
         """\
-        WITH Q1 AS (
-            SELECT av.id as av_id, aml.id as aml_id
-            FROM account_move_line aml
-            INNER JOIN account_move am ON am.id = aml.move_id
-            INNER JOIN account_voucher av ON av.move_id = am.id
-        )
-        UPDATE account_move_line aml
+        UPDATE account_move_line aml2
         SET payment_id = av.id
-        FROM account_voucher_line avl
-        JOIN account_voucher av ON av.id = avl.voucher_id
-        WHERE avl.move_line_id = aml.id
-        AND av.voucher_type IN ('receipt', 'payment')
-        AND av.state IN ('draft', 'posted')
-        AND (aml.id IN (
-                SELECT credit_move_id
-                FROM account_partial_reconcile
-                WHERE debit_move_id IN (
-                    SELECT aml_id FROM Q1 WHERE av_id = av.id
-                )
-            ) OR
-            aml.id IN (
-                SELECT debit_move_id
-                FROM account_partial_reconcile
-                WHERE credit_move_id IN (
-                    SELECT aml_id FROM Q1 WHERE av_id = av.id
-                )
-            )
-        )
+        FROM account_voucher av
+        JOIN account_move am
+        ON am.id = av.move_id
+        JOIN account_move_line aml
+        ON am.id = aml.move_id
+        WHERE av.voucher_type IN ('receipt', 'payment')
+        AND (av.writeoff_acc_id != aml.account_id
+             OR av.writeoff_acc_id IS NULL)
+        AND av.state in ('draft', 'posted')
+        AND aml.id = aml2.id
         """
     )
     # Also recreate link from invoice to payment
