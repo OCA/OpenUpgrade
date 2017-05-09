@@ -38,6 +38,10 @@ renamed_modules = {
     'account_analytic_analysis': 'contract',
     # OCA/website
     'website_disable_odoo': 'website_odoo_debranding',
+    # OCA/account-analytic
+    'account_analytic_plans': 'account_analytic_distribution',
+    'sale_analytic_plans': 'sale_analytic_distribution',
+    'purchase_analytic_plans': 'purchase_analytic_distribution',
 }
 
 renamed_models = {
