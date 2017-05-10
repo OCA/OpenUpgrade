@@ -174,6 +174,17 @@ def map_account_tax_template_type(cr):
         table='account_tax_template', write='sql')
 
 
+def upgrade_old_sequences_format(cr):
+    """ Maybe old sequences prefix have format: %(fy)s and new format is 
+    %(range_year)s instead. We have to update format in all sequences. 
+    Especially if module account_auto_fy_sequence is installed."""
+    openupgrade.logged_query(cr, """
+        UPDATE ir_sequence 
+        SET prefix = replace(prefix, '(fy)', '(range_year)') 
+        WHERE prefix LIKE '%(fy)%';
+        """)
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     # 9.0 introduces a constraint enforcing this
@@ -190,3 +201,4 @@ def migrate(cr, version):
     map_account_tax_type(cr)
     map_account_tax_template_type(cr)
     remove_account_moves_from_special_periods(cr)
+    upgrade_old_sequences_format(cr)
