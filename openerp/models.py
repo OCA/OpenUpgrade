@@ -5902,9 +5902,9 @@ class BaseModel(object):
             # determine the fields to recompute
             fs = self.env[field.model_name]._field_computed[field]
             # OpenUpgrade start:
+            field_key = '%s' % field
             if recs:
                 blacklist = recs[0]._openupgrade_recompute_fields_blacklist
-                field_key = '%s' % field
                 model_name, field_name = field_key.rsplit('.', 1)
                 if field_name in blacklist:
                     _logger.info(
