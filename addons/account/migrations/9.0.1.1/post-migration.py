@@ -362,7 +362,7 @@ def migrate_account_auto_fy_sequence(env):
     )
     query = """
         UPDATE ir_sequence
-        SET {0}=replace({0}, '%(fy)s', '%(year)s'),
+        SET {0}=replace({0}, '%(fy)s', '%(range_year)s'),
             use_date_range=True
         WHERE {0} like '%\%(fy)s%'
         """
