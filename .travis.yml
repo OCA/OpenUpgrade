@@ -61,7 +61,7 @@ script:
     - echo Testing modules $MODULES
     - OPENUPGRADE_TESTS=1 coverage run $ODOO --database=$DB --update=$MODULES --stop-after-init
     # try to build the documentation
-    - scripts/build_openupgrade_docs
+    - sh scripts/build_openupgrade_docs
 
 after_success:
     coveralls
