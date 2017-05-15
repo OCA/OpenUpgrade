@@ -12,6 +12,7 @@ addons:
             - python-simplejson
             - python-serial
             - python-yaml
+            - python-sphinx
     postgresql: "9.4"
 
 env:
@@ -59,6 +60,8 @@ script:
     - psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES | sed -e "s/,/','/g")')"
     - echo Testing modules $MODULES
     - OPENUPGRADE_TESTS=1 coverage run $ODOO --database=$DB --update=$MODULES --stop-after-init
+    # try to build the documentation
+    - sh scripts/build_openupgrade_docs
 
 after_success:
     coveralls
