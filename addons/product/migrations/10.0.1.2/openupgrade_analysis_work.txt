@@ -3,7 +3,7 @@ product      / product.attribute        / create_variant (boolean)      : NEW
 # NOTHING TO DO
 
 product      / product.category         / sequence (integer)            : DEL
-# NOTHING TO DO
+# Done: Preserved field in pre-migration
 
 product      / product.pricelist        / country_group_ids (many2many) : NEW relation: res.country.group
 product      / product.pricelist        / sequence (integer)            : NEW
@@ -13,10 +13,13 @@ product      / product.product          / item_ids (many2many)          : not a 
 product      / product.product          / item_ids (many2many)          : type is now 'one2many' ('many2many')
 # NOTHING TO DO
 
+product      / product.template         / state (selection)             : DEL selection_keys: ['draft', 'end', 'obsolete', 'sellable']
+product      / product.template         / product_manager (many2one)    : DEL relation: res.users
+# Done: Preserved field in pre-migration, just in case that someone uses them
+  in other modules
+
 product      / product.template         / default_code (char)           : now a function
 product      / product.template         / pricelist_id (many2one)       : not a function anymore
-product      / product.template         / product_manager (many2one)    : DEL relation: res.users
-product      / product.template         / state (selection)             : DEL selection_keys: ['draft', 'end', 'obsolete', 'sellable']
 product      / product.template         / type (selection)              : selection_keys is now '['consu', 'service']' ('function')
 # NOTHING TO DO
 
@@ -24,7 +27,7 @@ product      / res.country.group        / pricelist_ids (many2many)     : NEW re
 # NOTHING TO DO
 
 product      / res.partner              / property_product_pricelist (many2one): now a function
-# TODO: Migrate from a property field to a real one
+# NOTHING TO DO
 
 ---XML records in module 'product'---
 NEW ir.actions.act_window: product.product_template_action_all
