@@ -81,7 +81,7 @@ account      / account.tax.template     / tax_adjustment (boolean)      : NEW
 # NOTHING TO DO
 
 account      / account.tax.template     / tax_group_id (many2one)       : NEW relation: account.tax.group
-# ??? MORE ANALYSIS REQUIRED
+# NOTHING TO DO (If not set on template, default tax group will be used)
 
 account      / res.company              / paypal_account (char)         : DEL
 # NOTHING TO DO

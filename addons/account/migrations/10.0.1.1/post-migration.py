@@ -26,3 +26,15 @@ def migrate(env, version):
         second_account_id, second_label, second_tax_id, second_amount_type,
         second_amount
         ''')
+    # Update move_name in account_payment from account_move
+    cr.execute(
+        '''UPDATE account_payment
+        SET move_name = subquery.name
+        FROM (SELECT DISTINCT ON (aml.payment_id) am.name, aml.payment_id
+              FROM account_move am
+              JOIN account_move_line aml ON am.id = aml.move_id
+              WHERE NOT aml.payment_id IS NULL
+              ORDER BY aml.payment_id, am.name
+             ) AS subquery
+        WHERE account_payment.id = subquery.payment_id
+        ''')
