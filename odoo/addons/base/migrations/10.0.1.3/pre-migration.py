@@ -53,3 +53,9 @@ def migrate(cr, version):
         end,
         'res.lang', id
         from res_lang''')
+    # set some obsolete modules to auto uninstall
+    cr.execute(
+        '''update ir_module_module
+        set state = 'to remove'
+        where name in ('web_tip', 'web_view_editor')
+        ''')
