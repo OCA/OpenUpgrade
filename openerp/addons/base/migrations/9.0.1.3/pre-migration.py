@@ -57,6 +57,7 @@ def cleanup_modules(cr):
     other modules."""
     openupgrade.update_module_names(
         cr, [
+            ('contacts', 'mail'),
             ('marketing_crm', 'crm'),
             ('web_gantt', 'web'),
             ('web_graph', 'web'),
