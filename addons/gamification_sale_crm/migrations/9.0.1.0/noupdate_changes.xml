@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record id="definition_crm_lead_delay_open" model="gamification.goal.definition">
+            <field name="field_id" eval="ref('crm.field_crm_opportunity_report_delay_close')"/>
+            <field name="field_date_id" eval="ref('crm.field_crm_opportunity_report_date_closed')"/>
+            <field name="model_id" eval="ref('crm.model_crm_opportunity_report')"/>
+        </record>
+        <record id="definition_crm_lead_delay_close" model="gamification.goal.definition">
+            <field name="field_id" eval="ref('crm.field_crm_opportunity_report_delay_open')"/>
+            <field name="field_date_id" eval="ref('crm.field_crm_opportunity_report_opening_date')"/>
+            <field name="model_id" eval="ref('crm.model_crm_opportunity_report')"/>
+        </record>
+    </data>
+</openerp>
