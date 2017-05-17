@@ -1,0 +1,28 @@
+---Fields in module 'gamification'---
+gamification / gamification.badge       / message_follower_ids (many2many): not a function anymore
+gamification / gamification.badge       / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+gamification / gamification.badge       / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+# Covered in mail module
+
+gamification / gamification.challenge   / message_follower_ids (many2many): not a function anymore
+gamification / gamification.challenge   / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
+gamification / gamification.challenge   / message_follower_ids (many2many): type is now 'one2many' ('many2many')
+# Covered in mail module
+
+gamification / gamification.challenge   / report_message_group_id (many2one): relation is now 'mail.channel' ('mail.group')
+# Nothing to do: Model rename done in mail module
+
+gamification / gamification.challenge   / report_template_id (many2one) : relation is now 'mail.template' ('email.template')
+# Nothing to do: Model rename done in mail module
+
+---XML records in module 'gamification'---
+DEL email.template: gamification.email_template_badge_received
+DEL email.template: gamification.email_template_goal_reminder
+DEL email.template: gamification.simple_report_template
+DEL ir.module.category: gamification.module_goal_category
+NEW mail.template: gamification.email_template_badge_received
+NEW mail.template: gamification.email_template_goal_reminder
+NEW mail.template: gamification.simple_report_template
+NEW res.groups: base.group_hr_manager
+DEL res.groups: gamification.group_goal_manager
+# Nothing to do

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record id="definition_nbr_following" model="gamification.goal.definition">
+        <field name="description">Follow mail.channels to receive news</field>
+        <field name="action_id" eval="ref('mail.mail_channel_action_view')"/>
+        <field name="compute_code">result = pool.get('mail.followers').search(cr, uid, [('res_model', '=', 'mail.channel'), ('partner_id', '=', object.user_id.partner_id.id)], count=True, context=context)</field>
+    </record>
+    <record id="goal_gamification_manager_visibility" model="ir.rule">
+        <field name="groups" eval="[(4, ref('base.group_hr_manager'))]"/>
+    </record>
+    <record id="email_template_badge_received" model="mail.template">
+        <field name="lang">${object.user_id.lang}</field>
+        <field name="model_id" ref="gamification.model_gamification_badge_user"/>
+    </record>
+    <record id="email_template_goal_reminder" model="mail.template">
+        <field name="lang">${object.user_id.lang}</field>
+        <field name="model_id" ref="gamification.model_gamification_goal"/>
+    </record>
+    <record id="simple_report_template" model="mail.template">
+        <field name="model_id" ref="gamification.model_gamification_challenge"/>
+    </record>
+  </data>
+</openerp>
