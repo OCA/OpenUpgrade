@@ -7,7 +7,7 @@ from openupgradelib import openupgrade
 def migrate(env, version):
     update_picking_type_id(env)
     update_ordered_qty(env)
-    #populate_stock_scrap(env)
+    populate_stock_scrap(env)
     
 def update_picking_type_id(env):
     '''
@@ -56,7 +56,7 @@ def update_picking_type_id(env):
                     if xml_record:
                         picking_type_id = xml_record.id
         
-        procurement_rule.write({'picking_type_id': picking_type_id})
+            procurement_rule.write({'picking_type_id': picking_type_id})
 
 def update_ordered_qty(env):
     '''
@@ -82,8 +82,8 @@ def populate_stock_scrap(env):
     Fills up new object "stock.scrap" based on moves with destination scrap  
     :param env: enviroment variable (self)
     '''
-    cr = env.cr
-    scrap_locations = env['stock.location'].search([('scrapt_location','=',True)])
+    #cr = env.cr
+    #scrap_locations = env['stock.location'].search([('scrap_location','=',True)])
     
     env.cr.execute(
         """
@@ -91,17 +91,17 @@ def populate_stock_scrap(env):
         WHERE scrap_location is True
         """
         )
-    scrap_location_ids = cr.fetchone()
+    scrap_location_ids = env.cr.fetchone()
     
     #do not call stock_scrap.create as it will create a duplicated stock move, use SQL instead    
     env.cr.execute(
         '''
         INSERT INTO stock_scrap (date_expected,location_id,lot_id,move_id,name,origin,owner_id,picking_id,product_id,product_uom_id,scrap_location_id,scrap_qty,state)
-            SELECT date_expected,location_id,restrict_lot_id,id,name,origin,restrict_partner_id,picking_id,product_id,product_uom,location_dest_id,product_uom_qty,state,
+            SELECT date_expected,location_id,restrict_lot_id,id,name,origin,restrict_partner_id,picking_id,product_id,product_uom,location_dest_id,product_uom_qty,state
             FROM stock_move
-            WHERE location_src_id IN %scrap_locations AND product_uom_qty < 0.0 AND state = 'done' 
-                OR location_dest_id IN %scrap_locations AND product_uom_qty >= 0.0 AND state = 'done'
-        ''',(tuple(scrap_location_ids),))
+            WHERE location_id IN %s AND product_uom_qty < 0.0 AND state = 'done' 
+                OR location_dest_id IN %s AND product_uom_qty >= 0.0 AND state = 'done'
+        ''',(scrap_location_ids,scrap_location_ids))
     #field package_id not set as no value is defined
 
 
