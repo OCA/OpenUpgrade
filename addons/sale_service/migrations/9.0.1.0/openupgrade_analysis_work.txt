@@ -1,0 +1,10 @@
+---Fields in module 'sale_service'---
+sale_service / product.template         / auto_create_task (boolean)    : DEL
+# Renamed to preserve data
+
+sale_service / product.template         / track_service (False)         : NEW selection_keys: ['manual', 'task', 'timesheet'], mode: modify
+# Updated to 'task' if auto_create_task is True
+
+---XML records in module 'sale_service'---
+NEW ir.ui.view: sale_service.view_order_form_inherit_sale_service
+# Nothing to do
