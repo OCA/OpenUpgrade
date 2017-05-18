@@ -409,7 +409,7 @@ def fill_blacklisted_fields(cr):
             FROM account_invoice ai
             JOIN res_company com on ai.company_id = com.id
             LEFT OUTER JOIN res_currency_rate com_cur
-                ON com.currency_id = com_cur.id
+                ON com.currency_id = com_cur.currency_id
                     AND ai.company_id =
                         COALESCE(com_cur.company_id, ai.company_id)
                     AND COALESCE(ai.date_invoice, date(ai.create_date)) >=
@@ -423,7 +423,8 @@ def fill_blacklisted_fields(cr):
             FROM account_invoice ai
             JOIN res_company com on ai.company_id = com.id
             LEFT OUTER JOIN res_currency_rate inv_cur
-                ON COALESCE(ai.currency_id, com.currency_id) = inv_cur.id
+                ON COALESCE(ai.currency_id, com.currency_id) =
+                        inv_cur.currency_id
                     AND ai.company_id =
                         COALESCE(inv_cur.company_id, ai.company_id)
                     AND COALESCE(ai.date_invoice, date(ai.create_date)) >=
@@ -445,9 +446,10 @@ def fill_blacklisted_fields(cr):
             JOIN res_currency_rate inv_cur
                 ON irs.invoice_currency_id = inv_cur.currency_id
                     AND irs.rate_date = inv_cur.name)
-        , subquery(id, price_subtotal_signed) AS (
+        , subquery(id, price_subtotal, price_subtotal_signed) AS (
             SELECT
                 ail.id,
+                ail.price_subtotal,
                 CASE
                     WHEN ai.type IN ('in_refund', 'out_refund')
                     THEN ROUND(-ail.price_subtotal * er.effective_rate, 2)
