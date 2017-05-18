@@ -1,0 +1,46 @@
+---Fields in module 'purchase'---
+purchase     / product.template         / purchase_ok (boolean)         : module is now 'product' ('purchase')
+#nothing to do as this module already depends on stock_account which ultimately depends on product
+
+purchase     / purchase.order           / website_message_ids (one2many): DEL relation: mail.message
+#nothing to do
+
+purchase     / purchase.order.line      / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+#nothing to do
+
+purchase     / purchase.order.line      / sequence (integer)            : NEW
+#nothing to do as default value is present
+ 
+purchase     / res.company              / po_lock (selection)           : NEW selection_keys: ['edit', 'lock']
+#nothing to do as default value "lock" is equivalent to v9 behavior
+
+---XML records in module 'purchase'---
+NEW ir.actions.act_window: purchase.product_product_action
+NEW ir.actions.act_window: purchase.purchase_order_action_generic
+DEL ir.actions.client: purchase.action_client_purchase_menu
+DEL ir.actions.todo: base.open_menu
+NEW ir.ui.menu: purchase.menu_procurement_management_supplier_name
+NEW ir.ui.menu: purchase.menu_product_normal_action_puchased
+NEW ir.ui.menu: purchase.menu_purchase_root
+NEW ir.ui.menu: purchase.product_product_menu
+NEW ir.ui.menu: purchase.purchase_report
+DEL ir.ui.menu: base.menu_procurement_management_supplier_name
+DEL ir.ui.menu: base.menu_purchase_root
+DEL ir.ui.menu: base.purchase_report
+DEL ir.ui.menu: purchase.menu_purchase_config_pricelist
+DEL ir.ui.menu: purchase.menu_purchase_unit_measure_purchase
+NEW ir.ui.view: purchase.procurement_order_view_form_inherit_purchase
+DEL ir.ui.view: purchase.mrp_company
+DEL ir.ui.view: purchase.product_template_search_view_purchase
+DEL ir.ui.view: purchase.view_picking_in_search_picking_inherit
+#nothing to do
+
+NEW res.groups: purchase.group_warning_purchase
+DEL res.groups: purchase.group_advance_bidding
+NEW res.users: base.default_user
+#nothing to do
+
+DEL web.tip: purchase.purchase_tip_1
+DEL web.tip: purchase.purchase_tip_2
+DEL web.tip: purchase.purchase_tip_3
+#nothing to do
