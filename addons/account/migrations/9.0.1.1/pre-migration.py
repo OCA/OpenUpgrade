@@ -119,7 +119,8 @@ def remove_account_moves_from_special_periods(cr):
         AND fiscalyear_id = (SELECT id FROM account_fiscalyear
         ORDER BY date_start ASC LIMIT 1) ORDER BY date_start ASC LIMIT 1
     """)
-    first_nsp_id = cr.fetchone()[0] or False
+    first_nsp_id = cr.fetchone()
+    first_nsp_id = first_nsp_id and first_nsp_id[0]
 
     if first_nsp_id and move_ids:
         openupgrade.logged_query(cr, """
