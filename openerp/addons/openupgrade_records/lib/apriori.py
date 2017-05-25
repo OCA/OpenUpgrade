@@ -40,6 +40,7 @@ renamed_modules = {
     'website_disable_odoo': 'website_odoo_debranding',
     # OCA/account-analytic
     'account_analytic_plans': 'account_analytic_distribution',
+    'account_analytic_plan_required': 'account_analytic_distribution_required',
     'sale_analytic_plans': 'sale_analytic_distribution',
     'purchase_analytic_plans': 'purchase_analytic_distribution',
 }
