@@ -29,10 +29,10 @@ stock        / stock.inventory.line     / state (char)                  : type i
 # NOTHING TO DO
 
 stock        / stock.location.path      / auto (selection)              : selection_keys is now '['manual', 'transparent']' ('['auto', 'manual', 'transparent']')
-# Done: pre-migration. copy column and then replace value "auto" with value "manual"
+# Done: post-migration. move values 'auto' to 'manual'
 
 stock        / stock.location.path      / route_sequence (float)        : type is now 'integer' ('float')
-# Done!: pre-migration: copy column and then convert float to integer
+# Done: pre-migration: copy column and then convert float to integer
 
 stock        / stock.move               / ordered_qty (float)           : NEW
 # Done: post-migration. Default to product_uom_qty
@@ -68,7 +68,7 @@ stock        / stock.scrap              / product_uom_id (many2one)     : NEW re
 stock        / stock.scrap              / scrap_location_id (many2one)  : NEW relation: stock.location
 stock        / stock.scrap              / scrap_qty (float)             : NEW required: required, req_default: function
 stock        / stock.scrap              / state (selection)             : NEW selection_keys: ['done', 'draft']
-# Done: pre-migration: Create one record for each move that had as destionation a scrap location
+# Done: post-migration: Create one record for each move linked to a scrap location
 
 stock        / stock.warehouse          / active (boolean)              : NEW
 stock        / stock.warehouse          / resupply_from_wh (boolean)    : DEL

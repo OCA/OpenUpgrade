@@ -6,19 +6,17 @@ from openupgradelib import openupgrade
 column_copies = {
     'procurement_rule': [
         ('route_sequence', None, None),
-        ],
+    ],
     'stock_location_path': [
         ('auto', None, None),
         ('route_sequence', None, None),
-        ],
-    }
+    ],
+}
+
 
 @openupgrade.migrate(use_env=True)
-def migrate(env, version):    
-    openupgrade.copy_columns(env.cr, column_copies)
-    openupgrade.float_to_integer(env.cr, 'stock_location_path', 'route_sequence')
-    openupgrade.float_to_integer(env.cr, 'procurement_rule', 'route_sequence')
-    env.cr.execute(
-        """
-        UPDATE stock_location_path SET auto = 'manual' WHERE auto = 'auto';
-        """)
+def migrate(env, version):
+    cr = env.cr
+    openupgrade.copy_columns(cr, column_copies)
+    openupgrade.float_to_integer(cr, 'procurement_rule', 'route_sequence')
+    openupgrade.float_to_integer(cr, 'stock_location_path', 'route_sequence')
