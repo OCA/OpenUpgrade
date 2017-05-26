@@ -18,9 +18,10 @@ def update_picking_type_id(env):
     :param env: environment variable (self)
     """
     # load xml data to be used for filling in missing info
-    xml_stock_picking_type_int = env.ref("stock.picking_type_internal")
-    xml_stock_picking_type_out = env.ref("stock.picking_type_out")
-    xml_stock_picking_type_in = env.ref("stock.picking_type_in")
+    xml_stock_picking_type_int = env.ref("stock.picking_type_internal",False)
+    xml_stock_picking_type_out = env.ref("stock.picking_type_out",False)
+    xml_stock_picking_type_in = env.ref("stock.picking_type_in",False)
+    xml_stock_picking_type_manufacturing = env.ref("mrp.picking_type_manufacturing",False)
 
     # verify for each procurement rule to set
     procurement_rules_to_set = env['procurement.rule'].search([])
@@ -58,6 +59,12 @@ def update_picking_type_id(env):
                     else:
                         if xml_stock_picking_type_int:
                             picking_type_id = xml_stock_picking_type_int.id
+                
+                # special case for mrp module put here for not repeating the logic. 
+                # If mrp not installed won't break
+                elif procurement_rule.action == 'manufacture':
+                    if xml_stock_picking_type_manufacturing:
+                        picking_type_id = xml_stock_picking_type_manufacturing.id
 
             procurement_rule.write({'picking_type_id': picking_type_id})
 
@@ -88,10 +95,11 @@ def populate_stock_scrap(cr):
         """
     )
     scrap_location_ids = cr.fetchone()
-
+    
+    # Use SQL instead of ORM, otherwise stock_scrap.create()  will create a duplicated stock move
     cr.execute(
         """
-        INSERT INTO stock_scrap (date_expected,location_id,lot_id,move_id,
+        INSERT INTO stock_scrap (date_expected,create_date,location_id,lot_id,move_id,
             name,origin,owner_id,package_id,picking_id,product_id,
             product_uom_id,scrap_location_id,scrap_qty,state)
             WITH Q1 as (SELECT DISTINCT sq.package_id,sr.move_id
@@ -105,16 +113,13 @@ def populate_stock_scrap(cr):
                 LEFT JOIN stock_quant_move_rel sr ON sr.move_id = Q2.move_id
                 LEFT JOIN stock_quant as sq ON sq.id = sr.quant_id
                 WHERE Q2.n = 1)
-            SELECT date_expected,location_id,restrict_lot_id,id,name,origin,
+            SELECT date_expected,create_date,location_id,restrict_lot_id,id,name,origin,
                 restrict_partner_id,Q3.package_id,picking_id,product_id,
                 product_uom,location_dest_id,product_uom_qty,state
             FROM stock_move sm
             LEFT JOIN Q3 ON sm.id = Q3.move_id
-            WHERE (location_id IN %s AND product_uom_qty < 0.0 AND 
-                state = 'done') 
-                OR (location_dest_id IN %s AND product_uom_qty >= 0.0 AND 
-                state = 'done')
-        """, (scrap_location_ids, scrap_location_ids))
+            WHERE location_dest_id IN %s AND state = 'done'
+        """, (scrap_location_ids,))
 
 
 @openupgrade.migrate(use_env=True)
