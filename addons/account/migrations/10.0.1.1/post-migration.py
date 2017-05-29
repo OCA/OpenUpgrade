@@ -38,3 +38,16 @@ def migrate(env, version):
              ) AS subquery
         WHERE account_payment.id = subquery.payment_id
         ''')
+    # Move old rate_diff_partial_rec_id in account_move to
+    # exchange_partial_rec_id in account_full_reconcile:
+    cr.execute(
+        '''UPDATE account_full_reconcile
+        SET exchange_partial_rec_id = subquery.rate_diff_partial_rec_id
+        FROM (
+            SELECT apr.full_reconcile_id, am.rate_diff_partial_rec_id
+            FROM account_partial_reconcile apr
+            JOIN account_move am
+            ON apr.id = am.rate_diff_partial_rec_id
+        ) AS subquery
+        WHERE account_full_reconcile.id = subquery.full_reconcile_id
+        ''')
