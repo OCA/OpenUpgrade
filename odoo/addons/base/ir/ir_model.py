@@ -436,7 +436,7 @@ class IrModelFields(models.Model):
                 continue
             # OpenUpgrade: do not drop columns
             openupgrade.message(
-                cr, 'Unknown', False, False,
+                self._cr, 'Unknown', False, False,
                 "Not dropping the column of field %s of model %s", field.name, field.model)
             continue
             model = self.env[field.model]
