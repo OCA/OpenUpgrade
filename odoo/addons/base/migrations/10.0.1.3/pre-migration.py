@@ -57,5 +57,7 @@ def migrate(cr, version):
     cr.execute(
         '''update ir_module_module
         set state = 'to remove'
-        where name in ('web_tip', 'web_view_editor')
+        where name in (
+            'web_tip', 'web_view_editor', 'mail_tip', 'im_odoo_support'
+        )
         ''')
