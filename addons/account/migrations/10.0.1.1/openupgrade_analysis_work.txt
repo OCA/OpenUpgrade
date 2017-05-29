@@ -12,9 +12,8 @@ account      / account.bank.statement.line / move_name (char)              : NEW
 
 account      / account.full.reconcile   / exchange_move_id (many2one)   : NEW relation: account.move
 account      / account.full.reconcile   / exchange_partial_rec_id (many2one): NEW relation: account.partial.reconcile
-# TODO: Can we determine what were the move lines created as part of the
-# reconciliation when the exchange rate was different? If we can obtain, then
-# update. Otherwise leave blank.
+# DONE: Moves for exchange rate differences where in field
+# rate_diff_partial_rec_id of account_move.
 
 account      / account.invoice          / refund_invoice_id (many2one)  : NEW relation: account.invoice
 account      / account.invoice          / website_message_ids (one2many): DEL relation: mail.message
@@ -24,8 +23,7 @@ account      / account.invoice.line     / analytic_tag_ids (many2many)  : NEW re
 # NOTHING TO DO
 
 account      / account.move             / rate_diff_partial_rec_id (many2one): DEL relation: account.partial.reconcile
-# TODO: Perhaps it is related to account.full.reconcile
-# exchange_partial_rec_id. To be analyzed.
+# DONE: The data is now on account.full.reconcile, in the field exchange_partial_rec_id.
 
 account      / account.move.line        / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
 # NOTHING TO DO
