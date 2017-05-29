@@ -38,6 +38,7 @@ mrp          / mrp.production           / procurement_ids (one2many)    : NEW re
 mrp          / mrp.production           / product_lines (one2many)      : DEL relation: mrp.production.product.line
 mrp          / mrp.production           / product_uom (many2one)        : was renamed to product_uom_id [nothing to do]
 mrp          / mrp.production           / propagate (boolean)           : NEW 
+mrp          / mrp.production           / routing_id (many2one)         : now a function
 mrp          / mrp.production           / scrap_ids (one2many)          : NEW relation: stock.scrap
 mrp          / mrp.production           / state (selection)             : selection_keys is now '['cancel', 'confirmed', 'done', 'planned', 'progress']' ('['cancel', 'confirmed', 'done', 'draft', 'in_production', 'ready']')
 mrp          / mrp.production           / website_message_ids (one2many): DEL relation: mail.message
@@ -180,8 +181,10 @@ NEW ir.actions.act_window.view: mrp.action_mrp_workcenter_load_report_pivot
 DEL ir.actions.client: mrp.action_client_mrp_menu
 NEW ir.actions.server: mrp.production_order_server_action
 DEL ir.actions.todo: base.open_menu
+NEW ir.model.access: mrp.access_mrp_message_mrp_manager
 NEW ir.model.access: mrp.access_mrp_message_mrp_user
 NEW ir.model.access: mrp.access_mrp_unbuild
+NEW ir.model.access: mrp.access_mrp_unbuild_manager
 NEW ir.model.access: mrp.access_mrp_workcenter_productivity
 NEW ir.model.access: mrp.access_mrp_workcenter_productivity_loss
 NEW ir.model.access: mrp.access_mrp_workcenter_productivity_loss_manager

@@ -1,7 +1,13 @@
 ---Fields in module 'sale'---
 sale         / account.invoice          / partner_shipping_id (many2one): NEW relation: res.partner
 sale         / account.invoice.line     / layout_category_id (many2one) : NEW relation: sale.layout_category
+sale         / product.pricelist        / discount_policy (selection)   : NEW selection_keys: ['with_discount', 'without_discount']
+sale         / product.template         / expense_policy (selection)    : NEW selection_keys: ['cost', 'no', 'sales_price']
 sale         / product.template         / invoice_policy (selection)    : selection_keys is now '['delivery', 'order']' ('['cost', 'delivery', 'order']')
+sale         / product.template         / sale_line_warn (selection)    : NEW required: required, selection_keys: ['block', 'no-message', 'warning'], req_default: function
+sale         / product.template         / sale_line_warn_msg (text)     : NEW 
+sale         / res.partner              / sale_warn (selection)         : NEW required: required, selection_keys: ['block', 'no-message', 'warning'], req_default: function
+sale         / res.partner              / sale_warn_msg (text)          : NEW 
 sale         / sale.layout_category     / name (char)                   : NEW required: required
 sale         / sale.layout_category     / pagebreak (boolean)           : NEW 
 sale         / sale.layout_category     / sequence (integer)            : NEW required: required, req_default: function
@@ -55,6 +61,8 @@ DEL ir.ui.menu: base.menu_sale_config
 DEL ir.ui.menu: base.menu_sale_general_settings
 DEL ir.ui.menu: base.menu_sales_config
 NEW ir.ui.view: sale.account_invoice_line_form
+NEW ir.ui.view: sale.account_invoice_line_tree
+NEW ir.ui.view: sale.account_invoice_supplier_form
 NEW ir.ui.view: sale.product_pricelist_view_form
 NEW ir.ui.view: sale.product_pricelist_view_tree
 NEW ir.ui.view: sale.report_configuration_form_view

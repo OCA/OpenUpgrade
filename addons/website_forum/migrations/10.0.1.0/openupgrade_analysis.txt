@@ -7,7 +7,7 @@ website_forum / forum.tag                / message_follower_ids (one2many): NEW 
 website_forum / forum.tag                / message_ids (one2many)        : NEW relation: mail.message
 website_forum / forum.tag                / message_last_post (datetime)  : NEW 
 website_forum / gamification.challenge   / category (False)              : NEW selection_keys: ['forum', 'hr', 'other'], mode: modify
-website_forum / res.users                / badge_ids (one2many)          : module is now 'hr_gamification' ('website_forum')
+website_forum / res.users                / badge_ids (one2many)          : module is now 'hw_escpos' ('website_forum')
 ---XML records in module 'website_forum'---
 NEW ir.actions.act_window: website_forum.forum_tag_action
 NEW ir.ui.menu: website_forum.menu_forum_tag

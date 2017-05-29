@@ -1,13 +1,13 @@
 ---Fields in module 'hr_timesheet_sheet'---
-hr_timesheet_sheet / hr.attendance            / sheet_id (many2one)           : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
-hr_timesheet_sheet / hr_timesheet_sheet.sheet / attendance_count (integer)    : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
-hr_timesheet_sheet / hr_timesheet_sheet.sheet / attendances_ids (one2many)    : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
-hr_timesheet_sheet / hr_timesheet_sheet.sheet / period_ids (one2many)         : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
-hr_timesheet_sheet / hr_timesheet_sheet.sheet / total_attendance (float)      : type is now 'integer' ('float')
-hr_timesheet_sheet / hr_timesheet_sheet.sheet / total_difference (float)      : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
-hr_timesheet_sheet / hr_timesheet_sheet.sheet / total_timesheet (float)       : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
+hr_timesheet_sheet / hr.attendance            / sheet_id (many2one)           : module is now 'hw_escpos' ('hr_timesheet_sheet')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / attendance_count (integer)    : module is now 'hw_escpos' ('hr_timesheet_sheet')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / attendances_ids (one2many)    : module is now 'hw_escpos' ('hr_timesheet_sheet')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / period_ids (one2many)         : module is now 'hw_escpos' ('hr_timesheet_sheet')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / total_attendance (float)      : module is now 'hw_escpos' ('hr_timesheet_sheet')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / total_difference (float)      : module is now 'hw_escpos' ('hr_timesheet_sheet')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / total_timesheet (float)       : module is now 'hw_escpos' ('hr_timesheet_sheet')
 hr_timesheet_sheet / hr_timesheet_sheet.sheet / website_message_ids (one2many): DEL relation: mail.message
-hr_timesheet_sheet / res.company              / timesheet_max_difference (float): module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
+hr_timesheet_sheet / res.company              / timesheet_max_difference (float): module is now 'hw_escpos' ('hr_timesheet_sheet')
 hr_timesheet_sheet / res.company              / timesheet_range (selection)   : selection_keys is now '['month', 'week']' ('['day', 'month', 'week']')
 ---XML records in module 'hr_timesheet_sheet'---
 DEL ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_2_hr_analytic_timesheet
