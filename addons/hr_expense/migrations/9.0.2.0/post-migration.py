@@ -65,8 +65,9 @@ def hr_expense(env):
                 FROM hr_expense where id = %(b)s
             """ % {'a': p, 'b': expense})
     expenses = env['hr.expense'].search([])
-    env.add_todo(env['hr.expense']._fields['total_amount'], expenses)
-    env['hr.expense'].recompute()
+    if expenses:
+        env.add_todo(env['hr.expense']._fields['total_amount'], expenses)
+        env['hr.expense'].recompute()
 
 
 @openupgrade.migrate(use_env=True)
