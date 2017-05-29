@@ -31,11 +31,11 @@ account      / account.move.line        / analytic_tag_ids (many2many)  : NEW re
 # NOTHING TO DO
 
 account      / account.payment          / move_name (char)              : NEW
-# TODO: Calculate during post-migration using the move name associated to the
+# DONE: Calculate during post-migration using the move name associated to the
 # the move lines that have that payment.
 
 ## NEW MODEL ACCOUNT.RECONCILE.MODEL ##
-# TODO: pre-migration: rename table account.operation.template to
+# DONE: pre-migration: rename table account.operation.template to
 # account.reconcile.model
 account      / account.reconcile.model  / name (char)                   : NEW required: required
 account      / account.reconcile.model  / sequence (integer)            : NEW required: required, req_default: function
@@ -57,7 +57,7 @@ account      / account.reconcile.model  / second_analytic_account_id (many2one):
 account      / account.reconcile.model  / second_journal_id (many2one)  : NEW relation: account.journal
 
 ## NEW MODEL ACCOUNT.RECONCILE.MODEL.TEMPLATE ##
-# TODO: post-migration: precreate records from the account.reconcile.model,
+# DONE: post-migration: precreate records from the account.reconcile.model,
 # selecting the ones that are distinct regardless of the company
 account      / account.reconcile.model.template / name (char)                   : NEW required: required
 account      / account.reconcile.model.template / sequence (integer)            : NEW required: required, req_default: function
