@@ -13,7 +13,6 @@ sale         / sale.layout_category     / pagebreak (boolean)           : NEW
 sale         / sale.layout_category     / sequence (integer)            : NEW required: required, req_default: function
 sale         / sale.layout_category     / subtotal (boolean)            : NEW 
 sale         / sale.order               / confirmation_date (datetime)  : NEW 
-sale         / sale.order               / website_message_ids (one2many): DEL relation: mail.message
 sale         / sale.order.line          / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
 sale         / sale.order.line          / layout_category_id (many2one) : NEW relation: sale.layout_category
 ---XML records in module 'sale'---
