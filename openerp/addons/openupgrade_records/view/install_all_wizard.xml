@@ -7,28 +7,50 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="OpenUpgrade Install All Modules Wizard" version="6.1">
-                    <group states="init" colspan="4">
-                        <label string="This will install all modules on the database. Do not continue if you use this database in production." colspan="4"
-                               />
-                        <field name="to_install"/>
-                        <newline/>
-                        <button icon="gtk-close"
-                                special="cancel"
-                                string="Cancel"
-                                />
-                        <button icon="gtk-ok"
-                                string="Continue" 
-                                name="install_all"
-                                type="object"
-                                />
-                    </group>
-                    <group states="ready" colspan="4">
-                        <label string="Modules installed"
-                               />
+                    <group colspan="4" col="4">
                         <field name="state" invisible="1"/>
-                        <button icon="gtk-close"
-                                special="cancel"
-                                string="Close"
+                        <group states="init" colspan="4" col="4">
+                            <label
+                                string="This will install all modules on the database. Do not continue if you use this database in production."
+                                colspan="4"
+                                />
+                        </group>
+                        <group states="confirm" colspan="4" col="4">
+                            <label
+                                string="Confirm the installation of the modules."
+                                colspan="4"
+                                />
+                        </group>
+                        <group states="ready" colspan="4" col="4">
+                            <label
+                                string="Modules installed."
+                                colspan="4"
+                                />
+                        </group>
+                        <field name="no_localization"/>
+                        <field
+                            name="to_install"
+                            attrs="{'invisible': [('state', '=', 'init')]}"
+                            />
+                        <newline/>
+                        <button
+                            icon="gtk-close"
+                            special="cancel"
+                            string="Cancel"
+                        />
+                        <button
+                            icon="gtk-ok"
+                            string="Continue" 
+                            name="confirm_install"
+                            type="object"
+                            states="init"
+                            />
+                        <button
+                            icon="gtk-ok"
+                            string="Continue" 
+                            name="install_all"
+                            type="object"
+                            states="confirm"
                             />
                     </group>
                 </form>
