@@ -1,0 +1,34 @@
+---Fields in module 'delivery'---
+delivery     / delivery.carrier         / integration_level (selection) : NEW selection_keys: ['rate', 'rate_and_ship']
+# DONE: post-migration: map correct value based on old shipping_enabled value
+
+delivery     / delivery.carrier         / margin (integer)              : NEW 
+# NOTHING TO DO
+
+delivery     / delivery.carrier         / partner_id (many2one)         : DEL relation: res.partner, required: required
+# DONE: pre-migration: Renamed to preserve data
+
+delivery     / delivery.carrier         / prod_environment (boolean)    : NEW
+# NOTHING TO DO 
+
+delivery     / delivery.carrier         / shipping_enabled (boolean)    : DEL 
+# DONE: pre-migration: Renamed to preserve data
+
+delivery     / product.packaging        / height (integer)              : NEW 
+delivery     / product.packaging        / length (integer)              : NEW 
+delivery     / product.packaging        / max_weight (float)            : NEW 
+delivery     / product.packaging        / package_carrier_type (selection): NEW selection_keys: ['none']
+delivery     / product.packaging        / shipper_package_code (char)   : NEW 
+delivery     / product.packaging        / width (integer)               : NEW 
+delivery     / product.template         / hs_code (char)                : NEW 
+delivery     / stock.quant.package      / shipping_weight (float)       : NEW 
+# NOTHING TO DO
+
+---XML records in module 'delivery'---
+NEW ir.ui.view: delivery.product_packaging_delivery_form
+NEW ir.ui.view: delivery.product_packaging_delivery_tree
+NEW ir.ui.view: delivery.product_template_hs_code
+NEW ir.ui.view: delivery.view_quant_package_form_save
+DEL ir.ui.view: delivery.view_picking_withcarrier_out_form_shipping
+DEL res.partner: delivery.res_partner_delivery
+# NOTHING TO DO
