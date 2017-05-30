@@ -1,6 +1,7 @@
 ---Fields in module 'mrp_repair'---
 mrp_repair   / mrp.repair               / website_message_ids (one2many): DEL relation: mail.message
 ---XML records in module 'mrp_repair'---
+NEW ir.ui.view: mrp_repair.report_mrprepairorder2
 DEL workflow: mrp_repair.wkf_repair
 DEL workflow.activity: mrp_repair.act_cancel
 DEL workflow.activity: mrp_repair.act_cancel2
