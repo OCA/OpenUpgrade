@@ -1,6 +1,8 @@
 ---Fields in module 'mrp'---
 
-# Good reference for tracking changes between versions: https://github.com/odoo/odoo/commit/2ddc35a5300e89981c0572ae6749aee946f34e9d
+# Good reference for tracking changes between versions:
+# https://www.scribd.com/document/343980661/oDoo-10-Manufacturing
+# https://github.com/odoo/odoo/commit/2ddc35a5300e89981c0572ae6749aee946f34e9d
 
 mrp          / ir.attachment            / priority (selection)          : NEW selection_keys: ['0', '1', '2', '3']
 mrp          / mrp.bom                  / date_start (date)             : DEL
@@ -14,25 +16,7 @@ mrp          / mrp.bom                  / position (char)               : DEL
 # NOTHING TO DO
 
 mrp          / mrp.bom                  / product_efficiency (float)    : DEL required: required, req_default: function
-
-# DONE
-#
-# Efficiency factor has been kept only on mrp.bom.line level.
-# The efficiency factor on the mrp.bom simply applied on top of the efficiency factor to each and every bom line.
-# Consider the following scenario:
-# Product Bom (mrp.bom):
-#
-# - With the following bom lines (mrp.bom.line):
-#
-#    Line           Quantity    /   Efficiency
-# Bom line 1          1kg      /      0.5
-# Bom line 2          1kg      /      0.5
-#
-# To manufacture 1 Product you need 2kg of Bom line 1 and 2kg of Bom line 2 (because of the 0.5 lost during production)
-#
-# If you apply an efficiency factor of 0.5 on the parent mrp.bom then that efficiency if added to each line
-# essentially turning both mrp.bom.lines to 0.25 (0.5 * 0.5).
-# Thus we have to multiply each mrp.bom.line efficiency with the mrp.bom efficiency to have the same final efficiency # in both versions.
+# NOTHING TO DO
 
 mrp          / mrp.bom                  / product_rounding (float)      : DEL
 # NOTHING TO DO: Rounding is taken from the product.uom now
@@ -41,20 +25,27 @@ mrp          / mrp.bom                  / product_uom (many2one)        : was re
 # NOTHING TO DO
 
 mrp          / mrp.bom                  / property_ids (many2many)      : DEL relation: mrp.property
-
-# NOTHING TO DO: picking_type_id is used to identify the proper bom to use instead of properties in V10.
-# Since there can be multiple properties and only one picking type per bom this cannot be migrated properly.
-# if we migrate by creating a picking type for each property it would be incomplete in many cases and cause confusion.
+# TODO: Use a combination of routes & picking types to simulate the properties set before in order to
+# have a bom selected from the sale order? This might work but it will be confusing for the user.
 
 mrp          / mrp.bom                  / ready_to_produce (selection)  : NEW required: required, selection_keys: ['all_available', 'asap'], req_default: function
-
-# TODO: Use the default value
+# DONE: Use the default value
 
 mrp          / mrp.bom                  / website_message_ids (one2many): DEL relation: mail.message
+# NOTHING TO DO: website_message_ids were added via mail.thread which was remove
+# however field was not exposed anywhere in the code and should normally not hold any values?
+
 mrp          / mrp.bom.line             / date_start (date)             : DEL
 mrp          / mrp.bom.line             / date_stop (date)              : DEL
+# NOTHING TO DO: According to https://www.scribd.com/document/343980661/oDoo-10-Manufacturing automatic
+# change of boms using validity dates is no longer support as it is considered risky. Manual action needs
+# to be taken from ECO in order to make changes.
+
 mrp          / mrp.bom.line             / operation_id (many2one)       : NEW relation: mrp.routing.workcenter
+# NOTHING TO DO 
+
 mrp          / mrp.bom.line             / product_efficiency (float)    : DEL required: required, req_default: function
+DONE: 
 mrp          / mrp.bom.line             / product_rounding (float)      : DEL
 mrp          / mrp.bom.line             / product_uom (many2one)        : was renamed to product_uom_id [nothing to do]
 mrp          / mrp.bom.line             / property_ids (many2many)      : DEL relation: mrp.property
