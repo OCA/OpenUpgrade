@@ -12,12 +12,13 @@ def fill_account_date(cr):
     cr.execute(
         """
         UPDATE account_voucher
-        LEFT JOIN account_move ON account_move.id = account_voucher.move_id
-        SET account_voucher.account_date = account_move.date
+        SET account_date = account_move.date
+        FROM account_move
+        WHERE account_move.id = account_voucher.move_id
         """)
 
 
-@openupgrade.migrate(use_env=True)
+@openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
     fill_account_date(cr)
