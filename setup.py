@@ -145,6 +145,7 @@ setup(
         'mako',
         'mock',
         'ofxparse',
+        'openupgradelib>=1.3.0',
         'passlib',
         'pillow',  # windows binary http://www.lfd.uci.edu/~gohlke/pythonlibs/
         'psutil',  # windows binary code.google.com/p/psutil/downloads/list
