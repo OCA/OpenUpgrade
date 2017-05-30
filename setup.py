@@ -145,6 +145,7 @@ setup(
         'mako',
         'mock',
         'ofxparse',
+        'openerp-client-lib==1.1.2',
         'openupgradelib>=1.3.0',
         'passlib',
         'pillow',  # windows binary http://www.lfd.uci.edu/~gohlke/pythonlibs/
