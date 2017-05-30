@@ -1,0 +1,21 @@
+---Fields in module 'sale_stock'---
+sale_stock   / stock.move               / to_refund_so (boolean)        : NEW
+---XML records in module 'sale_stock'---
+NEW ir.model.access: sale_stock.access_procurement_rule
+NEW ir.model.access: sale_stock.access_procurement_rule_salemanager
+NEW ir.model.access: sale_stock.access_stock_location_path
+NEW ir.model.access: sale_stock.access_stock_location_path_sale_manager
+NEW ir.model.access: sale_stock.access_stock_location_sale_manager
+# Nothing to do
+
+NEW ir.ui.menu: sale_stock.menu_aftersale
+NEW ir.ui.menu: sale_stock.menu_invoiced
+DEL ir.ui.menu: base.menu_aftersale
+DEL ir.ui.menu: base.menu_invoiced
+# Done: Rename XML-IDs
+
+NEW ir.ui.view: sale_stock.assets_backend
+NEW ir.ui.view: sale_stock.report_delivery_document_inherit_sale_stock
+NEW ir.ui.view: sale_stock.view_stock_return_picking_form_inherit_sale_stock
+DEL ir.ui.view: sale_stock.view_company_form_inherit_sale_stock
+# Nothing to do
