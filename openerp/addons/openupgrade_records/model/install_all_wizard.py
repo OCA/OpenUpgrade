@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2012-2017 Therp BV <http://therp.nl>
+# © 2012-2017 2012-2014 OpenUpgrade community <https://odoo-community.org/>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import time
 try:
