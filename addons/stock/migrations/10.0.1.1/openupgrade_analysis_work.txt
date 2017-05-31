@@ -20,6 +20,10 @@ stock        / product.template         / warehouse_id (many2one)       : not a 
 stock        / product.template         / type (False)                  : NEW selection_keys: ['consu', 'product', 'service'], mode: modify
 # NOTHING TO DO
 
+stock        / res.partner              / picking_warn (selection)      : NEW
+stock        / res.partner              / picking_warn_msg (text)       : NEW
+# Done: Reassign module from 'warning' to 'stock'
+
 stock        / stock.inventory          / category_id (many2one)        : NEW relation: product.category
 stock        / stock.inventory          / exhausted (boolean)           : NEW
 # NOTHING TO DO
@@ -107,8 +111,16 @@ NEW ir.ui.view: stock.stock_scrap_tree_view
 NEW ir.ui.view: stock.stock_warehouse_view_search
 NEW ir.ui.view: stock.view_partner_stock_warnings_form
 DEL ir.ui.view: stock.view_stock_move_scrap_wizard
+# Nothing to do
+
 NEW res.groups: stock.group_stock_multi_locations
 NEW res.groups: stock.group_stock_multi_warehouses
-NEW res.groups: stock.group_warning_stock
 DEL res.groups: stock.group_locations
+# Done: Rename the old group to one of the new, and then assign also the second
+  new one to the same users
+
+NEW res.groups: stock.group_warning_stock
+# Done: Add the group to all users if the module 'warning' is installed
+
 NEW res.users: base.default_user
+# Nothing to do
