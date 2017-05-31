@@ -125,7 +125,7 @@ class IrModel(models.Model):
         for model in self:
             # OpenUpgrade: do not run the new table cleanup
             openupgrade.message(
-                cr, 'Unknown', False, False,
+                self._cr, 'Unknown', False, False,
                 "Not dropping the table or view of model %s", model.model)
             continue
             table = self.env[model.model]._table
@@ -437,7 +437,9 @@ class IrModelFields(models.Model):
             # OpenUpgrade: do not drop columns
             openupgrade.message(
                 self._cr, 'Unknown', False, False,
-                "Not dropping the column of field %s of model %s", field.name, field.model)
+                "Not dropping the column of field %s of model %s", field.name,
+                field.model,
+            )
             continue
             model = self.env[field.model]
             self._cr.execute('SELECT relkind FROM pg_class WHERE relname=%s', (model._table,))
