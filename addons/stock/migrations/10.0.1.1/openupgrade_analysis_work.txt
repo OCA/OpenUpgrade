@@ -3,11 +3,14 @@ stock        / barcode.rule             / type (False)                  : NEW se
 # NOTHING TO DO
 
 stock        / procurement.rule         / picking_type_id (many2one)    : now required
-# TODO: pre-migration. Default to some value, guessing by looking at source
+# TODO: post-migration. Default to some value, guessing by looking at source
 # and destination locations, and warehouse.
+# Done!
+
 stock        / procurement.rule         / route_sequence (float)        : type is now 'integer' ('float')
 # TODO: pre-migration: copy column
 # TODO: post-migration: move values from old column
+# Done!
 
 stock        / product.product          / stock_move_ids (one2many)     : NEW relation: stock.move
 stock        / product.product          / stock_quant_ids (one2many)    : NEW relation: stock.quant
@@ -15,7 +18,7 @@ stock        / product.product          / stock_quant_ids (one2many)    : NEW re
 
 stock        / product.template         / location_id (many2one)        : not a function anymore
 stock        / product.template         / warehouse_id (many2one)       : not a function anymore
-# TODO: ??? IN V9 were defined as fields.dummy
+# NOTHING TO DO as in v9 were dummy fields (existed only for backwards compatibility)
 
 stock        / product.template         / type (False)                  : NEW selection_keys: ['consu', 'product', 'service'], mode: modify
 # NOTHING TO DO
@@ -31,15 +34,20 @@ stock        / stock.inventory.line     / state (char)                  : type i
 stock        / stock.location.path      / auto (selection)              : selection_keys is now '['manual', 'transparent']' ('['auto', 'manual', 'transparent']')
 # TODO: pre-migration. copy column
 # TODO: post-migration. Move 'auto' to some other value
+# Done!
 
 stock        / stock.location.path      / route_sequence (float)        : type is now 'integer' ('float')
 # TODO: pre-migration. copy column
 # TODO: post-migration. copy values to new field converting to integer
+# Done!
 
 stock        / stock.move               / ordered_qty (float)           : NEW
 # TODO: post-migration. Default to product_uom_qty
+# Done!
+
 stock        / stock.pack.operation     / ordered_qty (float)           : NEW
-# TODO: post-migration. Default to product_uom_qty
+# TODO: post-migration. Default to product_qty
+# Done!
 
 stock        / stock.pack.operation     / processed_boolean (boolean)   : was renamed to is_done [nothing to do]
 # NOTHING TO DO
@@ -70,6 +78,8 @@ stock        / stock.scrap              / scrap_location_id (many2one)  : NEW re
 stock        / stock.scrap              / scrap_qty (float)             : NEW required: required, req_default: function
 stock        / stock.scrap              / state (selection)             : NEW selection_keys: ['done', 'draft']
 # TODO: Create one record for each move that had as destionation a scrap
+# TODO ANDRES - Maybe need to create a workflow for the "state"
+# TODO ANDRES - Y que pasa con la secuencia NEW ir.sequence: stock.sequence_stock_scrap
 # location
 
 stock        / stock.warehouse          / active (boolean)              : NEW
