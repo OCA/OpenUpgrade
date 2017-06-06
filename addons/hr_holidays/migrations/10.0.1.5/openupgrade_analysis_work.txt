@@ -1,0 +1,27 @@
+---Fields in module 'hr_holidays'---
+hr_holidays  / hr.holidays              / website_message_ids (one2many): DEL relation: mail.message
+hr_holidays  / resource.calendar        / uom_id (many2one)             : NEW relation: product.uom, required: required, req_default: function
+# NOTHING TO DO
+---XML records in module 'hr_holidays'---
+DEL ir.actions.client: hr_holidays.action_client_hr_holidays_menu
+DEL ir.actions.todo: base.open_menu
+NEW ir.ui.view: hr_holidays.resource_calendar_form_inherit
+NEW res.groups: hr_holidays.group_hr_holidays_manager
+NEW res.groups: hr_holidays.group_hr_holidays_user
+NEW res.users: base.default_user
+DEL workflow: hr_holidays.wkf_holidays
+DEL workflow.activity: hr_holidays.act_confirm
+DEL workflow.activity: hr_holidays.act_draft
+DEL workflow.activity: hr_holidays.act_refuse
+DEL workflow.activity: hr_holidays.act_validate
+DEL workflow.activity: hr_holidays.act_validate1
+DEL workflow.transition: hr_holidays.holiday_confirm2draft
+DEL workflow.transition: hr_holidays.holiday_confirm2refuse
+DEL workflow.transition: hr_holidays.holiday_confirm2validate
+DEL workflow.transition: hr_holidays.holiday_confirm2validate1
+DEL workflow.transition: hr_holidays.holiday_draft2confirm
+DEL workflow.transition: hr_holidays.holiday_refuse2draft
+DEL workflow.transition: hr_holidays.holiday_validate1_refuse
+DEL workflow.transition: hr_holidays.holiday_validate1_validate
+DEL workflow.transition: hr_holidays.holiday_validate2refuse
+# Nothing to do

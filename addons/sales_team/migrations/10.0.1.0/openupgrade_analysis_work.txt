@@ -1,7 +1,7 @@
 ---Fields in module 'sales_team'---
 sales_team   / crm.team                 / code (char)                   : DEL 
 sales_team   / crm.team                 / working_hours (float)         : DEL
-# NOTHING TO DO
+# Store columns for preserving data
 ---XML records in module 'sales_team'---
 NEW crm.team: sales_team.salesteam_website_sales
 NEW ir.actions.act_window: sales_team.action_sale_config
@@ -25,11 +25,16 @@ NEW ir.ui.menu: sales_team.menu_sale_general_settings
 NEW ir.ui.menu: sales_team.menu_sale_report
 NEW ir.ui.menu: sales_team.menu_sales
 NEW ir.ui.menu: sales_team.sales_team_config
-DEL ir.ui.menu: base.menu_base_partner
-DEL ir.ui.menu: base.menu_sale_report
-DEL ir.ui.menu: base.sales_team_config
 NEW ir.ui.view: sales_team.view_sale_config_settings
+NEW res.users: base.default_user
+# Nothing to do
+
 NEW res.groups: sales_team.group_sale_manager
 NEW res.groups: sales_team.group_sale_salesman
 NEW res.groups: sales_team.group_sale_salesman_all_leads
-NEW res.users: base.default_user
+# Done: Rename XML-IDs
+
+DEL ir.ui.menu: base.menu_base_partner
+DEL ir.ui.menu: base.menu_sale_report
+DEL ir.ui.menu: base.sales_team_config
+# Nothing to do: noupdate=0 records

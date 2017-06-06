@@ -9,7 +9,7 @@ def migrate(env, version):
     cr = env.cr
     # copy columns good practice in pre-mig script format of colum_spec should
     # be: { Table_name_in_db : [( old_column_name , new_column_name, type)]
-    # defaults of new columname are fetchable via method get_legacy_name 
+    # defaults of new columname are fetchable via method get_legacy_name
     openupgrade.copy_columns(
         cr, {
             'account_analytic_account': [
