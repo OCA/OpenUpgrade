@@ -198,6 +198,10 @@ class hr_employee(osv.osv):
 
     @api.multi
     def write(self, vals):
+        if 'address_home_id' in vals:
+            account_id = vals.get('bank_account_id') or self.bank_account_id.id
+            if account_id:
+                self.env['res.partner.bank'].browse(account_id).partner_id = vals['address_home_id']
         tools.image_resize_images(vals)
         return super(hr_employee, self).write(vals)
 
@@ -261,7 +265,7 @@ class hr_employee(osv.osv):
                 user_field_lst.append(name)
         return user_field_lst
 
-    _constraints = [(osv.osv._check_recursion, _('Error! You cannot create recursive hierarchy of Employee(s).'), ['parent_id']),]
+    _constraints = [(osv.osv._check_recursion, 'Error! You cannot create recursive hierarchy of Employee(s).', ['parent_id']),]
 
 
 class hr_department(osv.osv):
@@ -291,7 +295,7 @@ class hr_department(osv.osv):
     }
 
     _constraints = [
-        (osv.osv._check_recursion, _('Error! You cannot create recursive departments.'), ['parent_id'])
+        (osv.osv._check_recursion, 'Error! You cannot create recursive departments.', ['parent_id'])
     ]
 
     def name_get(self, cr, uid, ids, context=None):

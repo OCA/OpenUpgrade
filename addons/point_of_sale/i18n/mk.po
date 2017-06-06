@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Aleksandar Vangelovski <aleksandarv@hbee.eu>, 2016
+# Anica Milanova, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 09:18+0000\n"
-"PO-Revision-Date: 2016-07-12 10:39+0000\n"
-"Last-Translator: Aleksandar Vangelovski <aleksandarv@hbee.eu>\n"
+"PO-Revision-Date: 2016-11-22 16:26+0000\n"
+"Last-Translator: Anica Milanova\n"
 "Language-Team: Macedonian (http://www.transifex.com/odoo/odoo-9/language/mk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -116,7 +117,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
 msgid "<span>Cash Balance</span>"
-msgstr ""
+msgstr "<span>Биланс на кеш</span>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
@@ -171,7 +172,7 @@ msgstr "<strong>Опис</strong>"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_sessionsummary
 msgid "<strong>Difference</strong>"
-msgstr ""
+msgstr "<strong>Разлика</strong>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_detailsofsales
@@ -216,7 +217,7 @@ msgstr "<strong>Дневник</strong>"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_statement
 msgid "<strong>Journal</strong>:<br/>"
-msgstr ""
+msgstr "<strong>Дневник</strong>:<br/>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_payment
@@ -242,7 +243,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_detailsofsales
 msgid "<strong>Payment</strong>"
-msgstr ""
+msgstr "<strong>Плаќање</strong>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_sessionsummary
@@ -410,7 +411,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_detailsofsales
 msgid "<strong>Users</strong>:<br/>"
-msgstr ""
+msgstr "<strong>Корисници</strong>:<br/>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
@@ -510,7 +511,7 @@ msgstr "Сметководствени информации"
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config_journal_id
 msgid "Accounting journal used to post sales entries."
-msgstr "Дневник на сметка што се користи за објавување на внесови од продажба."
+msgstr "Дневник на сметка што се користи за книжење на внесови од продажба."
 
 #. module: point_of_sale
 #: model:product.product,name:point_of_sale.partner_product_5
@@ -956,7 +957,7 @@ msgstr ""
 msgid ""
 "Check this if you want to group the Journal Items by Product while closing a"
 " Session"
-msgstr "Означете го ова ако сакате да групирате ставки од дневникот по производ додека ја затварате сесијата"
+msgstr "Означете го ова ако сакате да групирате ставки на налогот по производ додека ја затворате сесијата"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1712,14 +1713,14 @@ msgstr "Генерирај записи"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_confirm
 msgid "Generate Journal Entries"
-msgstr "Генерирај внесови во дневник"
+msgstr "Генерирај внесови во налог"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_confirm
 msgid ""
 "Generate all sale journal entries for non invoiced orders linked to a closed"
 " cash register or statement."
-msgstr "Генерирај ги сите записи од дневникот за продажба за нефактурираните налози поврзани со затворена каса или извод."
+msgstr "Генерирај ги сите записи од налогот за продажба за нефактурираните налози поврзани со затворена каса или извод."
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config_settings_module_portal
@@ -1772,7 +1773,7 @@ msgstr "Групирај по"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_group_by
 msgid "Group Journal Items"
-msgstr "Групирај ставки од дневник"
+msgstr "Групирај ставки на налог"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1980,7 +1981,7 @@ msgstr "Дневник"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_account_move
 msgid "Journal Entry"
-msgstr "Внес во дневник"
+msgstr "Внес во налог"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_config_form
@@ -2848,12 +2849,12 @@ msgstr "Категории на производи на PoS"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_confirm
 msgid "Post All Orders"
-msgstr "Објави ги сите налози"
+msgstr "Книжи ги сите налози"
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_pos_confirm
 msgid "Post POS Journal Entries"
-msgstr "Обрави внесови во дневник за точка на продажба"
+msgstr "Прокнижи внесови во налог за точка на продажба"
 
 #. module: point_of_sale
 #. openerp-web
@@ -3843,7 +3844,7 @@ msgstr ""
 #, python-format
 msgid ""
 "The type of the journal for your payment method should be bank or cash "
-msgstr ""
+msgstr "Типот на налогот за вашиот метод за плаќање треба да биде банковен или готовински"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_session_cash_register_balance_end
@@ -4427,7 +4428,7 @@ msgstr "Вашиот краен биланс е премногу различе�
 #: code:addons/point_of_sale/static/src/js/gui.js:343
 #, python-format
 msgid "Your internet connection is probably down."
-msgstr ""
+msgstr "Вашата интернет конекција е веројатно падната."
 
 #. module: point_of_sale
 #. openerp-web

@@ -57,12 +57,12 @@ class Message(models.Model):
         help='Attachments are linked to a document through model / res_id and to the message'
              'through this field.')
     parent_id = fields.Many2one(
-        'mail.message', 'Parent Message', select=True, ondelete='set null',
+        'mail.message', 'Parent Message', index=True, ondelete='set null',
         help="Initial thread message.")
     child_ids = fields.One2many('mail.message', 'parent_id', 'Child Messages')
     # related document
-    model = fields.Char('Related Document Model', select=1)
-    res_id = fields.Integer('Related Document ID', select=1)
+    model = fields.Char('Related Document Model', index=True)
+    res_id = fields.Integer('Related Document ID', index=True)
     record_name = fields.Char('Message Record Name', help="Name get of the related document.")
     # characteristics
     message_type = fields.Selection([
@@ -73,13 +73,13 @@ class Message(models.Model):
         help="Message type: email for email message, notification for system "
              "message, comment for other messages such as user replies",
         oldname='type')
-    subtype_id = fields.Many2one('mail.message.subtype', 'Subtype', ondelete='set null', select=1)
+    subtype_id = fields.Many2one('mail.message.subtype', 'Subtype', ondelete='set null', index=True)
     # origin
     email_from = fields.Char(
         'From', default=_get_default_from,
         help="Email address of the sender. This field is set when no matching partner is found and replaces the author_id field in the chatter.")
     author_id = fields.Many2one(
-        'res.partner', 'Author', select=1,
+        'res.partner', 'Author', index=True,
         ondelete='set null', default=_get_default_author,
         help="Author of the message. If not set, email_from may hold an email address that did not match any partner.")
     author_avatar = fields.Binary("Author's avatar", related='author_id.image_small')
@@ -108,7 +108,7 @@ class Message(models.Model):
     no_auto_thread = fields.Boolean(
         'No threading for answers',
         help='Answers do not go in the original document discussion thread. This has an impact on the generated message-id.')
-    message_id = fields.Char('Message-Id', help='Message unique identifier', select=1, readonly=1, copy=False)
+    message_id = fields.Char('Message-Id', help='Message unique identifier', index=True, readonly=1, copy=False)
     reply_to = fields.Char('Reply-To', help='Reply email address. Setting the reply_to bypasses the automatic thread creation.')
     mail_server_id = fields.Many2one('ir.mail_server', 'Outgoing mail server')
 
@@ -853,6 +853,13 @@ class Message(models.Model):
             message_id = tools.generate_tracking_message_id('private')
         return message_id
 
+    @api.multi
+    def _invalidate_documents(self):
+        """ Invalidate the cache of the documents followed by ``self``. """
+        for record in self:
+            if record.model and record.res_id:
+                self.env[record.model].invalidate_cache(ids=[record.res_id])
+
     @api.model
     def create(self, values):
         # coming from mail.js that does not have pid in its values
@@ -869,6 +876,7 @@ class Message(models.Model):
             values['record_name'] = self._get_record_name(values)
 
         message = super(Message, self).create(values)
+        message._invalidate_documents()
 
         message._notify(force_send=self.env.context.get('mail_notify_force_send', True),
                         user_signature=self.env.context.get('mail_notify_user_signature', True))
@@ -882,6 +890,14 @@ class Message(models.Model):
         return super(Message, self).read(fields=fields, load=load)
 
     @api.multi
+    def write(self, vals):
+        if 'model' in vals or 'res_id' in vals:
+            self._invalidate_documents()
+        res = super(Message, self).write(vals)
+        self._invalidate_documents()
+        return res
+
+    @api.multi
     def unlink(self):
         # cascade-delete attachments that are directly attached to the message (should only happen
         # for mail.messages that act as parent for a standalone mail.mail record).
@@ -889,6 +905,7 @@ class Message(models.Model):
         self.mapped('attachment_ids').filtered(
             lambda attach: attach.res_model == self._name and (attach.res_id in self.ids or attach.res_id == 0)
         ).unlink()
+        self._invalidate_documents()
         return super(Message, self).unlink()
 
     #------------------------------------------------------

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-29 10:27+0000\n"
-"PO-Revision-Date: 2015-12-03 00:11+0000\n"
+"POT-Creation-Date: 2016-09-22 13:18+0000\n"
+"PO-Revision-Date: 2017-03-24 07:37+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Indonesian (http://www.transifex.com/odoo/odoo-9/language/id/)\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: hr_equipment
 #: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_request_view_kanban
 msgid "<b>Category:</b>"
-msgstr ""
+msgstr "<b>Kategori:</b>"
 
 #. module: hr_equipment
 #: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_view_kanban
@@ -109,7 +109,7 @@ msgstr "Aktiva"
 
 #. module: hr_equipment
 #: model:ir.model,name:hr_equipment.model_hr_equipment_category
-#: model:ir.model.fields,field_description:hr_equipment.field_hr_equipment_category_id_5383
+#: model:ir.model.fields,field_description:hr_equipment.field_hr_equipment_category_id_6493
 msgid "Asset Category"
 msgstr "Kategori Aktiva"
 
@@ -143,7 +143,7 @@ msgstr "Dikegiatankan untuk"
 #. module: hr_equipment
 #: model:ir.model.fields,field_description:hr_equipment.field_hr_equipment_department_id
 msgid "Assigned to Department"
-msgstr ""
+msgstr "Ditugaskan ke Departemen"
 
 #. module: hr_equipment
 #: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_view_search
@@ -193,7 +193,7 @@ msgstr "Kategori"
 #: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_category_view_form
 #: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_category_view_search
 msgid "Category Name"
-msgstr ""
+msgstr "Nama Kategori"
 
 #. module: hr_equipment
 #: model:ir.actions.act_window,help:hr_equipment.hr_equipment_action_from_category_form
@@ -484,13 +484,6 @@ msgid "If checked, new messages require your attention."
 msgstr "Jika dicentang, pesan baru memerlukan perhatian Anda."
 
 #. module: hr_equipment
-#: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_request_view_kanban
-#: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_request_view_search
-#: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_view_search
-msgid "Important Messages"
-msgstr "Pesan penting"
-
-#. module: hr_equipment
 #: selection:hr.equipment.request,kanban_state:0
 #: model:hr.equipment.stage,name:hr_equipment.stage_1
 msgid "In Progress"
@@ -623,13 +616,6 @@ msgid "Messages"
 msgstr "Pesan"
 
 #. module: hr_equipment
-#: model:ir.model.fields,help:hr_equipment.field_hr_equipment_category_message_ids
-#: model:ir.model.fields,help:hr_equipment.field_hr_equipment_message_ids
-#: model:ir.model.fields,help:hr_equipment.field_hr_equipment_request_message_ids
-msgid "Messages and communication history"
-msgstr "Pesan dan riwayat komunikasi"
-
-#. module: hr_equipment
 #: model:ir.model.fields,field_description:hr_equipment.field_hr_equipment_model
 msgid "Model"
 msgstr "Contoh"
@@ -739,8 +725,8 @@ msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document\n"
-msgstr "Kebijakan untuk mengirimkan sebuah pesan di dokumen menggunakan mailgateway.\n-Semua orang: setiap orang dapat memposting\n - mitra: hanya dikonfirmasi mitra  \n - pengikut: hanya pengikut dokumen terkait\n"
+"- followers: only followers of the related document or members of following channels\n"
+msgstr ""
 
 #. module: hr_equipment
 #: model:hr.equipment.category,name:hr_equipment.hr_equipment_printer
@@ -964,6 +950,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_equipment.field_hr_equipment_category_message_unread
 #: model:ir.model.fields,field_description:hr_equipment.field_hr_equipment_message_unread
 #: model:ir.model.fields,field_description:hr_equipment.field_hr_equipment_request_message_unread
+#: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_request_view_kanban
+#: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_request_view_search
+#: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_view_search
 msgid "Unread Messages"
 msgstr "Pesan Belum Dibaca"
 

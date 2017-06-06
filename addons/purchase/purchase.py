@@ -22,17 +22,17 @@ class PurchaseOrder(models.Model):
             amount_untaxed = amount_tax = 0.0
             for line in order.order_line:
                 amount_untaxed += line.price_subtotal
-                amount_tax += line.price_tax
+                # FORWARDPORT UP TO 10.0
+                if order.company_id.tax_calculation_rounding_method == 'round_globally':
+                    taxes = line.taxes_id.compute_all(line.price_unit, line.order_id.currency_id, line.product_qty, product=line.product_id, partner=line.order_id.partner_id)
+                    amount_tax += sum(t.get('amount', 0.0) for t in taxes.get('taxes', []))
+                else:
+                    amount_tax += line.price_tax
             order.update({
                 'amount_untaxed': order.currency_id.round(amount_untaxed),
                 'amount_tax': order.currency_id.round(amount_tax),
                 'amount_total': amount_untaxed + amount_tax,
             })
-
-    @api.multi
-    def _inverse_date_planned(self):
-        for order in self:
-            order.order_line.write({'date_planned': self.date_planned})
 
     @api.depends('order_line.date_planned')
     def _compute_date_planned(self):
@@ -77,12 +77,15 @@ class PurchaseOrder(models.Model):
             types = type_obj.search([('code', '=', 'incoming'), ('warehouse_id', '=', False)])
         return types[:1]
 
-    @api.depends('order_line.move_ids.picking_id')
+    @api.depends('order_line.move_ids')
     def _compute_picking(self):
         for order in self:
             pickings = self.env['stock.picking']
             for line in order.order_line:
-                moves = line.move_ids.filtered(lambda r: r.state != 'cancel')
+                # We keep a limited scope on purpose. Ideally, we should also use move_orig_ids and
+                # do some recursive search, but that could be prohibitive if not done correctly.
+                moves = line.move_ids | line.move_ids.mapped('returned_move_ids')
+                moves = moves.filtered(lambda r: r.state != 'cancel')
                 pickings |= moves.mapped('picking_id')
             order.picking_ids = pickings
             order.picking_count = len(pickings)
@@ -93,7 +96,7 @@ class PurchaseOrder(models.Model):
         'cancel': [('readonly', True)],
     }
 
-    name = fields.Char('Order Reference', required=True, select=True, copy=False, default='New')
+    name = fields.Char('Order Reference', required=True, index=True, copy=False, default='New')
     origin = fields.Char('Source Document', copy=False,\
         help="Reference of the document that generated this purchase order "
              "request (e.g. a sale order or an internal procurement request)")
@@ -102,9 +105,9 @@ class PurchaseOrder(models.Model):
              "It's used to do the matching when you receive the "
              "products as this reference is usually written on the "
              "delivery order sent by your vendor.")
-    date_order = fields.Datetime('Order Date', required=True, states=READONLY_STATES, select=True, copy=False, default=fields.Datetime.now,\
+    date_order = fields.Datetime('Order Date', required=True, states=READONLY_STATES, index=True, copy=False, default=fields.Datetime.now,\
         help="Depicts the date where the Quotation should be validated and converted into a purchase order.")
-    date_approve = fields.Date('Approval Date', readonly=1, select=True, copy=False)
+    date_approve = fields.Date('Approval Date', readonly=1, index=True, copy=False)
     partner_id = fields.Many2one('res.partner', string='Vendor', required=True, states=READONLY_STATES, change_default=True, track_visibility='always')
     dest_address_id = fields.Many2one('res.partner', string='Drop Ship Address', states=READONLY_STATES,\
         help="Put an address if you want to deliver directly from the vendor to the customer. "\
@@ -118,7 +121,7 @@ class PurchaseOrder(models.Model):
         ('purchase', 'Purchase Order'),
         ('done', 'Done'),
         ('cancel', 'Cancelled')
-        ], string='Status', readonly=True, select=True, copy=False, default='draft', track_visibility='onchange')
+        ], string='Status', readonly=True, index=True, copy=False, default='draft', track_visibility='onchange')
     order_line = fields.One2many('purchase.order.line', 'order_id', string='Order Lines', states=READONLY_STATES, copy=True)
     notes = fields.Text('Terms and Conditions')
 
@@ -133,7 +136,8 @@ class PurchaseOrder(models.Model):
     picking_count = fields.Integer(compute='_compute_picking', string='Receptions', default=0)
     picking_ids = fields.Many2many('stock.picking', compute='_compute_picking', string='Receptions', copy=False)
 
-    date_planned = fields.Datetime(string='Scheduled Date', compute='_compute_date_planned', inverse='_inverse_date_planned', required=True, select=True, oldname='minimum_planned_date')
+    # There is no inverse function on purpose since the date may be different on each line
+    date_planned = fields.Datetime(string='Scheduled Date', compute='_compute_date_planned', required=True, index=True, oldname='minimum_planned_date')
 
     amount_untaxed = fields.Monetary(string='Untaxed Amount', store=True, readonly=True, compute='_amount_all', track_visibility='always')
     amount_tax = fields.Monetary(string='Taxes', store=True, readonly=True, compute='_amount_all')
@@ -145,13 +149,13 @@ class PurchaseOrder(models.Model):
 
     product_id = fields.Many2one('product.product', related='order_line.product_id', string='Product')
     create_uid = fields.Many2one('res.users', 'Responsible')
-    company_id = fields.Many2one('res.company', 'Company', required=True, select=1, states=READONLY_STATES, default=lambda self: self.env.user.company_id.id)
+    company_id = fields.Many2one('res.company', 'Company', required=True, index=True, states=READONLY_STATES, default=lambda self: self.env.user.company_id.id)
 
     picking_type_id = fields.Many2one('stock.picking.type', 'Deliver To', states=READONLY_STATES, required=True, default=_default_picking_type,\
         help="This will determine picking type of incoming shipment")
     default_location_dest_id_usage = fields.Selection(related='picking_type_id.default_location_dest_id.usage', string='Destination Location Type',\
         help="Technical field used to display the Drop Ship Address", readonly=True)
-    group_id = fields.Many2one('procurement.group', string="Procurement Group")
+    group_id = fields.Many2one('procurement.group', string="Procurement Group", copy=False)
 
     @api.model
     def name_search(self, name, args=None, operator='ilike', limit=100):
@@ -281,6 +285,8 @@ class PurchaseOrder(models.Model):
     @api.multi
     def button_confirm(self):
         for order in self:
+            if order.state not in ['draft', 'sent']:
+                continue
             order._add_supplier_to_product()
             # Deal with double validation process
             if order.company_id.po_double_validation == 'one_step'\
@@ -339,7 +345,8 @@ class PurchaseOrder(models.Model):
             'date': self.date_order,
             'origin': self.name,
             'location_dest_id': self._get_destination_location(),
-            'location_id': self.partner_id.property_stock_supplier.id
+            'location_id': self.partner_id.property_stock_supplier.id,
+            'company_id': self.company_id.id,
         }
 
     @api.multi
@@ -391,6 +398,7 @@ class PurchaseOrder(models.Model):
         result = action.read()[0]
 
         #override the context to get rid of the default filtering on picking type
+        result.pop('id', None)
         result['context'] = {}
         pick_ids = sum([order.picking_ids.ids for order in self], [])
         #choose the view_mode accordingly
@@ -436,6 +444,16 @@ class PurchaseOrder(models.Model):
             result['views'] = [(res and res.id or False, 'form')]
             result['res_id'] = self.invoice_ids.id
         return result
+
+    @api.multi
+    def action_set_date_planned(self):
+        # implementation for 9.0 where PO date_planned is not stored
+        date_planned = self.env.context.get('date_planned')
+        if not date_planned:
+            return
+        for order in self:
+            for line in order.order_line:
+                line.update({'date_planned': date_planned})
 
 
 class PurchaseOrderLine(models.Model):
@@ -516,7 +534,7 @@ class PurchaseOrderLine(models.Model):
 
     name = fields.Text(string='Description', required=True)
     product_qty = fields.Float(string='Quantity', digits=dp.get_precision('Product Unit of Measure'), required=True)
-    date_planned = fields.Datetime(string='Scheduled Date', required=True, select=True)
+    date_planned = fields.Datetime(string='Scheduled Date', required=True, index=True)
     taxes_id = fields.Many2many('account.tax', string='Taxes', domain=['|', ('active', '=', False), ('active', '=', True)])
     product_uom = fields.Many2one('product.uom', string='Product Unit of Measure', required=True)
     product_id = fields.Many2one('product.product', string='Product', domain=[('purchase_ok', '=', True)], change_default=True, required=True)
@@ -527,7 +545,7 @@ class PurchaseOrderLine(models.Model):
     price_total = fields.Monetary(compute='_compute_amount', string='Total', store=True)
     price_tax = fields.Monetary(compute='_compute_amount', string='Tax', store=True)
 
-    order_id = fields.Many2one('purchase.order', string='Order Reference', select=True, required=True, ondelete='cascade')
+    order_id = fields.Many2one('purchase.order', string='Order Reference', index=True, required=True, ondelete='cascade')
     account_analytic_id = fields.Many2one('account.analytic.account', string='Analytic Account', domain=[('account_type', '=', 'normal')])
     company_id = fields.Many2one('res.company', related='order_id.company_id', string='Company', store=True, readonly=True)
     state = fields.Selection(related='order_id.state', stored=True)
@@ -591,15 +609,16 @@ class PurchaseOrderLine(models.Model):
             diff_quantity = line.product_qty
             for procurement in line.procurement_ids:
                 procurement_qty = procurement.product_uom._compute_qty_obj(procurement.product_uom, procurement.product_qty, line.product_uom)
-                tmp = template.copy()
-                tmp.update({
-                    'product_uom_qty': min(procurement_qty, diff_quantity),
-                    'move_dest_id': procurement.move_dest_id.id,  #move destination is same as procurement destination
-                    'procurement_id': procurement.id,
-                    'propagate': procurement.rule_id.propagate,
-                })
-                done += moves.create(tmp)
-                diff_quantity -= min(procurement_qty, diff_quantity)
+                if float_compare(procurement_qty, 0.0, precision_rounding=procurement.product_uom.rounding) > 0 and float_compare(diff_quantity, 0.0, precision_rounding=line.product_uom.rounding) > 0:
+                    tmp = template.copy()
+                    tmp.update({
+                        'product_uom_qty': min(procurement_qty, diff_quantity),
+                        'move_dest_id': procurement.move_dest_id.id,  #move destination is same as procurement destination
+                        'procurement_id': procurement.id,
+                        'propagate': procurement.rule_id.propagate,
+                    })
+                    done += moves.create(tmp)
+                    diff_quantity -= min(procurement_qty, diff_quantity)
             if float_compare(diff_quantity, 0.0, precision_rounding=line.product_uom.rounding) > 0:
                 template['product_uom_qty'] = diff_quantity
                 done += moves.create(template)
@@ -798,7 +817,7 @@ class ProcurementOrder(models.Model):
     @api.v8
     def _get_purchase_order_date(self, schedule_date):
         self.ensure_one()
-        seller_delay = int(self.product_id._select_seller(self.product_id).delay)
+        seller_delay = int(self.product_id._select_seller(product_id=self.product_id, quantity=self.product_qty).delay)
         return schedule_date - relativedelta(days=seller_delay)
 
     @api.v7
@@ -964,7 +983,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def _get_buy_route(self):
-        buy_route = self.env.ref('purchase.route_warehouse0_buy')
+        buy_route = self.env.ref('purchase.route_warehouse0_buy', raise_if_not_found=False)
         if buy_route:
             return buy_route.ids
         return []

@@ -20,6 +20,7 @@ import sys
 import threading
 import time
 import traceback
+import urllib2
 import urlparse
 import warnings
 from zlib import adler32
@@ -159,6 +160,7 @@ def redirect_with_hash(url, code=303):
     # See extensive test page at http://greenbytes.de/tech/tc/httpredirects/
     if request.httprequest.user_agent.browser in ('firefox',):
         return werkzeug.utils.redirect(url, code)
+    url = url.replace("'", "%27").replace("<", "%3C")
     return "<html><head><script>window.location = '%s' + location.hash;</script></head></html>" % url
 
 class WebRequest(object):
@@ -209,7 +211,7 @@ class WebRequest(object):
         to a database.
         """
         if not self.db:
-            return RuntimeError('request not bound to a database')
+            raise RuntimeError('request not bound to a database')
         return openerp.api.Environment(self.cr, self.uid, self.context)
 
     @lazy_property
@@ -245,7 +247,7 @@ class WebRequest(object):
         # can not be a lazy_property because manual rollback in _call_function
         # if already set (?)
         if not self.db:
-            return RuntimeError('request not bound to a database')
+            raise RuntimeError('request not bound to a database')
         if not self._cr:
             self._cr = self.registry.cursor()
         return self._cr
@@ -802,7 +804,7 @@ class HttpRequest(WebRequest):
         if request.httprequest.method == 'OPTIONS' and request.endpoint and request.endpoint.routing.get('cors'):
             headers = {
                 'Access-Control-Max-Age': 60 * 60 * 24,
-                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, X-Debug-Mode'
             }
             return Response(status=200, headers=headers)
 
@@ -838,7 +840,7 @@ more details.
   passing the `csrf=False` parameter to the `route` decorator.
                     """, request.httprequest.path)
 
-                raise werkzeug.exceptions.BadRequest('Invalid CSRF Token')
+                raise werkzeug.exceptions.BadRequest('Session expired (invalid CSRF token)')
 
         r = self._call_function(**self.params)
         if not r:
@@ -1553,9 +1555,16 @@ class Root(object):
             httprequest.session.db = db_monodb(httprequest)
 
     def setup_lang(self, httprequest):
-        if not "lang" in httprequest.session.context:
-            lang = httprequest.accept_languages.best or "en_US"
-            lang = babel.core.LOCALE_ALIASES.get(lang, lang).replace('-', '_')
+        if "lang" not in httprequest.session.context:
+            alang = httprequest.accept_languages.best or "en-US"
+            try:
+                code, territory, _, _ = babel.core.parse_locale(alang, sep='-')
+                if territory:
+                    lang = '%s_%s' % (code, territory)
+                else:
+                    lang = babel.core.LOCALE_ALIASES[code]
+            except (ValueError, KeyError):
+                lang = 'en_US'
             httprequest.session.context["lang"] = lang
 
     def get_request(self, httprequest):
@@ -1805,6 +1814,18 @@ def send_file(filepath_or_fp, mimetype=None, as_attachment=False, filename=None,
             if rv.status_code == 304:
                 rv.headers.pop('x-sendfile', None)
     return rv
+
+def content_disposition(filename):
+    filename = openerp.tools.ustr(filename)
+    escaped = urllib2.quote(filename.encode('utf8'))
+    browser = request.httprequest.user_agent.browser
+    version = int((request.httprequest.user_agent.version or '0').split('.')[0])
+    if browser == 'msie' and version < 9:
+        return "attachment; filename=%s" % escaped
+    elif browser == 'safari' and version < 537:
+        return u"attachment; filename=%s" % filename.encode('ascii', 'replace')
+    else:
+        return "attachment; filename*=UTF-8''%s" % escaped
 
 #----------------------------------------------------------
 # RPC controller
