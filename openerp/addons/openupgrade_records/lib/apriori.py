@@ -21,6 +21,7 @@ renamed_modules = {
     'account_check_writing': 'account_check_printing',
     # same here, whoever want this will also need bank-payment
     'account_payment': 'account_payment_order',
+    'payment_mode': 'account_payment_mode',
     # OCA/account-invoicing
     'account_refund_original': 'account_invoice_refund_link',
     # OCA/social
