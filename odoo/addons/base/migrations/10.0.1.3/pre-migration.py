@@ -53,16 +53,13 @@ def migrate(cr, version):
         end,
         'res.lang', id
         from res_lang''')
-    # set some obsolete modules to auto uninstall (and remove dependencies)
-    cr.execute(
-        '''update ir_module_module
-        set state = 'to remove'
-        where name in (
-            'web_tip', 'web_view_editor', 'mail_tip', 'im_odoo_support'
-        )
-        ''')
-    cr.execute(
-        """DELETE FROM ir_module_module_dependency
-        WHERE name in ('web_tip', 'web_view_editor')
-        """
+    openupgrade.update_module_names(
+        cr, [
+            ('account_full_reconcile', 'account'),
+            ('share', 'base'),
+            ('web_tip', 'web'),
+            ('web_view_editor', 'web'),
+            ('mail_tip', 'mail'),
+            ('im_odoo_support', 'im_livechat'),
+        ], merge_modules=True,
     )
