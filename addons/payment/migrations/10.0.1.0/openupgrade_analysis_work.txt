@@ -3,7 +3,7 @@ payment      / account.payment          / payment_token_id (many2one)   : NEW re
 payment      / account.payment          / payment_transaction_id (many2one): NEW relation: payment.transaction
 # NOTHING TO DO
 payment      / payment.acquirer         / auto_confirm (selection)      : selection_keys is now '['authorize', 'confirm_so', 'generate_and_pay_invoice', 'none']' ('['at_pay_confirm', 'at_pay_now', 'none']')
-# TODO: pre-migration. Map values
+# Done: post-migration. Mapped some values
 
 payment      / payment.acquirer         / description (html)            : NEW 
 payment      / payment.acquirer         / environment (selection)       : now required, default = function
@@ -25,7 +25,7 @@ payment      / payment.transaction      / payment_method_id (many2one)  : DEL re
 payment      / payment.transaction      / payment_token_id (many2one)   : NEW relation: payment.token
 # NOTHING TO DO
 payment      / payment.transaction      / state (selection)             : selection_keys is now '['authorized', 'cancel', 'done', 'draft', 'error', 'pending']' ('['cancel', 'done', 'draft', 'error', 'pending']')
-# TODO: pre-migration. Map values
+# NOTHING TO DO: 'authorized' value just will stay empty
 
 payment      / res.partner              / payment_method_ids (one2many) : DEL relation: payment.method
 payment      / res.partner              / payment_token_ids (one2many)  : NEW relation: payment.token
@@ -62,3 +62,4 @@ NEW payment.acquirer: payment.payment_acquirer_payu
 NEW payment.acquirer: payment.payment_acquirer_sips
 NEW payment.acquirer: payment.payment_acquirer_stripe
 NEW payment.acquirer: payment.payment_acquirer_transfer
+# Nothing to do
