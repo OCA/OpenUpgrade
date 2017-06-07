@@ -79,6 +79,8 @@ def get_records(addon_dir):
         record_nodes = data_node.xpath("./record")
         for record in record_nodes:
             xml_id = record.get("id")
+            if not xml_id:
+                continue
             if '.' in xml_id and xml_id.startswith(addon_name + '.'):
                 xml_id = xml_id[len(addon_name) + 1:]
             for records in records_noupdate, records_update:
