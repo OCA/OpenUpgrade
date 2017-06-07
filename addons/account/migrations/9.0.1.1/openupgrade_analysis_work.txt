@@ -319,7 +319,10 @@ account      / account.move.line        / date_maturity (date)          : now re
 # TODO: If not set, use current date or move date?
 
 account      / account.move.line        / invoice (many2one)            : not a function anymore
+# Done: We have to store the data, as it was previously a computed non stored one
+
 account      / account.move.line        / invoice (many2one)            : was renamed to invoice_id [nothing to to]
+# Nothing to do
 
 account      / account.move             / rate_diff_partial_rec_id (many2one): NEW relation: account.partial.reconcile
 account      / account.move.line        / matched_credit_ids (one2many) : NEW relation: account.partial.reconcile
