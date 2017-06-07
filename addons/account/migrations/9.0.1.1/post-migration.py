@@ -481,6 +481,20 @@ def reset_blacklist_field_recomputation():
     AccountInvoiceLine._openupgrade_recompute_fields_blacklist = []
 
 
+def fill_move_line_invoice(cr):
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE account_move_line aml
+        SET invoice_id = ai.id
+        FROM account_invoice ai,
+            account_move am
+        WHERE am.id = aml.move_id
+            AND am.id = ai.move_id;
+        """
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -571,3 +585,4 @@ def migrate(env, version):
     migrate_account_auto_fy_sequence(env)
     fill_blacklisted_fields(cr)
     reset_blacklist_field_recomputation()
+    fill_move_line_invoice(cr)
