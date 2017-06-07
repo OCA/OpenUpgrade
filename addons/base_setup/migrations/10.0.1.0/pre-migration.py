@@ -10,6 +10,6 @@ _xmlid_renames = [
 ]
 
 
-@openupgrade.migrate()
+@openupgrade.migrate(use_env=True)
 def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
