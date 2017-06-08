@@ -36,6 +36,7 @@ renamed_modules = {
     'account_financial_report_webkit': 'account_financial_report_qweb',
     # OCA/contract
     'account_analytic_analysis': 'contract',
+    'contract_recurring_plans': 'contract_recurring_analytic_distribution',
     # OCA/website
     'website_disable_odoo': 'website_odoo_debranding',
     # OCA/account-analytic
@@ -43,6 +44,8 @@ renamed_modules = {
     'account_analytic_plan_required': 'account_analytic_distribution_required',
     'sale_analytic_plans': 'sale_analytic_distribution',
     'purchase_analytic_plans': 'purchase_analytic_distribution',
+    # OCA/hr
+    'hr_expense_analytic_plans': 'hr_expense_analytic_distribution',
 }
 
 renamed_models = {
