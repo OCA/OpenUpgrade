@@ -5,7 +5,7 @@
 from openupgradelib import openupgrade
 
 
-@openupgrade.migrate()
+@openupgrade.migrate(use_env=True)
 def migrate(env, version):
     env.cr.execute(
         """
