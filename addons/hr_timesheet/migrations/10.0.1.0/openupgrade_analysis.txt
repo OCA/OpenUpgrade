@@ -2,8 +2,10 @@
 hr_timesheet / account.analytic.account / use_timesheets (boolean)      : DEL 
 hr_timesheet / account.analytic.line    / is_timesheet (boolean)        : DEL 
 hr_timesheet / account.analytic.line    / project_id (many2one)         : NEW relation: project.project
+hr_timesheet / account.analytic.line    / task_id (many2one)            : NEW relation: project.task
 hr_timesheet / project.project          / allow_timesheets (boolean)    : NEW 
 hr_timesheet / project.project          / subtask_project_id (many2one) : NEW relation: project.project
+hr_timesheet / project.task             / child_ids (one2many)          : NEW relation: project.task
 hr_timesheet / project.task             / parent_id (many2one)          : NEW relation: project.task
 hr_timesheet / project.task             / timesheet_ids (one2many)      : NEW relation: account.analytic.line
 ---XML records in module 'hr_timesheet'---

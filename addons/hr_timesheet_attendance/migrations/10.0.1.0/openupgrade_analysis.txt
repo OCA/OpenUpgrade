@@ -1,4 +1,7 @@
 ---Fields in module 'hr_timesheet_attendance'---
+hr_timesheet_attendance / hr_timesheet_sheet.sheet / attendances_ids (one2many)    : NEW relation: hr.attendance
+hr_timesheet_attendance / hr_timesheet_sheet.sheet / period_ids (one2many)         : NEW relation: hr_timesheet_sheet.sheet.day
+hr_timesheet_attendance / res.company              / timesheet_max_difference (float): NEW 
 ---XML records in module 'hr_timesheet_attendance'---
 NEW ir.actions.act_window: hr_timesheet_attendance.act_hr_timesheet_sheet_sheet_2_hr_analytic_timesheet
 NEW ir.actions.act_window: hr_timesheet_attendance.act_hr_timesheet_sheet_sheet_2_hr_attendance

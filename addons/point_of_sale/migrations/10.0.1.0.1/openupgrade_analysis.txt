@@ -32,6 +32,8 @@ DEL ir.actions.report.xml: point_of_sale.pos_lines_report
 DEL ir.actions.report.xml: point_of_sale.pos_payment_report
 DEL ir.actions.todo: base.open_menu
 NEW ir.filters: point_of_sale.filter_orders_per_session
+NEW ir.model.access: point_of_sale.access_account_cashbox_line_user
+NEW ir.model.access: point_of_sale.access_bank_statement_cashbox_user
 NEW ir.model.access: point_of_sale.access_pos_pack_operation_lot
 DEL ir.model.access: point_of_sale.access_report_sales_by_user_pos
 DEL ir.model.access: point_of_sale.access_report_sales_by_user_pos_month

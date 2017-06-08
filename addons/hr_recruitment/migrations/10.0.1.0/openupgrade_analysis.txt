@@ -1,9 +1,9 @@
 ---Fields in module 'hr_recruitment'---
-hr_recruitment / hr.applicant             / response_id (many2one)        : module is now 'hr_recruitment_survey' ('hr_recruitment')
+hr_recruitment / hr.applicant             / response_id (many2one)        : module is now 'hw_escpos' ('hr_recruitment')
 hr_recruitment / hr.applicant             / website_message_ids (one2many): DEL relation: mail.message
 hr_recruitment / hr.applicant.category    / color (integer)               : NEW 
 hr_recruitment / hr.job                   / stage_ids (many2many)         : DEL relation: hr.recruitment.stage
-hr_recruitment / hr.job                   / survey_id (many2one)          : module is now 'hr_recruitment_survey' ('hr_recruitment')
+hr_recruitment / hr.job                   / survey_id (many2one)          : module is now 'hw_escpos' ('hr_recruitment')
 hr_recruitment / hr.recruitment.stage     / job_id (many2one)             : NEW relation: hr.job
 hr_recruitment / hr.recruitment.stage     / job_ids (many2many)           : DEL relation: hr.job
 ---XML records in module 'hr_recruitment'---

@@ -1,5 +1,5 @@
 ---Fields in module 'website_quote'---
-website_quote / payment.transaction      / sale_order_id (many2one)      : module is now 'website_portal_sale' ('website_quote')
+website_quote / payment.transaction      / sale_order_id (many2one)      : module is now 'hw_escpos' ('website_quote')
 website_quote / sale.order               / require_payment (selection)   : selection_keys is now '[0, 1, 2]' ('[0, 1]')
 website_quote / sale.order.option        / layout_category_id (many2one) : NEW relation: sale.layout_category
 website_quote / sale.order.option        / sequence (integer)            : NEW 
