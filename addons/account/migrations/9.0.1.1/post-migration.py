@@ -450,17 +450,19 @@ def fill_blacklisted_fields(cr):
             SELECT
                 ail.id,
                 ail.price_subtotal,
-                CASE
+                (CASE
                     WHEN ai.type IN ('in_refund', 'out_refund')
                     THEN ROUND(-ail.price_subtotal * er.effective_rate, 2)
                     ELSE ROUND(ail.price_subtotal  * er.effective_rate, 2)
-                END
+                END) AS price_subtotal_signed,
+                ai.currency_id AS currency_id
             FROM account_invoice_line ail
             JOIN account_invoice ai ON ail.invoice_id = ai.id
             JOIN effective_rates er ON ai.id = er.invoice_id
         )
         UPDATE account_invoice_line
-        SET price_subtotal_signed = subquery.price_subtotal_signed
+        SET price_subtotal_signed = subquery.price_subtotal_signed,
+            currency_id = subquery.currency_id
         FROM subquery
         WHERE account_invoice_line.id = subquery.id
         """
