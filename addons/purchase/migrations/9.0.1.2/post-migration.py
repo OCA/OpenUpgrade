@@ -26,10 +26,12 @@ def set_dummy_product(env):
 
 def pricelist_property(cr, env):
     # Created res.currency properties from Purchase Pricelist
-    property_rec = env['ir.property'].\
-        search([('name', '=', 'property_product_pricelist_purchase'),
-                '|', ('res_id', 'like', 'res.partner%'), ('res_id', '=',
-                                                          False)])
+    property_rec = env['ir.property'].search(
+        [('name', '=', 'property_product_pricelist_purchase'),
+         '|',
+         ('res_id', 'like', 'res.partner%'),
+         ('res_id', '=', False)]
+    )
     pricelist = []
     partner = []
     currency = []
@@ -41,6 +43,11 @@ def pricelist_property(cr, env):
             pricelist_id = int(pricelist_id)
             currency_rec = env['product.pricelist'].\
                 search_read([('id', 'in', [pricelist_id])], ['currency_id'])
+            if not currency_rec:
+                # Some DB may have incorrect pricelist ids in this
+                # property.  It seems that some old bug left ir.properties
+                # when pricelists where deleted.
+                continue
             currency.append(currency_rec[0]['currency_id'][0])
             pricelist.append(pricelist_id)
             if res_partner:
