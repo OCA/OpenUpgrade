@@ -53,6 +53,7 @@ script:
     - pip install -q -r requirements.txt
     # this crashes if there is no test data
     - if [ -s ../test_data90.yml ]; then ./openerp-server --database=$DB --test-file=`readlink -f ../test_data90.yml` --test-commit --stop-after-init; fi
+    # Line below may fail occasionaly due to Travis bug:
     - git reset -q --hard $TRAVIS_COMMIT
     # Install Python requirements of target release
     - pip install -q -r requirements.txt
