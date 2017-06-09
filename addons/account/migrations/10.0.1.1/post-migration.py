@@ -45,8 +45,12 @@ def migrate(env, version):
     cr.execute(
         '''UPDATE account_full_reconcile
         SET exchange_partial_rec_id = subquery.rate_diff_partial_rec_id
+        , exchange_move_id = subquery.move_id
         FROM (
-            SELECT apr.full_reconcile_id, am.rate_diff_partial_rec_id
+            SELECT
+                apr.full_reconcile_id,
+                am.rate_diff_partial_rec_id,
+                am.id as move_id
             FROM account_partial_reconcile apr
             JOIN account_move am
             ON apr.id = am.rate_diff_partial_rec_id
