@@ -7,7 +7,7 @@ account      / account.bank.statement   / website_message_ids (one2many): DEL re
 # NOTHING TO DO
 
 account      / account.bank.statement.line / move_name (char)              : NEW
-# TODO: Calculate during post-migration using the move name associated to the
+# DONE: Calculate during post-migration using the move name associated to the
 # the move  lines that have that statement_id
 
 account      / account.full.reconcile   / exchange_move_id (many2one)   : NEW relation: account.move

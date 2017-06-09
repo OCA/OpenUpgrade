@@ -57,3 +57,15 @@ def migrate(env, version):
         ) AS subquery
         WHERE account_full_reconcile.id = subquery.full_reconcile_id
         ''')
+    # Update move_name on account_bank_statement_line:
+    cr.execute(
+        '''UPDATE account_bank_statement_line
+        SET move_name = subquery.name
+        FROM (
+            SELECT
+                am.name,
+                am.statement_line_id
+            FROM account_move am
+        ) AS subquery
+        WHERE account_bank_statement_line.id = subquery.statement_line_id
+        ''')
