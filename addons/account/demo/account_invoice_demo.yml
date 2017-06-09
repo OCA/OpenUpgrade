@@ -12,9 +12,11 @@
       - product_id: product.consu_delivery_02
         price_unit: 642.0
         quantity: 5
+        account_id: account.openupgrade_demo_sales_account
       - product_id: product.consu_delivery_03
         price_unit: 280.0
         quantity: 5.0
+        account_id: account.openupgrade_demo_sales_account
 -
   !python {model: account.invoice, id: demo_invoice_1}:
     self.action_invoice_open()
@@ -27,9 +29,11 @@
       - product_id: product.consu_delivery_03
         price_unit: 50.0
         quantity: 3
+        account_id: account.openupgrade_demo_sales_account
       - product_id: product.consu_delivery_01
         price_unit: 25
         quantity: 20
+        account_id: account.openupgrade_demo_sales_account
 -
   !python {model: account.invoice, id: demo_invoice_2}:
     self.action_invoice_open()
@@ -42,9 +46,11 @@
       - product_id: product.consu_delivery_01
         price_unit: 90.0
         quantity: 5
+        account_id: account.openupgrade_demo_sales_account
       - product_id: product.consu_delivery_03
         price_unit: 15.0
         quantity: 5.0
+        account_id: account.openupgrade_demo_sales_account
 -
   !python {model: account.invoice, id: demo_invoice_3}:
     self.action_invoice_open()
@@ -66,10 +72,12 @@
         quantity: 1.0
         product_id: product.product_delivery_01
         uom_id: product.product_uom_unit
+        account_id: account.openupgrade_demo_purchase_account
       - price_unit: 4.0
         quantity: 1.0
         product_id: product.product_order_01
         uom_id: product.product_uom_unit
+        account_id: account.openupgrade_demo_purchase_account
 -
   !record {model: account.invoice, id: demo_invoice_january_wages}:
     partner_id: base.res_partner_12
