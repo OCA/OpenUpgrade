@@ -46,6 +46,8 @@ renamed_modules = {
     'purchase_analytic_plans': 'purchase_analytic_distribution',
     # OCA/hr
     'hr_expense_analytic_plans': 'hr_expense_analytic_distribution',
+    # OCA/project
+    'project_work_time_control': 'project_timesheet_time_control',
 }
 
 renamed_models = {
