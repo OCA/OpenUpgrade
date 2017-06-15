@@ -1,28 +1,6 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    This module Copyright (C) 2012-2014 OpenUpgrade community
-#    https://launchpad.net/~openupgrade-committers
-#
-#    Contributors:
-#    Therp BV <http://therp.nl>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-
+# © 2012-2017 2012-2014 OpenUpgrade community <https://odoo-community.org/>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import time
 try:
     from openerp.osv.orm import TransientModel
@@ -34,6 +12,14 @@ except ImportError:
     from osv import fields
     import pooler
     from openupgrade_records.blacklist import BLACKLIST_MODULES
+from openerp.tools.translate import _
+
+
+STATE_SELECTION = [
+    ('init', 'init'),
+    ('confirm', 'confirm'),
+    ('ready', 'ready'),
+]
 
 
 class install_all_wizard(TransientModel):
@@ -41,33 +27,22 @@ class install_all_wizard(TransientModel):
     _description = 'OpenUpgrade Install All Wizard'
     _columns = {
         'state': fields.selection(
-            [('init', 'init'), ('ready', 'ready')], 'State', readonly=True),
+            STATE_SELECTION,
+            'State',
+            readonly=True,
+        ),
+        'no_localization': fields.boolean(
+            string='Do not install localization modules',
+            readonly=True,
+            states={'init': [('readonly', False)]}
+        ),
         'to_install': fields.integer(
             'Number of modules to install', readonly=True),
         }
     _defaults = {
         'state': lambda *a: 'init',
-        }
-
-    def default_get(self, cr, uid, fields, context=None):
-        """
-        Update module list and retrieve the number
-        of installable modules
-        """
-        res = super(install_all_wizard, self).default_get(
-            cr, uid, fields, context=None)
-        module_obj = self.pool.get('ir.module.module')
-        update, add = module_obj.update_list(cr, uid,)
-        print "%s modules added" % add
-        module_ids = module_obj.search(
-            cr, uid, [
-                ('state', 'not in',
-                 ['installed', 'uninstallable', 'unknown'])
-                ])
-        res.update(
-            {'to_install': module_ids and len(module_ids) or False}
-            )
-        return res
+        'no_localization': True,
+    }
 
     def quirk_fiscalyear(self, cr, uid, ids, context=None):
         """
@@ -105,23 +80,72 @@ class install_all_wizard(TransientModel):
                 'date_stop': "%s-12-31" % time.strftime('%Y'),
                 })
 
+    def _get_module_domain(self, no_localization):
+        module_domain = [
+            ('state', 'not in',
+                ['installed', 'uninstallable', 'unknown']),
+            ('category_id.name', '!=', 'Tests'),
+            ('name', 'not in', BLACKLIST_MODULES),
+        ]
+        if no_localization:
+            module_domain.append(('name', 'not like', 'l10n_'))
+        return module_domain
+
+    def redisplay_wizard_screen(self, cr, uid, ids, context=None):
+        """Redisplay wizardscreen."""
+        return {
+            'name': _('Install (nearly) all modules'),
+            'view_type': 'form',
+            'view_mode': 'form',
+            'views': [(False, 'form')],
+            'res_model': self._name,
+            'res_id': ids[0],
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }
+
+    def confirm_install(self, cr, uid, ids, context=None):
+        """Show users number of modules to be installed."""
+        user_input = self.browse(cr, uid, ids, context=context)[0]
+        module_obj = self.pool.get('ir.module.module')
+        update, add = module_obj.update_list(cr, uid,)
+        module_domain = self._get_module_domain(user_input.no_localization)
+        module_count = module_obj.search_count(
+            cr, uid, module_domain, context=context
+        )
+        if module_count:
+            self.write(
+                cr, uid, ids, {
+                    'state': 'confirm',
+                    'to_install': module_count,
+                },
+                context=context
+            )
+        else:
+            self.write(
+                cr, uid, ids, {
+                    'state': 'ready',
+                    'to_install': module_count,
+                },
+                context=context
+            )
+        return self.redisplay_wizard_screen(cr, uid, ids, context=context)
+
     def install_all(self, cr, uid, ids, context=None):
         """
         Main wizard step. Set all installable modules to install
         and actually install them. Exclude testing modules.
         """
+        user_input = self.browse(cr, uid, ids, context=context)[0]
         module_obj = self.pool.get('ir.module.module')
+        module_domain = self._get_module_domain(user_input.no_localization)
         module_ids = module_obj.search(
-            cr, uid, [
-                ('state', 'not in',
-                 ['installed', 'uninstallable', 'unknown']),
-                ('category_id.name', '!=', 'Tests'),
-                ('name', 'not in', BLACKLIST_MODULES),
-                ], context=context)
+            cr, uid, module_domain, context=context
+        )
         if module_ids:
             module_obj.write(
                 cr, uid, module_ids, {'state': 'to install'}, context=context)
             cr.commit()
             _db, pool = pooler.restart_pool(cr.dbname, update_module=True)
-            self.write(cr, uid, ids, {'state': 'ready'}, context)
-        return True
+        self.write(cr, uid, ids, {'state': 'ready'}, context)
+        return self.redisplay_wizard_screen(cr, uid, ids, context=context)
