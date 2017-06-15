@@ -8,6 +8,7 @@ product      / product.product          / item_ids (many2many)          : type i
 product      / product.template         / default_code (char)           : now a function
 product      / product.template         / pricelist_id (many2one)       : not a function anymore
 product      / product.template         / product_manager (many2one)    : DEL relation: res.users
+product      / product.template         / purchase_ok (boolean)         : previously in module purchase
 product      / product.template         / state (selection)             : DEL selection_keys: ['draft', 'end', 'obsolete', 'sellable']
 product      / product.template         / type (selection)              : selection_keys is now '['consu', 'service']' ('function')
 product      / res.country.group        / pricelist_ids (many2many)     : NEW relation: product.pricelist

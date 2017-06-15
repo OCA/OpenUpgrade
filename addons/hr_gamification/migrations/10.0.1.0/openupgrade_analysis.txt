@@ -1,5 +1,6 @@
 ---Fields in module 'hr_gamification'---
 hr_gamification / hr.employee              / direct_badge_ids (one2many)   : NEW relation: gamification.badge.user
+hr_gamification / res.users                / badge_ids (one2many)          : previously in module website_forum
 hr_gamification / res.users                / goal_ids (one2many)           : NEW relation: gamification.goal
 ---XML records in module 'hr_gamification'---
 NEW ir.rule: gamification.goal_gamification_manager_visibility

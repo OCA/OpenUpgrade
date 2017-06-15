@@ -12,6 +12,7 @@ base         / res.currency             / symbol (char)                 : now re
 base         / res.partner              / birthdate (char)              : DEL 
 base         / res.partner              / company_name (char)           : NEW 
 base         / res.partner              / company_type (selection)      : now a function
+base         / res.partner              / self (many2one)               : previously in module website_partner
 base         / res.partner              / use_parent_address (boolean)  : DEL 
 ---XML records in module 'base'---
 NEW ir.actions.act_url: base.action_open_website

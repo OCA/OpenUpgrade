@@ -1,4 +1,6 @@
 ---Fields in module 'hr_recruitment_survey'---
+hr_recruitment_survey / hr.applicant             / response_id (many2one)        : previously in module hr_recruitment
+hr_recruitment_survey / hr.job                   / survey_id (many2one)          : previously in module hr_recruitment
 ---XML records in module 'hr_recruitment_survey'---
 NEW ir.model.access: hr_recruitment_survey.access_survey_hr_user
 NEW ir.ui.view: hr_recruitment_survey.crm_case_form_view_job_inherit

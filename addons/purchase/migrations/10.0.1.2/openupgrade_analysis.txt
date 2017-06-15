@@ -1,9 +1,13 @@
 ---Fields in module 'purchase'---
+purchase     / product.template         / purchase_line_warn (selection): previously in module warning
+purchase     / product.template         / purchase_line_warn_msg (text) : previously in module warning
 purchase     / product.template         / purchase_ok (boolean)         : module is now 'product' ('purchase')
 purchase     / purchase.order           / website_message_ids (one2many): DEL relation: mail.message
 purchase     / purchase.order.line      / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
 purchase     / purchase.order.line      / sequence (integer)            : NEW 
 purchase     / res.company              / po_lock (selection)           : NEW selection_keys: ['edit', 'lock']
+purchase     / res.partner              / purchase_warn (selection)     : previously in module warning
+purchase     / res.partner              / purchase_warn_msg (text)      : previously in module warning
 ---XML records in module 'purchase'---
 NEW ir.actions.act_window: purchase.product_product_action
 NEW ir.actions.act_window: purchase.purchase_order_action_generic

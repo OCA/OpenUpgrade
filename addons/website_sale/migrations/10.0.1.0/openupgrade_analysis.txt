@@ -1,5 +1,7 @@
 ---Fields in module 'website_sale'---
 website_sale / crm.team                 / website_ids (one2many)        : NEW relation: website
+website_sale / delivery.carrier         / website_published (boolean)   : previously in module website_sale_delivery
+website_sale / delivery.carrier         / website_url (char)            : previously in module website_sale_delivery
 website_sale / product.attribute.value  / color (char)                  : was renamed to html_color [nothing to do]
 website_sale / product.image            / image (binary)                : NEW 
 website_sale / product.image            / name (char)                   : NEW 
