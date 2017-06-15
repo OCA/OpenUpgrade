@@ -1,5 +1,7 @@
 ---Fields in module 'sale_timesheet'---
 sale_timesheet / hr.employee              / account_id (many2one)         : NEW relation: account.account
+sale_timesheet / procurement.order        / task_id (many2one)            : previously in module sale_service
+sale_timesheet / product.template         / project_id (many2one)         : previously in module sale_service
 sale_timesheet / product.template         / track_service (False)         : selection_keys is now '['manual', 'task', 'timesheet']' ('['manual', 'timesheet']')
 sale_timesheet / project.task             / procurement_id (many2one)     : NEW relation: procurement.order
 ---XML records in module 'sale_timesheet'---

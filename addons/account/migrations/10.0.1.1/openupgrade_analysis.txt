@@ -5,13 +5,18 @@ account      / account.bank.statement   / website_message_ids (one2many): DEL re
 account      / account.bank.statement.line / move_name (char)              : NEW 
 account      / account.full.reconcile   / exchange_move_id (many2one)   : NEW relation: account.move
 account      / account.full.reconcile   / exchange_partial_rec_id (many2one): NEW relation: account.partial.reconcile
+account      / account.full.reconcile   / name (char)                   : previously in module account_full_reconcile
+account      / account.full.reconcile   / partial_reconcile_ids (one2many): previously in module account_full_reconcile
+account      / account.full.reconcile   / reconciled_line_ids (one2many): previously in module account_full_reconcile
 account      / account.invoice          / refund_invoice_id (many2one)  : NEW relation: account.invoice
 account      / account.invoice          / website_message_ids (one2many): DEL relation: mail.message
 account      / account.invoice.line     / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
 account      / account.move             / partner_id (many2one)         : now a function
 account      / account.move             / rate_diff_partial_rec_id (many2one): DEL relation: account.partial.reconcile
 account      / account.move.line        / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+account      / account.move.line        / full_reconcile_id (many2one)  : previously in module account_full_reconcile
 account      / account.move.line        / tax_exigible (boolean)        : NEW 
+account      / account.partial.reconcile / full_reconcile_id (many2one)  : previously in module account_full_reconcile
 account      / account.payment          / move_name (char)              : NEW 
 account      / account.reconcile.model  / account_id (many2one)         : NEW relation: account.account
 account      / account.reconcile.model  / amount (float)                : NEW required: required, req_default: function
@@ -48,6 +53,8 @@ account      / account.tax              / tax_adjustment (boolean)      : NEW
 account      / account.tax.template     / tax_adjustment (boolean)      : NEW 
 account      / account.tax.template     / tax_group_id (many2one)       : NEW relation: account.tax.group
 account      / res.company              / paypal_account (char)         : DEL 
+account      / res.partner              / invoice_warn (selection)      : previously in module warning
+account      / res.partner              / invoice_warn_msg (text)       : previously in module warning
 account      / res.partner              / trust (selection)             : NEW selection_keys: ['bad', 'good', 'normal']
 ---XML records in module 'account'---
 NEW account.account.type: account.data_account_type_credit_card

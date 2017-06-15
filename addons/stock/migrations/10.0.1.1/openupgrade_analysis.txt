@@ -7,6 +7,8 @@ stock        / product.product          / stock_quant_ids (one2many)    : NEW re
 stock        / product.template         / location_id (many2one)        : not a function anymore
 stock        / product.template         / type (False)                  : NEW selection_keys: ['consu', 'product', 'service'], mode: modify
 stock        / product.template         / warehouse_id (many2one)       : not a function anymore
+stock        / res.partner              / picking_warn (selection)      : previously in module warning
+stock        / res.partner              / picking_warn_msg (text)       : previously in module warning
 stock        / stock.inventory          / category_id (many2one)        : NEW relation: product.category
 stock        / stock.inventory          / exhausted (boolean)           : NEW 
 stock        / stock.inventory.line     / state (char)                  : selection_keys is now 'function' ('False')

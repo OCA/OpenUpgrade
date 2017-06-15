@@ -2,6 +2,7 @@
 hr_timesheet / account.analytic.account / use_timesheets (boolean)      : DEL 
 hr_timesheet / account.analytic.line    / is_timesheet (boolean)        : DEL 
 hr_timesheet / account.analytic.line    / project_id (many2one)         : NEW relation: project.project
+hr_timesheet / account.analytic.line    / task_id (many2one)            : previously in module project_timesheet
 hr_timesheet / project.project          / allow_timesheets (boolean)    : NEW 
 hr_timesheet / project.project          / subtask_project_id (many2one) : NEW relation: project.project
 hr_timesheet / project.task             / parent_id (many2one)          : NEW relation: project.task

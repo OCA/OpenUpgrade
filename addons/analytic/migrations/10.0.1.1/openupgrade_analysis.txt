@@ -1,6 +1,7 @@
 ---Fields in module 'analytic'---
 analytic     / account.analytic.account / account_type (selection)      : DEL required: required, selection_keys: ['closed', 'normal'], req_default: normal
 analytic     / account.analytic.account / active (boolean)              : NEW 
+analytic     / account.analytic.line    / currency_id (many2one)        : previously in module account
 ---XML records in module 'analytic'---
 NEW ir.actions.act_window: analytic.account_analytic_tag_action
 DEL ir.actions.act_window: analytic.action_account_analytic_chart

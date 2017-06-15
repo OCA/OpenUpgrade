@@ -80,6 +80,11 @@ def fieldprint(old, new, field, text, reprs):
     if not text:
         text = "%s is now '%s' ('%s')" % (field, new[field], old[field])
     reprs[module_map(old['module'])].append("%s: %s" % (fullrepr, text))
+    if field == 'module':
+        text = "previously in module %s" % old[field]
+        fullrepr = '%-12s / %-24s / %-30s' % (
+            new['module'], old['model'], fieldrepr)
+        reprs[module_map(new['module'])].append("%s: %s" % (fullrepr, text))
 
 
 def report_generic(new, old, attrs, reprs):
@@ -130,8 +135,17 @@ def compare_sets(old_records, new_records):
     """
     reprs = collections.defaultdict(list)
 
-    for record in old_records + new_records:
-        record['matched'] = False
+    def clean_records(records):
+        result = []
+        for record in records:
+            if record['field'] not in IGNORE_FIELDS:
+                record['matched'] = False
+                result.append(record)
+        return result
+
+    old_records = clean_records(old_records)
+    new_records = clean_records(new_records)
+
     origlen = len(old_records)
     new_models = set([column['model'] for column in new_records])
     old_models = set([column['model'] for column in old_records])
@@ -200,8 +214,7 @@ def compare_sets(old_records, new_records):
         ]
     for column in old_records:
         # we do not care about removed function fields
-        if (column['isfunction'] or column['isrelated'] or
-                column['field'] in IGNORE_FIELDS):
+        if column['isfunction'] or column['isrelated']:
             continue
         if column['mode'] == 'create':
             column['mode'] = ''
@@ -212,8 +225,7 @@ def compare_sets(old_records, new_records):
 
     for column in new_records:
         # we do not care about newly added function fields
-        if (column['isfunction'] or column['isrelated'] or
-                column['field'] in IGNORE_FIELDS):
+        if column['isfunction'] or column['isrelated']:
             continue
         if column['mode'] == 'create':
             column['mode'] = ''
