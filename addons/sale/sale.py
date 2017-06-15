@@ -29,7 +29,13 @@ class SaleOrder(models.Model):
             amount_untaxed = amount_tax = 0.0
             for line in order.order_line:
                 amount_untaxed += line.price_subtotal
-                amount_tax += line.price_tax
+                # FORWARDPORT UP TO 10.0
+                if order.company_id.tax_calculation_rounding_method == 'round_globally':
+                    price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+                    taxes = line.tax_id.compute_all(price, line.order_id.currency_id, line.product_uom_qty, product=line.product_id, partner=line.order_id.partner_id)
+                    amount_tax += sum(t.get('amount', 0.0) for t in taxes.get('taxes', []))
+                else:
+                    amount_tax += line.price_tax
             order.update({
                 'amount_untaxed': order.pricelist_id.currency_id.round(amount_untaxed),
                 'amount_tax': order.pricelist_id.currency_id.round(amount_tax),
@@ -51,16 +57,17 @@ class SaleOrder(models.Model):
         refund is not directly linked to the SO.
         """
         for order in self:
-            invoice_ids = order.order_line.mapped('invoice_lines').mapped('invoice_id')
+            invoice_ids = order.order_line.mapped('invoice_lines').mapped('invoice_id').filtered(lambda r: r.type in ['out_invoice', 'out_refund'])
             # Search for invoices which have been 'cancelled' (filter_refund = 'modify' in
             # 'account.invoice.refund')
             # use like as origin may contains multiple references (e.g. 'SO01, SO02')
-            refunds = invoice_ids.search([('origin', 'like', order.name)])
+            refunds = invoice_ids.search([('origin', 'like', order.name)]).filtered(lambda r: r.type in ['out_invoice', 'out_refund'])
             invoice_ids |= refunds.filtered(lambda r: order.name in [origin.strip() for origin in r.origin.split(',')])
             # Search for refunds as well
             refund_ids = self.env['account.invoice'].browse()
             if invoice_ids:
-                refund_ids = refund_ids.search([('type', '=', 'out_refund'), ('origin', 'in', invoice_ids.mapped('number')), ('origin', '!=', False)])
+                for inv in invoice_ids:
+                    refund_ids += refund_ids.search([('type', '=', 'out_refund'), ('origin', '=', inv.number), ('origin', '!=', False), ('journal_id', '=', inv.journal_id.id)])
 
             line_invoice_status = [line.invoice_status for line in order.order_line]
 
@@ -172,14 +179,12 @@ class SaleOrder(models.Model):
         return super(SaleOrder, self)._track_subtype(init_values)
 
     @api.multi
-    @api.onchange('partner_shipping_id')
+    @api.onchange('partner_shipping_id', 'partner_id')
     def onchange_partner_shipping_id(self):
         """
         Trigger the change of fiscal position when the shipping address is modified.
         """
-        fiscal_position = self.env['account.fiscal.position'].get_fiscal_position(self.partner_id.id, self.partner_shipping_id.id)
-        if fiscal_position:
-            self.fiscal_position_id = fiscal_position
+        self.fiscal_position_id = self.env['account.fiscal.position'].get_fiscal_position(self.partner_id.id, self.partner_shipping_id.id)
         return {}
 
     @api.multi
@@ -219,8 +224,11 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code('sale.order') or 'New'
+        if vals.get('name', _('New')) == _('New'):
+            if 'company_id' in vals:
+                vals['name'] = self.env['ir.sequence'].with_context(force_company=vals['company_id']).next_by_code('sale.order') or _('New')
+            else:
+                vals['name'] = self.env['ir.sequence'].next_by_code('sale.order') or _('New')
 
         # Makes sure partner_invoice_id', 'partner_shipping_id' and 'pricelist_id' are defined
         if any(f not in vals for f in ['partner_invoice_id', 'partner_shipping_id', 'pricelist_id']):
@@ -591,7 +599,7 @@ class SaleOrderLine(models.Model):
 
             vals = line._prepare_order_line_procurement(group_id=line.order_id.procurement_group_id.id)
             vals['product_qty'] = line.product_uom_qty - qty
-            new_proc = self.env["procurement.order"].create(vals)
+            new_proc = self.env["procurement.order"].with_context(procurement_autorun_defer=True).create(vals)
             new_procs += new_proc
         new_procs.run()
         return new_procs
@@ -603,6 +611,10 @@ class SaleOrderLine(models.Model):
     @api.model
     def _get_analytic_track_service(self):
         return []
+
+    @api.model
+    def _get_purchase_price(self, pricelist, product, product_uom, date):
+        return {}
 
     @api.model
     def create(self, values):
@@ -745,13 +757,14 @@ class SaleOrderLine(models.Model):
 
         vals = {}
         domain = {'product_uom': [('category_id', '=', self.product_id.uom_id.category_id.id)]}
-        if not self.product_uom or (self.product_id.uom_id.category_id.id != self.product_uom.category_id.id):
+        if not self.product_uom or (self.product_id.uom_id.id != self.product_uom.id):
             vals['product_uom'] = self.product_id.uom_id
+            vals['product_uom_qty'] = 1.0
 
         product = self.product_id.with_context(
             lang=self.order_id.partner_id.lang,
             partner=self.order_id.partner_id.id,
-            quantity=self.product_uom_qty,
+            quantity=vals.get('product_uom_qty') or self.product_uom_qty,
             date=self.order_id.date_order,
             pricelist=self.order_id.pricelist_id.id,
             uom=self.product_uom.id
@@ -811,7 +824,8 @@ class MailComposeMessage(models.TransientModel):
             order = self.env['sale.order'].browse([self._context['default_res_id']])
             if order.state == 'draft':
                 order.state = 'sent'
-        return super(MailComposeMessage, self.with_context(mail_post_autofollow=True)).send_mail(auto_commit=auto_commit)
+            self = self.with_context(mail_post_autofollow=True)
+        return super(MailComposeMessage, self).send_mail(auto_commit=auto_commit)
 
 
 class AccountInvoice(models.Model):
@@ -890,7 +904,7 @@ class ProductTemplate(models.Model):
     def action_view_sales(self):
         self.ensure_one()
         action = self.env.ref('sale.action_product_sale_list')
-        product_ids = self.product_variant_ids.ids
+        product_ids = self.with_context(active_test=False).product_variant_ids.ids
 
         return {
             'name': action.name,

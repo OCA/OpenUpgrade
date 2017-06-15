@@ -53,6 +53,7 @@ odoo.define('website_sale.website_sale', function (require) {
 
 var ajax = require('web.ajax');
 var core = require('web.core');
+var utils = require('web.utils');
 var _t = core._t;
 var base = require('web_editor.base');
 
@@ -97,6 +98,9 @@ $('.oe_website_sale').each(function () {
         $inputs.each(function () {
             $(this).val( data[$(this).attr("name")] || "" );
         });
+
+        $selects.filter('[name="shipping_country_id"]').val(data['shipping_country_id']).change();
+        $selects.filter('[name="shipping_state_id"]').val(data['shipping_state_id']);
     });
 
     $(oe_website_sale).on("change", 'input[name="add_qty"]', function (event) {
@@ -140,7 +144,7 @@ $('.oe_website_sale').each(function () {
         if ($input.data('update_change')) {
             return;
         }
-      var value = parseInt($input.val(), 10);
+      var value = parseInt($input.val() || 0, 10);
       var $dom = $(this).closest('tr');
       var default_price = parseFloat($dom.find('.text-danger > span.oe_currency_value').text());
       var $dom_optional = $dom.nextUntil(':not(.optional_product.info)');
@@ -161,7 +165,7 @@ $('.oe_website_sale').each(function () {
         'set_qty': value})
         .then(function (data) {
             $input.data('update_change', false);
-            if (value !== parseInt($input.val(), 10)) {
+            if (value !== parseInt($input.val() || 0, 10)) {
                 $input.trigger('change');
                 return;
             }
@@ -208,7 +212,7 @@ $('.oe_website_sale').each(function () {
         var product_id = +$input.closest('*:has(input[name="product_id"])').find('input[name="product_id"]').val();
         var min = parseFloat($input.data("min") || 0);
         var max = parseFloat($input.data("max") || Infinity);
-        var quantity = ($link.has(".fa-minus").length ? -1 : 1) + parseFloat($input.val(),10);
+        var quantity = ($link.has(".fa-minus").length ? -1 : 1) + parseFloat($input.val() || 0, 10);
         // if they are more of one input for this product (eg: option modal)
         $('input[name="'+$input.attr("name")+'"]').add($input).filter(function () {
             var $prod = $(this).closest('*:has(input[name="product_id"])');
@@ -247,15 +251,24 @@ $('.oe_website_sale').each(function () {
     });
 
     function price_to_str(price) {
-        price = Math.round(price * 100) / 100;
-        var dec = Math.round((price % 1) * 100);
-        return price + (dec ? '' : '.0') + (dec%10 ? '' : '0');
+        var l10n = _t.database.parameters;
+        var precision = 2;
+
+        if ($(".decimal_precision").length) {
+            precision = parseInt($(".decimal_precision").last().data('precision'));
+        }
+        var formatted = _.str.sprintf('%.' + precision + 'f', price).split('.');
+        formatted[0] = utils.insert_thousand_seps(formatted[0]);
+        return formatted.join(l10n.decimal_point);
     }
 
     $(oe_website_sale).on('change', 'input.js_product_change', function () {
+        var self = this;
         var $parent = $(this).closest('.js_product');
-        $parent.find(".oe_default_price:first .oe_currency_value").html( price_to_str(+$(this).data('lst_price')) );
-        $parent.find(".oe_price:first .oe_currency_value").html(price_to_str(+$(this).data('price')) );
+        $.when(base.ready()).then(function() {
+            $parent.find(".oe_default_price:first .oe_currency_value").html( price_to_str(+$(self).data('lst_price')) );
+            $parent.find(".oe_price:first .oe_currency_value").html(price_to_str(+$(self).data('price')) );
+        });
         update_product_image(this, +$(this).val());
     });
 
@@ -263,8 +276,10 @@ $('.oe_website_sale').each(function () {
         var $ul = $(ev.target).closest('.js_add_cart_variants');
         var $parent = $ul.closest('.js_product');
         var $product_id = $parent.find('input.product_id').first();
-        var $price = $parent.find(".oe_price:first .oe_currency_value");
-        var $default_price = $parent.find(".oe_default_price:first .oe_currency_value");
+        var $price = $parent.find(".oe_price:first .oe_currency_value")
+            .add($('#product_confirmation').find(".oe_price"));
+        var $default_price = $parent.find(".oe_default_price:first .oe_currency_value")
+            .add($('#product_confirmation').find(".oe_default_price:first .oe_currency_value"));
         var $optional_price = $parent.find(".oe_optional:first .oe_currency_value");
         var variant_ids = $ul.data("attribute_value_ids");
         var values = [];
@@ -277,8 +292,10 @@ $('.oe_website_sale').each(function () {
         var product_id = false;
         for (var k in variant_ids) {
             if (_.isEmpty(_.difference(variant_ids[k][1], values))) {
-                $price.html(price_to_str(variant_ids[k][2]));
-                $default_price.html(price_to_str(variant_ids[k][3]));
+                $.when(base.ready()).then(function() {
+                    $price.html(price_to_str(variant_ids[k][2]));
+                    $default_price.html(price_to_str(variant_ids[k][3]));
+                });
                 if (variant_ids[k][3]-variant_ids[k][2]>0.2) {
                     $default_price.closest('.oe_website_sale').addClass("discount");
                     $optional_price.closest('.oe_optional').show().css('text-decoration', 'line-through');
@@ -332,21 +349,28 @@ $('.oe_website_sale').each(function () {
         $('input.js_variant_change, select.js_variant_change', this).first().trigger('change');
     });
 
-    var state_options = $("select[name='state_id']:enabled option:not(:first)");
+    $("select[name='state_id']").each(function(){
+        $(this).data('options', $(this).find('option:not(:first)'));
+    });
     $(oe_website_sale).on('change', "select[name='country_id']", function () {
-        var select = $("select[name='state_id']");
+        var select = $("select[name='state_id']:enabled");
+        var state_options = select.data('options');
+        var selected_state = select.val();
         state_options.detach();
         var displayed_state = state_options.filter("[data-country_id="+($(this).val() || 0)+"]");
+        select.val(selected_state);
         var nb = displayed_state.appendTo(select).show().size();
         select.parent().toggle(nb>=1);
     });
     $(oe_website_sale).find("select[name='country_id']").change();
 
-    var shipping_state_options = $("select[name='shipping_state_id']:enabled option:not(:first)");
+    var shipping_state_options = $("select[name='shipping_state_id'] option:not(:first)");
     $(oe_website_sale).on('change', "select[name='shipping_country_id']", function () {
         var select = $("select[name='shipping_state_id']");
+        var selected_state = select.val();
         shipping_state_options.detach();
         var displayed_state = shipping_state_options.filter("[data-country_id="+($(this).val() || 0)+"]");
+        select.val(selected_state);
         var nb = displayed_state.appendTo(select).show().size();
         select.parent().toggle(nb>=1);
     });

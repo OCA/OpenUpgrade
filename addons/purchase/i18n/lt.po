@@ -3,13 +3,14 @@
 # * purchase
 # 
 # Translators:
+# Šarūnas Ažna <sarunas.azna@gmail.com>, 2016
 # S Butko <silvija.butko@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 09:18+0000\n"
-"PO-Revision-Date: 2016-06-22 09:11+0000\n"
+"PO-Revision-Date: 2017-06-01 15:09+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Lithuanian (http://www.transifex.com/odoo/odoo-9/language/lt/)\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +33,7 @@ msgid ""
 "       &nbsp;&nbsp;<strong>REFERENCES</strong><br />\n"
 "       &nbsp;&nbsp;Order number: <strong>${object.name}</strong><br />\n"
 "       &nbsp;&nbsp;Order total: <strong>${object.amount_total} ${object.currency_id.name}</strong><br />\n"
-"       &nbsp;&nbsp;Order date: ${object.date_order}<br />\n"
+"       &nbsp;&nbsp;Order date: ${format_tz(object.date_order, tz=user.tz, context={'lang':object.partner_id.lang})}<br />\n"
 "       % if object.origin:\n"
 "       &nbsp;&nbsp;Order reference: ${object.origin}<br />\n"
 "       % endif\n"
@@ -86,7 +87,7 @@ msgid ""
 "    <p style=\"border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
 "       &nbsp;&nbsp;<strong>REFERENCES</strong><br />\n"
 "       &nbsp;&nbsp;RFQ number: <strong>${object.name}</strong><br />\n"
-"       &nbsp;&nbsp;RFQ date: ${object.date_order}<br />\n"
+"       &nbsp;&nbsp;RFQ date: ${format_tz(object.date_order, tz=user.tz, context={'lang':object.partner_id.lang})}<br />\n"
 "       % if object.origin:\n"
 "       &nbsp;&nbsp;RFQ reference: ${object.origin}<br />\n"
 "       % endif\n"
@@ -138,7 +139,7 @@ msgstr ""
 #: code:addons/purchase/stock.py:62
 #, python-format
 msgid " Buy"
-msgstr ""
+msgstr "Pirkti"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_product_product_purchase_count
@@ -149,7 +150,7 @@ msgstr "# Pirkimai"
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_res_partner_supplier_invoice_count
 msgid "# Vendor Bills"
-msgstr ""
+msgstr "# Tiekėjų sąskaitos"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_invoice_count
@@ -217,27 +218,27 @@ msgstr ""
 #: model:ir.ui.view,arch_db:purchase.report_purchaseorder_document
 #: model:ir.ui.view,arch_db:purchase.report_purchasequotation_document
 msgid "<strong>Shipping address:</strong>"
-msgstr ""
+msgstr "<strong>Pristatymo adresas:</strong>"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.report_purchaseorder_document
 msgid "<strong>Taxes</strong>"
-msgstr ""
+msgstr "<strong>Mokesčiai</strong>"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.report_purchaseorder_document
 msgid "<strong>Total Without Taxes</strong>"
-msgstr ""
+msgstr "<strong>Viso be mokesčių</strong>"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.report_purchaseorder_document
 msgid "<strong>Total</strong>"
-msgstr ""
+msgstr "<strong>Suma</strong>"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.report_purchaseorder_document
 msgid "<strong>Unit Price</strong>"
-msgstr ""
+msgstr "<strong>Vieneto kaina</strong>"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.report_purchaseorder_document
@@ -247,7 +248,7 @@ msgstr ""
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Reikia atlikti veiksmą"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_account_invoice_purchase_id
@@ -295,7 +296,7 @@ msgstr ""
 #: model:ir.model.fields,help:purchase.field_purchase_config_settings_group_uom
 msgid ""
 "Allows you to select and maintain different units of measure for products."
-msgstr ""
+msgstr "Leisti pasirinkti ir palaikyti skirtingus prekių matavimo vienetus."
 
 #. module: purchase
 #: model:ir.model.fields,help:purchase.field_account_config_settings_group_analytic_account_for_purchases
@@ -680,12 +681,12 @@ msgstr "Prenumeratoriai"
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_message_channel_ids
 msgid "Followers (Channels)"
-msgstr ""
+msgstr "Prenumeratoriai (kanalų)"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Prenumeratoriai (partneriai)"
 
 #. module: purchase
 #: selection:res.company,po_double_validation:0
@@ -739,7 +740,7 @@ msgstr "Jeigu pažymėta, nauji pranešimai reikalaus jūsų dėmesio."
 #. module: purchase
 #: model:ir.model.fields,help:purchase.field_purchase_order_message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Jeigu pažymėtas - naujos  žinutės reikalauja Jūsų dėmesio."
 
 #. module: purchase
 #: code:addons/purchase/purchase.py:184
@@ -825,7 +826,7 @@ msgstr ""
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Yra prenumeratorius"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_message_last_post
@@ -1024,7 +1025,7 @@ msgstr "Pirkimai"
 #. module: purchase
 #: model:ir.model,name:purchase.model_mail_mail
 msgid "Outgoing Mails"
-msgstr ""
+msgstr "Išeinantis paštas"
 
 #. module: purchase
 #: model:mail.template,report_name:purchase.email_template_edi_purchase_done
@@ -1040,7 +1041,7 @@ msgstr "Partneris"
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_report_country_id
 msgid "Partner Country"
-msgstr ""
+msgstr "Partnerio šalis"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.view_purchase_order_search
@@ -1670,7 +1671,7 @@ msgstr "Neskaityti pranešimai"
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
+msgstr "Neperskaitytų žinučių skaičiuoklis"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.purchase_order_tree
@@ -1762,7 +1763,7 @@ msgstr ""
 #. module: purchase
 #: model:ir.model.fields,help:purchase.field_mail_mail_website_published
 msgid "Visible on the website as a comment"
-msgstr ""
+msgstr "Matomas tinklalapyje kaip komentaras"
 
 #. module: purchase
 #: selection:purchase.order,invoice_status:0

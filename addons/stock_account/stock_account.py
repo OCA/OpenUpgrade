@@ -30,7 +30,11 @@ class account_invoice_line(osv.osv):
 
     def _get_anglo_saxon_price_unit(self):
         self.ensure_one()
-        return self.product_id.standard_price
+        price = self.product_id.standard_price
+        if not self.uom_id or self.product_id.uom_id == self.uom_id:
+            return price
+        else:
+            return self.product_id.uom_id._compute_price(self.product_id.uom_id.id, price, to_uom_id=self.uom_id.id)
 
     def _get_price(self, cr, uid, inv, company_currency, i_line, price_unit):
         cur_obj = self.pool.get('res.currency')
@@ -79,17 +83,25 @@ class account_invoice(osv.osv):
             cacc = accounts['expense'].id
             if dacc and cacc:
                 price_unit = i_line._get_anglo_saxon_price_unit()
+                if inv.currency_id.id != company_currency:
+                    currency_id = inv.currency_id.id
+                    amount_currency = self.env['account.invoice.line']._get_price(inv, company_currency, i_line, price_unit)
+                else:
+                    currency_id = False
+                    amount_currency = False
                 return [
                     {
                         'type':'src',
                         'name': i_line.name[:64],
                         'price_unit': price_unit,
                         'quantity': i_line.quantity,
-                        'price': self.env['account.invoice.line']._get_price(inv, company_currency, i_line, price_unit),
+                        'price': price_unit * i_line.quantity,
+                        'currency_id': currency_id,
+                        'amount_currency': amount_currency,
                         'account_id':dacc,
                         'product_id':i_line.product_id.id,
                         'uom_id':i_line.uom_id.id,
-                        'account_analytic_id': False,
+                        'account_analytic_id': i_line.account_analytic_id.id,
                     },
 
                     {
@@ -97,36 +109,16 @@ class account_invoice(osv.osv):
                         'name': i_line.name[:64],
                         'price_unit': price_unit,
                         'quantity': i_line.quantity,
-                        'price': -1 * self.env['account.invoice.line']._get_price(inv, company_currency, i_line, price_unit),
+                        'price': -1 * price_unit * i_line.quantity,
+                        'currency_id': currency_id,
+                        'amount_currency': -1 * amount_currency,
                         'account_id':cacc,
                         'product_id':i_line.product_id.id,
                         'uom_id':i_line.uom_id.id,
-                        'account_analytic_id': False,
+                        'account_analytic_id': i_line.account_analytic_id.id,
                     },
                 ]
         return []
-
-    def _prepare_refund(self, cr, uid, invoice, date_invoice=None, date=None, description=None, journal_id=None, context=None):
-        invoice_data = super(account_invoice, self)._prepare_refund(cr, uid, invoice, date_invoice, date,
-                                                                    description, journal_id, context=context)
-        #for anglo-saxon accounting
-        if invoice.company_id.anglo_saxon_accounting and invoice.type == 'in_invoice':
-            fiscal_position = self.pool.get('account.fiscal.position')
-            for dummy, dummy, line_dict in invoice_data['invoice_line_ids']:
-                if line_dict.get('product_id'):
-                    product = self.pool.get('product.product').browse(cr, uid, line_dict['product_id'], context=context)
-                    counterpart_acct_id = product.property_stock_account_output and \
-                            product.property_stock_account_output.id
-                    if not counterpart_acct_id:
-                        counterpart_acct_id = product.categ_id.property_stock_account_output_categ_id and \
-                                product.categ_id.property_stock_account_output_categ_id.id
-                    if counterpart_acct_id:
-                        fpos = invoice.fiscal_position_id or False
-                        line_dict['account_id'] = fiscal_position.map_account(cr, uid,
-                                                                              fpos,
-                                                                              counterpart_acct_id)
-        return invoice_data
-
 
 #----------------------------------------------------------
 # Stock Location
@@ -234,6 +226,13 @@ class stock_quant(osv.osv):
             else:
                 self._create_account_move_line(cr, uid, quants, move, acc_valuation, acc_dest, journal_id, context=ctx)
 
+        if move.company_id.anglo_saxon_accounting and move.location_id.usage == 'supplier' and move.location_dest_id.usage == 'customer':
+            # Creates an account entry from stock_input to stock_output on a dropship move. https://github.com/odoo/odoo/issues/12687
+            ctx = context.copy()
+            ctx['force_company'] = move.company_id.id
+            journal_id, acc_src, acc_dest, acc_valuation = self._get_accounting_data_for_valuation(cr, uid, move, context=ctx)
+            self._create_account_move_line(cr, uid, quants, move, acc_src, acc_dest, journal_id, context=ctx)
+
     def _quant_create(self, cr, uid, qty, move, lot_id=False, owner_id=False, src_package_id=False, dest_package_id=False, force_location_from=False, force_location_to=False, context=None):
         quant_obj = self.pool.get('stock.quant')
         quant = super(stock_quant, self)._quant_create(cr, uid, qty, move, lot_id=lot_id, owner_id=owner_id, src_package_id=src_package_id, dest_package_id=dest_package_id, force_location_from=force_location_from, force_location_to=force_location_to, context=context)
@@ -325,7 +324,10 @@ class stock_quant(osv.osv):
         valuation_amount = currency_obj.round(cr, uid, move.company_id.currency_id, valuation_amount * qty)
         #check that all data is correct
         if move.company_id.currency_id.is_zero(valuation_amount):
-            raise UserError(_("The found valuation amount for product %s is zero. Which means there is probably a configuration error. Check the costing method and the standard price") % (move.product_id.name,))
+            if move.product_id.cost_method == 'standard':
+                raise UserError(_("The found valuation amount for product %s is zero. Which means there is probably a configuration error. Check the costing method and the standard price") % (move.product_id.name,))
+            else:
+                return []
         partner_id = (move.picking_id.partner_id and self.pool.get('res.partner')._find_accounting_partner(move.picking_id.partner_id).id) or False
         debit_line_vals = {
                     'name': move.name,
@@ -362,12 +364,13 @@ class stock_quant(osv.osv):
         move_obj = self.pool.get('account.move')
         for cost, qty in quant_cost_qty.items():
             move_lines = self._prepare_account_move_line(cr, uid, move, qty, cost, credit_account_id, debit_account_id, context=context)
-            date = context.get('force_period_date', fields.date.context_today(self, cr, uid, context=context))
-            new_move = move_obj.create(cr, uid, {'journal_id': journal_id,
-                                      'line_ids': move_lines,
-                                      'date': date,
-                                      'ref': move.picking_id.name}, context=context)
-            move_obj.post(cr, uid, [new_move], context=context)
+            if move_lines:
+                date = context.get('force_period_date', fields.date.context_today(self, cr, uid, context=context))
+                new_move = move_obj.create(cr, uid, {'journal_id': journal_id,
+                                          'line_ids': move_lines,
+                                          'date': date,
+                                          'ref': move.picking_id.name}, context=context)
+                move_obj.post(cr, uid, [new_move], context=context)
 
     #def _reconcile_single_negative_quant(self, cr, uid, to_solve_quant, quant, quant_neg, qty, context=None):
     #    move = self._get_latest_move(cr, uid, to_solve_quant, context=context)

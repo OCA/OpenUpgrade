@@ -3,14 +3,16 @@
 # * mrp
 # 
 # Translators:
-# AYHAN KIZILTAN <akiziltan76@hotmail.com>, 2015-2016
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2016
+# Alexander B. <road2monstercat@gmail.com>, 2016
+# Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-06 07:28+0000\n"
-"PO-Revision-Date: 2016-07-06 08:35+0000\n"
-"Last-Translator: Martin Trigaux\n"
+"PO-Revision-Date: 2016-12-31 22:38+0000\n"
+"Last-Translator: Ahmet Altinisik <aaltinisik@altinkaya.com.tr>\n"
 "Language-Team: Turkish (http://www.transifex.com/odoo/odoo-9/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -346,17 +348,17 @@ msgstr "BoM Türü"
 #. module: mrp
 #: selection:mrp.product.produce,tracking:0
 msgid "By Lots"
-msgstr ""
+msgstr "Türe göre"
 
 #. module: mrp
 #: selection:mrp.product.produce,tracking:0
 msgid "By Unique Serial Number"
-msgstr ""
+msgstr "Seri Numaraları ile"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_config_settings_module_mrp_byproduct
 msgid "By-Products"
-msgstr ""
+msgstr "Ürünlere göre"
 
 #. module: mrp
 #: code:addons/mrp/stock.py:227
@@ -923,6 +925,12 @@ msgid "Is Follower"
 msgstr "Takipçi mi"
 
 #. module: mrp
+#: code:addons/mrp/wizard/mrp_product_produce.py:127
+#, python-format
+msgid "Issue with lot quantity!"
+msgstr ""
+
+#. module: mrp
 #: model:ir.model.fields,help:mrp.field_mrp_routing_location_id
 msgid ""
 "Keep empty if you produce at the location where the finished products are "
@@ -1232,7 +1240,7 @@ msgstr ""
 #. module: mrp
 #: selection:mrp.config.settings,group_product_variant:0
 msgid "No variants on products"
-msgstr ""
+msgstr "Ürünlerde varyant yok"
 
 #. module: mrp
 #: selection:mrp.production,priority:0
@@ -1259,7 +1267,7 @@ msgstr "Notlar"
 #: model:ir.model.fields,field_description:mrp.field_mrp_production_message_needaction_counter
 #: model:ir.model.fields,field_description:mrp.field_mrp_production_workcenter_line_message_needaction_counter
 msgid "Number of Actions"
-msgstr "İşlem Sayısı"
+msgstr "Eylem Sayısı"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_production_workcenter_line_cycle
@@ -1280,7 +1288,7 @@ msgstr "Süre (Saat)"
 msgid ""
 "Number of iterations this work center has to do in the specified operation "
 "of the routing."
-msgstr "Belirtilen rota işlemi için bu iş merkezinin yapması gereken özyineleme sayısı."
+msgstr "Belirtilen rota işlemi için bu iş merkezinin yapması gereken işlem sayısı."
 
 #. module: mrp
 #: model:ir.model.fields,help:mrp.field_mrp_bom_message_needaction_counter
@@ -1294,7 +1302,7 @@ msgstr "Eylem gerektiren mesaj sayısı"
 msgid ""
 "Number of operations this Work Center can do in parallel. If this Work "
 "Center represents a team of 5 workers, the capacity per cycle is 5."
-msgstr "Bu İş Merkezinin paralel olarak yapacağı işlem sayısı. Bu İş Merkezi 5 kişilk bir takımı yansıtıyorsa her dönemin kapasitesi 5 tir."
+msgstr "Bu İş Merkezinin paralel olarak yapabileceği işlem sayısı. Bu İş Merkezi 5 kişilk bir takımı yansıtıyorsa her dönemin kapasitesi 5 tir."
 
 #. module: mrp
 #: model:ir.model.fields,help:mrp.field_mrp_bom_message_unread_counter
@@ -1542,7 +1550,7 @@ msgstr "Tüketilen Ürünler"
 msgid ""
 "Products can have several attributes, defining variants (Example: size, "
 "color,...)"
-msgstr ""
+msgstr "Ürünlerde varyant özelliği tanımlama (Örnek: boyut, renk, ...)"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_production_move_lines
@@ -2295,6 +2303,14 @@ msgid ""
 "You can not delete a Bill of Material with running manufacturing orders.\n"
 "Please close or cancel it first."
 msgstr "Aktif bir üretim emrinde kullanılan Ürün Ağacını silemezsiniz. Lütfen önce ilgili üretim emrini kapatın ya da iptal edin."
+
+#. module: mrp
+#: code:addons/mrp/wizard/mrp_product_produce.py:128
+#, python-format
+msgid ""
+"You plan to consume more than 1.00 unit of product %s with unique lot number"
+" %s"
+msgstr ""
 
 #. module: mrp
 #: model:ir.ui.view,arch_db:mrp.view_mrp_product_template_form_inherited

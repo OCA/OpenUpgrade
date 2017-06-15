@@ -5,14 +5,15 @@
 # Translators:
 # Bohdan Lisnenko, 2015-2016
 # Bohdan Lisnenko, 2016
+# Yaroslav Molochko <onorua@gmail.com>, 2016
 # ТАрас <tratatuta@i.ua>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 09:17+0000\n"
-"PO-Revision-Date: 2016-06-09 05:36+0000\n"
-"Last-Translator: ТАрас <tratatuta@i.ua>\n"
+"PO-Revision-Date: 2016-09-03 13:39+0000\n"
+"Last-Translator: Bohdan Lisnenko\n"
 "Language-Team: Ukrainian (http://www.transifex.com/odoo/odoo-9/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,7 +56,7 @@ msgstr "&times;"
 msgid ""
 "(Un)archiving a project automatically (un)archives its tasks and issues. Do "
 "you want to proceed?"
-msgstr ""
+msgstr "(Роз-)архівування проекту вручну (роз-)архівовує його завдання та проблеми. Бажаєте продовжити?"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -65,18 +66,18 @@ msgstr "- команда Odoo"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "1. Learn about Tasks, Issues and Timesheets."
-msgstr ""
+msgstr "1. Дізнайтесь про Задачі, Проблеми та Розклади. "
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid ""
 "2. Now, take some time to list <strong>the Projects you'll need:</strong>"
-msgstr ""
+msgstr "2. Тепер, складіть свій список <strong>потрібних Проектів: </strong>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "<i class=\"fa fa-user\"/> Person Responsible"
-msgstr ""
+msgstr "<i class=\"fa fa-user\"/> Відповідальна особа"
 
 #. module: project
 #: code:addons/project/project.py:139
@@ -87,7 +88,7 @@ msgid ""
 "                        Send messages or log internal notes with attachments to link\n"
 "                        documents to your project.\n"
 "                    </p>"
-msgstr ""
+msgstr "<p class=\"oe_view_nocontent_create\">\nДокументи прикріплено до завдань та проблем проекту.</p><p>\nНадсилайте повідомлення чи пишіть нотатки всередині з прикріпленням документів для вашого проекту.\n</p>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.edit_project
@@ -102,7 +103,7 @@ msgstr "<span class=\"fa fa-arrow-circle-o-down\"/> Встановити зар�
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "<span class=\"fa fa-comment-o\"/> Website Live Chat"
-msgstr ""
+msgstr "<span class=\"fa fa-comment-o\"/> Онлайн-Чат"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -112,21 +113,21 @@ msgstr "<span class=\"fa fa-comment-o\"/> Онлайн-чат увімкнено
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "<span class=\"fa fa-envelope-o\"/> Email Our Project Expert"
-msgstr ""
+msgstr "<span class=\"fa fa-envelope-o\"/> Напишіть нашому експерту з проетів"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid ""
 "<span class=\"fa fa-thumbs-o-down\"/> The <strong> Wrong Way</strong> to use"
 " projects:"
-msgstr ""
+msgstr "<span class=\"fa fa-thumbs-o-down\"/> <strong> Невірний шлях</strong> для користування Проектами:"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid ""
 "<span class=\"fa fa-thumbs-o-up\"/> The <strong>Right Way</strong> to use "
 "projects:"
-msgstr ""
+msgstr "<span class=\"fa fa-thumbs-o-up\"/> <strong> Вірний шлях</strong> для користування Проектами:"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.view_project_kanban
@@ -149,7 +150,7 @@ msgid ""
 "                                            <span class=\"fa fa-mobile\"/>\n"
 "                                            <strong> From your Mobile phone</strong>\n"
 "                                        </span>"
-msgstr ""
+msgstr "<span class=\"panel-title\">\n<span class=\"fa fa-mobile\"/>\n<strong> З вашого мобільного</strong>\n</span>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -158,7 +159,7 @@ msgid ""
 "                                            <span class=\"fa fa-pencil-square-o\"/>\n"
 "                                            <strong> Create Custom Reports</strong>\n"
 "                                        </span>"
-msgstr ""
+msgstr "<span class=\"panel-title\">\n<span class=\"fa fa-pencil-square-o\"/>\n<strong> Створити шаблони звітів</strong>\n</span>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -167,7 +168,7 @@ msgid ""
 "                                            <span class=\"fa fa-puzzle-piece\"/>\n"
 "                                            <strong> Via Chrome extension</strong>\n"
 "                                        </span>"
-msgstr ""
+msgstr "<span class=\"panel-title\">\n<span class=\"fa fa-puzzle-piece\"/>\n<strong> Через розширення Chrome </strong>\n</span>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -176,7 +177,7 @@ msgid ""
 "                                            <span class=\"fa fa-sitemap\"/>\n"
 "                                            <strong> Workflow Customization</strong>\n"
 "                                        </span>"
-msgstr ""
+msgstr "<span class=\"panel-title\">\n<span class=\"fa fa-sitemap\"/>\n<strong> Налаштування робочого \nпроцесу</strong>\n</span>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -185,7 +186,7 @@ msgid ""
 "                                            <span class=\"fa fa-tasks\"/>\n"
 "                                            <strong> Directly in Odoo</strong>\n"
 "                                        </span>"
-msgstr ""
+msgstr "<span class=\"panel-title\">\n<span class=\"fa fa-tasks\"/>\n<strong> Прямо тут</strong>\n</span>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -195,7 +196,7 @@ msgid ""
 "                                            <strong> Exercise 1</strong><br/>\n"
 "                                            <span class=\"small\">Check Workload</span>\n"
 "                                        </span>"
-msgstr ""
+msgstr "<span class=\"panel-title\">\n<span class=\"fa fa-thumb-tack\"/>\n<strong> Вправа 1</strong><br/>\n<span class=\"small\">Перевірити робоче навантаження</span>\n</span>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -205,7 +206,7 @@ msgid ""
 "                                            <strong> Exercise 2</strong><br/>\n"
 "                                            <span class=\"small\">Delay to close an Issue</span>\n"
 "                                        </span>"
-msgstr ""
+msgstr "<span class=\"panel-title\">\n<span class=\"fa fa-thumb-tack\"/>\n<strong> Вправа 2</strong><br/>\n<span class=\"small\">Відкласти закриття питання</span>\n</span>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -223,7 +224,7 @@ msgid ""
 "                                        <span class=\"fa fa-clock-o\"/>\n"
 "                                        <strong> Timesheets</strong>\n"
 "                                    </span>"
-msgstr ""
+msgstr "<span class=\"panel-title\">\n                                        <span class=\"fa fa-clock-o\"/>\n                                        <strong> Табелі</strong>\n                                    </span>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -232,7 +233,7 @@ msgid ""
 "                                        <span class=\"fa fa-exclamation-circle\"/>\n"
 "                                        <strong> Issues</strong>\n"
 "                                    </span>"
-msgstr ""
+msgstr "<span class=\"panel-title\">\n<span class=\"fa fa-exclamation-circle\"/>\n<strong> Проблеми</strong>\n</span>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -240,14 +241,14 @@ msgid ""
 "<span><strong>Contact us to customize your application:</strong><br/>\n"
 "                                    We have special options for unlimited number of customizations !\n"
 "                                    </span>"
-msgstr ""
+msgstr "<span><strong>Зв'яжіться з нами для налаштування програми:</strong><br/>\nУ нас є спеціальні опції для безлічі налаштувань!\n</span>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid ""
 "<span><strong>We are here to help you:</strong> if you don't succeed in achieving your favorite KPIs, contact us and we can help you create your custom reports.\n"
 "                                    </span>"
-msgstr ""
+msgstr "<span><strong>Ми тут, щоб Вам допомогти:</strong> Якщо Вам не вдається досягти бажаного ККД, зв'яжіться з нами і ми допоможемо Вам створити персоналізовані звіти.\n</span>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -261,7 +262,7 @@ msgstr ""
 msgid ""
 "<strong> Critical items (10 min)</strong>\n"
 "                                Upon completing the project status review session, summarize the critical items."
-msgstr ""
+msgstr "<strong> "
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -273,7 +274,7 @@ msgstr ""
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "<strong> Prepare an agenda (and keep to it)</strong>"
-msgstr ""
+msgstr "<strong> Складіть розклад (і слідуйте йому)</strong>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -320,7 +321,7 @@ msgstr ""
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "<strong>About Employees:</strong>"
-msgstr ""
+msgstr "<strong>Про співробітників:</strong>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -344,7 +345,7 @@ msgstr "<strong>Аналізувати звіти</strong> (щороку)"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "<strong>Approve your Timesheets</strong> (every week)"
-msgstr ""
+msgstr "<strong>Затвердьте свої розклади</strong> (щотижня)"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -363,7 +364,7 @@ msgstr ""
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "<strong>Billing</strong>"
-msgstr ""
+msgstr "<strong>Рахунки</strong>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -1614,7 +1615,7 @@ msgstr ""
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task_type_fold
 msgid "Folded in Tasks Pipeline"
-msgstr "згорнуті завдання уконвеєрі"
+msgstr "Згорнуті завдання у конвеєрі"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.edit_project
@@ -1794,7 +1795,7 @@ msgstr ""
 #: code:addons/project/project.py:760
 #, python-format
 msgid "I take it"
-msgstr ""
+msgstr "Беру собі"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_config_settings_id
@@ -2640,7 +2641,7 @@ msgstr "Проекти"
 #. module: project
 #: model:ir.ui.view,arch_db:project.task_type_edit
 msgid "Projects using this stage"
-msgstr ""
+msgstr "Проекти, що використовують цю стадію"
 
 #. module: project
 #: model:ir.model.fields,help:project.field_project_config_settings_module_project_issue_sheet
@@ -2943,7 +2944,7 @@ msgstr "Стадію змінено"
 #. module: project
 #: model:ir.ui.view,arch_db:project.task_type_edit
 msgid "Stage Description and Tooltips"
-msgstr ""
+msgstr "Опис стадій та підказки"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task_type_name
@@ -3748,7 +3749,7 @@ msgstr "завдання"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "to describe<br/> your experience or to suggest improvements !"
-msgstr ""
+msgstr "щоб описати<br/> свій досвід чи висунути пропозицію!"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_account_analytic_account_project_count

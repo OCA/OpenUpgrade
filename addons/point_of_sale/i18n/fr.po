@@ -4,13 +4,15 @@
 # 
 # Translators:
 # Clo <clo@odoo.com>, 2015
-# cyril vt <contact@invitu.com>, 2016
+# invitu <contact@invitu.com>, 2016
+# David Bertha <development@fonteynethekitchen.be>, 2016
 # Fabien Pinckaers <fp@openerp.com>, 2015
 # Florian Hatat, 2015
 # Loic <loic.richard2@gmail.com>, 2015
-# Martin Trigaux, 2015-2016
-# Maxime Chambreuil <maxime.chambreuil@gmail.com>, 2015-2016
+# Martin Trigaux, 2015-2017
+# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2015-2016
 # Melanie Bernard <mbe@odoo.com>, 2015
+# Olivier Dony <odo@odoo.com>, 2016
 # Quentin THEURET <quentin@theuret.net>, 2016
 # Shark McGnark <peculiarcheese@gmail.com>, 2016
 # Sylvain LE GAL <sylvain.legal@grap.coop>, 2015
@@ -22,7 +24,7 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 09:18+0000\n"
-"PO-Revision-Date: 2016-06-20 14:27+0000\n"
+"PO-Revision-Date: 2017-04-13 14:13+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: French (http://www.transifex.com/odoo/odoo-9/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -879,7 +881,7 @@ msgstr "Caisse"
 #: code:addons/point_of_sale/point_of_sale.py:364
 #, python-format
 msgid "Cash control can only be applied to cash journals."
-msgstr "Contrôle de la trésorerie ne peut être appliquée qu'aux journal de trésorerie."
+msgstr "Le contrôle de caisse ne peut s'appliquer que lorsqu'un journal de caisse est utilisé."
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_iface_cashdrawer
@@ -1151,7 +1153,7 @@ msgstr "Confirmer"
 #: code:addons/point_of_sale/static/src/js/models.js:114
 #, python-format
 msgid "Connecting to the PosBox"
-msgstr "Connexion au PosBox"
+msgstr "Connexion à la PosBox"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
@@ -2391,7 +2393,7 @@ msgstr "Seuls des formats d'images utilisables sur le Web sont supportés, tels 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_session_search
 msgid "Open"
-msgstr "Ouvert"
+msgstr "Ouvertes"
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_pos_open_statement
@@ -2807,7 +2809,7 @@ msgstr "Paramétrage du point de vente"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_group_pos_manager_id
 msgid "Point of Sale Manager Group"
-msgstr "Manager Groupe Point de ventes"
+msgstr "Groupe du gestionnaire des points de vente"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_name
@@ -2840,7 +2842,7 @@ msgstr "Session du point de vente"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_group_pos_user_id
 msgid "Point of Sale User Group"
-msgstr "Utilisateur Groupe Point de vente"
+msgstr "Groupe de l'utilisateur des points de vente"
 
 #. module: point_of_sale
 #: selection:pos.config.settings,module_pos_restaurant:0
@@ -2904,7 +2906,7 @@ msgstr "Prix"
 #: code:addons/point_of_sale/point_of_sale.py:1601
 #, python-format
 msgid "Priced Product"
-msgstr ""
+msgstr "Coûteux Produit"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_pricelist_id
@@ -3993,7 +3995,7 @@ msgstr "Ce module ajoute plusieurs fonctionnalités restaurant au point de vente
 msgid ""
 "This operation will permanently destroy all paid orders from the local "
 "storage. You will lose all the data. This operation cannot be undone."
-msgstr "Cette opération déruira toutes les commandes payés sur l'endroit de stockage local. Vous perdrez toutes vos données. Cette opératio est irréversible. "
+msgstr "Cette opération détruira toutes les commandes payées sur le stockage local. Vous perdrez toutes vos données. Cette opération est irréversible. "
 
 #. module: point_of_sale
 #. openerp-web
@@ -4003,7 +4005,7 @@ msgid ""
 "This operation will permanently destroy all unpaid orders from all sessions "
 "that have been put in the local storage. You will lose all the data and exit"
 " the point of sale. This operation cannot be undone."
-msgstr "Cette opération déruira toutes les commandes payés de session ayant été mises dans l'endroit de stockage local. Vous perdrez toutes vos données et sortirez du point de vente. Cette opératio est irréversible. "
+msgstr "Cette opération détruira toutes les commandes non payées de toutes les sessions qui ont été mises sur le stockage local. Vous perdrez toutes vos données et sortirez du point de vente. Cette opération est irréversible."
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config_sequence_id
@@ -4105,7 +4107,7 @@ msgstr "Total de tous les bons de commande payés"
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_session_cash_register_balance_end_real
 msgid "Total of closing cash control lines."
-msgstr "Total des lignes de contrôle de clôture"
+msgstr "Total des lignes de contrôle de clôture de caisse"
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_session_cash_register_balance_start

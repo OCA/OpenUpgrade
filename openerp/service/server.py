@@ -217,8 +217,12 @@ class ThreadedServer(CommonServer):
             _logger.debug('cron%d polling for jobs', number)
             for db_name, registry in registries.iteritems():
                 while registry.ready:
-                    acquired = openerp.addons.base.ir.ir_cron.ir_cron._acquire_job(db_name)
-                    if not acquired:
+                    try:
+                        acquired = openerp.addons.base.ir.ir_cron.ir_cron._acquire_job(db_name)
+                        if not acquired:
+                            break
+                    except Exception:
+                        _logger.warning('cron%d encountered an Exception:', number, exc_info=True)
                         break
 
     def cron_spawn(self):
@@ -728,6 +732,7 @@ class WorkerHTTP(Worker):
     """ HTTP Request workers """
     def process_request(self, client, addr):
         client.setblocking(1)
+        client.settimeout(0.5)
         client.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         # Prevent fd inherientence close_on_exec
         flags = fcntl.fcntl(client, fcntl.F_GETFD) | fcntl.FD_CLOEXEC

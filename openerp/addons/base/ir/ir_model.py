@@ -149,6 +149,8 @@ class ir_model(osv.osv):
             for model in self.browse(cr, user, ids, context):
                 if model.state != 'manual':
                     raise UserError(_("Model '%s' contains module data and cannot be removed!") % (model.name,))
+                # prevent screwing up fields that depend on these models' fields
+                model.field_id._prepare_update()
 
         self._drop_table(cr, user, ids, context)
         res = super(ir_model, self).unlink(cr, user, ids, context)
@@ -444,6 +446,19 @@ class ir_model_fields(osv.osv):
 
         return True
 
+    @api.multi
+    def _prepare_update(self):
+        """ Check whether the fields in ``self`` may be modified or removed.
+            This method prevents the modification/deletion of many2one fields
+            that have an inverse one2many, for instance.
+        """
+        for record in self:
+            model = self.env[record.model]
+            field = model._fields[record.name]
+            if field.type == 'many2one' and model._field_inverses.get(field):
+                msg = _("The field '%s' cannot be removed because the field '%s' depends on it.")
+                raise UserError(msg % (field, model._field_inverses[field][0]))
+
     def unlink(self, cr, user, ids, context=None):
         # Prevent manual deletion of module columns
         if context is None: context = {}
@@ -452,6 +467,9 @@ class ir_model_fields(osv.osv):
         if not context.get(MODULE_UNINSTALL_FLAG) and \
                 any(field.state != 'manual' for field in self.browse(cr, user, ids, context)):
             raise UserError(_("This column contains module data and cannot be removed!"))
+
+        # prevent screwing up fields that depend on these fields
+        self.browse(cr, user, ids, context=context)._prepare_update()
 
         self._drop_column(cr, user, ids, context)
         res = super(ir_model_fields, self).unlink(cr, user, ids, context)
@@ -541,6 +559,7 @@ class ir_model_fields(osv.osv):
 
                 if vals.get('name', item.name) != item.name:
                     # We need to rename the column
+                    item._prepare_update()
                     if column_rename:
                         raise UserError(_('Can only rename one field at a time!'))
                     if vals['name'] in obj._fields:
@@ -630,9 +649,10 @@ class ir_model_constraint(Model):
         ids.reverse()
         for data in self.browse(cr, uid, ids, context):
             model = data.model.model
-            model_obj = self.pool.get(model)
-            if not model_obj:
-                continue
+            if model in self.pool:
+                table = self.pool[model]._table
+            else:
+                table = model.replace('.', '_')
             name = openerp.tools.ustr(data.name)
             typ = data.type
 
@@ -646,17 +666,17 @@ class ir_model_constraint(Model):
             if typ == 'f':
                 # test if FK exists on this table (it could be on a related m2m table, in which case we ignore it)
                 cr.execute("""SELECT 1 from pg_constraint cs JOIN pg_class cl ON (cs.conrelid = cl.oid)
-                              WHERE cs.contype=%s and cs.conname=%s and cl.relname=%s""", ('f', name, model_obj._table))
+                              WHERE cs.contype=%s and cs.conname=%s and cl.relname=%s""", ('f', name, table))
                 if cr.fetchone():
-                    cr.execute('ALTER TABLE "%s" DROP CONSTRAINT "%s"' % (model_obj._table, name),)
+                    cr.execute('ALTER TABLE "%s" DROP CONSTRAINT "%s"' % (table, name),)
                     _logger.info('Dropped FK CONSTRAINT %s@%s', name, model)
 
             if typ == 'u':
                 # test if constraint exists
                 cr.execute("""SELECT 1 from pg_constraint cs JOIN pg_class cl ON (cs.conrelid = cl.oid)
-                              WHERE cs.contype=%s and cs.conname=%s and cl.relname=%s""", ('u', name, model_obj._table))
+                              WHERE cs.contype=%s and cs.conname=%s and cl.relname=%s""", ('u', name, table))
                 if cr.fetchone():
-                    cr.execute('ALTER TABLE "%s" DROP CONSTRAINT "%s"' % (model_obj._table, name),)
+                    cr.execute('ALTER TABLE "%s" DROP CONSTRAINT "%s"' % (table, name),)
                     _logger.info('Dropped CONSTRAINT %s@%s', name, model)
 
         self.unlink(cr, uid, ids, context)
@@ -711,8 +731,6 @@ class ir_model_relation(Model):
         for table in to_drop_table:
             cr.execute('DROP TABLE %s CASCADE'% table,)
             _logger.info('Dropped table %s', table)
-
-        cr.commit()
 
 class ir_model_access(osv.osv):
     _name = 'ir.model.access'
@@ -1294,7 +1312,6 @@ class ir_model_data(osv.osv):
         unlink_if_refcount((model, res_id) for model, res_id in to_unlink
                                 if model == 'ir.model')
 
-        cr.commit()
 
         self.unlink(cr, uid, ids, context)
 
