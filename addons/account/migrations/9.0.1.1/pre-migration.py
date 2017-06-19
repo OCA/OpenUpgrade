@@ -208,6 +208,7 @@ def blacklist_field_recomputation(env):
     ]
     AccountInvoiceLine._openupgrade_recompute_fields_blacklist = [
         'price_subtotal_signed',
+        'currency_id',
     ]
 
 
