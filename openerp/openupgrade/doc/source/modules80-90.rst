@@ -368,7 +368,7 @@ missing in the new release are marked with |del|.
 +----------------------------------------+------------------------------------------+
 |mass_mailing                            | Done                                     |
 +----------------------------------------+------------------------------------------+
-|membership                              |                                          |
+|membership                              | Nothing to do                            |
 +----------------------------------------+------------------------------------------+
 |mrp                                     | Nothing to do                            |
 +----------------------------------------+------------------------------------------+
@@ -678,6 +678,6 @@ missing in the new release are marked with |del|.
     as 'Purchase Analytic Distribution' (not exactly the same but does the same):
    See : https://github.com/OCA/account-analytic/tree/9.0/purchase_analytic_distribution
 
-.. [#purchase_analytic_plans] 'Sale Analytic Plans' Module is now under Odoo Community Association Umbrella
+.. [#sale_analytic_plans] 'Sale Analytic Plans' Module is now under Odoo Community Association Umbrella
     as 'Sale Analytic Distribution' (not exactly the same but does the same):
    See : https://github.com/OCA/account-analytic/tree/9.0/sale_analytic_distribution
