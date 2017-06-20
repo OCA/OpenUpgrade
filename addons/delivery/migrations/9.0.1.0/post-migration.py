@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2016 Therp BV <http://therp.nl>
-# Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
 from openupgradelib import openupgrade
 
 
@@ -29,20 +27,24 @@ def rename_property(cr, model, old_name, new_name):
 @openupgrade.migrate()
 def migrate(cr, version):
     cr.execute(
-        """
-        UPDATE delivery_carrier dc
-        SET delivery_type='base_on_rule',
-            free_if_more_than = old_dc.free_if_more_than,
-            fixed_price = old_dc.normal_price
-        FROM %s old_dc
-        WHERE old_dc.use_detailed_pricelist
-            AND old_dc.id = dc.%s
-        """ % (
-            openupgrade.get_legacy_name('delivery_carrier'),
-            openupgrade.get_legacy_name('carrier_id'),
-        )
-    )
+        "update delivery_price_rule r set carrier_id=g.carrier_id "
+        "from delivery_grid g where r.grid_id=g.id")
+    cr.execute(
+        "insert into delivery_carrier_country_rel (carrier_id, country_id) "
+        "select carrier_id, country_id from "
+        "delivery_grid_country_rel r join delivery_grid g on r.grid_id=g.id")
+    cr.execute(
+        "insert into delivery_carrier_state_rel (carrier_id, state_id) "
+        "select carrier_id, state_id from "
+        "delivery_grid_state_rel r join delivery_grid g on r.grid_id=g.id")
+    cr.execute(
+        "update delivery_carrier set delivery_type='base_on_rule' "
+        "where use_detailed_pricelist")
+    cr.execute(
+        "update delivery_carrier c set "
+        "zip_from=coalesce(c.zip_from, g.zip_from), "
+        "zip_to=coalesce(c.zip_to, g.zip_to) "
+        "from delivery_grid g where g.carrier_id=c.id")
     rename_property(
         cr, 'res.partner', 'property_delivery_carrier',
-        'property_delivery_carrier_id',
-    )
+        'property_delivery_carrier_id')
