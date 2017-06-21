@@ -59,6 +59,7 @@ def cleanup_modules(cr):
         cr, [
             ('contacts', 'mail'),
             ('marketing_crm', 'crm'),
+            ('procurement_jit_stock', 'procurement_jit'),
             ('web_gantt', 'web'),
             ('web_graph', 'web'),
             ('web_kanban_sparkline', 'web'),
