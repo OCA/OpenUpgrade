@@ -28,7 +28,7 @@ def create_payments_from_vouchers(env):
             name, amount, payment_type, payment_reference
         )
         SELECT
-            av.id, av.create_date, av.comment, av.company_id,
+            av.id, av.create_date, COALESCE(av.name, av.comment), av.company_id,
             av.payment_rate_currency_id, av.partner_id,
             CASE
                WHEN av.voucher_type = 'receipt' THEN 'customer'
