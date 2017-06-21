@@ -15,6 +15,13 @@ def delete_payment_views(cr):
     cr.execute(
         """\
         DELETE FROM ir_ui_view
+        WHERE inherit_id in (
+        SELECT id FROM ir_ui_view WHERE name like '%account.voucher.payment%')
+        """
+    )
+    cr.execute(
+        """\
+        DELETE FROM ir_ui_view
         WHERE name like '%account.voucher.payment%'
         """
     )
