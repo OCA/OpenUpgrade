@@ -39,9 +39,9 @@ def update_picking_type_id(env):
             WHERE warehouse_id = %s AND
                 default_location_dest_id = %s AND
                 default_location_src_id = %s""" % (
-                procurement_rule.warehouse_id,
-                procurement_rule.location_id,
-                procurement_rule.location_src_id,
+                procurement_rule.warehouse_id.id,
+                procurement_rule.location_id.id,
+                procurement_rule.location_src_id.id,
             )
         )
         picking_type_ids = env.cr.fetchone()
