@@ -665,10 +665,10 @@ missing in the new release are marked with |del|.
 
 .. [#account_analytic_plans] 'Account Analytic Plans' Module is now under Odoo Community Association Umbrella
     as 'Account Analytic Distribution' (not exactly the same but does the same):
-   See : https://github.com/OCA/account-analytic/tree/9.0/account_analytic_distribution
+    See : https://github.com/OCA/account-analytic/tree/9.0/account_analytic_distribution
 
 .. [#account_check_writing] 'Account Check Writing' Module is renamed as 'Account Check Printing'
-   (not exactly a rename but they do the same)
+    (not exactly a rename but they do the same)
 
 .. [#account_payment] 'Account Payment' Module is now under Odoo Community Association Umbrella
     as 'Account Payment Order' (not exactly the same but does the same and needs bank-payment):
@@ -676,8 +676,8 @@ missing in the new release are marked with |del|.
 
 .. [#purchase_analytic_plans] 'Purchase Analytic Plans' Module is now under Odoo Community Association Umbrella
     as 'Purchase Analytic Distribution' (not exactly the same but does the same):
-   See : https://github.com/OCA/account-analytic/tree/9.0/purchase_analytic_distribution
+    See : https://github.com/OCA/account-analytic/tree/9.0/purchase_analytic_distribution
 
 .. [#sale_analytic_plans] 'Sale Analytic Plans' Module is now under Odoo Community Association Umbrella
     as 'Sale Analytic Distribution' (not exactly the same but does the same):
-   See : https://github.com/OCA/account-analytic/tree/9.0/sale_analytic_distribution
+    See : https://github.com/OCA/account-analytic/tree/9.0/sale_analytic_distribution
