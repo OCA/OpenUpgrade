@@ -125,6 +125,9 @@ def sale_expense_update_module_names_partial(cr):
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
+    openupgrade.update_module_names(
+        env.cr, ('sale_layout', 'sale'), merge_modules=True,
+    )
     if openupgrade.is_module_installed(env.cr, 'sale_layout'):
         openupgrade.rename_columns(env.cr, column_renames_sale_layout)
         openupgrade.rename_models(env.cr, model_renames_sale_layout)
