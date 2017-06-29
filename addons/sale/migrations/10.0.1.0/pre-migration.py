@@ -38,12 +38,19 @@ column_copies = {
 
 
 def migrate_sale_layout(env):
+    # We need to manually removed these views because the cleanup is done
+    # after YAML demo data is loaded and there's an error on that phase
+    env.cr.execute(
+        """
+        DELETE FROM ir_ui_view
+        WHERE NAME in %s
+        """, tuple([
+            'sale.order.form.inherit_1',
+            'account.invoice.form.inherit_1',
+            'account.invoice.line.form.inherit_2',
+        ]),
+    )
     if openupgrade.is_module_installed(env.cr, 'sale_layout'):
-        # We need to manually removed this view because the cleanup is done
-        # after YAML demo data is loaded and there's an error on that phase
-        env.ref('sale_layout.view_order_form_inherit_1').unlink()
-        env.ref('sale_layout.view_invoice_line_form_inherit_2').unlink()
-        env.ref('sale_layout.view_invoice_form_inherit_1').unlink()
         openupgrade.rename_columns(env.cr, column_renames_sale_layout)
         openupgrade.rename_models(env.cr, model_renames_sale_layout)
 
