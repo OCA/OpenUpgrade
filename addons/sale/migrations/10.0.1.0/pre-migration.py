@@ -37,6 +37,17 @@ column_copies = {
 }
 
 
+def migrate_sale_layout(env):
+    if openupgrade.is_module_installed(env.cr, 'sale_layout'):
+        # We need to manually removed this view because the cleanup is done
+        # after YAML demo data is loaded and there's an error on that phase
+        env.ref('sale_layout.view_order_form_inherit_1').unlink()
+        env.ref('sale_layout.view_invoice_line_form_inherit_2').unlink()
+        env.ref('sale_layout.view_invoice_form_inherit_1').unlink()
+        openupgrade.rename_columns(env.cr, column_renames_sale_layout)
+        openupgrade.rename_models(env.cr, model_renames_sale_layout)
+
+
 def cleanup_modules(cr):
     openupgrade.update_module_names(
         cr,
@@ -125,12 +136,7 @@ def sale_expense_update_module_names_partial(cr):
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
-    openupgrade.update_module_names(
-        env.cr, [('sale_layout', 'sale')], merge_modules=True,
-    )
-    if openupgrade.is_module_installed(env.cr, 'sale_layout'):
-        openupgrade.rename_columns(env.cr, column_renames_sale_layout)
-        openupgrade.rename_models(env.cr, model_renames_sale_layout)
+    migrate_sale_layout(env)
     openupgrade.copy_columns(env.cr, column_copies)
     cleanup_modules(env.cr)
     warning_update_module_names_partial(env.cr)
