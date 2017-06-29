@@ -44,11 +44,13 @@ def migrate_sale_layout(env):
         """
         DELETE FROM ir_ui_view
         WHERE NAME in %s
-        """, tuple([
-            'sale.order.form.inherit_1',
-            'account.invoice.form.inherit_1',
-            'account.invoice.line.form.inherit_2',
-        ]),
+        """, (
+            tuple([
+                'sale.order.form.inherit_1',
+                'account.invoice.form.inherit_1',
+                'account.invoice.line.form.inherit_2',
+            ]),
+        )
     )
     if openupgrade.is_module_installed(env.cr, 'sale_layout'):
         openupgrade.rename_columns(env.cr, column_renames_sale_layout)
