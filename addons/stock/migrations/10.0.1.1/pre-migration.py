@@ -43,18 +43,18 @@ def warning_update_module_names_partial(cr):
         SELECT id
         FROM ir_model_fields
         WHERE model = 'res.partner' AND name in %s
-        """, (moved_fields,))
+        """, (tuple(moved_fields),))
     field_ids = [r[0] for r in cr.fetchall()]
     # update ir_model_data, the subselect allows to avoid duplicated XML-IDs
     query = ("UPDATE ir_model_data SET module = %s "
              "WHERE module = %s AND res_id IN %s AND name NOT IN "
              "(SELECT name FROM ir_model_data WHERE module = %s)")
-    openupgrade.logged_query(cr, query, (new_name, old_name, field_ids,
+    openupgrade.logged_query(cr, query, (new_name, old_name, tuple(field_ids),
                                          new_name))
     # update ir_translation
     query = ("UPDATE ir_translation SET module = %s "
              "WHERE module = %s AND res_id IN %s")
-    openupgrade.logged_query(cr, query, (new_name, old_name, field_ids))
+    openupgrade.logged_query(cr, query, (new_name, old_name, tuple(field_ids)))
 
 
 @openupgrade.migrate(use_env=True)
