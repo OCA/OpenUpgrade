@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-# © 2017 bloopark systems (<http://bloopark.de>)
+# Copyright 2017 bloopark systems (<http://bloopark.de>)
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
 
 # backup of separator column in table sale_layout_category because it doesn't
 # exist anymore in odoo 10
-column_renames = {
+column_renames_sale_layout = {
     'sale_layout_category': [
         ('separator', None),
     ],
@@ -23,7 +24,7 @@ column_renames = {
 
 # rename_tables is not needed because "sale_layout.category" and
 # "sale.layout_category" result both in "sale_layout_category"
-model_renames = [
+model_renames_sale_layout = [
     ('sale_layout.category', 'sale.layout_category')
 ]
 
@@ -124,8 +125,9 @@ def sale_expense_update_module_names_partial(cr):
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
-    openupgrade.rename_columns(env.cr, column_renames)
-    openupgrade.rename_models(env.cr, model_renames)
+    if openupgrade.is_module_installed(env.cr, 'sale_layout'):
+        openupgrade.rename_columns(env.cr, column_renames_sale_layout)
+        openupgrade.rename_models(env.cr, model_renames_sale_layout)
     openupgrade.copy_columns(env.cr, column_copies)
     cleanup_modules(env.cr)
     warning_update_module_names_partial(env.cr)
