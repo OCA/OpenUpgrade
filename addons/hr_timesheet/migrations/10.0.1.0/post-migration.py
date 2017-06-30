@@ -9,7 +9,7 @@ def migrate_allow_timesheets(env):
     openupgrade.logged_query(
         env.cr,
         """
-        UPDATE projec_project pp
+        UPDATE project_project pp
         SET allow_timesheets = True
         FROM account_analytic_account aaa
         WHERE aaa.id = pp.analytic_account_id
