@@ -1,0 +1,52 @@
+---Fields in module 'hr_timesheet_sheet'---
+hr_timesheet_sheet / hr.attendance            / sheet_id (many2one)           : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / attendance_count (integer)    : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / attendances_ids (one2many)    : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / period_ids (one2many)         : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / total_attendance (float)      : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / total_difference (float)      : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / total_timesheet (float)       : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
+hr_timesheet_sheet / res.company              / timesheet_max_difference (float): module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
+# Nothing to do: If hr_timesheet_attendance is installed, the columns will be used
+
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / website_message_ids (one2many): DEL relation: mail.message
+# Nothing to do: mail stuff
+
+hr_timesheet_sheet / res.company              / timesheet_range (selection)   : selection_keys is now '['month', 'week']' ('['day', 'month', 'week']')
+# Done: day range is converted to week
+
+---XML records in module 'hr_timesheet_sheet'---
+DEL ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_2_hr_analytic_timesheet
+DEL ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_2_hr_attendance
+DEL ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_by_account
+DEL ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_sheet_by_day
+DEL ir.actions.act_window: hr_timesheet_sheet.action_hr_timesheet_current_open
+DEL ir.actions.client: hr_timesheet_sheet.action_client_hr_timesheet_sheet_menu
+NEW ir.actions.server: hr_timesheet_sheet.ir_actions_server_timesheet_sheet
+DEL ir.actions.server: hr_timesheet_sheet.ir_actions_server_timsheet_sheet
+DEL ir.actions.todo: base.open_menu
+DEL ir.filters: hr_timesheet_sheet.filter_hr_timesheet_report_external_timesheets
+DEL ir.filters: hr_timesheet_sheet.filter_hr_timesheet_report_internal_timesheets
+DEL ir.model.access: hr_timesheet_sheet.access_hr_timesheet_sheet_sheet_day
+NEW ir.ui.menu: hr_timesheet_sheet.menu_hr_to_approve
+NEW ir.ui.view: hr_timesheet_sheet.view_config_settings_form_inherit_hr_timesheet_sheet
+DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_day_tree
+DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_sheet_company
+DEL ir.ui.view: hr_timesheet_sheet.view_attendance_form
+DEL ir.ui.view: hr_timesheet_sheet.view_attendance_tree
+DEL ir.ui.view: hr_timesheet_sheet.view_attendance_tree_who
+DEL ir.ui.view: hr_timesheet_sheet.view_hr_attendance_filter
+DEL ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_current_open
+DEL ir.ui.view: hr_timesheet_sheet.view_timesheet_report_graph
+DEL ir.ui.view: hr_timesheet_sheet.view_timesheet_report_search
+DEL mail.message: hr_timesheet_sheet.hr_timesheet_module_install_notification
+DEL workflow: hr_timesheet_sheet.wkf_timesheet
+DEL workflow.activity: hr_timesheet_sheet.act_confirm
+DEL workflow.activity: hr_timesheet_sheet.act_done
+DEL workflow.activity: hr_timesheet_sheet.act_draft
+DEL workflow.activity: hr_timesheet_sheet.act_new
+DEL workflow.transition: hr_timesheet_sheet.t0
+DEL workflow.transition: hr_timesheet_sheet.t1
+DEL workflow.transition: hr_timesheet_sheet.t2
+DEL workflow.transition: hr_timesheet_sheet.t3
+# Nothing to do: noupdate=0 records
