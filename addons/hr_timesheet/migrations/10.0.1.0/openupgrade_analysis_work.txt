@@ -1,0 +1,62 @@
+---Fields in module 'hr_timesheet'---
+hr_timesheet / account.analytic.account / use_timesheets (boolean)      : DEL
+hr_timesheet / project.project          / allow_timesheets (boolean)    : NEW
+# Done: Mark projects that have the linked analytic account with the flag
+
+hr_timesheet / account.analytic.line    / is_timesheet (boolean)        : DEL
+# Nothing to do
+
+hr_timesheet / account.analytic.line    / project_id (many2one)         : NEW relation: project.project
+# Done: Fill this field with the associated project if there's a task or an issue linked to the line
+
+hr_timesheet / account.analytic.line    / task_id (many2one)            : previously in module project_timesheet
+# Nothing to do: Already integrated in base
+
+hr_timesheet / project.project          / subtask_project_id (many2one) : NEW relation: project.project
+hr_timesheet / project.task             / parent_id (many2one)          : NEW relation: project.task
+# Nothing to do: New feature
+
+hr_timesheet / project.task             / timesheet_ids (one2many)      : NEW relation: account.analytic.line
+# Nothing to do: One2many field
+
+---XML records in module 'hr_timesheet'---
+NEW ir.actions.act_window: hr_timesheet.act_hr_timesheet_line
+NEW ir.actions.act_window: hr_timesheet.act_hr_timesheet_line_by_project
+NEW ir.actions.act_window: hr_timesheet.act_hr_timesheet_report
+NEW ir.actions.act_window: hr_timesheet.act_project_task_sub_task
+NEW ir.actions.act_window: hr_timesheet.project_task_action_view_timesheet
+DEL ir.actions.act_window: hr_timesheet.act_hr_timesheet_accounts_form
+DEL ir.actions.act_window: hr_timesheet.act_hr_timesheet_line_evry1_all_form
+DEL ir.actions.act_window: hr_timesheet.action_hr_timesheet_report_stat_all
+DEL ir.actions.act_window: hr_timesheet.action_hr_timesheet_report_stat_filtered
+NEW ir.actions.act_window.view: hr_timesheet.act_hr_timesheet_line_view_form
+NEW ir.actions.act_window.view: hr_timesheet.act_hr_timesheet_line_view_tree
+NEW ir.actions.act_window.view: hr_timesheet.act_hr_timesheet_report_form
+NEW ir.actions.act_window.view: hr_timesheet.act_hr_timesheet_report_pivot
+NEW ir.actions.act_window.view: hr_timesheet.act_hr_timesheet_report_tree
+DEL ir.actions.act_window.view: hr_timesheet.action_open_timesheet_tree
+NEW ir.actions.report.xml: hr_timesheet.timesheet_report
+DEL ir.model.access: hr_timesheet.access_hr_timesheet_report
+NEW ir.ui.menu: hr_timesheet.menu_hr_activity_analysis
+NEW ir.ui.menu: hr_timesheet.menu_hr_time_tracking
+NEW ir.ui.menu: hr_timesheet.timesheet_menu_root
+DEL ir.ui.menu: hr_timesheet.menu_hr_timesheet_config
+DEL ir.ui.menu: hr_timesheet.menu_hr_timesheet_report_all
+NEW ir.ui.view: hr_timesheet.project_invoice_form
+NEW ir.ui.view: hr_timesheet.project_project_view_form_simplified_inherit_timesheet
+NEW ir.ui.view: hr_timesheet.report_timesheet
+NEW ir.ui.view: hr_timesheet.view_hr_timesheet_line_pivot
+NEW ir.ui.view: hr_timesheet.view_project_kanban_inherited
+NEW ir.ui.view: hr_timesheet.view_task_form2_inherited
+NEW ir.ui.view: hr_timesheet.view_task_kanban_inherited_progress
+NEW ir.ui.view: hr_timesheet.view_task_tree2_inherited
+DEL ir.ui.view: hr_timesheet.view_hr_timesheet_report_graph
+DEL ir.ui.view: hr_timesheet.view_hr_timesheet_report_pivot
+DEL ir.ui.view: hr_timesheet.view_hr_timesheet_report_search
+# Nothing to do: noupdate=0 records
+
+NEW res.groups: hr_timesheet.group_hr_timesheet_user
+# Nothing to do: There's no way to know which users will need this new group
+
+NEW res.users: base.default_user
+# Nothing to do: It's not really a new group
