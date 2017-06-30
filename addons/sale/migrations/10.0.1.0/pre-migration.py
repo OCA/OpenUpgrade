@@ -143,6 +143,21 @@ def sale_expense_update_module_names_partial(cr):
     openupgrade.logged_query(cr, query, (old_name, field_ids))
 
 
+def migrate_account_invoice_shipping_address(cr):
+    """The feature of this module is now on core, so we merge and change data
+    accordingly.
+    """
+    module_name = 'account_invoice_shipping_address'
+    if not openupgrade.is_module_installed(cr, module_name):
+        return
+    openupgrade.update_module_names(
+        cr, [(module_name, 'sale')], merge_modules=True,
+    )
+    openupgrade.rename_columns(
+        cr, [('address_shipping_id', 'partner_shipping_id')],
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     migrate_sale_layout(env)
@@ -150,3 +165,4 @@ def migrate(env, version):
     cleanup_modules(env.cr)
     warning_update_module_names_partial(env.cr)
     sale_expense_update_module_names_partial(env.cr)
+    migrate_account_invoice_shipping_address(env.cr)
