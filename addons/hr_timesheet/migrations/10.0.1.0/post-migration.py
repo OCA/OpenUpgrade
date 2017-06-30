@@ -13,9 +13,33 @@ def migrate_allow_timesheets(env):
         SET allow_timesheets = True
         FROM account_analytic_account aaa
         WHERE aaa.id = pp.analytic_account_id
-        AND aaa.%s
+        AND aaa.%s = True
         """ % openupgrade.get_legacy_name('use_timesheets'),
     )
+
+
+def migrate_missing_projects(env):
+    """Create a project and link it to the orphaned analytic accounts"""
+    env.cr.execute(
+        """
+        SELECT aaa.id, aaa.company_id, aaa.name
+        FROM account_analytic_account aaa
+        LEFT JOIN project_project pp ON pp.analytic_account_id = aaa.id
+        WHERE %s = True
+        AND pp.id IS NULL
+        """ %
+        openupgrade.get_legacy_name('use_timesheets')
+    )
+    aaa_rows = env.cr.fetchall()
+    project_obj = env['project.project']
+    for aaa_row in aaa_rows:
+        # It's easier to create the project via ORM
+        project_obj.create({
+            'analytic_account_id': aaa_row[0],
+            'company_id': aaa_row[1],
+            'name': aaa_row[2],
+            'allow_timesheets': True,
+        })
 
 
 def fill_analytic_line_project(env):
