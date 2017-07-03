@@ -68,6 +68,9 @@ def cleanup_modules(cr):
             # from OCA/account-financial-tools - Features changed
             ('account_move_line_no_default_search', 'account'),
             ('account_tax_chart_interval', 'account'),
+            # from OCA/account_payment
+            ('account_payment_term_multi_day',
+             'account_payment_term_extension'),
             # from OCA/server-tools - features included now in core
             ('base_concurrency', 'base'),
             ('base_debug4all', 'base'),
