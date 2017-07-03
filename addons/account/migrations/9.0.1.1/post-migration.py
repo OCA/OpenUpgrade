@@ -524,11 +524,11 @@ def merge_invoice_journals(env, refund_journal_ids=None, journal_mapping=None):
             FROM account_journal
             WHERE openupgrade_legacy_9_0_type = %s
             """
-        args = [journal_type, ]
+        query_args = [journal_type, ]
         if refund_journal_ids:
             query += " AND id IN %s"
-            args.append(refund_journal_ids)
-        env.cr.execute(query, tuple(args))
+            query_args.append(tuple(refund_journal_ids))
+        env.cr.execute(query, tuple(query_args))
         refund_journal_ids = [x[0] for x in env.cr.fetchall()]
         refund_journals = env['account.journal'].browse(refund_journal_ids)
         for refund_journal in refund_journals:
