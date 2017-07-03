@@ -88,6 +88,7 @@ def cleanup_modules(cr):
             # from OCA/website
             ('website_event_register_free', 'website_event'),
             ('website_event_register_free_with_sale', 'website_event_sale'),
+            ('website_sale_collapse_categories', 'website_sale'),
         ], merge_modules=True,
     )
 
