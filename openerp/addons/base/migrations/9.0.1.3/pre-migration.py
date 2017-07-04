@@ -79,6 +79,8 @@ def cleanup_modules(cr):
             # from OCA/social - included in core
             ('website_mail_snippet_table_edit', 'mass_mailing'),
             ('mass_mailing_sending_queue', 'mass_mailing'),
+            ('website_mail_snippet_bg_color',
+             'web_editor_background_color'), # this one now located in OCA/web
             # from OCA/crm - included in core
             ('crm_lead_lost_reason', 'crm'),
             # from OCA/sale-workflow - included in core
