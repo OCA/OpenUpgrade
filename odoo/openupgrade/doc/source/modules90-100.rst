@@ -606,3 +606,10 @@ OCA/sale-workflow
 -----------------
 
 * |del| sale_order_back2draft: Feature is now included in core sale module.
+
+OCA/social
+----------
+
+* |del| mass_mailing_security_group: These extra permissions are not needed
+  anymore. Anyway, you will need to manually assign the "Mass mailing user"
+  permission for granting access to required users.

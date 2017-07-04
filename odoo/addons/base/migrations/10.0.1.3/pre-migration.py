@@ -64,5 +64,7 @@ def migrate(cr, version):
             ('im_odoo_support', 'im_livechat'),
             # OCA/sale-workflow
             ('sale_order_back2draft', 'sale'),
+            # OCA/social
+            ('mass_mailing_security_group', 'mass_mailing'),
         ], merge_modules=True,
     )
