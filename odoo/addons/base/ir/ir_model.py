@@ -679,7 +679,7 @@ class IrModelFields(models.Model):
                 return
             attrs['comodel_name'] = field_data['relation']
             attrs['ondelete'] = field_data['on_delete']
-            attrs['domain'] = safe_eval(field_data['domain']) if field_data['domain'] else None
+            attrs['domain'] = safe_eval(field_data['domain'] or '[]')
         elif field_data['ttype'] == 'one2many':
             if partial and not (
                 field_data['relation'] in self.env and (
@@ -689,7 +689,7 @@ class IrModelFields(models.Model):
                 return
             attrs['comodel_name'] = field_data['relation']
             attrs['inverse_name'] = field_data['relation_field']
-            attrs['domain'] = safe_eval(field_data['domain']) if field_data['domain'] else None
+            attrs['domain'] = safe_eval(field_data['domain'] or '[]')
         elif field_data['ttype'] == 'many2many':
             if partial and field_data['relation'] not in self.env:
                 return
@@ -698,7 +698,7 @@ class IrModelFields(models.Model):
             attrs['relation'] = field_data['relation_table'] or rel
             attrs['column1'] = field_data['column1'] or col1
             attrs['column2'] = field_data['column2'] or col2
-            attrs['domain'] = safe_eval(field_data['domain']) if field_data['domain'] else None
+            attrs['domain'] = safe_eval(field_data['domain'] or '[]')
         # add compute function if given
         if field_data['compute']:
             attrs['compute'] = make_compute(field_data['compute'], field_data['depends'])
@@ -1246,16 +1246,22 @@ class IrModelData(models.Model):
 
             record = record.create(values)
             if xml_id:
-                for parent_model, parent_field in record._inherits.iteritems():
-                    if parent_model in existing_parents:
-                        continue
-                    self.sudo().create({
-                        'name': xml_id + '_' + parent_model.replace('.', '_'),
-                        'model': parent_model,
-                        'module': module,
-                        'res_id': record[parent_field].id,
-                        'noupdate': noupdate,
-                    })
+                #To add an external identifiers to all inherits model
+                inherit_models = [record]
+                while inherit_models:
+                    current_model = inherit_models.pop()
+                    for parent_model_name, parent_field in current_model._inherits.iteritems():
+                        inherit_models.append(self.env[parent_model_name])
+                        if parent_model_name in existing_parents:
+                            continue
+                        self.sudo().create({
+                            'name': xml_id + '_' + parent_model_name.replace('.', '_'),
+                            'model': parent_model_name,
+                            'module': module,
+                            'res_id': record[parent_field].id,
+                            'noupdate': noupdate,
+                        })
+                        existing_parents.add(parent_model_name)
                 self.sudo().create({
                     'name': xml_id,
                     'model': model,
