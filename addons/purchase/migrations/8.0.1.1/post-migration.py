@@ -22,6 +22,7 @@
 import logging
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp import pooler, SUPERUSER_ID as uid
+from openerp.models import AUTOINIT_RECALCULATE_STORED_FIELDS
 
 logger = logging.getLogger('OpenUpgrade.purchase')
 
@@ -202,9 +203,39 @@ def migrate_stock_warehouse(cr, pool):
             "order to access this setting.")
 
 
+def compute_reception_to_invoice(cr, pool):
+    picking_obj = pool['stock.picking']
+    # Get picking related to purchase with invoice method set to picking
+    cr.execute(
+        """
+        SELECT distinct(picking_id)
+        FROM stock_move sm
+        INNER JOIN purchase_order_line pol ON sm.purchase_line_id = pol.id
+        INNER JOIN purchase_order po on pol.order_id = po.id
+        WHERE po.invoice_method='picking';
+        """)
+    picking_ids = [row[0] for row in cr.fetchall()]
+    logger.info(
+        "Computing stock_picking.reception_to_invoice for %d pickings" % (
+            len(picking_ids)))
+    res = {}
+    while picking_ids:
+        iids = picking_ids[:AUTOINIT_RECALCULATE_STORED_FIELDS]
+        picking_ids = picking_ids[AUTOINIT_RECALCULATE_STORED_FIELDS:]
+        res.update(picking_obj._get_to_invoice(cr, uid, iids, False, False))
+
+    to_invoice_picking_ids = [k for k, v in res.iteritems() if v is True]
+    logger.info(
+        "Found %d pickings with reception_to_invoice = True" % (
+            len(to_invoice_picking_ids)))
+    picking_obj.write(
+        cr, uid, to_invoice_picking_ids, {'reception_to_invoice': True})
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     pool = pooler.get_pool(cr.dbname)
+    compute_reception_to_invoice(cr, pool)
     create_workitem_picking(cr, uid, pool)
     migrate_purchase_order(cr)
     migrate_product_supply_method(cr)
