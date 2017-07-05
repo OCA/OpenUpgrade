@@ -86,14 +86,14 @@ def warning_update_module_names_partial(cr):
         return
 
     # get moved model fields
-    moved_fields = ['sale_line_warn', 'sale_line_warn_msg', 'sale_warn',
-                    'sale_warn_msg']
+    moved_fields = tuple(['sale_line_warn', 'sale_line_warn_msg', 'sale_warn',
+                    'sale_warn_msg'])
     cr.execute("""
         SELECT id
         FROM ir_model_fields
         WHERE model IN ('res.partner', 'product.template') AND name in %s
     """, (moved_fields,))
-    field_ids = [r[0] for r in cr.fetchall()]
+    field_ids = tuple([r[0] for r in cr.fetchall()])
 
     # update ir_model_data, the subselect allows to avoid duplicated XML-IDs
     query = ("UPDATE ir_model_data SET module = %s "
@@ -122,13 +122,13 @@ def sale_expense_update_module_names_partial(cr):
         return
 
     # get moved model fields
-    moved_fields = ['expense_policy']
+    moved_fields = tuple(['expense_policy'])
     cr.execute("""
         SELECT id
         FROM ir_model_fields
         WHERE model = 'product.template' AND name in %s
     """, (moved_fields,))
-    field_ids = [r[0] for r in cr.fetchall()]
+    field_ids = tuple([r[0] for r in cr.fetchall()])
 
     # update ir_model_data, the subselect allows to avoid duplicated XML-IDs,
     query = ("UPDATE ir_model_data SET module = %s "
