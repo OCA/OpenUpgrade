@@ -86,8 +86,8 @@ def warning_update_module_names_partial(cr):
         return
 
     # get moved model fields
-    moved_fields = tuple(['sale_line_warn', 'sale_line_warn_msg', 'sale_warn',
-                    'sale_warn_msg'])
+    moved_fields = tuple(['sale_line_warn', 'sale_line_warn_msg',
+                          'sale_warn', 'sale_warn_msg'])
     cr.execute("""
         SELECT id
         FROM ir_model_fields
