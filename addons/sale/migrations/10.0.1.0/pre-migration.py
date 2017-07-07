@@ -97,14 +97,14 @@ def warning_update_module_names_partial(cr):
 
     # update ir_model_data, the subselect allows to avoid duplicated XML-IDs
     query = ("UPDATE ir_model_data SET module = %s "
-             "WHERE module = %s AND res_id IN %s AND name NOT IN "
+             "WHERE module = %s AND res_id = ANY(%s) AND name NOT IN "
              "(SELECT name FROM ir_model_data WHERE module = %s)")
     openupgrade.logged_query(cr, query, (new_name, old_name, field_ids,
                                          new_name))
 
     # update ir_translation
     query = ("UPDATE ir_translation SET module = %s "
-             "WHERE module = %s AND res_id IN %s")
+             "WHERE module = %s AND res_id = ANY(%s)")
     openupgrade.logged_query(cr, query, (new_name, old_name, field_ids))
 
 
@@ -126,20 +126,20 @@ def sale_expense_update_module_names_partial(cr):
     cr.execute("""
         SELECT id
         FROM ir_model_fields
-        WHERE model = 'product.template' AND name in %s
+        WHERE model = 'product.template' AND name = ANY(%s)
     """, (moved_fields,))
     field_ids = [r[0] for r in cr.fetchall()]
 
     # update ir_model_data, the subselect allows to avoid duplicated XML-IDs,
     query = ("UPDATE ir_model_data SET module = %s "
-             "WHERE module = %s AND res_id IN %s AND name NOT IN "
+             "WHERE module = %s AND res_id = ANY(%s) AND name NOT IN "
              "(SELECT name FROM ir_model_data WHERE module = %s)")
     openupgrade.logged_query(cr, query, (new_name, old_name, field_ids,
                                          new_name))
 
     # delete ir_translation because the translations changes completely
     query = ("DELETE FROM ir_translation "
-             "WHERE module = %s AND res_id IN %s")
+             "WHERE module = %s AND res_id = ANY(%s)")
     openupgrade.logged_query(cr, query, (old_name, field_ids))
 
 
