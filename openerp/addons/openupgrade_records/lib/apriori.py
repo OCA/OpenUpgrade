@@ -23,7 +23,9 @@ renamed_modules = {
     'account_payment': 'account_payment_order',
     # OCA/account-invoicing
     'account_refund_original': 'account_invoice_refund_link',
+    'invoice_fiscal_position_update': 'account_invoice_fiscal_position_update',
     # OCA/social
+    'mail_message_name_search': 'base_search_mail_content',
     'marketing_security_group': 'mass_mailing_security_group',
     # odoomrp/odoomrp-wip
     'product_variants_no_automatic_creation': 'product_variant_configurator',
@@ -32,6 +34,7 @@ renamed_modules = {
     'purchase_product_variants': 'purchase_variant_configurator',
     # OCA/account-financial-reporting
     'account_financial_report_webkit': 'account_financial_report_qweb',
+    'account_journal_report_xls': 'account_journal_report',
     # OCA/contract
     'account_analytic_analysis': 'contract',
     'contract_recurring_plans': 'contract_recurring_analytic_distribution',
@@ -46,6 +49,11 @@ renamed_modules = {
     'hr_expense_analytic_plans': 'hr_expense_analytic_distribution',
     # OCA/project
     'project_work_time_control': 'project_timesheet_time_control',
+    # OCA/manufacture-reporting
+    'mrp_bom_structure_xls': 'mrp_bom_structure_xlsx',
+    'mrp_bom_structure_xls_level_1': 'mrp_bom_structure_xlsx_level_1',
+    # OCA/reporting-engine
+    'report_xls': 'report_xlsx',
 }
 
 renamed_models = {
