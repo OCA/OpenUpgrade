@@ -62,6 +62,7 @@ def migrate(cr, version):
             ('web_view_editor', 'web'),
             ('mail_tip', 'mail'),
             ('im_odoo_support', 'im_livechat'),
+            ('marketing', 'marketing_campaign'),
             # OCA/sale-workflow
             ('sale_order_back2draft', 'sale'),
             # OCA/social
