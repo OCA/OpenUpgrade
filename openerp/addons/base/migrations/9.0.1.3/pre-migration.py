@@ -59,6 +59,7 @@ def cleanup_modules(cr):
         cr, [
             ('contacts', 'mail'),
             ('marketing_crm', 'crm'),
+            ('email_template', 'mail'),  # mail_template class
             ('procurement_jit_stock', 'procurement_jit'),
             ('web_gantt', 'web'),
             ('web_graph', 'web'),
@@ -68,9 +69,17 @@ def cleanup_modules(cr):
             # from OCA/account-financial-tools - Features changed
             ('account_move_line_no_default_search', 'account'),
             ('account_tax_chart_interval', 'account'),
+            # from OCA/account-financial-reporting
+            ('account_financial_report_webkit_xls',
+             'account_financial_report_qweb'),
             # from OCA/account_payment
             ('account_payment_term_multi_day',
              'account_payment_term_extension'),
+            # from OCA/bank-statement-reconcile
+            ('account_easy_reconcile', 'account_mass_reconcile'),
+            ('account_advanced_reconcile', 'account_mass_reconcile'),
+            # from OCA/connector-telephony
+            ('asterisk_click2dial_crm', 'crm_phone'),
             # from OCA/server-tools - features included now in core
             ('base_concurrency', 'base'),
             ('base_debug4all', 'base'),
@@ -85,6 +94,8 @@ def cleanup_modules(cr):
             ('crm_lead_lost_reason', 'crm'),
             # from OCA/sale-workflow - included in core
             ('sale_order_back2draft', 'sale'),
+            ('partner_prepayment', 'sale_delivery_block'),
+            ('sale_fiscal_position_update', 'sale'),
             # from OCA/bank-payment
             ('account_payment_sale_stock', 'account_payment_sale'),
             # from OCA/website
