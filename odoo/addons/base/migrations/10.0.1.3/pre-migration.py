@@ -66,5 +66,7 @@ def migrate(cr, version):
             ('sale_order_back2draft', 'sale'),
             # OCA/social
             ('mass_mailing_security_group', 'mass_mailing'),
+            # OCA/website
+            ('website_snippet_anchor', 'web_editor_snippet_anchor'),
         ], merge_modules=True,
     )
