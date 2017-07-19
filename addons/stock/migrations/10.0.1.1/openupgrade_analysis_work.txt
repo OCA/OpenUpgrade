@@ -3,11 +3,11 @@ stock        / barcode.rule             / type (False)                  : NEW se
 # NOTHING TO DO
 
 stock        / procurement.rule         / picking_type_id (many2one)    : now required
-# TODO: pre-migration. Default to some value, guessing by looking at source
+# Done: post-migration. Default to some value, guessing by looking at source
 # and destination locations, and warehouse.
+
 stock        / procurement.rule         / route_sequence (float)        : type is now 'integer' ('float')
-# TODO: pre-migration: copy column
-# TODO: post-migration: move values from old column
+# Done: pre-migration: copy column and then convert float to integer
 
 stock        / product.product          / stock_move_ids (one2many)     : NEW relation: stock.move
 stock        / product.product          / stock_quant_ids (one2many)    : NEW relation: stock.quant
@@ -15,10 +15,14 @@ stock        / product.product          / stock_quant_ids (one2many)    : NEW re
 
 stock        / product.template         / location_id (many2one)        : not a function anymore
 stock        / product.template         / warehouse_id (many2one)       : not a function anymore
-# TODO: ??? IN V9 were defined as fields.dummy
+# NOTHING TO DO as in v9 were dummy fields (existed only for backwards compatibility)
 
 stock        / product.template         / type (False)                  : NEW selection_keys: ['consu', 'product', 'service'], mode: modify
 # NOTHING TO DO
+
+stock        / res.partner              / picking_warn (selection)      : NEW
+stock        / res.partner              / picking_warn_msg (text)       : NEW
+# Done: Reassign module from 'warning' to 'stock'
 
 stock        / stock.inventory          / category_id (many2one)        : NEW relation: product.category
 stock        / stock.inventory          / exhausted (boolean)           : NEW
@@ -29,17 +33,16 @@ stock        / stock.inventory.line     / state (char)                  : type i
 # NOTHING TO DO
 
 stock        / stock.location.path      / auto (selection)              : selection_keys is now '['manual', 'transparent']' ('['auto', 'manual', 'transparent']')
-# TODO: pre-migration. copy column
-# TODO: post-migration. Move 'auto' to some other value
+# Done: post-migration. move values 'auto' to 'manual'
 
 stock        / stock.location.path      / route_sequence (float)        : type is now 'integer' ('float')
-# TODO: pre-migration. copy column
-# TODO: post-migration. copy values to new field converting to integer
+# Done: pre-migration: copy column and then convert float to integer
 
 stock        / stock.move               / ordered_qty (float)           : NEW
-# TODO: post-migration. Default to product_uom_qty
+# Done: post-migration. Default to product_uom_qty
+
 stock        / stock.pack.operation     / ordered_qty (float)           : NEW
-# TODO: post-migration. Default to product_uom_qty
+# Done: post-migration. Default to product_qty
 
 stock        / stock.pack.operation     / processed_boolean (boolean)   : was renamed to is_done [nothing to do]
 # NOTHING TO DO
@@ -69,8 +72,7 @@ stock        / stock.scrap              / product_uom_id (many2one)     : NEW re
 stock        / stock.scrap              / scrap_location_id (many2one)  : NEW relation: stock.location
 stock        / stock.scrap              / scrap_qty (float)             : NEW required: required, req_default: function
 stock        / stock.scrap              / state (selection)             : NEW selection_keys: ['done', 'draft']
-# TODO: Create one record for each move that had as destionation a scrap
-# location
+# Done: post-migration: Create one record for each move linked to a scrap location
 
 stock        / stock.warehouse          / active (boolean)              : NEW
 stock        / stock.warehouse          / resupply_from_wh (boolean)    : DEL
@@ -109,8 +111,16 @@ NEW ir.ui.view: stock.stock_scrap_tree_view
 NEW ir.ui.view: stock.stock_warehouse_view_search
 NEW ir.ui.view: stock.view_partner_stock_warnings_form
 DEL ir.ui.view: stock.view_stock_move_scrap_wizard
+# Nothing to do
+
 NEW res.groups: stock.group_stock_multi_locations
 NEW res.groups: stock.group_stock_multi_warehouses
-NEW res.groups: stock.group_warning_stock
 DEL res.groups: stock.group_locations
+# Done: Rename the old group to one of the new, and then assign also the second
+  new one to the same users
+
+NEW res.groups: stock.group_warning_stock
+# Done: Add the group to all users if the module 'warning' is installed
+
 NEW res.users: base.default_user
+# Nothing to do

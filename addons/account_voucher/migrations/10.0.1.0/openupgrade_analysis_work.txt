@@ -1,6 +1,6 @@
 ---Fields in module 'account_voucher'---
 account_voucher / account.voucher          / account_date (date)           : NEW 
-# TODO: post-migration: Copy from date of move_id
+# Done: post-migration. Copied from date of move_id
 account_voucher / account.voucher          / website_message_ids (one2many): DEL relation: mail.message
 # NOTHING TO DO
 

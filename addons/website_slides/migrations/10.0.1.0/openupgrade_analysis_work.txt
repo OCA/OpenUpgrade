@@ -1,0 +1,11 @@
+---Fields in module 'website_slides'---
+website_slides / slide.channel            / active (boolean)              : NEW
+website_slides / slide.channel            / website_message_ids (one2many): DEL relation: mail.message
+website_slides / slide.slide              / active (boolean)              : NEW
+# NOTHING TO DO
+
+---XML records in module 'website_slides'---
+NEW ir.actions.todo: base.open_menu
+DEL ir.actions.todo: base.open_menu_channels
+NEW ir.ui.view: website_slides.slide_channel_view_search
+# NOTHING TO DO

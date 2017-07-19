@@ -8,8 +8,11 @@ DEL ir.actions.todo: base.open_menu
 DEL ir.cron: survey.ir_cron_clean_empty_surveys
 NEW ir.ui.view: survey.survey_survey_view_search
 NEW ir.values: survey.survey_values_action_clean_test_answers
+# NOTHING TO DO
 NEW res.groups: survey.group_survey_manager
 NEW res.groups: survey.group_survey_user
 DEL res.groups: base.group_survey_manager
 DEL res.groups: base.group_survey_user
+# Done: Rename the old groups to the new ones
 NEW res.users: base.default_user
+# NOTHING TO DO

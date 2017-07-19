@@ -3,7 +3,7 @@ hr_timesheet_sheet / hr.attendance            / sheet_id (many2one)           : 
 hr_timesheet_sheet / hr_timesheet_sheet.sheet / attendance_count (integer)    : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
 hr_timesheet_sheet / hr_timesheet_sheet.sheet / attendances_ids (one2many)    : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
 hr_timesheet_sheet / hr_timesheet_sheet.sheet / period_ids (one2many)         : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
-hr_timesheet_sheet / hr_timesheet_sheet.sheet / total_attendance (float)      : type is now 'integer' ('float')
+hr_timesheet_sheet / hr_timesheet_sheet.sheet / total_attendance (float)      : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
 hr_timesheet_sheet / hr_timesheet_sheet.sheet / total_difference (float)      : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
 hr_timesheet_sheet / hr_timesheet_sheet.sheet / total_timesheet (float)       : module is now 'hr_timesheet_attendance' ('hr_timesheet_sheet')
 hr_timesheet_sheet / hr_timesheet_sheet.sheet / website_message_ids (one2many): DEL relation: mail.message

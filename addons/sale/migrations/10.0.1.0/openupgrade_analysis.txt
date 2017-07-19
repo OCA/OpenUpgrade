@@ -1,13 +1,18 @@
 ---Fields in module 'sale'---
 sale         / account.invoice          / partner_shipping_id (many2one): NEW relation: res.partner
 sale         / account.invoice.line     / layout_category_id (many2one) : NEW relation: sale.layout_category
+sale         / product.pricelist        / discount_policy (selection)   : previously in module product_visible_discount
+sale         / product.template         / expense_policy (selection)    : previously in module sale_expense
 sale         / product.template         / invoice_policy (selection)    : selection_keys is now '['delivery', 'order']' ('['cost', 'delivery', 'order']')
+sale         / product.template         / sale_line_warn (selection)    : previously in module warning
+sale         / product.template         / sale_line_warn_msg (text)     : previously in module warning
+sale         / res.partner              / sale_warn (selection)         : previously in module warning
+sale         / res.partner              / sale_warn_msg (text)          : previously in module warning
 sale         / sale.layout_category     / name (char)                   : NEW required: required
 sale         / sale.layout_category     / pagebreak (boolean)           : NEW 
 sale         / sale.layout_category     / sequence (integer)            : NEW required: required, req_default: function
 sale         / sale.layout_category     / subtotal (boolean)            : NEW 
 sale         / sale.order               / confirmation_date (datetime)  : NEW 
-sale         / sale.order               / website_message_ids (one2many): DEL relation: mail.message
 sale         / sale.order.line          / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
 sale         / sale.order.line          / layout_category_id (many2one) : NEW relation: sale.layout_category
 ---XML records in module 'sale'---
@@ -55,6 +60,8 @@ DEL ir.ui.menu: base.menu_sale_config
 DEL ir.ui.menu: base.menu_sale_general_settings
 DEL ir.ui.menu: base.menu_sales_config
 NEW ir.ui.view: sale.account_invoice_line_form
+NEW ir.ui.view: sale.account_invoice_line_tree
+NEW ir.ui.view: sale.account_invoice_supplier_form
 NEW ir.ui.view: sale.product_pricelist_view_form
 NEW ir.ui.view: sale.product_pricelist_view_tree
 NEW ir.ui.view: sale.report_configuration_form_view

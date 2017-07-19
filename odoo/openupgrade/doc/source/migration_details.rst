@@ -1,12 +1,12 @@
-Migration process details
-=========================
+Manual migration
+================
 
 Instead of running *migrate.py*, you can also check out the code manually
 and upgrade your database by calling odoo-bin (or openerp-server) directly. You
 will want to do this when you are working on developing migration scripts for
 uncovered modules.
 
-1. Check out the OpenUpgrade source code from Launchpad for the branches you
+1. Check out the OpenUpgrade source code from Github for the branches you
    need. Each branch migrates to its version from the previous version, so
    branch 7.0 migrates from 6.1 to 7.0. If you are skipping versions, you still
    need to run all the branches in between.
@@ -31,12 +31,21 @@ uncovered modules.
    your data and have to do some manual clean up before and after the upgrade.
    Expect to repeat the process several times as you encounter errors, clean up
    your data, and try again. If necessary, ask for help or report bugs on
-   Launchpad.
+   Github.
 
 6. Once the data migration is successful, run the official version of Odoo
    against it to test how the migrated data behaves under the new version.
    Remember that the OpenUpgrade version of the source code is only intended to
    perform the migration, not run the Odoo server.
+
+General Tips
+++++++++++++
+
+* If you migrate your database through multiple versions make sure you use separate directories. If you use one directory and just check out a new branch the remaining *.pyc* files will cause trouble.
+
+* When installing the openupgradelib make sure you check out the latest version from github to get the latest updates and fixes. Either by following the method from *migrate.py* or installing via pip like so::
+
+    $ pip install git+git://github.com/OCA/openupgradelib.git
 
 Configuration options
 +++++++++++++++++++++

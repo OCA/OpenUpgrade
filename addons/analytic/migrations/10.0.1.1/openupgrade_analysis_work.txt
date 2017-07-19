@@ -1,8 +1,9 @@
 ---Fields in module 'analytic'---
 analytic     / account.analytic.account / account_type (selection)      : DEL required: required, selection_keys: ['closed', 'normal'], req_default: normal
-# TODO: pre-migraton: copy to new column
 analytic     / account.analytic.account / active (boolean)              : NEW
-# TODO: post-migraton: if account_type = closed, then set to False
+#copied old account type field in pre and mapped to the new boolean in post
+#(both closed = False and normal=True  , this last map is a redundant because
+#default is true)
 ---XML records in module 'analytic'---
 NEW ir.actions.act_window: analytic.account_analytic_tag_action
 DEL ir.actions.act_window: analytic.action_account_analytic_chart

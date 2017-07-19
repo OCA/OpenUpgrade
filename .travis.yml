@@ -12,6 +12,11 @@ addons:
             - python-simplejson
             - python-serial
             - python-yaml
+            - python-sphinx
+            - python-passlib
+            - python-psycopg2
+            - python-werkzeug
+            - realpath
     postgresql: "9.4"
 
 env:
@@ -48,6 +53,7 @@ script:
     - pip install -q -r requirements.txt
     # this crashes if there is no test data
     - if [ -s ../test_data90.yml ]; then ./openerp-server --database=$DB --test-file=`readlink -f ../test_data90.yml` --test-commit --stop-after-init; fi
+    # Line below may fail quite often due to Travis bug:
     - git reset -q --hard $TRAVIS_COMMIT
     # Install Python requirements of target release
     - pip install -q -r requirements.txt
@@ -55,10 +61,12 @@ script:
     # on unreleased features in openupgradelib
     - pip install --ignore-installed git+https://github.com/OCA/openupgradelib.git@master
     # select modules and perform the upgrade
-    - MODULES=base,$(sed -n '/^+========/,$p'  odoo/openupgrade/doc/source/modules90-100.rst | grep "Done\|Partial" | sed -n '/^|/ s/^|\([0-9a-z_]*\) *|.*$/\1/g p' | paste -d, -s)
+    - MODULES=base,$(sed -n '/^+========/,$p'  odoo/openupgrade/doc/source/modules90-100.rst | grep "Done\|Partial\|Nothing" | sed -n '/^|/ s/^|\([0-9a-z_]*\) *|.*$/\1/g p' | paste -d, -s)
     - psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES | sed -e "s/,/','/g")')"
     - echo Testing modules $MODULES
     - OPENUPGRADE_TESTS=1 coverage run $ODOO --database=$DB --update=$MODULES --stop-after-init
+    # try to build the documentation
+    - sh scripts/build_openupgrade_docs
 
 after_success:
     coveralls

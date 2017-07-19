@@ -1,0 +1,64 @@
+---Fields in module 'website_crm_partner_assign'---
+website_crm_partner_assign / crm.lead                 / partner_declined_ids (many2many): NEW relation: res.partner
+# NOTHING TO DO
+---XML records in module 'website_crm_partner_assign'---
+NEW crm.lead.tag: website_crm_partner_assign.tag_portal_lead_partner_unavailable
+NEW ir.actions.act_window: website_crm_partner_assign.action_crm_send_mass_forward
+NEW ir.actions.act_window: website_crm_partner_assign.action_report_crm_opportunity_assign
+NEW ir.actions.act_window: website_crm_partner_assign.action_report_crm_partner_assign
+NEW ir.actions.act_window: website_crm_partner_assign.crm_lead_forward_to_partner_act
+NEW ir.actions.act_window: website_crm_partner_assign.res_partner_activation_act
+NEW ir.actions.act_window: website_crm_partner_assign.res_partner_grade_action
+NEW ir.actions.server: website_crm_partner_assign.action_assign_salesman_according_assigned_partner
+NEW ir.model.access: website_crm_partner_assign.access_crm_lead_report_assign
+NEW ir.model.access: website_crm_partner_assign.access_crm_lead_report_assign_all
+NEW ir.model.access: website_crm_partner_assign.access_crm_partner_report
+NEW ir.model.access: website_crm_partner_assign.access_partner_activation_manager
+NEW ir.model.access: website_crm_partner_assign.access_res_partner_activation_user
+NEW ir.model.access: website_crm_partner_assign.access_res_partner_grade
+NEW ir.model.access: website_crm_partner_assign.access_res_partner_grade_employee
+NEW ir.model.access: website_crm_partner_assign.access_res_partner_grade_invoicing_payment
+NEW ir.model.access: website_crm_partner_assign.access_res_partner_grade_manager
+NEW ir.model.access: website_crm_partner_assign.access_res_partner_grade_portal
+NEW ir.model.access: website_crm_partner_assign.access_res_partner_grade_public
+NEW ir.model.access: website_crm_partner_assign.crm_activity_portal_access
+NEW ir.model.access: website_crm_partner_assign.crm_lead_portal_access
+NEW ir.model.access: website_crm_partner_assign.lead_portal_access
+NEW ir.model.access: website_crm_partner_assign.mail_message_subtype_portal_access
+NEW ir.model.access: website_crm_partner_assign.partner_access_crm_lead
+NEW ir.model.access: website_crm_partner_assign.res_partner_grade_access
+NEW ir.rule: website_crm_partner_assign.assigned_lead_portal_rule_1
+NEW ir.ui.menu: website_crm_partner_assign.menu_report_crm_opportunities_assign_tree
+NEW ir.ui.menu: website_crm_partner_assign.menu_report_crm_partner_assign_tree
+NEW ir.ui.menu: website_crm_partner_assign.menu_res_partner_grade_action
+NEW ir.ui.menu: website_crm_partner_assign.res_partner_activation_config_mi
+NEW ir.ui.view: website_crm_partner_assign.assets_frontend
+NEW ir.ui.view: website_crm_partner_assign.crm_lead_forward_to_partner_form
+NEW ir.ui.view: website_crm_partner_assign.crm_lead_partner_filter
+NEW ir.ui.view: website_crm_partner_assign.crm_opportunity_partner_filter
+NEW ir.ui.view: website_crm_partner_assign.portal_my_home_lead
+NEW ir.ui.view: website_crm_partner_assign.portal_my_home_menu_lead
+NEW ir.ui.view: website_crm_partner_assign.portal_my_lead
+NEW ir.ui.view: website_crm_partner_assign.portal_my_leads
+NEW ir.ui.view: website_crm_partner_assign.portal_my_opportunities
+NEW ir.ui.view: website_crm_partner_assign.portal_my_opportunity
+NEW ir.ui.view: website_crm_partner_assign.res_partner_activation_form
+NEW ir.ui.view: website_crm_partner_assign.res_partner_activation_tree
+NEW ir.ui.view: website_crm_partner_assign.view_crm_lead_geo_assign_form
+NEW ir.ui.view: website_crm_partner_assign.view_crm_lead_geo_assign_tree
+NEW ir.ui.view: website_crm_partner_assign.view_crm_opportunity_geo_assign_form
+NEW ir.ui.view: website_crm_partner_assign.view_crm_opportunity_geo_assign_tree
+NEW ir.ui.view: website_crm_partner_assign.view_crm_partner_assign_form
+NEW ir.ui.view: website_crm_partner_assign.view_partner_grade_form
+NEW ir.ui.view: website_crm_partner_assign.view_partner_grade_tree
+NEW ir.ui.view: website_crm_partner_assign.view_report_crm_lead_assign_filter
+NEW ir.ui.view: website_crm_partner_assign.view_report_crm_lead_assign_graph
+NEW ir.ui.view: website_crm_partner_assign.view_report_crm_lead_assign_pivot
+NEW ir.ui.view: website_crm_partner_assign.view_report_crm_partner_assign_filter
+NEW ir.ui.view: website_crm_partner_assign.view_report_crm_partner_assign_graph
+NEW ir.ui.view: website_crm_partner_assign.view_res_partner_filter_assign
+NEW ir.ui.view: website_crm_partner_assign.view_res_partner_filter_assign_tree
+DEL ir.ui.view: website_crm_partner_assign.partner_grade_view
+NEW ir.values: website_crm_partner_assign.ir_assign_salesman_according_assigned_partner
+NEW mail.template: website_crm_partner_assign.email_template_lead_forward_mail
+# NOTHING TO DO

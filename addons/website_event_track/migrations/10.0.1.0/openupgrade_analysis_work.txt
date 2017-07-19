@@ -1,0 +1,18 @@
+---Fields in module 'website_event_track'---
+website_event_track / event.event              / blog_id (many2one)            : DEL relation: blog.blog
+website_event_track / event.event              / show_blog (boolean)           : DEL 
+# Nothing to do - Disappeared feature, but columns are kept
+
+website_event_track / event.track              / active (boolean)              : NEW
+# Nothing to do: Default value True
+
+website_event_track / event.track              / website_message_ids (one2many): DEL relation: mail.message
+# Nothing to do: Standard mail migration
+
+website_event_track / event.track.tag          / color (integer)               : NEW
+# Nothing to do: Not required
+
+---XML records in module 'website_event_track'---
+NEW ir.ui.view: website_event_track.event_track_template_new
+DEL web.tip: website_event_track.event_track_tip_1
+# Nothing to do

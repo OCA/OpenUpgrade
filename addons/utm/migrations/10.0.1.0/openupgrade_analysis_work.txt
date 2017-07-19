@@ -1,0 +1,11 @@
+---Fields in module 'utm'---
+---XML records in module 'utm'---
+NEW ir.model.access: utm.access_utm_campaign_user
+NEW ir.model.access: utm.access_utm_medium_user
+NEW ir.model.access: utm.access_utm_source_user
+# Nothing to do
+
+DEL ir.model.access: utm.access_utm_campaign_manager
+DEL ir.model.access: utm.access_utm_medium_manager
+DEL ir.model.access: utm.access_utm_source_manager
+# Nothing to do: noupdate=0 records

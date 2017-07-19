@@ -45,12 +45,11 @@ class openupgrade_comparison_config(models.Model):
             connection = self.get_connection()
             user_model = connection.get_model("res.users")
             ids = user_model.search([("login", "=", "admin")])
-            user_info = user_model.read(ids[0], ["name"])
+            user_info = user_model.read([ids[0]], ["name"])[0]
         except Exception, e:
             raise UserError(
-                _("Connection failed."), unicode(e))
+                unicode(e))
         raise UserError(
-            _("Connection succesful."),
             _("%s is connected.") % user_info["name"])
 
     @api.multi
@@ -60,7 +59,7 @@ class openupgrade_comparison_config(models.Model):
         wizard = self.env['openupgrade.analysis.wizard'].create(
             {'server_config': self.id})
         return {
-            'name': wizard.description,
+            'name': wizard._description,
             'view_type': 'form',
             'view_mode': 'form',
             'res_model': wizard._name,
@@ -81,9 +80,10 @@ class openupgrade_comparison_config(models.Model):
 
         modules = []
         for module_id in remote_module_ids:
-            name = remote_module_obj.read(module_id, ["name"])
-            name = apriori.renamed_modules.get(name, name)
-            modules.append(name)
+            mod = remote_module_obj.read([module_id], ["name"])[0]
+            mod_name = mod['name']
+            mod_name = apriori.renamed_modules.get(mod_name, mod_name)
+            modules.append(mod_name)
         _logger = logging.getLogger(__name__)
         _logger.debug('remote modules %s', modules)
         local_modules = self.env['ir.module.module'].search([

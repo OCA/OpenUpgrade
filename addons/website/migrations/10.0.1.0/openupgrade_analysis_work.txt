@@ -54,8 +54,10 @@ DEL ir.ui.view: website.s_quote
 DEL ir.ui.view: website.s_quotes_slider
 DEL ir.ui.view: website.s_separator
 DEL ir.ui.view: website.s_text_image_floating
+NEW res.users: base.default_user
+# nothing to do
 NEW res.groups: website.group_website_designer
 NEW res.groups: website.group_website_publisher
 DEL res.groups: base.group_website_designer
 DEL res.groups: base.group_website_publisher
-NEW res.users: base.default_user
+# rename xmlids

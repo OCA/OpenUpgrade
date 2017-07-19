@@ -12,6 +12,7 @@ base         / res.currency             / symbol (char)                 : now re
 base         / res.partner              / birthdate (char)              : DEL 
 base         / res.partner              / company_name (char)           : NEW 
 base         / res.partner              / company_type (selection)      : now a function
+base         / res.partner              / self (many2one)               : previously in module website_partner
 base         / res.partner              / use_parent_address (boolean)  : DEL 
 ---XML records in module 'base'---
 NEW ir.actions.act_url: base.action_open_website
@@ -51,6 +52,7 @@ DEL ir.ui.menu: base.menu_partner_title_contact
 DEL ir.ui.menu: base.menu_sale_config
 DEL ir.ui.menu: base.menu_sales
 NEW ir.ui.view: base.action_view_company_form_link_2_currencies
+NEW ir.ui.view: base.view_currency_rate_form
 NEW ir.ui.view: base.view_translation_dialog_tree
 NEW res.country.state: base.state_ae_aj
 NEW res.country.state: base.state_ae_az

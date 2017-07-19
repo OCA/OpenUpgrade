@@ -53,3 +53,18 @@ def migrate(cr, version):
         end,
         'res.lang', id
         from res_lang''')
+    openupgrade.update_module_names(
+        cr, [
+            ('account_full_reconcile', 'account'),
+            ('project_timesheet', 'hr_timesheet'),
+            ('share', 'base'),
+            ('web_tip', 'web'),
+            ('web_view_editor', 'web'),
+            ('mail_tip', 'mail'),
+            ('im_odoo_support', 'im_livechat'),
+            # OCA/sale-workflow
+            ('sale_order_back2draft', 'sale'),
+            # OCA/social
+            ('mass_mailing_security_group', 'mass_mailing'),
+        ], merge_modules=True,
+    )

@@ -4,33 +4,36 @@ crm          / crm.activity             / activity_2_id (many2one)      : DEL re
 crm          / crm.activity             / activity_3_id (many2one)      : DEL relation: crm.activity
 crm          / crm.activity             / recommended_activity_ids (many2many): NEW relation: crm.activity
 crm          / crm.activity             / preceding_activity_ids (many2many): NEW relation: crm.activity
-# TODO: pre-migration: copy columns
-# TODO: post-migration: convert activity 1,2,3 to recommended_activity_ids
+# Done: rename columns on pre-migration for adding them to the new many2many on post-migration
 
 crm          / crm.lead                 / last_activity_id (many2one)   : DEL relation: crm.activity
+# Done: Preserve column if needed for other module
+
 crm          / crm.lead                 / website_message_ids (one2many): DEL relation: mail.message
-# NOTHING TO DO
+# Nothing to do
 
 crm          / crm.lead.tag             / team_id (many2one)            : DEL relation: crm.team
-# TODO: Merge resulting duplicated records
+# Done: Preserve column if needed for other module.
+# No merging is done because it's better to have tags with the same label than to merge them and
+# break other modules that use these tags.
 
 crm          / crm.stage                / team_id (many2one)            : NEW relation: crm.team
 crm          / crm.stage                / team_ids (many2many)          : DEL relation: crm.team
 crm          / crm.team                 / stage_ids (many2many)         : DEL relation: crm.stage
-# TODO: pre-migration: copy table
-# TODO: post-migration: if the stage applied to multiple teams, do not set it
-# . If it applied to just one team, set to that one.
+# Done: Assign a team on the field team_id if len(team_ids) == 1
 
 crm          / crm.stage                / type (selection)              : DEL required: required, selection_keys: ['both', 'lead', 'opportunity'], req_default: both
-# NOTHING TO DO
+# Done: Preserve column if needed for other module.
 
 crm          / res.partner              / team_id (False)               : NEW mode: modify
 crm          / res.users                / team_id (False)               : NEW mode: modify
-# NOTHING TO DO
+# Nothing to do: They can be False by default
 
 ---XML records in module 'crm'---
 NEW crm.stage: crm.stage_lead4
 DEL crm.stage: crm.stage_lead5
+# Done: Remove possible demo XML-ID and rename XML-ID
+
 NEW ir.actions.act_window: crm.create_opportunity_simplified
 NEW ir.actions.act_window: crm.crm_activity_log_action
 NEW ir.actions.act_window: crm.crm_activity_report_action_tree
@@ -73,4 +76,4 @@ DEL web.tip: crm.crm_tip_2
 DEL web.tip: crm.crm_tip_4
 DEL web.tip: crm.crm_tip_5
 DEL web.tip: crm.crm_tip_6
-# NOTHING TO DO
+# Nothing to do as noupdate=0 records

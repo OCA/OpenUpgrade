@@ -6,13 +6,16 @@ mass_mailing / mail.mass_mailing.list   / popup_content (html)          : module
 mass_mailing / mail.mass_mailing.list   / popup_redirect_url (char)     : module is now 'website_mass_mailing' ('mass_mailing')
 ---XML records in module 'mass_mailing'---
 NEW ir.actions.act_window: mass_mailing.mass_mailing_tag_action
+DEL ir.actions.act_window: mass_mailing.action_email_template_marketing
 DEL ir.actions.client: mass_mailing.action_client_mass_mailing_menu
 DEL ir.actions.todo: base.open_menu
 DEL ir.config_parameter: mass_mailing.icp_mail_bounce_alias
 NEW ir.model.access: mass_mailing.access_mail_mail_statistics_mass_mailing_user
 NEW ir.model.access: mass_mailing.access_mail_mail_statistics_user
+NEW ir.model.access: mass_mailing.access_utm_source
 DEL ir.model.access: mass_mailing.access_mail_mail_statistics
 NEW ir.ui.menu: mass_mailing.mass_mailing_tag_menu
+DEL ir.ui.menu: mass_mailing.menu_email_template
 NEW ir.ui.view: mass_mailing.assets_editor
 NEW ir.ui.view: mass_mailing.assets_mail_themes
 NEW ir.ui.view: mass_mailing.mail_mass_mailing_tag_view_form
@@ -38,6 +41,8 @@ NEW ir.ui.view: mass_mailing.s_mail_block_title_sub
 NEW ir.ui.view: mass_mailing.s_mail_block_title_text
 NEW ir.ui.view: mass_mailing.s_mail_block_two_cols
 NEW ir.ui.view: mass_mailing.theme_default_template
+DEL ir.ui.view: mass_mailing.email_template_form_minimal
 DEL ir.ui.view: mass_mailing.mass_mail_theme_list
+DEL ir.ui.view: mass_mailing.view_email_template_kanban
 DEL res.groups: mass_mailing.group_website_popup_on_exit
 NEW res.users: base.default_user

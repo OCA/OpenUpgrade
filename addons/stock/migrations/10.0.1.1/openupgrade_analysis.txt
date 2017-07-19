@@ -7,6 +7,8 @@ stock        / product.product          / stock_quant_ids (one2many)    : NEW re
 stock        / product.template         / location_id (many2one)        : not a function anymore
 stock        / product.template         / type (False)                  : NEW selection_keys: ['consu', 'product', 'service'], mode: modify
 stock        / product.template         / warehouse_id (many2one)       : not a function anymore
+stock        / res.partner              / picking_warn (selection)      : previously in module warning
+stock        / res.partner              / picking_warn_msg (text)       : previously in module warning
 stock        / stock.inventory          / category_id (many2one)        : NEW relation: product.category
 stock        / stock.inventory          / exhausted (boolean)           : NEW 
 stock        / stock.inventory.line     / state (char)                  : selection_keys is now 'function' ('False')
@@ -60,6 +62,8 @@ NEW ir.ui.menu: stock.product_product_menu
 NEW ir.ui.menu: stock.stock_move_menu
 DEL ir.ui.menu: stock.menu_action_move_form2
 DEL ir.ui.menu: stock.stock_picking_type_config
+NEW ir.ui.view: stock.product_product_view_form_procurement_button
+NEW ir.ui.view: stock.product_template_view_form_procurement_button
 NEW ir.ui.view: stock.stock_incoterms_view_search
 NEW ir.ui.view: stock.stock_location_route_view_search
 NEW ir.ui.view: stock.stock_scrap_form_view

@@ -5,11 +5,13 @@ account_asset / account.asset.asset      / website_message_ids (one2many): DEL r
 
 account_asset / account.asset.category   / account_income_recognition_id (many2one): now required
 account_asset / account.asset.category   / account_income_recognition_id (many2one): was renamed to account_depreciation_expense_id [nothing to do]
-account_asset / account.asset.category   / group_entries (boolean)       : NEW 
+account_asset / account.asset.category   / group_entries (boolean)       : NEW
 
 account_asset / account.move             / asset_depreciation_ids (one2many): NEW relation: account.asset.depreciation.line
-account_asset / account.move             / asset_id (many2one)           : DEL relation: account.asset.asset
 # NOTHING TO DO
+
+account_asset / account.move             / asset_id (many2one)           : DEL relation: account.asset.asset
+# Renamed to preserve data
 
 ---XML records in module 'account_asset'---
 DEL ir.ui.view: account_asset.view_account_move_filter_asset_inherit

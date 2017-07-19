@@ -1,11 +1,11 @@
 ---Fields in module 'general'---
-# 6864 fields matched,
-# Direct match: 6456
-# Found in other module: 74
+# 4880 fields matched,
+# Direct match: 4609
+# Found in other module: 59
 # Found with different name: 0
-# Found with different type: 3
-# In obsolete models: 331
-# New columns: 2671
+# Found with different type: 2
+# In obsolete models: 210
+# New columns: 2573
 # Not matched: 170
 new model account.reconcile.model
 new model account.reconcile.model.template
@@ -24,8 +24,11 @@ new model mrp.workcenter.productivity.loss
 new model mrp.workorder
 new model payment.token
 new model pos.pack.operation.lot
+new model pos_mercury.mercury_transaction
 new model product.image
 new model purchase.requisition.type
+new model report
+new model res.users.log
 new model sale.layout_category
 new model stock.move.lots
 new model stock.scrap
@@ -57,34 +60,23 @@ obsolete model website_pricelist
 obsolete model wizard.price
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
----Fields in module 'account_full_reconcile'---
-account_full_reconcile / account.full.reconcile   / create_date (datetime)        : module is now 'account' ('account_full_reconcile')
-account_full_reconcile / account.full.reconcile   / create_uid (many2one)         : module is now 'account' ('account_full_reconcile')
-account_full_reconcile / account.full.reconcile   / id (integer)                  : module is now 'account' ('account_full_reconcile')
-account_full_reconcile / account.full.reconcile   / name (char)                   : module is now 'account' ('account_full_reconcile')
-account_full_reconcile / account.full.reconcile   / partial_reconcile_ids (one2many): module is now 'account' ('account_full_reconcile')
-account_full_reconcile / account.full.reconcile   / reconciled_line_ids (one2many): module is now 'account' ('account_full_reconcile')
-account_full_reconcile / account.full.reconcile   / write_date (datetime)         : module is now 'account' ('account_full_reconcile')
-account_full_reconcile / account.full.reconcile   / write_uid (many2one)          : module is now 'account' ('account_full_reconcile')
-account_full_reconcile / account.move.line        / full_reconcile_id (many2one)  : module is now 'account' ('account_full_reconcile')
-account_full_reconcile / account.partial.reconcile / full_reconcile_id (many2one)  : module is now 'account' ('account_full_reconcile')
----XML records in module 'account_full_reconcile'---
-DEL ir.model.access: account_full_reconcile.access_account_full_reconcile
-DEL ir.model.access: account_full_reconcile.access_account_full_reconcile_group_invoice
-DEL ir.ui.view: account_full_reconcile.view_full_reconcile_form
-DEL ir.ui.view: account_full_reconcile.view_move_line_form
-ERROR: module not in list of installed modules:
 ---Fields in module 'web_analytics'---
 ---XML records in module 'web_analytics'---
 DEL ir.ui.view: web_analytics.assets_backend
 ERROR: module not in list of installed modules:
----Fields in module 'im_odoo_support'---
----XML records in module 'im_odoo_support'---
-DEL ir.ui.view: im_odoo_support.assets_backend
-ERROR: module not in list of installed modules:
----Fields in module 'web_view_editor'---
----XML records in module 'web_view_editor'---
-DEL ir.ui.view: web_view_editor.assets_backend
+---Fields in module 'web_tip'---
+---XML records in module 'web_tip'---
+DEL ir.actions.act_window: web_tip.edit_tip_action
+DEL ir.model.access: web_tip.access_web_tip
+DEL ir.ui.menu: web_tip.menu_tip_action
+DEL ir.ui.view: web_tip.assets_backend
+DEL ir.ui.view: web_tip.edit_tip_form
+DEL ir.ui.view: web_tip.edit_tip_list
+DEL ir.ui.view: web_tip.edit_tip_search
+DEL web.tip: web_tip.web_tip_1
+DEL web.tip: web_tip.web_tip_2
+DEL web.tip: web_tip.web_tip_3
+DEL web.tip: web_tip.web_tip_4
 ERROR: module not in list of installed modules:
 ---Fields in module 'sale_layout'---
 sale_layout  / account.invoice.line     / sale_layout_cat_id (many2one) : DEL relation: sale_layout.category
@@ -150,19 +142,67 @@ DEL ir.ui.view: account_extra_reports.report_journal
 DEL ir.ui.view: account_extra_reports.report_partnerledger
 DEL ir.values: account_extra_reports.action_account_partner_ledger_values
 ERROR: module not in list of installed modules:
----Fields in module 'web_tip'---
----XML records in module 'web_tip'---
-DEL ir.actions.act_window: web_tip.edit_tip_action
-DEL ir.model.access: web_tip.access_web_tip
-DEL ir.ui.menu: web_tip.menu_tip_action
-DEL ir.ui.view: web_tip.assets_backend
-DEL ir.ui.view: web_tip.edit_tip_form
-DEL ir.ui.view: web_tip.edit_tip_list
-DEL ir.ui.view: web_tip.edit_tip_search
-DEL web.tip: web_tip.web_tip_1
-DEL web.tip: web_tip.web_tip_2
-DEL web.tip: web_tip.web_tip_3
-DEL web.tip: web_tip.web_tip_4
+---Fields in module 'hr_equipment'---
+---XML records in module 'hr_equipment'---
+DEL hr.equipment.category: hr_equipment.hr_equipment_computer
+DEL hr.equipment.category: hr_equipment.hr_equipment_printer
+DEL hr.equipment.category: hr_equipment.hr_equipment_software
+DEL hr.equipment.stage: hr_equipment.stage_0
+DEL hr.equipment.stage: hr_equipment.stage_1
+DEL hr.equipment.stage: hr_equipment.stage_3
+DEL hr.equipment.stage: hr_equipment.stage_4
+DEL ir.actions.act_window: hr_equipment.action_hr_equipment_configuration
+DEL ir.actions.act_window: hr_equipment.hr_equipment_action
+DEL ir.actions.act_window: hr_equipment.hr_equipment_action_from_category_form
+DEL ir.actions.act_window: hr_equipment.hr_equipment_category_action
+DEL ir.actions.act_window: hr_equipment.hr_equipment_request_action
+DEL ir.actions.act_window: hr_equipment.hr_equipment_request_action_from_equipment
+DEL ir.actions.act_window: hr_equipment.hr_equipment_request_action_link
+DEL ir.actions.act_window: hr_equipment.hr_equipment_stage_action
+DEL ir.actions.client: hr_equipment.action_client_hr_equipment_menu
+DEL ir.actions.todo: base.open_menu
+DEL ir.model.access: hr_equipment.access_hr_equipment_admin_user
+DEL ir.model.access: hr_equipment.access_hr_equipment_category_employee
+DEL ir.model.access: hr_equipment.access_hr_equipment_category_user
+DEL ir.model.access: hr_equipment.access_hr_equipment_emp
+DEL ir.model.access: hr_equipment.access_hr_equipment_user
+DEL ir.model.access: hr_equipment.access_hr_maintenance_system_user
+DEL ir.model.access: hr_equipment.access_hr_maintenance_user
+DEL ir.model.access: hr_equipment.access_maintenance_request_stage_employee
+DEL ir.model.access: hr_equipment.access_maintenance_request_stage_user
+DEL ir.rule: hr_equipment.hr_equipment_request_rule_admin_user
+DEL ir.rule: hr_equipment.hr_equipment_request_rule_user
+DEL ir.rule: hr_equipment.hr_equipment_rule_admin_user
+DEL ir.rule: hr_equipment.hr_equipment_rule_user
+DEL ir.ui.menu: hr_equipment.menu_equipment_cat
+DEL ir.ui.menu: hr_equipment.menu_equipment_configuration
+DEL ir.ui.menu: hr_equipment.menu_equipment_global_settings
+DEL ir.ui.menu: hr_equipment.menu_equipment_stage_configuration
+DEL ir.ui.menu: hr_equipment.menu_equipment_title
+DEL ir.ui.menu: hr_equipment.menu_hr_equipment_form
+DEL ir.ui.menu: hr_equipment.menu_m_request_form
+DEL ir.ui.view: hr_equipment.hr_equipment_category_view_form
+DEL ir.ui.view: hr_equipment.hr_equipment_category_view_search
+DEL ir.ui.view: hr_equipment.hr_equipment_category_view_tree
+DEL ir.ui.view: hr_equipment.hr_equipment_config_settings_view_form
+DEL ir.ui.view: hr_equipment.hr_equipment_request_view_form
+DEL ir.ui.view: hr_equipment.hr_equipment_request_view_kanban
+DEL ir.ui.view: hr_equipment.hr_equipment_request_view_search
+DEL ir.ui.view: hr_equipment.hr_equipment_request_view_tree
+DEL ir.ui.view: hr_equipment.hr_equipment_stage_view_search
+DEL ir.ui.view: hr_equipment.hr_equipment_stage_view_tree
+DEL ir.ui.view: hr_equipment.hr_equipment_view_form
+DEL ir.ui.view: hr_equipment.hr_equipment_view_kanban
+DEL ir.ui.view: hr_equipment.hr_equipment_view_search
+DEL ir.ui.view: hr_equipment.hr_equipment_view_tree
+DEL mail.alias: hr_equipment.mail_alias_equipment
+DEL mail.message.subtype: hr_equipment.mt_cat_mat_assign
+DEL mail.message.subtype: hr_equipment.mt_cat_req_created
+DEL mail.message.subtype: hr_equipment.mt_mat_assign
+DEL mail.message.subtype: hr_equipment.mt_req_created
+DEL mail.message.subtype: hr_equipment.mt_req_status
+DEL res.groups: base.group_equipment_manager
+DEL res.groups: base.group_hr_user
 ERROR: module not in list of installed modules:
 ---Fields in module 'product_uos'---
 product_uos  / product.template         / uos_coeff (float)             : DEL 
@@ -178,6 +218,22 @@ DEL ir.model.access: website_crm_claim.access_crm_claim_stage
 DEL ir.rule: website_crm_claim.portal_claim_rule
 DEL ir.ui.menu: website_crm_claim.portal_after_sales_claims
 DEL ir.ui.view: website_crm_claim.link_claims
+ERROR: module not in list of installed modules:
+---Fields in module 'im_odoo_support'---
+---XML records in module 'im_odoo_support'---
+DEL ir.ui.view: im_odoo_support.assets_backend
+ERROR: module not in list of installed modules:
+---Fields in module 'account_full_reconcile'---
+account_full_reconcile / account.full.reconcile   / name (char)                   : module is now 'account' ('account_full_reconcile')
+account_full_reconcile / account.full.reconcile   / partial_reconcile_ids (one2many): module is now 'account' ('account_full_reconcile')
+account_full_reconcile / account.full.reconcile   / reconciled_line_ids (one2many): module is now 'account' ('account_full_reconcile')
+account_full_reconcile / account.move.line        / full_reconcile_id (many2one)  : module is now 'account' ('account_full_reconcile')
+account_full_reconcile / account.partial.reconcile / full_reconcile_id (many2one)  : module is now 'account' ('account_full_reconcile')
+---XML records in module 'account_full_reconcile'---
+DEL ir.model.access: account_full_reconcile.access_account_full_reconcile
+DEL ir.model.access: account_full_reconcile.access_account_full_reconcile_group_invoice
+DEL ir.ui.view: account_full_reconcile.view_full_reconcile_form
+DEL ir.ui.view: account_full_reconcile.view_move_line_form
 ERROR: module not in list of installed modules:
 ---Fields in module 'project_timesheet'---
 project_timesheet / account.analytic.line    / task_id (many2one)            : module is now 'hr_timesheet' ('project_timesheet')
@@ -286,68 +342,6 @@ DEL workflow.transition: mrp_operations.prod_trans_wc_start_cancel
 DEL workflow.transition: mrp_operations.prod_trans_wc_start_done
 DEL workflow.transition: mrp_operations.prod_trans_wc_start_pause
 ERROR: module not in list of installed modules:
----Fields in module 'hr_equipment'---
----XML records in module 'hr_equipment'---
-DEL hr.equipment.category: hr_equipment.hr_equipment_computer
-DEL hr.equipment.category: hr_equipment.hr_equipment_printer
-DEL hr.equipment.category: hr_equipment.hr_equipment_software
-DEL hr.equipment.stage: hr_equipment.stage_0
-DEL hr.equipment.stage: hr_equipment.stage_1
-DEL hr.equipment.stage: hr_equipment.stage_3
-DEL hr.equipment.stage: hr_equipment.stage_4
-DEL ir.actions.act_window: hr_equipment.action_hr_equipment_configuration
-DEL ir.actions.act_window: hr_equipment.hr_equipment_action
-DEL ir.actions.act_window: hr_equipment.hr_equipment_action_from_category_form
-DEL ir.actions.act_window: hr_equipment.hr_equipment_category_action
-DEL ir.actions.act_window: hr_equipment.hr_equipment_request_action
-DEL ir.actions.act_window: hr_equipment.hr_equipment_request_action_from_equipment
-DEL ir.actions.act_window: hr_equipment.hr_equipment_request_action_link
-DEL ir.actions.act_window: hr_equipment.hr_equipment_stage_action
-DEL ir.actions.client: hr_equipment.action_client_hr_equipment_menu
-DEL ir.actions.todo: base.open_menu
-DEL ir.model.access: hr_equipment.access_hr_equipment_admin_user
-DEL ir.model.access: hr_equipment.access_hr_equipment_category_employee
-DEL ir.model.access: hr_equipment.access_hr_equipment_category_user
-DEL ir.model.access: hr_equipment.access_hr_equipment_emp
-DEL ir.model.access: hr_equipment.access_hr_equipment_user
-DEL ir.model.access: hr_equipment.access_hr_maintenance_system_user
-DEL ir.model.access: hr_equipment.access_hr_maintenance_user
-DEL ir.model.access: hr_equipment.access_maintenance_request_stage_employee
-DEL ir.model.access: hr_equipment.access_maintenance_request_stage_user
-DEL ir.rule: hr_equipment.hr_equipment_request_rule_admin_user
-DEL ir.rule: hr_equipment.hr_equipment_request_rule_user
-DEL ir.rule: hr_equipment.hr_equipment_rule_admin_user
-DEL ir.rule: hr_equipment.hr_equipment_rule_user
-DEL ir.ui.menu: hr_equipment.menu_equipment_cat
-DEL ir.ui.menu: hr_equipment.menu_equipment_configuration
-DEL ir.ui.menu: hr_equipment.menu_equipment_global_settings
-DEL ir.ui.menu: hr_equipment.menu_equipment_stage_configuration
-DEL ir.ui.menu: hr_equipment.menu_equipment_title
-DEL ir.ui.menu: hr_equipment.menu_hr_equipment_form
-DEL ir.ui.menu: hr_equipment.menu_m_request_form
-DEL ir.ui.view: hr_equipment.hr_equipment_category_view_form
-DEL ir.ui.view: hr_equipment.hr_equipment_category_view_search
-DEL ir.ui.view: hr_equipment.hr_equipment_category_view_tree
-DEL ir.ui.view: hr_equipment.hr_equipment_config_settings_view_form
-DEL ir.ui.view: hr_equipment.hr_equipment_request_view_form
-DEL ir.ui.view: hr_equipment.hr_equipment_request_view_kanban
-DEL ir.ui.view: hr_equipment.hr_equipment_request_view_search
-DEL ir.ui.view: hr_equipment.hr_equipment_request_view_tree
-DEL ir.ui.view: hr_equipment.hr_equipment_stage_view_search
-DEL ir.ui.view: hr_equipment.hr_equipment_stage_view_tree
-DEL ir.ui.view: hr_equipment.hr_equipment_view_form
-DEL ir.ui.view: hr_equipment.hr_equipment_view_kanban
-DEL ir.ui.view: hr_equipment.hr_equipment_view_search
-DEL ir.ui.view: hr_equipment.hr_equipment_view_tree
-DEL mail.alias: hr_equipment.mail_alias_equipment
-DEL mail.message.subtype: hr_equipment.mt_cat_mat_assign
-DEL mail.message.subtype: hr_equipment.mt_cat_req_created
-DEL mail.message.subtype: hr_equipment.mt_mat_assign
-DEL mail.message.subtype: hr_equipment.mt_req_created
-DEL mail.message.subtype: hr_equipment.mt_req_status
-DEL res.groups: base.group_equipment_manager
-DEL res.groups: base.group_hr_user
-ERROR: module not in list of installed modules:
 ---Fields in module 'claim_from_delivery'---
 ---XML records in module 'claim_from_delivery'---
 DEL ir.actions.act_window: claim_from_delivery.action_claim_from_delivery
@@ -432,6 +426,10 @@ DEL ir.ui.view: report_webkit.header_img
 DEL ir.ui.view: report_webkit.header_webkit
 DEL ir.ui.view: report_webkit.view_report_webkit_actions
 ERROR: module not in list of installed modules:
+---Fields in module 'web_view_editor'---
+---XML records in module 'web_view_editor'---
+DEL ir.ui.view: web_view_editor.assets_backend
+ERROR: module not in list of installed modules:
 ---Fields in module 'crm_partner_assign'---
 crm_partner_assign / crm.lead                 / date_assign (date)            : module is now 'website_crm_partner_assign' ('crm_partner_assign')
 crm_partner_assign / crm.lead                 / partner_assigned_id (many2one): module is now 'website_crm_partner_assign' ('crm_partner_assign')
@@ -445,22 +443,12 @@ crm_partner_assign / res.partner              / date_review_next (date)       : 
 crm_partner_assign / res.partner              / grade_id (many2one)           : module is now 'website_crm_partner_assign' ('crm_partner_assign')
 crm_partner_assign / res.partner              / implemented_partner_ids (one2many): module is now 'website_crm_partner_assign' ('crm_partner_assign')
 crm_partner_assign / res.partner              / partner_weight (integer)      : module is now 'website_crm_partner_assign' ('crm_partner_assign')
-crm_partner_assign / res.partner.activation   / create_date (datetime)        : module is now 'website_crm_partner_assign' ('crm_partner_assign')
-crm_partner_assign / res.partner.activation   / create_uid (many2one)         : module is now 'website_crm_partner_assign' ('crm_partner_assign')
-crm_partner_assign / res.partner.activation   / id (integer)                  : module is now 'website_crm_partner_assign' ('crm_partner_assign')
 crm_partner_assign / res.partner.activation   / name (char)                   : module is now 'website_crm_partner_assign' ('crm_partner_assign')
 crm_partner_assign / res.partner.activation   / sequence (integer)            : module is now 'website_crm_partner_assign' ('crm_partner_assign')
-crm_partner_assign / res.partner.activation   / write_date (datetime)         : module is now 'website_crm_partner_assign' ('crm_partner_assign')
-crm_partner_assign / res.partner.activation   / write_uid (many2one)          : module is now 'website_crm_partner_assign' ('crm_partner_assign')
 crm_partner_assign / res.partner.grade        / active (boolean)              : module is now 'website_crm_partner_assign' ('crm_partner_assign')
-crm_partner_assign / res.partner.grade        / create_date (datetime)        : module is now 'website_crm_partner_assign' ('crm_partner_assign')
-crm_partner_assign / res.partner.grade        / create_uid (many2one)         : module is now 'website_crm_partner_assign' ('crm_partner_assign')
-crm_partner_assign / res.partner.grade        / id (integer)                  : module is now 'website_crm_partner_assign' ('crm_partner_assign')
 crm_partner_assign / res.partner.grade        / name (char)                   : module is now 'website_crm_partner_assign' ('crm_partner_assign')
 crm_partner_assign / res.partner.grade        / partner_weight (integer)      : module is now 'website_crm_partner_assign' ('crm_partner_assign')
 crm_partner_assign / res.partner.grade        / sequence (integer)            : module is now 'website_crm_partner_assign' ('crm_partner_assign')
-crm_partner_assign / res.partner.grade        / write_date (datetime)         : module is now 'website_crm_partner_assign' ('crm_partner_assign')
-crm_partner_assign / res.partner.grade        / write_uid (many2one)          : module is now 'website_crm_partner_assign' ('crm_partner_assign')
 ---XML records in module 'crm_partner_assign'---
 DEL crm.stage: crm_partner_assign.stage_portal_lead_assigned
 DEL crm.stage: crm_partner_assign.stage_portal_lead_recycle

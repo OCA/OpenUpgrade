@@ -7,14 +7,13 @@ account      / account.bank.statement   / website_message_ids (one2many): DEL re
 # NOTHING TO DO
 
 account      / account.bank.statement.line / move_name (char)              : NEW
-# TODO: Calculate during post-migration using the move name associated to the
+# DONE: Calculate during post-migration using the move name associated to the
 # the move  lines that have that statement_id
 
 account      / account.full.reconcile   / exchange_move_id (many2one)   : NEW relation: account.move
 account      / account.full.reconcile   / exchange_partial_rec_id (many2one): NEW relation: account.partial.reconcile
-# TODO: Can we determine what were the move lines created as part of the
-# reconciliation when the exchange rate was different? If we can obtain, then
-# update. Otherwise leave blank.
+# DONE: Moves for exchange rate differences where in field
+# rate_diff_partial_rec_id of account_move.
 
 account      / account.invoice          / refund_invoice_id (many2one)  : NEW relation: account.invoice
 account      / account.invoice          / website_message_ids (one2many): DEL relation: mail.message
@@ -24,18 +23,17 @@ account      / account.invoice.line     / analytic_tag_ids (many2many)  : NEW re
 # NOTHING TO DO
 
 account      / account.move             / rate_diff_partial_rec_id (many2one): DEL relation: account.partial.reconcile
-# TODO: Perhaps it is related to account.full.reconcile
-# exchange_partial_rec_id. To be analyzed.
+# DONE: The data is now on account.full.reconcile, in the field exchange_partial_rec_id.
 
 account      / account.move.line        / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
 # NOTHING TO DO
 
 account      / account.payment          / move_name (char)              : NEW
-# TODO: Calculate during post-migration using the move name associated to the
+# DONE: Calculate during post-migration using the move name associated to the
 # the move lines that have that payment.
 
 ## NEW MODEL ACCOUNT.RECONCILE.MODEL ##
-# TODO: pre-migration: rename table account.operation.template to
+# DONE: pre-migration: rename table account.operation.template to
 # account.reconcile.model
 account      / account.reconcile.model  / name (char)                   : NEW required: required
 account      / account.reconcile.model  / sequence (integer)            : NEW required: required, req_default: function
@@ -56,8 +54,8 @@ account      / account.reconcile.model  / second_tax_id (many2one)      : NEW re
 account      / account.reconcile.model  / second_analytic_account_id (many2one): NEW relation: account.analytic.account
 account      / account.reconcile.model  / second_journal_id (many2one)  : NEW relation: account.journal
 
-## NEW MODEL ACCOUNT.RECONCILE.MODEL ##
-# TODO: pre-migration: precreate records from the account.operation.template,
+## NEW MODEL ACCOUNT.RECONCILE.MODEL.TEMPLATE ##
+# DONE: post-migration: precreate records from the account.reconcile.model,
 # selecting the ones that are distinct regardless of the company
 account      / account.reconcile.model.template / name (char)                   : NEW required: required
 account      / account.reconcile.model.template / sequence (integer)            : NEW required: required, req_default: function
@@ -81,7 +79,7 @@ account      / account.tax.template     / tax_adjustment (boolean)      : NEW
 # NOTHING TO DO
 
 account      / account.tax.template     / tax_group_id (many2one)       : NEW relation: account.tax.group
-# ??? MORE ANALYSIS REQUIRED
+# NOTHING TO DO (If not set on template, default tax group will be used)
 
 account      / res.company              / paypal_account (char)         : DEL
 # NOTHING TO DO

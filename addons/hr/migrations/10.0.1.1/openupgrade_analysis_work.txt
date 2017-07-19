@@ -8,12 +8,17 @@ DEL ir.actions.act_window: hr.view_department_form_installer
 DEL ir.actions.client: hr.action_client_hr_menu
 DEL ir.actions.todo: base.open_menu
 NEW mail.template: hr.mail_template_data_unknown_employee_email_address
-NEW res.groups: hr.group_hr_attendance
-NEW res.groups: hr.group_hr_manager
-NEW res.groups: hr.group_hr_user
-DEL res.groups: base.group_hr_attendance
-DEL res.groups: base.group_hr_manager
-DEL res.groups: base.group_hr_user
 NEW res.users: base.default_user
 DEL web.tip: hr.hr_tip_1
 DEL web.tip: hr.hr_tip_2
+# Nothing to do
+
+NEW res.groups: hr.group_hr_attendance
+NEW res.groups: hr.group_hr_manager
+NEW res.groups: hr.group_hr_user
+# Done: Rename XML-IDs
+
+DEL res.groups: base.group_hr_attendance
+DEL res.groups: base.group_hr_manager
+DEL res.groups: base.group_hr_user
+# Nothing to do: noupdate=0 records

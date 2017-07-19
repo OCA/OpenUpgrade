@@ -1,0 +1,9 @@
+---Fields in module 'hr_gamification'---
+hr_gamification / hr.employee              / direct_badge_ids (one2many)   : NEW relation: gamification.badge.user
+hr_gamification / res.users                / goal_ids (one2many)           : NEW relation: gamification.goal
+# NOTHING TO DO
+
+---XML records in module 'hr_gamification'---
+NEW ir.rule: gamification.goal_gamification_manager_visibility
+DEL ir.rule: hr_gamification.goal_officer_visibility
+# NOTHING TO DO

@@ -2,7 +2,8 @@
 sale_crm     / account.invoice          / campaign_id (many2one)        : NEW relation: utm.campaign
 sale_crm     / account.invoice          / medium_id (many2one)          : NEW relation: utm.medium
 sale_crm     / account.invoice          / source_id (many2one)          : NEW relation: utm.source
-# TODO: Try to migrate from sales order
+# Done: migrating from sale.order
 ---XML records in module 'sale_crm'---
 NEW ir.ui.menu: sales_team.menu_base_partner
 NEW ir.ui.view: sale_crm.assets_backend
+# NOTHING TO DO

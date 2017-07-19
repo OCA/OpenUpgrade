@@ -1,6 +1,25 @@
 ---Fields in module 'website_crm_partner_assign'---
+website_crm_partner_assign / crm.lead                 / date_assign (date)            : previously in module crm_partner_assign
+website_crm_partner_assign / crm.lead                 / partner_assigned_id (many2one): previously in module crm_partner_assign
 website_crm_partner_assign / crm.lead                 / partner_declined_ids (many2many): NEW relation: res.partner
+website_crm_partner_assign / crm.lead                 / partner_latitude (float)      : previously in module crm_partner_assign
+website_crm_partner_assign / crm.lead                 / partner_longitude (float)     : previously in module crm_partner_assign
+website_crm_partner_assign / res.partner              / activation (many2one)         : previously in module crm_partner_assign
+website_crm_partner_assign / res.partner              / assigned_partner_id (many2one): previously in module crm_partner_assign
+website_crm_partner_assign / res.partner              / date_partnership (date)       : previously in module crm_partner_assign
+website_crm_partner_assign / res.partner              / date_review (date)            : previously in module crm_partner_assign
+website_crm_partner_assign / res.partner              / date_review_next (date)       : previously in module crm_partner_assign
+website_crm_partner_assign / res.partner              / grade_id (many2one)           : previously in module crm_partner_assign
+website_crm_partner_assign / res.partner              / implemented_partner_ids (one2many): previously in module crm_partner_assign
+website_crm_partner_assign / res.partner              / partner_weight (integer)      : previously in module crm_partner_assign
+website_crm_partner_assign / res.partner.activation   / name (char)                   : previously in module crm_partner_assign
+website_crm_partner_assign / res.partner.activation   / sequence (integer)            : previously in module crm_partner_assign
+website_crm_partner_assign / res.partner.grade        / active (boolean)              : previously in module crm_partner_assign
+website_crm_partner_assign / res.partner.grade        / name (char)                   : previously in module crm_partner_assign
+website_crm_partner_assign / res.partner.grade        / partner_weight (integer)      : previously in module crm_partner_assign
+website_crm_partner_assign / res.partner.grade        / sequence (integer)            : previously in module crm_partner_assign
 ---XML records in module 'website_crm_partner_assign'---
+NEW crm.lead.tag: website_crm_partner_assign.tag_portal_lead_is_spam
 NEW crm.lead.tag: website_crm_partner_assign.tag_portal_lead_partner_unavailable
 NEW ir.actions.act_window: website_crm_partner_assign.action_crm_send_mass_forward
 NEW ir.actions.act_window: website_crm_partner_assign.action_report_crm_opportunity_assign
