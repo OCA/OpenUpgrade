@@ -1,0 +1,32 @@
+---Fields in module 'portal_sale'---
+---XML records in module 'portal_sale'---
+DEL ir.actions.act_window: portal_sale.action_orders_portal
+DEL ir.actions.act_window: portal_sale.action_quotations_portal
+DEL ir.actions.act_window: portal_sale.portal_action_invoices
+DEL ir.actions.act_window.view: portal_sale.portal_action_invoices_form_spec
+DEL ir.actions.act_window.view: portal_sale.portal_action_invoices_tree_spec
+DEL ir.model.access: portal_sale.access_account_invoice
+DEL ir.model.access: portal_sale.access_account_invoice_line
+DEL ir.model.access: portal_sale.access_account_invoice_tax
+DEL ir.model.access: portal_sale.access_account_journal
+DEL ir.model.access: portal_sale.access_account_tax
+DEL ir.model.access: portal_sale.access_account_tax_group
+DEL ir.model.access: portal_sale.access_product_attribute_line_portal
+DEL ir.model.access: portal_sale.access_product_attribute_portal
+DEL ir.model.access: portal_sale.access_product_attribute_price_portal
+DEL ir.model.access: portal_sale.access_product_attribute_value_portal
+DEL ir.model.access: portal_sale.access_product_list
+DEL ir.model.access: portal_sale.access_res_partner
+DEL ir.model.access: portal_sale.access_res_partner_category
+DEL ir.model.access: portal_sale.access_sale_order
+DEL ir.model.access: portal_sale.access_sale_order_line
+DEL ir.ui.menu: portal_sale.portal_invoices
+DEL ir.ui.menu: portal_sale.portal_quotations
+DEL ir.ui.menu: portal_sale.portal_sales_orders
+DEL ir.ui.view: portal_sale.invoice_form_portal
+DEL ir.ui.view: portal_sale.view_order_form_portal_sale
+# NOTHING TO DO
+DEL mail.template: portal_sale.email_template_edi_invoice
+DEL mail.template: portal_sale.email_template_edi_sale
+# Done. Pre-migration: deleted xmlids from account/sale and changing names of
+# portal_sale xmlids to account/sale
