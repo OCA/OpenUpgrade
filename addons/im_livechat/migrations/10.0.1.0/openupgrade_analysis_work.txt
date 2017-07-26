@@ -1,0 +1,16 @@
+---Fields in module 'im_livechat'---
+---XML records in module 'im_livechat'---
+NEW ir.actions.act_window: im_livechat.im_livechat_canned_response_action
+NEW ir.actions.act_window.view: im_livechat.mail_channel_action_livechat_form
+NEW ir.actions.act_window.view: im_livechat.mail_channel_action_livechat_tree
+# NOTHING TO DO
+DEL ir.actions.client: im_livechat.ir_action_client_open_livechat_menu
+DEL ir.actions.todo: base.open_menu
+DEL ir.cron: im_livechat.ir_cron_remove_empty_session
+# Done: pre-migration. Removed noupdate=1 xmlids
+NEW ir.ui.menu: im_livechat.canned_responses
+NEW ir.ui.menu: im_livechat.livechat_config
+NEW ir.ui.view: im_livechat.im_livechat_canned_response_view_tree
+NEW mail.shortcode: im_livechat.mail_shortcode_rating_1
+NEW res.users: base.default_user
+# NOTHING TO DO
