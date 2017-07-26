@@ -1,0 +1,10 @@
+---Fields in module 'payment_payumoney'---
+payment_payumoney / payment.acquirer         / payumoney_merchant_key (char) : NEW 
+payment_payumoney / payment.acquirer         / payumoney_merchant_salt (char): NEW 
+payment_payumoney / payment.acquirer         / provider (False)              : NEW selection_keys: ['adyen', 'authorize', 'buckaroo', 'manual', 'ogone', 'paypal', 'payumoney'], mode: modify
+# NOTHING TO DO
+---XML records in module 'payment_payumoney'---
+NEW ir.ui.view: payment_payumoney.payment_acquirer_form_payumoney
+NEW ir.ui.view: payment_payumoney.payumoney_acquirer_button
+NEW payment.acquirer: payment.payment_acquirer_payu
+# NOTHING TO DO

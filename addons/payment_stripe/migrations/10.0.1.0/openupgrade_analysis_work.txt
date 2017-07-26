@@ -1,0 +1,13 @@
+---Fields in module 'payment_stripe'---
+payment_stripe / payment.acquirer         / provider (False)              : NEW selection_keys: ['adyen', 'authorize', 'buckaroo', 'manual', 'ogone', 'paypal', 'payumoney', 'sips', 'stripe'], mode: modify
+payment_stripe / payment.acquirer         / stripe_image_url (char)       : NEW 
+payment_stripe / payment.acquirer         / stripe_publishable_key (char) : NEW 
+payment_stripe / payment.acquirer         / stripe_secret_key (char)      : NEW 
+# NOTHING TO DO
+---XML records in module 'payment_stripe'---
+NEW ir.ui.view: payment_stripe.acquirer_form_stripe
+NEW ir.ui.view: payment_stripe.payment_stripe_redirect
+NEW ir.ui.view: payment_stripe.stripe_acquirer_button
+NEW ir.ui.view: payment_stripe.stripe_s2s_form
+NEW payment.acquirer: payment.payment_acquirer_stripe
+# NOTHING TO DO
