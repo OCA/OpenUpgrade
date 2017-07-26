@@ -452,8 +452,8 @@ def fill_blacklisted_fields(cr):
                 ail.price_subtotal,
                 (CASE
                     WHEN ai.type IN ('in_refund', 'out_refund')
-                    THEN ROUND(-ail.price_subtotal * er.effective_rate, 2)
-                    ELSE ROUND(ail.price_subtotal  * er.effective_rate, 2)
+                    THEN ROUND(-ail.price_subtotal / er.effective_rate, 2)
+                    ELSE ROUND(ail.price_subtotal  / er.effective_rate, 2)
                 END) AS price_subtotal_signed,
                 ai.currency_id AS currency_id
             FROM account_invoice_line ail
