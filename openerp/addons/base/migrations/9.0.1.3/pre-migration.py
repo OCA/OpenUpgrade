@@ -102,6 +102,8 @@ def cleanup_modules(cr):
             ('website_event_register_free', 'website_event'),
             ('website_event_register_free_with_sale', 'website_event_sale'),
             ('website_sale_collapse_categories', 'website_sale'),
+            # OCA/reporting-engine
+            ('report_xls', 'report_xlsx'),
         ], merge_modules=True,
     )
 
