@@ -15,7 +15,7 @@ def migrate(env, version):
         FROM website_pricelist_openupgrade_10 wp
         WHERE wp.pricelist_id = pp.id
     """
-    cr.execute(sql)
+    openupgrade.logged_query(cr, sql)
     # all remaining pricelists will be assigned to default
     sql = """select pricelist_id from
           website_pricelist_openupgrade_10"""
