@@ -8,20 +8,18 @@ from openupgradelib import openupgrade
 def migrate(env, version):
     cr = env.cr
     pl_model = env['product.pricelist']
-    sql = """select pricelist_id, website_id, selectable from
+    sql = """
+    UPDATE product_pricelist pp
+    SET website_id = wp.id,
+        selectable = wp.selectable
+        FROM website_pricelist_openupgrade_10 wp
+        WHERE wp.pricelist_id = pp.id
+    """
+    cr.execute(sql)
+    # all remaining pricelists will be assigned to default
+    sql = """select pricelist_id from
           website_pricelist_openupgrade_10"""
     cr.execute(sql)
-    pricelists = []
-    for pricelist_id, website_id, selectable in cr.fetchall():
-        pl_model.search([('id', '=', pricelist_id)]).write({
-            'website_id': website_id,
-            'selectable': selectable
-        })
-        pricelists.append(pricelist_id)
-    # all remaining pricelists will be assigned to default
-    for pricelist in pl_model.search([('id', 'not in', pricelists)]):
+    pricelist_ids = cr.fetchall()
+    for pricelist in pl_model.search([('id', 'not in', pricelist_ids)]):
         pricelist.write({'website_id': pricelist._default_website().id})
-    # now that all pricelists have a their corresponding website_id
-    # and selectable drop support table
-    sql = "drop table website_pricelist_openupgrade_10"
-    cr.execute(sql)
