@@ -33,6 +33,7 @@ script:
     - flake8 openerp/addons/openupgrade* --max-line-length=120 --exclude=__init__.py
     - flake8 . --max-line-length=120 --filename=pre-*.py,post-*.py
     - npm install -g less less-plugin-clean-css
+    - pip install setuptools==33.1.1
     - pip install -r requirements.txt
 # don't use pypi's openupgradelib, but the one from source to avoid choking
 # on unreleased features in openupgradelib
