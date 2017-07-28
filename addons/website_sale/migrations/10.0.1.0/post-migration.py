@@ -10,7 +10,7 @@ def migrate(env, version):
     pl_model = env['product.pricelist']
     sql = """
     UPDATE product_pricelist pp
-    SET website_id = wp.id,
+    SET website_id = wp.website_id,
         selectable = wp.selectable
         FROM website_pricelist_openupgrade_10 wp
         WHERE wp.pricelist_id = pp.id
