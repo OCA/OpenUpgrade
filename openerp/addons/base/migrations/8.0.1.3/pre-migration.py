@@ -31,6 +31,21 @@ xml_ids = [
 ]
 
 
+def cleanup_modules(cr):
+    """Don't report as missing these modules, as they are integrated in
+    other modules."""
+    openupgrade.update_module_names(
+        cr, [
+            # from OCA/product-attribute
+            ('product_customer_code', 'product_supplierinfo_for_customer'),
+            # from OCA/sale-workflow - included in core
+            ('sale_multi_picking', 'sale_sourced_by_line'),
+            # from OCA/stock-logistics-workflow
+            ('stock_cancel', 'stock_picking_back2draft'),
+        ], merge_modules=True,
+    )
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     # Drop view that inhibits changing field types. It will be recreated BTW
@@ -65,4 +80,5 @@ def migrate(cr, version):
         SET res_model = 'product.template'
         WHERE res_model = 'product.product';
         """)
-    
+
+    cleanup_modules(cr)
