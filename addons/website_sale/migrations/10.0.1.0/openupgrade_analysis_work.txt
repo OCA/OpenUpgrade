@@ -11,7 +11,9 @@ website_sale / product.image            / product_tmpl_id (many2one)    : NEW re
 
 
 website_sale / product.pricelist        / selectable (boolean)          : NEW 
+# Imported values from  old website_pricelist.selectable model
 website_sale / product.pricelist        / website_id (many2one)         : NEW relation: website
+# imported values from old website_pricelist_ids
 # TODO: Add the default website
 
 website_sale / product.template         / availability (selection)      : NEW selection_keys: ['empty', 'in_stock', 'warning']
@@ -20,10 +22,10 @@ website_sale / product.template         / product_image_ids (one2many)  : NEW re
 # NOTHING TO DO
 
 website_sale / res.country.group        / website_pricelist_ids (many2many): DEL relation: website_pricelist
-# NOTHING TO DO
+#  country is now taken out of this model and is managed on the pricelist itself, nothing to do
 
 website_sale / website                  / website_pricelist_ids (one2many): DEL relation: website_pricelist
-# NOTHING TO DO
+#  now is website_id on the pricelist. 
 
 ---XML records in module 'website_sale'---
 NEW crm.team: sales_team.salesteam_website_sales
