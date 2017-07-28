@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/OCA/OpenUpgrade.svg?branch=8.0)](https://travis-ci.org/OCA/OpenUpgrade)
 
-![OpenUpgrade logo](/odoo/openupgrade/doc/source/images/OpenUpgrade.png?raw=true)
+![OpenUpgrade logo](/openerp/openupgrade/doc/source/images/OpenUpgrade.png?raw=true)
 
 OpenUpgrade
 ===========
