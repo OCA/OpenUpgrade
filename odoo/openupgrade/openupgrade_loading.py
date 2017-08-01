@@ -9,6 +9,7 @@ from odoo import release
 from odoo import models
 from openupgradelib.openupgrade_tools import table_exists
 from odoo.tools import config, safe_eval
+from odoo.modules.module import get_module_path
 
 # A collection of functions used in
 # openerp/modules/loading.py
@@ -81,7 +82,10 @@ def add_module_dependencies(cr, module_list):
                 WHERE d.module_id = m.id
                 AND name NOT IN %s)
          """, (tuple(modules),))
-    auto_modules = [row[0] for row in cr.fetchall()]
+    auto_modules = [
+        row[0] for row in cr.fetchall()
+        if get_module_path(row[0])
+    ]
     if auto_modules:
         logger.info(
             "Selecting autoinstallable modules %s", ','.join(auto_modules))
