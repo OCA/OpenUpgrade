@@ -71,4 +71,5 @@ def fill_analytic_line_project(env):
 @openupgrade.migrate()
 def migrate(env, version):
     migrate_allow_timesheets(env)
+    migrate_missing_projects(env)
     fill_analytic_line_project(env)
