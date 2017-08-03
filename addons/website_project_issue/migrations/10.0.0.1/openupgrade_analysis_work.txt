@@ -1,0 +1,14 @@
+---Fields in module 'website_project_issue'---
+---XML records in module 'website_project_issue'---
+DEL ir.rule: project_issue.issue_user_rule
+# Done: noupdate record deleted on pre-migration
+
+NEW ir.ui.view: website_project_issue.my_issues
+NEW ir.ui.view: website_project_issue.my_issues_issue
+NEW ir.ui.view: website_project_issue.my_project
+NEW ir.ui.view: website_project_issue.my_projects
+NEW ir.ui.view: website_project_issue.portal_layout
+NEW ir.ui.view: website_project_issue.portal_my_home
+DEL ir.ui.view: website_project_issue.issues_followup
+DEL ir.ui.view: website_project_issue.portal_project_issue
+# Nothing to do
