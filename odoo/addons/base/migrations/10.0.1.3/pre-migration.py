@@ -56,6 +56,7 @@ def migrate(cr, version):
     openupgrade.update_module_names(
         cr, [
             ('account_full_reconcile', 'account'),
+            ('mail_tip', 'mail'),
             ('project_timesheet', 'hr_timesheet'),
             ('share', 'base'),
             ('web_tip', 'web'),
