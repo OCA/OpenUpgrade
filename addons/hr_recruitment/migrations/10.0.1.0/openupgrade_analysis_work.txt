@@ -1,0 +1,91 @@
+---Fields in module 'hr_recruitment'---
+hr_recruitment / hr.applicant             / response_id (many2one)        : module is now 'hr_recruitment_survey' ('hr_recruitment')
+hr_recruitment / hr.job                   / survey_id (many2one)          : module is now 'hr_recruitment_survey' ('hr_recruitment')
+# Done: Field definition moved to new module
+
+hr_recruitment / hr.applicant             / website_message_ids (one2many): DEL relation: mail.message
+# Nothing to do: mail stuff
+
+hr_recruitment / hr.applicant.category    / color (integer)               : NEW
+# Nothing to do: Not required field
+
+hr_recruitment / hr.job                   / stage_ids (many2many)         : DEL relation: hr.recruitment.stage
+hr_recruitment / hr.recruitment.stage     / job_id (many2one)             : NEW relation: hr.job
+hr_recruitment / hr.recruitment.stage     / job_ids (many2many)           : DEL relation: hr.job
+# Done: Create a stage for each job where appplied
+
+---XML records in module 'hr_recruitment'---
+NEW ir.actions.act_window: hr_recruitment.action_hr_department
+NEW ir.actions.act_window: hr_recruitment.create_job_simple
+NEW ir.actions.act_window: hr_recruitment.hr_applicant_category_action
+DEL ir.actions.client: hr_recruitment.action_client_hr_recruitment_menu
+DEL ir.actions.todo: base.open_menu
+DEL ir.model.access: hr_recruitment.access_survey_hr_user
+NEW ir.ui.menu: hr_recruitment.hr_applicant_category_menu
+NEW ir.ui.menu: hr_recruitment.menu_hr_department
+NEW ir.ui.menu: hr_recruitment.menu_hr_job_position
+NEW ir.ui.menu: hr_recruitment.menu_hr_job_position_config
+DEL ir.ui.menu: hr.menu_hr_job_position
+DEL ir.ui.menu: hr.menu_hr_job_position_config
+NEW ir.ui.view: hr_recruitment.hr_applicant_category_view_form
+NEW ir.ui.view: hr_recruitment.hr_job_simple_form
+NEW ir.ui.view: hr_recruitment.ir_attachment_view_search_inherit_hr_recruitment
+# Nothing to do
+
+NEW mail.template: hr_recruitment.email_template_data_applicant_employee
+NEW mail.template: hr_recruitment.email_template_data_applicant_interest
+NEW mail.template: hr_recruitment.email_template_data_applicant_refuse
+DEL mail.template: hr_recruitment.applicant_interest
+DEL mail.template: hr_recruitment.applicant_refuse
+DEL mail.template: hr_recruitment.hr_welcome_new_employee
+# Done: Rename XML-IDs
+
+NEW res.groups: hr_recruitment.group_hr_recruitment_manager
+NEW res.groups: hr_recruitment.group_hr_recruitment_user
+# Done: Assign these group to users with groups hr_manager and hr_user respectively
+
+DEL res.groups: base.group_hr_user
+NEW res.users: base.default_user
+# Nothing to do: It's a group addition for this user, not really new or del
+
+DEL survey.label: hr_recruitment.rcol_3_1_1
+DEL survey.label: hr_recruitment.rcol_3_1_2
+DEL survey.label: hr_recruitment.rcol_3_1_3
+DEL survey.label: hr_recruitment.rcol_3_1_4
+DEL survey.label: hr_recruitment.rcol_3_1_5
+DEL survey.label: hr_recruitment.recruitment_1_2_1
+DEL survey.label: hr_recruitment.recruitment_1_2_2
+DEL survey.label: hr_recruitment.recruitment_1_3_1
+DEL survey.label: hr_recruitment.recruitment_1_3_2
+DEL survey.label: hr_recruitment.recruitment_1_3_3
+DEL survey.label: hr_recruitment.recruitment_1_3_4
+DEL survey.label: hr_recruitment.recruitment_1_3_5
+DEL survey.label: hr_recruitment.recruitment_1_3_6
+DEL survey.label: hr_recruitment.recruitment_1_3_7
+DEL survey.label: hr_recruitment.recruitment_1_3_8
+DEL survey.label: hr_recruitment.rrow_2_1_1
+DEL survey.label: hr_recruitment.rrow_2_1_10
+DEL survey.label: hr_recruitment.rrow_2_1_11
+DEL survey.label: hr_recruitment.rrow_2_1_12
+DEL survey.label: hr_recruitment.rrow_2_1_13
+DEL survey.label: hr_recruitment.rrow_2_1_2
+DEL survey.label: hr_recruitment.rrow_2_1_3
+DEL survey.label: hr_recruitment.rrow_2_1_4
+DEL survey.label: hr_recruitment.rrow_2_1_5
+DEL survey.label: hr_recruitment.rrow_2_1_6
+DEL survey.label: hr_recruitment.rrow_2_1_7
+DEL survey.label: hr_recruitment.rrow_2_1_8
+DEL survey.label: hr_recruitment.rrow_2_1_9
+DEL survey.page: hr_recruitment.recruitment_1
+DEL survey.page: hr_recruitment.recruitment_2
+DEL survey.page: hr_recruitment.recruitment_3
+DEL survey.question: hr_recruitment.recruitment_1_1
+DEL survey.question: hr_recruitment.recruitment_1_2
+DEL survey.question: hr_recruitment.recruitment_1_3
+DEL survey.question: hr_recruitment.recruitment_2_1
+DEL survey.question: hr_recruitment.recruitment_2_2
+DEL survey.question: hr_recruitment.recruitment_2_3
+DEL survey.question: hr_recruitment.recruitment_2_4
+DEL survey.question: hr_recruitment.recruitment_3_1
+DEL survey.survey: hr_recruitment.recruitment_form
+# Done: XML-IDs renamed
