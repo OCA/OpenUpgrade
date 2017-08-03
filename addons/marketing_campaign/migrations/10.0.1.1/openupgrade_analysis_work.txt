@@ -1,0 +1,33 @@
+---Fields in module 'marketing_campaign'---
+marketing_campaign / marketing.campaign.activity / type (selection)              : was renamed to action_type [nothing to do]
+---XML records in module 'marketing_campaign'---
+DEL ir.actions.client: marketing_campaign.action_client_marketing_menu
+DEL ir.actions.todo: base.open_menu
+# NOTHING TO DO
+
+NEW res.groups: marketing_campaign.group_lead_automation_manager
+NEW res.groups: marketing_campaign.group_lead_automation_user
+# NOTHING TO DO: because the marketing module is merged=true on marketing_campaign
+
+NEW res.users: base.default_user
+DEL workflow: marketing_campaign.wkf_marketing_campaign
+DEL workflow: marketing_campaign.wkf_marketing_campaign_segment
+DEL workflow.activity: marketing_campaign.act_marketing_campaign_cancel
+DEL workflow.activity: marketing_campaign.act_marketing_campaign_done
+DEL workflow.activity: marketing_campaign.act_marketing_campaign_draft
+DEL workflow.activity: marketing_campaign.act_marketing_campaign_running
+DEL workflow.activity: marketing_campaign.act_marketing_campaign_segment_cancel
+DEL workflow.activity: marketing_campaign.act_marketing_campaign_segment_done
+DEL workflow.activity: marketing_campaign.act_marketing_campaign_segment_draft
+DEL workflow.activity: marketing_campaign.act_marketing_campaign_segment_running
+DEL workflow.transition: marketing_campaign.trans_campaign_cancelled_draft
+DEL workflow.transition: marketing_campaign.trans_campaign_done_draft
+DEL workflow.transition: marketing_campaign.trans_campaign_running_cancel
+DEL workflow.transition: marketing_campaign.trans_campaign_running_done
+DEL workflow.transition: marketing_campaign.trans_campaign_segment_done_draft
+DEL workflow.transition: marketing_campaign.trans_campaign_segment_running_cancel
+DEL workflow.transition: marketing_campaign.trans_campaign_segment_running_done
+DEL workflow.transition: marketing_campaign.trans_campaign_segment_set_to_draft
+DEL workflow.transition: marketing_campaign.trans_marketing_campaign_draft_running
+DEL workflow.transition: marketing_campaign.trans_marketing_campaign_segment_draft_running
+# NOTHING TO DO

@@ -317,11 +317,11 @@ missing in the new release are marked with |del|.
 +-----------------------------------+-----------------------------------+
 | |new| maintenance                 |                                   |
 +-----------------------------------+-----------------------------------+
-| |del| marketing                   |                                   |
+| |del| marketing                   | Done -Merged in marketing_campaign|
 +-----------------------------------+-----------------------------------+
-|marketing_campaign                 |                                   |
+|marketing_campaign                 | Nothing to do                     |
 +-----------------------------------+-----------------------------------+
-|marketing_campaign_crm_demo        |                                   |
+|marketing_campaign_crm_demo        | Nothing to do                     |
 +-----------------------------------+-----------------------------------+
 |mass_mailing                       | Done                              |
 +-----------------------------------+-----------------------------------+
