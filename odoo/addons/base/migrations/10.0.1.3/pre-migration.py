@@ -58,6 +58,7 @@ def migrate(cr, version):
             ('account_full_reconcile', 'account'),
             ('mail_tip', 'mail'),
             ('project_timesheet', 'hr_timesheet'),
+            ('sale_service', 'sale_timesheet'),
             ('share', 'base'),
             ('web_tip', 'web'),
             ('web_view_editor', 'web'),

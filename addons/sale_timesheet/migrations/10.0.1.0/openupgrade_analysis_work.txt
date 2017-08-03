@@ -1,0 +1,19 @@
+---Fields in module 'sale_timesheet'---
+sale_timesheet / procurement.order        / task_id (many2one)            : previously in module sale_service
+sale_timesheet / product.template         / project_id (many2one)         : previously in module sale_service
+# Done: Merged from sale_service to sale_timesheet in base
+
+sale_timesheet / hr.employee              / account_id (many2one)         : NEW relation: account.account
+# Nothing to do. Not required field.
+
+sale_timesheet / product.template         / track_service (False)         : selection_keys is now '['manual', 'task', 'timesheet']' ('['manual', 'timesheet']')
+# Nothing to do. New value added.
+
+sale_timesheet / project.task             / procurement_id (many2one)     : NEW relation: procurement.order
+# Nothing to do. Handled by sale_service merging as it's incorrectly tagged as new field
+
+---XML records in module 'sale_timesheet'---
+NEW ir.model.data: sale_timesheet.duplicate_field_xmlid
+NEW ir.ui.view: sale_timesheet.view_procurement_task_form
+NEW ir.ui.view: sale_timesheet.view_sale_service_inherit_form2
+# Nothing to do
