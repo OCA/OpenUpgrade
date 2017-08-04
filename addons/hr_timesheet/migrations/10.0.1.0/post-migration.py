@@ -55,6 +55,8 @@ def fill_analytic_line_project(env):
         AND aal.project_id IS NULL
         """,
     )
+    if not openupgrade.is_module_installed(env.cr, 'project_issue'):
+        return  # Don't perform next operation
     openupgrade.logged_query(
         env.cr,
         """
