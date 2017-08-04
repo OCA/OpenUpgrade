@@ -5,14 +5,11 @@ hr_attendance / hr.attendance            / action (selection)            : DEL r
 hr_attendance / hr.attendance            / action_desc (many2one)        : DEL relation: hr.action.reason
 # NOTHING TO DO: hr.action.reason model doesn't exist anymore
 
-hr_attendance / hr.attendance            / check_in (datetime)           : NEW required: required, req_default: function
-# DONE: name column renamed to check_in
-
-hr_attendance / hr.attendance            / check_out (datetime)          : NEW
-# NOTHING TO DO
-
 hr_attendance / hr.attendance            / name (datetime)               : DEL required: required, req_default: function
-# DONE: name column renamed to check_in
+hr_attendance / hr.attendance            / check_in (datetime)           : NEW required: required, req_default: function
+hr_attendance / hr.attendance            / check_out (datetime)          : NEW
+# DONE: 'name' column renamed to 'check_in'
+# DONE: Move name value to check_out column in matching 'sign_in' record for records where action='sign_out'
 
 hr_attendance / hr.employee              / attendance_ids (one2many)     : NEW relation: hr.attendance
 # NOTHING TO DO
