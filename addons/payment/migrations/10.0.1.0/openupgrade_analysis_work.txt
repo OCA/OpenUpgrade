@@ -52,6 +52,7 @@ NEW ir.ui.view: payment.view_account_payment_invoice_form_inherit_payment
 DEL ir.ui.view: payment.payment_method_form_view
 DEL ir.ui.view: payment.payment_method_tree_view
 DEL ir.ui.view: payment.payment_method_view_search
+# Nothing to do
 NEW payment.acquirer: payment.payment_acquirer_adyen
 NEW payment.acquirer: payment.payment_acquirer_authorize
 NEW payment.acquirer: payment.payment_acquirer_buckaroo
@@ -62,4 +63,4 @@ NEW payment.acquirer: payment.payment_acquirer_payu
 NEW payment.acquirer: payment.payment_acquirer_sips
 NEW payment.acquirer: payment.payment_acquirer_stripe
 NEW payment.acquirer: payment.payment_acquirer_transfer
-# Nothing to do
+# Done: pre-migration. Added a rename xmlids from their respective modules

@@ -1,0 +1,7 @@
+---Fields in module 'payment_sips'---
+payment_sips / payment.acquirer         / provider (False)              : NEW selection_keys: ['adyen', 'authorize', 'buckaroo', 'manual', 'ogone', 'paypal', 'payumoney', 'sips'], mode: modify
+# NOTHING TO DO
+---XML records in module 'payment_sips'---
+NEW payment.acquirer: payment.payment_acquirer_sips
+DEL payment.acquirer: payment_sips.payment_acquirer_sips
+# NOTHING TO DO
