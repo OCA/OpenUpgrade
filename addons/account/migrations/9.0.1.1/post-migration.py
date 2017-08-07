@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-# © 2016 Serpent Consulting Services Pvt. Ltd.
-# © 2016 Eficent Business and IT Consulting Services S.L.
+# Copyright 2016 Serpent Consulting Services Pvt. Ltd.
+# Copyright 2016 Eficent Business and IT Consulting Services S.L.
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
 import operator
 from openupgradelib import openupgrade
 from openerp.modules.registry import RegistryManager
@@ -497,6 +499,77 @@ def fill_move_line_invoice(cr):
     )
 
 
+def merge_invoice_journals(env, refund_journal_ids=None, journal_mapping=None):
+    """Move invoices and entries from refund journals to normal ones.
+
+    It can be used by other modules to complement this basic merging using
+    the extra provided arguments.
+
+    :param env: Odoo environment
+    :param refund_journal_ids: Restrict the journals to merge to the passed
+      ones.
+    :param journal_mapping: Optional dictionary with refund journal IDs as keys
+      and corresponding normal journal IDs as values for mapping the journals
+      when there's no easy correspondence.
+    """
+    journal_type_mapping = {
+        'sale_refund': 'sale',
+        'purchase_refund': 'purchase',
+    }
+    if journal_mapping is None:
+        journal_mapping = {}
+    for journal_type, new_journal_type in journal_type_mapping.iteritems():
+        query = """
+            SELECT id
+            FROM account_journal
+            WHERE openupgrade_legacy_9_0_type = %s
+            """
+        query_args = [journal_type, ]
+        if refund_journal_ids:
+            query += " AND id IN %s"
+            query_args.append(tuple(refund_journal_ids))
+        env.cr.execute(query, tuple(query_args))
+        refund_journal_ids = [x[0] for x in env.cr.fetchall()]
+        refund_journals = env['account.journal'].browse(refund_journal_ids)
+        for refund_journal in refund_journals:
+            if journal_mapping.get(refund_journal.id):
+                normal_journal = env['account.journal'].browse(
+                    journal_mapping[refund_journal.id]
+                )
+            else:
+                normal_journal = env['account.journal'].search([
+                    ('company_id', '=', refund_journal.company_id.id),
+                    ('type', '=', new_journal_type),
+                    ('id', '!=', refund_journal.id),
+                ])
+            # Is there only 1 'normal' journal for this company to move to?
+            if len(normal_journal) > 1:
+                continue
+            # Change journal references for account objects
+            tables = [
+                'account_invoice',
+                'account_move',
+                'account_move_line',
+            ]
+            for table in tables:
+                openupgrade.logged_query(
+                    env.cr,
+                    """
+                    UPDATE %s
+                    SET journal_id = %%s
+                    WHERE journal_id = %%s
+                    """ % table,
+                    (normal_journal.id, refund_journal.id)
+                )
+            refund_journal.show_on_dashboard = False
+            if refund_journal.sequence_id != normal_journal.sequence_id:
+                # Fill refund sequence
+                normal_journal.write({
+                    'refund_sequence': True,
+                    'refund_sequence_id': refund_journal.sequence_id.id,
+                })
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -588,3 +661,4 @@ def migrate(env, version):
     fill_blacklisted_fields(cr)
     reset_blacklist_field_recomputation()
     fill_move_line_invoice(cr)
+    merge_invoice_journals(env)
