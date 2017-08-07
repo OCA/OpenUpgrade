@@ -1,9 +1,11 @@
 ---Fields in module 'project'---
 project      / project.project          / favorite_user_ids (many2many) : NEW relation: res.users
 project      / project.project          / privacy_visibility (selection): selection_keys is now '['employees', 'followers', 'portal']' ('function')
-project      / project.project          / state (selection)             : DEL required: required, selection_keys: ['cancelled', 'close', 'draft', 'open', 'pending'], req_default: open
 project      / project.project          / website_message_ids (one2many): DEL relation: mail.message
 # NOTHING TO DO
+
+project      / project.project          / state (selection)             : DEL required: required, selection_keys: ['cancelled', 'close', 'draft', 'open', 'pending'], req_default: open
+# Done: Deactivate projects (active=False) where state='cancelled' or state='close'
 
 project      / project.task             / child_ids (many2many)         : type is now 'one2many' ('many2many')
 project      / project.task             / parent_ids (many2many)        : DEL relation: project.task
