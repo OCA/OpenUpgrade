@@ -1,0 +1,58 @@
+---Fields in module 'hr_recruitment_survey'---
+hr_recruitment_survey / hr.applicant             / response_id (many2one)        : previously in module hr_recruitment
+hr_recruitment_survey / hr.job                   / survey_id (many2one)          : previously in module hr_recruitment
+# Done: Renamed references on hr_recruitment pre-migration script
+
+---XML records in module 'hr_recruitment_survey'---
+NEW ir.model.access: hr_recruitment_survey.access_survey_hr_user
+NEW ir.ui.view: hr_recruitment_survey.crm_case_form_view_job_inherit
+NEW ir.ui.view: hr_recruitment_survey.crm_case_tree_view_job_inherit
+NEW ir.ui.view: hr_recruitment_survey.hr_job_survey_inherit
+NEW ir.ui.view: hr_recruitment_survey.hr_kanban_view_applicant_inherit
+NEW ir.ui.view: hr_recruitment_survey.view_hr_job_kanban_inherit
+# Nothing to do
+
+NEW res.groups: hr_recruitment.group_hr_recruitment_user
+# Nothing to do: Not really a new group but implied addition
+
+NEW survey.label: hr_recruitment_survey.rcol_3_1_1
+NEW survey.label: hr_recruitment_survey.rcol_3_1_2
+NEW survey.label: hr_recruitment_survey.rcol_3_1_3
+NEW survey.label: hr_recruitment_survey.rcol_3_1_4
+NEW survey.label: hr_recruitment_survey.rcol_3_1_5
+NEW survey.label: hr_recruitment_survey.recruitment_1_2_1
+NEW survey.label: hr_recruitment_survey.recruitment_1_2_2
+NEW survey.label: hr_recruitment_survey.recruitment_1_3_1
+NEW survey.label: hr_recruitment_survey.recruitment_1_3_2
+NEW survey.label: hr_recruitment_survey.recruitment_1_3_3
+NEW survey.label: hr_recruitment_survey.recruitment_1_3_4
+NEW survey.label: hr_recruitment_survey.recruitment_1_3_5
+NEW survey.label: hr_recruitment_survey.recruitment_1_3_6
+NEW survey.label: hr_recruitment_survey.recruitment_1_3_7
+NEW survey.label: hr_recruitment_survey.recruitment_1_3_8
+NEW survey.label: hr_recruitment_survey.rrow_2_1_1
+NEW survey.label: hr_recruitment_survey.rrow_2_1_10
+NEW survey.label: hr_recruitment_survey.rrow_2_1_11
+NEW survey.label: hr_recruitment_survey.rrow_2_1_12
+NEW survey.label: hr_recruitment_survey.rrow_2_1_13
+NEW survey.label: hr_recruitment_survey.rrow_2_1_2
+NEW survey.label: hr_recruitment_survey.rrow_2_1_3
+NEW survey.label: hr_recruitment_survey.rrow_2_1_4
+NEW survey.label: hr_recruitment_survey.rrow_2_1_5
+NEW survey.label: hr_recruitment_survey.rrow_2_1_6
+NEW survey.label: hr_recruitment_survey.rrow_2_1_7
+NEW survey.label: hr_recruitment_survey.rrow_2_1_8
+NEW survey.label: hr_recruitment_survey.rrow_2_1_9
+NEW survey.page: hr_recruitment_survey.recruitment_1
+NEW survey.page: hr_recruitment_survey.recruitment_2
+NEW survey.page: hr_recruitment_survey.recruitment_3
+NEW survey.question: hr_recruitment_survey.recruitment_1_1
+NEW survey.question: hr_recruitment_survey.recruitment_1_2
+NEW survey.question: hr_recruitment_survey.recruitment_1_3
+NEW survey.question: hr_recruitment_survey.recruitment_2_1
+NEW survey.question: hr_recruitment_survey.recruitment_2_2
+NEW survey.question: hr_recruitment_survey.recruitment_2_3
+NEW survey.question: hr_recruitment_survey.recruitment_2_4
+NEW survey.question: hr_recruitment_survey.recruitment_3_1
+NEW survey.survey: hr_recruitment_survey.recruitment_form
+# Done: XML-IDs renamed
