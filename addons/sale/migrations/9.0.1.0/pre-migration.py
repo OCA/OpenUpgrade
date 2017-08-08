@@ -85,12 +85,7 @@ def prepopulate_fields(cr):
     cr.execute(
         """\
         update sale_order_line
-        set qty_to_invoice=case
-            when pt.invoice_policy = 'order' then
-                product_uom_qty - coalesce(qty_invoiced, 0)
-            else
-                qty_delivered - coalesce(qty_invoiced, 0)
-        end
+        set qty_to_invoice=product_uom_qty - coalesce(qty_invoiced, 0)
         from product_product p
         join product_template pt on p.product_tmpl_id=pt.id
         where sale_order_line.product_id=p.id
