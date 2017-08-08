@@ -1,0 +1,99 @@
+---Fields in module 'hr_attendance'---
+hr_attendance / hr.attendance            / action (selection)            : DEL required: required, selection_keys: ['action', 'sign_in', 'sign_out']
+# DONE: pre-migration: rename columns
+
+hr_attendance / hr.attendance            / action_desc (many2one)        : DEL relation: hr.action.reason
+# NOTHING TO DO: hr.action.reason model doesn't exist anymore
+
+hr_attendance / hr.attendance            / name (datetime)               : DEL required: required, req_default: function
+hr_attendance / hr.attendance            / check_in (datetime)           : NEW required: required, req_default: function
+hr_attendance / hr.attendance            / check_out (datetime)          : NEW
+# DONE: 'name' column renamed to 'check_in'
+# DONE: Move name value to check_out column in matching 'sign_in' record for records where action='sign_out'
+
+hr_attendance / hr.employee              / attendance_ids (one2many)     : NEW relation: hr.attendance
+# NOTHING TO DO
+
+hr_attendance / hr.employee              / barcode (char)                : NEW
+# NOTHING TO DO
+
+hr_attendance / hr.employee              / pin (char)                    : NEW
+# NOTHING TO DO
+
+---XML records in module 'hr_attendance'---
+NEW ir.actions.act_window: hr_attendance.action_hr_attendance_settings
+NEW ir.actions.act_window: hr_attendance.hr_attendance_action
+NEW ir.actions.act_window: hr_attendance.hr_attendance_action_graph
+NEW ir.actions.act_window: hr_attendance.hr_attendance_action_graph_filtered
+NEW ir.actions.act_window: hr_attendance.hr_employee_attendance_action_kanban
+# NOTHING TO DO
+
+DEL ir.actions.act_window: hr_attendance.action_hr_attendance_error
+DEL ir.actions.act_window: hr_attendance.action_hr_attendance_graph
+DEL ir.actions.act_window: hr_attendance.action_hr_attendance_graph_filtered
+DEL ir.actions.act_window: hr_attendance.open_view_attendance
+DEL ir.actions.act_window: hr_attendance.open_view_attendance_reason
+# NOTHING TO DO
+
+NEW ir.actions.client: hr_attendance.hr_attendance_action_greeting_message
+NEW ir.actions.client: hr_attendance.hr_attendance_action_kiosk_mode
+NEW ir.actions.client: hr_attendance.hr_attendance_action_my_attendances
+NEW ir.actions.report.xml: hr_attendance.hr_employee_print_badge
+# NOTHING TO DO
+
+DEL ir.actions.report.xml: hr_attendance.action_report_hrattendanceerror
+# NOTHING TO DO
+
+DEL ir.model.access: hr_attendance.access_hr_action_reason_employee
+DEL ir.model.access: hr_attendance.access_hr_action_reason_user
+# NOTHING TO DO
+
+NEW ir.rule: hr_attendance.hr_attendance_rule_attendance_employee
+NEW ir.rule: hr_attendance.hr_attendance_rule_attendance_manager
+# NOTHING TO DO
+DEL ir.rule: hr_attendance.property_rule_attendace_employee
+DEL ir.rule: hr_attendance.property_rule_attendace_manager
+# DONE: delete
+
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_kiosk_mode
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_manage_attendances
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_my_attendances
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_settings
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_view_attendances
+NEW ir.ui.menu: hr_attendance.menu_hr_attendance_view_employees_kanban
+DEL ir.ui.menu: hr_attendance.menu_hr_attendance_config
+DEL ir.ui.menu: hr_attendance.menu_hr_time_tracking
+DEL ir.ui.menu: hr_attendance.menu_open_view_attendance
+DEL ir.ui.menu: hr_attendance.timesheet_menu_root
+# NOTHING TO DO
+
+NEW ir.ui.view: hr_attendance.hr_attendance_view_config
+NEW ir.ui.view: hr_attendance.hr_attendance_view_filter
+NEW ir.ui.view: hr_attendance.hr_attendance_view_form
+NEW ir.ui.view: hr_attendance.hr_attendance_view_graph
+NEW ir.ui.view: hr_attendance.hr_attendance_view_pivot
+NEW ir.ui.view: hr_attendance.hr_employees_view_kanban
+NEW ir.ui.view: hr_attendance.print_employee_badge
+NEW ir.ui.view: hr_attendance.view_employee_form_inherit_hr_attendance
+NEW ir.ui.view: hr_attendance.view_employee_kanban_inherit_hr_attendance
+DEL ir.ui.view: hr_attendance.edit_attendance_reason
+DEL ir.ui.view: hr_attendance.report_attendanceerrors
+DEL ir.ui.view: hr_attendance.view_attendance_form
+DEL ir.ui.view: hr_attendance.view_attendance_reason
+DEL ir.ui.view: hr_attendance.view_attendance_who
+DEL ir.ui.view: hr_attendance.view_hr_attendance_error
+DEL ir.ui.view: hr_attendance.view_hr_attendance_filter
+DEL ir.ui.view: hr_attendance.view_hr_attendance_graph
+DEL ir.ui.view: hr_attendance.view_hr_attendance_pivot
+# NOTHING TO DO
+
+DEL ir.values: hr_attendance.hr_attendance_error_values
+# NOTHING TO DO
+
+NEW res.groups: hr.group_hr_attendance
+NEW res.groups: hr_attendance.group_hr_attendance_manager
+NEW res.groups: hr_attendance.group_hr_attendance_use_pin
+NEW res.groups: hr_attendance.group_hr_attendance_user
+DEL res.groups: base.group_hr_manager
+NEW res.users: base.default_user
+# NOTHING TO DO
