@@ -449,6 +449,23 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
 
         cr.commit()
 
+        # OpenUpgrade: run deferred tests
+        tests_dir = os.path.join(
+            os.path.dirname(os.path.abspath(openupgrade_loading.__file__)),
+            'tests_deferred')
+        if os.environ.get('OPENUPGRADE_TESTS') and os.path.exists(
+                tests_dir):
+            import unittest
+            threading.currentThread().testing = True
+            tests = unittest.defaultTestLoader.discover(tests_dir, top_level_dir=tests_dir)
+            report.record_result(
+                unittest.TextTestRunner(
+                    verbosity=2,
+                    stream=odoo.modules.module.TestStream('deferred'),
+                ).run(tests).wasSuccessful())
+            threading.currentThread().testing = False
+        # OpenUpgrade edit end
+
         # STEP 5: Uninstall modules to remove
         if update_module:
             # Remove records referenced from ir_model_data for modules to be
