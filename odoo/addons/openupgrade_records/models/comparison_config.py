@@ -47,8 +47,7 @@ class openupgrade_comparison_config(models.Model):
             ids = user_model.search([("login", "=", "admin")])
             user_info = user_model.read([ids[0]], ["name"])[0]
         except Exception, e:
-            raise UserError(
-                unicode(e))
+            raise UserError(_("Connection failed.\n\nDETAIL: %s") % unicode(e))
         raise UserError(
             _("%s is connected.") % user_info["name"])
 
