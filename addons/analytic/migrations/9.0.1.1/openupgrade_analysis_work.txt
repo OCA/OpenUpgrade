@@ -39,7 +39,8 @@ analytic     / account.analytic.account / template_id (many2one)        : DEL re
 #Nothing to do : No longer needed.
 
 analytic     / account.analytic.account / type (selection)              : DEL required: required, selection_keys: ['contract', 'normal', 'template', 'view'], req_default: normal
-# Converted to tags
+# Done: Hide view accounts
+# Done: Converted to tags
 
 analytic     / account.analytic.account / user_id (many2one)            : DEL relation: res.users
 #Nothing to do : No longer needed.

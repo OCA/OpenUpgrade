@@ -40,7 +40,33 @@ def create_tags(cr):
         })
 
 
+def set_analytic_account_visibility(cr):
+    """Hide view analytic accounts with previous state considered as closed.
+
+    It also hides analytic accounts of type=view. If we want to restore the
+    visibility of these accounts, we have to perform:
+        UPDATE account_analytic_account SET account_type='normal'
+        WHERE %s = 'view' AND %s NOT IN ('cancelled', 'close') % (
+            openupgrade.get_legacy_name('type'),
+            openupgrade.get_legacy_name('state'),
+        )
+    """
+    openupgrade.map_values(
+        cr, openupgrade.get_legacy_name('state'), 'account_type', [
+            ('cancelled', 'closed'),
+            ('close', 'closed'),
+        ], table='account_analytic_account',
+    )
+    openupgrade.logged_query(
+        cr,
+        """UPDATE account_analytic_account
+        SET account_type='closed'
+        WHERE %s = 'view'""" % openupgrade.get_legacy_name('type')
+    )
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     set_partner_id(cr)
     create_tags(cr)
+    set_analytic_account_visibility(cr)
