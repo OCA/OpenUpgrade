@@ -159,6 +159,8 @@ def log_model(model, local_registry):
                     sorted([x[0] for x in v.selection]))
             else:
                 properties['selection_keys'] = 'function'
+        elif v.type == 'binary':
+            properties['attachment'] = str(getattr(v, "attachment", False))
         default = model._fields[k].default
         if v.required and default:
             if isinstance(default, types.FunctionType):
