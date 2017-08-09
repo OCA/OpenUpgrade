@@ -20,12 +20,3 @@ class TestBase(common.TransactionCase):
         self.assertIn(
             self.env.ref('base.user_root'),
             self.env.ref('base.group_no_one').users)
-
-    def test_image(self):
-        """ Binary fields are migrated to attachments """
-        self.assertTrue(
-            self.env['ir.attachment'].search([
-                ('res_model', '=', 'res.partner'),
-                ('res_field', '=', 'image'),
-                ('res_name', '=', 'Axelor...'),
-            ]).datas)
