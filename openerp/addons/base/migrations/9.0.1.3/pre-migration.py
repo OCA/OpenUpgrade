@@ -23,17 +23,6 @@ column_renames = {
     'res_partner_bank': [
         ('bank', 'bank_id'),
     ],
-    'res_partner': [
-        ('image', None),
-        ('image_medium', None),
-        ('image_small', None),
-    ],
-    'res_country': [
-        ('image', None),
-    ],
-    'ir_ui_menu': [
-        ('web_icon_data', None),
-    ],
 }
 
 

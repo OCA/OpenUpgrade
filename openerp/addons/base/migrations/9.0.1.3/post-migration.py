@@ -5,7 +5,6 @@
 
 import logging
 from openupgradelib import openupgrade
-from openupgradelib import openupgrade_90
 
 
 logger = logging.getLogger('OpenUpgrade')
@@ -15,20 +14,6 @@ logger = logging.getLogger('OpenUpgrade')
 column_copies = {
     'ir_actions': [
         ('help', None, None),
-    ],
-}
-
-attachment_fields = {
-    'res.partner': [
-        ('image', None),
-        ('image_medium', None),
-        ('image_small', None),
-    ],
-    'res.country': [
-        ('image', None),
-    ],
-    'ir.ui.menu': [
-        ('web_icon_data', None),
     ],
 }
 
@@ -98,4 +83,3 @@ def migrate(env, version):
         env.cr, 'base', 'migrations/9.0.1.3/noupdate_changes.xml',
     )
     assign_view_keys(env)
-    openupgrade_90.convert_binary_field_to_attachment(env, attachment_fields)

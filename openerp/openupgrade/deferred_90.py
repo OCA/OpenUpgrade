@@ -29,8 +29,34 @@ succesful result. Therefore, the functions in this module should be robust
 against being run multiple times on the same database.
 """
 import logging
+
+from openerp import api, models, SUPERUSER_ID
+from openerp.osv import fields, orm
+
+from openupgradelib import openupgrade_90, openupgrade_tools
+
+
 logger = logging.getLogger('OpenUpgrade.deferred')
 
 
 def migrate_deferred(cr, pool):
+    """ Convert attachment style binary fields """
     logger.info('Deferred migration step called')
+    field_spec = {}
+    for model_name, model in pool.items():
+        if isinstance(model, (orm.TransientModel, models.TransientModel)):
+            continue
+        for k, v in model._columns.items():
+            if (v._type == 'binary' and
+                    not isinstance(v, (
+                        fields.function, fields.property, fields.related)) and
+                    not model._fields[k].company_dependent and
+                    v.attachment and
+                    openupgrade_tools.column_exists(cr, model._table, k) and
+                    (k, k) not in field_spec.get(model_name, [])):
+                field_spec.setdefault(model_name, []).append((k, k))
+
+    if field_spec:
+        with api.Environment.manage():
+            env = api.Environment(cr, SUPERUSER_ID, {})
+            openupgrade_90.convert_binary_field_to_attachment(env, field_spec)
