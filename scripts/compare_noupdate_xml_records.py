@@ -94,7 +94,7 @@ def get_records(addon_dir):
             target_dict = (
                 records_noupdate if noupdate else records_update)
             target_dict[xml_id] = record
-        
+
     def process_data_node(data_node):
         noupdate = nodeattr2bool(data_node, 'noupdate', False)
         record_nodes = data_node.xpath("./record")
@@ -115,7 +115,11 @@ def get_records(addon_dir):
             root_node = tree.getroot()
             root_node_noupdate = nodeattr2bool(root_node, 'noupdate', False)
             if root_node.tag not in ('openerp', 'odoo'):
-                raise Exception, 'Unexpected root Element: %s in file: %s' % (tree.getroot(), xml_path)
+                raise Exception(
+                    'Unexpected root Element: %s in file: %s' % (
+                        tree.getroot(), xml_path
+                    )
+                )
             for node in root_node:
                 if node.tag == 'data':
                     process_data_node(node)
@@ -201,7 +205,6 @@ def main(argv=None):
             data.append(element)
 
     odoo = etree.Element("odoo")
-    odoo.append(data)
     document = etree.ElementTree(odoo)
 
     print etree.tostring(
