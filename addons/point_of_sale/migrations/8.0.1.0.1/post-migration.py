@@ -101,7 +101,7 @@ def get_pricelist_id(cr, pool, shop_id, pc):
     return pricelist_id[0]
 
 
-def get_picking_type_id(cr, pool, shop_id, pc):
+def get_picking_type_id(cr, pool, shop_id, pc, stock_loc_id):
     """
         Create a new picking_type_id using shop info
     """
@@ -114,9 +114,8 @@ def get_picking_type_id(cr, pool, shop_id, pc):
             cr, SUPERUSER_ID, 'point_of_sale.seq_picking_type_posout'),
         'code': 'outgoing',
         'warehouse_id': wh.id,
-        'default_location_src_id': wh.wh_output_stock_loc_id.id,
-        'default_location_dest_id': pool['ir.model.data'].xmlid_to_res_id(
-            cr, SUPERUSER_ID, 'stock.stock_location_customers'),
+        'default_location_src_id': stock_loc_id,
+        'default_location_dest_id': wh.wh_output_stock_loc_id.id,
     })
 
 
@@ -131,15 +130,32 @@ def migrate_pos_config(cr, pool):
         """ % (openupgrade.get_legacy_name('shop_id'), pc.id))
         shop_id = cr.fetchone()[0]
         stock_loc_id = get_stock_location_id(cr, pool, shop_id)
+        picking_type_id = get_picking_type_id(
+            cr, pool, shop_id, pc, stock_loc_id)
         vals = {
             'stock_location_id': stock_loc_id,
             'company_id': get_company_id(cr, pool, shop_id, pc, stock_loc_id),
-            'picking_type_id': get_picking_type_id(cr, pool, shop_id, pc),
+            'picking_type_id': picking_type_id,
         }
         pricelist_id = get_pricelist_id(cr, pool, shop_id, pc)
         if pricelist_id:
             vals.update({'pricelist_id': pricelist_id})
         pc.write(vals)
+        # Affect all pickings from Pos Order to the new picking_type
+        cr.execute("""
+            SELECT po.picking_id
+            FROM pos_order po
+            INNER JOIN pos_session ps on ps.id = po.session_id
+            WHERE ps.config_id = %d
+            """ % pc.id)
+        picking_ids = [x[0] for x in cr.fetchall()]
+        if picking_ids:
+            openupgrade.logged_query(
+                cr, """
+                    UPDATE stock_picking
+                    SET picking_type_id = %s
+                    WHERE id in %s """,
+                (picking_type_id, tuple(picking_ids),))
 
 
 def available_in_pos_field_func(cr, pool, id, vals):
