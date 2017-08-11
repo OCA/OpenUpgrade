@@ -17,7 +17,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+import logging
 from openerp.openupgrade import openupgrade
+
+logger = logging.getLogger('OpenUpgrade.purchase')
+
 
 column_renames = {
     'procurement_order': [('purchase_id', None)],
@@ -25,6 +30,15 @@ column_renames = {
     }
 
 
+def create_field_reception_to_invoice(cr):
+    cr.execute("""
+        ALTER TABLE "stock_picking"
+        ADD COLUMN "reception_to_invoice" bool DEFAULT False""")
+    logger.info(
+        "Fast creation of the field stock_picking.reception_to_invoice")
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
+    create_field_reception_to_invoice(cr)
