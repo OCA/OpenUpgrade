@@ -38,10 +38,12 @@ def update_picking_type_id(env):
             SELECT id from stock_picking_type
             WHERE warehouse_id = %s AND
                 default_location_dest_id = %s AND
-                default_location_src_id = %s""" % (
-                procurement_rule.warehouse_id.id,
-                procurement_rule.location_id.id,
-                procurement_rule.location_src_id.id,
+                default_location_src_id = %s
+            """,
+            (
+                procurement_rule.warehouse_id.id or None,
+                procurement_rule.location_id.id or None,
+                procurement_rule.location_src_id.id or None,
             )
         )
         picking_type_ids = env.cr.fetchone()
