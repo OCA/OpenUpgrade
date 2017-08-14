@@ -33,7 +33,7 @@ hr_expense   / hr.expense.sheet         / state (selection)             : NEW re
 # Done - Update states to fit with new definition
 
 hr_expense   / hr.expense               / website_message_ids (one2many): DEL relation: mail.message
-# Not present if no website..., I do not know what should be done here...
+# Nothing to do
 
 hr_expense   / hr.expense.sheet         / accounting_date (date)        : NEW
 # Done - set by default to date from account_move
