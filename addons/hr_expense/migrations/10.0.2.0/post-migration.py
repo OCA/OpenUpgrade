@@ -75,13 +75,6 @@ def migrate(env, version):
         WHERE state='cancel'
         ''')
 
-    # Set correct submit state for hr_expense_sheet since draft does not exist anymore for sheet
-    cr.execute(
-        '''UPDATE hr_expense_sheet
-        SET state='submit'
-        WHERE state='draft'
-        ''')
-
     # Set correct account corresponding to product subject to this expense
     cr.execute(
         '''SELECT distinct he.product_id, pp.product_tmpl_id
