@@ -78,12 +78,12 @@ def migrate(env, version):
     # Set correct account corresponding to product subject to this expense
     cr.execute(
         '''SELECT distinct he.product_id, pp.product_tmpl_id
-        FROM hr_expense he, product_product pp 
+        FROM hr_expense he, product_product pp
         WHERE he.product_id=pp.id
         ''')
     product_ids = cr.fetchall()
     for product in product_ids:
-        product_template= "'product_template," + str(product[1]) + "'"
+        product_template = "'product_template," + str(product[1]) + "'"
         cr.execute(
            '''UPDATE hr_expense
            SET account_id=(
@@ -91,7 +91,7 @@ def migrate(env, version):
                 FROM ir_property
                 WHERE res_id like %s limit 1)
            WHERE product_id=%s
-           '''% (product_template,product[0],))
+           ''' % (product_template, product[0], ))
 
     # Set accounting_date to date from account_analytic_line when it exists
     cr.execute(
