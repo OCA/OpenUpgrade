@@ -1,0 +1,7 @@
+---Fields in module 'payment_paypal'---
+payment_paypal / payment.acquirer         / provider (False)              : NEW selection_keys: ['adyen', 'authorize', 'buckaroo', 'manual', 'ogone', 'paypal'], mode: modify
+# NOTHING TO DO
+---XML records in module 'payment_paypal'---
+NEW payment.acquirer: payment.payment_acquirer_paypal
+DEL payment.acquirer: payment_paypal.payment_acquirer_paypal
+# NOTHING TO DO

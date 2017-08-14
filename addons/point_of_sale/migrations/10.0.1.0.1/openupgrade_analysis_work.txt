@@ -8,9 +8,7 @@ point_of_sale / barcode.rule             / type (False)                  : NEW s
 
 point_of_sale / pos.config               / active (boolean)              : NEW
 point_of_sale / pos.config               / state (selection)             : DEL required: required, selection_keys: ['active', 'deprecated', 'inactive'], req_default: active
-# TODO: pre-migration. Copy column state
-# TODO: post-migration. If old state in ('inactive', 'deprecated') then set
-# to false
+# Done: post-migration. When old state in ('inactive', 'deprecated') then set active to false
 
 point_of_sale / pos.config               / default_fiscal_position_id (many2one): NEW relation: account.fiscal.position
 point_of_sale / pos.config               / iface_fullscreen (boolean)    : DEL
@@ -106,3 +104,4 @@ DEL workflow.transition: point_of_sale.trans_paid_done
 DEL workflow.transition: point_of_sale.trans_paid_invoice
 DEL workflow.transition: point_of_sale.trans_start_to_open
 DEL workflow.transition: point_of_sale.trans_start_to_opening_control
+# NOTHING TO DO

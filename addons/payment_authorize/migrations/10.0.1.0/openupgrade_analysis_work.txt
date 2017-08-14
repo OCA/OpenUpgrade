@@ -1,0 +1,9 @@
+---Fields in module 'payment_authorize'---
+payment_authorize / payment.acquirer         / provider (False)              : NEW selection_keys: ['adyen', 'authorize', 'manual'], mode: modify
+payment_authorize / payment.token            / authorize_profile (char)      : NEW 
+# NOTHING TO DO
+---XML records in module 'payment_authorize'---
+NEW ir.ui.view: payment_authorize.authorize_s2s_form
+NEW payment.acquirer: payment.payment_acquirer_authorize
+DEL payment.acquirer: payment_authorize.payment_acquirer_authorize
+# NOTHING TO DO

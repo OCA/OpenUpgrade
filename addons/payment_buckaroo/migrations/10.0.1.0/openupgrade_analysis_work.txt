@@ -1,0 +1,7 @@
+---Fields in module 'payment_buckaroo'---
+payment_buckaroo / payment.acquirer         / provider (False)              : NEW selection_keys: ['adyen', 'authorize', 'buckaroo', 'manual'], mode: modify
+# NOTHING TO DO
+---XML records in module 'payment_buckaroo'---
+NEW payment.acquirer: payment.payment_acquirer_buckaroo
+DEL payment.acquirer: payment_buckaroo.payment_acquirer_buckaroo
+# NOTHING TO DO
