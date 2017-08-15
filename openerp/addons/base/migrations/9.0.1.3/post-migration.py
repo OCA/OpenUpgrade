@@ -68,6 +68,15 @@ def assign_view_keys(env):
         view.key = view.xml_id
 
 
+def publish_attachments(env):
+    """
+    Attachments are only shown to anonymous users if the public flag is set
+    """
+    env.cr.execute(
+        "update ir_attachment set public=True where res_model='ir.ui.view'"
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     for table_name in column_copies.keys():
@@ -83,3 +92,4 @@ def migrate(env, version):
         env.cr, 'base', 'migrations/9.0.1.3/noupdate_changes.xml',
     )
     assign_view_keys(env)
+    publish_attachments(env)

@@ -22,6 +22,8 @@ base         / ir.attachment            / checksum (char)               : NEW
 # initialize using ir_attachment._compute_checksum()
 
 base         / ir.attachment            / public (boolean)              : NEW 
+# set to True for attachments with res_model ir.ui.view (images on web pages)
+
 base         / ir.attachment            / res_field (char)              : NEW 
 # Nothing to do
 
