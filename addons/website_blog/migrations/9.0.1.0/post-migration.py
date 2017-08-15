@@ -27,7 +27,7 @@ def convert_blog_post_cover(env):
         post = post_obj.browse(row[0])
         post.cover_properties = (
             '{{"background-image": "url({})",'
-            ' "opacity": "1",'
+            ' "opacity": "0",'
             ' "background-color": "oe_none",'
             ' "resize_class": "cover cover_full"}}'
         ).format(row[1])
