@@ -16,10 +16,13 @@ def migrate(env, version):
         WHERE wp.pricelist_id = pp.id
     """
     openupgrade.logged_query(cr, sql)
-    # all remaining pricelists will be assigned to default
+    # all remaining sale pricelists will be assigned to default
     sql = """select pricelist_id from
           website_pricelist_openupgrade_10"""
     cr.execute(sql)
     pricelist_ids = cr.fetchall()
-    for pricelist in pl_model.search([('id', 'not in', pricelist_ids)]):
+    for pricelist in pl_model.search([
+            ('id', 'not in', pricelist_ids),
+            ('type', '=', 'sale'),
+    ]):
         pricelist.write({'website_id': pricelist._default_website().id})
