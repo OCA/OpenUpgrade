@@ -3,6 +3,7 @@ to help the matching process
 """
 
 renamed_modules = {
+    'portal_claim': 'website_crm_claim',
     # OCA/product-attribute
     'product_m2m_categories': 'product_multi_category',
     # OCA/e-commerce
