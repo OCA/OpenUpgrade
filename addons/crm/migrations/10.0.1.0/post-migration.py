@@ -23,19 +23,13 @@ def _assign_stage_team(env):
     assigned.
     """
     env.cr.execute(
-        """UPDATE crm_stage
-        SET team_id=team_stage_rel.team_id
+        """UPDATE crm_stage s
+        SET team_id=t.team_id
         FROM (
-            SELECT team_id, stage_id
-            FROM (
-                SELECT team_id, stage_id,
-                    row_number()
-                    OVER (partition BY stage_id ORDER BY stage_id) AS rnum
-                FROM crm_team_stage_rel
-            ) t
-            WHERE t.rnum = 1
-        ) AS team_stage_rel
-        WHERE id=team_stage_rel.stage_id
+            SELECT stage_id, MAX(team_id) as team_id, COUNT(stage_id) as count
+            FROM crm_team_stage_rel GROUP BY stage_id
+        ) t
+        WHERE t.count = 1 AND t.stage_id = s.id;
         """
     )
 
