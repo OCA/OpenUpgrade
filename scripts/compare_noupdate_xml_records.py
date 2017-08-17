@@ -110,11 +110,11 @@ def get_records(addon_dir):
                 tree = etree.parse(os.path.join(addon_dir, *xml_path))
             except etree.XMLSyntaxError:
                 continue
-            # Support xml files with root Element either odoo or openerp, supporting v9.0 and v1.0
-            # Condition: each xml file should have only one root element {<odoo> or <openerp>};
+            # Support xml files with root Element either odoo or openerp, supporting v9.0 and v10.0
+            # Condition: each xml file should have only one root element {<odoo>, <openerp> or —rarely— <data>};
             root_node = tree.getroot()
             root_node_noupdate = nodeattr2bool(root_node, 'noupdate', False)
-            if root_node.tag not in ('openerp', 'odoo'):
+            if root_node.tag not in ('openerp', 'odoo', 'data'):
                 raise Exception(
                     'Unexpected root Element: %s in file: %s' % (
                         tree.getroot(), xml_path
