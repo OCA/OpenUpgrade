@@ -46,6 +46,7 @@ def cleanup_modules(cr):
     other modules."""
     openupgrade.update_module_names(
         cr, [
+            ('account_followup', 'account_credit_control'),
             ('contacts', 'mail'),
             ('marketing_crm', 'crm'),
             ('email_template', 'mail'),  # mail_template class
