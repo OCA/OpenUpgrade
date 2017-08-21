@@ -53,6 +53,8 @@ renamed_modules = {
     # OCA/manufacture-reporting
     'mrp_bom_structure_xls': 'mrp_bom_structure_xlsx',
     'mrp_bom_structure_xls_level_1': 'mrp_bom_structure_xlsx_level_1',
+    # OCA/connector
+    'connector': 'queue_job',
 }
 
 renamed_models = {
