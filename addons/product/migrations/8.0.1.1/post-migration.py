@@ -78,6 +78,24 @@ def create_properties(cr, pool):
         AND name = 'standard_price'""")
     openupgrade.logged_query(cr, sql)
 
+    # Affect history to the template's company
+    # Note, for the time being, in a multi company context the history will
+    # be incomplete for products  that don't belong to a given company
+    # (Global products), because the history will be associated to the
+    # company of the SUPERUSER, during the migration
+    cr.execute("""
+        UPDATE product_price_history pph
+        SET company_id = template_company.company_id
+        FROM (
+            SELECT
+                pt.id template_id,
+                pt.company_id
+            FROM product_template pt
+            WHERE company_id is not null
+        ) template_company
+        WHERE pph.product_template_id = template_company.template_id
+    """)
+
     # product.price.history entries have been generated with a value for
     # today, we want a value for the past as well, write a bogus date to
     # be sure that we have an historic value whenever we want
