@@ -132,7 +132,7 @@ def get_records(addon_dir):
 
 def main_analysis(old_update, old_noupdate, new_update, new_noupdate):
 
-    data = etree.Element("data")
+    odoo = etree.Element("odoo")
 
     for xml_id, record_new in new_noupdate.items():
         record_old = None
@@ -172,9 +172,8 @@ def main_analysis(old_update, old_noupdate, new_update, new_noupdate):
                 element.append(deepcopy(record_new_dict[key]))
 
         if len(element):
-            data.append(element)
+            odoo.append(element)
 
-    odoo = etree.Element("odoo")
     document = etree.ElementTree(odoo)
 
     print etree.tostring(
