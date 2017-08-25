@@ -108,7 +108,10 @@ def get_records(addon_dir):
         for xml_file in manifest[key]:
             xml_path = xml_file.split('/')
             try:
-                tree = etree.parse(os.path.join(addon_dir, *xml_path))
+                # This is for a final correct pretty print
+                # Ref.: https://stackoverflow.com/a/7904066
+                parser = etree.XMLParser(remove_blank_text=True)
+                tree = etree.parse(os.path.join(addon_dir, *xml_path), parser)
             except etree.XMLSyntaxError:
                 continue
             # Support xml files with root Element either odoo or openerp, supporting v9.0 and v10.0
