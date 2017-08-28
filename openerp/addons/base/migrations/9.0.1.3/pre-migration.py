@@ -60,6 +60,7 @@ def cleanup_modules(cr):
             ('account_move_line_no_default_search', 'account'),
             ('account_tax_chart_interval', 'account'),
             # from OCA/account-financial-reporting
+            ('account_journal_report_xls', 'account_journal_report'),
             ('account_financial_report_webkit_xls',
              'account_financial_report_qweb'),
             # from OCA/account_payment
