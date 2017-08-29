@@ -4,6 +4,8 @@ sales_team   / crm.team                 / working_hours (float)         : DEL
 # Store columns for preserving data
 ---XML records in module 'sales_team'---
 NEW crm.team: sales_team.salesteam_website_sales
+Done: Rename if exists from 'website.salesteam_website_sales'
+
 NEW ir.actions.act_window: sales_team.action_sale_config
 NEW ir.rule: sales_team.crm_rule_all_salesteam
 NEW ir.rule: sales_team.crm_rule_own_salesteam

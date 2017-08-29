@@ -30,6 +30,8 @@ website_sale / website                  / website_pricelist_ids (one2many): DEL 
 ---XML records in module 'website_sale'---
 NEW crm.team: sales_team.salesteam_website_sales
 DEL crm.team: website.salesteam_website_sales
+# Done: Renamed in sales_team module
+
 NEW ir.actions.act_window: website_sale.action_abandonned_orders_ecommerce
 NEW ir.actions.act_window: website_sale.action_invoices_ecommerce
 NEW ir.actions.act_window: website_sale.action_orders_ecommerce
