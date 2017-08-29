@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="team_sales_department" model="crm.team">
+    <field name="company_id" eval="False"/>
+  </record>
+  <!-- This one has been added manually as the record has been renamed but
+       it's a noupdate record and this field has changed -->
+  <record id="salesteam_website_sales" model="crm.team">
+    <field name="company_id" eval="False"/>
+  </record>
+</odoo>

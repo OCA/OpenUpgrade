@@ -16,6 +16,7 @@ _xmlid_renames = [
     ('base.group_sale_salesman', 'sales_team.group_sale_salesman'),
     ('base.group_sale_salesman_all_leads',
      'sales_team.group_sale_salesman_all_leads'),
+    ('website.salesteam_website_sales', 'sales_team.salesteam_website_sales'),
 ]
 
 
