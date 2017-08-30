@@ -13,3 +13,6 @@ def migrate(env, version):
         SET active=False
         WHERE state IN ('cancelled', 'close')"""
     )
+    openupgrade.load_data(
+        env.cr, 'project', 'migrations/10.0.1.1/noupdate_changes.xml',
+    )
