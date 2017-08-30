@@ -43,7 +43,8 @@ def migrate_missing_projects(env):
 
 
 def fill_analytic_line_project(env):
-    """Fill project with the linked one in the related task or issue."""
+    """Fill project with the linked one in the related task, issue, or project
+    related to the analytic account."""
     openupgrade.logged_query(
         env.cr,
         """
@@ -55,17 +56,29 @@ def fill_analytic_line_project(env):
         AND aal.project_id IS NULL
         """,
     )
-    if not openupgrade.is_module_installed(env.cr, 'project_issue'):
-        return  # Don't perform next operation
+    if openupgrade.is_module_installed(env.cr, 'project_issue'):
+        openupgrade.logged_query(
+            env.cr,
+            """
+            UPDATE account_analytic_line aal
+            SET project_id = pi.project_id
+            FROM project_issue pi
+            WHERE pi.id = aal.issue_id
+            AND pi.project_id IS NOT NULL
+            AND aal.project_id IS NULL
+            """,
+        )
+    # Finally, try to link the rest of the lines that are not linked to a
+    # task nor an issue to the project associated with the analytic account
     openupgrade.logged_query(
         env.cr,
         """
         UPDATE account_analytic_line aal
-        SET project_id = pi.project_id
-        FROM project_issue pi
-        WHERE pi.id = aal.issue_id
-        AND pi.project_id IS NOT NULL
+        SET project_id = pp.id
+        FROM project_project pp
+        WHERE pp.analytic_account_id = aal.account_id
         AND aal.project_id IS NULL
+        AND aal.is_timesheet IS True
         """,
     )
 
