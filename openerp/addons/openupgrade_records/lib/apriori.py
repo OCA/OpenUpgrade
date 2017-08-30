@@ -25,6 +25,8 @@ renamed_modules = {
     # OCA/account-invoicing
     'account_refund_original': 'account_invoice_refund_link',
     'invoice_fiscal_position_update': 'account_invoice_fiscal_position_update',
+    # account_payment_term_multi_day in v8 is located in account-payment
+    'account_payment_term_multi_day': 'account_payment_term_extension',
     # OCA/social
     'mail_message_name_search': 'base_search_mail_content',
     'marketing_security_group': 'mass_mailing_security_group',
