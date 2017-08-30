@@ -65,6 +65,9 @@ def migrate(cr, version):
             ('mail_tip', 'mail'),
             ('im_odoo_support', 'im_livechat'),
             ('marketing', 'marketing_campaign'),
+            # OCA/account-invoicing
+            ('purchase_stock_picking_return_invoicing_open_qty',
+             'purchase_stock_picking_return_invoicing'),
             # OCA/e-commerce
             ('website_sale_b2c', 'sale'),  # used groups are in sale
             # OCA/sale-workflow
