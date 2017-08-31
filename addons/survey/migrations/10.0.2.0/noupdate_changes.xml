@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="survey_users_access" model="ir.rule">
+    <field name="groups" eval="[(4, ref('group_survey_user'))]"/>
+  </record>
+  <record id="survey_manager_access" model="ir.rule">
+    <field name="groups" eval="[(4, ref('group_survey_manager'))]"/>
+  </record>
+  <record id="survey_input_users_access" model="ir.rule">
+    <field name="groups" eval="[(4, ref('group_survey_user'))]"/>
+  </record>
+  <record id="survey_input_manager_access" model="ir.rule">
+    <field name="groups" eval="[(4, ref('group_survey_manager'))]"/>
+  </record>
+</odoo>
