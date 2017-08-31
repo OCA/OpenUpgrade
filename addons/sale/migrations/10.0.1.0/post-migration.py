@@ -12,3 +12,6 @@ def migrate(cr, version):
         openupgrade.get_legacy_name('invoice_policy'), 'invoice_policy',
         [('cost', 'order')],
         table='product_template', write='sql')
+    openupgrade.load_data(
+        cr, 'sale', 'migrations/10.0.1.0/noupdate_changes.xml',
+    )
