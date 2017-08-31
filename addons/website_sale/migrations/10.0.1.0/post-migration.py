@@ -23,3 +23,6 @@ def migrate(env, version):
     pricelist_ids = cr.fetchall()
     for pricelist in pl_model.search([('id', 'not in', pricelist_ids)]):
         pricelist.write({'website_id': pricelist._default_website().id})
+    openupgrade.load_data(
+        cr, 'website_sale', 'migrations/10.0.1.0/noupdate_changes.xml',
+    )
