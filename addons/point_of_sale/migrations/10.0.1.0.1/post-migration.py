@@ -14,3 +14,6 @@ def map_pos_config_state_active(cr):
 @openupgrade.migrate()
 def migrate(env, version):
     map_pos_config_state_active(env.cr)
+    openupgrade.load_data(
+        env.cr, 'point_of_sale', 'migrations/10.0.1.0.1/noupdate_changes.xml',
+    )
