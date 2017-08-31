@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="portal_issue_rule" model="ir.rule">
+    <field name="domain_force">[
+            '|',
+                '&amp;',
+                    ('project_id.privacy_visibility', '=', 'portal'),
+                    ('project_id.message_partner_ids', 'child_of', [user.partner_id.commercial_partner_id.id]),
+                '&amp;',
+                    ('project_id.privacy_visibility', '=', 'portal'),
+                    ('message_partner_ids', 'child_of', [user.partner_id.commercial_partner_id.id]),
+            ]</field>
+    <field name="name">Project/Issue: portal users: (portal and (following project or following issue)</field>
+  </record>
+</odoo>

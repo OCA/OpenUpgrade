@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mt_issue_ready" model="mail.message.subtype">
+    <field name="description">Issue ready for next stage</field>
+  </record>
+  <record id="issue_user_rule" model="ir.rule">
+    <field name="name">Project/Issue: employees: no need to follow or (following project or following issue</field>
+    <field name="domain_force">['|',
+                                            ('project_id.privacy_visibility', '!=', 'followers'),
+                                            '|',
+                                                ('project_id.message_partner_ids', 'in', [user.partner_id.id]),
+                                                ('message_partner_ids', 'in', [user.partner_id.id]),
+                                        ]</field>
+  </record>
+</odoo>

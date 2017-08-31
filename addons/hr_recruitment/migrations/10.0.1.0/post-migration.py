@@ -44,3 +44,6 @@ def assign_recruitment_groups(env):
 def migrate(env, version):
     fill_hr_recruitment_stage_job_id(env)
     assign_recruitment_groups(env)
+    openupgrade.load_data(
+        env.cr, 'hr_recruitment', 'migrations/10.0.1.0/noupdate_changes.xml',
+    )

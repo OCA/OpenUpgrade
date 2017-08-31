@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="contract_set_as_pending" model="ir.actions.server">
+    <field name="code">record.set_as_pending()</field>
+  </record>
+  <record id="contract_set_as_close" model="ir.actions.server">
+    <field name="code">record.set_as_close()</field>
+  </record>
+</odoo>

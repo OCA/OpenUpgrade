@@ -69,3 +69,6 @@ def migrate(env, version):
         ) AS subquery
         WHERE account_bank_statement_line.id = subquery.statement_line_id
         ''')
+    openupgrade.load_data(
+        cr, 'account', 'migrations/10.0.1.1/noupdate_changes.xml',
+    )

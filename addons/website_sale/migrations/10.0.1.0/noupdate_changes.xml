@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="website.default_website" model="website">
+    <field name="salesteam_id" ref="sales_team.salesteam_website_sales"/>
+  </record>
+  <record id="action_open_website" model="ir.actions.act_url">
+    <field name="url">/shop</field>
+  </record>
+</odoo>

@@ -154,3 +154,6 @@ def migrate(env, version):
     update_ordered_qty(cr)
     populate_stock_scrap(cr)
     assign_security_groups(env)
+    openupgrade.load_data(
+        cr, 'stock', 'migrations/10.0.1.1/noupdate_changes.xml',
+    )

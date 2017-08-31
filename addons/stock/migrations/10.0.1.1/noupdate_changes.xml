@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="module_install_notification" model="mail.message">
+    <field name="body"><![CDATA[<p>Manage your product inventory and stock locations: you can control stock moves history and planning,
+watch your stock valuation, and track production lots (based on serial numbers).</p>]]></field>
+  </record>
+  <record id="req_link_tracking" model="res.request.link">
+    <field name="name">Lot/Serial Number</field>
+  </record>
+</odoo>
