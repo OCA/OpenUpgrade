@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="stage_lead2" model="crm.stage">
+    <field name="type"/>
+    <field name="sequence">2</field>
+  </record>
+  <record id="stage_lead3" model="crm.stage">
+    <field name="type"/>
+    <field name="sequence">3</field>
+  </record>
+  <record id="stage_lead1" model="crm.stage">
+    <field name="type"/>
+  </record>
+  <record id="crm_rule_all_lead" model="ir.rule">
+    <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads'))]"/>
+  </record>
+  <record id="crm_rule_personal_lead_report" model="ir.rule">
+    <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+  </record>
+  <record id="crm_rule_personal_lead" model="ir.rule">
+    <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+  </record>
+  <record id="sales_team.team_sales_department" model="crm.team">
+    <field name="stage_ids"/>
+  </record>
+  <record id="crm_rule_all_lead_report" model="ir.rule">
+    <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads'))]"/>
+  </record>
+  <record id="email_template_opportunity_reminder_mail" model="mail.template">
+    <field name="body_html"><![CDATA[
+<p>Hello ${object.user_id and object.user_id.name or ''},</p>
+<p>The opportunity <strong>${object.name}</strong> did not have any activity since at least 5 days.</p>
+%if object.description:
+<p>Here is the description about the opportunity : </p><p><i>${object.description}</i>
+%endif
+</p><p>Thank you!</p>
+]]></field>
+    <field name="subject">Reminder: Lead ${object.name} from ${object.partner_id != False and object.partner_id.name or object.contact_name}</field>
+    <field name="name">Lead: Reminder</field>
+  </record>
+</odoo>

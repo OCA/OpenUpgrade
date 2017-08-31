@@ -38,3 +38,6 @@ def _assign_stage_team(env):
 def migrate(env, version):
     _convert_next_activities(env)
     _assign_stage_team(env)
+    openupgrade.load_data(
+        env.cr, 'crm', 'migrations/10.0.1.0/noupdate_changes.xml',
+    )
