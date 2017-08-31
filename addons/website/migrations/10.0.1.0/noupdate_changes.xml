@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="base.open_menu" model="ir.actions.todo">
+    <field name="action_id" ref="action_website"/>
+  </record>
+  <record id="default_website" model="website">
+    <field name="name">My Website</field>
+    <field name="default_lang_id"/>
+    <field name="language_ids"/>
+    <field name="favicon" type="base64" file="web/static/src/img/favicon.ico"/>
+  </record>
+  <record id="action_module_theme" model="ir.actions.act_window">
+    <field name="help" type="html">
+      <p>
+        <b>No theme module found!</b>
+      </p>
+      <p>You should try other search criteria.</p>
+    </field>
+  </record>
+  <record id="action_module_website" model="ir.actions.act_window">
+    <field name="help" type="html">
+      <p>
+        <b>No website module found!</b>
+      </p>
+      <p>You should try other search criteria.</p>
+    </field>
+  </record>
+  <record id="business_conference" model="ir.attachment">
+    <field name="public" eval="True"/>
+  </record>
+</odoo>
