@@ -407,7 +407,7 @@ missing in the new release are marked with |del|.
 +-----------------------------------+-----------------------------------+
 |project_issue                      | Done                              |
 +-----------------------------------+-----------------------------------+
-|project_issue_sheet                | Nothing to do                     |
+|project_issue_sheet                | Done                              |
 +-----------------------------------+-----------------------------------+
 | |del| project_timesheet           | Done - Merged in hr_timesheet     |
 +-----------------------------------+-----------------------------------+
