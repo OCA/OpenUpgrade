@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="action_account_print_checks" model="ir.actions.server">
+    <field name="code">
+if records:
+    action = records.print_checks()
+            </field>
+  </record>
+</odoo>
