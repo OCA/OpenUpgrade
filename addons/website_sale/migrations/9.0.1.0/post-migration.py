@@ -32,3 +32,6 @@ def set_last_sale_on_partner(cr):
 def migrate(env, version):
     set_last_sale_on_partner(env.cr)
     openupgrade_90.convert_binary_field_to_attachment(env, attachment_fields)
+    openupgrade.load_data(
+        env.cr, 'website_sale', 'migrations/9.0.1.0/noupdate_changes.xml',
+    )
