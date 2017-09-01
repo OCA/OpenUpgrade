@@ -118,7 +118,13 @@ def get_records(addon_dir):
         for xml_file in manifest[key]:
             xml_path = xml_file.split('/')
             try:
-                tree = etree.parse(os.path.join(addon_dir, *xml_path))
+                # This is for a final correct pretty print
+                # Ref.: https://stackoverflow.com/a/7904066
+                # Also don't strip CDATA tags as needed for HTML content
+                parser = etree.XMLParser(
+                    remove_blank_text=True, strip_cdata=False,
+                )
+                tree = etree.parse(os.path.join(addon_dir, *xml_path), parser)
             except etree.XMLSyntaxError:
                 continue
             for data_node in tree.xpath("/openerp/data"):
