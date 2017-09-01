@@ -199,3 +199,6 @@ def migrate(env, version):
         'update product_pricelist_item set price_discount=-price_discount*100'
     )
     openupgrade_90.convert_binary_field_to_attachment(env, attachment_fields)
+    openupgrade.load_data(
+        env.cr, 'product', 'migrations/9.0.1.2/noupdate_changes.xml',
+    )
