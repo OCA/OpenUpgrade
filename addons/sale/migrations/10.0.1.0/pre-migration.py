@@ -154,7 +154,11 @@ def migrate_account_invoice_shipping_address(cr):
         cr, [(module_name, 'sale')], merge_modules=True,
     )
     openupgrade.rename_columns(
-        cr, [('address_shipping_id', 'partner_shipping_id')],
+        cr, {
+            'account_invoice': [
+                ('address_shipping_id', 'partner_shipping_id'),
+            ]
+        },
     )
 
 
