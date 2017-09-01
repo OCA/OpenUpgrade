@@ -33,7 +33,10 @@ product      / product.price.history    / company_id (many2one)         : NEW re
 product      / product.price.history    / cost (float)                  : NEW 
 product      / product.price.history    / datetime (datetime)           : NEW 
 product      / product.price.history    / product_template_id (many2one): NEW relation: product.template, required: required
-# OK new fields -> nothing to do
+# OK. Create history for each template by ORM (write again standard_price)
+# 1. Set history to the template company (if defined)
+# Note : For global products (company_id = False), product.price.history has missing records. (As in Odoo Core)
+# 2. Set history date to 1970-01-01
 
 product      / product.template         / attribute_line_ids (one2many) : NEW relation: product.attribute.line
 product      / product.product          / attribute_value_ids (many2many): NEW relation: product.attribute.value
