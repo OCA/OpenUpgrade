@@ -152,6 +152,9 @@ def main_analysis(old_update, old_noupdate, new_update, new_noupdate):
 
         element = etree.Element(
             "record", id=xml_id, model=record_new.attrib['model'])
+        # Add forcecreate attribute if exists
+        if record_new.attrib.get('forcecreate'):
+            element.attrib['forcecreate'] = record_new.attrib['forcecreate']
         record_old_dict = get_node_dict(record_old)
         record_new_dict = get_node_dict(record_new)
         for key in record_old_dict.keys():
@@ -201,12 +204,8 @@ def main(argv=None):
     Known issues:
     - Does not detect if a deleted value belongs to a field
       which has been removed.
-    - Ignores forcecreate=False. This hardly occurs, but you should
-      check manually for new data records with this tag. Note that
-      'True' is the default value for data elements without this tag.
     - Does not take csv data into account (obviously)
     - Is not able to check cross module data
-    - etree's pretty_print is not *that* pretty
     - Does not take translations into account (e.g. in the case of
       email templates)
     - Does not handle the shorthand records <menu>, <act_window> etc.,
