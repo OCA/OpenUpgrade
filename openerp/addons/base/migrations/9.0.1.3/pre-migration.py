@@ -63,6 +63,7 @@ def cleanup_modules(cr):
             ('account_journal_report_xls', 'account_journal_report'),
             ('account_financial_report_webkit_xls',
              'account_financial_report_qweb'),
+            ('account_tax_report_no_zeroes', 'account'),
             # from OCA/account_payment
             ('account_payment_term_multi_day',
              'account_payment_term_extension'),
