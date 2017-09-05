@@ -3,7 +3,7 @@ mass_mailing / mail.mass_mailing        / _inherits (False)             : NEW
 # Nothing to do: The inheritance by delegation relies on campaign_id fields, which was present already
 
 mass_mailing / mail.mass_mailing        / source_id (many2one)          : now required
-# Done: Fill empty records with a wildcard pre-created source
+# Done: Create one source per mass mailing as Odoo now works
 
 mass_mailing / mail.mass_mailing.contact / website_message_ids (one2many): DEL relation: mail.message
 # Nothing to do: mail thing
