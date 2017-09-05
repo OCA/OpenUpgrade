@@ -56,6 +56,8 @@ renamed_modules = {
     # OCA/l10n-spain
     'l10n_es_fiscal_year_closing': 'l10n_es_account_fiscal_year_closing',
     'account_balance_reporting_xls': 'account_balance_reporting_xlsx',
+    # core
+    'website_mail_group': 'website_mail_channel',
 }
 
 renamed_models = {

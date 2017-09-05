@@ -618,9 +618,9 @@ missing in the new release are marked with |del|.
 +----------------------------------------+------------------------------------------+
 |website_mail                            | Nothing to do                            |
 +----------------------------------------+------------------------------------------+
-| |new| website_mail_channel             |                                          |
+| |new| website_mail_channel             | Done - Renamed from website_mail_group   |
 +----------------------------------------+------------------------------------------+
-| |del| website_mail_group               |                                          |
+| |del| website_mail_group               | Done - Renamed to website_mail_channel   |
 +----------------------------------------+------------------------------------------+
 | |new| website_mass_mailing             |                                          |
 +----------------------------------------+------------------------------------------+
