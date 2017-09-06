@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record id="mt_salesteam_lead" model="mail.message.subtype">
+      <field name="res_model">crm.team</field>
+      <field name="relation_field">team_id</field>
+    </record>
+    <record id="crm_rule_personal_lead_report" model="ir.rule">
+      <field ref="model_crm_opportunity_report" name="model_id"/>
+    </record>
+    <record id="mt_salesteam_lead_stage" model="mail.message.subtype">
+      <field name="relation_field">team_id</field>
+      <field name="res_model">crm.team</field>
+    </record>
+    <record id="mt_salesteam_lead_lost" model="mail.message.subtype">
+      <field name="res_model">crm.team</field>
+      <field name="relation_field">team_id</field>
+    </record>
+    <record id="crm_rule_all_lead_report" model="ir.rule">
+      <field ref="model_crm_opportunity_report" name="model_id"/>
+    </record>
+    <record id="mt_salesteam_lead_won" model="mail.message.subtype">
+      <field name="relation_field">team_id</field>
+      <field name="res_model">crm.team</field>
+    </record>
+    <record id="mail_alias_lead_info" model="mail.alias">
+      <field name="alias_parent_model_id" ref="model_crm_team"/>
+    </record>
+    <record id="email_template_opportunity_reminder_mail" model="mail.template">
+      <field name="body_html"><![CDATA[<p>This opportunity did not have any activity since at least 5 days. Here are some details:</p>
+<ul>
+<li>Name: ${object.name}</li>
+<li>ID: ${object.id}</li>
+<li>Description: ${object.description}</li>
+</ul>]]></field>
+    </record>
+  </data>
+</openerp>

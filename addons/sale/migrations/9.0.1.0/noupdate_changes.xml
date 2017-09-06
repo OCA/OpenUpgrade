@@ -1,15 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
 <openerp>
   <data>
-    <!--Changes in noupdate data-->
     <record id="mt_salesteam_order_sent" model="mail.message.subtype">
-        <field name="relation_field">team_id</field>
-        <field name="res_model">crm.team</field>
+      <field name="relation_field">team_id</field>
+      <field name="res_model">crm.team</field>
     </record>
     <record id="mt_salesteam_order_confirmed" model="mail.message.subtype">
-        <field name="relation_field">team_id</field>
-        <field name="res_model">crm.team</field>
+      <field name="relation_field">team_id</field>
+      <field name="res_model">crm.team</field>
     </record>
   </data>
 </openerp>
-

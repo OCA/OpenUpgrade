@@ -1,28 +1,32 @@
 <?xml version='1.0' encoding='utf-8'?>
 <openerp>
   <data>
-    <!--Changes in noupdate data-->
     <record id="mt_issue_new" model="mail.message.subtype">
-        <field name="description">Issue opened</field>
-        <field name="name">Issue Opened</field>
+      <field name="description">Issue opened</field>
+      <field name="name">Issue Opened</field>
     </record>
     <record id="mt_project_issue_new" model="mail.message.subtype">
-        <field name="name">Issue Opened</field>
+      <field name="name">Issue Opened</field>
     </record>
     <record id="mt_project_issue_blocked" model="mail.message.subtype">
-        <field name="sequence">21</field>
+      <field name="sequence">21</field>
+      <field name="default" eval="False"/>
+    </record>
+    <record id="mt_project_issue_stage" model="mail.message.subtype">
+      <field name="default" eval="False"/>
     </record>
     <record id="issue_user_rule" model="ir.rule">
-        <field name="domain_force">['|',
+      <field name="domain_force">['|',
                                             ('project_id.privacy_visibility', 'in', ['portal', 'employees']),
                                             '&amp;',
                                                 ('project_id.privacy_visibility', '=', 'followers'),
                                                 ('message_partner_ids', 'in', [user.partner_id.id]),
                                         ]</field>
-        <field name="name">Project/Issue: employees: portal, employee or (followers and following)</field>
+      <field name="name">Project/Issue: employees: portal, employee or (followers and following)</field>
     </record>
     <record id="mt_issue_ready" model="mail.message.subtype">
-        <field name="name">Issue Ready</field>
+      <field name="description">Issue ready for next Stage</field>
+      <field name="name">Issue Ready</field>
     </record>
   </data>
 </openerp>

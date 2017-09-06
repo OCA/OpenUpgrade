@@ -662,3 +662,6 @@ def migrate(env, version):
     reset_blacklist_field_recomputation()
     fill_move_line_invoice(cr)
     merge_invoice_journals(env)
+    openupgrade.load_data(
+        cr, 'account', 'migrations/9.0.1.1/noupdate_changes.xml',
+    )
