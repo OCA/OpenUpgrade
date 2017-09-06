@@ -10,4 +10,4 @@ class TestMassMailing(TransactionCase):
     def test_mass_mailing_source_id(self):
         mm = self.env.ref('mass_mailing.mass_mail_1')
         self.assertTrue(mm.source_id)
-        self.assertEqual(mm.source_id.name, "OpenUpgrade wildcard source")
+        self.assertEqual(mm.source_id.name, u"First Newsletter")
