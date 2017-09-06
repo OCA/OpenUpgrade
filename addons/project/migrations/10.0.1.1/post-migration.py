@@ -15,4 +15,5 @@ def migrate(env, version):
     )
     openupgrade.load_data(
         env.cr, 'project', 'migrations/10.0.1.1/noupdate_changes.xml',
+        mode='update',
     )
