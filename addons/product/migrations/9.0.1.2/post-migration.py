@@ -186,6 +186,46 @@ def map_product_template_type(cr):
         table='product_template', write='sql')
 
 
+def update_product_supplierinfo(env):
+
+    env.cr.execute("""
+        SELECT psi.id, psi.name, psi.product_name, psi.product_code,
+        psi.sequence, ppi.min_quantity, ppi.price,  psi.product_tmpl_id,
+        psi.delay, psi.company_id
+        FROM product_supplierinfo AS psi
+        INNER JOIN pricelist_partnerinfo AS ppi
+        ON ppi.suppinfo_id = psi.id
+    """)
+    to_delete_ids = []
+    for id, name, product_name, product_code, sequence, min_quantity, price, \
+            product_tmpl_id, delay, company_id in env.cr.fetchall():
+        to_delete_ids.append(id)
+        env.cr.execute("""
+            SELECT currency_id
+            FROM res_company
+            WHERE id = %s
+        """ % company_id)
+        currency_id = env.cr.fetchall()[0]
+
+        env['product.supplierinfo'].create({
+                'name': name,
+                'product_name': product_name,
+                'product_code': product_code,
+                'sequence': sequence,
+                'min_qty': min_quantity,
+                'price': price,
+                'product_tmpl_id': product_tmpl_id,
+                'delay': delay,
+                'company_id': company_id,
+                'currency_id': currency_id
+        })
+    if to_delete_ids:
+        env.cr.execute("""
+            DELETE FROM product_supplierinfo
+            WHERE id IN %s
+        """, (tuple(to_delete_ids),))
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     map_base(env.cr)
@@ -199,3 +239,4 @@ def migrate(env, version):
         'update product_pricelist_item set price_discount=-price_discount*100'
     )
     openupgrade_90.convert_binary_field_to_attachment(env, attachment_fields)
+    update_product_supplierinfo(env)
