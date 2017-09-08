@@ -58,6 +58,8 @@ renamed_modules = {
     'account_balance_reporting_xls': 'account_balance_reporting_xlsx',
     # core
     'website_mail_group': 'website_mail_channel',
+    # stock-logistics-barcode
+    'product_barcode_generator': 'barcodes_generator_product',
 }
 
 renamed_models = {
