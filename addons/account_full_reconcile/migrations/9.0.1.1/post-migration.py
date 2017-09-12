@@ -11,6 +11,29 @@ from openerp.tools.float_utils import float_round, float_is_zero
 _logger = logging.getLogger(__name__)
 
 
+def assure_reconcile_ref_integrity(cr):
+    """Triggers for reconcile_ref have failed across v8 history, and there
+    are inconsistencies of journal items reconciled, but without reconcile
+    reference. With this, we assure that all are filled before migrating
+    the reconciles."""
+    openupgrade.logged_query(
+        cr,
+        """UPDATE account_move_line aml
+        SET reconcile_ref = amr.name
+        FROM account_move_reconcile amr
+        WHERE reconcile_ref IS NULL
+        AND aml.reconcile_id = amr.id;"""
+    )
+    openupgrade.logged_query(
+        cr,
+        """UPDATE account_move_line aml
+        SET reconcile_ref = amr.name
+        FROM account_move_reconcile amr
+        WHERE reconcile_ref IS NULL
+        AND aml.reconcile_partial_id = amr.id;"""
+    )
+
+
 def migrate_reconcile(cr):
     """Migrate account.move.reconcile to account.partial.reconcile and
     account.full.reconcile.
@@ -481,5 +504,6 @@ def invoice_recompute(env):
 def migrate(env, version):
     """Thanks to no_version migration will be run on install as well."""
     cr = env.cr
+    assure_reconcile_ref_integrity(cr)
     migrate_reconcile(cr)
     invoice_recompute(env)
