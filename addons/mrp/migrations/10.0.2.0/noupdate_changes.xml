@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="module_install_notification" model="mail.message">
+    <field name="body"><![CDATA[<p>Manage your manufacturing process with Odoo by defining your bills of materials (BoM), routings and work centers.</p><p>
+This application supports complete integration and production scheduling for stockable goods, consumables, and services.</p>]]></field>
+  </record>
+  <record id="sequence_mrp_prod" model="ir.sequence">
+    <field name="prefix">MO/</field>
+  </record>
+</odoo>
