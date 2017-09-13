@@ -570,6 +570,20 @@ def merge_invoice_journals(env, refund_journal_ids=None, journal_mapping=None):
                 })
 
 
+def update_account_invoice_date(cr):
+    """Update invoice date from the period last date"""
+
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE account_invoice ai 
+        SET date = ap.date_stop 
+        FROM account_period ap 
+        WHERE ai.period_id = ap.id AND ai.date is null;
+        """
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -662,6 +676,7 @@ def migrate(env, version):
     reset_blacklist_field_recomputation()
     fill_move_line_invoice(cr)
     merge_invoice_journals(env)
+    update_account_invoice_date(cr)
     openupgrade.load_data(
         cr, 'account', 'migrations/9.0.1.1/noupdate_changes.xml',
     )
