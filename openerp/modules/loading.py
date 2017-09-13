@@ -223,6 +223,8 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
             # Set new modules and dependencies
             modobj.write(cr, SUPERUSER_ID, [module_id], {'state': 'installed', 'latest_version': ver})
 
+            package.load_state = package.state
+            package.load_version = package.installed_version
             package.state = 'installed'
             for kind in ('init', 'demo', 'update'):
                 if hasattr(package, kind):
@@ -411,6 +413,11 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
 
         registry.setup_models(cr)
 
+        # STEP 3.5: execute migration end-scripts
+        migrations = openerp.modules.migration.MigrationManager(cr, graph)
+        for package in graph:
+            migrations.migrate_module(package, 'end')
+
         # STEP 4: Finish and cleanup installations
         if processed_modules:
             cr.execute("""select model,name from ir_model where id NOT IN (select distinct model_id from ir_model_access)""")
@@ -430,7 +437,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
             for (model,) in cr.fetchall():
                 if model in registry:
                     registry[model]._check_removed_columns(cr, log=True)
-                else:
+                elif _logger.isEnabledFor(logging.INFO):    # more an info that a warning...
                     _logger.warning("Model %s is declared but cannot be loaded! (Perhaps a module was partially removed or renamed)", model)
 
             # Cleanup orphan records
@@ -439,11 +446,30 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
             # OpenUpgrade: call deferred migration steps
             if update_module:
                 deferred_90.migrate_deferred(cr, registry)
+            # OpenUpgrade edit end
 
         for kind in ('init', 'demo', 'update'):
             tools.config[kind] = {}
 
         cr.commit()
+
+        # OpenUpgrade: run deferred tests
+        tests_dir = os.path.join(
+            os.path.dirname(os.path.abspath(deferred_90.__file__)),
+            'tests_deferred')
+        if update_module and os.environ.get('OPENUPGRADE_TESTS') and os.path.exists(
+                tests_dir):
+            import unittest
+            threading.currentThread().testing = True
+            tests = unittest.defaultTestLoader.discover(tests_dir, top_level_dir=tests_dir)
+            report.record_result(
+                unittest.TextTestRunner(
+                    verbosity=2,
+                    stream=openerp.modules.module.TestStream('deferred'),
+                ).run(tests).wasSuccessful()
+            )
+            threading.currentThread().testing = False
+        # OpenUpgrade edit end
 
         # STEP 5: Uninstall modules to remove
         if update_module:
@@ -470,12 +496,9 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         # STEP 6: verify custom views on every model
         if update_module:
             Views = registry['ir.ui.view']
-            custom_view_test = True
             for model in registry.models.keys():
                 if not Views._validate_custom_views(cr, SUPERUSER_ID, model):
-                    custom_view_test = False
-                    _logger.error('invalid custom view(s) for model %s', model)
-            report.record_result(custom_view_test)
+                    _logger.warning('Invalid custom view(s) for model %s', model)
 
         if report.failures:
             _logger.error('At least one test failed when loading the modules.')

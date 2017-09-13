@@ -49,7 +49,10 @@ def recreate_analytic_lines(cr):
     """
     cr.execute("ALTER TABLE account_analytic_line ADD task_id integer")
     cr.execute("ALTER TABLE account_analytic_line ADD work_id integer")
-    cr.execute("ALTER TABLE account_analytic_line ADD is_timesheet boolean")
+    if not openupgrade.column_exists(cr, 'account_analytic_line',
+                                     'is_timesheet'):
+        cr.execute(
+            "ALTER TABLE account_analytic_line ADD is_timesheet boolean")
     # TODO: Calculate line cost according employee data
     openupgrade.logged_query(
         cr,

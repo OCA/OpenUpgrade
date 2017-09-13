@@ -105,6 +105,16 @@ def update_product_pricelist_item(cr):
         UPDATE product_pricelist_item
         SET compute_price = 'formula'""")
 
+    # but ones that arguably are meant to be fixed prices should be fixed
+    openupgrade.logged_query(
+        cr,
+        "update product_pricelist_item "
+        "set compute_price='fixed', fixed_price=price_surcharge "
+        "where compute_price='formula' and price_discount=100 and "
+        "price_surcharge > 0 and coalesce(price_min_margin, 0)=0 and "
+        "coalesce(price_max_margin, 0)=0"
+    )
+
 
 def update_product_template(cr):
 
@@ -199,3 +209,6 @@ def migrate(env, version):
         'update product_pricelist_item set price_discount=-price_discount*100'
     )
     openupgrade_90.convert_binary_field_to_attachment(env, attachment_fields)
+    openupgrade.load_data(
+        env.cr, 'product', 'migrations/9.0.1.2/noupdate_changes.xml',
+    )

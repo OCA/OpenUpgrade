@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+    <record id="categ_claim3" model="crm.claim.category">
+      <field name="section_id"/>
+      <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+      <field name="team_id" ref="sales_team.team_sales_department"/>
+    </record>
+    <record id="categ_claim2" model="crm.claim.category">
+      <field name="section_id"/>
+      <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+      <field name="team_id" ref="sales_team.team_sales_department"/>
+    </record>
+    <record id="categ_claim1" model="crm.claim.category">
+      <field name="section_id"/>
+      <field name="object_id" search="[('model','=','crm.claim')]" model="ir.model"/>
+      <field name="team_id" ref="sales_team.team_sales_department"/>
+    </record>
+  </data>
+</openerp>

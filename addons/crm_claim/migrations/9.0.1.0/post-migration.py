@@ -28,3 +28,6 @@ def migrate(cr, version):
         "WHERE res_id = ccc.lead_tag_id "
         "AND module = 'crm_claim' "
         "AND imd.name LIKE 'categ_claim%%'")
+    openupgrade.load_data(
+        cr, 'crm_claim', 'migrations/9.0.1.0/noupdate_changes.xml',
+    )

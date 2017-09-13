@@ -23,17 +23,6 @@ column_renames = {
     'res_partner_bank': [
         ('bank', 'bank_id'),
     ],
-    'res_partner': [
-        ('image', None),
-        ('image_medium', None),
-        ('image_small', None),
-    ],
-    'res_country': [
-        ('image', None),
-    ],
-    'ir_ui_menu': [
-        ('web_icon_data', None),
-    ],
 }
 
 
@@ -57,8 +46,11 @@ def cleanup_modules(cr):
     other modules."""
     openupgrade.update_module_names(
         cr, [
+            ('account_followup', 'account_credit_control'),
             ('contacts', 'mail'),
             ('marketing_crm', 'crm'),
+            ('email_template', 'mail'),  # mail_template class
+            ('procurement_jit_stock', 'procurement_jit'),
             ('web_gantt', 'web'),
             ('web_graph', 'web'),
             ('web_kanban_sparkline', 'web'),
@@ -67,6 +59,19 @@ def cleanup_modules(cr):
             # from OCA/account-financial-tools - Features changed
             ('account_move_line_no_default_search', 'account'),
             ('account_tax_chart_interval', 'account'),
+            # from OCA/account-financial-reporting
+            ('account_journal_report_xls', 'account_journal_report'),
+            ('account_financial_report_webkit_xls',
+             'account_financial_report_qweb'),
+            ('account_tax_report_no_zeroes', 'account'),
+            # from OCA/account_payment
+            ('account_payment_term_multi_day',
+             'account_payment_term_extension'),
+            # from OCA/bank-statement-reconcile
+            ('account_easy_reconcile', 'account_mass_reconcile'),
+            ('account_advanced_reconcile', 'account_mass_reconcile'),
+            # from OCA/connector-telephony
+            ('asterisk_click2dial_crm', 'crm_phone'),
             # from OCA/server-tools - features included now in core
             ('base_concurrency', 'base'),
             ('base_debug4all', 'base'),
@@ -75,12 +80,23 @@ def cleanup_modules(cr):
             # from OCA/social - included in core
             ('website_mail_snippet_table_edit', 'mass_mailing'),
             ('mass_mailing_sending_queue', 'mass_mailing'),
+            ('website_mail_snippet_bg_color',
+             'web_editor_background_color'), # this one now located in OCA/web
             # from OCA/crm - included in core
             ('crm_lead_lost_reason', 'crm'),
             # from OCA/sale-workflow - included in core
             ('sale_order_back2draft', 'sale'),
+            ('partner_prepayment', 'sale_delivery_block'),
+            ('sale_fiscal_position_update', 'sale'),
+            ('sale_documents_comments', 'sale_comment_propagation'),
             # from OCA/bank-payment
             ('account_payment_sale_stock', 'account_payment_sale'),
+            # from OCA/website
+            ('website_event_register_free', 'website_event'),
+            ('website_event_register_free_with_sale', 'website_event_sale'),
+            ('website_sale_collapse_categories', 'website_sale'),
+            # OCA/reporting-engine
+            ('report_xls', 'report_xlsx'),
         ], merge_modules=True,
     )
 

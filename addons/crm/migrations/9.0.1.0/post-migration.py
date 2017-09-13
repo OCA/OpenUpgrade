@@ -40,3 +40,6 @@ def migrate_phonecalls(env):
 def migrate(cr, version):
     env = api.Environment(cr, SUPERUSER_ID, {})
     migrate_phonecalls(env)
+    openupgrade.load_data(
+        cr, 'crm', 'migrations/9.0.1.0/noupdate_changes.xml',
+    )

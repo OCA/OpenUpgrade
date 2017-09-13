@@ -729,9 +729,11 @@ class crm_lead(format_address, osv.osv):
         return True
 
     def _lead_create_contact(self, cr, uid, lead, name, is_company, parent_id=False, context=None):
+        if context is None:
+            context = {}
         partner = self.pool.get('res.partner')
         vals = {'name': name,
-            'user_id': lead.user_id.id,
+            'user_id': context.get('default_user_id') or lead.user_id.id,
             'comment': lead.description,
             'team_id': lead.team_id.id or False,
             'parent_id': parent_id,
@@ -976,9 +978,9 @@ Update your business card, phone book, social media,... Send an email right now 
 
         lead = self.browse(cr, uid, ids[0], context=context)
 
-        won_action = self._notification_link_helper(cr, uid, ids, 'method', context=context, method='case_mark_won')
-        lost_action = self._notification_link_helper(cr, uid, ids, 'method', context=context, method='case_mark_lost')
-        convert_action = self._notification_link_helper(cr, uid, ids, 'method', context=context, method='convert_opportunity', partner_id=lead.partner_id.id)
+        won_action = self._notification_link_helper(cr, uid, ids, 'controller', controller='/lead/case_mark_won', context=context)
+        lost_action = self._notification_link_helper(cr, uid, ids, 'controller', controller='/lead/case_mark_lost', context=context)
+        convert_action = self._notification_link_helper(cr, uid, ids, 'controller', controller='/lead/convert', context=context)
 
         if lead.type == 'lead':
             res['group_sale_salesman'] = {

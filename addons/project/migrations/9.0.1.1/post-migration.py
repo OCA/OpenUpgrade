@@ -43,3 +43,6 @@ def migrate(cr, version):
         cr, 'project_task', openupgrade.get_legacy_name('description'),
         'description'
     )
+    openupgrade.load_data(
+        cr, 'project', 'migrations/9.0.1.1/noupdate_changes.xml',
+    )

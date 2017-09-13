@@ -25,11 +25,6 @@ import werkzeug.utils
 import werkzeug.wrappers
 from openerp.api import Environment
 
-try:
-    import xlwt
-except ImportError:
-    xlwt = None
-
 import openerp
 import openerp.modules.registry
 from openerp.addons.base.ir.ir_qweb import AssetsBundle, QWebTemplateNotFound
@@ -37,9 +32,9 @@ from openerp.modules import get_resource_path
 from openerp.tools import topological_sort
 from openerp.tools.translate import _
 from openerp.tools import ustr
-from openerp.tools.misc import str2bool
+from openerp.tools.misc import str2bool, xlwt
 from openerp import http
-from openerp.http import request, serialize_exception as _serialize_exception
+from openerp.http import request, serialize_exception as _serialize_exception, content_disposition
 from openerp.exceptions import AccessError
 
 _logger = logging.getLogger(__name__)
@@ -56,6 +51,8 @@ env.filters["json"] = json.dumps
 
 # 1 week cache for asset bundles as advised by Google Page Speed
 BUNDLE_MAXAGE = 60 * 60 * 24 * 7
+
+DBNAME_PATTERN = '^[a-zA-Z0-9][a-zA-Z0-9_.-]+$'
 
 #----------------------------------------------------------
 # OpenERP Web helpers
@@ -103,7 +100,7 @@ def ensure_db(redirect='/web/database/selector'):
     # If the db is taken out of a query parameter, it will be checked against
     # `http.db_filter()` in order to ensure it's legit and thus avoid db
     # forgering that could lead to xss attacks.
-    db = request.params.get('db')
+    db = request.params.get('db') and request.params.get('db').strip()
 
     # Ensure db is legit
     if db and db not in http.db_filter([db]):
@@ -420,10 +417,6 @@ def xml2json_from_elementtree(el, preserve_whitespaces=False):
     res["children"] = kids
     return res
 
-def content_disposition(filename):
-    return request.registry['ir.http'].content_disposition(filename)
-
-
 def binary_content(xmlid=None, model='ir.attachment', id=None, field='datas', unique=False, filename=None, filename_field='datas_fname', download=False, mimetype=None, default_mimetype='application/octet-stream', env=None):
     return request.registry['ir.http'].binary_content(
         xmlid=xmlid, model=model, id=id, field=field, unique=unique, filename=filename, filename_field=filename_field,
@@ -639,6 +632,7 @@ class Database(http.Controller):
         d['list_db'] = openerp.tools.config['list_db']
         d['langs'] = openerp.service.db.exp_list_lang()
         d['countries'] = openerp.service.db.exp_list_countries()
+        d['pattern'] = DBNAME_PATTERN
         # databases list
         d['databases'] = []
         try:
@@ -660,10 +654,12 @@ class Database(http.Controller):
     @http.route('/web/database/create', type='http', auth="none", methods=['POST'], csrf=False)
     def create(self, master_pwd, name, lang, password, **post):
         try:
+            if not re.match(DBNAME_PATTERN, name):
+                raise Exception(_('Invalid database name. Only alphanumerical characters, underscore, hyphen and dot are allowed.'))
             # country code could be = "False" which is actually True in python
             country_code = post.get('country_code') or False
-            request.session.proxy("db").create_database(master_pwd, name, bool(post.get('demo')), lang, password, post.get('login'), country_code)
-            request.session.authenticate(name, 'admin', password)
+            request.session.proxy("db").create_database(master_pwd, name, bool(post.get('demo')), lang, password, post['login'], country_code)
+            request.session.authenticate(name, post['login'], password)
             return http.local_redirect('/web/')
         except Exception, e:
             error = "Database creation error: %s" % e
@@ -672,6 +668,8 @@ class Database(http.Controller):
     @http.route('/web/database/duplicate', type='http', auth="none", methods=['POST'], csrf=False)
     def duplicate(self, master_pwd, name, new_name):
         try:
+            if not re.match(DBNAME_PATTERN, new_name):
+                raise Exception(_('Invalid database name. Only alphanumerical characters, underscore, hyphen and dot are allowed.'))
             request.session.proxy("db").duplicate_database(master_pwd, name, new_name)
             return http.local_redirect('/web/database/manager')
         except Exception, e:
@@ -956,6 +954,11 @@ class Binary(http.Controller):
         addons_path = http.addons_manifest['web']['addons_path']
         return open(os.path.join(addons_path, 'web', 'static', 'src', 'img', image), 'rb').read()
 
+    def force_contenttype(self, headers, contenttype='image/png'):
+        dictheaders = dict(headers)
+        dictheaders['Content-Type'] = contenttype
+        return dictheaders.items()
+
     @http.route(['/web/content',
         '/web/content/<string:xmlid>',
         '/web/content/<string:xmlid>/<string:filename>',
@@ -1014,8 +1017,15 @@ class Binary(http.Controller):
             if height > 500:
                 height = 500
             content = openerp.tools.image_resize_image(base64_source=content, size=(width or None, height or None), encoding='base64', filetype='PNG')
+            # resize force png as filetype
+            headers = self.force_contenttype(headers, contenttype='image/png')
 
-        image_base64 = content and base64.b64decode(content) or self.placeholder()
+        if content:
+            image_base64 = base64.b64decode(content)
+        else:
+            image_base64 = self.placeholder(image='placeholder.png')  # could return (contenttype, content) in master
+            headers = self.force_contenttype(headers, contenttype='image/png')
+
         headers.append(('Content-Length', len(image_base64)))
         response = request.make_response(image_base64, headers)
         response.status_code = status
@@ -1330,7 +1340,7 @@ class ExportFormat(object):
 
         Model = request.session.model(model)
         context = dict(request.context or {}, **params.get('context', {}))
-        ids = ids or Model.search(domain, 0, False, False, context=context)
+        ids = ids or Model.search(domain, offset=0, limit=False, order=False, context=context)
 
         if not request.env[model]._is_an_ordinary_table():
             fields = [field for field in fields if field['name'] != 'id']
