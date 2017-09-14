@@ -518,12 +518,18 @@ def merge_invoice_journals(env, refund_journal_ids=None, journal_mapping=None):
     }
     if journal_mapping is None:
         journal_mapping = {}
+    # Add a column for storing target journal
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE account_journal ADD %s INTEGER" % (
+            openupgrade.get_legacy_name('merged_journal_id')
+        )
+    )
     for journal_type, new_journal_type in journal_type_mapping.iteritems():
         query = """
             SELECT id
             FROM account_journal
-            WHERE openupgrade_legacy_9_0_type = %s
-            """
+            WHERE %s = %%s
+            """ % openupgrade.get_legacy_name('type')
         query_args = [journal_type, ]
         if refund_journal_ids:
             query += " AND id IN %s"
@@ -561,7 +567,19 @@ def merge_invoice_journals(env, refund_journal_ids=None, journal_mapping=None):
                     """ % table,
                     (normal_journal.id, refund_journal.id)
                 )
-            refund_journal.show_on_dashboard = False
+            # for avoiding to be selected first when invoicing
+            refund_journal.write({
+                'show_on_dashboard': False,
+                'sequence': 99999,
+            })
+            # update target journal in merged refund journal
+            env.cr.execute(
+                """UPDATE account_journal
+                SET %s = %%s
+                WHERE id = %%s
+                """ % openupgrade.get_legacy_name('merged_journal_id'),
+                (normal_journal.id, refund_journal.id)
+            )
             if refund_journal.sequence_id != normal_journal.sequence_id:
                 # Fill refund sequence
                 normal_journal.write({
