@@ -97,6 +97,8 @@ def cleanup_modules(cr):
             ('website_sale_collapse_categories', 'website_sale'),
             # OCA/reporting-engine
             ('report_xls', 'report_xlsx'),
+            # OCA/l10n-spain
+            ('l10n_es_account_financial_report', 'account_journal_report'),
         ], merge_modules=True,
     )
 
