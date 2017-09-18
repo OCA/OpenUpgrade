@@ -571,16 +571,38 @@ def merge_invoice_journals(env, refund_journal_ids=None, journal_mapping=None):
 
 
 def update_account_invoice_date(cr):
-    """Update invoice date from the period last date"""
+    """Update invoice date from the period last date.
 
+    NOTE: Invoices without linked journal entry won't be updated because they
+    are supposed to be in draft or cancel state, so the date will be filled on
+    normal validation workflow.
+    """
+    # Invoices with journal entries whose dates are in the same period
     openupgrade.logged_query(
         cr,
         """
-        UPDATE account_invoice ai 
-        SET date = ap.date_stop 
-        FROM account_period ap 
-        WHERE ai.period_id = ap.id AND ai.date is null;
+        UPDATE account_invoice ai
+        SET date = am.date
+        FROM account_period ap,
+             account_move am
+        WHERE am.period_id = ap.id
+            AND am.id = ai.move_id
+            AND ai.date IS NULL
+            AND am.date >= ap.date_start
+            AND am.date <= ap.date_stop"""
+    )
+    # Invoices with journal entries whose dates are outside of forced period
+    openupgrade.logged_query(
+        cr,
         """
+        UPDATE account_invoice ai
+        SET date = ap.date_start
+        FROM account_period ap,
+             account_move am
+        WHERE am.period_id = ap.id
+            AND am.id = ai.move_id
+            AND ai.date IS NULL
+            AND (am.date <= ap.date_start OR am.date >= ap.date_stop)"""
     )
 
 
