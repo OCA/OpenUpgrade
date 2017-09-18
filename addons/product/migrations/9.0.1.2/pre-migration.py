@@ -112,3 +112,8 @@ def migrate(cr, version):
     cr.execute("update product_template set state=NULL where state=''")
 
     map_product_template_type(cr)
+
+    # disable purchase price lists
+    cr.execute(
+        "update product_pricelist set active=False where type='purchase'"
+    )
