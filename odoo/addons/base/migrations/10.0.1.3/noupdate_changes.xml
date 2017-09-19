@@ -9,6 +9,17 @@
     <record id="tj" model="res.country">
         <field name="currency_id" ref="TJS"/>
     </record>
+    <record id="HUF" model="res.currency">
+        <field name="rounding">1.00</field>
+    </record>
+    <!--<record id="user_root" model="res.users">-->
+        <!--<field name="signature"><![CDATA[<span>&#45;&#45; <br/>-->
+<!--Administrator</span>]]></field>-->
+    <!--</record>-->
+    <record id="PEN" model="res.currency">
+        <field name="symbol">S/</field>
+        <field name="position">before</field>
+    </record>
     <record id="TRY" model="res.currency">
         <field name="symbol">₺</field>
     </record>
