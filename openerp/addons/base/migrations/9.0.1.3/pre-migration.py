@@ -71,6 +71,7 @@ def cleanup_modules(cr):
             # from OCA/bank-statement-reconcile
             ('account_easy_reconcile', 'account_mass_reconcile'),
             ('account_advanced_reconcile', 'account_mass_reconcile'),
+            ('account_bank_statement_period_from_line_date', 'account'),
             # from OCA/connector-telephony
             ('asterisk_click2dial_crm', 'crm_phone'),
             # from OCA/server-tools - features included now in core
