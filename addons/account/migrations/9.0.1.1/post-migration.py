@@ -624,6 +624,31 @@ def update_account_invoice_date(cr):
     )
 
 
+def update_move_date(cr):
+    """Update journal entries date when the date is not inside the indicated
+    period for respecting the accounting period on v9.
+    """
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE account_move am
+        SET date = ap.date_start
+        FROM account_period ap
+        WHERE am.period_id = ap.id
+            AND (am.date <= ap.date_start OR am.date >= ap.date_stop)"""
+    )
+    # Synchronize move line dates afterwards
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE account_move_line aml
+        SET date = am.date
+        FROM account_move am
+        WHERE am.id = aml.move_id
+            AND am.date != aml.date"""
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -717,6 +742,7 @@ def migrate(env, version):
     fill_move_line_invoice(cr)
     merge_invoice_journals(env)
     update_account_invoice_date(cr)
+    update_move_date(cr)
     openupgrade.load_data(
         cr, 'account', 'migrations/9.0.1.1/noupdate_changes.xml',
     )
