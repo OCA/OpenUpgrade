@@ -101,6 +101,8 @@ def cleanup_modules(cr):
             ('report_xls', 'report_xlsx'),
             # OCA/l10n-spain
             ('l10n_es_account_financial_report', 'account_journal_report'),
+            # OCA/stock-logistics-workflow
+            ('stock_dropshipping_dual_invoice', 'stock_dropshipping'),
         ], merge_modules=True,
     )
 
