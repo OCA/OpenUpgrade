@@ -2,7 +2,9 @@
 # © 2016 Sylvain LE GAL <https://twitter.com/legalsylvain>
 # © 2016 Serpent Consulting Services Pvt. Ltd.
 # © 2016 Eficent Business and IT Consulting Services S.L.
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
 from openupgradelib import openupgrade
 
 column_renames = {
@@ -41,6 +43,9 @@ column_copies = {
         ('type_tax_use', None, None),
         ('type', None, None),
     ],
+    'account_invoice': [
+        ('reference', None, None),
+    ]
 }
 
 table_renames = [
@@ -212,6 +217,31 @@ def blacklist_field_recomputation(env):
     ]
 
 
+def merge_supplier_invoice_refs(env):
+    """In v8, there are 2 fields for writing references:
+    supplier_invoice_number and reference. Now in v9 there's only the last one.
+    We merge the first field content in the second one for avoiding data loss.
+    Note that previously the `reference` field has been copied for preserving
+    the original field contents.
+    """
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_invoice
+        SET reference = supplier_invoice_number || ' - ' || reference
+        WHERE type IN ('in_invoice', 'in_refund')
+            AND reference IS NOT NULL
+            AND supplier_invoice_number IS NOT NULL"""
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_invoice
+        SET reference = supplier_invoice_number
+        WHERE type IN ('in_invoice', 'in_refund')
+            AND reference IS NULL
+            AND supplier_invoice_number IS NOT NULL"""
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -230,3 +260,4 @@ def migrate(env, version):
     map_account_tax_template_type(cr)
     remove_account_moves_from_special_periods(cr)
     blacklist_field_recomputation(env)
+    merge_supplier_invoice_refs(env)
