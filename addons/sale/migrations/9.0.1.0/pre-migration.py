@@ -65,8 +65,9 @@ def prepopulate_fields(cr):
         with line2qty_invoiced(id, qty_invoiced) as (
             select l.id, sum(
                 case
-                    when i.type='out_invoice' then il.quantity
-                    when i.type='out_refund' then -il.quantity
+                    when i.state != 'cancel' and i.type='out_invoice' then il.quantity
+                    when i.state != 'cancel' and i.type='out_refund' then -il.quantity
+                    else 0
                 end * uom_invoice.factor / uom_sale.factor
             ) s
             from sale_order_line l
