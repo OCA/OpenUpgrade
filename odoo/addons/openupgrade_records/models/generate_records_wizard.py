@@ -53,4 +53,17 @@ class GenerateWizard(models.TransientModel):
                 {'state': 'to install'})
         self.env.cr.commit()
         Registry.new(self.env.cr.dbname, update_module=True)
+
+        # Set noupdate property from ir_model_data
+        self.env.cr.execute(
+            """ UPDATE openupgrade_record our
+            SET noupdate = imd.noupdate
+            FROM ir_model_data imd
+            WHERE our.type = 'xmlid'
+                AND our.model = imd.model
+                AND our.name = imd.module || '.' || imd.name
+            """)
+        self.env.invalidate([
+            (self.env['openupgrade.record']._fields['noupdate'], None),
+        ])
         return self.write({'state': 'ready'})

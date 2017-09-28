@@ -33,6 +33,7 @@ class Record(models.Model):
     attribute_ids = fields.One2many(
             'openupgrade.attribute', 'record_id',
             readonly=True)
+    noupdate = fields.Boolean(readonly=True)
 
     @api.model
     def field_dump(self):

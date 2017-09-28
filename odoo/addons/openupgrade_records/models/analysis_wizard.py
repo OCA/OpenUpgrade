@@ -64,6 +64,7 @@ class AnalysisWizard(models.TransientModel):
         res = compare.compare_sets(remote_records, local_records)
 
         # Retrieve xml id representations and compare
+        # In version 11, add 'noupdate' as a field to retrieve and compare
         fields = ['module', 'model', 'name']
         local_xml_records = [
             dict([(field, record[field]) for field in fields])
