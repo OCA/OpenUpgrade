@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/OCA/OpenUpgrade.svg?branch=10.0)](https://travis-ci.org/OCA/OpenUpgrade)
+[![Build Status](https://travis-ci.org/OCA/OpenUpgrade.svg?branch=11.0)](https://travis-ci.org/OCA/OpenUpgrade)
 
 ![OpenUpgrade logo](/odoo/openupgrade/doc/source/images/OpenUpgrade.png?raw=true)
 

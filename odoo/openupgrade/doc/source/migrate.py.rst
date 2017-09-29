@@ -63,4 +63,4 @@ In a nutshell
   wget https://raw.githubusercontent.com/OCA/OpenUpgrade/HEAD/scripts/migrate.py
   python migrate.py --config=[your odoo.conf] --database=[your database] --run-migrations=[your migrations]
 
-.. _github: https://github.com/OCA/OpenUpgrade/blob/10.0/scripts/migrate.py
+.. _github: https://github.com/OCA/OpenUpgrade/blob/11.0/scripts/migrate.py

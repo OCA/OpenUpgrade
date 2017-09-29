@@ -60,6 +60,23 @@ def copy_database(conn_parms):
 
 
 migrations = {
+    '11.0': {
+        'addons': {
+            'addons': {
+                'type': 'link',
+                'url': os.path.join('server', 'addons'),
+            },
+        },
+        'server': {
+            'type': 'git',
+            'url': 'git://github.com/OpenUpgrade/OpenUpgrade.git',
+            'branch': '11.0',
+            'addons_dir': os.path.join('odoo', 'addons'),
+            'root_dir': os.path.join(''),
+            'cmd': 'odoo-bin --update=all --database=%(db)s '
+                   '--config=%(config)s --stop-after-init --no-xmlrpc',
+            },
+    },
     '10.0': {
         'addons': {
             'addons': {
