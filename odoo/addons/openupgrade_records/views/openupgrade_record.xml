@@ -12,16 +12,16 @@
         <field name="name">Search view for openupgrade records</field>
         <field name="model">openupgrade.record</field>
         <field name="arch" type="xml">
-            <search string="Search Records">
+            <search>
                 <field name="module"/>
                 <field name="model"/>
                 <field name="field"/>
                 <field name="type"/>
                 <separator/>
                 <filter name="mode_create" string="Create mode"
-                        filter_domain="[('mode', '=', 'create')]"/>
+                        domain="[('mode', '=', 'create')]"/>
                 <filter name="mode_modify" string="Modify mode"
-                        filter_domain="[('mode', '=', 'modify')]"/>
+                        domain="[('mode', '=', 'modify')]"/>
 
                 <separator/>
                 <group expand="1" string="Group By">
