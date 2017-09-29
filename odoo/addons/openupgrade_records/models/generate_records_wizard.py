@@ -63,7 +63,7 @@ class GenerateWizard(models.TransientModel):
                 AND our.model = imd.model
                 AND our.name = imd.module || '.' || imd.name
             """)
-        self.env.invalidate([
+        self.env.cache.invalidate([
             (self.env['openupgrade.record']._fields['noupdate'], None),
         ])
         return self.write({'state': 'ready'})
