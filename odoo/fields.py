@@ -37,6 +37,33 @@ _schema = logging.getLogger(__name__[:-7] + '.schema')
 
 Default = object()                      # default value for __init__() methods
 
+# OpenUpgrade start
+from psycopg2 import OperationalError
+import threading
+migration_cursors = {}
+
+
+def set_migration_cursor(cr=None):
+    """ Store or unset the current migration's cursor per database """
+    if cr:
+        migration_cursors[cr.dbname] = cr
+    else:
+        migration_cursors[threading.currentThread().dbname] = False
+
+
+def get_migration_cursor():
+    """ During migration, return a valid cursor for this thread's database,
+    if any """
+    cursor = migration_cursors.get(threading.currentThread().dbname)
+    if cursor:
+        try:
+            cursor.execute('SELECT 1')
+        except OperationalError:
+            return False
+    return cursor
+# OpenUpgrade end
+
+
 def copy_cache(records, env):
     """ Recursively copy the cache of ``records`` to the environment ``env``. """
     src, dst = records.env.cache, env.cache
@@ -1172,6 +1199,11 @@ class Float(Field):
     @property
     def digits(self):
         if callable(self._digits):
+            # OpenUpgrade: try to reuse the migration cursor, to prevent
+            # transaction locks
+            migration_cursor = get_migration_cursor()
+            if migration_cursor:
+                return self._digits(migration_cursor)
             with LazyCursor() as cr:
                 return self._digits(cr)
         else:

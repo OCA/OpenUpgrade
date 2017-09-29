@@ -1,0 +1,19 @@
+#!/bin/sh
+# create a database with all modules and demo data installed in order to run
+# tests
+set -e
+IGNORE_ADDONS='hw_scanner|hw_escpos'
+ODOO_DIR="."
+ODOO=$ODOO_DIR/openerp-server
+VERSION=$($ODOO --version | awk '{ print $3 }')
+DBNAME="openupgrade-test-$VERSION-$(date +%F)"
+ADDONS=$(echo $(ls $ODOO_DIR/addons | grep --invert-match -E $IGNORE_ADDONS) | tr ' ' ,)
+DUMP=/tmp/openupgrade-test-$VERSION
+dropdb $DBNAME || true
+createdb $DBNAME
+$ODOO --log-handler=:CRITICAL --database=$DBNAME --init=base --stop-after-init
+$ODOO --log-handler=:CRITICAL --load-language=fr_FR --database=$DBNAME --stop-after-init
+$ODOO --log-handler=:CRITICAL --database=$DBNAME --init=$ADDONS --stop-after-init
+pg_dump --no-owner --format=custom $DBNAME > $DUMP
+dropdb $DBNAME
+echo database dumped to $DUMP

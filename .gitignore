@@ -3,6 +3,7 @@ _build/
 
 # dotfiles
 .*
+!.travis
 !.gitignore
 !.mailmap
 # compiled python files
@@ -19,6 +20,8 @@ status
 odoo/filestore
 # maintenance migration scripts
 odoo/addons/base/maintenance
+# OpenUpgrade built docs
+odoo/openupgrade/doc/build
 
 # generated for windows installer?
 install/win32/*.bat

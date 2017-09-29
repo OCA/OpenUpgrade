@@ -45,6 +45,15 @@ class Graph(dict):
         ## and we update the default values with values from the database
         additional_data.update((x['name'], x) for x in cr.dictfetchall())
 
+        # OpenUpgrade:
+        # Prevent reloading of demo data from the new version on major upgrade
+        if ('base' in self and additional_data['base']['dbdemo'] and
+                additional_data['base']['installed_version'] <
+                release.major_version):
+            cr.execute("UPDATE ir_module_module SET demo = false")
+            for data in additional_data.values():
+                data['dbdemo'] = False
+
         for package in self.values():
             for k, v in additional_data[package.name].items():
                 setattr(package, k, v)
@@ -57,12 +66,22 @@ class Graph(dict):
             force = []
         packages = []
         len_graph = len(self)
+
+        # force additional dependencies for the upgrade process if given
+        # in config file
+        forced_deps = tools.config.get_misc('openupgrade', 'force_deps', '{}')
+        forced_deps = tools.config.get_misc('openupgrade',
+                                            'force_deps_' + release.version,
+                                            forced_deps)
+        forced_deps = tools.safe_eval(forced_deps)
+
         for module in module_list:
             # This will raise an exception if no/unreadable descriptor file.
             # NOTE The call to load_information_from_description_file is already
             # done by db.initialize, so it is possible to not do it again here.
             info = odoo.modules.module.load_information_from_description_file(module)
             if info and info['installable']:
+                info['depends'].extend(forced_deps.get(module, []))
                 packages.append((module, info)) # TODO directly a dict, like in get_modules_with_version
             elif module != 'studio_customization':
                 _logger.warning('module %s: not installable, skipped', module)

@@ -18,23 +18,15 @@ from odoo.tools import pycompat
 if pycompat.PY2:
     import imp
     def load_script(path, module_name):
+        # OpenUpgrade edit start:
+        # Removed a copy of migration script to temp directory
+        # Replaced call to load_source with load_module so frame isn't lost and breakpoints can be set
         fp, fname = tools.file_open(path, pathinfo=True)
-        fp2 = None
-
-        if not isinstance(fp, file):    # pylint: disable=file-builtin
-            # imp.load_source need a real file object, so we create
-            # one from the file-like object we get from file_open
-            fp2 = os.tmpfile()
-            fp2.write(fp.read())
-            fp2.seek(0)
-
         try:
-            return imp.load_source(module_name, fname, fp2 or fp)
+            return imp.load_module(name, fp, fname, ('.py', 'r', imp.PY_SOURCE))
         finally:
             if fp:
                 fp.close()
-            if fp2:
-                fp2.close()
 
 else:
     import importlib.util
@@ -108,7 +100,12 @@ class MigrationManager(object):
         }
         state = pkg.state if stage in ('pre', 'post') else getattr(pkg, 'load_state', None)
 
-        if not (hasattr(pkg, 'update') or state == 'to upgrade') or state == 'to install':
+        # In openupgrade, also run migration scripts upon installation.
+        # We want to always pass in pre and post migration files and use a new
+        # argument in the migrate decorator (explained in the docstring)
+        # to decide if we want to do something if a new module is installed
+        # during the migration.
+        if not (hasattr(pkg, 'update') or state in ('to upgrade', 'to install')):
             return
 
         def convert_version(version):
@@ -144,6 +141,11 @@ class MigrationManager(object):
                         lst.append(opj(mapping[x], version, f))
             lst.sort()
             return lst
+
+        def mergedict(a, b):
+            a = a.copy()
+            a.update(b)
+            return a
 
         parsed_installed_version = parse_version(getattr(pkg, 'load_version', pkg.installed_version) or '')
         current_version = parse_version(convert_version(pkg.data['version']))
