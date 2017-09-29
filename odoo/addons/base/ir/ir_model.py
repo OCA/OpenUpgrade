@@ -1597,7 +1597,7 @@ class IrModelData(models.Model):
                     # if other modules have defined this record, we must not delete it
                     continue
                     # OpenUpgrade specific start
-                    if not self.env.get(field.model):
+                    if not self.env.get(model):
                         continue
                     # OpenUpgrade specific end
                 if model == 'ir.model.fields':

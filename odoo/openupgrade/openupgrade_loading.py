@@ -6,7 +6,6 @@
 import types
 import logging
 from odoo import release
-from odoo import models
 from openupgradelib.openupgrade_tools import table_exists
 from odoo.tools import config, safe_eval
 from odoo.modules.module import get_module_path
@@ -110,6 +109,9 @@ def log_model(model, local_registry):
         return
 
     typemap = {'monetary': 'float'}
+
+    # Deferred import to prevent import loop
+    from odoo import models
 
     # persistent models only
     if isinstance(model, models.TransientModel):

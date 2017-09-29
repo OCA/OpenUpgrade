@@ -19,7 +19,7 @@ import odoo.modules.migration
 import odoo.modules.registry
 import odoo.tools as tools
 
-from odoo import api, fields, SUPERUSER_ID
+from odoo import api, SUPERUSER_ID
 from odoo.modules.module import adapt_version, initialize_sys_path, load_openerp_module
 
 from odoo.openupgrade import openupgrade_loading
@@ -119,7 +119,10 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     cr.commit = lambda *args: None
     cr.rollback_org = cr.rollback
     cr.rollback = lambda *args: None
-    fields.set_migration_cursor(cr)
+
+    # Delayed import to prevent import loop
+    from odoo.fields import set_migration_cursor
+    set_migration_cursor(cr)
 
     # register, instantiate and initialize models for each modules
     t0 = time.time()
@@ -268,7 +271,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
 
     cr.commit = cr.commit_org
     cr.commit()
-    fields.set_migration_cursor()
+    set_migration_cursor()
 
     return loaded_modules, processed_modules
 

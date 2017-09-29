@@ -49,7 +49,7 @@ class Graph(dict):
         # Prevent reloading of demo data from the new version on major upgrade
         if ('base' in self and additional_data['base']['dbdemo'] and
                 additional_data['base']['installed_version'] <
-                release.major_version):
+                odoo.release.major_version):
             cr.execute("UPDATE ir_module_module SET demo = false")
             for data in additional_data.values():
                 data['dbdemo'] = False
@@ -71,7 +71,7 @@ class Graph(dict):
         # in config file
         forced_deps = tools.config.get_misc('openupgrade', 'force_deps', '{}')
         forced_deps = tools.config.get_misc('openupgrade',
-                                            'force_deps_' + release.version,
+                                            'force_deps_' + odoo.release.version,
                                             forced_deps)
         forced_deps = tools.safe_eval(forced_deps)
 

@@ -23,7 +23,7 @@ if pycompat.PY2:
         # Replaced call to load_source with load_module so frame isn't lost and breakpoints can be set
         fp, fname = tools.file_open(path, pathinfo=True)
         try:
-            return imp.load_module(name, fp, fname, ('.py', 'r', imp.PY_SOURCE))
+            return imp.load_module(module_name, fp, fname, ('.py', 'r', imp.PY_SOURCE))
         finally:
             if fp:
                 fp.close()
