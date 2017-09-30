@@ -649,6 +649,20 @@ def update_move_date(cr):
     )
 
 
+def fill_bank_accounts(cr):
+    """Fill new bank_account_id field on journals through the inverse
+    reference on the bank accounts.
+    """
+    openupgrade.logged_query(
+        cr, """
+        UPDATE account_journal aj
+        SET bank_account_id = rpb.id
+        FROM res_partner_bank rpb
+        WHERE aj.type = 'bank'
+        AND rpb.journal_id = aj.id"""
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -743,6 +757,7 @@ def migrate(env, version):
     merge_invoice_journals(env)
     update_account_invoice_date(cr)
     update_move_date(cr)
+    fill_bank_accounts(cr)
     openupgrade.load_data(
         cr, 'account', 'migrations/9.0.1.1/noupdate_changes.xml',
     )
