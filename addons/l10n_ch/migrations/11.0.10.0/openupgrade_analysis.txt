@@ -4,10 +4,10 @@ l10n_ch      / res.bank                 / l10n_ch_postal_chf (char)     : NEW
 l10n_ch      / res.bank                 / l10n_ch_postal_eur (char)     : NEW 
 l10n_ch      / res.company              / l10n_ch_isr_print_bank_location (boolean): NEW 
 ---XML records in module 'l10n_ch'---
-NEW account.tax.group: l10n_ch.tax_group_tva_0
-NEW account.tax.group: l10n_ch.tax_group_tva_25
-NEW account.tax.group: l10n_ch.tax_group_tva_38
-NEW account.tax.group: l10n_ch.tax_group_tva_8
+NEW account.tax.group: l10n_ch.tax_group_tva_0 (noupdate)
+NEW account.tax.group: l10n_ch.tax_group_tva_25 (noupdate)
+NEW account.tax.group: l10n_ch.tax_group_tva_38 (noupdate)
+NEW account.tax.group: l10n_ch.tax_group_tva_8 (noupdate)
 NEW ir.actions.act_window: account.action_invoice_tree1
 NEW ir.actions.report: l10n_ch.l10n_ch_isr_report
 NEW ir.ui.view: l10n_ch.assets_common

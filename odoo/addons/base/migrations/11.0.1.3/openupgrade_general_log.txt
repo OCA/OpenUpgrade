@@ -100,8 +100,8 @@ DEL ir.model.access: website_project.access_project_portal
 DEL ir.model.access: website_project.access_project_tags_portal
 DEL ir.model.access: website_project.access_task_portal
 DEL ir.model.access: website_project.access_task_type_portal
-DEL ir.rule: website_project.portal_project_rule
-DEL ir.rule: website_project.portal_task_rule
+DEL ir.rule: website_project.portal_project_rule (noupdate)
+DEL ir.rule: website_project.portal_task_rule (noupdate)
 DEL ir.ui.view: website_project.my_project
 DEL ir.ui.view: website_project.my_projects
 DEL ir.ui.view: website_project.my_task
@@ -118,8 +118,8 @@ DEL ir.actions.act_window: marketing_campaign.action_campaign_analysis_all
 DEL ir.actions.act_window: marketing_campaign.action_marketing_campaign_form
 DEL ir.actions.act_window: marketing_campaign.action_marketing_campaign_segment_form
 DEL ir.actions.act_window: marketing_campaign.action_marketing_campaign_workitem
-DEL ir.cron: marketing_campaign.ir_cron_marketing_campaign_every_day
-DEL ir.cron: marketing_campaign.ir_cron_marketing_campaign_every_hour
+DEL ir.cron: marketing_campaign.ir_cron_marketing_campaign_every_day (noupdate)
+DEL ir.cron: marketing_campaign.ir_cron_marketing_campaign_every_hour (noupdate)
 DEL ir.model.access: marketing_campaign.access_email_template_account_manager
 DEL ir.model.access: marketing_campaign.access_email_template_account_user
 DEL ir.model.access: marketing_campaign.access_email_template_manager
@@ -165,15 +165,15 @@ DEL ir.ui.view: marketing_campaign.view_report_campaign_analysis_graph
 DEL ir.ui.view: marketing_campaign.view_report_campaign_analysis_pivot
 DEL res.groups: marketing_campaign.group_lead_automation_manager
 DEL res.groups: marketing_campaign.group_lead_automation_user
-DEL res.users: base.default_user
+DEL res.users: base.default_user (noupdate)
 ERROR: module not in list of installed modules:
 ---Fields in module 'portal_sale'---
 ---XML records in module 'portal_sale'---
-DEL ir.rule: portal_sale.portal_account_invoice_line_rule
-DEL ir.rule: portal_sale.portal_account_invoice_user_rule
-DEL ir.rule: portal_sale.portal_personal_contact
-DEL ir.rule: portal_sale.portal_sale_order_line_rule
-DEL ir.rule: portal_sale.portal_sale_order_user_rule
+DEL ir.rule: portal_sale.portal_account_invoice_line_rule (noupdate)
+DEL ir.rule: portal_sale.portal_account_invoice_user_rule (noupdate)
+DEL ir.rule: portal_sale.portal_personal_contact (noupdate)
+DEL ir.rule: portal_sale.portal_sale_order_line_rule (noupdate)
+DEL ir.rule: portal_sale.portal_sale_order_user_rule (noupdate)
 DEL ir.ui.view: portal_sale.view_account_invoice_filter_share
 ERROR: module not in list of installed modules:
 ---Fields in module 'report'---
@@ -248,7 +248,7 @@ DEL ir.model.access: project_issue_sheet.access_account_invoice_project_user
 DEL ir.model.access: project_issue_sheet.access_analytic_account_line_project_user
 DEL ir.model.access: project_issue_sheet.access_hr_timesheet_sheet_sheet_project_manager
 DEL ir.model.access: project_issue_sheet.access_hr_timesheet_sheet_sheet_project_user
-DEL ir.rule: project_issue_sheet.portal_issue_sheet_rule
+DEL ir.rule: project_issue_sheet.portal_issue_sheet_rule (noupdate)
 DEL ir.ui.view: project_issue_sheet.project_issue_form_view
 DEL ir.ui.view: project_issue_sheet.project_issue_tree_view_inherited
 ERROR: module not in list of installed modules:
@@ -291,7 +291,7 @@ DEL ir.model.access: portal_gamification.challenge_line_portal
 DEL ir.model.access: portal_gamification.challenge_portal
 DEL ir.model.access: portal_gamification.goal_definition_portal
 DEL ir.model.access: portal_gamification.goal_portal
-DEL ir.rule: gamification.goal_user_visibility
+DEL ir.rule: gamification.goal_user_visibility (noupdate)
 ERROR: module not in list of installed modules:
 ---Fields in module 'website_portal_sale'---
 website_portal_sale / payment.transaction      / sale_order_id (many2one)      : module is now 'sale_payment' ('website_portal_sale')
@@ -334,7 +334,7 @@ ERROR: module not in list of installed modules:
 ---Fields in module 'base_action_rule'---
 ---XML records in module 'base_action_rule'---
 DEL ir.actions.act_window: base_action_rule.base_action_rule_act
-DEL ir.cron: base_action_rule.ir_cron_crm_action
+DEL ir.cron: base_action_rule.ir_cron_crm_action (noupdate)
 DEL ir.model.access: base_action_rule.access_base_action_rule
 DEL ir.model.access: base_action_rule.access_base_action_rule_config
 DEL ir.model.access: base_action_rule.access_base_action_rule_lead_test
@@ -347,7 +347,7 @@ ERROR: module not in list of installed modules:
 ---Fields in module 'website_project_timesheet'---
 ---XML records in module 'website_project_timesheet'---
 DEL ir.model.access: website_project_timesheet.access_timesheets_portal
-DEL ir.rule: website_project_timesheet.portal_task_timesheet_rule
+DEL ir.rule: website_project_timesheet.portal_task_timesheet_rule (noupdate)
 DEL ir.ui.view: website_project_timesheet.my_task
 ERROR: module not in list of installed modules:
 ---Fields in module 'l10n_fr_hr_payroll'---
@@ -369,9 +369,9 @@ DEL hr.holidays.status: l10n_fr_hr_payroll.holiday_status_heures_sup
 DEL hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_base
 DEL hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_employe_cadre
 DEL hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_employe_non_cadre
-DEL hr.salary.rule: hr_payroll.hr_rule_basic
-DEL hr.salary.rule: hr_payroll.hr_rule_net
-DEL hr.salary.rule: hr_payroll.hr_rule_taxable
+DEL hr.salary.rule: hr_payroll.hr_rule_basic (noupdate)
+DEL hr.salary.rule: hr_payroll.hr_rule_net (noupdate)
+DEL hr.salary.rule: hr_payroll.hr_rule_taxable (noupdate)
 DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C10_employe
 DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C10_employer
 DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C11_employe
@@ -450,12 +450,12 @@ DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_2
 DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_a
 DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_b
 DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_c
-DEL hr.salary.rule.category: hr_payroll.ALW
-DEL hr.salary.rule.category: hr_payroll.BASIC
-DEL hr.salary.rule.category: hr_payroll.COMP
-DEL hr.salary.rule.category: hr_payroll.DED
-DEL hr.salary.rule.category: hr_payroll.GROSS
-DEL hr.salary.rule.category: hr_payroll.NET
+DEL hr.salary.rule.category: hr_payroll.ALW (noupdate)
+DEL hr.salary.rule.category: hr_payroll.BASIC (noupdate)
+DEL hr.salary.rule.category: hr_payroll.COMP (noupdate)
+DEL hr.salary.rule.category: hr_payroll.DED (noupdate)
+DEL hr.salary.rule.category: hr_payroll.GROSS (noupdate)
+DEL hr.salary.rule.category: hr_payroll.NET (noupdate)
 DEL hr.salary.rule.category: l10n_fr_hr_payroll.C_IMP
 DEL hr.salary.rule.category: l10n_fr_hr_payroll.PREV
 DEL hr.salary.rule.category: l10n_fr_hr_payroll.RETENUES
@@ -468,12 +468,12 @@ DEL ir.ui.view: l10n_fr_hr_payroll.hr_contract_view_form_l10n_fr_payroll
 DEL ir.ui.view: l10n_fr_hr_payroll.hr_payslip_form_l10n_fr_payroll
 DEL ir.ui.view: l10n_fr_hr_payroll.report_l10n_fr_fiche_paye
 DEL ir.ui.view: l10n_fr_hr_payroll.view_account_config_settings_form_inherit_l10n_fr_hr_payroll
-DEL res.company: base.main_company
+DEL res.company: base.main_company (noupdate)
 ERROR: module not in list of installed modules:
 ---Fields in module 'website_project_issue_sheet'---
 ---XML records in module 'website_project_issue_sheet'---
 DEL ir.model.access: website_project_issue_sheet.access_timesheets_portal
-DEL ir.rule: website_project_issue_sheet.portal_issue_sheet_rule
+DEL ir.rule: website_project_issue_sheet.portal_issue_sheet_rule (noupdate)
 DEL ir.ui.view: website_project_issue_sheet.my_issues_issue
 ERROR: module not in list of installed modules:
 ---Fields in module 'subscription'---
@@ -509,8 +509,8 @@ DEL ir.ui.menu: account.menu_account_config
 DEL ir.ui.menu: account.menu_finance
 DEL ir.ui.menu: account.menu_finance_reports
 DEL ir.ui.view: account_accountant.assets_backend
-DEL mail.message: account_accountant.module_install_notification
-DEL res.users: base.user_root
+DEL mail.message: account_accountant.module_install_notification (noupdate)
+DEL res.users: base.user_root (noupdate)
 ERROR: module not in list of installed modules:
 ---Fields in module 'hr_timesheet_sheet'---
 hr_timesheet_sheet / res.company              / timesheet_range (selection)   : DEL selection_keys: ['month', 'week']
@@ -520,11 +520,11 @@ DEL ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_form
 DEL ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_my_timesheets
 DEL ir.actions.act_window: hr_timesheet_sheet.hr_timesheet_action_from_department
 DEL ir.actions.act_window.view: hr_timesheet_sheet.action_open_timesheet_sheet_holidays_tree
-DEL ir.actions.server: hr_timesheet_sheet.ir_actions_server_timesheet_sheet
+DEL ir.actions.server: hr_timesheet_sheet.ir_actions_server_timesheet_sheet (noupdate)
 DEL ir.model.access: hr_timesheet_sheet.access_hr_timesheet_sheet_sheet_account
 DEL ir.model.access: hr_timesheet_sheet.access_hr_timesheet_sheet_sheet_system_employee
 DEL ir.model.access: hr_timesheet_sheet.access_hr_timesheet_sheet_sheet_user
-DEL ir.rule: hr_timesheet_sheet.timesheet_comp_rule
+DEL ir.rule: hr_timesheet_sheet.timesheet_comp_rule (noupdate)
 DEL ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form
 DEL ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_my_current
 DEL ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_my_timesheets
@@ -541,15 +541,15 @@ DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_sheet_form
 DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_sheet_tree_simplified
 DEL ir.ui.view: hr_timesheet_sheet.view_config_settings_form_inherit_hr_timesheet_sheet
 DEL ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_sheet_filter
-DEL mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_approved
-DEL mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_confirmed
-DEL mail.message.subtype: hr_timesheet_sheet.mt_timesheet_approved
-DEL mail.message.subtype: hr_timesheet_sheet.mt_timesheet_confirmed
+DEL mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_approved (noupdate)
+DEL mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_confirmed (noupdate)
+DEL mail.message.subtype: hr_timesheet_sheet.mt_timesheet_approved (noupdate)
+DEL mail.message.subtype: hr_timesheet_sheet.mt_timesheet_confirmed (noupdate)
 ERROR: module not in list of installed modules:
 ---Fields in module 'website_project_issue'---
 ---XML records in module 'website_project_issue'---
 DEL ir.model.access: website_project_issue.access_issues
-DEL ir.rule: website_project_issue.portal_issue_rule
+DEL ir.rule: website_project_issue.portal_issue_rule (noupdate)
 DEL ir.ui.view: website_project_issue.my_issues
 DEL ir.ui.view: website_project_issue.my_issues_issue
 DEL ir.ui.view: website_project_issue.my_project
@@ -575,8 +575,8 @@ DEL ir.model.access: portal_stock.access_stock_pack_operation_portal
 DEL ir.model.access: portal_stock.access_stock_picking
 DEL ir.model.access: portal_stock.access_stock_picking_type_portal
 DEL ir.model.access: portal_stock.access_stock_warehouse_orderpoint
-DEL ir.rule: portal_stock.portal_stock_pack_operation_portal_user_rule
-DEL ir.rule: portal_stock.portal_stock_picking_portal_user_rule
+DEL ir.rule: portal_stock.portal_stock_pack_operation_portal_user_rule (noupdate)
+DEL ir.rule: portal_stock.portal_stock_picking_portal_user_rule (noupdate)
 ERROR: module not in list of installed modules:
 ---Fields in module 'project_issue'---
 project_issue / account.analytic.account / use_issues (boolean)          : DEL 
@@ -595,8 +595,8 @@ DEL ir.model.access: project_issue.access_project_issue_report_all
 DEL ir.model.access: project_issue.access_project_issue_report_user
 DEL ir.model.access: project_issue.access_project_issue_user
 DEL ir.model.access: project_issue.access_resource_calendar_project_manager
-DEL ir.rule: project_issue.issue_project_manager_rule
-DEL ir.rule: project_issue.issue_user_rule
+DEL ir.rule: project_issue.issue_project_manager_rule (noupdate)
+DEL ir.rule: project_issue.issue_user_rule (noupdate)
 DEL ir.ui.menu: project_issue.menu_project_issue_report_tree
 DEL ir.ui.menu: project_issue.menu_project_issue_track
 DEL ir.ui.view: project_issue.analytic_account_inherited_issue_form
@@ -617,15 +617,15 @@ DEL ir.ui.view: project_issue.view_project_issue_report_filter
 DEL ir.ui.view: project_issue.view_project_issue_report_graph
 DEL ir.ui.view: project_issue.view_project_issue_report_pivot
 DEL ir.ui.view: project_issue.view_project_kanban_inherited
-DEL mail.message: project_issue.module_install_notification
-DEL mail.message.subtype: project_issue.mt_issue_blocked
-DEL mail.message.subtype: project_issue.mt_issue_new
-DEL mail.message.subtype: project_issue.mt_issue_ready
-DEL mail.message.subtype: project_issue.mt_issue_stage
-DEL mail.message.subtype: project_issue.mt_project_issue_blocked
-DEL mail.message.subtype: project_issue.mt_project_issue_new
-DEL mail.message.subtype: project_issue.mt_project_issue_ready
-DEL mail.message.subtype: project_issue.mt_project_issue_stage
+DEL mail.message: project_issue.module_install_notification (noupdate)
+DEL mail.message.subtype: project_issue.mt_issue_blocked (noupdate)
+DEL mail.message.subtype: project_issue.mt_issue_new (noupdate)
+DEL mail.message.subtype: project_issue.mt_issue_ready (noupdate)
+DEL mail.message.subtype: project_issue.mt_issue_stage (noupdate)
+DEL mail.message.subtype: project_issue.mt_project_issue_blocked (noupdate)
+DEL mail.message.subtype: project_issue.mt_project_issue_new (noupdate)
+DEL mail.message.subtype: project_issue.mt_project_issue_ready (noupdate)
+DEL mail.message.subtype: project_issue.mt_project_issue_stage (noupdate)
 ERROR: module not in list of installed modules:
 ---Fields in module 'web_calendar'---
 ---XML records in module 'web_calendar'---
@@ -667,13 +667,13 @@ DEL ir.actions.act_window: procurement.procurement_order_action_exceptions
 DEL ir.actions.act_window: procurement.procurement_order_action_product_product_stat
 DEL ir.actions.act_window: procurement.procurement_order_action_product_template_stat
 DEL ir.actions.server: procurement.procurement_order_server_action
-DEL ir.cron: procurement.ir_cron_scheduler_action
+DEL ir.cron: procurement.ir_cron_scheduler_action (noupdate)
 DEL ir.model.access: procurement.access_procurement
 DEL ir.model.access: procurement.access_procurement_group
 DEL ir.model.access: procurement.access_procurement_rule
-DEL ir.rule: procurement.procurement_rule
-DEL ir.rule: procurement.product_pulled_flow_comp_rule
-DEL ir.sequence: procurement.sequence_proc_group
+DEL ir.rule: procurement.procurement_rule (noupdate)
+DEL ir.rule: procurement.product_pulled_flow_comp_rule (noupdate)
+DEL ir.sequence: procurement.sequence_proc_group (noupdate)
 DEL ir.ui.view: procurement.procurement_form_view
 DEL ir.ui.view: procurement.procurement_group_form_view
 DEL ir.ui.view: procurement.procurement_tree_view

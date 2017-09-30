@@ -24,7 +24,7 @@ DEL ir.model.access: crm.access_base_action_rule_manager
 DEL ir.model.access: crm.access_crm_activity_manager
 DEL ir.model.access: crm.access_crm_activity_salesman
 DEL ir.model.access: crm.access_crm_activity_user
-NEW ir.rule: crm.opp_report_multi_company
+NEW ir.rule: crm.opp_report_multi_company (noupdate)
 NEW ir.ui.menu: contacts.res_partner_menu_config
 NEW ir.ui.menu: crm.crm_config_settings_menu
 NEW ir.ui.menu: crm.crm_menu_config
@@ -50,4 +50,4 @@ DEL ir.ui.view: crm.crm_activity_view_search
 DEL ir.ui.view: crm.crm_activity_view_tree
 DEL ir.ui.view: crm.view_sale_config_settings
 DEL ir.values: crm.ir_mark_as_lost
-DEL mail.message: crm.module_install_notification
+DEL mail.message: crm.module_install_notification (noupdate)

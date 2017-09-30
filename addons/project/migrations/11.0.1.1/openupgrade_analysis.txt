@@ -32,8 +32,8 @@ NEW ir.model.access: project.access_project_task_type_portal
 NEW ir.model.access: project.access_project_user
 NEW ir.model.access: project.access_task_portal
 DEL ir.model.access: project.access_project_on_partner
-NEW ir.rule: project.project_project_rule_portal
-NEW ir.rule: project.project_task_rule_portal
+NEW ir.rule: project.project_project_rule_portal (noupdate)
+NEW ir.rule: project.project_task_rule_portal (noupdate)
 NEW ir.ui.menu: project.project_config_settings_menu_action
 NEW ir.ui.menu: project.project_menu_config_activity_type
 NEW ir.ui.menu: project.project_task_menu_activity

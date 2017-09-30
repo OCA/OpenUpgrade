@@ -67,6 +67,6 @@ NEW ir.ui.view: point_of_sale.view_pos_order_kanban
 NEW ir.ui.view: point_of_sale.view_pos_session_kanban
 DEL ir.ui.view: point_of_sale.view_pos_config_form
 DEL ir.ui.view: point_of_sale.view_sale_config_settings_form_pos
-DEL mail.message: point_of_sale.module_install_notification
-NEW product.product: point_of_sale.product_product_tip
-NEW product.uom.categ: product.product_uom_categ_unit
+DEL mail.message: point_of_sale.module_install_notification (noupdate)
+NEW product.product: point_of_sale.product_product_tip (noupdate)
+NEW product.uom.categ: product.product_uom_categ_unit (noupdate)
