@@ -1,0 +1,62 @@
+---Fields in module 'website_sale'---
+website_sale / delivery.carrier         / website_published (boolean)   : module is now 'website_sale_delivery' ('website_sale')
+website_sale / delivery.carrier         / website_url (char)            : module is now 'website_sale_delivery' ('website_sale')
+website_sale / delivery.carrier         / website_url (char)            : now a function
+website_sale / product.attribute        / type (selection)              : selection_keys is now '['color', 'radio', 'select']' ('['color', 'hidden', 'radio', 'select']')
+website_sale / product.product          / website_message_ids (one2many): module is now 'product' ('website_sale')
+website_sale / product.template         / availability (selection)      : DEL selection_keys: ['empty', 'in_stock', 'warning']
+website_sale / product.template         / availability_warning (text)   : DEL 
+website_sale / product.template         / website_message_ids (one2many): module is now 'product' ('website_sale')
+website_sale / rating.rating            / website_published (boolean)   : module is now 'website_rating' ('website_sale')
+website_sale / sale.order               / cart_recovery_email_sent (boolean): NEW 
+website_sale / sale.order               / payment_acquirer_id (many2one): module is now 'sale_payment' ('website_sale')
+website_sale / sale.order               / payment_tx_id (many2one)      : module is now 'sale_payment' ('website_sale')
+---XML records in module 'website_sale'---
+NEW ir.actions.act_window: website_sale.action_abandoned_orders_ecommerce
+NEW ir.actions.act_window: website_sale.payment_transaction_action_payments_to_capture
+NEW ir.actions.act_window: website_sale.product_template_action_website
+NEW ir.actions.act_window: website_sale.sale_order_action_to_invoice
+NEW ir.actions.act_window: website_sale.sale_report_action_carts
+NEW ir.actions.act_window: website_sale.sale_report_action_dashboard
+DEL ir.actions.act_window: website_sale.action_abandonned_orders_ecommerce
+DEL ir.actions.act_window: website_sale.product_template_action
+NEW ir.actions.act_window.view: website_sale.sale_report_action_view_graph_carts
+NEW ir.actions.act_window.view: website_sale.sale_report_action_view_graph_website
+NEW ir.actions.act_window.view: website_sale.sale_report_action_view_pivot_carts
+NEW ir.actions.act_window.view: website_sale.sale_report_action_view_pivot_website
+NEW ir.actions.server: website_sale.ir_actions_server_sale_cart_recovery_email
+NEW ir.ui.menu: website.menu_website_global_configuration
+NEW ir.ui.menu: website_sale.menu_catalog_variants_action
+NEW ir.ui.menu: website_sale.menu_orders_abandoned_orders
+NEW ir.ui.menu: website_sale.menu_orders_customers
+NEW ir.ui.menu: website_sale.menu_product_attribute_action
+NEW ir.ui.menu: website_sale.menu_product_settings
+NEW ir.ui.menu: website_sale.menu_report_sales
+NEW ir.ui.menu: website_sale.menu_reporting
+NEW ir.ui.menu: website_sale.product_catalog_variants
+DEL ir.ui.menu: website_sale.menu_orders_abandonned_orders
+DEL ir.ui.menu: website_sale.menu_orders_invoices
+NEW ir.ui.view: website_sale.assets_common
+NEW ir.ui.view: website_sale.coupon_form
+NEW ir.ui.view: website_sale.crm_team_salesteams_view_kanban_inherit_website_sale
+NEW ir.ui.view: website_sale.payment_transaction_view_form_inherit_website_sale
+NEW ir.ui.view: website_sale.portal_order_page_products_links
+NEW ir.ui.view: website_sale.product_edit_options
+NEW ir.ui.view: website_sale.res_config_settings_view_form
+NEW ir.ui.view: website_sale.sale_order_view_form
+NEW ir.ui.view: website_sale.sale_order_view_form_cart_recovery
+NEW ir.ui.view: website_sale.sale_report_view_graph_website
+NEW ir.ui.view: website_sale.sale_report_view_pivot_website
+NEW ir.ui.view: website_sale.sale_report_view_search_website
+DEL ir.ui.view: website_sale.message_thread_rating
+DEL ir.ui.view: website_sale.order_state_message
+DEL ir.ui.view: website_sale.orders_followup_products_links
+DEL ir.ui.view: website_sale.payment_token_form
+DEL ir.ui.view: website_sale.payment_token_form_confirm
+DEL ir.ui.view: website_sale.transaction_form_website_sale
+DEL ir.ui.view: website_sale.view_order_form_acquirer
+DEL ir.ui.view: website_sale.website_config_settings_view_form
+NEW mail.template: website_sale.mail_template_sale_cart_recovery
+NEW res.groups: base.group_portal
+NEW res.groups: base.group_public
+NEW res.groups: base.group_user

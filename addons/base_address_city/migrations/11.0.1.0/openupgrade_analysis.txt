@@ -1,0 +1,14 @@
+---Fields in module 'base_address_city'---
+base_address_city / res.city                 / country_id (many2one)         : NEW relation: res.country, required: required
+base_address_city / res.city                 / name (char)                   : NEW required: required
+base_address_city / res.city                 / state_id (many2one)           : NEW relation: res.country.state
+base_address_city / res.city                 / zipcode (char)                : NEW 
+base_address_city / res.country              / enforce_cities (boolean)      : NEW 
+base_address_city / res.partner              / city_id (many2one)            : NEW relation: res.city
+---XML records in module 'base_address_city'---
+NEW ir.actions.act_window: base_address_city.action_res_city_tree
+NEW ir.model.access: base_address_city.access_res_city_group_all
+NEW ir.model.access: base_address_city.access_res_city_group_user
+NEW ir.ui.view: base_address_city.view_city_filter
+NEW ir.ui.view: base_address_city.view_city_tree
+NEW ir.ui.view: base_address_city.view_res_country_city_extended_form

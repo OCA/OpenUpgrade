@@ -1,0 +1,11 @@
+---Fields in module 'website_sale_stock'---
+website_sale_stock / product.template         / available_threshold (float)   : NEW 
+website_sale_stock / product.template         / custom_message (text)         : NEW 
+website_sale_stock / product.template         / inventory_availability (selection): NEW selection_keys: ['always', 'custom', 'never', 'threshold']
+---XML records in module 'website_sale_stock'---
+NEW ir.ui.view: website_sale_stock.assets_frontend
+NEW ir.ui.view: website_sale_stock.portal_order_page_shipping
+NEW ir.ui.view: website_sale_stock.product_template_form_view_inherit_website_sale_stock
+NEW ir.ui.view: website_sale_stock.res_config_settings_view_form
+NEW ir.ui.view: website_sale_stock.website_sale_stock_cart_lines
+DEL ir.ui.view: website_sale_stock.orders_followup_shipping

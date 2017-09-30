@@ -1,0 +1,8 @@
+---Fields in module 'sale_crm'---
+---XML records in module 'sale_crm'---
+NEW ir.actions.act_window: sale_crm.sale_action_orders
+NEW ir.actions.act_window: sales_team.mail_activity_type_action_config_sales
+NEW ir.ui.menu: sale_crm.sale_order_menu_quotations_crm
+DEL ir.ui.menu: sales_team.menu_base_partner
+DEL ir.ui.view: sale_crm.assets_backend
+DEL ir.ui.view: sale_crm.crm_team_salesteams_view_kanban

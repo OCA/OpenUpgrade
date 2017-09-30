@@ -1,0 +1,44 @@
+---Fields in module 'event'---
+event        / event.event              / auto_confirm (boolean)        : not a function anymore
+event        / event.event              / date_begin_located (datetime) : type is now 'char' ('datetime')
+event        / event.event              / date_end_located (datetime)   : type is now 'char' ('datetime')
+event        / event.event              / is_online (boolean)           : NEW 
+event        / event.event              / reply_to (char)               : DEL 
+event        / event.event              / twitter_hashtag (char)        : previously in module website_event
+event        / event.type               / auto_confirm (boolean)        : NEW 
+event        / event.type               / default_hashtag (char)        : NEW 
+event        / event.type               / default_reply_to (char)       : DEL 
+event        / event.type               / default_timezone (selection)  : NEW selection_keys: function
+event        / event.type               / event_type_mail_ids (one2many): NEW relation: event.type.mail
+event        / event.type               / has_seats_limitation (boolean): NEW 
+event        / event.type               / is_online (boolean)           : NEW 
+event        / event.type               / use_hashtag (boolean)         : NEW 
+event        / event.type               / use_mail_schedule (boolean)   : NEW 
+event        / event.type               / use_timezone (boolean)        : NEW 
+event        / event.type.mail          / event_type_id (many2one)      : NEW relation: event.type, required: required
+event        / event.type.mail          / interval_nbr (integer)        : NEW 
+event        / event.type.mail          / interval_type (selection)     : NEW required: required, selection_keys: ['after_event', 'after_sub', 'before_event'], req_default: function
+event        / event.type.mail          / interval_unit (selection)     : NEW required: required, selection_keys: ['days', 'hours', 'months', 'now', 'weeks'], req_default: function
+event        / event.type.mail          / template_id (many2one)        : NEW relation: mail.template, required: required
+---XML records in module 'event'---
+NEW event.type: event.event_type_data_online
+NEW event.type: event.event_type_data_physical
+NEW ir.actions.act_window: event.event_event_action_pivot
+DEL ir.actions.act_window: event.action_report_event_registration
+NEW ir.actions.report: event.report_event_event_badge
+NEW ir.actions.report: event.report_event_registration_badge
+DEL ir.actions.report.xml: event.report_event_event_badge
+DEL ir.actions.report.xml: event.report_event_registration_badge
+NEW ir.model.access: event.access_event_type_mail_event_manager
+NEW ir.model.access: event.access_event_type_mail_event_user
+DEL ir.model.access: event.access_report_event_registration
+DEL ir.rule: event.report_event_registration_company_rule
+NEW ir.ui.menu: event.event_event_menu_pivot_report
+DEL ir.ui.menu: event.menu_report_event_registration
+NEW ir.ui.view: event.event_event_view_pivot
+NEW ir.ui.view: event.res_config_settings_view_form
+NEW ir.ui.view: event.res_partner_view_tree
+DEL ir.ui.view: event.report_event_registration_graph
+DEL ir.ui.view: event.report_event_registration_pivot
+DEL ir.ui.view: event.view_event_configuration
+DEL ir.ui.view: event.view_report_event_registration_search

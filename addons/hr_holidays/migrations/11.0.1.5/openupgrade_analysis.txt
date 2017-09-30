@@ -1,0 +1,17 @@
+---Fields in module 'hr_holidays'---
+hr_holidays  / hr.employee              / leaves_count (integer)        : type is now 'float' ('integer')
+hr_holidays  / hr.holidays              / first_approver_id (many2one)  : NEW relation: hr.employee
+hr_holidays  / hr.holidays              / manager_id2 (many2one)        : was renamed to second_approver_id [nothing to do]
+hr_holidays  / hr.holidays              / website_message_ids (one2many): NEW relation: mail.message
+hr_holidays  / resource.calendar        / uom_id (many2one)             : DEL relation: product.uom, required: required, req_default: function
+---XML records in module 'hr_holidays'---
+DEL ir.actions.act_window: hr_holidays.act_hr_leave_request_to_meeting
+NEW ir.actions.report: hr_holidays.action_report_holidayssummary
+DEL ir.actions.report.xml: hr_holidays.report_holidays_summary
+NEW ir.ui.menu: hr_holidays.menu_hr_holidays_summary_dept
+DEL ir.ui.menu: hr_holidays.menu_account_central_journal
+NEW ir.ui.view: hr_holidays.hr_holiday_status_view_kanban
+NEW ir.ui.view: hr_holidays.view_hr_holidays_kanban
+DEL ir.ui.view: hr_holidays.resource_calendar_form_inherit
+DEL ir.values: hr_holidays.hr_holidays_summary_employee_value
+DEL mail.message: hr_holidays.module_install_notification

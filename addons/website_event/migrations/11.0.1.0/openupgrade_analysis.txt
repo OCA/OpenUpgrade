@@ -1,0 +1,12 @@
+---Fields in module 'website_event'---
+website_event / event.event              / twitter_hashtag (char)        : module is now 'event' ('website_event')
+website_event / event.event              / website_message_ids (one2many): module is now 'portal' ('website_event')
+website_event / event.type               / website_menu (boolean)        : NEW 
+---XML records in module 'website_event'---
+NEW ir.ui.view: website_event.event_edit_options
+NEW ir.ui.view: website_event.event_event_view_form_inherit_website
+NEW ir.ui.view: website_event.event_type_view_form_inherit_website
+NEW ir.ui.view: website_event.remove_external_snippets
+NEW ir.ui.view: website_event.res_config_settings_view_form
+NEW ir.ui.view: website_event.ticket
+DEL ir.ui.view: website_event.view_event_sale_form

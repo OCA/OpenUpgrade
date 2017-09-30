@@ -1,0 +1,6 @@
+---Fields in module 'website_event_questions'---
+website_event_questions / event.question           / event_type_id (many2one)      : NEW relation: event.type
+website_event_questions / event.type               / question_ids (one2many)       : NEW relation: event.question
+website_event_questions / event.type               / use_questions (boolean)       : NEW 
+---XML records in module 'website_event_questions'---
+NEW ir.ui.view: website_event_questions.event_type_view_form_inherit_question

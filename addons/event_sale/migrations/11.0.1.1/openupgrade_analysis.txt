@@ -1,0 +1,11 @@
+---Fields in module 'event_sale'---
+event_sale   / event.event.ticket       / event_type_id (many2one)      : NEW relation: event.type
+event_sale   / event.type               / event_ticket_ids (one2many)   : NEW relation: event.event.ticket
+event_sale   / event.type               / use_ticketing (boolean)       : NEW 
+---XML records in module 'event_sale'---
+NEW event.type: event_sale.event_type_data_sale
+DEL event.type: event_sale.event_type
+NEW ir.model.access: event_sale.access_product_price_history_event_manager
+NEW ir.model.access: event_sale.access_product_product_event_manager
+NEW ir.model.access: event_sale.access_product_template_event_manager
+NEW ir.ui.view: event_sale.event_type_view_form_inherit_sale

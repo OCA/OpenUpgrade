@@ -1,0 +1,36 @@
+---Fields in module 'website_event_track'---
+website_event_track / event.track              / activity_ids (one2many)       : NEW relation: mail.activity
+website_event_track / event.track              / kanban_state (selection)      : NEW required: required, selection_keys: ['blocked', 'done', 'normal'], req_default: function
+website_event_track / event.track              / speaker_ids (many2many)       : DEL relation: res.partner
+website_event_track / event.track              / stage_id (many2one)           : NEW relation: event.track.stage, required: required, req_default: function
+website_event_track / event.track              / state (selection)             : DEL required: required, selection_keys: ['announced', 'cancel', 'confirmed', 'draft', 'published', 'refused'], req_default: function
+website_event_track / event.track              / website_message_ids (one2many): NEW relation: mail.message
+website_event_track / event.track.stage        / fold (boolean)                : NEW 
+website_event_track / event.track.stage        / is_cancel (boolean)           : NEW 
+website_event_track / event.track.stage        / is_done (boolean)             : NEW 
+website_event_track / event.track.stage        / mail_template_id (many2one)   : NEW relation: mail.template
+website_event_track / event.track.stage        / name (char)                   : NEW required: required
+website_event_track / event.track.stage        / sequence (integer)            : NEW 
+website_event_track / event.type               / website_track (boolean)       : NEW 
+website_event_track / event.type               / website_track_proposal (boolean): NEW 
+---XML records in module 'website_event_track'---
+NEW event.track.stage: website_event_track.event_track_stage0
+NEW event.track.stage: website_event_track.event_track_stage1
+NEW event.track.stage: website_event_track.event_track_stage2
+NEW event.track.stage: website_event_track.event_track_stage3
+NEW event.track.stage: website_event_track.event_track_stage4
+NEW event.track.stage: website_event_track.event_track_stage5
+NEW event.type: website_event_track.event_type_data_tracks
+NEW ir.actions.act_window: website_event_track.event_track_stage_action
+NEW ir.model.access: website_event_track.access_event_track_stage_all
+NEW ir.model.access: website_event_track.access_event_track_stage_event_manager
+NEW ir.ui.menu: website_event_track.event_track_stage_menu
+NEW ir.ui.view: website_event_track.event_track_stage_view_form
+NEW ir.ui.view: website_event_track.event_track_stage_view_search
+NEW ir.ui.view: website_event_track.event_track_stage_view_tree
+NEW ir.ui.view: website_event_track.event_type_view_form_inherit_track
+NEW ir.ui.view: website_event_track.track_edit_options
+NEW ir.ui.view: website_event_track.view_event_track_stage_kanban
+NEW mail.message.subtype: website_event_track.mt_track_blocked
+NEW mail.message.subtype: website_event_track.mt_track_ready
+NEW mail.template: website_event_track.mail_template_data_track_confirmation

@@ -1,0 +1,33 @@
+---Fields in module 'hr_recruitment'---
+hr_recruitment / calendar.event           / applicant_id (many2one)       : NEW relation: hr.applicant
+hr_recruitment / hr.applicant             / activity_ids (one2many)       : NEW relation: mail.activity
+hr_recruitment / hr.applicant             / date_action (date)            : DEL 
+hr_recruitment / hr.applicant             / title_action (char)           : DEL 
+hr_recruitment / hr.applicant             / website_message_ids (one2many): NEW relation: mail.message
+hr_recruitment / hr.job                   / hr_responsible_id (many2one)  : NEW relation: res.users
+---XML records in module 'hr_recruitment'---
+NEW ir.actions.act_window: hr_recruitment.hr_applicant_action_activity
+NEW ir.actions.act_window: hr_recruitment.hr_applicant_action_analysis
+DEL ir.actions.act_window: hr_recruitment.action_hr_recruitment_report_all
+NEW ir.actions.act_window.view: hr_recruitment.hr_applicant_action_view_pivot
+NEW ir.filters: hr_recruitment.hr_applicant_filter_department
+NEW ir.filters: hr_recruitment.hr_applicant_filter_job
+NEW ir.filters: hr_recruitment.hr_applicant_filter_recruiter
+DEL ir.filters: hr_recruitment.filter_recruitment_report_departmnet
+DEL ir.filters: hr_recruitment.filter_recruitment_report_job
+DEL ir.filters: hr_recruitment.filter_recruitment_report_recruiter
+DEL ir.model.access: hr_recruitment.access_hr_recruitment_report
+NEW ir.ui.menu: hr_recruitment.hr_applicant_nmenu_activity
+NEW ir.ui.menu: hr_recruitment.menu_crm_case_categ_all_app
+NEW ir.ui.view: hr_recruitment.hr_applicant_view_graph
+NEW ir.ui.view: hr_recruitment.hr_applicant_view_pivot
+NEW ir.ui.view: hr_recruitment.hr_applicant_view_search
+NEW ir.ui.view: hr_recruitment.hr_applicant_view_tree_activity
+NEW ir.ui.view: hr_recruitment.res_config_settings_view_form
+NEW ir.ui.view: hr_recruitment.view_hr_recruitment_stage_kanban
+DEL ir.ui.view: hr_recruitment.view_hr_recruitment_configuration
+DEL ir.ui.view: hr_recruitment.view_hr_recruitment_report_graph
+DEL ir.ui.view: hr_recruitment.view_hr_recruitment_report_pivot
+DEL ir.ui.view: hr_recruitment.view_hr_recruitment_report_search
+DEL mail.message: hr_recruitment.module_install_notification
+NEW mail.template: hr_recruitment.email_template_data_applicant_congratulations

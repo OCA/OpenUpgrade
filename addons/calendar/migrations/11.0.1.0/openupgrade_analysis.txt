@@ -1,0 +1,12 @@
+---Fields in module 'calendar'---
+calendar     / calendar.contacts        / user_id (many2one)            : now required, default = function
+calendar     / calendar.event           / activity_ids (one2many)       : NEW relation: mail.activity
+calendar     / calendar.event           / res_id (integer)              : NEW 
+calendar     / calendar.event           / res_model_id (many2one)       : NEW relation: ir.model
+calendar     / mail.activity            / calendar_event_id (many2one)  : NEW relation: calendar.event
+calendar     / mail.activity.type       / category (False)              : NEW selection_keys: ['default', 'meeting'], mode: modify
+---XML records in module 'calendar'---
+NEW ir.ui.view: calendar.mail_activity_type_view_form
+NEW ir.ui.view: calendar.mail_activity_view_form_popup
+NEW ir.ui.view: calendar.qunit_suite
+NEW mail.activity.type: mail.mail_activity_data_meeting

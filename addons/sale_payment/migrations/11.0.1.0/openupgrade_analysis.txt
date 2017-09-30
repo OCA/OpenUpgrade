@@ -1,0 +1,13 @@
+---Fields in module 'sale_payment'---
+sale_payment / payment.transaction      / sale_order_id (many2one)      : previously in module website_portal_sale
+sale_payment / sale.order               / payment_acquirer_id (many2one): previously in module website_sale
+sale_payment / sale.order               / payment_tx_id (many2one)      : previously in module website_sale
+sale_payment / sale.order               / payment_tx_ids (one2many)     : NEW relation: payment.transaction
+---XML records in module 'sale_payment'---
+NEW ir.actions.act_window: sale_payment.payment_transaction_action_authorized
+NEW ir.actions.act_window: sale_payment.payment_transaction_action_pending
+NEW ir.ui.view: sale_payment.crm_team_salesteams_view_kanban_inherit_website_portal_sale
+NEW ir.ui.view: sale_payment.portal_my_orders_payment
+NEW ir.ui.view: sale_payment.portal_order_error
+NEW ir.ui.view: sale_payment.portal_order_success
+NEW ir.ui.view: sale_payment.sale_order_view_form

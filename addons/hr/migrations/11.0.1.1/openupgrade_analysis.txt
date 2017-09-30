@@ -1,0 +1,13 @@
+---Fields in module 'hr'---
+hr           / hr.employee              / _inherits (False)             : DEL 
+hr           / hr.employee              / permit_no (char)              : NEW 
+hr           / hr.employee              / visa_expire (date)            : NEW 
+hr           / hr.employee              / visa_no (char)                : NEW 
+---XML records in module 'hr'---
+NEW ir.actions.act_window: hr.hr_config_settings_action
+NEW ir.ui.menu: hr.hr_menu_configuration
+NEW ir.ui.view: hr.hr_job_view_kanban
+NEW ir.ui.view: hr.res_config_settings_view_form
+DEL ir.values: hr.hr_employee_action_subordinate_hierachy_mutli
+DEL mail.message: hr.module_install_notification
+DEL res.groups: hr.group_hr_attendance

@@ -1,0 +1,13 @@
+---Fields in module 'lunch'---
+---XML records in module 'lunch'---
+NEW ir.actions.report: lunch.action_report_lunch_order
+DEL ir.actions.report.xml: lunch.action_report_lunch_order
+NEW ir.ui.view: lunch.lunch_order_line_view_kanban
+NEW ir.ui.view: lunch.qunit_suite
+NEW ir.ui.view: lunch.view_lunch_alert_kanban
+NEW ir.ui.view: lunch.view_lunch_cashmove_kanban
+NEW ir.ui.view: lunch.view_lunch_product_kanban
+DEL ir.values: lunch.ir_lunch_order_line_action_cancel
+DEL ir.values: lunch.ir_lunch_order_line_action_confirm
+DEL ir.values: lunch.ir_lunch_order_line_action_order
+DEL ir.values: lunch.ir_values_lunch_archive_product

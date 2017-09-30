@@ -1,0 +1,55 @@
+---Fields in module 'hr_timesheet'---
+hr_timesheet / account.analytic.line    / employee_id (many2one)        : NEW relation: hr.employee
+hr_timesheet / project.project          / subtask_project_id (many2one) : module is now 'project' ('hr_timesheet')
+hr_timesheet / project.task             / child_ids (one2many)          : module is now 'project' ('hr_timesheet')
+hr_timesheet / project.task             / parent_id (many2one)          : module is now 'project' ('hr_timesheet')
+hr_timesheet / project.task             / subtask_count (integer)       : module is now 'project' ('hr_timesheet')
+hr_timesheet / project.task             / subtask_project_id (many2one) : module is now 'project' ('hr_timesheet')
+---XML records in module 'hr_timesheet'---
+NEW ir.actions.act_window: hr_timesheet.hr_timesheet_config_settings_action
+NEW ir.actions.act_window: hr_timesheet.timesheet_action_all
+NEW ir.actions.act_window: hr_timesheet.timesheet_action_from_employee
+NEW ir.actions.act_window: hr_timesheet.timesheet_action_report_by_project
+NEW ir.actions.act_window: hr_timesheet.timesheet_action_report_by_task
+DEL ir.actions.act_window: hr_timesheet.act_project_task_sub_task
+DEL ir.actions.act_window: hr_timesheet.action_define_analytic_structure
+NEW ir.actions.act_window.view: hr_timesheet.act_hr_timesheet_line_view_kanban
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_all_calendar
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_all_form
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_all_tree
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_calendar
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_project_form
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_project_pivot
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_project_tree
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_task_form
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_task_pivot
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_task_tree
+NEW ir.actions.report: hr_timesheet.timesheet_report
+DEL ir.actions.report.xml: hr_timesheet.timesheet_report
+NEW ir.model.access: hr_timesheet.access_account_analytic_line_portal
+NEW ir.model.access: hr_timesheet.access_account_analytic_user
+NEW ir.model.access: hr_timesheet.access_product_template_timesheet_user
+NEW ir.model.access: hr_timesheet.access_project_project
+NEW ir.model.access: hr_timesheet.access_project_task
+DEL ir.model.access: hr_timesheet.access_hr_account_analytic_line
+DEL ir.model.access: hr_timesheet.access_hr_account_analytic_line_employee
+DEL ir.model.access: hr_timesheet.access_product_template_hr_timesheet
+NEW ir.rule: hr_timesheet.timesheet_line_rule_manager
+NEW ir.rule: hr_timesheet.timesheet_line_rule_user
+NEW ir.rule: hr_timesheet.timesheet_rule_portal
+NEW ir.ui.menu: hr_timesheet.hr_timesheet_config_settings_menu_action
+NEW ir.ui.menu: hr_timesheet.hr_timesheet_menu_configuration
+NEW ir.ui.menu: hr_timesheet.menu_timesheets_reports_timesheet
+NEW ir.ui.menu: hr_timesheet.timesheet_menu_activity_all
+NEW ir.ui.menu: hr_timesheet.timesheet_menu_activity_mine
+NEW ir.ui.menu: hr_timesheet.timesheet_menu_report_timesheet_by_project
+NEW ir.ui.menu: hr_timesheet.timesheet_menu_report_timesheet_by_task
+DEL ir.ui.menu: hr_timesheet.menu_hr_working_hours
+NEW ir.ui.view: hr_timesheet.hr_employee_view_form_inherit_timesheet
+NEW ir.ui.view: hr_timesheet.portal_my_task
+NEW ir.ui.view: hr_timesheet.res_config_settings_view_form
+NEW ir.ui.view: hr_timesheet.timesheet_view_calendar
+NEW ir.ui.view: hr_timesheet.timesheet_view_form_user
+NEW ir.ui.view: hr_timesheet.timesheet_view_tree_user
+NEW ir.ui.view: hr_timesheet.view_kanban_account_analytic_line
+NEW res.groups: hr_timesheet.group_timesheet_manager

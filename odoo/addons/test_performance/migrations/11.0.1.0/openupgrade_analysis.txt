@@ -1,0 +1,22 @@
+---Fields in module 'test_performance'---
+test_performance / test_performance.base    / line_ids (one2many)           : NEW relation: test_performance.line
+test_performance / test_performance.base    / name (char)                   : NEW 
+test_performance / test_performance.base    / partner_id (many2one)         : NEW relation: res.partner
+test_performance / test_performance.base    / tag_ids (many2many)           : NEW relation: test_performance.tag
+test_performance / test_performance.base    / value (integer)               : NEW 
+test_performance / test_performance.line    / base_id (many2one)            : NEW relation: test_performance.base, required: required
+test_performance / test_performance.line    / value (integer)               : NEW 
+test_performance / test_performance.mail    / message_follower_ids (one2many): NEW relation: mail.followers
+test_performance / test_performance.mail    / message_ids (one2many)        : NEW relation: mail.message
+test_performance / test_performance.mail    / message_last_post (datetime)  : NEW 
+test_performance / test_performance.mail    / name (char)                   : NEW 
+test_performance / test_performance.mail    / partner_id (many2one)         : NEW relation: res.partner
+test_performance / test_performance.mail    / track (char)                  : NEW 
+test_performance / test_performance.mail    / value (integer)               : NEW 
+test_performance / test_performance.mail    / website_message_ids (one2many): NEW relation: mail.message
+test_performance / test_performance.tag     / name (char)                   : NEW 
+---XML records in module 'test_performance'---
+NEW ir.model.access: test_performance.access_test_performance_base
+NEW ir.model.access: test_performance.access_test_performance_line
+NEW ir.model.access: test_performance.access_test_performance_mail
+NEW ir.model.access: test_performance.access_test_performance_tag

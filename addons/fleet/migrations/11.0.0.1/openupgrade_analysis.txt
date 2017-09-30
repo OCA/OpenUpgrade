@@ -1,0 +1,17 @@
+---Fields in module 'fleet'---
+fleet        / fleet.service.type       / category (selection)          : selection_keys is now '['contract', 'service']' ('['both', 'contract', 'service']')
+fleet        / fleet.vehicle            / model_year (char)             : NEW 
+fleet        / fleet.vehicle            / residual_value (float)        : NEW 
+fleet        / fleet.vehicle.cost       / description (char)            : NEW 
+fleet        / fleet.vehicle.log.contract / message_follower_ids (one2many): NEW relation: mail.followers
+fleet        / fleet.vehicle.log.contract / message_ids (one2many)        : NEW relation: mail.message
+fleet        / fleet.vehicle.log.contract / message_last_post (datetime)  : NEW 
+fleet        / fleet.vehicle.log.contract / state (selection)             : selection_keys is now '['closed', 'diesoon', 'expired', 'futur', 'open']' ('['closed', 'open', 'toclose']')
+---XML records in module 'fleet'---
+NEW ir.actions.act_window: fleet.fleet_vehicle_contract_types_action
+NEW ir.ui.menu: fleet.fleet_vehicle_contract_types_menu
+NEW ir.ui.view: fleet.fleet_vehicle_cost_view_kanban
+NEW ir.ui.view: fleet.fleet_vehicle_log_contract_view_kanban
+NEW ir.ui.view: fleet.fleet_vehicle_log_fuel_view_kanban
+NEW ir.ui.view: fleet.fleet_vehicle_log_services_view_kanban
+NEW ir.ui.view: fleet.fleet_vehicle_odometer_view_kanban

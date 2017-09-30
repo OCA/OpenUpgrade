@@ -1,0 +1,12 @@
+---Fields in module 'account_payment'---
+account_payment / account.invoice          / payment_tx_id (many2one)      : NEW relation: payment.transaction
+account_payment / account.invoice          / payment_tx_ids (one2many)     : NEW relation: payment.transaction
+account_payment / payment.transaction      / account_invoice_id (many2one) : NEW relation: account.invoice
+---XML records in module 'account_payment'---
+NEW ir.ui.view: account_payment.account_invoice_view_form_inherit_payment
+NEW ir.ui.view: account_payment.payment_transaction_view_form
+NEW ir.ui.view: account_payment.portal_invoice_error
+NEW ir.ui.view: account_payment.portal_invoice_page_inherit_payment
+NEW ir.ui.view: account_payment.portal_invoice_report
+NEW ir.ui.view: account_payment.portal_invoice_success
+NEW ir.ui.view: account_payment.portal_my_invoices_payment
