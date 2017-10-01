@@ -1,0 +1,19 @@
+---Fields in module 'website_sale_comparison'---
+website_sale_comparison / product.attribute        / category_id (many2one)        : NEW relation: product.attribute.category
+website_sale_comparison / product.attribute.category / name (char)                   : NEW required: required
+website_sale_comparison / product.attribute.category / sequence (integer)            : NEW 
+---XML records in module 'website_sale_comparison'---
+NEW ir.actions.act_window: website_sale_comparison.product_attribute_category_action
+NEW ir.model.access: website_sale_comparison.access_product_attribute_category_public
+NEW ir.model.access: website_sale_comparison.access_product_attribute_category_public_saleman
+NEW ir.ui.menu: website_sale_comparison.menu_attribute_category_action
+NEW ir.ui.view: website_sale_comparison.add_to_compare
+NEW ir.ui.view: website_sale_comparison.assets_frontend
+NEW ir.ui.view: website_sale_comparison.product_add_to_compare
+NEW ir.ui.view: website_sale_comparison.product_attribute_category_tree_view
+NEW ir.ui.view: website_sale_comparison.product_attribute_tree_view_inherit
+NEW ir.ui.view: website_sale_comparison.product_attribute_view_form
+NEW ir.ui.view: website_sale_comparison.product_attributes_body
+NEW ir.ui.view: website_sale_comparison.product_compare
+NEW ir.ui.view: website_sale_comparison.product_product
+NEW ir.ui.view: website_sale_comparison.recommended_product

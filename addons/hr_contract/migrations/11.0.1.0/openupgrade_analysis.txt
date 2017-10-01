@@ -1,0 +1,18 @@
+---Fields in module 'hr_contract'---
+hr_contract  / hr.contract              / company_id (many2one)         : NEW relation: res.company
+hr_contract  / hr.contract              / resource_calendar_id (many2one): NEW relation: resource.calendar
+hr_contract  / hr.contract              / state (selection)             : selection_keys is now '['cancel', 'close', 'draft', 'open', 'pending']' ('['close', 'draft', 'open', 'pending']')
+hr_contract  / hr.contract              / trial_date_start (date)       : DEL 
+hr_contract  / hr.contract              / website_message_ids (one2many): NEW relation: mail.message
+hr_contract  / hr.contract              / working_hours (many2one)      : DEL relation: resource.calendar
+---XML records in module 'hr_contract'---
+DEL base.action.rule: hr_contract.rule_contract_1_set_as_pending
+DEL base.action.rule: hr_contract.rule_contract_2_set_as_pending
+DEL base.action.rule: hr_contract.rule_contract_3_set_as_close
+DEL base.action.rule: hr_contract.rule_contract_4_set_as_close
+DEL ir.actions.server: hr_contract.contract_set_as_close
+DEL ir.actions.server: hr_contract.contract_set_as_pending
+NEW ir.cron: hr_contract.ir_cron_data_contract_update_state
+DEL ir.filters: hr_contract.contract_open
+NEW ir.ui.view: hr_contract.hr_contract_view_kanban
+DEL ir.ui.view: hr_contract.view_base_action_rule_form_resource

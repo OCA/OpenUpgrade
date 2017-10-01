@@ -1,0 +1,322 @@
+---Fields in module 'base'---
+base         / ir.actions.act_url       / binding_model_id (many2one)   : NEW relation: ir.model
+base         / ir.actions.act_url       / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.act_url       / usage (char)                  : DEL 
+base         / ir.actions.act_window    / binding_model_id (many2one)   : NEW relation: ir.model
+base         / ir.actions.act_window    / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.act_window_close / binding_model_id (many2one)   : NEW relation: ir.model
+base         / ir.actions.act_window_close / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.act_window_close / usage (char)                  : DEL 
+base         / ir.actions.actions       / binding_model_id (many2one)   : NEW relation: ir.model
+base         / ir.actions.actions       / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.actions       / usage (char)                  : DEL 
+base         / ir.actions.client        / binding_model_id (many2one)   : NEW relation: ir.model
+base         / ir.actions.client        / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.client        / usage (char)                  : DEL 
+base         / ir.actions.report        / attachment (char)             : NEW 
+base         / ir.actions.report        / attachment_use (boolean)      : NEW 
+base         / ir.actions.report        / binding_model_id (many2one)   : NEW relation: ir.model
+base         / ir.actions.report        / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.report        / groups_id (many2many)         : NEW relation: res.groups
+base         / ir.actions.report        / help (html)                   : NEW 
+base         / ir.actions.report        / model (char)                  : NEW required: required
+base         / ir.actions.report        / multi (boolean)               : NEW 
+base         / ir.actions.report        / name (char)                   : NEW required: required
+base         / ir.actions.report        / paperformat_id (many2one)     : NEW relation: report.paperformat
+base         / ir.actions.report        / print_report_name (char)      : NEW 
+base         / ir.actions.report        / report_file (char)            : NEW 
+base         / ir.actions.report        / report_name (char)            : NEW required: required
+base         / ir.actions.report        / report_type (selection)       : NEW required: required, selection_keys: ['qweb-html', 'qweb-pdf'], req_default: function
+base         / ir.actions.report        / type (char)                   : NEW required: required, req_default: function
+base         / ir.actions.server        / action_id (many2one)          : DEL relation: ir.actions.actions
+base         / ir.actions.server        / binding_model_id (many2one)   : NEW relation: ir.model
+base         / ir.actions.server        / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.server        / condition (char)              : DEL 
+base         / ir.actions.server        / copyvalue (char)              : DEL 
+base         / ir.actions.server        / id_object (reference)         : DEL 
+base         / ir.actions.server        / id_value (char)               : DEL 
+base         / ir.actions.server        / link_new_record (boolean)     : DEL 
+base         / ir.actions.server        / menu_ir_values_id (many2one)  : DEL relation: ir.values
+base         / ir.actions.server        / model_object_field (many2one) : DEL relation: ir.model.fields
+base         / ir.actions.server        / ref_object (reference)        : DEL 
+base         / ir.actions.server        / state (selection)             : selection_keys is now '['code', 'multi', 'object_create', 'object_write']' ('function')
+base         / ir.actions.server        / sub_model_object_field (many2one): DEL relation: ir.model.fields
+base         / ir.actions.server        / sub_object (many2one)         : DEL relation: ir.model
+base         / ir.actions.server        / usage (char)                  : now required, default = function
+base         / ir.actions.server        / usage (char)                  : selection_keys is now '['ir_actions_server', 'ir_cron']' ('False')
+base         / ir.actions.server        / usage (char)                  : type is now 'selection' ('char')
+base         / ir.actions.server        / use_create (selection)        : DEL required: required, selection_keys: ['copy_current', 'copy_other', 'new', 'new_other'], req_default: function
+base         / ir.actions.server        / use_relational_model (selection): DEL required: required, selection_keys: ['base', 'relational'], req_default: function
+base         / ir.actions.server        / use_write (selection)         : DEL required: required, selection_keys: ['current', 'expression', 'other'], req_default: function
+base         / ir.actions.server        / wkf_field_id (many2one)       : DEL relation: ir.model.fields
+base         / ir.actions.server        / wkf_model_id (many2one)       : DEL relation: ir.model
+base         / ir.actions.server        / wkf_transition_id (many2one)  : DEL relation: workflow.transition
+base         / ir.actions.server        / write_expression (char)       : DEL 
+base         / ir.actions.todo          / groups_id (many2many)         : DEL relation: res.groups
+base         / ir.actions.todo          / note (text)                   : DEL 
+base         / ir.actions.todo          / type (selection)              : DEL required: required, selection_keys: ['automatic', 'manual', 'once'], req_default: function
+base         / ir.attachment            / access_token (char)           : NEW 
+base         / ir.config_parameter      / group_ids (many2many)         : DEL relation: res.groups
+base         / ir.cron                  / _inherits (False)             : NEW 
+base         / ir.cron                  / args (text)                   : DEL 
+base         / ir.cron                  / function (char)               : DEL 
+base         / ir.cron                  / interval_type (selection)     : selection_keys is now '['days', 'hours', 'minutes', 'months', 'weeks']' ('['days', 'hours', 'minutes', 'months', 'weeks', 'work_days']')
+base         / ir.cron                  / ir_actions_server_id (many2one): NEW relation: ir.actions.server, required: required
+base         / ir.cron                  / model (char)                  : DEL 
+base         / ir.default               / company_id (many2one)         : NEW relation: res.company
+base         / ir.default               / condition (char)              : NEW 
+base         / ir.default               / field_id (many2one)           : NEW relation: ir.model.fields, required: required
+base         / ir.default               / json_value (char)             : NEW required: required
+base         / ir.default               / user_id (many2one)            : NEW relation: res.users
+base         / ir.model.fields          / serialization_field_id (many2one): module is now 'base_sparse_field' ('base')
+base         / ir.model.fields          / ttype (selection)             : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'html', 'integer', 'many2many', 'many2one', 'monetary', 'one2many', 'reference', 'selection', 'text']' ('function')
+base         / ir.module.category       / exclusive (boolean)           : NEW 
+base         / ir.module.module         / exclusion_ids (one2many)      : NEW relation: ir.module.module.exclusion
+base         / ir.module.module.exclusion / module_id (many2one)          : NEW relation: ir.module.module
+base         / ir.module.module.exclusion / name (char)                   : NEW 
+base         / ir.ui.menu               / web_icon_data (binary)        : not a function anymore
+base         / report.paperformat       / __last_update (datetime)      : previously in module report
+base         / report.paperformat       / default (boolean)             : previously in module report
+base         / report.paperformat       / display_name (char)           : previously in module report
+base         / report.paperformat       / dpi (integer)                 : previously in module report
+base         / report.paperformat       / format (selection)            : previously in module report
+base         / report.paperformat       / header_line (boolean)         : previously in module report
+base         / report.paperformat       / header_spacing (integer)      : previously in module report
+base         / report.paperformat       / margin_bottom (float)         : previously in module report
+base         / report.paperformat       / margin_left (float)           : previously in module report
+base         / report.paperformat       / margin_right (float)          : previously in module report
+base         / report.paperformat       / margin_top (float)            : previously in module report
+base         / report.paperformat       / name (char)                   : previously in module report
+base         / report.paperformat       / orientation (selection)       : previously in module report
+base         / report.paperformat       / page_height (integer)         : previously in module report
+base         / report.paperformat       / page_width (integer)          : previously in module report
+base         / report.paperformat       / report_ids (one2many)         : previously in module report
+base         / res.bank                 / fax (char)                    : DEL 
+base         / res.company              / custom_footer (boolean)       : DEL 
+base         / res.company              / external_report_layout (selection): NEW selection_keys: ['background', 'boxed', 'clean', 'standard']
+base         / res.company              / font (many2one)               : DEL relation: res.font
+base         / res.company              / paperformat_id (many2one)     : previously in module report
+base         / res.company              / report_footer (text)          : NEW 
+base         / res.company              / report_header (text)          : NEW 
+base         / res.company              / rml_footer (text)             : DEL 
+base         / res.company              / rml_header (text)             : DEL required: required, req_default: function
+base         / res.company              / rml_header1 (char)            : DEL 
+base         / res.company              / rml_header2 (text)            : DEL required: required, req_default: function
+base         / res.company              / rml_header3 (text)            : DEL required: required, req_default: function
+base         / res.company              / rml_paper_format (selection)  : DEL required: required, selection_keys: ['a4', 'us_letter'], req_default: function
+base         / res.country              / address_view_id (many2one)    : NEW relation: ir.ui.view
+base         / res.country              / name_position (selection)     : NEW selection_keys: ['after', 'before']
+base         / res.country              / vat_label (char)              : NEW 
+base         / res.currency             / currency_subunit_label (char) : NEW 
+base         / res.currency             / currency_unit_label (char)    : NEW 
+base         / res.currency.rate        / name (datetime)               : type is now 'date' ('datetime')
+base         / res.groups               / is_portal (boolean)           : previously in module portal
+base         / res.partner              / fax (char)                    : DEL 
+base         / res.partner              / industry_id (many2one)        : NEW relation: res.partner.industry
+base         / res.partner.industry     / active (boolean)              : NEW 
+base         / res.partner.industry     / full_name (char)              : NEW 
+base         / res.partner.industry     / name (char)                   : NEW 
+---XML records in module 'base'---
+NEW ir.actions.act_window: base.action_currency_all_form
+NEW ir.actions.act_window: base.ir_action_report
+NEW ir.actions.act_window: base.ir_default_menu_action
+NEW ir.actions.act_window: base.paper_format_action
+NEW ir.actions.act_window: base.reports_action
+NEW ir.actions.act_window: base.res_config_setting_act_window
+NEW ir.actions.act_window: base.res_partner_industry_action
+DEL ir.actions.act_window: base.act_values_form_action
+DEL ir.actions.act_window: base.act_values_form_defaults
+DEL ir.actions.act_window: base.action_currency_form_company
+DEL ir.actions.act_window: base.action_module_open_categ
+DEL ir.actions.act_window: base.action_workflow_activity_form
+DEL ir.actions.act_window: base.action_workflow_form
+DEL ir.actions.act_window: base.action_workflow_instance_form
+DEL ir.actions.act_window: base.action_workflow_transition_form
+DEL ir.actions.act_window: base.action_workflow_workitem_form
+DEL ir.actions.act_window: base.ir_action_report_xml
+NEW ir.actions.act_window.view: base.action_partner_customer_form_view1
+NEW ir.actions.act_window.view: base.action_partner_customer_form_view2
+NEW ir.actions.act_window.view: base.action_partner_customer_form_view3
+NEW ir.actions.act_window.view: base.action_partner_vendor_form_view1
+NEW ir.actions.act_window.view: base.action_partner_vendor_form_view2
+NEW ir.actions.act_window.view: base.action_partner_vendor_form_view3
+DEL ir.actions.act_window.view: base.action_values_defaults_form_view
+DEL ir.actions.act_window.view: base.action_values_defaults_tree_view
+DEL ir.actions.act_window.view: base.action_values_form_view
+DEL ir.actions.act_window.view: base.action_values_tree_view
+NEW ir.actions.report: base.ir_module_reference_print
+NEW ir.actions.report: base.report_ir_model_overview
+DEL ir.actions.report.xml: base.ir_module_reference_print
+DEL ir.actions.report.xml: base.preview_rml_report
+DEL ir.actions.report.xml: base.report_ir_model_overview
+NEW ir.model.access: base.access_ir_actions_report_all
+NEW ir.model.access: base.access_ir_actions_report_group_system
+NEW ir.model.access: base.access_ir_attachment_portal
+NEW ir.model.access: base.access_ir_default_all
+NEW ir.model.access: base.access_ir_default_group_system
+NEW ir.model.access: base.access_ir_default_group_user
+NEW ir.model.access: base.access_ir_filter_erp_manager
+NEW ir.model.access: base.access_ir_filter_portal
+NEW ir.model.access: base.access_ir_filter_public
+NEW ir.model.access: base.access_ir_filter_user
+NEW ir.model.access: base.access_ir_model_fields_user
+NEW ir.model.access: base.access_ir_model_user
+NEW ir.model.access: base.access_ir_module_module_exclusion_group_system
+NEW ir.model.access: base.access_res_partner_industry_group_system
+NEW ir.model.access: base.access_res_partner_industry_group_user
+NEW ir.model.access: base.paperformat_access_employee
+NEW ir.model.access: base.paperformat_access_portal
+DEL ir.model.access: base.access_ir_actions_report_xml_all
+DEL ir.model.access: base.access_ir_actions_report_xml_group_system
+DEL ir.model.access: base.access_ir_config_parameter
+DEL ir.model.access: base.access_ir_filter all
+DEL ir.model.access: base.access_ir_model_access_all
+DEL ir.model.access: base.access_ir_model_all
+DEL ir.model.access: base.access_ir_model_constraint
+DEL ir.model.access: base.access_ir_model_data_all
+DEL ir.model.access: base.access_ir_model_fields_all
+DEL ir.model.access: base.access_ir_model_relation
+DEL ir.model.access: base.access_ir_needaction_mixin
+DEL ir.model.access: base.access_ir_rule_group_user
+DEL ir.model.access: base.access_ir_values_group_all
+DEL ir.model.access: base.access_res_font_all
+DEL ir.model.access: base.access_res_font_group_user
+DEL ir.model.access: base.access_workflow_activity_all
+DEL ir.model.access: base.access_workflow_activity_group_system
+DEL ir.model.access: base.access_workflow_all
+DEL ir.model.access: base.access_workflow_group_system
+DEL ir.model.access: base.access_workflow_instance_all
+DEL ir.model.access: base.access_workflow_transition_all
+DEL ir.model.access: base.access_workflow_transition_group_system
+DEL ir.model.access: base.access_workflow_triggers_all
+DEL ir.model.access: base.access_workflow_triggers_group_system
+DEL ir.model.access: base.access_workflow_workitem_all
+NEW ir.rule: base.ir_default_system_rule
+NEW ir.rule: base.ir_default_user_rule
+DEL ir.rule: base.ir_config_parameter_rule
+DEL ir.rule: base.ir_values_default_rule
+NEW ir.ui.menu: base.ir_default_menu
+NEW ir.ui.menu: base.menu_ir_action_report
+NEW ir.ui.menu: base.paper_format_menuitem
+NEW ir.ui.menu: base.reporting_menuitem
+NEW ir.ui.menu: base.reports_menuitem
+DEL ir.ui.menu: base.menu_ir_action_report_xml
+DEL ir.ui.menu: base.menu_values_form_action
+DEL ir.ui.menu: base.menu_values_form_defaults
+DEL ir.ui.menu: base.menu_workflow
+DEL ir.ui.menu: base.menu_workflow_activity
+DEL ir.ui.menu: base.menu_workflow_instance
+DEL ir.ui.menu: base.menu_workflow_root
+DEL ir.ui.menu: base.menu_workflow_transition
+DEL ir.ui.menu: base.menu_workflow_workitem
+NEW ir.ui.view: base.contact_name
+NEW ir.ui.view: base.ir_cron_view_form
+NEW ir.ui.view: base.ir_default_form_view
+NEW ir.ui.view: base.ir_default_search_view
+NEW ir.ui.view: base.ir_default_tree_view
+NEW ir.ui.view: base.paperformat_view_form
+NEW ir.ui.view: base.paperformat_view_tree
+NEW ir.ui.view: base.res_config_settings_view_form
+NEW ir.ui.view: base.res_partner_industry_view_form
+NEW ir.ui.view: base.res_partner_industry_view_tree
+NEW ir.ui.view: base.view_base_module_uninstall
+NEW ir.ui.view: base.view_company_report_form
+NEW ir.ui.view: base.view_company_report_form_with_print
+NEW ir.ui.view: base.view_currency_kanban
+NEW ir.ui.view: base.view_partner_short_form
+NEW ir.ui.view: base.view_res_company_kanban
+NEW ir.ui.view: base.view_res_users_kanban
+DEL ir.ui.view: base.action_view_company_form_link_2_currencies
+DEL ir.ui.view: base.ir_cron_view
+DEL ir.ui.view: base.values_view_form_action
+DEL ir.ui.view: base.values_view_form_defaults
+DEL ir.ui.view: base.values_view_search_action
+DEL ir.ui.view: base.values_view_tree_action
+DEL ir.ui.view: base.view_base_module_configuration_form
+DEL ir.ui.view: base.view_workflow_activity_form
+DEL ir.ui.view: base.view_workflow_activity_search
+DEL ir.ui.view: base.view_workflow_activity_tree
+DEL ir.ui.view: base.view_workflow_diagram
+DEL ir.ui.view: base.view_workflow_form
+DEL ir.ui.view: base.view_workflow_instance_form
+DEL ir.ui.view: base.view_workflow_instance_search
+DEL ir.ui.view: base.view_workflow_instance_tree
+DEL ir.ui.view: base.view_workflow_search
+DEL ir.ui.view: base.view_workflow_transition_form
+DEL ir.ui.view: base.view_workflow_transition_search
+DEL ir.ui.view: base.view_workflow_transition_tree
+DEL ir.ui.view: base.view_workflow_tree
+DEL ir.ui.view: base.view_workflow_workitem_form
+DEL ir.ui.view: base.view_workflow_workitem_search
+DEL ir.ui.view: base.view_workflow_workitem_tree
+DEL ir.values: base.action_module_immediate_install
+DEL ir.values: base.ir_action_module_category
+DEL ir.values: base.ir_open_company
+NEW report.paperformat: base.paperformat_batch_deposit
+NEW report.paperformat: base.paperformat_euro
+NEW report.paperformat: base.paperformat_us
+NEW res.country: base.tl
+DEL res.country: base.an
+DEL res.country: base.nt
+DEL res.country: base.tp
+DEL res.country: base.yu
+DEL res.country: base.zr
+NEW res.country.group: base.south_america
+NEW res.country.state: base.state_co_01
+NEW res.country.state: base.state_co_02
+NEW res.country.state: base.state_co_03
+NEW res.country.state: base.state_co_04
+NEW res.country.state: base.state_co_05
+NEW res.country.state: base.state_co_06
+NEW res.country.state: base.state_co_07
+NEW res.country.state: base.state_co_08
+NEW res.country.state: base.state_co_09
+NEW res.country.state: base.state_co_10
+NEW res.country.state: base.state_co_11
+NEW res.country.state: base.state_co_12
+NEW res.country.state: base.state_co_13
+NEW res.country.state: base.state_co_14
+NEW res.country.state: base.state_co_15
+NEW res.country.state: base.state_co_16
+NEW res.country.state: base.state_co_17
+NEW res.country.state: base.state_co_18
+NEW res.country.state: base.state_co_19
+NEW res.country.state: base.state_co_20
+NEW res.country.state: base.state_co_21
+NEW res.country.state: base.state_co_22
+NEW res.country.state: base.state_co_23
+NEW res.country.state: base.state_co_24
+NEW res.country.state: base.state_co_25
+NEW res.country.state: base.state_co_26
+NEW res.country.state: base.state_co_27
+NEW res.country.state: base.state_co_28
+NEW res.country.state: base.state_co_29
+NEW res.country.state: base.state_co_30
+NEW res.country.state: base.state_co_31
+NEW res.country.state: base.state_co_32
+NEW res.country.state: base.state_co_33
+DEL res.currency: base.VUB
+DEL res.font: base.font_courier
+DEL res.font: base.font_helvetica
+DEL res.font: base.font_times
+NEW res.partner.industry: base.res_partner_industry_A
+NEW res.partner.industry: base.res_partner_industry_B
+NEW res.partner.industry: base.res_partner_industry_C
+NEW res.partner.industry: base.res_partner_industry_D
+NEW res.partner.industry: base.res_partner_industry_E
+NEW res.partner.industry: base.res_partner_industry_F
+NEW res.partner.industry: base.res_partner_industry_G
+NEW res.partner.industry: base.res_partner_industry_H
+NEW res.partner.industry: base.res_partner_industry_I
+NEW res.partner.industry: base.res_partner_industry_J
+NEW res.partner.industry: base.res_partner_industry_K
+NEW res.partner.industry: base.res_partner_industry_L
+NEW res.partner.industry: base.res_partner_industry_M
+NEW res.partner.industry: base.res_partner_industry_N
+NEW res.partner.industry: base.res_partner_industry_O
+NEW res.partner.industry: base.res_partner_industry_P
+NEW res.partner.industry: base.res_partner_industry_Q
+NEW res.partner.industry: base.res_partner_industry_R
+NEW res.partner.industry: base.res_partner_industry_S
+NEW res.partner.industry: base.res_partner_industry_T
+NEW res.partner.industry: base.res_partner_industry_U

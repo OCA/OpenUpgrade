@@ -1,0 +1,5 @@
+---Fields in module 'website_forum'---
+website_forum / forum.forum              / website_message_ids (one2many): NEW relation: mail.message
+website_forum / forum.tag                / website_message_ids (one2many): NEW relation: mail.message
+---XML records in module 'website_forum'---
+NEW ir.ui.view: website_forum.res_users_view_form_preference

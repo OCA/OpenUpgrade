@@ -1,0 +1,58 @@
+---Fields in module 'project'---
+project      / account.analytic.account / use_tasks (boolean)           : DEL 
+project      / project.project          / alias_model (selection)       : DEL required: required, selection_keys: function, req_default: function
+project      / project.project          / subtask_project_id (many2one) : previously in module hr_timesheet
+project      / project.project          / website_message_ids (one2many): NEW relation: mail.message
+project      / project.task             / activity_ids (one2many)       : NEW relation: mail.activity
+project      / project.task             / attachment_ids (one2many)     : now a function
+project      / project.task             / child_ids (one2many)          : previously in module hr_timesheet
+project      / project.task             / email_cc (char)               : NEW 
+project      / project.task             / email_from (char)             : NEW 
+project      / project.task             / parent_id (many2one)          : previously in module hr_timesheet
+project      / project.task             / subtask_count (integer)       : previously in module hr_timesheet
+project      / project.task             / subtask_project_id (many2one) : previously in module hr_timesheet
+project      / project.task             / website_message_ids (one2many): NEW relation: mail.message
+project      / project.task.type        / legend_blocked (char)         : now required, default = function
+project      / project.task.type        / legend_done (char)            : now required, default = function
+project      / project.task.type        / legend_normal (char)          : now required, default = function
+---XML records in module 'project'---
+NEW ir.actions.act_window: project.mail_activity_type_action_config_project_types
+NEW ir.actions.act_window: project.project_config_settings_action
+NEW ir.actions.act_window: project.project_task_action_activity
+NEW ir.actions.act_window: project.project_task_action_from_partner
+NEW ir.actions.act_window: project.project_task_action_sub_task
+NEW ir.actions.act_window: project.project_task_actions_act_window_merge_tasks
+DEL ir.actions.act_window: project.action_config_settings
+NEW ir.actions.server: project.ir_actions_server_project_sample
+DEL ir.actions.server: project.activate_sample_project
+NEW ir.model.access: project.access_account_analytic_account_portal
+NEW ir.model.access: project.access_project_portal
+NEW ir.model.access: project.access_project_tags_portal
+NEW ir.model.access: project.access_project_task_type_portal
+NEW ir.model.access: project.access_project_user
+NEW ir.model.access: project.access_task_portal
+DEL ir.model.access: project.access_project_on_partner
+NEW ir.rule: project.project_project_rule_portal
+NEW ir.rule: project.project_task_rule_portal
+NEW ir.ui.menu: project.project_config_settings_menu_action
+NEW ir.ui.menu: project.project_menu_config_activity_type
+NEW ir.ui.menu: project.project_task_menu_activity
+DEL ir.ui.menu: base.menu_administration
+DEL ir.ui.menu: project.menu_project_general_settings
+NEW ir.ui.view: project.mail_template_task_merge
+NEW ir.ui.view: project.portal_layout
+NEW ir.ui.view: project.portal_my_home
+NEW ir.ui.view: project.portal_my_project
+NEW ir.ui.view: project.portal_my_projects
+NEW ir.ui.view: project.portal_my_task
+NEW ir.ui.view: project.portal_my_tasks
+NEW ir.ui.view: project.project_task_merge_wizard_form
+NEW ir.ui.view: project.project_task_view_tree_activity
+NEW ir.ui.view: project.project_view_kanban
+NEW ir.ui.view: project.qunit_suite
+NEW ir.ui.view: project.res_config_settings_view_form
+NEW ir.ui.view: project.view_project_task_type_kanban
+DEL ir.ui.view: project.view_config_settings
+DEL ir.values: project.ir_project_task_open
+DEL mail.message: project.module_install_notification
+NEW res.groups: project.group_subtask_project

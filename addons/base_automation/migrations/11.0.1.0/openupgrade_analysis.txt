@@ -1,0 +1,37 @@
+---Fields in module 'base_automation'---
+base_automation / base.automation          / _inherits (False)             : NEW 
+base_automation / base.automation          / action_server_id (many2one)   : NEW relation: ir.actions.server, required: required
+base_automation / base.automation          / active (boolean)              : NEW 
+base_automation / base.automation          / filter_domain (char)          : NEW 
+base_automation / base.automation          / filter_pre_domain (char)      : NEW 
+base_automation / base.automation          / last_run (datetime)           : NEW 
+base_automation / base.automation          / on_change_fields (char)       : NEW 
+base_automation / base.automation          / trg_date_calendar_id (many2one): NEW relation: resource.calendar
+base_automation / base.automation          / trg_date_id (many2one)        : NEW relation: ir.model.fields
+base_automation / base.automation          / trg_date_range (integer)      : NEW 
+base_automation / base.automation          / trg_date_range_type (selection): NEW selection_keys: ['day', 'hour', 'minutes', 'month']
+base_automation / base.automation          / trigger (selection)           : NEW required: required, selection_keys: ['on_change', 'on_create', 'on_create_or_write', 'on_time', 'on_unlink', 'on_write']
+base_automation / base.automation.lead.test / active (boolean)              : NEW 
+base_automation / base.automation.lead.test / date_action_last (datetime)   : NEW 
+base_automation / base.automation.lead.test / is_assigned_to_admin (boolean): NEW 
+base_automation / base.automation.lead.test / line_ids (one2many)           : NEW relation: base.automation.line.test
+base_automation / base.automation.lead.test / name (char)                   : NEW required: required
+base_automation / base.automation.lead.test / partner_id (many2one)         : NEW relation: res.partner
+base_automation / base.automation.lead.test / priority (boolean)            : NEW 
+base_automation / base.automation.lead.test / state (selection)             : NEW selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+base_automation / base.automation.lead.test / user_id (many2one)            : NEW relation: res.users
+base_automation / base.automation.line.test / lead_id (many2one)            : NEW relation: base.automation.lead.test
+base_automation / base.automation.line.test / name (char)                   : NEW 
+base_automation / base.automation.line.test / user_id (many2one)            : NEW relation: res.users
+base_automation / ir.actions.server        / usage (False)                 : NEW selection_keys: ['base_automation', 'ir_actions_server', 'ir_cron'], mode: modify
+---XML records in module 'base_automation'---
+NEW ir.actions.act_window: base_automation.base_automation_act
+NEW ir.cron: base_automation.ir_cron_data_base_automation_check
+NEW ir.model.access: base_automation.access_base_automation
+NEW ir.model.access: base_automation.access_base_automation_config
+NEW ir.model.access: base_automation.access_base_automation_lead_test
+NEW ir.model.access: base_automation.access_base_automation_line_test
+NEW ir.ui.menu: base_automation.menu_base_automation_form
+NEW ir.ui.view: base_automation.view_base_automation_form
+NEW ir.ui.view: base_automation.view_base_automation_search
+NEW ir.ui.view: base_automation.view_base_automation_tree

@@ -1,0 +1,11 @@
+---Fields in module 'website_crm_partner_assign'---
+---XML records in module 'website_crm_partner_assign'---
+NEW crm.lead.tag: website_crm_partner_assign.tag_portal_lead_own_opp
+DEL ir.model.access: website_crm_partner_assign.crm_activity_portal_access
+DEL ir.model.access: website_crm_partner_assign.crm_lead_portal_access
+DEL ir.model.access: website_crm_partner_assign.lead_portal_access
+DEL ir.model.access: website_crm_partner_assign.mail_message_subtype_portal_access
+DEL ir.model.access: website_crm_partner_assign.res_partner_grade_access
+NEW ir.rule: website_crm_partner_assign.res_partner_grade_rule_portal_public
+NEW ir.ui.menu: website_crm_partner_assign.crm_menu_resellers
+DEL ir.values: website_crm_partner_assign.ir_assign_salesman_according_assigned_partner

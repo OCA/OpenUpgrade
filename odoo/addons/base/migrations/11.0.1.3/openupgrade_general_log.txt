@@ -1,0 +1,687 @@
+---Fields in module 'general'---
+# 6856 fields matched,
+# Direct match: 6354
+# Found in other module: 58
+# Found with different name: 0
+# Found with different type: 2
+# In obsolete models: 442
+# New columns: 1117
+# Not matched: 394
+new model account.cash.rounding
+new model account.group
+new model base.automation
+new model base.automation.lead.test
+new model base.automation.line.test
+new model event.track.stage
+new model event.type.mail
+new model hr.contract.advantage.template
+new model ir.actions.report
+new model ir.default
+new model ir.module.module.exclusion
+new model mail.activity
+new model mail.activity.type
+new model mail.test.simple
+new model mrp.document
+new model payment.icon
+new model product.attribute.category
+new model product.wishlist
+new model res.city
+new model res.partner.industry
+new model resource.test
+new model stock.move.line
+new model stock.picking.batch
+new model test_performance.base
+new model test_performance.line
+new model test_performance.mail
+new model test_performance.tag
+new model website.page
+new model website.redirect
+obsolete model base.action.rule
+obsolete model base.action.rule.lead.test
+obsolete model base.action.rule.line.test
+obsolete model crm.activity
+obsolete model hr_timesheet_sheet.sheet
+obsolete model ir.actions.report.xml
+obsolete model ir.values
+obsolete model marketing.campaign
+obsolete model marketing.campaign.activity
+obsolete model marketing.campaign.segment
+obsolete model marketing.campaign.transition
+obsolete model marketing.campaign.workitem
+obsolete model procurement.order
+obsolete model project.issue
+obsolete model report
+obsolete model res.font
+obsolete model stock.move.lots
+obsolete model stock.move.operation.link
+obsolete model stock.pack.operation
+obsolete model stock.pack.operation.lot
+obsolete model stock.picking.wave
+obsolete model subscription.document
+obsolete model subscription.document.fields
+obsolete model subscription.subscription
+obsolete model subscription.subscription.history
+obsolete model workflow
+obsolete model workflow.activity
+obsolete model workflow.instance
+obsolete model workflow.transition
+obsolete model workflow.triggers
+obsolete model workflow.workitem
+---XML records in module 'general'---
+ERROR: module not in list of installed modules:
+---Fields in module 'website_issue'---
+---XML records in module 'website_issue'---
+DEL ir.model: project_issue.model_project_issue
+ERROR: module not in list of installed modules:
+---Fields in module 'crm_project_issue'---
+---XML records in module 'crm_project_issue'---
+DEL ir.actions.act_window: crm_project_issue.convert_lead2projectissue_wizard_action
+DEL ir.model.access: crm_project_issue.access_project_project_sale_user
+DEL ir.model.access: crm_project_issue.access_project_task_sale_user
+DEL ir.model.access: crm_project_issue.access_project_task_type_sale_user
+DEL ir.ui.view: crm_project_issue.crm_case_form_view_leads_project_issue
+DEL ir.ui.view: crm_project_issue.view_crm_lead2projectissue_wizard
+ERROR: module not in list of installed modules:
+---Fields in module 'website_portal'---
+---XML records in module 'website_portal'---
+DEL ir.ui.view: website_portal.assets_frontend
+DEL ir.ui.view: website_portal.contact
+DEL ir.ui.view: website_portal.custom_panel
+DEL ir.ui.view: website_portal.details
+DEL ir.ui.view: website_portal.my_account_link
+DEL ir.ui.view: website_portal.portal_archive_groups
+DEL ir.ui.view: website_portal.portal_layout
+DEL ir.ui.view: website_portal.portal_my_home
+ERROR: module not in list of installed modules:
+---Fields in module 'website_project'---
+---XML records in module 'website_project'---
+DEL ir.model.access: website_project.access_account_analytic_account_portal
+DEL ir.model.access: website_project.access_project_portal
+DEL ir.model.access: website_project.access_project_tags_portal
+DEL ir.model.access: website_project.access_task_portal
+DEL ir.model.access: website_project.access_task_type_portal
+DEL ir.rule: website_project.portal_project_rule
+DEL ir.rule: website_project.portal_task_rule
+DEL ir.ui.view: website_project.my_project
+DEL ir.ui.view: website_project.my_projects
+DEL ir.ui.view: website_project.my_task
+DEL ir.ui.view: website_project.my_tasks
+DEL ir.ui.view: website_project.portal_layout
+DEL ir.ui.view: website_project.portal_my_home
+ERROR: module not in list of installed modules:
+---Fields in module 'marketing_campaign'---
+---XML records in module 'marketing_campaign'---
+DEL ir.actions.act_window: marketing_campaign.act_marketing_campaing_followup
+DEL ir.actions.act_window: marketing_campaign.act_marketing_campaing_segment_opened
+DEL ir.actions.act_window: marketing_campaign.act_marketing_campaing_stat
+DEL ir.actions.act_window: marketing_campaign.action_campaign_analysis_all
+DEL ir.actions.act_window: marketing_campaign.action_marketing_campaign_form
+DEL ir.actions.act_window: marketing_campaign.action_marketing_campaign_segment_form
+DEL ir.actions.act_window: marketing_campaign.action_marketing_campaign_workitem
+DEL ir.cron: marketing_campaign.ir_cron_marketing_campaign_every_day
+DEL ir.cron: marketing_campaign.ir_cron_marketing_campaign_every_hour
+DEL ir.model.access: marketing_campaign.access_email_template_account_manager
+DEL ir.model.access: marketing_campaign.access_email_template_account_user
+DEL ir.model.access: marketing_campaign.access_email_template_manager
+DEL ir.model.access: marketing_campaign.access_email_template_user
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_activity_campaign_manager
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_activity_campaignadmin
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_admin
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_analysis_campaign_manager
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_analysis_campaignadmin
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_manager
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_segment_campaign_manager
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_segment_campaignadmin
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_segment_system
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_system
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_transition_campaign_manager
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_transition_campaignadmin
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_workitem_all
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_workitem_campaign_manager
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_workitem_campaignadmin
+DEL ir.model.access: marketing_campaign.access_marketing_campaign_workitem_system
+DEL ir.ui.menu: marketing_campaign.menu_action_campaign_analysis_all
+DEL ir.ui.menu: marketing_campaign.menu_action_marketing_campaign_workitem
+DEL ir.ui.menu: marketing_campaign.menu_marketing_campaign_campaigns
+DEL ir.ui.menu: marketing_campaign.menu_marketing_campaign_form
+DEL ir.ui.menu: marketing_campaign.menu_marketing_campaign_root
+DEL ir.ui.menu: marketing_campaign.menu_marketing_campaign_segment_form
+DEL ir.ui.menu: marketing_campaign.report_marketing_campaign
+DEL ir.ui.view: marketing_campaign.view_campaign_analysis_search
+DEL ir.ui.view: marketing_campaign.view_campaign_analysis_tree
+DEL ir.ui.view: marketing_campaign.view_marketing_campaign_activity_form
+DEL ir.ui.view: marketing_campaign.view_marketing_campaign_activity_tree
+DEL ir.ui.view: marketing_campaign.view_marketing_campaign_diagram
+DEL ir.ui.view: marketing_campaign.view_marketing_campaign_form
+DEL ir.ui.view: marketing_campaign.view_marketing_campaign_search
+DEL ir.ui.view: marketing_campaign.view_marketing_campaign_segment_form
+DEL ir.ui.view: marketing_campaign.view_marketing_campaign_segment_search
+DEL ir.ui.view: marketing_campaign.view_marketing_campaign_segment_tree
+DEL ir.ui.view: marketing_campaign.view_marketing_campaign_tree
+DEL ir.ui.view: marketing_campaign.view_marketing_campaign_workitem_form
+DEL ir.ui.view: marketing_campaign.view_marketing_campaign_workitem_search
+DEL ir.ui.view: marketing_campaign.view_marketing_campaign_workitem_tree
+DEL ir.ui.view: marketing_campaign.view_report_campaign_analysis_graph
+DEL ir.ui.view: marketing_campaign.view_report_campaign_analysis_pivot
+DEL res.groups: marketing_campaign.group_lead_automation_manager
+DEL res.groups: marketing_campaign.group_lead_automation_user
+DEL res.users: base.default_user
+ERROR: module not in list of installed modules:
+---Fields in module 'portal_sale'---
+---XML records in module 'portal_sale'---
+DEL ir.rule: portal_sale.portal_account_invoice_line_rule
+DEL ir.rule: portal_sale.portal_account_invoice_user_rule
+DEL ir.rule: portal_sale.portal_personal_contact
+DEL ir.rule: portal_sale.portal_sale_order_line_rule
+DEL ir.rule: portal_sale.portal_sale_order_user_rule
+DEL ir.ui.view: portal_sale.view_account_invoice_filter_share
+ERROR: module not in list of installed modules:
+---Fields in module 'report'---
+report       / report.paperformat       / __last_update (datetime)      : module is now 'base' ('report')
+report       / report.paperformat       / default (boolean)             : module is now 'base' ('report')
+report       / report.paperformat       / display_name (char)           : module is now 'base' ('report')
+report       / report.paperformat       / dpi (integer)                 : module is now 'base' ('report')
+report       / report.paperformat       / format (selection)            : module is now 'base' ('report')
+report       / report.paperformat       / header_line (boolean)         : module is now 'base' ('report')
+report       / report.paperformat       / header_spacing (integer)      : module is now 'base' ('report')
+report       / report.paperformat       / margin_bottom (float)         : module is now 'base' ('report')
+report       / report.paperformat       / margin_left (float)           : module is now 'base' ('report')
+report       / report.paperformat       / margin_right (float)          : module is now 'base' ('report')
+report       / report.paperformat       / margin_top (float)            : module is now 'base' ('report')
+report       / report.paperformat       / name (char)                   : module is now 'base' ('report')
+report       / report.paperformat       / orientation (selection)       : module is now 'base' ('report')
+report       / report.paperformat       / page_height (integer)         : module is now 'base' ('report')
+report       / report.paperformat       / page_width (integer)          : module is now 'base' ('report')
+report       / report.paperformat       / report_ids (one2many)         : module is now 'base' ('report')
+report       / report.paperformat       / report_ids (one2many)         : relation is now 'ir.actions.report' ('ir.actions.report.xml')
+report       / res.company              / paperformat_id (many2one)     : module is now 'base' ('report')
+---XML records in module 'report'---
+DEL ir.actions.act_window: report.paper_format_action
+DEL ir.actions.act_window: report.reports_action
+DEL ir.actions.report.xml: report.action_report_externalpreview
+DEL ir.actions.report.xml: report.action_report_internalpreview
+DEL ir.model.access: report.access_report
+DEL ir.model.access: report.paperformat_access_employee
+DEL ir.model.access: report.paperformat_access_portal
+DEL ir.ui.menu: report.paper_format_menuitem
+DEL ir.ui.menu: report.reporting_menuitem
+DEL ir.ui.menu: report.reports_menuitem
+DEL ir.ui.view: report.act_report_xml_view_inherit
+DEL ir.ui.view: report.act_report_xml_view_inherit_report
+DEL ir.ui.view: report.assets_backend
+DEL ir.ui.view: report.assets_common
+DEL ir.ui.view: report.assets_editor
+DEL ir.ui.view: report.assets_pdf
+DEL ir.ui.view: report.base_config_settings_inherited
+DEL ir.ui.view: report.external_layout
+DEL ir.ui.view: report.external_layout_footer
+DEL ir.ui.view: report.external_layout_header
+DEL ir.ui.view: report.html_container
+DEL ir.ui.view: report.internal_layout
+DEL ir.ui.view: report.layout
+DEL ir.ui.view: report.minimal_layout
+DEL ir.ui.view: report.paperformat_view_form
+DEL ir.ui.view: report.paperformat_view_tree
+DEL ir.ui.view: report.preview_externalreport
+DEL ir.ui.view: report.preview_internalreport
+DEL report.paperformat: report.paperformat_euro
+DEL report.paperformat: report.paperformat_us
+ERROR: module not in list of installed modules:
+---Fields in module 'l10n_fr_certification'---
+l10n_fr_certification / account.move             / l10n_fr_hash (char)           : DEL 
+l10n_fr_certification / account.move             / l10n_fr_secure_sequence_number (integer): DEL 
+l10n_fr_certification / res.company              / l10n_fr_secure_sequence_id (many2one): DEL relation: ir.sequence
+---XML records in module 'l10n_fr_certification'---
+DEL ir.actions.server: l10n_fr_certification.action_check_hash_integrity
+DEL ir.ui.menu: l10n_fr_certification.menu_check_move_integrity
+DEL ir.ui.view: l10n_fr_certification.bank_statement_draft_form_inherit
+DEL ir.ui.view: l10n_fr_certification.invoice_form_no_cancel_inherit
+DEL ir.ui.view: l10n_fr_certification.view_move_form_no_cancel_inherit
+ERROR: module not in list of installed modules:
+---Fields in module 'project_issue_sheet'---
+project_issue_sheet / account.analytic.line    / issue_id (many2one)           : DEL relation: project.issue
+---XML records in module 'project_issue_sheet'---
+DEL ir.model.access: project_issue_sheet.access_account_analytic_line_project_manager
+DEL ir.model.access: project_issue_sheet.access_account_analytic_line_project_user
+DEL ir.model.access: project_issue_sheet.access_account_invoice_project_manager
+DEL ir.model.access: project_issue_sheet.access_account_invoice_project_user
+DEL ir.model.access: project_issue_sheet.access_analytic_account_line_project_user
+DEL ir.model.access: project_issue_sheet.access_hr_timesheet_sheet_sheet_project_manager
+DEL ir.model.access: project_issue_sheet.access_hr_timesheet_sheet_sheet_project_user
+DEL ir.rule: project_issue_sheet.portal_issue_sheet_rule
+DEL ir.ui.view: project_issue_sheet.project_issue_form_view
+DEL ir.ui.view: project_issue_sheet.project_issue_tree_view_inherited
+ERROR: module not in list of installed modules:
+---Fields in module 'stock_picking_wave'---
+stock_picking_wave / stock.picking            / wave_id (many2one)            : module is now 'stock_picking_batch' ('stock_picking_wave')
+stock_picking_wave / stock.picking            / wave_id (many2one)            : relation is now 'stock.picking.batch' ('stock.picking.wave')
+stock_picking_wave / stock.picking            / wave_id (many2one)            : was renamed to batch_id [nothing to do]
+---XML records in module 'stock_picking_wave'---
+DEL ir.actions.act_window: stock_picking_wave.action_picking_to_wave
+DEL ir.actions.act_window: stock_picking_wave.action_picking_wave
+DEL ir.actions.act_window: stock_picking_wave.picking_to_wave_act
+DEL ir.model.access: stock_picking_wave.access_stock_picking_wave
+DEL ir.sequence: stock_picking_wave.seq_picking_wave
+DEL ir.ui.menu: stock_picking_wave.menu_action_picking_wave
+DEL ir.ui.view: stock_picking_wave.picking_to_wave_form
+DEL ir.ui.view: stock_picking_wave.view_picking_wave_filter
+DEL ir.ui.view: stock_picking_wave.view_picking_wave_form
+DEL ir.ui.view: stock_picking_wave.view_picking_wave_tree
+DEL ir.ui.view: stock_picking_wave.view_stock_picking_wave_inherit
+DEL ir.ui.view: stock_picking_wave.view_stock_picking_wave_search_inherit
+DEL ir.ui.view: stock_picking_wave.view_stock_picking_wave_tree_inherit
+DEL mail.message.subtype: stock_picking_wave.mt_wave_state
+ERROR: module not in list of installed modules:
+---Fields in module 'rating_project_issue'---
+---XML records in module 'rating_project_issue'---
+DEL ir.actions.act_window: rating_project_issue.rating_rating_action_issue
+DEL ir.ui.view: rating_project_issue.project_issue_view_form_inherit_rating
+DEL ir.ui.view: rating_project_issue.project_issue_view_kanban_inherit_rating
+DEL ir.ui.view: rating_project_issue.project_issue_view_rating
+DEL mail.message.subtype: rating_project_issue.mt_issue_rating
+DEL mail.message.subtype: rating_project_issue.mt_project_issue_rating
+ERROR: module not in list of installed modules:
+---Fields in module 'portal_gamification'---
+---XML records in module 'portal_gamification'---
+DEL ir.model.access: portal_gamification.badge_portal
+DEL ir.model.access: portal_gamification.badge_public
+DEL ir.model.access: portal_gamification.badge_user_portal
+DEL ir.model.access: portal_gamification.badge_user_public
+DEL ir.model.access: portal_gamification.challenge_line_portal
+DEL ir.model.access: portal_gamification.challenge_portal
+DEL ir.model.access: portal_gamification.goal_definition_portal
+DEL ir.model.access: portal_gamification.goal_portal
+DEL ir.rule: gamification.goal_user_visibility
+ERROR: module not in list of installed modules:
+---Fields in module 'website_portal_sale'---
+website_portal_sale / payment.transaction      / sale_order_id (many2one)      : module is now 'sale_payment' ('website_portal_sale')
+---XML records in module 'website_portal_sale'---
+DEL ir.model.access: website_portal_sale.access_account_invoice
+DEL ir.model.access: website_portal_sale.access_account_invoice_line
+DEL ir.model.access: website_portal_sale.access_account_invoice_tax
+DEL ir.model.access: website_portal_sale.access_account_journal
+DEL ir.model.access: website_portal_sale.access_account_tax
+DEL ir.model.access: website_portal_sale.access_account_tax_group
+DEL ir.model.access: website_portal_sale.access_product_attribute_line_portal
+DEL ir.model.access: website_portal_sale.access_product_attribute_portal
+DEL ir.model.access: website_portal_sale.access_product_attribute_price_portal
+DEL ir.model.access: website_portal_sale.access_product_attribute_value_portal
+DEL ir.model.access: website_portal_sale.access_product_list
+DEL ir.model.access: website_portal_sale.access_res_partner
+DEL ir.model.access: website_portal_sale.access_res_partner_category
+DEL ir.model.access: website_portal_sale.access_sale_order
+DEL ir.model.access: website_portal_sale.access_sale_order_line
+DEL ir.ui.view: website_portal_sale.assets_frontend
+DEL ir.ui.view: website_portal_sale.orders_followup
+DEL ir.ui.view: website_portal_sale.portal_my_home_menu_sale
+DEL ir.ui.view: website_portal_sale.portal_my_home_sale
+DEL ir.ui.view: website_portal_sale.portal_my_invoices
+DEL ir.ui.view: website_portal_sale.portal_my_orders
+DEL ir.ui.view: website_portal_sale.portal_my_quotations
+ERROR: module not in list of installed modules:
+---Fields in module 'website_rating_project_issue'---
+website_rating_project_issue / project.project          / website_published (boolean)   : module is now 'website_rating_project' ('website_rating_project_issue')
+website_rating_project_issue / project.project          / website_published (boolean)   : was renamed to portal_show_rating [nothing to do]
+---XML records in module 'website_rating_project_issue'---
+DEL ir.ui.view: website_rating_project_issue.assets_frontend
+DEL ir.ui.view: website_rating_project_issue.edit_project_inherit_website_rating_project_issue
+DEL ir.ui.view: website_rating_project_issue.header_footer_custom
+DEL ir.ui.view: website_rating_project_issue.index
+DEL ir.ui.view: website_rating_project_issue.project_data_satisfaction
+DEL ir.ui.view: website_rating_project_issue.project_rating_data
+DEL ir.ui.view: website_rating_project_issue.project_rating_page
+ERROR: module not in list of installed modules:
+---Fields in module 'base_action_rule'---
+---XML records in module 'base_action_rule'---
+DEL ir.actions.act_window: base_action_rule.base_action_rule_act
+DEL ir.cron: base_action_rule.ir_cron_crm_action
+DEL ir.model.access: base_action_rule.access_base_action_rule
+DEL ir.model.access: base_action_rule.access_base_action_rule_config
+DEL ir.model.access: base_action_rule.access_base_action_rule_lead_test
+DEL ir.model.access: base_action_rule.access_base_action_rule_line_test
+DEL ir.ui.menu: base_action_rule.menu_base_action_rule_form
+DEL ir.ui.view: base_action_rule.view_base_action_rule_form
+DEL ir.ui.view: base_action_rule.view_base_action_rule_search
+DEL ir.ui.view: base_action_rule.view_base_action_rule_tree
+ERROR: module not in list of installed modules:
+---Fields in module 'website_project_timesheet'---
+---XML records in module 'website_project_timesheet'---
+DEL ir.model.access: website_project_timesheet.access_timesheets_portal
+DEL ir.rule: website_project_timesheet.portal_task_timesheet_rule
+DEL ir.ui.view: website_project_timesheet.my_task
+ERROR: module not in list of installed modules:
+---Fields in module 'l10n_fr_hr_payroll'---
+l10n_fr_hr_payroll / hr.contract              / coef (char)                   : DEL 
+l10n_fr_hr_payroll / hr.contract              / niveau (char)                 : DEL 
+l10n_fr_hr_payroll / hr.contract              / qualif (char)                 : DEL 
+l10n_fr_hr_payroll / hr.payslip               / payment_mode (char)           : DEL 
+l10n_fr_hr_payroll / res.company              / conv_coll (char)              : DEL 
+l10n_fr_hr_payroll / res.company              / cotisation_prevoyance (float) : DEL 
+l10n_fr_hr_payroll / res.company              / nombre_employes (integer)     : DEL 
+l10n_fr_hr_payroll / res.company              / org_ss (char)                 : DEL 
+l10n_fr_hr_payroll / res.company              / plafond_secu (float)          : DEL 
+---XML records in module 'l10n_fr_hr_payroll'---
+DEL hr.contribution.register: l10n_fr_hr_payroll.hr_cci_register
+DEL hr.contribution.register: l10n_fr_hr_payroll.hr_prevoyance_register
+DEL hr.contribution.register: l10n_fr_hr_payroll.hr_retraite_register
+DEL hr.contribution.register: l10n_fr_hr_payroll.hr_urssaf_register
+DEL hr.holidays.status: l10n_fr_hr_payroll.holiday_status_heures_sup
+DEL hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_base
+DEL hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_employe_cadre
+DEL hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_employe_non_cadre
+DEL hr.salary.rule: hr_payroll.hr_rule_basic
+DEL hr.salary.rule: hr_payroll.hr_rule_net
+DEL hr.salary.rule: hr_payroll.hr_rule_taxable
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C10_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C10_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C11_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C11_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C12_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C12_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C13_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C13_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C14_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C14_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C15_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C15_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C16_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C16_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C17_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C17_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C18_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C18_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C19_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C19_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C1_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C1_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C20_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C20_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C21_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C21_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C22_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C22_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C23_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C23_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C24_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C24_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C25_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C25_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C26_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C26_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C27_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C27_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C28_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C29_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C2_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C2_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C30_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C35_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C35_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C36_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C36_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C37_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C37_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C38_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C38_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C39_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C39_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C3_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C3_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C40_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C40_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C4_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C4_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C5_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C5_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C7_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C7_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C8_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C8_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C9_employe
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C9_employer
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_cumul_imposable
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_secu
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_total
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_total_charges_patronales
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_total_charges_salariales
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_total_retenues
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_1
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_2
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_a
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_b
+DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_c
+DEL hr.salary.rule.category: hr_payroll.ALW
+DEL hr.salary.rule.category: hr_payroll.BASIC
+DEL hr.salary.rule.category: hr_payroll.COMP
+DEL hr.salary.rule.category: hr_payroll.DED
+DEL hr.salary.rule.category: hr_payroll.GROSS
+DEL hr.salary.rule.category: hr_payroll.NET
+DEL hr.salary.rule.category: l10n_fr_hr_payroll.C_IMP
+DEL hr.salary.rule.category: l10n_fr_hr_payroll.PREV
+DEL hr.salary.rule.category: l10n_fr_hr_payroll.RETENUES
+DEL hr.salary.rule.category: l10n_fr_hr_payroll.SALC
+DEL hr.salary.rule.category: l10n_fr_hr_payroll.SECU
+DEL hr.salary.rule.category: l10n_fr_hr_payroll.TOTAL
+DEL hr.salary.rule.category: l10n_fr_hr_payroll.other_totals
+DEL ir.actions.report.xml: l10n_fr_hr_payroll.action_report_report_l10nfrfichepaye
+DEL ir.ui.view: l10n_fr_hr_payroll.hr_contract_view_form_l10n_fr_payroll
+DEL ir.ui.view: l10n_fr_hr_payroll.hr_payslip_form_l10n_fr_payroll
+DEL ir.ui.view: l10n_fr_hr_payroll.report_l10n_fr_fiche_paye
+DEL ir.ui.view: l10n_fr_hr_payroll.view_account_config_settings_form_inherit_l10n_fr_hr_payroll
+DEL res.company: base.main_company
+ERROR: module not in list of installed modules:
+---Fields in module 'website_project_issue_sheet'---
+---XML records in module 'website_project_issue_sheet'---
+DEL ir.model.access: website_project_issue_sheet.access_timesheets_portal
+DEL ir.rule: website_project_issue_sheet.portal_issue_sheet_rule
+DEL ir.ui.view: website_project_issue_sheet.my_issues_issue
+ERROR: module not in list of installed modules:
+---Fields in module 'subscription'---
+---XML records in module 'subscription'---
+DEL ir.actions.act_window: subscription.action_document_form
+DEL ir.actions.act_window: subscription.action_subscription_form
+DEL ir.model.access: subscription.access_ir_cron_user
+DEL ir.model.access: subscription.access_res_partner_user
+DEL ir.model.access: subscription.access_subscription_document_fields
+DEL ir.model.access: subscription.access_subscription_document_user
+DEL ir.model.access: subscription.access_subscription_subscription_history_user
+DEL ir.model.access: subscription.access_subscription_subscription_user
+DEL ir.ui.menu: subscription.menu_action_document_form
+DEL ir.ui.menu: subscription.menu_action_subscription_form
+DEL ir.ui.view: subscription.document_fields_form
+DEL ir.ui.view: subscription.document_fields_tree
+DEL ir.ui.view: subscription.document_form
+DEL ir.ui.view: subscription.document_tree
+DEL ir.ui.view: subscription.subscription_subscription_history_form
+DEL ir.ui.view: subscription.subscription_subscription_history_tree
+DEL ir.ui.view: subscription.view_subscription_document_filter
+DEL ir.ui.view: subscription.view_subscription_filter
+DEL ir.ui.view: subscription.view_subscription_form
+DEL ir.ui.view: subscription.view_subscription_tree
+ERROR: module not in list of installed modules:
+---Fields in module 'web_kanban'---
+---XML records in module 'web_kanban'---
+DEL ir.ui.view: web_kanban.assets_backend
+ERROR: module not in list of installed modules:
+---Fields in module 'account_accountant'---
+---XML records in module 'account_accountant'---
+DEL ir.ui.menu: account.menu_account_config
+DEL ir.ui.menu: account.menu_finance
+DEL ir.ui.menu: account.menu_finance_reports
+DEL ir.ui.view: account_accountant.assets_backend
+DEL mail.message: account_accountant.module_install_notification
+DEL res.users: base.user_root
+ERROR: module not in list of installed modules:
+---Fields in module 'hr_timesheet_sheet'---
+hr_timesheet_sheet / res.company              / timesheet_range (selection)   : DEL selection_keys: ['month', 'week']
+---XML records in module 'hr_timesheet_sheet'---
+DEL ir.actions.act_window: hr_timesheet_sheet.act_hr_employee_2_hr_timesheet
+DEL ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_form
+DEL ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_my_timesheets
+DEL ir.actions.act_window: hr_timesheet_sheet.hr_timesheet_action_from_department
+DEL ir.actions.act_window.view: hr_timesheet_sheet.action_open_timesheet_sheet_holidays_tree
+DEL ir.actions.server: hr_timesheet_sheet.ir_actions_server_timesheet_sheet
+DEL ir.model.access: hr_timesheet_sheet.access_hr_timesheet_sheet_sheet_account
+DEL ir.model.access: hr_timesheet_sheet.access_hr_timesheet_sheet_sheet_system_employee
+DEL ir.model.access: hr_timesheet_sheet.access_hr_timesheet_sheet_sheet_user
+DEL ir.rule: hr_timesheet_sheet.timesheet_comp_rule
+DEL ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form
+DEL ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_my_current
+DEL ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_my_timesheets
+DEL ir.ui.menu: hr_timesheet_sheet.menu_hr_to_approve
+DEL ir.ui.view: hr_timesheet_sheet.assets_backend
+DEL ir.ui.view: hr_timesheet_sheet.hr_department_view_kanban
+DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_account_filter
+DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_account_form
+DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_account_tree
+DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_line_form
+DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_line_search
+DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_sheet_employee_extd_form
+DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_sheet_form
+DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_sheet_tree_simplified
+DEL ir.ui.view: hr_timesheet_sheet.view_config_settings_form_inherit_hr_timesheet_sheet
+DEL ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_sheet_filter
+DEL mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_approved
+DEL mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_confirmed
+DEL mail.message.subtype: hr_timesheet_sheet.mt_timesheet_approved
+DEL mail.message.subtype: hr_timesheet_sheet.mt_timesheet_confirmed
+ERROR: module not in list of installed modules:
+---Fields in module 'website_project_issue'---
+---XML records in module 'website_project_issue'---
+DEL ir.model.access: website_project_issue.access_issues
+DEL ir.rule: website_project_issue.portal_issue_rule
+DEL ir.ui.view: website_project_issue.my_issues
+DEL ir.ui.view: website_project_issue.my_issues_issue
+DEL ir.ui.view: website_project_issue.my_project
+DEL ir.ui.view: website_project_issue.my_projects
+DEL ir.ui.view: website_project_issue.portal_layout
+DEL ir.ui.view: website_project_issue.portal_my_home
+ERROR: module not in list of installed modules:
+---Fields in module 'account_tax_cash_basis'---
+account_tax_cash_basis / account.move             / tax_cash_basis_rec_id (many2one): module is now 'account' ('account_tax_cash_basis')
+account_tax_cash_basis / account.tax              / cash_basis_account (many2one) : module is now 'account' ('account_tax_cash_basis')
+account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : selection_keys is now '['on_invoice', 'on_payment']' ('False')
+account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : type is now 'selection' ('boolean')
+account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : was renamed to tax_exigibility [nothing to do]
+account_tax_cash_basis / res.company              / tax_cash_basis_journal_id (many2one): module is now 'account' ('account_tax_cash_basis')
+---XML records in module 'account_tax_cash_basis'---
+DEL ir.ui.view: account_tax_cash_basis.view_account_config_cash_basis_inherit_form
+DEL ir.ui.view: account_tax_cash_basis.view_tax_form_cash_basis_inherit
+ERROR: module not in list of installed modules:
+---Fields in module 'portal_stock'---
+---XML records in module 'portal_stock'---
+DEL ir.model.access: portal_stock.access_stock_move
+DEL ir.model.access: portal_stock.access_stock_pack_operation_portal
+DEL ir.model.access: portal_stock.access_stock_picking
+DEL ir.model.access: portal_stock.access_stock_picking_type_portal
+DEL ir.model.access: portal_stock.access_stock_warehouse_orderpoint
+DEL ir.rule: portal_stock.portal_stock_pack_operation_portal_user_rule
+DEL ir.rule: portal_stock.portal_stock_picking_portal_user_rule
+ERROR: module not in list of installed modules:
+---Fields in module 'project_issue'---
+project_issue / account.analytic.account / use_issues (boolean)          : DEL 
+project_issue / project.project          / issue_ids (one2many)          : DEL relation: project.issue
+project_issue / project.project          / label_issues (char)           : DEL 
+---XML records in module 'project_issue'---
+DEL ir.actions.act_window: project_issue.act_project_project_2_project_issue_all
+DEL ir.actions.act_window: project_issue.action_project_issue_report
+DEL ir.actions.act_window: project_issue.action_project_issue_report_filtered
+DEL ir.actions.act_window: project_issue.action_view_issues
+DEL ir.actions.act_window: project_issue.project_issue_categ_act0
+DEL ir.filters: project_issue.filter_issue_report_delay
+DEL ir.filters: project_issue.filter_issue_report_responsible
+DEL ir.model.access: project_issue.access_project_issue_portal
+DEL ir.model.access: project_issue.access_project_issue_report_all
+DEL ir.model.access: project_issue.access_project_issue_report_user
+DEL ir.model.access: project_issue.access_project_issue_user
+DEL ir.model.access: project_issue.access_resource_calendar_project_manager
+DEL ir.rule: project_issue.issue_project_manager_rule
+DEL ir.rule: project_issue.issue_user_rule
+DEL ir.ui.menu: project_issue.menu_project_issue_report_tree
+DEL ir.ui.menu: project_issue.menu_project_issue_track
+DEL ir.ui.view: project_issue.analytic_account_inherited_issue_form
+DEL ir.ui.view: project_issue.project_config_settings_view_form_inherit_project_issue
+DEL ir.ui.view: project_issue.project_feature_tree_view
+DEL ir.ui.view: project_issue.project_issue_calendar_view
+DEL ir.ui.view: project_issue.project_issue_form_view
+DEL ir.ui.view: project_issue.project_issue_graph_view
+DEL ir.ui.view: project_issue.project_issue_kanban_view
+DEL ir.ui.view: project_issue.project_issue_pivot_view
+DEL ir.ui.view: project_issue.project_issue_tree_view
+DEL ir.ui.view: project_issue.project_issue_view_kanban_inherit_no_group_create
+DEL ir.ui.view: project_issue.project_project_view_form_simplified_inherit_issue
+DEL ir.ui.view: project_issue.res_partner_issues_button_view
+DEL ir.ui.view: project_issue.view_project_form_inherited
+DEL ir.ui.view: project_issue.view_project_issue_filter
+DEL ir.ui.view: project_issue.view_project_issue_report_filter
+DEL ir.ui.view: project_issue.view_project_issue_report_graph
+DEL ir.ui.view: project_issue.view_project_issue_report_pivot
+DEL ir.ui.view: project_issue.view_project_kanban_inherited
+DEL mail.message: project_issue.module_install_notification
+DEL mail.message.subtype: project_issue.mt_issue_blocked
+DEL mail.message.subtype: project_issue.mt_issue_new
+DEL mail.message.subtype: project_issue.mt_issue_ready
+DEL mail.message.subtype: project_issue.mt_issue_stage
+DEL mail.message.subtype: project_issue.mt_project_issue_blocked
+DEL mail.message.subtype: project_issue.mt_project_issue_new
+DEL mail.message.subtype: project_issue.mt_project_issue_ready
+DEL mail.message.subtype: project_issue.mt_project_issue_stage
+ERROR: module not in list of installed modules:
+---Fields in module 'web_calendar'---
+---XML records in module 'web_calendar'---
+DEL ir.ui.view: web_calendar.assets_backend
+ERROR: module not in list of installed modules:
+---Fields in module 'stock_calendar'---
+stock_calendar / resource.calendar.attendance / group_id (many2one)           : DEL relation: procurement.group
+stock_calendar / resource.calendar.leaves / group_id (many2one)           : DEL relation: procurement.group
+stock_calendar / stock.warehouse.orderpoint / calendar_id (many2one)        : DEL relation: resource.calendar
+stock_calendar / stock.warehouse.orderpoint / last_execution_date (datetime): DEL 
+stock_calendar / stock.warehouse.orderpoint / purchase_calendar_id (many2one): DEL relation: resource.calendar
+---XML records in module 'stock_calendar'---
+DEL ir.ui.view: stock_calendar.view_procurement_form_stock_inherit
+DEL ir.ui.view: stock_calendar.view_resource_calendar_attendance_tree_procurement_group
+DEL ir.ui.view: stock_calendar.view_warehouse_orderpoint_form_inherit
+ERROR: module not in list of installed modules:
+---Fields in module 'procurement'---
+procurement  / procurement.group        / __last_update (datetime)      : module is now 'stock' ('procurement')
+procurement  / procurement.group        / display_name (char)           : module is now 'stock' ('procurement')
+procurement  / procurement.group        / move_type (selection)         : module is now 'stock' ('procurement')
+procurement  / procurement.group        / name (char)                   : module is now 'stock' ('procurement')
+procurement  / procurement.group        / procurement_ids (one2many)    : DEL relation: procurement.order
+procurement  / procurement.rule         / __last_update (datetime)      : module is now 'stock' ('procurement')
+procurement  / procurement.rule         / action (selection)            : module is now 'stock' ('procurement')
+procurement  / procurement.rule         / action (selection)            : selection_keys is now '['move']' ('function')
+procurement  / procurement.rule         / active (boolean)              : module is now 'stock' ('procurement')
+procurement  / procurement.rule         / company_id (many2one)         : module is now 'stock' ('procurement')
+procurement  / procurement.rule         / display_name (char)           : module is now 'stock' ('procurement')
+procurement  / procurement.rule         / group_id (many2one)           : module is now 'stock' ('procurement')
+procurement  / procurement.rule         / group_propagation_option (selection): module is now 'stock' ('procurement')
+procurement  / procurement.rule         / name (char)                   : module is now 'stock' ('procurement')
+procurement  / procurement.rule         / sequence (integer)            : module is now 'stock' ('procurement')
+---XML records in module 'procurement'---
+DEL ir.actions.act_window: procurement.action_compute_schedulers
+DEL ir.actions.act_window: procurement.do_view_procurements
+DEL ir.actions.act_window: procurement.procurement_action
+DEL ir.actions.act_window: procurement.procurement_action5
+DEL ir.actions.act_window: procurement.procurement_order_action_exceptions
+DEL ir.actions.act_window: procurement.procurement_order_action_product_product_stat
+DEL ir.actions.act_window: procurement.procurement_order_action_product_template_stat
+DEL ir.actions.server: procurement.procurement_order_server_action
+DEL ir.cron: procurement.ir_cron_scheduler_action
+DEL ir.model.access: procurement.access_procurement
+DEL ir.model.access: procurement.access_procurement_group
+DEL ir.model.access: procurement.access_procurement_rule
+DEL ir.rule: procurement.procurement_rule
+DEL ir.rule: procurement.product_pulled_flow_comp_rule
+DEL ir.sequence: procurement.sequence_proc_group
+DEL ir.ui.view: procurement.procurement_form_view
+DEL ir.ui.view: procurement.procurement_group_form_view
+DEL ir.ui.view: procurement.procurement_tree_view
+DEL ir.ui.view: procurement.product_product_view_form_procurement_button
+DEL ir.ui.view: procurement.product_template_view_form_procurement_button
+DEL ir.ui.view: procurement.view_compute_schedulers_wizard
+DEL ir.ui.view: procurement.view_procurement_filter
+DEL ir.ui.view: procurement.view_procurement_rule_filter
+DEL ir.ui.view: procurement.view_procurement_rule_form
+DEL ir.ui.view: procurement.view_procurement_rule_tree
+DEL ir.values: procurement.run_procurement_order_action

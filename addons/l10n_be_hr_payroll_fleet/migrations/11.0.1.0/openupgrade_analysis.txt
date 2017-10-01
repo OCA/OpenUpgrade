@@ -1,0 +1,20 @@
+---Fields in module 'l10n_be_hr_payroll_fleet'---
+l10n_be_hr_payroll_fleet / fleet.vehicle            / acquisition_date (False)      : NEW required: required, mode: modify
+l10n_be_hr_payroll_fleet / fleet.vehicle            / fuel_type (False)             : NEW required: required, req_default: function, mode: modify
+l10n_be_hr_payroll_fleet / fleet.vehicle.log.contract / recurring_cost_amount_depreciated (float): NEW 
+l10n_be_hr_payroll_fleet / fleet.vehicle.model      / can_be_requested (boolean)    : NEW 
+l10n_be_hr_payroll_fleet / fleet.vehicle.model      / default_car_value (float)     : NEW 
+l10n_be_hr_payroll_fleet / fleet.vehicle.model      / default_co2 (float)           : NEW 
+l10n_be_hr_payroll_fleet / fleet.vehicle.model      / default_fuel_type (selection) : NEW selection_keys: ['diesel', 'electric', 'gasoline', 'hybrid']
+l10n_be_hr_payroll_fleet / fleet.vehicle.model      / default_recurring_cost_amount_depreciated (float): NEW 
+l10n_be_hr_payroll_fleet / hr.contract              / car_id (many2one)             : NEW relation: fleet.vehicle
+l10n_be_hr_payroll_fleet / hr.contract              / new_car (boolean)             : NEW 
+l10n_be_hr_payroll_fleet / hr.contract              / new_car_model_id (many2one)   : NEW relation: fleet.vehicle.model
+---XML records in module 'l10n_be_hr_payroll_fleet'---
+NEW ir.actions.act_window: l10n_be_hr_payroll_fleet.fleet_config_settings_action
+NEW ir.ui.menu: l10n_be_hr_payroll_fleet.fleet_config_settings_menu
+NEW ir.ui.view: l10n_be_hr_payroll_fleet.fleet_vehicle_log_contract_view_form
+NEW ir.ui.view: l10n_be_hr_payroll_fleet.fleet_vehicle_model_view_form
+NEW ir.ui.view: l10n_be_hr_payroll_fleet.fleet_vehicle_view_form
+NEW ir.ui.view: l10n_be_hr_payroll_fleet.hr_contract_view_form
+NEW ir.ui.view: l10n_be_hr_payroll_fleet.res_config_settings_view_form

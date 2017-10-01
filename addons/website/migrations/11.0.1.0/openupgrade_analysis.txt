@@ -1,0 +1,54 @@
+---Fields in module 'website'---
+website      / ir.ui.view               / page (boolean)                : DEL 
+website      / website                  / auto_redirect_lang (boolean)  : NEW 
+website      / website                  / compress_html (boolean)       : DEL 
+website      / website                  / google_management_client_id (char): NEW 
+website      / website                  / google_management_client_secret (char): NEW 
+website      / website                  / homepage_id (many2one)        : NEW relation: website.page
+website      / website.menu             / page_id (many2one)            : NEW relation: website.page
+website      / website.page             / _inherits (False)             : NEW 
+website      / website.page             / date_publish (datetime)       : NEW 
+website      / website.page             / menu_ids (one2many)           : NEW relation: website.menu
+website      / website.page             / url (char)                    : NEW 
+website      / website.page             / view_id (many2one)            : NEW relation: ir.ui.view, required: required
+website      / website.page             / website_ids (many2many)       : NEW relation: website
+website      / website.page             / website_indexed (boolean)     : NEW 
+website      / website.page             / website_published (boolean)   : NEW 
+website      / website.redirect         / active (boolean)              : NEW 
+website      / website.redirect         / sequence (integer)            : NEW 
+website      / website.redirect         / type (selection)              : NEW selection_keys: ['301', '302']
+website      / website.redirect         / url_from (char)               : NEW 
+website      / website.redirect         / url_to (char)                 : NEW 
+website      / website.redirect         / website_id (many2one)         : NEW relation: website
+---XML records in module 'website'---
+NEW ir.actions.act_window: website.action_website_pages_list
+NEW ir.actions.act_window: website.action_website_redirect_list
+NEW ir.actions.server: website.ir_actions_server_website_dashboard
+NEW ir.attachment: website.s_company_team_image_1
+NEW ir.attachment: website.s_company_team_image_2
+NEW ir.attachment: website.s_company_team_image_3
+NEW ir.attachment: website.s_company_team_image_4
+NEW ir.model.access: website.access_website_page
+NEW ir.model.access: website.access_website_page_designer
+NEW ir.model.access: website.access_website_redirect
+NEW ir.model.access: website.access_website_redirect_designer
+NEW ir.rule: website.website_page_rule_public
+NEW ir.ui.menu: website.menu_website_pages_list
+NEW ir.ui.menu: website.menu_website_redirect_list
+DEL ir.ui.menu: website.menu_website
+NEW ir.ui.view: website.edit_website_pages
+NEW ir.ui.view: website.external_snippets
+NEW ir.ui.view: website.index_management
+NEW ir.ui.view: website.qunit_suite
+NEW ir.ui.view: website.res_config_settings_view_form
+NEW ir.ui.view: website.s_company_team
+NEW ir.ui.view: website.view_company_form_inherit_website
+NEW ir.ui.view: website.website_pages_form_view
+NEW ir.ui.view: website.website_pages_tree_view
+NEW ir.ui.view: website.website_redirect_form_view
+NEW ir.ui.view: website.website_redirect_tree_view
+DEL ir.ui.view: website.show_sign_in
+DEL ir.ui.view: website.view_website_config_settings
+NEW website.page: website.aboutus_page
+NEW website.page: website.contactus_page
+NEW website.page: website.homepage_page

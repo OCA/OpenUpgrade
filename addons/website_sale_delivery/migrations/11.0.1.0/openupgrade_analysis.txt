@@ -1,0 +1,8 @@
+---Fields in module 'website_sale_delivery'---
+website_sale_delivery / delivery.carrier         / website_description (text)    : DEL mode: modify
+website_sale_delivery / delivery.carrier         / website_published (boolean)   : previously in module website_sale
+website_sale_delivery / delivery.carrier         / website_url (char)            : previously in module website_sale
+---XML records in module 'website_sale_delivery'---
+NEW ir.ui.view: website_sale_delivery.portal_order_page_shipping_tracking
+NEW ir.ui.view: website_sale_delivery.res_config_settings_view_form
+DEL ir.ui.view: website_sale_delivery.shipping_tracking

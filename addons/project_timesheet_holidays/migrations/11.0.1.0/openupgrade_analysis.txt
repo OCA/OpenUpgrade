@@ -1,0 +1,12 @@
+---Fields in module 'project_timesheet_holidays'---
+project_timesheet_holidays / account.analytic.line    / holiday_id (many2one)         : NEW relation: hr.holidays
+project_timesheet_holidays / hr.holidays              / timesheet_ids (one2many)      : NEW relation: account.analytic.line
+project_timesheet_holidays / hr.holidays.status       / timesheet_generate (boolean)  : NEW 
+project_timesheet_holidays / hr.holidays.status       / timesheet_project_id (many2one): NEW relation: project.project
+project_timesheet_holidays / hr.holidays.status       / timesheet_task_id (many2one)  : NEW relation: project.task
+project_timesheet_holidays / res.company              / leave_timesheet_project_id (many2one): NEW relation: project.project
+project_timesheet_holidays / res.company              / leave_timesheet_task_id (many2one): NEW relation: project.task
+---XML records in module 'project_timesheet_holidays'---
+NEW ir.model.access: project_timesheet_holidays.access_account_analytic_account_leaves_manager
+NEW ir.ui.view: project_timesheet_holidays.hr_holiday_status_view_form_inherit
+NEW ir.ui.view: project_timesheet_holidays.res_config_settings_view_form

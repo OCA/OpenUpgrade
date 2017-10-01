@@ -1,0 +1,6 @@
+---Fields in module 'stock_landed_costs'---
+stock_landed_costs / stock.landed.cost        / website_message_ids (one2many): NEW relation: mail.message
+stock_landed_costs / stock.move               / landed_cost_value (float)     : NEW 
+---XML records in module 'stock_landed_costs'---
+NEW ir.ui.view: stock_landed_costs.res_config_settings_view_form
+DEL res.groups: base.group_user

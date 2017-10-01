@@ -1,0 +1,20 @@
+---Fields in module 'rating'---
+rating       / mail.message             / rating_ids (one2many)         : NEW relation: rating.rating
+rating       / rating.rating            / parent_res_id (integer)       : NEW 
+rating       / rating.rating            / parent_res_model_id (many2one): NEW relation: ir.model
+rating       / rating.rating            / res_model_id (many2one)       : NEW relation: ir.model
+---XML records in module 'rating'---
+NEW ir.ui.view: rating.rating_rating_view_form
+NEW ir.ui.view: rating.rating_rating_view_graph
+NEW ir.ui.view: rating.rating_rating_view_kanban
+NEW ir.ui.view: rating.rating_rating_view_pivot
+NEW ir.ui.view: rating.rating_rating_view_search
+NEW ir.ui.view: rating.rating_rating_view_tree
+DEL ir.ui.view: rating.assets_backend
+DEL ir.ui.view: rating.assets_common
+DEL ir.ui.view: rating.rating_card
+DEL ir.ui.view: rating.rating_star_card
+DEL ir.ui.view: rating.view_rating_rating_graph
+DEL ir.ui.view: rating.view_rating_rating_kanban
+DEL ir.ui.view: rating.view_rating_rating_pivot
+DEL ir.ui.view: rating.view_rating_rating_search

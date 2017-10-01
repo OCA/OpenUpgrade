@@ -1,0 +1,208 @@
+---Fields in module 'stock'---
+stock        / procurement.group        / __last_update (datetime)      : previously in module procurement
+stock        / procurement.group        / display_name (char)           : previously in module procurement
+stock        / procurement.group        / move_type (selection)         : previously in module procurement
+stock        / procurement.group        / name (char)                   : previously in module procurement
+stock        / procurement.rule         / __last_update (datetime)      : previously in module procurement
+stock        / procurement.rule         / action (selection)            : previously in module procurement
+stock        / procurement.rule         / active (boolean)              : previously in module procurement
+stock        / procurement.rule         / company_id (many2one)         : previously in module procurement
+stock        / procurement.rule         / display_name (char)           : previously in module procurement
+stock        / procurement.rule         / group_id (many2one)           : previously in module procurement
+stock        / procurement.rule         / group_propagation_option (selection): previously in module procurement
+stock        / procurement.rule         / name (char)                   : previously in module procurement
+stock        / procurement.rule         / route_id (many2one)           : now required
+stock        / procurement.rule         / sequence (integer)            : previously in module procurement
+stock        / product.putaway          / method (selection)            : DEL required: required, selection_keys: function, req_default: function
+stock        / product.template         / description_pickingin (text)  : NEW 
+stock        / product.template         / description_pickingout (text) : NEW 
+stock        / product.template         / property_stock_procurement (many2one): DEL relation: stock.location
+stock        / product.template         / responsible_id (many2one)     : NEW relation: res.users, required: required, req_default: function
+stock        / stock.location.path      / route_id (many2one)           : now required
+stock        / stock.move               / additional (boolean)          : NEW 
+stock        / stock.move               / has_tracking (selection)      : previously in module mrp
+stock        / stock.move               / linked_move_operation_ids (one2many): DEL relation: stock.move.operation.link
+stock        / stock.move               / move_dest_id (many2one)       : DEL relation: stock.move
+stock        / stock.move               / move_dest_ids (many2many)     : NEW relation: stock.move
+stock        / stock.move               / move_line_ids (one2many)      : NEW relation: stock.move.line
+stock        / stock.move               / move_line_nosuggest_ids (one2many): NEW relation: stock.move.line
+stock        / stock.move               / move_orig_ids (one2many)      : type is now 'many2many' ('one2many')
+stock        / stock.move               / partially_available (boolean) : DEL 
+stock        / stock.move               / procurement_id (many2one)     : DEL relation: procurement.order
+stock        / stock.move               / quant_ids (many2many)         : DEL relation: stock.quant
+stock        / stock.move               / quantity_done (float)         : previously in module mrp
+stock        / stock.move               / remaining_qty (float)         : module is now 'stock_account' ('stock')
+stock        / stock.move               / remaining_qty (float)         : not a function anymore
+stock        / stock.move               / reserved_quant_ids (one2many) : DEL relation: stock.quant
+stock        / stock.move               / restrict_lot_id (many2one)    : DEL relation: stock.production.lot
+stock        / stock.move               / scrap_ids (one2many)          : NEW relation: stock.scrap
+stock        / stock.move               / split_from (many2one)         : DEL relation: stock.move
+stock        / stock.move               / state (selection)             : selection_keys is now '['assigned', 'cancel', 'confirmed', 'done', 'draft', 'partially_available', 'waiting']' ('['assigned', 'cancel', 'confirmed', 'done', 'draft', 'waiting']')
+stock        / stock.move.line          / consume_line_ids (many2many)  : NEW relation: stock.move.line
+stock        / stock.move.line          / date (datetime)               : NEW required: required, req_default: function
+stock        / stock.move.line          / location_dest_id (many2one)   : NEW relation: stock.location, required: required
+stock        / stock.move.line          / location_id (many2one)        : NEW relation: stock.location, required: required
+stock        / stock.move.line          / lot_id (many2one)             : NEW relation: stock.production.lot
+stock        / stock.move.line          / lot_name (char)               : NEW 
+stock        / stock.move.line          / move_id (many2one)            : NEW relation: stock.move
+stock        / stock.move.line          / ordered_qty (float)           : NEW 
+stock        / stock.move.line          / owner_id (many2one)           : NEW relation: res.partner
+stock        / stock.move.line          / package_id (many2one)         : NEW relation: stock.quant.package
+stock        / stock.move.line          / picking_id (many2one)         : NEW relation: stock.picking
+stock        / stock.move.line          / produce_line_ids (many2many)  : NEW relation: stock.move.line
+stock        / stock.move.line          / product_id (many2one)         : NEW relation: product.product
+stock        / stock.move.line          / product_uom_id (many2one)     : NEW relation: product.uom, required: required
+stock        / stock.move.line          / product_uom_qty (float)       : NEW required: required, req_default: function
+stock        / stock.move.line          / qty_done (float)              : NEW 
+stock        / stock.move.line          / result_package_id (many2one)  : NEW relation: stock.quant.package
+stock        / stock.picking            / activity_ids (one2many)       : NEW relation: mail.activity
+stock        / stock.picking            / is_locked (boolean)           : NEW 
+stock        / stock.picking            / launch_pack_operations (boolean): DEL 
+stock        / stock.picking            / move_line_ids (one2many)      : NEW relation: stock.move.line
+stock        / stock.picking            / pack_operation_ids (one2many) : DEL relation: stock.pack.operation
+stock        / stock.picking            / pack_operation_pack_ids (one2many): DEL relation: stock.pack.operation
+stock        / stock.picking            / pack_operation_product_ids (one2many): DEL relation: stock.pack.operation
+stock        / stock.picking            / recompute_pack_op (boolean)   : DEL 
+stock        / stock.picking            / state (selection)             : selection_keys is now '['assigned', 'cancel', 'confirmed', 'done', 'draft', 'waiting']' ('['assigned', 'cancel', 'confirmed', 'done', 'draft', 'partially_available', 'waiting']')
+stock        / stock.picking            / website_message_ids (one2many): NEW relation: mail.message
+stock        / stock.picking.type       / show_operations (boolean)     : NEW 
+stock        / stock.picking.type       / show_reserved (boolean)       : NEW 
+stock        / stock.production.lot     / website_message_ids (one2many): NEW relation: mail.message
+stock        / stock.quant              / cost (float)                  : DEL 
+stock        / stock.quant              / history_ids (many2many)       : DEL relation: stock.move
+stock        / stock.quant              / negative_move_id (many2one)   : DEL relation: stock.move
+stock        / stock.quant              / propagated_from_id (many2one) : DEL relation: stock.quant
+stock        / stock.quant              / qty (float)                   : was renamed to quantity [nothing to do]
+stock        / stock.quant              / reservation_id (many2one)     : DEL relation: stock.move
+stock        / stock.quant              / reserved_quantity (float)     : NEW required: required, req_default: function
+stock        / stock.quant.package      / children_ids (one2many)       : DEL relation: stock.quant.package
+stock        / stock.quant.package      / move_line_ids (one2many)      : NEW relation: stock.move.line
+stock        / stock.quant.package      / parent_id (many2one)          : DEL relation: stock.quant.package
+stock        / stock.quant.package      / parent_left (integer)         : DEL 
+stock        / stock.quant.package      / parent_right (integer)        : DEL 
+stock        / stock.scrap              / scrap_location_id (many2one)  : now required, default = function
+stock        / stock.warehouse.orderpoint / procurement_ids (one2many)    : DEL relation: procurement.order
+---XML records in module 'stock'---
+NEW ir.actions.act_window: stock.action_stock_quantity_history
+NEW ir.actions.act_window: stock.stock_move_line_action
+DEL ir.actions.act_window: stock.act_make_procurement
+DEL ir.actions.act_window: stock.action_deliver_move
+DEL ir.actions.act_window: stock.action_inventory_line_tree
+DEL ir.actions.act_window: stock.action_receive_move
+DEL ir.actions.act_window: stock.action_stock_line_date
+DEL ir.actions.act_window: stock.do_view_procurement_op
+DEL ir.actions.act_window: stock.pack_details
+DEL ir.actions.act_window: stock.procrules
+NEW ir.actions.client: stock.action_stock_report
+NEW ir.actions.report: stock.action_report_delivery
+NEW ir.actions.report: stock.action_report_inventory
+NEW ir.actions.report: stock.action_report_location_barcode
+NEW ir.actions.report: stock.action_report_lot_barcode
+NEW ir.actions.report: stock.action_report_picking
+NEW ir.actions.report: stock.action_report_quant_package_barcode
+NEW ir.actions.report: stock.action_report_quant_package_barcode_small
+DEL ir.actions.report.xml: stock.action_report_delivery
+DEL ir.actions.report.xml: stock.action_report_inventory
+DEL ir.actions.report.xml: stock.action_report_location_barcode
+DEL ir.actions.report.xml: stock.action_report_lot_barcode
+DEL ir.actions.report.xml: stock.action_report_picking
+DEL ir.actions.report.xml: stock.action_report_quant_package_barcode
+DEL ir.actions.report.xml: stock.action_report_quant_package_barcode_small
+NEW ir.cron: stock.ir_cron_scheduler_action
+NEW ir.model.access: stock.access_procurement_group
+NEW ir.model.access: stock.access_procurement_rule
+NEW ir.model.access: stock.access_stock_move_line_all
+NEW ir.model.access: stock.access_stock_move_line_manager
+NEW ir.model.access: stock.access_stock_move_line_portal
+NEW ir.model.access: stock.access_stock_move_line_user
+NEW ir.model.access: stock.access_stock_move_portal
+NEW ir.model.access: stock.access_stock_picking_portal
+NEW ir.model.access: stock.access_stock_picking_type_portal
+NEW ir.model.access: stock.access_stock_warehouse_orderpoint_portal
+DEL ir.model.access: stock.access_stock_lines_date_manager
+DEL ir.model.access: stock.access_stock_lines_date_user
+DEL ir.model.access: stock.access_stock_move_operation_link_all
+DEL ir.model.access: stock.access_stock_move_operation_link_manager
+DEL ir.model.access: stock.access_stock_move_operation_link_user
+DEL ir.model.access: stock.access_stock_pack_operation_all
+DEL ir.model.access: stock.access_stock_pack_operation_lot_all
+DEL ir.model.access: stock.access_stock_pack_operation_lot_manager
+DEL ir.model.access: stock.access_stock_pack_operation_lot_user
+DEL ir.model.access: stock.access_stock_pack_operation_manager
+DEL ir.model.access: stock.access_stock_pack_operation_user
+DEL ir.property: stock.property_stock_procurement
+NEW ir.rule: stock.stock_move_line_rule_portal
+NEW ir.rule: stock.stock_picking_rule_portal
+NEW ir.sequence: stock.sequence_proc_group
+NEW ir.ui.menu: stock.menu_product_packagings
+NEW ir.ui.menu: stock.menu_valuation
+NEW ir.ui.menu: stock.product_uom_menu
+NEW ir.ui.menu: stock.stock_move_line_menu
+DEL ir.ui.menu: stock.menu_packages_config
+DEL ir.ui.menu: stock.menu_packagings
+DEL ir.ui.menu: stock.menu_procurement_rules
+DEL ir.ui.menu: stock.menu_quants
+DEL ir.ui.menu: stock.menu_report_stock_line_date
+DEL ir.ui.menu: stock.menu_stock_location_path
+DEL ir.ui.menu: stock.menu_stock_proc_schedulers
+DEL ir.ui.menu: stock.menu_stock_procurement
+DEL ir.ui.menu: stock.menu_stock_procurement_action
+DEL ir.ui.menu: stock.menu_stock_routes
+DEL ir.ui.menu: stock.menu_stock_sched
+NEW ir.ui.view: stock.assets_stock_print_report
+NEW ir.ui.view: stock.message_body
+NEW ir.ui.view: stock.message_head
+NEW ir.ui.view: stock.procurement_group_form_view
+NEW ir.ui.view: stock.report_mrp_line
+NEW ir.ui.view: stock.report_stock_body_print
+NEW ir.ui.view: stock.report_stock_inventory
+NEW ir.ui.view: stock.report_stock_inventory_print
+NEW ir.ui.view: stock.res_config_settings_view_form
+NEW ir.ui.view: stock.stock_assets_backend
+NEW ir.ui.view: stock.stock_location_view_form_editable
+NEW ir.ui.view: stock.stock_location_view_tree2_editable
+NEW ir.ui.view: stock.stock_move_line_view_search
+NEW ir.ui.view: stock.stock_move_view_kanban
+NEW ir.ui.view: stock.stock_quant_view_graph
+NEW ir.ui.view: stock.stock_warehouse_view_form_editable
+NEW ir.ui.view: stock.stock_warehouse_view_tree_editable
+NEW ir.ui.view: stock.stock_warn_insufficient_qty_form_view
+NEW ir.ui.view: stock.stock_warn_insufficient_qty_scrap_form_view
+NEW ir.ui.view: stock.track_move_template
+NEW ir.ui.view: stock.view_move_kandan
+NEW ir.ui.view: stock.view_move_line_form
+NEW ir.ui.view: stock.view_move_line_tree
+NEW ir.ui.view: stock.view_overprocessed_transfer
+NEW ir.ui.view: stock.view_procurement_rule_filter
+NEW ir.ui.view: stock.view_procurement_rule_form
+NEW ir.ui.view: stock.view_procurement_rule_tree
+NEW ir.ui.view: stock.view_quant_package_kanban
+NEW ir.ui.view: stock.view_stock_inventory_kanban
+NEW ir.ui.view: stock.view_stock_move_kanban
+NEW ir.ui.view: stock.view_stock_move_line_kanban
+NEW ir.ui.view: stock.view_stock_move_line_operation_tree
+NEW ir.ui.view: stock.view_stock_move_nosuggest_operations
+NEW ir.ui.view: stock.view_stock_move_operations
+NEW ir.ui.view: stock.view_stock_quantity_history
+NEW ir.ui.view: stock.view_stock_warehouse_orderpoint_kanban
+DEL ir.ui.view: stock.external_layout_barcode_right
+DEL ir.ui.view: stock.external_layout_header_barcode_right
+DEL ir.ui.view: stock.procurement_group_form_view_herited
+DEL ir.ui.view: stock.product_kanban_stock_view
+DEL ir.ui.view: stock.product_product_view_form_procurement_button
+DEL ir.ui.view: stock.product_template_view_form_procurement_button
+DEL ir.ui.view: stock.report_stock_lines_date_form
+DEL ir.ui.view: stock.report_stock_lines_date_search
+DEL ir.ui.view: stock.report_stock_lines_date_tree
+DEL ir.ui.view: stock.view_make_procurment_wizard
+DEL ir.ui.view: stock.view_pack_operation_details_form
+DEL ir.ui.view: stock.view_pack_operation_details_form_save
+DEL ir.ui.view: stock.view_pack_operation_lot_form
+DEL ir.ui.view: stock.view_pack_operation_lot_lot_form
+DEL ir.ui.view: stock.view_procurement_form_stock_inherit
+DEL ir.ui.view: stock.view_procurement_rule_form_stock_inherit
+DEL ir.ui.view: stock.view_procurement_rule_tree_stock_inherit
+DEL ir.ui.view: stock.view_procurement_tree_stock_inherit
+DEL ir.ui.view: stock.view_stock_config_settings
+DEL ir.ui.view: stock.view_stock_quant_graph_value
+DEL mail.message: stock.module_install_notification

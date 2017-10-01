@@ -1,0 +1,22 @@
+---Fields in module 'sale_stock'---
+sale_stock   / procurement.group        / sale_id (many2one)            : NEW relation: sale.order
+sale_stock   / sale.order               / picking_ids (many2many)       : not a function anymore
+sale_stock   / sale.order               / picking_ids (many2many)       : type is now 'one2many' ('many2many')
+sale_stock   / sale.order               / procurement_group_id (many2one): previously in module sale
+sale_stock   / sale.order.line          / move_ids (one2many)           : NEW relation: stock.move
+sale_stock   / stock.move               / sale_line_id (many2one)       : NEW relation: sale.order.line
+sale_stock   / stock.move               / to_refund_so (boolean)        : DEL 
+sale_stock   / stock.picking            / sale_id (many2one)            : not a function anymore
+---XML records in module 'sale_stock'---
+DEL ir.model.access: sale_stock.access_procurement_manager
+DEL ir.model.access: sale_stock.access_procurement_salesman
+NEW ir.ui.view: sale_stock.product_template_view_form_inherit_sale
+NEW ir.ui.view: sale_stock.product_template_view_form_inherit_stock
+NEW ir.ui.view: sale_stock.res_config_settings_view_form_sale
+NEW ir.ui.view: sale_stock.res_config_settings_view_form_stock
+NEW ir.ui.view: sale_stock.stock_location_route_view_form_inherit_sale_stock
+DEL ir.ui.view: sale_stock.stock_location_route_form_view_inherit_sale_stock
+DEL ir.ui.view: sale_stock.view_sales_config_inherit_sale_stock
+DEL ir.ui.view: sale_stock.view_stock_return_picking_form_inherit_sale_stock
+NEW res.groups: sale_stock.group_display_incoterm
+NEW stock.location.route: stock.route_warehouse0_mto

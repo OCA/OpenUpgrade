@@ -1,0 +1,12 @@
+---Fields in module 'survey'---
+survey       / survey.question          / type (selection)              : selection_keys is now '['date', 'free_text', 'matrix', 'multiple_choice', 'numerical_box', 'simple_choice', 'textbox']' ('['datetime', 'free_text', 'matrix', 'multiple_choice', 'numerical_box', 'simple_choice', 'textbox']')
+survey       / survey.question          / validation_max_date (datetime): type is now 'date' ('datetime')
+survey       / survey.question          / validation_min_date (datetime): type is now 'date' ('datetime')
+survey       / survey.survey            / activity_ids (one2many)       : NEW relation: mail.activity
+survey       / survey.survey            / website_message_ids (one2many): NEW relation: mail.message
+survey       / survey.user_input_line   / value_date (datetime)         : type is now 'date' ('datetime')
+---XML records in module 'survey'---
+NEW ir.ui.view: survey.date
+NEW ir.ui.view: survey.view_survey_user_input_kanban
+DEL ir.ui.view: survey.datetime
+DEL ir.values: survey.survey_values_action_clean_test_answers

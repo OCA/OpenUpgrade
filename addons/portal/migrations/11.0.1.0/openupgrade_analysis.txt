@@ -1,0 +1,43 @@
+---Fields in module 'portal'---
+portal       / account.analytic.account / website_message_ids (one2many): NEW relation: mail.message
+portal       / calendar.event           / website_message_ids (one2many): NEW relation: mail.message
+portal       / event.event              / website_message_ids (one2many): previously in module website_event
+portal       / event.registration       / website_message_ids (one2many): NEW relation: mail.message
+portal       / fleet.vehicle            / website_message_ids (one2many): NEW relation: mail.message
+portal       / fleet.vehicle.log.contract / website_message_ids (one2many): NEW relation: mail.message
+portal       / gamification.badge       / website_message_ids (one2many): NEW relation: mail.message
+portal       / gamification.challenge   / website_message_ids (one2many): NEW relation: mail.message
+portal       / hr.department            / website_message_ids (one2many): NEW relation: mail.message
+portal       / hr.employee              / website_message_ids (one2many): NEW relation: mail.message
+portal       / hr.job                   / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.channel             / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.mass_mailing.contact / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.test                / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.test.simple         / website_message_ids (one2many): NEW relation: mail.message
+portal       / maintenance.equipment    / website_message_ids (one2many): NEW relation: mail.message
+portal       / maintenance.equipment.category / website_message_ids (one2many): NEW relation: mail.message
+portal       / maintenance.request      / website_message_ids (one2many): NEW relation: mail.message
+portal       / note.note                / website_message_ids (one2many): NEW relation: mail.message
+portal       / res.groups               / is_portal (boolean)           : module is now 'base' ('portal')
+portal       / res.partner              / website_message_ids (one2many): NEW relation: mail.message
+---XML records in module 'portal'---
+DEL ir.model.access: portal.access_ir_attachment_portal
+DEL ir.model.access: portal.access_ir_ui_menu_portal
+NEW ir.ui.view: portal.assets_common
+NEW ir.ui.view: portal.assets_frontend
+NEW ir.ui.view: portal.frontend_layout
+NEW ir.ui.view: portal.message_thread
+NEW ir.ui.view: portal.my_account_link
+NEW ir.ui.view: portal.pager
+NEW ir.ui.view: portal.portal_archive_groups
+NEW ir.ui.view: portal.portal_contact
+NEW ir.ui.view: portal.portal_layout
+NEW ir.ui.view: portal.portal_my_details
+NEW ir.ui.view: portal.portal_my_home
+NEW ir.ui.view: portal.portal_searchbar
+NEW ir.ui.view: portal.portal_show_sign_in
+NEW ir.ui.view: portal.portal_signature
+NEW ir.ui.view: portal.record_pager
+DEL ir.ui.view: portal.group_form_view
+DEL ir.ui.view: portal.group_search_view
+DEL res.groups: base.group_portal

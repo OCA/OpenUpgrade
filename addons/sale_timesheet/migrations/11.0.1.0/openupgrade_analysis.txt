@@ -1,0 +1,38 @@
+---Fields in module 'sale_timesheet'---
+sale_timesheet / account.analytic.line    / timesheet_invoice_id (many2one): NEW relation: account.invoice
+sale_timesheet / account.analytic.line    / timesheet_invoice_type (selection): NEW selection_keys: ['billable_fixed', 'billable_time', 'non_billable', 'non_billable_project']
+sale_timesheet / account.analytic.line    / timesheet_revenue (float)     : NEW 
+sale_timesheet / account.invoice          / timesheet_ids (one2many)      : NEW relation: account.analytic.line
+sale_timesheet / hr.employee              / account_id (many2one)         : DEL relation: account.account
+sale_timesheet / product.template         / service_tracking (selection)  : NEW selection_keys: ['no', 'project_only', 'task_global_project', 'task_new_project']
+sale_timesheet / product.template         / service_type (False)          : NEW selection_keys: ['manual', 'timesheet'], mode: modify
+sale_timesheet / product.template         / track_service (False)         : DEL selection_keys: ['manual', 'task', 'timesheet'], mode: modify
+sale_timesheet / project.project          / sale_line_id (many2one)       : NEW relation: sale.order.line
+sale_timesheet / project.task             / procurement_id (many2one)     : DEL relation: procurement.order
+sale_timesheet / sale.order.line          / task_id (many2one)            : NEW relation: project.task
+---XML records in module 'sale_timesheet'---
+NEW ir.actions.act_window: sale_timesheet.action_timesheet_from_invoice
+NEW ir.actions.act_window: sale_timesheet.product_template_action_fixed
+NEW ir.actions.act_window: sale_timesheet.product_template_action_milestone
+NEW ir.actions.act_window: sale_timesheet.product_template_action_time_based
+NEW ir.actions.act_window: sale_timesheet.timesheet_action_billing_report
+NEW ir.actions.act_window: sale_timesheet.timesheet_action_from_plan
+NEW ir.actions.act_window: sale_timesheet.timesheet_action_plan_pivot
+NEW ir.actions.act_window: sale_timesheet.timesheet_action_report_cost_revenue
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_report_cost_revenue_form
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_report_cost_revenue_pivot
+NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_report_cost_revenue_tree
+NEW ir.filters: sale_timesheet.timesheet_filter_billing
+DEL ir.model.data: sale_timesheet.duplicate_field_xmlid
+NEW ir.ui.menu: sale_timesheet.menu_timesheet_billing_analysis
+NEW ir.ui.menu: sale_timesheet.menu_timesheet_report_cost_revenue
+NEW ir.ui.view: sale_timesheet.account_invoice_view_form_inherit_sale_timesheet
+NEW ir.ui.view: sale_timesheet.assets_backend
+NEW ir.ui.view: sale_timesheet.product_template_search_view_sale_timesheet
+NEW ir.ui.view: sale_timesheet.project_project_view_kanban_inherit_sale_timesheet
+NEW ir.ui.view: sale_timesheet.project_task_view_form_inherit_sale_timesheet
+NEW ir.ui.view: sale_timesheet.res_config_settings_view_form
+NEW ir.ui.view: sale_timesheet.timesheet_plan
+NEW ir.ui.view: sale_timesheet.timesheet_view_pivot_revenue
+NEW ir.ui.view: sale_timesheet.timesheet_view_search
+DEL ir.ui.view: sale_timesheet.view_procurement_task_form

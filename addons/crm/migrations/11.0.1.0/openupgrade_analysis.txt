@@ -1,0 +1,53 @@
+---Fields in module 'crm'---
+crm          / crm.lead                 / activity_ids (one2many)       : NEW relation: mail.activity
+crm          / crm.lead                 / date_action (date)            : DEL 
+crm          / crm.lead                 / date_action_next (datetime)   : DEL 
+crm          / crm.lead                 / fax (char)                    : DEL 
+crm          / crm.lead                 / next_activity_id (many2one)   : DEL relation: crm.activity
+crm          / crm.lead                 / title_action (char)           : DEL 
+crm          / crm.lead                 / website (char)                : NEW 
+crm          / crm.lead                 / website_message_ids (one2many): NEW relation: mail.message
+crm          / crm.team                 / dashboard_graph_group_pipeline (selection): NEW selection_keys: ['day', 'month', 'stage', 'user', 'week']
+crm          / crm.team                 / dashboard_graph_model (False) : NEW selection_keys: ['crm.opportunity.report'], mode: modify
+crm          / crm.team                 / resource_calendar_id (many2one): DEL relation: resource.calendar
+---XML records in module 'crm'---
+DEL crm.activity: crm.crm_activity_data_call
+DEL crm.activity: crm.crm_activity_data_email
+DEL crm.activity: crm.crm_activity_data_meeting
+NEW ir.actions.act_window: crm.crm_config_settings_action
+NEW ir.actions.act_window: sales_team.mail_activity_type_action_config_sales
+DEL ir.actions.act_window: crm.crm_activity_action
+DEL ir.actions.act_window: crm.crm_activity_log_action
+DEL ir.actions.act_window: crm.crm_activity_report_action_tree
+DEL ir.actions.act_window: crm.crm_activity_schedule_action
+DEL ir.model.access: crm.access_base_action_rule_manager
+DEL ir.model.access: crm.access_crm_activity_manager
+DEL ir.model.access: crm.access_crm_activity_salesman
+DEL ir.model.access: crm.access_crm_activity_user
+NEW ir.rule: crm.opp_report_multi_company
+NEW ir.ui.menu: contacts.res_partner_menu_config
+NEW ir.ui.menu: crm.crm_config_settings_menu
+NEW ir.ui.menu: crm.crm_menu_config
+NEW ir.ui.menu: crm.crm_menu_pipeline
+NEW ir.ui.menu: crm.crm_menu_report
+NEW ir.ui.menu: crm.crm_menu_root
+NEW ir.ui.menu: crm.crm_team_config
+NEW ir.ui.menu: crm.crm_team_menu_config_activity_types
+NEW ir.ui.menu: crm.res_partner_menu_crm
+NEW ir.ui.menu: crm.sales_team_menu_report_crm
+DEL ir.ui.menu: base.menu_administration
+DEL ir.ui.menu: crm.crm_activity_menu
+DEL ir.ui.menu: crm.crm_lead_menu_activities
+DEL ir.ui.menu: sales_team.menu_base_partner
+DEL ir.ui.menu: sales_team.menu_sale_config
+DEL ir.ui.menu: sales_team.menu_sales
+NEW ir.ui.view: crm.res_config_settings_view_form
+NEW ir.ui.view: crm.view_crm_lead_kanban
+DEL ir.ui.view: crm.crm_activity_log_view_form
+DEL ir.ui.view: crm.crm_activity_log_view_form_schedule
+DEL ir.ui.view: crm.crm_activity_view_form
+DEL ir.ui.view: crm.crm_activity_view_search
+DEL ir.ui.view: crm.crm_activity_view_tree
+DEL ir.ui.view: crm.view_sale_config_settings
+DEL ir.values: crm.ir_mark_as_lost
+DEL mail.message: crm.module_install_notification

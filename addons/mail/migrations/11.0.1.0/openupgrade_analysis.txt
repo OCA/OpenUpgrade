@@ -1,0 +1,98 @@
+---Fields in module 'mail'---
+mail         / ir.actions.server        / channel_ids (many2many)       : NEW relation: mail.channel
+mail         / ir.actions.server        / partner_ids (many2many)       : NEW relation: res.partner
+mail         / ir.actions.server        / state (False)                 : NEW selection_keys: ['code', 'email', 'followers', 'multi', 'object_create', 'object_write'], mode: modify
+mail         / ir.model                 / is_mail_thread (boolean)      : NEW 
+mail         / ir.model.fields          / track_visibility (selection)  : NEW selection_keys: ['always', 'onchange']
+mail         / mail.activity            / activity_type_id (many2one)   : NEW relation: mail.activity.type
+mail         / mail.activity            / date_deadline (date)          : NEW required: required, req_default: function
+mail         / mail.activity            / feedback (html)               : NEW 
+mail         / mail.activity            / note (html)                   : NEW 
+mail         / mail.activity            / previous_activity_type_id (many2one): NEW relation: mail.activity.type
+mail         / mail.activity            / recommended_activity_type_id (many2one): NEW relation: mail.activity.type
+mail         / mail.activity            / res_id (integer)              : NEW required: required
+mail         / mail.activity            / res_model_id (many2one)       : NEW relation: ir.model, required: required
+mail         / mail.activity            / summary (char)                : NEW 
+mail         / mail.activity            / user_id (many2one)            : NEW relation: res.users, required: required, req_default: function
+mail         / mail.activity.type       / category (selection)          : NEW selection_keys: ['default']
+mail         / mail.activity.type       / days (integer)                : NEW 
+mail         / mail.activity.type       / icon (char)                   : NEW 
+mail         / mail.activity.type       / name (char)                   : NEW required: required
+mail         / mail.activity.type       / next_type_ids (many2many)     : NEW relation: mail.activity.type
+mail         / mail.activity.type       / previous_type_ids (many2many) : NEW relation: mail.activity.type
+mail         / mail.activity.type       / res_model_id (many2one)       : NEW relation: ir.model
+mail         / mail.activity.type       / sequence (integer)            : NEW 
+mail         / mail.activity.type       / summary (char)                : NEW 
+mail         / mail.message             / mail_activity_type_id (many2one): NEW relation: mail.activity.type
+mail         / mail.shortcode           / unicode_source (char)         : NEW 
+mail         / mail.template            / ref_ir_value (many2one)       : DEL relation: ir.values
+mail         / mail.template            / report_template (many2one)    : relation is now 'ir.actions.report' ('ir.actions.report.xml')
+mail         / mail.test                / _inherits (False)             : NEW 
+mail         / mail.test                / alias_id (many2one)           : now required
+mail         / mail.test                / description (text)            : NEW 
+mail         / mail.test.simple         / description (text)            : NEW 
+mail         / mail.test.simple         / email_from (char)             : NEW 
+mail         / mail.test.simple         / message_follower_ids (one2many): NEW relation: mail.followers
+mail         / mail.test.simple         / message_ids (one2many)        : NEW relation: mail.message
+mail         / mail.test.simple         / message_last_post (datetime)  : NEW 
+mail         / mail.test.simple         / name (char)                   : NEW 
+mail         / res.partner              / activity_ids (one2many)       : NEW relation: mail.activity
+mail         / res.partner              / notify_email (selection)      : DEL required: required, selection_keys: ['always', 'none'], req_default: function
+mail         / res.users                / notification_type (selection) : NEW required: required, selection_keys: ['email', 'inbox'], req_default: function
+---XML records in module 'mail'---
+NEW ir.actions.act_window: mail.mail_activity_type_action
+NEW ir.model.access: mail.access_mail_activity_all
+NEW ir.model.access: mail.access_mail_activity_type_all
+NEW ir.model.access: mail.access_mail_activity_type_user
+NEW ir.model.access: mail.access_mail_activity_user
+NEW ir.model.access: mail.access_mail_test_portal
+NEW ir.model.access: mail.access_mail_test_simple
+NEW ir.model.access: mail.access_mail_test_user
+DEL ir.model.access: mail.access_mail_test_all
+NEW ir.ui.menu: mail.mail_channel_integrations_menu
+NEW ir.ui.menu: mail.menu_mail_activity_type
+NEW ir.ui.view: mail.field_form_view
+NEW ir.ui.view: mail.mail_activity_type_view_form
+NEW ir.ui.view: mail.mail_activity_type_view_tree
+NEW ir.ui.view: mail.mail_activity_view_calendar
+NEW ir.ui.view: mail.mail_activity_view_form_popup
+NEW ir.ui.view: mail.mail_activity_view_search
+NEW ir.ui.view: mail.mail_activity_view_tree
+NEW ir.ui.view: mail.message_activity_done
+NEW ir.ui.view: mail.model_form_view
+NEW ir.ui.view: mail.model_search_view
+NEW ir.ui.view: mail.qunit_suite
+NEW ir.ui.view: mail.res_config_settings_view_form
+NEW ir.ui.view: mail.res_partner_view_form_inherit_mail
+NEW ir.ui.view: mail.res_partner_view_search_inherit_mail
+DEL ir.ui.view: mail.res_partner_opt_out_search
+DEL ir.ui.view: mail.view_emails_partner_info_form
+DEL ir.ui.view: mail.view_general_configuration_mail_alias_domain
+NEW mail.activity.type: mail.mail_activity_data_call
+NEW mail.activity.type: mail.mail_activity_data_email
+NEW mail.activity.type: mail.mail_activity_data_meeting
+NEW mail.activity.type: mail.mail_activity_data_todo
+NEW mail.message.subtype: mail.mt_activities
+NEW mail.shortcode: mail.mail_smiley_angry
+NEW mail.shortcode: mail.mail_smiley_bug
+NEW mail.shortcode: mail.mail_smiley_cake
+NEW mail.shortcode: mail.mail_smiley_coffee
+NEW mail.shortcode: mail.mail_smiley_evil
+NEW mail.shortcode: mail.mail_smiley_flushed
+NEW mail.shortcode: mail.mail_smiley_monkey_hear
+NEW mail.shortcode: mail.mail_smiley_monkey_see
+NEW mail.shortcode: mail.mail_smiley_monkey_speak
+NEW mail.shortcode: mail.mail_smiley_normal_smile
+NEW mail.shortcode: mail.mail_smiley_party
+NEW mail.shortcode: mail.mail_smiley_sunglass
+NEW mail.shortcode: mail.mail_smiley_tears_of_joy
+NEW mail.shortcode: mail.mail_smiley_trophy
+DEL mail.shortcode: mail.mail_smiley_boar
+DEL mail.shortcode: mail.mail_smiley_man
+DEL mail.shortcode: mail.mail_smiley_man_with_turban
+DEL mail.shortcode: mail.mail_smiley_musti
+DEL mail.shortcode: mail.mail_smiley_pinky
+DEL mail.shortcode: mail.mail_smiley_postal_horn
+DEL mail.shortcode: mail.mail_smiley_troll
+DEL res.partner: base.partner_root
+NEW res.users: base.user_root

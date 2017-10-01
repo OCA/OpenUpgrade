@@ -1,0 +1,69 @@
+---Fields in module 'mrp'---
+mrp          / ir.attachment            / priority (selection)          : DEL selection_keys: ['0', '1', '2', '3']
+mrp          / mrp.bom                  / website_message_ids (one2many): NEW relation: mail.message
+mrp          / mrp.document             / _inherits (False)             : NEW 
+mrp          / mrp.document             / active (boolean)              : NEW 
+mrp          / mrp.document             / ir_attachment_id (many2one)   : NEW relation: ir.attachment, required: required
+mrp          / mrp.document             / priority (selection)          : NEW selection_keys: ['0', '1', '2', '3']
+mrp          / mrp.production           / activity_ids (one2many)       : NEW relation: mail.activity
+mrp          / mrp.production           / is_locked (boolean)           : NEW 
+mrp          / mrp.production           / move_dest_ids (one2many)      : NEW relation: stock.move
+mrp          / mrp.production           / procurement_ids (one2many)    : DEL relation: procurement.order
+mrp          / mrp.production           / website_message_ids (one2many): NEW relation: mail.message
+mrp          / mrp.unbuild              / activity_ids (one2many)       : NEW relation: mail.activity
+mrp          / mrp.unbuild              / website_message_ids (one2many): NEW relation: mail.message
+mrp          / mrp.workcenter           / _inherits (False)             : DEL 
+mrp          / mrp.workorder            / active_move_line_ids (one2many): NEW relation: stock.move.line
+mrp          / mrp.workorder            / active_move_lot_ids (one2many): DEL relation: stock.move.lots
+mrp          / mrp.workorder            / move_line_ids (one2many)      : NEW relation: stock.move.line
+mrp          / mrp.workorder            / move_lot_ids (one2many)       : DEL relation: stock.move.lots
+mrp          / mrp.workorder            / website_message_ids (one2many): NEW relation: mail.message
+mrp          / procurement.rule         / action (False)                : NEW selection_keys: ['manufacture', 'move'], mode: modify
+mrp          / stock.move               / active_move_line_ids (one2many): NEW relation: stock.move.line
+mrp          / stock.move               / active_move_lot_ids (one2many): DEL relation: stock.move.lots
+mrp          / stock.move               / created_production_id (many2one): NEW relation: mrp.production
+mrp          / stock.move               / has_tracking (selection)      : module is now 'stock' ('mrp')
+mrp          / stock.move               / move_lot_ids (one2many)       : DEL relation: stock.move.lots
+mrp          / stock.move               / quantity_done (float)         : module is now 'stock' ('mrp')
+mrp          / stock.move               / quantity_done_store (float)   : DEL 
+mrp          / stock.move.line          / done_wo (boolean)             : NEW 
+mrp          / stock.move.line          / lot_produced_id (many2one)    : NEW relation: stock.production.lot
+mrp          / stock.move.line          / lot_produced_qty (float)      : NEW 
+mrp          / stock.move.line          / production_id (many2one)      : NEW relation: mrp.production
+mrp          / stock.move.line          / workorder_id (many2one)       : NEW relation: mrp.workorder
+mrp          / stock.production.lot     / use_next_on_work_order_id (many2one): NEW relation: mrp.workorder
+mrp          / stock.quant              / consumed_quant_ids (many2many): DEL relation: stock.quant
+mrp          / stock.quant              / produced_quant_ids (many2many): DEL relation: stock.quant
+---XML records in module 'mrp'---
+NEW ir.actions.report: mrp.action_report_bom_price
+NEW ir.actions.report: mrp.action_report_bom_structure
+NEW ir.actions.report: mrp.action_report_production_order
+DEL ir.actions.report.xml: mrp.action_report_bom_price
+DEL ir.actions.report.xml: mrp.action_report_bom_structure
+DEL ir.actions.report.xml: mrp.action_report_production_order
+NEW ir.model.access: mrp.access_mrp_document_mrp_manager
+NEW ir.model.access: mrp.access_mrp_document_mrp_user
+NEW ir.model.access: mrp.access_product_price_history_mrp_manager
+DEL ir.model.access: mrp.access_procurement
+DEL ir.model.access: mrp.access_procurement_user
+DEL ir.model.access: mrp.access_stock_move_lots
+DEL ir.model.access: mrp.access_stock_move_lots_manager
+NEW ir.ui.menu: mrp.mrp_planning_menu_root
+NEW ir.ui.view: mrp.mrp_bom_kanban_view
+NEW ir.ui.view: mrp.mrp_routing_kanban_view
+NEW ir.ui.view: mrp.mrp_unbuild_kanban_view
+NEW ir.ui.view: mrp.mrp_workcenter_view_kanban
+NEW ir.ui.view: mrp.production_message
+NEW ir.ui.view: mrp.qunit_suite
+NEW ir.ui.view: mrp.res_config_settings_view_form
+NEW ir.ui.view: mrp.stock_warn_insufficient_qty_unbuild_form_view
+NEW ir.ui.view: mrp.track_production_move_template
+NEW ir.ui.view: mrp.view_document_form
+NEW ir.ui.view: mrp.view_mrp_message_kanban
+NEW ir.ui.view: mrp.view_mrp_workcenter_productivity_loss_kanban
+NEW ir.ui.view: mrp.view_picking_type_form_inherit_mrp
+DEL ir.ui.view: mrp.view_mrp_config
+DEL ir.ui.view: mrp.view_procurement_form_inherit
+DEL ir.values: mrp.ir_BOM_structure
+DEL ir.values: mrp.run_procurement_order_action
+DEL mail.message: mrp.module_install_notification

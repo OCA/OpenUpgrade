@@ -1,0 +1,7 @@
+---Fields in module 'pos_restaurant'---
+pos_restaurant / pos.config               / is_order_printer (boolean)    : NEW 
+pos_restaurant / pos.config               / is_table_management (boolean) : NEW 
+---XML records in module 'pos_restaurant'---
+NEW ir.ui.view: pos_restaurant.pos_config_view_form_inherit_restaurant
+NEW ir.ui.view: pos_restaurant.view_restaurant_floor_kanban
+DEL ir.ui.view: pos_restaurant.view_pos_config_form
