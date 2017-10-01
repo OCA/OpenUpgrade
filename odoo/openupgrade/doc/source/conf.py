@@ -47,9 +47,9 @@ copyright = '2012-2014, The OpenUpgrade team'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '9.0'
+version = '11.0'
 # The full version, including alpha/beta/rc tags.
-release = '9.0'
+release = '11.0'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:

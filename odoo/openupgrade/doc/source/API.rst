@@ -41,3 +41,12 @@ release.
 .. automodule:: openupgradelib.openupgrade_80
    :members:
 
+Methods for OpenUpgrade 9.0
+---------------------------
+
+The following specific methods for 9.0 are available. These have been
+developed to cover specific needs as per data model changes in that
+release.
+
+.. automodule:: openupgradelib.openupgrade_90
+   :members:

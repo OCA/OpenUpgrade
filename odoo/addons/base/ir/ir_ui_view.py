@@ -323,10 +323,10 @@ actual arch.
                     self.postprocess_and_fields(view.model, view_doc, view.id)
                 except Exception:
                     # OpenUpgrade: We ignore all view errors as they are
-                    # caused by views introduced by models not year loaded
+                    # caused by views introduced by models not yet loaded
                     _logger.warn(
                         "Can't render view %s for model: %s. If you are "
-                        "migrating between major versions of OpenERP, "
+                        "migrating between major versions of Odoo, "
                         "this is to be expected (otherwise, do not run "
                         "OpenUpgrade server).", view.xml_id, view.model)
                 # /OpenUpgrade
@@ -338,10 +338,10 @@ actual arch.
                 for view_arch in view_docs:
                     if not valid_view(view_arch):
                         # OpenUpgrade: We ignore all view errors as they are
-                        # caused by views introduced by models not year loaded
+                        # caused by views introduced by models not yet loaded
                         _logger.warn(
                             "Can't render view %s for model: %s. If you are "
-                            "migrating between major versions of OpenERP, "
+                            "migrating between major versions of Odoo, "
                             "this is to be expected (otherwise, do not run "
                             "OpenUpgrade server).", view.xml_id, view.model)
         return True
