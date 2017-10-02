@@ -104,7 +104,7 @@ class AnalysisWizard(models.TransientModel):
                 if res_xml[key]:
                     contents += '\n'
             if key not in res and key not in res_xml:
-                contents += '-- nothing has changed in this module'
+                contents += '---nothing has changed in this module--\n'
             if key == 'general':
                 general += contents
                 continue
