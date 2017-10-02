@@ -1,0 +1,857 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record model="res.country" id="gw">
+    <field name="name">Guinea-Bissau</field>
+  </record>
+  <record model="res.country" id="gu">
+    <field name="name">Guam</field>
+  </record>
+  <record model="res.country" id="gr">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="gp">
+    <field name="name">Guadeloupe</field>
+  </record>
+  <record model="res.country" id="gf">
+    <field name="name">French Guiana</field>
+  </record>
+  <record model="res.currency" id="YUM">
+    <field name="currency_subunit_label">Para</field>
+    <field name="currency_unit_label">Dinar</field>
+  </record>
+  <record model="res.currency" id="BWP">
+    <field name="currency_subunit_label">Thebe</field>
+    <field name="currency_unit_label">Pula</field>
+  </record>
+  <record model="res.country" id="tr">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s %(state_name)s %(zip)s\n%(country_name)s'" name="address_format"/>
+  </record>
+  <record model="res.currency" id="KYD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="UAH">
+    <field name="currency_subunit_label">Kopiyka</field>
+    <field name="currency_unit_label">Hryvnia</field>
+  </record>
+  <record model="res.currency" id="UAG">
+    <field name="currency_subunit_label">Kopiyka</field>
+    <field name="currency_unit_label">Hryvnia</field>
+  </record>
+  <record model="res.currency" id="GIP">
+    <field name="currency_subunit_label">Penny</field>
+    <field name="currency_unit_label">Pound</field>
+  </record>
+  <record model="res.currency" id="BYR">
+    <field name="currency_subunit_label">Kapeyka</field>
+    <field name="currency_unit_label">Ruble</field>
+  </record>
+  <record model="res.currency" id="XPF">
+    <field name="currency_subunit_label">Centimes</field>
+    <field name="currency_unit_label">Franc</field>
+  </record>
+  <record model="res.currency" id="DJF">
+    <field name="currency_subunit_label">Centime</field>
+    <field name="currency_unit_label">Franc</field>
+  </record>
+  <record model="res.users" id="default_user">
+    <field name="name">Default User Template</field>
+  </record>
+  <record model="res.currency" id="LAK">
+    <field name="currency_subunit_label">Att</field>
+    <field name="currency_unit_label">Kip</field>
+  </record>
+  <record model="res.currency" id="MAD">
+    <field name="currency_subunit_label">Centimes</field>
+    <field name="currency_unit_label">Dirham</field>
+  </record>
+  <record model="res.currency" id="NPR">
+    <field name="currency_subunit_label">Paisa</field>
+    <field name="currency_unit_label">Rupee</field>
+  </record>
+  <record model="res.currency" id="HUF">
+    <field name="currency_subunit_label">Filler</field>
+    <field name="currency_unit_label">Forint</field>
+  </record>
+  <record model="res.currency" id="LSL">
+    <field name="currency_subunit_label">Sente</field>
+    <field name="currency_unit_label">Loti</field>
+  </record>
+  <record model="res.currency" id="TTD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="SBD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="KPW">
+    <field name="currency_subunit_label">Chon</field>
+    <field name="currency_unit_label">Won</field>
+  </record>
+  <record model="res.currency" id="RWF">
+    <field name="currency_subunit_label">Santime</field>
+    <field name="currency_unit_label">Franc</field>
+  </record>
+  <record model="res.currency" id="NOK">
+    <field name="currency_unit_label">Krone</field>
+    <field name="currency_subunit_label">Ore</field>
+  </record>
+  <record model="res.currency" id="INR">
+    <field name="currency_subunit_label">Paise</field>
+    <field name="currency_unit_label">Rupees</field>
+  </record>
+  <record model="res.currency" id="MXN">
+    <field name="currency_unit_label">Pesos</field>
+    <field name="currency_subunit_label">Centavos</field>
+  </record>
+  <record model="res.currency" id="TJS">
+    <field name="currency_subunit_label">Diram</field>
+    <field name="currency_unit_label">Somoni</field>
+  </record>
+  <record model="res.currency" id="FJD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="BZD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="DOP">
+    <field name="currency_subunit_label">Centavos</field>
+    <field name="currency_unit_label">Peso</field>
+  </record>
+  <record model="res.currency" id="MMK">
+    <field name="currency_subunit_label">Pya</field>
+    <field name="currency_unit_label">Kyat</field>
+  </record>
+  <record model="res.currency" id="MDL">
+    <field name="currency_subunit_label">Ban</field>
+    <field name="currency_unit_label">Leu</field>
+  </record>
+  <record model="res.currency" id="BSD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="ZMK">
+    <field name="currency_subunit_label">Ngwee</field>
+    <field name="currency_unit_label">Kwacha</field>
+  </record>
+  <record model="res.currency" id="MVR">
+    <field name="currency_subunit_label">Laari</field>
+    <field name="currency_unit_label">Rufiyaa</field>
+  </record>
+  <record model="res.currency" id="AUD">
+    <field name="currency_unit_label">Dollars</field>
+    <field name="currency_subunit_label">Cents</field>
+  </record>
+  <record model="res.currency" id="VEF">
+    <field name="currency_subunit_label">Centimos</field>
+    <field name="currency_unit_label">Bolivar</field>
+  </record>
+  <record model="res.currency" id="LTL">
+    <field name="currency_subunit_label">Centas</field>
+    <field name="currency_unit_label">Litas</field>
+  </record>
+  <record model="res.country" id="md">
+    <field name="name">Moldova</field>
+  </record>
+  <record model="res.currency" id="ALL">
+    <field name="currency_subunit_label">Qindarke</field>
+    <field name="currency_unit_label">Lek</field>
+  </record>
+  <record model="res.country" id="mt">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="mq">
+    <field name="name">Martinique</field>
+  </record>
+  <record model="res.currency" id="TOP">
+    <field name="currency_subunit_label">Seniti</field>
+    <field name="currency_unit_label">Paanga</field>
+  </record>
+  <record model="res.currency" id="ERN">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Nakfa</field>
+  </record>
+  <record model="res.currency" id="BAM">
+    <field name="currency_subunit_label">Fening</field>
+    <field name="currency_unit_label">Mark</field>
+  </record>
+  <record model="res.currency" id="CAD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="PGK">
+    <field name="currency_subunit_label">Toea</field>
+    <field name="currency_unit_label">Kina</field>
+  </record>
+  <record model="res.currency" id="STD">
+    <field name="currency_subunit_label">Centimo</field>
+    <field name="currency_unit_label">Dobra</field>
+  </record>
+  <record model="res.country" id="fr">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.currency" id="ZRZ">
+    <field name="currency_subunit_label">Likuta</field>
+    <field name="currency_unit_label">Zaire</field>
+  </record>
+  <record model="res.currency" id="XOF">
+    <field name="currency_subunit_label">Centimes</field>
+    <field name="currency_unit_label">Franc</field>
+  </record>
+  <record model="res.currency" id="NZD">
+    <field name="currency_unit_label">Dollars</field>
+    <field name="currency_subunit_label">Cents</field>
+  </record>
+  <record model="res.country" id="fi">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.currency" id="RSD">
+    <field name="currency_subunit_label">Para</field>
+    <field name="currency_unit_label">Dinar</field>
+  </record>
+  <record model="res.currency" id="BHD">
+    <field name="currency_subunit_label">Fils</field>
+    <field name="currency_unit_label">Dinar</field>
+  </record>
+  <record model="res.country" id="st">
+    <field name="name">São Tomé and Príncipe</field>
+  </record>
+  <record model="res.country" id="sk">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="sj">
+    <field name="name">Svalbard and Jan Mayen</field>
+  </record>
+  <record model="res.country" id="si">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="sh">
+    <field name="name">Saint Helena, Ascension and Tristan da Cunha</field>
+  </record>
+  <record model="res.country" id="se">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.currency" id="GHS">
+    <field name="currency_subunit_label">Pesewas</field>
+    <field name="currency_unit_label">Cedi</field>
+  </record>
+  <record model="res.currency" id="EGP">
+    <field name="currency_subunit_label">Piastres</field>
+    <field name="currency_unit_label">Pound</field>
+  </record>
+  <record model="res.currency" id="DKK">
+    <field name="currency_unit_label">Krone</field>
+    <field name="currency_subunit_label">Ore</field>
+  </record>
+  <record model="res.currency" id="LBP">
+    <field name="currency_subunit_label">Piastres</field>
+    <field name="currency_unit_label">Pound</field>
+  </record>
+  <record model="res.currency" id="AOA">
+    <field name="currency_subunit_label">Centimos</field>
+    <field name="currency_unit_label">Kwanza</field>
+  </record>
+  <record model="res.country" id="lv">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="lu">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.currency" id="JOD">
+    <field name="currency_subunit_label">Fils</field>
+    <field name="currency_unit_label">Dinar</field>
+  </record>
+  <record model="res.currency" id="AZN">
+    <field name="currency_subunit_label">Qapik</field>
+    <field name="currency_unit_label">Manat</field>
+  </record>
+  <record model="res.currency" id="SAR">
+    <field name="currency_subunit_label">Halala</field>
+    <field name="currency_unit_label">Riyal</field>
+  </record>
+  <record model="res.currency" id="CHF">
+    <field name="currency_subunit_label">Centimes</field>
+    <field name="currency_unit_label">Franc</field>
+  </record>
+  <record model="res.currency" id="MRO">
+    <field name="currency_subunit_label">Khoums</field>
+    <field name="currency_unit_label">Ouguiya</field>
+  </record>
+  <record model="res.currency" id="HRK">
+    <field name="currency_subunit_label">Lipa</field>
+    <field name="currency_unit_label">Kuna</field>
+  </record>
+  <record model="res.currency" id="UYU">
+    <field name="currency_subunit_label">Centesimos</field>
+    <field name="currency_unit_label">Peso</field>
+  </record>
+  <record model="res.currency" id="PYG">
+    <field name="currency_subunit_label">Centimos</field>
+    <field name="currency_unit_label">Guarani</field>
+  </record>
+  <record model="res.country" id="ee">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.currency" id="NGN">
+    <field name="currency_subunit_label">Kobo</field>
+    <field name="currency_unit_label">Naira</field>
+  </record>
+  <record model="res.currency" id="ZWD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.country" id="es">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.currency" id="PKR">
+    <field name="currency_subunit_label">Paisa</field>
+    <field name="currency_unit_label">Rupee</field>
+  </record>
+  <record model="res.currency" id="SZL">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Lilangeni</field>
+  </record>
+  <record model="res.country" id="re">
+    <field name="name">Réunion</field>
+  </record>
+  <record model="res.currency" id="UGX">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Shilling</field>
+  </record>
+  <record model="res.country" id="ro">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.currency" id="SHP">
+    <field name="currency_subunit_label">Penny</field>
+    <field name="currency_unit_label">Pound</field>
+  </record>
+  <record model="res.currency" id="AFN">
+    <field name="currency_subunit_label">Puls</field>
+    <field name="currency_unit_label">Afghani</field>
+  </record>
+  <record model="res.currency" id="MGA">
+    <field name="currency_subunit_label">Iraimbilanja</field>
+    <field name="currency_unit_label">Ariary</field>
+  </record>
+  <record model="res.currency" id="YER">
+    <field name="currency_subunit_label">Fils</field>
+    <field name="currency_unit_label">Rial</field>
+  </record>
+  <record model="res.currency" id="XCD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="SSP">
+    <field name="currency_subunit_label">Piasters</field>
+    <field name="currency_unit_label">Pounds</field>
+  </record>
+  <record model="res.currency" id="CZK">
+    <field name="currency_subunit_label">Halers</field>
+    <field name="currency_unit_label">Koruna</field>
+  </record>
+  <record model="res.currency" id="BTN">
+    <field name="currency_subunit_label">Chhertum</field>
+    <field name="currency_unit_label">Ngultrum</field>
+  </record>
+  <record model="res.currency" id="MUR">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Rupee</field>
+  </record>
+  <record model="res.currency" id="ISK">
+    <field name="currency_subunit_label">Aurar</field>
+    <field name="currency_unit_label">Krona</field>
+  </record>
+  <record model="res.currency" id="QTQ">
+    <field name="currency_subunit_label">Centavo</field>
+    <field name="currency_unit_label">Quetzales</field>
+  </record>
+  <record model="res.currency" id="ECS">
+    <field name="currency_subunit_label">Centavos</field>
+    <field name="currency_unit_label">Sucre</field>
+  </record>
+  <record model="res.currency" id="SEK">
+    <field name="currency_subunit_label">Ore</field>
+    <field name="currency_unit_label">Krona</field>
+  </record>
+  <record model="res.currency" id="BBD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="GTQ">
+    <field name="currency_subunit_label">Centavo</field>
+    <field name="currency_unit_label">Quetzal</field>
+  </record>
+  <record model="res.currency" id="CLP">
+    <field name="currency_subunit_label">Centavos</field>
+    <field name="currency_unit_label">Peso</field>
+  </record>
+  <record model="res.currency" id="EUR">
+    <field name="currency_unit_label">Euros</field>
+    <field name="currency_subunit_label">Cents</field>
+  </record>
+  <record model="res.currency" id="ITL">
+    <field name="currency_subunit_label">Centesimo</field>
+    <field name="currency_unit_label">Lira</field>
+  </record>
+  <record model="res.currency" id="OMR">
+    <field name="currency_subunit_label">Baisa</field>
+    <field name="currency_unit_label">Rial</field>
+  </record>
+  <record model="res.currency" id="KES">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Shilling</field>
+  </record>
+  <record model="res.currency" id="CYP">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Euros</field>
+  </record>
+  <record model="res.currency" id="KWD">
+    <field name="currency_subunit_label">Fils</field>
+    <field name="currency_unit_label">Dinar</field>
+  </record>
+  <record model="res.currency" id="BIF">
+    <field name="currency_subunit_label">Centime</field>
+    <field name="currency_unit_label">Franc</field>
+  </record>
+  <record model="res.company" id="main_company">
+    <field name="rml_header1"/>
+  </record>
+  <record model="res.partner" id="main_partner">
+    <field name="image" type="base64" file="base/static/img/main_partner-image.png"/>
+  </record>
+  <record model="res.currency" id="SLL">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Leone</field>
+  </record>
+  <record model="res.currency" id="FKP">
+    <field name="currency_subunit_label">Penny</field>
+    <field name="currency_unit_label">Pound</field>
+  </record>
+  <record model="res.currency" id="GMD">
+    <field name="currency_subunit_label">Butut</field>
+    <field name="currency_unit_label">Dalasi</field>
+  </record>
+  <record model="res.country" id="kg">
+    <field name="name">Kyrgyzstan</field>
+  </record>
+  <record model="res.country" id="kh">
+    <field name="name">Cambodia</field>
+  </record>
+  <record model="res.country" id="kn">
+    <field name="name">Saint Kitts and Nevis</field>
+  </record>
+  <record model="res.currency" id="JPY">
+    <field name="currency_subunit_label">Cen</field>
+    <field name="currency_unit_label">Yen</field>
+  </record>
+  <record model="res.currency" id="DZD">
+    <field name="symbol">DA</field>
+    <field name="currency_subunit_label">Centimes</field>
+    <field name="currency_unit_label">Dinar</field>
+  </record>
+  <record model="res.currency" id="QAR">
+    <field name="currency_subunit_label">Dirham</field>
+    <field name="currency_unit_label">Rial</field>
+  </record>
+  <record model="res.currency" id="BGN">
+    <field name="currency_subunit_label">Stotinki</field>
+    <field name="currency_unit_label">Lev</field>
+  </record>
+  <record model="res.currency" id="PAB">
+    <field name="currency_subunit_label">Centesimo</field>
+    <field name="currency_unit_label">Balboa</field>
+  </record>
+  <record model="res.currency" id="TZS">
+    <field name="currency_subunit_label">Senti</field>
+    <field name="currency_unit_label">Shilling</field>
+  </record>
+  <record model="res.currency" id="VND">
+    <field name="currency_subunit_label">Xu</field>
+    <field name="currency_unit_label">Dong</field>
+  </record>
+  <record model="res.currency" id="AWG">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Guilder</field>
+  </record>
+  <record model="res.country" id="dk">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="de">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.currency" id="THB">
+    <field name="currency_subunit_label">Satang</field>
+    <field name="currency_unit_label">Baht</field>
+  </record>
+  <record model="res.currency" id="BND">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="NIO">
+    <field name="currency_subunit_label">Centavos</field>
+    <field name="currency_unit_label">Cordoba</field>
+  </record>
+  <record model="res.currency" id="SYP">
+    <field name="currency_subunit_label">Piastrp</field>
+    <field name="currency_unit_label">Pound</field>
+  </record>
+  <record model="res.currency" id="MZN">
+    <field name="currency_subunit_label">Centavo</field>
+    <field name="currency_unit_label">Metical</field>
+  </record>
+  <record model="res.currency" id="PHP">
+    <field name="currency_subunit_label">Centavos</field>
+    <field name="currency_unit_label">Peso</field>
+  </record>
+  <record model="res.currency" id="ZAR">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Rand</field>
+  </record>
+  <record model="res.country" id="wf">
+    <field name="name">Wallis and Futuna</field>
+  </record>
+  <record model="res.currency" id="CRC">
+    <field name="currency_subunit_label">Centimos</field>
+    <field name="currency_unit_label">Colon</field>
+  </record>
+  <record model="res.currency" id="AED">
+    <field name="currency_subunit_label">Fils</field>
+    <field name="currency_unit_label">Dirham</field>
+  </record>
+  <record model="res.currency" id="GBP">
+    <field name="currency_unit_label">Sterling</field>
+    <field name="currency_subunit_label">Penny</field>
+  </record>
+  <record model="res.currency" id="SKK">
+    <field name="currency_subunit_label">Halier</field>
+    <field name="currency_unit_label">Koruna</field>
+  </record>
+  <record model="res.currency" id="GEL">
+    <field name="currency_subunit_label">Tetri</field>
+    <field name="currency_unit_label">Lari</field>
+  </record>
+  <record model="res.country" id="jp">
+    <field name="address_format" eval="'%(zip)s\n%(state_name)s %(city)s\n%(street)s\n%(street2)\n%(country_name)s'"/>
+    <field name="name_position">after</field>
+  </record>
+  <record model="res.currency" id="ANG">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Guilder</field>
+  </record>
+  <record model="res.currency" id="MOP">
+    <field name="currency_subunit_label">Sin</field>
+    <field name="currency_unit_label">Pataca</field>
+  </record>
+  <record model="ir.rule" id="res_partner_rule">
+    <field name="model_id" ref="base.model_res_partner"/>
+  </record>
+  <record model="res.currency" id="KMF">
+    <field name="currency_subunit_label">Centime</field>
+    <field name="currency_unit_label">Franc</field>
+  </record>
+  <record model="res.country" id="ci">
+    <field name="name">Côte d'Ivoire</field>
+  </record>
+  <record model="res.country" id="cd">
+    <field name="name">Democratic Republic of the Congo</field>
+  </record>
+  <record model="res.currency" id="ETB">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Birr</field>
+  </record>
+  <record model="res.country" id="cz">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="cy">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.currency" id="ILS">
+    <field name="currency_subunit_label">Agorot</field>
+    <field name="currency_unit_label">Shekel</field>
+  </record>
+  <record model="res.country" id="ps">
+    <field name="name">State of Palestine</field>
+  </record>
+  <record model="res.currency" id="TWD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.country" id="pt">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="lt">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="pf">
+    <field name="name">French Polynesia</field>
+  </record>
+  <record model="res.country" id="pn">
+    <field name="name">Pitcairn Islands</field>
+  </record>
+  <record model="res.country" id="pl">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.currency" id="SRG">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="KRW">
+    <field name="currency_subunit_label">Chon</field>
+    <field name="currency_unit_label">Won</field>
+  </record>
+  <record model="res.currency" id="CDF">
+    <field name="currency_subunit_label">Centime</field>
+    <field name="currency_unit_label">Franc</field>
+  </record>
+  <record model="res.currency" id="RUB">
+    <field name="currency_subunit_label">Kopek</field>
+    <field name="currency_unit_label">Ruble</field>
+  </record>
+  <record model="res.currency" id="PLZ">
+    <field name="currency_subunit_label">Grosz</field>
+    <field name="currency_unit_label">Zloty</field>
+  </record>
+  <record model="res.currency" id="RUR">
+    <field name="currency_subunit_label">Kopek</field>
+    <field name="currency_unit_label">Ruble</field>
+  </record>
+  <record model="res.currency" id="PLN">
+    <field name="currency_subunit_label">Groszy</field>
+    <field name="currency_unit_label">Zloty</field>
+  </record>
+  <record model="res.currency" id="MKD">
+    <field name="currency_subunit_label">Deni</field>
+    <field name="currency_unit_label">Denar</field>
+  </record>
+  <record model="res.country" id="it">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.currency" id="GNF">
+    <field name="currency_subunit_label">Centime</field>
+    <field name="currency_unit_label">Franc</field>
+  </record>
+  <record model="res.currency" id="WST">
+    <field name="currency_subunit_label">Sene</field>
+    <field name="currency_unit_label">Tala</field>
+  </record>
+  <record model="res.country" id="in">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s %(zip)s\n%(state_name)s %(state_code)s\n%(country_name)s'" name="address_format"/>
+    <field name="vat_label">GSTIN</field>
+  </record>
+  <record model="res.currency" id="CVE">
+    <field name="currency_subunit_label">Centavo</field>
+    <field name="currency_unit_label">Escudo</field>
+  </record>
+  <record model="res.country" id="ie">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.currency" id="SOD">
+    <field name="currency_subunit_label">Senti</field>
+    <field name="currency_unit_label">Shillings</field>
+  </record>
+  <record model="res.currency" id="IRR">
+    <field name="currency_subunit_label">Fils</field>
+    <field name="currency_unit_label">Dinar</field>
+  </record>
+  <record model="res.currency" id="GYD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="LVL">
+    <field name="currency_subunit_label">Santims</field>
+    <field name="currency_unit_label">Lats</field>
+  </record>
+  <record model="res.currency" id="ARS">
+    <field name="currency_subunit_label">Centavos</field>
+    <field name="currency_unit_label">Peso</field>
+  </record>
+  <record model="res.currency" id="SDD">
+    <field name="currency_subunit_label">Fils</field>
+    <field name="currency_unit_label">Dinar</field>
+  </record>
+  <record model="res.currency" id="NAD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="COP">
+    <field name="currency_unit_label">Peso</field>
+    <field name="currency_subunit_label">Centavos</field>
+  </record>
+  <record model="res.currency" id="BOB">
+    <field name="currency_subunit_label">Centavos</field>
+    <field name="currency_unit_label">Boliviano</field>
+  </record>
+  <record model="res.currency" id="KHR">
+    <field name="currency_subunit_label">Sen</field>
+    <field name="currency_unit_label">Riel</field>
+  </record>
+  <record model="res.currency" id="MYR">
+    <field name="currency_subunit_label">Sen</field>
+    <field name="currency_unit_label">Ringgit</field>
+  </record>
+  <record model="res.currency" id="LYD">
+    <field name="currency_subunit_label">Centimes</field>
+    <field name="currency_unit_label">Dinar</field>
+  </record>
+  <record model="res.currency" id="HKD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.country" id="vc">
+    <field name="name">Saint Vincent and the Grenadines</field>
+  </record>
+  <record model="res.currency" id="SVC">
+    <field name="currency_subunit_label">Centavo</field>
+    <field name="currency_unit_label">Colones</field>
+  </record>
+  <record model="res.currency" id="HNL">
+    <field name="currency_subunit_label">Centavos</field>
+    <field name="currency_unit_label">Lempira</field>
+  </record>
+  <record model="res.currency" id="XAF">
+    <field name="currency_subunit_label">Centimes</field>
+    <field name="currency_unit_label">Franc</field>
+  </record>
+  <record model="res.currency" id="VUV">
+    <field name="currency_unit_label">Vatu</field>
+  </record>
+  <record model="res.currency" id="PEN">
+    <field name="currency_unit_label">Inti</field>
+    <field name="currency_subunit_label">Centimes</field>
+  </record>
+  <record model="res.currency" id="IQD">
+    <field name="currency_subunit_label">Fils</field>
+    <field name="currency_unit_label">Dinar</field>
+  </record>
+  <record model="res.currency" id="MWK">
+    <field name="currency_subunit_label">Tambala</field>
+    <field name="currency_unit_label">Kwacha</field>
+  </record>
+  <record model="res.currency" id="LKR">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Rupee</field>
+  </record>
+  <record model="res.currency" id="RON">
+    <field name="currency_subunit_label">Bani</field>
+    <field name="currency_unit_label">Leu</field>
+  </record>
+  <record model="res.currency" id="MNT">
+    <field name="currency_subunit_label">Mongo</field>
+    <field name="currency_unit_label">Tugrik</field>
+  </record>
+  <record model="res.currency" id="AMD">
+    <field name="currency_subunit_label">Luma</field>
+    <field name="currency_unit_label">Dram</field>
+  </record>
+  <record model="res.currency" id="TMM">
+    <field name="currency_subunit_label">Tenge</field>
+    <field name="currency_unit_label">Manat</field>
+  </record>
+  <record model="res.currency" id="JMD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="SCR">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Rupee</field>
+  </record>
+  <record model="res.country" id="be">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="bg">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="ba">
+    <field name="name">Bosnia and Herzegovina</field>
+  </record>
+  <record model="res.currency" id="TRY">
+    <field name="currency_subunit_label">Kurus</field>
+    <field name="currency_unit_label">Lira</field>
+  </record>
+  <record model="res.currency" id="BDT">
+    <field name="currency_subunit_label">Paisa</field>
+    <field name="currency_unit_label">Taka</field>
+  </record>
+  <record model="res.currency" id="HTG">
+    <field name="currency_subunit_label">Centime</field>
+    <field name="currency_unit_label">Gourde</field>
+  </record>
+  <record model="res.currency" id="LRD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="IDR">
+    <field name="currency_subunit_label">Sen</field>
+    <field name="currency_unit_label">Rupiah</field>
+  </record>
+  <record model="res.currency" id="CUP">
+    <field name="currency_subunit_label">Centavos</field>
+    <field name="currency_unit_label">Peso</field>
+  </record>
+  <record model="res.country" id="hr">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="hu">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="hm">
+    <field name="name">Heard Island and McDonald Islands</field>
+  </record>
+  <record model="res.currency" id="KZT">
+    <field name="currency_subunit_label">Tiin</field>
+    <field name="currency_unit_label">Tenge</field>
+  </record>
+  <record model="res.currency" id="BRL">
+    <field name="currency_unit_label">Real</field>
+    <field name="currency_subunit_label">Centavos</field>
+  </record>
+  <record model="res.country" id="uk">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.currency" id="USD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.country" id="ad">
+    <field name="name">Andorra</field>
+  </record>
+  <record model="res.country" id="af">
+    <field name="name">Afghanistan</field>
+  </record>
+  <record model="res.country" id="at">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="nl">
+    <field name="vat_label">VAT</field>
+  </record>
+  <record model="res.country" id="nc">
+    <field name="name">New Caledonia</field>
+  </record>
+  <record model="res.currency" id="SGD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record model="res.currency" id="UZS">
+    <field name="currency_subunit_label">Tiyin</field>
+    <field name="currency_unit_label">Som</field>
+  </record>
+  <record model="res.currency" id="CNY">
+    <field name="currency_subunit_label">Fen</field>
+    <field name="currency_unit_label">Yuan</field>
+  </record>
+  <record model="res.currency" id="TND">
+    <field name="currency_subunit_label">Millimes</field>
+    <field name="currency_unit_label">Dinar</field>
+  </record>
+  <record model="res.currency" id="KGS">
+    <field name="currency_subunit_label">Tyiyn</field>
+    <field name="currency_unit_label">Som</field>
+  </record>
+  <record model="res.currency" id="BMD">
+    <field name="currency_subunit_label">Cents</field>
+    <field name="currency_unit_label">Dollars</field>
+  </record>
+</odoo>
