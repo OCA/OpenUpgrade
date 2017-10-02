@@ -15,7 +15,8 @@ from odoo.addons.openupgrade_records.lib import apriori
 
 
 def module_map(module):
-    return apriori.renamed_modules.get(module, module)
+    return apriori.renamed_modules.get(
+        module, apriori.merged_modules.get(module, module))
 
 
 def model_map(model):
