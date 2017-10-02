@@ -63,7 +63,7 @@ base         / ir.actions.server        / action_id (many2one)          : DEL re
 
 base         / ir.actions.server        / binding_model_id (many2one)   : NEW relation: ir.model
 base         / ir.actions.server        / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
-# NOTHING TO DO
+# DONE: post-migration: map value 'menu_ir_values_id' with the help of 'model_id' to binding_model_id
 
 base         / ir.actions.server        / condition (char)              : DEL 
 base         / ir.actions.server        / copyvalue (char)              : DEL 
@@ -76,8 +76,7 @@ base         / ir.actions.server        / ref_object (reference)        : DEL
 # DONE: pre-migration: rename column
 
 base         / ir.actions.server        / state (selection)             : selection_keys is now '['code', 'multi', 'object_create', 'object_write']' ('function')
-# DONE: pre-migration: copy column
-# TODO: post-migration: map values 'trigger' and 'client_action' to default value
+# NOTHING TO DO, invalid options will be removed by migration of ir.actions.server 
 
 base         / ir.actions.server        / sub_model_object_field (many2one): DEL relation: ir.model.fields
 base         / ir.actions.server        / sub_object (many2one)         : DEL relation: ir.model
@@ -118,7 +117,7 @@ base         / ir.cron                  / function (char)               : DEL
 
 base         / ir.cron                  / interval_type (selection)     : selection_keys is now '['days', 'hours', 'minutes', 'months', 'weeks']' ('['days', 'hours', 'minutes', 'months', 'weeks', 'work_days']')
 # DONE: pre-migration: copy column
-# TODO: post-migration: map value 'work_days' to default value
+# TODO: post-migration: map value 'work_days' to 'days', because changing from work_days to month (default) is maybe not the best idea
 
 base         / ir.cron                  / ir_actions_server_id (many2one): NEW relation: ir.actions.server, required: required
 # TODO: Check which ir.actions.server should be used, because the field is required
