@@ -23,8 +23,13 @@ merged_modules = {
     'website_portal_sale': 'sale',
     'website_project': 'project',
     'website_project_timesheet': 'hr_timesheet',
-
 }
 
 renamed_models = {
+    'base.action.rule': 'base.automation',
+    'base.action.rule.lead.test': 'base.automation.lead.test',
+    'base.action.rule.line.test': 'base.automation.line.test',
+    'ir.actions.report.xml': 'ir.actions.report',
+    'stock.pack.operation': 'stock.move.line',
+    'stock.picking.wave': 'stock.picking.batch',
 }
