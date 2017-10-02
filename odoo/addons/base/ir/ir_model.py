@@ -13,6 +13,9 @@ from odoo.osv import expression
 from odoo.tools import pycompat
 from odoo.tools.safe_eval import safe_eval
 
+from odoo.openupgrade import openupgrade_log
+from openupgradelib import openupgrade
+
 _logger = logging.getLogger(__name__)
 
 MODULE_UNINSTALL_FLAG = '_force_unlink'
@@ -162,6 +165,11 @@ class IrModel(models.Model):
 
     def _drop_table(self):
         for model in self:
+            # OpenUpgrade: do not run the new table cleanup
+            openupgrade.message(
+                self._cr, 'Unknown', False, False,
+                "Not dropping the table or view of model %s", model.model)
+            continue
             table = self.env[model.model]._table
             kind = tools.table_kind(self._cr, table)
             if kind == 'v':
@@ -512,6 +520,13 @@ class IrModelFields(models.Model):
         for field in self:
             if field.name in models.MAGIC_COLUMNS:
                 continue
+            # OpenUpgrade: do not drop columns
+            openupgrade.message(
+                self._cr, 'Unknown', False, False,
+                "Not dropping the column of field %s of model %s", field.name,
+                field.model,
+            )
+            continue
             model = self.env[field.model]
             if tools.column_exists(self._cr, model._table, field.name) and \
                     tools.table_kind(self._cr, model._table) == 'r':
@@ -742,6 +757,48 @@ class IrModelFields(models.Model):
 
     def _reflect_field(self, field):
         """ Reflect the given field and return its corresponding record. """
+
+        # OpenUpgrade edit start
+        # create/update the entries in 'ir.model.fields' and 'ir.model.data'
+        # OpenUpgrade edit start: In rare cases, an old module defined a field
+        # on a model that is not defined in another module earlier in the
+        # chain of inheritance. Then we need to assign the ir.model.fields'
+        # xmlid to this other module, otherwise the column would be dropped
+        # when uninstalling the first module.
+        # An example is res.partner#display_name defined in 7.0 by
+        # account_report_company, but now the field belongs to the base
+        # module
+        # Given that we arrive here in order of inheritance, we simply check
+        # if the field's xmlid belongs to a module already loaded, and if not,
+        # update the record with the correct module name.
+        self.env.cr.execute(
+            "SELECT f.*, d.module, d.id as xmlid_id, d.name as xmlid "
+            "FROM ir_model_fields f LEFT JOIN ir_model_data d "
+            "ON f.id=d.res_id and d.model='ir.model.fields' WHERE f.model=%s",
+            (self._name,))
+        for rec in self.env.cr.dictfetchall():
+            if 'module' in self.env.context and\
+                    rec['module'] and\
+                    rec['name'] in self._fields.keys() and\
+                    rec['module'] != self.env.context['module'] and\
+                    rec['module'] not in self.env.registry._init_modules:
+                _logger.info(
+                    'Moving XMLID for ir.model.fields record of %s#%s '
+                    'from %s to %s',
+                    self._name, rec['name'], rec['module'], self.env.context['module'])
+                self.env.cr.execute(
+                    "SELECT id FROM ir_model_data WHERE module=%(module)s "
+                    "AND name=%(xmlid)s",
+                    dict(rec, module=self.env.context['module']))
+                if self.env.cr.fetchone():
+                    _logger.info('Aborting, an XMLID for this module already exists.')
+                else:
+                    self.env.cr.execute(
+                        "UPDATE ir_model_data SET module=%(module)s "
+                        "WHERE id=%(xmlid_id)s",
+                        dict(rec, module=self.env.context['module']))
+        # OpenUpgrade edit end
+
         fields_data = self._existing_field_data(field.model_name)
         field_data = fields_data.get(field.name)
         params = self._reflect_field_params(field)
@@ -1393,6 +1450,10 @@ class IrModelData(models.Model):
 
     @api.model
     def _update(self, model, module, values, xml_id=False, store=True, noupdate=False, mode='init', res_id=False):
+        #OpenUpgrade: log entry (used in csv import)
+        if xml_id:
+            openupgrade_log.log_xml_id(self.env.cr, module, xml_id)
+
         # records created during module install should not display the messages of OpenChatter
         self = self.with_context(install_mode=True)
         current_module = module
@@ -1535,6 +1596,10 @@ class IrModelData(models.Model):
                 if external_ids - datas:
                     # if other modules have defined this record, we must not delete it
                     continue
+                    # OpenUpgrade specific start
+                    if not self.env.get(model):
+                        continue
+                    # OpenUpgrade specific end
                 if model == 'ir.model.fields':
                     # Don't remove the LOG_ACCESS_COLUMNS unless _log_access
                     # has been turned off on the model.
@@ -1601,12 +1666,20 @@ class IrModelData(models.Model):
         for (id, name, model, res_id, module) in self._cr.fetchall():
             if (module, name) not in self.loads:
                 if model in self.env:
+                    # OpenUpgrade: never break on unlink of obsolete records
                     _logger.info('Deleting %s@%s (%s.%s)', res_id, model, module, name)
-                    record = self.env[model].browse(res_id)
-                    if record.exists():
-                        record.unlink()
-                    else:
+                    try:
+                        self.env.cr.execute('SAVEPOINT ir_model_data_delete');
+                        self.env[model].browse(res_id).unlink()
+                        self.env.cr.execute('RELEASE SAVEPOINT ir_model_data_delete')
+                    except Exception:
+                        self.env.cr.execute('ROLLBACK TO SAVEPOINT ir_model_data_delete');
+                        _logger.warning(
+                            'Could not delete obsolete record with id: %d of model %s\n'
+                            'Please refer to the log message right above',
+                            res_id, model)
                         bad_imd_ids.append(id)
+                    # /OpenUpgrade
         if bad_imd_ids:
             self.browse(bad_imd_ids).unlink()
         self.loads.clear()

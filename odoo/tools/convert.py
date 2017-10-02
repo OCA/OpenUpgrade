@@ -27,6 +27,8 @@ _logger = logging.getLogger(__name__)
 from .safe_eval import safe_eval as s_eval
 safe_eval = lambda expr, ctx={}: s_eval(expr, ctx, nocopy=True)
 
+from odoo.openupgrade import openupgrade_log
+
 class ParseError(Exception):
     def __init__(self, msg, text, filename, lineno):
         self.msg = msg
@@ -252,6 +254,8 @@ form: module.record_id""" % (xml_id,)
             if module != self.module:
                 modcnt = self.env['ir.module.module'].search_count([('name', '=', module), ('state', '=', 'installed')])
                 assert modcnt == 1, """The ID "%s" refers to an uninstalled module""" % (xml_id,)
+
+        openupgrade_log.log_xml_id(self.cr, self.module, xml_id)
 
     def _tag_delete(self, rec, data_node=None, mode=None):
         d_model = rec.get("model")
