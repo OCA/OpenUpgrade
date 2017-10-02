@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
-from odoo.tools import safe_eval
+import json
 
 
 def convert_blog_post_cover(env):
@@ -12,10 +12,10 @@ def convert_blog_post_cover(env):
     """
     post_obj = env['blog.post'].with_context(active_test=False)
     for post in post_obj.search([('cover_properties', '!=', False)]):
-        props = safe_eval(post.cover_properties)
+        props = json.loads(post.cover_properties)
         if 'opacity' in props:
             props['opacity'] = str(abs(1 - float(props['opacity'])))
-        post.cover_properties = str(props).replace("'", '"')
+        post.cover_properties = json.dumps(props)
 
 
 @openupgrade.migrate()
