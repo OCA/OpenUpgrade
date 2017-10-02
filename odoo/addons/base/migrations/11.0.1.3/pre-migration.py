@@ -83,7 +83,6 @@ column_copies = {
         ('report_type', None, None),
     ],
     'ir_act_server': [
-        ('state', None, None),
         ('usage', None, None),
     ],
     'ir_cron': [
@@ -156,7 +155,7 @@ def migrate(env, version):
     openupgrade.copy_columns(env.cr, column_copies)
     openupgrade.rename_models(env.cr, model_renames_ir_actions_report)
     openupgrade.rename_xmlids(env.cr, xmlid_renames)
-    update_module_names(env)
+    update_module_names(env.cr)
 
     # Remove security rules
     env.ref('base.ir_config_parameter_rule').unlink()
