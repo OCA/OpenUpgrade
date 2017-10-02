@@ -2,6 +2,7 @@
 # Copyright 2017 bloopark systems (<http://bloopark.de>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+from odoo.addons.openupgrade_records.lib import apriori
 
 
 # backup of deleted columns
@@ -147,6 +148,10 @@ def update_module_names(cr):
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
+    openupgrade.update_module_names(
+        cr, apriori.renamed_modules.iteritems()
+    )
+
     openupgrade.rename_columns(env.cr, column_renames)
     openupgrade.copy_columns(env.cr, column_copies)
     openupgrade.rename_models(env.cr, model_renames_ir_actions_report)
