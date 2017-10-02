@@ -4,7 +4,7 @@ pos_sale     / crm.team                 / pos_config_ids (one2many)     : NEW re
 pos_sale     / crm.team                 / team_type (False)             : NEW selection_keys: ['pos', 'sales', 'website'], mode: modify
 pos_sale     / pos.config               / crm_team_id (many2one)        : NEW relation: crm.team
 ---XML records in module 'pos_sale'---
-NEW crm.team: pos_sale.pos_sales_team
+NEW crm.team: pos_sale.pos_sales_team (noupdate)
 NEW ir.actions.act_window: pos_sale.pos_session_action_from_crm_team
 NEW ir.model.access: pos_sale.access_crm_team_pos_manager
 NEW ir.rule: pos_sale.pos_sale_rule_pos_channel_pos_manager
@@ -13,4 +13,4 @@ NEW ir.ui.view: pos_sale.crm_team_view_form_inherit_pos_sale
 NEW ir.ui.view: pos_sale.pos_config_view_form_pos_sale
 NEW ir.ui.view: pos_sale.view_pos_config_search_inherit_pos_sale
 NEW ir.ui.view: pos_sale.view_pos_session_search_inherit_pos_sale
-NEW pos.config: point_of_sale.pos_config_main
+NEW pos.config: point_of_sale.pos_config_main (noupdate)

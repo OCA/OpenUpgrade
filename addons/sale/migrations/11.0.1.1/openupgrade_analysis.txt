@@ -11,7 +11,7 @@ sale         / sale.order               / website_message_ids (one2many): NEW re
 sale         / sale.order.line          / is_downpayment (boolean)      : NEW 
 sale         / sale.order.line          / procurement_ids (one2many)    : DEL relation: procurement.order
 ---XML records in module 'sale'---
-NEW crm.team: sales_team.team_sales_department
+NEW crm.team: sales_team.team_sales_department (noupdate)
 NEW ir.actions.act_window: sale.action_sale_config_settings
 NEW ir.actions.act_window: sale.report_all_channels_sales_action
 NEW ir.actions.act_window: sales_team.mail_activity_type_action_config_sales
@@ -24,10 +24,10 @@ NEW ir.model.access: sale.access_sale_order_line_portal
 NEW ir.model.access: sale.access_sale_order_portal
 DEL ir.model.access: sale.access_ir_attachment_manager
 DEL ir.model.access: sale.access_ir_attachment_sales
-NEW ir.rule: sale.account_invoice_report_rule_see_all
-NEW ir.rule: sale.account_invoice_report_rule_see_personal
-NEW ir.rule: sale.sale_order_line_rule_portal
-NEW ir.rule: sale.sale_order_rule_portal
+NEW ir.rule: sale.account_invoice_report_rule_see_all (noupdate)
+NEW ir.rule: sale.account_invoice_report_rule_see_personal (noupdate)
+NEW ir.rule: sale.sale_order_line_rule_portal (noupdate)
+NEW ir.rule: sale.sale_order_rule_portal (noupdate)
 NEW ir.ui.menu: sale.menu_sale_config
 NEW ir.ui.menu: sale.menu_sale_general_settings
 NEW ir.ui.menu: sale.menu_sale_report
@@ -60,7 +60,7 @@ NEW ir.ui.view: sale.report_saleorder_pro_forma
 NEW ir.ui.view: sale.res_config_settings_view_form
 DEL ir.ui.view: sale.view_sales_config
 DEL ir.values: sale.sale_order_line_make_invoice
-DEL mail.message: sale.module_install_notification
+DEL mail.message: sale.module_install_notification (noupdate)
 NEW res.groups: sale.group_proforma_sales
 DEL res.groups: sale.group_display_incoterm
 DEL res.groups: sale.group_mrp_properties

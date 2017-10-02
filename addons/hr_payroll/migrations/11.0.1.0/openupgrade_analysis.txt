@@ -20,8 +20,8 @@ NEW ir.model.access: hr_payroll.access_hr_payslip_worked_days_officer
 NEW ir.model.access: hr_payroll.access_hr_rule_input_officer
 DEL ir.model.access: hr_payroll.access_hr_payslip_worked_days 
 DEL ir.model.access: hr_payroll.access_hr_rule_input
-NEW ir.rule: hr_payroll.hr_payroll_rule_officer
-NEW ir.rule: hr_payroll.hr_payslip_rule_manager
+NEW ir.rule: hr_payroll.hr_payroll_rule_officer (noupdate)
+NEW ir.rule: hr_payroll.hr_payslip_rule_manager (noupdate)
 NEW ir.ui.menu: hr_payroll.hr_contract_advantage_template_menu_action
 NEW ir.ui.view: hr_payroll.hr_contract_advantage_template_view_form
 NEW ir.ui.view: hr_payroll.hr_contract_advantage_template_view_tree

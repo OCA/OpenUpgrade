@@ -271,5 +271,7 @@ def compare_xml_sets(old_records, new_records):
             content = 'DEL %(model)s: %(name)s' % entry
         elif 'new' in entry:
             content = 'NEW %(model)s: %(name)s' % entry
+        if entry['noupdate']:
+            content += ' (noupdate)'
         reprs[module_map(entry['module'])].append(content)
     return reprs

@@ -191,10 +191,10 @@ DEL ir.model.access: base.access_workflow_transition_group_system
 DEL ir.model.access: base.access_workflow_triggers_all
 DEL ir.model.access: base.access_workflow_triggers_group_system
 DEL ir.model.access: base.access_workflow_workitem_all
-NEW ir.rule: base.ir_default_system_rule
-NEW ir.rule: base.ir_default_user_rule
-DEL ir.rule: base.ir_config_parameter_rule
-DEL ir.rule: base.ir_values_default_rule
+NEW ir.rule: base.ir_default_system_rule (noupdate)
+NEW ir.rule: base.ir_default_user_rule (noupdate)
+DEL ir.rule: base.ir_config_parameter_rule (noupdate)
+DEL ir.rule: base.ir_values_default_rule (noupdate)
 NEW ir.ui.menu: base.ir_default_menu
 NEW ir.ui.menu: base.menu_ir_action_report
 NEW ir.ui.menu: base.paper_format_menuitem
@@ -252,16 +252,16 @@ DEL ir.ui.view: base.view_workflow_workitem_tree
 DEL ir.values: base.action_module_immediate_install
 DEL ir.values: base.ir_action_module_category
 DEL ir.values: base.ir_open_company
-NEW report.paperformat: base.paperformat_batch_deposit
-NEW report.paperformat: base.paperformat_euro
-NEW report.paperformat: base.paperformat_us
-NEW res.country: base.tl
-DEL res.country: base.an
-DEL res.country: base.nt
-DEL res.country: base.tp
-DEL res.country: base.yu
-DEL res.country: base.zr
-NEW res.country.group: base.south_america
+NEW report.paperformat: base.paperformat_batch_deposit (noupdate)
+NEW report.paperformat: base.paperformat_euro (noupdate)
+NEW report.paperformat: base.paperformat_us (noupdate)
+NEW res.country: base.tl (noupdate)
+DEL res.country: base.an (noupdate)
+DEL res.country: base.nt (noupdate)
+DEL res.country: base.tp (noupdate)
+DEL res.country: base.yu (noupdate)
+DEL res.country: base.zr (noupdate)
+NEW res.country.group: base.south_america (noupdate)
 NEW res.country.state: base.state_co_01
 NEW res.country.state: base.state_co_02
 NEW res.country.state: base.state_co_03
@@ -295,28 +295,28 @@ NEW res.country.state: base.state_co_30
 NEW res.country.state: base.state_co_31
 NEW res.country.state: base.state_co_32
 NEW res.country.state: base.state_co_33
-DEL res.currency: base.VUB
-DEL res.font: base.font_courier
-DEL res.font: base.font_helvetica
-DEL res.font: base.font_times
-NEW res.partner.industry: base.res_partner_industry_A
-NEW res.partner.industry: base.res_partner_industry_B
-NEW res.partner.industry: base.res_partner_industry_C
-NEW res.partner.industry: base.res_partner_industry_D
-NEW res.partner.industry: base.res_partner_industry_E
-NEW res.partner.industry: base.res_partner_industry_F
-NEW res.partner.industry: base.res_partner_industry_G
-NEW res.partner.industry: base.res_partner_industry_H
-NEW res.partner.industry: base.res_partner_industry_I
-NEW res.partner.industry: base.res_partner_industry_J
-NEW res.partner.industry: base.res_partner_industry_K
-NEW res.partner.industry: base.res_partner_industry_L
-NEW res.partner.industry: base.res_partner_industry_M
-NEW res.partner.industry: base.res_partner_industry_N
-NEW res.partner.industry: base.res_partner_industry_O
-NEW res.partner.industry: base.res_partner_industry_P
-NEW res.partner.industry: base.res_partner_industry_Q
-NEW res.partner.industry: base.res_partner_industry_R
-NEW res.partner.industry: base.res_partner_industry_S
-NEW res.partner.industry: base.res_partner_industry_T
-NEW res.partner.industry: base.res_partner_industry_U
+DEL res.currency: base.VUB (noupdate)
+DEL res.font: base.font_courier (noupdate)
+DEL res.font: base.font_helvetica (noupdate)
+DEL res.font: base.font_times (noupdate)
+NEW res.partner.industry: base.res_partner_industry_A (noupdate)
+NEW res.partner.industry: base.res_partner_industry_B (noupdate)
+NEW res.partner.industry: base.res_partner_industry_C (noupdate)
+NEW res.partner.industry: base.res_partner_industry_D (noupdate)
+NEW res.partner.industry: base.res_partner_industry_E (noupdate)
+NEW res.partner.industry: base.res_partner_industry_F (noupdate)
+NEW res.partner.industry: base.res_partner_industry_G (noupdate)
+NEW res.partner.industry: base.res_partner_industry_H (noupdate)
+NEW res.partner.industry: base.res_partner_industry_I (noupdate)
+NEW res.partner.industry: base.res_partner_industry_J (noupdate)
+NEW res.partner.industry: base.res_partner_industry_K (noupdate)
+NEW res.partner.industry: base.res_partner_industry_L (noupdate)
+NEW res.partner.industry: base.res_partner_industry_M (noupdate)
+NEW res.partner.industry: base.res_partner_industry_N (noupdate)
+NEW res.partner.industry: base.res_partner_industry_O (noupdate)
+NEW res.partner.industry: base.res_partner_industry_P (noupdate)
+NEW res.partner.industry: base.res_partner_industry_Q (noupdate)
+NEW res.partner.industry: base.res_partner_industry_R (noupdate)
+NEW res.partner.industry: base.res_partner_industry_S (noupdate)
+NEW res.partner.industry: base.res_partner_industry_T (noupdate)
+NEW res.partner.industry: base.res_partner_industry_U (noupdate)

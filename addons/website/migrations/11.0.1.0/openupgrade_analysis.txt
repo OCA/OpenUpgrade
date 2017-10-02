@@ -24,10 +24,10 @@ website      / website.redirect         / website_id (many2one)         : NEW re
 NEW ir.actions.act_window: website.action_website_pages_list
 NEW ir.actions.act_window: website.action_website_redirect_list
 NEW ir.actions.server: website.ir_actions_server_website_dashboard
-NEW ir.attachment: website.s_company_team_image_1
-NEW ir.attachment: website.s_company_team_image_2
-NEW ir.attachment: website.s_company_team_image_3
-NEW ir.attachment: website.s_company_team_image_4
+NEW ir.attachment: website.s_company_team_image_1 (noupdate)
+NEW ir.attachment: website.s_company_team_image_2 (noupdate)
+NEW ir.attachment: website.s_company_team_image_3 (noupdate)
+NEW ir.attachment: website.s_company_team_image_4 (noupdate)
 NEW ir.model.access: website.access_website_page
 NEW ir.model.access: website.access_website_page_designer
 NEW ir.model.access: website.access_website_redirect
@@ -35,7 +35,7 @@ NEW ir.model.access: website.access_website_redirect_designer
 NEW ir.rule: website.website_page_rule_public
 NEW ir.ui.menu: website.menu_website_pages_list
 NEW ir.ui.menu: website.menu_website_redirect_list
-DEL ir.ui.menu: website.menu_website
+DEL ir.ui.menu: website.menu_website (noupdate)
 NEW ir.ui.view: website.edit_website_pages
 NEW ir.ui.view: website.external_snippets
 NEW ir.ui.view: website.index_management
@@ -49,6 +49,6 @@ NEW ir.ui.view: website.website_redirect_form_view
 NEW ir.ui.view: website.website_redirect_tree_view
 DEL ir.ui.view: website.show_sign_in
 DEL ir.ui.view: website.view_website_config_settings
-NEW website.page: website.aboutus_page
-NEW website.page: website.contactus_page
-NEW website.page: website.homepage_page
+NEW website.page: website.aboutus_page (noupdate)
+NEW website.page: website.contactus_page (noupdate)
+NEW website.page: website.homepage_page (noupdate)

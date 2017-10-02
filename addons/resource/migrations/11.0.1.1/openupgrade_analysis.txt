@@ -19,10 +19,10 @@ NEW ir.model.access: resource.access_resource_calendar_user
 NEW ir.model.access: resource.access_resource_test_all
 DEL ir.model.access: resource.access_resource_calendar
 DEL ir.model.access: resource.access_resource_calendar_attendance
-NEW ir.rule: resource.resource_calendar_leaves_rule_group_user_create
-NEW ir.rule: resource.resource_calendar_leaves_rule_group_user_modify
-DEL ir.rule: resource.resource_own_leaves
-NEW res.company: base.main_company
+NEW ir.rule: resource.resource_calendar_leaves_rule_group_user_create (noupdate)
+NEW ir.rule: resource.resource_calendar_leaves_rule_group_user_modify (noupdate)
+DEL ir.rule: resource.resource_own_leaves (noupdate)
+NEW res.company: base.main_company (noupdate)
 NEW resource.calendar: resource.resource_calendar_std
 NEW resource.calendar: resource.resource_calendar_std_35h
 NEW resource.calendar: resource.resource_calendar_std_38h

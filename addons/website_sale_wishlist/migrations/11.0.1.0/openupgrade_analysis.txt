@@ -11,8 +11,8 @@ NEW ir.model.access: website_sale_wishlist.access_product_wishlist_default
 NEW ir.model.access: website_sale_wishlist.access_product_wishlist_portal
 NEW ir.model.access: website_sale_wishlist.access_product_wishlist_public
 NEW ir.model.access: website_sale_wishlist.access_product_wishlist_user
-NEW ir.rule: website_sale_wishlist.all_product_wishlist_rule
-NEW ir.rule: website_sale_wishlist.product_wishlist_rule
+NEW ir.rule: website_sale_wishlist.all_product_wishlist_rule (noupdate)
+NEW ir.rule: website_sale_wishlist.product_wishlist_rule (noupdate)
 NEW ir.ui.view: website_sale_wishlist.add_to_wishlist
 NEW ir.ui.view: website_sale_wishlist.assets_frontend
 NEW ir.ui.view: website_sale_wishlist.header

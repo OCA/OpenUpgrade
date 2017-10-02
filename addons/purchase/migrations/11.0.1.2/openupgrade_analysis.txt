@@ -13,8 +13,8 @@ DEL ir.actions.report.xml: purchase.action_report_purchase_order
 DEL ir.actions.report.xml: purchase.report_purchase_quotation
 NEW ir.model.access: purchase.access_purchase_order_line_portal
 NEW ir.model.access: purchase.access_purchase_order_portal
-NEW ir.rule: purchase.portal_purchase_order_line_rule
-NEW ir.rule: purchase.portal_purchase_order_user_rule
+NEW ir.rule: purchase.portal_purchase_order_line_rule (noupdate)
+NEW ir.rule: purchase.portal_purchase_order_user_rule (noupdate)
 DEL ir.ui.menu: purchase.menu_product_normal_action_puchased
 NEW ir.ui.view: purchase.portal_my_home_menu_purchase
 NEW ir.ui.view: purchase.portal_my_home_purchase
@@ -29,5 +29,5 @@ DEL ir.ui.view: purchase.procurement_order_view_form_inherit_purchase
 DEL ir.ui.view: purchase.view_account_config
 DEL ir.ui.view: purchase.view_procurement_form_inherit
 DEL ir.ui.view: purchase.view_purchase_configuration
-DEL mail.message: purchase.module_install_notification
-NEW mail.template: purchase.mail_template_data_notification_email_purchase_order
+DEL mail.message: purchase.module_install_notification (noupdate)
+NEW mail.template: purchase.mail_template_data_notification_email_purchase_order (noupdate)

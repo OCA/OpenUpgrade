@@ -58,7 +58,7 @@ account      / res.company              / account_setup_fy_data_done (boolean): 
 account      / res.company              / tax_cash_basis_journal_id (many2one): previously in module account_tax_cash_basis
 account      / res.company              / tax_exigibility (boolean)     : NEW 
 ---XML records in module 'account'---
-NEW ir.actions.act_window: account.account_send_payment_receipt_by_email_action
+NEW ir.actions.act_window: account.account_send_payment_receipt_by_email_action (noupdate)
 NEW ir.actions.act_window: account.action_account_group_tree
 NEW ir.actions.act_window: account.action_account_tax_report
 NEW ir.actions.act_window: account.action_all_partner_invoices
@@ -109,8 +109,8 @@ NEW ir.model.access: account.access_account_group
 NEW ir.model.access: account.access_account_group_manager
 NEW ir.model.access: account.access_account_invoice_line_portal
 NEW ir.model.access: account.access_account_invoice_portal
-NEW ir.rule: account.account_invoice_line_rule_portal
-NEW ir.rule: account.account_invoice_rule_portal
+NEW ir.rule: account.account_invoice_line_rule_portal (noupdate)
+NEW ir.rule: account.account_invoice_rule_portal (noupdate)
 NEW ir.ui.menu: account.account_reports_legal_statements_menu
 NEW ir.ui.menu: account.menu_action_invoice_in_refund
 NEW ir.ui.menu: account.menu_action_invoice_out_refund
@@ -184,7 +184,7 @@ DEL ir.values: account.action_account_move_line_reconcile_prompt_values
 DEL ir.values: account.action_account_move_reversal
 DEL ir.values: account.action_account_partner_ledger_values
 DEL ir.values: account.validate_account_move_values
-NEW mail.template: account.mail_template_data_payment_receipt
+NEW mail.template: account.mail_template_data_payment_receipt (noupdate)
 NEW res.groups: account.group_cash_rounding
 DEL res.groups: account.group_proforma_invoices
-NEW res.users: base.user_root
+NEW res.users: base.user_root (noupdate)
