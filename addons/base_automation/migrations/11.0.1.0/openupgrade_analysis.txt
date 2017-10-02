@@ -26,12 +26,22 @@ base_automation / base.automation.line.test / user_id (many2one)            : NE
 base_automation / ir.actions.server        / usage (False)                 : NEW selection_keys: ['base_automation', 'ir_actions_server', 'ir_cron'], mode: modify
 ---XML records in module 'base_automation'---
 NEW ir.actions.act_window: base_automation.base_automation_act
+DEL ir.actions.act_window: base_action_rule.base_action_rule_act
 NEW ir.cron: base_automation.ir_cron_data_base_automation_check (noupdate)
+DEL ir.cron: base_action_rule.ir_cron_crm_action (noupdate)
 NEW ir.model.access: base_automation.access_base_automation
 NEW ir.model.access: base_automation.access_base_automation_config
 NEW ir.model.access: base_automation.access_base_automation_lead_test
 NEW ir.model.access: base_automation.access_base_automation_line_test
+DEL ir.model.access: base_action_rule.access_base_action_rule
+DEL ir.model.access: base_action_rule.access_base_action_rule_config
+DEL ir.model.access: base_action_rule.access_base_action_rule_lead_test
+DEL ir.model.access: base_action_rule.access_base_action_rule_line_test
 NEW ir.ui.menu: base_automation.menu_base_automation_form
+DEL ir.ui.menu: base_action_rule.menu_base_action_rule_form
 NEW ir.ui.view: base_automation.view_base_automation_form
 NEW ir.ui.view: base_automation.view_base_automation_search
 NEW ir.ui.view: base_automation.view_base_automation_tree
+DEL ir.ui.view: base_action_rule.view_base_action_rule_form
+DEL ir.ui.view: base_action_rule.view_base_action_rule_search
+DEL ir.ui.view: base_action_rule.view_base_action_rule_tree

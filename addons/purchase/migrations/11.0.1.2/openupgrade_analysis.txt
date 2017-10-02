@@ -7,10 +7,6 @@ purchase     / purchase.order.line      / orderpoint_id (many2one)      : NEW re
 purchase     / purchase.order.line      / procurement_ids (one2many)    : DEL relation: procurement.order
 purchase     / stock.move               / created_purchase_line_id (many2one): NEW relation: purchase.order.line
 ---XML records in module 'purchase'---
-NEW ir.actions.report: purchase.action_report_purchase_order
-NEW ir.actions.report: purchase.report_purchase_quotation
-DEL ir.actions.report.xml: purchase.action_report_purchase_order
-DEL ir.actions.report.xml: purchase.report_purchase_quotation
 NEW ir.model.access: purchase.access_purchase_order_line_portal
 NEW ir.model.access: purchase.access_purchase_order_portal
 NEW ir.rule: purchase.portal_purchase_order_line_rule (noupdate)
