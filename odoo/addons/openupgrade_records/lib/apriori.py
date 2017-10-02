@@ -14,13 +14,12 @@ renamed_modules = {
 merged_modules = {
     # Odoo
     'account_tax_cash_basis': 'account',
-    'portal_gamification': 'portal',
-    'portal_stock': 'stock',
+    'portal_gamification': 'gamification',
+    'portal_stock': 'portal',
     'report': 'base',
     'web_calendar': 'web',
     'web_kanban': 'web',
-    'website_portal': 'portal',
-    'website_portal_sale': 'sale',
+    'website_portal': 'website',
     'website_project': 'project',
     'website_project_timesheet': 'hr_timesheet',
 }
