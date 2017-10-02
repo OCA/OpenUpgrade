@@ -210,7 +210,7 @@ def compare_sets(old_records, new_records):
 
     printkeys = [
         'relation', 'required', 'selection_keys',
-        'req_default', 'inherits', 'mode'
+        'req_default', 'inherits', 'mode', 'attachment',
         ]
     for column in old_records:
         # we do not care about removed function fields
