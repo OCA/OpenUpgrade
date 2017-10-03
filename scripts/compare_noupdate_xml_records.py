@@ -185,8 +185,8 @@ def main_analysis(old_update, old_noupdate, new_update, new_noupdate):
 
     document = etree.ElementTree(odoo)
 
-    print etree.tostring(
-        document, pretty_print=True, xml_declaration=True, encoding='utf-8')
+    print(etree.tostring(
+        document, pretty_print=True, xml_declaration=True, encoding='utf-8'))
 
 
 def main(argv=None):
@@ -220,10 +220,10 @@ def main(argv=None):
     parser.add_argument(
         '--mode', metavar='module/repository', default='module')
     arguments = parser.parse_args(argv)
-    print "\n"
+    print("\n")
 
     if arguments.mode == "module":
-        print arguments.olddir.split('/')[-1] + ":\n"
+        print(arguments.olddir.split('/')[-1] + ":\n")
         old_update, old_noupdate = get_records(arguments.olddir)
         new_update, new_noupdate = get_records(arguments.newdir)
         main_analysis(old_update, old_noupdate, new_update, new_noupdate)
@@ -240,7 +240,7 @@ def main(argv=None):
                     opj(arguments.newdir, m, mname)),
                 os.listdir(arguments.newdir))
         for module_name in set(old_module_list).intersection(new_module_list):
-            print module_name + ":\n"
+            print(module_name + ":\n")
             old_update, old_noupdate = get_records(
                 opj(arguments.olddir, module_name))
             new_update, new_noupdate = get_records(
