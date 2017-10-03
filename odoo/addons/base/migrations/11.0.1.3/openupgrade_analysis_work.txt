@@ -4,30 +4,20 @@ base         / ir.actions.act_url       / binding_type (selection)      : NEW re
 # NOTHING TO DO
 
 base         / ir.actions.act_url       / usage (char)                  : DEL 
-# DONE: pre-migration: rename column
+base         / ir.actions.act_window_close / usage (char)                  : DEL 
+base         / ir.actions.actions       / usage (char)                  : DEL 
+base         / ir.actions.client        / usage (char)                  : DEL 
+# NOTHING TO DO, obsolete column
 
 base         / ir.actions.act_window    / binding_model_id (many2one)   : NEW relation: ir.model
 base         / ir.actions.act_window    / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
 base         / ir.actions.act_window_close / binding_model_id (many2one)   : NEW relation: ir.model
 base         / ir.actions.act_window_close / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
-# NOTHING TO DO
-
-base         / ir.actions.act_window_close / usage (char)                  : DEL 
-# DONE: pre-migration: rename column
-
 base         / ir.actions.actions       / binding_model_id (many2one)   : NEW relation: ir.model
 base         / ir.actions.actions       / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
-# NOTHING TO DO
-
-base         / ir.actions.actions       / usage (char)                  : DEL 
-# DONE: pre-migration: rename column
-
 base         / ir.actions.client        / binding_model_id (many2one)   : NEW relation: ir.model
 base         / ir.actions.client        / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
 # NOTHING TO DO
-
-base         / ir.actions.client        / usage (char)                  : DEL 
-# DONE: pre-migration: rename column
 
 base         / ir.actions.report        / attachment (char)             : NEW 
 base         / ir.actions.report        / attachment_use (boolean)      : NEW 
@@ -44,22 +34,11 @@ base         / ir.actions.report        / report_file (char)            : NEW
 base         / ir.actions.report        / report_name (char)            : NEW required: required
 base         / ir.actions.report        / report_type (selection)       : NEW required: required, selection_keys: ['qweb-html', 'qweb-pdf'], req_default: function
 base         / ir.actions.report        / type (char)                   : NEW required: required, req_default: function
-# DONE: pre-migration: rename columns
-# - ir_values_id
-# - header
-# - parser
-# - auto
-# - report_xsl
-# - report_xml
-# - report_rml
-# - report_sxw_content_data
-# - report_rml_content_data
-# DONE: pre-migration: copy column report_type
 # DONE: pre-migration: rename model
-# TODO: post-migration: map values 'controller', 'pdf', 'sxw' and 'webkit' of report_type to default value
+# Ignore report_type values 'controller', 'pdf', 'sxw' and 'webkit', which were already deprecated in 10.0
 
 base         / ir.actions.server        / action_id (many2one)          : DEL relation: ir.actions.actions
-# DONE: pre-migration: rename column
+# NOTHING TO DO. Executing client actions is no longer supported
 
 base         / ir.actions.server        / binding_model_id (many2one)   : NEW relation: ir.model
 base         / ir.actions.server        / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
@@ -73,21 +52,8 @@ base         / ir.actions.server        / link_new_record (boolean)     : DEL
 base         / ir.actions.server        / menu_ir_values_id (many2one)  : DEL relation: ir.values
 base         / ir.actions.server        / model_object_field (many2one) : DEL relation: ir.model.fields
 base         / ir.actions.server        / ref_object (reference)        : DEL 
-# DONE: pre-migration: rename column
-
-base         / ir.actions.server        / state (selection)             : selection_keys is now '['code', 'multi', 'object_create', 'object_write']' ('function')
-# NOTHING TO DO, invalid options will be removed by migration of ir.actions.server 
-
 base         / ir.actions.server        / sub_model_object_field (many2one): DEL relation: ir.model.fields
 base         / ir.actions.server        / sub_object (many2one)         : DEL relation: ir.model
-# DONE: pre-migration: rename column
-
-base         / ir.actions.server        / usage (char)                  : now required, default = function
-base         / ir.actions.server        / usage (char)                  : selection_keys is now '['ir_actions_server', 'ir_cron']' ('False')
-base         / ir.actions.server        / usage (char)                  : type is now 'selection' ('char')
-# DONE: pre-migration: copy column
-# TODO: post-migration: set values to default value
-
 base         / ir.actions.server        / use_create (selection)        : DEL required: required, selection_keys: ['copy_current', 'copy_other', 'new', 'new_other'], req_default: function
 base         / ir.actions.server        / use_relational_model (selection): DEL required: required, selection_keys: ['base', 'relational'], req_default: function
 base         / ir.actions.server        / use_write (selection)         : DEL required: required, selection_keys: ['current', 'expression', 'other'], req_default: function
@@ -95,7 +61,15 @@ base         / ir.actions.server        / wkf_field_id (many2one)       : DEL re
 base         / ir.actions.server        / wkf_model_id (many2one)       : DEL relation: ir.model
 base         / ir.actions.server        / wkf_transition_id (many2one)  : DEL relation: workflow.transition
 base         / ir.actions.server        / write_expression (char)       : DEL 
-# DONE: pre-migration: rename column
+# NOTHING TO DO. Obsolete fields
+
+base         / ir.actions.server        / state (selection)             : selection_keys is now '['code', 'multi', 'object_create', 'object_write']' ('function')
+# NOTHING TO DO, invalid options will be removed by migration of ir.actions.server 
+
+base         / ir.actions.server        / usage (char)                  : now required, default = function
+base         / ir.actions.server        / usage (char)                  : selection_keys is now '['ir_actions_server', 'ir_cron']' ('False')
+base         / ir.actions.server        / usage (char)                  : type is now 'selection' ('char')
+# TODO: post-migration: 'ir_cron' value is related to new functionality, so set existing records to 'ir_actions_server'
 
 base         / ir.actions.todo          / groups_id (many2many)         : DEL relation: res.groups
 # NOTHING TO DO
@@ -108,32 +82,29 @@ base         / ir.attachment            / access_token (char)           : NEW
 # NOTHING TO DO
 
 base         / ir.config_parameter      / group_ids (many2many)         : DEL relation: res.groups
-base         / ir.cron                  / _inherits (False)             : NEW 
 # NOTHING TO DO
+
+base         / ir.cron                  / _inherits (False)             : NEW 
+# Strange quirk from analysis
 
 base         / ir.cron                  / args (text)                   : DEL 
 base         / ir.cron                  / function (char)               : DEL 
-# DONE: pre-migration: rename column
+base         / ir.cron                  / model (char)                  : DEL 
+base         / ir.cron                  / ir_actions_server_id (many2one): NEW relation: ir.actions.server, required: required
+# TODO: ? migrate to server action for manually created cron records
 
 base         / ir.cron                  / interval_type (selection)     : selection_keys is now '['days', 'hours', 'minutes', 'months', 'weeks']' ('['days', 'hours', 'minutes', 'months', 'weeks', 'work_days']')
-# DONE: pre-migration: copy column
-# TODO: post-migration: map value 'work_days' to 'days', because changing from work_days to month (default) is maybe not the best idea
-
-base         / ir.cron                  / ir_actions_server_id (many2one): NEW relation: ir.actions.server, required: required
-# TODO: Check which ir.actions.server should be used, because the field is required
-
-base         / ir.cron                  / model (char)                  : DEL 
-# DONE: pre-migration: rename column
+# DONE map value 'work_days' to 'days'
 
 base         / ir.default               / company_id (many2one)         : NEW relation: res.company
 base         / ir.default               / condition (char)              : NEW 
 base         / ir.default               / field_id (many2one)           : NEW relation: ir.model.fields, required: required
 base         / ir.default               / json_value (char)             : NEW required: required
 base         / ir.default               / user_id (many2one)            : NEW relation: res.users
-# TODO: Check it later and decide which ir.values records can be merged into ir.default
+# TODO: migrate 'default' ir_values to this new model
 
 base         / ir.model.fields          / serialization_field_id (many2one): module is now 'base_sparse_field' ('base')
-# TODO: post-migration: mark module base_sparse_field as to-install when serialization_field_id is used
+# TODO: mark module base_sparse_field as to-install when serialization_field_id is used. Problem: the module list is not yet loaded at this point.
 
 base         / ir.model.fields          / ttype (selection)             : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'html', 'integer', 'many2many', 'many2one', 'monetary', 'one2many', 'reference', 'selection', 'text']' ('function')
 # NOTHING TO DO, selection options are still retrieved by a function
@@ -145,7 +116,7 @@ base         / ir.module.module.exclusion / name (char)                   : NEW
 # NOTHING TO DO
 
 base         / ir.ui.menu               / web_icon_data (binary)        : not a function anymore
-# TODO: post-migration: store value from web_icon
+# NOTHING TO DO: function field from 10.0 was stored
 
 base         / report.paperformat       / __last_update (datetime)      : previously in module report
 base         / report.paperformat       / default (boolean)             : previously in module report
@@ -163,17 +134,17 @@ base         / report.paperformat       / orientation (selection)       : previo
 base         / report.paperformat       / page_height (integer)         : previously in module report
 base         / report.paperformat       / page_width (integer)          : previously in module report
 base         / report.paperformat       / report_ids (one2many)         : previously in module report
-# Done: Reassign module from 'report' to 'base'
+# Done: module merged
 
 base         / res.bank                 / fax (char)                    : DEL 
 base         / res.company              / custom_footer (boolean)       : DEL 
-# DONE: pre-migration: rename column
+# Nothing to do
 
 base         / res.company              / external_report_layout (selection): NEW selection_keys: ['background', 'boxed', 'clean', 'standard']
 # NOTHING TO DO
 
 base         / res.company              / font (many2one)               : DEL relation: res.font
-# DONE: pre-migration: rename column
+# Nothing to do
 
 base         / res.company              / paperformat_id (many2one)     : previously in module report
 # Done: Reassign module from 'report' to 'base'
@@ -188,7 +159,7 @@ base         / res.company              / rml_header1 (char)            : DEL
 base         / res.company              / rml_header2 (text)            : DEL required: required, req_default: function
 base         / res.company              / rml_header3 (text)            : DEL required: required, req_default: function
 base         / res.company              / rml_paper_format (selection)  : DEL required: required, selection_keys: ['a4', 'us_letter'], req_default: function
-# DONE: pre-migration: rename column
+# Nothing to do
 
 base         / res.country              / address_view_id (many2one)    : NEW relation: ir.ui.view
 base         / res.country              / name_position (selection)     : NEW selection_keys: ['after', 'before']
@@ -198,14 +169,13 @@ base         / res.currency             / currency_unit_label (char)    : NEW
 # NOTHING TO DO
 
 base         / res.currency.rate        / name (datetime)               : type is now 'date' ('datetime')
-# DONE: pre-migration: copy column
 # DONE: pre-migration: change field type
 
 base         / res.groups               / is_portal (boolean)           : previously in module portal
-# Done: Reassign module from 'portal' to 'base'
+# NOTHING TO DO
 
 base         / res.partner              / fax (char)                    : DEL 
-# DONE: pre-migration: rename column
+# NOTHING TO DO
 
 base         / res.partner              / industry_id (many2one)        : NEW relation: res.partner.industry
 base         / res.partner.industry     / active (boolean)              : NEW 
@@ -358,7 +328,7 @@ NEW report.paperformat: base.paperformat_batch_deposit (noupdate)
 
 NEW report.paperformat: base.paperformat_euro (noupdate)
 NEW report.paperformat: base.paperformat_us (noupdate)
-# DONE: pre-migration: rename XML ID
+# DONE: merged in from report module
 
 NEW res.country: base.tl (noupdate)
 DEL res.country: base.an (noupdate)
