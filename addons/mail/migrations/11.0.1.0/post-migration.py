@@ -36,3 +36,6 @@ def set_binding_model_id_in_action_window(env):
 def migrate(env, version):
     move_notify_email_to_notification_type_field(env)
     set_binding_model_id_in_action_window(env)
+    openupgrade.load_data(
+        env.cr, 'mail', 'migrations/11.0.1.0/noupdate_changes.xml',
+    )
