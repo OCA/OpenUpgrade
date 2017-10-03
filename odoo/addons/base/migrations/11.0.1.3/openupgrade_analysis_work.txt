@@ -69,7 +69,7 @@ base         / ir.actions.server        / state (selection)             : select
 base         / ir.actions.server        / usage (char)                  : now required, default = function
 base         / ir.actions.server        / usage (char)                  : selection_keys is now '['ir_actions_server', 'ir_cron']' ('False')
 base         / ir.actions.server        / usage (char)                  : type is now 'selection' ('char')
-# TODO: post-migration: 'ir_cron' value is related to new functionality, so set existing records to 'ir_actions_server'
+# NOTHING TO DO, manually check needed after migration, 'ir_cron' value is related to new functionality, so set existing records to 'ir_actions_server'
 
 base         / ir.actions.todo          / groups_id (many2many)         : DEL relation: res.groups
 # NOTHING TO DO
@@ -91,7 +91,7 @@ base         / ir.cron                  / args (text)                   : DEL
 base         / ir.cron                  / function (char)               : DEL 
 base         / ir.cron                  / model (char)                  : DEL 
 base         / ir.cron                  / ir_actions_server_id (many2one): NEW relation: ir.actions.server, required: required
-# TODO: ? migrate to server action for manually created cron records
+# NOTHING TO DO, manually check needed for action server relations after migration
 
 base         / ir.cron                  / interval_type (selection)     : selection_keys is now '['days', 'hours', 'minutes', 'months', 'weeks']' ('['days', 'hours', 'minutes', 'months', 'weeks', 'work_days']')
 # DONE map value 'work_days' to 'days'
@@ -101,10 +101,11 @@ base         / ir.default               / condition (char)              : NEW
 base         / ir.default               / field_id (many2one)           : NEW relation: ir.model.fields, required: required
 base         / ir.default               / json_value (char)             : NEW required: required
 base         / ir.default               / user_id (many2one)            : NEW relation: res.users
-# TODO: migrate 'default' ir_values to this new model
+# DONE: post-migration: migrate 'default' ir_values to this new model
 
 base         / ir.model.fields          / serialization_field_id (many2one): module is now 'base_sparse_field' ('base')
-# TODO: mark module base_sparse_field as to-install when serialization_field_id is used. Problem: the module list is not yet loaded at this point.
+# NOTHING TO DO, manually check / installation of new module needed after migration
+# We can't mark the new module base_sparse_field as to-install when serialization_field_id is used because the module list is not yet loaded at this point.
 
 base         / ir.model.fields          / ttype (selection)             : selection_keys is now '['binary', 'boolean', 'char', 'date', 'datetime', 'float', 'html', 'integer', 'many2many', 'many2one', 'monetary', 'one2many', 'reference', 'selection', 'text']' ('function')
 # NOTHING TO DO, selection options are still retrieved by a function
@@ -138,13 +139,13 @@ base         / report.paperformat       / report_ids (one2many)         : previo
 
 base         / res.bank                 / fax (char)                    : DEL 
 base         / res.company              / custom_footer (boolean)       : DEL 
-# Nothing to do
+# NOTHING TO DO
 
 base         / res.company              / external_report_layout (selection): NEW selection_keys: ['background', 'boxed', 'clean', 'standard']
 # NOTHING TO DO
 
 base         / res.company              / font (many2one)               : DEL relation: res.font
-# Nothing to do
+# NOTHING TO DO
 
 base         / res.company              / paperformat_id (many2one)     : previously in module report
 # Done: Reassign module from 'report' to 'base'
@@ -159,7 +160,7 @@ base         / res.company              / rml_header1 (char)            : DEL
 base         / res.company              / rml_header2 (text)            : DEL required: required, req_default: function
 base         / res.company              / rml_header3 (text)            : DEL required: required, req_default: function
 base         / res.company              / rml_paper_format (selection)  : DEL required: required, selection_keys: ['a4', 'us_letter'], req_default: function
-# Nothing to do
+# NOTHING TO DO
 
 base         / res.country              / address_view_id (many2one)    : NEW relation: ir.ui.view
 base         / res.country              / name_position (selection)     : NEW selection_keys: ['after', 'before']
