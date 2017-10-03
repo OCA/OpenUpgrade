@@ -46,7 +46,7 @@ def log_xml_id(cr, module, xml_id):
         xml_id.split('.'))
     record = cr.fetchone()
     if not record:
-        print "Cannot find xml_id %s" % xml_id
+        print("Cannot find xml_id %s" % xml_id)
         return
     else:
         cr.execute(
