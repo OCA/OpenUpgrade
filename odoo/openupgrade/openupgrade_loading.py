@@ -9,6 +9,8 @@ from odoo import release
 from openupgradelib.openupgrade_tools import table_exists
 from odoo.tools import config, safe_eval
 from odoo.modules.module import get_module_path
+from odoo.tools import pycompat
+
 
 # A collection of functions used in
 # openerp/modules/loading.py
@@ -137,7 +139,8 @@ def log_model(model, local_registry):
     model_registry = local_registry.setdefault(
         model._name, {})
     if model._inherits:
-        model_registry['_inherits'] = {'_inherits': unicode(model._inherits)}
+        model_registry['_inherits'] = {
+            '_inherits': pycompat.text_type(model._inherits)}
     for k, v in model._fields.items():
         properties = {
             'type': typemap.get(v.type, v.type),
@@ -155,7 +158,7 @@ def log_model(model, local_registry):
             properties['oldname'] = v.oldname
         if v.type == 'selection':
             if hasattr(v.selection, "__iter__"):
-                properties['selection_keys'] = unicode(
+                properties['selection_keys'] = pycompat.text_type(
                     sorted([x[0] for x in v.selection]))
             else:
                 properties['selection_keys'] = 'function'
@@ -168,7 +171,7 @@ def log_model(model, local_registry):
                 # literals are wrapped in a lambda function
                 properties['req_default'] = 'function'
             else:
-                properties['req_default'] = unicode(default)
+                properties['req_default'] = pycompat.text_type(default)
         for key, value in properties.items():
             if value:
                 model_registry.setdefault(k, {})[key] = value
