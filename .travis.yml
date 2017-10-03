@@ -2,7 +2,7 @@ language: python
 sudo: false
 
 python:
-  - "2.7"
+  - "3.5"
 
 addons:
     apt:
@@ -33,6 +33,10 @@ install:
 #   * openerp/openupgrade/ directory
 # use a max length of 120
 script:
+    - source ~/virtualenv/python2.7/bin/activate
+    - python --version
+    - source ~/virtualenv/python3.5/bin/activate
+    - python --version
     - flake8 scripts --max-line-length=120
     - flake8 odoo/openupgrade --max-line-length=120
     - flake8 odoo/addons/openupgrade* --max-line-length=120 --filename=__init__.py --ignore=F401
