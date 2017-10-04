@@ -18,6 +18,6 @@
     ],
     'installable': True,
     'external_dependencies': {
-        'python': ['openerplib', 'openupgradelib'],
+        'python': ['odoorpc', 'openupgradelib'],
     },
 }

@@ -55,7 +55,7 @@ class AnalysisWizard(models.TransientModel):
 
         self.ensure_one()
         connection = self.server_config.get_connection()
-        remote_record_obj = connection.get_model('openupgrade.record')
+        remote_record_obj = connection.env['openupgrade.record']
         local_record_obj = self.env['openupgrade.record']
 
         # Retrieve field representations and compare
@@ -95,12 +95,12 @@ class AnalysisWizard(models.TransientModel):
             contents = "---Fields in module '%s'---\n" % key
             if key in res:
                 contents += '\n'.join(
-                    [unicode(line) for line in sorted(res[key])])
+                    [str(line) for line in sorted(res[key])])
                 if res[key]:
                     contents += '\n'
             contents += "---XML records in module '%s'---\n" % key
             if key in res_xml:
-                contents += '\n'.join([unicode(line) for line in res_xml[key]])
+                contents += '\n'.join([str(line) for line in res_xml[key]])
                 if res_xml[key]:
                     contents += '\n'
             if key not in res and key not in res_xml:
