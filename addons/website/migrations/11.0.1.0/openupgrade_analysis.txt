@@ -36,6 +36,11 @@ NEW ir.rule: website.website_page_rule_public
 NEW ir.ui.menu: website.menu_website_pages_list
 NEW ir.ui.menu: website.menu_website_redirect_list
 DEL ir.ui.menu: website.menu_website (noupdate)
+NEW ir.ui.view: website.default_css
+NEW ir.ui.view: website.default_csv
+NEW ir.ui.view: website.default_js
+NEW ir.ui.view: website.default_less
+NEW ir.ui.view: website.default_xml
 NEW ir.ui.view: website.edit_website_pages
 NEW ir.ui.view: website.external_snippets
 NEW ir.ui.view: website.index_management
