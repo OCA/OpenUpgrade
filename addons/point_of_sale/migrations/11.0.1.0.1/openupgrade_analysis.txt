@@ -30,14 +30,6 @@ NEW ir.actions.act_window: point_of_sale.account_journal_action_point_of_sale
 NEW ir.actions.act_window: point_of_sale.product_category_action
 NEW ir.actions.act_window: point_of_sale.product_template_action_pos_product
 DEL ir.actions.act_window: point_of_sale.action_pos_configuration
-NEW ir.actions.report: point_of_sale.action_report_account_statement
-NEW ir.actions.report: point_of_sale.pos_invoice_report
-NEW ir.actions.report: point_of_sale.report_user_label
-NEW ir.actions.report: point_of_sale.sale_details_report
-DEL ir.actions.report.xml: point_of_sale.action_report_account_statement
-DEL ir.actions.report.xml: point_of_sale.pos_invoice_report
-DEL ir.actions.report.xml: point_of_sale.report_user_label
-DEL ir.actions.report.xml: point_of_sale.sale_details_report
 NEW ir.model.access: point_of_sale.access_product_price_history_pos_manager
 NEW ir.model.access: point_of_sale.access_product_pricelist_user
 NEW ir.ui.menu: point_of_sale.menu_products_pos_category

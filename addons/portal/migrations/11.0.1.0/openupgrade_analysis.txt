@@ -23,6 +23,13 @@ portal       / res.partner              / website_message_ids (one2many): NEW re
 ---XML records in module 'portal'---
 DEL ir.model.access: portal.access_ir_attachment_portal
 DEL ir.model.access: portal.access_ir_ui_menu_portal
+DEL ir.model.access: portal_stock.access_stock_move
+DEL ir.model.access: portal_stock.access_stock_pack_operation_portal
+DEL ir.model.access: portal_stock.access_stock_picking
+DEL ir.model.access: portal_stock.access_stock_picking_type_portal
+DEL ir.model.access: portal_stock.access_stock_warehouse_orderpoint
+DEL ir.rule: portal_stock.portal_stock_pack_operation_portal_user_rule (noupdate)
+DEL ir.rule: portal_stock.portal_stock_picking_portal_user_rule (noupdate)
 NEW ir.ui.view: portal.assets_common
 NEW ir.ui.view: portal.assets_frontend
 NEW ir.ui.view: portal.frontend_layout

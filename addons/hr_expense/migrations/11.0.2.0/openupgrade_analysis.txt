@@ -8,8 +8,6 @@ NEW ir.actions.act_window: hr_expense.action_hr_expense_sheet_my_refused
 NEW ir.actions.act_window: hr_expense.hr_expense_sheet_register_payment_wizard_action
 DEL ir.actions.act_window: hr_expense.action_hr_expense_refused_expenses
 DEL ir.actions.act_window: hr_expense.hr_expense_register_payment_wizard_action
-NEW ir.actions.report: hr_expense.action_report_hr_expense_sheet
-DEL ir.actions.report.xml: hr_expense.action_report_hr_expense_sheet
 NEW ir.ui.menu: hr_expense.menu_hr_expense_sheet_my_reports_refused
 DEL ir.ui.menu: hr_expense.menu_hr_expense_my_expenses_refused
 NEW ir.ui.view: hr_expense.hr_expense_sheet_register_payment_view_form

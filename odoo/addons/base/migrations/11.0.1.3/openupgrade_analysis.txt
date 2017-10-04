@@ -75,27 +75,10 @@ base         / ir.module.module         / exclusion_ids (one2many)      : NEW re
 base         / ir.module.module.exclusion / module_id (many2one)          : NEW relation: ir.module.module
 base         / ir.module.module.exclusion / name (char)                   : NEW 
 base         / ir.ui.menu               / web_icon_data (binary)        : not a function anymore
-base         / report.paperformat       / __last_update (datetime)      : previously in module report
-base         / report.paperformat       / default (boolean)             : previously in module report
-base         / report.paperformat       / display_name (char)           : previously in module report
-base         / report.paperformat       / dpi (integer)                 : previously in module report
-base         / report.paperformat       / format (selection)            : previously in module report
-base         / report.paperformat       / header_line (boolean)         : previously in module report
-base         / report.paperformat       / header_spacing (integer)      : previously in module report
-base         / report.paperformat       / margin_bottom (float)         : previously in module report
-base         / report.paperformat       / margin_left (float)           : previously in module report
-base         / report.paperformat       / margin_right (float)          : previously in module report
-base         / report.paperformat       / margin_top (float)            : previously in module report
-base         / report.paperformat       / name (char)                   : previously in module report
-base         / report.paperformat       / orientation (selection)       : previously in module report
-base         / report.paperformat       / page_height (integer)         : previously in module report
-base         / report.paperformat       / page_width (integer)          : previously in module report
-base         / report.paperformat       / report_ids (one2many)         : previously in module report
 base         / res.bank                 / fax (char)                    : DEL 
 base         / res.company              / custom_footer (boolean)       : DEL 
 base         / res.company              / external_report_layout (selection): NEW selection_keys: ['background', 'boxed', 'clean', 'standard']
 base         / res.company              / font (many2one)               : DEL relation: res.font
-base         / res.company              / paperformat_id (many2one)     : previously in module report
 base         / res.company              / report_footer (text)          : NEW 
 base         / res.company              / report_header (text)          : NEW 
 base         / res.company              / rml_footer (text)             : DEL 
@@ -116,6 +99,7 @@ base         / res.partner              / industry_id (many2one)        : NEW re
 base         / res.partner.industry     / active (boolean)              : NEW 
 base         / res.partner.industry     / full_name (char)              : NEW 
 base         / res.partner.industry     / name (char)                   : NEW 
+report       / report.paperformat       / report_ids (one2many)         : relation is now 'ir.actions.report' ('ir.actions.report.xml')
 ---XML records in module 'base'---
 NEW ir.actions.act_window: base.action_currency_all_form
 NEW ir.actions.act_window: base.ir_action_report
@@ -134,6 +118,8 @@ DEL ir.actions.act_window: base.action_workflow_instance_form
 DEL ir.actions.act_window: base.action_workflow_transition_form
 DEL ir.actions.act_window: base.action_workflow_workitem_form
 DEL ir.actions.act_window: base.ir_action_report_xml
+DEL ir.actions.act_window: report.paper_format_action
+DEL ir.actions.act_window: report.reports_action
 NEW ir.actions.act_window.view: base.action_partner_customer_form_view1
 NEW ir.actions.act_window.view: base.action_partner_customer_form_view2
 NEW ir.actions.act_window.view: base.action_partner_customer_form_view3
@@ -144,11 +130,9 @@ DEL ir.actions.act_window.view: base.action_values_defaults_form_view
 DEL ir.actions.act_window.view: base.action_values_defaults_tree_view
 DEL ir.actions.act_window.view: base.action_values_form_view
 DEL ir.actions.act_window.view: base.action_values_tree_view
-NEW ir.actions.report: base.ir_module_reference_print
-NEW ir.actions.report: base.report_ir_model_overview
-DEL ir.actions.report.xml: base.ir_module_reference_print
 DEL ir.actions.report.xml: base.preview_rml_report
-DEL ir.actions.report.xml: base.report_ir_model_overview
+DEL ir.actions.report.xml: report.action_report_externalpreview
+DEL ir.actions.report.xml: report.action_report_internalpreview
 NEW ir.model.access: base.access_ir_actions_report_all
 NEW ir.model.access: base.access_ir_actions_report_group_system
 NEW ir.model.access: base.access_ir_attachment_portal
@@ -191,6 +175,9 @@ DEL ir.model.access: base.access_workflow_transition_group_system
 DEL ir.model.access: base.access_workflow_triggers_all
 DEL ir.model.access: base.access_workflow_triggers_group_system
 DEL ir.model.access: base.access_workflow_workitem_all
+DEL ir.model.access: report.access_report
+DEL ir.model.access: report.paperformat_access_employee
+DEL ir.model.access: report.paperformat_access_portal
 NEW ir.rule: base.ir_default_system_rule (noupdate)
 NEW ir.rule: base.ir_default_user_rule (noupdate)
 DEL ir.rule: base.ir_config_parameter_rule (noupdate)
@@ -209,6 +196,9 @@ DEL ir.ui.menu: base.menu_workflow_instance
 DEL ir.ui.menu: base.menu_workflow_root
 DEL ir.ui.menu: base.menu_workflow_transition
 DEL ir.ui.menu: base.menu_workflow_workitem
+DEL ir.ui.menu: report.paper_format_menuitem
+DEL ir.ui.menu: report.reporting_menuitem
+DEL ir.ui.menu: report.reports_menuitem
 NEW ir.ui.view: base.contact_name
 NEW ir.ui.view: base.ir_cron_view_form
 NEW ir.ui.view: base.ir_default_form_view
@@ -249,12 +239,32 @@ DEL ir.ui.view: base.view_workflow_tree
 DEL ir.ui.view: base.view_workflow_workitem_form
 DEL ir.ui.view: base.view_workflow_workitem_search
 DEL ir.ui.view: base.view_workflow_workitem_tree
+DEL ir.ui.view: report.act_report_xml_view_inherit
+DEL ir.ui.view: report.act_report_xml_view_inherit_report
+DEL ir.ui.view: report.assets_backend
+DEL ir.ui.view: report.assets_common
+DEL ir.ui.view: report.assets_editor
+DEL ir.ui.view: report.assets_pdf
+DEL ir.ui.view: report.base_config_settings_inherited
+DEL ir.ui.view: report.external_layout
+DEL ir.ui.view: report.external_layout_footer
+DEL ir.ui.view: report.external_layout_header
+DEL ir.ui.view: report.html_container
+DEL ir.ui.view: report.internal_layout
+DEL ir.ui.view: report.layout
+DEL ir.ui.view: report.minimal_layout
+DEL ir.ui.view: report.paperformat_view_form
+DEL ir.ui.view: report.paperformat_view_tree
+DEL ir.ui.view: report.preview_externalreport
+DEL ir.ui.view: report.preview_internalreport
 DEL ir.values: base.action_module_immediate_install
 DEL ir.values: base.ir_action_module_category
 DEL ir.values: base.ir_open_company
 NEW report.paperformat: base.paperformat_batch_deposit (noupdate)
 NEW report.paperformat: base.paperformat_euro (noupdate)
 NEW report.paperformat: base.paperformat_us (noupdate)
+DEL report.paperformat: report.paperformat_euro
+DEL report.paperformat: report.paperformat_us
 NEW res.country: base.tl (noupdate)
 DEL res.country: base.an (noupdate)
 DEL res.country: base.nt (noupdate)

@@ -94,20 +94,6 @@ DEL ir.actions.act_window: stock.do_view_procurement_op
 DEL ir.actions.act_window: stock.pack_details
 DEL ir.actions.act_window: stock.procrules
 NEW ir.actions.client: stock.action_stock_report
-NEW ir.actions.report: stock.action_report_delivery
-NEW ir.actions.report: stock.action_report_inventory
-NEW ir.actions.report: stock.action_report_location_barcode
-NEW ir.actions.report: stock.action_report_lot_barcode
-NEW ir.actions.report: stock.action_report_picking
-NEW ir.actions.report: stock.action_report_quant_package_barcode
-NEW ir.actions.report: stock.action_report_quant_package_barcode_small
-DEL ir.actions.report.xml: stock.action_report_delivery
-DEL ir.actions.report.xml: stock.action_report_inventory
-DEL ir.actions.report.xml: stock.action_report_location_barcode
-DEL ir.actions.report.xml: stock.action_report_lot_barcode
-DEL ir.actions.report.xml: stock.action_report_picking
-DEL ir.actions.report.xml: stock.action_report_quant_package_barcode
-DEL ir.actions.report.xml: stock.action_report_quant_package_barcode_small
 NEW ir.cron: stock.ir_cron_scheduler_action (noupdate)
 NEW ir.model.access: stock.access_procurement_group
 NEW ir.model.access: stock.access_procurement_rule

@@ -35,12 +35,6 @@ mrp          / stock.production.lot     / use_next_on_work_order_id (many2one): 
 mrp          / stock.quant              / consumed_quant_ids (many2many): DEL relation: stock.quant
 mrp          / stock.quant              / produced_quant_ids (many2many): DEL relation: stock.quant
 ---XML records in module 'mrp'---
-NEW ir.actions.report: mrp.action_report_bom_price
-NEW ir.actions.report: mrp.action_report_bom_structure
-NEW ir.actions.report: mrp.action_report_production_order
-DEL ir.actions.report.xml: mrp.action_report_bom_price
-DEL ir.actions.report.xml: mrp.action_report_bom_structure
-DEL ir.actions.report.xml: mrp.action_report_production_order
 NEW ir.model.access: mrp.access_mrp_document_mrp_manager
 NEW ir.model.access: mrp.access_mrp_document_mrp_user
 NEW ir.model.access: mrp.access_product_price_history_mrp_manager

@@ -25,10 +25,6 @@ NEW event.type: event.event_type_data_online (noupdate)
 NEW event.type: event.event_type_data_physical (noupdate)
 NEW ir.actions.act_window: event.event_event_action_pivot
 DEL ir.actions.act_window: event.action_report_event_registration
-NEW ir.actions.report: event.report_event_event_badge
-NEW ir.actions.report: event.report_event_registration_badge
-DEL ir.actions.report.xml: event.report_event_event_badge
-DEL ir.actions.report.xml: event.report_event_registration_badge
 NEW ir.model.access: event.access_event_type_mail_event_manager
 NEW ir.model.access: event.access_event_type_mail_event_user
 DEL ir.model.access: event.access_report_event_registration

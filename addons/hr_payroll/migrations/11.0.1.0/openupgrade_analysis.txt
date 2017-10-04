@@ -7,12 +7,6 @@ hr_payroll   / hr.contract.advantage.template / name (char)                   : 
 hr_payroll   / hr.contract.advantage.template / upper_bound (float)           : NEW 
 ---XML records in module 'hr_payroll'---
 NEW ir.actions.act_window: hr_payroll.hr_contract_advantage_template_action
-NEW ir.actions.report: hr_payroll.action_contribution_register
-NEW ir.actions.report: hr_payroll.action_report_payslip
-NEW ir.actions.report: hr_payroll.payslip_details_report
-DEL ir.actions.report.xml: hr_payroll.action_contribution_register
-DEL ir.actions.report.xml: hr_payroll.action_report_payslip
-DEL ir.actions.report.xml: hr_payroll.payslip_details_report
 NEW ir.model.access: hr_payroll.access_hr_contract_advantage_template
 NEW ir.model.access: hr_payroll.access_hr_contract_advantage_template_hr_user
 NEW ir.model.access: hr_payroll.access_hr_payroll_structure_hr_user
