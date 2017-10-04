@@ -9,6 +9,7 @@ import ast
 import os
 from copy import deepcopy
 from lxml import etree
+from sys import version_info
 
 
 def read_manifest(addon_dir):
@@ -184,9 +185,12 @@ def main_analysis(old_update, old_noupdate, new_update, new_noupdate):
             odoo.append(element)
 
     document = etree.ElementTree(odoo)
+    diff = etree.tostring(
+        document, pretty_print=True, xml_declaration=True, encoding='utf-8')
+    if version_info[0] > 2:
+        diff = diff.decode('utf-8')
 
-    print(etree.tostring(
-        document, pretty_print=True, xml_declaration=True, encoding='utf-8'))
+    print(diff)
 
 
 def main(argv=None):
