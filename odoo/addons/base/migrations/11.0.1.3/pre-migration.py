@@ -22,12 +22,15 @@ model_renames_ir_actions_report = [
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.update_module_names(
-        env.cr, apriori.renamed_modules.iteritems()
+        env.cr, apriori.renamed_modules.items()
     )
     openupgrade.update_module_names(
-        env.cr, apriori.merged_modules.iteritems(), merge_modules=True)
+        env.cr, apriori.merged_modules.items(), merge_modules=True)
     openupgrade.copy_columns(env.cr, column_copies)
     openupgrade.rename_models(env.cr, model_renames_ir_actions_report)
+    env.cr.execute(
+        """UPDATE ir_actions SET type = 'ir.actions.report'
+        WHERE type = 'ir.actions.report.xml'""")
 
     rule_xml_ids = ('ir_config_parameter_rule', 'ir_values_default_rule')
     env.cr.execute(
