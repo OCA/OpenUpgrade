@@ -12,10 +12,15 @@ class TestActions(TransactionCase):
         self.assertEqual(action_install.binding_type, 'action')
         self.assertEqual(
             action_install.binding_model_id.model, 'ir.module.module')
+        self.assertEqual(action_install.usage, 'ir_actions_server')
         action_overview = self.env.ref('base.report_ir_model_overview')
         self.assertEqual(action_overview.binding_type, 'report')
         self.assertEqual(action_overview.binding_model_id.model, 'ir.model')
         self.assertEqual(action_overview.type, 'ir.actions.report')
+        action_board = self.env.ref('board.open_board_my_dash_action',
+                                    raise_if_not_found=False)
+        if action_board:  # is board installed?
+            self.assertEqual(action_board.usage, 'menu')
 
     def test_default(self):
         """ Verify that default values are migrated from ir_values """
