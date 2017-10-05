@@ -1,0 +1,41 @@
+---Fields in module 'resource'---
+resource     / res.company              / resource_calendar_id (many2one): NEW relation: resource.calendar
+resource     / res.company              / resource_calendar_ids (one2many): NEW relation: resource.calendar
+resource     / res.users                / resource_ids (one2many)       : NEW relation: resource.resource
+resource     / resource.calendar        / global_leave_ids (one2many)   : NEW relation: resource.calendar.leaves
+resource     / resource.calendar        / manager (many2one)            : DEL relation: res.users
+# Nothing to do
+
+resource     / resource.calendar.leaves / tz (selection)                : NEW selection_keys: function
+# Done: update user tz in existing resource.calendar.leaves
+
+resource     / resource.resource        / calendar_id (many2one)        : now required, default = function
+# Done: update data in post migration in order to fill new required field
+
+resource     / resource.resource        / code (char)                   : DEL
+resource     / resource.test            / name (char)                   : NEW
+resource     / resource.test            / resource_id (many2one)        : NEW relation: resource.resource, required: required
+# Nothing to do
+
+---XML records in module 'resource'---
+NEW ir.actions.act_window: resource.resource_calendar_leaves_action_from_calendar
+NEW ir.actions.act_window: resource.resource_resource_action_from_calendar
+NEW ir.model.access: resource.access_resource_calendar_attendance_system
+NEW ir.model.access: resource.access_resource_calendar_attendance_user
+NEW ir.model.access: resource.access_resource_calendar_system
+NEW ir.model.access: resource.access_resource_calendar_user
+NEW ir.model.access: resource.access_resource_test_all
+DEL ir.model.access: resource.access_resource_calendar
+DEL ir.model.access: resource.access_resource_calendar_attendance
+NEW ir.rule: resource.resource_calendar_leaves_rule_group_user_create
+NEW ir.rule: resource.resource_calendar_leaves_rule_group_user_modify
+# Nothing to do
+
+DEL ir.rule: resource.resource_own_leaves
+# Done: delete security rule
+
+NEW res.company: base.main_company
+NEW resource.calendar: resource.resource_calendar_std
+NEW resource.calendar: resource.resource_calendar_std_35h
+NEW resource.calendar: resource.resource_calendar_std_38h
+# Nothing to do
