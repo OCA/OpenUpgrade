@@ -17,6 +17,22 @@ def update_new_required_field_calendar_id(env):
     """)
 
 
+def update_new_field_tz_for_linked_user(env):
+    env.cr.execute("""
+        UPDATE resource_calendar_leaves SET tz=subquery.tz
+        FROM (
+            SELECT rcl.id, p.tz
+            FROM resource_calendar_leaves rcl
+            JOIN resource_resource r ON rcl.resource_id = r.id
+            JOIN res_users u ON r.user_id = u.id
+            JOIN res_partner p ON u.partner_id = p.id
+            WHERE r.user_id IS NOT NULL
+        ) AS subquery
+        WHERE resource_calendar_leaves.id = subquery.id;
+    """)
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     update_new_required_field_calendar_id(env)
+    update_new_field_tz_for_linked_user(env)

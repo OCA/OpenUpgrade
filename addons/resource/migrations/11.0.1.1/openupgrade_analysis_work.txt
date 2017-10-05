@@ -4,8 +4,10 @@ resource     / res.company              / resource_calendar_ids (one2many): NEW 
 resource     / res.users                / resource_ids (one2many)       : NEW relation: resource.resource
 resource     / resource.calendar        / global_leave_ids (one2many)   : NEW relation: resource.calendar.leaves
 resource     / resource.calendar        / manager (many2one)            : DEL relation: res.users
-resource     / resource.calendar.leaves / tz (selection)                : NEW selection_keys: function
 # Nothing to do
+
+resource     / resource.calendar.leaves / tz (selection)                : NEW selection_keys: function
+# Done: update user tz in existing resource.calendar.leaves
 
 resource     / resource.resource        / calendar_id (many2one)        : now required, default = function
 # Done: update data in post migration in order to fill new required field
