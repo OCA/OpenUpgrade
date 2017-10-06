@@ -6,6 +6,14 @@ from openupgradelib import openupgrade
 
 
 def update_new_required_field_calendar_id(env):
+    """ Create a calendar for each company and assign to all resources """
+    for company in env['res.company'].search([]):
+        company.write({
+            'resource_calendar_id': env['resource.calendar'].create({
+                'name': ('Standard 40 hours/week'),
+                'company_id': company.id,
+            }).id,
+        })
     env.cr.execute("""
         UPDATE resource_resource SET calendar_id=subquery.resource_calendar_id
         FROM (
