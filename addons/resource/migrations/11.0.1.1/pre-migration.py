@@ -16,5 +16,9 @@ def migrate(env, version):
         """, (rule_xml_ids,))
     env.cr.execute(
         """ DELETE FROM ir_model_data WHERE module = 'resource'
-                AND name IN %s)
+                AND name IN %s
         """, (rule_xml_ids,))
+    # Precreate the calendar field on the company table to prevent the
+    # defaults method from kicking in prematurely
+    env.cr.execute(
+        "ALTER TABLE res_company ADD column resource_calendar_id INTEGER")
