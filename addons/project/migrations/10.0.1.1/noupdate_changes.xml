@@ -13,52 +13,6 @@
         ]</field>
     <field name="name">Project/Task: employees: follow required for follower-only projects</field>
   </record>
-  <record id="project_task_data_8" model="project.task" forcecreate="False">
-    <field name="active" eval="False"/>
-  </record>
-  <record id="project_task_data_9" model="project.task" forcecreate="False">
-    <field name="active" eval="False"/>
-  </record>
-  <record id="project_task_data_2" model="project.task" forcecreate="False">
-    <field name="active" eval="False"/>
-  </record>
-  <record id="project_task_data_0" model="project.task" forcecreate="False">
-    <field name="active" eval="False"/>
-  </record>
-  <record id="project_task_data_1" model="project.task" forcecreate="False">
-    <field name="active" eval="False"/>
-  </record>
-  <record id="project_task_data_6" model="project.task" forcecreate="False">
-    <field name="active" eval="False"/>
-  </record>
-  <record id="project_task_data_7" model="project.task" forcecreate="False">
-    <field name="active" eval="False"/>
-  </record>
-  <record id="project_task_data_4" model="project.task" forcecreate="False">
-    <field name="active" eval="False"/>
-  </record>
-  <record id="project_task_data_5" model="project.task" forcecreate="False">
-    <field name="active" eval="False"/>
-  </record>
-  <record id="project_task_data_14" model="project.task" forcecreate="False">
-    <field name="name">Send a message with a picture as attachment, and see what happens!</field>
-    <field name="active" eval="False"/>
-  </record>
-  <record id="project_task_data_11" model="project.task" forcecreate="False">
-    <field name="active" eval="False"/>
-  </record>
-  <record id="project_task_data_12" model="project.task" forcecreate="False">
-    <field name="active" eval="False"/>
-  </record>
-  <record id="project_task_data_13" model="project.task" forcecreate="False">
-    <field name="active" eval="False"/>
-  </record>
-  <record id="msg_task_data_14" model="mail.message" forcecreate="False">
-    <field name="subject">How to open the planner?</field>
-  </record>
-  <record id="project_project_data" model="project.project" forcecreate="False">
-    <field name="active" eval="False"/>
-  </record>
   <record id="project_public_members_rule" model="ir.rule">
     <field name="domain_force">['|',
                                         ('privacy_visibility', '!=', 'followers'),
