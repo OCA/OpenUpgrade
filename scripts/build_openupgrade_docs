@@ -6,11 +6,16 @@ DOC_PARTS="7.0/openerp/openupgrade/doc/source/modules50-60.rst
 7.0/openerp/openupgrade/doc/source/modules60-61.rst
 7.0/openerp/openupgrade/doc/source/modules61-70.rst
 8.0/openerp/openupgrade/doc/source/modules70-80.rst
-9.0/openerp/openupgrade/doc/source/modules80-90.rst"
+9.0/openerp/openupgrade/doc/source/modules80-90.rst
+10.0/odoo/openupgrade/doc/source/modules90-100.rst
+"
 OUTPUT_DIR=${OUTPUT_DIR:-$DOC_BUILD_DIR}/build/html
 OPENUPGRADELIB=https://github.com/OCA/OpenUpgradelib.git
 
 for line in $DOC_PARTS; do
+    if [ -z "$line" ]; then
+        continue
+    fi
     name=$(basename $line)
     wget -q $BASE_URL/$line -O $DOC_BUILD_DIR/source/$name
 done
