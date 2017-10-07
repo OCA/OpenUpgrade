@@ -31,7 +31,6 @@ def convert_blog_post_cover(env):
             ' "background-color": "oe_none",'
             ' "resize_class": "cover cover_full"}}'
         ).format(row[1])
-        break
 
 
 @openupgrade.migrate(use_env=True)

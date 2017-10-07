@@ -46,6 +46,7 @@ def cleanup_modules(cr):
     other modules."""
     openupgrade.update_module_names(
         cr, [
+            ('account_chart', 'account'),
             ('account_followup', 'account_credit_control'),
             ('contacts', 'mail'),
             ('marketing_crm', 'crm'),
@@ -70,6 +71,7 @@ def cleanup_modules(cr):
             # from OCA/bank-statement-reconcile
             ('account_easy_reconcile', 'account_mass_reconcile'),
             ('account_advanced_reconcile', 'account_mass_reconcile'),
+            ('account_bank_statement_period_from_line_date', 'account'),
             # from OCA/connector-telephony
             ('asterisk_click2dial_crm', 'crm_phone'),
             # from OCA/server-tools - features included now in core
@@ -97,6 +99,10 @@ def cleanup_modules(cr):
             ('website_sale_collapse_categories', 'website_sale'),
             # OCA/reporting-engine
             ('report_xls', 'report_xlsx'),
+            # OCA/l10n-spain
+            ('l10n_es_account_financial_report', 'account_journal_report'),
+            # OCA/stock-logistics-workflow
+            ('stock_dropshipping_dual_invoice', 'stock_dropshipping'),
         ], merge_modules=True,
     )
 

@@ -246,6 +246,7 @@ account      / account.journal          / allow_date (boolean)          : DEL
 account      / account.journal          / analytic_journal_id (many2one): DEL relation: account.analytic.journal
 
 account      / account.journal          / bank_account_id (many2one)    : NEW relation: res.partner.bank
+# Done: Fill this value through the journal_id field in res.partner.bank
 
 account      / account.journal          / bank_statements_source (selection): NEW selection_keys: ['manual']
 # Post migration script: Default to 'manual'

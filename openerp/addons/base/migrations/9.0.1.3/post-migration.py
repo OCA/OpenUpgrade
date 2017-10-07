@@ -77,6 +77,14 @@ def publish_attachments(env):
     )
 
 
+def cleanup_modules_post(env):
+    # Remove noupdate cron in OCA/social/mass_mailing_sending_queue
+    # It has been already moved to 'mass_mailing' module
+    cron = env.ref('mass_mailing.cronjob', False)
+    if cron:
+        cron.unlink()
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     for table_name in column_copies.keys():
@@ -93,3 +101,4 @@ def migrate(env, version):
     )
     assign_view_keys(env)
     publish_attachments(env)
+    cleanup_modules_post(env)
