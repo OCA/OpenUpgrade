@@ -1,0 +1,34 @@
+---Fields in module 'sales_team'---
+sales_team   / crm.team                 / currency_id (many2one)        : previously in module sale
+sales_team   / crm.team                 / dashboard_graph_group (selection): NEW selection_keys: ['day', 'month', 'user', 'week']
+sales_team   / crm.team                 / dashboard_graph_model (selection): NEW selection_keys: []
+sales_team   / crm.team                 / dashboard_graph_period (selection): NEW selection_keys: ['month', 'week', 'year']
+sales_team   / crm.team                 / favorite_user_ids (many2many) : NEW relation: res.users
+sales_team   / crm.team                 / team_type (selection)         : NEW required: required, selection_keys: ['sales', 'website'], req_default: function
+sales_team   / crm.team                 / website_message_ids (one2many): NEW relation: mail.message
+# nothing to do
+---XML records in module 'sales_team'---
+NEW ir.actions.act_window: sales_team.mail_activity_type_action_config_sales
+DEL ir.actions.act_window: sales_team.action_sale_config
+DEL ir.actions.act_window: sales_team.crm_team_act
+DEL ir.rule: sales_team.crm_rule_own_salesteam
+DEL ir.ui.menu: sales_team.menu_action_currency_form
+DEL ir.ui.menu: sales_team.menu_action_res_bank_form
+DEL ir.ui.menu: sales_team.menu_action_res_partner_bank_form
+DEL ir.ui.menu: sales_team.menu_base_partner
+DEL ir.ui.menu: sales_team.menu_config_address_book
+DEL ir.ui.menu: sales_team.menu_config_bank_accounts
+DEL ir.ui.menu: sales_team.menu_country_group
+DEL ir.ui.menu: sales_team.menu_country_partner
+DEL ir.ui.menu: sales_team.menu_country_state_partner
+DEL ir.ui.menu: sales_team.menu_localisation
+DEL ir.ui.menu: sales_team.menu_partner_category_form
+DEL ir.ui.menu: sales_team.menu_partner_form
+DEL ir.ui.menu: sales_team.menu_partner_title_contact
+DEL ir.ui.menu: sales_team.menu_sale_general_settings
+DEL ir.ui.menu: sales_team.menu_sale_report
+DEL ir.ui.menu: sales_team.menu_sales
+DEL ir.ui.menu: sales_team.menu_sales_team_act
+DEL ir.ui.menu: sales_team.sales_team_config
+NEW ir.ui.view: sales_team.crm_team_view_kanban
+DEL ir.ui.view: sales_team.view_sale_config_settings

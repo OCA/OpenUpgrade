@@ -1,5 +1,5 @@
 ---Fields in module 'website_rating_project'---
-website_rating_project / project.project          / website_published (boolean)   : previously in module website_rating_project_issue
+website_rating_project_issue / project.project          / website_published (boolean)   : was renamed to portal_show_rating [nothing to do]
 ---XML records in module 'website_rating_project'---
 NEW ir.ui.view: website_rating_project.assets_frontend
 NEW ir.ui.view: website_rating_project.header_footer_custom
@@ -8,3 +8,10 @@ NEW ir.ui.view: website_rating_project.project_data_satisfaction
 NEW ir.ui.view: website_rating_project.project_project_view_form
 NEW ir.ui.view: website_rating_project.project_rating_data
 NEW ir.ui.view: website_rating_project.project_rating_page
+DEL ir.ui.view: website_rating_project_issue.assets_frontend
+DEL ir.ui.view: website_rating_project_issue.edit_project_inherit_website_rating_project_issue
+DEL ir.ui.view: website_rating_project_issue.header_footer_custom
+DEL ir.ui.view: website_rating_project_issue.index
+DEL ir.ui.view: website_rating_project_issue.project_data_satisfaction
+DEL ir.ui.view: website_rating_project_issue.project_rating_data
+DEL ir.ui.view: website_rating_project_issue.project_rating_page

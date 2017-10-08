@@ -55,7 +55,7 @@ class AnalysisWizard(models.TransientModel):
 
         self.ensure_one()
         connection = self.server_config.get_connection()
-        remote_record_obj = connection.get_model('openupgrade.record')
+        remote_record_obj = connection.env['openupgrade.record']
         local_record_obj = self.env['openupgrade.record']
 
         # Retrieve field representations and compare
@@ -64,8 +64,7 @@ class AnalysisWizard(models.TransientModel):
         res = compare.compare_sets(remote_records, local_records)
 
         # Retrieve xml id representations and compare
-        # In version 11, add 'noupdate' as a field to retrieve and compare
-        fields = ['module', 'model', 'name']
+        fields = ['module', 'model', 'name', 'noupdate']
         local_xml_records = [
             dict([(field, record[field]) for field in fields])
             for record in local_record_obj.search([('type', '=', 'xmlid')])]
@@ -96,16 +95,16 @@ class AnalysisWizard(models.TransientModel):
             contents = "---Fields in module '%s'---\n" % key
             if key in res:
                 contents += '\n'.join(
-                    [unicode(line) for line in sorted(res[key])])
+                    [str(line) for line in sorted(res[key])])
                 if res[key]:
                     contents += '\n'
             contents += "---XML records in module '%s'---\n" % key
             if key in res_xml:
-                contents += '\n'.join([unicode(line) for line in res_xml[key]])
+                contents += '\n'.join([str(line) for line in res_xml[key]])
                 if res_xml[key]:
                     contents += '\n'
             if key not in res and key not in res_xml:
-                contents += '-- nothing has changed in this module'
+                contents += '---nothing has changed in this module--\n'
             if key == 'general':
                 general += contents
                 continue

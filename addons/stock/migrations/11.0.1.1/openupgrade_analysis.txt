@@ -94,21 +94,7 @@ DEL ir.actions.act_window: stock.do_view_procurement_op
 DEL ir.actions.act_window: stock.pack_details
 DEL ir.actions.act_window: stock.procrules
 NEW ir.actions.client: stock.action_stock_report
-NEW ir.actions.report: stock.action_report_delivery
-NEW ir.actions.report: stock.action_report_inventory
-NEW ir.actions.report: stock.action_report_location_barcode
-NEW ir.actions.report: stock.action_report_lot_barcode
-NEW ir.actions.report: stock.action_report_picking
-NEW ir.actions.report: stock.action_report_quant_package_barcode
-NEW ir.actions.report: stock.action_report_quant_package_barcode_small
-DEL ir.actions.report.xml: stock.action_report_delivery
-DEL ir.actions.report.xml: stock.action_report_inventory
-DEL ir.actions.report.xml: stock.action_report_location_barcode
-DEL ir.actions.report.xml: stock.action_report_lot_barcode
-DEL ir.actions.report.xml: stock.action_report_picking
-DEL ir.actions.report.xml: stock.action_report_quant_package_barcode
-DEL ir.actions.report.xml: stock.action_report_quant_package_barcode_small
-NEW ir.cron: stock.ir_cron_scheduler_action
+NEW ir.cron: stock.ir_cron_scheduler_action (noupdate)
 NEW ir.model.access: stock.access_procurement_group
 NEW ir.model.access: stock.access_procurement_rule
 NEW ir.model.access: stock.access_stock_move_line_all
@@ -130,10 +116,10 @@ DEL ir.model.access: stock.access_stock_pack_operation_lot_manager
 DEL ir.model.access: stock.access_stock_pack_operation_lot_user
 DEL ir.model.access: stock.access_stock_pack_operation_manager
 DEL ir.model.access: stock.access_stock_pack_operation_user
-DEL ir.property: stock.property_stock_procurement
-NEW ir.rule: stock.stock_move_line_rule_portal
-NEW ir.rule: stock.stock_picking_rule_portal
-NEW ir.sequence: stock.sequence_proc_group
+DEL ir.property: stock.property_stock_procurement (noupdate)
+NEW ir.rule: stock.stock_move_line_rule_portal (noupdate)
+NEW ir.rule: stock.stock_picking_rule_portal (noupdate)
+NEW ir.sequence: stock.sequence_proc_group (noupdate)
 NEW ir.ui.menu: stock.menu_product_packagings
 NEW ir.ui.menu: stock.menu_valuation
 NEW ir.ui.menu: stock.product_uom_menu
@@ -205,4 +191,4 @@ DEL ir.ui.view: stock.view_procurement_rule_tree_stock_inherit
 DEL ir.ui.view: stock.view_procurement_tree_stock_inherit
 DEL ir.ui.view: stock.view_stock_config_settings
 DEL ir.ui.view: stock.view_stock_quant_graph_value
-DEL mail.message: stock.module_install_notification
+DEL mail.message: stock.module_install_notification (noupdate)

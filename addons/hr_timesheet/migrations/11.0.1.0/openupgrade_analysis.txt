@@ -24,8 +24,6 @@ NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_pro
 NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_task_form
 NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_task_pivot
 NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_task_tree
-NEW ir.actions.report: hr_timesheet.timesheet_report
-DEL ir.actions.report.xml: hr_timesheet.timesheet_report
 NEW ir.model.access: hr_timesheet.access_account_analytic_line_portal
 NEW ir.model.access: hr_timesheet.access_account_analytic_user
 NEW ir.model.access: hr_timesheet.access_product_template_timesheet_user
@@ -34,9 +32,11 @@ NEW ir.model.access: hr_timesheet.access_project_task
 DEL ir.model.access: hr_timesheet.access_hr_account_analytic_line
 DEL ir.model.access: hr_timesheet.access_hr_account_analytic_line_employee
 DEL ir.model.access: hr_timesheet.access_product_template_hr_timesheet
-NEW ir.rule: hr_timesheet.timesheet_line_rule_manager
+DEL ir.model.access: website_project_timesheet.access_timesheets_portal
+NEW ir.rule: hr_timesheet.timesheet_line_rule_manager (noupdate)
 NEW ir.rule: hr_timesheet.timesheet_line_rule_user
-NEW ir.rule: hr_timesheet.timesheet_rule_portal
+NEW ir.rule: hr_timesheet.timesheet_rule_portal (noupdate)
+DEL ir.rule: website_project_timesheet.portal_task_timesheet_rule (noupdate)
 NEW ir.ui.menu: hr_timesheet.hr_timesheet_config_settings_menu_action
 NEW ir.ui.menu: hr_timesheet.hr_timesheet_menu_configuration
 NEW ir.ui.menu: hr_timesheet.menu_timesheets_reports_timesheet
@@ -52,4 +52,5 @@ NEW ir.ui.view: hr_timesheet.timesheet_view_calendar
 NEW ir.ui.view: hr_timesheet.timesheet_view_form_user
 NEW ir.ui.view: hr_timesheet.timesheet_view_tree_user
 NEW ir.ui.view: hr_timesheet.view_kanban_account_analytic_line
-NEW res.groups: hr_timesheet.group_timesheet_manager
+DEL ir.ui.view: website_project_timesheet.my_task
+NEW res.groups: hr_timesheet.group_timesheet_manager (noupdate)

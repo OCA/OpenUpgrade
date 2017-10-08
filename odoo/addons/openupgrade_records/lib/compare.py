@@ -15,7 +15,8 @@ from odoo.addons.openupgrade_records.lib import apriori
 
 
 def module_map(module):
-    return apriori.renamed_modules.get(module, module)
+    return apriori.renamed_modules.get(
+        module, apriori.merged_modules.get(module, module))
 
 
 def model_map(model):
@@ -210,7 +211,7 @@ def compare_sets(old_records, new_records):
 
     printkeys = [
         'relation', 'required', 'selection_keys',
-        'req_default', 'inherits', 'mode'
+        'req_default', 'inherits', 'mode', 'attachment',
         ]
     for column in old_records:
         # we do not care about removed function fields
@@ -271,5 +272,7 @@ def compare_xml_sets(old_records, new_records):
             content = 'DEL %(model)s: %(name)s' % entry
         elif 'new' in entry:
             content = 'NEW %(model)s: %(name)s' % entry
+        if entry['noupdate']:
+            content += ' (noupdate)'
         reprs[module_map(entry['module'])].append(content)
     return reprs

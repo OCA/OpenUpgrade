@@ -9,5 +9,6 @@ NEW ir.ui.menu: hr.hr_menu_configuration
 NEW ir.ui.view: hr.hr_job_view_kanban
 NEW ir.ui.view: hr.res_config_settings_view_form
 DEL ir.values: hr.hr_employee_action_subordinate_hierachy_mutli
-DEL mail.message: hr.module_install_notification
+DEL mail.message: hr.module_install_notification (noupdate)
+DEL res.groups: base.group_user (noupdate)
 DEL res.groups: hr.group_hr_attendance

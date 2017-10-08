@@ -32,8 +32,15 @@ NEW ir.model.access: project.access_project_task_type_portal
 NEW ir.model.access: project.access_project_user
 NEW ir.model.access: project.access_task_portal
 DEL ir.model.access: project.access_project_on_partner
-NEW ir.rule: project.project_project_rule_portal
-NEW ir.rule: project.project_task_rule_portal
+DEL ir.model.access: website_project.access_account_analytic_account_portal
+DEL ir.model.access: website_project.access_project_portal
+DEL ir.model.access: website_project.access_project_tags_portal
+DEL ir.model.access: website_project.access_task_portal
+DEL ir.model.access: website_project.access_task_type_portal
+NEW ir.rule: project.project_project_rule_portal (noupdate)
+NEW ir.rule: project.project_task_rule_portal (noupdate)
+DEL ir.rule: website_project.portal_project_rule (noupdate)
+DEL ir.rule: website_project.portal_task_rule (noupdate)
 NEW ir.ui.menu: project.project_config_settings_menu_action
 NEW ir.ui.menu: project.project_menu_config_activity_type
 NEW ir.ui.menu: project.project_task_menu_activity
@@ -53,6 +60,12 @@ NEW ir.ui.view: project.qunit_suite
 NEW ir.ui.view: project.res_config_settings_view_form
 NEW ir.ui.view: project.view_project_task_type_kanban
 DEL ir.ui.view: project.view_config_settings
+DEL ir.ui.view: website_project.my_project
+DEL ir.ui.view: website_project.my_projects
+DEL ir.ui.view: website_project.my_task
+DEL ir.ui.view: website_project.my_tasks
+DEL ir.ui.view: website_project.portal_layout
+DEL ir.ui.view: website_project.portal_my_home
 DEL ir.values: project.ir_project_task_open
 DEL mail.message: project.module_install_notification
 NEW res.groups: project.group_subtask_project

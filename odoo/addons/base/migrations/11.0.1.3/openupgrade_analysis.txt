@@ -75,27 +75,10 @@ base         / ir.module.module         / exclusion_ids (one2many)      : NEW re
 base         / ir.module.module.exclusion / module_id (many2one)          : NEW relation: ir.module.module
 base         / ir.module.module.exclusion / name (char)                   : NEW 
 base         / ir.ui.menu               / web_icon_data (binary)        : not a function anymore
-base         / report.paperformat       / __last_update (datetime)      : previously in module report
-base         / report.paperformat       / default (boolean)             : previously in module report
-base         / report.paperformat       / display_name (char)           : previously in module report
-base         / report.paperformat       / dpi (integer)                 : previously in module report
-base         / report.paperformat       / format (selection)            : previously in module report
-base         / report.paperformat       / header_line (boolean)         : previously in module report
-base         / report.paperformat       / header_spacing (integer)      : previously in module report
-base         / report.paperformat       / margin_bottom (float)         : previously in module report
-base         / report.paperformat       / margin_left (float)           : previously in module report
-base         / report.paperformat       / margin_right (float)          : previously in module report
-base         / report.paperformat       / margin_top (float)            : previously in module report
-base         / report.paperformat       / name (char)                   : previously in module report
-base         / report.paperformat       / orientation (selection)       : previously in module report
-base         / report.paperformat       / page_height (integer)         : previously in module report
-base         / report.paperformat       / page_width (integer)          : previously in module report
-base         / report.paperformat       / report_ids (one2many)         : previously in module report
 base         / res.bank                 / fax (char)                    : DEL 
 base         / res.company              / custom_footer (boolean)       : DEL 
 base         / res.company              / external_report_layout (selection): NEW selection_keys: ['background', 'boxed', 'clean', 'standard']
 base         / res.company              / font (many2one)               : DEL relation: res.font
-base         / res.company              / paperformat_id (many2one)     : previously in module report
 base         / res.company              / report_footer (text)          : NEW 
 base         / res.company              / report_header (text)          : NEW 
 base         / res.company              / rml_footer (text)             : DEL 
@@ -116,6 +99,7 @@ base         / res.partner              / industry_id (many2one)        : NEW re
 base         / res.partner.industry     / active (boolean)              : NEW 
 base         / res.partner.industry     / full_name (char)              : NEW 
 base         / res.partner.industry     / name (char)                   : NEW 
+report       / report.paperformat       / report_ids (one2many)         : relation is now 'ir.actions.report' ('ir.actions.report.xml')
 ---XML records in module 'base'---
 NEW ir.actions.act_window: base.action_currency_all_form
 NEW ir.actions.act_window: base.ir_action_report
@@ -134,6 +118,8 @@ DEL ir.actions.act_window: base.action_workflow_instance_form
 DEL ir.actions.act_window: base.action_workflow_transition_form
 DEL ir.actions.act_window: base.action_workflow_workitem_form
 DEL ir.actions.act_window: base.ir_action_report_xml
+DEL ir.actions.act_window: report.paper_format_action
+DEL ir.actions.act_window: report.reports_action
 NEW ir.actions.act_window.view: base.action_partner_customer_form_view1
 NEW ir.actions.act_window.view: base.action_partner_customer_form_view2
 NEW ir.actions.act_window.view: base.action_partner_customer_form_view3
@@ -144,11 +130,9 @@ DEL ir.actions.act_window.view: base.action_values_defaults_form_view
 DEL ir.actions.act_window.view: base.action_values_defaults_tree_view
 DEL ir.actions.act_window.view: base.action_values_form_view
 DEL ir.actions.act_window.view: base.action_values_tree_view
-NEW ir.actions.report: base.ir_module_reference_print
-NEW ir.actions.report: base.report_ir_model_overview
-DEL ir.actions.report.xml: base.ir_module_reference_print
 DEL ir.actions.report.xml: base.preview_rml_report
-DEL ir.actions.report.xml: base.report_ir_model_overview
+DEL ir.actions.report.xml: report.action_report_externalpreview
+DEL ir.actions.report.xml: report.action_report_internalpreview
 NEW ir.model.access: base.access_ir_actions_report_all
 NEW ir.model.access: base.access_ir_actions_report_group_system
 NEW ir.model.access: base.access_ir_attachment_portal
@@ -191,10 +175,13 @@ DEL ir.model.access: base.access_workflow_transition_group_system
 DEL ir.model.access: base.access_workflow_triggers_all
 DEL ir.model.access: base.access_workflow_triggers_group_system
 DEL ir.model.access: base.access_workflow_workitem_all
-NEW ir.rule: base.ir_default_system_rule
-NEW ir.rule: base.ir_default_user_rule
-DEL ir.rule: base.ir_config_parameter_rule
-DEL ir.rule: base.ir_values_default_rule
+DEL ir.model.access: report.access_report
+DEL ir.model.access: report.paperformat_access_employee
+DEL ir.model.access: report.paperformat_access_portal
+NEW ir.rule: base.ir_default_system_rule (noupdate)
+NEW ir.rule: base.ir_default_user_rule (noupdate)
+DEL ir.rule: base.ir_config_parameter_rule (noupdate)
+DEL ir.rule: base.ir_values_default_rule (noupdate)
 NEW ir.ui.menu: base.ir_default_menu
 NEW ir.ui.menu: base.menu_ir_action_report
 NEW ir.ui.menu: base.paper_format_menuitem
@@ -209,6 +196,9 @@ DEL ir.ui.menu: base.menu_workflow_instance
 DEL ir.ui.menu: base.menu_workflow_root
 DEL ir.ui.menu: base.menu_workflow_transition
 DEL ir.ui.menu: base.menu_workflow_workitem
+DEL ir.ui.menu: report.paper_format_menuitem
+DEL ir.ui.menu: report.reporting_menuitem
+DEL ir.ui.menu: report.reports_menuitem
 NEW ir.ui.view: base.contact_name
 NEW ir.ui.view: base.ir_cron_view_form
 NEW ir.ui.view: base.ir_default_form_view
@@ -249,19 +239,39 @@ DEL ir.ui.view: base.view_workflow_tree
 DEL ir.ui.view: base.view_workflow_workitem_form
 DEL ir.ui.view: base.view_workflow_workitem_search
 DEL ir.ui.view: base.view_workflow_workitem_tree
+DEL ir.ui.view: report.act_report_xml_view_inherit
+DEL ir.ui.view: report.act_report_xml_view_inherit_report
+DEL ir.ui.view: report.assets_backend
+DEL ir.ui.view: report.assets_common
+DEL ir.ui.view: report.assets_editor
+DEL ir.ui.view: report.assets_pdf
+DEL ir.ui.view: report.base_config_settings_inherited
+DEL ir.ui.view: report.external_layout
+DEL ir.ui.view: report.external_layout_footer
+DEL ir.ui.view: report.external_layout_header
+DEL ir.ui.view: report.html_container
+DEL ir.ui.view: report.internal_layout
+DEL ir.ui.view: report.layout
+DEL ir.ui.view: report.minimal_layout
+DEL ir.ui.view: report.paperformat_view_form
+DEL ir.ui.view: report.paperformat_view_tree
+DEL ir.ui.view: report.preview_externalreport
+DEL ir.ui.view: report.preview_internalreport
 DEL ir.values: base.action_module_immediate_install
 DEL ir.values: base.ir_action_module_category
 DEL ir.values: base.ir_open_company
-NEW report.paperformat: base.paperformat_batch_deposit
-NEW report.paperformat: base.paperformat_euro
-NEW report.paperformat: base.paperformat_us
-NEW res.country: base.tl
-DEL res.country: base.an
-DEL res.country: base.nt
-DEL res.country: base.tp
-DEL res.country: base.yu
-DEL res.country: base.zr
-NEW res.country.group: base.south_america
+NEW report.paperformat: base.paperformat_batch_deposit (noupdate)
+NEW report.paperformat: base.paperformat_euro (noupdate)
+NEW report.paperformat: base.paperformat_us (noupdate)
+DEL report.paperformat: report.paperformat_euro
+DEL report.paperformat: report.paperformat_us
+NEW res.country: base.tl (noupdate)
+DEL res.country: base.an (noupdate)
+DEL res.country: base.nt (noupdate)
+DEL res.country: base.tp (noupdate)
+DEL res.country: base.yu (noupdate)
+DEL res.country: base.zr (noupdate)
+NEW res.country.group: base.south_america (noupdate)
 NEW res.country.state: base.state_co_01
 NEW res.country.state: base.state_co_02
 NEW res.country.state: base.state_co_03
@@ -295,28 +305,28 @@ NEW res.country.state: base.state_co_30
 NEW res.country.state: base.state_co_31
 NEW res.country.state: base.state_co_32
 NEW res.country.state: base.state_co_33
-DEL res.currency: base.VUB
-DEL res.font: base.font_courier
-DEL res.font: base.font_helvetica
-DEL res.font: base.font_times
-NEW res.partner.industry: base.res_partner_industry_A
-NEW res.partner.industry: base.res_partner_industry_B
-NEW res.partner.industry: base.res_partner_industry_C
-NEW res.partner.industry: base.res_partner_industry_D
-NEW res.partner.industry: base.res_partner_industry_E
-NEW res.partner.industry: base.res_partner_industry_F
-NEW res.partner.industry: base.res_partner_industry_G
-NEW res.partner.industry: base.res_partner_industry_H
-NEW res.partner.industry: base.res_partner_industry_I
-NEW res.partner.industry: base.res_partner_industry_J
-NEW res.partner.industry: base.res_partner_industry_K
-NEW res.partner.industry: base.res_partner_industry_L
-NEW res.partner.industry: base.res_partner_industry_M
-NEW res.partner.industry: base.res_partner_industry_N
-NEW res.partner.industry: base.res_partner_industry_O
-NEW res.partner.industry: base.res_partner_industry_P
-NEW res.partner.industry: base.res_partner_industry_Q
-NEW res.partner.industry: base.res_partner_industry_R
-NEW res.partner.industry: base.res_partner_industry_S
-NEW res.partner.industry: base.res_partner_industry_T
-NEW res.partner.industry: base.res_partner_industry_U
+DEL res.currency: base.VUB (noupdate)
+DEL res.font: base.font_courier (noupdate)
+DEL res.font: base.font_helvetica (noupdate)
+DEL res.font: base.font_times (noupdate)
+NEW res.partner.industry: base.res_partner_industry_A (noupdate)
+NEW res.partner.industry: base.res_partner_industry_B (noupdate)
+NEW res.partner.industry: base.res_partner_industry_C (noupdate)
+NEW res.partner.industry: base.res_partner_industry_D (noupdate)
+NEW res.partner.industry: base.res_partner_industry_E (noupdate)
+NEW res.partner.industry: base.res_partner_industry_F (noupdate)
+NEW res.partner.industry: base.res_partner_industry_G (noupdate)
+NEW res.partner.industry: base.res_partner_industry_H (noupdate)
+NEW res.partner.industry: base.res_partner_industry_I (noupdate)
+NEW res.partner.industry: base.res_partner_industry_J (noupdate)
+NEW res.partner.industry: base.res_partner_industry_K (noupdate)
+NEW res.partner.industry: base.res_partner_industry_L (noupdate)
+NEW res.partner.industry: base.res_partner_industry_M (noupdate)
+NEW res.partner.industry: base.res_partner_industry_N (noupdate)
+NEW res.partner.industry: base.res_partner_industry_O (noupdate)
+NEW res.partner.industry: base.res_partner_industry_P (noupdate)
+NEW res.partner.industry: base.res_partner_industry_Q (noupdate)
+NEW res.partner.industry: base.res_partner_industry_R (noupdate)
+NEW res.partner.industry: base.res_partner_industry_S (noupdate)
+NEW res.partner.industry: base.res_partner_industry_T (noupdate)
+NEW res.partner.industry: base.res_partner_industry_U (noupdate)

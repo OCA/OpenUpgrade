@@ -2,7 +2,7 @@
 sale_expense / hr.expense               / sale_order_id (many2one)      : NEW relation: sale.order
 ---XML records in module 'sale_expense'---
 NEW ir.model.access: sale_expense.access_sale_order_employee
-NEW ir.rule: sale_expense.sale_order_rule_expense_user
+NEW ir.rule: sale_expense.sale_order_rule_expense_user (noupdate)
 NEW ir.ui.view: sale_expense.hr_expense_form_view_inherit_sale_expense
 NEW ir.ui.view: sale_expense.hr_expense_sheet_form_view_inherit_sale_expense
 NEW ir.ui.view: sale_expense.product_product_view_form_inherit_sale_expense

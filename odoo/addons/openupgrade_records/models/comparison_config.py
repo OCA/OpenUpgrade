@@ -29,25 +29,21 @@ class openupgrade_comparison_config(models.Model):
     @api.multi
     def get_connection(self):
         self.ensure_one()
-        import openerplib
-        return openerplib.get_connection(
-            hostname=self.server,
-            database=self.database,
-            login=self.username,
-            password=self.password,
-            port=self.port,
-        )
+        import odoorpc
+        remote = odoorpc.ODOO(self.server, port=self.port)
+        remote.login(self.database, self.username, self.password)
+        return remote
 
     @api.multi
     def test_connection(self):
         self.ensure_one()
         try:
             connection = self.get_connection()
-            user_model = connection.get_model("res.users")
+            user_model = connection.env["res.users"]
             ids = user_model.search([("login", "=", "admin")])
             user_info = user_model.read([ids[0]], ["name"])[0]
-        except Exception, e:
-            raise UserError(_("Connection failed.\n\nDETAIL: %s") % unicode(e))
+        except Exception as e:
+            raise UserError(_("Connection failed.\n\nDETAIL: %s") % e)
         raise UserError(
             _("%s is connected.") % user_info["name"])
 
@@ -73,7 +69,7 @@ class openupgrade_comparison_config(models.Model):
         """ Install same modules as in source DB """
         self.ensure_one()
         connection = self.get_connection()
-        remote_module_obj = connection.get_model("ir.module.module")
+        remote_module_obj = connection.env["ir.module.module"]
         remote_module_ids = remote_module_obj.search(
             [("state", "=", "installed")])
 

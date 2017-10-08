@@ -21,18 +21,14 @@ event        / event.type.mail          / interval_type (selection)     : NEW re
 event        / event.type.mail          / interval_unit (selection)     : NEW required: required, selection_keys: ['days', 'hours', 'months', 'now', 'weeks'], req_default: function
 event        / event.type.mail          / template_id (many2one)        : NEW relation: mail.template, required: required
 ---XML records in module 'event'---
-NEW event.type: event.event_type_data_online
-NEW event.type: event.event_type_data_physical
+NEW event.type: event.event_type_data_online (noupdate)
+NEW event.type: event.event_type_data_physical (noupdate)
 NEW ir.actions.act_window: event.event_event_action_pivot
 DEL ir.actions.act_window: event.action_report_event_registration
-NEW ir.actions.report: event.report_event_event_badge
-NEW ir.actions.report: event.report_event_registration_badge
-DEL ir.actions.report.xml: event.report_event_event_badge
-DEL ir.actions.report.xml: event.report_event_registration_badge
 NEW ir.model.access: event.access_event_type_mail_event_manager
 NEW ir.model.access: event.access_event_type_mail_event_user
 DEL ir.model.access: event.access_report_event_registration
-DEL ir.rule: event.report_event_registration_company_rule
+DEL ir.rule: event.report_event_registration_company_rule (noupdate)
 NEW ir.ui.menu: event.event_event_menu_pivot_report
 DEL ir.ui.menu: event.menu_report_event_registration
 NEW ir.ui.view: event.event_event_view_pivot

@@ -5,8 +5,6 @@ website_quote / sale.order               / require_payment (selection)   : selec
 website_quote / sale.quote.template      / active (boolean)              : NEW 
 website_quote / sale.quote.template      / require_payment (selection)   : selection_keys is now '[0, 1]' ('[0, 1, 2]')
 ---XML records in module 'website_quote'---
-NEW ir.actions.report: website_quote.report_web_quote
-DEL ir.actions.report.xml: website_quote.report_web_quote
 NEW ir.ui.menu: website_quote.payment_acquirer_menu_sale
 NEW ir.ui.view: website_quote.assets_editor
 NEW ir.ui.view: website_quote.portal_my_quotations_inherit_quote

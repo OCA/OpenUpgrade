@@ -6,8 +6,8 @@ payment      / payment.acquirer         / payment_flow (selection)      : NEW re
 payment      / payment.acquirer         / payment_icon_ids (many2many)  : NEW relation: payment.icon
 payment      / payment.acquirer         / specific_countries (boolean)  : NEW 
 payment      / payment.icon             / acquirer_ids (many2many)      : NEW relation: payment.acquirer
-payment      / payment.icon             / image (binary)                : NEW 
-payment      / payment.icon             / image_payment_form (binary)   : NEW 
+payment      / payment.icon             / image (binary)                : NEW attachment: True
+payment      / payment.icon             / image_payment_form (binary)   : NEW attachment: True
 payment      / payment.icon             / name (char)                   : NEW 
 payment      / payment.token            / verified (boolean)            : NEW 
 payment      / payment.transaction      / callback_eval (char)          : DEL 

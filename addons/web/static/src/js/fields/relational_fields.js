@@ -1704,9 +1704,13 @@ var FormFieldMany2ManyTags = FieldMany2ManyTags.extend({
 });
 
 var KanbanFieldMany2ManyTags = FieldMany2ManyTags.extend({
-    events: _.extend({}, FieldMany2ManyTags.prototype.events, {
-        'click .o_tag': '_onTagClicked',
-    }),
+    // Remove event handlers on this widget to ensure that the kanban 'global
+    // click' opens the clicked record, even if the click is done on a tag
+    // This is necessary because of the weird 'global click' logic in
+    // KanbanRecord, which should definitely be cleaned.
+    // Anyway, those handlers are only necessary in Form and List views, so we
+    // can removed them here.
+    events: AbstractField.prototype.events,
 
     //--------------------------------------------------------------------------
     // Private
@@ -1730,29 +1734,10 @@ var KanbanFieldMany2ManyTags = FieldMany2ManyTags.extend({
                 class: 'o_tag o_tag_color_' + (m2m.data[self.colorField] || 0),
                 text: m2m.data.display_name,
             })
-            .data('res_id', m2m.res_id)
             .prepend('<span>')
             .appendTo(self.$el);
         });
     },
-
-    //--------------------------------------------------------------------------
-    // Handlers
-    //--------------------------------------------------------------------------
-
-    /**
-     * @private
-     * @param {MouseEvent} e
-     */
-    _onTagClicked: function (e) {
-        var resID = $(e.currentTarget).data('res_id');
-        var record = _.findWhere(this.value.data, {res_id: resID});
-        var displayName = record.data.display_name;
-        this.trigger_up('add_filter', {
-            domain: "[['" + this.name + "','=','" + displayName + "']]",
-            help: displayName,
-        });
-    }
 });
 
 var FieldMany2ManyCheckBoxes = AbstractField.extend({

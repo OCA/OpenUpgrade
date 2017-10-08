@@ -38,6 +38,7 @@ class Record(models.Model):
     @api.model
     def field_dump(self):
         keys = [
+            'attachment',
             'module',
             'mode',
             'model',

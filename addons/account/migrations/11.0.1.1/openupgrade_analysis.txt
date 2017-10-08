@@ -36,7 +36,6 @@ account      / account.journal          / bank_statements_source (selection): se
 account      / account.journal          / color (integer)               : NEW 
 account      / account.journal          / display_on_footer (boolean)   : DEL 
 account      / account.move             / statement_line_id (many2one)  : DEL relation: account.bank.statement.line
-account      / account.move             / tax_cash_basis_rec_id (many2one): previously in module account_tax_cash_basis
 account      / account.move.line        / statement_line_id (many2one)  : NEW relation: account.bank.statement.line
 account      / account.payment          / message_follower_ids (one2many): NEW relation: mail.followers
 account      / account.payment          / message_ids (one2many)        : NEW relation: mail.message
@@ -46,7 +45,6 @@ account      / account.payment          / website_message_ids (one2many): NEW re
 account      / account.payment          / writeoff_label (char)         : NEW 
 account      / account.payment.term     / sequence (integer)            : NEW required: required, req_default: function
 account      / account.reconcile.model.template / chart_template_id (many2one)  : NEW relation: account.chart.template, required: required
-account      / account.tax              / cash_basis_account (many2one) : previously in module account_tax_cash_basis
 account      / account.tax.template     / cash_basis_account (many2one) : NEW relation: account.account.template
 account      / account.tax.template     / tax_exigibility (selection)   : NEW selection_keys: ['on_invoice', 'on_payment']
 account      / res.company              / account_opening_move_id (many2one): NEW relation: account.move
@@ -55,10 +53,12 @@ account      / res.company              / account_setup_bar_closed (boolean): NE
 account      / res.company              / account_setup_coa_done (boolean): NEW 
 account      / res.company              / account_setup_company_data_done (boolean): NEW 
 account      / res.company              / account_setup_fy_data_done (boolean): NEW 
-account      / res.company              / tax_cash_basis_journal_id (many2one): previously in module account_tax_cash_basis
 account      / res.company              / tax_exigibility (boolean)     : NEW 
+account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : selection_keys is now '['on_invoice', 'on_payment']' ('False')
+account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : type is now 'selection' ('boolean')
+account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : was renamed to tax_exigibility [nothing to do]
 ---XML records in module 'account'---
-NEW ir.actions.act_window: account.account_send_payment_receipt_by_email_action
+NEW ir.actions.act_window: account.account_send_payment_receipt_by_email_action (noupdate)
 NEW ir.actions.act_window: account.action_account_group_tree
 NEW ir.actions.act_window: account.action_account_tax_report
 NEW ir.actions.act_window: account.action_all_partner_invoices
@@ -83,34 +83,18 @@ NEW ir.actions.act_window.view: account.action_invoice_in_refund_tree
 NEW ir.actions.act_window.view: account.action_invoice_out_refund_form
 NEW ir.actions.act_window.view: account.action_invoice_out_refund_tree
 NEW ir.actions.act_window_close: account.setup_wizard_close
-NEW ir.actions.report: account.account_invoices
 NEW ir.actions.report: account.account_invoices_without_payment
 NEW ir.actions.report: account.action_report_account_tax
-NEW ir.actions.report: account.action_report_aged_partner_balance
-NEW ir.actions.report: account.action_report_financial
-NEW ir.actions.report: account.action_report_general_ledger
-NEW ir.actions.report: account.action_report_journal
-NEW ir.actions.report: account.action_report_partnerledger
 NEW ir.actions.report: account.action_report_payment_receipt
-NEW ir.actions.report: account.action_report_print_overdue
-NEW ir.actions.report: account.action_report_trial_balance
 DEL ir.actions.report.xml: account.account_invoice_action_report_duplicate
-DEL ir.actions.report.xml: account.account_invoices
-DEL ir.actions.report.xml: account.action_report_aged_partner_balance
-DEL ir.actions.report.xml: account.action_report_financial
-DEL ir.actions.report.xml: account.action_report_general_ledger
-DEL ir.actions.report.xml: account.action_report_journal
-DEL ir.actions.report.xml: account.action_report_partnerledger
-DEL ir.actions.report.xml: account.action_report_print_overdue
-DEL ir.actions.report.xml: account.action_report_trial_balance
 NEW ir.actions.server: account.action_account_confirm_payments
 NEW ir.model.access: account.access_account_cash_rounding_uinvoice
 NEW ir.model.access: account.access_account_group
 NEW ir.model.access: account.access_account_group_manager
 NEW ir.model.access: account.access_account_invoice_line_portal
 NEW ir.model.access: account.access_account_invoice_portal
-NEW ir.rule: account.account_invoice_line_rule_portal
-NEW ir.rule: account.account_invoice_rule_portal
+NEW ir.rule: account.account_invoice_line_rule_portal (noupdate)
+NEW ir.rule: account.account_invoice_rule_portal (noupdate)
 NEW ir.ui.menu: account.account_reports_legal_statements_menu
 NEW ir.ui.menu: account.menu_action_invoice_in_refund
 NEW ir.ui.menu: account.menu_action_invoice_out_refund
@@ -177,6 +161,8 @@ DEL ir.ui.view: account.account_invoice_report_duplicate_main
 DEL ir.ui.view: account.external_layout_footer
 DEL ir.ui.view: account.view_account_config_settings
 DEL ir.ui.view: account.view_move_line_form2
+DEL ir.ui.view: account_tax_cash_basis.view_account_config_cash_basis_inherit_form
+DEL ir.ui.view: account_tax_cash_basis.view_tax_form_cash_basis_inherit
 DEL ir.values: account.account_unreconcile_values
 DEL ir.values: account.action_account_balance_report_values1
 DEL ir.values: account.action_account_general_ledger_values
@@ -184,7 +170,7 @@ DEL ir.values: account.action_account_move_line_reconcile_prompt_values
 DEL ir.values: account.action_account_move_reversal
 DEL ir.values: account.action_account_partner_ledger_values
 DEL ir.values: account.validate_account_move_values
-NEW mail.template: account.mail_template_data_payment_receipt
+NEW mail.template: account.mail_template_data_payment_receipt (noupdate)
 NEW res.groups: account.group_cash_rounding
 DEL res.groups: account.group_proforma_invoices
-NEW res.users: base.user_root
+NEW res.users: base.user_root (noupdate)
