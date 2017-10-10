@@ -343,6 +343,181 @@ def migrate_account_auto_fy_sequence(env):
     env.cr.execute(query.format('suffix'))
 
 
+def fill_move_taxes(env):
+    """Try to deduce taxes in account move lines from old tax codes.
+
+    Method followed:
+
+    Tax amounts
+    -----------
+
+    * If the tax code is present in only one tax as tax code, then we can fill
+      tax_line_id with that tax.
+    * If there are more than one tax with that tax code, try to match tax lines
+      with the name of the move line.
+
+    Base amounts
+    ------------
+
+    * If the tax code is present in only one tax as base code, then we can add
+      that tax to tax_ids.
+    * If there are more than one for base amounts, see tax codes for other
+      lines in the same move and try to match entire tax. If matched exactly
+      with one tax, we can have 2 cases:
+
+       * The move line has debit/credit: then we just put the tax as base.
+       * It's a dummy line introduced for adding another base tax code, due to
+         the restriction of <v8 of only one tax code per line. We locate the
+         first line in the same move with the same amount in debit or credit
+         column that doesn't have this tax already as base tax.
+
+    * If still no success, then we make a last try searching only for active
+      taxes to see if this way we match only one record.
+    """
+    env.cr.execute(
+        "SELECT tax_code_id FROM account_move_line GROUP BY tax_code_id"
+    )
+    move_line_obj = env['account.move.line']
+    for row in env.cr.fetchall():
+        tax_code_id = row[0]
+        # TAX AMOUNT
+        env.cr.execute(
+            """SELECT COUNT(*), MAX(id) FROM account_tax
+            WHERE tax_code_id=%(tax_code_id)s
+            OR ref_tax_code_id=%(tax_code_id)s""",
+            {'tax_code_id': tax_code_id},
+        )
+        row_tax = env.cr.fetchone()
+        if row_tax[0] == 1:
+            openupgrade.logged_query(
+                env.cr,
+                """UPDATE account_move_line
+                SET tax_line_id = %s
+                WHERE tax_code_id = %s""", (row_tax[1], tax_code_id)
+            )
+        elif row_tax[0] > 1:
+            # Try to match by tax name (put on the description of the line)
+            env.cr.execute(
+                """SELECT name
+                FROM account_move_line
+                WHERE tax_code_id = %s
+                GROUP BY name""", (tax_code_id, )
+            )
+            for row_name in env.cr.fetchall():
+                # Look for a match also on translated terms
+                env.cr.execute(
+                    """SELECT COUNT(DISTINCT(t.id)), MAX(t.id)
+                    FROM account_tax t
+                    LEFT JOIN ir_translation tr
+                    ON tr.name='account.tax,name' AND tr.res_id = t.id
+                    WHERE (
+                        t.tax_code_id = %(tax_code_id)s OR
+                        t.ref_tax_code_id = %(tax_code_id)s
+                    )
+                    AND (
+                        t.name = %(name)s OR
+                        tr.value = %(name)s
+                    )""", {
+                        'tax_code_id': tax_code_id,
+                        'name': row_name[0],
+                    },
+                )
+                row_tax = env.cr.fetchone()
+                if row_tax[0] == 1:
+                    openupgrade.logged_query(
+                        env.cr,
+                        """UPDATE account_move_line
+                        SET tax_line_id = %s
+                        WHERE tax_code_id = %s
+                        AND name = %s
+                        """, (row_tax[1], tax_code_id, row_name[0])
+                    )
+        # BASE AMOUNT
+        env.cr.execute(
+            """SELECT id, tax_amount
+            FROM account_move_line
+            WHERE tax_code_id=%s""", (tax_code_id, ),
+        )
+        line_rows = env.cr.fetchall()
+        aml_ids = [x[0] for x in line_rows]
+        amls = env['account.move.line'].browse(aml_ids)
+        env.cr.execute(
+            """SELECT COUNT(*), MAX(id) FROM account_tax
+            WHERE base_code_id=%(tax_code_id)s OR
+            ref_base_code_id=%(tax_code_id)s
+            """, {'tax_code_id': tax_code_id},
+        )
+        row_base = env.cr.fetchone()
+        if row_base[0] == 1:
+            amls.write({'tax_ids': [(4, row_base[1])]})
+        elif row_base[0] > 1:
+            # Match base tax using the already assigned tax fees
+            matched = False
+            tax_amounts = dict(line_rows)
+            for line in amls:
+                env.cr.execute(
+                    """SELECT tax_line_id
+                    FROM account_move_line
+                    WHERE move_id = %s""", (line.move_id.id, ),
+                )
+                fee_tax_ids = [x[0] for x in env.cr.fetchall()]
+                if fee_tax_ids:
+                    env.cr.execute(
+                        """SELECT COUNT(*), MAX(id) FROM account_tax
+                        WHERE (
+                           base_code_id=%(tax_code_id)s OR
+                           ref_base_code_id=%(tax_code_id)s
+                        ) AND id IN %(tax_ids)s
+                        """, {
+                            'tax_code_id': tax_code_id,
+                            'tax_ids': tuple(fee_tax_ids),
+                        },
+                    )
+                    row_base = env.cr.fetchone()
+                    if row_base[0] == 1:
+                        matched = True
+                        if not line.debit and not line.credit:
+                            # Extra line generated by previous <v8 constraint
+                            # of one tax code per line. We need to find the
+                            # line for the same amount to put the base there
+                            env.cr.execute(
+                                """
+                                SELECT id
+                                FROM account_move_line
+                                WHERE (
+                                    debit = %(amount)s OR
+                                    credit = %(amount)s
+                                ) AND move_id = %(move_id)s
+                                """, {
+                                    'amount': tax_amounts[line.id],
+                                    'move_id': line.move_id.id,
+                                }
+                            )
+                            row_base2 = env.cr.fetchone()
+                            while row_base2:
+                                # for multiple lines with same amount
+                                line = move_line_obj.browse(row_base2[0])
+                                if row_base[1] not in line.tax_ids.ids:
+                                    line.write({'tax_ids': [(4, row_base[1])]})
+                                    break
+                                row_base2 = env.cr.fetchone()
+                        else:
+                            line.write({'tax_ids': [(4, row_base[1])]})
+            if not matched:
+                # Try with only active taxes
+                env.cr.execute(
+                    """SELECT COUNT(*), MAX(id) FROM account_tax
+                    WHERE (
+                        base_code_id=%(tax_code_id)s OR
+                        ref_base_code_id=%(tax_code_id)s
+                    ) AND active=True
+                    """, {'tax_code_id': tax_code_id},
+                )
+                row_base = env.cr.fetchone()
+                if row_base[0] == 1:
+                    amls.write({'tax_ids': [(4, row_base[1])]})
+
+
 def fill_blacklisted_fields(cr):
     """Fill data of fields for which recomputation was surpressed."""
     # Set fields on account_move
@@ -751,6 +926,7 @@ def migrate(env, version):
     map_account_tax_type(cr)
     map_account_tax_template_type(cr)
     migrate_account_auto_fy_sequence(env)
+    fill_move_taxes(env)
     fill_blacklisted_fields(cr)
     reset_blacklist_field_recomputation()
     fill_move_line_invoice(cr)
