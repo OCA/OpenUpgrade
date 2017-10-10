@@ -8,14 +8,14 @@ delivery     / sale.order               / delivery_price (float)        : not a 
 delivery     / sale.order               / delivery_rating_success (boolean): NEW 
 ---XML records in module 'delivery'---
 NEW ir.actions.act_window: delivery.action_delivery_packaging_view
-DEL ir.property: delivery.property_delivery_carrier
-NEW ir.rule: delivery.delivery_carrier_comp_rule
+DEL ir.property: delivery.property_delivery_carrier (noupdate)
+NEW ir.rule: delivery.delivery_carrier_comp_rule (noupdate)
 NEW ir.ui.menu: delivery.menu_delivery_packagings
 DEL ir.ui.menu: delivery.sale_menu_delivery
 NEW ir.ui.view: delivery.choose_delivery_package_view_form
 NEW ir.ui.view: delivery.res_config_settings_view_form
 DEL ir.ui.view: delivery.view_move_withweight_form
 DEL ir.ui.view: delivery.view_quant_package_form_save
-NEW mail.template: delivery.mail_template_data_delivery_confirmation
-NEW mail.template: delivery.mail_template_data_delivery_notification
-NEW product.product: delivery.product_product_delivery
+NEW mail.template: delivery.mail_template_data_delivery_confirmation (noupdate)
+NEW mail.template: delivery.mail_template_data_delivery_notification (noupdate)
+NEW product.product: delivery.product_product_delivery (noupdate)

@@ -3689,6 +3689,44 @@ QUnit.module('relational_fields', {
         AbstractField.prototype.destroy = oldDestroy;
     });
 
+    QUnit.test('one2many editable list with onchange keeps the order', function (assert) {
+        assert.expect(2);
+
+        this.data.partner.records[0].p = [1, 2, 4];
+        this.data.partner.onchanges = {
+            p: function () {},
+        };
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch:'<form string="Partners">' +
+                    '<field name="p">' +
+                        '<tree editable="bottom">' +
+                            '<field name="display_name"/>' +
+                        '</tree>' +
+                    '</field>' +
+                '</form>',
+            res_id: 1,
+            viewOptions: {
+                mode: 'edit',
+            },
+        });
+
+        assert.strictEqual(form.$('.o_data_cell').text(), 'first recordsecond recordaaa',
+            "records should be display in the correct order");
+
+        form.$('.o_data_row:first .o_data_cell').click();
+        form.$('.o_selected_row .o_field_widget[name=display_name]').val('new').trigger('input');
+        form.$el.click(); // click outside to validate the row
+
+        assert.strictEqual(form.$('.o_data_cell').text(), 'newsecond recordaaa',
+            "records should be display in the correct order");
+
+        form.destroy();
+    });
+
     QUnit.test('one2many list (editable): readonly domain is evaluated', function (assert) {
         assert.expect(2);
 
@@ -6119,7 +6157,7 @@ QUnit.module('relational_fields', {
     });
 
     QUnit.test('focus is correctly reset after an onchange in an x2many', function (assert) {
-        assert.expect(1);
+        assert.expect(2);
 
         this.data.partner.onchanges = {
             int_field: function () {}
@@ -6133,7 +6171,9 @@ QUnit.module('relational_fields', {
                     '<field name="p">' +
                         '<tree editable="bottom">' +
                             '<field name="int_field"/>' +
+                            '<button string="hello"/>' +
                             '<field name="qux"/>' +
+                            '<field name="trululu"/>' +
                         '</tree>' +
                     '</field>' +
                 '</form>',
@@ -6157,6 +6197,47 @@ QUnit.module('relational_fields', {
 
         assert.strictEqual(document.activeElement, form.$('.o_field_widget[name=qux]')[0],
             "qux field should have the focus");
+
+        form.$('.o_field_many2one input').click();
+        form.$('.o_field_many2one input').autocomplete('widget').find('a').first().click();
+        assert.strictEqual(form.$('.o_field_many2one input').val(), 'first record',
+            "the one2many field should have the expected value");
+
+        form.destroy();
+    });
+
+    QUnit.test('one2many with default value: edit line to make it invalid', function (assert) {
+        assert.expect(3);
+
+        this.data.partner.fields.p.default = [
+            [0, false, {foo: "coucou", int_field: 5}],
+        ];
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch:'<form string="Partners">' +
+                    '<field name="p">' +
+                        '<tree editable="bottom">' +
+                            '<field name="foo"/>' +
+                            '<field name="int_field"/>' +
+                        '</tree>' +
+                    '</field>' +
+                '</form>',
+        });
+
+        // edit the line and enter an invalid value for int_field
+        form.$('.o_data_row .o_data_cell:nth(1)').click();
+        form.$('.o_field_widget[name=int_field]').val('e').trigger('input');
+        form.$el.click(); // try to validate the line
+
+        assert.strictEqual(form.$('.o_data_row.o_selected_row').length, 1,
+            "line should not have been removed and should still be in edition");
+        assert.strictEqual($('.modal').length, 1,
+            "a confirmation dialog should be opened");
+        assert.ok(form.$('.o_field_widget[name=int_field]').hasClass('o_field_invalid'),
+            "should indicate that int_field is invalid");
 
         form.destroy();
     });
@@ -6659,6 +6740,100 @@ QUnit.module('relational_fields', {
 
         assert.strictEqual(form.$('td.o_data_cell').text(), "blipkawa",
             "should have loaded default data");
+
+        form.destroy();
+    });
+
+    QUnit.test('many2many checkboxes with default values', function (assert) {
+        assert.expect(7);
+
+        this.data.partner.fields.turtles.default = [3];
+        this.data.partner.fields.turtles.type = "many2many";
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch:'<form string="Partners">' +
+                    '<field name="turtles" widget="many2many_checkboxes">' +
+                    '</field>' +
+                '</form>',
+            mockRPC: function (route, args) {
+                if (args.method === 'create') {
+                    assert.deepEqual(args.args[0].turtles, [[6, false, [1]]],
+                        "correct values should have been sent to create");
+                }
+                return this._super.apply(this, arguments);
+            }
+        });
+
+        assert.notOk(form.$('.o_checkbox input').eq(0).prop('checked'),
+            "first checkbox should not be checked");
+        assert.notOk(form.$('.o_checkbox input').eq(1).prop('checked'),
+            "second checkbox should not be checked");
+        assert.ok(form.$('.o_checkbox input').eq(2).prop('checked'),
+            "third checkbox should be checked");
+
+        form.$('.o_checkbox input:checked').click();  // Uncheck default record
+        form.$('.o_checkbox input').first().click();  // Check first record
+        form.$('.o_checkbox input').first().click();  // Uncheck first record
+        form.$('.o_checkbox input').first().click();  // Recheck first record
+
+        assert.ok(form.$('.o_checkbox input').eq(0).prop('checked'),
+            "first checkbox should be checked");
+        assert.notOk(form.$('.o_checkbox input').eq(1).prop('checked'),
+            "second checkbox should not be checked");
+        assert.notOk(form.$('.o_checkbox input').eq(2).prop('checked'),
+            "third checkbox should not be checked");
+
+        form.$buttons.find('.o_form_button_save').click();
+
+        form.destroy();
+    });
+
+    QUnit.test('many2many checkboxes with default values', function (assert) {
+        assert.expect(7);
+
+        this.data.partner.fields.turtles.default = [3];
+        this.data.partner.fields.turtles.type = "many2many";
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch:'<form string="Partners">' +
+                    '<field name="turtles" widget="many2many_checkboxes">' +
+                    '</field>' +
+                '</form>',
+            mockRPC: function (route, args) {
+                if (args.method === 'create') {
+                    assert.deepEqual(args.args[0].turtles, [[6, false, [1]]],
+                        "correct values should have been sent to create");
+                }
+                return this._super.apply(this, arguments);
+            }
+        });
+
+        assert.notOk(form.$('.o_checkbox input').eq(0).prop('checked'),
+            "first checkbox should not be checked");
+        assert.notOk(form.$('.o_checkbox input').eq(1).prop('checked'),
+            "second checkbox should not be checked");
+        assert.ok(form.$('.o_checkbox input').eq(2).prop('checked'),
+            "third checkbox should be checked");
+
+        form.$('.o_checkbox input:checked').click();  // Uncheck default record
+        form.$('.o_checkbox input').first().click();  // Check first record
+        form.$('.o_checkbox input').first().click();  // Uncheck first record
+        form.$('.o_checkbox input').first().click();  // Recheck first record
+
+        assert.ok(form.$('.o_checkbox input').eq(0).prop('checked'),
+            "first checkbox should be checked");
+        assert.notOk(form.$('.o_checkbox input').eq(1).prop('checked'),
+            "second checkbox should not be checked");
+        assert.notOk(form.$('.o_checkbox input').eq(2).prop('checked'),
+            "third checkbox should not be checked");
+
+        form.$buttons.find('.o_form_button_save').click();
 
         form.destroy();
     });

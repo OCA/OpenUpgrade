@@ -14,13 +14,13 @@ website_event_track / event.track.stage        / sequence (integer)            :
 website_event_track / event.type               / website_track (boolean)       : NEW 
 website_event_track / event.type               / website_track_proposal (boolean): NEW 
 ---XML records in module 'website_event_track'---
-NEW event.track.stage: website_event_track.event_track_stage0
-NEW event.track.stage: website_event_track.event_track_stage1
-NEW event.track.stage: website_event_track.event_track_stage2
-NEW event.track.stage: website_event_track.event_track_stage3
-NEW event.track.stage: website_event_track.event_track_stage4
-NEW event.track.stage: website_event_track.event_track_stage5
-NEW event.type: website_event_track.event_type_data_tracks
+NEW event.track.stage: website_event_track.event_track_stage0 (noupdate)
+NEW event.track.stage: website_event_track.event_track_stage1 (noupdate)
+NEW event.track.stage: website_event_track.event_track_stage2 (noupdate)
+NEW event.track.stage: website_event_track.event_track_stage3 (noupdate)
+NEW event.track.stage: website_event_track.event_track_stage4 (noupdate)
+NEW event.track.stage: website_event_track.event_track_stage5 (noupdate)
+NEW event.type: website_event_track.event_type_data_tracks (noupdate)
 NEW ir.actions.act_window: website_event_track.event_track_stage_action
 NEW ir.model.access: website_event_track.access_event_track_stage_all
 NEW ir.model.access: website_event_track.access_event_track_stage_event_manager
@@ -31,6 +31,6 @@ NEW ir.ui.view: website_event_track.event_track_stage_view_tree
 NEW ir.ui.view: website_event_track.event_type_view_form_inherit_track
 NEW ir.ui.view: website_event_track.track_edit_options
 NEW ir.ui.view: website_event_track.view_event_track_stage_kanban
-NEW mail.message.subtype: website_event_track.mt_track_blocked
-NEW mail.message.subtype: website_event_track.mt_track_ready
-NEW mail.template: website_event_track.mail_template_data_track_confirmation
+NEW mail.message.subtype: website_event_track.mt_track_blocked (noupdate)
+NEW mail.message.subtype: website_event_track.mt_track_ready (noupdate)
+NEW mail.template: website_event_track.mail_template_data_track_confirmation (noupdate)

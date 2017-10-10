@@ -23,7 +23,7 @@ NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_report_cost_reve
 NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_report_cost_revenue_pivot
 NEW ir.actions.act_window.view: sale_timesheet.timesheet_action_report_cost_revenue_tree
 NEW ir.filters: sale_timesheet.timesheet_filter_billing
-DEL ir.model.data: sale_timesheet.duplicate_field_xmlid
+DEL ir.model.data: sale_timesheet.duplicate_field_xmlid (noupdate)
 NEW ir.ui.menu: sale_timesheet.menu_timesheet_billing_analysis
 NEW ir.ui.menu: sale_timesheet.menu_timesheet_report_cost_revenue
 NEW ir.ui.view: sale_timesheet.account_invoice_view_form_inherit_sale_timesheet

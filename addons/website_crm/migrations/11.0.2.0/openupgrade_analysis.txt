@@ -2,7 +2,7 @@
 website_crm  / website                  / crm_default_team_id (many2one): NEW relation: crm.team
 website_crm  / website                  / crm_default_user_id (many2one): NEW relation: res.users
 ---XML records in module 'website_crm'---
-DEL crm.team: sales_team.salesteam_website_sales
+DEL crm.team: sales_team.salesteam_website_sales (noupdate)
 NEW ir.ui.view: website_crm.res_config_settings_view_form
 DEL ir.ui.view: website_crm.assets_backend
 DEL ir.ui.view: website_crm.contactus_thanks

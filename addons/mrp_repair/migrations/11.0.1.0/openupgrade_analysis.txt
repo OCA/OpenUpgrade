@@ -5,8 +5,6 @@ mrp_repair   / mrp.repair.fee           / to_invoice (boolean)          : DEL
 mrp_repair   / mrp.repair.line          / to_invoice (boolean)          : DEL 
 mrp_repair   / stock.move               / repair_id (many2one)          : NEW relation: mrp.repair
 ---XML records in module 'mrp_repair'---
-NEW ir.actions.report: mrp_repair.action_report_mrp_repair_order
-DEL ir.actions.report.xml: mrp_repair.action_report_mrp_repair_order
 NEW ir.ui.view: mrp_repair.stock_warn_insufficient_qty_repair_form_view
 NEW ir.ui.view: mrp_repair.view_mrp_repair_kanban
-NEW mail.template: mrp_repair.mail_template_mrp_repair_quotation
+NEW mail.template: mrp_repair.mail_template_mrp_repair_quotation (noupdate)

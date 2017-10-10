@@ -25,6 +25,7 @@ NEW ir.actions.act_window.view: website_sale.sale_report_action_view_graph_websi
 NEW ir.actions.act_window.view: website_sale.sale_report_action_view_pivot_carts
 NEW ir.actions.act_window.view: website_sale.sale_report_action_view_pivot_website
 NEW ir.actions.server: website_sale.ir_actions_server_sale_cart_recovery_email
+NEW ir.model.access: website_sale.access_account_tax_user
 NEW ir.ui.menu: website.menu_website_global_configuration
 NEW ir.ui.menu: website_sale.menu_catalog_variants_action
 NEW ir.ui.menu: website_sale.menu_orders_abandoned_orders
@@ -56,7 +57,7 @@ DEL ir.ui.view: website_sale.payment_token_form_confirm
 DEL ir.ui.view: website_sale.transaction_form_website_sale
 DEL ir.ui.view: website_sale.view_order_form_acquirer
 DEL ir.ui.view: website_sale.website_config_settings_view_form
-NEW mail.template: website_sale.mail_template_sale_cart_recovery
+NEW mail.template: website_sale.mail_template_sale_cart_recovery (noupdate)
 NEW res.groups: base.group_portal
 NEW res.groups: base.group_public
-NEW res.groups: base.group_user
+NEW res.groups: base.group_user (noupdate)

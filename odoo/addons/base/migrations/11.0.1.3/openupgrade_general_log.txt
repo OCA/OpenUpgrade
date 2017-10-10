@@ -1,9 +1,9 @@
 ---Fields in module 'general'---
 # 6856 fields matched,
-# Direct match: 6354
-# Found in other module: 58
+# Direct match: 6377
+# Found in other module: 36
 # Found with different name: 0
-# Found with different type: 2
+# Found with different type: 1
 # In obsolete models: 442
 # New columns: 1117
 # Not matched: 394
@@ -71,43 +71,19 @@ obsolete model workflow.workitem
 ERROR: module not in list of installed modules:
 ---Fields in module 'website_issue'---
 ---XML records in module 'website_issue'---
-DEL ir.model: project_issue.model_project_issue
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'crm_project_issue'---
 ---XML records in module 'crm_project_issue'---
-DEL ir.actions.act_window: crm_project_issue.convert_lead2projectissue_wizard_action
-DEL ir.model.access: crm_project_issue.access_project_project_sale_user
-DEL ir.model.access: crm_project_issue.access_project_task_sale_user
-DEL ir.model.access: crm_project_issue.access_project_task_type_sale_user
-DEL ir.ui.view: crm_project_issue.crm_case_form_view_leads_project_issue
-DEL ir.ui.view: crm_project_issue.view_crm_lead2projectissue_wizard
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'website_portal'---
 ---XML records in module 'website_portal'---
-DEL ir.ui.view: website_portal.assets_frontend
-DEL ir.ui.view: website_portal.contact
-DEL ir.ui.view: website_portal.custom_panel
-DEL ir.ui.view: website_portal.details
-DEL ir.ui.view: website_portal.my_account_link
-DEL ir.ui.view: website_portal.portal_archive_groups
-DEL ir.ui.view: website_portal.portal_layout
-DEL ir.ui.view: website_portal.portal_my_home
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'website_project'---
 ---XML records in module 'website_project'---
-DEL ir.model.access: website_project.access_account_analytic_account_portal
-DEL ir.model.access: website_project.access_project_portal
-DEL ir.model.access: website_project.access_project_tags_portal
-DEL ir.model.access: website_project.access_task_portal
-DEL ir.model.access: website_project.access_task_type_portal
-DEL ir.rule: website_project.portal_project_rule
-DEL ir.rule: website_project.portal_task_rule
-DEL ir.ui.view: website_project.my_project
-DEL ir.ui.view: website_project.my_projects
-DEL ir.ui.view: website_project.my_task
-DEL ir.ui.view: website_project.my_tasks
-DEL ir.ui.view: website_project.portal_layout
-DEL ir.ui.view: website_project.portal_my_home
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'marketing_campaign'---
 ---XML records in module 'marketing_campaign'---
@@ -118,8 +94,8 @@ DEL ir.actions.act_window: marketing_campaign.action_campaign_analysis_all
 DEL ir.actions.act_window: marketing_campaign.action_marketing_campaign_form
 DEL ir.actions.act_window: marketing_campaign.action_marketing_campaign_segment_form
 DEL ir.actions.act_window: marketing_campaign.action_marketing_campaign_workitem
-DEL ir.cron: marketing_campaign.ir_cron_marketing_campaign_every_day
-DEL ir.cron: marketing_campaign.ir_cron_marketing_campaign_every_hour
+DEL ir.cron: marketing_campaign.ir_cron_marketing_campaign_every_day (noupdate)
+DEL ir.cron: marketing_campaign.ir_cron_marketing_campaign_every_hour (noupdate)
 DEL ir.model.access: marketing_campaign.access_email_template_account_manager
 DEL ir.model.access: marketing_campaign.access_email_template_account_user
 DEL ir.model.access: marketing_campaign.access_email_template_manager
@@ -165,67 +141,20 @@ DEL ir.ui.view: marketing_campaign.view_report_campaign_analysis_graph
 DEL ir.ui.view: marketing_campaign.view_report_campaign_analysis_pivot
 DEL res.groups: marketing_campaign.group_lead_automation_manager
 DEL res.groups: marketing_campaign.group_lead_automation_user
-DEL res.users: base.default_user
+DEL res.users: base.default_user (noupdate)
 ERROR: module not in list of installed modules:
 ---Fields in module 'portal_sale'---
 ---XML records in module 'portal_sale'---
-DEL ir.rule: portal_sale.portal_account_invoice_line_rule
-DEL ir.rule: portal_sale.portal_account_invoice_user_rule
-DEL ir.rule: portal_sale.portal_personal_contact
-DEL ir.rule: portal_sale.portal_sale_order_line_rule
-DEL ir.rule: portal_sale.portal_sale_order_user_rule
+DEL ir.rule: portal_sale.portal_account_invoice_line_rule (noupdate)
+DEL ir.rule: portal_sale.portal_account_invoice_user_rule (noupdate)
+DEL ir.rule: portal_sale.portal_personal_contact (noupdate)
+DEL ir.rule: portal_sale.portal_sale_order_line_rule (noupdate)
+DEL ir.rule: portal_sale.portal_sale_order_user_rule (noupdate)
 DEL ir.ui.view: portal_sale.view_account_invoice_filter_share
 ERROR: module not in list of installed modules:
 ---Fields in module 'report'---
-report       / report.paperformat       / __last_update (datetime)      : module is now 'base' ('report')
-report       / report.paperformat       / default (boolean)             : module is now 'base' ('report')
-report       / report.paperformat       / display_name (char)           : module is now 'base' ('report')
-report       / report.paperformat       / dpi (integer)                 : module is now 'base' ('report')
-report       / report.paperformat       / format (selection)            : module is now 'base' ('report')
-report       / report.paperformat       / header_line (boolean)         : module is now 'base' ('report')
-report       / report.paperformat       / header_spacing (integer)      : module is now 'base' ('report')
-report       / report.paperformat       / margin_bottom (float)         : module is now 'base' ('report')
-report       / report.paperformat       / margin_left (float)           : module is now 'base' ('report')
-report       / report.paperformat       / margin_right (float)          : module is now 'base' ('report')
-report       / report.paperformat       / margin_top (float)            : module is now 'base' ('report')
-report       / report.paperformat       / name (char)                   : module is now 'base' ('report')
-report       / report.paperformat       / orientation (selection)       : module is now 'base' ('report')
-report       / report.paperformat       / page_height (integer)         : module is now 'base' ('report')
-report       / report.paperformat       / page_width (integer)          : module is now 'base' ('report')
-report       / report.paperformat       / report_ids (one2many)         : module is now 'base' ('report')
-report       / report.paperformat       / report_ids (one2many)         : relation is now 'ir.actions.report' ('ir.actions.report.xml')
-report       / res.company              / paperformat_id (many2one)     : module is now 'base' ('report')
 ---XML records in module 'report'---
-DEL ir.actions.act_window: report.paper_format_action
-DEL ir.actions.act_window: report.reports_action
-DEL ir.actions.report.xml: report.action_report_externalpreview
-DEL ir.actions.report.xml: report.action_report_internalpreview
-DEL ir.model.access: report.access_report
-DEL ir.model.access: report.paperformat_access_employee
-DEL ir.model.access: report.paperformat_access_portal
-DEL ir.ui.menu: report.paper_format_menuitem
-DEL ir.ui.menu: report.reporting_menuitem
-DEL ir.ui.menu: report.reports_menuitem
-DEL ir.ui.view: report.act_report_xml_view_inherit
-DEL ir.ui.view: report.act_report_xml_view_inherit_report
-DEL ir.ui.view: report.assets_backend
-DEL ir.ui.view: report.assets_common
-DEL ir.ui.view: report.assets_editor
-DEL ir.ui.view: report.assets_pdf
-DEL ir.ui.view: report.base_config_settings_inherited
-DEL ir.ui.view: report.external_layout
-DEL ir.ui.view: report.external_layout_footer
-DEL ir.ui.view: report.external_layout_header
-DEL ir.ui.view: report.html_container
-DEL ir.ui.view: report.internal_layout
-DEL ir.ui.view: report.layout
-DEL ir.ui.view: report.minimal_layout
-DEL ir.ui.view: report.paperformat_view_form
-DEL ir.ui.view: report.paperformat_view_tree
-DEL ir.ui.view: report.preview_externalreport
-DEL ir.ui.view: report.preview_internalreport
-DEL report.paperformat: report.paperformat_euro
-DEL report.paperformat: report.paperformat_us
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'l10n_fr_certification'---
 l10n_fr_certification / account.move             / l10n_fr_hash (char)           : DEL 
@@ -248,29 +177,13 @@ DEL ir.model.access: project_issue_sheet.access_account_invoice_project_user
 DEL ir.model.access: project_issue_sheet.access_analytic_account_line_project_user
 DEL ir.model.access: project_issue_sheet.access_hr_timesheet_sheet_sheet_project_manager
 DEL ir.model.access: project_issue_sheet.access_hr_timesheet_sheet_sheet_project_user
-DEL ir.rule: project_issue_sheet.portal_issue_sheet_rule
+DEL ir.rule: project_issue_sheet.portal_issue_sheet_rule (noupdate)
 DEL ir.ui.view: project_issue_sheet.project_issue_form_view
 DEL ir.ui.view: project_issue_sheet.project_issue_tree_view_inherited
 ERROR: module not in list of installed modules:
 ---Fields in module 'stock_picking_wave'---
-stock_picking_wave / stock.picking            / wave_id (many2one)            : module is now 'stock_picking_batch' ('stock_picking_wave')
-stock_picking_wave / stock.picking            / wave_id (many2one)            : relation is now 'stock.picking.batch' ('stock.picking.wave')
-stock_picking_wave / stock.picking            / wave_id (many2one)            : was renamed to batch_id [nothing to do]
 ---XML records in module 'stock_picking_wave'---
-DEL ir.actions.act_window: stock_picking_wave.action_picking_to_wave
-DEL ir.actions.act_window: stock_picking_wave.action_picking_wave
-DEL ir.actions.act_window: stock_picking_wave.picking_to_wave_act
-DEL ir.model.access: stock_picking_wave.access_stock_picking_wave
-DEL ir.sequence: stock_picking_wave.seq_picking_wave
-DEL ir.ui.menu: stock_picking_wave.menu_action_picking_wave
-DEL ir.ui.view: stock_picking_wave.picking_to_wave_form
-DEL ir.ui.view: stock_picking_wave.view_picking_wave_filter
-DEL ir.ui.view: stock_picking_wave.view_picking_wave_form
-DEL ir.ui.view: stock_picking_wave.view_picking_wave_tree
-DEL ir.ui.view: stock_picking_wave.view_stock_picking_wave_inherit
-DEL ir.ui.view: stock_picking_wave.view_stock_picking_wave_search_inherit
-DEL ir.ui.view: stock_picking_wave.view_stock_picking_wave_tree_inherit
-DEL mail.message.subtype: stock_picking_wave.mt_wave_state
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'rating_project_issue'---
 ---XML records in module 'rating_project_issue'---
@@ -283,15 +196,7 @@ DEL mail.message.subtype: rating_project_issue.mt_project_issue_rating
 ERROR: module not in list of installed modules:
 ---Fields in module 'portal_gamification'---
 ---XML records in module 'portal_gamification'---
-DEL ir.model.access: portal_gamification.badge_portal
-DEL ir.model.access: portal_gamification.badge_public
-DEL ir.model.access: portal_gamification.badge_user_portal
-DEL ir.model.access: portal_gamification.badge_user_public
-DEL ir.model.access: portal_gamification.challenge_line_portal
-DEL ir.model.access: portal_gamification.challenge_portal
-DEL ir.model.access: portal_gamification.goal_definition_portal
-DEL ir.model.access: portal_gamification.goal_portal
-DEL ir.rule: gamification.goal_user_visibility
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'website_portal_sale'---
 website_portal_sale / payment.transaction      / sale_order_id (many2one)      : module is now 'sale_payment' ('website_portal_sale')
@@ -320,35 +225,16 @@ DEL ir.ui.view: website_portal_sale.portal_my_orders
 DEL ir.ui.view: website_portal_sale.portal_my_quotations
 ERROR: module not in list of installed modules:
 ---Fields in module 'website_rating_project_issue'---
-website_rating_project_issue / project.project          / website_published (boolean)   : module is now 'website_rating_project' ('website_rating_project_issue')
-website_rating_project_issue / project.project          / website_published (boolean)   : was renamed to portal_show_rating [nothing to do]
 ---XML records in module 'website_rating_project_issue'---
-DEL ir.ui.view: website_rating_project_issue.assets_frontend
-DEL ir.ui.view: website_rating_project_issue.edit_project_inherit_website_rating_project_issue
-DEL ir.ui.view: website_rating_project_issue.header_footer_custom
-DEL ir.ui.view: website_rating_project_issue.index
-DEL ir.ui.view: website_rating_project_issue.project_data_satisfaction
-DEL ir.ui.view: website_rating_project_issue.project_rating_data
-DEL ir.ui.view: website_rating_project_issue.project_rating_page
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'base_action_rule'---
 ---XML records in module 'base_action_rule'---
-DEL ir.actions.act_window: base_action_rule.base_action_rule_act
-DEL ir.cron: base_action_rule.ir_cron_crm_action
-DEL ir.model.access: base_action_rule.access_base_action_rule
-DEL ir.model.access: base_action_rule.access_base_action_rule_config
-DEL ir.model.access: base_action_rule.access_base_action_rule_lead_test
-DEL ir.model.access: base_action_rule.access_base_action_rule_line_test
-DEL ir.ui.menu: base_action_rule.menu_base_action_rule_form
-DEL ir.ui.view: base_action_rule.view_base_action_rule_form
-DEL ir.ui.view: base_action_rule.view_base_action_rule_search
-DEL ir.ui.view: base_action_rule.view_base_action_rule_tree
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'website_project_timesheet'---
 ---XML records in module 'website_project_timesheet'---
-DEL ir.model.access: website_project_timesheet.access_timesheets_portal
-DEL ir.rule: website_project_timesheet.portal_task_timesheet_rule
-DEL ir.ui.view: website_project_timesheet.my_task
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'l10n_fr_hr_payroll'---
 l10n_fr_hr_payroll / hr.contract              / coef (char)                   : DEL 
@@ -369,9 +255,9 @@ DEL hr.holidays.status: l10n_fr_hr_payroll.holiday_status_heures_sup
 DEL hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_base
 DEL hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_employe_cadre
 DEL hr.payroll.structure: l10n_fr_hr_payroll.hr_payroll_salary_structure_employe_non_cadre
-DEL hr.salary.rule: hr_payroll.hr_rule_basic
-DEL hr.salary.rule: hr_payroll.hr_rule_net
-DEL hr.salary.rule: hr_payroll.hr_rule_taxable
+DEL hr.salary.rule: hr_payroll.hr_rule_basic (noupdate)
+DEL hr.salary.rule: hr_payroll.hr_rule_net (noupdate)
+DEL hr.salary.rule: hr_payroll.hr_rule_taxable (noupdate)
 DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C10_employe
 DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C10_employer
 DEL hr.salary.rule: l10n_fr_hr_payroll.hr_payroll_rules_C11_employe
@@ -450,12 +336,12 @@ DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_2
 DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_a
 DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_b
 DEL hr.salary.rule: l10n_fr_hr_payroll.hr_rule_tranche_c
-DEL hr.salary.rule.category: hr_payroll.ALW
-DEL hr.salary.rule.category: hr_payroll.BASIC
-DEL hr.salary.rule.category: hr_payroll.COMP
-DEL hr.salary.rule.category: hr_payroll.DED
-DEL hr.salary.rule.category: hr_payroll.GROSS
-DEL hr.salary.rule.category: hr_payroll.NET
+DEL hr.salary.rule.category: hr_payroll.ALW (noupdate)
+DEL hr.salary.rule.category: hr_payroll.BASIC (noupdate)
+DEL hr.salary.rule.category: hr_payroll.COMP (noupdate)
+DEL hr.salary.rule.category: hr_payroll.DED (noupdate)
+DEL hr.salary.rule.category: hr_payroll.GROSS (noupdate)
+DEL hr.salary.rule.category: hr_payroll.NET (noupdate)
 DEL hr.salary.rule.category: l10n_fr_hr_payroll.C_IMP
 DEL hr.salary.rule.category: l10n_fr_hr_payroll.PREV
 DEL hr.salary.rule.category: l10n_fr_hr_payroll.RETENUES
@@ -468,12 +354,12 @@ DEL ir.ui.view: l10n_fr_hr_payroll.hr_contract_view_form_l10n_fr_payroll
 DEL ir.ui.view: l10n_fr_hr_payroll.hr_payslip_form_l10n_fr_payroll
 DEL ir.ui.view: l10n_fr_hr_payroll.report_l10n_fr_fiche_paye
 DEL ir.ui.view: l10n_fr_hr_payroll.view_account_config_settings_form_inherit_l10n_fr_hr_payroll
-DEL res.company: base.main_company
+DEL res.company: base.main_company (noupdate)
 ERROR: module not in list of installed modules:
 ---Fields in module 'website_project_issue_sheet'---
 ---XML records in module 'website_project_issue_sheet'---
 DEL ir.model.access: website_project_issue_sheet.access_timesheets_portal
-DEL ir.rule: website_project_issue_sheet.portal_issue_sheet_rule
+DEL ir.rule: website_project_issue_sheet.portal_issue_sheet_rule (noupdate)
 DEL ir.ui.view: website_project_issue_sheet.my_issues_issue
 ERROR: module not in list of installed modules:
 ---Fields in module 'subscription'---
@@ -501,7 +387,7 @@ DEL ir.ui.view: subscription.view_subscription_tree
 ERROR: module not in list of installed modules:
 ---Fields in module 'web_kanban'---
 ---XML records in module 'web_kanban'---
-DEL ir.ui.view: web_kanban.assets_backend
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'account_accountant'---
 ---XML records in module 'account_accountant'---
@@ -509,8 +395,8 @@ DEL ir.ui.menu: account.menu_account_config
 DEL ir.ui.menu: account.menu_finance
 DEL ir.ui.menu: account.menu_finance_reports
 DEL ir.ui.view: account_accountant.assets_backend
-DEL mail.message: account_accountant.module_install_notification
-DEL res.users: base.user_root
+DEL mail.message: account_accountant.module_install_notification (noupdate)
+DEL res.users: base.user_root (noupdate)
 ERROR: module not in list of installed modules:
 ---Fields in module 'hr_timesheet_sheet'---
 hr_timesheet_sheet / res.company              / timesheet_range (selection)   : DEL selection_keys: ['month', 'week']
@@ -520,11 +406,11 @@ DEL ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_form
 DEL ir.actions.act_window: hr_timesheet_sheet.act_hr_timesheet_sheet_my_timesheets
 DEL ir.actions.act_window: hr_timesheet_sheet.hr_timesheet_action_from_department
 DEL ir.actions.act_window.view: hr_timesheet_sheet.action_open_timesheet_sheet_holidays_tree
-DEL ir.actions.server: hr_timesheet_sheet.ir_actions_server_timesheet_sheet
+DEL ir.actions.server: hr_timesheet_sheet.ir_actions_server_timesheet_sheet (noupdate)
 DEL ir.model.access: hr_timesheet_sheet.access_hr_timesheet_sheet_sheet_account
 DEL ir.model.access: hr_timesheet_sheet.access_hr_timesheet_sheet_sheet_system_employee
 DEL ir.model.access: hr_timesheet_sheet.access_hr_timesheet_sheet_sheet_user
-DEL ir.rule: hr_timesheet_sheet.timesheet_comp_rule
+DEL ir.rule: hr_timesheet_sheet.timesheet_comp_rule (noupdate)
 DEL ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form
 DEL ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_form_my_current
 DEL ir.ui.menu: hr_timesheet_sheet.menu_act_hr_timesheet_sheet_my_timesheets
@@ -541,15 +427,15 @@ DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_sheet_form
 DEL ir.ui.view: hr_timesheet_sheet.hr_timesheet_sheet_tree_simplified
 DEL ir.ui.view: hr_timesheet_sheet.view_config_settings_form_inherit_hr_timesheet_sheet
 DEL ir.ui.view: hr_timesheet_sheet.view_hr_timesheet_sheet_filter
-DEL mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_approved
-DEL mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_confirmed
-DEL mail.message.subtype: hr_timesheet_sheet.mt_timesheet_approved
-DEL mail.message.subtype: hr_timesheet_sheet.mt_timesheet_confirmed
+DEL mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_approved (noupdate)
+DEL mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_confirmed (noupdate)
+DEL mail.message.subtype: hr_timesheet_sheet.mt_timesheet_approved (noupdate)
+DEL mail.message.subtype: hr_timesheet_sheet.mt_timesheet_confirmed (noupdate)
 ERROR: module not in list of installed modules:
 ---Fields in module 'website_project_issue'---
 ---XML records in module 'website_project_issue'---
 DEL ir.model.access: website_project_issue.access_issues
-DEL ir.rule: website_project_issue.portal_issue_rule
+DEL ir.rule: website_project_issue.portal_issue_rule (noupdate)
 DEL ir.ui.view: website_project_issue.my_issues
 DEL ir.ui.view: website_project_issue.my_issues_issue
 DEL ir.ui.view: website_project_issue.my_project
@@ -558,25 +444,12 @@ DEL ir.ui.view: website_project_issue.portal_layout
 DEL ir.ui.view: website_project_issue.portal_my_home
 ERROR: module not in list of installed modules:
 ---Fields in module 'account_tax_cash_basis'---
-account_tax_cash_basis / account.move             / tax_cash_basis_rec_id (many2one): module is now 'account' ('account_tax_cash_basis')
-account_tax_cash_basis / account.tax              / cash_basis_account (many2one) : module is now 'account' ('account_tax_cash_basis')
-account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : selection_keys is now '['on_invoice', 'on_payment']' ('False')
-account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : type is now 'selection' ('boolean')
-account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : was renamed to tax_exigibility [nothing to do]
-account_tax_cash_basis / res.company              / tax_cash_basis_journal_id (many2one): module is now 'account' ('account_tax_cash_basis')
 ---XML records in module 'account_tax_cash_basis'---
-DEL ir.ui.view: account_tax_cash_basis.view_account_config_cash_basis_inherit_form
-DEL ir.ui.view: account_tax_cash_basis.view_tax_form_cash_basis_inherit
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'portal_stock'---
 ---XML records in module 'portal_stock'---
-DEL ir.model.access: portal_stock.access_stock_move
-DEL ir.model.access: portal_stock.access_stock_pack_operation_portal
-DEL ir.model.access: portal_stock.access_stock_picking
-DEL ir.model.access: portal_stock.access_stock_picking_type_portal
-DEL ir.model.access: portal_stock.access_stock_warehouse_orderpoint
-DEL ir.rule: portal_stock.portal_stock_pack_operation_portal_user_rule
-DEL ir.rule: portal_stock.portal_stock_picking_portal_user_rule
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'project_issue'---
 project_issue / account.analytic.account / use_issues (boolean)          : DEL 
@@ -595,8 +468,8 @@ DEL ir.model.access: project_issue.access_project_issue_report_all
 DEL ir.model.access: project_issue.access_project_issue_report_user
 DEL ir.model.access: project_issue.access_project_issue_user
 DEL ir.model.access: project_issue.access_resource_calendar_project_manager
-DEL ir.rule: project_issue.issue_project_manager_rule
-DEL ir.rule: project_issue.issue_user_rule
+DEL ir.rule: project_issue.issue_project_manager_rule (noupdate)
+DEL ir.rule: project_issue.issue_user_rule (noupdate)
 DEL ir.ui.menu: project_issue.menu_project_issue_report_tree
 DEL ir.ui.menu: project_issue.menu_project_issue_track
 DEL ir.ui.view: project_issue.analytic_account_inherited_issue_form
@@ -617,19 +490,19 @@ DEL ir.ui.view: project_issue.view_project_issue_report_filter
 DEL ir.ui.view: project_issue.view_project_issue_report_graph
 DEL ir.ui.view: project_issue.view_project_issue_report_pivot
 DEL ir.ui.view: project_issue.view_project_kanban_inherited
-DEL mail.message: project_issue.module_install_notification
-DEL mail.message.subtype: project_issue.mt_issue_blocked
-DEL mail.message.subtype: project_issue.mt_issue_new
-DEL mail.message.subtype: project_issue.mt_issue_ready
-DEL mail.message.subtype: project_issue.mt_issue_stage
-DEL mail.message.subtype: project_issue.mt_project_issue_blocked
-DEL mail.message.subtype: project_issue.mt_project_issue_new
-DEL mail.message.subtype: project_issue.mt_project_issue_ready
-DEL mail.message.subtype: project_issue.mt_project_issue_stage
+DEL mail.message: project_issue.module_install_notification (noupdate)
+DEL mail.message.subtype: project_issue.mt_issue_blocked (noupdate)
+DEL mail.message.subtype: project_issue.mt_issue_new (noupdate)
+DEL mail.message.subtype: project_issue.mt_issue_ready (noupdate)
+DEL mail.message.subtype: project_issue.mt_issue_stage (noupdate)
+DEL mail.message.subtype: project_issue.mt_project_issue_blocked (noupdate)
+DEL mail.message.subtype: project_issue.mt_project_issue_new (noupdate)
+DEL mail.message.subtype: project_issue.mt_project_issue_ready (noupdate)
+DEL mail.message.subtype: project_issue.mt_project_issue_stage (noupdate)
 ERROR: module not in list of installed modules:
 ---Fields in module 'web_calendar'---
 ---XML records in module 'web_calendar'---
-DEL ir.ui.view: web_calendar.assets_backend
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'stock_calendar'---
 stock_calendar / resource.calendar.attendance / group_id (many2one)           : DEL relation: procurement.group
@@ -667,13 +540,13 @@ DEL ir.actions.act_window: procurement.procurement_order_action_exceptions
 DEL ir.actions.act_window: procurement.procurement_order_action_product_product_stat
 DEL ir.actions.act_window: procurement.procurement_order_action_product_template_stat
 DEL ir.actions.server: procurement.procurement_order_server_action
-DEL ir.cron: procurement.ir_cron_scheduler_action
+DEL ir.cron: procurement.ir_cron_scheduler_action (noupdate)
 DEL ir.model.access: procurement.access_procurement
 DEL ir.model.access: procurement.access_procurement_group
 DEL ir.model.access: procurement.access_procurement_rule
-DEL ir.rule: procurement.procurement_rule
-DEL ir.rule: procurement.product_pulled_flow_comp_rule
-DEL ir.sequence: procurement.sequence_proc_group
+DEL ir.rule: procurement.procurement_rule (noupdate)
+DEL ir.rule: procurement.product_pulled_flow_comp_rule (noupdate)
+DEL ir.sequence: procurement.sequence_proc_group (noupdate)
 DEL ir.ui.view: procurement.procurement_form_view
 DEL ir.ui.view: procurement.procurement_group_form_view
 DEL ir.ui.view: procurement.procurement_tree_view

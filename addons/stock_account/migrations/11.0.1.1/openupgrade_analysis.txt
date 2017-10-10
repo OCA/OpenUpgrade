@@ -12,7 +12,7 @@ NEW ir.actions.act_window: stock_account.product_valuation_action
 NEW ir.actions.act_window: stock_account.stock_move_valuation_action
 DEL ir.actions.act_window: stock_account.action_stock_history
 DEL ir.actions.act_window: stock_account.action_wizard_stock_valuation_history
-NEW ir.actions.server: stock_account.action_stock_account_valuation_report
+NEW ir.actions.server: stock_account.action_stock_account_valuation_report (noupdate)
 DEL ir.model.access: stock_account.access_stock_history_stock_manager
 DEL ir.rule: stock_account.stock_history_rule
 NEW ir.ui.menu: stock_account.menu_valuation

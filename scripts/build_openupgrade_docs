@@ -22,4 +22,4 @@ else
 fi
 export PYTHONPATH=$PYTHONPATH:$OPENUPGRADE_PYTHON_PATH:$DOC_BUILD_DIR/openupgradelib
 mkdir -p $DOC_BUILD_DIR/source/.static
-sphinx-build -q -d $DOC_BUILD_DIR/.doctrees -D latex_paper_size=a4 $DOC_BUILD_DIR/source $OUTPUT_DIR
+sphinx-build -q -d $DOC_BUILD_DIR/.doctrees $DOC_BUILD_DIR/source $OUTPUT_DIR

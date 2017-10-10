@@ -1,0 +1,69 @@
+---Fields in module 'sale'---
+sale         / crm.team                 / currency_id (many2one)        : module is now 'sales_team' ('sale')
+sale         / crm.team                 / dashboard_graph_model (False) : NEW selection_keys: ['account.invoice.report', 'crm.opportunity.report', 'sale.report'], mode: modify
+# nothing to do
+sale         / product.product          / track_service (selection)     : was renamed to service_type [nothing to do]
+sale         / product.template         / track_service (selection)     : was renamed to service_type [nothing to do]
+# nothing to do
+sale         / sale.order               / access_token (char)           : previously in module website_quote
+sale         / sale.order               / activity_ids (one2many)       : NEW relation: mail.activity
+sale         / sale.order               / procurement_group_id (many2one): module is now 'sale_stock' ('sale')
+sale         / sale.order               / project_id (many2one)         : was renamed to analytic_account_id [nothing to do]
+sale         / sale.order               / website_message_ids (one2many): NEW relation: mail.message
+sale         / sale.order.line          / is_downpayment (boolean)      : NEW 
+sale         / sale.order.line          / procurement_ids (one2many)    : DEL relation: procurement.order
+# nothing to do
+---XML records in module 'sale'---
+NEW crm.team: sales_team.team_sales_department
+NEW ir.actions.act_window: sale.action_sale_config_settings
+NEW ir.actions.act_window: sale.report_all_channels_sales_action
+NEW ir.actions.act_window: sales_team.mail_activity_type_action_config_sales
+NEW ir.actions.report: sale.action_report_pro_forma_invoice
+NEW ir.actions.report: sale.action_report_saleorder
+DEL ir.actions.report.xml: sale.report_sale_order
+NEW ir.model.access: sale.access_report_all_channels_sales_manager
+NEW ir.model.access: sale.access_report_all_channels_sales_salesman
+NEW ir.model.access: sale.access_sale_order_line_portal
+NEW ir.model.access: sale.access_sale_order_portal
+DEL ir.model.access: sale.access_ir_attachment_manager
+DEL ir.model.access: sale.access_ir_attachment_sales
+NEW ir.rule: sale.account_invoice_report_rule_see_all
+NEW ir.rule: sale.account_invoice_report_rule_see_personal
+NEW ir.rule: sale.sale_order_line_rule_portal
+NEW ir.rule: sale.sale_order_rule_portal
+NEW ir.ui.menu: sale.menu_sale_config
+NEW ir.ui.menu: sale.menu_sale_general_settings
+NEW ir.ui.menu: sale.menu_sale_report
+NEW ir.ui.menu: sale.product_menu_catalog
+NEW ir.ui.menu: sale.report_all_channels_sales
+NEW ir.ui.menu: sale.report_sales_team
+NEW ir.ui.menu: sale.res_partner_menu
+NEW ir.ui.menu: sale.sale_menu_root
+NEW ir.ui.menu: sale.sale_order_menu
+NEW ir.ui.menu: sale.sales_team_config
+DEL ir.ui.menu: base.menu_administration
+DEL ir.ui.menu: sale.menu_product_category_action_form
+DEL ir.ui.menu: sale.menu_product_pricelist_action2
+DEL ir.ui.menu: sales_team.menu_base_partner
+DEL ir.ui.menu: sales_team.menu_sale_config
+DEL ir.ui.menu: sales_team.menu_sales
+NEW ir.ui.view: sale.assets_frontend
+NEW ir.ui.view: sale.invoice_form_inherit_sale
+NEW ir.ui.view: sale.portal_my_home_menu_sale
+NEW ir.ui.view: sale.portal_my_home_sale
+NEW ir.ui.view: sale.portal_my_orders
+NEW ir.ui.view: sale.portal_my_quotations
+NEW ir.ui.view: sale.portal_order_error
+NEW ir.ui.view: sale.portal_order_page
+NEW ir.ui.view: sale.portal_order_success
+NEW ir.ui.view: sale.product_pricelist_view_kanban
+NEW ir.ui.view: sale.report_all_channels_sales_view_pivot
+NEW ir.ui.view: sale.report_all_channels_sales_view_search
+NEW ir.ui.view: sale.report_saleorder_pro_forma
+NEW ir.ui.view: sale.res_config_settings_view_form
+DEL ir.ui.view: sale.view_sales_config
+DEL ir.values: sale.sale_order_line_make_invoice
+DEL mail.message: sale.module_install_notification
+NEW res.groups: sale.group_proforma_sales
+DEL res.groups: sale.group_display_incoterm
+DEL res.groups: sale.group_mrp_properties

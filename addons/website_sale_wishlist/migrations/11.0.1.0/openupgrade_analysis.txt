@@ -1,9 +1,10 @@
 ---Fields in module 'website_sale_wishlist'---
 website_sale_wishlist / product.wishlist         / active (boolean)              : NEW required: required, req_default: function
-website_sale_wishlist / product.wishlist         / partner_id (many2one)         : NEW relation: res.partner, required: required
+website_sale_wishlist / product.wishlist         / partner_id (many2one)         : NEW relation: res.partner
 website_sale_wishlist / product.wishlist         / price (float)                 : NEW 
 website_sale_wishlist / product.wishlist         / pricelist_id (many2one)       : NEW relation: product.pricelist
 website_sale_wishlist / product.wishlist         / product_id (many2one)         : NEW relation: product.product, required: required
+website_sale_wishlist / product.wishlist         / session (char)                : NEW 
 website_sale_wishlist / product.wishlist         / website_id (many2one)         : NEW relation: website, required: required
 website_sale_wishlist / res.partner              / wishlist_ids (one2many)       : NEW relation: product.wishlist
 ---XML records in module 'website_sale_wishlist'---
@@ -11,8 +12,8 @@ NEW ir.model.access: website_sale_wishlist.access_product_wishlist_default
 NEW ir.model.access: website_sale_wishlist.access_product_wishlist_portal
 NEW ir.model.access: website_sale_wishlist.access_product_wishlist_public
 NEW ir.model.access: website_sale_wishlist.access_product_wishlist_user
-NEW ir.rule: website_sale_wishlist.all_product_wishlist_rule
-NEW ir.rule: website_sale_wishlist.product_wishlist_rule
+NEW ir.rule: website_sale_wishlist.all_product_wishlist_rule (noupdate)
+NEW ir.rule: website_sale_wishlist.product_wishlist_rule (noupdate)
 NEW ir.ui.view: website_sale_wishlist.add_to_wishlist
 NEW ir.ui.view: website_sale_wishlist.assets_frontend
 NEW ir.ui.view: website_sale_wishlist.header

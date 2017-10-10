@@ -1,5 +1,4 @@
 ---Fields in module 'stock_picking_batch'---
-stock_picking_batch / stock.picking            / wave_id (many2one)            : previously in module stock_picking_wave
 stock_picking_batch / stock.picking.batch      / message_follower_ids (one2many): NEW relation: mail.followers
 stock_picking_batch / stock.picking.batch      / message_ids (one2many)        : NEW relation: mail.message
 stock_picking_batch / stock.picking.batch      / message_last_post (datetime)  : NEW 
@@ -8,13 +7,21 @@ stock_picking_batch / stock.picking.batch      / picking_ids (one2many)        :
 stock_picking_batch / stock.picking.batch      / state (selection)             : NEW required: required, selection_keys: ['cancel', 'done', 'draft', 'in_progress'], req_default: function
 stock_picking_batch / stock.picking.batch      / user_id (many2one)            : NEW relation: res.users
 stock_picking_batch / stock.picking.batch      / website_message_ids (one2many): NEW relation: mail.message
+stock_picking_wave / stock.picking            / wave_id (many2one)            : relation is now 'stock.picking.batch' ('stock.picking.wave')
+stock_picking_wave / stock.picking            / wave_id (many2one)            : was renamed to batch_id [nothing to do]
 ---XML records in module 'stock_picking_batch'---
 NEW ir.actions.act_window: stock_picking_batch.stock_picking_batch_action
 NEW ir.actions.act_window: stock_picking_batch.stock_picking_to_batch_action
 NEW ir.actions.act_window: stock_picking_batch.stock_picking_to_batch_action_stock_picking
+DEL ir.actions.act_window: stock_picking_wave.action_picking_to_wave
+DEL ir.actions.act_window: stock_picking_wave.action_picking_wave
+DEL ir.actions.act_window: stock_picking_wave.picking_to_wave_act
 NEW ir.model.access: stock_picking_batch.access_stock_picking_batch
+DEL ir.model.access: stock_picking_wave.access_stock_picking_wave
 NEW ir.sequence: stock_picking_batch.seq_picking_batch
+DEL ir.sequence: stock_picking_wave.seq_picking_wave
 NEW ir.ui.menu: stock_picking_batch.stock_picking_batch_menu
+DEL ir.ui.menu: stock_picking_wave.menu_action_picking_wave
 NEW ir.ui.view: stock_picking_batch.stock_picking_batch_filter
 NEW ir.ui.view: stock_picking_batch.stock_picking_batch_form
 NEW ir.ui.view: stock_picking_batch.stock_picking_batch_kanban
@@ -22,4 +29,12 @@ NEW ir.ui.view: stock_picking_batch.stock_picking_batch_tree
 NEW ir.ui.view: stock_picking_batch.stock_picking_to_batch_form
 NEW ir.ui.view: stock_picking_batch.view_picking_internal_search_inherit_stock_picking_batch
 NEW ir.ui.view: stock_picking_batch.vpicktree_inherit_stock_picking_batch
+DEL ir.ui.view: stock_picking_wave.picking_to_wave_form
+DEL ir.ui.view: stock_picking_wave.view_picking_wave_filter
+DEL ir.ui.view: stock_picking_wave.view_picking_wave_form
+DEL ir.ui.view: stock_picking_wave.view_picking_wave_tree
+DEL ir.ui.view: stock_picking_wave.view_stock_picking_wave_inherit
+DEL ir.ui.view: stock_picking_wave.view_stock_picking_wave_search_inherit
+DEL ir.ui.view: stock_picking_wave.view_stock_picking_wave_tree_inherit
 NEW mail.message.subtype: stock_picking_batch.mt_batch_state
+DEL mail.message.subtype: stock_picking_wave.mt_wave_state

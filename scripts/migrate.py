@@ -1,12 +1,15 @@
 #!/usr/bin/env python2
 
+from future.utils import iteritems
+
 import os
 import sys
-import StringIO
+from io import StringIO
 import psycopg2
 import psycopg2.extensions
 from optparse import OptionParser
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
+from functools import reduce
 try:
     import bzrlib.plugin
     import bzrlib.builtins
@@ -27,12 +30,12 @@ def copy_database(conn_parms):
     cur = conn.cursor()
     cur.execute('drop database if exists "%(db)s"' % {'db': db_new})
     try:
-        print "Copying the database using 'with template'"
+        print("Copying the database using 'with template'")
         cur.execute('create database "%(db_new)s" with template "%(db_old)s"' %
                     {'db_new': db_new, 'db_old': db_old})
         cur.close()
     except psycopg2.OperationalError:
-        print "Failed, fallback on creating empty database + loading a dump"
+        print("Failed, fallback on creating empty database + loading a dump")
         cur.execute('create database "%(db)s"' % {'db': db_new})
         cur.close()
 
@@ -241,7 +244,7 @@ for parm in ('host', 'port', 'user', 'password'):
         conn_parms[parm] = config.get('options', db_parm)
 
 if 'user' not in conn_parms:
-    print 'No user found in configuration'
+    print('No user found in configuration')
     sys.exit()
 
 db_name = options.database or config.get('options', 'db_name')
@@ -276,7 +279,7 @@ if options.add:
 
     def deep_update(dict1, dict2):
         result = {}
-        for (name, value) in dict1.iteritems():
+        for (name, value) in iteritems(dict1):
             if name in dict2:
                 if isinstance(dict1[name], dict) and isinstance(dict2[name],
                                                                 dict):
@@ -285,7 +288,7 @@ if options.add:
                     result[name] = dict2[name]
             else:
                 result[name] = dict1[name]
-        for (name, value) in dict2.iteritems():
+        for (name, value) in iteritems(dict2):
             if name not in dict1:
                 result[name] = value
         return result
@@ -294,9 +297,10 @@ if options.add:
 
 for version in options.migrations.split(','):
     if version not in migrations:
-        print '%s is not a valid version! (valid verions are %s)' % (
+        print('%s is not a valid version! (valid verions are %s)' % (
             version,
             ','.join(sorted([a for a in migrations])))
+        )
 
 logfile = os.path.join(options.branch_dir, 'migration.log')
 
@@ -306,9 +310,9 @@ if not os.path.exists(options.branch_dir):
 for version in options.migrations.split(','):
     if not os.path.exists(os.path.join(options.branch_dir, version)):
         os.mkdir(os.path.join(options.branch_dir, version))
-    for (name, addon_config) in dict(
+    for (name, addon_config) in iteritems(dict(
             migrations[version]['addons'],
-            server=migrations[version]['server']).iteritems():
+            server=migrations[version]['server'])):
         addon_config = addon_config\
             if isinstance(addon_config, dict)\
             else {'url': addon_config}
@@ -320,21 +324,22 @@ for version in options.migrations.split(','):
                 bzrlib.plugin.load_plugins()
                 bzrlib.trace.enable_default_logging()
                 cmd_revno = bzrlib.builtins.cmd_revno()
-                cmd_revno.outf = StringIO.StringIO()
+                cmd_revno.outf = StringIO()
                 cmd_revno.run(location=os.path.join(options.branch_dir,
                                                     version,
                                                     name))
-                print 'updating %s rev%s' % (
+                print('updating %s rev%s' % (
                     os.path.join(version, name),
                     cmd_revno.outf.getvalue().strip())
+                )
                 cmd_update = bzrlib.builtins.cmd_update()
-                cmd_update.outf = StringIO.StringIO()
+                cmd_update.outf = StringIO()
                 cmd_update.outf.encoding = 'utf8'
                 cmd_update.run(
                     dir=os.path.join(options.branch_dir, version, name))
                 if hasattr(cmd_update, '_operation'):
                     cmd_update.cleanup_now()
-                print 'now at rev' + cmd_revno.outf.getvalue().strip()
+                print('now at rev' + cmd_revno.outf.getvalue().strip())
             elif addon_config_type == 'git':
                 os.system('cd %(location)s; git pull origin %(branch)s' % {
                     'branch': addon_config.get('branch', 'master'),
@@ -346,24 +351,24 @@ for version in options.migrations.split(','):
                 raise Exception('Unknown type %s' % addon_config_type)
         else:
             if addon_config_type == 'link':
-                print 'linking %s to %s' % (addon_config['url'],
+                print('linking %s to %s' % (addon_config['url'],
                                             os.path.join(options.branch_dir,
                                                          version,
-                                                         name))
+                                                         name)))
                 os.symlink(addon_config['url'],
                            os.path.join(options.branch_dir, version, name))
             elif addon_config_type == 'bzr':
                 bzrlib.plugin.load_plugins()
                 bzrlib.trace.enable_default_logging()
-                print 'getting ' + addon_config['url']
+                print('getting ' + addon_config['url'])
                 cmd_checkout = bzrlib.builtins.cmd_checkout()
-                cmd_checkout.outf = StringIO.StringIO()
+                cmd_checkout.outf = StringIO()
                 cmd_checkout.run(
                     addon_config['url'],
                     os.path.join(options.branch_dir, version, name),
                     lightweight=True)
             elif addon_config_type == 'git':
-                print 'getting ' + addon_config['url']
+                print('getting ' + addon_config['url'])
                 os.system('git clone --branch %(branch)s --single-branch '
                           '--depth=1 %(url)s %(target)s' %
                           {
@@ -395,7 +400,7 @@ if not options.inplace:
     db_name = copy_database(conn_parms)
 
 for version in options.migrations.split(','):
-    print 'running migration for '+version
+    print('running migration for '+version)
     config.set('options', 'without_demo', 'True')
     config.set('options', 'logfile', logfile)
     config.set('options', 'port', 'False')
@@ -416,7 +421,7 @@ for version in options.migrations.split(','):
                           addon_conf.get('addons_dir', '')
                           if isinstance(addon_conf, dict) else '')
              for (name, addon_conf)
-             in migrations[version]['addons'].iteritems()]))
+             in iteritems(migrations[version]['addons'])]))
     config.set(
         'options',
         'root_path',

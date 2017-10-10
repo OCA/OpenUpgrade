@@ -68,11 +68,11 @@ NEW ir.ui.view: mail.res_partner_view_search_inherit_mail
 DEL ir.ui.view: mail.res_partner_opt_out_search
 DEL ir.ui.view: mail.view_emails_partner_info_form
 DEL ir.ui.view: mail.view_general_configuration_mail_alias_domain
-NEW mail.activity.type: mail.mail_activity_data_call
-NEW mail.activity.type: mail.mail_activity_data_email
-NEW mail.activity.type: mail.mail_activity_data_meeting
-NEW mail.activity.type: mail.mail_activity_data_todo
-NEW mail.message.subtype: mail.mt_activities
+NEW mail.activity.type: mail.mail_activity_data_call (noupdate)
+NEW mail.activity.type: mail.mail_activity_data_email (noupdate)
+NEW mail.activity.type: mail.mail_activity_data_meeting (noupdate)
+NEW mail.activity.type: mail.mail_activity_data_todo (noupdate)
+NEW mail.message.subtype: mail.mt_activities (noupdate)
 NEW mail.shortcode: mail.mail_smiley_angry
 NEW mail.shortcode: mail.mail_smiley_bug
 NEW mail.shortcode: mail.mail_smiley_cake
@@ -94,5 +94,5 @@ DEL mail.shortcode: mail.mail_smiley_musti
 DEL mail.shortcode: mail.mail_smiley_pinky
 DEL mail.shortcode: mail.mail_smiley_postal_horn
 DEL mail.shortcode: mail.mail_smiley_troll
-DEL res.partner: base.partner_root
-NEW res.users: base.user_root
+DEL res.partner: base.partner_root (noupdate)
+NEW res.users: base.user_root (noupdate)
