@@ -1,0 +1,26 @@
+---Fields in module 'web'---
+---XML records in module 'web'---
+NEW ir.actions.report: web.action_report_externalpreview
+NEW ir.actions.report: web.action_report_internalpreview
+# Done: Rename XML-ID because the actions was before in report module
+
+NEW ir.ui.view: web.external_layout
+NEW ir.ui.view: web.html_container
+NEW ir.ui.view: web.internal_layout
+NEW ir.ui.view: web.minimal_layout
+NEW ir.ui.view: web.preview_externalreport
+NEW ir.ui.view: web.preview_internalreport
+NEW ir.ui.view: web.report_assets_common
+NEW ir.ui.view: web.report_assets_editor
+NEW ir.ui.view: web.report_assets_pdf
+NEW ir.ui.view: web.report_layout
+# Done: Rename XML-ID because the views was before in report module
+
+NEW ir.ui.view: web.basic_layout
+NEW ir.ui.view: web.benchmark_suite
+NEW ir.ui.view: web.external_layout_background
+NEW ir.ui.view: web.external_layout_boxed
+NEW ir.ui.view: web.external_layout_clean
+NEW ir.ui.view: web.external_layout_standard
+DEL ir.ui.view: web.webclient_script
+# Nothing to do
