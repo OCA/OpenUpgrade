@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="ir_cron_mail_scheduler_action" model="ir.cron">
+        <field name="name">Mail: Email Queue Manager</field>
+        <field name="model_id" ref="model_mail_mail"/>
+        <field name="state">code</field>
+        <field name="code">model.process_email_queue()</field>
+    </record>
+
+    <record id="ir_cron_module_update_notification" model="ir.cron">
+        <field name="name">Publisher: Update Notification</field>
+        <field name="model_id" ref="model_publisher_warranty_contract"/>
+        <field name="state">code</field>
+        <field name="code">model.update_notification(None)</field>
+    </record>
+
+</odoo>
