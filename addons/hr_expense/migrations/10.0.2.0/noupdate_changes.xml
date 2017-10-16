@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="mt_expense_approved" model="mail.message.subtype">
+        <field name="default" eval="True"/>
+        <field name="res_model">hr.expense.sheet</field>
+        <field name="description">Expense report approved</field>
+    </record>
+    <record id="mt_expense_confirmed" model="mail.message.subtype">
+        <field name="res_model">hr.expense.sheet</field>
+        <field name="description">Expense report submitted, waiting approval</field>
+        <field name="name">Submitted</field>
+    </record>
+    <record id="mt_expense_refused" model="mail.message.subtype">
+        <field name="res_model">hr.expense.sheet</field>
+        <field name="description">Expense report refused</field>
+    </record>
+    <record id="mt_department_expense_confirmed" model="mail.message.subtype">
+        <field name="default" eval="False"/>
+    </record>
+    <record id="property_rule_expense_manager" model="ir.rule">
+        <field name="groups" eval="[(4, ref('account.group_account_user')), (4, ref('hr_expense.group_hr_expense_manager')), (4, ref('hr_expense.group_hr_expense_user'))]"/>
+    </record>
+</odoo>
