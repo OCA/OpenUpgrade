@@ -13,6 +13,6 @@ def migrate(env, version):
     openupgrade.rename_tables(
         cr,
         [
-            ('account_operation_template', 'account_reconcile_model'),
+            ('account_operation_template', 'account_reconcile_model_template'),
         ]
     )
