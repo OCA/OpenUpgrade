@@ -12,7 +12,6 @@ addons:
             - python-simplejson
             - python-serial
             - python-yaml
-            - python-sphinx
             - python-passlib
             - python-psycopg2
             - python-werkzeug
@@ -66,6 +65,7 @@ script:
     - echo Testing modules $MODULES
     - OPENUPGRADE_TESTS=1 coverage run $ODOO --database=$DB --update=$MODULES --stop-after-init
     # try to build the documentation
+    - pip install sphinx
     - sh scripts/build_openupgrade_docs
 
 after_success:
