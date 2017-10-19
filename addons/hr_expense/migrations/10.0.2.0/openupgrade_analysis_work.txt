@@ -1,0 +1,120 @@
+---Fields in module 'hr_expense'---
+hr_expense   / hr.expense               / account_id (many2one)         : NEW relation: account.account
+# Done - Retrieved from many2one defined in ir_property between account_account and product_template
+
+hr_expense   / hr.expense               / account_move_id (many2one)    : DEL relation: account.move
+hr_expense   / hr.expense.sheet         / account_move_id (many2one)    : NEW relation: account.move
+hr_expense   / hr.expense               / bank_journal_id (many2one)    : DEL relation: account.journal
+hr_expense   / hr.expense.sheet         / bank_journal_id (many2one)    : NEW relation: account.journal
+hr_expense   / hr.expense               / department_id (many2one)      : DEL relation: hr.department
+hr_expense   / hr.expense.sheet         / department_id (many2one)      : NEW relation: hr.department
+hr_expense   / hr.expense               / journal_id (many2one)         : DEL relation: account.journal
+hr_expense   / hr.expense.sheet         / journal_id (many2one)         : NEW relation: account.journal
+hr_expense   / hr.expense               / sheet_id (many2one)           : NEW relation: hr.expense.sheet
+hr_expense   / hr.expense.sheet         / company_id (many2one)         : NEW relation: res.company
+hr_expense   / hr.expense.sheet         / currency_id (many2one)        : NEW relation: res.currency
+hr_expense   / hr.expense.sheet         / employee_id (many2one)        : NEW relation: hr.employee, required: required, req_default: function
+hr_expense   / hr.expense.sheet         / expense_line_ids (one2many)   : NEW relation: hr.expense
+hr_expense   / hr.expense.sheet         / message_follower_ids (one2many): NEW relation: mail.followers
+hr_expense   / hr.expense.sheet         / message_ids (one2many)        : NEW relation: mail.message
+hr_expense   / hr.expense.sheet         / message_last_post (datetime)  : NEW 
+hr_expense   / hr.expense.sheet         / name (char)                   : NEW required: required
+# Done - Create a expense sheet for each expense, link it, move the first 4 columns and copy the other ones
+
+hr_expense   / hr.expense               / reference (char)              : NEW 
+# Nothing to do (new field)
+
+hr_expense   / hr.expense.sheet         / responsible_id (many2one)     : NEW relation: res.users
+# Done - Responsible ID set by default to department_id manager
+
+hr_expense   / hr.expense               / state (selection)             : now a function
+hr_expense   / hr.expense               / state (selection)             : selection_keys is now '['done', 'draft', 'refused', 'reported']' ('['approve', 'cancel', 'done', 'draft', 'post', 'submit']')
+hr_expense   / hr.expense.sheet         / state (selection)             : NEW required: required, selection_keys: ['approve', 'cancel', 'done', 'post', 'submit'], req_default: function
+# Done - Update states to fit with new definition
+
+hr_expense   / hr.expense               / website_message_ids (one2many): DEL relation: mail.message
+# Nothing to do
+
+hr_expense   / hr.expense.sheet         / accounting_date (date)        : NEW
+# Done - set by default to date from account_move
+ 
+hr_expense   / hr.expense.sheet         / address_id (many2one)         : NEW relation: res.partner
+# Done - Retrieved from hr_employee
+
+---XML records in module 'hr_expense'---
+NEW ir.actions.act_window: hr_expense.action_hr_expense_configuration
+NEW ir.actions.act_window: hr_expense.action_hr_expense_refused_expenses
+NEW ir.actions.act_window: hr_expense.action_hr_expense_sheet_all_all
+NEW ir.actions.act_window: hr_expense.action_hr_expense_sheet_all_to_approve
+NEW ir.actions.act_window: hr_expense.action_hr_expense_sheet_all_to_pay
+NEW ir.actions.act_window: hr_expense.action_hr_expense_sheet_all_to_post
+NEW ir.actions.act_window: hr_expense.action_hr_expense_sheet_department_filtered
+NEW ir.actions.act_window: hr_expense.action_hr_expense_sheet_department_to_approve
+NEW ir.actions.act_window: hr_expense.action_hr_expense_sheet_my_all
+NEW ir.actions.act_window: hr_expense.action_request_approve_expense_sheet
+NEW ir.actions.act_window: hr_expense.action_request_to_pay_expense_sheet
+NEW ir.actions.act_window: hr_expense.action_request_to_post_expense_sheet
+NEW ir.actions.act_window: hr_expense.hr_expense_actions_all
+NEW ir.actions.act_window: hr_expense.hr_expense_actions_my_unsubmitted
+NEW ir.actions.act_window: hr_expense.hr_expense_register_payment_wizard_action
+DEL ir.actions.act_window: hr_expense.action_hr_expense_report_filtered
+DEL ir.actions.act_window: hr_expense.action_request_approve_expense
+DEL ir.actions.act_window: hr_expense.expense_all
+DEL ir.actions.act_window: hr_expense.hr_expense_action_from_department
+NEW ir.actions.act_window.view: hr_expense.hr_expense_product_form
+NEW ir.actions.act_window.view: hr_expense.hr_expense_product_kanban
+NEW ir.actions.act_window.view: hr_expense.hr_expense_product_tree
+DEL ir.actions.act_window.view: hr_expense.hr_expense_form_action
+DEL ir.actions.act_window.view: hr_expense.hr_expense_kanban_action
+DEL ir.actions.act_window.view: hr_expense.hr_expense_tree_action
+DEL ir.actions.client: hr_expense.action_client_expense_menu
+NEW ir.actions.report.xml: hr_expense.action_report_hr_expense_sheet
+DEL ir.actions.report.xml: hr_expense.action_report_hr_expense
+DEL ir.actions.server: hr_expense.hr_expense_entry_action_server
+DEL ir.actions.todo: base.open_menu
+NEW ir.model.access: hr_expense.access_hr_expense_sheet_employee
+NEW ir.model.access: hr_expense.access_hr_expense_sheet_user
+NEW ir.rule: hr_expense.hr_expense_report_comp_rule
+NEW ir.ui.menu: hr_expense.menu_hr_expense_accountant
+NEW ir.ui.menu: hr_expense.menu_hr_expense_all_expenses
+NEW ir.ui.menu: hr_expense.menu_hr_expense_global_settings
+NEW ir.ui.menu: hr_expense.menu_hr_expense_my_expenses
+NEW ir.ui.menu: hr_expense.menu_hr_expense_my_expenses_refused
+NEW ir.ui.menu: hr_expense.menu_hr_expense_my_expenses_to_submit
+NEW ir.ui.menu: hr_expense.menu_hr_expense_reports
+NEW ir.ui.menu: hr_expense.menu_hr_expense_sheet_all_all
+NEW ir.ui.menu: hr_expense.menu_hr_expense_sheet_all_to_approve
+NEW ir.ui.menu: hr_expense.menu_hr_expense_sheet_all_to_pay
+NEW ir.ui.menu: hr_expense.menu_hr_expense_sheet_all_to_post
+NEW ir.ui.menu: hr_expense.menu_hr_expense_sheet_my_reports
+NEW ir.ui.menu: hr_expense.menu_hr_expense_to_approve
+DEL ir.ui.menu: hr_expense.menu_expense_all
+DEL ir.ui.menu: hr_expense.menu_expense_approved
+DEL ir.ui.menu: hr_expense.menu_expense_to_approve
+DEL ir.ui.menu: hr_expense.menu_hr_expense
+NEW ir.ui.view: hr_expense.assets_backend_expense
+NEW ir.ui.view: hr_expense.hr_expense_planner
+NEW ir.ui.view: hr_expense.hr_expense_register_payment_view_form
+NEW ir.ui.view: hr_expense.product_product_expense_form_view
+NEW ir.ui.view: hr_expense.report_expense_sheet
+NEW ir.ui.view: hr_expense.view_hr_expense_configuration
+NEW ir.ui.view: hr_expense.view_hr_expense_sheet_filter
+NEW ir.ui.view: hr_expense.view_hr_expense_sheet_form
+NEW ir.ui.view: hr_expense.view_hr_expense_sheet_graph
+NEW ir.ui.view: hr_expense.view_hr_expense_sheet_kanban
+NEW ir.ui.view: hr_expense.view_hr_expense_sheet_pivot
+NEW ir.ui.view: hr_expense.view_hr_expense_sheet_tree
+DEL ir.ui.view: hr_expense.hr_expense_my_tree
+DEL ir.ui.view: hr_expense.report_expense
+DEL ir.values: hr_expense.action_hr_expense_account_entry
+NEW mail.alias: hr_expense.mail_alias_expense
+NEW mail.message.subtype: hr_expense.mt_expense_paid
+NEW product.product: hr_expense.product_product_fixed_cost
+NEW res.groups: hr_expense.group_hr_expense_manager
+NEW res.groups: hr_expense.group_hr_expense_user
+NEW res.users: base.default_user
+NEW web.planner: hr_expense.planner_hr_expense
+DEL web.tip: hr_expense.expense_tip_1
+DEL web.tip: hr_expense.expense_tip_2
+DEL web.tip: hr_expense.expense_tip_3
+# Nothing to do 
