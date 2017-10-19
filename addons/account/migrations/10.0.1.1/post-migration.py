@@ -16,7 +16,7 @@ def migrate(env, version):
         second_account_id, second_label, second_tax_id, second_amount_type,
         second_amount)
         SELECT
-        MIN(arm.create_uid), MIN(arm.create_date), MAX(arm.write_uid), 
+        MIN(arm.create_uid), MIN(arm.create_date), MAX(arm.write_uid),
         MAX(arm.write_date), arm.name, arm.sequence, arm.has_second_line,
         act1.id, arm.label, att1.id, arm.amount_type, arm.amount,
         act2.id, arm.second_label, att2.id,
@@ -29,7 +29,7 @@ def migrate(env, version):
         LEFT JOIN (SELECT id, name, type_tax_use
               FROM account_tax_template
               ) as att1
-        ON (att1.name = at1.name AND 
+        ON (att1.name = at1.name AND
             att1.type_tax_use = at1.type_tax_use)
         LEFT JOIN (SELECT id, name, code
                    FROM account_account) as acc1
@@ -45,7 +45,7 @@ def migrate(env, version):
         LEFT JOIN (SELECT id, name, type_tax_use
               FROM account_tax_template
               ) as att2
-        ON (att2.name = at2.name AND 
+        ON (att2.name = at2.name AND
             att2.type_tax_use = at2.type_tax_use)
         LEFT JOIN (SELECT id, name, code
                    FROM account_account) as acc2
@@ -53,11 +53,11 @@ def migrate(env, version):
         LEFT JOIN (SELECT id, name, code
                    FROM account_account_template) as act2
         ON (acc2.name = act2.name
-            AND acc2.code = act2.code)            
+            AND acc2.code = act2.code)
         GROUP BY
          arm.name, arm.sequence, arm.has_second_line,
          act1.id, arm.label, att1.id, arm.amount_type, arm.amount,
-         act2.id, arm.second_label, att2.id, 
+         act2.id, arm.second_label, att2.id,
          arm.second_amount_type, arm.second_amount
         ''')
     # Update move_name in account_payment from account_move

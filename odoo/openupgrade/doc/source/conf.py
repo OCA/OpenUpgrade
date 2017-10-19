@@ -154,6 +154,8 @@ htmlhelp_basename = 'OpenUpgradedoc'
 # Options for LaTeX output
 # ------------------------
 
+latex_elements = {'papersize': 'a4paper'}
+
 # The paper size ('letter' or 'a4').
 # latex_paper_size = 'letter'
 
