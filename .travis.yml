@@ -54,6 +54,8 @@ script:
     - if [ -s ../test_data90.yml ]; then ./openerp-server --database=$DB --test-file=`readlink -f ../test_data90.yml` --test-commit --stop-after-init; fi
     # Line below may fail quite often due to Travis bug:
     - git reset -q --hard $TRAVIS_COMMIT
+    # Remove obsolete directories with .pyc files to prevent them from being imported (such as 'openerp')
+    - git clean -xfdq
     # Install Python requirements of target release
     - pip install -q -r requirements.txt
     # don't use pypi's openupgradelib, but the one from source to avoid choking
