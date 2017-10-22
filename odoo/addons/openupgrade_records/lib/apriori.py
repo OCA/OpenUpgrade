@@ -16,6 +16,7 @@ merged_modules = {
     'account_tax_cash_basis': 'account',
     'portal_gamification': 'gamification',
     'portal_stock': 'portal',
+    'procurement': 'stock',
     'report': 'base',
     'web_calendar': 'web',
     'web_kanban': 'web',
