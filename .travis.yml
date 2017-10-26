@@ -19,7 +19,7 @@ env:
 
 # Need flake8 for pep8 testing
 install:
-    - pip install flake8 coveralls
+    - pip install flake8==3.4.1 coveralls
 
 # Test with flake for:
 #   * migration scripts
