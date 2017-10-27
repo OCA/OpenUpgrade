@@ -114,5 +114,5 @@ def migrate(env, version):
     )
     assign_view_keys(env)
     publish_attachments(env)
-    actualizar_calculo_impuesto(cr)
+    actualizar_calculo_impuesto(env.cr)
     cleanup_modules_post(env)
