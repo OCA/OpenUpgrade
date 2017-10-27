@@ -11,6 +11,8 @@ renamed_modules = {
     # OCA/account-invoicing
     'invoice_validation_wkfl': 'account_invoice_validation_workflow',
     'account_invoice_zero': 'account_invoice_zero_autopay',
+    # OCA/account-payment
+    'paydays': 'account_payment_term_multi_day',
     # OCA/sale-reporting
     'sale_condition_template': 'sale_comment_template',
     # OCA/server-tools
