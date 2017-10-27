@@ -2,7 +2,9 @@
 # © 2016 Sylvain LE GAL <https://twitter.com/legalsylvain>
 # © 2016 Serpent Consulting Services Pvt. Ltd.
 # © 2016 Eficent Business and IT Consulting Services S.L.
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
 from openupgradelib import openupgrade
 
 column_renames = {
@@ -41,6 +43,9 @@ column_copies = {
         ('type_tax_use', None, None),
         ('type', None, None),
     ],
+    'account_invoice': [
+        ('reference', None, None),
+    ]
 }
 
 table_renames = [
@@ -211,10 +216,68 @@ def blacklist_field_recomputation(env):
         'currency_id',
     ]
 
+def backup_fields_account_invoice(cr):
+    '''
+    Metodo para respaldar campos funcionales de la tabla account_invoice
+    '''
+    column_copies_ai = {
+                    'account_invoice': [
+                        ('amount_subtotal', None, None),
+                        ('amount_discount', None, None),
+                        ('amount_untaxed', None, None),
+                        ('amount_tax', None, None),
+                        ('amount_total', None, None),
+                        ('residual', None, None),
+                        ('amount_tax_retention', None, None),
+                        ('amount_ret_vat', None, None),
+                    ],
+                    }
+    openupgrade.copy_columns(cr, column_copies_ai)
+
+def backup_fields_account_invoice_line(cr):
+    '''
+    Metodo para respaldar campos funcionales de la tabla account_invoice_line
+    '''
+    column_copies_ail = {
+                    'account_invoice_line': [
+                        ('price_subtotal', None, None),
+                        ('price_unit', None, None),
+                        ('discount', None, None),
+                    ],
+                    }
+    openupgrade.copy_columns(cr, column_copies_ail)
+
+def merge_supplier_invoice_refs(env):
+    """In v8, there are 2 fields for writing references:
+    supplier_invoice_number and reference. Now in v9 there's only the last one.
+    We merge the first field content in the second one for avoiding data loss.
+    Note that previously the `reference` field has been copied for preserving
+    the original field contents.
+    """
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_invoice
+        SET reference = supplier_invoice_number || ' - ' || reference
+        WHERE type IN ('in_invoice', 'in_refund')
+            AND reference IS NOT NULL
+            AND supplier_invoice_number IS NOT NULL"""
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_invoice
+        SET reference = supplier_invoice_number
+        WHERE type IN ('in_invoice', 'in_refund')
+            AND reference IS NULL
+            AND supplier_invoice_number IS NOT NULL"""
+    )
+
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
+    #Metodos para respaldar campos funcionales
+    backup_fields_account_invoice(cr)
+    backup_fields_account_invoice_line(cr)
     # 9.0 introduces a constraint enforcing this
     cr.execute(
         "update account_account set reconcile=True "
@@ -230,3 +293,4 @@ def migrate(env, version):
     map_account_tax_template_type(cr)
     remove_account_moves_from_special_periods(cr)
     blacklist_field_recomputation(env)
+    merge_supplier_invoice_refs(env)

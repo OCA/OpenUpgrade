@@ -518,12 +518,18 @@ def merge_invoice_journals(env, refund_journal_ids=None, journal_mapping=None):
     }
     if journal_mapping is None:
         journal_mapping = {}
+    # Add a column for storing target journal
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE account_journal ADD %s INTEGER" % (
+            openupgrade.get_legacy_name('merged_journal_id')
+        )
+    )
     for journal_type, new_journal_type in journal_type_mapping.iteritems():
         query = """
             SELECT id
             FROM account_journal
-            WHERE openupgrade_legacy_9_0_type = %s
-            """
+            WHERE %s = %%s
+            """ % openupgrade.get_legacy_name('type')
         query_args = [journal_type, ]
         if refund_journal_ids:
             query += " AND id IN %s"
@@ -561,13 +567,100 @@ def merge_invoice_journals(env, refund_journal_ids=None, journal_mapping=None):
                     """ % table,
                     (normal_journal.id, refund_journal.id)
                 )
-            refund_journal.show_on_dashboard = False
+            # for avoiding to be selected first when invoicing
+            refund_journal.write({
+                'show_on_dashboard': False,
+                'sequence': 99999,
+            })
+            # update target journal in merged refund journal
+            env.cr.execute(
+                """UPDATE account_journal
+                SET %s = %%s
+                WHERE id = %%s
+                """ % openupgrade.get_legacy_name('merged_journal_id'),
+                (normal_journal.id, refund_journal.id)
+            )
             if refund_journal.sequence_id != normal_journal.sequence_id:
                 # Fill refund sequence
                 normal_journal.write({
                     'refund_sequence': True,
                     'refund_sequence_id': refund_journal.sequence_id.id,
                 })
+
+
+def update_account_invoice_date(cr):
+    """Update invoice date from the period last date.
+
+    NOTE: Invoices without linked journal entry won't be updated because they
+    are supposed to be in draft or cancel state, so the date will be filled on
+    normal validation workflow.
+    """
+    # Invoices with journal entries whose dates are in the same period
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE account_invoice ai
+        SET date = am.date
+        FROM account_period ap,
+             account_move am
+        WHERE am.period_id = ap.id
+            AND am.id = ai.move_id
+            AND ai.date IS NULL
+            AND am.date >= ap.date_start
+            AND am.date <= ap.date_stop"""
+    )
+    # Invoices with journal entries whose dates are outside of forced period
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE account_invoice ai
+        SET date = ap.date_start
+        FROM account_period ap,
+             account_move am
+        WHERE am.period_id = ap.id
+            AND am.id = ai.move_id
+            AND ai.date IS NULL
+            AND (am.date <= ap.date_start OR am.date >= ap.date_stop)"""
+    )
+
+
+def update_move_date(cr):
+    """Update journal entries date when the date is not inside the indicated
+    period for respecting the accounting period on v9.
+    """
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE account_move am
+        SET date = ap.date_start
+        FROM account_period ap
+        WHERE am.period_id = ap.id
+            AND (am.date <= ap.date_start OR am.date >= ap.date_stop)"""
+    )
+    # Synchronize move line dates afterwards
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE account_move_line aml
+        SET date = am.date
+        FROM account_move am
+        WHERE am.id = aml.move_id
+            AND am.date != aml.date"""
+    )
+
+
+def fill_bank_accounts(cr):
+    """Fill new bank_account_id field on journals through the inverse
+    reference on the bank accounts.
+    """
+    openupgrade.logged_query(
+        cr, """
+        UPDATE account_journal aj
+        SET bank_account_id = rpb.id
+        FROM res_partner_bank rpb
+        WHERE aj.type = 'bank'
+        AND rpb.journal_id = aj.id"""
+    )
 
 
 @openupgrade.migrate(use_env=True)
@@ -662,6 +755,9 @@ def migrate(env, version):
     reset_blacklist_field_recomputation()
     fill_move_line_invoice(cr)
     merge_invoice_journals(env)
+    update_account_invoice_date(cr)
+    update_move_date(cr)
+    fill_bank_accounts(cr)
     openupgrade.load_data(
         cr, 'account', 'migrations/9.0.1.1/noupdate_changes.xml',
     )

@@ -12,7 +12,6 @@ column_copies = {
     ],
 }
 
-
 def map_order_state(cr):
     """ Map values for state field in purchase.order and purchase.order.line.
     Do this in the pre script because it influences the automatic calculation
@@ -30,8 +29,35 @@ def map_order_state(cr):
         FROM purchase_order o
         WHERE l.order_id = o.id""")
 
+def backup_fields_purchase_order(cr):
+    '''
+    Metodo para respaldar campos funcionales de la tabla purchase_order
+    '''
+    column_copies_po = {
+                    'purchase_order': [
+                        ('amount_without_service', None, None),
+                        ('amount_tax', None, None),
+                        ('amount_total', None, None),
+                        ('amount_untaxed', None, None),
+                    ],
+                    }
+    openupgrade.copy_columns(cr, column_copies_po)
+
+def backup_fields_purchase_order_line(cr):
+    '''
+    Metodo para respaldar campos funcionales de la tabla purchase_order_line
+    '''
+    column_copies_pol = {
+                    'purchase_order_line': [
+                        ('price_unit', None, None),    
+                    ],
+                    }
+    openupgrade.copy_columns(cr, column_copies_pol)
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.copy_columns(cr, column_copies)
     map_order_state(cr)
+    backup_fields_purchase_order(cr)
+    backup_fields_purchase_order_line(cr)
+    
