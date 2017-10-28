@@ -56,9 +56,38 @@ def map_order_state(cr):
         WHERE sol.order_id = so.id""")
 
 
+def backup_fields_sale_order(cr):
+    '''
+    Metodo para respaldar campos funcionales de la tabla sale_order
+    '''
+    column_copies_so = {
+                    'sale_order': [
+                        ('amount_untaxed', None, None),
+                        ('amount_total', None, None),
+                        ('amount_tax', None, None),
+                    ],
+                    }
+    openupgrade.copy_columns(cr, column_copies_so)
+
+
+def backup_fields_sale_order_line(cr):
+    '''
+    Metodo para respaldar campos funcionales de la tabla sale_order_line
+    '''
+    column_copies_sol = {
+                    'sale_order_line': [
+                        ('discount', None, None),
+                        ('price_unit', None, None),
+                    ],
+                    }
+    openupgrade.copy_columns(cr, column_copies_sol)
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_tables(cr, table_renames)
     map_order_state(cr)
+    backup_fields_sale_order(cr)
+    backup_fields_sale_order_line(cr)

@@ -216,6 +216,36 @@ def blacklist_field_recomputation(env):
         'currency_id',
     ]
 
+def backup_fields_account_invoice(cr):
+    '''
+    Metodo para respaldar campos funcionales de la tabla account_invoice
+    '''
+    column_copies_ai = {
+                    'account_invoice': [
+                        ('amount_subtotal', None, None),
+                        ('amount_discount', None, None),
+                        ('amount_untaxed', None, None),
+                        ('amount_tax', None, None),
+                        ('amount_total', None, None),
+                        ('residual', None, None),
+                        ('amount_tax_retention', None, None),
+                        ('amount_ret_vat', None, None),
+                    ],
+                    }
+    openupgrade.copy_columns(cr, column_copies_ai)
+
+def backup_fields_account_invoice_line(cr):
+    '''
+    Metodo para respaldar campos funcionales de la tabla account_invoice_line
+    '''
+    column_copies_ail = {
+                    'account_invoice_line': [
+                        ('price_subtotal', None, None),
+                        ('price_unit', None, None),
+                        ('discount', None, None),
+                    ],
+                    }
+    openupgrade.copy_columns(cr, column_copies_ail)
 
 def merge_supplier_invoice_refs(env):
     """In v8, there are 2 fields for writing references:
@@ -245,6 +275,9 @@ def merge_supplier_invoice_refs(env):
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
+    #Metodos para respaldar campos funcionales
+    backup_fields_account_invoice(cr)
+    backup_fields_account_invoice_line(cr)
     # 9.0 introduces a constraint enforcing this
     cr.execute(
         "update account_account set reconcile=True "
