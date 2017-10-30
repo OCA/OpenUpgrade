@@ -100,3 +100,5 @@ def migrate(env, version):
         FROM account_move am
         WHERE hes.account_move_id = am.id;
         ''')
+    openupgrade.load_data(
+        cr, 'hr_expense', 'migrations/10.0.2.0/noupdate_changes.xml')
