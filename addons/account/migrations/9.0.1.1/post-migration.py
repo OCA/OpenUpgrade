@@ -5,8 +5,16 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import operator
-from openupgradelib import openupgrade
+from openupgradelib import openupgrade, openupgrade_90
 from openerp.modules.registry import RegistryManager
+
+
+account_type_map = [
+    ('account.data_account_type_cash', 'account.data_account_type_liquidity'),
+    ('account.conf_account_type_chk', 'account.data_account_type_liquidity'),
+    ('account.conf_account_type_tax',
+     'account.data_account_type_current_liabilities'),
+]
 
 
 def map_bank_state(cr):
@@ -864,6 +872,7 @@ def migrate(env, version):
     map_type_tax_use(cr)
     map_type_tax_use_template(cr)
     map_journal_state(cr)
+    openupgrade_90.replace_account_types(env, account_type_map)
     account_templates(env)
     parent_id_to_m2m(cr)
     cashbox(cr)
