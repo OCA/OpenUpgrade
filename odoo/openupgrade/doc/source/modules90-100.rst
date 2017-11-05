@@ -319,7 +319,7 @@ missing in the new release are marked with |del|.
 +-----------------------------------+-----------------------------------+
 | |del| marketing                   | Done -Merged in marketing_campaign|
 +-----------------------------------+-----------------------------------+
-|marketing_campaign                 | Nothing to do                     |
+|marketing_campaign                 | Done                              |
 +-----------------------------------+-----------------------------------+
 |marketing_campaign_crm_demo        | Nothing to do                     |
 +-----------------------------------+-----------------------------------+
