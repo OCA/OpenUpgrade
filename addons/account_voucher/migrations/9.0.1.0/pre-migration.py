@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-# © 2016 Therp BV <http://therp.nl>
+# Copyright 2016 Therp BV <http://therp.nl>
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 from openupgradelib import openupgrade
 from openerp.addons.account_voucher.account_voucher import \
     account_voucher_line
@@ -14,6 +16,12 @@ column_copies = {
     ],
 }
 
+field_renames = [
+    # renamings with oldname attribute - They also need the rest of operations
+    ('account.voucher', 'account_voucher', 'type', 'voucher_type'),
+    ('account.voucher.line', 'account_voucher_line', 'amount', 'price_unit'),
+]
+
 
 def delete_payment_views(cr):
     """Delete account.voucher payment views that hinder upgrade."""
@@ -25,13 +33,14 @@ def delete_payment_views(cr):
     )
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     cr.execute('update account_voucher_line set amount=0 where amount is null')
     cr.execute("update account_voucher_line set name='/' where name is null")
     openupgrade.copy_columns(cr, column_copies)
+    openupgrade.rename_fields(env, field_renames)
     delete_payment_views(cr)
-
     cr.execute('SELECT count(*) FROM account_voucher WHERE tax_id IS NOT NULL')
     taxed_vouchers = cr.fetchone()[0]
     if not taxed_vouchers:

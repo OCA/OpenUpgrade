@@ -1,8 +1,15 @@
 # -*- coding: utf-8 -*-
-# © 2016 Tecnativa - Vicent Cubells <vicent.cubells@tecnativa.com>
+# Copyright 2016 Tecnativa - Vicent Cubells <vicent.cubells@tecnativa.com>
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
 from openupgradelib import openupgrade
 
+
+field_renames = [
+    # renamings with oldname attribute - They also need the rest of operations
+    ('event.event', 'event_event', 'type', 'event_type_id'),
+]
 
 column_renames = {
     'event_event': [
@@ -19,6 +26,8 @@ column_renames = {
 }
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
+    openupgrade.rename_fields(env, field_renames)
     openupgrade.rename_columns(cr, column_renames)

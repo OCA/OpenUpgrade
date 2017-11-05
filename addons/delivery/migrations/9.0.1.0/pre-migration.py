@@ -7,8 +7,6 @@ from openupgradelib import openupgrade
 
 column_renames = {
     'delivery_grid_line': [
-        ('type', 'variable'),
-        ('grid_id', 'carrier_id'),
         ('price_type', None),
     ],
     'delivery_grid': [
@@ -21,6 +19,11 @@ column_renames = {
         ('grid_id', 'carrier_id'),
     ],
 }
+
+field_renames = [
+    ('delivery.grid.line', 'delivery_grid_line', 'type', 'variable'),
+    ('delivery.grid.line', 'delivery_grid_line', 'grid_id', 'carrier_id'),
+]
 
 column_copies = {
     'delivery_grid_line': [
@@ -80,10 +83,12 @@ def correct_rule_prices(cr):
     )
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     correct_object_references(cr)
     openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_fields(env, field_renames)
     correct_rule_prices(cr)
     openupgrade.rename_tables(cr, table_renames)
     # TODO: if the same product is used for multiple carriers, duplicate it

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-# @ 2014-Today: Odoo Community Association, Microcom
-# © 2015 Eficent Business and IT Consulting Services S.L. -
+# Copyright 2014-Today: Odoo Community Association, Microcom
+# Copyright 2015 Eficent Business and IT Consulting Services S.L. -
 # Jordi Ballester Alomar
-# © 2015 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
+# Copyright 2015 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -25,6 +26,11 @@ column_renames = {
         ('project_category_id', 'project_tags_id'),
     ],
 }
+
+field_renames = [
+    # renamings with oldname attribute - They also need the rest of operations
+    ('project.task', 'project_task', 'categ_ids', 'tag_ids'),
+]
 
 table_renames = [
     ('project_category', 'project_tags'),
@@ -75,11 +81,13 @@ def recreate_analytic_lines(cr):
     )
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_fields(env, field_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
     if not openupgrade.is_module_installed(cr, 'project_timesheet'):
         recreate_analytic_lines(cr)

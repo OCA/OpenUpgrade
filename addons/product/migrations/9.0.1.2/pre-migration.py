@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# © 2014-2015 Microcom
-# © 2016 Serpent Consulting Services Pvt. Ltd.
-# © 2016 Eficent Business and IT Consulting Services S.L.
-# Copyright 2017 Tecnativa - Pedro M. Baeza <pedro.baeza@tecnativa.com>
+# Copyright 2014-2015 Microcom
+# Copyright 2016 Serpent Consulting Services Pvt. Ltd.
+# Copyright 2016 Eficent Business and IT Consulting Services S.L.
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
@@ -26,6 +26,12 @@ column_renames = {
     ],
 }
 
+field_renames = [
+    # renamings with oldname attribute - They also need the rest of operations
+    ('product.product', 'product_product', 'ean13', 'barcode'),
+    ('product.template', 'product_template', 'ean13', 'barcode'),
+]
+
 column_copies = {
     'product_template': [
         ('type', None, None),
@@ -45,8 +51,9 @@ def map_product_template_type(cr):
         table='product_template', write='sql')
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     # Remove NOT NULL constraint on these obsolete required fields
     openupgrade.logged_query(cr, """
         ALTER TABLE product_price_history
@@ -74,6 +81,7 @@ def migrate(cr, version):
         """)
 
     openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_fields(env, field_renames)
     openupgrade.copy_columns(cr, column_copies)
 
     # Add default value when it is null, as Product name / Package Logistic

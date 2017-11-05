@@ -19,11 +19,11 @@ column_copies = {
     ]
 }
 
-column_renames = {
-    'res_partner_bank': [
-        ('bank', 'bank_id'),
-    ],
-}
+field_renames = [
+    ('res.partner.bank', 'res_partner_bank', 'bank', 'bank_id'),
+    # renamings with oldname attribute - They also need the rest of operations
+    ('res.partner', 'res_partner', 'ean13', 'barcode'),
+]
 
 
 OBSOLETE_RULES = (
@@ -118,13 +118,14 @@ def map_res_partner_type(cr):
         table='res_partner', write='sql')
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     openupgrade.update_module_names(
         cr, apriori.renamed_modules.iteritems()
     )
     openupgrade.copy_columns(cr, column_copies)
-    openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_fields(env, field_renames, no_deep=True)
     remove_obsolete(cr)
     pre_create_columns(cr)
     cleanup_modules(cr)

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# @copyright 2014-Today: Odoo Community Association, Microcom, Therp BV
+# Copyright 2014 Microcom, Therp BV
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -21,8 +22,15 @@ column_renames = {
     ],
 }
 
+field_renames = [
+    # renamings with oldname attribute - They also need the rest of operations
+    ('stock.location', 'stock_location', 'loc_barcode', 'barcode'),
+]
 
-@openupgrade.migrate()
-def migrate(cr, version):
+
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     openupgrade.rename_xmlids(cr, xmlids)
     openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_fields(env, field_renames)
