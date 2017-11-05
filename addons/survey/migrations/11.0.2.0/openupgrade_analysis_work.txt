@@ -1,12 +1,12 @@
 ---Fields in module 'survey'---
 survey       / survey.question          / type (selection)              : selection_keys is now '['date', 'free_text', 'matrix', 'multiple_choice', 'numerical_box', 'simple_choice', 'textbox']' ('['datetime', 'free_text', 'matrix', 'multiple_choice', 'numerical_box', 'simple_choice', 'textbox']')
-# Nothing to do: selections keys are the same
+# Done: datetime is mapped to date
 
 survey       / survey.question          / validation_max_date (datetime): type is now 'date' ('datetime')
-DONE: pre-migration: Renamed to preserve data
+# DONE: pre-migration: Renamed to preserve data
 
 survey       / survey.question          / validation_min_date (datetime): type is now 'date' ('datetime')
-DONE: pre-migration: Renamed to preserve data
+# DONE: pre-migration: Renamed to preserve data
 
 survey       / survey.survey            / activity_ids (one2many)       : NEW relation: mail.activity
 # Nothing to do
@@ -15,7 +15,7 @@ survey       / survey.survey            / website_message_ids (one2many): NEW re
 # Nothing to do
 
 survey       / survey.user_input_line   / value_date (datetime)         : type is now 'date' ('datetime')
-DONE: pre-migration: Renamed to preserve data
+# DONE: pre-migration: Renamed to preserve data, then the field is converted automatically to date.
 
 
 ---XML records in module 'survey'---
