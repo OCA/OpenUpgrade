@@ -39,7 +39,7 @@ def cleanup_modules(cr):
             # from OCA/product-attribute
             ('product_customer_code', 'product_supplierinfo_for_customer'),
             # from OCA/sale-workflow - included in core
-            ('sale_multi_picking', 'sale_sourced_by_line'),
+            ('sale_multi_picking', 'sale_procurement_group_by_line'),
             # from OCA/stock-logistics-workflow
             ('stock_cancel', 'stock_picking_back2draft'),
         ], merge_modules=True,
