@@ -11,15 +11,18 @@ column_renames_sale_layout = {
     'sale_layout_category': [
         ('separator', None),
     ],
-    'account_invoice_line': [
-        ('sale_layout_cat_id', 'layout_category_id'),
-        ('categ_sequence', 'layout_category_sequence'),
-    ],
-    'sale_order_line': [
-        ('sale_layout_cat_id', 'layout_category_id'),
-        ('categ_sequence', 'layout_category_sequence'),
-    ],
 }
+
+field_renames_sale_layout = [
+    ('account.invoice.line', 'account_invoice_line', 'sale_layout_cat_id',
+     'layout_category_id'),
+    ('account.invoice.line', 'account_invoice_line', 'categ_sequence',
+     'layout_category_sequence'),
+    ('sale.order.line', 'sale_order_line', 'sale_layout_cat_id',
+     'layout_category_id'),
+    ('sale.order.line', 'sale_order_line', 'categ_sequence',
+     'layout_category_sequence'),
+]
 
 
 # rename_tables is not needed because "sale_layout.category" and
@@ -54,6 +57,7 @@ def migrate_sale_layout(env):
     )
     if openupgrade.is_module_installed(env.cr, 'sale_layout'):
         openupgrade.rename_columns(env.cr, column_renames_sale_layout)
+        openupgrade.rename_fields(env, field_renames_sale_layout)
         openupgrade.rename_models(env.cr, model_renames_sale_layout)
 
 
@@ -143,23 +147,21 @@ def sale_expense_update_module_names_partial(cr):
     openupgrade.logged_query(cr, query, (old_name, field_ids))
 
 
-def migrate_account_invoice_shipping_address(cr):
+def migrate_account_invoice_shipping_address(env):
     """The feature of this module is now on core, so we merge and change data
     accordingly.
     """
+    cr = env.cr
     module_name = 'account_invoice_shipping_address'
     if not openupgrade.is_module_installed(cr, module_name):
         return
     openupgrade.update_module_names(
         cr, [(module_name, 'sale')], merge_modules=True,
     )
-    openupgrade.rename_columns(
-        cr, {
-            'account_invoice': [
-                ('address_shipping_id', 'partner_shipping_id'),
-            ]
-        },
-    )
+    openupgrade.rename_fields(env, [
+        ('account.invoice', 'account_invoice', 'address_shipping_id',
+         'partner_shipping_id')
+    ])
 
 
 @openupgrade.migrate(use_env=True)
@@ -169,4 +171,4 @@ def migrate(env, version):
     cleanup_modules(env.cr)
     warning_update_module_names_partial(env.cr)
     sale_expense_update_module_names_partial(env.cr)
-    migrate_account_invoice_shipping_address(env.cr)
+    migrate_account_invoice_shipping_address(env)

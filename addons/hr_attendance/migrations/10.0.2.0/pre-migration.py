@@ -5,11 +5,9 @@
 
 from openupgradelib import openupgrade
 
-_column_renames = {
-    'hr_attendance': [
-        ('name', 'check_in'),
-    ],
-}
+_field_renames = [
+    ('hr.attendance', 'hr_attendance', 'name', 'check_in'),
+]
 
 
 @openupgrade.migrate()
@@ -28,6 +26,6 @@ def migrate(env, version):
         """DELETE FROM hr_attendance
         WHERE action != 'sign_in'"""
     )
-    openupgrade.rename_columns(env.cr, _column_renames)
+    openupgrade.rename_fields(env, _field_renames)
     env.ref('hr_attendance.property_rule_attendace_manager').unlink()
     env.ref('hr_attendance.property_rule_attendace_employee').unlink()

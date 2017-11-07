@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2017 Trescloud <http://trescloud.com>
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -12,6 +13,12 @@ column_copies = {
         ('route_sequence', None, None),
     ],
 }
+
+field_renames = [
+    # renamings with oldname attribute - They also need the rest of operations
+    ('stock.pack.operation', 'stock_pack_operation', 'processed_boolean',
+     'is_done'),
+]
 
 xmlid_renames = [
     ('stock.group_locations', 'stock.group_stock_multi_locations'),
@@ -64,4 +71,5 @@ def migrate(env, version):
     openupgrade.float_to_integer(cr, 'procurement_rule', 'route_sequence')
     openupgrade.float_to_integer(cr, 'stock_location_path', 'route_sequence')
     openupgrade.rename_xmlids(env.cr, xmlid_renames)
+    openupgrade.rename_fields(env, field_renames)
     warning_update_module_names_partial(cr)
