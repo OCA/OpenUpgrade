@@ -18,6 +18,7 @@ def assign_check_out(env):
             WHERE action = 'sign_out'
             AND name > a.check_in
             AND employee_id = a.employee_id
+            ORDER BY name
             LIMIT 1
         )
         """ % openupgrade.get_legacy_name('hr_attendance')
