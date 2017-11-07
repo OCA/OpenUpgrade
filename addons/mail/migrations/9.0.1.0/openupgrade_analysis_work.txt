@@ -101,7 +101,14 @@ mail         / res.users                / display_groups_suggestions (boolean): 
 
 ---XML records in module 'mail'---
 DEL ir.rule: mail.mail_group_public_and_joined
-# Done: Remove rule as it's a noupdate record that is not automatically removed
+DEL ir.rule: mail.mail_followers_read_write_others
+DEL ir.rule: mail.mail_notification_read_write_own
+DEL ir.cron: mail.ir_cron_mail_garbage_collect_attachments
+# Done: Remove records as they are noupdate and aren't automatically removed
+
+DEL mail.group: mail.group_all_employees
+NEW mail.channel: mail.channel_all_employees
+# Done: Rename XML-ID as table has been renamed also
 
 NEW ir.actions.act_window: mail.action_contacts
 NEW ir.actions.act_window: mail.action_email_template_tree_all
@@ -124,7 +131,6 @@ DEL ir.actions.client: mail.action_mail_star_feeds
 DEL ir.actions.client: mail.action_mail_to_me_feeds
 DEL ir.actions.server: mail.action_mail_redirect
 DEL ir.actions.todo: base.open_menu
-DEL ir.cron: mail.ir_cron_mail_garbage_collect_attachments
 NEW ir.model.access: mail.access mail_channel_partner_user
 NEW ir.model.access: mail.access_mail_channel_all
 NEW ir.model.access: mail.access_mail_channel_partner_portal
@@ -150,8 +156,6 @@ DEL ir.model.access: mail.access_mail_notification_system
 DEL ir.model.access: mail.access_mail_notification_user
 NEW ir.rule: mail.mail_channel_rule
 NEW ir.rule: mail.mail_message_subtype_rule_public
-DEL ir.rule: mail.mail_followers_read_write_others
-DEL ir.rule: mail.mail_notification_read_write_own
 NEW ir.ui.menu: mail.mail_channel_menu_root_chat
 NEW ir.ui.menu: mail.mail_channel_menu_settings
 NEW ir.ui.menu: mail.mail_channel_partner_menu
@@ -189,8 +193,6 @@ DEL ir.ui.view: mail.view_group_kanban
 DEL ir.ui.view: mail.view_group_search
 DEL ir.ui.view: mail.view_group_tree
 DEL ir.ui.view: mail.view_notification_tree
-NEW mail.channel: mail.channel_all_employees
-DEL mail.group: mail.group_all_employees
 NEW mail.message.subtype: mail.mt_note
 NEW mail.shortcode: mail.mail_smiley_beer
 NEW mail.shortcode: mail.mail_smiley_boar
