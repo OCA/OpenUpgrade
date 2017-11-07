@@ -1,7 +1,19 @@
 # -*- coding: utf-8 -*-
-# © 2016 Therp BV <http://therp.nl>
+# Copyright 2016 Therp BV <http://therp.nl>
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 from openupgradelib import openupgrade
+
+field_renames = [
+    # renamings with oldname attribute - They also need the rest of operations
+    ('product.category', 'product_category',
+     'property_stock_account_input_categ',
+     'property_stock_account_input_categ_id'),
+    ('product.category', 'product_category',
+     'property_stock_account_output_categ',
+     'property_stock_account_output_categ_id'),
+]
 
 
 def rename_property(cr, model, old_name, new_name):
@@ -24,8 +36,9 @@ def rename_property(cr, model, old_name, new_name):
         (new_name, field_ids))
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     rename_property(
         cr, 'product.template', 'cost_method', 'property_cost_method')
     rename_property(
@@ -36,3 +49,4 @@ def migrate(cr, version):
     rename_property(
         cr, 'product.category', 'property_stock_account_output_categ',
         'property_stock_account_output_categ_id')
+    openupgrade.rename_fields(env, field_renames)

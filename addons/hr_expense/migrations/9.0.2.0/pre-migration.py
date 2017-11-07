@@ -13,22 +13,20 @@ column_copies = {
     ],
 }
 
-column_renames = {
-    'product_template': [
-        ('hr_expense_ok', 'can_be_expensed'),
-    ],
-    'hr_expense': [
-        ('note', 'description'),
-    ],
-}
+field_renames = [
+    ('product.template', 'product_template', 'hr_expense_ok',
+     'can_be_expensed'),
+    ('hr.expense', 'hr_expense', 'note', 'description'),
+]
 
 table_renames = [
     ('hr_expense_expense', 'hr_expense'),
     ]
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     openupgrade.rename_tables(cr, table_renames)
-    openupgrade.rename_columns(cr, column_renames)
+    openupgrade.rename_fields(env, field_renames)
     openupgrade.copy_columns(cr, column_copies)

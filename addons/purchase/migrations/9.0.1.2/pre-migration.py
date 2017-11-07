@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# © 2015 Eficent Business and IT Consulting Services S.L. -
+# Copyright 2015 Eficent Business and IT Consulting Services S.L. -
 # Jordi Ballester Alomar
-# © 2015 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
+# Copyright 2015 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
@@ -11,6 +12,12 @@ column_copies = {
         ('state', None, None),
     ],
 }
+
+field_renames = [
+    # renamings with oldname attribute - They also need the rest of operations
+    ('purchase.order', 'purchase_order', 'fiscal_position',
+     'fiscal_position_id'),
+]
 
 
 def map_order_state(cr):
@@ -31,7 +38,9 @@ def map_order_state(cr):
         WHERE l.order_id = o.id""")
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     openupgrade.copy_columns(cr, column_copies)
+    openupgrade.rename_fields(env, field_renames)
     map_order_state(cr)
