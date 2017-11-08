@@ -13,6 +13,12 @@ column_renames = {
 }
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     openupgrade.rename_columns(cr, column_renames)
+    # Reset noupdate flag of base.group_hr_attendance
+    env['ir.model.data'].search([
+        ('module', '=', 'base'),
+        ('name', '=', 'group_hr_attendance'),
+    ]).write({'noupdate': 0})
