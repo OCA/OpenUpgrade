@@ -11,7 +11,11 @@ DEL ir.ui.menu: hr_attendance.menu_hr_attendance_graph
 DEL ir.ui.menu: hr_attendance.menu_open_view_attendance_reason
 NEW ir.ui.view: hr_attendance.hr_department_view_kanban
 NEW ir.ui.view: hr_attendance.view_hr_attendance_pivot
+
 DEL ir.ui.view: hr_attendance.hr_attendace_group
+# Done, set view to noupdate = false so that it is removed and does not block
+# the removal of the views that it inherits from
+
 DEL ir.ui.view: hr_attendance.hr_attendance_employee
 NEW res.groups: base.group_hr_manager
 DEL res.groups: base.group_hr_attendance
