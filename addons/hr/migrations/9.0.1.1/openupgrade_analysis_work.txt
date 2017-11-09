@@ -19,6 +19,9 @@ hr           / res.users                / display_employees_suggestions (boolean
 nothing to do
 
 ---XML records in module 'hr'---
+NEW res.groups: base.group_hr_attendance
+# Done: Not really new, as it was before on hr_attendance, but with noupdate=1 flag. Reset that flag.
+
 NEW hr.department: hr.dep_administration
 NEW hr.department: hr.dep_sales
 DEL hr.employee: hr.employee
@@ -38,6 +41,5 @@ DEL ir.ui.view: hr.view_human_resources_configuration
 DEL ir.ui.view: hr.view_users_form_mail
 NEW ir.values: hr.hr_employee_action_subordinate_hierachy_mutli
 DEL ir.values: hr.hr_employee_category_open
-NEW res.groups: base.group_hr_attendance
 NEW web.tip: hr.hr_tip_1
 NEW web.tip: hr.hr_tip_2
