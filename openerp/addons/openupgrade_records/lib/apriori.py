@@ -23,8 +23,13 @@ renamed_modules = {
     # same here, whoever want this will also need bank-payment
     'account_payment': 'account_payment_order',
     # OCA/account-invoicing
+    'account_invoice_reorder_lines': 'account_invoice_line_sequence',
     'account_refund_original': 'account_invoice_refund_link',
     'invoice_fiscal_position_update': 'account_invoice_fiscal_position_update',
+    # OCA/stock-logistics-workflow
+    'stock_picking_reorder_lines': 'stock_picking_line_sequence',
+    # OCA/purchase-workflow
+    'purchase_order_reorder_lines': 'purchase_order_line_sequence',
     # OCA/social
     'mail_message_name_search': 'base_search_mail_content',
     'marketing_security_group': 'mass_mailing_security_group',
