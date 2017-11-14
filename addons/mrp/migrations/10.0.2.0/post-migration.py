@@ -27,13 +27,16 @@ def map_mrp_production_state(cr):
 
 
 def map_mrp_workorder_state(cr):
-    openupgrade.map_values(
-        cr,
-        openupgrade.get_legacy_name('state'), 'state',
-        [('draft', 'pending'),
-         ('starworking', 'progress'),
-         ('pause', 'ready'),
-         ], table='mrp_workorder', write='sql')
+    legacy_state = openupgrade.get_legacy_name('state')
+    if openupgrade.column_exists(cr, 'mrp_workorder', legacy_state):
+        # if mrp_operations was installed
+        openupgrade.map_values(
+            cr,
+            legacy_state, 'state',
+            [('draft', 'pending'),
+             ('starworking', 'progress'),
+             ('pause', 'ready'),
+             ], table='mrp_workorder', write='sql')
 
 
 def update_stock_warehouse(cr):

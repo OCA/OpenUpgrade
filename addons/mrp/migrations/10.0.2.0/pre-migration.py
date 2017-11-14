@@ -9,9 +9,6 @@ _column_copies = {
     'mrp_production': [
         ('state', None, None)
     ],
-    'mrp_workorder': [
-        ('state', None, None)
-    ],
 }
 
 _column_renames = {
@@ -57,6 +54,11 @@ def migrate(env, version):
     tools.drop_view_if_exists(cr, 'mrp_workorder')
     openupgrade.rename_tables(cr, _table_renames)
     openupgrade.copy_columns(cr, _column_copies)
+    if openupgrade.column_exists(cr, 'mrp_workorder', 'state'):
+        # if mrp_operations was installed
+        openupgrade.copy_columns(
+            cr, {'mrp_workorder': [('state', None, None)]})
+
     openupgrade.rename_columns(cr, _column_renames)
     openupgrade.rename_fields(env, _field_renames)
     prepopulate_fields(cr)
