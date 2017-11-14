@@ -83,7 +83,7 @@ def cleanup_modules(cr):
             ('website_mail_snippet_table_edit', 'mass_mailing'),
             ('mass_mailing_sending_queue', 'mass_mailing'),
             ('website_mail_snippet_bg_color',
-             'web_editor_background_color'), # this one now located in OCA/web
+             'web_editor_background_color'),  # this one now located in OCA/web
             # from OCA/crm - included in core
             ('crm_lead_lost_reason', 'crm'),
             # from OCA/sale-workflow - included in core
@@ -118,11 +118,27 @@ def map_res_partner_type(cr):
         table='res_partner', write='sql')
 
 
+def has_recurring_contracts(cr):
+    """ Whether or not to migrate to the contract module """
+    if openupgrade.column_exists(
+            cr, 'account_analytic_account', 'recurring_invoices'):
+        cr.execute(
+            """SELECT id FROM account_analytic_account
+            WHERE recurring_invoices LIMIT 1""")
+        if cr.fetchone():
+            return True
+    return False
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
+    module_renames = dict(apriori.renamed_modules)
+    if not has_recurring_contracts(cr):
+        # Don't install contract module without any recurring invoicing
+        del module_renames['account_analytic_analysis']
     openupgrade.update_module_names(
-        cr, apriori.renamed_modules.iteritems()
+        cr, module_renames.iteritems()
     )
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_fields(env, field_renames, no_deep=True)
