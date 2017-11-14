@@ -9,6 +9,9 @@ _column_copies = {
     'mrp_production': [
         ('state', None, None)
     ],
+    'mrp_workorder': [
+        ('sequence', None, None)
+    ],
 }
 
 _column_renames = {
@@ -22,14 +25,18 @@ _field_renames = [
     ('mrp.bom.line', 'mrp_bom_line', 'product_uom', 'product_uom_id'),
     ('mrp.production', 'mrp_production', 'date_planned', 'date_planned_start'),
     ('mrp.production', 'mrp_production', 'move_lines', 'move_raw_ids'),
+    ('mrp.production', 'mrp_production', 'move_created_ids2', 'move_finished_ids'),
     ('mrp.production', 'mrp_production', 'product_uom', 'product_uom_id'),
     ('mrp.production', 'mrp_production', 'workcenter_lines', 'workorder_ids'),
     ('mrp.routing', 'mrp_routing', 'workcenter_lines', 'operation_ids'),
     ('mrp.workcenter', 'mrp_workcenter', 'capacity_per_cycle', 'capacity'),
+]
+
+_field_renames2 = [
     ('mrp.workorder', 'mrp_workorder', 'date_planned', 'date_planned_start'),
 ]
 
-_table_renames = [
+_model_renames = [
     ('mrp_production_workcenter_line', 'mrp_workorder'),
 ]
 
@@ -52,13 +59,13 @@ def prepopulate_fields(cr):
 def migrate(env, version):
     cr = env.cr
     tools.drop_view_if_exists(cr, 'mrp_workorder')
-    openupgrade.rename_tables(cr, _table_renames)
+    openupgrade.rename_models(cr, _model_renames)
     openupgrade.copy_columns(cr, _column_copies)
     if openupgrade.column_exists(cr, 'mrp_workorder', 'state'):
         # if mrp_operations was installed
         openupgrade.copy_columns(
             cr, {'mrp_workorder': [('state', None, None)]})
-
+        openupgrade.rename_fields(env, _field_renames2)
     openupgrade.rename_columns(cr, _column_renames)
     openupgrade.rename_fields(env, _field_renames)
     prepopulate_fields(cr)
