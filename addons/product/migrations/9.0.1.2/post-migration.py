@@ -197,43 +197,67 @@ def map_product_template_type(cr):
 
 
 def update_product_supplierinfo(env):
-
-    env.cr.execute("""
-        SELECT psi.id, psi.name, psi.product_name, psi.product_code,
-        psi.sequence, ppi.min_quantity, ppi.price,  psi.product_tmpl_id,
-        psi.delay, psi.company_id
-        FROM product_supplierinfo AS psi
-        INNER JOIN pricelist_partnerinfo AS ppi
-        ON ppi.suppinfo_id = psi.id
-    """)
-    to_delete_ids = []
-    for id, name, product_name, product_code, sequence, min_quantity, price, \
-            product_tmpl_id, delay, company_id in env.cr.fetchall():
-        to_delete_ids.append(id)
-        env.cr.execute("""
-            SELECT currency_id
-            FROM res_company
-            WHERE id = %s
-        """ % company_id)
-        currency_id = env.cr.fetchall()[0]
-
-        env['product.supplierinfo'].create({
-                'name': name,
-                'product_name': product_name,
-                'product_code': product_code,
-                'sequence': sequence,
-                'min_qty': min_quantity,
-                'price': price,
-                'product_tmpl_id': product_tmpl_id,
-                'delay': delay,
-                'company_id': company_id,
-                'currency_id': currency_id
-        })
-    if to_delete_ids:
-        env.cr.execute("""
-            DELETE FROM product_supplierinfo
-            WHERE id IN %s
-        """, (tuple(to_delete_ids),))
+    """ Merge obsolete partner_pricelistinfo with product_supplierinfo.
+    Store the id of the original pricelistinfo on a custom integer field
+    for later reference."""
+    # Default currency for infos without a company
+    default_currency_id = env['res.company'].search(
+        [], order='id asc', limit=1).currency_id.id
+    env.cr.execute(
+        """ALTER TABLE product_supplierinfo
+        ADD COLUMN openupgrade_migrated_from_pricelist_id INTEGER""")
+    env.cr.execute(
+        """UPDATE product_supplierinfo ps
+        SET openupgrade_migrated_from_pricelist_id = pp.id,
+        min_qty = pp.min_quantity,
+        price = pp.price,
+        currency_id = %s
+        FROM pricelist_partnerinfo pp
+        WHERE pp.suppinfo_id = ps.id
+        """, (default_currency_id,))
+    # Fix currency where company is set
+    env.cr.execute(
+        """UPDATE product_supplierinfo ps
+        SET currency_id = rc.currency_id
+        FROM res_company rc
+        WHERE rc.id = ps.company_id """)
+    openupgrade.logged_query(
+        env.cr,
+        """ INSERT INTO product_supplierinfo (
+            company_id,
+            create_date,
+            create_uid,
+            currency_id,
+            delay,
+            min_qty,
+            name,
+            openupgrade_migrated_from_pricelist_id,
+            price,
+            product_tmpl_id,
+            product_code,
+            product_name,
+            sequence)
+        SELECT
+            ps.company_id,
+            pp.create_date,
+            pp.create_uid,
+            ps.currency_id,
+            ps.delay,
+            pp.min_quantity,
+            ps.name,
+            pp.id,
+            pp.price,
+            ps.product_tmpl_id,
+            ps.product_code,
+            ps.product_name,
+            ps.sequence
+        FROM product_supplierinfo ps, pricelist_partnerinfo pp
+        WHERE pp.id NOT IN (
+                SELECT openupgrade_migrated_from_pricelist_id
+                FROM product_supplierinfo
+                WHERE openupgrade_migrated_from_pricelist_id IS NOT NULL)
+            AND pp.suppinfo_id = ps.id
+        """)
 
 
 @openupgrade.migrate(use_env=True)
