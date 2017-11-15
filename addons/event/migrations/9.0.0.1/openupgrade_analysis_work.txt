@@ -76,7 +76,7 @@ event        / event.registration       / message_follower_ids (many2many): type
 # Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
 
 event        / event.registration       / nb_register (integer)         : DEL required: required, req_default: 1
-# Nothing to do: new relation
+# Done: Copy (nb_register-1) times the event.registration record for having the same effect with new structure: 1 record = 1 attendee
 
 event        / event.registration       / user_id (many2one)            : DEL relation: res.users
 # Nothing to do: new relation
