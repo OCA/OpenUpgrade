@@ -1,0 +1,31 @@
+---Fields in module 'hr_contract'---
+hr_contract  / hr.contract              / company_id (many2one)         : NEW relation: res.company
+# Nothing to do, new relation
+
+hr_contract  / hr.contract              / resource_calendar_id (many2one): NEW relation: resource.calendar
+# TODO : rename the field
+# Done : done in pre-migration script
+
+hr_contract  / hr.contract              / state (selection)             : selection_keys is now '['cancel', 'close', 'draft', 'open', 'pending']' ('['close', 'draft', 'open', 'pending']')
+# Nothing to do, nothing related
+
+hr_contract  / hr.contract              / trial_date_start (date)       : DEL
+# Nothing to do, nothing related
+
+hr_contract  / hr.contract              / website_message_ids (one2many): NEW relation: mail.message
+# Nothing to do, new relations
+
+hr_contract  / hr.contract              / working_hours (many2one)      : DEL relation: resource.calendar
+# Nothing to do, nothing related
+---XML records in module 'hr_contract'---
+DEL base.action.rule: hr_contract.rule_contract_1_set_as_pending (noupdate)
+DEL base.action.rule: hr_contract.rule_contract_2_set_as_pending (noupdate)
+DEL base.action.rule: hr_contract.rule_contract_3_set_as_close (noupdate)
+DEL base.action.rule: hr_contract.rule_contract_4_set_as_close (noupdate)
+DEL ir.actions.server: hr_contract.contract_set_as_close (noupdate)
+DEL ir.actions.server: hr_contract.contract_set_as_pending (noupdate)
+NEW ir.cron: hr_contract.ir_cron_data_contract_update_state (noupdate)
+DEL ir.filters: hr_contract.contract_open (noupdate)
+NEW ir.ui.view: hr_contract.hr_contract_view_kanban
+DEL ir.ui.view: hr_contract.view_base_action_rule_form_resource
+# Nothing to do, nothing related
