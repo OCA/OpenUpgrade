@@ -14,3 +14,9 @@ class TestDeferred(common.TransactionCase):
                 ('res_field', '=', 'image'),
                 ('res_name', '=', 'Axelor...'),
             ]).datas)
+
+    def test_hr_attendance_view_removed(self):
+        """ This view, which had the noupdate flag, is now successfully removed
+        """
+        with self.assertRaisesRegexp(ValueError, 'External ID not found'):
+            self.env.ref('hr_attendance.hr_attendace_group')
