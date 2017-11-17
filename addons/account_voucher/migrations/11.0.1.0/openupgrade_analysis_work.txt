@@ -1,0 +1,7 @@
+---Fields in module 'account_voucher'---
+account_voucher / account.voucher          / website_message_ids (one2many): NEW relation: mail.message
+# Nothing to do
+
+---XML records in module 'account_voucher'---
+DEL mail.message: account_voucher.module_install_notification (noupdate)
+# Nothing to do
