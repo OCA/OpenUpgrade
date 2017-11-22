@@ -1,0 +1,31 @@
+---Fields in module 'product'---
+product      / product.category         / type (selection)              : DEL selection_keys: ['normal', 'view']
+product      / product.packaging        / barcode (char)                : NEW
+# Nothing to do
+
+product      / product.packaging        / product_id (many2one)         : NEW relation: product.product
+product      / product.packaging        / product_tmpl_id (many2one)    : DEL relation: product.template
+# DONE: post-migration: merge product_tmpl_id to product_id
+
+product      / product.pricelist.item   / sequence (integer)            : DEL required: required, req_default: function
+product      / product.product          / activity_ids (one2many)       : NEW relation: mail.activity
+product      / product.product          / website_message_ids (one2many): previously in module website_sale
+product      / product.template         / activity_ids (one2many)       : NEW relation: mail.activity
+product      / product.template         / packaging_ids (one2many)      : now a function
+product      / product.template         / variant_seller_ids (one2many) : NEW relation: product.supplierinfo
+product      / product.template         / warranty (float)              : DEL 
+product      / product.template         / website_message_ids (one2many): previously in module website_sale
+# Nothing to do
+
+---XML records in module 'product'---
+NEW ir.actions.report: product.action_report_pricelist
+NEW ir.actions.report: product.report_product_label
+NEW ir.actions.report: product.report_product_template_label
+DEL ir.actions.report.xml: product.action_report_pricelist
+DEL ir.actions.report.xml: product.report_product_label
+DEL ir.actions.report.xml: product.report_product_template_label
+NEW ir.ui.view: product.product_pricelist_view_kanban
+NEW ir.ui.view: product.res_config_settings_view_form
+DEL ir.ui.view: product.inherit_view_general_configuration
+DEL res.groups: product.group_mrp_properties
+# Nothing to do
