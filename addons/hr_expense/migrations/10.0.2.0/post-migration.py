@@ -23,11 +23,13 @@ def set_expense_responsible(env):
     openupgrade.logged_query(
         env.cr, """
         UPDATE hr_expense_sheet s
-        SET responsible_id = e.user_id
+        SET responsible_id = r.user_id
         FROM hr_department d,
-             hr_employee e
+             hr_employee e,
+             resource_resource r
         WHERE s.department_id = d.id
-            AND d.manager_id = e.id""",
+            AND d.manager_id = e.id
+            AND r.id = e.resource_id""",
     )
 
 
