@@ -4,9 +4,16 @@
 
 from openupgradelib import openupgrade
 
+column_copies = {
+    'hr_expense': [
+        ('state', None, None),
+    ]
+}
+
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
+    openupgrade.copy_columns(env.cr, column_copies)
     record = env.ref('hr_expense.action_client_expense_menu', False)
     if record:
         record.unlink()

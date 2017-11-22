@@ -1,7 +1,65 @@
 # -*- coding: utf-8 -*-
 # Copyright 2017 Le Filament (<https://le-filament.com>)
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 from openupgradelib import openupgrade
+
+
+def set_expense_sheet_address(env):
+    """Set address for each employee."""
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE hr_expense_sheet s
+        SET address_id = e.address_home_id
+        FROM hr_employee e
+        WHERE s.employee_id = e.id""",
+    )
+
+
+def set_expense_responsible(env):
+    """Set responsible on expenses by setting them to department manager user.
+    """
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE hr_expense_sheet s
+        SET responsible_id = e.user_id
+        FROM hr_department d,
+             hr_employee e
+        WHERE s.department_id = d.id
+            AND d.manager_id = e.id""",
+    )
+
+
+def set_expense_states(env):
+    """Set correct states on hr.expense"""
+    openupgrade.map_values(
+        env.cr, openupgrade.get_legacy_name('state'), 'state', [
+            ('submit', 'reported'),
+            ('approved', 'reported'),
+            ('post', 'done'),
+            ('cancel', 'refused'),
+        ], table='hr_expense',
+    )
+
+
+def fill_expense_product_account(env):
+    """Set correct account corresponding to product subject to this expense."""
+    for expense in env['hr.expense'].search([]):
+        expense.account_id = expense.product_id.with_context(
+            force_company=expense.company_id.id,
+        ).product_tmpl_id._get_product_accounts()['expense']
+
+
+def set_expense_sheet_accounting_date(env):
+    """Set accounting_date to date from account move when it exists."""
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE hr_expense_sheet hes
+        SET accounting_date = am.date
+        FROM account_move am
+        WHERE hes.account_move_id = am.id""",
+    )
 
 
 @openupgrade.migrate()
@@ -19,7 +77,6 @@ def migrate(env, version):
             message_last_post, name, state, total_amount, write_date, write_uid
         FROM hr_expense WHERE state != 'draft'
         ''')
-
     # Set sheet_id for each expense_id
     cr.execute(
         '''UPDATE hr_expense
@@ -31,74 +88,10 @@ def migrate(env, version):
         ) AS subquery
         WHERE id=subquery.expense_id
         ''')
-
-    # Set address for each employee
-    cr.execute(
-        '''UPDATE hr_expense_sheet
-        SET address_id = subquery.address_home_id
-        FROM (
-            SELECT address_home_id, id
-            FROM hr_employee
-        ) AS subquery
-        WHERE employee_id = subquery.id
-        ''')
-
-    # Set responsible for each expense by setting to department manager when department is filled in
-    cr.execute(
-        '''UPDATE hr_expense_sheet
-        SET responsible_id = subquery.manager_id
-        FROM (
-            SELECT manager_id, id
-            FROM hr_department
-        ) AS subquery
-        WHERE department_id = subquery.id
-        ''')
-
-    # Set correct reported state for hr_expense
-    cr.execute(
-        '''UPDATE hr_expense
-        SET state='reported'
-        WHERE state='submit' or state='approved'
-        ''')
-
-    # Set correct done state for hr_expense
-    cr.execute(
-        '''UPDATE hr_expense
-        SET state='done'
-        WHERE state='post' or state='done'
-        ''')
-
-    # Set correct refused state for hr_expense
-    cr.execute(
-        '''UPDATE hr_expense
-        SET state='refused'
-        WHERE state='cancel'
-        ''')
-
-    # Set correct account corresponding to product subject to this expense
-    cr.execute(
-        '''SELECT distinct he.product_id, pp.product_tmpl_id
-        FROM hr_expense he, product_product pp
-        WHERE he.product_id=pp.id
-        ''')
-    product_ids = cr.fetchall()
-    for product in product_ids:
-        product_template = "'product_template," + str(product[1]) + "'"
-        cr.execute(
-           '''UPDATE hr_expense
-           SET account_id=(
-                SELECT to_number(substring(value_reference from 17),'99999')
-                FROM ir_property
-                WHERE res_id like %s limit 1)
-           WHERE product_id=%s
-           ''' % (product_template, product[0], ))
-
-    # Set accounting_date to date from account_analytic_line when it exists
-    cr.execute(
-        '''UPDATE hr_expense_sheet hes
-        SET accounting_date = am.date
-        FROM account_move am
-        WHERE hes.account_move_id = am.id;
-        ''')
+    set_expense_sheet_address(env)
+    set_expense_responsible(env)
+    set_expense_states(env)
+    fill_expense_product_account(env)
+    set_expense_sheet_accounting_date(env)
     openupgrade.load_data(
         cr, 'hr_expense', 'migrations/10.0.2.0/noupdate_changes.xml')
