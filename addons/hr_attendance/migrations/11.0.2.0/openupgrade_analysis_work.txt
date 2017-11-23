@@ -1,0 +1,12 @@
+---Fields in module 'hr_attendance'---
+---XML records in module 'hr_attendance'---
+NEW ir.actions.act_window: hr_attendance.hr_attendance_action_employee
+NEW ir.ui.view: hr_attendance.qunit_suite
+NEW ir.ui.view: hr_attendance.res_config_settings_view_form
+NEW ir.ui.view: hr_attendance.view_hr_attendance_kanban
+DEL ir.ui.view: hr_attendance.hr_attendance_view_config
+# Nothing to do
+
+NEW res.groups: hr_attendance.group_hr_attendance
+DEL res.groups: hr.group_hr_attendance
+# Done: Rename XML-IDs
