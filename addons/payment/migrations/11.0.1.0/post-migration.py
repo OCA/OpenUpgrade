@@ -9,5 +9,5 @@ from openupgradelib import openupgrade
 def migrate(env, version):
 
     openupgrade.load_data(
-        env.cd, 'payment', 'migrations/11.0.1.0/noupdate_changes.xml',
+        env.cr, 'payment', 'migrations/11.0.1.0/noupdate_changes.xml',
     )
