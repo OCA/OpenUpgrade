@@ -8,7 +8,7 @@ from openupgradelib import openupgrade
 
 
 column_copies = {
-    'hr_expense': [
+    'hr_expense_expense': [
         ('state', None, None),
     ],
 }
@@ -20,13 +20,14 @@ field_renames = [
 ]
 
 table_renames = [
-    ('hr_expense_expense', 'hr_expense'),
+    ('hr_expense_expense', None),
+    ('hr_expense_line', 'hr_expense'),
     ]
 
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
-    openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_fields(env, field_renames)
     openupgrade.copy_columns(cr, column_copies)
+    openupgrade.rename_tables(cr, table_renames)
