@@ -51,7 +51,7 @@ purchase     / purchase.order.line      / date_planned (date)           : type i
 #Nothing To Do : will get datetime automatically.
 
 purchase     / purchase.order.line      / invoice_lines (many2many)     : type is now 'one2many' ('many2many')
-#Nothing To Do : As there is already m2o (purchase_line_id) for purchase.order.line in account.invoice.line.
+#Done: migrated Many2many table to Many2one field on the invoice line (purchase_line_id)
 
 purchase     / purchase.order.line      / invoiced (boolean)            : DEL 
 #Nothing To Do : Functionality removed now no longer needed.
