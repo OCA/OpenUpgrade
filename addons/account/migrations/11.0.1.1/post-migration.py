@@ -18,7 +18,7 @@ def migrate(env, version):
         UPDATE account_move_line aml
         SET statement_line_id = am.statement_line_id
         FROM account_move am
-        WHERE aml.move_id = am.id;
+        WHERE aml.move_id = am.id AND am.statement_line_id IS NOT NULL;
     """)
 
     openupgrade.load_data(

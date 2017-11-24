@@ -32,6 +32,8 @@ account      / account.invoice          / activity_ids (one2many)       : NEW re
 account      / account.invoice          / cash_rounding_id (many2one)   : NEW relation: account.cash.rounding
 account      / account.invoice          / refund_invoice_ids (one2many) : NEW relation: account.invoice
 # NOTHING TO DO
+# access_token: is prepopulated with unique tokens by default function
+# refund_invoice_ids: is the counterpart of the existing many2one field refund_invoice_id
 
 account      / account.invoice          / state (selection)             : selection_keys is now '['cancel', 'draft', 'open', 'paid']' ('['cancel', 'draft', 'open', 'paid', 'proforma', 'proforma2']')
 # DONE: pre-migration: copy column
