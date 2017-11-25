@@ -1,0 +1,159 @@
+---Fields in module 'fleet'---
+fleet        / fleet.vehicle            / active (boolean)              : NEW
+fleet        / fleet.vehicle            / contract_renewal_total (integer): type is now 'text' ('integer')
+fleet        / fleet.vehicle.cost       / odometer_unit (char)          : selection_keys is now 'function' ('False')
+fleet        / fleet.vehicle.cost       / odometer_unit (char)          : type is now 'selection' ('char')
+fleet        / fleet.vehicle.log.contract / active (boolean)              : NEW
+fleet        / fleet.vehicle.odometer   / unit (char)                   : selection_keys is now 'function' ('False')
+fleet        / fleet.vehicle.odometer   / unit (char)                   : type is now 'selection' ('char')
+# NOTHING TO DO
+
+---XML records in module 'fleet'---
+NEW ir.actions.act_window: fleet.fleet_costs_reporting_action
+NEW ir.actions.act_window: fleet.fleet_costs_reporting_non_effective_action
+NEW ir.actions.act_window: fleet.fleet_vehicle_action
+NEW ir.actions.act_window: fleet.fleet_vehicle_costs_action
+NEW ir.actions.act_window: fleet.fleet_vehicle_log_contract_action
+NEW ir.actions.act_window: fleet.fleet_vehicle_log_fuel_action
+NEW ir.actions.act_window: fleet.fleet_vehicle_log_services_action
+NEW ir.actions.act_window: fleet.fleet_vehicle_model_action
+NEW ir.actions.act_window: fleet.fleet_vehicle_model_brand_action
+NEW ir.actions.act_window: fleet.fleet_vehicle_odometer_action
+NEW ir.actions.act_window: fleet.fleet_vehicle_service_types_action
+NEW ir.actions.act_window: fleet.fleet_vehicle_state_action
+NEW ir.actions.act_window: fleet.fleet_vehicle_tag_action
+DEL ir.actions.act_window: fleet.action_fleet_reporting_costs
+DEL ir.actions.act_window: fleet.action_fleet_reporting_costs_non_effective
+DEL ir.actions.act_window: fleet.fleet_vehicle_act
+DEL ir.actions.act_window: fleet.fleet_vehicle_costs_act
+DEL ir.actions.act_window: fleet.fleet_vehicle_log_contract_act
+DEL ir.actions.act_window: fleet.fleet_vehicle_log_fuel_act
+DEL ir.actions.act_window: fleet.fleet_vehicle_log_services_act
+DEL ir.actions.act_window: fleet.fleet_vehicle_model_act
+DEL ir.actions.act_window: fleet.fleet_vehicle_model_brand_act
+DEL ir.actions.act_window: fleet.fleet_vehicle_odometer_act
+DEL ir.actions.act_window: fleet.fleet_vehicle_service_types_act
+DEL ir.actions.act_window: fleet.fleet_vehicle_state_act
+NEW ir.actions.act_window.view: fleet.fleet_reporting_graph_action
+NEW ir.actions.act_window.view: fleet.fleet_reporting_pivot_action
+NEW ir.actions.act_window.view: fleet.view_fleet_non_effective_graph_action
+NEW ir.actions.act_window.view: fleet.view_fleet_non_effective_pivot_action
+DEL ir.actions.act_window.view: fleet.action_view_fleet_non_effective_graph
+DEL ir.actions.act_window.view: fleet.action_view_fleet_non_effective_pivot
+DEL ir.actions.act_window.view: fleet.action_view_fleet_reporting_graph
+DEL ir.actions.act_window.view: fleet.action_view_fleet_reporting_pivot
+# Nothing to do
+
+DEL ir.actions.client: fleet.action_fleet_menu
+DEL ir.actions.todo: base.open_menu
+DEL ir.model.access: fleet.access_fleet_contract_state
+DEL ir.model.access: fleet.access_fleet_contract_state_user
+# Nothing to do
+
+NEW ir.rule: fleet.fleet_rule_contract_visibility_manager
+NEW ir.rule: fleet.fleet_rule_contract_visibility_user
+NEW ir.rule: fleet.fleet_rule_cost_visibility_manager
+NEW ir.rule: fleet.fleet_rule_cost_visibility_user
+NEW ir.rule: fleet.fleet_rule_fuel_log_visibility_manager
+NEW ir.rule: fleet.fleet_rule_fuel_log_visibility_user
+NEW ir.rule: fleet.fleet_rule_odometer_visibility_manager
+NEW ir.rule: fleet.fleet_rule_odometer_visibility_user
+NEW ir.rule: fleet.fleet_rule_service_visibility_manager
+NEW ir.rule: fleet.fleet_rule_service_visibility_user
+NEW ir.rule: fleet.fleet_rule_vehicle_visibility_manager
+NEW ir.rule: fleet.fleet_rule_vehicle_visibility_user
+DEL ir.rule: fleet.fleet_user_contract_visibility
+DEL ir.rule: fleet.fleet_user_contract_visibility_manager
+DEL ir.rule: fleet.fleet_user_cost_visibility
+DEL ir.rule: fleet.fleet_user_cost_visibility_manager
+DEL ir.rule: fleet.fleet_user_fuel_log_visibility
+DEL ir.rule: fleet.fleet_user_fuel_log_visibility_manager
+DEL ir.rule: fleet.fleet_user_odometer_visibility
+DEL ir.rule: fleet.fleet_user_odometer_visibility_manager
+DEL ir.rule: fleet.fleet_user_service_visibility
+DEL ir.rule: fleet.fleet_user_service_visibility_manager
+DEL ir.rule: fleet.fleet_user_vehicle_visibility
+DEL ir.rule: fleet.fleet_user_vehicle_visibility_manager
+# Done: Rename XML-IDs
+
+NEW ir.ui.menu: fleet.fleet_vehicle_tag_menu
+NEW ir.ui.view: fleet.fleet_vehicle_cost_indicative_view_graph
+NEW ir.ui.view: fleet.fleet_vehicle_cost_indicative_view_pivot
+NEW ir.ui.view: fleet.fleet_vehicle_cost_view_graph
+NEW ir.ui.view: fleet.fleet_vehicle_cost_view_pivot
+NEW ir.ui.view: fleet.fleet_vehicle_cost_view_tree
+NEW ir.ui.view: fleet.fleet_vehicle_costs_view_form
+NEW ir.ui.view: fleet.fleet_vehicle_costs_view_graph
+NEW ir.ui.view: fleet.fleet_vehicle_costs_view_search
+NEW ir.ui.view: fleet.fleet_vehicle_log_contract_view_form
+NEW ir.ui.view: fleet.fleet_vehicle_log_contract_view_graph
+NEW ir.ui.view: fleet.fleet_vehicle_log_contract_view_search
+NEW ir.ui.view: fleet.fleet_vehicle_log_contract_view_tree
+NEW ir.ui.view: fleet.fleet_vehicle_log_fuel_view_form
+NEW ir.ui.view: fleet.fleet_vehicle_log_fuel_view_graph
+NEW ir.ui.view: fleet.fleet_vehicle_log_fuel_view_search
+NEW ir.ui.view: fleet.fleet_vehicle_log_fuel_view_tree
+NEW ir.ui.view: fleet.fleet_vehicle_log_services_view_form
+NEW ir.ui.view: fleet.fleet_vehicle_log_services_view_graph
+NEW ir.ui.view: fleet.fleet_vehicle_log_services_view_search
+NEW ir.ui.view: fleet.fleet_vehicle_log_services_view_tree
+NEW ir.ui.view: fleet.fleet_vehicle_model_brand_view_form
+NEW ir.ui.view: fleet.fleet_vehicle_model_brand_view_kanban
+NEW ir.ui.view: fleet.fleet_vehicle_model_brand_view_tree
+NEW ir.ui.view: fleet.fleet_vehicle_model_view_form
+NEW ir.ui.view: fleet.fleet_vehicle_model_view_search
+NEW ir.ui.view: fleet.fleet_vehicle_model_view_tree
+NEW ir.ui.view: fleet.fleet_vehicle_odometer_view_form
+NEW ir.ui.view: fleet.fleet_vehicle_odometer_view_graph
+NEW ir.ui.view: fleet.fleet_vehicle_odometer_view_search
+NEW ir.ui.view: fleet.fleet_vehicle_odometer_view_tree
+NEW ir.ui.view: fleet.fleet_vehicle_service_types_view_tree
+NEW ir.ui.view: fleet.fleet_vehicle_state_view_tree
+NEW ir.ui.view: fleet.fleet_vehicle_tag_view_view_form
+NEW ir.ui.view: fleet.fleet_vehicle_view_form
+NEW ir.ui.view: fleet.fleet_vehicle_view_kanban
+NEW ir.ui.view: fleet.fleet_vehicle_view_search
+NEW ir.ui.view: fleet.fleet_vehicle_view_tree
+DEL ir.ui.view: fleet.fleet_vehicle_cost_tree
+DEL ir.ui.view: fleet.fleet_vehicle_costs_form
+DEL ir.ui.view: fleet.fleet_vehicle_costs_graph
+DEL ir.ui.view: fleet.fleet_vehicle_costs_search
+DEL ir.ui.view: fleet.fleet_vehicle_effective_costs_report
+DEL ir.ui.view: fleet.fleet_vehicle_effective_costs_report_pivot
+DEL ir.ui.view: fleet.fleet_vehicle_form
+DEL ir.ui.view: fleet.fleet_vehicle_indicative_costs_report
+DEL ir.ui.view: fleet.fleet_vehicle_indicative_costs_report_pivot
+DEL ir.ui.view: fleet.fleet_vehicle_kanban
+DEL ir.ui.view: fleet.fleet_vehicle_log_contract_form
+DEL ir.ui.view: fleet.fleet_vehicle_log_contract_graph
+DEL ir.ui.view: fleet.fleet_vehicle_log_contract_tree
+DEL ir.ui.view: fleet.fleet_vehicle_log_fuel_form
+DEL ir.ui.view: fleet.fleet_vehicle_log_fuel_graph
+DEL ir.ui.view: fleet.fleet_vehicle_log_fuel_search
+DEL ir.ui.view: fleet.fleet_vehicle_log_fuel_tree
+DEL ir.ui.view: fleet.fleet_vehicle_log_services_form
+DEL ir.ui.view: fleet.fleet_vehicle_log_services_graph
+DEL ir.ui.view: fleet.fleet_vehicle_log_services_search
+DEL ir.ui.view: fleet.fleet_vehicle_log_services_tree
+DEL ir.ui.view: fleet.fleet_vehicle_model_brand_form
+DEL ir.ui.view: fleet.fleet_vehicle_model_brand_kanban
+DEL ir.ui.view: fleet.fleet_vehicle_model_brand_tree
+DEL ir.ui.view: fleet.fleet_vehicle_model_form
+DEL ir.ui.view: fleet.fleet_vehicle_model_search
+DEL ir.ui.view: fleet.fleet_vehicle_model_tree
+DEL ir.ui.view: fleet.fleet_vehicle_odometer_form
+DEL ir.ui.view: fleet.fleet_vehicle_odometer_graph
+DEL ir.ui.view: fleet.fleet_vehicle_odometer_search
+DEL ir.ui.view: fleet.fleet_vehicle_odometer_tree
+DEL ir.ui.view: fleet.fleet_vehicle_search
+DEL ir.ui.view: fleet.fleet_vehicle_service_types_tree
+DEL ir.ui.view: fleet.fleet_vehicle_state_tree
+DEL ir.ui.view: fleet.fleet_vehicle_tree
+# Nothing to do
+
+NEW res.groups: fleet.fleet_group_manager
+NEW res.groups: fleet.fleet_group_user
+DEL res.groups: fleet.group_fleet_manager
+DEL res.groups: fleet.group_fleet_user
+NEW res.users: base.default_user
+# Done: Rename XML-IDs
