@@ -19,6 +19,17 @@ field_renames = [
      'fiscal_position_id'),
 ]
 
+column_renames = {
+    'purchase_order_taxe': [
+        ('ord_id', 'purchase_order_line_id'),
+        ('tax_id', 'account_tax_id'),
+    ]
+}
+
+table_renames = [
+    ('purchase_order_taxe', 'account_tax_purchase_order_line_rel'),
+]
+
 
 def map_order_state(cr):
     """ Map values for state field in purchase.order and purchase.order.line.
@@ -57,5 +68,8 @@ def migrate(env, version):
     cr = env.cr
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_fields(env, field_renames)
+    # This should be run before table renames
+    openupgrade.rename_columns(env.cr, column_renames)
+    openupgrade.rename_tables(env.cr, table_renames)
     map_order_state(cr)
     purchase_invoice_lines(cr)
