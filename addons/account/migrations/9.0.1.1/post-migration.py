@@ -199,21 +199,34 @@ def cashbox(cr):
     )
     # assign those to the cashbox lines they derive from
     cr.execute(
-        'update account_cashbox_line l set cashbox_id='
-        '(select id from account_bank_statement_cashbox where l.id='
-        'any(%(cashbox_line_ids)s))' % {
+        'update account_cashbox_line l set cashbox_id=cb.id '
+        'from (select id, openupgrade_legacy_9_0_cashbox_line_ids from '
+        'account_bank_statement_cashbox) cb '
+        'where l.id=any(%(cashbox_line_ids)s)' % {
             'cashbox_line_ids': openupgrade.get_legacy_name('cashbox_line_ids')
         }
     )
-    # and now assign the proper cashbox_{start,end}_id values
+    # and now assign the proper cashbox_start_id values
     cr.execute(
-        'update account_bank_statement s set '
-        'cashbox_start_id=(select cashbox_id from account_cashbox_line where '
-        '%(bank_statement_id)s=s.id and %(number_closing)s is null limit 1),'
-        'cashbox_end_id=(select cashbox_id from account_cashbox_line where '
-        '%(bank_statement_id)s=s.id and %(number_opening)s is null limit 1)' %
+        'update account_bank_statement s '
+        'set cashbox_start_id=cbl.cashbox_id '
+        'from (select cashbox_id, %(bank_statement_id)s,  '
+        '%(number_closing)s from account_cashbox_line) cbl '
+        'where s.id=cbl.%(bank_statement_id)s and %(number_closing)s is null' %
         {
             'number_closing': openupgrade.get_legacy_name('number_closing'),
+            'bank_statement_id':
+            openupgrade.get_legacy_name('bank_statement_id'),
+        }
+    )
+
+    # and now assign the proper cashbox_end_id values
+    cr.execute(
+        'update account_bank_statement s set cashbox_end_id=cbl.cashbox_id '
+        'from (select cashbox_id, %(bank_statement_id)s, %(number_opening)s '
+        ' from account_cashbox_line) cbl '
+        'where s.id=cbl.%(bank_statement_id)s and %(number_opening)s is null' %
+        {
             'number_opening': openupgrade.get_legacy_name('number_opening'),
             'bank_statement_id':
             openupgrade.get_legacy_name('bank_statement_id'),
@@ -224,17 +237,19 @@ def cashbox(cr):
 def account_properties(cr):
     # Handle account properties as their names are changed.
     cr.execute("""
-            update ir_property set name = 'property_account_payable_id',
-            fields_id = (select id from ir_model_fields where model
-            = 'res.partner' and name = 'property_account_payable_id')
+        update ir_property set name = 'property_account_payable_id',
+            fields_id = f.id
+        from (select id from ir_model_fields where model
+            = 'res.partner' and name = 'property_account_payable_id') f
             where name = 'property_account_payable' and (res_id like
             'res.partner%' or res_id is null)
-            """)
+           """)
     cr.execute("""
-            update ir_property set fields_id = (select id from
+            update ir_property set name = 'property_account_receivable_id',
+            fields_id = f.id
+            from (select id from
             ir_model_fields where model = 'res.partner' and
-            name = 'property_account_receivable_id'), name =
-            'property_account_receivable_id' where
+            name = 'property_account_receivable_id') f  where
             name = 'property_account_receivable' and (res_id like
             'res.partner%' or res_id is null)
             """)
