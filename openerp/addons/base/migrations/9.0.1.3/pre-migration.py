@@ -87,6 +87,7 @@ def cleanup_modules(cr):
             # from OCA/crm - included in core
             ('crm_lead_lost_reason', 'crm'),
             # from OCA/sale-workflow - included in core
+            ('account_invoice_reorder_lines', 'account'),
             ('sale_order_back2draft', 'sale'),
             ('partner_prepayment', 'sale_delivery_block'),
             ('sale_fiscal_position_update', 'sale'),
