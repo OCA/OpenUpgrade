@@ -546,6 +546,7 @@ account      / account.tax.template     / type_tax_use (selection)      : select
 #### FIELDS IN MODEL IR.SEQUENCE ####
 
 account      / ir.sequence              / fiscal_ids (one2many)         : DEL relation: account.sequence.fiscalyear
+# DONE: migrated fiscal year sequences to date ranges
 
 #### FIELDS IN MODEL PRODUCT.CATEGORY ####
 account      / product.category         / property_account_expense_categ (many2one): was renamed to property_account_expense_categ_id [nothing to to]
