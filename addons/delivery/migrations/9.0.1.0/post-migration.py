@@ -28,9 +28,10 @@ def rename_property(cr, model, old_name, new_name):
 
 def reassign_carrier_id(cr):
     cr.execute("""
-        select id, openupgrade_legacy_9_0_carrier_id from delivery_carrier
-        where id != openupgrade_legacy_9_0_carrier_id;
-    """)
+        select id, %s from delivery_carrier
+        where id != %s;
+    """ % (openupgrade.get_legacy_name('carrier_id'),
+           openupgrade.get_legacy_name('carrier_id')),)
     for new_id, old_id in cr.fetchall():
         if openupgrade.table_exists(cr, 'sale_order') and \
                 openupgrade.column_exists(cr, 'sale_order', 'carrier_id'):
