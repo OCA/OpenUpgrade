@@ -26,6 +26,27 @@ def rename_property(cr, model, old_name, new_name):
         (new_name, field_ids))
 
 
+def reassign_carrier_id(cr):
+    cr.execute("""
+        select id, %s from delivery_carrier
+        where id != %s;
+    """ % (openupgrade.get_legacy_name('carrier_id'),
+           openupgrade.get_legacy_name('carrier_id')),)
+    for new_id, old_id in cr.fetchall():
+        if openupgrade.table_exists(cr, 'sale_order') and \
+                openupgrade.column_exists(cr, 'sale_order', 'carrier_id'):
+            cr.execute("""
+                UPDATE sale_order set carrier_id = %s
+                where carrier_id = %s
+            """ % (new_id, old_id))
+        if openupgrade.table_exists(cr, 'stock_picking') and \
+                openupgrade.column_exists(cr, 'stock_picking', 'carrier_id'):
+            cr.execute("""
+                UPDATE stock_picking set carrier_id = %s
+                where carrier_id = %s
+            """ % (new_id, old_id))
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     cr.execute(
@@ -46,3 +67,4 @@ def migrate(cr, version):
         cr, 'res.partner', 'property_delivery_carrier',
         'property_delivery_carrier_id',
     )
+    reassign_carrier_id(cr)
