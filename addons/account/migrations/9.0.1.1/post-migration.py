@@ -363,6 +363,31 @@ def map_account_tax_template_type(cr):
         table='account_tax_template', write='sql')
 
 
+def migrate_account_sequence_fiscalyear(cr):
+    """ Migrate subsequences from fiscalyears to sequence date ranges
+    so that the next number is aligned with the last assigned number """
+    openupgrade.logged_query(
+        cr,
+        """ \
+        INSERT into ir_sequence_date_range
+        (sequence_id, date_from, date_to, number_next)
+        SELECT sequence_main_id, af.date_start, af.date_stop,
+            irs.number_next
+        FROM account_sequence_fiscalyear asf,
+            account_fiscalyear af, ir_sequence irs
+        WHERE asf.fiscalyear_id = af.id
+             and asf.sequence_id = irs.id; """)
+    openupgrade.logged_query(
+        cr,
+        """ \
+        UPDATE ir_sequence SET
+            prefix = REPLACE(prefix, '%%(year)s', '%%(range_year)s'),
+            suffix = REPLACE(suffix, '%%(year)s', '%%(range_year)s'),
+            use_date_range = TRUE
+        WHERE id IN (SELECT sequence_id FROM ir_sequence_date_range)
+        """)
+
+
 def migrate_account_auto_fy_sequence(env):
     """As now Odoo implements a feature for having several sequence numbers
     per date range, we don't need anymore this module. This handles a smooth
@@ -987,6 +1012,7 @@ def migrate(env, version):
     account_internal_type(env)
     map_account_tax_type(cr)
     map_account_tax_template_type(cr)
+    migrate_account_sequence_fiscalyear(cr)
     migrate_account_auto_fy_sequence(env)
     fill_move_taxes(env)
     fill_blacklisted_fields(cr)

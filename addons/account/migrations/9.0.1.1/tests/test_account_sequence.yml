@@ -1,0 +1,11 @@
+- !record {model: ir.sequence, id: account.seq_out_invoice_test}:
+    name: Account Invoice Out for the demonstration Fiscal Year # XXX indicate the name of the fiscal year
+    padding: 3
+    prefix: FY-
+    suffix: -TEST
+    number_next_actual: 42
+
+- !record {model: account.sequence.fiscalyear, id: account.seq_out_invoice_test_fy}:
+    sequence_id: account.seq_out_invoice_test
+    sequence_main_id: account.sequence_sale_journal
+    fiscalyear_id: account.data_fiscalyear
