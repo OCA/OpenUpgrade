@@ -7,6 +7,7 @@
 import operator
 from openupgradelib import openupgrade
 from openerp.modules.registry import RegistryManager
+from psycopg2.extensions import AsIs
 
 
 def map_bank_state(cr):
@@ -253,6 +254,32 @@ def account_properties(cr):
             name = 'property_account_receivable' and (res_id like
             'res.partner%' or res_id is null)
             """)
+
+
+def move_view_accounts(env):
+    """Move accounts of type view to another table, but removing them from the
+    main list for not disturbing normal accounting.
+    """
+    openupgrade.logged_query(
+        env.cr, """
+        CREATE TABLE %s
+        AS SELECT * FROM account_account
+        WHERE %s = 'view'""", (
+            AsIs(openupgrade.get_legacy_name('account_account')),
+            AsIs(openupgrade.get_legacy_name('type')),
+        )
+    )
+    # Remove constraint that delete in cascade children accounts
+    openupgrade.logged_query(
+        env.cr, """
+        ALTER TABLE account_account
+        DROP CONSTRAINT account_account_parent_id_fkey"""
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        DELETE FROM account_account
+        WHERE %s = 'view'""", (AsIs(openupgrade.get_legacy_name('type')),)
+    )
 
 
 def account_internal_type(env):
@@ -956,6 +983,7 @@ def migrate(env, version):
 
     parent_id_to_tag(env, 'account.tax')
     parent_id_to_tag(env, 'account.account', recursive=True)
+    move_view_accounts(env)
     account_internal_type(env)
     map_account_tax_type(cr)
     map_account_tax_template_type(cr)
