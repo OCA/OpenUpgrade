@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="s_banner_default_image" model="ir.attachment">
+        <field name="name">Slider Snippet - Default Image</field>
+    </record>
+    <record id="menu_contactus" model="website.menu">
+        <field name="url">/contactus</field>
+        <field name="page_id" ref="contactus_page"/>
+    </record>
+    <record id="menu_homepage" model="website.menu">
+        <field name="url">/</field>
+        <field name="page_id" ref="homepage_page"/>
+    </record>
+    <record id="action_website_homepage" model="ir.actions.act_url">
+        <field name="url">/</field>
+    </record>
+    <record id="default_website" model="website">
+        <field name="homepage_id" ref="homepage_page"/>
+    </record>
+</odoo>
