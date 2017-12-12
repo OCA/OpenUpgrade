@@ -22,7 +22,6 @@ def update_journal_payment_methods(env):
     })
 
 
-
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     update_journal_payment_methods(env)

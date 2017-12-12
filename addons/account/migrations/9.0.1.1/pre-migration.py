@@ -111,9 +111,15 @@ table_renames = [
     ('account_tax_code', 'account_tax_group')]
 
 xmlid_renames = [
-    ('account.conf_account_type_equity', 'account.data_account_type_equity'), 
+    ('account.conf_account_type_equity', 'account.data_account_type_equity'),
     ('account.data_account_type_income', 'account.data_account_type_revenue'),
     ('account.data_account_type_bank', 'account.data_account_type_liquidity'),
+    ('account.data_account_type_asset',
+     'account.data_account_type_current_assets'),
+    ('account.data_account_type_liability',
+     'account.data_account_type_current_liabilities'),
+    ('account.data_account_type_expense',
+     'account.data_account_type_expenses'),
 ]
 
 PROPERTY_FIELDS = {
