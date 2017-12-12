@@ -1,0 +1,28 @@
+-
+  !record {model: product.supplierinfo, id: product.ou_demo_supplierinfo_eu}:
+    name: base.res_partner_1
+    product_tmpl_id: product.product_product_4_product_template
+    product_name: 'partner product name'
+    product_code: 'PPCD'
+    sequence: 3
+    delay: 2
+    company_id: base.main_company
+    pricelist_ids:
+      - min_quantity: 1
+        price: 2
+      - min_quantity: 10
+        price: 1.5
+-
+  !record {model: product.supplierinfo, id: product.ou_demo_supplierinfo_us}:
+    name: base.res_partner_4
+    product_tmpl_id: product.product_product_4_product_template
+    product_name: 'other partner product name'
+    product_code: 'OPPCD'
+    sequence: 2
+    delay: 4
+    company_id: multi_company.res_company_oerp_us
+    pricelist_ids:
+      - min_quantity: 2
+        price: 3
+      - min_quantity: 15
+        price: 2

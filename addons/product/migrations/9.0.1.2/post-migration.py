@@ -196,6 +196,70 @@ def map_product_template_type(cr):
         table='product_template', write='sql')
 
 
+def update_product_supplierinfo(env):
+    """ Merge obsolete partner_pricelistinfo with product_supplierinfo.
+    Store the id of the original pricelistinfo on a custom integer field
+    for later reference."""
+    # Default currency for infos without a company
+    default_currency_id = env['res.company'].search(
+        [], order='id asc', limit=1).currency_id.id
+    env.cr.execute(
+        """ALTER TABLE product_supplierinfo
+        ADD COLUMN openupgrade_migrated_from_pricelist_id INTEGER""")
+    env.cr.execute(
+        """UPDATE product_supplierinfo ps
+        SET openupgrade_migrated_from_pricelist_id = pp.id,
+        min_qty = pp.min_quantity,
+        price = pp.price,
+        currency_id = %s
+        FROM pricelist_partnerinfo pp
+        WHERE pp.suppinfo_id = ps.id
+        """, (default_currency_id,))
+    # Fix currency where company is set
+    env.cr.execute(
+        """UPDATE product_supplierinfo ps
+        SET currency_id = rc.currency_id
+        FROM res_company rc
+        WHERE rc.id = ps.company_id """)
+    openupgrade.logged_query(
+        env.cr,
+        """ INSERT INTO product_supplierinfo (
+            company_id,
+            create_date,
+            create_uid,
+            currency_id,
+            delay,
+            min_qty,
+            name,
+            openupgrade_migrated_from_pricelist_id,
+            price,
+            product_tmpl_id,
+            product_code,
+            product_name,
+            sequence)
+        SELECT
+            ps.company_id,
+            pp.create_date,
+            pp.create_uid,
+            ps.currency_id,
+            ps.delay,
+            pp.min_quantity,
+            ps.name,
+            pp.id,
+            pp.price,
+            ps.product_tmpl_id,
+            ps.product_code,
+            ps.product_name,
+            ps.sequence
+        FROM product_supplierinfo ps, pricelist_partnerinfo pp
+        WHERE pp.id NOT IN (
+                SELECT openupgrade_migrated_from_pricelist_id
+                FROM product_supplierinfo
+                WHERE openupgrade_migrated_from_pricelist_id IS NOT NULL)
+            AND pp.suppinfo_id = ps.id
+        """)
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     map_base(env.cr)
@@ -212,3 +276,4 @@ def migrate(env, version):
     openupgrade.load_data(
         env.cr, 'product', 'migrations/9.0.1.2/noupdate_changes.xml',
     )
+    update_product_supplierinfo(env)
