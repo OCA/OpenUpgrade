@@ -83,6 +83,31 @@ def correct_rule_prices(cr):
     )
 
 
+def reassign_carrier_id(cr):
+    cr.execute(
+        """SELECT id, {0} FROM delivery_carrier
+        WHERE id != {0};
+        """.format(openupgrade.get_legacy_name('carrier_id'))
+    )
+    for new_id, old_id in cr.fetchall():
+        if openupgrade.table_exists(cr, 'sale_order') and \
+                openupgrade.column_exists(cr, 'sale_order', 'carrier_id'):
+            openupgrade.logged_query(
+                cr, """
+                UPDATE sale_order set carrier_id = %s
+                where carrier_id = %s""",
+                (new_id, old_id),
+            )
+        if openupgrade.table_exists(cr, 'stock_picking') and \
+                openupgrade.column_exists(cr, 'stock_picking', 'carrier_id'):
+            openupgrade.logged_query(
+                cr, """
+                UPDATE stock_picking set carrier_id = %s
+                where carrier_id = %s""",
+                (new_id, old_id),
+            )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -93,3 +118,4 @@ def migrate(env, version):
     openupgrade.rename_tables(cr, table_renames)
     # TODO: if the same product is used for multiple carriers, duplicate it
     # for having a correct structure of 1 product = 1 carrier
+    reassign_carrier_id(cr)
