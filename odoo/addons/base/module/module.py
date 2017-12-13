@@ -26,6 +26,7 @@ import odoo
 from odoo import api, fields, models, modules, tools, _
 from odoo.exceptions import AccessDenied, UserError
 from odoo.tools.parse_version import parse_version
+from odoo.tools.misc import topological_sort
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)
@@ -304,6 +305,14 @@ class Module(models.Model):
             if module.state in ('installed', 'to upgrade', 'to remove', 'to install'):
                 raise UserError(_('You try to remove a module that is installed or will be installed'))
         self.clear_caches()
+        # Installing a module creates entries in base.module.uninstall, during
+        # the unlink process of ir.module.module we try to update the
+        # base.module.uninstall table's module_id to null, which violates a
+        # non-null constraint, effectively raising an Exception.
+        # V11-only !!DO NOT FORWARD-PORT!!
+        self.env['base.module.uninstall'].search(
+            [('module_id', 'in', self.ids)]
+        ).unlink()
         return super(Module, self).unlink()
 
     @staticmethod
@@ -844,7 +853,13 @@ class Module(models.Model):
             filter_lang = [lang.code for lang in langs]
         elif not isinstance(filter_lang, (list, tuple)):
             filter_lang = [filter_lang]
-        mod_names = [mod.name for mod in self if mod.state in ('installed', 'to install', 'to upgrade')]
+
+        update_mods = self.filtered(lambda r: r.state in ('installed', 'to install', 'to upgrade'))
+        mod_dict = {
+            mod.name: mod.dependencies_id.mapped('name')
+            for mod in update_mods
+        }
+        mod_names = topological_sort(mod_dict)
         self.env['ir.translation'].load_module_terms(mod_names, filter_lang)
 
     @api.multi

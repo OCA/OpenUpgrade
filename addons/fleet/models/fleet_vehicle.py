@@ -275,7 +275,7 @@ class FleetVehicleOdometer(models.Model):
                 name = record.date
             elif record.date:
                 name += ' / ' + record.date
-            self.name = name
+            record.name = name
 
     @api.onchange('vehicle_id')
     def _onchange_vehicle(self):
@@ -310,4 +310,4 @@ class FleetServiceType(models.Model):
     category = fields.Selection([
         ('contract', 'Contract'),
         ('service', 'Service')
-        ], 'Category', required=True, help='Choose wheter the service refer to contracts, vehicle services or both')
+        ], 'Category', required=True, help='Choose whether the service refer to contracts, vehicle services or both')

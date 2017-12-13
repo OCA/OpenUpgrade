@@ -62,6 +62,7 @@ var BaseSettingRenderer = FormRenderer.extend({
             var isNotApp = $(settingView).hasClass('o_not_app');
             if(group && !isNotApp) {
                 var data = $(settingView).data();
+                data.string = $(settingView).attr('string') || data.string;
                 self.modules.push({
                     key: data.key,
                     string: data.string,
@@ -294,7 +295,7 @@ var BaseSettingRenderer = FormRenderer.extend({
                     var settingBox = $(this).closest('.o_setting_box');
                     if (!settingBox.hasClass('o_invisible_modifier')) {
                         settingBox.removeClass('o_hidden');
-                        $(this).html(self._wordHighlighter($(this).text(), self.searchText));
+                        $(this).html(self._wordHighlighter($(this).html(), self.searchText));
                     } else {
                         self.inVisibleCount++;
                     }

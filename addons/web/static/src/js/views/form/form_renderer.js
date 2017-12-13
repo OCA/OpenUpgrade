@@ -200,6 +200,26 @@ var FormRenderer = BasicRenderer.extend({
     //--------------------------------------------------------------------------
 
     /**
+     * Add a tooltip on a button
+     *
+     * @private
+     * @param {Object} node
+     * @param {jQuery} $button
+     */
+    _addButtonTooltip: function (node, $button) {
+        var self = this;
+        $button.tooltip({
+            delay: { show: 1000, hide: 0 },
+            title: function () {
+                return qweb.render('WidgetButton.tooltip', {
+                    debug: config.debug,
+                    state: self.state,
+                    node: node,
+                });
+            },
+        });
+    },
+    /**
      * @private
      * @param {jQueryElement} $el
      * @param {Object} node
@@ -225,6 +245,17 @@ var FormRenderer = BasicRenderer.extend({
             this.idsForLabels[name] = idForLabel;
         }
         return idForLabel;
+    },
+    /**
+     * @override
+     * @private
+     */
+    _postProcessField: function (widget, node) {
+        this._setIDForLabel(widget, this._getIDForLabel(node.attrs.name));
+        this._handleAttributes(widget.$el, node);
+        if (JSON.parse(node.attrs.default_focus || "0")) {
+            this.defaultFocusField = widget;
+        }
     },
     /**
      * @private
@@ -288,23 +319,6 @@ var FormRenderer = BasicRenderer.extend({
         return $result;
     },
     /**
-     * @override
-     * @private
-     * @param {string} node
-     * @param {Object} record
-     * @param {Object} [options]
-     * @returns {AbstractField}
-     */
-    _renderFieldWidget: function (node, record, options, modifiersOptions) {
-        var widget = this._super.apply(this, arguments);
-        this._setIDForLabel(widget, this._getIDForLabel(node.attrs.name));
-        this._handleAttributes(widget.$el, node);
-        if (JSON.parse(node.attrs.default_focus || "0")) {
-            this.defaultFocusField = widget;
-        }
-        return widget;
-    },
-    /**
      * @private
      * @param {Object} node
      * @returns {jQueryElement}
@@ -322,7 +336,6 @@ var FormRenderer = BasicRenderer.extend({
      * @returns {jQueryElement}
      */
     _renderHeaderButton: function (node) {
-        var self = this;
         var $button = $('<button>')
                         .text(node.attrs.string)
                         .addClass('btn btn-sm btn-default');
@@ -332,16 +345,7 @@ var FormRenderer = BasicRenderer.extend({
 
         // Display tooltip
         if (config.debug || node.attrs.help) {
-            $button.tooltip({
-                delay: { show: 1000, hide: 0 },
-                title: function () {
-                    return qweb.render('WidgetButton.tooltip', {
-                        debug: config.debug,
-                        state: self.state,
-                        node: node,
-                    });
-                },
-            });
+            this._addButtonTooltip(node, $button);
         }
         return $button;
     },
@@ -552,6 +556,12 @@ var FormRenderer = BasicRenderer.extend({
         this._addOnClickAction($button, node);
         this._handleAttributes($button, node);
         this._registerModifiers(node, this.state, $button);
+
+        // Display tooltip
+        if (config.debug || node.attrs.help) {
+            this._addButtonTooltip(node, $button);
+        }
+
         return $button;
     },
     /**
@@ -618,6 +628,8 @@ var FormRenderer = BasicRenderer.extend({
                 $statusbar.append(widget.$el);
             }
         });
+        this._handleAttributes($statusbar, node);
+        this._registerModifiers(node, this.state, $statusbar);
         return $statusbar;
     },
     /**
@@ -800,15 +812,19 @@ var FormRenderer = BasicRenderer.extend({
         this.$el.toggleClass('o_form_editable', this.mode === 'edit');
         this.$el.toggleClass('o_form_readonly', this.mode === 'readonly');
 
-        // Necessary to allow all sub widgets to use their dimensions in
-        // layout related activities, such as autoresize on fieldtexts
-        core.bus.trigger('DOM_updated');
-
         // Attach the tooltips on the fields' label
         _.each(this.allFieldWidgets[this.state.id], function (widget) {
             var idForLabel = self.idsForLabels[widget.name];
+            // We usually don't support multiple widgets for the same field on the
+            // same view but it is the case with the new settings view on V11.0.
+            // Therefore, we need to retrieve the correct label since it could be
+            // displayed multiple times on the view, otherwise, for example the
+            // enterprise label will be displayed as many times as the field
+            // exists on settings.
+            var $widgets = self.$('.o_field_widget[name=' + widget.name + ']');
             var $label = idForLabel ? self.$('label[for=' + idForLabel + ']') : $();
-            if (core.debug || widget.attrs.help || widget.field.help) {
+            $label = $label.eq($widgets.index(widget.$el));
+            if (config.debug || widget.attrs.help || widget.field.help) {
                 self._addFieldTooltip(widget, $label);
             }
             if (widget.attrs.widget === 'upgrade_boolean') {

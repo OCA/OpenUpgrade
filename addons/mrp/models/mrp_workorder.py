@@ -60,7 +60,8 @@ class MrpWorkorder(models.Model):
         'Currently Produced Quantity', default=1.0,
         digits=dp.get_precision('Product Unit of Measure'),
         states={'done': [('readonly', True)], 'cancel': [('readonly', True)]})
-    is_produced = fields.Boolean(compute='_compute_is_produced')
+    is_produced = fields.Boolean(string="Has Been Produced",
+        compute='_compute_is_produced')
 
     state = fields.Selection([
         ('pending', 'Pending'),
@@ -116,7 +117,7 @@ class MrpWorkorder(models.Model):
     time_ids = fields.One2many(
         'mrp.workcenter.productivity', 'workorder_id')
     is_user_working = fields.Boolean(
-        'Is Current User Working', compute='_compute_is_user_working',
+        'Is the Current User Working', compute='_compute_is_user_working',
         help="Technical field indicating whether the current user is working. ")
     production_messages = fields.Html('Workorder Message', compute='_compute_production_messages')
 
@@ -287,7 +288,7 @@ class MrpWorkorder(models.Model):
         if self.qty_producing <= 0:
             raise UserError(_('Please set the quantity you are currently producing. It should be different from zero.'))
 
-        if (self.production_id.product_id.tracking != 'none') and not self.final_lot_id:
+        if (self.production_id.product_id.tracking != 'none') and not self.final_lot_id and self.move_raw_ids:
             raise UserError(_('You should provide a lot/serial number for the final product'))
 
         # Update quantities done on each raw material line
@@ -354,6 +355,12 @@ class MrpWorkorder(models.Model):
                                  })
             else:
                 production_move.quantity_done += self.qty_producing
+
+        if not self.next_work_order_id:
+            for by_product_move in self.production_id.move_finished_ids.filtered(lambda x: (x.product_id.id != self.production_id.product_id.id) and (x.state not in ('done', 'cancel'))):
+                if by_product_move.has_tracking == 'none':
+                    by_product_move.quantity_done += self.qty_producing * by_product_move.unit_factor
+
         # Update workorder quantity produced
         self.qty_produced += self.qty_producing
 

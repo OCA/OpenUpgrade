@@ -39,6 +39,7 @@ var WebsiteRoot = BodyManager.extend({
         'click .js_change_lang': '_onLangChangeClick',
         'click .js_publish_management .js_publish_btn': '_onPublishBtnClick',
         'submit .js_website_submit_form': '_onWebsiteFormSubmit',
+        'click .js_disable_on_click': '_onDisableOnClick',
     }),
     custom_events: _.extend({}, BodyManager.prototype.custom_events || {}, {
         animation_start_demand: '_onAnimationStartDemand',
@@ -118,17 +119,20 @@ var WebsiteRoot = BodyManager.extend({
      * (@see Animation.selector).
      *
      * @param {boolean} [editableMode=false] - true if the page is in edition mode
-     * @param {jQuery} [$initTarget]
-     *        only initialize the animations whose `selector` matches the element
+     * @param {jQuery} [$from]
+     *        only initialize the animations whose `selector` matches the
+     *        element or one of its descendant (default to the wrapwrap element)
      * @returns {Deferred}
      */
-    _startAnimations: function (editableMode, $initTarget) {
+    _startAnimations: function (editableMode, $from) {
         var self = this;
         editableMode = editableMode || false;
-        var $wrapwrap = this.$('#wrapwrap');
+        if ($from === undefined) {
+            $from = this.$('#wrapwrap');
+        }
         var defs = _.map(sAnimation.registry, function (Animation) {
             var selector = Animation.prototype.selector || '';
-            var $target = $initTarget ? $initTarget.filter(selector) : $wrapwrap.find(selector);
+            var $target = $from.find(selector).addBack(selector);
 
             var defs = _.map($target, function (el) {
                 var $snippet = $(el);
@@ -223,6 +227,16 @@ var WebsiteRoot = BodyManager.extend({
             $btn.attr('data-loading-text', '<i class="fa fa-spinner fa-spin"></i> ' + $(btn).text());
             $btn.button('loading');
         });
+    },
+    /**
+     * Called when the root is notified that the button should be
+     * disabled after the first click.
+     *
+     * @private
+     * @param {Event} ev
+     */
+    _onDisableOnClick: function (ev) {
+        $(ev.currentTarget).addClass('disabled');
     },
 });
 
