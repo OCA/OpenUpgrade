@@ -5,8 +5,7 @@ from odoo import models
 from openupgradelib import openupgrade, openupgrade_90, openupgrade_tools
 
 
-@openupgrade.migrate(use_env=True)
-def migrate(env, version):
+def convert_binary_attachment_style(env):
     """ Convert attachment style binary fields """
     field_spec = {}
     for model_name, model in env.items():
@@ -22,6 +21,11 @@ def migrate(env, version):
                         env.cr, model._table, k) and
                     (k, k) not in field_spec.get(model_name, [])):
                 field_spec.setdefault(model_name, []).append((k, k))
-
     if field_spec:
         openupgrade_90.convert_binary_field_to_attachment(env, field_spec)
+
+
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    convert_binary_attachment_style(env)
+    openupgrade.disable_invalid_filters(env)
