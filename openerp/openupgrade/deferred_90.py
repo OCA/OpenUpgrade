@@ -5,7 +5,8 @@
 #    (<https://odoo-community.org>)
 #
 #    Contributors:
-#    -
+#    - Stefan Rijnhart
+#    - Tecnativa - Pedro M. Baeza
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -33,10 +34,16 @@ import logging
 from openerp import api, models, SUPERUSER_ID
 from openerp.osv import fields, orm
 
-from openupgradelib import openupgrade_90, openupgrade_tools
+from openupgradelib import openupgrade, openupgrade_90, openupgrade_tools
 
 
 logger = logging.getLogger('OpenUpgrade.deferred')
+
+
+def disable_invalid_filters(cr):
+    with api.Environment.manage():
+        env = api.Environment(cr, SUPERUSER_ID, {})
+        openupgrade.disable_invalid_filters(env)
 
 
 def migrate_deferred(cr, pool):
@@ -60,3 +67,4 @@ def migrate_deferred(cr, pool):
         with api.Environment.manage():
             env = api.Environment(cr, SUPERUSER_ID, {})
             openupgrade_90.convert_binary_field_to_attachment(env, field_spec)
+    disable_invalid_filters(cr)
