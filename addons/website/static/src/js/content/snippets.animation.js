@@ -343,12 +343,19 @@ var Animation = Widget.extend({
      * Also stops animation effects and destroys them if any.
      */
     destroy: function () {
+        var $oldel = this.$el;
         // The difference with the default behavior is that we unset the
         // associated element first so that:
         // 1) its events are unbinded
         // 2) it is not removed from the DOM
         this.setElement(null);
         this._super.apply(this, arguments);
+        // Reassign the variables afterwards to allow extensions to use them
+        // after calling the _super method
+        this.$el = $oldel;
+        this.el = $oldel[0];
+        this.$target = this.$el;
+        this.target = this.el;
     },
     /**
      * @override
@@ -583,7 +590,11 @@ registry.mediaVideo = Animation.extend({
      * @override
      */
     start: function () {
-        if (!this.$target.has('> iframe').length) {
+        // TODO: this code should be refactored to make more sense and be better
+        // integrated with Odoo (this refactoring should be done in master).
+        this.$target.find('iframe').remove();
+
+        if (!this.$target.has('.media_iframe_video_size').length) {
             var editor = '<div class="css_editableMode_display">&nbsp;</div>';
             var size = '<div class="media_iframe_video_size">&nbsp;</div>';
             this.$target.html(editor+size);

@@ -657,8 +657,19 @@ var RTEWidget = Widget.extend({
         if ($.browser.chrome === true && ev.originalEvent.detail === 3) {
             var currentSelection = range.create();
             if (currentSelection.sc.parentNode === currentSelection.ec) {
-                range.create(currentSelection.sc, currentSelection.so, currentSelection.sc, currentSelection.sc.length).select();
+                _selectSC(currentSelection);
+            } else if (currentSelection.eo === 0) {
+                var $hasNext = $(currentSelection.sc).parent();
+                while (!$hasNext.next().length && !$hasNext.is('body')) {
+                    $hasNext = $hasNext.parent();
+                }
+                if ($hasNext.next()[0] === currentSelection.ec) {
+                    _selectSC(currentSelection);
+                }
             }
+        }
+        function _selectSC(selection) {
+            range.create(selection.sc, selection.so, selection.sc, selection.sc.length).select();
         }
     },
 });

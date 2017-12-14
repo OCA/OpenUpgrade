@@ -80,7 +80,11 @@ class TestSaleStock(TestSale):
         for sol in self.so.order_line:
             sol.product_id.invoice_policy = 'order'
         # confirm our standard so, check the picking
+        self.so.order_line._compute_product_updatable()
+        self.assertTrue(self.so.order_line[0].product_updatable)
         self.so.action_confirm()
+        self.so.order_line._compute_product_updatable()
+        self.assertFalse(self.so.order_line[0].product_updatable)
         self.assertTrue(self.so.picking_ids, 'Sale Stock: no picking created for "invoice on order" stockable products')
         # let's do an invoice for a deposit of 5%
         adv_wiz = self.env['sale.advance.payment.inv'].with_context(active_ids=[self.so.id]).create({
@@ -269,3 +273,34 @@ class TestSaleStock(TestSale):
         })
         # a single picking should be created for the new delivery
         self.assertEquals(len(self.so.picking_ids), 2)
+
+    def test_05_confirm_cancel_confirm(self):
+        """ Confirm a sale order, cancel it, set to quotation, change the
+        partner, confirm it again: the second delivery order should have
+        the new partner.
+        """
+        item1 = self.products['prod_order']
+        partner1 = self.partner.id
+        partner2 = self.env.ref('base.res_partner_2').id
+        so1 = self.env['sale.order'].create({
+            'partner_id': partner1,
+            'order_line': [(0, 0, {
+                'name': item1.name,
+                'product_id': item1.id,
+                'product_uom_qty': 1,
+                'product_uom': item1.uom_id.id,
+                'price_unit': item1.list_price,
+            })],
+        })
+        so1.action_confirm()
+        self.assertEqual(len(so1.picking_ids), 1)
+        self.assertEqual(so1.picking_ids.partner_id.id, partner1)
+        so1.action_cancel()
+        so1.action_draft()
+        so1.partner_id = partner2
+        so1.partner_shipping_id = partner2  # set by an onchange
+        so1.action_confirm()
+        self.assertEqual(len(so1.picking_ids), 2)
+        picking2 = so1.picking_ids.filtered(lambda p: p.state != 'cancel')
+        self.assertEqual(picking2.partner_id.id, partner2)
+

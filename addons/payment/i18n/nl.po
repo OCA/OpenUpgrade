@@ -361,13 +361,13 @@ msgstr "Afvangen transactie"
 #. module: payment
 #: model:ir.model.fields,help:payment.field_payment_acquirer_capture_manually
 msgid "Capture the amount from Odoo, when the delivery is completed."
-msgstr ""
+msgstr "Ontvang het aantal van Odoo wanneer de levering voltooid is."
 
 #. module: payment
 #: model:ir.model.fields,field_description:payment.field_payment_transaction_partner_city
 #: model:ir.ui.view,arch_db:payment.transaction_form
 msgid "City"
-msgstr "Gemeente"
+msgstr "Plaats"
 
 #. module: payment
 #: model:ir.actions.act_window,help:payment.action_payment_acquirer
@@ -377,7 +377,7 @@ msgstr "Klik om een betalingsverwerker aan te maken."
 #. module: payment
 #: model:ir.actions.act_window,help:payment.action_payment_icon
 msgid "Click to create a payment icon."
-msgstr ""
+msgstr "Klik om een betalingsicoon aan te maken."
 
 #. module: payment
 #: model:payment.acquirer,post_msg:payment.payment_acquirer_custom
@@ -1028,7 +1028,7 @@ msgstr "Telefoon"
 #: model:payment.acquirer,post_msg:payment.payment_acquirer_custom
 #: model:payment.acquirer,post_msg:payment.payment_acquirer_transfer
 msgid "Please use the following transfer details"
-msgstr ""
+msgstr "Gebruik de volgende tranfer details."
 
 #. module: payment
 #: model:payment.acquirer,post_msg:payment.payment_acquirer_custom
@@ -1089,7 +1089,7 @@ msgstr "S2S formulier sjabloon"
 #. module: payment
 #: model:ir.model.fields,field_description:payment.field_payment_acquirer_save_token
 msgid "Save Cards"
-msgstr "Bewaar creditcards"
+msgstr "Creditcards opslaan"
 
 #. module: payment
 #: model:ir.ui.view,arch_db:payment.payment_tokens_list
@@ -1209,17 +1209,17 @@ msgstr "Bedanktbericht"
 #: code:addons/payment/models/payment_acquirer.py:570
 #, python-format
 msgid "The %s payment acquirers are not allowed to manual capture mode!"
-msgstr ""
+msgstr "De %s betaalverwervers zijn niet toegestaan bij handmatige mode!"
 
 #. module: payment
 #: selection:payment.acquirer,payment_flow:0
 msgid "The customer encode his payment details on the website."
-msgstr ""
+msgstr "De klant heeft zijn betaaldetails ingevoerd op de website."
 
 #. module: payment
 #: selection:payment.acquirer,payment_flow:0
 msgid "The customer is redirected to the website of the acquirer."
-msgstr ""
+msgstr "De klant wordt doorverwezen naar de website van de betaalverwerker."
 
 #. module: payment
 #: code:addons/payment/models/payment_acquirer.py:563
@@ -1282,12 +1282,15 @@ msgid ""
 "This template renders the acquirer button with all necessary values.\n"
 "                                            It is rendered with qWeb with the following evaluation context:"
 msgstr ""
+"Dit sjabloon genereert de verwerver knop met alle benodigde waardes.\n"
+"Het wordt aangemaakt met qWeb en met de volgende evaluatie context:"
 
 #. module: payment
 #: model:payment.acquirer,pre_msg:payment.payment_acquirer_transfer
 msgid ""
 "Transfer information will be provided after choosing the payment aquirer."
 msgstr ""
+"De betaalinformatie ontvangt u nadat u heeft gekozen voor de betaalwijze."
 
 #. module: payment
 #: model:ir.model.fields,field_description:payment.field_payment_transaction_type

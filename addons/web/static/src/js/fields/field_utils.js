@@ -97,8 +97,7 @@ function formatDate(value, field, options) {
             value = value.clone().add(session.getTZOffset(value), 'minutes');
         }
     }
-    var l10n = core._t.database.parameters;
-    var date_format = time.strftime_to_moment_format(l10n.date_format);
+    var date_format = time.getLangDateFormat();
     return value.format(date_format);
 }
 
@@ -122,11 +121,7 @@ function formatDateTime(value, field, options) {
     if (!options || !('timezone' in options) || options.timezone) {
         value = value.clone().add(session.getTZOffset(value), 'minutes');
     }
-    var l10n = core._t.database.parameters;
-    var date_format = time.strftime_to_moment_format(l10n.date_format);
-    var time_format = time.strftime_to_moment_format(l10n.time_format);
-    var datetime_format = date_format + ' ' + time_format;
-    return value.format(datetime_format);
+    return value.format(time.getLangDatetimeFormat());
 }
 
 /**
@@ -349,7 +344,7 @@ function parseDate(value, field, options) {
     if (!value) {
         return false;
     }
-    var datePattern = time.strftime_to_moment_format(core._t.database.parameters.date_format);
+    var datePattern = time.getLangDateFormat();
     var datePatternWoZero = datePattern.replace('MM','M').replace('DD','D');
     var date;
     if (options && options.isUTC) {
@@ -388,8 +383,8 @@ function parseDateTime(value, field, options) {
     if (!value) {
         return false;
     }
-    var datePattern = time.strftime_to_moment_format(core._t.database.parameters.date_format),
-        timePattern = time.strftime_to_moment_format(core._t.database.parameters.time_format);
+    var datePattern = time.getLangDateFormat(),
+        timePattern = time.getLangTimeFormat();
     var datePatternWoZero = datePattern.replace('MM','M').replace('DD','D'),
         timePatternWoZero = timePattern.replace('HH','H').replace('mm','m').replace('ss','s');
     var pattern1 = datePattern + ' ' + timePattern;
@@ -418,13 +413,36 @@ function parseDateTime(value, field, options) {
     throw new Error(_.str.sprintf(core._t("'%s' is not a correct datetime"), value));
 }
 
-function parseFloat(value) {
+/**
+ * Parse a String containing number in language formating
+ *
+ * @param {string} value
+ *                The string to be parsed with the setting of thousands and
+ *                decimal separator
+ * @returns {float|NaN} the number value contained in the string representation
+ */
+function parseNumber(value) {
     if (core._t.database.parameters.thousands_sep) {
         var escapedSep = _.str.escapeRegExp(core._t.database.parameters.thousands_sep);
         value = value.replace(new RegExp(escapedSep, 'g'), '');
     }
-    value = value.replace(core._t.database.parameters.decimal_point, '.');
-    var parsed = Number(value);
+    if (core._t.database.parameters.decimal_point) {
+        value = value.replace(core._t.database.parameters.decimal_point, '.');
+    }
+    return Number(value);
+}
+
+/**
+ * Parse a String containing float in language formating
+ *
+ * @param {string} value
+ *                The string to be parsed with the setting of thousands and
+ *                decimal separator
+ * @returns {float}
+ * @throws {Error} if no float is found respecting the language configuration
+ */
+function parseFloat(value) {
+    var parsed = parseNumber(value);
     if (isNaN(parsed)) {
         throw new Error(_.str.sprintf(core._t("'%s' is not a correct float"), value));
     }
@@ -491,9 +509,17 @@ function parseFloatTime(value) {
     return factor * (hours + (minutes / 60));
 }
 
+/**
+ * Parse a String containing integer with language formating
+ *
+ * @param {string} value
+ *                The string to be parsed with the setting of thousands and
+ *                decimal separator
+ * @returns {integer}
+ * @throws {Error} if no integer is found respecting the language configuration
+ */
 function parseInteger(value) {
-    value = value.replace(new RegExp(core._t.database.parameters.thousands_sep, "g"), '');
-    var parsed = Number(value);
+    var parsed = parseNumber(value);
     // do not accept not numbers or float values
     if (isNaN(parsed) || parsed % 1 || parsed < -2147483648 || parsed > 2147483647) {
         throw new Error(_.str.sprintf(core._t("'%s' is not a correct integer"), value));

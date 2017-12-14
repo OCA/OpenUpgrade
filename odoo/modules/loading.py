@@ -202,7 +202,8 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
             overwrite = odoo.tools.config["overwrite_existing_translations"]
             module.with_context(overwrite=overwrite)._update_translations()
 
-            registry._init_modules.add(package.name)
+            if package.name is not None:
+                registry._init_modules.add(package.name)
 
             if new_install:
                 post_init = package.info.get('post_init_hook')
@@ -237,32 +238,34 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                 if hasattr(package, kind):
                     delattr(package, kind)
 
-        registry._init_modules.add(package.name)
+        if package.name is not None:
+            registry._init_modules.add(package.name)
         cr.commit_org()
 
         # OpenUpgrade edit start:
         # if there's a tests directory, run those if tests are enabled
-        tests_dir = os.path.join(
-            odoo.modules.module.get_module_path(package.name),
-            'migrations',
-            adapt_version(package.data['version']),
-            'tests',
-        )
-        # check for an environment variable because we don't want to mess
-        # with odoo's config.py, but we also don't want to run existing
-        # tests
-        if os.environ.get('OPENUPGRADE_TESTS') and os.path.exists(tests_dir):
-            import unittest
-            threading.currentThread().testing = True
-            tests = unittest.defaultTestLoader.discover(tests_dir, top_level_dir=tests_dir)
-            report.record_result(
-                unittest.TextTestRunner(
-                    verbosity=2,
-                    stream=odoo.modules.module.TestStream(package.name),
-                ).run(tests)
-                .wasSuccessful()
+        if package.name is not None:
+            tests_dir = os.path.join(
+                odoo.modules.module.get_module_path(package.name),
+                'migrations',
+                adapt_version(package.data['version']),
+                'tests',
             )
-            threading.currentThread().testing = False
+            # check for an environment variable because we don't want to mess
+            # with odoo's config.py, but we also don't want to run existing
+            # tests
+            if os.environ.get('OPENUPGRADE_TESTS') and os.path.exists(tests_dir):
+                import unittest
+                threading.currentThread().testing = True
+                tests = unittest.defaultTestLoader.discover(tests_dir, top_level_dir=tests_dir)
+                report.record_result(
+                    unittest.TextTestRunner(
+                        verbosity=2,
+                        stream=odoo.modules.module.TestStream(package.name),
+                    ).run(tests)
+                    .wasSuccessful()
+                )
+                threading.currentThread().testing = False
         # OpenUpgrade edit end
 
     _logger.log(25, "%s modules loaded in %.2fs, %s queries", len(graph), time.time() - t0, odoo.sql_db.sql_counter - t0_sql)

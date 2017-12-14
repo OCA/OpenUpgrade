@@ -1096,6 +1096,7 @@ actual arch.
             datetime=datetime,
             relativedelta=relativedelta,
             xmlid=self.key,
+            to_text=pycompat.to_text,
         )
         return qcontext
 

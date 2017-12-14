@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
+
 import os.path
 import posixpath
 import re
@@ -114,7 +116,7 @@ class BootstrapTranslator(nodes.NodeVisitor, object):
         return u''.join(self.body)
 
     def unknown_visit(self, node):
-        print "unknown node", node.__class__.__name__
+        print("unknown node", node.__class__.__name__)
         self.body.append(u'[UNKNOWN NODE {}]'.format(node.__class__.__name__))
         raise nodes.SkipNode
 
@@ -141,6 +143,11 @@ class BootstrapTranslator(nodes.NodeVisitor, object):
         # close last section of document
         if not self.section_level:
             self.body.append(u'</section>')
+
+    def visit_topic(self, node):
+        self.body.append(self.starttag(node, 'nav'))
+    def depart_topic(self, node):
+        self.body.append(u'</nav>')
 
     def is_compact_paragraph(self, node):
         parent = node.parent
@@ -305,9 +312,9 @@ class BootstrapTranslator(nodes.NodeVisitor, object):
 
     def visit_title(self, node):
         parent = node.parent
-        closing = u'</p>'
+        closing = u'</h3>'
         if isinstance(parent, nodes.Admonition):
-            self.body.append(self.starttag(node, 'p', CLASS='alert-title'))
+            self.body.append(self.starttag(node, 'h3', CLASS='alert-title'))
         elif isinstance(node.parent, nodes.document):
             self.body.append(self.starttag(node, 'h1'))
             closing = u'</h1>'
@@ -374,6 +381,10 @@ class BootstrapTranslator(nodes.NodeVisitor, object):
                     "Unsupported alignment value \"%s\"" % node['align'],
                     location=doc
                 )
+        elif 'align' in node.parent and node.parent['align'] == 'center':
+            # figure > image
+            attrs['class'] += ' center-block'
+
         # todo: explicit width/height/scale?
         self.body.append(self.starttag(node, 'img', **attrs))
     def depart_image(self, node): pass
@@ -622,9 +633,9 @@ class BootstrapTranslator(nodes.NodeVisitor, object):
             classes = env.metadata[ref].get('types', 'tutorials')
             classes += ' toc-single-entry' if not toc else ' toc-section'
             self.body.append(self.starttag(node, 'div', CLASS="row " + classes))
-            self.body.append(u'<h2 class="col-sm-12">')
+            self.body.append(u'<div class="col-sm-12"><h2>')
             self.body.append(title if title else util.nodes.clean_astext(env.titles[ref]))
-            self.body.append(u'</h2>')
+            self.body.append(u'</h2></div>')
 
             entries = [(title, ref)] if not toc else ((e[0], e[1]) for e in toc[0]['entries'])
             for subtitle, subref in entries:

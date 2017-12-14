@@ -140,8 +140,9 @@ class FSWatcher(object):
                     except SyntaxError:
                         _logger.error('autoreload: python code change detected, SyntaxError in %s', path)
                     else:
-                        _logger.info('autoreload: python code updated, autoreload activated')
-                        restart()
+                        if not getattr(odoo, 'phoenix', False):
+                            _logger.info('autoreload: python code updated, autoreload activated')
+                            restart()
 
     def start(self):
         self.observer.start()
@@ -220,14 +221,11 @@ class ThreadedServer(CommonServer):
             registries = odoo.modules.registry.Registry.registries
             _logger.debug('cron%d polling for jobs', number)
             for db_name, registry in registries.items():
-                while registry.ready:
+                if registry.ready:
                     try:
-                        acquired = ir_cron._acquire_job(db_name)
-                        if not acquired:
-                            break
+                        ir_cron._acquire_job(db_name)
                     except Exception:
                         _logger.warning('cron%d encountered an Exception:', number, exc_info=True)
-                        break
 
     def cron_spawn(self):
         """ Start the above runner function in a daemon thread.
@@ -367,15 +365,15 @@ class GeventServer(CommonServer):
         import gevent
         from gevent.wsgi import WSGIServer
 
-        # Set process memory limit as an extra safeguard
-        _, hard = resource.getrlimit(resource.RLIMIT_AS)
-        resource.setrlimit(resource.RLIMIT_AS, (config['limit_memory_hard'], hard))
 
         if os.name == 'posix':
+            # Set process memory limit as an extra safeguard
+            _, hard = resource.getrlimit(resource.RLIMIT_AS)
+            resource.setrlimit(resource.RLIMIT_AS, (config['limit_memory_hard'], hard))
             signal.signal(signal.SIGQUIT, dumpstacks)
             signal.signal(signal.SIGUSR1, log_ormcache_stats)
-
-        gevent.spawn(self.watchdog)
+            gevent.spawn(self.watchdog)
+        
         self.httpd = WSGIServer((self.interface, self.port), self.app)
         _logger.info('Evented Service (longpolling) running on %s:%s', self.interface, self.port)
         try:
@@ -972,6 +970,11 @@ def start(preload=None, stop=False):
             _logger.warning("Unit testing in workers mode could fail; use --workers 0.")
 
         server = PreforkServer(odoo.service.wsgi_server.application)
+
+        # Workaround for Python issue24291, fixed in 3.6 (see Python issue26721)
+        if sys.version_info[:2] == (3,5):
+            # turn on buffering also for wfile, to avoid partial writes (Default buffer = 8k)
+            werkzeug.serving.WSGIRequestHandler.wbufsize = -1
     else:
         server = ThreadedServer(odoo.service.wsgi_server.application)
 

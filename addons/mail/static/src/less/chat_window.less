@@ -3,7 +3,7 @@
 @o-mail-chatter-gap: 10px; // has to be defined here as this file is both in
                            // backend and other assets (livechat)
 @o-chat-header-height: 46px;
-@o-chat-window-zindex: 1101; // blockUI's z-index is 1100 > @zindex-modal
+@o-chat-window-zindex: @zindex-modal + 1;
 
 .o_chat_window {
     .o-flex-display();
@@ -78,6 +78,7 @@
     .o_mail_thread {
         .o-flex(1, 1, auto);
         overflow: auto;
+        -webkit-overflow-scrolling: touch; // smooth scrolling in iOS app (Safari)
         .o_thread_date_separator {
             margin: 0px 0px 15px 0px;
             .o_thread_date {
@@ -142,6 +143,17 @@
             }
         }
     }
+}
+
+.o_ui_blocked .o_chat_window {
+    // We cannot put the z-index of chat windows directly to be greater than
+    // blockUI's as ui-autocomplete dropdowns (which are below blockUI) would
+    // appear under the chat windows (and ui-autocomplete is used to choose the
+    // person you want to chat with). So we only raise the z-index value when
+    // the ui is really blocked (in that case, the ui-autocomplete dropdowns
+    // will disappear under the chat windows but this is not really an issue as
+    // there should not be any at that time).
+    z-index: 1101; // blockUI's z-index is 1100
 }
 
 .o_no_chat_window .o_chat_window {

@@ -88,7 +88,7 @@ exports.PosModel = Backbone.Model.extend({
 
         // We fetch the backend data on the server asynchronously. this is done only when the pos user interface is launched,
         // Any change on this data made on the server is thus not reflected on the point of sale until it is relaunched.
-        // when all the data has loaded, we compute some stuff, and declare the Pos ready to be used.
+        // when all the data has loaded, we compute some stuff, and declare the Pos ready to be used. 
         this.ready = this.load_server_data().then(function(){
             return self.after_load_server_data();
         });
@@ -338,14 +338,15 @@ exports.PosModel = Backbone.Model.extend({
         },
     },{
         model:  'pos.category',
-        fields: ['id','name','parent_id','child_id','image'],
+        fields: ['id', 'name', 'parent_id', 'child_id'],
         domain: null,
         loaded: function(self, categories){
             self.db.add_categories(categories);
         },
     },{
         model:  'product.product',
-        fields: ['display_name', 'list_price', 'standard_price', 'categ_id', 'pos_categ_id', 'taxes_id',
+        // todo remove list_price in master, it is unused
+        fields: ['display_name', 'list_price', 'lst_price', 'standard_price', 'categ_id', 'pos_categ_id', 'taxes_id',
                  'barcode', 'default_code', 'to_weight', 'uom_id', 'description_sale', 'description',
                  'product_tmpl_id','tracking'],
         order:  _.map(['sequence','default_code','name'], function (name) { return {name: name}; }),
@@ -552,7 +553,7 @@ exports.PosModel = Backbone.Model.extend({
                                 .then(function(){ load_model(index + 1); },
                                       function(err){ loaded.reject(err); });
                         }catch(err){
-                            console.error(err.stack);
+                            console.error(err.message, err.stack);
                             loaded.reject(err);
                         }
                     },function(err){
@@ -868,10 +869,10 @@ exports.PosModel = Backbone.Model.extend({
                 // generate the pdf and download it
                 self.chrome.do_action('point_of_sale.pos_invoice_report',{additional_context:{
                     active_ids:order_server_id,
-                }});
-
-                invoiced.resolve();
-                done.resolve();
+                }}).done(function () {
+                    invoiced.resolve();
+                    done.resolve();
+                });
             });
 
             return done;
@@ -1233,7 +1234,7 @@ exports.Product = Backbone.Model.extend({
                    (! item.date_end || moment(item.date_end).isSameOrAfter(date));
         });
 
-        var price = self.list_price;
+        var price = self.lst_price;
         _.find(pricelist_items, function (rule) {
             if (rule.min_quantity && quantity < rule.min_quantity) {
                 return false;
@@ -1393,6 +1394,7 @@ exports.Orderline = Backbone.Model.extend({
         // just like in sale.order changing the quantity will recompute the unit price
         if(! keep_price){
             this.set_unit_price(this.product.get_price(this.order.pricelist, this.get_quantity()));
+            this.order.fix_tax_included_price(this);
         }
     },
     // return the quantity of product
@@ -2229,6 +2231,7 @@ exports.Order = Backbone.Model.extend({
         this.pricelist = pricelist;
         _.each(this.get_orderlines(), function (line) {
             line.set_unit_price(line.product.get_price(self.pricelist, line.get_quantity()));
+            self.fix_tax_included_price(line);
         });
         this.trigger('change');
     },

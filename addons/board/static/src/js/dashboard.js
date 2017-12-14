@@ -188,13 +188,9 @@ FormRenderer.include({
                 var actionID = $(this).attr('data-id');
                 var newAttrs = _.clone(self.actionsDescr[actionID]);
 
-                if (newAttrs.domain) {
-                    newAttrs.domain = newAttrs.domain_string;
-                    delete(newAttrs.domain_string);
-                }
-                if (newAttrs.context) {
-                    newAttrs.context = newAttrs.context_string;
-                    delete(newAttrs.context_string);
+                /* prepare attributes as they should be saved */
+                if (newAttrs.modifiers) {
+                    newAttrs.modifiers = JSON.stringify(newAttrs.modifiers);
                 }
                 actions.push(newAttrs);
             });
@@ -225,6 +221,10 @@ FormRenderer.include({
                 params: {action_id: params.actionID}
             })
             .then(function (action) {
+                if (!action) {
+                    // the action does not exist anymore
+                    return $.when();
+                }
                 var view = _.find(action.views, function (descr) {
                     return descr[1] === params.viewType;
                 });

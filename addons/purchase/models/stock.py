@@ -31,11 +31,24 @@ class StockMove(models.Model):
     created_purchase_line_id = fields.Many2one('purchase.order.line',
         'Created Purchase Order Line', ondelete='set null', readonly=True, copy=False)
 
+    @api.model
+    def _prepare_merge_moves_distinct_fields(self):
+        distinct_fields = super(StockMove, self)._prepare_merge_moves_distinct_fields()
+        distinct_fields.append('purchase_line_id')
+        return distinct_fields
+
+    @api.model
+    def _prepare_merge_move_sort_method(self, move):
+        move.ensure_one()
+        keys_sorted = super(StockMove, self)._prepare_merge_move_sort_method(move)
+        keys_sorted.append(move.purchase_line_id.id)
+        return keys_sorted
+
     @api.multi
     def _get_price_unit(self):
         """ Returns the unit price for the move"""
         self.ensure_one()
-        if self.purchase_line_id:
+        if self.purchase_line_id and self.product_id.id == self.purchase_line_id.product_id.id:
             line = self.purchase_line_id
             order = line.order_id
             price_unit = line.price_unit
@@ -57,6 +70,23 @@ class StockMove(models.Model):
         vals = super(StockMove, self)._prepare_move_split_vals(uom_qty)
         vals['purchase_line_id'] = self.purchase_line_id.id
         return vals
+
+    def _action_cancel(self):
+        for move in self:
+            if move.created_purchase_line_id:
+                try:
+                    activity_type_id = self.env.ref('mail.mail_activity_data_todo').id
+                except ValueError:
+                    activity_type_id = False
+                self.env['mail.activity'].create({
+                    'activity_type_id': activity_type_id,
+                    'note': _('A sale order that generated this purchase order has been deleted. Check if an action is needed.'),
+                    'user_id': move.created_purchase_line_id.product_id.responsible_id.id,
+                    'res_id': move.created_purchase_line_id.order_id.id,
+                    'res_model_id': self.env.ref('purchase.model_purchase_order').id,
+                })
+        return super(StockMove, self)._action_cancel()
+
 
 class StockWarehouse(models.Model):
     _inherit = 'stock.warehouse'

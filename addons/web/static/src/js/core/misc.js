@@ -59,12 +59,14 @@ function blockUI() {
     var throbber = new Throbber();
     throbbers.push(throbber);
     throbber.appendTo($(".oe_blockui_spin_container"));
+    $(document.body).addClass('o_ui_blocked');
     return tmp;
 }
 
 function unblockUI() {
     _.invoke(throbbers, 'destroy');
     throbbers = [];
+    $(document.body).removeClass('o_ui_blocked');
     return $.unblockUI.apply($, arguments);
 }
 
@@ -173,6 +175,23 @@ function ReloadContext (parent, action) {
 }
 core.action_registry.add("reload_context", ReloadContext);
 
+// In Internet Explorer, document doesn't have the contains method, so we make a
+// polyfill for the method in order to be compatible.
+if (!document.contains) {
+    document.contains = function contains (node) {
+        if (!(0 in arguments)) {
+            throw new TypeError('1 argument is required');
+        }
+
+        do {
+            if (this === node) {
+                return true;
+            }
+        } while (node = node && node.parentNode);
+
+        return false;
+    };
+}
 
 return {
     blockUI: blockUI,

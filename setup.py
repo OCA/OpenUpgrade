@@ -86,7 +86,6 @@ def py2exe_options():
                         'mock',
                         'ofxparse',
                         'odoo',
-                        'openid',
                         'passlib',
                         'PIL',
                         'poplib',
@@ -151,7 +150,6 @@ setup(
         'passlib',
         'pillow',  # windows binary http://www.lfd.uci.edu/~gohlke/pythonlibs/
         'psutil',  # windows binary code.google.com/p/psutil/downloads/list
-        'psycogreen',
         'psycopg2 >= 2.2',
         'pydot',
         'pyldap',  # optional
@@ -159,7 +157,6 @@ setup(
         'pypdf2',
         'pyserial',
         'python-dateutil',
-        'python-openid',
         'pytz',
         'pyusb >= 1.0.0b1',
         'pyyaml',
