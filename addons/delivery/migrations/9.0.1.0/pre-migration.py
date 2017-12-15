@@ -99,9 +99,23 @@ def fill_missing_delivery_grid_records(cr):
     )
 
 
+def correct_names(env):
+    """Compose the delivery name from old carrier name + old grid name.
+    This method is called before table renaming."""
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE delivery_grid dg
+        SET name = dc.name || ': ' || dg.name
+        FROM delivery_carrier dc
+        WHERE dc.id = dg.carrier_id
+        """
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
+    correct_names(env)
     fill_missing_delivery_grid_records(cr)
     correct_object_references(cr)
     openupgrade.rename_columns(cr, column_renames)
