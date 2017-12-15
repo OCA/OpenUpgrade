@@ -99,28 +99,40 @@ def fill_missing_delivery_grid_records(cr):
     )
 
 
-def correct_names(env):
-    """Compose the delivery name from old carrier name + old grid name.
-    This method is called before table renaming."""
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE delivery_grid dg
-        SET name = dc.name || ': ' || dg.name
-        FROM delivery_carrier dc
-        WHERE dc.id = dg.carrier_id
-        """
+def create_delivery_products(env):
+    """As now delivery.carrier inherits by delegation from product.product,
+    we need to create a specific product for each carrier, independently from
+    the previous product that was assigned. If not, things like the carrier
+    name will be taken from old product name, carriers will share products...
+
+    To be executed before the renaming, but after filling missing grids.
+    """
+    # Pre-create product_id column
+    env.cr.execute("ALTER TABLE delivery_grid ADD product_id INTEGER")
+    # Add a product per carrier
+    env.cr.execute(
+        """SELECT dg.id, dc.name, dg.name
+        FROM delivery_carrier dc, delivery_grid dg
+        WHERE dc.id = dg.carrier_id"""
     )
+    Product = env['product.product']
+    for row in env.cr.fetchall():
+        product = Product.create({
+            'name': row[1] + ": " + row[2],
+        })
+        env.cr.execute(
+            "UPDATE delivery_grid SET product_id=%s WHERE id=%s",
+            (product.id, row[0]),
+        )
 
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
-    correct_names(env)
     fill_missing_delivery_grid_records(cr)
+    create_delivery_products(env)
     correct_object_references(cr)
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_fields(env, field_renames)
     correct_rule_prices(cr)
     openupgrade.rename_tables(cr, table_renames)
-    # TODO: if the same product is used for multiple carriers, duplicate it
-    # for having a correct structure of 1 product = 1 carrier
