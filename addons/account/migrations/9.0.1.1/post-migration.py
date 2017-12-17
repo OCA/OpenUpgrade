@@ -781,6 +781,7 @@ def merge_invoice_journals(env, refund_journal_ids=None, journal_mapping=None):
       and corresponding normal journal IDs as values for mapping the journals
       when there's no easy correspondence.
     """
+    cr = env.cr
     journal_type_mapping = {
         'sale_refund': 'sale',
         'purchase_refund': 'purchase',
@@ -788,11 +789,11 @@ def merge_invoice_journals(env, refund_journal_ids=None, journal_mapping=None):
     if journal_mapping is None:
         journal_mapping = {}
     # Add a column for storing target journal
-    openupgrade.logged_query(
-        env.cr, "ALTER TABLE account_journal ADD %s INTEGER" % (
-            openupgrade.get_legacy_name('merged_journal_id')
+    support_column = openupgrade.get_legacy_name('merged_journal_id')
+    if not openupgrade.column_exists(cr, 'account_journal', support_column):
+        openupgrade.logged_query(
+            cr, "ALTER TABLE account_journal ADD %s INTEGER" % support_column,
         )
-    )
     for journal_type, new_journal_type in journal_type_mapping.iteritems():
         query = """
             SELECT id
