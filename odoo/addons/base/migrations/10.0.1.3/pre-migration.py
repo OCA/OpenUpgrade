@@ -78,6 +78,8 @@ def migrate(cr, version):
             ('sale_order_back2draft', 'sale'),
             # OCA/social
             ('mass_mailing_security_group', 'mass_mailing'),
+            # OCA/stock-logistics-workflow
+            ('stock_scrap', 'stock'),
             # OCA/web
             ('web_easy_switch_company', 'web'),
         ], merge_modules=True,
