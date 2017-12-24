@@ -1,0 +1,8 @@
+-
+  Set a custom field name translation to verify its correct migration.
+  Take advantage of the fact that the French translation is already loaded in a
+  database with demo data installed.
+-
+  !python {model: ir.translation}: |
+    trans_ids = self.search(cr, uid, [('lang', '=', 'fr_FR'), ('name', '=', 'ir.module.module,summary'), ('type', '=', 'field')])
+    self.write(cr, uid, trans_ids, {'value': 'Custom translation'})
