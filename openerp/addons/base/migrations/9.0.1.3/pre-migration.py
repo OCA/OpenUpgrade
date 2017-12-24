@@ -131,6 +131,32 @@ def has_recurring_contracts(cr):
     return False
 
 
+def migrate_translations(cr):
+    """ Translations of field names are encoded differently in Odoo 9.0:
+     version |           name                    | res_id |  type
+    ---------+-----------------------------------+--------+-------
+     8.0     | ir.module.module,summary          |      0 | field
+     9.0     | ir.model.fields,field_description |    759 | model
+    """
+    openupgrade.logged_query(
+        cr, """
+        WITH mapping AS (
+            SELECT imd.module,
+                imf.model||','||imf.name AS name80,
+                'ir.model.fields,field_description' AS name90,
+                imd.res_id
+            FROM ir_model_data imd
+            JOIN ir_model_fields imf ON imf.id = imd.res_id
+            WHERE imd.model = 'ir.model.fields' ORDER BY imd.id DESC)
+        UPDATE ir_translation
+        SET name = mapping.name90, type = 'model', res_id = mapping.res_id
+        FROM mapping
+        WHERE name = mapping.name80
+            AND type = 'field'
+            AND (ir_translation.module = mapping.module
+                 OR ir_translation.module IS NULL); """)
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -147,6 +173,7 @@ def migrate(env, version):
     pre_create_columns(cr)
     cleanup_modules(cr)
     map_res_partner_type(cr)
+    migrate_translations(env.cr)
 
 
 def pre_create_columns(cr):

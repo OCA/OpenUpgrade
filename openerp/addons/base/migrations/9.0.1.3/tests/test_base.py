@@ -20,3 +20,10 @@ class TestBase(common.TransactionCase):
         self.assertIn(
             self.env.ref('base.user_root'),
             self.env.ref('base.group_no_one').users)
+
+    def test_translation(self):
+        """ Existing field name translations are migrated correctly """
+        self.assertEqual(
+            self.env.ref('base.field_ir_module_module_summary').with_context(
+                lang='fr_FR')['field_description'],
+            'Custom translation')
