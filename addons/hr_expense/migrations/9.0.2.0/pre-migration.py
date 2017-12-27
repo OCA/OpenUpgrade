@@ -17,6 +17,7 @@ field_renames = [
     ('product.template', 'product_template', 'hr_expense_ok',
      'can_be_expensed'),
     ('hr.expense', 'hr_expense', 'note', 'description'),
+    ('hr.expense.line', 'hr_expense_line', 'unit_quantity', 'quantity'),
 ]
 
 table_renames = [
