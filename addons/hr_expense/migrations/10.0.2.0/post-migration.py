@@ -68,15 +68,16 @@ def set_expense_sheet_accounting_date(env):
 def migrate(env, version):
     cr = env.cr
     # Create new expense sheet for each expense registered
+    # grouped by name and creation date
     cr.execute(
         '''INSERT INTO hr_expense_sheet
         (account_move_id, bank_journal_id, company_id, create_date,
         create_uid, currency_id, department_id, employee_id, journal_id,
-        message_last_post, name, state, total_amount, write_date, write_uid)
-        SELECT
+        message_last_post, name, state, write_date, write_uid)
+        SELECT DISTINCT ON (name, create_date)
             account_move_id, bank_journal_id, company_id, create_date,
             create_uid, currency_id, department_id, employee_id, journal_id,
-            message_last_post, name, state, total_amount, write_date, write_uid
+            message_last_post, name, state, write_date, write_uid
         FROM hr_expense WHERE state != 'draft'
         ''')
     # Set sheet_id for each expense_id
@@ -95,5 +96,9 @@ def migrate(env, version):
     set_expense_states(env)
     fill_expense_product_account(env)
     set_expense_sheet_accounting_date(env)
+    Sheet = env['hr.expense.sheet']
+    sheets = Sheet.search([])
+    env.add_todo(Sheet._fields['total_amount'], sheets)
+    Sheet.recompute()
     openupgrade.load_data(
         cr, 'hr_expense', 'migrations/10.0.2.0/noupdate_changes.xml')
