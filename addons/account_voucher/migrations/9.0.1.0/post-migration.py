@@ -44,7 +44,7 @@ def create_payments_from_vouchers(env):
             END,
             av.journal_id, av.state, av.writeoff_acc_id, av.create_uid,
             av.write_date, av.write_uid,
-            COALESCE(av.name, av.comment),
+            COALESCE(av.name, av.number, av.comment),
             av.amount,
             CASE
                WHEN av.voucher_type = 'receipt' THEN 'inbound'
