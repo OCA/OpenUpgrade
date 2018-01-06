@@ -1,0 +1,7 @@
+-
+  Write a non default expense account to check migration of product account properties
+-
+  !python {model: product.product}: |
+    self.write(cr, uid, ref('product.product_product_43'), {
+      'property_account_expense': ref('account.cog'),
+    })
