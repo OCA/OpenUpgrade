@@ -23,6 +23,10 @@ merged_modules = {
     'website_portal': 'website',
     'website_project': 'project',
     'website_project_timesheet': 'hr_timesheet',
+    # OCA/account-financial-reporting
+    # Done here for avoiding problems if updating from a previous version
+    # where account_financial_report exists as other kind of module
+    'account_financial_report_qweb': 'account_financial_report',
 }
 
 renamed_models = {
