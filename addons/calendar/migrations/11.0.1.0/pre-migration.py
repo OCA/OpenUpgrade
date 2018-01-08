@@ -26,18 +26,7 @@ def cleanup_translations(cr):
         'calendar_template_meeting_invitation',
     )
 
-    cr.execute("""
-        SELECT res_id
-        FROM ir_model_data
-        WHERE module = 'calendar' AND model = 'mail.template' AND name in %s
-    """, (updated_templates,))
-    record_ids = tuple([r[0] for r in cr.fetchall()])
-
-    query = ("""
-        DELETE FROM ir_translation
-        WHERE module = 'calendar' AND res_id IN %s
-    """)
-    openupgrade.logged_query(cr, query, (record_ids,))
+    openupgrade.delete_record_translations(cr, 'calendar', updated_templates)
 
 
 @openupgrade.migrate(use_env=False)
