@@ -25,7 +25,23 @@ def convert_binary_attachment_style(env):
         openupgrade_90.convert_binary_field_to_attachment(env, field_spec)
 
 
+def compute_store_in_fields(env):
+    cr = env.cr
+    cr.execute('SELECT id, model, name FROM ir_model_fields WHERE store IS NULL')
+    nulls = cr.fetchall()
+    for id, modelname, fieldname in nulls:
+        model = env.get(modelname, None)
+        if model is not None:
+            field = model._fields.get(fieldname)
+            if field:
+                cr.execute(
+                    'UPDATE ir_model_fields SET store=%s WHERE id=%s',
+                    (field.store, id)
+                )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     convert_binary_attachment_style(env)
+    compute_store_in_fields(env)
     openupgrade.disable_invalid_filters(env)
