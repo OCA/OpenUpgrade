@@ -26,7 +26,40 @@ def create_and_populate_department(cr):
     ''')
 
 
+def create_and_populate_children(env):
+    cr = env.cr
+    openupgrade.add_fields(env, [
+        _task_field('parent_id', 'integer', 'INT'),
+        _task_field('children_hours', 'float', 'DOUBLE PRECISION'),
+        _task_field('total_hours_spent', 'float', 'DOUBLE PRECISION'),
+    ])
+    #  Since the parent_id is new there's no point in computing the
+    #  children_hours, they will be 0; however there's a single method
+    #  computing children_hours, effective_hours, remaining_hours,
+    #  total_hours, total_hours_spent, and delay_hours; but only
+    #  children_hours and total_hours_spent need recomputation.
+    #
+    #  In _get_hours, ``task.total_hours_spent = task.effective_hours + task.children_hours``
+    #  No need to bother to add 0.
+    openupgrade.logged_query(cr, '''
+    UPDATE project_task SET children_hours=0, total_hours_spent=effective_hours;
+    ''')
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_columns(env.cr, COLUMN_RENAMES)
     create_and_populate_department(env.cr)
+    create_and_populate_children(env)
+
+
+def _task_field(field_name, field_type, sql_type, module='project'):
+    # See `create_and_populate_children` above.
+    return (
+        field_name,
+        'project.task',
+        'project_task',
+        field_type,
+        sql_type,
+        module
+    )
