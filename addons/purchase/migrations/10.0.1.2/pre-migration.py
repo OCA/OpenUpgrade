@@ -6,7 +6,7 @@ from openupgradelib import openupgrade
 
 
 def copy_state_to_purchase_lines(cr):
-    cr.execute('''
+    openupgrade.logged_query(cr, '''
        ALTER TABLE purchase_order_line ADD COLUMN state VARCHAR;
 
        WITH purchases AS (
