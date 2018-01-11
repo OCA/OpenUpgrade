@@ -612,6 +612,204 @@ def fill_move_taxes(env):
                 _fill_aml_tax_line_ids(env, amls, row_base[1], tax_amounts)
 
 
+def fill_account_invoice_tax_taxes(env, manual_tax_code_mapping=None):
+    """Fill tax_id field from old base_code_id and tax_code_id fields from v8.
+
+    This method can be called several times from other migration scripts, as it
+    doesn't overwrite lines already filled, and it's intended to be used by
+    other migration scripts, mostly localization modules (l10n_*) that needs
+    to adjust mapping, for example if there has been several tax changes across
+    time. There's a parameter for that purpose.
+
+    :param: manual_tax_code_mapping: List of tuples for indicating mappings
+      from old tax codes (first element of the tuple) to newest ones (second
+      element).
+    """
+    if manual_tax_code_mapping is None:
+        manual_tax_code_mapping = []
+    env.cr.execute(
+        """SELECT base_code_id, tax_code_id
+        FROM account_invoice_tax
+        WHERE tax_id IS NULL
+        GROUP BY base_code_id, tax_code_id"""
+    )
+    for row in env.cr.fetchall():
+        base_code_id = row[0]
+        tax_code_id = row[1]
+        _fill_account_invoice_tax_taxes_recursive(
+            env, base_code_id, tax_code_id,
+            manual_tax_code_mapping=manual_tax_code_mapping,
+        )
+
+
+def _fill_account_invoice_tax_taxes_recursive(env, base_code_id, tax_code_id,
+                                              original_base_code_id=0,
+                                              original_tax_code_id=0,
+                                              bypass_exact_match=False,
+                                              manual_tax_code_mapping=None):
+    """This makes the dirty work of filling taxes or calling itself with
+    other parameters.
+
+    Method followed
+    ===============
+
+    * If both codes are present in only one tax, then we can safely fill
+      tax_id with that tax.
+    * If there are more than one tax with that tax codes, try to match tax
+      with the name of the tax line.
+    * If still no single match, try to match only with active taxes.
+    * Finally, if there is no match, see if there's any tax code manual mapping
+      for starting again the matching.
+    """
+    if not original_base_code_id:
+        original_base_code_id = base_code_id
+    if not original_tax_code_id:
+        original_tax_code_id = tax_code_id
+    # Using `IS NOT DISTINCT FROM` for avoiding problems with NULL values
+    env.cr.execute(
+        """SELECT COUNT(*), MAX(id) FROM account_tax
+        WHERE (
+            base_code_id IS NOT DISTINCT FROM %(base_code_id)s AND
+            tax_code_id IS NOT DISTINCT FROM %(tax_code_id)s
+        ) OR (
+            ref_base_code_id IS NOT DISTINCT FROM %(base_code_id)s AND
+            ref_tax_code_id IS NOT DISTINCT FROM %(tax_code_id)s
+        )""", {
+            'base_code_id': base_code_id or AsIs('NULL'),
+            'tax_code_id': tax_code_id or AsIs('NULL'),
+        },
+    )
+    row_tax = env.cr.fetchone()
+    if row_tax[0] == 1 and not bypass_exact_match:
+        # EXACT MATCH
+        openupgrade.logged_query(
+            env.cr,
+            """UPDATE account_invoice_tax
+            SET tax_id = %s
+            WHERE base_code_id IS NOT DISTINCT FROM %s
+            AND tax_code_id IS NOT DISTINCT FROM %s
+            AND tax_id IS NULL""", (
+                row_tax[1],
+                original_base_code_id or AsIs('NULL'),
+                original_tax_code_id or AsIs('NULL'),
+            )
+        )
+    elif row_tax[0] > 1 or bypass_exact_match:
+        # MULTIPLE MATCHES - SEARCH BY NAME
+        env.cr.execute(
+            """SELECT name, company_id
+            FROM account_invoice_tax
+            WHERE base_code_id = %s AND tax_code_id = %s AND tax_id IS NULL
+            GROUP BY name, company_id
+            """, (
+                original_base_code_id,
+                original_tax_code_id,
+            )
+        )
+        for row_name in env.cr.fetchall():
+            # Make 2 passes - The second one only considering active taxes
+            for i in range(2):
+                # Look for a match also on translated terms
+                query = """
+                    SELECT COUNT(DISTINCT(t.id)), MAX(t.id)
+                    FROM account_tax t
+                    LEFT JOIN ir_translation tr
+                    ON tr.name='account.tax,name' AND tr.res_id = t.id
+                    WHERE (
+                        base_code_id IS NOT DISTINCT FROM %(base_code_id)s AND
+                        tax_code_id IS NOT DISTINCT FROM %(tax_code_id)s
+                    ) OR (
+                        ref_base_code_id IS NOT DISTINCT FROM %(base_code_id)s
+                        AND
+                        ref_tax_code_id IS NOT DISTINCT FROM %(tax_code_id)s
+                    )
+                    AND t.company_id = %(company_id)s
+                    AND (
+                        t.name = %(name)s OR
+                        tr.value = %(name)s
+                    )"""
+                if i == 1:
+                    query += " AND t.active"
+                env.cr.execute(
+                    query, {
+                        'base_code_id': base_code_id or AsIs('NULL'),
+                        'tax_code_id': tax_code_id or AsIs('NULL'),
+                        'name': row_name[0],
+                        'company_id': row_name[1],
+                    },
+                )
+                row_tax = env.cr.fetchone()
+                if row_tax[0] == 1:
+                    openupgrade.logged_query(
+                        env.cr,
+                        """UPDATE account_invoice_tax
+                        SET tax_id = %s
+                        WHERE base_code_id IS NOT DISTINCT FROM %s
+                        AND tax_code_id IS NOT DISTINCT FROM %s
+                        AND name = %s
+                        AND company_id = %s
+                        AND tax_id IS NULL
+                        """, (
+                            row_tax[1],
+                            original_base_code_id or AsIs('NULL'),
+                            original_tax_code_id or AsIs('NULL'),
+                            row_name[0],
+                            row_name[1],
+                        )
+                    )
+                    break
+    else:
+        # NO MATCH - TRY TO MAKE REPLACEMENT
+        query_name = "SELECT name FROM account_tax_group WHERE id = %s"
+        query_id = "SELECT id FROM account_tax_group WHERE name = %s"
+        env.cr.execute(query_name, (base_code_id,))
+        base_row = env.cr.fetchone()
+        env.cr.execute(query_name, (tax_code_id,))
+        tax_row = env.cr.fetchone()
+        if not base_row or not tax_row:
+            return
+        base_code_name = base_row[0]
+        tax_code_name = tax_row[0]
+        # This allows to search also when only tax code name is mapped, but
+        # base code name is not mapped
+        mappings = [(False, False)] + manual_tax_code_mapping
+        for old_base_name, new_base_name in mappings:
+            # Look for mapping for base codes
+            if old_base_name and old_base_name != base_code_name:
+                continue
+            if old_base_name:
+                env.cr.execute(query_id, (new_base_name, ))
+                row_base = env.cr.fetchone()
+                if not row_base:
+                    continue
+            else:
+                row_base = [base_code_id]
+            second_match = False
+            for old_tax_name, new_tax_name in manual_tax_code_mapping:
+                if old_tax_name != tax_code_name:
+                    continue
+                second_match = True
+                env.cr.execute(query_id, (new_tax_name, ))
+                row_tax = env.cr.fetchone()
+                if not row_tax:
+                    continue
+                _fill_account_invoice_tax_taxes_recursive(
+                    env, row_base[0], row_tax[0],
+                    original_base_code_id=base_code_id,
+                    original_tax_code_id=tax_code_id,
+                    bypass_exact_match=True,
+                    manual_tax_code_mapping=manual_tax_code_mapping,
+                )
+            if not second_match and new_base_name:
+                _fill_account_invoice_tax_taxes_recursive(
+                    env, row_base[0], tax_code_id,
+                    original_base_code_id=base_code_id,
+                    original_tax_code_id=tax_code_id,
+                    bypass_exact_match=True,
+                    manual_tax_code_mapping=manual_tax_code_mapping,
+                )
+
+
 def fill_blacklisted_fields(cr):
     """Fill data of fields for which recomputation was surpressed."""
     # Set fields on account_move
@@ -1025,6 +1223,7 @@ def migrate(env, version):
     migrate_account_sequence_fiscalyear(cr)
     migrate_account_auto_fy_sequence(env)
     fill_move_taxes(env)
+    fill_account_invoice_tax_taxes(env)
     fill_blacklisted_fields(cr)
     reset_blacklist_field_recomputation()
     fill_move_line_invoice(cr)
