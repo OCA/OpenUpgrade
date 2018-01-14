@@ -504,6 +504,8 @@ def invoice_recompute(env):
 def migrate(env, version):
     """Thanks to no_version migration will be run on install as well."""
     cr = env.cr
+    if not openupgrade.table_exists(cr, 'account_move_reconcile'):
+        return  # This avoids errors when this module is installed on fresh DB
     assure_reconcile_ref_integrity(cr)
     migrate_reconcile(cr)
     invoice_recompute(env)
