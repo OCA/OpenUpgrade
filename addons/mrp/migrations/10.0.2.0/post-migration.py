@@ -6,12 +6,12 @@ from openupgradelib import openupgrade
 
 
 def update_mrp_workcenter_times(cr):
-    """The time now is in minutes instead of hours."""
+    """The time now in minutes instead of hours."""
     cr.execute(
         """
         UPDATE mrp_workcenter
-        SET time_start = time_start*60
-        AND time_stop = time_stop*60
+        SET time_start = COALESCE(time_start, 0) * 60,
+            time_stop = COALESCE(time_stop, 0) * 60
         """
     )
 
@@ -127,8 +127,8 @@ def populate_stock_move_workorder_id(cr):
         """
         UPDATE mrp_workorder mw
         SET next_work_order_id = Q4.next_id
-        FROM ( 
-            SELECT Q1.id as id, min(Q2.sequence) as sequence  
+        FROM (
+            SELECT Q1.id as id, min(Q2.sequence) as sequence
             FROM (
                 SELECT id, production_id, %s as sequence
                 FROM mrp_workorder
@@ -144,7 +144,7 @@ def populate_stock_move_workorder_id(cr):
             GROUP BY Q1.id
         ) Q3
         LEFT JOIN (
-            SELECT Q1.id as id, min(Q2.id) as next_id, Q2.sequence  
+            SELECT Q1.id as id, min(Q2.id) as next_id, Q2.sequence
             FROM (
                 SELECT id, production_id, %s as sequence
                 FROM mrp_workorder
@@ -174,7 +174,7 @@ def populate_stock_move_workorder_id(cr):
         FROM mrp_production mp
         LEFT JOIN mrp_workorder mw ON (
             mw.production_id = mp.id AND mw.next_work_order_id IS NULL
-        ) 
+        )
         WHERE sm.raw_material_production_id = mp.id AND mw.id IS NOT NULL
         """
     )

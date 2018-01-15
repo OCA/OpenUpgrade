@@ -7,10 +7,10 @@ from odoo import tools
 
 _column_copies = {
     'mrp_production': [
-        ('state', None, None)
+        ('state', None, None),
     ],
     'mrp_workorder': [
-        ('sequence', None, None)
+        ('sequence', None, None),
     ],
 }
 
@@ -23,9 +23,11 @@ _column_renames = {
 _field_renames = [
     ('mrp.bom', 'mrp_bom', 'product_uom', 'product_uom_id'),
     ('mrp.bom.line', 'mrp_bom_line', 'product_uom', 'product_uom_id'),
-    ('mrp.production', 'mrp_production', 'date_planned', 'date_planned_start'),
+    ('mrp.production', 'mrp_production', 'date_planned',
+     'date_planned_start'),
     ('mrp.production', 'mrp_production', 'move_lines', 'move_raw_ids'),
-    ('mrp.production', 'mrp_production', 'move_created_ids2', 'move_finished_ids'),
+    ('mrp.production', 'mrp_production', 'move_created_ids2',
+     'move_finished_ids'),
     ('mrp.production', 'mrp_production', 'product_uom', 'product_uom_id'),
     ('mrp.production', 'mrp_production', 'workcenter_lines', 'workorder_ids'),
     ('mrp.routing', 'mrp_routing', 'workcenter_lines', 'operation_ids'),
@@ -36,14 +38,30 @@ _field_renames2 = [
     ('mrp.workorder', 'mrp_workorder', 'date_planned', 'date_planned_start'),
 ]
 
-_model_renames = [
-    ('mrp_production_workcenter_line', 'mrp_workorder'),
-]
-
 _xmlid_renames = [
     ('base.menu_mrp_config', 'mrp.menu_mrp_config'),
     ('base.menu_mrp_root', 'mrp.menu_mrp_root'),
 ]
+
+
+def rename_mrp_workorder(env):
+    """Special case where in v9, you have a model called mrp.workorder that is
+    an SQL view report, but on v10 it's a model, which corresponds to a
+    renamed model.
+    """
+    cr = env.cr
+    tools.drop_view_if_exists(cr, 'mrp_workorder')
+    openupgrade.rename_tables(
+        cr, [('mrp_production_workcenter_line', 'mrp_workorder')],
+    )
+    openupgrade.logged_query(
+        cr,
+        "DELETE FROM ir_model WHERE model = %s",
+        ('mrp.workorder', )
+    )
+    openupgrade.rename_models(
+        cr, [('mrp.production.workcenter.line', 'mrp.workorder')],
+    )
 
 
 def prepopulate_fields(cr):
@@ -58,8 +76,7 @@ def prepopulate_fields(cr):
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
-    tools.drop_view_if_exists(cr, 'mrp_workorder')
-    openupgrade.rename_models(cr, _model_renames)
+    rename_mrp_workorder(env)
     openupgrade.copy_columns(cr, _column_copies)
     if openupgrade.column_exists(cr, 'mrp_workorder', 'state'):
         # if mrp_operations was installed
