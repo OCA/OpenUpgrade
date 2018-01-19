@@ -54,6 +54,18 @@ def migrate(cr, version):
             and (sub.res_model = 'mail.channel' or sub.res_model is NULL)
         """
     )
+    # retrieve messages on channels
+    cr.execute(
+        """
+        INSERT INTO mail_message_mail_channel_rel (
+            mail_message_id, mail_channel_id
+        )
+        SELECT mm.id, mm.res_id
+        FROM mail_message mm
+        INNER JOIN mail_channel cc on cc.id = mm.res_id
+        WHERE mm.model = 'mail.channel'
+        """
+    )
     openupgrade.load_data(
         cr, 'mail', 'migrations/9.0.1.0/noupdate_changes.xml',
     )
