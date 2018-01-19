@@ -17,6 +17,17 @@ def update_mrp_workcenter_times(cr):
 
 
 def map_mrp_production_state(cr):
+    """Get ids of old 'draft' MOs and map states.
+    :return: list of ids with all old draft MOs.
+    """
+    cr.execute(
+        """
+        SELECT id
+        FROM mrp_production
+        WHERE state = 'draft'
+        """
+    )
+    draft_ids = [r[0] for r in cr.fetchall()]
     openupgrade.map_values(
         cr,
         openupgrade.get_legacy_name('state'), 'state',
@@ -24,6 +35,11 @@ def map_mrp_production_state(cr):
          ('in_production', 'progress'),
          ('ready', 'planned'),
          ], table='mrp_production', write='sql')
+    return draft_ids
+
+
+def create_moves_draft_mos(env, draft_ids):
+    env['mrp.production'].browse(draft_ids)._generate_moves()
 
 
 def map_mrp_workorder_state(cr):
@@ -39,46 +55,64 @@ def map_mrp_workorder_state(cr):
              ], table='mrp_workorder', write='sql')
 
 
-def update_stock_warehouse(cr):
+def update_stock_warehouse(env):
+    """Check for manufacturing warehouses and update them.
+    :returns: a map (dict) to populate MO's picking types.
+              keys: location_dest_id
+              values: corresponding manu_type_id
+    """
+    cr = env.cr
     cr.execute(
         """
-        UPDATE stock_warehouse
-        SET manufacture_to_resupply = TRUE
+        SELECT location_dest_id
+        FROM mrp_production
+        GROUP BY location_dest_id;
         """
     )
+    ids = [r[0] for r in cr.fetchall()]
+    loc_ids = env['stock.location'].browse(ids)
+    wh_ids = []
+    loc_wh_map = dict()
+    for loc in loc_ids:
+        wh_id = loc.get_warehouse()
+        if wh_id:
+            wh_ids.append(wh_id.id)
+            loc_wh_map[loc.id] = wh_id.id
+    # update manufacture_to_ressupply
+    if wh_ids:
+        cr.execute(
+            """
+            UPDATE stock_warehouse
+            SET manufacture_to_resupply = TRUE
+            WHERE id in %s
+            """, (tuple(set(wh_ids)),)
+        )
+    # Create a default picking_type for manufacturing, for each warehouse above
+    loc_pt_map = dict()
+    wh_pt_map = dict()
+    for wh in env["stock.warehouse"].browse(list(set(wh_ids))):
+        wh._create_manufacturing_picking_type()
+        wh_pt_map[wh.id] = wh.manu_type_id.id
+    for loc in loc_wh_map.keys():
+        loc_pt_map[loc] = wh_pt_map[loc_wh_map[loc]]
+    return loc_pt_map
 
 
-def populate_production_picking_type_id(cr):
+def populate_production_picking_type_id(cr, loc_pt_map):
     """
-    Updated all mrp.production records trying to find
-    first the most suitable picking_type_id based on the destination location,
-    and fall back to the default picking type search if none found previously.
+    Updated all MO's with the new picking type created by
+    'update_stock_warehouse'.
     """
-    openupgrade.logged_query(
-        cr,
-        """
-        UPDATE mrp_production mp
-        SET picking_type_id = spt.id
-        FROM stock_picking_type spt
-        WHERE spt.code = 'mrp_operation'
-            AND mp.location_dest_id = spt.default_location_dest_id
-            AND mp.picking_type_id IS NULL
-        """
-    )
-    openupgrade.logged_query(
-        cr,
-        """
-        UPDATE mrp_production mp
-        SET picking_type_id = spt.id
-        FROM (
-            SELECT id
-            FROM stock_picking_type
-            WHERE code = 'mrp_operation'
-            LIMIT 1
-        ) spt
-        WHERE mp.picking_type_id IS NULL
-        """
-    )
+    for loc in loc_pt_map.keys():
+        openupgrade.logged_query(
+            cr,
+            """
+            UPDATE mrp_production
+            SET picking_type_id = %s
+            WHERE location_dest_id = %s
+                AND picking_type_id IS NULL
+            """ % (loc_pt_map[loc], loc)
+        )
 
 
 def populate_routing_workcenter_routing_id(env):
@@ -184,10 +218,11 @@ def populate_stock_move_workorder_id(cr):
 def migrate(env, version):
     cr = env.cr
     update_mrp_workcenter_times(cr)
-    map_mrp_production_state(cr)
+    draft_ids = map_mrp_production_state(cr)
+    create_moves_draft_mos(env, draft_ids)
     map_mrp_workorder_state(cr)
-    update_stock_warehouse(cr)
-    populate_production_picking_type_id(cr)
+    loc_pt_map = update_stock_warehouse(env)
+    populate_production_picking_type_id(cr, loc_pt_map)
     populate_routing_workcenter_routing_id(env)
     fill_stock_quant_consume_rel(cr)
     populate_stock_move_workorder_id(cr)

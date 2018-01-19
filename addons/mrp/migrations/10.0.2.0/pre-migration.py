@@ -44,23 +44,34 @@ _xmlid_renames = [
 ]
 
 
-def rename_mrp_workorder(env):
+def rename_mrp_workorder(cr):
     """Special case where in v9, you have a model called mrp.workorder that is
     an SQL view report, but on v10 it's a model, which corresponds to a
     renamed model.
     """
-    cr = env.cr
     tools.drop_view_if_exists(cr, 'mrp_workorder')
-    openupgrade.rename_tables(
-        cr, [('mrp_production_workcenter_line', 'mrp_workorder')],
-    )
     openupgrade.logged_query(
         cr,
         "DELETE FROM ir_model WHERE model = %s",
-        ('mrp.workorder', )
+        ('mrp.workorder',)
+    )
+    openupgrade.rename_tables(
+        cr, [('mrp_production_workcenter_line', 'mrp_workorder')],
     )
     openupgrade.rename_models(
         cr, [('mrp.production.workcenter.line', 'mrp.workorder')],
+    )
+    # Fix the external ID:
+    cr.execute("""
+        SELECT id FROM ir_model
+        WHERE model = 'mrp.workorder'
+    """)
+    model_id = cr.fetchone()
+    openupgrade.logged_query(
+        cr,
+        "UPDATE ir_model_data SET res_id = %s "
+        "WHERE name = 'model_mrp_workorder'",
+        model_id
     )
 
 
@@ -76,7 +87,7 @@ def prepopulate_fields(cr):
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
-    rename_mrp_workorder(env)
+    rename_mrp_workorder(cr)
     openupgrade.copy_columns(cr, _column_copies)
     if openupgrade.column_exists(cr, 'mrp_workorder', 'state'):
         # if mrp_operations was installed
