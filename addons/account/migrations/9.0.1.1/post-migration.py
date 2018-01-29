@@ -847,7 +847,7 @@ def merge_invoice_journals(env, refund_journal_ids=None, journal_mapping=None):
                 """UPDATE account_journal
                 SET %s = %%s
                 WHERE id = %%s
-                """ % openupgrade.get_legacy_name('merged_journal_id'),
+                """ % support_column,
                 (normal_journal.id, refund_journal.id)
             )
             if refund_journal.sequence_id != normal_journal.sequence_id:
