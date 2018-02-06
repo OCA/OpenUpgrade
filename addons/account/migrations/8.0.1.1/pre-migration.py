@@ -35,6 +35,27 @@ def migrate(cr, version):
             cr, 'account', 'exp', 'account.analytic.journal', res[0], True)
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_tables(cr, tables_renames)
+
+    # Create and set values for new functional field reconcile_ref to
+    # bypass the ORM auto creation and calculation because it can take
+    # a long time and consume a lot of memory for large account_move_line.
+    cr.execute("""
+        alter table account_move_line
+        add column reconcile_ref character varying;
+        """)
+    cr.execute("""
+        update account_move_line ml
+            set reconcile_ref = r.name
+        from account_move_reconcile r
+        where ml.reconcile_partial_id = r.id;
+        """)
+    cr.execute("""
+        update account_move_line ml
+            set reconcile_ref = r.name
+        from account_move_reconcile r
+        where ml.reconcile_id = r.id;
+        """)
+
     # drop views that inhibit changing field types. They will be recreated
     # anyways
     for view in [
