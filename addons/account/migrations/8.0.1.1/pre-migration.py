@@ -59,7 +59,6 @@ def migrate(cr, version):
             cr, 'account', 'exp', 'account.analytic.journal', res[0], True)
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_tables(cr, tables_renames)
-
     pre_compute_reconcile_ref_field(cr)
 
     # drop views that inhibit changing field types. They will be recreated
