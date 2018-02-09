@@ -41,7 +41,27 @@ def update_payments_from_vouchers(env):
         )
 
 
+def set_journal_payment_method(env):
+    """For those journals that have allow_check_writing marked, we have to
+    enable 'Check' outbound payment method.
+    """
+    if not openupgrade.column_exists(
+            env.cr, 'account_journal', 'allow_check_writing'):
+        return
+    check_method = env.ref(
+        'account_check_printing.account_payment_method_check')
+    env.cr.execute(
+        "SELECT id FROM account_journal WHERE allow_check_writing")
+    journal_ids = [x[0] for x in env.cr.fetchall()]
+    if journal_ids:
+        journals = env['account.journal'].browse(journal_ids)
+        journals.write({
+            'outbound_payment_method_ids': [(4, check_method.id, None)],
+        })
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     """Control function for account_voucher migration."""
     update_payments_from_vouchers(env)
+    set_journal_payment_method(env)
