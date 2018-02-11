@@ -805,8 +805,8 @@ def merge_invoice_journals(env, refund_journal_ids=None, journal_mapping=None):
             query += " AND id IN %s"
             query_args.append(tuple(refund_journal_ids))
         env.cr.execute(query, tuple(query_args))
-        refund_journal_ids = [x[0] for x in env.cr.fetchall()]
-        refund_journals = env['account.journal'].browse(refund_journal_ids)
+        ids = [x[0] for x in env.cr.fetchall()]
+        refund_journals = env['account.journal'].browse(ids)
         for refund_journal in refund_journals:
             if journal_mapping.get(refund_journal.id):
                 normal_journal = env['account.journal'].browse(
