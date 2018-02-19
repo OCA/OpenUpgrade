@@ -233,8 +233,7 @@ account      / account.invoice.tax      / tax_amount (float)            : DEL
 
 account      / account.invoice.tax      / tax_code_id (many2one)        : DEL relation: account.tax.code
 account      / account.invoice.tax      / tax_id (many2one)             : NEW relation: account.tax
-# TODO: A mapping function should provide the transition from tax_code_ids to tax_ids. 
-  Use this function to get the new tax_id from the old tax_code_id.
+# Done: Post-migration - A function tries to infer the mapping from tax codes to taxes
 
 
 #### FIELDS IN MODEL ACCOUNT.JOURNAL ####
