@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# @copyright 2016-Today: Odoo Community Association, Therp BV
+# Copyright 2016 - Therp BV
+# Copyright 2018 - Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from psycopg2.extensions import AsIs
 from openerp import SUPERUSER_ID, api
@@ -30,6 +31,10 @@ def _migrate_tracking(cr):
 
 
 def _migrate_pack_operation(env):
+    """Create stock.pack.operation.lot records - non existing in v8 -,
+    mark pickings that need to recreate pack operations, and update new field
+    qty_done on stock.pack.operation for transferred pickings.
+    """
     env.cr.execute(
         "select o.id, o.%(lot_id)s, p.state, sum(q.qty) "
         "from stock_pack_operation o "
@@ -48,6 +53,14 @@ def _migrate_pack_operation(env):
         "update stock_pack_operation "
         "set fresh_record = (%(processed)s = 'false')",
         {'processed': AsIs(openupgrade.get_legacy_name('processed'))})
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE stock_pack_operation spo
+        SET qty_done = product_qty
+        FROM stock_picking p
+        WHERE p.id = spo.picking_id
+        AND p.state = 'done'"""
+    )
 
 
 def _migrate_stock_picking(cr):
