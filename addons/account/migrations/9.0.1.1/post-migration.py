@@ -1157,10 +1157,10 @@ def migrate(env, version):
     UPDATE account_journal SET bank_statements_source = 'manual'
     """)
 
-    # Value 'percentage_of_total' => 'percentage'
+    # Value 'percentage_of_total' and 'percentage_of_balance' => 'percentage'
     cr.execute("""
     UPDATE account_operation_template SET amount_type = 'percentage'
-    WHERE amount_type = 'percentage_of_total'
+    WHERE amount_type in ('percentage_of_total', 'percentage_of_balance')
     """)
 
     # Set up anglosaxon accounting
