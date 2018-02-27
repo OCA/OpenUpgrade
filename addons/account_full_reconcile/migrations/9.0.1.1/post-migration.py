@@ -92,10 +92,15 @@ def migrate_reconcile(cr):
         currency_id = False
         rate = 1.0
         amount_currency = 0.0
-        if debit_record.line_currency_id and debit_record.amount_currency:
+        if debit_record.line_currency_id:
             currency_id = debit_record.line_currency_id
-            rate = abs(debit_record.balance / debit_record.amount_currency)
-            amount_currency = amount / rate
+            if debit_record.line_currency_id == credit_record.line_currency_id:
+                amount_currency = min(
+                    abs(debit_record.amount_residual_currency),
+                    abs(credit_record.amount_residual_currency))
+            elif debit_record.amount_currency:
+                rate = abs(debit_record.balance / debit_record.amount_currency)
+                amount_currency = amount / rate
         elif credit_record.line_currency_id and credit_record.amount_currency:
             currency_id = credit_record.line_currency_id
             rate = abs(credit_record.balance / credit_record.amount_currency)
