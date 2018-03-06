@@ -1,0 +1,12 @@
+---Fields in module 'sale_mrp'---
+sale_mrp     / sale.order.line          / property_ids (many2many)      : DEL relation: mrp.property
+# Relation removed in v10.0 --> Nothing to do
+
+---XML records in module 'sale_mrp'---
+NEW ir.model.access: sale_mrp.access_mrp_bom_line_salesman
+NEW ir.model.access: sale_mrp.access_mrp_bom_salesman
+NEW ir.model.access: sale_mrp.access_mrp_production_salesman
+NEW ir.model.access: sale_mrp.access_mrp_production_workcenter_line_salesman
+DEL ir.ui.view: sale_mrp.mrp_production_form_view_inherit_sale_mrp
+DEL ir.ui.view: sale_mrp.view_order_form_inherit_sale_mrp
+# Nothing to do
