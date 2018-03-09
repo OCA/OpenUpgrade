@@ -1171,7 +1171,7 @@ def migrate(env, version):
 
     # deprecate accounts where active is False
     cr.execute("""
-    UPDATE account_account SET deprecated = True WHERE active = False
+    UPDATE account_account SET deprecated = (active IS FALSE);
     """)
 
     # Set display_on_footer to False
