@@ -1,0 +1,12 @@
+-
+    !python {model: ir.ui.view }: |
+        inherit_id = self.pool.get('ir.model.data').get_object_reference(
+            cr, uid, 'base', 'view_currency_form')[1]
+        self.create(
+            cr, uid, {
+                'model': 'res.currency',
+                'type': 'form',
+                'arch': '<field name="base" position="replace"/>',
+                'inherit_id': inherit_id,
+                'name': 'Invalid custom view',
+            })

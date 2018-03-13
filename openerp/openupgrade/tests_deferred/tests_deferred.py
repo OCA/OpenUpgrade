@@ -23,6 +23,17 @@ class TestDeferred(common.TransactionCase):
             self.env.ref('hr_attendance.hr_attendace_group')
 
     def test_event_migration(self):
+        try:
+            self.env['event.event']
+        except KeyError:
+            return  # test does not apply
         self.assertEqual(
             len(self.env.ref('event.event_1').registration_ids), 15,
         )
+
+    def test_invalid_custom_view(self):
+        """ Check that an invalid custom view has been set to inactive """
+        view = self.env['ir.ui.view'].with_context(active_test=False).search([
+            ('name', '=', 'Invalid custom view')])
+        self.assertTrue(view)
+        self.assertFalse(view.active)
