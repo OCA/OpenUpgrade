@@ -22,6 +22,17 @@ def update_journal_payment_methods(env):
     })
 
 
+def mark_reconciled(env):
+    '''Update move lines fully reconciled.'''
+    openupgrade.logged_query(
+        env.cr,
+        '''UPDATE account_move_line SET reconciled=true
+           WHERE full_reconcile_id IS NOT NULL AND reconciled=false
+        '''
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     update_journal_payment_methods(env)
+    mark_reconciled(env)
