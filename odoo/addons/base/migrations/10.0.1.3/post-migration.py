@@ -6,7 +6,7 @@ from openupgradelib import openupgrade
 
 def handle_im_odoo_support_views(env):
     """ im_odoo_support is a deprecated module, merged into im_livechat.
-    If this module is installed, a broken version of
+    If the latter module is not installed, a broken version of
     im_odoo_support.assets_backend is left in the database which breaks the
     web client after the migration. """
     module = env['ir.module.module'].search([('name', '=', 'im_livechat')])
