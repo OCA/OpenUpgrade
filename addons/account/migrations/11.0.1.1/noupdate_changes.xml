@@ -79,15 +79,7 @@ from ${object.company_id.name}.
   <record model="ir.sequence" id="sequence_payment_supplier_refund">
     <field name="name">Payments supplier credit notes sequence</field>
   </record>
-  <record model="account.payment.term" id="account_payment_term_15days">
-    <field name="note">Payment terms: 15 Days</field>
-    <field name="line_ids" eval="[(5, 0), (0, 0, {'value': 'balance', 'value_amount': 0.0, 'sequence': 500, 'days': 15, 'option': 'day_after_invoice_date'})]"/>
-  </record>
   <record model="ir.sequence" id="sequence_payment_customer_refund">
     <field name="name">Payments customer credit notes sequence</field>
-  </record>
-  <record model="account.payment.term" id="account_payment_term_net">
-    <field name="note">Payment terms: 30 Net Days</field>
-    <field name="line_ids" eval="[(5, 0), (0, 0, {'value': 'balance', 'value_amount': 0.0, 'sequence': 500, 'days': 30, 'option': 'day_after_invoice_date'})]"/>
   </record>
 </odoo> 

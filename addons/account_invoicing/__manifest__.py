@@ -28,4 +28,6 @@ You could use this simplified accounting in case you work with an (external) acc
     'qweb': [
     ],
     'application': True,
+    # OpenUpgrade: set to autoinstall
+    'auto_install': True,
 }

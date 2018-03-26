@@ -20,20 +20,23 @@ account      / account.fiscal.position.template / sequence (integer)            
 account      / account.fiscal.position.template / state_ids (many2many)         : NEW relation: res.country.state
 account      / account.fiscal.position.template / vat_required (boolean)        : NEW 
 account      / account.fiscal.position.template / zip_from (integer)            : NEW 
-account      / account.fiscal.position.template / zip_to (integer)              : NEW 
+account      / account.fiscal.position.template / zip_to (integer)              : NEW
+# NOTIHING TO DO new functionality
 account      / account.full.reconcile   / exchange_partial_rec_id (many2one): DEL relation: account.partial.reconcile
+# NOTHING TO DO: already included in the full reconcile's partial_reconcile_ids
 account      / account.group            / code_prefix (char)            : NEW 
 account      / account.group            / name (char)                   : NEW required: required
 account      / account.group            / parent_id (many2one)          : NEW relation: account.group
 account      / account.group            / parent_left (integer)         : NEW 
-account      / account.group            / parent_right (integer)        : NEW 
+account      / account.group            / parent_right (integer)        : NEW
+# NOTHING TO DO new functionality
 account      / account.invoice          / access_token (char)           : NEW 
+# NOTHING TO DO access_token is prepopulated with unique tokens by default function
 account      / account.invoice          / activity_ids (one2many)       : NEW relation: mail.activity
 account      / account.invoice          / cash_rounding_id (many2one)   : NEW relation: account.cash.rounding
+# NOTHING TO DO new functionality
 account      / account.invoice          / refund_invoice_ids (one2many) : NEW relation: account.invoice
-# NOTHING TO DO
-# access_token: is prepopulated with unique tokens by default function
-# refund_invoice_ids: is the counterpart of the existing many2one field refund_invoice_id
+# NOTING TO DO: refund_invoice_ids is the counterpart of the existing many2one field refund_invoice_id
 
 account      / account.invoice          / state (selection)             : selection_keys is now '['cancel', 'draft', 'open', 'paid']' ('['cancel', 'draft', 'open', 'paid', 'proforma', 'proforma2']')
 # DONE: pre-migration: copy column
@@ -41,7 +44,7 @@ account      / account.invoice          / state (selection)             : select
 
 account      / account.invoice          / website_message_ids (one2many): NEW relation: mail.message
 account      / account.invoice.line     / is_rounding_line (boolean)    : NEW 
-account      / account.invoice.tax      / amount_rounding (float)       : NEW 
+account      / account.invoice.tax      / amount_rounding (float)       : NEW
 account      / account.journal          / active (boolean)              : NEW 
 account      / account.journal          / bank_statements_source (selection): selection_keys is now '['manual', 'undefined']' ('['manual']')
 account      / account.journal          / color (integer)               : NEW 
@@ -56,23 +59,28 @@ account      / account.payment          / message_follower_ids (one2many): NEW r
 account      / account.payment          / message_ids (one2many)        : NEW relation: mail.message
 account      / account.payment          / message_last_post (datetime)  : NEW 
 account      / account.payment          / state (selection)             : selection_keys is now '['cancelled', 'draft', 'posted', 'reconciled', 'sent']' ('['draft', 'posted', 'reconciled', 'sent']')
+# DONE: set draft payments that have been posted before to cancelled
 account      / account.payment          / website_message_ids (one2many): NEW relation: mail.message
 account      / account.payment          / writeoff_label (char)         : NEW 
 account      / account.payment.term     / sequence (integer)            : NEW required: required, req_default: function
+# DONE: fill sequence field according to original order field 'name'
 account      / account.reconcile.model.template / chart_template_id (many2one)  : NEW relation: account.chart.template, required: required
 account      / account.tax.template     / cash_basis_account (many2one) : NEW relation: account.account.template
 account      / account.tax.template     / tax_exigibility (selection)   : NEW selection_keys: ['on_invoice', 'on_payment']
+# NOTHING TO DO: fields of chart template elements which do not affect installed charts
 account      / res.company              / account_opening_move_id (many2one): NEW relation: account.move
 account      / res.company              / account_setup_bank_data_done (boolean): NEW 
 account      / res.company              / account_setup_bar_closed (boolean): NEW 
 account      / res.company              / account_setup_coa_done (boolean): NEW 
 account      / res.company              / account_setup_company_data_done (boolean): NEW 
-account      / res.company              / account_setup_fy_data_done (boolean): NEW 
+account      / res.company              / account_setup_fy_data_done (boolean): NEW
+# NOTHING TO DO: setup wizards that are harmless or even useful to revisit
+
 account      / res.company              / tax_exigibility (boolean)     : NEW 
 account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : selection_keys is now '['on_invoice', 'on_payment']' ('False')
 account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : type is now 'selection' ('boolean')
 account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : was renamed to tax_exigibility [nothing to do]
-# NOTHING TO DO
+# DONE: Migrated old True value to 'on_payment' and set company field to True if there are any such taxes
 
 ---XML records in module 'account'---
 NEW ir.actions.act_window: account.account_send_payment_receipt_by_email_action (noupdate)

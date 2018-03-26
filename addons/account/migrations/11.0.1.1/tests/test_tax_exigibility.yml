@@ -1,0 +1,4 @@
+-
+  !python {model: account.tax, id: l10n_generic_coa.1_purchase_tax_template}: |
+    if 'use_cash_basis' in self._fields:
+        self.write({'use_cash_basis': True})

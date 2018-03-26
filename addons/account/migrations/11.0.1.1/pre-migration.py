@@ -16,6 +16,12 @@ column_copies = {
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.copy_columns(env.cr, column_copies)
+    # account_tax_cash_basis was merged with account, so there is no module
+    # entry anymore to check if it was installed. Check one of its columns
+    # instead.
+    if openupgrade.column_exists(env.cr, 'account_tax', 'use_cash_basis'):
+        openupgrade.rename_columns(
+            env.cr, {'account_tax': [('use_cash_basis', None)]})
     openupgrade.delete_record_translations(env.cr, 'account', [
         'mail_template_data_notification_email_account_invoice',
         'email_template_edi_invoice'
