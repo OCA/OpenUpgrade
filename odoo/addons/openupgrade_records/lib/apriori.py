@@ -12,7 +12,10 @@ renamed_modules = {
     'website_sale_qty': 'website_sale_price_tier',
     # OCA/hr
     # The OCA extensions of the hr_holidays module are 'hr_holidays_something'
-    'hr_holiday_notify_employee_manager': 'hr_holidays_notify_employee_manager'
+    'hr_holiday_notify_employee_manager':
+        'hr_holidays_notify_employee_manager',
+    # OCA/manufacture-reporting:
+    'report_mrp_bom_matrix': 'mrp_bom_matrix_report',
 }
 
 renamed_models = {
