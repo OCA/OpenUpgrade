@@ -52,7 +52,7 @@ script:
     - source ~/virtualenv/python2.7/bin/activate
     - pip install -q -r requirements.txt
     # this crashes if there is no test data
-    - if [ -s ../test_data100.yml ]; then ./openerp-server --database=$DB --test-file=`readlink -f ../test_data100.yml` --test-commit --stop-after-init; fi
+    - if [ -s ../test_data100.yml ]; then ./odoo-bin --database=$DB --test-file=`readlink -f ../test_data100.yml` --test-commit --stop-after-init; fi
     - source ~/virtualenv/python3.5/bin/activate
     # Line below may fail quite often due to Travis bug:
     - git reset -q --hard $TRAVIS_COMMIT

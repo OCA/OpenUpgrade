@@ -1,0 +1,16 @@
+# Config file .coveragerc
+# adapt the include for your project
+
+[report]
+include =
+    addons/*/migrations
+    odoo/addons/*/migrations
+
+omit =
+    addons/*/migrations/*/tests
+    odoo/addons/*/migrations/*/tests
+
+# Regexes for lines to exclude from consideration
+exclude_lines =
+    # Have to re-enable the standard pragma
+    pragma: no cover
