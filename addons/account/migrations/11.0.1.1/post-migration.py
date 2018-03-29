@@ -63,6 +63,18 @@ def migrate(env, version):
         FROM (SELECT id, row_number() over (ORDER BY name asc) AS sequence
               FROM account_payment_term) sub
         WHERE sub.id = apt.id """)
+    # Set accounting configuration steps to done if there are moves
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE res_company rc
+        SET account_setup_bank_data_done = TRUE,
+            account_setup_bar_closed = TRUE,
+            account_setup_coa_done = TRUE,
+            account_setup_company_data_done = TRUE,
+            account_setup_fy_data_done = TRUE
+        WHERE EXISTS (
+            SELECT id FROM account_move
+            WHERE company_id = rc.id)""")
 
     migrate_account_tax_cash_basis(env)
 

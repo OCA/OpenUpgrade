@@ -69,12 +69,13 @@ account      / account.tax.template     / cash_basis_account (many2one) : NEW re
 account      / account.tax.template     / tax_exigibility (selection)   : NEW selection_keys: ['on_invoice', 'on_payment']
 # NOTHING TO DO: fields of chart template elements which do not affect installed charts
 account      / res.company              / account_opening_move_id (many2one): NEW relation: account.move
+# NOT DONE: not possible to determine actual opening move. Selecting the wrong one is potentially harmful. Not selecting one is harmless.
 account      / res.company              / account_setup_bank_data_done (boolean): NEW 
 account      / res.company              / account_setup_bar_closed (boolean): NEW 
 account      / res.company              / account_setup_coa_done (boolean): NEW 
 account      / res.company              / account_setup_company_data_done (boolean): NEW 
 account      / res.company              / account_setup_fy_data_done (boolean): NEW
-# NOTHING TO DO: setup wizards that are harmless or even useful to revisit
+# DONE: set to True for companies with accounting moves
 
 account      / res.company              / tax_exigibility (boolean)     : NEW 
 account_tax_cash_basis / account.tax              / use_cash_basis (boolean)      : selection_keys is now '['on_invoice', 'on_payment']' ('False')

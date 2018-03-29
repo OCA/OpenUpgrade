@@ -1,0 +1,3 @@
+-
+  !python {model: res.company, id: base.main_company}: |
+    self.copy().write({'name': 'Company without accounting'})
