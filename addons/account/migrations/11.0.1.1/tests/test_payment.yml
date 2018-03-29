@@ -1,0 +1,27 @@
+-
+  Create a payment that is cancelled and a payment that is not confirmed.
+  In Odoo 10.0, both will have state 'draft' but in 11.0 one will have state 'cancelled'
+-
+  !python {model: 'account.register.payments', id: False}: |
+    import time
+    invoice = self.env.ref('l10n_generic_coa.demo_invoice_1')
+    method = self.env.ref('account.account_payment_method_manual_out')
+    journal = self.env['account.journal'].search([('type', '=', 'bank')], limit=1)
+    journal.update_posted = True
+    register_payment = self.with_context(
+        active_model='account.invoice', active_ids=invoice.ids).create({
+            'payment_date': time.strftime('%Y') + '-07-15',
+            'journal_id': journal.id,
+            'payment_method_id': method.id,
+        })
+    payment1 = self.env['account.payment'].create(
+        register_payment.get_payment_vals())
+    payment1.communication = 'openupgrade_cancelled_payment'
+    payment1.post()
+    payment1.cancel()
+    assert(payment1.state == 'draft')
+    
+    payment2 = self.env['account.payment'].create(
+        register_payment.get_payment_vals())
+    payment2.communication = 'openupgrade_draft_payment'
+    assert(payment2.state == 'draft')
