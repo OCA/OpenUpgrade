@@ -1,0 +1,48 @@
+---Fields in module 'payment'---
+payment      / payment.acquirer         / auto_confirm (selection)      : DEL required: required, selection_keys: ['authorize', 'confirm_so', 'generate_and_pay_invoice', 'none'], req_default: function
+payment      / payment.acquirer         / capture_manually (boolean)    : NEW 
+payment      / payment.acquirer         / country_ids (many2many)       : NEW relation: res.country
+payment      / payment.acquirer         / payment_flow (selection)      : NEW required: required, selection_keys: ['form', 's2s'], req_default: function
+payment      / payment.acquirer         / payment_icon_ids (many2many)  : NEW relation: payment.icon
+payment      / payment.acquirer         / specific_countries (boolean)  : NEW 
+payment      / payment.icon             / acquirer_ids (many2many)      : NEW relation: payment.acquirer
+payment      / payment.icon             / image (binary)                : NEW attachment: True
+payment      / payment.icon             / image_payment_form (binary)   : NEW attachment: True
+payment      / payment.icon             / name (char)                   : NEW 
+payment      / payment.token            / verified (boolean)            : NEW 
+payment      / payment.transaction      / callback_eval (char)          : DEL 
+payment      / payment.transaction      / callback_hash (char)          : NEW 
+payment      / payment.transaction      / callback_method (char)        : NEW 
+payment      / payment.transaction      / callback_model_id (many2one)  : NEW relation: ir.model
+payment      / payment.transaction      / callback_res_id (integer)     : NEW 
+payment      / payment.transaction      / state (selection)             : selection_keys is now '['authorized', 'cancel', 'done', 'draft', 'error', 'pending', 'refunded', 'refunding']' ('['authorized', 'cancel', 'done', 'draft', 'error', 'pending']')
+payment      / payment.transaction      / type (selection)              : selection_keys is now '['form', 'form_save', 'server2server', 'validation']' ('['form', 'form_save', 'server2server']')
+# Nothing to do
+
+---XML records in module 'payment'---
+NEW ir.actions.act_window: payment.action_payment_icon
+DEL ir.actions.act_window: payment.payment_transaction_action_child
+NEW ir.model.access: payment.payment_icon_all
+NEW ir.model.access: payment.payment_icon_system
+NEW ir.model.access: payment.payment_icon_user
+NEW ir.ui.menu: payment.payment_icon_menu
+NEW ir.ui.view: payment.assets_frontend
+NEW ir.ui.view: payment.confirm
+NEW ir.ui.view: payment.pay
+NEW ir.ui.view: payment.pay_meth_link
+NEW ir.ui.view: payment.pay_methods
+NEW ir.ui.view: payment.payment_icon_form_view
+NEW ir.ui.view: payment.payment_tokens_list
+NEW ir.ui.view: payment.transaction_view_kanban
+DEL ir.ui.view: payment.payment_acquirer_installation
+NEW payment.icon: payment.payment_icon_cc_american_express
+NEW payment.icon: payment.payment_icon_cc_bancontact
+NEW payment.icon: payment.payment_icon_cc_cirrus
+NEW payment.icon: payment.payment_icon_cc_diners_club_intl
+NEW payment.icon: payment.payment_icon_cc_discover
+NEW payment.icon: payment.payment_icon_cc_jcb
+NEW payment.icon: payment.payment_icon_cc_maestro
+NEW payment.icon: payment.payment_icon_cc_mastercard
+NEW payment.icon: payment.payment_icon_cc_unionpay
+NEW payment.icon: payment.payment_icon_cc_visa
+# Nothing to do
