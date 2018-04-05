@@ -30,4 +30,6 @@ You could use this simplified accounting in case you work with an (external) acc
     'application': True,
     # OpenUpgrade: set to autoinstall
     'auto_install': True,
+    'uninstall_hook': 'uninstall_hook',
+    'post_init_hook': 'post_init_hook',
 }

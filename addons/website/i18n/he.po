@@ -3,18 +3,20 @@
 # * website
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # ExcaliberX <excaliberx@gmail.com>, 2017
 # Moshe Flam <pashute@gmail.com>, 2017
-# fishfurbanter <fishfurbanter@gmail.com>, 2017
+# Fishfur A Banter <fishfurbanter@gmail.com>, 2017
 # Yihya Hugirat <hugirat@gmail.com>, 2017
+# yacov mosbacher (‫יעקב מוסבכר‬‎) <ymosba@gmail.com>, 2018
+# שהאב חוסיין <shhab89@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-16 08:08+0000\n"
-"PO-Revision-Date: 2017-11-16 08:08+0000\n"
-"Last-Translator: Yihya Hugirat <hugirat@gmail.com>, 2017\n"
+"POT-Creation-Date: 2018-02-19 13:42+0000\n"
+"PO-Revision-Date: 2018-02-19 13:42+0000\n"
+"Last-Translator: שהאב חוסיין <shhab89@gmail.com>, 2018\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,7 +59,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.xml:40
 #, python-format
 msgid "&nbsp;"
-msgstr ""
+msgstr "&nbsp;"
 
 #. module: website
 #. openerp-web
@@ -91,6 +93,13 @@ msgstr ""
 msgid ""
 "(e.g. business name, location) tends to improve your ranking in search "
 "engines and consequently increases your traffic. Do it:"
+msgstr ""
+
+#. module: website
+#: model:ir.ui.view,arch_db:website.layout_footer_copyright
+msgid ""
+",\n"
+"                                                      the #1"
 msgstr ""
 
 #. module: website
@@ -244,7 +253,7 @@ msgstr ""
 #. module: website
 #: model:ir.ui.view,arch_db:website.snippet_options
 msgid "<b>Set Custom Image...</b>"
-msgstr ""
+msgstr "<b>קבע תמונה של הלקוח</b>"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
@@ -1080,7 +1089,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:website.view_website_form
 #, python-format
 msgid "Cancel"
-msgstr ""
+msgstr "בטל"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.s_feature_grid
@@ -1173,7 +1182,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.gallery.xml:51
 #, python-format
 msgid "Close"
-msgstr ""
+msgstr "סגור"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
@@ -1222,7 +1231,7 @@ msgstr ""
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
 msgid "Congratulations, you're done!"
-msgstr ""
+msgstr "ברכות, סיימת !"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.footer_default
@@ -1307,11 +1316,6 @@ msgstr "צור תפריט"
 #. module: website
 #: model:ir.ui.view,arch_db:website.page_404
 msgid "Create Page"
-msgstr ""
-
-#. module: website
-#: model:ir.ui.view,arch_db:website.layout_footer_copyright
-msgid "Create a"
 msgstr ""
 
 #. module: website
@@ -1456,7 +1460,7 @@ msgstr "תיאור"
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
 msgid "Design"
-msgstr ""
+msgstr "עיצוב"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.snippet_options
@@ -1717,6 +1721,11 @@ msgid "Feature Two"
 msgstr ""
 
 #. module: website
+#: model:ir.model,name:website.model_ir_model_fields
+msgid "Fields"
+msgstr "שדות"
+
+#. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
 msgid ""
 "Finally don't try to make all your content accessible from the main menu or the footer.\n"
@@ -1741,7 +1750,7 @@ msgstr "קבוע"
 #. module: website
 #: model:ir.ui.view,arch_db:website.snippet_options
 msgid "Float"
-msgstr ""
+msgstr "צף"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.snippet_options
@@ -1758,7 +1767,7 @@ msgstr ""
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
 msgid "Footer"
-msgstr ""
+msgstr "תחתית"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
@@ -1975,7 +1984,7 @@ msgstr "קבץ לפי"
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_page_groups_id
 msgid "Groups"
-msgstr ""
+msgstr "קבוצות"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
@@ -2055,7 +2064,7 @@ msgstr ""
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_id
-#: model:ir.model.fields,field_description:website.field_website_menu_id_7239
+#: model:ir.model.fields,field_description:website.field_website_menu_id_7241
 #: model:ir.model.fields,field_description:website.field_website_page_id
 #: model:ir.model.fields,field_description:website.field_website_published_mixin_id
 #: model:ir.model.fields,field_description:website.field_website_redirect_id
@@ -2180,6 +2189,7 @@ msgid ""
 msgstr ""
 
 #. module: website
+#: model:ir.model.fields,field_description:website.field_website_menu_is_visible
 #: model:ir.model.fields,field_description:website.field_website_page_is_visible
 msgid "Is Visible"
 msgstr ""
@@ -2206,7 +2216,7 @@ msgstr ""
 
 #. module: website
 #. openerp-web
-#: code:addons/website/static/src/js/content/website_root.js:209
+#: code:addons/website/static/src/js/content/website_root.js:212
 #, python-format
 msgid ""
 "It might be possible to edit the relevant items or fix the issue in <a "
@@ -2275,7 +2285,7 @@ msgstr "תאריך שינוי אחרון"
 #: code:addons/website/static/src/xml/website.backend.xml:110
 #, python-format
 msgid "Last Month"
-msgstr ""
+msgstr "חודש אחרון"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_menu_write_uid
@@ -2310,7 +2320,7 @@ msgstr ""
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
 msgid "Launch"
-msgstr ""
+msgstr "הפעל"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
@@ -2443,7 +2453,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website.field_website_menu_name
 #, python-format
 msgid "Menu"
-msgstr ""
+msgstr "תפריט"
 
 #. module: website
 #. openerp-web
@@ -2493,6 +2503,11 @@ msgstr "מודל"
 #: model:ir.model.fields,field_description:website.field_website_page_model_data_id
 msgid "Model Data"
 msgstr ""
+
+#. module: website
+#: model:ir.model,name:website.model_ir_model
+msgid "Models"
+msgstr "מודלים"
 
 #. module: website
 #. openerp-web
@@ -2719,6 +2734,11 @@ msgid "Open Source ERP"
 msgstr ""
 
 #. module: website
+#: model:ir.ui.view,arch_db:website.layout_footer_copyright
+msgid "Open Source eCommerce"
+msgstr ""
+
+#. module: website
 #: model:ir.ui.view,arch_db:website.user_navbar
 msgid "Optimize SEO"
 msgstr ""
@@ -2918,7 +2938,7 @@ msgstr ""
 #. module: website
 #: model:ir.model,name:website.model_web_planner
 msgid "Planner"
-msgstr ""
+msgstr "מתכנן"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.theme_customize
@@ -2931,6 +2951,11 @@ msgid ""
 "Post content on other people blogs, forums, websites, that are related to "
 "your environment."
 msgstr ""
+
+#. module: website
+#: model:ir.ui.view,arch_db:website.layout_footer_copyright
+msgid "Powered by"
+msgstr "מופעל על ידי"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.kanban_contain
@@ -3796,7 +3821,7 @@ msgstr "תצוגה"
 #: model:ir.model.fields,field_description:website.field_website_page_arch
 #: model:ir.model.fields,field_description:website.field_website_page_arch_base
 msgid "View Architecture"
-msgstr ""
+msgstr "ארכיטקטורת תצוגה"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_page_name
@@ -3902,7 +3927,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:website.res_config_settings_view_form
 #: model:ir.ui.view,arch_db:website.view_server_action_search_website
 msgid "Website"
-msgstr ""
+msgstr "אתר"
 
 #. module: website
 #: model:ir.actions.act_window,name:website.action_module_website
@@ -4115,7 +4140,7 @@ msgstr ""
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
 msgid "Welcome"
-msgstr ""
+msgstr "ברוכים הבאים"
 
 #. module: website
 #. openerp-web
@@ -4384,11 +4409,6 @@ msgid "found(s)"
 msgstr ""
 
 #. module: website
-#: model:ir.ui.view,arch_db:website.layout_footer_copyright
-msgid "free website"
-msgstr ""
-
-#. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.seo.xml:28
 #, python-format
@@ -4468,7 +4488,7 @@ msgstr ""
 #. module: website
 #: model:ir.ui.view,arch_db:website.menu_search
 msgid "name"
-msgstr ""
+msgstr "שם"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.user_navbar
@@ -4560,11 +4580,6 @@ msgstr ""
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
 msgid "will help you:"
-msgstr ""
-
-#. module: website
-#: model:ir.ui.view,arch_db:website.layout_footer_copyright
-msgid "with"
 msgstr ""
 
 #. module: website

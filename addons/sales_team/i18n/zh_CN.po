@@ -4,14 +4,16 @@
 # 
 # Translators:
 # liAnGjiA <liangjia@qq.com>, 2017
-# Gary Wei <Gary.wei@elico-corp.com>, 2017
+# 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2017
 # waveyeung <waveyeung@qq.com>, 2017
-# xiaobin wu <bd5dml@gmail.com>, 2017
-# Jeffery CHEN <jeffery9@gmail.com>, 2017
+# e2f_cn c7 <e2f_cn_c7@outlook.com>, 2017
+# Jeffery CHEN Fan <jeffery9@gmail.com>, 2017
 # Xu Lei <xulei8@qq.com>, 2017
 # Talway <9010446@qq.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
 # 老窦 北京 <2662059195@qq.com>, 2017
+# Martin Trigaux, 2017
+# Gary Wei <Gary.wei@elico-corp.com>, 2017
+# xiaobin wu <bd5dml@gmail.com>, 2017
 # 卓忆科技 <zhanghao@jointd.com>, 2017
 # Liping Wang <lynn.config@gmail.com>, 2017
 # 苏州远鼎 <tiexinliu@126.com>, 2017
@@ -33,7 +35,7 @@ msgstr ""
 #. module: sales_team
 #: model:ir.ui.view,arch_db:sales_team.crm_team_salesteams_view_kanban
 msgid "<span>New</span>"
-msgstr "<span>新建</span>"
+msgstr "<span>创建</span>"
 
 #. module: sales_team
 #: model:ir.ui.view,arch_db:sales_team.crm_team_salesteams_view_kanban
@@ -79,7 +81,7 @@ msgstr "大漂亮按钮：）"
 #. module: sales_team
 #: model:ir.model.fields,field_description:sales_team.field_crm_team_user_id
 msgid "Channel Leader"
-msgstr "渠道领导"
+msgstr "渠道负责人"
 
 #. module: sales_team
 #: model:ir.model.fields,field_description:sales_team.field_crm_team_member_ids
@@ -95,7 +97,7 @@ msgstr "频道类型"
 #: model:ir.actions.act_window,help:sales_team.crm_team_salesteams_act
 #: model:ir.actions.act_window,help:sales_team.sales_team_config_action
 msgid "Click here to define a new sales channel."
-msgstr "单击此处定义新的销售渠道"
+msgstr "点击此处以定义新的销售渠道。"
 
 #. module: sales_team
 #: model:ir.model.fields,field_description:sales_team.field_crm_team_color
@@ -203,7 +205,7 @@ msgstr "分组"
 #. module: sales_team
 #: model:ir.model.fields,help:sales_team.field_crm_team_dashboard_graph_group
 msgid "How this channel's dashboard graph will group the results."
-msgstr "这就是通道的仪表盘图组的结果"
+msgstr "此渠道的仪表板图将如何对结果进行分组。"
 
 #. module: sales_team
 #: model:ir.model.fields,field_description:sales_team.field_crm_team_id
@@ -216,14 +218,14 @@ msgstr "ID"
 msgid ""
 "If set, this sales channel will be used for sales and assignations related "
 "to this partner"
-msgstr "如果设置了，这种销售渠道将用于销售和合作伙伴的相关矩阵"
+msgstr "如果设置，则此销售渠道将用于与此合作伙伴相关的销售和分配"
 
 #. module: sales_team
 #: model:ir.model.fields,help:sales_team.field_crm_team_active
 msgid ""
 "If the active field is set to false, it will allow you to hide the sales "
 "channel without removing it."
-msgstr "如果活动字段设置为false，它将允许您在不删除它的情况下隐藏销售通道。"
+msgstr "如果活动字段设置为错，则可以隐藏销售渠道而不删除它。"
 
 #. module: sales_team
 #: selection:crm.team,dashboard_graph_model:0
@@ -284,12 +286,12 @@ msgstr "我的收藏夹"
 #: code:addons/sales_team/models/crm_team.py:255
 #, python-format
 msgid "Not Defined"
-msgstr "没有定义"
+msgstr "未定义"
 
 #. module: sales_team
 #: selection:crm.team,dashboard_graph_model:0
 msgid "Pipeline"
-msgstr "漏斗"
+msgstr "管道"
 
 #. module: sales_team
 #: selection:crm.team,team_type:0
@@ -299,7 +301,7 @@ msgstr "POS"
 #. module: sales_team
 #: model:ir.model.fields,field_description:sales_team.field_crm_team_reply_to
 msgid "Reply-To"
-msgstr "回复 至"
+msgstr "回复至"
 
 #. module: sales_team
 #: selection:crm.team,dashboard_graph_model:0 selection:crm.team,team_type:0
@@ -322,7 +324,7 @@ msgstr "销售渠道"
 msgid ""
 "Sales Channel the user is member of. Used to compute the members of a sales "
 "channel through the inverse one2many"
-msgstr "销售渠道用户是会员。用于计算一个销售渠道成员通过逆one2many"
+msgstr "该用户是销售渠道的成员。 用于通过逆向计算销售渠道的成员"
 
 #. module: sales_team
 #: model:ir.actions.act_window,name:sales_team.crm_team_salesteams_act
@@ -338,7 +340,7 @@ msgstr "销售员"
 #. module: sales_team
 #: model:ir.ui.view,arch_db:sales_team.crm_team_view_form
 msgid "Salesteam name..."
-msgstr "销售团队名称"
+msgstr "销售团队名称…"
 
 #. module: sales_team
 #: model:ir.ui.view,arch_db:sales_team.crm_team_salesteams_search
@@ -363,7 +365,7 @@ msgstr "显示仪表"
 #. module: sales_team
 #: model:ir.ui.view,arch_db:sales_team.crm_team_salesteams_search
 msgid "Team Leader"
-msgstr "团队领导"
+msgstr "团队负责人"
 
 #. module: sales_team
 #: model:ir.ui.view,arch_db:sales_team.crm_team_view_form
@@ -373,35 +375,35 @@ msgstr "团队成员"
 #. module: sales_team
 #: model:ir.model.fields,help:sales_team.field_crm_team_color
 msgid "The color of the channel"
-msgstr "通道的颜色"
+msgstr "渠道的颜色"
 
 #. module: sales_team
 #: model:ir.model.fields,help:sales_team.field_crm_team_reply_to
 msgid ""
 "The email address put in the 'Reply-To' of all emails sent by Odoo about "
 "cases in this sales channel"
-msgstr "电子邮件地址放在“回复”发送的所有电子邮件的Odoo案件这一销售渠道"
+msgstr "电子邮件地址放在有关此销售渠道由Odoo发送的所有电邮的 “回复”一栏"
 
 #. module: sales_team
 #: model:ir.model.fields,help:sales_team.field_crm_team_dashboard_graph_model
 msgid "The graph this channel will display in the Dashboard.\n"
-msgstr "此图通道将显示在仪表板中。\n"
+msgstr "此渠道的图形将显示在仪表板中。\n"
 
 #. module: sales_team
 #: model:ir.model.fields,help:sales_team.field_crm_team_dashboard_graph_period
 msgid "The time period this channel's dashboard graph will consider."
-msgstr "此通道的仪表板图将考虑的时间段。"
+msgstr "此渠道的仪表板图将考虑的时间段。"
 
 #. module: sales_team
 #: model:ir.model.fields,help:sales_team.field_crm_team_dashboard_graph_type
 msgid "The type of graph this channel will display in the dashboard."
-msgstr "此通道将显示在仪表板中的图形类型。"
+msgstr "此渠道将显示在仪表板中的图形类型。"
 
 #. module: sales_team
 #: model:ir.model.fields,help:sales_team.field_crm_team_team_type
 msgid ""
 "The type of this channel, it will define the resources this channel uses."
-msgstr "此通道的类型，它将定义此通道使用的资源。"
+msgstr "此渠道的类型，它将定义此渠道使用的资源。"
 
 #. module: sales_team
 #: model:ir.model.fields,field_description:sales_team.field_crm_team_dashboard_graph_type
@@ -413,7 +415,7 @@ msgstr "类型"
 #: code:addons/sales_team/models/crm_team.py:173
 #, python-format
 msgid "Undefined graph model for Sales Channel: %s"
-msgstr "销售渠道的不确定图模型：%s"
+msgstr "销售渠道的未定义图形模型：%s"
 
 #. module: sales_team
 #: model:ir.actions.act_window,help:sales_team.crm_team_salesteams_act
@@ -422,9 +424,8 @@ msgid ""
 "Use sales channels to organize your sales departments. \n"
 "                    Each channel will work with a separate pipeline."
 msgstr ""
-"利用销售渠道组织销售部门。\n"
-"\n"
-"每个通道将与一个单独的管道一起工作。"
+"使用销售渠道来组织您的销售部门。\n"
+"                     每个渠道将进行一个单独的管道工作。"
 
 #. module: sales_team
 #: model:res.groups,name:sales_team.group_sale_salesman_all_leads
@@ -469,4 +470,4 @@ msgstr "在销售应用，用户只能访问自己的数据。"
 msgid ""
 "the user will have an access to the sales configuration as well as statistic"
 " reports."
-msgstr "用户将有权限访问销售配置及统计报表。"
+msgstr "用户将有权访问销售配置及统计报告。"

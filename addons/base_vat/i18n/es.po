@@ -3,8 +3,9 @@
 # * base_vat
 # 
 # Translators:
-# Antonio Trueba <atgayol@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Antonio Trueba, 2017
+# Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
+# Martin Trigaux, 2017
 # Alejandro Santana <alejandrosantana@anubia.es>, 2017
 msgid ""
 msgstr ""
@@ -36,6 +37,8 @@ msgid ""
 "If this checkbox is ticked, you will not be able to save a contact if its "
 "VAT number cannot be verified by the European VIES service."
 msgstr ""
+"Si esta casilla de verificación está marcada, no podrá guardar un contacto "
+"si el NIF no puede validarse por el servicio VIES."
 
 #. module: base_vat
 #: code:addons/base_vat/models/res_partner.py:134
@@ -61,18 +64,18 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base_vat.view_partner_form
 #: model:ir.ui.view,arch_db:base_vat.view_partner_short_form
 msgid "VAT"
-msgstr "IVA"
+msgstr "NIF"
 
 #. module: base_vat
 #: model:ir.model.fields,field_description:base_vat.field_res_company_vat_check_vies
 #: model:ir.model.fields,field_description:base_vat.field_res_config_settings_vat_check_vies
 msgid "Verify VAT Numbers"
-msgstr ""
+msgstr "Verificar números NIF"
 
 #. module: base_vat
 #: model:ir.ui.view,arch_db:base_vat.res_config_settings_view_form
 msgid "Verify VAT numbers using the European VIES service"
-msgstr ""
+msgstr "Verificar números NIF usando el servicio VIES"
 
 #. module: base_vat
 #: model:ir.model,name:base_vat.model_res_config_settings

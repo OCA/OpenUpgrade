@@ -4,13 +4,15 @@
 # 
 # Translators:
 # Yihya Hugirat <hugirat@gmail.com>, 2017
+# שהאב חוסיין <shhab89@gmail.com>, 2018
+# ExcaliberX <excaliberx@gmail.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:26+0000\n"
-"PO-Revision-Date: 2017-10-02 11:26+0000\n"
-"Last-Translator: Yihya Hugirat <hugirat@gmail.com>, 2017\n"
+"POT-Creation-Date: 2018-02-19 13:43+0000\n"
+"PO-Revision-Date: 2018-02-19 13:43+0000\n"
+"Last-Translator: ExcaliberX <excaliberx@gmail.com>, 2018\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -245,12 +247,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_uom_active
 #: model:ir.ui.view,arch_db:product.product_supplierinfo_search_view
 msgid "Active"
-msgstr ""
+msgstr "פעיל"
 
 #. module: product
 #: model:product.category,name:product.product_category_all
 msgid "All"
-msgstr ""
+msgstr "כל"
 
 #. module: product
 #: code:addons/product/models/product_pricelist.py:441
@@ -318,7 +320,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:product.product_supplierinfo_search_view
 #: model:ir.ui.view,arch_db:product.product_template_search_view
 msgid "Archived"
-msgstr ""
+msgstr "התווסף לארכיון"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_sequence
@@ -352,7 +354,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_attribute_line_value_ids
 #: model:ir.ui.view,arch_db:product.product_attribute_view_form
 msgid "Attribute Values"
-msgstr ""
+msgstr "ערכי מאפיינים"
 
 #. module: product
 #: model:ir.actions.act_window,name:product.attribute_action
@@ -361,7 +363,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:product.product_template_search_view
 #: model:ir.ui.view,arch_db:product.product_variant_easy_edit_view
 msgid "Attributes"
-msgstr ""
+msgstr "מאפיינים"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_res_config_settings_group_product_variant
@@ -386,7 +388,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_product_barcode
 #: model:ir.model.fields,field_description:product.field_product_template_barcode
 msgid "Barcode"
-msgstr ""
+msgstr "ברקוד"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_packaging_barcode
@@ -529,7 +531,7 @@ msgstr ""
 #. module: product
 #: model:ir.ui.view,arch_db:product.view_product_price_list
 msgid "Cancel"
-msgstr ""
+msgstr "בטל"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_uom_category_id
@@ -746,7 +748,7 @@ msgstr "קבוצת מדינות"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_pricelist_country_group_ids
 msgid "Country Groups"
-msgstr ""
+msgstr "קבוצות מדינות"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_create_variant
@@ -847,7 +849,7 @@ msgstr "תאריך"
 #. module: product
 #: model:product.uom,name:product.product_uom_day
 msgid "Day(s)"
-msgstr ""
+msgstr "ימים"
 
 #. module: product
 #: code:addons/product/models/res_company.py:59
@@ -878,7 +880,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_product_description
 #: model:ir.model.fields,field_description:product.field_product_template_description
 msgid "Description"
-msgstr ""
+msgstr "תיאור"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_template_form_view
@@ -966,7 +968,7 @@ msgstr ""
 #: code:addons/product/models/product.py:53
 #, python-format
 msgid "Error ! You cannot create recursive categories."
-msgstr ""
+msgstr "שגיאה! לא ניתן ליצור קטגוריות רקורסיביות"
 
 #. module: product
 #: code:addons/product/models/product_attribute.py:101
@@ -1125,6 +1127,11 @@ msgid "Friendly to the environment."
 msgstr ""
 
 #. module: product
+#: model:ir.ui.view,arch_db:product.product_template_search_view
+msgid "Future Activities"
+msgstr ""
+
+#. module: product
 #: model:product.product,name:product.product_product_1
 #: model:product.template,name:product.product_product_1_product_template
 msgid "GAP Analysis Service"
@@ -1133,7 +1140,7 @@ msgstr ""
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_template_form_view
 msgid "General Information"
-msgstr ""
+msgstr "מידע כללי"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_11
@@ -1181,7 +1188,7 @@ msgstr ""
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_supplierinfo_search_view
 msgid "Group By"
-msgstr ""
+msgstr "קבץ לפי"
 
 #. module: product
 #: model:product.product,name:product.product_product_17
@@ -1306,7 +1313,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_template_image
 msgid "Image"
-msgstr ""
+msgstr "תמונה"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_image
@@ -1376,7 +1383,7 @@ msgstr ""
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_template_form_view
 msgid "Inventory"
-msgstr ""
+msgstr "מלאי"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_7
@@ -1461,6 +1468,11 @@ msgid "Last Updated on"
 msgstr "תאריך עדכון אחרון"
 
 #. module: product
+#: model:ir.ui.view,arch_db:product.product_template_search_view
+msgid "Late Activities"
+msgstr ""
+
+#. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_delay
 msgid ""
 "Lead time in days between the confirmation of the purchase order and the "
@@ -1471,7 +1483,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_category_parent_left
 msgid "Left Parent"
-msgstr ""
+msgstr "הורים משמאל"
 
 #. module: product
 #: model:product.uom.categ,name:product.uom_categ_length
@@ -1481,7 +1493,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_attribute_line_ids
 msgid "Lines"
-msgstr ""
+msgstr "שורות"
 
 #. module: product
 #: model:product.uom,name:product.product_uom_litre
@@ -1528,7 +1540,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_product_image_medium
 #: model:ir.model.fields,field_description:product.field_product_template_image_medium
 msgid "Medium-sized image"
-msgstr ""
+msgstr "תמונה בגודל בינוני"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_template_image_medium
@@ -1619,7 +1631,7 @@ msgstr ""
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_template_form_view
 msgid "Notes"
-msgstr ""
+msgstr "הערות"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_supplierinfo_form_view
@@ -1653,7 +1665,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_category_parent_id
 msgid "Parent Category"
-msgstr ""
+msgstr "קטגורית הורה"
 
 #. module: product
 #: model:product.product,name:product.product_product_5c
@@ -1715,7 +1727,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:product.product_supplierinfo_tree_view
 #: model:ir.ui.view,arch_db:product.product_template_form_view
 msgid "Price"
-msgstr ""
+msgstr "מחיר"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_pricelist_item_form_view
@@ -1777,7 +1789,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_template_pricelist_id
 #: model:ir.ui.view,arch_db:product.product_template_form_view
 msgid "Pricelist"
-msgstr ""
+msgstr "מחירון"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_pricelist_item_ids
@@ -1815,7 +1827,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:product.product_pricelist_action2
 #: model:ir.model.fields,field_description:product.field_res_country_group_pricelist_ids
 msgid "Pricelists"
-msgstr ""
+msgstr "מחירון"
 
 #. module: product
 #: model:res.groups,name:product.group_product_pricelist
@@ -1831,12 +1843,12 @@ msgstr ""
 #: model:ir.ui.view,arch_db:product.product_template_form_view
 #: model:ir.ui.view,arch_db:product.product_variant_easy_edit_view
 msgid "Pricing"
-msgstr ""
+msgstr "תמחור"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.view_product_price_list
 msgid "Print"
-msgstr ""
+msgstr "הדפס"
 
 #. module: product
 #: model:product.product,name:product.product_product_22
@@ -1861,7 +1873,7 @@ msgstr ""
 #: selection:product.pricelist.item,applied_on:0
 #: model:res.request.link,name:product.req_link_product
 msgid "Product"
-msgstr ""
+msgstr "פריט"
 
 #. module: product
 #: model:ir.model,name:product.model_product_attribute
@@ -1890,13 +1902,13 @@ msgstr ""
 #: model:ir.ui.view,arch_db:product.product_category_list_view
 #: model:ir.ui.view,arch_db:product.product_category_search_view
 msgid "Product Categories"
-msgstr ""
+msgstr "קטגוריות מוצרים"
 
 #. module: product
 #: model:ir.model,name:product.model_product_category
 #: model:ir.model.fields,field_description:product.field_product_pricelist_item_categ_id
 msgid "Product Category"
-msgstr ""
+msgstr "קטגורית מוצר"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_template_form_view
@@ -1927,7 +1939,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_supplierinfo_product_tmpl_id
 #: model:ir.ui.view,arch_db:product.product_search_form_view
 msgid "Product Template"
-msgstr ""
+msgstr "תבנית לפריט"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_type
@@ -1938,7 +1950,7 @@ msgstr ""
 #. module: product
 #: model:ir.model,name:product.model_product_uom
 msgid "Product Unit of Measure"
-msgstr ""
+msgstr "יחידת מדידה של מוצר"
 
 #. module: product
 #: model:ir.model,name:product.model_product_uom_categ
@@ -1959,7 +1971,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:product.product_variant_action
 #: model:ir.ui.view,arch_db:product.product_product_tree_view
 msgid "Product Variants"
-msgstr ""
+msgstr "משתני מוצר"
 
 #. module: product
 #: model:ir.actions.act_window,name:product.product_template_action
@@ -1968,7 +1980,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_template_product_variant_ids
 #: model:ir.ui.view,arch_db:product.product_template_search_view
 msgid "Products"
-msgstr ""
+msgstr "מוצרים"
 
 #. module: product
 #: model:ir.actions.report,name:product.report_product_label
@@ -2003,6 +2015,11 @@ msgstr ""
 #: selection:product.pricelist.item,base:0
 msgid "Public Price"
 msgstr ""
+
+#. module: product
+#: model:product.pricelist,name:product.list0
+msgid "Public Pricelist"
+msgstr "מחירון פומבי"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_description_purchase
@@ -2060,7 +2077,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_code
 msgid "Reference"
-msgstr ""
+msgstr "הפניה"
 
 #. module: product
 #: selection:product.uom,uom_type:0
@@ -2124,12 +2141,12 @@ msgstr ""
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_pricelist_item_form_view
 msgid "Rounding Method"
-msgstr ""
+msgstr "שיטת עיגול"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_uom_rounding
 msgid "Rounding Precision"
-msgstr ""
+msgstr "דיוק עיגול"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_description_sale
@@ -2156,7 +2173,7 @@ msgstr ""
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_template_form_view
 msgid "Sales"
-msgstr ""
+msgstr "מכירות"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_list_price
@@ -2238,6 +2255,11 @@ msgid ""
 "Share your product to all companies defined in your instance.\n"
 " * Checked : Product are visible for every company, even if a company is defined on the partner.\n"
 " * Unchecked : Each company can see only its product (product where company is defined). Product not related to a company are visible for all companies."
+msgstr ""
+
+#. module: product
+#: model:ir.ui.view,arch_db:product.product_template_search_view
+msgid "Show all records which has next action date is before today"
 msgstr ""
 
 #. module: product
@@ -2342,7 +2364,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_pricelist_item_date_start
 #: model:ir.model.fields,field_description:product.field_product_supplierinfo_date_start
 msgid "Start Date"
-msgstr ""
+msgstr "תאריך התחלה"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_date_start
@@ -2673,6 +2695,11 @@ msgid ""
 msgstr ""
 
 #. module: product
+#: model:ir.ui.view,arch_db:product.product_template_search_view
+msgid "Today Activities"
+msgstr "פעילויות של היום"
+
+#. module: product
 #: model:product.product,website_description:product.product_product_7
 #: model:product.template,website_description:product.product_product_7_product_template
 msgid "Two is better than one."
@@ -2681,7 +2708,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_uom_uom_type
 msgid "Type"
-msgstr ""
+msgstr "סוג"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_5b
@@ -2689,11 +2716,6 @@ msgstr ""
 msgid ""
 "USB port allows for software update to ensure ongoing Bluetooth device "
 "compatibility"
-msgstr ""
-
-#. module: product
-#: model:product.pricelist,name:product.list0
-msgid "USD"
 msgstr ""
 
 #. module: product
@@ -2717,7 +2739,7 @@ msgstr ""
 #. module: product
 #: model:product.uom.categ,name:product.product_uom_categ_unit
 msgid "Unit"
-msgstr ""
+msgstr "יחידה"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_uom_id
@@ -2848,7 +2870,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:product.product_supplierinfo_form_view
 #: model:ir.ui.view,arch_db:product.product_supplierinfo_search_view
 msgid "Vendor"
-msgstr ""
+msgstr "ספק"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_supplierinfo_form_view
@@ -2885,7 +2907,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_product_seller_ids
 #: model:ir.model.fields,field_description:product.field_product_template_seller_ids
 msgid "Vendors"
-msgstr ""
+msgstr "ספקים"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_volume
@@ -3216,7 +3238,7 @@ msgstr ""
 #. module: product
 #: model:ir.ui.view,arch_db:product.view_partner_property_form
 msgid "the parent company"
-msgstr ""
+msgstr "חברת אם"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_variant_easy_edit_view

@@ -46,6 +46,7 @@ var ViewManager = Widget.extend(ControlPanelMixin, {
         push_state: function(event) {
             this.do_push_state(event.data);
         },
+        get_controller_context: '_onGetControllerContext',
         switch_to_previous_view: '_onSwitchToPreviousView',
     },
     /**
@@ -87,12 +88,6 @@ var ViewManager = Widget.extend(ControlPanelMixin, {
         this.active_view = null;
         this.registry = view_registry;
         this.title = this.action.name;
-        var actionGroupBy = self.action.context.group_by;
-        if (!actionGroupBy) {
-            actionGroupBy = [];
-        } else if (typeof actionGroupBy === 'string') {
-            actionGroupBy = [actionGroupBy];
-        }
         _.each(views, function (view) {
             var view_type = view[1] || view.view_type;
             var View = self.registry.get(view_type); //.prototype.config.Controller;
@@ -114,7 +109,6 @@ var ViewManager = Widget.extend(ControlPanelMixin, {
                     action: self.action,
                     limit: self.action.limit,
                     views: self.action.views,
-                    groupBy: actionGroupBy,
                 }, self.flags, self.flags[view_type], view.options),
                 searchable: View.prototype.searchable,
                 title: self.title,
@@ -271,16 +265,6 @@ var ViewManager = Widget.extend(ControlPanelMixin, {
 
             if (!view.loaded) {
                 view_options = _.extend({}, view.options, view_options, self.env);
-                if (view_options.groupBy && !view_options.groupBy.length) {
-                    var actionContext = view_options ? view_options.action.context : {};
-                    var actionGroupBy = actionContext.group_by;
-                    if (!actionGroupBy) {
-                        actionGroupBy = [];
-                    } else if (typeof actionGroupBy === 'string') {
-                        actionGroupBy = [actionGroupBy];
-                    }
-                    view_options.groupBy = actionGroupBy;
-                }
                 view.loaded = $.Deferred();
                 self.create_view(view, view_options).then(function(controller) {
                     view.controller = controller;
@@ -512,18 +496,15 @@ var ViewManager = Widget.extend(ControlPanelMixin, {
             throw new Error(_.str.sprintf(_t("Failed to evaluate search criterions")+": \n%s",
                             JSON.stringify(results.error)));
         }
-        // this.dataset._model = new Model(this.dataset.model, results.context, results.domain);
-        // var groupby = results.group_by.length ? results.group_by : action_context.group_by;
-        // if (_.isString(groupby)) {
-        //     groupby = [groupby];
-        // }
-        // if (!controller.grouped && !_.isEmpty(groupby)){
-        //     this.dataset.set_sort([]);
-        // }
+        // FORWARDPORT THIS UP TO SAAS-11.1 ONLY, NOT LATER
+        var groupby = results.group_by.length ? results.group_by : action_context.group_by;
+        if (_.isString(groupby)) {
+            groupby = [groupby];
+        }
         return {
             context: results.context,
             domain: results.domain,
-            groupBy: results.group_by,
+            groupBy: groupby || [],
         };
     },
     do_push_state: function(state) {
@@ -651,6 +632,21 @@ var ViewManager = Widget.extend(ControlPanelMixin, {
     // Handlers
     //--------------------------------------------------------------------------
 
+    // DO NOT FORWARDPORT THIS
+    /**
+     * Handles a context request: provides to the caller the context of the
+     * active controller.
+     *
+     * @private
+     * @param {OdooEvent} ev
+     * @param {function} ev.data.callback used to send the requested context
+     */
+    _onGetControllerContext: function (ev) {
+        ev.stopPropagation();
+        var controller = this.active_view && this.active_view.controller;
+        var context = controller && controller.getContext();
+        ev.data.callback(context);
+    },
     /**
      * This handler is probably called by a sub form view when the user discards
      * its value.  The usual result of this is that we switch back to the

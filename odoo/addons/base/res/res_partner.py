@@ -509,7 +509,7 @@ class Partner(models.Model):
         result = True
         # To write in SUPERUSER on field is_company and avoid access rights problems.
         if 'is_company' in vals and self.user_has_groups('base.group_partner_manager') and not self.env.uid == SUPERUSER_ID:
-            result = super(Partner, self).sudo().write({'is_company': vals.get('is_company')})
+            result = super(Partner, self.sudo()).write({'is_company': vals.get('is_company')})
             del vals['is_company']
         result = result and super(Partner, self).write(vals)
         for partner in self:
@@ -539,7 +539,7 @@ class Partner(models.Model):
         self.ensure_one()
         if self.company_name:
             # Create parent company
-            values = dict(name=self.company_name, is_company=True)
+            values = dict(name=self.company_name, is_company=True, vat=self.vat)
             values.update(self._update_fields_values(self._address_fields()))
             new_company = self.create(values)
             # Set new company as my parent

@@ -13,6 +13,7 @@ class PaymentTransaction(models.Model):
 
     # YTI FIXME: The auto_join seems useless
     sale_order_id = fields.Many2one('sale.order', string='Sales Order', auto_join=True)
+    so_state = fields.Selection('sale.order', string='Sale Order State', related='sale_order_id.state')
 
     @api.model
     def form_feedback(self, data, acquirer_name):
@@ -63,12 +64,10 @@ class PaymentTransaction(models.Model):
             _logger.info('<%s> transaction authorized, auto-confirming order %s (ID %s)', self.acquirer_id.provider, self.sale_order_id.name, self.sale_order_id.id)
             if self.sale_order_id.state in ('draft', 'sent'):
                 self.sale_order_id.with_context(send_email=True).action_confirm()
-
-        if self.state == 'done':
-            _logger.info('<%s> transaction completed, auto-confirming order %s (ID %s) and generating invoice', self.acquirer_id.provider, self.sale_order_id.name, self.sale_order_id.id)
+        elif self.state == 'done':
+            _logger.info('<%s> transaction completed, auto-confirming order %s (ID %s)', self.acquirer_id.provider, self.sale_order_id.name, self.sale_order_id.id)
             if self.sale_order_id.state in ('draft', 'sent'):
                 self.sale_order_id.with_context(send_email=True).action_confirm()
-            self._generate_and_pay_invoice()
         elif self.state not in ['cancel', 'error'] and self.sale_order_id.state == 'draft':
             _logger.info('<%s> transaction pending/to confirm manually, sending quote email for order %s (ID %s)', self.acquirer_id.provider, self.sale_order_id.name, self.sale_order_id.id)
             self.sale_order_id.force_quotation_send()
@@ -104,6 +103,7 @@ class PaymentTransaction(models.Model):
             created_invoice.with_context(default_currency_id=self.currency_id.id).pay_and_reconcile(self.acquirer_id.journal_id, pay_amount=created_invoice.amount_total)
             if created_invoice.payment_ids:
                 created_invoice.payment_ids[0].payment_transaction_id = self
+            self._post_process_after_done(invoice_id=created_invoice)
         else:
             _logger.warning('<%s> transaction completed, could not auto-generate invoice for %s (ID %s)',
                             self.acquirer_id.provider, self.sale_order_id.name, self.sale_order_id.id)

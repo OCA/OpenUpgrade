@@ -635,8 +635,9 @@ class JsonRequest(WebRequest):
             body = json.dumps(response, default=ustr)
 
         return Response(
-                    body, headers=[('Content-Type', mime),
-                                   ('Content-Length', len(body))])
+            body, status=error and error.pop('http_status', 200) or 200,
+            headers=[('Content-Type', mime), ('Content-Length', len(body))]
+        )
 
     def _handle_exception(self, exception):
         """Called within an except block to allow converting exceptions
@@ -645,13 +646,18 @@ class JsonRequest(WebRequest):
         try:
             return super(JsonRequest, self)._handle_exception(exception)
         except Exception:
-            if not isinstance(exception, (odoo.exceptions.Warning, SessionExpiredException, odoo.exceptions.except_orm)):
+            if not isinstance(exception, (odoo.exceptions.Warning, SessionExpiredException,
+                                          odoo.exceptions.except_orm, werkzeug.exceptions.NotFound)):
                 _logger.exception("Exception during JSON request handling.")
             error = {
                     'code': 200,
                     'message': "Odoo Server Error",
                     'data': serialize_exception(exception)
             }
+            if isinstance(exception, werkzeug.exceptions.NotFound):
+                error['http_status'] = 404
+                error['code'] = 404
+                error['message'] = "404: Not Found"
             if isinstance(exception, AuthenticationError):
                 error['code'] = 100
                 error['message'] = "Odoo Session Invalid"
@@ -795,7 +801,7 @@ class HttpRequest(WebRequest):
 
 Odoo URLs are CSRF-protected by default (when accessed with unsafe
 HTTP methods). See
-https://www.odoo.com/documentation/9.0/reference/http.html#csrf for
+https://www.odoo.com/documentation/11.0/reference/http.html#csrf for
 more details.
 
 * if this endpoint is accessed through Odoo via py-QWeb form, embed a CSRF
@@ -1030,7 +1036,7 @@ class OpenERPSession(werkzeug.contrib.sessions.Session):
         self.db = db
         self.uid = uid
         self.login = login
-        self.password = password
+        self.session_token = uid and security.compute_session_token(self)
         request.uid = uid
         request.disable_db = False
 
@@ -1045,7 +1051,16 @@ class OpenERPSession(werkzeug.contrib.sessions.Session):
         """
         if not self.db or not self.uid:
             raise SessionExpiredException("Session expired")
-        security.check(self.db, self.uid, self.password)
+
+        #  == BACKWARD COMPATIBILITY TO CONVERT OLD SESSION TYPE TO THE NEW ONES ! REMOVE ME AFTER 11.0 ==
+        if self.get('password'):
+            security.check(self.db, self.uid, self.password)
+            self.session_token = security.compute_session_token(self)
+            self.pop('password')
+        # =================================================================================================
+        # here we check if the session is still valid
+        if not security.check_session(self):
+            raise SessionExpiredException("Session expired")
 
     def logout(self, keep_db=False):
         for k in list(self):
@@ -1058,7 +1073,7 @@ class OpenERPSession(werkzeug.contrib.sessions.Session):
         self.setdefault("db", None)
         self.setdefault("uid", None)
         self.setdefault("login", None)
-        self.setdefault("password", None)
+        self.setdefault("session_token", None)
         self.setdefault("context", {})
 
     def get_context(self):
@@ -1394,17 +1409,6 @@ class Root(object):
             response = Response(result, mimetype='text/html')
         else:
             response = result
-
-        # save to cache if requested and possible
-        if getattr(request, 'cache_save', False) and response.status_code == 200:
-            response.freeze()
-            r = response.response
-            if isinstance(r, list) and len(r) == 1 and isinstance(r[0], str):
-                request.registry.cache[request.cache_save] = {
-                    'content': r[0],
-                    'mimetype': response.headers['Content-Type'],
-                    'time': time.time(),
-                }
 
         if httprequest.session.should_save:
             if httprequest.session.rotate:

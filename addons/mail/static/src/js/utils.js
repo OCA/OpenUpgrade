@@ -60,7 +60,7 @@ function _parse_and_transform(nodes, transform_function) {
 
 // Suggested URL Javascript regex of http://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
 // Adapted to make http(s):// not required if (and only if) www. is given. So `should.notmatch` does not match.
-var url_regexp = /\b(?:https?:\/\/|(www\.))[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,13}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
+var url_regexp = /\b(?:https?:\/\/\d{1,3}(?:\.\d{1,3}){3}|(?:https?:\/\/|(?:www\.))[-a-z0-9@:%._\+~#=]{2,256}\.[a-z]{2,13})\b(?:[-a-z0-9@:%_\+.~#?&//=]*)/gi;
 function linkify(text, attrs) {
     attrs = attrs || {};
     if (attrs.target === undefined) {
@@ -70,7 +70,7 @@ function linkify(text, attrs) {
         return key + '="' + _.escape(value) + '"';
     }).join(' ');
     return text.replace(url_regexp, function (url) {
-        var href = (!/^(f|ht)tps?:\/\//i.test(url)) ? "http://" + url : url;
+        var href = (!/^https?:\/\//i.test(url)) ? "http://" + url : url;
         return '<a ' + attrs + ' href="' + href + '">' + url + '</a>';
     });
 }
@@ -92,6 +92,7 @@ function strip_html (node, transform_children) {
 
 function inline (node, transform_children) {
     if (node.nodeType === 3) return node.data;
+    if (node.nodeType === 8) return "";
     if (node.tagName === "BR") return " ";
     if (node.tagName.match(/^(A|P|DIV|PRE|BLOCKQUOTE)$/)) return transform_children();
     node.innerHTML = transform_children();
@@ -100,15 +101,17 @@ function inline (node, transform_children) {
 
 // Parses text to find email: Tagada <address@mail.fr> -> [Tagada, address@mail.fr] or False
 function parse_email (text) {
-    var result = text.match(/(.*)<(.*@.*)>/);
-    if (result) {
-        return [_.str.trim(result[1]), _.str.trim(result[2])];
+    if (text){
+        var result = text.match(/(.*)<(.*@.*)>/);
+        if (result) {
+            return [_.str.trim(result[1]), _.str.trim(result[2])];
+        }
+        result = text.match(/(.*@.*)/);
+        if (result) {
+            return [_.str.trim(result[1]), _.str.trim(result[1])];
+        }
+        return [text, false];
     }
-    result = text.match(/(.*@.*)/);
-    if (result) {
-        return [_.str.trim(result[1]), _.str.trim(result[1])];
-    }
-    return [text, false];
 }
 
 // Replaces textarea text into html text (add <p>, <a>)

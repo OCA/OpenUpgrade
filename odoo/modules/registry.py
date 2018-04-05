@@ -81,7 +81,11 @@ class Registry(Mapping):
                 try:
                     registry.setup_signaling()
                     # This should be a method on Registry
-                    odoo.modules.load_modules(registry._db, force_demo, status, update_module)
+                    try:
+                        odoo.modules.load_modules(registry._db, force_demo, status, update_module)
+                    except Exception:
+                        odoo.modules.reset_modules_state(db_name)
+                        raise
                 except Exception:
                     _logger.exception('Failed to load registry')
                     del cls.registries[db_name]
@@ -310,8 +314,16 @@ class Registry(Mapping):
             models[0].recompute()
 
         # make sure all tables are present
+        self.check_tables_exist(cr)
+
+    def check_tables_exist(self, cr):
+        """
+        Verify that all tables are present and try to initialize those that are missing.
+        """
+        env = odoo.api.Environment(cr, SUPERUSER_ID, {})
         table2model = {model._table: name for name, model in env.items() if not model._abstract}
         missing_tables = set(table2model).difference(existing_tables(cr, table2model))
+
         if missing_tables:
             missing = {table2model[table] for table in missing_tables}
             _logger.warning("Models have no table: %s.", ", ".join(missing))

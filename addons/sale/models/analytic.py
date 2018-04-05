@@ -41,7 +41,8 @@ class AccountAnalyticLine(models.Model):
     @api.multi
     def _sale_postprocess(self, values, additional_so_lines=None):
         if 'so_line' not in values:  # allow to force a False value for so_line
-            self.with_context(sale_analytic_norecompute=True)._sale_determine_order_line()
+            # only take the AAL from expense or vendor bill, meaning having a negative amount
+            self.filtered(lambda aal: aal.amount <= 0).with_context(sale_analytic_norecompute=True)._sale_determine_order_line()
 
         if any(field_name in values for field_name in self._sale_get_fields_delivered_qty()):
             if not self._context.get('sale_analytic_norecompute'):
@@ -128,11 +129,13 @@ class AccountAnalyticLine(models.Model):
                 raise UserError(_('The Sales Order %s linked to the Analytic Account must be validated before registering expenses.') % sale_order.name)
 
             price = analytic_line._sale_get_invoice_price(sale_order)
-            so_line = self.env['sale.order.line'].search([
-                ('order_id', '=', sale_order.id),
-                ('price_unit', '=', price),
-                ('product_id', '=', self.product_id.id)
-            ], limit=1)
+            so_line = None
+            if analytic_line.product_id.expense_policy == 'sales_price' and analytic_line.product_id.invoice_policy == 'delivery':
+                so_line = self.env['sale.order.line'].search([
+                    ('order_id', '=', sale_order.id),
+                    ('price_unit', '=', price),
+                    ('product_id', '=', self.product_id.id)
+                ], limit=1)
 
             if not so_line:
                 # generate a new SO line
@@ -142,7 +145,7 @@ class AccountAnalyticLine(models.Model):
                 so_line = self.env['sale.order.line'].create(so_line_values)
                 so_line._compute_tax_id()
             else:
-                so_line.write({'qty_delivered': analytic_line.unit_amount})
+                so_line.write({'qty_delivered': so_line.qty_delivered + analytic_line.unit_amount})
 
             if so_line:  # if so line found or created, then update AAL (this will trigger the recomputation of qty delivered on SO line)
                 analytic_line.with_context(sale_analytic_norecompute=True).write({'so_line': so_line.id})

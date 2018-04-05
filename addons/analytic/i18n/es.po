@@ -6,18 +6,20 @@
 # Pedro M. Baeza <pedro.baeza@gmail.com>, 2017
 # Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
 # José Vicente <txusev@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
+# Nicolás Broggi <rnbroggi@gmail.com>, 2017
 # Alejandro Die Sanchis <marketing@domatix.com>, 2017
-# Gustavo Valverde <g.valverde02@gmail.com>, 2017
+# Gustavo Valverde, 2017
 # Roberto Lizana <robertolizana@trey.es>, 2017
 # Martin Mendoza del Solar <martin@mendozadelsolar.com>, 2017
+# Christopher Ormaza <chris.ormaza@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-20 09:53+0000\n"
 "PO-Revision-Date: 2017-09-20 09:53+0000\n"
-"Last-Translator: Martin Mendoza del Solar <martin@mendozadelsolar.com>, 2017\n"
+"Last-Translator: Christopher Ormaza <chris.ormaza@gmail.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,7 +42,7 @@ msgstr "Activo"
 #: model:ir.model.fields,field_description:analytic.field_account_analytic_line_amount
 #: model:ir.ui.view,arch_db:analytic.view_account_analytic_line_form
 msgid "Amount"
-msgstr "Monto"
+msgstr "Importe"
 
 #. module: analytic
 #: model:ir.model,name:analytic.model_account_analytic_account
@@ -86,7 +88,7 @@ msgstr "Asiento analítico"
 #. module: analytic
 #: model:ir.model,name:analytic.model_account_analytic_line
 msgid "Analytic Line"
-msgstr "Línea Analítica"
+msgstr "Línea analítica"
 
 #. module: analytic
 #: model:ir.model.fields,field_description:analytic.field_account_analytic_account_line_ids
@@ -101,7 +103,7 @@ msgstr "Etiqueta analítica"
 #. module: analytic
 #: model:ir.model,name:analytic.model_account_analytic_tag
 msgid "Analytic Tags"
-msgstr "Etiquetas Analíticas"
+msgstr "Etiquetas analíticas"
 
 #. module: analytic
 #: model:ir.ui.view,arch_db:analytic.view_account_analytic_account_search
@@ -121,7 +123,7 @@ msgstr "Balance"
 #. module: analytic
 #: model:ir.ui.view,arch_db:analytic.view_account_analytic_account_kanban
 msgid "Balance:"
-msgstr ""
+msgstr "Balance:"
 
 #. module: analytic
 #: model:ir.actions.act_window,name:analytic.action_analytic_account_form
@@ -152,12 +154,12 @@ msgstr "Compañía"
 #. module: analytic
 #: model:ir.ui.view,arch_db:analytic.view_account_analytic_account_form
 msgid "Cost/Revenue"
-msgstr "Coste/Beneficio"
+msgstr "Costo/Beneficio"
 
 #. module: analytic
 #: model:ir.actions.act_window,name:analytic.account_analytic_line_action
 msgid "Costs & Revenues"
-msgstr "Costes e ingresos"
+msgstr "Costos e ingresos"
 
 #. module: analytic
 #: model:ir.actions.act_window,help:analytic.account_analytic_line_action
@@ -166,7 +168,7 @@ msgid ""
 "Costs will be created automatically when you register supplier\n"
 "                invoices, expenses or timesheets."
 msgstr ""
-"Los costes se crearán automáticamente cuando registre las facturas de "
+"Los costos se crearán automáticamente cuando registre las facturas de "
 "proveedor, gastos o partes de horas."
 
 #. module: analytic
@@ -249,6 +251,9 @@ msgid ""
 "                analytic accounts. You can track costs and revenues to analyse\n"
 "                your margins easily."
 msgstr ""
+"En Odoo, los pedidos de venta y los proyectos se implementan usando cuentas "
+"analíticas. Puede realizar seguimiento de los costos e ingresos para "
+"analizar sus márgenes fácilmente."
 
 #. module: analytic
 #: model:ir.model.fields,field_description:analytic.field_account_analytic_account___last_update
@@ -306,6 +311,10 @@ msgid ""
 "                (fixed price invoices), on timesheets (based on the work done) or\n"
 "                on expenses (e.g. reinvoicing of travel costs)."
 msgstr ""
+"Los ingresos se crearán automáticamente cuando cree facturas de cliente. Las"
+" facturas de cliente se pueden crear basadas en los pedidos de venta "
+"(facturas de precio fijo), en los partes de horas (basados en el trabajo "
+"realizado) o en los gastos (por ejemplo, refacturación de gastos de viaje)."
 
 #. module: analytic
 #: model:ir.ui.view,arch_db:analytic.view_account_analytic_line_filter
@@ -315,7 +324,7 @@ msgstr "Buscar líneas analíticas"
 #. module: analytic
 #: model:ir.model.fields,help:analytic.field_account_analytic_tag_active
 msgid "Set active to false to hide the Analytic Tag without removing it."
-msgstr ""
+msgstr "Establezca a falso para ocultar la etiqueta analítica sin eliminarla."
 
 #. module: analytic
 #: model:ir.model.fields,field_description:analytic.field_account_analytic_account_tag_ids

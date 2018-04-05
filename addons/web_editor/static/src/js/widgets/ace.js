@@ -58,6 +58,10 @@ function checkXML(xml) {
  * @returns {string} formatted xml
  */
 function formatXML(xml) {
+    // do nothing if an inline script is present to avoid breaking it
+    if (/<script(?: [^>]*)?>[^<][\s\S]*<\/script>/i.test(xml)) {
+        return xml;
+    }
     return window.vkbeautify.xml(xml, 4);
 }
 /**
@@ -192,7 +196,6 @@ var ViewEditor = Widget.extend({
      */
     start: function () {
         this.$viewEditor = this.$('#ace-view-editor');
-        this.$editor = this.$('.ace_editor');
 
         this.$typeSwitcherChoices = this.$('.o_ace_type_switcher_choice');
         this.$typeSwitcherBtn = this.$('.o_ace_type_switcher > .dropdown-toggle');
@@ -210,6 +213,7 @@ var ViewEditor = Widget.extend({
 
         this.aceEditor = window.ace.edit(this.$viewEditor[0]);
         this.aceEditor.setTheme('ace/theme/monokai');
+        this.$editor = this.$('.ace_editor');
 
         var refX = 0;
         var resizing = false;
@@ -742,7 +746,7 @@ var ViewEditor = Widget.extend({
 
             var text = data.text || '';
             if (!isSelected) {
-                text = Array($elem.data('level')).join('-') + ' ' + text;
+                text = Array(($elem.data('level') || 0) + 1).join('-') + ' ' + text;
             }
             var $div = $('<div/>',  {
                 text: text,

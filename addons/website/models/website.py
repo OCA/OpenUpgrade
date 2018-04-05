@@ -63,7 +63,7 @@ class Website(models.Model):
     google_management_client_id = fields.Char('Google Client ID')
     google_management_client_secret = fields.Char('Google Client Secret')
 
-    user_id = fields.Many2one('res.users', string='Public User', default=lambda self: self.env.ref('base.public_user').id)
+    user_id = fields.Many2one('res.users', string='Public User', required=True, default=lambda self: self.env.ref('base.public_user').id)
     cdn_activated = fields.Boolean('Activate CDN for assets')
     cdn_url = fields.Char('CDN Base URL', default='')
     cdn_filters = fields.Text('CDN Filters', default=lambda s: '\n'.join(DEFAULT_CDN_FILTERS), help="URL matching those filters will be rewritten using the CDN Base URL")
@@ -119,6 +119,10 @@ class Website(models.Model):
             'arch': template_record.arch.replace(template, key),
             'name': name,
         })
+
+        if view.arch_fs:
+            view.arch_fs = False
+
         if ispage:
             page = self.env['website.page'].create({
                 'url': page_url,
@@ -520,7 +524,7 @@ class Website(models.Model):
         if not force:
             domain += [('website_indexed', '=', True)]
             #is_visible
-            domain += [('website_published', '=', True), '|', ('date_publish', '!=', False), ('date_publish', '>', fields.Datetime.now())]
+            domain += [('website_published', '=', True), '|', ('date_publish', '=', False), ('date_publish', '<=', fields.Datetime.now())]
 
         if query_string:
             domain += [('url', 'like', query_string)]
@@ -654,6 +658,11 @@ class Page(models.Model):
         item = self.search_read(domain, fields=['id', 'name', 'url', 'website_published', 'website_indexed', 'date_publish', 'menu_ids', 'is_homepage'], limit=1)
         return item
 
+    @api.multi
+    def get_view_identifier(self):
+        """ Get identifier of this page view that may be used to render it """
+        return self.view_id.id
+
     @api.model
     def save_page_info(self, website_id, data):
         website = self.env['website'].browse(website_id)
@@ -711,7 +720,7 @@ class Page(models.Model):
                 'website_id': website.id,
             })
 
-        return True
+        return url
 
     @api.multi
     def copy(self, default=None):
@@ -791,7 +800,7 @@ class Menu(models.Model):
 
     _parent_store = True
     _parent_order = 'sequence'
-    _order = "sequence"
+    _order = "sequence, id"
 
     def _default_sequence(self):
         menu = self.search([], limit=1, order="sequence DESC")
@@ -807,6 +816,14 @@ class Menu(models.Model):
     child_id = fields.One2many('website.menu', 'parent_id', string='Child Menus')
     parent_left = fields.Integer('Parent Left', index=True)
     parent_right = fields.Integer('Parent Rigth', index=True)
+    is_visible = fields.Boolean(compute='_compute_visible', string='Is Visible')
+
+    @api.one
+    def _compute_visible(self):
+        visible = True
+        if self.page_id and not self.page_id.sudo().is_visible and not self.user_has_groups('base.group_user'):
+            visible = False
+        self.is_visible = visible
 
     @api.model
     def clean_url(self):
@@ -815,7 +832,7 @@ class Menu(models.Model):
             url = self.page_id.sudo().url
         else:
             url = self.url
-            if not self.url.startswith('/'):
+            if url and not self.url.startswith('/'):
                 if '@' in self.url:
                     if not self.url.startswith('mailto'):
                         url = 'mailto:%s' % self.url
@@ -866,11 +883,14 @@ class Menu(models.Model):
                 new_menu = self.create({'name': menu['name']})
                 replace_id(mid, new_menu.id)
         for menu in data['data']:
+            menu_id = self.browse(menu['id'])
             # if the url match a website.page, set the m2o relation
             page = self.env['website.page'].search([('url', '=', menu['url'])], limit=1)
             if page:
                 menu['page_id'] = page.id
-            self.browse(menu['id']).write(menu)
+            elif menu_id.page_id:
+                menu_id.page_id.write({'url': menu['url']})
+            menu_id.write(menu)
 
         return True
 
