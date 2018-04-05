@@ -17,6 +17,7 @@ import operator
 import os
 import re
 import sys
+import tempfile
 import time
 import zlib
 
@@ -24,6 +25,7 @@ import werkzeug
 import werkzeug.utils
 import werkzeug.wrappers
 import werkzeug.wsgi
+from collections import OrderedDict
 from werkzeug.urls import url_decode, iri_to_uri
 from xml.etree import ElementTree
 
@@ -41,6 +43,7 @@ from odoo.http import content_disposition, dispatch_rpc, request, \
     serialize_exception as _serialize_exception, Response
 from odoo.exceptions import AccessError, UserError
 from odoo.models import check_method_name
+from odoo.service import db
 
 _logger = logging.getLogger(__name__)
 
@@ -155,10 +158,10 @@ def module_installed(environment):
     # TODO The following code should move to ir.module.module.list_installed_modules()
     Modules = environment['ir.module.module']
     domain = [('state','=','installed'), ('name','in', loadable)]
-    modules = {
-        module.name: module.dependencies_id.mapped('name')
+    modules = OrderedDict(
+        (module.name, module.dependencies_id.mapped('name'))
         for module in Modules.search(domain)
-    }
+    )
 
     sorted_modules = topological_sort(modules)
     return sorted_modules
@@ -608,7 +611,7 @@ class WebClient(http.Controller):
     def version_info(self):
         return odoo.service.common.exp_version()
 
-    @http.route('/web/tests', type='http', auth="none")
+    @http.route('/web/tests', type='http', auth="user")
     def test_suite(self, mod=None, **kwargs):
         return request.render('web.qunit_suite')
 
@@ -740,12 +743,15 @@ class Database(http.Controller):
     @http.route('/web/database/restore', type='http', auth="none", methods=['POST'], csrf=False)
     def restore(self, master_pwd, backup_file, name, copy=False):
         try:
-            data = base64.b64encode(backup_file.read())
-            dispatch_rpc('db', 'restore', [master_pwd, name, data, str2bool(copy)])
+            with tempfile.NamedTemporaryFile(delete=False) as data_file:
+                backup_file.save(data_file)
+            db.restore_db(name, data_file.name, str2bool(copy))
             return http.local_redirect('/web/database/manager')
         except Exception as e:
             error = "Database restore error: %s" % (str(e) or repr(e))
             return self._render_template(error=error)
+        finally:
+            os.unlink(data_file.name)
 
     @http.route('/web/database/change_password', type='http', auth="none", methods=['POST'], csrf=False)
     def change_password(self, master_pwd, master_pwd_new):
@@ -987,7 +993,7 @@ class Binary(http.Controller):
         '/web/content/<string:model>/<int:id>/<string:field>/<string:filename>'], type='http', auth="public")
     def content_common(self, xmlid=None, model='ir.attachment', id=None, field='datas',
                        filename=None, filename_field='datas_fname', unique=None, mimetype=None,
-                       download=None, data=None, token=None, access_token=None):
+                       download=None, data=None, token=None, access_token=None, **kw):
         status, headers, content = binary_content(
             xmlid=xmlid, model=model, id=id, field=field, unique=unique, filename=filename,
             filename_field=filename_field, download=download, mimetype=mimetype,
@@ -1376,7 +1382,7 @@ class ExportFormat(object):
         model, fields, ids, domain, import_compat = \
             operator.itemgetter('model', 'fields', 'ids', 'domain', 'import_compat')(params)
 
-        Model = request.env[model].with_context(**params.get('context', {}))
+        Model = request.env[model].with_context(import_compat=import_compat, **params.get('context', {}))
         records = Model.browse(ids) or Model.search(domain, offset=0, limit=False, order=False)
 
         if not Model._is_an_ordinary_table():
@@ -1487,69 +1493,6 @@ class ExcelExport(ExportFormat, http.Controller):
         data = fp.read()
         fp.close()
         return data
-
-class Reports(http.Controller):
-    POLLING_DELAY = 0.25
-    TYPES_MAPPING = {
-        'doc': 'application/vnd.ms-word',
-        'html': 'text/html',
-        'odt': 'application/vnd.oasis.opendocument.text',
-        'pdf': 'application/pdf',
-        'sxw': 'application/vnd.sun.xml.writer',
-        'xls': 'application/vnd.ms-excel',
-    }
-
-    @http.route('/web/report', type='http', auth="user")
-    @serialize_exception
-    def index(self, action, token):
-        action = json.loads(action)
-
-        context = dict(request.context)
-        context.update(action["context"])
-
-        report_data = {}
-        report_ids = context.get("active_ids", None)
-        if 'report_type' in action:
-            report_data['report_type'] = action['report_type']
-        if 'datas' in action:
-            if 'ids' in action['datas']:
-                report_ids = action['datas'].pop('ids')
-            report_data.update(action['datas'])
-
-        report_id = dispatch_rpc('report', 'report', [
-            request.session.db, request.session.uid, request.session.password,
-            action["report_name"], report_ids, report_data, context])
-
-        report_struct = None
-        while True:
-            report_struct = dispatch_rpc('report', 'report_get', [
-                request.session.db, request.session.uid, request.session.password, report_id])
-            if report_struct["state"]:
-                break
-
-            time.sleep(self.POLLING_DELAY)
-
-        report = base64.b64decode(report_struct['result'])
-        if report_struct.get('code') == 'zlib':
-            report = zlib.decompress(report)
-        report_mimetype = self.TYPES_MAPPING.get(
-            report_struct['format'], 'octet-stream')
-        file_name = action.get('name', 'report')
-        if 'name' not in action:
-            reports = request.env['ir.actions.report']
-            reports = reports.search([('report_name', '=', action['report_name'])])
-            if reports:
-                file_name = reports[0].name
-            else:
-                file_name = action['report_name']
-        file_name = '%s.%s' % (file_name, report_struct['format'])
-
-        return request.make_response(report,
-             headers=[
-                 ('Content-Disposition', content_disposition(file_name)),
-                 ('Content-Type', report_mimetype),
-                 ('Content-Length', len(report))],
-             cookies={'fileToken': token})
 
 class Apps(http.Controller):
     @http.route('/apps/<app>', auth='user')

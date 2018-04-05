@@ -137,6 +137,7 @@ var DataImport = Widget.extend(ControlPanelMixin, {
                 model: 'base_import.import',
                 method: 'create',
                 args: [{res_model: this.res_model}],
+                kwargs: {context: session.user_context},
             });
     },
     renderButtons: function() {
@@ -280,6 +281,7 @@ var DataImport = Widget.extend(ControlPanelMixin, {
                 model: 'base_import.import',
                 method: 'parse_preview',
                 args: [this.id, this.import_options()],
+                kwargs: {context: session.user_context},
             }).done(function (result) {
                 var signal = result.error ? 'preview_failed' : 'preview_succeeded';
                 self[signal](result);
@@ -316,6 +318,7 @@ var DataImport = Widget.extend(ControlPanelMixin, {
         this.$('.oe_import_float_decimal_separator').val(result.options.float_decimal_separator).change();
         if (result.debug === false){
             this.$('.oe_import_tracking').hide();
+            this.$('.oe_import_deferparentstore').hide();
         }
 
         var $fields = this.$('.oe_import_fields input');
@@ -454,10 +457,12 @@ var DataImport = Widget.extend(ControlPanelMixin, {
             return $(el).select2('val') || false;
         }).get();
         var tracking_disable = 'tracking_disable' in kwargs ? kwargs.tracking_disable : !this.$('#oe_import_tracking').prop('checked')
+        var defer_parent_store = 'defer_parent_store' in kwargs ? kwargs.defer_parent_store : !!this.$('#oe_import_deferparentstore').prop('checked')
         delete kwargs.tracking_disable;
+        delete kwargs.defer_parent_store;
         kwargs.context = _.extend(
             {}, this.parent_context,
-            {tracking_disable: tracking_disable}
+            {tracking_disable: tracking_disable, defer_parent_store_computation: defer_parent_store}
         );
         return this._rpc({
                 model: 'base_import.import',

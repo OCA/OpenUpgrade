@@ -2,6 +2,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import itertools
+import unittest
+from cProfile import Profile
 
 from odoo.tests import common
 from odoo.tools import pycompat
@@ -71,6 +73,16 @@ class test_integer_field(CreatorCase):
             self.export(2**31-1),
             [[pycompat.text_type(2**31-1)]])
 
+    @unittest.skip("Only benches/profiles")
+    def test_xid_perfs(self):
+        for i in range(10000):
+            self.make(i)
+        self.model.invalidate_cache()
+        records = self.model.search([])
+
+        p = Profile()
+        p.runcall(records._export_rows, [['id'], ['value']])
+        p.dump_stats('xid_perfs.pstats')
 
 class test_float_field(CreatorCase):
     model_name = 'export.float'
@@ -325,11 +337,9 @@ class test_m2o(CreatorCase):
         record = self.env['export.integer'].create({'value': 42})
         # Expecting the m2o target model name in the external id,
         # not this model's name
-        external_id = u'__export__.export_integer_%d' % record.id
-        self.assertEqual(
-            self.export(record.id, fields=['value/id']),
-            [[external_id]])
-
+        self.assertRegexpMatches(
+            self.export(record.id, fields=['value/id'])[0][0],
+            u'__export__.export_integer_%d_[0-9a-f]{8}' % record.id)
 
 class test_o2m(CreatorCase):
     model_name = 'export.one2many'
@@ -601,7 +611,54 @@ class test_m2m(CreatorCase):
                 ['', u'export.many2many.other:13'],
             ])
 
-    # essentially same as o2m, so boring
+    def test_multiple_records_subfield(self):
+        r = self.make(self.commands)
+        xid = self.env['ir.model.data'].create({
+            'name': 'whopwhopwhop',
+            'module': '__t__',
+            'model': r._name,
+            'res_id': r.id,
+        }).complete_name
+        sids = [
+            self.env['ir.model.data'].create({
+                'name': sub.str,
+                'module': '__t__',
+                'model': sub._name,
+                'res_id': sub.id,
+            }).complete_name
+            for sub in r.value
+        ]
+        r.invalidate_cache()
+
+        self.assertEqual(
+            r._export_rows([['value', 'id']]),
+            [['__t__.record000,__t__.record001,__t__.record010,__t__.record011,__t__.record100']]
+        )
+        self.assertEqual(
+            r.with_context(import_compat=True)._export_rows([['value', 'id']]),
+            [['__t__.record000,__t__.record001,__t__.record010,__t__.record011,__t__.record100']]
+        )
+
+        self.assertEqual(
+            r.with_context(import_compat=False)._export_rows([['id'], ['value', 'id'], ['value', 'value']]),
+            [
+                [xid, u'__t__.record000', u'4'],
+                [u'', u'__t__.record001', u'42'],
+                [u'', u'__t__.record010', u'36'],
+                [u'', u'__t__.record011', u'4'],
+                [u'', u'__t__.record100', u'13']
+            ]
+        )
+        self.assertEqual(
+            r.with_context(import_compat=False)._export_rows([['id'], ['value', 'value'], ['value', 'id']]),
+            [
+                [xid, u'4', u'__t__.record000'],
+                [u'', u'42', u'__t__.record001'],
+                [u'', u'36', u'__t__.record010'],
+                [u'', u'4', u'__t__.record011'],
+                [u'', u'13', u'__t__.record100']
+            ]
+        )
 
 
 class test_function(CreatorCase):

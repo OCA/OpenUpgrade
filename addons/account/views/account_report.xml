@@ -56,6 +56,7 @@
             id="action_report_financial"
             model="account.financial.report"
             string="Financial report"
+            menu="False"
             report_type="qweb-pdf"
             name="account.report_financial"
             file="account.report_financial"
@@ -74,7 +75,7 @@
         <report 
             id="action_report_journal"
             model="account.common.journal.report"
-            string="Sale/Purchase Journal"
+            string="Journals Audit"
             report_type="qweb-pdf"
             name="account.report_journal"
             file="account.report_journal"

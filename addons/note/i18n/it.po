@@ -3,15 +3,17 @@
 # * note
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2017
-# Paolo Valier <paolo.valier@hotmail.it>, 2017
+# Martin Trigaux, 2017
+# Paolo Valier, 2017
+# Pietro Della Notte <pdellanotte@gmail.com>, 2017
+# Luigi Di Naro <gigidn@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.saas~18\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-02 11:26+0000\n"
 "PO-Revision-Date: 2017-10-02 11:26+0000\n"
-"Last-Translator: Paolo Valier <paolo.valier@hotmail.it>, 2017\n"
+"Last-Translator: Luigi Di Naro <gigidn@gmail.com>, 2018\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,33 +25,33 @@ msgstr ""
 #: model:ir.model.fields,field_description:note.field_note_note_open
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
 msgid "Active"
-msgstr ""
+msgstr "Attivo"
 
 #. module: note
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
 msgid "Archive"
-msgstr ""
+msgstr "Archivio"
 
 #. module: note
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
 msgid "By sticky note Category"
-msgstr ""
+msgstr "Per categoria post-it"
 
 #. module: note
 #: model:ir.actions.act_window,help:note.note_tag_action
 msgid "Click to add a new tag."
-msgstr ""
+msgstr "Clicca per aggiungere un nuovo tag."
 
 #. module: note
 #: model:ir.actions.act_window,help:note.action_note_note
 msgid "Click to add a personal note."
-msgstr ""
+msgstr "Clicca per aggiungere una nota personale."
 
 #. module: note
 #: model:ir.model.fields,field_description:note.field_note_note_color
 #: model:ir.model.fields,field_description:note.field_note_tag_color
 msgid "Color Index"
-msgstr ""
+msgstr "Indice Colore"
 
 #. module: note
 #: model:ir.ui.menu,name:note.menu_note_configuration
@@ -73,12 +75,12 @@ msgstr "Creato il"
 #. module: note
 #: model:ir.model.fields,field_description:note.field_note_note_date_done
 msgid "Date done"
-msgstr ""
+msgstr "Data Completamento"
 
 #. module: note
 #: model:ir.ui.view,arch_db:note.view_note_note_kanban
 msgid "Delete"
-msgstr ""
+msgstr "Elimina"
 
 #. module: note
 #: model:ir.model.fields,field_description:note.field_note_note_display_name
@@ -95,7 +97,7 @@ msgstr ""
 #. module: note
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
 msgid "Future Activities"
-msgstr ""
+msgstr "Attività future"
 
 #. module: note
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
@@ -133,45 +135,45 @@ msgstr "Ultima modifica il"
 #. module: note
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
 msgid "Late Activities"
-msgstr ""
+msgstr "Attività in ritardo"
 
 #. module: note
 #: model:note.stage,name:note.demo_note_stage_03
 #: model:note.stage,name:note.note_stage_03
 msgid "Later"
-msgstr ""
+msgstr "Piú tardi"
 
 #. module: note
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
 msgid "My Activities"
-msgstr ""
+msgstr "Le mie attività"
 
 #. module: note
 #: model:note.stage,name:note.note_stage_00
 msgid "New"
-msgstr ""
+msgstr "Nuovo"
 
 #. module: note
 #: model:ir.model,name:note.model_note_note
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
 #: model:ir.ui.view,arch_db:note.view_note_note_form
 msgid "Note"
-msgstr ""
+msgstr "Nota"
 
 #. module: note
 #: model:ir.model.fields,field_description:note.field_note_note_memo
 msgid "Note Content"
-msgstr ""
+msgstr "Contenuto Nota"
 
 #. module: note
 #: model:ir.model,name:note.model_note_stage
 msgid "Note Stage"
-msgstr ""
+msgstr "Fase nota"
 
 #. module: note
 #: model:ir.model.fields,field_description:note.field_note_note_name
 msgid "Note Summary"
-msgstr ""
+msgstr "Riepilogo nota"
 
 #. module: note
 #: model:ir.model,name:note.model_note_tag
@@ -184,13 +186,13 @@ msgstr ""
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
 #: model:note.stage,name:note.note_stage_04
 msgid "Notes"
-msgstr ""
+msgstr "Note"
 
 #. module: note
 #: model:ir.model.fields,field_description:note.field_note_note_user_id
 #: model:ir.model.fields,field_description:note.field_note_stage_user_id
 msgid "Owner"
-msgstr ""
+msgstr "Proprietario"
 
 #. module: note
 #: model:ir.model.fields,help:note.field_note_stage_user_id
@@ -207,49 +209,50 @@ msgstr "Sequenza"
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
 msgid "Show all records which has next action date is before today"
 msgstr ""
+"Mostra tutti i record che hanno la prossima data dell’azione è prima di oggi"
 
 #. module: note
 #: model:ir.model.fields,field_description:note.field_note_note_stage_id
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
 msgid "Stage"
-msgstr ""
+msgstr "Fase"
 
 #. module: note
 #: model:ir.model.fields,field_description:note.field_note_stage_name
 msgid "Stage Name"
-msgstr ""
+msgstr "Nome Fase"
 
 #. module: note
 #: model:ir.ui.view,arch_db:note.view_note_stage_form
 msgid "Stage of Notes"
-msgstr ""
+msgstr "Fase delle Note"
 
 #. module: note
 #: model:ir.actions.act_window,name:note.action_note_stage
 #: model:ir.ui.menu,name:note.menu_notes_stage
 #: model:ir.ui.view,arch_db:note.view_note_note_tree
 msgid "Stages"
-msgstr ""
+msgstr "Fasi"
 
 #. module: note
 #: model:ir.ui.view,arch_db:note.view_note_stage_tree
 msgid "Stages of Notes"
-msgstr ""
+msgstr "Fasi delle Note"
 
 #. module: note
 #: model:ir.model.fields,field_description:note.field_note_note_stage_ids
 msgid "Stages of Users"
-msgstr ""
+msgstr "Fasi degli Utenti"
 
 #. module: note
 #: model:ir.model.fields,field_description:note.field_note_tag_name
 msgid "Tag Name"
-msgstr ""
+msgstr "Nome Tag"
 
 #. module: note
 #: sql_constraint:note.tag:0
 msgid "Tag name already exists !"
-msgstr ""
+msgstr "Il nome del Tag esiste già !"
 
 #. module: note
 #: model:ir.actions.act_window,name:note.note_tag_action
@@ -259,23 +262,23 @@ msgstr ""
 #: model:ir.ui.view,arch_db:note.note_tag_view_tree
 #: model:ir.ui.view,arch_db:note.view_note_note_form
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 #. module: note
 #: model:note.stage,name:note.note_stage_02
 msgid "This Week"
-msgstr ""
+msgstr "Questa Settimana"
 
 #. module: note
 #: model:note.stage,name:note.demo_note_stage_01
 #: model:note.stage,name:note.note_stage_01
 msgid "Today"
-msgstr ""
+msgstr "Oggi"
 
 #. module: note
 #: model:ir.ui.view,arch_db:note.view_note_note_filter
 msgid "Today Activities"
-msgstr ""
+msgstr "Attività di Oggi"
 
 #. module: note
 #: model:note.stage,name:note.demo_note_stage_02
@@ -300,7 +303,7 @@ msgstr ""
 #. module: note
 #: model:ir.model,name:note.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Utenti"
 
 #. module: note
 #: model:ir.actions.act_window,help:note.action_note_note

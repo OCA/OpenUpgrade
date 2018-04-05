@@ -24,7 +24,7 @@ class CrmTeam(models.Model):
     def _get_default_team_id(self, user_id=None):
         if not user_id:
             user_id = self.env.uid
-        company_id = self.sudo(user_id).company_id.id
+        company_id = self.sudo(user_id).env.user.company_id.id
         team_id = self.env['crm.team'].sudo().search([
             '|', ('user_id', '=', user_id), ('member_ids', '=', user_id),
             '|', ('company_id', '=', False), ('company_id', 'child_of', [company_id])
@@ -232,7 +232,7 @@ class CrmTeam(models.Model):
                 values[index][y_field] = data_item.get('y_value')
 
         elif self.dashboard_graph_group == 'week':
-            weeks_in_start_year = int(date(start_date.year, 12, 31).isocalendar()[1])
+            weeks_in_start_year = int(date(start_date.year, 12, 28).isocalendar()[1]) # This date is always in the last week of ISO years
             for week in range(0, (end_date.isocalendar()[1] - start_date.isocalendar()[1]) % weeks_in_start_year + 1):
                 short_name = get_week_name(start_date + relativedelta(days=7 * week), locale)
                 values.append({x_field: short_name, y_field: 0})

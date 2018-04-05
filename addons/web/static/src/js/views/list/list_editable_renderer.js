@@ -54,8 +54,13 @@ ListRenderer.include({
      * @returns {Deferred}
      */
     start: function () {
-        if (this.mode === 'edit') {
-            this.$el.css({height: '100%'});
+        // deliberately use the 'editable' attribute instead of '_isEditable'
+        // function, because the groupBy must not be taken into account to
+        // enable the '_onWindowClicked' handler (otherwise, an editable grouped
+        // list which is reloaded without groupBy wouldn't have this handler
+        // bound, and edited rows couldn't be left by clicking outside the list)
+        if (this.editable) {
+            this.$el.css({height: '100%'}); // seems useless: to remove in master
             core.bus.on('click', this, this._onWindowClicked.bind(this));
         }
         return this._super();
@@ -295,12 +300,7 @@ ListRenderer.include({
             renderInvisible: editMode,
             renderWidgets: editMode,
         };
-        if (!editMode) {
-            // Force 'readonly' mode for widgets in readonly rows as
-            // otherwise they default to the view mode which is 'edit' for
-            // an editable list view
-            options.mode = 'readonly';
-        }
+        options.mode = editMode ? 'edit' : 'readonly';
 
         // Switch each cell to the new mode; note: the '_renderBodyCell'
         // function might fill the 'this.defs' variables with multiple deferred
@@ -417,7 +417,7 @@ ListRenderer.include({
      * @returns {boolean}
      */
     _isEditable: function () {
-        return this.mode === 'edit' && !this.state.groupedBy.length && this.arch.attrs.editable;
+        return !this.state.groupedBy.length && this.editable;
     },
     /**
      * Move the cursor on the end of the previous line, if possible.
@@ -498,7 +498,8 @@ ListRenderer.include({
     _renderRow: function (record, index) {
         var $row = this._super.apply(this, arguments);
         if (this.addTrashIcon) {
-            var $icon = $('<span>', {class: 'fa fa-trash-o', name: 'delete'});
+            var $icon = $('<button>', {class: 'fa fa-trash-o o_list_record_delete_btn', name: 'delete',
+                'aria-label': _t('Delete row ') + (index+1)});
             var $td = $('<td>', {class: 'o_list_record_delete'}).append($icon);
             $row.append($td);
         }
@@ -547,21 +548,49 @@ ListRenderer.include({
         var row = _.findWhere(rows, {id: movedRecordID});
         var index0 = rows.indexOf(row);
         var index1 = ui.item.index();
-        rows = rows.slice(Math.min(index0, index1), Math.max(index0, index1) + 1);
-        rows = _.without(rows, row);
-        if (index0 > index1) {
-            rows.unshift(row);
+        var lower = Math.min(index0, index1);
+        var upper = Math.max(index0, index1) + 1;
+
+        var order = _.findWhere(self.state.orderedBy, {name: self.handleField});
+        var asc = !order || order.asc;
+        var reorderAll = false;
+        var sequence = (asc ? -1 : 1) * Infinity;
+
+        // determine if we need to reorder all lines
+        _.each(rows, function (row, index) {
+            if ((index < lower || index >= upper) &&
+                ((asc && sequence >= row.data[self.handleField]) ||
+                 (!asc && sequence <= row.data[self.handleField]))) {
+                reorderAll = true;
+            }
+            sequence = row.data[self.handleField];
+        });
+
+        if (reorderAll) {
+            rows = _.without(rows, row);
+            rows.splice(index1, 0, row);
         } else {
-            rows.push(row);
+            rows = rows.slice(lower, upper);
+            rows = _.without(rows, row);
+            if (index0 > index1) {
+                rows.unshift(row);
+            } else {
+                rows.push(row);
+            }
         }
 
         var sequences = _.pluck(_.pluck(rows, 'data'), self.handleField);
         var rowIDs = _.pluck(rows, 'id');
 
-        this.trigger_up('resequence', {
-            rowIDs: rowIDs,
-            offset: _.min(sequences),
-            handleField: this.handleField,
+        if (!asc) {
+            rowIDs.reverse();
+        }
+        this.unselectRow().then(function () {
+            self.trigger_up('resequence', {
+                rowIDs: rowIDs,
+                offset: _.min(sequences),
+                handleField: self.handleField,
+            });
         });
     },
     /**

@@ -6,7 +6,7 @@
 # grazziano <gra.negocia@gmail.com>, 2017
 # Luiz Carlos de Lima <luiz.carlos@akretion.com.br>, 2017
 # Mateus Lopes <mateus1@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # danimaribeiro <danimaribeiro@gmail.com>, 2017
 # Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2017
 # falexandresilva <falexandresilva@gmail.com>, 2017
@@ -16,10 +16,10 @@
 # André Augusto Firmino Cordeiro <a.cordeito@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.saas~18\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-02 11:26+0000\n"
-"PO-Revision-Date: 2017-10-02 11:26+0000\n"
+"POT-Creation-Date: 2018-02-19 13:43+0000\n"
+"PO-Revision-Date: 2018-02-19 13:43+0000\n"
 "Last-Translator: André Augusto Firmino Cordeiro <a.cordeito@gmail.com>, 2017\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/41243/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -1222,6 +1222,11 @@ msgid "Friendly to the environment."
 msgstr "Amigável ao meio ambiente."
 
 #. module: product
+#: model:ir.ui.view,arch_db:product.product_template_search_view
+msgid "Future Activities"
+msgstr "Atividades Futuras"
+
+#. module: product
 #: model:product.product,name:product.product_product_1
 #: model:product.template,name:product.product_product_1_product_template
 msgid "GAP Analysis Service"
@@ -1575,6 +1580,11 @@ msgstr "Última atualização por"
 #: model:ir.model.fields,field_description:product.field_product_uom_write_date
 msgid "Last Updated on"
 msgstr "Última atualização em"
+
+#. module: product
+#: model:ir.ui.view,arch_db:product.product_template_search_view
+msgid "Late Activities"
+msgstr "Últimas Atividades"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_delay
@@ -2133,6 +2143,11 @@ msgid "Public Price"
 msgstr "Preço público"
 
 #. module: product
+#: model:product.pricelist,name:product.list0
+msgid "Public Pricelist"
+msgstr "Preço público"
+
+#. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_description_purchase
 #: model:ir.model.fields,field_description:product.field_product_template_description_purchase
 msgid "Purchase Description"
@@ -2392,6 +2407,12 @@ msgstr ""
 "Compartilhe seu produto para todas as empresas definidas na sua instância.\n"
 "* Marcado: O produto é visível para todas as empresas, mesmo que uma empresa estiver definida no parceiro.\n"
 "* Desmarcado: Cada empresa pode ver apenas o seu produto (onde a empresa está definida). O produto não relacionado a uma empresa é visível para todas as empresas."
+
+#. module: product
+#: model:ir.ui.view,arch_db:product.product_template_search_view
+msgid "Show all records which has next action date is before today"
+msgstr ""
+"Mostrar todas as gravações em que a próxima data de ação seja antes de hoje."
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_res_config_settings_group_product_pricelist
@@ -2902,6 +2923,11 @@ msgstr ""
 "requisição para cotação. Deixe vazio para usar o código interno."
 
 #. module: product
+#: model:ir.ui.view,arch_db:product.product_template_search_view
+msgid "Today Activities"
+msgstr "Atividades de Hoje"
+
+#. module: product
 #: model:product.product,website_description:product.product_product_7
 #: model:product.template,website_description:product.product_product_7_product_template
 msgid "Two is better than one."
@@ -2921,11 +2947,6 @@ msgid ""
 msgstr ""
 "Porta USB permite a atualização de software para garantir a compatibilidade "
 "de dispositivos Bluetooth em curso"
-
-#. module: product
-#: model:product.pricelist,name:product.list0
-msgid "USD"
-msgstr ""
 
 #. module: product
 #: model:product.product,website_description:product.product_product_6

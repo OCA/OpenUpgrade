@@ -10,6 +10,7 @@ from odoo.addons.base.ir.ir_qweb.fields import nl2br
 from odoo.addons.http_routing.models.ir_http import slug
 from odoo.addons.website.controllers.main import QueryURL
 from odoo.exceptions import ValidationError
+from odoo.addons.website.controllers.main import Website
 from odoo.addons.website_form.controllers.main import WebsiteForm
 
 _logger = logging.getLogger(__name__)
@@ -116,7 +117,19 @@ class WebsiteSaleForm(WebsiteForm):
         return json.dumps({'id': order.id})
 
 
+class Website(Website):
+    @http.route()
+    def get_switchable_related_views(self, key):
+        views = super(Website, self).get_switchable_related_views(key)
+        if key == 'website_sale.product':
+            if not request.env.user.has_group('product.group_product_variant'):
+                view_product_variants = request.env.ref('website_sale.product_variants')
+                views[:] = [v for v in views if v['id'] != view_product_variants.id]
+        return views
+
+
 class WebsiteSale(http.Controller):
+
     def _get_compute_currency_and_context(self):
         pricelist_context = dict(request.env.context)
         pricelist = False
@@ -151,7 +164,7 @@ class WebsiteSale(http.Controller):
             else:
                 price = variant.website_public_price / quantity
             visible_attribute_ids = [v.id for v in variant.attribute_value_ids if v.attribute_id.id in visible_attrs_ids]
-            attribute_value_ids.append([variant.id, visible_attribute_ids, variant.website_price, price])
+            attribute_value_ids.append([variant.id, visible_attribute_ids, variant.website_price / quantity, price])
         return attribute_value_ids
 
     def _get_search_order(self, post):
@@ -445,7 +458,7 @@ class WebsiteSale(http.Controller):
             Partner = order.partner_id.with_context(show_address=1).sudo()
             shippings = Partner.search([
                 ("id", "child_of", order.partner_id.commercial_partner_id.ids),
-                '|', ("type", "=", "delivery"), ("id", "=", order.partner_id.commercial_partner_id.id)
+                '|', ("type", "in", ["delivery", "other"]), ("id", "=", order.partner_id.commercial_partner_id.id)
             ], order='id desc')
             if shippings:
                 if kw.get('partner_id') or 'use_billing' in kw:
@@ -749,7 +762,7 @@ class WebsiteSale(http.Controller):
         values['s2s_acquirers'] = [acq for acq in acquirers if acq.payment_flow == 's2s' and acq.registration_view_template_id]
         values['tokens'] = request.env['payment.token'].search(
             [('partner_id', '=', order.partner_id.id),
-            ('acquirer_id', 'in', [acq.id for acq in values['s2s_acquirers']])])
+            ('acquirer_id', 'in', acquirers.ids)])
 
         for acq in values['form_acquirers']:
             acq.form = acq.with_context(submit_class='btn btn-primary', submit_txt=_('Pay Now')).sudo().render(
@@ -845,7 +858,7 @@ class WebsiteSale(http.Controller):
             return request.redirect('/shop/?error=invalid_token_id')
 
         # We retrieve the token the user want to use to pay
-        token = request.env['payment.token'].browse(pm_id)
+        token = request.env['payment.token'].sudo().browse(pm_id)
         if not token:
             return request.redirect('/shop/?error=token_not_found')
 
@@ -858,9 +871,11 @@ class WebsiteSale(http.Controller):
         # we proceed the s2s payment
         res = tx.confirm_sale_token()
         # we then redirect to the page that validates the payment by giving it error if there's one
-        if res is not True:
-            return request.redirect('/shop/payment/validate?success=False&error=%s' % res)
-        return request.redirect('/shop/payment/validate?success=True')
+        if tx.state != 'authorized' or not tx.acquirer_id.capture_manually:
+            if res is not True:
+                return request.redirect('/shop/payment/validate?success=False&error=%s' % res)
+            return request.redirect('/shop/payment/validate?success=True')
+        return request.redirect('/shop/payment/validate')
 
     @http.route('/shop/payment/get_status/<int:sale_order_id>', type='json', auth="public", website=True)
     def payment_get_status(self, sale_order_id, **post):

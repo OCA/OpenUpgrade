@@ -174,6 +174,7 @@ function createAsyncView(params) {
     return view.getController(widget).then(function (view) {
         // override the view's 'destroy' so that it calls 'destroy' on the widget
         // instead, as the widget is the parent of the view and the mockServer.
+        view.__destroy = view.destroy;
         view.destroy = function () {
             // remove the override to properly destroy the view and its children
             // when it will be called the second time (by its parent)
@@ -411,11 +412,16 @@ function dragAndDrop($el, $to, options) {
     elementCenter.top += $el.outerHeight()/2;
 
     var toOffset = $to.offset();
+    toOffset.top += $to.outerHeight()/2;
     toOffset.left += $to.outerWidth()/2;
-    if (position === 'center') {
-        toOffset.top += $to.outerHeight()/2;
+    if (position === 'top') {
+        toOffset.top -= $to.outerHeight()/2;
     } else if (position === 'bottom') {
-        toOffset.top += $to.outerHeight();
+        toOffset.top += $to.outerHeight()/2;
+    } else if (position === 'left') {
+        toOffset.left -= $to.outerWidth()/2;
+    } else if (position === 'right') {
+        toOffset.left += $to.outerWidth()/2;
     }
 
     $el.trigger($.Event("mousedown", {
@@ -528,6 +534,87 @@ function removeSrcAttribute($el, widget) {
     });
 }
 
+var patches = {};
+/**
+ * Patches a given Class or Object with the given properties.
+ *
+ * @param {Class|Object} target
+ * @param {Object} props
+ */
+function patch (target, props) {
+    var patchID = _.uniqueId('patch_');
+    target.__patchID = patchID;
+    patches[patchID] = {
+        target: target,
+        otherPatchedProps: [],
+        ownPatchedProps: [],
+    };
+    if (target.prototype) {
+        _.each(props, function (value, key) {
+            if (target.prototype.hasOwnProperty(key)) {
+                patches[patchID].ownPatchedProps.push({
+                    key: key,
+                    initialValue: target.prototype[key],
+                });
+            } else {
+                patches[patchID].otherPatchedProps.push(key);
+            }
+        });
+        target.include(props);
+    } else {
+        _.each(props, function (value, key) {
+            if (key in target) {
+                var oldValue = target[key];
+                patches[patchID].ownPatchedProps.push({
+                    key: key,
+                    initialValue: oldValue,
+                });
+                if (typeof value === 'function') {
+                    target[key] = function () {
+                        var oldSuper = this._super;
+                        this._super = oldValue;
+                        var result = value.apply(this, arguments);
+                        if (oldSuper === undefined) {
+                            delete this._super;
+                        } else {
+                            this._super = oldSuper;
+                        }
+                        return result;
+                    };
+                } else {
+                    target[key] = value;
+                }
+            } else {
+                patches[patchID].otherPatchedProps.push(key);
+                target[key] = value;
+            }
+        });
+    }
+}
+/**
+ * Unpatches a given Class or Object.
+ *
+ * @param {Class|Object} target
+ */
+function unpatch(target) {
+    var patchID = target.__patchID;
+    var patch = patches[patchID];
+    _.each(patch.ownPatchedProps, function (p) {
+        target[p.key] = p.initialValue;
+    });
+    if (target.prototype) {
+        _.each(patch.otherPatchedProps, function (key) {
+            delete target.prototype[key];
+        });
+    } else {
+        _.each(patch.otherPatchedProps, function (key) {
+            delete target[key];
+        });
+    }
+    delete patches[patchID];
+    delete target.__patchID;
+}
+
 // Loading static files cannot be properly simulated when their real content is
 // really needed. This is the case for static XML files so we load them here,
 // before starting the qunit test suite.
@@ -543,17 +630,19 @@ return $.when(
         QUnit.start();
     }, 0);
     return {
-        intercept: intercept,
-        observe: observe,
-        createView: createView,
+        addMockEnvironment: addMockEnvironment,
         createAsyncView: createAsyncView,
         createModel: createModel,
-        addMockEnvironment: addMockEnvironment,
+        createView: createView,
         dragAndDrop: dragAndDrop,
+        intercept: intercept,
+        observe: observe,
+        patch: patch,
+        removeSrcAttribute: removeSrcAttribute,
+        triggerKeypressEvent: triggerKeypressEvent,
         triggerMouseEvent: triggerMouseEvent,
         triggerPositionalMouseEvent: triggerPositionalMouseEvent,
-        triggerKeypressEvent: triggerKeypressEvent,
-        removeSrcAttribute: removeSrcAttribute,
+        unpatch: unpatch,
     };
 });
 

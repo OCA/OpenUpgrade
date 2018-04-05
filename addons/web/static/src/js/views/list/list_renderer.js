@@ -60,6 +60,7 @@ var ListRenderer = BasicRenderer.extend({
         this.hasSelectors = params.hasSelectors;
         this.selection = [];
         this.pagers = []; // instantiated pagers (only for grouped lists)
+        this.editable = params.editable;
     },
 
     //--------------------------------------------------------------------------
@@ -71,6 +72,7 @@ var ListRenderer = BasicRenderer.extend({
      */
     updateState: function (state, params) {
         this._processColumns(params.columnInvisibleFields || {});
+        this.selection = [];
         return this._super.apply(this, arguments);
     },
 
@@ -202,9 +204,11 @@ var ListRenderer = BasicRenderer.extend({
                 var field = self.state.fields[column.attrs.name];
                 var value = aggregateValues[column.attrs.name].value;
                 var help = aggregateValues[column.attrs.name].help;
-                var formattedValue = field_utils.format[field.type](value, field, {
-                    escape: true,
-                });
+                var formatFunc = field_utils.format[column.attrs.widget];
+                if (!formatFunc) {
+                    formatFunc = field_utils.format[field.type];
+                }
+                var formattedValue = formatFunc(value, field, {escape: true});
                 $cell.addClass('o_list_number').attr('title', help).html(formattedValue);
             }
             return $cell;
@@ -261,7 +265,7 @@ var ListRenderer = BasicRenderer.extend({
 
         // We register modifiers on the <td> element so that it gets the correct
         // modifiers classes (for styling)
-        var modifiers = this._registerModifiers(node, record, $td);
+        var modifiers = this._registerModifiers(node, record, $td, _.pick(options, 'mode'));
         // If the invisible modifiers is true, the <td> element is left empty.
         // Indeed, if the modifiers was to change the whole cell would be
         // rerendered anyway.
@@ -276,6 +280,7 @@ var ListRenderer = BasicRenderer.extend({
         }
         if (node.attrs.widget || (options && options.renderWidgets)) {
             var widget = this._renderFieldWidget(node, record, _.pick(options, 'mode'));
+            this._handleAttributes(widget.$el, node);
             return $td.append(widget.$el);
         }
         var name = node.attrs.name;
@@ -286,6 +291,7 @@ var ListRenderer = BasicRenderer.extend({
             escape: true,
             isPassword: 'password' in node.attrs,
         });
+        this._handleAttributes($td, node);
         return $td.html(formattedValue);
     },
     /**

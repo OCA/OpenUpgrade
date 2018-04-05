@@ -5,6 +5,7 @@ var core = require('web.core');
 var mixins = require('web.mixins');
 var rpc = require('web.rpc');
 var Session = require('web.Session');
+var PosBaseWidget = require('point_of_sale.BaseWidget');
 
 var QWeb = core.qweb;
 var _t = core._t;
@@ -92,8 +93,9 @@ var JobQueue = function(){
 
 var ProxyDevice  = core.Class.extend(mixins.PropertiesMixin,{
     init: function(parent,options){
-        mixins.PropertiesMixin.init.call(this,parent);
+        mixins.PropertiesMixin.init.call(this);
         var self = this;
+        this.setParent(parent);
         options = options || {};
 
         this.pos = parent;
@@ -447,6 +449,7 @@ var ProxyDevice  = core.Class.extend(mixins.PropertiesMixin,{
             })
             .then(function(result){
                 var env = {
+                    widget: new PosBaseWidget(self),
                     company: self.pos.company,
                     pos: self.pos,
                     products: result.products,

@@ -434,7 +434,7 @@ class AlarmManager(models.AbstractModel):
 
         result = False
         if alarm.type == 'email':
-            result = meeting.attendee_ids._send_mail_to_attendees('calendar.calendar_template_meeting_reminder', force_send=True)
+            result = meeting.attendee_ids.filtered(lambda r: r.state != 'declined')._send_mail_to_attendees('calendar.calendar_template_meeting_reminder', force_send=True)
         return result
 
     def do_notif_reminder(self, alert):
@@ -608,7 +608,8 @@ class Meeting(models.Model):
         if not event_date:
             event_date = datetime.now()
 
-        if self.allday and self.rrule and 'UNTIL' in self.rrule and 'Z' not in self.rrule:
+        use_naive_datetime = self.allday and self.rrule and 'UNTIL' in self.rrule and 'Z' not in self.rrule
+        if use_naive_datetime:
             rset1 = rrule.rrulestr(str(self.rrule), dtstart=event_date.replace(tzinfo=None), forceset=True, ignoretz=True)
         else:
             # Convert the event date to saved timezone (or context tz) as it'll
@@ -616,9 +617,13 @@ class Meeting(models.Model):
             event_date = event_date.astimezone(timezone)  # transform "+hh:mm" timezone
             rset1 = rrule.rrulestr(str(self.rrule), dtstart=event_date, forceset=True, tzinfos={})
         recurring_meetings = self.search([('recurrent_id', '=', self.id), '|', ('active', '=', False), ('active', '=', True)])
-
         for meeting in recurring_meetings:
-            rset1._exdate.append(todate(meeting.recurrent_id_date))
+            recurring_date = fields.Datetime.from_string(meeting.recurrent_id_date)
+            if use_naive_datetime:
+                recurring_date = recurring_date.replace(tzinfo=None)
+            else:
+                recurring_date = todate(meeting.recurrent_id_date)
+            rset1.exdate(recurring_date)
         return [d.astimezone(pytz.UTC) if d.tzinfo else d for d in rset1]
 
     @api.multi
@@ -823,7 +828,7 @@ class Meeting(models.Model):
     attendee_ids = fields.One2many('calendar.attendee', 'event_id', 'Participant', ondelete='cascade')
     partner_ids = fields.Many2many('res.partner', 'calendar_event_res_partner_rel', string='Attendees', states={'done': [('readonly', True)]}, default=_default_partners)
     alarm_ids = fields.Many2many('calendar.alarm', 'calendar_alarm_calendar_event_rel', string='Reminders', ondelete="restrict", copy=False)
-    is_highlighted = fields.Boolean(compute='_compute_is_highlighted', string='# Meetings Highlight')
+    is_highlighted = fields.Boolean(compute='_compute_is_highlighted', string='Is the Event Highlighted')
 
     @api.multi
     def _compute_attendee(self):
@@ -1141,9 +1146,14 @@ class Meeting(models.Model):
             for key in (order or self._order).split(',')
         ))
         def key(record):
+            # we need to deal with undefined fields, as sorted requires an homogeneous iterable
+            def boolean_product(x):
+                if isinstance(x, bool):
+                    return (x, x)
+                return (True, x)
             # first extract the values for each key column (ids need special treatment)
             vals_spec = (
-                (any_id2key(record[name]) if name == 'id' else record[name], desc)
+                (any_id2key(record[name]) if name == 'id' else boolean_product(record[name]), desc)
                 for name, desc in sort_spec
             )
             # then Reverse if the value matches a "desc" column
@@ -1478,7 +1488,7 @@ class Meeting(models.Model):
                     partners_to_notify = meeting.partner_ids.ids
                     event_attendees_changes = attendees_create and real_ids and attendees_create[real_ids[0]]
                     if event_attendees_changes:
-                        partners_to_notify.append(event_attendees_changes['removed_partners'].ids)
+                        partners_to_notify.extend(event_attendees_changes['removed_partners'].ids)
                     self.env['calendar.alarm_manager'].notify_next_alarm(partners_to_notify)
 
             if (values.get('start_date') or values.get('start_datetime') or

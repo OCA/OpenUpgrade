@@ -208,7 +208,9 @@
             .o_kanban_record_headings {
                 line-height: 1.2;
                 .o-flex(1, 1, auto);
-
+                // Ensure long word doesn't break out of container
+                word-wrap: break-word;
+                overflow: hidden;
             }
         }
 
@@ -228,7 +230,7 @@
                 height: 20px;
             }
             .oe_kanban_bottom_left {
-                .o-flex(1, 0, auto);
+                .o-flex(1, 1, auto);
 
                 > * {
                     margin-right: 6px;
@@ -241,7 +243,7 @@
                 }
             }
             .oe_kanban_bottom_right{
-                .o-flex(0, 0, auto);
+                .o-flex(0, 1, auto);
 
                 .oe_kanban_avatar {
                     width: 20px;

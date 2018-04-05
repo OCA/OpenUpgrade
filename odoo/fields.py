@@ -66,18 +66,7 @@ def get_migration_cursor():
 
 def copy_cache(records, env):
     """ Recursively copy the cache of ``records`` to the environment ``env``. """
-    src, dst = records.env.cache, env.cache
-    todo, done = set(records), set()
-    while todo:
-        record = todo.pop()
-        if record not in done:
-            done.add(record)
-            target = record.with_env(env)
-            for field in src.get_fields(record):
-                value = src.get(record, field)
-                dst.set(target, field, value)
-                if value and field.type in ('many2one', 'one2many', 'many2many', 'reference'):
-                    todo.update(field.convert_to_record(value, record))
+    env.cache.copy(records, env)
 
 def first(records):
     """ Return the first record in ``records``, with the same prefetching. """
@@ -590,7 +579,7 @@ class Field(MetaField('DummyField', (object,), {})):
         # when related_sudo, bypass access rights checks when reading values
         others = records.sudo() if self.related_sudo else records
         # copy the cache of draft records into others' cache
-        if records.env != others.env:
+        if records.env.in_onchange and records.env != others.env:
             copy_cache(records - records.filtered('id'), others.env)
         #
         # Traverse fields one by one for all records, in order to take advantage
@@ -790,6 +779,9 @@ class Field(MetaField('DummyField', (object,), {})):
             cache, the full cache key being ``(self, record.id, key)``.
         """
         env = record.env
+        # IMPORTANT: odoo.api.Cache.get_records() depends on the fact that the
+        # result does not depend on record.id. If you ever make the following
+        # dependent on record.id, don't forget to fix the other method!
         return env if self.context_dependent else (env.cr, env.uid)
 
     def null(self, record):
@@ -1001,7 +993,7 @@ class Field(MetaField('DummyField', (object,), {})):
             if env.in_onchange:
                 for invf in record._field_inverses[self]:
                     invf._update(record[self.name], record)
-                record._set_dirty(self.name)
+                env.dirty[record].add(self.name)
 
             # determine more dependent fields, and invalidate them
             if self.relational:
@@ -1567,6 +1559,9 @@ class Date(Field):
         """ Convert a :class:`date` value into the format expected by the ORM. """
         return value.strftime(DATE_FORMAT) if value else False
 
+    def convert_to_column(self, value, record, values=None):
+        return super(Date, self).convert_to_column(value or None, record, values)
+
     def convert_to_cache(self, value, record, validate=True):
         if not value:
             return False
@@ -1636,6 +1631,9 @@ class Datetime(Field):
     def to_string(value):
         """ Convert a :class:`datetime` value into the format expected by the ORM. """
         return value.strftime(DATETIME_FORMAT) if value else False
+
+    def convert_to_column(self, value, record, values=None):
+        return super(Datetime, self).convert_to_column(value or None, record, values)
 
     def convert_to_cache(self, value, record, validate=True):
         if not value:
@@ -2027,7 +2025,7 @@ class Many2one(_Relational):
             # access rights, and not the value's access rights.
             try:
                 # performance: value.sudo() prefetches the same records as value
-                return value.sudo().name_get()[0]
+                return (value.id, value.sudo().display_name)
             except MissingError:
                 # Should not happen, unless the foreign key is missing.
                 return False
@@ -2144,17 +2142,22 @@ class _RelationalMulti(_Relational):
         # return the recordset value as a list of commands; the commands may
         # give all fields values, the client is responsible for figuring out
         # which fields are actually dirty
+        vals = {record: {} for record in value}
+        for name, subnames in names.items():
+            if name == 'id':
+                continue
+            field = value._fields[name]
+            # read all values before converting them (better prefetching)
+            rec_vals = [(rec, rec[name]) for rec in value]
+            for rec, val in rec_vals:
+                vals[rec][name] = field.convert_to_onchange(val, rec, subnames)
+
         result = [(5,)]
         for record in value:
-            vals = {
-                name: value._fields[name].convert_to_onchange(record[name], record, subnames)
-                for name, subnames in names.items()
-                if name != 'id'
-            }
             if not record.id:
-                result.append((0, record.id.ref or 0, vals))
-            elif vals:
-                result.append((1, record.id, vals))
+                result.append((0, record.id.ref or 0, vals[record]))
+            elif vals[record]:
+                result.append((1, record.id, vals[record]))
             else:
                 result.append((4, record.id))
         return result

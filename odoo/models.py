@@ -27,10 +27,12 @@ import collections
 import dateutil
 import functools
 import itertools
+import io
 import logging
 import operator
 import pytz
 import re
+import uuid
 from collections import defaultdict, MutableMapping, OrderedDict
 from contextlib import closing
 from inspect import getmembers, currentframe
@@ -615,33 +617,67 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
     def _is_an_ordinary_table(self):
         return tools.table_kind(self.env.cr, self._table) == 'r'
 
-    def __export_xml_id(self):
-        """ Return a valid xml_id for the record ``self``. """
+    def __ensure_xml_id(self, skip=False):
+        """ Create missing external ids for records in ``self``, and return an
+            iterator of pairs ``(record, xmlid)`` for the records in ``self``.
+
+        :rtype: Iterable[Model, str | None]
+        """
+        if skip:
+            return ((record, None) for record in self)
+
+        if not self:
+            return iter([])
+
         if not self._is_an_ordinary_table():
             raise Exception(
                 "You can not export the column ID of model %s, because the "
                 "table %s is not an ordinary table."
                 % (self._name, self._table))
-        ir_model_data = self.sudo().env['ir.model.data']
-        data = ir_model_data.search([('model', '=', self._name), ('res_id', '=', self.id)])
-        if data:
-            if data[0].module:
-                return '%s.%s' % (data[0].module, data[0].name)
-            else:
-                return data[0].name
-        else:
-            postfix = 0
-            name = '%s_%s' % (self._table, self.id)
-            while ir_model_data.search([('module', '=', '__export__'), ('name', '=', name)]):
-                postfix += 1
-                name = '%s_%s_%s' % (self._table, self.id, postfix)
-            ir_model_data.create({
-                'model': self._name,
-                'res_id': self.id,
-                'module': '__export__',
-                'name': name,
-            })
-            return '__export__.' + name
+
+        modname = '__export__'
+
+        cr = self.env.cr
+        cr.execute("""
+            SELECT res_id, module, name
+            FROM ir_model_data
+            WHERE model = %s AND res_id in %s
+        """, (self._name, tuple(self.ids)))
+        xids = {
+            res_id: (module, name)
+            for res_id, module, name in cr.fetchall()
+        }
+
+        # create missing xml ids
+        missing = self.filtered(lambda r: r.id not in xids)
+        xids.update(
+            (r.id, (modname, '%s_%s_%s' % (
+                r._table,
+                r.id,
+                uuid.uuid4().hex[:8],
+            )))
+            for r in missing
+        )
+        cr.copy_from(io.StringIO(
+            u'\n'.join(
+                u"%s\t%s\t%s\t%d" % (
+                    modname,
+                    record._name,
+                    xids[record.id][1],
+                    record.id,
+                )
+                for record in missing
+            )),
+            table='ir_model_data',
+            columns=['module', 'model', 'name', 'res_id'],
+        )
+
+        self.invalidate_cache()
+
+        return (
+            (record, '%s.%s' % xids[record.id])
+            for record in self
+        )
 
     @api.multi
     def _export_rows(self, fields):
@@ -650,8 +686,25 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             :param fields: list of lists of fields to traverse
             :return: list of lists of corresponding values
         """
+        import_compatible = self.env.context.get('import_compat', True)
         lines = []
-        for record in self:
+
+        def splittor(rs):
+            """ Splits the self recordset in batches of 1000 (to avoid
+            entire-recordset-prefetch-effects) & removes the previous batch
+            from the cache after it's been iterated in full
+            """
+            for idx in range(0, len(rs), 1000):
+                sub = rs[idx:idx+1000]
+                for rec in sub:
+                    yield rec
+                rs.invalidate_cache(ids=sub.ids)
+
+        # both _ensure_xml_id and the splitter want to work on recordsets but
+        # neither returns one, so can't really be composed...
+        xids = dict(self.__ensure_xml_id(skip=['id'] not in fields))
+        # memory stable but ends up prefetching 275 fields (???)
+        for record in splittor(self):
             # main line of record, initially empty
             current = [''] * len(fields)
             lines.append(current)
@@ -671,7 +724,9 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                 if name == '.id':
                     current[i] = str(record.id)
                 elif name == 'id':
-                    current[i] = record.__export_xml_id()
+                    xid = xids.get(record)
+                    assert xid, "no xid was generated for the record %s" % record
+                    current[i] = xid
                 else:
                     field = record._fields[name]
                     value = record[name]
@@ -683,9 +738,10 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                     else:
                         primary_done.append(name)
 
-                        # This is a special case, its strange behavior is intended!
-                        if field.type == 'many2many' and len(path) > 1 and path[1] == 'id':
-                            xml_ids = [r.__export_xml_id() for r in value]
+                        # in import_compat mode, m2m should always be exported as
+                        # a comma-separated list of xids in a single cell
+                        if import_compatible and field.type == 'many2many' and len(path) > 1 and path[1] == 'id':
+                            xml_ids = [xid for _, xid in value.__ensure_xml_id()]
                             current[i] = ','.join(xml_ids) or False
                             continue
 
@@ -1651,7 +1707,8 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                     order = '"%s" %s' % (order_field, '' if len(order_split) == 1 else order_split[1])
                     orderby_terms.append(order)
             elif order_field in aggregated_fields:
-                orderby_terms.append(order_part)
+                order_split[0] = '"' + order_field + '"'
+                orderby_terms.append(' '.join(order_split))
             else:
                 # Cannot order by a field that will not appear in the results (needs to be grouped or aggregated)
                 _logger.warn('%s: read_group order by `%s` ignored, cannot sort on empty columns (not grouped/aggregated)',
@@ -2839,47 +2896,48 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             raise UserError(_('Unable to delete this document because it is used as a default property'))
 
         # Delete the records' properties.
-        self.env['ir.property'].search([('res_id', 'in', refs)]).unlink()
+        with self.env.norecompute():
+            self.env['ir.property'].search([('res_id', 'in', refs)]).unlink()
 
-        self.check_access_rule('unlink')
+            self.check_access_rule('unlink')
 
-        cr = self._cr
-        Data = self.env['ir.model.data'].sudo().with_context({})
-        Defaults = self.env['ir.default'].sudo()
-        Attachment = self.env['ir.attachment']
+            cr = self._cr
+            Data = self.env['ir.model.data'].sudo().with_context({})
+            Defaults = self.env['ir.default'].sudo()
+            Attachment = self.env['ir.attachment']
 
-        for sub_ids in cr.split_for_in_conditions(self.ids):
-            query = "DELETE FROM %s WHERE id IN %%s" % self._table
-            cr.execute(query, (sub_ids,))
+            for sub_ids in cr.split_for_in_conditions(self.ids):
+                query = "DELETE FROM %s WHERE id IN %%s" % self._table
+                cr.execute(query, (sub_ids,))
 
-            # Removing the ir_model_data reference if the record being deleted
-            # is a record created by xml/csv file, as these are not connected
-            # with real database foreign keys, and would be dangling references.
-            #
-            # Note: the following steps are performed as superuser to avoid
-            # access rights restrictions, and with no context to avoid possible
-            # side-effects during admin calls.
-            data = Data.search([('model', '=', self._name), ('res_id', 'in', sub_ids)])
-            if data:
-                data.unlink()
+                # Removing the ir_model_data reference if the record being deleted
+                # is a record created by xml/csv file, as these are not connected
+                # with real database foreign keys, and would be dangling references.
+                #
+                # Note: the following steps are performed as superuser to avoid
+                # access rights restrictions, and with no context to avoid possible
+                # side-effects during admin calls.
+                data = Data.search([('model', '=', self._name), ('res_id', 'in', sub_ids)])
+                if data:
+                    data.unlink()
 
-            # For the same reason, remove the defaults having some of the
-            # records as value
-            Defaults.discard_records(self.browse(sub_ids))
+                # For the same reason, remove the defaults having some of the
+                # records as value
+                Defaults.discard_records(self.browse(sub_ids))
 
-            # For the same reason, remove the relevant records in ir_attachment
-            # (the search is performed with sql as the search method of
-            # ir_attachment is overridden to hide attachments of deleted
-            # records)
-            query = 'SELECT id FROM ir_attachment WHERE res_model=%s AND res_id IN %s'
-            cr.execute(query, (self._name, sub_ids))
-            attachments = Attachment.browse([row[0] for row in cr.fetchall()])
-            if attachments:
-                attachments.unlink()
+                # For the same reason, remove the relevant records in ir_attachment
+                # (the search is performed with sql as the search method of
+                # ir_attachment is overridden to hide attachments of deleted
+                # records)
+                query = 'SELECT id FROM ir_attachment WHERE res_model=%s AND res_id IN %s'
+                cr.execute(query, (self._name, sub_ids))
+                attachments = Attachment.browse([row[0] for row in cr.fetchall()])
+                if attachments:
+                    attachments.unlink()
 
-        # invalidate the *whole* cache, since the orm does not handle all
-        # changes made in the database, like cascading delete!
-        self.invalidate_cache()
+            # invalidate the *whole* cache, since the orm does not handle all
+            # changes made in the database, like cascading delete!
+            self.invalidate_cache()
 
         # recompute new-style fields
         if self.env.recompute and self._context.get('recompute', True):
@@ -3007,15 +3065,28 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                 self._write(old_vals)
 
             if new_vals:
-                # put the values of pure new-style fields into cache, and inverse them
                 self.modified(set(new_vals) - set(old_vals))
-                for record in self:
-                    record._cache.update(record._convert_to_cache(new_vals, update=True))
+
+                # put the values of fields into cache, and inverse them
                 for key in new_vals:
-                    self._fields[key].determine_inverse(self)
+                    field = self._fields[key]
+                    # If a field is not stored, its inverse method will probably
+                    # write on its dependencies, which will invalidate the field
+                    # on all records. We therefore inverse the field one record
+                    # at a time.
+                    batches = [self] if field.store else list(self)
+                    for records in batches:
+                        for record in records:
+                            record._cache.update(
+                                record._convert_to_cache(new_vals, update=True)
+                            )
+                        field.determine_inverse(records)
+
                 self.modified(set(new_vals) - set(old_vals))
+
                 # check Python constraints for inversed fields
                 self._validate_fields(set(new_vals) - set(old_vals))
+
                 # recompute new-style fields
                 if self.env.recompute and self._context.get('recompute', True):
                     self.recompute()
@@ -3821,7 +3892,9 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                     del vals['module']      # duplicated vals is not linked to any module
                     vals['res_id'] = target_id
                     if vals['lang'] == old.env.lang and field.translate is True:
-                        vals['source'] = old_wo_lang[name]
+                        # force a source if the new_val was not changed by copy override
+                        if new_val == old[name]:
+                            vals['source'] = old_wo_lang[name]
                         # the value should be the new value (given by copy())
                         vals['value'] = new_val
                     Translation.create(vals)
@@ -4966,15 +5039,16 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         done = set()
 
         # dummy assignment: trigger invalidations on the record
-        for name in todo:
-            if name == 'id':
-                continue
-            value = record[name]
-            field = self._fields[name]
-            if field.type == 'many2one' and field.delegate and not value:
-                # do not nullify all fields of parent record for new records
-                continue
-            record[name] = value
+        with env.do_in_onchange():
+            for name in todo:
+                if name == 'id':
+                    continue
+                value = record[name]
+                field = self._fields[name]
+                if field.type == 'many2one' and field.delegate and not value:
+                    # do not nullify all fields of parent record for new records
+                    continue
+                record[name] = value
 
         result = {}
         dirty = set()
@@ -5014,10 +5088,11 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                 subtree = subtree[name]
 
         # collect values from dirty fields
-        result['value'] = {
-            name: self._fields[name].convert_to_onchange(record[name], record, subnames[name])
-            for name in dirty
-        }
+        with env.do_in_onchange():
+            result['value'] = {
+                name: self._fields[name].convert_to_onchange(record[name], record, subnames[name])
+                for name in dirty
+            }
 
         return result
 

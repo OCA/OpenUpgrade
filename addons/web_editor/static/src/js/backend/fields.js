@@ -51,6 +51,9 @@ var FieldTextHtmlSimple = basic_fields.DebouncedField.extend(TranslatableFieldMi
             var layoutInfo = this.$textarea.data('layoutInfo');
             $.summernote.pluginEvents.codeview(undefined, undefined, layoutInfo, false);
         }
+        if (this._getValue() !== this.value) {
+            this._isDirty = true;
+        }
         this._super.apply(this, arguments);
     },
     /**
@@ -115,6 +118,7 @@ var FieldTextHtmlSimple = basic_fields.DebouncedField.extend(TranslatableFieldMi
      */
     _getValue: function () {
         if (this.nodeOptions['style-inline']) {
+            transcoder.linkImgToAttachmentThumbnail(this.$content);
             transcoder.classToStyle(this.$content);
             transcoder.fontToImg(this.$content);
         }
@@ -130,6 +134,8 @@ var FieldTextHtmlSimple = basic_fields.DebouncedField.extend(TranslatableFieldMi
         this.$textarea.summernote(this._getSummernoteConfig());
         this.$content = this.$('.note-editable:first');
         this.$content.html(this._textToHtml(this.value));
+        this.$content.data('oe-id', this.recordData.res_id || this.res_id);
+        this.$content.data('oe-model', this.recordData.model || this.model);
         // trigger a mouseup to refresh the editor toolbar
         this.$content.trigger('mouseup');
         if (this.nodeOptions['style-inline']) {
@@ -218,7 +224,8 @@ var FieldTextHtml = AbstractField.extend({
     start: function () {
         var self = this;
 
-        this.loaded = false;
+        this.editorLoadedDeferred = $.Deferred();
+        this.contentLoadedDeferred = $.Deferred();
         this.callback = _.uniqueId('FieldTextHtml_');
         window.odoo[this.callback+"_editor"] = function (EditorBar) {
             setTimeout(function () {
@@ -309,8 +316,6 @@ var FieldTextHtml = AbstractField.extend({
     old_initialize_content: function () {
         this.$el.closest('.modal-body').css('max-height', 'none');
         this.$iframe = this.$el.find('iframe');
-        // deactivate any button to avoid saving a not ready iframe
-        $('.o_cp_buttons, .o_statusbar_buttons').find('button').addClass('o_disabled').attr('disabled', true);
         this.document = null;
         this.$body = $();
         this.$content = $();
@@ -325,9 +330,7 @@ var FieldTextHtml = AbstractField.extend({
         this.$content = this.$body.find("#editable_area");
         this.render();
         this.add_button();
-        this.loaded = true;
-        // reactivate all the buttons when the field's content (the iframe) is loaded
-        $('.o_cp_buttons, .o_statusbar_buttons').find('button').removeClass('o_disabled').attr('disabled', false);
+        this.contentLoadedDeferred.resolve();
         setTimeout(self.resize, 0);
     },
     on_editor_loaded: function (EditorBar) {
@@ -336,6 +339,7 @@ var FieldTextHtml = AbstractField.extend({
         if (this.value && window.odoo[self.callback+"_updown"] && !(this.$content.html()||"").length) {
             this.render();
         }
+        this.editorLoadedDeferred.resolve();
         setTimeout(function () {
             setTimeout(self.resize,0);
         }, 0);
@@ -392,20 +396,37 @@ var FieldTextHtml = AbstractField.extend({
     //--------------------------------------------------------------------------
 
     /**
+     * Set the value when the widget is fully loaded (content + editor).
+     *
      * @override
      */
     commitChanges: function () {
-        if (!this.loaded || this.mode === 'readonly') {
+        var self = this;
+        var result = this._super.bind(this, arguments);
+        if (this.mode === 'readonly') {
             return;
         }
-        // switch to WYSIWYG mode if currently in code mode to get all changes
-        if (config.debug && this.mode === 'edit' && this.editor.rte) {
-            var layoutInfo = this.editor.rte.editable().data('layoutInfo');
-            $.summernote.pluginEvents.codeview(undefined, undefined, layoutInfo, false);
-        }
-        this.editor.snippetsMenu && this.editor.snippetsMenu.cleanForSave();
-        this._setValue(this.$content.html());
-        return this._super.apply(this, arguments);
+        return $.when(this.contentLoadedDeferred, this.editorLoadedDeferred, result).then(function () {
+            // switch to WYSIWYG mode if currently in code mode to get all changes
+            if (config.debug && self.editor.rte) {
+                var layoutInfo = self.editor.rte.editable().data('layoutInfo');
+                $.summernote.pluginEvents.codeview(undefined, undefined, layoutInfo, false);
+            }
+            var $ancestors = self.$iframe.filter(':not(:visible)').parentsUntil(':visible').addBack();
+            var ancestorsStyle = [];
+            // temporarily force displaying iframe (needed for firefox)
+            _.each($ancestors, function (el) {
+                var $el = $(el);
+                ancestorsStyle.unshift($el.attr('style') || null);
+                $el.css({display: 'initial', visibility: 'hidden', height: 1});
+            });
+            self.editor.snippetsMenu && self.editor.snippetsMenu.cleanForSave();
+            _.each($ancestors, function (el) {
+                var $el = $(el);
+                $el.attr('style', ancestorsStyle.pop());
+            });
+            self._setValue(self.$content.html());
+        });
     },
 });
 

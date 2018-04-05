@@ -12,6 +12,7 @@ class TestStockValuation(TransactionCase):
         self.customer_location = self.env.ref('stock.stock_location_customers')
         self.supplier_location = self.env.ref('stock.stock_location_suppliers')
         self.partner = self.env['res.partner'].create({'name': 'xxx'})
+        self.owner1 = self.env['res.partner'].create({'name': 'owner1'})
         self.uom_unit = self.env.ref('product.product_uom_unit')
         self.product1 = self.env['product.product'].create({
             'name': 'Product A',
@@ -1329,7 +1330,8 @@ class TestStockValuation(TransactionCase):
 
     def test_fifo_negative_2(self):
         """ Receives 10 units, send more, the extra quantity should be valued at the last fifo
-        price, running the vacuum should not do anything.
+        price, running the vacuum should not do anything. Receive 2 units at the price the two
+        extra units were sent, check that no accounting entries are created.
         """
         self.product1.product_tmpl_id.cost_method = 'fifo'
 
@@ -1428,14 +1430,69 @@ class TestStockValuation(TransactionCase):
         self.assertEqual(len(move1.account_move_ids), 1)
         self.assertEqual(len(move2.account_move_ids), 1)
 
-        # ---------------------------------------------------------------------
-        # Ending
-        # ---------------------------------------------------------------------
         self.assertEqual(self.product1.qty_available, -2)
         self.assertEqual(self.product1.stock_value, -20)
         self.assertEqual(sum(self._get_stock_input_move_lines().mapped('debit')), 0)
         self.assertEqual(sum(self._get_stock_input_move_lines().mapped('credit')), 100)
         self.assertEqual(sum(self._get_stock_valuation_move_lines().mapped('debit')), 100)
+        self.assertEqual(sum(self._get_stock_valuation_move_lines().mapped('credit')), 120)
+        self.assertEqual(sum(self._get_stock_output_move_lines().mapped('debit')), 120)
+        self.assertEqual(sum(self._get_stock_output_move_lines().mapped('credit')), 0)
+
+        # Now receive exactly the extra units at exactly the price sent, no
+        # accounting entries should be created after the vacuum.
+        # ---------------------------------------------------------------------
+        # Receive 2@10
+        # ---------------------------------------------------------------------
+        move3 = self.env['stock.move'].create({
+            'name': '10 in',
+            'location_id': self.supplier_location.id,
+            'location_dest_id': self.stock_location.id,
+            'product_id': self.product1.id,
+            'product_uom': self.uom_unit.id,
+            'product_uom_qty': 2.0,
+            'price_unit': 10,
+            'move_line_ids': [(0, 0, {
+                'product_id': self.product1.id,
+                'location_id': self.supplier_location.id,
+                'location_dest_id': self.stock_location.id,
+                'product_uom_id': self.uom_unit.id,
+                'qty_done': 2.0,
+            })]
+        })
+        move3._action_confirm()
+        move3._action_done()
+
+        # ---------------------------------------------------------------------
+        # Run the vacuum
+        # ---------------------------------------------------------------------
+        self.env['stock.move']._run_fifo_vacuum()
+
+        # ---------------------------------------------------------------------
+        # Ending
+        # ---------------------------------------------------------------------
+        self.assertEqual(move1.value, 100.0)
+        self.assertEqual(move1.remaining_qty, 0.0)
+        self.assertEqual(move1.price_unit, 10.0)
+        self.assertEqual(move1.remaining_value, 0.0)
+        self.assertEqual(move2.value, -120.0)
+        self.assertEqual(move2.remaining_qty, 0)
+        self.assertEqual(move2.remaining_value, 0)
+        self.assertEqual(move3.value, 20)
+        self.assertEqual(move3.remaining_qty, 0.0)
+        self.assertEqual(move3.price_unit, 10.0)
+        self.assertEqual(move3.remaining_value, 0.0)
+
+        self.assertEqual(len(move1.account_move_ids), 1)
+        self.assertEqual(len(move2.account_move_ids), 1)
+        self.assertEqual(len(move3.account_move_ids), 1)  # the created account move is due to the receipt
+
+        # nothing should have changed in the accounting regarding the output
+        self.assertEqual(self.product1.qty_available, 0)
+        self.assertEqual(self.product1.stock_value, 0)
+        self.assertEqual(sum(self._get_stock_input_move_lines().mapped('debit')), 0)
+        self.assertEqual(sum(self._get_stock_input_move_lines().mapped('credit')), 120)
+        self.assertEqual(sum(self._get_stock_valuation_move_lines().mapped('debit')), 120)
         self.assertEqual(sum(self._get_stock_valuation_move_lines().mapped('credit')), 120)
         self.assertEqual(sum(self._get_stock_output_move_lines().mapped('debit')), 120)
         self.assertEqual(sum(self._get_stock_output_move_lines().mapped('credit')), 0)
@@ -2207,6 +2264,24 @@ class TestStockValuation(TransactionCase):
         move5._action_done()
 
         self.assertEqual(move5.value, -477.6)
+
+        # Receives 10 units but assign them to an owner, the valuation should not be impacted.
+        move6 = self.env['stock.move'].create({
+            'name': '10 units to an owner',
+            'location_id': self.supplier_location.id,
+            'location_dest_id': self.stock_location.id,
+            'product_id': self.product1.id,
+            'product_uom': self.uom_unit.id,
+            'product_uom_qty': 10.0,
+            'price_unit': 99,
+        })
+        move6._action_confirm()
+        move6._action_assign()
+        move6.move_line_ids.owner_id = self.owner1.id
+        move6.move_line_ids.qty_done = 10.0
+        move6._action_done()
+
+        self.assertEqual(move6.value, 0)
 
     def test_average_perpetual_2(self):
         self.product1.product_tmpl_id.cost_method = 'average'

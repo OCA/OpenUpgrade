@@ -4,6 +4,7 @@ odoo.define('web.calendar_tests', function (require) {
 var CalendarView = require('web.CalendarView');
 var CalendarRenderer = require('web.CalendarRenderer');
 var fieldUtils = require('web.field_utils');
+var mixins = require('web.mixins');
 var testUtils = require('web.test_utils');
 var session = require('web.session');
 
@@ -1570,7 +1571,7 @@ QUnit.module('Views', {
     });
 
     QUnit.test('set event as all day when field is date', function (assert) {
-        assert.expect(1);
+        assert.expect(2);
 
         this.data.event.records[0].start_date = "2016-12-14";
 
@@ -1594,9 +1595,16 @@ QUnit.module('Views', {
             viewOptions: {
                 initialDate: initialDate,
             },
+            session: {
+                getTZOffset: function () {
+                    return -480;
+                }
+            },
         });
         assert.strictEqual(calendar.$('.fc-day-grid .fc-event-container').length, 1,
             "should be one event in the all day row");
+        assert.strictEqual(calendar.model.data.data[0].r_start.date(), 14,
+            "the date should be 14");
         calendar.destroy();
     });
 
@@ -1649,6 +1657,63 @@ QUnit.module('Views', {
             "should create only one event");
 
         calendar.destroy();
+    });
+
+    QUnit.test('check if the view destroys all widgets and instances', function (assert) {
+        assert.expect(1);
+
+        var instanceNumber = 0;
+        testUtils.patch(mixins.ParentedMixin, {
+            init: function () {
+                instanceNumber++;
+                return this._super.apply(this, arguments);
+            },
+            destroy: function () {
+                if (!this.isDestroyed()) {
+                    instanceNumber--;
+                }
+                return this._super.apply(this, arguments);
+            }
+        });
+
+        var params = {
+            View: CalendarView,
+            model: 'event',
+            data: this.data,
+            arch:
+            '<calendar class="o_calendar_test" '+
+                'event_open_popup="true" '+
+                'date_start="start_date" '+
+                'all_day="allday" '+
+                'mode="week" '+
+                'attendee="partner_ids" '+
+                'color="partner_id">'+
+                    '<field name="name"/>'+
+                    '<filter name="user_id" avatar_field="image"/>'+
+                    '<field name="partner_ids" write_model="filter_partner" write_field="partner_id"/>'+
+            '</calendar>',
+            archs: archs,
+            viewOptions: {
+                initialDate: initialDate,
+            },
+        };
+
+        var calendar = createView(params);
+        calendar.destroy();
+
+        var initialInstanceNumber = instanceNumber;
+        instanceNumber = 0;
+
+        calendar = createView(params);
+
+        // call destroy function of controller to ensure that it correctly destroys everything
+        calendar.__destroy();
+
+        assert.strictEqual(instanceNumber, initialInstanceNumber+1, "every widget must be destroyed exept the parent");
+
+        calendar.destroy();
+
+        testUtils.unpatch(mixins.ParentedMixin);
     });
 });
 
