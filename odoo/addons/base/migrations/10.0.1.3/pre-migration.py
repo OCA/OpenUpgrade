@@ -72,6 +72,7 @@ def migrate(cr, version):
             # OCA/account-invoicing
             ('purchase_stock_picking_return_invoicing_open_qty',
              'purchase_stock_picking_return_invoicing'),
+            ('sale_stock_picking_return_invoicing', 'sale_stock'),
             # OCA/e-commerce
             ('website_sale_b2c', 'sale'),  # used groups are in sale
             # OCA/sale-workflow
