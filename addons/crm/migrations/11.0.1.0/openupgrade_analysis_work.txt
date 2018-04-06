@@ -4,15 +4,20 @@ crm          / crm.lead                 / date_action (date)            : DEL
 crm          / crm.lead                 / date_action_next (datetime)   : DEL 
 crm          / crm.lead                 / next_activity_id (many2one)   : DEL relation: crm.activity
 crm          / crm.lead                 / title_action (char)           : DEL 
-# DONE: post-migration save next_activity, date_action and title_action to mail.activity
+# Done: post-migration: Create mail_activity_type according crm_activity
+# Done: post-migration: save next_activity, date_action and title_action to mail.activity
 
 crm          / crm.lead                 / fax (char)                    : DEL 
-crm          / crm.lead                 / website (char)                : NEW 
+# Nothing to do: SQL column is preserved
+
+crm          / crm.lead                 / website (char)                : NEW
 crm          / crm.lead                 / website_message_ids (one2many): NEW relation: mail.message
 crm          / crm.team                 / dashboard_graph_group_pipeline (selection): NEW selection_keys: ['day', 'month', 'stage', 'user', 'week']
 crm          / crm.team                 / dashboard_graph_model (False) : NEW selection_keys: ['crm.opportunity.report'], mode: modify
+# Nothing to do: new fields not required
+
 crm          / crm.team                 / resource_calendar_id (many2one): DEL relation: resource.calendar
-# NOTHING TO DO 
+# Nothing to do: Not used in standard and SQL column is preserved
 
 ---XML records in module 'crm'---
 DEL crm.activity: crm.crm_activity_data_call
