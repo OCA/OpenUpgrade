@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Camptocamp
+# Copyright 2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -37,15 +37,18 @@ def migrate_base_action_rule(cr):
         openupgrade.rename_xmlids(cr, xmlid_renames_base_action_rule)
 
 
-def create_ir_actions_server(cr):
+def create_ir_actions_server(env):
     """ base.automation
 
-    fill delegate field action_server_id
-    by creating the related ir.actions.server
-    most of the field values will go in ir.actions.server
+    fill delegate field action_server_id by creating the related
+    ir.actions.server most of the field values will go in ir.actions.server.
 
+    These fields don't have a replacement:
+
+    * act_user_id: This is for forcing to write in the record the "user_id"
+      field with that value. Very specific.
     """
-
+    cr = env.cr
     default_vals = {
         'code': DEFAULT_PYTHON_CODE,
         'state': 'object_write',
@@ -54,14 +57,13 @@ def create_ir_actions_server(cr):
     }
     cr.execute("""
         SELECT id, create_uid, create_date, write_uid, write_date
-          name, sequence, model_id, kind
+          name, sequence, model_id, kind, filter_id, filter_pre_id
         FROM base_automation
         WHERE action_server_id IS NULL
     """)
     rows = cr.fetchall()
     for row in rows:
         act = dict(row)
-
         vals = default_vals.copy()
         vals.update({
             'create_uid': act['create_uid'],
@@ -72,12 +74,14 @@ def create_ir_actions_server(cr):
             'model_id': act['model_id'],
             'sequence': act['sequence'],
             'trigger': act['kind'],
-            # DROPPED fields
-            # act_user_id
-            # filter_id
-            # filter_pre_id
         })
-
+        for old_field, new_field in [
+            ('filter_id', 'filter_domain'),
+            ('filter_pre_id', 'filter_pre_domain'),
+        ]:
+            if act.get(old_field):
+                f = env['ir.filters'].browse(act[old_field])
+                vals[new_field] = f.domain
         cr.execute("""
             INSERT INTO ir_act_server
               (create_uid, create_date, write_uid, write_date,
@@ -90,9 +94,7 @@ def create_ir_actions_server(cr):
             )
             RETURNING id
         """, vals)
-
         srv_act_id = cr.fetchone()[0]
-
         cr.execute(
             "UPDATE base_automation SET action_server_id = %s WHERE id = %s",
             (srv_act_id, act['id']))
@@ -101,4 +103,4 @@ def create_ir_actions_server(cr):
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     migrate_base_action_rule(env.cr)
-    create_ir_actions_server(env.cr)
+    create_ir_actions_server(env)
