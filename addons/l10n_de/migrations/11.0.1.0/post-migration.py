@@ -31,5 +31,5 @@ def migrate(env, version):
     try:
         with env.cr.savepoint():
             type_other_de.unlink()
-    except Exception:
+    except Exception:  # pragma: no cover
         pass
