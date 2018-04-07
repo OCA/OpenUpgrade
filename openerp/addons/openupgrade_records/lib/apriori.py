@@ -28,6 +28,8 @@ renamed_modules = {
         'account_bank_statement_import_mt940_nl_rabo',
     # OCA/product-attribute
     'product_images': 'product_multi_image',
+    # OCA/hr-timesheet
+    'hr_timesheet_holidays': 'hr_timesheet_holiday',
 }
 
 renamed_models = {
