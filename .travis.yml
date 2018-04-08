@@ -54,7 +54,7 @@ script:
     # on unreleased features in openupgradelib
     - pip install --ignore-installed git+https://github.com/OCA/openupgradelib.git@master
     # select modules and perform the upgrade
-    - MODULES=base,$(sed -n '/^+========/,$p'  openerp/openupgrade/doc/source/modules80-90.rst | grep "Done\|Partial" | sed -n '/^|/ s/^|\([0-9a-z_]*\) *|.*$/\1/g p' | paste -d, -s)
+    - MODULES=base,$(sed -n '/^+========/,$p'  openerp/openupgrade/doc/source/modules80-90.rst | grep "Done\|Partial\|Nothing" | grep -v "theme_" | sed -r -n 's/((^\| *\|new\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
     - psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES | sed -e "s/,/','/g")')"
     - echo Testing modules $MODULES
     - OPENUPGRADE_TESTS=1 coverage run $ODOO --database=$DB --update=$MODULES --stop-after-init
