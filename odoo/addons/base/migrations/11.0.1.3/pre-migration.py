@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # Copyright 2017 bloopark systems (<http://bloopark.de>)
+# Copyright 2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
 from psycopg2.extensions import AsIs
-
 from odoo.addons.openupgrade_records.lib import apriori
-
 from openupgradelib import openupgrade
 
 
@@ -23,6 +23,26 @@ column_renames = {
 model_renames_ir_actions_report = [
     ('ir.actions.report.xml', 'ir.actions.report')
 ]
+
+
+def fill_cron_action_server_pre(env):
+    """Prefill the column with a fixed value for avoiding the not null error,
+    but wait until post for filling correctly the field and related record.
+    """
+    openupgrade.add_fields(
+        env, [
+            ('ir_actions_server_id', 'ir.cron', 'ir_cron', 'many2one', False,
+             'base'),
+        ],
+    )
+    env.cr.execute("SELECT MIN(id) FROM ir_act_server")
+    row = env.cr.fetchone()
+    server_action_id = row and row[0] or 1
+    # Write in the ir.cron record the parent ir.actions.server ID
+    env.cr.execute(
+        "UPDATE ir_cron SET ir_actions_server_id = %s",
+        (server_action_id, ),
+    )
 
 
 @openupgrade.migrate()
@@ -64,3 +84,4 @@ def migrate(env, version):
         """
         UPDATE ir_cron SET interval_type = 'days'
         WHERE interval_type = 'work_days'""")
+    fill_cron_action_server_pre(env)

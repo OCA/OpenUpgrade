@@ -1,0 +1,12 @@
+-
+    create a ir.cron record
+-
+    !record {model: ir.cron, id: base.cron_test_migration}:
+      name: 'Test cron for migration'
+      model: 'res.partner'
+      function: '_commercial_sync_from_company'
+      args: '()'
+      numbercall: 1
+      doall: False
+      interval_number: 1
+      interval_type: 'months'

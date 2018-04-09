@@ -416,9 +416,6 @@
     <field name="currency_subunit_label">Centime</field>
     <field name="currency_unit_label">Franc</field>
   </record>
-  <record model="res.company" id="main_company">
-    <field name="rml_header1"/>
-  </record>
   <record model="res.partner" id="main_partner">
     <field name="image" type="base64" file="base/static/img/main_partner-image.png"/>
   </record>

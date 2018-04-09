@@ -85,13 +85,11 @@ base         / ir.config_parameter      / group_ids (many2many)         : DEL re
 # NOTHING TO DO
 
 base         / ir.cron                  / _inherits (False)             : NEW 
-# Strange quirk from analysis
-
-base         / ir.cron                  / args (text)                   : DEL 
+base         / ir.cron                  / args (text)                   : DEL
 base         / ir.cron                  / function (char)               : DEL 
 base         / ir.cron                  / model (char)                  : DEL 
 base         / ir.cron                  / ir_actions_server_id (many2one): NEW relation: ir.actions.server, required: required
-# NOTHING TO DO, manually check needed for action server relations after migration
+# Done: pre-migration. Create manually ir.actions.server record
 
 base         / ir.cron                  / interval_type (selection)     : selection_keys is now '['days', 'hours', 'minutes', 'months', 'weeks']' ('['days', 'hours', 'minutes', 'months', 'weeks', 'work_days']')
 # DONE map value 'work_days' to 'days'
