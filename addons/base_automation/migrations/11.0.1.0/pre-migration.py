@@ -1,17 +1,9 @@
 # Copyright 2017 Camptocamp
 # Copyright 2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-from openupgradelib import openupgrade
 
-DEFAULT_PYTHON_CODE = """# Available variables:
-#  - env: Odoo Environment on which the action is triggered
-#  - model: Odoo Model of the record on which the action is triggered; is a void recordset
-#  - record: record on which the action is triggered; may be be void
-#  - records: recordset of all records on which the action is triggered in multi-mode; may be void
-#  - time, datetime, dateutil, timezone: useful Python libraries
-#  - log: log(message, level='info'): logging function to record debug information in ir.logging table
-#  - Warning: Warning Exception to use with raise
-# To return an action, assign: action = {...}\n\n\n\n"""
+from openupgradelib import openupgrade
+from odoo.addons.base.ir.ir_actions import IrActionsServer
 
 model_renames_base_action_rule = [
     ('base.action.rule', 'base.automation')
@@ -31,39 +23,40 @@ def migrate_base_action_rule(cr):
     """ base.action.rule renamed base.automation
     Models, table and xmlid renaming
     """
-    if openupgrade.is_module_installed(cr, 'base_action_rule'):
-        openupgrade.rename_models(cr, model_renames_base_action_rule)
-        openupgrade.rename_tables(cr, table_renames_base_action_rule)
-        openupgrade.rename_xmlids(cr, xmlid_renames_base_action_rule)
+    openupgrade.rename_models(cr, model_renames_base_action_rule)
+    openupgrade.rename_tables(cr, table_renames_base_action_rule)
+    openupgrade.rename_xmlids(cr, xmlid_renames_base_action_rule)
 
 
 def create_ir_actions_server(env):
-    """ base.automation
-
-    fill delegate field action_server_id by creating the related
+    """Fill delegate field action_server_id by creating the related
     ir.actions.server most of the field values will go in ir.actions.server.
 
-    These fields don't have a replacement:
-
-    * act_user_id: This is for forcing to write in the record the "user_id"
-      field with that value. Very specific.
+    Fill also m2m table for server actions to run.
     """
-    cr = env.cr
+    openupgrade.add_fields(
+        env, [
+            ('action_server_id', 'base.automation', 'base_automation',
+             'many2one', False, 'base_automation'),
+        ],
+    )
     default_vals = {
-        'code': DEFAULT_PYTHON_CODE,
-        'state': 'object_write',
+        'code': IrActionsServer.DEFAULT_PYTHON_CODE,
+        'state': 'multi',
         'type': 'ir.actions.server',
         'usage': 'base_automation',
+        'binding_type': 'action',
     }
-    cr.execute("""
-        SELECT id, create_uid, create_date, write_uid, write_date
-          name, sequence, model_id, kind, filter_id, filter_pre_id
-        FROM base_automation
-        WHERE action_server_id IS NULL
+    env.cr.execute("""
+        SELECT ba.id, ba.create_uid, ba.create_date, ba.write_uid,
+            ba.write_date, ba.name, ba.sequence, ba.model_id, ba.kind,
+            ba.filter_id, ba.filter_pre_id, im.model
+        FROM base_automation AS BA,
+            ir_model AS im
+        WHERE
+            im.id = ba.model_id
     """)
-    rows = cr.fetchall()
-    for row in rows:
-        act = dict(row)
+    for act in env.cr.dictfetchall():
         vals = default_vals.copy()
         vals.update({
             'create_uid': act['create_uid'],
@@ -72,8 +65,8 @@ def create_ir_actions_server(env):
             'write_date': act['write_date'],
             'name': act['name'],
             'model_id': act['model_id'],
+            'model_name': act['model'],
             'sequence': act['sequence'],
-            'trigger': act['kind'],
         })
         for old_field, new_field in [
             ('filter_id', 'filter_domain'),
@@ -82,22 +75,35 @@ def create_ir_actions_server(env):
             if act.get(old_field):
                 f = env['ir.filters'].browse(act[old_field])
                 vals[new_field] = f.domain
-        cr.execute("""
+        openupgrade.logged_query(
+            env.cr, """
             INSERT INTO ir_act_server
-              (create_uid, create_date, write_uid, write_date,
-               code, state, type, usage,
-               name, model_id, sequence, trigger)
+              (create_uid, create_date, write_uid, write_date, binding_type,
+               code, state, type, usage, name, model_id, model_name, sequence)
             VALUES (
               %(create_uid)s, %(create_date)s, %(write_uid)s, %(write_date)s,
-              %(code)s, %(state)s, %(type)s, %(usage)s,
-              %(name)s, %(model_id)s, %(sequence)s, %(trigger)s
+              %(binding_type)s, %(code)s, %(state)s, %(type)s, %(usage)s,
+              %(name)s, %(model_id)s, %(model_name)s, %(sequence)s
             )
-            RETURNING id
-        """, vals)
-        srv_act_id = cr.fetchone()[0]
-        cr.execute(
+            RETURNING id""", vals,
+        )
+        srv_act_id = env.cr.fetchone()[0]
+        # Transfer server actions to run
+        openupgrade.logged_query(
+            env.cr, """
+            INSERT INTO rel_server_actions
+                (server_id, action_id)
+            SELECT
+                %s, ir_act_server_id
+            FROM base_action_rule_ir_act_server_rel
+            WHERE base_action_rule_id = %s
+            """, (srv_act_id, act['id']),
+        )
+        # Write in the base.automation record the parent ir.actions.server ID
+        env.cr.execute(
             "UPDATE base_automation SET action_server_id = %s WHERE id = %s",
-            (srv_act_id, act['id']))
+            (srv_act_id, act['id']),
+        )
 
 
 @openupgrade.migrate(use_env=True)
