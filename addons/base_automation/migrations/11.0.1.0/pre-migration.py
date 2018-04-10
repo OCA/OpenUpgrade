@@ -100,10 +100,16 @@ def create_ir_actions_server(env):
             """, (srv_act_id, act['id']),
         )
         # Write in the base.automation record the parent ir.actions.server ID
-        env.cr.execute(
-            "UPDATE base_automation SET action_server_id = %s WHERE id = %s",
-            (srv_act_id, act['id']),
-        )
+        # and possible filters
+        set_query = "action_server_id = %s"
+        params = [srv_act_id]
+        for field in ['filter_domain', 'filter_pre_domain']:
+            if vals.get(field):
+                set_query += ', %s = %%s' % field
+                params.append(vals[field])
+        params.append(act['id'])
+        query = 'UPDATE base_automation SET %s WHERE id = %%s' % set_query
+        openupgrade.logged_query(env.cr, query, tuple(params))
 
 
 @openupgrade.migrate(use_env=True)

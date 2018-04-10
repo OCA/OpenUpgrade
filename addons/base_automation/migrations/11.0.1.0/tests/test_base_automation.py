@@ -13,8 +13,9 @@ class TestBaseAutomation(common.TransactionCase):
         self.assertEquals(record.trigger, "on_write")
         self.assertEquals(record.state, "object_write")
         self.assertTrue(record.fields_lines)
-        self.assertEquals(record.fields_lines.value,
-                          self.env.ref('base.user_demo'))
+        self.assertEquals(
+            int(record.fields_lines.value), self.env.ref('base.user_demo').id,
+        )
 
     def test_rule_followers_multi(self):
         record = self.env.ref('base_automation.test_rule_followers_multi')
@@ -26,6 +27,13 @@ class TestBaseAutomation(common.TransactionCase):
         self.assertEquals(len(rules), 2)
         new_record = rules - record
         self.assertEquals(new_record.state, "followers")
-        followers = new_record.partners
+        followers = new_record.partner_ids
         self.assertIn(self.env.ref('base.partner_root'), followers)
         self.assertIn(self.env.ref('base.partner_demo'), followers)
+
+    def test_rule_followers_only(self):
+        record = self.env.ref('base_automation.test_rule_followers_only')
+        self.assertTrue(record)
+        self.assertEquals(
+            self.env.ref('base.partner_demo'), record.partner_ids,
+        )

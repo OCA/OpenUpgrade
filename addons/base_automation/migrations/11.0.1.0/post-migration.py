@@ -21,7 +21,7 @@ def migrate_act_user_id(env):
             ('name', '=', 'user_id'),
             ('model_id', '=', rule.model_id.id),
         ])
-        if not field:
+        if not field:  # pragma: no cover
             continue
         if rule.child_ids:
             # If the rule has server actions to run, duplicate it
@@ -59,17 +59,21 @@ def migrate_act_followers(env):
             new_rule = rule.copy({'child_ids': False})
         else:
             new_rule = rule
+        # Update through SQL this value, as there's a check that rises an
+        # error, as models haven't loaded yet the inheritance from mail.thread
         env.cr.execute(
-            """SELECT res_partner_id
-            FROM base_action_rule_res_partner_rel
-            WHERE base_action_rule_id = %s"""
+            "UPDATE ir_act_server SET state = 'followers' WHERE id = %s",
+            (new_rule.action_server_id.id, ),
         )
-        new_rule.write({
-            'state': 'followers',
-            'partner_ids': [
-                (6, 0, [x[0] for x in env.cr.fetchall()]),
-            ]
-        })
+        openupgrade.logged_query(
+            env.cr, """
+            INSERT INTO ir_act_server_res_partner_rel
+            (ir_act_server_id, res_partner_id)
+            SELECT %s, rel.res_partner_id
+            FROM base_action_rule_res_partner_rel rel
+            WHERE rel.base_action_rule_id = %s
+            """, (new_rule.action_server_id.id, row[0]),
+        )
 
 
 @openupgrade.migrate(use_env=True)

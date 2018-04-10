@@ -3,7 +3,7 @@
 -
     !record {model: ir.actions.server, id: base_action_rule.test_action_server_multi}:
       name: 'Test action server'
-      model_id: base_action_rule.model_base_action_rule_lead_test
+      model_id: base.model_res_partner
       condition: 'True'
       type: 'ir.actions.server'
       state: 'code'
@@ -15,10 +15,18 @@
     !record {model: base.action.rule, id: base_action_rule.test_rule_followers_multi}:
       name: 'Test rule followers multi'
       kind: 'on_create'
-      model_id: base_action_rule.model_base_action_rule_lead_test
+      model_id: base.model_res_partner
       act_followers:
         - base.partner_demo
         - base.partner_root
-      filter_id: base_action_rule.test_filter_draft
       server_action_ids:
         - base_action_rule.test_action_server_multi
+-
+    create a rule with only followers
+-
+    !record {model: base.action.rule, id: base_action_rule.test_rule_followers_only}:
+      name: 'Test rule followers only'
+      kind: 'on_create'
+      model_id: base.model_res_partner
+      act_followers:
+        - base.partner_demo
