@@ -626,7 +626,8 @@ class Page(models.Model):
 
     url = fields.Char('Page URL')
     website_ids = fields.Many2many('website', string='Websites')
-    view_id = fields.Many2one('ir.ui.view', string='View', required=True, ondelete="cascade")
+    # OpenUpgrade: Change required of this field for avoiding temp log error
+    view_id = fields.Many2one('ir.ui.view', string='View', required=False, ondelete="cascade")
     website_indexed = fields.Boolean('Page Indexed', default=True)
     date_publish = fields.Datetime('Publishing Date')
     # This is needed to be able to display if page is a menu in /website/pages
