@@ -93,11 +93,64 @@ def merge_default_ir_values(cr):
     return True
 
 
+def fill_cron_action_server_post(env):
+    """As cron now inherits by delegation from server action, we need to create
+    manually the server action record for each of the existing crons, and
+    translate fields for achieving the same result.
+    """
+    default_vals = {
+        'state': 'code',
+        'type': 'ir.actions.server',
+        'usage': 'ir_cron',
+        'binding_type': 'action',
+        'sequence': 10,
+    }
+    env.cr.execute("""
+        SELECT ic.id, ic.create_uid, ic.create_date, ic.write_uid, ic.args,
+            ic.write_date, ic.name, im.id AS model_id, ic.function
+        FROM ir_cron AS ic,
+            ir_model AS im
+        WHERE
+            im.model = ic.model
+     """)
+    for act in env.cr.dictfetchall():
+        vals = default_vals.copy()
+        vals.update({
+            'create_uid': act['create_uid'],
+            'create_date': act['create_date'],
+            'write_uid': act['write_uid'],
+            'write_date': act['write_date'],
+            'name': act['name'],
+            'model_id': act['model_id'],
+            'code': 'records.%s%s' % (act['function'], act['args'] or '()'),
+        })
+        openupgrade.logged_query(
+            env.cr, """
+            INSERT INTO ir_act_server
+              (create_uid, create_date, write_uid, write_date,
+               code, state, type, usage, name, model_id,
+               binding_type, sequence)
+            VALUES (
+              %(create_uid)s, %(create_date)s, %(write_uid)s, %(write_date)s,
+              %(code)s, %(state)s, %(type)s, %(usage)s, %(name)s, %(model_id)s,
+              %(binding_type)s, %(sequence)s
+            )
+            RETURNING id""", vals,
+        )
+        server_action_id = env.cr.fetchone()[0]
+        # Write in the ir.cron record the parent ir.actions.server ID
+        env.cr.execute(
+            "UPDATE ir_cron SET ir_actions_server_id = %s WHERE id = %s",
+            (server_action_id, act['id']),
+        )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     map_ir_actions_server_fields(env.cr)
     set_currency_rate_dates(env.cr)
     merge_default_ir_values(env.cr)
+    fill_cron_action_server_post(env)
     openupgrade.load_data(
         env.cr, 'base', 'migrations/11.0.1.3/noupdate_changes.xml',
     )
