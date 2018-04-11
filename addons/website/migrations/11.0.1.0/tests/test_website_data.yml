@@ -1,0 +1,18 @@
+-
+    create a page view for testing website.page creation
+-
+    !record {model: ir.ui.view, id: website.view_test_website_page}:
+      name: 'test-website'
+      page: !eval True
+      key: 'website.test_page'
+      website_id: website.default_website
+      type: 'qweb'
+      arch_base: '<?xml version="1.0"?><t name="Test" t-name="website.test_page"><div id="wrap" class="oe_structure oe_empty"/></t>'
+-
+    create a website menu
+-
+    !record {model: website.menu, id: website.website_menu_test_website_page}:
+      name: 'Test website page'
+      url: '/page/test-website'
+      parent_id: website.main_menu
+      website_id: website.default_website
