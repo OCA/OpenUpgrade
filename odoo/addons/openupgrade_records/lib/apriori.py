@@ -16,6 +16,8 @@ renamed_modules = {
         'hr_holidays_notify_employee_manager',
     # OCA/manufacture-reporting:
     'report_mrp_bom_matrix': 'mrp_bom_matrix_report',
+    # OCA/sale-workflow:
+    'sale_delivery_block': 'sale_stock_picking_blocking',
     # OCA/server-tools:
     'mail_log_messages_to_process': 'mail_log_message_to_process',
 }
