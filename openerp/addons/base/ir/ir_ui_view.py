@@ -275,12 +275,12 @@ class view(osv.osv):
                 match = TRANSLATED_ATTRS_RE.search(node.get('expr', ''))
                 if match:
                     message = "View inheritance may not use attribute %r as a selector." % match.group(1)
-                    self.raise_view_error(view._cr, view._uid, message, view.id)
+                    self.raise_view_error(view._cr, view._uid, message, view.id, view._context)
             else:
                 for attr in TRANSLATED_ATTRS:
                     if node.get(attr):
                         message = "View inheritance may not use attribute %r as a selector." % attr
-                        self.raise_view_error(view._cr, view._uid, message, view.id)
+                        self.raise_view_error(view._cr, view._uid, message, view.id, view._context)
         return True
 
     def _check_xml(self, cr, uid, ids, context=None):
@@ -309,7 +309,7 @@ class view(osv.osv):
                     # caused by views introduced by models not year loaded
                     _logger.warn(
                         "Can't render view %s for model: %s. If you are "
-                        "migrating between major versions of OpenERP, "
+                        "migrating between major versions of Odoo, "
                         "this is to be expected (otherwise, do not run "
                         "OpenUpgrade server).", view.xml_id, view.model)
                 # RNG-based validation is not possible anymore with 7.0 forms
@@ -327,7 +327,7 @@ class view(osv.osv):
                         # caused by views introduced by models not year loaded
                         _logger.warn(
                             "Can't render view %s for model: %s. If you are "
-                            "migrating between major versions of OpenERP, "
+                            "migrating between major versions of Odoo, "
                             "this is to be expected (otherwise, do not run "
                             "OpenUpgrade server).", view.xml_id, view.model)
                         return True
@@ -336,7 +336,7 @@ class view(osv.osv):
                         # caused by views introduced by models not year loaded
                         _logger.warn(
                             "Can't render view %s for model: %s. If you are "
-                            "migrating between major versions of OpenERP, "
+                            "migrating between major versions of Odoo, "
                             "this is to be expected (otherwise, do not run "
                             "OpenUpgrade server).", view.xml_id, view.model)
                         return True
@@ -495,9 +495,10 @@ class view(osv.osv):
                           'parent': view.inherit_id.id or not_avail,
                           'msg': message,
                         }
+        # OpenUpgrade: we ignore view errors unless explicitely indicated
+        if (context or {}).get('raise_view_error'):
+            raise AttributeError(message)
         _logger.info(message)
-        # OpenUpgrade we want to ignore view errors
-        # raise AttributeError(message)
 
     def locate_node(self, arch, spec):
         """ Locate a node in a source (parent) architecture.
@@ -1193,15 +1194,28 @@ class view(osv.osv):
         cr.execute("""SELECT max(v.id)
                         FROM ir_ui_view v
                    LEFT JOIN ir_model_data md ON (md.model = 'ir.ui.view' AND md.res_id = v.id)
-                       WHERE md.module NOT IN (SELECT name FROM ir_module_module)
+                       WHERE md.module IN (SELECT name FROM ir_module_module) IS NOT TRUE
                          AND v.model = %s
                          AND v.active = true
                     GROUP BY coalesce(v.inherit_id, v.id)
                    """, (model,))
 
         ids = map(itemgetter(0), cr.fetchall())
-        context = dict(load_all_views=True)
-        return self._check_xml(cr, uid, ids, context=context)
+        context = dict(load_all_views=True, raise_view_error=True)
+        # OpenUpgrade: set invalid custom views to inactive
+        for view_id in ids:
+            try:
+                self._check_xml(cr, uid, [view_id], context=context)
+            except AttributeError:
+                view = self.browse(cr, uid, view_id, context=context)
+                _logger.warn(
+                    "Can't render custom view %s for model %s. "
+                    "Assuming you are migrating between major versions of "
+                    "Odoo, this view is now set to inactive. Please "
+                    "review the view contents manually after the migration.",
+                    view.xml_id, view.model)
+                view.write({'active': False})
+        return True
 
     def _validate_module_views(self, cr, uid, module):
         """Validate architecture of all the views of a given module"""
