@@ -1,0 +1,11 @@
+-
+    !python {model: ir.ui.view }: |
+        inherit_id = self.pool.get('ir.model.data').get_object_reference(
+            cr, uid, 'base', 'view_partner_category_list')[1]
+        self.create(
+            cr, uid, {
+                'model': 'res.partner.category',
+                'arch': '<field name="complete_name" position="attributes"><attribute name="invisible">0</attribute></field>',
+                'inherit_id': inherit_id,
+                'name': 'Invalid custom view',
+            })
