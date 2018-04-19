@@ -7,7 +7,7 @@ Status :
   'openupgrade_analysis.txt' file of the module and share your analyse;
 
 * 'Nothing to do' : Analyse has been done, and there is nothing to do or
-  there's no change between 9.0 and 10.0;
+  there's no change between 10.0 and 11.0;
 
 * 'Work in progress' : Analyse / Work in progress.  Please review the
   merge proposals at https://github.com/OCA/OpenUpgrade/pulls
