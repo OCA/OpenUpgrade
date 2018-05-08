@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="sales_team.salesteam_website_sales" model="crm.team">
+    <field name="use_quotations"/>
+    <field name="dashboard_graph_model">sale.report</field>
+    <field name="company_id" eval="False"/>
+    <field name="active" eval="True"/>
+    <field name="dashboard_graph_period">week</field>
+  </record>
+</odoo>
