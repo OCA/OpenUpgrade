@@ -3,32 +3,26 @@ project      / account.analytic.account / use_tasks (boolean)           : DEL
 # Nothing to do
 
 project      / project.project          / alias_model (selection)       : DEL required: required, selection_keys: function, req_default: function
-# Nothing to do
+# Nothing to do: mail.alias.mixin is not needing this field anymore - There's already alias_model_id
 
 project      / project.project          / subtask_project_id (many2one) : previously in module hr_timesheet
-# Should be done in pre-migration of hr_timesheet
+project      / project.task             / child_ids (one2many)          : previously in module hr_timesheet
+project      / project.task             / parent_id (many2one)          : previously in module hr_timesheet
+project      / project.task             / subtask_count (integer)       : previously in module hr_timesheet
+project      / project.task             / subtask_project_id (many2one) : previously in module hr_timesheet
+# Done - pre-migration: Update module information for these fields
 
 project      / project.project          / website_message_ids (one2many): NEW relation: mail.message
-# Nothing to do
+project      / project.task             / website_message_ids (one2many): NEW relation: mail.message
+# Nothing to do - inverse field already present and filled
 
 project      / project.task             / activity_ids (one2many)       : NEW relation: mail.activity
 project      / project.task             / attachment_ids (one2many)     : now a function
 # Nothing to do
 
-project      / project.task             / child_ids (one2many)          : previously in module hr_timesheet
-# Should be done in pre-migration of hr_timesheet
-
 project      / project.task             / email_cc (char)               : NEW
 project      / project.task             / email_from (char)             : NEW
-# Nothing to do
-
-project      / project.task             / parent_id (many2one)          : previously in module hr_timesheet
-project      / project.task             / subtask_count (integer)       : previously in module hr_timesheet
-project      / project.task             / subtask_project_id (many2one) : previously in module hr_timesheet
-# Should be done in pre-migration of hr_timesheet
-
-project      / project.task             / website_message_ids (one2many): NEW relation: mail.message
-# Nothing to do
+# Nothing to do - New features coming from project_issue
 
 project      / project.task.type        / legend_blocked (char)         : now required, default = function
 project      / project.task.type        / legend_done (char)            : now required, default = function
@@ -63,11 +57,11 @@ DEL ir.model.access: website_project.access_task_portal
 DEL ir.model.access: website_project.access_task_type_portal
 # Nothing to do
 
+DEL ir.rule: website_project.portal_project_rule > project.portal_project_rule (noupdate)
 NEW ir.rule: project.project_project_rule_portal (noupdate)
+DEL ir.rule: website_project.portal_task_rule > project.portal_task_rule (noupdate)
 NEW ir.rule: project.project_task_rule_portal (noupdate)
-DEL ir.rule: website_project.portal_project_rule (noupdate)
-DEL ir.rule: website_project.portal_task_rule (noupdate)
-# Nothing to do
+# Done - Pre-migration: rename XML-IDs
 
 NEW ir.ui.menu: project.project_config_settings_menu_action
 NEW ir.ui.menu: project.project_menu_config_activity_type
