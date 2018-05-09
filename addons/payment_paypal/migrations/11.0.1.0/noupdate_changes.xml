@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_acquirer_paypal" model="payment.acquirer">
+    <field name="view_template_id" ref="paypal_form"/>
+    <field name="paypal_pdt_token">dummy</field>
+  </record>
+</odoo>
