@@ -14,10 +14,11 @@ def migrate_auto_confirm(env):
     """)
     value = env.cr.fetchone()
     if value and 'I00' in value[0]:
-        env.cr.execute("""
+        openupgrade.logged_query(
+            env.cr, """
             UPDATE event_event
-            SET auto_confirm = False;
-        """)
+            SET auto_confirm = False"""
+        )
 
 
 def migrate_reply_to(env):
