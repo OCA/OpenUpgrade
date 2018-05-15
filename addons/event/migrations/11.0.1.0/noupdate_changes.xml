@@ -163,7 +163,6 @@
     <field name="reply_to" eval="False"/>
   </record>
   <record id="event_mail_scheduler" model="ir.cron" forcecreate="True">
-    <field name="active"/>
     <field name="name">Event: Mail Scheduler</field>
     <field name="state">code</field>
     <field name="code">model.run(True)</field>
