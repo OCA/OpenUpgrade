@@ -22,6 +22,11 @@ hr_timesheet / project.task             / parent_id (many2one)          : NEW re
 hr_timesheet / project.task             / timesheet_ids (one2many)      : NEW relation: account.analytic.line
 # Nothing to do: One2many field
 
+hr_timesheet / project.task             / children_hours (float)        : NEW computed field
+hr_timesheet / project.task             / total_hours_spent (float)     : NEW computed field
+# Done: Added in SQL in the pre-migration script
+
+
 ---XML records in module 'hr_timesheet'---
 NEW ir.actions.act_window: hr_timesheet.act_hr_timesheet_line
 NEW ir.actions.act_window: hr_timesheet.act_hr_timesheet_line_by_project

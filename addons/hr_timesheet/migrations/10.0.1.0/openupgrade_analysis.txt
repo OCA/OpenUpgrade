@@ -8,6 +8,8 @@ hr_timesheet / project.project          / allow_timesheets (boolean)    : NEW
 hr_timesheet / project.project          / subtask_project_id (many2one) : NEW relation: project.project
 hr_timesheet / project.task             / parent_id (many2one)          : NEW relation: project.task
 hr_timesheet / project.task             / timesheet_ids (one2many)      : NEW relation: account.analytic.line
+hr_timesheet / project.task             / children_hours (float)        : NEW computed field
+hr_timesheet / project.task             / total_hours_spent (float)     : NEW computed field
 ---XML records in module 'hr_timesheet'---
 NEW ir.actions.act_window: hr_timesheet.act_hr_timesheet_line
 NEW ir.actions.act_window: hr_timesheet.act_hr_timesheet_line_by_project
