@@ -1,0 +1,8 @@
+-
+    !python {model: ir.ui.view }: |
+        self.create({
+            'model': 'res.partner',
+            'arch': '<field name="fax" position="attributes"><attribute name="invisible">0</attribute></field>',
+            'inherit_id': self.env.ref('base.view_partner_form').id,
+            'name': 'Invalid custom view',
+        })

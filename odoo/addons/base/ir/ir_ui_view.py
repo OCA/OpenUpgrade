@@ -332,18 +332,7 @@ actual arch.
             if view.type != 'qweb':
                 view_doc = etree.fromstring(view_arch_utf8)
                 # verify that all fields used are valid, etc.
-                # OpenUpgrade: never break on view rendering
-                try:
-                    self.postprocess_and_fields(view.model, view_doc, view.id)
-                except Exception:
-                    # OpenUpgrade: We ignore all view errors as they are
-                    # caused by views introduced by models not yet loaded
-                    _logger.warn(
-                        "Can't render view %s for model: %s. If you are "
-                        "migrating between major versions of Odoo, "
-                        "this is to be expected (otherwise, do not run "
-                        "OpenUpgrade server).", view.xml_id, view.model)
-                # /OpenUpgrade
+                self.postprocess_and_fields(view.model, view_doc, view.id)
                 # RNG-based validation is not possible anymore with 7.0 forms
                 view_docs = [view_doc]
                 if view_docs[0].tag == 'data':
@@ -516,9 +505,10 @@ actual arch.
             'parent': view.inherit_id.id or not_avail,
             'msg': message,
         }
+        # OpenUpgrade: we ignore view errors unless explicitely indicated
+        if self.env.context.get('raise_view_error'):
+            raise AttributeError(message)
         _logger.info(message)
-        # OpenUpgrade we want to ignore view errors
-        # raise ValueError(message)
 
     def locate_node(self, arch, spec):
         """ Locate a node in a source (parent) architecture.
@@ -1327,14 +1317,26 @@ actual arch.
         query = """SELECT max(v.id)
                      FROM ir_ui_view v
                 LEFT JOIN ir_model_data md ON (md.model = 'ir.ui.view' AND md.res_id = v.id)
-                    WHERE md.module NOT IN (SELECT name FROM ir_module_module)
+                    WHERE md.module IN (SELECT name FROM ir_module_module) IS NOT TRUE
                       AND v.model = %s
                       AND v.active = true
                  GROUP BY coalesce(v.inherit_id, v.id)"""
         self._cr.execute(query, [model])
 
-        rec = self.browse(it[0] for it in self._cr.fetchall())
-        return rec.with_context({'load_all_views': True})._check_xml()
+        # OpenUpgrade: set invalid custom views to inactive
+        for view in self.with_context(load_all_views=True, raise_view_error=True).browse(
+                it[0] for it in self._cr.fetchall()):
+            try:
+                view._check_xml()
+            except AttributeError:
+                _logger.warn(
+                    "Can't render custom view %s for model %s. "
+                    "Assuming you are migrating between major versions of "
+                    "Odoo, this view is now set to inactive. Please "
+                    "review the view contents manually after the migration.",
+                    view.xml_id, view.model)
+                view.write({'active': False})
+        return True
 
     @api.model
     def _validate_module_views(self, module):
