@@ -19,6 +19,7 @@ merged_modules = {
     'portal_gamification': 'gamification',
     'portal_stock': 'portal',
     'procurement': 'stock',
+    'project_issue': 'project',
     'report': 'base',
     'web_calendar': 'web',
     'web_kanban': 'web',
