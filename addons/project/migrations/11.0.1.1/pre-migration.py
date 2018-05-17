@@ -31,3 +31,6 @@ def move_fields_from_module(env):
 def migrate(env, version):
     move_fields_from_module(env)
     openupgrade.rename_xmlids(env.cr, renamed_xml_ids)
+    openupgrade.delete_records_safely_by_xml_id(env, [
+        'project.portal_issue_rule',  # Comes from website_project_issue
+    ])
