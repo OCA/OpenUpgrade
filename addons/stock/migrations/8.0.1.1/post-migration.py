@@ -21,7 +21,7 @@
 ##############################################################################
 
 import logging
-from openerp import api, SUPERUSER_ID
+from openerp import api, SUPERUSER_ID, tools
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID as uid
@@ -920,22 +920,57 @@ def _move_done(env, move):
 
 
 def migrate_stock_qty(cr, registry):
-    """Reprocess stock moves in done state to fill stock.quant."""
     # First set restrict_lot_id so that quants point to correct moves
     sql = '''
         UPDATE stock_move SET restrict_lot_id = {}
     '''.format(openupgrade.get_legacy_name('prodlot_id'))
     openupgrade.logged_query(cr, sql)
 
+    if not tools.config.get('sql_quants_creation', False):
+        orm_migrate_stock_qty(cr, registry)
+    else:
+        sql_migrate_stock_qty(cr, registry)
+
+
+def orm_migrate_stock_qty(cr, registry):
+    """Reprocess stock moves in done state to fill stock.quant by ORM."""
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
         moves = env['stock.move'].search(
             [('state', 'in', ['assign', 'done'])], order="date")
+        logger.info(
+            "%d assigned or done moves found. Processing by ORM." % (
+                len(moves)))
         for move in moves:
             if move.state == 'assign':
                 _move_assign(env, move)
             else:
                 _move_done(env, move)
+
+
+def sql_migrate_stock_qty(cr, registry):
+    """Reprocess stock moves in done state to fill stock.quant by SQL script.
+    To activate this feature, please set a new key in your configuration file:
+    sql_quants_creation = True
+    """
+    with api.Environment.manage():
+        env = api.Environment(cr, SUPERUSER_ID, {})
+        moves_qty = len(env['stock.move'].search([
+            ('product_uom_qty', '>', 0),
+            ('state', 'in', ['done'])], order="date"))
+    logger.info(
+        "%d done moves with not null quantity found. Processing by SQL" % (
+            moves_qty))
+    f = tools.file_open('stock/migrations/8.0.1.1/quants_creation.sql')
+    cr.execute(f.read())
+    error_qty = cr.fetchone()
+    if error_qty:
+        logger.error(
+            "%d / %d stock moves failed. Please see the table"
+            " 'stock_quants_openupgrade_8_log' for more details." % (
+                error_qty, moves_qty))
+    else:
+        logger.info("%d done moves processed by SQL." % (moves_qty))
 
 
 def migrate_stock_production_lot(cr, registry):
