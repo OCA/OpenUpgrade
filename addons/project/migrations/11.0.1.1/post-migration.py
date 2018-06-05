@@ -43,7 +43,7 @@ def convert_issues(env):
        as the original one + ' (issues)'. This is the default option. Maximum
        information will be preserved, like the label used for issues, or the
        subtype followers.
-    2. Convert issues into tasks in the same project. It there's an issue
+    2. Convert issues into tasks in the same project. If there is an issue
        linked to a task, then the same task will be preserved for both records.
 
     This is controlled via a system parameter inserted in the DB prior to the
@@ -212,7 +212,8 @@ def remove_mail_subtypes(env):
 @openupgrade.migrate()
 def migrate(env, version):
     set_default_values(env)
-    convert_issues(env)
+    if openupgrade.table_exists(env.cr, 'project_issue'):
+        convert_issues(env)
     openupgrade.load_data(
         env.cr, 'project', 'migrations/11.0.1.1/noupdate_changes.xml'
     )
