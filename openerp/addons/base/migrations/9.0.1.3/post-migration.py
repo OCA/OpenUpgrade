@@ -98,6 +98,7 @@ def migrate(env, version):
     set_filter_active(env.cr)
     openupgrade.load_data(
         env.cr, 'base', 'migrations/9.0.1.3/noupdate_changes.xml',
+        mode='init_no_create',
     )
     assign_view_keys(env)
     publish_attachments(env)
