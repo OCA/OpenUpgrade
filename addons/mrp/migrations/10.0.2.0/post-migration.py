@@ -3,6 +3,45 @@
 # Copyright 2017 Eficent <http://www.eficent.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+import time
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+
+
+def populate_stock_move_quantity_done_store(cr):
+    cr.execute(
+        """
+        UPDATE stock_move
+        SET quantity_done_store = product_uom_qty
+        WHERE state = 'done'
+            AND (COALESCE(production_id, 0) > 0
+                OR COALESCE(raw_material_production_id, 0) > 0)
+        """
+    )
+
+
+def archive_mrp_bom_date_stop(cr):
+    cr.execute(
+        """
+        UPDATE mrp_bom
+        SET active = FALSE
+        WHERE active = TRUE AND %s IS NOT NULL AND %s < '%s'
+        """ % (openupgrade.get_legacy_name('date_stop'),
+               openupgrade.get_legacy_name('date_stop'),
+               time.strftime(DEFAULT_SERVER_DATE_FORMAT),
+               )
+    )
+
+
+def update_mrp_workorder_hour(cr):
+    """It's a sum because the user used hours or used cycles."""
+    cr.execute(
+        """
+        UPDATE mrp_workorder
+        SET duration_expected = (COALESCE(%s, 0) + COALESCE(%s, 0)) * 60
+        """ % (openupgrade.get_legacy_name('hour'),
+               openupgrade.get_legacy_name('cycle'),
+               )
+    )
 
 
 def update_mrp_workcenter_times(cr):
@@ -13,6 +52,17 @@ def update_mrp_workcenter_times(cr):
         SET time_start = COALESCE(time_start, 0) * 60,
             time_stop = COALESCE(time_stop, 0) * 60
         """
+    )
+
+
+def fill_mrp_routing_workcenter_time_cycle_manual(cr):
+    cr.execute(
+        """
+        UPDATE mrp_routing_workcenter
+        SET time_cycle_manual = COALESCE(%s, 0) * COALESCE(%s, 1) * 60
+        """ % (openupgrade.get_legacy_name('hour_nbr'),
+               openupgrade.get_legacy_name('cycle_nbr'),
+               )
     )
 
 
@@ -31,7 +81,8 @@ def map_mrp_production_state(cr):
     openupgrade.map_values(
         cr,
         openupgrade.get_legacy_name('state'), 'state',
-        [('draft', 'confirmed'),
+        [('confirmed', 'planned'),
+         ('draft', 'confirmed'),
          ('in_production', 'progress'),
          ('ready', 'planned'),
          ], table='mrp_production', write='sql')
@@ -45,7 +96,6 @@ def create_moves_draft_mos(env, draft_ids):
 def map_mrp_workorder_state(cr):
     legacy_state = openupgrade.get_legacy_name('state')
     if openupgrade.column_exists(cr, 'mrp_workorder', legacy_state):
-        # if mrp_operations was installed
         openupgrade.map_values(
             cr,
             legacy_state, 'state',
@@ -66,7 +116,7 @@ def update_stock_warehouse(env):
         """
         SELECT location_dest_id
         FROM mrp_production
-        GROUP BY location_dest_id;
+        GROUP BY location_dest_id
         """
     )
     ids = [r[0] for r in cr.fetchall()]
@@ -113,6 +163,18 @@ def populate_production_picking_type_id(cr, loc_pt_map):
                 AND picking_type_id IS NULL
             """ % (loc_pt_map[loc], loc)
         )
+
+
+def update_manufacture_procurement_rules(cr):
+    cr.execute(
+        """
+        UPDATE procurement_rule pr
+        SET picking_type_id = spt.id
+        FROM stock_picking_type spt
+        WHERE pr.action='manufacture' AND spt.code='mrp_operation'
+            AND pr.warehouse_id = spt.warehouse_id
+        """
+    )
 
 
 def populate_routing_workcenter_routing_id(env):
@@ -214,17 +276,125 @@ def populate_stock_move_workorder_id(cr):
     )
 
 
+def fill_stock_move_unit_factor(env):
+    cr = env.cr
+    productions = env['mrp.production'].search([])
+    if openupgrade.column_exists(cr, 'mrp_production', 'qty_produced'):
+        cr.execute(
+            """
+            SELECT id
+            FROM mrp_production
+            WHERE qty_produced IS NULL
+            """
+        )
+        ids = [r[0] for r in cr.fetchall()]
+        productions = env['mrp.production'].browse(ids)
+    productions._get_produced_qty()
+
+    for production in productions:
+        diff = production.product_qty - production.qty_produced
+        cr.execute(
+            """
+            UPDATE stock_move sm
+            SET unit_factor = CASE
+                WHEN %s = 0.0
+                THEN sm.product_uom_qty
+                WHEN %s != 0.0
+                THEN sm.product_uom_qty / %s
+                ELSE unit_factor
+            END
+            WHERE sm.raw_material_production_id = %s
+            """ % (diff, diff, diff,
+                   production.id,
+                   )
+        )
+
+
+def fill_stock_move_bom_line_id(cr):
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE stock_move sm
+        SET bom_line_id = mbl.bom_line_id
+        FROM mrp_production mp
+        LEFT JOIN mrp_bom mb ON mp.bom_id = mb.id
+        LEFT JOIN (SELECT min(id) AS bom_line_id, bom_id, product_id
+                   FROM mrp_bom_line
+                   GROUP BY bom_id, product_id
+                   ) mbl ON (mbl.bom_id = mb.id
+                                AND mbl.product_id = mp.product_id)
+        WHERE sm.production_id = mp.id AND sm.product_id = mp.product_id
+            AND sm.bom_line_id IS NULL
+        """
+    )
+
+
+def populate_mrp_workcenter_productivity(env):
+    cr = env.cr
+    cr.execute(
+        """
+        SELECT id
+        FROM mrp_workcenter_productivity_loss
+        WHERE sequence = 0
+        LIMIT 1
+        """
+    )
+    loss_id = cr.fetchone()[0]
+    if not loss_id:
+        cr.execute(
+            """
+            SELECT id
+            FROM mrp_workcenter_productivity_loss
+            ORDER BY id ASC
+            LIMIT 1
+            """
+        )
+        loss_id = cr.fetchone()[0]
+        if not loss_id:
+            loss_id = env['mrp.workcenter.productivity.loss'].create({
+                'name': 'Dummy Loss',
+                'loss_type': 'productive',
+            }).id
+    legacy_delay = openupgrade.get_legacy_name('delay')
+    if openupgrade.column_exists(cr, 'mrp_workorder', legacy_delay):
+        openupgrade.logged_query(
+            cr,
+            """
+            INSERT INTO mrp_workcenter_productivity
+            (user_id, create_uid, create_date, write_uid, write_date,
+            loss_id, date_start, date_end, workorder_id, workcenter_id)
+            SELECT mp.user_id, wo.create_uid, wo.create_date, wo.write_uid,
+            wo.write_date, %s loss_id, wo.date_start,
+            wo.date_start + (wo.%s || ' hour')::INTERVAL AS date_end,
+            wo.id workorder_id, wo.workcenter_id
+            FROM mrp_workorder wo
+            LEFT JOIN mrp_production mp ON wo.production_id = mp.id
+            WHERE wo.state NOT IN ('cancel', 'pending')
+            """ % (loss_id,
+                   legacy_delay,
+                   )
+        )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
+    populate_stock_move_quantity_done_store(cr)
+    archive_mrp_bom_date_stop(cr)
+    update_mrp_workorder_hour(cr)
     update_mrp_workcenter_times(cr)
+    fill_mrp_routing_workcenter_time_cycle_manual(cr)
     draft_ids = map_mrp_production_state(cr)
     create_moves_draft_mos(env, draft_ids)
     map_mrp_workorder_state(cr)
     loc_pt_map = update_stock_warehouse(env)
     populate_production_picking_type_id(cr, loc_pt_map)
+    update_manufacture_procurement_rules(cr)
     populate_routing_workcenter_routing_id(env)
     fill_stock_quant_consume_rel(cr)
     populate_stock_move_workorder_id(cr)
+    fill_stock_move_unit_factor(env)
+    fill_stock_move_bom_line_id(cr)
+    populate_mrp_workcenter_productivity(env)
     openupgrade.load_data(
         cr, 'mrp', 'migrations/10.0.2.0/noupdate_changes.xml')

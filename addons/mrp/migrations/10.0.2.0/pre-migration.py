@@ -9,14 +9,35 @@ _column_copies = {
     'mrp_production': [
         ('state', None, None),
     ],
+}
+
+_column_copies2 = {
     'mrp_workorder': [
-        ('sequence', None, None),
+        ('state', None, None),
     ],
 }
 
 _column_renames = {
+    'mrp_bom': [
+        ('date_stop', None),
+    ],
     'stock_move': [
         ('consumed_for', None),
+    ],
+    'mrp_workorder': [
+        ('sequence', None),
+        ('cycle', None),
+        ('hour', None),
+    ],
+    'mrp_routing_workcenter': [
+        ('hour_nbr', None),
+        ('cycle_nbr', None),
+    ],
+}
+
+_column_renames2 = {
+    'mrp_workorder': [
+        ('delay', None),
     ],
 }
 
@@ -36,6 +57,11 @@ _field_renames = [
 
 _field_renames2 = [
     ('mrp.workorder', 'mrp_workorder', 'date_planned', 'date_planned_start'),
+    ('mrp.workorder', 'mrp_workorder', 'date_planned_end',
+     'date_planned_finished'),
+    ('mrp.workorder', 'mrp_workorder', 'product', 'product_id'),
+    ('mrp.workorder', 'mrp_workorder', 'qty', 'qty_production'),
+    ('mrp.workorder', 'mrp_workorder', 'uom', 'product_uom_id'),
 ]
 
 _xmlid_renames = [
@@ -44,17 +70,63 @@ _xmlid_renames = [
 ]
 
 
+def delete_old_workorder_model(cr):
+    """Delete old mrp.workorder model that was a report."""
+    openupgrade.logged_query(
+        cr,
+        "DELETE FROM ir_model WHERE model = %s",
+        ('mrp.workorder',)
+    )
+    openupgrade.logged_query(
+        cr,
+        "DELETE FROM ir_model_fields WHERE relation = %s",
+        ('mrp.workorder',)
+    )
+    openupgrade.logged_query(
+        cr,
+        "DELETE FROM ir_model_data WHERE model = %s",
+        ('mrp.workorder',)
+    )
+    openupgrade.logged_query(
+        cr,
+        "DELETE FROM ir_model_data WHERE name = %s AND model = 'ir.model'",
+        ('model_mrp_workorder',)
+    )
+    openupgrade.logged_query(
+        cr,
+        "DELETE FROM ir_model_data WHERE name LIKE %s AND"
+        " model = 'ir.model.fields'",
+        ('field_mrp_workorder_%',)
+    )
+    openupgrade.logged_query(
+        cr,
+        "DELETE FROM ir_attachment WHERE res_model = %s",
+        ('mrp.workorder',)
+    )
+    openupgrade.logged_query(
+        cr,
+        "DELETE FROM ir_model_fields WHERE model = %s",
+        ('mrp.workorder',)
+    )
+    openupgrade.logged_query(
+        cr,
+        "DELETE FROM ir_translation WHERE name LIKE %s",
+        ('mrp.workorder,%',)
+    )
+    openupgrade.logged_query(
+        cr,
+        "DELETE FROM ir_property WHERE value_reference LIKE %s",
+        ('mrp.workorder,%',)
+    )
+
+
 def rename_mrp_workorder(cr):
     """Special case where in v9, you have a model called mrp.workorder that is
     an SQL view report, but on v10 it's a model, which corresponds to a
     renamed model.
     """
     tools.drop_view_if_exists(cr, 'mrp_workorder')
-    openupgrade.logged_query(
-        cr,
-        "DELETE FROM ir_model WHERE model = %s",
-        ('mrp.workorder',)
-    )
+    delete_old_workorder_model(cr)
     openupgrade.rename_tables(
         cr, [('mrp_production_workcenter_line', 'mrp_workorder')],
     )
@@ -91,8 +163,8 @@ def migrate(env, version):
     openupgrade.copy_columns(cr, _column_copies)
     if openupgrade.column_exists(cr, 'mrp_workorder', 'state'):
         # if mrp_operations was installed
-        openupgrade.copy_columns(
-            cr, {'mrp_workorder': [('state', None, None)]})
+        openupgrade.copy_columns(cr, _column_copies2)
+        openupgrade.rename_columns(cr, _column_renames2)
         openupgrade.rename_fields(env, _field_renames2)
     openupgrade.rename_columns(cr, _column_renames)
     openupgrade.rename_fields(env, _field_renames)
