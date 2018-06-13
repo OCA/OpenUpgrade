@@ -52,6 +52,6 @@ Migrating your database
 .. toctree::
    :maxdepth: 2
 
-   migrate.py
    migration_details
    after_migration
+   migrate.py
