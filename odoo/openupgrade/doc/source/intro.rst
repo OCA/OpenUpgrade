@@ -54,4 +54,5 @@ Migrating your database
 
    migrate.py
    migration_details
+   migration_pycharm
    after_migration

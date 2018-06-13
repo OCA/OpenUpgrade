@@ -1,0 +1,19 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="conf_new_version_migration" type="PythonConfigurationType" factoryName="Python">
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="PYTHONUNBUFFERED" value="1" />
+    </envs>
+    <option name="SDK_HOME" value="/usr/bin/python3" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="IS_MODULE_SDK" value="false" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <module name="OpenUpgrade11" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/OpenUpgrade/odoo-bin" />
+    <option name="PARAMETERS" value="--addons-path=$PROJECT_DIR$/OpenUpgrade/addons,$PROJECT_DIR$/OpenUpgrade/odoo/addons,$PROJECT_DIR$/OCA/server-tools --data-dir=/opt/data_dir --db_host=localhost --db_name=odoo_db_migrated --db_password=database_user_password --db_port=5432 --db_user=odoo --load=web --stop-after-init --update=all" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <method />
+  </configuration>
+</component>
