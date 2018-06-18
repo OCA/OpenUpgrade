@@ -11,10 +11,8 @@ purchase     / purchase.order           / website_message_ids (one2many): NEW re
 purchase     / purchase.order.line      / move_dest_ids (one2many)      : NEW relation: stock.move
 purchase     / stock.move               / created_purchase_line_id (many2one): NEW relation: purchase.order.line
 purchase     / purchase.order.line      / orderpoint_id (many2one)      : NEW relation: stock.warehouse.orderpoint
-# updated fields from procurement order
-
 purchase     / purchase.order.line      / procurement_ids (one2many)    : DEL relation: procurement.order
-# nothing to do
+# updated fields from procurement order
 
 ---XML records in module 'purchase'---
 NEW ir.model.access: purchase.access_purchase_order_line_portal
