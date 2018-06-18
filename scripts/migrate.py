@@ -233,7 +233,7 @@ if not options.config or not options.migrations\
                       options.migrations.split(','),
                       True):
     parser.print_help()
-    sys.exit()
+    sys.exit(5)
 
 config.read(options.config)
 
@@ -245,14 +245,14 @@ for parm in ('host', 'port', 'user', 'password'):
 
 if 'user' not in conn_parms:
     print('No user found in configuration')
-    sys.exit()
+    sys.exit(1)
 
 db_name = options.database or config.get('options', 'db_name')
 
 if not db_name or db_name == '' or db_name.isspace()\
         or db_name.lower() == 'false':
     parser.print_help()
-    sys.exit()
+    sys.exit(2)
 
 conn_parms['database'] = db_name
 
@@ -261,7 +261,7 @@ if options.force_deps:
         eval(options.force_deps)
     except:
         parser.print_help()
-        sys.exit()
+        sys.exit(3)
 
 if options.add:
     merge_migrations = {}
@@ -275,7 +275,7 @@ if options.add:
             merge_migrations = eval(options.add)
         except:
             parser.print_help()
-            sys.exit()
+            sys.exit(4)
 
     def deep_update(dict1, dict2):
         result = {}
@@ -369,15 +369,17 @@ for version in options.migrations.split(','):
                     lightweight=True)
             elif addon_config_type == 'git':
                 print('getting ' + addon_config['url'])
-                os.system('git clone --branch %(branch)s --single-branch '
-                          '--depth=1 %(url)s %(target)s' %
-                          {
-                              'branch': addon_config.get('branch', 'master'),
-                              'url': addon_config['url'],
-                              'target': os.path.join(options.branch_dir,
-                                                     version,
-                                                     name),
-                          })
+                result = os.system('git clone --branch %(branch)s --single-branch --depth=1 %(url)s %(target)s' %
+                                   {
+                                          'branch': addon_config.get('branch', 'master'),
+                                          'url': addon_config['url'],
+                                          'target': os.path.join(options.branch_dir,
+                                                                 version,
+                                                                 name),
+                                   })
+                if result != 0:
+                    print("Could not clone version")
+                    sys.exit(6)
             else:
                 raise Exception('Unknown type %s' % addon_config_type)
 
@@ -438,7 +440,7 @@ for version in options.migrations.split(','):
         open(
             os.path.join(options.branch_dir, version, 'server.cfg'), 'w+'))
 
-    os.system(
+    result = os.system(
         os.path.join(
             options.branch_dir,
             version,
@@ -448,3 +450,6 @@ for version in options.migrations.split(','):
                 'config': os.path.join(options.branch_dir, version,
                                        'server.cfg')
             }))
+    if result != 0:
+        print("Could not upgrade to version %s" % version)
+        sys.exit(7)
