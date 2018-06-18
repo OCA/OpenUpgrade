@@ -1,0 +1,41 @@
+---Fields in module 'purchase'---
+purchase     / procurement.rule         / action (False)                : NEW selection_keys: ['buy', 'manufacture', 'move'], mode: modify
+# nothing to do as the selection key "buy" was already added in function _get_action before and is moved now directly to the field
+
+purchase     / purchase.order           / activity_ids (one2many)       : NEW relation: mail.activity
+# nothing to do as this was added by mail.activity.mixin, activities didn't exist before so that we have nothing to migrate
+
+purchase     / purchase.order           / website_message_ids (one2many): NEW relation: mail.message
+# nothing to do as this field was added by mail.thread in module portal and the field didn't exist before
+
+purchase     / purchase.order.line      / move_dest_ids (one2many)      : NEW relation: stock.move
+purchase     / stock.move               / created_purchase_line_id (many2one): NEW relation: purchase.order.line
+purchase     / purchase.order.line      / orderpoint_id (many2one)      : NEW relation: stock.warehouse.orderpoint
+purchase     / purchase.order.line      / procurement_ids (one2many)    : DEL relation: procurement.order
+# updated fields from procurement order
+
+---XML records in module 'purchase'---
+NEW ir.model.access: purchase.access_purchase_order_line_portal
+NEW ir.model.access: purchase.access_purchase_order_portal
+NEW ir.rule: purchase.portal_purchase_order_line_rule (noupdate)
+NEW ir.rule: purchase.portal_purchase_order_user_rule (noupdate)
+DEL ir.ui.menu: purchase.menu_product_normal_action_puchased
+NEW ir.ui.view: purchase.portal_my_home_menu_purchase
+NEW ir.ui.view: purchase.portal_my_home_purchase
+NEW ir.ui.view: purchase.portal_my_purchase_order
+NEW ir.ui.view: purchase.portal_my_purchase_orders
+NEW ir.ui.view: purchase.res_config_settings_view_form_account
+NEW ir.ui.view: purchase.res_config_settings_view_form_purchase
+NEW ir.ui.view: purchase.res_config_settings_view_form_stock
+NEW ir.ui.view: purchase.track_po_line_template
+NEW ir.ui.view: purchase.view_warehouse_orderpoint_purchase_form
+DEL ir.ui.view: purchase.procurement_order_view_form_inherit_purchase
+DEL ir.ui.view: purchase.view_account_config
+DEL ir.ui.view: purchase.view_procurement_form_inherit
+DEL ir.ui.view: purchase.view_purchase_configuration
+DEL mail.message: purchase.module_install_notification (noupdate)
+NEW mail.template: purchase.mail_template_data_notification_email_purchase_order (noupdate)
+# nothing to do
+
+UPDATE mail.template: email_template_edi_purchase (noupdate)
+# updated body and deleted translations
