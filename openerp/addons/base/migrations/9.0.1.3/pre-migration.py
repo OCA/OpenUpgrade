@@ -52,6 +52,7 @@ def cleanup_modules(cr):
             ('marketing_crm', 'crm'),
             ('email_template', 'mail'),  # mail_template class
             ('procurement_jit_stock', 'procurement_jit'),
+            ('sale_layout', 'sale'),
             ('web_gantt', 'web'),
             ('web_graph', 'web'),
             ('web_kanban_sparkline', 'web'),
