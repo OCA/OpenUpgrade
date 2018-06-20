@@ -9,6 +9,10 @@ renamed_modules = {
     'stock_picking_wave': 'stock_picking_batch',
     'website_issue': 'website_form_project',
     'website_rating_project_issue': 'website_rating_project',
+    # OCA/credit-control
+    'partner_financial_risk': 'account_financial_risk',
+    'partner_payment_return_risk': 'account_payment_return_financial_risk',
+    'partner_sale_risk': 'sale_financial_risk',
     # OCA/vertical-association
     'membership_prorrate': 'membership_prorate',
 }
