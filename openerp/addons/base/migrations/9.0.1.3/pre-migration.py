@@ -51,6 +51,8 @@ def cleanup_modules(cr):
             ('contacts', 'mail'),
             ('marketing_crm', 'crm'),
             ('email_template', 'mail'),  # mail_template class
+            ('portal_project', 'project'),
+            ('portal_project_issue', 'project_issue'),
             ('procurement_jit_stock', 'procurement_jit'),
             ('web_gantt', 'web'),
             ('web_graph', 'web'),
