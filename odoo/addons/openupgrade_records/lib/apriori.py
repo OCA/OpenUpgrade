@@ -36,6 +36,8 @@ merged_modules = {
     'account_financial_report_qweb': 'account_financial_report',
     # OCA/bank-payment
     'portal_payment_mode': 'account_payment_mode',
+    # OCA/stock-logistics-workflow
+    'stock_picking_transfer_lot_autoassign': 'stock_pack_operation_auto_fill',
 }
 
 renamed_models = {
