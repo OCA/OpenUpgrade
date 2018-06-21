@@ -1,0 +1,14 @@
+---Fields in module 'purchase_requisition'---
+purchase_requisition / purchase.requisition     / procurement_id (many2one)     : DEL relation: procurement.order
+purchase_requisition / purchase.requisition     / website_message_ids (one2many): NEW relation: mail.message
+# Nothing to do
+
+purchase_requisition / purchase.requisition.line / move_dest_id (many2one)       : NEW relation: stock.move
+# Done: update with move_dest_id of procurement_id
+
+---XML records in module 'purchase_requisition'---
+NEW ir.ui.view: purchase_requisition.res_config_settings_view_form
+NEW ir.ui.view: purchase_requisition.view_purchase_requisition_kanban
+NEW ir.ui.view: purchase_requisition.view_purchase_requisition_type_kanban
+DEL ir.ui.view: purchase_requisition.procurement_normal_form_view_inherit
+# Nothing to do
