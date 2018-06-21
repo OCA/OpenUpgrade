@@ -2,9 +2,7 @@
 <odoo>
 
   <record id="ir_cron_scheduler_alarm" model="ir.cron" forcecreate="True">
-    <field name="model"/>
     <field name="name">Calendar: Event Reminder</field>
-    <field name="function"/>
     <field name="code">model.get_next_mail()</field>
     <field name="model_id" ref="model_calendar_alarm_manager"/>
     <field name="state">code</field>
