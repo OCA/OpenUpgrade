@@ -10,7 +10,8 @@ def update_sale_line_id(env):
           UPDATE purchase_order_line pol
           SET sale_line_id = po.sale_line_id
           FROM procurement_order po
-          WHERE po.purchase_line_id = pol.id""",
+          WHERE po.purchase_line_id = pol.id
+            AND po.sale_line_id IS NOT NULL""",
     )
 
 
