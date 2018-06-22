@@ -1,0 +1,32 @@
+---Fields in module 'website_portal_sale'---
+website_portal_sale / payment.transaction      / sale_order_id (many2one)      : previously in module website_quote
+# Done: update field information in pre-migration script
+
+---XML records in module 'website_portal_sale'---
+NEW ir.model.access: website_portal_sale.access_account_invoice
+NEW ir.model.access: website_portal_sale.access_account_invoice_line
+NEW ir.model.access: website_portal_sale.access_account_invoice_tax
+NEW ir.model.access: website_portal_sale.access_account_journal
+NEW ir.model.access: website_portal_sale.access_account_tax
+NEW ir.model.access: website_portal_sale.access_account_tax_group
+NEW ir.model.access: website_portal_sale.access_product_attribute_line_portal
+NEW ir.model.access: website_portal_sale.access_product_attribute_portal
+NEW ir.model.access: website_portal_sale.access_product_attribute_price_portal
+NEW ir.model.access: website_portal_sale.access_product_attribute_value_portal
+NEW ir.model.access: website_portal_sale.access_product_list
+NEW ir.model.access: website_portal_sale.access_res_partner
+NEW ir.model.access: website_portal_sale.access_res_partner_category
+NEW ir.model.access: website_portal_sale.access_sale_order
+NEW ir.model.access: website_portal_sale.access_sale_order_line
+NEW ir.ui.view: website_portal_sale.portal_my_home_menu_sale
+NEW ir.ui.view: website_portal_sale.portal_my_home_sale
+NEW ir.ui.view: website_portal_sale.portal_my_invoices
+NEW ir.ui.view: website_portal_sale.portal_my_orders
+NEW ir.ui.view: website_portal_sale.portal_my_quotations
+DEL ir.ui.view: website_portal_sale.account
+DEL ir.ui.view: website_portal_sale.invoices
+DEL ir.ui.view: website_portal_sale.quotations
+DEL ir.ui.view: website_portal_sale.sale_backend_link
+DEL ir.ui.view: website_portal_sale.sale_orders
+DEL ir.ui.view: website_portal_sale.sales_backend_access
+# Nothing to do
