@@ -17,6 +17,14 @@ _portal_xmlid_renames = [
     ('sale_payment.portal_my_invoices', 'account.portal_my_invoices'),
 ]
 
+# It comes from the renaming of portal_sale > sale
+_portal_sale_xmlid_renames = [
+    ('sale.portal_account_invoice_user_rule',
+     'account.account_invoice_rule_portal'),
+    ('sale.portal_account_invoice_line_rule',
+     'account.account_invoice_line_rule_portal'),
+]
+
 
 @openupgrade.migrate()
 def migrate(env, version):
@@ -32,3 +40,4 @@ def migrate(env, version):
         'email_template_edi_invoice'
     ])
     openupgrade.rename_xmlids(env.cr, _portal_xmlid_renames)
+    openupgrade.rename_xmlids(env.cr, _portal_sale_xmlid_renames)
