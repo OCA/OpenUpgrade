@@ -12,8 +12,9 @@ column_copies = {
     ],
 }
 
+# It comes from the renaming of website_portal_sale > sale_payment
 _portal_xmlid_renames = [
-    ('website_portal_sale.portal_my_invoices', 'account.portal_my_invoices'),
+    ('sale_payment.portal_my_invoices', 'account.portal_my_invoices'),
 ]
 
 

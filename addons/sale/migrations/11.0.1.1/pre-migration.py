@@ -8,13 +8,12 @@ _xmlid_renames = [
     ('account.group_proforma_invoices', 'sale.group_proforma_sales'),
 ]
 
+# It comes from the renaming of website_portal_sale > sale_payment
 _portal_xmlid_renames = [
-    ('website_portal_sale.portal_my_home_menu_sale',
-     'sale.portal_my_home_menu_sale'),
-    ('website_portal_sale.portal_my_home_sale',
-     'sale.portal_my_home_sale'),
-    ('website_portal_sale.portal_my_quotations', 'sale.portal_my_quotations'),
-    ('website_portal_sale.portal_my_orders', 'sale.portal_my_orders'),
+    ('sale_payment.portal_my_home_menu_sale', 'sale.portal_my_home_menu_sale'),
+    ('sale_payment.portal_my_home_sale', 'sale.portal_my_home_sale'),
+    ('sale_payment.portal_my_quotations', 'sale.portal_my_quotations'),
+    ('sale_payment.portal_my_orders', 'sale.portal_my_orders'),
 ]
 
 
@@ -24,6 +23,6 @@ def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _portal_xmlid_renames)
     try:
         with env.cr.savepoint():
-            env.ref('website_portal_sale.orders_followup').unlink()
+            env.ref('sale_payment.orders_followup').unlink()
     except Exception:
         pass
