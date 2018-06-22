@@ -165,7 +165,6 @@ msgid ""
 "    <p>\n"
 "        Your login: ${object.email}\n"
 "        <br/>\n"
-"        Your password: ${ctx['password']}\n"
 "    </p>\n"
 "    <p>\n"
 "        To gain access to your account, you can use the following link:\n"
@@ -200,7 +199,7 @@ msgstr "<strong>次のサブスクリプションリンクを含む招待メー�
 #. module: auth_signup
 #: model:ir.ui.view,arch_db:auth_signup.signup
 msgid "Already have an account?"
-msgstr ""
+msgstr "既にアカウントをお持ちですか？"
 
 #. module: auth_signup
 #: code:addons/auth_signup/controllers/main.py:78

@@ -28,7 +28,8 @@ _logger = logging.getLogger(__name__)
 _test_logger = logging.getLogger('odoo.tests')
 
 
-def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=None, report=None, upg_registry=None):
+def load_module_graph(cr, graph, status=None, perform_checks=True,
+                      skip_modules=None, report=None, models_to_check=None, upg_registry=None):
     """Migrates+Updates or Installs all module nodes from ``graph``
        :param graph: graph of module nodes to load
        :param status: deprecated parameter, unused, left to avoid changing signature in 8.0
@@ -99,11 +100,11 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
             if kind in ('demo', 'test'):
                 threading.currentThread().testing = False
 
-    if status is None:
-        status = {}
-
     if skip_modules is None:
         skip_modules = []
+
+    if models_to_check is None:
+        models_to_check = set()
 
     processed_modules = []
     loaded_modules = []
@@ -128,6 +129,8 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     t0 = time.time()
     t0_sql = odoo.sql_db.sql_counter
 
+    models_updated = set()
+
     for index, package in enumerate(graph, 1):
         module_name = package.name
         module_id = package.id
@@ -149,7 +152,10 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
         model_names = registry.load(cr, package)
 
         loaded_modules.append(package.name)
-        if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
+        if (hasattr(package, 'init') or hasattr(package, 'update')
+                or package.state in ('to install', 'to upgrade')):
+            models_updated |= set(model_names)
+            models_to_check -= set(model_names)
             registry.setup_models(cr)
             # OpenUpgrade: rebuild the local registry based on the loaded models
             local_registry = {}
@@ -163,6 +169,13 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
             # OpenUpgrade end
             registry.init_models(cr, model_names, {'module': package.name})
             cr.commit()
+        elif package.state != 'to remove':
+            # The current module has simply been loaded. The models extended by this module
+            # and for which we updated the schema, must have their schema checked again.
+            # This is because the extension may have changed the model,
+            # e.g. adding required=True to an existing field, but the schema has not been
+            # updated by this module because it's not marked as 'to upgrade/to install'.
+            models_to_check |= set(model_names) & models_updated
 
         idref = {}
 
@@ -292,9 +305,14 @@ def _check_module_names(cr, module_names):
             incorrect_names = mod_names.difference([x['name'] for x in cr.dictfetchall()])
             _logger.warning('invalid module names, ignored: %s', ", ".join(incorrect_names))
 
-def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_modules, perform_checks, upg_registry):
+def load_marked_modules(cr, graph, states, force, progressdict, report,
+                        loaded_modules, perform_checks, models_to_check=None, upg_registry=None):
     """Loads modules marked with ``states``, adding them to ``graph`` and
        ``loaded_modules`` and returns a list of installed/upgraded modules."""
+
+    if models_to_check is None:
+        models_to_check = set()
+
     processed_modules = []
     while True:
         cr.execute("SELECT name from ir_module_module WHERE state IN %s" ,(tuple(states),))
@@ -304,7 +322,11 @@ def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_m
             break
         graph.add_modules(cr, module_list, force)
         _logger.debug('Updating graph with %d more modules', len(module_list))
-        loaded, processed = load_module_graph(cr, graph, progressdict, report=report, skip_modules=loaded_modules, perform_checks=perform_checks, upg_registry=upg_registry)
+        loaded, processed = load_module_graph(
+            cr, graph, progressdict, report=report, skip_modules=loaded_modules,
+            perform_checks=perform_checks, models_to_check=models_to_check,
+            upg_registry=upg_registry,
+        )
         processed_modules.extend(processed)
         loaded_modules.extend(loaded)
         if not processed:
@@ -319,6 +341,8 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         force.append('demo')
 
     upg_registry = {}
+    models_to_check = set()
+
     cr = db.cursor()
     try:
         if not odoo.modules.db.is_initialized(cr):
@@ -347,7 +371,9 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         # processed_modules: for cleanup step after install
         # loaded_modules: to avoid double loading
         report = registry._assertion_report
-        loaded_modules, processed_modules = load_module_graph(cr, graph, status, perform_checks=update_module, report=report, upg_registry=upg_registry)
+        loaded_modules, processed_modules = load_module_graph(
+            cr, graph, status, perform_checks=update_module,
+            report=report, models_to_check=models_to_check, upg_registry=upg_registry)
 
         load_lang = tools.config.pop('load_language')
         if load_lang or update_module:
@@ -413,11 +439,11 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
             previously_processed = len(processed_modules)
             processed_modules += load_marked_modules(cr, graph,
                 ['installed', 'to upgrade', 'to remove'],
-                force, status, report, loaded_modules, update_module, upg_registry)
+                force, status, report, loaded_modules, update_module, models_to_check, upg_registry)
             if update_module:
                 processed_modules += load_marked_modules(cr, graph,
                     ['to install'], force, status, report,
-                    loaded_modules, update_module, upg_registry)
+                    loaded_modules, update_module, models_to_check, upg_registry)
 
         registry.loaded = True
         registry.setup_models(cr)
@@ -486,6 +512,16 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
                 registry.check_tables_exist(cr)
                 cr.commit()
                 return registry
+
+        # STEP 5.5: Verify extended fields on every model
+        # This will fix the schema of all models in a situation such as:
+        #   - module A is loaded and defines model M;
+        #   - module B is installed/upgraded and extends model M;
+        #   - module C is loaded and extends model M;
+        #   - module B and C depend on A but not on each other;
+        # The changes introduced by module C are not taken into account by the upgrade of B.
+        if models_to_check:
+            registry.init_models(cr, list(models_to_check), {'models_to_check': True})
 
         # STEP 6: verify custom views on every model
         if update_module:

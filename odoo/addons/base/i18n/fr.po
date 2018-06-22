@@ -18,7 +18,6 @@
 # Xavier Belmere <Info@cartmeleon.com>, 2017
 # Lionel Sausin <ls@numerigraphe.com>, 2017
 # Florian Hatat, 2017
-# Lamia Ishak <lamiaishak@hotmail.co.uk>, 2017
 # Christophe Dubuit <cdubuit@yahoo.com>, 2017
 # Bertrand LATOUR <divoir@gmail.com>, 2017
 # nthnnl <nathan070@me.com>, 2017
@@ -49,7 +48,6 @@
 # leemannd <denis.leemann@camptocamp.com>, 2017
 # Nancy Bolognesi <nb@microcom.ca>, 2017
 # Jeanjean Noname <monsieur.spock@gmail.com>, 2017
-# fr rev <e2ffr02@hotmail.com>, 2017
 # Alexis de Lattre <alexis@via.ecp.fr>, 2017
 # fr rev <e2ffr04@hotmail.com>, 2017
 # Sébastien LANGE (SYLEAM) <sebastien.lange@syleam.fr>, 2017
@@ -57,13 +55,14 @@
 # fr trans <e2ftrans1@yahoo.com>, 2017
 # William Henrotin <whe@odoo.com>, 2017
 # e2f <projects@e2f.com>, 2018
+# fr rev <e2ffr02@hotmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 14:33+0000\n"
 "PO-Revision-Date: 2018-02-19 14:33+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"Last-Translator: fr rev <e2ffr02@hotmail.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -5827,19 +5826,18 @@ msgid ""
 "       the spreading, for the selected Analytic Accounts of Budgets.\n"
 msgstr ""
 "\n"
-"Module permettant aux comptables de gérer les budgets analytiques et croisés.\n"
-"================================================== ========================\n"
+"Module permettant aux comptables de gérer les budgets analytiques et croisés\n"
+"============================================================================\n"
 "\n"
-"  Une fois que les budgets sont définis (dans Facturation / Budgets / Budgets), les gestionnaires de projet peuvent fixer le montant prévu sur chaque compte analytique.\n"
+"Une fois que les budgets sont définis (dans Facturation / Budgets / Budgets), les gestionnaires de projet peuvent fixer le montant prévu sur chaque compte analytique.\n"
 "\n"
 "Le comptable a la possibilité de voir le total des prévisions de chaque budget afin d'assurer que le total prévu n'est ni supérieur ni inférieur à ce qu'il avait planifié. Chaque budget peut être visualisé sous forme de vue graphique.\n"
 "\n"
-"  Trois rapports sont disponibles:\n"
-"  ----------------------------\n"
-"  1. Le premier est réalisé à partir d'une liste des budgets. Il donne la répartition des comptes analytiques pour ces budgets.\n"
+"Trois rapports sont disponibles:\n"
+"--------------------------------\n"
 "\n"
-"  2. Le second est un résumé du précédent, il donne la répartition par comptes analytiques budgétaires sélectionnés\n"
-"\n"
+"1. Le premier est réalisé à partir d'une liste des budgets. Il donne la répartition des comptes analytiques pour ces budgets.\n"
+"2. Le second est un résumé du précédent, il donne la répartition par comptes analytiques budgétaires sélectionnés\n"
 "3. Le dernier est réalisé à partir du plan comptable analytique. Il donne la répartition, pour les comptes analytiques budgétaires sélectionnés.\n"
 
 #. module: base
@@ -8648,7 +8646,7 @@ msgstr "Lecture et analyse de Codes barre"
 #: model:ir.ui.view,arch_db:base.view_model_fields_search
 #: model:ir.ui.view,arch_db:base.view_model_search
 msgid "Base"
-msgstr "Base de calcul"
+msgstr "Base"
 
 #. module: base
 #: selection:ir.model.fields,state:0
@@ -10789,7 +10787,7 @@ msgstr "Données de démonstration"
 #. module: base
 #: model:res.country,name:base.cd
 msgid "Democratic Republic of the Congo"
-msgstr "République démocratique du Congo "
+msgstr "République démocratique du Congo"
 
 #. module: base
 #: model:res.country,name:base.dk
@@ -11333,7 +11331,7 @@ msgstr "Passerelle de Courriels"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mass_mailing
 msgid "Email Marketing"
-msgstr "Marketing par e-mail"
+msgstr "Emailing"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_users_form_simple_modif
@@ -13369,10 +13367,8 @@ msgid ""
 "If several child actions return an action, only the last one will be executed.\n"
 "                                    This may happen when having server actions executing code that returns an action, or server actions returning a client action."
 msgstr ""
-"Si plusieurs actions filles retournent une action, seul la dernière sera exécutée.\n"
-"Cela peut se produire quand on a : \n"
-" - des actions-serveur qui exécutent du code retournant une action \n"
-" - ou des actions-serveur retournant une action du client."
+"Si plusieurs actions filles renvoient une action, seule la dernière sera exécutée.\n"
+"Cela peut se produire lorsque plusieurs actions-serveur exécutent du code qui renvoie une action ; ou lorsque des actions-serveur renvoient une action-client."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_users_action_id
@@ -15139,7 +15135,7 @@ msgstr "Marketing"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_marketing_automation
 msgid "Marketing Automation"
-msgstr "Automatisation du marketing"
+msgstr "Automatisation d'emails"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_ma
