@@ -28,6 +28,7 @@ merged_modules = {
     'web_calendar': 'web',
     'web_kanban': 'web',
     'website_portal': 'website',
+    'website_portal_sale': 'sale_payment',
     'website_project': 'project',
     'website_project_timesheet': 'hr_timesheet',
     # OCA/account-financial-reporting

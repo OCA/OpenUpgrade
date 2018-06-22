@@ -12,6 +12,10 @@ column_copies = {
     ],
 }
 
+_portal_xmlid_renames = [
+    ('website_portal_sale.portal_my_invoices', 'account.portal_my_invoices'),
+]
+
 
 @openupgrade.migrate()
 def migrate(env, version):
@@ -26,3 +30,4 @@ def migrate(env, version):
         'mail_template_data_notification_email_account_invoice',
         'email_template_edi_invoice'
     ])
+    openupgrade.rename_xmlids(env.cr, _portal_xmlid_renames)
