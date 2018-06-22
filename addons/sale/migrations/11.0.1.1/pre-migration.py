@@ -27,5 +27,3 @@ def migrate(env, version):
             env.ref('website_portal_sale.orders_followup').unlink()
     except Exception:
         pass
-
-
