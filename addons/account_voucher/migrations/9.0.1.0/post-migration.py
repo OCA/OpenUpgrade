@@ -20,7 +20,7 @@ def create_payments_from_vouchers(env):
     # As far as I can see there is no connection between invoices in 8.0
     # that we can or have to migrate to 9.0.
     env.cr.execute(
-        """\
+        """
         INSERT INTO account_payment (
             id, create_date, communication, company_id, currency_id,
             partner_id, partner_type,
@@ -68,7 +68,7 @@ def create_payments_from_vouchers(env):
     )
     # Statement below works because new payments have same id as old vouchers
     env.cr.execute(
-        """\
+        """
         UPDATE account_move_line aml2
         SET payment_id = av.id
         FROM account_voucher av
@@ -85,13 +85,19 @@ def create_payments_from_vouchers(env):
     )
     # Also recreate link from invoice to payment
     env.cr.execute(
-        """\
+        """
         INSERT INTO account_invoice_payment_rel (payment_id, invoice_id)
-        SELECT aml.payment_id, ai.id
-        FROM account_move_line aml
-        JOIN account_invoice ai ON aml.move_id = ai.move_id
-        WHERE NOT aml.payment_id IS NULL
-        GROUP BY aml.payment_id, ai.id
+        SELECT av.id as payment_id, ai.id as invoice_id
+        FROM account_invoice ai
+        JOIN account_move_line amli ON ai.move_id = amli.move_id
+        JOIN account_partial_reconcile apr ON
+             (apr.credit_move_id = amli.id OR apr.debit_move_id = amli.id)
+        JOIN account_move_line amlp ON
+             (apr.credit_move_id = amlp.id OR apr.debit_move_id = amlp.id)
+        JOIN account_voucher av ON av.move_id = amlp.move_id
+        WHERE av.voucher_type IN ('receipt', 'payment')
+        AND av.state IN ('draft', 'posted')
+        GROUP BY av.id, ai.id
         """
     )
 
