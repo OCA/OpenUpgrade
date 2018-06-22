@@ -17,8 +17,8 @@
 # fausthuang, 2017
 # Wei "oldrev" Li <liwei@sandwych.com>, 2017
 # 苏州远鼎 <tiexinliu@126.com>, 2017
-# Siyuan Gu <siyuancn@hotmail.com>, 2017
 # 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2017
+# Siyuan Gu <siyuancn@hotmail.com>, 2017
 # Joray <13637815@qq.com>, 2017
 # Si Ling Lau <happy8645@hotmail.com>, 2017
 # liulixia <liu.lixia@elico-corp.com>, 2017
@@ -32,7 +32,6 @@
 # Bo Cao, 2017
 # LIN Yu <yu_lin@me.com>, 2017
 # Yaorong Li <55yaorong.li@gmail.com>, 2017
-# 钟小华 <mackz@sina.com>, 2017
 # Maie <m@maie.name>, 2017
 # 仁东 郑 <msntop@outlook.com>, 2017
 # Noah McDermott <Noah_mcdermott@northwestschools.net>, 2017
@@ -1926,7 +1925,7 @@ msgstr ""
 " * 员工工资单\n"
 " * 每月工资单登记\n"
 " * 整合休假管理\n"
-" * 薪资管理、 社会保险局、须扣税款、育儿补贴 ...\n"
+" * 薪资更新、社会保险局、须扣税款、育儿补贴 ..."
 
 #. module: base
 #: model:ir.module.module,description:base.module_pos_blackbox_be
@@ -7983,7 +7982,7 @@ msgstr "管理"
 #: model:ir.model.fields,help:base.field_res_country_state_name
 msgid ""
 "Administrative divisions of a country. E.g. Fed. State, Departement, Canton"
-msgstr "管理国家或地区的分类。"
+msgstr "管理国家/地区或地区的分类。"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:907 code:addons/base/ir/ir_model.py:1019
@@ -8028,7 +8027,7 @@ msgstr "阿富汗"
 #. module: base
 #: selection:res.country,name_position:0
 msgid "After Address"
-msgstr "地址后"
+msgstr "设置在地址后面"
 
 #. module: base
 #: selection:res.currency,position:0
@@ -8754,7 +8753,7 @@ msgstr "批量存款"
 #. module: base
 #: selection:res.country,name_position:0
 msgid "Before Address"
-msgstr "地址前"
+msgstr "设置在地址前面"
 
 #. module: base
 #: selection:res.currency,position:0
@@ -9999,17 +9998,17 @@ msgstr "国家"
 #: model:ir.ui.view,arch_db:base.view_res_bank_form
 #: model:ir.ui.view,arch_db:base.view_res_partner_filter
 msgid "Country"
-msgstr "国家"
+msgstr "国家/地区"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_country_phone_code
 msgid "Country Calling Code"
-msgstr "国家长途区号"
+msgstr "国家/地区长途区号"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_country_code
 msgid "Country Code"
-msgstr "国家代码"
+msgstr "国家/地区代码"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_country_group
@@ -10017,22 +10016,22 @@ msgstr "国家代码"
 #: model:ir.ui.view,arch_db:base.view_country_group_form
 #: model:ir.ui.view,arch_db:base.view_country_group_tree
 msgid "Country Group"
-msgstr "国家组"
+msgstr "国家/地区组"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_country_country_group_ids
 msgid "Country Groups"
-msgstr "国家分组"
+msgstr "国家/地区分组"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_country_name
 msgid "Country Name"
-msgstr "国家名称"
+msgstr "国家/地区名称"
 
 #. module: base
 #: model:ir.model,name:base.model_res_country_state
 msgid "Country state"
-msgstr "国家州/省"
+msgstr "国家地区州/省"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_access_perm_create
@@ -10891,7 +10890,7 @@ msgid ""
 "Disabling this option will also uninstall the following modules \n"
 "%s"
 msgstr ""
-"禁用此选项也会卸载以下模块 \\n\n"
+"禁用此选项也会卸载以下模块\n"
 "%s"
 
 #. module: base
@@ -11037,7 +11036,7 @@ msgstr "在相关文档上显示一个选择来打印这个报告"
 msgid ""
 "Display and manage the list of all countries group. You can create or delete"
 " country group to make sure the ones you are working on will be maintained."
-msgstr "显示和管理所有国家群组的列表。你可以创建或删除国家群组，以确保你正在使用的国家群组被维护。"
+msgstr "显示和管理所有国家/地区群组的列表。你可以创建或删除国家/地区群组，以确保你正在使用的国家/地区群组被维护。"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_country
@@ -11058,13 +11057,13 @@ msgid ""
 "%(country_name)s: the name of the country\n"
 "%(country_code)s: the code of the country"
 msgstr ""
-"显示用于属于该国家的地址的格式。\n"
+"显示用于属于该国家/地区的地址的格式。\n"
 "\n"
 "您可以在地址的所有字段中使用 python 样式的字符串模式（例如，使用“%(street)s”来显示字段“street”）加上\n"
 "%(state_name)s：州的名称\n"
 "%(state_code)s：州代码\n"
-"%(country_name)s：国家名称\n"
-"%(country_code)s：国家代码"
+"%(country_name)s：国家/地区名称\n"
+"%(country_code)s：国家/地区代码"
 
 #. module: base
 #: model:res.partner.category,name:base.res_partner_category_13
@@ -11224,7 +11223,7 @@ msgid ""
 "Either customer (no user), either shared user. Indicated the current partner"
 " is a customer without access or with a limited access created for sharing "
 "data."
-msgstr "要么是客户（无用户），要么是共享用户。表明当前的业务伙伴对于共享数据是无权访问或访问权限受限的。"
+msgstr "要么是客户（非用户），要么是共享用户。表明当前的业务伙伴对于共享数据是无权访问或访问权限受限的。"
 
 #. module: base
 #: model:res.country,name:base.sv
@@ -13212,7 +13211,7 @@ msgstr "ISO 代号"
 #. module: base
 #: model:ir.model.fields,help:base.field_base_language_import_code
 msgid "ISO Language and Country code, e.g. en_US"
-msgstr "ISO语言和国家代码，例如en_US"
+msgstr "ISO语言和国家/地区代码，例如en_US"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_lang_iso_code
@@ -17249,7 +17248,7 @@ msgstr ""
 "\n"
 "### 为提高效率而设计\n"
 "\n"
-"无论用于餐厅还是商店，您可以同时激活多张工单，\n"
+"无论用于餐厅还是商店，您可以同时激活多张订单，\n"
 "无需让您的客户等待。\n"
 "\n"
 "### 极其快速的搜索\n"
@@ -17613,7 +17612,7 @@ msgstr ""
 "-------------------------\n"
 "\n"
 "得益于基于\n"
-"bootstrap 的响应式设计，您可建立一个适合移动设备的网站。所有页面都会自动适应屏幕大小。 （移动设备\n"
+"已找到框架的响应式设计，您可建立一个适合移动设备的网站。所有页面都会自动适应屏幕大小。 （移动设备\n"
 "手机、平板电脑、台式电脑）您不必担心移动内容，它\n"
 "会默认运行。\n"
 "\n"
@@ -18626,8 +18625,8 @@ msgstr ""
 "- 发布相关文档\n"
 "- 资源分配\n"
 "- 自动采购（餐饮...）\n"
-"-多个地点和组织者\n"
-"-移动界面\n"
+"- 多个地点和组织者\n"
+"- 移动界面\n"
 "\n"
 "### 销售\n"
 "\n"
@@ -18640,9 +18639,9 @@ msgstr ""
 "### 组织\n"
 "\n"
 "- 高级计划\n"
-"-打印徽章\n"
+"- 打印徽章\n"
 "- 自动发送跟进电子邮件\n"
-"-最小/最大容量\n"
+"- 最小/最大容量\n"
 "- 管理分类和资源\n"
 "- 创建参与者群组\n"
 "- 自动化满意度调查问卷\n"
@@ -21661,7 +21660,7 @@ msgid ""
 "The ISO country code in two chars. \n"
 "You can use this field for quick search."
 msgstr ""
-"ISO 国家代码使用两个字符。\n"
+"ISO 国家/地区代码使用两个字符。\n"
 " 您可以使用此字段进行快速搜索。"
 
 #. module: base
@@ -21723,7 +21722,7 @@ msgstr "选择的公司不属于此用户允许访问的公司。"
 #. module: base
 #: sql_constraint:res.country:0
 msgid "The code of the country must be unique !"
-msgstr "国家代码须唯一 !"
+msgstr "国家/地区代码须唯一 !"
 
 #. module: base
 #: sql_constraint:res.lang:0
@@ -21733,7 +21732,7 @@ msgstr "语言代码必须唯一!"
 #. module: base
 #: sql_constraint:res.country.state:0
 msgid "The code of the state must be unique by country !"
-msgstr "国家代码须唯一！"
+msgstr "国家/地区代码须唯一！"
 
 #. module: base
 #: sql_constraint:res.company:0
@@ -21849,7 +21848,7 @@ msgstr "以下 模块没有安装 或未知: %s"
 #. module: base
 #: model:ir.model.fields,help:base.field_res_country_name
 msgid "The full name of the country."
-msgstr "国家全名。"
+msgstr "国家/地区全名。"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_partner_user_id
@@ -21893,7 +21892,7 @@ msgstr "该字段所属的模型"
 #. module: base
 #: sql_constraint:res.country:0
 msgid "The name of the country must be unique !"
-msgstr "国家名必须唯一！"
+msgstr "国家/地区名必须唯一！"
 
 #. module: base
 #: code:addons/base/res/res_users.py:152
@@ -21940,8 +21939,9 @@ msgid ""
 "- deletion: you may be trying to delete a record while other records still reference it\n"
 "- creation/update: a mandatory field is not correctly set"
 msgstr ""
-"该操作无法完成，可能是由于以下原因：\\n - 删除：您可能正试图删除一个记录，但是仍有其它记录引用到它 \\n - "
-"创建/更新：一个强制字段没有正确设置"
+"该操作无法完成，可能是由于以下原因：\n"
+"- 删除：您可能正试图删除一个记录，但是仍有其它记录引用到它 \n"
+"- 创建/更新：一个强制字段没有正确设置"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_model_fields_domain

@@ -10,6 +10,7 @@
 # Rona Lin <ssauapw@qq.com>, 2017
 # Gary Wei <Gary.wei@elico-corp.com>, 2017
 # 卓忆科技 <zhanghao@jointd.com>, 2017
+# e2f_cn c5 <jarvisn@ecinnovations.com>, 2017
 # liAnGjiA <liangjia@qq.com>, 2017
 # waveyeung <waveyeung@qq.com>, 2017
 # liulixia <liu.lixia@elico-corp.com>, 2017
@@ -24,17 +25,17 @@
 # Michael Chong <michaelchong2005@gmail.com>, 2017
 # 苏州远鼎 <tiexinliu@126.com>, 2017
 # Si Ling Lau <happy8645@hotmail.com>, 2017
+# Henry Zhou <zhouhenry@live.com>, 2017
 # glovebx <ruinning@163.com>, 2017
 # Jeff Yu - Elico Corp <jeff.yu@elico-corp.com>, 2017
 # 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2018
-# e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 13:42+0000\n"
 "PO-Revision-Date: 2018-02-19 13:42+0000\n"
-"Last-Translator: e2f_cn c5 <jarvisn@ecinnovations.com>, 2018\n"
+"Last-Translator: 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -759,8 +760,8 @@ msgid ""
 "Add and customize route operations to process product moves in your warehouse(s): e.g. unload > quality control > stock for incoming products, pick > pack > ship for outgoing products. \n"
 " You can also set putaway strategies on warehouse locations in order to send incoming products into specific child locations straight away (e.g. specific bins, racks)."
 msgstr ""
-"添加和自定义路线操作以处理你仓库中的产品移动：例如：卸货>质量控制>入库产品库存，拣货>包装>出货产品。\n"
-"您也可以在仓库位置设置入库策略，以便立即将入库产品发送到特定的小孩位置（例如：特定箱子、机架）。"
+"添加和自定义路线操作以处理你仓库中的产品移动：例如：卸货>品控>入库，拣货>包装>发运。\n"
+"您也可以在仓库位置设置上架策略，以便直接将入库产品发送到特定的子位置（例如：特定的货位、货架）。"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.res_config_settings_view_form
@@ -771,8 +772,7 @@ msgid ""
 "strategies on warehouse locations in order to send incoming products into "
 "specific child locations straight away (e.g. specific bins, racks)."
 msgstr ""
-"添加和自定义路线操作以处理你仓库中的产品移动：例如：卸货>质量控制>入库产品库存，拣货>包装>出货产品。\n"
-"您也可以在仓库位置设置入库策略，以便立即将入库产品发送到特定的小孩位置（例如：特定箱子、机架）。"
+"添加和自定义路线操作以处理你仓库中的产品移动：例如：卸货>品控>入库，拣货>包装>发运。您也可以在仓库位置设置上架策略，以便直接将入库产品发送到特定的子位置（例如：特定的货位、货架）。"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_picking_form
@@ -5008,7 +5008,7 @@ msgstr "上架方法"
 #: model:ir.model,name:stock.model_product_putaway
 #: model:ir.model.fields,field_description:stock.field_stock_location_putaway_strategy_id
 msgid "Put Away Strategy"
-msgstr "下架策略"
+msgstr "上架策略"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_picking_form
@@ -6667,7 +6667,7 @@ msgid ""
 "To use more precise units like pounds or kilograms, activate<i> Some "
 "products may be sold/purchased in different unit of measures (advanced)</i> "
 "in the"
-msgstr "使用更加精确的计量单位，例如：镑和千克, 激活<i> 一些可能以不同计量单位（高级）买／卖的产品</i> 在"
+msgstr "使用更加精确的计量单位，如镑或千克，请在库存设置中激活<i> 一些可能以不同计量单位（高级）买／卖的产品</i>"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_move_search
@@ -7385,7 +7385,7 @@ msgstr "你只能删除草稿状态的移动。"
 #: code:addons/stock/models/stock_move_line.py:126
 #, python-format
 msgid "You can only process 1.0 %s for products with unique serial number."
-msgstr "对于具有独特序列号的产品你仅允许设置为1.0%s。"
+msgstr "您只能处理具有独特序列号产品的 1.0 %s。"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.inventory_planner
@@ -7670,7 +7670,7 @@ msgid ""
 "either by manually updating the Done quantity on the product lines, or scan "
 "them with the Odoo Barcode app, or let Odoo do it automatically while "
 "validating"
-msgstr "或者手动在产品行更新完成数量，或者通过Odoo扫描枪扫描它们，或者让Odoo在确认时自动进行"
+msgstr "或者手动在产品行更新完成数量，或者通过 Odoo 扫描枪扫描它们，或者让 Odoo 在确认时自动进行处理"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.inventory_planner
@@ -7694,7 +7694,7 @@ msgstr ""
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.inventory_planner
 msgid "from your vendor with the products and the requested quantities"
-msgstr "来自你的供应商带有产品和所需数量"
+msgstr "根据产品和所需数量创建来自供应商的 RFQ"
 
 #. module: stock
 #: model:stock.inventory.line,product_name:stock.stock_inventory_line_3
@@ -7728,7 +7728,7 @@ msgstr "没有足够的数量"
 msgid ""
 "on the purchase order form or click on <i>Receive Products</i> to see the "
 "Transfer Order"
-msgstr "在订单上或者点击<i>接收货物</i>查看调拨单"
+msgstr "点击采购订单上的送货或者点击<i>接收货物</i>查看调拨单"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.inventory_planner

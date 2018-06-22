@@ -122,9 +122,11 @@ var ImageDialog = Widget.extend({
         this._super.apply(this, arguments);
         this.options = options || {};
         this.accept = this.options.accept || this.options.document ? "*/*" : "image/*";
-        if (this.options.res_id) {
+        if (options.domain) {
+            this.domain = typeof options.domain === 'function' ? options.domain() : options.domain;
+        } else if (options.res_id) {
             this.domain = ['|',
-                '&', ['res_model', '=', this.options.res_model], ['res_id', '=', this.options.res_id],
+                '&', ['res_model', '=', options.res_model], ['res_id', '=', options.res_id],
                 ['res_model', '=', 'ir.ui.view']];
         } else {
             this.domain = [['res_model', '=', 'ir.ui.view']];
@@ -188,8 +190,7 @@ var ImageDialog = Widget.extend({
 
         var img = this.images[0];
         if (!img) {
-            var id = this.$(".existing-attachments [data-src]:first").data('id');
-            img = _.find(this.images, function (img) { return img.id === id;});
+            return this.media;
         }
 
         var def = $.when();
@@ -238,6 +239,11 @@ var ImageDialog = Widget.extend({
             $(self.media).attr('alt', img.alt);
             var style = self.style;
             if (style) { $(self.media).css(style); }
+
+            if (self.options.onUpload) {
+                // We consider that when selecting an image it is as if we upload it in the html content.
+                self.options.onUpload([img]);
+            }
 
             return self.media;
         });
@@ -289,6 +295,10 @@ var ImageDialog = Widget.extend({
             self.images = attachments;
             for (var i=0; i<attachments.length; i++) {
                 self.file_selected(attachments[i], error);
+            }
+
+            if (self.options.onUpload) {
+                self.options.onUpload(attachments);
             }
         };
     },
@@ -1185,6 +1195,8 @@ var LinkDialog = Dialog.extend({
                     if (dom.ancestor(nodes[i], dom.isImg)) {
                         this.data.images.push(dom.ancestor(nodes[i], dom.isImg));
                         text += '[IMG]';
+                    } else if (!is_link && nodes[i].nodeType === 1) {
+                        // just use text nodes from listBetween
                     } else if (!is_link && i===0) {
                         text += nodes[i].textContent.slice(so, Infinity);
                     } else if (!is_link && i===nodes.length-1) {
