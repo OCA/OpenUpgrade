@@ -8,12 +8,9 @@ def update_sale_line_id(env):
     openupgrade.logged_query(
         env.cr, """
           UPDATE purchase_order_line pol
-          SET sale_line_id = (
-            SELECT sale_line_id
-            FROM procurement_order po
-            WHERE po.purchase_line_id = pol.id
-            LIMIT 1)
-        """
+          SET sale_line_id = po.sale_line_id
+          FROM procurement_order po
+          WHERE po.purchase_line_id = pol.id""",
     )
 
 
