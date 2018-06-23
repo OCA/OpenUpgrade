@@ -1,6 +1,6 @@
 ---Fields in module 'sale_stock'---
 sale_stock   / procurement.group        / sale_id (many2one)            : NEW relation: sale.order
-# Filled in post-migration script
+# Done: pre-migration: Pre-created field and filled from procurement order
 
 sale_stock   / sale.order               / picking_ids (many2many)       : not a function anymore
 sale_stock   / sale.order               / picking_ids (many2many)       : type is now 'one2many' ('many2many')
@@ -13,13 +13,13 @@ sale_stock   / sale.order.line          / move_ids (one2many)           : NEW re
 # Nothing to do
 
 sale_stock   / stock.move               / sale_line_id (many2one)       : NEW relation: sale.order.line
-# Filled in post-migration script
+# Done: pre-migration: Pre-created field and filled from procurement order
 
 sale_stock   / stock.move               / to_refund_so (boolean)        : DEL
 # Nothing to do
 
 sale_stock   / stock.picking            / sale_id (many2one)            : not a function anymore
-# Nothing to do, converted to a related
+# Done: pre-migration: Pre-created field and filled from related
 
 ---XML records in module 'sale_stock'---
 DEL ir.model.access: sale_stock.access_procurement_manager
