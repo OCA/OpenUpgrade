@@ -2,9 +2,11 @@
 # Copyright 2016 - Therp BV
 # Copyright 2018 - Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+import logging
 from psycopg2.extensions import AsIs
 from openerp import SUPERUSER_ID, api
 from openupgradelib import openupgrade
+logger = logging.getLogger('OpenUpgrade')
 
 
 def _migrate_tracking(cr):
@@ -63,15 +65,35 @@ def _migrate_pack_operation(env):
     )
 
 
-def _migrate_stock_picking(cr):
-    cr.execute(
-        "update stock_picking p set "
-        "location_id=coalesce(location_id, default_location_src_id), "
-        "location_dest_id=coalesce(location_dest_id, "
-        "default_location_dest_id) "
-        "from stock_picking_type t "
-        "where p.picking_type_id=t.id and "
-        "(location_id is null or location_dest_id is null)")
+def _migrate_stock_picking(env):
+
+    env.cr.execute(
+        "update stock_picking set "
+        "recompute_pack_op = False "
+        "where state in ('done', 'cancel')")
+
+    env.cr.execute("""
+        UPDATE stock_picking sp
+        SET location_id = sm.location_id,
+        location_dest_id = sm.location_dest_id
+        FROM stock_move sm
+        WHERE sm.picking_id = sp.id
+    """)
+
+    env.cr.execute("""
+        UPDATE stock_move sm
+        SET location_id = sp.location_id,
+        location_dest_id = sp.location_dest_id
+        FROM stock_picking sp
+        WHERE sp.id = sm.picking_id
+        AND sm.state NOT IN ('done', 'cancel')
+    """)
+
+    moves = env['stock.move'].search([
+        ('picking_id', '!=', False),
+        ('picking_id.state', 'not in', ('done', 'cancel'))])
+
+    moves.check_recompute_pack_op()
 
 
 def _set_lot_params(cr):
@@ -88,5 +110,5 @@ def migrate(cr, version):
     env = api.Environment(cr, SUPERUSER_ID, {})
     _migrate_tracking(cr)
     _migrate_pack_operation(env)
-    _migrate_stock_picking(cr)
+    _migrate_stock_picking(env)
     _set_lot_params(cr)
