@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Copyright 2017 Tecnativa - Pedro M. Baeza
 # Copyright 2018 - Nicolas JEUDY
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
@@ -26,3 +27,6 @@ def migrate(env, version):
             env.ref('sale_payment.orders_followup').unlink()
     except Exception:
         pass
+    openupgrade.update_module_moved_fields(
+        env.cr, 'sale.order', ['procurement_group_id'], 'sale', 'sale_stock',
+    )
