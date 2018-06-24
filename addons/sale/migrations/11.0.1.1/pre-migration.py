@@ -17,16 +17,28 @@ _portal_xmlid_renames = [
     ('sale_payment.portal_my_orders', 'sale.portal_my_orders'),
 ]
 
+# It comes from the renaming of portal_sale > sale
+_portal_sale_xmlid_renames = [
+    ('sale.portal_sale_order_user_rule', 'sale.sale_order_rule_portal'),
+    ('sale.portal_sale_order_line_rule', 'sale.sale_order_line_rule_portal'),
+]
+
 
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
     openupgrade.rename_xmlids(env.cr, _portal_xmlid_renames)
-    try:
-        with env.cr.savepoint():
-            env.ref('sale_payment.orders_followup').unlink()
-    except Exception:
-        pass
+    openupgrade.rename_xmlids(env.cr, _portal_sale_xmlid_renames)
+    xml_ids_to_remove = [
+        'sale_payment.orders_followup',
+        'sale.portal_personal_contact',
+    ]
+    for xml_id in xml_ids_to_remove:
+        try:
+            with env.cr.savepoint():
+                env.ref(xml_id).unlink()
+        except Exception:
+            pass
     openupgrade.update_module_moved_fields(
         env.cr, 'sale.order', ['procurement_group_id'], 'sale', 'sale_stock',
     )
