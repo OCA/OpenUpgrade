@@ -6,5 +6,9 @@ from openupgradelib import openupgrade
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
-    # Remove noupdate ir.rule
-    env.ref('portal_stock.portal_stock_picking_user_rule').unlink()
+    try:
+        with env.cr.savepoint():
+            # Remove noupdate ir.rule
+            env.ref('portal_stock.portal_stock_picking_user_rule').unlink()
+    except Exception:
+        pass
