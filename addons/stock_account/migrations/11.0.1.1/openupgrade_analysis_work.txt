@@ -5,7 +5,7 @@ stock_account / stock.move               / account_move_ids (one2many)   : NEW r
 
 stock_account / product.category         / property_cost_method (selection): selection_keys is now '['average', 'fifo', 'standard']' ('['average', 'real', 'standard']')
 stock_account / product.template         / property_cost_method (selection): selection_keys is now '['average', 'fifo', 'standard']' ('['average', 'real', 'standard']')
-# Done: pre-migration: The real costing method doesn't exist anymore, so the most similar one is 'average'. Values mapped according this.
+# Done: pre-migration: The real costing method doesn't exist anymore, so the most similar one is 'fifo'. Values mapped according this.
 
 stock_account / stock.move               / remaining_qty (float)         : previously in module stock
 # Done: pre-migration: Move field definition to new module
