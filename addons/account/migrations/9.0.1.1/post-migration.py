@@ -1088,7 +1088,7 @@ def update_account_invoice_date(cr):
         WHERE am.period_id = ap.id
             AND am.id = ai.move_id
             AND ai.date IS NULL
-            AND (am.date <= ap.date_start OR am.date >= ap.date_stop)"""
+            AND (am.date < ap.date_start OR am.date > ap.date_stop)"""
     )
 
 
@@ -1103,7 +1103,7 @@ def update_move_date(cr):
         SET date = ap.date_start
         FROM account_period ap
         WHERE am.period_id = ap.id
-            AND (am.date <= ap.date_start OR am.date >= ap.date_stop)"""
+            AND (am.date < ap.date_start OR am.date > ap.date_stop)"""
     )
     # Synchronize move line dates afterwards
     openupgrade.logged_query(
