@@ -83,6 +83,9 @@ def set_sale_order_qty_delivered(env):
                 AND sm.location_dest_id in %s
             GROUP by sol.id) a
          WHERE sol.id = line_id""", (loc_ids,))
+    # Take only records that have the same products on both move and
+    # sale order lines as unit categories could be different if
+    # bom (phantom) are used.
     env.cr.execute("""\
         SELECT sol.id, sm.id
         FROM sale_order_line sol
@@ -90,6 +93,7 @@ def set_sale_order_qty_delivered(env):
             JOIN stock_move sm ON sm.procurement_id = po.id
         WHERE sm.state = 'done'
             AND sm.product_uom != sol.product_uom
+            AND sm.product_id = sol.product_id
             AND sm.location_dest_id in %s""", (loc_ids,))
     so_qty_map = {}
     uom_obj = env['product.uom']
