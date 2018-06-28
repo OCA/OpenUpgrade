@@ -65,7 +65,11 @@ Dashboard / Reports for MRP will include:
     ],
     'demo': [
         'data/mrp_demo.xml',
-        'data/mrp_lot_demo.yml'],
+        # 'data/mrp_lot_demo.yml'
+        # mrp_demo.xml has <function> tags that later mrp_lot_demo.yml uses.
+        # This <function> tags only are executed on install, not in updates.
+        # When migrating, this tags are not executed and the yml file breaks.
+    ],
     'qweb': ['static/src/xml/mrp.xml'],
     'test': [],
     'application': True,

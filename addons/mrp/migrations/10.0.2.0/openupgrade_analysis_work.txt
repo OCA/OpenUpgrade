@@ -1,0 +1,429 @@
+---Fields in module 'mrp'---
+
+# Good reference for tracking changes between versions:
+# https://www.scribd.com/document/343980661/oDoo-10-Manufacturing
+# https://github.com/odoo/odoo/commit/2ddc35a5300e89981c0572ae6749aee946f34e9d
+
+mrp          / ir.attachment            / priority (selection)          : NEW selection_keys: ['0', '1', '2', '3']
+# NOTHING TO DO
+
+mrp          / mrp.bom                  / date_start (date)             : DEL
+mrp          / mrp.bom                  / date_stop (date)              : DEL
+# DONE: Post-migration: Archived stopped boms.
+
+mrp          / mrp.bom                  / picking_type_id (many2one)    : NEW relation: stock.picking.type
+# NOTHING TO DO: because we do not have pre-existing data of the picking type relating to mrp.bom
+
+mrp          / mrp.bom                  / position (char)               : DEL
+mrp          / mrp.bom                  / product_efficiency (float)    : DEL required: required, req_default: function
+# NOTHING TO DO
+
+mrp          / mrp.bom                  / product_rounding (float)      : DEL
+# NOTHING TO DO: Rounding is taken from the product.uom now
+
+mrp          / mrp.bom                  / product_uom (many2one)        : was renamed to product_uom_id
+# DONE: Renamed column in pre-migration
+
+mrp          / mrp.bom                  / property_ids (many2many)      : DEL relation: mrp.property
+mrp          / mrp.bom                  / ready_to_produce (selection)  : NEW required: required, selection_keys: ['all_available', 'asap'], req_default: function
+mrp          / mrp.bom                  / website_message_ids (one2many): DEL relation: mail.message
+# NOTHING TO DO
+
+mrp          / mrp.bom.line             / date_start (date)             : DEL
+mrp          / mrp.bom.line             / date_stop (date)              : DEL
+# NOTHING TO DO: According to https://www.scribd.com/document/343980661/oDoo-10-Manufacturing automatic
+# change of boms using validity dates is no longer support as it is considered risky. Manual action needs
+# to be taken from ECO in order to make changes.
+
+mrp          / mrp.bom.line             / operation_id (many2one)       : NEW relation: mrp.routing.workcenter
+mrp          / mrp.bom.line             / product_efficiency (float)    : DEL required: required, req_default: function
+mrp          / mrp.bom.line             / product_rounding (float)      : DEL
+mrp          / mrp.bom.line             / property_ids (many2many)      : DEL relation: mrp.property
+# NOTHING TO DO
+
+mrp          / mrp.bom.line             / product_uom (many2one)        : was renamed to product_uom_id [nothing to do]
+# DONE: pre-migration: Renamed field.
+
+
+mrp          / mrp.message              / bom_id (many2one)             : NEW relation: mrp.bom
+mrp          / mrp.message              / message (html)                : NEW required: required
+mrp          / mrp.message              / product_id (many2one)         : NEW relation: product.product
+mrp          / mrp.message              / product_tmpl_id (many2one)    : NEW relation: product.template
+mrp          / mrp.message              / routing_id (many2one)         : NEW relation: mrp.routing
+mrp          / mrp.message              / valid_until (date)            : NEW required: required, req_default: function
+mrp          / mrp.message              / workcenter_id (many2one)      : NEW relation: mrp.workcenter
+# NOTHING TO DO
+
+mrp          / mrp.production           / date_planned (datetime)       : was renamed to date_planned_start [nothing to do]
+mrp          / mrp.production           / move_lines (one2many)         : was renamed to move_raw_ids [nothing to do]
+mrp          / mrp.production           / move_created_ids2 (one2many)  : DEL relation: stock.move
+mrp          / mrp.production           / move_finished_ids (one2many)  : NEW relation: stock.move
+# DONE: pre-migration: Renamed fields.
+
+mrp          / mrp.production           / date_planned_finished (datetime): NEW
+mrp          / mrp.production           / move_created_ids (one2many)   : DEL relation: stock.move
+mrp          / mrp.production           / move_lines2 (one2many)        : DEL relation: stock.move
+mrp          / mrp.production           / move_prod_id (many2one)       : DEL relation: stock.move
+# NOTHING TO DO
+
+mrp          / mrp.production           / picking_type_id (many2one)    : NEW relation: stock.picking.type, required: required, req_default: function
+# DONE: Pre-migration: pre-created the field
+# DONE: Post-migration: Updated all mrp.production records trying to find
+# first the most suitable picking_type_id based on the destination location,
+# and fall back to the default picking type search if none found previously.
+
+mrp          / mrp.production           / procurement_group_id (many2one): NEW relation: procurement.group
+# NOTHING TO DO
+
+mrp          / mrp.production           / state (selection)             : selection_keys is now '['cancel', 'confirmed', 'done', 'planned', 'progress']' ('['cancel', 'confirmed', 'done', 'draft', 'in_production', 'ready']')
+# DONE: Pre-migration: Copy-column. Post-migration. Mapped some values
+
+mrp          / mrp.production           / procurement_ids (one2many)    : NEW relation: procurement.order
+mrp          / mrp.production           / product_lines (one2many)      : DEL relation: mrp.production.product.line
+mrp          / mrp.production           / propagate (boolean)           : NEW
+mrp          / mrp.production           / scrap_ids (one2many)          : NEW relation: stock.scrap
+mrp          / mrp.production           / website_message_ids (one2many): DEL relation: mail.message
+mrp          / mrp.production           / workcenter_lines (one2many)   : relation is now 'mrp.workorder' ('mrp.production.workcenter.line')
+# NOTHING TO DO
+
+mrp          / mrp.production           / product_uom (many2one)        : was renamed to product_uom_id [nothing to do]
+mrp          / mrp.production           / workcenter_lines (one2many)   : was renamed to workorder_ids [nothing to do]
+# DONE: pre-migration: Renamed fields.
+
+
+mrp          / mrp.routing              / workcenter_lines (one2many)   : was renamed to operation_ids [nothing to do]
+# DONE: pre-migration: Renamed field.
+
+
+mrp          / mrp.routing.workcenter   / batch (selection)             : NEW required: required, selection_keys: ['no', 'yes'], req_default: function
+mrp          / mrp.routing.workcenter   / batch_size (float)            : NEW
+# NOTHING TO DO
+
+mrp          / mrp.routing.workcenter   / cycle_nbr (float)             : DEL required: required, req_default: function
+mrp          / mrp.routing.workcenter   / hour_nbr (float)              : DEL required: required, req_default: function
+mrp          / mrp.routing.workcenter   / time_cycle_manual (float)     : NEW
+# DONE: Post-migration: Filled time_cycle_manual from cycle_nbr and hour_nbr.
+
+mrp          / mrp.routing.workcenter   / routing_id (many2one)         : now required
+# DONE: Post-migration: If not set, search for an existing routing in the company. If not found, created a dummy routing and assign it.
+
+mrp          / mrp.routing.workcenter   / time_mode (selection)         : NEW selection_keys: ['auto', 'manual']
+mrp          / mrp.routing.workcenter   / time_mode_batch (integer)     : NEW
+mrp          / mrp.routing.workcenter   / workorder_ids (one2many)      : NEW relation: mrp.workorder
+mrp          / mrp.routing.workcenter   / worksheet (binary)            : NEW
+# NOTHING TO DO
+
+
+##### THIS IS A NEW MODEL. NOTHING TO DO #######
+mrp          / mrp.unbuild              / bom_id (many2one)             : NEW relation: mrp.bom, required: required
+mrp          / mrp.unbuild              / consume_line_ids (one2many)   : NEW relation: stock.move
+mrp          / mrp.unbuild              / location_dest_id (many2one)   : NEW relation: stock.location, required: required, req_default: function
+mrp          / mrp.unbuild              / location_id (many2one)        : NEW relation: stock.location, required: required, req_default: function
+mrp          / mrp.unbuild              / lot_id (many2one)             : NEW relation: stock.production.lot
+mrp          / mrp.unbuild              / message_follower_ids (one2many): NEW relation: mail.followers
+mrp          / mrp.unbuild              / message_ids (one2many)        : NEW relation: mail.message
+mrp          / mrp.unbuild              / message_last_post (datetime)  : NEW
+mrp          / mrp.unbuild              / mo_id (many2one)              : NEW relation: mrp.production
+mrp          / mrp.unbuild              / name (char)                   : NEW
+mrp          / mrp.unbuild              / produce_line_ids (one2many)   : NEW relation: stock.move
+mrp          / mrp.unbuild              / product_id (many2one)         : NEW relation: product.product, required: required
+mrp          / mrp.unbuild              / product_qty (float)           : NEW required: required
+mrp          / mrp.unbuild              / product_uom_id (many2one)     : NEW relation: product.uom, required: required
+mrp          / mrp.unbuild              / state (selection)             : NEW selection_keys: ['done', 'draft']
+
+
+mrp          / mrp.workcenter           / capacity_per_cycle (float)    : was renamed to capacity [nothing to do]
+# DONE: pre-migration: Renamed field.
+
+mrp          / mrp.workcenter           / color (integer)               : NEW
+mrp          / mrp.workcenter           / costs_cycle (float)           : DEL
+mrp          / mrp.workcenter           / costs_cycle_account_id (many2one): DEL relation: account.analytic.account
+mrp          / mrp.workcenter           / costs_general_account_id (many2one): DEL relation: account.account
+mrp          / mrp.workcenter           / costs_hour (float)            : DEL
+mrp          / mrp.workcenter           / costs_hour_account_id (many2one): DEL relation: account.analytic.account
+mrp          / mrp.workcenter           / oee_target (float)            : NEW
+mrp          / mrp.workcenter           / order_ids (one2many)          : NEW relation: mrp.workorder
+mrp          / mrp.workcenter           / product_id (many2one)         : DEL relation: product.product
+mrp          / mrp.workcenter           / routing_line_ids (one2many)   : NEW relation: mrp.routing.workcenter
+mrp          / mrp.workcenter           / sequence (integer)            : NEW required: required, req_default: function
+mrp          / mrp.workcenter           / time_cycle (float)            : DEL
+mrp          / mrp.workcenter           / time_ids (one2many)           : NEW relation: mrp.workcenter.productivity
+# NOTHING TO DO
+
+
+##### THIS IS A NEW MODEL. NOTHING TO DO #######
+mrp          / mrp.workcenter.productivity / date_end (datetime)           : NEW
+mrp          / mrp.workcenter.productivity / date_start (datetime)         : NEW required: required, req_default: function
+mrp          / mrp.workcenter.productivity / description (text)            : NEW
+mrp          / mrp.workcenter.productivity / loss_id (many2one)            : NEW relation: mrp.workcenter.productivity.loss, required: required
+mrp          / mrp.workcenter.productivity / user_id (many2one)            : NEW relation: res.users
+mrp          / mrp.workcenter.productivity / workcenter_id (many2one)      : NEW relation: mrp.workcenter, required: required
+mrp          / mrp.workcenter.productivity / workorder_id (many2one)       : NEW relation: mrp.workorder
+# DONE: Post-migration: Tried to populate from new mrp.workorder
+mrp          / mrp.workcenter.productivity.loss / loss_type (selection)         : NEW required: required, selection_keys: ['availability', 'performance', 'productive', 'quality'], req_default: function
+mrp          / mrp.workcenter.productivity.loss / manual (boolean)              : NEW
+mrp          / mrp.workcenter.productivity.loss / name (char)                   : NEW required: required
+mrp          / mrp.workcenter.productivity.loss / sequence (integer)            : NEW
+
+####### DONE: Renamed model 'mrp_production_workcenter_line' to 'mrp_workorder' ################
+mrp          / mrp.workorder            / next_work_order_id (many2one) : NEW relation: mrp.workorder
+# DONE: Ordered the workorders of a same mrp_production based on the v9 'sequence' field and the ids.
+
+mrp          / mrp.workorder            / active_move_lot_ids (one2many): NEW relation: stock.move.lots
+mrp          / mrp.workorder            / capacity (float)              : NEW
+mrp          / mrp.workorder            / date_finished (datetime)      : NEW
+mrp          / mrp.workorder            / date_planned_finished (datetime): NEW
+mrp          / mrp.workorder            / date_planned_start (datetime) : NEW
+mrp          / mrp.workorder            / date_start (datetime)         : NEW
+mrp          / mrp.workorder            / duration_expected (float)     : NEW
+mrp          / mrp.workorder            / final_lot_id (many2one)       : NEW relation: stock.production.lot
+mrp          / mrp.workorder            / message_follower_ids (one2many): NEW relation: mail.followers
+mrp          / mrp.workorder            / message_ids (one2many)        : NEW relation: mail.message
+mrp          / mrp.workorder            / message_last_post (datetime)  : NEW
+mrp          / mrp.workorder            / move_lot_ids (one2many)       : NEW relation: stock.move.lots
+mrp          / mrp.workorder            / move_raw_ids (one2many)       : NEW relation: stock.move
+mrp          / mrp.workorder            / name (char)                   : NEW required: required
+mrp          / mrp.workorder            / operation_id (many2one)       : NEW relation: mrp.routing.workcenter
+mrp          / mrp.workorder            / production_id (many2one)      : NEW relation: mrp.production, required: required
+mrp          / mrp.workorder            / qty_produced (float)          : NEW
+mrp          / mrp.workorder            / qty_producing (float)         : NEW
+mrp          / mrp.workorder            / scrap_ids (one2many)          : NEW relation: stock.scrap
+mrp          / mrp.workorder            / state (selection)             : NEW selection_keys: ['cancel', 'done', 'pending', 'progress', 'ready']
+mrp          / mrp.workorder            / time_ids (one2many)           : NEW relation: mrp.workcenter.productivity
+mrp          / mrp.workorder            / workcenter_id (many2one)      : NEW relation: mrp.workcenter, required: required
+# DONE: pre-migration: renamed/mapped some fields from old mrp_operations module
+
+mrp          / procurement.order        / property_ids (many2many)      : DEL relation: mrp.property
+# NOTHING TO DO
+
+
+mrp          / stock.move               / consumed_for (many2one)       : DEL relation: stock.move
+# DONE: Pre-migration: Renamed to None and copied this column. That will be used in post-migration to known which moves are consumed for.
+
+mrp          / stock.move               / active_move_lot_ids (one2many): NEW relation: stock.move.lots
+mrp          / stock.move               / consume_unbuild_id (many2one) : NEW relation: mrp.unbuild
+mrp          / stock.move               / move_lot_ids (one2many)       : NEW relation: stock.move.lots
+mrp          / stock.move               / operation_id (many2one)       : NEW relation: mrp.routing.workcenter
+mrp          / stock.move               / unbuild_id (many2one)         : NEW relation: mrp.unbuild
+# NOTHING TO DO
+
+mrp          / stock.move               / bom_line_id (many2one)        : NEW relation: mrp.bom.line
+mrp          / stock.move               / unit_factor (float)           : NEW
+# DONE: post-migration: Filled someway.
+
+mrp          / stock.move               / quantity_done_store (float)   : NEW
+# DONE: post-migration: Populated by product_uom_qty if state = done and has production_id/raw_material_production_id
+
+mrp          / stock.move               / workorder_id (many2one)       : NEW relation: mrp.workorder
+# DONE: Post-migration: Linked raw moves with the last mrp_workorder of their mrp_production.
+
+
+mrp          / stock.move.lots          / done_wo (boolean)             : NEW
+mrp          / stock.move.lots          / lot_id (many2one)             : NEW relation: stock.production.lot
+mrp          / stock.move.lots          / lot_produced_id (many2one)    : NEW relation: stock.production.lot
+mrp          / stock.move.lots          / lot_produced_qty (float)      : NEW
+mrp          / stock.move.lots          / move_id (many2one)            : NEW relation: stock.move
+mrp          / stock.move.lots          / production_id (many2one)      : NEW relation: mrp.production
+mrp          / stock.move.lots          / quantity (float)              : NEW
+mrp          / stock.move.lots          / quantity_done (float)         : NEW
+mrp          / stock.move.lots          / workorder_id (many2one)       : NEW relation: mrp.workorder
+# NOTHING TO DO
+
+
+mrp          / stock.picking.type       / code (False)                  : NEW selection_keys: ['incoming', 'internal', 'mrp_operation', 'outgoing'], mode: modify
+# DONE: post-migration: Populated from manufacturing warehouses. Then, procurement rules updated accordingly.
+
+mrp          / stock.quant              / consumed_quant_ids (many2many): NEW relation: stock.quant
+# DONE: Post-migration: Used the 'consumed_for' column of stock_move to find the relation and insert into the relations table
+
+mrp          / stock.quant              / produced_quant_ids (many2many): NEW relation: stock.quant
+# NOTHING TO DO. Used in the new unbuild process
+
+
+mrp          / stock.scrap              / production_id (many2one)      : NEW relation: mrp.production
+mrp          / stock.scrap              / workorder_id (many2one)       : NEW relation: mrp.workorder
+# NOTHING TO DO
+
+mrp          / stock.warehouse          / manu_type_id (many2one)       : NEW relation: stock.picking.type
+# DONE: Post-migration: for all warehouses, wrote on 'manufacture_to_resupply' to True, so as to force
+# the creation of the default picking types and pull rules for manufacturing on that warehouse
+
+---XML records in module 'mrp'---
+NEW ir.actions.act_window: mrp.act_mrp_block_workcenter
+NEW ir.actions.act_window: mrp.act_mrp_block_workcenter_wo
+NEW ir.actions.act_window: mrp.act_product_mrp_production_workcenter
+NEW ir.actions.act_window: mrp.action_mrp_production_form
+NEW ir.actions.act_window: mrp.action_mrp_production_moves
+NEW ir.actions.act_window: mrp.action_mrp_routing_time
+NEW ir.actions.act_window: mrp.action_mrp_unbuild_moves
+NEW ir.actions.act_window: mrp.action_mrp_workcenter_load_report_graph
+NEW ir.actions.act_window: mrp.action_mrp_workorder_production
+NEW ir.actions.act_window: mrp.action_mrp_workorder_production_specific
+NEW ir.actions.act_window: mrp.action_mrp_workorder_workcenter
+NEW ir.actions.act_window: mrp.action_work_orders
+NEW ir.actions.act_window: mrp.mrp_bom_line_action_from_bom
+NEW ir.actions.act_window: mrp.mrp_message_action_main
+NEW ir.actions.act_window: mrp.mrp_production_action_picking_deshboard
+NEW ir.actions.act_window: mrp.mrp_production_action_waiting
+NEW ir.actions.act_window: mrp.mrp_production_report
+NEW ir.actions.act_window: mrp.mrp_unbuild
+NEW ir.actions.act_window: mrp.mrp_workcenter_kanban_action
+NEW ir.actions.act_window: mrp.mrp_workcenter_productivity_loss_action
+NEW ir.actions.act_window: mrp.mrp_workcenter_productivity_report
+NEW ir.actions.act_window: mrp.mrp_workcenter_productivity_report_blocked
+NEW ir.actions.act_window: mrp.mrp_workcenter_productivity_report_oee
+NEW ir.actions.act_window: mrp.mrp_workorder_delta_report
+NEW ir.actions.act_window: mrp.mrp_workorder_report
+NEW ir.actions.act_window: mrp.mrp_workorder_todo
+NEW ir.actions.act_window: mrp.mrp_workorder_workcenter_report
+DEL ir.actions.act_window: mrp.action2
+DEL ir.actions.act_window: mrp.action_report_in_out_picking_tree
+DEL ir.actions.act_window: mrp.move_consume
+DEL ir.actions.act_window: mrp.mrp_property_action
+DEL ir.actions.act_window: mrp.mrp_property_group_action
+NEW ir.actions.act_window.view: mrp.action_mrp_workcenter_load_report_pivot
+DEL ir.actions.client: mrp.action_client_mrp_menu
+NEW ir.actions.server: mrp.production_order_server_action
+DEL ir.actions.todo: base.open_menu
+NEW ir.model.access: mrp.access_mrp_message_mrp_user
+NEW ir.model.access: mrp.access_mrp_unbuild
+NEW ir.model.access: mrp.access_mrp_workcenter_productivity
+NEW ir.model.access: mrp.access_mrp_workcenter_productivity_loss
+NEW ir.model.access: mrp.access_mrp_workcenter_productivity_loss_manager
+NEW ir.model.access: mrp.access_mrp_workorder_mrp_manager
+NEW ir.model.access: mrp.access_mrp_workorder_mrp_user
+NEW ir.model.access: mrp.access_stock_move_lots
+NEW ir.model.access: mrp.access_stock_move_lots_manager
+DEL ir.model.access: mrp.access_account_account
+DEL ir.model.access: mrp.access_account_analytic_line_user
+DEL ir.model.access: mrp.access_account_journal_mrp_manager
+DEL ir.model.access: mrp.access_hr_timesheet_group_mrp_worker
+DEL ir.model.access: mrp.access_ir_property_group_product_mrp_manager
+DEL ir.model.access: mrp.access_ir_property_manager
+DEL ir.model.access: mrp.access_mrp_bom_invoicing_payment
+DEL ir.model.access: mrp.access_mrp_bom_line_salesman
+DEL ir.model.access: mrp.access_mrp_bom_salesman
+DEL ir.model.access: mrp.access_mrp_production_invoicing_payment
+DEL ir.model.access: mrp.access_mrp_production_product_line
+DEL ir.model.access: mrp.access_mrp_production_product_line_manager
+DEL ir.model.access: mrp.access_mrp_production_product_line_salesman
+DEL ir.model.access: mrp.access_mrp_production_salesman
+DEL ir.model.access: mrp.access_mrp_production_workcenter_line_salesman
+DEL ir.model.access: mrp.access_mrp_property
+DEL ir.model.access: mrp.access_mrp_property_group
+DEL ir.model.access: mrp.access_mrp_property_group_manager
+DEL ir.model.access: mrp.access_mrp_property_manager
+DEL ir.model.access: mrp.access_procurement_manager
+DEL ir.model.access: mrp.access_report_mrp_inout
+DEL ir.model.access: mrp.access_report_mrp_inout_user
+DEL ir.model.access: mrp.access_report_workcenter_load
+DEL ir.model.access: mrp.access_report_workcenter_load_user
+DEL ir.model.access: mrp.access_workcenter_manager
+DEL ir.model.access: mrp.access_workcenter_user
+NEW ir.sequence: mrp.sequence_mrp_route
+NEW ir.sequence: mrp.sequence_mrp_unbuild
+NEW ir.ui.menu: mrp.menu_mrp_dashboard
+NEW ir.ui.menu: mrp.menu_mrp_production_report
+NEW ir.ui.menu: mrp.menu_mrp_reporting
+NEW ir.ui.menu: mrp.menu_mrp_scrap
+NEW ir.ui.menu: mrp.menu_mrp_traceability
+NEW ir.ui.menu: mrp.menu_mrp_unbuild
+NEW ir.ui.menu: mrp.menu_mrp_work_order_report
+NEW ir.ui.menu: mrp.menu_mrp_workcenter_productivity_loss
+NEW ir.ui.menu: mrp.menu_mrp_workcenter_productivity_report
+NEW ir.ui.menu: mrp.menu_mrp_workorder_todo
+NEW ir.ui.menu: mrp.mrp_message_menu
+DEL ir.ui.menu: mrp.menu_mrp_planning
+DEL ir.ui.menu: mrp.menu_mrp_production_order_action
+DEL ir.ui.menu: mrp.menu_mrp_property_action
+DEL ir.ui.menu: mrp.menu_mrp_property_group_action
+# NOTHING TO DO
+
+NEW ir.ui.menu: mrp.menu_mrp_config
+DEL ir.ui.menu: base.menu_mrp_config
+NEW ir.ui.menu: mrp.menu_mrp_root
+DEL ir.ui.menu: base.menu_mrp_root
+# DONE: Renamed XML-IDs
+
+NEW ir.ui.view: mrp.assets_backend
+NEW ir.ui.view: mrp.mrp_bom_cost_report
+NEW ir.ui.view: mrp.mrp_bom_line_view_form
+NEW ir.ui.view: mrp.mrp_bom_structure_report
+NEW ir.ui.view: mrp.mrp_message_view_form
+NEW ir.ui.view: mrp.mrp_message_view_form_embedded_bom
+NEW ir.ui.view: mrp.mrp_message_view_form_embedded_product
+NEW ir.ui.view: mrp.mrp_message_view_search
+NEW ir.ui.view: mrp.mrp_message_view_tree
+NEW ir.ui.view: mrp.mrp_production_workcenter_form_view_inherit
+NEW ir.ui.view: mrp.mrp_production_workcenter_tree_view_inherit
+NEW ir.ui.view: mrp.mrp_unbuild_form_view
+NEW ir.ui.view: mrp.mrp_unbuild_search_view
+NEW ir.ui.view: mrp.mrp_unbuild_tree_view
+NEW ir.ui.view: mrp.mrp_workcenter_block_wizard_form
+NEW ir.ui.view: mrp.mrp_workcenter_kanban
+NEW ir.ui.view: mrp.mrp_workorder_view_gantt
+NEW ir.ui.view: mrp.oee_form_view
+NEW ir.ui.view: mrp.oee_graph_view
+NEW ir.ui.view: mrp.oee_loss_form_view
+NEW ir.ui.view: mrp.oee_loss_search_view
+NEW ir.ui.view: mrp.oee_loss_tree_view
+NEW ir.ui.view: mrp.oee_pie_view
+NEW ir.ui.view: mrp.oee_pivot_view
+NEW ir.ui.view: mrp.oee_search_view
+NEW ir.ui.view: mrp.oee_tree_view
+NEW ir.ui.view: mrp.stock_production_type_kanban
+NEW ir.ui.view: mrp.stock_scrap_view_form2_mrp_inherit_mrp
+NEW ir.ui.view: mrp.stock_scrap_view_form_mrp_inherit_mrp
+NEW ir.ui.view: mrp.view_document_file_kanban_mrp
+NEW ir.ui.view: mrp.view_mrp_production_work_order_search
+NEW ir.ui.view: mrp.view_mrp_production_workcenter_form_view_filter
+NEW ir.ui.view: mrp.view_stock_move_lots
+NEW ir.ui.view: mrp.view_work_center_load_graph
+NEW ir.ui.view: mrp.view_workcenter_load_pivot
+NEW ir.ui.view: mrp.workcenter_line_calendar
+NEW ir.ui.view: mrp.workcenter_line_gantt_production
+NEW ir.ui.view: mrp.workcenter_line_graph
+NEW ir.ui.view: mrp.workcenter_line_kanban
+NEW ir.ui.view: mrp.workcenter_line_pivot
+DEL ir.ui.view: mrp.mrp_bom_cost
+DEL ir.ui.view: mrp.mrp_company
+DEL ir.ui.view: mrp.mrp_production_product_form_view
+DEL ir.ui.view: mrp.mrp_production_product_tree_view
+DEL ir.ui.view: mrp.mrp_property_form_view
+DEL ir.ui.view: mrp.mrp_property_group_form_view
+DEL ir.ui.view: mrp.mrp_property_tree_view
+DEL ir.ui.view: mrp.report_mrpbomstructure
+DEL ir.ui.view: mrp.view_mrp_property_search
+DEL ir.ui.view: mrp.view_report_in_out_picking_form
+DEL ir.ui.view: mrp.view_report_in_out_picking_graph
+DEL ir.ui.view: mrp.view_report_in_out_picking_tree
+DEL ir.ui.view: mrp.view_stock_move_consume_wizard
+DEL ir.ui.view: mrp.view_workcenter_load_graph
+DEL ir.ui.view: mrp.view_workcenter_load_search
+DEL ir.ui.view: mrp.view_workcenter_load_tree
+NEW ir.values: mrp.run_procurement_order_action
+NEW mrp.workcenter.productivity.loss: mrp.block_reason0
+NEW mrp.workcenter.productivity.loss: mrp.block_reason1
+NEW mrp.workcenter.productivity.loss: mrp.block_reason2
+NEW mrp.workcenter.productivity.loss: mrp.block_reason4
+NEW mrp.workcenter.productivity.loss: mrp.block_reason5
+NEW mrp.workcenter.productivity.loss: mrp.block_reason6
+NEW mrp.workcenter.productivity.loss: mrp.block_reason7
+DEL res.groups: mrp.group_rounding_efficiency
+NEW res.users: base.default_user
+DEL workflow: mrp.wkf_prod
+DEL workflow.activity: mrp.prod_act_cancel
+DEL workflow.activity: mrp.prod_act_confirmed
+DEL workflow.activity: mrp.prod_act_done
+DEL workflow.activity: mrp.prod_act_draft
+DEL workflow.activity: mrp.prod_act_in_production
+DEL workflow.activity: mrp.prod_act_ready
+DEL workflow.transition: mrp.prod_trans_confirmed_cancel
+DEL workflow.transition: mrp.prod_trans_draft_cancel
+DEL workflow.transition: mrp.prod_trans_draft_picking
+DEL workflow.transition: mrp.prod_trans_in_production_cancel
+DEL workflow.transition: mrp.prod_trans_in_production_done
+DEL workflow.transition: mrp.prod_trans_picking_ready
+DEL workflow.transition: mrp.prod_trans_ready_cancel
+DEL workflow.transition: mrp.prod_trans_ready_in_production
+# NOTHING TO DO
