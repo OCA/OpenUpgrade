@@ -1,0 +1,21 @@
+---Fields in module 'website_sale_delivery'---
+website_sale_delivery / delivery.carrier         / website_description (text)    : NEW mode: modify
+website_sale_delivery / delivery.carrier         / website_description (text)    : type is now 'html' ('text')
+# Nothing to do because field is related and change to html it must be done in product module
+
+website_sale_delivery / delivery.carrier         / website_published (boolean)   : module is now 'website_sale' ('website_sale_delivery')
+website_sale_delivery / delivery.carrier         / website_url (char)            : module is now 'website_sale' ('website_sale_delivery')
+# Nothing to do
+
+website_sale_delivery / delivery.carrier         / website_url (char)            : not a function anymore
+# Nothing to do
+
+---XML records in module 'website_sale_delivery'---
+NEW ir.ui.menu: website_sale_delivery.menu_ecommerce_delivery
+NEW ir.ui.view: website_sale_delivery.shipping_tracking
+NEW ir.ui.view: website_sale_delivery.view_delivery_carrier_form_website_delivery
+NEW ir.ui.view: website_sale_delivery.view_delivery_carrier_search_inherit_website_sale_delivery
+NEW ir.ui.view: website_sale_delivery.view_delivery_carrier_tree_inherit_website_sale_delivery
+DEL ir.ui.view: website_sale_delivery.country_state_shipping
+DEL ir.ui.view: website_sale_delivery.view_delivery_carrier_form
+# Nothing to do
