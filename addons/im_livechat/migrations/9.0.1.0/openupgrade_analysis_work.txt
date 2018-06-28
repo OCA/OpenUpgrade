@@ -6,10 +6,14 @@ im_livechat  / im_livechat.channel.rule / auto_popup_timer (integer)    : NEW
 im_livechat  / im_livechat.channel.rule / channel_id (many2one)         : NEW relation: im_livechat.channel
 im_livechat  / im_livechat.channel.rule / country_ids (many2many)       : NEW relation: res.country
 im_livechat  / im_livechat.channel.rule / regex_url (char)              : NEW 
-im_livechat  / im_livechat.channel.rule / sequence (integer)            : NEW 
+im_livechat  / im_livechat.channel.rule / sequence (integer)            : NEW
+# Nothing to do: new features
+
 im_livechat  / mail.channel             / anonymous_name (char)         : NEW 
 im_livechat  / mail.channel             / channel_type (False)          : NEW selection_keys: ['channel', 'chat', 'livechat'], mode: modify
 im_livechat  / mail.channel             / livechat_channel_id (many2one): NEW relation: im_livechat.channel
+# DONE: Import data from im_chat module
+
 im_livechat  / mail.channel             / rating_ids (one2many)         : NEW relation: rating.rating
 # Nothing to do: new features
 
