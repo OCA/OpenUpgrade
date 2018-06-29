@@ -14,6 +14,9 @@ renamed_modules = {
     # The OCA extensions of the hr_holidays module are 'hr_holidays_something'
     'hr_holiday_notify_employee_manager':
         'hr_holidays_notify_employee_manager',
+    # OCA/hr-timesheet
+    'hr_timesheet_sheet_restrict_analytic':
+        'hr_timesheet_sheet_restrict_project',
     # OCA/manufacture-reporting:
     'report_mrp_bom_matrix': 'mrp_bom_matrix_report',
     # OCA/sale-workflow:
