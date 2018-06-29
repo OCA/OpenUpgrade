@@ -1,0 +1,67 @@
+---Fields in module 'purchase_requisition'---
+purchase_requisition / purchase.order.line      / quantity_tendered (float)     : DEL
+purchase_requisition / purchase.requisition     / exclusive (selection)         : DEL required: required, selection_keys: ['exclusive', 'multiple'], req_default: multiple
+purchase_requisition / purchase.requisition     / multiple_rfq_per_supplier (boolean): DEL
+# Nothing to do
+
+purchase_requisition / purchase.requisition     / type_id (many2one)            : NEW relation: purchase.requisition.type, required: required, req_default: function
+# Done: Apply default value in post migration
+
+purchase_requisition / purchase.requisition     / vendor_id (many2one)          : NEW relation: res.partner
+# Nothing to do
+
+purchase_requisition / purchase.requisition     / website_message_ids (one2many): DEL relation: mail.message
+# Nothing to do
+
+purchase_requisition / purchase.requisition.line / price_unit (float)            : NEW
+# Nothing to do
+
+purchase_requisition / purchase.requisition.line / product_id (many2one)         : now required
+# Done: fill this field with a generic product if null
+
+purchase_requisition / purchase.requisition.type / exclusive (selection)         : NEW required: required, selection_keys: ['exclusive', 'multiple'], req_default: function
+# Nothing to do
+
+purchase_requisition / purchase.requisition.type / line_copy (selection)         : NEW required: required, selection_keys: ['copy', 'none'], req_default: function
+# Nothing to do
+
+purchase_requisition / purchase.requisition.type / name (char)                   : NEW required: required
+# Nothing to do
+
+purchase_requisition / purchase.requisition.type / quantity_copy (selection)     : NEW required: required, selection_keys: ['copy', 'none'], req_default: function
+# Nothing to do
+
+purchase_requisition / purchase.requisition.type / sequence (integer)            : NEW
+# Nothing to do
+
+
+---XML records in module 'purchase_requisition'---
+NEW ir.actions.act_window: purchase_requisition.action_purchase_requisition_list
+NEW ir.actions.act_window: purchase_requisition.action_purchase_requisition_to_so
+NEW ir.actions.act_window: purchase_requisition.tender_type_action
+DEL ir.actions.act_window: purchase_requisition.action_bid_line_qty
+DEL ir.actions.act_window: purchase_requisition.action_purchase_requisition_partner
+DEL ir.actions.act_window: purchase_requisition.purchase_line_tree
+NEW ir.model.access: purchase_requisition.access_purchase_requisition_type
+NEW ir.model.access: purchase_requisition.access_purchase_requisition_type_manager
+NEW ir.ui.menu: purchase_requisition.menu_purchase_requisition_type
+NEW ir.ui.view: purchase_requisition.view_purchase_requisition_type_form
+NEW ir.ui.view: purchase_requisition.view_purchase_requisition_type_tree
+DEL ir.ui.view: purchase_requisition.assets_backend
+DEL ir.ui.view: purchase_requisition.purchase_order_line_tree_tender
+DEL ir.ui.view: purchase_requisition.view_bid_line_qty
+DEL ir.ui.view: purchase_requisition.view_purchase_requisition_partner
+NEW purchase.requisition.type: purchase_requisition.type_multi
+NEW purchase.requisition.type: purchase_requisition.type_single
+DEL workflow: purchase_requisition.purchase_requisition_workflow
+DEL workflow.activity: purchase_requisition.act_cancel
+DEL workflow.activity: purchase_requisition.act_done
+DEL workflow.activity: purchase_requisition.act_draft
+DEL workflow.activity: purchase_requisition.act_open
+DEL workflow.activity: purchase_requisition.act_sent
+DEL workflow.transition: purchase_requisition.trans_draft_cancel
+DEL workflow.transition: purchase_requisition.trans_draft_sent
+DEL workflow.transition: purchase_requisition.trans_open_done
+DEL workflow.transition: purchase_requisition.trans_sent_cancel
+DEL workflow.transition: purchase_requisition.trans_sent_open
+# Nothing to do
