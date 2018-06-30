@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Tecnativa - Pedro M. Baeza
+# Copyright 2017-2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
@@ -62,4 +62,11 @@ def migrate(env, version):
     openupgrade.map_values(
         env.cr, openupgrade.get_legacy_name('state'), 'state',
         [('partially_available', 'assigned')], table='stock_picking',
+    )
+    openupgrade.add_fields(
+        env, [
+            ('reference', 'stock.move', 'stock_move', 'char', False, 'stock'),
+            ('scheduled_date', 'stock.picking', 'stock_picking', 'date', False,
+             'stock'),
+        ],
     )
