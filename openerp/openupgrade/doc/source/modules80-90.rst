@@ -28,7 +28,7 @@ missing in the new release are marked with |del|.
 +----------------------------------------+------------------------------------------+
 |account_accountant                      | Nothing to do                            |
 +----------------------------------------+------------------------------------------+
-| |del| account_analytic_analysis        |                                          |
+| |del| account_analytic_analysis        | Moved to OCA [#a_analytic_analysis]_     |
 +----------------------------------------+------------------------------------------+
 |account_analytic_default                | Nothing to do                            |
 +----------------------------------------+------------------------------------------+
@@ -662,6 +662,10 @@ missing in the new release are marked with |del|.
 +----------------------------------------+------------------------------------------+
 |website_twitter                         |                                          |
 +----------------------------------------+------------------------------------------+
+
+.. [#a_analytic_analysis] 'Account Analytic Analysis' Module is now under Odoo Community Association Umbrella
+    as 'Contract' (not exactly the same but does the same):
+    See : https://github.com/OCA/contract/tree/9.0/contract
 
 .. [#account_analytic_plans] 'Account Analytic Plans' Module is now under Odoo Community Association Umbrella
     as 'Account Analytic Distribution' (not exactly the same but does the same):
