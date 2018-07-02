@@ -1,10 +1,51 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Tecnativa - Pedro M. Baeza
+# Copyright 2017-2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
+from psycopg2.extensions import AsIs
 
 
+@openupgrade.logging()
+def compute_stock_move_reference(env):
+    """Compute through SQL this field for saving time."""
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE stock_move
+        SET reference = name
+        WHERE picking_id IS NULL"""
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE stock_move sm
+        SET reference = sp.name
+        FROM stock_picking sp
+        WHERE sm.picking_id = sp.id"""
+    )
+
+
+@openupgrade.logging()
+def compute_picking_scheduled_date(env):
+    """Compute through SQL this field for saving time."""
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE stock_picking sp
+        SET scheduled_date = sub.date_expected
+        FROM (
+            SELECT sm.picking_id,
+                CASE WHEN sp.move_type = 'direct'
+                THEN MIN(sm.date_expected)
+                ELSE MAX(sm.date_expected)
+                END AS date_expected
+            FROM stock_move sm, stock_picking sp
+            WHERE sm.picking_id = sp.id
+            GROUP BY sm.picking_id, sp.move_type
+        ) AS sub
+        WHERE sub.picking_id = sp.id"""
+    )
+
+
+@openupgrade.logging()
 def product_assign_responsible(env):
     """Assign as responsible the creator of the product."""
     openupgrade.logged_query(
@@ -15,6 +56,7 @@ def product_assign_responsible(env):
     )
 
 
+@openupgrade.logging()
 def create_specific_procurement_rules_from_globals(env):
     """Create one record per route for the global rules found in previous
     version.
@@ -24,26 +66,29 @@ def create_specific_procurement_rules_from_globals(env):
             """SELECT column_name
             FROM information_schema.columns
             WHERE table_name = %s
+                AND column_name != 'id'
             ORDER BY ordinal_position""",
             (table, ),
         )
-        columns = [
-            ('t.' + x[0]) if x != 'route_id' else 'slr.id'
-            for x in env.cr.fetchall()
+        dest_columns = [x[0] for x in env.cr.fetchall()]
+        src_columns = [
+            ('t.' + x) if x != 'route_id' else 'slr.id' for x in dest_columns
         ]
         openupgrade.logged_query(
             env.cr, """
             INSERT INTO %s
+            (%s)
             SELECT %s
-            FROM %s t, stock_location_route slr
-            """ % (
-                table,
-                ", ".join(columns),
-                openupgrade.get_legacy_name(table)
+            FROM %s t, stock_location_route slr""", (
+                AsIs(table),
+                AsIs(", ".join(dest_columns)),
+                AsIs(", ".join(src_columns)),
+                AsIs(openupgrade.get_legacy_name(table)),
             ),
         )
 
 
+@openupgrade.logging()
 def set_quant_reserved_qty(env):
     """If there was a reserved move, then the entire quantity was reserved,
     so we have to put quant qty as the reserved qty. Later on end migration,
@@ -57,6 +102,7 @@ def set_quant_reserved_qty(env):
     )
 
 
+@openupgrade.logging()
 def set_partially_available_state(env):
     openupgrade.logged_query(
         env.cr, """
@@ -66,6 +112,7 @@ def set_partially_available_state(env):
     )
 
 
+@openupgrade.logging()
 def create_stock_move_line(env):
     """This method creates stock.move.line recreated from old
     stock.pack.operation records.
@@ -150,6 +197,8 @@ def create_stock_move_line(env):
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
+    compute_stock_move_reference(env)
+    compute_picking_scheduled_date(env)
     product_assign_responsible(env)
     create_specific_procurement_rules_from_globals(env)
     set_quant_reserved_qty(env)
