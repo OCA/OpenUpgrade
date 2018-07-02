@@ -23,6 +23,9 @@ renamed_modules = {
     'sale_delivery_block': 'sale_stock_picking_blocking',
     # OCA/server-tools:
     'mail_log_messages_to_process': 'mail_log_message_to_process',
+    # OCA/stock-logistics-workflow:
+    'product_customer_code_picking':
+        'product_supplierinfo_for_customer_picking',
 }
 
 renamed_models = {
