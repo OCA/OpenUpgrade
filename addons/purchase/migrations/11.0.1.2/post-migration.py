@@ -27,9 +27,72 @@ def update_procurement_fields(env):
     )
 
 
+@openupgrade.logging()
+def fill_purchase_order_picking_fields(env):
+    """Fill computed stored fields through SQL for performance."""
+    # Field picking_ids
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO purchase_order_stock_picking_rel
+        (purchase_order_id, stock_picking_id)
+        SELECT order_id, picking_id
+        FROM purchase_order_line pol,
+            stock_move sm
+        WHERE sm.purchase_line_id = pol.id
+            AND sm.picking_id IS NOT NULL
+        GROUP BY pol.order_id, sm.picking_id""",
+    )
+    # First we set everything to 0 for picking_count
+    openupgrade.logged_query(
+        env.cr, "UPDATE purchase_order po SET picking_count = 0",
+    )
+    # Now we set actual values for picking_count
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE purchase_order po
+        SET picking_count = sub.picking_count
+        FROM (
+            SELECT purchase_order_id AS id,
+                COUNT(stock_picking_id) AS picking_count
+            FROM purchase_order_stock_picking_rel
+            GROUP BY purchase_order_id
+        ) AS sub
+        WHERE sub.id = po.id""",
+    )
+    # Field invoice_ids
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO account_invoice_purchase_order_rel
+        (purchase_order_id, account_invoice_id)
+        SELECT order_id, invoice_id
+        FROM purchase_order_line pol,
+            account_invoice_line ail
+        WHERE ail.purchase_line_id = pol.id
+        GROUP BY pol.order_id, ail.invoice_id""",
+    )
+    # First we set everything to 0 for invoice_count
+    openupgrade.logged_query(
+        env.cr, "UPDATE purchase_order po SET invoice_count = 0",
+    )
+    # Now we set actual values for invoice_count
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE purchase_order po
+        SET invoice_count = sub.invoice_count
+        FROM (
+            SELECT purchase_order_id AS id,
+                COUNT(account_invoice_id) AS invoice_count
+            FROM account_invoice_purchase_order_rel
+            GROUP BY purchase_order_id
+        ) AS sub
+        WHERE sub.id = po.id""",
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     update_procurement_fields(env)
+    fill_purchase_order_picking_fields(env)
     openupgrade.load_data(
         env.cr, 'purchase', 'migrations/11.0.1.2/noupdate_changes.xml',
     )
