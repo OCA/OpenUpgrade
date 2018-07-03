@@ -6,26 +6,6 @@
 from openupgradelib import openupgrade
 
 
-def rename_property(cr, model, old_name, new_name):
-    """Rename property old_name to new_name. This should happen in a
-    pre-migration script."""
-    # TODO: propose this to openupgradelib
-    cr.execute(
-        "update ir_model_fields f set name=%s "
-        "from ir_model m "
-        "where m.id=f.model_id and m.model=%s and f.name=%s "
-        "returning f.id",
-        (new_name, model, old_name))
-    field_ids = tuple(i for i, in cr.fetchall())
-    cr.execute(
-        "update ir_model_data set name=%s where model='ir.model.fields' and "
-        "res_id in %s",
-        ('%s,%s' % (model, new_name), field_ids))
-    cr.execute(
-        "update ir_property set name=%s where fields_id in %s",
-        (new_name, field_ids))
-
-
 @openupgrade.migrate()
 def migrate(cr, version):
     cr.execute(
@@ -41,8 +21,4 @@ def migrate(cr, version):
             openupgrade.get_legacy_name('delivery_carrier'),
             openupgrade.get_legacy_name('carrier_id'),
         )
-    )
-    rename_property(
-        cr, 'res.partner', 'property_delivery_carrier',
-        'property_delivery_carrier_id',
     )

@@ -136,3 +136,6 @@ def migrate(env, version):
     openupgrade.rename_fields(env, field_renames)
     correct_rule_prices(cr)
     openupgrade.rename_tables(cr, table_renames)
+    openupgrade.rename_property(
+        cr,'res.partner', 'property_delivery_carrier',
+        'property_delivery_carrier_id')
