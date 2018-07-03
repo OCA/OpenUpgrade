@@ -251,6 +251,10 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
     _depends = {}               # dependencies of models backed up by sql views
                                 # {model_name: field_names, ...}
 
+    # OpenUpgrade start
+    _openupgrade_recompute_fields_blacklist = []  # List of blacklisted fields
+    # OpenUpgrade end
+
     # default values for _transient_vacuum()
     _transient_check_count = 0
     _transient_max_count = lazy_classproperty(lambda _: config.get('osv_memory_count_limit'))
@@ -4893,9 +4897,20 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             # determine the fields to recompute
             fs = self.env[field.model_name]._field_computed[field]
             # OpenUpgrade start:
+            blacklist = recs._openupgrade_recompute_fields_blacklist
+            field_key = '%s' % field
+            model_name, field_name = field_key.rsplit('.', 1)
+            if field_name in blacklist:
+                _logger.info(
+                    "Recompute of field %s for %d recs blacklisted." %
+                    (field_key, len(recs))
+                )
+                for f in fs:
+                    recs._recompute_done(f)
+                continue
             _logger.info(
                 "Actual recompute of field %s for %d recs." %
-                (field, len(recs))
+                (field_key, len(recs))
             )
             # OpenUpgrade end
             ns = [f.name for f in fs if f.store]
