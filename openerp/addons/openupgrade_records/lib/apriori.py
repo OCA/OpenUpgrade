@@ -64,6 +64,8 @@ renamed_modules = {
     'website_mail_group': 'website_mail_channel',
     # stock-logistics-barcode
     'product_barcode_generator': 'barcodes_generator_product',
+    # OCA/web
+    'web_shortcuts': 'web_shortcut',
 }
 
 renamed_models = {
