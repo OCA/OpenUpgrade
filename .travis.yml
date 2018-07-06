@@ -16,7 +16,7 @@ addons:
             - python-psycopg2
             - python-werkzeug
             - realpath
-    postgresql: "9.4"
+    postgresql: "9.6"
 
 env:
   - DB=openupgrade ODOO=./odoo-bin
