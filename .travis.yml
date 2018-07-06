@@ -11,7 +11,7 @@ addons:
             - python-simplejson
             - python-serial
             - python-yaml
-    postgresql: "9.4"
+    postgresql: "9.6"
 
 env:
   - DB=openupgrade ODOO=./openerp-server OPENUPGRADE_TESTS=1

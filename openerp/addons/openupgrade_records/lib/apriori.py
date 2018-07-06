@@ -30,6 +30,8 @@ renamed_modules = {
     'product_images': 'product_multi_image',
     # OCA/hr-timesheet
     'hr_timesheet_holidays': 'hr_timesheet_holiday',
+    # OCA/web
+    'web_popup_large': 'web_dialog_size',
 }
 
 renamed_models = {
