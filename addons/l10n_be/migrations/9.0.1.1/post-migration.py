@@ -17,8 +17,12 @@ def _load_code2tag(env):
     here = os.path.dirname(__file__)
     with open(os.path.join(here, 'tax_code2tag.csv')) as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
-        next(reader)
-        for code_code, code_name, tag_name, tag_xmlid in reader:
+        header = next(reader)
+        code_code_index = header.index('account.tax.code:code')
+        tag_xmlid_index = header.index('account.account.tag:xmlid')
+        for row in reader:
+            code_code = row[code_code_index]
+            tag_xmlid = row[tag_xmlid_index]
             if not code_code:
                 continue
             if tag_xmlid:
