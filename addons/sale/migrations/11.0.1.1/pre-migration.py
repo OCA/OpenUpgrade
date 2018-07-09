@@ -48,3 +48,11 @@ def migrate(env, version):
     openupgrade.update_module_moved_fields(
         env.cr, 'sale.order', ['procurement_group_id'], 'sale', 'sale_stock',
     )
+    openupgrade.add_fields(
+        env, [
+            ('amt_invoiced', 'sale.order.line', 'sale_order_line', 'monetary',
+             False, 'sale'),
+            ('amt_to_invoice', 'sale.order.line', 'sale_order_line',
+             'monetary', False, 'sale'),
+        ]
+    )
