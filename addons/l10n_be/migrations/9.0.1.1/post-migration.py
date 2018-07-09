@@ -183,32 +183,33 @@ def set_aml_taxes(env, company_id, codeid2tag):
                 tax_code_id, tax_id,
             )
     env.cr.execute(
-        """SELECT id, name, move_id, account_id, tax_code_id, tax_amount
+        """SELECT id, date, name, move_id, account_id, tax_code_id, tax_amount
         FROM account_move_line
         WHERE company_id=%s
           AND tax_code_id IS NOT NULL
           AND debit = 0 AND credit = 0 AND tax_amount != 0
         """, (company_id, )
     )
-    for ml_id, name, move_id, account_id, tax_code_id, tax_amount \
+    for ml_id, date, name, move_id, account_id, tax_code_id, tax_amount \
             in env.cr.fetchall():
         tax_id, ttype = _get_tax_from_tax_code(
             env, company_id, tax_code_id, codeid2tag, tc2t,
         )
         if not tax_id:
             continue
-        move = env['account.move'].browse(move_id)
-        _logger.info("fixing %s %s %s %s", ml_id, name, tax_code_id, move.name)
-        for move_line in move.line_ids:
-            if move_line.account_id.id == account_id and \
-                    (move_line.debit == abs(tax_amount) or
-                     move_line.credit == abs(tax_amount)):
-                move_line.write({
-                    'tax_ids': [(4, tax_id, 0)],
-                })
-                break
-        else:
-            _logger.error("fixing %s %s %s in %s", ml_id, name, tax_code_id, move.name)
+	if tax_amount < 0:
+	    debit = -tax_amount
+	    credit = 0
+	else:
+	   debit = 0
+	   credit = tax_amount
+	for d, c, t in ((debit, credit, tax_id), (credit, debit, None)):
+	    env.cr.execute(
+		"""INSERT INTO account_move_line
+		(move_id, date, date_maturity, name, account_id, debit, credit, tax_line_id)
+		VALUES (%s, %s, %s, '[8 to 9 tax migration] ' || %s, %s, %s, %s, %s)
+		""", (move_id, date, date, name, account_id, d, c, t)
+	    )
 
 
 def reset_aml_taxes(env, company_id):
