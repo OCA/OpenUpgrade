@@ -12,6 +12,7 @@ _logger = logging.getLogger(__name__)
 
 
 MIG_TAX_PREFIX = "Mig Code "
+MIG_TAX_LINE_PREFIX = "[9 to 9 tax migration] "
 
 
 def _load_code2tag(env):
@@ -197,19 +198,23 @@ def set_aml_taxes(env, company_id, codeid2tag):
         )
         if not tax_id:
             continue
-	if tax_amount < 0:
-	    debit = -tax_amount
-	    credit = 0
-	else:
-	   debit = 0
-	   credit = tax_amount
-	for d, c, t in ((debit, credit, tax_id), (credit, debit, None)):
-	    env.cr.execute(
-		"""INSERT INTO account_move_line
-		(move_id, date, date_maturity, name, account_id, debit, credit, tax_line_id)
-		VALUES (%s, %s, %s, '[8 to 9 tax migration] ' || %s, %s, %s, %s, %s)
-		""", (move_id, date, date, name, account_id, d, c, t)
-	    )
+        if tax_amount < 0:
+            debit = -tax_amount
+            credit = 0
+        else:
+            debit = 0
+            credit = tax_amount
+        for d, c, t in ((debit, credit, tax_id), (credit, debit, None)):
+            env.cr.execute(
+                """INSERT INTO account_move_line
+                (move_id, date, date_maturity, name,
+                 account_id, debit, credit, tax_line_id)
+                VALUES
+                (%s, %s, %s, %s,
+                 %s, %s, %s, %s)
+                """, (move_id, date, date, MIG_TAX_LINE_PREFIX + name,
+                      account_id, d, c, t)
+            )
 
 
 def reset_aml_taxes(env, company_id):
@@ -227,8 +232,13 @@ def reset_aml_taxes(env, company_id):
     """, (company_id, ))
     env.cr.execute(
         """DELETE FROM account_tax
-        WHERE NAME like '{}%'
+        WHERE name LIKE '{}%'
         """.format(MIG_TAX_PREFIX),
+    )
+    env.cr.execute(
+        """DELETE FROM account_move_line
+        WHERE name LIKE %s || '%'
+        """, (MIG_TAX_LINE_PREFIX, )
     )
 
 
@@ -242,7 +252,7 @@ def _migrate(env):
         if company.partner_id.country_id.code != 'BE':
             continue
         set_tax_tags_from_tax_codes(env, company.id, codeid2tag)
-        reset_aml_taxes(env, company.id)
+        # reset_aml_taxes(env, company.id)
         set_aml_taxes(env, company.id, codeid2tag)
 
 
