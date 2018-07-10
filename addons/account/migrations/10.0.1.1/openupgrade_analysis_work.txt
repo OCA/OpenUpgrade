@@ -16,6 +16,8 @@ account      / account.full.reconcile   / exchange_partial_rec_id (many2one): NE
 # rate_diff_partial_rec_id of account_move.
 
 account      / account.invoice          / refund_invoice_id (many2one)  : NEW relation: account.invoice
+# Done: post-migration. Reuse acccount_invoice_refund_link OCA module info
+
 account      / account.invoice          / website_message_ids (one2many): DEL relation: mail.message
 # NOTHING TO DO
 
