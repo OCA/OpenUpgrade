@@ -41,3 +41,11 @@ def migrate(env, version):
     ])
     openupgrade.rename_xmlids(env.cr, _portal_xmlid_renames)
     openupgrade.rename_xmlids(env.cr, _portal_sale_xmlid_renames)
+    openupgrade.add_fields(
+        env, [
+            ('price_total', 'account.invoice.line', 'account_invoice_line',
+             'monetary', False, 'account'),
+            ('tax_base_amount', 'account.move.line', 'account_move_line',
+             'monetary', False, 'account'),
+        ]
+    )
