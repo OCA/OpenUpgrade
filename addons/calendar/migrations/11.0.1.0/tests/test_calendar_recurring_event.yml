@@ -1,0 +1,8 @@
+-
+    Create a recurring event for having the error on virtual IDs
+-
+    !record {model: calendar.event, id: calendar.ou_recurrent_event}:
+        name: 'Test recurring event'
+        start: '2018-07-09 10:00:00'
+        stop: '2018-07-09 10:00:01'
+        rrule: 'FREQ=MONTHLY;INTERVAL=12;COUNT=20;BYMONTHDAY=10'

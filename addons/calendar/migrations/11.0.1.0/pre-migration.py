@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# © 2017 bloopark systems (<http://bloopark.de>)
+# Copyright 2017 bloopark systems (<http://bloopark.de>)
+# Copyright 2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
@@ -29,7 +30,23 @@ def cleanup_translations(cr):
     openupgrade.delete_record_translations(cr, 'calendar', updated_templates)
 
 
-@openupgrade.migrate(use_env=False)
-def migrate(cr, version):
+def set_calendar_event_res_model(env):
+    """This pre-creates before ORM related computation the field `res_model`,
+    for avoiding an error when writing back the value on virtual records
+    created by recurring events. No need of writing any possible value, as
+    this is a new feature not available in v10.
+    """
+    openupgrade.add_fields(
+        env, [
+            ('res_model', 'calendar.event', 'calendar_event', 'char', False,
+             'calendar'),
+        ],
+    )
+
+
+@openupgrade.migrate()
+def migrate(env, version):
+    cr = env.cr
     update_user_ids(cr)
     cleanup_translations(cr)
+    set_calendar_event_res_model(env)
