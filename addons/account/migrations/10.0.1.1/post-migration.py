@@ -4,6 +4,23 @@
 from openupgradelib import openupgrade
 
 
+def fill_refund_invoice_id(env):
+    """This method fills the new field refund_invoice_id in invoices using
+    the information of the OCA/account-invoicing module
+    account_invoice_refund_link if present.
+    """
+    if not openupgrade.table_exists(env.cr, 'account_invoice_refunds_rel'):
+        return
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_invoice ai
+        SET refund_invoice_id = rel.original_invoice_id
+        FROM account_invoice_refunds_rel rel
+        WHERE rel.refund_invoice_id = ai.id"""
+    )
+    # TODO: Make a fuzzy match if the OCA module is not present
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -101,6 +118,7 @@ def migrate(env, version):
         ) AS subquery
         WHERE account_bank_statement_line.id = subquery.statement_line_id
         ''')
+    fill_refund_invoice_id(env)
     openupgrade.load_data(
         cr, 'account', 'migrations/10.0.1.1/noupdate_changes.xml',
     )
