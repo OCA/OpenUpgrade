@@ -11,8 +11,13 @@ from openupgradelib import openupgrade
 _logger = logging.getLogger(__name__)
 
 
-MIG_TAX_PREFIX = "Mig Code "
 MIG_TAX_LINE_PREFIX = "[8 to 9 tax migration] "
+
+# Set this to True if you want to attempt to reuse existing taxes
+# on move lines. If False, a new inactive tax is created for each
+# tax code used on move lines.
+MIG_TAX_REUSE = False
+MIG_TAX_PREFIX = "Mig Code "
 
 
 def _load_code2tag(env):
@@ -118,7 +123,9 @@ def _get_tax_from_tax_code(env, company_id, tax_code_id, inv_type,
     """
     if (tax_code_id, inv_type) in tc2t:
         return tc2t[(tax_code_id, inv_type)]
-    # find out ttype (base or tax)
+    #
+    # 1. find out ttype (base or tax)
+    #
     base_where = []
     tax_where = []
     if inv_type == 'in_invoice':
@@ -185,11 +192,14 @@ def _get_tax_from_tax_code(env, company_id, tax_code_id, inv_type,
     else:
         # this code can be used as base or tax
         ttype = None
+    #
+    # 2. find out tax or create a new one
+    #
     tax_ids = base_tax_ids + tax_tax_ids
-    if len(tax_ids) == 1:
+    if MIG_TAX_REUSE and len(tax_ids) == 1:
         tax_id = tax_ids[0]
     else:
-        if not tax_ids:
+        if MIG_TAX_REUSE and not tax_ids:
             _logger.warning(
                 "No tax found using tax_code_id [%s] and invoice "
                 "type '%s', creating one.",
@@ -397,7 +407,15 @@ def set_aml_taxes(env, company_id, codeid2tag):
                     "You need to fix this manually.",
                     tax_code_id, name, ml_id, invoice_id,
                 )
+    #
+    # Step 3.
+    #
     # Handle tax lines with debit=credit=0 by creating debit/credit transaction
+    #
+    # If it's a base we try to find the base line in the same move with
+    # same amount and add the tax to it. If we don't find it, or if it's a tax,
+    # we create new move lines.
+    #
     env.cr.execute(
         """SELECT aml.id, aml.date, aml.name, aml.move_id,
                   aml.account_id, aml.tax_code_id, aml.tax_amount,
