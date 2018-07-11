@@ -14,7 +14,7 @@ table_renames_base_action_rule = [
 ]
 
 xmlid_renames_base_action_rule = [
-    ('base_automation.ir_cron_data_bar_check',
+    ('base_automation.ir_cron_crm_action',
      'base_automation.ir_cron_data_base_automation_check')
 ]
 
