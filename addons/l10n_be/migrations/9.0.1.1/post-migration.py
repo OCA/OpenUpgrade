@@ -28,15 +28,17 @@ def _load_code2tag(env):
         header = next(reader)
         code_code_index = header.index('account.tax.code:code')
         tag_xmlid_index = header.index('account.account.tag:xmlid')
+        ttype_index = header.index('ttype')
         for row in reader:
             code_code = row[code_code_index]
             tag_xmlid = row[tag_xmlid_index]
+            ttype = row[ttype_index]
             if not code_code:
                 continue
             if tag_xmlid:
-                res[code_code] = env.ref(tag_xmlid)
+                res[code_code] = (env.ref(tag_xmlid), ttype)
             else:
-                res[code_code] = None
+                res[code_code] = (None, None)
     return res
 
 
@@ -66,7 +68,7 @@ def set_tax_tags_from_tax_codes(env, company_id, codeid2tag):
         for code_id in env.cr.fetchone():
             if not code_id:
                 continue
-            tag = codeid2tag.get(code_id)
+            tag, _ = codeid2tag.get(code_id)
             if tag:
                 tags.append(tag)
             else:
@@ -85,7 +87,7 @@ def _create_tax_from_tax_code(env, company_id, tax_code_id, codeid2tag):
     """ Create an inactive tax that is linked to a single tax tag
     correponding to the provided tax_code_id.
     """
-    tax_tag = codeid2tag.get(tax_code_id)
+    tax_tag, _ = codeid2tag.get(tax_code_id)
     if not tax_tag:
         _logger.error(
             "Tax code with id [%s] does "
@@ -115,7 +117,7 @@ def _create_tax_from_tax_code(env, company_id, tax_code_id, codeid2tag):
 
 def _get_tax_from_tax_code(env, company_id, tax_code_id, inv_type,
                            codeid2tag, tc2t):
-    """ Obtain a tax corresponding to the providing tax_code_id
+    """ Obtain a tax corresponding to the provided tax_code_id
     and invoice type. Try to determine if this tax code is
     used as base or tax.
 
@@ -126,6 +128,7 @@ def _get_tax_from_tax_code(env, company_id, tax_code_id, inv_type,
     #
     # 1. find out ttype (base or tax)
     #
+    _, ttype = codeid2tag.get(tax_code_id)
     base_where = []
     tax_where = []
     if inv_type == 'in_invoice':
@@ -185,13 +188,11 @@ def _get_tax_from_tax_code(env, company_id, tax_code_id, inv_type,
         {'tax_code_id': tax_code_id},
     )
     tax_tax_ids = env.cr.fetchall()
-    if base_tax_ids and not tax_tax_ids:
-        ttype = 'base'
-    elif tax_tax_ids and not base_tax_ids:
-        ttype = 'tax'
-    else:
-        # this code can be used as base or tax
-        ttype = None
+    if not ttype:
+        if base_tax_ids and not tax_tax_ids:
+            ttype = 'base'
+        elif tax_tax_ids and not base_tax_ids:
+            ttype = 'tax'
     #
     # 2. find out tax or create a new one
     #
