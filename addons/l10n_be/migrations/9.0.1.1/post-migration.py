@@ -420,7 +420,7 @@ def set_aml_taxes(env, company_id, codeid2tag):
     env.cr.execute(
         """SELECT aml.id, aml.date, aml.name, aml.move_id,
                   aml.account_id, aml.tax_code_id, aml.tax_amount,
-                  inv.type
+                  invoice_id, inv.type
         FROM account_move_line aml
         LEFT JOIN account_invoice inv ON inv.id = aml.invoice_id
         WHERE aml.company_id=%s
@@ -430,7 +430,7 @@ def set_aml_taxes(env, company_id, codeid2tag):
     )
     for ml_id, date, name, move_id, \
             account_id, tax_code_id, tax_amount, \
-            inv_type \
+            invoice_id, inv_type \
             in env.cr.fetchall():
         tax_id, ttype = _get_tax_from_tax_code(
             env, company_id, tax_code_id, inv_type, codeid2tag, tc2t,
@@ -447,6 +447,7 @@ def set_aml_taxes(env, company_id, codeid2tag):
                 "and set tax_ids or tax_line_id to %s.",
                 tax_code_id, name, ml_id, inv_type, tax_id,
             )
+            continue
         elif ttype == 'tax':
             _logger.warning(
                 "Found a move line [%s] with a tax code that could be "
@@ -461,16 +462,7 @@ def set_aml_taxes(env, company_id, codeid2tag):
         else:
             debit = 0
             credit = tax_amount
-        if ttype == 'none':
-            _logger.error(
-                "account.tax.code %s may correspond to both base and taxes "
-                "on move line [%s]. "
-                "You need to fix move lines with this tax_code_id manually "
-                "by finding a way to determine if it's a base or tax "
-                "and set tax_ids or tax_line_id to [%s].",
-                tax_code_id, tax_id,
-            )
-            continue
+        _logger.debug("updating move %s for 0/0/tax", move_id)
         if ttype == 'base':
             # it's a base, add the tax to another move line
             # with the same amount
@@ -501,12 +493,12 @@ def set_aml_taxes(env, company_id, codeid2tag):
                 date_maturity=date,
                 name=MIG_TAX_LINE_PREFIX + name,
                 account_id=account_id,
+                invoice_id=invoice_id,
                 debit=d,
                 credit=c,
                 tax_line_id=t if t and ttype == 'tax' else False,
                 tax_ids=[(6, 0, [tax_id] if t and ttype == 'base' else [])],
             )))
-        _logger.debug("updating move %s for 0/0/tax", move_id)
         env['account.move'].browse(move_id).write(dict(line_ids=vals))
 
 
