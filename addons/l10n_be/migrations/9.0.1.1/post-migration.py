@@ -76,7 +76,10 @@ def set_tax_tags_from_tax_codes(env, company_id, codeid2tag):
         })
 
 
-def _create_tax_from_tax_code(env, company_id, tax_code_id, inv_type, codeid2tag):
+def _create_tax_from_tax_code(env, company_id, tax_code_id, codeid2tag):
+    """ Create an inactive tax that is linked to a single tax tag
+    correponding to the provided tax_code_id.
+    """
     tax_tag = codeid2tag.get(tax_code_id)
     if not tax_tag:
         _logger.error(
@@ -92,7 +95,7 @@ def _create_tax_from_tax_code(env, company_id, tax_code_id, inv_type, codeid2tag
     )
     tax_code_code = env.cr.fetchone()[0]
     tax = env['account.tax'].create({
-        'name': MIG_TAX_PREFIX + tax_code_code + ' (' + (inv_type or '') + ')',
+        'name': MIG_TAX_PREFIX + tax_code_code,
         'company_id': company_id,
         'tag_ids': [(6, 0, [tax_tag.id])],
         'active': False,
@@ -107,8 +110,15 @@ def _create_tax_from_tax_code(env, company_id, tax_code_id, inv_type, codeid2tag
 
 def _get_tax_from_tax_code(env, company_id, tax_code_id, inv_type,
                            codeid2tag, tc2t):
+    """ Obtain a tax corresponding to the providing tax_code_id
+    and invoice type. Try to determine if this tax code is
+    used as base or tax.
+
+    Return tax_id, tax type ('base' or 'tax' or None)
+    """
     if (tax_code_id, inv_type) in tc2t:
         return tc2t[(tax_code_id, inv_type)]
+    # find out ttype (base or tax)
     base_where = []
     tax_where = []
     if inv_type == 'in_invoice':
@@ -179,11 +189,22 @@ def _get_tax_from_tax_code(env, company_id, tax_code_id, inv_type,
     if len(tax_ids) == 1:
         tax_id = tax_ids[0]
     else:
-        # several taxes use this code, use one
-        tax = _create_tax_from_tax_code(
-            env, company_id, tax_code_id, inv_type, codeid2tag,
-        )
-        tax_id = tax.id if tax else None
+        if not tax_ids:
+            _logger.warning(
+                "No tax found using tax_code_id [%s] and invoice "
+                "type '%s', creating one.",
+                tax_code_id, inv_type,
+            )
+        # several taxes use this code, create one
+        # and cache those we have created
+        if (tax_code_id, 'mig') in tc2t:
+            tax_id = tc2t[(tax_code_id, 'mig')]
+        else:
+            tax = _create_tax_from_tax_code(
+                env, company_id, tax_code_id, codeid2tag,
+            )
+            tax_id = tax.id if tax else None
+            tc2t[(tax_code_id, 'mig')] = tax_id
     tc2t[(tax_code_id, inv_type)] = (tax_id, ttype)
     return tax_id, ttype
 
@@ -191,12 +212,20 @@ def _get_tax_from_tax_code(env, company_id, tax_code_id, inv_type,
 def set_aml_taxes(env, company_id, codeid2tag):
     tc2t = {}
     ambiguous_tax_codes = []
+    #
+    # Step 1.
+    # 
     # Handle the normal case: debit or credit != 0 and tax amount != 0
     #
     # * If the tax code can be unambiguously linked to a tax for use
     #   as tax amount, use it for tax_line_id.
     # * If the tax code can be unambiguously linked to a tax for use
     #   as base amount, us it for tax_ids
+    #
+    # If the tax code may be used for base or tax, keep it
+    # a list of ambiguous tax code that we'll attempt to diambiguate
+    # in step 2.
+    #
     env.cr.execute(
         """SELECT DISTINCT tax_code_id, inv.type
         FROM account_move_line aml
@@ -212,26 +241,55 @@ def set_aml_taxes(env, company_id, codeid2tag):
             env, company_id, tax_code_id, inv_type, codeid2tag, tc2t,
         )
         if not tax_id:
+            # the error has been logged before
             continue
         if ttype == 'tax':
-            env.cr.execute(
-                """UPDATE account_move_line
-                SET tax_line_id=%s
-                WHERE tax_code_id=%s
-                  AND (debit != 0 or credit != 0) AND tax_amount != 0
-                """, (tax_id, tax_code_id)
-            )
+            if not inv_type:
+                env.cr.execute(
+                    """UPDATE account_move_line
+                    SET tax_line_id=%s
+                    WHERE tax_code_id=%s
+                      AND (debit != 0 or credit != 0) AND tax_amount != 0
+                      AND invoice_id IS NULL
+                    """, (tax_id, tax_code_id)
+                )
+            else:
+                env.cr.execute(
+                    """UPDATE account_move_line
+                    SET tax_line_id=%s
+                    WHERE tax_code_id=%s
+                      AND (debit != 0 or credit != 0) AND tax_amount != 0
+                      AND invoice_id IN 
+                          (SELECT id FROM account_invoice
+                           WHERE type=%s AND company_id=%s)
+                    """, (tax_id, tax_code_id, inv_type, company_id)
+                )
         elif ttype == 'base':
-            env.cr.execute(
-                """INSERT INTO account_move_line_account_tax_rel
-                (account_move_line_id, account_tax_id)
-                SELECT id, %s
-                FROM account_move_line
-                WHERE tax_code_id=%s
-                  AND (debit != 0 or credit != 0) AND tax_amount != 0
-                """,
-                (tax_id, tax_code_id)
-            )
+            if not inv_type:
+                env.cr.execute(
+                    """INSERT INTO account_move_line_account_tax_rel
+                    (account_move_line_id, account_tax_id)
+                    SELECT aml.id, %s
+                    FROM account_move_line aml
+                    WHERE aml.tax_code_id=%s
+                      AND invoice_id IS NULL
+                      AND (debit != 0 or credit != 0) AND tax_amount != 0
+                    """,
+                    (tax_id, tax_code_id)
+                )
+            else:
+                env.cr.execute(
+                    """INSERT INTO account_move_line_account_tax_rel
+                    (account_move_line_id, account_tax_id)
+                    SELECT aml.id, %s
+                    FROM account_move_line aml
+                    LEFT JOIN account_invoice inv ON inv.id = aml.invoice_id
+                    WHERE aml.tax_code_id=%s
+                      AND inv.type=%s
+                      AND (debit != 0 or credit != 0) AND tax_amount != 0
+                    """,
+                    (tax_id, tax_code_id, inv_type)
+                )
         else:
             if not inv_type:
                 _logger.error(
@@ -244,7 +302,14 @@ def set_aml_taxes(env, company_id, codeid2tag):
                 )
             else:
                 ambiguous_tax_codes.append((tax_code_id, inv_type))
-    # Handle ambiguous tax codes
+    #
+    # Step 2.
+    #
+    # Handle ambiguous tax codes by looking at the invoice linked
+    # to the move line and examine the account_invoice_tax table
+    # to determine if the tax code is for base or tax.
+    # If this fails, log an error (this should be very rare).
+    #
     for tax_code_id, inv_type in ambiguous_tax_codes:
         _logger.info(
             "Trying to disambiguate tax code [%s] '%s'.",
@@ -263,6 +328,14 @@ def set_aml_taxes(env, company_id, codeid2tag):
                 account_id, tax_code_id, tax_amount, \
                 invoice_id, inv_type \
                 in env.cr.fetchall():
+            if not invoice_id:
+                _logger.error(
+                    "Could not determine if tax code [%s] is base or tax for "
+                    "move line %s [%s] because it is not linked to an invoice. "
+                    "You need to fix this manually.",
+                    tax_code_id, name, ml_id, invoice_id,
+                )
+                continue
             env.cr.execute(
                 """SELECT base_amount, base_code_id, tax_amount, tax_code_id
                 FROM account_invoice_tax
@@ -293,8 +366,16 @@ def set_aml_taxes(env, company_id, codeid2tag):
                 env, company_id, tax_code_id, inv_type, codeid2tag, tc2t,
             )
             if not tax_id:
+                # the error has been logged before
                 continue
             if ttype == 'tax':
+                _logger.warning(
+                    "Found a move line [%s] with a tax code that could be "
+                    "base or tax, and which is actually a tax, "
+                    "This will be handled correctly but we log it "
+                    "as it should be a rare occurence.",
+                    ml_id,
+                )
                 env.cr.execute(
                     """UPDATE account_move_line
                     SET tax_line_id=%s
@@ -336,6 +417,7 @@ def set_aml_taxes(env, company_id, codeid2tag):
             env, company_id, tax_code_id, inv_type, codeid2tag, tc2t,
         )
         if not tax_id:
+            # the error has been logged before
             continue
         if not ttype:
             _logger.error(
@@ -346,6 +428,14 @@ def set_aml_taxes(env, company_id, codeid2tag):
                 "and set tax_ids or tax_line_id to %s.",
                 tax_code_id, name, ml_id, inv_type, tax_id,
             )
+        elif ttype == 'tax':
+            _logger.warning(
+                "Found a move line [%s] with a tax code that could be "
+                "base or tax, and which is actually a tax, "
+                "This will be handled correctly but we log it "
+                "as it should be a rare occurence.",
+                ml_id,
+            )
         if tax_amount < 0:
             debit = -tax_amount
             credit = 0
@@ -354,13 +444,37 @@ def set_aml_taxes(env, company_id, codeid2tag):
             credit = tax_amount
         if ttype == 'none':
             _logger.error(
-                "account.tax.code %s may correspond to both base and taxes. "
+                "account.tax.code %s may correspond to both base and taxes "
+                "on move line [%s]. "
                 "You need to fix move lines with this tax_code_id manually "
                 "by finding a way to determine if it's a base or tax "
-                "and set tax_ids or tax_line_id to %s.",
+                "and set tax_ids or tax_line_id to [%s].",
                 tax_code_id, tax_id,
             )
             continue
+        if ttype == 'base':
+            # it's a base, add the tax to another move line
+            # with the same amount
+            env.cr.execute(
+                """SELECT id
+                FROM account_move_line
+                WHERE move_id=%s
+                  AND debit=%s AND credit=%s
+                  AND tax_code_id != %s
+                  AND tax_line_id IS NULL
+                """, (move_id, debit, credit, tax_code_id)
+            )
+            base_ml = env.cr.fetchall()
+            if base_ml:
+                env.cr.execute(
+                    """INSERT INTO account_move_line_account_tax_rel
+                    (account_move_line_id, account_tax_id)
+                    VALUES (%s, %s)
+                    """, (base_ml[0], tax_id)
+                )
+                continue
+        # we did not find a move line with same debit/credit/tax_code_id
+        # create new debit/credit lines
         vals = []
         for d, c, t in ((debit, credit, tax_id), (credit, debit, None)):
             vals.append((0, 0, dict(
@@ -373,28 +487,7 @@ def set_aml_taxes(env, company_id, codeid2tag):
                 tax_line_id=t if t and ttype == 'tax' else False,
                 tax_ids=[(6, 0, [tax_id] if t and ttype == 'base' else [])],
             )))
-            continue
-            env.cr.execute(
-                """INSERT INTO account_move_line
-                (move_id, date, date_maturity, name,
-                 account_id, debit, credit, tax_line_id)
-                VALUES
-                (%s, %s, %s, %s,
-                 %s, %s, %s, %s)
-                RETURNING id
-                """, (move_id, date, date, MIG_TAX_LINE_PREFIX + name,
-                      account_id, d, c, t if ttype == 'tax' else None)
-            )
-            if t and ttype == 'base':
-                new_ml_id = env.cr.fetchone()[0]
-                env.cr.execute(
-                    """INSERT INTO account_move_line_account_tax_rel
-                    (account_move_line_id, account_tax_rel)
-                    VALUES
-                    (%s, %s)
-                    """, (new_ml_id, t)
-                )
-        _logger.info("updating move %s for 0/0/tax", move_id)
+        _logger.debug("updating move %s for 0/0/tax", move_id)
         env['account.move'].browse(move_id).write(dict(line_ids=vals))
 
 
