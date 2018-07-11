@@ -26,7 +26,8 @@ succesful result. Therefore, the functions in this module should be robust
 against being run multiple times on the same database.
 """
 import logging
-from openerp import SUPERUSER_ID
+from psycopg2.extensions import AsIs
+from openerp import api, SUPERUSER_ID
 from openerp.openupgrade import openupgrade
 logger = logging.getLogger('OpenUpgrade.deferred')
 
@@ -83,7 +84,7 @@ def migrate_product_valuation(cr, pool):
         "ALTER TABLE product_product DROP COLUMN {}".format(valuation_column))
 
 
-def migrate_procurement_order_method(cr, pool):
+def migrate_procurement_order_method(env):
     """Procurements method: change the supply_method for the matching rule
 
     Needs to be deferred because the rules are created in the migration
@@ -93,15 +94,15 @@ def migrate_procurement_order_method(cr, pool):
     upgrade, but harmless when run multiple times.
     """
 
-    cr.execute(
+    env.cr.execute(
         """
         SELECT id FROM ir_module_module
         WHERE name = 'stock' AND state = 'installed'
         AND latest_version = '8.0.1.1'
         """)
-    if not cr.fetchone():
+    if not env.cr.fetchone():
         # Only warn if there are traces of stock
-        if openupgrade.table_exists(cr, 'stock_move'):
+        if openupgrade.table_exists(env.cr, 'stock_move'):
             logger.debug(
                 "Stock not installed or not properly migrated, skipping "
                 "migration of procurement orders.")
@@ -109,69 +110,75 @@ def migrate_procurement_order_method(cr, pool):
 
     procure_method_legacy = openupgrade.get_legacy_name('procure_method')
     if not openupgrade.column_exists(
-            cr, 'product_template', procure_method_legacy):
+            env.cr, 'product_template', procure_method_legacy):
         # in this case, there was no migration for the procurement module
         # which can be okay if procurement was not installed in the 7.0 db
         return
 
-    procurement_obj = pool['procurement.order']
-    rule_obj = pool['procurement.rule']
-    rules = {}
-    for rule in rule_obj.browse(
-            cr, SUPERUSER_ID,
-            rule_obj.search(cr, SUPERUSER_ID, [])):
-        rules.setdefault(
-            rule.location_id.id, {})[rule.procure_method] = rule.id
-        rules.setdefault(rule.location_id.id, {})[rule.action] = rule.id
+    mto_route_id = env['stock.warehouse']._get_mto_route()
 
-    cr.execute(
-        """
-        SELECT pp.id FROM product_product pp, product_template pt
-        WHERE pp.product_tmpl_id = pt.id
-            AND pt.%s = 'produce'
-        """ % openupgrade.get_legacy_name('supply_method'))
-    production_products = [row[0] for row in cr.fetchall()]
+    env.cr.execute(
+        """ SELECT ARRAY_AGG(po.id), po.%(procure_method)s,
+            pt.%(supply_method)s, po.location_id, sm.location_dest_id
+        FROM procurement_order po
+            JOIN product_product pp ON po.product_id = pp.id
+            JOIN product_template pt ON pp.product_tmpl_id = pt.id
+            LEFT JOIN stock_move sm ON po.id = sm.procurement_id
+        WHERE po.rule_id is NULL AND po.state != 'done'
+        GROUP BY po.%(procure_method)s, pt.%(supply_method)s, po.location_id,
+            sm.location_dest_id """, {
+                'procure_method': AsIs(procure_method_legacy),
+                'supply_method': AsIs(
+                    openupgrade.get_legacy_name('supply_method')),
+            })
 
-    cr.execute(
-        """
-        SELECT id, %s FROM procurement_order
-        WHERE rule_id is NULL AND state != %%s
-        """ % procure_method_legacy, ('done',))
+    parent_location_cache = {}
 
-    procurements = cr.fetchall()
-    if len(procurements):
-        logger.debug(
-            "Trying to find rules for %s procurements", len(procurements))
+    def get_parent_locations(location_in):
+        if location_in not in parent_location_cache:
+            location = locations = location_in
+            while location.location_id:
+                location = location.location_id
+                locations += location
+            parent_location_cache[location_in] = locations
+        return parent_location_cache[location_in]
 
-    for proc_id, procure_method in procurements:
-        procurement = procurement_obj.browse(cr, SUPERUSER_ID, proc_id)
-        location_id = procurement.location_id.id
+    for (proc_ids, procure_method, supply_method, location_id,
+         location_dest_id) in env.cr.fetchall():
+        location_dest = env['stock.location'].browse(location_dest_id)
+        procurement = env['procurement.order'].browse(proc_ids[0])
+        procurement_repr = '%s procurements (%s -> %s, %s, %s)' % (
+            len(proc_ids), procurement.location_id.complete_name,
+            location_dest.complete_name or ' - ', procure_method, supply_method)
 
-        # if location type is internal (presumably stock), then
-        # find the rule with this location and the appropriate action,
-        # regardless of procure method
-        rule_id = False
-        action = 'move'  # Default, only for log message
-        if procure_method == 'make_to_order':
-            if procurement.location_id.usage == 'internal':
-                if procurement.product_id.id in production_products:
-                    action = 'manufacture'
-                else:
-                    action = 'buy'
-                rule_id = rules.get(location_id, {}).get(action)
-            else:
-                rule_id = rules.get(location_id, {}).get('make_to_order')
-        else:
-            rule_id = rules.get(location_id, {}).get('make_to_stock')
-        if rule_id:
-            procurement.write({'rule_id': rule_id})
+        rule = False
+        if location_dest and procure_method == 'make_to_stock':
+            # Prefer move rules if there is one between the two locations
+            parent_dest_locations = get_parent_locations(location_dest)
+            parent_locations = get_parent_locations(
+                env['stock.location'].browse(location_id))
+            rule = env['procurement.rule'].search([
+                ('location_id', 'in', parent_dest_locations.ids),
+                ('location_src_id', 'in', parent_locations.ids),
+                ('action', '=', 'move'),
+                ('route_id', '!=', mto_route_id)], limit=1)
+
+        if not rule:
+            rule_id = env['procurement.order']._find_suitable_rule(procurement)
+            if rule_id:
+                rule = env['procurement.rule'].browse(rule_id)
+
+        if rule:
+            logger.info(
+                'Got rule %s (%s->%s) for %s',
+                rule.name, rule.location_src_id.complete_name,
+                rule.location_id.complete_name, procurement_repr)
+            env['procurement.order'].browse(proc_ids).write(
+                {'rule_id': rule.id})
         else:
             logger.warn(
-                "Procurement order #%s with location %s "
-                "has no %s procurement rule with action %s, please create and "
-                "assign a new rule for this procurement""",
-                procurement.id, procurement.location_id.name,
-                procure_method, action)
+                'No rule found for %s. Please create and assign a new rule '
+                'for this configuration.', procurement_repr)
 
 
 def migrate_stock_move_warehouse(cr):
@@ -201,6 +208,7 @@ def migrate_stock_move_warehouse(cr):
 
 
 def migrate_deferred(cr, pool):
+    env = api.Environment(cr, SUPERUSER_ID, {})
     migrate_product_valuation(cr, pool)
-    migrate_procurement_order_method(cr, pool)
+    migrate_procurement_order_method(env)
     migrate_stock_move_warehouse(cr)
