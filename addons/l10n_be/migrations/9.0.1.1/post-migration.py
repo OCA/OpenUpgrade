@@ -106,6 +106,8 @@ def _create_tax_from_tax_code(env, company_id, tax_code_id, codeid2tag):
         'company_id': company_id,
         'tag_ids': [(6, 0, [tax_tag.id])],
         'active': False,
+        'type_tax_use': 'none',
+        'amount_type': 'group',
         'amount': 0,
     })
     _logger.info(
