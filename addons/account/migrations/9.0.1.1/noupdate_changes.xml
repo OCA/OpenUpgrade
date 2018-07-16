@@ -72,5 +72,17 @@
       <field name="note">Payment term: 30 Net Days</field>
       <field name="line_ids" eval="[(5, ), (0, 0, {'value': 'balance', 'value_amount': 0.0, 'sequence': 500, 'days': 30, 'option': 'day_after_invoice_date'})]"/>
     </record>
+    <record model="account.account.type" id="data_account_type_receivable">
+      <field name="type">receivable</field>
+      <field name="include_initial_balance" eval="True"/>
+    </record>
+    <record model="account.account.type" id="data_account_type_payable">
+      <field name="type">payable</field>
+      <field name="include_initial_balance" eval="True"/>
+    </record>
+    <record model="account.account.type" id="data_account_type_liquidity">
+      <field name="type">liquidity</field>
+      <field name="include_initial_balance" eval="True"/>
+    </record>
   </data>
 </openerp>
