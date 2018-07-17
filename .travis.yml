@@ -1,4 +1,5 @@
 language: python
+sudo: false
 
 python:
   - "2.7"
@@ -14,7 +15,7 @@ addons:
     postgresql: "9.6"
 
 env:
-  - DB=openupgrade ODOO=./openerp-server OPENUPGRADE_TESTS=1
+  - DB=openupgrade ODOO=./openerp-server
 
 # Need flake8 for pep8 testing
 install:
@@ -31,23 +32,33 @@ script:
     - flake8 openerp/openupgrade --max-line-length=120
     - flake8 openerp/addons/openupgrade* --max-line-length=120 --filename=__init__.py --ignore=F401
     - flake8 openerp/addons/openupgrade* --max-line-length=120 --exclude=__init__.py
-    - flake8 . --max-line-length=120 --filename=pre-*.py,post-*.py
+# only flake8 migration scripts from the openupgrade project, presumably
+# identifyable by using the openupgrade helpers
+    - flake8 --max-line-length=120 $(find . -name 'pre-*.py' -or -name 'post-*.py' -exec grep -q openupgrade {} \; -print)
+    - flake8 openerp/addons/*/migrations/*/tests/ --max-line-length=120
+    - flake8 addons/*/migrations/*/tests/ --max-line-length=120
     - npm install -g less less-plugin-clean-css
-# These 2 command are needed for avoiding a pip error (https://stackoverflow.com/a/43250324)
-    - python -m pip install --upgrade --force pip
-    - pip install -q setuptools==33.1.1
-# Install OpenUpgrade requirements
+    # Install 8.0's requirements as 7.0 does not contain this file, plus a 7.0 specific dependency
     - pip install -q -r requirements.txt
-# don't use pypi's openupgradelib, but the one from source to avoid choking
-# on unreleased features in openupgradelib
-    - pip uninstall -q --yes openupgradelib
-    - pip install -q git+https://github.com/OCA/openupgradelib.git@master
+    - pip install pywebdav
     - createdb $DB
     - wget -q -O- https://github.com/OCA/OpenUpgrade/releases/download/databases/7.0.psql | pg_restore -d $DB --no-owner
-    - MODULES=base,$(sed -n '/^+========/,$p'  openerp/openupgrade/doc/source/modules70-80.rst | grep Done | sed -n '/^|/ s/^|\([0-9a-z_]*\) *|.*$/\1/g p' | paste -d, -s)
-    - psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES | sed -e "s/,/','/g")')"
-    - echo Testing modules $MODULES
-    - coverage run $ODOO --database=$DB --update=$MODULES --stop-after-init
+    - cat openerp/addons/base/migrations/*/tests/*.yml addons/*/migrations/*/tests/*.yml > ../test_data70.yml
+    # Roundtrip to previous release to update the test database with additional test data
+    # Loading and committing test data without triggering post tests needs https://github.com/odoo/odoo/pull/13146. This is now included in OpenUpgrade.
+    - git fetch --depth 2 origin 7.0
+    - git reset --hard `git ls-remote |grep refs/heads/7.0 |awk '{print $1}'`
+    - $ODOO --addons-path openerp/addons,addons --database=$DB --test-file=`readlink -f ../test_data70.yml` --test-commit --stop-after-init
+    - git reset -q --hard $TRAVIS_COMMIT
+    # don't use pypi's openupgradelib, but the one from source to avoid choking
+    # on unreleased features in openupgradelib
+    - pip install --ignore-installed git+https://github.com/OCA/openupgradelib.git@master
+    # select modules and perform the upgrade
+    - MODULES_OLD=base,$(sed -n '/^+========/,$p'  openerp/openupgrade/doc/source/modules70-80.rst | grep "Done\|Partial\|Nothing" | grep -v "theme_" | sed -r -n 's/((^\| *\|del\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
+    - MODULES_NEW=base,$(sed -n '/^+========/,$p'  openerp/openupgrade/doc/source/modules70-80.rst | grep "Done\|Partial\|Nothing" | grep -v "theme_" | sed -r -n 's/((^\| *\|new\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
+    - psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')"
+    - echo Testing modules $MODULES_NEW
+    - OPENUPGRADE_TESTS=1 coverage run $ODOO --database=$DB --update=$MODULES_NEW --stop-after-init
 
 after_success:
     coveralls

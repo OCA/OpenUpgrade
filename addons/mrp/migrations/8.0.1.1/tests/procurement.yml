@@ -7,7 +7,7 @@
     wf_service = netsvc.LocalService("workflow")
     wh = self.pool['stock.warehouse'].browse(cr, uid, ref('stock.warehouse0'))
     location_id = wh.lot_stock_id.id
-    output_id = wh.lot_output_id.id
+    output_id = ref('stock.stock_location_customers')
     product = self.pool['product.product'].browse(cr, uid, ref('product.product_product_4'))
     move_m2s_id = self.create(cr, uid, {
         'name': 'test m2s manufacture',
