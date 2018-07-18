@@ -557,6 +557,3 @@ def _migrate(env):
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     _migrate(env)
-
-
-_migrate(env)
