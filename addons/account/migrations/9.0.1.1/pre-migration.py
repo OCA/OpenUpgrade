@@ -310,12 +310,13 @@ def merge_supplier_invoice_refs(env):
     )
 
 
-def set_date_maturity(cr):
-    cr.execute("""
+def set_date_maturity(env):
+    openupgrade.logged_query(
+        env.cr, """
         UPDATE account_move_line
         SET date_maturity = date
-        WHERE date_maturity IS NULL
-    """)
+        WHERE date_maturity IS NULL"""
+    )
 
 
 @openupgrade.migrate(use_env=True)
@@ -338,4 +339,4 @@ def migrate(env, version):
     blacklist_field_recomputation(env)
     merge_supplier_invoice_refs(env)
     openupgrade.rename_fields(env, field_renames)
-    set_date_maturity(cr)
+    set_date_maturity(env)
