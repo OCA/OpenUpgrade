@@ -227,7 +227,7 @@ def set_aml_taxes(env, company_id, codeid2tag):
     ambiguous_tax_codes = []
     #
     # Step 1.
-    # 
+    #
     # Handle the normal case: debit or credit != 0 and tax amount != 0
     #
     # * If the tax code can be unambiguously linked to a tax for use
@@ -258,7 +258,8 @@ def set_aml_taxes(env, company_id, codeid2tag):
             continue
         if ttype == 'tax':
             if not inv_type:
-                env.cr.execute(
+                openupgrade.logged_query(
+                    env.cr,
                     """UPDATE account_move_line
                     SET tax_line_id=%s
                     WHERE tax_code_id=%s
@@ -267,19 +268,21 @@ def set_aml_taxes(env, company_id, codeid2tag):
                     """, (tax_id, tax_code_id)
                 )
             else:
-                env.cr.execute(
+                openupgrade.logged_query(
+                    env.cr,
                     """UPDATE account_move_line
                     SET tax_line_id=%s
                     WHERE tax_code_id=%s
                       AND (debit != 0 or credit != 0) AND tax_amount != 0
-                      AND invoice_id IN 
+                      AND invoice_id IN
                           (SELECT id FROM account_invoice
                            WHERE type=%s AND company_id=%s)
                     """, (tax_id, tax_code_id, inv_type, company_id)
                 )
         elif ttype == 'base':
             if not inv_type:
-                env.cr.execute(
+                openupgrade.logged_query(
+                    env.cr,
                     """INSERT INTO account_move_line_account_tax_rel
                     (account_move_line_id, account_tax_id)
                     SELECT aml.id, %s
@@ -291,7 +294,8 @@ def set_aml_taxes(env, company_id, codeid2tag):
                     (tax_id, tax_code_id)
                 )
             else:
-                env.cr.execute(
+                openupgrade.logged_query(
+                    env.cr,
                     """INSERT INTO account_move_line_account_tax_rel
                     (account_move_line_id, account_tax_id)
                     SELECT aml.id, %s
@@ -389,14 +393,16 @@ def set_aml_taxes(env, company_id, codeid2tag):
                     "as it should be a rare occurence.",
                     ml_id,
                 )
-                env.cr.execute(
+                openupgrade.logged_query(
+                    env.cr,
                     """UPDATE account_move_line
                     SET tax_line_id=%s
                     WHERE id=%s
                     """, (tax_id, ml_id)
                 )
             elif ttype == 'base':
-                env.cr.execute(
+                openupgrade.logged_query(
+                    env.cr,
                     """INSERT INTO account_move_line_account_tax_rel
                     (account_move_line_id, account_tax_id)
                     VALUES (%s, %s)
@@ -479,7 +485,8 @@ def set_aml_taxes(env, company_id, codeid2tag):
             )
             base_ml = env.cr.fetchall()
             if base_ml:
-                env.cr.execute(
+                openupgrade.logged_query(
+                    env.cr,
                     """INSERT INTO account_move_line_account_tax_rel
                     (account_move_line_id, account_tax_id)
                     VALUES (%s, %s)
@@ -506,7 +513,8 @@ def set_aml_taxes(env, company_id, codeid2tag):
 
 def reset_aml_taxes(env, company_id):
     _logger.info("clearing aml.tax_line_id")
-    env.cr.execute(
+    openupgrade.logged_query(
+        env.cr,
         """UPDATE account_move_line
         SET tax_line_id = NULL
         WHERE tax_line_id IS NOT NULL
@@ -514,7 +522,8 @@ def reset_aml_taxes(env, company_id):
         """, (company_id, )
     )
     _logger.info("clearing aml.tax_ids")
-    env.cr.execute(
+    openupgrade.logged_query(
+        env.cr,
         """DELETE FROM account_move_line_account_tax_rel
         WHERE account_move_line_id IN
           (SELECT id FROM account_move_line
@@ -522,7 +531,8 @@ def reset_aml_taxes(env, company_id):
         """, (company_id, )
     )
     _logger.info("deleting %s taxes", MIG_TAX_PREFIX)
-    env.cr.execute(
+    openupgrade.logged_query(
+        env.cr,
         """DELETE FROM account_tax
         WHERE name LIKE '{}%%'
           AND company_id = %s
@@ -530,7 +540,8 @@ def reset_aml_taxes(env, company_id):
         (company_id, )
     )
     _logger.info("deleting %s aml", MIG_TAX_LINE_PREFIX)
-    env.cr.execute(
+    openupgrade.logged_query(
+        env.cr,
         """DELETE FROM account_move_line
         WHERE name LIKE '{}%%'
           AND company_id = %s
