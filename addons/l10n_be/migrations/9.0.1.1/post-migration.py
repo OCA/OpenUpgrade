@@ -53,6 +53,10 @@ def _load_codeid2code(env):
 
 
 def set_tax_tags_from_tax_codes(env, company_id, codeid2tag):
+    _logger.info(
+        "Setting tax tags from tax codes from company %s",
+        company_id,
+    )
     taxes = env['account.tax'].search([
         ('company_id', '=', company_id),
     ])
@@ -239,6 +243,7 @@ def set_aml_taxes(env, company_id, codeid2tag):
     # a list of ambiguous tax code that we'll attempt to diambiguate
     # in step 2.
     #
+    _logger.info("set_aml_taxes step 1 for company %s", company_id)
     env.cr.execute(
         """SELECT DISTINCT tax_code_id, inv.type
         FROM account_move_line aml
@@ -327,6 +332,7 @@ def set_aml_taxes(env, company_id, codeid2tag):
     # to determine if the tax code is for base or tax.
     # If this fails, log an error (this should be very rare).
     #
+    _logger.info("set_aml_taxes step 2 for company %s", company_id)
     for tax_code_id, inv_type in ambiguous_tax_codes:
         _logger.info(
             "Trying to disambiguate tax code [%s] '%s'.",
@@ -425,6 +431,7 @@ def set_aml_taxes(env, company_id, codeid2tag):
     # same amount and add the tax to it. If we don't find it, or if it's a tax,
     # we create new move lines.
     #
+    _logger.info("set_aml_taxes step 3 for company %s", company_id)
     env.cr.execute(
         """SELECT aml.id, aml.date, aml.name, aml.move_id,
                   aml.account_id, aml.tax_code_id, aml.tax_amount,
@@ -565,6 +572,6 @@ def _migrate(env):
         set_aml_taxes(env, company.id, codeid2tag)
 
 
-@openupgrade.migrate(use_env=True)
+@openupgrade.migrate(use_env=True, no_version=True)
 def migrate(env, version):
     _migrate(env)
