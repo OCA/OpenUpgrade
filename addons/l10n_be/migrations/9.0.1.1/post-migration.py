@@ -6,6 +6,7 @@ import csv
 import logging
 import os
 
+from odoo import SUPERUSER_ID
 from openupgradelib import openupgrade
 
 _logger = logging.getLogger(__name__)
@@ -433,9 +434,7 @@ def set_aml_taxes(env, company_id, codeid2tag):
     #
     _logger.info("set_aml_taxes step 3 for company %s", company_id)
     env.cr.execute(
-        """SELECT aml.id, aml.date, aml.name, aml.move_id,
-                  aml.account_id, aml.tax_code_id, aml.tax_amount,
-                  invoice_id, inv.type
+        """SELECT aml.*, inv.type AS inv_type
         FROM account_move_line aml
         LEFT JOIN account_invoice inv ON inv.id = aml.invoice_id
         WHERE aml.company_id=%s
@@ -443,12 +442,10 @@ def set_aml_taxes(env, company_id, codeid2tag):
           AND aml.debit = 0 AND aml.credit = 0 AND aml.tax_amount != 0
         """, (company_id, )
     )
-    for ml_id, date, name, move_id, \
-            account_id, tax_code_id, tax_amount, \
-            invoice_id, inv_type \
-            in env.cr.fetchall():
+    for row in env.cr.dictfetchall():
         tax_id, ttype = _get_tax_from_tax_code(
-            env, company_id, tax_code_id, inv_type, codeid2tag, tc2t,
+            env, company_id, row['tax_code_id'], row['inv_type'],
+            codeid2tag, tc2t,
         )
         if not tax_id:
             # the error has been logged before
@@ -460,7 +457,8 @@ def set_aml_taxes(env, company_id, codeid2tag):
                 "You need to fix move lines with this tax_code_id manually "
                 "by finding a way to determine if it's a base or tax "
                 "and set tax_ids or tax_line_id to %s.",
-                tax_code_id, name, ml_id, inv_type, tax_id,
+                row['tax_code_id'], row['name'], row['id'], row['inv_type'],
+                tax_id,
             )
             continue
         elif ttype == 'tax':
@@ -469,15 +467,15 @@ def set_aml_taxes(env, company_id, codeid2tag):
                 "base or tax, and which is actually a tax, "
                 "This will be handled correctly but we log it "
                 "as it should be a rare occurence.",
-                ml_id,
+                row['id'],
             )
-        if tax_amount < 0:
-            debit = -tax_amount
+        if row['tax_amount'] < 0:
+            debit = -row['tax_amount']
             credit = 0
         else:
             debit = 0
-            credit = tax_amount
-        _logger.debug("updating move %s for 0/0/tax", move_id)
+            credit = row['tax_amount']
+        _logger.debug("updating move %s for 0/0/tax", row['move_id'])
         if ttype == 'base':
             # it's a base, add the tax to another move line
             # with the same amount
@@ -488,7 +486,7 @@ def set_aml_taxes(env, company_id, codeid2tag):
                   AND debit=%s AND credit=%s
                   AND tax_code_id != %s
                   AND tax_line_id IS NULL
-                """, (move_id, debit, credit, tax_code_id)
+                """, (row['move_id'], debit, credit, row['tax_code_id'])
             )
             base_ml = env.cr.fetchall()
             if base_ml:
@@ -502,20 +500,43 @@ def set_aml_taxes(env, company_id, codeid2tag):
                 continue
         # we did not find a move line with same debit/credit/tax_code_id
         # create new debit/credit lines
-        vals = []
         for d, c, t in ((debit, credit, tax_id), (credit, debit, None)):
-            vals.append((0, 0, dict(
-                date=date,
-                date_maturity=date,
-                name=MIG_TAX_LINE_PREFIX + name,
-                account_id=account_id,
-                invoice_id=invoice_id,
-                debit=d,
-                credit=c,
-                tax_line_id=t if t and ttype == 'tax' else False,
-                tax_ids=[(6, 0, [tax_id] if t and ttype == 'base' else [])],
-            )))
-        env['account.move'].browse(move_id).write(dict(line_ids=vals))
+            rec = row.copy()
+            rec.pop('inv_type')
+            rec.pop('id')
+            rec.pop('create_date')
+            rec.pop('create_uid')
+            rec.pop('write_date')
+            rec.pop('write_uid')
+            rec.pop('tax_amount')
+            rec.pop('tax_code_id')
+            rec['create_uid'] = SUPERUSER_ID
+            rec['debit'] = d
+            rec['credit'] = c
+            rec['tax_line_id'] = t if ttype == 'tax' else None,
+            rec['name'] = MIG_TAX_LINE_PREFIX + rec['name']
+            columns = list(rec.keys())
+            values = ["%({})s".format(c) for c in columns]
+            openupgrade.logged_query(
+                env.cr,
+                """INSERT INTO account_move_line
+                ({}) VALUES ({})
+                RETURNING id
+                """.format(
+                    ",".join(columns),
+                    ",".join(values),
+                ),
+                rec,
+            )
+            if ttype == 'base':
+                new_ml_id = env.cr.fetchone()[0]
+                openupgrade.logged_query(
+                    env.cr,
+                    """INSERT INTO account_move_line_account_tax_rel
+                    (account_move_line_id, account_tax_id)
+                    VALUES (%s, %s)
+                    """, (new_ml_id, tax_id)
+                )
 
 
 def reset_aml_taxes(env, company_id):
