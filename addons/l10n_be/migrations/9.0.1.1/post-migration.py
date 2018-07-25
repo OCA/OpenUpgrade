@@ -6,7 +6,7 @@ import csv
 import logging
 import os
 
-from odoo import SUPERUSER_ID
+from openerp import SUPERUSER_ID
 from openupgradelib import openupgrade
 
 _logger = logging.getLogger(__name__)
