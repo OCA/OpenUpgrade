@@ -26,6 +26,7 @@ from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID as uid
 from openerp.tools.float_utils import float_compare
+from psycopg2.extras import execute_values
 
 logger = logging.getLogger('OpenUpgrade.stock')
 default_spec = {
@@ -959,25 +960,14 @@ def migrate_stock_production_lot(cr, registry):
     # stock.pack.operation linked with related lot before creating the quant
     field_name = openupgrade.get_legacy_name('prodlot_id')
     cr.execute("""
-        SELECT id, %s
-        FROM stock_move
-        WHERE
-            %s IS NOT NULL AND
-            picking_id IS NULL""" % (
-        field_name, field_name))
-    res1 = cr.fetchall()
-    for move, lot in res1:
-        cr.execute("""
-            SELECT quant_id
-            FROM stock_quant_move_rel
-            WHERE move_id = %s""" % (move,))
-        res2 = cr.fetchall()
-        for quant in res2:
-            cr.execute("""
-                UPDATE stock_quant
-                SET lot_id = %s
-                WHERE id = %s""" % (lot, quant[0],))
-        cr.commit()
+        UPDATE stock_quant SET lot_id = ss.lot 
+        FROM (SELECT q.quant_id, sm.{fieldname}, 
+            FROM stock_quant_move_rel q, stock_move sm
+              WHERE sm.{fieldname} IS NOT NULL AND 
+                sm.picking_id IS NULL AND sm.id=q.move_id) as ss (qid, lot)
+        WHERE stock_quant.id = q.qid; 
+    """.format(fieldname=field_name))
+    cr.commit()
 
 
 def reset_warehouse_data_ids(cr, registry):
@@ -1017,14 +1007,18 @@ def populate_stock_move_fields(cr, registry):
     # Set product_qty = product_uom_qty if uom_id of stock move
     # is the same as uom_id of product. (Main case)
     openupgrade.logged_query(cr, """
-        UPDATE stock_move sm1
+        UPDATE stock_move
         SET product_qty = product_uom_qty
-        FROM
-            (SELECT sm2.id from stock_move sm2
-            INNER join product_product pp on sm2.product_id = pp.id
-            INNER join product_template pt on pp.product_tmpl_id = pt.id
-            where pt.uom_id = sm2.product_uom) as res
-        WHERE sm1.id = res.id""")
+        FROM product_product pp, product_template pt 
+            WHERE pp.id=stock_move.product_id AND 
+              pt.id=pp.product_tmpl_id AND 
+              pt.uom_id = stock_move.product_uom;
+        """)
+        #     (SELECT sm2.id from stock_move sm2
+        #     INNER join product_product pp on sm2.product_id = pp.id
+        #     INNER join product_template pt on pp.product_tmpl_id = pt.id
+        #     where pt.uom_id = sm2.product_uom) as res
+        # WHERE sm1.id = res.id""")
     # Use ORM if uom id are different
     cr.execute(
         """SELECT sm2.id from stock_move sm2
@@ -1033,24 +1027,24 @@ def populate_stock_move_fields(cr, registry):
         where pt.uom_id != sm2.product_uom""")
     sm_ids = [row[0] for row in cr.fetchall()]
     qty_vals = sm_obj._quantity_normalize(cr, uid, sm_ids, None, None)
-    for id, qty in qty_vals.iteritems():
-        cr.execute("UPDATE stock_move set product_qty = '%s' where id=%s" % (
-            qty, id))
+    execute_values(cr, "UPDATE stock_move SET product_qty = v.qty "
+                       "FROM (VALUES %s) as v (id, qty) "
+                       "WHERE v.id=stock_move.id", qty_vals.items())
+    # for id, qty in qty_vals.iteritems():
+    #     cr.execute("UPDATE stock_move set product_qty = '%s' where id=%s" % (
+    #         qty, id))
 
     # If a stock move is Waiting availability ('confirmed'), but the source
     # location is 'supplier', 'inventory' or 'production', then set it as
     # Available ('assigned').
-    openupgrade.logged_query(cr, """
-        UPDATE stock_move sm1
-        SET state = 'assigned'
-        FROM
-            (SELECT sm2.id from stock_move sm2
-            INNER JOIN stock_location sl
-            ON sm2.location_id = sl.id
-            where sl.usage in ('supplier', 'inventory', 'production')
-            and sm2.state = 'confirmed'
-            ) as res
-        WHERE sm1.id = res.id""")
+    openupgrade.logged_query(
+        cr,
+        "UPDATE stock_move SET state = 'assigned' "
+        "FROM stock_location sl " 
+        "WHERE sl.id=stock_move.location_id AND " 
+        "sl.usage IN ('supplier', 'inventory', 'production') AND " 
+        "stock_move.state = 'confirmed';"
+    )
 
 
 @openupgrade.migrate()
