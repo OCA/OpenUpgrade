@@ -38,8 +38,9 @@ def delete_quants_for_consumable(env):
 
 
 def drop_slow_constraint(env):
-    """Removing this constraint, that doesn't affect new data structure, we
-    get tons of more performance on quant removal.
+    """Removing this constraint, that doesn't affect new data structure, as
+    it belongs to an obsolete modelo, we get tons of more performance on
+    quant removal.
     """
     openupgrade.logged_query(
         env.cr, "ALTER TABLE stock_move_operation_link DROP CONSTRAINT "
