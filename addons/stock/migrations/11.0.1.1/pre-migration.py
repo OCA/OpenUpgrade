@@ -37,10 +37,22 @@ def delete_quants_for_consumable(env):
     )
 
 
+def drop_slow_constraint(env):
+    """Removing this constraint, that doesn't affect new data structure, as
+    it belongs to an obsolete model, we get tons of more performance on
+    quant removal.
+    """
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE stock_move_operation_link DROP CONSTRAINT "
+                "stock_move_operation_link_reserved_quant_id_fkey",
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     copy_global_rules(env)
     delete_quants_for_consumable(env)
+    drop_slow_constraint(env)
     openupgrade.update_module_moved_fields(
         env.cr, 'stock.move', ['has_tracking'], 'mrp', 'stock',
     )
