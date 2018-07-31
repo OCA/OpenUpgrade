@@ -115,7 +115,17 @@ def set_partially_available_state(env):
 @openupgrade.logging()
 def create_stock_move_line(env):
     """This method creates stock.move.line recreated from old
-    stock.pack.operation records.
+    stock.pack.operation records. These records are created only for done
+    moves, as for those not done, there's no need of creating stock.move.line,
+    as they can be recreated in v11 easily:
+
+    * For outgoing or internal transfers, clicking on "Check availability",
+      which takes current reserved quants information for recreating the
+      information.
+    * For incoming transfers, clicking on validate for accepting full
+      quantities, or writing the quantity in the lines you want in
+      "Operations" tab. The only drawback is that if you want to use the
+      detailed operation mode, you will have to enter quantity manually.
     """
     openupgrade.logged_query(
         env.cr, """
@@ -144,37 +154,38 @@ def create_stock_move_line(env):
             write_uid
         )
         SELECT
-            spo.create_date,
-            spo.create_uid,
-            spo.date,
-            spo.location_dest_id,
-            spo.location_id,
-            COALESCE(spol.lot_id, sm.restrict_lot_id),
-            spol.lot_name,
-            sm.id,
-            spo.ordered_qty,
-            spo.owner_id,
-            spo.package_id,
-            spo.picking_id,
+            MIN(spo.create_date),
+            MIN(spo.create_uid),
+            MIN(spo.date),
+            MIN(spo.location_dest_id),
+            MIN(spo.location_id),
+            sq.lot_id,
+            MIN(spl.name),
+            MIN(sm.id),
+            SUM(smol.qty),
+            MIN(spo.owner_id),
+            MIN(spo.package_id),
+            MIN(spo.picking_id),
             spo.product_id,
-            spo.product_qty,
-            spo.product_uom_id,
-            spo.product_qty,
-            spo.qty_done,
-            COALESCE(sp.name, sm.name),
-            sm.state,
-            spo.result_package_id,
-            spo.write_date,
-            spo.write_uid
+            SUM(smol.qty),
+            MIN(spo.product_uom_id),
+            SUM(smol.qty),
+            SUM(smol.qty),
+            MIN(COALESCE(sp.name, sm.name)),
+            'done',
+            MIN(spo.result_package_id),
+            MIN(spo.write_date),
+            MIN(spo.write_uid)
         FROM stock_pack_operation spo
             INNER JOIN stock_move_operation_link smol
                 ON smol.operation_id = spo.id
             INNER JOIN stock_move sm ON sm.id = smol.move_id
             INNER JOIN product_product pp ON spo.product_id = pp.id
             LEFT JOIN stock_picking sp ON sp.id = spo.picking_id
-            LEFT JOIN stock_pack_operation_lot spol
-                ON spol.operation_id = spo.id
-        """
+            LEFT JOIN stock_quant sq ON sq.id = smol.reserved_quant_id
+            LEFT JOIN stock_production_lot spl ON spl.id = sq.lot_id
+        WHERE sm.state = 'done'
+        GROUP BY sq.lot_id, spo.product_id""",
     )
     # Re-compute product_qty for those lines where product UoM != line UoM
     env.cr.execute(
