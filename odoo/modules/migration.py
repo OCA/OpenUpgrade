@@ -18,15 +18,28 @@ from odoo.tools import pycompat
 if pycompat.PY2:
     import imp
     def load_script(path, module_name):
-        # OpenUpgrade edit start:
-        # Removed a copy of migration script to temp directory
-        # Replaced call to load_source with load_module so frame isn't lost and breakpoints can be set
         fp, fname = tools.file_open(path, pathinfo=True)
+        fp2 = None
+
+        # OpenUpgrade edit start:
+        # Don't copy the migration script into a temp directory. Instead,
+        # replace the call to load_source with a call to load_module so  that
+        # the frame isn't lost and breakpoints can be set
+        # pylint: disable=file-builtin,undefined-variable
+        if False and not isinstance(fp, file):
+            # imp.load_source need a real file object, so we create
+            # one from the file-like object we get from file_open
+            fp2 = os.tmpfile()
+            fp2.write(fp.read())
+            fp2.seek(0)
+
         try:
             return imp.load_module(module_name, fp, fname, ('.py', 'r', imp.PY_SOURCE))
         finally:
             if fp:
                 fp.close()
+            if fp2:
+                fp2.close()
 
 else:
     import importlib.util
