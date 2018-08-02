@@ -1,3 +1,4 @@
+from odoo import api
 from odoo.addons.account.tests.account_test_classes import AccountingTestCase
 import time
 import unittest
@@ -789,12 +790,19 @@ class TestReconciliation(AccountingTestCase):
 
         statement = self.make_payment(invoice, journal, 50)
 
+        # The report searches on the create_date to dispatch reconciled lines to report periods
+        # Also, in this case, there can be only 1 partial_reconcile
+        statement_partial_id = statement.move_line_ids.mapped(lambda l: l.matched_credit_ids + l.matched_debit_ids)
+        self.env.cr.execute('UPDATE account_partial_reconcile SET create_date = %(date)s WHERE id = %(partial_id)s',
+            {'date': report_date_to + ' 00:00:00',
+             'partial_id': statement_partial_id.id})
+
         # Case 1: The invoice and payment are reconciled: Nothing should appear
         report_lines, total, amls = AgedReport._get_partner_move_lines(account_type, report_date_to, 'posted', 30)
 
         partner_lines = [line for line in report_lines if line['partner_id'] == partner.id]
         self.assertEqual(partner_lines, [], 'The aged receivable shouldn\'t have lines at this point')
-        self.assertFalse(partner.id in amls, 'The aged receivable should not have amls either')
+        self.assertFalse(amls.get(partner.id, False), 'The aged receivable should not have amls either')
 
         # Case 2: The invoice and payment are not reconciled: we should have one line on the report
         # and 2 amls
@@ -811,3 +819,71 @@ class TestReconciliation(AccountingTestCase):
 
         self.assertEqual(positive_line[0]['amount'], 50.0, 'The amount of the amls should be 50')
         self.assertEqual(negative_line[0]['amount'], -50.0, 'The amount of the amls should be -50')
+
+    def test_revert_payment_and_reconcile_exchange(self):
+
+        # A reversal of a reconciled payment which created a currency exchange entry, should create reversal moves
+        # which move lines should be reconciled two by two with the original move's lines
+
+        def _determine_debit_credit_line(move):
+            line_ids_reconciliable = move.line_ids.filtered(lambda l: l.account_id.reconcile or l.account_id.internal_type == 'liquidity')
+            return line_ids_reconciliable.filtered(lambda l: l.debit), line_ids_reconciliable.filtered(lambda l: l.credit)
+
+        def _move_revert_test_pair(move, revert):
+            self.assertTrue(move.line_ids)
+            self.assertTrue(revert.line_ids)
+
+            move_lines = _determine_debit_credit_line(move)
+            revert_lines = _determine_debit_credit_line(revert)
+
+            # in the case of the exchange entry, only one pair of lines will be found
+            if move_lines[0] and revert_lines[1]:
+                self.assertTrue(move_lines[0].full_reconcile_id.exists())
+                self.assertEqual(move_lines[0].full_reconcile_id.id, revert_lines[1].full_reconcile_id.id)
+
+            if move_lines[1] and revert_lines[0]:
+                self.assertTrue(move_lines[1].full_reconcile_id.exists())
+                self.assertEqual(move_lines[1].full_reconcile_id.id, revert_lines[0].full_reconcile_id.id)
+
+        self.env['res.currency.rate'].create({
+            'name': time.strftime('%Y') + '-07-01',
+            'rate': 1.0,
+            'currency_id': self.currency_usd_id,
+            'company_id': self.env.ref('base.main_company').id
+        })
+        self.env['res.currency.rate'].create({
+            'name': time.strftime('%Y') + '-08-01',
+            'rate': 0.5,
+            'currency_id': self.currency_usd_id,
+            'company_id': self.env.ref('base.main_company').id
+        })
+        inv = self.create_invoice(invoice_amount=111, currency_id=self.currency_usd_id)
+        payment = self.env['account.payment'].create({
+            'payment_type': 'inbound',
+            'payment_method_id': self.env.ref('account.account_payment_method_manual_in').id,
+            'partner_type': 'customer',
+            'partner_id': self.partner_agrolait_id,
+            'amount': 111,
+            'currency_id': self.currency_usd_id,
+            'journal_id': self.bank_journal_usd.id,
+            'payment_date': time.strftime('%Y') + '-08-01',
+        })
+        payment.post()
+
+        credit_aml = payment.move_line_ids.filtered('credit')
+        inv.assign_outstanding_credit(credit_aml.id)
+        self.assertTrue(inv.state == 'paid', 'The invoice should be paid')
+
+        exchange_reconcile = payment.move_line_ids.mapped('full_reconcile_id')
+        exchange_move = exchange_reconcile.exchange_move_id
+        payment_move = payment.move_line_ids[0].move_id
+
+        reverted_payment_move = self.env['account.move'].browse(payment_move.reverse_moves(time.strftime('%Y') + '-08-01'))
+
+        # After reversal of payment, the invoice should be open
+        self.assertTrue(inv.state == 'open', 'The invoice should be open again')
+        self.assertFalse(exchange_reconcile.exists())
+
+        reverted_exchange_move = self.env['account.move'].search([('journal_id', '=', exchange_move.journal_id.id), ('ref', 'ilike', exchange_move.name)], limit=1)
+        _move_revert_test_pair(payment_move, reverted_payment_move)
+        _move_revert_test_pair(exchange_move, reverted_exchange_move)
