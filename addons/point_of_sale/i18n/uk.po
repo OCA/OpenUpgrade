@@ -41,25 +41,25 @@ msgstr "К-сть рядків"
 #: model:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "$ 3.12"
-msgstr ""
+msgstr "$ 3.12"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "$ 4.40"
-msgstr ""
+msgstr "$ 4.40"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "$ 4.50"
-msgstr ""
+msgstr "$ 4.50"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "$ 8.50"
-msgstr ""
+msgstr "$ 8.50"
 
 #. module: point_of_sale
 #. openerp-web
@@ -80,7 +80,7 @@ msgstr "&nbsp;"
 #: code:addons/point_of_sale/models/pos_order.py:83
 #, python-format
 msgid "(RESCUE FOR %(session)s)"
-msgstr ""
+msgstr "(ЗБЕРЕГТИ ДЛЯ %(session)s)"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_pos_form
@@ -105,7 +105,7 @@ msgstr "<i class=\"fa fa-eye-slash\"/>Сховати"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "<i class=\"fa fa-fw fa-arrow-right\"/>How to manage tax-included prices"
-msgstr ""
+msgstr "<i class=\"fa fa-fw fa-arrow-right\"/>Як управляти цінами з податками"
 
 #. module: point_of_sale
 #. openerp-web
@@ -151,43 +151,43 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "<span class=\"oe_inline\"><b>Skip Preview Screen</b></span>"
-msgstr ""
+msgstr "<span class=\"oe_inline\"><b>Пропустити попередній екран</b></span>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "<span class=\"pos-change_amount\">$ 0.86</span>"
-msgstr ""
+msgstr "<span class=\"pos-change_amount\">$ 0.86</span>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "<span class=\"pos-change_title\">Change</span>"
-msgstr ""
+msgstr "<span class=\"pos-change_title\">Змінити</span>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "<span class=\"total-amount-formatting\">TOTAL</span>"
-msgstr ""
+msgstr "<span class=\"total-amount-formatting\">ВСЬОГО</span>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "<span id=\"total-amount\" class=\"pos_total-amount\">$ 469.14</span>"
-msgstr ""
+msgstr "<span id=\"total-amount\" class=\"pos_total-amount\">$ 469.14</span>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "<span>$ 470.00</span>"
-msgstr ""
+msgstr "<span>$ 470.00</span>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "<span>Cash (USD):</span>"
-msgstr ""
+msgstr "<span>Готівка (USD):</span>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
@@ -280,6 +280,8 @@ msgid ""
 "A globally unique identifier for this pos configuration, used to prevent "
 "conflicts in client-generated data."
 msgstr ""
+"Глобально унікальний ідентифікатор для цього налаштування точки продажу, яке"
+" використовується для запобігання конфліктів у даних, створених клієнтом."
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_session_login_number
@@ -335,7 +337,7 @@ msgstr "АБВ"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "Accept payments with an integrated card reader"
-msgstr ""
+msgstr "Прийняти платежі за допомогою вбудованого пристрою для читання карт"
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_account_bank_statement_cashbox
@@ -407,6 +409,9 @@ msgid ""
 "the Sales Journal set on this point of sale if you use the Accounting "
 "application."
 msgstr ""
+"Усі доступні прайслисти повинні бути в тій же валюті, що й компанія, або як "
+"Журнал продажів, встановлений на цій точці продажу, якщо ви використовуєте "
+"програму бухгалтерського обліку."
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_config.py:243
@@ -415,6 +420,8 @@ msgid ""
 "All payment methods must be in the same currency as the Sales Journal or the"
 " company currency if that is not set."
 msgstr ""
+"Усі способи оплати повинні бути в тій же валюті, що й Журнал продажів, або "
+"валюту компанії, якщо вона не встановлена."
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_pos_all_sales_lines
@@ -890,7 +897,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
 #, python-format
 msgid "Close"
-msgstr "Зупинено"
+msgstr "Закрити"
 
 #. module: point_of_sale
 #: selection:pos.session,state:0
@@ -3909,7 +3916,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config_tip_product_id
 msgid "This product is used as reference on customer receipts."
-msgstr ""
+msgstr "Цей товар використовується як довідка на замовлення клієнта."
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config_sequence_line_id
@@ -4354,13 +4361,14 @@ msgstr "Ви повинні встановити Журнал продажу д�
 #: code:addons/point_of_sale/wizard/pos_details.py:48
 #, python-format
 msgid "You have to set a logo or a layout for your company."
-msgstr ""
+msgstr "Ви повинні встановити логотип або макет для вашої компанії."
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/wizard/pos_details.py:50
 #, python-format
 msgid "You have to set your reports's header and footer layout."
 msgstr ""
+"Вам потрібно встановити макети заголовків і нижніх колонтитулів звітів."
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,help:point_of_sale.product_product_action
