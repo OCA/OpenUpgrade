@@ -247,7 +247,7 @@ class AccountBankStatement(models.Model):
                     raise UserError(_('All the account entries lines must be processed in order to close the statement.'))
                 moves = (moves | st_line.journal_entry_ids)
             if moves:
-                moves.post()
+                moves.filtered(lambda m: m.state != 'posted').post()
             statement.message_post(body=_('Statement %s confirmed, journal items were created.') % (statement.name,))
         statements.link_bank_to_partner()
         statements.write({'state': 'confirm', 'date_done': time.strftime("%Y-%m-%d %H:%M:%S")})
@@ -878,7 +878,7 @@ class AccountBankStatementLine(models.Model):
 
         # Fully reconciled moves are just linked to the bank statement
         for aml_rec in payment_aml_rec:
-            aml_rec.write({'statement_id': self.statement_id.id})
+            aml_rec.with_context(check_move_validity=False).write({'statement_id': self.statement_id.id})
             aml_rec.move_id.write({'statement_line_id': self.id})
             counterpart_moves = (counterpart_moves | aml_rec.move_id)
 
@@ -891,6 +891,10 @@ class AccountBankStatementLine(models.Model):
             # Create the move
             self.sequence = self.statement_id.line_ids.ids.index(self.id) + 1
             move_name = (self.statement_id.name or self.name) + "/" + str(self.sequence)
+            # Ensure no duplicate is created
+            if self.env['account.move'].search([('name', '=', move_name)]):
+                count = self.env['account.move'].search_count([('name', '=like', move_name + '/%')])
+                move_name = u'{}/{}'.format(move_name, count + 1)
             move_vals = self._prepare_reconciliation_move(move_name)
             move = self.env['account.move'].create(move_vals)
             counterpart_moves = (counterpart_moves | move)

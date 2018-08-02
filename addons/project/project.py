@@ -257,7 +257,8 @@ class project(osv.osv):
         res = super(project, self).copy(cr, uid, id, default, context)
         for follower in proj.message_follower_ids:
             self.message_subscribe(cr, uid, res, partner_ids=[follower.partner_id.id], subtype_ids=[subtype.id for subtype in follower.subtype_ids])
-        self.map_tasks(cr, uid, id, res, context=context)
+        if 'tasks' not in default:
+            self.map_tasks(cr, uid, id, res, context=context)
         return res
 
     def duplicate_template(self, cr, uid, ids, context=None):
@@ -402,7 +403,8 @@ class task(osv.osv):
         if project_id:
             project = self.pool.get('project.project').browse(cr, uid, project_id, context=context)
             if project.exists():
-                values['partner_id'] = project.partner_id.id
+                if project.partner_id:
+                    values['partner_id'] = project.partner_id.id
                 values['stage_id'] = self.stage_find(cr, uid, [], project_id, [('fold', '=', False)], context=context)
         else:
             values['stage_id'] = False

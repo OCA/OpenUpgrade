@@ -148,6 +148,7 @@ class mrp_bom(osv.osv):
     _name = 'mrp.bom'
     _description = 'Bill of Material'
     _inherit = ['mail.thread']
+    _rec_name = 'product_tmpl_id'
 
     _columns = {
         'code': fields.char('Reference', size=16),
@@ -333,13 +334,6 @@ class mrp_bom(osv.osv):
                 result = result + res[0]
                 result2 = result2 + res[1]
         return result, result2
-
-    def copy_data(self, cr, uid, id, default=None, context=None):
-        if default is None:
-            default = {}
-        bom_data = self.read(cr, uid, id, [], context=context)
-        default.update(name=_("%s (copy)") % (bom_data['display_name']))
-        return super(mrp_bom, self).copy_data(cr, uid, id, default, context=context)
 
     def onchange_uom(self, cr, uid, ids, product_tmpl_id, product_uom, context=None):
         res = {'value': {}}
@@ -622,7 +616,7 @@ class mrp_production(osv.osv):
         ('name_uniq', 'unique(name, company_id)', 'Reference must be unique per Company!'),
     ]
 
-    _order = 'priority desc, date_planned asc'
+    _order = 'priority desc, date_planned asc, id'
 
     def _check_qty(self, cr, uid, ids, context=None):
         for order in self.browse(cr, uid, ids, context=context):

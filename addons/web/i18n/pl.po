@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-18 04:43+0000\n"
-"PO-Revision-Date: 2016-10-28 12:11+0000\n"
-"Last-Translator: zbik2607 <darek@krokus.com.pl>\n"
+"PO-Revision-Date: 2017-11-29 09:25+0000\n"
+"Last-Translator: Martin Trigaux\n"
 "Language-Team: Polish (http://www.transifex.com/odoo/odoo-9/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: pl\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
 #. module: web
 #. openerp-web
@@ -879,6 +879,13 @@ msgid "Error"
 msgstr "Błąd"
 
 #. module: web
+#. openerp-web
+#: code:addons/web/static/src/js/views/form_widgets.js:458
+#, python-format
+msgid "Error: Bad domain"
+msgstr "Błąd: zła domena"
+
+#. module: web
 #: code:addons/web/controllers/main.py:838
 #, python-format
 msgid "Error, password not changed !"
@@ -1147,6 +1154,15 @@ msgstr "Nieaktywne"
 #, python-format
 msgid "Invalid data"
 msgstr "Nieprawidłowe dane"
+
+#. module: web
+#: code:addons/web/controllers/main.py:655
+#: code:addons/web/controllers/main.py:669
+#, python-format
+msgid ""
+"Invalid database name. Only alphanumerical characters, underscore, hyphen "
+"and dot are allowed."
+msgstr ""
 
 #. module: web
 #. openerp-web
@@ -1507,8 +1523,8 @@ msgstr "Brak wybranego rekordu"
 #. openerp-web
 #: code:addons/web/static/src/js/views/form_relational_widgets.js:328
 #, python-format
-msgid "No value found for the field  for value "
-msgstr "Nie znaleziono wartości dla pola o wartości "
+msgid "No value found for the field %s for value %s"
+msgstr "Nie znaleziono wartości %s dla pola o wartości %s"
 
 #. module: web
 #. openerp-web
@@ -1695,7 +1711,7 @@ msgstr "Wykres kołowy"
 msgid ""
 "Pie chart cannot display all zero numbers.. Try to change your domain to "
 "display positive results"
-msgstr ""
+msgstr "Wykres kołowy nie może wyświetlać wartości zerowych. Zmień domenę by wyświetlać wartości dodatnie"
 
 #. module: web
 #. openerp-web
@@ -1788,8 +1804,8 @@ msgstr "Drukuj obieg"
 #: code:addons/web/static/src/xml/base.xml:578
 #: code:addons/web/static/src/xml/base.xml:610
 #, python-format
-msgid "Quantity"
-msgstr "Ilość"
+msgid "Count"
+msgstr "Liczba"
 
 #. module: web
 #. openerp-web
@@ -2018,7 +2034,7 @@ msgstr "Współdziel z wszystkimi użytkownikami"
 #: code:addons/web/static/src/js/apps.js:189
 #, python-format
 msgid "Showing locally available modules"
-msgstr ""
+msgstr "Wyświetla lokalne moduły"
 
 #. module: web
 #. openerp-web
@@ -2031,7 +2047,7 @@ msgstr "Rozmiar:"
 #: code:addons/web/controllers/main.py:1067
 #, python-format
 msgid "Something horrible happened"
-msgstr ""
+msgstr "Stało się coś strasznego"
 
 #. module: web
 #. openerp-web
@@ -2088,6 +2104,13 @@ msgstr "Przerwa na kawę,<br /> pobieranie potrwa..."
 #, python-format
 msgid "Technical Translation"
 msgstr "Tłumaczenie techniczne"
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/js/views/form_widgets.js:458
+#, python-format
+msgid "The domain is wrong."
+msgstr ""
 
 #. module: web
 #. openerp-web
@@ -2467,6 +2490,12 @@ msgstr "Wpisano nieprawidłową wartość!"
 #, python-format
 msgid "XML ID:"
 msgstr "XML ID:"
+
+#. module: web
+#: code:addons/web/controllers/main.py:513
+#, python-format
+msgid "Wrong login/password"
+msgstr "Błędny login lub hasło"
 
 #. module: web
 #. openerp-web

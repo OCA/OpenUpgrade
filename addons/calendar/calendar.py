@@ -16,6 +16,7 @@ from dateutil.relativedelta import relativedelta
 from openerp import api
 from openerp import tools, SUPERUSER_ID
 from openerp.osv import fields, osv
+from openerp.fields import Datetime as FieldDatetime
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 from openerp.tools.translate import _
 from openerp.http import request
@@ -666,9 +667,23 @@ class calendar_event(osv.Model):
     def do_run_scheduler(self, cr, uid, id, context=None):
         self.pool['calendar.alarm_manager'].get_next_mail(cr, uid, context=context)
 
+    def _get_recurrent_dates_by_event(self, cr, uid, ids, context=None):
+        """ Get recurrent start and stop dates based on Rule string"""
+        start_dates = self._get_recurrent_date_by_event(cr, uid, ids, date_field='start')
+        stop_dates = self._get_recurrent_date_by_event(cr, uid, ids, date_field='stop')
+        return zip(start_dates, stop_dates)
+
     def get_recurrent_date_by_event(self, cr, uid, event, context=None):
+        return self._get_recurrent_date_by_event(cr, uid, event, context=None)
+
+    def _get_recurrent_date_by_event(self, cr, uid, event, context=None, date_field='start'):
         """Get recurrent dates based on Rule string and all event where recurrent_id is child
         """
+        if date_field in event._fields.keys() and event._fields[date_field].type in ('date', 'datetime'):
+            reference_date = event[date_field]
+        else:
+            reference_date = event.start
+
         def todate(date):
             val = parser.parse(''.join((re.compile('\d')).findall(date)))
             ## Dates are localized to saved timezone if any, else current timezone.
@@ -680,14 +695,14 @@ class calendar_event(osv.Model):
             context = {}
 
         timezone = pytz.timezone(context.get('tz') or 'UTC')
-        startdate = pytz.UTC.localize(datetime.strptime(event.start, DEFAULT_SERVER_DATETIME_FORMAT))  # Add "+hh:mm" timezone
-        if not startdate:
-            startdate = datetime.now()
+        event_date = pytz.UTC.localize(FieldDatetime.from_string(reference_date))  # Add "+hh:mm" timezone
+        if not event_date:
+            event_date = datetime.now()
 
-        ## Convert the start date to saved timezone (or context tz) as it'll
+        ## Convert the event date to saved timezone (or context tz) as it'll
         ## define the correct hour/day asked by the user to repeat for recurrence.
-        startdate = startdate.astimezone(timezone)  # transform "+hh:mm" timezone
-        rset1 = rrule.rrulestr(str(event.rrule), dtstart=startdate, forceset=True)
+        event_date = event_date.astimezone(timezone)  # transform "+hh:mm" timezone
+        rset1 = rrule.rrulestr(str(event.rrule), dtstart=event_date, forceset=True)
         ids_depending = self.search(cr, uid, [('recurrent_id', '=', event.id), '|', ('active', '=', False), ('active', '=', True)], context=context)
         all_events = self.browse(cr, uid, ids_depending, context=context)
         for ev in all_events:
@@ -975,6 +990,7 @@ class calendar_event(osv.Model):
     def onchange_allday(self, cr, uid, ids, start=False, end=False, starttime=False, endtime=False, startdatetime=False, enddatetime=False, checkallday=False, context=None):
 
         value = {}
+        context = context or {}
 
         if not ((starttime and endtime) or (start and end)):  # At first intialize, we have not datetime
             return value
@@ -983,12 +999,18 @@ class calendar_event(osv.Model):
             startdatetime = startdatetime or start
             if startdatetime:
                 start = datetime.strptime(startdatetime, DEFAULT_SERVER_DATETIME_FORMAT)
-                value['start_date'] = fields.date.context_today(self, cr, uid, context=context, timestamp=start)
+                if context.get('default_allday'):
+                    value['start_date'] = datetime.strftime(start, DEFAULT_SERVER_DATE_FORMAT)
+                else:
+                    value['start_date'] = fields.date.context_today(self, cr, uid, context=context, timestamp=start)
 
             enddatetime = enddatetime or end
             if enddatetime:
                 end = datetime.strptime(enddatetime, DEFAULT_SERVER_DATETIME_FORMAT)
-                value['stop_date'] = fields.date.context_today(self, cr, uid, context=context, timestamp=end)
+                if context.get('default_allday'):
+                    value['stop_date'] = datetime.strftime(end, DEFAULT_SERVER_DATE_FORMAT)
+                else:
+                    value['stop_date'] = fields.date.context_today(self, cr, uid, context=context, timestamp=end)
         else:  # from date to datetime
             user = self.pool['res.users'].browse(cr, uid, uid, context)
             tz = pytz.timezone(user.tz) if user.tz else pytz.utc
@@ -1166,27 +1188,38 @@ class calendar_event(osv.Model):
                 result.append(ev.id)
                 result_data.append(self.get_search_fields(ev, order_fields))
                 continue
-            rdates = self.get_recurrent_date_by_event(cr, uid, ev, context=context)
+            rdates = self._get_recurrent_dates_by_event(cr, uid, ev, context=context)
 
-            for r_date in rdates:
+            for r_start_date, r_stop_date in rdates:
                 # fix domain evaluation
                 # step 1: check date and replace expression by True or False, replace other expressions by True
                 # step 2: evaluation of & and |
                 # check if there are one False
                 pile = []
                 ok = True
+                r_date = None
                 for arg in domain:
                     if str(arg[0]) in ('start', 'stop', 'final_date'):
+                        if str(arg[0]) == 'start':
+                            r_date = r_start_date
+                        else:
+                            r_date = r_stop_date
+                        if arg[2] and len(arg[2]) > len(r_date.strftime(DEFAULT_SERVER_DATE_FORMAT)):
+                            dformat = DEFAULT_SERVER_DATETIME_FORMAT
+                        else:
+                            dformat = DEFAULT_SERVER_DATE_FORMAT
                         if (arg[1] == '='):
-                            ok = r_date.strftime('%Y-%m-%d') == arg[2]
+                            ok = r_date.strftime(dformat) == arg[2]
                         if (arg[1] == '>'):
-                            ok = r_date.strftime('%Y-%m-%d') > arg[2]
+                            ok = r_date.strftime(dformat) > arg[2]
                         if (arg[1] == '<'):
-                            ok = r_date.strftime('%Y-%m-%d') < arg[2]
+                            ok = r_date.strftime(dformat) < arg[2]
                         if (arg[1] == '>='):
-                            ok = r_date.strftime('%Y-%m-%d') >= arg[2]
+                            ok = r_date.strftime(dformat) >= arg[2]
                         if (arg[1] == '<='):
-                            ok = r_date.strftime('%Y-%m-%d') <= arg[2]
+                            ok = r_date.strftime(dformat) <= arg[2]
+                        if (arg[1] == '!='):
+                            ok = r_date.strftime(dformat) != arg[2]
                         pile.append(ok)
                     elif str(arg) == str('&') or str(arg) == str('|'):
                         pile.append(arg)
@@ -1209,7 +1242,7 @@ class calendar_event(osv.Model):
 
                 if [True for item in new_pile if not item]:
                     continue
-                result_data.append(self.get_search_fields(ev, order_fields, r_date=r_date))
+                result_data.append(self.get_search_fields(ev, order_fields, r_date=r_start_date))
 
         if order_fields:
             uniq = lambda it: collections.OrderedDict((id(x), x) for x in it).values()
@@ -1521,6 +1554,18 @@ class calendar_event(osv.Model):
 
         if not context.get('virtual_id', True):
             return super(calendar_event, self).search(cr, uid, new_args, offset=offset, limit=limit, order=order, count=count, context=context)
+
+        if any(arg[0] == 'start' for arg in args) and \
+           not any(arg[0] in ('stop', 'final_date') for arg in args):
+            # domain with a start filter but with no stop clause should be extended
+            # e.g. start=2017-01-01, count=5 => virtual occurences must be included in ('start', '>', '2017-01-02')
+            start_args = new_args
+            new_args = []
+            for arg in start_args:
+                new_arg = arg
+                if arg[0] in ('start_date', 'start_datetime', 'start',):
+                    new_args += ['|', '&', ('recurrency', '=', 1), ('final_date', arg[1], arg[2])]
+                new_args.append(new_arg)
 
         # offset, limit, order and count must be treated separately as we may need to deal with virtual ids
         res = super(calendar_event, self).search(cr, uid, new_args, offset=0, limit=0, order=None, context=context, count=False)
