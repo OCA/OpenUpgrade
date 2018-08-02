@@ -1,0 +1,70 @@
+-
+  Create a couple of 'produce' procurements to validate that they are assigned the correct rule
+  during the deferred migration step
+-
+  !python {model: stock.move}: |
+    import netsvc
+    wf_service = netsvc.LocalService("workflow")
+    wh = self.pool['stock.warehouse'].browse(cr, uid, ref('stock.warehouse0'))
+    location_id = wh.lot_stock_id.id
+    output_id = ref('stock.stock_location_customers')
+    product = self.pool['product.product'].browse(cr, uid, ref('product.product_product_4'))
+    move_m2s_id = self.create(cr, uid, {
+        'name': 'test m2s manufacture',
+        'product_id': product.id,
+        'date': '2018-01-01',
+        'date_expected': '2018-01-01',
+        'product_qty': 1,
+        'product_uom': product.uom_id.id,
+        'product_uos_qty': 1,
+        'product_uos': product.uom_id.id,
+        'location_id': location_id,
+        'location_dest_id': output_id,
+        'state': 'confirmed',
+    })
+    move = self.browse(cr, uid, move_m2s_id)
+    proc_m2s_id = self.pool['procurement.order'].create(cr, uid, {
+        'name': move.name,
+        'origin': move.name,
+        'date_planned': move.date,
+        'product_id': move.product_id.id,
+        'product_qty': move.product_qty,
+        'product_uom': move.product_uom.id,
+        'product_uos_qty': move.product_qty,
+        'product_uos': move.product_uom.id,
+        'location_id': location_id,
+        'procure_method': 'make_to_stock',
+        'move_id': move.id,
+        'note': move.name,
+    })
+    wf_service.trg_validate(uid, 'procurement.order', proc_m2s_id, 'button_confirm', cr)
+
+    move_m2o_id = self.create(cr, uid, {
+        'name': 'test m2s manufacture',
+        'product_id': product.id,
+        'date': '2018-01-01',
+        'date_expected': '2018-01-01',
+        'product_qty': 1,
+        'product_uom': product.uom_id.id,
+        'product_uos_qty': 1,
+        'product_uos': product.uom_id.id,
+        'location_id': location_id,
+        'location_dest_id': output_id,
+        'state': 'confirmed',
+    })
+    move = self.browse(cr, uid, move_m2o_id)
+    proc_m2o_id = self.pool['procurement.order'].create(cr, uid, {
+        'name': move.name,
+        'origin': move.name,
+        'date_planned': move.date,
+        'product_id': move.product_id.id,
+        'product_qty': move.product_qty,
+        'product_uom': move.product_uom.id,
+        'product_uos_qty': move.product_qty,
+        'product_uos': move.product_uom.id,
+        'location_id': location_id,
+        'procure_method': 'make_to_order',
+        'move_id': move.id,
+        'note': move.name,
+    })
+    wf_service.trg_validate(uid, 'procurement.order', proc_m2o_id, 'button_confirm', cr)
