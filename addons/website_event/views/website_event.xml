@@ -9,7 +9,7 @@
     </xpath>
 </template>
 
-<template id="assets_editor" inherit_id="website.assets_editor" name="Event Editor" groups="event.group_event_manager">
+<template id="assets_editor" inherit_id="website.assets_editor" name="Event Editor">
     <xpath expr="." position="inside">
         <script type="text/javascript" src="/website_event/static/src/js/website_event.editor.js"></script>
         <script type="text/javascript" src="/website_event/static/src/js/website.tour.event.js"></script>
@@ -431,7 +431,7 @@
             class="btn btn-primary btn-lg pull-right a-submit" t-attf-id="#{event.id}">Register Now</button>
         <div t-if="not event.state == 'confirm'" class="alert alert-info">
             Event registration not yet started. 
-            <t t-if="uid">
+            <t t-if="request.env.user.has_group('event.group_event_manager')">
                 <i class="fa fa-plus-circle"><a t-attf-href="/web#id=#{event.id}&amp;view_type=form&amp;model=event.event"> <em>Configure and Launch Event Registration</em></a></i>
             </t>
         </div>
@@ -441,7 +441,7 @@
 <template id="registration_attendee_details" name="Registration Attendee Details">
     <div id="modal_attendees_registration" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
-            <form id="attendee_registration" t-attf-action="/event/#{slug(event)}/registration/confirm" method="post">
+            <form id="attendee_registration" t-attf-action="/event/#{slug(event)}/registration/confirm" method="post" class="js_website_submit_form">
                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                 <div class="modal-content">
                     <div class="modal-header">

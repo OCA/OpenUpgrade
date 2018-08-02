@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-01 06:27+0000\n"
-"PO-Revision-Date: 2016-11-12 00:56+0000\n"
-"Last-Translator: Jongkwan, Yeom <jongkwanyeom@gmail.com>\n"
+"POT-Creation-Date: 2016-09-22 13:16+0000\n"
+"PO-Revision-Date: 2018-07-31 07:48+0000\n"
+"Last-Translator: Linkup <link-up@naver.com>\n"
 "Language-Team: Korean (http://www.transifex.com/odoo/odoo-9/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -52,8 +52,8 @@ msgstr ""
 #. module: event
 #: model:event.event,description:event.event_2
 msgid ""
-"<em>(Chamber Works reserves the right to cancel, re-name or re-"
-"locate<br/>the event or change the dates on which it is held.)</em>"
+"<em>(Chamber Works reserves the right to cancel, re-name or re-locate<br>the"
+" event or change the dates on which it is held.)</em>"
 msgstr ""
 
 #. module: event
@@ -143,7 +143,7 @@ msgstr ""
 #: model:event.event,description:event.event_1
 #: model:event.event,description:event.event_3
 msgid "<small>John Doe, CEO</small>"
-msgstr ""
+msgstr "<small>John Doe, CEO</small>"
 
 #. module: event
 #: model:ir.ui.view,arch_db:event.view_event_form
@@ -214,7 +214,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:event.field_event_event_message_needaction
 #: model:ir.model.fields,field_description:event.field_event_registration_message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "필요한 조치"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_event_active
@@ -308,7 +308,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:event.field_event_registration_name
 #: model:ir.ui.view,arch_db:event.event_event_report_template_badge
 msgid "Attendee Name"
-msgstr ""
+msgstr "참석자 이름"
 
 #. module: event
 #: model:ir.actions.act_window,name:event.act_event_registration_from_event
@@ -354,7 +354,7 @@ msgstr "Odoo 이미지 배너"
 #. module: event
 #: selection:event.mail,interval_type:0
 msgid "Before the event"
-msgstr ""
+msgstr "일정 전"
 
 #. module: event
 #: model:event.event,description:event.event_2
@@ -1011,7 +1011,7 @@ msgstr "선택하면 새로운 메시지를 주목할 필요가 있습니다."
 #: model:ir.model.fields,help:event.field_event_event_message_needaction
 #: model:ir.model.fields,help:event.field_event_registration_message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "만약 선택하였으면, 새 메시지에 주의를 기울여야 합니다."
 
 #. module: event
 #: model:ir.model.fields,help:event.field_event_event_state
@@ -1091,7 +1091,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:event.field_event_event_message_is_follower
 #: model:ir.model.fields,field_description:event.field_event_registration_message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "팔로워입니다"
 
 #. module: event
 #: model:ir.model.fields,help:event.field_event_type_default_registration_max
@@ -1233,12 +1233,6 @@ msgid "Messages"
 msgstr "메시지"
 
 #. module: event
-#: model:ir.model.fields,help:event.field_event_event_message_ids
-#: model:ir.model.fields,help:event.field_event_registration_message_ids
-msgid "Messages and communication history"
-msgstr "메시지 및 대화 기록"
-
-#. module: event
 #: model:ir.model.fields,field_description:event.field_event_event_seats_min
 msgid "Minimum Attendees"
 msgstr "최소 참석자"
@@ -1327,13 +1321,13 @@ msgstr "등록 회수"
 #: model:ir.model.fields,help:event.field_event_event_message_needaction_counter
 #: model:ir.model.fields,help:event.field_event_registration_message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr ""
+msgstr "조치가 필요한 메시지 수"
 
 #. module: event
 #: model:ir.model.fields,help:event.field_event_event_message_unread_counter
 #: model:ir.model.fields,help:event.field_event_registration_message_unread_counter
 msgid "Number of unread messages"
-msgstr ""
+msgstr "읽지 않은 메시지 수"
 
 #. module: event
 #: model:event.event,description:event.event_0
@@ -1522,7 +1516,7 @@ msgstr ""
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_type_default_reply_to
 msgid "Reply To"
-msgstr ""
+msgstr "회신"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_event_reply_to
@@ -1612,7 +1606,7 @@ msgstr "설정"
 #. module: event
 #: model:event.type,name:event.event_type_3
 msgid "Show"
-msgstr ""
+msgstr "보기"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_registration_origin
@@ -1813,16 +1807,6 @@ msgid ""
 "Warning: This Event has not reached its Minimum Registration Limit. Are you "
 "sure you want to confirm it?"
 msgstr "경고 : 해당 일정이 최소 등록 기준에 도달하지 못했습니다. 그래도 확정하길 원하십니까?"
-
-#. module: event
-#: model:ir.model.fields,field_description:event.field_event_event_website_message_ids
-msgid "Website Messages"
-msgstr ""
-
-#. module: event
-#: model:ir.model.fields,help:event.field_event_event_website_message_ids
-msgid "Website communication history"
-msgstr ""
 
 #. module: event
 #: selection:event.mail,interval_unit:0

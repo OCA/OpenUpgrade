@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-13 09:40+0000\n"
-"PO-Revision-Date: 2017-05-28 15:15+0000\n"
-"Last-Translator: Martin Trigaux\n"
+"PO-Revision-Date: 2018-05-31 01:41+0000\n"
+"Last-Translator: Onii Onii <onii0223@yahoo.com>\n"
 "Language-Team: Mongolian (http://www.transifex.com/odoo/odoo-9/language/mn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3202,7 +3202,7 @@ msgstr "Цувралын Тооллого"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_pack_operation_lot_lot_name
 msgid "Lot Name"
-msgstr ""
+msgstr "Цувралын нэр"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_picking_form
@@ -3872,6 +3872,12 @@ msgstr "Буцах хөдөлгөөний эх"
 #: model:ir.model.fields,field_description:stock.field_stock_move_move_orig_ids
 msgid "Original Move"
 msgstr "Эх хөдөлгөөн"
+
+#. module: stock
+#: code:addons/stock/stock.py:576
+#, python-format
+msgid "Otherwise make sure the right stock/owner is set."
+msgstr "Бусад тохиолдолд зөв нөөц/эзэмшигч тохируулагдсан эсгийг нягталж хяна."
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_warehouse_out_type_id
@@ -5486,7 +5492,7 @@ msgstr "Хадгалж болох"
 #: code:addons/stock/product.py:400
 #, python-format
 msgid "Stockable Product"
-msgstr ""
+msgstr "Хадгалах бараа"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_location_route_supplied_wh_id
@@ -6819,6 +6825,14 @@ msgstr "Ижил цувралын дугаартай барааг л хүлээ�
 #, python-format
 msgid "You should provide a different serial number for each piece"
 msgstr "Барааны зүйл бүрт ялгаатай цувралын дугаар өгөх ёстой"
+
+#. module: stock
+#: code:addons/stock/product.py:349
+#, python-format
+msgid ""
+"You still have some active reordering rules on this product. Please archive "
+"or delete them first."
+msgstr ""
 
 #. module: stock
 #: constraint:stock.move:0
