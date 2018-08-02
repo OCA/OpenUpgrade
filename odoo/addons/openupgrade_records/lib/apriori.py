@@ -35,6 +35,7 @@ merged_modules = {
     'website_portal': 'website',
     'website_portal_sale': 'sale_payment',
     'website_project': 'project',
+    'website_project_issue': 'project',
     'website_project_timesheet': 'hr_timesheet',
     # OCA/account-financial-reporting
     # Done here for avoiding problems if updating from a previous version
