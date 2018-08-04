@@ -8,13 +8,14 @@
 # Albena Mincheva <albena_vicheva@abv.bg>, 2018
 # Boris Stefanov <borkata@gmail.com>, 2018
 # Kaloyan Naumov <kaloyan@lumnus.net>, 2018
+# Maria Boyadjieva <marabo2000@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 13:42+0000\n"
 "PO-Revision-Date: 2018-02-19 13:42+0000\n"
-"Last-Translator: Kaloyan Naumov <kaloyan@lumnus.net>, 2018\n"
+"Last-Translator: Maria Boyadjieva <marabo2000@gmail.com>, 2018\n"
 "Language-Team: Bulgarian (https://www.transifex.com/odoo/teams/41243/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,6 +31,10 @@ msgid ""
 " * The 'Posted' status is used when user create voucher,a voucher number is generated and voucher entries are created in account.\n"
 " * The 'Cancelled' status is used when user cancel voucher."
 msgstr ""
+" * Етапът 'Чернова' is used when a user is encoding a new and unconfirmed Voucher.\n"
+" * The 'Pro-forma' status is used when the voucher does not have a voucher number.\n"
+" * The 'Posted' status is used when user create voucher,a voucher number is generated and voucher entries are created in account.\n"
+" * The 'Cancelled' status is used when user cancel voucher."
 
 #. module: account_voucher
 #: model:ir.model.fields,field_description:account_voucher.field_account_voucher_account_id
@@ -73,17 +78,17 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_voucher.view_purchase_receipt_form
 #: model:ir.ui.view,arch_db:account_voucher.view_voucher_filter_vendor
 msgid "Bill Date"
-msgstr ""
+msgstr "Дата на издаване на фактура"
 
 #. module: account_voucher
 #: model:ir.ui.view,arch_db:account_voucher.view_purchase_receipt_form
 msgid "Bill Information"
-msgstr ""
+msgstr "Иформация за фактура за покупка"
 
 #. module: account_voucher
 #: model:ir.model.fields,field_description:account_voucher.field_account_voucher_reference
 msgid "Bill Reference"
-msgstr ""
+msgstr "Референция за фактура за покупка"
 
 #. module: account_voucher
 #: model:ir.ui.view,arch_db:account_voucher.view_purchase_receipt_form
@@ -182,7 +187,7 @@ msgstr "Чернова"
 #: model:ir.ui.view,arch_db:account_voucher.view_voucher_filter_sale
 #: model:ir.ui.view,arch_db:account_voucher.view_voucher_filter_vendor
 msgid "Draft Vouchers"
-msgstr ""
+msgstr "Чернови ваучери"
 
 #. module: account_voucher
 #: model:ir.model.fields,field_description:account_voucher.field_account_voucher_date_due
@@ -241,7 +246,7 @@ msgstr "Дневников запис"
 #: model:ir.ui.view,arch_db:account_voucher.view_purchase_receipt_form
 #: model:ir.ui.view,arch_db:account_voucher.view_sale_receipt_form
 msgid "Journal Items"
-msgstr ""
+msgstr "Пунктове в счетоводния регистър"
 
 #. module: account_voucher
 #: model:ir.model.fields,field_description:account_voucher.field_account_voucher___last_update
@@ -311,13 +316,13 @@ msgstr "Референция за плащане"
 #: code:addons/account_voucher/models/account_voucher.py:195
 #, python-format
 msgid "Please activate the sequence of selected journal !"
-msgstr ""
+msgstr "Моля активирайте последователността на избрания журнал !"
 
 #. module: account_voucher
 #: code:addons/account_voucher/models/account_voucher.py:198
 #, python-format
 msgid "Please define a sequence on the journal."
-msgstr ""
+msgstr "Моля задайте последователност в счетоводния регистър"
 
 #. module: account_voucher
 #: selection:account.voucher,state:0
@@ -516,7 +521,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_voucher.view_voucher_tree
 #: model:ir.ui.view,arch_db:account_voucher.view_voucher_tree_purchase
 msgid "Voucher Entries"
-msgstr ""
+msgstr "Записи на ваучери"
 
 #. module: account_voucher
 #: model:ir.model,name:account_voucher.model_account_voucher_line
@@ -536,7 +541,7 @@ msgstr "Статистика за ваучери"
 #. module: account_voucher
 #: model:ir.actions.act_window,name:account_voucher.action_review_voucher_list
 msgid "Vouchers Entries"
-msgstr ""
+msgstr "Записи на ваучери"
 
 #. module: account_voucher
 #: model:ir.actions.act_window,help:account_voucher.action_purchase_receipt
@@ -556,4 +561,4 @@ msgstr ""
 #: code:addons/account_voucher/models/account_voucher.py:377
 #, python-format
 msgid "You must first select a partner!"
-msgstr ""
+msgstr "Първо трябва да изберете партньор!"

@@ -145,7 +145,9 @@ class Groups(models.Model):
     @api.multi
     def copy(self, default=None):
         self.ensure_one()
-        default = dict(default or {}, name=_('%s (copy)') % self.name)
+        chosen_name = default.get('name') if default else ''
+        default_name = chosen_name or _('%s (copy)') % self.name
+        default = dict(default or {}, name=default_name)
         return super(Groups, self).copy(default)
 
     @api.multi
@@ -694,7 +696,7 @@ class UsersImplied(models.Model):
             for user in self.with_context({}):
                 gs = set(concat(g.trans_implied_ids for g in user.groups_id))
                 vals = {'groups_id': [(4, g.id) for g in gs]}
-                super(UsersImplied, self).write(vals)
+                super(UsersImplied, user).write(vals)
         return res
 
 #

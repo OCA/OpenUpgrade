@@ -18,13 +18,14 @@
 # Monika Grzelak <m.e.grzelak@gmail.com>, 2017
 # Tomasz Leppich <t.leppich@gmail.com>, 2018
 # Radosław Biegalski <radoslaw.biegalski@openglobe.pl>, 2018
+# Paweł Wodyński <pw@myodoo.pl>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 13:42+0000\n"
 "PO-Revision-Date: 2018-02-19 13:42+0000\n"
-"Last-Translator: Radosław Biegalski <radoslaw.biegalski@openglobe.pl>, 2018\n"
+"Last-Translator: Paweł Wodyński <pw@myodoo.pl>, 2018\n"
 "Language-Team: Polish (https://www.transifex.com/odoo/teams/41243/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1083,12 +1084,12 @@ msgstr "Zastosuj to na swojej stronie na stronie administratora bazy danych"
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_page_arch_db
 msgid "Arch Blob"
-msgstr ""
+msgstr "Arch Blob"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_page_arch_fs
 msgid "Arch Filename"
-msgstr ""
+msgstr "Arch Nazwa pliku"
 
 #. module: website
 #. openerp-web
@@ -2238,6 +2239,10 @@ msgid ""
 "* if False, the view currently does not extend its parent but can be enabled\n"
 "         "
 msgstr ""
+"Jeśli ten widok jest dziedziczony,\n"
+"* jeśli Prawda, widok zawsze rozszerza rodzica\n"
+"* jeśli Fałsz, widok obecnie nie rozszerza rodzica, ale można go włączyć\n"
+"         "
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
@@ -2868,6 +2873,15 @@ msgid ""
 "(<xpath/>) are applied, and the result is used as if it were this view's\n"
 "actual arch.\n"
 msgstr ""
+"Ma zastosowanie tylko wtedy, gdy widok ten dziedziczy z innego (inherit_id nie ma wartości False/Null).\n"
+"\n"
+"* jeśli rozszerzenie (domyślnie), jeśli ten widok jest wymagany, przeglądany jest najbliższy podstawowy\n"
+"widok (przez parametr inherit_id), wtedy wszystkie widoki dziedziczące z niego z tym\n"
+"modelem widoku są zastosowane\n"
+"* jeśli podstawowy, najbliższy główny widok jest w pełni rozdzielony (nawet jeśli używa\n"
+"innego modelu niż ten), to stosowane są specyfikacje dziedziczenia tego widoku\n"
+"(<xpath/>), a wynik jest używany tak, jakby był rzeczywistym\n"
+"modelem tego widoku.\n"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.show_website_info
@@ -3998,7 +4012,7 @@ msgstr "Tryb dziedziczenia widoku"
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_page_inherit_children_ids
 msgid "Views which inherit from this one"
-msgstr ""
+msgstr "Widoki, które odziedziczą po tym"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_blog_post_website_published
