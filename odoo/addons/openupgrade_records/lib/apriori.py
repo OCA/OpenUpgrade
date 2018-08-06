@@ -13,6 +13,8 @@ renamed_modules = {
     'partner_financial_risk': 'account_financial_risk',
     'partner_payment_return_risk': 'account_payment_return_financial_risk',
     'partner_sale_risk': 'sale_financial_risk',
+    # OCA/product-variant
+    'product_variant_supplierinfo': 'product',
     # OCA/stock-logistics-reporting
     'stock_valued_picking_report': 'stock_picking_report_valued',
     # OCA/vertical-association
