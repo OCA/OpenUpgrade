@@ -84,7 +84,7 @@ product      / product.product          / weight (float)                : NEW
 # Done: Move field values from product.template to product.product
 
 product      / product.supplierinfo     / currency_id (many2one)        : NEW relation: res.currency, required: required, req_default: function
-# Nothing to do
+# Done: set to the currency of the supplier's default pricelist
 
 product      / product.supplierinfo     / date_end (date)               : NEW
 product      / product.supplierinfo     / date_start (date)             : NEW
