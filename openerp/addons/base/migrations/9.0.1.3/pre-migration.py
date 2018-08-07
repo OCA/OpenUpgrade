@@ -76,6 +76,8 @@ def cleanup_modules(cr):
             ('account_bank_statement_period_from_line_date', 'account'),
             # from OCA/connector-telephony
             ('asterisk_click2dial_crm', 'crm_phone'),
+            # from OCA/product-attribute
+            ('product_pricelist_fixed_price', 'product'),
             # from OCA/server-tools - features included now in core
             ('base_concurrency', 'base'),
             ('base_debug4all', 'base'),
