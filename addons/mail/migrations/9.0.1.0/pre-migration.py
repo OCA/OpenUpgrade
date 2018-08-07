@@ -48,3 +48,17 @@ def migrate(env, version):
         rule = env.ref('mail.' + xml_id, False)
         if rule:
             rule.unlink()
+
+    if openupgrade.table_exists(env.cr, 'im_chat_session'):
+        env.cr.execute(
+            """
+            ALTER TABLE mail_channel
+            ADD COLUMN %s integer;
+            """ % openupgrade.get_legacy_name('old_id')
+        )
+        env.cr.execute(
+            """
+            ALTER TABLE im_chat_session
+            ADD COLUMN %s integer;
+            """ % openupgrade.get_legacy_name('alias_id')
+        )

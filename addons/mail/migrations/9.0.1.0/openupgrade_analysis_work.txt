@@ -18,6 +18,7 @@ mail         / mail.channel             / name (char)                   : NEW re
 mail         / mail.channel             / public (selection)            : NEW required: required, selection_keys: ['groups', 'private', 'public'], req_default: groups
 mail         / mail.channel             / uuid (char)                   : NEW 
 # This is mail.group renamed
+# DONE: Also included merge of im_chat.session.
 
 mail         / mail.channel.partner     / channel_id (many2one)         : NEW relation: mail.channel
 mail         / mail.channel.partner     / fold_state (selection)        : NEW selection_keys: ['closed', 'folded', 'open']
@@ -26,6 +27,7 @@ mail         / mail.channel.partner     / is_pinned (boolean)           : NEW
 mail         / mail.channel.partner     / partner_id (many2one)         : NEW relation: res.partner
 mail         / mail.channel.partner     / seen_message_id (many2one)    : NEW relation: mail.message
 # New functionality, we create records for followers of existing mail.group records
+# DONE: Also included merge of im_chat.im_chat_session_res_users_rel.
 
 mail         / mail.followers           / channel_id (many2one)         : NEW relation: mail.channel
 mail         / mail.mail                / failure_reason (text)         : NEW 
@@ -37,6 +39,7 @@ mail         / mail.message             / notification_ids (one2many)   : DEL re
 mail         / mail.message             / notified_partner_ids (many2many): DEL relation: res.partner
 mail         / mail.message             / starred_partner_ids (many2many): NEW relation: res.partner
 # Done in post script
+# DONE: Included merge of im_chat_message.
 
 mail         / mail.message             / tracking_value_ids (one2many) : NEW relation: mail.tracking.value
 mail         / mail.message             / type (selection)              : now required, default = email

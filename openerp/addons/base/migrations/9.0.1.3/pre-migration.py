@@ -49,6 +49,7 @@ def cleanup_modules(cr):
             ('account_chart', 'account'),
             ('account_followup', 'account_credit_control'),
             ('contacts', 'mail'),
+            ('im_chat', 'mail'),
             ('marketing_crm', 'crm'),
             ('email_template', 'mail'),  # mail_template class
             ('portal_project', 'project'),
