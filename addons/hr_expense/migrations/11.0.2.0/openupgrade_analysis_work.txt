@@ -1,9 +1,14 @@
 ---Fields in module 'hr_expense'---
-hr_expense   / account.move.line        / expense_id (many2one)         : NEW relation: hr.expense
-hr_expense   / hr.expense               / is_refused (boolean)          : NEW 
 hr_expense   / hr.expense               / website_message_ids (one2many): NEW relation: mail.message
 hr_expense   / hr.expense.sheet         / website_message_ids (one2many): NEW relation: mail.message
 # Nothing to do, new relations, new field
+
+hr_expense   / account.move.line        / expense_id (many2one)         : NEW relation: hr.expense
+# Done: post-migration: Link last expense move.
+# TODO: Create heuristic method for deducing the rest of journal entries when # of expenses per sheet > 1
+
+hr_expense   / hr.expense               / is_refused (boolean)          : NEW
+# Done: post-migration: Set this to True when linked sheet_id has state=cancel
 
 ---XML records in module 'hr_expense'---
 NEW ir.actions.act_window: hr_expense.action_hr_expense_sheet_my_refused
@@ -28,5 +33,7 @@ NEW ir.ui.view: hr_expense.res_config_settings_view_form
 DEL ir.ui.view: hr_expense.hr_expense_register_payment_view_form
 DEL ir.ui.view: hr_expense.view_hr_expense_configuration
 DEL ir.values: hr_expense.action_hr_expense_submit
-DEL mail.message: hr_expense.module_install_notification (noupdate)
 # Nothing to do, nothing related
+
+DEL mail.message: hr_expense.module_install_notification (noupdate)
+# Nothing to do, as this one is some kind of a fake record
