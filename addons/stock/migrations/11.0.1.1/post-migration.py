@@ -138,6 +138,7 @@ def create_stock_move_line(env):
             product_uom_qty,
             qty_done,
             reference,
+            state,
             result_package_id,
             write_date,
             write_uid
@@ -161,6 +162,7 @@ def create_stock_move_line(env):
             spo.product_qty,
             spo.qty_done,
             COALESCE(sp.name, sm.name),
+            sm.state,
             spo.result_package_id,
             spo.write_date,
             spo.write_uid
