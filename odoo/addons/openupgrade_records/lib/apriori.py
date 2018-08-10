@@ -49,6 +49,8 @@ merged_modules = {
     'project_issue_timesheet_time_control': 'project_timesheet_time_control',
     # OCA/stock-logistics-workflow
     'stock_picking_transfer_lot_autoassign': 'stock_pack_operation_auto_fill',
+    # OCA/web
+    'web_widget_domain_v11': 'web',
 }
 
 renamed_models = {
