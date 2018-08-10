@@ -425,7 +425,7 @@ missing in the new release are marked with |del|.
 +-----------------------------------+-------------------------------------------------+
 | |del| project_issue               | Done (merged in project as project_task)        |
 +-----------------------------------+-------------------------------------------------+
-| |del| project_issue_sheet         |                                                 |
+| |del| project_issue_sheet         | Done (merged in hr_timesheet)                   |
 +-----------------------------------+-------------------------------------------------+
 | |new| project_timesheet_holidays  |                                                 |
 +-----------------------------------+-------------------------------------------------+
