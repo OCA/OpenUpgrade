@@ -20,6 +20,7 @@
 #
 ##############################################################################
 import logging
+from psycopg2.extensions import AsIs
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp import api, pooler, SUPERUSER_ID
 from datetime import datetime
@@ -42,6 +43,11 @@ def bom_product_template(cr):
 def migrate_bom_lines(cr, pool):
     cr.execute("ALTER TABLE mrp_bom DROP CONSTRAINT mrp_bom_bom_id_fkey")
     bom_line_obj = pool['mrp.bom.line']
+    created_from_bom_id = openupgrade.get_legacy_name('created_from_bom_id')
+    cr.execute(
+        "ALTER TABLE mrp_bom_line ADD COLUMN %s INTEGER",
+        (AsIs(created_from_bom_id),))
+
     fields = {
         'bom_id': openupgrade.get_legacy_name('bom_id'),
         'product_uos': openupgrade.get_legacy_name('product_uos'),
@@ -70,7 +76,10 @@ def migrate_bom_lines(cr, pool):
             'routing_id': row['routing_id'],
             'sequence': row['sequence'],
             'type': row['type']
-            })
+        })
+        cr.execute(
+            "UPDATE mrp_bom_line SET %s = %s WHERE id = %s",
+            (AsIs(created_from_bom_id), row['id'], bom_line_id))
         ids.append(str(row['id']))
         # Transfer properties from bom to bom line
         cr.execute(
