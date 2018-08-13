@@ -4,7 +4,7 @@
 from openupgradelib import openupgrade
 
 
-@openupgrade.migrate
+@openupgrade.migrate()
 def migrate(env, version):
     """ Delete the translations of the email templates that are being
     overwritten in the noupdate_changes.xml """
