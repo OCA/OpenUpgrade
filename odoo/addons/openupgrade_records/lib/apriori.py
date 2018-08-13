@@ -22,6 +22,8 @@ renamed_modules = {
     'membership_prorrate_variable_period': (
         'membership_prorate_variable_period'
     ),
+    # OCA/web
+    'web_advanced_search_x2x': 'web_advanced_search',
 }
 
 merged_modules = {
