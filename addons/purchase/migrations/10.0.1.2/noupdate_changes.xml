@@ -1,9 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="module_install_notification" model="mail.message">
-    <field name="body"><![CDATA[<p>Create purchase orders to buy products from your vendors, control supplier bills and manage payments.</p>
-<p>If you need to manage blanket orders, purchase requisitions, or purchase tenders, activate them through the Configuration menu.</p>]]></field>
-  </record>
   <record id="email_template_edi_purchase_done" model="mail.template">
     <field name="body_html"><![CDATA[
 <p>Dear ${object.partner_id.name}
