@@ -67,7 +67,6 @@ You could use this simplified accounting in case you work with an (external) acc
     ],
     'demo': [
         'demo/account_demo.xml',
-        'demo/openupgrade_account_demo.xml',
     ],
     'qweb': [
         "static/src/xml/account_reconciliation.xml",
