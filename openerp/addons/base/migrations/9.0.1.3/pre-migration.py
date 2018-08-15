@@ -48,6 +48,9 @@ def cleanup_modules(cr):
         cr, [
             ('account_chart', 'account'),
             ('account_followup', 'account_credit_control'),
+            # We convert deprecated Odoo module into OCA one - The rest of
+            # the migration is in the module in OCA/sale-workflow
+            ('account_journal', 'sale_order_type'),
             ('contacts', 'mail'),
             ('im_chat', 'mail'),
             ('marketing_crm', 'crm'),
