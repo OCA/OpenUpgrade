@@ -15,21 +15,21 @@ def fill_website_pages(env):
         INSERT INTO website_page
             (url, view_id, website_indexed, website_published, create_uid,
              create_date, write_uid, write_date)
-        SELECT
-            wm.url, iuv.id, TRUE, TRUE, iuv.create_uid,
+        SELECT COALESCE(wm.url, '/page/' || iuv.name), iuv.id, TRUE, TRUE,
+            iuv.create_uid,
             iuv.create_date, iuv.write_uid, iuv.write_date
         FROM
-            ir_ui_view iuv
-        INNER JOIN
-            website_menu wm ON wm.url = '/page/' || iuv.name AND
-            (wm.website_id = iuv.website_id OR
-             wm.website_id IS NULL OR
-             iuv.website_id IS NULL)
+            website_page wp
+        RIGHT JOIN
+            ir_ui_view iuv ON wp.view_id = iuv.id
         LEFT JOIN
-            website_page wp ON wp.view_id = iuv.id
+            website_menu wm ON wm.url = '/page/' || iuv.name
+            AND (wm.website_id = iuv.website_id
+            OR wm.website_id IS NULL
+            OR iuv.website_id IS NULL)
         WHERE
-            wp.id IS NULL AND
-            iuv.page = true""",
+            wp.id IS NULL
+            AND iuv.page = TRUE""",
     )
 
 
