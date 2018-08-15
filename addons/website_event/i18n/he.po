@@ -4,15 +4,16 @@
 # 
 # Translators:
 # ExcaliberX <excaliberx@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
-# fishfurbanter <fishfurbanter@gmail.com>, 2017
+# Martin Trigaux, 2017
+# Fishfur A Banter <fishfurbanter@gmail.com>, 2017
+# Yihya Hugirat <hugirat@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-29 14:01+0000\n"
 "PO-Revision-Date: 2016-09-29 14:01+0000\n"
-"Last-Translator: fishfurbanter <fishfurbanter@gmail.com>, 2017\n"
+"Last-Translator: Yihya Hugirat <hugirat@gmail.com>, 2017\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -86,7 +87,7 @@ msgstr ""
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_attendee_details
 msgid "<strong>Name</strong>"
-msgstr ""
+msgstr "<strong>שם</strong>"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.event_description_full
@@ -436,6 +437,11 @@ msgid "Register Now"
 msgstr ""
 
 #. module: website_event
+#: model:ir.ui.view,arch_db:website_event.event_description_full
+msgid "Registration for this event is now closed"
+msgstr ""
+
+#. module: website_event
 #: model:ir.ui.view,arch_db:website_event.404
 msgid "Return to the event list."
 msgstr ""
@@ -469,7 +475,7 @@ msgstr ""
 #: code:addons/website_event/controllers/main.py:39
 #, python-format
 msgid "This Week"
-msgstr ""
+msgstr "שבוע נוכחי"
 
 #. module: website_event
 #: code:addons/website_event/controllers/main.py:47

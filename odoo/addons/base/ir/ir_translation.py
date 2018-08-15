@@ -484,13 +484,19 @@ class IrTranslation(models.Model):
                 continue
 
             # remap existing translations on terms when possible
+            trans_src = record_trans.mapped('src')
             for trans in record_trans:
                 if trans.src == trans.value:
                     discarded += trans
                 elif trans.src not in terms:
                     matches = get_close_matches(trans.src, terms, 1, 0.9)
                     if matches:
-                        trans.write({'src': matches[0], 'state': trans.state})
+                        if matches[0] in trans_src:
+                            # there is already a translation for this term; discard this one
+                            discarded += trans
+                        else:
+                            trans.write({'src': matches[0], 'state': trans.state})
+                            trans_src.append(matches[0])  # avoid reuse of term
                     else:
                         outdated += trans
 
@@ -699,6 +705,16 @@ class IrTranslation(models.Model):
                 action['context'] = {
                     'search_default_name': "%s,%s" % (fld.model_name, fld.name),
                 }
+            else:
+                rec = record
+                try:
+                    while fld.related:
+                        rec, fld = fld.traverse_related(rec)
+                    if rec:
+                        action['context'] = {'search_default_name': "%s,%s" % (fld.model_name, fld.name),}
+                except AccessError:
+                    pass
+
         return action
 
     @api.model

@@ -49,7 +49,7 @@ def keep_query(*keep_params, **additional_params):
     if not keep_params and not additional_params:
         keep_params = ('*',)
     params = additional_params.copy()
-    qs_keys = request.httprequest.args.keys()
+    qs_keys = request.httprequest.args.keys() if request else []
     for keep_param in keep_params:
         for param in fnmatch.filter(qs_keys, keep_param):
             if param not in additional_params and param in qs_keys:
@@ -201,7 +201,7 @@ actual arch.
                 fullpath = get_resource_path(*view.arch_fs.split('/'))
                 arch_fs = get_view_arch_from_file(fullpath, view.xml_id)
                 # replace %(xml_id)s, %(xml_id)d, %%(xml_id)s, %%(xml_id)d by the res_id
-                arch_fs = arch_fs and resolve_external_ids(arch_fs, view.xml_id)
+                arch_fs = arch_fs and resolve_external_ids(arch_fs, view.xml_id).replace('%%', '%')
             view.arch = arch_fs or view.arch_db
 
     def _inverse_arch(self):
@@ -403,6 +403,12 @@ actual arch.
         self.clear_caches()
         return super(View, self).write(self._compute_defaults(vals))
 
+    def unlink(self):
+        # if in uninstall mode and has children views, emulate an ondelete cascade
+        if self.env.context.get('_force_unlink', False) and self.mapped('inherit_children_ids'):
+            self.mapped('inherit_children_ids').unlink()
+        super(View, self).unlink()
+
     @api.multi
     def toggle(self):
         """ Switches between enabled and disabled statuses
@@ -428,6 +434,15 @@ actual arch.
     # Inheritance mecanism
     #------------------------------------------------------
     @api.model
+    def _get_inheriting_views_arch_domain(self, view_id, model):
+        return [
+            ['inherit_id', '=', view_id],
+            ['model', '=', model],
+            ['mode', '=', 'extension'],
+            ['active', '=', True],
+        ]
+
+    @api.model
     def get_inheriting_views_arch(self, view_id, model):
         """Retrieves the architecture of views that inherit from the given view, from the sets of
            views that should currently be used in the system. During the module upgrade phase it
@@ -442,13 +457,8 @@ actual arch.
            :return: [(view_arch,view_id), ...]
         """
         user_groups = self.env.user.groups_id
+        conditions = self._get_inheriting_views_arch_domain(view_id, model)
 
-        conditions = [
-            ['inherit_id', '=', view_id],
-            ['model', '=', model],
-            ['mode', '=', 'extension'],
-            ['active', '=', True],
-        ]
         if self.pool._init and not self._context.get('load_all_views'):
             # Module init currently in progress, only consider views from
             # modules whose code is already loaded
@@ -938,7 +948,7 @@ actual arch.
 
     def _read_template_keys(self):
         """ Return the list of context keys to use for caching ``_read_template``. """
-        return ['lang', 'inherit_branding', 'editable', 'translatable', 'edit_translations']
+        return ['lang', 'inherit_branding', 'editable', 'translatable', 'edit_translations', 'website_id']
 
     # apply ormcache_context decorator unless in dev mode...
     @api.model

@@ -53,7 +53,7 @@ class MrpBom(models.Model):
         default='asap', required=True)
     picking_type_id = fields.Many2one(
         'stock.picking.type', 'Picking Type', domain=[('code', '=', 'mrp_operation')],
-        help="When a procurement has a ‘produce’ route with a picking type set, it will try to create "
+        help=u"When a procurement has a ‘produce’ route with a picking type set, it will try to create "
              "a Manufacturing Order for that product using a BoM of the same picking type. That allows "
              "to define procurement rules which trigger different manufacturing orders with different BoMs. ")
     company_id = fields.Many2one(
@@ -81,6 +81,13 @@ class MrpBom(models.Model):
     def onchange_product_tmpl_id(self):
         if self.product_tmpl_id:
             self.product_uom_id = self.product_tmpl_id.uom_id.id
+            if self.product_id.product_tmpl_id != self.product_tmpl_id:
+                self.product_id = False
+
+    @api.onchange('routing_id')
+    def onchange_routing_id(self):
+        for line in self.bom_line_ids:
+            line.operation_id = False
 
     @api.multi
     def name_get(self):

@@ -208,11 +208,8 @@ class MrpProduction(models.Model):
     @api.depends('move_raw_ids.quantity_done', 'move_finished_ids.quantity_done')
     def _compute_post_visible(self):
         for order in self:
-            if order.product_tmpl_id._is_cost_method_standard():
-                order.post_visible = any((x.quantity_done > 0 and x.state not in ['done', 'cancel']) for x in order.move_raw_ids) or \
-                    any((x.quantity_done > 0 and x.state not in ['done' 'cancel']) for x in order.move_finished_ids)
-            else:
-                order.post_visible = any((x.quantity_done > 0 and x.state not in ['done' 'cancel']) for x in order.move_finished_ids)
+            order.post_visible = any(order.move_raw_ids.filtered(lambda x: (x.quantity_done) > 0 and (x.state not in ['done', 'cancel']))) or \
+                any(order.move_finished_ids.filtered(lambda x: (x.quantity_done) > 0 and (x.state not in ['done', 'cancel'])))
 
     @api.multi
     @api.depends('workorder_ids.state', 'move_finished_ids')
@@ -265,6 +262,17 @@ class MrpProduction(models.Model):
         location = self.env.ref('stock.stock_location_stock')
         self.location_src_id = self.picking_type_id.default_location_src_id.id or location.id
         self.location_dest_id = self.picking_type_id.default_location_dest_id.id or location.id
+
+    @api.multi
+    def write (self, vals):
+        res = super(MrpProduction, self).write(vals)
+        if 'date_planned_start' in vals:
+            moves = (self.mapped('move_raw_ids') + self.mapped('move_finished_ids')).filtered(
+                lambda r: r.state not in ['done', 'cancel'])
+            moves.write({
+                'date_expected': vals['date_planned_start'],
+            })
+        return res
 
     @api.model
     def create(self, values):
@@ -341,8 +349,9 @@ class MrpProduction(models.Model):
             source_location = routing.location_id
         else:
             source_location = self.location_src_id
-        original_quantity = self.product_qty - self.qty_produced
+        original_quantity = (self.product_qty - self.qty_produced) or 1.0
         data = {
+            'sequence': bom_line.sequence,
             'name': self.name,
             'date': self.date_planned_start,
             'date_expected': self.date_planned_start,

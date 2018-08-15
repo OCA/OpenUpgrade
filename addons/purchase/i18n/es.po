@@ -11,10 +11,10 @@
 # Sergio Flores <vitavitae1@gmail.com>, 2016
 # Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
 # Carlos rodriguez <carlosalbertor436@gmail.com>, 2016
+# Luis M. Ontalba <luis.martinez@tecnativa.com>, 2016
 # Glen Sojo <inactive+glen.sojo@transifex.com>, 2016
 # RGB Consulting <odoo@rgbconsulting.com>, 2016
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2016
-# Leonardo Chianea <noamixcontenidos@gmail.com>, 2016
 # oihane <oihanecruce@gmail.com>, 2016
 # David Perez <david@closemarketing.es>, 2016
 # Mateo Tibaquirá Palacios <nestormateo@gmail.com>, 2016
@@ -24,18 +24,17 @@
 # Alejandro Die Sanchis <marketing@domatix.com>, 2016
 # Luis Pomar <luis.pomar@gmail.com>, 2016
 # Luis M. Triana <luis.triana@jarsa.com.mx>, 2016
-# Luis M. Ontalba <luis.martinez@tecnativa.com>, 2016
 # Ivan Nieto <ivan.n.s@tuta.io>, 2016
+# Leonardo Chianea <noamixcontenidos@gmail.com>, 2016
 # Juan Fernando Cano González <jfcano@nanobytes.es>, 2016
 # Kiko <kiko@comunitea.com>, 2016
-# Ruben Dario Machado <ruben@vauxoo.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:27+0000\n"
 "PO-Revision-Date: 2017-06-23 13:27+0000\n"
-"Last-Translator: Ruben Dario Machado <ruben@vauxoo.com>, 2017\n"
+"Last-Translator: Kiko <kiko@comunitea.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -172,7 +171,7 @@ msgstr "# de Facturas"
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_report_nbr_lines
 msgid "# of Lines"
-msgstr "# de líneas"
+msgstr "Nº de líneas"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_res_partner_purchase_order_count
@@ -301,7 +300,7 @@ msgid ""
 "Allow using call for tenders to get quotes from multiple suppliers "
 "(advanced)"
 msgstr ""
-"Permitir el uso de licitación para obtener cotizaciones de varios "
+"Permitir el uso de licitaciones para obtener presupuestos de varios "
 "proveedores (avanzado)"
 
 #. module: purchase
@@ -389,8 +388,8 @@ msgid ""
 "Associated Purchase Order. Filled in automatically when a PO is chosen on "
 "the vendor bill."
 msgstr ""
-"Orden de compra asociado. Rellenado automáticamente cuando se elige un PO en"
-" la factura de proveedor."
+"Pedido de compra asociado. Rellenado automáticamente cuando se elige uno en "
+"la factura de proveedor."
 
 #. module: purchase
 #: model:ir.filters,name:purchase.filter_purchase_order_average_delivery_time
@@ -416,7 +415,7 @@ msgstr "Cant. facturada"
 #: code:addons/purchase/models/purchase.py:581
 #, python-format
 msgid "Billed Quantity"
-msgstr ""
+msgstr "Cantidad facturada"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_invoice_status
@@ -469,8 +468,8 @@ msgid ""
 "Calls for tenders are used when you want to generate requests for quotations to several vendors for a given set of products.\n"
 "You can configure per product if you directly do a Request for Quotation to one vendor or if you want a Call for Tenders to compare offers from several vendors."
 msgstr ""
-"Las Licitaciones son utilizadas cuando desea generar solicitudes de presupuesto a varios proveedores para un determinado conjunto de productos.\n"
-"Puede configurar por producto si hace directamente una Solicitud de Presupuesto a un proveedor o si desea una Licitación para comparar las ofertas de varios proveedores."
+"Las licitaciones se utilizan cuando se desea generar solicitudes de presupuesto a varios proveedores para un determinado conjunto de productos.\n"
+"Puede configurar por producto si hacer directamente una solicitud de presupuesto a un proveedor o si desea una licitación para comparar las ofertas de varios proveedores."
 
 #. module: purchase
 #: code:addons/purchase/models/purchase.py:812
@@ -479,8 +478,8 @@ msgid ""
 "Can not cancel a procurement related to a purchase order. Please cancel the "
 "purchase order first."
 msgstr ""
-"No se puede cancelar un abastecimiento relacionado a una orden de compra. "
-"Primero cancele la orden de compra."
+"No se puede cancelar un abastecimiento relacionado a un pedido de compra. "
+"Cancele primero el pedido de compra."
 
 #. module: purchase
 #: code:addons/purchase/models/stock.py:84
@@ -605,7 +604,7 @@ msgstr "Control facturas compra"
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_config_settings_group_costing_method
 msgid "Costing Methods"
-msgstr "Métodos de costeo"
+msgstr "Métodos de costo"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_config_settings_create_uid
@@ -665,8 +664,8 @@ msgid ""
 "Depicts the date where the Quotation should be validated and converted into "
 "a purchase order."
 msgstr ""
-"Representa la fecha en que el presupuesto debe ser validado y se convierte "
-"en una orden de compra."
+"Representa la fecha en la que el presupuesto debe ser validado y convertido "
+"en un pedido de compra."
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line_name
@@ -750,7 +749,7 @@ msgstr "Filtro avanzado"
 #: code:addons/purchase/models/purchase.py:559
 #, python-format
 msgid "Extra line with %s "
-msgstr ""
+msgstr "Linea extra con %s"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_fiscal_position_id
@@ -1046,7 +1045,7 @@ msgstr "Orden del día"
 #: code:addons/purchase/models/purchase.py:578
 #, python-format
 msgid "Ordered Quantity"
-msgstr ""
+msgstr "Quantitat demanada"
 
 #. module: purchase
 #: code:addons/purchase/models/purchase.py:816
@@ -1088,7 +1087,7 @@ msgstr "País del Asociado"
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_payment_term_id
 msgid "Payment Terms"
-msgstr "Términos de pago"
+msgstr "Plazos de pago"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_product_category_property_account_creditor_price_difference_categ
@@ -1406,7 +1405,7 @@ msgstr "SdP realizada"
 #. module: purchase
 #: selection:purchase.order,state:0 selection:purchase.report,state:0
 msgid "RFQ Sent"
-msgstr "Petición de cotización enviada"
+msgstr "Petición de presupuesto enviada"
 
 #. module: purchase
 #: model:mail.template,report_name:purchase.email_template_edi_purchase
@@ -1437,7 +1436,7 @@ msgstr "Ctdad recibida"
 #: code:addons/purchase/models/purchase.py:580
 #, python-format
 msgid "Received Quantity"
-msgstr ""
+msgstr "Cantidad recibida"
 
 #. module: purchase
 #: model:ir.actions.act_window,name:purchase.purchase_open_picking
@@ -1656,6 +1655,8 @@ msgid ""
 "The ordered quantity has been decreased. Do not forget to take it into "
 "account on your bills and receipts."
 msgstr ""
+"La cantidad ordenada se ha reducido. No olvide tenerlo en cuenta en sus "
+"facturas y recibos."
 
 #. module: purchase
 #: model:ir.actions.act_window,help:purchase.product_product_action
@@ -1687,7 +1688,7 @@ msgid ""
 "                quotation is converted into a purchase order."
 msgstr ""
 "El presupuesto contiene el historial de la discusión / negociación\n"
-"que tuvo con su proveedor. Una vez confirmado, una solicitud de \n"
+"que mantuvo con su proveedor. Una vez confirmado, una solicitud de \n"
 "presupuesto se convierte en un pedido de compra."
 
 #. module: purchase
@@ -1698,8 +1699,8 @@ msgid ""
 "                    of the products and the vendor bill."
 msgstr ""
 "La solicitud de presupuesto es el primer paso del flujo de compras. una vez \n"
-"convertida en un pedido de compra, usted será capaz de controlar el recibo\n"
-"de los productos y la factura de proveedor."
+"convertida en un pedido de compra, podrá controlar la recepción\n"
+"de los productos y la factura del proveedor."
 
 #. module: purchase
 #: model:ir.model.fields,help:purchase.field_product_category_property_account_creditor_price_difference_categ
@@ -1739,7 +1740,7 @@ msgstr ""
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.view_product_supplier_inherit
 msgid "This note will be displayed on requests for quotation."
-msgstr "Esta nota se mostrará en las peticiones de presupuesto."
+msgstr "Esta nota se mostrará en las solicitudes de presupuesto."
 
 #. module: purchase
 #: code:addons/purchase/models/purchase.py:973
@@ -1748,7 +1749,7 @@ msgid ""
 "This purchase order has been created from: <a href=# data-oe-"
 "model=procurement.order data-oe-id=%d>%s</a>"
 msgstr ""
-"Esta orden de compra ha sido creada desde: <a href=# data-oe-"
+"Este pedido de compra ha sido creado desde: <a href=# data-oe-"
 "model=procurement.order data-oe-id=%d>%s</a>"
 
 #. module: purchase
@@ -1758,7 +1759,7 @@ msgid ""
 "This purchase order has been modified from: <a href=# data-oe-"
 "model=procurement.order data-oe-id=%d>%s</a>"
 msgstr ""
-"Esta orden de compra ha sido modificada desde: <a href=# data-oe-"
+"Este pedido de compra ha sido modificada desde: <a href=# data-oe-"
 "model=procurement.order data-oe-id=%d>%s</a>"
 
 #. module: purchase
@@ -1777,7 +1778,7 @@ msgstr "Esta factura de proveedor ha sido modificada desde: %s"
 #: model:ir.actions.act_window,help:purchase.act_res_partner_2_purchase_order
 msgid "This vendor has no purchase order. Click to create a new RfQ."
 msgstr ""
-"Este proveedor no tiene ninguna orden de compra. Clickea para crear una "
+"Este proveedor no tiene ningún pedido de compra. Haz clic para crear una "
 "nueva SdP."
 
 #. module: purchase
@@ -1834,7 +1835,7 @@ msgid ""
 "Unable to cancel this purchase order. You must first cancel related vendor "
 "bills."
 msgstr ""
-"No es posible cancelar esta orden de compra. Primero debe cancelar las "
+"No es posible cancelar este pedido de compra. Primero debe cancelar las "
 "facturas de proveedor relacionadas."
 
 #. module: purchase
@@ -1861,7 +1862,7 @@ msgstr "Desbloquear"
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.view_purchase_order_filter
 msgid "Unread Messages"
-msgstr ""
+msgstr "Mensajes sin leer"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.purchase_order_tree
@@ -1886,9 +1887,9 @@ msgid ""
 "            and Odoo will fill the bill automatically according to ordered\n"
 "            or received quantities."
 msgstr ""
-"Utilice este menú para controlar las facturas que se reciban de su\n"
-"proveedor. Cuando registre una nueva factura, establezca la orden de compra\n"
-"y Odoo llenará la factura automáticamente según las cantidades ordenadas\n"
+"Utilice este menú para controlar las facturas a recibir de su proveedor.\n"
+"Cuando registre una nueva factura, establezca el pedido de compra\n"
+"y Odoo rellenará la factura automáticamente según las cantidades pedidas\n"
 "o recibidas."
 
 #. module: purchase
@@ -1899,9 +1900,9 @@ msgid ""
 "                you can track the related discussion with the vendor, control\n"
 "                the products received and control the vendor bills."
 msgstr ""
-"Utilice este menú para buscar dentro de sus órdenes de compra por\n"
-"referencia, proveedor, productos, etc. Para cada orden de compra, \n"
-"usted puede seguir la discusión relacionada con el proveedor, controlar\n"
+"Utilice este menú para buscar en sus pedidos de compra por\n"
+"referencia, proveedor, productos, etc. Para cada pedido de compra, \n"
+"puede seguir la conversación mantenida con el proveedor, controlar\n"
 "los productos recibidos y controlar las facturas de los proveedores."
 
 #. module: purchase

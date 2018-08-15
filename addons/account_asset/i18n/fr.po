@@ -3,15 +3,15 @@
 # * account_asset
 # 
 # Translators:
-# Cyrille de Lambert <cdelambert@teclib.com>, 2016
+# Cyrille de Lambert <cdelambert@auguria.net>, 2016
 # lucasdeliege <deliegelucas@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2016
 # Olivier Lenoir <olivier.lenoir@free.fr>, 2016
 # Xavier Belmere <Info@cartmeleon.com>, 2016
 # Clo <clo@odoo.com>, 2016
 # Nancy Bolognesi <nb@microcom.ca>, 2016
-# Quentin THEURET <quentin@theuret.net>, 2016
+# Quentin THEURET <odoo@kerpeo.com>, 2016
 # jalal <j.zahid@gmail.com>, 2016
 # Frédéric Clementi <frederic.clementi@camptocamp.com>, 2016
 # Lucas Deliege <lud@odoo.com>, 2016
@@ -22,7 +22,7 @@
 # Fabien Pinckaers <fp@openerp.com>, 2016
 # Lionel Sausin <ls@numerigraphe.com>, 2016
 # Not Telling <levequevincel2@gmail.com>, 2016
-# Florian Hatat <mininet@wanadoo.fr>, 2016
+# Florian Hatat, 2016
 # Sébastien LANGE (SYLEAM) <sebastien.lange@syleam.fr>, 2016
 # Miguel Vidali <mvidali129@gmail.com>, 2016
 # Olivier Dony <odo@odoo.com>, 2016
@@ -30,13 +30,14 @@
 # Paul-Hervé Meyer <paulherve.meyer@mail.novancia.fr>, 2017
 # Sébastien Le Ray <sebastien-github@orniz.org>, 2017
 # Micky Jault <micky037@hotmail.fr>, 2017
+# e2f <projects@e2f.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 08:56+0000\n"
 "PO-Revision-Date: 2016-09-07 08:56+0000\n"
-"Last-Translator: Micky Jault <micky037@hotmail.fr>, 2017\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -93,12 +94,15 @@ msgid ""
 "Account used in the periodical entries, to record a part of the asset as "
 "expense."
 msgstr ""
+"Compte utilisé dans les entrées périodiques, pour enregistrer une partie du "
+"bien comme une dépense."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset_category_account_asset_id
 msgid ""
 "Account used to record the purchase of the asset at its original price."
 msgstr ""
+"Compte utilisé pour enregistrer les achats des biens à leur prix de base."
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_asset_active
@@ -245,7 +249,7 @@ msgstr "Analyse des immobilisations"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_move_asset_depreciation_ids
 msgid "Assets Depreciation Lines"
-msgstr ""
+msgstr "Lignes d'amortissement des biens"
 
 #. module: account_asset
 #: model:ir.ui.menu,name:account_asset.menu_finance_config_assets
@@ -275,7 +279,7 @@ msgstr "Immobilisation en cours"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_category_open_asset
 msgid "Auto-confirm Assets"
-msgstr ""
+msgstr "Biens auto-confirmés"
 
 #. module: account_asset
 #: model:ir.ui.view,arch_db:account_asset.asset_modify_form
@@ -513,7 +517,7 @@ msgstr "Dépréciations : compte d'actif"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_category_account_depreciation_expense_id
 msgid "Depreciation Entries: Expense Account"
-msgstr ""
+msgstr "Entrées d'amortissement : compte de dépense"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_depreciation_line_move_id
@@ -663,7 +667,7 @@ msgstr "Regrouper par..."
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_category_group_entries
 msgid "Group Journal Entries"
-msgstr ""
+msgstr "Grouper les écritures comptables"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_asset_id
@@ -826,7 +830,7 @@ msgstr "Nombre de mois dans une période"
 #. module: account_asset
 #: model:ir.ui.view,arch_db:account_asset.view_account_asset_category_form
 msgid "One Entry Every"
-msgstr ""
+msgstr "Une écriture tout les"
 
 #. module: account_asset
 #: code:addons/account_asset/models/account_asset.py:570
@@ -1006,6 +1010,16 @@ msgstr "La durée entre deux amortissements, en mois"
 msgid "The number of depreciations needed to depreciate your asset"
 msgstr ""
 "Le nombre d'amortissements nécessaire pour amortir votre immobilisation"
+
+#. module: account_asset
+#: code:addons/account_asset/models/account_asset.py:477
+#, python-format
+msgid ""
+"This depreciation is already linked to a journal entry! Please post or "
+"delete it."
+msgstr ""
+"Cet amortissement est déjà associé à une écriture ! Veuillez le publier ou "
+"le supprimer."
 
 #. module: account_asset
 #: model:ir.ui.view,arch_db:account_asset.view_asset_depreciation_confirmation_wizard

@@ -7,19 +7,21 @@
 # Marcin Młynarczyk <mlynarczyk@gmail.com>, 2016
 # zbik2607 <darek@krokus.com.pl>, 2016
 # Piotr Szlązak <szlazakpiotr@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # Grażyna Grzelak <grazyna.grzelak@openglobe.pl>, 2016
-# Jaroslaw Kaczmarski <jarek.pl@gmail.com>, 2016
+# Jaroslaw Kaczmarski, 2016
 # Judyta Kaźmierczak <judyta.kazmierczak@openglobe.pl>, 2016
-# Mariusz <waniliowy@o2.pl>, 2016
+# Mariusz, 2016
 # Bartłomiej Maliński <bartlomiej.malinski@gmail.com>, 2017
+# Tadeusz Karpiński <tadeuszkarpinski@gmail.com>, 2017
+# Tomasz Leppich <t.leppich@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:28+0000\n"
 "PO-Revision-Date: 2017-06-23 13:28+0000\n"
-"Last-Translator: Bartłomiej Maliński <bartlomiej.malinski@gmail.com>, 2017\n"
+"Last-Translator: Tomasz Leppich <t.leppich@gmail.com>, 2018\n"
 "Language-Team: Polish (https://www.transifex.com/odoo/teams/41243/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,7 +34,7 @@ msgstr ""
 #: code:addons/web/static/src/js/views/form_common.js:874
 #, python-format
 msgid " & Close"
-msgstr " & Zamknięte"
+msgstr " & Zamknij"
 
 #. module: web
 #. openerp-web
@@ -127,6 +129,9 @@ msgid ""
 "                        &lt;body class=\"ie9\"&gt;\n"
 "                    &lt;![endif]--&gt;"
 msgstr ""
+"&lt;!--[if lt IE 10]&gt;\n"
+"                        &lt;body class=\"ie9\"&gt;\n"
+"                    &lt;![endif]--&gt;"
 
 #. module: web
 #. openerp-web
@@ -313,7 +318,7 @@ msgstr "Dodaj element"
 #: code:addons/web/static/src/xml/base.xml:1042
 #, python-format
 msgid "Add custom group"
-msgstr "Dodaj własnął grupę"
+msgstr "Dodaj własną grupę"
 
 #. module: web
 #. openerp-web
@@ -903,7 +908,7 @@ msgstr "Eksport danych"
 #: code:addons/web/static/src/xml/base.xml:1096
 #, python-format
 msgid "Export Formats :"
-msgstr ""
+msgstr "Format eksportu"
 
 #. module: web
 #. openerp-web
@@ -1175,7 +1180,7 @@ msgstr "Ostatnio modyfikowano przez:"
 #: code:addons/web/static/src/xml/base.xml:122
 #, python-format
 msgid "Leave the Developer Tools"
-msgstr ""
+msgstr "Opuść tryb deweloperski"
 
 #. module: web
 #. openerp-web
@@ -1580,7 +1585,7 @@ msgstr "Tylko ty"
 #: code:addons/web/static/src/xml/base.xml:95
 #, python-format
 msgid "Open Developer Tools"
-msgstr ""
+msgstr "Otwórz narzędzia deweloperskie"
 
 #. module: web
 #. openerp-web
@@ -1619,6 +1624,8 @@ msgid ""
 "Pie chart cannot display all zero numbers.. Try to change your domain to "
 "display positive results"
 msgstr ""
+"Wykres kołowy nie może wyświetlać wartości zerowych. Zmień domenę by "
+"wyświetlać wartości dodatnie"
 
 #. module: web
 #. openerp-web
@@ -1746,7 +1753,7 @@ msgstr "Renderuj"
 #: code:addons/web/static/src/xml/base.xml:114
 #, python-format
 msgid "Run JS Tests"
-msgstr ""
+msgstr "Uruchom testy JS"
 
 #. module: web
 #. openerp-web
@@ -1870,14 +1877,14 @@ msgstr "Wybierz <i class=\"fa fa-database\"/>"
 #: code:addons/web/static/src/js/widgets/debug_manager.js:165
 #, python-format
 msgid "Select a view"
-msgstr ""
+msgstr "Wybierz widok"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/views/form_widgets.js:448
 #, python-format
 msgid "Select records "
-msgstr ""
+msgstr "Wybierz rekordy"
 
 #. module: web
 #. openerp-web
@@ -1940,7 +1947,7 @@ msgstr "Współdziel z wszystkimi użytkownikami"
 #: code:addons/web/static/src/js/apps.js:195
 #, python-format
 msgid "Showing locally available modules"
-msgstr ""
+msgstr "Wyświetla lokalne moduły"
 
 #. module: web
 #. openerp-web
@@ -1953,7 +1960,7 @@ msgstr "Rozmiar:"
 #: code:addons/web/controllers/main.py:1038
 #, python-format
 msgid "Something horrible happened"
-msgstr ""
+msgstr "Stało się coś strasznego"
 
 #. module: web
 #. openerp-web
@@ -2169,7 +2176,7 @@ msgstr "Drzewo"
 #: code:addons/web/static/src/js/abstract_web_client.js:208
 #, python-format
 msgid "Trying to reconnect..."
-msgstr ""
+msgstr "Ponawianie połączenia..."
 
 #. module: web
 #. openerp-web
@@ -2244,7 +2251,7 @@ msgstr "Nieznany operator %s w domenie %s"
 #: code:addons/web/static/src/js/framework/data.js:1131
 #, python-format
 msgid "Unnamed"
-msgstr ""
+msgstr "Bez nazwy"
 
 #. module: web
 #. openerp-web
@@ -2258,7 +2265,7 @@ msgstr "Nieobsługiwany operator %s w domenie %s"
 #: code:addons/web/static/src/xml/base.xml:1256
 #, python-format
 msgid "Update translations"
-msgstr ""
+msgstr "Aktualizuj tłumaczenia"
 
 #. module: web
 #. openerp-web
@@ -2279,7 +2286,7 @@ msgstr "Aktualizacja do przyszłych wersji"
 #: code:addons/web/static/src/xml/base.xml:840
 #, python-format
 msgid "Upload your file"
-msgstr ""
+msgstr "Wgraj plik"
 
 #. module: web
 #. openerp-web
@@ -2441,7 +2448,7 @@ msgstr "Hasło nie może być puste"
 #: code:addons/web/static/src/xml/base.xml:1254
 #, python-format
 msgid "You have updated"
-msgstr ""
+msgstr "Zaktualizowałeś"
 
 #. module: web
 #. openerp-web

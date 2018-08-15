@@ -169,7 +169,7 @@ class PosOrder(models.Model):
             'comment': self.note or '',
             # considering partner's sale pricelist's currency
             'currency_id': self.pricelist_id.currency_id.id,
-            'user_id': self.env.uid,
+            'user_id': self.user_id.id,
         }
 
     def _action_create_invoice_line(self, line=False, invoice_id=False):
@@ -197,6 +197,16 @@ class PosOrder(models.Model):
         return InvoiceLine.sudo().create(inv_line)
 
     def _create_account_move_line(self, session=None, move=None):
+        def _flatten_tax_and_children(taxes, group_done=None):
+            children = self.env['account.tax']
+            if group_done is None:
+                group_done = set()
+            for tax in taxes.filtered(lambda t: t.amount_type == 'group'):
+                if tax.id not in group_done:
+                    group_done.add(tax.id)
+                    children |= _flatten_tax_and_children(tax.children_tax_ids, group_done)
+            return taxes + children
+
         # Tricky, via the workflow, we only have one id in the ids variable
         """Create a account move line of order grouped by products or not."""
         IrProperty = self.env['ir.property']
@@ -209,7 +219,42 @@ class PosOrder(models.Model):
         have_to_group_by = session and session.config_id.group_by or False
         rounding_method = session and session.config_id.company_id.tax_calculation_rounding_method
 
-        for order in self.filtered(lambda o: not o.account_move or order.state == 'paid'):
+        def add_anglosaxon_lines(grouped_data):
+            Product = self.env['product.product']
+            Analytic = self.env['account.analytic.account']
+            for product_key in list(grouped_data.keys()):
+                if product_key[0] == "product":
+                    line = grouped_data[product_key][0]
+                    product = Product.browse(line['product_id'])
+                    # In the SO part, the entries will be inverted by function compute_invoice_totals
+                    price_unit = - product._get_anglo_saxon_price_unit()
+                    account_analytic = Analytic.browse(line.get('analytic_account_id'))
+                    res = Product._anglo_saxon_sale_move_lines(
+                        line['name'], product, product.uom_id, line['quantity'], price_unit,
+                            fiscal_position=order.fiscal_position_id,
+                            account_analytic=account_analytic)
+                    if res:
+                        line1, line2 = res
+                        line1 = Product._convert_prepared_anglosaxon_line(line1, order.partner_id)
+                        insert_data('counter_part', {
+                            'name': line1['name'],
+                            'account_id': line1['account_id'],
+                            'credit': line1['credit'] or 0.0,
+                            'debit': line1['debit'] or 0.0,
+                            'partner_id': line1['partner_id']
+
+                        })
+
+                        line2 = Product._convert_prepared_anglosaxon_line(line2, order.partner_id)
+                        insert_data('counter_part', {
+                            'name': line2['name'],
+                            'account_id': line2['account_id'],
+                            'credit': line2['credit'] or 0.0,
+                            'debit': line2['debit'] or 0.0,
+                            'partner_id': line2['partner_id']
+                        })
+
+        for order in self.filtered(lambda o: not o.account_move or o.state == 'paid'):
             current_company = order.sale_journal.company_id
             account_def = IrProperty.get(
                 'property_account_receivable_id', 'res.partner')
@@ -278,6 +323,9 @@ class PosOrder(models.Model):
                     name = name + ' (' + line.notice + ')'
 
                 # Create a move for the line for the order line
+                # Just like for invoices, a group of taxes must be present on this base line
+                # As well as its children
+                base_line_tax_ids = _flatten_tax_and_children(line.tax_ids_after_fiscal_position).filtered(lambda tax: tax.type_tax_use in ['sale', 'none'])
                 insert_data('product', {
                     'name': name,
                     'quantity': line.qty,
@@ -286,7 +334,7 @@ class PosOrder(models.Model):
                     'analytic_account_id': self._prepare_analytic_account(line),
                     'credit': ((amount > 0) and amount) or 0.0,
                     'debit': ((amount < 0) and -amount) or 0.0,
-                    'tax_ids': [(6, 0, line.tax_ids_after_fiscal_position.ids)],
+                    'tax_ids': [(6, 0, base_line_tax_ids.ids)],
                     'partner_id': partner_id
                 })
 
@@ -326,6 +374,9 @@ class PosOrder(models.Model):
 
             order.write({'state': 'done', 'account_move': move.id})
 
+        if self and order.company_id.anglo_saxon_accounting:
+            add_anglosaxon_lines(grouped_data)
+
         all_lines = []
         for group_key, group_data in grouped_data.iteritems():
             for value in group_data:
@@ -339,15 +390,22 @@ class PosOrder(models.Model):
         for order in self:
             aml = order.statement_ids.mapped('journal_entry_ids').mapped('line_ids') | order.account_move.line_ids | order.invoice_id.move_id.line_ids
             aml = aml.filtered(lambda r: not r.reconciled and r.account_id.internal_type == 'receivable' and r.partner_id == order.partner_id.commercial_partner_id)
+
+            # Reconcile returns first
+            # to avoid mixing up the credit of a payment and the credit of a return
+            # in the receivable account
+            aml_returns = aml.filtered(lambda l: (l.journal_id.type == 'sale' and l.credit) or (l.journal_id.type != 'sale' and l.debit))
             try:
-                aml.reconcile()
+                aml_returns.reconcile()
+                (aml - aml_returns).reconcile()
             except:
                 # There might be unexpected situations where the automatic reconciliation won't
                 # work. We don't want the user to be blocked because of this, since the automatic
                 # reconciliation is introduced for convenience, not for mandatory accounting
                 # reasons.
-                _logger.error('Reconciliation did not work for order %s', order.name)
-                continue
+                # It may be interesting to have the Traceback logged anyway
+                # for debugging and support purposes
+                _logger.exception('Reconciliation did not work for order %s', order.name)
 
     def _default_session(self):
         return self.env['pos.session'].search([('state', '=', 'opened'), ('user_id', '=', self.env.uid)], limit=1)
@@ -628,7 +686,7 @@ class PosOrder(models.Model):
                     return_picking = Picking.create(return_vals)
                     return_picking.message_post(body=message)
 
-            for line in order.lines.filtered(lambda l: l.product_id.type in ['product', 'consu']):
+            for line in order.lines.filtered(lambda l: l.product_id.type in ['product', 'consu'] and not float_is_zero(l.qty, precision_rounding=l.product_id.uom_id.rounding)):
                 moves |= Move.create({
                     'name': line.name,
                     'product_uom': line.product_id.uom_id.id,
@@ -823,7 +881,7 @@ class PosOrderLine(models.Model):
     def create(self, values):
         if values.get('order_id') and not values.get('name'):
             # set name based on the sequence specified on the config
-            config_id = self.env['pos.order'].browse(values['order_id']).session_id.config_id.id
+            config_id = self.order_id.browse(values['order_id']).session_id.config_id.id
             # HACK: sequence created in the same transaction as the config
             # cf TODO master is pos.config create
             # remove me saas-15
@@ -868,8 +926,8 @@ class PosOrderLine(models.Model):
             self._onchange_qty()
             self.tax_ids = self.product_id.taxes_id.filtered(lambda r: not self.company_id or r.company_id == self.company_id)
             fpos = self.order_id.fiscal_position_id
-            tax_ids_after_fiscal_position = fpos.map_tax(self.tax_ids, line.product_id, line.order_id.partner_id) if fpos else self.tax_ids
-            self.price_unit = self.env['account.tax']._fix_tax_included_price(price, self.product_id.taxes_id, tax_ids_after_fiscal_position)
+            tax_ids_after_fiscal_position = fpos.map_tax(self.tax_ids, self.product_id, self.order_id.partner_id) if fpos else self.tax_ids
+            self.price_unit = self.env['account.tax']._fix_tax_included_price_company(price, self.product_id.taxes_id, tax_ids_after_fiscal_position, self.company_id)
 
     @api.onchange('qty', 'discount', 'price_unit', 'tax_ids')
     def _onchange_qty(self):
@@ -981,6 +1039,7 @@ class ReportSaleDetails(models.AbstractModel):
             payments = []
 
         return {
+            'currency_precision': user_currency.decimal_places,
             'total_paid': user_currency.round(total),
             'payments': payments,
             'company_name': self.env.user.company_id.name,
