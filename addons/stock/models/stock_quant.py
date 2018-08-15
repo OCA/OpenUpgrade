@@ -613,7 +613,7 @@ class QuantPackage(models.Model):
     @api.one
     @api.depends('parent_id', 'children_ids')
     def _compute_ancestor_ids(self):
-        self.ancestor_ids = self.env['stock.quant.package'].search(['id', 'parent_of', self.id]).ids
+        self.ancestor_ids = self.env['stock.quant.package'].search([('id', 'parent_of', self.id)]).ids
 
     @api.multi
     @api.depends('parent_id', 'children_ids', 'quant_ids.package_id')
@@ -693,6 +693,17 @@ class QuantPackage(models.Model):
             if len(locations) != 1:
                 raise UserError(_('Everything inside a package should be in the same location'))
         return True
+
+    @api.multi
+    def action_view_related_picking(self):
+        """ Returns an action that display the picking related to this
+        package (source or destination).
+        """
+        self.ensure_one()
+        pickings = self.env['stock.picking'].search(['|', ('pack_operation_ids.package_id', '=', self.id), ('pack_operation_ids.result_package_id', '=', self.id)])
+        action = self.env.ref('stock.action_picking_tree_all').read()[0]
+        action['domain'] = [('id', 'in', pickings.ids)]
+        return action
 
     @api.multi
     def unpack(self):

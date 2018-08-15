@@ -4,18 +4,22 @@
 # 
 # Translators:
 # Kaloyan Naumov <kaloyan@lumnus.net>, 2016
-# kalatchev <kalatchev@gmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# kalatchev, 2016
+# Martin Trigaux, 2016
+# Maria Boyadjieva <marabo2000@gmail.com>, 2016
 # Todor Mladenov <tmladenov@dir.bg>, 2016
+# Vladimir Petrov <vladimir.petrov@gmail.com>, 2016
 # Iliana Ilieva <i.ilieva@sunservice-bg.com>, 2016
 # preslav <hackerz99999@gmail.com>, 2016
+# kirily <kiril@teracomp.eu>, 2017
+# Albena Mincheva <albena_vicheva@abv.bg>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:27+0000\n"
 "PO-Revision-Date: 2017-06-23 13:27+0000\n"
-"Last-Translator: preslav <hackerz99999@gmail.com>, 2016\n"
+"Last-Translator: Albena Mincheva <albena_vicheva@abv.bg>, 2018\n"
 "Language-Team: Bulgarian (https://www.transifex.com/odoo/teams/41243/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,12 +36,12 @@ msgstr "Категория на продукта"
 #: model:ir.model.fields,field_description:product.field_product_product_product_variant_count
 #: model:ir.model.fields,field_description:product.field_product_template_product_variant_count
 msgid "# Product Variants"
-msgstr ""
+msgstr "# Продуктови варианти"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_category_product_count
 msgid "# Products"
-msgstr ""
+msgstr " # Продукти"
 
 #. module: product
 #: code:addons/product/models/product_pricelist.py:438
@@ -60,7 +64,7 @@ msgstr "%s (копие)"
 #. module: product
 #: model:product.attribute.value,name:product.product_attribute_value_1
 msgid "16 GB"
-msgstr ""
+msgstr "16 GB"
 
 #. module: product
 #: model:product.product,description_sale:product.product_product_3
@@ -86,6 +90,8 @@ msgstr ""
 #: model:product.attribute.value,name:product.product_attribute_value_5
 msgid "2.4 GHz"
 msgstr ""
+"17\" Monitor, 4GB RAM\n"
+"Standard-1294P Processor"
 
 #. module: product
 #: model:product.product,description_sale:product.product_product_8
@@ -102,7 +108,7 @@ msgstr ""
 #. module: product
 #: model:product.attribute.value,name:product.product_attribute_value_2
 msgid "32 GB"
-msgstr ""
+msgstr "32 GB"
 
 #. module: product
 #: model:product.product,description_sale:product.product_product_4
@@ -136,7 +142,7 @@ msgstr ""
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_category_form_view
 msgid "<span class=\"o_stat_text\"> Products</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\"> Продукти</span>"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_variant_easy_edit_view
@@ -170,12 +176,15 @@ msgid ""
 "                        will delete and recreate existing variants and lead\n"
 "                        to the loss of their possible customizations."
 msgstr ""
+"<strong>Предупреждение</strong>:добавянето или изтриването на характеристики"
+" ще изтрие и създаде повторно съществуващи варианти и ще доведе до загуба на"
+" техните възможни персонализации."
 
 #. module: product
 #: code:addons/product/models/product.py:167 sql_constraint:product.product:0
 #, python-format
 msgid "A barcode can only be assigned to one product !"
-msgstr "Един баркод може да се асоциира само с един продукт!"
+msgstr "Един баркод може да се разпределя само към един продукт!"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_category_type
@@ -201,6 +210,9 @@ msgid ""
 "This description will be copied to every Purchase Order, Receipt and Vendor "
 "Bill/Refund."
 msgstr ""
+"Описание на продукта, който желаете да споделите с Вашите доставчици. Това "
+"описание ще бъде копирано на всяка поръчка за покупка, квитанция и фактура "
+"за покупка/кредитно известие."
 
 #. module: product
 #: model:product.product,website_description:product.product_product_9
@@ -273,7 +285,7 @@ msgstr "Всички Продукти"
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_variant_easy_edit_view
 msgid "All general settings about this product are managed on"
-msgstr "Всички ощбщи настройки на продукта се оправляват на"
+msgstr "Всички общи настройки на продукта се управляват на"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_8
@@ -299,13 +311,13 @@ msgstr ""
 #: model:product.product,name:product.product_product_7
 #: model:product.template,name:product.product_product_7_product_template
 msgid "Apple In-Ear Headphones"
-msgstr ""
+msgstr "Apple In-Ear Headphones"
 
 #. module: product
 #: model:product.product,name:product.product_product_9
 #: model:product.template,name:product.product_product_9_product_template
 msgid "Apple Wireless Keyboard"
-msgstr ""
+msgstr "Apple Wireless Keyboard"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_normal_form_view
@@ -328,7 +340,7 @@ msgstr "Архивирани"
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_sequence
 msgid "Assigns the priority to the list of product vendor."
-msgstr "Слага приоритет към списъка на доставчика на продукти."
+msgstr "Определя приоритета към списъка на доставчика на продукти."
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_line_attribute_id
@@ -340,7 +352,7 @@ msgstr "Атрибут"
 #: model:ir.ui.view,arch_db:product.product_attribute_line_form
 #: model:ir.ui.view,arch_db:product.product_attribute_view_form
 msgid "Attribute Name"
-msgstr ""
+msgstr "Име на атрибут"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_value_price_extra
@@ -372,7 +384,7 @@ msgstr "Атрибути"
 #: model:product.product,website_description:product.product_product_5b
 #: model:product.template,website_description:product.product_product_5b_product_template
 msgid "Auxiliary input for portable devices"
-msgstr ""
+msgstr "Допълнителен вход за преносими устройства"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_5b
@@ -380,6 +392,8 @@ msgstr ""
 msgid ""
 "Auxiliary port lets you connect other audio sources, like an MP3 player"
 msgstr ""
+"Помощният порт ви позволява да свързвате други аудио източници, като MP3 "
+"плейър"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_barcode
@@ -414,13 +428,13 @@ msgstr "Базиран на"
 #: model:product.product,name:product.consu_delivery_03
 #: model:product.template,name:product.consu_delivery_03_product_template
 msgid "Basic Computer"
-msgstr ""
+msgstr "Основен компютър"
 
 #. module: product
 #: model:product.product,name:product.membership_2
 #: model:product.template,name:product.membership_2_product_template
 msgid "Basic Membership"
-msgstr ""
+msgstr "Основно членство"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_6
@@ -437,7 +451,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_image
 msgid "Big-sized image"
-msgstr "Картинка със Голям Размер "
+msgstr "Картинка с голям Размер"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_uom_factor_inv
@@ -458,13 +472,13 @@ msgstr "Черен"
 #: model:product.product,website_description:product.product_product_5b
 #: model:product.template,website_description:product.product_product_5b_product_template
 msgid "Bluetooth connectivity"
-msgstr ""
+msgstr "Блутут свързаност"
 
 #. module: product
 #: model:product.product,name:product.product_product_5b
 #: model:product.template,name:product.product_product_5b_product_template
 msgid "Bose Mini Bluetooth Speaker"
-msgstr ""
+msgstr "Bose Mini Bluetooth Speaker"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_5b
@@ -506,7 +520,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_template_purchase_ok
 #: model:ir.ui.view,arch_db:product.product_template_search_view
 msgid "Can be Purchased"
-msgstr "Може да бъде Поръчано"
+msgstr "Може да бъде поръчано"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_rental
@@ -650,12 +664,12 @@ msgstr "Фирма"
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_pricelist_item_form_view
 msgid "Compute Price"
-msgstr ""
+msgstr "Изчислете цената"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_pricelist_item_compute_price
 msgid "Compute price"
-msgstr ""
+msgstr "Изчислена цена"
 
 #. module: product
 #: model:product.product,name:product.product_product_16
@@ -731,7 +745,7 @@ msgstr "Групи Държави"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_create_variant
 msgid "Create variant"
-msgstr ""
+msgstr "Създай вариант"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_create_uid
@@ -842,13 +856,13 @@ msgid ""
 "Default Unit of Measure used for purchase orders. It must be in the same "
 "category than the default unit of measure."
 msgstr ""
-"По подразбиране мер. ед. използвани при нареждане за закупуване. Трябва да "
-"бъде в същата категория като мер. ед. по подразбиране."
+"Мерна единица по подразбиране, изолзвана при поръчка за покупка. Трябва да "
+"бъде в същата категория като мерната единица по подразбиране."
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_supplierinfo_delay
 msgid "Delivery Lead Time"
-msgstr "Време за доставка"
+msgstr "Време за доставка на лийдове"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_description
@@ -873,7 +887,7 @@ msgstr ""
 #: model:ir.model.fields,help:product.field_product_attribute_sequence
 #: model:ir.model.fields,help:product.field_product_attribute_value_sequence
 msgid "Determine the display order"
-msgstr "Определя реда на показване"
+msgstr "Определете реда на показване"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_display_name
@@ -920,7 +934,7 @@ msgstr ""
 #: model:product.product,website_description:product.product_product_5b
 #: model:product.template,website_description:product.product_product_5b_product_template
 msgid "Efficient, high-quality audio"
-msgstr ""
+msgstr "Ефективно, висококачествено аудио"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_pricelist_item_date_end
@@ -936,19 +950,19 @@ msgstr "Крайна дата на цената от този доставчик
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item_date_end
 msgid "Ending valid for the pricelist item validation"
-msgstr ""
+msgstr "Краен срока за валидиране на реда за ценообразуване"
 
 #. module: product
 #: code:addons/product/models/product.py:43
 #, python-format
 msgid "Error ! You cannot create recursive categories."
-msgstr "Грешка, не можете да създавате рекурсивни категории."
+msgstr "Грешка! не можете да създавате рекурсивни категории."
 
 #. module: product
 #: code:addons/product/models/product_attribute.py:97
 #, python-format
 msgid "Error ! You cannot use this attribute with the following value."
-msgstr ""
+msgstr "Грешка! Не можете да използвате този атрибут с посочената стойност."
 
 #. module: product
 #: code:addons/product/models/product.py:302
@@ -957,12 +971,13 @@ msgid ""
 "Error! It is not allowed to choose more than one value for a given "
 "attribute."
 msgstr ""
+"Грешка! Не е позволено да задавате повече от една стойност на даден атрибут."
 
 #. module: product
 #: code:addons/product/models/product_pricelist.py:419
 #, python-format
 msgid "Error! The minimum margin should be lower than the maximum margin."
-msgstr ""
+msgstr "Грешка! Не може минималният марж да е по-малък от максималният."
 
 #. module: product
 #: code:addons/product/models/product_pricelist.py:413
@@ -971,6 +986,8 @@ msgid ""
 "Error! You cannot assign the Main Pricelist as Other Pricelist in PriceList "
 "Item!"
 msgstr ""
+"Грешка! Не можете да определите главния ценоразпис като друг ценоразпис в "
+"ценовата листа!"
 
 #. module: product
 #: code:addons/product/models/product_template.py:252
@@ -979,6 +996,8 @@ msgid ""
 "Error: The default Unit of Measure and the purchase Unit of Measure must be "
 "in the same category."
 msgstr ""
+"Грешка! Мерната единица по подразбиране и мерната единица на покупката "
+"трябва да са от една и съща категория."
 
 #. module: product
 #: model:product.product,website_description:product.product_product_6
@@ -1021,13 +1040,13 @@ msgstr ""
 #: model:product.product,description:product.product_product_2
 #: model:product.template,description:product.product_product_2_product_template
 msgid "Example of product to invoice based on delivery."
-msgstr ""
+msgstr "Пример за продукт за фактуриране въз основа на доставката."
 
 #. module: product
 #: model:product.product,description:product.service_order_01
 #: model:product.template,description:product.service_order_01_product_template
 msgid "Example of product to invoice on order."
-msgstr ""
+msgstr "Пример за продукт за фактуриране по поръчка."
 
 #. module: product
 #: model:product.product,description:product.service_cost_01
@@ -1057,7 +1076,7 @@ msgstr ""
 #: model:product.product,website_description:product.product_product_6
 #: model:product.template,website_description:product.product_product_6_product_template
 msgid "Fast connections.The world over."
-msgstr ""
+msgstr "Бързи връзки."
 
 #. module: product
 #: selection:product.pricelist.item,compute_price:0
@@ -1127,8 +1146,7 @@ msgid ""
 "the picking order and is mainly used if you use the EDI module."
 msgstr ""
 "Предоставя различни начини за пакетиране на един и същ продукт. Това не се "
-"отразява на нареждане за товарене и се използва главно, ако използвате "
-"модула EDI."
+"отразява на пикинг поръчката и се използва главно, ако прилагате модула EDI."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item_sequence
@@ -1142,7 +1160,7 @@ msgstr ""
 #: model:ir.model.fields,help:product.field_product_product_sequence
 #: model:ir.model.fields,help:product.field_product_template_sequence
 msgid "Gives the sequence order when displaying a product list"
-msgstr ""
+msgstr "Дава реда на последователност при показване на списък с продукти"
 
 #. module: product
 #: selection:product.pricelist.item,applied_on:0
@@ -1159,7 +1177,7 @@ msgstr ""
 #: model:product.product,name:product.product_product_24
 #: model:product.template,name:product.product_product_24_product_template
 msgid "Graphics Card"
-msgstr ""
+msgstr "Видео карта"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_supplierinfo_search_view
@@ -1170,7 +1188,7 @@ msgstr "Групиране по"
 #: model:product.product,name:product.product_product_17
 #: model:product.template,name:product.product_product_17_product_template
 msgid "HDD SH-1"
-msgstr ""
+msgstr "HDD SH-1"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_11
@@ -1202,7 +1220,7 @@ msgstr ""
 #: model:product.product,website_description:product.product_product_8
 #: model:product.template,website_description:product.product_product_8_product_template
 msgid "Highly rated designs."
-msgstr ""
+msgstr "Високо оценени дизайни."
 
 #. module: product
 #: model:product.uom,name:product.product_uom_hour
@@ -1272,6 +1290,8 @@ msgstr ""
 msgid ""
 "If unchecked, it will allow you to hide the pricelist without removing it."
 msgstr ""
+"Ако не е отметнато, това ще ви позволи да скриете ценовата листа, без да я "
+"премахвате."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_active
@@ -1316,7 +1336,7 @@ msgstr ""
 #. module: product
 #: model:ir.model,name:product.model_product_supplierinfo
 msgid "Information about a product vendor"
-msgstr ""
+msgstr "Информация за достаавчиак на продукт"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_7
@@ -1356,13 +1376,13 @@ msgstr ""
 #: model:product.product,website_description:product.product_product_7
 #: model:product.template,website_description:product.product_product_7_product_template
 msgid "Keep it clean."
-msgstr ""
+msgstr "Пази го чисто."
 
 #. module: product
 #: model:product.product,website_description:product.product_product_8
 #: model:product.template,website_description:product.product_product_8_product_template
 msgid "Key Features"
-msgstr ""
+msgstr "Основни функции"
 
 #. module: product
 #: model:product.product,name:product.product_product_27
@@ -1374,7 +1394,7 @@ msgstr ""
 #: model:product.product,name:product.product_product_25
 #: model:product.template,name:product.product_product_25_product_template
 msgid "Laptop E5023"
-msgstr ""
+msgstr "Laptop E5023"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute___last_update
@@ -1441,6 +1461,9 @@ msgid ""
 "receipt of the products in your warehouse. Used by the scheduler for "
 "automatic computation of the purchase order planning."
 msgstr ""
+"Времето на лийдовете в дни между потвърждаването на поръчката за покупка и "
+"квитанцията за продуктите във Вашия склад. Използвано от графика за "
+"автоматично изчисляване планирането на поръчката за покупка."
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_category_parent_left
@@ -1460,13 +1483,13 @@ msgstr "Редове"
 #. module: product
 #: model:product.uom,name:product.product_uom_litre
 msgid "Liter(s)"
-msgstr ""
+msgstr "Литър (Литри)"
 
 #. module: product
 #: model:product.product,name:product.consu_delivery_02
 #: model:product.template,name:product.consu_delivery_02_product_template
 msgid "Little server"
-msgstr ""
+msgstr "Малък сървър"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_packaging_ids
@@ -1477,22 +1500,22 @@ msgstr "Транспортни Единици"
 #. module: product
 #: model:res.groups,name:product.group_uom
 msgid "Manage Multiple Units of Measure"
-msgstr ""
+msgstr "Управление на няколко мерни единици"
 
 #. module: product
 #: model:res.groups,name:product.group_pricelist_item
 msgid "Manage Pricelist Items"
-msgstr ""
+msgstr "Управлявайте редовете на ценовите листи"
 
 #. module: product
 #: model:res.groups,name:product.group_stock_packaging
 msgid "Manage Product Packaging"
-msgstr ""
+msgstr "Управление на опаковката на продуктите"
 
 #. module: product
 #: model:res.groups,name:product.group_product_variant
 msgid "Manage Product Variants"
-msgstr ""
+msgstr "Управление на вариантите на продукта"
 
 #. module: product
 #: model:res.groups,name:product.group_mrp_properties
@@ -1552,13 +1575,13 @@ msgstr "Минимално количество"
 #: model:product.product,website_description:product.product_product_8
 #: model:product.template,website_description:product.product_product_8_product_template
 msgid "More energy efficient."
-msgstr ""
+msgstr "По-енергийно ефективни."
 
 #. module: product
 #: model:product.product,website_description:product.product_product_5b
 #: model:product.template,website_description:product.product_product_5b_product_template
 msgid "More features."
-msgstr ""
+msgstr "Повече финкционалности"
 
 #. module: product
 #: model:product.product,name:product.product_product_20
@@ -1631,7 +1654,7 @@ msgstr "Друга ценова листа"
 #: model:product.product,website_description:product.product_product_6
 #: model:product.template,website_description:product.product_product_6_product_template
 msgid "Over 375,000 apps."
-msgstr ""
+msgstr "Над 375 000 приложения."
 
 #. module: product
 #: model:ir.model,name:product.model_product_packaging
@@ -1673,7 +1696,7 @@ msgstr ""
 #. module: product
 #: model:product.category,name:product.product_category_5
 msgid "Physical"
-msgstr ""
+msgstr "Физически"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_11
@@ -1702,7 +1725,7 @@ msgstr ""
 #: model:product.product,name:product.service_order_01
 #: model:product.template,name:product.service_order_01_product_template
 msgid "Prepaid Consulting"
-msgstr ""
+msgstr "Предплатени консултации"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_pricelist_item_price
@@ -1729,7 +1752,7 @@ msgstr "Отстъпка от цената"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_price_price_extra
 msgid "Price Extra"
-msgstr ""
+msgstr "Допълнителна цена"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_attribute_value_price_extra
@@ -1761,7 +1784,7 @@ msgstr "Увеличение на цената"
 #: model:ir.ui.view,arch_db:product.product_kanban_view
 #: model:ir.ui.view,arch_db:product.product_template_kanban_view
 msgid "Price:"
-msgstr ""
+msgstr "Цена:"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_price_list_price_list
@@ -1793,7 +1816,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:product.product_pricelist_view
 #: model:ir.ui.view,arch_db:product.product_template_form_view
 msgid "Pricelist Items"
-msgstr ""
+msgstr "Редове ценова листа"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_pricelist_name
@@ -1808,7 +1831,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_pricelist_item_ids
 msgid "Pricelist item ids"
-msgstr ""
+msgstr "Ред ценова листа - идентификации"
 
 #. module: product
 #: model:ir.actions.act_window,name:product.product_pricelist_action2
@@ -1871,12 +1894,12 @@ msgstr "Продуктови Атрибути"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_price_value_id
 msgid "Product Attribute Value"
-msgstr ""
+msgstr "Стойност на атрибута на продукта"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_attribute_line_form
 msgid "Product Attribute and Values"
-msgstr ""
+msgstr "Продуктови атрибути и стойности"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_attribute_line_ids
@@ -1928,7 +1951,7 @@ msgstr "Мерни единици на продукт"
 #. module: product
 #: model:ir.model,name:product.model_product_uom_categ
 msgid "Product UoM Categories"
-msgstr ""
+msgstr "Product UoM Categories"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_supplierinfo_product_id
@@ -2017,7 +2040,7 @@ msgstr "Мерни единице на покупката"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_packaging_qty
 msgid "Quantity per Package"
-msgstr ""
+msgstr "Количество в пакет"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_price_list_qty1
@@ -2058,7 +2081,7 @@ msgstr "Съотношение"
 #. module: product
 #: selection:product.uom,uom_type:0
 msgid "Reference Unit of Measure for this category"
-msgstr ""
+msgstr "Мерна единица за тази категория"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_5b
@@ -2150,7 +2173,7 @@ msgstr "Продажби"
 #. module: product
 #: model:res.groups,name:product.group_sale_pricelist
 msgid "Sales Pricelists"
-msgstr ""
+msgstr "Ценова листа на продажбите"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_11
@@ -2217,7 +2240,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,field_description:product.field_base_config_settings_company_share_product
 msgid "Share product to all companies"
-msgstr ""
+msgstr "Споделяйте продукта с всички компании"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_base_config_settings_company_share_product
@@ -2231,13 +2254,13 @@ msgstr ""
 #: model:product.product,name:product.membership_1
 #: model:product.template,name:product.membership_1_product_template
 msgid "Silver Membership"
-msgstr ""
+msgstr "Сребърно членство"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_5b
 #: model:product.template,website_description:product.product_product_5b_product_template
 msgid "Sleek, compact design"
-msgstr ""
+msgstr "Елегантен, компактен дизайн"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_image_small
@@ -2265,11 +2288,13 @@ msgid ""
 "Soft covers are available separately in blue, green or orange. Pick a color "
 "to match your style."
 msgstr ""
+"Меки корици са налични поотделно в синьо, зелено или оранжево. Изберете си "
+"цвят, който да подхожда на стила Ви."
 
 #. module: product
 #: model:product.category,name:product.product_category_4
 msgid "Software"
-msgstr ""
+msgstr "Софтуер"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item_categ_id
@@ -2324,7 +2349,7 @@ msgstr "Начална дата"
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_date_start
 msgid "Start date for this vendor price"
-msgstr ""
+msgstr "Начална дата на тази цена на продавача"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item_date_start
@@ -2340,7 +2365,7 @@ msgstr "Складируем продукт"
 #: model:product.product,name:product.product_product_2
 #: model:product.template,name:product.product_product_2_product_template
 msgid "Support Contract (on timesheet)"
-msgstr ""
+msgstr "Договор за поддръжка (в разписанието)"
 
 #. module: product
 #: model:product.product,name:product.product_delivery_01
@@ -2426,7 +2451,7 @@ msgstr ""
 #: code:addons/product/models/product_uom.py:43 sql_constraint:product.uom:0
 #, python-format
 msgid "The conversion ratio for a unit of measure cannot be 0!"
-msgstr ""
+msgstr "Коефициентът на преобразуване за единица мярка не може да бъде 0!"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_8
@@ -2488,7 +2513,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_price
 msgid "The price to purchase a product"
-msgstr ""
+msgstr "Цената за закупуване на продукт"
 
 #. module: product
 #: model:ir.actions.act_window,help:product.product_normal_action
@@ -2520,7 +2545,7 @@ msgstr ""
 #: code:addons/product/models/product_uom.py:44 sql_constraint:product.uom:0
 #, python-format
 msgid "The rounding precision must be greater than 0!"
-msgstr ""
+msgstr "Точността на закръгляване трябва да е по-голяма от 0!"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_lst_price
@@ -2528,6 +2553,8 @@ msgid ""
 "The sale price is managed from the product template. Click on the 'Variant "
 "Prices' button to set the extra attribute prices."
 msgstr ""
+"Продажната цена се управлява от продуктовия шаблон. Кликнете върху бутона "
+"\"Варианти за цените\", за да зададете допълнителните атрибутни цени."
 
 #. module: product
 #: model:product.product,description_sale:product.product_product_9
@@ -2551,7 +2578,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,help:product.field_product_packaging_qty
 msgid "The total number of products you can have per pallet or box."
-msgstr ""
+msgstr "Общият брой продукти, които можете да получите на палет или кутия."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_volume
@@ -2563,7 +2590,7 @@ msgstr "Обемът в м3"
 #: model:ir.model.fields,help:product.field_product_product_weight
 #: model:ir.model.fields,help:product.field_product_template_weight
 msgid "The weight of the contents in Kg, not including any packaging, etc."
-msgstr ""
+msgstr "Теглото на съдържанието в Kg, без да се включва опаковката и т.н."
 
 #. module: product
 #: model:product.product,website_description:product.product_product_4
@@ -2603,7 +2630,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_product_uom
 msgid "This comes from the product form."
-msgstr ""
+msgstr "Това идва от продуктовата форма."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_image_variant
@@ -2618,6 +2645,8 @@ msgid ""
 "This field holds the image used as image for the product, limited to "
 "1024x1024px."
 msgstr ""
+"Това поле съдържа изображението, използвано като изображение за варианта на "
+"продукта, ограничено до 1024x1024px."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_price_extra
@@ -2657,7 +2686,7 @@ msgstr ""
 #: model:product.product,website_description:product.product_product_7
 #: model:product.template,website_description:product.product_product_7_product_template
 msgid "Two is better than one."
-msgstr ""
+msgstr "Две е повече от едно."
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_uom_uom_type
@@ -2681,7 +2710,7 @@ msgstr ""
 #: model:product.product,website_description:product.product_product_6
 #: model:product.template,website_description:product.product_product_6_product_template
 msgid "Ultrafast wireless."
-msgstr ""
+msgstr "Супер бърза безжична връзка."
 
 #. module: product
 #: model:product.product,website_description:product.product_product_8
@@ -2823,7 +2852,7 @@ msgstr "Информация за Доставчик"
 #. module: product
 #: model:ir.actions.act_window,name:product.product_supplierinfo_type_action
 msgid "Vendor Pricelists"
-msgstr ""
+msgstr "Ценови листи на доставчика"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_supplierinfo_product_code
@@ -2867,7 +2896,7 @@ msgstr "Обем"
 #: model:product.product,website_description:product.product_product_5b
 #: model:product.template,website_description:product.product_product_5b_product_template
 msgid "Volume control on main system"
-msgstr ""
+msgstr "Контрол на силата на звука на главната система"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_5b
@@ -2931,7 +2960,7 @@ msgstr ""
 #. module: product
 #: model:product.attribute,name:product.product_attribute_3
 msgid "Wi-Fi"
-msgstr ""
+msgstr "Wi-Fi"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_6
@@ -2950,6 +2979,9 @@ msgid ""
 "Work with product variant allows you to define some variant of the same "
 "products, an ease the product management in the ecommerce for example"
 msgstr ""
+"Работата с продуктови варианти ви позволява да дефинирате някои варианти на "
+"един и същ продукт, например за улеснение управлението на продукта в "
+"електронната търговия"
 
 #. module: product
 #: model:product.uom.categ,name:product.uom_categ_wtime

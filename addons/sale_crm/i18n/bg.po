@@ -3,17 +3,19 @@
 # * sale_crm
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
+# Maria Boyadjieva <marabo2000@gmail.com>, 2016
+# kalatchev, 2016
 # Kaloyan Naumov <kaloyan@lumnus.net>, 2016
-# kalatchev <kalatchev@gmail.com>, 2016
-# Vihren Kanev <vihren.kanev@gmail.com>, 2016
+# Ivan Ivanov, 2017
+# Daria Stefanova <daria@clearlypro.eu>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 08:57+0000\n"
 "PO-Revision-Date: 2016-09-07 08:57+0000\n"
-"Last-Translator: Vihren Kanev <vihren.kanev@gmail.com>, 2016\n"
+"Last-Translator: Daria Stefanova <daria@clearlypro.eu>, 2018\n"
 "Language-Team: Bulgarian (https://www.transifex.com/odoo/teams/41243/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,12 +31,12 @@ msgstr ""
 #. module: sale_crm
 #: model:ir.model.fields,field_description:sale_crm.field_res_users_sale_order_count
 msgid "# of Sales Order"
-msgstr ""
+msgstr "# от поръчка за продажби"
 
 #. module: sale_crm
 #: model:ir.ui.view,arch_db:sale_crm.crm_case_form_view_oppor
 msgid "<span class=\"o_stat_text\"> Orders</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\"> Поръчки</span>"
 
 #. module: sale_crm
 #: model:ir.ui.view,arch_db:sale_crm.crm_case_form_view_oppor
@@ -83,7 +85,7 @@ msgstr "Местонахождение на клиент"
 #. module: sale_crm
 #: model:ir.model.fields,help:sale_crm.field_res_users_membership_start
 msgid "Date from which membership becomes active."
-msgstr ""
+msgstr "Дата от която членството става активно."
 
 #. module: sale_crm
 #: model:ir.model.fields,help:sale_crm.field_res_users_membership_cancel
@@ -93,7 +95,7 @@ msgstr ""
 #. module: sale_crm
 #: model:ir.model.fields,help:sale_crm.field_res_users_membership_stop
 msgid "Date until which membership remains active."
-msgstr ""
+msgstr "Дато до която членството остава активно."
 
 #. module: sale_crm
 #: model:ir.model.fields,field_description:sale_crm.field_res_users_free_member
@@ -125,7 +127,7 @@ msgstr ""
 #. module: sale_crm
 #: model:ir.model,name:sale_crm.model_crm_lead
 msgid "Lead/Opportunity"
-msgstr "Следа/Възможност"
+msgstr "Лийд/Възможност"
 
 #. module: sale_crm
 #. openerp-web
@@ -162,12 +164,12 @@ msgstr "Начална Дата на Абонамента"
 #. module: sale_crm
 #: model:ir.model.fields,field_description:sale_crm.field_res_users_sale_warn_msg
 msgid "Message for Sales Order"
-msgstr "Съобщения за поръчка за продажба"
+msgstr "Съобщение за поръчка за продажба"
 
 #. module: sale_crm
 #: model:ir.model.fields,field_description:sale_crm.field_res_users_picking_warn_msg
 msgid "Message for Stock Picking"
-msgstr "Съобщение за вдигане от склад"
+msgstr "Съобщение за складов пикинг"
 
 #. module: sale_crm
 #: model:ir.ui.view,arch_db:sale_crm.crm_case_form_view_oppor
@@ -187,7 +189,7 @@ msgstr "Възможности"
 #. module: sale_crm
 #: model:ir.model.fields,field_description:sale_crm.field_crm_lead_order_ids
 msgid "Orders"
-msgstr ""
+msgstr "Поръчки"
 
 #. module: sale_crm
 #: model:ir.model.fields,field_description:sale_crm.field_res_users_payment_token_ids
@@ -232,7 +234,7 @@ msgstr ""
 #. module: sale_crm
 #: model:ir.model.fields,field_description:sale_crm.field_res_users_picking_warn
 msgid "Stock Picking"
-msgstr "Вдигане от склад"
+msgstr "Складов пикинг"
 
 #. module: sale_crm
 #: model:ir.model.fields,field_description:sale_crm.field_crm_lead_sale_amount_total

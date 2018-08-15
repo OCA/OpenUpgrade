@@ -3,7 +3,7 @@
 # * website_quote
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # Boško Stojaković <bluesoft83@gmail.com>, 2016
 # Bole <bole@dajmi5.com>, 2016
 msgid ""
@@ -390,6 +390,8 @@ msgid ""
 " This description will be copied to every Sale Order, Delivery Order and "
 "Customer Invoice/Refund"
 msgstr ""
+"Opis proizvoda koji želite da prikažete vašem kupcu. Ovaj opis će biti "
+"kopiran na svaku Prodajnu Narudžbu, Nalog Isporuke i Račun/Povrat kupca."
 
 #. module: website_quote
 #: model:sale.quote.template,website_description:website_quote.website_quote_template_default
@@ -672,7 +674,7 @@ msgstr "Opis"
 #. module: website_quote
 #: model:ir.model.fields,field_description:website_quote.field_delivery_carrier_website_description
 msgid "Description for Online Quotations"
-msgstr ""
+msgstr "Opis za online predračune"
 
 #. module: website_quote
 #: model:ir.model.fields,field_description:website_quote.field_delivery_carrier_quote_description
@@ -1362,7 +1364,7 @@ msgstr ""
 #. module: website_quote
 #: model:ir.ui.view,arch_db:website_quote.so_template
 msgid "Product:"
-msgstr ""
+msgstr "Proizvod:"
 
 #. module: website_quote
 #: model:ir.ui.view,arch_db:website_quote.pricing

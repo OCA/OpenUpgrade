@@ -4,19 +4,23 @@
 # 
 # Translators:
 # Kaloyan Naumov <kaloyan@lumnus.net>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
-# kalatchev <kalatchev@gmail.com>, 2016
-# Anton Vassilev <anton.vasilev@gmail.com>, 2016
+# Martin Trigaux, 2016
+# kalatchev, 2016
+# Maria Boyadjieva <marabo2000@gmail.com>, 2016
+# Anton Vassilev, 2016
 # Iliana Ilieva <i.ilieva@sunservice-bg.com>, 2016
 # preslav <hackerz99999@gmail.com>, 2016
 # Todor Mladenov <tmladenov@dir.bg>, 2016
+# Albena Mincheva <albena_vicheva@abv.bg>, 2018
+# Boris Stefanov <borkata@gmail.com>, 2018
+# Daria Stefanova <daria@clearlypro.eu>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 08:56+0000\n"
 "PO-Revision-Date: 2016-09-07 08:56+0000\n"
-"Last-Translator: Todor Mladenov <tmladenov@dir.bg>, 2016\n"
+"Last-Translator: Daria Stefanova <daria@clearlypro.eu>, 2018\n"
 "Language-Team: Bulgarian (https://www.transifex.com/odoo/teams/41243/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,12 +51,12 @@ msgstr "# Фактуриран в Продажби"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_mo_count
 msgid "# Manufacturing Orders"
-msgstr "# Нареждания за производство"
+msgstr "# Поръчки за производство"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_product_variant_count
 msgid "# Product Variants"
-msgstr ""
+msgstr "# Продуктови варианти"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_purchase_count
@@ -72,6 +76,9 @@ msgid ""
 "                    Buy Odoo Enterprise now to get more providers.\n"
 "                </p>"
 msgstr ""
+"<p class=\"oe_view_nocontent\">\n"
+"Купете Odoo Enterprise сега, за да получите повече доставчици.\n"
+"</p>"
 
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_quant_package_form_save
@@ -105,6 +112,9 @@ msgid ""
 "This description will be copied to every Purchase Order, Receipt and Vendor "
 "Bill/Refund."
 msgstr ""
+"Описание на продукта, който желаете да споделите с Вашите доставчици. Това "
+"описание ще бъде копирано на всяка поръчка за покупка, квитанция и фактура "
+"за покупка/кредитно известие."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_description
@@ -175,7 +185,7 @@ msgstr "Наличен"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_available_in_pos
 msgid "Available in the Point of Sale"
-msgstr "Видим в ПОС"
+msgstr "Наличен в Център за продажби"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_produce_delay
@@ -183,16 +193,19 @@ msgid ""
 "Average delay in days to produce this product. In the case of multi-level "
 "BOM, the manufacturing lead times of the components will be added."
 msgstr ""
+"Средно забавяне в дни за производството на този продукт. В случай на "
+"многостепенна фактура за покупка на материали, ще бъдат добавени и сроковете"
+" за производство на компонентите."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_sale_avg_price
 msgid "Avg. Price in Customer Invoices."
-msgstr ""
+msgstr "Осреднена цена във фактурите за продажба."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_purchase_avg_price
 msgid "Avg. Price in Vendor Bills "
-msgstr ""
+msgstr "Осреднена цена във фактурите за покупки"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_purchase_avg_price
@@ -259,6 +272,8 @@ msgid ""
 "Can be changed during the 'put in pack' to adjust the weight of the "
 "shipping."
 msgstr ""
+"Може да се променя по време на \"поставената опаковка\", за да се коригира "
+"теглото на експедицията."
 
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_picking_withcarrier_out_form
@@ -284,7 +299,7 @@ msgstr "Маршрути за Категорията"
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_membership
 msgid "Check if the product is eligible for membership."
-msgstr ""
+msgstr "Check if the product is eligible for membership."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_to_weight
@@ -295,12 +310,13 @@ msgstr "Отбележи, ако продукта трябва да бъде п�
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_available_in_pos
 msgid "Check if you want this product to appear in the Point of Sale"
-msgstr "Изберете, ако искате продукта да се вижда в ПОС"
+msgstr ""
+"Отметнете, ако искате този продукт да се появява в Центъра за продажби"
 
 #. module: delivery
 #: model:ir.actions.act_window,help:delivery.action_delivery_carrier_form
 msgid "Click to define a new delivery method."
-msgstr ""
+msgstr "Кликнете, за да определите нов начин на доставка."
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_color
@@ -320,7 +336,7 @@ msgstr "Условие"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_purchase_method
 msgid "Control Purchase Bills"
-msgstr ""
+msgstr "Контролирайте фактурите за покупки"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_standard_price
@@ -392,7 +408,7 @@ msgstr ""
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_sale_delay
 msgid "Customer Lead Time"
-msgstr ""
+msgstr "Време на клиентски лийд"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_partner_ref
@@ -407,7 +423,7 @@ msgstr "Данъци на клиент"
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_membership_date_from
 msgid "Date from which membership becomes active."
-msgstr ""
+msgstr "Дата от която членството става активно."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_message_last_post
@@ -417,7 +433,7 @@ msgstr "Дата на последното съобщение, публикув�
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_membership_date_to
 msgid "Date until which membership remains active."
-msgstr ""
+msgstr "Дато до която членството остава активно."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_uom_id
@@ -430,13 +446,13 @@ msgid ""
 "Default Unit of Measure used for purchase orders. It must be in the same "
 "category than the default unit of measure."
 msgstr ""
-"По подразбиране мер. ед. използвани при нареждане за закупуване. Трябва да "
-"бъде в същата категория като мер. ед. по подразбиране."
+"Мерна единица по подразбиране, използвана за поръчки за покупки. Трябва да е"
+" поставена в същата категория като мерната единица по подразбиране."
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_deferred_revenue_category_id
 msgid "Deferred Revenue Type"
-msgstr ""
+msgstr "Тип Отложен Приход"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_delivery_count
@@ -448,12 +464,12 @@ msgstr "Доставка"
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_delivery_carrier_search
 msgid "Delivery Carrier"
-msgstr ""
+msgstr "Доставчик"
 
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_picking_withcarrier_out_form
 msgid "Delivery Information"
-msgstr ""
+msgstr "Информация за доставка"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_res_partner_property_delivery_carrier_id
@@ -493,7 +509,7 @@ msgstr "Описание"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_description_picking
 msgid "Description on Picking"
-msgstr "Описание при Пакетиране"
+msgstr "Описание на пикинг"
 
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_delivery_carrier_form
@@ -506,6 +522,8 @@ msgid ""
 "Determine if a product needs to create automatically an event registration "
 "at the confirmation of a sales order line."
 msgstr ""
+"Определете дали даден продукт трябва автоматично да създаде регистрация на "
+"събитие при потвърждаване на поръчка за продажба."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_sequence
@@ -530,11 +548,14 @@ msgid ""
 "                UPS Express, UPS Standard) with a set of pricing rules attached\n"
 "                to each method."
 msgstr ""
+"Всеки носител (например UPS) може да има няколко метода за доставка (напр.\n"
+" UPS Express, UPS Standard) с набор от правила за ценообразуване\n"
+" към всеки метод."
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_prod_environment
 msgid "Environment"
-msgstr ""
+msgstr "Среда"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_sale_order_delivery_price
@@ -590,6 +611,8 @@ msgstr "Сметка за Разходи"
 #: model:ir.model.fields,help:delivery.field_sale_order_carrier_id
 msgid "Fill this field if you plan to invoice the shipping based on picking."
 msgstr ""
+"Попълнете това поле, ако планирате да фактурирате превоза въз основа на "
+"пикинг."
 
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_delivery_carrier_form
@@ -597,6 +620,8 @@ msgid ""
 "Filling this form allows you to filter delivery carriers according to the "
 "delivery address of your customer."
 msgstr ""
+"Попълването на този формуляр ви позволява да филтрирате превозвачите за "
+"доставка според адреса за доставка на клиента си."
 
 #. module: delivery
 #: selection:delivery.carrier,delivery_type:0
@@ -636,13 +661,14 @@ msgstr ""
 #. module: delivery
 #: model:delivery.carrier,name:delivery.free_delivery_carrier
 #: model:product.product,name:delivery.free_delivery_carrier_product_product
+#: model:product.template,name:delivery.free_delivery_carrier_product_template
 msgid "Free delivery charges"
 msgstr "Безплатна доставка"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_free_if_more_than
 msgid "Free if Order total is more than"
-msgstr "Безплатно ако поръчката е на стойност над"
+msgstr "Безплатно, ако поръчката е на стойност над"
 
 #. module: delivery
 #: selection:delivery.carrier,integration_level:0
@@ -652,7 +678,7 @@ msgstr ""
 #. module: delivery
 #: selection:delivery.carrier,integration_level:0
 msgid "Get Rate and Create Shipment"
-msgstr ""
+msgstr "Получаване на тарифа и създаване на пратка"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_packaging_ids
@@ -661,7 +687,7 @@ msgid ""
 "the picking order and is mainly used if you use the EDI module."
 msgstr ""
 "Предоставя различни начини за пакетиране на един и същ продукт. Това не се "
-"отразява на нареждане за товарене и се използва главно, ако използвате "
+"отразява на поръчката на пикингите и се прилага главно, ако използвате "
 "модула EDI."
 
 #. module: delivery
@@ -678,7 +704,7 @@ msgstr "Групиране по"
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_hs_code
 #: model:ir.model.fields,field_description:delivery.field_product_template_hs_code
 msgid "HS Code"
-msgstr ""
+msgstr "HS код"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_product_packaging_height
@@ -688,7 +714,7 @@ msgstr "Височина"
 #. module: delivery
 #: sql_constraint:product.packaging:0
 msgid "Height must be positive"
-msgstr ""
+msgstr "Височината трябва да е положително число"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_id
@@ -770,7 +796,7 @@ msgstr ""
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_integration_level
 msgid "Integration Level"
-msgstr ""
+msgstr "Ниво на интеграция"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_categ_id
@@ -860,7 +886,7 @@ msgstr "Дължина"
 #. module: delivery
 #: sql_constraint:product.packaging:0
 msgid "Length must be positive"
-msgstr ""
+msgstr "Дължината трябва да е положително число"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_location_id
@@ -875,7 +901,7 @@ msgstr "Транспортни Единици"
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_picking_withcarrier_out_form
 msgid "Manage Package Type"
-msgstr ""
+msgstr "Управление на типа пакет"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_track_service
@@ -888,7 +914,7 @@ msgstr ""
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_produce_delay
 msgid "Manufacturing Lead Time"
-msgstr "Производствен срок за доставка"
+msgstr "Време на производствен лийд"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_margin
@@ -898,12 +924,12 @@ msgstr "Марж"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_date_from
 msgid "Margin Date From"
-msgstr ""
+msgstr "Марж Дата От"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_date_to
 msgid "Margin Date To"
-msgstr ""
+msgstr "Маржин Дата до"
 
 #. module: delivery
 #: sql_constraint:delivery.carrier:0
@@ -918,7 +944,7 @@ msgstr ""
 #. module: delivery
 #: sql_constraint:product.packaging:0
 msgid "Max Weight must be positive"
-msgstr ""
+msgstr "Максималното тегло трябва да е положително"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_price_rule_max_value
@@ -928,7 +954,7 @@ msgstr "Максимална стойност"
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_product_packaging_max_weight
 msgid "Maximum weight shippable in this packaging"
-msgstr ""
+msgstr "Максимално тегло, което може да се транспортира в тази опаковка"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_image_medium
@@ -953,7 +979,7 @@ msgstr "Начална Дата на Абонамента"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_purchase_line_warn_msg
 msgid "Message for Purchase Order Line"
-msgstr "Съобщение за ред от поръчка за покупка"
+msgstr "Съобщение за ред на поръчка за покупка"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_sale_line_warn_msg
@@ -980,7 +1006,7 @@ msgstr "Име"
 #. module: delivery
 #: selection:product.packaging,package_carrier_type:0
 msgid "No carrier integration"
-msgstr ""
+msgstr "Няма интеграция на оператора"
 
 #. module: delivery
 #: code:addons/delivery/models/sale_order.py:63
@@ -992,7 +1018,7 @@ msgstr "Няма превозвач."
 #: code:addons/delivery/models/sale_order.py:72
 #, python-format
 msgid "No carrier set for this order."
-msgstr "Няма превозвач за тази поръчка."
+msgstr "Няма назначен превозвач за тази поръчка."
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_normal_cost
@@ -1007,8 +1033,9 @@ msgstr "Нормална цена - Крайна цена"
 #. module: delivery
 #: model:delivery.carrier,name:delivery.normal_delivery_carrier
 #: model:product.product,name:delivery.normal_delivery_carrier_product_product
+#: model:product.template,name:delivery.normal_delivery_carrier_product_template
 msgid "Normal Delivery Charges"
-msgstr ""
+msgstr "Обичайни такси за доставка"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_message_needaction_counter
@@ -1036,6 +1063,8 @@ msgid ""
 "On ordered quantities: control bills based on ordered quantities.\n"
 "On received quantities: control bills based on received quantity."
 msgstr ""
+"На поръчани количества: контролирайте фактурите за покупки на базата на поръчани количества.\n"
+"На получени количества: контролирайте фактурите за покупки на базата на получени количества."
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_price_rule_operator
@@ -1057,7 +1086,7 @@ msgstr "Изходящ"
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_quant_package_form_save
 msgid "Package"
-msgstr ""
+msgstr "Пакет"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_product_packaging_shipper_package_code
@@ -1069,7 +1098,7 @@ msgstr ""
 #: code:addons/delivery/models/stock_picking.py:128
 #, python-format
 msgid "Package Details"
-msgstr ""
+msgstr "Детайли на опаковката"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_stock_picking_package_ids
@@ -1084,7 +1113,7 @@ msgstr "Опаковане"
 #. module: delivery
 #: model:ir.model,name:delivery.model_stock_pack_operation
 msgid "Packing Operation"
-msgstr ""
+msgstr "Операция за опаковане"
 
 #. module: delivery
 #: model:ir.model,name:delivery.model_res_partner
@@ -1099,7 +1128,7 @@ msgstr "Физически Пакети"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_pos_categ_id
 msgid "Point of Sale Category"
-msgstr "ПОС Категория"
+msgstr "Категория 'Център на продажби'"
 
 #. module: delivery
 #: selection:delivery.price.rule,variable:0
@@ -1127,12 +1156,12 @@ msgstr "Ценоразпис"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_item_ids
 msgid "Pricelist Items"
-msgstr ""
+msgstr "Редове ценова листа"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_pricelist_item_ids
 msgid "Pricelist item ids"
-msgstr ""
+msgstr "Ред ценова листа - идентификации"
 
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_delivery_carrier_form
@@ -1157,7 +1186,7 @@ msgstr "Продукт"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_alert_time
 msgid "Product Alert Time"
-msgstr ""
+msgstr "Време за предупреждение за продукт"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_attribute_line_ids
@@ -1172,12 +1201,12 @@ msgstr "Емейл Шаблон за Продукт"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_life_time
 msgid "Product Life Time"
-msgstr ""
+msgstr "Време на живот на продукта"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_removal_time
 msgid "Product Removal Time"
-msgstr ""
+msgstr "Време за премахване на продукта"
 
 #. module: delivery
 #: model:ir.model,name:delivery.model_product_template
@@ -1194,7 +1223,7 @@ msgstr "Тип на продукта"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_use_time
 msgid "Product Use Time"
-msgstr ""
+msgstr "Срок на Годност"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_property_stock_production
@@ -1226,7 +1255,7 @@ msgstr "Описание на покупката"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_purchase_gap
 msgid "Purchase Gap"
-msgstr ""
+msgstr "Дупка в Снабдяването"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_purchase_line_warn
@@ -1281,7 +1310,7 @@ msgstr "Касов бон"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_nbr_reordering_rules
 msgid "Reordering Rules"
-msgstr "Правила за Повторна Поръчка"
+msgstr "Правила за повторна поръчка"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_reordering_max_qty
@@ -1291,12 +1320,12 @@ msgstr ""
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_reordering_min_qty
 msgid "Reordering min qty"
-msgstr ""
+msgstr "Повторна поръчка на минимално количество"
 
 #. module: delivery
 #: model:ir.model,name:delivery.model_stock_return_picking
 msgid "Return Picking"
-msgstr ""
+msgstr "Върнете пикинг"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_route_ids
@@ -1325,7 +1354,7 @@ msgstr "Продажна цена"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_sales_gap
 msgid "Sales Gap"
-msgstr ""
+msgstr "Дупка в Продажбите"
 
 #. module: delivery
 #: model:ir.model,name:delivery.model_sale_order
@@ -1336,7 +1365,7 @@ msgstr "Поръчка за продажба"
 #: model:ir.model,name:delivery.model_sale_order_line
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_sale_line_warn
 msgid "Sales Order Line"
-msgstr "Ред от нареждане за продажба"
+msgstr "Ред от поръчка за продажба"
 
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_quant_package_form_save
@@ -1389,6 +1418,8 @@ msgstr "Определни Цена"
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_prod_environment
 msgid "Set to True if your credentials are certified for production."
 msgstr ""
+"Задайте True, ако вашите идентификационни данни са сертифицирани за "
+"производство."
 
 #. module: delivery
 #: code:addons/delivery/models/stock_picking.py:147
@@ -1406,7 +1437,7 @@ msgstr "Цена на Доставка"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_stock_quant_package_shipping_weight
 msgid "Shipping Weight"
-msgstr ""
+msgstr "Тегло на пратката"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_image_small
@@ -1437,6 +1468,7 @@ msgstr ""
 #: model:ir.model.fields,help:delivery.field_product_template_hs_code
 msgid "Standardized code for international shipping and goods declaration"
 msgstr ""
+"Стандартизиран код за международна декларация за корабоплаването и стоките"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_state_ids
@@ -1472,17 +1504,22 @@ msgstr ""
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_normal_cost
 msgid "Sum of Multiplication of Cost price and quantity of Vendor Bills"
 msgstr ""
+"Сума от произведението на доставната цена и количеството фактури за покупка."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_turnover
 msgid ""
 "Sum of Multiplication of Invoice price and quantity of Customer Invoices"
 msgstr ""
+"Сума на унмножението на цената от фактурата и количество фактури за "
+"продажба."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_total_cost
 msgid "Sum of Multiplication of Invoice price and quantity of Vendor Bills "
 msgstr ""
+"Сума от произведението на цената на фактурата и количеството фактури за "
+"покупка."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_sale_expected
@@ -1490,16 +1527,18 @@ msgid ""
 "Sum of Multiplication of Sale Catalog price and quantity of Customer "
 "Invoices"
 msgstr ""
+"Сума от умножаването на продажната каталожна цена и количество от фактурите "
+"за продажба"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_sale_num_invoiced
 msgid "Sum of Quantity in Customer Invoices"
-msgstr "Сумата на количеството по клиентски фактури"
+msgstr "Количествена сума във фактурите за продажба"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_purchase_num_invoiced
 msgid "Sum of Quantity in Vendor Bills"
-msgstr ""
+msgstr "Количествена сума във фактурите за покупка"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_pricelist_id
@@ -1516,6 +1555,7 @@ msgstr ""
 #. module: delivery
 #: model:delivery.carrier,name:delivery.delivery_carrier
 #: model:product.product,name:delivery.delivery_carrier_product_product
+#: model:product.template,name:delivery.delivery_carrier_product_template
 msgid "The Poste"
 msgstr "Пощата"
 
@@ -1532,8 +1572,8 @@ msgstr ""
 #, python-format
 msgid "The order state have to be draft to add delivery lines."
 msgstr ""
-"Състоянието на поръчката трябва да бъде в проект за да може да се добавят "
-"редове за доставка"
+"Етапът на поръчката трябва да е 'чернова', за да може да се добавят редове "
+"за доставка"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_lst_price
@@ -1541,6 +1581,8 @@ msgid ""
 "The sale price is managed from the product template. Click on the 'Variant "
 "Prices' button to set the extra attribute prices."
 msgstr ""
+"Продажната цена се управлява от продуктовия шаблон. Кликнете върху бутона "
+"\"Варианти за цените\", за да зададете допълнителните атрибутни цени."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_volume
@@ -1550,7 +1592,7 @@ msgstr "Обемът в м3"
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_weight
 msgid "The weight of the contents in Kg, not including any packaging, etc."
-msgstr ""
+msgstr "Теглото на съдържанието в Kg, без да се включва опаковката и т.н."
 
 #. module: delivery
 #: model:ir.actions.act_window,help:delivery.action_delivery_carrier_form
@@ -1559,6 +1601,9 @@ msgid ""
 "                according to your settings; on the sales order (based on the\n"
 "                quotation) or the invoice (based on the delivery orders)."
 msgstr ""
+"Тези методи позволяват автоматично изчисляване на цената на доставката\n"
+" според вашите настройки; върху поръчката за продажба (въз основа на\n"
+" котировка) или фактурата (въз основа на поръчките за доставка)."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_property_account_expense_id
@@ -1566,6 +1611,8 @@ msgid ""
 "This account will be used for invoices instead of the default one to value "
 "expenses for the current product."
 msgstr ""
+"Тази Фирма ще бъде използвана за Фактури вместо тази по подразбиране за "
+"остойностяване на разходите по текущият продукт.."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_property_account_income_id
@@ -1573,6 +1620,8 @@ msgid ""
 "This account will be used for invoices instead of the default one to value "
 "sales for the current product."
 msgstr ""
+"Тази Фирма ще бъде използвана за Фактури вместо тази по подразбиране за "
+"остойностяване на продажбите на текущият продукт.."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_property_account_creditor_price_difference
@@ -1587,8 +1636,7 @@ msgstr ""
 #: model:ir.model.fields,help:delivery.field_res_partner_property_delivery_carrier_id
 msgid "This delivery method will be used when invoicing from picking."
 msgstr ""
-"Този метод на доставка ще бъде използван при фактуриране от списък за "
-"товарене."
+"Този метод на доставка ще бъде използван, когато се фактурира от пикинг."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_image_variant
@@ -1605,7 +1653,7 @@ msgstr "Сума на допълнителните цени на всички а
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_margin
 msgid "This percentage will be added to the shipping price."
-msgstr ""
+msgstr "Този процент ще бъде добавен към цената за доставка."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_property_stock_production
@@ -1631,7 +1679,8 @@ msgstr ""
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_pos_categ_id
 msgid "Those categories are used to group similar products for point of sale."
-msgstr "Тези категории се използват за групиране на продукти в ПОС."
+msgstr ""
+"Тези категории се използват за групиране на продукти в Център за продажби."
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_to_weight
@@ -1672,7 +1721,7 @@ msgstr "Проследяване"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_stock_picking_carrier_tracking_ref
 msgid "Tracking Reference"
-msgstr ""
+msgstr "Референтен № за проследяване"
 
 #. module: delivery
 #: model:ir.model,name:delivery.model_stock_picking
@@ -1699,7 +1748,7 @@ msgstr "Мерна единица"
 #: model:ir.model.fields,help:delivery.field_stock_move_weight_uom_id
 msgid ""
 "Unit of Measure (Unit of Measure) is the unit of measurement for Weight"
-msgstr ""
+msgstr "Единица мярка (единица мярка) е единицата за измерване на теглото"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_stock_picking_weight_uom_id
@@ -1719,7 +1768,7 @@ msgstr "Брой непрочетени съобщения"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_valuation
 msgid "Valuation"
-msgstr ""
+msgstr "Оценка"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_price_rule_variable
@@ -1789,7 +1838,7 @@ msgstr "Тегло * Обем"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_stock_move_weight_uom_id
 msgid "Weight Unit of Measure"
-msgstr ""
+msgstr "Тегло на единица мярка"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_stock_picking_shipping_weight
@@ -1802,6 +1851,8 @@ msgid ""
 "When a new a Serial Number is issued, this is the number of days before an "
 "alert should be notified."
 msgstr ""
+"Когато се издаде нов Сериен Номер, това е броят дни преди да започнем да "
+"получаваме предупреждения."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_life_time
@@ -1809,6 +1860,8 @@ msgid ""
 "When a new a Serial Number is issued, this is the number of days before the "
 "goods may become dangerous and must not be consumed."
 msgstr ""
+"Когато се издаде нов Сериен Номер, това е броят дни преди продуктът да стане"
+" опасен и не бива да се консумира."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_removal_time
@@ -1816,6 +1869,8 @@ msgid ""
 "When a new a Serial Number is issued, this is the number of days before the "
 "goods should be removed from the stock."
 msgstr ""
+"Когато се издаде нов Сериен Номер, това е броят дни преди продуктът да "
+"трябва да се премахне от наличност."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_use_time
@@ -1823,6 +1878,8 @@ msgid ""
 "When a new a Serial Number is issued, this is the number of days before the "
 "goods starts deteriorating, without being dangerous yet."
 msgstr ""
+"Когато се издаде нов Сериен Номер, това е броят дни преди качеството на "
+"продукт да започне да се влошава, без да е опасен все още."
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_property_stock_account_input
@@ -1849,6 +1906,9 @@ msgid ""
 "this template. The customer will receive an email for each product linked to"
 " an email template."
 msgstr ""
+"При потвърждаване на фактура ще бъде изпратен имейл на клиента въз основа на"
+" този шаблон. Клиентът ще получи имейл за всеки продукт, свързан с шаблон за"
+" имейл."
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_product_packaging_width
@@ -1858,7 +1918,7 @@ msgstr "Ширина"
 #. module: delivery
 #: sql_constraint:product.packaging:0
 msgid "Width must be positive"
-msgstr ""
+msgstr "Ширината трябва да е положителна"
 
 #. module: delivery
 #: code:addons/delivery/models/stock_picking.py:187
@@ -1867,6 +1927,8 @@ msgid ""
 "You are shipping different packaging types in the same shipment.\n"
 "Packaging Types: %s"
 msgstr ""
+"Изпращате различни видове опаковки в една и съща пратка.\n"
+"Видове опаковки:%s"
 
 #. module: delivery
 #: code:addons/delivery/models/stock_picking.py:163
@@ -1875,6 +1937,8 @@ msgid ""
 "Your delivery method has no redirect on courier provider's website to track "
 "this order."
 msgstr ""
+"Методът Ви за показване няма пренасочване на уебсайта на доставчика на "
+"куриерски услуги за проследяване на тази поръчка."
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier_zip_from

@@ -4,20 +4,21 @@
 # 
 # Translators:
 # Yoshi Tashiro <tashiro@roomsfor.hk>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # kent_ocean <ke.tanabe@gmail.com>, 2016
 # Takahiro MURAKAMI <murakami@date-yakkyoku.com>, 2016
 # 高木正勝 <masakatsu.takagi@pro-spire.co.jp>, 2016
 # Manami Hashi <manami@roomsfor.hk>, 2016
 # SHIMIZU Taku <shimizu.taku@gmail.com>, 2016
 # Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2016
+# Takuya Sawada <takuya@tuntunkun.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:27+0000\n"
 "PO-Revision-Date: 2017-06-23 13:27+0000\n"
-"Last-Translator: Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2016\n"
+"Last-Translator: Takuya Sawada <takuya@tuntunkun.com>, 2018\n"
 "Language-Team: Japanese (https://www.transifex.com/odoo/teams/41243/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -105,7 +106,7 @@ msgstr "仕入先請求書数"
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_invoice_count
 msgid "# of Bills"
-msgstr ""
+msgstr "請求書数"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_report_nbr_lines
@@ -160,7 +161,7 @@ msgstr "<strong>発注日:</strong>"
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.report_purchaseorder_document
 msgid "<strong>Our Order Reference:</strong>"
-msgstr ""
+msgstr "<strong>弊社オーダ参照:</strong>"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.report_purchaseorder_document
@@ -202,7 +203,7 @@ msgstr "<strong>発注参照</strong>"
 #. module: purchase
 #: model:res.groups,name:purchase.group_warning_purchase
 msgid "A warning can be set on a product or a customer (Purchase)"
-msgstr ""
+msgstr "製品または取引先に警告設定可 (購買)"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_account_invoice_purchase_id
@@ -263,7 +264,7 @@ msgstr "管理者は会社設定にて、デフォルトの取引条件を定義
 #: selection:purchase.config.settings,group_warning_purchase:0
 msgid ""
 "An informative or blocking warning can be set on a product or a customer"
-msgstr "製品や顧客での警告表示設定を有効可"
+msgstr "製品や取引先に情報またはブロック警告設定可"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line_account_analytic_id
@@ -342,18 +343,18 @@ msgstr ""
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_invoice_status
 msgid "Billing Status"
-msgstr ""
+msgstr "請求ステータス"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_invoice_ids
 msgid "Bills"
-msgstr ""
+msgstr "請求書"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.view_purchase_order_filter
 #: selection:purchase.order,invoice_status:0
 msgid "Bills Received"
-msgstr ""
+msgstr "請求書受領済"
 
 #. module: purchase
 #: selection:product.template,purchase_line_warn:0
@@ -438,7 +439,7 @@ msgstr "クリックして見積フォームから注文書を作成"
 #. module: purchase
 #: model:ir.actions.act_window,help:purchase.purchase_rfq
 msgid "Click to create a request for quotation."
-msgstr ""
+msgstr "クリックして見積依頼を作成してください。"
 
 #. module: purchase
 #: model:ir.actions.act_window,help:purchase.action_invoice_pending
@@ -857,7 +858,7 @@ msgstr "月別購買"
 msgid ""
 "Most propositions of purchase orders are created automatically\n"
 "                by Odoo based on inventory needs."
-msgstr ""
+msgstr "購買オーダ提案の大部分は、在庫所要にもとづき自動作成することが可能です。"
 
 #. module: purchase
 #: selection:product.template,purchase_line_warn:0
@@ -885,7 +886,7 @@ msgstr "ノート"
 #. module: purchase
 #: selection:purchase.order,invoice_status:0
 msgid "Nothing to Bill"
-msgstr ""
+msgstr "請求対象なし"
 
 #. module: purchase
 #: selection:product.template,purchase_method:0
@@ -946,7 +947,7 @@ msgstr "日順"
 #: code:addons/purchase/models/purchase.py:578
 #, python-format
 msgid "Ordered Quantity"
-msgstr ""
+msgstr "受注数量"
 
 #. module: purchase
 #: code:addons/purchase/models/purchase.py:816
@@ -1072,7 +1073,7 @@ msgstr "製品バリアント"
 #: model:ir.ui.menu,name:purchase.menu_product_in_config_purchase
 #: model:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid "Products"
-msgstr "メニュー"
+msgstr "プロダクト"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_report_price_standard
@@ -1150,12 +1151,12 @@ msgstr "発注"
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.report_purchaseorder_document
 msgid "Purchase Order Confirmation #"
-msgstr ""
+msgstr "注文 #"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.view_purchase_order_search
 msgid "Purchase Order Fiscal Position"
-msgstr ""
+msgstr "購買オーダ会計ポジション"
 
 #. module: purchase
 #: model:ir.model,name:purchase.model_purchase_order_line
@@ -1218,7 +1219,7 @@ msgstr ""
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.view_purchase_order_filter
 msgid "Purchase orders that have been invoiced."
-msgstr ""
+msgstr "請求書受領済の購買オーダ"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.view_purchase_order_filter
@@ -1334,7 +1335,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_picking_count
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_picking_ids
 msgid "Receptions"
-msgstr ""
+msgstr "入荷"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.purchase_order_tree
@@ -1377,7 +1378,7 @@ msgstr "見積依頼"
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.report_purchaseorder_document
 msgid "Request for Quotation #"
-msgstr ""
+msgstr "見積依頼 #"
 
 #. module: purchase
 #: model:ir.actions.act_window,name:purchase.purchase_rfq
@@ -1401,7 +1402,7 @@ msgstr "担当者"
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_date_planned
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line_date_planned
 msgid "Scheduled Date"
-msgstr "予定日"
+msgstr "納期"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.purchase_order_line_search
@@ -1444,7 +1445,7 @@ msgstr "標準原価のみ"
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid "Set date to all order lines"
-msgstr ""
+msgstr "全明細の日付更新"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.purchase_order_form
@@ -1542,7 +1543,7 @@ msgid ""
 "The product form contains detailed information to improve the\n"
 "                purchase process: prices, procurement logistics, accounting data,\n"
 "                available vendors, etc."
-msgstr ""
+msgstr "プロダクトフォームは購買プロセス改善のための詳細情報 (価格、調達ロジスティクス、会計関連設定、仕入先等) を含みます。"
 
 #. module: purchase
 #: model:ir.actions.act_window,help:purchase.product_normal_action_puchased
@@ -1550,7 +1551,7 @@ msgid ""
 "The product form contains detailed information to improve the\n"
 "            purchase process: prices, procurement logistics, accounting data,\n"
 "            available vendors, etc."
-msgstr ""
+msgstr "プロダクトフォームは購買プロセス改善のための詳細情報 (価格、調達ロジスティクス、会計関連設定、仕入先等) を含みます。"
 
 #. module: purchase
 #: model:ir.actions.act_window,help:purchase.purchase_rfq
@@ -1708,12 +1709,12 @@ msgstr "単位"
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid "Unlock"
-msgstr ""
+msgstr "ロック解除"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.view_purchase_order_filter
 msgid "Unread Messages"
-msgstr ""
+msgstr "未読メッセージ"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.purchase_order_tree
@@ -1831,7 +1832,7 @@ msgstr "容積"
 #: model:ir.ui.view,arch_db:purchase.view_purchase_order_filter
 #: selection:purchase.order,invoice_status:0
 msgid "Waiting Bills"
-msgstr ""
+msgstr "請求書待ち"
 
 #. module: purchase
 #: model:ir.model,name:purchase.model_stock_warehouse
@@ -1896,7 +1897,7 @@ msgid ""
 "You must define a product for everything you purchase, whether\n"
 "                it's a physical product, a consumable or services you buy to\n"
 "                subcontractors."
-msgstr ""
+msgstr "購買するもの全て (在庫品、消耗品、サービス) につきプロダクトを作成してください。"
 
 #. module: purchase
 #: model:ir.actions.act_window,help:purchase.product_normal_action_puchased
@@ -1904,7 +1905,7 @@ msgid ""
 "You must define a product for everything you purchase, whether\n"
 "            it's a physical product, a consumable or services you buy to\n"
 "            subcontractors."
-msgstr ""
+msgstr "購買するもの全て (在庫品、消耗品、サービス) につきプロダクトを作成してください。"
 
 #. module: purchase
 #: code:addons/purchase/models/purchase.py:389

@@ -3,7 +3,7 @@
 # * mrp
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # Yoshi Tashiro <tashiro@roomsfor.hk>, 2016
 # SHIMIZU Taku <shimizu.taku@gmail.com>, 2016
 # Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2016
@@ -2182,7 +2182,7 @@ msgstr "取消/分割を展開"
 #. module: mrp
 #: model:ir.model,name:mrp.model_stock_location_path
 msgid "Pushed Flow"
-msgstr ""
+msgstr "プッシュ型フロー"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_config_settings_module_quality_mrp
@@ -2236,6 +2236,11 @@ msgstr "生産済量"
 #: model:ir.model.fields,field_description:mrp.field_mrp_production_product_qty
 msgid "Quantity To Produce"
 msgstr "生産予定量"
+
+#. module: mrp
+#: model:ir.model.fields,field_description:mrp.field_stock_move_quantity_done_store
+msgid "Quantity done store"
+msgstr ""
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_routing_workcenter_batch_size
@@ -2862,6 +2867,11 @@ msgid ""
 msgstr "分刻みの時間です。この時間はマニュアルモード、もしくは今まで一度も作業オーダがなかった初めての実時間作業の場合使用します。"
 
 #. module: mrp
+#: model:ir.ui.view,arch_db:mrp.mrp_production_workcenter_form_view_inherit
+msgid "Time the currently logged user spent on this workorder."
+msgstr ""
+
+#. module: mrp
 #: model:ir.ui.view,arch_db:mrp.mrp_production_form_view
 msgid "To Consume"
 msgstr "消費対象"
@@ -3424,6 +3434,18 @@ msgstr "既に消費した材料を有する移動は取り消すことができ
 #: code:addons/mrp/models/stock_move.py:40
 #, python-format
 msgid "You cannot use the same serial number in two different lines."
+msgstr ""
+
+#. module: mrp
+#: code:addons/mrp/models/mrp_unbuild.py:110
+#, python-format
+msgid "You don't have in the stock the lot %s."
+msgstr ""
+
+#. module: mrp
+#: code:addons/mrp/models/mrp_unbuild.py:125
+#, python-format
+msgid "You don't have in the stock the required lot/serial number for %s ."
 msgstr ""
 
 #. module: mrp

@@ -5,7 +5,7 @@
 # Translators:
 # Jaroslav Bosansky <jaro.bosansky@ekoenergo.sk>, 2017
 # Matus Krnac <matus.krnac@gmail.com>, 2017
-# Martin Trigaux <mat@odoo.com>, 2017
+# Martin Trigaux, 2017
 # Pavol Krnáč <pavol.krnac@ekoenergo.sk>, 2017
 # Robert Kirschner <robertkirschner@yahoo.com>, 2017
 msgid ""
@@ -1024,6 +1024,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:project.field_project_task_active
 msgid "Active"
 msgstr "Aktívny"
+
+#. module: project
+#: model:ir.ui.view,arch_db:project.project_planner
+msgid "Activities"
+msgstr "Aktivity"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.task_type_edit
@@ -2684,6 +2689,11 @@ msgstr "Počet priloženych dokumentov"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
+msgid "Objectives"
+msgstr "Ciele"
+
+#. module: project
+#: model:ir.ui.view,arch_db:project.project_planner
 msgid ""
 "Odoo Project is a super fast and easy way to make your activities and tasks visible to\n"
 "                        everyone in your company. Follow how things progress, see when things are stuck, know\n"
@@ -2989,6 +2999,7 @@ msgstr "Úlohy projektov"
 #: model:ir.model.fields,field_description:project.field_project_task_type_project_ids
 #: model:ir.ui.menu,name:project.menu_projects_config
 #: model:ir.ui.view,arch_db:project.analytic_account_inherited_form
+#: model:ir.ui.view,arch_db:project.project_planner
 #: model:ir.ui.view,arch_db:project.view_project
 msgid "Projects"
 msgstr "Projekty"

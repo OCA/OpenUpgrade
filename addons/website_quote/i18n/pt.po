@@ -3,7 +3,7 @@
 # * website_quote
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # Ricardo Martins <ricardo.nbs.martins@gmail.com>, 2016
 # Daniel C Santos <dcs@thinkopensolutions.pt>, 2016
 # Manuela Silva <inactive+h_manuela_rodsilva@transifex.com>, 2016
@@ -340,6 +340,8 @@ msgid ""
 "<strong>This offer expired!</strong><br/>\n"
 "                                  Contact us for new quote."
 msgstr ""
+"<strong>Esta oferta expirou!</strong><br/>\n"
+"                                  Contacte-nos para um novo orçamento."
 
 #. module: website_quote
 #: model:ir.ui.view,arch_db:website_quote.so_quotation
@@ -352,6 +354,8 @@ msgid ""
 "<strong>This quotation has been canceled.</strong> Contact us to get a new "
 "quote."
 msgstr ""
+"<strong>Este orçamento foi cancelado.</strong> Contacte-nos para obter um "
+"novo orçamento."
 
 #. module: website_quote
 #: model:ir.ui.view,arch_db:website_quote.pricing
@@ -380,6 +384,9 @@ msgid ""
 " This description will be copied to every Sale Order, Delivery Order and "
 "Customer Invoice/Refund"
 msgstr ""
+"A descrição do produto que você quer comunicar aos seus clientes. Esta "
+"descrição será copiado para cada pedido de venda, Ordem de entrega e "
+"Fatura/Reembolso de Cliente"
 
 #. module: website_quote
 #: model:sale.quote.template,website_description:website_quote.website_quote_template_default
@@ -664,7 +671,7 @@ msgstr "Descrição"
 #. module: website_quote
 #: model:ir.model.fields,field_description:website_quote.field_delivery_carrier_website_description
 msgid "Description for Online Quotations"
-msgstr ""
+msgstr "Descrição para Orçamentos On-line"
 
 #. module: website_quote
 #: model:ir.model.fields,field_description:website_quote.field_delivery_carrier_quote_description
@@ -892,6 +899,8 @@ msgid ""
 "If we store your payment information on our server, subscription payments "
 "will be made automatically."
 msgstr ""
+"Se nós guardarmos a sua informação de pagamento no nosso servidor, os "
+"pagamentos de subscrição serão efetuados automaticamente."
 
 #. module: website_quote
 #: selection:sale.order,require_payment:0
@@ -1285,7 +1294,7 @@ msgstr ""
 #: code:addons/website_quote/controllers/main.py:204
 #, python-format
 msgid "Pay & Confirm"
-msgstr ""
+msgstr "Pagar e Confirmar"
 
 #. module: website_quote
 #: model:ir.model.fields,field_description:website_quote.field_sale_order_require_payment
@@ -1889,7 +1898,7 @@ msgstr ""
 #. module: website_quote
 #: model:ir.ui.view,arch_db:website_quote.so_quotation
 msgid "Your payment has been authorized."
-msgstr ""
+msgstr "O seu pagamento foi autorizado."
 
 #. module: website_quote
 #: model:ir.ui.view,arch_db:website_quote.so_quotation
