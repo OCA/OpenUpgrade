@@ -1,0 +1,9 @@
+---Fields in module 'website_slides'---
+website_slides / slide.channel            / website_message_ids (one2many): NEW relation: mail.message
+# Nothing to do: new feature
+
+---XML records in module 'website_slides'---
+NEW ir.ui.view: website_slides.res_config_settings_view_form
+NEW ir.ui.view: website_slides.slide_edit_options
+DEL ir.ui.view: website_slides.view_website_config_settings
+# Nothing to do
