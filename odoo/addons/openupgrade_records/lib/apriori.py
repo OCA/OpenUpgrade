@@ -33,6 +33,7 @@ merged_modules = {
     'portal_stock': 'portal',
     'procurement': 'stock',
     'project_issue': 'project',
+    'project_issue_sheet': 'hr_timesheet',
     'report': 'base',
     'web_calendar': 'web',
     'web_kanban': 'web',
