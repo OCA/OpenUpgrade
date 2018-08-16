@@ -1,22 +1,25 @@
 ---Fields in module 'general'---
-# 6690 fields matched,
-# Direct match: 5548
+# 6683 fields matched,
+# Direct match: 5541
 # Found in other module: 26
 # Found with different name: 0
 # Found with different type: 0
 # In obsolete models: 1116
-# New columns: 1436
-# Not matched: 745
+# New columns: 1493
+# Not matched: 762
 new model account.account.tag
 new model account.analytic.tag
 new model account.bank.statement.cashbox
+new model account.full.reconcile
 new model account.operation.template
 new model account.partial.reconcile
 new model account.payment
 new model account.payment.method
+new model account.sale.closing
 new model account.tax.group
 new model barcode.nomenclature
 new model barcode.rule
+new model base.action.rule.line.test
 new model bus.presence
 new model crm.activity
 new model crm.claim.category
@@ -208,49 +211,9 @@ ERROR: module not in list of installed modules:
 ---XML records in module 'web_kanban_sparkline'---
 DEL ir.ui.view: web_kanban_sparkline.assets_backend
 ERROR: module not in list of installed modules:
----Fields in module 'edi'---
----XML records in module 'edi'---
-DEL ir.ui.view: edi.assets_backend
-ERROR: module not in list of installed modules:
 ---Fields in module 'account_analytic_analysis'---
-account_analytic_analysis / account.analytic.account / fix_price_invoices (boolean)  : DEL 
-account_analytic_analysis / account.analytic.account / hours_qtt_est (float)         : DEL 
-account_analytic_analysis / account.analytic.account / invoice_on_timesheets (boolean): DEL 
-account_analytic_analysis / account.analytic.account / recurring_interval (integer)  : DEL 
-account_analytic_analysis / account.analytic.account / recurring_invoice_line_ids (one2many): DEL relation: account.analytic.invoice.line
-account_analytic_analysis / account.analytic.account / recurring_invoices (boolean)  : DEL 
-account_analytic_analysis / account.analytic.account / recurring_next_date (date)    : DEL 
-account_analytic_analysis / account.analytic.account / recurring_rule_type (selection): DEL selection_keys: ['daily', 'monthly', 'weekly', 'yearly']
 ---XML records in module 'account_analytic_analysis'---
-DEL email.template: account_analytic_analysis.account_analytic_cron_email_template
-DEL ir.actions.act_window: account_analytic_analysis.action_account_analytic_overdue
-DEL ir.actions.act_window: account_analytic_analysis.action_account_analytic_overdue_all
-DEL ir.actions.act_window: account_analytic_analysis.action_hr_tree_invoiced_all
-DEL ir.actions.act_window: account_analytic_analysis.action_sales_order
-DEL ir.actions.act_window: account_analytic_analysis.template_of_contract_action
-DEL ir.cron: account_analytic_analysis.account_analytic_cron
-DEL ir.cron: account_analytic_analysis.account_analytic_cron_for_invoice
-DEL ir.model.access: account_analytic_analysis.access_account_analytic_analysis_summary_month
-DEL ir.model.access: account_analytic_analysis.access_account_analytic_analysis_summary_month_sale
-DEL ir.model.access: account_analytic_analysis.access_account_analytic_analysis_summary_user
-DEL ir.model.access: account_analytic_analysis.access_account_analytic_analysis_summary_user_sale
-DEL ir.model.access: account_analytic_analysis.access_account_analytic_invoice_line
-DEL ir.model.access: account_analytic_analysis.access_edi_edi
-DEL ir.ui.menu: account_analytic_analysis.menu_action_account_analytic_overdue
-DEL ir.ui.menu: account_analytic_analysis.menu_action_account_analytic_overdue_all
-DEL ir.ui.menu: account_analytic_analysis.menu_action_hr_tree_invoiced_all
-DEL ir.ui.menu: account_analytic_analysis.menu_template_of_contract_action
-DEL ir.ui.menu: base.menu_invoiced
-DEL ir.ui.menu: base.menu_sales
-DEL ir.ui.view: account_analytic_analysis.account_analytic_account_form_form
-DEL ir.ui.view: account_analytic_analysis.assets_backend
-DEL ir.ui.view: account_analytic_analysis.view_account_analytic_account_overdue_search
-DEL ir.ui.view: account_analytic_analysis.view_account_analytic_account_template_required
-DEL ir.ui.view: account_analytic_analysis.view_account_analytic_account_tree_c2c_3
-DEL ir.ui.view: account_analytic_analysis.view_sales_config
-DEL res.groups: account_analytic_analysis.group_template_required
-DEL res.users: base.user_root
-ERROR: module not in list of installed modules:
+-- nothing has changed in this moduleERROR: module not in list of installed modules:
 ---Fields in module 'account_bank_statement_extensions'---
 account_bank_statement_extensions / account.bank.statement.line / counterparty_bic (char)       : DEL 
 account_bank_statement_extensions / account.bank.statement.line / counterparty_currency (char)  : DEL 
@@ -333,37 +296,11 @@ DEL ir.rule: project.task_visibility_rule
 DEL ir.ui.menu: portal_project.portal_services_projects
 ERROR: module not in list of installed modules:
 ---Fields in module 'account_check_writing'---
-account_check_writing / account.journal          / allow_check_writing (boolean) : DEL 
-account_check_writing / account.journal          / use_preprint_check (boolean)  : DEL 
-account_check_writing / account.voucher          / amount_in_word (char)         : DEL 
-account_check_writing / res.company              / check_layout (selection)      : DEL selection_keys: ['bottom', 'middle', 'top']
 ---XML records in module 'account_check_writing'---
-DEL ir.actions.act_window: account_check_writing.action_account_check_write
-DEL ir.actions.act_window: account_check_writing.action_write_check
-DEL ir.actions.act_window.view: account_check_writing.action_write_check_form
-DEL ir.actions.act_window.view: account_check_writing.action_write_check_tree
-DEL ir.actions.report.xml: account_check_writing.action_report_check
-DEL ir.sequence: account_check_writing.sequence_check_number
-DEL ir.sequence.type: account_check_writing.sequence_type_check_number
-DEL ir.ui.menu: account_check_writing.menu_action_write_check
-DEL ir.ui.view: account_check_writing.check_format_company
-DEL ir.ui.view: account_check_writing.report_check
-DEL ir.ui.view: account_check_writing.view_account_check_write
-DEL ir.ui.view: account_check_writing.view_account_journal_form
-DEL ir.ui.view: account_check_writing.view_vendor_payment_check_form
-DEL report.paperformat: account_check_writing.paperformat_frenchcheck
-ERROR: module not in list of installed modules:
+-- nothing has changed in this moduleERROR: module not in list of installed modules:
 ---Fields in module 'website_mail_group'---
 ---XML records in module 'website_mail_group'---
-DEL ir.ui.view: website_mail_group.editor
-DEL ir.ui.view: website_mail_group.footer_mailing_list
-DEL ir.ui.view: website_mail_group.group_message
-DEL ir.ui.view: website_mail_group.group_messages
-DEL ir.ui.view: website_mail_group.head
-DEL ir.ui.view: website_mail_group.mail_groups
-DEL ir.ui.view: website_mail_group.messages_short
-DEL ir.ui.view: website_mail_group.subscribe
-ERROR: module not in list of installed modules:
+-- nothing has changed in this moduleERROR: module not in list of installed modules:
 ---Fields in module 'crm_helpdesk'---
 ---XML records in module 'crm_helpdesk'---
 DEL ir.actions.act_window: crm_helpdesk.action_report_crm_helpdesk
@@ -390,50 +327,8 @@ DEL ir.ui.view: crm_helpdesk.view_report_crm_helpdesk_filter
 DEL ir.ui.view: crm_helpdesk.view_report_crm_helpdesk_graph
 ERROR: module not in list of installed modules:
 ---Fields in module 'account_analytic_plans'---
-account_analytic_plans / account.analytic.default / analytics_id (many2one)       : DEL relation: account.analytic.plan.instance
-account_analytic_plans / account.analytic.line    / percentage (float)            : DEL 
-account_analytic_plans / account.bank.statement.line / analytics_id (many2one)       : DEL relation: account.analytic.plan.instance
-account_analytic_plans / account.invoice.line     / analytics_id (many2one)       : DEL relation: account.analytic.plan.instance
-account_analytic_plans / account.journal          / plan_id (many2one)            : DEL relation: account.analytic.plan
-account_analytic_plans / account.move.line        / analytics_id (many2one)       : DEL relation: account.analytic.plan.instance
 ---XML records in module 'account_analytic_plans'---
-DEL ir.actions.act_window: account_analytic_plans.account_analytic_instance_model_open
-DEL ir.actions.act_window: account_analytic_plans.account_analytic_plan_form_action
-DEL ir.actions.act_window: account_analytic_plans.account_analytic_plan_instance_action
-DEL ir.actions.act_window: account_analytic_plans.action_account_crossovered_analytic
-DEL ir.actions.act_window: account_analytic_plans.action_analytic_plan_create_model
-DEL ir.actions.report.xml: account_analytic_plans.action_account_analytic_account_crossovered_analytic
-DEL ir.model.access: account_analytic_plans.access_account_analytic_plan
-DEL ir.model.access: account_analytic_plans.access_account_analytic_plan_instance
-DEL ir.model.access: account_analytic_plans.access_account_analytic_plan_instance_line
-DEL ir.model.access: account_analytic_plans.access_account_analytic_plan_line
-DEL ir.model.access: account_analytic_plans.access_account_analytic_plan_line_invoice
-DEL ir.ui.menu: account_analytic_plans.menu_account_analytic_multi_plan_action
-DEL ir.ui.menu: account_analytic_plans.menu_account_analytic_plan_action
-DEL ir.ui.view: account_analytic_plans.account_analytic_plan_form
-DEL ir.ui.view: account_analytic_plans.account_analytic_plan_instance_form
-DEL ir.ui.view: account_analytic_plans.account_analytic_plan_instance_line_form
-DEL ir.ui.view: account_analytic_plans.account_analytic_plan_instance_line_tree
-DEL ir.ui.view: account_analytic_plans.account_analytic_plan_instance_tree
-DEL ir.ui.view: account_analytic_plans.account_analytic_plan_line_form
-DEL ir.ui.view: account_analytic_plans.account_analytic_plan_line_tree
-DEL ir.ui.view: account_analytic_plans.account_analytic_plan_search
-DEL ir.ui.view: account_analytic_plans.account_analytic_plan_tree
-DEL ir.ui.view: account_analytic_plans.assets_backend
-DEL ir.ui.view: account_analytic_plans.report_crossoveredanalyticplans
-DEL ir.ui.view: account_analytic_plans.view_account_crossovered_analytic
-DEL ir.ui.view: account_analytic_plans.view_account_journal_form_inherit
-DEL ir.ui.view: account_analytic_plans.view_analytic_plan_create_model
-DEL ir.ui.view: account_analytic_plans.view_analytic_plan_create_model_msg
-DEL ir.ui.view: account_analytic_plans.view_default_inherit_form
-DEL ir.ui.view: account_analytic_plans.view_default_inherit_tree
-DEL ir.ui.view: account_analytic_plans.view_move_form_inherit
-DEL ir.ui.view: account_analytic_plans.view_move_line_form_1_inherit
-DEL ir.ui.view: account_analytic_plans.view_move_line_form_inherit
-DEL ir.ui.view: account_analytic_plans.view_move_line_tree_inherit
-DEL ir.values: account_analytic_plans.account_crossovered_analytic_values
-DEL res.users: base.user_root
-ERROR: module not in list of installed modules:
+-- nothing has changed in this moduleERROR: module not in list of installed modules:
 ---Fields in module 'hr_timesheet_invoice'---
 hr_timesheet_invoice / account.analytic.account / amount_max (float)            : DEL 
 hr_timesheet_invoice / account.analytic.account / pricelist_id (many2one)       : DEL relation: product.pricelist
@@ -553,58 +448,7 @@ DEL ir.ui.view: portal_project_issue.portal_project_issue_kanban_view
 ERROR: module not in list of installed modules:
 ---Fields in module 'account_payment'---
 ---XML records in module 'account_payment'---
-DEL ir.actions.act_window: account_payment.action_account_payment_make_payment
-DEL ir.actions.act_window: account_payment.action_account_payment_populate_statement
-DEL ir.actions.act_window: account_payment.action_account_populate_statement_confirm
-DEL ir.actions.act_window: account_payment.action_create_payment_order
-DEL ir.actions.act_window: account_payment.action_payment_line_form
-DEL ir.actions.act_window: account_payment.action_payment_mode_form
-DEL ir.actions.act_window: account_payment.action_payment_order_tree
-DEL ir.actions.act_window: account_payment.action_payment_order_tree_new
-DEL ir.actions.report.xml: account_payment.action_report_payment_order
-DEL ir.model.access: account_payment.access_account_invoice_payment
-DEL ir.model.access: account_payment.access_account_journal_payement
-DEL ir.model.access: account_payment.access_account_move_line_payment
-DEL ir.model.access: account_payment.access_payment_line
-DEL ir.model.access: account_payment.access_payment_mode
-DEL ir.model.access: account_payment.access_payment_order
-DEL ir.model.access: account_payment.access_payment_order_manager
-DEL ir.rule: account_payment.payment_line_comp_rule
-DEL ir.rule: account_payment.payment_mode_comp_rule
-DEL ir.rule: account_payment.payment_order_comp_rule
-DEL ir.sequence: account_payment.seq_payment_line
-DEL ir.sequence: account_payment.seq_payment_order
-DEL ir.sequence.type: account_payment.seq_type_payment_line
-DEL ir.sequence.type: account_payment.seq_type_payment_order
-DEL ir.ui.menu: account_payment.menu_action_payment_mode_form
-DEL ir.ui.menu: account_payment.menu_action_payment_order_form
-DEL ir.ui.menu: account_payment.menu_main_payment
-DEL ir.ui.view: account_payment.account_payment_make_payment_view
-DEL ir.ui.view: account_payment.account_payment_populate_statement_view
-DEL ir.ui.view: account_payment.report_paymentorder
-DEL ir.ui.view: account_payment.view_bank_statement_form
-DEL ir.ui.view: account_payment.view_create_payment_order
-DEL ir.ui.view: account_payment.view_create_payment_order_lines
-DEL ir.ui.view: account_payment.view_payment_line_form
-DEL ir.ui.view: account_payment.view_payment_line_tree
-DEL ir.ui.view: account_payment.view_payment_mode_form
-DEL ir.ui.view: account_payment.view_payment_mode_search
-DEL ir.ui.view: account_payment.view_payment_mode_tree
-DEL ir.ui.view: account_payment.view_payment_order_form
-DEL ir.ui.view: account_payment.view_payment_order_search
-DEL ir.ui.view: account_payment.view_payment_order_tree
-DEL res.groups: account.group_account_invoice
-DEL res.groups: account_payment.group_account_payment
-DEL workflow: account_payment.wkf_payment_order
-DEL workflow.activity: account_payment.act_cancel
-DEL workflow.activity: account_payment.act_done
-DEL workflow.activity: account_payment.act_draft
-DEL workflow.activity: account_payment.act_open
-DEL workflow.transition: account_payment.trans_draft_cancel
-DEL workflow.transition: account_payment.trans_draft_open
-DEL workflow.transition: account_payment.trans_open_cancel
-DEL workflow.transition: account_payment.trans_open_done
-ERROR: module not in list of installed modules:
+-- nothing has changed in this moduleERROR: module not in list of installed modules:
 ---Fields in module 'analytic_user_function'---
 analytic_user_function / account.analytic.account / user_product_ids (one2many)   : DEL relation: analytic.user.funct.grid
 ---XML records in module 'analytic_user_function'---
@@ -654,23 +498,16 @@ DEL ir.actions.act_window: hr_applicant_document.hr_applicant_resumes
 DEL ir.ui.menu: hr_applicant_document.menu_crm_case_categ0_act_job02
 DEL ir.ui.view: hr_applicant_document.view_crm_case_jobs_filter_inherit
 ERROR: module not in list of installed modules:
+---Fields in module 'edi'---
+---XML records in module 'edi'---
+DEL ir.ui.view: edi.assets_backend
+ERROR: module not in list of installed modules:
 ---Fields in module 'sale_analytic_plans'---
-sale_analytic_plans / sale.order.line          / analytics_id (many2one)       : DEL relation: account.analytic.plan.instance
 ---XML records in module 'sale_analytic_plans'---
-DEL ir.ui.view: sale.view_order_form_editable_list
-DEL ir.ui.view: sale_analytic_plans.view_invoice_form_analytic_inherit
-DEL ir.ui.view: sale_analytic_plans.view_invoice_line_form_inherit
-DEL ir.ui.view: sale_analytic_plans.view_order_form_inherit2
-DEL ir.ui.view: sale_analytic_plans.view_order_line_form2_inherit
-ERROR: module not in list of installed modules:
+-- nothing has changed in this moduleERROR: module not in list of installed modules:
 ---Fields in module 'purchase_analytic_plans'---
-purchase_analytic_plans / purchase.order.line      / analytics_id (many2one)       : DEL relation: account.analytic.plan.instance
 ---XML records in module 'purchase_analytic_plans'---
-DEL ir.ui.view: purchase_analytic_plans.invoice_supplier_form_inherit
-DEL ir.ui.view: purchase_analytic_plans.purchase_order_form_analytic_inherit
-DEL ir.ui.view: purchase_analytic_plans.purchase_order_line_form_inherit
-DEL ir.ui.view: purchase_analytic_plans.view_purchase_order_form_editable_list
-ERROR: module not in list of installed modules:
+-- nothing has changed in this moduleERROR: module not in list of installed modules:
 ---Fields in module 'web_tests'---
 ---XML records in module 'web_tests'---
 DEL ir.ui.view: web_tests.assets_backend
@@ -803,28 +640,6 @@ DEL ir.ui.view: account_followup.view_account_followup_stat_search
 DEL ir.ui.view: account_followup.view_move_line_form
 DEL ir.ui.view: account_followup.view_partner_inherit_customer_followup_tree
 DEL ir.ui.view: account_followup.view_partner_inherit_followup_form
-ERROR: module not in list of installed modules:
----Fields in module 'share'---
-share        / res.groups               / share (boolean)               : module is now 'base' ('share')
-share        / res.users                / share (boolean)               : module is now 'base' ('share')
----XML records in module 'share'---
-DEL ir.actions.act_window: base.action_res_groups
-DEL ir.actions.act_window: base.action_res_users
-DEL ir.actions.act_window: share.action_share_wizard
-DEL ir.actions.act_window: share.action_share_wizard_step1
-DEL ir.model.access: share.access_ir_ui_menu_group_shared
-DEL ir.module.category: share.module_category_share
-DEL ir.ui.view: share.assets_backend
-DEL ir.ui.view: share.res_groups_search_sharing
-DEL ir.ui.view: share.res_users_search_sharing
-DEL ir.ui.view: share.share_step0_form
-DEL ir.ui.view: share.share_step1_form
-DEL ir.ui.view: share.share_step2_form
-DEL ir.ui.view: share.view_groups_form_share
-DEL ir.ui.view: share.webclient_bootstrap
-DEL res.groups: share.group_share_user
-DEL res.groups: share.group_shared
-DEL res.users: base.public_user
 ERROR: module not in list of installed modules:
 ---Fields in module 'hr_evaluation'---
 hr_evaluation / hr.employee              / evaluation_date (date)        : DEL 
@@ -1093,12 +908,7 @@ DEL ir.ui.view: multi_company.view_inventory_tree
 ERROR: module not in list of installed modules:
 ---Fields in module 'portal_claim'---
 ---XML records in module 'portal_claim'---
-DEL ir.actions.act_window: portal_claim.crm_case_categ_claim0
-DEL ir.model.access: portal_claim.access_crm_claim
-DEL ir.model.access: portal_claim.access_crm_claim_stage
-DEL ir.rule: portal_claim.portal_claim_rule
-DEL ir.ui.menu: portal_claim.portal_after_sales_claims
-ERROR: module not in list of installed modules:
+-- nothing has changed in this moduleERROR: module not in list of installed modules:
 ---Fields in module 'account_anglo_saxon'---
 account_anglo_saxon / account.invoice.line     / move_id (many2one)            : DEL relation: stock.move
 account_anglo_saxon / product.category         / property_account_creditor_price_difference_categ (many2one): module is now 'purchase' ('account_anglo_saxon')

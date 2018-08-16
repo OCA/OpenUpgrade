@@ -47,7 +47,9 @@ NEW ir.model.access: event.access_event_mail
 NEW ir.model.access: event.access_event_mail_manager
 NEW ir.model.access: event.access_event_mail_registration
 NEW ir.model.access: event.access_event_mail_registration_manager
+NEW ir.model.access: event.access_event_registration_employee
 DEL ir.module.category: event.module_category_event_management
+NEW ir.rule: event.event_registration_portal
 NEW ir.ui.menu: event.menu_event_configuration
 NEW ir.ui.menu: event.menu_event_global_settings
 DEL ir.ui.menu: base.menu_marketing_config_root

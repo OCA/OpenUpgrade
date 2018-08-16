@@ -20,8 +20,9 @@ hr_expense   / hr.expense               / quantity (float)              : NEW re
 hr_expense   / hr.expense               / state (selection)             : NEW required: required, selection_keys: ['approve', 'cancel', 'done', 'draft', 'post', 'submit'], req_default: draft
 hr_expense   / hr.expense               / tax_ids (many2many)           : NEW relation: account.tax
 hr_expense   / hr.expense               / unit_amount (float)           : NEW required: required
+hr_expense   / hr.expense               / website_message_ids (one2many): NEW relation: mail.message
 hr_expense   / product.template         / can_be_expensed (boolean)     : NEW 
-hr_expense   / product.template         / hr_expense_ok (boolean)       : DEL
+hr_expense   / product.template         / hr_expense_ok (boolean)       : DEL 
 ---XML records in module 'hr_expense'---
 NEW ir.actions.act_window: hr_expense.action_approved_expense
 NEW ir.actions.act_window: hr_expense.action_hr_expense_report_filtered

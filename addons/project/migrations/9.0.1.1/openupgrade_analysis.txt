@@ -1,4 +1,5 @@
 ---Fields in module 'project'---
+project      / account.analytic.account / project_ids (one2many)        : NEW relation: project.project
 project      / project.project          / date (date)                   : NEW 
 project      / project.project          / date_start (date)             : NEW 
 project      / project.project          / label_tasks (char)            : NEW 
@@ -8,6 +9,7 @@ project      / project.project          / message_follower_ids (many2many): rela
 project      / project.project          / message_follower_ids (many2many): type is now 'one2many' ('many2many')
 project      / project.project          / state (selection)             : selection_keys is now '['cancelled', 'close', 'draft', 'open', 'pending']' ('['cancelled', 'close', 'draft', 'open', 'pending', 'template']')
 project      / project.project          / user_id (many2one)            : NEW relation: res.users
+project      / project.project          / website_message_ids (one2many): NEW relation: mail.message
 project      / project.tags             / color (integer)               : NEW 
 project      / project.tags             / name (char)                   : NEW required: required
 project      / project.task             / active (boolean)              : not a function anymore
@@ -15,18 +17,15 @@ project      / project.task             / attachment_ids (one2many)     : NEW re
 project      / project.task             / categ_ids (many2many)         : relation is now 'project.tags' ('project.category')
 project      / project.task             / categ_ids (many2many)         : was renamed to tag_ids [nothing to to]
 project      / project.task             / date_assign (datetime)        : NEW 
-project      / project.task             / delay_hours (float)           : module is now 'project_timesheet' ('project')
 project      / project.task             / description (text)            : type is now 'html' ('text')
 project      / project.task             / displayed_image_id (many2one) : NEW relation: ir.attachment
-project      / project.task             / effective_hours (float)       : module is now 'project_timesheet' ('project')
 project      / project.task             / kanban_state (selection)      : now required, default = normal
 project      / project.task             / message_follower_ids (many2many): not a function anymore
 project      / project.task             / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
 project      / project.task             / message_follower_ids (many2many): type is now 'one2many' ('many2many')
 project      / project.task             / priority (selection)          : selection_keys is now '['0', '1']' ('['0', '1', '2']')
-project      / project.task             / progress (float)              : module is now 'project_timesheet' ('project')
 project      / project.task             / reviewer_id (many2one)        : DEL relation: res.users
-project      / project.task             / total_hours (float)           : module is now 'project_timesheet' ('project')
+project      / project.task             / website_message_ids (one2many): NEW relation: mail.message
 project      / project.task             / work_ids (one2many)           : DEL relation: project.task.work
 project      / project.task.type        / case_default (boolean)        : DEL 
 project      / project.task.type        / legend_blocked (char)         : NEW 

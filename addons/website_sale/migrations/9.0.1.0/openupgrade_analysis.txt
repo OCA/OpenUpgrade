@@ -1,5 +1,7 @@
 ---Fields in module 'website_sale'---
 website_sale / payment.transaction      / sale_order_id (many2one)      : module is now 'website_quote' ('website_sale')
+website_sale / product.public.category  / image_medium (binary)         : not a function anymore
+website_sale / product.public.category  / image_small (binary)          : not a function anymore
 website_sale / product.public.category  / website_meta_description (text): NEW 
 website_sale / product.public.category  / website_meta_keywords (char)  : NEW 
 website_sale / product.public.category  / website_meta_title (char)     : NEW 
@@ -20,9 +22,9 @@ NEW crm.team: website.salesteam_website_sales
 NEW ir.actions.act_window: website_sale.website_sale_pricelists_by_website
 NEW ir.model.access: website_sale.access_fiscal_position_public
 NEW ir.model.access: website_sale.access_payment_term
-NEW ir.model.access: website_sale.access_product_supplierinfo_user
 NEW ir.model.access: website_sale.access_website_pricelist
 NEW ir.model.access: website_sale.access_website_pricelist_sale_manager
+DEL ir.model.access: website_sale.access_pricelist_partnerinfo_user
 DEL ir.model.access: website_sale.access_product_pricelist_version_public
 DEL ir.model.access: website_sale.access_product_product_price_type_public
 NEW ir.ui.menu: website_sale.menu_website_sale_pricelists

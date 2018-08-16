@@ -32,7 +32,6 @@ NEW delivery.carrier: delivery.free_delivery_carrier
 DEL ir.actions.act_window: delivery.action_delivery_grid_form
 DEL ir.actions.act_window: delivery.action_picking_tree
 NEW ir.model.access: delivery.access_delivery_carrier_stock_manager
-NEW ir.model.access: delivery.access_delivery_carrier_stock_user
 NEW ir.model.access: delivery.access_delivery_price_rule
 NEW ir.model.access: delivery.access_delivery_price_rule_manager
 NEW ir.model.access: delivery.access_delivery_price_rule_stock_manager
@@ -44,6 +43,7 @@ NEW ir.ui.menu: delivery.sale_menu_action_delivery_carrier_form
 NEW ir.ui.menu: delivery.sale_menu_delivery
 DEL ir.ui.menu: delivery.menu_action_delivery_grid_form
 NEW ir.ui.view: delivery.report_delivery_document2
+NEW ir.ui.view: delivery.view_delivery_carrier_search
 NEW ir.ui.view: delivery.view_delivery_price_rule_form
 NEW ir.ui.view: delivery.view_delivery_price_rule_tree
 NEW ir.ui.view: delivery.view_order_form_with_carrier

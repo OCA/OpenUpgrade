@@ -11,6 +11,8 @@ mail         / mail.channel             / email_send (boolean)          : NEW
 mail         / mail.channel             / group_ids (many2many)         : NEW relation: res.groups
 mail         / mail.channel             / group_public_id (many2one)    : NEW relation: res.groups
 mail         / mail.channel             / image (binary)                : NEW 
+mail         / mail.channel             / image_medium (binary)         : NEW 
+mail         / mail.channel             / image_small (binary)          : NEW 
 mail         / mail.channel             / message_follower_ids (one2many): NEW relation: mail.followers
 mail         / mail.channel             / message_ids (one2many)        : NEW relation: mail.message
 mail         / mail.channel             / message_last_post (datetime)  : NEW 

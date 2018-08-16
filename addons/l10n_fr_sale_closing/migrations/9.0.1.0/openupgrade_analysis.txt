@@ -1,0 +1,22 @@
+---Fields in module 'l10n_fr_sale_closing'---
+l10n_fr_sale_closing / account.sale.closing     / company_id (many2one)         : NEW relation: res.company, required: required
+l10n_fr_sale_closing / account.sale.closing     / cumulative_total (float)      : NEW required: required
+l10n_fr_sale_closing / account.sale.closing     / date_closing_start (datetime) : NEW required: required
+l10n_fr_sale_closing / account.sale.closing     / date_closing_stop (datetime)  : NEW required: required
+l10n_fr_sale_closing / account.sale.closing     / frequency (selection)         : NEW required: required, selection_keys: ['annually', 'daily', 'monthly']
+l10n_fr_sale_closing / account.sale.closing     / last_move_hash (char)         : NEW 
+l10n_fr_sale_closing / account.sale.closing     / last_move_id (many2one)       : NEW relation: account.move
+l10n_fr_sale_closing / account.sale.closing     / name (char)                   : NEW required: required
+l10n_fr_sale_closing / account.sale.closing     / sequence_number (integer)     : NEW required: required
+l10n_fr_sale_closing / account.sale.closing     / total_interval (float)        : NEW required: required
+l10n_fr_sale_closing / res.company              / l10n_fr_closing_sequence_id (many2one): NEW relation: ir.sequence
+---XML records in module 'l10n_fr_sale_closing'---
+NEW ir.actions.act_window: l10n_fr_sale_closing.action_list_view_account_sale_closing
+NEW ir.cron: l10n_fr_sale_closing.account_sale_closing_annually
+NEW ir.cron: l10n_fr_sale_closing.account_sale_closing_daily
+NEW ir.cron: l10n_fr_sale_closing.account_sale_closing_monthly
+NEW ir.model.access: l10n_fr_sale_closing.access_l10n_fr_sale_closing_account_sale_closing_user
+NEW ir.rule: l10n_fr_sale_closing.account_sale_closing_multi_company
+NEW ir.ui.menu: l10n_fr_sale_closing.menu_account_closing_reporting
+NEW ir.ui.view: l10n_fr_sale_closing.form_view_account_sale_closing
+NEW ir.ui.view: l10n_fr_sale_closing.list_view_account_sale_closing

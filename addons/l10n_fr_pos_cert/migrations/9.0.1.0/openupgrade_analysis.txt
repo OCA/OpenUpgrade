@@ -1,0 +1,10 @@
+---Fields in module 'l10n_fr_pos_cert'---
+l10n_fr_pos_cert / pos.order                / l10n_fr_hash (char)           : NEW 
+l10n_fr_pos_cert / pos.order                / l10n_fr_secure_sequence_number (integer): NEW 
+l10n_fr_pos_cert / res.company              / l10n_fr_pos_cert_sequence_id (many2one): NEW relation: ir.sequence
+---XML records in module 'l10n_fr_pos_cert'---
+NEW ir.actions.server: l10n_fr_pos_cert.action_check_hash_integrity_pos_orders
+NEW ir.ui.menu: l10n_fr_pos_cert.menu_account_closing
+NEW ir.ui.menu: l10n_fr_pos_cert.menu_check_pos_order_integrity
+NEW ir.ui.menu: l10n_fr_pos_cert.pos_fr_statements_menu
+NEW ir.ui.view: l10n_fr_pos_cert.view_bank_statement_form_readonly

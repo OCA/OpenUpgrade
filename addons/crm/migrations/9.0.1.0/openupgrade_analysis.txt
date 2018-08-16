@@ -148,6 +148,7 @@ DEL ir.actions.act_window.view: crm.action_report_crm_lead_graph
 DEL ir.actions.act_window.view: crm.action_report_crm_opportunity_graph
 DEL ir.actions.act_window.view: crm.action_report_crm_phonecall_graph
 NEW ir.actions.server: crm.action_your_pipeline
+NEW ir.filters: crm.filter_opportunity_expected_revenue
 NEW ir.filters: crm.ir_filters_crm_opportunity_report_next_action
 DEL ir.filters: crm.filter_crm_phonecall_delay_to_close
 DEL ir.filters: crm.filter_crm_phonecall_phone_call_to_do
@@ -263,6 +264,7 @@ DEL ir.ui.view: crm.phonecall_to_phonecall_view
 DEL ir.ui.view: crm.view_crm_case_phonecalls_filter
 DEL ir.ui.view: crm.view_crm_payment_mode_form
 DEL ir.ui.view: crm.view_crm_payment_mode_tree
+DEL ir.ui.view: crm.view_partners_form_crm_calls
 DEL ir.ui.view: crm.view_report_crm_lead_filter
 DEL ir.ui.view: crm.view_report_crm_lead_graph
 DEL ir.ui.view: crm.view_report_crm_lead_graph_two

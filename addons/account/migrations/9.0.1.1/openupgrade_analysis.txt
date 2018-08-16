@@ -28,6 +28,7 @@ account      / account.account.type     / code (char)                   : DEL re
 account      / account.account.type     / include_initial_balance (boolean): NEW 
 account      / account.account.type     / type (selection)              : NEW required: required, selection_keys: ['liquidity', 'other', 'payable', 'receivable'], req_default: other
 account      / account.analytic.line    / journal_id (many2one)         : DEL relation: account.analytic.journal, required: required
+account      / account.bank.statement   / account_id (many2one)         : module is now 'point_of_sale' ('account')
 account      / account.bank.statement   / cashbox_end_id (many2one)     : NEW relation: account.bank.statement.cashbox
 account      / account.bank.statement   / cashbox_start_id (many2one)   : NEW relation: account.bank.statement.cashbox
 account      / account.bank.statement   / closing_date (datetime)       : DEL 
@@ -40,6 +41,7 @@ account      / account.bank.statement   / message_follower_ids (many2many): type
 account      / account.bank.statement   / opening_details_ids (one2many): DEL relation: account.cashbox.line
 account      / account.bank.statement   / period_id (many2one)          : DEL relation: account.period, required: required, req_default: function
 account      / account.bank.statement   / state (selection)             : selection_keys is now '['confirm', 'open']' ('['confirm', 'draft', 'open']')
+account      / account.bank.statement   / website_message_ids (one2many): NEW relation: mail.message
 account      / account.bank.statement.cashbox / cashbox_lines_ids (one2many)  : NEW relation: account.cashbox.line
 account      / account.bank.statement.line / journal_entry_id (many2one)   : DEL relation: account.move
 account      / account.bank.statement.line / journal_entry_ids (one2many)  : NEW relation: account.move
@@ -89,6 +91,7 @@ account      / account.invoice          / payment_term (many2one)       : was re
 account      / account.invoice          / period_id (many2one)          : DEL relation: account.period
 account      / account.invoice          / supplier_invoice_number (char): DEL 
 account      / account.invoice          / tax_line (one2many)           : was renamed to tax_line_ids [nothing to to]
+account      / account.invoice          / website_message_ids (one2many): NEW relation: mail.message
 account      / account.invoice.line     / invoice_line_tax_id (many2many): was renamed to invoice_line_tax_ids [nothing to to]
 account      / account.invoice.line     / uos_id (many2one)             : was renamed to uom_id [nothing to to]
 account      / account.invoice.tax      / base (float)                  : DEL 
@@ -121,6 +124,7 @@ account      / account.journal          / with_last_closing_balance (boolean): D
 account      / account.move             / balance (float)               : DEL 
 account      / account.move             / line_id (one2many)            : DEL relation: account.move.line
 account      / account.move             / line_ids (one2many)           : NEW relation: account.move.line
+account      / account.move             / partner_id (many2one)         : now a function
 account      / account.move             / period_id (many2one)          : DEL relation: account.period, required: required, req_default: function
 account      / account.move             / rate_diff_partial_rec_id (many2one): NEW relation: account.partial.reconcile
 account      / account.move             / statement_line_id (many2one)  : NEW relation: account.bank.statement.line
@@ -162,9 +166,9 @@ account      / account.operation.template / sequence (integer)            : NEW 
 account      / account.operation.template / tax_id (many2one)             : NEW relation: account.tax
 account      / account.partial.reconcile / amount (float)                : NEW 
 account      / account.partial.reconcile / amount_currency (float)       : NEW 
-account      / account.partial.reconcile / credit_move_id (many2one)     : NEW relation: account.move.line
+account      / account.partial.reconcile / credit_move_id (many2one)     : NEW relation: account.move.line, required: required
 account      / account.partial.reconcile / currency_id (many2one)        : NEW relation: res.currency
-account      / account.partial.reconcile / debit_move_id (many2one)      : NEW relation: account.move.line
+account      / account.partial.reconcile / debit_move_id (many2one)      : NEW relation: account.move.line, required: required
 account      / account.payment          / amount (float)                : NEW required: required
 account      / account.payment          / communication (char)          : NEW 
 account      / account.payment          / currency_id (many2one)        : NEW relation: res.currency, required: required, req_default: function
@@ -203,8 +207,8 @@ account      / account.tax              / child_ids (one2many)          : DEL re
 account      / account.tax              / children_tax_ids (many2many)  : NEW relation: account.tax
 account      / account.tax              / domain (char)                 : DEL 
 account      / account.tax              / parent_id (many2one)          : DEL relation: account.tax
-account      / account.tax              / python_applicable (text)      : DEL 
-account      / account.tax              / python_compute (text)         : DEL 
+account      / account.tax              / python_applicable (text)      : module is now 'account_tax_python' ('account')
+account      / account.tax              / python_compute (text)         : module is now 'account_tax_python' ('account')
 account      / account.tax              / python_compute_inv (text)     : DEL 
 account      / account.tax              / ref_base_code_id (many2one)   : DEL relation: account.tax.code
 account      / account.tax              / ref_base_sign (float)         : DEL 
@@ -232,8 +236,8 @@ account      / account.tax.template     / children_tax_ids (many2many)  : NEW re
 account      / account.tax.template     / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
 account      / account.tax.template     / domain (char)                 : DEL 
 account      / account.tax.template     / parent_id (many2one)          : DEL relation: account.tax.template
-account      / account.tax.template     / python_applicable (text)      : DEL 
-account      / account.tax.template     / python_compute (text)         : DEL 
+account      / account.tax.template     / python_applicable (text)      : module is now 'account_tax_python' ('account')
+account      / account.tax.template     / python_compute (text)         : module is now 'account_tax_python' ('account')
 account      / account.tax.template     / python_compute_inv (text)     : DEL 
 account      / account.tax.template     / ref_base_code_id (many2one)   : DEL relation: account.tax.code.template
 account      / account.tax.template     / ref_base_sign (float)         : DEL 
@@ -245,10 +249,14 @@ account      / account.tax.template     / tax_sign (float)              : DEL
 account      / account.tax.template     / type (selection)              : DEL required: required, selection_keys: ['balance', 'code', 'fixed', 'none', 'percent'], req_default: percent
 account      / account.tax.template     / type_tax_use (selection)      : selection_keys is now '['none', 'purchase', 'sale']' ('['all', 'purchase', 'sale']')
 account      / ir.sequence              / fiscal_ids (one2many)         : DEL relation: account.sequence.fiscalyear
-account      / product.category         / property_account_expense_categ (many2one): was renamed to property_account_expense_categ_id [nothing to to]
-account      / product.category         / property_account_income_categ (many2one): was renamed to property_account_income_categ_id [nothing to to]
-account      / product.template         / property_account_expense (many2one): was renamed to property_account_expense_id [nothing to to]
-account      / product.template         / property_account_income (many2one): was renamed to property_account_income_id [nothing to to]
+account      / product.category         / property_account_expense_categ (many2one): DEL relation: account.account
+account      / product.category         / property_account_expense_categ_id (many2one): NEW relation: account.account
+account      / product.category         / property_account_income_categ (many2one): DEL relation: account.account
+account      / product.category         / property_account_income_categ_id (many2one): NEW relation: account.account
+account      / product.template         / property_account_expense (many2one): DEL relation: account.account
+account      / product.template         / property_account_expense_id (many2one): NEW relation: account.account
+account      / product.template         / property_account_income (many2one): DEL relation: account.account
+account      / product.template         / property_account_income_id (many2one): NEW relation: account.account
 account      / res.company              / accounts_code_digits (integer): NEW 
 account      / res.company              / anglo_saxon_accounting (boolean): NEW 
 account      / res.company              / bank_account_code_prefix (char): NEW 
@@ -267,11 +275,16 @@ account      / res.company              / property_stock_account_output_categ_id
 account      / res.company              / property_stock_valuation_account_id (many2one): NEW relation: account.account
 account      / res.company              / transfer_account_id (many2one): NEW relation: account.account
 account      / res.partner              / last_reconciliation_date (datetime): was renamed to last_time_entries_checked [nothing to to]
-account      / res.partner              / property_account_payable (many2one): was renamed to property_account_payable_id [nothing to to]
-account      / res.partner              / property_account_position (many2one): was renamed to property_account_position_id [nothing to to]
-account      / res.partner              / property_account_receivable (many2one): was renamed to property_account_receivable_id [nothing to to]
-account      / res.partner              / property_payment_term (many2one): was renamed to property_payment_term_id [nothing to to]
-account      / res.partner              / property_supplier_payment_term (many2one): was renamed to property_supplier_payment_term_id [nothing to to]
+account      / res.partner              / property_account_payable (many2one): DEL relation: account.account, required: required
+account      / res.partner              / property_account_payable_id (many2one): NEW relation: account.account, required: required
+account      / res.partner              / property_account_position (many2one): DEL relation: account.fiscal.position
+account      / res.partner              / property_account_position_id (many2one): NEW relation: account.fiscal.position
+account      / res.partner              / property_account_receivable (many2one): DEL relation: account.account, required: required
+account      / res.partner              / property_account_receivable_id (many2one): NEW relation: account.account, required: required
+account      / res.partner              / property_payment_term (many2one): DEL relation: account.payment.term
+account      / res.partner              / property_payment_term_id (many2one): NEW relation: account.payment.term
+account      / res.partner              / property_supplier_payment_term (many2one): DEL relation: account.payment.term
+account      / res.partner              / property_supplier_payment_term_id (many2one): NEW relation: account.payment.term
 account      / res.partner              / ref_companies (one2many)      : was renamed to ref_company_ids [nothing to to]
 account      / res.partner              / vat_subjected (boolean)       : DEL 
 account      / res.partner.bank         / currency_id (many2one)        : module is now 'base' ('account')
@@ -507,6 +520,7 @@ NEW ir.model.access: account.access_account_account_tax
 NEW ir.model.access: account.access_account_account_tax_user
 NEW ir.model.access: account.access_account_account_type_manager
 NEW ir.model.access: account.access_account_bank_statement_group_invoice
+NEW ir.model.access: account.access_account_bank_statement_line_group_invoice
 NEW ir.model.access: account.access_account_cashbox
 NEW ir.model.access: account.access_account_invoice_report_user
 NEW ir.model.access: account.access_account_journal_user
@@ -566,7 +580,6 @@ DEL ir.rule: account.analytic_entry_analysis_comp_rule
 DEL ir.rule: account.analytic_journal_comp_rule
 DEL ir.rule: account.entry_analysis_comp_rule
 DEL ir.rule: account.fiscal_year_comp_rule
-DEL ir.rule: account.invoice_analysis_comp_rule
 DEL ir.rule: account.journal_period_comp_rule
 DEL ir.rule: account.period_comp_rule
 DEL ir.rule: account.tax_code_comp_rule

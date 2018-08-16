@@ -2,6 +2,7 @@
 account_voucher / account.voucher          / amount (float)                : now a function
 account_voucher / account.voucher          / analytic_id (many2one)        : DEL relation: account.analytic.account
 account_voucher / account.voucher          / comment (char)                : DEL required: required, req_default: Write-Off
+account_voucher / account.voucher          / company_id (many2one)         : DEL relation: res.company, required: required, req_default: function
 account_voucher / account.voucher          / is_multi_currency (boolean)   : DEL 
 account_voucher / account.voucher          / line_cr_ids (one2many)        : DEL relation: account.voucher.line
 account_voucher / account.voucher          / line_dr_ids (one2many)        : DEL relation: account.voucher.line

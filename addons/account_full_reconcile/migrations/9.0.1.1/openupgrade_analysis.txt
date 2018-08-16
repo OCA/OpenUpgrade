@@ -1,0 +1,11 @@
+---Fields in module 'account_full_reconcile'---
+account_full_reconcile / account.full.reconcile   / name (char)                   : NEW required: required, req_default: function
+account_full_reconcile / account.full.reconcile   / partial_reconcile_ids (one2many): NEW relation: account.partial.reconcile
+account_full_reconcile / account.full.reconcile   / reconciled_line_ids (one2many): NEW relation: account.move.line
+account_full_reconcile / account.move.line        / full_reconcile_id (many2one)  : NEW relation: account.full.reconcile
+account_full_reconcile / account.partial.reconcile / full_reconcile_id (many2one)  : NEW relation: account.full.reconcile
+---XML records in module 'account_full_reconcile'---
+NEW ir.model.access: account_full_reconcile.access_account_full_reconcile
+NEW ir.model.access: account_full_reconcile.access_account_full_reconcile_group_invoice
+NEW ir.ui.view: account_full_reconcile.view_full_reconcile_form
+NEW ir.ui.view: account_full_reconcile.view_move_line_form

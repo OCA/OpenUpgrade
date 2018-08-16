@@ -5,6 +5,8 @@ fleet        / fleet.vehicle            / message_follower_ids (many2many): type
 fleet        / fleet.vehicle.model      / modelname (char)              : DEL required: required
 fleet        / fleet.vehicle.model      / name (char)                   : not a function anymore
 fleet        / fleet.vehicle.model      / name (char)                   : now required
+fleet        / fleet.vehicle.model.brand / image_medium (binary)         : not a function anymore
+fleet        / fleet.vehicle.model.brand / image_small (binary)          : not a function anymore
 fleet        / fleet.vehicle.tag        / color (integer)               : NEW 
 ---XML records in module 'fleet'---
 NEW fleet.vehicle.model.brand: fleet.brand_suzuki

@@ -25,6 +25,7 @@ DEL ir.actions.act_window: mrp.mrp_bom_form_action2
 DEL ir.actions.act_window: mrp.mrp_production_action2
 DEL ir.actions.act_window: mrp.mrp_production_action3
 DEL ir.actions.act_window: mrp.mrp_production_action4
+NEW ir.actions.report.xml: mrp.action_report_bom_price
 DEL ir.actions.report.xml: mrp.report_cost_structure
 NEW ir.model.access: mrp.access_mrp_bom_invoicing_payment
 NEW ir.model.access: mrp.access_mrp_production_invoicing_payment
@@ -40,10 +41,12 @@ DEL ir.model.access: mrp.access_product_price_type_mrp_manager
 DEL ir.model.access: mrp.access_product_pricelist_type_mrp_manager
 DEL ir.model.access: mrp.access_product_pricelist_version_mrp_manager
 DEL ir.model.access: mrp.access_product_ul_mrp_manager
+DEL ir.model.access: mrp.access_resource_resource_mrp_manger
 DEL ir.sequence.type: mrp.sequence_mrp_prod_type
 DEL ir.ui.menu: mrp.menu_mrp_bom_form_action2
 DEL ir.ui.menu: mrp.menu_mrp_property
 DEL ir.ui.menu: mrp.next_id_77
+NEW ir.ui.view: mrp.mrp_bom_cost
 NEW ir.ui.view: mrp.mrp_bom_line_tree_view
 NEW ir.ui.view: mrp.mrp_production_kanban_view
 NEW ir.ui.view: mrp.view_procurement_rule_form_stock_inherit_mrp

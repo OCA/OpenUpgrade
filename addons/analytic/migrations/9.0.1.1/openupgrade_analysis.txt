@@ -1,5 +1,5 @@
 ---Fields in module 'analytic'---
-analytic     / account.analytic.account / account_type (selection)      : NEW required: required, selection_keys: ['normal'], req_default: normal
+analytic     / account.analytic.account / account_type (selection)      : NEW required: required, selection_keys: ['closed', 'normal'], req_default: normal
 analytic     / account.analytic.account / child_ids (one2many)          : DEL relation: account.analytic.account
 analytic     / account.analytic.account / company_id (many2one)         : now required, default = function
 analytic     / account.analytic.account / date (date)                   : DEL 

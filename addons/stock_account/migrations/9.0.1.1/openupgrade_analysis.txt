@@ -2,8 +2,10 @@
 stock_account / procurement.order        / invoice_state (selection)     : DEL selection_keys: ['2binvoiced', 'invoiced', 'none']
 stock_account / procurement.rule         / invoice_state (selection)     : DEL selection_keys: ['2binvoiced', 'invoiced', 'none']
 stock_account / product.category         / property_cost_method (selection): NEW required: required, selection_keys: ['average', 'real', 'standard']
-stock_account / product.category         / property_stock_account_input_categ (many2one): was renamed to property_stock_account_input_categ_id [nothing to to]
-stock_account / product.category         / property_stock_account_output_categ (many2one): was renamed to property_stock_account_output_categ_id [nothing to to]
+stock_account / product.category         / property_stock_account_input_categ (many2one): DEL relation: account.account
+stock_account / product.category         / property_stock_account_input_categ_id (many2one): NEW relation: account.account
+stock_account / product.category         / property_stock_account_output_categ (many2one): DEL relation: account.account
+stock_account / product.category         / property_stock_account_output_categ_id (many2one): NEW relation: account.account
 stock_account / product.category         / property_valuation (selection): NEW required: required, selection_keys: ['manual_periodic', 'real_time']
 stock_account / product.template         / cost_method (selection)       : now a function
 stock_account / product.template         / cost_method (selection)       : selection_keys is now 'False' ('['average', 'real', 'standard']')
@@ -19,6 +21,7 @@ stock_account / stock.location.path      / invoice_state (selection)     : DEL s
 stock_account / stock.move               / invoice_state (selection)     : DEL required: required, selection_keys: ['2binvoiced', 'invoiced', 'none'], req_default: function
 ---XML records in module 'stock_account'---
 DEL account.journal: stock_account.stock_journal
+NEW ir.actions.act_window: stock_account.action_stock_history
 DEL ir.actions.act_window: stock_account.action_history_tree
 DEL ir.actions.act_window: stock_account.action_stock_invoice_onshipping
 NEW ir.model.access: stock_account.access_stock_move_invoicing_payments
@@ -33,6 +36,7 @@ DEL ir.property: stock_account.property_stock_account_output_categ
 DEL ir.property: stock_account.property_stock_journal
 DEL ir.sequence: stock_account.stock_journal_sequence
 DEL ir.ui.menu: stock_account.menu_action_history_tree
+NEW ir.ui.view: stock_account.product_variant_easy_edit_view_inherit
 NEW ir.ui.view: stock_account.view_stock_history_report_pivot
 DEL ir.ui.view: stock_account.view_move_form_inherit
 DEL ir.ui.view: stock_account.view_move_picking_from_stockaccount_inherit

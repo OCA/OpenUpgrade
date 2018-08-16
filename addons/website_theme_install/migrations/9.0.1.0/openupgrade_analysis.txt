@@ -1,0 +1,10 @@
+---Fields in module 'website_theme_install'---
+website_theme_install / ir.module.module         / image_ids (one2many)          : NEW relation: ir.attachment
+---XML records in module 'website_theme_install'---
+NEW ir.actions.act_window: website_theme_install.theme_install_kanban_action
+NEW ir.actions.server: website_theme_install.theme_install_todo_action
+NEW ir.actions.todo: website_theme_install.theme_install_todo
+NEW ir.module.category: base.module_category_theme_hidden
+NEW ir.ui.view: website_theme_install.theme_view_kanban
+NEW ir.ui.view: website_theme_install.theme_view_search
+NEW ir.ui.view: website_theme_install.website_theme_install_assets

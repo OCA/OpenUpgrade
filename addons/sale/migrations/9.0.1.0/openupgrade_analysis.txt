@@ -1,7 +1,7 @@
 ---Fields in module 'sale'---
 sale         / account.analytic.line    / so_line (many2one)            : NEW relation: sale.order.line
-sale         / account.invoice          / section_id (many2one)         : DEL relation: crm.case.section
-sale         / account.invoice          / team_id (many2one)            : NEW relation: crm.team
+sale         / account.invoice          / section_id (many2one)         : relation is now 'crm.team' ('crm.case.section')
+sale         / account.invoice          / section_id (many2one)         : was renamed to team_id [nothing to to]
 sale         / account.invoice.line     / sale_line_ids (many2many)     : NEW relation: sale.order.line
 sale         / crm.team                 / invoiced_target (integer)     : NEW 
 sale         / crm.team                 / use_invoices (boolean)        : NEW 
@@ -16,10 +16,9 @@ sale         / sale.order               / message_follower_ids (many2many): rela
 sale         / sale.order               / message_follower_ids (many2many): type is now 'one2many' ('many2many')
 sale         / sale.order               / order_policy (selection)      : DEL required: required, selection_keys: ['manual'], req_default: manual
 sale         / sale.order               / payment_term (many2one)       : was renamed to payment_term_id [nothing to to]
-sale         / sale.order               / section_id (many2one)         : DEL relation: crm.case.section
+sale         / sale.order               / section_id (many2one)         : relation is now 'crm.team' ('crm.case.section')
+sale         / sale.order               / section_id (many2one)         : was renamed to team_id [nothing to to]
 sale         / sale.order               / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'sale', 'sent']' ('['cancel', 'done', 'draft', 'invoice_except', 'manual', 'progress', 'sent', 'shipping_except', 'waiting_date']')
-sale         / sale.order               / team_id (many2one)            : NEW relation: crm.team
-sale         / sale.order               / validity_date (date)          : NEW 
 sale         / sale.order.line          / address_allotment_id (many2one): DEL relation: res.partner
 sale         / sale.order.line          / delay (float)                 : was renamed to customer_lead [nothing to to]
 sale         / sale.order.line          / product_id (many2one)         : now required
