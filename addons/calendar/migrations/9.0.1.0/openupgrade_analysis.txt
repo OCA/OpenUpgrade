@@ -8,6 +8,7 @@ DEL email.template: calendar.calendar_template_meeting_changedate
 DEL email.template: calendar.calendar_template_meeting_invitation
 DEL email.template: calendar.calendar_template_meeting_reminder
 DEL ir.actions.act_window.view: calendar.action_view_calendar_event_gantt
+NEW ir.rule: calendar.calendar_event_rule_private
 NEW ir.ui.view: calendar.calendar_alarm_view_form
 DEL ir.ui.view: calendar.view_calendar_event_gantt
 NEW mail.template: calendar.calendar_template_meeting_changedate

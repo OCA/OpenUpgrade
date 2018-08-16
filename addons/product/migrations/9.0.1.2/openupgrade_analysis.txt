@@ -39,6 +39,8 @@ product      / product.supplierinfo     / price (float)                 : NEW re
 product      / product.supplierinfo     / pricelist_ids (one2many)      : DEL relation: pricelist.partnerinfo
 product      / product.supplierinfo     / product_id (many2one)         : NEW relation: product.product
 product      / product.template         / ean13 (char)                  : was renamed to barcode [nothing to to]
+product      / product.template         / image_medium (binary)         : not a function anymore
+product      / product.template         / image_small (binary)          : not a function anymore
 product      / product.template         / item_ids (one2many)           : NEW relation: product.pricelist.item
 product      / product.template         / mes_type (selection)          : DEL selection_keys: ['fixed', 'variable']
 product      / product.template         / message_follower_ids (many2many): not a function anymore
@@ -95,6 +97,7 @@ DEL ir.ui.view: product.variants_template_tree_view
 DEL ir.values: product.ir_product_category_open
 DEL product.price.type: product.list_price
 DEL product.price.type: product.standard_price
+DEL product.pricelist.item: product.item0
 DEL product.pricelist.type: product.pricelist_type_sale
 DEL product.pricelist.version: product.ver0
 DEL product.product: product.product_product_consultant

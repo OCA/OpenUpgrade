@@ -21,7 +21,7 @@ mass_mailing / mail.mass_mailing.contact / message_follower_ids (many2many): rel
 mass_mailing / mail.mass_mailing.contact / message_follower_ids (many2many): type is now 'one2many' ('many2many')
 mass_mailing / mail.mass_mailing.contact / unsubscription_date (datetime): NEW 
 mass_mailing / mail.mass_mailing.list   / active (boolean)              : NEW 
-mass_mailing / mail.mass_mailing.list   / popup_content (html)          : NEW required: required, req_default: function
+mass_mailing / mail.mass_mailing.list   / popup_content (html)          : NEW 
 mass_mailing / mail.mass_mailing.list   / popup_redirect_url (char)     : NEW 
 mass_mailing / mail.mass_mailing.tag    / color (integer)               : NEW 
 mass_mailing / mail.mass_mailing.tag    / name (char)                   : NEW required: required

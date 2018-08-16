@@ -1,0 +1,9 @@
+---Fields in module 'l10n_fr_certification'---
+l10n_fr_certification / account.move             / l10n_fr_hash (char)           : NEW 
+l10n_fr_certification / account.move             / l10n_fr_secure_sequence_number (integer): NEW 
+l10n_fr_certification / res.company              / l10n_fr_secure_sequence_id (many2one): NEW relation: ir.sequence
+---XML records in module 'l10n_fr_certification'---
+NEW ir.actions.server: l10n_fr_certification.action_check_hash_integrity
+NEW ir.actions.server: l10n_fr_certification.odoo_french_certification
+NEW ir.ui.menu: l10n_fr_certification.menu_check_move_integrity_reporting
+NEW ir.ui.view: l10n_fr_certification.view_general_fr_inalterability_inherit_config

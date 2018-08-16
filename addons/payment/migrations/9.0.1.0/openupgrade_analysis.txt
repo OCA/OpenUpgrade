@@ -4,6 +4,8 @@ payment      / payment.acquirer         / cancel_msg (html)             : NEW
 payment      / payment.acquirer         / done_msg (html)               : NEW 
 payment      / payment.acquirer         / error_msg (html)              : NEW 
 payment      / payment.acquirer         / image (binary)                : NEW 
+payment      / payment.acquirer         / image_medium (binary)         : NEW 
+payment      / payment.acquirer         / image_small (binary)          : NEW 
 payment      / payment.acquirer         / pending_msg (html)            : NEW 
 payment      / payment.acquirer         / registration_view_template_id (many2one): NEW relation: ir.ui.view
 payment      / payment.acquirer         / sequence (integer)            : NEW 

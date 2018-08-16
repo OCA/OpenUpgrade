@@ -1,7 +1,5 @@
 ---Fields in module 'purchase'---
 purchase     / account.invoice          / purchase_id (many2one)        : NEW relation: purchase.order
-purchase     / product.category         / property_account_creditor_price_difference_categ (many2one): NEW relation: account.account
-purchase     / product.template         / property_account_creditor_price_difference (many2one): NEW relation: account.account
 purchase     / product.template         / purchase_method (selection)   : NEW selection_keys: ['purchase', 'receive']
 purchase     / purchase.order           / bid_date (date)               : DEL 
 purchase     / purchase.order           / bid_validity (date)           : DEL 

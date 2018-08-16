@@ -7,7 +7,9 @@ website      / website                  / cdn_activated (boolean)       : NEW
 website      / website                  / cdn_filters (text)            : NEW 
 website      / website                  / cdn_url (char)                : NEW 
 website      / website                  / compress_html (boolean)       : NEW 
+website      / website                  / default_lang_id (many2one)    : now required
 website      / website                  / domain (char)                 : NEW 
+website      / website                  / user_id (many2one)            : now required, default = function
 ---XML records in module 'website'---
 NEW ir.actions.act_window: website.action_module_theme
 NEW ir.attachment: website.business_conference

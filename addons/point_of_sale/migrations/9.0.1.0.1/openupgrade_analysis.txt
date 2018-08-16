@@ -1,5 +1,7 @@
 ---Fields in module 'point_of_sale'---
 point_of_sale / account.journal          / self_checkout_payment_method (boolean): DEL 
+point_of_sale / pos.category             / image_medium (binary)         : not a function anymore
+point_of_sale / pos.category             / image_small (binary)          : not a function anymore
 point_of_sale / pos.config               / barcode_cashier (char)        : DEL 
 point_of_sale / pos.config               / barcode_customer (char)       : DEL 
 point_of_sale / pos.config               / barcode_discount (char)       : DEL 
@@ -47,7 +49,9 @@ DEL ir.actions.act_window.view: point_of_sale.act_cash_statement1_all
 DEL ir.actions.act_window.view: point_of_sale.act_cash_statement2_all
 DEL ir.actions.act_window.view: point_of_sale.act_cash_statement_all_register
 DEL ir.actions.act_window.view: point_of_sale.act_cash_statement_all_register1
+NEW ir.model.access: point_of_sale.access_account_cashbox_line_user
 NEW ir.model.access: point_of_sale.access_account_payment_method_pos_user
+NEW ir.model.access: point_of_sale.access_bank_statement_cashbox_user
 NEW ir.model.access: point_of_sale.access_barcode_nomenclature_pos_manager
 NEW ir.model.access: point_of_sale.access_barcode_nomenclature_pos_user
 NEW ir.model.access: point_of_sale.access_barcode_rule_pos_manager
@@ -87,7 +91,7 @@ NEW ir.rule: point_of_sale.rule_pos_bank_statement_line_account_user
 NEW ir.rule: point_of_sale.rule_pos_bank_statement_line_user
 NEW ir.rule: point_of_sale.rule_pos_bank_statement_user
 NEW ir.rule: point_of_sale.rule_pos_cashbox_line_accountant
-NEW ir.rule: point_of_sale.rule_pos_cashbox_line_user
+NEW ir.rule: point_of_sale.rule_pos_session_multi_company
 DEL ir.sequence.type: point_of_sale.seq_type_pos_order
 DEL ir.sequence.type: point_of_sale.seq_type_pos_order_line
 DEL ir.sequence.type: point_of_sale.seq_type_pos_session

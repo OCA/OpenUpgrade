@@ -3,9 +3,21 @@ account_check_printing / account.journal          / check_manual_sequencing (boo
 account_check_printing / account.journal          / check_sequence_id (many2one)  : NEW relation: ir.sequence
 account_check_printing / account.payment          / check_amount_in_words (char)  : NEW 
 account_check_printing / account.payment          / check_number (integer)        : NEW 
+account_check_writing / account.journal          / allow_check_writing (boolean) : DEL 
+account_check_writing / account.journal          / use_preprint_check (boolean)  : DEL 
+account_check_writing / account.voucher          / amount_in_word (char)         : DEL 
+account_check_writing / res.company              / check_layout (selection)      : DEL selection_keys: ['bottom', 'middle', 'top']
 ---XML records in module 'account_check_printing'---
 NEW account.payment.method: account_check_printing.account_payment_method_check
+DEL ir.actions.act_window: account_check_writing.action_account_check_write
+DEL ir.actions.act_window: account_check_writing.action_write_check
+DEL ir.actions.act_window.view: account_check_writing.action_write_check_form
+DEL ir.actions.act_window.view: account_check_writing.action_write_check_tree
+DEL ir.actions.report.xml: account_check_writing.action_report_check
 NEW ir.actions.server: account_check_printing.action_account_print_checks
+DEL ir.sequence: account_check_writing.sequence_check_number
+DEL ir.sequence.type: account_check_writing.sequence_type_check_number
+DEL ir.ui.menu: account_check_writing.menu_action_write_check
 NEW ir.ui.view: account_check_printing.account_journal_dashboard_kanban_view_inherited
 NEW ir.ui.view: account_check_printing.print_pre_numbered_checks_view
 NEW ir.ui.view: account_check_printing.view_account_journal_form_inherited
@@ -13,4 +25,10 @@ NEW ir.ui.view: account_check_printing.view_account_payment_form_inherited
 NEW ir.ui.view: account_check_printing.view_account_payment_from_invoices_inherited
 NEW ir.ui.view: account_check_printing.view_account_payment_invoice_form_inherited
 NEW ir.ui.view: account_check_printing.view_payment_check_printing_search
+DEL ir.ui.view: account_check_writing.check_format_company
+DEL ir.ui.view: account_check_writing.report_check
+DEL ir.ui.view: account_check_writing.view_account_check_write
+DEL ir.ui.view: account_check_writing.view_account_journal_form
+DEL ir.ui.view: account_check_writing.view_vendor_payment_check_form
 NEW ir.values: account_check_printing.account_print_checks
+DEL report.paperformat: account_check_writing.paperformat_frenchcheck

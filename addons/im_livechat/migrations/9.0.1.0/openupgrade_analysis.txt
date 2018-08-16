@@ -1,5 +1,7 @@
 ---Fields in module 'im_livechat'---
 im_livechat  / im_livechat.channel      / channel_ids (one2many)        : NEW relation: mail.channel
+im_livechat  / im_livechat.channel      / image_medium (binary)         : not a function anymore
+im_livechat  / im_livechat.channel      / image_small (binary)          : not a function anymore
 im_livechat  / im_livechat.channel      / rule_ids (one2many)           : NEW relation: im_livechat.channel.rule
 im_livechat  / im_livechat.channel.rule / action (selection)            : NEW required: required, selection_keys: ['auto_popup', 'display_button', 'hide_button'], req_default: display_button
 im_livechat  / im_livechat.channel.rule / auto_popup_timer (integer)    : NEW 
@@ -19,6 +21,8 @@ NEW ir.actions.act_window: im_livechat.mail_channel_action
 NEW ir.actions.act_window: im_livechat.mail_channel_action_from_livechat_channel
 DEL ir.actions.act_window: im_livechat.action_history
 DEL ir.actions.act_window: im_livechat.action_support_channels
+NEW ir.actions.act_window.view: im_livechat.mail_channel_action_form
+NEW ir.actions.act_window.view: im_livechat.mail_channel_action_tree
 NEW ir.actions.client: im_livechat.ir_action_client_open_livechat_menu
 NEW ir.actions.todo: base.open_menu
 NEW ir.cron: im_livechat.ir_cron_remove_empty_session

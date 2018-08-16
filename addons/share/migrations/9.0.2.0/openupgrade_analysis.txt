@@ -1,0 +1,21 @@
+---Fields in module 'share'---
+share        / res.groups               / share (boolean)               : module is now 'base' ('share')
+share        / res.users                / share (boolean)               : module is now 'base' ('share')
+---XML records in module 'share'---
+DEL ir.actions.act_window: base.action_res_groups
+DEL ir.actions.act_window: base.action_res_users
+DEL ir.actions.act_window: share.action_share_wizard
+DEL ir.actions.act_window: share.action_share_wizard_step1
+DEL ir.model.access: share.access_ir_ui_menu_group_shared
+DEL ir.module.category: share.module_category_share
+DEL ir.ui.view: share.assets_backend
+DEL ir.ui.view: share.res_groups_search_sharing
+DEL ir.ui.view: share.res_users_search_sharing
+DEL ir.ui.view: share.share_step0_form
+DEL ir.ui.view: share.share_step1_form
+DEL ir.ui.view: share.share_step2_form
+DEL ir.ui.view: share.view_groups_form_share
+DEL ir.ui.view: share.webclient_bootstrap
+DEL res.groups: share.group_share_user
+DEL res.groups: share.group_shared
+DEL res.users: base.public_user

@@ -4,6 +4,8 @@ hr           / hr.department            / message_follower_ids (one2many): NEW r
 hr           / hr.department            / message_ids (one2many)        : NEW relation: mail.message
 hr           / hr.department            / message_last_post (datetime)  : NEW 
 hr           / hr.employee              / gender (selection)            : selection_keys is now '['female', 'male', 'other']' ('['female', 'male']')
+hr           / hr.employee              / image_medium (binary)         : not a function anymore
+hr           / hr.employee              / image_small (binary)          : not a function anymore
 hr           / hr.employee              / message_follower_ids (many2many): not a function anymore
 hr           / hr.employee              / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
 hr           / hr.employee              / message_follower_ids (many2many): type is now 'one2many' ('many2many')

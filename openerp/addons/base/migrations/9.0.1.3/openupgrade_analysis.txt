@@ -25,7 +25,7 @@ base         / ir.model.fields          / index (boolean)               : NEW
 base         / ir.model.fields          / related (char)                : NEW 
 base         / ir.model.fields          / relation_table (char)         : NEW 
 base         / ir.model.fields          / select_level (selection)      : DEL required: required, selection_keys: ['0', '1', '2'], req_default: 0
-base         / ir.module.module         / license (selection)           : selection_keys is now '['AGPL-3', 'GPL-2', 'GPL-2 or any later version', 'GPL-3', 'GPL-3 or any later version', 'LGPL-3', 'OEEL-1', 'Other OSI approved licence', 'Other proprietary']' ('['AGPL-3', 'GPL-2', 'GPL-2 or any later version', 'GPL-3', 'GPL-3 or any later version', 'Other OSI approved licence', 'Other proprietary']')
+base         / ir.module.module         / license (selection)           : selection_keys is now '['AGPL-3', 'GPL-2', 'GPL-2 or any later version', 'GPL-3', 'GPL-3 or any later version', 'LGPL-3', 'OEEL-1', 'Other OSI approved licence', 'Other proprietary']' ('['AGPL-3', 'GPL-2', 'GPL-2 or any later version', 'GPL-3', 'GPL-3 or any later version', 'LGPL-3', 'Other OSI approved licence', 'Other proprietary']')
 base         / ir.sequence              / code (selection)              : selection_keys is now 'False' ('function')
 base         / ir.sequence              / code (selection)              : type is now 'char' ('selection')
 base         / ir.sequence              / date_range_ids (one2many)     : NEW relation: ir.sequence.date_range
@@ -54,7 +54,9 @@ base         / res.currency.rate        / company_id (many2one)         : NEW re
 base         / res.groups               / color (integer)               : NEW 
 base         / res.partner              / company_type (selection)      : NEW selection_keys: ['company', 'person']
 base         / res.partner              / ean13 (char)                  : was renamed to barcode [nothing to to]
-base         / res.partner              / type (selection)              : selection_keys is now '['contact', 'delivery', 'invoice', 'other']' ('['contact', 'default', 'delivery', 'invoice', 'other']')
+base         / res.partner              / image_medium (binary)         : not a function anymore
+base         / res.partner              / image_small (binary)          : not a function anymore
+base         / res.partner              / type (selection)              : selection_keys is now '['contact', 'delivery', 'invoice', 'other', 'private']' ('['contact', 'default', 'delivery', 'invoice', 'other']')
 base         / res.partner.bank         / bank (many2one)               : DEL relation: res.bank
 base         / res.partner.bank         / bank_bic (char)               : DEL 
 base         / res.partner.bank         / bank_id (many2one)            : NEW relation: res.bank
@@ -114,6 +116,8 @@ DEL ir.module.category: base.module_category_marketing
 DEL ir.module.category: base.module_category_report_designer
 DEL ir.module.category: base.module_category_tools
 NEW ir.rule: base.res_currency_rate_rule
+NEW ir.rule: base.res_partner_rule_private_employee
+NEW ir.rule: base.res_partner_rule_private_group
 NEW ir.rule: base.res_users_log_rule
 DEL ir.rule: base.multi_company_default_rule
 DEL ir.rule: base.res_currency_rule
@@ -131,6 +135,8 @@ DEL ir.ui.menu: base.menu_reporting
 DEL ir.ui.menu: base.menu_res_company_global
 NEW ir.ui.view: base.report_irmodeloverview
 NEW ir.ui.view: base.report_irmodulereference
+NEW ir.ui.view: base.res_partner_view_form_private
+NEW ir.ui.view: base.view_currency_rate_form
 NEW ir.ui.view: base.view_currency_rate_search
 NEW ir.ui.view: base.view_currency_rate_tree
 NEW ir.ui.view: base.view_partner_address_form
@@ -320,6 +326,7 @@ DEL res.currency.rate: base.rateZRZ
 DEL res.currency.rate: base.rateZWD
 NEW res.groups: base.group_configuration
 NEW res.groups: base.group_light_multi_company
+NEW res.groups: base.group_private_addresses
 DEL res.partner.bank.type: base.bank_normal
 DEL res.partner.bank.type.field: base.bank_normal_field_bic
 DEL res.partner.title: base.res_partner_title_ltd

@@ -56,6 +56,7 @@ NEW barcode.rule: stock.barcode_rule_location
 NEW barcode.rule: stock.barcode_rule_lot
 NEW barcode.rule: stock.barcode_rule_package
 NEW barcode.rule: stock.barcode_rule_weight_three_dec
+NEW ir.actions.act_window: stock.action_inventory_line_tree
 NEW ir.actions.act_window: stock.action_picking_form
 NEW ir.actions.act_window: stock.action_stock_level_forecast_report_product
 NEW ir.actions.act_window: stock.action_stock_level_forecast_report_template
@@ -119,6 +120,8 @@ NEW ir.ui.view: stock.inventory_planner
 NEW ir.ui.view: stock.product_product_view_form_easy_inherit_stock
 NEW ir.ui.view: stock.report_delivery_document
 NEW ir.ui.view: stock.report_deliveryslip
+NEW ir.ui.view: stock.stock_inventory_line_search
+NEW ir.ui.view: stock.stock_inventory_line_tree2
 NEW ir.ui.view: stock.stock_location_path_filter
 NEW ir.ui.view: stock.stock_picking_kanban
 NEW ir.ui.view: stock.view_backorder_confirmation

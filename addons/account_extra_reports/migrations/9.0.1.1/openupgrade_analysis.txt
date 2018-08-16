@@ -1,0 +1,13 @@
+---Fields in module 'account_extra_reports'---
+---XML records in module 'account_extra_reports'---
+NEW ir.actions.act_window: account_extra_reports.action_account_partner_ledger_menu
+NEW ir.actions.act_window: account_extra_reports.action_account_print_journal_menu
+NEW ir.actions.report.xml: account_extra_reports.action_report_journal
+NEW ir.actions.report.xml: account_extra_reports.action_report_partnerledger
+NEW ir.ui.menu: account_extra_reports.menu_partner_ledger
+NEW ir.ui.menu: account_extra_reports.menu_print_journal
+NEW ir.ui.view: account_extra_reports.account_report_partner_ledger_view
+NEW ir.ui.view: account_extra_reports.account_report_print_journal_view
+NEW ir.ui.view: account_extra_reports.report_journal
+NEW ir.ui.view: account_extra_reports.report_partnerledger
+NEW ir.values: account_extra_reports.action_account_partner_ledger_values
