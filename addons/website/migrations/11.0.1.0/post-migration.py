@@ -72,12 +72,28 @@ def delete_noupdate_records(env):
     env.ref('website.menu_website').unlink()
 
 
+def import_website_seo_redirection_data(env):
+    """Check if module was installed looking to the expected table, and then
+    import data in the new website feature table.
+    """
+    if not openupgrade.table_exists(env.cr, 'website_seo_redirection'):
+        return
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO website_redirect
+        (type, url_from, url_to, active, sequence)
+        SELECT '301', wsr.origin, wsr.destination, True, 10
+        FROM website_seo_redirection wsr""",
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_website_pages(env)
     link_websites_with_pages(env)
     add_website_homepages(env)
     delete_noupdate_records(env)
+    import_website_seo_redirection_data(env)
     openupgrade.load_data(
         env.cr, 'website', 'migrations/11.0.1.0/noupdate_changes.xml',
     )
