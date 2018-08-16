@@ -99,7 +99,7 @@ class install_all_wizard(TransientModel):
             'view_mode': 'form',
             'views': [(False, 'form')],
             'res_model': self._name,
-            'res_id': ids[0],
+            'res_id': ids[0] if ids else False,
             'type': 'ir.actions.act_window',
             'target': 'new',
         }
@@ -136,9 +136,12 @@ class install_all_wizard(TransientModel):
         Main wizard step. Set all installable modules to install
         and actually install them. Exclude testing modules.
         """
-        user_input = self.browse(cr, uid, ids, context=context)[0]
+        no_localization = False
+        if ids:
+            no_localization = self.browse(
+                cr, uid, ids[0], context=context).no_localization
         module_obj = self.pool.get('ir.module.module')
-        module_domain = self._get_module_domain(user_input.no_localization)
+        module_domain = self._get_module_domain(no_localization)
         module_ids = module_obj.search(
             cr, uid, module_domain, context=context
         )
