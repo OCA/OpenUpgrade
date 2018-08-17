@@ -36,7 +36,7 @@ def migrate_reply_to(env):
                 'name': row[1],
                 'email': row[1],
             })
-        event.message_follower_ids = [(4, partner[:1].id)]
+        event.message_subscribe(partner_ids=partner[:1].ids)
 
 
 @openupgrade.migrate()
