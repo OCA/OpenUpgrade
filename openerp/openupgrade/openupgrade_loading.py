@@ -51,12 +51,12 @@ def add_module_dependencies(cr, module_list):
     if not module_list:
         return module_list
 
-    forced_deps = safe_eval.safe_eval(
+    forced_deps = safe_eval(
         config.get_misc(
             'openupgrade', 'forced_deps_' + release.version,
             config.get_misc('openupgrade', 'forced_deps', '{}')))
 
-    autoinstall = safe_eval.safe_eval(
+    autoinstall = safe_eval(
         config.get_misc(
             'openupgrade', 'autoinstall_' + release.version,
             config.get_misc('openupgrade', 'autoinstall', '{}')))
