@@ -4,7 +4,7 @@
 # 
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
-# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016-2017
 # Kari Lindgren <kari.lindgren@emsystems.fi>, 2015
 # Kari Lindgren <karisatu@gmail.com>, 2015
 msgid ""
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:07+0000\n"
-"PO-Revision-Date: 2016-02-24 23:01+0000\n"
+"PO-Revision-Date: 2017-05-26 10:45+0000\n"
 "Last-Translator: Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>\n"
 "Language-Team: Finnish (http://www.transifex.com/odoo/odoo-8/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr "(Päivitys)"
 #: view:account.voucher:account_voucher.view_purchase_receipt_form
 #: view:account.voucher:account_voucher.view_sale_receipt_form
 msgid "(update)"
-msgstr "(päivitys)"
+msgstr "(päivitä)"
 
 #. module: account_voucher
 #: model:ir.actions.act_window,help:account_voucher.action_vendor_payment
@@ -168,7 +168,7 @@ msgstr "Tapahtumapäivänä vaihtokurssi oli\n%s = %s"
 #. module: account_voucher
 #: field:sale.receipt.report,delay_to_pay:0
 msgid "Avg. Delay To Pay"
-msgstr ""
+msgstr "Keskimääräinen maksun kesto"
 
 #. module: account_voucher
 #: field:sale.receipt.report,due_delay:0
@@ -245,7 +245,7 @@ msgstr ""
 #: code:addons/account_voucher/account_voucher.py:1057
 #, python-format
 msgid "Configuration Error !"
-msgstr ""
+msgstr "Konfiguraatiovirhe!"
 
 #. module: account_voucher
 #: field:account.voucher,writeoff_acc_id:0
@@ -279,7 +279,7 @@ msgstr "Kredit"
 #: view:account.voucher:account_voucher.view_vendor_receipt_form
 #: field:account.voucher,line_cr_ids:0
 msgid "Credits"
-msgstr ""
+msgstr "Krediitit"
 
 #. module: account_voucher
 #: field:account.voucher,currency_id:0
@@ -329,12 +329,12 @@ msgstr "Debet"
 #. module: account_voucher
 #: field:account.voucher,line_dr_ids:0
 msgid "Debits"
-msgstr ""
+msgstr "Debetit"
 
 #. module: account_voucher
 #: field:account.voucher,type:0
 msgid "Default Type"
-msgstr ""
+msgstr "Oletustyyppi"
 
 #. module: account_voucher
 #: field:account.voucher.line,name:0
@@ -344,7 +344,7 @@ msgstr "Kuvaus"
 #. module: account_voucher
 #: field:account.voucher,writeoff_amount:0
 msgid "Difference Amount"
-msgstr ""
+msgstr "Erotuksen määrä"
 
 #. module: account_voucher
 #: field:account.voucher.line,type:0
@@ -382,7 +382,7 @@ msgstr "Eräpäivä"
 #. module: account_voucher
 #: view:sale.receipt.report:account_voucher.view_sale_receipt_report_search
 msgid "Due Month"
-msgstr ""
+msgstr "Eräkuukausi"
 
 #. module: account_voucher
 #: help:account.voucher,date:0
@@ -426,7 +426,7 @@ msgstr "Seuraajat"
 #. module: account_voucher
 #: field:account.voucher.line,reconcile:0
 msgid "Full Reconcile"
-msgstr ""
+msgstr "Kokonaissuoritus"
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:1098
@@ -535,7 +535,7 @@ msgstr "Päiväkirjatositteet"
 #. module: account_voucher
 #: selection:account.voucher,payment_option:0
 msgid "Keep Open"
-msgstr ""
+msgstr "Pidä auki"
 
 #. module: account_voucher
 #: field:account.voucher,message_last_post:0
@@ -555,7 +555,7 @@ msgstr "Viimeksi päivitetty"
 #. module: account_voucher
 #: field:account.voucher,name:0
 msgid "Memo"
-msgstr ""
+msgstr "Muistio"
 
 #. module: account_voucher
 #: field:account.voucher,message_ids:0
@@ -632,12 +632,12 @@ msgstr "Maksettu"
 #: view:account.voucher:account_voucher.view_vendor_receipt_dialog_form
 #: view:account.voucher:account_voucher.view_vendor_receipt_form
 msgid "Paid Amount"
-msgstr ""
+msgstr "Maksettu summa"
 
 #. module: account_voucher
 #: field:account.voucher,paid_amount_in_company_currency:0
 msgid "Paid Amount in Company Currency"
-msgstr ""
+msgstr "Maksettu summa yrityksen valuutassa"
 
 #. module: account_voucher
 #: view:account.voucher:account_voucher.view_voucher_filter
@@ -650,7 +650,7 @@ msgstr "Kumppani"
 #. module: account_voucher
 #: view:account.invoice:account_voucher.view_invoice_supplier
 msgid "Pay"
-msgstr ""
+msgstr "Maksa"
 
 #. module: account_voucher
 #: view:account.voucher:account_voucher.view_purchase_receipt_form
@@ -660,13 +660,13 @@ msgstr "Maksa lasku"
 #. module: account_voucher
 #: selection:account.voucher,pay_now:0 selection:sale.receipt.report,pay_now:0
 msgid "Pay Directly"
-msgstr ""
+msgstr "Maksa suoraan"
 
 #. module: account_voucher
 #: code:addons/account_voucher/invoice.py:34
 #, python-format
 msgid "Pay Invoice"
-msgstr ""
+msgstr "Maksa lasku"
 
 #. module: account_voucher
 #: selection:account.voucher,pay_now:0 selection:sale.receipt.report,pay_now:0
@@ -683,7 +683,7 @@ msgstr "Maksu"
 #. module: account_voucher
 #: field:account.voucher,payment_option:0
 msgid "Payment Difference"
-msgstr ""
+msgstr "Maksun erotus"
 
 #. module: account_voucher
 #: view:account.voucher:account_voucher.view_low_priority_payment_form
@@ -704,7 +704,7 @@ msgstr "Maksutapa"
 #. module: account_voucher
 #: view:account.voucher:account_voucher.view_vendor_payment_form
 msgid "Payment Options"
-msgstr ""
+msgstr "Maksun valinnat"
 
 #. module: account_voucher
 #: field:account.voucher,payment_rate_currency_id:0
@@ -739,7 +739,7 @@ msgstr ""
 #: code:addons/account_voucher/account_voucher.py:1064
 #, python-format
 msgid "Please define a sequence on the journal."
-msgstr ""
+msgstr "Määrittele päiväkirjaan järjestys."
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:518
@@ -776,7 +776,7 @@ msgstr "Kirjatut tositteet"
 #. module: account_voucher
 #: field:account.voucher,pre_line:0
 msgid "Previous Payments ?"
-msgstr ""
+msgstr "Aiempia maksuja ?"
 
 #. module: account_voucher
 #: selection:account.voucher,state:0
@@ -798,7 +798,7 @@ msgstr "Osto"
 #. module: account_voucher
 #: view:account.voucher:account_voucher.view_purchase_receipt_form
 msgid "Purchase Receipt"
-msgstr ""
+msgstr "Ostokuitti"
 
 #. module: account_voucher
 #: model:ir.actions.act_window,name:account_voucher.action_purchase_receipt
@@ -841,7 +841,7 @@ msgstr "Myynti"
 #. module: account_voucher
 #: view:account.voucher:account_voucher.view_sale_receipt_form
 msgid "Sales Information"
-msgstr ""
+msgstr "Myyntitietoa"
 
 #. module: account_voucher
 #: view:account.voucher:account_voucher.view_sale_receipt_form
@@ -851,12 +851,12 @@ msgstr "Myyntirivit"
 #. module: account_voucher
 #: view:account.voucher:account_voucher.view_sale_receipt_form
 msgid "Sales Receipt"
-msgstr ""
+msgstr "Myyntikuitti"
 
 #. module: account_voucher
 #: model:ir.model,name:account_voucher.model_sale_receipt_report
 msgid "Sales Receipt Statistics"
-msgstr ""
+msgstr "Myyntikuittien tilastot"
 
 #. module: account_voucher
 #: model:ir.actions.act_window,name:account_voucher.action_sale_receipt
@@ -1051,12 +1051,12 @@ msgstr "Lukemattomia viestejä"
 #: view:account.voucher:account_voucher.view_vendor_payment_form
 #: view:account.voucher:account_voucher.view_vendor_receipt_form
 msgid "Unreconcile"
-msgstr "Poista suoritukset"
+msgstr "Poista täsmäytys"
 
 #. module: account_voucher
 #: field:account.voucher.line,untax_amount:0
 msgid "Untax Amount"
-msgstr ""
+msgstr "Veroton summa"
 
 #. module: account_voucher
 #: view:account.voucher:account_voucher.view_purchase_receipt_form
@@ -1152,7 +1152,7 @@ msgstr "Alaskirjaus"
 #. module: account_voucher
 #: field:account.voucher,analytic_id:0
 msgid "Write-Off Analytic Account"
-msgstr ""
+msgstr "Arvonaleneman kustannuspaikka"
 
 #. module: account_voucher
 #: code:addons/account_voucher/account_voucher.py:1202
@@ -1199,14 +1199,14 @@ msgstr "muuta"
 #: view:account.voucher:account_voucher.view_vendor_receipt_dialog_form
 #: view:account.voucher:account_voucher.view_vendor_receipt_form
 msgid "e.g. 003/10"
-msgstr ""
+msgstr "esim. 003/10"
 
 #. module: account_voucher
 #: view:account.voucher:account_voucher.view_vendor_payment_form
 #: view:account.voucher:account_voucher.view_vendor_receipt_dialog_form
 #: view:account.voucher:account_voucher.view_vendor_receipt_form
 msgid "e.g. Invoice SAJ/0042"
-msgstr ""
+msgstr "esim. Lasku SAJ/0042"
 
 #. module: account_voucher
 #: view:account.voucher:account_voucher.view_vendor_receipt_dialog_form

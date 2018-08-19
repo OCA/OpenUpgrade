@@ -554,7 +554,10 @@ class ir_model_constraint(Model):
         ids.reverse()
         for data in self.browse(cr, uid, ids, context):
             model = data.model.model
-            model_obj = self.pool[model]
+            if model in self.pool:
+                table = self.pool[model]._table
+            else:
+                table = model.replace('.', '_')
             name = openerp.tools.ustr(data.name)
             typ = data.type
 
@@ -568,17 +571,17 @@ class ir_model_constraint(Model):
             if typ == 'f':
                 # test if FK exists on this table (it could be on a related m2m table, in which case we ignore it)
                 cr.execute("""SELECT 1 from pg_constraint cs JOIN pg_class cl ON (cs.conrelid = cl.oid)
-                              WHERE cs.contype=%s and cs.conname=%s and cl.relname=%s""", ('f', name, model_obj._table))
+                              WHERE cs.contype=%s and cs.conname=%s and cl.relname=%s""", ('f', name, table))
                 if cr.fetchone():
-                    cr.execute('ALTER TABLE "%s" DROP CONSTRAINT "%s"' % (model_obj._table, name),)
+                    cr.execute('ALTER TABLE "%s" DROP CONSTRAINT "%s"' % (table, name),)
                     _logger.info('Dropped FK CONSTRAINT %s@%s', name, model)
 
             if typ == 'u':
                 # test if constraint exists
                 cr.execute("""SELECT 1 from pg_constraint cs JOIN pg_class cl ON (cs.conrelid = cl.oid)
-                              WHERE cs.contype=%s and cs.conname=%s and cl.relname=%s""", ('u', name, model_obj._table))
+                              WHERE cs.contype=%s and cs.conname=%s and cl.relname=%s""", ('u', name, table))
                 if cr.fetchone():
-                    cr.execute('ALTER TABLE "%s" DROP CONSTRAINT "%s"' % (model_obj._table, name),)
+                    cr.execute('ALTER TABLE "%s" DROP CONSTRAINT "%s"' % (table, name),)
                     _logger.info('Dropped CONSTRAINT %s@%s', name, model)
 
         self.unlink(cr, uid, ids, context)
@@ -891,10 +894,11 @@ class ir_model_data(osv.osv):
         type(self).loads = self.pool.model_data_reference_ids
 
     def _auto_init(self, cr, context=None):
-        super(ir_model_data, self)._auto_init(cr, context)
+        res = super(ir_model_data, self)._auto_init(cr, context)
         cr.execute('SELECT indexname FROM pg_indexes WHERE indexname = \'ir_model_data_module_name_index\'')
         if not cr.fetchone():
             cr.execute('CREATE INDEX ir_model_data_module_name_index ON ir_model_data (module, name)')
+        return res
 
     # NEW V8 API
     @tools.ormcache(skiparg=3)
@@ -1239,17 +1243,19 @@ class ir_model_data(osv.osv):
         for (id, name, model, res_id, module) in cr.fetchall():
             if (module, name) not in self.loads:
                 if model in self.pool:
-                    _logger.info('Deleting %s@%s', res_id, model)
-                    try:
-                        cr.execute('SAVEPOINT ir_model_data_delete');
-                        self.pool[model].unlink(cr, uid, [res_id])
-                        cr.execute('RELEASE SAVEPOINT ir_model_data_delete')
-                    except Exception:
-                        cr.execute('ROLLBACK TO SAVEPOINT ir_model_data_delete');
-                        _logger.warning(
-                            'Could not delete obsolete record with id: %d of model %s\n'
-                            'Please refer to the log message right above',
-                            res_id, model)
+                    _logger.info('Deleting %s@%s (%s.%s)', res_id, model, module, name)
+                    if self.pool[model].exists(cr, uid, [res_id], context=context):
+                        try:
+                            cr.execute('SAVEPOINT ir_model_data_delete');
+                            self.pool[model].unlink(cr, uid, [res_id])
+                            cr.execute('RELEASE SAVEPOINT ir_model_data_delete')
+                        except Exception:
+                            cr.execute('ROLLBACK TO SAVEPOINT ir_model_data_delete');
+                            _logger.warning(
+                                'Could not delete obsolete record with id: %d of model %s\n'
+                                'Please refer to the log message right above',
+                                res_id, model)
+                    else:
                         bad_imd_ids.append(id)
         if bad_imd_ids:
             self.unlink(cr, uid, bad_imd_ids, context=context)

@@ -4,13 +4,13 @@
 # 
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
-# Mustafa Rawi <mustafa@cubexco.com>, 2015
+# Mustafa Rawi <mustafa@cubexco.com>, 2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:08+0000\n"
-"PO-Revision-Date: 2015-09-08 11:54+0000\n"
+"PO-Revision-Date: 2017-05-13 14:36+0000\n"
 "Last-Translator: Mustafa Rawi <mustafa@cubexco.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/odoo/odoo-8/language/ar/)\n"
 "MIME-Version: 1.0\n"
@@ -110,7 +110,7 @@ msgstr "تم التسليم"
 #: model:ir.actions.act_window,name:sale_stock.outgoing_picking_list_to_invoice
 #: model:ir.ui.menu,name:sale_stock.menu_action_picking_list_to_invoice
 msgid "Deliveries to Invoice"
-msgstr "إصدار فواتير لأوامر التسليم"
+msgstr "تسليمات بلا فواتير"
 
 #. module: sale_stock
 #: model:res.groups,name:sale_stock.group_invoice_deli_orders
@@ -130,7 +130,7 @@ msgstr "إنشاء الفواتير عند إتمام التسليم وبناء 
 #. module: sale_stock
 #: view:sale.order:sale_stock.view_order_form_inherit
 msgid "Ignore Exception"
-msgstr "تجاهل التعليق"
+msgstr "تجاهل الخلل"
 
 #. module: sale_stock
 #: field:sale.order,incoterm:0
@@ -367,11 +367,11 @@ msgstr "تريد بيع %.2f %s ولكن لديك %.2f %s فقط!\nالمخزو�
 #: code:addons/sale_stock/sale_stock.py:270
 #, python-format
 msgid ""
-"You selected a quantity of %d Units.\n"
+"You selected a quantity of %s %s.\n"
 "But it's not compatible with the selected packaging.\n"
 "Here is a proposition of quantities according to the packaging:\n"
 "EAN: %s Quantity: %s Type of ul: %s"
-msgstr "لقد أدخلت الكمية %d وحدة.\nولكنها غير متوافقة مع التعبئة المحددة.\nإليك اقتراح بالكميات التي تتناسب مع التعبئة المحددة:\nEAN: %s، الكمية: %s، النوع: %s"
+msgstr "قمت بتحديد كمية قدرها %s %s.\nولكن هذه الكمية غير متوافقة مع التعبئة المحددة.\nتجد أدناه اقتراح بالكمية المناسبة للتعبئة المحددة:\nEAN: %s الكمية: %s النوع: %s"
 
 #. module: sale_stock
 #: view:sale.order:sale_stock.view_order_form_inherit

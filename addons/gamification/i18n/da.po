@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-21 14:08+0000\n"
-"PO-Revision-Date: 2016-04-06 06:46+0000\n"
-"Last-Translator: Hans Henrik Gabelgaard <hhg@gabelgaard.org>\n"
+"POT-Creation-Date: 2016-05-25 12:58+0000\n"
+"PO-Revision-Date: 2017-08-18 15:16+0000\n"
+"Last-Translator: Martin Trigaux\n"
 "Language-Team: Danish (http://www.transifex.com/odoo/odoo-8/language/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -247,7 +247,7 @@ msgstr "Aktiv"
 #. module: gamification
 #: view:gamification.challenge:gamification.challenge_form_view
 msgid "Advanced Options"
-msgstr ""
+msgstr "Avancerede optioner"
 
 #. module: gamification
 #: field:gamification.badge,rule_auth:0
@@ -321,7 +321,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:gamification.badge_list_action
 #: model:ir.ui.menu,name:gamification.gamification_badge_menu
 msgid "Badges"
-msgstr ""
+msgstr "Badges"
 
 #. module: gamification
 #: view:gamification.challenge:gamification.challenge_form_view
@@ -414,7 +414,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:gamification.challenge_list_action
 #: model:ir.ui.menu,name:gamification.gamification_challenge_menu
 msgid "Challenges"
-msgstr ""
+msgstr "Udfordringer"
 
 #. module: gamification
 #: help:gamification.badge,rule_max:0
@@ -512,7 +512,7 @@ msgstr "Oprettet af"
 #. module: gamification
 #: field:gamification.goal.wizard,current:0
 msgid "Current"
-msgstr ""
+msgstr "Aktuel"
 
 #. module: gamification
 #: field:gamification.goal,current:0
@@ -523,7 +523,7 @@ msgstr ""
 #: selection:gamification.challenge,period:0
 #: selection:gamification.challenge,report_message_frequency:0
 msgid "Daily"
-msgstr ""
+msgstr "Dagligt"
 
 #. module: gamification
 #: view:gamification.goal:gamification.goal_form_view
@@ -577,7 +577,7 @@ msgstr ""
 #. module: gamification
 #: view:gamification.badge.user.wizard:gamification.view_badge_wizard_grant
 msgid "Describe what they did and why it matters (will be public)"
-msgstr ""
+msgstr "Beskriv hvad de gjorde og hvilken forskel det gjorde (vil være offentlig)"
 
 #. module: gamification
 #: field:gamification.badge,description:0
@@ -589,6 +589,18 @@ msgstr "Beskrivelse"
 #: field:gamification.challenge,visibility_mode:0
 #: field:gamification.goal,definition_display:0
 msgid "Display Mode"
+msgstr ""
+
+#. module: gamification
+#: field:gamification.badge,display_name:0
+#: field:gamification.badge.user,display_name:0
+#: field:gamification.badge.user.wizard,display_name:0
+#: field:gamification.challenge,display_name:0
+#: field:gamification.challenge.line,display_name:0
+#: field:gamification.goal,display_name:0
+#: field:gamification.goal.definition,display_name:0
+#: field:gamification.goal.wizard,display_name:0
+msgid "Display Name"
 msgstr ""
 
 #. module: gamification
@@ -665,7 +677,7 @@ msgstr ""
 #. module: gamification
 #: selection:gamification.goal,state:0
 msgid "Failed"
-msgstr ""
+msgstr "Fejlede"
 
 #. module: gamification
 #: field:gamification.goal.definition,field_id:0
@@ -721,7 +733,7 @@ msgstr ""
 #. module: gamification
 #: model:ir.module.category,name:gamification.module_goal_category
 msgid "Gamification"
-msgstr ""
+msgstr "Gamification"
 
 #. module: gamification
 #: model:ir.ui.menu,name:gamification.gamification_menu
@@ -736,7 +748,7 @@ msgstr ""
 #. module: gamification
 #: model:ir.model,name:gamification.model_gamification_challenge
 msgid "Gamification challenge"
-msgstr ""
+msgstr "Gamification udfordring"
 
 #. module: gamification
 #: model:ir.model,name:gamification.model_gamification_challenge_line
@@ -756,7 +768,7 @@ msgstr ""
 #. module: gamification
 #: model:ir.model,name:gamification.model_gamification_badge_user
 msgid "Gamification user badge"
-msgstr ""
+msgstr "Gamification bruger badge"
 
 #. module: gamification
 #: view:gamification.challenge:gamification.view_challenge_kanban
@@ -1005,6 +1017,18 @@ msgid "Last Message Date"
 msgstr "Sidste besked Dato"
 
 #. module: gamification
+#: field:gamification.badge,__last_update:0
+#: field:gamification.badge.user,__last_update:0
+#: field:gamification.badge.user.wizard,__last_update:0
+#: field:gamification.challenge,__last_update:0
+#: field:gamification.challenge.line,__last_update:0
+#: field:gamification.goal,__last_update:0
+#: field:gamification.goal.definition,__last_update:0
+#: field:gamification.goal.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr ""
+
+#. module: gamification
 #: field:gamification.challenge,last_report_date:0
 msgid "Last Report Date"
 msgstr ""
@@ -1248,7 +1272,7 @@ msgstr ""
 #. module: gamification
 #: field:gamification.challenge,period:0
 msgid "Periodicity"
-msgstr ""
+msgstr "Hyppighed"
 
 #. module: gamification
 #: model:gamification.badge,name:gamification.badge_problem_solver
@@ -1263,7 +1287,7 @@ msgstr ""
 #. module: gamification
 #: field:gamification.goal.definition,compute_code:0
 msgid "Python Code"
-msgstr ""
+msgstr "Python kode"
 
 #. module: gamification
 #: help:gamification.goal.definition,compute_code:0
@@ -1637,6 +1661,24 @@ msgid ""
 msgstr ""
 
 #. module: gamification
+#: code:addons/gamification/models/goal.py:160
+#, python-format
+msgid ""
+"The model configuration for the definition %s seems incorrect, please check it.\n"
+"\n"
+"%s not found"
+msgstr ""
+
+#. module: gamification
+#: code:addons/gamification/models/goal.py:158
+#, python-format
+msgid ""
+"The model configuration for the definition %s seems incorrect, please check it.\n"
+"\n"
+"%s not stored"
+msgstr ""
+
+#. module: gamification
 #: help:gamification.goal.definition,model_id:0
 msgid "The model object for the field to evaluate"
 msgstr ""
@@ -1833,7 +1875,7 @@ msgstr ""
 #: selection:gamification.challenge,period:0
 #: selection:gamification.challenge,report_message_frequency:0
 msgid "Yearly"
-msgstr ""
+msgstr "Årligt"
 
 #. module: gamification
 #: code:addons/gamification/models/badge.py:240

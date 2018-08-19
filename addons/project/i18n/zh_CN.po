@@ -4,17 +4,19 @@
 # 
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
-# jeffery chen fan <jeffery9@gmail.com>, 2015-2016
+# Jeffery CHEN <jeffery9@gmail.com>, 2015-2016
+# Jeffery CHEN <jeffery9@gmail.com>, 2016
+# liAnGjiA <liangjia@qq.com>, 2017
 # mrshelly <mrshelly@hotmail.com>, 2015
 # Qing Wang <snowkite@outlook.com>, 2015
-# 珠海-老天 <liangjia@qq.com>, 2015
+# liAnGjiA <liangjia@qq.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-19 06:31+0000\n"
-"PO-Revision-Date: 2016-03-19 07:30+0000\n"
-"Last-Translator: jeffery chen fan <jeffery9@gmail.com>\n"
+"PO-Revision-Date: 2017-04-19 04:15+0000\n"
+"Last-Translator: liAnGjiA <liangjia@qq.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/odoo/odoo-8/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -60,7 +62,7 @@ msgid ""
 "                  projects or invite customers to share your activities.\n"
 "                </p>\n"
 "            "
-msgstr "<p class=\"oe_view_nocontent_create\">\n                  创建一个新项目\n                </p><p>\n                  项目是组织活动，计划任务，跟踪问题，记录人力资源成本的组织形式。项目可以分为内部项目（研发活动，加快销售进度），私有项目或者客户参与的项目。\n                </p><p>\n                内部用户以项目成员的方式参与到项目中，也可以邀请客户加入到项目中分享项目活动。\n                </p>\n            "
+msgstr "<p class=\"oe_view_nocontent_create\">\n                  点击创建新项目\n                </p><p>\n                  项目是组织活动，计划任务，跟踪问题，记录人力资源成本的组织形式。项目可以分为内部项目（研发活动，加快销售进度），私有项目或者客户参与的项目。\n                </p><p>\n                内部用户以项目成员的方式参与到项目中，也可以邀请客户加入到项目中分享项目活动。\n                </p>\n            "
 
 #. module: project
 #: model:ir.actions.act_window,help:project.project_category_action
@@ -95,7 +97,7 @@ msgid ""
 "                    track progress, discuss on tasks, attach documents, etc.\n"
 "                </p>\n"
 "            "
-msgstr "<p>\nOdoo项目管理模块使你可以通过进度跟踪、任务讨论、添加文档等方式进行任务管理从而有效的提高工作效率。\n </p>"
+msgstr "<p>\nOdoo项目管理模块使您可以通过进度跟踪、任务讨论、添加文档等方式进行任务管理从而有效的提高工作效率。\n </p>"
 
 #. module: project
 #: help:project.task,kanban_state:0
@@ -119,12 +121,12 @@ msgstr "有效"
 #. module: project
 #: view:project.task:project.view_task_form2
 msgid "Add a Description..."
-msgstr "添加一个描述"
+msgstr "添加说明"
 
 #. module: project
 #: view:project.task.type:project.task_type_edit
 msgid "Add a description..."
-msgstr "添加描述"
+msgstr "添加说明"
 
 #. module: project
 #: view:project.project:project.edit_project
@@ -149,17 +151,17 @@ msgstr "允许任务委派"
 #. module: project
 #: help:project.config.settings,group_time_work_estimation_tasks:0
 msgid "Allows you to compute Time Estimation on tasks."
-msgstr "允许你基于任务计算时间估计"
+msgstr "允许您基于任务计算时间估计"
 
 #. module: project
 #: help:project.config.settings,group_tasks_work_on_tasks:0
 msgid "Allows you to compute work on tasks."
-msgstr "允许你基于任务计算工作"
+msgstr "允许您基于任务计算工作"
 
 #. module: project
 #: help:project.config.settings,group_manage_delegation_task:0
 msgid "Allows you to delegate tasks to other users."
-msgstr "允许你委托任务给其他用户。"
+msgstr "允许委派任务给其他用户。"
 
 #. module: project
 #: model:project.task.type,name:project.project_tt_analysis
@@ -238,12 +240,12 @@ msgstr "受阻"
 #. module: project
 #: model:ir.filters,name:project.filter_task_report_responsible
 msgid "By Responsible"
-msgstr "按负责人"
+msgstr "负责人"
 
 #. module: project
 #: model:ir.filters,name:project.filter_task_report_reviewer
 msgid "By Reviewer"
-msgstr "按审核人"
+msgstr "审核人"
 
 #. module: project
 #: code:addons/project/wizard/project_task_delegate.py:69
@@ -280,7 +282,7 @@ msgstr "已取消"
 #. module: project
 #: model:ir.model,name:project.model_project_category
 msgid "Category of project's task, issue, ..."
-msgstr "项目任务以及问题的类别"
+msgstr "项目任务以及问题的类别, ..."
 
 #. module: project
 #: code:addons/project/project.py:921
@@ -288,7 +290,7 @@ msgstr "项目任务以及问题的类别"
 msgid ""
 "Child task still open.\n"
 "Please cancel or complete child task first."
-msgstr "子任务仍然开启。\n请先取消或完成子任务。"
+msgstr "下级任务仍然开启。\n请先取消或完成子任务。"
 
 #. module: project
 #: view:project.project:project.edit_project
@@ -450,12 +452,12 @@ msgstr "委派"
 #. module: project
 #: view:project.task.delegate:project.view_project_task_delegate
 msgid "Delegated Task"
-msgstr "已委派任务"
+msgstr "委派任务"
 
 #. module: project
 #: field:project.task,child_ids:0
 msgid "Delegated Tasks"
-msgstr "已委派任务"
+msgstr "委派任务"
 
 #. module: project
 #: field:project.task.delegate,name:0
@@ -569,12 +571,12 @@ msgstr "错误！项目的起始日期须大于结束日期。"
 msgid ""
 "Estimated time for you to validate the work done by the user to whom you "
 "delegate this task"
-msgstr "你复核分派任务的工作成果需要的工时数"
+msgstr "您复核委派任务的工作成果需要的工时数"
 
 #. module: project
 #: help:project.task.delegate,planned_hours:0
 msgid "Estimated time to close this task by the delegated user"
-msgstr "被分派任务的人估算的工时"
+msgstr "被委派任务的人估算的工时"
 
 #. module: project
 #: help:project.task,planned_hours:0
@@ -613,7 +615,7 @@ msgstr "在看板视图中折叠"
 msgid ""
 "Follow this project to automatically track the events associated to tasks "
 "and issues of this project."
-msgstr "关注此项目的同时，追踪此项目的任务和问题关联的事件。"
+msgstr "关注此项目的同时，跟踪此项目的任务和问题关联的事件。"
 
 #. module: project
 #: field:project.project,message_follower_ids:0
@@ -629,7 +631,7 @@ msgstr "GTD"
 #. module: project
 #: view:project.task:project.view_task_form2
 msgid "Gantt View"
-msgstr "甘特视图"
+msgstr "甘特图"
 
 #. module: project
 #: field:project.config.settings,module_sale_service:0
@@ -715,14 +717,14 @@ msgstr "ID"
 #. module: project
 #: help:project.project,message_unread:0 help:project.task,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr "如果选中此项，你需要注意新的消息。"
+msgstr "如果选中此项，您需要注意新的消息。"
 
 #. module: project
 #: help:account.analytic.account,use_tasks:0
 msgid ""
 "If checked, this contract will be available in the project menu and you will"
 " be able to manage tasks or track issues"
-msgstr "如果选中，则该合同将可在项目菜单中，您将能够管理任务或追踪问题"
+msgstr "如果选中，则该合同将可在项目菜单中，您将能够管理任务或跟踪问题"
 
 #. module: project
 #: help:project.project,active:0
@@ -754,7 +756,7 @@ msgstr "进行中"
 #. module: project
 #: view:project.project:project.edit_project
 msgid "Incoming Emails create"
-msgstr "收到电子邮件后创建"
+msgstr "收到的邮件创建"
 
 #. module: project
 #: field:project.task,planned_hours:0
@@ -854,7 +856,7 @@ msgid ""
 "Link this project to an analytic account if you need financial management on"
 " projects. It enables you to connect projects with budgets, planning, cost "
 "and revenue analysis, timesheets on projects, etc."
-msgstr "如果你需要项目的财务管理，链接这项目到一个分析账户。它能让你链接预算、计划、成本和收益分析、项目时间表等到项目."
+msgstr "如果您需要项目的财务管理，链接这项目到一个分析账户。它能让您链接预算、计划、成本和收益分析、项目时间表等到项目."
 
 #. module: project
 #: field:project.config.settings,group_tasks_work_on_tasks:0
@@ -876,7 +878,7 @@ msgstr "管理任务的估计时间"
 #: view:project.project:project.view_project_project_filter
 #: model:res.groups,name:project.group_project_manager
 msgid "Manager"
-msgstr "经理"
+msgstr "管理者"
 
 #. module: project
 #: view:project.project:project.view_project_project_filter
@@ -959,12 +961,12 @@ msgstr "新任务说明"
 msgid ""
 "New state of your own task. Pending will be reopened automatically when the "
 "delegated task is closed"
-msgstr "你的任务进入了新的阶段。等待状态将在分派的任务结束后重启任务"
+msgstr "您的任务进入了新的阶段。等待状态将在分派的任务关闭后重启任务"
 
 #. module: project
 #: help:project.task.delegate,name:0
 msgid "New title of the task delegated to the user"
-msgstr "分派给这个用户的任务标题"
+msgstr "委派给这个用户的任务的标题"
 
 #. module: project
 #: selection:project.task,priority:0
@@ -992,7 +994,7 @@ msgstr "距开始日期"
 #. module: project
 #: help:report.project.task.user,closing_days:0
 msgid "Number of Days to close the task"
-msgstr "距结束日期"
+msgstr "距关闭日期"
 
 #. module: project
 #: field:project.project,doc_count:0
@@ -1051,7 +1053,7 @@ msgstr "待定"
 #. module: project
 #: help:project.project,progress_rate:0
 msgid "Percent of tasks closed according to the total of tasks todo."
-msgstr "已结束任务和未结束任务的百分比。"
+msgstr "已关闭任务和未关闭任务的百分比。"
 
 #. module: project
 #: field:project.task.delegate,planned_hours:0
@@ -1125,7 +1127,7 @@ msgstr "项目管理"
 #: view:project.project:project.view_project_project_filter
 #: field:project.task,manager_id:0
 msgid "Project Manager"
-msgstr "项目经理"
+msgstr "项目管理者"
 
 #. module: project
 #: field:project.project,members:0
@@ -1153,7 +1155,7 @@ msgstr "项目阶段"
 #: model:ir.actions.act_window,name:project.action_project_task_delegate
 #: view:project.task.delegate:project.view_project_task_delegate
 msgid "Project Task Delegate"
-msgstr "任务分派"
+msgstr "项目任务委派"
 
 #. module: project
 #: model:ir.model,name:project.model_project_task_work
@@ -1235,7 +1237,7 @@ msgstr "就绪"
 #: selection:project.task.history.cumulative,kanban_state:0
 #: selection:report.project.task.user,state:0
 msgid "Ready for next stage"
-msgstr "准备好下一个阶段"
+msgstr "下一阶段就绪"
 
 #. module: project
 #: field:project.config.settings,module_project_timesheet:0
@@ -1245,7 +1247,7 @@ msgstr "记录每个任务的计工单明细行"
 #. module: project
 #: help:project.task.delegate,new_task_description:0
 msgid "Reinclude the description of the task in the task of the user"
-msgstr "包含当前任务的描述"
+msgstr "包含当前任务的说明"
 
 #. module: project
 #: view:project.task:project.view_task_form2
@@ -1292,7 +1294,7 @@ msgstr "搜索项目"
 #: field:project.project,sequence:0 field:project.task,sequence:0
 #: field:project.task.type,sequence:0
 msgid "Sequence"
-msgstr "序列"
+msgstr "序号"
 
 #. module: project
 #: view:project.project:project.edit_project
@@ -1353,7 +1355,7 @@ msgstr "开始日期"
 #. module: project
 #: field:project.task,date_start:0
 msgid "Starting Date"
-msgstr "开始日期"
+msgstr "起始日期"
 
 #. module: project
 #: field:project.project,state:0
@@ -1367,7 +1369,7 @@ msgstr "状态"
 msgid ""
 "Sum of planned hours of all tasks related to this project and its child "
 "projects."
-msgstr "项目下的任务和子任务计划工时的合计数"
+msgstr "项目下的任务和下级任务计划工时的合计数"
 
 #. module: project
 #: help:project.project,effective_hours:0
@@ -1381,7 +1383,7 @@ msgstr "本项目和相关项目的任务实际花费的小时数合计"
 msgid ""
 "Sum of total hours of all tasks related to this project and its child "
 "projects."
-msgstr "此项目极其子项目的所有任务的实际工时数"
+msgstr "此项目极其下级项目的所有任务的实际工时数"
 
 #. module: project
 #: field:project.project,message_summary:0
@@ -1442,7 +1444,7 @@ msgstr "任务已创建"
 #. module: project
 #: model:ir.model,name:project.model_project_task_delegate
 msgid "Task Delegate"
-msgstr "任务分派"
+msgstr "任务委派"
 
 #. module: project
 #: model:res.groups,name:project.group_delegate_task
@@ -1452,13 +1454,13 @@ msgstr "任务委派"
 #. module: project
 #: model:ir.filters,name:project.filter_task_report_task_pipe
 msgid "Task Pipe"
-msgstr "任务通道"
+msgstr "任务管道"
 
 #. module: project
 #: model:mail.message.subtype,description:project.mt_task_ready
 #: model:mail.message.subtype,name:project.mt_task_ready
 msgid "Task Ready for Next Stage"
-msgstr "任务已为下一阶段准备好了"
+msgstr "下一阶段任务已就绪"
 
 #. module: project
 #: model:ir.model,name:project.model_project_task_type
@@ -1583,7 +1585,7 @@ msgstr "该类型的文件创建电子邮件时，收到该项目的电子邮件
 msgid ""
 "This allows you to transfer the entries under tasks defined for Project Management to the timesheet line entries for particular date and user, with the effect of creating, editing and deleting either ways.\n"
 "-This installs the module project_timesheet."
-msgstr "这可以允许你将用于项目管理任务下的条目转移到时间表下的条目，特别是时间和用户。无论哪种方式的都将影响生成、编辑、删除\n这会安装项目时间表模块"
+msgstr "这可以允许您将用于项目管理任务下的条目转移到时间表下的条目，特别是时间和用户。无论哪种方式的都将影响生成、编辑、删除\n这会安装项目时间表模块"
 
 #. module: project
 #: help:project.config.settings,module_sale_service:0
@@ -1606,7 +1608,7 @@ msgid ""
 "This report allows you to analyse the performance of your projects and "
 "users. You can analyse the quantities of tasks, the hours spent compared to "
 "the planned hours, the average number of days to open or close a task, etc."
-msgstr "这个报表用于分析你项目和成员的效率。可以分析任务数量、计划工时和实际工时的对比、任务的平均花费天数"
+msgstr "这个报表用于分析您项目和成员的效率。可以分析任务数量、计划工时和实际工时的对比、任务的平均花费天数"
 
 #. module: project
 #: help:project.task.type,fold:0
@@ -1681,7 +1683,7 @@ msgstr "总剩余时间，任务执行者可定期重估"
 #. module: project
 #: field:project.config.settings,module_project_issue:0
 msgid "Track issues and bugs"
-msgstr "追踪问题和错误"
+msgstr "跟踪问题和错误"
 
 #. module: project
 #: view:project.task:project.view_task_search_form
@@ -1728,7 +1730,7 @@ msgstr "用户电子邮件"
 #: help:project.task.delegate,project_id:0
 #: help:project.task.delegate,user_id:0
 msgid "User you want to delegate this task to"
-msgstr "你要分派这个任务给哪个用户"
+msgstr "您要委派这个任务给哪个用户"
 
 #. module: project
 #: field:project.task.delegate,state:0
@@ -1800,12 +1802,12 @@ msgstr "您必须指定该项目“%s成员！"
 #. module: project
 #: field:project.task.delegate,prefix:0
 msgid "Your Task Title"
-msgstr "你的任务主题"
+msgstr "您的任务主题"
 
 #. module: project
 #: view:project.task.delegate:project.view_project_task_delegate
 msgid "_Delegate"
-msgstr "_D分派"
+msgstr "_委派"
 
 #. module: project
 #: view:project.task:project.view_task_kanban

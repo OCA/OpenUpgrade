@@ -4,13 +4,13 @@
 # 
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
-# Paolo Valier, 2016
+# Paolo Valier, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-14 12:26+0000\n"
-"PO-Revision-Date: 2016-04-01 15:32+0000\n"
+"PO-Revision-Date: 2017-09-23 21:12+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/odoo/odoo-8/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -43,7 +43,7 @@ msgstr "\n* Bozza: ancora non confermato e non può essere schedulato fino alla 
 msgid ""
 "\n"
 "Creates the dropship route and add more complex tests-This installs the module stock_dropshipping."
-msgstr "\nCrea il percorso navetta e aggiunge prove più complesse-Questo installa il modulo stock_dropshipping"
+msgstr "\nCrea il percorso navetta e aggiunge prove più complesse\n-Questa voce installa il modulo stock_dropshipping"
 
 #. module: stock
 #: code:addons/stock/stock.py:1662
@@ -65,7 +65,7 @@ msgid ""
 "same product(%s), same location(%s), same package, same owner and same lot. "
 "Please first validate the first inventory adjustement with this product "
 "before creating another one."
-msgstr ""
+msgstr "Non è possibile avere due rettifiche inventariali nello stato \"In Corso\" per lo stesso prodotto(%s), stessa location(%s), stesso pacco, stesso proprietario e stesso lotto. Prego confermare la prima rettifica inventariale di questo prodotto prima di crearne una nuova."
 
 #. module: stock
 #: code:addons/stock/stock.py:3090
@@ -107,7 +107,7 @@ msgstr "Sequenza di packing"
 #: code:addons/stock/stock.py:3227 code:addons/stock/stock.py:3501
 #, python-format
 msgid " Sequence picking"
-msgstr "Sequenza di prelievo"
+msgstr "Sequenza picking"
 
 #. module: stock
 #: field:stock.inventory,move_ids_exist:0
@@ -130,7 +130,7 @@ msgstr "%s: Fornisce il Prodotto da %s"
 #: code:addons/stock/res_config.py:43
 #, python-format
 msgid "%s: Transit Location"
-msgstr "%s: Locazione di Transito"
+msgstr "%s: Punto di Stoccaggio di Transito"
 
 #. module: stock
 #: help:stock.move,state:0
@@ -140,7 +140,7 @@ msgid ""
 "* Waiting Availability: This state is reached when the procurement resolution is not straight forward. It may need the scheduler to run, a component to me manufactured...\n"
 "* Available: When products are reserved, it is set to 'Available'.\n"
 "* Done: When the shipment is processed, the state is 'Done'."
-msgstr "* Nuovo: Quando il movimento di magazzino è generato e non ancora confermato.\n* In attesa di altro movimento: Questo stato viene visualizzato quando la movimentazione è in attesa di un'altra movimentazione, per esempio in un flusso concatenato.\n* Attesa disponibilità: Questo stato viene visualizzato quando l'elaborazione dell'approvvigionamento non è lineare. Potrebbe essere necessario eseguire lo scheduler, o produrre un componente...\n* Disponibile: Quando i prodotti vengono riservati.\n* Completato: Quando la movimentazione è completata."
+msgstr "* Nuovo: Quando il movimento di magazzino è generato e non ancora confermato.\n* In attesa di altro movimento: Questo stato viene visualizzato quando la movimentazione è in attesa di un'altra movimentazione, per esempio in un flusso concatenato.\n* Attesa disponibilità: Questo stato viene visualizzato quando l'elaborazione dell'approvvigionamento non è lineare. Potrebbe essere necessario eseguire il pianificatore, o produrre un componente...\n* Disponibile: Quando i prodotti vengono riservati.\n* Completato: Quando la movimentazione è completata."
 
 #. module: stock
 #: help:stock.location,usage:0
@@ -361,7 +361,7 @@ msgstr ""
 #: code:addons/stock/static/src/js/widgets.js:656
 #, python-format
 msgid "<p>We could not find a picking to display.</p>"
-msgstr "<p>Non è stato possibile trovare un prelievo da visualizzare.</p>"
+msgstr "<p>Non è stato possibile trovare un picking da visualizzare.</p>"
 
 #. module: stock
 #: code:addons/stock/stock.py:2556
@@ -663,7 +663,7 @@ msgstr ""
 #: code:addons/stock/stock.py:3074
 #, python-format
 msgid "Can't find any generic Make To Order route."
-msgstr ""
+msgstr "Non è stato possibile trovare una rotta generica di Produzione su Ordine."
 
 #. module: stock
 #: view:make.procurement:stock.view_make_procurment_wizard
@@ -709,7 +709,7 @@ msgstr "Non puoi annullare la prenotazione di un movimento già effettuato"
 #. module: stock
 #: field:product.template,loc_case:0
 msgid "Case"
-msgstr "Case"
+msgstr "Contenitore"
 
 #. module: stock
 #: field:stock.return.picking,move_dest_exists:0
@@ -1144,7 +1144,7 @@ msgid ""
 "\n"
 "Thank you in advance for your cooperation.\n"
 "Best Regards,"
-msgstr "Gentile signore/signora, \n\nDlle nostre registrazioni contabili ci risulta che alcuni pagamenti del vostro conto sono ancora aperti. Prego verificate i dettagli\nallegati.\nSe il pagamento dovesse già essere stato corrisposto, prego non considerate la presente. In caso contrario, prego corrispondete l'importo indicato di seguito.\nSe dovessero esserci dubbi o richieste a riguardo, prego non esitate a contattarci.\n\nRingraziamo in anticipo per la Vostra collaborazione.\nDistinti saluti,"
+msgstr "Gentile signore/signora, \n\nDalle nostre registrazioni contabili risultano ancora sospesi alcuni pagamenti. Vi preghiamo di verificare i dettagli allegati.\nSe il pagamento dovesse essere già stato corrisposto, vi preghiamo di non considerare la presente. In caso contrario, vi chiediamo di corrispondere l'importo indicato di seguito.\nSe dovessero esserci dubbi o richieste a riguardo, non esitate a contattarci.\n\nRingraziamo in anticipo per la Vostra collaborazione.\nDistinti saluti,"
 
 #. module: stock
 #: field:stock.config.settings,decimal_precision:0
@@ -1412,7 +1412,7 @@ msgstr ""
 #. module: stock
 #: view:product.template:stock.product_template_search_form_view_stock
 msgid "Exhausted Stock"
-msgstr ""
+msgstr "Stock Esaurito"
 
 #. module: stock
 #: field:stock.move,date_expected:0
@@ -1504,12 +1504,12 @@ msgstr "Previsione Prodotti Disponibili"
 #. module: stock
 #: view:product.template:stock.product_template_search_form_view_stock
 msgid "Forecast Exhausted Stock"
-msgstr ""
+msgstr "Previsione Stock Esaurito"
 
 #. module: stock
 #: view:product.template:stock.product_template_search_form_view_stock
 msgid "Forecast Negative Stock"
-msgstr ""
+msgstr "Previsione Stock Negativo"
 
 #. module: stock
 #: field:product.product,virtual_available:0
@@ -1634,12 +1634,12 @@ msgstr "Raggruppa per..."
 #. module: stock
 #: view:procurement.order:stock.view_procurement_form_stock_inherit
 msgid "Group's Pickings"
-msgstr "Prelievi di Gruppo"
+msgstr "Picking di Gruppo"
 
 #. module: stock
 #: field:stock.pack.operation,processed:0
 msgid "Has been processed?"
-msgstr "E' stato processato?"
+msgstr "È stato processato?"
 
 #. module: stock
 #: field:stock.location,posz:0
@@ -1652,7 +1652,7 @@ msgstr "Altezza (Z)"
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr "Gestisce il sommario (numero di messaggi, ...) di Chatter. Questo sommario è direttamente in html così da poter essere inserito nelle viste kanban."
+msgstr "Contiene il riepilogo Chatter (numero di messaggi, ...). Questa sintesi è direttamente in formato HTML, al fine di essere inserita nelle viste kanban."
 
 #. module: stock
 #: field:make.procurement,id:0 field:procurement.orderpoint.compute,id:0
@@ -1819,7 +1819,7 @@ msgstr ""
 msgid ""
 "In case of dropshipping, we need to know the destination address more "
 "precisely"
-msgstr "In caso di consegna diretta dal fornitore, abbiamo bisogno di conoscere l'indirizzo di destinazione con maggiore precisione"
+msgstr "In caso di dropship abbiamo bisogno di conoscere l'indirizzo di destinazione con maggiore precisione"
 
 #. module: stock
 #: field:product.product,incoming_qty:0 field:product.template,incoming_qty:0
@@ -1886,7 +1886,7 @@ msgstr ""
 msgid ""
 "Install the picking wave module which will help you grouping your pickings "
 "and processing them in batch"
-msgstr "Installa il modulo movimentazioni che aiuta nel raggruppare i prelievi e processarli assieme"
+msgstr "Installa il modulo movimentazioni che aiuta nel raggruppare i picking e processarli assieme"
 
 #. module: stock
 #: model:stock.location,name:stock.stock_location_inter_wh
@@ -1947,27 +1947,27 @@ msgstr "Numero di riferimento interno nel caso sia diverso dal numero seriale di
 #. module: stock
 #: field:stock.inventory,location_id:0
 msgid "Inventoried Location"
-msgstr ""
+msgstr "Location inventariata"
 
 #. module: stock
 #: field:stock.inventory,lot_id:0
 msgid "Inventoried Lot/Serial Number"
-msgstr ""
+msgstr "Lotto/Numero di serie inventariato"
 
 #. module: stock
 #: field:stock.inventory,partner_id:0
 msgid "Inventoried Owner"
-msgstr ""
+msgstr "Proprietario inventariato"
 
 #. module: stock
 #: field:stock.inventory,package_id:0
 msgid "Inventoried Pack"
-msgstr ""
+msgstr "Pacco inventariato"
 
 #. module: stock
 #: field:stock.inventory,product_id:0
 msgid "Inventoried Product"
-msgstr ""
+msgstr "Prodotto inventariato"
 
 #. module: stock
 #: field:stock.inventory,line_ids:0
@@ -1977,7 +1977,7 @@ msgstr "Inventari"
 #. module: stock
 #: view:stock.inventory:stock.view_inventory_filter
 msgid "Inventories Month"
-msgstr ""
+msgstr "Mese Inventari"
 
 #. module: stock
 #: model:ir.actions.report.xml,name:stock.action_report_inventory
@@ -2087,7 +2087,7 @@ msgstr "Fattura prodotti in una unità di misura differente da quella dell'ordin
 #: field:stock.picking,message_is_follower:0
 #: field:stock.production.lot,message_is_follower:0
 msgid "Is a Follower"
-msgstr "E' un Follower"
+msgstr "È un Follower"
 
 #. module: stock
 #: field:stock.location,scrap_location:0
@@ -2118,7 +2118,7 @@ msgstr "Ultime 10 Operazioni"
 #. module: stock
 #: field:stock.picking.type,last_done_picking:0
 msgid "Last 10 Done Pickings"
-msgstr "Ultimi 10 Prelievi effettuati"
+msgstr "Ultimi 10 Picking effettuati"
 
 #. module: stock
 #: field:stock.picking,message_last_post:0
@@ -2378,7 +2378,7 @@ msgstr "Genera approvvigionamenti"
 #: model:stock.location.route,name:stock.route_warehouse0_mto
 #, python-format
 msgid "Make To Order"
-msgstr ""
+msgstr "Produrre su Ordine"
 
 #. module: stock
 #: selection:stock.warehouse,delivery_steps:0
@@ -2405,12 +2405,12 @@ msgstr "Gestisci Magazzini e Locations multipli"
 #. module: stock
 #: model:res.groups,name:stock.group_tracking_lot
 msgid "Manage Packages"
-msgstr ""
+msgstr "Gestisci Confezioni"
 
 #. module: stock
 #: model:res.groups,name:stock.group_adv_location
 msgid "Manage Push and Pull inventory flows"
-msgstr "Gestisci flussi d'Invio e Richiesta invetario"
+msgstr "Gestisci flussi d'Invio e Richiesta inventario"
 
 #. module: stock
 #: field:stock.config.settings,group_stock_adv_location:0
@@ -2542,7 +2542,7 @@ msgstr "Sposta"
 #: code:addons/stock/procurement.py:43
 #, python-format
 msgid "Move From Another Location"
-msgstr ""
+msgstr "Sposta da altra Location"
 
 #. module: stock
 #: field:stock.quant,negative_move_id:0
@@ -2557,7 +2557,7 @@ msgstr ""
 #. module: stock
 #: field:procurement.rule,procure_method:0
 msgid "Move Supply Method"
-msgstr ""
+msgstr "Sposta Metodo di Approvvigionamento"
 
 #. module: stock
 #: help:stock.move,date:0
@@ -2635,7 +2635,7 @@ msgstr ""
 #. module: stock
 #: view:product.template:stock.product_template_search_form_view_stock
 msgid "Negative Stock"
-msgstr ""
+msgstr "Stock Negativo"
 
 #. module: stock
 #: selection:stock.move,state:0
@@ -2645,7 +2645,7 @@ msgstr "Nuovo"
 #. module: stock
 #: field:stock.change.product.qty,new_quantity:0
 msgid "New Quantity on Hand"
-msgstr ""
+msgstr "Nuova Quantità a disposizione"
 
 #. module: stock
 #. openerp-web
@@ -2669,7 +2669,7 @@ msgstr ""
 #: code:addons/stock/static/src/js/widgets.js:649
 #, python-format
 msgid "No Picking Available"
-msgstr "Nessun Prelievo Disponibile"
+msgstr "Nessun Picking Disponibile"
 
 #. module: stock
 #: view:report.stock.lines.date:stock.report_stock_lines_date_search
@@ -2681,7 +2681,7 @@ msgstr ""
 #: code:addons/stock/static/src/xml/picking.xml:195
 #, python-format
 msgid "No picking found."
-msgstr "Nessun prelievo trovato."
+msgstr "Nessun Picking trovato."
 
 #. module: stock
 #: code:addons/stock/wizard/stock_return_picking.py:84
@@ -2722,7 +2722,7 @@ msgstr "Note"
 #: code:addons/stock/stock.py:880
 #, python-format
 msgid "Nothing to check the availability for."
-msgstr ""
+msgstr "Nulla di cui controllare la disponibilità."
 
 #. module: stock
 #: field:procurement.rule,delay:0
@@ -2779,7 +2779,7 @@ msgstr "Un solo prodotto"
 #. module: stock
 #: model:ir.actions.client,name:stock.action_client_warehouse_menu
 msgid "Open Warehouse Menu"
-msgstr "Apre il menù Magazzino"
+msgstr "Apre il menu Magazzino"
 
 #. module: stock
 #: field:stock.move.operation.link,operation_id:0
@@ -2977,7 +2977,7 @@ msgstr ""
 #: view:stock.quant.package:stock.view_quant_package_tree
 #: view:website:stock.report_inventory
 msgid "Package"
-msgstr ""
+msgstr "Confezione"
 
 #. module: stock
 #: model:ir.actions.report.xml,name:stock.action_report_quant_package_barcode_small
@@ -3094,7 +3094,7 @@ msgstr "Punti di Stoccaggio del Partner"
 #. module: stock
 #: view:stock.inventory:stock.view_inventory_filter
 msgid "Physical Inventories by Month"
-msgstr ""
+msgstr "Inventari Fisici per Mese"
 
 #. module: stock
 #: model:stock.location,name:stock.stock_location_locations
@@ -3140,12 +3140,12 @@ msgstr "Picking"
 #: model:ir.model,name:stock.model_stock_picking
 #: view:stock.picking:stock.view_picking_internal_search
 msgid "Picking List"
-msgstr "Picking List"
+msgstr "Lista Picking"
 
 #. module: stock
 #: view:stock.picking:stock.view_picking_internal_search
 msgid "Picking Lists"
-msgstr "Liste Prelievi"
+msgstr "Liste Picking"
 
 #. module: stock
 #: field:procurement.rule,picking_type_id:0 field:stock.move,picking_type_id:0
@@ -3153,71 +3153,71 @@ msgstr "Liste Prelievi"
 #: field:stock.picking,picking_type_id:0
 #: view:stock.picking.type:stock.view_pickingtype_filter
 msgid "Picking Type"
-msgstr "Tipo Prelievo"
+msgstr "Tipo Picking"
 
 #. module: stock
 #: field:stock.picking,picking_type_code:0
 msgid "Picking Type Code"
-msgstr "Codice del Tipo di Prelievo"
+msgstr "Codice del Tipo di Picking"
 
 #. module: stock
 #: field:stock.picking.type,name:0
 msgid "Picking Type Name"
-msgstr "Nome del Tipo di Prelievo"
+msgstr "Nome del Tipo di Picking"
 
 #. module: stock
 #: help:procurement.rule,picking_type_id:0
 msgid ""
 "Picking Type determines the way the picking should be shown in the view, "
 "reports, ..."
-msgstr "Il Tipo di Prelievo determina il modo in cui i prelievi dovrebbero esser visualizzati nelle viste, report, ..."
+msgstr "Il Tipo di Picking determina il modo in cui i picking dovrebbero esser visualizzati nelle viste, report, ..."
 
 #. module: stock
 #: field:stock.picking.type,return_picking_type_id:0
 msgid "Picking Type for Returns"
-msgstr "Tipo di Prelievo per i Resi"
+msgstr "Tipo di Picking per i Resi"
 
 #. module: stock
 #: view:stock.picking.type:stock.view_picking_type_form
 #: view:stock.picking.type:stock.view_picking_type_tree
 #: view:stock.warehouse:stock.view_warehouse
 msgid "Picking Types"
-msgstr "Tipi di Prelievo"
+msgstr "Tipi di Picking"
 
 #. module: stock
 #: view:stock.picking:stock.vpicktree
 msgid "Picking list"
-msgstr "Picking list"
+msgstr "Lista Picking"
 
 #. module: stock
 #: model:ir.model,name:stock.model_stock_transfer_details
 msgid "Picking wizard"
-msgstr "Procedura guidata Prelievi"
+msgstr "Procedura guidata Picking"
 
 #. module: stock
 #: model:ir.model,name:stock.model_stock_transfer_details_items
 msgid "Picking wizard items"
-msgstr "Elementi proceduta guidata Prelievi"
+msgstr "Elementi proceduta guidata Picking"
 
 #. module: stock
 #: view:procurement.group:stock.procurement_group_form_view_herited
 msgid "Pickings"
-msgstr "Prelievi"
+msgstr "Picking"
 
 #. module: stock
 #: view:stock.picking:stock.view_picking_internal_search
 msgid "Pickings already processed"
-msgstr "Prelievo già processato"
+msgstr "Picking già processati"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.do_view_pickings
 msgid "Pickings for Groups"
-msgstr "Prelievi per Gruppi"
+msgstr "Picking per Gruppi"
 
 #. module: stock
 #: view:stock.picking:stock.view_picking_internal_search
 msgid "Pickings that are late on scheduled time"
-msgstr "Prelievi che sono in ritardo su quanto programato"
+msgstr "Picking che sono in ritardo su quanto programato"
 
 #. module: stock
 #: field:make.procurement,date_planned:0
@@ -3240,13 +3240,13 @@ msgstr "Specifica almeno una quantità diversa da zero."
 #: code:addons/stock/wizard/stock_change_product_qty.py:58
 #, python-format
 msgid "Please use the Product Variant view to update the product quantity."
-msgstr "Accedi alle Varianti prodotto per aggiornarne la quantità."
+msgstr "Accedere alle Varianti Prodotto per aggiornarne le quantità."
 
 #. module: stock
 #: code:addons/stock/wizard/make_procurement_product.py:117
 #, python-format
 msgid "Please use the Product Variant vue to request a procurement."
-msgstr ""
+msgstr "Accedere alle Varianti Prodotto per aggiornare le quantità."
 
 #. module: stock
 #: field:stock.move,product_packaging:0
@@ -3280,7 +3280,7 @@ msgstr "Stampa"
 #. module: stock
 #: view:stock.picking:stock.view_picking_form
 msgid "Print Picking List"
-msgstr "Stampa Lista Prelievi"
+msgstr "Stampa Lista Picking"
 
 #. module: stock
 #. openerp-web
@@ -3300,7 +3300,7 @@ msgstr "Priorità"
 msgid ""
 "Priority for this picking. Setting manually a value here would set it as "
 "priority for all the moves"
-msgstr "Priorità del prelievo. Impostando manualmente un valore risulterà effettivo come priorità anche per tutti i movimenti"
+msgstr "Priorità del picking. Impostando manualmente un valore risulterà effettivo come priorità anche per tutti i movimenti"
 
 #. module: stock
 #: view:stock.move:stock.view_move_tree
@@ -3350,7 +3350,7 @@ msgstr "Richiesta approvvigionamento"
 #. module: stock
 #: model:ir.model,name:stock.model_procurement_group
 msgid "Procurement Requisition"
-msgstr ""
+msgstr "Richiesta di approvvigionamento"
 
 #. module: stock
 #: model:ir.model,name:stock.model_procurement_rule field:stock.move,rule_id:0
@@ -3516,12 +3516,12 @@ msgstr ""
 #: field:procurement.rule,propagate:0 field:stock.location.path,propagate:0
 #: field:stock.move,propagate:0
 msgid "Propagate cancel and split"
-msgstr ""
+msgstr "Propaga Cancellazione e Divisione"
 
 #. module: stock
 #: view:stock.return.picking:stock.view_stock_return_picking_form
 msgid "Provide the quantities of the returned products."
-msgstr "Fornisce le quantità dei prodotti ritornati."
+msgstr "Fornisce le quantità dei prodotti resi."
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.procrules
@@ -3656,7 +3656,7 @@ msgstr ""
 #. module: stock
 #: field:stock.move,reserved_availability:0
 msgid "Quantity Reserved"
-msgstr ""
+msgstr "Quantità Riservata"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_change_product_qty.py:92
@@ -3667,7 +3667,7 @@ msgstr "La quantità non può essere negativa."
 #. module: stock
 #: help:stock.move,availability:0
 msgid "Quantity in stock that can still be reserved for this move"
-msgstr ""
+msgstr "La Quantità in stock può ancora essere riservata per questo movimento"
 
 #. module: stock
 #: help:stock.move,product_qty:0
@@ -3710,7 +3710,7 @@ msgstr ""
 #. module: stock
 #: help:stock.move,reserved_availability:0
 msgid "Quantity that has already been reserved for this move"
-msgstr ""
+msgstr "La Quantità è già stata riservata per questo movimento"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.quantsact
@@ -3874,7 +3874,7 @@ msgstr ""
 #. module: stock
 #: view:stock.picking:stock.view_picking_internal_search
 msgid "Remaining parts of picking partially processed"
-msgstr "Parti rimanenti del prelievo processato parzialmente"
+msgstr "Parti rimanenti del picking processato parzialmente"
 
 #. module: stock
 #: help:stock.pack.operation,remaining_qty:0
@@ -3923,7 +3923,7 @@ msgstr "Modalità di riordino"
 #: view:stock.warehouse.orderpoint:stock.view_warehouse_orderpoint_tree
 #: view:stock.warehouse.orderpoint:stock.warehouse_orderpoint_search
 msgid "Reordering Rules"
-msgstr "Regole di Riordino"
+msgstr "Regole Riordino"
 
 #. module: stock
 #: view:stock.warehouse.orderpoint:stock.warehouse_orderpoint_search
@@ -3944,7 +3944,7 @@ msgstr "Quantità Riservate"
 #. module: stock
 #: field:stock.quant,reservation_id:0
 msgid "Reserved for Move"
-msgstr ""
+msgstr "Riservato per Movimento"
 
 #. module: stock
 #: field:stock.move,reserved_quant_ids:0
@@ -3974,7 +3974,7 @@ msgstr "Rientro"
 #. module: stock
 #: model:ir.model,name:stock.model_stock_return_picking
 msgid "Return Picking"
-msgstr "Ritorna picking"
+msgstr "Ritorna Picking"
 
 #. module: stock
 #: view:stock.return.picking.line:stock.stock_return_line_form_in
@@ -3995,7 +3995,7 @@ msgstr ""
 #: code:addons/stock/wizard/stock_return_picking.py:179
 #, python-format
 msgid "Returned Picking"
-msgstr "Prelievi Resi"
+msgstr "Picking Resi"
 
 #. module: stock
 #: view:stock.picking:stock.view_picking_form
@@ -4057,7 +4057,7 @@ msgstr "Regole"
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_proc_schedulers
 msgid "Run Schedulers"
-msgstr "Esegui Scheduler"
+msgstr "Esegui Pianificatore"
 
 #. module: stock
 #. openerp-web
@@ -4086,7 +4086,7 @@ msgstr ""
 #: code:addons/stock/static/src/xml/picking.xml:226
 #, python-format
 msgid "Scanned picking could not be found"
-msgstr ""
+msgstr "Il picking scansionato non può esser trovato"
 
 #. module: stock
 #: view:stock.move:stock.view_move_search
@@ -4220,7 +4220,7 @@ msgstr "Numeri di serie"
 #. module: stock
 #: field:procurement.rule,warehouse_id:0
 msgid "Served Warehouse"
-msgstr ""
+msgstr "Magazzino servito"
 
 #. module: stock
 #: view:stock.move:stock.view_move_form
@@ -4363,7 +4363,7 @@ msgstr "Dividi"
 #. module: stock
 #: view:stock.inventory:stock.view_inventory_form
 msgid "Start Inventory"
-msgstr ""
+msgstr "Comincia Inventario"
 
 #. module: stock
 #: view:website:stock.report_picking
@@ -4400,7 +4400,7 @@ msgstr "Righe inventario di magazzino"
 #. module: stock
 #: model:ir.actions.report.xml,name:stock.report_product_history
 msgid "Stock Level Forecast"
-msgstr ""
+msgstr "Previsioni Scorte a Magazzino"
 
 #. module: stock
 #: view:stock.location:stock.view_location_form
@@ -4444,7 +4444,7 @@ msgstr ""
 #. module: stock
 #: field:stock.pack.operation,picking_id:0
 msgid "Stock Picking"
-msgstr "Prelievo di Magazzino"
+msgstr "Picking di Magazzino"
 
 #. module: stock
 #: view:product.template:stock.view_template_property_form
@@ -4533,12 +4533,12 @@ msgstr "Fornitori"
 #. module: stock
 #: view:product.template:stock.view_template_property_form
 msgid "Supply Chain Information"
-msgstr ""
+msgstr "Informazioni di Approvvigionamento"
 
 #. module: stock
 #: field:stock.move,procure_method:0
 msgid "Supply Method"
-msgstr ""
+msgstr "Metodo di Approvvigionamento"
 
 #. module: stock
 #: selection:procurement.rule,procure_method:0
@@ -4591,7 +4591,7 @@ msgstr ""
 msgid ""
 "Technical field used to display the correct label on print button in the "
 "picking view"
-msgstr "Campo tecnico utilizzato per visualizzare l'etichetta corretta nel pulsante di stampa della vista prelievi."
+msgstr "Campo tecnico utilizzato per visualizzare l'etichetta corretta nel pulsante di stampa della vista picking."
 
 #. module: stock
 #: help:stock.return.picking,move_dest_exists:0
@@ -4626,7 +4626,7 @@ msgid ""
 "The average delay in days between the confirmation of the customer order and"
 " the delivery of the finished products. It's the time you promise to your "
 "customers."
-msgstr "Il ritardo medio in giorni tra la conferma dell'ordine cliente e la consegna dei prodotti finiti. E' la tempistica promessa ai clienti."
+msgstr "Il ritardo medio in giorni tra la conferma dell'ordine cliente e la consegna dei prodotti finiti. È la tempistica promessa ai clienti."
 
 #. module: stock
 #: sql_constraint:stock.location:0
@@ -4678,7 +4678,7 @@ msgstr ""
 #, python-format
 msgid ""
 "The destination location must be the same for all the moves of the picking."
-msgstr "La location di destinazione deve essere la stessa per tutti i movimenti del prelievo."
+msgstr "La location di destinazione deve essere la stessa per tutti i movimenti del picking."
 
 #. module: stock
 #: view:product.category:stock.product_category_form_view_inherit
@@ -4715,7 +4715,7 @@ msgstr ""
 #. module: stock
 #: model:ir.model,name:stock.model_stock_picking_type
 msgid "The picking type determines the picking view"
-msgstr "Il tipo di prelievo determina la vista prelievo"
+msgstr "Il tipo di picking determina la vista picking"
 
 #. module: stock
 #: help:stock.warehouse.orderpoint,qty_multiple:0
@@ -4775,7 +4775,7 @@ msgstr ""
 #: code:addons/stock/stock.py:1070
 #, python-format
 msgid "The source location must be the same for all the moves of the picking."
-msgstr "La location d'origine deve essere la stessa per tutti i movimenti del prelievo."
+msgstr "La location d'origine deve essere la stessa per tutti i movimenti del picking."
 
 #. module: stock
 #: view:stock.transfer_details:stock.view_stock_enter_transfer_details
@@ -4792,7 +4792,7 @@ msgstr ""
 #. module: stock
 #: help:procurement.rule,warehouse_id:0
 msgid "The warehouse this rule is for"
-msgstr ""
+msgstr "Il magazzino per cui è questa regola"
 
 #. module: stock
 #: help:procurement.rule,propagate_warehouse_id:0
@@ -4805,7 +4805,7 @@ msgstr ""
 #. module: stock
 #: field:stock.inventory.line,theoretical_qty:0
 msgid "Theoretical Quantity"
-msgstr ""
+msgstr "Quantità Teorica"
 
 #. module: stock
 #: help:stock.config.settings,module_procurement_jit:0
@@ -4849,12 +4849,12 @@ msgstr ""
 #. module: stock
 #: help:stock.quant,owner_id:0
 msgid "This is the owner of the quant"
-msgstr ""
+msgstr "Questo è il proprietario della quantità"
 
 #. module: stock
 #: help:stock.location.path,picking_type_id:0
 msgid "This is the picking type associated with the different pickings"
-msgstr "Questo è il tipo di prelievo associato con diversi prelievi"
+msgstr "Questo è il tipo di picking associato con diversi picking"
 
 #. module: stock
 #: help:stock.move,product_uom_qty:0
@@ -4939,7 +4939,7 @@ msgstr ""
 msgid ""
 "This will show you the locations and allows you to define multiple picking "
 "types and warehouses."
-msgstr "Questo mostrerà le location e permetterà di definire tipi di prelievo e magazzini multipli."
+msgstr "Questo mostrerà le location e permetterà di definire tipi di picking e magazzini multipli."
 
 #. module: stock
 #. openerp-web
@@ -5116,7 +5116,7 @@ msgstr "Unità di Misura"
 #: code:addons/stock/stock.py:3736
 #, python-format
 msgid "Unknown Pack"
-msgstr ""
+msgstr "Confezione Sconosciuta"
 
 #. module: stock
 #: selection:stock.warehouse,reception_steps:0
@@ -5155,7 +5155,7 @@ msgstr "Non riservare"
 #. module: stock
 #: view:stock.inventory:stock.view_inventory_form
 msgid "UoM"
-msgstr ""
+msgstr "UdM"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_view_change_product_quantity
@@ -5180,7 +5180,7 @@ msgid ""
 "                        product. According to the product configuration, this may\n"
 "                        trigger a draft purchase order, a manufacturing order or\n"
 "                        a new task."
-msgstr ""
+msgstr "Utilizzare questa procedura per generare una richiesta di \napprovvigionamento per questo prodotto. In base alla \nconfigurazione del prodotto, questa può innescare una bozza \ndi ordine di acquisto, un ordine di produzione o una nuova attività."
 
 #. module: stock
 #: help:stock.return.picking.line,lot_id:0
@@ -5218,7 +5218,7 @@ msgstr "Convalida inventario"
 #: code:addons/stock/static/src/xml/picking.xml:67
 #, python-format
 msgid "Validate package"
-msgstr ""
+msgstr "Valida confezione"
 
 #. module: stock
 #: selection:stock.inventory,state:0
@@ -5271,7 +5271,7 @@ msgstr "Attesa disponibilità"
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_picking_tree_waiting
 msgid "Waiting Availability Transfers"
-msgstr ""
+msgstr "In Attesa Disponibilità Trasferimenti"
 
 #. module: stock
 #: view:stock.picking:stock.view_picking_internal_search
@@ -5312,7 +5312,7 @@ msgstr "Nome Magazzino"
 #. module: stock
 #: field:procurement.rule,propagate_warehouse_id:0
 msgid "Warehouse to Propagate"
-msgstr ""
+msgstr "Magazzino da Propagare"
 
 #. module: stock
 #: help:procurement.order,warehouse_id:0
@@ -5361,7 +5361,7 @@ msgstr "Attenzione!"
 #: code:addons/stock/stock.py:3866
 #, python-format
 msgid "Warning: wrong UoM!"
-msgstr "Attenzione: errata UdM!"
+msgstr "Attenzione: UdM errata!"
 
 #. module: stock
 #: code:addons/stock/stock.py:3873
@@ -5396,18 +5396,18 @@ msgstr ""
 msgid ""
 "When you select a serial number (lot), the quantity is corrected with respect to\n"
 "                            the quantity of that serial number (lot) and not to the total quantity of the product."
-msgstr ""
+msgstr "Quando viene selezionato un numero di serie (lotto), la quantità è aggiornata rispetto\nalla quantità di tale numero di serie (lotto) e non alla quantità totale del prodotto."
 
 #. module: stock
 #: field:stock.return.picking.line,wizard_id:0
 msgid "Wizard"
-msgstr "Wizard"
+msgstr "Procedura guidata"
 
 #. module: stock
 #: view:procurement.orderpoint.compute:stock.view_procurement_compute_wizard
 msgid ""
 "Wizard checks all the stock minimum rules and generate procurement order."
-msgstr "Il wizard controlla tutte le regole di stock minimo e genera ordini di approvvigionamento."
+msgstr "La Procedura guidata controlla tutte le regole di stock minimo e genera ordini di approvvigionamento."
 
 #. module: stock
 #: selection:stock.pack.operation,processed:0
@@ -5444,7 +5444,7 @@ msgstr "Puoi cancellare solo i movimenti in bozza"
 #: code:addons/stock/stock.py:2244
 #, python-format
 msgid "You cannot cancel a stock move that has been set to 'Done'."
-msgstr ""
+msgstr "Non è possibile cancellare un movimento di magazzino che è nello stato 'Completato'."
 
 #. module: stock
 #: code:addons/stock/stock.py:638
@@ -5489,13 +5489,13 @@ msgstr "Devi selezionare un unità di misura che appartiene stessa categoria di 
 #: code:addons/stock/wizard/stock_return_picking.py:62
 #, python-format
 msgid "You may only return one picking at a time!"
-msgstr "È possibile ritornare soltanto un prelievo alla volta!"
+msgstr "È possibile ritornare soltanto un picking alla volta!"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_return_picking.py:72
 #, python-format
 msgid "You may only return pickings that are Done!"
-msgstr "È possibile ritornare soltanto prelievi che sono Completati!"
+msgstr "È possibile ritornare soltanto picking che sono Completati!"
 
 #. module: stock
 #: code:addons/stock/stock.py:2159
@@ -5560,7 +5560,7 @@ msgstr "o"
 #: code:addons/stock/static/src/xml/picking.xml:243
 #, python-format
 msgid "picking(s)"
-msgstr "prelievo(i)"
+msgstr "picking"
 
 #. module: stock
 #: view:stock.return.picking:stock.view_stock_return_picking_form
@@ -5611,7 +5611,7 @@ msgstr "sconosciuto"
 #. module: stock
 #: view:product.template:stock.view_template_property_form
 msgid "⇒ Request Procurement"
-msgstr ""
+msgstr "⇒ Richiesta di Approvvigionamento"
 
 #. module: stock
 #: view:stock.inventory:stock.view_inventory_form

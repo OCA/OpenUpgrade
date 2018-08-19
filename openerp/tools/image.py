@@ -28,6 +28,10 @@ from PIL import Image
 from PIL import ImageEnhance
 from random import randint
 
+# Preload PIL with the minimal subset of image formats we need
+Image.preinit()
+Image._initialized = 2
+
 # ----------------------------------------
 # Image resizing
 # ----------------------------------------
@@ -89,7 +93,7 @@ def image_resize_image(base64_source, size=(1024, 1024), encoding='base64', file
 
     if image.size != size:
         image = image_resize_and_sharpen(image, size)
-    if image.mode not in ["1", "L", "P", "RGB", "RGBA"]:
+    if image.mode not in ["1", "L", "P", "RGB", "RGBA"] or (filetype == 'JPEG' and image.mode == 'RGBA'):
         image = image.convert("RGB")
 
     background_stream = StringIO.StringIO()
@@ -106,6 +110,7 @@ def image_resize_and_sharpen(image, size, preserve_aspect_ratio=False, factor=2.
         :param preserve_aspect_ratio: boolean (default: False)
         :param factor: Sharpen factor (default: 2.0)
     """
+    origin_mode = image.mode
     if image.mode != 'RGBA':
         image = image.convert('RGBA')
     image.thumbnail(size, Image.ANTIALIAS)
@@ -116,6 +121,8 @@ def image_resize_and_sharpen(image, size, preserve_aspect_ratio=False, factor=2.
     # create a transparent image for background and paste the image on it
     image = Image.new('RGBA', size, (255, 255, 255, 0))
     image.paste(resized_image, ((size[0] - resized_image.size[0]) / 2, (size[1] - resized_image.size[1]) / 2))
+    if image.mode != origin_mode:
+        image = image.convert(origin_mode)
     return image
 
 def image_save_for_web(image, fp=None, format=None):
@@ -183,7 +190,7 @@ def image_colorize(original, randomize=True, color=(255, 255, 255)):
     # generate the background color, past it as background
     if randomize:
         color = (randint(32, 224), randint(32, 224), randint(32, 224))
-    image.paste(color)
+    image.paste(color, box=(0, 0) + original.size)
     image.paste(original, mask=original)
     # return the new image
     buffer = StringIO.StringIO()

@@ -5,17 +5,19 @@
 # Translators:
 # eden.chen <ccskysea@gmail.com>, 2015
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
-# 珠海-老天 <liangjia@qq.com>, 2015
+# Jeffery CHEN <jeffery9@gmail.com>, 2016
+# liAnGjiA <liangjia@qq.com>, 2015
+# liAnGjiA <liangjia@qq.com>, 2015-2017
 # mrshelly <mrshelly@hotmail.com>, 2015-2016
 # THL <wt39181819@gmail.com>, 2015
-# 珠海-老天 <liangjia@qq.com>, 2015
+# liAnGjiA <liangjia@qq.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:07+0000\n"
-"PO-Revision-Date: 2016-01-15 02:40+0000\n"
-"Last-Translator: mrshelly <mrshelly@hotmail.com>\n"
+"PO-Revision-Date: 2017-08-19 03:30+0000\n"
+"Last-Translator: liAnGjiA <liangjia@qq.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/odoo/odoo-8/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -74,7 +76,7 @@ msgstr "<p> </p>"
 #. module: survey
 #: model:survey.page,description:survey.feedback_4
 msgid "<p>If you do not contribute or develop in Odoo, skip this page.</p>"
-msgstr "<p>如果你不是贡献者或者开发者,请跳过这页.</p>"
+msgstr "<p>如果您不是贡献者或者开发者,请跳过这页.</p>"
 
 #. module: survey
 #: model:ir.actions.act_window,help:survey.action_selected_survey_user_input
@@ -95,7 +97,7 @@ msgstr "<p>尚无何人任对您的调查做出回馈。</p>\n            "
 msgid ""
 "<p>These questions relate to the ergonomy and ease of use of Odoo. Try to remind your firsts days on Odoo and\n"
 "what have been your difficulties.</p>"
-msgstr "<p>这些问题涉及到Odoo的模块化和易用性。在Odoo上试着提醒你的第一天,什么正成为你的困难.</p>"
+msgstr "<p>这些问题涉及到Odoo的模块化和易用性。在Odoo上试着提醒您的第一天,什么正成为您的困难.</p>"
 
 #. module: survey
 #: model:survey.survey,description:survey.feedback_form
@@ -115,7 +117,7 @@ msgstr "长度必须是正数。"
 #. module: survey
 #: help:survey.survey,description:0
 msgid "A long description of the purpose of the survey"
-msgstr "此次调查目的的详细描述"
+msgstr "此次调查目的的详细说明"
 
 #. module: survey
 #: help:survey.label,quizz_mark:0
@@ -233,7 +235,7 @@ msgstr "答案将不包括在原始文档的讨论线程中。这个将对已产
 #. module: survey
 #: model:survey.question,question:survey.feedback_1_1
 msgid "Are you using Odoo on a daily basis?"
-msgstr "你现在每天使用Odoo吗?"
+msgstr "您现在每天使用Odoo吗?"
 
 #. module: survey
 #: field:survey.mail.compose.message,attachment_ids:0
@@ -250,7 +252,7 @@ msgstr "作者"
 msgid ""
 "Author of the message. If not set, email_from may hold an email address that"
 " did not match any partner."
-msgstr "消息的作者。如果没设置，email_from 可能保存一个不匹配任何合作伙伴的 email地址，"
+msgstr "消息的作者。如果没设置，email_from 可能保存一个不匹配任何合作伙伴的 电子邮箱地址。"
 
 #. module: survey
 #: field:survey.mail.compose.message,author_avatar:0
@@ -280,12 +282,12 @@ msgstr "取消"
 #. module: survey
 #: field:survey.survey,res_model:0
 msgid "Category"
-msgstr "分类"
+msgstr "类别"
 
 #. module: survey
 #: field:survey.mail.compose.message,child_ids:0
 msgid "Child Messages"
-msgstr "子信息"
+msgstr "下级信息"
 
 #. module: survey
 #: view:website:survey.simple_choice
@@ -314,12 +316,12 @@ msgstr "点击此处参与调查"
 #: view:survey.mail.compose.message:survey.survey_email_compose_message
 #: view:website:survey.page
 msgid "Close"
-msgstr "结束"
+msgstr "关闭"
 
 #. module: survey
 #: field:survey.stage,closed:0 model:survey.stage,name:survey.stage_closed
 msgid "Closed"
-msgstr "已结束"
+msgstr "已关闭"
 
 #. module: survey
 #: field:survey.survey,color:0
@@ -367,7 +369,7 @@ msgstr "写作模式"
 #. module: survey
 #: model:survey.label,value:survey.frow_2_7_2
 msgid "Configuration wizard exists for each important setting"
-msgstr "为每个重要的设置配置向导"
+msgstr "为每个重要的设置都存在配置向导"
 
 #. module: survey
 #: view:survey.question:survey.survey_question_form
@@ -388,7 +390,7 @@ msgstr "复制粘贴下方的HTML代码，把该链接增加到任意网页。"
 #. module: survey
 #: view:survey.mail.compose.message:survey.survey_email_compose_message
 msgid "Copy, paste and share the web link below to your audience."
-msgstr "复制、粘贴并分享下面的链接给你的粉丝。"
+msgstr "复制、粘贴并分享下面的链接给您的粉丝。"
 
 #. module: survey
 #: field:survey.user_input_line,date_create:0
@@ -487,12 +489,12 @@ msgstr "删除！"
 #: field:survey.page,description:0 field:survey.question,description:0
 #: field:survey.survey,description:0
 msgid "Description"
-msgstr "描述"
+msgstr "说明"
 
 #. module: survey
 #: model:survey.label,value:survey.frow_2_7_1
 msgid "Descriptions and help tooltips are clear enough"
-msgstr "描述和帮助工具提示是否足够明显"
+msgstr "说明和帮助工具提示是否足够明显"
 
 #. module: survey
 #: view:survey.survey:survey.survey_kanban
@@ -516,17 +518,17 @@ msgstr "显示模式"
 #. module: survey
 #: model:survey.question,question:survey.feedback_3_3
 msgid "Do you have a proposition to attract new contributors?"
-msgstr "你有一个方案来吸引新的参与者?"
+msgstr "您有一个方案来吸引新的参与者?"
 
 #. module: survey
 #: model:survey.question,question:survey.feedback_3_2
 msgid "Do you have a proposition to help people to contribute?"
-msgstr "你是否有一个构想来吸引新的贡献者?"
+msgstr "您是否有一个构想来吸引新的贡献者?"
 
 #. module: survey
 #: model:survey.question,question:survey.feedback_2_3
 msgid "Do you have suggestions on how to improve the process view ?"
-msgstr "你是否有新的建议来如何改善流程视图?"
+msgstr "您是否有新的建议来如何改善流程视图?"
 
 #. module: survey
 #: model:survey.stage,name:survey.stage_draft
@@ -559,7 +561,7 @@ msgstr "电子邮件模板"
 msgid ""
 "Email address of the sender. This field is set when no matching partner is "
 "found for incoming emails."
-msgstr "发送者的Email地址。当收取的email没有对应的合作伙伴时，此字段被设置"
+msgstr "发送者的电子邮箱地址。当收取的电子邮箱没有对应的合作伙伴时，此字段被设置。"
 
 #. module: survey
 #: model:ir.model,name:survey.model_survey_mail_compose_message
@@ -666,7 +668,7 @@ msgstr "保存聊天摘要(消息数量,……等)。为了插入到看板视图
 #. module: survey
 #: model:survey.question,question:survey.feedback_3_1
 msgid "How do you contribute or plan to contribute to Odoo?"
-msgstr "你如何为Odoo贡献或计划贡献?"
+msgstr "您如何为Odoo贡献或计划贡献?"
 
 #. module: survey
 #: model:survey.label,value:survey.choice_1_2_6
@@ -739,7 +741,7 @@ msgstr "识别标记"
 #. module: survey
 #: help:survey.survey,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr "如果勾选此项，需要你关注新消息。"
+msgstr "如果勾选此项，需要您关注新消息。"
 
 #. module: survey
 #: help:survey.survey,users_can_go_back:0
@@ -773,7 +775,7 @@ msgstr "如果是其他，请相信说明："
 #. module: survey
 #: view:website:survey.sfinished
 msgid "If you wish, you can"
-msgstr "如果你愿意，你能"
+msgstr "如果您愿意，您能"
 
 #. module: survey
 #: model:survey.stage,name:survey.stage_in_progress
@@ -833,7 +835,7 @@ msgstr "这是最新的"
 #. module: survey
 #: model:survey.label,value:survey.frow_2_2_5
 msgid "It's easy to find the process you need"
-msgstr "很容易找到你所需要的流程"
+msgstr "很容易找到您所需要的流程"
 
 #. module: survey
 #: field:survey.label,sequence:0
@@ -888,7 +890,7 @@ msgstr "邮件列表"
 #. module: survey
 #: field:survey.mail.compose.message,is_log:0
 msgid "Log an Internal Note"
-msgstr "记录内部日志"
+msgstr "记录内部备注"
 
 #. module: survey
 #: field:survey.survey,auth_required:0 view:website:survey.auth_required
@@ -971,7 +973,7 @@ msgstr "消息记录名称"
 msgid ""
 "Message type: email for email message, notification for system message, "
 "comment for other messages such as user replies"
-msgstr "消息类型：Email 用于 邮件消息， 通知用户系统消息，评论用于其他消息，例如用户回复。"
+msgstr "消息类型：电子邮箱用于 邮件消息， 通知用户系统消息，评论用于其他消息，例如用户回复。"
 
 #. module: survey
 #: help:survey.mail.compose.message,message_id:0
@@ -991,7 +993,7 @@ msgstr "消息"
 #. module: survey
 #: help:survey.survey,message_ids:0
 msgid "Messages and communication history"
-msgstr "消息和通信历史"
+msgstr "信息和通信历史记录"
 
 #. module: survey
 #: view:website:survey.result_number
@@ -1026,7 +1028,7 @@ msgstr "多选：允许选择多个答案"
 #. module: survey
 #: selection:survey.question,type:0
 msgid "Multiple choice: only one answer"
-msgstr "多选：只允许选择一个答案"
+msgstr "单选：只允许选择一个答案"
 
 #. module: survey
 #: selection:survey.question,matrix_subtype:0
@@ -1158,7 +1160,7 @@ msgstr "选项"
 #. module: survey
 #: field:survey.mail.compose.message,mail_server_id:0
 msgid "Outgoing mail server"
-msgstr "邮件发送服务器"
+msgstr "发件服务器"
 
 #. module: survey
 #: view:survey.page:survey.survey_page_search
@@ -1188,7 +1190,7 @@ msgstr "页面"
 #. module: survey
 #: field:survey.mail.compose.message,parent_id:0
 msgid "Parent Message"
-msgstr "父消息"
+msgstr "上级消息"
 
 #. module: survey
 #: view:survey.user_input:survey.survey_user_input_search
@@ -1453,14 +1455,14 @@ msgstr "发送"
 #. module: survey
 #: selection:survey.mail.compose.message,public:0
 msgid "Send by email the public web link to your audience."
-msgstr "通过邮件发送公共链接给你的粉丝。"
+msgstr "通过邮件发送公共链接给您的粉丝。"
 
 #. module: survey
 #: selection:survey.mail.compose.message,public:0
 msgid ""
 "Send private invitation to your audience (only one response per recipient "
 "and per invitation)."
-msgstr "发送私人要求给你的粉丝（每个收件人和邀请只有一个反应）。"
+msgstr "发送私人要求给您的粉丝（每个收件人和邀请只有一个反应）。"
 
 #. module: survey
 #: view:survey.user_input:survey.survey_user_input_form
@@ -1495,7 +1497,7 @@ msgstr "分享选项"
 #. module: survey
 #: selection:survey.mail.compose.message,public:0
 msgid "Share the public web link to your audience."
-msgstr "分享公共链接给你的粉丝"
+msgstr "分享公共链接给您的粉丝"
 
 #. module: survey
 #: field:survey.question,comments_allowed:0
@@ -1726,7 +1728,7 @@ msgstr "文本答案"
 #. module: survey
 #: field:survey.survey,thank_you_message:0
 msgid "Thank you message"
-msgstr "谢谢你的信息"
+msgstr "谢谢您的信息"
 
 #. module: survey
 #: view:website:survey.sfinished
@@ -2068,46 +2070,46 @@ msgstr "警告！"
 #. module: survey
 #: model:survey.question,question:survey.feedback_2_7
 msgid "What do you think about configuration wizards?"
-msgstr "你怎么看配置向导?"
+msgstr "您怎么看配置向导?"
 
 #. module: survey
 #: model:survey.question,question:survey.feedback_2_1
 msgid ""
 "What do you think about the documentation available on doc.openerp.com?"
-msgstr "你怎么看待在doc.openerp.com上的可用文档?"
+msgstr "您怎么看待在doc.openerp.com上的可用文档?"
 
 #. module: survey
 #: model:survey.question,question:survey.feedback_2_5
 msgid "What do you think about the groups of users?"
-msgstr "你怎么看待用户组?"
+msgstr "您怎么看待用户群组?"
 
 #. module: survey
 #: model:survey.question,question:survey.feedback_2_2
 msgid ""
 "What do you think about the process views of Odoo, available in the web "
 "client ?"
-msgstr "你怎么看待Odoo的流程视图,在web客户端是否匹配?"
+msgstr "您怎么看待Odoo的流程视图,在web客户端是否匹配?"
 
 #. module: survey
 #: model:survey.question,question:survey.feedback_2_4
 #: model:survey.question,question:survey.feedback_2_6
 msgid "What do you think about the structure of the menus?"
-msgstr "你怎么看菜单的结构?"
+msgstr "您怎么看菜单的结构?"
 
 #. module: survey
 #: model:survey.question,question:survey.feedback_4_1
 msgid "Where do you develop your new features?"
-msgstr "你开发新功能在哪里?"
+msgstr "您开发新功能在哪里?"
 
 #. module: survey
 #: help:survey.mail.compose.message,is_log:0
 msgid "Whether the message is an internal note (comment mode only)"
-msgstr "无论消息是内部记录（只适用评论模式）"
+msgstr "该消息是否是一个内部备注(注释模式)"
 
 #. module: survey
 #: model:survey.question,question:survey.feedback_1_2
 msgid "Which modules are you using/testing?"
-msgstr "哪个模块你现在在使用或测试?"
+msgstr "哪个模块您现在在使用或测试?"
 
 #. module: survey
 #: model:survey.label,value:survey.choice_1_1_1
@@ -2131,19 +2133,19 @@ msgid ""
 " your audience. People can answer once per invitation, and whenever they "
 "want with the public web link (in this case, the \"Public in website\" "
 "setting must be enabled)."
-msgstr "您能够分享问卷的网络链接和/或私下邀请你的粉丝。 无论什么时候，受到邀请者都可使用公共网络链接参与回答（这种情况下，必须设定 \"在网站公开\" 选项）。"
+msgstr "您能够分享问卷的网络链接和/或私下邀请您的粉丝。 无论什么时候，受到邀请者都可使用公共网络链接参与回答（这种情况下，必须设定 \"在网站公开\" 选项）。"
 
 #. module: survey
 #: code:addons/survey/survey.py:898 code:addons/survey/survey.py:1030
 #, python-format
 msgid "You cannot duplicate this             element!"
-msgstr "你不能复制此             元素！"
+msgstr "您不能复制此元素！"
 
 #. module: survey
 #: code:addons/survey/survey.py:439
 #, python-format
 msgid "You cannot send an invitation for a survey that has no questions."
-msgstr "你不能为没有问题的调查问卷发送邀请。"
+msgstr "您不能为没有问题的调查问卷发送邀请。"
 
 #. module: survey
 #: code:addons/survey/survey.py:445
@@ -2174,7 +2176,7 @@ msgstr "在"
 #. module: survey
 #: view:survey.mail.compose.message:survey.survey_email_compose_message
 msgid "or"
-msgstr "or"
+msgstr "或"
 
 #. module: survey
 #: view:website:survey.sfinished
@@ -2184,7 +2186,7 @@ msgstr "点"
 #. module: survey
 #: view:website:survey.sfinished
 msgid "review your answers"
-msgstr "查看你的回答"
+msgstr "查看您的回答"
 
 #. module: survey
 #: view:website:survey.datetime

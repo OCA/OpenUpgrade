@@ -5,15 +5,17 @@
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 # gezgin biri <gezginbiri@hotmail.com>, 2015
-# Murat Kaplan <muratk@projetgrup.com>, 2015
+# Güven YILMAZ <guvenyilmaz@outlook.com.tr>, 2016-2017
+# Levent Karakaş <levent@mektup.at>, 2017
+# Murat Kaplan <muratk@projetgrup.com>, 2015-2017
 # Saban Yildiz <sabany@projetgrup.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:07+0000\n"
-"PO-Revision-Date: 2015-12-15 16:25+0000\n"
-"Last-Translator: Murat Kaplan <muratk@projetgrup.com>\n"
+"PO-Revision-Date: 2017-06-28 18:55+0000\n"
+"Last-Translator: Levent Karakaş <levent@mektup.at>\n"
 "Language-Team: Turkish (http://www.transifex.com/odoo/odoo-8/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -254,7 +256,7 @@ msgstr "Hesap"
 #. module: point_of_sale
 #: view:pos.order:point_of_sale.view_pos_pos_form
 msgid "Accounting Information"
-msgstr "Muahsebe Bilgisi"
+msgstr "Muhasebe Bilgisi"
 
 #. module: point_of_sale
 #: help:pos.config,journal_id:0
@@ -397,7 +399,7 @@ msgstr "BarKod"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:391
 #, python-format
 msgid "Barcode"
-msgstr "Barcode"
+msgstr "Barkod"
 
 #. module: point_of_sale
 #: view:pos.config:point_of_sale.view_pos_config_form
@@ -482,7 +484,7 @@ msgstr "İptal"
 #. module: point_of_sale
 #: selection:pos.order,state:0 selection:report.pos.order,state:0
 msgid "Cancelled"
-msgstr "İptalEdildi"
+msgstr "İptal Edildi"
 
 #. module: point_of_sale
 #. openerp-web
@@ -564,7 +566,7 @@ msgstr "Müşteriyi Değiştir"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1008
 #, python-format
 msgid "Change:"
-msgstr "Değişim:"
+msgstr "Para Üstü:"
 
 #. module: point_of_sale
 #: model:product.template,name:point_of_sale.chaudfontaine_1,5l_product_template
@@ -680,7 +682,7 @@ msgstr "Chips"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:321
 #, python-format
 msgid "City"
-msgstr "İl"
+msgstr "Semt/Mahalle"
 
 #. module: point_of_sale
 #: view:pos.session.opening:point_of_sale.pos_session_opening_form_view
@@ -1409,7 +1411,7 @@ msgstr "Ekstra Flandria hindiba"
 #. module: point_of_sale
 #: view:pos.order:point_of_sale.view_pos_pos_form
 msgid "Extra Info"
-msgstr "Eksra Bilgisi"
+msgstr "Diğer Bilgiler"
 
 #. module: point_of_sale
 #: model:product.template,name:point_of_sale.fanta_orange_25cl_product_template
@@ -2720,7 +2722,7 @@ msgstr "Fişi Yazdır"
 #. module: point_of_sale
 #: view:pos.details:point_of_sale.view_pos_details
 msgid "Print Report"
-msgstr "Rapor Yazdır"
+msgstr "Yazdır"
 
 #. module: point_of_sale
 #: view:website:point_of_sale.report_payment
@@ -3165,7 +3167,7 @@ msgstr "Oturumlar"
 #: code:addons/point_of_sale/static/src/js/screens.js:681
 #, python-format
 msgid "Set Customer"
-msgstr "Müşteri Yerleştir"
+msgstr "Müşteri Seç"
 
 #. module: point_of_sale
 #. openerp-web
@@ -4094,7 +4096,7 @@ msgid ""
 "Method\" from the \"Point of Sale\" tab. You can also create new payment "
 "methods directly from menu \"PoS Backend / Configuration / Payment "
 "Methods\"."
-msgstr ""
+msgstr "Satış noktasında kullanılabilir ödeme yöntemlerini mevcut kasa ve bankaları \"Muhasebe / Yapılandırma / Yevmiyeler / Yevmiyeler\" üzerinden tanımlayabilirsiniz. Bir yevmiye seçin ve \"Satış Noktası\" sekmesindeki \"POS Ödeme Yöntemi\" kutusunu işaretleyin. \"POS / Yapılandırma / Ödeme Yöntemleri\" menüsünü kullanarak ödeme yöntemlerini direk yaratabilirsiniz."
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/point_of_sale.py:887
@@ -4226,7 +4228,7 @@ msgstr "hata!"
 #: code:addons/point_of_sale/point_of_sale.py:140
 #, python-format
 msgid "not used"
-msgstr "kullanılmaz"
+msgstr "Kullanılabilir"
 
 #. module: point_of_sale
 #. openerp-web
