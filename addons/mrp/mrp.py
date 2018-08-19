@@ -774,17 +774,18 @@ class mrp_production(osv.osv):
         proc_obj = self.pool.get('procurement.order')
         for production in self.browse(cr, uid, ids, context=context):
             if production.move_created_ids:
-                move_obj.action_cancel(cr, uid, [x.id for x in production.move_created_ids])
+                move_obj.action_cancel(cr, uid, [x.id for x in production.move_created_ids], context=context)
             procs = proc_obj.search(cr, uid, [('move_dest_id', 'in', [x.id for x in production.move_lines])], context=context)
             if procs:
                 proc_obj.cancel(cr, uid, procs, context=context)
-            move_obj.action_cancel(cr, uid, [x.id for x in production.move_lines])
+            move_obj.action_cancel(cr, uid, [x.id for x in production.move_lines], context=context)
         self.write(cr, uid, ids, {'state': 'cancel'})
         # Put related procurements in exception
         proc_obj = self.pool.get("procurement.order")
         procs = proc_obj.search(cr, uid, [('production_id', 'in', ids)], context=context)
         if procs:
-            proc_obj.message_post(cr, uid, procs, body=_('Manufacturing order cancelled.'), context=context)
+            for proc in procs:
+                proc_obj.message_post(cr, uid, proc, body=_('Manufacturing order cancelled.'), context=context)
             proc_obj.write(cr, uid, procs, {'state': 'exception'}, context=context)
         return True
 
@@ -1196,8 +1197,13 @@ class mrp_production(osv.osv):
         source_location_id = production.location_src_id.id
         prod_location_id = source_location_id
         prev_move= False
-        if production.bom_id.routing_id and production.bom_id.routing_id.location_id and production.bom_id.routing_id.location_id.id != source_location_id:
-            source_location_id = production.bom_id.routing_id.location_id.id
+        if production.routing_id:
+            routing = production.routing_id
+        else:
+            routing = production.bom_id.routing_id
+
+        if routing and routing.location_id and routing.location_id.id != source_location_id:
+            source_location_id = routing.location_id.id
             prev_move = True
 
         destination_location_id = production.product_id.property_stock_production.id

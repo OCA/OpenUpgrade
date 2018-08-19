@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-21 14:08+0000\n"
-"PO-Revision-Date: 2015-11-18 13:50+0000\n"
+"POT-Creation-Date: 2016-05-25 12:58+0000\n"
+"PO-Revision-Date: 2017-03-13 04:19+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Georgian (http://www.transifex.com/odoo/odoo-8/language/ka/)\n"
 "MIME-Version: 1.0\n"
@@ -591,6 +591,18 @@ msgid "Display Mode"
 msgstr ""
 
 #. module: gamification
+#: field:gamification.badge,display_name:0
+#: field:gamification.badge.user,display_name:0
+#: field:gamification.badge.user.wizard,display_name:0
+#: field:gamification.challenge,display_name:0
+#: field:gamification.challenge.line,display_name:0
+#: field:gamification.goal,display_name:0
+#: field:gamification.goal.definition,display_name:0
+#: field:gamification.goal.wizard,display_name:0
+msgid "Display Name"
+msgstr "სახელი"
+
+#. module: gamification
 #: field:gamification.goal.definition,display_mode:0
 msgid "Displayed as"
 msgstr ""
@@ -680,7 +692,7 @@ msgstr ""
 #: field:gamification.badge,message_follower_ids:0
 #: field:gamification.challenge,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "მიმდევრები"
 
 #. module: gamification
 #: field:gamification.challenge,reward_first_id:0
@@ -995,13 +1007,25 @@ msgstr ""
 #: field:gamification.badge,message_is_follower:0
 #: field:gamification.challenge,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "არის მიმდევარი"
 
 #. module: gamification
 #: field:gamification.badge,message_last_post:0
 #: field:gamification.challenge,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "ბოლო შეტყობინების თარიღი"
+
+#. module: gamification
+#: field:gamification.badge,__last_update:0
+#: field:gamification.badge.user,__last_update:0
+#: field:gamification.badge.user.wizard,__last_update:0
+#: field:gamification.challenge,__last_update:0
+#: field:gamification.challenge.line,__last_update:0
+#: field:gamification.goal,__last_update:0
+#: field:gamification.goal.definition,__last_update:0
+#: field:gamification.goal.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr "ბოლოს განახლებულია"
 
 #. module: gamification
 #: field:gamification.challenge,last_report_date:0
@@ -1401,7 +1425,7 @@ msgstr ""
 #. module: gamification
 #: view:gamification.goal:gamification.goal_form_view
 msgid "Schedule"
-msgstr ""
+msgstr "განრიგი"
 
 #. module: gamification
 #: view:gamification.challenge:gamification.challenge_search_view
@@ -1636,6 +1660,24 @@ msgid ""
 msgstr ""
 
 #. module: gamification
+#: code:addons/gamification/models/goal.py:160
+#, python-format
+msgid ""
+"The model configuration for the definition %s seems incorrect, please check it.\n"
+"\n"
+"%s not found"
+msgstr ""
+
+#. module: gamification
+#: code:addons/gamification/models/goal.py:158
+#, python-format
+msgid ""
+"The model configuration for the definition %s seems incorrect, please check it.\n"
+"\n"
+"%s not stored"
+msgstr ""
+
+#. module: gamification
 #: help:gamification.goal.definition,model_id:0
 msgid "The model object for the field to evaluate"
 msgstr ""
@@ -1747,7 +1789,7 @@ msgstr ""
 #. module: gamification
 #: field:gamification.badge,stat_count:0
 msgid "Total"
-msgstr ""
+msgstr "ჯამი"
 
 #. module: gamification
 #: field:gamification.badge,unique_owner_ids:0

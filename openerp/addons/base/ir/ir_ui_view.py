@@ -93,10 +93,11 @@ class view_custom(osv.osv):
 
 
     def _auto_init(self, cr, context=None):
-        super(view_custom, self)._auto_init(cr, context)
+        res = super(view_custom, self)._auto_init(cr, context)
         cr.execute('SELECT indexname FROM pg_indexes WHERE indexname = \'ir_ui_view_custom_user_id_ref_id\'')
         if not cr.fetchone():
             cr.execute('CREATE INDEX ir_ui_view_custom_user_id_ref_id ON ir_ui_view_custom (user_id, ref_id)')
+        return res
 
 def _hasclass(context, *cls):
     """ Checks if the context node has all the classes passed as arguments
@@ -110,6 +111,7 @@ xpath_utils['hasclass'] = _hasclass
 
 class view(osv.osv):
     _name = 'ir.ui.view'
+    _parent_name = 'inherit_id'     # used for recursion check
 
     def _get_model_data(self, cr, uid, ids, fname, args, context=None):
         result = dict.fromkeys(ids, False)
@@ -187,6 +189,10 @@ class view(osv.osv):
         return self._relaxng_validator
 
     def _check_xml(self, cr, uid, ids, context=None):
+        # As all constraints are verified on create/write, we must re-check that there is no
+        # recursion before calling `read_combined` to avoid an infinite loop.
+        if not self._check_recursion(cr, uid, ids, context=context):
+            return True     # pretend arch is valid to avoid misleading user about the error.
         if context is None:
             context = {}
         context = dict(context, check_view_ids=ids)
@@ -247,13 +253,15 @@ class view(osv.osv):
     ]
     _constraints = [
         (_check_xml, 'Invalid view definition', ['arch']),
+        (osv.osv._check_recursion, 'You cannot create recursive inherited views.', ['inherit_id']),
     ]
 
     def _auto_init(self, cr, context=None):
-        super(view, self)._auto_init(cr, context)
+        res = super(view, self)._auto_init(cr, context)
         cr.execute('SELECT indexname FROM pg_indexes WHERE indexname = \'ir_ui_view_model_type_inherit_id\'')
         if not cr.fetchone():
             cr.execute('CREATE INDEX ir_ui_view_model_type_inherit_id ON ir_ui_view (model, inherit_id)')
+        return res
 
     def _compute_defaults(self, cr, uid, values, context=None):
         if 'inherit_id' in values:

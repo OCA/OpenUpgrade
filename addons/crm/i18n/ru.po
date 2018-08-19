@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:07+0000\n"
-"PO-Revision-Date: 2016-04-02 17:12+0000\n"
+"PO-Revision-Date: 2017-02-18 05:45+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Russian (http://www.transifex.com/odoo/odoo-8/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -327,7 +327,7 @@ msgstr "Вы уверены, что хотите выполнить автома
 #: view:base.partner.merge.automatic.wizard:crm.base_partner_merge_automatic_wizard_form
 msgid ""
 "Are you sure to execute the list of automatic merges of your contacts ?"
-msgstr ""
+msgstr "Вы уверенны, что хотите выполнить автоматическое объединение контактов?"
 
 #. module: crm
 #: field:crm.phonecall2phonecall,user_id:0
@@ -1231,7 +1231,7 @@ msgid ""
 "If opt-out is checked, this contact has refused to receive emails for mass "
 "mailing and marketing campaign. Filter 'Available for Mass Mailing' allows "
 "users to filter the leads when performing mass mailing."
-msgstr ""
+msgstr "Если установлен флажок Отказ, этот контакт отказался получать письма для массовой рассылки и маркетинговой кампании. Фильтр 'Доступен для массового рассылки' позволяет пользователям фильтровать лиды при выполнении массовой рассылки."
 
 #. module: crm
 #: help:crm.lead2opportunity.partner.mass,force_assignation:0
@@ -1895,7 +1895,7 @@ msgid ""
 "Only the destination contact may be linked to existing Journal Items. Please"
 " ask the Administrator if you need to merge several contacts linked to "
 "existing Journal Items."
-msgstr ""
+msgstr "Только назначенный контакт может быть связан с существующими элементами журнала. Попросите администратора, если вам нужно объединить несколько контактов, связанных с существующими элементами журнала."
 
 #. module: crm
 #: view:crm.case.section:crm.crm_case_section_salesteams_view_kanban
@@ -1963,12 +1963,12 @@ msgstr "Анализ предложений дает вам мгновенный
 #. module: crm
 #: model:ir.filters,name:crm.filter_opportunity_opportunities_cohort
 msgid "Opportunities Cohort"
-msgstr ""
+msgstr "Когортные возможности"
 
 #. module: crm
 #: model:ir.filters,name:crm.filter_opportunity_opportunities_won_per_team
 msgid "Opportunities Won Per Team"
-msgstr ""
+msgstr "Выигранных возможностей по командам"
 
 #. module: crm
 #: view:crm.lead:crm.view_crm_case_opportunities_filter
@@ -3071,7 +3071,7 @@ msgstr "Вы уже на верхнем уровне вашей категори
 #: code:addons/crm/base_partner_merge.py:310
 #, python-format
 msgid "You cannot merge a contact with one of his parent."
-msgstr ""
+msgstr "Нельзя объединить контакт со своим родителем."
 
 #. module: crm
 #: code:addons/crm/base_partner_merge.py:446

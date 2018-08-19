@@ -4,13 +4,14 @@
 # 
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
+# Goran Kliska <gkliska@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-07 12:39+0000\n"
-"PO-Revision-Date: 2015-10-22 07:22+0000\n"
-"Last-Translator: Davor Bojkić <bole@dajmi5.com>\n"
+"PO-Revision-Date: 2017-04-14 09:40+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>\n"
 "Language-Team: Croatian (http://www.transifex.com/odoo/odoo-8/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,12 +47,12 @@ msgstr "'Napravi ID klijenta'"
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
 msgid "'Create Project'"
-msgstr ""
+msgstr "\"Kreiraj Project\""
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
 msgid "'Create new Client ID'"
-msgstr ""
+msgstr "'Napravi novi ID klijenta'"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
@@ -81,7 +82,7 @@ msgstr ""
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
 msgid ", then click on"
-msgstr ""
+msgstr "i kliknite na"
 
 #. module: google_calendar
 #: model:ir.actions.act_window,name:google_calendar.action_config_settings_google_calendar
@@ -180,7 +181,7 @@ msgstr "Spojite se na svoj Google račun i idite na"
 #: code:addons/google_calendar/static/src/js/calendar_sync.js:47
 #, python-format
 msgid "Do you want to do this now?"
-msgstr ""
+msgstr "Da li želite uraditi to sada?"
 
 #. module: google_calendar
 #: model:ir.model,name:google_calendar.model_calendar_event
@@ -212,7 +213,7 @@ msgstr ""
 #. module: google_calendar
 #: sql_constraint:calendar.attendee:0
 msgid "Google ID should be unique!"
-msgstr ""
+msgstr "Google ID treba biti jedinstven!"
 
 #. module: google_calendar
 #: field:google.calendar,id:0
@@ -250,17 +251,17 @@ msgstr ""
 #. module: google_calendar
 #: field:res.users,google_calendar_last_sync_date:0
 msgid "Last synchro date"
-msgstr ""
+msgstr "Zadnji datum sinkronizacije"
 
 #. module: google_calendar
 #: field:calendar.attendee,oe_synchro_date:0
 msgid "Odoo Synchro Date"
-msgstr ""
+msgstr "Datum Odoo sinkronizacije"
 
 #. module: google_calendar
 #: field:calendar.event,oe_update_date:0
 msgid "Odoo Update Date"
-msgstr ""
+msgstr "Odoo datum ažuriranja"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
@@ -270,7 +271,7 @@ msgstr "Jednom ispunjeno, imat ćete obje informacije ("
 #. module: google_calendar
 #: field:res.users,google_calendar_rtoken:0
 msgid "Refresh Token"
-msgstr ""
+msgstr "Osvježi token"
 
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
@@ -322,7 +323,7 @@ msgstr ""
 #. module: google_calendar
 #: field:res.users,google_calendar_token_validity:0
 msgid "Token Validity"
-msgstr ""
+msgstr "Valjanost tokena"
 
 #. module: google_calendar
 #: field:base.config.settings,server_uri:0
@@ -383,4 +384,4 @@ msgstr ""
 #. module: google_calendar
 #: view:base.config.settings:google_calendar.view_calendar_config_settings
 msgid "https://console.developers.google.com/"
-msgstr ""
+msgstr "https://console.developers.google.com/"

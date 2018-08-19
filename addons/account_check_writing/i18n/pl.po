@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:07+0000\n"
-"PO-Revision-Date: 2015-07-17 06:43+0000\n"
+"PO-Revision-Date: 2017-09-22 08:21+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Polish (http://www.transifex.com/odoo/odoo-8/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: pl\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
 #. module: account_check_writing
 #: model:ir.actions.act_window,help:account_check_writing.action_write_check
@@ -67,7 +67,7 @@ msgstr "Czek"
 #. module: account_check_writing
 #: field:res.company,check_layout:0
 msgid "Check Layout"
-msgstr ""
+msgstr "sprawdzić układ"
 
 #. module: account_check_writing
 #: help:account.journal,use_preprint_check:0
@@ -87,7 +87,7 @@ msgstr ""
 #. module: account_check_writing
 #: selection:res.company,check_layout:0
 msgid "Check on bottom"
-msgstr ""
+msgstr "sprawdź przycisk"
 
 #. module: account_check_writing
 #: help:res.company,check_layout:0
@@ -162,7 +162,7 @@ msgstr "Data ostatniej modyfikacji"
 #. module: account_check_writing
 #: field:account.check.write,check_number:0
 msgid "Next Check Number"
-msgstr ""
+msgstr "sprawdź następny numer"
 
 #. module: account_check_writing
 #: code:addons/account_check_writing/account_voucher.py:77
@@ -200,7 +200,7 @@ msgstr ""
 #: view:account.check.write:account_check_writing.view_account_check_write
 #: view:account.voucher:account_check_writing.view_vendor_payment_check_form
 msgid "Print Check"
-msgstr ""
+msgstr "sprawdź druk"
 
 #. module: account_check_writing
 #: model:ir.actions.act_window,name:account_check_writing.action_account_check_write

@@ -151,15 +151,23 @@ class aged_trial_report(report_sxw.rml_parse, common_report_header):
         for i in range(5):
             args_list = (tuple(move_state), tuple(self.ACCOUNT_TYPE), tuple(partner_ids),self.date_from,)
             dates_query = '(COALESCE(l.date_maturity,l.date)'
+            date_partial = ''
+            arg_partial = ()
             if form[str(i)]['start'] and form[str(i)]['stop']:
                 dates_query += ' BETWEEN %s AND %s)'
                 args_list += (form[str(i)]['start'], form[str(i)]['stop'])
+                date_partial = 'AND l.date <= %s'
+                arg_partial = (form[str(i)]['stop'],)
             elif form[str(i)]['start']:
                 dates_query += ' >= %s)'
                 args_list += (form[str(i)]['start'],)
+                date_partial = 'AND l.date >= %s'
+                arg_partial = (form[str(i)]['start'],)
             else:
                 dates_query += ' <= %s)'
                 args_list += (form[str(i)]['stop'],)
+                date_partial = 'AND l.date <= %s'
+                arg_partial = (form[str(i)]['stop'],)
             args_list += (self.date_from,)
             self.cr.execute('''SELECT l.partner_id, SUM(l.debit-l.credit), l.reconcile_partial_id
                     FROM account_move_line AS l, account_account, account_move am 
@@ -178,9 +186,21 @@ class aged_trial_report(report_sxw.rml_parse, common_report_header):
             partners_amount = dict((i[0],0) for i in partners_partial)
             for partner_info in partners_partial:
                 if partner_info[2]:
-                    # in case of partial reconciliation, we want to keep the left amount in the oldest period
-                    self.cr.execute('''SELECT MIN(COALESCE(date_maturity,date)) FROM account_move_line WHERE reconcile_partial_id = %s''', (partner_info[2],))
+                    # in case of partial reconciliation, we want to keep the remaining amount in the
+                    # period corresponding to the maturity date of the invoice.
+                    self.cr.execute('''
+                        SELECT MAX(COALESCE(l.date_maturity, l.date))
+                        FROM account_move_line AS l
+                        JOIN account_account AS a ON l.account_id = a.id
+                        WHERE reconcile_partial_id = %s
+                            AND a.type IN %s
+                            ''' + date_partial
+                        , (partner_info[2], tuple(self.ACCOUNT_TYPE),) + arg_partial)
                     date = self.cr.fetchall()
+                    # Just in case date is not defined (but it should be defined)
+                    if date and not date[0][0]:
+                        self.cr.execute('''SELECT MIN(COALESCE(date_maturity,date)) FROM account_move_line WHERE reconcile_partial_id = %s''', (partner_info[2],))
+                        date = self.cr.fetchall()
                     partial = False
                     if 'BETWEEN' in dates_query:
                         partial = date and args_list[-3] <= date[0][0] <= args_list[-2]
@@ -190,7 +210,7 @@ class aged_trial_report(report_sxw.rml_parse, common_report_header):
                         partial = date and date[0][0] <= form[str(i)]['stop']
                     if partial:
                         # partial reconcilation
-                        limit_date = 'COALESCE(l.date_maturity,l.date) %s %%s' % '<=' if self.direction_selection == 'past' else '>='
+                        limit_date = 'COALESCE(l.date_maturity,l.date) %s %%s' % ('<=' if self.direction_selection == 'past' else '>=',)
                         self.cr.execute('''SELECT SUM(l.debit-l.credit)
                                            FROM account_move_line AS l, account_move AS am
                                            WHERE l.move_id = am.id AND am.state in %s

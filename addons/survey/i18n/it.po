@@ -4,13 +4,14 @@
 # 
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
-# Paolo Valier, 2016
+# Luigi Di Naro <gigidn@gmail.com>, 2016
+# Paolo Valier, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:07+0000\n"
-"PO-Revision-Date: 2016-04-01 15:44+0000\n"
+"PO-Revision-Date: 2017-09-23 21:12+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/odoo/odoo-8/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -622,7 +623,7 @@ msgstr "Formato"
 #. module: survey
 #: selection:survey.user_input_line,answer_type:0
 msgid "Free Text"
-msgstr ""
+msgstr "Testo libero"
 
 #. module: survey
 #: field:survey.user_input_line,value_free_text:0
@@ -657,7 +658,7 @@ msgstr "Raggruppa per"
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr "Gestisce il sommario (numero di messaggi, ...) di Chatter. Questo sommario è direttamente in html così da poter essere inserito nelle viste kanban."
+msgstr "Contiene il riepilogo Chatter (numero di messaggi, ...). Questa sintesi è direttamente in formato HTML, al fine di essere inserita nelle viste kanban."
 
 #. module: survey
 #: model:survey.question,question:survey.feedback_3_1
@@ -794,7 +795,7 @@ msgstr "Inviti inviati"
 #. module: survey
 #: field:survey.survey,message_is_follower:0
 msgid "Is a Follower"
-msgstr "E' un Follower"
+msgstr "È un Follower"
 
 #. module: survey
 #: field:survey.survey,designed:0
@@ -900,7 +901,7 @@ msgstr ""
 #: view:survey.question:survey.survey_question_form
 #: field:survey.question,constr_mandatory:0
 msgid "Mandatory Answer"
-msgstr ""
+msgstr "Risposta obbligatoria"
 
 #. module: survey
 #: selection:survey.user_input,type:0
@@ -1027,7 +1028,7 @@ msgstr ""
 #. module: survey
 #: selection:survey.question,matrix_subtype:0
 msgid "Multiple choices per row"
-msgstr ""
+msgstr "Scelte multiple per riga"
 
 #. module: survey
 #: field:survey.stage,name:0
@@ -1067,7 +1068,7 @@ msgstr ""
 #. module: survey
 #: view:website:survey.nopages
 msgid "Not ready"
-msgstr ""
+msgstr "Non pronto"
 
 #. module: survey
 #: selection:survey.user_input,state:0
@@ -1202,7 +1203,7 @@ msgstr "Partner"
 #: model:ir.actions.act_window,name:survey.action_partner_survey_mail
 #: model:ir.actions.act_window,name:survey.action_partner_survey_mail_crm
 msgid "Partner Survey Mailing"
-msgstr ""
+msgstr "Invio di Questionari ai Partner"
 
 #. module: survey
 #: help:survey.mail.compose.message,notified_partner_ids:0
@@ -1342,7 +1343,7 @@ msgstr "ID documento collegato"
 #. module: survey
 #: field:survey.mail.compose.message,model:0
 msgid "Related Document Model"
-msgstr "Modello documento relativo"
+msgstr "Modello Documento correlato"
 
 #. module: survey
 #: help:survey.mail.compose.message,reply_to:0
@@ -1461,7 +1462,7 @@ msgstr "Invia inviti privati ai tuoi lettori (solo una risposta per destinatario
 #. module: survey
 #: view:survey.user_input:survey.survey_user_input_form
 msgid "Sent Invitation Again"
-msgstr ""
+msgstr "Invia nuovamente l'Invito"
 
 #. module: survey
 #: field:survey.question,sequence:0 field:survey.stage,sequence:0
@@ -1937,12 +1938,12 @@ msgstr "Tipo"
 #. module: survey
 #: field:survey.question,type:0
 msgid "Type of Question"
-msgstr ""
+msgstr "Tipo di Domanda"
 
 #. module: survey
 #: view:survey.question:survey.survey_question_form
 msgid "Type of answers"
-msgstr ""
+msgstr "Tipo di risposte"
 
 #. module: survey
 #: field:survey.question,labels_ids:0
@@ -2007,7 +2008,7 @@ msgstr ""
 #. module: survey
 #: field:survey.survey,user_input_ids:0
 msgid "User responses"
-msgstr ""
+msgstr "Risposte dell'utente"
 
 #. module: survey
 #: field:survey.survey,users_can_go_back:0
@@ -2034,12 +2035,12 @@ msgstr ""
 #. module: survey
 #: view:survey.user_input:survey.survey_user_input_form
 msgid "View Results"
-msgstr ""
+msgstr "Vedi Risultati"
 
 #. module: survey
 #: view:survey.survey:survey.survey_form
 msgid "View results"
-msgstr ""
+msgstr "Vedi risultati"
 
 #. module: survey
 #: view:website:survey.result_choice
@@ -2175,14 +2176,14 @@ msgstr "o"
 #. module: survey
 #: view:website:survey.sfinished
 msgid "points."
-msgstr ""
+msgstr "punti."
 
 #. module: survey
 #: view:website:survey.sfinished
 msgid "review your answers"
-msgstr ""
+msgstr "rivedi le tue risposte"
 
 #. module: survey
 #: view:website:survey.datetime
 msgid "yyyy-mm-dd hh:mm:ss"
-msgstr ""
+msgstr "aaaa-mm-gg hh:mm:ss"

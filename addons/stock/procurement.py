@@ -331,22 +331,23 @@ class procurement_order(osv.osv):
         '''
         Create procurement based on Orderpoint
 
-        :param bool use_new_cursor: if set, use a dedicated cursor and auto-commit after processing each procurement.
+        :param bool use_new_cursor: if set, use dedicated cursors and auto-commit after processing
+            100 orderpoints.
             This is appropriate for batch jobs only.
         '''
         if context is None:
             context = {}
-        if use_new_cursor:
-            cr = openerp.registry(cr.dbname).cursor()
         orderpoint_obj = self.pool.get('stock.warehouse.orderpoint')
 
         procurement_obj = self.pool.get('procurement.order')
         dom = company_id and [('company_id', '=', company_id)] or []
-        orderpoint_ids = orderpoint_obj.search(cr, uid, dom)
+        orderpoint_ids = orderpoint_obj.search(cr, uid, dom, context=context)
         prev_ids = []
         while orderpoint_ids:
             ids = orderpoint_ids[:100]
             del orderpoint_ids[:100]
+            if use_new_cursor:
+                cr = openerp.registry(cr.dbname).cursor()
             for op in orderpoint_obj.browse(cr, uid, ids, context=context):
                 try:
                     prods = self._product_virtual_get(cr, uid, op)
@@ -368,8 +369,8 @@ class procurement_order(osv.osv):
                             proc_id = procurement_obj.create(cr, uid,
                                                              self._prepare_orderpoint_procurement(cr, uid, op, qty_rounded, context=context),
                                                              context=context)
-                            self.check(cr, uid, [proc_id])
-                            self.run(cr, uid, [proc_id])
+                            self.check(cr, uid, [proc_id], context=context)
+                            self.run(cr, uid, [proc_id], context=context)
                     if use_new_cursor:
                         cr.commit()
                 except OperationalError:
@@ -381,12 +382,10 @@ class procurement_order(osv.osv):
                         raise
             if use_new_cursor:
                 cr.commit()
+                cr.close()
             if prev_ids == ids:
                 break
             else:
                 prev_ids = ids
 
-        if use_new_cursor:
-            cr.commit()
-            cr.close()
         return {}

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-14 12:26+0000\n"
-"PO-Revision-Date: 2016-01-30 09:47+0000\n"
+"PO-Revision-Date: 2017-08-11 19:56+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Hebrew (http://www.transifex.com/odoo/odoo-8/language/he/)\n"
 "MIME-Version: 1.0\n"
@@ -47,13 +47,13 @@ msgstr ""
 #: code:addons/stock/stock.py:1662
 #, python-format
 msgid " (%s reserved)"
-msgstr ""
+msgstr " (%s שמור)"
 
 #. module: stock
 #: code:addons/stock/stock.py:1665
 #, python-format
 msgid " (reserved)"
-msgstr ""
+msgstr " (שמור)"
 
 #. module: stock
 #: code:addons/stock/stock.py:2954
@@ -128,7 +128,7 @@ msgstr ""
 #: code:addons/stock/res_config.py:43
 #, python-format
 msgid "%s: Transit Location"
-msgstr ""
+msgstr "%s: מיקום מעבר"
 
 #. module: stock
 #: help:stock.move,state:0
@@ -423,7 +423,7 @@ msgstr ""
 #. module: stock
 #: selection:stock.picking,move_type:0
 msgid "All at once"
-msgstr ""
+msgstr "בבת אחת"
 
 #. module: stock
 #: code:addons/stock/stock.py:2542
@@ -549,7 +549,7 @@ msgstr "זמינות"
 #. module: stock
 #: selection:stock.move,state:0
 msgid "Available"
-msgstr ""
+msgstr "זמין"
 
 #. module: stock
 #: view:product.template:stock.product_template_search_form_view_stock
@@ -588,7 +588,7 @@ msgstr ""
 #. module: stock
 #: view:website:stock.report_picking
 msgid "Barcode"
-msgstr ""
+msgstr "ברקוד"
 
 #. module: stock
 #: view:website:stock.barcode_index
@@ -864,7 +864,7 @@ msgstr ""
 #. module: stock
 #: view:report.stock.lines.date:stock.report_stock_lines_date_search
 msgid "Consumable"
-msgstr ""
+msgstr "נצר"
 
 #. module: stock
 #: view:stock.quant.package:stock.view_quant_package_form
@@ -1822,22 +1822,22 @@ msgstr ""
 #. module: stock
 #: field:product.product,incoming_qty:0 field:product.template,incoming_qty:0
 msgid "Incoming"
-msgstr ""
+msgstr "נכנס"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_receipt_picking_move
 msgid "Incoming  Products"
-msgstr ""
+msgstr "מוצרים נכנסים"
 
 #. module: stock
 #: field:stock.quant,in_date:0
 msgid "Incoming Date"
-msgstr ""
+msgstr "תאריך כניסה"
 
 #. module: stock
 #: field:stock.warehouse,reception_steps:0
 msgid "Incoming Shipments"
-msgstr ""
+msgstr "משלוחים נכנסים"
 
 #. module: stock
 #: help:stock.incoterms,code:0
@@ -1872,7 +1872,7 @@ msgstr "מידע"
 #: model:stock.location,name:stock.stock_location_company
 #, python-format
 msgid "Input"
-msgstr ""
+msgstr "קלט"
 
 #. module: stock
 #: field:stock.warehouse,wh_input_stock_loc_id:0
@@ -1895,18 +1895,18 @@ msgstr ""
 #: view:stock.location:stock.view_location_search
 #: selection:stock.picking.type,code:0
 msgid "Internal"
-msgstr ""
+msgstr "פנימי"
 
 #. module: stock
 #: selection:stock.location,usage:0
 msgid "Internal Location"
-msgstr ""
+msgstr "מיקום פנימי"
 
 #. module: stock
 #: view:stock.location:stock.view_location_search
 #: view:stock.quant:stock.quant_search_view
 msgid "Internal Locations"
-msgstr ""
+msgstr "מקומות פנימיים"
 
 #. module: stock
 #: field:stock.picking,move_lines:0
@@ -1983,40 +1983,40 @@ msgstr ""
 #: field:stock.inventory.line,inventory_id:0 selection:stock.location,usage:0
 #: field:stock.move,inventory_id:0 view:website:stock.report_inventory
 msgid "Inventory"
-msgstr ""
+msgstr "מלאי"
 
 #. module: stock
 #: view:stock.inventory:stock.view_inventory_form
 msgid "Inventory Adjustment"
-msgstr ""
+msgstr "התאמת מלאי"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_inventory_form
 #: model:ir.ui.menu,name:stock.menu_action_inventory_form
 #: view:stock.inventory:stock.view_inventory_form
 msgid "Inventory Adjustments"
-msgstr ""
+msgstr "התאמות מלאי"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_inventory_control
 msgid "Inventory Control"
-msgstr ""
+msgstr "בקרת מלאי"
 
 #. module: stock
 #: field:stock.inventory,date:0
 msgid "Inventory Date"
-msgstr ""
+msgstr "תאריך מלאי"
 
 #. module: stock
 #: view:stock.inventory:stock.view_inventory_form
 #: view:stock.transfer_details:stock.view_stock_enter_transfer_details
 msgid "Inventory Details"
-msgstr ""
+msgstr "פרטי מלאי"
 
 #. module: stock
 #: model:ir.model,name:stock.model_stock_inventory_line
 msgid "Inventory Line"
-msgstr ""
+msgstr "קוו מלאי"
 
 #. module: stock
 #: help:stock.inventory,line_ids:0
@@ -2026,12 +2026,12 @@ msgstr ""
 #. module: stock
 #: field:product.template,property_stock_inventory:0
 msgid "Inventory Location"
-msgstr ""
+msgstr "מיקום מלאי"
 
 #. module: stock
 #: model:ir.model,name:stock.model_stock_location
 msgid "Inventory Locations"
-msgstr ""
+msgstr "מקומות מלאי"
 
 #. module: stock
 #: help:stock.inventory,move_ids:0
@@ -2052,19 +2052,19 @@ msgstr ""
 #. module: stock
 #: model:ir.model,name:stock.model_stock_location_route
 msgid "Inventory Routes"
-msgstr ""
+msgstr "נתיבי מלאי"
 
 #. module: stock
 #: field:stock.quant,inventory_value:0
 msgid "Inventory Value"
-msgstr ""
+msgstr "ערך מלאי"
 
 #. module: stock
 #: view:stock.inventory:stock.view_inventory_form
 msgid ""
 "Inventory adjustments will be made by comparing the theoretical and the "
 "checked quantities."
-msgstr ""
+msgstr "התאמות מלאי יבוצעו על ידי השוואת הכמויות התיאורטיות והבדקות."
 
 #. module: stock
 #: model:stock.location,name:stock.location_inventory
@@ -2074,7 +2074,7 @@ msgstr ""
 #. module: stock
 #: view:stock.inventory:stock.view_inventory_form
 msgid "Inventory of"
-msgstr ""
+msgstr "מלאי של"
 
 #. module: stock
 #: field:stock.config.settings,group_uos:0
@@ -2090,7 +2090,7 @@ msgstr "הוא עוקב"
 #. module: stock
 #: field:stock.location,scrap_location:0
 msgid "Is a Scrap Location?"
-msgstr ""
+msgstr "האם מיקום גרוטאות?"
 
 #. module: stock
 #: help:stock.move,product_packaging:0
@@ -2180,7 +2180,7 @@ msgstr "עודכן לאחרונה על"
 #: view:stock.picking.type:stock.stock_picking_type_kanban
 #, python-format
 msgid "Late"
-msgstr ""
+msgstr "מאחר"
 
 #. module: stock
 #: view:stock.picking.type:stock.stock_picking_type_kanban
@@ -2196,17 +2196,17 @@ msgstr ""
 #: model:ir.actions.act_window,name:stock.action_stock_line_date
 #: model:ir.ui.menu,name:stock.menu_report_stock_line_date
 msgid "Latest Inventories & Moves"
-msgstr ""
+msgstr "ספירות מלאי & והעברות אחרונות"
 
 #. module: stock
 #: field:stock.location,parent_left:0 field:stock.quant.package,parent_left:0
 msgid "Left Parent"
-msgstr ""
+msgstr "הורים משמאל"
 
 #. module: stock
 #: help:stock.location,company_id:0
 msgid "Let this field empty if this location is shared between companies"
-msgstr ""
+msgstr "רוקן אם מיקום זה משותף בין חברות"
 
 #. module: stock
 #: help:stock.location.route,company_id:0
@@ -2257,12 +2257,12 @@ msgstr "מיקום"
 #. module: stock
 #: view:stock.config.settings:stock.view_stock_config_settings
 msgid "Location & Warehouse"
-msgstr ""
+msgstr "מיקום & מחסן"
 
 #. module: stock
 #: model:ir.actions.report.xml,name:stock.action_report_location_barcode
 msgid "Location BarCode"
-msgstr ""
+msgstr "מיקום & ברקוד"
 
 #. module: stock
 #: field:stock.location,loc_barcode:0
@@ -2273,28 +2273,28 @@ msgstr ""
 #: field:stock.inventory.line,location_name:0
 #: field:stock.location,complete_name:0 field:stock.location,name:0
 msgid "Location Name"
-msgstr ""
+msgstr "שם מיקום"
 
 #. module: stock
 #: view:stock.location.path:stock.stock_location_path_form
 #: view:stock.location.path:stock.stock_location_path_tree
 msgid "Location Paths"
-msgstr ""
+msgstr "מסלול מיקום"
 
 #. module: stock
 #: field:stock.warehouse,lot_stock_id:0
 msgid "Location Stock"
-msgstr ""
+msgstr "מיקום במלאי"
 
 #. module: stock
 #: field:stock.location,usage:0
 msgid "Location Type"
-msgstr ""
+msgstr "סוג מיקום"
 
 #. module: stock
 #: help:stock.move,location_dest_id:0
 msgid "Location where the system will stock the finished products."
-msgstr ""
+msgstr "מיקום איפה המערכת תאחסן מוצרים מוגמרים"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_location_form
@@ -2303,7 +2303,7 @@ msgstr ""
 #: view:stock.picking.type:stock.view_picking_type_form
 #: view:stock.warehouse:stock.view_warehouse
 msgid "Locations"
-msgstr ""
+msgstr "אתרים"
 
 #. module: stock
 #: view:stock.config.settings:stock.view_stock_config_settings
@@ -2324,7 +2324,7 @@ msgstr ""
 #: view:product.category:stock.product_category_form_view_inherit
 #: view:stock.location:stock.view_location_form
 msgid "Logistics"
-msgstr ""
+msgstr "לוגיסטיקה"
 
 #. module: stock
 #: field:stock.move,restrict_lot_id:0 field:stock.move.scrap,restrict_lot_id:0
@@ -2332,7 +2332,7 @@ msgstr ""
 #: view:website:stock.report_lot_barcode
 #: view:website:stock.report_package_barcode
 msgid "Lot"
-msgstr ""
+msgstr "מיקום"
 
 #. module: stock
 #: model:ir.actions.report.xml,name:stock.action_report_lot_barcode
@@ -2369,14 +2369,14 @@ msgstr ""
 #. module: stock
 #: model:ir.model,name:stock.model_make_procurement
 msgid "Make Procurements"
-msgstr ""
+msgstr "ביצוע רכש"
 
 #. module: stock
 #: code:addons/stock/stock.py:3217
 #: model:stock.location.route,name:stock.route_warehouse0_mto
 #, python-format
 msgid "Make To Order"
-msgstr ""
+msgstr "הכן לפי הזמנה"
 
 #. module: stock
 #: selection:stock.warehouse,delivery_steps:0
@@ -2469,7 +2469,7 @@ msgstr ""
 #. module: stock
 #: field:stock.warehouse.orderpoint,product_max_qty:0
 msgid "Maximum Quantity"
-msgstr ""
+msgstr "כמות מקסימלית"
 
 #. module: stock
 #. openerp-web
@@ -2507,7 +2507,7 @@ msgstr ""
 #. module: stock
 #: field:stock.warehouse.orderpoint,product_min_qty:0
 msgid "Minimum Quantity"
-msgstr ""
+msgstr "כמות מינימלית"
 
 #. module: stock
 #: field:procurement.order,orderpoint_id:0
@@ -2540,7 +2540,7 @@ msgstr "העבר"
 #: code:addons/stock/procurement.py:43
 #, python-format
 msgid "Move From Another Location"
-msgstr ""
+msgstr "העבר ממקום אחר"
 
 #. module: stock
 #: field:stock.quant,negative_move_id:0
@@ -2736,7 +2736,7 @@ msgstr ""
 #: code:addons/stock/stock.py:4195
 #, python-format
 msgid "OK"
-msgstr ""
+msgstr "אוקי"
 
 #. module: stock
 #. openerp-web
@@ -2975,7 +2975,7 @@ msgstr ""
 #: view:stock.quant.package:stock.view_quant_package_tree
 #: view:website:stock.report_inventory
 msgid "Package"
-msgstr ""
+msgstr "חבילה"
 
 #. module: stock
 #: model:ir.actions.report.xml,name:stock.action_report_quant_package_barcode_small
@@ -3022,7 +3022,7 @@ msgstr ""
 #: view:stock.quant.package:stock.quant_package_search_view
 #: field:stock.quant.package,packaging_id:0
 msgid "Packaging"
-msgstr ""
+msgstr "אריזה"
 
 #. module: stock
 #: field:stock.warehouse,wh_pack_stock_loc_id:0
@@ -3065,7 +3065,7 @@ msgstr ""
 #. module: stock
 #: selection:stock.picking,move_type:0
 msgid "Partial"
-msgstr ""
+msgstr "חלקי"
 
 #. module: stock
 #: field:stock.move,partially_available:0 selection:stock.picking,state:0
@@ -3132,7 +3132,7 @@ msgstr ""
 #: view:stock.move:stock.view_move_search
 #: field:stock.transfer_details,picking_id:0
 msgid "Picking"
-msgstr ""
+msgstr "איסוף"
 
 #. module: stock
 #: model:ir.model,name:stock.model_stock_picking
@@ -3151,7 +3151,7 @@ msgstr ""
 #: field:stock.picking,picking_type_id:0
 #: view:stock.picking.type:stock.view_pickingtype_filter
 msgid "Picking Type"
-msgstr ""
+msgstr "סוג איסוף"
 
 #. module: stock
 #: field:stock.picking,picking_type_code:0
@@ -3326,7 +3326,7 @@ msgstr "רכש"
 #: view:stock.picking:stock.view_picking_internal_search
 #: field:stock.picking,group_id:0 field:stock.warehouse.orderpoint,group_id:0
 msgid "Procurement Group"
-msgstr ""
+msgstr "קבוצת רכישה"
 
 #. module: stock
 #: field:procurement.order,location_id:0 field:procurement.rule,location_id:0
@@ -3348,17 +3348,17 @@ msgstr ""
 #. module: stock
 #: model:ir.model,name:stock.model_procurement_group
 msgid "Procurement Requisition"
-msgstr ""
+msgstr "דרישת רכש"
 
 #. module: stock
 #: model:ir.model,name:stock.model_procurement_rule field:stock.move,rule_id:0
 msgid "Procurement Rule"
-msgstr ""
+msgstr "כלל רכש"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_procurement_rules
 msgid "Procurement Rules"
-msgstr ""
+msgstr "כללי רכש"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_procurement_action
@@ -3405,7 +3405,7 @@ msgstr "קטגוריות מוצרים"
 #: model:ir.model,name:stock.model_product_category
 #: field:stock.fixed.putaway.strat,category_id:0
 msgid "Product Category"
-msgstr ""
+msgstr "קטגורית מוצר"
 
 #. module: stock
 #: field:stock.inventory.line,product_code:0
@@ -3450,18 +3450,18 @@ msgstr ""
 #: field:stock.transfer_details_items,product_uom_id:0
 #: field:stock.warehouse.orderpoint,product_uom:0
 msgid "Product Unit of Measure"
-msgstr ""
+msgstr "יחידת מדידה של מוצר"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_product_variant_config_stock
 msgid "Product Variants"
-msgstr ""
+msgstr "משתני מוצר"
 
 #. module: stock
 #: model:stock.location,name:stock.location_production
 #: selection:stock.location,usage:0
 msgid "Production"
-msgstr ""
+msgstr "בביצוע"
 
 #. module: stock
 #: field:product.template,property_stock_production:0
@@ -3502,7 +3502,7 @@ msgstr ""
 #: code:addons/stock/product.py:60
 #, python-format
 msgid "Products: "
-msgstr ""
+msgstr "מוצרים:"
 
 #. module: stock
 #: code:addons/stock/stock.py:1699
@@ -4094,7 +4094,7 @@ msgstr ""
 #. module: stock
 #: field:stock.picking,min_date:0 view:website:stock.report_picking
 msgid "Scheduled Date"
-msgstr ""
+msgstr "תאריך שנקבע"
 
 #. module: stock
 #: help:stock.move,date_expected:0
@@ -4202,7 +4202,7 @@ msgstr "רצף"
 #: view:stock.production.lot:stock.view_production_lot_tree
 #: field:stock.production.lot,name:0 field:stock.return.picking.line,lot_id:0
 msgid "Serial Number"
-msgstr ""
+msgstr "מספר סידורי"
 
 #. module: stock
 #: field:stock.inventory.line,prodlot_name:0
@@ -4356,7 +4356,7 @@ msgstr ""
 #. module: stock
 #: view:stock.transfer_details:stock.view_stock_enter_transfer_details
 msgid "Split"
-msgstr ""
+msgstr "פיצול"
 
 #. module: stock
 #: view:stock.inventory:stock.view_inventory_form
@@ -4404,7 +4404,7 @@ msgstr ""
 #: view:stock.location:stock.view_location_form
 #: view:stock.location:stock.view_location_tree2
 msgid "Stock Location"
-msgstr ""
+msgstr "מיקום מחסן"
 
 #. module: stock
 #: view:stock.location:stock.view_location_search
@@ -5013,7 +5013,7 @@ msgstr ""
 #: view:stock.picking:stock.view_picking_form
 #: field:stock.transfer_details_items,transfer_id:0
 msgid "Transfer"
-msgstr ""
+msgstr "העברה"
 
 #. module: stock
 #: view:stock.transfer_details:stock.view_stock_enter_transfer_details
@@ -5102,13 +5102,13 @@ msgstr "יחידת מידה"
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_uom_categ_form_action
 msgid "Unit of Measure Categories"
-msgstr ""
+msgstr "קטגוריית יחידת מידה"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_unit_measure_stock
 #: model:ir.ui.menu,name:stock.menu_stock_uom_form_action
 msgid "Units of Measure"
-msgstr ""
+msgstr "יחידות מידה"
 
 #. module: stock
 #: code:addons/stock/stock.py:3736
@@ -5226,7 +5226,7 @@ msgstr "בתוקף"
 #. module: stock
 #: selection:stock.move,priority:0 selection:stock.picking,priority:0
 msgid "Very Urgent"
-msgstr ""
+msgstr "דחוף ביותר"
 
 #. module: stock
 #: selection:stock.location,usage:0
@@ -5614,7 +5614,7 @@ msgstr ""
 #. module: stock
 #: view:stock.inventory:stock.view_inventory_form
 msgid "⇒ Set quantities to 0"
-msgstr ""
+msgstr "⇒ אפס כמויות"
 
 #. module: stock
 #: view:product.template:stock.view_template_property_form

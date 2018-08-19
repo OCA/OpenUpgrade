@@ -3,15 +3,16 @@
 # * event
 # 
 # Translators:
-# Davor Bojkić <bole@dajmi5.com>, 2015
+# Bole <bole@dajmi5.com>, 2016
+# Bole <bole@dajmi5.com>, 2015
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-21 14:08+0000\n"
-"PO-Revision-Date: 2015-10-29 10:46+0000\n"
-"Last-Translator: Davor Bojkić <bole@dajmi5.com>\n"
+"PO-Revision-Date: 2017-04-13 12:52+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>\n"
 "Language-Team: Croatian (http://www.transifex.com/odoo/odoo-8/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -745,7 +746,7 @@ msgstr "Otkazano"
 #. module: event
 #: help:res.partner,speaker:0
 msgid "Check this box if this contact is a speaker."
-msgstr ""
+msgstr "Označite ovo polje ako je ovaj kontakt govornik."
 
 #. module: event
 #: code:addons/event/event.py:219
@@ -804,7 +805,7 @@ msgstr "Potvrđeni događaji"
 #. module: event
 #: view:event.registration:event.view_registration_search
 msgid "Confirmed registrations"
-msgstr ""
+msgstr "Potvrđenih registracija"
 
 #. module: event
 #: field:event.event,country_id:0
@@ -898,7 +899,7 @@ msgstr "Datum početka događaja"
 #. module: event
 #: view:event.event:event.view_event_tree
 msgid "Event Category"
-msgstr ""
+msgstr "Kategorija događaja"
 
 #. module: event
 #: view:event.confirm:event.view_event_confirm
@@ -959,7 +960,7 @@ msgstr ""
 #. module: event
 #: field:report.event.registration,user_id:0
 msgid "Event Responsible"
-msgstr ""
+msgstr "Odgovoran za događaj"
 
 #. module: event
 #: view:report.event.registration:event.view_report_event_registration_search
@@ -1005,7 +1006,7 @@ msgstr "Analiza događaja"
 #. module: event
 #: view:event.event:event.view_event_search
 msgid "Events in New state"
-msgstr ""
+msgstr "Događaji u novom statusu"
 
 #. module: event
 #: view:report.event.registration:event.view_report_event_registration_search
@@ -1114,7 +1115,7 @@ msgstr "Zadana maksimalna vtrijednost će biti odabrana prilikom odabia ovog dog
 #. module: event
 #: help:event.type,default_registration_min:0
 msgid "It will select this default minimum value when you choose this event"
-msgstr ""
+msgstr "Zadana minimalna vrijednost bit će odabrana prilikom odabira ovog događaja"
 
 #. module: event
 #: field:event.event,message_last_post:0
@@ -1299,7 +1300,7 @@ msgstr "Registracija"
 #. module: event
 #: view:event.event:event.view_event_form
 msgid "Register with this event"
-msgstr ""
+msgstr "Registriraj s ovim događajem"
 
 #. module: event
 #: view:event.event:event.view_event_form
@@ -1338,7 +1339,7 @@ msgstr "Status registracije"
 #. module: event
 #: view:report.event.registration:event.view_report_event_registration_search
 msgid "Registration contact"
-msgstr ""
+msgstr "Kontakt registracije"
 
 #. module: event
 #: view:event.event:event.view_event_form field:event.event,registration_ids:0
@@ -1407,7 +1408,7 @@ msgstr "Izvorni dokument"
 #. module: event
 #: field:res.partner,speaker:0
 msgid "Speaker"
-msgstr ""
+msgstr "Govornik"
 
 #. module: event
 #: field:event.event,date_begin:0
@@ -1494,7 +1495,7 @@ msgstr "Vrsta događaja"
 #: model:ir.actions.act_window,name:event.action_event_type
 #: model:ir.ui.menu,name:event.menu_event_type
 msgid "Types of Events"
-msgstr ""
+msgstr "Vrste događaja"
 
 #. module: event
 #: view:event.event:event.view_event_search selection:event.event,state:0
@@ -1540,7 +1541,7 @@ msgstr "Korisnik"
 msgid ""
 "Warning: This Event has not reached its Minimum Registration Limit. Are you "
 "sure you want to confirm it?"
-msgstr ""
+msgstr "Upozorenje: Ovaj događaj nije dosegao minimalnu granicu registracije. Jeste li sigurni da ga želite potvrditi?"
 
 #. module: event
 #: help:event.event,seats_min:0
@@ -1562,18 +1563,18 @@ msgstr ""
 #: code:addons/event/event.py:364
 #, python-format
 msgid "You must wait for the starting day of the event to do this action."
-msgstr ""
+msgstr "Za ovu akciju morate čekati dan početka događaja."
 
 #. module: event
 #: model:email.template,subject:event.confirmation_event
 #: model:email.template,subject:event.confirmation_registration
 msgid "Your registration at ${object.event_id.name}"
-msgstr ""
+msgstr "Vaša registracija na ${object.event_id.name}"
 
 #. module: event
 #: view:event.event:event.view_event_kanban
 msgid "available."
-msgstr ""
+msgstr "dostupno."
 
 #. module: event
 #: view:event.confirm:event.view_event_confirm
