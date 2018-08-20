@@ -122,7 +122,7 @@ def fill_cron_action_server_post(env):
             'write_date': act['write_date'],
             'name': act['name'],
             'model_id': act['model_id'],
-            'code': 'records.%s%s' % (act['function'], act['args'] or '()'),
+            'code': 'model.%s%s' % (act['function'], act['args'] or '()'),
         })
         openupgrade.logged_query(
             env.cr, """
