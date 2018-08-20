@@ -12,5 +12,5 @@ class TestIrCron(TransactionCase):
         self.assertTrue(cron.ir_actions_server_id)
         self.assertEquals(
             cron.ir_actions_server_id.code,
-            'records._commercial_sync_from_company()',
+            'model._commercial_sync_from_company()',
         )
