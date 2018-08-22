@@ -249,6 +249,14 @@ def map_account_tax_template_type(cr):
         table='account_tax_template', write='sql')
 
 
+def map_payment_term_line_value(cr):
+    """ Someone fixed a Flemishism """
+    openupgrade.logged_query(
+        cr,
+        """UPDATE account_payment_term_line
+        SET value = 'percent' WHERE value = 'procent';""")
+
+
 def blacklist_field_recomputation(env):
     """Create computed fields that take long time to compute, but will be
     filled with valid values by migration."""
@@ -335,6 +343,7 @@ def migrate(env, version):
     install_account_tax_python(cr)
     map_account_tax_type(cr)
     map_account_tax_template_type(cr)
+    map_payment_term_line_value(cr)
     remove_account_moves_from_special_periods(cr)
     blacklist_field_recomputation(env)
     merge_supplier_invoice_refs(env)
