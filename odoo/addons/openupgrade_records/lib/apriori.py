@@ -9,6 +9,8 @@ renamed_modules = {
     'stock_picking_wave': 'stock_picking_batch',
     'website_issue': 'website_form_project',
     'website_rating_project_issue': 'website_rating_project',
+    # OCA/account-invoice-reporting
+    'invoice_comment_template': 'account_invoice_comment_template',
     # OCA/credit-control
     'partner_financial_risk': 'account_financial_risk',
     'partner_payment_return_risk': 'account_payment_return_financial_risk',
