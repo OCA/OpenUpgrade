@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+  <data>
+        <!-- Force removal of values in src_model, as it is not needed in 9.0.
+        Having this field completed causes issues during migration in 11.0.-->
+        <record id="action_procurement_compute" model="ir.actions.act_window">
+            <field name="name">Run Reordering Rules</field>
+            <field name="res_model">procurement.orderpoint.compute</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="src_model"></field>
+        </record>
+  </data>
+</openerp>
