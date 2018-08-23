@@ -434,6 +434,7 @@ account      / account.payment.term.line / days2 (integer)               : DEL r
 account      / account.payment.term.line / option (selection)            : NEW required: required, selection_keys: ['day_after_invoice_date', 'fix_day_following_month', 'last_day_current_month', 'last_day_following_month'], req_default: day_after_invoice_date
 account      / account.payment.term.line / sequence (integer)            : NEW 
 account      / account.payment.term.line / value (selection)             : selection_keys is now '['balance', 'fixed', 'percent']' ('['balance', 'fixed', 'procent']')
+# Done: rewrote 'procent' entries to 'percent'
 
 
 #### FIELDS IN MODEL ACCOUNT.TAX ####
