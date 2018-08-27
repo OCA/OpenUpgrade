@@ -232,12 +232,23 @@ def map_account_tax_type(cr):
     """ The tax type 'code' is not an option in the account module for v9.
     We need to assign a temporary 'dummy' value until module
     account_tax_python is installed. In post-migration we will
-    restore the original value."""
+    restore the original value.
+
+    Also, the value `none` is not accepted anymore. We switch to `percent` +
+    value = 0.
+    """
     openupgrade.map_values(
         cr,
         openupgrade.get_legacy_name('type'), 'type',
         [('code', 'group')],
         table='account_tax', write='sql')
+    openupgrade.logged_query(
+        cr, """
+        UPDATE account_tax
+        SET type='percent',
+            amount=0.0
+        WHERE type='none'""",
+    )
 
 
 def map_account_tax_template_type(cr):

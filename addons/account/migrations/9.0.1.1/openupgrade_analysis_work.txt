@@ -474,6 +474,7 @@ account      / account.tax              / type (selection)              : was re
 account      / account.tax              / type (selection)              : selection_keys is now '['division', 'fixed', 'group', 'percent']' ('['balance', 'code', 'fixed', 'none', 'percent']')
 # Done: pre-migration: If the selection was 'code', rename to 'group' and install 'account_tax_python'
 # Done: post-migration: If the selection was 'code', rename again from 'group' to 'code'
+# Done: pre-migration: Switch type='none' to type='percent' + amount=0.0
 
 
 # Post migration script: In v8, if child_depend == True, then in v9, amount_type='group'
