@@ -48,11 +48,30 @@ def drop_slow_constraint(env):
     )
 
 
+def fix_act_window(env):
+    """Action window with XML-ID 'stock.action_procurement_compute' has
+    set src_model='procurement.order', and this will provoke an error as
+    new definition doesn't overwrite this field. We empty that value before
+    that happens. The source of this assignation is not clear, but it doesn't
+    hurt any way.
+    """
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE ir_act_window iaw
+        SET src_model = NULL
+        FROM ir_model_data imd
+        WHERE imd.res_id = iaw.id
+            AND imd.module = 'stock'
+            AND imd.name = 'action_procurement_compute'""",
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     copy_global_rules(env)
     delete_quants_for_consumable(env)
     drop_slow_constraint(env)
+    fix_act_window(env)
     openupgrade.update_module_moved_fields(
         env.cr, 'stock.move', ['has_tracking'], 'mrp', 'stock',
     )
