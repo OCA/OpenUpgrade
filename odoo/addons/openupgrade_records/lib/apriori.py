@@ -17,8 +17,6 @@ renamed_modules = {
     'partner_sale_risk': 'sale_financial_risk',
     # OCA/account-payment
     'account_due_list_aging_comments': 'account_due_list_aging_comment',
-    # OCA/product-variant
-    'product_variant_supplierinfo': 'product',
     # OCA/stock-logistics-reporting
     'stock_valued_picking_report': 'stock_picking_report_valued',
     # OCA/vertical-association
@@ -52,6 +50,8 @@ merged_modules = {
     'account_financial_report_qweb': 'account_financial_report',
     # OCA/bank-payment
     'portal_payment_mode': 'account_payment_mode',
+    # OCA/product-variant
+    'product_variant_supplierinfo': 'product',
     # OCA/project
     'project_issue_timesheet_time_control': 'project_timesheet_time_control',
     # OCA/stock-logistics-workflow
