@@ -41,9 +41,15 @@ def create_and_populate_children(env):
     #
     #  In _get_hours, ``task.total_hours_spent = task.effective_hours + task.children_hours``
     #  No need to bother to add 0.
-    openupgrade.logged_query(cr, '''
-    UPDATE project_task SET children_hours=0, total_hours_spent=effective_hours;
-    ''')
+    query = """
+        UPDATE project_task
+        SET children_hours=0, total_hours_spent="""
+    # This column only exists if project_timesheet was installed previously
+    if openupgrade.column_exists(cr, 'project_task', 'effective_hours'):
+        query += 'effective_hours'
+    else:
+        query += '0'
+    openupgrade.logged_query(cr, query)
 
 
 @openupgrade.migrate()
