@@ -19,6 +19,8 @@ renamed_modules = {
     'account_due_list_aging_comments': 'account_due_list_aging_comment',
     # OCA/stock-logistics-reporting
     'stock_valued_picking_report': 'stock_picking_report_valued',
+    # OCA/hr
+    'hr_public_holidays': 'hr_holidays_public',
     # OCA/vertical-association
     'membership_prorrate': 'membership_prorate',
     'membership_prorrate_variable_period': (
