@@ -10,7 +10,7 @@ def map_list_id_to_list_ids(env):
     """Set the list_ids for the list_id in mail.mass_mailing.contact"""
     openupgrade.m2o_to_x2m(
         env.cr, env['mail.mass_mailing.contact'], 'mail_mass_mailing_contact',
-        'list_ids', 'list_id',
+        'list_ids', openupgrade.get_legacy_name('list_id'),
     )
 
 

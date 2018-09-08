@@ -4,6 +4,12 @@
 
 from openupgradelib import openupgrade
 
+COLUMN_RENAMES = {
+    'mail_mass_mailing_contact': [
+        ('list_id', None),
+    ],
+}
+
 
 def switch_mailing_model_list(env):
     """Doing a mass mailing on lists now points to the 'mail.mass_mailing.list'
@@ -19,4 +25,5 @@ def switch_mailing_model_list(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.rename_columns(env.cr, COLUMN_RENAMES)
     switch_mailing_model_list(env)
