@@ -52,6 +52,8 @@ merged_modules = {
     'account_financial_report_qweb': 'account_financial_report',
     # OCA/bank-payment
     'portal_payment_mode': 'account_payment_mode',
+    # OCA/crm
+    'crm_lead_website': 'crm',
     # OCA/product-variant
     'product_variant_supplierinfo': 'product',
     # OCA/project
