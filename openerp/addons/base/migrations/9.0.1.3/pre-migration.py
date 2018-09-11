@@ -55,6 +55,7 @@ def cleanup_modules(cr):
             ('im_chat', 'mail'),
             ('marketing_crm', 'crm'),
             ('email_template', 'mail'),  # mail_template class
+            ('hr_applicant_document', 'hr_recruitment'),
             ('portal_project', 'project'),
             ('portal_project_issue', 'project_issue'),
             ('procurement_jit_stock', 'procurement_jit'),
