@@ -107,6 +107,7 @@ def convert_issues(env):
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO project_task (
+            create_date, create_uid, write_date, write_uid,
             %(issue_column)s, project_id,
             active, color, company_id, date_start, date_end,
             date_deadline, description, kanban_state, name,
@@ -115,6 +116,7 @@ def convert_issues(env):
             priority
         )
         SELECT
+            pi.create_date, pi.create_uid, pi.write_date, pi.write_uid,
             pi.id, COALESCE(pp.%(project_column)s, pp.id),
             pi.active, pi.color, pi.company_id, pi.date_open, pi.date_closed,
             pi.date_deadline, pi.description, pi.kanban_state, pi.name,
