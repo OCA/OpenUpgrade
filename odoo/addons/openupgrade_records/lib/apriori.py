@@ -17,6 +17,8 @@ renamed_modules = {
     'partner_sale_risk': 'sale_financial_risk',
     # OCA/account-payment
     'account_due_list_aging_comments': 'account_due_list_aging_comment',
+    # OCA/partner-contact
+    'partner_sector': 'partner_industry_secondary',
     # OCA/stock-logistics-reporting
     'stock_valued_picking_report': 'stock_picking_report_valued',
     # OCA/hr
