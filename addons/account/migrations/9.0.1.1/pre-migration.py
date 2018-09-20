@@ -157,28 +157,12 @@ def migrate_properties(cr):
             """.format(name_v8=name_v8, name_v9=name_v9))
 
 
-def no_remove_moves_exception_modules():
-    """ In some countries the odoo standard closing procedure is not used,
-    and the special periods should not be deleted."""
-    return ['l10n_es_fiscal_year_closing']
-
-
 def remove_account_moves_from_special_periods(cr):
     """We first search for journal entries in a special period, in the
     first reported fiscal year of the company, and we take them out of the
     special period, into a normal period, because we assume that this is
     the starting balance of the company, and should be maintained.
     Then we delete all the moves associated to special periods."""
-
-    module_names = no_remove_moves_exception_modules()
-    cr.execute("""
-        SELECT * FROM ir_module_module
-        WHERE name in %s
-        AND state='installed'
-    """, (tuple(module_names),))
-    if cr.fetchall():
-        return True
-
     cr.execute("""
         SELECT id FROM account_move
         WHERE period_id in (SELECT id FROM account_period WHERE special = True
