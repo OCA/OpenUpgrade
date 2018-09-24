@@ -1,37 +1,37 @@
-account.tax.code:code,account.tax.code:name,account.account.tag:name,account.account.tag:xmlid,ttype
-00,Opérations soumises à un régime particulier,Belgium VAT Form: grid 0,l10n_be.tax_tag_00,base
-01,Opérations avec TVA à 6%,Belgium VAT Form: grid 01,l10n_be.tax_tag_01,base
-02,Opérations avec TVA à 12%,Belgium VAT Form: grid 02,l10n_be.tax_tag_02,base
-03,Opérations avec TVA à 21%,Belgium VAT Form: grid 03,l10n_be.tax_tag_03,base
-44,Services intra-communautaires,Belgium VAT Form: grid 44,l10n_be.tax_tag_44,base
-45,Opérations avec TVA due par le cocontractant,Belgium VAT Form: grid 45,l10n_be.tax_tag_45,base
-46,Livraisons intra-communautaire exemptées,,,base
-46L,Livraisons biens intra-communautaire exemptées,Belgium VAT Form: grid 46L,l10n_be.tax_tag_46L,base
-46T,ABC intra-communautaires,Belgium VAT Form: grid 46T,l10n_be.tax_tag_46T,base
-47,Autres operations exemptées,Belgium VAT Form: grid 47,l10n_be.tax_tag_47,base
-48,Notes de crédit aux opérations grilles [44] et [46],,,base
-48s44,Notes de crédit aux opérations grille [44],Belgium VAT Form: grid 48s44,l10n_be.tax_tag_48s44,base
-48s46L,Notes de crédit aux opérations grille [46L],Belgium VAT Form: grid 48s46L,l10n_be.tax_tag_48s46L,base
-48s46T,Notes de crédit aux opérations grille [46T],Belgium VAT Form: grid 48s46T,l10n_be.tax_tag_48s46T,base
-49,Notes de crédit aux opérations du point II,Belgium VAT Form: grid 49,l10n_be.tax_tag_49,base
-54,"TVA sur opérations des grilles [01], [02], [03]",Belgium VAT Form: grid 54,l10n_be.tax_tag_54,tax
-55,TVA sur opérations des grilles [86] et [88],Belgium VAT Form: grid 55,l10n_be.tax_tag_55,tax
-56,TVA sur opérations de la grille [87],Belgium VAT Form: grid 56,l10n_be.tax_tag_56,tax
-57,TVA relatives aux importations,Belgium VAT Form: grid 57,l10n_be.tax_tag_57,tax
-59,TVA déductible,Belgium VAT Form: grid 59,l10n_be.tax_tag_59,tax
-61,Diverses régularisations en faveur de l'Etat,Belgium VAT Form: grid 61,l10n_be.tax_tag_61,
-62,Régularisations TVA en faveur du déclarant,Belgium VAT Form: grid 62,l10n_be.tax_tag_62,
-63,TVA à reverser sur notes de crédit reçues,Belgium VAT Form: grid 63,l10n_be.tax_tag_63,
-64,TVA à recuperer sur notes de crédit delivrées,Belgium VAT Form: grid 64,l10n_be.tax_tag_64,
-81,"Marchandises, matières premières et auxiliaires",Belgium VAT Form: grid 81,l10n_be.tax_tag_81,base
-82,Services et biens divers,Belgium VAT Form: grid 82,l10n_be.tax_tag_82,base
-83,Biens d'investissement,Belgium VAT Form: grid 83,l10n_be.tax_tag_83,base
-84,Notes de crédits sur opérations case [86] et [88],Belgium VAT Form: grid 84,l10n_be.tax_tag_84,base
-85,Notes de crédits autres opérations,Belgium VAT Form: grid 85,l10n_be.tax_tag_85,base
-86,Acquisition intra-communautaires et ventes ABC,Belgium VAT Form: grid 86,l10n_be.tax_tag_86,base
-88,Acquisition services intra-communautaires,Belgium VAT Form: grid 88,l10n_be.tax_tag_88,base
-87,Autres opérations à l'entrée,Belgium VAT Form: base in 87,l10n_be.tax_tag_87,base
-,,Belgium VAT Form: Tax not deductible (grid 81),l10n_be.tax_tag_81_not_deductible,
-,,Belgium VAT Form: Tax not deductible (grid 82),l10n_be.tax_tag_82_not_deductible,
-,,Belgium VAT Form: Tax not deductible (grid 83),l10n_be.tax_tag_83_not_deductible,
-,,Belgium VAT Form: Tax not deductible (grid 85),l10n_be.tax_tag_85_not_deductible,
+account.tax.code:code,account.tax.code:name,account.account.tag:name,account.account.tag:xmlid,ttype,sign
+00,Opérations soumises à un régime particulier,Belgium VAT Form: grid 0,l10n_be.tax_tag_00,base,crd
+01,Opérations avec TVA à 6%,Belgium VAT Form: grid 01,l10n_be.tax_tag_01,base,crd
+02,Opérations avec TVA à 12%,Belgium VAT Form: grid 02,l10n_be.tax_tag_02,base,crd
+03,Opérations avec TVA à 21%,Belgium VAT Form: grid 03,l10n_be.tax_tag_03,base,crd
+44,Services intra-communautaires,Belgium VAT Form: grid 44,l10n_be.tax_tag_44,base,crd
+45,Opérations avec TVA due par le cocontractant,Belgium VAT Form: grid 45,l10n_be.tax_tag_45,base,crd
+46,Livraisons intra-communautaire exemptées,,,base,XXX
+46L,Livraisons biens intra-communautaire exemptées,Belgium VAT Form: grid 46L,l10n_be.tax_tag_46L,base,XXX
+46T,ABC intra-communautaires,Belgium VAT Form: grid 46T,l10n_be.tax_tag_46T,base,XXX
+47,Autres operations exemptées,Belgium VAT Form: grid 47,l10n_be.tax_tag_47,base,crd
+48,Notes de crédit aux opérations grilles [44] et [46],,,base,deb
+48s44,Notes de crédit aux opérations grille [44],Belgium VAT Form: grid 48s44,l10n_be.tax_tag_48s44,base,deb
+48s46L,Notes de crédit aux opérations grille [46L],Belgium VAT Form: grid 48s46L,l10n_be.tax_tag_48s46L,base,deb
+48s46T,Notes de crédit aux opérations grille [46T],Belgium VAT Form: grid 48s46T,l10n_be.tax_tag_48s46T,base,deb
+49,Notes de crédit aux opérations du point II,Belgium VAT Form: grid 49,l10n_be.tax_tag_49,base,deb
+54,"TVA sur opérations des grilles [01], [02], [03]",Belgium VAT Form: grid 54,l10n_be.tax_tag_54,tax,crd
+55,TVA sur opérations des grilles [86] et [88],Belgium VAT Form: grid 55,l10n_be.tax_tag_55,tax,deb
+56,TVA sur opérations de la grille [87],Belgium VAT Form: grid 56,l10n_be.tax_tag_56,tax,deb
+57,TVA relatives aux importations,Belgium VAT Form: grid 57,l10n_be.tax_tag_57,tax,crd
+59,TVA déductible,Belgium VAT Form: grid 59,l10n_be.tax_tag_59,tax,deb
+61,Diverses régularisations en faveur de l'Etat,Belgium VAT Form: grid 61,l10n_be.tax_tag_61,tax,crd
+62,Régularisations TVA en faveur du déclarant,Belgium VAT Form: grid 62,l10n_be.tax_tag_62,tax,deb
+63,TVA à reverser sur notes de crédit reçues,Belgium VAT Form: grid 63,l10n_be.tax_tag_63,tax,crd
+64,TVA à recuperer sur notes de crédit delivrées,Belgium VAT Form: grid 64,l10n_be.tax_tag_64,tax,deb
+81,"Marchandises, matières premières et auxiliaires",Belgium VAT Form: grid 81,l10n_be.tax_tag_81,base,deb
+82,Services et biens divers,Belgium VAT Form: grid 82,l10n_be.tax_tag_82,base,deb
+83,Biens d'investissement,Belgium VAT Form: grid 83,l10n_be.tax_tag_83,base,deb
+84,Notes de crédits sur opérations case [86] et [88],Belgium VAT Form: grid 84,l10n_be.tax_tag_84,base,crd
+85,Notes de crédits autres opérations,Belgium VAT Form: grid 85,l10n_be.tax_tag_85,base,crd
+86,Acquisition intra-communautaires et ventes ABC,Belgium VAT Form: grid 86,l10n_be.tax_tag_86,base,deb
+88,Acquisition services intra-communautaires,Belgium VAT Form: grid 88,l10n_be.tax_tag_88,base,deb
+87,Autres opérations à l'entrée,Belgium VAT Form: base in 87,l10n_be.tax_tag_87,base,deb
+,,Belgium VAT Form: Tax not deductible (grid 81),l10n_be.tax_tag_81_not_deductible,,
+,,Belgium VAT Form: Tax not deductible (grid 82),l10n_be.tax_tag_82_not_deductible,,
+,,Belgium VAT Form: Tax not deductible (grid 83),l10n_be.tax_tag_83_not_deductible,,
+,,Belgium VAT Form: Tax not deductible (grid 85),l10n_be.tax_tag_85_not_deductible,,
