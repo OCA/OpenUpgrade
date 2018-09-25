@@ -12,6 +12,7 @@ table_renames = [
     ('crm_case_categ', 'crm_lead_tag'),
     ('crm_case_stage', 'crm_stage'),
     ('section_stage_rel', 'crm_team_stage_rel'),
+    ('crm_lead_lost_reason', 'crm_lost_reason'),
 ]
 
 column_renames = {
@@ -94,6 +95,3 @@ def migrate(env, version):
         [('4', '3')], table='crm_lead',
     )
     cr.execute("update crm_lead set type='opportunity' where type is null")
-    # Needed for crm_lead_lost_reason migration
-    cr.execute("ALTER TABLE IF EXISTS crm_lead_lost_reason "
-               "RENAME TO crm_lost_reason")
