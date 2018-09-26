@@ -3,7 +3,9 @@ mass_mailing / mail.mass_mailing        / _inherits (False)             : NEW
 mass_mailing / mail.mass_mailing        / source_id (many2one)          : now required
 mass_mailing / mail.mass_mailing.contact / website_message_ids (one2many): DEL relation: mail.message
 mass_mailing / mail.mass_mailing.list   / popup_content (html)          : module is now 'website_mass_mailing' ('mass_mailing')
+# managed in website_mass_mailing
 mass_mailing / mail.mass_mailing.list   / popup_redirect_url (char)     : module is now 'website_mass_mailing' ('mass_mailing')
+# managed in website_mass_mailing
 ---XML records in module 'mass_mailing'---
 NEW ir.actions.act_window: mass_mailing.mass_mailing_tag_action
 DEL ir.actions.act_window: mass_mailing.action_email_template_marketing
