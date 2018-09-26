@@ -1,0 +1,22 @@
+---Fields in module 'website_mass_mailing'---
+website_mass_mailing / mail.mass_mailing.list   / popup_content (html)          : previously in module mass_mailing
+website_mass_mailing / mail.mass_mailing.list   / popup_redirect_url (char)     : previously in module mass_mailing
+# Nothing to do: columns are in new model
+
+---XML records in module 'website_mass_mailing'---
+NEW ir.ui.view: website_mass_mailing.inherited_view_mass_mailing_configuration
+NEW ir.ui.view: website_mass_mailing.newsletter_subscribe_options
+NEW ir.ui.view: website_mass_mailing.s_mail_block_footer_social
+NEW ir.ui.view: website_mass_mailing.s_mail_block_footer_social_left
+NEW ir.ui.view: website_mass_mailing.s_mail_block_header_social
+NEW ir.ui.view: website_mass_mailing.s_mail_block_header_text_social
+NEW ir.ui.view: website_mass_mailing.s_newsletter_subscribe_form
+NEW ir.ui.view: website_mass_mailing.s_newsletter_subscribe_popup
+NEW ir.ui.view: website_mass_mailing.snippets
+NEW ir.ui.view: website_mass_mailing.social_links
+NEW ir.ui.view: website_mass_mailing.view_mail_mass_mailing_list_form
+DEL ir.ui.view: website_mass_mailing.mailing_list_subscribe
+DEL ir.ui.view: website_mass_mailing.website_popup_options
+DEL ir.ui.view: website_mass_mailing.website_popup_snippet
+NEW res.groups: website_mass_mailing.group_website_popup_on_exit
+# Nothing to do
