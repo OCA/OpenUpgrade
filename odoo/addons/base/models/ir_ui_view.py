@@ -526,8 +526,10 @@ actual arch.
             'parent': view.inherit_id.id or not_avail,
             'msg': message,
         }
+        # OpenUpgrade: we ignore view errors unless explicitely indicated
+        if self.env.context.get('raise_view_error'):
+            raise AttributeError(message)
         _logger.info(message)
-        raise ValueError(message)
 
     def locate_node(self, arch, spec):
         """ Locate a node in a source (parent) architecture.
@@ -1388,8 +1390,20 @@ actual arch.
                  GROUP BY coalesce(v.inherit_id, v.id)"""
         self._cr.execute(query, [model])
 
-        rec = self.browse(it[0] for it in self._cr.fetchall())
-        return rec.with_context({'load_all_views': True})._check_xml()
+        # OpenUpgrade: set invalid custom views to inactive
+        for view in self.with_context(load_all_views=True, raise_view_error=True).browse(
+                it[0] for it in self._cr.fetchall()):
+            try:
+                view._check_xml()
+            except AttributeError:
+                _logger.warn(
+                    "Can't render custom view %s for model %s. "
+                    "Assuming you are migrating between major versions of "
+                    "Odoo, this view is now set to inactive. Please "
+                    "review the view contents manually after the migration.",
+                    view.xml_id, view.model)
+                view.write({'active': False})
+        return True
 
     @api.model
     def _validate_module_views(self, module):

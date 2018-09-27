@@ -1,0 +1,94 @@
+Script started on 2018-09-27 06:48:50+0200
+bruno@tulpa:~/buildout/ou120/parts/odoo$ gpg -d kl/ewac/accounts.gpg |grep -i odoocaja[K^C
+bruno@tulpa:~/buildout/ou120/parts/odoo$ patch -p1 < ../../../ou110/parts/framework
+patching file addons/account/models/account_invoice.py
+Hunk #1 succeeded at 1887 with fuzz 1 (offset 191 lines).
+can't find file to patch at input line 18
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff -c -r --exclude '*.git' --exclude migrations odoo_ec7109c9/addons/account_invoicing/__manifest__.py odoo/addons/account_invoicing/__manifest__.py
+|*** odoo_ec7109c9/addons/account_invoicing/__manifest__.py	2018-09-27 06:29:36.687465142 +0200
+|--- odoo/addons/account_invoicing/__manifest__.py	2018-05-17 09:37:49.939260547 +0200
+--------------------------
+File to patch: 
+Skip this patch? [y] y
+Skipping patch.
+1 out of 1 hunk ignored
+patching file addons/l10n_br/models/account.py
+patching file addons/l10n_fr_hr_payroll/__manifest__.py
+patching file addons/project/models/project.py
+Hunk #1 succeeded at 518 with fuzz 2 (offset 48 lines).
+patching file addons/website/models/website.py
+Hunk #1 FAILED at 630.
+1 out of 1 hunk FAILED -- saving rejects to file addons/website/models/website.py.rej
+patching file .gitignore
+can't find file to patch at input line 140
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff -c -r --exclude '*.git' --exclude migrations odoo_ec7109c9/odoo/addons/base/ir/ir_model.py odoo/odoo/addons/base/ir/ir_model.py
+|*** odoo_ec7109c9/odoo/addons/base/ir/ir_model.py	2018-09-27 06:29:36.691465155 +0200
+|--- odoo/odoo/addons/base/ir/ir_model.py	2018-09-27 06:33:15.984168277 +0200
+--------------------------
+File to patch: patch -p1 < ../../../ou110/parts/framework                                          odoo/addons/base/model/ s/ir_model.py
+patching file odoo/addons/base/models/ir_model.py
+Hunk #2 succeeded at 166 (offset 1 line).
+Hunk #3 succeeded at 546 (offset 19 lines).
+Hunk #4 succeeded at 794 (offset 24 lines).
+Hunk #5 FAILED at 1465.
+Hunk #6 succeeded at 1604 (offset -3 lines).
+Hunk #7 succeeded at 1674 (offset -3 lines).
+1 out of 7 hunks FAILED -- saving rejects to file odoo/addons/base/models/ir_model.py.rej
+can't find file to patch at input line 297
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff -c -r --exclude '*.git' --exclude migrations odoo_ec7109c9/odoo/addons/base/ir/ir_ui_view.py odoo/odoo/addons/base/ir/ir_ui_view.py
+|*** odoo_ec7109c9/odoo/addons/base/ir/ir_ui_view.py	2018-09-27 06:29:36.691465155 +0200
+|--- odoo/odoo/addons/base/ir/ir_ui_view.py	2018-09-27 06:33:15.992168303 +0200
+--------------------------
+File to patch: odoo/addons/base/models/ir_ui_view.py
+patching file odoo/addons/base/models/ir_ui_view.py
+Hunk #1 FAILED at 340.
+Hunk #2 succeeded at 524 (offset 19 lines).
+Hunk #3 succeeded at 1388 (offset 65 lines).
+1 out of 3 hunks FAILED -- saving rejects to file odoo/addons/base/models/ir_ui_view.py.rej
+patching file odoo/fields.py
+Hunk #1 succeeded at 39 (offset 2 lines).
+Hunk #2 succeeded at 1254 (offset 29 lines).
+patching file odoo/models.py
+Hunk #1 succeeded at 252 (offset 1 line).
+Hunk #2 succeeded at 5173 (offset 277 lines).
+patching file odoo/modules/graph.py
+patching file odoo/modules/loading.py
+Hunk #2 FAILED at 22.
+Hunk #3 succeeded at 142 with fuzz 2 (offset 44 lines).
+Hunk #4 succeeded at 157 (offset 44 lines).
+Hunk #5 succeeded at 177 (offset 44 lines).
+Hunk #6 succeeded at 208 with fuzz 2 (offset 44 lines).
+Hunk #7 succeeded at 250 with fuzz 2 (offset 41 lines).
+Hunk #8 FAILED at 260.
+Hunk #9 succeeded at 328 (offset 43 lines).
+Hunk #10 succeeded at 339 (offset 43 lines).
+Hunk #11 succeeded at 362 with fuzz 1 (offset 43 lines).
+Hunk #12 succeeded at 394 (offset 42 lines).
+Hunk #13 succeeded at 422 (offset 42 lines).
+Hunk #14 succeeded at 460 (offset 42 lines).
+Hunk #15 FAILED at 526.
+3 out of 15 hunks FAILED -- saving rejects to file odoo/modules/loading.py.rej
+patching file odoo/modules/migration.py
+patching file odoo/modules/registry.py
+Hunk #1 succeeded at 301 (offset -11 lines).
+patching file odoo/tools/convert.py
+Hunk #1 succeeded at 26 (offset -1 lines).
+Hunk #2 succeeded at 259 (offset 4 lines).
+patching file README.md
+Hunk #1 FAILED at 1.
+1 out of 1 hunk FAILED -- saving rejects to file README.md.rej
+patching file requirements.txt
+Hunk #1 succeeded at 44 (offset 3 lines).
+patching file setup.py
+bruno@tulpa:~/buildout/ou120/parts/odoo$ exit
+
+Script done on 2018-09-27 06:49:47+0200
