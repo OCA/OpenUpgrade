@@ -60,6 +60,7 @@ from .tools.safe_eval import safe_eval
 from .tools.translate import _
 from .tools import date_utils
 
+
 _logger = logging.getLogger(__name__)
 _schema = logging.getLogger(__name__ + '.schema')
 _unlink = logging.getLogger(__name__ + '.unlink')
@@ -251,6 +252,10 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
     _depends = {}               # dependencies of models backed up by sql views
                                 # {model_name: field_names, ...}
+
+    # OpenUpgrade start
+    _openupgrade_recompute_fields_blacklist = []  # List of blacklisted fields
+    # OpenUpgrade end
 
     # default values for _transient_vacuum()
     _transient_check_count = 0
@@ -920,6 +925,8 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             if xid:
                 xid = xid if '.' in xid else "%s.%s" % (current_module, xid)
                 batch_xml_ids.update(ModelData._generate_xmlids(xid, self))
+                # Openupgrade: log csv records
+                odoo.openupgrade.openupgrade_log.log_xml_id(self.env.cr, current_module, xid)
             elif id:
                 record['id'] = id
             batch.append((xid, record, info))
@@ -5173,6 +5180,23 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             field, recs = self.env.get_todo()
             # determine the fields to recompute
             fs = self.env[field.model_name]._field_computed[field]
+            # OpenUpgrade start:
+            blacklist = recs._openupgrade_recompute_fields_blacklist
+            field_key = '%s' % field
+            model_name, field_name = field_key.rsplit('.', 1)
+            if field_name in blacklist:
+                _logger.info(
+                    "Recompute of field %s for %d recs blacklisted." %
+                    (field_key, len(recs))
+                )
+                for f in fs:
+                    recs._recompute_done(f)
+                continue
+            _logger.info(
+                "Actual recompute of field %s for %d recs." %
+                (field_key, len(recs))
+            )
+            # OpenUpgrade end
             ns = [f.name for f in fs if f.store]
             # evaluate fields, and group record ids by update
             updates = defaultdict(set)

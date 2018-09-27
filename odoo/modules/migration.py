@@ -21,8 +21,12 @@ if pycompat.PY2:
         fp, fname = tools.file_open(path, pathinfo=True)
         fp2 = None
 
+        # OpenUpgrade edit start:
+        # Don't copy the migration script into a temp directory. Instead,
+        # replace the call to load_source with a call to load_module so  that
+        # the frame isn't lost and breakpoints can be set
         # pylint: disable=file-builtin,undefined-variable
-        if not isinstance(fp, file):
+        if False and not isinstance(fp, file):
             # imp.load_source need a real file object, so we create
             # one from the file-like object we get from file_open
             fp2 = os.tmpfile()
@@ -30,7 +34,7 @@ if pycompat.PY2:
             fp2.seek(0)
 
         try:
-            return imp.load_source(module_name, fname, fp2 or fp)
+            return imp.load_module(module_name, fp, fname, ('.py', 'r', imp.PY_SOURCE))
         finally:
             if fp:
                 fp.close()
@@ -109,7 +113,12 @@ class MigrationManager(object):
         }
         state = pkg.state if stage in ('pre', 'post') else getattr(pkg, 'load_state', None)
 
-        if not (hasattr(pkg, 'update') or state == 'to upgrade') or state == 'to install':
+        # In openupgrade, also run migration scripts upon installation.
+        # We want to always pass in pre and post migration files and use a new
+        # argument in the migrate decorator (explained in the docstring)
+        # to decide if we want to do something if a new module is installed
+        # during the migration.
+        if not (hasattr(pkg, 'update') or state in ('to upgrade', 'to install')):
             return
 
         def convert_version(version):

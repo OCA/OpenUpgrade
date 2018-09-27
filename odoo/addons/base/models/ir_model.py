@@ -13,6 +13,9 @@ from odoo.osv import expression
 from odoo.tools import pycompat
 from odoo.tools.safe_eval import safe_eval
 
+from odoo.openupgrade import openupgrade_log, openupgrade_loading
+from openupgradelib import openupgrade
+
 _logger = logging.getLogger(__name__)
 
 MODULE_UNINSTALL_FLAG = '_force_unlink'
@@ -177,6 +180,11 @@ class IrModel(models.Model):
 
     def _drop_table(self):
         for model in self:
+            # OpenUpgrade: do not run the new table cleanup
+            openupgrade.message(
+                self._cr, 'Unknown', False, False,
+                "Not dropping the table or view of model %s", model.model)
+            continue
             table = self.env[model.model]._table
             kind = tools.table_kind(self._cr, table)
             if kind == 'v':
@@ -552,6 +560,13 @@ class IrModelFields(models.Model):
         for field in self:
             if field.name in models.MAGIC_COLUMNS:
                 continue
+            # OpenUpgrade: do not drop columns
+            openupgrade.message(
+                self._cr, 'Unknown', False, False,
+                "Not dropping the column of field %s of model %s", field.name,
+                field.model,
+            )
+            continue
             model = self.env[field.model]
             if tools.column_exists(self._cr, model._table, field.name) and \
                     tools.table_kind(self._cr, model._table) == 'r':
@@ -808,6 +823,7 @@ class IrModelFields(models.Model):
         to_insert = []
         to_xmlids = []
         for name, field in model._fields.items():
+            openupgrade_loading.update_field_xmlid(self, field)
             old_vals = fields_data.get(name)
             new_vals = self._reflect_field_params(field)
             if old_vals is None:
@@ -1543,6 +1559,10 @@ class IrModelData(models.Model):
                 if external_ids - datas:
                     # if other modules have defined this record, we must not delete it
                     continue
+                    # OpenUpgrade specific start
+                    if not self.env.get(model):
+                        continue
+                    # OpenUpgrade specific end
                 if model == 'ir.model.fields':
                     # Don't remove the LOG_ACCESS_COLUMNS unless _log_access
                     # has been turned off on the model.
@@ -1613,7 +1633,17 @@ class IrModelData(models.Model):
                     _logger.info('Deleting %s@%s (%s)', res_id, model, xmlid)
                     record = self.env[model].browse(res_id)
                     if record.exists():
-                        record.unlink()
+                        # OpenUpgrade: never break on unlink of obsolete records
+                        try:
+                            self.env.cr.execute('SAVEPOINT ir_model_data_delete');
+                            record.unlink()
+                        except Exception:
+                            self.env.cr.execute('ROLLBACK TO SAVEPOINT ir_model_data_delete');
+                            _logger.warning(
+                                'Could not delete obsolete record with id: %d of model %s\n'
+                                'Please refer to the log message right above',
+                                res_id, model)
+                        # /OpenUpgrade
                     else:
                         bad_imd_ids.append(id)
         if bad_imd_ids:

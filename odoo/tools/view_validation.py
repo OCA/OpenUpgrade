@@ -15,7 +15,9 @@ _relaxng_cache = {}
 
 def valid_view(arch):
     for pred in _validators[arch.tag]:
-        check = pred(arch)
+
+        # OpenUpgrade: Force warning here as we ignore all view errors.
+        check = pred(arch) or 'warning'
         if not check:
             _logger.error("Invalid XML: %s", pred.__doc__)
             return False
