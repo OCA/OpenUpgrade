@@ -1,0 +1,7 @@
+---Fields in module 'project_timesheet_holidays'---
+project_timesheet_holidays / account.analytic.line    / holiday_id (many2one)         : relation is now 'hr.leave' ('hr.holidays')
+project_timesheet_holidays / hr.leave                 / timesheet_ids (one2many)      : NEW relation: account.analytic.line
+project_timesheet_holidays / hr.leave.type            / timesheet_generate (boolean)  : NEW 
+project_timesheet_holidays / hr.leave.type            / timesheet_project_id (many2one): NEW relation: project.project
+project_timesheet_holidays / hr.leave.type            / timesheet_task_id (many2one)  : NEW relation: project.task
+---XML records in module 'project_timesheet_holidays'---

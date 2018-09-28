@@ -1,0 +1,6 @@
+---Fields in module 'account_voucher'---
+account_voucher / account.voucher          / message_last_post (datetime)  : DEL 
+account_voucher / account.voucher          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+account_voucher / account.voucher          / payment_journal_id (many2one) : not a function anymore
+account_voucher / account.voucher.line     / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+---XML records in module 'account_voucher'---

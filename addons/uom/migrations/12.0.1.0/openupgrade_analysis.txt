@@ -1,0 +1,44 @@
+---Fields in module 'uom'---
+uom          / uom.category             / measure_type (selection)      : NEW selection_keys: ['length', 'time', 'unit', 'volume', 'weight']
+uom          / uom.category             / name (char)                   : NEW required: required
+uom          / uom.uom                  / active (boolean)              : NEW 
+uom          / uom.uom                  / category_id (many2one)        : NEW relation: uom.category, required: required
+uom          / uom.uom                  / factor (float)                : NEW required: required, req_default: function
+uom          / uom.uom                  / name (char)                   : NEW required: required
+uom          / uom.uom                  / rounding (float)              : NEW required: required, req_default: function
+uom          / uom.uom                  / uom_type (selection)          : NEW required: required, selection_keys: ['bigger', 'reference', 'smaller'], req_default: function
+---XML records in module 'uom'---
+NEW ir.actions.act_window: uom.product_uom_categ_form_action
+NEW ir.actions.act_window: uom.product_uom_form_action
+NEW ir.model.access: uom.access_uom_category_manager
+NEW ir.model.access: uom.access_uom_category_user
+NEW ir.model.access: uom.access_uom_uom_manager
+NEW ir.model.access: uom.access_uom_uom_user
+NEW ir.ui.view: uom.product_uom_categ_form_view
+NEW ir.ui.view: uom.product_uom_form_view
+NEW ir.ui.view: uom.product_uom_tree_view
+NEW res.groups: uom.group_uom
+NEW uom.category: uom.product_uom_categ_kgm (noupdate)
+NEW uom.category: uom.product_uom_categ_unit (noupdate)
+NEW uom.category: uom.product_uom_categ_vol (noupdate)
+NEW uom.category: uom.uom_categ_length (noupdate)
+NEW uom.category: uom.uom_categ_wtime (noupdate)
+NEW uom.uom: uom.product_uom_cm (noupdate)
+NEW uom.uom: uom.product_uom_day (noupdate)
+NEW uom.uom: uom.product_uom_dozen (noupdate)
+NEW uom.uom: uom.product_uom_floz (noupdate)
+NEW uom.uom: uom.product_uom_foot (noupdate)
+NEW uom.uom: uom.product_uom_gal (noupdate)
+NEW uom.uom: uom.product_uom_gram (noupdate)
+NEW uom.uom: uom.product_uom_hour (noupdate)
+NEW uom.uom: uom.product_uom_inch (noupdate)
+NEW uom.uom: uom.product_uom_kgm (noupdate)
+NEW uom.uom: uom.product_uom_km (noupdate)
+NEW uom.uom: uom.product_uom_lb (noupdate)
+NEW uom.uom: uom.product_uom_litre (noupdate)
+NEW uom.uom: uom.product_uom_meter (noupdate)
+NEW uom.uom: uom.product_uom_mile (noupdate)
+NEW uom.uom: uom.product_uom_oz (noupdate)
+NEW uom.uom: uom.product_uom_qt (noupdate)
+NEW uom.uom: uom.product_uom_ton (noupdate)
+NEW uom.uom: uom.product_uom_unit (noupdate)

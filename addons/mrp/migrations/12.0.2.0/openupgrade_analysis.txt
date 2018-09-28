@@ -1,0 +1,92 @@
+---Fields in module 'mrp'---
+mrp          / mrp.bom                  / message_last_post (datetime)  : DEL 
+mrp          / mrp.bom                  / message_main_attachment_id (many2one): NEW relation: ir.attachment
+mrp          / mrp.bom                  / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+mrp          / mrp.bom.line             / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+mrp          / mrp.production           / activity_date_deadline (date) : now a function
+mrp          / mrp.production           / message_last_post (datetime)  : DEL 
+mrp          / mrp.production           / message_main_attachment_id (many2one): NEW relation: ir.attachment
+mrp          / mrp.production           / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+mrp          / mrp.unbuild              / activity_date_deadline (date) : now a function
+mrp          / mrp.unbuild              / message_last_post (datetime)  : DEL 
+mrp          / mrp.unbuild              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+mrp          / mrp.unbuild              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+mrp          / mrp.workcenter           / costs_hour (float)            : NEW 
+mrp          / mrp.workcenter.productivity.loss / loss_id (many2one)            : NEW relation: mrp.workcenter.productivity.loss.type
+mrp          / mrp.workcenter.productivity.loss / loss_type (selection)         : selection_keys is now 'function' ('['availability', 'performance', 'productive', 'quality']')
+mrp          / mrp.workcenter.productivity.loss.type / loss_type (selection)         : NEW required: required, selection_keys: ['availability', 'performance', 'productive', 'quality'], req_default: function
+mrp          / mrp.workorder            / message_last_post (datetime)  : DEL 
+mrp          / mrp.workorder            / message_main_attachment_id (many2one): NEW relation: ir.attachment
+mrp          / mrp.workorder            / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+mrp          / product.product          / bom_line_ids (one2many)       : NEW relation: mrp.bom.line
+mrp          / product.product          / variant_bom_ids (one2many)    : NEW relation: mrp.bom
+mrp          / product.template         / bom_line_ids (one2many)       : NEW relation: mrp.bom.line
+mrp          / stock.rule               / action (False)                : NEW selection_keys: ['manufacture', 'pull', 'pull_push', 'push'], mode: modify
+mrp          / stock.warehouse          / manufacture_pull_id (many2one): relation is now 'stock.rule' ('procurement.rule')
+mrp          / stock.warehouse          / manufacture_steps (selection) : NEW required: required, selection_keys: ['mrp_one_step', 'pbm', 'pbm_sam'], req_default: function
+mrp          / stock.warehouse          / pbm_loc_id (many2one)         : NEW relation: stock.location
+mrp          / stock.warehouse          / pbm_mto_pull_id (many2one)    : NEW relation: stock.rule
+mrp          / stock.warehouse          / pbm_route_id (many2one)       : NEW relation: stock.location.route
+mrp          / stock.warehouse          / pbm_type_id (many2one)        : NEW relation: stock.picking.type
+mrp          / stock.warehouse          / sam_loc_id (many2one)         : NEW relation: stock.location
+mrp          / stock.warehouse          / sam_rule_id (many2one)        : NEW relation: stock.rule
+mrp          / stock.warehouse          / sam_type_id (many2one)        : NEW relation: stock.picking.type
+---XML records in module 'mrp'---
+NEW ir.actions.act_window: mrp.action_mrp_unbuild_move_line
+NEW ir.actions.act_window: mrp.mrp_product_variant_action
+DEL ir.actions.act_window: mrp.mrp_message_action_main
+DEL ir.actions.act_window: mrp.mrp_production_action_planning
+DEL ir.actions.act_window: mrp.mrp_production_action_waiting
+NEW ir.actions.client: mrp.action_report_mrp_bom
+DEL ir.actions.report: mrp.action_report_bom_price
+NEW ir.model.access: mrp.access_mrp_workcenter_productivity_loss_type
+NEW ir.model.access: mrp.access_uom_category
+NEW ir.model.access: mrp.access_uom_category_mrp_manager
+NEW ir.model.access: mrp.access_uom_uom_mrp_manager
+NEW ir.model.access: mrp.access_uom_uom_user
+DEL ir.model.access: mrp.access_mrp_message_mrp_manager
+DEL ir.model.access: mrp.access_mrp_message_mrp_user
+DEL ir.model.access: mrp.access_product_puom_categ
+DEL ir.model.access: mrp.access_product_uom_categ_mrp_manager
+DEL ir.model.access: mrp.access_product_uom_mrp_manager
+DEL ir.model.access: mrp.access_product_uom_user
+DEL ir.sequence: mrp.sequence_mrp_prod (noupdate)
+NEW ir.ui.menu: mrp.product_variant_mrp
+DEL ir.ui.menu: mrp.menu_pm_resources_config
+DEL ir.ui.menu: mrp.menu_view_resource_calendar_leaves_search_mrp
+DEL ir.ui.menu: mrp.mrp_message_menu
+NEW ir.ui.view: mrp.assets_common
+NEW ir.ui.view: mrp.exception_on_mo
+NEW ir.ui.view: mrp.mrp_product_product_search_view
+NEW ir.ui.view: mrp.mrp_product_template_search_view
+NEW ir.ui.view: mrp.mrp_production_workorder_form_view_inherit
+NEW ir.ui.view: mrp.mrp_production_workorder_tree_view_inherit
+NEW ir.ui.view: mrp.mrp_report_stock_rule
+NEW ir.ui.view: mrp.report_bom_structure
+NEW ir.ui.view: mrp.report_mrp_bom
+NEW ir.ui.view: mrp.report_mrp_bom_line
+NEW ir.ui.view: mrp.report_mrp_bom_pdf
+NEW ir.ui.view: mrp.report_mrp_bom_pdf_line
+NEW ir.ui.view: mrp.report_mrp_operation_line
+NEW ir.ui.view: mrp.view_mrp_production_workorder_form_view_filter
+NEW ir.ui.view: mrp.view_warehouse_inherit_mrp
+DEL ir.ui.view: mrp.mrp_bom_component_tree_view
+DEL ir.ui.view: mrp.mrp_bom_cost_report
+DEL ir.ui.view: mrp.mrp_bom_structure_report
+DEL ir.ui.view: mrp.mrp_message_view_form
+DEL ir.ui.view: mrp.mrp_message_view_form_embedded_bom
+DEL ir.ui.view: mrp.mrp_message_view_form_embedded_product
+DEL ir.ui.view: mrp.mrp_message_view_search
+DEL ir.ui.view: mrp.mrp_message_view_tree
+DEL ir.ui.view: mrp.mrp_production_workcenter_form_view_inherit
+DEL ir.ui.view: mrp.mrp_production_workcenter_tree_view_inherit
+DEL ir.ui.view: mrp.product_template_search_view_procurment
+DEL ir.ui.view: mrp.view_mrp_bom_line_filter
+DEL ir.ui.view: mrp.view_mrp_message_kanban
+DEL ir.ui.view: mrp.view_mrp_production_workcenter_form_view_filter
+DEL ir.ui.view: mrp.view_procurement_rule_form_stock_inherit_mrp
+DEL ir.ui.view: mrp.view_warehouse_inherited
+NEW mrp.workcenter.productivity.loss.type: mrp.category_availability (noupdate)
+NEW mrp.workcenter.productivity.loss.type: mrp.category_performance (noupdate)
+NEW mrp.workcenter.productivity.loss.type: mrp.category_productive (noupdate)
+NEW mrp.workcenter.productivity.loss.type: mrp.category_quality (noupdate)

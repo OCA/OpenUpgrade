@@ -1,0 +1,9 @@
+---Fields in module 'account_budget'---
+account_budget / account.budget.post      / crossovered_budget_line (one2many): DEL relation: crossovered.budget.lines
+account_budget / crossovered.budget       / creating_user_id (many2one)   : was renamed to user_id [nothing to do]
+account_budget / crossovered.budget       / message_last_post (datetime)  : DEL 
+account_budget / crossovered.budget       / message_main_attachment_id (many2one): NEW relation: ir.attachment
+---XML records in module 'account_budget'---
+NEW ir.ui.view: account_budget.view_crossovered_budget_line_graph
+NEW ir.ui.view: account_budget.view_crossovered_budget_line_pivot
+NEW res.users: base.user_admin (noupdate)

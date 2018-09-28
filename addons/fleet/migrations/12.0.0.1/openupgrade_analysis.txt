@@ -1,0 +1,151 @@
+---Fields in module 'fleet'---
+fleet        / fleet.vehicle            / activity_ids (one2many)       : NEW relation: mail.activity
+fleet        / fleet.vehicle            / first_contract_date (date)    : NEW 
+fleet        / fleet.vehicle            / log_drivers (one2many)        : NEW relation: fleet.vehicle.assignation.log
+fleet        / fleet.vehicle            / message_last_post (datetime)  : DEL 
+fleet        / fleet.vehicle            / message_main_attachment_id (many2one): NEW relation: ir.attachment
+fleet        / fleet.vehicle.assignation.log / date_end (date)               : NEW 
+fleet        / fleet.vehicle.assignation.log / date_start (date)             : NEW 
+fleet        / fleet.vehicle.assignation.log / driver_id (many2one)          : NEW relation: res.partner, required: required
+fleet        / fleet.vehicle.assignation.log / vehicle_id (many2one)         : NEW relation: fleet.vehicle, required: required
+fleet        / fleet.vehicle.log.contract / activity_ids (one2many)       : NEW relation: mail.activity
+fleet        / fleet.vehicle.log.contract / message_last_post (datetime)  : DEL 
+fleet        / fleet.vehicle.log.contract / message_main_attachment_id (many2one): NEW relation: ir.attachment
+fleet        / fleet.vehicle.log.contract / user_id (many2one)            : NEW relation: res.users
+---XML records in module 'fleet'---
+DEL fleet.service.type: fleet.type_contract_leasing
+DEL fleet.service.type: fleet.type_contract_omnium
+DEL fleet.service.type: fleet.type_contract_repairing
+DEL fleet.service.type: fleet.type_service_1
+DEL fleet.service.type: fleet.type_service_10
+DEL fleet.service.type: fleet.type_service_11
+DEL fleet.service.type: fleet.type_service_12
+DEL fleet.service.type: fleet.type_service_13
+DEL fleet.service.type: fleet.type_service_14
+DEL fleet.service.type: fleet.type_service_15
+DEL fleet.service.type: fleet.type_service_16
+DEL fleet.service.type: fleet.type_service_17
+DEL fleet.service.type: fleet.type_service_18
+DEL fleet.service.type: fleet.type_service_19
+DEL fleet.service.type: fleet.type_service_2
+DEL fleet.service.type: fleet.type_service_20
+DEL fleet.service.type: fleet.type_service_21
+DEL fleet.service.type: fleet.type_service_22
+DEL fleet.service.type: fleet.type_service_23
+DEL fleet.service.type: fleet.type_service_24
+DEL fleet.service.type: fleet.type_service_25
+DEL fleet.service.type: fleet.type_service_26
+DEL fleet.service.type: fleet.type_service_27
+DEL fleet.service.type: fleet.type_service_28
+DEL fleet.service.type: fleet.type_service_29
+DEL fleet.service.type: fleet.type_service_3
+DEL fleet.service.type: fleet.type_service_30
+DEL fleet.service.type: fleet.type_service_31
+DEL fleet.service.type: fleet.type_service_32
+DEL fleet.service.type: fleet.type_service_33
+DEL fleet.service.type: fleet.type_service_34
+DEL fleet.service.type: fleet.type_service_35
+DEL fleet.service.type: fleet.type_service_36
+DEL fleet.service.type: fleet.type_service_37
+DEL fleet.service.type: fleet.type_service_38
+DEL fleet.service.type: fleet.type_service_39
+DEL fleet.service.type: fleet.type_service_4
+DEL fleet.service.type: fleet.type_service_40
+DEL fleet.service.type: fleet.type_service_41
+DEL fleet.service.type: fleet.type_service_42
+DEL fleet.service.type: fleet.type_service_43
+DEL fleet.service.type: fleet.type_service_44
+DEL fleet.service.type: fleet.type_service_45
+DEL fleet.service.type: fleet.type_service_46
+DEL fleet.service.type: fleet.type_service_47
+DEL fleet.service.type: fleet.type_service_48
+DEL fleet.service.type: fleet.type_service_49
+DEL fleet.service.type: fleet.type_service_5
+DEL fleet.service.type: fleet.type_service_50
+DEL fleet.service.type: fleet.type_service_51
+DEL fleet.service.type: fleet.type_service_52
+DEL fleet.service.type: fleet.type_service_53
+DEL fleet.service.type: fleet.type_service_6
+DEL fleet.service.type: fleet.type_service_7
+DEL fleet.service.type: fleet.type_service_8
+DEL fleet.service.type: fleet.type_service_9
+DEL fleet.service.type: fleet.type_service_refueling
+DEL fleet.service.type: fleet.type_service_service_1
+DEL fleet.service.type: fleet.type_service_service_10
+DEL fleet.service.type: fleet.type_service_service_11
+DEL fleet.service.type: fleet.type_service_service_12
+DEL fleet.service.type: fleet.type_service_service_13
+DEL fleet.service.type: fleet.type_service_service_14
+DEL fleet.service.type: fleet.type_service_service_15
+DEL fleet.service.type: fleet.type_service_service_16
+DEL fleet.service.type: fleet.type_service_service_17
+DEL fleet.service.type: fleet.type_service_service_18
+DEL fleet.service.type: fleet.type_service_service_19
+DEL fleet.service.type: fleet.type_service_service_2
+DEL fleet.service.type: fleet.type_service_service_3
+DEL fleet.service.type: fleet.type_service_service_5
+DEL fleet.service.type: fleet.type_service_service_6
+DEL fleet.service.type: fleet.type_service_service_7
+DEL fleet.service.type: fleet.type_service_service_8
+DEL fleet.service.type: fleet.type_service_service_9
+DEL fleet.vehicle.model: fleet.model_a1
+DEL fleet.vehicle.model: fleet.model_a3
+DEL fleet.vehicle.model: fleet.model_a4
+DEL fleet.vehicle.model: fleet.model_a5
+DEL fleet.vehicle.model: fleet.model_a6
+DEL fleet.vehicle.model: fleet.model_a7
+DEL fleet.vehicle.model: fleet.model_a8
+DEL fleet.vehicle.model: fleet.model_agila
+DEL fleet.vehicle.model: fleet.model_ampera
+DEL fleet.vehicle.model: fleet.model_antara
+DEL fleet.vehicle.model: fleet.model_astra
+DEL fleet.vehicle.model: fleet.model_astragtc
+DEL fleet.vehicle.model: fleet.model_classa
+DEL fleet.vehicle.model: fleet.model_classb
+DEL fleet.vehicle.model: fleet.model_classc
+DEL fleet.vehicle.model: fleet.model_classcl
+DEL fleet.vehicle.model: fleet.model_classcls
+DEL fleet.vehicle.model: fleet.model_classe
+DEL fleet.vehicle.model: fleet.model_classgl
+DEL fleet.vehicle.model: fleet.model_classglk
+DEL fleet.vehicle.model: fleet.model_classm
+DEL fleet.vehicle.model: fleet.model_classr
+DEL fleet.vehicle.model: fleet.model_classs
+DEL fleet.vehicle.model: fleet.model_classslk
+DEL fleet.vehicle.model: fleet.model_classsls
+DEL fleet.vehicle.model: fleet.model_combotour
+DEL fleet.vehicle.model: fleet.model_corsa
+DEL fleet.vehicle.model: fleet.model_insignia
+DEL fleet.vehicle.model: fleet.model_meriva
+DEL fleet.vehicle.model: fleet.model_mokka
+DEL fleet.vehicle.model: fleet.model_q3
+DEL fleet.vehicle.model: fleet.model_q5
+DEL fleet.vehicle.model: fleet.model_q7
+DEL fleet.vehicle.model: fleet.model_serie1
+DEL fleet.vehicle.model: fleet.model_serie3
+DEL fleet.vehicle.model: fleet.model_serie5
+DEL fleet.vehicle.model: fleet.model_serie6
+DEL fleet.vehicle.model: fleet.model_serie7
+DEL fleet.vehicle.model: fleet.model_seriehybrid
+DEL fleet.vehicle.model: fleet.model_seriem
+DEL fleet.vehicle.model: fleet.model_seriex
+DEL fleet.vehicle.model: fleet.model_seriez4
+DEL fleet.vehicle.model: fleet.model_tt
+DEL fleet.vehicle.model: fleet.model_zafira
+DEL fleet.vehicle.model: fleet.model_zafiratourer
+NEW fleet.vehicle.state: fleet.fleet_vehicle_state_new_request (noupdate)
+DEL fleet.vehicle.tag: fleet.vehicle_tag_break
+DEL fleet.vehicle.tag: fleet.vehicle_tag_compact
+DEL fleet.vehicle.tag: fleet.vehicle_tag_convertible
+DEL fleet.vehicle.tag: fleet.vehicle_tag_junior
+DEL fleet.vehicle.tag: fleet.vehicle_tag_leasing
+DEL fleet.vehicle.tag: fleet.vehicle_tag_purchased
+DEL fleet.vehicle.tag: fleet.vehicle_tag_sedan
+DEL fleet.vehicle.tag: fleet.vehicle_tag_senior
+NEW ir.actions.act_window: fleet.mail_activity_type_action_config_fleet
+NEW ir.model.access: fleet.access_fleet_vehicle_assignation_log_fleet_group_user
+NEW ir.model.access: fleet.access_mail_activity_type_fleet_manager
+NEW ir.ui.menu: fleet.fleet_menu_config_activity_type
+NEW ir.ui.view: fleet.fleet_vehicle_assignation_log_view_list
+NEW mail.activity.type: fleet.mail_act_fleet_contract_to_renew (noupdate)
+NEW mail.message.subtype: fleet.mt_fleet_driver_updated (noupdate)

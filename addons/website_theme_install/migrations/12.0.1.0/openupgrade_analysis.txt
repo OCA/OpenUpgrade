@@ -1,0 +1,39 @@
+---Fields in module 'website_theme_install'---
+website_theme_install / ir.attachment            / theme_template_id (many2one)  : NEW relation: theme.ir.attachment
+website_theme_install / ir.ui.view               / theme_template_id (many2one)  : NEW relation: theme.ir.ui.view
+website_theme_install / theme.ir.attachment      / copy_ids (one2many)           : NEW relation: ir.attachment
+website_theme_install / theme.ir.attachment      / key (char)                    : NEW required: required
+website_theme_install / theme.ir.attachment      / name (char)                   : NEW required: required
+website_theme_install / theme.ir.attachment      / url (char)                    : NEW 
+website_theme_install / theme.ir.ui.view         / active (boolean)              : NEW 
+website_theme_install / theme.ir.ui.view         / arch (text)                   : NEW 
+website_theme_install / theme.ir.ui.view         / arch_fs (char)                : NEW 
+website_theme_install / theme.ir.ui.view         / copy_ids (one2many)           : NEW relation: ir.ui.view
+website_theme_install / theme.ir.ui.view         / inherit_id (reference)        : NEW 
+website_theme_install / theme.ir.ui.view         / key (char)                    : NEW 
+website_theme_install / theme.ir.ui.view         / mode (selection)              : NEW selection_keys: ['extension', 'primary']
+website_theme_install / theme.ir.ui.view         / name (char)                   : NEW required: required
+website_theme_install / theme.ir.ui.view         / priority (integer)            : NEW required: required, req_default: function
+website_theme_install / theme.ir.ui.view         / type (char)                   : NEW 
+website_theme_install / theme.website.menu       / copy_ids (one2many)           : NEW relation: website.menu
+website_theme_install / theme.website.menu       / name (char)                   : NEW required: required
+website_theme_install / theme.website.menu       / new_window (boolean)          : NEW 
+website_theme_install / theme.website.menu       / page_id (many2one)            : NEW relation: theme.website.page
+website_theme_install / theme.website.menu       / parent_id (many2one)          : NEW relation: theme.website.menu
+website_theme_install / theme.website.menu       / sequence (integer)            : NEW 
+website_theme_install / theme.website.menu       / url (char)                    : NEW 
+website_theme_install / theme.website.page       / copy_ids (one2many)           : NEW relation: website.page
+website_theme_install / theme.website.page       / url (char)                    : NEW 
+website_theme_install / theme.website.page       / view_id (many2one)            : NEW relation: theme.ir.ui.view, required: required
+website_theme_install / theme.website.page       / website_indexed (boolean)     : NEW 
+website_theme_install / website.menu             / theme_template_id (many2one)  : NEW relation: theme.website.menu
+website_theme_install / website.page             / theme_template_id (many2one)  : NEW relation: theme.website.page
+---XML records in module 'website_theme_install'---
+NEW ir.actions.act_window: base.open_module_tree
+NEW ir.model.access: website_theme_install.access_theme_ir_attachment
+NEW ir.model.access: website_theme_install.access_theme_ir_ui_view
+NEW ir.model.access: website_theme_install.access_theme_website_menu
+NEW ir.model.access: website_theme_install.access_theme_website_page
+NEW ir.ui.view: website_theme_install.onboarding_website_theme_step
+NEW ir.ui.view: website_theme_install.res_config_settings_view_form
+NEW ir.ui.view: website_theme_install.view_website_form_view_themes_modal

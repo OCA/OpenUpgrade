@@ -1,0 +1,31 @@
+---Fields in module 'hr_timesheet'---
+hr_timesheet / account.analytic.account / company_uom_id (many2one)     : previously in module project
+hr_timesheet / account.analytic.account / project_count (integer)       : previously in module project
+hr_timesheet / account.analytic.account / project_ids (one2many)        : previously in module project
+hr_timesheet / hr.employee              / currency_id (many2one)        : previously in module sale_timesheet
+hr_timesheet / hr.employee              / timesheet_cost (float)        : previously in module sale_timesheet
+hr_timesheet / project.project          / analytic_account_id (many2one): previously in module project
+hr_timesheet / project.task             / children_hours (float)        : was renamed to subtask_effective_hours [nothing to do]
+hr_timesheet / project.task             / remaining_hours (float)       : previously in module project
+hr_timesheet / res.company              / project_time_mode_id (many2one): previously in module project
+hr_timesheet / res.company              / timesheet_encode_uom_id (many2one): NEW relation: uom.uom, required: required, req_default: function
+hr_timesheet / uom.uom                  / timesheet_widget (char)       : NEW 
+---XML records in module 'hr_timesheet'---
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_from_employee_form
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_from_employee_list
+DEL ir.actions.act_window.view: hr_timesheet.timesheet_action_view_all_calendar
+DEL ir.actions.act_window.view: hr_timesheet.timesheet_action_view_calendar
+NEW ir.model.access: hr_timesheet.access_account_analytic_account_manager
+NEW ir.model.access: hr_timesheet.access_account_analytic_account_portal
+NEW ir.model.access: hr_timesheet.access_account_analytic_account_user
+NEW ir.model.access: hr_timesheet.access_account_analytic_line_project
+NEW ir.model.access: hr_timesheet.access_uom_uom_hr_timesheet
+DEL ir.model.access: hr_timesheet.access_product_product_user
+DEL ir.model.access: hr_timesheet.access_product_template_timesheet_user
+DEL ir.model.access: hr_timesheet.access_product_uom_hr_timesheet
+NEW ir.ui.view: hr_timesheet.account_analytic_account_view_form_inherit
+NEW ir.ui.view: hr_timesheet.assets_backend
+DEL ir.ui.view: hr_timesheet.timesheet_view_calendar
+NEW uom.uom: uom.product_uom_day (noupdate)
+NEW uom.uom: uom.product_uom_hour (noupdate)
+NEW web_tour.tour: hr_timesheet.web_tour_project_consumed_by_admin

@@ -1,0 +1,8 @@
+---Fields in module 'resource'---
+resource     / resource.calendar        / hours_per_day (float)         : NEW 
+resource     / resource.calendar        / tz (selection)                : NEW required: required, selection_keys: function, req_default: function
+resource     / resource.calendar.attendance / day_period (selection)        : NEW required: required, selection_keys: ['afternoon', 'morning'], req_default: function
+resource     / resource.calendar.leaves / time_type (selection)         : NEW selection_keys: ['leave', 'other']
+resource     / resource.calendar.leaves / tz (selection)                : DEL selection_keys: function
+resource     / resource.resource        / tz (selection)                : NEW required: required, selection_keys: function, req_default: function
+---XML records in module 'resource'---

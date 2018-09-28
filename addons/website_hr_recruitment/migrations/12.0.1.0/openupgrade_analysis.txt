@@ -1,0 +1,14 @@
+---Fields in module 'website_hr_recruitment'---
+website_hr_recruitment / hr.job                   / is_published (boolean)        : NEW 
+website_hr_recruitment / hr.job                   / website_id (many2one)         : NEW relation: website
+website_hr_recruitment / hr.job                   / website_meta_og_img (char)    : NEW 
+website_hr_recruitment / hr.job                   / website_published (boolean)   : now a function
+---XML records in module 'website_hr_recruitment'---
+NEW ir.ui.view: website_hr_recruitment.hr_job_website_inherit
+NEW ir.ui.view: website_hr_recruitment.user_navbar_inherit_website_hr_recruitment
+DEL ir.ui.view: website_hr_recruitment.content_new_job_offer
+DEL ir.ui.view: website_hr_recruitment.job_footer_custom
+DEL ir.ui.view: website_hr_recruitment.s_hr_rating
+DEL ir.ui.view: website_hr_recruitment.s_hr_rating_options
+DEL ir.ui.view: website_hr_recruitment.website_hr_recuitment_snippets_assets
+DEL ir.ui.view: website_hr_recruitment.website_hr_recuitment_snippets_include

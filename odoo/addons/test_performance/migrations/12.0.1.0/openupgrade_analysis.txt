@@ -1,0 +1,21 @@
+---Fields in module 'test_performance'---
+test_performance / test_performance.mail    / __last_update (datetime)      : module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / display_name (char)           : module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / message_channel_ids (many2many): module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / message_follower_ids (one2many): module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / message_ids (one2many)        : module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / message_is_follower (boolean) : module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / message_last_post (datetime)  : DEL 
+test_performance / test_performance.mail    / message_needaction (boolean)  : module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / message_needaction_counter (integer): module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / message_partner_ids (many2many): module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / message_unread (boolean)      : module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / message_unread_counter (integer): module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / name (char)                   : module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / partner_id (many2one)         : module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / track (char)                  : module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / value (integer)               : module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / value_pc (float)              : module is now 'test_mail' ('test_performance')
+test_performance / test_performance.mail    / website_message_ids (one2many): module is now 'test_mail' ('test_performance')
+---XML records in module 'test_performance'---
+DEL ir.model.access: test_performance.access_test_performance_mail

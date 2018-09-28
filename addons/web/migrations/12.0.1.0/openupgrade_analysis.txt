@@ -1,0 +1,24 @@
+---Fields in module 'web'---
+web          / report.layout            / image (char)                  : NEW 
+web          / report.layout            / pdf (char)                    : NEW 
+web          / report.layout            / view_id (many2one)            : NEW relation: ir.ui.view, required: required
+---XML records in module 'web'---
+NEW ir.model.access: web.access_report_layout
+NEW ir.ui.view: web._assets_backend_helpers
+NEW ir.ui.view: web._assets_bootstrap
+NEW ir.ui.view: web._assets_frontend_helpers
+NEW ir.ui.view: web._assets_helpers
+NEW ir.ui.view: web._assets_primary_variables
+NEW ir.ui.view: web._assets_secondary_variables
+NEW ir.ui.view: web._assets_utils
+NEW ir.ui.view: web.address_layout
+DEL ir.ui.view: web.less_helpers
+DEL ir.ui.view: web.menu
+DEL ir.ui.view: web.menu_link
+DEL ir.ui.view: web.menu_secondary
+DEL ir.ui.view: web.menu_secondary_submenu
+NEW report.layout: web.report_layout_background
+NEW report.layout: web.report_layout_boxed
+NEW report.layout: web.report_layout_clean
+NEW report.layout: web.report_layout_standard
+NEW res.company: base.main_company (noupdate)

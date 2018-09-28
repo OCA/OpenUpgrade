@@ -1,0 +1,52 @@
+---Fields in module 'mass_mailing'---
+mass_mailing / mail.mail.statistics     / email (char)                  : NEW 
+mass_mailing / mail.mail.statistics     / ignored (datetime)            : NEW 
+mass_mailing / mail.mail.statistics     / state (selection)             : selection_keys is now '['bounced', 'exception', 'ignored', 'opened', 'outgoing', 'replied', 'sent']' ('['bounced', 'exception', 'opened', 'outgoing', 'replied', 'sent']')
+mass_mailing / mail.mass_mailing        / mail_server_id (many2one)     : NEW relation: ir.mail_server
+mass_mailing / mail.mass_mailing        / user_id (many2one)            : NEW relation: res.users
+mass_mailing / mail.mass_mailing.contact / message_last_post (datetime)  : DEL 
+mass_mailing / mail.mass_mailing.contact / message_main_attachment_id (many2one): NEW relation: ir.attachment
+mass_mailing / mail.mass_mailing.contact / opt_out (boolean)             : DEL 
+mass_mailing / mail.mass_mailing.contact / subscription_list_ids (one2many): NEW relation: mail.mass_mailing.list_contact_rel
+mass_mailing / mail.mass_mailing.contact / unsubscription_date (datetime): DEL 
+mass_mailing / mail.mass_mailing.contact / website_message_ids (one2many): previously in module portal
+mass_mailing / mail.mass_mailing.list   / contact_ids (many2many)       : NEW relation: mail.mass_mailing.contact
+mass_mailing / mail.mass_mailing.list   / is_public (boolean)           : NEW 
+mass_mailing / mail.mass_mailing.list   / subscription_contact_ids (one2many): NEW relation: mail.mass_mailing.list_contact_rel
+mass_mailing / mail.mass_mailing.list_contact_rel / contact_id (many2one)         : NEW relation: mail.mass_mailing.contact, required: required
+mass_mailing / mail.mass_mailing.list_contact_rel / list_id (many2one)            : NEW relation: mail.mass_mailing.list, required: required
+mass_mailing / mail.mass_mailing.list_contact_rel / opt_out (boolean)             : NEW 
+mass_mailing / mail.mass_mailing.list_contact_rel / unsubscription_date (datetime): NEW 
+mass_mailing / res.company              / social_facebook (char)        : module is now 'social_media' ('mass_mailing')
+mass_mailing / res.company              / social_github (char)          : module is now 'social_media' ('mass_mailing')
+mass_mailing / res.company              / social_googleplus (char)      : module is now 'social_media' ('mass_mailing')
+mass_mailing / res.company              / social_linkedin (char)        : module is now 'social_media' ('mass_mailing')
+mass_mailing / res.company              / social_twitter (char)         : module is now 'social_media' ('mass_mailing')
+mass_mailing / res.company              / social_youtube (char)         : module is now 'social_media' ('mass_mailing')
+---XML records in module 'mass_mailing'---
+NEW ir.actions.act_window: mass_mailing.mass_mailing_list_merge_action
+NEW ir.actions.act_window: mass_mailing.mass_mailing_schedule_date_action
+NEW ir.actions.act_window: mass_mailing.open_create_mass_mailing_list
+DEL ir.filters: mass_mailing.filter_contact_subscription
+DEL ir.filters: mass_mailing.filter_contact_unsubscription
+NEW ir.model.access: mass_mailing.access_ir_mail_server
+NEW ir.model.access: mass_mailing.access_mail_blacklist_mass_mailing_user
+NEW ir.model.access: mass_mailing.access_mail_mass_mailing_list_contact_rel
+NEW ir.ui.menu: mass_mailing.mail_blacklist_mm_menu
+NEW ir.ui.menu: mass_mailing.mass_mailing_mailing_list_menu
+DEL ir.ui.menu: mass_mailing.mass_mailing_contact_menu
+DEL ir.ui.menu: mass_mailing.menu_email_mass_mailings
+NEW ir.ui.view: mass_mailing.layout
+NEW ir.ui.view: mass_mailing.mail_mass_mailing_list_contact_rel_list_contact_view_tree
+NEW ir.ui.view: mass_mailing.mail_mass_mailing_list_contact_rel_view_form
+NEW ir.ui.view: mass_mailing.mail_mass_mailing_list_contact_view_search
+NEW ir.ui.view: mass_mailing.mass_mailing_list_merge_view_form
+NEW ir.ui.view: mass_mailing.mass_mailing_mail_layout
+NEW ir.ui.view: mass_mailing.mass_mailing_mail_style
+NEW ir.ui.view: mass_mailing.mass_mailing_schedule_date_view_form
+NEW ir.ui.view: mass_mailing.page_unsubscribe
+NEW ir.ui.view: mass_mailing.page_unsubscribed
+NEW ir.ui.view: mass_mailing.unsubscribe
+NEW ir.ui.view: mass_mailing.unsubscribed
+NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_list_form_simplified
+DEL ir.ui.view: mass_mailing.view_company_form_inherit_mass_mailing

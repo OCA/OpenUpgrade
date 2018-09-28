@@ -1,0 +1,80 @@
+---Fields in module 'base'---
+base         / ir.actions.report        / report_type (selection)       : selection_keys is now '['qweb-html', 'qweb-pdf', 'qweb-text']' ('['qweb-html', 'qweb-pdf']')
+base         / ir.attachment            / active (boolean)              : NEW 
+base         / ir.attachment            / thumbnail (binary)            : NEW attachment: True
+base         / ir.model                 / rule_ids (one2many)           : NEW relation: ir.rule
+base         / ir.model.fields          / copy (boolean)                : was renamed to copied [nothing to do]
+base         / ir.module.module         / to_buy (boolean)              : NEW 
+base         / ir.server.object.lines   / type (selection)              : selection_keys is now '['equation', 'reference', 'value']' ('['equation', 'value']')
+base         / ir.translation           / type (selection)              : selection_keys is now '['code', 'constraint', 'model', 'model_terms', 'selection', 'sql_constraint']' ('['code', 'constraint', 'field', 'help', 'model', 'report', 'selection', 'sql_constraint', 'view']')
+base         / ir.ui.menu               / parent_left (integer)         : DEL 
+base         / ir.ui.menu               / parent_path (char)            : NEW 
+base         / ir.ui.menu               / parent_right (integer)        : DEL 
+base         / res.company              / base_onboarding_company_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+base         / res.company              / external_report_layout (selection): DEL selection_keys: ['background', 'boxed', 'clean', 'standard']
+base         / res.company              / external_report_layout_id (many2one): NEW relation: ir.ui.view
+base         / res.groups               / is_portal (boolean)           : DEL 
+base         / res.lang                 / week_start (selection)        : NEW required: required, selection_keys: [1, 2, 3, 4, 5, 6, 7], req_default: function
+base         / res.partner.bank         / acc_holder_name (char)        : NEW 
+base         / res.partner.bank         / acc_type (char)               : selection_keys is now 'function' ('False')
+base         / res.partner.bank         / acc_type (char)               : type is now 'selection' ('char')
+base         / res.partner.bank         / partner_id (many2one)         : now required
+base         / res.partner.category     / parent_left (integer)         : DEL 
+base         / res.partner.category     / parent_path (char)            : NEW 
+base         / res.partner.category     / parent_right (integer)        : DEL 
+base         / res.users                / password (char)               : now a function
+---XML records in module 'base'---
+NEW ir.actions.act_window: base.action_open_base_onboarding_company
+NEW ir.actions.act_window: base.action_partner_deduplicate
+NEW ir.actions.act_window: base.action_partner_merge
+NEW ir.actions.act_window: base.demo_force_install_action
+DEL ir.actions.act_window: base.res_request_link-act
+NEW ir.actions.server: base.demo_failure_action
+NEW ir.actions.todo: base.demo_failure_todo
+NEW ir.config_parameter: base.default_template_user_config
+DEL ir.mail_server: base.ir_mail_server_localhost0 (noupdate)
+DEL ir.model.access: base.access_res_request_link_group_system
+DEL ir.model.access: base.access_res_request_link_group_user
+NEW ir.module.category: base.module_category_helpdesk
+NEW ir.module.category: base.module_category_hr_contract
+NEW ir.module.category: base.module_category_sign
+NEW ir.module.category: base.module_category_user_type
+NEW ir.module.module: base.module_account_accountant (noupdate)
+NEW ir.module.module: base.module_helpdesk (noupdate)
+NEW ir.module.module: base.module_hr_appraisal (noupdate)
+NEW ir.module.module: base.module_marketing_automation (noupdate)
+NEW ir.module.module: base.module_mrp_plm (noupdate)
+NEW ir.module.module: base.module_mrp_workorder (noupdate)
+NEW ir.module.module: base.module_project_forecast (noupdate)
+NEW ir.module.module: base.module_quality_control (noupdate)
+NEW ir.module.module: base.module_sale_ebay (noupdate)
+NEW ir.module.module: base.module_sale_subscription (noupdate)
+NEW ir.module.module: base.module_sign (noupdate)
+NEW ir.module.module: base.module_stock_barcode (noupdate)
+NEW ir.module.module: base.module_timesheet_grid (noupdate)
+NEW ir.module.module: base.module_voip (noupdate)
+NEW ir.module.module: base.module_web_mobile (noupdate)
+NEW ir.module.module: base.module_web_studio (noupdate)
+NEW ir.module.module: base.module_website_calendar (noupdate)
+NEW ir.module.module: base.module_website_form_editor (noupdate)
+NEW ir.module.module: base.module_website_twitter_wall (noupdate)
+DEL ir.ui.menu: base.menu_res_request_link_act
+NEW ir.ui.view: base.base_onboarding_company_form
+NEW ir.ui.view: base.base_partner_merge_automatic_wizard_form
+NEW ir.ui.view: base.demo_failures_dialog
+NEW ir.ui.view: base.demo_force_install_form
+NEW ir.ui.view: base.onboarding_company_step
+NEW ir.ui.view: base.onboarding_confetti
+NEW ir.ui.view: base.onboarding_container
+NEW ir.ui.view: base.onboarding_step
+NEW ir.ui.view: base.view_company_document_template_form
+DEL ir.ui.view: base.action_view_company_form_link_2_currencies
+DEL ir.ui.view: base.res_request_link-view
+DEL ir.ui.view: base.res_request_link_search_view
+DEL ir.ui.view: base.res_request_link_tree-view
+NEW res.country: base.xk (noupdate)
+NEW res.lang: base.lang_en_CA
+NEW res.partner: base.partner_admin (noupdate)
+DEL res.request.link: base.req_link_partner (noupdate)
+NEW res.users: base.template_portal_user_id
+NEW res.users: base.user_admin (noupdate)

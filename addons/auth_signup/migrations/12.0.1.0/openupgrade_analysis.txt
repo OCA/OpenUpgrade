@@ -1,0 +1,6 @@
+---Fields in module 'auth_signup'---
+---XML records in module 'auth_signup'---
+DEL ir.config_parameter: auth_signup.default_template_user_config (noupdate)
+NEW ir.ui.view: auth_signup.res_users_view_form
+DEL ir.ui.view: auth_signup.res_users_form_view
+DEL res.users: auth_signup.default_template_user (noupdate)

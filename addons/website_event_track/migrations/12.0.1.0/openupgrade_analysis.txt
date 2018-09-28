@@ -1,0 +1,16 @@
+---Fields in module 'website_event_track'---
+website_event_track / event.event              / track_menu_ids (one2many)     : NEW relation: website.event.menu
+website_event_track / event.event              / track_proposal_menu_ids (one2many): NEW relation: website.event.menu
+website_event_track / event.event              / website_track (boolean)       : not a function anymore
+website_event_track / event.event              / website_track_proposal (boolean): not a function anymore
+website_event_track / event.track              / activity_date_deadline (date) : now a function
+website_event_track / event.track              / is_published (boolean)        : NEW 
+website_event_track / event.track              / message_last_post (datetime)  : DEL 
+website_event_track / event.track              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+website_event_track / event.track              / website_meta_og_img (char)    : NEW 
+website_event_track / website.event.menu       / event_id (many2one)           : NEW relation: event.event
+website_event_track / website.event.menu       / menu_id (many2one)            : NEW relation: website.menu
+website_event_track / website.event.menu       / menu_type (selection)         : NEW selection_keys: ['track', 'track_proposal']
+---XML records in module 'website_event_track'---
+NEW ir.model.access: website_event_track.access_website_event_menu_manager
+NEW ir.model.access: website_event_track.access_website_event_menu_public

@@ -1,0 +1,22 @@
+---Fields in module 'l10n_sg'---
+l10n_sg      / account.invoice          / l10n_sg_permit_number (char)  : NEW 
+l10n_sg      / account.invoice          / l10n_sg_permit_number_date (date): NEW 
+l10n_sg      / res.partner              / l10n_sg_unique_entity_number (char): NEW 
+---XML records in module 'l10n_sg'---
+NEW account.account.tag: l10n_sg.tag_sg_48 (noupdate)
+NEW account.account.tag: l10n_sg.tag_sg_49 (noupdate)
+NEW account.account.tag: l10n_sg.tag_sg_50 (noupdate)
+NEW account.account.tag: l10n_sg.tag_sg_51 (noupdate)
+NEW account.account.tag: l10n_sg.tag_sg_52 (noupdate)
+NEW account.account.tag: l10n_sg.tag_sg_53 (noupdate)
+NEW account.account.template: l10n_sg.account_account_750
+NEW account.account.template: l10n_sg.account_account_797
+NEW account.account.template: l10n_sg.account_account_798
+DEL account.account.template: l10n_sg.account_account_733
+DEL account.account.template: l10n_sg.transfer_account_id
+NEW account.tax.template: l10n_sg.sg_purchase_tax_txca_7
+NEW account.tax.template: l10n_sg.sg_sale_tax_srca_c_7
+NEW account.tax.template: l10n_sg.sg_sale_tax_srca_s_na
+NEW ir.ui.view: l10n_sg.view_company_form_l10n_sg
+NEW ir.ui.view: l10n_sg.view_invoice_form_l10n_sg
+NEW ir.ui.view: l10n_sg.view_partner_form_l10n_sg

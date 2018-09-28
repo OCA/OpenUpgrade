@@ -1,0 +1,45 @@
+---Fields in module 'sale_timesheet'---
+sale_timesheet / account.analytic.line    / timesheet_invoice_type (selection): now a function
+sale_timesheet / account.analytic.line    / timesheet_revenue (float)     : DEL 
+sale_timesheet / hr.employee              / currency_id (many2one)        : module is now 'hr_timesheet' ('sale_timesheet')
+sale_timesheet / hr.employee              / timesheet_cost (float)        : module is now 'hr_timesheet' ('sale_timesheet')
+sale_timesheet / product.template         / project_template_id (many2one): NEW relation: project.project
+sale_timesheet / project.project          / sale_line_employee_ids (one2many): NEW relation: project.sale.line.employee.map
+sale_timesheet / project.project          / sale_order_id (many2one)      : NEW relation: sale.order
+sale_timesheet / project.sale.line.employee.map / employee_id (many2one)        : NEW relation: hr.employee, required: required
+sale_timesheet / project.sale.line.employee.map / project_id (many2one)         : NEW relation: project.project, required: required, req_default: function
+sale_timesheet / project.sale.line.employee.map / sale_line_id (many2one)       : NEW relation: sale.order.line, required: required
+sale_timesheet / sale.order.line          / project_id (many2one)         : NEW relation: project.project
+sale_timesheet / sale.order.line          / qty_delivered_method (False)  : NEW selection_keys: ['analytic', 'manual', 'stock_move', 'timesheet'], mode: modify
+---XML records in module 'sale_timesheet'---
+NEW ir.actions.act_window: sale_timesheet.project_profitability_report_action
+NEW ir.actions.act_window: sale_timesheet.project_project_action_multi_create_invoice
+NEW ir.actions.act_window: sale_timesheet.project_project_action_multi_create_sale_order
+NEW ir.actions.act_window: sale_timesheet.project_task_action_multi_assign_so_line
+DEL ir.actions.act_window: sale_timesheet.timesheet_action_report_cost_revenue
+DEL ir.actions.act_window.view: sale_timesheet.timesheet_action_report_cost_revenue_form
+DEL ir.actions.act_window.view: sale_timesheet.timesheet_action_report_cost_revenue_pivot
+DEL ir.actions.act_window.view: sale_timesheet.timesheet_action_report_cost_revenue_tree
+NEW ir.actions.client: sale_timesheet.project_timesheet_action_client_timesheet_plan
+NEW ir.filters: sale_timesheet.ir_filter_project_profitability_report_costs_and_revenues
+NEW ir.filters: sale_timesheet.ir_filter_project_profitability_report_manager_and_product
+NEW ir.model.access: sale_timesheet.access_project_profitability_report_analysis_manager
+NEW ir.model.access: sale_timesheet.access_project_sale_line_employee_map
+NEW ir.model.access: sale_timesheet.access_project_sale_line_employee_map_manager
+NEW ir.model.access: sale_timesheet.access_sale_order_line_project_manager
+NEW ir.model.access: sale_timesheet.access_sale_order_project_manager
+NEW ir.rule: sale_timesheet.sale_order_line_rule_project_manager (noupdate)
+NEW ir.ui.menu: sale_timesheet.menu_project_profitability_analysis
+DEL ir.ui.menu: sale_timesheet.menu_timesheet_report_cost_revenue
+NEW ir.ui.view: sale_timesheet.project_create_invoice_view_form
+NEW ir.ui.view: sale_timesheet.project_create_sale_order_view_form
+NEW ir.ui.view: sale_timesheet.project_profitability_report_view_graph
+NEW ir.ui.view: sale_timesheet.project_profitability_report_view_pivot
+NEW ir.ui.view: sale_timesheet.project_profitability_report_view_search
+NEW ir.ui.view: sale_timesheet.project_project_view_form
+NEW ir.ui.view: sale_timesheet.project_project_view_search
+NEW ir.ui.view: sale_timesheet.project_task_assign_so_line_view_form
+NEW ir.ui.view: sale_timesheet.project_task_view_search
+NEW ir.ui.view: sale_timesheet.qunit_suite
+DEL ir.ui.view: sale_timesheet.hr_timesheet_employee_extd_form
+DEL ir.ui.view: sale_timesheet.product_template_search_view_sale_timesheet

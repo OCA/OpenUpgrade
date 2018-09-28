@@ -1,0 +1,20 @@
+---Fields in module 'payment'---
+payment      / account.invoice          / transaction_ids (many2many)   : NEW relation: payment.transaction
+payment      / payment.acquirer         / qr_code (boolean)             : NEW 
+payment      / payment.transaction      / date (datetime)               : NEW 
+payment      / payment.transaction      / date_validate (datetime)      : DEL 
+payment      / payment.transaction      / invoice_ids (many2many)       : NEW relation: account.invoice
+payment      / payment.transaction      / is_processed (boolean)        : NEW 
+payment      / payment.transaction      / payment_id (many2one)         : NEW relation: account.payment
+payment      / payment.transaction      / return_url (char)             : NEW 
+payment      / payment.transaction      / state (selection)             : selection_keys is now '['authorized', 'cancel', 'done', 'draft', 'error', 'pending']' ('['authorized', 'cancel', 'done', 'draft', 'error', 'pending', 'refunded', 'refunding']')
+payment      / res.company              / payment_acquirer_onboarding_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+payment      / res.company              / payment_onboarding_payment_method (selection): NEW selection_keys: ['manual', 'other', 'paypal', 'stripe']
+---XML records in module 'payment'---
+NEW ir.actions.act_window: payment.action_open_payment_onboarding_payment_acquirer_wizard
+NEW ir.cron: payment.cron_post_process_payment_tx
+NEW ir.ui.view: payment.account_invoice_payment_acquirer_onboarding
+NEW ir.ui.view: payment.account_invoice_view_form_inherit_payment
+NEW ir.ui.view: payment.onboarding_payment_acquirer_step
+NEW ir.ui.view: payment.payment_acquirer_onboarding_wizard_form
+NEW ir.ui.view: payment.payment_process_page

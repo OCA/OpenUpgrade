@@ -1,0 +1,22 @@
+---Fields in module 'hr_recruitment'---
+hr_recruitment / digest.digest            / kpi_hr_recruitment_new_colleagues (boolean): NEW 
+hr_recruitment / hr.applicant             / activity_date_deadline (date) : now a function
+hr_recruitment / hr.applicant             / kanban_state (selection)      : NEW required: required, selection_keys: ['blocked', 'done', 'normal'], req_default: function
+hr_recruitment / hr.applicant             / message_last_post (datetime)  : DEL 
+hr_recruitment / hr.applicant             / message_main_attachment_id (many2one): NEW relation: ir.attachment
+hr_recruitment / hr.recruitment.stage     / legend_blocked (char)         : NEW required: required, req_default: function
+hr_recruitment / hr.recruitment.stage     / legend_done (char)            : NEW required: required, req_default: function
+hr_recruitment / hr.recruitment.stage     / legend_normal (char)          : NEW required: required, req_default: function
+---XML records in module 'hr_recruitment'---
+NEW digest.digest: digest.digest_digest_default (noupdate)
+NEW digest.tip: hr_recruitment.digest_tip_hr_recruitment_0
+NEW hr.recruitment.stage: hr_recruitment.stage_job1 (noupdate)
+NEW hr.recruitment.stage: hr_recruitment.stage_job2 (noupdate)
+NEW hr.recruitment.stage: hr_recruitment.stage_job3 (noupdate)
+NEW hr.recruitment.stage: hr_recruitment.stage_job4 (noupdate)
+NEW hr.recruitment.stage: hr_recruitment.stage_job5 (noupdate)
+NEW ir.actions.act_window: hr_recruitment.mail_activity_type_action_config_hr_applicant
+NEW ir.ui.menu: hr_recruitment.hr_recruitment_menu_config_activity_type
+NEW ir.ui.view: hr_recruitment.digest_digest_view_form
+NEW ir.ui.view: hr_recruitment.quick_create_applicant_form
+DEL mail.template: hr_recruitment.email_template_data_applicant_employee (noupdate)

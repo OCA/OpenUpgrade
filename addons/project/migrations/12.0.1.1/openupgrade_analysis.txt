@@ -1,0 +1,78 @@
+---Fields in module 'project'---
+project      / account.analytic.account / company_uom_id (many2one)     : module is now 'hr_timesheet' ('project')
+project      / account.analytic.account / company_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+project      / account.analytic.account / project_count (integer)       : module is now 'hr_timesheet' ('project')
+project      / account.analytic.account / project_ids (one2many)        : module is now 'hr_timesheet' ('project')
+project      / digest.digest            / kpi_project_task_opened (boolean): NEW 
+project      / project.project          / access_token (char)           : NEW 
+project      / project.project          / analytic_account_id (many2one): module is now 'hr_timesheet' ('project')
+project      / project.project          / message_last_post (datetime)  : DEL 
+project      / project.project          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+project      / project.project          / percentage_satisfaction_project (integer): previously in module rating_project
+project      / project.project          / percentage_satisfaction_task (integer): previously in module rating_project
+project      / project.project          / portal_show_rating (boolean)  : previously in module website_rating_project
+project      / project.project          / rating_request_deadline (datetime): previously in module rating_project
+project      / project.project          / rating_status (selection)     : previously in module rating_project
+project      / project.project          / rating_status_period (selection): previously in module rating_project
+project      / project.task             / access_token (char)           : NEW 
+project      / project.task             / activity_date_deadline (date) : now a function
+project      / project.task             / message_last_post (datetime)  : DEL 
+project      / project.task             / message_main_attachment_id (many2one): NEW relation: ir.attachment
+project      / project.task             / rating_count (integer)        : previously in module rating_project
+project      / project.task             / rating_ids (one2many)         : previously in module rating_project
+project      / project.task             / rating_last_feedback (text)   : previously in module rating_project
+project      / project.task             / rating_last_image (binary)    : previously in module rating_project
+project      / project.task             / rating_last_value (float)     : previously in module rating_project
+project      / project.task             / remaining_hours (float)       : module is now 'hr_timesheet' ('project')
+project      / project.task             / remaining_hours (float)       : now a function
+project      / project.task.type        / auto_validation_kanban_state (boolean): previously in module rating_project
+project      / project.task.type        / rating_template_id (many2one) : previously in module rating_project
+project      / res.company              / project_time_mode_id (many2one): module is now 'hr_timesheet' ('project')
+project      / res.company              / project_time_mode_id (many2one): relation is now 'uom.uom' ('product.uom')
+---XML records in module 'project'---
+NEW digest.digest: digest.digest_digest_default (noupdate)
+NEW digest.tip: project.digest_tip_project_0
+NEW ir.actions.act_window: project.rating_rating_action_project_report
+NEW ir.actions.act_window: project.rating_rating_action_task
+NEW ir.actions.act_window: project.rating_rating_action_view_project_rating
+DEL ir.actions.act_window: project.action_project_task_user_tree_filtered
+DEL ir.actions.act_window: project.project_task_action_activity
+DEL ir.actions.act_window: project.project_task_actions_act_window_merge_tasks
+DEL ir.attachment: project.msg_task_data_14_attach (noupdate)
+DEL ir.attachment: project.msg_task_data_8_attach (noupdate)
+NEW ir.cron: project.ir_cron_rating_project (noupdate)
+NEW ir.model.access: project.access_mail_activity_type_project_manager
+DEL ir.model.access: project.access_account_analytic_account_manager
+DEL ir.model.access: project.access_account_analytic_account_portal
+DEL ir.model.access: project.access_account_analytic_account_user
+DEL ir.model.access: project.access_account_analytic_line_project
+NEW ir.ui.menu: project.rating_rating_menu_project
+DEL ir.ui.menu: project.menu_action_view_task
+DEL ir.ui.menu: project.project_task_menu_activity
+NEW ir.ui.view: project.assets_frontend
+NEW ir.ui.view: project.digest_digest_view_form
+NEW ir.ui.view: project.portal_project_rating_partner_stat
+NEW ir.ui.view: project.portal_project_rating_popover
+NEW ir.ui.view: project.portal_project_rating_progressbar
+NEW ir.ui.view: project.quick_create_task_form
+NEW ir.ui.view: project.rating_index
+NEW ir.ui.view: project.rating_project_rating_page
+NEW ir.ui.view: project.rating_rating_view_search_project
+DEL ir.ui.view: project.analytic_account_inherited_form
+DEL ir.ui.view: project.mail_template_task_merge
+DEL ir.ui.view: project.project_planner
+DEL ir.ui.view: project.project_task_merge_wizard_form
+DEL mail.message: project.msg_task_data_14 (noupdate)
+DEL mail.message: project.msg_task_data_8 (noupdate)
+NEW mail.message.subtype: project.mt_project_task_rating
+NEW mail.message.subtype: project.mt_task_rating
+NEW mail.template: project.mail_template_data_project_task (noupdate)
+NEW mail.template: project.rating_project_request_email_template (noupdate)
+DEL mail.template: project.mail_template_data_module_install_project (noupdate)
+DEL project.task: project.project_task_data_8 (noupdate)
+DEL res.company: base.main_company (noupdate)
+NEW res.groups: project.group_project_rating
+DEL res.groups: project.group_time_work_estimation_tasks
+DEL res.request.link: project.req_link_project (noupdate)
+DEL res.request.link: project.req_link_task (noupdate)
+DEL web.planner: project.planner_project

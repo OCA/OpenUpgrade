@@ -1,0 +1,8 @@
+---Fields in module 'mail_bot'---
+mail_bot     / res.users                / odoobot_state (selection)     : NEW required: required, selection_keys: ['disabled', 'idle', 'not_initialized', 'onboarding_attachement', 'onboarding_command', 'onboarding_emoji', 'onboarding_ping'], req_default: function
+---XML records in module 'mail_bot'---
+NEW ir.ui.view: mail_bot.assets_backend
+NEW ir.ui.view: mail_bot.qunit_suite
+NEW ir.ui.view: mail_bot.res_users_view_form
+NEW ir.ui.view: mail_bot.res_users_view_form_preferences
+NEW res.partner: mail_bot.partner_odoobot

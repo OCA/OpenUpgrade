@@ -1,0 +1,13 @@
+---Fields in module 'delivery'---
+delivery     / product.template         / hs_code (char)                : DEL 
+delivery     / stock.move               / weight_uom_id (many2one)      : DEL relation: product.uom, required: required, req_default: function
+delivery     / stock.picking            / number_of_packages (integer)  : DEL 
+delivery     / stock.picking            / weight_uom_id (many2one)      : now a function
+delivery     / stock.picking            / weight_uom_id (many2one)      : relation is now 'uom.uom' ('product.uom')
+---XML records in module 'delivery'---
+NEW ir.actions.act_window: delivery.act_delivery_trackers_url
+NEW ir.ui.view: delivery.delivery_tracking_url_warning_form
+NEW ir.ui.view: delivery.view_quant_package_packaging_tree
+DEL ir.ui.view: delivery.product_template_hs_code
+DEL mail.template: delivery.mail_template_data_delivery_notification (noupdate)
+NEW product.category: delivery.product_category_deliveries (noupdate)

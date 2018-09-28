@@ -1,0 +1,14 @@
+---Fields in module 'sale_quotation_builder'---
+sale_quotation_builder / product.template         / quotation_only_description (html): NEW 
+sale_quotation_builder / sale.order               / website_description (html)    : previously in module website_quote
+sale_quotation_builder / sale.order.line          / website_description (html)    : previously in module website_quote
+sale_quotation_builder / sale.order.option        / website_description (html)    : previously in module website_quote
+sale_quotation_builder / sale.order.template      / website_description (html)    : NEW 
+sale_quotation_builder / sale.order.template.option / website_description (html)    : NEW 
+---XML records in module 'sale_quotation_builder'---
+NEW ir.ui.view: sale.brand_promotion
+NEW ir.ui.view: sale_quotation_builder.sale_order_form_quote_design
+NEW ir.ui.view: sale_quotation_builder.sale_order_portal_content_inherit_sale_quotation_builder
+NEW ir.ui.view: sale_quotation_builder.sale_order_template_view_form_inherit_sale_quotation_builder
+NEW ir.ui.view: sale_quotation_builder.so_template
+NEW sale.order.template: sale_quotation_builder.sale_order_template_default (noupdate)

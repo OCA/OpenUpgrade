@@ -1,0 +1,116 @@
+---Fields in module 'website'---
+website      / ir.attachment            / key (char)                    : NEW 
+website      / ir.attachment            / website_id (many2one)         : NEW relation: website
+website      / ir.ui.view               / page_ids (one2many)           : not a function anymore
+website      / ir.ui.view               / website_meta_og_img (char)    : NEW 
+website      / res.partner              / website_id (many2one)         : NEW relation: website
+website      / website                  / auth_signup_uninvited (selection): NEW selection_keys: ['b2b', 'b2c']
+website      / website                  / company_id (many2one)         : now required, default = function
+website      / website                  / country_group_ids (many2many) : NEW relation: res.country.group
+website      / website                  / google_maps_api_key (char)    : NEW 
+website      / website                  / name (char)                   : now required
+website      / website                  / social_instagram (char)       : NEW 
+website      / website                  / specific_user_account (boolean): NEW 
+website      / website                  / theme_id (many2one)           : NEW relation: ir.module.module
+website      / website.menu             / parent_left (integer)         : DEL 
+website      / website.menu             / parent_path (char)            : NEW 
+website      / website.menu             / parent_right (integer)        : DEL 
+website      / website.page             / header_color (char)           : NEW 
+website      / website.page             / header_overlay (boolean)      : NEW 
+website      / website.page             / is_published (boolean)        : NEW 
+website      / website.page             / website_ids (many2many)       : DEL relation: website
+website      / website.page             / website_published (boolean)   : now a function
+website      / website.redirect         / type (selection)              : now required
+website      / website.redirect         / url_from (char)               : now required
+website      / website.redirect         / url_to (char)                 : now required
+---XML records in module 'website'---
+DEL ir.actions.act_url: website.action_website_homepage (noupdate)
+NEW ir.actions.act_window: website.action_website_add_features
+NEW ir.actions.act_window: website.action_website_list
+DEL ir.actions.act_window: website.action_module_theme (noupdate)
+DEL ir.actions.act_window: website.action_module_website (noupdate)
+NEW ir.actions.server: website.ir_actions_server_website_google_analytics
+NEW ir.attachment: website.s_carousel_default_image_1 (noupdate)
+NEW ir.attachment: website.s_carousel_default_image_2 (noupdate)
+NEW ir.attachment: website.s_carousel_default_image_3 (noupdate)
+NEW ir.attachment: website.s_parallax_default_image (noupdate)
+NEW ir.attachment: website.s_picture_default_image (noupdate)
+NEW ir.attachment: website.s_quotes_carousel_demo_image_1 (noupdate)
+NEW ir.attachment: website.s_quotes_carousel_demo_image_2 (noupdate)
+NEW ir.attachment: website.s_quotes_carousel_demo_image_3 (noupdate)
+NEW ir.attachment: website.s_quotes_carousel_demo_image_4 (noupdate)
+NEW ir.attachment: website.s_quotes_carousel_demo_image_5 (noupdate)
+DEL ir.attachment: website.s_big_picture_default_image (noupdate)
+DEL ir.attachment: website.s_image_floating_default_image (noupdate)
+DEL ir.attachment: website.s_parallax_slider_default_image (noupdate)
+NEW ir.model.access: website.access_seo_manager
+NEW ir.model.access: website.access_website_designer
+NEW ir.ui.menu: website.menu_website_add_features
+NEW ir.ui.menu: website.menu_website_dashboard
+NEW ir.ui.menu: website.menu_website_google_analytics
+NEW ir.ui.menu: website.menu_website_menu_list
+NEW ir.ui.menu: website.menu_website_websites_list
+NEW ir.ui.view: website._assets_frontend_helpers
+NEW ir.ui.view: website._assets_primary_variables
+NEW ir.ui.view: website._assets_secondary_variables
+NEW ir.ui.view: website.affix_top_menu
+NEW ir.ui.view: website.brand_promotion
+NEW ir.ui.view: website.default_scss
+NEW ir.ui.view: website.list_website_pages
+NEW ir.ui.view: website.no_autohide_menu
+NEW ir.ui.view: website.one_page_line
+NEW ir.ui.view: website.option_custom_body_image
+NEW ir.ui.view: website.option_custom_body_pattern
+NEW ir.ui.view: website.option_font_body_02_variables
+NEW ir.ui.view: website.option_font_body_03_variables
+NEW ir.ui.view: website.option_font_body_04_variables
+NEW ir.ui.view: website.option_font_body_05_variables
+NEW ir.ui.view: website.option_font_body_06_variables
+NEW ir.ui.view: website.option_font_button_02_variables
+NEW ir.ui.view: website.option_font_button_03_variables
+NEW ir.ui.view: website.option_font_button_04_variables
+NEW ir.ui.view: website.option_font_button_05_variables
+NEW ir.ui.view: website.option_font_button_06_variables
+NEW ir.ui.view: website.option_font_navbar_02_variables
+NEW ir.ui.view: website.option_font_navbar_03_variables
+NEW ir.ui.view: website.option_font_navbar_04_variables
+NEW ir.ui.view: website.option_font_navbar_05_variables
+NEW ir.ui.view: website.option_font_navbar_06_variables
+NEW ir.ui.view: website.option_font_title_02_variables
+NEW ir.ui.view: website.option_font_title_03_variables
+NEW ir.ui.view: website.option_font_title_04_variables
+NEW ir.ui.view: website.option_font_title_05_variables
+NEW ir.ui.view: website.option_font_title_06_variables
+NEW ir.ui.view: website.option_layout_boxed_variables
+NEW ir.ui.view: website.s_alert
+NEW ir.ui.view: website.s_btn
+NEW ir.ui.view: website.s_call_to_action
+NEW ir.ui.view: website.s_card
+NEW ir.ui.view: website.s_carousel
+NEW ir.ui.view: website.s_facebook_page
+NEW ir.ui.view: website.s_features_grid
+NEW ir.ui.view: website.s_hr
+NEW ir.ui.view: website.s_picture
+NEW ir.ui.view: website.s_quotes_carousel
+NEW ir.ui.view: website.s_rating
+NEW ir.ui.view: website.s_tabs
+NEW ir.ui.view: website.view_attachment_form_inherit_website
+NEW ir.ui.view: website.view_partner_form_inherit_website
+NEW ir.ui.view: website.view_redirect_search
+NEW ir.ui.view: website.view_view_tree_inherit_website
+NEW ir.ui.view: website.website_menus_form_view
+DEL ir.ui.view: website.edit_website_pages
+DEL ir.ui.view: website.footer_default
+DEL ir.ui.view: website.s_big_message
+DEL ir.ui.view: website.s_big_picture
+DEL ir.ui.view: website.s_button
+DEL ir.ui.view: website.s_feature_grid
+DEL ir.ui.view: website.s_image_floating
+DEL ir.ui.view: website.s_panel
+DEL ir.ui.view: website.s_parallax_slider
+DEL ir.ui.view: website.s_well
+DEL ir.ui.view: website.view_company_form_inherit_website
+DEL ir.ui.view: website.website_planner
+NEW res.groups: website.group_multi_website
+NEW res.users: base.user_admin (noupdate)
+DEL web.planner: website.planner_website
