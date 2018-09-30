@@ -1,0 +1,74 @@
+language: python
+sudo: false
+
+python:
+  - "3.5"
+
+addons:
+    apt:
+        packages:
+            - expect-dev  # provides unbuffer utility
+            - python-lxml  # because pip installation is slow
+            - python-simplejson
+            - python-serial
+            - python-yaml
+            - python-passlib
+            - python-psycopg2
+            - python-werkzeug
+            - realpath
+    postgresql: "9.6"
+
+env:
+  - DB=openupgrade ODOO=./odoo-bin
+
+# Need flake8 for pep8 testing
+install:
+    - pip install flake8==3.4.1 coveralls
+
+# Test with flake for:
+#   * migration scripts
+#   * scripts/ directory
+#   * openerp/addons/openupgrade* directories
+#   * openerp/openupgrade/ directory
+# use a max length of 120
+script:
+    - flake8 odoo/openupgrade --max-line-length=120
+    - flake8 odoo/addons/openupgrade* --max-line-length=120 --filename=__init__.py --ignore=F401
+    - flake8 odoo/addons/openupgrade* --max-line-length=120 --exclude=__init__.py
+# only flake8 migration scripts from the openupgrade project, presumably
+# identifyable by using the openupgrade helpers
+    - flake8 --max-line-length=120 scripts $(find . \( -name 'pre-*.py' -or -name 'post-*.py' \) -exec grep -q openupgrade {} \; -print)
+    - flake8 odoo/addons/*/migrations/*/tests/ --max-line-length=120
+    - flake8 addons/*/migrations/*/tests/ --max-line-length=120
+    - npm install -g less less-plugin-clean-css
+    - createdb $DB
+    - wget -q -O- https://github.com/OCA/OpenUpgrade/releases/download/databases/11.0.psql | pg_restore -d $DB --no-owner
+    - cat odoo/addons/base/migrations/*/tests/*.yml addons/*/migrations/*/tests/*.yml > ../test_data110.yml || true
+    # Roundtrip to previous release to update the test database with additional test data
+    # Loading and committing test data without triggering post tests needs https://github.com/odoo/odoo/pull/13146. This is now included in OpenUpgrade.
+    - git fetch --depth 2 origin 11.0
+    - git reset --hard `git ls-remote |grep refs/heads/11.0 |awk '{print $1}'`
+    - source ~/virtualenv/python2.7/bin/activate
+    - pip install -q -r requirements.txt
+    # this crashes if there is no test data
+    - if [ -s ../test_data110.yml ]; then ./odoo-bin --database=$DB --test-file=`readlink -f ../test_data110.yml` --test-commit --stop-after-init; fi
+    - source ~/virtualenv/python3.5/bin/activate
+    # Line below may fail quite often due to Travis bug:
+    - git reset -q --hard $TRAVIS_COMMIT
+    # Install Python requirements of target release
+    - pip install -q -r requirements.txt
+    # don't use pypi's openupgradelib, but the one from source to avoid choking
+    # on unreleased features in openupgradelib
+    - pip install --ignore-installed git+https://github.com/OCA/openupgradelib.git@master
+    # select modules and perform the upgrade
+    - MODULES_OLD=base,$(sed -n '/^+========/,$p'  odoo/openupgrade/doc/source/modules110-120.rst | grep "Done\|Partial\|Nothing" | grep -v "theme_" | sed -r -n 's/((^\| *\|del\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
+    - MODULES_NEW=base,$(sed -n '/^+========/,$p'  odoo/openupgrade/doc/source/modules110-120.rst | grep "Done\|Partial\|Nothing" | grep -v "theme_" | sed -r -n 's/((^\| *\|new\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
+    - psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')"
+    - echo Testing modules $MODULES_NEW
+    - OPENUPGRADE_TESTS=1 coverage run $ODOO --database=$DB --update=$MODULES_NEW --stop-after-init
+    # try to build the documentation
+    - pip install sphinx
+    - sh scripts/build_openupgrade_docs
+
+after_success:
+    coveralls
