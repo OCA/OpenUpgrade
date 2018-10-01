@@ -302,6 +302,12 @@ class Registry(Mapping):
 
         if models:
             models[0].recompute()
+            # OpenUpgrade start
+            for model in models:
+                if model._openupgrade_recompute_fields_blacklist:
+                    model._openupgrade_recompute_fields_blacklist = []
+                    _logger.info("Blacklist reset for model %s." % model._name)
+            # OpenUpgrade end
 
         # make sure all tables are present
         self.check_tables_exist(cr)

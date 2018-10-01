@@ -44,3 +44,9 @@ XlsxWriter==0.9.3
 xlwt==1.3.*
 xlrd==1.0.0
 pypiwin32 ; sys_platform == 'win32'
+# Python 3 compatibility
+configparser==3.5.0
+future==0.16.0
+# Needed for OpenUpgrade
+odoorpc==0.6.0
+openupgradelib>=2.0.0
