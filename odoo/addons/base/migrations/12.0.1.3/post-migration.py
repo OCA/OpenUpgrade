@@ -1,29 +1,12 @@
 # © 2018 Opener B.V. (stefan@opener.amsterdam)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from openerp.models import PREFETCH_MAX
 from openupgradelib import openupgrade
-
-
-def chunked(records, single=True):
-    """ Memory and performance friendly method to iterate over a potentially
-    large number of records. Yields either a whole chunk or a single record
-    at the time. Don't nest calls to this method. """
-    model = records._name
-    ids = records.with_context(prefetch_fields=False).ids
-    for i in range(0, len(ids), PREFETCH_MAX):
-        records.env.invalidate_all()
-        chunk = records.env[model].browse(ids[i:i + PREFETCH_MAX])
-        if single:
-            for record in chunk:
-                yield record
-            continue
-        yield chunk
 
 
 def generate_thumbnails(env):
     """ Let Odoo create a thumbnail for all attachments that consist of one of
     the supported image types and are not linked to a binary field. """
-    for chunk in chunked(
+    for chunk in openupgrade.chunked(
             env['ir.attachment'].search([
                 ('res_field', '=', False),
                 ('mimetype', 'like', 'image.%'),

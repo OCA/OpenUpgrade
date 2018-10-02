@@ -52,8 +52,9 @@ def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, xmlid_renames)
     eliminate_duplicate_translations(env.cr)
 
-    # Workaround to link the admin xmlids to the current admin
-    # until we split up the admin account from the system account
+    # Make the system and admin user XML ids refer to the same entry for now to
+    # prevent errors when base data is loaded. The users are picked apart in
+    # this module's end stage migration script.
     env.cr.execute(
         """ INSERT INTO ir_model_data
         (module, name, model, res_id, noupdate)

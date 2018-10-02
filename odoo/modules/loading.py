@@ -583,6 +583,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         registry.updated_modules += processed_modules
 
         # OpenUpgrade: run deferred tests
+        cr.commit()
         openupgrade_loading.run_tests('_deferred', report)
 
 
