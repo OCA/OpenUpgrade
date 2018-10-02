@@ -48,6 +48,8 @@ merged_modules = {
     'website_project': 'project',
     'website_project_issue': 'project',
     'website_project_timesheet': 'hr_timesheet',
+    # OCA/account-invoice-reporting
+    'product_brand_invoice_report': 'product_brand',
     # OCA/account-financial-reporting
     # Done here for avoiding problems if updating from a previous version
     # where account_financial_report exists as other kind of module
@@ -60,6 +62,8 @@ merged_modules = {
     'product_variant_supplierinfo': 'product',
     # OCA/project
     'project_issue_timesheet_time_control': 'project_timesheet_time_control',
+    # OCA/sale-reporting
+    'product_brand_sale_report': 'product_brand',
     # OCA/stock-logistics-workflow
     'stock_picking_transfer_lot_autoassign': 'stock_pack_operation_auto_fill',
     # OCA/web
