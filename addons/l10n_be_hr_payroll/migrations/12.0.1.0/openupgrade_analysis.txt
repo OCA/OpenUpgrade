@@ -1,0 +1,15 @@
+---Fields in module 'l10n_be_hr_payroll'---
+l10n_be_hr_payroll / hr.contract              / ip (boolean)                  : NEW 
+l10n_be_hr_payroll / hr.contract              / ip_wage_rate (float)          : NEW 
+l10n_be_hr_payroll / hr.contract              / transport_mode (selection)    : DEL selection_keys: ['company_car', 'others', 'public_transport']
+l10n_be_hr_payroll / hr.contract              / transport_mode_car (boolean)  : NEW 
+l10n_be_hr_payroll / hr.contract              / transport_mode_others (boolean): NEW 
+l10n_be_hr_payroll / hr.contract              / transport_mode_public (boolean): NEW 
+---XML records in module 'l10n_be_hr_payroll'---
+NEW hr.salary.rule: hr_payroll.hr_rule_basic
+NEW hr.salary.rule: l10n_be_hr_payroll.hr_salary_rule_gross_with_ip
+NEW hr.salary.rule: l10n_be_hr_payroll.hr_salary_rule_ip
+NEW hr.salary.rule: l10n_be_hr_payroll.hr_salary_rule_ip_deduction
+NEW hr.salary.rule: l10n_be_hr_payroll.hr_salary_rule_ip_part
+NEW hr.salary.rule.category: l10n_be_hr_payroll.hr_salary_rule_category_gross_with_ip
+NEW hr.salary.rule.category: l10n_be_hr_payroll.hr_salary_rule_category_ip_part

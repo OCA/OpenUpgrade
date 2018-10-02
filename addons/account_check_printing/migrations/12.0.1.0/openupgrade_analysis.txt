@@ -1,0 +1,10 @@
+---Fields in module 'account_check_printing'---
+account_check_printing / res.company              / account_check_printing_date_label (boolean): NEW 
+account_check_printing / res.company              / account_check_printing_layout (selection): NEW required: required, selection_keys: ['action_print_check_bottom', 'action_print_check_middle', 'action_print_check_top', 'disabled'], req_default: function
+account_check_printing / res.company              / account_check_printing_margin_left (float): NEW 
+account_check_printing / res.company              / account_check_printing_margin_right (float): NEW 
+account_check_printing / res.company              / account_check_printing_margin_top (float): NEW 
+account_check_printing / res.company              / account_check_printing_multi_stub (boolean): NEW 
+---XML records in module 'account_check_printing'---
+NEW ir.ui.view: account_check_printing.res_config_settings_view_form
+DEL ir.ui.view: account_check_printing.view_account_bank_journal_form_inherited_check_printing

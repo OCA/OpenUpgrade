@@ -1,0 +1,101 @@
+---Fields in module 'product'---
+product      / product.attribute        / attribute_line_ids (one2many) : relation is now 'product.template.attribute.line' ('product.attribute.line')
+product      / product.attribute        / create_variant (boolean)      : now required, default = function
+product      / product.attribute        / create_variant (boolean)      : selection_keys is now '['always', 'dynamic', 'no_variant']' ('False')
+product      / product.attribute        / create_variant (boolean)      : type is now 'selection' ('boolean')
+product      / product.attribute.value  / price_ids (one2many)          : DEL relation: product.attribute.price
+product      / product.attribute.value  / product_ids (many2many)       : DEL relation: product.product
+product      / product.category         / parent_left (integer)         : DEL 
+product      / product.category         / parent_path (char)            : NEW 
+product      / product.category         / parent_right (integer)        : DEL 
+product      / product.product          / activity_date_deadline (date) : now a function
+product      / product.product          / attribute_line_ids (one2many) : relation is now 'product.template.attribute.line' ('product.attribute.line')
+product      / product.product          / message_last_post (datetime)  : DEL 
+product      / product.product          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+product      / product.product          / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
+product      / product.product          / uom_po_id (many2one)          : relation is now 'uom.uom' ('product.uom')
+product      / product.supplierinfo     / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+product      / product.template         / activity_date_deadline (date) : now a function
+product      / product.template         / attribute_line_ids (one2many) : relation is now 'product.template.attribute.line' ('product.attribute.line')
+product      / product.template         / message_last_post (datetime)  : DEL 
+product      / product.template         / message_main_attachment_id (many2one): NEW relation: ir.attachment
+product      / product.template         / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
+product      / product.template         / uom_po_id (many2one)          : relation is now 'uom.uom' ('product.uom')
+product      / product.template.attribute.exclusion / product_template_attribute_value_id (many2one): NEW relation: product.template.attribute.value
+product      / product.template.attribute.exclusion / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+product      / product.template.attribute.exclusion / value_ids (many2many)         : NEW relation: product.template.attribute.value
+product      / product.template.attribute.line / attribute_id (many2one)       : NEW relation: product.attribute, required: required
+product      / product.template.attribute.line / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+product      / product.template.attribute.line / value_ids (many2many)         : NEW relation: product.attribute.value
+product      / product.template.attribute.value / exclude_for (one2many)        : NEW relation: product.template.attribute.exclusion
+product      / product.template.attribute.value / price_extra (float)           : NEW 
+product      / product.template.attribute.value / product_attribute_value_id (many2one): NEW relation: product.attribute.value, required: required
+product      / product.template.attribute.value / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+---XML records in module 'product'---
+DEL ir.actions.act_window: product.product_uom_categ_form_action
+DEL ir.actions.act_window: product.product_uom_form_action
+NEW ir.actions.report: product.report_product_packaging
+NEW ir.actions.report: product.report_product_product_barcode
+NEW ir.actions.report: product.report_product_template_barcode
+NEW ir.model.access: product.access_product_attribute_manager
+NEW ir.model.access: product.access_product_attribute_value_manager
+NEW ir.model.access: product.access_product_category_manager
+NEW ir.model.access: product.access_product_packaging_manager
+NEW ir.model.access: product.access_product_price_history_manager
+NEW ir.model.access: product.access_product_pricelist_item_manager
+NEW ir.model.access: product.access_product_pricelist_manager
+NEW ir.model.access: product.access_product_product_attribute
+NEW ir.model.access: product.access_product_product_attribute_manager
+NEW ir.model.access: product.access_product_product_manager
+NEW ir.model.access: product.access_product_supplierinfo_manager
+NEW ir.model.access: product.access_product_template_attribute_exclusion
+NEW ir.model.access: product.access_product_template_attribute_exclusion_manager
+NEW ir.model.access: product.access_product_template_attribute_line
+NEW ir.model.access: product.access_product_template_attribute_line_manager
+NEW ir.model.access: product.access_product_template_manager
+DEL ir.model.access: product.access_product_attribute_line
+DEL ir.model.access: product.access_product_attribute_price
+DEL ir.model.access: product.access_product_uom_categ_user
+DEL ir.model.access: product.access_product_uom_user
+NEW ir.ui.view: product.product_packaging_form_view2
+NEW ir.ui.view: product.product_packaging_tree_view2
+NEW ir.ui.view: product.product_supplierinfo_view_kanban
+NEW ir.ui.view: product.product_template_attribute_line_form
+NEW ir.ui.view: product.product_template_attribute_value_view_form
+NEW ir.ui.view: product.product_template_attribute_value_view_tree
+NEW ir.ui.view: product.report_packagingbarcode
+NEW ir.ui.view: product.report_productbarcode
+NEW ir.ui.view: product.report_producttemplatebarcode
+NEW ir.ui.view: product.report_simple_barcode
+DEL ir.ui.view: product.product_attribute_line_form
+DEL ir.ui.view: product.product_attribute_value_view_tree
+DEL ir.ui.view: product.product_uom_categ_form_view
+DEL ir.ui.view: product.product_uom_form_view
+DEL ir.ui.view: product.product_uom_tree_view
+NEW product.category: product.cat_expense (noupdate)
+DEL product.uom: product.product_uom_cm (noupdate)
+DEL product.uom: product.product_uom_day (noupdate)
+DEL product.uom: product.product_uom_dozen (noupdate)
+DEL product.uom: product.product_uom_floz (noupdate)
+DEL product.uom: product.product_uom_foot (noupdate)
+DEL product.uom: product.product_uom_gal (noupdate)
+DEL product.uom: product.product_uom_gram (noupdate)
+DEL product.uom: product.product_uom_hour (noupdate)
+DEL product.uom: product.product_uom_inch (noupdate)
+DEL product.uom: product.product_uom_kgm (noupdate)
+DEL product.uom: product.product_uom_km (noupdate)
+DEL product.uom: product.product_uom_lb (noupdate)
+DEL product.uom: product.product_uom_litre (noupdate)
+DEL product.uom: product.product_uom_meter (noupdate)
+DEL product.uom: product.product_uom_mile (noupdate)
+DEL product.uom: product.product_uom_oz (noupdate)
+DEL product.uom: product.product_uom_qt (noupdate)
+DEL product.uom: product.product_uom_ton (noupdate)
+DEL product.uom: product.product_uom_unit (noupdate)
+DEL product.uom.categ: product.product_uom_categ_kgm (noupdate)
+DEL product.uom.categ: product.product_uom_categ_unit (noupdate)
+DEL product.uom.categ: product.product_uom_categ_vol (noupdate)
+DEL product.uom.categ: product.uom_categ_length (noupdate)
+DEL product.uom.categ: product.uom_categ_wtime (noupdate)
+DEL res.groups: product.group_uom
+DEL res.request.link: product.req_link_product (noupdate)

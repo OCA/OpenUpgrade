@@ -1,0 +1,17 @@
+---Fields in module 'base_import'---
+base_import  / base_import.mapping      / column_name (char)            : NEW 
+base_import  / base_import.mapping      / field_name (char)             : NEW 
+base_import  / base_import.mapping      / res_model (char)              : NEW 
+base_import  / base_import.tests.models.complex / c (char)                      : NEW 
+base_import  / base_import.tests.models.complex / currency_id (many2one)        : NEW relation: res.currency
+base_import  / base_import.tests.models.complex / d (date)                      : NEW 
+base_import  / base_import.tests.models.complex / dt (datetime)                 : NEW 
+base_import  / base_import.tests.models.complex / f (float)                     : NEW 
+base_import  / base_import.tests.models.complex / m (float)                     : NEW 
+base_import  / base_import.tests.models.float / currency_id (many2one)        : NEW relation: res.currency
+base_import  / base_import.tests.models.float / value (float)                 : NEW 
+base_import  / base_import.tests.models.float / value2 (float)                : NEW 
+---XML records in module 'base_import'---
+NEW ir.model.access: base_import.access_base_import_mapping
+NEW ir.model.access: base_import.access_base_import_tests_models_complex
+NEW ir.model.access: base_import.access_base_import_tests_models_float

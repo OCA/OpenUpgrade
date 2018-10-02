@@ -1,0 +1,318 @@
+---Fields in module 'crm_reveal'---
+crm_reveal   / crm.lead                 / reveal_iap_credits (integer)  : NEW 
+crm_reveal   / crm.lead                 / reveal_id (char)              : NEW 
+crm_reveal   / crm.lead                 / reveal_ip (char)              : NEW 
+crm_reveal   / crm.lead                 / reveal_rule_id (many2one)     : NEW relation: crm.reveal.rule
+crm_reveal   / crm.reveal.industry      / color (integer)               : NEW 
+crm_reveal   / crm.reveal.industry      / name (char)                   : NEW required: required
+crm_reveal   / crm.reveal.industry      / reveal_id (char)              : NEW required: required
+crm_reveal   / crm.reveal.role          / color (integer)               : NEW 
+crm_reveal   / crm.reveal.role          / name (char)                   : NEW required: required
+crm_reveal   / crm.reveal.role          / reveal_id (char)              : NEW required: required
+crm_reveal   / crm.reveal.rule          / active (boolean)              : NEW 
+crm_reveal   / crm.reveal.rule          / company_size_max (integer)    : NEW 
+crm_reveal   / crm.reveal.rule          / company_size_min (integer)    : NEW 
+crm_reveal   / crm.reveal.rule          / country_ids (many2many)       : NEW relation: res.country
+crm_reveal   / crm.reveal.rule          / extra_contacts (integer)      : NEW 
+crm_reveal   / crm.reveal.rule          / industry_tag_ids (many2many)  : NEW relation: crm.reveal.industry
+crm_reveal   / crm.reveal.rule          / lead_for (selection)          : NEW required: required, selection_keys: ['companies', 'people'], req_default: function
+crm_reveal   / crm.reveal.rule          / lead_ids (one2many)           : NEW relation: crm.lead
+crm_reveal   / crm.reveal.rule          / lead_type (selection)         : NEW required: required, selection_keys: ['lead', 'opportunity'], req_default: function
+crm_reveal   / crm.reveal.rule          / name (char)                   : NEW required: required
+crm_reveal   / crm.reveal.rule          / other_role_ids (many2many)    : NEW relation: crm.reveal.role
+crm_reveal   / crm.reveal.rule          / preferred_role_id (many2one)  : NEW relation: crm.reveal.role
+crm_reveal   / crm.reveal.rule          / priority (selection)          : NEW selection_keys: ['0', '1', '2', '3']
+crm_reveal   / crm.reveal.rule          / regex_url (char)              : NEW 
+crm_reveal   / crm.reveal.rule          / seniority_id (many2one)       : NEW relation: crm.reveal.seniority
+crm_reveal   / crm.reveal.rule          / sequence (integer)            : NEW 
+crm_reveal   / crm.reveal.rule          / suffix (char)                 : NEW 
+crm_reveal   / crm.reveal.rule          / tag_ids (many2many)           : NEW relation: crm.lead.tag
+crm_reveal   / crm.reveal.rule          / team_id (many2one)            : NEW relation: crm.team
+crm_reveal   / crm.reveal.rule          / user_id (many2one)            : NEW relation: res.users
+crm_reveal   / crm.reveal.seniority     / name (char)                   : NEW required: required
+crm_reveal   / crm.reveal.seniority     / reveal_id (char)              : NEW required: required
+crm_reveal   / crm.reveal.view          / reveal_ip (char)              : NEW 
+crm_reveal   / crm.reveal.view          / reveal_rule_id (many2one)     : NEW relation: crm.reveal.rule
+crm_reveal   / crm.reveal.view          / reveal_state (selection)      : NEW selection_keys: ['not_found', 'to_process']
+---XML records in module 'crm_reveal'---
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_1
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_10
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_100
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_101
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_102
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_103
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_104
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_105
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_106
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_107
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_108
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_109
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_11
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_110
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_111
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_112
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_113
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_114
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_115
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_116
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_117
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_118
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_119
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_12
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_120
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_121
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_122
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_123
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_124
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_125
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_126
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_127
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_128
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_129
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_13
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_130
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_131
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_132
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_133
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_134
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_135
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_136
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_137
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_138
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_139
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_14
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_140
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_141
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_142
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_143
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_144
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_145
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_146
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_147
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_148
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_149
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_15
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_150
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_151
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_152
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_153
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_154
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_155
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_156
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_157
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_158
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_159
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_16
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_160
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_161
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_162
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_163
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_164
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_165
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_166
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_167
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_168
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_169
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_17
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_170
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_171
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_172
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_173
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_174
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_175
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_176
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_177
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_178
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_179
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_18
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_180
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_181
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_182
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_183
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_184
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_185
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_186
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_187
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_188
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_189
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_19
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_190
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_191
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_192
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_193
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_194
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_195
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_196
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_197
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_198
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_199
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_2
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_20
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_200
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_201
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_202
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_203
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_204
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_205
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_206
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_207
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_208
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_209
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_21
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_210
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_211
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_212
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_213
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_214
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_215
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_216
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_217
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_218
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_219
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_22
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_220
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_221
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_222
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_223
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_224
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_225
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_226
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_227
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_228
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_229
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_23
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_230
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_231
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_232
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_233
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_234
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_235
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_236
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_237
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_24
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_25
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_26
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_27
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_28
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_29
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_3
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_30
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_31
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_32
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_33
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_34
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_35
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_36
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_37
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_38
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_39
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_4
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_40
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_41
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_42
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_43
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_44
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_45
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_46
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_47
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_48
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_49
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_5
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_50
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_51
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_52
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_53
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_54
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_55
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_56
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_57
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_58
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_59
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_6
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_60
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_61
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_62
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_63
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_64
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_65
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_66
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_67
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_68
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_69
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_7
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_70
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_71
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_72
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_73
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_74
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_75
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_76
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_77
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_78
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_79
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_8
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_80
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_81
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_82
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_83
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_84
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_85
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_86
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_87
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_88
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_89
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_9
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_90
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_91
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_92
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_93
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_94
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_95
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_96
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_97
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_98
+NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_99
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_1
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_10
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_11
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_12
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_13
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_14
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_15
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_16
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_17
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_18
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_19
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_2
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_20
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_21
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_22
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_3
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_4
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_5
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_6
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_7
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_8
+NEW crm.reveal.role: crm_reveal.crm_reveal_role_9
+NEW crm.reveal.seniority: crm_reveal.crm_reveal_seniority_1
+NEW crm.reveal.seniority: crm_reveal.crm_reveal_seniority_2
+NEW crm.reveal.seniority: crm_reveal.crm_reveal_seniority_3
+NEW ir.actions.act_window: crm_reveal.crm_reveal_rule_action
+NEW ir.actions.act_window: crm_reveal.crm_reveal_view_action
+NEW ir.cron: crm_reveal.ir_cron_crm_reveal_lead (noupdate)
+NEW ir.model.access: crm_reveal.access_crm_reveal_industry
+NEW ir.model.access: crm_reveal.access_crm_reveal_role
+NEW ir.model.access: crm_reveal.access_crm_reveal_rule
+NEW ir.model.access: crm_reveal.access_crm_reveal_seniority
+NEW ir.model.access: crm_reveal.access_crm_reveal_view
+NEW ir.ui.menu: crm_reveal.crm_reveal_rule_menu_action
+NEW ir.ui.menu: crm_reveal.crm_reveal_view_menu_action
+NEW ir.ui.view: crm_reveal.crm_reveal_lead_form
+NEW ir.ui.view: crm_reveal.crm_reveal_lead_opportunity_form
+NEW ir.ui.view: crm_reveal.crm_reveal_rule_form
+NEW ir.ui.view: crm_reveal.crm_reveal_rule_tree
+NEW ir.ui.view: crm_reveal.crm_reveal_view_form
+NEW ir.ui.view: crm_reveal.crm_reveal_view_tree
+NEW ir.ui.view: crm_reveal.lead_message_template
+NEW ir.ui.view: crm_reveal.res_config_settings_view_form
+NEW mail.template: crm_reveal.reveal_no_credits (noupdate)

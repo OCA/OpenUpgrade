@@ -1,0 +1,12 @@
+---Fields in module 'survey'---
+survey       / survey.survey            / activity_date_deadline (date) : now a function
+survey       / survey.survey            / message_last_post (datetime)  : DEL 
+survey       / survey.survey            / message_main_attachment_id (many2one): NEW relation: ir.attachment
+---XML records in module 'survey'---
+DEL ir.actions.act_window: survey.action_partner_survey_mail
+NEW ir.ui.view: survey.403
+NEW ir.ui.view: survey.layout
+NEW ir.ui.view: survey.survey_assets
+DEL ir.ui.view: survey.assets_frontend
+DEL ir.ui.view: survey.assets_frontend_result
+DEL ir.ui.view: survey.assets_frontend_survey

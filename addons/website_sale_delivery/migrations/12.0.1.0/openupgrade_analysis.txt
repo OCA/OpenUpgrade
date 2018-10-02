@@ -1,0 +1,8 @@
+---Fields in module 'website_sale_delivery'---
+website_sale_delivery / delivery.carrier         / is_published (boolean)        : NEW 
+website_sale_delivery / delivery.carrier         / website_id (many2one)         : NEW relation: website
+website_sale_delivery / delivery.carrier         / website_published (boolean)   : now a function
+---XML records in module 'website_sale_delivery'---
+NEW ir.ui.view: website_sale_delivery.payment_delivery_methods
+NEW ir.ui.view: website_sale_delivery.sale_order_portal_content_inherit_sale_stock_inherit_website_sale_delivery
+DEL ir.ui.view: website_sale_delivery.portal_order_page_shipping_tracking

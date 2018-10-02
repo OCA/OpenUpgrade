@@ -1,0 +1,9 @@
+---Fields in module 'sale_expense'---
+sale_expense / sale.order               / expense_ids (one2many)        : NEW relation: hr.expense
+---XML records in module 'sale_expense'---
+NEW digest.tip: sale_expense.digest_tip_sale_expense_0
+NEW ir.actions.act_window: hr_expense.hr_expense_product
+NEW ir.actions.act_window: sale_expense.hr_expense_action_from_sale_order
+NEW ir.ui.view: sale_expense.sale_order_form_view_inherit
+DEL ir.ui.view: sale_expense.product_template_form_view_expense_policy
+NEW product.product: hr_expense.product_product_fixed_cost (noupdate)

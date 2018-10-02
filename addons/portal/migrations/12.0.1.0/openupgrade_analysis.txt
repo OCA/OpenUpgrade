@@ -1,0 +1,18 @@
+---Fields in module 'portal'---
+portal       / mail.blacklist           / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.mass_mailing.contact / website_message_ids (one2many): module is now 'mass_mailing' ('portal')
+portal       / mail.test                / website_message_ids (one2many): module is now 'test_mail' ('portal')
+portal       / mail.test.simple         / website_message_ids (one2many): module is now 'test_mail' ('portal')
+---XML records in module 'portal'---
+NEW ir.actions.act_window: portal.portal_share_action
+NEW ir.ui.view: portal._assets_frontend_helpers
+NEW ir.ui.view: portal._assets_primary_variables
+NEW ir.ui.view: portal.portal_back_in_edit_mode
+NEW ir.ui.view: portal.portal_breadcrumbs
+NEW ir.ui.view: portal.portal_docs_entry
+NEW ir.ui.view: portal.portal_record_layout
+NEW ir.ui.view: portal.portal_record_sidebar
+NEW ir.ui.view: portal.portal_share_template (noupdate)
+NEW ir.ui.view: portal.portal_share_wizard
+NEW ir.ui.view: portal.portal_sidebar
+NEW ir.ui.view: portal.portal_table

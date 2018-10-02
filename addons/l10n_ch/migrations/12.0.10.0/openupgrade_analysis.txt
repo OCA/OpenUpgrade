@@ -1,0 +1,35 @@
+---Fields in module 'l10n_ch'---
+l10n_ch      / res.partner.bank         / l10n_ch_postal (char)         : not a function anymore
+---XML records in module 'l10n_ch'---
+NEW account.account.tag: l10n_ch.vat_tag_382_a
+NEW account.account.tag: l10n_ch.vat_tag_382_b
+DEL account.account.tag: l10n_ch.vat_tag_301_a
+DEL account.account.tag: l10n_ch.vat_tag_301_b
+DEL account.account.tag: l10n_ch.vat_tag_341_a
+DEL account.account.tag: l10n_ch.vat_tag_341_b
+DEL account.account.template: l10n_ch.transfer_account_id (noupdate)
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_11 (noupdate)
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_12 (noupdate)
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_16 (noupdate)
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_18 (noupdate)
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_7 (noupdate)
+DEL account.fiscal.position.tax.template: l10n_ch.fiscal_position_tax_template_8 (noupdate)
+DEL account.tax.group: l10n_ch.tax_group_tva_38 (noupdate)
+DEL account.tax.group: l10n_ch.tax_group_tva_8 (noupdate)
+NEW account.tax.template: l10n_ch.vat_77_purchase_return
+NEW account.tax.template: l10n_ch.vat_77_purchase_reverse
+DEL account.tax.template: l10n_ch.vat_38
+DEL account.tax.template: l10n_ch.vat_38_incl
+DEL account.tax.template: l10n_ch.vat_38_invest
+DEL account.tax.template: l10n_ch.vat_38_invest_incl
+DEL account.tax.template: l10n_ch.vat_38_purchase
+DEL account.tax.template: l10n_ch.vat_38_purchase_incl
+DEL account.tax.template: l10n_ch.vat_80
+DEL account.tax.template: l10n_ch.vat_80_incl
+DEL account.tax.template: l10n_ch.vat_80_invest
+DEL account.tax.template: l10n_ch.vat_80_invest_incl
+DEL account.tax.template: l10n_ch.vat_80_purchase
+DEL account.tax.template: l10n_ch.vat_80_purchase_incl
+NEW ir.ui.view: l10n_ch.isr_bank_journal_form
+NEW ir.ui.view: l10n_ch.isr_partner_bank_form
+NEW ir.ui.view: l10n_ch.l10n_ch_swissqr_template

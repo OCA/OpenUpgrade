@@ -1,0 +1,9 @@
+---Fields in module 'calendar'---
+calendar     / calendar.event           / message_last_post (datetime)  : DEL 
+calendar     / calendar.event           / message_main_attachment_id (many2one): NEW relation: ir.attachment
+---XML records in module 'calendar'---
+DEL calendar.event.type: calendar.categ_meet1 (noupdate)
+DEL calendar.event.type: calendar.categ_meet2 (noupdate)
+DEL calendar.event.type: calendar.categ_meet3 (noupdate)
+DEL calendar.event.type: calendar.categ_meet4 (noupdate)
+DEL calendar.event.type: calendar.categ_meet5 (noupdate)

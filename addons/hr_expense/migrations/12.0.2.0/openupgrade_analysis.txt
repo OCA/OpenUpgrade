@@ -1,0 +1,47 @@
+---Fields in module 'hr_expense'---
+hr_expense   / hr.employee              / expense_manager_id (many2one) : NEW relation: res.users
+hr_expense   / hr.expense               / activity_ids (one2many)       : NEW relation: mail.activity
+hr_expense   / hr.expense               / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+hr_expense   / hr.expense               / message_last_post (datetime)  : DEL 
+hr_expense   / hr.expense               / message_main_attachment_id (many2one): NEW relation: ir.attachment
+hr_expense   / hr.expense               / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+hr_expense   / hr.expense               / state (selection)             : selection_keys is now '['approved', 'done', 'draft', 'refused', 'reported']' ('['done', 'draft', 'refused', 'reported']')
+hr_expense   / hr.expense.sheet         / activity_ids (one2many)       : NEW relation: mail.activity
+hr_expense   / hr.expense.sheet         / message_last_post (datetime)  : DEL 
+hr_expense   / hr.expense.sheet         / message_main_attachment_id (many2one): NEW relation: ir.attachment
+hr_expense   / hr.expense.sheet         / responsible_id (many2one)     : was renamed to user_id [nothing to do]
+hr_expense   / hr.expense.sheet         / state (selection)             : selection_keys is now '['approve', 'cancel', 'done', 'draft', 'post', 'submit']' ('['approve', 'cancel', 'done', 'post', 'submit']')
+---XML records in module 'hr_expense'---
+NEW ir.actions.act_window: hr_expense.action_unsubmitted_expense
+NEW ir.actions.act_window: hr_expense.mail_activity_type_action_config_hr_expense
+DEL ir.actions.act_window: hr_expense.action_hr_expense_sheet_my_refused
+NEW ir.model.access: hr_expense.access_hr_expense_manager
+NEW ir.model.access: hr_expense.access_hr_expense_sheet_manager
+NEW ir.model.access: hr_expense.access_mail_activity_type_expense_user
+NEW ir.model.access: hr_expense.access_uom_uom_hr_expense_user
+DEL ir.model.access: hr_expense.access_product_uom_hr_expense_user
+NEW ir.rule: hr_expense.ir_rule_hr_expense_employee (noupdate)
+NEW ir.rule: hr_expense.ir_rule_hr_expense_manager (noupdate)
+NEW ir.rule: hr_expense.ir_rule_hr_expense_sheet_employee (noupdate)
+NEW ir.rule: hr_expense.ir_rule_hr_expense_sheet_manager (noupdate)
+NEW ir.rule: hr_expense.ir_rule_hr_expense_sheet_user (noupdate)
+NEW ir.rule: hr_expense.ir_rule_hr_expense_user (noupdate)
+DEL ir.rule: hr_expense.property_rule_expense_employee (noupdate)
+DEL ir.rule: hr_expense.property_rule_expense_manager (noupdate)
+NEW ir.ui.menu: hr_expense.hr_expense_menu_config_activity_type
+NEW ir.ui.menu: hr_expense.menu_hr_expense_report
+DEL ir.ui.menu: hr_expense.menu_hr_expense_accountant
+DEL ir.ui.menu: hr_expense.menu_hr_expense_sheet_all_all
+DEL ir.ui.menu: hr_expense.menu_hr_expense_sheet_my_reports_refused
+DEL ir.ui.menu: hr_expense.menu_hr_expense_to_approve
+NEW ir.ui.view: hr_expense.account_journal_dashboard_kanban_view_inherit_hr_expense
+NEW ir.ui.view: hr_expense.hr_employee_view_form_inherit_expense
+NEW ir.ui.view: hr_expense.hr_expense_view_form
+NEW ir.ui.view: hr_expense.hr_expense_view_form_without_header
+DEL ir.ui.view: hr_expense.hr_expense_form_view
+DEL ir.ui.view: hr_expense.hr_expense_planner
+NEW mail.activity.type: hr_expense.mail_act_expense_approval (noupdate)
+DEL mail.message.subtype: hr_expense.mt_department_expense_confirmed (noupdate)
+DEL mail.message.subtype: hr_expense.mt_expense_confirmed (noupdate)
+DEL product.category: hr_expense.cat_expense (noupdate)
+DEL web.planner: hr_expense.planner_hr_expense

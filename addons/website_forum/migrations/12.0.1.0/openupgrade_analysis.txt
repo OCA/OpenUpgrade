@@ -1,0 +1,23 @@
+---Fields in module 'website_forum'---
+website_forum / forum.forum              / message_last_post (datetime)  : DEL 
+website_forum / forum.forum              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+website_forum / forum.forum              / website_id (many2one)         : NEW relation: website
+website_forum / forum.forum              / website_meta_og_img (char)    : NEW 
+website_forum / forum.post               / message_last_post (datetime)  : DEL 
+website_forum / forum.post               / message_main_attachment_id (many2one): NEW relation: ir.attachment
+website_forum / forum.post               / website_meta_og_img (char)    : NEW 
+website_forum / forum.tag                / message_last_post (datetime)  : DEL 
+website_forum / forum.tag                / message_main_attachment_id (many2one): NEW relation: ir.attachment
+website_forum / forum.tag                / website_meta_og_img (char)    : NEW 
+---XML records in module 'website_forum'---
+NEW ir.ui.menu: website_forum.menu_forum_global
+NEW ir.ui.menu: website_forum.menu_forum_tag_global
+NEW ir.ui.menu: website_forum.menu_website_forum_global
+DEL ir.ui.menu: website_forum.menu_forum
+DEL ir.ui.menu: website_forum.menu_forum_tag
+NEW ir.ui.view: website_forum.user_navbar_inherit_website_forum
+DEL ir.ui.view: website_forum.content_new_forum
+DEL ir.ui.view: website_forum.header_footer_custom
+NEW res.users: base.user_admin (noupdate)
+NEW website.menu: website_forum.menu_website_forums (noupdate)
+DEL website.menu: website_forum.menu_questions (noupdate)

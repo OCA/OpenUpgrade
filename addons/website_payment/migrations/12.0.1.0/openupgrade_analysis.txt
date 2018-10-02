@@ -1,0 +1,6 @@
+---Fields in module 'website_payment'---
+website_payment / payment.acquirer         / website_id (many2one)         : NEW relation: website
+---XML records in module 'website_payment'---
+NEW ir.ui.view: website_payment.acquirer_form_webiste
+DEL ir.ui.view: website_payment.header_footer_custom_payment
+DEL ir.ui.view: website_payment.website_settings_payment

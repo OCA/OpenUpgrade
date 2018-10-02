@@ -1,0 +1,13 @@
+---Fields in module 'website_event'---
+website_event / event.event              / is_published (boolean)        : NEW 
+website_event / event.event              / website_id (many2one)         : NEW relation: website
+website_event / event.event              / website_menu (boolean)        : not a function anymore
+website_event / event.event              / website_meta_og_img (char)    : NEW 
+website_event / event.event              / website_published (boolean)   : now a function
+---XML records in module 'website_event'---
+NEW ir.ui.view: website_event.brand_promotion
+NEW ir.ui.view: website_event.event_event_view_list_inherit_website
+NEW ir.ui.view: website_event.user_navbar_inherit_website_event
+DEL ir.ui.view: website.layout_footer_copyright
+DEL ir.ui.view: website_event.content_new_event
+DEL ir.ui.view: website_event.header_footer_custom

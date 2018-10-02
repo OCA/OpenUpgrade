@@ -1,0 +1,28 @@
+---Fields in module 'analytic'---
+analytic     / account.analytic.account / group_id (many2one)           : NEW relation: account.analytic.group
+analytic     / account.analytic.account / message_last_post (datetime)  : DEL 
+analytic     / account.analytic.account / message_main_attachment_id (many2one): NEW relation: ir.attachment
+analytic     / account.analytic.account / tag_ids (many2many)           : DEL relation: account.analytic.tag
+analytic     / account.analytic.distribution / account_id (many2one)         : NEW relation: account.analytic.account, required: required
+analytic     / account.analytic.distribution / percentage (float)            : NEW required: required, req_default: function
+analytic     / account.analytic.distribution / tag_id (many2one)             : NEW relation: account.analytic.tag, required: required
+analytic     / account.analytic.group   / children_ids (one2many)       : NEW relation: account.analytic.group
+analytic     / account.analytic.group   / company_id (many2one)         : NEW relation: res.company
+analytic     / account.analytic.group   / description (text)            : NEW 
+analytic     / account.analytic.group   / name (char)                   : NEW required: required
+analytic     / account.analytic.group   / parent_id (many2one)          : NEW relation: account.analytic.group
+analytic     / account.analytic.group   / parent_path (char)            : NEW 
+analytic     / account.analytic.line    / company_id (many2one)         : now required, default = function
+analytic     / account.analytic.line    / product_uom_id (many2one)     : previously in module account
+analytic     / account.analytic.tag     / active_analytic_distribution (boolean): NEW 
+analytic     / account.analytic.tag     / analytic_distribution_ids (one2many): NEW relation: account.analytic.distribution
+analytic     / account.analytic.tag     / company_id (many2one)         : NEW relation: res.company
+---XML records in module 'analytic'---
+NEW ir.actions.act_window: analytic.account_analytic_group_action
+NEW ir.model.access: analytic.access_account_analytic_distribution
+NEW ir.model.access: analytic.access_account_analytic_group
+NEW ir.rule: analytic.analytic_group_comp_rule (noupdate)
+NEW ir.rule: analytic.analytic_tag_comp_rule (noupdate)
+NEW ir.ui.view: analytic.account_analytic_group_form_view
+NEW ir.ui.view: analytic.account_analytic_group_tree_view
+NEW res.groups: analytic.group_analytic_tags

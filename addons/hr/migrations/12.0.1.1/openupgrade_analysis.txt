@@ -1,0 +1,27 @@
+---Fields in module 'hr'---
+hr           / hr.department            / message_last_post (datetime)  : DEL 
+hr           / hr.department            / message_main_attachment_id (many2one): NEW relation: ir.attachment
+hr           / hr.employee              / activity_ids (one2many)       : NEW relation: mail.activity
+hr           / hr.employee              / additional_note (text)        : NEW 
+hr           / hr.employee              / certificate (selection)       : NEW selection_keys: ['bachelor', 'master', 'other']
+hr           / hr.employee              / children (integer)            : previously in module hr_contract
+hr           / hr.employee              / country_of_birth (many2one)   : NEW relation: res.country
+hr           / hr.employee              / emergency_contact (char)      : NEW 
+hr           / hr.employee              / emergency_phone (char)        : NEW 
+hr           / hr.employee              / google_drive_link (char)      : NEW 
+hr           / hr.employee              / job_title (char)              : NEW 
+hr           / hr.employee              / km_home_work (integer)        : NEW 
+hr           / hr.employee              / message_last_post (datetime)  : DEL 
+hr           / hr.employee              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+hr           / hr.employee              / place_of_birth (char)         : previously in module hr_contract
+hr           / hr.employee              / spouse_birthdate (date)       : NEW 
+hr           / hr.employee              / spouse_complete_name (char)   : NEW 
+hr           / hr.employee              / study_field (char)            : NEW 
+hr           / hr.employee              / study_school (char)           : NEW 
+hr           / hr.job                   / message_last_post (datetime)  : DEL 
+hr           / hr.job                   / message_main_attachment_id (many2one): NEW relation: ir.attachment
+hr           / mail.channel             / subscription_department_ids (many2many): NEW relation: hr.department
+---XML records in module 'hr'---
+NEW hr.employee: hr.employee_admin (noupdate)
+DEL hr.employee: hr.employee_root (noupdate)
+NEW ir.ui.view: hr.mail_channel_view_form_

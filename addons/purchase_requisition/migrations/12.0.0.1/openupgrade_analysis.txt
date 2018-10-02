@@ -1,0 +1,19 @@
+---Fields in module 'purchase_requisition'---
+purchase_requisition / product.supplierinfo     / purchase_requisition_line_id (many2one): NEW relation: purchase.requisition.line
+purchase_requisition / purchase.requisition     / account_analytic_id (many2one): DEL relation: account.analytic.account
+purchase_requisition / purchase.requisition     / currency_id (many2one)        : NEW relation: res.currency, required: required, req_default: function
+purchase_requisition / purchase.requisition     / message_last_post (datetime)  : DEL 
+purchase_requisition / purchase.requisition     / message_main_attachment_id (many2one): NEW relation: ir.attachment
+purchase_requisition / purchase.requisition     / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'in_progress', 'ongoing', 'open']' ('['cancel', 'done', 'draft', 'in_progress', 'open']')
+purchase_requisition / purchase.requisition.line / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+purchase_requisition / purchase.requisition.line / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+purchase_requisition / purchase.requisition.line / requisition_id (many2one)     : now required
+purchase_requisition / purchase.requisition.line / supplier_info_ids (one2many)  : NEW relation: product.supplierinfo
+purchase_requisition / stock.move               / requisition_line_ids (one2many): NEW relation: purchase.requisition.line
+purchase_requisition / stock.move               / requistion_line_ids (one2many): NEW relation: purchase.requisition.line
+---XML records in module 'purchase_requisition'---
+NEW ir.sequence: purchase_requisition.seq_blanket_order (noupdate)
+NEW ir.sequence: purchase_requisition.seq_purchase_tender (noupdate)
+DEL ir.sequence: purchase_requisition.seq_purchase_requisition (noupdate)
+NEW ir.ui.view: purchase_requisition.product_supplierinfo_tree_view_inherit
+NEW ir.ui.view: purchase_requisition.supplier_info_form_inherit

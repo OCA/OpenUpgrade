@@ -1,0 +1,39 @@
+---Fields in module 'website_blog'---
+website_blog / blog.blog                / message_last_post (datetime)  : DEL 
+website_blog / blog.blog                / message_main_attachment_id (many2one): NEW relation: ir.attachment
+website_blog / blog.blog                / website_id (many2one)         : NEW relation: website
+website_blog / blog.blog                / website_meta_og_img (char)    : NEW 
+website_blog / blog.post                / is_published (boolean)        : NEW 
+website_blog / blog.post                / message_last_post (datetime)  : DEL 
+website_blog / blog.post                / message_main_attachment_id (many2one): NEW relation: ir.attachment
+website_blog / blog.post                / website_meta_og_img (char)    : NEW 
+website_blog / blog.post                / website_published (boolean)   : now a function
+website_blog / blog.tag                 / category_id (many2one)        : NEW relation: blog.tag.category
+website_blog / blog.tag                 / website_meta_og_img (char)    : NEW 
+website_blog / blog.tag.category        / name (char)                   : NEW required: required
+website_blog / blog.tag.category        / tag_ids (one2many)            : NEW relation: blog.tag
+website_blog / mail.message             / path (char)                   : DEL 
+---XML records in module 'website_blog'---
+NEW ir.actions.act_window: website_blog.action_tag_category
+NEW ir.model.access: website_blog.blog_tag_category
+NEW ir.model.access: website_blog.blog_tag_category_all
+NEW ir.ui.menu: website_blog.menu_blog_global
+NEW ir.ui.menu: website_blog.menu_blog_tag_global
+NEW ir.ui.menu: website_blog.menu_website_blog_root_global
+NEW ir.ui.menu: website_blog.menu_website_blog_tag_category_global
+DEL ir.ui.menu: website_blog.menu_blog
+DEL ir.ui.menu: website_blog.menu_blog_tag
+DEL ir.ui.menu: website_blog.menu_page
+NEW ir.ui.view: website_blog._assets_primary_variables
+NEW ir.ui.view: website_blog.blog_post_view_kanban
+NEW ir.ui.view: website_blog.blog_tag_category_form
+NEW ir.ui.view: website_blog.blog_tag_category_tree
+NEW ir.ui.view: website_blog.s_latest_posts
+NEW ir.ui.view: website_blog.s_latest_posts_big_picture
+NEW ir.ui.view: website_blog.s_latest_posts_big_picture_template
+NEW ir.ui.view: website_blog.s_latest_posts_list_template
+NEW ir.ui.view: website_blog.s_latest_posts_options
+NEW ir.ui.view: website_blog.tag_category
+NEW ir.ui.view: website_blog.user_navbar_inherit_website_blog
+DEL ir.ui.view: website_blog.content_new_blogpost
+DEL ir.ui.view: website_blog.header_footer_custom

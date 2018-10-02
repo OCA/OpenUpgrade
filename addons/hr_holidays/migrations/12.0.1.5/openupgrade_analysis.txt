@@ -1,0 +1,220 @@
+---Fields in module 'hr_holidays'---
+hr_holidays  / hr.employee              / current_leave_id (many2one)   : relation is now 'hr.leave.type' ('hr.holidays.status')
+hr_holidays  / hr.leave                 / activity_ids (one2many)       : NEW relation: mail.activity
+hr_holidays  / hr.leave                 / category_id (many2one)        : NEW relation: hr.employee.category
+hr_holidays  / hr.leave                 / date_from (datetime)          : NEW required: required, req_default: function
+hr_holidays  / hr.leave                 / date_to (datetime)            : NEW required: required, req_default: function
+hr_holidays  / hr.leave                 / department_id (many2one)      : NEW relation: hr.department
+hr_holidays  / hr.leave                 / employee_id (many2one)        : NEW relation: hr.employee
+hr_holidays  / hr.leave                 / first_approver_id (many2one)  : NEW relation: hr.employee
+hr_holidays  / hr.leave                 / holiday_status_id (many2one)  : NEW relation: hr.leave.type, required: required
+hr_holidays  / hr.leave                 / holiday_type (selection)      : NEW required: required, selection_keys: ['category', 'company', 'department', 'employee'], req_default: function
+hr_holidays  / hr.leave                 / linked_request_ids (one2many) : NEW relation: hr.leave
+hr_holidays  / hr.leave                 / manager_id (many2one)         : NEW relation: hr.employee
+hr_holidays  / hr.leave                 / meeting_id (many2one)         : NEW relation: calendar.event
+hr_holidays  / hr.leave                 / message_follower_ids (one2many): NEW relation: mail.followers
+hr_holidays  / hr.leave                 / message_ids (one2many)        : NEW relation: mail.message
+hr_holidays  / hr.leave                 / message_main_attachment_id (many2one): NEW relation: ir.attachment
+hr_holidays  / hr.leave                 / mode_company_id (many2one)    : NEW relation: res.company
+hr_holidays  / hr.leave                 / name (char)                   : NEW 
+hr_holidays  / hr.leave                 / notes (text)                  : NEW 
+hr_holidays  / hr.leave                 / number_of_days (float)        : NEW 
+hr_holidays  / hr.leave                 / parent_id (many2one)          : NEW relation: hr.leave
+hr_holidays  / hr.leave                 / payslip_status (boolean)      : NEW 
+hr_holidays  / hr.leave                 / report_note (text)            : NEW 
+hr_holidays  / hr.leave                 / request_date_from (date)      : NEW 
+hr_holidays  / hr.leave                 / request_date_from_period (selection): NEW selection_keys: ['am', 'pm']
+hr_holidays  / hr.leave                 / request_date_to (date)        : NEW 
+hr_holidays  / hr.leave                 / request_hour_from (selection) : NEW selection_keys: [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5, 21, 21.5, 22, 22.5, 23, 23.5]
+hr_holidays  / hr.leave                 / request_hour_to (selection)   : NEW selection_keys: [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5, 21, 21.5, 22, 22.5, 23, 23.5]
+hr_holidays  / hr.leave                 / request_unit_custom (boolean) : NEW 
+hr_holidays  / hr.leave                 / request_unit_half (boolean)   : NEW 
+hr_holidays  / hr.leave                 / request_unit_hours (boolean)  : NEW 
+hr_holidays  / hr.leave                 / second_approver_id (many2one) : NEW relation: hr.employee
+hr_holidays  / hr.leave                 / state (selection)             : NEW selection_keys: ['cancel', 'confirm', 'draft', 'refuse', 'validate', 'validate1']
+hr_holidays  / hr.leave                 / website_message_ids (one2many): NEW relation: mail.message
+hr_holidays  / hr.leave.allocation      / accrual (boolean)             : NEW 
+hr_holidays  / hr.leave.allocation      / accrual_limit (integer)       : NEW 
+hr_holidays  / hr.leave.allocation      / activity_ids (one2many)       : NEW relation: mail.activity
+hr_holidays  / hr.leave.allocation      / category_id (many2one)        : NEW relation: hr.employee.category
+hr_holidays  / hr.leave.allocation      / date_from (datetime)          : NEW 
+hr_holidays  / hr.leave.allocation      / date_to (datetime)            : NEW 
+hr_holidays  / hr.leave.allocation      / department_id (many2one)      : NEW relation: hr.department
+hr_holidays  / hr.leave.allocation      / employee_id (many2one)        : NEW relation: hr.employee
+hr_holidays  / hr.leave.allocation      / first_approver_id (many2one)  : NEW relation: hr.employee
+hr_holidays  / hr.leave.allocation      / holiday_status_id (many2one)  : NEW relation: hr.leave.type, required: required, req_default: function
+hr_holidays  / hr.leave.allocation      / holiday_type (selection)      : NEW required: required, selection_keys: ['category', 'company', 'department', 'employee'], req_default: function
+hr_holidays  / hr.leave.allocation      / interval_number (integer)     : NEW 
+hr_holidays  / hr.leave.allocation      / interval_unit (selection)     : NEW selection_keys: ['months', 'weeks', 'years']
+hr_holidays  / hr.leave.allocation      / linked_request_ids (one2many) : NEW relation: hr.leave.allocation
+hr_holidays  / hr.leave.allocation      / message_follower_ids (one2many): NEW relation: mail.followers
+hr_holidays  / hr.leave.allocation      / message_ids (one2many)        : NEW relation: mail.message
+hr_holidays  / hr.leave.allocation      / message_main_attachment_id (many2one): NEW relation: ir.attachment
+hr_holidays  / hr.leave.allocation      / mode_company_id (many2one)    : NEW relation: res.company
+hr_holidays  / hr.leave.allocation      / name (char)                   : NEW 
+hr_holidays  / hr.leave.allocation      / nextcall (date)               : NEW 
+hr_holidays  / hr.leave.allocation      / notes (text)                  : NEW 
+hr_holidays  / hr.leave.allocation      / number_of_days (float)        : NEW 
+hr_holidays  / hr.leave.allocation      / number_per_interval (float)   : NEW 
+hr_holidays  / hr.leave.allocation      / parent_id (many2one)          : NEW relation: hr.leave.allocation
+hr_holidays  / hr.leave.allocation      / second_approver_id (many2one) : NEW relation: hr.employee
+hr_holidays  / hr.leave.allocation      / state (selection)             : NEW selection_keys: ['cancel', 'confirm', 'draft', 'refuse', 'validate', 'validate1']
+hr_holidays  / hr.leave.allocation      / unit_per_interval (selection) : NEW selection_keys: ['days', 'hours']
+hr_holidays  / hr.leave.allocation      / website_message_ids (one2many): NEW relation: mail.message
+hr_holidays  / hr.leave.type            / active (boolean)              : NEW 
+hr_holidays  / hr.leave.type            / allocation_type (selection)   : NEW selection_keys: ['fixed', 'fixed_allocation', 'no']
+hr_holidays  / hr.leave.type            / categ_id (many2one)           : NEW relation: calendar.event.type
+hr_holidays  / hr.leave.type            / color_name (selection)        : NEW required: required, selection_keys: ['black', 'blue', 'brown', 'ivory', 'lavender', 'lightblue', 'lightcoral', 'lightcyan', 'lightgreen', 'lightpink', 'lightsalmon', 'lightyellow', 'magenta', 'red', 'violet', 'wheat'], req_default: function
+hr_holidays  / hr.leave.type            / company_id (many2one)         : NEW relation: res.company
+hr_holidays  / hr.leave.type            / name (char)                   : NEW required: required
+hr_holidays  / hr.leave.type            / request_unit (selection)      : NEW required: required, selection_keys: ['day', 'hour'], req_default: function
+hr_holidays  / hr.leave.type            / sequence (integer)            : NEW 
+hr_holidays  / hr.leave.type            / time_type (selection)         : NEW selection_keys: ['leave', 'other']
+hr_holidays  / hr.leave.type            / unpaid (boolean)              : NEW 
+hr_holidays  / hr.leave.type            / validation_type (selection)   : NEW selection_keys: ['both', 'hr', 'manager']
+hr_holidays  / hr.leave.type            / validity_start (date)         : NEW 
+hr_holidays  / hr.leave.type            / validity_stop (date)          : NEW 
+hr_holidays  / resource.calendar.leaves / holiday_id (many2one)         : relation is now 'hr.leave' ('hr.holidays')
+---XML records in module 'hr_holidays'---
+DEL hr.holidays.status: hr_holidays.holiday_status_cl (noupdate)
+DEL hr.holidays.status: hr_holidays.holiday_status_comp (noupdate)
+DEL hr.holidays.status: hr_holidays.holiday_status_sl (noupdate)
+DEL hr.holidays.status: hr_holidays.holiday_status_unpaid (noupdate)
+NEW hr.leave.type: hr_holidays.holiday_status_cl
+NEW hr.leave.type: hr_holidays.holiday_status_comp
+NEW hr.leave.type: hr_holidays.holiday_status_sl
+NEW hr.leave.type: hr_holidays.holiday_status_unpaid
+NEW ir.actions.act_window: hr_holidays.hr_leave_action_action_approve_department
+NEW ir.actions.act_window: hr_holidays.hr_leave_action_action_department
+NEW ir.actions.act_window: hr_holidays.hr_leave_action_all
+NEW ir.actions.act_window: hr_holidays.hr_leave_action_my
+NEW ir.actions.act_window: hr_holidays.hr_leave_action_new_request
+NEW ir.actions.act_window: hr_holidays.hr_leave_action_payroll
+NEW ir.actions.act_window: hr_holidays.hr_leave_allocation_action_all
+NEW ir.actions.act_window: hr_holidays.hr_leave_allocation_action_approve_department
+NEW ir.actions.act_window: hr_holidays.hr_leave_allocation_action_my
+NEW ir.actions.act_window: hr_holidays.mail_activity_type_action_config_hr_holidays
+DEL ir.actions.act_window: hr_holidays.act_hr_employee_holiday_request_approved
+DEL ir.actions.act_window: hr_holidays.action_hr_holidays_leaves_analysis
+DEL ir.actions.act_window: hr_holidays.action_hr_holidays_leaves_analysis_filtered
+DEL ir.actions.act_window: hr_holidays.hr_holidays_action_allocation_from_department
+DEL ir.actions.act_window: hr_holidays.hr_holidays_action_request_from_department
+DEL ir.actions.act_window: hr_holidays.hr_holidays_leaves_assign_legal
+DEL ir.actions.act_window: hr_holidays.open_allocation_holidays
+DEL ir.actions.act_window: hr_holidays.open_ask_holidays
+DEL ir.actions.act_window: hr_holidays.open_department_holidays_allocation_approve
+DEL ir.actions.act_window: hr_holidays.open_department_holidays_approve
+DEL ir.actions.act_window: hr_holidays.open_employee_leaves
+DEL ir.actions.act_window: hr_holidays.request_approve_allocation
+DEL ir.actions.act_window: hr_holidays.request_approve_holidays
+NEW ir.actions.act_window.view: hr_holidays.hhr_leave_action_new_request_view_form
+NEW ir.actions.act_window.view: hr_holidays.hr_leave_action_my_view_form
+NEW ir.actions.act_window.view: hr_holidays.hr_leave_action_my_view_tree
+NEW ir.actions.act_window.view: hr_holidays.hr_leave_action_new_request_view_calendar
+NEW ir.actions.act_window.view: hr_holidays.hr_leave_action_new_request_view_tree
+NEW ir.actions.act_window.view: hr_holidays.hr_leave_allocation_action_my_view_form
+NEW ir.actions.act_window.view: hr_holidays.hr_leave_allocation_action_my_view_tree
+DEL ir.actions.act_window.view: hr_holidays.action_open_allocation_holidays_form
+DEL ir.actions.act_window.view: hr_holidays.action_open_allocation_holidays_tree
+DEL ir.actions.act_window.view: hr_holidays.action_open_ask_holidays_calendar
+DEL ir.actions.act_window.view: hr_holidays.action_open_ask_holidays_form
+DEL ir.actions.act_window.view: hr_holidays.action_open_ask_holidays_tree
+DEL ir.actions.act_window.view: hr_holidays.action_request_approve_allocation_form
+DEL ir.actions.act_window.view: hr_holidays.action_request_approve_allocation_tree
+DEL ir.actions.act_window.view: hr_holidays.action_request_approve_holidays_form
+DEL ir.actions.act_window.view: hr_holidays.action_request_approve_holidays_tree
+DEL ir.actions.act_window.view: hr_holidays.action_window_leave_pivot
+NEW ir.actions.report: hr_holidays.action_report_holidayssummary2
+NEW ir.cron: hr_holidays.hr_leave_allocation_cron_accrual
+NEW ir.model.access: hr_holidays.access_hr_holidays_employee_allocation
+NEW ir.model.access: hr_holidays.access_hr_holidays_employee_request
+NEW ir.model.access: hr_holidays.access_hr_holidays_manager_allocation
+NEW ir.model.access: hr_holidays.access_hr_holidays_manager_request
+NEW ir.model.access: hr_holidays.access_hr_holidays_status_employee
+NEW ir.model.access: hr_holidays.access_hr_holidays_status_manager
+NEW ir.model.access: hr_holidays.access_hr_holidays_status_user
+NEW ir.model.access: hr_holidays.access_hr_holidays_user_allocation
+NEW ir.model.access: hr_holidays.access_hr_holidays_user_request
+NEW ir.model.access: hr_holidays.access_hr_leave_report
+NEW ir.model.access: hr_holidays.access_mail_activity_type_holidays_manager
+DEL ir.model.access: hr_holidays.access_hr_holidays_employee
+DEL ir.model.access: hr_holidays.access_hr_holidays_remain_user
+DEL ir.model.access: hr_holidays.access_hr_holidays_user
+DEL ir.model.access: hr_holidays.access_hr_holydays_status_employee
+DEL ir.model.access: hr_holidays.access_hr_holydays_status_manager
+NEW ir.rule: hr_holidays.hr_leave_allocation_rule_employee
+NEW ir.rule: hr_holidays.hr_leave_allocation_rule_employee_update
+NEW ir.rule: hr_holidays.hr_leave_allocation_rule_manager
+NEW ir.rule: hr_holidays.hr_leave_allocation_rule_officer_read
+NEW ir.rule: hr_holidays.hr_leave_allocation_rule_officer_update
+NEW ir.rule: hr_holidays.hr_leave_rule_employee
+NEW ir.rule: hr_holidays.hr_leave_rule_employee_update
+NEW ir.rule: hr_holidays.hr_leave_rule_manager
+NEW ir.rule: hr_holidays.hr_leave_rule_multicompany
+NEW ir.rule: hr_holidays.hr_leave_rule_officer_read
+NEW ir.rule: hr_holidays.hr_leave_rule_officer_update
+DEL ir.rule: hr_holidays.property_rule_holidays_employee
+DEL ir.rule: hr_holidays.property_rule_holidays_employee_write
+DEL ir.rule: hr_holidays.property_rule_holidays_officer
+NEW ir.ui.menu: hr_holidays.hr_holidays_menu_config_activity_type
+NEW ir.ui.menu: hr_holidays.hr_holidays_menu_manager_all
+NEW ir.ui.menu: hr_holidays.hr_holidays_menu_manager_all_allocations
+NEW ir.ui.menu: hr_holidays.hr_holidays_menu_manager_approve
+NEW ir.ui.menu: hr_holidays.hr_holidays_menu_manager_approve_allocations
+NEW ir.ui.menu: hr_holidays.hr_holidays_menu_manager_payroll
+NEW ir.ui.menu: hr_holidays.hr_holidays_menu_manager_payroll_to_report
+NEW ir.ui.menu: hr_holidays.hr_holidays_status_menu_configuration
+NEW ir.ui.menu: hr_holidays.hr_leave_menu_my
+NEW ir.ui.menu: hr_holidays.hr_leave_menu_new_request
+NEW ir.ui.menu: hr_holidays.menu_open_allocation
+DEL ir.ui.menu: hr_holidays.menu_open_allocation_holidays
+DEL ir.ui.menu: hr_holidays.menu_open_ask_holidays_new
+DEL ir.ui.menu: hr_holidays.menu_open_department_leave_allocation_approve
+NEW ir.ui.view: hr_holidays.hr_leave_allocation_view_form
+NEW ir.ui.view: hr_holidays.hr_leave_allocation_view_form_manager
+NEW ir.ui.view: hr_holidays.hr_leave_allocation_view_kanban
+NEW ir.ui.view: hr_holidays.hr_leave_allocation_view_tree
+NEW ir.ui.view: hr_holidays.hr_leave_allocation_view_tree_my
+NEW ir.ui.view: hr_holidays.hr_leave_report_kanban
+NEW ir.ui.view: hr_holidays.hr_leave_report_tree
+NEW ir.ui.view: hr_holidays.hr_leave_view_calendar
+NEW ir.ui.view: hr_holidays.hr_leave_view_form
+NEW ir.ui.view: hr_holidays.hr_leave_view_form_manager
+NEW ir.ui.view: hr_holidays.hr_leave_view_kanban
+NEW ir.ui.view: hr_holidays.hr_leave_view_tree
+NEW ir.ui.view: hr_holidays.hr_leave_view_tree_my
+NEW ir.ui.view: hr_holidays.view_hr_holidays_filter_report
+NEW ir.ui.view: hr_holidays.view_hr_leave_allocation_filter
+DEL ir.ui.view: hr_holidays.edit_holiday_new
+DEL ir.ui.view: hr_holidays.hr_holidays_leaves_assign_tree_view
+DEL ir.ui.view: hr_holidays.view_holiday
+DEL ir.ui.view: hr_holidays.view_holiday_allocation_tree
+DEL ir.ui.view: hr_holidays.view_holiday_allocation_tree_customize
+DEL ir.ui.view: hr_holidays.view_holiday_employee
+DEL ir.ui.view: hr_holidays.view_holiday_new_calendar
+DEL ir.ui.view: hr_holidays.view_holiday_simple
+DEL ir.ui.view: hr_holidays.view_holiday_status_tree
+DEL ir.ui.view: hr_holidays.view_hr_holidays_kanban
+DEL ir.ui.view: hr_holidays.view_hr_holidays_remaining_leaves_user_graph
+DEL ir.ui.view: hr_holidays.view_hr_holidays_remaining_leaves_user_tree
+DEL ir.ui.view: hr_holidays.view_hr_holidays_status_search
+NEW mail.activity.type: hr_holidays.mail_act_leave_allocation_approval (noupdate)
+NEW mail.activity.type: hr_holidays.mail_act_leave_allocation_second_approval (noupdate)
+NEW mail.activity.type: hr_holidays.mail_act_leave_approval (noupdate)
+NEW mail.activity.type: hr_holidays.mail_act_leave_second_approval (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_department_leave_allocation_approved (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_department_leave_allocation_refused (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_department_leave_approved (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_department_leave_refused (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_leave_allocation_approved (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_leave_allocation_refused (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_leave_approved (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_leave_refused (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_department_holidays_approved (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_department_holidays_confirmed (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_department_holidays_first_validated (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_department_holidays_refused (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_holidays_approved (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_holidays_confirmed (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_holidays_first_validated (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_holidays_refused (noupdate)

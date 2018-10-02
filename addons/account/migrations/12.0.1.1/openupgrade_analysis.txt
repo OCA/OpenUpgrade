@@ -1,0 +1,234 @@
+---Fields in module 'account'---
+account      / account.account.type     / internal_group (selection)    : NEW selection_keys: ['asset', 'equity', 'expense', 'income', 'liability']
+account      / account.analytic.line    / product_uom_id (many2one)     : module is now 'analytic' ('account')
+account      / account.analytic.line    / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+account      / account.bank.statement   / accounting_date (date)        : NEW 
+account      / account.bank.statement   / message_last_post (datetime)  : DEL 
+account      / account.bank.statement   / message_main_attachment_id (many2one): NEW relation: ir.attachment
+account      / account.bank.statement.line / account_number (char)         : NEW 
+account      / account.chart.template   / bank_account_code_prefix (char): now required
+account      / account.chart.template   / cash_account_code_prefix (char): now required
+account      / account.chart.template   / company_id (many2one)         : DEL relation: res.company
+account      / account.chart.template   / transfer_account_code_prefix (char): NEW required: required
+account      / account.chart.template   / transfer_account_id (many2one): DEL relation: account.account.template, required: required
+account      / account.fiscal.year      / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+account      / account.fiscal.year      / date_from (date)              : NEW required: required
+account      / account.fiscal.year      / date_to (date)                : NEW required: required
+account      / account.fiscal.year      / name (char)                   : NEW required: required
+account      / account.group            / parent_left (integer)         : DEL 
+account      / account.group            / parent_path (char)            : NEW 
+account      / account.group            / parent_right (integer)        : DEL 
+account      / account.incoterms        / active (boolean)              : NEW 
+account      / account.incoterms        / code (char)                   : NEW required: required
+account      / account.incoterms        / name (char)                   : NEW required: required
+account      / account.invoice          / activity_date_deadline (date) : now a function
+account      / account.invoice          / incoterm_id (many2one)        : previously in module l10n_be_intrastat
+account      / account.invoice          / message_last_post (datetime)  : DEL 
+account      / account.invoice          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+account      / account.invoice          / reference_type (selection)    : DEL required: required, selection_keys: function, req_default: function
+account      / account.invoice          / source_email (char)           : NEW 
+account      / account.invoice          / state (selection)             : selection_keys is now '['cancel', 'draft', 'in_payment', 'open', 'paid']' ('['cancel', 'draft', 'open', 'paid']')
+account      / account.invoice          / vendor_bill_id (many2one)     : NEW relation: account.invoice
+account      / account.invoice.line     / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section']
+account      / account.invoice.line     / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
+account      / account.invoice.tax      / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+account      / account.journal          / alias_id (many2one)           : NEW relation: mail.alias
+account      / account.journal          / bank_statements_source (selection): selection_keys is now 'function' ('['manual', 'undefined']')
+account      / account.journal          / post_at_bank_rec (boolean)    : NEW 
+account      / account.move             / auto_reverse (boolean)        : NEW 
+account      / account.move             / reverse_date (date)           : NEW 
+account      / account.move             / reverse_entry_id (many2one)   : NEW relation: account.move
+account      / account.move             / tax_type_domain (char)        : NEW 
+account      / account.move.line        / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+account      / account.move.line        / recompute_tax_line (boolean)  : NEW 
+account      / account.move.line        / tax_line_grouping_key (char)  : NEW 
+account      / account.payment          / message_last_post (datetime)  : DEL 
+account      / account.payment          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+account      / account.payment          / multi (boolean)               : NEW 
+account      / account.payment          / partner_bank_account_id (many2one): NEW relation: res.partner.bank
+account      / account.payment.term.line / day_of_the_month (integer)    : NEW 
+account      / account.payment.term.line / option (selection)            : selection_keys is now '['after_invoice_month', 'day_after_invoice_date', 'day_current_month', 'day_following_month']' ('['day_after_invoice_date', 'fix_day_following_month', 'last_day_current_month', 'last_day_following_month']')
+account      / account.reconcile.model  / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+account      / account.reconcile.model  / auto_reconcile (boolean)      : NEW 
+account      / account.reconcile.model  / force_second_tax_included (boolean): NEW 
+account      / account.reconcile.model  / force_tax_included (boolean)  : NEW 
+account      / account.reconcile.model  / match_amount (selection)      : NEW selection_keys: ['between', 'greater', 'lower']
+account      / account.reconcile.model  / match_amount_max (float)      : NEW 
+account      / account.reconcile.model  / match_amount_min (float)      : NEW 
+account      / account.reconcile.model  / match_journal_ids (many2many) : NEW relation: account.journal
+account      / account.reconcile.model  / match_label (selection)       : NEW selection_keys: ['contains', 'match_regex', 'not_contains']
+account      / account.reconcile.model  / match_label_param (char)      : NEW 
+account      / account.reconcile.model  / match_nature (selection)      : NEW required: required, selection_keys: ['amount_paid', 'amount_received', 'both'], req_default: function
+account      / account.reconcile.model  / match_partner (boolean)       : NEW 
+account      / account.reconcile.model  / match_partner_category_ids (many2many): NEW relation: res.partner.category
+account      / account.reconcile.model  / match_partner_ids (many2many) : NEW relation: res.partner
+account      / account.reconcile.model  / match_same_currency (boolean) : NEW 
+account      / account.reconcile.model  / match_total_amount (boolean)  : NEW 
+account      / account.reconcile.model  / match_total_amount_param (float): NEW 
+account      / account.reconcile.model  / rule_type (selection)         : NEW required: required, selection_keys: ['invoice_matching', 'writeoff_button', 'writeoff_suggestion'], req_default: function
+account      / account.reconcile.model  / second_analytic_tag_ids (many2many): NEW relation: account.analytic.tag
+account      / account.reconcile.model.template / auto_reconcile (boolean)      : NEW 
+account      / account.reconcile.model.template / force_second_tax_included (boolean): NEW 
+account      / account.reconcile.model.template / force_tax_included (boolean)  : NEW 
+account      / account.reconcile.model.template / match_amount (selection)      : NEW selection_keys: ['between', 'greater', 'lower']
+account      / account.reconcile.model.template / match_amount_max (float)      : NEW 
+account      / account.reconcile.model.template / match_amount_min (float)      : NEW 
+account      / account.reconcile.model.template / match_journal_ids (many2many) : NEW relation: account.journal
+account      / account.reconcile.model.template / match_label (selection)       : NEW selection_keys: ['contains', 'match_regex', 'not_contains']
+account      / account.reconcile.model.template / match_label_param (char)      : NEW 
+account      / account.reconcile.model.template / match_nature (selection)      : NEW required: required, selection_keys: ['amount_paid', 'amount_received', 'both'], req_default: function
+account      / account.reconcile.model.template / match_partner (boolean)       : NEW 
+account      / account.reconcile.model.template / match_partner_category_ids (many2many): NEW relation: res.partner.category
+account      / account.reconcile.model.template / match_partner_ids (many2many) : NEW relation: res.partner
+account      / account.reconcile.model.template / match_same_currency (boolean) : NEW 
+account      / account.reconcile.model.template / match_total_amount (boolean)  : NEW 
+account      / account.reconcile.model.template / match_total_amount_param (float): NEW 
+account      / account.reconcile.model.template / rule_type (selection)         : NEW required: required, selection_keys: ['invoice_matching', 'writeoff_button', 'writeoff_suggestion'], req_default: function
+account      / account.tax              / cash_basis_account (many2one) : was renamed to cash_basis_account_id [nothing to do]
+account      / account.tax              / cash_basis_base_account_id (many2one): previously in module account_cash_basis_base_account
+account      / account.tax              / tax_adjustment (boolean)      : DEL 
+account      / account.tax              / type_tax_use (selection)      : selection_keys is now '['adjustment', 'none', 'purchase', 'sale']' ('['none', 'purchase', 'sale']')
+account      / account.tax.template     / cash_basis_account (many2one) : was renamed to cash_basis_account_id [nothing to do]
+account      / account.tax.template     / cash_basis_base_account_id (many2one): NEW relation: account.account.template
+account      / account.tax.template     / company_id (many2one)         : DEL relation: res.company
+account      / account.tax.template     / tax_adjustment (boolean)      : DEL 
+account      / account.tax.template     / type_tax_use (selection)      : selection_keys is now '['adjustment', 'none', 'purchase', 'sale']' ('['none', 'purchase', 'sale']')
+account      / digest.digest            / kpi_account_total_revenue (boolean): NEW 
+account      / res.company              / account_bank_reconciliation_start (date): NEW 
+account      / res.company              / account_dashboard_onboarding_state (selection): NEW selection_keys: ['closed', 'done', 'just_done', 'not_done']
+account      / res.company              / account_invoice_onboarding_state (selection): NEW selection_keys: ['closed', 'done', 'just_done', 'not_done']
+account      / res.company              / account_onboarding_invoice_layout_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_onboarding_sale_tax_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_onboarding_sample_invoice_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_purchase_tax_id (many2one): NEW relation: account.tax
+account      / res.company              / account_sale_tax_id (many2one): NEW relation: account.tax
+account      / res.company              / account_setup_bank_data_done (boolean): DEL 
+account      / res.company              / account_setup_bank_data_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_setup_bar_closed (boolean): DEL 
+account      / res.company              / account_setup_coa_done (boolean): DEL 
+account      / res.company              / account_setup_coa_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_setup_company_data_done (boolean): DEL 
+account      / res.company              / account_setup_fy_data_done (boolean): DEL 
+account      / res.company              / account_setup_fy_data_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / accounts_code_digits (integer): DEL 
+account      / res.company              / incoterm_id (many2one)        : previously in module l10n_be_intrastat
+account      / res.company              / invoice_is_email (boolean)    : NEW 
+account      / res.company              / invoice_is_print (boolean)    : NEW 
+account      / res.company              / invoice_reference_type (selection): NEW selection_keys: function
+account      / res.company              / qr_code (boolean)             : NEW 
+account      / res.company              / transfer_account_code_prefix (char): NEW 
+---XML records in module 'account'---
+NEW account.incoterms: account.incoterm_CFR
+NEW account.incoterms: account.incoterm_CIF
+NEW account.incoterms: account.incoterm_CIP
+NEW account.incoterms: account.incoterm_CPT
+NEW account.incoterms: account.incoterm_DAF
+NEW account.incoterms: account.incoterm_DAP
+NEW account.incoterms: account.incoterm_DAT
+NEW account.incoterms: account.incoterm_DDP
+NEW account.incoterms: account.incoterm_DDU
+NEW account.incoterms: account.incoterm_DEQ
+NEW account.incoterms: account.incoterm_DES
+NEW account.incoterms: account.incoterm_EXW
+NEW account.incoterms: account.incoterm_FAS
+NEW account.incoterms: account.incoterm_FCA
+NEW account.incoterms: account.incoterm_FOB
+NEW account.payment.term: account.account_payment_term_2months (noupdate)
+NEW account.payment.term: account.account_payment_term_45days (noupdate)
+NEW account.reconcile.model: account.reconciliation_model_default_rule (noupdate)
+NEW digest.digest: digest.digest_digest_default (noupdate)
+NEW ir.actions.act_window: account.account_invoice_import_wizard_action
+NEW ir.actions.act_window: account.action_account_payments_transfer
+NEW ir.actions.act_window: account.action_incoterms_tree
+NEW ir.actions.act_window: account.action_open_account_onboarding_invoice_layout
+NEW ir.actions.act_window: account.action_open_account_onboarding_sale_tax
+NEW ir.actions.act_window: account.action_open_account_onboarding_sample_invoice
+NEW ir.actions.act_window: account.action_open_settings (noupdate)
+NEW ir.actions.act_window: account.action_vendor_bill_template
+NEW ir.actions.act_window: account.actions_account_fiscal_year
+NEW ir.actions.act_window: account.invoice_send
+DEL ir.actions.act_window: account.act_account_invoice_partner_relation
+DEL ir.actions.act_window: account.action_all_partner_invoices
+DEL ir.actions.act_window: account.action_invoice_tree2
+DEL ir.actions.act_window: account.action_view_account_move_line_reconcile
+DEL ir.actions.act_window: account.action_wizard_multi_chart
+DEL ir.actions.act_window: account.analytic_line_reporting_pivot
+DEL ir.actions.act_window_close: account.setup_wizard_close
+NEW ir.actions.client: account.action_view_account_move_line_reconcile
+NEW ir.actions.server: account.action_invoice_tree2
+NEW ir.actions.server: account.model_account_invoice_action_share (noupdate)
+NEW ir.cron: account.ir_cron_reverse_entry
+NEW ir.filters: account.filter_invoice_report_salespersons
+NEW ir.model.access: account.access_account_fiscal_year_manager
+NEW ir.model.access: account.access_account_fiscal_year_user
+NEW ir.model.access: account.access_account_incoterms_all
+NEW ir.model.access: account.access_account_incoterms_manager
+NEW ir.model.access: account.access_account_invoice_line_user
+NEW ir.rule: account.account_payment_term_comp_rule (noupdate)
+NEW ir.ui.menu: account.account_analytic_group_menu
+NEW ir.ui.menu: account.action_account_reconcile_model_menu
+NEW ir.ui.menu: account.menu_action_incoterm_open
+DEL ir.ui.menu: account.menu_action_analytic_lines_reporting
+DEL ir.ui.menu: account.menu_finance_payables_documents
+DEL ir.ui.menu: account.menu_finance_payables_master_data
+DEL ir.ui.menu: account.menu_finance_receivables_documents
+DEL ir.ui.menu: account.menu_finance_receivables_follow_up
+DEL ir.ui.menu: account.menu_finance_receivables_master_data
+NEW ir.ui.view: account._assets_backend_helpers
+NEW ir.ui.view: account.account_dashboard_onboarding_panel
+NEW ir.ui.view: account.account_incoterms_form
+NEW ir.ui.view: account.account_incoterms_view_search
+NEW ir.ui.view: account.account_invoice_import_wizard_form_view
+NEW ir.ui.view: account.account_invoice_onboarding_invoice_layout_form
+NEW ir.ui.view: account.account_invoice_onboarding_panel
+NEW ir.ui.view: account.account_invoice_onboarding_sale_tax_form
+NEW ir.ui.view: account.account_invoice_send_wizard_form
+NEW ir.ui.view: account.account_move_line_view_kanban
+NEW ir.ui.view: account.account_tax_view_search
+NEW ir.ui.view: account.account_tax_view_tree
+NEW ir.ui.view: account.action_account_fiscal_year_form
+NEW ir.ui.view: account.action_account_fiscal_year_search
+NEW ir.ui.view: account.action_account_fiscal_year_tree
+NEW ir.ui.view: account.assets_frontend
+NEW ir.ui.view: account.dashboard_onboarding_company_step
+NEW ir.ui.view: account.digest_digest_view_form
+NEW ir.ui.view: account.email_compose_onboarding_sample_invoice
+NEW ir.ui.view: account.invoice_tree_with_onboarding
+NEW ir.ui.view: account.onboarding_bank_account_step
+NEW ir.ui.view: account.onboarding_chart_of_account_step
+NEW ir.ui.view: account.onboarding_fiscal_year_step
+NEW ir.ui.view: account.onboarding_invoice_layout_step
+NEW ir.ui.view: account.onboarding_sale_tax_step
+NEW ir.ui.view: account.onboarding_sample_invoice_step
+NEW ir.ui.view: account.portal_invoice_chatter
+NEW ir.ui.view: account.report_payment_receipt_document
+NEW ir.ui.view: account.res_company_form_view_inherit_account_intrastat
+NEW ir.ui.view: account.setup_bank_account_wizard
+NEW ir.ui.view: account.view_account_position_filter
+NEW ir.ui.view: account.view_company_partner_bank_form
+NEW ir.ui.view: account.view_incoterms_tree
+DEL ir.ui.view: account.account_journal_dashboard_kanban_view_js
+DEL ir.ui.view: account.account_move_line_reconcile_writeoff
+DEL ir.ui.view: account.account_planner
+DEL ir.ui.view: account.portal_invoice_report
+DEL ir.ui.view: account.setup_bank_journal_form
+DEL ir.ui.view: account.setup_opening_move_lines_tree
+DEL ir.ui.view: account.setup_opening_move_wizard_form
+DEL ir.ui.view: account.setup_posted_move_form
+DEL ir.ui.view: account.setup_view_company_form
+DEL ir.ui.view: account.view_account_invoice_filter_inherit_credit_notes
+DEL ir.ui.view: account.view_account_invoice_filter_inherit_invoices
+DEL ir.ui.view: account.view_account_move_line_reconcile_full
+DEL ir.ui.view: account.view_wizard_multi_chart
+DEL mail.template: account.mail_template_data_notification_email_account_invoice (noupdate)
+NEW res.groups: account.group_fiscal_year
+NEW res.groups: account.group_products_in_bills
+NEW res.groups: account.group_show_line_subtotals_tax_excluded
+NEW res.groups: account.group_show_line_subtotals_tax_included
+NEW res.groups: base.group_portal
+NEW res.groups: base.group_public
+NEW res.groups: base.group_user (noupdate)
+DEL res.request.link: account.req_link_invoice (noupdate)
+NEW res.users: base.user_admin (noupdate)
+DEL res.users: base.user_root (noupdate)
+DEL web.planner: account.planner_account

@@ -1,0 +1,12 @@
+---Fields in module 'website_crm_partner_assign'---
+website_crm_partner_assign / res.partner.grade        / is_published (boolean)        : NEW 
+---XML records in module 'website_crm_partner_assign'---
+DEL ir.actions.act_window: website_crm_partner_assign.action_report_crm_opportunity_assign
+DEL ir.model.access: website_crm_partner_assign.access_crm_lead_report_assign
+DEL ir.model.access: website_crm_partner_assign.access_crm_lead_report_assign_all
+DEL ir.ui.menu: website_crm_partner_assign.menu_report_crm_opportunities_assign_tree
+DEL ir.ui.view: website_crm_partner_assign.footer_custom
+DEL ir.ui.view: website_crm_partner_assign.view_report_crm_lead_assign_filter
+DEL ir.ui.view: website_crm_partner_assign.view_report_crm_lead_assign_graph
+DEL ir.ui.view: website_crm_partner_assign.view_report_crm_lead_assign_pivot
+NEW website.menu: website_crm_partner_assign.menu_resellers (noupdate)

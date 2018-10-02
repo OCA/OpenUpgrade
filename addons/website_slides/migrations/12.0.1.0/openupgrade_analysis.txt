@@ -1,0 +1,24 @@
+---Fields in module 'website_slides'---
+website_slides / slide.channel            / is_published (boolean)        : NEW 
+website_slides / slide.channel            / message_last_post (datetime)  : DEL 
+website_slides / slide.channel            / message_main_attachment_id (many2one): NEW relation: ir.attachment
+website_slides / slide.channel            / website_id (many2one)         : NEW relation: website
+website_slides / slide.channel            / website_meta_og_img (char)    : NEW 
+website_slides / slide.channel            / website_published (boolean)   : now a function
+website_slides / slide.slide              / is_published (boolean)        : NEW 
+website_slides / slide.slide              / message_last_post (datetime)  : DEL 
+website_slides / slide.slide              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+website_slides / slide.slide              / website_meta_og_img (char)    : NEW 
+website_slides / website                  / website_slide_google_app_key (char): NEW 
+---XML records in module 'website_slides'---
+DEL ir.config_parameter: website_slides.google_app_key (noupdate)
+NEW ir.ui.menu: website_slides.menu_action_ir_slide_category_global
+NEW ir.ui.menu: website_slides.menu_action_slide_channels_global
+NEW ir.ui.menu: website_slides.menu_website_slides_root_global
+DEL ir.ui.menu: website_slides.menu_action_ir_slide_category
+DEL ir.ui.menu: website_slides.menu_action_slide_channels
+DEL ir.ui.menu: website_slides.submenu_action_slides_slides
+NEW ir.ui.view: website_slides.assets_editor_inherit_website_slides
+NEW ir.ui.view: website_slides.user_navbar_inherit_website_slides
+DEL ir.ui.view: website_slides.slide_footer
+NEW website: website.default_website (noupdate)

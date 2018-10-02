@@ -1,0 +1,149 @@
+---Fields in module 'sale'---
+sale         / account.invoice.line     / layout_category_id (many2one) : DEL relation: sale.layout_category
+sale         / account.invoice.line     / layout_category_sequence (integer): DEL 
+sale         / crm.team                 / dashboard_graph_model (False) : selection_keys is now '['account.invoice.report', 'crm.lead', 'sale.report']' ('['account.invoice.report', 'crm.opportunity.report', 'sale.report']')
+sale         / payment.acquirer         / so_reference_type (selection) : NEW selection_keys: ['partner', 'so_name']
+sale         / payment.transaction      / sale_order_ids (many2many)    : NEW relation: sale.order
+sale         / product.attribute        / type (selection)              : previously in module website_sale
+sale         / product.attribute.custom.value / attribute_value_id (many2one) : NEW relation: product.attribute.value
+sale         / product.attribute.custom.value / custom_value (char)           : NEW 
+sale         / product.attribute.custom.value / sale_order_line_id (many2one) : NEW relation: sale.order.line
+sale         / product.attribute.value  / html_color (char)             : previously in module website_sale
+sale         / product.attribute.value  / is_custom (boolean)           : NEW 
+sale         / product.product          / optional_product_ids (many2many): previously in module website_sale_options
+sale         / product.product          / sales_count (integer)         : type is now 'float' ('integer')
+sale         / product.template         / optional_product_ids (many2many): previously in module website_sale_options
+sale         / product.template         / sales_count (integer)         : type is now 'float' ('integer')
+sale         / res.company              / portal_confirmation_pay (boolean): NEW 
+sale         / res.company              / portal_confirmation_sign (boolean): NEW 
+sale         / res.company              / quotation_validity_days (integer): NEW 
+sale         / res.company              / sale_onboarding_order_confirmation_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+sale         / res.company              / sale_onboarding_payment_method (selection): NEW selection_keys: ['digital_signature', 'manual', 'other', 'paypal', 'stripe']
+sale         / res.company              / sale_onboarding_sample_quotation_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+sale         / res.company              / sale_quotation_onboarding_state (selection): NEW selection_keys: ['closed', 'done', 'just_done', 'not_done']
+sale         / sale.order               / activity_date_deadline (date) : now a function
+sale         / sale.order               / amount_undiscounted (float)   : previously in module website_quote
+sale         / sale.order               / commitment_date (datetime)    : previously in module sale_order_dates
+sale         / sale.order               / message_last_post (datetime)  : DEL 
+sale         / sale.order               / message_main_attachment_id (many2one): NEW relation: ir.attachment
+sale         / sale.order               / reference (char)              : NEW 
+sale         / sale.order               / require_signature (boolean)   : NEW 
+sale         / sale.order               / signature (binary)            : NEW attachment: True
+sale         / sale.order               / signed_by (char)              : NEW 
+sale         / sale.order               / transaction_ids (many2many)   : NEW relation: payment.transaction
+sale         / sale.order.line          / analytic_line_ids (one2many)  : NEW relation: account.analytic.line
+sale         / sale.order.line          / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section']
+sale         / sale.order.line          / is_expense (boolean)          : NEW 
+sale         / sale.order.line          / layout_category_id (many2one) : DEL relation: sale.layout_category
+sale         / sale.order.line          / layout_category_sequence (integer): DEL 
+sale         / sale.order.line          / product_custom_attribute_value_ids (one2many): NEW relation: product.attribute.custom.value
+sale         / sale.order.line          / product_no_variant_attribute_values (many2many): NEW relation: product.template.attribute.value
+sale         / sale.order.line          / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+sale         / sale.order.line          / qty_delivered (float)         : now a function
+sale         / sale.order.line          / qty_delivered_manual (float)  : NEW 
+---XML records in module 'sale'---
+NEW ir.actions.act_window: sale.action_open_sale_onboarding_payment_acquirer_wizard
+NEW ir.actions.act_window: sale.action_open_sale_onboarding_quotation_layout
+NEW ir.actions.act_window: sale.action_open_sale_onboarding_sample_quotation
+NEW ir.actions.act_window: sale.action_quotations_with_onboarding
+NEW ir.actions.act_window: sale.mail_activity_type_action_config_sale
+NEW ir.actions.act_window: sale.product_template_action
+DEL ir.actions.act_window: sale.action_product_sale_list
+DEL ir.actions.act_window: sale.report_configuration_action
+NEW ir.actions.act_window.view: sale.sale_order_action_view_order_calendar
+NEW ir.actions.act_window.view: sale.sale_order_action_view_order_form
+NEW ir.actions.act_window.view: sale.sale_order_action_view_order_graph
+NEW ir.actions.act_window.view: sale.sale_order_action_view_order_kanban
+NEW ir.actions.act_window.view: sale.sale_order_action_view_order_pivot
+NEW ir.actions.act_window.view: sale.sale_order_action_view_order_tree
+NEW ir.actions.act_window.view: sale.sale_order_action_view_quotation_calendar
+NEW ir.actions.act_window.view: sale.sale_order_action_view_quotation_form
+NEW ir.actions.act_window.view: sale.sale_order_action_view_quotation_graph
+NEW ir.actions.act_window.view: sale.sale_order_action_view_quotation_kanban
+NEW ir.actions.act_window.view: sale.sale_order_action_view_quotation_pivot
+NEW ir.actions.act_window.view: sale.sale_order_action_view_quotation_tree
+NEW ir.actions.report: sale.report_web_quote
+NEW ir.actions.server: sale.model_sale_order_action_share (noupdate)
+DEL ir.filters: sale.filter_isale_report_product
+DEL ir.filters: sale.filter_sale_report_sales_funnel
+DEL ir.filters: sale.filter_sale_report_salespersons
+DEL ir.filters: sale.filter_sale_report_salesteam
+NEW ir.model.access: sale.access_mail_activity_type_sale_manager
+NEW ir.model.access: sale.access_product_product_attribute_custom_value
+NEW ir.model.access: sale.access_product_product_attribute_sale_manager
+NEW ir.model.access: sale.access_product_template_attribute_exclusion_sale_manager
+NEW ir.model.access: sale.access_product_template_attribute_line_sale_manager
+NEW ir.model.access: sale.access_report_all_channels_sales
+NEW ir.model.access: sale.access_uom_category_sale_manager
+NEW ir.model.access: sale.access_uom_uom_sale_manager
+NEW ir.model.access: sale.access_uom_uom_user
+DEL ir.model.access: sale.access_product_attribute_line_sale_manager
+DEL ir.model.access: sale.access_product_attribute_price_sale_manager
+DEL ir.model.access: sale.access_product_uom_categ_sale_manager
+DEL ir.model.access: sale.access_product_uom_sale_manager
+DEL ir.model.access: sale.access_product_uom_user
+DEL ir.model.access: sale.access_report_all_channels_sales_manager
+DEL ir.model.access: sale.access_report_all_channels_sales_salesman
+DEL ir.model.access: sale.report_layout_category_1
+DEL ir.model.access: sale.report_layout_category_2
+DEL ir.model.access: sale.report_layout_category_3
+DEL ir.model.access: sale.report_layout_category_4
+DEL ir.model.access: sale.report_layout_category_5
+NEW ir.ui.menu: sale.menu_product_category_config_sale
+NEW ir.ui.menu: sale.sale_menu_config_activity_type
+DEL ir.ui.menu: sale.Report_configuration
+DEL ir.ui.menu: sale.report_all_channels_sales
+NEW ir.ui.view: sale.acquirer_form_inherit_sale
+NEW ir.ui.view: sale.assets_backend_inherit_sale
+NEW ir.ui.view: sale.assets_frontend_inherit_sale
+NEW ir.ui.view: sale.attribute_tree_view
+NEW ir.ui.view: sale.onboarding_quotation_layout_step
+NEW ir.ui.view: sale.optional_product_items
+NEW ir.ui.view: sale.optional_products_modal
+NEW ir.ui.view: sale.product_attribute_view_form
+NEW ir.ui.view: sale.product_configurator_configure
+NEW ir.ui.view: sale.product_configurator_configure_optional_products
+NEW ir.ui.view: sale.product_template_attribute_line_form
+NEW ir.ui.view: sale.product_template_attribute_value_view_form_inherit
+NEW ir.ui.view: sale.product_template_attribute_value_view_tree_inherit
+NEW ir.ui.view: sale.product_template_form_view
+NEW ir.ui.view: sale.qunit_suite
+NEW ir.ui.view: sale.report_quotation
+NEW ir.ui.view: sale.sale_onboarding_order_confirmation_form
+NEW ir.ui.view: sale.sale_onboarding_order_confirmation_step
+NEW ir.ui.view: sale.sale_onboarding_quotation_layout_form
+NEW ir.ui.view: sale.sale_onboarding_sample_quotation_form
+NEW ir.ui.view: sale.sale_onboarding_sample_quotation_step
+NEW ir.ui.view: sale.sale_order_line_view_form_readonly
+NEW ir.ui.view: sale.sale_order_portal_content
+NEW ir.ui.view: sale.sale_order_portal_template
+NEW ir.ui.view: sale.sale_product_configurator_view_form
+NEW ir.ui.view: sale.sale_quotation_onboarding_panel
+NEW ir.ui.view: sale.transaction_form_inherit_sale
+NEW ir.ui.view: sale.variants
+NEW ir.ui.view: sale.variants_tree_view
+NEW ir.ui.view: sale.view_quotation_tree_with_onboarding
+DEL ir.ui.view: sale.assets_backend
+DEL ir.ui.view: sale.assets_frontend
+DEL ir.ui.view: sale.invoice_form_inherit_sale
+DEL ir.ui.view: sale.portal_order_error
+DEL ir.ui.view: sale.portal_order_page
+DEL ir.ui.view: sale.portal_order_success
+DEL ir.ui.view: sale.report_configuration_form_view
+DEL ir.ui.view: sale.report_configuration_search_view
+DEL ir.ui.view: sale.report_configuration_tree_view
+DEL ir.ui.view: sale.report_invoice_layouted
+NEW mail.activity.type: sale.mail_act_sale_upsell (noupdate)
+DEL mail.template: sale.mail_template_data_notification_email_sale_order (noupdate)
+NEW res.groups: sale.group_sale_order_dates
+DEL res.groups: base.group_portal
+DEL res.groups: base.group_public
+DEL res.groups: base.group_user (noupdate)
+DEL res.groups: sale.group_analytic_accounting
+DEL res.groups: sale.group_sale_layout
+DEL res.groups: sale.group_show_price_subtotal
+DEL res.groups: sale.group_show_price_total
+DEL res.request.link: sale.req_link_sale_order (noupdate)
+NEW res.users: base.user_admin (noupdate)
+DEL sale.layout_category: sale.sale_layout_cat_1 (noupdate)
+DEL sale.layout_category: sale.sale_layout_cat_2 (noupdate)

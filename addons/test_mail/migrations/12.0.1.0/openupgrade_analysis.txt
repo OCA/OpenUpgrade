@@ -1,0 +1,104 @@
+---Fields in module 'test_mail'---
+test_mail    / mail.test                / __last_update (datetime)      : previously in module mail
+test_mail    / mail.test                / _inherits (False)             : previously in module mail
+test_mail    / mail.test                / alias_contact (selection)     : previously in module mail
+test_mail    / mail.test                / alias_defaults (text)         : previously in module mail
+test_mail    / mail.test                / alias_domain (char)           : previously in module mail
+test_mail    / mail.test                / alias_force_thread_id (integer): previously in module mail
+test_mail    / mail.test                / alias_id (many2one)           : previously in module mail
+test_mail    / mail.test                / alias_model_id (many2one)     : previously in module mail
+test_mail    / mail.test                / alias_name (char)             : previously in module mail
+test_mail    / mail.test                / alias_parent_model_id (many2one): previously in module mail
+test_mail    / mail.test                / alias_parent_thread_id (integer): previously in module mail
+test_mail    / mail.test                / alias_user_id (many2one)      : previously in module mail
+test_mail    / mail.test                / customer_id (many2one)        : NEW relation: res.partner
+test_mail    / mail.test                / description (text)            : previously in module mail
+test_mail    / mail.test                / display_name (char)           : previously in module mail
+test_mail    / mail.test                / message_channel_ids (many2many): previously in module mail
+test_mail    / mail.test                / message_follower_ids (one2many): previously in module mail
+test_mail    / mail.test                / message_ids (one2many)        : previously in module mail
+test_mail    / mail.test                / message_is_follower (boolean) : previously in module mail
+test_mail    / mail.test                / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test                / message_needaction (boolean)  : previously in module mail
+test_mail    / mail.test                / message_needaction_counter (integer): previously in module mail
+test_mail    / mail.test                / message_partner_ids (many2many): previously in module mail
+test_mail    / mail.test                / message_unread (boolean)      : previously in module mail
+test_mail    / mail.test                / message_unread_counter (integer): previously in module mail
+test_mail    / mail.test                / name (char)                   : previously in module mail
+test_mail    / mail.test                / website_message_ids (one2many): previously in module portal
+test_mail    / mail.test.activity       / active (boolean)              : NEW 
+test_mail    / mail.test.activity       / activity_ids (one2many)       : NEW relation: mail.activity
+test_mail    / mail.test.activity       / email_from (char)             : NEW 
+test_mail    / mail.test.activity       / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.test.activity       / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.test.activity       / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.activity       / name (char)                   : NEW 
+test_mail    / mail.test.activity       / website_message_ids (one2many): NEW relation: mail.message
+test_mail    / mail.test.full           / count (integer)               : NEW 
+test_mail    / mail.test.full           / customer_id (many2one)        : NEW relation: res.partner
+test_mail    / mail.test.full           / datetime (datetime)           : NEW 
+test_mail    / mail.test.full           / email_from (char)             : NEW 
+test_mail    / mail.test.full           / mail_template (many2one)      : NEW relation: mail.template
+test_mail    / mail.test.full           / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.test.full           / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.test.full           / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.full           / name (char)                   : NEW 
+test_mail    / mail.test.full           / umbrella_id (many2one)        : NEW relation: mail.test
+test_mail    / mail.test.full           / user_id (many2one)            : NEW relation: res.users
+test_mail    / mail.test.full           / website_message_ids (one2many): NEW relation: mail.message
+test_mail    / mail.test.simple         / __last_update (datetime)      : previously in module mail
+test_mail    / mail.test.simple         / display_name (char)           : previously in module mail
+test_mail    / mail.test.simple         / email_from (char)             : previously in module mail
+test_mail    / mail.test.simple         / message_channel_ids (many2many): previously in module mail
+test_mail    / mail.test.simple         / message_follower_ids (one2many): previously in module mail
+test_mail    / mail.test.simple         / message_ids (one2many)        : previously in module mail
+test_mail    / mail.test.simple         / message_is_follower (boolean) : previously in module mail
+test_mail    / mail.test.simple         / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.simple         / message_needaction (boolean)  : previously in module mail
+test_mail    / mail.test.simple         / message_needaction_counter (integer): previously in module mail
+test_mail    / mail.test.simple         / message_partner_ids (many2many): previously in module mail
+test_mail    / mail.test.simple         / message_unread (boolean)      : previously in module mail
+test_mail    / mail.test.simple         / message_unread_counter (integer): previously in module mail
+test_mail    / mail.test.simple         / name (char)                   : previously in module mail
+test_mail    / mail.test.simple         / website_message_ids (one2many): previously in module portal
+test_mail    / mail.test.track          / email_from (char)             : NEW 
+test_mail    / mail.test.track          / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.test.track          / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.test.track          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.track          / name (char)                   : NEW 
+test_mail    / mail.test.track          / umbrella_id (many2one)        : NEW relation: mail.test
+test_mail    / mail.test.track          / user_id (many2one)            : NEW relation: res.users
+test_mail    / mail.test.track          / website_message_ids (one2many): NEW relation: mail.message
+test_mail    / test_performance.mail    / __last_update (datetime)      : previously in module test_performance
+test_mail    / test_performance.mail    / display_name (char)           : previously in module test_performance
+test_mail    / test_performance.mail    / message_channel_ids (many2many): previously in module test_performance
+test_mail    / test_performance.mail    / message_follower_ids (one2many): previously in module test_performance
+test_mail    / test_performance.mail    / message_ids (one2many)        : previously in module test_performance
+test_mail    / test_performance.mail    / message_is_follower (boolean) : previously in module test_performance
+test_mail    / test_performance.mail    / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / test_performance.mail    / message_needaction (boolean)  : previously in module test_performance
+test_mail    / test_performance.mail    / message_needaction_counter (integer): previously in module test_performance
+test_mail    / test_performance.mail    / message_partner_ids (many2many): previously in module test_performance
+test_mail    / test_performance.mail    / message_unread (boolean)      : previously in module test_performance
+test_mail    / test_performance.mail    / message_unread_counter (integer): previously in module test_performance
+test_mail    / test_performance.mail    / name (char)                   : previously in module test_performance
+test_mail    / test_performance.mail    / partner_id (many2one)         : previously in module test_performance
+test_mail    / test_performance.mail    / track (char)                  : previously in module test_performance
+test_mail    / test_performance.mail    / value (integer)               : previously in module test_performance
+test_mail    / test_performance.mail    / value_pc (float)              : previously in module test_performance
+test_mail    / test_performance.mail    / website_message_ids (one2many): previously in module test_performance
+---XML records in module 'test_mail'---
+NEW ir.model.access: test_mail.access_mail_test_activity_portal
+NEW ir.model.access: test_mail.access_mail_test_activity_user
+NEW ir.model.access: test_mail.access_mail_test_full_portal
+NEW ir.model.access: test_mail.access_mail_test_full_user
+NEW ir.model.access: test_mail.access_mail_test_portal
+NEW ir.model.access: test_mail.access_mail_test_simple_portal
+NEW ir.model.access: test_mail.access_mail_test_simple_user
+NEW ir.model.access: test_mail.access_mail_test_track_portal
+NEW ir.model.access: test_mail.access_mail_test_track_user
+NEW ir.model.access: test_mail.access_mail_test_user
+NEW ir.model.access: test_mail.access_test_performance_mail
+NEW mail.activity.type: test_mail.mail_act_test_call
+NEW mail.activity.type: test_mail.mail_act_test_meeting
+NEW mail.activity.type: test_mail.mail_act_test_todo

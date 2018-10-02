@@ -1,0 +1,9 @@
+---Fields in module 'l10n_be_invoice_bba'---
+l10n_be_invoice_bba / res.company              / l10n_be_structured_comm (selection): NEW selection_keys: ['date', 'partner_ref', 'random']
+l10n_be_invoice_bba / res.partner              / out_inv_comm_algorithm (selection): DEL selection_keys: ['date', 'partner_ref', 'random']
+l10n_be_invoice_bba / res.partner              / out_inv_comm_type (selection) : DEL selection_keys: function
+---XML records in module 'l10n_be_invoice_bba'---
+NEW ir.ui.view: l10n_be_invoice_bba.res_config_settings_view_form
+DEL ir.ui.view: l10n_be_invoice_bba.customer_invoice_bbacomm_form
+DEL ir.ui.view: l10n_be_invoice_bba.report_invoice_document_inherit
+DEL ir.ui.view: l10n_be_invoice_bba.view_partner_inv_comm_type_form
