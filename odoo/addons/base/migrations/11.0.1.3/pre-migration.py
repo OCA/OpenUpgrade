@@ -24,6 +24,15 @@ model_renames_ir_actions_report = [
     ('ir.actions.report.xml', 'ir.actions.report')
 ]
 
+# OCA/partner-contact
+# migration of partner_sector to partner_industry_secondary
+# Done here for avoiding the IntegrityError of duplicating a model:
+# The installing of base module already creates the res.partner.industry,
+# so if the rename is done later in the module, it gives that error.
+model_renames_partner_sector = [
+    ('res.partner.sector', 'res.partner.industry'),
+]
+
 
 def fill_cron_action_server_pre(env):
     """Prefill the column with a fixed value for avoiding the not null error,
@@ -55,6 +64,7 @@ def migrate(env, version):
     openupgrade.copy_columns(env.cr, column_copies)
     openupgrade.rename_columns(env.cr, column_renames)
     openupgrade.rename_models(env.cr, model_renames_ir_actions_report)
+    openupgrade.rename_models(env.cr, model_renames_partner_sector)
     env.cr.execute(
         """UPDATE ir_actions SET type = 'ir.actions.report'
         WHERE type = 'ir.actions.report.xml'""")
