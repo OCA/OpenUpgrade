@@ -493,9 +493,9 @@ missing in the new release are marked with |del|.
 +-----------------------------------+-------------------------------------------------+
 |stock_landed_costs                 |                                                 |
 +-----------------------------------+-------------------------------------------------+
-| |new| stock_picking_batch         | Blocked - Renamed from stock_picking_wave       |
+| |new| stock_picking_batch         | Done - Renamed from stock_picking_wave          |
 +-----------------------------------+-------------------------------------------------+
-| |del| stock_picking_wave          | Blocked - Renamed to stock_picking_batch        |
+| |del| stock_picking_wave          | Done - Renamed to stock_picking_batch           |
 +-----------------------------------+-------------------------------------------------+
 | |del| subscription                |                                                 |
 +-----------------------------------+-------------------------------------------------+
