@@ -35,13 +35,18 @@ def set_calendar_event_res_model(env):
     for avoiding an error when writing back the value on virtual records
     created by recurring events. No need of writing any possible value, as
     this is a new feature not available in v10.
+
+    If the OCA module `mail_activity_calendar` was installed in
+    previous version this field would already exist, thus no need to
+    pre-create it.
     """
-    openupgrade.add_fields(
-        env, [
-            ('res_model', 'calendar.event', 'calendar_event', 'char', False,
-             'calendar'),
-        ],
-    )
+    if not openupgrade.column_exists(env.cr, 'calendar_event', 'res_model'):
+        openupgrade.add_fields(
+            env, [
+                ('res_model', 'calendar.event', 'calendar_event', 'char',
+                 False, 'calendar'),
+            ],
+        )
 
 
 @openupgrade.migrate()
