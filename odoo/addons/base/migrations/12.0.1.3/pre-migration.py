@@ -43,7 +43,7 @@ def eliminate_duplicate_translations(cr):
             AND it1.id < it2.id); """)
 
 
-@openupgrade.migrate()
+@openupgrade.migrate(use_env=True)
 def migrate(env, version):
     openupgrade.update_module_names(
         env.cr, apriori.renamed_modules.items())
@@ -65,3 +65,7 @@ def migrate(env, version):
         (SELECT module, 'partner_admin', model, res_id, noupdate
          FROM ir_model_data WHERE module = 'base' AND name = 'partner_root')
         """)
+
+    # for migration of web module
+    openupgrade.rename_columns(
+        env.cr, {'res_company': [('external_report_layout', None)]})

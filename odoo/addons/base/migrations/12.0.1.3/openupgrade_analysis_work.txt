@@ -23,7 +23,7 @@ base         / res.company              / base_onboarding_company_state (selecti
 # Done: set to done for all companies
 base         / res.company              / external_report_layout (selection): DEL selection_keys: ['background', 'boxed', 'clean', 'standard']
 base         / res.company              / external_report_layout_id (many2one): NEW relation: ir.ui.view
-# TODO in the web module, as this is where the views are defined which can be mapped to the selection value of the old field
+# Done in the web module: map external_report_layout of res_company with the related views
 base         / res.groups               / is_portal (boolean)           : DEL
 # Nothing to do: obsolete functionality
 base         / res.lang                 / week_start (selection)        : NEW required: required, selection_keys: [1, 2, 3, 4, 5, 6, 7], req_default: function
