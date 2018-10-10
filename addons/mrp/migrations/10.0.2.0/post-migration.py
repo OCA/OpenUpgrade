@@ -291,7 +291,8 @@ def fill_stock_move_unit_factor(env):
         productions = env['mrp.production'].browse(ids)
     productions._get_produced_qty()
 
-    for production in productions:
+    for production in productions.filtered(
+            lambda r: r.state not in ['done', 'cancel']):
         diff = production.product_qty - production.qty_produced
         cr.execute(
             """
