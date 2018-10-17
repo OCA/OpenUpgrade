@@ -40,6 +40,7 @@ def set_dummy_product(env):
         'name': 'Any product',
         'type': 'service',
         'order_policy': 'manual',
+        'uom_id': env.ref('product.product_uom_unit').id,
     })
     env.cr.execute(
         """UPDATE sale_order_line
