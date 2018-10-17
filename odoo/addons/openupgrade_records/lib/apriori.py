@@ -58,6 +58,8 @@ merged_modules = {
     'portal_payment_mode': 'account_payment_mode',
     # OCA/crm
     'crm_lead_website': 'crm',
+    # OCA/hr-timesheet
+    'hr_timesheet_sheet_week_start_day': 'hr_timesheet_sheet',
     # OCA/product-variant
     'product_variant_supplierinfo': 'product',
     # OCA/project
