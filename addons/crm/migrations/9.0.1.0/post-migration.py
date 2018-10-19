@@ -7,6 +7,16 @@ from openupgradelib import openupgrade
 
 
 def migrate_phonecalls(env):
+    """Convert each phonecall to a logged activity. If you have crm_phonecall
+    OCA module in your environment, this is not done, and the module is marked
+    instead to be installed, as the module replaces exactly this feature and
+    you save this time.
+    """
+    module = env['ir.module.module'].search([('name', '=', 'crm_phonecall')])
+    if module:
+        if module.state == 'uninstalled':
+            module.state = 'to install'
+        return
     activity = env.ref('crm.crm_activity_data_call')
     env.cr.execute(
         'select id, opportunity_id, partner_id, '
