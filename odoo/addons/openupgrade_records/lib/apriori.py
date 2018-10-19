@@ -67,6 +67,7 @@ merged_modules = {
     'project_issue_timesheet_time_control': 'project_timesheet_time_control',
     # OCA/sale-reporting
     'product_brand_sale_report': 'product_brand',
+    'sale_proforma_report': 'sale',
     # OCA/stock-logistics-workflow
     'stock_picking_transfer_lot_autoassign': 'stock_pack_operation_auto_fill',
     # OCA/web
