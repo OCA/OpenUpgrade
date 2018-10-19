@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="email_template_survey" model="mail.template">
+    <field name="name">Survey: Send by email</field>
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px; font-size: 13px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello<br/><br/>
+        We are conducting a survey, and your response would be appreciated.
+        <div style="margin: 16px 0px 16px 0px;"><a href="__URL__" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                Start Survey
+            </a></div>
+        Thanks for your participation!
+    </p>
+      </div>
+    </field>
+    <field name="subject">${object.title}: Survey</field>
+    <field name="user_signature" eval="False"/>
+  </record>
+  <record id="group_survey_manager" model="res.groups">
+    <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+  </record>
+</odoo>
