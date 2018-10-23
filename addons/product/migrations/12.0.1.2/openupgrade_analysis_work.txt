@@ -1,63 +1,68 @@
 ---Fields in module 'product'---
 product      / product.attribute        / attribute_line_ids (one2many) : relation is now 'product.template.attribute.line' ('product.attribute.line')
-# Done: Taken care by model rename from product.attribute.line to product.template.attribute.line
+# NOTHING TO DO (one2many)
+
 product      / product.attribute        / create_variant (boolean)      : now required, default = function
 product      / product.attribute        / create_variant (boolean)      : selection_keys is now '['always', 'dynamic', 'no_variant']' ('False')
 product      / product.attribute        / create_variant (boolean)      : type is now 'selection' ('boolean')
-# Nothing to do: this feature was non-existent in the previous version and we should keep the default for consistency.
+# DONE: post-migration: mapped values
+
 product      / product.attribute.value  / price_ids (one2many)          : DEL relation: product.attribute.price
 product      / product.attribute.value  / product_ids (many2many)       : DEL relation: product.product
-# Done: renamed model from product.attribute.price to product.template.attribute.value and one column rename
-product      / product.category         / parent_left (integer)         : DEL 
+# NOTHING TO DO (lost in the refactor)
+
+product      / product.category         / parent_left (integer)         : DEL
 product      / product.category         / parent_path (char)            : NEW 
 product      / product.category         / parent_right (integer)        : DEL 
-# Done: taken care by env['product.category']._parent_store_compute()
+# DONE: Post-migration: called _parent_store_compute()
+
 product      / product.product          / activity_date_deadline (date) : now a function
-# Nothing to do: unstored computed method, will triger computation on view
+# NOTHING TO DO: unstored computed method
+
 product      / product.product          / attribute_line_ids (one2many) : relation is now 'product.template.attribute.line' ('product.attribute.line')
-# Done: taken care by model and table rename
-product      / product.product          / message_last_post (datetime)  : DEL 
-# Nothing to do
+# NOTHING TO DO (one2many)
+
+product      / product.product          / message_last_post (datetime)  : DEL
 product      / product.product          / message_main_attachment_id (many2one): NEW relation: ir.attachment
-# Nothing to do
+# NOTHING TO DO
+
 product      / product.product          / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
-# Done: Solved by model and table renaming in the uom module
 product      / product.product          / uom_po_id (many2one)          : relation is now 'uom.uom' ('product.uom')
-# Done: Solved by model and table renaming in the uom module
 product      / product.supplierinfo     / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
-# Done: Solved by model and table renaming in the uom module
+# NOTHING TO DO (done in uom module)
+
 product      / product.template         / activity_date_deadline (date) : now a function
-# Nothing to do: unstored computed method, will triger computation on view
+# NOTHING TO DO: unstored computed method
+
 product      / product.template         / attribute_line_ids (one2many) : relation is now 'product.template.attribute.line' ('product.attribute.line')
-# Done: taken care by model and table rename
-product      / product.template         / message_last_post (datetime)  : DEL 
-# Nothing to do
+# NOTHING TO DO (one2many)
+
+product      / product.template         / message_last_post (datetime)  : DEL
 product      / product.template         / message_main_attachment_id (many2one): NEW relation: ir.attachment
-# Nothing to do
+# NOTHING TO DO
+
 product      / product.template         / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
-# Done: Solved by model and table renaming in the uom module
 product      / product.template         / uom_po_id (many2one)          : relation is now 'uom.uom' ('product.uom')
-# Done: Solved by model and table renaming in the uom module
+# NOTHING TO DO (done in uom module)
+
 product      / product.template.attribute.exclusion / product_template_attribute_value_id (many2one): NEW relation: product.template.attribute.value
-# Nothing to do
 product      / product.template.attribute.exclusion / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
-# Nothing to do
 product      / product.template.attribute.exclusion / value_ids (many2many)         : NEW relation: product.template.attribute.value
-# Nothing to do
+# NOTHING TO DO (new model)
+
 product      / product.template.attribute.line / attribute_id (many2one)       : NEW relation: product.attribute, required: required
-# Done: taken care by model and table rename
 product      / product.template.attribute.line / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
-# Done: taken care by model and table rename
 product      / product.template.attribute.line / value_ids (many2many)         : NEW relation: product.attribute.value
-# Done: taken care by model and table rename
+# DONE: pre-migration: renamed from 'product.attribute.line' to 'product.template.attribute.line'
+
 product      / product.template.attribute.value / exclude_for (one2many)        : NEW relation: product.template.attribute.exclusion
-# Done: taken care by model and table rename
-product      / product.template.attribute.value / price_extra (float)           : NEW 
-# Done: taken care by model and table rename
+# NOTHING TO DO (as product.template.attribute.exclusion is new model)
+
+product      / product.template.attribute.value / price_extra (float)           : NEW
 product      / product.template.attribute.value / product_attribute_value_id (many2one): NEW relation: product.attribute.value, required: required
-# Done: taken care by model and table rename
 product      / product.template.attribute.value / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
-# Done: taken care by model and table rename
+# DONE: pre-migration: renamed from 'product.attribute.price' to 'product.template.attribute.value'
+
 ---XML records in module 'product'---
 DEL ir.actions.act_window: product.product_uom_categ_form_action
 DEL ir.actions.act_window: product.product_uom_form_action
@@ -126,4 +131,4 @@ DEL product.uom.categ: product.uom_categ_length (noupdate)
 DEL product.uom.categ: product.uom_categ_wtime (noupdate)
 DEL res.groups: product.group_uom
 DEL res.request.link: product.req_link_product (noupdate)
-# Nothing to do: either new views/groups or transfered to uom module
+# NOTHING TO DO

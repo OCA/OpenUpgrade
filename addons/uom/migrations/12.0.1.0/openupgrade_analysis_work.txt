@@ -7,7 +7,6 @@ uom          / uom.uom                  / factor (float)                : NEW re
 uom          / uom.uom                  / name (char)                   : NEW required: required
 uom          / uom.uom                  / rounding (float)              : NEW required: required, req_default: function
 uom          / uom.uom                  / uom_type (selection)          : NEW required: required, selection_keys: 
-
 # Done renaming models and tables from product.uom to uom.uom*
 
 ['bigger', 'reference', 'smaller'], req_default: function
@@ -46,5 +45,4 @@ NEW uom.uom: uom.product_uom_oz (noupdate)
 NEW uom.uom: uom.product_uom_qt (noupdate)
 NEW uom.uom: uom.product_uom_ton (noupdate)
 NEW uom.uom: uom.product_uom_unit (noupdate)
-
 # Done renaming xml_ids from product.uom* to uom.uom*
