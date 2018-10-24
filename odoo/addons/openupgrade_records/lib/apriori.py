@@ -29,5 +29,36 @@ renamed_modules = {
         'product_supplierinfo_for_customer_picking',
 }
 
+merged_modules = [
+    ('account_full_reconcile', 'account'),
+    ('mail_tip', 'mail'),
+    ('mrp_operations', 'mrp'),
+    ('project_timesheet', 'hr_timesheet'),
+    ('sale_service', 'sale_timesheet'),
+    ('share', 'base'),
+    ('web_tip', 'web'),
+    ('web_view_editor', 'web'),
+    ('mail_tip', 'mail'),
+    ('im_odoo_support', 'im_livechat'),
+    ('marketing', 'marketing_campaign'),
+    ('website_sale_stock_control', 'website_sale_stock'),
+    # OCA/account-invoicing
+    ('purchase_stock_picking_return_invoicing_open_qty',
+     'purchase_stock_picking_return_invoicing'),
+    ('sale_stock_picking_return_invoicing', 'sale_stock'),
+    # OCA/account-financial-reporting
+    ('account_journal_report', 'account_financial_report_qweb'),
+    # OCA/e-commerce
+    ('website_sale_b2c', 'sale'),  # used groups are in sale
+    # OCA/sale-workflow
+    ('sale_order_back2draft', 'sale'),
+    # OCA/social
+    ('mass_mailing_security_group', 'mass_mailing'),
+    # OCA/stock-logistics-workflow
+    ('stock_scrap', 'stock'),
+    # OCA/web
+    ('web_easy_switch_company', 'web'),
+]
+
 renamed_models = {
 }
