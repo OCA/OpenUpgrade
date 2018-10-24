@@ -1,26 +1,51 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-    <record id="gw" model="res.country">
-        <field name="currency_id" ref="XOF"/>
-    </record>
-    <record id="tp" model="res.country">
-        <field name="currency_id" ref="USD"/>
-    </record>
-    <record id="tj" model="res.country">
-        <field name="currency_id" ref="TJS"/>
-    </record>
-    <record id="HUF" model="res.currency">
-        <field name="rounding">1.00</field>
-    </record>
-    <!--<record id="user_root" model="res.users">-->
-        <!--<field name="signature"><![CDATA[<span>&#45;&#45; <br/>-->
+  <record id="gw" model="res.country">
+    <field name="currency_id" ref="XOF"/>
+  </record>
+  <record id="tp" model="res.country">
+    <field name="currency_id" ref="USD"/>
+  </record>
+  <record id="tj" model="res.country">
+    <field name="currency_id" ref="TJS"/>
+  </record>
+  <record id="MAD" model="res.currency">
+    <field name="symbol">DH</field>
+  </record>
+  <record id="HUF" model="res.currency">
+    <field name="rounding">1.00</field>
+  </record>
+  <record id="sd" model="res.country">
+    <field name="currency_id" ref="SDG"/>
+  </record>
+  <!--<record id="user_root" model="res.users">-->
+    <!--<field name="signature"><![CDATA[<span>&#45;&#45; <br/>-->
 <!--Administrator</span>]]></field>-->
-    <!--</record>-->
-    <record id="PEN" model="res.currency">
-        <field name="symbol">S/</field>
-        <field name="position">before</field>
-    </record>
-    <record id="TRY" model="res.currency">
-        <field name="symbol">₺</field>
-    </record>
+  <!--</record>-->
+  <record id="JPY" model="res.currency">
+    <field name="rounding">1.00</field>
+  </record>
+  <record id="dk" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s\n%(country_name)s'" name="address_format"/>
+  </record>
+  <record id="pa" model="res.country">
+    <field name="address_format" eval="'%(street)s\n%(street2)s\n%(city)s %(state_name)s %(zip)s\n%(country_name)s'"/>
+  </record>
+  <record id="vn" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s\n%(state_name)s %(country_name)s'" name="address_format"/>
+  </record>
+  <record id="PEN" model="res.currency">
+    <field name="symbol">S/</field>
+    <field name="position">before</field>
+  </record>
+  <record id="TRY" model="res.currency">
+    <field name="symbol">₺</field>
+  </record>
+  <record id="by" model="res.country">
+    <field eval="375" name="phone_code"/>
+    <field name="currency_id" ref="BYN"/>
+  </record>
+  <record id="IDR" model="res.currency">
+    <field name="position">before</field>
+  </record>
 </odoo>
