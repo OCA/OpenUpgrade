@@ -39,7 +39,7 @@ def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, xmlid_renames)
     # Remove noupdate records
     xml_ids = [
-        'mail.mail_group_public_and_joined',
+        'mail_group_public_and_joined',
         'mail_followers_read_write_others',
         'mail_notification_read_write_own',
         'ir_cron_mail_garbage_collect_attachments',
