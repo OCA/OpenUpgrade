@@ -65,6 +65,7 @@ merged_modules = {
     'hr_timesheet_sheet_week_start_day': 'hr_timesheet_sheet',
     # OCA/product-variant
     'product_variant_supplierinfo': 'product',
+    'sale_stock_variant_configurator': 'sale_variant_configurator',
     # OCA/project
     'project_issue_timesheet_time_control': 'project_timesheet_time_control',
     # OCA/sale-reporting
