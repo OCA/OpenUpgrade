@@ -61,28 +61,29 @@ _oca_odoo_renamed_modules = {
 }
 
 _other_renamed_modules = {
-    # ??? -> OCA/manufacture-reporting
+    # odoomrp-wip -> OCA/manufacture-reporting
     'mrp_bom_structure_xls_level_1': 'mrp_bom_structure_xlsx_level_1',
 
-    # ??? -> OCA/product-attribute
+    # odoomrp-wip -> OCA/product-attribute
     'product_m2m_categories': 'product_multi_category',
 
-    # ??? -> OCA/product-variant
+    # odoomrp-wip -> OCA/product-attribute 10.0
+    'sale_product_variants': 'sale_variant_configurator',
+    'sale_stock_product_variants': 'sale_stock_variant_configurator',
+
+    # odoomrp-wip -> OCA/product-variant
     'product_variants_no_automatic_creation': 'product_variant_configurator',
     'purchase_product_variants': 'purchase_variant_configurator',
 
-    # ??? -> OCA/project
+    # odoomrp-wip -> OCA/project
     'project_work_time_control': 'project_timesheet_time_control',
 
-    # ??? -> OCA/social
+    # odoomrp-wip -> OCA/social
     'mail_message_name_search': 'base_search_mail_content',
 
-    # ??? -> OCA/website
+    # odoomrp-wip -> OCA/website
     'website_disable_odoo': 'website_odoo_debranding',
 
-    # ??? -> ???
-    'sale_product_variants': 'sale_variant_configurator',
-    'sale_stock_product_variants': 'sale_stock_variant_configurator',
 }
 
 renamed_modules = _oca_odoo_renamed_modules.copy()
