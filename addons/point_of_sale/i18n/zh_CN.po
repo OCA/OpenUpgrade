@@ -4,17 +4,19 @@
 # 
 # Translators:
 # Jeffery CHEN Fan <jeffery9@gmail.com>, 2016
-# liAnGjiA <liangjia@qq.com>, 2016
+# 珠海-杜哥 <liangjia@qq.com>, 2016
 # Martin Trigaux, 2017
 # Jeff Yu - Elico Corp <jeff.yu@elico-corp.com>, 2017
 # e2f <projects@e2f.com>, 2018
+# ChinaMaker <liuct@chinamaker.net>, 2018
+# xu xiaohu <xu.xiaohu@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:27+0000\n"
 "PO-Revision-Date: 2017-06-23 13:27+0000\n"
-"Last-Translator: e2f <projects@e2f.com>, 2018\n"
+"Last-Translator: xu xiaohu <xu.xiaohu@gmail.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -142,7 +144,7 @@ msgstr "<strong>日记账</strong>:<br/>"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_statement
 msgid "<strong>Opening Date</strong>:<br/>"
-msgstr "<strong>开业日期</strong>:<br/>"
+msgstr "<strong>开张日期</strong>:<br/>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_statement
@@ -753,7 +755,7 @@ msgstr "公司"
 #: model:product.product,name:point_of_sale.poire_conference
 #: model:product.template,name:point_of_sale.poire_conference_product_template
 msgid "Conference pears"
-msgstr "会议"
+msgstr "荷兰绿啤梨"
 
 #. module: point_of_sale
 #: model:ir.ui.menu,name:point_of_sale.menu_point_config_product
@@ -1273,7 +1275,7 @@ msgstr "水果蔬菜"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_pos_form
 msgid "General Information"
-msgstr "通用信息"
+msgstr "基本信息"
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_category_sequence
@@ -1911,13 +1913,13 @@ msgstr "开业管理"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_session_start_at
 msgid "Opening Date"
-msgstr "开业日期"
+msgstr "开张日期"
 
 #. module: point_of_sale
 #: model:product.product,name:point_of_sale.papillon_orange
 #: model:product.template,name:point_of_sale.papillon_orange_product_template
 msgid "Orange Butterfly"
-msgstr "Orange Butterfly"
+msgstr ""
 
 #. module: point_of_sale
 #. openerp-web
@@ -2197,7 +2199,7 @@ msgstr "拣货类型"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_session_picking_count
 msgid "Picking count"
-msgstr ""
+msgstr "拣货数"
 
 #. module: point_of_sale
 #. openerp-web
@@ -2510,7 +2512,7 @@ msgstr "读取称重电子秤"
 #: code:addons/point_of_sale/static/src/js/tour.js:13
 #, python-format
 msgid "Ready to launch your <b>point of sale</b>? <i>Click here</i>."
-msgstr "<i/><b/>"
+msgstr "准备好启动您的<b>销售点了吗</b>？<i>点击此处</i>。"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
@@ -2562,7 +2564,7 @@ msgstr "报告"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_settings_module_pos_reprint
 msgid "Reprints"
-msgstr "重新打印"
+msgstr "重打"
 
 #. module: point_of_sale
 #. openerp-web
@@ -2610,7 +2612,7 @@ msgstr "退回"
 #: model:ir.ui.view,arch_db:point_of_sale.report_saledetails
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_details_wizard
 msgid "Sale Details"
-msgstr "销售细节"
+msgstr "销售详单"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_journal_id
@@ -2913,7 +2915,7 @@ msgstr "街道"
 #: model:product.product,name:point_of_sale.limon
 #: model:product.template,name:point_of_sale.limon_product_template
 msgid "Stringers"
-msgstr "Stringers"
+msgstr ""
 
 #. module: point_of_sale
 #. openerp-web
@@ -2967,7 +2969,7 @@ msgstr "小计总计"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
 msgid "Summary by Payment Methods"
-msgstr "汇总，按付款方式"
+msgstr "按付款方式汇总"
 
 #. module: point_of_sale
 #. openerp-web
@@ -3594,7 +3596,7 @@ msgstr "黄辣椒"
 msgid ""
 "You can define another list of available currencies on the\n"
 "                                <i>Cash Registers</i> tab of the"
-msgstr "<i/>"
+msgstr ""
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_order.py:390
@@ -3747,7 +3749,7 @@ msgstr "购物车是空的"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:335
 #, python-format
 msgid "ZIP"
-msgstr "ZIP"
+msgstr "邮编"
 
 #. module: point_of_sale
 #: model:product.product,name:point_of_sale.courgette

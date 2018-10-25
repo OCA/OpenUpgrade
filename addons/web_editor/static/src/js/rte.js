@@ -159,7 +159,7 @@ var History = function History ($editable) {
 
         if (aUndo[pos]) {
             pos = Math.min(pos, aUndo.length);
-            aUndo.splice(Math.max(pos,1), aUndo.length);
+            aUndo.splice(pos, aUndo.length);
         }
 
         // => make a snap when the user change editable zone (because: don't make snap for each keydown)
@@ -517,6 +517,14 @@ var RTE = Widget.extend({
         if (!$editable.length) {
             return;
         }
+
+        // Removes strange _moz_abspos attribute when it appears. Cannot
+        // find another solution which works in all cases. A grabber still
+        // appears at the same time which I did not manage to remove.
+        // TODO find a complete and better solution
+        _.defer(function () {
+            $editable.find('[_moz_abspos]').removeAttr('_moz_abspos');
+        });
 
         if ($target.is('a')) {
             /**

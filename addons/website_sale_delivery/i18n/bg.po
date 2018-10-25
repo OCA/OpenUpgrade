@@ -37,6 +37,9 @@ msgid ""
 " This description will be copied to every Sale Order, Delivery Order and "
 "Customer Invoice/Refund"
 msgstr ""
+"Описание на продукта, който искате да предоставите на клиентите си. Това "
+"описание ще бъде копирано на всяка поръчка за продажба, поръчка за доставка "
+"и клиентска фактура/кредитно известие"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,help:website_sale_delivery.field_delivery_carrier_accessory_product_ids
@@ -45,21 +48,25 @@ msgid ""
 "sell strategy, e.g. for computers: mouse, keyboard, etc.). An algorithm "
 "figures out a list of accessories based on all the products added to cart."
 msgstr ""
+"Аксесоарите се появяват, когато клиентът преглежда количката преди да плати "
+"(стратегия за кръстосани продажби, напр. за компютри: мишка, клавиатура и "
+"др.). Алгоритъмът представя списък с аксесоари, въз основа на всички "
+"продукти, добавени в количката."
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_accessory_product_ids
 msgid "Accessory Products"
-msgstr "Аксесоари"
+msgstr "Продукти за аксесоари"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,help:website_sale_delivery.field_delivery_carrier_availability
 msgid "Adds an availability status on the web product page."
-msgstr ""
+msgstr "Добавя състояние на наличност на страницата на уебпродукта."
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_alternative_product_ids
 msgid "Alternative Products"
-msgstr ""
+msgstr "Алтернативни продукти"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_availability
@@ -69,7 +76,7 @@ msgstr "Наличност"
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_availability_warning
 msgid "Availability Warning"
-msgstr ""
+msgstr "Предупреждение за наличност"
 
 #. module: website_sale_delivery
 #: model:ir.model,name:website_sale_delivery.model_delivery_carrier
@@ -84,11 +91,16 @@ msgid ""
 "Shop page, hit Customize and turn *Product Categories* on. A product can "
 "belong to several categories."
 msgstr ""
+"Категориите могат да бъдат публикувани на страницата на магазина (онлайн "
+"каталожна мрежа), за да са в помощ на клиентите да откриват всички артикули "
+"в дадена категория. За да ги публикувате, отидете в страницата на магазина, "
+"натиснете 'Персонализирайте' и включете *Продуктови категории*. Даден "
+"продукт може да принадлежи на няколко категории."
 
 #. module: website_sale_delivery
 #: model:ir.ui.view,arch_db:website_sale_delivery.payment_delivery
 msgid "Choose your Delivery Method"
-msgstr "Изберете начин за доставка"
+msgstr "Изберете метода си за доставка"
 
 #. module: website_sale_delivery
 #: model:ir.model,name:website_sale_delivery.model_res_country
@@ -98,12 +110,12 @@ msgstr "Държава"
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_sale_order_amount_delivery
 msgid "Delivery Amount"
-msgstr "Сума на доставката"
+msgstr "Количество на доставка"
 
 #. module: website_sale_delivery
 #: model:ir.ui.menu,name:website_sale_delivery.menu_ecommerce_delivery
 msgid "Delivery Methods"
-msgstr "Начини на доставка"
+msgstr "Методи на доставка"
 
 #. module: website_sale_delivery
 #: model:ir.ui.view,arch_db:website_sale_delivery.view_delivery_carrier_form_website_delivery
@@ -113,17 +125,17 @@ msgstr "Описание"
 #. module: website_sale_delivery
 #: model:ir.ui.view,arch_db:website_sale_delivery.view_delivery_carrier_form_website_delivery
 msgid "Description displayed on the eCommerce and on online quotations."
-msgstr ""
+msgstr "Описание, изложено в електронната търговия и онлайн офертите."
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_website_description
 msgid "Description for Online Quotations"
-msgstr "Описание за он-лайн оферти"
+msgstr "Описание на онлайн оферти"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_quote_description
 msgid "Description for the quote"
-msgstr "Описание за офертата"
+msgstr "Описание на офертата"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,help:website_sale_delivery.field_delivery_carrier_website_sequence
@@ -139,6 +151,11 @@ msgid ""
 "By Weight : Cost will be divided depending on its weight.\n"
 "By Volume : Cost will be divided depending on its volume."
 msgstr ""
+"Равен: Разходът ще бъде разделен по равно.\n"
+"По количество: Разходът ще бъде разделен според количеството продукт.\n"
+"По настоящ разход: Разходът ще бъде разделен според текущия разход на продукта.\n"
+"По тегло: Разходът ще бъде разделен според собственото си тегло.\n"
+"По обем: Разходът ще бъде разделен според собствения си обем."
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_attachment_count
@@ -158,7 +175,7 @@ msgstr "Има доставка"
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_product_image_ids
 msgid "Images"
-msgstr ""
+msgstr "Изображения"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_intrastat_id
@@ -177,13 +194,13 @@ msgid ""
 "No shipping method is available for your current order and shipping address."
 " Please contact us for more information."
 msgstr ""
-"Няма възможен метод за доставка за техущата Ви поръчка и адрес. Моля "
-"свържете се с нас за допълнителна информация."
+"Няма на разположение шипинг метод за техущата Ви поръчка и адрес за шипинг. "
+"Моля свържете се с нас за допълнителна информация."
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_optional_product_ids
 msgid "Optional Products"
-msgstr "Опционни Продукти"
+msgstr "Незадължителти продукти"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,help:website_sale_delivery.field_delivery_carrier_optional_product_ids
@@ -191,6 +208,9 @@ msgid ""
 "Optional Products are suggested whenever the customer hits *Add to Cart* "
 "(cross-sell strategy, e.g. for computers: warranty, software, etc.)."
 msgstr ""
+"Незадължителни продукти се предлагат всеки път, когато клиентът натисне * "
+"Добавете в количката * (стратегия за кръстосани продажби, например за "
+"компютри: гаранция, софтуер и т.н.)."
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_purchase_requisition
@@ -205,22 +225,22 @@ msgstr "Публикуван"
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_rating_ids
 msgid "Rating"
-msgstr "Рейтинг"
+msgstr "Оценяване"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_rating_last_value
 msgid "Rating Last Value"
-msgstr ""
+msgstr "Оценяване последна стойност"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_rating_count
 msgid "Rating count"
-msgstr ""
+msgstr "Брой оценявания"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,help:website_sale_delivery.field_delivery_carrier_rating_last_value
 msgid "Rating value: 0=Unhappy, 10=Happy"
-msgstr ""
+msgstr "Оценяване стойност: 0=Несполучлив, 10=Сполучлив"
 
 #. module: website_sale_delivery
 #: model:ir.model,name:website_sale_delivery.model_sale_order
@@ -241,7 +261,7 @@ msgstr "Размер Y"
 #: code:addons/website_sale_delivery/models/sale_order.py:98
 #, python-format
 msgid "Sorry, we are unable to ship your order"
-msgstr "Съжаляваме, не можем да изпратим Вашата поръчка."
+msgstr "Съжаляваме, не можем да превозим Вашата поръчка."
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_split_method
@@ -259,6 +279,8 @@ msgid ""
 "Suggest more expensive alternatives to your customers (upsell strategy). "
 "Those products show up on the product page."
 msgstr ""
+"Предлагайте по-скъпи варианти на клиентите си (стратегия за ъпселинг). Тези "
+"продукти се излагат в продуктовата страница."
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,help:website_sale_delivery.field_sale_order_amount_delivery
@@ -268,12 +290,12 @@ msgstr "Сумата без данък."
 #. module: website_sale_delivery
 #: model:ir.ui.view,arch_db:website_sale_delivery.shipping_tracking
 msgid "Tracking:"
-msgstr ""
+msgstr "Проследяване:"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_website_published
 msgid "Visible in Website"
-msgstr "Видим в уеб сайта"
+msgstr "Видим в уебсайта"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_website_message_ids
@@ -283,34 +305,34 @@ msgstr "Уебсайт Коментари"
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_public_categ_ids
 msgid "Website Product Category"
-msgstr "Категория продукти в Уебсайт"
+msgstr "Продуктова категория в уебсайт"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_website_sequence
 msgid "Website Sequence"
-msgstr ""
+msgstr "Уебсайт последователност"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_website_meta_description
 msgid "Website meta description"
-msgstr "Уебсайт Мета описание"
+msgstr "Мета описание на уебсайт"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_website_meta_keywords
 msgid "Website meta keywords"
-msgstr "Уебсайт Мета ключови думи"
+msgstr "Мета ключови думи на уебсайт"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_website_meta_title
 msgid "Website meta title"
-msgstr "Уебсайт Мета заглавие"
+msgstr "Мета заглавие на уебсайт"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_website_price
 msgid "Website price"
-msgstr ""
+msgstr "Цена на уебсайт"
 
 #. module: website_sale_delivery
 #: model:ir.model.fields,field_description:website_sale_delivery.field_delivery_carrier_website_public_price
 msgid "Website public price"
-msgstr ""
+msgstr "Общодостъпна цена на уебсайт"

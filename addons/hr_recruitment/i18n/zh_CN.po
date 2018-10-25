@@ -4,17 +4,16 @@
 # 
 # Translators:
 # Jeffery CHEN Fan <jeffery9@gmail.com>, 2016
-# liAnGjiA <liangjia@qq.com>, 2016
+# 珠海-杜哥 <liangjia@qq.com>, 2016
 # Bo Cao, 2017
 # e2f <projects@e2f.com>, 2018
-# e2f_cn c5 <jarvisn@ecinnovations.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 08:56+0000\n"
 "PO-Revision-Date: 2016-09-07 08:56+0000\n"
-"Last-Translator: e2f_cn c5 <jarvisn@ecinnovations.com>, 2018\n"
+"Last-Translator: e2f <projects@e2f.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,6 +31,12 @@ msgid ""
 "<p>If you have any questions, please let us know.</p>\n"
 "<p>Best regards,</p>"
 msgstr ""
+"\n"
+"<p>尊敬的 ${object.partner_name or 'applicant'},</p>\n"
+"<p>感谢您的咨询。<br />\n"
+"我们很遗憾地通知您，贵资料与我司要求不符。</p>\n"
+"<p>如您有任何疑问，请随时与我们联系。</p>\n"
+"<p>此致,</p>"
 
 #. module: hr_recruitment
 #: model:mail.template,body_html:hr_recruitment.email_template_data_applicant_interest
@@ -44,6 +49,13 @@ msgid ""
 "<p>If you have any questions, please let us know.</p>\n"
 "<p>Best regards,</p>"
 msgstr ""
+"\n"
+"<p>尊敬的 ${object.partner_name or 'applicant'},</p>\n"
+"<p>感谢您的咨询。<br />\n"
+"你的简历引起了我们的兴趣。我会尽快与你联系计划\n"
+"招聘流程的下一步。</p>\n"
+"<p>如您有任何疑问，请随时与我们联系。</p>\n"
+"<p>此致,</p>"
 
 #. module: hr_recruitment
 #: model:mail.template,body_html:hr_recruitment.email_template_data_applicant_employee
@@ -59,7 +71,7 @@ msgid ""
 "<p>Please welcome him/her and help him/her finding his/her marks.</p>"
 msgstr ""
 "\n"
-"<p>各位：</p>\n"
+"<p>亲爱的小伙伴们：</p>\n"
 "<p>很高兴宣布，<strong>${object.name} </strong> 将\n"
 "加入我们，担任 ${object.job_id.name}\n"
 "%if object.department_id:\n"
@@ -128,7 +140,7 @@ msgstr "有效"
 msgid ""
 "Add columns to define the <b>interview stages</b>.<br/><i>e.g. New &gt; "
 "Qualified &gt; First Interview &gt; Recruited</i>"
-msgstr ""
+msgstr "添加用于定义 <b>面试阶段</b>。<br/><i>例如，新增申请人 &gt; 取得资格 &gt; 首次面试 &gt; 录用</i>"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,help:hr_recruitment.field_hr_job_address_id
@@ -425,7 +437,7 @@ msgstr "内容"
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.crm_case_form_view_job
 msgid "Contract"
-msgstr "合约"
+msgstr "合同"
 
 #. module: hr_recruitment
 #: model:hr.recruitment.stage,name:hr_recruitment.stage_job4
@@ -584,7 +596,7 @@ msgstr "说明"
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.hr_job_simple_form
 msgid "Discard"
-msgstr "丢弃"
+msgstr "取消"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_category_display_name
@@ -600,7 +612,7 @@ msgstr "显示名称"
 #. module: hr_recruitment
 #: selection:hr.recruitment.config.settings,module_hr_recruitment_survey:0
 msgid "Do not use interview forms"
-msgstr ""
+msgstr "请勿使用面试表格"
 
 #. module: hr_recruitment
 #: model:hr.recruitment.degree,name:hr_recruitment.degree_bac5
@@ -920,7 +932,7 @@ msgstr "最后更新时间"
 #, python-format
 msgid ""
 "Let's have a look at the <b>applications pipeline</b> for this job position."
-msgstr "<b/>"
+msgstr "让我们看一看此职位的申请<b>渠道。</b>"
 
 #. module: hr_recruitment
 #: model:res.groups,name:hr_recruitment.group_hr_recruitment_manager
@@ -1081,6 +1093,8 @@ msgid ""
 "Once a job position is created, you can track related applications\n"
 "                  and manage the recruitment process."
 msgstr ""
+"职位一经创建，您便可以跟踪相关申请\n"
+" 并管理招聘流程。"
 
 #. module: hr_recruitment
 #: model:ir.actions.act_window,help:hr_recruitment.action_hr_job_config
@@ -1511,6 +1525,10 @@ msgid ""
 "                files so that you can search keywords from the content of these\n"
 "                files."
 msgstr ""
+"此菜单有助您通过简历和动机\n"
+" 信进行搜索。Odoo 自动检索PDF、DOC、DOCX、TXT\n"
+" 文件，这样您便可在这些\n"
+" 文件的内容中搜索关键字。"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,help:hr_recruitment.field_hr_recruitment_stage_fold
@@ -1549,7 +1567,7 @@ msgstr "更新日期"
 #. module: hr_recruitment
 #: selection:hr.recruitment.config.settings,module_hr_recruitment_survey:0
 msgid "Use interview forms during the recruitment process"
-msgstr ""
+msgstr "在招聘流程中使用面试表单"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_recruitment_stage_template_id
@@ -1561,7 +1579,7 @@ msgstr "使用模板"
 #: code:addons/hr_recruitment/static/src/js/tour.js:25
 #, python-format
 msgid "Use the breadcrumbs to <b>go back to the dashboard</b>."
-msgstr "<b/>"
+msgstr "使用面包屑导航<b>返回到仪表盘。</b>"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_recruitment_report_user_id
@@ -1584,7 +1602,7 @@ msgstr "非常优秀"
 #: code:addons/hr_recruitment/static/src/js/tour.js:11
 #, python-format
 msgid "Want to <b>start recruiting</b> like a pro? <i>Start here.</i>"
-msgstr "<b/><i/>"
+msgstr "想要像专业人士<b>一样开始您的招聘</b>吗？<i>在这里开始。</i>"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_email_cc
