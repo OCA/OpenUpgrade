@@ -14,12 +14,12 @@ import copy
 from odoo.addons.openupgrade_records.lib import apriori
 
 
-def module_map(module):
+def _module_map(module):
     return apriori.renamed_modules.get(
         module, apriori.merged_modules.get(module, module))
 
 
-def model_map(model):
+def _model_map(model):
     return apriori.renamed_models.get(model, model)
 
 
@@ -32,7 +32,7 @@ IGNORE_FIELDS = [
     ]
 
 
-def compare_records(dict_old, dict_new, fields):
+def _compare_records(dict_old, dict_new, fields):
     """
     Check equivalence of two OpenUpgrade field representations
     with respect to the keys in the 'fields' arguments.
@@ -42,24 +42,24 @@ def compare_records(dict_old, dict_new, fields):
     """
     for field in fields:
         if field == 'module':
-            if (module_map(dict_old[field]) != dict_new[field]):
+            if (_module_map(dict_old[field]) != dict_new[field]):
                 return False
         elif field == 'model':
-            if (model_map(dict_old[field]) != dict_new[field]):
+            if (_model_map(dict_old[field]) != dict_new[field]):
                 return False
         elif dict_old[field] != dict_new[field]:
             return False
     return True
 
 
-def search(item, item_list, fields):
+def _search(item, item_list, fields):
     """
     Find a match of a dictionary in a list of similar dictionaries
     with respect to the keys in the 'fields' arguments.
     Return the item if found or None.
     """
     for other in item_list:
-        if not compare_records(item, other, fields):
+        if not _compare_records(item, other, fields):
             continue
         return other
     # search for renamed fields
@@ -68,62 +68,62 @@ def search(item, item_list, fields):
             if not item['field'] or item['field'] != other.get('oldname') or\
                item['isproperty']:
                 continue
-            if compare_records(
+            if _compare_records(
                     dict(item, field=other['field']), other, fields):
                 return other
     return None
 
 
-def fieldprint(old, new, field, text, reprs):
+def _fieldprint(old, new, field, text, reprs):
     fieldrepr = "%s (%s)" % (old['field'], old['type'])
     fullrepr = '%-12s / %-24s / %-30s' % (
         old['module'], old['model'], fieldrepr)
     if not text:
         text = "%s is now '%s' ('%s')" % (field, new[field], old[field])
-    reprs[module_map(old['module'])].append("%s: %s" % (fullrepr, text))
+    reprs[_module_map(old['module'])].append("%s: %s" % (fullrepr, text))
     if field == 'module':
         text = "previously in module %s" % old[field]
         fullrepr = '%-12s / %-24s / %-30s' % (
             new['module'], old['model'], fieldrepr)
-        reprs[module_map(new['module'])].append("%s: %s" % (fullrepr, text))
+        reprs[_module_map(new['module'])].append("%s: %s" % (fullrepr, text))
 
 
-def report_generic(new, old, attrs, reprs):
+def _report_generic(new, old, attrs, reprs):
     for attr in attrs:
         if attr == 'required':
             if old[attr] != new['required'] and new['required']:
                 text = "now required"
                 if new['req_default']:
                     text += ', default = %s' % new['req_default']
-                fieldprint(old, new, None, text, reprs)
+                _fieldprint(old, new, None, text, reprs)
         elif attr == 'isfunction':
             if old[attr] != new[attr]:
                 if new['isfunction']:
                     text = "now a function"
                 else:
                     text = "not a function anymore"
-                fieldprint(old, new, None, text, reprs)
+                _fieldprint(old, new, None, text, reprs)
         elif attr == 'isproperty':
             if old[attr] != new[attr]:
                 if new[attr]:
                     text = "now a property"
                 else:
                     text = "not a property anymore"
-                fieldprint(old, new, None, text, reprs)
+                _fieldprint(old, new, None, text, reprs)
         elif attr == 'isrelated':
             if old[attr] != new[attr]:
                 if new[attr]:
                     text = "now related"
                 else:
                     text = "not related anymore"
-                fieldprint(old, new, None, text, reprs)
+                _fieldprint(old, new, None, text, reprs)
         elif attr == 'oldname':
             if new.get('oldname') == old['field'] and\
                not new.get('isproperty'):
                 text = 'was renamed to %s [nothing to do]' % new['field']
-                fieldprint(old, new, None, text, reprs)
+                _fieldprint(old, new, None, text, reprs)
         elif old[attr] != new[attr]:
-            fieldprint(old, new, attr, None, reprs)
+            _fieldprint(old, new, attr, None, reprs)
 
 
 def compare_sets(old_records, new_records):
@@ -175,12 +175,12 @@ def compare_sets(old_records, new_records):
     def match(match_fields, report_fields, warn=False):
         count = 0
         for column in copy.copy(old_records):
-            found = search(column, new_records, match_fields)
+            found = _search(column, new_records, match_fields)
             if found:
                 if warn:
                     pass
                     # print "Tentatively"
-                report_generic(found, column, report_fields, reprs)
+                _report_generic(found, column, report_fields, reprs)
                 old_records.remove(column)
                 new_records.remove(found)
                 count += 1
@@ -219,7 +219,7 @@ def compare_sets(old_records, new_records):
             continue
         if column['mode'] == 'create':
             column['mode'] = ''
-        fieldprint(
+        _fieldprint(
             column, None, None, "DEL " + ", ".join(
                 [k + ': ' + str(column[k]) for k in printkeys if column[k]]
                 ), reprs)
@@ -230,7 +230,7 @@ def compare_sets(old_records, new_records):
             continue
         if column['mode'] == 'create':
             column['mode'] = ''
-        fieldprint(
+        _fieldprint(
             column, None, None, "NEW " + ", ".join(
                 [k + ': ' + str(column[k]) for k in printkeys if column[k]]
                 ), reprs)
@@ -253,7 +253,7 @@ def compare_xml_sets(old_records, new_records):
     reprs = collections.defaultdict(list)
     match_fields = ['module', 'model', 'name']
     for column in copy.copy(old_records):
-        found = search(column, new_records, match_fields)
+        found = _search(column, new_records, match_fields)
         if found:
             old_records.remove(column)
             new_records.remove(found)
@@ -274,5 +274,5 @@ def compare_xml_sets(old_records, new_records):
             content = 'NEW %(model)s: %(name)s' % entry
         if entry['noupdate']:
             content += ' (noupdate)'
-        reprs[module_map(entry['module'])].append(content)
+        reprs[_module_map(entry['module'])].append(content)
     return reprs
