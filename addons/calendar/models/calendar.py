@@ -563,7 +563,10 @@ class Meeting(models.Model):
         recurring_meetings = self.search([('recurrent_id', '=', self.id), '|', ('active', '=', False), ('active', '=', True)])
 
         for meeting in recurring_meetings:
-            rset1._exdate.append(todate(meeting.recurrent_id_date))
+            date = todate(meeting.recurrent_id_date)
+            if date_field == 'stop':
+                date = date + timedelta(hours=self.duration)
+            rset1._exdate.append(date)
         return [d.astimezone(pytz.UTC) if d.tzinfo else d for d in rset1]
 
     @api.multi
@@ -861,11 +864,13 @@ class Meeting(models.Model):
 
     @api.onchange('start_date')
     def _onchange_start_date(self):
-        self.start = self.start_date
+        if self.start_date:
+            self.start = self.start_date
 
     @api.onchange('stop_date')
     def _onchange_stop_date(self):
-        self.stop = self.stop_date
+        if self.stop_date:
+            self.stop = self.stop_date
 
     ####################################################
     # Calendar Business, Reccurency, ...
@@ -992,9 +997,8 @@ class Meeting(models.Model):
             else:
                 sort_fields[field] = self[field]
                 if isinstance(self[field], models.BaseModel):
-                    name_get = self[field].name_get()
-                    if len(name_get) and len(name_get[0]) >= 2:
-                        sort_fields[field] = name_get[0][1]
+                    name_get = self[field].mapped('display_name')
+                    sort_fields[field] = name_get and name_get[0] or ''
         if r_date:
             sort_fields['sort_start'] = r_date.strftime(VIRTUALID_DATETIME_FORMAT)
         else:

@@ -153,6 +153,8 @@ class AccountAccount(models.Model):
     def onchange_internal_type(self):
         if self.internal_type in ('receivable', 'payable'):
             self.reconcile = True
+        if self.internal_type == 'liquidity':
+            self.reconcile = False
 
     @api.multi
     @api.depends('name', 'code')
@@ -185,6 +187,12 @@ class AccountAccount(models.Model):
             move_lines = self.env['account.move.line'].search([('account_id', 'in', self.ids)], limit=1)
             if len(move_lines):
                 raise UserError(_('You cannot change the value of the reconciliation on this account as it already has some moves'))
+
+        if vals.get('currency_id'):
+            for account in self:
+                if self.env['account.move.line'].search_count([('account_id', '=', account.id), ('currency_id', 'not in', (False, vals['currency_id']))]):
+                    raise UserError(_('You cannot set a currency on this account as it already has some journal entries having a different foreign currency.'))
+
         return super(AccountAccount, self).write(vals)
 
     @api.multi
@@ -297,6 +305,8 @@ class AccountJournal(models.Model):
     @api.constrains('currency_id', 'default_credit_account_id', 'default_debit_account_id')
     def _check_currency(self):
         if self.currency_id:
+            if self.currency_id == self.company_id.currency_id:
+                raise ValidationError(_("Currency field should only be set if the journal's currency is different from the company's. Leave the field blank to use company currency."))
             if self.default_credit_account_id and not self.default_credit_account_id.currency_id.id == self.currency_id.id:
                 raise ValidationError(_('Configuration error!\nThe currency of the journal should be the same than the default credit account.'))
             if self.default_debit_account_id and not self.default_debit_account_id.currency_id.id == self.currency_id.id:

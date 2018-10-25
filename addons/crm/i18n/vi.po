@@ -712,7 +712,7 @@ msgstr ""
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
 msgid "<strong>Slides</strong>"
-msgstr ""
+msgstr "<strong>Trang trình bày</strong>"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -771,7 +771,7 @@ msgstr ""
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
 msgid "<strong>Website Live Chat</strong>"
-msgstr ""
+msgstr "<strong>Website chat trực tuyến</strong>"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -1096,17 +1096,17 @@ msgstr "Xác suất trung bình"
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
 msgid "B2B"
-msgstr ""
+msgstr "B2B"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
 msgid "B2C"
-msgstr ""
+msgstr "B2C"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
 msgid "Basic, Premium"
-msgstr ""
+msgstr "Cơ bản, Nâng cao"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -1495,7 +1495,7 @@ msgstr "Tạo Nhà cung cấp"
 #: code:addons/crm/static/src/js/web_planner_crm.js:31
 #, python-format
 msgid "Create a Proof of Concept with consultants"
-msgstr ""
+msgstr "Tạo một khái niệm chung với các chuyên gia tư vấn"
 
 #. module: crm
 #: selection:crm.lead2opportunity.partner,action:0
@@ -2024,7 +2024,7 @@ msgstr ""
 #: code:addons/crm/static/src/js/web_planner_crm.js:32
 #, python-format
 msgid "Final Proposal sent"
-msgstr ""
+msgstr "Đề xuất cuối cùng đã được gửi"
 
 #. module: crm
 #: selection:base.partner.merge.automatic.wizard,state:0
@@ -2040,7 +2040,7 @@ msgstr "Đóng ở trong Pipeline"
 #: model:crm.activity,name:crm.crm_activity_demo_followup_quote
 #: model:mail.message.subtype,name:crm.crm_activity_demo_followup_quote_mail_message_subtype
 msgid "Follow-up Quote"
-msgstr ""
+msgstr "Theo dõi báo giá"
 
 #. module: crm
 #: model:crm.activity,description:crm.crm_activity_demo_followup_quote
@@ -2163,7 +2163,7 @@ msgstr "Tăng trưởng thu nhập"
 #. module: crm
 #: model:ir.model,name:crm.model_crm_partner_binding
 msgid "Handle partner binding or generation in CRM wizards."
-msgstr ""
+msgstr "Xử lý ràng buộc hoặc tạo đối tác trong trình hướng dẫn CRM."
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -2875,6 +2875,11 @@ msgid ""
 "subtypes allow to precisely tune the notifications the user want to receive "
 "on its wall."
 msgstr ""
+"Kiểu thư phụ cung cấp loại chính xác hơn trên thư, đặc biệt là đối với thông"
+" báo hệ thống. Ví dụ, nó có thể là một thông báo liên quan đến một bản ghi "
+"mới (Mới) hoặc thay đổi giai đoạn trong một quy trình (Thay đổi giai đoạn). "
+"Các kiểu con tin nhắn cho phép điều chỉnh chính xác các thông báo mà người "
+"dùng muốn nhận trên tường của nó."
 
 #. module: crm
 #: model:ir.model.fields,help:crm.field_crm_activity_internal
@@ -2910,6 +2915,8 @@ msgstr "Mô hình"
 msgid ""
 "Model the subtype applies to. If False, this subtype applies to all models."
 msgstr ""
+"Mô hình loại phụ áp dụng cho. Nếu sai, loại phụ này áp dụng cho tất cả các "
+"kiểu máy."
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_activity_report_view_search
@@ -3008,7 +3015,7 @@ msgstr "Hoạt động tiếp theo"
 #: model:ir.model.fields,field_description:crm.field_crm_activity_log_date_action
 #: model:ir.model.fields,field_description:crm.field_crm_lead_date_action
 msgid "Next Activity Date"
-msgstr ""
+msgstr "Ngày thực hiện kết tiếp"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_title_action
@@ -3096,7 +3103,7 @@ msgstr "Số lượng Phòng"
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_activity_days
 msgid "Number of days"
-msgstr ""
+msgstr "Số ngày"
 
 #. module: crm
 #: model:ir.model.fields,help:crm.field_crm_activity_days
@@ -3305,7 +3312,7 @@ msgstr "Cơ hội chiến thắng"
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_opt_out
 msgid "Opt-Out"
-msgstr ""
+msgstr "Opt-Out"
 
 #. module: crm
 #: selection:base.partner.merge.automatic.wizard,state:0
@@ -3341,7 +3348,7 @@ msgstr "Hoạt động quá hạn"
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.view_crm_case_opportunities_filter
 msgid "Overdue Opportunities"
-msgstr ""
+msgstr "Cơ hội quá hạn"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_opportunity_report_delay_expected
@@ -3405,6 +3412,9 @@ msgid ""
 " named. For example on a project, the parent_id of project subtypes refers "
 "to task-related subtypes."
 msgstr ""
+"Phụ đề con, được sử dụng để đăng ký tự động. Trường này không được đặt tên "
+"chính xác. Ví dụ về một dự án, parent_id của các kiểu con dự án là các kiểu "
+"con liên quan đến nhiệm vụ."
 
 #. module: crm
 #: model:ir.model,name:crm.model_res_partner
@@ -4331,7 +4341,7 @@ msgstr ""
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.view_crm_case_opportunities_filter
 msgid "This Week Activities"
-msgstr ""
+msgstr "Thực hiện Tuần này"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -4457,7 +4467,7 @@ msgstr "Loại được sử dụng để tách riêng đầu mối và Cơ hộ
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
 msgid "USD, EUR, GBP"
-msgstr ""
+msgstr "USD, EUR, GBP"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_case_kanban_view_leads
@@ -4569,7 +4579,7 @@ msgstr ""
 #: code:addons/crm/static/src/js/tour.js:66
 #, python-format
 msgid "Use the breadcrumbs to <b>go back to your sales pipeline</b>."
-msgstr ""
+msgstr "Sử dụng đường dẫn để <b>quay lại kênh bán hàng của bạn</b>."
 
 #. module: crm
 #: model:ir.model.fields,help:crm.field_crm_team_resource_calendar_id
@@ -4924,12 +4934,12 @@ msgstr "như một bài thực hành"
 #. module: crm
 #: model:ir.model,name:crm.model_base_partner_merge_automatic_wizard
 msgid "base.partner.merge.automatic.wizard"
-msgstr ""
+msgstr "base.partner.merge.automatic.wizard"
 
 #. module: crm
 #: model:ir.model,name:crm.model_base_partner_merge_line
 msgid "base.partner.merge.line"
-msgstr ""
+msgstr "base.partner.merge.line"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_planner
@@ -4944,7 +4954,7 @@ msgstr "vd: 15% chiết khấu khi mua nhiều hơn 3 áo sơ mi"
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.view_create_opportunity_simplified
 msgid "e.g. Customer Deal"
-msgstr ""
+msgstr "ví dụ. Giao dịch khách hàng"
 
 #. module: crm
 #: model:ir.ui.view,arch_db:crm.crm_activity_log_view_form

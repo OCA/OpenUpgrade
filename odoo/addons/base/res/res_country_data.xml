@@ -453,7 +453,7 @@
             <field name="name">Ecuador</field>
             <field name="code">ec</field>
             <field file="base/static/img/country_flags/ec.png" name="image" type="base64" />
-            <field name="currency_id" ref="ECS" />
+            <field name="currency_id" ref="USD" />
             <field eval="593" name="phone_code" />
         </record>
         <record id="ee" model="res.country">
@@ -1707,6 +1707,7 @@
             <field file="base/static/img/country_flags/vn.png" name="image" type="base64" />
             <field name="currency_id" ref="VND" />
             <field eval="84" name="phone_code" />
+            <field eval="'%(street)s\n%(street2)s\n%(city)s\n%(state_name)s %(country_name)s'" name="address_format" />
         </record>
         <record id="vu" model="res.country">
             <field name="name">Vanuatu</field>
@@ -1773,6 +1774,13 @@
             <field file="base/static/img/country_flags/zw.png" name="image" type="base64" />
             <field name="currency_id" ref="ZWD" />
             <field eval="263" name="phone_code" />
+        </record>
+        <record id="xk" model="res.country">
+            <field name="name">Kosovo</field>
+            <field name="code">xk</field>
+            <field file="base/static/img/country_flags/xk.png" name="image" type="base64" />
+            <field name="currency_id" ref="EUR" />
+            <field eval="383" name="phone_code" />
         </record>
 
         <record id="europe" model="res.country.group">
