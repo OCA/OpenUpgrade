@@ -245,11 +245,18 @@ def map_account_tax_template_type(cr):
 
 
 def map_payment_term_line_value(cr):
-    """ Someone fixed a Flemishism """
+    """ Someone fixed a Flemishism and payment terms percentages are now
+    over 100, not over 1.
+    """
     openupgrade.logged_query(
         cr,
         """UPDATE account_payment_term_line
         SET value = 'percent' WHERE value = 'procent';""")
+    openupgrade.logged_query(
+        cr, """
+        UPDATE account_payment_term_line
+        SET value_amount = value_amount * 100 WHERE value = 'percent'""",
+    )
 
 
 def blacklist_field_recomputation(env):
