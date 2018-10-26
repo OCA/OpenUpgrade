@@ -134,6 +134,18 @@ def convert_issues(env):
             'issue_column': AsIs(origin_issue_column),
         },
     )
+    # Convert description from plain text to HTML
+    from odoo.tools.mail import plaintext2html
+    env.cr.execute(
+        "SELECT id, description FROM project_task "
+        "WHERE %s IS NOT NULL AND description IS NOT NULL",
+        (AsIs(openupgrade.get_legacy_name('origin_issue_id')), ),
+    )
+    for row in env.cr.fetchall():
+        env.cr.execute(
+            "UPDATE project_task SET description = %s WHERE id = %s",
+            (plaintext2html(row[1]), row[0]),
+        )
     # Issues tags
     openupgrade.logged_query(
         env.cr, """
