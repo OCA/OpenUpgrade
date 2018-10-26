@@ -33,14 +33,16 @@ def recompute_mailing_list_domain(env):
     """
     mailings = env['mail.mass_mailing'].search([
         ('mailing_model_name', '=', 'mail.mass_mailing.list'),
-        ('contact_list_ids', '!=', False),
     ])
     for mailing in mailings:
-        mailing.mailing_domain = (
-            "[('list_ids', 'in', [%s]), ('opt_out', '=', False)]" % (
-                ','.join(str(id) for id in mailing.contact_list_ids.ids),
+        if mailing.contact_list_ids:
+            mailing.mailing_domain = (
+                "[('list_ids', 'in', [%s]), ('opt_out', '=', False)]" % (
+                    ','.join(str(id) for id in mailing.contact_list_ids.ids),
+                )
             )
-        )
+        else:
+            mailing.mailing_domain = "[(0, '=', 1)]"
 
 
 @openupgrade.migrate()
