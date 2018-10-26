@@ -120,6 +120,19 @@ def fix_lang_table(env):
     )
 
 
+def fill_ir_ui_view_key(cr):
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE ir_ui_view
+        SET key = COALESCE(split_part(
+            arch_fs, '/', 1), 'website') || '.' || replace(
+                lower(trim(both from name)), ' ', '_') || '_view'
+        WHERE type = 'qweb' AND key IS NULL
+        """
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     openupgrade.update_module_names(
@@ -153,3 +166,5 @@ def migrate(env, version):
     # for migration of web module
     openupgrade.rename_columns(
         env.cr, {'res_company': [('external_report_layout', None)]})
+    # for migration of website module
+    fill_ir_ui_view_key(env.cr)
