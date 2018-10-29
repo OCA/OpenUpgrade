@@ -72,6 +72,7 @@ merged_modules = {
     'product_brand_sale_report': 'product_brand',
     'sale_proforma_report': 'sale',
     # OCA/stock-logistics-workflow
+    'stock_disable_force_availability_button': 'stock',
     'stock_picking_transfer_lot_autoassign': 'stock_pack_operation_auto_fill',
     # OCA/web
     'web_widget_domain_v11': 'web',
