@@ -769,6 +769,81 @@ QUnit.module('Views', {
         kanban.destroy();
     });
 
+    QUnit.test('quick create record in grouped on date(time) field', function (assert) {
+        assert.expect(6);
+
+        var kanban = createView({
+            View: KanbanView,
+            model: 'partner',
+            data: this.data,
+            arch: '<kanban class="o_kanban_test" on_create="quick_create">' +
+                        '<templates><t t-name="kanban-box">' +
+                            '<div><field name="display_name"/></div>' +
+                        '</t></templates>' +
+                    '</kanban>',
+            groupBy: ['date'],
+            intercepts: {
+                switch_view: function (ev) {
+                    assert.deepEqual(_.pick(ev.data, 'res_id', 'view_type'), {
+                        res_id: undefined,
+                        view_type: 'form',
+                    }, "should trigger an event to open the form view (twice)");
+                },
+            },
+        });
+
+        assert.strictEqual(kanban.$('.o_kanban_header .o_kanban_quick_add i').length, 0,
+            "quick create should be disabled when grouped on a date field");
+
+        // clicking on CREATE in control panel should not open a quick create
+        kanban.$buttons.find('.o-kanban-button-new').click();
+        assert.strictEqual(kanban.$('.o_kanban_quick_create').length, 0,
+            "should not have opened the quick create widget");
+
+        kanban.reload({groupBy: ['datetime']});
+
+        assert.strictEqual(kanban.$('.o_kanban_header .o_kanban_quick_add i').length, 0,
+            "quick create should be disabled when grouped on a datetime field");
+
+        // clicking on CREATE in control panel should not open a quick create
+        kanban.$buttons.find('.o-kanban-button-new').click();
+        assert.strictEqual(kanban.$('.o_kanban_quick_create').length, 0,
+            "should not have opened the quick create widget");
+
+        kanban.destroy();
+    });
+
+    QUnit.test('quick create record feature is properly enabled/disabled at reload', function (assert) {
+        assert.expect(3);
+
+        var kanban = createView({
+            View: KanbanView,
+            model: 'partner',
+            data: this.data,
+            arch: '<kanban class="o_kanban_test" on_create="quick_create">' +
+                        '<templates><t t-name="kanban-box">' +
+                            '<div><field name="display_name"/></div>' +
+                        '</t></templates>' +
+                    '</kanban>',
+            groupBy: ['foo'],
+        });
+
+        assert.strictEqual(kanban.$('.o_kanban_header .o_kanban_quick_add i').length, 3,
+            "quick create should be enabled when grouped on a char field");
+
+        kanban.reload({groupBy: ['date']});
+
+        assert.strictEqual(kanban.$('.o_kanban_header .o_kanban_quick_add i').length, 0,
+            "quick create should now be disabled (grouped on date field)");
+
+        kanban.reload({groupBy: ['bar']});
+
+        assert.strictEqual(kanban.$('.o_kanban_header .o_kanban_quick_add i').length, 2,
+            "quick create should be enabled again (grouped on boolean field)");
+
+        kanban.destroy();
+    });
+
     QUnit.test('many2many_tags in kanban views', function (assert) {
         assert.expect(12);
 
@@ -836,6 +911,72 @@ QUnit.module('Views', {
         // click on a tag (should trigger switch_view)
         kanban.$('.o_tag:contains(gold):first').click();
 
+        kanban.destroy();
+    });
+
+    QUnit.test('Do not open record when clicking on `a` with `href`', function (assert) {
+        assert.expect(5);
+
+        this.data.partner.records = [
+            { id: 1, foo: 'yop' },
+        ];
+
+        var kanban = createView({
+            View: KanbanView,
+            model: 'partner',
+            data: this.data,
+            arch: '<kanban class="o_kanban_test">' +
+                        '<templates>' +
+                            '<t t-name="kanban-box">' +
+                                '<div class="oe_kanban_global_click">' +
+                                    '<field name="foo"/>' +
+                                    '<div>' +
+                                        '<a class="o_test_link" href="#">test link</a>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</t>' +
+                        '</templates>' +
+                    '</kanban>',
+            intercepts: {
+                // when clicking on a record in kanban view,
+                // it switches to form view.
+                switch_view: function () {
+                    throw new Error("should not switch view");
+                },
+            },
+        });
+
+        var $record = kanban.$('.o_kanban_record:not(.o_kanban_ghost)');
+        assert.strictEqual($record.length, 1,
+            "should display a kanban record");
+
+        var $testLink = $record.find('a');
+        assert.strictEqual($testLink.length, 1,
+            "should contain a link in the kanban record");
+        assert.ok(!!$testLink[0].href,
+            "link inside kanban record should have non-empty href");
+
+        // Mocked views prevent accessing a link with href. This is intented
+        // most of the time, but not in this test which specifically needs to
+        // let the browser access a link with href.
+        kanban.$el.off('click', 'a');
+        // Prevent the browser default behaviour when clicking on anything.
+        // This includes clicking on a `<a>` with `href`, so that it does not
+        // change the URL in the address bar.
+        // Note that we should not specify a click listener on 'a', otherwise
+        // it may influence the kanban record global click handler to not open
+        // the record.
+        $(document.body).on('click.o_test', function (ev) {
+            assert.notOk(ev.isDefaultPrevented(),
+                "should not prevented browser default behaviour beforehand");
+            assert.strictEqual(ev.target, $testLink[0],
+                "should have clicked on the test link in the kanban record");
+            ev.preventDefault();
+        });
+
+        $testLink.click();
+
+        $(document.body).off('click.o_test');
         kanban.destroy();
     });
 
@@ -1203,7 +1344,7 @@ QUnit.module('Views', {
     });
 
     QUnit.test('quick create record & column in grouped on m2o', function (assert) {
-        assert.expect(2);
+        assert.expect(4);
 
         var kanban = createView({
             View: KanbanView,
@@ -1230,11 +1371,18 @@ QUnit.module('Views', {
 
         assert.strictEqual(kanban.$('.o_kanban_group:last span:contains(new column)').length, 1,
             "the last column should be the newly created one");
+
+        assert.strictEqual(kanban.$('.o_kanban_quick_create:visible button.o_kanban_add').length, 1,
+            "the quick create column should still be opened for mass creation");
+        kanban.$('.o_column_quick_create input').trigger($.Event('keydown', { keyCode: $.ui.keyCode.ESCAPE }));
+        assert.strictEqual(kanban.$('.o_kanban_quick_create:visible button.o_kanban_add').length, 0,
+            "the quick create column should now be closed");
+
         kanban.destroy();
     });
 
     QUnit.test('delete a column in grouped on m2o', function (assert) {
-        assert.expect(33);
+        assert.expect(36);
 
         testUtils.patch(KanbanRenderer, {
             _renderGrouped: function () {
@@ -1851,6 +1999,7 @@ QUnit.module('Views', {
 
     QUnit.test('resequence columns in grouped by m2o', function (assert) {
         assert.expect(7);
+        this.data.product.fields.sequence = {string: "Sequence", type: "integer"};
 
         var envIDs = [1, 3, 2, 4]; // the ids that should be in the environment during this test
         var kanban = createView({
@@ -1864,12 +2013,6 @@ QUnit.module('Views', {
                         '</t></templates>' +
                     '</kanban>',
             groupBy: ['product_id'],
-            mockRPC: function (route) {
-                if (route === '/web/dataset/resequence') {
-                    return $.when();
-                }
-                return this._super.apply(this, arguments);
-            },
             intercepts: {
                 env_updated: function (event) {
                     assert.deepEqual(event.data.ids, envIDs,
@@ -1893,7 +2036,7 @@ QUnit.module('Views', {
         kanban.update({}, {reload: false}); // re-render without reloading
 
         assert.strictEqual(kanban.$('.o_kanban_group:first').data('id'), 5,
-            "first column should be id 5 before resequencing");
+            "first column should be id 5 after resequencing");
 
         kanban.destroy();
     });
@@ -2550,6 +2693,37 @@ QUnit.module('Views', {
         kanban.destroy();
     });
 
+    QUnit.test('column progressbars are working with load more', function (assert) {
+        assert.expect(1);
+
+        var kanban = createView({
+            View: KanbanView,
+            model: 'partner',
+            data: this.data,
+            domain: [['bar', '=', true]],
+            arch:
+                '<kanban limit="1">' +
+                    '<progressbar field="foo" colors=\'{"yop": "success", "gnap": "warning", "blip": "danger"}\'/>' +
+                    '<templates><t t-name="kanban-box">' +
+                        '<div>' +
+                            '<field name="id"/>' +
+                        '</div>' +
+                    '</t></templates>' +
+                '</kanban>',
+            groupBy: ['bar'],
+        });
+
+        // we have 1 record shown, load 2 more and check it worked
+        kanban.$('.o_kanban_group').find('.o_kanban_load_more').click();
+        kanban.$('.o_kanban_group').find('.o_kanban_load_more').click();
+        var shownIDs = _.map(kanban.$('.o_kanban_record'), function(record) {
+            return parseInt(record.innerText);
+        });
+        assert.deepEqual(shownIDs, [1, 2, 3], "intended records are loaded");
+
+        kanban.destroy();
+    });
+
     QUnit.test('column progressbars on archiving records update counter', function (assert) {
         assert.expect(4);
 
@@ -2734,7 +2908,7 @@ QUnit.module('Views', {
                         '<div><field name="foo"/></div>' +
                     '</t></templates>' +
                 '</kanban>',
-            groupBy: ['int_field'],
+            groupBy: ['foo'],
             mockRPC: function (route, args) {
                 if (route === '/web/dataset/resequence') {
                     return $.when(true);
@@ -2890,6 +3064,29 @@ QUnit.module('Views', {
         kanban.destroy();
     });
 
+    QUnit.test('quick_create on grouped kanban without column', function (assert) {
+        assert.expect(1);
+        this.data.partner.records = [];
+        var kanban = createView({
+            View: KanbanView,
+            model: 'partner',
+            data: this.data,
+            arch: '<kanban class="o_kanban_test" on_create="quick_create"><templates><t t-name="kanban-box">' +
+                    '<div>' +
+                    '<field name="name"/>' +
+                    '</div>' +
+                '</t></templates></kanban>',
+            groupBy: ['product_id'],
+
+            intercepts: {
+                switch_view: function (event) {
+                    assert.ok(true, "switch_view was called instead of quick_create");
+                },
+            },
+        });
+        kanban.$buttons.find('.o-kanban-button-new').click();
+        kanban.destroy();
+    });
 });
 
 });

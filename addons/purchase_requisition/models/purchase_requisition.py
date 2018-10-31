@@ -33,9 +33,9 @@ class PurchaseRequisition(models.Model):
     _order = "id desc"
 
     def _get_picking_in(self):
-        pick_in = self.env.ref('stock.picking_type_in')
-        if not pick_in:
-            company = self.env['res.company']._company_default_get('purchase.requisition')
+        pick_in = self.env.ref('stock.picking_type_in', raise_if_not_found=False)
+        company = self.env['res.company']._company_default_get('purchase.requisition')
+        if not pick_in or pick_in.sudo().warehouse_id.company_id.id != company.id:
             pick_in = self.env['stock.picking.type'].search(
                 [('warehouse_id.company_id', '=', company.id), ('code', '=', 'incoming')],
                 limit=1,
@@ -312,6 +312,18 @@ class ProductTemplate(models.Model):
         [('rfq', 'Create a draft purchase order'),
          ('tenders', 'Propose a call for tenders')],
         string='Procurement', default='rfq')
+
+class StockMove(models.Model):
+    _inherit = "stock.move"
+
+    requistion_line_ids =  fields.One2many('purchase.requisition.line', 'move_dest_id')
+
+class ProcurementGroup(models.Model):
+    _inherit = 'procurement.group'
+
+    @api.model
+    def _get_exceptions_domain(self):
+        return super(ProcurementGroup, self)._get_exceptions_domain() + [('requistion_line_ids', '=', False)]
 
 
 class ProcurementRule(models.Model):

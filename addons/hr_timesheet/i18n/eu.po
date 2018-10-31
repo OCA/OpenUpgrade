@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-19 13:42+0000\n"
-"PO-Revision-Date: 2018-02-19 13:42+0000\n"
+"POT-Creation-Date: 2018-08-16 14:27+0000\n"
+"PO-Revision-Date: 2018-08-16 14:27+0000\n"
 "Last-Translator: Gorka Toledo <gorka.toledo@gmail.com>, 2018\n"
 "Language-Team: Basque (https://www.transifex.com/odoo/teams/41243/eu/)\n"
 "MIME-Version: 1.0\n"
@@ -70,7 +70,7 @@ msgstr ""
 #. module: hr_timesheet
 #: model:ir.ui.view,arch_db:hr_timesheet.hr_timesheet_line_form
 msgid "Analytic Entry"
-msgstr ""
+msgstr "Sarrera analitikoa"
 
 #. module: hr_timesheet
 #: model:ir.model,name:hr_timesheet.model_account_analytic_line
@@ -216,10 +216,15 @@ msgid "Hours Spent"
 msgstr "Gastatutako orduak "
 
 #. module: hr_timesheet
+#: model:ir.ui.view,arch_db:hr_timesheet.view_task_tree2_inherited
+msgid "Initially Planned Hours"
+msgstr ""
+
+#. module: hr_timesheet
 #: model:ir.model.fields,field_description:hr_timesheet.field_res_config_settings_module_project_timesheet_holidays
 #: model:ir.ui.view,arch_db:hr_timesheet.res_config_settings_view_form
 msgid "Leaves"
-msgstr ""
+msgstr "Baimenak"
 
 #. module: hr_timesheet
 #: model:res.groups,name:hr_timesheet.group_timesheet_manager
@@ -335,7 +340,7 @@ msgstr "Zereginak erabiltzaileka eta proiektuka"
 #. module: hr_timesheet
 #: model:ir.ui.view,arch_db:hr_timesheet.hr_timesheet_line_search
 msgid "This Month"
-msgstr ""
+msgstr "Hilabete hau"
 
 #. module: hr_timesheet
 #: model:ir.ui.view,arch_db:hr_timesheet.hr_timesheet_line_search
@@ -369,7 +374,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:hr_timesheet.hr_timesheet_line_search
 #: model:ir.ui.view,arch_db:hr_timesheet.view_hr_timesheet_line_pivot
 msgid "Timesheet"
-msgstr ""
+msgstr "Denbora-orria"
 
 #. module: hr_timesheet
 #: model:ir.ui.view,arch_db:hr_timesheet.hr_timesheet_line_tree

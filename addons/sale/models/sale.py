@@ -89,8 +89,8 @@ class SaleOrder(models.Model):
 
     @api.model
     def get_empty_list_help(self, help):
-        if help:
-            return '<p class=''oe_view_nocontent_create''">%s</p>' % (help)
+        if help and help.find("oe_view_nocontent_create") == -1:
+            return '<p class="oe_view_nocontent_create">%s</p>' % (help)
         return super(SaleOrder, self).get_empty_list_help(help)
 
     def _get_default_access_token(self):
@@ -111,6 +111,11 @@ class SaleOrder(models.Model):
         """
         for order in self:
             order.order_line._compute_tax_id()
+
+    @api.multi
+    def _get_payment_type(self):
+        self.ensure_one()
+        return 'form'
 
     name = fields.Char(string='Order Reference', required=True, copy=False, readonly=True, states={'draft': [('readonly', False)]}, index=True, default=lambda self: _('New'))
     origin = fields.Char(string='Source Document', help="Reference of the document that generated this sales order request.")
@@ -542,10 +547,17 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
+        if self._get_forbidden_state_confirm() & set(self.mapped('state')):
+            raise UserError(_(
+                'It is not allowed to confirm an order in the following states: %s'
+            ) % (', '.join(self._get_forbidden_state_confirm())))
         self._action_confirm()
         if self.env['ir.config_parameter'].sudo().get_param('sale.auto_done_setting'):
             self.action_done()
         return True
+
+    def _get_forbidden_state_confirm(self):
+        return {'done', 'cancel'}
 
     @api.multi
     def _create_analytic_account(self, prefix=None):
@@ -633,6 +645,12 @@ class SaleOrder(models.Model):
                         'target': 'self',
                         'res_id': self.id,
                     }
+        else:
+            action = self.env.ref('sale.action_quotations', False)
+            if action:
+                result = action.read()[0]
+                result['res_id'] = self.id
+                return result
         return super(SaleOrder, self).get_access_action(access_uid)
 
     def get_mail_url(self):
@@ -732,10 +750,17 @@ class SaleOrderLine(models.Model):
             invoice_lines = line.invoice_lines.filtered(lambda l: l.invoice_id.state in ('open', 'paid'))
             # Refund invoices linked to invoice_lines
             refund_invoices = invoice_lines.mapped('invoice_id.refund_invoice_ids').filtered(lambda inv: inv.state in ('open', 'paid'))
-            # Total invoiced amount
-            invoiced_amount_total = sum(invoice_lines.mapped('price_total'))
-            # Total refunded amount
-            refund_amount_total = sum(refund_invoices.mapped('amount_total'))
+            refund_invoice_lines = refund_invoices.mapped('invoice_line_ids').filtered(lambda l: l.product_id == line.product_id)
+            # If the currency of the invoice differs from the sale order, we need to convert the values
+            if line.invoice_lines and line.invoice_lines[0].currency_id \
+                    and line.invoice_lines[0].currency_id != line.currency_id:
+                invoiced_amount_total = sum([inv_line.currency_id.with_context({'date': inv_line.invoice_id.date}).compute(inv_line.price_total, line.currency_id)
+                                             for inv_line in invoice_lines])
+                refund_amount_total = sum([inv_line.currency_id.with_context({'date': inv_line.invoice_id.date}).compute(inv_line.price_total, line.currency_id)
+                                           for inv_line in refund_invoice_lines])
+            else:
+                invoiced_amount_total = sum(invoice_lines.mapped('price_total'))
+                refund_amount_total = sum(refund_invoice_lines.mapped('price_total'))
             # Total of remaining amount to invoice on the sale ordered (and draft invoice included) to support upsell (when
             # delivered quantity is higher than ordered one). Draft invoice are ignored on purpose, the 'to invoice' should
             # come only from the SO lines.
@@ -1160,13 +1185,13 @@ class SaleOrderLine(models.Model):
 
     @api.onchange('product_id', 'price_unit', 'product_uom', 'product_uom_qty', 'tax_id')
     def _onchange_discount(self):
-        self.discount = 0.0
         if not (self.product_id and self.product_uom and
                 self.order_id.partner_id and self.order_id.pricelist_id and
                 self.order_id.pricelist_id.discount_policy == 'without_discount' and
                 self.env.user.has_group('sale.group_discount_per_so_line')):
             return
 
+        self.discount = 0.0
         product = self.product_id.with_context(
             lang=self.order_id.partner_id.lang,
             partner=self.order_id.partner_id.id,

@@ -6,14 +6,14 @@
 # Martin Trigaux, 2017
 # Jan Horzinka <jan.horzinka@centrum.cz>, 2018
 # Michal Veselý <michal@veselyberanek.net>, 2018
-# Jiří P., 2018
+# J. Podhorecky <j.podhorecky@volny.cz>, 2018
 # Jaroslav Helemik Nemec <nemec@helemik.cz>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-24 09:00+0000\n"
-"PO-Revision-Date: 2017-10-24 09:00+0000\n"
+"POT-Creation-Date: 2018-07-27 11:56+0000\n"
+"PO-Revision-Date: 2018-07-27 11:56+0000\n"
 "Last-Translator: Jaroslav Helemik Nemec <nemec@helemik.cz>, 2018\n"
 "Language-Team: Czech (https://www.transifex.com/odoo/teams/41243/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -72,6 +72,8 @@ msgid ""
 " karma is required to perform this action. You can earn karma by having your"
 " answers upvoted by the community."
 msgstr ""
+"karma je vyžadována k provedení této akce. Karmu získáte tím, že vaše "
+"odpovědi podpoří komunita."
 
 #. module: website_forum
 #: model:mail.template,subject:website_forum.validation_email
@@ -385,7 +387,7 @@ msgstr ""
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_forum_karma_answer_accept_own
 msgid "Accept an answer on own questions"
-msgstr ""
+msgstr "Přijměte odpověď na vlastní otázky"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_forum_karma_answer_accept_all
@@ -395,7 +397,7 @@ msgstr ""
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.view_forum_post_search
 msgid "Accepted Answer"
-msgstr ""
+msgstr "Přijatá odpověď"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_forum_karma_gen_answer_accept
@@ -432,6 +434,8 @@ msgid ""
 "After posting the user will be proposed to share its question or answer on "
 "social networks, enabling social network propagation of the forum content."
 msgstr ""
+"Po odeslání bude uživateli navržena sdílet svou otázku nebo odpověď na "
+"sociální sítě, což umožní šíření obsahu fóra ze sociálních sítí."
 
 #. module: website_forum
 #: code:addons/website_forum/controllers/main.py:196
@@ -451,7 +455,7 @@ msgid "Answer"
 msgstr "Odpovědět"
 
 #. module: website_forum
-#: code:addons/website_forum/models/forum.py:499
+#: code:addons/website_forum/models/forum.py:511
 #: model:mail.message.subtype,description:website_forum.mt_answer_edit
 #: model:mail.message.subtype,name:website_forum.mt_answer_edit
 #, python-format
@@ -466,7 +470,7 @@ msgstr ""
 #. module: website_forum
 #: model:gamification.badge,description:website_forum.badge_a_6
 msgid "Answer accepted with 15 or more votes"
-msgstr ""
+msgstr "Odpověď přijata s 15 nebo více hlasy"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_forum_karma_gen_answer_downvote
@@ -555,7 +559,7 @@ msgstr ""
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.header
 msgid "Ask a Question"
-msgstr ""
+msgstr "Položit otázku"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_forum_karma_ask
@@ -572,7 +576,7 @@ msgstr ""
 #: code:addons/website_forum/static/src/js/website_tour_forum.js:29
 #, python-format
 msgid "Ask the question in this forum by clicking on the button."
-msgstr ""
+msgstr "Zadejte otázku v tomto fóru kliknutím na tlačítko."
 
 #. module: website_forum
 #: model:gamification.badge,description:website_forum.badge_26
@@ -597,7 +601,7 @@ msgstr ""
 #. module: website_forum
 #: model:gamification.badge,description:website_forum.badge_q_7
 msgid "Asked first question with at least one up vote"
-msgstr ""
+msgstr "Na první položenou otázku alespoň jedno hlasování"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_post_create_date
@@ -677,7 +681,7 @@ msgstr ""
 #: code:addons/website_forum/static/src/xml/website_forum_share_templates.xml:34
 #, python-format
 msgid "By sharing you answer, you will get additional"
-msgstr ""
+msgstr "Sdílením odpovědi získáte další"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_post_can_accept
@@ -790,7 +794,7 @@ msgstr ""
 #: code:addons/website_forum/static/src/js/website_tour_forum.js:71
 #, python-format
 msgid "Click here to accept this answer."
-msgstr ""
+msgstr "Klikněte zde pro přijetí této odpovědi."
 
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.header
@@ -974,7 +978,7 @@ msgstr "Země"
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.edit_profile
 msgid "Country..."
-msgstr ""
+msgstr "Země..."
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_forum_post_vote_create_date
@@ -1463,6 +1467,11 @@ msgid "Help"
 msgstr "Pomoc"
 
 #. module: website_forum
+#: model:forum.forum,welcome_message:website_forum.forum_help
+msgid "Hide Intro"
+msgstr ""
+
+#. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.new_question
 msgid ""
 "How to create a physical inventory at an anterior date?, How is the "
@@ -1677,7 +1686,7 @@ msgstr ""
 #. module: website_forum
 #: selection:forum.forum,default_order:0
 msgid "Most Voted"
-msgstr ""
+msgstr "Nejvíce hlasovali"
 
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.forum_index
@@ -1771,20 +1780,20 @@ msgid "Nofollow links"
 msgstr ""
 
 #. module: website_forum
-#: code:addons/website_forum/models/forum.py:868
-#: code:addons/website_forum/models/forum.py:888
+#: code:addons/website_forum/models/forum.py:880
+#: code:addons/website_forum/models/forum.py:900
 #, python-format
 msgid "Not allowed to vote for its own post"
 msgstr ""
 
 #. module: website_forum
-#: code:addons/website_forum/models/forum.py:932
+#: code:addons/website_forum/models/forum.py:944
 #, python-format
 msgid "Not enough karma to create a new Tag"
 msgstr ""
 
 #. module: website_forum
-#: code:addons/website_forum/models/forum.py:489
+#: code:addons/website_forum/models/forum.py:501
 #, python-format
 msgid "Not enough karma to retag."
 msgstr ""
@@ -1978,7 +1987,7 @@ msgid "Posted 100 comments"
 msgstr ""
 
 #. module: website_forum
-#: code:addons/website_forum/models/forum.py:433
+#: code:addons/website_forum/models/forum.py:438
 #, python-format
 msgid "Posting answer on a [Deleted] or [Closed] question is not possible"
 msgstr ""
@@ -2034,7 +2043,7 @@ msgid "Question"
 msgstr "Otázka"
 
 #. module: website_forum
-#: code:addons/website_forum/models/forum.py:502
+#: code:addons/website_forum/models/forum.py:514
 #: model:mail.message.subtype,description:website_forum.mt_question_edit
 #: model:mail.message.subtype,name:website_forum.mt_question_edit
 #, python-format
@@ -2111,7 +2120,7 @@ msgid "Questions"
 msgstr "Otázky"
 
 #. module: website_forum
-#: code:addons/website_forum/models/forum.py:520
+#: code:addons/website_forum/models/forum.py:532
 #, python-format
 msgid "Re: %s"
 msgstr ""
@@ -2154,6 +2163,11 @@ msgstr ""
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.display_post_question_block
 msgid "Redirect to external link"
+msgstr ""
+
+#. module: website_forum
+#: model:forum.forum,welcome_message:website_forum.forum_help
+msgid "Register"
 msgstr ""
 
 #. module: website_forum
@@ -2301,21 +2315,21 @@ msgstr ""
 
 #. module: website_forum
 #. openerp-web
-#: code:addons/website_forum/static/src/js/website_forum.js:100
+#: code:addons/website_forum/static/src/js/website_forum.js:101
 #, python-format
 msgid "Sorry you must be logged to flag a post"
 msgstr ""
 
 #. module: website_forum
 #. openerp-web
-#: code:addons/website_forum/static/src/js/website_forum.js:149
+#: code:addons/website_forum/static/src/js/website_forum.js:150
 #, python-format
 msgid "Sorry you must be logged to vote"
 msgstr ""
 
 #. module: website_forum
 #. openerp-web
-#: code:addons/website_forum/static/src/js/website_forum.js:199
+#: code:addons/website_forum/static/src/js/website_forum.js:200
 #, python-format
 msgid "Sorry, anonymous users cannot choose correct answer."
 msgstr ""
@@ -2327,7 +2341,7 @@ msgstr ""
 
 #. module: website_forum
 #. openerp-web
-#: code:addons/website_forum/static/src/js/website_forum.js:144
+#: code:addons/website_forum/static/src/js/website_forum.js:145
 #, python-format
 msgid "Sorry, you cannot vote for your own posts"
 msgstr ""
@@ -2474,7 +2488,10 @@ msgid ""
 msgstr ""
 
 #. module: website_forum
+#: code:addons/website_forum/models/forum.py:51
 #: model:forum.forum,description:website_forum.forum_help
+#: model:forum.forum,welcome_message:website_forum.forum_help
+#, python-format
 msgid ""
 "This community is for professionals and enthusiasts of our products and "
 "services. Share and discuss the best content and new marketing ideas, build "
@@ -2497,14 +2514,14 @@ msgstr ""
 
 #. module: website_forum
 #. openerp-web
-#: code:addons/website_forum/static/src/js/website_forum.js:110
+#: code:addons/website_forum/static/src/js/website_forum.js:111
 #, python-format
 msgid "This post can not be flagged"
 msgstr ""
 
 #. module: website_forum
 #. openerp-web
-#: code:addons/website_forum/static/src/js/website_forum.js:105
+#: code:addons/website_forum/static/src/js/website_forum.js:106
 #, python-format
 msgid "This post is already flagged"
 msgstr ""
@@ -2697,7 +2714,7 @@ msgstr ""
 #. module: website_forum
 #: model:ir.ui.view,arch_db:website_forum.post_description_full
 msgid "Waiting for validation"
-msgstr ""
+msgstr "Čeká na ověření"
 
 #. module: website_forum
 #: model:ir.model.fields,field_description:website_forum.field_res_users_forum_waiting_posts_count
@@ -2730,6 +2747,11 @@ msgstr "Historie komunikace Webové stránky"
 #: model:ir.model.fields,field_description:website_forum.field_forum_forum_welcome_message
 msgid "Welcome Message"
 msgstr ""
+
+#. module: website_forum
+#: model:forum.forum,welcome_message:website_forum.forum_help
+msgid "Welcome!"
+msgstr "Vítejte!"
 
 #. module: website_forum
 #: model:forum.forum,faq:website_forum.forum_help
@@ -2777,6 +2799,12 @@ msgstr ""
 #, python-format
 msgid ""
 "You cannot choose %s as default post since the forum does not allow it."
+msgstr ""
+
+#. module: website_forum
+#: code:addons/website_forum/models/forum.py:428
+#, python-format
+msgid "You cannot create recursive forum posts."
 msgstr ""
 
 #. module: website_forum

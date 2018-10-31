@@ -16,17 +16,22 @@
 # David Vidal <david.vidal@trespinos.es>, 2017
 # Raquel Iciarte <ric@odoo.com>, 2017
 # oihane <oihanecruce@gmail.com>, 2017
+# Luis J. Salvatierra <ljsalvatierra@binovo.es>, 2017
 # Carlos Lopez <celm1990@hotmail.com>, 2017
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017
 # JOSE ALEJANDRO ECHEVERRI VALENCIA <josealejandroeche@gmail.com>, 2018
 # Martin Trigaux, 2018
 # Ana Juaristi <ajuaristio@gmail.com>, 2018
+# Diego de cos <diegodecos@hotmail.com>, 2018
+# Cristina Martín Rodríguez <cristina.marrod@gmail.com>, 2018
+# Jimmy Ramos <jimmybanegas93@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-27 11:55+0000\n"
 "PO-Revision-Date: 2018-07-27 11:55+0000\n"
-"Last-Translator: Ana Juaristi <ajuaristio@gmail.com>, 2018\n"
+"Last-Translator: Jimmy Ramos <jimmybanegas93@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,9 +47,9 @@ msgid ""
 " * The 'Paid' status is set automatically when the invoice is paid. Its related journal entries may or may not be reconciled.\n"
 " * The 'Cancelled' status is used when user cancel invoice."
 msgstr ""
-"* El estado de \"Borrador\" se usa cuando se codifica un factura nueva y no confirmada.\n"
+"* El estado \"Borrador\" se usa cuando un usuario confecciona un nueva factura no confirmada.\n"
 "* El estado \"Abierto\" se usa cuando el usuario crea una factura, y se genera un número de factura. Este estado se mantiene hasta que el usuario paga la factura\n"
-"* El Estado \"Pagado\" se establece automáticamente cuando la factura se paga.  Sus entradas diarias relacionadas pueden estar o no conciliadas.\n"
+"* El Estado \"Pagado\" se establece automáticamente cuando la factura se paga.  Sus entradas relacionadas en el diario pueden o no estar conciliadas.\n"
 "* El estado \"Cancelado\" se usa cuando el usuario cancela una factura"
 
 #. module: account
@@ -2261,12 +2266,12 @@ msgstr "Aplicabilidad"
 #. module: account
 #: selection:tax.adjustments.wizard,adjustment_type:0
 msgid "Applied on credit journal item"
-msgstr ""
+msgstr "Aplicado en un elemento de diario de crédito"
 
 #. module: account
 #: selection:tax.adjustments.wizard,adjustment_type:0
 msgid "Applied on debit journal item"
-msgstr ""
+msgstr "Aplicado en un elemento de diario de débito"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_fiscal_position_auto_apply
@@ -2374,7 +2379,7 @@ msgstr "Balanceo Automático de Línea"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_config_settings_module_currency_rate_live
 msgid "Automatic Currency Rates"
-msgstr "Taza de Cambio Automática"
+msgstr "Tasa de Cambio Automática"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -2430,7 +2435,7 @@ msgstr "Deudor Malo"
 #: model:ir.ui.view,arch_db:account.report_payment_receipt
 #: model:ir.ui.view,arch_db:account.report_trialbalance
 msgid "Balance"
-msgstr "Balance"
+msgstr "Saldo"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line_balance_cash_basis
@@ -3169,7 +3174,7 @@ msgstr "Elija plantilla del plan contable"
 #: code:addons/account/static/src/xml/account_reconciliation.xml:131
 #, python-format
 msgid "Choose counterpart or Create Write-off"
-msgstr ""
+msgstr "Seleccione contrapartida o Cree un Descuadre"
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_account_bank_journal_form
@@ -7376,7 +7381,7 @@ msgstr "Octubre"
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
 msgid "Odoo Accounting has many extra-features:"
-msgstr ""
+msgstr "La contabilidad en Odoo tienen muchas características extra:"
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_bank_statement_line
@@ -7625,10 +7630,11 @@ msgid ""
 "would make a gap in the numbering. You should book an entry and make a "
 "regular revert of it in case you want to cancel it."
 msgstr ""
-"Operación no permitida. Ya que su declaración ya recibió un número, no puede"
-" conciliarla completamente con otras entradas contables ya que habrá un "
-"salto en la secuencia. Debe reservar un asiento y hacer un reverso normal de"
-" ese caso si lo deseas anular."
+"Operación no permitida. Puesto que su línea de extracto ya recibió un "
+"número, no puede conciliarla completamente con otros apuntes contables "
+"existentes, ya que habría un salto en la secuencia. Debe crear un nuevo "
+"asiento y hacer un asiento de reversión del anterior en caso de que quiera "
+"anularlo."
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_account_template_nocreate
@@ -10279,6 +10285,7 @@ msgstr ""
 #, python-format
 msgid "The lock date for advisors is irreversible and can't be removed."
 msgstr ""
+"El bloqueo de fecha para asesores es irreversible y no puede ser eliminado."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_move_line_move_id
@@ -10307,6 +10314,8 @@ msgstr "El nombre que se utilizará en los apuntes contables"
 msgid ""
 "The new lock date for advisors must be set after the previous lock date."
 msgstr ""
+"La nueva fecha de bloqueo para los asesores se debe establecer después de la"
+" fecha de bloqueo anterior."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_journal_refund_sequence_number_next
@@ -11804,6 +11813,9 @@ msgid ""
 "You cannot define stricter conditions on advisors than on users. Please make"
 " sure that the lock date on advisor is set before the lock date for users."
 msgstr ""
+"No puede definir condiciones más estrictas en los asesores que en los "
+"usuarios. Asegúrese de que la fecha de bloqueo en el asesor esté configurada"
+" antes de la fecha de bloqueo para los usuarios."
 
 #. module: account
 #: code:addons/account/models/account_invoice.py:613
@@ -11887,6 +11899,9 @@ msgid ""
 "You cannot lock a period that is not finished yet. Please make sure that the"
 " lock date for advisors is not set after the last day of the previous month."
 msgstr ""
+"No se puede bloquear un periodo que no ha transcurrido todavía. Por favor, "
+"asegúrate de que la fecha bloqueada no es anterior al último día del mes "
+"anterior. "
 
 #. module: account
 #. openerp-web
@@ -12360,3 +12375,11 @@ msgstr "wizard.multi.charts.accounts"
 #: model:ir.ui.view,arch_db:account.view_bank_statement_form
 msgid "→ Count"
 msgstr "→ Cuenta"
+
+#. module: account
+#: code:addons/account/models/account.py:309
+#, python-format
+msgid ""
+"Currency field should only be set if the journal's currency is different "
+"from the company's. Leave the field blank to use company currency."
+msgstr ""

@@ -22,8 +22,8 @@
                              <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
                              <field name="currency_id" options="{'no_create': True}" groups="base.group_multi_currency"/>
                              <field name="internal_type" invisible="1" readonly="1"/>
-                             <label for="reconcile"/>
-                             <div>
+                             <label for="reconcile" attrs="{'invisible': [('internal_type','=','liquidity')]}"/>
+                             <div attrs="{'invisible': [('internal_type','=','liquidity')]}">
                                 <field name="reconcile"/>
                                 <button name="action_open_reconcile" class="oe_link" type="object" string=" -> Reconcile" attrs="{'invisible': [('reconcile', '=', False)]}"/>
                              </div>
@@ -398,8 +398,9 @@
                         </div>
                         <group>
                             <group>
-                                <field name="bank_acc_number"/>
-                                <field name="bank_id"/>
+                                <field name="bank_account_id"/>
+                                <field name="bank_acc_number" attrs="{'readonly': [('bank_account_id', '!=', False)]}"/>
+                                <field name="bank_id" attrs="{'readonly': [('bank_account_id', '!=', False)]}"/>
                             </group>
                             <group>
                                 <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>

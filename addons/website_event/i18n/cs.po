@@ -5,7 +5,7 @@
 # Translators:
 # Martin Trigaux, 2017
 # Michal Veselý <michal@veselyberanek.net>, 2018
-# Jiří P., 2018
+# J. Podhorecky <j.podhorecky@volny.cz>, 2018
 # Chris <krystof.reklamy13@gmail.com>, 2018
 msgid ""
 msgstr ""
@@ -24,7 +24,7 @@ msgstr ""
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_attendee_details
 msgid "(Free)"
-msgstr ""
+msgstr "(Free)"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_template
@@ -125,7 +125,7 @@ msgstr ""
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_attendee_details
 msgid "<strong>Email</strong>"
-msgstr ""
+msgstr "<strong>Email</strong>"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_attendee_details
@@ -239,6 +239,7 @@ msgid ""
 "Creates menus Introduction, Location and Register on the page  of the event "
 "on the website."
 msgstr ""
+"Vytváří nabídky Úvod, Umístění a Registrace na stránce události na webu."
 
 #. module: website_event
 #: model:ir.model.fields,field_description:website_event.field_event_event_website_menu
@@ -270,7 +271,7 @@ msgstr ""
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.ticket
 msgid "End of Registration"
-msgstr ""
+msgstr "Konec registrace"
 
 #. module: website_event
 #: model:ir.model,name:website_event.model_event_event
@@ -470,6 +471,17 @@ msgstr "Telefon"
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.event_right_photos
 msgid "Photos of Past Events"
+msgstr ""
+
+#. module: website_event
+#: code:addons/website_event/static/src/js/website_event.js:37
+#, python-format
+msgid "Please select at least one ticket."
+msgstr ""
+
+#. module: website_event
+#: model:ir.ui.view,arch_db:website_event.event_event_view_form_inherit_website
+msgid "Preview Badges"
 msgstr ""
 
 #. module: website_event

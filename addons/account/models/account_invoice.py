@@ -103,7 +103,7 @@ class AccountInvoice(models.Model):
     def _compute_residual(self):
         residual = 0.0
         residual_company_signed = 0.0
-        sign = self.type in ['in_refund', 'out_refund'] and -1 or 1
+        sign = self.type in ['in_invoice', 'out_refund'] and -1 or 1
         for line in self.sudo().move_id.line_ids:
             if line.account_id == self.account_id:
                 residual_company_signed += line.amount_residual
@@ -223,7 +223,7 @@ class AccountInvoice(models.Model):
         for line in self.move_id.line_ids.filtered(lambda l: l.account_id.id == self.account_id.id):
             payment_lines.update(line.mapped('matched_credit_ids.credit_move_id.id'))
             payment_lines.update(line.mapped('matched_debit_ids.debit_move_id.id'))
-        self.payment_move_line_ids = self.env['account.move.line'].browse(list(payment_lines))
+        self.payment_move_line_ids = self.env['account.move.line'].browse(list(payment_lines)).sorted()
 
     name = fields.Char(string='Reference/Description', index=True,
         readonly=True, states={'draft': [('readonly', False)]}, copy=False, help='The name that will be used on account move lines')
@@ -1341,18 +1341,7 @@ class AccountInvoice(models.Model):
             new_invoices += refund_invoice
         return new_invoices
 
-    @api.multi
-    def pay_and_reconcile(self, pay_journal, pay_amount=None, date=None, writeoff_acc=None):
-        """ Create and post an account.payment for the invoice self, which creates a journal entry that reconciles the invoice.
-
-            :param pay_journal: journal in which the payment entry will be created
-            :param pay_amount: amount of the payment to register, defaults to the residual of the invoice
-            :param date: payment date, defaults to fields.Date.context_today(self)
-            :param writeoff_acc: account in which to create a writeoff if pay_amount < self.residual, so that the invoice is fully paid
-        """
-        if isinstance(pay_journal, pycompat.integer_types):
-            pay_journal = self.env['account.journal'].browse([pay_journal])
-        assert len(self) == 1, "Can only pay one invoice at a time."
+    def _prepare_payment_vals(self, pay_journal, pay_amount=None, date=None, writeoff_acc=None, communication=None):
         payment_type = self.type in ('out_invoice', 'in_refund') and 'inbound' or 'outbound'
         if payment_type == 'inbound':
             payment_method = self.env.ref('account.account_payment_method_manual_in')
@@ -1361,9 +1350,10 @@ class AccountInvoice(models.Model):
             payment_method = self.env.ref('account.account_payment_method_manual_out')
             journal_payment_methods = pay_journal.outbound_payment_method_ids
 
-        communication = self.type in ('in_invoice', 'in_refund') and self.reference or self.number
-        if self.origin:
-            communication = '%s (%s)' % (communication, self.origin)
+        if not communication:
+            communication = self.type in ('in_invoice', 'in_refund') and self.reference or self.number
+            if self.origin:
+                communication = '%s (%s)' % (communication, self.origin)
 
         payment_vals = {
             'invoice_ids': [(6, 0, self.ids)],
@@ -1378,7 +1368,22 @@ class AccountInvoice(models.Model):
             'payment_difference_handling': writeoff_acc and 'reconcile' or 'open',
             'writeoff_account_id': writeoff_acc and writeoff_acc.id or False,
         }
+        return payment_vals
 
+    @api.multi
+    def pay_and_reconcile(self, pay_journal, pay_amount=None, date=None, writeoff_acc=None):
+        """ Create and post an account.payment for the invoice self, which creates a journal entry that reconciles the invoice.
+
+            :param pay_journal: journal in which the payment entry will be created
+            :param pay_amount: amount of the payment to register, defaults to the residual of the invoice
+            :param date: payment date, defaults to fields.Date.context_today(self)
+            :param writeoff_acc: account in which to create a writeoff if pay_amount < self.residual, so that the invoice is fully paid
+        """
+        if isinstance(pay_journal, pycompat.integer_types):
+            pay_journal = self.env['account.journal'].browse([pay_journal])
+        assert len(self) == 1, "Can only pay one invoice at a time."
+
+        payment_vals = self._prepare_payment_vals(pay_journal, pay_amount=pay_amount, date=date, writeoff_acc=writeoff_acc)
         payment = self.env['account.payment'].create(payment_vals)
         payment.post()
 
@@ -1454,7 +1459,7 @@ class AccountInvoiceLine(models.Model):
         ondelete='set null', index=True, oldname='uos_id')
     product_id = fields.Many2one('product.product', string='Product',
         ondelete='restrict', index=True)
-    product_image = fields.Binary('Product Image', related="product_id.image", store=False)
+    product_image = fields.Binary('Product Image', related="product_id.image", store=False, readonly=True)
     account_id = fields.Many2one('account.account', string='Account',
         required=True, domain=[('deprecated', '=', False)],
         default=_default_account,

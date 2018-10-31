@@ -950,6 +950,27 @@ class StockMove(TransactionCase):
         move_partial._action_assign()
         self.assertEqual(move_partial.state, 'assigned')
 
+    def test_availability_9(self):
+        """ Test the assignment mechanism when the product quantity is increase
+        on a receipt move.
+        """
+        move_receipt = self.env['stock.move'].create({
+            'name': 'test_receipt_edit',
+            'location_id': self.supplier_location.id,
+            'location_dest_id': self.stock_location.id,
+            'product_id': self.product1.id,
+            'product_uom': self.uom_dozen.id,
+            'product_uom_qty': 1.0,
+        })
+
+        move_receipt._action_confirm()
+        move_receipt._action_assign()
+        self.assertEqual(move_receipt.state, 'assigned')
+        move_receipt.product_uom_qty = 3.0
+        move_receipt._action_assign()
+        self.assertEqual(move_receipt.state, 'assigned')
+        self.assertEqual(move_receipt.move_line_ids.product_uom_qty, 3)
+
     def test_unreserve_1(self):
         """ Check that unreserving a stock move sets the products reserved as available and
         set the state back to confirmed.
@@ -1832,6 +1853,48 @@ class StockMove(TransactionCase):
 
         self.assertAlmostEqual(move_pack_cust.reserved_availability, 1.0)
         self.assertEqual(move_pack_cust.state, 'partially_available')
+
+    def test_use_reserved_move_line_1(self):
+        """ Test that _free_reservation work when quantity is only available on
+        reserved move lines.
+        """
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10.0)
+        move1 = self.env['stock.move'].create({
+            'name': 'test_use_unreserved_move_line_1_1',
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'product_id': self.product1.id,
+            'product_uom': self.uom_unit.id,
+            'product_uom_qty': 5.0,
+        })
+        move2 = self.env['stock.move'].create({
+            'name': 'test_use_unreserved_move_line_1_1',
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'product_id': self.product1.id,
+            'product_uom': self.uom_unit.id,
+            'product_uom_qty': 5.0,
+        })
+        move1._action_confirm()
+        move1._action_assign()
+        move2._action_confirm()
+        move2._action_assign()
+        move3 = self.env['stock.move'].create({
+            'name': 'test_use_unreserved_move_line_1_1',
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'product_id': self.product1.id,
+            'product_uom': self.uom_unit.id,
+            'product_uom_qty': 0.0,
+            'quantity_done': 1.0,
+        })
+        move3._action_confirm()
+        move3._action_assign()
+        move3._action_done()
+        self.assertEqual(move3.state, 'done')
+        quant = self.env['stock.quant']._gather(self.product1, self.stock_location)
+        self.assertEqual(quant.quantity, 9.0)
+        self.assertEqual(quant.reserved_quantity, 9.0)
 
     def test_use_unreserved_move_line_1(self):
         """ Test that validating a stock move linked to an untracked product reserved by another one
@@ -3008,7 +3071,7 @@ class StockMove(TransactionCase):
 
     def test_immediate_validate_4(self):
         """ In a picking with a single available tracked by lot move, clicking on validate without
-        filling any quantities should open an UserError.
+        filling any quantities should pop up the immediate transfer wizard.
         """
         partner = self.env['res.partner'].create({'name': 'Jean'})
         lot1 = self.env['stock.production.lot'].create({
@@ -3034,12 +3097,11 @@ class StockMove(TransactionCase):
         })
         picking.action_confirm()
         picking.action_assign()
-        # No quantites/lot filled, it should raise.
-        with self.assertRaises(UserError):
-            picking.button_validate()
-        picking.move_lines.move_line_ids[0].qty_done = 5.0
-        # All the information are present (lots and quantities), the wizard won't be opened.
-        picking.button_validate()
+        # No quantites filled, immediate transfer wizard should pop up.
+        immediate_trans_wiz_dict = picking.button_validate()
+        self.assertEqual(immediate_trans_wiz_dict.get('res_model'), 'stock.immediate.transfer')
+        immediate_trans_wiz = self.env[immediate_trans_wiz_dict['res_model']].browse(immediate_trans_wiz_dict['res_id'])
+        immediate_trans_wiz.process()
 
         self.assertEqual(picking.move_lines.quantity_done, 5.0)
         # Check move_lines data

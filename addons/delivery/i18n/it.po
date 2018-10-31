@@ -12,13 +12,14 @@
 # Luca Tralli, 2018
 # Massimo Bianchi <bianchi.massimo@gmail.com>, 2018
 # Tiziano Zambelli <zstiziano@gmail.com>, 2018
+# Léonie Bouchat <lbo@odoo.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 13:43+0000\n"
 "PO-Revision-Date: 2018-02-19 13:43+0000\n"
-"Last-Translator: Tiziano Zambelli <zstiziano@gmail.com>, 2018\n"
+"Last-Translator: Léonie Bouchat <lbo@odoo.com>, 2018\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -401,6 +402,13 @@ msgid "Error: no matching grid."
 msgstr ""
 
 #. module: delivery
+#: code:addons/delivery/models/delivery_carrier.py:206
+#: code:addons/delivery/models/delivery_grid.py:50
+#, python-format
+msgid "Error: this delivery method is not available for this address."
+msgstr ""
+
+#. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_sale_order_delivery_price
 msgid "Estimated Delivery Price"
 msgstr "Costo di spedizione stimato"
@@ -567,7 +575,7 @@ msgstr ""
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_delivery_carrier_form
 msgid "Margin on Rate"
-msgstr ""
+msgstr "Margine sulla Tariffa"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_product_packaging_max_weight
@@ -845,7 +853,7 @@ msgstr ""
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier_margin
 msgid "This percentage will be added to the shipping price."
-msgstr ""
+msgstr "Questa percentuale verrà aggiunta al prezzo di spedizione."
 
 #. module: delivery
 #: model:ir.ui.view,arch_db:delivery.view_picking_withcarrier_out_form
@@ -919,7 +927,7 @@ msgstr "Peso * Volume"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_stock_move_weight_uom_id
 msgid "Weight Unit of Measure"
-msgstr ""
+msgstr "Unità di misura del peso"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_stock_picking_shipping_weight

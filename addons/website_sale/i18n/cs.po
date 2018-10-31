@@ -6,7 +6,7 @@
 # Martin Trigaux, 2017
 # Jan Horzinka <jan.horzinka@centrum.cz>, 2018
 # Michal Veselý <michal@veselyberanek.net>, 2018
-# trendspotter, 2018
+# J. Podhorecky <j.podhorecky@volny.cz>, 2018
 # Chris <krystof.reklamy13@gmail.com>, 2018
 # Adam Kettner <cetnerix@gmail.com>, 2018
 # Ladislav Tomm <tomm@helemik.cz>, 2018
@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-19 13:43+0000\n"
-"PO-Revision-Date: 2018-02-19 13:43+0000\n"
+"POT-Creation-Date: 2018-07-27 11:55+0000\n"
+"PO-Revision-Date: 2018-07-27 11:55+0000\n"
 "Last-Translator: Jaroslav Helemik Nemec <nemec@helemik.cz>, 2018\n"
 "Language-Team: Czech (https://www.transifex.com/odoo/teams/41243/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -130,7 +130,7 @@ msgstr ""
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.confirmation
 msgid "<i class=\"fa fa-print\"/> Print"
-msgstr ""
+msgstr "<i class=\"fa fa-print\"/> Tisk"
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.header
@@ -1210,7 +1210,7 @@ msgstr "Kontakt"
 #: code:addons/website_sale/static/src/xml/website_sale_dashboard.xml:97
 #, python-format
 msgid "Conversion"
-msgstr ""
+msgstr "Konverze"
 
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_res_country
@@ -1221,7 +1221,7 @@ msgstr "Země"
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.address
 msgid "Country..."
-msgstr ""
+msgstr "Země..."
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.website_planner
@@ -1349,7 +1349,7 @@ msgstr ""
 #. module: website_sale
 #: model:product.public.category,name:website_sale.devices
 msgid "Devices"
-msgstr ""
+msgstr "Zařízení"
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.website_planner
@@ -1508,7 +1508,7 @@ msgstr ""
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
 msgid "FedEx"
-msgstr ""
+msgstr "FedEx"
 
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_ir_model_fields
@@ -1749,10 +1749,10 @@ msgid "Installs *e-Commerce Inventory*"
 msgstr ""
 
 #. module: website_sale
-#: code:addons/website_sale/controllers/main.py:502
+#: code:addons/website_sale/controllers/main.py:518
 #, python-format
 msgid "Invalid Email! Please enter a valid email address."
-msgstr ""
+msgstr "Neplatný e-mail! Prosím zadejte platnou emailovou adresu."
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_res_config_settings_module_website_sale_stock
@@ -1776,7 +1776,7 @@ msgid "Issue invoices to customers"
 msgstr ""
 
 #. module: website_sale
-#: code:addons/website_sale/models/sale_order.py:146
+#: code:addons/website_sale/models/sale_order.py:157
 #, python-format
 msgid "It is forbidden to modify a sales order which is not in draft status"
 msgstr ""
@@ -1847,7 +1847,7 @@ msgstr ""
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.sale_report_view_search_website
 msgid "Last Year"
-msgstr ""
+msgstr "Minulý rok"
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.website_planner
@@ -1924,11 +1924,6 @@ msgid "Manage promotion &amp; coupon programs"
 msgstr ""
 
 #. module: website_sale
-#: model:ir.ui.view,arch_db:website_sale.sale_order_view_form
-msgid "Mark as Paid"
-msgstr ""
-
-#. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_product_public_category_image_medium
 msgid "Medium-sized image"
 msgstr "Středně velký obrázek"
@@ -2002,11 +1997,11 @@ msgstr ""
 #. module: website_sale
 #: model:product.public.category,name:website_sale.network
 msgid "Network"
-msgstr ""
+msgstr "Síť"
 
 #. module: website_sale
 #. openerp-web
-#: code:addons/website_sale/controllers/main.py:968
+#: code:addons/website_sale/controllers/main.py:988
 #: code:addons/website_sale/static/src/js/website_sale.editor.js:32
 #: model:ir.ui.view,arch_db:website_sale.content_new_product
 #, python-format
@@ -2095,7 +2090,7 @@ msgstr ""
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_res_config_settings_module_website_sale_options
 msgid "Optional Products"
-msgstr ""
+msgstr "Volitelné produkty"
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.website_planner
@@ -2155,7 +2150,7 @@ msgid "Parent Category"
 msgstr "Nadřazená kategorie"
 
 #. module: website_sale
-#: code:addons/website_sale/controllers/main.py:756
+#: code:addons/website_sale/controllers/main.py:774
 #: model:ir.ui.view,arch_db:website_sale.payment
 #, python-format
 msgid "Pay Now"
@@ -2886,7 +2881,7 @@ msgstr "Software"
 #: code:addons/website_sale/static/src/xml/website_sale_dashboard.xml:109
 #, python-format
 msgid "Sold"
-msgstr ""
+msgstr "Prodáno"
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.website_planner
@@ -2896,10 +2891,10 @@ msgid ""
 msgstr ""
 
 #. module: website_sale
-#: code:addons/website_sale/controllers/main.py:520
+#: code:addons/website_sale/controllers/main.py:536
 #, python-format
 msgid "Some required fields are empty."
-msgstr ""
+msgstr "Některá povinná pole jsou prázdná."
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.404
@@ -2929,7 +2924,7 @@ msgstr ""
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.address
 msgid "State / Province"
-msgstr ""
+msgstr "Stát / provincie"
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.address
@@ -2979,7 +2974,7 @@ msgstr ""
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
 msgid "Suggest optional products when adding to cart"
-msgstr ""
+msgstr "Navrhnout volitelné produkty při přidávání do košíku"
 
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.website_planner
@@ -3092,6 +3087,14 @@ msgid ""
 msgstr ""
 
 #. module: website_sale
+#: model:ir.model.fields,help:website_sale.field_res_config_settings_automatic_invoice
+msgid ""
+"The invoice is generated automatically and available in the customer portal when the transaction is confirmed by the payment acquirer.\n"
+"The invoice is marked as paid and the payment is registered in the payment journal defined in the configuration of the payment acquirer.\n"
+"This mode is advised if you issue the final invoice at the order and not after the delivery."
+msgstr ""
+
+#. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
 msgid ""
 "The mode selected here applies as invoicing policy of any new product "
@@ -3099,7 +3102,7 @@ msgid ""
 msgstr ""
 
 #. module: website_sale
-#: code:addons/website_sale/models/sale_order.py:247
+#: code:addons/website_sale/models/sale_order.py:258
 #, python-format
 msgid ""
 "The quote should be sent and the payment acquirer type should be manual or "
@@ -3207,7 +3210,7 @@ msgstr ""
 #. module: website_sale
 #: model:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
 msgid "USPS"
-msgstr ""
+msgstr "USPS"
 
 #. module: website_sale
 #: model:sale.order.line,website_description:website_sale.website_sale_order_line_1
