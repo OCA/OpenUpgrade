@@ -1847,7 +1847,7 @@ QUnit.module('basic_fields', {
             var evt = document.createEvent("MouseEvents"); //taken ref from https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/initMouseEvent
             evt.initMouseEvent("mouseover", true, true, window, 0, 0, 0, 80, 20, false, false, false, false, 0, null);
             $('.discreteBar')[0].dispatchEvent(evt);
-            var tooltip = $('.nvtooltip').find('table').find('.key')[0].innerText;
+            var tooltip = $('.nvtooltip').find('table').find('.key')[0].innerText.trim();
             assert.equal(tooltip, graph_key, "graph tooltip should be generated ");
             $('.nvtooltip').remove();
 
@@ -1898,6 +1898,45 @@ QUnit.module('basic_fields', {
 
         kanban.destroy();
         basicFields.JournalDashboardGraph.prototype.destroy = destroy;
+
+        assert.verifySteps(['destroy']);
+    });
+
+    QUnit.test('graph dashboard widget can be destroyed when nv is partially loaded', function (assert) {
+        // this test ensures that the JournalDashboardGraph widget doesn't crash
+        // when being destroyed before nv has been completely loaded
+        assert.expect(2);
+
+        testUtils.patch(basicFields.JournalDashboardGraph, {
+            destroy: function () {
+                assert.step('destroy');
+                // nv is fully loaded only when nvd3.js has been loaded
+                // which happens sequentially after nv.d3.js
+                // we simulate this race condition with:
+                var offWindowResize = window.nv.utils.offWindowResize;
+                window.nv.utils.offWindowResize = undefined;
+                this._super.apply(this, arguments);
+                window.nv.utils.offWindowResize = offWindowResize;
+            },
+        });
+
+        var kanban = createView({
+            View: KanbanView,
+            model: 'partner',
+            data: this.data,
+            arch: '<kanban class="o_kanban_test">' +
+                    '<field name="graph_type"/>' +
+                    '<templates><t t-name="kanban-box">' +
+                        '<div>' +
+                        '<field name="graph_data" t-att-graph_type="record.graph_type.raw_value" widget="dashboard_graph"/>' +
+                        '</div>' +
+                    '</t>' +
+                '</templates></kanban>',
+            domain: [['id', 'in', [1]]],
+        });
+
+        kanban.destroy();
+        testUtils.unpatch(basicFields.JournalDashboardGraph);
 
         assert.verifySteps(['destroy']);
     });
@@ -2006,7 +2045,7 @@ QUnit.module('basic_fields', {
     });
 
     QUnit.test('date field value should not set on first click', function (assert) {
-        assert.expect(2);
+        assert.expect(3);
 
         var form = createView({
             View: FormView,
@@ -2016,10 +2055,10 @@ QUnit.module('basic_fields', {
             res_id: 4,
         });
         form.$buttons.find('.o_form_button_edit').click();
-        form.$('.o_datepicker_input').click();
+        assert.strictEqual($('.bootstrap-datetimepicker-widget').length, 1, "there should be a datepicker (autofocus)");
         assert.strictEqual(form.$('.o_datepicker_input').val(), '', "date field's input should be empty on first click");
         $('.day:contains(22)').click();
-        form.$('.o_datepicker_input').click(); // Open Datepicker second time
+        form.$('.o_datepicker_input').focus(); // Open Datepicker second time
         assert.strictEqual($('.day.active').text(), '22', 'datepicker should be highlight with 22nd day of month');
         form.destroy();
     });
@@ -2057,8 +2096,7 @@ QUnit.module('basic_fields', {
         assert.strictEqual(form.$('.o_datepicker_input').val(), '02/03/2017',
             'the date should be correct in edit mode');
 
-        // click on the input and select another value
-        form.$('.o_datepicker_input').click();
+        // select another value
         assert.ok($('.bootstrap-datetimepicker-widget').length, 'datepicker should be open');
         assert.strictEqual($('.day.active').data('day'), '02/03/2017', 'datepicker should be highlight February 3');
         $('.bootstrap-datetimepicker-widget .picker-switch').first().click();  // Month selection
@@ -2141,8 +2179,7 @@ QUnit.module('basic_fields', {
         assert.strictEqual(list.$('input.o_datepicker_input').val(), '02/03/2017',
             'the date should be correct in edit mode');
 
-        // click on the input and select another value
-        list.$('input.o_datepicker_input').click();
+        // select another value
         assert.ok($('.bootstrap-datetimepicker-widget').length, 'datepicker should be open');
         $('.bootstrap-datetimepicker-widget .picker-switch').first().click();  // Month selection
         $('.bootstrap-datetimepicker-widget .picker-switch').first().click();  // Year selection
@@ -2259,8 +2296,7 @@ QUnit.module('basic_fields', {
         form.$buttons.find('.o_form_button_edit').click();
         assert.strictEqual(form.$('.o_datepicker_input').val(), expectedDateString,
             'the datetime should be correct in edit mode');
-        // click on the input and select 22 February at 8:23:33
-        form.$('.o_datepicker_input').click();
+        // select 22 February at 8:23:33
         assert.ok($('.bootstrap-datetimepicker-widget').length, 'datepicker should be open');
         $('.bootstrap-datetimepicker-widget .picker-switch').first().click();  // Month selection
         $('.bootstrap-datetimepicker-widget .picker-switch').first().click();  // Year selection
@@ -2358,8 +2394,7 @@ QUnit.module('basic_fields', {
         assert.strictEqual(list.$('input.o_datepicker_input').val(), expectedDateString,
             'the date should be correct in edit mode');
 
-        // click on the input and select 22 February at 8:23:33
-        list.$('input.o_datepicker_input').click();
+        // select 22 February at 8:23:33
         assert.ok($('.bootstrap-datetimepicker-widget').length, 'datepicker should be open');
         $('.bootstrap-datetimepicker-widget .picker-switch').first().click();  // Month selection
         $('.bootstrap-datetimepicker-widget .picker-switch').first().click();  // Year selection
@@ -2513,6 +2548,32 @@ QUnit.module('basic_fields', {
         form.$('.o_field_widget[name=p] .o_data_row').click();
         assert.strictEqual($('.modal .o_field_date[name=datetime]').text(), '02/08/2017',
             'the datetime (date widget) should be correctly displayed in form view');
+
+        form.destroy();
+    });
+
+    QUnit.test('datepicker option: daysOfWeekDisabled', function (assert) {
+        assert.expect(2);
+
+        this.data.partner.fields.datetime.default = "2017-08-02 12:00:05";
+        this.data.partner.fields.datetime.required = true;
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch:'<form string="Partners">' +
+                    '<field name="datetime" ' +
+                            'options=\'{"datepicker": {"daysOfWeekDisabled": [0, 6]}}\'/>' +
+                '</form>',
+            res_id: 1,
+        });
+
+        form.$buttons.find('.o_form_button_create').click();
+        assert.ok($('.day:last-child(),.day:nth-child(2)').hasClass('disabled'),
+            'first and last days must be disabled');
+        assert.notOk($('.day:not(:last-child()):not(:nth-child(2))').hasClass('disabled'),
+            'other days must stay clickable');
 
         form.destroy();
     });
@@ -4345,6 +4406,33 @@ QUnit.module('basic_fields', {
 
     QUnit.module('FieldDomain');
 
+    QUnit.test('The domain editor should not crash the view when given a dynamic filter', function (assert) {
+        //dynamic filters (containing variables, such as uid, parent or today)
+        //are not handled by the domain editor, but it shouldn't crash the view
+        assert.expect(1);
+
+        this.data.partner.records[0].foo = '[["int_field", "=", uid]]';
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch:
+                '<form>' +
+                    '<field name="foo" widget="domain" options="{\'model\': \'partner\'}"/>' +
+                    '<field name="int_field" invisible="1"/>' +
+                '</form>',
+            res_id: 1,
+            session: {
+                user_context: {uid: 14},
+            },
+        });
+
+        assert.strictEqual(form.$('.o_read_mode').text(), "This domain is not supported.",
+            "The widget should not crash the view, but gracefully admit its failure.");
+        form.destroy();
+    });
+
     QUnit.test('basic domain field usage is ok', function (assert) {
         assert.expect(6);
 
@@ -4491,6 +4579,43 @@ QUnit.module('basic_fields', {
             "field selector popover should contain two fields");
         assert.strictEqual($sampleLi.length, 1,
             "field selector popover should contain 'Color index' field");
+        form.destroy();
+    });
+
+    QUnit.test('domain field can be reset with a new domain (from onchange)', function (assert) {
+        assert.expect(2);
+
+        this.data.partner.records[0].foo = '[]';
+        this.data.partner.onchanges = {
+            display_name: function (obj) {
+                obj.foo = '[["id", "=", 1]]';
+            },
+        };
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch:
+                '<form>' +
+                    '<field name="display_name"/>' +
+                    '<field name="foo" widget="domain" options="{\'model\': \'partner\'}"/>' +
+                '</form>',
+            res_id: 1,
+            viewOptions: {
+                mode: 'edit',
+            },
+        });
+
+        assert.equal(form.$('.o_domain_show_selection_button').text().trim(), '5 record(s)',
+            "the domain being empty, there should be 5 records");
+
+        // update display_name to trigger the onchange and reset foo
+        form.$('.o_field_widget[name=display_name]').val('new value').trigger('input');
+
+        assert.equal(form.$('.o_domain_show_selection_button').text().trim(), '1 record(s)',
+            "the domain has changed, there should be only 1 record");
+
         form.destroy();
     });
 

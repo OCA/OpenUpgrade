@@ -65,7 +65,7 @@
             <field name="res_model">project.task</field>
             <field name="view_mode">kanban,tree,form,calendar,pivot,graph</field>
             <field name="context">{
-                'group_by': 'stage_id',
+                'default_group_by': 'stage_id',
                 'search_default_project_id': [active_id],
                 'default_project_id': active_id,
             }</field>
@@ -713,7 +713,7 @@
             <field name="name">Project's tasks</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar,graph,kanban</field>
-            <field name="domain">[('project_id', 'child_of', [active_id])]</field>
+            <field name="domain">[('project_id', '=', active_id)]</field>
             <field name="context">{'project_id':active_id}</field>
         </record>
 

@@ -14,9 +14,9 @@
 # peso <peer.sommerlund@gmail.com>, 2017
 # jonas jensen <j.jensen@tcomp.dk>, 2017
 # Jesper Carstensen <jc@danodoo.dk>, 2017
+# Kenneth Hansen <kenneth@vkdata.dk>, 2017
 # Visti Kristensen <visti@vkdata.dk>, 2017
 # Nicolaj Helmer Hansen <nhh@softwarehuset.com>, 2017
-# Kenneth Hansen <kenneth@vkdata.dk>, 2017
 # lhmflexerp <lhm@flexerp.dk>, 2017
 # JonathanStein <jstein@image.dk>, 2017
 # Simon Andersen <simon@vkdata.dk>, 2018
@@ -5042,7 +5042,7 @@ msgstr ""
 #: code:addons/account/static/src/xml/account_reconciliation.xml:57
 #, python-format
 msgid "Go to bank statement(s)"
-msgstr ""
+msgstr "Gå til kontoudtog"
 
 #. module: account
 #: code:addons/account/models/account_invoice.py:642
@@ -5145,7 +5145,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_form
 msgid "How do account types affect your reports?"
-msgstr ""
+msgstr "Hvordan påvirker kontotyper dine rapporter?"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -5956,7 +5956,7 @@ msgstr "Kursiv tekst (mindre)"
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
 msgid "Items"
-msgstr "Varer"
+msgstr "Posteringer"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.report_generalledger
@@ -6158,7 +6158,7 @@ msgstr "Begrundelse"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_journal_kanban_dashboard
 msgid "Kanban Dashboard"
-msgstr ""
+msgstr "Kanban rollecenter"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_journal_kanban_dashboard_graph
@@ -12009,3 +12009,11 @@ msgstr "wizard.multi.charts.accounts"
 #: model:ir.ui.view,arch_db:account.view_bank_statement_form
 msgid "→ Count"
 msgstr "→ Sammentæl"
+
+#. module: account
+#: code:addons/account/models/account.py:309
+#, python-format
+msgid ""
+"Currency field should only be set if the journal's currency is different "
+"from the company's. Leave the field blank to use company currency."
+msgstr ""

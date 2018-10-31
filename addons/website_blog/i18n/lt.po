@@ -3,6 +3,7 @@
 # * website_blog
 # 
 # Translators:
+# Linas Versada <paulius.sladkevicius@gmail.com>, 2017
 # UAB "Draugiški sprendimai" <transifex@draugiskisprendimai.lt>, 2017
 # Martin Trigaux, 2017
 # digitouch UAB <digitouchagencyeur@gmail.com>, 2017
@@ -12,14 +13,13 @@
 # Anatolij, 2017
 # Rolandas <info@paninfo.lt>, 2017
 # Monika Raciunaite <monika.raciunaite@gmail.com>, 2017
-# Linas Versada <paulius.sladkevicius@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-24 09:00+0000\n"
 "PO-Revision-Date: 2017-10-24 09:00+0000\n"
-"Last-Translator: Linas Versada <paulius.sladkevicius@gmail.com>, 2018\n"
+"Last-Translator: Monika Raciunaite <monika.raciunaite@gmail.com>, 2017\n"
 "Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -83,7 +83,7 @@ msgstr "&amp;times;"
 #. module: website_blog
 #: model:ir.ui.view,arch_db:website_blog.blog_feed
 msgid "&lt;?xml version=\"1.0\" encoding=\"utf-8\"?&gt;"
-msgstr ""
+msgstr "&lt;?xml version=\"1.0\" encoding=\"utf-8\"?&gt;"
 
 #. module: website_blog
 #: model:ir.ui.view,arch_db:website_blog.view_blog_blog_form
@@ -97,7 +97,7 @@ msgstr ""
 #: code:addons/website_blog/static/src/js/website.tour.blog.js:53
 #, python-format
 msgid "<b>Click on Save</b> to record your changes."
-msgstr ""
+msgstr "<b>Paspauskite \"Išsaugoti\"</b>, kad įrašytumėte pakeitimus."
 
 #. module: website_blog
 #. openerp-web
@@ -105,6 +105,8 @@ msgstr ""
 #, python-format
 msgid "<b>Publish your blog post</b> to make it visible to your visitors."
 msgstr ""
+"<b>Paskelbkite savo tinklaraščio įrašą</b>, kad jis taptų matomas jūsų "
+"lankytojams."
 
 #. module: website_blog
 #. openerp-web
@@ -114,6 +116,8 @@ msgid ""
 "<b>That's it, your blog post is published!</b> Discover more features "
 "through the <i>Customize</i> menu."
 msgstr ""
+"<b>Viskas, jūsų tinklaraščio įrašas paskelbtas! </b> Daugiau funkcijų galite"
+" rasti <i>pritaikymo</i> meniu."
 
 #. module: website_blog
 #. openerp-web
@@ -124,6 +128,10 @@ msgid ""
 " image or table, set bold or italic, etc. Drag and drop building blocks for "
 "more graphical blogs."
 msgstr ""
+"<b>Čia parašykite savo istoriją. </b>Teksto formatavimui naudokite viršutinę"
+" meniu juostą: pridėkite paveikslėlį ar lentelę, pastorinkite ar pabraukite "
+"tekstą ir t.t. Norėdami, kad jūsų tiklaraštis būtų vizualesnis, pridėkite "
+"turinio blokų."
 
 #. module: website_blog
 #: model:blog.post,content:website_blog.blog_post_1
@@ -136,7 +144,7 @@ msgstr ""
 #. module: website_blog
 #: model:ir.ui.view,arch_db:website_blog.blog_post_template_new_post
 msgid "A new post"
-msgstr ""
+msgstr "Naujas įrašas"
 
 #. module: website_blog
 #: model:ir.ui.view,arch_db:website_blog.opt_blog_rc_about_us
@@ -146,7 +154,7 @@ msgstr "Apie mus"
 #. module: website_blog
 #: model:ir.ui.view,arch_db:website_blog.blog_post_template_new_post
 msgid "Access post"
-msgstr ""
+msgstr "Įrašo prieiga"
 
 #. module: website_blog
 #: model:ir.model.fields,field_description:website_blog.field_blog_blog_active
@@ -218,12 +226,12 @@ msgstr "Juoda"
 #: model:ir.ui.view,arch_db:website_blog.view_blog_post_search
 #: model:website.menu,name:website_blog.menu_news
 msgid "Blog"
-msgstr "Dienoraštis"
+msgstr "Tinklaraštis"
 
 #. module: website_blog
 #: model:ir.model.fields,field_description:website_blog.field_blog_blog_name
 msgid "Blog Name"
-msgstr "Dienoraščio pavadinimas"
+msgstr "Tinklaraščio pavadinimas"
 
 #. module: website_blog
 #: code:addons/website_blog/models/website.py:22
@@ -233,7 +241,7 @@ msgstr "Dienoraščio pavadinimas"
 #: model:ir.ui.view,arch_db:website_blog.view_blog_post_search
 #, python-format
 msgid "Blog Post"
-msgstr "Dienoraščio pranešimas"
+msgstr "Tinklaraščio įrašas"
 
 #. module: website_blog
 #: code:addons/website_blog/models/website.py:53
@@ -252,7 +260,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:website_blog.opt_blog_post_complete_read_next
 #: model:ir.ui.view,arch_db:website_blog.view_blog_post_form
 msgid "Blog Post Title"
-msgstr "Dienoraščio pranešimo antraštė"
+msgstr "Tinklaraščio įrašo pavadinimas"
 
 #. module: website_blog
 #: code:addons/website_blog/models/website.py:24
@@ -262,24 +270,24 @@ msgstr "Dienoraščio pranešimo antraštė"
 #: model:ir.ui.view,arch_db:website_blog.view_blog_post_list
 #, python-format
 msgid "Blog Posts"
-msgstr "Dienoraščio pranešimai"
+msgstr "Tinklaraščio įrašai"
 
 #. module: website_blog
 #: model:ir.model.fields,field_description:website_blog.field_blog_blog_subtitle
 #: model:ir.ui.view,arch_db:website_blog.view_blog_post_form
 msgid "Blog Subtitle"
-msgstr "Dienoraščio paantraštė"
+msgstr "Tinklaraščio paantraštė"
 
 #. module: website_blog
 #: model:ir.model,name:website_blog.model_blog_tag
 msgid "Blog Tag"
-msgstr "Dienoraščio žyma"
+msgstr "Tinklaraščio žyma"
 
 #. module: website_blog
 #: model:ir.actions.act_window,name:website_blog.action_tags
 #: model:ir.ui.menu,name:website_blog.menu_blog_tag
 msgid "Blog Tags"
-msgstr "Dienoraščio žymės"
+msgstr "Tinklaraščio žymos"
 
 #. module: website_blog
 #: model:ir.actions.act_window,name:website_blog.action_blog_blog
@@ -287,7 +295,7 @@ msgstr "Dienoraščio žymės"
 #: model:ir.ui.menu,name:website_blog.menu_blog
 #: model:ir.ui.view,arch_db:website_blog.view_blog_blog_list
 msgid "Blogs"
-msgstr "Dienoraščiai"
+msgstr "Tinklaraščiai"
 
 #. module: website_blog
 #: model:ir.ui.view,arch_db:website_blog.website_blog
@@ -337,7 +345,7 @@ msgstr ""
 #. module: website_blog
 #: model:ir.actions.act_window,help:website_blog.action_blog_post
 msgid "Click to create a new blog post."
-msgstr ""
+msgstr "Paspauskite norėdami sukurti naują tinklaraščio įrašą."
 
 #. module: website_blog
 #: model:ir.model.fields,field_description:website_blog.field_blog_post_content
@@ -606,7 +614,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:website_blog.content_new_blogpost
 #, python-format
 msgid "New Blog Post"
-msgstr "Naujas dienoraščio pranešimas"
+msgstr "Naujas tinklaraščio įrašas"
 
 #. module: website_blog
 #: model:blog.post,content:website_blog.blog_post_2
@@ -626,7 +634,7 @@ msgstr ""
 #. module: website_blog
 #: model:ir.ui.view,arch_db:website_blog.blog_post_short
 msgid "No blog post yet."
-msgstr "Dienoraštyje dar nėra pranešimų."
+msgstr "Tinklaraštyje dar nėra įrašų."
 
 #. module: website_blog
 #: model:ir.ui.view,arch_db:website_blog.latest_blogs
@@ -666,12 +674,12 @@ msgstr ""
 #. module: website_blog
 #: model:blog.blog,name:website_blog.blog_blog_1
 msgid "Our Blog"
-msgstr ""
+msgstr "Mūsų tinklaraštis"
 
 #. module: website_blog
 #: model:ir.ui.view,arch_db:website_blog.opt_blog_rc_blogs
 msgid "Our Blogs"
-msgstr "Mūsų dienoraščiai"
+msgstr "Mūsų tinklaraščiai"
 
 #. module: website_blog
 #: model:ir.ui.view,arch_db:website_blog.opt_blog_rc_follow_us
@@ -717,12 +725,12 @@ msgstr "Publikuotas pranešimas"
 #. module: website_blog
 #: model:ir.ui.view,arch_db:website_blog.view_blog_post_form
 msgid "Publishing Options"
-msgstr ""
+msgstr "Publikavimo nustatymai"
 
 #. module: website_blog
 #: model:ir.model.fields,field_description:website_blog.field_blog_post_post_date
 msgid "Publishing date"
-msgstr ""
+msgstr "Publikavimo data"
 
 #. module: website_blog
 #: model:ir.ui.view,arch_db:website_blog.website_blog
@@ -763,7 +771,7 @@ msgstr "Raudona"
 #, python-format
 msgid "Select this menu item to create a new blog post."
 msgstr ""
-"Pasirinkite šį meniu elementą, kad sukurti naują dienoraščio pranešimą."
+"Pasirinkite šį meniu elementą, kad sukurtumėte naują tinklaraščio įrašą."
 
 #. module: website_blog
 #. openerp-web
@@ -944,7 +952,7 @@ msgstr "Tinklalapis"
 #. module: website_blog
 #: model:ir.actions.act_url,name:website_blog.action_open_website
 msgid "Website Blogs"
-msgstr "Interneto svetainės dienoraščiai"
+msgstr "Svetainės tinklaraščiai"
 
 #. module: website_blog
 #: model:ir.model.fields,field_description:website_blog.field_blog_post_website_message_ids

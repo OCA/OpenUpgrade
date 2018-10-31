@@ -893,21 +893,51 @@ var BasicModel = AbstractModel.extend({
                 route: '/web/dataset/resequence',
                 params: params,
             })
-            .then(function () {
-                data.data = _.sortBy(data.data, function (d) {
-                    return _.indexOf(resIDs, self.localData[d].res_id);
-                });
-                data.res_ids = [];
-                _.each(data.data, function (d) {
-                    var dataPoint = self.localData[d];
-                    if (dataPoint.type === 'record') {
-                        data.res_ids.push(dataPoint.res_id);
-                    } else {
-                        data.res_ids = data.res_ids.concat(dataPoint.res_ids);
+            .then(function (wasResequenced) {
+                if (!wasResequenced) {
+                    // the field on which the resequence was triggered does not
+                    // exist, so no resequence happened server-side
+                    return $.when();
+                }
+                var field = params.field ? params.field : 'sequence';
+
+                return self._rpc({
+                    model: modelName,
+                    method: 'read',
+                    args: [resIDs, [field]],
+                }).then(function (records) {
+                    if (data.data.length) {
+                        var dataType = self.localData[data.data[0]].type;
+                        if (dataType === 'record') {
+                            _.each(data.data, function (dataPoint) {
+                                var recordData = self.localData[dataPoint].data;
+                                var inRecords = _.findWhere(records, {id: recordData.id});
+                                if (inRecords) {
+                                    recordData[field] = inRecords[field];
+                                }
+                            });
+                            data.data = _.sortBy(data.data, function (d) {
+                                return self.localData[d].data[field];
+                            });
+                        }
+                        if (dataType === 'list') {
+                            data.data = _.sortBy(data.data, function (d) {
+                                return _.indexOf(resIDs, self.localData[d].res_id)
+                            });
+                        }
                     }
-                });
-                self._updateParentResIDs(data);
-                return parentID;
+                    data.res_ids = [];
+                    _.each(data.data, function (d) {
+                        var dataPoint = self.localData[d];
+                        if (dataPoint.type === 'record') {
+                            data.res_ids.push(dataPoint.res_id);
+                        } else {
+                            data.res_ids = data.res_ids.concat(dataPoint.res_ids);
+                        }
+                    });
+                    self._updateParentResIDs(data);
+                    return parentID;
+                })
             });
     },
     /**
@@ -1977,7 +2007,7 @@ var BasicModel = AbstractModel.extend({
      * @param {Object} [options]
      * @param {string[]} [options.fieldNames] the list of fields to fetch. If
      *   not given, fetch all the fields in record.fieldNames (+ display_name)
-     * @param {string} [optinos.viewType] the type of view for which the record
+     * @param {string} [options.viewType] the type of view for which the record
      *   is fetched (usefull to load the adequate fields), by defaults, uses
      *   record.viewType
      * @returns {Deferred<Object>} resolves to the record or is rejected in
@@ -2423,11 +2453,11 @@ var BasicModel = AbstractModel.extend({
         }
 
         var def = $.Deferred();
-
+        var evalContext = this._getEvalContext(record);
         this._rpc({
                 model: domainModel,
                 method: 'search_count',
-                args: [Domain.prototype.stringToArray(domainValue)],
+                args: [Domain.prototype.stringToArray(domainValue, evalContext)],
                 context: context
             })
             .then(_.identity, function (error, e) {
@@ -3543,11 +3573,12 @@ var BasicModel = AbstractModel.extend({
      */
     _postprocess: function (record, options) {
         var self = this;
+        var viewType = options && options.viewType || record.viewType;
         var defs = [];
 
         _.each(record.getFieldNames(options), function (name) {
             var field = record.fields[name];
-            var fieldInfo = record.fieldsInfo[record.viewType][name] || {};
+            var fieldInfo = record.fieldsInfo[viewType][name] || {};
             var options = fieldInfo.options || {};
             if (options.always_reload) {
                 if (record.fields[name].type === 'many2one' && record.data[name]) {
@@ -3556,7 +3587,7 @@ var BasicModel = AbstractModel.extend({
                             model: field.relation,
                             method: 'name_get',
                             args: [element.data.id],
-                            context: self._getContext(record, {fieldName: name}),
+                            context: self._getContext(record, {fieldName: name, viewType: viewType}),
                         })
                         .then(function (result) {
                             element.data.display_name = result[0][1];

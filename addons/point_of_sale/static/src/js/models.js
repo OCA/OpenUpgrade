@@ -126,13 +126,21 @@ exports.PosModel = Backbone.Model.extend({
                 progress: function(prog){
                     self.chrome.loading_progress(prog);
                 },
-            }).then(function(){
-                if(self.config.iface_scan_via_proxy){
-                    self.barcode_reader.connect_to_proxy();
-                }
-            }).always(function(){
-                done.resolve();
-            });
+            }).then(
+                function(){
+                        if(self.config.iface_scan_via_proxy){
+                            self.barcode_reader.connect_to_proxy();
+                        }
+                        done.resolve();
+                },
+                function(statusText, url){
+                        if (statusText == 'error' && window.location.protocol == 'https:') {
+                            var error = {message: 'TLSError', url: url};
+                            self.chrome.loading_error(error);
+                        } else {
+                            done.resolve();
+                        }
+                });
         return done;
     },
 
@@ -1237,6 +1245,15 @@ exports.Product = Backbone.Model.extend({
         var self = this;
         var date = moment().startOf('day');
 
+        // In case of nested pricelists, it is necessary that all pricelists are made available in
+        // the POS. Display a basic alert to the user in this case.
+        if (pricelist === undefined) {
+            alert(_t(
+                'An error occurred when loading product prices. ' +
+                'Make sure all pricelists are available in the POS.'
+            ));
+        }
+
         var category_ids = [];
         var category = this.categ;
         while (category) {
@@ -1499,6 +1516,7 @@ exports.Orderline = Backbone.Model.extend({
     // when we add an new orderline we want to merge it with the last line to see reduce the number of items
     // in the orderline. This returns true if it makes sense to merge the two
     can_be_merged_with: function(orderline){
+        var price = parseFloat(round_di(this.price || 0, this.pos.dp['Product Price']).toFixed(this.pos.dp['Product Price']));
         if( this.get_product().id !== orderline.get_product().id){    //only orderline of the same product can be merged
             return false;
         }else if(!this.get_unit() || !this.get_unit().is_pos_groupable){
@@ -1507,7 +1525,7 @@ exports.Orderline = Backbone.Model.extend({
             return false;
         }else if(this.get_discount() > 0){             // we don't merge discounted orderlines
             return false;
-        }else if(this.price !== orderline.get_product().get_price(orderline.order.pricelist, this.get_quantity())){
+        }else if(price !== orderline.get_product().get_price(orderline.order.pricelist, this.get_quantity())){
             return false;
         }else if(this.product.tracking == 'lot') {
             return false;

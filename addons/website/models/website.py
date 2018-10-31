@@ -72,6 +72,11 @@ class Website(models.Model):
     homepage_id = fields.Many2one('website.page', string='Homepage')
     favicon = fields.Binary(string="Website Favicon", help="This field holds the image used to display a favicon on the website.")
 
+    @api.onchange('language_ids')
+    def _onchange_language_ids(self):
+        if self.language_ids and self.default_lang_id not in self.language_ids:
+            self.default_lang_id = self.language_ids[0]
+
     @api.multi
     def _compute_menu(self):
         Menu = self.env['website.menu']
@@ -767,11 +772,11 @@ class Page(models.Model):
         for page in self:
             # Other pages linked to the ir_ui_view of the page being deleted (will it even be possible?)
             pages_linked_to_iruiview = self.search(
-                [('view_id', '=', self.view_id.id), ('id', '!=', self.id)]
+                [('view_id', '=', page.view_id.id), ('id', '!=', page.id)]
             )
-            if len(pages_linked_to_iruiview) == 0:
+            if not pages_linked_to_iruiview:
                 # If there is no other pages linked to that ir_ui_view, we can delete the ir_ui_view
-                self.env['ir.ui.view'].search([('id', '=', self.view_id.id)]).unlink()
+                page.view_id.unlink()
         # And then delete the website_page itself
         return super(Page, self).unlink()
 
@@ -791,7 +796,6 @@ class Page(models.Model):
 
     @api.multi
     def write(self, vals):
-        self.ensure_one()
         if 'url' in vals and not vals['url'].startswith('/'):
             vals['url'] = '/' + vals['url']
         result = super(Page, self).write(vals)

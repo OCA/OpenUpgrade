@@ -380,6 +380,49 @@ QUnit.module('relational_fields', {
         form.destroy();
     });
 
+    QUnit.test('show_address works in a view embedded in a view of another type', function (assert) {
+        assert.expect(1);
+
+        this.data.turtle.records[1].turtle_trululu = 2;
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch: '<form string="Partners">' +
+                    '<field name="display_name"/>' +
+                    '<field name="turtles"/>' +
+                 '</form>',
+            res_id: 1,
+            archs: {
+                "turtle,false,form": '<form string="T">' +
+                        '<field name="display_name"/>' +
+                        '<field name="turtle_trululu" context="{\'show_address\': 1}" options="{\'always_reload\': True}"/>' +
+                    '</form>',
+                "turtle,false,list": '<tree editable="bottom">' +
+                        '<field name="display_name"/>' +
+                    '</tree>',
+            },
+            mockRPC: function (route, args) {
+                if (args.method === 'name_get') {
+                    return this._super(route, args).then(function (result) {
+                        if (args.model === 'partner' && args.kwargs.context.show_address) {
+                            result[0][1] += '\nrue morgue\nparis 75013';
+                        }
+                        return result;
+                    });
+                }
+                return this._super(route, args);
+            },
+        });
+        // click the turtle field, opens a modal with the turtle form view
+        form.$('.o_data_row:first td.o_data_cell').click();
+
+        assert.strictEqual($('[name="turtle_trululu"]').text(), "second recordrue morgueparis 75013",
+                           "The partner's address should be displayed");
+        form.destroy();
+    });
+
     QUnit.test('many2ones in form views with search more', function (assert) {
         assert.expect(3);
         this.data.partner.records.push({
@@ -2226,7 +2269,7 @@ QUnit.module('relational_fields', {
         });
     });
 
-    QUnit.test('pressing ENTER on a \'no_quick_create\' many2one should not trigger M2ODialog', function (assert) {
+    QUnit.test('pressing ENTER on a \'no_quick_create\' many2one should open a M2ODialog', function (assert) {
         var done = assert.async();
         assert.expect(2);
 
@@ -2274,6 +2317,68 @@ QUnit.module('relational_fields', {
                 relationalFields.FieldMany2One.prototype.AUTOCOMPLETE_DELAY = M2O_DELAY;
                 done();
             });
+        });
+    });
+
+    QUnit.test('select a value by pressing TAB on a many2one with onchange', function (assert) {
+        var done = assert.async();
+        assert.expect(3);
+
+        this.data.partner.onchanges.trululu = function () {};
+
+        var M2O_DELAY = relationalFields.FieldMany2One.prototype.AUTOCOMPLETE_DELAY;
+        relationalFields.FieldMany2One.prototype.AUTOCOMPLETE_DELAY = 0;
+        var def = $.Deferred();
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch: '<form>' +
+                    '<field name="trululu"/>' +
+                    '<field name="display_name"/>' +
+                '</form>',
+            mockRPC: function (route, args) {
+                var result = this._super.apply(this, arguments);
+                if (args.method === 'onchange') {
+                    return $.when(def).then(_.constant(result));
+                }
+                return result;
+            },
+            res_id: 1,
+            viewOptions: {
+                mode: 'edit',
+            },
+        });
+
+        var $input = form.$('.o_field_many2one input');
+        $input.val("first").trigger('input');
+        concurrency.delay(0).then(function () {
+            var evOptions = {
+                which: $.ui.keyCode.TAB,
+                keyCode: $.ui.keyCode.TAB,
+            };
+            $input.trigger($.Event('keydown', evOptions));
+            $input.trigger($.Event('keypress', evOptions));
+            $input.trigger($.Event('keyup', evOptions));
+
+            // simulate a focusout (e.g. because the user clicks outside)
+            // before the onchange returns
+            form.$('.o_field_char').focus();
+
+            assert.strictEqual($('.modal').length, 0,
+                "there shouldn't be any modal in body");
+
+            // unlock the onchange
+            def.resolve();
+
+            assert.strictEqual($input.val(), 'first record',
+                "first record should have been selected");
+            assert.strictEqual($('.modal').length, 0,
+                "there shouldn't be any modal in body");
+            relationalFields.FieldMany2One.prototype.AUTOCOMPLETE_DELAY = M2O_DELAY;
+            form.destroy();
+            done();
         });
     });
 
@@ -9603,6 +9708,37 @@ QUnit.module('relational_fields', {
         form.destroy();
     });
 
+    QUnit.test('click on URL should not open the record', function (assert) {
+        assert.expect(2);
+
+        this.data.partner.records[0].turtles = [1];
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch:'<form string="Partners">' +
+                    '<field name="turtles">' +
+                        '<tree>' +
+                            '<field name="display_name" widget="email"/>' +
+                            '<field name="turtle_foo" widget="url"/>' +
+                        '</tree>' +
+                        '<form></form>' +
+                    '</field>' +
+                '</form>',
+            res_id: 1,
+        });
+
+        form.$('.o_email_cell a').click();
+        assert.strictEqual($('.modal .o_form_view').length, 0,
+            'click should not open the modal');
+
+        form.$('.o_url_cell a').click();
+        assert.strictEqual($('.modal .o_form_view').length, 0,
+            'click should not open the modal');
+        form.destroy();
+    });
+
     QUnit.module('FieldMany2Many');
 
     QUnit.test('many2many kanban: edition', function (assert) {
@@ -10480,6 +10616,31 @@ QUnit.module('relational_fields', {
         });
 
         form.$('.o_field_widget[name=int_field]').val(2).trigger('input');
+        form.destroy();
+    });
+
+    QUnit.test('widget many2many_tags', function (assert) {
+        assert.expect(1);
+        this.data.turtle.records[0].partner_ids = [2];
+
+        var form = createView({
+            View: FormView,
+            model: 'turtle',
+            data: this.data,
+            arch:'<form string="Turtles">' +
+                    '<sheet>' +
+                        '<field name="display_name"/>' +
+                        '<field name="partner_ids" widget="many2many_tags"/>' +
+                    '</sheet>' +
+                '</form>',
+            res_id: 1,
+        });
+
+        assert.deepEqual(
+            form.$('.o_field_many2manytags.o_field_widget .badge .o_badge_text').attr('title'),
+            'second record', 'the title should be filled in'
+        );
+
         form.destroy();
     });
 

@@ -8,6 +8,7 @@
 # Simone Bernini <simone@aperturelabs.it>, 2017
 # Paolo Valier, 2017
 # Cesare Cugnasco <cesare.cugnasco@gmail.com>, 2018
+# Sergio Zanchetta <primes2h@gmail.com>, 2018
 # Manuela Feliciani <mfeliciani@alice.it>, 2018
 # Luigi Di Naro <gigidn@gmail.com>, 2018
 # David Minneci <david@numeko.it>, 2018
@@ -21,13 +22,15 @@
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2018
 # Alex Comba <alex.comba@agilebg.com>, 2018
 # Giacomo Grasso <giacomo.grasso.82@gmail.com>, 2018
+# Sebastiano Pistore <SebastianoPistore.info@protonmail.ch>, 2018
+# Léonie Bouchat <lbo@odoo.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-30 13:11+0000\n"
-"PO-Revision-Date: 2017-11-30 13:11+0000\n"
-"Last-Translator: Giacomo Grasso <giacomo.grasso.82@gmail.com>, 2018\n"
+"POT-Creation-Date: 2018-07-27 11:55+0000\n"
+"PO-Revision-Date: 2018-07-27 11:55+0000\n"
+"Last-Translator: Léonie Bouchat <lbo@odoo.com>, 2018\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -123,7 +126,7 @@ msgid ""
 "                                <span>We would be delighted to assist you along the way. Contact us through our\n"
 "                                <a href=\"https://www.odoo.com/help\">support form</a> if you have any question.\n"
 "                                You can also discover how to get the best out of Odoo Project with our </span>\n"
-"                                <a target=\"_blank\" href=\"https://www.odoo.com/documentation/user/10.0/project.html\">\n"
+"                                <a target=\"_blank\" href=\"https://www.odoo.com/documentation/user/11.0/project.html\">\n"
 "                                <span style=\"text-decoration:underline;\">User Documentation</span></a>\n"
 "                                </span><span> or with our </span>\n"
 "                                <a target=\"_blank\" href=\"https://www.odoo.com/documentation\">\n"
@@ -179,7 +182,7 @@ msgstr "# di Attività"
 
 #. module: project
 #: code:addons/project/models/project.py:244
-#: code:addons/project/models/project.py:533
+#: code:addons/project/models/project.py:542
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (copia)"
@@ -718,7 +721,8 @@ msgstr ""
 msgid ""
 "<strong>Need help with Timesheets management? Contact us now:</strong><br/>"
 msgstr ""
-"<strong>Hai bisogno di aiuto con le Timesheet? Contattaci ora:</strong><br/>"
+"<strong>Necessario un aiuto con i fogli presenze? Contattaci "
+"ora:</strong><br/>"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -881,7 +885,7 @@ msgstr "Accetta email da"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Account Preferences"
-msgstr ""
+msgstr "Preferenze account"
 
 #. module: project
 #. openerp-web
@@ -896,8 +900,8 @@ msgid ""
 "Activate 'Allow invoicing based on timesheets' from the <i>Human Resources "
 "Settings</i>."
 msgstr ""
-"Attiva 'Permetti fatturazione basata sui timesheet' da <i>Impostazioni "
-"Risorse Umane</i>."
+"Attivare \"Consentire fatturazione basata sui fogli presenze\" da "
+"<i>Impostazioni risorse umane</i>."
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_project_active
@@ -968,7 +972,7 @@ msgid "Aliased Model"
 msgstr "Modello Alias"
 
 #. module: project
-#: code:addons/project/controllers/portal.py:89
+#: code:addons/project/controllers/portal.py:92
 #, python-format
 msgid "All"
 msgstr "Tutto"
@@ -1087,7 +1091,7 @@ msgstr "Allegati"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Available on the Apple Store"
-msgstr ""
+msgstr "Disponibile negli Apple Store"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -1128,6 +1132,7 @@ msgid ""
 msgstr ""
 
 #. module: project
+#: code:addons/project/models/project.py:29
 #: model:project.task,legend_blocked:project.project_task_15
 #: model:project.task,legend_blocked:project.project_task_16
 #: model:project.task,legend_blocked:project.project_task_18
@@ -1154,6 +1159,7 @@ msgstr ""
 #: model:project.task.type,legend_blocked:project.project_stage_data_1
 #: model:project.task.type,legend_blocked:project.project_stage_data_2
 #: selection:report.project.task.user,state:0
+#, python-format
 msgid "Blocked"
 msgstr "Bloccato"
 
@@ -1229,6 +1235,8 @@ msgid ""
 "Choosing a sub-tasks project will both enable sub-tasks and set their "
 "default project (possibly the project itself)"
 msgstr ""
+"Scegliere un progetto con sottoattività permette sia di abilitarle che di "
+"impostare il progetto predefinito (possibilmente lo stesso)"
 
 #. module: project
 #. openerp-web
@@ -1304,7 +1312,7 @@ msgstr "Azienda"
 #: model:ir.model.fields,field_description:project.field_account_analytic_account_company_uom_id
 #: model:ir.model.fields,field_description:project.field_project_project_company_uom_id
 msgid "Company UOM"
-msgstr ""
+msgstr "UdM azienda"
 
 #. module: project
 #: model:ir.ui.menu,name:project.menu_project_config
@@ -1471,7 +1479,7 @@ msgstr "Valuta"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Current Timesheet"
-msgstr "Timesheet attuale"
+msgstr "Foglio presenze corrente"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.portal_my_tasks
@@ -1489,7 +1497,7 @@ msgid "Currently there are not any activity scheduled."
 msgstr ""
 
 #. module: project
-#: code:addons/project/models/project.py:818
+#: code:addons/project/models/project.py:836
 #: model:ir.model.fields,field_description:project.field_project_project_partner_id
 #: model:ir.model.fields,field_description:project.field_project_task_partner_id
 #: model:ir.ui.view,arch_db:project.edit_project
@@ -1498,7 +1506,8 @@ msgid "Customer"
 msgstr "Cliente"
 
 #. module: project
-#: code:addons/project/models/project.py:818
+#: code:addons/project/models/project.py:836
+#: code:addons/project/models/project.py:839
 #, python-format
 msgid "Customer Email"
 msgstr "Email del Cliente"
@@ -1756,6 +1765,12 @@ msgid "Ending Date"
 msgstr "Data finale"
 
 #. module: project
+#: code:addons/project/models/project.py:556
+#, python-format
+msgid "Error! You cannot create recursive hierarchy of task(s)."
+msgstr ""
+
+#. module: project
 #: sql_constraint:project.project:0
 msgid "Error! project start-date must be lower than project end-date."
 msgstr ""
@@ -1841,7 +1856,7 @@ msgstr ""
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task_type_fold
 msgid "Folded in Kanban"
-msgstr ""
+msgstr "Chiuso nella vista Kanban"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.edit_project
@@ -1903,7 +1918,7 @@ msgstr "GTD"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Generate a timesheet report to attach to your customer invoices"
-msgstr "Genera un rapporto timesheet da allegare alle fatture cliente"
+msgstr "Genera un rapportino presenze da allegare alle fatture cliente"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -1913,7 +1928,7 @@ msgstr ""
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Get it on Google Play"
-msgstr ""
+msgstr "Scaricalo da Google Play"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -1969,7 +1984,7 @@ msgstr ""
 #. module: project
 #: selection:project.task,kanban_state:0
 msgid "Grey"
-msgstr ""
+msgstr "Grigio"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task_type_legend_normal
@@ -2020,7 +2035,7 @@ msgid "Hours"
 msgstr "Ore"
 
 #. module: project
-#: code:addons/project/models/project.py:730
+#: code:addons/project/models/project.py:745
 #, python-format
 msgid "I take it"
 msgstr ""
@@ -2129,6 +2144,7 @@ msgid "Improve collaboration with customers"
 msgstr "Migliora collaborazione con i clienti"
 
 #. module: project
+#: code:addons/project/models/project.py:35
 #: model:project.task,legend_normal:project.project_task_1
 #: model:project.task,legend_normal:project.project_task_10
 #: model:project.task,legend_normal:project.project_task_11
@@ -2177,6 +2193,7 @@ msgstr "Migliora collaborazione con i clienti"
 #: model:project.task.type,legend_normal:project.project_stage_data_2
 #: model:project.task.type,name:project.project_stage_1
 #: selection:report.project.task.user,state:0
+#, python-format
 msgid "In Progress"
 msgstr "In corso"
 
@@ -2331,7 +2348,7 @@ msgid "Last Modified on"
 msgstr "Data di ultima modifica"
 
 #. module: project
-#: code:addons/project/controllers/portal.py:86
+#: code:addons/project/controllers/portal.py:89
 #: model:ir.model.fields,field_description:project.field_project_task_date_last_stage_update
 #: model:ir.model.fields,field_description:project.field_report_project_task_user_date_last_stage_update
 #, python-format
@@ -2388,9 +2405,9 @@ msgid ""
 " projects. It enables you to connect projects with budgets, planning, cost "
 "and revenue analysis, timesheets on projects, etc."
 msgstr ""
-"Collega questo progetto ad un conto analitico se necessiti la gestione "
-"finanziaria sui progetti. Ti permette di collegare progetti con il Budget, "
-"Pianificazione, Analisi di costi e ricavi, Timesheet sui progetti, ecc."
+"Se è necessaria la gestione finanziaria collegare questo progetto a un conto"
+" analitico. Permette di collegare i progetti con budget, pianificazione, "
+"analisi costi e ricavi, fogli presenze sui progetti, ecc."
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -2498,9 +2515,10 @@ msgid "My Tasks"
 msgstr "Le Mie Attività"
 
 #. module: project
-#: code:addons/project/controllers/portal.py:31
+#: code:addons/project/controllers/portal.py:35
 #: model:ir.model.fields,field_description:project.field_project_tags_name
 #: model:ir.ui.view,arch_db:project.portal_my_projects
+#: model:ir.ui.view,arch_db:project.portal_my_tasks
 #, python-format
 msgid "Name"
 msgstr "Nome"
@@ -2550,8 +2568,8 @@ msgid "New task name"
 msgstr ""
 
 #. module: project
-#: code:addons/project/controllers/portal.py:30
-#: code:addons/project/controllers/portal.py:83
+#: code:addons/project/controllers/portal.py:34
+#: code:addons/project/controllers/portal.py:86
 #, python-format
 msgid "Newest"
 msgstr "i più recenti"
@@ -2563,10 +2581,16 @@ msgid "Next Activities"
 msgstr "Prossima attività"
 
 #. module: project
-#: code:addons/project/models/project.py:775
+#: code:addons/project/models/project.py:792
 #, python-format
 msgid "No Subject"
 msgstr "Nessun soggetto"
+
+#. module: project
+#: code:addons/project/controllers/portal.py:102
+#, python-format
+msgid "None"
+msgstr "Nessuna"
 
 #. module: project
 #: selection:project.task,priority:0
@@ -2672,8 +2696,8 @@ msgid ""
 "Organize your activities (plan tasks, track issues, invoice timesheets) for "
 "internal, personal or customer projects."
 msgstr ""
-"Organizza le varie attività (pianificare task, tracciare problematiche, "
-"fatturare i timesheet) relative a progetti interni, personali o di clienti"
+"Organizza le attività (pianificazione lavori, monitoraggio problemi, "
+"fatturazione fogli presenze) per progetti interni, personali o di clienti."
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -2726,7 +2750,7 @@ msgid "Parent Record Thread ID"
 msgstr "ID discussione record principale"
 
 #. module: project
-#: code:addons/project/models/project.py:861
+#: code:addons/project/models/project.py:878
 #: model:ir.model.fields,field_description:project.field_project_task_parent_id
 #: model:ir.ui.view,arch_db:project.view_task_form2
 #, python-format
@@ -2755,7 +2779,7 @@ msgid "Planner"
 msgstr "Progettista"
 
 #. module: project
-#: code:addons/project/models/project.py:887
+#: code:addons/project/models/project.py:918
 #, python-format
 msgid ""
 "Please remove existing tasks in the project linked to the accounts you want "
@@ -2794,10 +2818,11 @@ msgstr "Privacy"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Product or software version"
-msgstr ""
+msgstr "Versione del software o del prodotto"
 
 #. module: project
-#: code:addons/project/models/project.py:346
+#: code:addons/project/controllers/portal.py:103
+#: code:addons/project/models/project.py:355
 #: model:ir.model,name:project.model_project_project
 #: model:ir.model.fields,field_description:project.field_project_task_project_id
 #: model:ir.model.fields,field_description:project.field_report_project_task_user_project_id
@@ -2850,7 +2875,7 @@ msgstr "Impostazioni Progetto"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Project Settings."
-msgstr ""
+msgstr "Impostazioni progetto."
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.view_project_task_graph
@@ -2860,6 +2885,7 @@ msgstr "Attività del Progetto"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_res_company_project_time_mode_id
+#: model:ir.model.fields,field_description:project.field_res_config_settings_project_time_mode_id
 #: model:ir.model.fields,field_description:project.project_time_mode_id_duplicate_xmlid
 msgid "Project Time Unit"
 msgstr "Unità di tempo del progetto"
@@ -2906,6 +2932,7 @@ msgid "Rating on Tasks"
 msgstr ""
 
 #. module: project
+#: code:addons/project/models/project.py:32
 #: model:project.task,legend_done:project.project_task_1
 #: model:project.task,legend_done:project.project_task_12
 #: model:project.task,legend_done:project.project_task_15
@@ -2935,6 +2962,7 @@ msgstr ""
 #: model:project.task.type,legend_done:project.project_stage_data_0
 #: model:project.task.type,legend_done:project.project_stage_data_1
 #: model:project.task.type,legend_done:project.project_stage_data_2
+#, python-format
 msgid "Ready for Next Stage"
 msgstr "Pronto per prossima Fase"
 
@@ -3017,6 +3045,11 @@ msgid "Red: the Task is blocked (there's a problem)"
 msgstr ""
 
 #. module: project
+#: model:ir.ui.view,arch_db:project.portal_my_tasks
+msgid "Ref"
+msgstr "Rif"
+
+#. module: project
 #: model:ir.model.fields,field_description:project.field_project_project_code
 msgid "Reference"
 msgstr "Riferimento"
@@ -3090,7 +3123,7 @@ msgstr ""
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Scrum Methodology"
-msgstr ""
+msgstr "Metodo Scrum"
 
 #. module: project
 #: model:ir.ui.menu,name:project.menu_project_management
@@ -3098,7 +3131,7 @@ msgid "Search"
 msgstr "Ricerca"
 
 #. module: project
-#: code:addons/project/controllers/portal.py:92
+#: code:addons/project/controllers/portal.py:95
 #, python-format
 msgid "Search <span class=\"nolabel\"> (in Content)</span>"
 msgstr ""
@@ -3109,25 +3142,25 @@ msgid "Search Project"
 msgstr "Cerca progetto"
 
 #. module: project
-#: code:addons/project/controllers/portal.py:96
+#: code:addons/project/controllers/portal.py:99
 #, python-format
 msgid "Search in All"
 msgstr ""
 
 #. module: project
-#: code:addons/project/controllers/portal.py:94
+#: code:addons/project/controllers/portal.py:97
 #, python-format
 msgid "Search in Customer"
 msgstr ""
 
 #. module: project
-#: code:addons/project/controllers/portal.py:93
+#: code:addons/project/controllers/portal.py:96
 #, python-format
 msgid "Search in Messages"
 msgstr "Cerca in Messaggi"
 
 #. module: project
-#: code:addons/project/controllers/portal.py:95
+#: code:addons/project/controllers/portal.py:98
 #, python-format
 msgid "Search in Stages"
 msgstr "Cerca nelle Fasi"
@@ -3185,7 +3218,7 @@ msgstr "Impostazioni"
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Severity"
-msgstr ""
+msgstr "Gravità"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -3249,7 +3282,7 @@ msgid "Sprint"
 msgstr ""
 
 #. module: project
-#: code:addons/project/controllers/portal.py:85
+#: code:addons/project/controllers/portal.py:88
 #: model:ir.model.fields,field_description:project.field_project_task_stage_id
 #: model:ir.model.fields,field_description:project.field_report_project_task_user_stage_id
 #: model:ir.ui.view,arch_db:project.portal_my_tasks
@@ -3314,7 +3347,7 @@ msgstr "Data d'Inizio"
 #: model:ir.model.fields,field_description:project.field_project_project_subtask_project_id
 #: model:ir.model.fields,field_description:project.field_project_task_subtask_project_id
 msgid "Sub-task Project"
-msgstr ""
+msgstr "Progetto della sottoattività"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task_subtask_count
@@ -3355,7 +3388,6 @@ msgstr ""
 
 #. module: project
 #: model:ir.model,name:project.model_project_task
-#: model:ir.ui.view,arch_db:project.portal_my_tasks
 #: model:ir.ui.view,arch_db:project.view_task_form2
 #: model:ir.ui.view,arch_db:project.view_task_project_user_search
 #: model:ir.ui.view,arch_db:project.view_task_search_form
@@ -3692,11 +3724,14 @@ msgstr ""
 #: model:ir.model.fields,help:project.field_account_analytic_account_company_uom_id
 #: model:ir.model.fields,help:project.field_project_project_company_uom_id
 #: model:ir.model.fields,help:project.field_res_company_project_time_mode_id
+#: model:ir.model.fields,help:project.field_res_config_settings_project_time_mode_id
 #: model:ir.model.fields,help:project.project_time_mode_id_duplicate_xmlid
 msgid ""
 "This will set the unit of measure used in projects and tasks.\n"
 "If you use the timesheet linked to projects, don't forget to setup the right unit of measure in your employees."
 msgstr ""
+"Ciò andrà a impostare l'unità di misura usata nei progetti e nelle attività.\n"
+"Se viene usato il foglio ore collegato ai progetti, non dimenticare di impostare i dipendenti con l'unità di misura corretta."
 
 #. module: project
 #: model:res.groups,name:project.group_time_work_estimation_tasks
@@ -3716,7 +3751,7 @@ msgstr ""
 #. module: project
 #: model:ir.model.fields,field_description:project.field_res_config_settings_module_hr_timesheet
 msgid "Timesheets"
-msgstr "Timesheet"
+msgstr "Fogli presenze"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
@@ -3738,7 +3773,7 @@ msgstr ""
 "Organizza l'orario di lavoro per sistemare il report del diagramma di gantt"
 
 #. module: project
-#: code:addons/project/controllers/portal.py:84
+#: code:addons/project/controllers/portal.py:87
 #, python-format
 msgid "Title"
 msgstr "Titolo"
@@ -3812,7 +3847,7 @@ msgstr ""
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Use Timesheets"
-msgstr "Utilizza Timesheet"
+msgstr "Usare fogli presenze"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.res_config_settings_view_form
@@ -3958,6 +3993,16 @@ msgid ""
 msgstr ""
 
 #. module: project
+#: model:ir.model.fields,field_description:project.field_project_task_website_message_ids
+msgid "Website Messages"
+msgstr "Messaggi sito web"
+
+#. module: project
+#: model:ir.model.fields,help:project.field_project_task_website_message_ids
+msgid "Website communication history"
+msgstr "Storico comunicazione sito"
+
+#. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "Welcome"
 msgstr "Benvenuto"
@@ -4097,7 +4142,7 @@ msgid "You can save your reports to easily reuse it later"
 msgstr ""
 
 #. module: project
-#: code:addons/project/models/project.py:547
+#: code:addons/project/models/project.py:562
 #, python-format
 msgid ""
 "You can't define a parent task if its project is not correctly configured. "
@@ -4160,6 +4205,11 @@ msgstr ""
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "etc.."
+msgstr "ecc..."
+
+#. module: project
+#: model:ir.ui.view,arch_db:project.portal_my_tasks
+msgid "for project:"
 msgstr ""
 
 #. module: project
@@ -4183,7 +4233,7 @@ msgid "send us an email"
 msgstr "inviaci un'email"
 
 #. module: project
-#: code:addons/project/models/project.py:595
+#: code:addons/project/models/project.py:610
 #, python-format
 msgid "tasks"
 msgstr "attività"
@@ -4213,7 +4263,7 @@ msgstr ""
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner
 msgid "with Timesheet"
-msgstr "con Timesheet"
+msgstr "con foglio presenze"
 
 #. module: project
 #: model:ir.ui.view,arch_db:project.project_planner

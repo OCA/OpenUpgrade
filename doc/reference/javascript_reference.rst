@@ -446,7 +446,7 @@ of them in the new class.
         },
     };
 
-    var Hamster = Hamster.extend(DanceMixin, {
+    var Hamster = Animal.extend(DanceMixin, {
         sleep: function () {
             console.log('sleeping');
         },
@@ -1348,7 +1348,7 @@ order.
 
     .. code-block:: xml
 
-        <field name="datefield" options='{"datepicker": {"daysOfWeekDisabled": [0, 6]}}'/>
+        <field name="datetimefield" options='{"datepicker": {"daysOfWeekDisabled": [0, 6]}}'/>
 
 - monetary (FieldMonetary)
     This is the default field type for fields of type 'monetary'. It is used to
