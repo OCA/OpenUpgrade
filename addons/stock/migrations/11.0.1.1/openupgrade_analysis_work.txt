@@ -95,7 +95,7 @@ stock        / stock.quant.package      / move_line_ids (one2many)      : NEW re
 
 stock        / stock.move.line          / consume_line_ids (many2many)  : NEW relation: stock.move.line
 stock        / stock.move.line          / produce_line_ids (many2many)  : NEW relation: stock.move.line
-# Nothing to do: Fields without use in this module. To check on mrp and mrp_repair
+# Done (in 'mrp' module): post-migration: Filled stock_move_line_consume_rel from stock_quant_consume_rel
 
 stock        / stock.picking            / activity_ids (one2many)       : NEW relation: mail.activity
 # Nothing to do: new feature
