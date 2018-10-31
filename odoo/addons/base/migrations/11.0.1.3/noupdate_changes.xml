@@ -44,7 +44,7 @@
   </record>
   <record model="res.currency" id="BYR">
     <field name="currency_subunit_label">Kapeyka</field>
-    <field name="currency_unit_label">Ruble</field>
+    <field name="currency_unit_label">Ruble BYR</field>
   </record>
   <record model="res.currency" id="XPF">
     <field name="currency_subunit_label">Centimes</field>
@@ -119,7 +119,8 @@
   </record>
   <record model="res.currency" id="DOP">
     <field name="currency_subunit_label">Centavos</field>
-    <field name="currency_unit_label">Peso</field>
+    <field name="currency_unit_label">Pesos</field>
+    <field name="position">before</field>
   </record>
   <record model="res.currency" id="MMK">
     <field name="currency_subunit_label">Pya</field>
@@ -531,7 +532,7 @@
     <field name="currency_unit_label">Lari</field>
   </record>
   <record model="res.country" id="jp">
-    <field name="address_format" eval="'%(zip)s\n%(state_name)s %(city)s\n%(street)s\n%(street2)\n%(country_name)s'"/>
+    <field name="address_format" eval="'%(zip)s\n%(state_name)s %(city)s\n%(street)s\n%(street2)s\n%(country_name)s'"/>
     <field name="name_position">after</field>
   </record>
   <record model="res.currency" id="ANG">
@@ -838,6 +839,7 @@
   <record model="res.currency" id="CNY">
     <field name="currency_subunit_label">Fen</field>
     <field name="currency_unit_label">Yuan</field>
+    <field name="position">before</field>
   </record>
   <record model="res.currency" id="TND">
     <field name="currency_subunit_label">Millimes</field>
@@ -850,5 +852,25 @@
   <record model="res.currency" id="BMD">
     <field name="currency_subunit_label">Cents</field>
     <field name="currency_unit_label">Dollars</field>
+  </record>
+  <record id="do" model="res.country">
+    <field eval="1" name="phone_code"/>
+    <field eval="'%(street)s\n%(street2)s\n%(city)s %(state_name)s %(zip)s\n%(country_name)s'" name="address_format"/>
+    <field name="vat_label">RNC</field>
+  </record>
+  <record id="ca" model="res.country">
+    <field name="vat_label">HST</field>
+  </record>
+  <record id="BYN" model="res.currency">
+    <field name="currency_unit_label">Rubles</field>
+    <field name="currency_subunit_label">Kopeks</field>
+  </record>
+  <record id="mx" model="res.country">
+    <field eval="'%(street)s %(street2)s\n%(zip)s %(city)s, %(state_code)s\n%(country_name)s'" name="address_format"/>
+    <field name="vat_label">RFC</field>
+  </record>
+  <record id="gt" model="res.country">
+    <field name="currency_id" ref="GTQ"/>
+    <field name="vat_label">NIT</field>
   </record>
 </odoo>
