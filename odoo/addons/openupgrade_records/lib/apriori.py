@@ -24,6 +24,8 @@ renamed_modules = {
     'res_partner_affiliate': 'partner_affiliate',
     # OCA/stock-logistics-reporting
     'stock_valued_picking_report': 'stock_picking_report_valued',
+    # OCA/stock-logistics-workflow
+    'stock_pack_operation_quick_lot': 'stock_move_quick_lot',
     # OCA/hr
     'hr_public_holidays': 'hr_holidays_public',
     # OCA/vertical-association
