@@ -72,6 +72,8 @@ merged_modules = {
     'project_issue_timesheet_time_control': 'project_timesheet_time_control',
     # OCA/purchase-workflow
     'product_by_supplier': 'purchase',
+    'purchase_request_procurement': 'purchase_request',
+    'purchase_request_to_rfq': 'purchase_request',
     # OCA/sale-reporting
     'product_brand_sale_report': 'product_brand',
     'sale_proforma_report': 'sale',
