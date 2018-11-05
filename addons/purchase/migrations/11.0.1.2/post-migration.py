@@ -89,6 +89,24 @@ def fill_purchase_order_picking_fields(env):
     )
 
 
+def activate_vendor_pricelists(env):
+    """If module `product_by_supplier` (OCA/purchase-workflow) was installed we
+    need to activate the "Vendor Pricelists" setting as the module was
+    deprecated in favour of it."""
+    env.cr.execute(
+        """
+        SELECT id
+        FROM ir_model_data
+        WHERE module = 'purchase' AND
+            name = 'view_product_supplierinfo_search'
+        """
+    )
+    if env.cr.fetchone():
+        employee_group = env.ref('base.module_category_human_resources')
+        vendor_price_group = env.ref('purchase.group_manage_vendor_price')
+        employee_group.write({'implied_ids': [(4, vendor_price_group.id)]})
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     update_procurement_fields(env)
@@ -96,3 +114,4 @@ def migrate(env, version):
     openupgrade.load_data(
         env.cr, 'purchase', 'migrations/11.0.1.2/noupdate_changes.xml',
     )
+    activate_vendor_pricelists(env)

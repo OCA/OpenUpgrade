@@ -70,6 +70,8 @@ merged_modules = {
     'sale_stock_variant_configurator': 'sale_variant_configurator',
     # OCA/project
     'project_issue_timesheet_time_control': 'project_timesheet_time_control',
+    # OCA/purchase-workflow
+    'product_by_supplier': 'purchase',
     # OCA/sale-reporting
     'product_brand_sale_report': 'product_brand',
     'sale_proforma_report': 'sale',
