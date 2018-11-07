@@ -254,7 +254,8 @@ class IrAttachment(models.Model):
     def _check_contents(self, values):
         mimetype = values['mimetype'] = self._compute_mimetype(values)
         xml_like = 'ht' in mimetype or 'xml' in mimetype # hta, html, xhtml, etc.
-        force_text = (xml_like and (not self.env.user._is_admin() or
+        user = self.env.context.get('binary_field_real_user', self.env.user)
+        force_text = (xml_like and (not user._is_system() or
             self.env.context.get('attachments_mime_plainxml')))
         if force_text:
             values['mimetype'] = 'text/plain'
@@ -379,6 +380,15 @@ class IrAttachment(models.Model):
         if require_employee:
             if not (self.env.user._is_admin() or self.env.user.has_group('base.group_user')):
                 raise AccessError(_("Sorry, you are not allowed to access this document."))
+
+    @api.model
+    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
+        """Override read_group to add res_field=False in domain if not present."""
+        if not any(item[0] in ('id', 'res_field') for item in domain):
+            domain.insert(0, ('res_field', '=', False))
+        return super(IrAttachment, self).read_group(domain, fields, groupby,
+                                                    offset=offset, limit=limit,
+                                                    orderby=orderby, lazy=lazy)
 
     @api.model
     def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
@@ -589,6 +599,13 @@ class IrAttachment(models.Model):
             return self._split_pdf_groups(pdf_groups=[[min(x), max(x)] for x in pages], remainder=remainder)
         return self._split_pdf_groups(remainder=remainder)
 
+    @api.model
+    def get_serve_attachment(self, url, extra_domain=None, extra_fields=None, order=None):
+        domain = [('type', '=', 'binary'), ('url', '=', url)] + (extra_domain or [])
+        fieldNames = ['__last_update', 'datas', 'mimetype'] + (extra_fields or [])
+        return self.search_read(domain, fieldNames, order=order, limit=1)
 
-
-
+    @api.model
+    def get_attachment_by_key(self, key, extra_domain=None, order=None):
+        domain = [('key', '=', key)] + (extra_domain or [])
+        return self.search(domain, order=order, limit=1)

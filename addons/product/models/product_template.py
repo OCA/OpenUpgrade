@@ -241,10 +241,7 @@ class ProductTemplate(models.Model):
 
     def _compute_is_product_variant(self):
         for template in self:
-            if template._name == 'product.template':
-                template.is_product_variant = False
-            else:
-                template.is_product_variant = True
+            template.is_product_variant = False
 
     @api.model
     def _get_weight_uom_id_from_ir_config_parameter(self):
@@ -525,8 +522,12 @@ class ProductTemplate(models.Model):
         if reference_product:
             # append the reference_product if provided
             product_template_attribute_values |= reference_product.product_template_attribute_value_ids
-        product_variants = self.product_variant_ids
+            if reference_product._context.get('no_variant_attribute_values'):
+                # Add "no_variant" attribute values' exclusions
+                # They are kept in the context since they are not linked to this product variant
+                product_template_attribute_values |= reference_product._context.get('no_variant_attribute_values')
 
+        product_variants = self.product_variant_ids
         for product_template_attribute_value in product_template_attribute_values:
             # CASE 1: The whole product is excluded when no attribute values are selected in the parent product
             # returns empty recordset of product.product if so. What is checked is:

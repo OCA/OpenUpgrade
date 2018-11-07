@@ -18,7 +18,7 @@
 
     <t t-extend="DashboardApps">
         <t t-jquery=".o_web_settings_dashboard_pills > :first-child" t-operation="after">
-            <a t-att-href="widget.data.url" class="flex-grow-1 w-25" target="_blank"><i class="fa fa-lg fa-money text-muted"/> In-App Purchases</a>
+            <a t-att-href="widget.data.url" class="d-block flex-grow-1 w-25" target="_blank"><i class="fa fa-lg fa-money text-muted"/> In-App Purchases</a>
         </t>
     </t>
 
@@ -28,14 +28,17 @@
                 <i class="fa fa-spinner fa-spin"/> Checking remaining credit ...
             </div>
             <div class="insufficient">
-                <i class="fa fa-exclamation-triangle text-warning"/> Insufficient credit<br/>
+                <i class="fa fa-exclamation-triangle text-warning"/> Insufficient credit
             </div>
             <div class="sufficient">
                 <i class="fa fa-check-circle text-success"/> Remaining : <b class="remaining_credits"/> credits
             </div>
+            <div class="error">
+                <i class="fa fa-question-circle text-muted"/> Temporarily unavailable
+            </div>
         </div>
         <div class="col-sm text-right">
-            <a class="oe_link" target="_blank"><i class="fa fa-arrow-right"/> Buy more credits</a>
+            <button class="btn btn-link buy_credits"><i class="fa fa-arrow-right"/> Buy more credits</button>
         </div>
     </div>
 </template>

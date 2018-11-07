@@ -168,24 +168,6 @@ QUnit.module('Views', {
         });
     });
 
-    QUnit.test('displaying line chart data with multiple data point', function (assert) {
-        assert.expect(1);
-
-        var graph = createView({
-            View: GraphView,
-            model: "foo",
-            data: this.data,
-            arch: '<graph type="line">' +
-                        '<field name="date"/>' +
-                '</graph>',
-        });
-
-        assert.strictEqual(graph.$('.nv-x text').text(), "March 2016May 2016",
-            "should contain intermediate x labels only");
-
-        graph.destroy();
-    });
-
     QUnit.test('displaying line chart data with multiple groupbys', function (assert) {
         // this test makes sure the line chart shows all data labels (X axis) when
         // it is grouped by several fields
@@ -279,6 +261,35 @@ QUnit.module('Views', {
             "should not contain a div with a svg element");
         assert.strictEqual(graph.$('div.o_view_nocontent').length, 1,
             "should display the no content helper");
+        graph.destroy();
+    });
+
+    QUnit.test('render pie chart in comparison mode', function (assert) {
+        assert.expect(2);
+
+        var graph = createView({
+            View: GraphView,
+            model: "foo",
+            data: this.data,
+            context: {
+                timeRangeMenuData: {
+                    //Q3 2018
+                    timeRange: ['&', ["date", ">=", "2018-07-01"],["date", "<=", "2018-09-30"]],
+                    timeRangeDescription: 'This Quarter',
+                    //Q4 2018
+                    comparisonTimeRange: ['&', ["date", ">=", "2018-10-01"],["date", "<=", "2018-12-31"]],
+                    comparisonTimeRangeDescription: 'Previous Period',
+                },
+            },
+            arch: '<graph type="pie">' +
+                        '<field name="product_id"/>' +
+                '</graph>',
+        });
+
+        assert.strictEqual(graph.$('div.o_view_nocontent').length, 0,
+        "should not display the no content helper");
+        assert.strictEqual($('.o_graph_svg_container svg > text').text(),
+            "No data to displayNo data to display", "should display two empty pie charts instead");
         graph.destroy();
     });
 
@@ -750,7 +761,7 @@ QUnit.module('Views', {
     });
 
     QUnit.test('Undefined should appear in bar, pie graph but not in line graph', function (assert) {
-        assert.expect(5);
+        assert.expect(4);
         
         var graph = createView({
             View: GraphView,
@@ -763,7 +774,6 @@ QUnit.module('Views', {
         });
 
         assert.strictEqual(graph.$("svg.nvd3-svg:contains('Undefined')").length, 0);
-        assert.strictEqual(graph.$("svg.nvd3-svg:contains('January')").length, 0);
         assert.strictEqual(graph.$("svg.nvd3-svg:contains('March')").length, 1);
 
         graph.$buttons.find('.o_graph_button[data-mode=bar]').click();

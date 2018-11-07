@@ -1,5 +1,10 @@
 odoo.define('document.document', function (require) {
 "use strict";
+/**
+ * The feature is disabled as it was replaced by another feature
+ * while still holding unfixed bugs and doing unnecessary rpc.
+ */
+return;
 
 var core = require('web.core');
 var Dialog = require('web.Dialog');
@@ -50,10 +55,10 @@ Sidebar.include({
      * @override
      */
     updateEnv: function (env) {
-        if (this.hasAttachments) {
-            this.env = env;
-            this._updateAttachments().then(this._redraw.bind(this));
-        }
+        this.env = env;
+        var _super = _.bind(this._super, this, env);
+        var def = this.hasAttachments ? this._updateAttachments() : $.when();
+        def.then(_super);
     },
 
     //--------------------------------------------------------------------------

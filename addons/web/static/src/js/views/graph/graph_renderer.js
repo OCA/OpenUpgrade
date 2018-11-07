@@ -68,6 +68,16 @@ return AbstractRenderer.extend({
         this._super.apply(this, arguments);
         this.isInDOM = false;
     },
+    /**
+     * @override
+     * @param {Object} state
+     * @param {Object} params
+     */
+    updateState: function (state, params) {
+        this.isComparison = !!state.comparisonData;
+        this.stacked = this.isComparison ? false : params.stacked;
+        return this._super.apply(this, arguments);
+    },
 
     //--------------------------------------------------------------------------
     // Private
@@ -136,11 +146,7 @@ return AbstractRenderer.extend({
             }];
         } else if (this.state.groupedBy.length === 1) {
             values = this.state.data.map(function (datapt, index) {
-                if (self.state.comparisonData) {
-                    return {x: index, y: datapt.value};
-                } else {
-                    return {x: datapt.labels, y: datapt.value};
-                }
+                return {x: datapt.labels, y: datapt.value};
             });
             data.push({
                 values: values,
@@ -148,7 +154,7 @@ return AbstractRenderer.extend({
             });
             if (this.state.comparisonData) {
                 values = this.state.comparisonData.map(function (datapt, index) {
-                    return {x: index, y: datapt.value};
+                    return {x: datapt.labels, y: datapt.value};
                 });
                 data.push({
                     values: values,
@@ -256,7 +262,7 @@ return AbstractRenderer.extend({
             return;
         }
         if (all_zero) {
-            if (this.isEmbedded) {
+            if (this.isEmbedded || this.isComparison) {
                 // add fake data to display an empty pie chart
                 data = [{
                     x : "No data" ,
@@ -335,7 +341,6 @@ return AbstractRenderer.extend({
 
         var data = [];
         var ticksLabels = [];
-        var tickValues = [];
         var measure = this.state.fields[this.state.measure].string;
         var values;
 
@@ -356,18 +361,6 @@ return AbstractRenderer.extend({
                     values: values,
                     key: measure + ' (compare)',
                     color: '#ff7f0e',
-                });
-
-                if (this.state.comparisonData.length > graphData.length) {
-                    tickValues = this.state.comparisonData.map(function (d, i) {
-                        return i;
-                    });
-                }
-            }
-
-            if (!tickValues.length) {
-                tickValues = graphData.map(function (d, i) {
-                    return i;
                 });
             }
 
@@ -397,7 +390,6 @@ return AbstractRenderer.extend({
             for (var i = 0; i < this.state.data.length; i++) {
                 if (graphData[i].labels[0] !== tickLabel) {
                     tickLabel = this.state.data[i].labels[0];
-                    tickValues.push(tick);
                     ticksLabels.push(tickLabel);
                     tick++;
                 }
@@ -415,13 +407,6 @@ return AbstractRenderer.extend({
             }
         }
 
-        // Delete first and last label because there is no enough space because
-        // of the tiny margins.
-        if (ticksLabels.length > 3) {
-            ticksLabels[0] = [];
-            ticksLabels[ticksLabels.length - 1] = [];
-        }
-
         var $svgContainer = $('<div/>', {class: 'o_graph_svg_container'});
         this.$el.append($svgContainer);
         var svg = d3.select($svgContainer[0]).append('svg');
@@ -436,11 +421,9 @@ return AbstractRenderer.extend({
           showLegend: _.size(data) <= MAX_LEGEND_LENGTH,
           showXAxis: true,
           showYAxis: true,
-          wrapLabels: true,
         });
         chart.forceY([0]);
         chart.xAxis
-            .tickValues(tickValues)
             .tickFormat(function (d) {
                 return ticksLabels[d];
             });
@@ -458,6 +441,12 @@ return AbstractRenderer.extend({
 
         // Bigger line (stroke-width 1.5 is hardcoded in nv.d3)
         $svgContainer.find('.nvd3 .nv-groups g.nv-group').css('stroke-width', '2px')
+
+        // Delete first and last label because there is no enough space because
+        // of the tiny margins.
+        if (ticksLabels.length > 3) {
+            $svgContainer.find('svg .nv-x g.nv-axisMaxMin-x > text').hide();
+        }
 
         return chart;
     },
@@ -482,8 +471,8 @@ return AbstractRenderer.extend({
         var chart = this['_render' + _.str.capitalize(this.state.mode) + 'Chart'](this.state.data);
 
         if (chart) {
-            // FIXME: When 'orient' is right for Y axis, horizontal lines aren't displayed correctly
             chart.dispatch.on('renderEnd', function () {
+                // FIXME: When 'orient' is right for Y axis, horizontal lines aren't displayed correctly
                 $('.nv-y .tick > line').attr('x2', function (i, value) {
                     return Math.abs(value);
                 });

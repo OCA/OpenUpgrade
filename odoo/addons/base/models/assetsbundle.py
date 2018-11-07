@@ -525,6 +525,11 @@ class AssetsBundle(object):
 
     def run_rtlcss(self, source):
         rtlcss = 'rtlcss'
+        if os.name == 'nt':
+            try:
+                rtlcss = misc.find_in_path('rtlcss.cmd')
+            except IOError:
+                rtlcss = 'rtlcss'
         cmd = [rtlcss, '-']
 
 
@@ -614,9 +619,7 @@ class WebAsset(object):
                 return
             try:
                 # Test url against ir.attachments
-                fields = ['__last_update', 'datas', 'mimetype']
-                domain = [('type', '=', 'binary'), ('url', '=', self.url)]
-                attach = self.bundle.env['ir.attachment'].sudo().search_read(domain, fields)
+                attach = self.bundle.env['ir.attachment'].sudo().get_serve_attachment(self.url)
                 self._ir_attach = attach[0]
             except Exception:
                 raise AssetNotFound("Could not find %s" % self.name)

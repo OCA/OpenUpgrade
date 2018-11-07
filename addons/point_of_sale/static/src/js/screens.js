@@ -34,6 +34,7 @@ var core = require('web.core');
 var rpc = require('web.rpc');
 var utils = require('web.utils');
 var field_utils = require('web.field_utils');
+var BarcodeEvents = require('barcodes.BarcodeEvents').BarcodeEvents;
 
 var QWeb = core.qweb;
 var _t = core._t;
@@ -1288,6 +1289,9 @@ var ClientListScreenWidget = ScreenWidget.extend({
         } else {
             fields.property_product_pricelist = false;
         }
+        var contents = this.$(".client-details-contents");
+        contents.off("click", ".button.save");
+
 
         rpc.query({
                 model: 'res.partner',
@@ -1307,6 +1311,7 @@ var ClientListScreenWidget = ScreenWidget.extend({
                     'title': _t('Error: Could not Save Changes'),
                     'body': error_body,
                 });
+                contents.on('click','.button.save',function(){ self.save_client_details(partner); });
             });
     },
     
@@ -1324,6 +1329,8 @@ var ClientListScreenWidget = ScreenWidget.extend({
                 // has created, and reload_partner() must have loaded the newly created partner. 
                 self.display_client_details('hide');
             }
+        }).always(function(){
+            $(".client-details-contents").on('click','.button.save',function(){ self.save_client_details(partner); });
         });
     },
 
@@ -1689,6 +1696,13 @@ var PaymentScreenWidget = ScreenWidget.extend({
         // also called explicitly to handle some keydown events that
         // do not generate keypress events.
         this.keyboard_handler = function(event){
+            // On mobile Chrome BarcodeEvents relies on an invisible
+            // input being filled by a barcode device. Let events go
+            // through when this input is focused.
+            if (BarcodeEvents.$barcodeInput && BarcodeEvents.$barcodeInput.is(":focus")) {
+                return;
+            }
+
             var key = '';
 
             if (event.type === "keypress") {

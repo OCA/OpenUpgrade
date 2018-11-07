@@ -178,15 +178,14 @@ class Message(models.Model):
 
     @api.model
     def _search_need_moderation(self, operator, operand):
-        if operator == '=' and operand:
+        if operator == '=' and operand is True:
             return ['&', '&',
                     ('moderation_status', '=', 'pending_moderation'),
                     ('model', '=', 'mail.channel'),
                     ('res_id', 'in', self.env.user.moderation_channel_ids.ids)]
-        return ['|', '|',
-                ('moderation_status', '!=', 'pending_moderation'),
-                ('model', '!=', 'mail.channel'),
-                ('res_id', 'not in', self.env.user.moderation_channel_ids.ids)]
+
+        # no support for other operators
+        return ValueError(_('Unsupported search filter on moderation status'))
 
     #------------------------------------------------------
     # Notification API
@@ -391,7 +390,7 @@ class Message(models.Model):
             for notification in message.notification_ids.filtered(filter_notification):
                 customer_email_data.append((partner_tree[notification.res_partner_id.id][0], partner_tree[notification.res_partner_id.id][1], notification.email_status))
 
-            main_attachment = message.model and message.res_id and getattr(self.env[message.model].browse(message.res_id), 'message_main_attachment_id')
+            main_attachment = message.model and message.res_id and self.env[message.model].search([('id', '=',message.res_id)]) and getattr(self.env[message.model].browse(message.res_id), 'message_main_attachment_id')
             attachment_ids = []
             for attachment in message.attachment_ids:
                 if attachment.id in attachments_tree:
@@ -419,8 +418,30 @@ class Message(models.Model):
         return messages._format_mail_failures()
 
     @api.model
-    def message_fetch(self, domain, limit=20):
-        return self.search(domain, limit=limit).message_format()
+    def message_fetch(self, domain, limit=20, moderated_channel_ids=None):
+        """ Get a limited amount of formatted messages with provided domain.
+            :param domain: the domain to filter messages;
+            :param limit: the maximum amount of messages to get;
+            :param list(int) moderated_channel_ids: if set, it contains the ID
+              of a moderated channel. Fetched messages should include pending
+              moderation messages for moderators. If the current user is not
+              moderator, it should still get self-authored messages that are
+              pending moderation;
+            :returns list(dict).
+        """
+        messages = self.search(domain, limit=limit)
+        if moderated_channel_ids:
+            # Split load moderated and regular messages, as the ORed domain can
+            # cause performance issues on large databases.
+            moderated_messages_dom = [('model', '=', 'mail.channel'),
+                                      ('res_id', 'in', moderated_channel_ids),
+                                      '|',
+                                      ('author_id', '=', self.env.user.partner_id.id),
+                                      ('need_moderation', '=', True)]
+            messages |= self.search(moderated_messages_dom, limit=limit)
+            # Truncate the results to `limit`
+            messages = messages.sorted(key='id', reverse=True)[:limit]
+        return messages.message_format()
 
     @api.multi
     def message_format(self):

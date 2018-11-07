@@ -125,6 +125,7 @@ var createActionManager = function (params) {
  */
 var createDebugManager = function (params) {
     params = params || {};
+    var mockRPC = params.mockRPC;
     _.extend(params, {
         mockRPC: function (route, args) {
             if (args.method === 'check_access_rights') {
@@ -132,6 +133,9 @@ var createDebugManager = function (params) {
             }
             if (args.method === 'xmlid_to_res_id') {
                 return $.when(true);
+            }
+            if (mockRPC) {
+                return mockRPC.apply(this, arguments);
             }
             return this._super.apply(this, arguments);
         },
@@ -252,6 +256,12 @@ function createAsyncView(params) {
     var controlPanel = new ControlPanel(widget);
     controlPanel.appendTo($web_client);
     var $content = $('<div>').addClass('o_content').appendTo($web_client);
+
+    if (params.interceptsPropagate) {
+        _.each(params.interceptsPropagate, function (cb, name) {
+            intercept(widget, name, cb, true);
+        });
+    }
 
     return view.getController(widget).then(function (view) {
         // override the view's 'destroy' so that it calls 'destroy' on the widget
@@ -428,7 +438,6 @@ function addMockEnvironment(widget, params) {
         initialConfig.device = _.clone(config.device);
         if ('device' in params.config) {
             _.extend(config.device, params.config.device);
-            config.device.isMobile = config.device.size_class <= config.device.SIZES.VSM;
         }
         if ('debug' in params.config) {
             config.debug = params.config.debug;

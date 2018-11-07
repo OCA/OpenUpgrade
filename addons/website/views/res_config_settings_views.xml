@@ -25,7 +25,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h2>Website</h2>
+                        <h2>Website <button name="action_website_create_new" type="object" string="New" class="ml-2 btn btn-link" icon="fa-plus" groups="!website.group_multi_website"/></h2>
                         <div class="row mt16 o_settings_container" id="website_settings">
                             <div class="col-12  o_setting_box" id="website_action_setting">
                                 <button name="website_go_to" type="object" string="Go to Website" class="btn btn-primary" icon="fa-globe"/>
@@ -41,7 +41,7 @@
                                     <div class="content-group">
                                         <div class="row mt16">
                                             <label class="col-lg-3 o_light_label" string="Name" for="website_name"/>
-                                            <field name="website_name"/>
+                                            <field name="website_name" required="1"/>
                                         </div>
                                         <div class="row">
                                             <label class="col-lg-3 o_light_label" for="favicon" />
@@ -136,7 +136,7 @@
                                         </div>
                                     </div>
                                     <div attrs="{'invisible': [('has_google_analytics', '=', False)]}">
-                                        <a href="https://www.odoo.com/documentation/user/11.0/website/optimize/google_analytics.html"
+                                        <a href="https://www.odoo.com/documentation/user/12.0/website/optimize/google_analytics.html"
                                                 class="oe_link" target="_blank">
                                             <i class="fa fa-arrow-right"/>
                                             How to get my Tracking ID

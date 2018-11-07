@@ -126,9 +126,7 @@ class IrHttp(models.AbstractModel):
     @classmethod
     def _serve_attachment(cls):
         env = api.Environment(request.cr, SUPERUSER_ID, request.context)
-        domain = [('type', '=', 'binary'), ('url', '=', request.httprequest.path)]
-        fields = ['__last_update', 'datas', 'name', 'mimetype', 'checksum']
-        attach = env['ir.attachment'].search_read(domain, fields)
+        attach = env['ir.attachment'].get_serve_attachment(request.httprequest.path, extra_fields=['name', 'checksum'])
         if attach:
             wdate = attach[0]['__last_update']
             datas = attach[0]['datas'] or b''
@@ -249,7 +247,7 @@ class IrHttp(models.AbstractModel):
         return env.ref(xmlid, False)
 
     @classmethod
-    def check_access_mode(cls, env, id, access_mode, model, access_token=None, related_id=None):
+    def _check_access_mode(cls, env, id, access_mode, model, access_token=None, related_id=None):
         """
         Implemented by each module to define an additional way to check access.
 
@@ -258,9 +256,9 @@ class IrHttp(models.AbstractModel):
         :param access_mode: typically a string that describes the behaviour of the custom check
         :param model: the model of the object for which binary_content was called
         :param related_id: optional id to check security.
-        :return: the object or falsy result if not valid.
+        :return: True if the test passes, else False.
         """
-        return None
+        return False
 
 
     @classmethod
@@ -296,17 +294,21 @@ class IrHttp(models.AbstractModel):
         obj = None
         if xmlid:
             obj = cls._xmlid_to_obj(env, xmlid)
-        if access_mode:
-            obj = cls.check_access_mode(env, id, access_mode, model, access_token=access_token, related_id=related_id)
-        elif id and model == 'ir.attachment' and access_token:
-            obj = env[model].sudo().browse(int(id))
-            if not consteq(obj.access_token or '', access_token):
-                return (403, [], None)
         elif id and model in env.registry:
             obj = env[model].browse(int(id))
         # obj exists
         if not obj or not obj.exists() or field not in obj:
             return (404, [], None)
+
+        # access token grant access
+        if model == 'ir.attachment' and access_token:
+            obj = obj.sudo()
+            if access_mode:
+                if not cls._check_access_mode(env, id, access_mode, model, access_token=access_token,
+                                             related_id=related_id):
+                    return (403, [], None)
+            elif not consteq(obj.access_token or u'', access_token):
+                return (403, [], None)
 
         # check read access
         try:

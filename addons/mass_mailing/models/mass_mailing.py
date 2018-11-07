@@ -76,6 +76,7 @@ class MassMailingContactListRel(models.Model):
         return super(MassMailingContactListRel, self).write(vals)
 
     def action_open_mailing_list_contact(self):
+        """TODO DBE : To remove - Deprecated"""
         contact_id = self.contact_id
         action = {
             'name': _(contact_id.name),
@@ -115,11 +116,11 @@ class MassMailingList(models.Model):
                 left join mail_mass_mailing_contact c on (r.contact_id=c.id)
             where
                 COALESCE(r.opt_out,FALSE) = FALSE
-                AND c.email NOT IN (select email from mail_blacklist where active = TRUE)
                 AND substring(c.email, '%s') IS NOT NULL
+                AND LOWER(substring(c.email, '%s')) NOT IN (select email from mail_blacklist where active = TRUE)
             group by
                 list_id
-        ''' % EMAIL_PATTERN)
+        ''' % (EMAIL_PATTERN, EMAIL_PATTERN))
         data = dict(self.env.cr.fetchall())
         for mailing_list in self:
             mailing_list.contact_nbr = data.get(mailing_list.id, 0)
@@ -172,7 +173,7 @@ class MassMailingList(models.Model):
                     mail_mass_mailing_list mailing_list
                 WHERE contact.id=contact_list_rel.contact_id
                 AND COALESCE(contact_list_rel.opt_out,FALSE) = FALSE
-                AND contact.email NOT IN (select email from mail_blacklist where active = TRUE)
+                AND LOWER(substring(contact.email, %s)) NOT IN (select email from mail_blacklist where active = TRUE)
                 AND mailing_list.id=contact_list_rel.list_id
                 AND mailing_list.id IN %s
                 AND NOT EXISTS
@@ -186,7 +187,7 @@ class MassMailingList(models.Model):
                     AND contact_list_rel2.list_id = %s
                     )
                 ) st
-            WHERE st.rn = 1;""", (self.id, tuple(src_lists.ids), self.id))
+            WHERE st.rn = 1;""", (self.id, EMAIL_PATTERN, tuple(src_lists.ids), self.id))
         self.invalidate_cache()
         if archive:
             (src_lists - self).write({'active': False})
@@ -220,11 +221,41 @@ class MassMailingContact(models.Model):
     message_bounce = fields.Integer(string='Bounced', help='Counter of the number of bounced emails for this contact.', default=0)
     country_id = fields.Many2one('res.country', string='Country')
     tag_ids = fields.Many2many('res.partner.category', string='Tags')
+    opt_out = fields.Boolean('Opt Out', compute='_compute_opt_out', search='_search_opt_out',
+                             help='Opt out flag for a specific mailing list.'
+                                  'This field should not be used in a view without a unique and active mailing list context.')
 
     @api.depends('email')
     def _compute_is_email_valid(self):
         for record in self:
             record.is_email_valid = re.match(EMAIL_PATTERN, record.email)
+
+    @api.model
+    def _search_opt_out(self, operator, value):
+        # Assumes operator is '=' or '!=' and value is True or False
+        if operator != '=':
+            if operator == '!=' and isinstance(value, bool):
+                value = not value
+            else:
+                raise NotImplementedError()
+
+        if 'default_list_ids' in self._context and isinstance(self._context['default_list_ids'], (list, tuple)) and len(self._context['default_list_ids']) == 1:
+            [active_list_id] = self._context['default_list_ids']
+            contacts = self.env['mail.mass_mailing.list_contact_rel'].search([('list_id', '=', active_list_id)])
+            return [('id', 'in', [record.contact_id.id for record in contacts if record.opt_out == value])]
+        else:
+            raise UserError('Search opt out cannot be executed without a unique and valid active mailing list context.')
+
+    @api.depends('subscription_list_ids')
+    def _compute_opt_out(self):
+        if 'default_list_ids' in self._context and isinstance(self._context['default_list_ids'], (list, tuple)) and len(self._context['default_list_ids']) == 1:
+            [active_list_id] = self._context['default_list_ids']
+            for record in self:
+                active_subscription_list = record.subscription_list_ids.filtered(lambda l: l.list_id.id == active_list_id)
+                record.opt_out = active_subscription_list.opt_out
+        else:
+            for record in self:
+                record.opt_out = False
 
     def get_name_email(self, name):
         name, email = self.env['res.partner']._parse_partner_name(name)
@@ -287,7 +318,7 @@ class MassMailingCampaign(models.Model):
     mass_mailing_ids = fields.One2many(
         'mail.mass_mailing', 'mass_mailing_campaign_id',
         string='Mass Mailings')
-    unique_ab_testing = fields.Boolean(string='Allow A/B Testing', default=True,
+    unique_ab_testing = fields.Boolean(string='Allow A/B Testing', default=False,
         help='If checked, recipients will be mailed only once for the whole campaign. '
              'This lets you send different mailings to randomly selected recipients and test '
              'the effectiveness of the mailings, without causing duplicate messages.')
@@ -717,7 +748,6 @@ class MassMailing(models.Model):
             'view_mode': 'tree',
             'res_model': self.mailing_model_real,
             'domain': [('id', 'in', res_ids)],
-            'context': self.env.context,
         }
 
     #------------------------------------------------------

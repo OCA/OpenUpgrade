@@ -45,13 +45,21 @@ odoo.define('web.KeyboardNavigationMixin', function (require) {
             var accesskeyElements = $(document).find('[accesskey]').filter(':visible');
             _.each(accesskeyElements, function (elem) {
                 var overlay = $(_.str.sprintf("<div class='o_web_accesskey_overlay'>%s</div>", $(elem).attr('accesskey').toUpperCase()));
+
+                var $overlayParent;
                 if (elem.tagName.toUpperCase() === "INPUT") {
-                    // special case for the search input that has an access key defined. We cannot set the overlay on the input itself, only on its parent
-                    overlay.appendTo($(elem).parent().css('position', 'relative'));
+                    // special case for the search input that has an access key
+                    // defined. We cannot set the overlay on the input itself,
+                    // only on its parent.
+                    $overlayParent = $(elem).parent();
+                } else {
+                    $overlayParent = $(elem);
                 }
-                else {
-                    overlay.appendTo($(elem).css('position', 'relative'));
+
+                if ($overlayParent.css('position') !== 'absolute') {
+                    $overlayParent.css('position', 'relative');
                 }
+                overlay.appendTo($overlayParent);
             });
         },
         /**
@@ -144,6 +152,13 @@ odoo.define('web.KeyboardNavigationMixin', function (require) {
                 });
                 this._addAccessKeyOverlays();
             }
+            // on mac, there are a number of keys that are only accessible though the usage of
+            // the ALT key (like the @ sign in most keyboards)
+            // for them we do not facilitate the access keys, so they will need to be activated classically
+            // though Control + Alt + key (case sensitive), see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/accesskey
+            if (this.BrowserDetection.isOsMac())
+                return;
+
             if (keyDownEvent.altKey && !keyDownEvent.ctrlKey && keyDownEvent.key.length === 1) { // we don't want to catch the Alt key down, only the characters A to Z and number keys
                 var elementWithAccessKey = [];
                 if (keyDownEvent.keyCode >= 65 && keyDownEvent.keyCode <= 90 || keyDownEvent.keyCode >= 97 && keyDownEvent.keyCode <= 122) {

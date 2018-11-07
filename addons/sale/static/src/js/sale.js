@@ -21,8 +21,8 @@ KanbanRecord.include({
         ev.preventDefault();
 
         this.$target_input = $('<input>');
-        this.$('.o_kanban_primary_bottom').html(this.$target_input);
-        this.$('.o_kanban_primary_bottom').prepend(_t("Set an invoicing target: "));
+        this.$('.o_kanban_primary_bottom:last').html(this.$target_input);
+        this.$('.o_kanban_primary_bottom:last').prepend(_t("Set an invoicing target: "));
         this.$target_input.focus();
 
         var self = this;
@@ -39,6 +39,8 @@ KanbanRecord.include({
                     .done(function() {
                         self.trigger_up('kanban_record_update', {id: self.id});
                     });
+                // TODO: previous lines can be refactored as follows (in master)
+                // self.trigger_up('kanban_record_update', {invoiced_target: value});
             }
         });
     },

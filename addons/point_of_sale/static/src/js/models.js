@@ -127,13 +127,21 @@ exports.PosModel = Backbone.Model.extend({
                 progress: function(prog){
                     self.chrome.loading_progress(prog);
                 },
-            }).then(function(){
-                if(self.config.iface_scan_via_proxy){
-                    self.barcode_reader.connect_to_proxy();
-                }
-            }).always(function(){
-                done.resolve();
-            });
+            }).then(
+                function(){
+                        if(self.config.iface_scan_via_proxy){
+                            self.barcode_reader.connect_to_proxy();
+                        }
+                        done.resolve();
+                },
+                function(statusText, url){
+                        if (statusText == 'error' && window.location.protocol == 'https:') {
+                            var error = {message: 'TLSError', url: url};
+                            self.chrome.loading_error(error);
+                        } else {
+                            done.resolve();
+                        }
+                });
         return done;
     },
 
@@ -1509,6 +1517,7 @@ exports.Orderline = Backbone.Model.extend({
     // when we add an new orderline we want to merge it with the last line to see reduce the number of items
     // in the orderline. This returns true if it makes sense to merge the two
     can_be_merged_with: function(orderline){
+        var price = parseFloat(round_di(this.price || 0, this.pos.dp['Product Price']).toFixed(this.pos.dp['Product Price']));
         if( this.get_product().id !== orderline.get_product().id){    //only orderline of the same product can be merged
             return false;
         }else if(!this.get_unit() || !this.get_unit().is_pos_groupable){
@@ -1517,7 +1526,7 @@ exports.Orderline = Backbone.Model.extend({
             return false;
         }else if(this.get_discount() > 0){             // we don't merge discounted orderlines
             return false;
-        }else if(this.price !== orderline.get_product().get_price(orderline.order.pricelist, this.get_quantity())){
+        }else if(price !== orderline.get_product().get_price(orderline.order.pricelist, this.get_quantity())){
             return false;
         }else if(this.product.tracking == 'lot') {
             return false;
@@ -1870,6 +1879,9 @@ exports.Paymentline = Backbone.Model.extend({
             return;
         }
         this.cashregister = options.cashregister;
+        if (this.cashregister === undefined) {
+            throw new Error(_t('Please configure a payment method in your POS.'));
+        }
         this.name = this.cashregister.journal_id[1];
     },
     init_from_JSON: function(json){

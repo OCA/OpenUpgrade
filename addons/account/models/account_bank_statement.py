@@ -281,7 +281,7 @@ class AccountBankStatement(models.Model):
 class AccountBankStatementLine(models.Model):
     _name = "account.bank.statement.line"
     _description = "Bank Statement Line"
-    _order = "statement_id desc, date desc, sequence, id desc"
+    _order = "statement_id desc, date, sequence, id desc"
 
     name = fields.Char(string='Label', required=True)
     date = fields.Date(required=True, default=lambda self: self._context.get('date', fields.Date.context_today(self)))
@@ -381,7 +381,7 @@ class AccountBankStatementLine(models.Model):
     ####################################################
 
     def _get_common_sql_query(self, overlook_partner = False, excluded_ids = None, split = False):
-        acc_type = "acc.internal_type IN ('payable', 'receivable')" if (self.partner_id or overlook_partner) else "acc.reconcile = true"
+        acc_type = "acc.reconcile = true"
         select_clause = "SELECT aml.id "
         from_clause = "FROM account_move_line aml JOIN account_account acc ON acc.id = aml.account_id "
         account_clause = ''

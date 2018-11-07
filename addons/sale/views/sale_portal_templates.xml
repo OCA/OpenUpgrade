@@ -183,7 +183,7 @@
                                 <div class="small mb-1"><strong class="text-muted">Your Contact</strong></div>
                                 <div class="row flex-nowrap">
                                     <div class="col flex-grow-0 pr-2">
-                                        <img class="rounded-circle mr4 float-left o_portal_contact_img" t-if="sale_order.user_id.image" t-attf-src="data:image/png;base64,#{sale_order.user_id.image}" alt="Contact"/>
+                                        <img class="rounded-circle mr4 float-left o_portal_contact_img" t-if="sale_order.user_id.image" t-att-src="image_data_uri(sale_order.user_id.image)" alt="Contact"/>
                                         <img class="rounded-circle mr4 float-left o_portal_contact_img" t-if="not sale_order.user_id.image" src="/web/static/src/img/placeholder.png" alt="Contact"/>
                                     </div>
                                     <div class="col pl-0" style="min-width: 150px">
@@ -411,25 +411,6 @@
                                 </a>
                             </t>
                         </ul>
-                        <t t-if="invoices2">
-                            <strong class="text-muted d-block mb-1">Invoices</strong>
-                            <div>
-                                <t t-foreach="invoices" t-as="i">
-                                    <t t-set="report_url" t-value="i.get_portal_url(report_type='pdf', download=True)"/>
-                                    <div>
-                                        <a t-att-href="report_url"><span class="fa fa-download" role="img" aria-label="Download" title="Download"/></a>
-                                        <a t-att-href="report_url"><span t-esc="i.number"/></a>
-                                        <span class="text-muted" t-field="i.date_invoice"/>
-                                        <t t-if="i.state == 'paid'">
-                                            <span class="badge badge-success orders_label_text_align"><i class="fa fa-fw fa-check"/> Paid</span>
-                                        </t>
-                                        <t t-if="i.state != 'paid'">
-                                            <span class="badge badge-info orders_label_text_align"><i class="fa fa-fw fa-clock-o"/> Waiting Payment</span>
-                                        </t>
-                                    </div>
-                                </t>
-                            </div>
-                        </t>
                     </div>
                 </div>
             </div>
@@ -579,7 +560,7 @@
                 <div class="row mt-4" name="signature">
                     <div t-attf-class="#{'col-3' if report_type != 'html' else 'col-sm-7 col-md-4'} ml-auto text-center">
                         <h5>Signature</h5>
-                        <img t-att-src="'data:image/png;base64,%s' % to_text(sale_order.signature)" style="max-height: 6rem; max-width: 100%;"/>
+                        <img t-att-src="image_data_uri(sale_order.signature)" style="max-height: 6rem; max-width: 100%;"/>
                         <p t-field="sale_order.signed_by"/>
                     </div>
                 </div>

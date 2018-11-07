@@ -385,6 +385,7 @@
             <field name="model">crm.lead</field>
             <field name="arch" type="xml">
                 <search string="Search Leads">
+                    <field name="name" filter_domain="['|','|','|',('partner_name', 'ilike', self),('email_from', 'ilike', self), ('contact_name', 'ilike', self), ('name', 'ilike', self)]"/>
                     <field name="tag_ids" string="Tag" filter_domain="[('tag_ids', 'ilike', self)]"/>
                     <field name="user_id"/>
                     <field name="team_id"/>
@@ -870,7 +871,7 @@ for rec in records:
         <record model="ir.actions.act_window" id="crm_lead_all_leads">
             <field name="name">Leads</field>
             <field name="res_model">crm.lead</field>
-            <field name="view_mode">tree,kanban,graph,pivot,calendar,form</field>
+            <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
             <field name="domain">['|', ('type','=','lead'), ('type','=',False)]</field>
             <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
             <field name="context">{
@@ -928,7 +929,7 @@ for rec in records:
         <record model="ir.actions.act_window" id="crm_lead_opportunities">
             <field name="name">Opportunities</field>
             <field name="res_model">crm.lead</field>
-            <field name="view_mode">kanban,tree,graph,pivot,form,calendar</field>
+            <field name="view_mode">kanban,tree,graph,pivot,form,calendar,activity</field>
             <field name="domain">[('type','=','opportunity')]</field>
             <field name="context">{
                     'default_type': 'opportunity',
@@ -990,7 +991,7 @@ for rec in records:
         <record model="ir.actions.act_window" id="crm_lead_opportunities_tree_view">
             <field name="name">Pipeline</field>
             <field name="res_model">crm.lead</field>
-            <field name="view_mode">kanban,tree,graph,pivot,form,calendar</field>
+            <field name="view_mode">kanban,tree,graph,pivot,form,calendar,activity</field>
             <field name="domain">[('type','=','opportunity')]</field>
             <field name="context">{
                     'default_type': 'opportunity',

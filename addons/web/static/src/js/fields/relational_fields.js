@@ -1106,6 +1106,13 @@ var FieldX2Many = AbstractField.extend({
         }
         return def.then(function () {
             self.pager.updateState({ size: self.value.count });
+            var newEval = self._evalColumnInvisibleFields();
+            if (!_.isEqual(self.currentColInvisibleFields, newEval)) {
+                self.currentColInvisibleFields = newEval;
+                self.renderer.updateState(self.value, {
+                    columnInvisibleFields: self.currentColInvisibleFields,
+                });
+            }
         });
     },
     /**
@@ -1486,8 +1493,8 @@ var FieldOne2Many = FieldX2Many.extend({
                     allowWarning: data.allowWarning
                 }).always(function () {
                     self.creatingRecord = false;
-                }).done(function(){
-                    if(data.onSuccess){
+                }).done(function (){
+                    if (data.onSuccess){
                         data.onSuccess();
                     }
                 });
@@ -2584,10 +2591,12 @@ var FieldSelectionBadge = FieldSelection.extend({
  * a FieldMany2one for its value.
  * Its intern representation is similar to the many2one (a datapoint with a
  * `name_get` as data).
+ * Note that there is some logic to support char field because of one use in our
+ * codebase, but this use should be removed along with this note.
  */
 var FieldReference = FieldMany2One.extend({
     specialData: "_fetchSpecialReference",
-    supportedFieldTypes: ['char', 'reference'],
+    supportedFieldTypes: ['reference'],
     template: 'FieldReference',
     events: _.extend({}, FieldMany2One.prototype.events, {
         'change select': '_onSelectionChange',

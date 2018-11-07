@@ -11,10 +11,10 @@
 # Thomas Pot <thomas@open2bizz.nl>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.5\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 13:17+0000\n"
-"PO-Revision-Date: 2018-09-21 13:17+0000\n"
+"POT-Creation-Date: 2018-10-08 06:48+0000\n"
+"PO-Revision-Date: 2018-10-08 06:48+0000\n"
 "Last-Translator: Thomas Pot <thomas@open2bizz.nl>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -30,17 +30,25 @@ msgid "% discount"
 msgstr "% korting"
 
 #. module: sale_management
+#: model:sale.order.template.line,name:sale_management.sale_order_template_line_1
+msgid "4 Person Desk"
+msgstr "4 persoonstafel"
+
+#. module: sale_management
 #: model_terms:ir.ui.view,arch_db:sale_management.res_config_settings_view_form
 msgid ""
 "<em attrs=\"{'invisible': "
 "[('module_sale_quotation_builder','=',False)]}\">Warning: this option will "
 "install the Website app.</em>"
 msgstr ""
+"<em attrs=\"{'invisible': "
+"[('module_sale_quotation_builder','=',False)]}\">Waarschuwing: deze optie "
+"zal de Website app installeren.</em>"
 
 #. module: sale_management
 #: model_terms:ir.ui.view,arch_db:sale_management.sale_order_portal_content_inherit_sale_management
 msgid "<span>Discount</span>"
-msgstr ""
+msgstr "<span>Korting</span>"
 
 #. module: sale_management
 #: model_terms:ir.ui.view,arch_db:sale_management.report_saleorder_document_inherit_sale_management
@@ -71,7 +79,7 @@ msgstr "Sectie toevoegen"
 #. module: sale_management
 #: model_terms:ir.ui.view,arch_db:sale_management.sale_order_portal_content_inherit_sale_management
 msgid "Add one"
-msgstr ""
+msgstr "Voeg één toe"
 
 #. module: sale_management
 #: model_terms:ir.ui.view,arch_db:sale_management.sale_order_portal_content_inherit_sale_management
@@ -86,12 +94,22 @@ msgstr "Toevoegen aan orderregels"
 #. module: sale_management
 #: model:ir.model.fields,field_description:sale_management.field_digest_digest__kpi_all_sale_total
 msgid "All Sales"
-msgstr ""
+msgstr "Alle verkopen"
 
 #. module: sale_management
 #: model_terms:ir.ui.view,arch_db:sale_management.sale_order_template_view_search
 msgid "Archived"
 msgstr "Gearchiveerd"
+
+#. module: sale_management
+#: model:ir.ui.menu,name:sale_management.menu_catalog_variants_action
+msgid "Attribute Values"
+msgstr "Kenmerk waardes"
+
+#. module: sale_management
+#: model:ir.ui.menu,name:sale_management.menu_product_attribute_action
+msgid "Attributes"
+msgstr "Kenmerken"
 
 #. module: sale_management
 #: model:ir.model,name:sale_management.model_res_config_settings
@@ -116,7 +134,7 @@ msgstr "Maak factuur"
 #. module: sale_management
 #: model_terms:ir.ui.view,arch_db:sale_management.res_config_settings_view_form
 msgid "Create standardized offers with default products"
-msgstr ""
+msgstr "Maak gestandaardiseerde offertes met standaard producten"
 
 #. module: sale_management
 #: model_terms:ir.actions.act_window,help:sale_management.sale_order_template_action
@@ -157,6 +175,7 @@ msgstr "Omschrijving"
 #: model_terms:ir.ui.view,arch_db:sale_management.res_config_settings_view_form
 msgid "Design your quotation templates using building blocks<br/>"
 msgstr ""
+"Ontwerp eigen offertesjablonen door gebruik te maken van bouwblokken<br/>"
 
 #. module: sale_management
 #: model:ir.model,name:sale_management.model_digest_digest
@@ -196,11 +215,14 @@ msgid ""
 "Forbidden product, unit price, quantity, and UoM on non-accountable sale "
 "quote line"
 msgstr ""
+"Niet toegestaan product, prijs, hoeveelheid en maateenheid op niet "
+"verrekenbare verkoopofferte regel"
 
 #. module: sale_management
 #: model:ir.model.fields,help:sale_management.field_sale_order_option__sequence
 msgid "Gives the sequence order when displaying a list of optional products."
 msgstr ""
+"Bepaald de volgorde van weergeven van een lijst van optionele producten."
 
 #. module: sale_management
 #: model:ir.model.fields,help:sale_management.field_sale_order_template_line__sequence
@@ -229,7 +251,7 @@ msgstr ""
 #. module: sale_management
 #: model:ir.model.fields,field_description:sale_management.field_digest_digest__kpi_all_sale_total_value
 msgid "Kpi All Sale Total Value"
-msgstr ""
+msgstr "KPI alle verkopen totale waarde"
 
 #. module: sale_management
 #: model:ir.model.fields,field_description:sale_management.field_sale_order_option____last_update
@@ -264,12 +286,14 @@ msgstr "Regel"
 #: model:ir.model.fields,field_description:sale_management.field_sale_order_template__sale_order_template_line_ids
 #: model_terms:ir.ui.view,arch_db:sale_management.sale_order_template_view_form
 msgid "Lines"
-msgstr "Lijnen"
+msgstr "Regels"
 
 #. module: sale_management
 #: sql_constraint:sale.order.template.line:0
 msgid "Missing required product and UoM on accountable sale quote line."
 msgstr ""
+"Ontbrekend verplicht product en maateenheid op verrekenbare "
+"verkoopofferteregel"
 
 #. module: sale_management
 #: model_terms:ir.ui.view,arch_db:sale_management.sale_order_template_view_form
@@ -281,6 +305,11 @@ msgstr "Notitie"
 #: model:ir.model.fields,help:sale_management.field_sale_order_template__number_of_days
 msgid "Number of days for the validity date computation of the quotation"
 msgstr "Aantal dagen van de validiteitsdatum berekening voor de offerte"
+
+#. module: sale_management
+#: model:sale.order.template.option,name:sale_management.sale_order_template_option_1
+msgid "Office Chair"
+msgstr "Kantoorstoel"
 
 #. module: sale_management
 #: model:ir.model.fields,field_description:sale_management.field_sale_order_template__require_payment
@@ -320,6 +349,11 @@ msgid "Product"
 msgstr "Product"
 
 #. module: sale_management
+#: model:ir.ui.menu,name:sale_management.menu_product_settings
+msgid "Products"
+msgstr "Producten"
+
+#. module: sale_management
 #: model:ir.model.fields,field_description:sale_management.field_sale_order_option__quantity
 #: model:ir.model.fields,field_description:sale_management.field_sale_order_template_line__product_uom_qty
 #: model:ir.model.fields,field_description:sale_management.field_sale_order_template_option__quantity
@@ -348,7 +382,7 @@ msgstr "Offertesjabloon"
 #. module: sale_management
 #: model:ir.model,name:sale_management.model_sale_order_template_line
 msgid "Quotation Template Line"
-msgstr ""
+msgstr "Offertesjabloonregel"
 
 #. module: sale_management
 #: model_terms:ir.ui.view,arch_db:sale_management.sale_order_template_view_form
@@ -373,7 +407,7 @@ msgstr "Offertesjabloon referentie"
 #: model_terms:ir.ui.view,arch_db:sale_management.res_config_settings_view_form
 #: model:res.groups,name:sale_management.group_sale_order_template
 msgid "Quotation Templates"
-msgstr "Offerte sjablonen"
+msgstr "Offertesjablonen"
 
 #. module: sale_management
 #: model_terms:ir.ui.view,arch_db:sale_management.sale_order_template_view_form
@@ -405,11 +439,13 @@ msgid ""
 "Request an online payment to the customer in order to confirm orders "
 "automatically."
 msgstr ""
+"Vraag een online betaling aan de klant om automatisch de orders te "
+"bevestigen."
 
 #. module: sale_management
 #: model:ir.model,name:sale_management.model_sale_order_option
 msgid "Sale Options"
-msgstr "Verkoop opties"
+msgstr "Verkoopopties"
 
 #. module: sale_management
 #: model:ir.model,name:sale_management.model_sale_order
@@ -508,6 +544,9 @@ msgid ""
 "                Send these quotes by email and let your customers sign online.\n"
 "                Use cross-selling and discounts to push and boost your sales."
 msgstr ""
+"Gebruik sjablonen om gepolijste, professionele offertes te maken in minuten.\n"
+"Verzend deze offertes via e-mail en laat uw klanten online tekenen.\n"
+"Gebruik kruisverkoop en kortingen om uw verkoop te boosten."
 
 #. module: sale_management
 #: code:addons/sale_management/models/sale_order.py:178

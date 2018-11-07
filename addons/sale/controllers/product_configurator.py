@@ -57,10 +57,15 @@ class ProductConfiguratorController(http.Controller):
         compute_currency = lambda price: from_currency._convert(price, to_currency, company, date)
 
         product = product.with_context(self._get_product_context(pricelist, **kw))
+        no_variant_attribute_values = request.env['product.template.attribute.value'].browse(variant_values).filtered(
+            lambda product_template_attribute_value: product_template_attribute_value.attribute_id.create_variant == 'no_variant'
+        )
+        if no_variant_attribute_values:
+            product = product.with_context(no_variant_attribute_values=no_variant_attribute_values)
 
         has_optional_products = False
         for optional_product in product.optional_product_ids:
-            if optional_product.get_filtered_variants(product):
+            if optional_product.has_dynamic_attributes() or optional_product.get_filtered_variants(product):
                 has_optional_products = True
                 break
 
@@ -108,15 +113,38 @@ class ProductConfiguratorController(http.Controller):
 
         parent_exclusions = []
         if reference_product:
+            parent_attribute_value_ids = reference_product.product_template_attribute_value_ids
+            if parent_attribute_value_ids and reference_product._context.get('no_variant_attribute_values'):
+                # Add "no_variant" attribute values' exclusions
+                # They are kept in the context since they are not linked to this product variant
+                parent_attribute_value_ids |= reference_product._context.get('no_variant_attribute_values')
+
             parent_exclusions = [
                 value_id
-                for filter_line in reference_product.mapped('product_template_attribute_value_ids.exclude_for').filtered(
+                for filter_line in parent_attribute_value_ids.mapped('exclude_for').filtered(
                     lambda filter_line: filter_line.product_tmpl_id == product
                 ) for value_id in filter_line.value_ids.ids]
 
+        # Query all archived products for this template
+        archived_combinations = request.env['product.product'].search(
+            [('product_tmpl_id', '=', product.id), ('active', '=', False)])
+
+        if archived_combinations:
+            # Old archived variants could have a different set of attributes and are not relevant here
+            # -> filter them out
+            attribute_ids = product_attribute_values.mapped('attribute_id')
+            archived_combinations = archived_combinations.filtered(
+                lambda product: all(
+                    attribute_id in product.mapped('product_template_attribute_value_ids.attribute_id')
+                    for attribute_id in attribute_ids
+                )
+            )
+
         return {
             'exclusions': mapped_exclusions,
-            'parent_exclusions': parent_exclusions
+            'parent_exclusions': parent_exclusions,
+            'archived_combinations': [archived_combination.product_template_attribute_value_ids.ids
+                for archived_combination in archived_combinations]
         }
 
     def _get_product_context(self, pricelist=None, **kw):

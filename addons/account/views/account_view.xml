@@ -22,8 +22,8 @@
                              <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
                              <field name="currency_id" options="{'no_create': True}" groups="base.group_multi_currency"/>
                              <field name="internal_type" invisible="1" readonly="1"/>
-                             <label for="reconcile"/>
-                             <div>
+                             <label for="reconcile" attrs="{'invisible': [('internal_type','=','liquidity')]}"/>
+                             <div attrs="{'invisible': [('internal_type','=','liquidity')]}">
                                 <field name="reconcile"/>
                                 <button name="action_open_reconcile" class="oe_link" type="object" string=" -> Reconcile" attrs="{'invisible': [('reconcile', '=', False)]}"/>
                              </div>
@@ -375,6 +375,7 @@
             <field name="model">res.partner.bank</field>
             <field name="inherit_id" ref="base.view_partner_bank_form"/>
             <field name="mode">primary</field>
+            <field name="priority">20</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -429,8 +430,10 @@
                         </div>
                         <group>
                             <group>
-                                <field name="bank_acc_number"/>
-                                <field name="bank_id"/>
+                                <field name="company_partner_id" invisible="1"/>
+                                <field name="bank_account_id"/>
+                                <field name="bank_acc_number" attrs="{'readonly': [('bank_account_id', '!=', False)]}"/>
+                                <field name="bank_id" attrs="{'readonly': [('bank_account_id', '!=', False)]}"/>
                             </group>
                             <group>
                                 <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
@@ -931,7 +934,7 @@
                                        attrs="{'invisible': [('match_partner', '=', False)]}"/>
                             </group>
                         </group>
-                        <group string="Write-off Values"
+                        <group string="Counterpart Values"
                                attrs="{'invisible': [('rule_type', '=', 'invoice_matching'), '|', ('match_total_amount', '=', False), '&amp;', ('match_total_amount', '=', True), ('match_total_amount_param', '=', 100.0)]}">
                             <group>
                                 <field name="account_id" domain="[('company_id', '=', company_id)]"
@@ -2266,7 +2269,7 @@
             <field name="name">Products</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">product.product</field>
-            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_mode">kanban,tree,form,activity</field>
             <field name="view_type">form</field>
             <field name="context">{'search_default_filter_to_sell': 1}</field>
             <field name="view_id" ref="product_product_view_tree"/>
@@ -2281,7 +2284,7 @@
             <field name="name">Products</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">product.product</field>
-            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_mode">kanban,tree,form,activity</field>
             <field name="view_type">form</field>
             <field name="context">{'search_default_filter_to_purchase': 1}</field>
             <field name="view_id" ref="product_product_view_tree"/>
@@ -2299,77 +2302,6 @@
         <menuitem id="menu_account_supplier" name="Vendors"
             parent="account.menu_finance_payables"
             action="base.action_partner_supplier_form" sequence="200"/>
-
-        <!-- Account Financial Report -->
-
-        <record id="view_account_financial_report_form" model="ir.ui.view">
-            <field name="name">account.financial.report.form</field>
-            <field name="model">account.financial.report</field>
-            <field name="arch" type="xml">
-                <form string="Account Report">
-                    <group col="4">
-                        <field name="name"/>
-                        <field name="parent_id"/>
-                        <field name="sequence"/>
-                        <field name="type"/>
-                        <field name="sign"/>
-                        <field name="style_overwrite"/>
-                    </group>
-                    <notebook attrs="{'invisible': [('type','not in',['accounts','account_type', 'account_report'])]}">
-                        <page string="Report">
-                            <group>
-                                <field name="display_detail" attrs="{'invisible': [('type','not in',['accounts','account_type'])]}"/>
-                                <field name="account_report_id" attrs="{'invisible': [('type', '!=', 'account_report')]}"/>
-                            </group>
-                            <field name="account_ids" attrs="{'invisible': [('type', '!=', 'accounts')]}"/>
-                            <field name="account_type_ids" attrs="{'invisible': [('type', '!=', 'account_type')]}"/>
-                        </page>
-                    </notebook>
-                </form>
-            </field>
-        </record>
-
-        <record id="view_account_financial_report_tree" model="ir.ui.view">
-            <field name="name">account.financial.report.tree</field>
-            <field name="model">account.financial.report</field>
-            <field name="arch" type="xml">
-                <tree string="Account Report">
-                    <field name="name"/>
-                    <field name="parent_id" invisible="1"/>
-                    <field name="type"/>
-                    <field name="account_report_id"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="view_account_financial_report_search" model="ir.ui.view">
-            <field name="name">account.financial.report.search</field>
-            <field name="model">account.financial.report</field>
-            <field name="arch" type="xml">
-                <search string="Account Report">
-                    <field name="name" string="Account Report"/>
-                    <field name="type"/>
-                    <field name="account_report_id"/>
-                    <group expand="0" string="Group By">
-                        <filter string="Parent Report" name="parentreport" domain="" context="{'group_by':'parent_id'}"/>
-                        <filter string="Report Type" name="reporttype" domain="[]" context="{'group_by':'type'}"/>
-                    </group>
-                </search>
-            </field>
-        </record>
-
-        <record id="action_account_financial_report_tree" model="ir.actions.act_window">
-            <field name="name">Financial Reports</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">account.financial.report</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref="view_account_financial_report_search"/>
-            <field name="view_id" ref="view_account_financial_report_tree"/>
-        </record>
-
-        <menuitem id="menu_account_financial_reports_tree" name="Account Reports" parent="menu_account_reports" action="action_account_financial_report_tree"/>
-
 
         <!-- Manual reconciliation -->
         <record id="action_manual_reconciliation" model="ir.actions.client">
