@@ -56,14 +56,18 @@ $-font-numbers: (
     // anyway. Automatically mimic navbar-dark if the user's menu color is dark.
     // Note: this only works because navbar-light is defined before navbar-dark,
     // we may want to use a safest way when possible.
-    background-color: color('menu') !important;
-    @if (color-yiq(color('menu')) != $yiq-text-dark) {
-        @extend .navbar-dark;
+    @if color('menu') {
+        background-color: color('menu') !important;
+        @if (color-yiq(color('menu')) != $yiq-text-dark) {
+            @extend .navbar-dark;
+        }
     }
 }
 
 .o_footer {
-    @include o-bg-color(color('footer'));
+    @if color('footer') {
+        @include o-bg-color(color('footer'));
+    }
 
     > #footer {
         // FIXME needed to prevent the dropzone at the bottom of the #wrap element
@@ -262,6 +266,10 @@ table.table_desc tr td {
     }
 }
 
+// Jumbotron
+.jumbotron {
+    border-radius: 0;
+}
 
 //
 // Snippets
@@ -788,28 +796,26 @@ table.table_desc tr td {
                 border-width: 0;
                 position: absolute;
                 bottom: 0;
+                width: 100%;
+                margin-left: 0;
+                left: 0%;
                 > * {
                     list-style-image: none;
                     display: inline-block;
                     width: 40px;
                     height: 40px;
-                    margin: 0 0px 5px 5px;
+                    margin: 2.5px 2.5px 2.5px 2.5px;
                     padding: 0;
                     border: 1px solid #aaa;
                     text-indent: initial;
                     background-size: cover;
                     background-color: #fff;
                     border-radius: 0;
+                    vertical-align: bottom;
                     flex: 0 0 40px;
                     &:not(.active) {
                         opacity: 0.8;
-                        -webkit-filter: grayscale(100%);
-                        filter: grayscale(100%);
-                        filter: gray;
-                        filter: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' height='0'><filter id='greyscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0' /></filter></svg>#greyscale");
-                    }
-                    &:first-child {
-                        margin-left: 0;
+                        filter: grayscale(1);
                     }
                 }
             }

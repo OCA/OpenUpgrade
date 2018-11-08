@@ -6,20 +6,11 @@
             <field name="domain"></field>
         </record>
 
-        <record id="menu_contactus2" model="website.menu">
-            <field name="name">Contact us</field>
-            <field name="url">/contactus</field>
-            <field name="parent_id" search="[('website_id', '=', ref('website2')), ('parent_id', '=', False)]"/>
-            <field name="sequence" type="int">60</field>
-            <field name="page_id" ref="contactus_page"/>
-            <field name="website_id" ref="website2"/>
-        </record>
-
         <!-- BS Debug Page -->
         <!-- Showcase all (most?) BS components and utilities -->
         <record id="bs_debug_page" model="website.page">
             <field name="name">BS Debug</field>
-            <field name="url">/demo/bs-debug</field>
+            <field name="url">/website/demo/bootstrap</field>
             <field name="website_published">False</field>
             <field name="type">qweb</field>
             <field name="key">website.bs_debug_page_view</field>
@@ -30,7 +21,7 @@
                         <t t-set="bs_theme_colors" t-value="[['primary', 'Primary'], ['secondary', 'Secondary'], ['success', 'Success'], ['info', 'Info'], ['warning', 'Warning'], ['danger', 'Danger'], ['light', 'Light'], ['dark', 'Dark']]"/>
                         <t t-set="bs_gray_colors" t-value="[['white', 'White'], ['100', '100'], ['200', '200'], ['300', '300'], ['400', '400'], ['500', '500'], ['600', '600'], ['700', '700'], ['800', '800'], ['900', '900'], ['black', 'Black']]"/>
                         <t t-set="all_theme_colors" t-value="odoo_theme_colors + bs_theme_colors"/>
-                        <div id="wrap oe_structure">
+                        <div id="wrap" class="oe_structure">
                             <section class="py-2">
                                 <div class="container">
                                     <h1>Components</h1>
@@ -281,7 +272,7 @@
         <!-- Showcase all snippets -->
         <record id="snippets_debug_page" model="website.page">
             <field name="name">Snippet Debug</field>
-            <field name="url">/demo/snippets-debug</field>
+            <field name="url">/website/demo/snippets</field>
             <field name="website_published">False</field>
             <field name="type">qweb</field>
             <field name="key">website.snippets_debug_page_view</field>
@@ -306,7 +297,7 @@
                                 clear: both;
                             }
                         </style>
-                        <div id="wrap oe_structure">
+                        <div id="wrap" class="oe_structure">
                             <t t-call="website.snippets"/>
                         </div>
                     </t>

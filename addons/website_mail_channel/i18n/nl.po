@@ -31,7 +31,7 @@ msgstr "<i class=\"fa fa-envelope-o\"/>Verzend e-mail"
 #: model_terms:ir.ui.view,arch_db:website_mail_channel.mail_channels
 #: model_terms:ir.ui.view,arch_db:website_mail_channel.subscribe
 msgid "<i class=\"fa fa-file-o\"/> archives"
-msgstr ""
+msgstr "<i class=\"fa fa-file-o\"/> archieven"
 
 #. module: website_mail_channel
 #: model_terms:ir.ui.view,arch_db:website_mail_channel.mail_channels
@@ -42,7 +42,7 @@ msgstr "<i class=\"fa fa-times\"/> uitschrijven"
 #. module: website_mail_channel
 #: model_terms:ir.ui.view,arch_db:website_mail_channel.subscribe
 msgid "<span class=\"oe_snippet_thumbnail_title\">Discussion Group</span>"
-msgstr "<span class=\"oe_snippet_thumbnail_title\">Discussie groep</span>"
+msgstr "<span class=\"oe_snippet_thumbnail_title\">Discussiegroep</span>"
 
 #. module: website_mail_channel
 #: model:mail.template,body_html:website_mail_channel.mail_template_list_subscribe
@@ -258,19 +258,19 @@ msgstr "Wijzig discussie lijst"
 #. module: website_mail_channel
 #: model:mail.template,subject:website_mail_channel.mail_template_list_subscribe
 msgid "Confirm subscription to ${object.name}"
-msgstr ""
+msgstr "Bevestig abonnement op ${object.name}"
 
 #. module: website_mail_channel
 #: model:mail.template,subject:website_mail_channel.mail_template_list_unsubscribe
 msgid "Confirm unsubscription to ${object.name}"
-msgstr ""
+msgstr "Bevestig uitschrijving op ${object.name}"
 
 #. module: website_mail_channel
 #. openerp-web
 #: code:addons/website_mail_channel/static/src/js/website_mail_channel.editor.js:18
 #, python-format
 msgid "Discussion List"
-msgstr "Discussie lijst"
+msgstr "Discussielijst"
 
 #. module: website_mail_channel
 #: model:ir.model,name:website_mail_channel.model_mail_channel
@@ -303,7 +303,7 @@ msgstr "Mailinglijsten"
 #: code:addons/website_mail_channel/models/mail_mail.py:20
 #, python-format
 msgid "Mailing-List"
-msgstr "Mailing-lijst"
+msgstr "Mailinglijst"
 
 #. module: website_mail_channel
 #: model_terms:ir.ui.view,arch_db:website_mail_channel.mail_channels
@@ -311,6 +311,8 @@ msgid ""
 "Need to unsubscribe? It's right here! <span class=\"fa fa-2x fa-arrow-down "
 "float-right\" role=\"img\" aria-label=\"\" title=\"Read this !\"/>"
 msgstr ""
+"Wilt u zich uitschrijven? Dat kan hier! <span class=\"fa fa-2x fa-arrow-down"
+" float-right\" role=\"img\" aria-label=\"\" title=\"Read this !\"/>"
 
 #. module: website_mail_channel
 #: model:ir.model,name:website_mail_channel.model_mail_mail
@@ -397,7 +399,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_mail_channel.group_message
 #: model_terms:ir.ui.view,arch_db:website_mail_channel.group_messages
 msgid "mailing list archives"
-msgstr "Mailing lijst archieven"
+msgstr "mailinglijst archieven"
 
 #. module: website_mail_channel
 #: model_terms:ir.ui.view,arch_db:website_mail_channel.mail_channels
@@ -405,6 +407,8 @@ msgid ""
 "members<br/>\n"
 "                    <i class=\"fa fa-fw fa-envelope-o\" role=\"img\" aria-label=\"Traffic\" title=\"Traffic\"/>"
 msgstr ""
+"leden<br/>\n"
+"                    <i class=\"fa fa-fw fa-envelope-o\" role=\"img\" aria-label=\"Traffic\" title=\"Traffic\"/>"
 
 #. module: website_mail_channel
 #: model_terms:ir.ui.view,arch_db:website_mail_channel.mail_channels
@@ -434,7 +438,7 @@ msgstr "ingeschreven"
 #. module: website_mail_channel
 #: model_terms:ir.ui.view,arch_db:website_mail_channel.confirmation_subscription
 msgid "to the mailing list."
-msgstr "aan de mailing lijst."
+msgstr "aan de mailinglijst."
 
 #. module: website_mail_channel
 #: model_terms:ir.ui.view,arch_db:website_mail_channel.confirmation_subscription

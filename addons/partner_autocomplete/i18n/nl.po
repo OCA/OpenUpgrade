@@ -5,14 +5,17 @@
 # Translators:
 # Martin Trigaux, 2018
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2018
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2018
 # Thomas Pot <thomas@open2bizz.nl>, 2018
+# Cas Vissers <casvissers@brahoo.nl>, 2018
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 14:22+0000\n"
-"PO-Revision-Date: 2018-09-21 14:22+0000\n"
-"Last-Translator: Thomas Pot <thomas@open2bizz.nl>, 2018\n"
+"POT-Creation-Date: 2018-10-02 10:06+0000\n"
+"PO-Revision-Date: 2018-09-21 14:23+0000\n"
+"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,84 +25,8 @@ msgstr ""
 
 #. module: partner_autocomplete
 #: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
-msgid "&amp;nbsp;&amp;nbsp;&amp;nbsp;"
-msgstr "&amp;nbsp;&amp;nbsp;&amp;nbsp;"
-
-#. module: partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
-msgid "<b>Annual revenue:</b>"
-msgstr "<b>Jaarlijkse inkomsten:</b>"
-
-#. module: partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
-msgid "<b>Description</b><br/>"
-msgstr "<b>Omschrijving</b><br/>"
-
-#. module: partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
-msgid "<b>Email addresses</b><br/>"
-msgstr "<b>Email adressen</b><br/>"
-
-#. module: partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
-msgid "<b>Employees:</b>"
-msgstr "<b>Medewerkers:</b>"
-
-#. module: partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
-msgid "<b>Estimated annual revenue:</b>"
-msgstr "<b>Geschatte jaaromzet::</b>"
-
-#. module: partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
-msgid "<b>Phone numbers</b><br/>"
-msgstr "<b>Telefoonnummers</b><br/>"
-
-#. module: partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
-msgid "<b>Sector:</b>"
-msgstr "<b>Sector:</b>"
-
-#. module: partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
-msgid ""
-"<b>Social networks</b><br/>\n"
-"            &amp;nbsp;&amp;nbsp;&amp;nbsp; <b>Facebook:</b>"
-msgstr ""
-"<b>Social media kanalen</b><br/>\n"
-"            &amp;nbsp;&amp;nbsp;&amp;nbsp; <b>Facebook:</b>"
-
-#. module: partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
-msgid "<b>Tech:</b>"
-msgstr "<b>Tecnisch:</b>"
-
-#. module: partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
-msgid ""
-"<br/>\n"
-"            &amp;nbsp;&amp;nbsp;&amp;nbsp; <b>Crunchbase:</b>"
-msgstr ""
-"<br/>\n"
-"            &amp;nbsp;&amp;nbsp;&amp;nbsp; <b>Crunchbase:</b>"
-
-#. module: partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
-msgid ""
-"<br/>\n"
-"            &amp;nbsp;&amp;nbsp;&amp;nbsp; <b>Linkedin:</b>"
-msgstr ""
-"<br/>\n"
-"            &amp;nbsp;&amp;nbsp;&amp;nbsp; <b>Linkedin:</b>"
-
-#. module: partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
-msgid ""
-"<br/>\n"
-"            &amp;nbsp;&amp;nbsp;&amp;nbsp; <b>Twitter:</b>"
-msgstr ""
-"<br/>\n"
-"            &amp;nbsp;&amp;nbsp;&amp;nbsp; <b>Twitter:</b>"
+msgid "(Time Now)"
+msgstr "(Tijd nu)"
 
 #. module: partner_autocomplete
 #: model_terms:ir.ui.view,arch_db:partner_autocomplete.res_config_settings_view_form
@@ -108,7 +35,7 @@ msgid ""
 "                        Buy more credits"
 msgstr ""
 "<i class=\"fa fa-arrow-right\"/>\n"
-"                        Meer Krediet kopen"
+"                        Meer krediet kopen"
 
 #. module: partner_autocomplete
 #: model_terms:ir.ui.view,arch_db:partner_autocomplete.res_config_settings_view_form
@@ -120,29 +47,104 @@ msgstr ""
 "geen krediet meer voor de gegevens van auto-aanvullen van bedrijfsgegevens."
 
 #. module: partner_autocomplete
+#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
+msgid ""
+"<i class=\"fa fa-fw mr-2 fa-building text-primary\"/>\n"
+"                <b>Company type:</b>"
+msgstr ""
+"<i class=\"fa fa-fw mr-2 fa-building text-primary\"/>\n"
+"                <b>Bedrijfstype:</b>"
+
+#. module: partner_autocomplete
+#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
+msgid ""
+"<i class=\"fa fa-fw mr-2 fa-calendar text-primary\"/>\n"
+"                <b>Founded:</b>"
+msgstr ""
+"<i class=\"fa fa-fw mr-2 fa-calendar text-primary\"/>\n"
+"                <b>Gevonden:</b>"
+
+#. module: partner_autocomplete
+#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
+msgid ""
+"<i class=\"fa fa-fw mr-2 fa-cube text-primary\"/>\n"
+"                <b>Technology Used :</b>"
+msgstr ""
+"<i class=\"fa fa-fw mr-2 fa-cube text-primary\"/>\n"
+"                <b>Technologie gebruikt :</b>"
+
+#. module: partner_autocomplete
+#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
+msgid ""
+"<i class=\"fa fa-fw mr-2 fa-envelope text-primary\"/>\n"
+"                <b>Email :</b>"
+msgstr ""
+"<i class=\"fa fa-fw mr-2 fa-envelope text-primary\"/>\n"
+"                <b>E-mail :</b>"
+
+#. module: partner_autocomplete
+#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
+msgid ""
+"<i class=\"fa fa-fw mr-2 fa-globe text-primary\"/>\n"
+"                <b>Timezone :</b>"
+msgstr ""
+"<i class=\"fa fa-fw mr-2 fa-globe text-primary\"/>\n"
+"                <b>Tijdzone :</b>"
+
+#. module: partner_autocomplete
+#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
+msgid ""
+"<i class=\"fa fa-fw mr-2 fa-industry text-primary\"/>\n"
+"                <b>Sector:</b>"
+msgstr ""
+"<i class=\"fa fa-fw mr-2 fa-industry text-primary\"/>\n"
+"                <b>Sector:</b>"
+
+#. module: partner_autocomplete
+#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
+msgid ""
+"<i class=\"fa fa-fw mr-2 fa-money text-primary\"/>\n"
+"                <b>Annual revenue:</b>"
+msgstr ""
+"<i class=\"fa fa-fw mr-2 fa-money text-primary\"/>\n"
+"                <b>Jaarlijkse omzet:</b>"
+
+#. module: partner_autocomplete
+#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
+msgid ""
+"<i class=\"fa fa-fw mr-2 fa-money text-primary\"/>\n"
+"                <b>Estimated annual revenue:</b>"
+msgstr ""
+"<i class=\"fa fa-fw mr-2 fa-money text-primary\"/>\n"
+"                <b>Verwachte jaarlijkse omzet:</b>"
+
+#. module: partner_autocomplete
+#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
+msgid ""
+"<i class=\"fa fa-fw mr-2 fa-phone text-primary\"/>\n"
+"                <b>Phone :</b>"
+msgstr ""
+"<i class=\"fa fa-fw mr-2 fa-phone text-primary\"/>\n"
+"                <b>Telefoonnummer :</b>"
+
+#. module: partner_autocomplete
+#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
+msgid ""
+"<i class=\"fa fa-fw mr-2 fa-users text-primary\"/>\n"
+"                <b>Employees:</b>"
+msgstr ""
+"<i class=\"fa fa-fw mr-2 fa-users text-primary\"/>\n"
+"                <b>Medewerkers:</b>"
+
+#. module: partner_autocomplete
 #: model_terms:ir.ui.view,arch_db:partner_autocomplete.res_config_settings_view_form
 msgid "<span>&amp;times;</span>"
-msgstr "<span>&amp;aantal;</span>"
+msgstr "<span>&amp;times;</span>"
 
 #. module: partner_autocomplete
 #: model:ir.model.fields,field_description:partner_autocomplete.field_res_partner__additional_info
-#: model:ir.model.fields,field_description:partner_autocomplete.field_res_users__additional_info
 msgid "Additional info"
 msgstr "Aanvullende informatie"
-
-#. module: partner_autocomplete
-#. openerp-web
-#: code:addons/partner_autocomplete/static/src/xml/partner_autocomplete.xml:30
-#, python-format
-msgid "Buy more credits"
-msgstr "Koop krediet"
-
-#. module: partner_autocomplete
-#. openerp-web
-#: code:addons/partner_autocomplete/static/src/xml/partner_autocomplete.xml:20
-#, python-format
-msgid "Checking remaining credit ..."
-msgstr "Resterend krediet controleren ..."
 
 #. module: partner_autocomplete
 #: model_terms:ir.ui.view,arch_db:partner_autocomplete.res_config_settings_view_form
@@ -157,7 +159,6 @@ msgstr "Bedrijven"
 #. module: partner_autocomplete
 #: model:ir.model.fields,field_description:partner_autocomplete.field_res_company__partner_gid
 #: model:ir.model.fields,field_description:partner_autocomplete.field_res_partner__partner_gid
-#: model:ir.model.fields,field_description:partner_autocomplete.field_res_users__partner_gid
 msgid "Company database ID"
 msgstr "Database ID van bedrijf"
 
@@ -170,13 +171,6 @@ msgstr "Configuratie instellingen"
 #: model:ir.model,name:partner_autocomplete.model_res_partner
 msgid "Contact"
 msgstr "Contact"
-
-#. module: partner_autocomplete
-#. openerp-web
-#: code:addons/partner_autocomplete/static/src/js/partner_autocomplete_many2one.js:108
-#, python-format
-msgid "Create and Edit from Autocomplete :"
-msgstr "Klant automatisch aanvullen"
 
 #. module: partner_autocomplete
 #: model:ir.model.fields,field_description:partner_autocomplete.field_res_partner_autocomplete_sync__create_uid
@@ -199,12 +193,9 @@ msgid "ID"
 msgstr "ID"
 
 #. module: partner_autocomplete
-#. openerp-web
-#: code:addons/partner_autocomplete/static/src/xml/partner_autocomplete.xml:23
 #: model:ir.model.fields,field_description:partner_autocomplete.field_res_config_settings__partner_autocomplete_insufficient_credit
-#, python-format
 msgid "Insufficient credit"
-msgstr "Onvoldoende saldo"
+msgstr "Onvoldoende krediet"
 
 #. module: partner_autocomplete
 #: model:ir.model.fields,field_description:partner_autocomplete.field_res_partner_autocomplete_sync__synched
@@ -239,18 +230,21 @@ msgid "Partner Autocomplete : Sync with remote DB"
 msgstr "Auto aanvullen relaties: Synchroniseer met externe DB"
 
 #. module: partner_autocomplete
+#: model:ir.model,name:partner_autocomplete.model_res_partner_autocomplete_sync
+msgid "Partner Autocomplete Sync"
+msgstr "Automatische relatie synchronisatie"
+
+#. module: partner_autocomplete
+#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
+msgid "Partner created by Odoo Partner Autocomplete Service"
+msgstr "Relatie aangemaakt door automatische relatie synchronisatie"
+
+#. module: partner_autocomplete
 #. openerp-web
 #: code:addons/partner_autocomplete/static/src/xml/partner_autocomplete.xml:8
 #, python-format
 msgid "Placeholder"
 msgstr "Label"
-
-#. module: partner_autocomplete
-#. openerp-web
-#: code:addons/partner_autocomplete/static/src/xml/partner_autocomplete.xml:26
-#, python-format
-msgid "Remaining :"
-msgstr "Resterend :"
 
 #. module: partner_autocomplete
 #. openerp-web
@@ -260,23 +254,11 @@ msgid "Searching Autocomplete..."
 msgstr "Automatisch aanvullen wordt uitgevoerd .."
 
 #. module: partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.view_res_partner_form_inherit_partner_autocomplete
-#: model_terms:ir.ui.view,arch_db:partner_autocomplete.view_res_partner_short_form_inherit_partner_autocomplete
-msgid ""
-"You can find a customer, a contact, etc. by its Name, TIN, Email or Internal"
-" Reference."
-msgstr ""
-"U kunt een klant, een contactpersoon, enz. vinden op naam, BTW-nr, E-mail of"
-" interne referentie."
+#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
+msgid "Twitter :"
+msgstr "Twitter :"
 
 #. module: partner_autocomplete
-#. openerp-web
-#: code:addons/partner_autocomplete/static/src/xml/partner_autocomplete.xml:26
-#, python-format
-msgid "credits"
-msgstr "Krediet"
-
-#. module: partner_autocomplete
-#: model:ir.model,name:partner_autocomplete.model_res_partner_autocomplete_sync
-msgid "res.partner.autocomplete.sync"
-msgstr "res.partner.autocomplete.sync"
+#: model_terms:ir.ui.view,arch_db:partner_autocomplete.additional_info_template
+msgid "followers)"
+msgstr "volgers)"

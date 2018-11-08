@@ -363,11 +363,12 @@ var ImageWidget = MediaWidget.extend({
         if (!noRender) {
             this.$('input.url').val('').trigger('input').trigger('change');
         }
+        // TODO: Expand this for adding SVG
         var domain = this.domain.concat(['|', ['mimetype', '=', false], ['mimetype', this.options.document ? 'not in' : 'in', ['image/gif', 'image/jpe', 'image/jpeg', 'image/jpg', 'image/gif', 'image/png']]]);
         if (needle && needle.length) {
             domain.push('|', ['datas_fname', 'ilike', needle], ['name', 'ilike', needle]);
         }
-        domain.push('!', ['datas_fname', '=like', '%.crop'], '!', ['name', '=like', '%.crop']);
+        domain.push('|', ['datas_fname', '=', false], '!', ['datas_fname', '=like', '%.crop'], '!', ['name', '=like', '%.crop']);
         return this._rpc({
             model: 'ir.attachment',
             method: 'search_read',
@@ -1465,7 +1466,7 @@ var LinkDialog = Dialog.extend({
                 var $btn = $(btn);
                 var color = $btn.css('background-color');
                 if (_.contains(colors, color)) {
-                    $btn.remove();
+                    $btn.hide(); // Not remove to be able to edit buttons with those styles
                 } else {
                     colors.push(color);
                 }

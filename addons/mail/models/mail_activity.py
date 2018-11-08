@@ -59,7 +59,7 @@ class MailActivityType(models.Model):
              ' and not available when managing activities for other models.')
     default_next_type_id = fields.Many2one('mail.activity.type', 'Default Next Activity',
         domain="['|', ('res_model_id', '=', False), ('res_model_id', '=', res_model_id)]")
-    force_next = fields.Boolean("Auto-launched next activity", default=False)
+    force_next = fields.Boolean("Auto Schedule Next Activity", default=False)
     next_type_ids = fields.Many2many(
         'mail.activity.type', 'mail_activity_rel', 'activity_id', 'recommended_id',
         domain="['|', ('res_model_id', '=', False), ('res_model_id', '=', res_model_id)]",
@@ -276,9 +276,12 @@ class MailActivity(models.Model):
         activity_user = activity.sudo(self.env.user)
         activity_user._check_access('create')
 
-        # check target user has rights on document otherwise we have to prevent activity creation
+        # send a notification to assigned user; in case of manually done activity also check
+        # target has rights on document otherwise we prevent its creation. Automated activities
+        # are checked since they are integrated into business flows that should not crash.
         if activity_user.user_id != self.env.user:
-            activity_user._check_access_assignation()
+            if not activity_user.automated:
+                activity_user._check_access_assignation()
             if not self.env.context.get('mail_activity_quick_update', False):
                 activity_user.action_notify()
 
@@ -298,7 +301,8 @@ class MailActivity(models.Model):
 
         if values.get('user_id'):
             if values['user_id'] != self.env.uid:
-                self._check_access_assignation()
+                to_check = self.filtered(lambda act: not act.automated)
+                to_check._check_access_assignation()
                 if not self.env.context.get('mail_activity_quick_update', False):
                     self.action_notify()
             for activity in self:

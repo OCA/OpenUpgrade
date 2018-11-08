@@ -33,6 +33,7 @@ from odoo.tools.parse_version import parse_version
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.view_validation import valid_view
 from odoo.tools.translate import xml_translate, TRANSLATED_ATTRS
+from odoo.tools.image import image_data_uri
 
 _logger = logging.getLogger(__name__)
 
@@ -129,6 +130,13 @@ def get_view_arch_from_file(filename, xmlid):
         if node.tag in ('template', 'record'):
             if node.tag == 'record':
                 field = node.find('field[@name="arch"]')
+                if field is None:
+                    if node.find('field[@name="view_id"]') is not None:
+                        view_id = node.find('field[@name="view_id"]').attrib.get('ref')
+                        ref_id = '%s%s' % ('.' not in view_id and xmlid.split('.')[0] + '.' or '', view_id)
+                        return get_view_arch_from_file(filename, ref_id)
+                    else:
+                        return None
                 _fix_multiple_roots(field)
                 inner = u''.join([etree.tostring(child, encoding='unicode') for child in field.iterchildren()])
                 return field.text + inner
@@ -320,6 +328,12 @@ actual arch.
                         self.raise_view_error(message, self.id)
         return True
 
+    def _check_groups_validity(self, view, view_name):
+        for node in view.xpath('//*[@groups]'):
+            for group in node.get('groups').replace('!', '').split(','):
+                if not self.env.ref(group.strip(), raise_if_not_found=False):
+                    _logger.warning("The group %s defined in view %s does not exist!", group, view_name)
+
     @api.constrains('arch_db')
     def _check_xml(self):
         # Sanity checks: the view should not break anything upon rendering!
@@ -332,6 +346,7 @@ actual arch.
             view_arch_utf8 = view_def['arch']
             if view.type != 'qweb':
                 view_doc = etree.fromstring(view_arch_utf8)
+                self._check_groups_validity(view_doc, view.name)
                 # verify that all fields used are valid, etc.
                 self.postprocess_and_fields(view.model, view_doc, view.id)
                 # RNG-based validation is not possible anymore with 7.0 forms
@@ -1291,6 +1306,7 @@ actual arch.
             xmlid=self.key,
             viewid=self.id,
             to_text=pycompat.to_text,
+            image_data_uri=image_data_uri,
         )
         return qcontext
 

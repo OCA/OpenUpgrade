@@ -507,6 +507,9 @@ class Challenge(models.Model):
                 goals = Goals.search(domain, order="completeness desc, current desc")
             else:
                 goals = Goals.search(domain, order="completeness desc, current asc")
+            if not goals:
+                continue
+
             for ranking, goal in enumerate(goals):
                 if user and goal.user_id == user:
                     line_data['own_goal_id'] = goal.id
@@ -523,8 +526,20 @@ class Challenge(models.Model):
                     'completeness': goal.completeness,
                     'state': goal.state,
                 })
-            if goals:
-                res_lines.append(line_data)
+            if len(goals) < 3:
+                # display at least the top 3 in the results
+                missing = 3 - len(goals)
+                for ranking, mock_goal in enumerate([{'id': False,
+                                                      'user_id': False,
+                                                      'name': '',
+                                                      'current': 0,
+                                                      'completeness': 0,
+                                                      'state': False}] * missing,
+                                                    start=len(goals)):
+                    mock_goal['rank'] = ranking
+                    line_data['goals'].append(mock_goal)
+
+            res_lines.append(line_data)
         return res_lines
 
     ##### Reporting #####
@@ -545,7 +560,7 @@ class Challenge(models.Model):
         if challenge.visibility_mode == 'ranking':
             lines_boards = challenge._get_serialized_challenge_lines(restrict_goals=subset_goals)
 
-            body_html = MailTemplates.with_context(challenge_lines=lines_boards).render_template(challenge.report_template_id.body_html, 'gamification.challenge', challenge.id)
+            body_html = MailTemplates.with_context(challenge_lines=lines_boards)._render_template(challenge.report_template_id.body_html, 'gamification.challenge', challenge.id)
 
             # send to every follower and participant of the challenge
             challenge.message_post(
@@ -566,7 +581,7 @@ class Challenge(models.Model):
                 if not lines:
                     continue
 
-                body_html = MailTemplates.sudo(user).with_context(challenge_lines=lines).render_template(
+                body_html = MailTemplates.sudo(user).with_context(challenge_lines=lines)._render_template(
                     challenge.report_template_id.body_html,
                     'gamification.challenge',
                     challenge.id)

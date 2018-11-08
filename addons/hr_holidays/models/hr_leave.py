@@ -355,7 +355,7 @@ class HolidaysRequest(models.Model):
     @api.depends('number_of_days')
     def _compute_number_of_hours_display(self):
         for holiday in self:
-            calendar = self.employee_id.resource_calendar_id or self.env.user.company_id.resource_calendar_id
+            calendar = holiday.employee_id.resource_calendar_id or self.env.user.company_id.resource_calendar_id
             holiday.number_of_hours_display = holiday.number_of_days * (calendar.hours_per_day or HOURS_PER_DAY)
 
     @api.multi
@@ -387,7 +387,7 @@ class HolidaysRequest(models.Model):
         for holiday in self:
             domain = [
                 ('date_from', '<=', holiday.date_to),
-                ('date_to', '>=', holiday.date_from),
+                ('date_to', '>', holiday.date_from),
                 ('employee_id', '=', holiday.employee_id.id),
                 ('id', '!=', holiday.id),
                 ('state', 'not in', ['cancel', 'refuse']),

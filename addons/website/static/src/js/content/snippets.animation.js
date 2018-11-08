@@ -426,27 +426,17 @@ var registry = {};
 
 registry.slider = Animation.extend({
     selector: '.carousel',
+    edit_events: {
+        'slid.bs.carousel': '_onEditionSlide',
+    },
 
     /**
      * @override
      */
     start: function () {
         if (!this.editableMode) {
-            var maxHeight = 0;
-            var $items = this.$('.item');
-            _.each($items, function (el) {
-                var $item = $(el);
-                var isActive =  $item.hasClass('active');
-                $item.addClass('active');
-                var height = $item.outerHeight();
-                if (height > maxHeight) {
-                    maxHeight = height;
-                }
-                $item.toggleClass('active', isActive);
-            });
-            _.each($items, function (el) {
-                $(el).css('min-height', maxHeight);
-            });
+            this.$('img').on('load.slider', this._onImageLoaded.bind(this));
+            this._computeHeights();
         }
         this.$target.carousel();
         return this._super.apply(this, arguments);
@@ -456,11 +446,54 @@ registry.slider = Animation.extend({
      */
     destroy: function () {
         this._super.apply(this, arguments);
+        this.$('img').off('.slider');
         this.$target.carousel('pause');
         this.$target.removeData('bs.carousel');
-        _.each(this.$('.item'), function (el) {
+        _.each(this.$('.carousel-item'), function (el) {
             $(el).css('min-height', '');
         });
+    },
+
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     */
+    _computeHeights: function () {
+        var maxHeight = 0;
+        var $items = this.$('.carousel-item');
+        _.each($items, function (el) {
+            var $item = $(el);
+            var isActive = $item.hasClass('active');
+            $item.addClass('active');
+            var height = $item.outerHeight();
+            if (height > maxHeight) {
+                maxHeight = height;
+            }
+            $item.toggleClass('active', isActive);
+        });
+        _.each($items, function (el) {
+            $(el).css('min-height', maxHeight);
+        });
+    },
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     */
+    _onEditionSlide: function () {
+        this._computeHeights();
+    },
+    /**
+     * @private
+     */
+    _onImageLoaded: function () {
+        this._computeHeights();
     },
 });
 
@@ -699,6 +732,7 @@ registry.gallery = Animation.extend({
      * @param {Event} ev
      */
     _onClickImg: function (ev) {
+        var self = this;
         var $cur = $(ev.currentTarget);
 
         var urls = [];
@@ -743,7 +777,12 @@ registry.gallery = Animation.extend({
         $modal.find('.modal-content, .modal-body.o_slideshow').css('height', '100%');
         $modal.appendTo(document.body);
 
-        this.carousel = new registry.gallery_slider($modal.find('.carousel').carousel());
+        $modal.one('shown.bs.modal', function () {
+            self.trigger_up('animation_start_demand', {
+                editableMode: false,
+                $target: $modal.find('.modal-body.o_slideshow'),
+            });
+        });
     },
 });
 

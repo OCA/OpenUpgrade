@@ -16,7 +16,7 @@ from lxml import etree
 from lxml.builder import E
 import passlib.context
 
-from odoo import api, fields, models, tools, SUPERUSER_ID, ADMINUSER_ID, _
+from odoo import api, fields, models, tools, SUPERUSER_ID, _
 from odoo.exceptions import AccessDenied, AccessError, UserError, ValidationError
 from odoo.http import request
 from odoo.osv import expression
@@ -449,7 +449,7 @@ class Users(models.Model):
                     if values['company_id'] not in self.env.user.company_ids.ids:
                         del values['company_id']
                 # safe fields only, so we write as super-user to bypass access rights
-                self = self.sudo()
+                self = self.sudo().with_context(binary_field_real_user=self.env.user)
 
         res = super(Users, self).write(values)
         if 'company_id' in values:
@@ -578,18 +578,19 @@ class Users(models.Model):
                relevant environment attributes
         """
         uid = cls._login(db, login, password)
-        if uid == ADMINUSER_ID:
-            # Successfully logged in as admin!
-            # Attempt to guess the web base url...
-            if user_agent_env and user_agent_env.get('base_location'):
-                try:
-                    with cls.pool.cursor() as cr:
+        if user_agent_env and user_agent_env.get('base_location'):
+            with cls.pool.cursor() as cr:
+                env = api.Environment(cr, uid, {})
+                if env.user.has_group('base.group_system'):
+                    # Successfully logged in as system user!
+                    # Attempt to guess the web base url...
+                    try:
                         base = user_agent_env['base_location']
-                        ICP = api.Environment(cr, uid, {})['ir.config_parameter']
+                        ICP = env['ir.config_parameter']
                         if not ICP.get_param('web.base.url.freeze'):
                             ICP.set_param('web.base.url', base)
-                except Exception:
-                    _logger.exception("Failed to update web.base.url configuration parameter")
+                    except Exception:
+                        _logger.exception("Failed to update web.base.url configuration parameter")
         return uid
 
     @classmethod
@@ -784,7 +785,7 @@ class Users(models.Model):
                     "and *might* be a proxy. If your Odoo is behind a proxy, "
                     "it may be mis-configured. Check that you are running "
                     "Odoo in Proxy Mode and that the proxy is properly configured, see "
-                    "https://www.odoo.com/documentation/11.0/setup/deploy.html#https for details.",
+                    "https://www.odoo.com/documentation/12.0/setup/deploy.html#https for details.",
                     source
                 )
             raise AccessDenied(_("Too many login failures, please wait a bit before trying again."))
@@ -1038,7 +1039,7 @@ class GroupsView(models.Model):
         def linearize(app, gs):
             # 'User Type' is an exception
             if app.xml_id == 'base.module_category_user_type':
-                return (app, 'selection', gs)
+                return (app, 'selection', gs.sorted('id'))
             # determine sequence order: a group appears after its implied groups
             order = {g: len(g.trans_implied_ids & gs) for g in gs}
             # check whether order is total, i.e., sequence orders are distinct

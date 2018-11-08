@@ -58,6 +58,7 @@ var ThreadWidget = Widget.extend({
         this._enabledOptions = _.defaults(options || {}, {
             displayOrder: ORDER.ASC,
             displayMarkAsRead: true,
+            displayModerationCommands: false,
             displayStars: true,
             displayDocumentLinks: true,
             displayAvatars: true,
@@ -70,6 +71,7 @@ var ThreadWidget = Widget.extend({
         this._disabledOptions = {
             displayOrder: this._enabledOptions.displayOrder,
             displayMarkAsRead: false,
+            displayModerationCommands: false,
             displayStars: false,
             displayDocumentLinks: false,
             displayAvatars: this._enabledOptions.displayAvatars,
@@ -282,12 +284,12 @@ var ThreadWidget = Widget.extend({
     /**
      * Scrolls the thread to a given message
      *
-     * @param {integer} options.messageID the ID of the message to scroll to
+     * @param {integer} options.msgID the ID of the message to scroll to
      * @param {integer} [options.duration]
      * @param {boolean} [options.onlyIfNecessary]
      */
     scrollToMessage: function (options) {
-        var $target = this.$('.o_thread_message[data-message-id="' + options.messageID + '"]');
+        var $target = this.$('.o_thread_message[data-message-id="' + options.msgID + '"]');
         if (options.onlyIfNecessary) {
             var delta = $target.parent().height() - $target.height();
             var offset = delta < 0 ?
@@ -443,6 +445,9 @@ var ThreadWidget = Widget.extend({
     _renderMessageMailPopover: function (messages) {
         if (this._messageMailPopover) {
             this._messageMailPopover.popover('hide');
+        }
+        if (!this.$('.o_thread_tooltip').length) {
+            return;
         }
         this._messageMailPopover = this.$('.o_thread_tooltip').popover({
             html: true,

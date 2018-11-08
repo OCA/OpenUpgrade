@@ -74,7 +74,7 @@ class Discussion(models.Model):
     categories = fields.Many2many('test_new_api.category',
         'test_new_api_discussion_category', 'discussion', 'category')
     participants = fields.Many2many('res.users', context={'active_test': False})
-    messages = fields.One2many('test_new_api.message', 'discussion')
+    messages = fields.One2many('test_new_api.message', 'discussion', copy=True)
     message_concat = fields.Text(string='Message concatenate')
     important_messages = fields.One2many('test_new_api.message', 'discussion',
                                          domain=[('important', '=', True)])
@@ -128,6 +128,7 @@ class Message(models.Model):
         'res.partner', compute='_compute_author_partner',
         search='_search_author_partner')
     important = fields.Boolean()
+    label = fields.Char(translate=True)
 
     @api.one
     @api.constrains('author', 'discussion')
@@ -458,3 +459,12 @@ class ComputeCascade(models.Model):
     def _compute_baz(self):
         for record in self:
             record.baz = "<%s>" % (record.bar or "")
+
+
+class BinarySvg(models.Model):
+    _name = 'test_new_api.binary_svg'
+    _description = 'Test SVG upload'
+
+    name = fields.Char(required=True)
+    image_attachment = fields.Binary(attachment=True)
+    image_wo_attachment = fields.Binary(attachment=False)

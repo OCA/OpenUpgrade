@@ -27,3 +27,17 @@ class Attachment(models.Model):
     @api.model
     def get_serving_groups(self):
         return super(Attachment, self).get_serving_groups() + ['website.group_website_designer']
+
+    @api.model
+    def get_serve_attachment(self, url, extra_domain=None, extra_fields=None, order=None):
+        website = self.env['website'].get_current_website()
+        extra_domain = (extra_domain or []) + website.website_domain()
+        order = ('website_id, %s' % order) if order else 'website_id'
+        return super(Attachment, self).get_serve_attachment(url, extra_domain, extra_fields, order)
+
+    @api.model
+    def get_attachment_by_key(self, key, extra_domain=None, order=None):
+        website = self.env['website'].get_current_website()
+        extra_domain = (extra_domain or []) + website.website_domain()
+        order = ('website_id, %s' % order) if order else 'website_id'
+        return super(Attachment, self).get_attachment_by_key(key, extra_domain, order)

@@ -108,18 +108,26 @@ var ProductConfiguratorMixin = {
                     $variantContainer.find('.variant_custom_value_label').remove();
                     $variantContainer.find('.variant_custom_value').remove();
 
-                    var $label = $('<label>', {
-                        html: attributeValueName + ': ',
-                        class: 'variant_custom_value_label'
-                    });
-
                     var $input = $('<input>', {
                         type: 'text',
                         'data-attribute_value_id': attributeValueId,
                         'data-attribute_value_name': attributeValueName,
                         class: 'variant_custom_value form-control'
                     });
-                    $variantContainer.append($label).append($input);
+
+                    var isRadioInput = $target.is('input[type=radio]') &&
+                        $target.closest('label.css_attribute_color').length === 0;
+
+                    if (isRadioInput) {
+                        $input.addClass('custom_value_radio');
+                        $target.closest('div').after($input);
+                    } else {
+                        var $label = $('<label>', {
+                            html: attributeValueName + ': ',
+                            class: 'variant_custom_value_label'
+                        });
+                        $variantContainer.append($label).append($input);
+                    }
                 }
             } else {
                 $variantContainer.find('.variant_custom_value_label').remove();
@@ -269,6 +277,43 @@ var ProductConfiguratorMixin = {
         return values.concat(unchangedValues);
     },
 
+    /**
+     * Will return a deferred:
+     * - If the product already exists, immediately resolves it with the product_id
+     * - If the product does not exist yet ("dynamic" variant creation), this method will
+     *   create the product first and then resolve the deferred with the created product's id
+     *
+     * @param {$.Element} $container the container to look into
+     * @param {integer} productId the product id
+     * @param {integer} productTemplateId the corresponding product template id
+     * @param {boolean} useAjax wether the rpc call should be done using ajax.jsonRpc or using _rpc
+     * @returns {$.Deferred} the deferred that will be resolved with a {integer} productId
+     */
+    selectOrCreateProduct: function ($container, productId, productTemplateId, useAjax) {
+        var self = this;
+        var productReady = $.Deferred();
+        if (productId && productId !== '0'){
+            productReady.resolve(productId);
+        } else {
+            var params = {
+                model: 'product.template',
+                method: 'create_product_variant',
+                args: [
+                    productTemplateId,
+                    JSON.stringify(self.getSelectedVariantValues($container))
+                ]
+            };
+
+            if (useAjax) {
+                productReady = ajax.jsonRpc('/web/dataset/call', 'call', params);
+            } else {
+                productReady = this._rpc(params);
+            }
+        }
+
+        return productReady;
+    },
+
     //--------------------------------------------------------------------------
     // Private
     //--------------------------------------------------------------------------
@@ -281,6 +326,9 @@ var ProductConfiguratorMixin = {
      * This will check both the exclusions within the product itself and
      * the exclusions coming from the parent product (meaning that this product
      * is an option of the parent product)
+     *
+     * It will also check that the selected combination does not exactly
+     * match a manually archived product
      *
      * @private
      * @param {$.Element} $parent the parent container to apply exclusions
@@ -317,6 +365,18 @@ var ProductConfiguratorMixin = {
                     disable = true;
                 }
                 self._disableInput($parent, exclusion);
+            });
+        }
+
+        if (combinationData.archived_combinations){
+            _.each(combinationData.archived_combinations, function (archived_combination){
+                if (disable) {
+                    return;
+                }
+
+                disable = _.every(archived_combination, function (attribute_value){
+                    return combination.indexOf(attribute_value) > -1;
+                });
             });
         }
 

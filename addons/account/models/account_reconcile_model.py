@@ -17,7 +17,7 @@ class AccountReconcileModel(models.Model):
 
     rule_type = fields.Selection(selection=[
         ('writeoff_button', _('Manually create a write-off on clicked button.')),
-        ('writeoff_suggestion', _('Suggest a write-off.')),
+        ('writeoff_suggestion', _('Suggest counterpart values.')),
         ('invoice_matching', _('Match existing invoices/bills.'))
     ], string='Type', default='writeoff_button', required=True)
     auto_reconcile = fields.Boolean(string='Auto-validate',
@@ -190,7 +190,7 @@ class AccountReconcileModel(models.Model):
 
         # First write-off line.
         writeoff_line = {
-            'name': self.label,
+            'name': self.label or st_line.name,
             'account_id': self.account_id.id,
             'analytic_account_id': self.analytic_account_id.id,
             'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
@@ -210,7 +210,7 @@ class AccountReconcileModel(models.Model):
         if self.has_second_line and self.second_account_id:
             line_balance = balance - sum(aml['debit'] - aml['credit'] for aml in new_aml_dicts)
             second_writeoff_line = {
-                'name': self.second_label,
+                'name': self.second_label or st_line.name,
                 'account_id': self.second_account_id.id,
                 'analytic_account_id': self.second_analytic_account_id.id,
                 'analytic_tag_ids': [(6, 0, self.second_analytic_tag_ids.ids)],
@@ -597,8 +597,7 @@ class AccountReconcileModel(models.Model):
         reconciled_amls_ids = set()
 
         # Iterate all and create results.
-        sorted_st_lines = sorted(st_lines, key=lambda line: (line.statement_id.id, line.date, -line.sequence, line.id), reverse=True)
-        for line in sorted_st_lines:
+        for line in st_lines:
             line_currency = line.currency_id or line.journal_id.currency_id or line.company_id.currency_id
             line_residual = line.currency_id and line.amount_currency or line.amount
 

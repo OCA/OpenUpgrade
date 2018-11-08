@@ -305,7 +305,7 @@ class IrActionsReport(models.Model):
         bodies = []
         res_ids = []
 
-        body_parent = root.xpath('//main')
+        body_parent = root.xpath('//main')[0]
         # Retrieve headers
         for node in root.xpath(match_klass.format('header')):
             body_parent = node.getparent()
@@ -320,7 +320,11 @@ class IrActionsReport(models.Model):
 
         # Retrieve bodies
         for node in root.xpath(match_klass.format('article')):
-            body = layout.render(dict(subst=False, body=lxml.html.tostring(node), base_url=base_url))
+            layout_with_lang = layout
+            # set context language to body language
+            if node.get('data-oe-lang'):
+                layout_with_lang = layout_with_lang.with_context(lang=node.get('data-oe-lang'))
+            body = layout_with_lang.render(dict(subst=False, body=lxml.html.tostring(node), base_url=base_url))
             bodies.append(body)
             if node.get('data-oe-model') == self.model:
                 res_ids.append(int(node.get('data-oe-id', 0)))

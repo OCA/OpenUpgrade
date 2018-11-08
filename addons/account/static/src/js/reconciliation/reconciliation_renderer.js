@@ -43,6 +43,7 @@ var StatementRenderer = Widget.extend(FieldManagerMixin, {
         var defs = [this._super.apply(this, arguments)];
         this.time = Date.now();
         this.$progress = this.$('.progress');
+        this.clickStatementName = this._initialState.bank_statement_id ? true : false;
 
         if (this._initialState.bank_statement_id) {
             var def = this.model.makeRecord("account.bank.statement", [{
@@ -84,7 +85,7 @@ var StatementRenderer = Widget.extend(FieldManagerMixin, {
     hideLoadMoreButton: function () {
         this.$('.js_load_more').hide();
     },
-    showRainbowMan(state){
+    showRainbowMan: function (state) {
         var dt = Date.now()-this.time;
         var $done = $(qweb.render("reconciliation.done", {
             'duration': moment(dt).utc().format(time.getLangTimeFormat()),

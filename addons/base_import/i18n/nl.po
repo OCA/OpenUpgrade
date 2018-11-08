@@ -6,13 +6,17 @@
 # Martin Trigaux, 2018
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2018
 # Cas Vissers <c.vissers@brahoo.nl>, 2018
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2018
+# Wynand Tastenhoye <wta@odoo.com>, 2018
+# Thomas Pot <thomas@open2bizz.nl>, 2018
+# Cas Vissers <casvissers@brahoo.nl>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 13:17+0000\n"
-"PO-Revision-Date: 2018-09-21 13:17+0000\n"
-"Last-Translator: Cas Vissers <c.vissers@brahoo.nl>, 2018\n"
+"POT-Creation-Date: 2018-10-02 10:05+0000\n"
+"PO-Revision-Date: 2018-10-02 10:05+0000\n"
+"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,6 +59,11 @@ msgid ""
 " transient. If the issue still occurs, try to split the file rather than "
 "import it at once."
 msgstr ""
+"Er is een onbekend probleem opgetreden tijdens het importeren (mogelijk "
+"verloren verbinding, datalimiet overschreden of geheugenlimieten "
+"overschreden). Probeer het opnieuw als het probleem van voorbijgaande aard "
+"is. Als het probleem zich blijft voordoen, probeert u het bestand te "
+"splitsen in plaats van het in één keer te importeren."
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base
@@ -64,12 +73,12 @@ msgstr "Basis"
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_import
 msgid "Base Import"
-msgstr ""
+msgstr "Basis import functionaliteit"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_mapping
 msgid "Base Import Mapping"
-msgstr ""
+msgstr "Basis importconfiguratie"
 
 #. module: base_import
 #. openerp-web
@@ -79,13 +88,13 @@ msgid "Cancel"
 msgstr "Annuleer"
 
 #. module: base_import
-#: code:addons/base_import/models/base_import.py:713
+#: code:addons/base_import/models/base_import.py:693
 #, python-format
 msgid "Column %s contains incorrect values (value: %s)"
 msgstr "Kolom %s bevat een incorrecte waarde (waarde: %s)"
 
 #. module: base_import
-#: code:addons/base_import/models/base_import.py:808
+#: code:addons/base_import/models/base_import.py:788
 #, python-format
 msgid "Column %s contains incorrect values. Error in line %d: %s"
 msgstr "Kolom %s bevat  incorrecte waarde. Fout in regel %d: %s"
@@ -104,7 +113,7 @@ msgid "Comma"
 msgstr "Komma"
 
 #. module: base_import
-#: code:addons/base_import/models/base_import.py:845
+#: code:addons/base_import/models/base_import.py:825
 #, python-format
 msgid ""
 "Could not retrieve URL: %(url)s [%(field_name)s: L%(line_number)d]: "
@@ -170,6 +179,10 @@ msgid ""
 "Note that the value in the column will be used as the new record's 'name', "
 "and assumes this is sufficient to create the record."
 msgstr ""
+"Creëert nieuwe records als deze niet kunnen worden gevonden (in plaats van "
+"niet te importeren). Merk op dat de waarde in de kolom zal worden gebruikt "
+"als de 'naam' van de nieuwe record, en gaat ervan uit dat dit voldoende is "
+"om de record te creëren."
 
 #. module: base_import
 #: model:ir.model.fields,field_description:base_import.field_base_import_tests_models_complex__currency_id
@@ -178,8 +191,8 @@ msgid "Currency"
 msgstr "Valuta"
 
 #. module: base_import
-#: code:addons/base_import/models/base_import.py:208
-#: code:addons/base_import/models/base_import.py:213
+#: code:addons/base_import/models/base_import.py:207
+#: code:addons/base_import/models/base_import.py:212
 #, python-format
 msgid "Database ID"
 msgstr "Database ID"
@@ -267,13 +280,13 @@ msgid "Encoding:"
 msgstr "Codering:"
 
 #. module: base_import
-#: code:addons/base_import/models/base_import.py:810
+#: code:addons/base_import/models/base_import.py:790
 #, python-format
 msgid "Error Parsing Date [%s:L%d]: %s"
 msgstr "Fout bij maken datum [%s:L%d]: %s"
 
 #. module: base_import
-#: code:addons/base_import/models/base_import.py:290
+#: code:addons/base_import/models/base_import.py:289
 #, python-format
 msgid "Error cell found while reading XLS/XLSX file: %s"
 msgstr "Foute cel gevonden bij het inlezen van het XLS/XLSX-bestand: %s"
@@ -295,8 +308,8 @@ msgstr ""
 "worden. "
 
 #. module: base_import
-#: code:addons/base_import/models/base_import.py:170
-#: code:addons/base_import/models/base_import.py:207
+#: code:addons/base_import/models/base_import.py:169
+#: code:addons/base_import/models/base_import.py:206
 #, python-format
 msgid "External ID"
 msgstr "Externe ID"
@@ -322,8 +335,8 @@ msgid "File Type"
 msgstr "Bestandstype"
 
 #. module: base_import
-#: code:addons/base_import/models/base_import.py:828
-#: code:addons/base_import/models/base_import.py:834
+#: code:addons/base_import/models/base_import.py:808
+#: code:addons/base_import/models/base_import.py:814
 #, python-format
 msgid "File size exceeds configured maximum (%s bytes)"
 msgstr "Bestanden is groter dan de maximum grootte (%s bytes)"
@@ -476,6 +489,9 @@ msgid ""
 "may be too big for the system's configuration, try to split it (import less "
 "records per file)."
 msgstr ""
+"Import time-out. Probeer het opnieuw. Als u dit probleem nog steeds "
+"tegenkomt, is het bestand mogelijk te groot voor de systeemconfiguratie en "
+"probeert u het te splitsen (minder records per bestand importeren)."
 
 #. module: base_import
 #: model:ir.model.fields,field_description:base_import.field_base_import_import____last_update
@@ -678,67 +694,77 @@ msgstr "Test import"
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_preview
 msgid "Tests : Base Import Model Preview"
-msgstr ""
+msgstr "Tests : Base import model voorbeeld"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_char
 msgid "Tests : Base Import Model, Character"
-msgstr ""
+msgstr "Tests : Base import model, karakter"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_char_noreadonly
 msgid "Tests : Base Import Model, Character No readonly"
-msgstr ""
+msgstr "Tests : Base base import model. karakter niet alleen-lezen"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_char_readonly
 msgid "Tests : Base Import Model, Character readonly"
-msgstr ""
+msgstr "Tests : Base base import model. karakter alleen-lezen"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_char_required
 msgid "Tests : Base Import Model, Character required"
-msgstr ""
+msgstr "Tests : Base import model, karakter verplicht"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_char_states
 msgid "Tests : Base Import Model, Character states"
-msgstr ""
+msgstr "Tests : Base import model, karakter statussen"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_char_stillreadonly
 msgid "Tests : Base Import Model, Character still readonly"
-msgstr ""
+msgstr "Tests : Base base import model. karakter nog steeds alleen-lezen"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_m2o
 msgid "Tests : Base Import Model, Many to One"
-msgstr ""
+msgstr "Tests : Base import model, many to one"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_m2o_related
 msgid "Tests : Base Import Model, Many to One related"
-msgstr ""
+msgstr "Tests : Base import model, gerelateerde many to one"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_m2o_required
 msgid "Tests : Base Import Model, Many to One required"
-msgstr ""
+msgstr "Tests : Base import model, many to one verplicht"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_m2o_required_related
 msgid "Tests : Base Import Model, Many to One required related"
-msgstr ""
+msgstr "Tests : Base import model, gerelateerde many to one verplicht"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_o2m
 msgid "Tests : Base Import Model, One to Many"
-msgstr ""
+msgstr "Tests : Base import model, one to many"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_o2m_child
 msgid "Tests : Base Import Model, One to Many child"
-msgstr ""
+msgstr "Tests : Base import model, one to many onderliggend"
+
+#. module: base_import
+#: model:ir.model,name:base_import.model_base_import_tests_models_complex
+msgid "Tests: Base Import Model Complex"
+msgstr "Tests: Base import model complexx"
+
+#. module: base_import
+#: model:ir.model,name:base_import.model_base_import_tests_models_float
+msgid "Tests: Base Import Model Float"
+msgstr "Tests: Base import model float"
 
 #. module: base_import
 #. openerp-web
@@ -773,7 +799,7 @@ msgid "Track history during import"
 msgstr "Volg geschiedenis tijdens importeren"
 
 #. module: base_import
-#: code:addons/base_import/models/base_import.py:255
+#: code:addons/base_import/models/base_import.py:254
 #, python-format
 msgid "Unable to load \"{extension}\" file: requires Python module \"{modname}\""
 msgstr ""
@@ -781,7 +807,7 @@ msgstr ""
 " vereist Python."
 
 #. module: base_import
-#: code:addons/base_import/models/base_import.py:256
+#: code:addons/base_import/models/base_import.py:255
 #, python-format
 msgid ""
 "Unsupported file format \"{}\", import only supports CSV, ODS, XLS and XLSX"
@@ -817,17 +843,17 @@ msgid "Value2"
 msgstr "Waarde2"
 
 #. module: base_import
-#: code:addons/base_import/models/base_import.py:780
+#: code:addons/base_import/models/base_import.py:760
 #, python-format
 msgid ""
 "You can not import images via URL, check with your administrator or support "
 "for the reason."
 msgstr ""
 "U kunt geen afbeeldingen importen via een URL, neem contact op met uw "
-"beheerder of support voor de reden."
+"administrator of support voor de reden."
 
 #. module: base_import
-#: code:addons/base_import/models/base_import.py:651
+#: code:addons/base_import/models/base_import.py:631
 #, python-format
 msgid "You must configure at least one field to import"
 msgstr "U dient minstens een veld te confituren om te importeren"
@@ -838,16 +864,6 @@ msgstr "U dient minstens een veld te confituren om te importeren"
 #, python-format
 msgid "at row %d"
 msgstr "op regel %d"
-
-#. module: base_import
-#: model:ir.model,name:base_import.model_base_import_tests_models_complex
-msgid "base_import.tests.models.complex"
-msgstr "base_import.tests.models.complex"
-
-#. module: base_import
-#: model:ir.model,name:base_import.model_base_import_tests_models_float
-msgid "base_import.tests.models.float"
-msgstr "base_import.tests.models.float"
 
 #. module: base_import
 #. openerp-web

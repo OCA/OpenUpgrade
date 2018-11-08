@@ -5,6 +5,9 @@
 }
 
 .oe_website_sale {
+    ul ul {
+        margin-left: 1.5rem;
+    }
     .o_payment_form .card {
         border-radius: 4px !important;
     }
@@ -25,13 +28,20 @@
         }
     }
 
-    ul ul {
-        margin-left: 1.5em;
+    h1[itemprop="name"], .oe_product_cart form h5 {
+        word-wrap: break-word;
     }
 
-    h1[itemprop="name"],
-    .oe_product_cart form h5 {
-        word-wrap: break-word;
+    @include media-breakpoint-down(sm) {
+        .td-img {
+            display: none;
+        }
+    }
+
+    .toggle_summary_div {
+        @include media-breakpoint-up(xl) {
+            max-width: 400px;
+        }
     }
 }
 /* ---- Default Styles ---- */
@@ -446,7 +456,7 @@ div#payment_method {
 
 .oe_overlay_options {
     .dropdown {
-        ul[name="size"] {
+        div[name="size"] {
             table {
                 margin-left: 20px;
             }
@@ -558,6 +568,8 @@ ul.wizard {
 }
 /* Collapse category */
 #o_shop_collapse_category li {
+    width: 100%;
+
     a {
         display: inline-block;
         width: 80%;

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from odoo.osv import expression
 from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import UserError, ValidationError
@@ -145,8 +146,9 @@ class ProductTemplateAttributeLine(models.Model):
         # search on a m2o and one on a m2m, probably this will quickly become
         # difficult to compute - check if performance optimization is required
         if name and operator in ('=', 'ilike', '=ilike', 'like', '=like'):
-            args = expression.AND([['|', ('attribute_id', operator, name), ('value_ids', operator, name)], args])
-            attribute_ids = self._search(args, limit=limit, access_rights_uid=name_get_uid)
+            args = args or []
+            domain = ['|', ('attribute_id', operator, name), ('value_ids', operator, name)]
+            attribute_ids = self._search(expression.AND([domain, args]), limit=limit, access_rights_uid=name_get_uid)
             return self.browse(attribute_ids).name_get()
         return super(ProductTemplateAttributeLine, self)._name_search(name=name, args=args, operator=operator, limit=limit, name_get_uid=name_get_uid)
 
@@ -187,7 +189,7 @@ class ProductTemplateAttributeValue(models.Model):
     @api.multi
     def name_get(self):
         if not self._context.get('show_attribute', True):  # TDE FIXME: not used
-            return super(ProductAttributeValue, self).name_get()
+            return super(ProductTemplateAttributeValue, self).name_get()
         return [(value.id, "%s: %s" % (value.attribute_id.name, value.name)) for value in self]
 
 
