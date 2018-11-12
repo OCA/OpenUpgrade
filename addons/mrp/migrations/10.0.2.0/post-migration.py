@@ -8,7 +8,8 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 
 def populate_stock_move_quantity_done_store(cr):
-    cr.execute(
+    openupgrade.logged_query(
+        cr,
         """
         UPDATE stock_move
         SET quantity_done_store = product_uom_qty
@@ -20,7 +21,8 @@ def populate_stock_move_quantity_done_store(cr):
 
 
 def archive_mrp_bom_date_stop(cr):
-    cr.execute(
+    openupgrade.logged_query(
+        cr,
         """
         UPDATE mrp_bom
         SET active = FALSE
@@ -34,7 +36,8 @@ def archive_mrp_bom_date_stop(cr):
 
 def update_mrp_workorder_hour(cr):
     """It's a sum because the user used hours or used cycles."""
-    cr.execute(
+    openupgrade.logged_query(
+        cr,
         """
         UPDATE mrp_workorder
         SET duration_expected = (COALESCE(%s, 0) + COALESCE(%s, 0)) * 60
@@ -46,7 +49,8 @@ def update_mrp_workorder_hour(cr):
 
 def update_mrp_workcenter_times(cr):
     """The time now in minutes instead of hours."""
-    cr.execute(
+    openupgrade.logged_query(
+        cr,
         """
         UPDATE mrp_workcenter
         SET time_start = COALESCE(time_start, 0) * 60,
@@ -56,7 +60,8 @@ def update_mrp_workcenter_times(cr):
 
 
 def fill_mrp_routing_workcenter_time_cycle_manual(cr):
-    cr.execute(
+    openupgrade.logged_query(
+        cr,
         """
         UPDATE mrp_routing_workcenter
         SET time_cycle_manual = COALESCE(%s, 0) * COALESCE(%s, 1) * 60
@@ -175,7 +180,8 @@ def populate_production_picking_type_id(cr, loc_pt_map):
 
 
 def update_manufacture_procurement_rules(cr):
-    cr.execute(
+    openupgrade.logged_query(
+        cr,
         """
         UPDATE procurement_rule pr
         SET picking_type_id = spt.id
@@ -287,37 +293,110 @@ def populate_stock_move_workorder_id(cr):
 
 def fill_stock_move_unit_factor(env):
     cr = env.cr
-    productions = env['mrp.production'].search([])
-    if openupgrade.column_exists(cr, 'mrp_production', 'qty_produced'):
-        cr.execute(
-            """
-            SELECT id
-            FROM mrp_production
-            WHERE qty_produced IS NULL
-            """
-        )
-        ids = [r[0] for r in cr.fetchall()]
-        productions = env['mrp.production'].browse(ids)
-    productions._get_produced_qty()
+    # to fix performence issue, we use sql to compute quantity_done of
+    # stock move and qty_produced of mrp_production
+    quantity_done_filed = 'quantity_done'
+    if not openupgrade.column_exists(cr, 'stock_move', 'quantity_done'):
+        quantity_done_filed = openupgrade.get_legacy_name('quantity_done')
+        openupgrade.logged_query(cr, """
+            ALTER TABLE %(table_name)s
+            ADD COLUMN %(field)s %(field_type)s;
+            """ % {
+            'table_name': 'stock_move',
+            'field': quantity_done_filed,
+            'field_type': 'float',
+        })
 
-    for production in productions.filtered(
-            lambda r: r.state not in ['done', 'cancel']):
-        diff = production.product_qty - production.qty_produced
-        cr.execute(
-            """
+    # compute quantity_done for product lots
+
+    openupgrade.logged_query(cr, """
+        UPDATE stock_move sm
+        SET %(field)s = lot_qty.quantity_done
+        FROM (
+        SELECT sum(COALESCE(sml.quantity_done, 0)) as quantity_done,
+            sml.move_id
+        FROM stock_move sm
+        INNER JOIN stock_move_lots sml on sml.move_id = sm.id
+        INNER JOIN stock_production_lot spl on spl.id = sml.lot_id
+        INNER JOIN product_product pp on pp.id = sm.product_id
+        INNER JOIN product_template pt on pt.id = pp.product_tmpl_id
+        WHERE (pt.tracking != 'none' OR  sml.lot_id IS NOT NULL)
+            AND sml.done_wo = True
+        GROUP BY sml.move_id) AS lot_qty
+        WHERE sm.id = lot_qty.move_id AND %(field)s IS NULL
+        ;
+        """ % {
+        'field': quantity_done_filed,
+    })
+    # compute quantity_done for not product lots
+
+    openupgrade.logged_query(cr, """
+        UPDATE stock_move sm
+        SET %(field)s = quantity_done_store
+        FROM
+        product_product pp
+        INNER JOIN product_template pt ON pt.id = pp.product_tmpl_id
+        WHERE pp.id = sm.product_id
+        AND (pt.tracking = 'none' or pt.tracking IS NULL)
+        AND %(field)s IS NULL;
+        """ % {
+        'field': quantity_done_filed,
+    })
+
+    qty_produced_filed = 'qty_produced'
+    if not openupgrade.column_exists(cr, 'mrp_production', 'qty_produced'):
+        qty_produced_filed = openupgrade.get_legacy_name('qty_produced')
+        openupgrade.logged_query(cr, """
+            ALTER TABLE %(table_name)s
+            ADD COLUMN %(field)s %(field_type)s;
+            """ % {
+            'table_name': 'mrp_production',
+            'field': qty_produced_filed,
+            'field_type': 'float',
+        })
+
+    # compute qty_produced for mrp_production
+
+    openupgrade.logged_query(cr, """
+        UPDATE mrp_production mp
+        SET %(field)s = qty_done_tb.quantity_done
+        FROM (
+        SELECT sum(sm.quantity_done) as quantity_done, sm.production_id FROM
+        stock_move sm
+        INNER JOIN mrp_production mp on sm.production_id = mp.id
+        WHERE sm.scrapped = False AND sm.state != 'cancel'
+        GROUP BY sm.production_id)
+        as qty_done_tb
+        WHERE qty_done_tb.production_id = mp.id
+        AND %(field)s IS NULL;
+        """ % {
+        'field': qty_produced_filed,
+    })
+
+    mp_obj = env['mrp.production']
+    domain = [('state', 'not in', ['done', 'cancel'])]
+    offset = 0
+    while len(mp_obj.search(
+            domain, offset=offset, limit=2000, order='id')) > 0:
+        productions = mp_obj.search(
+            domain, offset=offset, limit=2000, order='id')
+        openupgrade.logged_query(cr, """
             UPDATE stock_move sm
             SET unit_factor = CASE
-                WHEN %s = 0.0
+                WHEN (mp.product_qty - %(field)s) = 0.0
                 THEN sm.product_uom_qty
-                WHEN %s != 0.0
-                THEN sm.product_uom_qty / %s
+                WHEN (mp.product_qty - %(field)s) != 0.0
+                THEN sm.product_uom_qty / (mp.product_qty - %(field)s)
                 ELSE unit_factor
             END
-            WHERE sm.raw_material_production_id = %s
-            """ % (diff, diff, diff,
-                   production.id,
-                   )
-        )
+            FROM mrp_production mp
+            WHERE sm.raw_material_production_id = mp.id
+            AND sm.raw_material_production_id in %(mp_ids)s
+            """ % {
+            'field': qty_produced_filed,
+            'mp_ids': productions.ids,
+        })
+        offset += 2000
 
 
 def fill_stock_move_bom_line_id(cr):
