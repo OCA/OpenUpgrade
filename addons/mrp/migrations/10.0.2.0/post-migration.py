@@ -295,15 +295,15 @@ def fill_stock_move_unit_factor(env):
     cr = env.cr
     # to fix performence issue, we use sql to compute quantity_done of
     # stock move and qty_produced of mrp_production
-    quantity_done_filed = 'quantity_done'
+    quantity_done_field = 'quantity_done'
     if not openupgrade.column_exists(cr, 'stock_move', 'quantity_done'):
-        quantity_done_filed = openupgrade.get_legacy_name('quantity_done')
+        quantity_done_field = openupgrade.get_legacy_name('quantity_done')
         openupgrade.logged_query(cr, """
             ALTER TABLE %(table_name)s
             ADD COLUMN %(field)s %(field_type)s;
             """ % {
             'table_name': 'stock_move',
-            'field': quantity_done_filed,
+            'field': quantity_done_field,
             'field_type': 'float',
         })
 
@@ -326,7 +326,7 @@ def fill_stock_move_unit_factor(env):
         WHERE sm.id = lot_qty.move_id AND %(field)s IS NULL
         ;
         """ % {
-        'field': quantity_done_filed,
+        'field': quantity_done_field,
     })
     # compute quantity_done for not product lots
 
@@ -340,18 +340,18 @@ def fill_stock_move_unit_factor(env):
         AND (pt.tracking = 'none' or pt.tracking IS NULL)
         AND %(field)s IS NULL;
         """ % {
-        'field': quantity_done_filed,
+        'field': quantity_done_field,
     })
 
-    qty_produced_filed = 'qty_produced'
+    qty_produced_field = 'qty_produced'
     if not openupgrade.column_exists(cr, 'mrp_production', 'qty_produced'):
-        qty_produced_filed = openupgrade.get_legacy_name('qty_produced')
+        qty_produced_field = openupgrade.get_legacy_name('qty_produced')
         openupgrade.logged_query(cr, """
             ALTER TABLE %(table_name)s
             ADD COLUMN %(field)s %(field_type)s;
             """ % {
             'table_name': 'mrp_production',
-            'field': qty_produced_filed,
+            'field': qty_produced_field,
             'field_type': 'float',
         })
 
@@ -359,18 +359,20 @@ def fill_stock_move_unit_factor(env):
 
     openupgrade.logged_query(cr, """
         UPDATE mrp_production mp
-        SET %(field)s = qty_done_tb.quantity_done
+        SET %(qty_produced_field)s = qty_done_tb.quantity_done
         FROM (
-        SELECT sum(sm.quantity_done) as quantity_done, sm.production_id FROM
+        SELECT sum(COALESCE(sm.%(quantity_done_field)s, 0)) as quantity_done,
+            sm.production_id FROM
         stock_move sm
         INNER JOIN mrp_production mp on sm.production_id = mp.id
         WHERE sm.scrapped = False AND sm.state != 'cancel'
         GROUP BY sm.production_id)
         as qty_done_tb
         WHERE qty_done_tb.production_id = mp.id
-        AND %(field)s IS NULL;
+        AND %(qty_produced_field)s IS NULL;
         """ % {
-        'field': qty_produced_filed,
+        'quantity_done_field': quantity_done_field,
+        'qty_produced_field': qty_produced_field,
     })
 
     mp_obj = env['mrp.production']
@@ -393,8 +395,8 @@ def fill_stock_move_unit_factor(env):
             WHERE sm.raw_material_production_id = mp.id
             AND sm.raw_material_production_id in %(mp_ids)s
             """ % {
-            'field': qty_produced_filed,
-            'mp_ids': productions.ids,
+            'field': qty_produced_field,
+            'mp_ids': tuple(productions.ids,),
         })
         offset += 2000
 
