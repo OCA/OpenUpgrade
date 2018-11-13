@@ -15,6 +15,7 @@ base         / ir.server.object.lines   / type (selection)              : select
 # Nothing to do: new functionality
 base         / ir.translation           / type (selection)              : selection_keys is now '['code', 'constraint', 'model', 'model_terms', 'selection', 'sql_constraint']' ('['code', 'constraint', 'field', 'help', 'model', 'report', 'selection', 'sql_constraint', 'view']')
 # Nothing to do: types field, help and view were deprecated in 11.0 already. It's likely that these translation types are added in a module and will be reloaded automatically on module update as long as the translation file itself was updated.
+# Done: update type of xml structured field types to 'model_terms'
 base         / ir.ui.menu               / parent_left (integer)         : DEL
 base         / ir.ui.menu               / parent_path (char)            : NEW 
 base         / ir.ui.menu               / parent_right (integer)        : DEL
