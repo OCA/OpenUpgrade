@@ -50,6 +50,8 @@ merged_modules = [
     ('account_journal_report', 'account_financial_report_qweb'),
     # OCA/e-commerce
     ('website_sale_b2c', 'sale'),  # used groups are in sale
+    # OCA/manufacture
+    ('mrp_production_unreserve', 'mrp'),
     # OCA/sale-workflow
     ('sale_order_back2draft', 'sale'),
     # OCA/social
