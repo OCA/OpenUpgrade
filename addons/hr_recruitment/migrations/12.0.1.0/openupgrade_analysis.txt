@@ -16,7 +16,9 @@ NEW hr.recruitment.stage: hr_recruitment.stage_job3 (noupdate)
 NEW hr.recruitment.stage: hr_recruitment.stage_job4 (noupdate)
 NEW hr.recruitment.stage: hr_recruitment.stage_job5 (noupdate)
 NEW ir.actions.act_window: hr_recruitment.mail_activity_type_action_config_hr_applicant
+DEL ir.actions.act_window: hr_recruitment.hr_applicant_action_activity
 NEW ir.ui.menu: hr_recruitment.hr_recruitment_menu_config_activity_type
+DEL ir.ui.menu: hr_recruitment.hr_applicant_nmenu_activity
 NEW ir.ui.view: hr_recruitment.digest_digest_view_form
 NEW ir.ui.view: hr_recruitment.quick_create_applicant_form
 DEL mail.template: hr_recruitment.email_template_data_applicant_employee (noupdate)

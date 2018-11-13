@@ -85,7 +85,6 @@ account      / account.reconcile.model.template / match_total_amount (boolean)  
 account      / account.reconcile.model.template / match_total_amount_param (float): NEW 
 account      / account.reconcile.model.template / rule_type (selection)         : NEW required: required, selection_keys: ['invoice_matching', 'writeoff_button', 'writeoff_suggestion'], req_default: function
 account      / account.tax              / cash_basis_account (many2one) : was renamed to cash_basis_account_id [nothing to do]
-account      / account.tax              / cash_basis_base_account_id (many2one): previously in module account_cash_basis_base_account
 account      / account.tax              / tax_adjustment (boolean)      : DEL 
 account      / account.tax              / type_tax_use (selection)      : selection_keys is now '['adjustment', 'none', 'purchase', 'sale']' ('['none', 'purchase', 'sale']')
 account      / account.tax.template     / cash_basis_account (many2one) : was renamed to cash_basis_account_id [nothing to do]
@@ -118,6 +117,14 @@ account      / res.company              / invoice_reference_type (selection): NE
 account      / res.company              / qr_code (boolean)             : NEW 
 account      / res.company              / transfer_account_code_prefix (char): NEW 
 ---XML records in module 'account'---
+DEL account.financial.report: account.account_financial_report_assets0 (noupdate)
+DEL account.financial.report: account.account_financial_report_balancesheet0 (noupdate)
+DEL account.financial.report: account.account_financial_report_expense0 (noupdate)
+DEL account.financial.report: account.account_financial_report_income0 (noupdate)
+DEL account.financial.report: account.account_financial_report_liability0 (noupdate)
+DEL account.financial.report: account.account_financial_report_liabilitysum0 (noupdate)
+DEL account.financial.report: account.account_financial_report_profitandloss0 (noupdate)
+DEL account.financial.report: account.account_financial_report_profitloss_toreport0 (noupdate)
 NEW account.incoterms: account.incoterm_CFR
 NEW account.incoterms: account.incoterm_CIF
 NEW account.incoterms: account.incoterm_CIP
@@ -148,6 +155,16 @@ NEW ir.actions.act_window: account.action_vendor_bill_template
 NEW ir.actions.act_window: account.actions_account_fiscal_year
 NEW ir.actions.act_window: account.invoice_send
 DEL ir.actions.act_window: account.act_account_invoice_partner_relation
+DEL ir.actions.act_window: account.action_account_aged_balance_view
+DEL ir.actions.act_window: account.action_account_balance_menu
+DEL ir.actions.act_window: account.action_account_financial_report_tree
+DEL ir.actions.act_window: account.action_account_general_ledger_menu
+DEL ir.actions.act_window: account.action_account_partner_ledger_menu
+DEL ir.actions.act_window: account.action_account_print_journal_menu
+DEL ir.actions.act_window: account.action_account_report
+DEL ir.actions.act_window: account.action_account_report_bs
+DEL ir.actions.act_window: account.action_account_report_pl
+DEL ir.actions.act_window: account.action_account_tax_report
 DEL ir.actions.act_window: account.action_all_partner_invoices
 DEL ir.actions.act_window: account.action_invoice_tree2
 DEL ir.actions.act_window: account.action_view_account_move_line_reconcile
@@ -155,6 +172,12 @@ DEL ir.actions.act_window: account.action_wizard_multi_chart
 DEL ir.actions.act_window: account.analytic_line_reporting_pivot
 DEL ir.actions.act_window_close: account.setup_wizard_close
 NEW ir.actions.client: account.action_view_account_move_line_reconcile
+DEL ir.actions.report: account.action_report_account_tax
+DEL ir.actions.report: account.action_report_financial
+DEL ir.actions.report: account.action_report_general_ledger
+DEL ir.actions.report: account.action_report_partnerledger
+DEL ir.actions.report: account.action_report_print_overdue
+DEL ir.actions.report: account.action_report_trial_balance
 NEW ir.actions.server: account.action_invoice_tree2
 NEW ir.actions.server: account.model_account_invoice_action_share (noupdate)
 NEW ir.cron: account.ir_cron_reverse_entry
@@ -164,16 +187,31 @@ NEW ir.model.access: account.access_account_fiscal_year_user
 NEW ir.model.access: account.access_account_incoterms_all
 NEW ir.model.access: account.access_account_incoterms_manager
 NEW ir.model.access: account.access_account_invoice_line_user
+DEL ir.model.access: account.access_account_financial_report
+DEL ir.model.access: account.access_account_financial_report_invoice
 NEW ir.rule: account.account_payment_term_comp_rule (noupdate)
 NEW ir.ui.menu: account.account_analytic_group_menu
 NEW ir.ui.menu: account.action_account_reconcile_model_menu
 NEW ir.ui.menu: account.menu_action_incoterm_open
+DEL ir.ui.menu: account.account_reports_business_intelligence_menu
+DEL ir.ui.menu: account.menu_account_financial_reports_tree
+DEL ir.ui.menu: account.menu_account_report
+DEL ir.ui.menu: account.menu_account_report_bs
+DEL ir.ui.menu: account.menu_account_report_pl
+DEL ir.ui.menu: account.menu_account_reports
 DEL ir.ui.menu: account.menu_action_analytic_lines_reporting
+DEL ir.ui.menu: account.menu_aged_trial_balance
+DEL ir.ui.menu: account.menu_finance
+DEL ir.ui.menu: account.menu_finance_legal_statement
 DEL ir.ui.menu: account.menu_finance_payables_documents
 DEL ir.ui.menu: account.menu_finance_payables_master_data
 DEL ir.ui.menu: account.menu_finance_receivables_documents
 DEL ir.ui.menu: account.menu_finance_receivables_follow_up
 DEL ir.ui.menu: account.menu_finance_receivables_master_data
+DEL ir.ui.menu: account.menu_general_Balance_report
+DEL ir.ui.menu: account.menu_general_ledger
+DEL ir.ui.menu: account.menu_partner_ledger
+DEL ir.ui.menu: account.menu_print_journal
 NEW ir.ui.view: account._assets_backend_helpers
 NEW ir.ui.view: account.account_dashboard_onboarding_panel
 NEW ir.ui.view: account.account_incoterms_form
@@ -207,19 +245,41 @@ NEW ir.ui.view: account.setup_bank_account_wizard
 NEW ir.ui.view: account.view_account_position_filter
 NEW ir.ui.view: account.view_company_partner_bank_form
 NEW ir.ui.view: account.view_incoterms_tree
+DEL ir.ui.view: account.account_aged_balance_view
 DEL ir.ui.view: account.account_journal_dashboard_kanban_view_js
 DEL ir.ui.view: account.account_move_line_reconcile_writeoff
 DEL ir.ui.view: account.account_planner
+DEL ir.ui.view: account.account_report_balance_view
+DEL ir.ui.view: account.account_report_general_ledger_view
+DEL ir.ui.view: account.account_report_partner_ledger_view
+DEL ir.ui.view: account.account_report_print_journal_view
+DEL ir.ui.view: account.accounting_report_view
+DEL ir.ui.view: account.accounting_tax_report_view
 DEL ir.ui.view: account.portal_invoice_report
+DEL ir.ui.view: account.report_agedpartnerbalance
+DEL ir.ui.view: account.report_financial
+DEL ir.ui.view: account.report_generalledger
+DEL ir.ui.view: account.report_overdue
+DEL ir.ui.view: account.report_overdue_document
+DEL ir.ui.view: account.report_partnerledger
+DEL ir.ui.view: account.report_tax
+DEL ir.ui.view: account.report_trialbalance
 DEL ir.ui.view: account.setup_bank_journal_form
 DEL ir.ui.view: account.setup_opening_move_lines_tree
 DEL ir.ui.view: account.setup_opening_move_wizard_form
 DEL ir.ui.view: account.setup_posted_move_form
 DEL ir.ui.view: account.setup_view_company_form
+DEL ir.ui.view: account.view_account_financial_report_form
+DEL ir.ui.view: account.view_account_financial_report_search
+DEL ir.ui.view: account.view_account_financial_report_tree
 DEL ir.ui.view: account.view_account_invoice_filter_inherit_credit_notes
 DEL ir.ui.view: account.view_account_invoice_filter_inherit_invoices
 DEL ir.ui.view: account.view_account_move_line_reconcile_full
 DEL ir.ui.view: account.view_wizard_multi_chart
+DEL ir.ui.view: account_cash_basis_base_account.view_tax_form_cash_basis_inherit
+DEL ir.ui.view: account_invoicing.assets_backend
+DEL ir.ui.view: account_invoicing.product_template_form_view_invoice_policy
+DEL ir.ui.view: account_invoicing.res_config_settings_view_form_inherit_account_invoicing
 DEL mail.template: account.mail_template_data_notification_email_account_invoice (noupdate)
 NEW res.groups: account.group_fiscal_year
 NEW res.groups: account.group_products_in_bills

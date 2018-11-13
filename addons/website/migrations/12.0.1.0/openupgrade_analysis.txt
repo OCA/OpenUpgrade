@@ -9,6 +9,7 @@ website      / website                  / company_id (many2one)         : now re
 website      / website                  / country_group_ids (many2many) : NEW relation: res.country.group
 website      / website                  / google_maps_api_key (char)    : NEW 
 website      / website                  / name (char)                   : now required
+website      / website                  / social_default_image (binary) : NEW attachment: True
 website      / website                  / social_instagram (char)       : NEW 
 website      / website                  / specific_user_account (boolean): NEW 
 website      / website                  / theme_id (many2one)           : NEW relation: ir.module.module
@@ -95,6 +96,7 @@ NEW ir.ui.view: website.s_quotes_carousel
 NEW ir.ui.view: website.s_rating
 NEW ir.ui.view: website.s_tabs
 NEW ir.ui.view: website.view_attachment_form_inherit_website
+NEW ir.ui.view: website.view_attachment_tree_inherit_website
 NEW ir.ui.view: website.view_partner_form_inherit_website
 NEW ir.ui.view: website.view_redirect_search
 NEW ir.ui.view: website.view_view_tree_inherit_website
@@ -114,3 +116,5 @@ DEL ir.ui.view: website.website_planner
 NEW res.groups: website.group_multi_website
 NEW res.users: base.user_admin (noupdate)
 DEL web.planner: website.planner_website
+NEW website.menu: website.menu_home (noupdate)
+DEL website.menu: website.menu_homepage (noupdate)

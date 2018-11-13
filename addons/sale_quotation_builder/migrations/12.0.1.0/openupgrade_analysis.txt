@@ -1,14 +1,70 @@
 ---Fields in module 'sale_quotation_builder'---
 sale_quotation_builder / product.template         / quotation_only_description (html): NEW 
-sale_quotation_builder / sale.order               / website_description (html)    : previously in module website_quote
-sale_quotation_builder / sale.order.line          / website_description (html)    : previously in module website_quote
-sale_quotation_builder / sale.order.option        / website_description (html)    : previously in module website_quote
 sale_quotation_builder / sale.order.template      / website_description (html)    : NEW 
 sale_quotation_builder / sale.order.template.option / website_description (html)    : NEW 
+website_quote / product.product          / website_description (html)    : module is now 'website_sale' ('website_quote')
+website_quote / product.template         / quote_description (html)      : DEL 
+website_quote / product.template         / website_description (html)    : module is now 'website_sale' ('website_quote')
+website_quote / sale.order               / amount_undiscounted (float)   : module is now 'sale' ('website_quote')
+website_quote / sale.order               / options (one2many)            : DEL relation: sale.order.option
+website_quote / sale.order               / quote_viewed (boolean)        : DEL 
+website_quote / sale.order               / require_payment (selection)   : selection_keys is now 'False' ('[0, 1]')
+website_quote / sale.order               / require_payment (selection)   : type is now 'boolean' ('selection')
+website_quote / sale.order               / template_id (many2one)        : DEL relation: sale.quote.template
+website_quote / sale.order.line          / option_line_id (one2many)     : DEL relation: sale.order.option
+website_quote / sale.order.option        / __last_update (datetime)      : module is now 'sale_management' ('website_quote')
+website_quote / sale.order.option        / discount (float)              : module is now 'sale_management' ('website_quote')
+website_quote / sale.order.option        / display_name (char)           : module is now 'sale_management' ('website_quote')
+website_quote / sale.order.option        / layout_category_id (many2one) : DEL relation: sale.layout_category
+website_quote / sale.order.option        / line_id (many2one)            : module is now 'sale_management' ('website_quote')
+website_quote / sale.order.option        / name (text)                   : module is now 'sale_management' ('website_quote')
+website_quote / sale.order.option        / order_id (many2one)           : module is now 'sale_management' ('website_quote')
+website_quote / sale.order.option        / price_unit (float)            : module is now 'sale_management' ('website_quote')
+website_quote / sale.order.option        / product_id (many2one)         : module is now 'sale_management' ('website_quote')
+website_quote / sale.order.option        / product_id (many2one)         : now required
+website_quote / sale.order.option        / quantity (float)              : module is now 'sale_management' ('website_quote')
+website_quote / sale.order.option        / sequence (integer)            : module is now 'sale_management' ('website_quote')
+website_quote / sale.order.option        / uom_id (many2one)             : module is now 'sale_management' ('website_quote')
+website_quote / sale.order.option        / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
 ---XML records in module 'sale_quotation_builder'---
-NEW ir.ui.view: sale.brand_promotion
+DEL ir.actions.act_window: sale.action_quotations
+DEL ir.actions.act_window: website_quote.action_sale_quotation_template
+DEL ir.actions.report: website_quote.report_web_quote
+DEL ir.model.access: website_quote.access_sale_order_option
+DEL ir.model.access: website_quote.access_sale_order_option_all
+DEL ir.model.access: website_quote.access_sale_quote_line
+DEL ir.model.access: website_quote.access_sale_quote_line_manager
+DEL ir.model.access: website_quote.access_sale_quote_option
+DEL ir.model.access: website_quote.access_sale_quote_option_manager
+DEL ir.model.access: website_quote.access_sale_quote_template
+DEL ir.model.access: website_quote.access_sale_quote_template_manager
+DEL ir.ui.menu: website_quote.menu_sale_quote_template
+DEL ir.ui.menu: website_quote.payment_acquirer_menu_sale
+NEW ir.ui.view: sale_quotation_builder.brand_promotion
 NEW ir.ui.view: sale_quotation_builder.sale_order_form_quote_design
 NEW ir.ui.view: sale_quotation_builder.sale_order_portal_content_inherit_sale_quotation_builder
 NEW ir.ui.view: sale_quotation_builder.sale_order_template_view_form_inherit_sale_quotation_builder
 NEW ir.ui.view: sale_quotation_builder.so_template
+DEL ir.ui.view: website.layout_footer_copyright
+DEL ir.ui.view: website_quote.assets_editor
+DEL ir.ui.view: website_quote.assets_frontend
+DEL ir.ui.view: website_quote.change_quantity
+DEL ir.ui.view: website_quote.chatter
+DEL ir.ui.view: website_quote.navigation_menu
+DEL ir.ui.view: website_quote.optional_products
+DEL ir.ui.view: website_quote.payment_confirmation_status
+DEL ir.ui.view: website_quote.portal_my_quotations_inherit_quote
+DEL ir.ui.view: website_quote.pricing
+DEL ir.ui.view: website_quote.report_quote
+DEL ir.ui.view: website_quote.report_saleorder_validity_date
+DEL ir.ui.view: website_quote.res_config_settings_view_form
+DEL ir.ui.view: website_quote.sale_order_form_quote
+DEL ir.ui.view: website_quote.so_quotation
+DEL ir.ui.view: website_quote.so_quotation_content
+DEL ir.ui.view: website_quote.so_template
+DEL ir.ui.view: website_quote.view_sale_quote_template_form
+DEL ir.ui.view: website_quote.view_sale_quote_template_search
+DEL ir.ui.view: website_quote.view_sale_quote_template_tree
+DEL mail.template: website_quote.confirmation_mail (noupdate)
 NEW sale.order.template: sale_quotation_builder.sale_order_template_default (noupdate)
+DEL sale.quote.template: website_quote.website_quote_template_default (noupdate)

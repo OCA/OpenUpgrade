@@ -6,7 +6,7 @@ mass_mailing / mail.mass_mailing        / mail_server_id (many2one)     : NEW re
 mass_mailing / mail.mass_mailing        / user_id (many2one)            : NEW relation: res.users
 mass_mailing / mail.mass_mailing.contact / message_last_post (datetime)  : DEL 
 mass_mailing / mail.mass_mailing.contact / message_main_attachment_id (many2one): NEW relation: ir.attachment
-mass_mailing / mail.mass_mailing.contact / opt_out (boolean)             : DEL 
+mass_mailing / mail.mass_mailing.contact / opt_out (boolean)             : now a function
 mass_mailing / mail.mass_mailing.contact / subscription_list_ids (one2many): NEW relation: mail.mass_mailing.list_contact_rel
 mass_mailing / mail.mass_mailing.contact / unsubscription_date (datetime): DEL 
 mass_mailing / mail.mass_mailing.contact / website_message_ids (one2many): previously in module portal
@@ -30,6 +30,7 @@ NEW ir.actions.act_window: mass_mailing.open_create_mass_mailing_list
 DEL ir.filters: mass_mailing.filter_contact_subscription
 DEL ir.filters: mass_mailing.filter_contact_unsubscription
 NEW ir.model.access: mass_mailing.access_ir_mail_server
+NEW ir.model.access: mass_mailing.access_link_tracker_mailing
 NEW ir.model.access: mass_mailing.access_mail_blacklist_mass_mailing_user
 NEW ir.model.access: mass_mailing.access_mail_mass_mailing_list_contact_rel
 NEW ir.ui.menu: mass_mailing.mail_blacklist_mm_menu

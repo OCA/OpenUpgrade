@@ -13,10 +13,12 @@ website_sale / product.template         / website_meta_og_img (char)    : NEW
 website_sale / product.template         / website_published (boolean)   : now a function
 website_sale / res.company              / website_sale_onboarding_payment_acquirer_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
 website_sale / res.partner              / last_website_so_id (many2one) : now a function
-website_sale / sale.order.line          / linked_line_id (many2one)     : previously in module website_sale_options
-website_sale / sale.order.line          / option_line_ids (one2many)    : previously in module website_sale_options
+website_sale / sale.order               / website_id (many2one)         : NEW relation: website
+website_sale / sale.order               / website_order_line (one2many) : now a function
 website_sale / website                  / cart_abandoned_delay (float)  : NEW 
 website_sale / website                  / cart_recovery_mail_template_id (many2one): NEW relation: mail.template
+website_sale_options / product.product          / optional_product_ids (many2many): module is now 'sale' ('website_sale_options')
+website_sale_options / product.template         / optional_product_ids (many2many): module is now 'sale' ('website_sale_options')
 ---XML records in module 'website_sale'---
 NEW digest.digest: digest.digest_digest_default (noupdate)
 NEW ir.actions.act_window: website_sale.action_open_website_sale_onboarding_payment_acquirer_wizard
@@ -62,4 +64,9 @@ DEL ir.ui.view: website_sale.report_shop_saleorder_document
 DEL ir.ui.view: website_sale.variants
 DEL ir.ui.view: website_sale.variants_tree_view
 DEL ir.ui.view: website_sale.website_planner
+DEL ir.ui.view: website_sale_options.assets_frontend
+DEL ir.ui.view: website_sale_options.modal
+DEL ir.ui.view: website_sale_options.optional_products
+DEL ir.ui.view: website_sale_options.product_template_form_view
+DEL ir.ui.view: website_sale_options.products_add_to_cart
 DEL res.groups: website_sale.group_website_multi_image (noupdate)

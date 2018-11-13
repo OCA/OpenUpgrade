@@ -10,6 +10,7 @@ product      / product.category         / parent_path (char)            : NEW
 product      / product.category         / parent_right (integer)        : DEL 
 product      / product.product          / activity_date_deadline (date) : now a function
 product      / product.product          / attribute_line_ids (one2many) : relation is now 'product.template.attribute.line' ('product.attribute.line')
+product      / product.product          / is_product_variant (boolean)  : now a function
 product      / product.product          / message_last_post (datetime)  : DEL 
 product      / product.product          / message_main_attachment_id (many2one): NEW relation: ir.attachment
 product      / product.product          / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
