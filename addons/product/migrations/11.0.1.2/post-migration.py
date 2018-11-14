@@ -34,11 +34,11 @@ def map_product_tmpl_id_to_product_id(cr):
             for p in product_rows[1:]:
                 fields = values = column_names
                 cr.execute("""
-                   INSERT INTO product_packaging %s
+                   INSERT INTO product_packaging(%s)
                    SELECT %s
-                   FROM product_packaging WHERE id = %%s""" % (
+                   FROM product_packaging WHERE id = %s""" % (
                     ','.join(fields + ['product_id']),
-                    ','.join(values + [p[0]])), (r[0],))
+                    ','.join(values + [str(p[0])]), r[0]))
 
 
 @openupgrade.migrate()
