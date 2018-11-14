@@ -95,6 +95,10 @@ mail         / res.partner              / message_main_attachment_id (many2one):
 mail         / res.partner              / opt_out (boolean)             : DEL 
 mail         / res.users                / moderation_channel_ids (many2many): NEW relation: mail.channel
 ---XML records in module 'mail'---
+NEW ir.actions.act_window: base.action_partner_customer_form
+NEW ir.actions.act_window: base.action_partner_form
+NEW ir.actions.act_window: base.action_partner_supplier_form
+NEW ir.actions.act_window: base.ir_cron_act
 NEW ir.actions.act_window: mail.mail_blacklist_action
 NEW ir.actions.act_window: mail.mail_moderation_action
 NEW ir.actions.act_window: mail.mail_resend_cancel_action
@@ -121,6 +125,7 @@ NEW ir.ui.view: mail.mail_blacklist_view_search
 NEW ir.ui.view: mail.mail_blacklist_view_tree
 NEW ir.ui.view: mail.mail_bounce_catchall
 NEW ir.ui.view: mail.mail_channel_notify_moderation
+NEW ir.ui.view: mail.mail_channel_send_guidelines
 NEW ir.ui.view: mail.mail_moderation_view_search
 NEW ir.ui.view: mail.mail_moderation_view_tree
 NEW ir.ui.view: mail.mail_notification_borders
@@ -165,5 +170,4 @@ DEL mail.shortcode: mail.mail_smiley_thumbsdown
 DEL mail.shortcode: mail.mail_smiley_thumbsup
 DEL mail.shortcode: mail.mail_smiley_trophy
 DEL mail.shortcode: mail.mail_smiley_wink
-NEW mail.template: mail.mail_template_channel_send_guidelines
 DEL mail.template: mail.mail_template_data_notification_email_default

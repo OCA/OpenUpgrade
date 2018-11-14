@@ -23,7 +23,6 @@ sale         / res.company              / sale_onboarding_sample_quotation_state
 sale         / res.company              / sale_quotation_onboarding_state (selection): NEW selection_keys: ['closed', 'done', 'just_done', 'not_done']
 sale         / sale.order               / activity_date_deadline (date) : now a function
 sale         / sale.order               / amount_undiscounted (float)   : previously in module website_quote
-sale         / sale.order               / commitment_date (datetime)    : previously in module sale_order_dates
 sale         / sale.order               / message_last_post (datetime)  : DEL 
 sale         / sale.order               / message_main_attachment_id (many2one): NEW relation: ir.attachment
 sale         / sale.order               / reference (char)              : NEW 
@@ -37,10 +36,16 @@ sale         / sale.order.line          / is_expense (boolean)          : NEW
 sale         / sale.order.line          / layout_category_id (many2one) : DEL relation: sale.layout_category
 sale         / sale.order.line          / layout_category_sequence (integer): DEL 
 sale         / sale.order.line          / product_custom_attribute_value_ids (one2many): NEW relation: product.attribute.custom.value
-sale         / sale.order.line          / product_no_variant_attribute_values (many2many): NEW relation: product.template.attribute.value
+sale         / sale.order.line          / product_no_variant_attribute_value_ids (many2many): NEW relation: product.template.attribute.value
 sale         / sale.order.line          / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
 sale         / sale.order.line          / qty_delivered (float)         : now a function
 sale         / sale.order.line          / qty_delivered_manual (float)  : NEW 
+sale_order_dates / sale.order               / commitment_date (datetime)    : not a function anymore
+sale_order_dates / sale.order               / effective_date (date)         : module is now 'sale_stock' ('sale_order_dates')
+sale_order_dates / sale.order               / requested_date (datetime)     : DEL 
+sale_payment / payment.transaction      / sale_order_id (many2one)      : DEL relation: sale.order
+sale_payment / sale.order               / payment_tx_id (many2one)      : DEL relation: payment.transaction
+sale_payment / sale.order               / payment_tx_ids (one2many)     : DEL relation: payment.transaction
 ---XML records in module 'sale'---
 NEW ir.actions.act_window: sale.action_open_sale_onboarding_payment_acquirer_wizard
 NEW ir.actions.act_window: sale.action_open_sale_onboarding_quotation_layout
@@ -50,6 +55,8 @@ NEW ir.actions.act_window: sale.mail_activity_type_action_config_sale
 NEW ir.actions.act_window: sale.product_template_action
 DEL ir.actions.act_window: sale.action_product_sale_list
 DEL ir.actions.act_window: sale.report_configuration_action
+DEL ir.actions.act_window: sale_payment.payment_transaction_action_authorized
+DEL ir.actions.act_window: sale_payment.payment_transaction_action_pending
 NEW ir.actions.act_window.view: sale.sale_order_action_view_order_calendar
 NEW ir.actions.act_window.view: sale.sale_order_action_view_order_form
 NEW ir.actions.act_window.view: sale.sale_order_action_view_order_graph
@@ -62,7 +69,6 @@ NEW ir.actions.act_window.view: sale.sale_order_action_view_quotation_graph
 NEW ir.actions.act_window.view: sale.sale_order_action_view_quotation_kanban
 NEW ir.actions.act_window.view: sale.sale_order_action_view_quotation_pivot
 NEW ir.actions.act_window.view: sale.sale_order_action_view_quotation_tree
-NEW ir.actions.report: sale.report_web_quote
 NEW ir.actions.server: sale.model_sale_order_action_share (noupdate)
 DEL ir.filters: sale.filter_isale_report_product
 DEL ir.filters: sale.filter_sale_report_sales_funnel
@@ -89,9 +95,10 @@ DEL ir.model.access: sale.report_layout_category_2
 DEL ir.model.access: sale.report_layout_category_3
 DEL ir.model.access: sale.report_layout_category_4
 DEL ir.model.access: sale.report_layout_category_5
-NEW ir.ui.menu: sale.menu_product_category_config_sale
 NEW ir.ui.menu: sale.sale_menu_config_activity_type
 DEL ir.ui.menu: sale.Report_configuration
+DEL ir.ui.menu: sale.menu_attribute_action
+DEL ir.ui.menu: sale.menu_variants_action
 DEL ir.ui.menu: sale.report_all_channels_sales
 NEW ir.ui.view: sale.acquirer_form_inherit_sale
 NEW ir.ui.view: sale.assets_backend_inherit_sale
@@ -108,7 +115,8 @@ NEW ir.ui.view: sale.product_template_attribute_value_view_form_inherit
 NEW ir.ui.view: sale.product_template_attribute_value_view_tree_inherit
 NEW ir.ui.view: sale.product_template_form_view
 NEW ir.ui.view: sale.qunit_suite
-NEW ir.ui.view: sale.report_quotation
+NEW ir.ui.view: sale.res_partner_view_form_payment_defaultcreditcard
+NEW ir.ui.view: sale.res_partner_view_form_property_inherit
 NEW ir.ui.view: sale.sale_onboarding_order_confirmation_form
 NEW ir.ui.view: sale.sale_onboarding_order_confirmation_step
 NEW ir.ui.view: sale.sale_onboarding_quotation_layout_form
@@ -133,6 +141,16 @@ DEL ir.ui.view: sale.report_configuration_form_view
 DEL ir.ui.view: sale.report_configuration_search_view
 DEL ir.ui.view: sale.report_configuration_tree_view
 DEL ir.ui.view: sale.report_invoice_layouted
+DEL ir.ui.view: sale_order_dates.view_order_form_inherit_sale_stock_inherit_sale_order_dates
+DEL ir.ui.view: sale_order_dates.view_order_tree_date
+DEL ir.ui.view: sale_order_dates.view_quotation_tree_date
+DEL ir.ui.view: sale_payment.crm_team_salesteams_view_kanban_inherit_website_portal_sale
+DEL ir.ui.view: sale_payment.payment_confirmation_status
+DEL ir.ui.view: sale_payment.portal_my_orders_payment
+DEL ir.ui.view: sale_payment.portal_order_error
+DEL ir.ui.view: sale_payment.portal_order_success
+DEL ir.ui.view: sale_payment.res_config_settings_view_form
+DEL ir.ui.view: sale_payment.sale_order_view_form
 NEW mail.activity.type: sale.mail_act_sale_upsell (noupdate)
 DEL mail.template: sale.mail_template_data_notification_email_sale_order (noupdate)
 NEW res.groups: sale.group_sale_order_dates

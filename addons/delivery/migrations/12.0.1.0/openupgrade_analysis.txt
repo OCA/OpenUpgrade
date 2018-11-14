@@ -1,5 +1,6 @@
 ---Fields in module 'delivery'---
-delivery     / product.template         / hs_code (char)                : DEL 
+delivery     / product.product          / hs_code (char)                : module is now 'delivery_hs_code' ('delivery')
+delivery     / product.template         / hs_code (char)                : module is now 'delivery_hs_code' ('delivery')
 delivery     / stock.move               / weight_uom_id (many2one)      : DEL relation: product.uom, required: required, req_default: function
 delivery     / stock.picking            / number_of_packages (integer)  : DEL 
 delivery     / stock.picking            / weight_uom_id (many2one)      : now a function

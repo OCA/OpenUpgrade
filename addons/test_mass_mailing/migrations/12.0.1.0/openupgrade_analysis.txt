@@ -1,0 +1,20 @@
+---Fields in module 'test_mass_mailing'---
+test_mass_mailing / mass.mail.test           / email_from (char)             : NEW 
+test_mass_mailing / mass.mail.test           / message_follower_ids (one2many): NEW relation: mail.followers
+test_mass_mailing / mass.mail.test           / message_ids (one2many)        : NEW relation: mail.message
+test_mass_mailing / mass.mail.test           / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mass_mailing / mass.mail.test           / name (char)                   : NEW 
+test_mass_mailing / mass.mail.test           / website_message_ids (one2many): NEW relation: mail.message
+test_mass_mailing / mass.mail.test.bl        / email_from (char)             : NEW 
+test_mass_mailing / mass.mail.test.bl        / message_follower_ids (one2many): NEW relation: mail.followers
+test_mass_mailing / mass.mail.test.bl        / message_ids (one2many)        : NEW relation: mail.message
+test_mass_mailing / mass.mail.test.bl        / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mass_mailing / mass.mail.test.bl        / name (char)                   : NEW 
+test_mass_mailing / mass.mail.test.bl        / umbrella_id (many2one)        : NEW relation: mail.test
+test_mass_mailing / mass.mail.test.bl        / user_id (many2one)            : NEW relation: res.users
+test_mass_mailing / mass.mail.test.bl        / website_message_ids (one2many): NEW relation: mail.message
+---XML records in module 'test_mass_mailing'---
+NEW ir.model.access: test_mass_mailing.access_mass_mail_test_all
+NEW ir.model.access: test_mass_mailing.access_mass_mail_test_bl_all
+NEW ir.model.access: test_mass_mailing.access_mass_mail_test_bl_user
+NEW ir.model.access: test_mass_mailing.access_mass_mail_test_user

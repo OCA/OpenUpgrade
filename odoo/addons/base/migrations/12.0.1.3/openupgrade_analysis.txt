@@ -1,4 +1,5 @@
 ---Fields in module 'base'---
+auth_crypt   / res.users                / password_crypt (char)         : DEL 
 base         / ir.actions.report        / report_type (selection)       : selection_keys is now '['qweb-html', 'qweb-pdf', 'qweb-text']' ('['qweb-html', 'qweb-pdf']')
 base         / ir.attachment            / active (boolean)              : NEW 
 base         / ir.attachment            / thumbnail (binary)            : NEW attachment: True
