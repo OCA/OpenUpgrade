@@ -76,6 +76,8 @@ merged_modules = {
     'sale_stock_variant_configurator': 'sale_variant_configurator',
     # OCA/project
     'project_issue_timesheet_time_control': 'project_timesheet_time_control',
+    # OCA/purchase-reporting
+    'purchase_reporting_weight': 'product_weight_through_uom',
     # OCA/purchase-workflow
     'product_by_supplier': 'purchase',
     'purchase_request_procurement': 'purchase_request',
@@ -83,6 +85,7 @@ merged_modules = {
     # OCA/sale-reporting
     'product_brand_sale_report': 'product_brand',
     'sale_proforma_report': 'sale',
+    'sale_reporting_weight': 'product_weight_through_uom',
     # OCA/stock-logistics-workflow
     'stock_disable_force_availability_button': 'stock',
     'stock_picking_transfer_lot_autoassign': 'stock_pack_operation_auto_fill',
