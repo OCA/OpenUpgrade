@@ -29,8 +29,6 @@ def hr_expense(env):
             journal_id = ot.journal_id,
             employee_id = ot.employee_id,
             state = ot.state,
-            name = ot.name,
-            date = ot.date,
             account_move_id = ot.account_move_id,
             payment_mode = 'own_account'
         FROM %(old_table)s ot
