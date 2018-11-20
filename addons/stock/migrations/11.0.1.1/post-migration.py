@@ -108,7 +108,7 @@ def set_partially_available_state(env):
         env.cr, """
         UPDATE stock_move
         SET state = 'partially_available'
-        WHERE partially_available AND state='waiting'"""
+        WHERE partially_available AND state != 'done'"""
     )
 
 
@@ -116,12 +116,14 @@ def set_partially_available_state(env):
 def create_stock_move_line(env):
     """This method creates stock.move.line recreated from old
     stock.pack.operation records. These records are created only for done
-    moves, as for those not done, there's no need of creating stock.move.line,
-    as they can be recreated in v11 easily:
+    moves, as for those not done, there's no need of creating stock.move.line
+    or it's handled later:
 
-    * For outgoing or internal transfers, clicking on "Check availability",
-      which takes current reserved quants information for recreating the
-      information.
+    * For outgoing or internal transfers without reserved quantity, clicking on
+      "Check availability" will work.
+    * For outgoing or internal transfers with reserved quantity,
+      stock.move.line records are created from other source (quants) later
+      in `create_stock_move_line_reserved` method.
     * For incoming transfers, clicking on validate for accepting full
       quantities, or writing the quantity in the lines you want in
       "Operations" tab. The only drawback is that if you want to use the
@@ -163,8 +165,8 @@ def create_stock_move_line(env):
             MIN(spl.name),
             MIN(sm.id),
             SUM(smol.qty),
-            MIN(spo.owner_id),
-            MIN(spo.package_id),
+            spo.owner_id,
+            spo.package_id,
             MIN(spo.picking_id),
             spo.product_id,
             SUM(smol.qty),
@@ -173,7 +175,7 @@ def create_stock_move_line(env):
             SUM(smol.qty),
             MIN(COALESCE(sp.name, sm.name)),
             'done',
-            MIN(spo.result_package_id),
+            spo.result_package_id,
             MIN(spo.write_date),
             MIN(spo.write_uid)
         FROM stock_pack_operation spo
@@ -185,9 +187,74 @@ def create_stock_move_line(env):
             LEFT JOIN stock_quant sq ON sq.id = smol.reserved_quant_id
             LEFT JOIN stock_production_lot spl ON spl.id = sq.lot_id
         WHERE sm.state = 'done'
-        GROUP BY sq.lot_id, spo.product_id""",
+        GROUP BY sq.lot_id, spo.product_id, spo.owner_id, spo.package_id,
+            spo.result_package_id""",
     )
-    # Re-compute product_qty for those lines where product UoM != line UoM
+
+
+@openupgrade.logging()
+def create_stock_move_line_reserved(env):
+    """This method creates stock.move.line got from old stock.quant
+    reservation_id field for recreating partially available moves.
+    """
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO stock_move_line (
+            create_date,
+            create_uid,
+            date,
+            location_dest_id,
+            location_id,
+            lot_id,
+            lot_name,
+            move_id,
+            ordered_qty,
+            owner_id,
+            package_id,
+            picking_id,
+            product_id,
+            product_qty,
+            product_uom_id,
+            product_uom_qty,
+            qty_done,
+            reference,
+            state,
+            write_date,
+            write_uid
+        )
+        SELECT
+            current_timestamp,
+            MIN(sq.write_uid),
+            sm.date,
+            sm.location_dest_id,
+            sm.location_id,
+            sq.lot_id,
+            MIN(spl.name),
+            sm.id,
+            LEAST(SUM(sq.quantity), sm.product_uom_qty),
+            sq.owner_id,
+            sq.package_id,
+            sm.picking_id,
+            sq.product_id,
+            LEAST(SUM(sq.quantity), sm.product_uom_qty),
+            sm.product_uom,
+            LEAST(SUM(sq.quantity), sm.product_uom_qty),
+            0,
+            MIN(COALESCE(sp.name, sm.name)),
+            sm.state,
+            current_timestamp,
+            MIN(sq.write_uid)
+        FROM stock_quant sq
+            INNER JOIN stock_move sm ON sm.id = sq.reservation_id
+            LEFT JOIN stock_picking sp ON sp.id = sm.picking_id
+            LEFT JOIN stock_production_lot spl ON spl.id = sq.lot_id
+        GROUP BY sq.lot_id, sq.product_id, sq.owner_id, sq.package_id,
+            sm.id""",
+    )
+
+
+def recompute_stock_move_line_qty_different_uom(env):
+    """Re-compute product_qty for those lines where product UoM != line UoM."""
     env.cr.execute(
         """SELECT sml.id
         FROM stock_move_line sml
@@ -222,3 +289,5 @@ def migrate(env, version):
     # TODO: Get is_initial_demand_editable, is_locked values in stock.move
     set_partially_available_state(env)
     create_stock_move_line(env)
+    create_stock_move_line_reserved(env)
+    recompute_stock_move_line_qty_different_uom(env)
