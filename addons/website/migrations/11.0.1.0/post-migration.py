@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
+from psycopg2.extensions import AsIs
 
 
 def fill_website_pages(env):
@@ -87,12 +88,36 @@ def import_website_seo_redirection_data(env):
     )
 
 
+def update_social_media(env):
+    """Data are now located at company level."""
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE res_company rc
+        SET social_twitter = w.%s,
+            social_facebook = w.%s,
+            social_github = w.%s,
+            social_linkedin = w.%s,
+            social_youtube = w.%s,
+            social_googleplus = w.%s
+        FROM website w
+        WHERE w.company_id = rc.id""", (
+            AsIs(openupgrade.get_legacy_name('social_twitter')),
+            AsIs(openupgrade.get_legacy_name('social_facebook')),
+            AsIs(openupgrade.get_legacy_name('social_github')),
+            AsIs(openupgrade.get_legacy_name('social_linkedin')),
+            AsIs(openupgrade.get_legacy_name('social_youtube')),
+            AsIs(openupgrade.get_legacy_name('social_googleplus')),
+        ),
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_website_pages(env)
     link_websites_with_pages(env)
     add_website_homepages(env)
     delete_noupdate_records(env)
+    update_social_media(env)
     import_website_seo_redirection_data(env)
     openupgrade.load_data(
         env.cr, 'website', 'migrations/11.0.1.0/noupdate_changes.xml',
