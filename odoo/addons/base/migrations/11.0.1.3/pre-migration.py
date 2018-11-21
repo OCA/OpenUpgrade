@@ -3,9 +3,11 @@
 # Copyright 2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import csv
 from psycopg2.extensions import AsIs
 from odoo.addons.openupgrade_records.lib import apriori
 from openupgradelib import openupgrade
+from odoo.modules.module import get_module_resource
 
 
 # backup of
@@ -43,6 +45,107 @@ def fill_cron_action_server_pre(env):
         "UPDATE ir_cron SET ir_actions_server_id = %s",
         (server_action_id, ),
     )
+
+
+def ensure_country_state_id_on_existing_records(cr):
+    """Suppose you have country states introduced manually.
+    This method ensure you don't have problems later in the migration when
+    loading the res.country.state.csv"""
+    with open(get_module_resource('base', 'res', 'res.country.state.csv'),
+              newline='') as country_states_file:
+        states = csv.reader(country_states_file, delimiter=',', quotechar='"')
+        for row, state in enumerate(states):
+            if row == 0:
+                continue
+            data_name = state[0]
+            country_code = state[1]
+            name = state[2]
+            state_code = state[3]
+            # first: query to ensure the existing odoo countries have
+            # the code of the csv file, because maybe some code has changed
+            cr.execute(
+                """
+                UPDATE res_country_state rcs
+                SET code = '%(state_code)s'
+                FROM ir_model_data imd
+                WHERE imd.model = 'res.country.state'
+                    AND imd.res_id = rcs.id
+                    AND imd.name = '%(data_name)s'
+                """ % {
+                    'state_code': state_code,
+                    'data_name': data_name,
+                }
+            )
+            # second: find if csv record exists in ir_model_data
+            cr.execute(
+                """
+                SELECT imd.id
+                FROM ir_model_data imd
+                INNER JOIN res_country_state rcs ON (
+                    imd.model = 'res.country.state' AND imd.res_id = rcs.id)
+                LEFT JOIN res_country rc ON rcs.country_id = rc.id
+                INNER JOIN ir_model_data imd2 ON (
+                    rc.id = imd2.res_id AND imd2.model = 'res.country')
+                WHERE imd2.name = '%(country_code)s'
+                    AND rcs.code = '%(state_code)s'
+                    AND imd.name = '%(data_name)s'
+                """ % {
+                    'country_code': country_code,
+                    'state_code': state_code,
+                    'data_name': data_name,
+                }
+            )
+            found_id = cr.fetchone()
+            if found_id:
+                continue
+            # third: as csv record not exists in ir_model_data, search for one
+            # introduced manually that has same codes
+            cr.execute(
+                """
+                SELECT imd.id
+                FROM ir_model_data imd
+                INNER JOIN res_country_state rcs ON (
+                    imd.model = 'res.country.state' AND imd.res_id = rcs.id)
+                LEFT JOIN res_country rc ON rcs.country_id = rc.id
+                INNER JOIN ir_model_data imd2 ON (
+                    rc.id = imd2.res_id AND imd2.model = 'res.country')
+                WHERE imd2.name = '%(country_code)s'
+                    AND rcs.code = '%(state_code)s'
+                ORDER BY imd.id DESC
+                LIMIT 1
+                """ % {
+                    'country_code': country_code,
+                    'state_code': state_code,
+                }
+            )
+            found_id = cr.fetchone()
+            if not found_id:
+                continue
+            # fourth: if found, ensure it has the same xmlid as the csv record
+            openupgrade.logged_query(
+                cr,
+                """
+                UPDATE ir_model_data
+                SET name = '%(data_name)s', module = 'base'
+                WHERE id = %(data_id)s AND model = 'res.country.state'
+                """ % {
+                    'data_name': data_name,
+                    'data_id': found_id[0],
+                }
+            )
+            cr.execute(
+                """
+                UPDATE res_country_state rcs
+                SET name = $$%(name)s$$
+                FROM ir_model_data imd
+                WHERE imd.id = %(data_id)s
+                    AND imd.model = 'res.country.state'
+                    AND imd.res_id = rcs.id
+                """ % {
+                    'name': name,
+                    'data_id': found_id[0],
+                }
+            )
 
 
 @openupgrade.migrate()
@@ -85,3 +188,4 @@ def migrate(env, version):
         UPDATE ir_cron SET interval_type = 'days'
         WHERE interval_type = 'work_days'""")
     fill_cron_action_server_pre(env)
+    ensure_country_state_id_on_existing_records(env.cr)
