@@ -1,0 +1,14 @@
+---Fields in module 'mrp_byproduct'---
+mrp_byproduct / mrp.subproduct           / operation_id (many2one)       : NEW relation: mrp.routing.workcenter
+# NOTHING TO DO
+
+mrp_byproduct / mrp.subproduct           / product_uom (many2one)        : DEL relation: product.uom, required: required
+mrp_byproduct / mrp.subproduct           / product_uom_id (many2one)     : NEW relation: product.uom, required: required
+# DONE: pre-migration: Renamed field
+
+mrp_byproduct / mrp.subproduct           / subproduct_type (selection)   : DEL required: required, selection_keys: ['fixed', 'variable'], req_default: variable
+mrp_byproduct / stock.move               / subproduct_id (many2one)      : NEW relation: mrp.subproduct
+# NOTHING TO DO
+
+---XML records in module 'mrp_byproduct'---
+# NOTHING TO DO
