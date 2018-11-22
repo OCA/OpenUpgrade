@@ -47,6 +47,7 @@ merged_modules = {
     # Odoo
     'account_tax_cash_basis': 'account',
     'portal_gamification': 'gamification',
+    'portal_sale': 'sale',
     'portal_stock': 'portal',
     'procurement': 'stock',
     'project_issue': 'project',
