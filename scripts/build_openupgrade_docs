@@ -8,6 +8,7 @@ DOC_PARTS="7.0/openerp/openupgrade/doc/source/modules50-60.rst
 8.0/openerp/openupgrade/doc/source/modules70-80.rst
 9.0/openerp/openupgrade/doc/source/modules80-90.rst
 10.0/odoo/openupgrade/doc/source/modules90-100.rst
+11.0/odoo/openupgrade/doc/source/modules100-110.rst
 "
 OUTPUT_DIR=${OUTPUT_DIR:-$DOC_BUILD_DIR}/build/html
 OPENUPGRADELIB=https://github.com/OCA/OpenUpgradelib.git
@@ -27,4 +28,4 @@ else
 fi
 export PYTHONPATH=$PYTHONPATH:$OPENUPGRADE_PYTHON_PATH:$DOC_BUILD_DIR/openupgradelib
 mkdir -p $DOC_BUILD_DIR/source/.static
-sphinx-build -W -q -d $DOC_BUILD_DIR/.doctrees $DOC_BUILD_DIR/source $OUTPUT_DIR
+python3 -m sphinx -W -q -d $DOC_BUILD_DIR/.doctrees $DOC_BUILD_DIR/source $OUTPUT_DIR
