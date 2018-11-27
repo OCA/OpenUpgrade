@@ -124,6 +124,7 @@ def import_data_from_im_chat_module(env):
         """
         INSERT INTO mail_message (author_id, res_id, body, message_type,
             subtype_id, model, record_name, no_auto_thread,
+            date,
             create_uid, create_date, write_uid, write_date)
         SELECT ru.partner_id AS author_id, mc.id AS res_id,
             icm.message AS body, CASE
@@ -132,6 +133,7 @@ def import_data_from_im_chat_module(env):
                         ELSE icm.type
                     END AS message_type, %s AS subtype_id,
             'mail.channel' AS model, mc.name AS record_name, FALSE AS nat,
+            icm.create_date,
             icm.create_uid, icm.create_date, icm.write_uid, icm.write_date
         FROM im_chat_message icm
         LEFT JOIN res_users ru ON ru.id = icm.from_id
