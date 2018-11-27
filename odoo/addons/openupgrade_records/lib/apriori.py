@@ -26,6 +26,8 @@ renamed_modules = {
     'purchase_request_to_rfq_order_approved': (
         'purchase_request_order_approved'
     ),
+    # OCA/sale-reporting
+    'sale_report_delivered': 'sale_report_delivered_subtotal',
     # OCA/server-tools
     'mail_log_message_to_process': 'fetchmail_incoming_log',
     # OCA/stock-logistics-reporting
