@@ -87,7 +87,6 @@ def update_stock_move_value_fifo(env):
     perpetual/automated inventory valuation and to not lose the possibility
     to switch to it after migration in envs with manual valuation.
     """
-    pt_obj = env['product.template']
     # Valuate incoming moves:
     env.cr.execute("""
         SELECT sm.id, pt.id, sm.price_unit, sm.product_uom_qty
@@ -107,8 +106,8 @@ def update_stock_move_value_fifo(env):
             AND sm.state = 'done'
     """)
     for move, tmpl_id, price_unit, product_uom_qty in env.cr.fetchall():
-        # TODO: else 0.0?
-        # TODO: maybe move to pre-migration, quants affected in migration??
+        # Update remaining value and remaining qty based on quants that
+        # still exist in internal locations.
         env.cr.execute("""
             UPDATE stock_move AS to_update
             SET remaining_value = q1.remaining_value,
@@ -129,52 +128,23 @@ def update_stock_move_value_fifo(env):
                 ) AS q1
             WHERE to_update.id = %s
         """, (move, move))
-
-        if price_unit:
-            # if we have price_unit we use it to set the value
-            env.cr.execute("""
-                UPDATE stock_move
-                SET value = %s
-                WHERE id = %s
-            """, (price_unit * product_uom_qty, move))
-
-        else:
-            # With no price unit we use the account_move_id to
-            # valuate the move.
-            product = pt_obj.browse(tmpl_id)
-            if product.cost_method == 'fifo':
-                env.cr.execute("""
-                    SELECT id, amount
-                    FROM account_move
-                    WHERE stock_move_id = %s
-                """, (move,))
-                am_ids = [x[0] for x in env.cr.fetchall()]
-                amount = [x[1] for x in env.cr.fetchall()]
-                if len(am_ids) == 1:
-                    value = amount[0]
-                    env.cr.execute("""
-                        UPDATE stock_move
-                        SET value = %s, price_unit = %s
-                        WHERE id = %s
-                    """, (value, value / product_uom_qty, move))
-                else:
-                    # TODO: more than one or no accounting entry.
-                    openupgrade.logger.debug(
-                        "stock.move.%s: account_move_ids: %s" % (move, am_ids))
-            else:
-                # TODO: this might have changed depending on date.
-                price_unit = product.standard_price
-                if price_unit:
-                    # TODO: should we update the price unit to the move?
-                    env.cr.execute("""
-                        UPDATE stock_move
-                        SET value = %s
-                        WHERE id = %s
-                    """, (price_unit * product_uom_qty, move))
-                else:
-                    # TODO
-                    openupgrade.logger.debug(
-                        "move ID %s. no product standard price" % (move,))
+        # Update value based on quants that a linked to this move.
+        env.cr.execute("""
+            UPDATE stock_move AS to_update
+            SET value = q1.value
+            FROM (
+                SELECT sum(sq.quantity*sq.cost) as value
+                FROM stock_quant_move_rel sqsm
+                INNER JOIN stock_move sm
+                ON sqsm.move_id = sm.id
+                INNER JOIN stock_quant sq
+                ON sqsm.quant_id = sq.id
+                INNER JOIN stock_location sl
+                ON sq.location_id = sl.id
+                WHERE sm.id = %s
+                ) AS q1
+            WHERE to_update.id = %s
+        """, (move, move))
 
     # Valuate outgoing moves:
     env.cr.execute("""
@@ -195,55 +165,26 @@ def update_stock_move_value_fifo(env):
             AND sm.state = 'done'
     """)
     for move, tmpl_id, price_unit, product_uom_qty in env.cr.fetchall():
-        if price_unit:
-            # if we have price_unit we use it to set the value
-            env.cr.execute("""
-                UPDATE stock_move
-                SET value = %s
-                WHERE id = %s
-            """, (price_unit * product_uom_qty, move))
-
-        else:
-            # With no price unit we use the account_move_id to
-            # valuate the move.
-            product = pt_obj.browse(tmpl_id)
-            if product.cost_method == 'fifo':
-                env.cr.execute("""
-                    SELECT id, amount
-                    FROM account_move
-                    WHERE stock_move_id = %s
-                """, (move,))
-                am_ids = [x[0] for x in env.cr.fetchall()]
-                amount = [x[1] for x in env.cr.fetchall()]
-                if len(am_ids) == 1:
-                    # For outgoing moves value and price_unit are negative.
-                    value = - amount[0]
-                    env.cr.execute("""
-                        UPDATE stock_move
-                        SET value = %s, price_unit = %s
-                        WHERE id = %s
-                    """, (value, value / product_uom_qty, move))
-                else:
-                    # TODO: more than one or no accounting entry.
-                    openupgrade.logger.debug(
-                        "stock.move.%s: account_move_ids: %s" % (move, am_ids))
-            else:
-                # TODO: this might have changed depending on date.
-                price_unit = - product.standard_price  # outgoing -> neg.
-                if price_unit:
-                    # TODO: should we update the price unit to the move?
-                    env.cr.execute("""
-                        UPDATE stock_move
-                        SET value = %s
-                        WHERE id = %s
-                    """, (price_unit * product_uom_qty, move))
-                else:
-                    # TODO
-                    openupgrade.logger.debug(
-                        "move ID %s. no product standard price" % (move,))
+        # Update value based on quants that a linked to this move.
+        env.cr.execute("""
+            UPDATE stock_move AS to_update
+            SET value = -q1.value
+            FROM (
+                SELECT sum(sq.quantity*sq.cost) as value
+                FROM stock_quant_move_rel sqsm
+                INNER JOIN stock_move sm
+                ON sqsm.move_id = sm.id
+                INNER JOIN stock_quant sq
+                ON sqsm.quant_id = sq.id
+                INNER JOIN stock_location sl
+                ON sq.location_id = sl.id
+                WHERE sm.id = %s
+                ) AS q1
+            WHERE to_update.id = %s
+        """, (move, move))
 
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
-    set_stock_move_id_for_account_moves(env)
+    # set_stock_move_id_for_account_moves(env) # TODO: not sure if we'll do
     update_stock_move_value_fifo(env)
