@@ -240,7 +240,7 @@ def create_stock_move_line_incoming(env):
             INNER JOIN stock_picking_type spt ON spt.id = sp.picking_type_id
         WHERE sm.state = 'assigned'
             AND sm.origin_returned_move_id IS NULL
-            AND spt.code == 'incoming'
+            AND spt.code = 'incoming'
         """,
     )
 
