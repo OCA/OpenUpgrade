@@ -116,18 +116,14 @@ def set_partially_available_state(env):
 def create_stock_move_line(env):
     """This method creates stock.move.line recreated from old
     stock.pack.operation records. These records are created only for done
-    moves, as for those not done, there's no need of creating stock.move.line
-    or it's handled later:
+    moves, as for those not done, it's handled later:
 
     * For outgoing or internal transfers without reserved quantity, clicking on
       "Check availability" will work.
     * For outgoing or internal transfers with reserved quantity,
       stock.move.line records are created from other source (quants) later
       in `create_stock_move_line_reserved` method.
-    * For incoming transfers, clicking on validate for accepting full
-      quantities, or writing the quantity in the lines you want in
-      "Operations" tab. The only drawback is that if you want to use the
-      detailed operation mode, you will have to enter quantity manually.
+    * For incoming transfers not yet validated, they are created later.
     """
     openupgrade.logged_query(
         env.cr, """
@@ -163,7 +159,7 @@ def create_stock_move_line(env):
             MIN(spo.location_id),
             sq.lot_id,
             MIN(spl.name),
-            MIN(sm.id),
+            sm.id,
             SUM(smol.qty),
             spo.owner_id,
             spo.package_id,
@@ -188,7 +184,64 @@ def create_stock_move_line(env):
             LEFT JOIN stock_production_lot spl ON spl.id = sq.lot_id
         WHERE sm.state = 'done'
         GROUP BY sq.lot_id, spo.product_id, spo.owner_id, spo.package_id,
-            spo.result_package_id""",
+            spo.result_package_id, sm.id""",
+    )
+
+
+@openupgrade.logging()
+def create_stock_move_line_incoming(env):
+    """This method creates stock.move.line for incoming moves that are not yet
+    validated and don't come from a return (as these need reservation the
+    same as the deliveries).
+
+    The drawback of current method is that any lot/package already input, but
+    not validated, will be lost. Maybe we can recreate this through
+    stock_move_operation_link the same as done moves.
+    """
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO stock_move_line (
+            create_date,
+            create_uid,
+            date,
+            location_dest_id,
+            location_id,
+            move_id,
+            ordered_qty,
+            picking_id,
+            product_id,
+            product_qty,
+            product_uom_id,
+            product_uom_qty,
+            reference,
+            state,
+            write_date,
+            write_uid
+        )
+        SELECT
+            sm.create_date,
+            sm.create_uid,
+            sm.date,
+            sm.location_dest_id,
+            sm.location_id,
+            sm.id,
+            sm.product_uom_qty,
+            sp.id,
+            sm.product_id,
+            sm.product_qty,
+            sm.product_uom,
+            sm.product_uom_qty,
+            COALESCE(sp.name, sm.name),
+            'assigned',
+            sm.write_date,
+            sm.write_uid
+        FROM stock_move sm
+            INNER JOIN stock_picking sp ON sp.id = sm.picking_id
+            INNER JOIN stock_picking_type spt ON spt.id = sp.picking_type_id
+        WHERE sm.state = 'assigned'
+            AND sm.origin_returned_move_id IS NULL
+            AND spt.code = 'incoming'
+        """,
     )
 
 
@@ -196,6 +249,8 @@ def create_stock_move_line(env):
 def create_stock_move_line_reserved(env):
     """This method creates stock.move.line got from old stock.quant
     reservation_id field for recreating partially available moves.
+
+    TODO: Check this with multiple UoMs.
     """
     openupgrade.logged_query(
         env.cr, """
@@ -289,5 +344,6 @@ def migrate(env, version):
     # TODO: Get is_initial_demand_editable, is_locked values in stock.move
     set_partially_available_state(env)
     create_stock_move_line(env)
+    create_stock_move_line_incoming(env)
     create_stock_move_line_reserved(env)
     recompute_stock_move_line_qty_different_uom(env)
