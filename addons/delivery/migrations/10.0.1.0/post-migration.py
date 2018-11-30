@@ -14,6 +14,3 @@ def migrate(cr, version):
     """ % {
         'shipping_enabled': openupgrade.get_legacy_name('shipping_enabled')
     })
-    openupgrade.load_data(
-        cr, 'delivery', 'migrations/10.0.1.0/noupdate_changes.xml',
-    )
