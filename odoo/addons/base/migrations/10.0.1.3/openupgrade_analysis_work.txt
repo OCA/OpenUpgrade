@@ -68,6 +68,8 @@ DEL ir.ui.menu: base.menu_sale_config
 DEL ir.ui.menu: base.menu_sales
 NEW ir.ui.view: base.action_view_company_form_link_2_currencies
 NEW ir.ui.view: base.view_translation_dialog_tree
+# NOTHING TO DO
+
 NEW res.country.state: base.state_ae_aj
 NEW res.country.state: base.state_ae_az
 NEW res.country.state: base.state_ae_du
@@ -654,6 +656,8 @@ NEW res.country.state: base.state_za_nc
 NEW res.country.state: base.state_za_nl
 NEW res.country.state: base.state_za_nw
 NEW res.country.state: base.state_za_wc
+# DONE: post-migration: assured no duplications, due to new 'name_code_uniq' constraint
+
 NEW res.currency: base.TJS
 DEL res.currency: base.GWP
 DEL res.currency: base.SIT
