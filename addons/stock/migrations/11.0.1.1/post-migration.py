@@ -2,6 +2,7 @@
 # Copyright 2017-2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo.exceptions import UserError
 from openupgradelib import openupgrade
 from psycopg2.extensions import AsIs
 
@@ -319,15 +320,18 @@ def recompute_stock_move_line_qty_different_uom(env):
     )
     lines = env['stock.move.line'].browse([x[0] for x in env.cr.fetchall()])
     for line in lines:
-        product_qty = line.product_uom_id._compute_quantity(
-            line.product_uom_qty, line.product_id.uom_id,
-            rounding_method='HALF-UP',
-        )
-        # Can't assign by ORM, so by SQL
-        env.cr.execute(
-            "UPDATE stock_move_line SET product_qty = %s WHERE id = %s",
-            (product_qty, line.id),
-        )
+        try:  # Don't fail on incompatible conversions
+            product_qty = line.product_uom_id._compute_quantity(
+                line.product_uom_qty, line.product_id.uom_id,
+                rounding_method='HALF-UP',
+            )
+            # Can't assign by ORM, so by SQL
+            env.cr.execute(
+                "UPDATE stock_move_line SET product_qty = %s WHERE id = %s",
+                (product_qty, line.id),
+            )
+        except UserError:
+            pass
 
 
 @openupgrade.migrate(use_env=True)
