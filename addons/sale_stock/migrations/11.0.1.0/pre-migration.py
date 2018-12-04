@@ -18,9 +18,10 @@ def update_procurement_field_from_sale(env):
     openupgrade.logged_query(
         env.cr, """
         UPDATE procurement_group pg
-        SET sale_id = so.id
-        FROM sale_order so
-        WHERE so.procurement_group_id = pg.id""",
+        SET sale_id = sol.order_id
+        FROM stock_move sm
+        INNER JOIN sale_order_line sol ON sm.sale_line_id = sol.id
+        WHERE sm.group_id = pg.id""",
     )
 
 
@@ -59,8 +60,8 @@ def update_stock_move_field_from_procurement_order(env):
     )
 
 
-@openupgrade.migrate()
+@openupgrade.migrate(use_env=True)
 def migrate(env, version):
+    update_stock_move_field_from_procurement_order(env)
     update_procurement_field_from_sale(env)
     update_picking_sale_related(env)
-    update_stock_move_field_from_procurement_order(env)
