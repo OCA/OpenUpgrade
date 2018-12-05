@@ -5,7 +5,12 @@
 # Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import logging
+from psycopg2.extensions import AsIs
+
 from openupgradelib import openupgrade
+
+logger = logging.getLogger('OpenUpgrade')
 
 column_renames = {
     'account_account_type': [
@@ -140,6 +145,41 @@ PROPERTY_FIELDS = {
     ('res.partner', 'property_supplier_payment_term',
      'property_supplier_payment_term_id'),
 }
+
+
+FAST_CREATIONS = [
+    ('account_invoice_tax', 'currency_id', 'integer', """
+    UPDATE account_invoice_tax ait SET currency_id = ai.currency_id
+    FROM account_invoice ai where ai.id = ait.invoice_id;
+    """),
+    ('account_bank_statement', 'difference', 'numeric', """
+    UPDATE account_bank_statement abs
+    SET difference = balance_end_real - balance_end;
+    """),
+    ('account_invoice', 'amount_total_signed', 'numeric', """
+    UPDATE account_invoice
+    SET amount_total_signed = amount_total
+    WHERE type IN ('in_invoice', 'out_invoice');
+    UPDATE account_invoice
+    SET amount_total_signed = - amount_total
+    WHERE type IN ('in_refund', 'out_refund');
+    """)
+]
+
+MONO_CURRENCY_FAST_CREATIONS = [
+    ('account_invoice', 'amount_total_company_signed', 'numeric', """
+    UPDATE account_invoice
+    SET amount_total_company_signed = amount_total_signed;
+    """),
+    ('account_invoice', 'amount_untaxed_signed', 'numeric', """
+    UPDATE account_invoice
+    SET amount_untaxed_signed = amount_untaxed
+    WHERE type IN ('in_invoice', 'out_invoice');
+    UPDATE account_invoice
+    SET amount_untaxed_signed = - amount_untaxed
+    WHERE type IN ('in_refund', 'out_refund');
+    """)
+]
 
 
 def migrate_properties(cr):
@@ -329,9 +369,22 @@ def set_date_maturity(env):
     )
 
 
+def fast_create(env, settings):
+    for setting in settings:
+        (table_name, field_name, sql_type, sql_request) = setting
+        logger.info(
+            "Fast creation of the field '%s' (table '%s')" % (
+                field_name, table_name))
+        env.cr.execute(
+            "ALTER TABLE %s ADD COLUMN %s %s;",
+            (AsIs(table_name), AsIs(field_name), AsIs(sql_type)),)
+        env.cr.execute(sql_request)
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
+
     # 9.0 introduces a constraint enforcing this
     cr.execute(
         "update account_account set reconcile=True "
@@ -351,3 +404,17 @@ def migrate(env, version):
     merge_supplier_invoice_refs(env)
     openupgrade.rename_fields(env, field_renames)
     set_date_maturity(env)
+
+    # Fast Create new fields
+    fast_create(env, FAST_CREATIONS)
+
+    # Fast create other fields, in the simple case of mono currency
+    cr.execute("""
+    SELECT ai.currency_id, rc.currency_id
+    FROM account_invoice ai
+    INNER JOIN res_company rc on ai.company_id = rc.id
+    WHERE ai.currency_id != rc.currency_id;
+    """)
+    multi_currency = cr.fetchone()
+    if not multi_currency:
+        fast_create(env, MONO_CURRENCY_FAST_CREATIONS)
