@@ -384,7 +384,6 @@ def fast_create(env, settings):
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
-
     # 9.0 introduces a constraint enforcing this
     cr.execute(
         "update account_account set reconcile=True "
