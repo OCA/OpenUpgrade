@@ -78,11 +78,20 @@ def map_mrp_production_state(cr):
         """
     )
     draft_ids = [r[0] for r in cr.fetchall()]
+    # only MOs that uses workorders have the 'planned' state:
+    cr.execute(
+        """
+        UPDATE mrp_production mp
+        SET state = 'planned'
+        FROM mrp_workorder mw
+        WHERE mp.state = 'confirmed'
+            AND mp.id = mw.production_id
+        """
+    )
     openupgrade.map_values(
         cr,
         openupgrade.get_legacy_name('state'), 'state',
-        [('confirmed', 'planned'),
-         ('draft', 'confirmed'),
+        [('draft', 'confirmed'),
          ('in_production', 'progress'),
          ('ready', 'planned'),
          ], table='mrp_production', write='sql')
