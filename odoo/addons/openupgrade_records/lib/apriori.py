@@ -31,6 +31,8 @@ renamed_modules = {
     # OCA/stock-logistics-workflow:
     'product_customer_code_picking':
         'product_supplierinfo_for_customer_picking',
+    # OCA/account-analytic:
+    'hr_timesheet_invoice': 'account_invoice_analytic_line',
 }
 
 merged_modules = [
