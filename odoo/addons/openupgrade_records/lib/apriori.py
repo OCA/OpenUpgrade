@@ -21,6 +21,8 @@ renamed_modules = {
         'hr_timesheet_sheet_restrict_project',
     # OCA/manufacture-reporting:
     'report_mrp_bom_matrix': 'mrp_bom_matrix_report',
+    # OCA/partner-contact:
+    'res_partner_affiliate': 'partner_affiliate',
     # OCA/sale-workflow:
     'sale_delivery_block': 'sale_stock_picking_blocking',
     'sale_delivery_block_proc_group_by_line':
