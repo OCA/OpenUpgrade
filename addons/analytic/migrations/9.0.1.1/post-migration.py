@@ -11,9 +11,9 @@ from openerp import SUPERUSER_ID, api
 def set_partner_id(cr):
     openupgrade.logged_query(cr, """
     UPDATE account_analytic_line a
-    SET partner_id = s.partner_id
-    FROM res_users s
-    WHERE a.user_id = s.id
+    SET partner_id = aa.partner_id
+    FROM account_analytic_account aa
+    WHERE a.account_id = aa.id AND a.partner_id IS NULL
     """)
 
 
