@@ -21,7 +21,6 @@ renamed_modules = {
     'account_due_list_aging_comments': 'account_due_list_aging_comment',
     # OCA/partner-contact
     'partner_sector': 'partner_industry_secondary',
-    'res_partner_affiliate': 'partner_affiliate',
     # OCA/purchase-workflow
     'purchase_request_to_rfq_order_approved': (
         'purchase_request_order_approved'
