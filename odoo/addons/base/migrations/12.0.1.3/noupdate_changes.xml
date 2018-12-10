@@ -1,17 +1,174 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="gt" model="res.country">
-    <field name="currency_id" ref="GTQ"/>
+  <record id="cc" model="res.country">
+    <field eval="61" name="phone_code"/>
   </record>
-  <record id="sg" model="res.country">
-    <field name="vat_label">GST No.</field>
+  <record id="aq" model="res.country">
+    <field eval="672" name="phone_code"/>
+  </record>
+  <record id="kn" model="res.country">
+    <field eval="1869" name="phone_code"/>
+  </record>
+  <record id="mp" model="res.country">
+    <field eval="1670" name="phone_code"/>
+  </record>
+  <record id="eh" model="res.country">
+    <field eval="212" name="phone_code"/>
+  </record>
+  <record id="do" model="res.country">
+    <field eval="1849" name="phone_code"/>
+  </record>
+  <record id="gu" model="res.country">
+    <field eval="1671" name="phone_code"/>
+  </record>
+  <record id="nf" model="res.country">
+    <field eval="672" name="phone_code"/>
+  </record>
+  <record id="pn" model="res.country">
+    <field eval="64" name="phone_code"/>
+  </record>
+  <record id="sx" model="res.country">
+    <field eval="1721" name="phone_code"/>
+  </record>
+  <record id="ax" model="res.country">
+    <field eval="358" name="phone_code"/>
+  </record>
+  <record id="im" model="res.country">
+    <field eval="44" name="phone_code"/>
+  </record>
+  <record id="bm" model="res.country">
+    <field eval="1441" name="phone_code"/>
+  </record>
+  <record id="lc" model="res.country">
+    <field eval="1758" name="phone_code"/>
+  </record>
+  <record id="bq" model="res.country">
+    <field eval="599" name="phone_code"/>
+  </record>
+  <!-- not needed (because end-migration)
+  <record id="user_root" model="res.users">
+    <field name="signature"><![CDATA[<span>&#45;&#45; <br/>
+System</span>]]></field>
+  </record>
+  -->
+  <record id="gg" model="res.country">
+    <field eval="44" name="phone_code"/>
+  </record>
+  <record id="tt" model="res.country">
+    <field eval="1868" name="phone_code"/>
+  </record>
+  <record id="sh" model="res.country">
+    <field eval="290" name="phone_code"/>
   </record>
   <!--
   <record id="main_partner" model="res.partner">
     <field name="image" type="base64" file="base/static/img/res_company_logo.png"/>
-  </record
+  </record>
   -->
   <record id="paperformat_euro" model="report.paperformat">
     <field name="name">A4</field>
+  </record>
+  <record id="tc" model="res.country">
+    <field eval="1649" name="phone_code"/>
+  </record>
+  <record id="ms" model="res.country">
+    <field eval="1664" name="phone_code"/>
+  </record>
+  <record id="as" model="res.country">
+    <field eval="1684" name="phone_code"/>
+  </record>
+  <record id="ss" model="res.country">
+    <field eval="211" name="phone_code"/>
+  </record>
+  <record id="mf" model="res.country">
+    <field eval="590" name="phone_code"/>
+  </record>
+  <record id="cw" model="res.country">
+    <field eval="599" name="phone_code"/>
+  </record>
+  <record id="tf" model="res.country">
+    <field eval="262" name="phone_code"/>
+  </record>
+  <record id="gs" model="res.country">
+    <field eval="500" name="phone_code"/>
+  </record>
+  <record id="bs" model="res.country">
+    <field eval="1242" name="phone_code"/>
+  </record>
+  <record id="vc" model="res.country">
+    <field eval="1784" name="phone_code"/>
+  </record>
+  <record id="sj" model="res.country">
+    <field eval="47" name="phone_code"/>
+  </record>
+  <record id="um" model="res.country">
+    <field eval="699" name="phone_code"/>
+  </record>
+  <record id="bb" model="res.country">
+    <field eval="1246" name="phone_code"/>
+  </record>
+  <record id="fk" model="res.country">
+    <field eval="500" name="phone_code"/>
+  </record>
+  <record id="ai" model="res.country">
+    <field eval="1264" name="phone_code"/>
+  </record>
+  <record id="vg" model="res.country">
+    <field eval="1284" name="phone_code"/>
+  </record>
+  <record id="jm" model="res.country">
+    <field eval="1876" name="phone_code"/>
+  </record>
+  <record id="pr" model="res.country">
+    <field eval="1939" name="phone_code"/>
+  </record>
+  <record id="hm" model="res.country">
+    <field eval="672" name="phone_code"/>
+  </record>
+  <record id="ky" model="res.country">
+    <field eval="1345" name="phone_code"/>
+  </record>
+  <record id="vi" model="res.country">
+    <field eval="1340" name="phone_code"/>
+  </record>
+  <record id="io" model="res.country">
+    <field eval="246" name="phone_code"/>
+  </record>
+  <record id="ps" model="res.country">
+    <field eval="970" name="phone_code"/>
+  </record>
+  <record id="uk" model="res.country">
+    <field eval="44" name="phone_code"/>
+  </record>
+  <record id="gd" model="res.country">
+    <field eval="1473" name="phone_code"/>
+  </record>
+  <record id="sg" model="res.country">
+    <field name="vat_label">GST No.</field>
+  </record>
+  <record id="je" model="res.country">
+    <field eval="44" name="phone_code"/>
+  </record>
+  <record id="cx" model="res.country">
+    <field eval="61" name="phone_code"/>
+  </record>
+  <record id="ag" model="res.country">
+    <field eval="1268" name="phone_code"/>
+  </record>
+  <record id="bl" model="res.country">
+    <field eval="590" name="phone_code"/>
+  </record>
+  <record id="bv" model="res.country">
+    <field eval="55" name="phone_code"/>
+  </record>
+  <!-- handled in end-migration
+  <record id="partner_root" model="res.partner">
+    <field name="name">System</field>
+    <field name="email">root@example.com</field>
+    <field name="active" eval="False"/>
+  </record>
+  -->
+  <record id="dm" model="res.country">
+    <field eval="1767" name="phone_code"/>
   </record>
 </odoo>

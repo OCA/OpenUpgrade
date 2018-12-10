@@ -30,3 +30,13 @@ def migrate(env, version):
     env['res.company'].write({'base_onboarding_company_state': 'done'})
     openupgrade.load_data(
         env.cr, 'base', 'migrations/12.0.1.3/noupdate_changes.xml')
+    env.cr.execute(
+        """
+        UPDATE res_partner rp
+        SET active = FALSE
+        FROM ir_model_data imd
+        WHERE imd.model = 'res.partner'
+            AND imd.name = 'partner_root'
+            AND imd.res_id = rp.id
+        """
+    )

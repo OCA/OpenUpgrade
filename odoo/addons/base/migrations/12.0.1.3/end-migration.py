@@ -3,12 +3,6 @@
 from openupgradelib import openupgrade, openupgrade_merge_records
 
 
-@openupgrade.migrate()
-def migrate(env, version):
-    update_model_terms_translations(env)
-    fork_off_system_user(env)
-
-
 def update_model_terms_translations(env):
     """ Adapt to changes in https://github.com/odoo/odoo/pull/26925, that
     introduces a separate translation type for xml structured fields. First,
@@ -96,3 +90,14 @@ def fork_off_system_user(env):
         """ UPDATE res_users
             SET active = FALSE, password = NULL WHERE id = %s """,
         (user_root.id,))
+    # Ensure also partner_root is inactive
+    env.cr.execute(
+        """ UPDATE res_partner
+            SET active = FALSE WHERE id = %s """,
+        (partner_root.id,))
+
+
+@openupgrade.migrate()
+def migrate(env, version):
+    update_model_terms_translations(env)
+    fork_off_system_user(env)
