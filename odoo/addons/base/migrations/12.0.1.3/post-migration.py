@@ -22,21 +22,18 @@ def generate_thumbnails(env):
                     'thumbnail': res['thumbnail']})
 
 
-@openupgrade.migrate()
+def update_res_company_onboarding_company_state(env):
+    # based on old base_onboarding_company_done
+    good_companies = env["res.company"].with_context(
+        active_test=False).search([('street', '!=', False)])
+    good_companies.write({'base_onboarding_company_state': 'done'})
+
+
+@openupgrade.migrate(use_env=True)
 def migrate(env, version):
     env['ir.ui.menu']._parent_store_compute()
     env['res.partner.category']._parent_store_compute()
     generate_thumbnails(env)
-    env['res.company'].write({'base_onboarding_company_state': 'done'})
+    update_res_company_onboarding_company_state(env)
     openupgrade.load_data(
         env.cr, 'base', 'migrations/12.0.1.3/noupdate_changes.xml')
-    env.cr.execute(
-        """
-        UPDATE res_partner rp
-        SET active = FALSE
-        FROM ir_model_data imd
-        WHERE imd.model = 'res.partner'
-            AND imd.name = 'partner_root'
-            AND imd.res_id = rp.id
-        """
-    )

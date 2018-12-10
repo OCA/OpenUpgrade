@@ -21,7 +21,7 @@ base         / ir.ui.menu               / parent_path (char)            : NEW
 base         / ir.ui.menu               / parent_right (integer)        : DEL
 # Done: call _parent_store_compute on the model (TODO: make this automatic for all affected models?)
 base         / res.company              / base_onboarding_company_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
-# Done: set to done for all companies
+# Done: set to done for all companies that have 'street' field filled (see the compute of old base_onboarding_company_done)
 base         / res.company              / external_report_layout (selection): DEL selection_keys: ['background', 'boxed', 'clean', 'standard']
 base         / res.company              / external_report_layout_id (many2one): NEW relation: ir.ui.view
 # Done in the web module: map external_report_layout of res_company with the related views
