@@ -1,0 +1,16 @@
+---Fields in module 'account_payment'---
+account_payment / account.invoice          / payment_acquirer_id (many2one): DEL relation: payment.acquirer
+account_payment / account.invoice          / payment_tx_id (many2one)      : DEL relation: payment.transaction
+account_payment / account.invoice          / payment_tx_ids (one2many)     : DEL relation: payment.transaction
+# NOTHING TO DO
+
+account_payment / payment.transaction      / account_invoice_id (many2one) : DEL relation: account.invoice
+# DONE: post-migration: convert in invoice_ids many2many
+
+---XML records in module 'account_payment'---
+NEW ir.ui.view: account_payment.portal_invoice_payment
+DEL ir.ui.view: account_payment.account_invoice_view_form_inherit_payment
+DEL ir.ui.view: account_payment.payment_confirmation_status
+DEL ir.ui.view: account_payment.payment_transaction_view_form
+DEL ir.ui.view: account_payment.portal_invoice_report
+# NOTHING TO DO
