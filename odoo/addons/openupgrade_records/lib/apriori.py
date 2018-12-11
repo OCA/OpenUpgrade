@@ -66,6 +66,8 @@ merged_modules = [
     ('stock_scrap', 'stock'),
     # OCA/web
     ('web_easy_switch_company', 'web'),
+    # OCA/website
+    ('website_blog_mgmt', 'website_blog'),
 ]
 
 renamed_models = {
