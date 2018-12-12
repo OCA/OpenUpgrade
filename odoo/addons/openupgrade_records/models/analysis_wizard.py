@@ -13,6 +13,7 @@ from odoo.addons.openupgrade_records.lib import compare
 class AnalysisWizard(models.TransientModel):
     _name = 'openupgrade.analysis.wizard'
     _description = 'OpenUpgrade Analysis Wizard'
+
     server_config = fields.Many2one(
         'openupgrade.comparison.config',
         'Configuration', required=True)

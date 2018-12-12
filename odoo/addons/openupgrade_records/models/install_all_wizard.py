@@ -11,6 +11,7 @@ from odoo.addons.openupgrade_records.blacklist import BLACKLIST_MODULES
 class InstallAll(models.TransientModel):
     _name = 'openupgrade.install.all.wizard'
     _description = 'OpenUpgrade Install All Wizard'
+
     state = fields.Selection(
         [('init', 'init'), ('ready', 'ready')],
         readonly=True, default='init')

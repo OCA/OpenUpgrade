@@ -8,6 +8,8 @@ from odoo import api, fields, models
 
 class Attribute(models.Model):
     _name = 'openupgrade.attribute'
+    _description = 'OpenUpgrade Attribute'
+
     name = fields.Char(readonly=True)
     value = fields.Char(readonly=True)
     record_id = fields.Many2one(
@@ -17,6 +19,8 @@ class Attribute(models.Model):
 
 class Record(models.Model):
     _name = 'openupgrade.record'
+    _description = 'OpenUpgrade Record'
+
     name = fields.Char(readonly=True)
     module = fields.Char(readonly=True)
     model = fields.Char(readonly=True)
