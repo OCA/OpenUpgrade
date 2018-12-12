@@ -324,17 +324,21 @@ def fill_stock_move_bom_line_id(cr):
     openupgrade.logged_query(
         cr,
         """
-        UPDATE stock_move sm
+        UPDATE stock_move sm_update
         SET bom_line_id = mbl.bom_line_id
-        FROM mrp_production mp
-        LEFT JOIN mrp_bom mb ON mp.bom_id = mb.id
-        LEFT JOIN (SELECT min(id) AS bom_line_id, bom_id, product_id
-                   FROM mrp_bom_line
-                   GROUP BY bom_id, product_id
-                   ) mbl ON (mbl.bom_id = mb.id
-                                AND mbl.product_id = mp.product_id)
-        WHERE sm.production_id = mp.id AND sm.product_id = mp.product_id
-            AND sm.bom_line_id IS NULL
+        FROM stock_move sm
+            INNER JOIN mrp_production mp
+            ON sm.raw_material_production_id = mp.id
+            LEFT JOIN (
+                SELECT min(id) AS bom_line_id, bom_id, product_id
+                FROM mrp_bom_line
+                GROUP BY bom_id, product_id
+                ) mbl ON (
+                    mbl.bom_id = mp.bom_id
+                    AND mbl.product_id = sm.product_id)
+        WHERE sm_update.raw_material_production_id = mp.id
+            AND sm_update.id = sm.id
+            AND sm_update.bom_line_id IS NULL;
         """
     )
 
