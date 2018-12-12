@@ -12,8 +12,10 @@ from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
 
-class openupgrade_comparison_config(models.Model):
+class OpenupgradeComparisonConfig(models.Model):
     _name = 'openupgrade.comparison.config'
+    _description = 'OpenUpgrade Comparison Configuration'
+
     name = fields.Char()
     server = fields.Char(required=True)
     port = fields.Integer(required=True, default=8069)

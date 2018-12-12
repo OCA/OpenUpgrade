@@ -13,6 +13,7 @@ class GenerateWizard(models.TransientModel):
     _name = 'openupgrade.generate.records.wizard'
     _description = 'OpenUpgrade Generate Records Wizard'
     _rec_name = 'state'
+
     state = fields.Selection(
         [('init', 'init'), ('ready', 'ready')], default='init')
 
