@@ -76,14 +76,6 @@ hr_holidays  / hr.leave.type            / validity_start (date)         : NEW
 hr_holidays  / hr.leave.type            / validity_stop (date)          : NEW 
 hr_holidays  / resource.calendar.leaves / holiday_id (many2one)         : relation is now 'hr.leave' ('hr.holidays')
 ---XML records in module 'hr_holidays'---
-DEL hr.holidays.status: hr_holidays.holiday_status_cl (noupdate)
-DEL hr.holidays.status: hr_holidays.holiday_status_comp (noupdate)
-DEL hr.holidays.status: hr_holidays.holiday_status_sl (noupdate)
-DEL hr.holidays.status: hr_holidays.holiday_status_unpaid (noupdate)
-NEW hr.leave.type: hr_holidays.holiday_status_cl (noupdate)
-NEW hr.leave.type: hr_holidays.holiday_status_comp (noupdate)
-NEW hr.leave.type: hr_holidays.holiday_status_sl (noupdate)
-NEW hr.leave.type: hr_holidays.holiday_status_unpaid (noupdate)
 NEW ir.actions.act_window: hr_holidays.hr_leave_action_action_approve_department
 NEW ir.actions.act_window: hr_holidays.hr_leave_action_action_department
 NEW ir.actions.act_window: hr_holidays.hr_leave_action_all
