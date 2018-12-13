@@ -26,15 +26,19 @@ merged_modules = {
 
 renamed_models = {
     # Odoo
+    'hr.holidays': 'hr.leave',
+    'hr.holidays.status': 'hr.leave.type',
+    'mrp.repair': 'repair.order',
+    'mrp.repair.fee': 'repair.fee',
+    'mrp.repair.line': 'repair.line',
     'procurement.rule': 'stock.rule',
     'product.attribute.line': 'product.template.attribute.line',
     'product.attribute.price': 'product.template.attribute.value',
     'product.uom': 'uom.uom',
     'product.uom.category': 'uom.category',
-    'hr.holidays': 'hr.leave',
-    'hr.holidays.status': 'hr.leave.type',
-    'sale.quote.template': 'sale.order.template',
-    'sale.quote.option': 'sale.order.template.option',
     'sale.quote.line': 'sale.order.template.line',
+    'sale.quote.option': 'sale.order.template.option',
+    'sale.quote.template': 'sale.order.template',
     'stock.incoterms': 'account.incoterms',
+    # 'stock.location.path': 'stock.rule',
 }
