@@ -1,0 +1,194 @@
+---Fields in module 'stock'---
+stock        / product.putaway          / product_location_ids (one2many): NEW relation: stock.fixed.putaway.strat
+stock        / stock.fixed.putaway.strat / product_id (many2one)         : NEW relation: product.product
+# DONE: pre-migration: Filled if stock_putaway_product module is installed
+
+stock        / stock.incoterms          / __last_update (datetime)      : module is now 'account' ('stock')
+stock        / stock.incoterms          / active (boolean)              : module is now 'account' ('stock')
+stock        / stock.incoterms          / code (char)                   : module is now 'account' ('stock')
+stock        / stock.incoterms          / display_name (char)           : module is now 'account' ('stock')
+stock        / stock.incoterms          / name (char)                   : module is now 'account' ('stock')
+# NOTHING TO DO: handled in base pre-migration
+
+stock        / stock.inventory.line     / location_name (char)          : DEL
+stock        / stock.inventory.line     / prodlot_name (char)           : DEL
+stock        / stock.inventory.line     / product_code (char)           : DEL
+stock        / stock.inventory.line     / product_name (char)           : DEL
+# NOTHING TO DO
+
+stock        / stock.inventory.line     / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+stock        / stock.move               / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+stock        / stock.move.line          / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+stock        / stock.production.lot     / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+stock        / stock.quant              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+stock        / stock.scrap              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+stock        / stock.warehouse.orderpoint / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+# NOTHING TO DO: handled in base pre-migration
+
+stock        / stock.location           / parent_left (integer)         : DEL
+stock        / stock.location           / parent_path (char)            : NEW 
+stock        / stock.location           / parent_right (integer)        : DEL 
+# DONE: post-migration: called _parent_store_compute
+
+stock        / stock.move               / ordered_qty (float)           : DEL
+stock        / stock.move.line          / ordered_qty (float)           : DEL 
+# NOTHING TO DO: they are a copy of the initial value of product_uom_qty, but not used more anywhere
+
+stock        / stock.move               / package_level_id (many2one)   : NEW relation: stock.package_level
+stock        / stock.move.line          / package_level_id (many2one)   : NEW relation: stock.package_level
+stock        / stock.package_level      / location_dest_id (many2one)   : NEW relation: stock.location
+stock        / stock.package_level      / move_ids (one2many)           : NEW relation: stock.move
+stock        / stock.package_level      / move_line_ids (one2many)      : NEW relation: stock.move.line
+stock        / stock.package_level      / package_id (many2one)         : NEW relation: stock.quant.package, required: required
+stock        / stock.package_level      / picking_id (many2one)         : NEW relation: stock.picking
+stock        / stock.picking            / package_level_ids (one2many)  : NEW relation: stock.package_level
+stock        / stock.picking            / package_level_ids_details (one2many): NEW relation: stock.package_level
+DONE: post-migration: filled model (tentative).
+
+stock        / stock.picking            / activity_date_deadline (date) : not related anymore
+stock        / stock.picking            / activity_date_deadline (date) : not stored anymore
+stock        / stock.picking            / activity_date_deadline (date) : now a function
+stock        / stock.picking            / backorder_ids (one2many)      : NEW relation: stock.picking
+stock        / stock.picking            / immediate_transfer (boolean)  : NEW 
+stock        / stock.picking            / message_last_post (datetime)  : DEL 
+stock        / stock.picking            / message_main_attachment_id (many2one): NEW relation: ir.attachment
+stock        / stock.picking            / move_ids_without_package (one2many): NEW relation: stock.move
+stock        / stock.picking            / move_line_ids_without_package (one2many): NEW relation: stock.move.line
+# NOTHING TO DO
+
+stock        / stock.picking.type       / barcode (char)                : NEW
+# DONE: post-migration: Filled the same way Odoo does
+
+stock        / stock.picking.type       / barcode_nomenclature_id (many2one): DEL relation: barcode.nomenclature
+# NOTHING TO DO: handled in barcodes module
+
+stock        / stock.production.lot     / activity_ids (one2many)       : NEW relation: mail.activity
+stock        / stock.production.lot     / message_last_post (datetime)  : DEL 
+stock        / stock.production.lot     / message_main_attachment_id (many2one): NEW relation: ir.attachment
+# NOTHING TO DO
+
+stock        / stock.quant.package      / company_id (many2one)         : is now stored
+stock        / stock.quant.package      / location_id (many2one)        : is now stored
+stock        / stock.quant.package      / move_line_ids (one2many)      : DEL relation: stock.move.line
+# NOTHING TO DO
+
+stock        / stock.location.route     / pull_ids (one2many)           : DEL relation: procurement.rule
+stock        / stock.location.route     / push_ids (one2many)           : DEL relation: stock.location.path
+stock        / stock.location.route     / rule_ids (one2many)           : NEW relation: stock.rule
+stock        / stock.move               / push_rule_id (many2one)       : DEL relation: stock.location.path
+stock        / stock.move               / rule_id (many2one)            : relation is now 'stock.rule' ('procurement.rule')
+
+stock        / procurement.rule         / action (selection)            : selection_keys is now '['pull', 'pull_push', 'push']' ('['move']')
+# DONE: post-migration: mapped 'move' to 'pull_push'
+
+stock        / procurement.rule         / location_id (many2one)        : now required
+??????
+
+stock        / stock.rule               / auto (selection)              : NEW required: required, selection_keys: ['manual', 'transparent'], req_default: function
+stock        / stock.warehouse          / mto_pull_id (many2one)        : relation is now 'stock.rule' ('procurement.rule')
+# DONE: pre-migration (rename of procurement.rule into stock.rule)
+# DONE: post-migration (merge stock.location.path into stock.rule)
+
+stock        / stock.warehouse          / default_resupply_wh_id (many2one): DEL relation: stock.warehouse
+# NOTHING TO DO
+
+---XML records in module 'stock'---
+NEW ir.actions.act_window: stock.action_product_replenish
+NEW ir.actions.act_window: stock.action_rules_form
+NEW ir.actions.act_window: stock.action_stock_rules_report
+NEW ir.actions.act_window: stock.stock_product_normal_action
+DEL ir.actions.act_window: stock.action_incoterms_tree
+DEL ir.actions.act_window: stock.action_view_change_product_quantity
+DEL ir.actions.act_window: stock.stolocpath
+NEW ir.actions.report: stock.action_report_lot_label
+NEW ir.actions.report: stock.action_report_picking_type_label
+NEW ir.actions.report: stock.action_report_stock_rule
+DEL ir.actions.report: stock.action_report_lot_barcode
+NEW ir.model.access: stock.access_product_product_attribute_manager
+NEW ir.model.access: stock.access_product_template_attribute_exclusion_manager
+NEW ir.model.access: stock.access_product_template_attribute_line_manager
+NEW ir.model.access: stock.access_stock_package_level_all
+NEW ir.model.access: stock.access_stock_package_level_stock_manager
+NEW ir.model.access: stock.access_stock_package_level_stock_user
+NEW ir.model.access: stock.access_stock_rule
+NEW ir.model.access: stock.access_stock_rule_internal
+NEW ir.model.access: stock.access_stock_rule_manager
+NEW ir.model.access: stock.access_stock_rule_stock_manager
+NEW ir.model.access: stock.access_stock_rule_user
+NEW ir.model.access: stock.access_uom_category_stock_manager
+NEW ir.model.access: stock.access_uom_uom_stock_manager
+DEL ir.model.access: stock.access_procurement_rule
+DEL ir.model.access: stock.access_procurement_rule_internal
+DEL ir.model.access: stock.access_procurement_rule_manager
+DEL ir.model.access: stock.access_procurement_rule_stock_manager
+DEL ir.model.access: stock.access_procurement_rule_user
+DEL ir.model.access: stock.access_product_attribute_line_manager
+DEL ir.model.access: stock.access_product_attribute_price_manager
+DEL ir.model.access: stock.access_product_uom_categ_stock_manager
+DEL ir.model.access: stock.access_product_uom_stock_manager
+DEL ir.model.access: stock.access_stock_incoterms_all
+DEL ir.model.access: stock.access_stock_incoterms_manager
+DEL ir.model.access: stock.access_stock_location_path_internal_user
+DEL ir.model.access: stock.access_stock_location_path_stock_user
+DEL ir.model.access: stock.access_stock_location_path_user
+# NOTHING TO DO
+
+DEL ir.rule: stock.stock_location_path_comp_rule (noupdate)
+# DONE: post-migration: Deleted by xml_id safely
+
+NEW ir.ui.menu: stock.menu_action_rules_form
+DEL ir.ui.menu: stock.menu_action_incoterm_open
+NEW ir.ui.view: stock.exception_on_picking
+NEW ir.ui.view: stock.package_level_form_view
+NEW ir.ui.view: stock.package_level_tree_view_picking
+NEW ir.ui.view: stock.report_lot_label
+NEW ir.ui.view: stock.report_picking_type_label
+NEW ir.ui.view: stock.report_stock_rule
+NEW ir.ui.view: stock.report_stock_rule_left_arrow
+NEW ir.ui.view: stock.report_stock_rule_line
+NEW ir.ui.view: stock.report_stock_rule_right_arrow
+NEW ir.ui.view: stock.report_stock_rule_suspension_points
+NEW ir.ui.view: stock.stock_fixed_putaway_strat_form
+NEW ir.ui.view: stock.stock_package_destination_form_view
+NEW ir.ui.view: stock.stock_product_search_form_view
+NEW ir.ui.view: stock.stock_scrap_view_kanban
+NEW ir.ui.view: stock.view_product_replenish
+NEW ir.ui.view: stock.view_route_rule_form
+NEW ir.ui.view: stock.view_stock_rule_filter
+NEW ir.ui.view: stock.view_stock_rule_form
+NEW ir.ui.view: stock.view_stock_rule_tree
+NEW ir.ui.view: stock.view_stock_rules_report
+NEW ir.ui.view: stock.view_stock_track_confirmation
+DEL ir.ui.view: stock.inventory_planner
+DEL ir.ui.view: stock.report_lot_barcode
+DEL ir.ui.view: stock.stock_incoterms_form
+DEL ir.ui.view: stock.stock_incoterms_view_search
+DEL ir.ui.view: stock.stock_location_path_filter
+DEL ir.ui.view: stock.stock_location_path_form
+DEL ir.ui.view: stock.stock_location_path_tree
+DEL ir.ui.view: stock.view_incoterms_tree
+DEL ir.ui.view: stock.view_procurement_rule_filter
+DEL ir.ui.view: stock.view_procurement_rule_form
+DEL ir.ui.view: stock.view_procurement_rule_tree
+DEL ir.ui.view: stock.view_quant_package_picking_tree
+NEW res.groups: stock.group_lot_on_delivery_slip
+DEL res.request.link: stock.req_link_tracking (noupdate)
+DEL web.planner: stock.planner_inventory
+# NOTHING TO DO
+
+DEL stock.incoterms: stock.incoterm_CFR
+DEL stock.incoterms: stock.incoterm_CIF
+DEL stock.incoterms: stock.incoterm_CIP
+DEL stock.incoterms: stock.incoterm_CPT
+DEL stock.incoterms: stock.incoterm_DAF
+DEL stock.incoterms: stock.incoterm_DAP
+DEL stock.incoterms: stock.incoterm_DAT
+DEL stock.incoterms: stock.incoterm_DDP
+DEL stock.incoterms: stock.incoterm_DDU
+DEL stock.incoterms: stock.incoterm_DEQ
+DEL stock.incoterms: stock.incoterm_DES
+DEL stock.incoterms: stock.incoterm_EXW
+DEL stock.incoterms: stock.incoterm_FAS
+DEL stock.incoterms: stock.incoterm_FCA
+DEL stock.incoterms: stock.incoterm_FOB
+# NOTHING TO DO: handled in base pre-migration

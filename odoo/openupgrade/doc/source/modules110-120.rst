@@ -503,7 +503,7 @@ missing in the new release are marked with |del|.
 +--------------------------------------------+-------------------------------------------------+
 | |new| social_media                         | Nothing to do                                   |
 +--------------------------------------------+-------------------------------------------------+
-|stock                                       |                                                 |
+|stock                                       | Done                                            |
 +--------------------------------------------+-------------------------------------------------+
 |stock_account                               |                                                 |
 +--------------------------------------------+-------------------------------------------------+
@@ -648,3 +648,8 @@ OCA/account-financial-tools
 ---------------------------
 
 * |del| account_reversal: Feature is now included in core account module.
+
+OCA/stock-logistics-warehouse
+-----------------------------
+
+* |del| stock_putaway_product: Feature is now included in core stock module.

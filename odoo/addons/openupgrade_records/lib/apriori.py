@@ -28,7 +28,6 @@ merged_modules = {
     'sale_payment': 'sale',
     'sale_service_rating': 'sale_timesheet',
     'web_planner': 'web',
-    'website_form_metadata': 'website_form',
     'website_quote': 'sale_quotation_builder',
     'website_rating_project': 'project',
     'website_sale_options': 'website_sale',
@@ -51,9 +50,13 @@ merged_modules = {
     'base_partner_merge': 'base',
     # OCA/server-auth
     'auth_brute_force': 'base',
+    # OCA/stock-logistics-warehouse
+    'stock_putaway_product': 'stock',
     # OCA/web
     'web_no_bubble': 'web',
     'web_sheet_full_width': 'web_responsive',
+    # OCA/website
+    'website_form_metadata': 'website_form',
 }
 
 # only used here for openupgrade_records analysis:
@@ -73,5 +76,5 @@ renamed_models = {
     'sale.quote.option': 'sale.order.template.option',
     'sale.quote.template': 'sale.order.template',
     'stock.incoterms': 'account.incoterms',
-    # 'stock.location.path': 'stock.rule',
+    # 'stock.location.path': 'stock.rule', handled in 'stock'
 }
