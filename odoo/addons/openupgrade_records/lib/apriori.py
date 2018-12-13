@@ -27,6 +27,10 @@ merged_modules = {
 renamed_models = {
     # Odoo
     'procurement.rule': 'stock.rule',
+    'product.attribute.line': 'product.template.attribute.line',
+    'product.attribute.price': 'product.template.attribute.value',
+    'product.uom': 'uom.uom',
+    'product.uom.category': 'uom.category',
     'hr.holidays': 'hr.leave',
     'hr.holidays.status': 'hr.leave.type',
     'sale.quote.template': 'sale.order.template',
