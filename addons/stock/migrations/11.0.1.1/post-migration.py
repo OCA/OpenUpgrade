@@ -283,7 +283,7 @@ def create_stock_move_line_reserved(env):
             MIN(sq.write_uid),
             sm.date,
             sm.location_dest_id,
-            sm.location_id,
+            sq.location_id,
             sq.lot_id,
             MIN(spl.name),
             sm.id,
@@ -305,7 +305,7 @@ def create_stock_move_line_reserved(env):
             LEFT JOIN stock_picking sp ON sp.id = sm.picking_id
             LEFT JOIN stock_production_lot spl ON spl.id = sq.lot_id
         GROUP BY sq.lot_id, sq.product_id, sq.owner_id, sq.package_id,
-            sm.id""",
+            sq.location_id, sm.id""",
     )
 
 
