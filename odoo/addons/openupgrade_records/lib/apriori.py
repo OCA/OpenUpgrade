@@ -67,6 +67,8 @@ merged_modules = {
     # Done here for avoiding problems if updating from a previous version
     # where account_financial_report exists as other kind of module
     'account_financial_report_qweb': 'account_financial_report',
+    # OCA/account-financial-tools
+    'account_group': 'account',
     # OCA/bank-payment
     'portal_payment_mode': 'account_payment_mode',
     # OCA/crm
