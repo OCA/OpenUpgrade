@@ -148,6 +148,8 @@ def rename_mrp_workorder(cr):
 
 
 def prepopulate_fields(cr):
+    if openupgrade.column_exists(cr, 'mrp_production', 'picking_type_id'):
+        return False
     cr.execute(
         """
         ALTER TABLE mrp_production
