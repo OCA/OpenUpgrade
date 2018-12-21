@@ -1,5 +1,7 @@
 # Copyright 2018 Eficent <http://www.eficent.com>
+# Copyright 2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 from openupgradelib import openupgrade
 from psycopg2.extensions import AsIs
 
@@ -9,12 +11,11 @@ def fill_mail_blacklist_res_partner(cr):
         """
         INSERT INTO mail_blacklist (email, active,
             create_uid, create_date, write_uid, write_date)
-        SELECT email, BOOL_OR(active), MAX(create_uid), MAX(create_date),
-            MAX(write_uid), MAX(write_date)
+        SELECT email, active, create_uid, create_date,
+            write_uid, write_date
         FROM res_partner
         WHERE %s AND email IS NOT NULL
-            AND email NOT IN (SELECT email FROM mail_blacklist)
-        GROUP BY email
+        ON CONFLICT DO NOTHING
         """, (AsIs(openupgrade.get_legacy_name('opt_out')), ),
     )
 
