@@ -43,6 +43,17 @@ def eliminate_duplicate_translations(cr):
             AND it1.id < it2.id); """)
 
 
+def fix_lang_constraints(env):
+    """Avoid error on normal update process due to the removal + re-addition of
+    constraints.
+    """
+    openupgrade.logged_query(
+        env.cr, """ALTER TABLE ir_translation
+        DROP CONSTRAINT ir_translation_lang_fkey_res_lang
+        """,
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     openupgrade.update_module_names(
@@ -65,7 +76,7 @@ def migrate(env, version):
         (SELECT module, 'partner_admin', model, res_id, noupdate
          FROM ir_model_data WHERE module = 'base' AND name = 'partner_root')
         """)
-
+    fix_lang_constraints(env)
     # for migration of web module
     openupgrade.rename_columns(
         env.cr, {'res_company': [('external_report_layout', None)]})
