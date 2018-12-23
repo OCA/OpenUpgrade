@@ -17,7 +17,7 @@ def migrate(env, version):
         ],
     )
     openupgrade.delete_records_safely_by_xml_id(
-        env.cr, [
+        env, [
             'auth_signup.default_template_user_config',
             'auth_signup.default_template_user',
         ],
