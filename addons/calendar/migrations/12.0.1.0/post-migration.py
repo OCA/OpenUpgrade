@@ -17,7 +17,7 @@ def migrate(env, version):
         ],
     )
     openupgrade.delete_records_safely_by_xml_id(
-        env.cr, [
+        env, [
             'calendar.categ_meet1',
             'calendar.categ_meet2',
             'calendar.categ_meet3',
