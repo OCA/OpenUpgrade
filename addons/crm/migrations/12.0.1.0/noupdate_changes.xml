@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_alias_lead_info" model="mail.alias">
+    <field name="alias_user_id" ref="base.user_admin"/>
+  </record>
+  <record id="mt_salesteam_lead" model="mail.message.subtype">
+    <field name="name">Opportunity Created</field>
+    <field name="default" eval="True"/>
+  </record>
+  <record id="mt_lead_create" model="mail.message.subtype">
+    <field name="description">Opportunity created</field>
+    <field name="name">Opportunity Created</field>
+  </record>
+  <record id="sales_team.team_sales_department" model="crm.team">
+    <field name="dashboard_graph_model">crm.lead</field>
+  </record>
+</odoo>
