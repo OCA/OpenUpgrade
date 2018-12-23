@@ -1,5 +1,7 @@
 # Copyright 2018 Eficent <http://www.eficent.com>
+# Copyright 2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 from openupgradelib import openupgrade
 from psycopg2.extensions import AsIs
 
@@ -12,8 +14,8 @@ def fill_mail_blacklist_crm_lead(cr):
         SELECT email_from, active, create_uid, create_date,
             write_uid, write_date
         FROM crm_lead cl
-        WHERE cl.%s = TRUE
-            AND cl.email_from NOT IN (SELECT email FROM mail_blacklist)
+        WHERE cl.%s
+        ON CONFLICT DO NOTHING
         """, (AsIs(openupgrade.get_legacy_name('opt_out')), ),
     )
 
@@ -27,9 +29,18 @@ def map_crm_team_dashboard_graph_model(cr):
         table='crm_team', write='sql')
 
 
-@openupgrade.migrate(use_env=False)
-def migrate(cr, version):
-    fill_mail_blacklist_crm_lead(cr)
-    map_crm_team_dashboard_graph_model(cr)
+@openupgrade.migrate()
+def migrate(env, version):
+    fill_mail_blacklist_crm_lead(env.cr)
+    map_crm_team_dashboard_graph_model(env.cr)
     openupgrade.load_data(
-        cr, 'crm', 'migrations/12.0.1.0/noupdate_changes.xml')
+        env.cr, 'crm', 'migrations/12.0.1.0/noupdate_changes.xml')
+    openupgrade.delete_records_safely_by_xml_id(
+        env, [
+            'crm.crm_rule_all_lead_report',
+            'crm.crm_rule_personal_lead_report',
+            'crm.opp_report_multi_company',
+            'crm.email_template_opportunity_reminder_mail',
+            'crm.mail_template_data_module_install_crm',
+        ],
+    )

@@ -1,6 +1,6 @@
 ---Fields in module 'crm'---
 crm          / crm.lead                 / activity_date_deadline (date) : now a function
-crm          / crm.lead                 / message_last_post (datetime)  : DEL 
+crm          / crm.lead                 / message_last_post (datetime)  : DEL
 crm          / crm.lead                 / message_main_attachment_id (many2one): NEW relation: ir.attachment
 # NOTHING TO DO
 
@@ -11,34 +11,45 @@ crm          / crm.team                 / dashboard_graph_model (False) : select
 # DONE: map 'crm.opportunity.report' to 'crm.lead' in dashboard_graph_model
 
 crm          / digest.digest            / kpi_crm_lead_created (boolean): NEW
-crm          / digest.digest            / kpi_crm_opportunities_won (boolean): NEW 
+crm          / digest.digest            / kpi_crm_opportunities_won (boolean): NEW
 # NOTHING TO DO
 
 ---XML records in module 'crm'---
-NEW digest.digest: digest.digest_digest_default (noupdate)
-NEW digest.tip: crm.digest_tip_crm_0
-DEL ir.actions.act_window: crm.action_partner_deduplicate
-DEL ir.actions.act_window: crm.action_partner_merge
-NEW ir.actions.act_window.view: crm.crm_lead_all_leads_view_calendar
-NEW ir.actions.act_window.view: crm.crm_lead_all_leads_view_graph
-NEW ir.actions.act_window.view: crm.crm_lead_all_leads_view_kanban
-NEW ir.actions.act_window.view: crm.crm_lead_all_leads_view_pivot
+DEL ir.rule: crm.crm_rule_all_lead_report (noupdate)
+DEL ir.rule: crm.crm_rule_personal_lead_report (noupdate)
+DEL ir.rule: crm.opp_report_multi_company (noupdate)
+DEL mail.template: crm.email_template_opportunity_reminder_mail (noupdate)
+DEL mail.template: crm.mail_template_data_module_install_crm (noupdate)
+# DONE: post-migration: try to delete records
+
 NEW ir.actions.act_window.view: crm.crm_lead_all_leads_view_tree
+NEW ir.actions.act_window.view: crm.crm_lead_all_leads_view_kanban
 NEW ir.actions.act_window.view: crm.crm_lead_opportunities_tree_view_view_calendar
 NEW ir.actions.act_window.view: crm.crm_lead_opportunities_tree_view_view_form
 NEW ir.actions.act_window.view: crm.crm_lead_opportunities_tree_view_view_graph
 NEW ir.actions.act_window.view: crm.crm_lead_opportunities_tree_view_view_kanban
 NEW ir.actions.act_window.view: crm.crm_lead_opportunities_tree_view_view_pivot
 NEW ir.actions.act_window.view: crm.crm_lead_opportunities_tree_view_view_tree
-NEW ir.actions.act_window.view: crm.crm_lead_opportunities_view_calendar
+# DONE: pre-migration: Give these XML-IDs to previously anonymous records
+
 NEW ir.actions.act_window.view: crm.crm_lead_opportunities_view_form
-NEW ir.actions.act_window.view: crm.crm_lead_opportunities_view_graph
-NEW ir.actions.act_window.view: crm.crm_lead_opportunities_view_kanban
-NEW ir.actions.act_window.view: crm.crm_lead_opportunities_view_pivot
-NEW ir.actions.act_window.view: crm.crm_lead_opportunities_view_tree
 DEL ir.actions.act_window.view: crm.action_crm_tag_form_view_oppor11
+NEW ir.actions.act_window.view: crm.crm_lead_opportunities_view_kanban
 DEL ir.actions.act_window.view: crm.action_crm_tag_kanban_view_oppor11
+NEW ir.actions.act_window.view: crm.crm_lead_opportunities_view_tree
 DEL ir.actions.act_window.view: crm.action_crm_tag_tree_view_oppor11
+# DONE: pre-migration: Renamed XML-IDs
+
+NEW digest.digest: digest.digest_digest_default (noupdate)
+NEW digest.tip: crm.digest_tip_crm_0
+DEL ir.actions.act_window: crm.action_partner_deduplicate
+DEL ir.actions.act_window: crm.action_partner_merge
+NEW ir.actions.act_window.view: crm.crm_lead_all_leads_view_calendar
+NEW ir.actions.act_window.view: crm.crm_lead_all_leads_view_graph
+NEW ir.actions.act_window.view: crm.crm_lead_all_leads_view_pivot
+NEW ir.actions.act_window.view: crm.crm_lead_opportunities_view_calendar
+NEW ir.actions.act_window.view: crm.crm_lead_opportunities_view_graph
+NEW ir.actions.act_window.view: crm.crm_lead_opportunities_view_pivot
 DEL ir.filters: crm.filter_opportunity_country
 DEL ir.filters: crm.filter_opportunity_expected_revenue
 DEL ir.filters: crm.filter_opportunity_opportunities_cohort
@@ -51,9 +62,6 @@ DEL ir.model.access: crm.access_crm_opportunity_report_manager
 DEL ir.model.access: crm.access_crm_opportunity_report_user
 DEL ir.model.access: crm.mail_mailgate_thread
 NEW ir.rule: crm.crm_lead_company_rule (noupdate)
-DEL ir.rule: crm.crm_rule_all_lead_report (noupdate)
-DEL ir.rule: crm.crm_rule_personal_lead_report (noupdate)
-DEL ir.rule: crm.opp_report_multi_company (noupdate)
 NEW ir.ui.menu: crm.crm_menu_leads
 NEW ir.ui.menu: crm.crm_menu_sales
 NEW ir.ui.menu: crm.res_partner_menu_customer
@@ -69,8 +77,6 @@ DEL ir.ui.view: crm.base_partner_merge_automatic_wizard_form
 DEL ir.ui.view: crm.crm_case_graph_view_leads
 DEL ir.ui.view: crm.crm_case_pivot_view_leads
 DEL ir.ui.view: crm.crm_planner
-DEL mail.template: crm.email_template_opportunity_reminder_mail (noupdate)
-DEL mail.template: crm.mail_template_data_module_install_crm (noupdate)
 NEW res.users: base.user_admin (noupdate)
 DEL web.planner: crm.planner_crm
 # NOTHING TO DO
