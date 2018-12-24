@@ -5,6 +5,7 @@ product      / product.attribute        / attribute_line_ids (one2many) : relati
 product      / product.attribute        / create_variant (boolean)      : now required, default = function
 product      / product.attribute        / create_variant (boolean)      : selection_keys is now '['always', 'dynamic', 'no_variant']' ('False')
 product      / product.attribute        / create_variant (boolean)      : type is now 'selection' ('boolean')
+# DONE: pre-migration: rename column
 # DONE: post-migration: mapped values
 
 product      / product.attribute.value  / price_ids (one2many)          : DEL relation: product.attribute.price
@@ -12,8 +13,8 @@ product      / product.attribute.value  / product_ids (many2many)       : DEL re
 # NOTHING TO DO (lost in the refactor)
 
 product      / product.category         / parent_left (integer)         : DEL
-product      / product.category         / parent_path (char)            : NEW 
-product      / product.category         / parent_right (integer)        : DEL 
+product      / product.category         / parent_path (char)            : NEW
+product      / product.category         / parent_right (integer)        : DEL
 # DONE: Post-migration: called _parent_store_compute()
 
 product      / product.product          / activity_date_deadline (date) : now a function
@@ -59,9 +60,11 @@ product      / product.template.attribute.value / exclude_for (one2many)        
 # NOTHING TO DO (as product.template.attribute.exclusion is new model)
 
 product      / product.template.attribute.value / price_extra (float)           : NEW
-product      / product.template.attribute.value / product_attribute_value_id (many2one): NEW relation: product.attribute.value, required: required
 product      / product.template.attribute.value / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
 # DONE: pre-migration: renamed from 'product.attribute.price' to 'product.template.attribute.value'
+
+product      / product.template.attribute.value / product_attribute_value_id (many2one): NEW relation: product.attribute.value, required: required
+# DONE: pre-migration: renamed field/column
 
 ---XML records in module 'product'---
 DEL ir.actions.act_window: product.product_uom_categ_form_action
@@ -105,6 +108,9 @@ DEL ir.ui.view: product.product_uom_categ_form_view
 DEL ir.ui.view: product.product_uom_form_view
 DEL ir.ui.view: product.product_uom_tree_view
 NEW product.category: product.cat_expense (noupdate)
+DEL res.request.link: product.req_link_product (noupdate)
+# NOTHING TO DO
+
 DEL product.uom: product.product_uom_cm (noupdate)
 DEL product.uom: product.product_uom_day (noupdate)
 DEL product.uom: product.product_uom_dozen (noupdate)
@@ -130,5 +136,4 @@ DEL product.uom.categ: product.product_uom_categ_vol (noupdate)
 DEL product.uom.categ: product.uom_categ_length (noupdate)
 DEL product.uom.categ: product.uom_categ_wtime (noupdate)
 DEL res.groups: product.group_uom
-DEL res.request.link: product.req_link_product (noupdate)
-# NOTHING TO DO
+# DONE: Renamings already handled in `base` module.
