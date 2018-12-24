@@ -10,7 +10,7 @@ def fill_mail_tracking_value_track_sequence(env):
         FROM mail_tracking_value mtv
         INNER JOIN mail_message mm ON mtv.mail_message_id = mm.id
         INNER JOIN ir_model_fields imf ON (
-            imf.name = mtv.field AND mm.model = imf.model) 
+            imf.name = mtv.field AND mm.model = imf.model)
         WHERE mm.model IS NOT NULL AND imf.track_visibility IS NOT NULL AND
             imf.track_visibility != 'false'
         """
@@ -37,21 +37,25 @@ def fill_mail_thread_message_main_attachment_id(env):
     for model in thread_models:
         records = env[model].with_context(active_test=False).search(
             [('message_main_attachment_id', '=', False)])
-        grouped_attachments = env['ir.attachment'].read_group(
+        attachment_obj = env['ir.attachment'].with_context(
+            prefetch_fields=False,
+        )
+        grouped_attachments = attachment_obj.read_group(
             [('res_model', '=', model)],
-            fields=['res_id', 'id:array_agg'],
+            fields=['res_id'],
             groupby=['res_id'])
-        attachs = [(a['res_id'], a['id']) for a in grouped_attachments]
+        attachs = {
+            a['res_id']: attachment_obj.search(a['__domain'])
+            for a in grouped_attachments
+        }
         for record in records:
-            attachment_ids = [a[1] for a in attachs if a[0] == record.id]
-            if attachment_ids:
-                all_attachments = env['ir.attachment'].browse(
-                    attachment_ids[0])
+            all_attachments = attachs.get(record.id, [])
+            if all_attachments:
                 prioritary_attachments = all_attachments.filtered(
-                    lambda x: x.mimetype.endswith('pdf')) \
-                    or all_attachments.filtered(
-                    lambda x: x.mimetype.startswith('image')) \
-                    or all_attachments
+                    lambda x: x.mimetype.endswith('pdf')
+                ) or all_attachments.filtered(
+                    lambda x: x.mimetype.startswith('image')
+                ) or all_attachments
                 record.write({'message_main_attachment_id':
                               prioritary_attachments[0].id})
 
