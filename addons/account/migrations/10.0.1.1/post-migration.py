@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# © 2017 Therp BV
+# Copyright 2017 Therp BV
+# Copyright 2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -78,17 +79,14 @@ def migrate(env, version):
          arm.second_amount_type, arm.second_amount
         ''')
     # Update move_name in account_payment from account_move
-    cr.execute(
-        '''UPDATE account_payment
-        SET move_name = subquery.name
-        FROM (SELECT DISTINCT ON (aml.payment_id) am.name, aml.payment_id
-              FROM account_move am
-              JOIN account_move_line aml ON am.id = aml.move_id
-              WHERE NOT aml.payment_id IS NULL
-              ORDER BY aml.payment_id, am.name
-             ) AS subquery
-        WHERE account_payment.id = subquery.payment_id
-        ''')
+    openupgrade.logged_query(
+        cr, """UPDATE account_payment ap
+        SET move_name = am.name
+        FROM account_move_line aml
+        INNER JOIN account_move am ON am.id = aml.move_id
+        WHERE ap.move_name IS NULL
+            AND aml.payment_id = ap.id""",
+    )
     # Move old rate_diff_partial_rec_id in account_move to
     # exchange_partial_rec_id in account_full_reconcile:
     cr.execute(
@@ -107,17 +105,13 @@ def migrate(env, version):
         WHERE account_full_reconcile.id = subquery.full_reconcile_id
         ''')
     # Update move_name on account_bank_statement_line:
-    cr.execute(
-        '''UPDATE account_bank_statement_line
-        SET move_name = subquery.name
-        FROM (
-            SELECT
-                am.name,
-                am.statement_line_id
-            FROM account_move am
-        ) AS subquery
-        WHERE account_bank_statement_line.id = subquery.statement_line_id
-        ''')
+    openupgrade.logged_query(
+        cr, """UPDATE account_bank_statement_line absl
+        SET move_name = am.name
+        FROM account_move am
+        WHERE absl.id = am.statement_line_id
+        AND absl.move_name IS NULL"""
+    )
     fill_refund_invoice_id(env)
     openupgrade.load_data(
         cr, 'account', 'migrations/10.0.1.1/noupdate_changes.xml',
