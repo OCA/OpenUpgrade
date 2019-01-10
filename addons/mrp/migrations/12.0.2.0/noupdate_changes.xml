@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="block_reason2" model="mrp.workcenter.productivity.loss">
+    <field name="loss_id" ref="mrp.category_availability"/>
+  </record>
+  <record id="block_reason6" model="mrp.workcenter.productivity.loss">
+    <field name="loss_id" ref="mrp.category_quality"/>
+  </record>
+  <record id="block_reason5" model="mrp.workcenter.productivity.loss">
+    <field name="loss_id" ref="mrp.category_quality"/>
+  </record>
+  <record id="block_reason1" model="mrp.workcenter.productivity.loss">
+    <field name="loss_id" ref="mrp.category_availability"/>
+  </record>
+  <record id="block_reason0" model="mrp.workcenter.productivity.loss">
+    <field name="loss_id" ref="mrp.category_availability"/>
+  </record>
+  <record id="block_reason4" model="mrp.workcenter.productivity.loss">
+    <field name="loss_id" ref="mrp.category_performance"/>
+  </record>
+  <record id="block_reason7" model="mrp.workcenter.productivity.loss">
+    <field name="loss_id" ref="mrp.category_productive"/>
+  </record>
+</odoo>
