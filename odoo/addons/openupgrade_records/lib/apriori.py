@@ -19,6 +19,7 @@ merged_modules = {
     'sale_payment': 'sale',
     'sale_service_rating': 'sale_timesheet',
     'web_planner': 'web',
+    'website_form_metadata': 'website_form',
     'website_quote': 'sale_quotation_builder',
     'website_rating_project': 'project',
     'website_sale_options': 'website_sale',
