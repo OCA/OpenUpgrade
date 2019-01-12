@@ -1,6 +1,6 @@
 ---Fields in module 'mass_mailing'---
-mass_mailing / mail.mail.statistics     / email (char)                  : NEW 
-mass_mailing / mail.mail.statistics     / ignored (datetime)            : NEW 
+mass_mailing / mail.mail.statistics     / email (char)                  : NEW
+mass_mailing / mail.mail.statistics     / ignored (datetime)            : NEW
 mass_mailing / mail.mail.statistics     / state (selection)             : selection_keys is now '['bounced', 'exception', 'ignored', 'opened', 'outgoing', 'replied', 'sent']' ('['bounced', 'exception', 'opened', 'outgoing', 'replied', 'sent']')
 # NOTHING TO DO
 
@@ -14,20 +14,20 @@ mass_mailing / mail.mass_mailing.contact / message_last_post (datetime)  : DEL
 mass_mailing / mail.mass_mailing.contact / message_main_attachment_id (many2one): NEW relation: ir.attachment
 # NOTHING TO DO
 
-mass_mailing / mail.mass_mailing.contact / opt_out (boolean)             : now a function
-# Done: post-migration: filled mail blacklist
-
 mass_mailing / mail.mass_mailing.contact / subscription_list_ids (one2many): NEW relation: mail.mass_mailing.list_contact_rel
 mass_mailing / mail.mass_mailing.contact / website_message_ids (one2many): previously in module portal
 mass_mailing / mail.mass_mailing.list   / contact_ids (many2many)       : NEW relation: mail.mass_mailing.contact
-mass_mailing / mail.mass_mailing.list   / is_public (boolean)           : NEW 
+mass_mailing / mail.mass_mailing.list   / is_public (boolean)           : NEW
 mass_mailing / mail.mass_mailing.list   / subscription_contact_ids (one2many): NEW relation: mail.mass_mailing.list_contact_rel
 # NOTHING TO DO
 
 mass_mailing / mail.mass_mailing.list_contact_rel / contact_id (many2one)         : NEW relation: mail.mass_mailing.contact, required: required
 mass_mailing / mail.mass_mailing.list_contact_rel / list_id (many2one)            : NEW relation: mail.mass_mailing.list, required: required
+# Nothing to do: It comes from the already existing m2m table in v11. Now this is a full model, but with same column/table name
+
+mass_mailing / mail.mass_mailing.contact / opt_out (boolean)             : now a function
 mass_mailing / mail.mass_mailing.list_contact_rel / opt_out (boolean)             : NEW
-# NOTHING TO DO
+# Done: post-migration: Move this field from one model to the other
 
 mass_mailing / mail.mass_mailing.contact / unsubscription_date (datetime): DEL
 mass_mailing / mail.mass_mailing.list_contact_rel / unsubscription_date (datetime): NEW
