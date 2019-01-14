@@ -24,8 +24,11 @@ def generate_thumbnails(env):
 
 def update_res_company_onboarding_company_state(env):
     # based on old base_onboarding_company_done
-    good_companies = env["res.company"].with_context(
-        active_test=False).search([('street', '!=', False)])
+    good_companies = env["res.company"].search([]).filtered(lambda c: (
+        c.partner_id.browse(
+            c.partner_id.sudo().address_get(adr_pref=['contact'])['contact']
+        ).sudo().street
+    ))
     good_companies.write({'base_onboarding_company_state': 'done'})
 
 

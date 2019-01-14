@@ -49,7 +49,7 @@ def fill_mail_thread_message_main_attachment_id(env):
             for a in grouped_attachments
         }
         for record in records:
-            all_attachments = attachs.get(record.id, [])
+            all_attachments = attachs.get(record.id, attachment_obj)
             if all_attachments:
                 prioritary_attachments = all_attachments.filtered(
                     lambda x: x.mimetype.endswith('pdf')
