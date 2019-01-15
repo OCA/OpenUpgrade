@@ -24,6 +24,8 @@ merged_modules = {
     'website_rating_project': 'project',
     'website_sale_options': 'website_sale',
     'website_sale_stock_options': 'website_sale_stock',
+    # OCA/web
+    'web_sheet_full_width': 'web_responsive',
 }
 
 renamed_models = {
