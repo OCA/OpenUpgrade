@@ -1,0 +1,17 @@
+---Fields in module 'mrp_repair'---
+mrp_repair   / mrp.repair               / activity_ids (one2many)       : NEW relation: mail.activity
+mrp_repair   / mrp.repair               / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO
+
+mrp_repair   / mrp.repair.fee           / to_invoice (boolean)          : DEL
+mrp_repair   / mrp.repair.line          / to_invoice (boolean)          : DEL 
+# DONE: post-migration: if they are False, then put price_unit to 0
+
+mrp_repair   / stock.move               / repair_id (many2one)          : NEW relation: mrp.repair
+# DONE: post-migration: filled with the move_id of mrp.repair
+
+---XML records in module 'mrp_repair'---
+NEW ir.ui.view: mrp_repair.stock_warn_insufficient_qty_repair_form_view
+NEW ir.ui.view: mrp_repair.view_mrp_repair_kanban
+NEW mail.template: mrp_repair.mail_template_mrp_repair_quotation (noupdate)
+# NOTHING TO DO
