@@ -1,7 +1,7 @@
 ---Fields in module 'stock_account'---
 stock_account / account.move             / stock_move_id (many2one)      : NEW relation: stock.move
 stock_account / stock.move               / account_move_ids (one2many)   : NEW relation: account.move
-# TODO: Not easy way to figure out previous valuation moves from which stock.move comes from. Only impacts if stock valuation accounting is enabled.
+# Done: post-migration script added
 
 stock_account / product.category         / property_cost_method (selection): selection_keys is now '['average', 'fifo', 'standard']' ('['average', 'real', 'standard']')
 stock_account / product.template         / property_cost_method (selection): selection_keys is now '['average', 'fifo', 'standard']' ('['average', 'real', 'standard']')
@@ -12,7 +12,7 @@ stock_account / stock.move               / remaining_qty (float)         : previ
 
 stock_account / stock.move               / remaining_value (float)       : NEW
 stock_account / stock.move               / value (float)                 : NEW
-# TODO: Not easy to figure out remaining and value. Only impacts if stock valuation accounting is enabled.
+# Done: post-migration script added
 
 stock_account / stock.move               / to_refund (boolean)           : NEW
 # Done: pre-migration: Rename `to_refund_so` if exists and update field definition
