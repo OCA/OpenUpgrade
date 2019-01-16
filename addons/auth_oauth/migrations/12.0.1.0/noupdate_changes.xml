@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="provider_openerp" model="auth.oauth.provider">
+    <field name="css_class">fa fa-fw o_custom_icon</field>
+  </record>
+  <record id="provider_facebook" model="auth.oauth.provider">
+    <field name="body">Log in with Facebook</field>
+    <field name="css_class">fa fa-fw fa-facebook-square</field>
+  </record>
+  <record id="provider_google" model="auth.oauth.provider">
+    <field name="css_class">fa fa-fw fa-google-plus-square</field>
+  </record>
+</odoo>
