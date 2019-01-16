@@ -309,6 +309,69 @@ def create_stock_move_line_reserved(env):
     )
 
 
+@openupgrade.logging()
+def create_stock_move_line_from_inventory_moves(env):
+    """This method creates stock.move.line got from inventory moves.
+    """
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO stock_move_line (
+            create_date,
+            create_uid,
+            date,
+            location_dest_id,
+            location_id,
+            lot_id,
+            lot_name,
+            move_id,
+            ordered_qty,
+            owner_id,
+            picking_id,
+            product_id,
+            product_qty,
+            product_uom_id,
+            product_uom_qty,
+            qty_done,
+            reference,
+            state,
+            write_date,
+            write_uid
+        )
+        SELECT
+            sm.create_date,
+            sm.create_uid,
+            sm.date,
+            sm.location_dest_id,
+            sm.location_id,
+            spl.id,
+            spl.name,
+            sm.id,
+            0,
+            sm.restrict_partner_id,
+            NULL,
+            sm.product_id,
+            0,
+            sm.product_uom,
+            0,
+            sm.product_uom_qty,
+            sm.name,
+            sm.state,
+            sm.write_date,
+            sm.write_uid
+        FROM stock_move sm
+        INNER JOIN stock_inventory si ON sm.inventory_id = si.id
+        LEFT JOIN (SELECT sqmr.move_id, MIN(sq.lot_id) AS lot_id
+                   FROM stock_quant_move_rel sqmr
+                   LEFT JOIN stock_quant sq ON sqmr.quant_id = sq.id
+                   WHERE sq.lot_id IS NOT NULL
+                   GROUP BY move_id
+        ) AS move_lot_rel ON move_lot_rel.move_id = sm.id
+        LEFT JOIN stock_production_lot spl ON move_lot_rel.lot_id = spl.id
+        WHERE si.state = 'done' AND sm.state = 'done'
+        """,
+    )
+
+
 def recompute_stock_move_line_qty_different_uom(env):
     """Re-compute product_qty for those lines where product UoM != line UoM."""
     env.cr.execute(
@@ -350,4 +413,5 @@ def migrate(env, version):
     create_stock_move_line(env)
     create_stock_move_line_incoming(env)
     create_stock_move_line_reserved(env)
+    create_stock_move_line_from_inventory_moves(env)
     recompute_stock_move_line_qty_different_uom(env)
