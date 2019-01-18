@@ -1487,7 +1487,22 @@ var ReceiptScreenWidget = ScreenWidget.extend({
         }
     },
     print_web: function() {
-        window.print();
+        if ($.browser.safari) {
+            document.execCommand('print', false, null);
+        } else {
+            try {
+                window.print();
+            } catch(err) {
+                if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+                    this.gui.show_popup('error',{
+                        'title':_t('Printing is not supported on some android browsers'),
+                        'body': _t('Printing is not supported on some android browsers due to no default printing protocol is available. It is possible to print your tickets by making use of an IoT Box.'),
+                    });
+                } else {
+                    throw err;
+                }
+            }
+        }
         this.pos.get_order()._printed = true;
     },
     print_xml: function() {
@@ -1926,17 +1941,6 @@ var PaymentScreenWidget = ScreenWidget.extend({
                 'body':  _t('There must be at least one product in your order before it can be validated'),
             });
             return false;
-        }
-
-        var plines = order.get_paymentlines();
-        for (var i = 0; i < plines.length; i++) {
-            if (plines[i].get_type() === 'bank' && plines[i].get_amount() < 0) {
-                this.gui.show_popup('error',{
-                    'message': _t('Negative Bank Payment'),
-                    'comment': _t('You cannot have a negative amount in a Bank payment. Use a cash payment method to return money to the customer.'),
-                });
-                return false;
-            }
         }
 
         if (!order.is_paid() || this.invoicing) {
