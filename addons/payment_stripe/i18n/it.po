@@ -4,7 +4,6 @@
 # 
 # Translators:
 # Paolo Valier, 2018
-# Léonie Bouchat <lbo@odoo.com>, 2018
 # Sergio Zanchetta <primes2h@gmail.com>, 2018
 # 
 msgid ""
@@ -57,7 +56,7 @@ msgstr "Titolare della carta"
 #. module: payment_stripe
 #: model:ir.model.fields,field_description:payment_stripe.field_payment_acquirer_stripe_image_url
 msgid "Checkout Image URL"
-msgstr ""
+msgstr "URL immagine per Checkout"
 
 #. module: payment_stripe
 #. openerp-web
@@ -88,7 +87,7 @@ msgstr "Ancora qualche secondo, conferma del pagamento..."
 #. module: payment_stripe
 #: model:ir.model,name:payment_stripe.model_payment_acquirer
 msgid "Payment Acquirer"
-msgstr "Servizio di pagamento"
+msgstr "Sistema di pagamento"
 
 #. module: payment_stripe
 #: model:ir.model,name:payment_stripe.model_payment_transaction
@@ -115,12 +114,12 @@ msgstr ""
 #. module: payment_stripe
 #: model:ir.model.fields,field_description:payment_stripe.field_payment_acquirer_stripe_publishable_key
 msgid "Stripe Publishable Key"
-msgstr "Chiave pubblicabile Stripe"
+msgstr "Chiave pubblica Stripe"
 
 #. module: payment_stripe
 #: model:ir.model.fields,field_description:payment_stripe.field_payment_acquirer_stripe_secret_key
 msgid "Stripe Secret Key"
-msgstr "Chiave segreta Stripe"
+msgstr "Chiave privata Stripe"
 
 #. module: payment_stripe
 #: code:addons/payment_stripe/models/payment.py:165
@@ -132,13 +131,13 @@ msgstr "Stripe ha fornito le seguenti informazioni sul problema: \"%s\""
 #: code:addons/payment_stripe/models/payment.py:177
 #, python-format
 msgid "Stripe: %s orders found for reference %s"
-msgstr "Stripe: trovati %s ordini per il riferimento %s"
+msgstr "Stripe: trovati %s ordini con riferimento %s"
 
 #. module: payment_stripe
 #: code:addons/payment_stripe/models/payment.py:173
 #, python-format
 msgid "Stripe: no order found for reference %s"
-msgstr "Stripe: nessun ordine trovato per il riferimento %s"
+msgstr "Stripe: nessun ordine trovato con riferimento %s"
 
 #. module: payment_stripe
 #: code:addons/payment_stripe/models/payment.py:163

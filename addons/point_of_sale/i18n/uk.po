@@ -3,21 +3,22 @@
 # * point_of_sale
 # 
 # Translators:
-# Bohdan Lisnenko, 2017
-# Martin Trigaux, 2017
-# Alina Lisnenko <alinasemeniuk1@gmail.com>, 2017
-# Yaroslav Molochko <onorua@gmail.com>, 2017
-# ТАрас <tratatuta@i.ua>, 2017
 # Zoriana Zaiats, 2017
+# Martin Trigaux, 2017
+# ТАрас <tratatuta@i.ua>, 2017
+# Yaroslav Molochko <onorua@gmail.com>, 2017
+# Bohdan Lisnenko, 2017
 # rontif <oleksandr.basenko@gmail.com>, 2017
 # Olga Lugova <trolka.olug@gmail.com>, 2018
+# Alina Lisnenko <alinasemeniuk1@gmail.com>, 2018
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-30 08:47+0000\n"
-"PO-Revision-Date: 2018-07-30 08:47+0000\n"
-"Last-Translator: Olga Lugova <trolka.olug@gmail.com>, 2018\n"
+"POT-Creation-Date: 2019-01-03 15:06+0000\n"
+"PO-Revision-Date: 2017-09-20 10:21+0000\n"
+"Last-Translator: Alina Lisnenko <alinasemeniuk1@gmail.com>, 2018\n"
 "Language-Team: Ukrainian (https://www.transifex.com/odoo/teams/41243/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -523,7 +524,7 @@ msgstr "Автоматичний друк чеку"
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config_iface_cashdrawer
 msgid "Automatically open the cashdrawer."
-msgstr "Автоматично відкриває грошовий ящик."
+msgstr "Автоматично відкриває касу."
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_journal_ids
@@ -545,7 +546,7 @@ msgstr "Доступний для точки продажу"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.product_template_search_view_pos
 msgid "Available in POS"
-msgstr "Доступний у ТП"
+msgstr "Доступний у точці продажу"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_product_product_available_in_pos
@@ -639,7 +640,7 @@ msgstr "Друкувати в обхід браузера за допомого�
 #: code:addons/point_of_sale/static/src/xml/pos.xml:847
 #, python-format
 msgid "CHANGE"
-msgstr "ЗДАЧА"
+msgstr "РЕШТА"
 
 #. module: point_of_sale
 #. openerp-web
@@ -668,7 +669,7 @@ msgstr "Скасовано"
 #: code:addons/point_of_sale/static/src/js/screens.js:1993
 #, python-format
 msgid "Cannot return change without a cash payment method"
-msgstr "Неможливо дати здачу без способу оплати готівкою"
+msgstr "Неможливо дати решту без способу оплати готівкою"
 
 #. module: point_of_sale
 #: model:product.product,name:point_of_sale.carotte
@@ -716,12 +717,6 @@ msgid "Cashdrawer"
 msgstr "Касова скринька"
 
 #. module: point_of_sale
-#: code:addons/point_of_sale/models/barcode_rule.py:16
-#, python-format
-msgid "Cashier"
-msgstr "Касир"
-
-#. module: point_of_sale
 #: model:ir.ui.menu,name:point_of_sale.pos_config_menu_catalog
 msgid "Catalog"
 msgstr "Каталог"
@@ -737,7 +732,7 @@ msgid ""
 "Categories are used to browse your products through the\n"
 "                touchscreen interface."
 msgstr ""
-"Категорії для перегляду ваших продуктів через\n"
+"Категорії для перегляду ваших товарів через\n"
 "інтерфейс сенсорного екрану."
 
 #. module: point_of_sale
@@ -750,7 +745,7 @@ msgstr "Категорія зображень"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:552
 #, python-format
 msgid "Change"
-msgstr "Здача"
+msgstr "Решта"
 
 #. module: point_of_sale
 #. openerp-web
@@ -780,7 +775,7 @@ msgstr "Змінити чайові"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1693
 #, python-format
 msgid "Change:"
-msgstr "Здача:"
+msgstr "Решта:"
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_product_product_to_weight
@@ -807,7 +802,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config_cash_control
 msgid "Check the amount of the cashbox at opening and closing."
-msgstr "Перевірте суму грошей в грошовій скринці при відкритті та закритті."
+msgstr "Перевірте суму грошей в касі при відкритті та закритті."
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_account_journal_journal_user
@@ -895,12 +890,6 @@ msgstr "Натисніть, щоб визначити нову категорі�
 #: model:ir.actions.act_window,help:point_of_sale.action_pos_session
 msgid "Click to start a new session."
 msgstr "Натисніть, щоб розпочати нову сесію."
-
-#. module: point_of_sale
-#: code:addons/point_of_sale/models/barcode_rule.py:15
-#, python-format
-msgid "Client"
-msgstr "Клієнт"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1009,7 +998,7 @@ msgstr "Продовжити продаж"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "Control cash box at opening and closing"
-msgstr "Контролювати грошові ящики при відкритті та закритті"
+msgstr "Контролювати каси при відкритті та закритті"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1269,12 +1258,6 @@ msgid "Discount:"
 msgstr "Знижка:"
 
 #. module: point_of_sale
-#: code:addons/point_of_sale/models/barcode_rule.py:14
-#, python-format
-msgid "Discounted Product"
-msgstr "Товар зі знижкою"
-
-#. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/xml/pos.xml:856
 #, python-format
@@ -1476,8 +1459,8 @@ msgid ""
 "administrator in a multi-company setup, with the administrator account set "
 "to the wrong company."
 msgstr ""
-"Помилка: Користуча точка продажу повинyf належати до тієї ж компанії, як і "
-"точка продажу. Ви, ймовірно, намагається завантажити точку продажу в якості "
+"Помилка: Користувач точки продажу повинен належати до тієї ж компанії, як і "
+"точка продажу. Ви, ймовірно, намагаєтеся завантажити точку продажу в якості "
 "адміністратора в налаштуванні мульти-компанії, під обліковим записом "
 "адміністратора іншої компанії. "
 
@@ -1570,11 +1553,11 @@ msgid ""
 "recommended for an easy review of your journal entries when managing lots of"
 " orders."
 msgstr ""
-"Отримайте один елемент журналу на товар, а не один елемент журналу на "
-"квитанцію. Це працює для будь-якого анонімного замовлення. Якщо клієнт "
-"встановлений у замовленні, для кожного рядка квитка створюється один елемент"
-" журналу. Цей параметр рекомендується для зручного перегляду ваших записів "
-"журналу при управлінні великою кількістю замовлень."
+"Отримайте один елемент журналу на товар, а не один елемент журналу на рядок "
+"квитанції. Це працює для будь-якого анонімного замовлення. Якщо клієнт "
+"встановлений у замовленні, для кожного рядка квитанції створюється один "
+"елемент журналу. Цей параметр рекомендується для зручного перегляду ваших "
+"записів журналу при управлінні великою кількістю замовлень."
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
@@ -1589,7 +1572,7 @@ msgstr "Дає порядок послідовності при відображ
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_module_pos_discount
 msgid "Global Discounts"
-msgstr "Глобальні знижки"
+msgstr "Загальні знижки"
 
 #. module: point_of_sale
 #: model:product.product,name:point_of_sale.pomme_golden_perlim
@@ -1829,7 +1812,7 @@ msgstr "Встановлений модуль бухобліку"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_module_pos_restaurant
 msgid "Is a Bar/Restaurant"
-msgstr "Є Баром/рестораном"
+msgstr "Є баром/рестораном"
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_account_bank_statement_account_id
@@ -1958,7 +1941,7 @@ msgstr "Завантаження"
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_location_id
 #: model:ir.model.fields,field_description:point_of_sale.field_report_pos_order_location_id
 msgid "Location"
-msgstr "Розташування"
+msgstr "Місцезнаходження"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_session_login_number
@@ -2089,13 +2072,6 @@ msgstr "Дані відсутні"
 #, python-format
 msgid "Name"
 msgstr "Назва"
-
-#. module: point_of_sale
-#. openerp-web
-#: code:addons/point_of_sale/static/src/js/screens.js:1937
-#, python-format
-msgid "Negative Bank Payment"
-msgstr "Негативний платіж банку"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_order_filter
@@ -2855,14 +2831,8 @@ msgid "Price Unit"
 msgstr "Ціна одиниці"
 
 #. module: point_of_sale
-#: code:addons/point_of_sale/models/barcode_rule.py:13
-#, python-format
-msgid "Priced Product"
-msgstr "Цінний товар"
-
-#. module: point_of_sale
 #. openerp-web
-#: code:addons/point_of_sale/static/src/js/screens.js:2194
+#: code:addons/point_of_sale/static/src/js/screens.js:2230
 #: code:addons/point_of_sale/static/src/xml/pos.xml:388
 #: code:addons/point_of_sale/static/src/xml/pos.xml:461
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_pricelist_id
@@ -2870,13 +2840,13 @@ msgstr "Цінний товар"
 #: model:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 #, python-format
 msgid "Pricelist"
-msgstr "Прайс-лист"
+msgstr "Прайслист"
 
 #. module: point_of_sale
 #: model:ir.ui.menu,name:point_of_sale.pos_config_menu_action_product_pricelist
 #: model:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "Pricelists"
-msgstr "Прайс-листи"
+msgstr "Прайслисти"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
@@ -2920,10 +2890,27 @@ msgstr "Принтер"
 
 #. module: point_of_sale
 #. openerp-web
-#: code:addons/point_of_sale/static/src/js/devices.js:432
+#: code:addons/point_of_sale/static/src/js/devices.js:437
 #, python-format
 msgid "Printing Error: "
 msgstr "Помилка друку:"
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/screens.js:1569
+#, python-format
+msgid "Printing is not supported on some android browsers"
+msgstr ""
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/screens.js:1570
+#, python-format
+msgid ""
+"Printing is not supported on some android browsers due to no default "
+"printing protocol is available. It is possible to print your tickets by "
+"making use of an IoT Box."
+msgstr ""
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_product_product
@@ -2965,7 +2952,7 @@ msgstr "Шаблон товару"
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_product_uom
 msgid "Product Unit of Measure"
-msgstr "Одиниця виміру товару"
+msgstr "Одиниця вимірювання товару"
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_product_uom_categ
@@ -3635,7 +3622,7 @@ msgstr "Податки:"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:748
 #, python-format
 msgid "Tel:"
-msgstr "тел.:"
+msgstr "Teл:"
 
 #. module: point_of_sale
 #. openerp-web
@@ -4298,12 +4285,6 @@ msgid "Weighing"
 msgstr "Зважування"
 
 #. module: point_of_sale
-#: code:addons/point_of_sale/models/barcode_rule.py:12
-#, python-format
-msgid "Weighted Product"
-msgstr "Зважений товар"
-
-#. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid ""
 "Whenever you close a session, one entry is generated in the following "
@@ -4370,6 +4351,7 @@ msgstr "Ви не можете створити дві активних сесі
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/product.py:21
+#: code:addons/point_of_sale/models/product.py:38
 #, python-format
 msgid ""
 "You cannot delete a product saleable in point of sale while a session is "
@@ -4377,17 +4359,6 @@ msgid ""
 msgstr ""
 "Ви не можете видалити товар, який можна продати у точці продажу, поки сеанс "
 "ще не відкритий."
-
-#. module: point_of_sale
-#. openerp-web
-#: code:addons/point_of_sale/static/src/js/screens.js:1938
-#, python-format
-msgid ""
-"You cannot have a negative amount in a Bank payment. Use a cash payment "
-"method to return money to the customer."
-msgstr ""
-"Ви не можете отримати негативну суму за допомогою банківського платежу. "
-"Використовуйте метод готівкового платежу для повернення грошей клієнту."
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_session.py:299
@@ -4428,7 +4399,7 @@ msgstr "Ви повинні відкрити щонайменше одну ка�
 #: code:addons/point_of_sale/models/pos_order.py:999
 #, python-format
 msgid "You have to select a pricelist in the sale form !"
-msgstr "Ви повинні вибрати прайс-лист у формі продажу!"
+msgstr "Ви повинні вибрати прайслист у формі продажу!"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_order.py:985
@@ -4437,7 +4408,7 @@ msgid ""
 "You have to select a pricelist in the sale form !\n"
 "Please set one before choosing a product."
 msgstr ""
-"Ви повинні вибрати прайс-лист у формі продажу!\n"
+"Ви повинні вибрати прайслист у формі продажу!\n"
 "Будь-ласка, встановіть його перед вибором товару."
 
 #. module: point_of_sale
