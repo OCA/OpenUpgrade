@@ -4,38 +4,40 @@
 # 
 # Translators:
 # Raquel Iciarte <ric@odoo.com>, 2017
-# Pedro M. Baeza <pedro.baeza@gmail.com>, 2017
-# Martin Trigaux, 2017
-# Nicolás Broggi <rnbroggi@gmail.com>, 2017
-# RGB Consulting <odoo@rgbconsulting.com>, 2017
 # Cristóbal Martí Oliver <info@moblesmarti.com>, 2017
-# José Vicente <txusev@gmail.com>, 2017
-# Antonio Trueba, 2017
-# Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
 # Alejandro Die Sanchis <marketing@domatix.com>, 2017
-# Miguel Orueta <mo@landoo.es>, 2017
 # Ana Juaristi <ajuaristio@gmail.com>, 2017
-# Many Feathers <many-feathers@hotmail.com>, 2017
+# nle_odoo, 2017
 # Olar Alca [Vauxoo] <oszckar@gmail.com>, 2017
-# Inigo Zuluaga <inigo_zuluaga@yahoo.es>, 2017
 # Alejandro Santana <alejandrosantana@anubia.es>, 2017
-# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2017
 # Carles Antoli <carlesantoli@hotmail.com>, 2017
 # Luis M. Triana <luis.triana@jarsa.com.mx>, 2017
 # Moises Lopez <moylop260@gmail.com>, 2017
 # Gustavo Valverde, 2017
+# José Vicente <txusev@gmail.com>, 2017
 # Ivan Nieto <ivan.n.s@tuta.io>, 2017
 # Sergio Flores <vitavitae1@gmail.com>, 2017
-# Christopher Ormaza <chris.ormaza@gmail.com>, 2017
+# Many Feathers <many-feathers@hotmail.com>, 2017
+# Miguel Orueta <mo@landoo.es>, 2017
+# Inigo Zuluaga <inigo_zuluaga@yahoo.es>, 2017
+# RGB Consulting <odoo@rgbconsulting.com>, 2017
+# Antonio Trueba, 2017
 # e2f_EPV Translator <e2f_EPV@outlook.com>, 2017
+# Luis M. Ontalba <luis.martinez@tecnativa.com>, 2017
+# Nicolás Broggi <rnbroggi@gmail.com>, 2017
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2017
+# Christopher Ormaza <chris.ormaza@gmail.com>, 2018
 # José Matias Zuazo <jose.zuazo@tpsistemas.com.ar>, 2018
+# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2018
+# Martin Trigaux, 2018
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-27 11:56+0000\n"
-"PO-Revision-Date: 2018-07-27 11:56+0000\n"
-"Last-Translator: José Matias Zuazo <jose.zuazo@tpsistemas.com.ar>, 2018\n"
+"POT-Creation-Date: 2019-01-03 15:07+0000\n"
+"PO-Revision-Date: 2017-09-20 10:22+0000\n"
+"Last-Translator: Martin Trigaux, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -768,9 +770,7 @@ msgid "Computer SC234"
 msgstr "Computer SC234"
 
 #. module: product
-#: code:addons/product/models/product_template.py:50
 #: selection:product.template,type:0
-#, python-format
 msgid "Consumable"
 msgstr "Consumible"
 
@@ -1555,6 +1555,10 @@ msgstr "Inventario"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_is_product_variant
+msgid "Is Product Variant"
+msgstr ""
+
+#. module: product
 #: model:ir.model.fields,field_description:product.field_product_template_is_product_variant
 msgid "Is a product variant"
 msgstr "Es una variante de producto"
@@ -2428,9 +2432,7 @@ msgid "Server"
 msgstr "Servidor"
 
 #. module: product
-#: code:addons/product/models/product_template.py:51
 #: selection:product.template,type:0
-#, python-format
 msgid "Service"
 msgstr "Servicio"
 
@@ -3083,7 +3085,7 @@ msgid ""
 msgstr ""
 "Las unidades de medida pertenecientes a la misma categoría pueden ser\n"
 "convertidas entre sí. Por ejemplo,  la categoría\n"
-"<I>'Tiempo'</i>, tendrá las siguientes unidades de medida: \n"
+"<i>'Tiempo'</i>, tendrá las siguientes unidades de medida: \n"
 "Horas, Días."
 
 #. module: product
