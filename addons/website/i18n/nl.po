@@ -5,16 +5,16 @@
 # Translators:
 # Eric Geens <ericgeens@yahoo.com>, 2018
 # Thomas Pot <thomas@open2bizz.nl>, 2018
-# Martin Trigaux, 2018
 # Cas Vissers <casvissers@brahoo.nl>, 2018
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2018
+# Martin Trigaux, 2018
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2018
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-08 06:48+0000\n"
+"POT-Creation-Date: 2018-12-19 08:20+0000\n"
 "PO-Revision-Date: 2018-08-24 09:33+0000\n"
 "Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
@@ -510,6 +510,11 @@ msgstr "<i class=\"fa fa-magic\"/>Stijlen"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
+msgid "<i class=\"fa fa-minus\"/>Remove Tab"
+msgstr "<i class=\"fa fa-minus\"/>Verwijder tab"
+
+#. module: website
+#: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "<i class=\"fa fa-minus\"/>Thickness"
 msgstr "<i class=\"fa fa-minus\"/>Dikte"
 
@@ -527,6 +532,11 @@ msgstr "<i class=\"fa fa-pencil\"/>Stijl"
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "<i class=\"fa fa-picture-o\"/>Background Image"
 msgstr "<i class=\"fa fa-picture-o\"/>Achtergrondafbeelding"
+
+#. module: website
+#: model_terms:ir.ui.view,arch_db:website.snippet_options
+msgid "<i class=\"fa fa-plus\"/>Add Tab"
+msgstr "<i class=\"fa fa-plus\"/>Toevoegen tab"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.language_selector
@@ -847,7 +857,7 @@ msgstr "Actie"
 #: model:ir.model.fields,field_description:website.field_website_page__active
 #: model:ir.model.fields,field_description:website.field_website_redirect__active
 msgid "Active"
-msgstr "Actie"
+msgstr "Actief"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_three_columns
@@ -2037,7 +2047,7 @@ msgstr "Github"
 #: model:ir.model.fields,field_description:website.field_res_config_settings__social_github
 #: model:ir.model.fields,field_description:website.field_website__social_github
 msgid "GitHub Account"
-msgstr "GitHub Account"
+msgstr "GitHub account"
 
 #. module: website
 #. openerp-web
@@ -2151,7 +2161,7 @@ msgstr "Google Plus"
 #: model:ir.model.fields,field_description:website.field_res_config_settings__social_googleplus
 #: model:ir.model.fields,field_description:website.field_website__social_googleplus
 msgid "Google+ Account"
-msgstr "Google+ Account"
+msgstr "Google+ account"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_features_grid
@@ -2628,7 +2638,7 @@ msgstr "Laatst bijgewerkt op"
 #: code:addons/website/static/src/xml/website.backend.xml:71
 #, python-format
 msgid "Last Week"
-msgstr "Laatste week"
+msgstr "Vorige week"
 
 #. module: website
 #. openerp-web
@@ -2679,7 +2689,7 @@ msgstr "Beperkte personalisering"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Line-On-Sides"
-msgstr ""
+msgstr "Lijnen aan weerzijde"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
@@ -2714,7 +2724,7 @@ msgstr "LinkedIn"
 #: model:ir.model.fields,field_description:website.field_res_config_settings__social_linkedin
 #: model:ir.model.fields,field_description:website.field_website__social_linkedin
 msgid "LinkedIn Account"
-msgstr "LinkedIn Account"
+msgstr "LinkedIn account"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_faq_collapse
@@ -2947,6 +2957,11 @@ msgstr "Naam en favicon van uw website"
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Navbar"
 msgstr "Navbar"
+
+#. module: website
+#: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
+msgid "New"
+msgstr "Nieuw"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.user_navbar
@@ -3403,13 +3418,6 @@ msgstr "Openbare gebruiker"
 #, python-format
 msgid "Publish"
 msgstr "Publiceer"
-
-#. module: website
-#. openerp-web
-#: code:addons/website/static/src/xml/website.pageProperties.xml:137
-#, python-format
-msgid "Publish date"
-msgstr "Datum gepubliceer"
 
 #. module: website
 #. openerp-web
@@ -3998,6 +4006,13 @@ msgid "The installation of an App is already in progress."
 msgstr "De installatie van een app is al in uitvoering."
 
 #. module: website
+#. openerp-web
+#: code:addons/website/static/src/xml/website.seo.xml:93
+#, python-format
+msgid "The language of the keyword and related keywords."
+msgstr "De taal van het zoekwoord en gerelateerde zoekwoorden."
+
+#. module: website
 #: model_terms:ir.ui.view,arch_db:website.403
 msgid "The page you were looking for could not be authorized."
 msgstr "De pagina waarnaar u zocht is niet geautoriseerd."
@@ -4241,7 +4256,7 @@ msgstr "Twitter"
 #: model:ir.model.fields,field_description:website.field_res_config_settings__social_twitter
 #: model:ir.model.fields,field_description:website.field_website__social_twitter
 msgid "Twitter Account"
-msgstr "Twitter Account"
+msgstr "Twitter account"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.external_snippets
@@ -4859,7 +4874,7 @@ msgstr "Uw zoekopdracht '"
 #: model:ir.model.fields,field_description:website.field_res_config_settings__social_youtube
 #: model:ir.model.fields,field_description:website.field_website__social_youtube
 msgid "Youtube Account"
-msgstr "Youtube Account"
+msgstr "Youtube account"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.http_error_debug

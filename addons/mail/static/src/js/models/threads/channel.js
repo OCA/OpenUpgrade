@@ -179,7 +179,8 @@ var Channel = SearchableThread.extend(ThreadTypingMixin, {
     /**
      * Get listeners of a channel
      *
-     * @returns {$.Promise<Object[]>} resolved with list of channel listeners
+     * @returns {$.Promise<Array<Object[]>>} resolved with list of list of
+     *   channel listeners.
      */
     getMentionPartnerSuggestions: function () {
         var self = this;
@@ -193,7 +194,7 @@ var Channel = SearchableThread.extend(ThreadTypingMixin, {
             })
             .then(function (members) {
                 self._members = members;
-                return members;
+                return [members];
             });
         }
         return this._membersDef;
@@ -216,19 +217,9 @@ var Channel = SearchableThread.extend(ThreadTypingMixin, {
         return _.extend(result, {
             author: lastMessage ? lastMessage.getDisplayedAuthor() : '',
             body: lastMessage ? mailUtils.parseAndTransform(lastMessage.getBody(), mailUtils.inline) : '',
-            date: lastMessage ? lastMessage.getDate() : moment(),
+            date: lastMessage ? lastMessage.getDate() : undefined,
             isMyselfAuthor: this.hasMessages() && this.getLastMessage().isMyselfAuthor(),
         });
-    },
-    /**
-     * Returns the title to display in thread window's headers.
-     * For channels, the title is prefixed with "#".
-     *
-     * @override
-     * @returns {string|Object} the name of the thread by default (see getName)
-     */
-    getTitle: function () {
-        return "#" + this._super.apply(this, arguments);
     },
     /**
      * Get the UUID of the channel.

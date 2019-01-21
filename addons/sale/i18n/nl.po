@@ -561,7 +561,7 @@ msgstr "Activiteitsfase"
 #: model:ir.actions.act_window,name:sale.mail_activity_type_action_config_sale
 #: model:ir.ui.menu,name:sale.sale_menu_config_activity_type
 msgid "Activity Types"
-msgstr "Soorten activiteiten"
+msgstr "Activeiteitssoorten"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.sale_product_configurator_view_form
@@ -690,7 +690,7 @@ msgstr ""
 #. module: sale
 #: selection:product.template,expense_policy:0
 msgid "At cost"
-msgstr "Aan kosten"
+msgstr "Voor kostprijs"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order__message_attachment_count
@@ -819,7 +819,7 @@ msgstr ""
 #: model:ir.model.fields,help:sale.field_crm_team__use_invoices
 msgid "Check this box to set an invoicing target for this Sales Team."
 msgstr ""
-"Vink dit aan om een facturatie doel in te stellen voor dit verkoopteam."
+"Vink dit aan om een facturatiedoel in te stellen voor dit verkoopteam."
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.sale_onboarding_order_confirmation_step
@@ -1158,18 +1158,18 @@ msgstr "Datum"
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.res_config_settings_view_form
 msgid "Default Limit:"
-msgstr "Standaard limiet:"
+msgstr "Standaard geldigheid:"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_res_config_settings__use_quotation_validity_days
 msgid "Default Quotation Validity"
-msgstr "Standaard offerte geldigheid"
+msgstr "Standaard geldigheid offerte "
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_res_company__quotation_validity_days
 #: model:ir.model.fields,field_description:sale.field_res_config_settings__quotation_validity_days
 msgid "Default Quotation Validity (Days)"
-msgstr "Standaard offerte geldigheid (dagen)"
+msgstr "Standaard geldigheid offerte (dagen)"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_res_config_settings__use_sale_note
@@ -1179,7 +1179,7 @@ msgstr "Standaard algemene voorwaarden"
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_res_company__sale_note
 msgid "Default Terms and Conditions"
-msgstr "Standaard Algemene Voorwaarden"
+msgstr "Standaard algemene verkoopvoorwaarden"
 
 #. module: sale
 #: model:ir.model.fields,help:sale.field_res_config_settings__deposit_default_product_id
@@ -1795,7 +1795,7 @@ msgstr "Facturatiebeleid"
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_crm_team__invoiced_target
 msgid "Invoicing Target"
-msgstr "Facturatie doelstelling"
+msgstr "Facturatiedoel"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.report_saleorder_document
@@ -1983,7 +1983,7 @@ msgid ""
 "Create a task and track hours: Create a task on the sales order validation and track the work hours."
 msgstr ""
 "Bepaal handmatig de hoeveelheden voor de order: Factuur op basis van de handmatig ingevoerde hoeveelheid, zonder het aanmaken van een kostenplaats.\n"
-"Urenstaten op projecten: Factuur op basis van de geschreven uren op gerelateerde urenstaten.\n"
+"Urenstaten op project: Factuur op basis van de geschreven uren op gerelateerde urenstaten.\n"
 "Maak een taak aan en volg de uren ervan op: Een taak maken bij verkoop order bevestiging en volg werkuren via taken."
 
 #. module: sale
@@ -1994,7 +1994,7 @@ msgstr "Marges"
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order__message_has_error
 msgid "Message Delivery error"
-msgstr "Bericht aflever fout"
+msgstr "Bericht afleverfout"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_res_partner__sale_warn_msg
@@ -2476,7 +2476,7 @@ msgstr "Betaal met een andere betalingsverwerker"
 #. module: sale
 #: selection:sale.payment.acquirer.onboarding.wizard,payment_method:0
 msgid "Pay with credit card (via Stripe)"
-msgstr "Betaal met credit card (via Stripe)"
+msgstr "Betaal met creditcard (via Stripe)"
 
 #. module: sale
 #: selection:res.company,sale_onboarding_payment_method:0
@@ -3174,7 +3174,7 @@ msgstr "Verkopen per kanaal analyse"
 #. module: sale
 #: selection:product.template,expense_policy:0
 msgid "Sales price"
-msgstr "Verkoopprijs"
+msgstr "Voor verkoopprijs"
 
 #. module: sale
 #: code:addons/sale/models/sales_team.py:94
@@ -3284,7 +3284,7 @@ msgstr "Verzend een offerte om het klantenportaal te testen."
 #. module: sale
 #: model:ir.actions.act_window,name:sale.action_open_sale_onboarding_sample_quotation
 msgid "Send a sample quotation."
-msgstr "Verstuurd een voorbeeld offerte."
+msgstr "Verstuurd een voorbeeldofferte."
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.view_order_form
@@ -3461,7 +3461,7 @@ msgstr "Satus van de onboarding bevestigingsstap"
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_res_company__sale_onboarding_sample_quotation_state
 msgid "State of the onboarding sample quotation step"
-msgstr "Status van de onboarding voorbeeld offerte stap"
+msgstr "Status van de onboarding voorbeeldofferte stap"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_res_company__sale_quotation_onboarding_state
@@ -3573,7 +3573,7 @@ msgstr "Algemene Voorwaarden"
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order__note
 msgid "Terms and conditions"
-msgstr "Voorwaarden"
+msgstr "Algemene verkoopvoorwaarden"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.view_order_form
@@ -3581,8 +3581,8 @@ msgid ""
 "Terms and conditions... (note: you can setup default ones in the "
 "Configuration menu)"
 msgstr ""
-"Betalingscondities... (opmerking: u kan standaard condities instellen in het"
-" configuratie menu)"
+"Algemene verkoopvoorwaarden... (opmerking: u kan standaard condities "
+"instellen in het configuratie menu)"
 
 #. module: sale
 #: code:addons/sale/models/analytic.py:116

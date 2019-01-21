@@ -3,6 +3,9 @@ odoo.define('sale.product_configurator_tour', function (require) {
 
 var tour = require('web_tour.tour');
 
+// Note: please keep this test without pricelist for maximum coverage.
+// The pricelist is tested on the other tours.
+
 tour.register('sale_product_configurator_tour', {
     url: "/web",
     test: true,
@@ -16,7 +19,7 @@ tour.register('sale_product_configurator_tour', {
     trigger: ".o_list_button_add",
     extra_trigger: ".o_sale_order"
 }, {
-    trigger: "a:contains('Configure a product')"
+    trigger: "a:contains('Configure a product')",
 }, {
     trigger: '.o_product_configurator .o_input_dropdown input',
     run: 'click'
@@ -41,7 +44,7 @@ tour.register('sale_product_configurator_tour', {
     trigger: '.configurator_container span:contains("Aluminium")',
     run: 'click'
 }, {
-    trigger: 'span.oe_currency_value:contains("800")',
+    trigger: 'span.oe_currency_value:contains("800.40")',
     run: function (){} // check updated price
 }, {
     trigger: 'input[data-value_name="Black"]'
@@ -67,11 +70,12 @@ tour.register('sale_product_configurator_tour', {
 }, {
     trigger: 'button span:contains(Confirm)',
     extra_trigger: '.oe_optional_products_modal',
+    id: "quotation_product_selected",
     run: 'click'
 },
 // check that 3 products were added to the SO
 {
-    trigger: 'td.o_data_cell:contains("Customizable Desk (White, Aluminium)")',
+    trigger: 'td.o_data_cell:contains("Customizable Desk (Aluminium, White)")',
     extra_trigger: 'div[name="order_line"]',
     in_modal: false,
     run: function (){}
@@ -85,6 +89,11 @@ tour.register('sale_product_configurator_tour', {
     extra_trigger: 'div[name="order_line"]',
     in_modal: false,
     run: function (){}
-}]);
+}, {
+    trigger: '.o_readonly_modifier[name=amount_total]:contains("0.00")',
+    in_modal: false,
+    run: function (){}
+}
+]);
 
 });

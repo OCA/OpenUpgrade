@@ -193,6 +193,12 @@ PREFETCH_MAX = 1000
 LOG_ACCESS_COLUMNS = ['create_uid', 'create_date', 'write_uid', 'write_date']
 MAGIC_COLUMNS = ['id'] + LOG_ACCESS_COLUMNS
 
+# valid SQL aggregation functions
+VALID_AGGREGATE_FUNCTIONS = {
+    'array_agg', 'count', 'count_distinct',
+    'bool_and', 'bool_or', 'max', 'min', 'avg', 'sum',
+}
+
 
 @pycompat.implements_to_string
 class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
@@ -851,7 +857,6 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         ids = []
         messages = []
         ModelData = self.env['ir.model.data']
-        ModelData.clear_caches()
 
         # list of (xid, vals, info) for records to be created in batch
         batch = []
@@ -907,6 +912,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                     # avoid broken transaction) and keep going
                     cr.execute('ROLLBACK TO SAVEPOINT model_load_save')
                 except Exception as e:
+                    _logger.exception("Error while loading record")
                     info = rec_data['info']
                     message = (_(u'Unknown error during import:') + u' %s: %s' % (type(e), e))
                     moreinfo = _('Resolve other errors first')
@@ -935,6 +941,8 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         if any(message['type'] == 'error' for message in messages):
             cr.execute('ROLLBACK TO SAVEPOINT model_load')
             ids = False
+            # cancel all changes done to the registry/ormcache
+            self.pool.reset_changes()
 
         return {'ids': ids, 'messages': messages}
 
@@ -2123,7 +2131,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                 field = self._fields[fname]
                 if not (field.base_field.store and field.base_field.column_type):
                     raise UserError(_("Cannot aggregate field %r.") % fname)
-                if not func.isidentifier():
+                if func not in VALID_AGGREGATE_FUNCTIONS:
                     raise UserError(_("Invalid aggregation function %r.") % func)
             else:
                 # we have 'name', retrieve the aggregator on the field
@@ -2765,17 +2773,21 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         # retrieve results from records; this takes values from the cache and
         # computes remaining fields
-        result = []
-        name_fields = [(name, self._fields[name]) for name in (stored + inherited + computed)]
+        self = self.with_prefetch(self._prefetch.copy())
+        data = {record: {'id': record.id} for record in self}
+        missing = set()
         use_name_get = (load == '_classic_read')
-        for record in self:
-            try:
-                values = {'id': record.id}
-                for name, field in name_fields:
-                    values[name] = field.convert_to_read(record[name], record, use_name_get)
-                result.append(values)
-            except MissingError:
-                pass
+        for name in (stored + inherited + computed):
+            convert = self._fields[name].convert_to_read
+            # restrict the prefetching of self's model to self; this avoids
+            # computing fields on a larger recordset than self
+            self._prefetch[self._name] = set(self._ids)
+            for record in self:
+                try:
+                    data[record][name] = convert(record[name], record, use_name_get)
+                except MissingError:
+                    missing.add(record)
+        result = [data[record] for record in self if record not in missing]
 
         return result
 
@@ -3260,7 +3272,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         with self.env.protecting(protected_fields, self):
             # write stored fields with (low-level) method _write
-            if store_vals:
+            if store_vals or inverse_vals or inherited_vals:
                 self._write(store_vals)
 
             # update parent records (after possibly updating parent fields)
@@ -3723,6 +3735,12 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         modified_ids = {row[0] for row in cr.fetchall()}
         self.browse(modified_ids).modified(['parent_path'])
 
+    def _load_records_write(self, values):
+        self.write(values)
+
+    def _load_records_create(self, values):
+        return self.create(values)
+
     def _load_records(self, data_list, update=False):
         """ Create or update records of this model, and assign XMLIDs.
 
@@ -3780,7 +3798,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         # update existing records
         for data in to_update:
-            data['record'].write(data['values'])
+            data['record']._load_records_write(data['values'])
 
         # determine existing parents for new records
         for parent_model, parent_field in self._inherits.items():
@@ -3807,7 +3825,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                     _logger.warning("Creating record %s in module %s.", data['xml_id'], module)
 
         # create records
-        records = self.create([data['values'] for data in to_create])
+        records = self._load_records_create([data['values'] for data in to_create])
         for data, record in pycompat.izip(to_create, records):
             data['record'] = record
 
@@ -5384,10 +5402,13 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                                 line_diff = line_snapshot.diff({})
                                 commands.append((0, line.id.ref or 0, line_diff))
                             else:
-                                # existing line: send diff from database
+                                # existing line: check diff from database
                                 # (requires a clean record cache!)
                                 line_diff = line_snapshot.diff(Snapshot(line, subnames))
                                 if line_diff:
+                                    # send all fields because the web client
+                                    # might need them to evaluate modifiers
+                                    line_diff = line_snapshot.diff({})
                                     commands.append((1, line.id, line_diff))
                                 else:
                                     commands.append((4, line.id))

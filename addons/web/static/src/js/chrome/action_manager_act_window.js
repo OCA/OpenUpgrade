@@ -646,8 +646,10 @@ ActionManager.include({
                     });
                 } else {
                     viewOptions = _.extend(viewOptions || {}, action.env);
-                    return controller.widget.reload(viewOptions).then(function () {
-                        return controller;
+                    return $.when(controller.widget.willRestore()).then(function () {
+                        return controller.widget.reload(viewOptions).then(function () {
+                            return controller;
+                        });
                     });
                 }
             });
@@ -772,7 +774,7 @@ ActionManager.include({
                     _.object(_.reject(_.pairs(env.context), function (pair) {
                         return pair[0].match('^(?:(?:default_|search_default_|show_).+|' +
                                              '.+_view_ref|group_by|group_by_no_leaf|active_id|' +
-                                             'active_ids)$') !== null;
+                                             'active_ids|orderedBy)$') !== null;
                     }))
                 );
                 ctx.add(actionData.context || {});

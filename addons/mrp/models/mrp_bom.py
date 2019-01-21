@@ -71,8 +71,12 @@ class MrpBom(models.Model):
     @api.constrains('product_id', 'product_tmpl_id', 'bom_line_ids')
     def _check_product_recursion(self):
         for bom in self:
-            if bom.bom_line_ids.filtered(lambda x: x.product_id.product_tmpl_id == bom.product_tmpl_id):
-                raise ValidationError(_('BoM line product %s should not be same as BoM product.') % bom.display_name)
+            if bom.product_id:
+                if bom.bom_line_ids.filtered(lambda x: x.product_id == bom.product_id):
+                    raise ValidationError(_('BoM line product %s should not be same as BoM product.') % bom.display_name)
+            else:
+                if bom.bom_line_ids.filtered(lambda x: x.product_id.product_tmpl_id == bom.product_tmpl_id):
+                    raise ValidationError(_('BoM line product %s should not be same as BoM product.') % bom.display_name)
 
     @api.onchange('product_uom_id')
     def onchange_product_uom_id(self):
@@ -257,7 +261,7 @@ class MrpBomLine(models.Model):
     @api.one
     @api.depends('product_id')
     def _compute_has_attachments(self):
-        nbr_attach = self.env['ir.attachment'].search_count([
+        nbr_attach = self.env['mrp.document'].search_count([
             '|',
             '&', ('res_model', '=', 'product.product'), ('res_id', '=', self.product_id.id),
             '&', ('res_model', '=', 'product.template'), ('res_id', '=', self.product_id.product_tmpl_id.id)])
@@ -287,7 +291,7 @@ class MrpBomLine(models.Model):
     @api.onchange('parent_product_tmpl_id')
     def onchange_parent_product(self):
         return {'domain': {'attribute_value_ids': [
-            ('id', 'in', self.parent_product_tmpl_id.mapped('attribute_line_ids.value_ids.id')),
+            ('id', 'in', self.parent_product_tmpl_id._get_valid_product_attribute_values().ids),
             ('attribute_id.create_variant', '!=', 'no_variant')
         ]}}
 

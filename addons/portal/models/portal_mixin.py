@@ -31,7 +31,8 @@ class PortalMixin(models.AbstractModel):
     def _portal_ensure_token(self):
         """ Get the current record access token """
         if not self.access_token:
-            self.sudo().access_token = str(uuid.uuid4())
+            # we use a `write` to force the cache clearing otherwise `return self.access_token` will return False
+            self.sudo().write({'access_token': str(uuid.uuid4())})
         return self.access_token
 
     def _get_share_url(self, redirect=False, signup_partner=False, pid=None):
@@ -79,7 +80,7 @@ class PortalMixin(models.AbstractModel):
                     'has_button_access': False,
                     'button_access': {
                         'url': access_link,
-                        'title': ('View %s') % self.env['ir.model']._get(message.model).display_name,
+                        'title': _('View %s') % self.env['ir.model']._get(message.model).display_name,
                     },
                 })
             ]

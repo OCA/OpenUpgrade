@@ -15,8 +15,12 @@ var EditPageMenu = websiteNavbarData.WebsiteNavbarActionWidget.extend({
     xmlDependencies: ['/website/static/src/xml/website.editor.xml'],
     actions: _.extend({}, websiteNavbarData.WebsiteNavbarActionWidget.prototype.actions, {
         edit: '_startEditMode',
+        on_save: '_onSave',
     }),
     custom_events: _.extend({}, websiteNavbarData.WebsiteNavbarActionWidget.custom_events || {}, {
+        content_will_be_destroyed: '_onContentWillBeDestroyed',
+        content_was_recreated: '_onContentWasRecreated',
+        snippet_cloned: '_onSnippetCloned',
         snippet_dropped: '_onSnippetDropped',
     }),
 
@@ -89,11 +93,62 @@ var EditPageMenu = websiteNavbarData.WebsiteNavbarActionWidget.extend({
             return def;
         });
     },
+    /**
+     * On save, the editor will ask to parent widgets if something needs to be
+     * done first. The website navbar will receive that demand and asks to its
+     * action-capable components to do something. For example, the content menu
+     * handles page-related options saving. However, some users with limited
+     * access rights do not have the content menu... but the website navbar
+     * expects that the save action is performed. So, this empty action is
+     * defined here so that all users have an 'on_save' related action.
+     *
+     * @private
+     * @todo improve the system to somehow declare required/optional actions
+     */
+    _onSave: function () {},
 
     //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------
 
+    /**
+     * Called when content will be destroyed in the page. Notifies the
+     * WebsiteRoot that is should stop the animations.
+     *
+     * @private
+     * @param {OdooEvent} ev
+     */
+    _onContentWillBeDestroyed: function (ev) {
+        this.trigger_up('animation_stop_demand', {
+            $target: ev.data.$target,
+        });
+    },
+    /**
+     * Called when content will be recreated in the page. Notifies the
+     * WebsiteRoot that is should start the animations.
+     *
+     * @private
+     * @param {OdooEvent} ev
+     */
+    _onContentWasRecreated: function (ev) {
+        this.trigger_up('animation_start_demand', {
+            editableMode: true,
+            $target: ev.data.$target,
+        });
+    },
+    /**
+     * Called when a snippet is cloned in the page. Notifies the WebsiteRoot
+     * that is should start the animations for this snippet.
+     *
+     * @private
+     * @param {OdooEvent} ev
+     */
+    _onSnippetCloned: function (ev) {
+        this.trigger_up('animation_start_demand', {
+            editableMode: true,
+            $target: ev.data.$target,
+        });
+    },
     /**
      * Called when a snippet is dropped in the page. Notifies the WebsiteRoot
      * that is should start the animations for this snippet.

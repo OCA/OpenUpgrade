@@ -47,27 +47,27 @@ tour.register('shop_wishlist', {
             },
         },
         {
-            content: "check that logged in and search for Customizable Desk",
-            extra_trigger: "li span:contains('Mitchell Admin')",
-            trigger: 'form input[name="search"]',
-            run: "text Customizable Desk",
-        },
-        {
-            content: "submit search",
-            trigger: 'form:has(input[name="search"]) .oe_search_button',
+            content: "check that logged in",
+            trigger: "li span:contains('Mitchell Admin')",
+            run: function () {},
         },
         {
             content: "click on Customizable Desk",
             trigger: '.oe_product_cart a:contains("Customizable Desk")',
         },
         {
-            content: "select desk cutomizable",
+            content: "check the first variant is already in wishlist",
+            trigger: '#product_detail .o_add_wishlist_dyn:disabled',
+            run: function () {},
+        },
+        {
+            content: "change variant",
             extra_trigger: '#product_detail label:contains(Aluminium) input',
             trigger: 'label:contains(Aluminium) input',
         },
         {
-            content: "Change variant, wait button enable and click on add to wishlist",
-            extra_trigger: '#product_detail .o_add_wishlist_dyn:not(".disabled")',
+            content: "wait button enable and click on add to wishlist",
+            extra_trigger: '#product_detail .o_add_wishlist_dyn:not(:disabled)',
             trigger: '#product_detail .o_add_wishlist_dyn',
         },
         {

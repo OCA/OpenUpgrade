@@ -175,7 +175,7 @@ class Survey(http.Controller):
                 elif answer.answer_type == 'number':
                     answer_value = str(answer.value_number)
                 elif answer.answer_type == 'date':
-                    answer_value = answer.value_date
+                    answer_value = fields.Date.to_string(answer.value_date)
                 elif answer.answer_type == 'suggestion' and not answer.value_suggested_row:
                     answer_value = answer.value_suggested.id
                 elif answer.answer_type == 'suggestion' and answer.value_suggested_row:
@@ -185,7 +185,7 @@ class Survey(http.Controller):
                     ret.setdefault(answer_tag, []).append(answer_value)
                 else:
                     _logger.warning("[survey] No answer has been found for question %s marked as non skipped" % answer_tag)
-        return json.dumps(ret)
+        return json.dumps(ret, default=str)
 
     # AJAX scores loading for quiz correction mode
     @http.route(['/survey/scores/<model("survey.survey"):survey>/<string:token>'],
@@ -251,6 +251,10 @@ class Survey(http.Controller):
     def print_survey(self, survey, token=None, **post):
         '''Display an survey in printable view; if <token> is set, it will
         grab the answers of the user_input_id that has <token>.'''
+
+        if survey.auth_required and request.env.user == request.website.user_id:
+            return request.render("survey.auth_required", {'survey': survey, 'token': token})
+
         return request.render('survey.survey_print',
                                       {'survey': survey,
                                        'token': token,

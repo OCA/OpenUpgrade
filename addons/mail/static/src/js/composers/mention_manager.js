@@ -378,9 +378,9 @@ var MentionManager = Widget.extend({
         var textInput = this._composer.$input.val();
         var id = $(ev.currentTarget).data('id');
         var suggestions = _.flatten(this.get('mention_suggestions'));
-        var selectedSuggestion = _.find(suggestions, function (s) {
+        var selectedSuggestion = _.clone(_.find(suggestions, function (s) {
             return s.id === id;
-        });
+        }));
         var substitution = selectedSuggestion.substitution;
         if (!substitution) {
             // no substitution string given, so use the mention name instead
@@ -416,7 +416,11 @@ var MentionManager = Widget.extend({
         this._composer.$input.val(textInputNew);
         this._setCursorPosition(textLeft.length+substitution.length+2);
         this.set('mention_suggestions', []);
-        this._composer.focus(); // to trigger autoresize
+        this._composer.focus('body'); // to trigger autoresize
+        // suggestion after inserting will be used with escaped content
+        if (selectedSuggestion.name) {
+            selectedSuggestion.name = _.escape(selectedSuggestion.name);
+        }
     },
     /**
      * @private

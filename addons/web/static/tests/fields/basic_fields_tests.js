@@ -1247,10 +1247,7 @@ QUnit.module('basic_fields', {
         form.destroy();
     });
 
-    QUnit.skip('input field: change password value', function (assert) {
-        // password policy needs an RPC call to initialize &
-        // presents somewhat differently (custom widget), need way
-        // to augment/override tests
+    QUnit.test('input field: change password value', function (assert) {
         assert.expect(4);
 
         var form = createView({
@@ -1278,7 +1275,7 @@ QUnit.module('basic_fields', {
         form.destroy();
     });
 
-    QUnit.skip('input field: empty password', function (assert) {
+    QUnit.test('input field: empty password', function (assert) {
         assert.expect(3);
 
         this.data.partner.records[0].foo = false;
@@ -2779,6 +2776,42 @@ QUnit.module('basic_fields', {
         form.destroy();
     });
 
+    QUnit.test('date field with warn_future option: do not overwrite datepicker option', function (assert) {
+        assert.expect(2);
+
+        // Making sure we don't have a legit default value
+        // or any onchange that would set the value
+        this.data.partner.fields.date.default = undefined;
+        this.data.partner.onchanges = {};
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch:'<form string="Partners">' +
+                    '<field name="foo" />' + // Do not let the date field get the focus in the first place
+                    '<field name="date" options="{\'datepicker\': {\'warn_future\': true}}"/>' +
+                 '</form>',
+            res_id: 1,
+        });
+
+        // switch to edit mode
+        form.$buttons.find('.o_form_button_edit').click();
+        assert.strictEqual(form.$('input[name="date"]').val(), '02/03/2017',
+            'The existing record should have a value for the date field');
+
+        // save with no changes
+        form.$buttons.find('.o_form_button_save').click();
+
+        //Create a new record
+        form.$buttons.find('.o_form_button_create').click();
+
+        assert.notOk(form.$('input[name="date"]').val(),
+            'The new record should not have a value that the framework would have set');
+
+        form.destroy();
+    });
+
     QUnit.test('date field in editable list view', function (assert) {
         assert.expect(8);
 
@@ -2900,6 +2933,38 @@ QUnit.module('basic_fields', {
         form.$buttons.find('.o_form_button_save').click();
 
         assert.verifySteps(['read']); // should not have save as nothing changed
+
+        form.destroy();
+    });
+
+    QUnit.test('field date should select its content onclick when there is one', function (assert) {
+        assert.expect(2);
+        var done = assert.async();
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch:'<form string="Partners">' +
+                    '<field name="display_name" /> ' + // Do not focus on the date field right away
+                    '<field name="date" />' +
+                '</form>',
+            res_id: 1,
+            viewOptions: {
+                mode: 'edit',
+            },
+        });
+
+        form.$el.on({
+            'show.datetimepicker': function () {
+                assert.ok($('.bootstrap-datetimepicker-widget').is(':visible'),
+                    'bootstrap-datetimepicker is visible');
+                assert.strictEqual(window.getSelection().toString(), "02/03/2017",
+                    'The whole input of the date field should have been selected');
+                done();
+            }
+        });
+        form.$('.o_input[name="date"]').mouseenter().trigger('focus');
 
         form.destroy();
     });
@@ -5343,6 +5408,48 @@ QUnit.module('basic_fields', {
         // we don't actually check that it doesn't open the record because even
         // if it tries to, it will crash as we don't define an arch in this test
         $('.modal .o_list_view .o_data_row:first .o_data_cell').click();
+
+        form.destroy();
+    });
+
+    QUnit.module('FieldProgressBar');
+
+    QUnit.test('Field ProgressBar: max_value should update', function (assert) {
+        assert.expect(2);
+
+        this.data.partner.records = this.data.partner.records.slice(0,1);
+        this.data.partner.records[0].qux = 2;
+
+        this.data.partner.onchanges = {
+            display_name: function (obj) {
+                obj.int_field = 999;
+                obj.qux = 5;
+            }
+        };
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch: '<form>' +
+                    '<field name="display_name" />' +
+                    '<field name="qux" invisible="1" />' +
+                    '<field name="int_field" widget="progressbar" options="{\'current_value\': \'int_field\', \'max_value\': \'qux\'}" />' +
+                '</form>',
+            res_id: 1,
+            viewOptions: {
+                mode: 'edit',
+            },
+        });
+
+        assert.strictEqual(form.$('.o_progressbar_value').text(), '10 / 2',
+            'The initial value of the progress bar should be correct');
+
+        // trigger the onchange
+        form.$('.o_input[name=display_name]').val('new name').trigger('input');
+
+        assert.strictEqual(form.$('.o_progressbar_value').text(), '999 / 5',
+            'The value of the progress bar should be correct after the update');
 
         form.destroy();
     });
