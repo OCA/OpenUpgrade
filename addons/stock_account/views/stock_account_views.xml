@@ -77,7 +77,8 @@
                     <field name="qty_at_date"/>
                     <field name="uom_id" groups="uom.group_uom"/>
                     <field name="currency_id" invisible="1"/>
-                    <field name="stock_value" sum="Stock Valuation" widget="monetary"/>
+                    <field name="stock_value_currency_id" invisible="1"/>
+                    <field name="stock_value" sum="Stock Valuation" widget="monetary" options="{'currency_field': 'stock_value_currency_id'}"/>
                     <field name="cost_method" invisible="1"/>
                     <button name="action_valuation_at_date_details" type="object" icon="fa-info-circle" aria-label="Valuation" title="Valuation" attrs="{'invisible': [('cost_method', '!=', 'fifo')]}" />
                 </tree>
@@ -87,6 +88,7 @@
         <record id="view_inventory_valuation_search" model="ir.ui.view">
             <field name="name">product.product</field>
             <field name="model">product.product</field>
+            <field name="priority" eval="17"/>
             <field name="arch" type="xml">
                 <search string="Inventory Valuation">
                     <filter string="Category" name="categ_id" context="{'group_by':'categ_id'}"/>

@@ -78,6 +78,7 @@ class Channel(models.Model):
         ('chat', 'Chat Discussion'),
         ('channel', 'Channel')],
         'Channel Type', default='channel')
+    is_chat = fields.Boolean(string='Is a chat', compute='_compute_is_chat', default=False)
     description = fields.Text('Description')
     uuid = fields.Char('UUID', size=50, index=True, default=lambda self: str(uuid4()), copy=False)
     email_send = fields.Boolean('Send messages by email', default=False)
@@ -177,6 +178,12 @@ class Channel(models.Model):
         membership_ids = memberships.mapped('channel_id')
         for record in self:
             record.is_member = record in membership_ids
+
+    @api.multi
+    def _compute_is_chat(self):
+        for record in self:
+            if record.channel_type == 'chat':
+                record.is_chat = True
 
     @api.onchange('public')
     def _onchange_public(self):
@@ -280,6 +287,7 @@ class Channel(models.Model):
         channel_partner = self.mapped('channel_last_seen_partner_ids').filtered(lambda cp: cp.partner_id == self.env.user.partner_id)
         if not channel_partner:
             return self.write({'channel_last_seen_partner_ids': [(0, 0, {'partner_id': self.env.user.partner_id.id})]})
+        return False
 
     @api.multi
     def action_unfollow(self):
@@ -340,7 +348,7 @@ class Channel(models.Model):
     @api.multi
     def _notify_email_recipients(self, message, recipient_ids):
         # Excluded Blacklisted
-        whitelist = self.env['res.partner'].sudo().search([('id', 'in', recipient_ids), ('is_blacklisted', '=', False)])
+        whitelist = self.env['res.partner'].sudo().search([('id', 'in', recipient_ids)]).filtered(lambda p: not p.is_blacklisted)
         # real mailing list: multiple recipients (hidden by X-Forge-To)
         if self.alias_domain and self.alias_name:
             return {
@@ -383,7 +391,7 @@ class Channel(models.Model):
         if moderation_status == 'rejected':
             return self.env['mail.message']
 
-        self.filtered(lambda channel: channel.channel_type == 'chat').mapped('channel_last_seen_partner_ids').write({'is_pinned': True})
+        self.filtered(lambda channel: channel.is_chat).mapped('channel_last_seen_partner_ids').write({'is_pinned': True})
 
         message = super(Channel, self.with_context(mail_create_nosubscribe=True)).message_post(message_type=message_type, moderation_status=moderation_status, **kwargs)
 
@@ -798,15 +806,15 @@ class Channel(models.Model):
     @api.multi
     def channel_join_and_get_info(self):
         self.ensure_one()
-        if self.channel_type == 'channel' and not self.email_send:
+        added = self.action_follow()
+        if added and self.channel_type == 'channel' and not self.email_send:
             notification = _('<div class="o_mail_notification">joined <a href="#" class="o_channel_redirect" data-oe-id="%s">#%s</a></div>') % (self.id, self.name,)
             self.message_post(body=notification, message_type="notification", subtype="mail.mt_comment")
-        self.action_follow()
 
-        if self.moderation_guidelines:
+        if added and self.moderation_guidelines:
             self._send_guidelines(self.env.user.partner_id)
 
-        channel_info = self.channel_info()[0]
+        channel_info = self.channel_info('join')[0]
         self.env['bus.bus'].sendone((self._cr.dbname, 'res.partner', self.env.user.partner_id.id), channel_info)
         return channel_info
 

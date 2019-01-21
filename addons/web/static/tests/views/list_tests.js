@@ -378,6 +378,99 @@ QUnit.module('Views', {
         list.destroy();
     });
 
+    QUnit.test('ordered list, sort attribute in context', function (assert) {
+        assert.expect(1);
+        // Equivalent to saving a custom filter
+
+        this.data.foo.fields.foo.sortable = true;
+        this.data.foo.fields.date.sortable = true;
+
+        var list = createView({
+            View: ListView,
+            model: 'foo',
+            data: this.data,
+            arch: '<tree>' +
+                    '<field name="foo"/>' +
+                    '<field name="date"/>' +
+                '</tree>',
+        });
+
+        // Descending order on Foo
+        list.$('th.o_column_sortable:contains("Foo")').click();
+        list.$('th.o_column_sortable:contains("Foo")').click();
+
+        // Ascending order on Date
+        list.$('th.o_column_sortable:contains("Date")').click();
+
+        var listContext = list.getContext();
+        assert.deepEqual(listContext,
+            {
+                orderedBy: [{
+                    name: 'date',
+                    asc: true,
+                }, {
+                    name: 'foo',
+                    asc: false,
+                }]
+            }, 'the list should have the right orderedBy in context');
+        list.destroy();
+    });
+
+    QUnit.test('Loading a filter with a sort attribute', function (assert) {
+        assert.expect(2);
+
+        this.data.foo.fields.foo.sortable = true;
+        this.data.foo.fields.date.sortable = true;
+
+        var searchReads = 0;
+        var list = createView({
+            View: ListView,
+            model: 'foo',
+            data: this.data,
+            arch: '<tree>' +
+                    '<field name="foo"/>' +
+                    '<field name="date"/>' +
+                '</tree>',
+            context: {
+                orderedBy: [{
+                        name: 'date',
+                        asc: true,
+                    }, {
+                        name: 'foo',
+                        asc: false,
+                }]
+            },
+            mockRPC: function (route, args) {
+                if (route === '/web/dataset/search_read') {
+                    if (searchReads === 0) {
+                        assert.strictEqual(args.sort, 'date ASC, foo DESC',
+                            'The sort attribute of the filter should be used by the initial search_read');
+                    } else if (searchReads === 1) {
+                        assert.strictEqual(args.sort, 'date DESC, foo ASC',
+                            'The sort attribute of the filter should be used by the next search_read');
+                    }
+                    searchReads += 1;
+                }
+                return this._super.apply(this,arguments);
+            },
+        });
+
+        // Simulate loading a filter
+        list.update({
+            context: {
+                orderedBy: [{
+                        name: 'date',
+                        asc: false,
+                    }, {
+                        name: 'foo',
+                        asc: true,
+                    }]
+                }
+            });
+
+        list.destroy()
+    });
+
     QUnit.test('many2one field rendering', function (assert) {
         assert.expect(1);
 
@@ -1054,9 +1147,6 @@ QUnit.module('Views', {
             viewOptions: {hasSidebar: true},
             arch: '<tree><field name="foo"/></tree>',
             mockRPC: function (route) {
-                if (route === '/web/dataset/call_kw/ir.attachment/search_read') {
-                    return $.when([]);
-                }
                 assert.step(route);
                 return this._super.apply(this, arguments);
             },
@@ -2849,72 +2939,6 @@ QUnit.module('Views', {
         $(textarea).trigger({type: 'keydown', which: $.ui.keyCode.RIGHT});
         assert.strictEqual(document.activeElement, list.$('textarea[name="foo"]')[0],
             "next field (checkbox) should now be focused");
-        list.destroy();
-    });
-
-    QUnit.skip('navigation: moving left/right with keydown', function (assert) {
-        assert.expect(8);
-
-        this.data.foo.fields.foo.type = 'text';
-        var list = createView({
-            View: ListView,
-            model: 'foo',
-            data: this.data,
-            arch:
-                '<tree editable="bottom">' +
-                    '<field name="m2m" widget="many2many_tags"/>' +
-                    '<field name="foo"/>' +
-                    '<field name="bar"/>' +
-                    '<field name="m2o"/>' +
-                    '<field name="qux"/>' +
-                '</tree>',
-        });
-
-        list.$('td:contains(13)').click();
-        var $m2m = list.$('[name="m2m"] input');
-        var $foo = list.$('textarea[name="foo"]');
-        var $bar = list.$('[name="bar"] input');
-        var $m2o = list.$('[name="m2o"] input');
-        var $qux = list.$('input[name="qux"]');
-
-        assert.strictEqual(document.activeElement, $qux[0],
-            "'qux' input should be focused");
-
-        $qux[0].selectionEnd = 0; // Simulate browser keyboard left behavior (unselect)
-        $qux.trigger({type: 'keydown', which: $.ui.keyCode.LEFT});
-        assert.strictEqual(document.activeElement, $m2o[0],
-            "'m2o' input should be focused");
-
-        // forget unselecting and try leaving
-        $m2o.trigger({type: 'keydown', which: $.ui.keyCode.LEFT});
-        assert.strictEqual(document.activeElement, $m2o[0],
-            "'m2o' input should still be focused");
-
-        $m2o[0].selectionEnd = 0; // Simulate browser keyboard left behavior (unselect)
-        $m2o.trigger({type: 'keydown', which: $.ui.keyCode.LEFT});
-        assert.strictEqual(document.activeElement, $bar[0],
-            "'bar' input should be focused");
-
-        // no unselect here as it is a checkbox
-        $bar.trigger({type: 'keydown', which: $.ui.keyCode.LEFT});
-        assert.strictEqual(document.activeElement, $foo[0],
-            "'foo' input should be focused");
-
-        // forget unselecting and try leaving
-        $foo.trigger({type: 'keydown', which: $.ui.keyCode.LEFT});
-        assert.strictEqual(document.activeElement, $foo[0],
-            "'foo' input should still be focused");
-
-        $foo[0].selectionEnd = 0; // Simulate browser keyboard left behavior (unselect)
-        $foo.trigger({type: 'keydown', which: $.ui.keyCode.LEFT});
-        assert.strictEqual(document.activeElement, $m2m[0],
-            "'m2m' input should be focused");
-
-        $m2m[0].selectionStart = $m2m[0].value.length; // Simulate browser keyboard right behavior (unselect)
-        $m2m.trigger({type: 'keydown', which: $.ui.keyCode.RIGHT});
-        assert.strictEqual(document.activeElement, $foo[0],
-            "'foo' input should be focused");
-
         list.destroy();
     });
 

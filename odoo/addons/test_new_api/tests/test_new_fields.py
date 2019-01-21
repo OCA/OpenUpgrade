@@ -772,20 +772,42 @@ class TestFields(common.TransactionCase):
                                         'value': tag0, 'type': 'many2one'})
 
         # create/modify a record, and check the value for each user
-        record = self.env['test_new_api.company'].create({'foo': 'main', 'tag_id': tag1})
+        record = self.env['test_new_api.company'].create({
+            'foo': 'main',
+            'date': '1932-11-09',
+            'moment': '1932-11-09 00:00:00',
+            'tag_id': tag1.id,
+        })
         record.invalidate_cache()
         self.assertEqual(record.sudo(user0).foo, 'main')
         self.assertEqual(record.sudo(user1).foo, 'default')
         self.assertEqual(record.sudo(user2).foo, 'default')
+        self.assertEqual(str(record.sudo(user0).date), '1932-11-09')
+        self.assertEqual(record.sudo(user1).date, False)
+        self.assertEqual(record.sudo(user2).date, False)
+        self.assertEqual(str(record.sudo(user0).moment), '1932-11-09 00:00:00')
+        self.assertEqual(record.sudo(user1).moment, False)
+        self.assertEqual(record.sudo(user2).moment, False)
         self.assertEqual(record.sudo(user0).tag_id, tag1)
         self.assertEqual(record.sudo(user1).tag_id, tag0)
         self.assertEqual(record.sudo(user2).tag_id, tag0)
 
-        record.sudo(user1).write({'foo': 'alpha', 'tag_id': tag2.id})
+        record.sudo(user1).write({
+            'foo': 'alpha',
+            'date': '1932-12-10',
+            'moment': '1932-12-10 23:59:59',
+            'tag_id': tag2.id,
+        })
         record.invalidate_cache()
         self.assertEqual(record.sudo(user0).foo, 'main')
         self.assertEqual(record.sudo(user1).foo, 'alpha')
         self.assertEqual(record.sudo(user2).foo, 'default')
+        self.assertEqual(str(record.sudo(user0).date), '1932-11-09')
+        self.assertEqual(str(record.sudo(user1).date), '1932-12-10')
+        self.assertEqual(record.sudo(user2).date, False)
+        self.assertEqual(str(record.sudo(user0).moment), '1932-11-09 00:00:00')
+        self.assertEqual(str(record.sudo(user1).moment), '1932-12-10 23:59:59')
+        self.assertEqual(record.sudo(user2).moment, False)
         self.assertEqual(record.sudo(user0).tag_id, tag1)
         self.assertEqual(record.sudo(user1).tag_id, tag2)
         self.assertEqual(record.sudo(user2).tag_id, tag0)
@@ -795,6 +817,12 @@ class TestFields(common.TransactionCase):
         self.assertEqual(record.sudo(user0).tag_id, tag1)
         self.assertEqual(record.sudo(user1).tag_id, tag0.browse())
         self.assertEqual(record.sudo(user2).tag_id, tag0)
+
+        record.sudo(user1).foo = False
+        record.invalidate_cache()
+        self.assertEqual(record.sudo(user0).foo, 'main')
+        self.assertEqual(record.sudo(user1).foo, False)
+        self.assertEqual(record.sudo(user2).foo, 'default')
 
         # create company record and attribute
         company_record = self.env['test_new_api.company'].create({'foo': 'ABC'})
@@ -1053,6 +1081,26 @@ class TestFields(common.TransactionCase):
             ('res_id', '=', demo_user.partner_id.id),
         ])
         self.assertEqual(attachment.mimetype, 'text/plain')
+
+    def test_93_monetary_related(self):
+        """ Check the currency field on related monetary fields. """
+        # check base field
+        field = self.env['test_new_api.monetary_base']._fields['amount']
+        self.assertEqual(field.currency_field, 'base_currency_id')
+
+        # related fields must use the field 'currency_id' or 'x_currency_id'
+        field = self.env['test_new_api.monetary_related']._fields['amount']
+        self.assertEqual(field.related, ('monetary_id', 'amount'))
+        self.assertEqual(field.currency_field, 'currency_id')
+
+        field = self.env['test_new_api.monetary_custom']._fields['x_amount']
+        self.assertEqual(field.related, ('monetary_id', 'amount'))
+        self.assertEqual(field.currency_field, 'x_currency_id')
+
+        # inherited field must use the same field as its parent field
+        field = self.env['test_new_api.monetary_inherits']._fields['amount']
+        self.assertEqual(field.related, ('monetary_id', 'amount'))
+        self.assertEqual(field.currency_field, 'base_currency_id')
 
 
 class TestX2many(common.TransactionCase):

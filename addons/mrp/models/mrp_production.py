@@ -52,7 +52,7 @@ class MrpProduction(models.Model):
         domain=[('type', 'in', ['product', 'consu'])],
         readonly=True, required=True,
         states={'confirmed': [('readonly', False)]})
-    product_tmpl_id = fields.Many2one('product.template', 'Product Template', related='product_id.product_tmpl_id', readonly=False)
+    product_tmpl_id = fields.Many2one('product.template', 'Product Template', related='product_id.product_tmpl_id', readonly=True)
     product_qty = fields.Float(
         'Quantity To Produce',
         default=1.0, digits=dp.get_precision('Product Unit of Measure'),
@@ -486,7 +486,11 @@ class MrpProduction(models.Model):
         if move:
             old_qty = move[0].product_uom_qty
             if quantity > 0:
-                move[0].write({'product_uom_qty': quantity})
+                move[0]._decrease_reserved_quanity(quantity)
+                move[0].with_context(do_not_unreserve=True).write({'product_uom_qty': quantity})
+                move[0]._recompute_state()
+                move[0]._action_assign()
+                move.unit_factor = quantity / move.raw_material_production_id.product_qty
             elif quantity < 0:  # Do not remove 0 lines
                 if move[0].quantity_done > 0:
                     raise UserError(_('Lines need to be deleted, but can not as you still have some quantities to consume in them. '))
@@ -762,14 +766,14 @@ class MrpProduction(models.Model):
                 order_exceptions.update(order_exception)
                 visited_objects += visited
             visited_objects = self.env[visited_objects[0]._name].concat(*visited_objects)
-            visited_objects |= visited_objects.mapped('move_orig_ids')
-            impacted_pickings = []
-            if visited_objects._name == 'stock.move':
-                impacted_pickings = visited_objects.filtered(lambda m: m.state not in ('done', 'cancel')).mapped('picking_id')
+            impacted_object = []
+            if visited_objects and visited_objects._name == 'stock.move':
+                visited_objects |= visited_objects.mapped('move_orig_ids')
+                impacted_object = visited_objects.filtered(lambda m: m.state not in ('done', 'cancel')).mapped('picking_id')
             values = {
                 'production_order': self,
                 'order_exceptions': order_exceptions,
-                'impacted_pickings': impacted_pickings,
+                'impacted_object': impacted_object,
                 'cancel': cancel
             }
             return self.env.ref('mrp.exception_on_mo').render(values=values)

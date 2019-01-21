@@ -158,8 +158,6 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
     module_count = len(graph)
     _logger.info('loading %d modules...', module_count)
 
-    registry.clear_caches()
-
     # suppress commits to have the upgrade of one module in just one transaction
     cr.commit_org = cr.commit
     cr.commit = lambda *args: None
@@ -317,8 +315,6 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
             registry._init_modules.add(package.name)
 
     _logger.log(25, "%s modules loaded in %.2fs, %s queries", len(graph), time.time() - t0, odoo.sql_db.sql_counter - t0_sql)
-
-    registry.clear_caches()
 
     # Openupgrade: restore commit method and unset migration cursor
     cr.commit = cr.commit_org

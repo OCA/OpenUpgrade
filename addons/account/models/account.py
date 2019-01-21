@@ -66,9 +66,14 @@ class AccountAccount(models.Model):
     @api.multi
     @api.constrains('user_type_id')
     def _check_user_type_id(self):
-        account_unaffected_earnings = self.search([('company_id', '=', self.company_id.id), ('user_type_id', '=', self.env.ref('account.data_unaffected_earnings').id)])
-        if len(account_unaffected_earnings) >= 2:
-            raise ValidationError(_('You cannot have more than one account with "Current Year Earnings" as type. (accounts: %s)') % [a.code for a in account_unaffected_earnings])
+        data_unaffected_earnings = self.env.ref('account.data_unaffected_earnings')
+        for company in self.mapped('company_id'):
+            account_unaffected_earnings = self.search([
+                ('company_id', '=', company.id),
+                ('user_type_id', '=', data_unaffected_earnings.id),
+            ])
+            if len(account_unaffected_earnings) >= 2:
+                raise ValidationError(_('You cannot have more than one account with "Current Year Earnings" as type. (accounts: %s)') % [a.code for a in account_unaffected_earnings])
 
     name = fields.Char(required=True, index=True)
     currency_id = fields.Many2one('res.currency', string='Account Currency',
@@ -268,6 +273,8 @@ class AccountAccount(models.Model):
 
         Note that: lines with debit = credit = amount_currency = 0 are set to `reconciled´ = True
         '''
+        if not self.ids:
+            return None
         query = """
             UPDATE account_move_line SET
                 reconciled = CASE WHEN debit = 0 AND credit = 0 AND amount_currency = 0
@@ -283,6 +290,8 @@ class AccountAccount(models.Model):
 
         Note that it is disallowed if some lines are partially reconciled.
         '''
+        if not self.ids:
+            return None
         partial_lines_count = self.env['account.move.line'].search_count([
             ('account_id', 'in', self.ids),
             ('full_reconcile_id', '=', False),
