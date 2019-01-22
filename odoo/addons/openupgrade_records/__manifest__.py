@@ -16,6 +16,7 @@
         'views/install_all_wizard.xml',
         'security/ir.model.access.csv',
     ],
+    'depends': ['base', 'web'],  # web is need for adapt_to_v11.py
     'installable': True,
     'external_dependencies': {
         'python': ['odoorpc', 'openupgradelib'],
