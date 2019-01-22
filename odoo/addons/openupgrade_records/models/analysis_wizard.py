@@ -131,6 +131,8 @@ class AnalysisWizard(models.TransientModel):
         self.server_config.write({'last_log': general})
         self.write({'state': 'ready', 'log': general})
 
+        connection.logout()
+
         return {
             'name': self._description,
             'view_type': 'form',

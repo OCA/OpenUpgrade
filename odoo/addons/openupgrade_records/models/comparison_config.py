@@ -44,6 +44,7 @@ class OpenupgradeComparisonConfig(models.Model):
             user_model = connection.env["res.users"]
             ids = user_model.search([("login", "=", "admin")])
             user_info = user_model.read([ids[0]], ["name"])[0]
+            connection.logout()
         except Exception as e:
             raise UserError(_("Connection failed.\n\nDETAIL: %s") % e)
         raise UserError(
@@ -90,4 +91,5 @@ class OpenupgradeComparisonConfig(models.Model):
                       ','.join(local_modules.mapped('name')))
         if local_modules:
             local_modules.write({'state': 'to install'})
+        connection.logout()
         return {}
