@@ -80,7 +80,8 @@ def create_specific_procurement_rules_from_globals(env):
             INSERT INTO %s
             (%s)
             SELECT %s
-            FROM %s t, stock_location_route slr""", (
+            FROM %s t, stock_location_route slr
+            WHERE t.route_id=slr.id""", (
                 AsIs(table),
                 AsIs(", ".join(dest_columns)),
                 AsIs(", ".join(src_columns)),
