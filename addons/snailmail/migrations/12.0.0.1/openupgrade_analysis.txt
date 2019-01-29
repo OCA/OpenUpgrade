@@ -13,16 +13,3 @@ snailmail    / snailmail.letter         / res_id (integer)              : NEW re
 snailmail    / snailmail.letter         / state (selection)             : NEW selection_keys: ['canceled', 'draft', 'error', 'pending', 'sent']
 snailmail    / snailmail.letter         / user_id (many2one)            : NEW relation: res.users
 ---XML records in module 'snailmail'---
-NEW ir.actions.act_window: snailmail.action_mail_letters
-NEW ir.cron: snailmail.snailmail_print
-NEW ir.model.access: snailmail.access_snailmail_letter_all
-NEW ir.model.access: snailmail.access_snailmail_letter_portal
-NEW ir.model.access: snailmail.access_snailmail_letter_system
-NEW ir.model.access: snailmail.access_snailmail_letter_user
-NEW ir.ui.menu: snailmail.menu_snailmail_letters
-NEW ir.ui.view: snailmail.minimal_layout
-NEW ir.ui.view: snailmail.report_assets_snailmail
-NEW ir.ui.view: snailmail.report_layout
-NEW ir.ui.view: snailmail.res_config_settings_view_form
-NEW ir.ui.view: snailmail.snailmail_letter_form
-NEW ir.ui.view: snailmail.snailmail_letter_list

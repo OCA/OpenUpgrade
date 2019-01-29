@@ -14,7 +14,3 @@ test_mass_mailing / mass.mail.test.bl        / umbrella_id (many2one)        : N
 test_mass_mailing / mass.mail.test.bl        / user_id (many2one)            : NEW relation: res.users
 test_mass_mailing / mass.mail.test.bl        / website_message_ids (one2many): NEW relation: mail.message
 ---XML records in module 'test_mass_mailing'---
-NEW ir.model.access: test_mass_mailing.access_mass_mail_test_all
-NEW ir.model.access: test_mass_mailing.access_mass_mail_test_bl_all
-NEW ir.model.access: test_mass_mailing.access_mass_mail_test_bl_user
-NEW ir.model.access: test_mass_mailing.access_mass_mail_test_user

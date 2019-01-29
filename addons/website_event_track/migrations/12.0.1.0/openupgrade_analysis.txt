@@ -12,5 +12,3 @@ website_event_track / website.event.menu       / event_id (many2one)           :
 website_event_track / website.event.menu       / menu_id (many2one)            : NEW relation: website.menu
 website_event_track / website.event.menu       / menu_type (selection)         : NEW selection_keys: ['track', 'track_proposal']
 ---XML records in module 'website_event_track'---
-NEW ir.model.access: website_event_track.access_website_event_menu_manager
-NEW ir.model.access: website_event_track.access_website_event_menu_public

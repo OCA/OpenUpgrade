@@ -10,10 +10,4 @@ purchase_requisition / purchase.requisition.line / product_uom_id (many2one)    
 purchase_requisition / purchase.requisition.line / requisition_id (many2one)     : now required
 purchase_requisition / purchase.requisition.line / supplier_info_ids (one2many)  : NEW relation: product.supplierinfo
 purchase_requisition / stock.move               / requisition_line_ids (one2many): NEW relation: purchase.requisition.line
-purchase_requisition / stock.move               / requistion_line_ids (one2many): NEW relation: purchase.requisition.line
 ---XML records in module 'purchase_requisition'---
-NEW ir.sequence: purchase_requisition.seq_blanket_order (noupdate)
-NEW ir.sequence: purchase_requisition.seq_purchase_tender (noupdate)
-DEL ir.sequence: purchase_requisition.seq_purchase_requisition (noupdate)
-NEW ir.ui.view: purchase_requisition.product_supplierinfo_tree_view_inherit
-NEW ir.ui.view: purchase_requisition.supplier_info_form_inherit

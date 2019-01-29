@@ -5,7 +5,3 @@ note         / note.note                / activity_date_deadline (date) : now a 
 note         / note.note                / message_last_post (datetime)  : DEL 
 note         / note.note                / message_main_attachment_id (many2one): NEW relation: ir.attachment
 ---XML records in module 'note'---
-NEW ir.ui.view: note.mail_activity_type_view_form
-NEW ir.ui.view: note.qunit_suite
-NEW mail.activity.type: note.mail_activity_data_reminder (noupdate)
-DEL note.stage: note.note_stage_04

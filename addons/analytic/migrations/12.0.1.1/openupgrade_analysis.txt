@@ -18,11 +18,3 @@ analytic     / account.analytic.tag     / active_analytic_distribution (boolean)
 analytic     / account.analytic.tag     / analytic_distribution_ids (one2many): NEW relation: account.analytic.distribution
 analytic     / account.analytic.tag     / company_id (many2one)         : NEW relation: res.company
 ---XML records in module 'analytic'---
-NEW ir.actions.act_window: analytic.account_analytic_group_action
-NEW ir.model.access: analytic.access_account_analytic_distribution
-NEW ir.model.access: analytic.access_account_analytic_group
-NEW ir.rule: analytic.analytic_group_comp_rule (noupdate)
-NEW ir.rule: analytic.analytic_tag_comp_rule (noupdate)
-NEW ir.ui.view: analytic.account_analytic_group_form_view
-NEW ir.ui.view: analytic.account_analytic_group_tree_view
-NEW res.groups: analytic.group_analytic_tags

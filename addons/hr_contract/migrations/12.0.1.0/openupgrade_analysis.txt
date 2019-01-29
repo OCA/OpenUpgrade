@@ -8,7 +8,4 @@ hr_contract  / hr.employee              / children (integer)            : module
 hr_contract  / hr.employee              / place_of_birth (char)         : module is now 'hr' ('hr_contract')
 hr_contract  / hr.employee              / vehicle_distance (integer)    : DEL 
 ---XML records in module 'hr_contract'---
-DEL ir.model.access: hr_contract.access_hr_contract_type_user
-DEL ir.model.access: hr_contract.access_hr_contract_user
-NEW res.groups: hr_contract.group_hr_contract_manager (noupdate)
-NEW res.users: base.default_user (noupdate)
+NEW res.users: base.default_user

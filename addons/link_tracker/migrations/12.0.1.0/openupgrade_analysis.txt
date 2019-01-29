@@ -1,3 +1,872 @@
 ---Fields in module 'link_tracker'---
+link_tracker / account.account.type     / internal_group (selection)    : NEW selection_keys: ['asset', 'equity', 'expense', 'income', 'liability']
+link_tracker / account.analytic.account / company_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / account.analytic.account / crossovered_budget_line (one2many): DEL relation: crossovered.budget.lines
+link_tracker / account.analytic.account / group_id (many2one)           : NEW relation: account.analytic.group
+link_tracker / account.analytic.account / message_last_post (datetime)  : DEL 
+link_tracker / account.analytic.account / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / account.analytic.account / tag_ids (many2many)           : DEL relation: account.analytic.tag
+link_tracker / account.analytic.default / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+link_tracker / account.analytic.distribution / account_id (many2one)         : NEW relation: account.analytic.account, required: required
+link_tracker / account.analytic.distribution / percentage (float)            : NEW required: required, req_default: function
+link_tracker / account.analytic.distribution / tag_id (many2one)             : NEW relation: account.analytic.tag, required: required
+link_tracker / account.analytic.group   / children_ids (one2many)       : NEW relation: account.analytic.group
+link_tracker / account.analytic.group   / company_id (many2one)         : NEW relation: res.company
+link_tracker / account.analytic.group   / description (text)            : NEW 
+link_tracker / account.analytic.group   / name (char)                   : NEW required: required
+link_tracker / account.analytic.group   / parent_id (many2one)          : NEW relation: account.analytic.group
+link_tracker / account.analytic.group   / parent_path (char)            : NEW 
+link_tracker / account.analytic.line    / company_id (many2one)         : now required, default = function
+link_tracker / account.analytic.line    / holiday_id (many2one)         : relation is now 'hr.leave' ('hr.holidays')
+link_tracker / account.analytic.line    / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / account.analytic.line    / timesheet_invoice_type (selection): now a function
+link_tracker / account.analytic.line    / timesheet_revenue (float)     : DEL 
+link_tracker / account.analytic.tag     / active_analytic_distribution (boolean): NEW 
+link_tracker / account.analytic.tag     / analytic_distribution_ids (one2many): NEW relation: account.analytic.distribution
+link_tracker / account.analytic.tag     / company_id (many2one)         : NEW relation: res.company
+link_tracker / account.bank.statement   / accounting_date (date)        : NEW 
+link_tracker / account.bank.statement   / message_last_post (datetime)  : DEL 
+link_tracker / account.bank.statement   / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / account.bank.statement.line / account_number (char)         : NEW 
+link_tracker / account.chart.template   / bank_account_code_prefix (char): now required
+link_tracker / account.chart.template   / cash_account_code_prefix (char): now required
+link_tracker / account.chart.template   / company_id (many2one)         : DEL relation: res.company
+link_tracker / account.chart.template   / transfer_account_code_prefix (char): NEW required: required
+link_tracker / account.chart.template   / transfer_account_id (many2one): DEL relation: account.account.template, required: required
+link_tracker / account.fiscal.year      / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+link_tracker / account.fiscal.year      / date_from (date)              : NEW required: required
+link_tracker / account.fiscal.year      / date_to (date)                : NEW required: required
+link_tracker / account.fiscal.year      / name (char)                   : NEW required: required
+link_tracker / account.group            / parent_left (integer)         : DEL 
+link_tracker / account.group            / parent_path (char)            : NEW 
+link_tracker / account.group            / parent_right (integer)        : DEL 
+link_tracker / account.incoterms        / active (boolean)              : NEW 
+link_tracker / account.incoterms        / code (char)                   : NEW required: required
+link_tracker / account.incoterms        / name (char)                   : NEW required: required
+link_tracker / account.invoice          / activity_date_deadline (date) : now a function
+link_tracker / account.invoice          / incoterm_id (many2one)        : NEW relation: account.incoterms
+link_tracker / account.invoice          / incoterms_id (many2one)       : relation is now 'account.incoterms' ('stock.incoterms')
+link_tracker / account.invoice          / message_last_post (datetime)  : DEL 
+link_tracker / account.invoice          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / account.invoice          / payment_tx_id (many2one)      : DEL relation: payment.transaction
+link_tracker / account.invoice          / payment_tx_ids (one2many)     : DEL relation: payment.transaction
+link_tracker / account.invoice          / reference_type (selection)    : DEL required: required, selection_keys: function, req_default: function
+link_tracker / account.invoice          / source_email (char)           : NEW 
+link_tracker / account.invoice          / state (selection)             : selection_keys is now '['cancel', 'draft', 'in_payment', 'open', 'paid']' ('['cancel', 'draft', 'open', 'paid']')
+link_tracker / account.invoice          / transaction_ids (many2many)   : NEW relation: payment.transaction
+link_tracker / account.invoice          / vendor_bill_id (many2one)     : NEW relation: account.invoice
+link_tracker / account.invoice          / vendor_bill_purchase_id (many2one): NEW relation: purchase.bill.union
+link_tracker / account.invoice.line     / asset_category_id (many2one)  : DEL relation: account.asset.category
+link_tracker / account.invoice.line     / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section']
+link_tracker / account.invoice.line     / layout_category_id (many2one) : DEL relation: sale.layout_category
+link_tracker / account.invoice.line     / layout_category_sequence (integer): DEL 
+link_tracker / account.invoice.line     / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
+link_tracker / account.invoice.tax      / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+link_tracker / account.journal          / alias_id (many2one)           : NEW relation: mail.alias
+link_tracker / account.journal          / bank_statements_source (selection): selection_keys is now 'function' ('['file_import', 'manual', 'undefined']')
+link_tracker / account.journal          / post_at_bank_rec (boolean)    : NEW 
+link_tracker / account.move             / asset_depreciation_ids (one2many): DEL relation: account.asset.depreciation.line
+link_tracker / account.move             / auto_reverse (boolean)        : NEW 
+link_tracker / account.move             / reverse_date (date)           : NEW 
+link_tracker / account.move             / reverse_entry_id (many2one)   : NEW relation: account.move
+link_tracker / account.move             / tax_type_domain (char)        : NEW 
+link_tracker / account.move.line        / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / account.move.line        / recompute_tax_line (boolean)  : NEW 
+link_tracker / account.move.line        / tax_line_grouping_key (char)  : NEW 
+link_tracker / account.payment          / message_last_post (datetime)  : DEL 
+link_tracker / account.payment          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / account.payment          / multi (boolean)               : NEW 
+link_tracker / account.payment          / partner_bank_account_id (many2one): NEW relation: res.partner.bank
+link_tracker / account.payment.term.line / day_of_the_month (integer)    : NEW 
+link_tracker / account.payment.term.line / option (selection)            : selection_keys is now '['after_invoice_month', 'day_after_invoice_date', 'day_current_month', 'day_following_month']' ('['day_after_invoice_date', 'fix_day_following_month', 'last_day_current_month', 'last_day_following_month']')
+link_tracker / account.reconcile.model  / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+link_tracker / account.reconcile.model  / auto_reconcile (boolean)      : NEW 
+link_tracker / account.reconcile.model  / force_second_tax_included (boolean): NEW 
+link_tracker / account.reconcile.model  / force_tax_included (boolean)  : NEW 
+link_tracker / account.reconcile.model  / match_amount (selection)      : NEW selection_keys: ['between', 'greater', 'lower']
+link_tracker / account.reconcile.model  / match_amount_max (float)      : NEW 
+link_tracker / account.reconcile.model  / match_amount_min (float)      : NEW 
+link_tracker / account.reconcile.model  / match_journal_ids (many2many) : NEW relation: account.journal
+link_tracker / account.reconcile.model  / match_label (selection)       : NEW selection_keys: ['contains', 'match_regex', 'not_contains']
+link_tracker / account.reconcile.model  / match_label_param (char)      : NEW 
+link_tracker / account.reconcile.model  / match_nature (selection)      : NEW required: required, selection_keys: ['amount_paid', 'amount_received', 'both'], req_default: function
+link_tracker / account.reconcile.model  / match_partner (boolean)       : NEW 
+link_tracker / account.reconcile.model  / match_partner_category_ids (many2many): NEW relation: res.partner.category
+link_tracker / account.reconcile.model  / match_partner_ids (many2many) : NEW relation: res.partner
+link_tracker / account.reconcile.model  / match_same_currency (boolean) : NEW 
+link_tracker / account.reconcile.model  / match_total_amount (boolean)  : NEW 
+link_tracker / account.reconcile.model  / match_total_amount_param (float): NEW 
+link_tracker / account.reconcile.model  / rule_type (selection)         : NEW required: required, selection_keys: ['invoice_matching', 'writeoff_button', 'writeoff_suggestion'], req_default: function
+link_tracker / account.reconcile.model  / second_analytic_tag_ids (many2many): NEW relation: account.analytic.tag
+link_tracker / account.reconcile.model.template / auto_reconcile (boolean)      : NEW 
+link_tracker / account.reconcile.model.template / force_second_tax_included (boolean): NEW 
+link_tracker / account.reconcile.model.template / force_tax_included (boolean)  : NEW 
+link_tracker / account.reconcile.model.template / match_amount (selection)      : NEW selection_keys: ['between', 'greater', 'lower']
+link_tracker / account.reconcile.model.template / match_amount_max (float)      : NEW 
+link_tracker / account.reconcile.model.template / match_amount_min (float)      : NEW 
+link_tracker / account.reconcile.model.template / match_journal_ids (many2many) : NEW relation: account.journal
+link_tracker / account.reconcile.model.template / match_label (selection)       : NEW selection_keys: ['contains', 'match_regex', 'not_contains']
+link_tracker / account.reconcile.model.template / match_label_param (char)      : NEW 
+link_tracker / account.reconcile.model.template / match_nature (selection)      : NEW required: required, selection_keys: ['amount_paid', 'amount_received', 'both'], req_default: function
+link_tracker / account.reconcile.model.template / match_partner (boolean)       : NEW 
+link_tracker / account.reconcile.model.template / match_partner_category_ids (many2many): NEW relation: res.partner.category
+link_tracker / account.reconcile.model.template / match_partner_ids (many2many) : NEW relation: res.partner
+link_tracker / account.reconcile.model.template / match_same_currency (boolean) : NEW 
+link_tracker / account.reconcile.model.template / match_total_amount (boolean)  : NEW 
+link_tracker / account.reconcile.model.template / match_total_amount_param (float): NEW 
+link_tracker / account.reconcile.model.template / rule_type (selection)         : NEW required: required, selection_keys: ['invoice_matching', 'writeoff_button', 'writeoff_suggestion'], req_default: function
+link_tracker / account.tax              / cash_basis_account (many2one) : was renamed to cash_basis_account_id [nothing to do]
+link_tracker / account.tax              / tax_adjustment (boolean)      : DEL 
+link_tracker / account.tax              / type_tax_use (selection)      : selection_keys is now '['adjustment', 'none', 'purchase', 'sale']' ('['none', 'purchase', 'sale']')
+link_tracker / account.tax.template     / cash_basis_account (many2one) : was renamed to cash_basis_account_id [nothing to do]
+link_tracker / account.tax.template     / cash_basis_base_account_id (many2one): NEW relation: account.account.template
+link_tracker / account.tax.template     / company_id (many2one)         : DEL relation: res.company
+link_tracker / account.tax.template     / tax_adjustment (boolean)      : DEL 
+link_tracker / account.tax.template     / type_tax_use (selection)      : selection_keys is now '['adjustment', 'none', 'purchase', 'sale']' ('['none', 'purchase', 'sale']')
+link_tracker / account.voucher          / message_last_post (datetime)  : DEL 
+link_tracker / account.voucher          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / account.voucher          / payment_journal_id (many2one) : not a function anymore
+link_tracker / account.voucher.line     / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+link_tracker / base_import.mapping      / column_name (char)            : NEW 
+link_tracker / base_import.mapping      / field_name (char)             : NEW 
+link_tracker / base_import.mapping      / res_model (char)              : NEW 
+link_tracker / base_import.tests.models.complex / c (char)                      : NEW 
+link_tracker / base_import.tests.models.complex / currency_id (many2one)        : NEW relation: res.currency
+link_tracker / base_import.tests.models.complex / d (date)                      : NEW 
+link_tracker / base_import.tests.models.complex / dt (datetime)                 : NEW 
+link_tracker / base_import.tests.models.complex / f (float)                     : NEW 
+link_tracker / base_import.tests.models.complex / m (float)                     : NEW 
+link_tracker / base_import.tests.models.float / currency_id (many2one)        : NEW relation: res.currency
+link_tracker / base_import.tests.models.float / value (float)                 : NEW 
+link_tracker / base_import.tests.models.float / value2 (float)                : NEW 
+link_tracker / calendar.event           / message_last_post (datetime)  : DEL 
+link_tracker / calendar.event           / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / crm.lead                 / activity_date_deadline (date) : now a function
+link_tracker / crm.lead                 / message_last_post (datetime)  : DEL 
+link_tracker / crm.lead                 / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / crm.lead                 / opt_out (boolean)             : DEL 
+link_tracker / crm.lead                 / reveal_iap_credits (integer)  : NEW 
+link_tracker / crm.lead                 / reveal_id (char)              : NEW 
+link_tracker / crm.lead                 / reveal_ip (char)              : NEW 
+link_tracker / crm.lead                 / reveal_rule_id (many2one)     : NEW relation: crm.reveal.rule
+link_tracker / crm.reveal.industry      / color (integer)               : NEW 
+link_tracker / crm.reveal.industry      / name (char)                   : NEW required: required
+link_tracker / crm.reveal.industry      / reveal_id (char)              : NEW required: required
+link_tracker / crm.reveal.role          / color (integer)               : NEW 
+link_tracker / crm.reveal.role          / name (char)                   : NEW required: required
+link_tracker / crm.reveal.role          / reveal_id (char)              : NEW required: required
+link_tracker / crm.reveal.rule          / active (boolean)              : NEW 
+link_tracker / crm.reveal.rule          / company_size_max (integer)    : NEW 
+link_tracker / crm.reveal.rule          / company_size_min (integer)    : NEW 
+link_tracker / crm.reveal.rule          / country_ids (many2many)       : NEW relation: res.country
+link_tracker / crm.reveal.rule          / extra_contacts (integer)      : NEW 
+link_tracker / crm.reveal.rule          / industry_tag_ids (many2many)  : NEW relation: crm.reveal.industry
+link_tracker / crm.reveal.rule          / lead_for (selection)          : NEW required: required, selection_keys: ['companies', 'people'], req_default: function
+link_tracker / crm.reveal.rule          / lead_ids (one2many)           : NEW relation: crm.lead
+link_tracker / crm.reveal.rule          / lead_type (selection)         : NEW required: required, selection_keys: ['lead', 'opportunity'], req_default: function
+link_tracker / crm.reveal.rule          / name (char)                   : NEW required: required
+link_tracker / crm.reveal.rule          / other_role_ids (many2many)    : NEW relation: crm.reveal.role
+link_tracker / crm.reveal.rule          / preferred_role_id (many2one)  : NEW relation: crm.reveal.role
+link_tracker / crm.reveal.rule          / priority (selection)          : NEW selection_keys: ['0', '1', '2', '3']
+link_tracker / crm.reveal.rule          / regex_url (char)              : NEW 
+link_tracker / crm.reveal.rule          / seniority_id (many2one)       : NEW relation: crm.reveal.seniority
+link_tracker / crm.reveal.rule          / sequence (integer)            : NEW 
+link_tracker / crm.reveal.rule          / suffix (char)                 : NEW 
+link_tracker / crm.reveal.rule          / tag_ids (many2many)           : NEW relation: crm.lead.tag
+link_tracker / crm.reveal.rule          / team_id (many2one)            : NEW relation: crm.team
+link_tracker / crm.reveal.rule          / user_id (many2one)            : NEW relation: res.users
+link_tracker / crm.reveal.seniority     / name (char)                   : NEW required: required
+link_tracker / crm.reveal.seniority     / reveal_id (char)              : NEW required: required
+link_tracker / crm.reveal.view          / reveal_ip (char)              : NEW 
+link_tracker / crm.reveal.view          / reveal_rule_id (many2one)     : NEW relation: crm.reveal.rule
+link_tracker / crm.reveal.view          / reveal_state (selection)      : NEW selection_keys: ['not_found', 'to_process']
+link_tracker / crm.team                 / dashboard_graph_model (selection): selection_keys is now '['account.invoice.report', 'crm.lead', 'sale.report']' ('['account.invoice.report', 'crm.opportunity.report', 'sale.report']')
+link_tracker / crm.team                 / message_last_post (datetime)  : DEL 
+link_tracker / crm.team                 / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / delivery.carrier         / is_published (boolean)        : NEW 
+link_tracker / delivery.carrier         / website_id (many2one)         : NEW relation: website
+link_tracker / delivery.carrier         / website_published (boolean)   : now a function
+link_tracker / digest.digest            / company_id (many2one)         : NEW relation: res.company
+link_tracker / digest.digest            / kpi_account_total_revenue (boolean): NEW 
+link_tracker / digest.digest            / kpi_all_sale_total (boolean)  : NEW 
+link_tracker / digest.digest            / kpi_crm_lead_created (boolean): NEW 
+link_tracker / digest.digest            / kpi_crm_opportunities_won (boolean): NEW 
+link_tracker / digest.digest            / kpi_hr_recruitment_new_colleagues (boolean): NEW 
+link_tracker / digest.digest            / kpi_mail_message_total (boolean): NEW 
+link_tracker / digest.digest            / kpi_pos_total (boolean)       : NEW 
+link_tracker / digest.digest            / kpi_project_task_opened (boolean): NEW 
+link_tracker / digest.digest            / kpi_res_users_connected (boolean): NEW 
+link_tracker / digest.digest            / kpi_website_sale_total (boolean): NEW 
+link_tracker / digest.digest            / name (char)                   : NEW required: required
+link_tracker / digest.digest            / next_run_date (date)          : NEW 
+link_tracker / digest.digest            / periodicity (selection)       : NEW required: required, selection_keys: ['monthly', 'quarterly', 'weekly'], req_default: function
+link_tracker / digest.digest            / state (selection)             : NEW selection_keys: ['activated', 'deactivated']
+link_tracker / digest.digest            / template_id (many2one)        : NEW relation: mail.template, required: required, req_default: function
+link_tracker / digest.digest            / user_ids (many2many)          : NEW relation: res.users
+link_tracker / digest.tip               / group_id (many2one)           : NEW relation: res.groups
+link_tracker / digest.tip               / sequence (integer)            : NEW 
+link_tracker / digest.tip               / tip_description (html)        : NEW 
+link_tracker / digest.tip               / user_ids (many2many)          : NEW relation: res.users
+link_tracker / event.event              / message_last_post (datetime)  : DEL 
+link_tracker / event.event              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / event.registration       / message_last_post (datetime)  : DEL 
+link_tracker / event.registration       / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / fetchmail.server         / action_id (many2one)          : DEL relation: ir.actions.server
+link_tracker / gamification.badge       / message_last_post (datetime)  : DEL 
+link_tracker / gamification.badge       / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / gamification.challenge   / message_last_post (datetime)  : DEL 
+link_tracker / gamification.challenge   / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / hr.applicant             / activity_date_deadline (date) : now a function
+link_tracker / hr.applicant             / kanban_state (selection)      : NEW required: required, selection_keys: ['blocked', 'done', 'normal'], req_default: function
+link_tracker / hr.applicant             / message_last_post (datetime)  : DEL 
+link_tracker / hr.applicant             / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / hr.contract              / active (boolean)              : NEW 
+link_tracker / hr.contract              / activity_ids (one2many)       : NEW relation: mail.activity
+link_tracker / hr.contract              / analytic_account_id (many2one): NEW relation: account.analytic.account
+link_tracker / hr.contract              / journal_id (many2one)         : NEW relation: account.journal
+link_tracker / hr.contract              / message_last_post (datetime)  : DEL 
+link_tracker / hr.contract              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / hr.contract              / reported_to_secretariat (boolean): NEW 
+link_tracker / hr.department            / message_last_post (datetime)  : DEL 
+link_tracker / hr.department            / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / hr.employee              / activity_ids (one2many)       : NEW relation: mail.activity
+link_tracker / hr.employee              / additional_note (text)        : NEW 
+link_tracker / hr.employee              / certificate (selection)       : NEW selection_keys: ['bachelor', 'master', 'other']
+link_tracker / hr.employee              / country_of_birth (many2one)   : NEW relation: res.country
+link_tracker / hr.employee              / current_leave_id (many2one)   : relation is now 'hr.leave.type' ('hr.holidays.status')
+link_tracker / hr.employee              / emergency_contact (char)      : NEW 
+link_tracker / hr.employee              / emergency_phone (char)        : NEW 
+link_tracker / hr.employee              / expense_manager_id (many2one) : NEW relation: res.users
+link_tracker / hr.employee              / google_drive_link (char)      : NEW 
+link_tracker / hr.employee              / job_title (char)              : NEW 
+link_tracker / hr.employee              / km_home_work (integer)        : NEW 
+link_tracker / hr.employee              / message_last_post (datetime)  : DEL 
+link_tracker / hr.employee              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / hr.employee              / spouse_birthdate (date)       : NEW 
+link_tracker / hr.employee              / spouse_complete_name (char)   : NEW 
+link_tracker / hr.employee              / study_field (char)            : NEW 
+link_tracker / hr.employee              / study_school (char)           : NEW 
+link_tracker / hr.employee              / vehicle_distance (integer)    : DEL 
+link_tracker / hr.expense               / activity_ids (one2many)       : NEW relation: mail.activity
+link_tracker / hr.expense               / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
+link_tracker / hr.expense               / message_last_post (datetime)  : DEL 
+link_tracker / hr.expense               / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / hr.expense               / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / hr.expense               / state (selection)             : selection_keys is now '['approved', 'done', 'draft', 'refused', 'reported']' ('['done', 'draft', 'refused', 'reported']')
+link_tracker / hr.expense.sheet         / activity_ids (one2many)       : NEW relation: mail.activity
+link_tracker / hr.expense.sheet         / message_last_post (datetime)  : DEL 
+link_tracker / hr.expense.sheet         / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / hr.expense.sheet         / responsible_id (many2one)     : was renamed to user_id [nothing to do]
+link_tracker / hr.expense.sheet         / state (selection)             : selection_keys is now '['approve', 'cancel', 'done', 'draft', 'post', 'submit']' ('['approve', 'cancel', 'done', 'post', 'submit']')
+link_tracker / hr.job                   / message_last_post (datetime)  : DEL 
+link_tracker / hr.job                   / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / hr.leave                 / activity_ids (one2many)       : NEW relation: mail.activity
+link_tracker / hr.leave                 / category_id (many2one)        : NEW relation: hr.employee.category
+link_tracker / hr.leave                 / date_from (datetime)          : NEW required: required, req_default: function
+link_tracker / hr.leave                 / date_to (datetime)            : NEW required: required, req_default: function
+link_tracker / hr.leave                 / department_id (many2one)      : NEW relation: hr.department
+link_tracker / hr.leave                 / employee_id (many2one)        : NEW relation: hr.employee
+link_tracker / hr.leave                 / first_approver_id (many2one)  : NEW relation: hr.employee
+link_tracker / hr.leave                 / holiday_status_id (many2one)  : NEW relation: hr.leave.type, required: required
+link_tracker / hr.leave                 / holiday_type (selection)      : NEW required: required, selection_keys: ['category', 'company', 'department', 'employee'], req_default: function
+link_tracker / hr.leave                 / linked_request_ids (one2many) : NEW relation: hr.leave
+link_tracker / hr.leave                 / manager_id (many2one)         : NEW relation: hr.employee
+link_tracker / hr.leave                 / meeting_id (many2one)         : NEW relation: calendar.event
+link_tracker / hr.leave                 / message_follower_ids (one2many): NEW relation: mail.followers
+link_tracker / hr.leave                 / message_ids (one2many)        : NEW relation: mail.message
+link_tracker / hr.leave                 / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / hr.leave                 / mode_company_id (many2one)    : NEW relation: res.company
+link_tracker / hr.leave                 / name (char)                   : NEW 
+link_tracker / hr.leave                 / notes (text)                  : NEW 
+link_tracker / hr.leave                 / number_of_days (float)        : NEW 
+link_tracker / hr.leave                 / parent_id (many2one)          : NEW relation: hr.leave
+link_tracker / hr.leave                 / payslip_status (boolean)      : NEW 
+link_tracker / hr.leave                 / report_note (text)            : NEW 
+link_tracker / hr.leave                 / request_date_from (date)      : NEW 
+link_tracker / hr.leave                 / request_date_from_period (selection): NEW selection_keys: ['am', 'pm']
+link_tracker / hr.leave                 / request_date_to (date)        : NEW 
+link_tracker / hr.leave                 / request_hour_from (selection) : NEW selection_keys: [-24, -23, -22, -21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+link_tracker / hr.leave                 / request_hour_to (selection)   : NEW selection_keys: [-24, -23, -22, -21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+link_tracker / hr.leave                 / request_unit_custom (boolean) : NEW 
+link_tracker / hr.leave                 / request_unit_half (boolean)   : NEW 
+link_tracker / hr.leave                 / request_unit_hours (boolean)  : NEW 
+link_tracker / hr.leave                 / second_approver_id (many2one) : NEW relation: hr.employee
+link_tracker / hr.leave                 / state (selection)             : NEW selection_keys: ['cancel', 'confirm', 'draft', 'refuse', 'validate', 'validate1']
+link_tracker / hr.leave                 / timesheet_ids (one2many)      : NEW relation: account.analytic.line
+link_tracker / hr.leave                 / website_message_ids (one2many): NEW relation: mail.message
+link_tracker / hr.leave.allocation      / accrual (boolean)             : NEW 
+link_tracker / hr.leave.allocation      / accrual_limit (integer)       : NEW 
+link_tracker / hr.leave.allocation      / activity_ids (one2many)       : NEW relation: mail.activity
+link_tracker / hr.leave.allocation      / category_id (many2one)        : NEW relation: hr.employee.category
+link_tracker / hr.leave.allocation      / date_from (datetime)          : NEW 
+link_tracker / hr.leave.allocation      / date_to (datetime)            : NEW 
+link_tracker / hr.leave.allocation      / department_id (many2one)      : NEW relation: hr.department
+link_tracker / hr.leave.allocation      / employee_id (many2one)        : NEW relation: hr.employee
+link_tracker / hr.leave.allocation      / first_approver_id (many2one)  : NEW relation: hr.employee
+link_tracker / hr.leave.allocation      / holiday_status_id (many2one)  : NEW relation: hr.leave.type, required: required, req_default: function
+link_tracker / hr.leave.allocation      / holiday_type (selection)      : NEW required: required, selection_keys: ['category', 'company', 'department', 'employee'], req_default: function
+link_tracker / hr.leave.allocation      / interval_number (integer)     : NEW 
+link_tracker / hr.leave.allocation      / interval_unit (selection)     : NEW selection_keys: ['months', 'weeks', 'years']
+link_tracker / hr.leave.allocation      / linked_request_ids (one2many) : NEW relation: hr.leave.allocation
+link_tracker / hr.leave.allocation      / message_follower_ids (one2many): NEW relation: mail.followers
+link_tracker / hr.leave.allocation      / message_ids (one2many)        : NEW relation: mail.message
+link_tracker / hr.leave.allocation      / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / hr.leave.allocation      / mode_company_id (many2one)    : NEW relation: res.company
+link_tracker / hr.leave.allocation      / name (char)                   : NEW 
+link_tracker / hr.leave.allocation      / nextcall (date)               : NEW 
+link_tracker / hr.leave.allocation      / notes (text)                  : NEW 
+link_tracker / hr.leave.allocation      / number_of_days (float)        : NEW 
+link_tracker / hr.leave.allocation      / number_per_interval (float)   : NEW 
+link_tracker / hr.leave.allocation      / parent_id (many2one)          : NEW relation: hr.leave.allocation
+link_tracker / hr.leave.allocation      / second_approver_id (many2one) : NEW relation: hr.employee
+link_tracker / hr.leave.allocation      / state (selection)             : NEW selection_keys: ['cancel', 'confirm', 'draft', 'refuse', 'validate', 'validate1']
+link_tracker / hr.leave.allocation      / unit_per_interval (selection) : NEW selection_keys: ['days', 'hours']
+link_tracker / hr.leave.allocation      / website_message_ids (one2many): NEW relation: mail.message
+link_tracker / hr.leave.type            / active (boolean)              : NEW 
+link_tracker / hr.leave.type            / allocation_type (selection)   : NEW selection_keys: ['fixed', 'fixed_allocation', 'no']
+link_tracker / hr.leave.type            / categ_id (many2one)           : NEW relation: calendar.event.type
+link_tracker / hr.leave.type            / color_name (selection)        : NEW required: required, selection_keys: ['black', 'blue', 'brown', 'ivory', 'lavender', 'lightblue', 'lightcoral', 'lightcyan', 'lightgreen', 'lightpink', 'lightsalmon', 'lightyellow', 'magenta', 'red', 'violet', 'wheat'], req_default: function
+link_tracker / hr.leave.type            / company_id (many2one)         : NEW relation: res.company
+link_tracker / hr.leave.type            / name (char)                   : NEW required: required
+link_tracker / hr.leave.type            / request_unit (selection)      : NEW required: required, selection_keys: ['day', 'hour'], req_default: function
+link_tracker / hr.leave.type            / sequence (integer)            : NEW 
+link_tracker / hr.leave.type            / time_type (selection)         : NEW selection_keys: ['leave', 'other']
+link_tracker / hr.leave.type            / timesheet_generate (boolean)  : NEW 
+link_tracker / hr.leave.type            / timesheet_project_id (many2one): NEW relation: project.project
+link_tracker / hr.leave.type            / timesheet_task_id (many2one)  : NEW relation: project.task
+link_tracker / hr.leave.type            / unpaid (boolean)              : NEW 
+link_tracker / hr.leave.type            / validation_type (selection)   : NEW selection_keys: ['both', 'hr', 'manager']
+link_tracker / hr.leave.type            / validity_start (date)         : NEW 
+link_tracker / hr.leave.type            / validity_stop (date)          : NEW 
+link_tracker / hr.payslip               / date (date)                   : NEW 
+link_tracker / hr.payslip               / journal_id (many2one)         : NEW relation: account.journal, required: required, req_default: function
+link_tracker / hr.payslip               / move_id (many2one)            : NEW relation: account.move
+link_tracker / hr.payslip.line          / account_credit (many2one)     : NEW relation: account.account
+link_tracker / hr.payslip.line          / account_debit (many2one)      : NEW relation: account.account
+link_tracker / hr.payslip.line          / account_tax_id (many2one)     : NEW relation: account.tax
+link_tracker / hr.payslip.line          / analytic_account_id (many2one): NEW relation: account.analytic.account
+link_tracker / hr.payslip.run           / journal_id (many2one)         : NEW relation: account.journal, required: required, req_default: function
+link_tracker / hr.recruitment.stage     / legend_blocked (char)         : NEW required: required, req_default: function
+link_tracker / hr.recruitment.stage     / legend_done (char)            : NEW required: required, req_default: function
+link_tracker / hr.recruitment.stage     / legend_normal (char)          : NEW required: required, req_default: function
+link_tracker / hr.salary.rule           / account_credit (many2one)     : NEW relation: account.account
+link_tracker / hr.salary.rule           / account_debit (many2one)      : NEW relation: account.account
+link_tracker / hr.salary.rule           / account_tax_id (many2one)     : NEW relation: account.tax
+link_tracker / hr.salary.rule           / analytic_account_id (many2one): NEW relation: account.analytic.account
+link_tracker / im_livechat.channel      / is_published (boolean)        : NEW 
+link_tracker / ir.actions.act_window.view / view_mode (selection)         : selection_keys is now '['activity', 'calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'tree']' ('['calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'tree']')
+link_tracker / ir.actions.report        / report_type (selection)       : selection_keys is now '['qweb-html', 'qweb-pdf', 'qweb-text']' ('['qweb-html', 'qweb-pdf']')
+link_tracker / ir.actions.server        / activity_date_deadline_range (integer): NEW 
+link_tracker / ir.actions.server        / activity_date_deadline_range_type (selection): NEW selection_keys: ['days', 'months', 'weeks']
+link_tracker / ir.actions.server        / activity_note (html)          : NEW 
+link_tracker / ir.actions.server        / activity_summary (char)       : NEW 
+link_tracker / ir.actions.server        / activity_type_id (many2one)   : NEW relation: mail.activity.type
+link_tracker / ir.actions.server        / activity_user_field_name (char): NEW 
+link_tracker / ir.actions.server        / activity_user_id (many2one)   : NEW relation: res.users
+link_tracker / ir.actions.server        / activity_user_type (selection): NEW required: required, selection_keys: ['generic', 'specific'], req_default: function
+link_tracker / ir.actions.server        / state (selection)             : selection_keys is now '['code', 'email', 'followers', 'multi', 'next_activity', 'object_create', 'object_write']' ('['code', 'email', 'followers', 'multi', 'object_create', 'object_write']')
+link_tracker / ir.attachment            / active (boolean)              : NEW 
+link_tracker / ir.attachment            / key (char)                    : NEW 
+link_tracker / ir.attachment            / theme_template_id (many2one)  : NEW relation: theme.ir.attachment
+link_tracker / ir.attachment            / thumbnail (binary)            : NEW attachment: True
+link_tracker / ir.attachment            / website_id (many2one)         : NEW relation: website
+link_tracker / ir.model                 / rule_ids (one2many)           : NEW relation: ir.rule
+link_tracker / ir.model.fields          / copy (boolean)                : was renamed to copied [nothing to do]
+link_tracker / ir.module.module         / to_buy (boolean)              : NEW 
+link_tracker / ir.server.object.lines   / type (selection)              : selection_keys is now '['equation', 'reference', 'value']' ('['equation', 'value']')
+link_tracker / ir.translation           / type (selection)              : selection_keys is now '['code', 'constraint', 'model', 'model_terms', 'selection', 'sql_constraint']' ('['code', 'constraint', 'field', 'help', 'model', 'report', 'selection', 'sql_constraint', 'view']')
+link_tracker / ir.ui.menu               / parent_left (integer)         : DEL 
+link_tracker / ir.ui.menu               / parent_path (char)            : NEW 
+link_tracker / ir.ui.menu               / parent_right (integer)        : DEL 
+link_tracker / ir.ui.view               / page_ids (one2many)           : not a function anymore
+link_tracker / ir.ui.view               / theme_template_id (many2one)  : NEW relation: theme.ir.ui.view
+link_tracker / ir.ui.view               / type (selection)              : selection_keys is now '['activity', 'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']' ('['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']')
+link_tracker / ir.ui.view               / website_meta_og_img (char)    : NEW 
+link_tracker / mail.activity            / automated (boolean)           : NEW 
+link_tracker / mail.activity            / create_user_id (many2one)     : NEW relation: res.users
+link_tracker / mail.activity            / note_id (many2one)            : NEW relation: note.note
+link_tracker / mail.activity.type       / active (boolean)              : NEW 
+link_tracker / mail.activity.type       / category (selection)          : selection_keys is now '['default', 'meeting', 'reminder']' ('['default', 'meeting']')
+link_tracker / mail.activity.type       / days (integer)                : was renamed to delay_count [nothing to do]
+link_tracker / mail.activity.type       / decoration_type (selection)   : NEW selection_keys: ['danger', 'warning']
+link_tracker / mail.activity.type       / default_next_type_id (many2one): NEW relation: mail.activity.type
+link_tracker / mail.activity.type       / delay_from (selection)        : NEW required: required, selection_keys: ['current_date', 'previous_activity'], req_default: function
+link_tracker / mail.activity.type       / delay_unit (selection)        : NEW required: required, selection_keys: ['days', 'months', 'weeks'], req_default: function
+link_tracker / mail.activity.type       / force_next (boolean)          : NEW 
+link_tracker / mail.activity.type       / mail_template_ids (many2many) : NEW relation: mail.template
+link_tracker / mail.activity.type       / res_model_change (boolean)    : NEW 
+link_tracker / mail.blacklist           / active (boolean)              : NEW 
+link_tracker / mail.blacklist           / email (char)                  : NEW required: required
+link_tracker / mail.blacklist           / message_follower_ids (one2many): NEW relation: mail.followers
+link_tracker / mail.blacklist           / message_ids (one2many)        : NEW relation: mail.message
+link_tracker / mail.blacklist           / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / mail.blacklist           / website_message_ids (one2many): NEW relation: mail.message
+link_tracker / mail.channel             / message_last_post (datetime)  : DEL 
+link_tracker / mail.channel             / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / mail.channel             / moderation (boolean)          : NEW 
+link_tracker / mail.channel             / moderation_guidelines (boolean): NEW 
+link_tracker / mail.channel             / moderation_guidelines_msg (text): NEW 
+link_tracker / mail.channel             / moderation_ids (one2many)     : NEW relation: mail.moderation
+link_tracker / mail.channel             / moderation_notify (boolean)   : NEW 
+link_tracker / mail.channel             / moderation_notify_msg (text)  : NEW 
+link_tracker / mail.channel             / moderator_ids (many2many)     : NEW relation: res.users
+link_tracker / mail.channel             / subscription_department_ids (many2many): NEW relation: hr.department
+link_tracker / mail.message             / add_sign (boolean)            : NEW 
+link_tracker / mail.message             / layout (char)                 : NEW 
+link_tracker / mail.message             / moderation_status (selection) : NEW selection_keys: ['accepted', 'pending_moderation', 'rejected']
+link_tracker / mail.message             / moderator_id (many2one)       : NEW relation: res.users
+link_tracker / mail.moderation          / channel_id (many2one)         : NEW relation: mail.channel, required: required
+link_tracker / mail.moderation          / email (char)                  : NEW required: required
+link_tracker / mail.moderation          / status (selection)            : NEW required: required, selection_keys: ['allow', 'ban']
+link_tracker / mail.notification        / email_status (selection)      : selection_keys is now '['bounce', 'canceled', 'exception', 'ready', 'sent']' ('['bounce', 'exception', 'ready', 'sent']')
+link_tracker / mail.notification        / failure_reason (text)         : NEW 
+link_tracker / mail.notification        / failure_type (selection)      : NEW selection_keys: ['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN']
+link_tracker / mail.notification        / mail_id (many2one)            : NEW relation: mail.mail
+link_tracker / mail.shortcode           / shortcode_type (selection)    : DEL required: required, selection_keys: ['image', 'text'], req_default: function
+link_tracker / mail.shortcode           / unicode_source (char)         : DEL 
+link_tracker / mail.test                / _inherits (False)             : DEL 
+link_tracker / mail.test                / alias_id (many2one)           : DEL relation: mail.alias, required: required
+link_tracker / mail.test                / description (text)            : DEL 
+link_tracker / mail.test                / message_follower_ids (one2many): DEL relation: mail.followers
+link_tracker / mail.test                / message_ids (one2many)        : DEL relation: mail.message
+link_tracker / mail.test                / message_last_post (datetime)  : DEL 
+link_tracker / mail.test                / name (char)                   : DEL 
+link_tracker / mail.test                / website_message_ids (one2many): DEL relation: mail.message
+link_tracker / mail.test.simple         / description (text)            : DEL 
+link_tracker / mail.test.simple         / email_from (char)             : DEL 
+link_tracker / mail.test.simple         / message_follower_ids (one2many): DEL relation: mail.followers
+link_tracker / mail.test.simple         / message_ids (one2many)        : DEL relation: mail.message
+link_tracker / mail.test.simple         / message_last_post (datetime)  : DEL 
+link_tracker / mail.test.simple         / name (char)                   : DEL 
+link_tracker / mail.test.simple         / website_message_ids (one2many): DEL relation: mail.message
+link_tracker / mail.tracking.value      / track_sequence (integer)      : NEW 
+link_tracker / mrp.bom                  / message_last_post (datetime)  : DEL 
+link_tracker / mrp.bom                  / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / mrp.bom                  / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / mrp.bom.line             / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / mrp.production           / activity_date_deadline (date) : now a function
+link_tracker / mrp.production           / message_last_post (datetime)  : DEL 
+link_tracker / mrp.production           / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / mrp.production           / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / mrp.unbuild              / activity_date_deadline (date) : now a function
+link_tracker / mrp.unbuild              / message_last_post (datetime)  : DEL 
+link_tracker / mrp.unbuild              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / mrp.unbuild              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / mrp.workcenter           / costs_hour (float)            : NEW 
+link_tracker / mrp.workcenter.productivity.loss / loss_id (many2one)            : NEW relation: mrp.workcenter.productivity.loss.type
+link_tracker / mrp.workcenter.productivity.loss / loss_type (selection)         : selection_keys is now 'function' ('['availability', 'performance', 'productive', 'quality']')
+link_tracker / mrp.workcenter.productivity.loss.type / loss_type (selection)         : NEW required: required, selection_keys: ['availability', 'performance', 'productive', 'quality'], req_default: function
+link_tracker / mrp.workorder            / message_last_post (datetime)  : DEL 
+link_tracker / mrp.workorder            / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / mrp.workorder            / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / note.note                / activity_date_deadline (date) : now a function
+link_tracker / note.note                / message_last_post (datetime)  : DEL 
+link_tracker / note.note                / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / payment.acquirer         / qr_code (boolean)             : NEW 
+link_tracker / payment.acquirer         / so_reference_type (selection) : NEW selection_keys: ['partner', 'so_name']
+link_tracker / payment.acquirer         / website_id (many2one)         : NEW relation: website
+link_tracker / payment.transaction      / account_invoice_id (many2one) : DEL relation: account.invoice
+link_tracker / payment.transaction      / date (datetime)               : NEW 
+link_tracker / payment.transaction      / date_validate (datetime)      : DEL 
+link_tracker / payment.transaction      / invoice_ids (many2many)       : NEW relation: account.invoice
+link_tracker / payment.transaction      / is_processed (boolean)        : NEW 
+link_tracker / payment.transaction      / payment_id (many2one)         : NEW relation: account.payment
+link_tracker / payment.transaction      / return_url (char)             : NEW 
+link_tracker / payment.transaction      / sale_order_id (many2one)      : DEL relation: sale.order
+link_tracker / payment.transaction      / sale_order_ids (many2many)    : NEW relation: sale.order
+link_tracker / payment.transaction      / state (selection)             : selection_keys is now '['authorized', 'cancel', 'done', 'draft', 'error', 'pending']' ('['authorized', 'cancel', 'done', 'draft', 'error', 'pending', 'refunded', 'refunding']')
+link_tracker / pos.config               / group_pricelist_item (boolean): DEL 
+link_tracker / pos.config               / group_sale_pricelist (boolean): DEL 
+link_tracker / pos.config               / iface_invoicing (boolean)     : DEL 
+link_tracker / pos.config               / module_account (boolean)      : NEW 
+link_tracker / pos.order                / amount_paid (float)           : not a function anymore
+link_tracker / pos.order                / amount_paid (float)           : now required
+link_tracker / pos.order                / amount_return (float)         : not a function anymore
+link_tracker / pos.order                / amount_return (float)         : now required
+link_tracker / pos.order                / amount_tax (float)            : not a function anymore
+link_tracker / pos.order                / amount_tax (float)            : now required
+link_tracker / pos.order                / amount_total (float)          : not a function anymore
+link_tracker / pos.order                / amount_total (float)          : now required
+link_tracker / pos.order.line           / price_subtotal (float)        : not a function anymore
+link_tracker / pos.order.line           / price_subtotal (float)        : now required
+link_tracker / pos.order.line           / price_subtotal_incl (float)   : not a function anymore
+link_tracker / pos.order.line           / price_subtotal_incl (float)   : now required
+link_tracker / product.attribute        / attribute_line_ids (one2many) : relation is now 'product.template.attribute.line' ('product.attribute.line')
+link_tracker / product.attribute        / create_variant (boolean)      : now required, default = function
+link_tracker / product.attribute        / create_variant (boolean)      : selection_keys is now '['always', 'dynamic', 'no_variant']' ('False')
+link_tracker / product.attribute        / create_variant (boolean)      : type is now 'selection' ('boolean')
+link_tracker / product.attribute        / type (selection)              : now required, default = function
+link_tracker / product.attribute.custom.value / attribute_value_id (many2one) : NEW relation: product.attribute.value
+link_tracker / product.attribute.custom.value / custom_value (char)           : NEW 
+link_tracker / product.attribute.custom.value / sale_order_line_id (many2one) : NEW relation: sale.order.line
+link_tracker / product.attribute.value  / is_custom (boolean)           : NEW 
+link_tracker / product.attribute.value  / price_ids (one2many)          : DEL relation: product.attribute.price
+link_tracker / product.attribute.value  / product_ids (many2many)       : DEL relation: product.product
+link_tracker / product.category         / parent_left (integer)         : DEL 
+link_tracker / product.category         / parent_path (char)            : NEW 
+link_tracker / product.category         / parent_right (integer)        : DEL 
+link_tracker / product.product          / activity_date_deadline (date) : now a function
+link_tracker / product.product          / attribute_line_ids (one2many) : relation is now 'product.template.attribute.line' ('product.attribute.line')
+link_tracker / product.product          / bom_line_ids (one2many)       : NEW relation: mrp.bom.line
+link_tracker / product.product          / message_last_post (datetime)  : DEL 
+link_tracker / product.product          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / product.product          / sales_count (integer)         : type is now 'float' ('integer')
+link_tracker / product.product          / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
+link_tracker / product.product          / uom_po_id (many2one)          : relation is now 'uom.uom' ('product.uom')
+link_tracker / product.product          / variant_bom_ids (one2many)    : NEW relation: mrp.bom
+link_tracker / product.public.category  / website_id (many2one)         : NEW relation: website
+link_tracker / product.public.category  / website_meta_og_img (char)    : NEW 
+link_tracker / product.putaway          / product_location_ids (one2many): NEW relation: stock.fixed.putaway.strat
+link_tracker / product.supplierinfo     / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+link_tracker / product.template         / activity_date_deadline (date) : now a function
+link_tracker / product.template         / asset_category_id (many2one)  : DEL relation: account.asset.category
+link_tracker / product.template         / attribute_line_ids (one2many) : relation is now 'product.template.attribute.line' ('product.attribute.line')
+link_tracker / product.template         / bom_line_ids (one2many)       : NEW relation: mrp.bom.line
+link_tracker / product.template         / deferred_revenue_category_id (many2one): DEL relation: account.asset.category
+link_tracker / product.template         / is_published (boolean)        : NEW 
+link_tracker / product.template         / message_last_post (datetime)  : DEL 
+link_tracker / product.template         / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / product.template         / optional_product_ids (many2many): NEW relation: product.template
+link_tracker / product.template         / project_template_id (many2one): NEW relation: project.project
+link_tracker / product.template         / sales_count (integer)         : type is now 'float' ('integer')
+link_tracker / product.template         / service_to_purchase (boolean) : NEW 
+link_tracker / product.template         / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
+link_tracker / product.template         / uom_po_id (many2one)          : relation is now 'uom.uom' ('product.uom')
+link_tracker / product.template         / website_id (many2one)         : NEW relation: website
+link_tracker / product.template         / website_meta_og_img (char)    : NEW 
+link_tracker / product.template         / website_published (boolean)   : now a function
+link_tracker / product.template.attribute.exclusion / product_template_attribute_value_id (many2one): NEW relation: product.template.attribute.value
+link_tracker / product.template.attribute.exclusion / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+link_tracker / product.template.attribute.exclusion / value_ids (many2many)         : NEW relation: product.template.attribute.value
+link_tracker / product.template.attribute.line / attribute_id (many2one)       : NEW relation: product.attribute, required: required
+link_tracker / product.template.attribute.line / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+link_tracker / product.template.attribute.line / value_ids (many2many)         : NEW relation: product.attribute.value
+link_tracker / product.template.attribute.value / exclude_for (one2many)        : NEW relation: product.template.attribute.exclusion
+link_tracker / product.template.attribute.value / price_extra (float)           : NEW 
+link_tracker / product.template.attribute.value / product_attribute_value_id (many2one): NEW relation: product.attribute.value, required: required
+link_tracker / product.template.attribute.value / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+link_tracker / project.project          / access_token (char)           : NEW 
+link_tracker / project.project          / message_last_post (datetime)  : DEL 
+link_tracker / project.project          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / project.project          / portal_show_rating (boolean)  : NEW 
+link_tracker / project.project          / rating_status (selection)     : NEW required: required, selection_keys: ['no', 'periodic', 'stage'], req_default: function
+link_tracker / project.project          / rating_status_period (selection): NEW selection_keys: ['bimonthly', 'daily', 'monthly', 'quarterly', 'weekly', 'yearly']
+link_tracker / project.project          / sale_line_employee_ids (one2many): NEW relation: project.sale.line.employee.map
+link_tracker / project.project          / sale_order_id (many2one)      : NEW relation: sale.order
+link_tracker / project.sale.line.employee.map / employee_id (many2one)        : NEW relation: hr.employee, required: required
+link_tracker / project.sale.line.employee.map / project_id (many2one)         : NEW relation: project.project, required: required, req_default: function
+link_tracker / project.sale.line.employee.map / sale_line_id (many2one)       : NEW relation: sale.order.line, required: required
+link_tracker / project.task             / access_token (char)           : NEW 
+link_tracker / project.task             / activity_date_deadline (date) : now a function
+link_tracker / project.task             / children_hours (float)        : was renamed to subtask_effective_hours [nothing to do]
+link_tracker / project.task             / message_last_post (datetime)  : DEL 
+link_tracker / project.task             / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / project.task             / rating_ids (one2many)         : NEW relation: rating.rating
+link_tracker / project.task.type        / auto_validation_kanban_state (boolean): NEW 
+link_tracker / project.task.type        / rating_template_id (many2one) : NEW relation: mail.template
+link_tracker / purchase.order           / access_token (char)           : NEW 
+link_tracker / purchase.order           / activity_date_deadline (date) : now a function
+link_tracker / purchase.order           / incoterm_id (many2one)        : relation is now 'account.incoterms' ('stock.incoterms')
+link_tracker / purchase.order           / message_last_post (datetime)  : DEL 
+link_tracker / purchase.order           / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / purchase.order           / user_id (many2one)            : NEW relation: res.users
+link_tracker / purchase.order.line      / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+link_tracker / purchase.order.line      / qty_received (float)          : not a function anymore
+link_tracker / purchase.order.line      / sale_line_id (many2one)       : NEW relation: sale.order.line
+link_tracker / report.layout            / image (char)                  : NEW 
+link_tracker / report.layout            / pdf (char)                    : NEW 
+link_tracker / report.layout            / view_id (many2one)            : NEW relation: ir.ui.view, required: required
+link_tracker / res.company              / account_bank_reconciliation_start (date): NEW 
+link_tracker / res.company              / account_check_printing_date_label (boolean): NEW 
+link_tracker / res.company              / account_check_printing_layout (selection): NEW required: required, selection_keys: ['action_print_check_bottom', 'action_print_check_middle', 'action_print_check_top', 'disabled'], req_default: function
+link_tracker / res.company              / account_check_printing_margin_left (float): NEW 
+link_tracker / res.company              / account_check_printing_margin_right (float): NEW 
+link_tracker / res.company              / account_check_printing_margin_top (float): NEW 
+link_tracker / res.company              / account_check_printing_multi_stub (boolean): NEW 
+link_tracker / res.company              / account_dashboard_onboarding_state (selection): NEW selection_keys: ['closed', 'done', 'just_done', 'not_done']
+link_tracker / res.company              / account_invoice_onboarding_state (selection): NEW selection_keys: ['closed', 'done', 'just_done', 'not_done']
+link_tracker / res.company              / account_onboarding_invoice_layout_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+link_tracker / res.company              / account_onboarding_sale_tax_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+link_tracker / res.company              / account_onboarding_sample_invoice_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+link_tracker / res.company              / account_purchase_tax_id (many2one): NEW relation: account.tax
+link_tracker / res.company              / account_sale_tax_id (many2one): NEW relation: account.tax
+link_tracker / res.company              / account_setup_bank_data_done (boolean): DEL 
+link_tracker / res.company              / account_setup_bank_data_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+link_tracker / res.company              / account_setup_bar_closed (boolean): DEL 
+link_tracker / res.company              / account_setup_coa_done (boolean): DEL 
+link_tracker / res.company              / account_setup_coa_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+link_tracker / res.company              / account_setup_company_data_done (boolean): DEL 
+link_tracker / res.company              / account_setup_fy_data_done (boolean): DEL 
+link_tracker / res.company              / account_setup_fy_data_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+link_tracker / res.company              / accounts_code_digits (integer): DEL 
+link_tracker / res.company              / base_onboarding_company_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+link_tracker / res.company              / external_report_layout (selection): DEL selection_keys: ['background', 'boxed', 'clean', 'standard']
+link_tracker / res.company              / external_report_layout_id (many2one): NEW relation: ir.ui.view
+link_tracker / res.company              / incoterm_id (many2one)        : NEW relation: account.incoterms
+link_tracker / res.company              / invoice_is_email (boolean)    : NEW 
+link_tracker / res.company              / invoice_is_print (boolean)    : NEW 
+link_tracker / res.company              / invoice_is_snailmail (boolean): NEW 
+link_tracker / res.company              / invoice_reference_type (selection): NEW selection_keys: function
+link_tracker / res.company              / nomenclature_id (many2one)    : NEW relation: barcode.nomenclature
+link_tracker / res.company              / payment_acquirer_onboarding_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+link_tracker / res.company              / payment_onboarding_payment_method (selection): NEW selection_keys: ['manual', 'other', 'paypal', 'stripe']
+link_tracker / res.company              / portal_confirmation_pay (boolean): NEW 
+link_tracker / res.company              / portal_confirmation_sign (boolean): NEW 
+link_tracker / res.company              / project_time_mode_id (many2one): relation is now 'uom.uom' ('product.uom')
+link_tracker / res.company              / qr_code (boolean)             : NEW 
+link_tracker / res.company              / quotation_validity_days (integer): NEW 
+link_tracker / res.company              / sale_onboarding_order_confirmation_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+link_tracker / res.company              / sale_onboarding_payment_method (selection): NEW selection_keys: ['digital_signature', 'manual', 'other', 'paypal', 'stripe']
+link_tracker / res.company              / sale_onboarding_sample_quotation_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+link_tracker / res.company              / sale_quotation_onboarding_state (selection): NEW selection_keys: ['closed', 'done', 'just_done', 'not_done']
+link_tracker / res.company              / snailmail_color (boolean)     : NEW 
+link_tracker / res.company              / snailmail_duplex (boolean)    : NEW 
+link_tracker / res.company              / social_instagram (char)       : NEW 
+link_tracker / res.company              / timesheet_encode_uom_id (many2one): NEW relation: uom.uom, required: required, req_default: function
+link_tracker / res.company              / transfer_account_code_prefix (char): NEW 
+link_tracker / res.company              / website_sale_onboarding_payment_acquirer_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+link_tracker / res.groups               / is_portal (boolean)           : DEL 
+link_tracker / res.lang                 / week_start (selection)        : NEW required: required, selection_keys: [1, 2, 3, 4, 5, 6, 7], req_default: function
+link_tracker / res.partner              / activity_date_deadline (date) : now a function
+link_tracker / res.partner              / additional_info (char)        : NEW 
+link_tracker / res.partner              / is_published (boolean)        : NEW 
+link_tracker / res.partner              / last_website_so_id (many2one) : now a function
+link_tracker / res.partner              / message_last_post (datetime)  : DEL 
+link_tracker / res.partner              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / res.partner              / opt_out (boolean)             : DEL 
+link_tracker / res.partner              / partner_gid (integer)         : NEW 
+link_tracker / res.partner              / website_id (many2one)         : NEW relation: website
+link_tracker / res.partner              / website_meta_og_img (char)    : NEW 
+link_tracker / res.partner.autocomplete.sync / partner_id (many2one)         : NEW relation: res.partner
+link_tracker / res.partner.autocomplete.sync / synched (boolean)             : NEW 
+link_tracker / res.partner.bank         / aba_routing (integer)         : type is now 'char' ('integer')
+link_tracker / res.partner.bank         / acc_holder_name (char)        : NEW 
+link_tracker / res.partner.bank         / acc_type (char)               : selection_keys is now 'function' ('False')
+link_tracker / res.partner.bank         / acc_type (char)               : type is now 'selection' ('char')
+link_tracker / res.partner.bank         / partner_id (many2one)         : now required
+link_tracker / res.partner.category     / parent_left (integer)         : DEL 
+link_tracker / res.partner.category     / parent_path (char)            : NEW 
+link_tracker / res.partner.category     / parent_right (integer)        : DEL 
+link_tracker / res.users                / moderation_channel_ids (many2many): NEW relation: mail.channel
+link_tracker / res.users                / odoobot_state (selection)     : NEW required: required, selection_keys: ['disabled', 'idle', 'not_initialized', 'onboarding_attachement', 'onboarding_canned', 'onboarding_command', 'onboarding_emoji', 'onboarding_ping'], req_default: function
+link_tracker / res.users                / password_crypt (char)         : DEL 
+link_tracker / resource.calendar        / hours_per_day (float)         : NEW 
+link_tracker / resource.calendar        / tz (selection)                : NEW required: required, selection_keys: function, req_default: function
+link_tracker / resource.calendar.attendance / day_period (selection)        : NEW required: required, selection_keys: ['afternoon', 'morning'], req_default: function
+link_tracker / resource.calendar.leaves / holiday_id (many2one)         : relation is now 'hr.leave' ('hr.holidays')
+link_tracker / resource.calendar.leaves / time_type (selection)         : NEW selection_keys: ['leave', 'other']
+link_tracker / resource.calendar.leaves / tz (selection)                : DEL selection_keys: function
+link_tracker / resource.resource        / tz (selection)                : NEW required: required, selection_keys: function, req_default: function
+link_tracker / sale.order               / activity_date_deadline (date) : now a function
+link_tracker / sale.order               / commitment_date (datetime)    : NEW 
+link_tracker / sale.order               / expense_ids (one2many)        : NEW relation: hr.expense
+link_tracker / sale.order               / incoterm (many2one)           : relation is now 'account.incoterms' ('stock.incoterms')
+link_tracker / sale.order               / message_last_post (datetime)  : DEL 
+link_tracker / sale.order               / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / sale.order               / payment_tx_id (many2one)      : DEL relation: payment.transaction
+link_tracker / sale.order               / payment_tx_ids (one2many)     : DEL relation: payment.transaction
+link_tracker / sale.order               / reference (char)              : NEW 
+link_tracker / sale.order               / require_payment (boolean)     : NEW 
+link_tracker / sale.order               / require_signature (boolean)   : NEW 
+link_tracker / sale.order               / sale_order_option_ids (one2many): NEW relation: sale.order.option
+link_tracker / sale.order               / sale_order_template_id (many2one): NEW relation: sale.order.template
+link_tracker / sale.order               / signature (binary)            : NEW attachment: True
+link_tracker / sale.order               / signed_by (char)              : NEW 
+link_tracker / sale.order               / transaction_ids (many2many)   : NEW relation: payment.transaction
+link_tracker / sale.order               / website_id (many2one)         : NEW relation: website
+link_tracker / sale.order.line          / analytic_line_ids (one2many)  : NEW relation: account.analytic.line
+link_tracker / sale.order.line          / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section']
+link_tracker / sale.order.line          / is_expense (boolean)          : NEW 
+link_tracker / sale.order.line          / layout_category_id (many2one) : DEL relation: sale.layout_category
+link_tracker / sale.order.line          / layout_category_sequence (integer): DEL 
+link_tracker / sale.order.line          / linked_line_id (many2one)     : NEW relation: sale.order.line
+link_tracker / sale.order.line          / option_line_ids (one2many)    : NEW relation: sale.order.line
+link_tracker / sale.order.line          / product_custom_attribute_value_ids (one2many): NEW relation: product.attribute.custom.value
+link_tracker / sale.order.line          / product_no_variant_attribute_value_ids (many2many): NEW relation: product.template.attribute.value
+link_tracker / sale.order.line          / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+link_tracker / sale.order.line          / project_id (many2one)         : NEW relation: project.project
+link_tracker / sale.order.line          / purchase_line_ids (one2many)  : NEW relation: purchase.order.line
+link_tracker / sale.order.line          / qty_delivered (float)         : now a function
+link_tracker / sale.order.line          / qty_delivered_manual (float)  : NEW 
+link_tracker / sale.order.line          / sale_order_option_ids (one2many): NEW relation: sale.order.option
+link_tracker / sale.order.option        / discount (float)              : NEW 
+link_tracker / sale.order.option        / line_id (many2one)            : NEW relation: sale.order.line
+link_tracker / sale.order.option        / name (text)                   : NEW required: required
+link_tracker / sale.order.option        / order_id (many2one)           : NEW relation: sale.order
+link_tracker / sale.order.option        / price_unit (float)            : NEW required: required
+link_tracker / sale.order.option        / product_id (many2one)         : NEW relation: product.product, required: required
+link_tracker / sale.order.option        / quantity (float)              : NEW required: required, req_default: function
+link_tracker / sale.order.option        / sequence (integer)            : NEW 
+link_tracker / sale.order.option        / uom_id (many2one)             : NEW relation: uom.uom, required: required
+link_tracker / sale.order.template      / active (boolean)              : NEW 
+link_tracker / sale.order.template      / mail_template_id (many2one)   : NEW relation: mail.template
+link_tracker / sale.order.template      / name (char)                   : NEW required: required
+link_tracker / sale.order.template      / note (text)                   : NEW 
+link_tracker / sale.order.template      / number_of_days (integer)      : NEW 
+link_tracker / sale.order.template      / require_payment (boolean)     : NEW 
+link_tracker / sale.order.template      / require_signature (boolean)   : NEW 
+link_tracker / sale.order.template      / sale_order_template_line_ids (one2many): NEW relation: sale.order.template.line
+link_tracker / sale.order.template      / sale_order_template_option_ids (one2many): NEW relation: sale.order.template.option
+link_tracker / sale.order.template.line / discount (float)              : NEW 
+link_tracker / sale.order.template.line / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section']
+link_tracker / sale.order.template.line / name (text)                   : NEW required: required
+link_tracker / sale.order.template.line / price_unit (float)            : NEW required: required
+link_tracker / sale.order.template.line / product_id (many2one)         : NEW relation: product.product
+link_tracker / sale.order.template.line / product_uom_id (many2one)     : NEW relation: uom.uom
+link_tracker / sale.order.template.line / product_uom_qty (float)       : NEW required: required, req_default: function
+link_tracker / sale.order.template.line / sale_order_template_id (many2one): NEW relation: sale.order.template, required: required
+link_tracker / sale.order.template.line / sequence (integer)            : NEW 
+link_tracker / sale.order.template.option / discount (float)              : NEW 
+link_tracker / sale.order.template.option / name (text)                   : NEW required: required
+link_tracker / sale.order.template.option / price_unit (float)            : NEW required: required
+link_tracker / sale.order.template.option / product_id (many2one)         : NEW relation: product.product, required: required
+link_tracker / sale.order.template.option / quantity (float)              : NEW required: required, req_default: function
+link_tracker / sale.order.template.option / sale_order_template_id (many2one): NEW relation: sale.order.template, required: required
+link_tracker / sale.order.template.option / uom_id (many2one)             : NEW relation: uom.uom, required: required
+link_tracker / snailmail.letter         / attachment_id (many2one)      : NEW relation: ir.attachment
+link_tracker / snailmail.letter         / color (boolean)               : NEW 
+link_tracker / snailmail.letter         / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
+link_tracker / snailmail.letter         / duplex (boolean)              : NEW 
+link_tracker / snailmail.letter         / info_msg (char)               : NEW 
+link_tracker / snailmail.letter         / model (char)                  : NEW required: required
+link_tracker / snailmail.letter         / partner_id (many2one)         : NEW relation: res.partner, required: required
+link_tracker / snailmail.letter         / report_template (many2one)    : NEW relation: ir.actions.report
+link_tracker / snailmail.letter         / res_id (integer)              : NEW required: required
+link_tracker / snailmail.letter         / state (selection)             : NEW selection_keys: ['canceled', 'draft', 'error', 'pending', 'sent']
+link_tracker / snailmail.letter         / user_id (many2one)            : NEW relation: res.users
+link_tracker / stock.fixed.putaway.strat / product_id (many2one)         : NEW relation: product.product
+link_tracker / stock.inventory.line     / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / stock.landed.cost        / message_last_post (datetime)  : DEL 
+link_tracker / stock.landed.cost        / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / stock.location           / parent_left (integer)         : DEL 
+link_tracker / stock.location           / parent_path (char)            : NEW 
+link_tracker / stock.location           / parent_right (integer)        : DEL 
+link_tracker / stock.location.route     / pull_ids (one2many)           : DEL relation: procurement.rule
+link_tracker / stock.location.route     / push_ids (one2many)           : DEL relation: stock.location.path
+link_tracker / stock.location.route     / rule_ids (one2many)           : NEW relation: stock.rule
+link_tracker / stock.move               / ordered_qty (float)           : DEL 
+link_tracker / stock.move               / package_level_id (many2one)   : NEW relation: stock.package_level
+link_tracker / stock.move               / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+link_tracker / stock.move               / push_rule_id (many2one)       : DEL relation: stock.location.path
+link_tracker / stock.move               / rule_id (many2one)            : relation is now 'stock.rule' ('procurement.rule')
+link_tracker / stock.move               / weight_uom_id (many2one)      : DEL relation: product.uom, required: required, req_default: function
+link_tracker / stock.move.line          / ordered_qty (float)           : DEL 
+link_tracker / stock.move.line          / package_level_id (many2one)   : NEW relation: stock.package_level
+link_tracker / stock.move.line          / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / stock.package_level      / location_dest_id (many2one)   : NEW relation: stock.location
+link_tracker / stock.package_level      / move_ids (one2many)           : NEW relation: stock.move
+link_tracker / stock.package_level      / move_line_ids (one2many)      : NEW relation: stock.move.line
+link_tracker / stock.package_level      / package_id (many2one)         : NEW relation: stock.quant.package, required: required
+link_tracker / stock.package_level      / picking_id (many2one)         : NEW relation: stock.picking
+link_tracker / stock.picking            / activity_date_deadline (date) : now a function
+link_tracker / stock.picking            / backorder_ids (one2many)      : NEW relation: stock.picking
+link_tracker / stock.picking            / immediate_transfer (boolean)  : NEW 
+link_tracker / stock.picking            / message_last_post (datetime)  : DEL 
+link_tracker / stock.picking            / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / stock.picking            / move_ids_without_package (one2many): NEW relation: stock.move
+link_tracker / stock.picking            / move_line_ids_without_package (one2many): NEW relation: stock.move.line
+link_tracker / stock.picking            / number_of_packages (integer)  : DEL 
+link_tracker / stock.picking            / package_level_ids (one2many)  : NEW relation: stock.package_level
+link_tracker / stock.picking            / package_level_ids_details (one2many): NEW relation: stock.package_level
+link_tracker / stock.picking            / weight_uom_id (many2one)      : now a function
+link_tracker / stock.picking            / weight_uom_id (many2one)      : relation is now 'uom.uom' ('product.uom')
+link_tracker / stock.picking.type       / barcode (char)                : NEW 
+link_tracker / stock.picking.type       / barcode_nomenclature_id (many2one): DEL relation: barcode.nomenclature
+link_tracker / stock.production.lot     / activity_ids (one2many)       : NEW relation: mail.activity
+link_tracker / stock.production.lot     / message_last_post (datetime)  : DEL 
+link_tracker / stock.production.lot     / message_main_attachment_id (many2one): NEW relation: ir.attachment
+link_tracker / stock.production.lot     / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / stock.quant              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / stock.quant.package      / move_line_ids (one2many)      : DEL relation: stock.move.line
+link_tracker / stock.rule               / action (selection)            : NEW required: required, selection_keys: ['buy', 'manufacture', 'pull', 'pull_push', 'push']
+link_tracker / stock.rule               / active (boolean)              : NEW 
+link_tracker / stock.rule               / auto (selection)              : NEW required: required, selection_keys: ['manual', 'transparent'], req_default: function
+link_tracker / stock.rule               / company_id (many2one)         : NEW relation: res.company
+link_tracker / stock.rule               / delay (integer)               : NEW 
+link_tracker / stock.rule               / group_id (many2one)           : NEW relation: procurement.group
+link_tracker / stock.rule               / group_propagation_option (selection): NEW selection_keys: ['fixed', 'none', 'propagate']
+link_tracker / stock.rule               / location_id (many2one)        : NEW relation: stock.location, required: required
+link_tracker / stock.rule               / location_src_id (many2one)    : NEW relation: stock.location
+link_tracker / stock.rule               / name (char)                   : NEW required: required
+link_tracker / stock.rule               / partner_address_id (many2one) : NEW relation: res.partner
+link_tracker / stock.rule               / picking_type_id (many2one)    : NEW relation: stock.picking.type, required: required
+link_tracker / stock.rule               / procure_method (selection)    : NEW required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: function
+link_tracker / stock.rule               / propagate (boolean)           : NEW 
+link_tracker / stock.rule               / propagate_warehouse_id (many2one): NEW relation: stock.warehouse
+link_tracker / stock.rule               / route_id (many2one)           : NEW relation: stock.location.route, required: required
+link_tracker / stock.rule               / sequence (integer)            : NEW 
+link_tracker / stock.rule               / warehouse_id (many2one)       : NEW relation: stock.warehouse
+link_tracker / stock.scrap              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+link_tracker / stock.warehouse          / buy_pull_id (many2one)        : relation is now 'stock.rule' ('procurement.rule')
+link_tracker / stock.warehouse          / default_resupply_wh_id (many2one): DEL relation: stock.warehouse
+link_tracker / stock.warehouse          / manufacture_pull_id (many2one): relation is now 'stock.rule' ('procurement.rule')
+link_tracker / stock.warehouse          / manufacture_steps (selection) : NEW required: required, selection_keys: ['mrp_one_step', 'pbm', 'pbm_sam'], req_default: function
+link_tracker / stock.warehouse          / mto_pull_id (many2one)        : relation is now 'stock.rule' ('procurement.rule')
+link_tracker / stock.warehouse          / pbm_loc_id (many2one)         : NEW relation: stock.location
+link_tracker / stock.warehouse          / pbm_mto_pull_id (many2one)    : NEW relation: stock.rule
+link_tracker / stock.warehouse          / pbm_route_id (many2one)       : NEW relation: stock.location.route
+link_tracker / stock.warehouse          / pbm_type_id (many2one)        : NEW relation: stock.picking.type
+link_tracker / stock.warehouse          / sam_loc_id (many2one)         : NEW relation: stock.location
+link_tracker / stock.warehouse          / sam_rule_id (many2one)        : NEW relation: stock.rule
+link_tracker / stock.warehouse          / sam_type_id (many2one)        : NEW relation: stock.picking.type
+link_tracker / stock.warehouse.orderpoint / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+link_tracker / theme.ir.attachment      / copy_ids (one2many)           : NEW relation: ir.attachment
+link_tracker / theme.ir.attachment      / key (char)                    : NEW required: required
+link_tracker / theme.ir.attachment      / name (char)                   : NEW required: required
+link_tracker / theme.ir.attachment      / url (char)                    : NEW 
+link_tracker / theme.ir.ui.view         / active (boolean)              : NEW 
+link_tracker / theme.ir.ui.view         / arch (text)                   : NEW 
+link_tracker / theme.ir.ui.view         / arch_fs (char)                : NEW 
+link_tracker / theme.ir.ui.view         / copy_ids (one2many)           : NEW relation: ir.ui.view
+link_tracker / theme.ir.ui.view         / inherit_id (reference)        : NEW 
+link_tracker / theme.ir.ui.view         / key (char)                    : NEW 
+link_tracker / theme.ir.ui.view         / mode (selection)              : NEW selection_keys: ['extension', 'primary']
+link_tracker / theme.ir.ui.view         / name (char)                   : NEW required: required
+link_tracker / theme.ir.ui.view         / priority (integer)            : NEW required: required, req_default: function
+link_tracker / theme.ir.ui.view         / type (char)                   : NEW 
+link_tracker / theme.website.menu       / copy_ids (one2many)           : NEW relation: website.menu
+link_tracker / theme.website.menu       / name (char)                   : NEW required: required
+link_tracker / theme.website.menu       / new_window (boolean)          : NEW 
+link_tracker / theme.website.menu       / page_id (many2one)            : NEW relation: theme.website.page
+link_tracker / theme.website.menu       / parent_id (many2one)          : NEW relation: theme.website.menu
+link_tracker / theme.website.menu       / sequence (integer)            : NEW 
+link_tracker / theme.website.menu       / url (char)                    : NEW 
+link_tracker / theme.website.page       / copy_ids (one2many)           : NEW relation: website.page
+link_tracker / theme.website.page       / url (char)                    : NEW 
+link_tracker / theme.website.page       / view_id (many2one)            : NEW relation: theme.ir.ui.view, required: required
+link_tracker / theme.website.page       / website_indexed (boolean)     : NEW 
+link_tracker / uom.category             / is_pos_groupable (boolean)    : NEW 
+link_tracker / uom.category             / measure_type (selection)      : NEW selection_keys: ['length', 'time', 'unit', 'volume', 'weight']
+link_tracker / uom.category             / name (char)                   : NEW required: required
+link_tracker / uom.uom                  / active (boolean)              : NEW 
+link_tracker / uom.uom                  / category_id (many2one)        : NEW relation: uom.category, required: required
+link_tracker / uom.uom                  / factor (float)                : NEW required: required, req_default: function
+link_tracker / uom.uom                  / name (char)                   : NEW required: required
+link_tracker / uom.uom                  / rounding (float)              : NEW required: required, req_default: function
+link_tracker / uom.uom                  / timesheet_widget (char)       : NEW 
+link_tracker / uom.uom                  / uom_type (selection)          : NEW required: required, selection_keys: ['bigger', 'reference', 'smaller'], req_default: function
+link_tracker / website                  / auth_signup_uninvited (selection): NEW selection_keys: ['b2b', 'b2c']
+link_tracker / website                  / cart_abandoned_delay (float)  : NEW 
+link_tracker / website                  / cart_recovery_mail_template_id (many2one): NEW relation: mail.template
+link_tracker / website                  / company_id (many2one)         : now required, default = function
+link_tracker / website                  / country_group_ids (many2many) : NEW relation: res.country.group
+link_tracker / website                  / google_maps_api_key (char)    : NEW 
+link_tracker / website                  / name (char)                   : now required
+link_tracker / website                  / social_default_image (binary) : NEW attachment: True
+link_tracker / website                  / social_instagram (char)       : NEW 
+link_tracker / website                  / specific_user_account (boolean): NEW 
+link_tracker / website                  / theme_id (many2one)           : NEW relation: ir.module.module
+link_tracker / website.menu             / parent_left (integer)         : DEL 
+link_tracker / website.menu             / parent_path (char)            : NEW 
+link_tracker / website.menu             / parent_right (integer)        : DEL 
+link_tracker / website.menu             / theme_template_id (many2one)  : NEW relation: theme.website.menu
+link_tracker / website.page             / header_color (char)           : NEW 
+link_tracker / website.page             / header_overlay (boolean)      : NEW 
+link_tracker / website.page             / is_published (boolean)        : NEW 
+link_tracker / website.page             / theme_template_id (many2one)  : NEW relation: theme.website.page
+link_tracker / website.page             / website_ids (many2many)       : DEL relation: website
+link_tracker / website.page             / website_published (boolean)   : now a function
+link_tracker / website.redirect         / type (selection)              : now required, default = function
+link_tracker / website.redirect         / url_from (char)               : now required
+link_tracker / website.redirect         / url_to (char)                 : now required
 ---XML records in module 'link_tracker'---
----nothing has changed in this module--

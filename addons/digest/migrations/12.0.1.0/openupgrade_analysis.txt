@@ -13,21 +13,3 @@ digest       / digest.tip               / sequence (integer)            : NEW
 digest       / digest.tip               / tip_description (html)        : NEW 
 digest       / digest.tip               / user_ids (many2many)          : NEW relation: res.users
 ---XML records in module 'digest'---
-NEW digest.digest: digest.digest_digest_default (noupdate)
-NEW digest.tip: digest.digest_tip_mail_0
-NEW digest.tip: digest.digest_tip_mail_1
-NEW ir.actions.act_window: digest.digest_digest_action
-NEW ir.config_parameter: digest.default_digest
-NEW ir.config_parameter: digest.default_emails_digest
-NEW ir.cron: digest.ir_cron_digest_scheduler_action
-NEW ir.model.access: digest.access_digest_digest_system
-NEW ir.model.access: digest.access_digest_digest_user
-NEW ir.model.access: digest.access_digest_tip_system
-NEW ir.model.access: digest.access_digest_tip_user
-NEW ir.ui.menu: digest.digest_menu
-NEW ir.ui.view: digest.digest_digest_view_form
-NEW ir.ui.view: digest.digest_digest_view_search
-NEW ir.ui.view: digest.digest_digest_view_tree
-NEW ir.ui.view: digest.portal_digest_unsubscribed
-NEW ir.ui.view: digest.res_config_settings_view_form
-NEW mail.template: digest.digest_mail_template

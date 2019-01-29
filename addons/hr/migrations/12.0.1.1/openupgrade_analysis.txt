@@ -22,6 +22,3 @@ hr           / hr.job                   / message_last_post (datetime)  : DEL
 hr           / hr.job                   / message_main_attachment_id (many2one): NEW relation: ir.attachment
 hr           / mail.channel             / subscription_department_ids (many2many): NEW relation: hr.department
 ---XML records in module 'hr'---
-NEW hr.employee: hr.employee_admin (noupdate)
-DEL hr.employee: hr.employee_root (noupdate)
-NEW ir.ui.view: hr.mail_channel_view_form_
