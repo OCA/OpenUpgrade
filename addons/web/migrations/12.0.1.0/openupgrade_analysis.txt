@@ -3,7 +3,14 @@ web          / report.layout            / image (char)                  : NEW
 web          / report.layout            / pdf (char)                    : NEW 
 web          / report.layout            / view_id (many2one)            : NEW relation: ir.ui.view, required: required
 ---XML records in module 'web'---
+DEL ir.actions.act_window: web_planner.web_planner_action
 NEW ir.model.access: web.access_report_layout
+DEL ir.model.access: web_planner.access_planner_emp
+DEL ir.model.access: web_planner.access_planner_manager
+DEL ir.model.access: web_planner.access_planner_portal
+DEL ir.rule: web_planner.planner_rule_all
+DEL ir.rule: web_planner.web_planner_rule_portal
+DEL ir.ui.menu: web_planner.web_planner_menu
 NEW ir.ui.view: web._assets_backend_helpers
 NEW ir.ui.view: web._assets_bootstrap
 NEW ir.ui.view: web._assets_frontend_helpers
@@ -17,6 +24,13 @@ DEL ir.ui.view: web.menu
 DEL ir.ui.view: web.menu_link
 DEL ir.ui.view: web.menu_secondary
 DEL ir.ui.view: web.menu_secondary_submenu
+DEL ir.ui.view: web_planner.assets_backend
+DEL ir.ui.view: web_planner.assets_common
+DEL ir.ui.view: web_planner.category
+DEL ir.ui.view: web_planner.page
+DEL ir.ui.view: web_planner.pages
+DEL ir.ui.view: web_planner.web_planner_view_search
+DEL ir.ui.view: web_planner.web_planner_view_tree
 NEW report.layout: web.report_layout_background
 NEW report.layout: web.report_layout_boxed
 NEW report.layout: web.report_layout_clean

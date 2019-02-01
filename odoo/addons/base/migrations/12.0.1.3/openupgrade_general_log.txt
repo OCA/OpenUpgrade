@@ -1,12 +1,12 @@
 ---Fields in module 'general'---
-# 7362 fields matched,
-# Direct match: 6804
-# Found in other module: 112
+# 7367 fields matched,
+# Direct match: 6808
+# Found in other module: 113
 # Found with different name: 0
 # Found with different type: 1
 # In obsolete models: 445
-# New columns: 1510
-# Not matched: 230
+# New columns: 1511
+# Not matched: 229
 new model account.analytic.distribution
 new model account.analytic.group
 new model account.fiscal.year
@@ -95,71 +95,17 @@ obsolete model stock.location.path
 obsolete model web.planner
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
----Fields in module 'account_budget'---
-account_budget / account.analytic.account / crossovered_budget_line (one2many): DEL relation: crossovered.budget.lines
----XML records in module 'account_budget'---
-DEL ir.actions.act_window: account_budget.act_account_analytic_account_cb_lines
-DEL ir.actions.act_window: account_budget.act_crossovered_budget_lines_view
-DEL ir.actions.act_window: account_budget.act_crossovered_budget_view
-DEL ir.actions.act_window: account_budget.open_budget_post_form
-DEL ir.model.access: account_budget.access_account_budget_post
-DEL ir.model.access: account_budget.access_account_budget_post_accountant
-DEL ir.model.access: account_budget.access_budget
-DEL ir.model.access: account_budget.access_crossovered_budget
-DEL ir.model.access: account_budget.access_crossovered_budget_accountant
-DEL ir.model.access: account_budget.access_crossovered_budget_lines_accountant
-DEL ir.rule: account_budget.budget_comp_rule (noupdate)
-DEL ir.rule: account_budget.budget_lines_comp_rule (noupdate)
-DEL ir.rule: account_budget.budget_post_comp_rule (noupdate)
-DEL ir.ui.menu: account_budget.menu_act_crossovered_budget_lines_view
-DEL ir.ui.menu: account_budget.menu_act_crossovered_budget_view
-DEL ir.ui.menu: account_budget.menu_budget_post_form
-DEL ir.ui.view: account_budget.crossovered_budget_view_form
-DEL ir.ui.view: account_budget.crossovered_budget_view_tree
-DEL ir.ui.view: account_budget.res_config_settings_view_form
-DEL ir.ui.view: account_budget.view_account_analytic_account_form_inherit_budget
-DEL ir.ui.view: account_budget.view_budget_post_form
-DEL ir.ui.view: account_budget.view_budget_post_search
-DEL ir.ui.view: account_budget.view_budget_post_tree
-DEL ir.ui.view: account_budget.view_crossovered_budget_kanban
-DEL ir.ui.view: account_budget.view_crossovered_budget_line_form
-DEL ir.ui.view: account_budget.view_crossovered_budget_line_search
-DEL ir.ui.view: account_budget.view_crossovered_budget_line_tree
-DEL ir.ui.view: account_budget.view_crossovered_budget_search
-DEL res.users: base.user_root (noupdate)
+---Fields in module 'website_quote'---
+---XML records in module 'website_quote'---
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
----Fields in module 'website_forum_doc'---
-website_forum_doc / forum.post               / color (integer)               : DEL 
-website_forum_doc / forum.post               / documentation_stage_id (many2one): DEL relation: forum.documentation.stage
-website_forum_doc / forum.post               / documentation_toc_id (many2one): DEL relation: forum.documentation.toc
----XML records in module 'website_forum_doc'---
-DEL forum.documentation.stage: website_forum_doc.stage_draft (noupdate)
-DEL forum.documentation.stage: website_forum_doc.stage_ideas (noupdate)
-DEL forum.documentation.stage: website_forum_doc.stage_publish (noupdate)
-DEL forum.documentation.stage: website_forum_doc.stage_review (noupdate)
-DEL ir.actions.act_url: website_forum_doc.action_open_documentation
-DEL ir.actions.act_window: website_forum_doc.action_documentation_toc
-DEL ir.actions.act_window: website_forum_doc.action_forum_doc_post
-DEL ir.actions.todo: base.open_menu
-DEL ir.model.access: website_forum_doc.all_documentation_toc
-DEL ir.model.access: website_forum_doc.users_documentation_stage
-DEL ir.model.access: website_forum_doc.users_documentation_stage_all
-DEL ir.model.access: website_forum_doc.users_documentation_toc
-DEL ir.ui.menu: website_forum_doc.menu_documentation
-DEL ir.ui.menu: website_forum_doc.menu_forum_doc_posts
-DEL ir.ui.view: website_forum_doc.assets_frontend
-DEL ir.ui.view: website_forum_doc.breadcrumb
-DEL ir.ui.view: website_forum_doc.documentation
-DEL ir.ui.view: website_forum_doc.documentation_post
-DEL ir.ui.view: website_forum_doc.forum_question_doc
-DEL ir.ui.view: website_forum_doc.header_footer_custom
-DEL ir.ui.view: website_forum_doc.promote_question
-DEL ir.ui.view: website_forum_doc.toc
-DEL ir.ui.view: website_forum_doc.view_documentation_toc_list
-DEL ir.ui.view: website_forum_doc.view_forum_post_doc_form
-DEL ir.ui.view: website_forum_doc.view_forum_post_doc_list
-DEL ir.ui.view: website_forum_doc.view_forum_post_kanban
-DEL website.menu: website_forum_doc.menu_questions (noupdate)
+---Fields in module 'website_sale_stock_options'---
+---XML records in module 'website_sale_stock_options'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'website_rating_project'---
+---XML records in module 'website_rating_project'---
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'anonymization'---
 ---XML records in module 'anonymization'---
@@ -214,89 +160,12 @@ DEL ir.ui.view: anonymization.view_ir_model_fields_anonymization_tree
 DEL ir.ui.view: anonymization.view_ir_model_fields_anonymize_wizard_form
 DEL ir.ui.view: anonymization.view_ir_model_fields_nonymization_kanban
 ERROR: module not in list of installed modules:
----Fields in module 'website_quote'---
----XML records in module 'website_quote'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'product_extended'---
----XML records in module 'product_extended'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'auth_crypt'---
----XML records in module 'auth_crypt'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'base_vat_autocomplete'---
----XML records in module 'base_vat_autocomplete'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'account_asset'---
-account_asset / account.invoice.line     / asset_category_id (many2one)  : DEL relation: account.asset.category
-account_asset / account.move             / asset_depreciation_ids (one2many): DEL relation: account.asset.depreciation.line
-account_asset / product.template         / asset_category_id (many2one)  : DEL relation: account.asset.category
-account_asset / product.template         / deferred_revenue_category_id (many2one): DEL relation: account.asset.category
----XML records in module 'account_asset'---
-DEL ir.actions.act_window: account_asset.action_account_asset_asset_form
-DEL ir.actions.act_window: account_asset.action_account_asset_asset_list_normal_purchase
-DEL ir.actions.act_window: account_asset.action_asset_asset_report
-DEL ir.actions.act_window: account_asset.action_asset_depreciation_confirmation_wizard
-DEL ir.actions.act_window: account_asset.action_asset_modify
-DEL ir.cron: account_asset.account_asset_cron
-DEL ir.model.access: account_asset.access_account_asset_asset
-DEL ir.model.access: account_asset.access_account_asset_asset_invoicing_payment
-DEL ir.model.access: account_asset.access_account_asset_asset_manager
-DEL ir.model.access: account_asset.access_account_asset_category
-DEL ir.model.access: account_asset.access_account_asset_category_invoicing_payment
-DEL ir.model.access: account_asset.access_account_asset_category_manager
-DEL ir.model.access: account_asset.access_account_asset_depreciation_line
-DEL ir.model.access: account_asset.access_account_asset_depreciation_line_invoicing_payment
-DEL ir.model.access: account_asset.access_account_asset_depreciation_line_manager
-DEL ir.model.access: account_asset.access_asset_asset_report
-DEL ir.model.access: account_asset.access_asset_asset_report_manager
-DEL ir.rule: account_asset.account_asset_asset_multi_company_rule (noupdate)
-DEL ir.rule: account_asset.account_asset_category_multi_company_rule (noupdate)
-DEL ir.ui.menu: account_asset.menu_action_account_asset_asset_form
-DEL ir.ui.menu: account_asset.menu_action_account_asset_asset_list_normal_purchase
-DEL ir.ui.menu: account_asset.menu_action_asset_asset_report
-DEL ir.ui.menu: account_asset.menu_asset_depreciation_confirmation_wizard
-DEL ir.ui.menu: account_asset.menu_finance_config_assets
-DEL ir.ui.view: account_asset.action_account_asset_report_graph
-DEL ir.ui.view: account_asset.action_account_asset_report_pivot
-DEL ir.ui.view: account_asset.asset_modify_form
-DEL ir.ui.view: account_asset.assets_backend
-DEL ir.ui.view: account_asset.qunit_suite
-DEL ir.ui.view: account_asset.res_config_settings_view_form
-DEL ir.ui.view: account_asset.view_account_asset_asset_category_kanban
-DEL ir.ui.view: account_asset.view_account_asset_asset_form
-DEL ir.ui.view: account_asset.view_account_asset_asset_kanban
-DEL ir.ui.view: account_asset.view_account_asset_asset_purchase_tree
-DEL ir.ui.view: account_asset.view_account_asset_category_form
-DEL ir.ui.view: account_asset.view_account_asset_category_search
-DEL ir.ui.view: account_asset.view_account_asset_category_tree
-DEL ir.ui.view: account_asset.view_account_asset_search
-DEL ir.ui.view: account_asset.view_asset_asset_report_search
-DEL ir.ui.view: account_asset.view_asset_depreciation_confirmation_wizard
-DEL ir.ui.view: account_asset.view_invoice_asset_category
-DEL ir.ui.view: account_asset.view_product_template_form_inherit
-ERROR: module not in list of installed modules:
----Fields in module 'website_sale_stock_options'---
----XML records in module 'website_sale_stock_options'---
+---Fields in module 'web_planner'---
+---XML records in module 'web_planner'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'sale_payment'---
 ---XML records in module 'sale_payment'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'website_sale_options'---
----XML records in module 'website_sale_options'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'account_cash_basis_base_account'---
----XML records in module 'account_cash_basis_base_account'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'sale_order_dates'---
----XML records in module 'sale_order_dates'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'pos_data_drinks'---
@@ -367,88 +236,57 @@ DEL product.product: pos_data_drinks.water (noupdate)
 DEL product.product: pos_data_drinks.white_russian (noupdate)
 DEL product.product: pos_data_drinks.white_wine (noupdate)
 ERROR: module not in list of installed modules:
----Fields in module 'mrp_repair'---
----XML records in module 'mrp_repair'---
+---Fields in module 'auth_crypt'---
+---XML records in module 'auth_crypt'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
----Fields in module 'web_planner'---
----XML records in module 'web_planner'---
-DEL ir.actions.act_window: web_planner.web_planner_action
-DEL ir.model.access: web_planner.access_planner_emp
-DEL ir.model.access: web_planner.access_planner_manager
-DEL ir.model.access: web_planner.access_planner_portal
-DEL ir.rule: web_planner.planner_rule_all
-DEL ir.rule: web_planner.web_planner_rule_portal
-DEL ir.ui.menu: web_planner.web_planner_menu
-DEL ir.ui.view: web_planner.assets_backend
-DEL ir.ui.view: web_planner.assets_common
-DEL ir.ui.view: web_planner.category
-DEL ir.ui.view: web_planner.page
-DEL ir.ui.view: web_planner.pages
-DEL ir.ui.view: web_planner.web_planner_view_search
-DEL ir.ui.view: web_planner.web_planner_view_tree
+---Fields in module 'website_forum_doc'---
+website_forum_doc / forum.post               / color (integer)               : DEL 
+website_forum_doc / forum.post               / documentation_stage_id (many2one): DEL relation: forum.documentation.stage
+website_forum_doc / forum.post               / documentation_toc_id (many2one): DEL relation: forum.documentation.toc
+---XML records in module 'website_forum_doc'---
+DEL forum.documentation.stage: website_forum_doc.stage_draft (noupdate)
+DEL forum.documentation.stage: website_forum_doc.stage_ideas (noupdate)
+DEL forum.documentation.stage: website_forum_doc.stage_publish (noupdate)
+DEL forum.documentation.stage: website_forum_doc.stage_review (noupdate)
+DEL ir.actions.act_url: website_forum_doc.action_open_documentation
+DEL ir.actions.act_window: website_forum_doc.action_documentation_toc
+DEL ir.actions.act_window: website_forum_doc.action_forum_doc_post
+DEL ir.actions.todo: base.open_menu
+DEL ir.model.access: website_forum_doc.all_documentation_toc
+DEL ir.model.access: website_forum_doc.users_documentation_stage
+DEL ir.model.access: website_forum_doc.users_documentation_stage_all
+DEL ir.model.access: website_forum_doc.users_documentation_toc
+DEL ir.ui.menu: website_forum_doc.menu_documentation
+DEL ir.ui.menu: website_forum_doc.menu_forum_doc_posts
+DEL ir.ui.view: website_forum_doc.assets_frontend
+DEL ir.ui.view: website_forum_doc.breadcrumb
+DEL ir.ui.view: website_forum_doc.documentation
+DEL ir.ui.view: website_forum_doc.documentation_post
+DEL ir.ui.view: website_forum_doc.forum_question_doc
+DEL ir.ui.view: website_forum_doc.header_footer_custom
+DEL ir.ui.view: website_forum_doc.promote_question
+DEL ir.ui.view: website_forum_doc.toc
+DEL ir.ui.view: website_forum_doc.view_documentation_toc_list
+DEL ir.ui.view: website_forum_doc.view_forum_post_doc_form
+DEL ir.ui.view: website_forum_doc.view_forum_post_doc_list
+DEL ir.ui.view: website_forum_doc.view_forum_post_kanban
+DEL website.menu: website_forum_doc.menu_questions (noupdate)
 ERROR: module not in list of installed modules:
----Fields in module 'report_intrastat'---
-report_intrastat / product.template         / intrastat_id (many2one)       : DEL relation: report.intrastat.code
-report_intrastat / res.country              / intrastat (boolean)           : DEL 
----XML records in module 'report_intrastat'---
-DEL ir.actions.act_window: report_intrastat.action_report_intrastat_code_tree
-DEL ir.actions.act_window: report_intrastat.action_report_intrastat_tree_all
-DEL ir.actions.report: report_intrastat.account_intrastatinvoices
-DEL ir.model.access: report_intrastat.access_report_intrastat
-DEL ir.model.access: report_intrastat.access_report_intrastat_code
-DEL ir.model.access: report_intrastat.access_report_intrastat_code_purchase_manager
-DEL ir.model.access: report_intrastat.access_report_intrastat_code_sale_manager
-DEL ir.model.access: report_intrastat.access_report_intrastat_code_stock_manager
-DEL ir.rule: report_intrastat.invoice_analysis_comp_rule
-DEL ir.ui.menu: report_intrastat.menu_report_intrastat_all
-DEL ir.ui.menu: report_intrastat.menu_report_intrastat_code
-DEL ir.ui.view: report_intrastat.product_template_form_view
-DEL ir.ui.view: report_intrastat.report_intrastatinvoice
-DEL ir.ui.view: report_intrastat.report_intrastatinvoice_document
-DEL ir.ui.view: report_intrastat.view_country_form
-DEL ir.ui.view: report_intrastat.view_country_tree
-DEL ir.ui.view: report_intrastat.view_report_intrastat_code_form
-DEL ir.ui.view: report_intrastat.view_report_intrastat_code_tree
-DEL ir.ui.view: report_intrastat.view_report_intrastat_kanban
-DEL ir.ui.view: report_intrastat.view_report_intrastat_search
-DEL ir.ui.view: report_intrastat.view_report_intrastat_tree
-DEL res.country: base.at (noupdate)
-DEL res.country: base.be (noupdate)
-DEL res.country: base.cy (noupdate)
-DEL res.country: base.cz (noupdate)
-DEL res.country: base.de (noupdate)
-DEL res.country: base.dk (noupdate)
-DEL res.country: base.ee (noupdate)
-DEL res.country: base.es (noupdate)
-DEL res.country: base.fi (noupdate)
-DEL res.country: base.fr (noupdate)
-DEL res.country: base.gr (noupdate)
-DEL res.country: base.hu (noupdate)
-DEL res.country: base.ie (noupdate)
-DEL res.country: base.it (noupdate)
-DEL res.country: base.lt (noupdate)
-DEL res.country: base.lu (noupdate)
-DEL res.country: base.lv (noupdate)
-DEL res.country: base.mt (noupdate)
-DEL res.country: base.nl (noupdate)
-DEL res.country: base.pl (noupdate)
-DEL res.country: base.pt (noupdate)
-DEL res.country: base.se (noupdate)
-DEL res.country: base.si (noupdate)
-DEL res.country: base.sk (noupdate)
-DEL res.country: base.uk (noupdate)
-ERROR: module not in list of installed modules:
----Fields in module 'account_invoicing'---
----XML records in module 'account_invoicing'---
+---Fields in module 'account_cash_basis_base_account'---
+---XML records in module 'account_cash_basis_base_account'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'rating_project'---
 ---XML records in module 'rating_project'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
----Fields in module 'website_rating_project'---
----XML records in module 'website_rating_project'---
+---Fields in module 'website_sale_options'---
+---XML records in module 'website_sale_options'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'mrp_repair'---
+---XML records in module 'mrp_repair'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'l10n_be_intrastat'---
@@ -9884,3 +9722,152 @@ DEL report.intrastat.code: l10n_be_intrastat.intrastat_category_2014_99500000
 DEL report.intrastat.code: l10n_be_intrastat.intrastat_category_2014_99600000
 DEL report.intrastat.code: l10n_be_intrastat.intrastat_category_2014_99700000
 DEL res.groups: l10n_be_intrastat.intrastat_extended
+ERROR: module not in list of installed modules:
+---Fields in module 'report_intrastat'---
+report_intrastat / product.template         / intrastat_id (many2one)       : DEL relation: report.intrastat.code
+report_intrastat / res.country              / intrastat (boolean)           : DEL 
+---XML records in module 'report_intrastat'---
+DEL ir.actions.act_window: report_intrastat.action_report_intrastat_code_tree
+DEL ir.actions.act_window: report_intrastat.action_report_intrastat_tree_all
+DEL ir.actions.report: report_intrastat.account_intrastatinvoices
+DEL ir.model.access: report_intrastat.access_report_intrastat
+DEL ir.model.access: report_intrastat.access_report_intrastat_code
+DEL ir.model.access: report_intrastat.access_report_intrastat_code_purchase_manager
+DEL ir.model.access: report_intrastat.access_report_intrastat_code_sale_manager
+DEL ir.model.access: report_intrastat.access_report_intrastat_code_stock_manager
+DEL ir.rule: report_intrastat.invoice_analysis_comp_rule
+DEL ir.ui.menu: report_intrastat.menu_report_intrastat_all
+DEL ir.ui.menu: report_intrastat.menu_report_intrastat_code
+DEL ir.ui.view: report_intrastat.product_template_form_view
+DEL ir.ui.view: report_intrastat.report_intrastatinvoice
+DEL ir.ui.view: report_intrastat.report_intrastatinvoice_document
+DEL ir.ui.view: report_intrastat.view_country_form
+DEL ir.ui.view: report_intrastat.view_country_tree
+DEL ir.ui.view: report_intrastat.view_report_intrastat_code_form
+DEL ir.ui.view: report_intrastat.view_report_intrastat_code_tree
+DEL ir.ui.view: report_intrastat.view_report_intrastat_kanban
+DEL ir.ui.view: report_intrastat.view_report_intrastat_search
+DEL ir.ui.view: report_intrastat.view_report_intrastat_tree
+DEL res.country: base.at (noupdate)
+DEL res.country: base.be (noupdate)
+DEL res.country: base.cy (noupdate)
+DEL res.country: base.cz (noupdate)
+DEL res.country: base.de (noupdate)
+DEL res.country: base.dk (noupdate)
+DEL res.country: base.ee (noupdate)
+DEL res.country: base.es (noupdate)
+DEL res.country: base.fi (noupdate)
+DEL res.country: base.fr (noupdate)
+DEL res.country: base.gr (noupdate)
+DEL res.country: base.hu (noupdate)
+DEL res.country: base.ie (noupdate)
+DEL res.country: base.it (noupdate)
+DEL res.country: base.lt (noupdate)
+DEL res.country: base.lu (noupdate)
+DEL res.country: base.lv (noupdate)
+DEL res.country: base.mt (noupdate)
+DEL res.country: base.nl (noupdate)
+DEL res.country: base.pl (noupdate)
+DEL res.country: base.pt (noupdate)
+DEL res.country: base.se (noupdate)
+DEL res.country: base.si (noupdate)
+DEL res.country: base.sk (noupdate)
+DEL res.country: base.uk (noupdate)
+ERROR: module not in list of installed modules:
+---Fields in module 'account_budget'---
+account_budget / account.analytic.account / crossovered_budget_line (one2many): DEL relation: crossovered.budget.lines
+---XML records in module 'account_budget'---
+DEL ir.actions.act_window: account_budget.act_account_analytic_account_cb_lines
+DEL ir.actions.act_window: account_budget.act_crossovered_budget_lines_view
+DEL ir.actions.act_window: account_budget.act_crossovered_budget_view
+DEL ir.actions.act_window: account_budget.open_budget_post_form
+DEL ir.model.access: account_budget.access_account_budget_post
+DEL ir.model.access: account_budget.access_account_budget_post_accountant
+DEL ir.model.access: account_budget.access_budget
+DEL ir.model.access: account_budget.access_crossovered_budget
+DEL ir.model.access: account_budget.access_crossovered_budget_accountant
+DEL ir.model.access: account_budget.access_crossovered_budget_lines_accountant
+DEL ir.rule: account_budget.budget_comp_rule (noupdate)
+DEL ir.rule: account_budget.budget_lines_comp_rule (noupdate)
+DEL ir.rule: account_budget.budget_post_comp_rule (noupdate)
+DEL ir.ui.menu: account_budget.menu_act_crossovered_budget_lines_view
+DEL ir.ui.menu: account_budget.menu_act_crossovered_budget_view
+DEL ir.ui.menu: account_budget.menu_budget_post_form
+DEL ir.ui.view: account_budget.crossovered_budget_view_form
+DEL ir.ui.view: account_budget.crossovered_budget_view_tree
+DEL ir.ui.view: account_budget.res_config_settings_view_form
+DEL ir.ui.view: account_budget.view_account_analytic_account_form_inherit_budget
+DEL ir.ui.view: account_budget.view_budget_post_form
+DEL ir.ui.view: account_budget.view_budget_post_search
+DEL ir.ui.view: account_budget.view_budget_post_tree
+DEL ir.ui.view: account_budget.view_crossovered_budget_kanban
+DEL ir.ui.view: account_budget.view_crossovered_budget_line_form
+DEL ir.ui.view: account_budget.view_crossovered_budget_line_search
+DEL ir.ui.view: account_budget.view_crossovered_budget_line_tree
+DEL ir.ui.view: account_budget.view_crossovered_budget_search
+DEL res.users: base.user_root (noupdate)
+ERROR: module not in list of installed modules:
+---Fields in module 'base_vat_autocomplete'---
+---XML records in module 'base_vat_autocomplete'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'account_asset'---
+account_asset / account.invoice.line     / asset_category_id (many2one)  : DEL relation: account.asset.category
+account_asset / account.move             / asset_depreciation_ids (one2many): DEL relation: account.asset.depreciation.line
+account_asset / product.template         / asset_category_id (many2one)  : DEL relation: account.asset.category
+account_asset / product.template         / deferred_revenue_category_id (many2one): DEL relation: account.asset.category
+---XML records in module 'account_asset'---
+DEL ir.actions.act_window: account_asset.action_account_asset_asset_form
+DEL ir.actions.act_window: account_asset.action_account_asset_asset_list_normal_purchase
+DEL ir.actions.act_window: account_asset.action_asset_asset_report
+DEL ir.actions.act_window: account_asset.action_asset_depreciation_confirmation_wizard
+DEL ir.actions.act_window: account_asset.action_asset_modify
+DEL ir.cron: account_asset.account_asset_cron
+DEL ir.model.access: account_asset.access_account_asset_asset
+DEL ir.model.access: account_asset.access_account_asset_asset_invoicing_payment
+DEL ir.model.access: account_asset.access_account_asset_asset_manager
+DEL ir.model.access: account_asset.access_account_asset_category
+DEL ir.model.access: account_asset.access_account_asset_category_invoicing_payment
+DEL ir.model.access: account_asset.access_account_asset_category_manager
+DEL ir.model.access: account_asset.access_account_asset_depreciation_line
+DEL ir.model.access: account_asset.access_account_asset_depreciation_line_invoicing_payment
+DEL ir.model.access: account_asset.access_account_asset_depreciation_line_manager
+DEL ir.model.access: account_asset.access_asset_asset_report
+DEL ir.model.access: account_asset.access_asset_asset_report_manager
+DEL ir.rule: account_asset.account_asset_asset_multi_company_rule (noupdate)
+DEL ir.rule: account_asset.account_asset_category_multi_company_rule (noupdate)
+DEL ir.ui.menu: account_asset.menu_action_account_asset_asset_form
+DEL ir.ui.menu: account_asset.menu_action_account_asset_asset_list_normal_purchase
+DEL ir.ui.menu: account_asset.menu_action_asset_asset_report
+DEL ir.ui.menu: account_asset.menu_asset_depreciation_confirmation_wizard
+DEL ir.ui.menu: account_asset.menu_finance_config_assets
+DEL ir.ui.view: account_asset.action_account_asset_report_graph
+DEL ir.ui.view: account_asset.action_account_asset_report_pivot
+DEL ir.ui.view: account_asset.asset_modify_form
+DEL ir.ui.view: account_asset.assets_backend
+DEL ir.ui.view: account_asset.qunit_suite
+DEL ir.ui.view: account_asset.res_config_settings_view_form
+DEL ir.ui.view: account_asset.view_account_asset_asset_category_kanban
+DEL ir.ui.view: account_asset.view_account_asset_asset_form
+DEL ir.ui.view: account_asset.view_account_asset_asset_kanban
+DEL ir.ui.view: account_asset.view_account_asset_asset_purchase_tree
+DEL ir.ui.view: account_asset.view_account_asset_category_form
+DEL ir.ui.view: account_asset.view_account_asset_category_search
+DEL ir.ui.view: account_asset.view_account_asset_category_tree
+DEL ir.ui.view: account_asset.view_account_asset_search
+DEL ir.ui.view: account_asset.view_asset_asset_report_search
+DEL ir.ui.view: account_asset.view_asset_depreciation_confirmation_wizard
+DEL ir.ui.view: account_asset.view_invoice_asset_category
+DEL ir.ui.view: account_asset.view_product_template_form_inherit
+ERROR: module not in list of installed modules:
+---Fields in module 'product_extended'---
+---XML records in module 'product_extended'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'sale_order_dates'---
+---XML records in module 'sale_order_dates'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'account_invoicing'---
+---XML records in module 'account_invoicing'---
+---nothing has changed in this module--
