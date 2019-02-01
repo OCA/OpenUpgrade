@@ -1,0 +1,86 @@
+---Fields in module 'purchase'---
+purchase     / account.invoice          / vendor_bill_purchase_id (many2one): NEW relation: purchase.bill.union
+purchase     / purchase.order           / access_token (char)           : NEW
+purchase     / purchase.order           / activity_date_deadline (date) : not related anymore
+purchase     / purchase.order           / activity_date_deadline (date) : not stored anymore
+purchase     / purchase.order           / activity_date_deadline (date) : now a function
+# NOTHING TO DO
+
+purchase     / procurement.rule         / action (False)                : module is now 'purchase_stock' ('purchase')
+purchase     / procurement.rule         / action (False)                : selection_keys is now '['buy', 'manufacture', 'pull', 'pull_push', 'push']' ('['buy', 'manufacture', 'move']')
+purchase     / purchase.order           / default_location_dest_id_usage (selection): module is now 'purchase_stock' ('purchase')
+purchase     / purchase.order           / group_id (many2one)           : module is now 'purchase_stock' ('purchase')
+purchase     / purchase.order           / is_shipped (boolean)          : module is now 'purchase_stock' ('purchase')
+purchase     / purchase.order           / picking_count (integer)       : module is now 'purchase_stock' ('purchase')
+purchase     / purchase.order           / picking_ids (many2many)       : module is now 'purchase_stock' ('purchase')
+purchase     / purchase.order           / picking_type_id (many2one)    : module is now 'purchase_stock' ('purchase')
+purchase     / purchase.order.line      / move_dest_ids (one2many)      : module is now 'purchase_stock' ('purchase')
+purchase     / purchase.order.line      / move_ids (one2many)           : module is now 'purchase_stock' ('purchase')
+purchase     / purchase.order.line      / orderpoint_id (many2one)      : module is now 'purchase_stock' ('purchase')
+purchase     / stock.move               / created_purchase_line_id (many2one): module is now 'purchase_stock' ('purchase')
+purchase     / stock.move               / purchase_line_id (many2one)   : module is now 'purchase_stock' ('purchase')
+purchase     / stock.picking            / purchase_id (many2one)        : module is now 'purchase_stock' ('purchase')
+purchase     / stock.warehouse          / buy_pull_id (many2one)        : module is now 'purchase_stock' ('purchase')
+purchase     / stock.warehouse          / buy_to_resupply (boolean)     : module is now 'purchase_stock' ('purchase')
+# NOTHING TO DO: because purchase_stock will automatically be installed
+
+purchase     / purchase.order           / incoterm_id (many2one)        : relation is now 'account.incoterms' ('stock.incoterms')
+# NOTHING TO DO: handled in account module
+
+purchase     / purchase.order           / message_last_post (datetime)  : DEL
+purchase     / purchase.order           / message_main_attachment_id (many2one): NEW relation: ir.attachment
+# NOTHING TO DO
+
+purchase     / purchase.order           / user_id (many2one)            : NEW relation: res.users
+# DONE: post-migration: filled from create_uid
+
+purchase     / purchase.order.line      / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+# NOTHING TO DO: handled in base module
+
+purchase     / purchase.order.line      / product_uom_qty (float)       : NEW
+# DONE: pre-migration: new computed field, but assure it can be computed, ie, don't fail
+
+purchase     / purchase.order.line      / qty_received (float)          : not a function anymore
+# NOTHING TO DO
+
+purchase     / stock.warehouse          / buy_pull_id (many2one)        : relation is now 'stock.rule' ('procurement.rule')
+# NOTHING TO DO: handled in stock module
+
+---XML records in module 'purchase'---
+DEL ir.actions.act_window: purchase.action_purchase_line_product_tree
+DEL ir.actions.act_window: purchase.purchase_open_picking
+NEW ir.actions.server: purchase.model_purchase_order_action_share (noupdate)
+NEW ir.model.access: purchase.access_purchase_bill_union
+NEW ir.model.access: purchase.access_uom_category_purchase_manager
+NEW ir.model.access: purchase.access_uom_uom_purchase_manager
+DEL ir.model.access: purchase.access_product_uom_categ_purchase_manager
+DEL ir.model.access: purchase.access_product_uom_purchase_manager
+DEL ir.model.access: purchase.access_purchase_order_line_stock_worker
+DEL ir.model.access: purchase.access_purchase_order_stock_worker
+DEL ir.model.access: purchase.access_stock_location_purchase_manager
+DEL ir.model.access: purchase.access_stock_location_purchase_user
+DEL ir.model.access: purchase.access_stock_location_purchase_user_manager
+DEL ir.model.access: purchase.access_stock_move_purchase_user
+DEL ir.model.access: purchase.access_stock_move_purchase_user_manager
+DEL ir.model.access: purchase.access_stock_picking_purchase_user
+DEL ir.model.access: purchase.access_stock_picking_purchase_user_manager
+DEL ir.model.access: purchase.access_stock_warehouse_orderpoint_manager
+DEL ir.model.access: purchase.access_stock_warehouse_purchase_user
+DEL ir.model.access: purchase.access_stock_warehouse_purchase_user_manager
+NEW ir.rule: purchase.purchase_bill_union_comp_rule (noupdate)
+DEL ir.ui.menu: purchase.menu_action_picking_tree_in_move
+NEW ir.ui.view: purchase.product_normal_form_view_inherit_purchase
+NEW ir.ui.view: purchase.view_purchase_bill_union_filter
+NEW ir.ui.view: purchase.view_purchase_bill_union_tree
+DEL ir.ui.view: purchase.res_config_settings_view_form_account
+DEL ir.ui.view: purchase.res_config_settings_view_form_stock
+DEL ir.ui.view: purchase.stock_move_purchase
+DEL ir.ui.view: purchase.view_warehouse_inherited
+DEL ir.ui.view: purchase.view_warehouse_orderpoint_purchase_form
+DEL mail.template: purchase.mail_template_data_notification_email_purchase_order (noupdate)
+DEL res.groups: purchase.group_analytic_accounting
+DEL res.request.link: purchase.req_link_purchase_order (noupdate)
+# NOTHING TO DO
+
+DEL stock.location.route: purchase.route_warehouse0_buy (noupdate)
+# NOTHING TO DO: handled in purchase_stock
