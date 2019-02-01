@@ -1,4 +1,5 @@
 # Copyright 2018 Tecnativa - Vicent Cubells
+# Copyright 2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
@@ -16,7 +17,7 @@ def migrate_sale_line_tasks(env):
 
 
 def migrate_project_sale_line(env):
-    service_column = openupgrade.get_legacy_name('service_type')
+    service_column = openupgrade.get_legacy_name('track_service')
     openupgrade.logged_query(
         env.cr, """
             UPDATE project_project pj
@@ -47,12 +48,72 @@ def migrate_project_sale_line(env):
         """, (AsIs(service_column),))
 
 
+def map_track_service(env):
+    """"Map values for old `track_service` field (copied in sale pre-migration)
+    according this mapping:
+
+    track_service           service_tracking
+    -------------           ----------------
+    'manual'		         'no'
+    'task'                  if not project_id: 'task_new_project'
+                            if project_id: 'task_global_project'
+    'timesheet'             'project_only'
+
+    Project field depends on company, so this is applicable as soon as one
+    company has any project set.
+    """
+    openupgrade.map_values(
+        env.cr,
+        openupgrade.get_legacy_name('track_service'),
+        'service_tracking', [
+            ('manual', 'no'),
+            ('timesheet', 'project_only'),
+        ], table='product_template',
+    )
+    # Need to be done through subquery as unique option for proper joining
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE product_template pt
+        SET service_tracking = 'task_new_project'
+        FROM (
+            SELECT pt.id FROM
+            product_template pt
+            JOIN ir_model_fields imf ON imf.name = 'project_id'
+                AND imf.model = 'product.template'
+            LEFT JOIN ir_property ip ON ip.fields_id = imf.id
+                AND ip.res_id = 'product.template,' || pt.id::text
+            WHERE pt.%s = 'task'
+                AND ip.value_reference IS NULL
+        ) sub
+        WHERE sub.id = pt.id""",
+        (AsIs(openupgrade.get_legacy_name('track_service')), ),
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE product_template pt
+        SET service_tracking = 'task_global_project'
+        FROM (
+            SELECT pt.id FROM
+            product_template pt
+            JOIN ir_model_fields imf ON imf.name = 'project_id'
+                AND imf.model = 'product.template'
+            LEFT JOIN ir_property ip ON ip.fields_id = imf.id
+                AND ip.res_id = 'product.template,' || pt.id::text
+            WHERE pt.%s = 'task'
+                AND ip.value_reference IS NOT NULL
+        ) sub
+        WHERE sub.id = pt.id""",
+        (AsIs(openupgrade.get_legacy_name('track_service')), ),
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.map_values(
-        env.cr, openupgrade.get_legacy_name('service_type'), 'service_type',
+        env.cr, openupgrade.get_legacy_name('track_service'), 'service_type',
         [('task', 'timesheet')], table='product_template',
     )
+    map_track_service(env)
     # Update invoice_policy
     env['product.template'].search([
         ('type', '=', 'service'),

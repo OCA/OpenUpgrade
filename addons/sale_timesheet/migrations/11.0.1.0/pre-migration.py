@@ -3,18 +3,9 @@
 
 from openupgradelib import openupgrade
 
-COLUMN_COPIES = {
-    'product_template': [
-        ('service_type', None, None),
-    ],
-}
-
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.copy_columns(env.cr, COLUMN_COPIES)
-    try:
-        with env.cr.savepoint():
-            env.ref('sale_timesheet.duplicate_field_xmlid').unlink()
-    except Exception:
-        pass
+    openupgrade.delete_records_safely_by_xml_id(
+        env, ['sale_timesheet.duplicate_field_xmlid'],
+    )
