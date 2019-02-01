@@ -40,9 +40,9 @@ sale         / sale.order.line          / product_no_variant_attribute_value_ids
 sale         / sale.order.line          / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
 sale         / sale.order.line          / qty_delivered (float)         : now a function
 sale         / sale.order.line          / qty_delivered_manual (float)  : NEW 
-sale_order_dates / sale.order               / commitment_date (datetime)    : not a function anymore
+sale_order_dates / sale.order               / commitment_date (datetime)    : was renamed to expected_date [nothing to do]
 sale_order_dates / sale.order               / effective_date (date)         : module is now 'sale_stock' ('sale_order_dates')
-sale_order_dates / sale.order               / requested_date (datetime)     : DEL 
+sale_order_dates / sale.order               / requested_date (datetime)     : was renamed to commitment_date [nothing to do]
 sale_payment / payment.transaction      / sale_order_id (many2one)      : DEL relation: sale.order
 sale_payment / sale.order               / payment_tx_id (many2one)      : DEL relation: payment.transaction
 sale_payment / sale.order               / payment_tx_ids (one2many)     : DEL relation: payment.transaction
@@ -98,6 +98,7 @@ DEL ir.model.access: sale.report_layout_category_5
 NEW ir.ui.menu: sale.sale_menu_config_activity_type
 DEL ir.ui.menu: sale.Report_configuration
 DEL ir.ui.menu: sale.menu_attribute_action
+DEL ir.ui.menu: sale.menu_product_category_config_sale
 DEL ir.ui.menu: sale.menu_variants_action
 DEL ir.ui.menu: sale.report_all_channels_sales
 NEW ir.ui.view: sale.acquirer_form_inherit_sale
@@ -114,7 +115,6 @@ NEW ir.ui.view: sale.product_template_attribute_line_form
 NEW ir.ui.view: sale.product_template_attribute_value_view_form_inherit
 NEW ir.ui.view: sale.product_template_attribute_value_view_tree_inherit
 NEW ir.ui.view: sale.product_template_form_view
-NEW ir.ui.view: sale.qunit_suite
 NEW ir.ui.view: sale.res_partner_view_form_payment_defaultcreditcard
 NEW ir.ui.view: sale.res_partner_view_form_property_inherit
 NEW ir.ui.view: sale.sale_onboarding_order_confirmation_form

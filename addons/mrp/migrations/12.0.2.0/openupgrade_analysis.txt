@@ -38,6 +38,7 @@ DEL ir.actions.act_window: mrp.mrp_message_action_main
 DEL ir.actions.act_window: mrp.mrp_production_action_planning
 DEL ir.actions.act_window: mrp.mrp_production_action_waiting
 NEW ir.actions.client: mrp.action_report_mrp_bom
+NEW ir.actions.report: mrp.action_report_finished_product
 DEL ir.actions.report: mrp.action_report_bom_price
 NEW ir.model.access: mrp.access_mrp_workcenter_productivity_loss_type
 NEW ir.model.access: mrp.access_uom_category
@@ -57,6 +58,7 @@ DEL ir.ui.menu: mrp.menu_view_resource_calendar_leaves_search_mrp
 DEL ir.ui.menu: mrp.mrp_message_menu
 NEW ir.ui.view: mrp.assets_common
 NEW ir.ui.view: mrp.exception_on_mo
+NEW ir.ui.view: mrp.label_production_view_pdf
 NEW ir.ui.view: mrp.mrp_product_product_search_view
 NEW ir.ui.view: mrp.mrp_product_template_search_view
 NEW ir.ui.view: mrp.mrp_production_workorder_form_view_inherit

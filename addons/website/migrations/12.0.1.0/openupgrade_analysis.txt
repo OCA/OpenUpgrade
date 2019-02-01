@@ -21,7 +21,7 @@ website      / website.page             / header_overlay (boolean)      : NEW
 website      / website.page             / is_published (boolean)        : NEW 
 website      / website.page             / website_ids (many2many)       : DEL relation: website
 website      / website.page             / website_published (boolean)   : now a function
-website      / website.redirect         / type (selection)              : now required
+website      / website.redirect         / type (selection)              : now required, default = function
 website      / website.redirect         / url_from (char)               : now required
 website      / website.redirect         / url_to (char)                 : now required
 ---XML records in module 'website'---
@@ -55,6 +55,7 @@ NEW ir.ui.view: website._assets_frontend_helpers
 NEW ir.ui.view: website._assets_primary_variables
 NEW ir.ui.view: website._assets_secondary_variables
 NEW ir.ui.view: website.affix_top_menu
+NEW ir.ui.view: website.assets_frontend_compatibility_for_12_0
 NEW ir.ui.view: website.brand_promotion
 NEW ir.ui.view: website.default_scss
 NEW ir.ui.view: website.list_website_pages
