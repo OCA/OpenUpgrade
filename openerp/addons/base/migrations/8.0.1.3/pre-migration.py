@@ -36,6 +36,7 @@ def cleanup_modules(cr):
     other modules."""
     openupgrade.update_module_names(
         cr, [
+            ('account_report_company', 'account'),
             # from OCA/product-attribute
             ('product_customer_code', 'product_supplierinfo_for_customer'),
             # from OCA/sale-workflow - included in core
