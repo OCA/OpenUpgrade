@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017-2018 Tecnativa - Pedro M. Baeza
+# Copyright 2017-2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.exceptions import UserError
+from odoo.tools import float_compare
 from openupgradelib import openupgrade
 from psycopg2.extensions import AsIs
 
@@ -125,6 +125,11 @@ def create_stock_move_line(env):
       stock.move.line records are created from other source (quants) later
       in `create_stock_move_line_reserved` method.
     * For incoming transfers not yet validated, they are created later.
+
+    Information is taken from stock.move.operation.link instead of
+    stock.pack.operation/stock.operation.lot as v10 grouped together several
+    stock.move lines with the same product in the same operation record, making
+    impossible to split the lot quantity across each move.
     """
     openupgrade.logged_query(
         env.cr, """
@@ -187,6 +192,66 @@ def create_stock_move_line(env):
         GROUP BY sq.lot_id, spo.product_id, spo.owner_id, spo.package_id,
             spo.result_package_id, sm.id""",
     )
+
+
+@openupgrade.logging()
+def fill_missing_lots_for_sml(env):
+    """On v10, `reserved_quant_id` field on stock.move.operation.link is
+    filled unless manual operations or extra quantities are added on transfer
+    wizard, which technically means that they fall under this part of code:
+
+    https://github.com/OCA/OpenUpgrade/blob/
+    a0890c2bcfee62bdf9daf89e267d01b25a55d793/addons/stock/models/
+    stock_picking.py#L759
+
+    The SQL query for inserting stock.move.line can't be modified as explained
+    in previous method, so we call this method afterwards for filling missing
+    lots when possible.
+
+    Heuristic:
+
+    * Find stock.move.operation.link records without reserved quant, but the
+      linked operation has some lots.
+    * Check the stock.move.line (sml) new records associated to the move. If
+      there's only one sml with the same quantity of stock.pack.operation.
+    * If found, then we can conclude the lot is that one.
+    * If not, we try to see that all the stock.move.line of the same product
+      makes the total of the stock.pack.operation.lot for concluding the same.
+    """
+    env.cr.execute(
+        """SELECT sm.id, spol.qty, spol.lot_id, spol.lot_name
+        FROM stock_pack_operation spo
+            JOIN stock_move_operation_link smol
+                ON smol.operation_id = spo.id
+            JOIN stock_move sm ON sm.id = smol.move_id
+            JOIN stock_pack_operation_lot spol
+                ON spol.operation_id = spo.id
+        WHERE smol.reserved_quant_id IS NULL""",
+    )
+    rounding = env['decimal.precision'].precision_get(
+        'Product Unit of Measure')
+    Move = env['stock.move']
+    for row in env.cr.fetchall():
+        move = Move.browse(row[0])
+        smls = move.move_line_ids.filtered(lambda x: (float_compare(
+            x.product_qty, row[1], precision_digits=rounding
+        ) == 0))
+        match = len(smls) == 1
+        if not match:
+            smls = move.picking_id.mapped('move_line_ids').filtered(
+                lambda x: x.product_id == move.move_line_ids[:1].product_id)
+            match = float_compare(
+                sum(smls.mapped('product_qty')), row[1],
+                precision_digits=rounding,
+            ) == 0
+        if match and smls:
+            # Done through SQL for avoiding triggering other changes
+            env.cr.execute(
+                """UPDATE stock_move_line
+                SET lot_id = %s, lot_name = %s
+                WHERE id IN %s""",
+                (row[2], row[3], tuple(smls.ids)),
+            )
 
 
 @openupgrade.logging()
@@ -411,6 +476,7 @@ def migrate(env, version):
     # TODO: Get is_initial_demand_editable, is_locked values in stock.move
     set_partially_available_state(env)
     create_stock_move_line(env)
+    fill_missing_lots_for_sml(env)
     create_stock_move_line_incoming(env)
     create_stock_move_line_reserved(env)
     create_stock_move_line_from_inventory_moves(env)
