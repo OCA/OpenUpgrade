@@ -8,7 +8,7 @@ from openupgradelib import openupgrade
 
 model_renames = [
     ('product.uom', 'uom.uom'),
-    ('product.uom.category', 'uom.category'),
+    ('product.uom.categ', 'uom.category'),
 ]
 
 table_renames = [
