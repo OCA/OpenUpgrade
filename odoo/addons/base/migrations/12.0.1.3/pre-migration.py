@@ -89,6 +89,13 @@ def fix_lang_constraints(env):
     )
 
 
+def fix_lang_table(env):
+    """Avoid error on normal update process due to changed language codes"""
+    openupgrade.logged_query(
+        env.cr, "UPDATE res_lang SET code='km_KH' WHERE code='km_KM'"
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     openupgrade.update_module_names(
@@ -114,6 +121,7 @@ def migrate(env, version):
          FROM ir_model_data WHERE module = 'base' AND name = 'partner_root')
         """)
     fix_lang_constraints(env)
+    fix_lang_table(env)
     # for migration of web module
     openupgrade.rename_columns(
         env.cr, {'res_company': [('external_report_layout', None)]})
