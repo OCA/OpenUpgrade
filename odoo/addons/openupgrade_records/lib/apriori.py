@@ -10,6 +10,7 @@ renamed_modules = {
 
 merged_modules = {
     # Odoo
+    'auth_brute_force': 'base',
     'auth_crypt': 'base',
     'account_cash_basis_base_account': 'account',
     'account_invoicing': 'account',
