@@ -12,8 +12,7 @@ hr           / hr.employee              / emergency_contact (char)      : NEW
 hr           / hr.employee              / emergency_phone (char)        : NEW 
 hr           / hr.employee              / google_drive_link (char)      : NEW 
 hr           / hr.employee              / job_title (char)              : NEW 
-hr           / hr.employee              / km_home_work (integer)        : NEW 
-hr           / hr.employee              / message_last_post (datetime)  : DEL 
+hr           / hr.employee              / message_last_post (datetime)  : DEL
 hr           / hr.employee              / message_main_attachment_id (many2one): NEW relation: ir.attachment
 hr           / hr.employee              / place_of_birth (char)         : previously in module hr_contract
 hr           / hr.employee              / spouse_birthdate (date)       : NEW 
@@ -21,6 +20,9 @@ hr           / hr.employee              / spouse_complete_name (char)   : NEW
 hr           / hr.employee              / study_field (char)            : NEW 
 hr           / hr.employee              / study_school (char)           : NEW 
 # NOTHING TO DO
+
+hr           / hr.employee              / km_home_work (integer)        : NEW
+DONE: pre-migration: renamed from vehicle_distance that comes from hr_contract module
 
 hr           / hr.job                   / message_last_post (datetime)  : DEL
 hr           / hr.job                   / message_main_attachment_id (many2one): NEW relation: ir.attachment

@@ -1,0 +1,27 @@
+---Fields in module 'hr_contract'---
+hr_contract  / hr.contract              / active (boolean)              : NEW 
+# NOTHING TO DO: filled by default
+
+hr_contract  / hr.contract              / activity_ids (one2many)       : NEW relation: mail.activity
+hr_contract  / hr.contract              / message_last_post (datetime)  : DEL 
+hr_contract  / hr.contract              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+# NOTHING TO DO: related to mail mixins
+
+hr_contract  / hr.contract              / reported_to_secretariat (boolean): NEW
+# NOTHING TO DO: new feature
+
+hr_contract  / hr.employee              / children (integer)            : module is now 'hr' ('hr_contract')
+hr_contract  / hr.employee              / place_of_birth (char)         : module is now 'hr' ('hr_contract')
+# NOTHING TO DO: hr is a dependency of hr_contract
+
+hr_contract  / hr.employee              / vehicle_distance (integer)    : DEL
+# NOTHING TO DO: renamed to km_home_work in 'hr' module
+
+---XML records in module 'hr_contract'---
+DEL ir.model.access: hr_contract.access_hr_contract_type_user
+DEL ir.model.access: hr_contract.access_hr_contract_user
+NEW res.users: base.default_user (noupdate)
+# NOTHING TO DO
+
+NEW res.groups: hr_contract.group_hr_contract_manager (noupdate)
+# DONE: post-migration: added this group to all hr managers
