@@ -10,7 +10,6 @@ renamed_modules = {
 
 merged_modules = {
     # Odoo
-    'auth_brute_force': 'base',
     'auth_crypt': 'base',
     'account_cash_basis_base_account': 'account',
     'account_invoicing': 'account',
@@ -25,6 +24,8 @@ merged_modules = {
     'website_rating_project': 'project',
     'website_sale_options': 'website_sale',
     'website_sale_stock_options': 'website_sale_stock',
+    # OCA/server-auth
+    'auth_brute_force': 'base',
     # OCA/web
     'web_sheet_full_width': 'web_responsive',
 }
