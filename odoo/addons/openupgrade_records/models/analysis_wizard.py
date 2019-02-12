@@ -33,7 +33,7 @@ class AnalysisWizard(models.TransientModel):
         change set
         """
 
-        def write_file(module, version, contents,
+        def write_file(module, version, content,
                        filename='openupgrade_analysis.txt'):
             module_path = get_module_path(module)
             if not module_path:
@@ -50,7 +50,7 @@ class AnalysisWizard(models.TransientModel):
                 f = open(logfile, 'w')
             except Exception:
                 return "ERROR: could not open file %s for writing:\n" % logfile
-            f.write(contents)
+            f.write(content)
             f.close()
             return None
 
