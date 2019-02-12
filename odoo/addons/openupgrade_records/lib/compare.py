@@ -167,8 +167,12 @@ def compare_sets(old_records, new_records):
     obsolete_models = []
     for model in old_models:
         if model not in new_models:
-            obsolete_models.append(model)
-            reprs['general'].append('obsolete model %s' % model)
+            if model_map(model) not in new_models:
+                obsolete_models.append(model)
+                reprs['general'].append('obsolete model %s' % model)
+            else:
+                reprs['general'].append('obsolete model %s (renamed to %s)' % (
+                    model, model_map(model)))
 
     for column in copy.copy(old_records):
         if column['model'] in obsolete_models:
