@@ -95,42 +95,42 @@ def report_generic(new, old, attrs, reprs):
                 text = "now required"
                 if new['req_default']:
                     text += ', default = %s' % new['req_default']
-                fieldprint(old, new, None, text, reprs)
+                fieldprint(old, new, '', text, reprs)
         elif attr == 'stored':
             if old[attr] != new[attr]:
                 if new['stored']:
                     text = "is now stored"
                 else:
                     text = "not stored anymore"
-                fieldprint(old, new, None, text, reprs)
+                fieldprint(old, new, '', text, reprs)
         elif attr == 'isfunction':
             if old[attr] != new[attr]:
                 if new['isfunction']:
                     text = "now a function"
                 else:
                     text = "not a function anymore"
-                fieldprint(old, new, None, text, reprs)
+                fieldprint(old, new, '', text, reprs)
         elif attr == 'isproperty':
             if old[attr] != new[attr]:
                 if new[attr]:
                     text = "now a property"
                 else:
                     text = "not a property anymore"
-                fieldprint(old, new, None, text, reprs)
+                fieldprint(old, new, '', text, reprs)
         elif attr == 'isrelated':
             if old[attr] != new[attr]:
                 if new[attr]:
                     text = "now related"
                 else:
                     text = "not related anymore"
-                fieldprint(old, new, None, text, reprs)
+                fieldprint(old, new, '', text, reprs)
         elif attr == 'oldname':
             if new.get('oldname') == old['field'] and\
                not new.get('isproperty'):
                 text = 'was renamed to %s [nothing to do]' % new['field']
-                fieldprint(old, new, None, text, reprs)
+                fieldprint(old, new, '', text, reprs)
         elif old[attr] != new[attr]:
-            fieldprint(old, new, attr, None, reprs)
+            fieldprint(old, new, attr, '', reprs)
 
 
 def compare_sets(old_records, new_records):
@@ -232,7 +232,7 @@ def compare_sets(old_records, new_records):
         if column['mode'] == 'create':
             column['mode'] = ''
         fieldprint(
-            column, None, None, "DEL " + ", ".join(
+            column, '', '', "DEL " + ", ".join(
                 [k + ': ' + str(column[k]) for k in printkeys if column[k]]
                 ), reprs)
 
@@ -244,7 +244,7 @@ def compare_sets(old_records, new_records):
         if column['mode'] == 'create':
             column['mode'] = ''
         fieldprint(
-            column, None, None, "NEW " + ", ".join(
+            column, '', '', "NEW " + ", ".join(
                 [k + ': ' + str(column[k]) for k in printkeys if column[k]]
                 ), reprs)
 
