@@ -62,14 +62,14 @@ class Record(models.Model):
         template = dict([(x, False) for x in keys])
         data = []
         for record in self.search([('type', '=', 'field')]):
-            repr = template.copy()
-            repr.update({
+            repre = template.copy()
+            repre.update({
                 'module': record.module,
                 'model': record.model,
                 'field': record.field,
                 'mode': record.mode,
                 })
-            repr.update(
+            repre.update(
                 dict([(x.name, x.value) for x in record.attribute_ids]))
-            data.append(repr)
+            data.append(repre)
         return data
