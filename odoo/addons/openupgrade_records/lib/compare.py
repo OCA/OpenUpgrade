@@ -42,10 +42,10 @@ def compare_records(dict_old, dict_new, fields):
     """
     for field in fields:
         if field == 'module':
-            if (module_map(dict_old[field]) != dict_new[field]):
+            if module_map(dict_old['module']) != dict_new['module']:
                 return False
         elif field == 'model':
-            if (model_map(dict_old[field]) != dict_new[field]):
+            if model_map(dict_old['model']) != dict_new['model']:
                 return False
         elif dict_old[field] != dict_new[field]:
             return False
