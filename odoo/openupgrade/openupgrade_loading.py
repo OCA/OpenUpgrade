@@ -5,7 +5,6 @@
 
 import logging
 import os
-import types
 import threading
 from odoo import release
 from openupgradelib.openupgrade_tools import table_exists
@@ -169,7 +168,10 @@ def log_model(model, local_registry):
             properties['attachment'] = str(getattr(v, "attachment", False))
         default = model._fields[k].default
         if v.required and default:
-            if isinstance(default, types.FunctionType):
+            if callable(default) or isinstance(
+                    default, pycompat.string_types) and \
+                    getattr(model._fields[k], default, False) and \
+                    callable(getattr(model._fields[k], default)):
                 # todo: in OpenERP 5 (and in 6 as well),
                 # literals are wrapped in a lambda function
                 properties['req_default'] = 'function'
