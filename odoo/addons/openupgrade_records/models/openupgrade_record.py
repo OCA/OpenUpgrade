@@ -53,6 +53,7 @@ class Record(models.Model):
             'isrelated',
             'relation',
             'required',
+            'stored',
             'selection_keys',
             'req_default',
             'inherits',

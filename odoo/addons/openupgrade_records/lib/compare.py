@@ -96,6 +96,13 @@ def report_generic(new, old, attrs, reprs):
                 if new['req_default']:
                     text += ', default = %s' % new['req_default']
                 fieldprint(old, new, None, text, reprs)
+        elif attr == 'stored':
+            if old[attr] != new[attr]:
+                if new['stored']:
+                    text = "is now stored"
+                else:
+                    text = "not stored anymore"
+                fieldprint(old, new, None, text, reprs)
         elif attr == 'isfunction':
             if old[attr] != new[attr]:
                 if new['isfunction']:
@@ -188,19 +195,19 @@ def compare_sets(old_records, new_records):
 
     matched_direct = match(
         ['module', 'mode', 'model', 'field'],
-        ['relation', 'type', 'selection_keys', 'inherits',
+        ['relation', 'type', 'selection_keys', 'inherits', 'stored',
          'isfunction', 'isrelated', 'required', 'oldname'])
 
     # other module, same type and operation
     matched_other_module = match(
         ['mode', 'model', 'field', 'type'],
-        ['module', 'relation', 'selection_keys', 'inherits',
+        ['module', 'relation', 'selection_keys', 'inherits', 'stored',
          'isfunction', 'isrelated', 'required', 'oldname'])
 
     # other module, same operation, other type
     matched_other_type = match(
         ['mode', 'model', 'field'],
-        ['relation', 'type', 'selection_keys', 'inherits',
+        ['relation', 'type', 'selection_keys', 'inherits', 'stored',
          'isfunction', 'isrelated', 'required', 'oldname'])
 
     # fields with other names
@@ -214,8 +221,9 @@ def compare_sets(old_records, new_records):
         'req_default', 'inherits', 'mode', 'attachment',
         ]
     for column in old_records:
-        # we do not care about removed function fields
-        if column['isfunction'] or column['isrelated']:
+        # we do not care about removed non stored function fields
+        if not column['stored'] and (
+                column['isfunction'] or column['isrelated']):
             continue
         if column['mode'] == 'create':
             column['mode'] = ''
@@ -225,8 +233,9 @@ def compare_sets(old_records, new_records):
                 ), reprs)
 
     for column in new_records:
-        # we do not care about newly added function fields
-        if column['isfunction'] or column['isrelated']:
+        # we do not care about newly added non stored function fields
+        if not column['stored'] and (
+                column['isfunction'] or column['isrelated']):
             continue
         if column['mode'] == 'create':
             column['mode'] = ''
