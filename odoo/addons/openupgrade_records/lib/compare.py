@@ -281,6 +281,7 @@ def compare_xml_sets(old_records, new_records):
         key=lambda k: (k['model'], 'old' in k, k['name'])
     )
     for entry in sorted_records:
+        content = ''
         if 'old' in entry:
             content = 'DEL %(model)s: %(name)s' % entry
         elif 'new' in entry:
