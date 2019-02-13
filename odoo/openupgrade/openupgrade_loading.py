@@ -3,7 +3,6 @@
 # Copyright 2016 Opener B.V. <https://opener.am>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import types
 import logging
 from odoo import release
 from openupgradelib.openupgrade_tools import table_exists
@@ -150,6 +149,7 @@ def log_model(model, local_registry):
             'relation': v.comodel_name if v.type in (
                 'many2many', 'many2one', 'one2many') else '',
             'required': v.required and 'required' or '',
+            'stored': v.store and 'stored' or '',
             'selection_keys': '',
             'req_default': '',
             'inherits': '',
@@ -166,7 +166,10 @@ def log_model(model, local_registry):
             properties['attachment'] = str(getattr(v, "attachment", False))
         default = model._fields[k].default
         if v.required and default:
-            if isinstance(default, types.FunctionType):
+            if callable(default) or isinstance(
+                    default, pycompat.string_types) and \
+                    getattr(model._fields[k], default, False) and \
+                    callable(getattr(model._fields[k], default)):
                 # todo: in OpenERP 5 (and in 6 as well),
                 # literals are wrapped in a lambda function
                 properties['req_default'] = 'function'
