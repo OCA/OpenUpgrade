@@ -1,5 +1,8 @@
 ---Fields in module 'account'---
+account      / account.account          / internal_group (selection)    : NEW selection_keys: function
 account      / account.account.type     / internal_group (selection)    : NEW selection_keys: ['asset', 'equity', 'expense', 'income', 'liability']
+account      / account.analytic.line    / amount_currency (float)       : DEL 
+account      / account.analytic.line    / currency_id (False)           : DEL mode: modify
 account      / account.analytic.line    / product_uom_id (many2one)     : module is now 'analytic' ('account')
 account      / account.analytic.line    / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
 account      / account.bank.statement   / accounting_date (date)        : NEW 
@@ -18,9 +21,8 @@ account      / account.fiscal.year      / name (char)                   : NEW re
 account      / account.group            / parent_left (integer)         : DEL 
 account      / account.group            / parent_path (char)            : NEW 
 account      / account.group            / parent_right (integer)        : DEL 
-account      / account.incoterms        / active (boolean)              : NEW 
-account      / account.incoterms        / code (char)                   : NEW required: required
-account      / account.incoterms        / name (char)                   : NEW required: required
+account      / account.invoice          / activity_date_deadline (date) : not related anymore
+account      / account.invoice          / activity_date_deadline (date) : not stored anymore
 account      / account.invoice          / activity_date_deadline (date) : now a function
 account      / account.invoice          / incoterm_id (many2one)        : previously in module l10n_be_intrastat
 account      / account.invoice          / message_last_post (datetime)  : DEL 
@@ -29,6 +31,7 @@ account      / account.invoice          / reference_type (selection)    : DEL re
 account      / account.invoice          / source_email (char)           : NEW 
 account      / account.invoice          / state (selection)             : selection_keys is now '['cancel', 'draft', 'in_payment', 'open', 'paid']' ('['cancel', 'draft', 'open', 'paid']')
 account      / account.invoice          / vendor_bill_id (many2one)     : NEW relation: account.invoice
+account      / account.invoice          / vendor_display_name (char)    : NEW 
 account      / account.invoice.line     / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section']
 account      / account.invoice.line     / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
 account      / account.invoice.tax      / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
@@ -42,6 +45,7 @@ account      / account.move             / tax_type_domain (char)        : NEW
 account      / account.move.line        / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
 account      / account.move.line        / recompute_tax_line (boolean)  : NEW 
 account      / account.move.line        / tax_line_grouping_key (char)  : NEW 
+account      / account.payment          / company_id (many2one)         : not stored anymore
 account      / account.payment          / message_last_post (datetime)  : DEL 
 account      / account.payment          / message_main_attachment_id (many2one): NEW relation: ir.attachment
 account      / account.payment          / multi (boolean)               : NEW 
@@ -116,6 +120,11 @@ account      / res.company              / invoice_is_print (boolean)    : NEW
 account      / res.company              / invoice_reference_type (selection): NEW selection_keys: function
 account      / res.company              / qr_code (boolean)             : NEW 
 account      / res.company              / transfer_account_code_prefix (char): NEW 
+account      / stock.incoterms          / __last_update (datetime)      : previously in module stock
+account      / stock.incoterms          / active (boolean)              : previously in module stock
+account      / stock.incoterms          / code (char)                   : previously in module stock
+account      / stock.incoterms          / display_name (char)           : previously in module stock
+account      / stock.incoterms          / name (char)                   : previously in module stock
 ---XML records in module 'account'---
 DEL account.financial.report: account.account_financial_report_assets0 (noupdate)
 DEL account.financial.report: account.account_financial_report_balancesheet0 (noupdate)

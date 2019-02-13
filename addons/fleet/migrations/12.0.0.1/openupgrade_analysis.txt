@@ -1,5 +1,6 @@
 ---Fields in module 'fleet'---
 fleet        / fleet.vehicle            / activity_ids (one2many)       : NEW relation: mail.activity
+fleet        / fleet.vehicle            / brand_id (many2one)           : NEW relation: fleet.vehicle.model.brand
 fleet        / fleet.vehicle            / first_contract_date (date)    : NEW 
 fleet        / fleet.vehicle            / log_drivers (one2many)        : NEW relation: fleet.vehicle.assignation.log
 fleet        / fleet.vehicle            / message_last_post (datetime)  : DEL 

@@ -4,11 +4,14 @@ website_slides / slide.channel            / message_last_post (datetime)  : DEL
 website_slides / slide.channel            / message_main_attachment_id (many2one): NEW relation: ir.attachment
 website_slides / slide.channel            / website_id (many2one)         : NEW relation: website
 website_slides / slide.channel            / website_meta_og_img (char)    : NEW 
+website_slides / slide.channel            / website_published (boolean)   : not stored anymore
 website_slides / slide.channel            / website_published (boolean)   : now a function
 website_slides / slide.slide              / is_published (boolean)        : NEW 
 website_slides / slide.slide              / message_last_post (datetime)  : DEL 
 website_slides / slide.slide              / message_main_attachment_id (many2one): NEW relation: ir.attachment
 website_slides / slide.slide              / website_meta_og_img (char)    : NEW 
+website_slides / slide.slide              / website_published (boolean)   : not stored anymore
+website_slides / slide.slide              / website_published (boolean)   : now related
 website_slides / website                  / website_slide_google_app_key (char): NEW 
 ---XML records in module 'website_slides'---
 DEL ir.config_parameter: website_slides.google_app_key (noupdate)

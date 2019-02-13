@@ -4,8 +4,10 @@ mass_mailing / mail.mail.statistics     / ignored (datetime)            : NEW
 mass_mailing / mail.mail.statistics     / state (selection)             : selection_keys is now '['bounced', 'exception', 'ignored', 'opened', 'outgoing', 'replied', 'sent']' ('['bounced', 'exception', 'opened', 'outgoing', 'replied', 'sent']')
 mass_mailing / mail.mass_mailing        / mail_server_id (many2one)     : NEW relation: ir.mail_server
 mass_mailing / mail.mass_mailing        / user_id (many2one)            : NEW relation: res.users
+mass_mailing / mail.mass_mailing.contact / is_email_valid (boolean)      : NEW 
 mass_mailing / mail.mass_mailing.contact / message_last_post (datetime)  : DEL 
 mass_mailing / mail.mass_mailing.contact / message_main_attachment_id (many2one): NEW relation: ir.attachment
+mass_mailing / mail.mass_mailing.contact / opt_out (boolean)             : not stored anymore
 mass_mailing / mail.mass_mailing.contact / opt_out (boolean)             : now a function
 mass_mailing / mail.mass_mailing.contact / subscription_list_ids (one2many): NEW relation: mail.mass_mailing.list_contact_rel
 mass_mailing / mail.mass_mailing.contact / unsubscription_date (datetime): DEL 

@@ -1,7 +1,5 @@
 ---Fields in module 'sale_quotation_builder'---
 sale_quotation_builder / product.template         / quotation_only_description (html): NEW 
-sale_quotation_builder / sale.order.template      / website_description (html)    : NEW 
-sale_quotation_builder / sale.order.template.option / website_description (html)    : NEW 
 website_quote / product.product          / website_description (html)    : module is now 'website_sale' ('website_quote')
 website_quote / product.template         / quote_description (html)      : DEL 
 website_quote / product.template         / website_description (html)    : module is now 'website_sale' ('website_quote')
@@ -26,6 +24,40 @@ website_quote / sale.order.option        / quantity (float)              : modul
 website_quote / sale.order.option        / sequence (integer)            : module is now 'sale_management' ('website_quote')
 website_quote / sale.order.option        / uom_id (many2one)             : module is now 'sale_management' ('website_quote')
 website_quote / sale.order.option        / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
+website_quote / sale.quote.line          / __last_update (datetime)      : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.line          / discount (float)              : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.line          / display_name (char)           : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.line          / layout_category_id (many2one) : DEL relation: sale.layout_category
+website_quote / sale.quote.line          / name (text)                   : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.line          / price_unit (float)            : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.line          / product_id (many2one)         : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.line          / product_uom_id (many2one)     : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.line          / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+website_quote / sale.quote.line          / product_uom_qty (float)       : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.line          / quote_id (many2one)           : DEL relation: sale.quote.template, required: required
+website_quote / sale.quote.line          / sequence (integer)            : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.option        / __last_update (datetime)      : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.option        / discount (float)              : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.option        / display_name (char)           : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.option        / layout_category_id (many2one) : DEL relation: sale.layout_category
+website_quote / sale.quote.option        / name (text)                   : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.option        / price_unit (float)            : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.option        / product_id (many2one)         : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.option        / quantity (float)              : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.option        / template_id (many2one)        : DEL relation: sale.quote.template, required: required
+website_quote / sale.quote.option        / uom_id (many2one)             : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.option        / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
+website_quote / sale.quote.template      / __last_update (datetime)      : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.template      / active (boolean)              : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.template      / display_name (char)           : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.template      / mail_template_id (many2one)   : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.template      / name (char)                   : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.template      / note (text)                   : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.template      / number_of_days (integer)      : module is now 'sale_management' ('website_quote')
+website_quote / sale.quote.template      / options (one2many)            : DEL relation: sale.quote.option
+website_quote / sale.quote.template      / quote_line (one2many)         : DEL relation: sale.quote.line
+website_quote / sale.quote.template      / require_payment (selection)   : selection_keys is now 'False' ('[0, 1]')
+website_quote / sale.quote.template      / require_payment (selection)   : type is now 'boolean' ('selection')
 ---XML records in module 'sale_quotation_builder'---
 DEL ir.actions.act_window: sale.action_quotations
 DEL ir.actions.act_window: website_quote.action_sale_quotation_template

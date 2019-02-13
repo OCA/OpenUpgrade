@@ -1,6 +1,10 @@
 ---Fields in module 'purchase'---
 purchase     / account.invoice          / vendor_bill_purchase_id (many2one): NEW relation: purchase.bill.union
+purchase     / procurement.rule         / action (False)                : module is now 'purchase_stock' ('purchase')
+purchase     / procurement.rule         / action (False)                : selection_keys is now '['buy', 'manufacture', 'pull', 'pull_push', 'push']' ('['buy', 'manufacture', 'move']')
 purchase     / purchase.order           / access_token (char)           : NEW 
+purchase     / purchase.order           / activity_date_deadline (date) : not related anymore
+purchase     / purchase.order           / activity_date_deadline (date) : not stored anymore
 purchase     / purchase.order           / activity_date_deadline (date) : now a function
 purchase     / purchase.order           / default_location_dest_id_usage (selection): module is now 'purchase_stock' ('purchase')
 purchase     / purchase.order           / group_id (many2one)           : module is now 'purchase_stock' ('purchase')
@@ -16,6 +20,7 @@ purchase     / purchase.order.line      / move_dest_ids (one2many)      : module
 purchase     / purchase.order.line      / move_ids (one2many)           : module is now 'purchase_stock' ('purchase')
 purchase     / purchase.order.line      / orderpoint_id (many2one)      : module is now 'purchase_stock' ('purchase')
 purchase     / purchase.order.line      / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+purchase     / purchase.order.line      / product_uom_qty (float)       : NEW 
 purchase     / purchase.order.line      / qty_received (float)          : not a function anymore
 purchase     / stock.move               / created_purchase_line_id (many2one): module is now 'purchase_stock' ('purchase')
 purchase     / stock.move               / purchase_line_id (many2one)   : module is now 'purchase_stock' ('purchase')

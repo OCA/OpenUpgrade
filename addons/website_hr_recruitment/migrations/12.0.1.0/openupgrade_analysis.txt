@@ -2,6 +2,7 @@
 website_hr_recruitment / hr.job                   / is_published (boolean)        : NEW 
 website_hr_recruitment / hr.job                   / website_id (many2one)         : NEW relation: website
 website_hr_recruitment / hr.job                   / website_meta_og_img (char)    : NEW 
+website_hr_recruitment / hr.job                   / website_published (boolean)   : not stored anymore
 website_hr_recruitment / hr.job                   / website_published (boolean)   : now a function
 ---XML records in module 'website_hr_recruitment'---
 NEW ir.ui.view: website_hr_recruitment.hr_job_website_inherit

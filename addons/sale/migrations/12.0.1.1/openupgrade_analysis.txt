@@ -21,8 +21,11 @@ sale         / res.company              / sale_onboarding_order_confirmation_sta
 sale         / res.company              / sale_onboarding_payment_method (selection): NEW selection_keys: ['digital_signature', 'manual', 'other', 'paypal', 'stripe']
 sale         / res.company              / sale_onboarding_sample_quotation_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
 sale         / res.company              / sale_quotation_onboarding_state (selection): NEW selection_keys: ['closed', 'done', 'just_done', 'not_done']
+sale         / sale.order               / activity_date_deadline (date) : not related anymore
+sale         / sale.order               / activity_date_deadline (date) : not stored anymore
 sale         / sale.order               / activity_date_deadline (date) : now a function
 sale         / sale.order               / amount_undiscounted (float)   : previously in module website_quote
+sale         / sale.order               / currency_rate (float)         : NEW 
 sale         / sale.order               / message_last_post (datetime)  : DEL 
 sale         / sale.order               / message_main_attachment_id (many2one): NEW relation: ir.attachment
 sale         / sale.order               / reference (char)              : NEW 
@@ -30,6 +33,8 @@ sale         / sale.order               / require_signature (boolean)   : NEW
 sale         / sale.order               / signature (binary)            : NEW attachment: True
 sale         / sale.order               / signed_by (char)              : NEW 
 sale         / sale.order               / transaction_ids (many2many)   : NEW relation: payment.transaction
+sale         / sale.order.line          / amt_invoiced (float)          : DEL 
+sale         / sale.order.line          / amt_to_invoice (float)        : DEL 
 sale         / sale.order.line          / analytic_line_ids (one2many)  : NEW relation: account.analytic.line
 sale         / sale.order.line          / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section']
 sale         / sale.order.line          / is_expense (boolean)          : NEW 
@@ -40,10 +45,15 @@ sale         / sale.order.line          / product_no_variant_attribute_value_ids
 sale         / sale.order.line          / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
 sale         / sale.order.line          / qty_delivered (float)         : now a function
 sale         / sale.order.line          / qty_delivered_manual (float)  : NEW 
+sale         / sale.order.line          / qty_delivered_method (selection): NEW selection_keys: ['analytic', 'manual']
+sale         / sale.order.line          / untaxed_amount_invoiced (float): NEW 
+sale         / sale.order.line          / untaxed_amount_to_invoice (float): NEW 
+sale_order_dates / sale.order               / commitment_date (datetime)    : not stored anymore
 sale_order_dates / sale.order               / commitment_date (datetime)    : was renamed to expected_date [nothing to do]
 sale_order_dates / sale.order               / effective_date (date)         : module is now 'sale_stock' ('sale_order_dates')
 sale_order_dates / sale.order               / requested_date (datetime)     : was renamed to commitment_date [nothing to do]
 sale_payment / payment.transaction      / sale_order_id (many2one)      : DEL relation: sale.order
+sale_payment / sale.order               / payment_acquirer_id (many2one): DEL relation: payment.acquirer
 sale_payment / sale.order               / payment_tx_id (many2one)      : DEL relation: payment.transaction
 sale_payment / sale.order               / payment_tx_ids (one2many)     : DEL relation: payment.transaction
 ---XML records in module 'sale'---
