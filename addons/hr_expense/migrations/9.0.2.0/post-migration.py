@@ -39,6 +39,22 @@ def hr_expense(env):
             )
         },
     )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE ir_attachment
+        SET res_model='hr.expense', res_id=hr_expense.id
+        FROM hr_expense
+        WHERE res_model='hr.expense.expense' AND hr_expense.expense_id=res_id
+        """
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE mail_message
+        SET model='hr.expense', res_id=hr_expense.id
+        FROM hr_expense
+        WHERE model='hr.expense.expense' AND hr_expense.expense_id=res_id
+        """
+    )
     Expense = env['hr.expense']
     expenses = Expense.search([])
     env.add_todo(Expense._fields['total_amount'], expenses)
