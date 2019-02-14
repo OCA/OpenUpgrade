@@ -70,6 +70,7 @@ merged_modules = [
     ('web_easy_switch_company', 'web'),
     # OCA/website
     ('website_blog_mgmt', 'website_blog'),
+    ('website_blog_share', 'website_blog'),
 ]
 
 renamed_models = {
