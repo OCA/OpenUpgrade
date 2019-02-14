@@ -33,7 +33,7 @@ class AnalysisWizard(models.TransientModel):
         change set
         """
 
-        def write_file(module, version, contents,
+        def write_file(module, version, content,
                        filename='openupgrade_analysis.txt'):
             module_path = get_module_path(module)
             if not module_path:
@@ -50,7 +50,7 @@ class AnalysisWizard(models.TransientModel):
                 f = open(logfile, 'w')
             except Exception:
                 return "ERROR: could not open file %s for writing:\n" % logfile
-            f.write(contents)
+            f.write(content)
             f.close()
             return None
 
@@ -65,16 +65,16 @@ class AnalysisWizard(models.TransientModel):
         res = compare.compare_sets(remote_records, local_records)
 
         # Retrieve xml id representations and compare
-        fields = ['module', 'model', 'name', 'noupdate']
+        flds = ['module', 'model', 'name', 'noupdate']
         local_xml_records = [
-            dict([(field, record[field]) for field in fields])
+            dict([(field, record[field]) for field in flds])
             for record in local_record_obj.search([('type', '=', 'xmlid')])]
         remote_xml_record_ids = remote_record_obj.search(
             [('type', '=', 'xmlid')])
         remote_xml_records = [
-            dict([(field, record[field]) for field in fields])
+            dict([(field, record[field]) for field in flds])
             for record in remote_record_obj.read(
-                remote_xml_record_ids, fields)
+                remote_xml_record_ids, flds)
         ]
         res_xml = compare.compare_xml_sets(
             remote_xml_records, local_xml_records)

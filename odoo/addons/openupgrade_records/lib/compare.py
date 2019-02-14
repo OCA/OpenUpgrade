@@ -42,10 +42,10 @@ def compare_records(dict_old, dict_new, fields):
     """
     for field in fields:
         if field == 'module':
-            if (module_map(dict_old[field]) != dict_new[field]):
+            if module_map(dict_old['module']) != dict_new['module']:
                 return False
         elif field == 'model':
-            if (model_map(dict_old[field]) != dict_new[field]):
+            if model_map(dict_old['model']) != dict_new['model']:
                 return False
         elif dict_old[field] != dict_new[field]:
             return False
@@ -95,35 +95,42 @@ def report_generic(new, old, attrs, reprs):
                 text = "now required"
                 if new['req_default']:
                     text += ', default = %s' % new['req_default']
-                fieldprint(old, new, None, text, reprs)
+                fieldprint(old, new, '', text, reprs)
+        elif attr == 'stored':
+            if old[attr] != new[attr]:
+                if new['stored']:
+                    text = "is now stored"
+                else:
+                    text = "not stored anymore"
+                fieldprint(old, new, '', text, reprs)
         elif attr == 'isfunction':
             if old[attr] != new[attr]:
                 if new['isfunction']:
                     text = "now a function"
                 else:
                     text = "not a function anymore"
-                fieldprint(old, new, None, text, reprs)
+                fieldprint(old, new, '', text, reprs)
         elif attr == 'isproperty':
             if old[attr] != new[attr]:
                 if new[attr]:
                     text = "now a property"
                 else:
                     text = "not a property anymore"
-                fieldprint(old, new, None, text, reprs)
+                fieldprint(old, new, '', text, reprs)
         elif attr == 'isrelated':
             if old[attr] != new[attr]:
                 if new[attr]:
                     text = "now related"
                 else:
                     text = "not related anymore"
-                fieldprint(old, new, None, text, reprs)
+                fieldprint(old, new, '', text, reprs)
         elif attr == 'oldname':
             if new.get('oldname') == old['field'] and\
                not new.get('isproperty'):
                 text = 'was renamed to %s [nothing to do]' % new['field']
-                fieldprint(old, new, None, text, reprs)
+                fieldprint(old, new, '', text, reprs)
         elif old[attr] != new[attr]:
-            fieldprint(old, new, attr, None, reprs)
+            fieldprint(old, new, attr, '', reprs)
 
 
 def compare_sets(old_records, new_records):
@@ -160,8 +167,12 @@ def compare_sets(old_records, new_records):
     obsolete_models = []
     for model in old_models:
         if model not in new_models:
-            obsolete_models.append(model)
-            reprs['general'].append('obsolete model %s' % model)
+            if model_map(model) not in new_models:
+                obsolete_models.append(model)
+                reprs['general'].append('obsolete model %s' % model)
+            else:
+                reprs['general'].append('obsolete model %s (renamed to %s)' % (
+                    model, model_map(model)))
 
     for column in copy.copy(old_records):
         if column['model'] in obsolete_models:
@@ -188,20 +199,20 @@ def compare_sets(old_records, new_records):
 
     matched_direct = match(
         ['module', 'mode', 'model', 'field'],
-        ['relation', 'type', 'selection_keys', 'inherits',
-         'isfunction', 'required', 'oldname'])
+        ['relation', 'type', 'selection_keys', 'inherits', 'stored',
+         'isfunction', 'isrelated', 'required', 'oldname'])
 
     # other module, same type and operation
     matched_other_module = match(
         ['mode', 'model', 'field', 'type'],
-        ['module', 'relation', 'selection_keys', 'inherits',
-         'isfunction', 'required', 'oldname'])
+        ['module', 'relation', 'selection_keys', 'inherits', 'stored',
+         'isfunction', 'isrelated', 'required', 'oldname'])
 
     # other module, same operation, other type
     matched_other_type = match(
         ['mode', 'model', 'field'],
-        ['relation', 'type', 'selection_keys', 'inherits',
-         'isfunction', 'required', 'oldname'])
+        ['relation', 'type', 'selection_keys', 'inherits', 'stored',
+         'isfunction', 'isrelated', 'required', 'oldname'])
 
     # fields with other names
     # matched_other_name = match(
@@ -214,24 +225,26 @@ def compare_sets(old_records, new_records):
         'req_default', 'inherits', 'mode', 'attachment',
         ]
     for column in old_records:
-        # we do not care about removed function fields
-        if column['isfunction'] or column['isrelated']:
+        # we do not care about removed non stored function fields
+        if not column['stored'] and (
+                column['isfunction'] or column['isrelated']):
             continue
         if column['mode'] == 'create':
             column['mode'] = ''
         fieldprint(
-            column, None, None, "DEL " + ", ".join(
+            column, '', '', "DEL " + ", ".join(
                 [k + ': ' + str(column[k]) for k in printkeys if column[k]]
                 ), reprs)
 
     for column in new_records:
-        # we do not care about newly added function fields
-        if column['isfunction'] or column['isrelated']:
+        # we do not care about newly added non stored function fields
+        if not column['stored'] and (
+                column['isfunction'] or column['isrelated']):
             continue
         if column['mode'] == 'create':
             column['mode'] = ''
         fieldprint(
-            column, None, None, "NEW " + ", ".join(
+            column, '', '', "NEW " + ", ".join(
                 [k + ': ' + str(column[k]) for k in printkeys if column[k]]
                 ), reprs)
 
@@ -268,6 +281,7 @@ def compare_xml_sets(old_records, new_records):
         key=lambda k: (k['model'], 'old' in k, k['name'])
     )
     for entry in sorted_records:
+        content = ''
         if 'old' in entry:
             content = 'DEL %(model)s: %(name)s' % entry
         elif 'new' in entry:
