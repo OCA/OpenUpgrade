@@ -1,27 +1,21 @@
 ---Fields in module 'hr_holidays'---
 hr_holidays  / hr.employee              / current_leave_id (many2one)   : relation is now 'hr.leave.type' ('hr.holidays.status')
+hr_holidays  / hr.holidays              / date_from (datetime)          : now required, default = function
+hr_holidays  / hr.holidays              / date_to (datetime)            : now required, default = function
+hr_holidays  / hr.holidays              / holiday_status_id (many2one)  : relation is now 'hr.leave.type' ('hr.holidays.status')
+hr_holidays  / hr.holidays              / holiday_type (selection)      : selection_keys is now '['category', 'company', 'department', 'employee']' ('['category', 'employee']')
+hr_holidays  / hr.holidays              / linked_request_ids (one2many) : relation is now 'hr.leave' ('hr.holidays')
+hr_holidays  / hr.holidays              / message_last_post (datetime)  : DEL 
+hr_holidays  / hr.holidays              / number_of_days (float)        : not a function anymore
+hr_holidays  / hr.holidays              / number_of_days_temp (float)   : DEL 
+hr_holidays  / hr.holidays              / parent_id (many2one)          : relation is now 'hr.leave' ('hr.holidays')
+hr_holidays  / hr.holidays              / type (selection)              : DEL required: required, selection_keys: ['add', 'remove'], req_default: function
+hr_holidays  / hr.holidays.status       / double_validation (boolean)   : not stored anymore
+hr_holidays  / hr.holidays.status       / double_validation (boolean)   : now a function
+hr_holidays  / hr.holidays.status       / limit (boolean)               : DEL 
 hr_holidays  / hr.leave                 / activity_ids (one2many)       : NEW relation: mail.activity
-hr_holidays  / hr.leave                 / category_id (many2one)        : NEW relation: hr.employee.category
-hr_holidays  / hr.leave                 / date_from (datetime)          : NEW required: required, req_default: function
-hr_holidays  / hr.leave                 / date_to (datetime)            : NEW required: required, req_default: function
-hr_holidays  / hr.leave                 / department_id (many2one)      : NEW relation: hr.department
-hr_holidays  / hr.leave                 / employee_id (many2one)        : NEW relation: hr.employee
-hr_holidays  / hr.leave                 / first_approver_id (many2one)  : NEW relation: hr.employee
-hr_holidays  / hr.leave                 / holiday_status_id (many2one)  : NEW relation: hr.leave.type, required: required
-hr_holidays  / hr.leave                 / holiday_type (selection)      : NEW required: required, selection_keys: ['category', 'company', 'department', 'employee'], req_default: function
-hr_holidays  / hr.leave                 / linked_request_ids (one2many) : NEW relation: hr.leave
-hr_holidays  / hr.leave                 / manager_id (many2one)         : NEW relation: hr.employee
-hr_holidays  / hr.leave                 / meeting_id (many2one)         : NEW relation: calendar.event
-hr_holidays  / hr.leave                 / message_follower_ids (one2many): NEW relation: mail.followers
-hr_holidays  / hr.leave                 / message_ids (one2many)        : NEW relation: mail.message
 hr_holidays  / hr.leave                 / message_main_attachment_id (many2one): NEW relation: ir.attachment
 hr_holidays  / hr.leave                 / mode_company_id (many2one)    : NEW relation: res.company
-hr_holidays  / hr.leave                 / name (char)                   : NEW 
-hr_holidays  / hr.leave                 / notes (text)                  : NEW 
-hr_holidays  / hr.leave                 / number_of_days (float)        : NEW 
-hr_holidays  / hr.leave                 / parent_id (many2one)          : NEW relation: hr.leave
-hr_holidays  / hr.leave                 / payslip_status (boolean)      : NEW 
-hr_holidays  / hr.leave                 / report_note (text)            : NEW 
 hr_holidays  / hr.leave                 / request_date_from (date)      : NEW 
 hr_holidays  / hr.leave                 / request_date_from_period (selection): NEW selection_keys: ['am', 'pm']
 hr_holidays  / hr.leave                 / request_date_to (date)        : NEW 
@@ -30,9 +24,6 @@ hr_holidays  / hr.leave                 / request_hour_to (selection)   : NEW se
 hr_holidays  / hr.leave                 / request_unit_custom (boolean) : NEW 
 hr_holidays  / hr.leave                 / request_unit_half (boolean)   : NEW 
 hr_holidays  / hr.leave                 / request_unit_hours (boolean)  : NEW 
-hr_holidays  / hr.leave                 / second_approver_id (many2one) : NEW relation: hr.employee
-hr_holidays  / hr.leave                 / state (selection)             : NEW selection_keys: ['cancel', 'confirm', 'draft', 'refuse', 'validate', 'validate1']
-hr_holidays  / hr.leave                 / website_message_ids (one2many): NEW relation: mail.message
 hr_holidays  / hr.leave.allocation      / accrual (boolean)             : NEW 
 hr_holidays  / hr.leave.allocation      / accrual_limit (integer)       : NEW 
 hr_holidays  / hr.leave.allocation      / activity_ids (one2many)       : NEW relation: mail.activity
@@ -61,12 +52,7 @@ hr_holidays  / hr.leave.allocation      / second_approver_id (many2one) : NEW re
 hr_holidays  / hr.leave.allocation      / state (selection)             : NEW selection_keys: ['cancel', 'confirm', 'draft', 'refuse', 'validate', 'validate1']
 hr_holidays  / hr.leave.allocation      / unit_per_interval (selection) : NEW selection_keys: ['days', 'hours']
 hr_holidays  / hr.leave.allocation      / website_message_ids (one2many): NEW relation: mail.message
-hr_holidays  / hr.leave.type            / active (boolean)              : NEW 
 hr_holidays  / hr.leave.type            / allocation_type (selection)   : NEW selection_keys: ['fixed', 'fixed_allocation', 'no']
-hr_holidays  / hr.leave.type            / categ_id (many2one)           : NEW relation: calendar.event.type
-hr_holidays  / hr.leave.type            / color_name (selection)        : NEW required: required, selection_keys: ['black', 'blue', 'brown', 'ivory', 'lavender', 'lightblue', 'lightcoral', 'lightcyan', 'lightgreen', 'lightpink', 'lightsalmon', 'lightyellow', 'magenta', 'red', 'violet', 'wheat'], req_default: function
-hr_holidays  / hr.leave.type            / company_id (many2one)         : NEW relation: res.company
-hr_holidays  / hr.leave.type            / name (char)                   : NEW required: required
 hr_holidays  / hr.leave.type            / request_unit (selection)      : NEW required: required, selection_keys: ['day', 'hour'], req_default: function
 hr_holidays  / hr.leave.type            / sequence (integer)            : NEW 
 hr_holidays  / hr.leave.type            / time_type (selection)         : NEW selection_keys: ['leave', 'other']

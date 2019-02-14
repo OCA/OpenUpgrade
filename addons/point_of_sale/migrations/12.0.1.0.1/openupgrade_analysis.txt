@@ -5,16 +5,22 @@ point_of_sale / pos.config               / group_sale_pricelist (boolean): DEL
 point_of_sale / pos.config               / iface_invoicing (boolean)     : DEL 
 point_of_sale / pos.config               / module_account (boolean)      : NEW 
 point_of_sale / pos.order                / amount_paid (float)           : not a function anymore
+point_of_sale / pos.order                / amount_paid (float)           : is now stored
 point_of_sale / pos.order                / amount_paid (float)           : now required
 point_of_sale / pos.order                / amount_return (float)         : not a function anymore
+point_of_sale / pos.order                / amount_return (float)         : is now stored
 point_of_sale / pos.order                / amount_return (float)         : now required
 point_of_sale / pos.order                / amount_tax (float)            : not a function anymore
+point_of_sale / pos.order                / amount_tax (float)            : is now stored
 point_of_sale / pos.order                / amount_tax (float)            : now required
 point_of_sale / pos.order                / amount_total (float)          : not a function anymore
+point_of_sale / pos.order                / amount_total (float)          : is now stored
 point_of_sale / pos.order                / amount_total (float)          : now required
 point_of_sale / pos.order.line           / price_subtotal (float)        : not a function anymore
+point_of_sale / pos.order.line           / price_subtotal (float)        : is now stored
 point_of_sale / pos.order.line           / price_subtotal (float)        : now required
 point_of_sale / pos.order.line           / price_subtotal_incl (float)   : not a function anymore
+point_of_sale / pos.order.line           / price_subtotal_incl (float)   : is now stored
 point_of_sale / pos.order.line           / price_subtotal_incl (float)   : now required
 point_of_sale / uom.category             / is_pos_groupable (boolean)    : NEW 
 ---XML records in module 'point_of_sale'---

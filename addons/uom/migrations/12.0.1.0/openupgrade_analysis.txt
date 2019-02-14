@@ -1,12 +1,16 @@
 ---Fields in module 'uom'---
+uom          / product.uom              / __last_update (datetime)      : previously in module product
+uom          / product.uom              / active (boolean)              : previously in module product
+uom          / product.uom              / category_id (many2one)        : previously in module product
+uom          / product.uom              / display_name (char)           : previously in module product
+uom          / product.uom              / factor (float)                : previously in module product
+uom          / product.uom              / factor_inv (float)            : previously in module product
+uom          / product.uom              / name (char)                   : previously in module product
+uom          / product.uom              / rounding (float)              : previously in module product
+uom          / product.uom              / uom_type (selection)          : previously in module product
 uom          / uom.category             / measure_type (selection)      : NEW selection_keys: ['length', 'time', 'unit', 'volume', 'weight']
 uom          / uom.category             / name (char)                   : NEW required: required
-uom          / uom.uom                  / active (boolean)              : NEW 
-uom          / uom.uom                  / category_id (many2one)        : NEW relation: uom.category, required: required
-uom          / uom.uom                  / factor (float)                : NEW required: required, req_default: function
-uom          / uom.uom                  / name (char)                   : NEW required: required
-uom          / uom.uom                  / rounding (float)              : NEW required: required, req_default: function
-uom          / uom.uom                  / uom_type (selection)          : NEW required: required, selection_keys: ['bigger', 'reference', 'smaller'], req_default: function
+uom          / uom.uom                  / measure_type (selection)      : NEW selection_keys: function
 ---XML records in module 'uom'---
 NEW ir.actions.act_window: uom.product_uom_categ_form_action
 NEW ir.actions.act_window: uom.product_uom_form_action

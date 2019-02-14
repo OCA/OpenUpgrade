@@ -1,4 +1,6 @@
 ---Fields in module 'maintenance'---
+maintenance  / maintenance.equipment    / activity_date_deadline (date) : not related anymore
+maintenance  / maintenance.equipment    / activity_date_deadline (date) : not stored anymore
 maintenance  / maintenance.equipment    / activity_date_deadline (date) : now a function
 maintenance  / maintenance.equipment    / company_id (many2one)         : NEW relation: res.company
 maintenance  / maintenance.equipment    / effective_date (date)         : NEW required: required, req_default: function
@@ -8,6 +10,8 @@ maintenance  / maintenance.equipment    / warranty (date)               : was re
 maintenance  / maintenance.equipment.category / company_id (many2one)         : NEW relation: res.company
 maintenance  / maintenance.equipment.category / message_last_post (datetime)  : DEL 
 maintenance  / maintenance.equipment.category / message_main_attachment_id (many2one): NEW relation: ir.attachment
+maintenance  / maintenance.request      / activity_date_deadline (date) : not related anymore
+maintenance  / maintenance.request      / activity_date_deadline (date) : not stored anymore
 maintenance  / maintenance.request      / activity_date_deadline (date) : now a function
 maintenance  / maintenance.request      / company_id (many2one)         : NEW relation: res.company
 maintenance  / maintenance.request      / message_last_post (datetime)  : DEL 

@@ -1,6 +1,17 @@
 ---Fields in module 'stock'---
+stock        / procurement.rule         / action (selection)            : selection_keys is now '['pull', 'pull_push', 'push']' ('['move']')
+stock        / procurement.rule         / location_id (many2one)        : now required
 stock        / product.putaway          / product_location_ids (one2many): NEW relation: stock.fixed.putaway.strat
 stock        / stock.fixed.putaway.strat / product_id (many2one)         : NEW relation: product.product
+stock        / stock.incoterms          / __last_update (datetime)      : module is now 'account' ('stock')
+stock        / stock.incoterms          / active (boolean)              : module is now 'account' ('stock')
+stock        / stock.incoterms          / code (char)                   : module is now 'account' ('stock')
+stock        / stock.incoterms          / display_name (char)           : module is now 'account' ('stock')
+stock        / stock.incoterms          / name (char)                   : module is now 'account' ('stock')
+stock        / stock.inventory.line     / location_name (char)          : DEL 
+stock        / stock.inventory.line     / prodlot_name (char)           : DEL 
+stock        / stock.inventory.line     / product_code (char)           : DEL 
+stock        / stock.inventory.line     / product_name (char)           : DEL 
 stock        / stock.inventory.line     / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
 stock        / stock.location           / parent_left (integer)         : DEL 
 stock        / stock.location           / parent_path (char)            : NEW 
@@ -21,6 +32,8 @@ stock        / stock.package_level      / move_ids (one2many)           : NEW re
 stock        / stock.package_level      / move_line_ids (one2many)      : NEW relation: stock.move.line
 stock        / stock.package_level      / package_id (many2one)         : NEW relation: stock.quant.package, required: required
 stock        / stock.package_level      / picking_id (many2one)         : NEW relation: stock.picking
+stock        / stock.picking            / activity_date_deadline (date) : not related anymore
+stock        / stock.picking            / activity_date_deadline (date) : not stored anymore
 stock        / stock.picking            / activity_date_deadline (date) : now a function
 stock        / stock.picking            / backorder_ids (one2many)      : NEW relation: stock.picking
 stock        / stock.picking            / immediate_transfer (boolean)  : NEW 
@@ -37,25 +50,10 @@ stock        / stock.production.lot     / message_last_post (datetime)  : DEL
 stock        / stock.production.lot     / message_main_attachment_id (many2one): NEW relation: ir.attachment
 stock        / stock.production.lot     / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
 stock        / stock.quant              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+stock        / stock.quant.package      / company_id (many2one)         : is now stored
+stock        / stock.quant.package      / location_id (many2one)        : is now stored
 stock        / stock.quant.package      / move_line_ids (one2many)      : DEL relation: stock.move.line
-stock        / stock.rule               / action (selection)            : NEW required: required, selection_keys: ['pull', 'pull_push', 'push']
-stock        / stock.rule               / active (boolean)              : NEW 
 stock        / stock.rule               / auto (selection)              : NEW required: required, selection_keys: ['manual', 'transparent'], req_default: function
-stock        / stock.rule               / company_id (many2one)         : NEW relation: res.company
-stock        / stock.rule               / delay (integer)               : NEW 
-stock        / stock.rule               / group_id (many2one)           : NEW relation: procurement.group
-stock        / stock.rule               / group_propagation_option (selection): NEW selection_keys: ['fixed', 'none', 'propagate']
-stock        / stock.rule               / location_id (many2one)        : NEW relation: stock.location, required: required
-stock        / stock.rule               / location_src_id (many2one)    : NEW relation: stock.location
-stock        / stock.rule               / name (char)                   : NEW required: required
-stock        / stock.rule               / partner_address_id (many2one) : NEW relation: res.partner
-stock        / stock.rule               / picking_type_id (many2one)    : NEW relation: stock.picking.type, required: required
-stock        / stock.rule               / procure_method (selection)    : NEW required: required, selection_keys: ['make_to_order', 'make_to_stock'], req_default: function
-stock        / stock.rule               / propagate (boolean)           : NEW 
-stock        / stock.rule               / propagate_warehouse_id (many2one): NEW relation: stock.warehouse
-stock        / stock.rule               / route_id (many2one)           : NEW relation: stock.location.route, required: required
-stock        / stock.rule               / sequence (integer)            : NEW 
-stock        / stock.rule               / warehouse_id (many2one)       : NEW relation: stock.warehouse
 stock        / stock.scrap              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
 stock        / stock.warehouse          / default_resupply_wh_id (many2one): DEL relation: stock.warehouse
 stock        / stock.warehouse          / mto_pull_id (many2one)        : relation is now 'stock.rule' ('procurement.rule')

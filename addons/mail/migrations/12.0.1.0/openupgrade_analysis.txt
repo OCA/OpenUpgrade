@@ -89,6 +89,8 @@ mail         / mail.test.simple         / message_unread (boolean)      : module
 mail         / mail.test.simple         / message_unread_counter (integer): module is now 'test_mail' ('mail')
 mail         / mail.test.simple         / name (char)                   : module is now 'test_mail' ('mail')
 mail         / mail.tracking.value      / track_sequence (integer)      : NEW 
+mail         / res.partner              / activity_date_deadline (date) : not related anymore
+mail         / res.partner              / activity_date_deadline (date) : not stored anymore
 mail         / res.partner              / activity_date_deadline (date) : now a function
 mail         / res.partner              / message_last_post (datetime)  : DEL 
 mail         / res.partner              / message_main_attachment_id (many2one): NEW relation: ir.attachment
