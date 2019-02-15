@@ -3,11 +3,17 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
+_field_renames = [
+    ('hr.employee', 'hr_employee', 'vehicle_distance', 'km_home_work'),
+]
+
 xmlid_renames = [
     ('hr.employee_root', 'hr.employee_admin'),
 ]
 
 
-@openupgrade.migrate(use_env=False)
-def migrate(cr, version):
-    openupgrade.rename_xmlids(cr, xmlid_renames)
+@openupgrade.migrate()
+def migrate(env, version):
+    if openupgrade.column_exists(env.cr, 'hr_employee', 'vehicle_distance'):
+        openupgrade.rename_fields(env, _field_renames)
+    openupgrade.rename_xmlids(env.cr, xmlid_renames)
