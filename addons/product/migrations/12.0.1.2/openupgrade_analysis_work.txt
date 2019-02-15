@@ -17,6 +17,8 @@ product      / product.category         / parent_path (char)            : NEW
 product      / product.category         / parent_right (integer)        : DEL
 # DONE: Post-migration: called _parent_store_compute()
 
+product      / product.product          / activity_date_deadline (date) : not related anymore
+product      / product.product          / activity_date_deadline (date) : not stored anymore
 product      / product.product          / activity_date_deadline (date) : now a function
 # NOTHING TO DO: unstored computed method
 
@@ -32,6 +34,8 @@ product      / product.product          / uom_po_id (many2one)          : relati
 product      / product.supplierinfo     / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
 # NOTHING TO DO (done in uom module)
 
+product      / product.template         / activity_date_deadline (date) : not related anymore
+product      / product.template         / activity_date_deadline (date) : not stored anymore
 product      / product.template         / activity_date_deadline (date) : now a function
 # NOTHING TO DO: unstored computed method
 
@@ -51,20 +55,30 @@ product      / product.template.attribute.exclusion / product_tmpl_id (many2one)
 product      / product.template.attribute.exclusion / value_ids (many2many)         : NEW relation: product.template.attribute.value
 # NOTHING TO DO (new model)
 
-product      / product.template.attribute.line / attribute_id (many2one)       : NEW relation: product.attribute, required: required
-product      / product.template.attribute.line / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
-product      / product.template.attribute.line / value_ids (many2many)         : NEW relation: product.attribute.value
-# DONE: pre-migration: renamed from 'product.attribute.line' to 'product.template.attribute.line'
-
 product      / product.template.attribute.value / exclude_for (one2many)        : NEW relation: product.template.attribute.exclusion
 # NOTHING TO DO (as product.template.attribute.exclusion is new model)
 
-product      / product.template.attribute.value / price_extra (float)           : NEW
-product      / product.template.attribute.value / product_tmpl_id (many2one)    : NEW relation: product.template, required: required
+**** new model 'product.template.attribute.line' ****
+# DONE: pre-migration: renamed from 'product.attribute.line' to 'product.template.attribute.line'
+
+**** new model 'product.template.attribute.value' ****
 # DONE: pre-migration: renamed from 'product.attribute.price' to 'product.template.attribute.value'
 
+product      / product.attribute.price  / value_id (many2one)           : DEL relation: product.attribute.value, required: required
 product      / product.template.attribute.value / product_attribute_value_id (many2one): NEW relation: product.attribute.value, required: required
 # DONE: pre-migration: renamed field/column
+
+product      / product.uom              / __last_update (datetime)      : module is now 'uom' ('product')
+product      / product.uom              / active (boolean)              : module is now 'uom' ('product')
+product      / product.uom              / category_id (many2one)        : module is now 'uom' ('product')
+product      / product.uom              / category_id (many2one)        : relation is now 'uom.category' ('product.uom.categ')
+product      / product.uom              / display_name (char)           : module is now 'uom' ('product')
+product      / product.uom              / factor (float)                : module is now 'uom' ('product')
+product      / product.uom              / factor_inv (float)            : module is now 'uom' ('product')
+product      / product.uom              / name (char)                   : module is now 'uom' ('product')
+product      / product.uom              / rounding (float)              : module is now 'uom' ('product')
+product      / product.uom              / uom_type (selection)          : module is now 'uom' ('product')
+# NOTHING TO DO: model rename handled in base module pre-migration
 
 ---XML records in module 'product'---
 DEL ir.actions.act_window: product.product_uom_categ_form_action
