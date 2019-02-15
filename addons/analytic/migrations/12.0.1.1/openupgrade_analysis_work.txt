@@ -1,5 +1,6 @@
 ---Fields in module 'analytic'---
 analytic     / account.analytic.account / group_id (many2one)           : NEW relation: account.analytic.group
+analytic     / account.analytic.line    / group_id (many2one)           : NEW relation: account.analytic.group
 # NOTHING TO DO (relation to new model)
 
 analytic     / account.analytic.account / message_last_post (datetime)  : DEL
@@ -16,14 +17,19 @@ analytic     / account.analytic.distribution / tag_id (many2one)             : N
 
 analytic     / account.analytic.group   / children_ids (one2many)       : NEW relation: account.analytic.group
 analytic     / account.analytic.group   / company_id (many2one)         : NEW relation: res.company
+analytic     / account.analytic.group   / complete_name (char)          : NEW
 analytic     / account.analytic.group   / description (text)            : NEW 
 analytic     / account.analytic.group   / name (char)                   : NEW required: required
 analytic     / account.analytic.group   / parent_id (many2one)          : NEW relation: account.analytic.group
 analytic     / account.analytic.group   / parent_path (char)            : NEW 
 # NOTHING TO DO (new model)
 
+analytic     / account.analytic.line    / company_id (many2one)         : not related anymore
 analytic     / account.analytic.line    / company_id (many2one)         : now required, default = function
 # DONE: post-migration: put the company of their analytic account
+
+analytic     / account.analytic.line    / currency_id (many2one)        : is now stored
+# DONE: post-migration: filled from res_company
 
 analytic     / account.analytic.line    / product_uom_id (many2one)     : previously in module account
 # NOTHING TO DO

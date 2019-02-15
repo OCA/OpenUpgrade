@@ -15,6 +15,17 @@ def fill_account_analytic_line_company_id(cr):
     )
 
 
+def fill_account_analytic_line_currency_id(cr):
+    openupgrade.logged_query(
+        cr, """UPDATE account_analytic_line aal
+        SET currency_id = rc.currency_id
+        FROM res_company rc
+        WHERE aal.company_id = rc.id
+        """,
+    )
+
+
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     fill_account_analytic_line_company_id(cr)
+    fill_account_analytic_line_currency_id(cr)
