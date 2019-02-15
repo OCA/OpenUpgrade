@@ -27,6 +27,7 @@ merged_modules = {
     # OCA/server-auth
     'auth_brute_force': 'base',
     # OCA/web
+    'web_no_bubble': 'web',
     'web_sheet_full_width': 'web_responsive',
 }
 
