@@ -9,7 +9,6 @@ uom          / product.uom              / name (char)                   : previo
 uom          / product.uom              / rounding (float)              : previously in module product
 uom          / product.uom              / uom_type (selection)          : previously in module product
 uom          / uom.category             / measure_type (selection)      : NEW selection_keys: ['length', 'time', 'unit', 'volume', 'weight']
-uom          / uom.category             / name (char)                   : NEW required: required
 uom          / uom.uom                  / measure_type (selection)      : NEW selection_keys: function
 ---XML records in module 'uom'---
 NEW ir.actions.act_window: uom.product_uom_categ_form_action

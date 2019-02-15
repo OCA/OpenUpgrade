@@ -42,7 +42,7 @@ renamed_models = {
     'product.attribute.line': 'product.template.attribute.line',
     'product.attribute.price': 'product.template.attribute.value',
     'product.uom': 'uom.uom',
-    'product.uom.category': 'uom.category',
+    'product.uom.categ': 'uom.category',
     'sale.quote.line': 'sale.order.template.line',
     'sale.quote.option': 'sale.order.template.option',
     'sale.quote.template': 'sale.order.template',
