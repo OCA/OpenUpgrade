@@ -24,6 +24,10 @@ hr           / hr.employee              / study_school (char)           : NEW
 hr           / hr.employee              / km_home_work (integer)        : NEW
 DONE: pre-migration: renamed from vehicle_distance that comes from hr_contract module
 
+hr           / hr.employee              / resource_calendar_id (many2one): is now stored
+hr           / hr.employee              / user_id (many2one)            : is now stored
+# DONE: post-migration: filled these fields
+
 hr           / hr.job                   / message_last_post (datetime)  : DEL
 hr           / hr.job                   / message_main_attachment_id (many2one): NEW relation: ir.attachment
 hr           / mail.channel             / subscription_department_ids (many2many): NEW relation: hr.department

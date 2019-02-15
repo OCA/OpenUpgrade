@@ -4,8 +4,21 @@
 from openupgradelib import openupgrade
 
 
+def fill_hr_employee_resource_calendar_and_user(cr):
+    openupgrade.logged_query(
+        cr, """
+        UPDATE hr_employee he
+        SET resource_calendar_id = rr.calendar_id,
+            user_id = rr.user_id
+        FROM resource_resource rr
+        WHERE he.resource_id = rr.id
+        """
+    )
+
+
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
+    fill_hr_employee_resource_calendar_and_user(cr)
     openupgrade.load_data(
         cr, 'hr', 'migrations/12.0.1.1/noupdate_changes.xml')
     openupgrade.delete_record_translations(
