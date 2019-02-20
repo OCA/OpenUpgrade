@@ -24,7 +24,7 @@ class TestBasic(TransactionCase):
         self.assertEqual(f.f3, 21)
         self.assertEqual(f.f4, 42)
 
-        f.f1 = 4
+        f.f1 = '4'
         self.assertEqual(f.f2, 42)
         self.assertEqual(f.f3, 21)
         self.assertEqual(f.f4, 10)
@@ -36,7 +36,7 @@ class TestBasic(TransactionCase):
         r = f.save()
         self.assertEqual(
             (r.f1, r.f2, r.f3, r.f4),
-            (4, 8, 4, 2),
+            ('4', 8, 4, 2),
         )
 
     def test_required(self):
@@ -45,12 +45,12 @@ class TestBasic(TransactionCase):
         with self.assertRaisesRegexp(AssertionError, 'f1 is a required field'):
             f.save()
         # set f1 and unset f2 => should work
-        f.f1 = 1
+        f.f1 = '1'
         f.f2 = False
         r = f.save()
         self.assertEqual(
             (r.f1, r.f2, r.f3, r.f4),
-            (1, 0, 0, 0)
+            ('1', 0, 0, 0)
         )
 
     def test_readonly(self):
@@ -61,9 +61,22 @@ class TestBasic(TransactionCase):
         f = Form(self.env['test_testing_utilities.readonly'])
 
         with self.assertRaises(AssertionError):
-            f.f1 = 5
+            f.f1 = '5'
         with self.assertRaises(AssertionError):
             f.f2 = 42
+
+    def test_readonly_save(self):
+        """ Should not save readonly fields unless they're force_save
+        """
+        f = Form(self.env['test_testing_utilities.a'], view='test_testing_utilities.non_normalized_attrs')
+
+        f.f1 = '1'
+        f.f2 = 987
+        self.assertEqual(f.f5, 987)
+        self.assertEqual(f.f6, 987)
+        r = f.save()
+        self.assertEqual(r.f5, 0)
+        self.assertEqual(r.f6, 987)
 
     def test_attrs(self):
         """ Checks that attrs/modifiers with non-normalized domains work
@@ -73,7 +86,7 @@ class TestBasic(TransactionCase):
         # not readonly yet, should work
         f.f2 = 5
         # make f2 readonly
-        f.f1 = 63
+        f.f1 = '63'
         f.f3 = 5
         with self.assertRaises(AssertionError):
             f.f2 = 6
@@ -88,9 +101,9 @@ class TestM2O(TransactionCase):
 
         f = Form(self.env['test_testing_utilities.d'])
 
-        self.assertEqual(
-            f.f, a,
-            "The default value for the m2o should be the first Sub record"
+        self.assertFalse(
+            f.f,
+            "The default value gets overridden by the onchange"
         )
         f.f2 = "B"
         self.assertEqual(
@@ -258,6 +271,7 @@ class TestO2M(TransactionCase):
             [get(s) for s in r.subs],
             [("2", 2, 2), ("2", 2, 2)]
         )
+        self.assertEqual(r.v, 5)
 
         with Form(r, view='test_testing_utilities.o2m_parent') as f:
             with f.subs.new() as sub:
@@ -273,6 +287,7 @@ class TestO2M(TransactionCase):
             [get(s) for s in r.subs],
             [("2", 2, 2), ("5", 5, 5), ("2", 2, 2)]
         )
+        self.assertEqual(r.v, 10)
 
         with Form(r, view='test_testing_utilities.o2m_parent') as f, \
             f.subs.edit(index=0) as sub,\
@@ -426,12 +441,12 @@ class TestEdition(TransactionCase):
     """
     def test_trivial(self):
         r = self.env['test_testing_utilities.a'].create({
-            'f1': 5,
+            'f1': '5',
         })
 
         with Form(r) as f:
             self.assertEqual(f.id, r.id)
-            self.assertEqual(f.f1, 5)
+            self.assertEqual(f.f1, '5')
             self.assertEqual(f.f4, 8)
 
             f.f2 = 5
