@@ -6,7 +6,6 @@
 # NOKA Shigekazu <shigekazu.noka@gmail.com>, 2017
 # Manami Hashi <manami@roomsfor.hk>, 2017
 # ook rio <riokoko5@gmail.com>, 2017
-# Kazuki Eda <edak1209@gmail.com>, 2017
 # kent_ocean <ke.tanabe@gmail.com>, 2017
 # Masayuki Takesue <m_takesue@nifty.com>, 2017
 # Kohji Katayama <kohji.katayama@dreamyard.co.jp>, 2017
@@ -19,7 +18,7 @@
 # 前園義博 <yoshihiro.maezono@pro-spire.co.jp>, 2018
 # 城谷 龍弥 <tatsuya.shirotani@pro-spire.co.jp>, 2018
 # Takuya Sawada <takuya@tuntunkun.com>, 2018
-# Yoshi Tashiro <tashiro@roomsfor.hk>, 2018
+# Yoshi Tashiro <tashiro@roomsfor.hk>, 2019
 # 
 msgid ""
 msgstr ""
@@ -27,7 +26,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-03 15:06+0000\n"
 "PO-Revision-Date: 2017-09-20 10:13+0000\n"
-"Last-Translator: Yoshi Tashiro <tashiro@roomsfor.hk>, 2018\n"
+"Last-Translator: Yoshi Tashiro <tashiro@roomsfor.hk>, 2019\n"
 "Language-Team: Japanese (https://www.transifex.com/odoo/teams/41243/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -73,7 +72,7 @@ msgstr "${(object.name or '').replace('/','-')}"
 #. module: account
 #: model:mail.template,subject:account.email_template_edi_invoice
 msgid "${object.company_id.name} Invoice (Ref ${object.number or 'n/a'})"
-msgstr "${object.company_id.name} 発注 (Ref ${object.name or 'n/a' })"
+msgstr "${object.company_id.name} 請求書 (Ref ${object.number or 'n/a' })"
 
 #. module: account
 #: model:mail.template,subject:account.mail_template_data_payment_receipt
@@ -129,7 +128,7 @@ msgstr "-> 消込"
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_move_line_form
 msgid "-> View partially reconciled entries"
-msgstr ""
+msgstr "-> 部分的に消込済の仕訳照会"
 
 #. module: account
 #: code:addons/account/models/account_bank_statement.py:463
@@ -2574,13 +2573,13 @@ msgid ""
 "Cannot create a credit note for the invoice which is already reconciled, "
 "invoice should be unreconciled first, then only you can add credit note for "
 "this invoice."
-msgstr ""
+msgstr "消込済の請求にクレジットノートを作成することはできません。先に請求の消込を取り消した上で、クレジットノートを作成してください。"
 
 #. module: account
 #: code:addons/account/wizard/account_invoice_refund.py:54
 #, python-format
 msgid "Cannot create credit note for the draft/cancelled invoice."
-msgstr ""
+msgstr "ドラフト/取消済請求にはクレジットノートが作成できません。"
 
 #. module: account
 #: code:addons/account/models/account_move.py:197
@@ -3550,7 +3549,7 @@ msgstr "返金通知"
 #: code:addons/account/models/account_invoice.py:442
 #, python-format
 msgid "Credit Note - %s"
-msgstr ""
+msgstr "クレジットノート - %s"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
@@ -3575,7 +3574,7 @@ msgstr "クレジットノート"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_journal_refund_sequence_number_next
 msgid "Credit Notes: Next Number"
-msgstr ""
+msgstr "クレジットノート: 次の番号"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_tax_adjustments_wizard_credit_account_id
@@ -3718,7 +3717,7 @@ msgstr "顧客請求書"
 #: code:addons/account/models/account_payment.py:675
 #, python-format
 msgid "Customer Payment"
-msgstr ""
+msgstr "顧客支払"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_partner_property_payment_term_id
@@ -5456,7 +5455,7 @@ msgstr "請求書番号"
 #: code:addons/account/models/account_invoice.py:440
 #, python-format
 msgid "Invoice - %s"
-msgstr ""
+msgstr "請求書 - %s"
 
 #. module: account
 #: model:mail.message.subtype,description:account.mt_invoice_created
@@ -5526,7 +5525,7 @@ msgstr "クレジットノート対象請求書"
 #: code:addons/account/models/account_invoice.py:753
 #, python-format
 msgid "Invoice must be cancelled in order to reset it to draft."
-msgstr ""
+msgstr "ドラフトに再設定するには先に請求書を取り消してください。"
 
 #. module: account
 #: code:addons/account/models/account_invoice.py:801
@@ -5931,7 +5930,7 @@ msgstr "かんばんダッシュボード"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_journal_kanban_dashboard_graph
 msgid "Kanban Dashboard Graph"
-msgstr ""
+msgstr "かんばんダッシュボードグラフ"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_journal_form
@@ -5946,7 +5945,7 @@ msgstr "現在日付を利用するには空のままとします。"
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_date
 msgid "Keep empty to use the invoice date."
-msgstr ""
+msgstr "請求日を適用するには空のままにしてください。"
 
 #. module: account
 #: selection:account.payment,payment_difference_handling:0
@@ -6064,7 +6063,7 @@ msgstr "先月"
 #: code:addons/account/static/src/xml/account_reconciliation.xml:119
 #, python-format
 msgid "Last Reconciliation:"
-msgstr ""
+msgstr "最終消込:"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_account_tag_write_uid
@@ -7839,7 +7838,7 @@ msgstr "プロダクトカテゴリ"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_line_product_image
 msgid "Product Image"
-msgstr ""
+msgstr "プロダクト画像"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_report_product_qty
@@ -8233,12 +8232,12 @@ msgstr "標準"
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_residual_company_signed
 msgid "Remaining amount due in the currency of the company."
-msgstr ""
+msgstr "会社通貨での未消込額"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_residual_signed
 msgid "Remaining amount due in the currency of the invoice."
-msgstr ""
+msgstr "請求書通貨での未消込額"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_residual
@@ -8486,7 +8485,7 @@ msgstr "保存"
 #: code:addons/account/static/src/xml/account_reconciliation.xml:199
 #, python-format
 msgid "Save and New"
-msgstr ""
+msgstr "保存して新たに追加"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -8702,7 +8701,7 @@ msgstr "付番"
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_payment_form
 msgid "Set To Draft"
-msgstr "予定に設定"
+msgstr "ドラフトに設定"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_account_tag_active
@@ -10556,6 +10555,7 @@ msgid ""
 "                                with the current invoice. A new draft invoice will be created\n"
 "                                so that you can edit it."
 msgstr ""
+"請求書を取り消し、新たに請求書を作成したい場合はこのオプションを使用してください。クレジットノートが作成、検証され、請求書と消し込まれると同時に、新たにドラフト請求書が作成されます。"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_invoice_refund
@@ -10564,6 +10564,7 @@ msgid ""
 "                                have issued. The credit note will be created, validated and reconciled\n"
 "                                with the invoice. You will not be able to modify the credit note."
 msgstr ""
+"請求書を取り消したい場合はこのオプションを使用してください。クレジットノートが作成、検証され、請求書と消し込まれます。クレジットノートの編集はできません。"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_account_type_include_initial_balance

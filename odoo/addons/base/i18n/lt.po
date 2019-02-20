@@ -5,7 +5,7 @@
 # Translators:
 # Edgaras Kriukonis <edgaras@focusate.eu>, 2017
 # Aleksandr Jadov <a.jadov@tata.lt>, 2017
-# Zygi Mantus <zygimantus@gmail.com>, 2017
+# Zygimantus <zygimantus@gmail.com>, 2017
 # Arminas Grigonis <arminas@versada.lt>, 2017
 # Šarūnas Ažna <sarunas.azna@gmail.com>, 2017
 # Audrius Palenskis <audrius.palenskis@gmail.com>, 2017
@@ -17,11 +17,11 @@
 # Martin Trigaux, 2017
 # Eimantas <eimantas@focusate.eu>, 2018
 # Silvija Butko <silvija.butko@gmail.com>, 2018
-# Naglis Jonaitis, 2018
 # Paulius Sladkevičius <paulius@versada.eu>, 2018
 # digitouch UAB <digitouchagencyeur@gmail.com>, 2018
 # Vytautas Stanaitis <vytautas@basas.lt>, 2018
-# Linas Versada <linaskrisiukenas@gmail.com>, 2018
+# Naglis Jonaitis, 2019
+# Linas Versada <linaskrisiukenas@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
@@ -29,7 +29,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-03 15:05+0000\n"
 "PO-Revision-Date: 2017-09-20 10:13+0000\n"
-"Last-Translator: Linas Versada <linaskrisiukenas@gmail.com>, 2018\n"
+"Last-Translator: Linas Versada <linaskrisiukenas@gmail.com>, 2019\n"
 "Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -5819,7 +5819,7 @@ msgstr "Prieigos požymis"
 #. module: base
 #: model:res.groups,name:base.group_private_addresses
 msgid "Access to Private Addresses"
-msgstr ""
+msgstr "Prieiga prie privačių adresų"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_analytic_default
@@ -12910,7 +12910,7 @@ msgstr "Lesotas"
 #. module: base
 #: model:ir.module.module,description:base.module_website_sale_wishlist
 msgid "Let returning shoppers save products in a wishlist"
-msgstr ""
+msgstr "Leisti grįžtantiems pirkėjams išsaugoti produktus norų sąraše"
 
 #. module: base
 #: selection:report.paperformat,format:0
@@ -13051,7 +13051,7 @@ msgstr "Krauti"
 #: model:ir.ui.menu,name:base.menu_view_base_language_install
 #: model:ir.ui.view,arch_db:base.view_base_language_install
 msgid "Load a Translation"
-msgstr "Įkrauti vertimą"
+msgstr "Įkelti vertimą"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_lang_code
@@ -19646,6 +19646,9 @@ msgid ""
 "- deletion: you may be trying to delete a record while other records still reference it\n"
 "- creation/update: a mandatory field is not correctly set"
 msgstr ""
+"Operacijos nepavyko įvykdyti, tikriausiai dėl:\n"
+"- ištrynimo: galbūt bandote ištrinti įrašą, nors kiti įrašai vis dar susieti su juo\n"
+"- sukūrimo/atnaujinimo: privalomas laukas nėra teisingai nustatytas"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_model_fields_domain
