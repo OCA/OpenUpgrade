@@ -193,10 +193,12 @@ return AbstractRenderer.extend({
             }
         }
 
-        // For Bar chart View, we keep only groups where count > 0
-        data[0].values  = _.filter(data[0].values, function (elem, index) {
-            return self.state.data[index].count > 0;
-        });
+        // For one level Bar chart View, we keep only groups where count > 0
+        if (this.state.groupedBy.length <= 1) {
+            data[0].values  = _.filter(data[0].values, function (elem, index) {
+                return self.state.data[index].count > 0;
+            });
+        }
 
         var $svgContainer = $('<div/>', {class: 'o_graph_svg_container'});
         this.$el.append($svgContainer);
@@ -449,6 +451,10 @@ return AbstractRenderer.extend({
         // of the tiny margins.
         if (ticksLabels.length > 3) {
             $svgContainer.find('svg .nv-x g.nv-axisMaxMin-x > text').hide();
+        } else {
+            // Since the graph is on full container have first and last label in the container
+            $svgContainer.find('svg .nv-x g.nv-axisMin-x > text').css({'text-anchor': 'start'});
+            $svgContainer.find('svg .nv-x g.nv-axisMax-x > text').css({'text-anchor': 'end'});
         }
 
         return chart;

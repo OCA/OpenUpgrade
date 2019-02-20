@@ -105,6 +105,14 @@ QUnit.module('Views', {
                 ]
             },
         };
+
+        this.actions = [{
+            id: 1,
+            name: 'Partners Action 1',
+            res_model: 'partner',
+            type: 'ir.actions.act_window',
+            views: [[false, 'kanban'], [false, 'form']],
+        }];
     }
 }, function () {
 
@@ -5647,9 +5655,10 @@ QUnit.module('Views', {
     });
 
     QUnit.test('display translation alert', function (assert) {
-        assert.expect(1);
+        assert.expect(2);
 
         this.data.partner.fields.foo.translate = true;
+        this.data.partner.fields.display_name.translate = true;
 
         var multi_lang = _t.database.multi_lang;
         _t.database.multi_lang = true;
@@ -5662,6 +5671,7 @@ QUnit.module('Views', {
                     '<sheet>' +
                         '<group>' +
                             '<field name="foo"/>' +
+                            '<field name="display_name"/>' +
                         '</group>' +
                     '</sheet>' +
                 '</form>',
@@ -5671,11 +5681,151 @@ QUnit.module('Views', {
         form.$buttons.find('.o_form_button_edit').click();
         form.$('input[name="foo"]').val("test").trigger("input");
         form.$buttons.find('.o_form_button_save').click();
+        assert.strictEqual(form.$('.o_form_view > .alert > div .oe_field_translate').length, 1,
+            "should have single translation alert");
 
-        assert.strictEqual(form.$('.o_form_view > .alert > div').length, 1,"should have a translation alert");
+        form.$buttons.find('.o_form_button_edit').click();
+        form.$('input[name="display_name"]').val("test2").trigger("input");
+        form.$buttons.find('.o_form_button_save').click();
+        assert.strictEqual(form.$('.o_form_view > .alert > div .oe_field_translate').length, 2,
+            "should have two translate fields in translation alert");
 
         form.destroy();
 
+        _t.database.multi_lang = multi_lang;
+    });
+
+    QUnit.test('translation alerts are preserved on pager change', function (assert) {
+        assert.expect(5);
+
+        this.data.partner.fields.foo.translate = true;
+
+        var multi_lang = _t.database.multi_lang;
+        _t.database.multi_lang = true;
+
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch: '<form string="Partners">' +
+                    '<sheet>' +
+                        '<field name="foo"/>' +
+                    '</sheet>' +
+                '</form>',
+            viewOptions: {
+                ids: [1, 2],
+                index: 0,
+            },
+            res_id: 1,
+        });
+
+        form.$buttons.find('.o_form_button_edit').click();
+        form.$('input[name="foo"]').val("test").trigger("input");
+        form.$buttons.find('.o_form_button_save').click();
+
+        assert.strictEqual(form.$('.o_form_view > .alert > div').length, 1,
+            "should have a translation alert");
+
+        // click on the pager to switch to the next record
+        form.pager.$('.o_pager_next').click();
+        assert.strictEqual(form.$('.o_form_view > .alert > div').length, 0,
+            "should not have a translation alert");
+
+        // click on the pager to switch back to the previous record
+        form.pager.$('.o_pager_previous').click();
+        assert.strictEqual(form.$('.o_form_view > .alert > div').length, 1,
+            "should have a translation alert");
+
+        // remove translation alert by click X and check alert even after form reload
+        form.$('.o_form_view > .alert > .close').click();
+        assert.strictEqual(form.$('.o_form_view > .alert > div').length, 0,
+            "should not have a translation alert");
+        form.reload();
+        assert.strictEqual(form.$('.o_form_view > .alert > div').length, 0,
+            "should not have a translation alert after reload");
+
+        form.destroy();
+        _t.database.multi_lang = multi_lang;
+    });
+
+    QUnit.test('translation alerts preseved on reverse breadcrumb', function (assert) {
+        assert.expect(2);
+
+        this.data['ir.translation'] = {
+            fields: {
+                name: { string: "name", type: "char" },
+                source: {string: "Source", type: "char"},
+                value: {string: "Value", type: "char"},
+            },
+            records: [],
+        };
+
+        this.data.partner.fields.foo.translate = true;
+
+        var multi_lang = _t.database.multi_lang;
+        _t.database.multi_lang = true;
+
+        var archs = {
+            'partner,false,form': '<form string="Partners">' +
+                    '<sheet>' +
+                        '<field name="foo"/>' +
+                    '</sheet>' +
+                '</form>',
+            'partner,false,search': '<search></search>',
+            'ir.translation,false,list': '<tree>' +
+                        '<field name="name"/>' +
+                        '<field name="source"/>' +
+                        '<field name="value"/>' +
+                    '</tree>',
+            'ir.translation,false,search': '<search></search>',
+        };
+
+        var actions = [{
+            id: 1,
+            name: 'Partner',
+            res_model: 'partner',
+            type: 'ir.actions.act_window',
+            views: [[false, 'form']],
+        }, {
+            id: 2,
+            name: 'Translate',
+            res_model: 'ir.translation',
+            type: 'ir.actions.act_window',
+            views: [[false, 'list']],
+            target: 'current',
+            flags: {'search_view': true, 'action_buttons': true},
+        }];
+
+        var actionManager = createActionManager({
+            actions: actions,
+            archs: archs,
+            data: this.data,
+        });
+
+        actionManager.doAction(1);
+
+        actionManager.controlPanel.$el.find('.o_form_button_edit').click();
+        actionManager.$('input[name="foo"]').val("test").trigger("input");
+        actionManager.controlPanel.$el.find('.o_form_button_save').click();
+
+        assert.strictEqual(actionManager.$('.o_form_view > .alert > div').length, 1,
+            "should have a translation alert");
+
+        var currentController = actionManager.getCurrentController().widget;
+        actionManager.doAction(2, {
+            on_reverse_breadcrumb: function () {
+                if (!_.isEmpty(currentController.renderer.alertFields)) {
+                    currentController.renderer.displayTranslationAlert();
+                }
+                return false;
+            },
+        });
+
+        $('.o_control_panel .breadcrumb a:first').click();
+        assert.strictEqual(actionManager.$('.o_form_view > .alert > div').length, 1,
+            "should have a translation alert");
+
+        actionManager.destroy();
         _t.database.multi_lang = multi_lang;
     });
 
@@ -7315,6 +7465,95 @@ QUnit.module('Views', {
             "should not display the 'Changes will be discarded' dialog");
 
         form.destroy();
+    });
+
+    QUnit.test('domain returned by onchange is cleared on discard', function (assert) {
+        assert.expect(4);
+
+        this.data.partner.onchanges = {
+            foo: function () {},
+        };
+
+        var domain = ['id', '=', 1];
+        var expectedDomain = domain;
+        var form = createView({
+            View: FormView,
+            model: 'partner',
+            data: this.data,
+            arch: '<form><field name="foo"/><field name="trululu"/></form>',
+            mockRPC: function (route, args) {
+                if (args.method === 'onchange' && args.args[0][0] === 1) {
+                    // onchange returns a domain only on record 1
+                    return $.when({
+                        domain: {
+                            trululu: domain,
+                        },
+                    });
+                }
+                if (args.method === 'name_search') {
+                    assert.deepEqual(args.kwargs.args, expectedDomain);
+                }
+                return this._super.apply(this, arguments);
+            },
+            res_id: 1,
+            viewOptions: {
+                ids: [1, 2],
+                mode: 'edit',
+            },
+        });
+
+        assert.strictEqual(form.$('input[name=foo]').val(), 'yop', "should be on record 1");
+
+        // change foo to trigger the onchange
+        testUtils.fields.editInput(form.$('input[name=foo]'), 'new value');
+
+        // open many2one dropdown to check if the domain is applied
+        testUtils.fields.many2one.clickOpenDropdown('trululu');
+
+        // switch to another record (should ask to discard changes, and reset the domain)
+        testUtils.dom.click(form.pager.$('.o_pager_next'));
+
+        // discard changes by clicking on confirm in the dialog
+        testUtils.dom.click($('.modal .modal-footer .btn-primary:first'));
+
+        assert.strictEqual(form.$('input[name=foo]').val(), 'blip', "should be on record 2");
+
+        // open many2one dropdown to check if the domain is applied
+        expectedDomain = [];
+        testUtils.fields.many2one.clickOpenDropdown('trululu');
+
+        form.destroy();
+    });
+
+    QUnit.test('discard after a failed save', function (assert) {
+        assert.expect(2);
+
+        var actionManager = createActionManager({
+            data: this.data,
+            archs: {
+                'partner,false,form': '<form>' +
+                                        '<field name="date" required="true"/>' +
+                                        '<field name="foo" required="true"/>' +
+                                    '</form>',
+                'partner,false,kanban': '<kanban><templates><t t-name="kanban-box">' +
+                                        '</t></templates></kanban>',
+                'partner,false,search': '<search></search>',
+            },
+            actions: this.actions,
+        });
+
+        actionManager.doAction(1);
+
+        testUtils.dom.click('.o_control_panel .o-kanban-button-new');
+
+        //cannot save because there is a required field
+        testUtils.dom.click('.o_control_panel .o_form_button_save');
+        testUtils.dom.click('.o_control_panel .o_form_button_cancel');
+
+        assert.containsNone(actionManager, '.o_form_view');
+        assert.containsOnce(actionManager, '.o_kanban_view');
+
+        actionManager.destroy();
     });
 
     QUnit.module('FormViewTABMainButtons');

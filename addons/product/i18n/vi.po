@@ -6,19 +6,19 @@
 # Thong Dong <thongdong7@gmail.com>, 2018
 # son dang <son.dang@doda100.com>, 2018
 # Minh Nguyen <ndminh210994@gmail.com>, 2018
-# thanh nguyen <thanhnguyen.icsc@gmail.com>, 2018
 # fanha99 <fanha99@hotmail.com>, 2018
 # khoibv Mr <kendev2009@gmail.com>, 2018
 # Duy BQ <duybq86@gmail.com>, 2018
 # Martin Trigaux, 2018
+# Nancy Momoland <thanhnguyen.icsc@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-19 08:21+0000\n"
+"POT-Creation-Date: 2019-01-09 10:32+0000\n"
 "PO-Revision-Date: 2018-08-24 09:23+0000\n"
-"Last-Translator: Martin Trigaux, 2018\n"
+"Last-Translator: Nancy Momoland <thanhnguyen.icsc@gmail.com>, 2019\n"
 "Language-Team: Vietnamese (https://www.transifex.com/odoo/teams/41243/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -80,6 +80,11 @@ msgid "2 year"
 msgstr "2 năm"
 
 #. module: product
+#: model_terms:ir.ui.view,arch_db:product.product_pricelist_view_kanban
+msgid "<i class=\"fa fa-money\" role=\"img\" aria-label=\"Currency\" title=\"Currency\"/>"
+msgstr ""
+
+#. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_pricelist_item_form_view
 msgid ""
 "<span attrs=\"{'invisible':[('base', '!=', 'list_price')]}\">Public Price  -  </span>\n"
@@ -94,6 +99,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:product.product_category_form_view
 msgid "<span class=\"o_stat_text\"> Products</span>"
 msgstr "<span class=\"o_stat_text\"> Sản phẩm</span>"
+
+#. module: product
+#: model_terms:ir.ui.view,arch_db:product.report_simple_barcode
+#: model_terms:ir.ui.view,arch_db:product.report_simple_label
+msgid "<span class=\"text-muted\">No barcode available</span>"
+msgstr ""
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_variant_easy_edit_view
@@ -179,6 +190,13 @@ msgid ""
 "A consumable product is a product for which stock is not managed.\n"
 "A service is a non-material product you provide."
 msgstr ""
+"Sản phẩm lưu kho là sản phẩm bạn muốn quản lý lượng tồn kho của nó. Hệ thống sẽ cần cài thêm phân hệ Kho.\n"
+"Sản phẩm tiêu dùng là sản phẩm bạn không cần quản lý lượng tồn kho.\n"
+"Sản phẩm dịch vụ là sản phẩm bạn cung cấp.Sản phẩm lưu kho là sản phẩm bạn muốn quản lý lượng tồn kho của nó. Hệ thống sẽ cần cài thêm phân hệ Kho.\n"
+"Sản phẩm tiêu dùng là sản phẩm bạn không cần quản lý lượng tồn kho.\n"
+"Sản phẩm dịch vụ là sản phẩm bạn cung cấp.Sản phẩm lưu kho là sản phẩm bạn muốn quản lý lượng tồn kho của nó. Hệ thống sẽ cần cài thêm phân hệ Kho.\n"
+"Sản phẩm tiêu dùng là sản phẩm bạn không cần quản lý lượng tồn kho.\n"
+"Sản phẩm dịch là sản phẩm bạn cung cấp."
 
 #. module: product
 #: model:product.product,name:product.product_product_25
@@ -571,14 +589,14 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:product.product_template_action
 #: model_terms:ir.actions.act_window,help:product.product_template_action_all
 msgid "Create a new product"
-msgstr ""
+msgstr "Tạo sản phẩm mới"
 
 #. module: product
 #: model_terms:ir.actions.act_window,help:product.product_normal_action
 #: model_terms:ir.actions.act_window,help:product.product_normal_action_sell
 #: model_terms:ir.actions.act_window,help:product.product_variant_action
 msgid "Create a new product variant"
-msgstr ""
+msgstr "Tạo biến thể sản phẩm mới"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute__create_uid
@@ -953,7 +971,7 @@ msgstr "Nếu đánh dấu kiểm, các thông điệp mới yêu cầu sự có
 #: model:ir.model.fields,help:product.field_product_product__message_has_error
 #: model:ir.model.fields,help:product.field_product_template__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Nếu chọn, sẽ hiển thị thông báo lỗi."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo__product_id
@@ -1020,7 +1038,7 @@ msgstr ""
 #: code:addons/product/models/product_template.py:573
 #, python-format
 msgid "Import Template for Products"
-msgstr ""
+msgstr "Import sản phẩm mẫu"
 
 #. module: product
 #: code:addons/product/models/product.py:665
@@ -1245,7 +1263,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_product__message_has_error
 #: model:ir.model.fields,field_description:product.field_product_template__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Thông báo gửi đi gặp lỗi"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product__message_ids
@@ -1331,7 +1349,7 @@ msgstr "Số thông điệp cần có hành động"
 #: model:ir.model.fields,help:product.field_product_product__message_has_error_counter
 #: model:ir.model.fields,help:product.field_product_template__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Số tin gửi đi bị lỗi"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product__message_unread_counter
@@ -2135,7 +2153,7 @@ msgstr ""
 "nhóm này)"
 
 #. module: product
-#: code:addons/product/models/product_template.py:475
+#: code:addons/product/models/product_template.py:480
 #, python-format
 msgid ""
 "The number of variants to generate is too high. You should either not "
@@ -2145,15 +2163,7 @@ msgid ""
 msgstr ""
 
 #. module: product
-#: code:addons/product/models/product_attribute.py:46
-#, python-format
-msgid ""
-"You are trying to change the type of an attribute value still referenced on "
-"at least one product template: %s"
-msgstr ""
-
-#. module: product
-#: code:addons/product/models/product_attribute.py:56
+#: code:addons/product/models/product_attribute.py:85
 #, python-format
 msgid ""
 "The operation cannot be completed:\n"
@@ -2556,6 +2566,14 @@ msgid "White"
 msgstr "Trắng"
 
 #. module: product
+#: code:addons/product/models/product_attribute.py:46
+#, python-format
+msgid ""
+"You are trying to change the type of an attribute value still referenced on "
+"at least one product template: %s"
+msgstr ""
+
+#. module: product
 #: model_terms:ir.actions.act_window,help:product.product_pricelist_action2
 msgid ""
 "You can assign pricelists to your customers or select one when creating a "
@@ -2563,14 +2581,14 @@ msgid ""
 msgstr ""
 
 #. module: product
-#: code:addons/product/models/product_pricelist.py:437
+#: code:addons/product/models/product_pricelist.py:442
 #, python-format
 msgid ""
 "You cannot assign the Main Pricelist as Other Pricelist in PriceList Item"
 msgstr ""
 
 #. module: product
-#: code:addons/product/models/product.py:54
+#: code:addons/product/models/product.py:57
 #, python-format
 msgid "You cannot create recursive categories."
 msgstr ""
@@ -2610,6 +2628,8 @@ msgid ""
 "You must define a product for everything you purchase,\n"
 "                whether it's a physical product, a consumable or services."
 msgstr ""
+"Bạn phải xác định một sản phẩm cho mọi thứ mà bạn mua, cho dù\n"
+"                nó có thể là một mặt hàng cụ thể, một hàng tiêu dùng hay là một dịch vụ."
 
 #. module: product
 #: model_terms:ir.actions.act_window,help:product.product_normal_action_sell
