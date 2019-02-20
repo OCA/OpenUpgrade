@@ -50,11 +50,16 @@ class Web_Editor(http.Controller):
 
         kwargs.update(trans)
 
-        record = None
-        if model and kwargs.get('res_id'):
-            record = request.env[model].with_context(trans).browse(kwargs.get('res_id'))
+        content = None
+        if model:
+            Model = request.env[model].with_context(trans)
+            if kwargs.get('res_id'):
+                record = Model.browse(kwargs.get('res_id'))
+                content = record and getattr(record, field)
+            else:
+                content = Model.default_get([field]).get(field)
 
-        kwargs.update(content=record and getattr(record, field) or "")
+        kwargs.update(content=content or '')
 
         return request.render(kwargs.get("template") or "web_editor.FieldTextHtml", kwargs, uid=request.uid)
 
@@ -387,7 +392,7 @@ class Web_Editor(http.Controller):
 
                 (note: searching for the URL string is not enough as it could appear in a comment or an xpath expression.)
                 """
-                return bool(etree.XML(view.arch).xpath("link[@href='{}']".format(url)))
+                return bool(etree.XML(view.arch).xpath("//link[@href='{}']".format(url)))
 
             view_to_xpath = IrUiView.get_related_views(bundle_xmlid, bundles=True).filtered(views_linking_url)
 

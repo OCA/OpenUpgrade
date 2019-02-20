@@ -2597,20 +2597,22 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         # retrieve results from records; this takes values from the cache and
         # computes remaining fields
         self = self.with_prefetch(self._prefetch.copy())
-        data = {record: {'id': record.id} for record in self}
-        missing = set()
+        data = [(record, {'id': record._ids[0]}) for record in self]
         use_name_get = (load == '_classic_read')
         for name in (stored + inherited + computed):
             convert = self._fields[name].convert_to_read
             # restrict the prefetching of self's model to self; this avoids
             # computing fields on a larger recordset than self
             self._prefetch[self._name] = set(self._ids)
-            for record in self:
+            for record, vals in data:
+                # missing records have their vals empty
+                if not vals:
+                    continue
                 try:
-                    data[record][name] = convert(record[name], record, use_name_get)
+                    vals[name] = convert(record[name], record, use_name_get)
                 except MissingError:
-                    missing.add(record)
-        result = [data[record] for record in self if record not in missing]
+                    vals.clear()
+        result = [vals for record, vals in data if vals]
 
         return result
 
@@ -2705,36 +2707,46 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                 res = 'pg_size_pretty(length(%s)::bigint)' % res
             return '%s as "%s"' % (res, col)
 
+        # selected fields are: 'id' followed by fields_pre
         qual_names = [qualify(name) for name in [self._fields['id']] + fields_pre]
 
         # determine the actual query to execute
         from_clause, where_clause, params = query.get_sql()
         query_str = "SELECT %s FROM %s WHERE %s" % (",".join(qual_names), from_clause, where_clause)
 
-        result = []
+        # fetch one list of record values per field
+        field_values_list = [[] for name in qual_names]
         param_pos = params.index(param_ids)
         for sub_ids in cr.split_for_in_conditions(self.ids):
             params[param_pos] = tuple(sub_ids)
             cr.execute(query_str, params)
-            result.extend(cr.dictfetchall())
+            for row in cr.fetchall():
+                for values, val in pycompat.izip(field_values_list, row):
+                    values.append(val)
 
-        ids = [vals['id'] for vals in result]
+        ids = field_values_list.pop(0)
         fetched = self.browse(ids)
 
         if ids:
             # translate the fields if necessary
             if context.get('lang'):
-                for field in fields_pre:
+                for field, values in pycompat.izip(fields_pre, field_values_list):
                     if not field.inherited and callable(field.translate):
                         name = field.name
                         translate = field.get_trans_func(fetched)
-                        for vals in result:
-                            vals[name] = translate(vals['id'], vals[name])
+                        for index in range(len(ids)):
+                            values[index] = translate(ids[index], values[index])
 
             # store result in cache
-            for vals in result:
-                record = self.browse(vals.pop('id'), self._prefetch)
-                record._cache.update(record._convert_to_cache(vals, validate=False))
+            target = self.browse([], self._prefetch)
+            for field, values in pycompat.izip(fields_pre, field_values_list):
+                convert = field.convert_to_cache
+                # Note that the target record passed to convert below is empty.
+                # This does not harm in practice, as it is only used in Monetary
+                # fields for rounding the value. As the value comes straight
+                # from the database, it is expected to be rounded already.
+                values = [convert(value, target, validate=False) for value in values]
+                self.env.cache.update(fetched, field, values)
 
             # determine the fields that must be processed now;
             # for the sake of simplicity, we ignore inherited fields
@@ -3094,10 +3106,15 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         protected_fields = [self._fields[n] for n in new_vals]
         with self.env.protecting(protected_fields, self):
             # write old-style fields with (low-level) method _write
-            if old_vals:
+            if old_vals or new_vals:
+                # if log_access is enabled, this updates 'write_date' and
+                # 'write_uid' and check access rules, even when old_vals is
+                # empty
                 self._write(old_vals)
 
             if new_vals:
+                self.check_field_access_rights('write', list(new_vals))
+
                 self.modified(set(new_vals) - set(old_vals))
 
                 # put the values of fields into cache, and inverse them
@@ -4318,7 +4335,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
     #
 
     @classmethod
-    def _browse(cls, ids, env, prefetch=None):
+    def _browse(cls, ids, env, prefetch=None, add_prefetch=True):
         """ Create a recordset instance.
 
         :param ids: a tuple of record ids
@@ -4331,7 +4348,8 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         if prefetch is None:
             prefetch = defaultdict(set)         # {model_name: set(ids)}
         records._prefetch = prefetch
-        prefetch[cls._name].update(ids)
+        if add_prefetch:
+            prefetch[cls._name].update(ids)
         return records
 
     def browse(self, arg=None, prefetch=None):
@@ -4370,9 +4388,13 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         """ Verifies that the current recorset holds a single record. Raises
         an exception otherwise.
         """
-        if len(self) == 1:
+        try:
+            # unpack to ensure there is only one value is faster than len when true and
+            # has a significant impact as this check is largely called
+            _id, = self._ids
             return self
-        raise ValueError("Expected singleton: %s" % self)
+        except ValueError:
+            raise ValueError("Expected singleton: %s" % self)
 
     def with_env(self, env):
         """ Returns a new version of this recordset attached to the provided
@@ -4638,7 +4660,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
     def __iter__(self):
         """ Return an iterator over ``self``. """
         for id in self._ids:
-            yield self._browse((id,), self.env, self._prefetch)
+            yield self._browse((id,), self.env, self._prefetch, False)
 
     def __contains__(self, item):
         """ Test whether ``item`` (record or field name) is an element of ``self``.
