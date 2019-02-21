@@ -15,4 +15,7 @@ resource     / resource.calendar        / tz (selection)                : NEW re
 resource     / resource.resource        / tz (selection)                : NEW required: required, selection_keys: function, req_default: function
 # Done: post-migration: filled tz from user_id.tz
 
+resource     / resource.test            / resource_calendar_id (many2one): is now stored
+# NOTHING TO DO
+
 ---XML records in module 'resource'---

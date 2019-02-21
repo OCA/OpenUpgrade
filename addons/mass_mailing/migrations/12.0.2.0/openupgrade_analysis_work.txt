@@ -14,6 +14,7 @@ mass_mailing / mail.mass_mailing.contact / message_last_post (datetime)  : DEL
 mass_mailing / mail.mass_mailing.contact / message_main_attachment_id (many2one): NEW relation: ir.attachment
 # NOTHING TO DO
 
+mass_mailing / mail.mass_mailing.contact / is_email_valid (boolean)      : NEW
 mass_mailing / mail.mass_mailing.contact / subscription_list_ids (one2many): NEW relation: mail.mass_mailing.list_contact_rel
 mass_mailing / mail.mass_mailing.contact / website_message_ids (one2many): previously in module portal
 mass_mailing / mail.mass_mailing.list   / contact_ids (many2many)       : NEW relation: mail.mass_mailing.contact
@@ -25,6 +26,7 @@ mass_mailing / mail.mass_mailing.list_contact_rel / contact_id (many2one)       
 mass_mailing / mail.mass_mailing.list_contact_rel / list_id (many2one)            : NEW relation: mail.mass_mailing.list, required: required
 # Nothing to do: It comes from the already existing m2m table in v11. Now this is a full model, but with same column/table name
 
+mass_mailing / mail.mass_mailing.contact / opt_out (boolean)             : not stored anymore
 mass_mailing / mail.mass_mailing.contact / opt_out (boolean)             : now a function
 mass_mailing / mail.mass_mailing.list_contact_rel / opt_out (boolean)             : NEW
 # Done: post-migration: Move this field from one model to the other

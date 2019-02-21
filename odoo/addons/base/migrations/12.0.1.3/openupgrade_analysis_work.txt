@@ -3,12 +3,17 @@ base         / ir.actions.report        / report_type (selection)       : select
 # Nothing to do: existing reports keep their original type
 base         / ir.attachment            / active (boolean)              : NEW
 # Nothing to do: default True is applied to all records
+base         / ir.attachment            / res_model_name (char)         : NEW
+# NOTHING TO DO: new field
 base         / ir.attachment            / thumbnail (binary)            : NEW attachment: True
 # Done: create thumbnails for all applicable attachments
 base         / ir.model                 / rule_ids (one2many)           : NEW relation: ir.rule
 # Nothing to do: One2many counterpart of existing many2one
 base         / ir.model.fields          / copy (boolean)                : was renamed to copied [nothing to do]
 # Nothing to do
+base         / ir.model.fields          / related_field_id (many2one)   : NEW relation: ir.model.fields
+base         / ir.model.fields          / relation_field_id (many2one)  : NEW relation: ir.model.fields
+# NOTHING TO DO: new fields
 base         / ir.module.module         / to_buy (boolean)              : NEW
 # Nothing to do, inserted by data for existing modules
 base         / ir.server.object.lines   / type (selection)              : selection_keys is now '['equation', 'reference', 'value']' ('['equation', 'value']')
@@ -25,10 +30,14 @@ base         / res.company              / base_onboarding_company_state (selecti
 base         / res.company              / external_report_layout (selection): DEL selection_keys: ['background', 'boxed', 'clean', 'standard']
 base         / res.company              / external_report_layout_id (many2one): NEW relation: ir.ui.view
 # Done in the web module: map external_report_layout of res_company with the related views
+base         / res.currency             / decimal_places (integer)      : is now stored
+# NOTHING TO DO: is computed automatically
 base         / res.groups               / is_portal (boolean)           : DEL
 # Nothing to do: obsolete functionality
 base         / res.lang                 / week_start (selection)        : NEW required: required, selection_keys: [1, 2, 3, 4, 5, 6, 7], req_default: function
 # Nothing to do: values are loaded from base/data/res.lang.csv
+base         / res.partner              / commercial_partner_country_id (many2one): DEL relation: res.country
+# NOTHING TO DO: unneeded
 base         / res.partner.bank         / acc_holder_name (char)        : NEW
 # Nothing to do: optional field in case the name is different from the partner name
 base         / res.partner.bank         / acc_type (char)               : selection_keys is now 'function' ('False')
@@ -40,6 +49,7 @@ base         / res.partner.category     / parent_left (integer)         : DEL
 base         / res.partner.category     / parent_path (char)            : NEW 
 base         / res.partner.category     / parent_right (integer)        : DEL
 # Done: call _parent_store_compute
+base         / res.users                / password (char)               : not stored anymore
 base         / res.users                / password (char)               : now a function
 # Nothing to do: feature from auth_crypt, merged into base
 ---XML records in module 'base'---
