@@ -6,6 +6,8 @@ renamed_modules = {
     # Odoo
     'mrp_repair': 'repair',
     'product_extended': 'mrp_bom_cost',
+    # OCA/community-data-files
+    'product_uom_unece': 'uom_unece',
 }
 
 merged_modules = {
