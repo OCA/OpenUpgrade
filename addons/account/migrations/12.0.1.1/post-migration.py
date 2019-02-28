@@ -115,10 +115,10 @@ def update_res_company_account_helper_states(cr):
         cr, """
         UPDATE res_company
         SET account_dashboard_onboarding_state = 'done',
-            account_invoice_onboarding_state = 'done,
+            account_invoice_onboarding_state = 'done',
             account_onboarding_invoice_layout_state = 'done',
             account_onboarding_sale_tax_state = 'done',
-            account_onboarding_sample_invoice_state = 'done',
+            account_onboarding_sample_invoice_state = 'done'
         """
     )
 
@@ -198,6 +198,21 @@ def recompute_invoice_taxes_add_analytic_tags(env):
                 env.cr.rollback()
 
 
+def set_default_taxes(env):
+    IrDefault = env['ir.default']
+    for company in env['res.company'].search([]):
+        stax = IrDefault.get(
+            'product.template', "taxes_id", company_id=company.id,
+        )
+        ptax = IrDefault.get(
+            'product.template', "supplier_taxes_id", company_id=company.id,
+        )
+        company.write({
+            'account_sale_tax_id': stax[0] if stax else False,
+            'account_purchase_tax_id': ptax[0] if ptax else False,
+        })
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
@@ -207,10 +222,12 @@ def migrate(env, version):
     map_account_tax_type_tax_use(cr)
     env['account.group']._parent_store_compute()
     fill_account_chart_template_account_code_prefix(cr)
+    update_res_company_account_helper_states(cr)
     update_res_company_account_setup_steps_states(cr)
     fill_account_journal_alias_id(env)
     fill_account_move_reverse_entry_id(env)
     recompute_invoice_taxes_add_analytic_tags(env)
+    set_default_taxes(env)
     openupgrade.load_data(
         cr, 'account', 'migrations/12.0.1.1/noupdate_changes.xml')
     openupgrade.delete_record_translations(

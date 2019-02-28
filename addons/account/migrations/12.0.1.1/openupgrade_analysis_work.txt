@@ -35,8 +35,8 @@ account      / account.fiscal.year      / name (char)                   : NEW re
 # NOTHING TO DO (new model)
 
 account      / account.group            / parent_left (integer)         : DEL
-account      / account.group            / parent_path (char)            : NEW 
-account      / account.group            / parent_right (integer)        : DEL 
+account      / account.group            / parent_path (char)            : NEW
+account      / account.group            / parent_right (integer)        : DEL
 # DONE: post-migration: call _parent_store_compute() method
 
 account      / stock.incoterms          / __last_update (datetime)      : previously in module stock
@@ -50,7 +50,7 @@ account      / account.invoice          / activity_date_deadline (date) : not re
 account      / account.invoice          / activity_date_deadline (date) : not stored anymore
 account      / account.invoice          / activity_date_deadline (date) : now a function
 account      / account.invoice          / incoterm_id (many2one)        : previously in module l10n_be_intrastat
-account      / account.invoice          / message_last_post (datetime)  : DEL 
+account      / account.invoice          / message_last_post (datetime)  : DEL
 account      / account.invoice          / message_main_attachment_id (many2one): NEW relation: ir.attachment
 # NOTHING TO DO
 
@@ -86,16 +86,16 @@ account      / account.journal          / post_at_bank_rec (boolean)    : NEW
 # NOTHING TO DO: complement for new invoice state `in_payment`
 
 account      / account.move             / auto_reverse (boolean)        : NEW
-account      / account.move             / reverse_date (date)           : NEW 
+account      / account.move             / reverse_date (date)           : NEW
 account      / account.move             / reverse_entry_id (many2one)   : NEW relation: account.move
-account      / account.move             / tax_type_domain (char)        : NEW 
+account      / account.move             / tax_type_domain (char)        : NEW
 # DONE: pre-migration: renames in case account_reversal module was installed
 # DONE: post-migration: filled if not account_reversal module was installed
 # DONE: post-migration: filled reverse_date
 
 account      / account.move.line        / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
-account      / account.move.line        / recompute_tax_line (boolean)  : NEW 
-account      / account.move.line        / tax_line_grouping_key (char)  : NEW 
+account      / account.move.line        / recompute_tax_line (boolean)  : NEW
+account      / account.move.line        / tax_line_grouping_key (char)  : NEW
 # NOTHING TO DO: new optional content
 
 account      / account.payment          / company_id (many2one)         : not stored anymore
@@ -116,42 +116,42 @@ account      / account.payment.term.line / option (selection)            : selec
 # DONE: post-migration: mapped each value
 
 account      / account.reconcile.model  / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
-account      / account.reconcile.model  / auto_reconcile (boolean)      : NEW 
-account      / account.reconcile.model  / force_second_tax_included (boolean): NEW 
-account      / account.reconcile.model  / force_tax_included (boolean)  : NEW 
+account      / account.reconcile.model  / auto_reconcile (boolean)      : NEW
+account      / account.reconcile.model  / force_second_tax_included (boolean): NEW
+account      / account.reconcile.model  / force_tax_included (boolean)  : NEW
 account      / account.reconcile.model  / match_amount (selection)      : NEW selection_keys: ['between', 'greater', 'lower']
-account      / account.reconcile.model  / match_amount_max (float)      : NEW 
-account      / account.reconcile.model  / match_amount_min (float)      : NEW 
+account      / account.reconcile.model  / match_amount_max (float)      : NEW
+account      / account.reconcile.model  / match_amount_min (float)      : NEW
 account      / account.reconcile.model  / match_journal_ids (many2many) : NEW relation: account.journal
 account      / account.reconcile.model  / match_label (selection)       : NEW selection_keys: ['contains', 'match_regex', 'not_contains']
-account      / account.reconcile.model  / match_label_param (char)      : NEW 
+account      / account.reconcile.model  / match_label_param (char)      : NEW
 account      / account.reconcile.model  / match_nature (selection)      : NEW required: required, selection_keys: ['amount_paid', 'amount_received', 'both'], req_default: function
-account      / account.reconcile.model  / match_partner (boolean)       : NEW 
+account      / account.reconcile.model  / match_partner (boolean)       : NEW
 account      / account.reconcile.model  / match_partner_category_ids (many2many): NEW relation: res.partner.category
 account      / account.reconcile.model  / match_partner_ids (many2many) : NEW relation: res.partner
-account      / account.reconcile.model  / match_same_currency (boolean) : NEW 
-account      / account.reconcile.model  / match_total_amount (boolean)  : NEW 
-account      / account.reconcile.model  / match_total_amount_param (float): NEW 
+account      / account.reconcile.model  / match_same_currency (boolean) : NEW
+account      / account.reconcile.model  / match_total_amount (boolean)  : NEW
+account      / account.reconcile.model  / match_total_amount_param (float): NEW
 account      / account.reconcile.model  / rule_type (selection)         : NEW required: required, selection_keys: ['invoice_matching', 'writeoff_button', 'writeoff_suggestion'], req_default: function
 account      / account.reconcile.model  / second_analytic_tag_ids (many2many): NEW relation: account.analytic.tag
 # NOTHING TO DO: new features
 
 account      / account.reconcile.model.template / auto_reconcile (boolean)      : NEW
-account      / account.reconcile.model.template / force_second_tax_included (boolean): NEW 
-account      / account.reconcile.model.template / force_tax_included (boolean)  : NEW 
+account      / account.reconcile.model.template / force_second_tax_included (boolean): NEW
+account      / account.reconcile.model.template / force_tax_included (boolean)  : NEW
 account      / account.reconcile.model.template / match_amount (selection)      : NEW selection_keys: ['between', 'greater', 'lower']
-account      / account.reconcile.model.template / match_amount_max (float)      : NEW 
-account      / account.reconcile.model.template / match_amount_min (float)      : NEW 
+account      / account.reconcile.model.template / match_amount_max (float)      : NEW
+account      / account.reconcile.model.template / match_amount_min (float)      : NEW
 account      / account.reconcile.model.template / match_journal_ids (many2many) : NEW relation: account.journal
 account      / account.reconcile.model.template / match_label (selection)       : NEW selection_keys: ['contains', 'match_regex', 'not_contains']
-account      / account.reconcile.model.template / match_label_param (char)      : NEW 
+account      / account.reconcile.model.template / match_label_param (char)      : NEW
 account      / account.reconcile.model.template / match_nature (selection)      : NEW required: required, selection_keys: ['amount_paid', 'amount_received', 'both'], req_default: function
-account      / account.reconcile.model.template / match_partner (boolean)       : NEW 
+account      / account.reconcile.model.template / match_partner (boolean)       : NEW
 account      / account.reconcile.model.template / match_partner_category_ids (many2many): NEW relation: res.partner.category
 account      / account.reconcile.model.template / match_partner_ids (many2many) : NEW relation: res.partner
-account      / account.reconcile.model.template / match_same_currency (boolean) : NEW 
-account      / account.reconcile.model.template / match_total_amount (boolean)  : NEW 
-account      / account.reconcile.model.template / match_total_amount_param (float): NEW 
+account      / account.reconcile.model.template / match_same_currency (boolean) : NEW
+account      / account.reconcile.model.template / match_total_amount (boolean)  : NEW
+account      / account.reconcile.model.template / match_total_amount_param (float): NEW
 account      / account.reconcile.model.template / rule_type (selection)         : NEW required: required, selection_keys: ['invoice_matching', 'writeoff_button', 'writeoff_suggestion'], req_default: function
 # NOTHING TO DO: new features
 
@@ -183,22 +183,22 @@ account      / res.company              / account_onboarding_sample_invoice_stat
 
 account      / res.company              / account_purchase_tax_id (many2one): NEW relation: account.tax
 account      / res.company              / account_sale_tax_id (many2one): NEW relation: account.tax
-??
+# DONE: post-migration: Fetched from old ir.default values
 
 account      / res.company              / account_setup_bank_data_done (boolean): DEL
 account      / res.company              / account_setup_bank_data_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
-account      / res.company              / account_setup_bar_closed (boolean): DEL 
-account      / res.company              / account_setup_coa_done (boolean): DEL 
+account      / res.company              / account_setup_bar_closed (boolean): DEL
+account      / res.company              / account_setup_coa_done (boolean): DEL
 account      / res.company              / account_setup_coa_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
-account      / res.company              / account_setup_company_data_done (boolean): DEL 
-account      / res.company              / account_setup_fy_data_done (boolean): DEL 
+account      / res.company              / account_setup_company_data_done (boolean): DEL
+account      / res.company              / account_setup_fy_data_done (boolean): DEL
 account      / res.company              / account_setup_fy_data_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
 # DONE: post-migration: filled the new *_state fields
 
 account      / res.company              / accounts_code_digits (integer): DEL
 account      / res.company              / incoterm_id (many2one)        : previously in module l10n_be_intrastat
-account      / res.company              / invoice_is_email (boolean)    : NEW 
-account      / res.company              / invoice_is_print (boolean)    : NEW 
+account      / res.company              / invoice_is_email (boolean)    : NEW
+account      / res.company              / invoice_is_print (boolean)    : NEW
 account      / res.company              / invoice_reference_type (selection): NEW selection_keys: function
 account      / res.company              / qr_code (boolean)             : NEW
 # NOTHING TO DO
