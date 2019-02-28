@@ -47,6 +47,10 @@ def compare_records(dict_old, dict_new, fields):
         elif field == 'model':
             if model_map(dict_old['model']) != dict_new['model']:
                 return False
+        elif field == 'original_module':
+            if dict_old['original_module'] != dict_old['prefix'] or \
+                    dict_new['original_module'] != dict_new['prefix']:
+                return False
         elif dict_old[field] != dict_new[field]:
             return False
     return True
@@ -264,6 +268,8 @@ def compare_sets(old_records, new_records):
 
 def compare_xml_sets(old_records, new_records):
     reprs = collections.defaultdict(list)
+
+    # direct match
     match_fields = ['module', 'model', 'name']
     for column in copy.copy(old_records):
         found = search(column, new_records, match_fields)
@@ -271,21 +277,59 @@ def compare_xml_sets(old_records, new_records):
             old_records.remove(column)
             new_records.remove(found)
 
+    # other module, same full xmlid
+    match_fields = ['model', 'name']
+    moved_records = []
+    for column in copy.copy(old_records):
+        found = search(column, new_records, match_fields)
+        if found:
+            old_records.remove(column)
+            new_records.remove(found)
+            column['old'] = True
+            found['new'] = True
+            column['moved'] = found['module']
+            found['moved'] = module_map(column['module'])
+            moved_records.append(column)
+            moved_records.append(found)
+
+    # other module, same suffix, other prefix (with original_module == prefix)
+    match_fields = ['model', 'suffix', 'original_module']
+    renamed_records = []
+    for column in copy.copy(old_records):
+        found = search(column, new_records, match_fields)
+        if found:
+            old_records.remove(column)
+            new_records.remove(found)
+            column['old'] = True
+            found['new'] = True
+            column['renamed'] = found['module']
+            found['renamed'] = module_map(column['module'])
+            renamed_records.append(column)
+            renamed_records.append(found)
+
     for record in old_records:
         record['old'] = True
     for record in new_records:
         record['new'] = True
 
     sorted_records = sorted(
-        old_records + new_records,
+        old_records + new_records + moved_records + renamed_records,
         key=lambda k: (k['model'], 'old' in k, k['name'])
     )
     for entry in sorted_records:
         content = ''
         if 'old' in entry:
             content = 'DEL %(model)s: %(name)s' % entry
+            if 'moved' in entry:
+                content += ' [potentially moved to %(moved)s module]' % entry
+            elif 'renamed' in entry:
+                content += ' [renamed to %(renamed)s module]' % entry
         elif 'new' in entry:
             content = 'NEW %(model)s: %(name)s' % entry
+            if 'moved' in entry:
+                content += ' [potentially moved from %(moved)s module]' % entry
+            elif 'renamed' in entry:
+                content += ' [renamed from %(renamed)s module]' % entry
         if entry['noupdate']:
             content += ' (noupdate)'
         reprs[module_map(entry['module'])].append(content)
