@@ -9,11 +9,13 @@ from openupgradelib import openupgrade
 model_renames = [
     ('product.uom', 'uom.uom'),
     ('product.uom.categ', 'uom.category'),
+    ('stock.incoterms', 'account.incoterms'),
 ]
 
 table_renames = [
     ('product_uom', 'uom_uom'),
     ('product_uom_categ', 'uom_category'),
+    ('stock_incoterms', 'account_incoterms'),
 ]
 
 xmlid_renames = [
@@ -42,6 +44,21 @@ xmlid_renames = [
     ('product.product_uom_mile', 'uom.product_uom_mile'),
     ('product.product_uom_floz', 'uom.product_uom_floz'),
     ('product.product_uom_gal', 'uom.product_uom_gal'),
+    ('stock.incoterm_CFR', 'account.incoterm_CFR'),
+    ('stock.incoterm_CIF', 'account.incoterm_CIF'),
+    ('stock.incoterm_CIP', 'account.incoterm_CIP'),
+    ('stock.incoterm_CPT', 'account.incoterm_CPT'),
+    ('stock.incoterm_DAF', 'account.incoterm_DAF'),
+    ('stock.incoterm_DAP', 'account.incoterm_DAP'),
+    ('stock.incoterm_DAT', 'account.incoterm_DAT'),
+    ('stock.incoterm_DDP', 'account.incoterm_DDP'),
+    ('stock.incoterm_DDU', 'account.incoterm_DDU'),
+    ('stock.incoterm_DEQ', 'account.incoterm_DEQ'),
+    ('stock.incoterm_DES', 'account.incoterm_DES'),
+    ('stock.incoterm_EXW', 'account.incoterm_EXW'),
+    ('stock.incoterm_FAS', 'account.incoterm_FAS'),
+    ('stock.incoterm_FCA', 'account.incoterm_FCA'),
+    ('stock.incoterm_FOB', 'account.incoterm_FOB'),
 ]
 
 
