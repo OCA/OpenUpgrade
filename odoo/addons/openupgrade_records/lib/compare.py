@@ -235,10 +235,13 @@ def compare_sets(old_records, new_records):
             continue
         if column['mode'] == 'create':
             column['mode'] = ''
+        extra_message = ", ".join(
+            [k + ': ' + str(column[k]) for k in printkeys if column[k]]
+        )
+        if extra_message:
+            extra_message = " " + extra_message
         fieldprint(
-            column, '', '', "DEL " + ", ".join(
-                [k + ': ' + str(column[k]) for k in printkeys if column[k]]
-                ), reprs)
+            column, '', '', "DEL" + extra_message, reprs)
 
     for column in new_records:
         # we do not care about newly added non stored function fields
@@ -247,10 +250,13 @@ def compare_sets(old_records, new_records):
             continue
         if column['mode'] == 'create':
             column['mode'] = ''
+        extra_message = ", ".join(
+            [k + ': ' + str(column[k]) for k in printkeys if column[k]]
+        )
+        if extra_message:
+            extra_message = " " + extra_message
         fieldprint(
-            column, '', '', "NEW " + ", ".join(
-                [k + ': ' + str(column[k]) for k in printkeys if column[k]]
-                ), reprs)
+            column, '', '', "NEW" + extra_message, reprs)
 
     for line in [
             "# %d fields matched," % (origlen - len(old_records)),
