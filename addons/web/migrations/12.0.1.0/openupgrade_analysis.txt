@@ -1,6 +1,6 @@
 ---Fields in module 'web'---
-web          / report.layout            / image (char)                  : NEW 
-web          / report.layout            / pdf (char)                    : NEW 
+web          / report.layout            / image (char)                  : NEW
+web          / report.layout            / pdf (char)                    : NEW
 web          / report.layout            / view_id (many2one)            : NEW relation: ir.ui.view, required: required
 ---XML records in module 'web'---
 DEL ir.actions.act_window: web_planner.web_planner_action
@@ -35,4 +35,4 @@ NEW report.layout: web.report_layout_background
 NEW report.layout: web.report_layout_boxed
 NEW report.layout: web.report_layout_clean
 NEW report.layout: web.report_layout_standard
-NEW res.company: base.main_company (noupdate)
+NEW res.company: base.main_company [potentially moved from project module] (noupdate)

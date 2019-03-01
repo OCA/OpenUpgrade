@@ -1,6 +1,6 @@
 ---Fields in module 'sale_timesheet'---
 sale_timesheet / account.analytic.line    / timesheet_invoice_type (selection): now a function
-sale_timesheet / account.analytic.line    / timesheet_revenue (float)     : DEL 
+sale_timesheet / account.analytic.line    / timesheet_revenue (float)     : DEL
 sale_timesheet / hr.employee              / currency_id (many2one)        : module is now 'hr_timesheet' ('sale_timesheet')
 sale_timesheet / hr.employee              / timesheet_cost (float)        : module is now 'hr_timesheet' ('sale_timesheet')
 sale_timesheet / product.template         / project_template_id (many2one): NEW relation: project.project

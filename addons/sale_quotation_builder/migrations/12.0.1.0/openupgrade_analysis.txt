@@ -1,11 +1,11 @@
 ---Fields in module 'sale_quotation_builder'---
-sale_quotation_builder / product.template         / quotation_only_description (html): NEW 
+sale_quotation_builder / product.template         / quotation_only_description (html): NEW
 website_quote / product.product          / website_description (html)    : module is now 'website_sale' ('website_quote')
-website_quote / product.template         / quote_description (html)      : DEL 
+website_quote / product.template         / quote_description (html)      : DEL
 website_quote / product.template         / website_description (html)    : module is now 'website_sale' ('website_quote')
 website_quote / sale.order               / amount_undiscounted (float)   : module is now 'sale' ('website_quote')
 website_quote / sale.order               / options (one2many)            : DEL relation: sale.order.option
-website_quote / sale.order               / quote_viewed (boolean)        : DEL 
+website_quote / sale.order               / quote_viewed (boolean)        : DEL
 website_quote / sale.order               / require_payment (selection)   : selection_keys is now 'False' ('[0, 1]')
 website_quote / sale.order               / require_payment (selection)   : type is now 'boolean' ('selection')
 website_quote / sale.order               / template_id (many2one)        : DEL relation: sale.quote.template
@@ -59,7 +59,7 @@ website_quote / sale.quote.template      / quote_line (one2many)         : DEL r
 website_quote / sale.quote.template      / require_payment (selection)   : selection_keys is now 'False' ('[0, 1]')
 website_quote / sale.quote.template      / require_payment (selection)   : type is now 'boolean' ('selection')
 ---XML records in module 'sale_quotation_builder'---
-DEL ir.actions.act_window: sale.action_quotations
+DEL ir.actions.act_window: sale.action_quotations [moved to sale_management module]
 DEL ir.actions.act_window: website_quote.action_sale_quotation_template
 DEL ir.actions.report: website_quote.report_web_quote
 DEL ir.model.access: website_quote.access_sale_order_option

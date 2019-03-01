@@ -1,11 +1,11 @@
 ---Fields in module 'snailmail'---
-snailmail    / res.company              / snailmail_color (boolean)     : NEW 
-snailmail    / res.company              / snailmail_duplex (boolean)    : NEW 
+snailmail    / res.company              / snailmail_color (boolean)     : NEW
+snailmail    / res.company              / snailmail_duplex (boolean)    : NEW
 snailmail    / snailmail.letter         / attachment_id (many2one)      : NEW relation: ir.attachment
-snailmail    / snailmail.letter         / color (boolean)               : NEW 
+snailmail    / snailmail.letter         / color (boolean)               : NEW
 snailmail    / snailmail.letter         / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
-snailmail    / snailmail.letter         / duplex (boolean)              : NEW 
-snailmail    / snailmail.letter         / info_msg (char)               : NEW 
+snailmail    / snailmail.letter         / duplex (boolean)              : NEW
+snailmail    / snailmail.letter         / info_msg (char)               : NEW
 snailmail    / snailmail.letter         / model (char)                  : NEW required: required
 snailmail    / snailmail.letter         / partner_id (many2one)         : NEW relation: res.partner, required: required
 snailmail    / snailmail.letter         / report_template (many2one)    : NEW relation: ir.actions.report

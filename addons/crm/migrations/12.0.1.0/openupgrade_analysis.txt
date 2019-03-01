@@ -2,13 +2,13 @@
 crm          / crm.lead                 / activity_date_deadline (date) : not related anymore
 crm          / crm.lead                 / activity_date_deadline (date) : not stored anymore
 crm          / crm.lead                 / activity_date_deadline (date) : now a function
-crm          / crm.lead                 / expected_revenue (float)      : NEW 
-crm          / crm.lead                 / message_last_post (datetime)  : DEL 
+crm          / crm.lead                 / expected_revenue (float)      : NEW
+crm          / crm.lead                 / message_last_post (datetime)  : DEL
 crm          / crm.lead                 / message_main_attachment_id (many2one): NEW relation: ir.attachment
-crm          / crm.lead                 / opt_out (boolean)             : DEL 
+crm          / crm.lead                 / opt_out (boolean)             : DEL
 crm          / crm.team                 / dashboard_graph_model (False) : selection_keys is now '['crm.lead']' ('['crm.opportunity.report']')
-crm          / digest.digest            / kpi_crm_lead_created (boolean): NEW 
-crm          / digest.digest            / kpi_crm_opportunities_won (boolean): NEW 
+crm          / digest.digest            / kpi_crm_lead_created (boolean): NEW
+crm          / digest.digest            / kpi_crm_opportunities_won (boolean): NEW
 ---XML records in module 'crm'---
 NEW digest.digest: digest.digest_digest_default (noupdate)
 NEW digest.tip: crm.digest_tip_crm_0

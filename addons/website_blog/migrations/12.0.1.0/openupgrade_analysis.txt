@@ -1,19 +1,19 @@
 ---Fields in module 'website_blog'---
-website_blog / blog.blog                / message_last_post (datetime)  : DEL 
+website_blog / blog.blog                / message_last_post (datetime)  : DEL
 website_blog / blog.blog                / message_main_attachment_id (many2one): NEW relation: ir.attachment
 website_blog / blog.blog                / website_id (many2one)         : NEW relation: website
-website_blog / blog.blog                / website_meta_og_img (char)    : NEW 
-website_blog / blog.post                / is_published (boolean)        : NEW 
-website_blog / blog.post                / message_last_post (datetime)  : DEL 
+website_blog / blog.blog                / website_meta_og_img (char)    : NEW
+website_blog / blog.post                / is_published (boolean)        : NEW
+website_blog / blog.post                / message_last_post (datetime)  : DEL
 website_blog / blog.post                / message_main_attachment_id (many2one): NEW relation: ir.attachment
-website_blog / blog.post                / website_meta_og_img (char)    : NEW 
+website_blog / blog.post                / website_meta_og_img (char)    : NEW
 website_blog / blog.post                / website_published (boolean)   : not stored anymore
 website_blog / blog.post                / website_published (boolean)   : now a function
 website_blog / blog.tag                 / category_id (many2one)        : NEW relation: blog.tag.category
-website_blog / blog.tag                 / website_meta_og_img (char)    : NEW 
+website_blog / blog.tag                 / website_meta_og_img (char)    : NEW
 website_blog / blog.tag.category        / name (char)                   : NEW required: required
 website_blog / blog.tag.category        / tag_ids (one2many)            : NEW relation: blog.tag
-website_blog / mail.message             / path (char)                   : DEL 
+website_blog / mail.message             / path (char)                   : DEL
 ---XML records in module 'website_blog'---
 NEW ir.actions.act_window: website_blog.action_tag_category
 NEW ir.model.access: website_blog.blog_tag_category

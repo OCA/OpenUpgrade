@@ -4,7 +4,7 @@ note         / mail.activity.type       / category (False)              : NEW se
 note         / note.note                / activity_date_deadline (date) : not related anymore
 note         / note.note                / activity_date_deadline (date) : not stored anymore
 note         / note.note                / activity_date_deadline (date) : now a function
-note         / note.note                / message_last_post (datetime)  : DEL 
+note         / note.note                / message_last_post (datetime)  : DEL
 note         / note.note                / message_main_attachment_id (many2one): NEW relation: ir.attachment
 ---XML records in module 'note'---
 NEW ir.ui.view: note.mail_activity_type_view_form
