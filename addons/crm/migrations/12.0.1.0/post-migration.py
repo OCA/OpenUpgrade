@@ -15,6 +15,7 @@ def fill_mail_blacklist_crm_lead(cr):
             write_uid, write_date
         FROM crm_lead cl
         WHERE cl.%s
+            AND COALESCE(cl.email_from, '') != ''
         ON CONFLICT DO NOTHING
         """, (AsIs(openupgrade.get_legacy_name('opt_out')), ),
     )
