@@ -85,7 +85,8 @@ def eliminate_duplicate_translations(cr):
         cr, """ DELETE FROM ir_translation WHERE id IN (
         SELECT it2.id FROM ir_translation it1
         JOIN ir_translation it2 ON it1.type IN
-                ('selection', 'constraint', 'sql_constraint')
+                ('selection', 'constraint', 'sql_constraint',
+                'view', 'field', 'help', 'xsl', 'report')
             AND it1.type = it2.type
             AND it1.name = it2.name
             AND it1.src = it2.src
