@@ -158,28 +158,28 @@ def create_stock_move_line(env):
             write_uid
         )
         SELECT
-            MIN(spo.create_date),
-            MIN(spo.create_uid),
-            MIN(spo.date),
-            MIN(spo.location_dest_id),
-            MIN(spo.location_id),
+            spo.create_date,
+            spo.create_uid,
+            spo.date,
+            spo.location_dest_id,
+            spo.location_id,
             sq.lot_id,
-            MIN(spl.name),
+            spl.name,
             sm.id,
-            SUM(smol.qty),
+            smol.qty,
             spo.owner_id,
             spo.package_id,
-            MIN(spo.picking_id),
+            spo.picking_id,
             spo.product_id,
-            SUM(smol.qty),
-            MIN(spo.product_uom_id),
-            SUM(smol.qty),
-            SUM(smol.qty),
-            MIN(COALESCE(sp.name, sm.name)),
+            smol.qty,
+            spo.product_uom_id,
+            smol.qty,
+            smol.qty,
+            COALESCE(sp.name, sm.name),
             'done',
             spo.result_package_id,
-            MIN(spo.write_date),
-            MIN(spo.write_uid)
+            spo.write_date,
+            spo.write_uid
         FROM stock_pack_operation spo
             INNER JOIN stock_move_operation_link smol
                 ON smol.operation_id = spo.id
@@ -189,8 +189,7 @@ def create_stock_move_line(env):
             LEFT JOIN stock_quant sq ON sq.id = smol.reserved_quant_id
             LEFT JOIN stock_production_lot spl ON spl.id = sq.lot_id
         WHERE sm.state = 'done'
-        GROUP BY sq.lot_id, spo.product_id, spo.owner_id, spo.package_id,
-            spo.result_package_id, sm.id""",
+        """,
     )
 
 
