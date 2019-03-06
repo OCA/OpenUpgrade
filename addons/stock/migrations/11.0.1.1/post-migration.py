@@ -131,6 +131,15 @@ def create_stock_move_line(env):
     stock.move lines with the same product in the same operation record, making
     impossible to split the lot quantity across each move.
     """
+    # If coming from v8, chances of having stock_move_operation_link (smol)
+    # `reserved_quant_id` filled are low, so `lot_id` will remain empty on
+    # created sml on lot of cases. As in v8 there's no stock.pack.operation
+    # (spo)>stock.pack.operation.lot structure, we can use lot informed in spo
+    lot_column = 'openupgrade_legacy_9_0_lot_id'
+    if openupgrade.column_exists(env.cr, 'stock_pack_operation', lot_column):
+        lot_expr = "COALESCE(sq.lot_id, %s)" % lot_column
+    else:
+        lot_expr = 'sq.lot_id'
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO stock_move_line (
@@ -163,7 +172,7 @@ def create_stock_move_line(env):
             spo.date,
             spo.location_dest_id,
             spo.location_id,
-            sq.lot_id,
+            %s,
             spl.name,
             sm.id,
             smol.qty,
@@ -189,7 +198,7 @@ def create_stock_move_line(env):
             LEFT JOIN stock_quant sq ON sq.id = smol.reserved_quant_id
             LEFT JOIN stock_production_lot spl ON spl.id = sq.lot_id
         WHERE sm.state = 'done'
-        """,
+        """, (AsIs(lot_expr), ),
     )
 
 
