@@ -131,6 +131,15 @@ def create_stock_move_line(env):
     stock.move lines with the same product in the same operation record, making
     impossible to split the lot quantity across each move.
     """
+    # If coming from v8, chances of having stock_move_operation_link (smol)
+    # `reserved_quant_id` filled are low, so `lot_id` will remain empty on
+    # created sml on lot of cases. As in v8 there's no stock.pack.operation
+    # (spo)>stock.pack.operation.lot structure, we can use lot informed in spo
+    lot_column = 'openupgrade_legacy_9_0_lot_id'
+    if openupgrade.column_exists(env.cr, 'stock_pack_operation', lot_column):
+        lot_expr = "COALESCE(sq.lot_id, %s)" % lot_column
+    else:
+        lot_expr = 'sq.lot_id'
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO stock_move_line (
@@ -158,28 +167,28 @@ def create_stock_move_line(env):
             write_uid
         )
         SELECT
-            MIN(spo.create_date),
-            MIN(spo.create_uid),
-            MIN(spo.date),
-            MIN(spo.location_dest_id),
-            MIN(spo.location_id),
-            sq.lot_id,
-            MIN(spl.name),
+            spo.create_date,
+            spo.create_uid,
+            spo.date,
+            spo.location_dest_id,
+            spo.location_id,
+            %s,
+            spl.name,
             sm.id,
-            SUM(smol.qty),
+            smol.qty,
             spo.owner_id,
             spo.package_id,
-            MIN(spo.picking_id),
+            spo.picking_id,
             spo.product_id,
-            SUM(smol.qty),
-            MIN(spo.product_uom_id),
-            SUM(smol.qty),
-            SUM(smol.qty),
-            MIN(COALESCE(sp.name, sm.name)),
+            smol.qty,
+            spo.product_uom_id,
+            smol.qty,
+            smol.qty,
+            COALESCE(sp.name, sm.name),
             'done',
             spo.result_package_id,
-            MIN(spo.write_date),
-            MIN(spo.write_uid)
+            spo.write_date,
+            spo.write_uid
         FROM stock_pack_operation spo
             INNER JOIN stock_move_operation_link smol
                 ON smol.operation_id = spo.id
@@ -189,8 +198,7 @@ def create_stock_move_line(env):
             LEFT JOIN stock_quant sq ON sq.id = smol.reserved_quant_id
             LEFT JOIN stock_production_lot spl ON spl.id = sq.lot_id
         WHERE sm.state = 'done'
-        GROUP BY sq.lot_id, spo.product_id, spo.owner_id, spo.package_id,
-            spo.result_package_id, sm.id""",
+        """, (AsIs(lot_expr), ),
     )
 
 
