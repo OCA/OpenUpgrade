@@ -52,9 +52,9 @@ def fill_mail_thread_message_main_attachment_id(env):
             all_attachments = attachs.get(record.id, attachment_obj)
             if all_attachments:
                 prioritary_attachments = all_attachments.filtered(
-                    lambda x: x.mimetype.endswith('pdf')
+                    lambda x: x.mimetype and x.mimetype.endswith('pdf')
                 ) or all_attachments.filtered(
-                    lambda x: x.mimetype.startswith('image')
+                    lambda x: x.mimetype and x.mimetype.startswith('image')
                 ) or all_attachments
                 record.write({'message_main_attachment_id':
                               prioritary_attachments[0].id})
