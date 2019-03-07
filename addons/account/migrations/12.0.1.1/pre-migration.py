@@ -107,3 +107,8 @@ def migrate(env, version):
     if openupgrade.table_exists(cr, 'account_move_reverse'):
         # module account_reversal
         openupgrade.rename_fields(env, _field_renames_account_reversal)
+    if not openupgrade.column_exists(env.cr, 'res_company', 'incoterm_id'):
+        openupgrade.logged_query(
+            env.cr, """
+            ALTER TABLE res_company ADD COLUMN incoterm_id INTEGER""",
+        )
