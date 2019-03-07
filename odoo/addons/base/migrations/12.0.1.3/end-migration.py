@@ -97,7 +97,19 @@ def fork_off_system_user(env):
         (partner_root.id,))
 
 
+def fill_res_users_password_from_password_crypt(cr):
+    openupgrade.logged_query(
+        cr,
+        """UPDATE res_users
+        SET password = password_crypt
+        WHERE password_crypt IS NOT NULL
+        """,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     update_model_terms_translations(env)
     fork_off_system_user(env)
+    if openupgrade.column_exists(env.cr, 'res_users', 'password_crypt'):
+        fill_res_users_password_from_password_crypt(env.cr)
