@@ -51,7 +51,8 @@ base         / res.partner.category     / parent_right (integer)        : DEL
 # Done: call _parent_store_compute
 base         / res.users                / password (char)               : not stored anymore
 base         / res.users                / password (char)               : now a function
-# Nothing to do: feature from auth_crypt, merged into base
+auth_crypt   / res.users                / password_crypt (char)         : DEL
+# DONE: end-migration: fill password from password_crypt (feature from auth_crypt, merged into base)
 ---XML records in module 'base'---
 NEW ir.actions.act_window: base.action_open_base_onboarding_company
 NEW ir.actions.act_window: base.action_partner_deduplicate
