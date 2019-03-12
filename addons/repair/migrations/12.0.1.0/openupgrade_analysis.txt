@@ -4,7 +4,7 @@ mrp_repair   / mrp.repair               / activity_date_deadline (date) : not st
 mrp_repair   / mrp.repair               / activity_date_deadline (date) : now a function
 mrp_repair   / mrp.repair               / fees_lines (one2many)         : relation is now 'repair.fee' ('mrp.repair.fee')
 mrp_repair   / mrp.repair               / location_dest_id (many2one)   : DEL relation: stock.location, required: required
-mrp_repair   / mrp.repair               / message_last_post (datetime)  : DEL 
+mrp_repair   / mrp.repair               / message_last_post (datetime)  : DEL
 mrp_repair   / mrp.repair               / operations (one2many)         : relation is now 'repair.line' ('mrp.repair.line')
 mrp_repair   / mrp.repair               / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
 mrp_repair   / mrp.repair.fee           / name (char)                   : type is now 'text' ('char')

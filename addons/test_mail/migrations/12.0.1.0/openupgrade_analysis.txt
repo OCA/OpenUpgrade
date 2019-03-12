@@ -26,23 +26,23 @@ test_mail    / mail.test                / message_unread (boolean)      : previo
 test_mail    / mail.test                / message_unread_counter (integer): previously in module mail
 test_mail    / mail.test                / name (char)                   : previously in module mail
 test_mail    / mail.test                / website_message_ids (one2many): previously in module portal
-test_mail    / mail.test.activity       / active (boolean)              : NEW 
+test_mail    / mail.test.activity       / active (boolean)              : NEW
 test_mail    / mail.test.activity       / activity_ids (one2many)       : NEW relation: mail.activity
-test_mail    / mail.test.activity       / email_from (char)             : NEW 
+test_mail    / mail.test.activity       / email_from (char)             : NEW
 test_mail    / mail.test.activity       / message_follower_ids (one2many): NEW relation: mail.followers
 test_mail    / mail.test.activity       / message_ids (one2many)        : NEW relation: mail.message
 test_mail    / mail.test.activity       / message_main_attachment_id (many2one): NEW relation: ir.attachment
-test_mail    / mail.test.activity       / name (char)                   : NEW 
+test_mail    / mail.test.activity       / name (char)                   : NEW
 test_mail    / mail.test.activity       / website_message_ids (one2many): NEW relation: mail.message
-test_mail    / mail.test.full           / count (integer)               : NEW 
+test_mail    / mail.test.full           / count (integer)               : NEW
 test_mail    / mail.test.full           / customer_id (many2one)        : NEW relation: res.partner
-test_mail    / mail.test.full           / datetime (datetime)           : NEW 
-test_mail    / mail.test.full           / email_from (char)             : NEW 
+test_mail    / mail.test.full           / datetime (datetime)           : NEW
+test_mail    / mail.test.full           / email_from (char)             : NEW
 test_mail    / mail.test.full           / mail_template (many2one)      : NEW relation: mail.template
 test_mail    / mail.test.full           / message_follower_ids (one2many): NEW relation: mail.followers
 test_mail    / mail.test.full           / message_ids (one2many)        : NEW relation: mail.message
 test_mail    / mail.test.full           / message_main_attachment_id (many2one): NEW relation: ir.attachment
-test_mail    / mail.test.full           / name (char)                   : NEW 
+test_mail    / mail.test.full           / name (char)                   : NEW
 test_mail    / mail.test.full           / umbrella_id (many2one)        : NEW relation: mail.test
 test_mail    / mail.test.full           / user_id (many2one)            : NEW relation: res.users
 test_mail    / mail.test.full           / website_message_ids (one2many): NEW relation: mail.message
@@ -61,11 +61,12 @@ test_mail    / mail.test.simple         / message_unread (boolean)      : previo
 test_mail    / mail.test.simple         / message_unread_counter (integer): previously in module mail
 test_mail    / mail.test.simple         / name (char)                   : previously in module mail
 test_mail    / mail.test.simple         / website_message_ids (one2many): previously in module portal
-test_mail    / mail.test.track          / email_from (char)             : NEW 
+test_mail    / mail.test.track          / company_id (many2one)         : NEW relation: res.company
+test_mail    / mail.test.track          / email_from (char)             : NEW
 test_mail    / mail.test.track          / message_follower_ids (one2many): NEW relation: mail.followers
 test_mail    / mail.test.track          / message_ids (one2many)        : NEW relation: mail.message
 test_mail    / mail.test.track          / message_main_attachment_id (many2one): NEW relation: ir.attachment
-test_mail    / mail.test.track          / name (char)                   : NEW 
+test_mail    / mail.test.track          / name (char)                   : NEW
 test_mail    / mail.test.track          / umbrella_id (many2one)        : NEW relation: mail.test
 test_mail    / mail.test.track          / user_id (many2one)            : NEW relation: res.users
 test_mail    / mail.test.track          / website_message_ids (one2many): NEW relation: mail.message

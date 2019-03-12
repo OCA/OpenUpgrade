@@ -6,14 +6,14 @@ product      / product.attribute        / create_variant (boolean)      : type i
 product      / product.attribute.price  / value_id (many2one)           : DEL relation: product.attribute.value, required: required
 product      / product.attribute.value  / price_ids (one2many)          : DEL relation: product.attribute.price
 product      / product.attribute.value  / product_ids (many2many)       : DEL relation: product.product
-product      / product.category         / parent_left (integer)         : DEL 
-product      / product.category         / parent_path (char)            : NEW 
-product      / product.category         / parent_right (integer)        : DEL 
+product      / product.category         / parent_left (integer)         : DEL
+product      / product.category         / parent_path (char)            : NEW
+product      / product.category         / parent_right (integer)        : DEL
 product      / product.product          / activity_date_deadline (date) : not related anymore
 product      / product.product          / activity_date_deadline (date) : not stored anymore
 product      / product.product          / activity_date_deadline (date) : now a function
 product      / product.product          / attribute_line_ids (one2many) : relation is now 'product.template.attribute.line' ('product.attribute.line')
-product      / product.product          / message_last_post (datetime)  : DEL 
+product      / product.product          / message_last_post (datetime)  : DEL
 product      / product.product          / message_main_attachment_id (many2one): NEW relation: ir.attachment
 product      / product.product          / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
 product      / product.product          / uom_po_id (many2one)          : relation is now 'uom.uom' ('product.uom')
@@ -22,7 +22,7 @@ product      / product.template         / activity_date_deadline (date) : not re
 product      / product.template         / activity_date_deadline (date) : not stored anymore
 product      / product.template         / activity_date_deadline (date) : now a function
 product      / product.template         / attribute_line_ids (one2many) : relation is now 'product.template.attribute.line' ('product.attribute.line')
-product      / product.template         / message_last_post (datetime)  : DEL 
+product      / product.template         / message_last_post (datetime)  : DEL
 product      / product.template         / message_main_attachment_id (many2one): NEW relation: ir.attachment
 product      / product.template         / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
 product      / product.template         / uom_po_id (many2one)          : relation is now 'uom.uom' ('product.uom')
@@ -41,6 +41,9 @@ product      / product.uom              / factor_inv (float)            : module
 product      / product.uom              / name (char)                   : module is now 'uom' ('product')
 product      / product.uom              / rounding (float)              : module is now 'uom' ('product')
 product      / product.uom              / uom_type (selection)          : module is now 'uom' ('product')
+product      / product.uom.categ        / __last_update (datetime)      : module is now 'uom' ('product')
+product      / product.uom.categ        / display_name (char)           : module is now 'uom' ('product')
+product      / product.uom.categ        / name (char)                   : module is now 'uom' ('product')
 ---XML records in module 'product'---
 DEL ir.actions.act_window: product.product_uom_categ_form_action
 DEL ir.actions.act_window: product.product_uom_form_action
@@ -83,29 +86,29 @@ DEL ir.ui.view: product.product_uom_categ_form_view
 DEL ir.ui.view: product.product_uom_form_view
 DEL ir.ui.view: product.product_uom_tree_view
 NEW product.category: product.cat_expense (noupdate)
-DEL product.uom: product.product_uom_cm (noupdate)
-DEL product.uom: product.product_uom_day (noupdate)
-DEL product.uom: product.product_uom_dozen (noupdate)
-DEL product.uom: product.product_uom_floz (noupdate)
-DEL product.uom: product.product_uom_foot (noupdate)
-DEL product.uom: product.product_uom_gal (noupdate)
-DEL product.uom: product.product_uom_gram (noupdate)
-DEL product.uom: product.product_uom_hour (noupdate)
-DEL product.uom: product.product_uom_inch (noupdate)
-DEL product.uom: product.product_uom_kgm (noupdate)
-DEL product.uom: product.product_uom_km (noupdate)
-DEL product.uom: product.product_uom_lb (noupdate)
-DEL product.uom: product.product_uom_litre (noupdate)
-DEL product.uom: product.product_uom_meter (noupdate)
-DEL product.uom: product.product_uom_mile (noupdate)
-DEL product.uom: product.product_uom_oz (noupdate)
-DEL product.uom: product.product_uom_qt (noupdate)
-DEL product.uom: product.product_uom_ton (noupdate)
-DEL product.uom: product.product_uom_unit (noupdate)
-DEL product.uom.categ: product.product_uom_categ_kgm (noupdate)
-DEL product.uom.categ: product.product_uom_categ_unit (noupdate)
-DEL product.uom.categ: product.product_uom_categ_vol (noupdate)
-DEL product.uom.categ: product.uom_categ_length (noupdate)
-DEL product.uom.categ: product.uom_categ_wtime (noupdate)
+DEL product.uom: product.product_uom_cm [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_day [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_dozen [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_floz [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_foot [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_gal [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_gram [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_hour [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_inch [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_kgm [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_km [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_lb [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_litre [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_meter [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_mile [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_oz [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_qt [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_ton [renamed to uom module] (noupdate)
+DEL product.uom: product.product_uom_unit [renamed to uom module] (noupdate)
+DEL product.uom.categ: product.product_uom_categ_kgm [renamed to uom module] (noupdate)
+DEL product.uom.categ: product.product_uom_categ_unit [renamed to uom module] (noupdate)
+DEL product.uom.categ: product.product_uom_categ_vol [renamed to uom module] (noupdate)
+DEL product.uom.categ: product.uom_categ_length [renamed to uom module] (noupdate)
+DEL product.uom.categ: product.uom_categ_wtime [renamed to uom module] (noupdate)
 DEL res.groups: product.group_uom
 DEL res.request.link: product.req_link_product (noupdate)

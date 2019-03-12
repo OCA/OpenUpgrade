@@ -38,6 +38,19 @@ class Record(models.Model):
             'openupgrade.attribute', 'record_id',
             readonly=True)
     noupdate = fields.Boolean(readonly=True)
+    prefix = fields.Char(compute='_compute_prefix_and_suffix')
+    suffix = fields.Char(compute='_compute_prefix_and_suffix')
+    original_module = fields.Char(compute='_compute_original_module')
+
+    @api.depends('name')
+    def _compute_prefix_and_suffix(self):
+        for rec in self:
+            rec.prefix, rec.suffix = rec.name.split('.', 1)
+
+    @api.depends('model')
+    def _compute_original_module(self):
+        for rec in self:
+            rec.original_module = self.env[rec.model]._original_module
 
     @api.model
     def field_dump(self):

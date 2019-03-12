@@ -8,23 +8,23 @@ stock        / stock.incoterms          / active (boolean)              : module
 stock        / stock.incoterms          / code (char)                   : module is now 'account' ('stock')
 stock        / stock.incoterms          / display_name (char)           : module is now 'account' ('stock')
 stock        / stock.incoterms          / name (char)                   : module is now 'account' ('stock')
-stock        / stock.inventory.line     / location_name (char)          : DEL 
-stock        / stock.inventory.line     / prodlot_name (char)           : DEL 
-stock        / stock.inventory.line     / product_code (char)           : DEL 
-stock        / stock.inventory.line     / product_name (char)           : DEL 
+stock        / stock.inventory.line     / location_name (char)          : DEL
+stock        / stock.inventory.line     / prodlot_name (char)           : DEL
+stock        / stock.inventory.line     / product_code (char)           : DEL
+stock        / stock.inventory.line     / product_name (char)           : DEL
 stock        / stock.inventory.line     / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
-stock        / stock.location           / parent_left (integer)         : DEL 
-stock        / stock.location           / parent_path (char)            : NEW 
-stock        / stock.location           / parent_right (integer)        : DEL 
+stock        / stock.location           / parent_left (integer)         : DEL
+stock        / stock.location           / parent_path (char)            : NEW
+stock        / stock.location           / parent_right (integer)        : DEL
 stock        / stock.location.route     / pull_ids (one2many)           : DEL relation: procurement.rule
 stock        / stock.location.route     / push_ids (one2many)           : DEL relation: stock.location.path
 stock        / stock.location.route     / rule_ids (one2many)           : NEW relation: stock.rule
-stock        / stock.move               / ordered_qty (float)           : DEL 
+stock        / stock.move               / ordered_qty (float)           : DEL
 stock        / stock.move               / package_level_id (many2one)   : NEW relation: stock.package_level
 stock        / stock.move               / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
 stock        / stock.move               / push_rule_id (many2one)       : DEL relation: stock.location.path
 stock        / stock.move               / rule_id (many2one)            : relation is now 'stock.rule' ('procurement.rule')
-stock        / stock.move.line          / ordered_qty (float)           : DEL 
+stock        / stock.move.line          / ordered_qty (float)           : DEL
 stock        / stock.move.line          / package_level_id (many2one)   : NEW relation: stock.package_level
 stock        / stock.move.line          / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
 stock        / stock.package_level      / location_dest_id (many2one)   : NEW relation: stock.location
@@ -36,17 +36,17 @@ stock        / stock.picking            / activity_date_deadline (date) : not re
 stock        / stock.picking            / activity_date_deadline (date) : not stored anymore
 stock        / stock.picking            / activity_date_deadline (date) : now a function
 stock        / stock.picking            / backorder_ids (one2many)      : NEW relation: stock.picking
-stock        / stock.picking            / immediate_transfer (boolean)  : NEW 
-stock        / stock.picking            / message_last_post (datetime)  : DEL 
+stock        / stock.picking            / immediate_transfer (boolean)  : NEW
+stock        / stock.picking            / message_last_post (datetime)  : DEL
 stock        / stock.picking            / message_main_attachment_id (many2one): NEW relation: ir.attachment
 stock        / stock.picking            / move_ids_without_package (one2many): NEW relation: stock.move
 stock        / stock.picking            / move_line_ids_without_package (one2many): NEW relation: stock.move.line
 stock        / stock.picking            / package_level_ids (one2many)  : NEW relation: stock.package_level
 stock        / stock.picking            / package_level_ids_details (one2many): NEW relation: stock.package_level
-stock        / stock.picking.type       / barcode (char)                : NEW 
+stock        / stock.picking.type       / barcode (char)                : NEW
 stock        / stock.picking.type       / barcode_nomenclature_id (many2one): DEL relation: barcode.nomenclature
 stock        / stock.production.lot     / activity_ids (one2many)       : NEW relation: mail.activity
-stock        / stock.production.lot     / message_last_post (datetime)  : DEL 
+stock        / stock.production.lot     / message_last_post (datetime)  : DEL
 stock        / stock.production.lot     / message_main_attachment_id (many2one): NEW relation: ir.attachment
 stock        / stock.production.lot     / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
 stock        / stock.quant              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
@@ -135,19 +135,19 @@ DEL ir.ui.view: stock.view_procurement_rule_tree
 DEL ir.ui.view: stock.view_quant_package_picking_tree
 NEW res.groups: stock.group_lot_on_delivery_slip
 DEL res.request.link: stock.req_link_tracking (noupdate)
-DEL stock.incoterms: stock.incoterm_CFR
-DEL stock.incoterms: stock.incoterm_CIF
-DEL stock.incoterms: stock.incoterm_CIP
-DEL stock.incoterms: stock.incoterm_CPT
-DEL stock.incoterms: stock.incoterm_DAF
-DEL stock.incoterms: stock.incoterm_DAP
-DEL stock.incoterms: stock.incoterm_DAT
-DEL stock.incoterms: stock.incoterm_DDP
-DEL stock.incoterms: stock.incoterm_DDU
-DEL stock.incoterms: stock.incoterm_DEQ
-DEL stock.incoterms: stock.incoterm_DES
-DEL stock.incoterms: stock.incoterm_EXW
-DEL stock.incoterms: stock.incoterm_FAS
-DEL stock.incoterms: stock.incoterm_FCA
-DEL stock.incoterms: stock.incoterm_FOB
+DEL stock.incoterms: stock.incoterm_CFR [renamed to account module]
+DEL stock.incoterms: stock.incoterm_CIF [renamed to account module]
+DEL stock.incoterms: stock.incoterm_CIP [renamed to account module]
+DEL stock.incoterms: stock.incoterm_CPT [renamed to account module]
+DEL stock.incoterms: stock.incoterm_DAF [renamed to account module]
+DEL stock.incoterms: stock.incoterm_DAP [renamed to account module]
+DEL stock.incoterms: stock.incoterm_DAT [renamed to account module]
+DEL stock.incoterms: stock.incoterm_DDP [renamed to account module]
+DEL stock.incoterms: stock.incoterm_DDU [renamed to account module]
+DEL stock.incoterms: stock.incoterm_DEQ [renamed to account module]
+DEL stock.incoterms: stock.incoterm_DES [renamed to account module]
+DEL stock.incoterms: stock.incoterm_EXW [renamed to account module]
+DEL stock.incoterms: stock.incoterm_FAS [renamed to account module]
+DEL stock.incoterms: stock.incoterm_FCA [renamed to account module]
+DEL stock.incoterms: stock.incoterm_FOB [renamed to account module]
 DEL web.planner: stock.planner_inventory

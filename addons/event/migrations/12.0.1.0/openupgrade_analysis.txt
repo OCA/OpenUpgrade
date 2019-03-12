@@ -1,7 +1,7 @@
 ---Fields in module 'event'---
-event        / event.event              / message_last_post (datetime)  : DEL 
+event        / event.event              / message_last_post (datetime)  : DEL
 event        / event.event              / message_main_attachment_id (many2one): NEW relation: ir.attachment
-event        / event.registration       / message_last_post (datetime)  : DEL 
+event        / event.registration       / message_last_post (datetime)  : DEL
 event        / event.registration       / message_main_attachment_id (many2one): NEW relation: ir.attachment
 ---XML records in module 'event'---
 DEL ir.actions.act_window: event.act_register_event_partner

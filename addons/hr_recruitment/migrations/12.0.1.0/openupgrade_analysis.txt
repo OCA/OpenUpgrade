@@ -1,10 +1,10 @@
 ---Fields in module 'hr_recruitment'---
-hr_recruitment / digest.digest            / kpi_hr_recruitment_new_colleagues (boolean): NEW 
+hr_recruitment / digest.digest            / kpi_hr_recruitment_new_colleagues (boolean): NEW
 hr_recruitment / hr.applicant             / activity_date_deadline (date) : not related anymore
 hr_recruitment / hr.applicant             / activity_date_deadline (date) : not stored anymore
 hr_recruitment / hr.applicant             / activity_date_deadline (date) : now a function
 hr_recruitment / hr.applicant             / kanban_state (selection)      : NEW required: required, selection_keys: ['blocked', 'done', 'normal'], req_default: function
-hr_recruitment / hr.applicant             / message_last_post (datetime)  : DEL 
+hr_recruitment / hr.applicant             / message_last_post (datetime)  : DEL
 hr_recruitment / hr.applicant             / message_main_attachment_id (many2one): NEW relation: ir.attachment
 hr_recruitment / hr.recruitment.stage     / legend_blocked (char)         : NEW required: required, req_default: function
 hr_recruitment / hr.recruitment.stage     / legend_done (char)            : NEW required: required, req_default: function

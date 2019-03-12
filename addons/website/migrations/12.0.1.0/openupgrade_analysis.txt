@@ -1,38 +1,38 @@
 ---Fields in module 'website'---
-website      / ir.attachment            / key (char)                    : NEW 
+website      / ir.attachment            / key (char)                    : NEW
 website      / ir.attachment            / website_id (many2one)         : NEW relation: website
-website      / ir.ui.view               / page_ids (one2many)           : not a function anymore
 website      / ir.ui.view               / page_ids (one2many)           : is now stored
-website      / ir.ui.view               / website_meta_og_img (char)    : NEW 
+website      / ir.ui.view               / page_ids (one2many)           : not a function anymore
+website      / ir.ui.view               / website_meta_og_img (char)    : NEW
 website      / res.partner              / website_id (many2one)         : NEW relation: website
 website      / res.users                / website_id (many2one)         : NEW relation: website
 website      / website                  / auth_signup_uninvited (selection): NEW selection_keys: ['b2b', 'b2c']
 website      / website                  / company_id (many2one)         : now required, default = function
 website      / website                  / country_group_ids (many2many) : NEW relation: res.country.group
-website      / website                  / google_maps_api_key (char)    : NEW 
+website      / website                  / google_maps_api_key (char)    : NEW
 website      / website                  / name (char)                   : now required
 website      / website                  / social_default_image (binary) : NEW attachment: True
-website      / website                  / social_facebook (char)        : not related anymore
 website      / website                  / social_facebook (char)        : is now stored
-website      / website                  / social_github (char)          : not related anymore
+website      / website                  / social_facebook (char)        : not related anymore
 website      / website                  / social_github (char)          : is now stored
-website      / website                  / social_googleplus (char)      : not related anymore
+website      / website                  / social_github (char)          : not related anymore
 website      / website                  / social_googleplus (char)      : is now stored
-website      / website                  / social_instagram (char)       : NEW 
-website      / website                  / social_linkedin (char)        : not related anymore
+website      / website                  / social_googleplus (char)      : not related anymore
+website      / website                  / social_instagram (char)       : NEW
 website      / website                  / social_linkedin (char)        : is now stored
-website      / website                  / social_twitter (char)         : not related anymore
+website      / website                  / social_linkedin (char)        : not related anymore
 website      / website                  / social_twitter (char)         : is now stored
-website      / website                  / social_youtube (char)         : not related anymore
+website      / website                  / social_twitter (char)         : not related anymore
 website      / website                  / social_youtube (char)         : is now stored
-website      / website                  / specific_user_account (boolean): NEW 
+website      / website                  / social_youtube (char)         : not related anymore
+website      / website                  / specific_user_account (boolean): NEW
 website      / website                  / theme_id (many2one)           : NEW relation: ir.module.module
-website      / website.menu             / parent_left (integer)         : DEL 
-website      / website.menu             / parent_path (char)            : NEW 
-website      / website.menu             / parent_right (integer)        : DEL 
-website      / website.page             / header_color (char)           : NEW 
-website      / website.page             / header_overlay (boolean)      : NEW 
-website      / website.page             / is_published (boolean)        : NEW 
+website      / website.menu             / parent_left (integer)         : DEL
+website      / website.menu             / parent_path (char)            : NEW
+website      / website.menu             / parent_right (integer)        : DEL
+website      / website.page             / header_color (char)           : NEW
+website      / website.page             / header_overlay (boolean)      : NEW
+website      / website.page             / is_published (boolean)        : NEW
 website      / website.page             / website_id (many2one)         : is now stored
 website      / website.page             / website_ids (many2many)       : DEL relation: website
 website      / website.page             / website_published (boolean)   : not stored anymore
@@ -71,6 +71,7 @@ NEW ir.ui.view: website._assets_frontend_helpers
 NEW ir.ui.view: website._assets_primary_variables
 NEW ir.ui.view: website._assets_secondary_variables
 NEW ir.ui.view: website.affix_top_menu
+NEW ir.ui.view: website.assets_common
 NEW ir.ui.view: website.assets_frontend_compatibility_for_12_0
 NEW ir.ui.view: website.brand_promotion
 NEW ir.ui.view: website.default_scss

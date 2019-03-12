@@ -3,22 +3,22 @@ project      / account.analytic.account / company_uom_id (many2one)     : module
 project      / account.analytic.account / company_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
 project      / account.analytic.account / project_count (integer)       : module is now 'hr_timesheet' ('project')
 project      / account.analytic.account / project_ids (one2many)        : module is now 'hr_timesheet' ('project')
-project      / digest.digest            / kpi_project_task_opened (boolean): NEW 
-project      / project.project          / access_token (char)           : NEW 
+project      / digest.digest            / kpi_project_task_opened (boolean): NEW
+project      / project.project          / access_token (char)           : NEW
 project      / project.project          / analytic_account_id (many2one): module is now 'hr_timesheet' ('project')
-project      / project.project          / company_id (many2one)         : not related anymore
 project      / project.project          / company_id (many2one)         : is now stored
-project      / project.project          / message_last_post (datetime)  : DEL 
+project      / project.project          / company_id (many2one)         : not related anymore
+project      / project.project          / message_last_post (datetime)  : DEL
 project      / project.project          / message_main_attachment_id (many2one): NEW relation: ir.attachment
-project      / project.project          / name (char)                   : not related anymore
 project      / project.project          / name (char)                   : is now stored
-project      / project.project          / partner_id (many2one)         : not related anymore
+project      / project.project          / name (char)                   : not related anymore
 project      / project.project          / partner_id (many2one)         : is now stored
-project      / project.task             / access_token (char)           : NEW 
+project      / project.project          / partner_id (many2one)         : not related anymore
+project      / project.task             / access_token (char)           : NEW
 project      / project.task             / activity_date_deadline (date) : not related anymore
 project      / project.task             / activity_date_deadline (date) : not stored anymore
 project      / project.task             / activity_date_deadline (date) : now a function
-project      / project.task             / message_last_post (datetime)  : DEL 
+project      / project.task             / message_last_post (datetime)  : DEL
 project      / project.task             / message_main_attachment_id (many2one): NEW relation: ir.attachment
 project      / project.task             / remaining_hours (float)       : module is now 'hr_timesheet' ('project')
 project      / project.task             / remaining_hours (float)       : now a function
@@ -89,7 +89,7 @@ NEW mail.template: project.rating_project_request_email_template (noupdate)
 DEL mail.template: project.mail_template_data_module_install_project (noupdate)
 DEL mail.template: rating_project.rating_project_request_email_template
 DEL project.task: project.project_task_data_8 (noupdate)
-DEL res.company: base.main_company (noupdate)
+DEL res.company: base.main_company [potentially moved to web module] (noupdate)
 NEW res.groups: project.group_project_rating
 DEL res.groups: project.group_time_work_estimation_tasks
 DEL res.request.link: project.req_link_project (noupdate)

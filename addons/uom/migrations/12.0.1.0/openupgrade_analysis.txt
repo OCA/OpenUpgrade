@@ -8,6 +8,9 @@ uom          / product.uom              / factor_inv (float)            : previo
 uom          / product.uom              / name (char)                   : previously in module product
 uom          / product.uom              / rounding (float)              : previously in module product
 uom          / product.uom              / uom_type (selection)          : previously in module product
+uom          / product.uom.categ        / __last_update (datetime)      : previously in module product
+uom          / product.uom.categ        / display_name (char)           : previously in module product
+uom          / product.uom.categ        / name (char)                   : previously in module product
 uom          / uom.category             / measure_type (selection)      : NEW selection_keys: ['length', 'time', 'unit', 'volume', 'weight']
 uom          / uom.uom                  / measure_type (selection)      : NEW selection_keys: function
 ---XML records in module 'uom'---
@@ -21,27 +24,27 @@ NEW ir.ui.view: uom.product_uom_categ_form_view
 NEW ir.ui.view: uom.product_uom_form_view
 NEW ir.ui.view: uom.product_uom_tree_view
 NEW res.groups: uom.group_uom
-NEW uom.category: uom.product_uom_categ_kgm (noupdate)
-NEW uom.category: uom.product_uom_categ_unit (noupdate)
-NEW uom.category: uom.product_uom_categ_vol (noupdate)
-NEW uom.category: uom.uom_categ_length (noupdate)
-NEW uom.category: uom.uom_categ_wtime (noupdate)
-NEW uom.uom: uom.product_uom_cm (noupdate)
-NEW uom.uom: uom.product_uom_day (noupdate)
-NEW uom.uom: uom.product_uom_dozen (noupdate)
-NEW uom.uom: uom.product_uom_floz (noupdate)
-NEW uom.uom: uom.product_uom_foot (noupdate)
-NEW uom.uom: uom.product_uom_gal (noupdate)
-NEW uom.uom: uom.product_uom_gram (noupdate)
-NEW uom.uom: uom.product_uom_hour (noupdate)
-NEW uom.uom: uom.product_uom_inch (noupdate)
-NEW uom.uom: uom.product_uom_kgm (noupdate)
-NEW uom.uom: uom.product_uom_km (noupdate)
-NEW uom.uom: uom.product_uom_lb (noupdate)
-NEW uom.uom: uom.product_uom_litre (noupdate)
-NEW uom.uom: uom.product_uom_meter (noupdate)
-NEW uom.uom: uom.product_uom_mile (noupdate)
-NEW uom.uom: uom.product_uom_oz (noupdate)
-NEW uom.uom: uom.product_uom_qt (noupdate)
-NEW uom.uom: uom.product_uom_ton (noupdate)
-NEW uom.uom: uom.product_uom_unit (noupdate)
+NEW uom.category: uom.product_uom_categ_kgm [renamed from product module] (noupdate)
+NEW uom.category: uom.product_uom_categ_unit [renamed from product module] (noupdate)
+NEW uom.category: uom.product_uom_categ_vol [renamed from product module] (noupdate)
+NEW uom.category: uom.uom_categ_length [renamed from product module] (noupdate)
+NEW uom.category: uom.uom_categ_wtime [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_cm [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_day [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_dozen [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_floz [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_foot [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_gal [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_gram [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_hour [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_inch [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_kgm [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_km [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_lb [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_litre [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_meter [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_mile [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_oz [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_qt [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_ton [renamed from product module] (noupdate)
+NEW uom.uom: uom.product_uom_unit [renamed from product module] (noupdate)
