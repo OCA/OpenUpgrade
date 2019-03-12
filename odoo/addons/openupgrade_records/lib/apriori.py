@@ -16,6 +16,7 @@ merged_modules = {
     'account_cash_basis_base_account': 'account',
     'account_invoicing': 'account',
     'base_vat_autocomplete': 'partner_autocomplete',
+    'product_extended': 'mrp_bom_cost',
     'rating_project': 'project',
     'sale_order_dates': 'sale',
     'sale_payment': 'sale',
