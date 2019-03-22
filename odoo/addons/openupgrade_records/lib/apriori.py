@@ -8,6 +8,8 @@ renamed_modules = {
     'product_extended': 'mrp_bom_cost',
     # OCA/community-data-files
     'product_uom_unece': 'uom_unece',
+    # OCA/crm > OCA/partner-contact
+    'crm_deduplicate_acl': 'partner_deduplicate_acl',
 }
 
 merged_modules = {
