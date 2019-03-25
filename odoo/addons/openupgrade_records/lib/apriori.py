@@ -10,6 +10,7 @@ renamed_modules = {
     'product_uom_unece': 'uom_unece',
     # OCA/crm > OCA/partner-contact
     'crm_deduplicate_acl': 'partner_deduplicate_acl',
+    'crm_deduplicate_filter': 'partner_deduplicate_filter',
 }
 
 merged_modules = {
