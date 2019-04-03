@@ -930,7 +930,7 @@ def migrate_stock_qty(cr, registry):
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
         moves = env['stock.move'].search(
-            [('state', 'in', ['assign', 'done'])], order="date")
+            [('state', 'in', ['assigned', 'done'])], order="date")
         for move in moves:
             if move.state == 'assign':
                 _move_assign(env, move)
