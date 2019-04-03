@@ -36,18 +36,18 @@ def _migrate_pack_operation(env):
     qty_done on stock.pack.operation for transferred pickings.
     """
     env.cr.execute(
-        "select o.id, o.%(lot_id)s, p.state, sum(q.qty) "
+        "select o.id, o.%(lot_id)s, p.state, o.qty_done "
         "from stock_pack_operation o "
-        "join stock_quant q on q.lot_id=o.%(lot_id)s "
         "join stock_picking p on o.picking_id=p.id "
-        "group by o.id, o.%(lot_id)s, p.state",
+        "where o.%(lot_id)s is not null "
+        "group by o.id, o.%(lot_id)s, p.state, o.qty_done",
         {'lot_id': AsIs(openupgrade.get_legacy_name('lot_id'))})
-    for operation_id, lot_id, state, qty in env.cr.fetchall():
+    for operation_id, lot_id, state, qty_done in env.cr.fetchall():
         env['stock.pack.operation.lot'].create({
             'lot_id': lot_id,
             'operation_id': operation_id,
-            'qty': 0 if state not in ['done'] else qty,
-            'qty_todo': 0 if state in ['done'] else qty,
+            'qty': 0 if state not in ['done'] else qty_done,
+            'qty_todo': 0 if state in ['done'] else qty_done,
         })
     env.cr.execute(
         "update stock_pack_operation "
