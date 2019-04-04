@@ -932,7 +932,7 @@ def migrate_stock_qty(cr, registry):
         moves = env['stock.move'].search(
             [('state', 'in', ['assigned', 'done'])], order="date")
         for move in moves:
-            if move.state == 'assign':
+            if move.state == 'assigned':
                 _move_assign(env, move)
             else:
                 _move_done(env, move)
