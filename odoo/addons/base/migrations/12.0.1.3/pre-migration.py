@@ -6,14 +6,22 @@
 from odoo.addons.openupgrade_records.lib import apriori
 from openupgradelib import openupgrade
 
-model_renames = [
+model_renames_product = [
     ('product.uom', 'uom.uom'),
     ('product.uom.categ', 'uom.category'),
 ]
 
-table_renames = [
+model_renames_stock = [
+    ('stock.incoterms', 'account.incoterms'),
+]
+
+table_renames_product = [
     ('product_uom', 'uom_uom'),
     ('product_uom_categ', 'uom_category'),
+]
+
+table_renames_stock = [
+    ('stock_incoterms', 'account_incoterms'),
 ]
 
 xmlid_renames = [
@@ -118,15 +126,12 @@ def migrate(env, version):
         env.cr, apriori.renamed_modules.items())
     openupgrade.update_module_names(
         env.cr, apriori.merged_modules.items(), merge_modules=True)
-    openupgrade.rename_models(env.cr, model_renames)
-    openupgrade.rename_tables(env.cr, table_renames)
+    if openupgrade.table_exists(env.cr, 'product_uom'):
+        openupgrade.rename_models(env.cr, model_renames_product)
+        openupgrade.rename_tables(env.cr, table_renames_product)
     if openupgrade.table_exists(env.cr, 'stock_incoterms'):
-        openupgrade.rename_models(
-            env.cr, [('stock.incoterms', 'account.incoterms')],
-        )
-        openupgrade.rename_tables(
-            env.cr, [('stock_incoterms', 'account_incoterms')],
-        )
+        openupgrade.rename_models(env.cr, model_renames_stock)
+        openupgrade.rename_tables(env.cr, table_renames_stock)
     openupgrade.rename_xmlids(env.cr, xmlid_renames)
     eliminate_duplicate_translations(env.cr)
 
