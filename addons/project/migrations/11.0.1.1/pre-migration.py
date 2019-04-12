@@ -33,6 +33,8 @@ def avoid_subproject_constraint(env):
     so for avoiding this constraint, we empty the subproject in the parent
     project in these cases.
     """
+    if not openupgrade.column_exists(env.cr, 'project_task', 'parent_id'):
+        return
     openupgrade.logged_query(
         env.cr, """
         UPDATE project_project pp
