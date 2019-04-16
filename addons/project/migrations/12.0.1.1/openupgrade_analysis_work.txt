@@ -50,6 +50,7 @@ project      / project.task             / rating_last_value (float)     : previo
 project      / project.task.type        / auto_validation_kanban_state (boolean): previously in module rating_project
 project      / project.task.type        / rating_template_id (many2one) : previously in module rating_project
 # NOTHING TO DO: rating_project and website_rating_project merged to project
+# DONE: pre-migration: compute rating_last_value using SQL because is faster
 
 project      / project.task             / remaining_hours (float)       : now a function
 # NOTHING TO DO
