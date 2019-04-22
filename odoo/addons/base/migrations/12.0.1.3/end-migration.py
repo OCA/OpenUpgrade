@@ -46,6 +46,16 @@ def fork_off_system_user(env):
         'partner_id': partner_admin.id,
         'login': login,
     })
+    # copy old passwords for not losing them on new admin user
+    crypt = openupgrade.column_exists(env.cr, 'res_users', 'password_crypt')
+    set_query = "SET password = ru2.password "
+    if crypt:
+        set_query += ", password_crypt = ru2.password_crypt "
+    env.cr.execute(
+        "UPDATE res_users ru " + set_query +
+        "FROM res_users ru2 WHERE ru2.id = %s AND ru.id = %s",
+        (user_root.id, user_admin.id),
+    )
     user_root.write({
         'partner_id': partner_root.id,
         'email': 'root@example.com',
@@ -86,10 +96,13 @@ def fork_off_system_user(env):
         method='sql', delete=False, exclude_columns=exclude_columns)
     # Circumvent ORM when setting root user inactive, because
     # "You cannot deactivate the user you're currently logged in as."
+    set_query = "SET active = FALSE, password = NULL"
+    if crypt:
+        set_query += ", password_crypt = NULL"
     env.cr.execute(
-        """ UPDATE res_users
-            SET active = FALSE, password = NULL WHERE id = %s """,
-        (user_root.id,))
+        "UPDATE res_users " + set_query + " WHERE id = %s",
+        (user_root.id, ),
+    )
     # Ensure also partner_root is inactive
     env.cr.execute(
         """ UPDATE res_partner
