@@ -19,14 +19,9 @@ def fill_project_project_inherits_values(cr):
 @openupgrade.migrate()
 def migrate(env, version):
     fill_project_project_inherits_values(env.cr)
-    # openupgrade.load_data(
-    #     env.cr, 'project', 'migrations/12.0.1.1/noupdate_changes.xml',
-    #     mode='init_no_create')
-    # TODO: change again when the 'init_no_create' works correctly
-    task_14 = env.ref('project.project_task_data_14', False)
-    if task_14:
-        openupgrade.load_data(
-            env.cr, 'project', 'migrations/12.0.1.1/noupdate_changes.xml')
+    openupgrade.load_data(
+        env.cr, 'project', 'migrations/12.0.1.1/noupdate_changes.xml',
+        mode='init_no_create')
     openupgrade.delete_records_safely_by_xml_id(
         env, [
             'project.msg_task_data_14_attach',
