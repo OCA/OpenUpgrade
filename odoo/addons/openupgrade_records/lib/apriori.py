@@ -4,6 +4,7 @@ to help the matching process
 
 renamed_modules = {
     # Odoo
+    'base_vat_autocomplete': 'partner_autocomplete',
     'mrp_repair': 'repair',
     'product_extended': 'mrp_bom_cost',
     # OCA/community-data-files
@@ -18,7 +19,6 @@ merged_modules = {
     'auth_crypt': 'base',
     'account_cash_basis_base_account': 'account',
     'account_invoicing': 'account',
-    'base_vat_autocomplete': 'partner_autocomplete',
     'rating_project': 'project',
     'sale_order_dates': 'sale',
     'sale_payment': 'sale',
