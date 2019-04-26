@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="default_website" model="website">
+    <field name="domain"/>
+  </record>
+  <record id="s_text_image_default_image" model="ir.attachment">
+    <field name="datas_fname">s_text_image_default_image.jpg</field>
+    <field name="url">/website/static/src/img/snippets_demo/s_text_image.jpg</field>
+  </record>
+  <record id="contactus" model="ir.ui.view">
+    <field name="arch" type="xml">
+      <t name="Contact Us" t-name="website.contactus">
+        <t t-call="website.layout">
+          <div id="wrap">
+            <div class="oe_structure">
+              <section class="pt8 pb8">
+                <div class="container">
+                  <div class="row s_nb_column_fixed">
+                    <div class="col-lg-12 s_title pt16 pb16">
+                      <h1>Contact us</h1>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <div class="container mt-2">
+              <div class="row">
+                <div class="col-lg-8">
+                  <div class="oe_structure">
+                    <section class="s_text_block">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <p>
+                                                                Contact us about anything related to our company or services.<br/>
+                                                                We'll do our best to get back to you as soon as possible.
+                                                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                  <div class="text-center my-3" name="mail_button">
+                    <a role="button" t-attf-href="mailto:{{ res_company.email }}" class="btn btn-primary" id="o_contact_mail">Send us an email</a>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <t t-call="website.company_description"/>
+                </div>
+              </div>
+            </div>
+            <div class="oe_structure mt-2"/>
+          </div>
+        </t>
+      </t>
+    </field>
+  </record>
+  <record id="main_menu" model="website.menu">
+    <field name="website_id"/>
+    <field name="name">Default Main Menu</field>
+    <field name="url">/default-main-menu</field>
+  </record>
+  <record id="s_banner_default_image" model="ir.attachment">
+    <field name="datas_fname">s_banner_default_image.jpg</field>
+    <field name="url">/website/static/src/img/snippets_demo/s_banner.jpg</field>
+    <field name="name">Banner Snippet - Default Image</field>
+  </record>
+  <record id="s_image_text_default_image" model="ir.attachment">
+    <field name="datas_fname">s_image_text_default_image.jpg</field>
+    <field name="url">/website/static/src/img/snippets_demo/s_image_text.jpg</field>
+  </record>
+  <record id="s_cover_default_image" model="ir.attachment">
+    <field name="url">/website/static/src/img/snippets_demo/s_cover.jpg</field>
+  </record>
+  <record id="menu_contactus" model="website.menu">
+    <field name="website_id"/>
+    <field name="page_id"/>
+  </record>
+  <record id="aboutus" model="ir.ui.view">
+    <field name="arch" type="xml">
+      <t name="About us" t-name="website.aboutus">
+        <t t-call="website.layout">
+          <div id="wrap">
+            <div class="oe_structure">
+              <section class="pt8 pb8">
+                <div class="container">
+                  <div class="row s_nb_column_fixed">
+                    <div class="col-lg-12 s_title pt16 pb16">
+                      <h1 class="text-center">About us</h1>
+                      <h3 class="text-muted text-center">Great products for great people</h3>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section class="s_text_image pt8 pb8">
+                <div class="container">
+                  <div class="row align-items-center">
+                    <div class="col-lg-6 pt16 pb16">
+                      <p>
+                                                    We are a team of passionate people whose goal is to improve everyone's
+                                                    life through disruptive products. We build great products to solve your
+                                                    business problems.
+                                                </p>
+                      <p>
+                                                    Our products are designed for small to medium size companies willing to optimize
+                                                    their performance.
+                                                </p>
+                    </div>
+                    <div class="col-lg-6 pt16 pb16">
+                      <img src="/website/static/src/img/library/business_conference.jpg" class="img img-fluid shadow" alt="Our Team"/>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </t>
+      </t>
+    </field>
+  </record>
+</odoo>
