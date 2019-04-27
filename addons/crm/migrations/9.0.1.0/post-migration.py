@@ -44,7 +44,8 @@ def migrate_phonecalls(env):
         record.message_post(
             body=body, subject=phonecall['name'] or 'Phone call',
             subtype_id=activity.subtype_id.id)
-        
+
+
 def assign_crm_activity(env):
     openupgrade.logged_query(
         env.cr, """
@@ -52,6 +53,7 @@ def assign_crm_activity(env):
         WHERE title_action IS NOT NULL or date_action IS NOT NULL
         """, (env.ref('crm.crm_activity_data_meeting').id,)
     )
+
 
 @openupgrade.migrate()
 def migrate(cr, version):
