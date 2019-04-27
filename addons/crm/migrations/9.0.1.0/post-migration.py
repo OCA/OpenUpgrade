@@ -46,10 +46,20 @@ def migrate_phonecalls(env):
             subtype_id=activity.subtype_id.id)
 
 
+def assign_crm_activity(env):
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE crm_lead SET next_activity_id = %s
+        WHERE title_action IS NOT NULL or date_action IS NOT NULL
+        """, (env.ref('crm.crm_activity_data_meeting').id,)
+    )
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     env = api.Environment(cr, SUPERUSER_ID, {})
     migrate_phonecalls(env)
+    assign_crm_activity(env)
     openupgrade.load_data(
         cr, 'crm', 'migrations/9.0.1.0/noupdate_changes.xml',
     )
