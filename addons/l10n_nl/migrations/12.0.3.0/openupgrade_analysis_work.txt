@@ -2,9 +2,9 @@
 ---XML records in module 'l10n_nl'---
 DEL account.account.tag: l10n_nl.tag_nl_13 (noupdate)
 DEL account.account.tag: l10n_nl.tag_nl_34 (noupdate)
-DEL account.account.template: l10n_nl.transfer_account_id
 # DONE: post-migration: deleted safely
 
+DEL account.account.template: l10n_nl.transfer_account_id
 NEW account.fiscal.position.tax.template: l10n_nl.position_tax_eu_no_taxes_report_1
 NEW account.fiscal.position.tax.template: l10n_nl.position_tax_eu_no_taxes_report_10
 NEW account.fiscal.position.tax.template: l10n_nl.position_tax_eu_no_taxes_report_11
@@ -28,10 +28,8 @@ NEW account.fiscal.position.tax.template: l10n_nl.position_tax_eu_no_taxes_repor
 NEW account.fiscal.position.template: l10n_nl.fiscal_position_template_eu_no_taxes_report
 NEW account.tax.template: l10n_nl.btw_X0_diensten
 NEW account.tax.template: l10n_nl.btw_X0_producten
-# NOTHING TO DO
-
 DEL account.tax.template: l10n_nl.btw_X0
-# DONE: post-migration: deleted safely
+# NOTHING TO DO
 
 NEW res.country.state: l10n_nl.state_nl_bq1
 NEW res.country.state: l10n_nl.state_nl_bq2
