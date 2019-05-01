@@ -30,7 +30,6 @@ renamed_modules = {
     'sale_delivery_block': 'sale_stock_picking_blocking',
     'sale_delivery_block_proc_group_by_line':
         'sale_stock_picking_blocking_proc_group_by_line',
-    # 'product_customer_code_sale': 'product_supplierinfo_for_customer_sale',
     # OCA/server-tools:
     'mail_log_messages_to_process': 'mail_log_message_to_process',
     # OCA/stock-logistics-workflow:
@@ -63,6 +62,8 @@ merged_modules = [
     ('mrp_production_unreserve', 'mrp'),
     # OCA/sale-workflow
     ('sale_order_back2draft', 'sale'),
+    ('product_customer_code_sale',
+     'product_supplierinfo_for_customer_sale'),
     # OCA/social
     ('mass_mailing_security_group', 'mass_mailing'),
     # OCA/stock-logistics-workflow
