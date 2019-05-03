@@ -36,6 +36,8 @@ merged_modules = {
     # OCA/web
     'web_no_bubble': 'web',
     'web_sheet_full_width': 'web_responsive',
+    # OCA/website
+    'website_img_bg_style': 'website',
 }
 
 renamed_models = {
