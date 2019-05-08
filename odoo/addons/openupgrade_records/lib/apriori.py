@@ -7,6 +7,10 @@ renamed_modules = {
     'base_vat_autocomplete': 'partner_autocomplete',
     'mrp_repair': 'repair',
     'product_extended': 'mrp_bom_cost',
+    # OCA/account-payment
+    'account_payment_return_import_sepa_pain': (
+        'account_payment_return_import_iso20022'
+    ),
     # OCA/community-data-files
     'product_uom_unece': 'uom_unece',
     # OCA/crm > OCA/partner-contact
