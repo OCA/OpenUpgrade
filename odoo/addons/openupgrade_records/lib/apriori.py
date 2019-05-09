@@ -35,6 +35,8 @@ merged_modules = {
     'website_sale_stock_options': 'website_sale_stock',
     # OCA/account-financial-tools
     'account_reversal': 'account',
+    # OCA/partner-contact
+    'base_partner_merge': 'base',
     # OCA/server-auth
     'auth_brute_force': 'base',
     # OCA/web
