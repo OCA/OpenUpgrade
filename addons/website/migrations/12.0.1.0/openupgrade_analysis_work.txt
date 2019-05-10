@@ -169,3 +169,7 @@ NEW res.groups: website.group_multi_website
 NEW res.users: base.user_admin (noupdate)
 DEL web.planner: website.planner_website
 # NOTHING TO DO
+
+NEW website.menu: website.menu_home (noupdate)
+DEL website.menu: website.menu_homepage (noupdate)
+# DONE: Renamed
