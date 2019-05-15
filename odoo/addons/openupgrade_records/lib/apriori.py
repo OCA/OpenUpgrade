@@ -73,6 +73,11 @@ merged_modules = [
     # OCA/website
     ('website_blog_mgmt', 'website_blog'),
     ('website_blog_share', 'website_blog'),
+    # OCA/l10n-brazil
+    ('l10n_br_data_base', 'l10n_br_base'),
+    ('l10n_br_data_account', 'l10n_br_account'),
+    ('l10n_br_data_account_product', 'l10n_br_account_product'),
+    ('l10n_br_data_account_service', 'l10n_br_account_service'),
 ]
 
 renamed_models = {
