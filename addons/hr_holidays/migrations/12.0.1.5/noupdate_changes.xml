@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="holiday_status_cl" model="hr.leave.type">
+    <!--<field name="limit"/>-->
+    <field name="allocation_type">fixed</field>
+    <field name="validity_stop" eval="time.strftime('%Y-12-31')"/>
+    <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+  </record>
+  <record id="holiday_status_comp" model="hr.leave.type">
+    <!--<field name="limit"/>-->
+    <field name="validity_stop" eval="time.strftime('%Y-12-31')"/>
+    <field name="request_unit">hour</field>
+    <field name="allocation_type">fixed_allocation</field>
+    <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+  </record>
+  <record id="holiday_status_unpaid" model="hr.leave.type">
+    <!--<field name="limit"/>-->
+    <field name="allocation_type">fixed_allocation</field>
+    <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+    <field name="unpaid" eval="True"/>
+    <field name="validation_type">both</field>
+  </record>
+  <record id="holiday_status_sl" model="hr.leave.type">
+    <!--<field name="limit"/>-->
+    <field name="allocation_type">no</field>
+    <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+  </record>
+</odoo>
