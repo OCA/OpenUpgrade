@@ -1,7 +1,8 @@
 ---Fields in module 'payment'---
 payment      / account.invoice          / transaction_ids (many2many)   : NEW relation: payment.transaction
 payment      / payment.transaction      / invoice_ids (many2many)       : NEW relation: account.invoice
-# NOTHING TO DO (presumably)
+payment      / payment.transaction      / invoice_ids_nbr (many2many)       : NEW relation: account.invoice
+# DONE: post-migration: Filled from related payment
 
 payment      / payment.acquirer         / qr_code (boolean)             : NEW
 # NOTHING TO DO
