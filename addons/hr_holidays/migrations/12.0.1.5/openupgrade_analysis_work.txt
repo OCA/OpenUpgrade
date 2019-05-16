@@ -89,10 +89,14 @@ hr_holidays  / hr.leave.type            / time_type (selection)         : NEW se
 # NOTHING TO DO: default value 'leave' is correct
 
 hr_holidays  / hr.leave.type            / sequence (integer)            : NEW
+# NOTHING TO DO: Default value preserves the order by id
+
 hr_holidays  / hr.leave.type            / unpaid (boolean)              : NEW
-hr_holidays  / hr.leave.type            / validity_start (date)         : NEW
 hr_holidays  / hr.leave.type            / validity_stop (date)          : NEW
 # NOTHING TO DO: new features
+
+hr_holidays  / hr.leave.type            / validity_start (date)         : NEW
+# DONE: Pre-migration: pre-create column for not populating the default value
 
 hr_holidays  / hr.leave.type            / validation_type (selection)   : NEW selection_keys: ['both', 'hr', 'manager']
 hr_holidays  / hr.holidays.status       / double_validation (boolean)   : not stored anymore
@@ -104,7 +108,7 @@ hr_holidays  / hr.holidays.status       / limit (boolean)               : DEL
 # DONE: post-migration: filled allocation_type ('no' if limit was True)
 
 hr_holidays  / resource.calendar.leaves / holiday_id (many2one)         : relation is now 'hr.leave' ('hr.holidays')
-# DONE: post-migration: updated holiday_id with the corresponding hr.leave id
+# NOTHING TO DO: ids have been kept, so no problem at all
 
 ---XML records in module 'hr_holidays'---
 NEW ir.actions.act_window: hr_holidays.hr_leave_action_action_approve_department
@@ -221,26 +225,36 @@ DEL ir.ui.view: hr_holidays.view_hr_holidays_kanban
 DEL ir.ui.view: hr_holidays.view_hr_holidays_remaining_leaves_user_graph
 DEL ir.ui.view: hr_holidays.view_hr_holidays_remaining_leaves_user_tree
 DEL ir.ui.view: hr_holidays.view_hr_holidays_status_search
+# NOTHING TO DO: Disposable objects that are auto-handled by regular update process
+
 NEW mail.activity.type: hr_holidays.mail_act_leave_allocation_approval (noupdate)
 NEW mail.activity.type: hr_holidays.mail_act_leave_allocation_second_approval (noupdate)
 NEW mail.activity.type: hr_holidays.mail_act_leave_approval (noupdate)
 NEW mail.activity.type: hr_holidays.mail_act_leave_second_approval (noupdate)
-# NOTHING TO DO
+# NOTHING TO DO: New objects with no previous equivalent
 
-NEW mail.message.subtype: hr_holidays.mt_department_leave_allocation_approved (noupdate)
-NEW mail.message.subtype: hr_holidays.mt_department_leave_allocation_refused (noupdate)
-NEW mail.message.subtype: hr_holidays.mt_department_leave_approved (noupdate)
-NEW mail.message.subtype: hr_holidays.mt_department_leave_refused (noupdate)
-NEW mail.message.subtype: hr_holidays.mt_leave_allocation_approved (noupdate)
-NEW mail.message.subtype: hr_holidays.mt_leave_allocation_refused (noupdate)
-NEW mail.message.subtype: hr_holidays.mt_leave_approved (noupdate)
-NEW mail.message.subtype: hr_holidays.mt_leave_refused (noupdate)
 DEL mail.message.subtype: hr_holidays.mt_department_holidays_approved (noupdate)
-DEL mail.message.subtype: hr_holidays.mt_department_holidays_confirmed (noupdate)
-DEL mail.message.subtype: hr_holidays.mt_department_holidays_first_validated (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_department_leave_allocation_approved (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_department_leave_approved (noupdate)
+# DONE: Mark new unfolded subtypes for previous followers of the folded subtypes. Then remove old ones.
+
 DEL mail.message.subtype: hr_holidays.mt_department_holidays_refused (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_department_leave_allocation_refused (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_department_leave_refused (noupdate)
+# DONE: Mark new unfolded subtypes for previous followers of the folded subtypes. Then remove old ones.
+
 DEL mail.message.subtype: hr_holidays.mt_holidays_approved (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_leave_allocation_approved (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_leave_approved (noupdate)
+# DONE: Mark new unfolded subtypes for previous followers of the folded subtypes. Then remove old ones.
+
+DEL mail.message.subtype: hr_holidays.mt_holidays_refused (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_leave_allocation_refused (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_leave_refused (noupdate)
+# DONE: Mark new unfolded subtypes for previous followers of the folded subtypes. Then remove old ones.
+
 DEL mail.message.subtype: hr_holidays.mt_holidays_confirmed (noupdate)
 DEL mail.message.subtype: hr_holidays.mt_holidays_first_validated (noupdate)
-DEL mail.message.subtype: hr_holidays.mt_holidays_refused (noupdate)
-# DONE: post-migration: it's preferable to not do the rename and delete the old ones instead
+DEL mail.message.subtype: hr_holidays.mt_department_holidays_confirmed (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_department_holidays_first_validated (noupdate)
+# DONE: post-migration: delete non continued old ones
