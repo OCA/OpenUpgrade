@@ -358,8 +358,9 @@ actual arch.
                     check = valid_view(view_arch)
                     if not check:
                         raise ValidationError(_('Invalid view %s definition in %s') % (view.name, view.arch_fs))
-                    if check == "Warning":
-                        _logger.warning(_('Invalid view %s definition in %s \n%s'), view.name, view.arch_fs, view.arch)
+                    # OpenUpgrade: Don't show this warning as useless and too much verbose
+                    # if check == "Warning":
+                        # _logger.warning(_('Invalid view %s definition in %s'), view.name, view.arch_fs)
         return True
 
     @api.constrains('type', 'groups_id')
