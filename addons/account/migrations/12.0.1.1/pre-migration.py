@@ -60,6 +60,11 @@ xmlid_renames = [
 def fill_account_invoice_line_sections(cr):
     """It's done here instead of post-migration to avoid
     possible new rows added in the migration (just in case)"""
+    if not openupgrade.column_exists(
+        cr, 'account_invoice_line', 'layout_category_id'
+    ):
+        # Module 'sale' not installed in previous version
+        return
     cr.execute(
         "ALTER TABLE account_invoice_line ADD COLUMN display_type varchar",
     )
