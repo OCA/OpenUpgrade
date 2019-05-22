@@ -80,7 +80,8 @@ def fill_hr_leave(env):
         RETURNING id""", (AsIs(openupgrade.get_legacy_name('type')), ),
     )
     ids = [x[0] for x in env.cr.fetchall()]
-    _move_model_in_data(env, ids, 'hr.holidays', 'hr.leave')
+    if ids:
+        _move_model_in_data(env, ids, 'hr.holidays', 'hr.leave')
 
 
 def fill_hr_leave_request_dates(cr):
@@ -113,7 +114,8 @@ def fill_hr_leave_allocation(env):
         RETURNING id""", (AsIs(openupgrade.get_legacy_name('type')), ),
     )
     ids = [x[0] for x in env.cr.fetchall()]
-    _move_model_in_data(env, ids, 'hr.holidays', 'hr.leave.allocation')
+    if ids:
+        _move_model_in_data(env, ids, 'hr.holidays', 'hr.leave.allocation')
 
 
 def set_max_sequences(env):
