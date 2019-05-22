@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="default_cost_method" model="ir.property" forcecreate="True">
+    <field name="fields_id" ref="field_product_template__property_cost_method"/>
+  </record>
+  <record id="default_category_cost_method" model="ir.property" forcecreate="True">
+    <field name="fields_id" ref="field_product_category__property_cost_method"/>
+  </record>
+  <record id="default_category_valuation" model="ir.property" forcecreate="True">
+    <field name="fields_id" ref="field_product_category__property_valuation"/>
+  </record>
+  <record id="default_valuation" model="ir.property" forcecreate="True">
+    <field name="fields_id" ref="field_product_template__property_valuation"/>
+  </record>
+</odoo>
