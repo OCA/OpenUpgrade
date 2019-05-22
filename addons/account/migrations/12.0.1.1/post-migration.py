@@ -177,9 +177,9 @@ def fill_account_move_reverse_entry_id(env):
                 lambda m: m.ref and m.ref.startswith(reversal_text))
             for move in reversal_moves:
                 name = move.ref.partition(reversal_text)[2]
-                origin = all_moves.filtered(lambda m: m.name == name)[0]
-                if not origin.reverse_entry_id:
-                    origin.reverse_entry_id = move.id
+                origin = all_moves.filtered(lambda m: m.name == name)
+                if origin and not origin[0].reverse_entry_id:
+                    origin[0].reverse_entry_id = move.id
 
 
 def recompute_invoice_taxes_add_analytic_tags(env):
