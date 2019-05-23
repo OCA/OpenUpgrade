@@ -25,6 +25,22 @@ model_renames_ir_actions_report = [
 ]
 
 
+def handle_partner_sector(env):
+    if openupgrade.table_exists(env.cr, 'res_partner_sector'):
+        # Module `partner_sector` was installed in 10.0
+        openupgrade.rename_models(
+            env.cr, [('res.partner.sector', 'res.partner.industry')],
+        )
+        openupgrade.rename_tables(
+            env.cr, [(('res_partner_sector', 'res_partner_industry'))]
+        )
+        openupgrade.rename_fields(
+            env, [
+                ('res.partner', 'res_partner', 'sector_id', 'industry_id'),
+            ],
+        )
+
+
 def fill_cron_action_server_pre(env):
     """Prefill the column with a fixed value for avoiding the not null error,
     but wait until post for filling correctly the field and related record.
@@ -55,6 +71,7 @@ def migrate(env, version):
     openupgrade.copy_columns(env.cr, column_copies)
     openupgrade.rename_columns(env.cr, column_renames)
     openupgrade.rename_models(env.cr, model_renames_ir_actions_report)
+    handle_partner_sector(env)
     env.cr.execute(
         """UPDATE ir_actions SET type = 'ir.actions.report'
         WHERE type = 'ir.actions.report.xml'""")
