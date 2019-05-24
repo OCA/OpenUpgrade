@@ -23,6 +23,7 @@ merged_modules = {
     'auth_crypt': 'base',
     'account_cash_basis_base_account': 'account',
     'account_invoicing': 'account',
+    'event_registration_mass_mailing': 'mass_mailing_event',
     'rating_project': 'project',
     'sale_order_dates': 'sale',
     'sale_payment': 'sale',
