@@ -1,10 +1,9 @@
 Manual migration
 ================
 
-Instead of running *migrate.py*, you can also check out the code manually
-and upgrade your database by calling odoo-bin (or openerp-server) directly. You
-will want to do this when you are working on developing migration scripts for
-uncovered modules.
+Check out the code manually and upgrade your database by calling odoo-bin,
+(or openerp-server) directly. You will want to do this when you are working on
+developing migration scripts for uncovered modules.
 
 1. Check out the OpenUpgrade source code from Github for the branches you
    need. Each branch migrates to its version from the previous version, so
@@ -43,7 +42,7 @@ General Tips
 
 * If you migrate your database through multiple versions make sure you use separate directories. If you use one directory and just check out a new branch the remaining *.pyc* files will cause trouble.
 
-* When installing the openupgradelib make sure you check out the latest version from github to get the latest updates and fixes. Either by following the method from *migrate.py* or installing via pip like so::
+* When installing the openupgradelib make sure you check out the latest version from github to get the latest updates and fixes::
 
     $ pip install git+git://github.com/OCA/openupgradelib.git
 
