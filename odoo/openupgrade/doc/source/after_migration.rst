@@ -11,7 +11,7 @@ they can be used in a later migration script (or to fix an incorrect migration)
 or only for reference.
 
 After the upgraded database has been running stable for a while, you can
-consider removing this extra data for saving DB space. It's also import for
+consider removing this extra data for saving DB space. It's also important for
 restoring the consistency between the ORM and the database layout. The data is
 orphaned, which means there is no protection from the ORM when another module
 or a future version of Odoo reintroduces any table or column for a new purpose.
