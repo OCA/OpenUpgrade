@@ -1,0 +1,23 @@
+---Fields in module 'sale_stock'---
+sale_stock   / account.invoice          / incoterms_id (many2one)       : relation is now 'account.incoterms' ('stock.incoterms')
+sale_stock   / sale.order               / incoterm (many2one)           : relation is now 'account.incoterms' ('stock.incoterms')
+# handled in account migration
+
+sale_stock   / sale.order               / effective_date (date)         : previously in module sale_order_dates
+sale_stock   / sale.order.line          / qty_delivered_method (False)  : NEW selection_keys: ['analytic', 'manual', 'stock_move'], mode: modify
+# NOTHING TO DO
+
+---XML records in module 'sale_stock'---
+NEW ir.model.access: sale_stock.access_stock_rule
+NEW ir.model.access: sale_stock.access_stock_rule_salemanager
+DEL ir.model.access: sale_stock.access_procurement_rule
+DEL ir.model.access: sale_stock.access_procurement_rule_salemanager
+DEL ir.model.access: sale_stock.access_stock_location_path
+DEL ir.model.access: sale_stock.access_stock_location_path_sale_manager
+NEW ir.ui.view: sale_stock.exception_on_picking
+NEW ir.ui.view: sale_stock.exception_on_so
+NEW ir.ui.view: sale_stock.sale_order_portal_content_inherit_sale_stock
+NEW ir.ui.view: sale_stock.stock_production_lot_view_form
+NEW ir.ui.view: sale_stock.stock_production_lot_view_form_simple
+NEW ir.ui.view: sale_stock.view_stock_rules_report_sale
+# NOTHING TO DO
