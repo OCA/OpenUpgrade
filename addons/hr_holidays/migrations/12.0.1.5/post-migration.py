@@ -162,7 +162,7 @@ def subscribe_new_subtypes(env):
             subtype_ids = (new_mt1 + new_mt2).ids
             partner_ids = followers.mapped('partner_id').ids
             Followers._insert_followers(
-                followers[0].res_model, followers.mapped('res_id'),
+                followers[0].res_model, list(set(followers.mapped('res_id'))),
                 partner_ids,
                 dict((pid, subtype_ids) for pid in partner_ids),
                 [], False, check_existing=True, existing_policy='update',
