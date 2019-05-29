@@ -4,17 +4,17 @@
 # 
 # Translators:
 # Khishigbat Ganbold <khishigbat@asterisk-tech.mn>, 2018
-# Martin Trigaux, 2018
 # Otgonbayar.A <gobi.mn@gmail.com>, 2018
 # Baskhuu Lodoikhuu <baskhuujacara@gmail.com>, 2019
+# Martin Trigaux, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-08 06:49+0000\n"
+"POT-Creation-Date: 2019-03-29 10:10+0000\n"
 "PO-Revision-Date: 2018-08-24 09:18+0000\n"
-"Last-Translator: Baskhuu Lodoikhuu <baskhuujacara@gmail.com>, 2019\n"
+"Last-Translator: Martin Trigaux, 2019\n"
 "Language-Team: Mongolian (https://www.transifex.com/odoo/teams/41243/mn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -90,12 +90,12 @@ msgstr "Ажилбарын Төлөв"
 #: model:ir.actions.act_window,name:fleet.mail_activity_type_action_config_fleet
 #: model:ir.ui.menu,name:fleet.fleet_menu_config_activity_type
 msgid "Activity Types"
-msgstr ""
+msgstr "Ажилбарын төрөл"
 
 #. module: fleet
 #: model_terms:ir.actions.act_window,help:fleet.fleet_vehicle_tag_action
 msgid "Add a new tag"
-msgstr ""
+msgstr "Шинэ пайз нэмэх"
 
 #. module: fleet
 #: model_terms:ir.ui.view,arch_db:fleet.fleet_vehicle_log_fuel_view_form
@@ -151,7 +151,7 @@ msgstr "Тусламж"
 #: model:ir.model.fields,field_description:fleet.field_fleet_vehicle__message_attachment_count
 #: model:ir.model.fields,field_description:fleet.field_fleet_vehicle_log_contract__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Хавсралтын тоо"
 
 #. module: fleet
 #: model_terms:ir.ui.view,arch_db:fleet.fleet_vehicle_view_kanban
@@ -1109,6 +1109,11 @@ msgid "Km"
 msgstr ""
 
 #. module: fleet
+#: selection:fleet.vehicle,fuel_type:0
+msgid "LPG"
+msgstr ""
+
+#. module: fleet
 #: model:ir.model.fields,field_description:fleet.field_fleet_service_type____last_update
 #: model:ir.model.fields,field_description:fleet.field_fleet_vehicle____last_update
 #: model:ir.model.fields,field_description:fleet.field_fleet_vehicle_assignation_log____last_update
@@ -1296,7 +1301,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:fleet.field_fleet_vehicle__message_has_error
 #: model:ir.model.fields,field_description:fleet.field_fleet_vehicle_log_contract__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Алдаа үүссэн талаарх мессеж"
 
 #. module: fleet
 #: model:ir.model.fields,field_description:fleet.field_fleet_vehicle__message_ids
@@ -1922,6 +1927,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Ажилбаруудын төлөв байдал\n"
+"Хоцорсон: Гүйцэтгэх огноо нь аль хэдий нь өнгөрсөн\n"
+"Өнөөдөр: Өнөөдөр гүйцэтгэх ёстой\n"
+"Төлөвлөгдсөн: Ирээдүйд гүйцэтгэх ажилбарууд"
 
 #. module: fleet
 #: model:fleet.service.type,name:fleet.type_service_service_5
@@ -2282,6 +2291,18 @@ msgstr ""
 #: model:fleet.service.type,name:fleet.type_service_50
 msgid "Water Pump Replacement"
 msgstr "Усны Насос Солилт"
+
+#. module: fleet
+#: model:ir.model.fields,field_description:fleet.field_fleet_vehicle__website_message_ids
+#: model:ir.model.fields,field_description:fleet.field_fleet_vehicle_log_contract__website_message_ids
+msgid "Website Messages"
+msgstr "Вебсайтын зурвас"
+
+#. module: fleet
+#: model:ir.model.fields,help:fleet.field_fleet_vehicle__website_message_ids
+#: model:ir.model.fields,help:fleet.field_fleet_vehicle_log_contract__website_message_ids
+msgid "Website communication history"
+msgstr "Вебсайтын харилцааны түүх"
 
 #. module: fleet
 #: selection:fleet.vehicle.log.contract,cost_frequency:0

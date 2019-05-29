@@ -10,18 +10,18 @@
 # roye w <159820@qq.com>, 2018
 # xu xiaohu <xu.xiaohu@gmail.com>, 2018
 # bower Guo <124358678@qq.com>, 2018
-# liAnGjiA <liangjia@qq.com>, 2018
 # snow wang <147156565@qq.com>, 2018
 # keecome <7017511@qq.com>, 2018
 # Martin Trigaux, 2018
 # inspur qiuguodong <qiuguodong@inspur.com>, 2018
+# liAnGjiA <liangjia@qq.com>, 2019
 # Jeffery CHEN Fan <jeffery9@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-15 10:48+0000\n"
+"POT-Creation-Date: 2019-03-15 10:04+0000\n"
 "PO-Revision-Date: 2018-08-24 09:20+0000\n"
 "Last-Translator: Jeffery CHEN Fan <jeffery9@gmail.com>, 2019\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
@@ -147,6 +147,10 @@ msgid ""
 "attrs=\"{'invisible': [('is_blacklisted', '=', False)]}\" "
 "groups=\"base.group_user\"/>"
 msgstr ""
+"<i class=\"fa fa-ban\" style=\"color: red;\" role=\"img\" title=\"This email"
+" is blacklisted for mass mailing\" aria-label=\"Blacklisted\" "
+"attrs=\"{'invisible': [('is_blacklisted', '=', False)]}\" "
+"groups=\"base.group_user\"/>"
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.email_designer_snippets
@@ -159,6 +163,8 @@ msgid ""
 "<i class=\"fa fa-exclamation-triangle\" role=\"img\" aria-label=\"Warning\" "
 "title=\"Warning\"/>"
 msgstr ""
+"<i class=\"fa fa-exclamation-triangle\" role=\"img\" aria-label=\"Warning\" "
+"title=\"Warning\"/>"
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.snippet_options
@@ -173,7 +179,7 @@ msgstr "<i class=\"fa fa-plus\"/> 营销内容"
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.view_mail_mass_mailing_list_kanban
 msgid "<i class=\"fa fa-user\" role=\"img\" aria-label=\"Contacts\" title=\"Contacts\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-user\" role=\"img\" aria-label=\"Contacts\" title=\"Contacts\"/>"
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.s_mail_block_title_text
@@ -780,7 +786,7 @@ msgstr "目标邮件列表"
 #: model_terms:ir.ui.view,arch_db:mass_mailing.mass_mailing_schedule_date_view_form
 #: model_terms:ir.ui.view,arch_db:mass_mailing.view_mail_mass_mailing_list_form_simplified
 msgid "Discard"
-msgstr "取消"
+msgstr "丢弃"
 
 #. module: mass_mailing
 #: model:ir.model.fields,field_description:mass_mailing.field_mail_mail_statistics__display_name
@@ -851,6 +857,11 @@ msgstr "邮件营销"
 #: model:ir.model,name:mass_mailing.model_mail_mail_statistics
 msgid "Email Statistics"
 msgstr "邮件统计"
+
+#. module: mass_mailing
+#: model:ir.model,name:mass_mailing.model_mail_template
+msgid "Email Templates"
+msgstr "EMail模板"
 
 #. module: mass_mailing
 #: model:ir.model,name:mass_mailing.model_mail_thread
@@ -2274,10 +2285,15 @@ msgid "Unsubscription Date"
 msgstr "取消订阅日期"
 
 #. module: mass_mailing
-#: code:addons/mass_mailing/models/mass_mailing.py:806
+#: code:addons/mass_mailing/models/mass_mailing.py:880
 #, python-format
-msgid "Unsupported mass mailing model %r"
+msgid "Unsupported mass mailing model %s"
 msgstr ""
+
+#. module: mass_mailing
+#: model_terms:ir.ui.view,arch_db:mass_mailing.unsubscribe
+msgid "Update my subscriptions"
+msgstr "更新我的订阅"
 
 #. module: mass_mailing
 #. openerp-web

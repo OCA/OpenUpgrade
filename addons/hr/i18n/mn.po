@@ -3,19 +3,19 @@
 # * hr
 # 
 # Translators:
-# Martin Trigaux, 2018
 # Otgonbayar.A <gobi.mn@gmail.com>, 2018
 # Unurjargal Tsoodol <unuruu25@gmail.com>, 2018
 # nasaaskii <nasaaskii@gmail.com>, 2018
 # Khishigbat Ganbold <khishigbat@asterisk-tech.mn>, 2018
 # Onii Onii <onii0223@yahoo.com>, 2018
+# Martin Trigaux, 2019
 # Baskhuu Lodoikhuu <baskhuujacara@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-09 10:31+0000\n"
+"POT-Creation-Date: 2019-04-12 12:19+0000\n"
 "PO-Revision-Date: 2018-08-24 09:18+0000\n"
 "Last-Translator: Baskhuu Lodoikhuu <baskhuujacara@gmail.com>, 2019\n"
 "Language-Team: Mongolian (https://www.transifex.com/odoo/teams/41243/mn/)\n"
@@ -39,7 +39,7 @@ msgstr "&amp;nbsp;"
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.hr_department_view_kanban
 msgid "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_ceo
@@ -85,6 +85,10 @@ msgid ""
 "specific.\" role=\"img\" aria-label=\"Values set here are company-"
 "specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Эдгээр утгууд нь зөвхөн "
+"тухайн компаны хувьд хадгалагдана.\" aria-label=\"Эдгээр утгууд нь зөвхөн "
+"тухайн компаны хувьд хадгалагдана.\" groups=\"base.group_multi_company\" "
+"role=\"img\"/>"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.hr_department_view_kanban
@@ -198,7 +202,10 @@ msgid "Additional Note"
 msgstr ""
 
 #. module: hr
+#: model:ir.model.fields,field_description:hr.field_crm_team__alias_contact
 #: model:ir.model.fields,field_description:hr.field_mail_alias__alias_contact
+#: model:ir.model.fields,field_description:hr.field_mail_alias_mixin__alias_contact
+#: model:ir.model.fields,field_description:hr.field_mail_channel__alias_contact
 msgid "Alias Contact Security"
 msgstr "Хуурмаг холбогчийн нууцлал"
 
@@ -219,7 +226,7 @@ msgstr "Архивласан"
 #: model:ir.model.fields,field_description:hr.field_hr_employee__message_attachment_count
 #: model:ir.model.fields,field_description:hr.field_hr_job__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Хавсралтын тоо"
 
 #. module: hr
 #: selection:mail.alias,alias_contact:0
@@ -372,7 +379,7 @@ msgstr "Бүтэн Нэр"
 #. module: hr
 #: model:ir.model,name:hr.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Тохируулга"
 
 #. module: hr
 #: model:ir.ui.menu,name:hr.menu_human_resources_configuration
@@ -477,7 +484,7 @@ msgstr "Хэлтэсүүд"
 
 #. module: hr
 #: model:ir.model,name:hr.model_mail_channel
-msgid "Discussion channel"
+msgid "Discussion Channel"
 msgstr "Хөөрөлдөөний суваг"
 
 #. module: hr
@@ -652,6 +659,11 @@ msgstr "Дагагчид (Харилцагчид)"
 #: selection:mail.alias,alias_contact:0
 msgid "Followers only"
 msgstr "Зөвхөн дагагчид"
+
+#. module: hr
+#: model_terms:ir.ui.view,arch_db:hr.view_employee_filter
+msgid "Future Activities"
+msgstr "Ирээдүйн ажилбар"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__gender
@@ -909,6 +921,11 @@ msgid "Last Updated on"
 msgstr "Сүүлийн засвар хийсэн огноо"
 
 #. module: hr
+#: model_terms:ir.ui.view,arch_db:hr.view_employee_filter
+msgid "Late Activities"
+msgstr "Хоцорсон ажилбар"
+
+#. module: hr
 #: model_terms:hr.job,website_description:hr.job_marketing
 msgid "Launch new marketing campaigns and offers"
 msgstr "Маркетингийн шинэ аян, саналыг гүйцэтгэх"
@@ -1006,7 +1023,7 @@ msgstr "Гишүүд"
 #: model:ir.model.fields,field_description:hr.field_hr_employee__message_has_error
 #: model:ir.model.fields,field_description:hr.field_hr_job__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Алдаа үүссэн талаарх мессеж"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_department__message_ids
@@ -1217,7 +1234,10 @@ msgid "Planned"
 msgstr "Төлөвлөсөн"
 
 #. module: hr
+#: model:ir.model.fields,help:hr.field_crm_team__alias_contact
 #: model:ir.model.fields,help:hr.field_mail_alias__alias_contact
+#: model:ir.model.fields,help:hr.field_mail_alias_mixin__alias_contact
+#: model:ir.model.fields,help:hr.field_mail_channel__alias_contact
 msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
@@ -1454,6 +1474,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Ажилбаруудын төлөв байдал\n"
+"Хоцорсон: Гүйцэтгэх огноо нь аль хэдий нь өнгөрсөн\n"
+"Өнөөдөр: Өнөөдөр гүйцэтгэх ёстой\n"
+"Төлөвлөгдсөн: Ирээдүйд гүйцэтгэх ажилбарууд"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_hr_job_form
@@ -1538,6 +1562,11 @@ msgstr "Цагийн бүс"
 #: selection:hr.employee,activity_state:0
 msgid "Today"
 msgstr "Өнөөдөр"
+
+#. module: hr
+#: model_terms:ir.ui.view,arch_db:hr.view_employee_filter
+msgid "Today Activities"
+msgstr "Өнөөдрийн ажилбар"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_job__expected_employees
@@ -1662,6 +1691,20 @@ msgstr ""
 "дүүрэн маркетингийн менежерийг хайж байна. Бидэнд санаачлагатай, хүсэл "
 "тэмүүлэлтэй, мөн ...... шинэ зүйл, олон шинэ зүйлсийг эхлэхээс айдаггүй, "
 "өгсөх ирээдүйтэй хүн хэрэгтэй байна."
+
+#. module: hr
+#: model:ir.model.fields,field_description:hr.field_hr_department__website_message_ids
+#: model:ir.model.fields,field_description:hr.field_hr_employee__website_message_ids
+#: model:ir.model.fields,field_description:hr.field_hr_job__website_message_ids
+msgid "Website Messages"
+msgstr "Вебсайтын зурвас"
+
+#. module: hr
+#: model:ir.model.fields,help:hr.field_hr_department__website_message_ids
+#: model:ir.model.fields,help:hr.field_hr_employee__website_message_ids
+#: model:ir.model.fields,help:hr.field_hr_job__website_message_ids
+msgid "Website communication history"
+msgstr "Вебсайтын харилцааны түүх"
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_ceo

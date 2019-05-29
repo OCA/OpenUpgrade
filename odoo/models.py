@@ -2388,6 +2388,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         cr = self._cr
         update_custom_fields = self._context.get('update_custom_fields', False)
         must_create_table = not tools.table_exists(cr, self._table)
+        parent_path_compute = False
 
         if self._auto:
             if must_create_table:
@@ -2396,6 +2397,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             if self._parent_store:
                 if not tools.column_exists(cr, self._table, 'parent_path'):
                     self._create_parent_columns()
+                    parent_path_compute = True
 
             self._check_removed_columns(log=False)
 
@@ -2423,6 +2425,9 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         if must_create_table:
             self._execute_sql()
+
+        if parent_path_compute:
+            self._parent_store_compute()
 
     @api.model_cr
     def init(self):
@@ -3283,14 +3288,12 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                             self._name, ', '.join(sorted(unknown_names)))
 
         with self.env.protecting(protected_fields, self):
-            # write stored fields with (low-level) method _write
-            if store_vals or inverse_vals or inherited_vals:
-                # if log_access is enabled, this updates 'write_date' and
-                # 'write_uid' and check access rules, even when old_vals is
-                # empty
-                self._write(store_vals)
+            # update references to parents
+            ref_store_vals = {k: store_vals[k] for k in self._inherits.values() if k in store_vals}
+            if ref_store_vals:
+                self._write(ref_store_vals)
 
-            # update parent records (after possibly updating parent fields)
+            # update parent records
             cr = self.env.cr
             for model_name, parent_vals in inherited_vals.items():
                 parent_name = self._inherits[model_name]
@@ -3302,6 +3305,13 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                     parent_ids.update(row[0] for row in cr.fetchall())
 
                 self.env[model_name].browse(parent_ids).write(parent_vals)
+
+            # write stored fields with (low-level) method _write
+            if store_vals or inverse_vals or inherited_vals:
+                # if log_access is enabled, this updates 'write_date' and
+                # 'write_uid' and check access rules, even when old_vals is
+                # empty
+                self._write(store_vals)
 
             if inverse_vals:
                 self.check_field_access_rights('write', list(inverse_vals))
@@ -3367,7 +3377,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                 _logger.warning('Field %s is deprecated: %s', field, field.deprecated)
 
             if field.column_type:
-                if single_lang or not (has_translation and field.translate):
+                if single_lang or not (has_translation and field.translate is True):
                     # val is not a translation: update the table
                     val = field.convert_to_column(val, self, vals)
                     columns.append((name, field.column_format, val))
@@ -3958,8 +3968,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             # The quotes surrounding `ir_translation` are important as well.
             unique_translation_subselect = """
                 (SELECT res_id, value FROM "ir_translation"
-                 WHERE name=%s AND lang=%s AND value!=''
-                 ORDER BY res_id, id DESC)
+                 WHERE type='model' AND name=%s AND lang=%s AND value!='')
             """
             alias, alias_statement = query.add_join(
                 (table_alias, unique_translation_subselect, 'id', 'res_id', field),
@@ -4249,11 +4258,12 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                     if vals['lang'] == old.env.lang and field.translate is True:
                         # force a source if the new_val was not changed by copy override
                         if new_val == old[name]:
-                            vals['source'] = old_wo_lang[name]
+                            new_wo_lang[name] = old_wo_lang[name]
+                            vals['src'] = old_wo_lang[name]
                         # the value should be the new value (given by copy())
                         vals['value'] = new_val
                     vals_list.append(vals)
-                Translation.create(vals_list)
+                Translation._upsert_translations(vals_list)
 
     @api.multi
     @api.returns('self', lambda value: value.id)
@@ -5402,6 +5412,19 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                         if subnames else record[name]
                     )
 
+            def has_changed(self, name):
+                """ Return whether a field on record has changed. """
+                record = self['<record>']
+                subnames = self['<tree>'][name]
+                if not subnames:
+                    return self[name] != record[name]
+                else:
+                    return len(self[name]) != len(record[name]) or any(
+                        line_snapshot.has_changed(subname)
+                        for line_snapshot in self[name]
+                        for subname in subnames
+                    )
+
             def diff(self, other):
                 """ Return the values in ``self`` that differ from ``other``.
                     Requires record cache invalidation for correct output!
@@ -5479,25 +5502,24 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         result = {'warnings': OrderedSet()}
 
-        # process names in order (or the keys of values if no name given)
-        while todo:
-            name = todo.pop(0)
-            if name in done:
-                continue
-            done.add(name)
-
-            with env.do_in_onchange():
+        # process names in order
+        with env.do_in_onchange():
+            while todo:
                 # apply field-specific onchange methods
-                if field_onchange.get(name):
-                    record._onchange_eval(name, field_onchange[name], result)
+                for name in todo:
+                    if field_onchange.get(name):
+                        record._onchange_eval(name, field_onchange[name], result)
+                    done.add(name)
 
-                # make a snapshot (this forces evaluation of computed fields)
-                snapshot1 = Snapshot(record, nametree)
+                # determine which fields to process for the next pass
+                todo = [
+                    name
+                    for name in nametree
+                    if name not in done and snapshot0.has_changed(name)
+                ]
 
-                # determine which fields have been modified
-                for name in nametree:
-                    if snapshot1[name] != snapshot0[name]:
-                        todo.append(name)
+            # make the snapshot with the final values of record
+            snapshot1 = Snapshot(record, nametree)
 
         # determine values that have changed by comparing snapshots
         self.invalidate_cache()

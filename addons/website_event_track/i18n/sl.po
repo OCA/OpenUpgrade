@@ -3,11 +3,12 @@
 # * website_event_track
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2019
 # Dejan Sraka <dejan.sraka@picolabs.si>, 2019
 # laznikd <laznik@mentis.si>, 2019
 # matjaz k <matjaz@mentis.si>, 2019
 # Martin Trigaux, 2019
+# Matjaz Mozetic <m.mozetic@matmoz.si>, 2019
+# Boris Kodelja <boris@hbs.si>, 2019
 # 
 msgid ""
 msgstr ""
@@ -15,7 +16,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-08 06:49+0000\n"
 "PO-Revision-Date: 2018-08-24 09:34+0000\n"
-"Last-Translator: Martin Trigaux, 2019\n"
+"Last-Translator: Boris Kodelja <boris@hbs.si>, 2019\n"
 "Language-Team: Slovenian (https://www.transifex.com/odoo/teams/41243/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -153,7 +154,7 @@ msgstr "Aktivnosti"
 #. module: website_event_track
 #: model:ir.model.fields,field_description:website_event_track.field_event_track__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Stanje aktivnosti"
 
 #. module: website_event_track
 #: model_terms:ir.actions.act_window,help:website_event_track.event_track_stage_action
@@ -214,7 +215,7 @@ msgstr "Arhivirano"
 #. module: website_event_track
 #: model:ir.model.fields,field_description:website_event_track.field_event_track__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Število prilog"
 
 #. module: website_event_track
 #: model:ir.model.fields,field_description:website_event_track.field_event_event__allowed_track_tag_ids
@@ -342,7 +343,7 @@ msgstr "Dokumenti"
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.view_event_track_kanban
 msgid "Dropdown menu"
-msgstr ""
+msgstr "Spustni seznam"
 
 #. module: website_event_track
 #: model:ir.model.fields,field_description:website_event_track.field_event_track__duration
@@ -393,7 +394,7 @@ msgstr ""
 #. module: website_event_track
 #: model:ir.model,name:website_event_track.model_event_sponsor
 msgid "Event Sponsor"
-msgstr ""
+msgstr "Pokrovitelj dogodka"
 
 #. module: website_event_track
 #: model:ir.model,name:website_event_track.model_event_sponsor_type
@@ -409,7 +410,7 @@ msgstr "Tipi pokroviteljev dogodkov"
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.view_event_sponsor_search
 msgid "Event Sponsors"
-msgstr ""
+msgstr "Pokrovitelji dogodka"
 
 #. module: website_event_track
 #: model:ir.model,name:website_event_track.model_event_track
@@ -491,7 +492,7 @@ msgstr "Sledilci (partnerji)"
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.view_event_track_search
 msgid "Future Activities"
-msgstr ""
+msgstr "Bodoče aktivnosti"
 
 #. module: website_event_track
 #: model:event.sponsor.type,name:website_event_track.event_sponsor_type3
@@ -592,7 +593,7 @@ msgstr "Če je označeno, zahtevajo nova sporočila vašo pozornost."
 #. module: website_event_track
 #: model:ir.model.fields,help:website_event_track.field_event_track__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Če je označeno, imajo nekatera sporočila napako pri dostavi."
 
 #. module: website_event_track
 #: model:ir.model.fields,help:website_event_track.field_event_track_stage__mail_template_id
@@ -667,7 +668,7 @@ msgstr "Zadnjič posodobljeno"
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.view_event_track_search
 msgid "Late Activities"
-msgstr ""
+msgstr "Aktivnosti z zamudo"
 
 #. module: website_event_track
 #: model:event.track,name:website_event_track.event_track12
@@ -697,7 +698,7 @@ msgstr "Obrok"
 #. module: website_event_track
 #: model:ir.model.fields,field_description:website_event_track.field_event_track__message_main_attachment_id
 msgid "Main Attachment"
-msgstr ""
+msgstr "Glavna priponka"
 
 #. module: website_event_track
 #: selection:event.track,priority:0
@@ -729,7 +730,7 @@ msgstr ""
 #. module: website_event_track
 #: model:ir.model.fields,field_description:website_event_track.field_event_track__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Napaka pri dostavi sporočila"
 
 #. module: website_event_track
 #: model:ir.model.fields,field_description:website_event_track.field_event_track__message_ids
@@ -749,7 +750,7 @@ msgstr "Jutranji odmor"
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.view_event_track_search
 msgid "My Activities"
-msgstr ""
+msgstr "Moje aktivnosti"
 
 #. module: website_event_track
 #: model:event.track,name:website_event_track.event_track27
@@ -779,17 +780,17 @@ msgstr ""
 #. module: website_event_track
 #: model:ir.model.fields,field_description:website_event_track.field_event_track__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Rok naslednje aktivnosti"
 
 #. module: website_event_track
 #: model:ir.model.fields,field_description:website_event_track.field_event_track__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Povzetek naslednje aktivnosti"
 
 #. module: website_event_track
 #: model:ir.model.fields,field_description:website_event_track.field_event_track__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Tip naslednje aktivnosti"
 
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.tracks
@@ -804,7 +805,7 @@ msgstr "Število aktivnosti"
 #. module: website_event_track
 #: model:ir.model.fields,field_description:website_event_track.field_event_track__message_has_error_counter
 msgid "Number of error"
-msgstr ""
+msgstr "Številka napake"
 
 #. module: website_event_track
 #: model:ir.model.fields,help:website_event_track.field_event_track__message_needaction_counter
@@ -814,7 +815,7 @@ msgstr "Število sporočil, ki zahtevajo dejavnost"
 #. module: website_event_track
 #: model:ir.model.fields,help:website_event_track.field_event_track__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Število sporočil, ki niso bila pravilno dostavljena."
 
 #. module: website_event_track
 #: model:ir.model.fields,help:website_event_track.field_event_track__message_unread_counter
@@ -829,7 +830,7 @@ msgstr "Naši pokrovitelji"
 #. module: website_event_track
 #: selection:event.track,activity_state:0
 msgid "Overdue"
-msgstr ""
+msgstr "Zapadlo"
 
 #. module: website_event_track
 #: model:event.track,name:website_event_track.event_track14
@@ -839,7 +840,7 @@ msgstr ""
 #. module: website_event_track
 #: selection:event.track,activity_state:0
 msgid "Planned"
-msgstr ""
+msgstr "Planirano"
 
 #. module: website_event_track
 #: model:event.track,name:website_event_track.event_track3
@@ -859,7 +860,7 @@ msgstr "Prioriteta"
 #. module: website_event_track
 #: model:event.track.stage,name:website_event_track.event_track_stage0
 msgid "Proposal"
-msgstr ""
+msgstr "Predlog"
 
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.event_track_proposal
@@ -940,6 +941,7 @@ msgstr "Zaporedje"
 #: model_terms:ir.ui.view,arch_db:website_event_track.view_event_track_search
 msgid "Show all records which has next action date is before today"
 msgstr ""
+"Prikaži vse zapise z datumom naslednje aktivnosti pred današnjim datumom."
 
 #. module: website_event_track
 #: model:event.sponsor.type,name:website_event_track.event_sponsor_type2
@@ -1046,6 +1048,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Status na podlagi aktivnosti\n"
+"Zapadel: Datum zapadlosti je v preteklosti\n"
+"Danes: Datum aktivnosti je danes\n"
+"Planned: Bodoče aktivnosti."
 
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.event_track_proposal
@@ -1155,7 +1161,7 @@ msgstr "Danes"
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.view_event_track_search
 msgid "Today Activities"
-msgstr ""
+msgstr "Današnje aktivnosti"
 
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.view_event_track_form

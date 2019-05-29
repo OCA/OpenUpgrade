@@ -6,8 +6,8 @@
 # Seongseok Shin <shinss61@hotmail.com>, 2018
 # Martin Trigaux, 2018
 # Link Up링크업 <linkup.way@gmail.com>, 2018
-# Linkup <link-up@naver.com>, 2018
-# 최재호 <hwangtog@gmail.com>, 2019
+# Linkup <link-up@naver.com>, 2019
+# JH CHOI <hwangtog@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-09 10:31+0000\n"
 "PO-Revision-Date: 2018-08-24 09:19+0000\n"
-"Last-Translator: 최재호 <hwangtog@gmail.com>, 2019\n"
+"Last-Translator: JH CHOI <hwangtog@gmail.com>, 2019\n"
 "Language-Team: Korean (https://www.transifex.com/odoo/teams/41243/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,6 +30,18 @@ msgid ""
 "leaves;\tFixed by HR + allocation request: allocated by HR and users can "
 "request leaves and allocations;\tNo allocation: no allocation by default, "
 "users can freely request leaves;"
+msgstr ""
+
+#. module: hr_holidays
+#: code:addons/hr_holidays/models/hr_leave_type.py:265
+#, python-format
+msgid " days"
+msgstr ""
+
+#. module: hr_holidays
+#: code:addons/hr_holidays/models/hr_leave_type.py:265
+#, python-format
+msgid " hours"
 msgstr ""
 
 #. module: hr_holidays
@@ -70,9 +82,21 @@ msgid "%s : %.2f day(s)"
 msgstr "%s : %.2f 일"
 
 #. module: hr_holidays
+#: code:addons/hr_holidays/models/hr_leave.py:466
+#, python-format
+msgid "%s : %.2f hour(s)"
+msgstr ""
+
+#. module: hr_holidays
 #: code:addons/hr_holidays/models/hr_leave.py:440
 #, python-format
-msgid "%s on %s :%.2f day(s)"
+msgid "%s on %s : %.2f day(s)"
+msgstr ""
+
+#. module: hr_holidays
+#: code:addons/hr_holidays/models/hr_leave.py:481
+#, python-format
+msgid "%s on %s : %.2f hour(s)"
 msgstr ""
 
 #. module: hr_holidays
@@ -475,7 +499,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__message_needaction
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_allocation__message_needaction
 msgid "Action Needed"
-msgstr "필요한 조치"
+msgstr "작업이 필요함"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_type__active
@@ -551,9 +575,9 @@ msgid "All Leaves"
 msgstr "전체 휴가"
 
 #. module: hr_holidays
-#: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_allocation_view_tree
-msgid "Allocated Days"
-msgstr "할당된 날짜"
+#: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_allocation__duration_display
+msgid "Allocated (Days/Hours)"
+msgstr ""
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.edit_holiday_status_form
@@ -689,7 +713,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__message_attachment_count
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_allocation__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "첨부 파일 수"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_allocation__accrual_limit
@@ -748,7 +772,7 @@ msgstr "직원 태그별"
 msgid ""
 "By Employee: Allocation/Request for individual Employee, By Employee Tag: "
 "Allocation/Request for group of employees in category"
-msgstr "직원별 : 개별 직원에 할당/요청. 직원 태그별 : 임직원 분류 그룹에 할당/요청"
+msgstr "직원별 : 개별 직원에 할당/요청. 직원 태그별 : 직원 분류 그룹에 할당/요청"
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.edit_holiday_status_form
@@ -789,7 +813,7 @@ msgstr "분류"
 #. module: hr_holidays
 #: model:ir.model.fields,help:hr_holidays.field_hr_leave__category_id
 msgid "Category of Employee"
-msgstr "임직원 분류"
+msgstr "직원 분류"
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.report_holidayssummary
@@ -973,7 +997,7 @@ msgstr "내용"
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_type__display_name
 #: model:ir.model.fields,field_description:hr_holidays.field_report_hr_holidays_report_holidayssummary__display_name
 msgid "Display Name"
-msgstr "이름 표시"
+msgstr "제목"
 
 #. module: hr_holidays
 #: selection:hr.leave.type,validation_type:0
@@ -984,7 +1008,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_allocation_view_kanban
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_view_kanban
 msgid "Dropdown menu"
-msgstr ""
+msgstr "드롭 다운 메뉴"
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_allocation_view_form
@@ -1041,7 +1065,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_holidays.view_hr_holidays_filter_report
 #: model_terms:ir.ui.view,arch_db:hr_holidays.view_hr_leave_allocation_filter
 msgid "Employee"
-msgstr "임직원"
+msgstr "직원"
 
 #. module: hr_holidays
 #: selection:hr.leave.type,validation_type:0
@@ -1053,12 +1077,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_allocation__category_id
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_report__category_id
 msgid "Employee Tag"
-msgstr "임직원 태그"
+msgstr "직원 태그"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_holidays_summary_employee__emp
 msgid "Employee(s)"
-msgstr "임직원"
+msgstr "직원"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__date_to
@@ -1072,6 +1096,20 @@ msgstr "종료일"
 #: code:addons/hr_holidays/models/hr_leave_type.py:93
 #, python-format
 msgid "End of validity period should be greater than start of validity period"
+msgstr ""
+
+#. module: hr_holidays
+#: model:ir.model.fields,help:hr_holidays.field_hr_leave_allocation__duration_display
+msgid ""
+"Field allowing to see the allocation duration in days or hours depending on "
+"the type_request_unit"
+msgstr ""
+
+#. module: hr_holidays
+#: model:ir.model.fields,help:hr_holidays.field_hr_leave__duration_display
+msgid ""
+"Field allowing to see the leave request duration in days or hours depending "
+"on the leave_type_request_unit"
 msgstr ""
 
 #. module: hr_holidays
@@ -1173,7 +1211,7 @@ msgstr ""
 #. module: hr_holidays
 #: model:ir.model,name:hr_holidays.model_hr_department
 msgid "HR Department"
-msgstr ""
+msgstr "인사부서"
 
 #. module: hr_holidays
 #: model:ir.model,name:hr_holidays.model_hr_holidays_summary_dept
@@ -1183,7 +1221,7 @@ msgstr "부서별 직원 휴가 요약 보고서"
 #. module: hr_holidays
 #: model:ir.model,name:hr_holidays.model_hr_holidays_summary_employee
 msgid "HR Leaves Summary Report By Employee"
-msgstr "임직원별 휴가 요약 보고서"
+msgstr "직원별 휴가 요약 보고서"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__request_unit_half
@@ -1247,7 +1285,7 @@ msgstr "만약 선택하였으면, 새 메시지에 주의를 기울여야 합�
 #: model:ir.model.fields,help:hr_holidays.field_hr_leave__message_has_error
 #: model:ir.model.fields,help:hr_holidays.field_hr_leave_allocation__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "이 옵션을 선택하면 일부 메시지에 배달 오류가 발생합니다."
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_allocation_view_form_manager
@@ -1583,7 +1621,7 @@ msgstr "선홍색"
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__message_main_attachment_id
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_allocation__message_main_attachment_id
 msgid "Main Attachment"
-msgstr ""
+msgstr "주요 첨부 파일"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__manager_id
@@ -1595,7 +1633,7 @@ msgstr "관리자"
 #. module: hr_holidays
 #: model:ir.ui.menu,name:hr_holidays.menu_hr_holidays_approvals
 msgid "Managers"
-msgstr ""
+msgstr "관리자"
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_holiday_status_view_kanban
@@ -1637,7 +1675,7 @@ msgstr "회의 유형"
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__message_has_error
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_allocation__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "메시지 배달 오류"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__message_ids
@@ -1702,13 +1740,13 @@ msgstr ""
 #. module: hr_holidays
 #: selection:hr.employee,current_leave_state:0
 msgid "New"
-msgstr "새로운"
+msgstr "신규"
 
 #. module: hr_holidays
 #: model:ir.actions.act_window,name:hr_holidays.hr_leave_action_new_request
 #: model:ir.ui.menu,name:hr_holidays.hr_leave_menu_new_request
 msgid "New Request"
-msgstr ""
+msgstr "새 요청"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__activity_date_deadline
@@ -1737,7 +1775,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__message_needaction_counter
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_allocation__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "작업 횟수"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_allocation__number_of_days
@@ -1767,7 +1805,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__message_has_error_counter
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_allocation__message_has_error_counter
 msgid "Number of error"
-msgstr ""
+msgstr "오류 횟수"
 
 #. module: hr_holidays
 #: model:ir.model.fields,help:hr_holidays.field_hr_leave__number_of_hours_display
@@ -1780,13 +1818,13 @@ msgstr ""
 #: model:ir.model.fields,help:hr_holidays.field_hr_leave__message_needaction_counter
 #: model:ir.model.fields,help:hr_holidays.field_hr_leave_allocation__message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr "조치가 필요한 메시지 수"
+msgstr "작업이 필요한 메시지 수"
 
 #. module: hr_holidays
 #: model:ir.model.fields,help:hr_holidays.field_hr_leave__message_has_error_counter
 #: model:ir.model.fields,help:hr_holidays.field_hr_leave_allocation__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "배달 오류 메시지 수"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_allocation__interval_number
@@ -1807,7 +1845,7 @@ msgstr "읽지 않은 메시지 수"
 #. module: hr_holidays
 #: model:res.groups,name:hr_holidays.group_hr_holidays_user
 msgid "Officer"
-msgstr ""
+msgstr "직원"
 
 #. module: hr_holidays
 #: model:ir.model.fields,help:hr_holidays.field_hr_leave_type__categ_id
@@ -1879,7 +1917,7 @@ msgstr ""
 #. module: hr_holidays
 #: model:ir.ui.menu,name:hr_holidays.menu_hr_holidays_dashboard
 msgid "Overview"
-msgstr ""
+msgstr "개요"
 
 #. module: hr_holidays
 #: model:hr.leave.type,name:hr_holidays.holiday_status_cla
@@ -2013,6 +2051,11 @@ msgstr "요청 승인됨"
 #: model:mail.message.subtype,description:hr_holidays.mt_leave_refused
 msgid "Request refused"
 msgstr "요청 거부"
+
+#. module: hr_holidays
+#: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__duration_display
+msgid "Requested (Days/Hours)"
+msgstr ""
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_allocation_view_form_manager
@@ -2236,7 +2279,7 @@ msgstr "받는 이"
 #: model_terms:ir.ui.view,arch_db:hr_holidays.view_hr_holidays_filter_report
 #: model_terms:ir.ui.view,arch_db:hr_holidays.view_hr_leave_allocation_filter
 msgid "To Approve"
-msgstr "승인"
+msgstr "승인 대기"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_employee__leave_date_to
@@ -2279,23 +2322,13 @@ msgid "Total Employee"
 msgstr ""
 
 #. module: hr_holidays
-#: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_allocation_view_tree
-msgid "Total allocated days"
-msgstr ""
-
-#. module: hr_holidays
-#: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_view_tree
-msgid "Total leaves"
-msgstr ""
-
-#. module: hr_holidays
 #: model:ir.model.fields,help:hr_holidays.field_hr_employee__remaining_leaves
 msgid ""
 "Total number of legal leaves allocated to this employee, change this value "
 "to create allocation/leave request. Total based on all the leave types "
 "without overriding limit."
 msgstr ""
-"이 임직원에게 할당된 총 법정 휴가일수. 할당/휴가 요청을 만들면 이 값이 변경됩니다. 합계는 한계 설정없이 모든 휴가 유형을 기반으로 "
+"이 직원에게 할당된 총 법정 휴가일수. 할당/휴가 요청을 만들면 이 값이 변경됩니다. 합계는 한계 설정없이 모든 휴가 유형을 기반으로 "
 "합니다."
 
 #. module: hr_holidays
@@ -2364,7 +2397,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_view_form
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_view_tree
 msgid "Validate"
-msgstr "유효성 검사"
+msgstr "tmddls"
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.edit_holiday_status_form
@@ -2488,6 +2521,11 @@ msgid "You must be either %s's manager or Leave manager to approve this leave"
 msgstr ""
 
 #. module: hr_holidays
+#: code:addons/hr_holidays/models/hr_leave.py:392
+#, python-format
+msgid "day(s)"
+msgstr "일"
+
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_allocation_view_kanban
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_report_kanban
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_view_kanban
@@ -2498,6 +2536,13 @@ msgstr "일"
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_view_form_manager
 msgid "e.g. Report to the next month..."
+msgstr ""
+
+#. module: hr_holidays
+#: code:addons/hr_holidays/models/hr_leave.py:392
+#: code:addons/hr_holidays/models/hr_leave_allocation.py:219
+#, python-format
+msgid "hour(s)"
 msgstr ""
 
 #. module: hr_holidays

@@ -7,13 +7,14 @@
 # Jakub Lohnisky <jakub@lepremier.cz>, 2018
 # Jan Horzinka <jan.horzinka@centrum.cz>, 2018
 # Michal Veselý <michal@veselyberanek.net>, 2018
+# Jaroslav Helemik Nemec <nemec@helemik.cz>, 2019
 # trendspotter <j.podhorecky@volny.cz>, 2019
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~11.5\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 13:17+0000\n"
+"POT-Creation-Date: 2019-03-29 10:09+0000\n"
 "PO-Revision-Date: 2018-08-24 09:15+0000\n"
 "Last-Translator: trendspotter <j.podhorecky@volny.cz>, 2019\n"
 "Language-Team: Czech (https://www.transifex.com/odoo/teams/41243/cs/)\n"
@@ -288,7 +289,7 @@ msgstr "Sledující"
 #. module: analytic
 #: model:ir.model.fields,field_description:analytic.field_account_analytic_account__message_channel_ids
 msgid "Followers (Channels)"
-msgstr ""
+msgstr "Sledující (Kanály)"
 
 #. module: analytic
 #: model:ir.model.fields,field_description:analytic.field_account_analytic_account__message_partner_ids
@@ -446,7 +447,7 @@ msgstr "Nadřazený"
 #. module: analytic
 #: model:ir.model.fields,field_description:analytic.field_account_analytic_group__parent_path
 msgid "Parent Path"
-msgstr ""
+msgstr "Nadřazená cesta"
 
 #. module: analytic
 #: model:ir.model.fields,field_description:analytic.field_account_analytic_distribution__tag_id
@@ -547,6 +548,16 @@ msgstr "Počítadlo nepřečtených zpráv"
 #: model:ir.model.fields,field_description:analytic.field_account_analytic_line__user_id
 msgid "User"
 msgstr "Uživatel"
+
+#. module: analytic
+#: model:ir.model.fields,field_description:analytic.field_account_analytic_account__website_message_ids
+msgid "Website Messages"
+msgstr "Zprávy Webové stránky"
+
+#. module: analytic
+#: model:ir.model.fields,help:analytic.field_account_analytic_account__website_message_ids
+msgid "Website communication history"
+msgstr "Historie komunikace Webové stránky"
 
 #. module: analytic
 #: model_terms:ir.ui.view,arch_db:analytic.view_account_analytic_account_form

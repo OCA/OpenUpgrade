@@ -516,12 +516,18 @@ class SaleOrder(models.Model):
         invoices_origin = {}
         invoices_name = {}
 
+        # Keep track of the sequences of the lines
+        # To keep lines under their section
+        inv_line_sequence = 0
         for order in self:
             group_key = order.id if grouped else (order.partner_invoice_id.id, order.currency_id.id)
 
             # We only want to create sections that have at least one invoiceable line
             pending_section = None
 
+            # Create lines in batch to avoid performance problems
+            line_vals_list = []
+            # sequence is the natural order of order_lines
             for line in order.order_line:
                 if line.display_type == 'line_section':
                     pending_section = line
@@ -543,13 +549,27 @@ class SaleOrder(models.Model):
 
                 if line.qty_to_invoice > 0 or (line.qty_to_invoice < 0 and final):
                     if pending_section:
-                        pending_section.invoice_line_create(invoices[group_key].id, pending_section.qty_to_invoice)
+                        section_invoice = pending_section.invoice_line_create_vals(
+                            invoices[group_key].id,
+                            pending_section.qty_to_invoice
+                        )
+                        inv_line_sequence += 1
+                        section_invoice[0]['sequence'] = inv_line_sequence
+                        line_vals_list.extend(section_invoice)
                         pending_section = None
-                    line.invoice_line_create(invoices[group_key].id, line.qty_to_invoice)
+
+                    inv_line_sequence += 1
+                    inv_line = line.invoice_line_create_vals(
+                        invoices[group_key].id, line.qty_to_invoice
+                    )
+                    inv_line[0]['sequence'] = inv_line_sequence
+                    line_vals_list.extend(inv_line)
 
             if references.get(invoices.get(group_key)):
                 if order not in references[invoices[group_key]]:
                     references[invoices[group_key]] |= order
+
+            self.env['account.invoice.line'].create(line_vals_list)
 
         for group_key in invoices:
             invoices[group_key].write({'name': ', '.join(invoices_name[group_key]),
@@ -578,7 +598,9 @@ class SaleOrder(models.Model):
             invoice.compute_taxes()
             # Idem for partner
             so_payment_term_id = invoice.payment_term_id.id
+            fp_invoice = invoice.fiscal_position_id
             invoice._onchange_partner_id()
+            invoice.fiscal_position_id = fp_invoice
             # To keep the payment terms set on the SO
             invoice.payment_term_id = so_payment_term_id
             invoice.message_post_with_view('mail.message_origin_link',
@@ -651,15 +673,16 @@ class SaleOrder(models.Model):
             if email_act and email_act.get('context'):
                 email_ctx = email_act['context']
                 email_ctx.update(default_email_from=order.company_id.email)
-                order.with_context(email_ctx).message_post_with_template(email_ctx.get('default_template_id'))
+                order.with_context(**email_ctx).message_post_with_template(email_ctx.get('default_template_id'))
         return True
 
     @api.multi
     def action_done(self):
-        tx = self.sudo().transaction_ids.get_last_transaction()
-        if tx and tx.state == 'pending' and tx.acquirer_id.provider == 'transfer':
-            tx._set_transaction_done()
-            tx.write({'is_processed': True})
+        for order in self:
+            tx = order.sudo().transaction_ids.get_last_transaction()
+            if tx and tx.state == 'pending' and tx.acquirer_id.provider == 'transfer':
+                tx._set_transaction_done()
+                tx.write({'is_processed': True})
         return self.write({'state': 'done'})
 
     @api.multi
@@ -1037,20 +1060,23 @@ class SaleOrderLine(models.Model):
                     res[field] = line._fields[field].convert_to_write(line[field], line)
         return res
 
-    @api.model
-    def create(self, values):
-        if values.get('display_type', self.default_get(['display_type'])['display_type']):
-            values.update(product_id=False, price_unit=0, product_uom_qty=0, product_uom=False, customer_lead=0)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for values in vals_list:
+            if values.get('display_type', self.default_get(['display_type'])['display_type']):
+                values.update(product_id=False, price_unit=0, product_uom_qty=0, product_uom=False, customer_lead=0)
 
-        values.update(self._prepare_add_missing_fields(values))
-        line = super(SaleOrderLine, self).create(values)
-        if line.product_id and line.order_id.state == 'sale':
-            msg = _("Extra line with %s ") % (line.product_id.display_name,)
-            line.order_id.message_post(body=msg)
-            # create an analytic account if at least an expense product
-            if line.product_id.expense_policy not in [False, 'no'] and not self.order_id.analytic_account_id:
-                self.order_id._create_analytic_account()
-        return line
+            values.update(self._prepare_add_missing_fields(values))
+
+        lines = super().create(vals_list)
+        for line in lines:
+            if line.product_id and line.order_id.state == 'sale':
+                msg = _("Extra line with %s ") % (line.product_id.display_name,)
+                line.order_id.message_post(body=msg)
+                # create an analytic account if at least an expense product
+                if line.product_id.expense_policy not in [False, 'no'] and not line.order_id.analytic_account_id:
+                    line.order_id._create_analytic_account()
+        return lines
 
     _sql_constraints = [
         ('accountable_required_fields',
@@ -1101,7 +1127,7 @@ class SaleOrderLine(models.Model):
         result = super(SaleOrderLine, self).write(values)
         return result
 
-    order_id = fields.Many2one('sale.order', string='Order Reference', required=True, ondelete='cascade', index=True, copy=False, readonly=True)
+    order_id = fields.Many2one('sale.order', string='Order Reference', required=True, ondelete='cascade', index=True, copy=False)
     name = fields.Text(string='Description', required=True)
     sequence = fields.Integer(string='Sequence', default=10)
 
@@ -1258,7 +1284,7 @@ class SaleOrderLine(models.Model):
             result.setdefault(so_line_id, 0.0)
             uom = product_uom_map.get(item['product_uom_id'][0])
             if so_line.product_uom.category_id == uom.category_id:
-                qty = uom._compute_quantity(item['unit_amount'], so_line.product_uom)
+                qty = uom._compute_quantity(item['unit_amount'], so_line.product_uom, rounding_method='HALF-UP')
             else:
                 qty = item['unit_amount']
             result[so_line_id] += qty
@@ -1363,18 +1389,34 @@ class SaleOrderLine(models.Model):
     @api.multi
     def invoice_line_create(self, invoice_id, qty):
         """ Create an invoice line. The quantity to invoice can be positive (invoice) or negative (refund).
+
+            .. deprecated:: 12.0
+                Replaced by :func:`invoice_line_create_vals` which can be used for creating
+                `account.invoice.line` records in batch
+
             :param invoice_id: integer
             :param qty: float quantity to invoice
             :returns recordset of account.invoice.line created
         """
-        invoice_lines = self.env['account.invoice.line']
+        return self.env['account.invoice.line'].create(
+            self.invoice_line_create_vals(invoice_id, qty))
+
+    def invoice_line_create_vals(self, invoice_id, qty):
+        """ Create an invoice line. The quantity to invoice can be positive (invoice) or negative
+            (refund).
+
+            :param invoice_id: integer
+            :param qty: float quantity to invoice
+            :returns list of dict containing creation values for account.invoice.line records
+        """
+        vals_list = []
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
         for line in self:
             if not float_is_zero(qty, precision_digits=precision) or not line.product_id:
                 vals = line._prepare_invoice_line(qty=qty)
                 vals.update({'invoice_id': invoice_id, 'sale_line_ids': [(6, 0, [line.id])]})
-                invoice_lines |= self.env['account.invoice.line'].create(vals)
-        return invoice_lines
+                vals_list.append(vals)
+        return vals_list
 
     @api.multi
     def _prepare_procurement_values(self, group_id=False):
@@ -1550,7 +1592,7 @@ class SaleOrderLine(models.Model):
             if currency_id.id == product_currency.id:
                 cur_factor = 1.0
             else:
-                cur_factor = currency_id._get_conversion_rate(product_currency, currency_id, self.company_id, self.order_id.date_order)
+                cur_factor = currency_id._get_conversion_rate(product_currency, currency_id, self.company_id or self.env.user.company_id, self.order_id.date_order or fields.Date.today())
 
         product_uom = self.env.context.get('uom') or product.uom_id.id
         if uom and uom.id != product_uom:
@@ -1598,7 +1640,7 @@ class SaleOrderLine(models.Model):
                     new_list_price, self.order_id.pricelist_id.currency_id,
                     self.order_id.company_id, self.order_id.date_order or fields.Date.today())
             discount = (new_list_price - price) / new_list_price * 100
-            if discount > 0:
+            if (discount > 0 and new_list_price > 0) or (discount < 0 and new_list_price < 0):
                 self.discount = discount
 
     def _is_delivery(self):

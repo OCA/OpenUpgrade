@@ -6,10 +6,11 @@
 # Dejan Sraka <dejan.sraka@picolabs.si>, 2019
 # laznikd <laznik@mentis.si>, 2019
 # Martin Trigaux, 2019
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2019
 # Vida Potočnik <vida.potocnik@mentis.si>, 2019
 # matjaz k <matjaz@mentis.si>, 2019
 # jl2035 <jaka.luthar@gmail.com>, 2019
+# Matjaz Mozetic <m.mozetic@matmoz.si>, 2019
+# Boris Kodelja <boris@hbs.si>, 2019
 # 
 msgid ""
 msgstr ""
@@ -17,7 +18,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-19 08:20+0000\n"
 "PO-Revision-Date: 2018-08-24 09:18+0000\n"
-"Last-Translator: jl2035 <jaka.luthar@gmail.com>, 2019\n"
+"Last-Translator: Boris Kodelja <boris@hbs.si>, 2019\n"
 "Language-Team: Slovenian (https://www.transifex.com/odoo/teams/41243/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -144,7 +145,7 @@ msgstr "Aktivnosti"
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense__activity_state
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense_sheet__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Stanje aktivnosti"
 
 #. module: hr_expense
 #: model:ir.actions.act_window,name:hr_expense.mail_activity_type_action_config_hr_expense
@@ -228,7 +229,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense__message_attachment_count
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense_sheet__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Število prilog"
 
 #. module: hr_expense
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense_sheet__bank_journal_id
@@ -285,7 +286,7 @@ msgstr "Podjetje"
 #. module: hr_expense
 #: model:ir.model,name:hr_expense.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Uredi nastavitve"
 
 #. module: hr_expense
 #: model:ir.ui.menu,name:hr_expense.menu_hr_expense_configuration
@@ -669,7 +670,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_expense.view_hr_expense_filter
 #: model_terms:ir.ui.view,arch_db:hr_expense.view_hr_expense_sheet_filter
 msgid "Future Activities"
-msgstr ""
+msgstr "Bodoče aktivnosti"
 
 #. module: hr_expense
 #: model_terms:ir.ui.view,arch_db:hr_expense.product_product_expense_form_view
@@ -695,7 +696,7 @@ msgstr ""
 #. module: hr_expense
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense_sheet_register_payment_wizard__hide_payment_method
 msgid "Hide Payment Method"
-msgstr ""
+msgstr "Skrij način plačila"
 
 #. module: hr_expense
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense_refuse_wizard__hr_expense_ids
@@ -731,7 +732,7 @@ msgstr "Če je označeno, zahtevajo nova sporočila vašo pozornost."
 #: model:ir.model.fields,help:hr_expense.field_hr_expense__message_has_error
 #: model:ir.model.fields,help:hr_expense.field_hr_expense_sheet__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Če je označeno, imajo nekatera sporočila napako pri dostavi."
 
 #. module: hr_expense
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense__message_is_follower
@@ -782,7 +783,7 @@ msgstr "Zadnjič posodobljeno"
 #: model_terms:ir.ui.view,arch_db:hr_expense.view_hr_expense_filter
 #: model_terms:ir.ui.view,arch_db:hr_expense.view_hr_expense_sheet_filter
 msgid "Late Activities"
-msgstr ""
+msgstr "Aktivnosti z zamudo"
 
 #. module: hr_expense
 #: model:ir.model.fields,field_description:hr_expense.field_res_config_settings__use_mailgateway
@@ -794,7 +795,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense__message_main_attachment_id
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense_sheet__message_main_attachment_id
 msgid "Main Attachment"
-msgstr ""
+msgstr "Glavna priponka"
 
 #. module: hr_expense
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense_sheet__user_id
@@ -818,7 +819,7 @@ msgstr "Zapisek"
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense__message_has_error
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense_sheet__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Napaka pri dostavi sporočila"
 
 #. module: hr_expense
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense__message_ids
@@ -870,19 +871,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense__activity_date_deadline
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense_sheet__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Rok naslednje aktivnosti"
 
 #. module: hr_expense
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense__activity_summary
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense_sheet__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Povzetek naslednje aktivnosti"
 
 #. module: hr_expense
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense__activity_type_id
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense_sheet__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Tip naslednje aktivnosti"
 
 #. module: hr_expense
 #: code:addons/hr_expense/models/hr_expense.py:244
@@ -942,7 +943,7 @@ msgstr "Število prilog"
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense__message_has_error_counter
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense_sheet__message_has_error_counter
 msgid "Number of error"
-msgstr ""
+msgstr "Številka napake"
 
 #. module: hr_expense
 #: model:ir.model.fields,help:hr_expense.field_hr_expense__message_needaction_counter
@@ -954,7 +955,7 @@ msgstr "Število sporočil, ki zahtevajo dejavnost"
 #: model:ir.model.fields,help:hr_expense.field_hr_expense__message_has_error_counter
 #: model:ir.model.fields,help:hr_expense.field_hr_expense_sheet__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Število sporočil, ki niso bila pravilno dostavljena."
 
 #. module: hr_expense
 #: model:ir.model.fields,help:hr_expense.field_hr_expense__message_unread_counter
@@ -1011,7 +1012,7 @@ msgstr "Ostale informacije"
 #: selection:hr.expense,activity_state:0
 #: selection:hr.expense.sheet,activity_state:0
 msgid "Overdue"
-msgstr ""
+msgstr "Zapadlo"
 
 #. module: hr_expense
 #: selection:hr.expense,state:0 selection:hr.expense.sheet,state:0
@@ -1054,7 +1055,7 @@ msgstr ""
 #: selection:hr.expense,activity_state:0
 #: selection:hr.expense.sheet,activity_state:0
 msgid "Planned"
-msgstr ""
+msgstr "Planirano"
 
 #. module: hr_expense
 #: code:addons/hr_expense/models/hr_expense.py:248
@@ -1252,6 +1253,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_expense.view_hr_expense_sheet_filter
 msgid "Show all records which has next action date is before today"
 msgstr ""
+"Prikaži vse zapise z datumom naslednje aktivnosti pred današnjim datumom."
 
 #. module: hr_expense
 #: model:ir.model.fields,help:hr_expense.field_product_template__can_be_expensed
@@ -1279,6 +1281,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Status na podlagi aktivnosti\n"
+"Zapadel: Datum zapadlosti je v preteklosti\n"
+"Danes: Datum aktivnosti je danes\n"
+"Planned: Bodoče aktivnosti."
 
 #. module: hr_expense
 #: model:ir.model.fields,help:hr_expense.field_hr_expense__state
@@ -1387,7 +1393,7 @@ msgstr "Danes"
 #: model_terms:ir.ui.view,arch_db:hr_expense.view_hr_expense_filter
 #: model_terms:ir.ui.view,arch_db:hr_expense.view_hr_expense_sheet_filter
 msgid "Today Activities"
-msgstr ""
+msgstr "Današnje aktivnosti"
 
 #. module: hr_expense
 #: model:ir.model.fields,field_description:hr_expense.field_hr_expense__total_amount

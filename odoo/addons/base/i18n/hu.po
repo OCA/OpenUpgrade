@@ -5,11 +5,11 @@
 # Translators:
 # picibucor <picibucor@gmail.com>, 2018
 # Tamás Dombos, 2018
-# gezza <geza.nagy@oregional.hu>, 2018
 # Kovács Tibor <kovika@gmail.com>, 2018
 # krnkris, 2018
 # Tibor Kőnig <konig.tibor@evitalit.hu>, 2018
 # Martin Trigaux, 2018
+# gezza <geza.nagy@oregional.hu>, 2019
 # Ákos Nagy <akos.nagy@oregional.hu>, 2019
 # 
 msgid ""
@@ -8283,7 +8283,7 @@ msgstr "Automatikus összefésülés varázsló"
 #. module: base
 #: model:ir.model,name:base.model_ir_autovacuum
 msgid "Automatic Vacuum"
-msgstr ""
+msgstr "Automatikus kiürítés"
 
 #. module: base
 #: code:addons/base/models/ir_module.py:725
@@ -21377,7 +21377,7 @@ msgstr "Cél ablak"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_timesheet
 msgid "Task Logs"
-msgstr ""
+msgstr "Feladat naplói"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_mx_tax_cash_basis
@@ -22551,6 +22551,13 @@ msgid ""
 "rendering method. HTML means the report will be opened directly in your "
 "browser PDF means the report will be rendered using Wkhtmltopdf and "
 "downloaded by the user."
+msgstr ""
+
+#. module: base
+#: code:addons/base/models/res_users.py:117
+#: code:addons/base/models/res_users.py:404
+#, python-format
+msgid "The user cannot have more than one user types."
 msgstr ""
 
 #. module: base

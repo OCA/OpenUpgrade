@@ -8,16 +8,16 @@
 # Martin Trigaux, 2018
 # Minh Nguyen <ndminh210994@gmail.com>, 2018
 # fanha99 <fanha99@hotmail.com>, 2018
-# Duy BQ <duybq86@gmail.com>, 2018
 # Nancy Momoland <thanhnguyen.icsc@gmail.com>, 2019
+# Duy BQ <duybq86@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-09 10:31+0000\n"
+"POT-Creation-Date: 2019-03-29 10:09+0000\n"
 "PO-Revision-Date: 2018-08-24 09:35+0000\n"
-"Last-Translator: Nancy Momoland <thanhnguyen.icsc@gmail.com>, 2019\n"
+"Last-Translator: Duy BQ <duybq86@gmail.com>, 2019\n"
 "Language-Team: Vietnamese (https://www.transifex.com/odoo/teams/41243/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -117,7 +117,7 @@ msgid ""
 "                        <hr/>\n"
 "                    % endif\n"
 "                    <div style=\"text-align: center; margin: 16px 0px 16px 0px; font-size: 14px;\">\n"
-"                        <a href=\"/shop/cart?access_token=${object.access_token}\" target=\"_blank\" style=\"background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;\">\n"
+"                        <a href=\"${object.get_base_url()}/shop/cart?access_token=${object.access_token}\" target=\"_blank\" style=\"background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;\">\n"
 "                            Resume order\n"
 "                        </a>\n"
 "                    </div>\n"
@@ -166,7 +166,7 @@ msgstr ""
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.payment_confirmation_status
 msgid "<b>Communication: </b>"
-msgstr ""
+msgstr "<b>Trao đổi: </b>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.confirmation
@@ -354,6 +354,11 @@ msgid "<span>Sort by</span>"
 msgstr ""
 
 #. module: website_sale
+#: model_terms:ir.ui.view,arch_db:website_sale.payment_confirmation_status
+msgid "<span>Your payment has been authorized.</span>"
+msgstr ""
+
+#. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.suggested_products_list
 msgid "<strong>Add to Cart</strong>"
 msgstr "<strong>Thêm vào Giỏ</strong>"
@@ -477,6 +482,7 @@ msgid ""
 msgstr ""
 
 #. module: website_sale
+#: model:ir.model.fields,help:website_sale.field_product_product__accessory_product_ids
 #: model:ir.model.fields,help:website_sale.field_product_template__accessory_product_ids
 msgid ""
 "Accessories show up when the customerreviews the cart before payment (cross-"
@@ -484,6 +490,7 @@ msgid ""
 msgstr ""
 
 #. module: website_sale
+#: model:ir.model.fields,field_description:website_sale.field_product_product__accessory_product_ids
 #: model:ir.model.fields,field_description:website_sale.field_product_template__accessory_product_ids
 msgid "Accessory Products"
 msgstr "Sản phẩm Phụ kiện"
@@ -534,11 +541,7 @@ msgid "Allow the end user to choose this price list"
 msgstr "Cho phép người dùng cuối chọn bảng giá này"
 
 #. module: website_sale
-#: model_terms:ir.ui.view,arch_db:website_sale.website_sale_pricelist_form_view
-msgid "Allow to use on"
-msgstr "Cho phép sử dụng trên"
-
-#. module: website_sale
+#: model:ir.model.fields,field_description:website_sale.field_product_product__alternative_product_ids
 #: model:ir.model.fields,field_description:website_sale.field_product_template__alternative_product_ids
 msgid "Alternative Products"
 msgstr "Sản phẩm Thay thế"
@@ -926,7 +929,7 @@ msgstr "Tiền tệ"
 #. module: website_sale
 #: selection:website.sale.payment.acquirer.onboarding.wizard,payment_method:0
 msgid "Custom payment instructions"
-msgstr ""
+msgstr "Tùy chỉnh giới thiệu phương thức thanh toán"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.sale_report_view_search_website
@@ -936,7 +939,7 @@ msgstr "Khách hàng"
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.sale_report_view_search_website
 msgid "Customer Country"
-msgstr ""
+msgstr "Quốc gia của khách hàng"
 
 #. module: website_sale
 #: model:ir.ui.menu,name:website_sale.menu_orders_customers
@@ -982,6 +985,7 @@ msgstr ""
 "chi phí giao hàng"
 
 #. module: website_sale
+#: model:ir.model.fields,field_description:website_sale.field_product_product__website_description
 #: model:ir.model.fields,field_description:website_sale.field_product_template__website_description
 msgid "Description for the website"
 msgstr "Mô tả cho Website"
@@ -992,6 +996,7 @@ msgid "Desks"
 msgstr ""
 
 #. module: website_sale
+#: model:ir.model.fields,help:website_sale.field_product_product__website_sequence
 #: model:ir.model.fields,help:website_sale.field_product_template__website_sequence
 msgid "Determine the display order in the Website E-commerce"
 msgstr "Xác định trình tự hiển thị trên website"
@@ -1019,6 +1024,8 @@ msgstr "Tên hiển thị"
 #, python-format
 msgid "Do not have access, skip this data for user's digest email"
 msgstr ""
+"Không có quyền truy cập, bỏ qua dữ liệu này cho email thông báo của người "
+"dùng"
 
 #. module: website_sale
 #: selection:res.company,website_sale_onboarding_payment_acquirer_state:0
@@ -1135,7 +1142,7 @@ msgstr "Tạo hóa đơn từ các đơn đặt hàng đã sẵn sàng để l�
 #: model_terms:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
 msgid ""
 "Generate the invoice automatically when the online payment is confirmed"
-msgstr ""
+msgstr "Tự động tạo hóa đơn khi thanh toán online được xác nhận"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.extra_info
@@ -1150,7 +1157,7 @@ msgstr "Cung cấp thứ tự hiển thị một danh sách nhóm sản phẩm."
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
 msgid "Grant discounts on sales order lines"
-msgstr ""
+msgstr "Ghi nhận giảm giá theo từng dòng của đơn hàng"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.sale_report_view_search_website
@@ -1224,6 +1231,7 @@ msgid "Image Name"
 msgstr "Tên Hình"
 
 #. module: website_sale
+#: model:ir.model.fields,field_description:website_sale.field_product_product__product_image_ids
 #: model:ir.model.fields,field_description:website_sale.field_product_template__product_image_ids
 msgid "Images"
 msgstr "Hình ảnh"
@@ -1296,6 +1304,7 @@ msgstr "Sửa lần cuối vào"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_res_partner__last_website_so_id
+#: model:ir.model.fields,field_description:website_sale.field_res_users__last_website_so_id
 msgid "Last Online Sales Order"
 msgstr "Đơn hàng Bán trực tuyến Cuối"
 
@@ -1318,7 +1327,7 @@ msgstr "Cập nhật lần cuối vào"
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
 msgid "Let returning shoppers save products in a wishlist"
-msgstr ""
+msgstr "Hãy để người mua trở lại lưu sản phẩm trong một danh sách mong muốn"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
@@ -1453,11 +1462,6 @@ msgstr ""
 #: selection:res.config.settings,sale_delivery_settings:0
 msgid "No shipping management on website"
 msgstr "Không quản lý giao hàng trên Website"
-
-#. module: website_sale
-#: model_terms:ir.ui.view,arch_db:website_sale.website_sale_pricelist_form_view
-msgid "None website"
-msgstr "Không có trang web nào"
 
 #. module: website_sale
 #: selection:res.company,website_sale_onboarding_payment_acquirer_state:0
@@ -1996,7 +2000,7 @@ msgstr "Bán hàng"
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_sale_report
 msgid "Sales Analysis Report"
-msgstr ""
+msgstr "Báo cáo phân tích hoạt động kinh doanh"
 
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_crm_team
@@ -2180,11 +2184,13 @@ msgid "Size"
 msgstr "Kích thước"
 
 #. module: website_sale
+#: model:ir.model.fields,field_description:website_sale.field_product_product__website_size_x
 #: model:ir.model.fields,field_description:website_sale.field_product_template__website_size_x
 msgid "Size X"
 msgstr "Cỡ X"
 
 #. module: website_sale
+#: model:ir.model.fields,field_description:website_sale.field_product_product__website_size_y
 #: model:ir.model.fields,field_description:website_sale.field_product_template__website_size_y
 msgid "Size Y"
 msgstr "Cỡ Y"
@@ -2274,6 +2280,7 @@ msgid "Style Name"
 msgstr "Tên Phong cách"
 
 #. module: website_sale
+#: model:ir.model.fields,field_description:website_sale.field_product_product__website_style_ids
 #: model:ir.model.fields,field_description:website_sale.field_product_template__website_style_ids
 #: model_terms:ir.ui.view,arch_db:website_sale.website_sale
 msgid "Styles"
@@ -2285,6 +2292,7 @@ msgid "Subtotal:"
 msgstr "Tổng phụ:"
 
 #. module: website_sale
+#: model:ir.model.fields,help:website_sale.field_product_product__alternative_product_ids
 #: model:ir.model.fields,help:website_sale.field_product_template__alternative_product_ids
 msgid ""
 "Suggest alternatives to your customer(upsell strategy).Those product show up"
@@ -2355,6 +2363,7 @@ msgstr ""
 "phẩm mới nào được tạo nhưng không phải là sản phẩm đã tồn tại."
 
 #. module: website_sale
+#: model:ir.model.fields,help:website_sale.field_product_product__public_categ_ids
 #: model:ir.model.fields,help:website_sale.field_product_template__public_categ_ids
 msgid ""
 "The product will be available in each mentioned e-commerce category. Go "
@@ -2510,6 +2519,7 @@ msgstr ""
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_website
 #: model:ir.model.fields,field_description:website_sale.field_account_invoice__website_id
+#: model:ir.model.fields,field_description:website_sale.field_product_pricelist__website_id
 #: model:ir.model.fields,field_description:website_sale.field_product_product__website_id
 #: model:ir.model.fields,field_description:website_sale.field_product_public_category__website_id
 #: model:ir.model.fields,field_description:website_sale.field_sale_order__website_id
@@ -2520,6 +2530,7 @@ msgstr "Trang web"
 
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_product_public_category
+#: model:ir.model.fields,field_description:website_sale.field_product_product__public_categ_ids
 #: model:ir.model.fields,field_description:website_sale.field_product_template__public_categ_ids
 msgid "Website Product Category"
 msgstr "Nhóm Sản phẩm trên Website"
@@ -2530,6 +2541,7 @@ msgid "Website Public Categories"
 msgstr "Nhóm trên Website"
 
 #. module: website_sale
+#: model:ir.model.fields,field_description:website_sale.field_product_product__website_sequence
 #: model:ir.model.fields,field_description:website_sale.field_product_template__website_sequence
 msgid "Website Sequence"
 msgstr "Trình tự trên Website"
@@ -2557,7 +2569,7 @@ msgstr "Website dữ liệu Tiêu đề"
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_product_public_category__website_meta_og_img
 msgid "Website opengraph image"
-msgstr ""
+msgstr "Hình ảnh trang web"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_product_product__website_price
@@ -2671,11 +2683,6 @@ msgid "Your cart is empty!"
 msgstr "Giỏ hàng của bạn đang trống!"
 
 #. module: website_sale
-#: model_terms:ir.ui.view,arch_db:website_sale.payment_confirmation_status
-msgid "Your payment has been authorized."
-msgstr "Thanh toán của bạn đã được chứng thực."
-
-#. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.cart
 msgid "Your previous cart has already been completed."
 msgstr "Giỏ hàng trước của bạn đã được hoàn thành."
@@ -2778,11 +2785,6 @@ msgstr "điều khoản &amp; điều kiện"
 #: model_terms:ir.ui.view,arch_db:website_sale.confirmation
 msgid "to follow your order."
 msgstr ""
-
-#. module: website_sale
-#: model:ir.model.fields,field_description:website_sale.field_product_pricelist__website_id
-msgid "website"
-msgstr "Trang web"
 
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_website_sale_payment_acquirer_onboarding_wizard

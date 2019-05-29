@@ -26,14 +26,15 @@
 # Martin Trigaux, 2018
 # Osoul <baruni@osoul.ly>, 2018
 # Mustafa Rawi <mustafa@cubexco.com>, 2019
+# Mohamed AbdAllah <m.abdallahp@yahoo.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-09 10:32+0000\n"
+"POT-Creation-Date: 2019-03-29 10:09+0000\n"
 "PO-Revision-Date: 2018-08-24 09:23+0000\n"
-"Last-Translator: Mustafa Rawi <mustafa@cubexco.com>, 2019\n"
+"Last-Translator: Mohamed AbdAllah <m.abdallahp@yahoo.com>, 2019\n"
 "Language-Team: Arabic (https://www.transifex.com/odoo/teams/41243/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -119,11 +120,6 @@ msgid "<span class=\"text-muted\">No barcode available</span>"
 msgstr ""
 
 #. module: product
-#: model_terms:ir.ui.view,arch_db:product.product_variant_easy_edit_view
-msgid "<span>kg</span>"
-msgstr "<span>كجم</span>"
-
-#. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_template_form_view
 #: model_terms:ir.ui.view,arch_db:product.product_variant_easy_edit_view
 msgid "<span>m³</span>"
@@ -196,6 +192,9 @@ msgid ""
 "A consumable product is a product for which stock is not managed.\n"
 "A service is a non-material product you provide."
 msgstr ""
+"المنتج القابل للتخزين هو المنتج الممكن إدارة مخزونه. يجب تثبيت تطبيق المخزون.\n"
+"المنتج الاستهلاكي هو المنتج الذي لا يتم إدارة مخزونه.\n"
+"الخدمة هي منتج غير مادي تقوم بتوفيره."
 
 #. module: product
 #: model:product.product,name:product.product_product_25
@@ -543,6 +542,12 @@ msgid "Cost"
 msgstr "التكلفة"
 
 #. module: product
+#: model:ir.model.fields,field_description:product.field_product_product__cost_currency_id
+#: model:ir.model.fields,field_description:product.field_product_template__cost_currency_id
+msgid "Cost Currency"
+msgstr ""
+
+#. module: product
 #: model:ir.model.fields,help:product.field_product_template__standard_price
 msgid ""
 "Cost used for stock valuation in standard price and as a first price to set "
@@ -588,7 +593,7 @@ msgstr "انشاء منتج جديد"
 #: model_terms:ir.actions.act_window,help:product.product_normal_action_sell
 #: model_terms:ir.actions.act_window,help:product.product_variant_action
 msgid "Create a new product variant"
-msgstr ""
+msgstr "إنشاء موديل جديد لمنتج"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute__create_uid
@@ -1022,7 +1027,7 @@ msgstr ""
 #: code:addons/product/models/product_template.py:573
 #, python-format
 msgid "Import Template for Products"
-msgstr ""
+msgstr "استيراد قالب للمنتجات"
 
 #. module: product
 #: code:addons/product/models/product.py:665
@@ -1508,6 +1513,7 @@ msgstr "قائمة الأسعار"
 #: model:ir.model.fields,field_description:product.field_product_product__pricelist_id
 #: model:ir.model.fields,field_description:product.field_product_template__pricelist_id
 #: model:ir.model.fields,field_description:product.field_res_partner__property_product_pricelist
+#: model:ir.model.fields,field_description:product.field_res_users__property_product_pricelist
 #: model_terms:ir.ui.view,arch_db:product.product_template_form_view
 msgid "Pricelist"
 msgstr "قائمه الاسعار"
@@ -1516,7 +1522,7 @@ msgstr "قائمه الاسعار"
 #: model:ir.model,name:product.model_product_pricelist_item
 #: model:ir.model.fields,field_description:product.field_product_product__pricelist_item_ids
 msgid "Pricelist Item"
-msgstr ""
+msgstr "عنصر قائمة الأسعار"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item__applied_on
@@ -1661,7 +1667,7 @@ msgstr "طرود المنتج"
 #: model:ir.model,name:product.model_product_packaging
 #: model_terms:ir.ui.view,arch_db:product.product_packaging_form_view
 msgid "Product Packaging"
-msgstr ""
+msgstr "تعبئة المنتج"
 
 #. module: product
 #: model:ir.actions.report,name:product.report_product_packaging
@@ -2056,6 +2062,26 @@ msgid "Supplier Pricelist"
 msgstr "قائمة أسعار الموردين"
 
 #. module: product
+#: model:ir.model.fields,help:product.field_product_product__valid_archived_variant_ids
+#: model:ir.model.fields,help:product.field_product_product__valid_existing_variant_ids
+#: model:ir.model.fields,help:product.field_product_product__valid_product_attribute_ids
+#: model:ir.model.fields,help:product.field_product_product__valid_product_attribute_value_ids
+#: model:ir.model.fields,help:product.field_product_product__valid_product_attribute_value_wnva_ids
+#: model:ir.model.fields,help:product.field_product_product__valid_product_attribute_wnva_ids
+#: model:ir.model.fields,help:product.field_product_product__valid_product_template_attribute_line_ids
+#: model:ir.model.fields,help:product.field_product_product__valid_product_template_attribute_line_wnva_ids
+#: model:ir.model.fields,help:product.field_product_template__valid_archived_variant_ids
+#: model:ir.model.fields,help:product.field_product_template__valid_existing_variant_ids
+#: model:ir.model.fields,help:product.field_product_template__valid_product_attribute_ids
+#: model:ir.model.fields,help:product.field_product_template__valid_product_attribute_value_ids
+#: model:ir.model.fields,help:product.field_product_template__valid_product_attribute_value_wnva_ids
+#: model:ir.model.fields,help:product.field_product_template__valid_product_attribute_wnva_ids
+#: model:ir.model.fields,help:product.field_product_template__valid_product_template_attribute_line_ids
+#: model:ir.model.fields,help:product.field_product_template__valid_product_template_attribute_line_wnva_ids
+msgid "Technical compute"
+msgstr ""
+
+#. module: product
 #: model:ir.model.fields,help:product.field_product_product__pricelist_id
 #: model:ir.model.fields,help:product.field_product_template__pricelist_id
 msgid ""
@@ -2132,6 +2158,12 @@ msgid "The price to purchase a product"
 msgstr ""
 
 #. module: product
+#: code:addons/product/models/product_template.py:943
+#, python-format
+msgid "The product template is archived so no combination is possible."
+msgstr ""
+
+#. module: product
 #: model:ir.model.fields,help:product.field_product_product__lst_price
 msgid ""
 "The sale price is managed from the product template. Click on the 'Configure"
@@ -2152,6 +2184,24 @@ msgstr "الحجم بالـ م3"
 #. module: product
 #: model:ir.model.fields,help:product.field_product_template__weight
 msgid "The weight of the contents in Kg, not including any packaging, etc."
+msgstr ""
+
+#. module: product
+#: code:addons/product/models/product_template.py:1010
+#, python-format
+msgid "There are no possible combination."
+msgstr ""
+
+#. module: product
+#: code:addons/product/models/product_template.py:1005
+#, python-format
+msgid "There are no remaining closest combination."
+msgstr ""
+
+#. module: product
+#: code:addons/product/models/product_template.py:963
+#, python-format
+msgid "There are no remaining possible combination."
 msgstr ""
 
 #. module: product
@@ -2195,6 +2245,7 @@ msgstr ""
 
 #. module: product
 #: model:ir.model.fields,help:product.field_res_partner__property_product_pricelist
+#: model:ir.model.fields,help:product.field_res_users__property_product_pricelist
 msgid ""
 "This pricelist will be used, instead of the default one, for sales to the "
 "current partner"
@@ -2326,6 +2377,54 @@ msgstr "استخدم قوائم الأسعار لتغير السعر على حس
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_template_form_view
 msgid "Valid"
+msgstr "صالح"
+
+#. module: product
+#: model:ir.model.fields,field_description:product.field_product_product__valid_archived_variant_ids
+#: model:ir.model.fields,field_description:product.field_product_template__valid_archived_variant_ids
+msgid "Valid Archived Variants"
+msgstr ""
+
+#. module: product
+#: model:ir.model.fields,field_description:product.field_product_product__valid_existing_variant_ids
+#: model:ir.model.fields,field_description:product.field_product_template__valid_existing_variant_ids
+msgid "Valid Existing Variants"
+msgstr ""
+
+#. module: product
+#: model:ir.model.fields,field_description:product.field_product_product__valid_product_template_attribute_line_ids
+#: model:ir.model.fields,field_description:product.field_product_template__valid_product_template_attribute_line_ids
+msgid "Valid Product Attribute Lines"
+msgstr ""
+
+#. module: product
+#: model:ir.model.fields,field_description:product.field_product_product__valid_product_template_attribute_line_wnva_ids
+#: model:ir.model.fields,field_description:product.field_product_template__valid_product_template_attribute_line_wnva_ids
+msgid "Valid Product Attribute Lines Without No Variant Attributes"
+msgstr ""
+
+#. module: product
+#: model:ir.model.fields,field_description:product.field_product_product__valid_product_attribute_value_ids
+#: model:ir.model.fields,field_description:product.field_product_template__valid_product_attribute_value_ids
+msgid "Valid Product Attribute Values"
+msgstr ""
+
+#. module: product
+#: model:ir.model.fields,field_description:product.field_product_product__valid_product_attribute_value_wnva_ids
+#: model:ir.model.fields,field_description:product.field_product_template__valid_product_attribute_value_wnva_ids
+msgid "Valid Product Attribute Values Without No Variant Attributes"
+msgstr ""
+
+#. module: product
+#: model:ir.model.fields,field_description:product.field_product_product__valid_product_attribute_ids
+#: model:ir.model.fields,field_description:product.field_product_template__valid_product_attribute_ids
+msgid "Valid Product Attributes"
+msgstr ""
+
+#. module: product
+#: model:ir.model.fields,field_description:product.field_product_product__valid_product_attribute_wnva_ids
+#: model:ir.model.fields,field_description:product.field_product_template__valid_product_attribute_wnva_ids
+msgid "Valid Product Attributes Without No Variant Attributes"
 msgstr ""
 
 #. module: product
@@ -2546,6 +2645,12 @@ msgid ""
 msgstr ""
 
 #. module: product
+#: code:addons/product/models/product_template.py:332
+#, python-format
+msgid "You cannot define two attribute lines for the same attribute."
+msgstr ""
+
+#. module: product
 #: code:addons/product/models/product_attribute.py:79
 #, python-format
 msgid "You cannot use this attribute with the following value."
@@ -2570,6 +2675,8 @@ msgid ""
 "You must define a product for everything you purchase,\n"
 "                whether it's a physical product, a consumable or services."
 msgstr ""
+"يجب تعيين منتج لكل ما تقوم بشراؤه،\n"
+"                سواء كان منتجًا ماديًا، أو استهلاكيًا، أو خدمات."
 
 #. module: product
 #: model_terms:ir.actions.act_window,help:product.product_normal_action_sell

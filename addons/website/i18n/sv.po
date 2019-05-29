@@ -6,22 +6,22 @@
 # Robin Chatfield <robin.chatfield@gmail.com>, 2019
 # Haojun Zou <apollo_zhj@msn.com>, 2019
 # lasch a <bmail440@gmail.com>, 2019
-# Chrille Hedberg <hedberg.chrille@gmail.com>, 2019
 # Kristoffer Grundström <hamnisdude@gmail.com>, 2019
 # Martin Trigaux, 2019
-# Anders Wallenquist <anders.wallenquist@vertel.se>, 2019
 # Christelle Wehbe <libanon_cristelle@hotmail.com>, 2019
 # Martin Wilderoth <martin.wilderoth@linserv.se>, 2019
 # Robert Frykelius <robert.frykelius@linserv.se>, 2019
 # Kim Asplund <kim.asplund@gmail.com>, 2019
+# Anders Wallenquist <anders.wallenquist@vertel.se>, 2019
+# Chrille Hedberg <hedberg.chrille@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-09 10:31+0000\n"
+"POT-Creation-Date: 2019-03-29 10:08+0000\n"
 "PO-Revision-Date: 2018-08-24 09:33+0000\n"
-"Last-Translator: Kim Asplund <kim.asplund@gmail.com>, 2019\n"
+"Last-Translator: Chrille Hedberg <hedberg.chrille@gmail.com>, 2019\n"
 "Language-Team: Swedish (https://www.transifex.com/odoo/teams/41243/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -82,6 +82,11 @@ msgstr "&times;"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.list_website_pages
 msgid "' did not match any pages."
+msgstr ""
+
+#. module: website
+#: model_terms:ir.ui.view,arch_db:website.500
+msgid "(!!! This view will be removed )"
 msgstr ""
 
 #. module: website
@@ -2564,14 +2569,14 @@ msgstr "Senast uppdaterad"
 #: code:addons/website/static/src/xml/website.backend.xml:71
 #, python-format
 msgid "Last Week"
-msgstr ""
+msgstr "Förra veckan"
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.backend.xml:73
 #, python-format
 msgid "Last Year"
-msgstr ""
+msgstr "Förra året"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
@@ -3059,7 +3064,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.backend.xml:5
 #, python-format
 msgid "On Website"
-msgstr ""
+msgstr "På webbplats"
 
 #. module: website
 #: selection:website,auth_signup_uninvited:0

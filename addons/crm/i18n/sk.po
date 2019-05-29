@@ -95,6 +95,10 @@ msgid ""
 "attrs=\"{'invisible': [('is_blacklisted', '=', False)]}\" "
 "groups=\"base.group_user\"/>"
 msgstr ""
+"<i class=\"fa fa-ban\" style=\"color: red;\" role=\"img\" title=\"Tento mail"
+" je na čiernej listine pre hromadné posielanie\" aria-label=\"Blacklisted\" "
+"attrs=\"{'invisible': [('is_blacklisted', '=', False)]}\" "
+"groups=\"base.group_user\"/>"
 
 #. module: crm
 #: model_terms:ir.ui.view,arch_db:crm.view_crm_lead_kanban
@@ -788,7 +792,7 @@ msgstr "Zobrazovaný Názov"
 #: code:addons/crm/models/digest.py:18 code:addons/crm/models/digest.py:29
 #, python-format
 msgid "Do not have access, skip this data for user's digest email"
-msgstr ""
+msgstr "Nemáte prístup, vynechajte tieto dáta z mailu prehľadu"
 
 #. module: crm
 #: selection:crm.lead2opportunity.partner,action:0
@@ -1988,7 +1992,7 @@ msgstr "Zodpovedný používateľ"
 #: model_terms:ir.ui.view,arch_db:crm.crm_case_form_view_leads
 #: model_terms:ir.ui.view,arch_db:crm.crm_case_form_view_oppor
 msgid "Restore"
-msgstr ""
+msgstr "Obnoviť"
 
 #. module: crm
 #: selection:crm.team,dashboard_graph_model:0
@@ -2329,11 +2333,14 @@ msgid ""
 "This is a name that helps you keep track of your different campaign efforts,"
 " e.g. Fall_Drive, Christmas_Special"
 msgstr ""
+"Toto je názov, ktorý vám pomáha sledovať vaše rôzne kampane, napr. "
+"Fall_Drive, Christmas_Special"
 
 #. module: crm
 #: model:ir.model.fields,help:crm.field_crm_lead__medium_id
 msgid "This is the method of delivery, e.g. Postcard, Email, or Banner Ad"
 msgstr ""
+"Toto je spôsob dodávania, napr. pohľadnica, e-mail alebo bannerová reklama"
 
 #. module: crm
 #: model:ir.model.fields,help:crm.field_crm_lead__source_id

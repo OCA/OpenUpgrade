@@ -5,7 +5,6 @@
 # Translators:
 # Haojun Zou <apollo_zhj@msn.com>, 2019
 # Kristoffer Grundström <hamnisdude@gmail.com>, 2019
-# Anders Wallenquist <anders.wallenquist@vertel.se>, 2019
 # Daniel Forslund <daniel.forslund@gmail.com>, 2019
 # Mikael Åkerberg <mikael.akerberg@dermanord.se>, 2019
 # Martin Wilderoth <martin.wilderoth@linserv.se>, 2019
@@ -13,14 +12,15 @@
 # Robert Frykelius <robert.frykelius@linserv.se>, 2019
 # Martin Trigaux, 2019
 # Chrille Hedberg <hedberg.chrille@gmail.com>, 2019
+# Anders Wallenquist <anders.wallenquist@vertel.se>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-09 10:32+0000\n"
+"POT-Creation-Date: 2019-03-29 10:10+0000\n"
 "PO-Revision-Date: 2018-08-24 09:25+0000\n"
-"Last-Translator: Chrille Hedberg <hedberg.chrille@gmail.com>, 2019\n"
+"Last-Translator: Anders Wallenquist <anders.wallenquist@vertel.se>, 2019\n"
 "Language-Team: Swedish (https://www.transifex.com/odoo/teams/41243/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -688,6 +688,7 @@ msgid "Delete sent emails (mass mailing only)"
 msgstr ""
 
 #. module: survey
+#: model:ir.model.fields,field_description:survey.field_survey_mail_compose_message__description
 #: model:ir.model.fields,field_description:survey.field_survey_page__description
 #: model:ir.model.fields,field_description:survey.field_survey_question__description
 #: model:ir.model.fields,field_description:survey.field_survey_survey__description
@@ -771,7 +772,7 @@ msgstr ""
 #. module: survey
 #: model:ir.model.fields,field_description:survey.field_survey_user_input__email
 msgid "E-mail"
-msgstr ""
+msgstr "E-post"
 
 #. module: survey
 #: model_terms:ir.ui.view,arch_db:survey.survey_form
@@ -1274,6 +1275,11 @@ msgid "Message Record Name"
 msgstr "Message Record Name"
 
 #. module: survey
+#: model:ir.model.fields,help:survey.field_survey_mail_compose_message__description
+msgid "Message description: either the subject, or the beginning of the body"
+msgstr ""
+
+#. module: survey
 #: model:ir.model.fields,help:survey.field_survey_mail_compose_message__message_type
 msgid ""
 "Message type: email for email message, notification for system message, "
@@ -1689,6 +1695,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:survey.field_survey_mail_compose_message__public_url
 msgid "Public url"
 msgstr ""
+
+#. module: survey
+#: model:ir.model.fields,field_description:survey.field_survey_mail_compose_message__website_published
+msgid "Published"
+msgstr "Publicerad"
 
 #. module: survey
 #: model:survey.label,value:survey.choice_1_2_2
@@ -2556,6 +2567,11 @@ msgstr "Visa svar"
 #: model_terms:ir.ui.view,arch_db:survey.survey_form
 msgid "View results"
 msgstr "Visa svar"
+
+#. module: survey
+#: model:ir.model.fields,help:survey.field_survey_mail_compose_message__website_published
+msgid "Visible on the website as a comment"
+msgstr ""
 
 #. module: survey
 #: model_terms:ir.ui.view,arch_db:survey.result_choice
