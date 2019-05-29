@@ -1,22 +1,22 @@
 ---Fields in module 'base'---
 base         / ir.actions.act_url       / binding_model_id (many2one)   : NEW relation: ir.model
-base         / ir.actions.act_url       / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.act_url       / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'action_form_only', 'report'], req_default: function
 base         / ir.actions.act_url       / usage (char)                  : DEL 
 base         / ir.actions.act_window    / binding_model_id (many2one)   : NEW relation: ir.model
-base         / ir.actions.act_window    / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.act_window    / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'action_form_only', 'report'], req_default: function
 base         / ir.actions.act_window_close / binding_model_id (many2one)   : NEW relation: ir.model
-base         / ir.actions.act_window_close / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.act_window_close / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'action_form_only', 'report'], req_default: function
 base         / ir.actions.act_window_close / usage (char)                  : DEL 
 base         / ir.actions.actions       / binding_model_id (many2one)   : NEW relation: ir.model
-base         / ir.actions.actions       / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.actions       / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'action_form_only', 'report'], req_default: function
 base         / ir.actions.actions       / usage (char)                  : DEL 
 base         / ir.actions.client        / binding_model_id (many2one)   : NEW relation: ir.model
-base         / ir.actions.client        / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.client        / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'action_form_only', 'report'], req_default: function
 base         / ir.actions.client        / usage (char)                  : DEL 
 base         / ir.actions.report        / attachment (char)             : NEW 
 base         / ir.actions.report        / attachment_use (boolean)      : NEW 
 base         / ir.actions.report        / binding_model_id (many2one)   : NEW relation: ir.model
-base         / ir.actions.report        / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.report        / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'action_form_only', 'report'], req_default: function
 base         / ir.actions.report        / groups_id (many2many)         : NEW relation: res.groups
 base         / ir.actions.report        / help (html)                   : NEW 
 base         / ir.actions.report        / model (char)                  : NEW required: required
@@ -30,7 +30,7 @@ base         / ir.actions.report        / report_type (selection)       : NEW re
 base         / ir.actions.report        / type (char)                   : NEW required: required, req_default: function
 base         / ir.actions.server        / action_id (many2one)          : DEL relation: ir.actions.actions
 base         / ir.actions.server        / binding_model_id (many2one)   : NEW relation: ir.model
-base         / ir.actions.server        / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'report'], req_default: function
+base         / ir.actions.server        / binding_type (selection)      : NEW required: required, selection_keys: ['action', 'action_form_only', 'report'], req_default: function
 base         / ir.actions.server        / condition (char)              : DEL 
 base         / ir.actions.server        / copyvalue (char)              : DEL 
 base         / ir.actions.server        / id_object (reference)         : DEL 
@@ -216,7 +216,6 @@ NEW ir.ui.view: base.view_currency_kanban
 NEW ir.ui.view: base.view_partner_short_form
 NEW ir.ui.view: base.view_res_company_kanban
 NEW ir.ui.view: base.view_res_users_kanban
-DEL ir.ui.view: base.action_view_company_form_link_2_currencies
 DEL ir.ui.view: base.ir_cron_view
 DEL ir.ui.view: base.values_view_form_action
 DEL ir.ui.view: base.values_view_form_defaults
@@ -305,6 +304,7 @@ NEW res.country.state: base.state_co_30
 NEW res.country.state: base.state_co_31
 NEW res.country.state: base.state_co_32
 NEW res.country.state: base.state_co_33
+NEW res.country.state: base.state_it_su
 DEL res.currency: base.VUB (noupdate)
 DEL res.font: base.font_courier (noupdate)
 DEL res.font: base.font_helvetica (noupdate)

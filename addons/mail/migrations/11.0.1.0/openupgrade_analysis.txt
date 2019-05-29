@@ -49,6 +49,7 @@ NEW ir.model.access: mail.access_mail_test_portal
 NEW ir.model.access: mail.access_mail_test_simple
 NEW ir.model.access: mail.access_mail_test_user
 DEL ir.model.access: mail.access_mail_test_all
+NEW ir.rule: mail.mail_activity_rule_user (noupdate)
 NEW ir.ui.menu: mail.mail_channel_integrations_menu
 NEW ir.ui.menu: mail.menu_mail_activity_type
 NEW ir.ui.view: mail.field_form_view
@@ -61,6 +62,7 @@ NEW ir.ui.view: mail.mail_activity_view_tree
 NEW ir.ui.view: mail.message_activity_done
 NEW ir.ui.view: mail.model_form_view
 NEW ir.ui.view: mail.model_search_view
+NEW ir.ui.view: mail.qunit_mobile_suite
 NEW ir.ui.view: mail.qunit_suite
 NEW ir.ui.view: mail.res_config_settings_view_form
 NEW ir.ui.view: mail.res_partner_view_form_inherit_mail
@@ -84,6 +86,7 @@ NEW mail.shortcode: mail.mail_smiley_monkey_see
 NEW mail.shortcode: mail.mail_smiley_monkey_speak
 NEW mail.shortcode: mail.mail_smiley_normal_smile
 NEW mail.shortcode: mail.mail_smiley_party
+NEW mail.shortcode: mail.mail_smiley_smile_eyes
 NEW mail.shortcode: mail.mail_smiley_sunglass
 NEW mail.shortcode: mail.mail_smiley_tears_of_joy
 NEW mail.shortcode: mail.mail_smiley_trophy

@@ -15,6 +15,9 @@ project      / project.task             / website_message_ids (one2many): NEW re
 project      / project.task.type        / legend_blocked (char)         : now required, default = function
 project      / project.task.type        / legend_done (char)            : now required, default = function
 project      / project.task.type        / legend_normal (char)          : now required, default = function
+project_issue / account.analytic.account / use_issues (boolean)          : DEL 
+project_issue / project.project          / issue_ids (one2many)          : DEL relation: project.issue
+project_issue / project.project          / label_issues (char)           : DEL 
 ---XML records in module 'project'---
 NEW ir.actions.act_window: project.mail_activity_type_action_config_project_types
 NEW ir.actions.act_window: project.project_config_settings_action
@@ -23,8 +26,15 @@ NEW ir.actions.act_window: project.project_task_action_from_partner
 NEW ir.actions.act_window: project.project_task_action_sub_task
 NEW ir.actions.act_window: project.project_task_actions_act_window_merge_tasks
 DEL ir.actions.act_window: project.action_config_settings
+DEL ir.actions.act_window: project_issue.act_project_project_2_project_issue_all
+DEL ir.actions.act_window: project_issue.action_project_issue_report
+DEL ir.actions.act_window: project_issue.action_project_issue_report_filtered
+DEL ir.actions.act_window: project_issue.action_view_issues
+DEL ir.actions.act_window: project_issue.project_issue_categ_act0
 NEW ir.actions.server: project.ir_actions_server_project_sample
 DEL ir.actions.server: project.activate_sample_project
+DEL ir.filters: project_issue.filter_issue_report_delay
+DEL ir.filters: project_issue.filter_issue_report_responsible
 NEW ir.model.access: project.access_account_analytic_account_portal
 NEW ir.model.access: project.access_project_portal
 NEW ir.model.access: project.access_project_tags_portal
@@ -32,20 +42,31 @@ NEW ir.model.access: project.access_project_task_type_portal
 NEW ir.model.access: project.access_project_user
 NEW ir.model.access: project.access_task_portal
 DEL ir.model.access: project.access_project_on_partner
+DEL ir.model.access: project_issue.access_project_issue_portal
+DEL ir.model.access: project_issue.access_project_issue_report_all
+DEL ir.model.access: project_issue.access_project_issue_report_user
+DEL ir.model.access: project_issue.access_project_issue_user
+DEL ir.model.access: project_issue.access_resource_calendar_project_manager
 DEL ir.model.access: website_project.access_account_analytic_account_portal
 DEL ir.model.access: website_project.access_project_portal
 DEL ir.model.access: website_project.access_project_tags_portal
 DEL ir.model.access: website_project.access_task_portal
 DEL ir.model.access: website_project.access_task_type_portal
+DEL ir.model.access: website_project_issue.access_issues
 NEW ir.rule: project.project_project_rule_portal (noupdate)
 NEW ir.rule: project.project_task_rule_portal (noupdate)
+DEL ir.rule: project_issue.issue_project_manager_rule (noupdate)
+DEL ir.rule: project_issue.issue_user_rule (noupdate)
 DEL ir.rule: website_project.portal_project_rule (noupdate)
 DEL ir.rule: website_project.portal_task_rule (noupdate)
+DEL ir.rule: website_project_issue.portal_issue_rule (noupdate)
 NEW ir.ui.menu: project.project_config_settings_menu_action
 NEW ir.ui.menu: project.project_menu_config_activity_type
 NEW ir.ui.menu: project.project_task_menu_activity
 DEL ir.ui.menu: base.menu_administration
 DEL ir.ui.menu: project.menu_project_general_settings
+DEL ir.ui.menu: project_issue.menu_project_issue_report_tree
+DEL ir.ui.menu: project_issue.menu_project_issue_track
 NEW ir.ui.view: project.mail_template_task_merge
 NEW ir.ui.view: project.portal_layout
 NEW ir.ui.view: project.portal_my_home
@@ -60,12 +81,45 @@ NEW ir.ui.view: project.qunit_suite
 NEW ir.ui.view: project.res_config_settings_view_form
 NEW ir.ui.view: project.view_project_task_type_kanban
 DEL ir.ui.view: project.view_config_settings
+DEL ir.ui.view: project_issue.analytic_account_inherited_issue_form
+DEL ir.ui.view: project_issue.project_config_settings_view_form_inherit_project_issue
+DEL ir.ui.view: project_issue.project_feature_tree_view
+DEL ir.ui.view: project_issue.project_issue_calendar_view
+DEL ir.ui.view: project_issue.project_issue_form_view
+DEL ir.ui.view: project_issue.project_issue_graph_view
+DEL ir.ui.view: project_issue.project_issue_kanban_view
+DEL ir.ui.view: project_issue.project_issue_pivot_view
+DEL ir.ui.view: project_issue.project_issue_tree_view
+DEL ir.ui.view: project_issue.project_issue_view_kanban_inherit_no_group_create
+DEL ir.ui.view: project_issue.project_project_view_form_simplified_inherit_issue
+DEL ir.ui.view: project_issue.res_partner_issues_button_view
+DEL ir.ui.view: project_issue.view_project_form_inherited
+DEL ir.ui.view: project_issue.view_project_issue_filter
+DEL ir.ui.view: project_issue.view_project_issue_report_filter
+DEL ir.ui.view: project_issue.view_project_issue_report_graph
+DEL ir.ui.view: project_issue.view_project_issue_report_pivot
+DEL ir.ui.view: project_issue.view_project_kanban_inherited
 DEL ir.ui.view: website_project.my_project
 DEL ir.ui.view: website_project.my_projects
 DEL ir.ui.view: website_project.my_task
 DEL ir.ui.view: website_project.my_tasks
 DEL ir.ui.view: website_project.portal_layout
 DEL ir.ui.view: website_project.portal_my_home
+DEL ir.ui.view: website_project_issue.my_issues
+DEL ir.ui.view: website_project_issue.my_issues_issue
+DEL ir.ui.view: website_project_issue.my_project
+DEL ir.ui.view: website_project_issue.my_projects
+DEL ir.ui.view: website_project_issue.portal_layout
+DEL ir.ui.view: website_project_issue.portal_my_home
 DEL ir.values: project.ir_project_task_open
 DEL mail.message: project.module_install_notification
+DEL mail.message: project_issue.module_install_notification (noupdate)
+DEL mail.message.subtype: project_issue.mt_issue_blocked (noupdate)
+DEL mail.message.subtype: project_issue.mt_issue_new (noupdate)
+DEL mail.message.subtype: project_issue.mt_issue_ready (noupdate)
+DEL mail.message.subtype: project_issue.mt_issue_stage (noupdate)
+DEL mail.message.subtype: project_issue.mt_project_issue_blocked (noupdate)
+DEL mail.message.subtype: project_issue.mt_project_issue_new (noupdate)
+DEL mail.message.subtype: project_issue.mt_project_issue_ready (noupdate)
+DEL mail.message.subtype: project_issue.mt_project_issue_stage (noupdate)
 NEW res.groups: project.group_subtask_project

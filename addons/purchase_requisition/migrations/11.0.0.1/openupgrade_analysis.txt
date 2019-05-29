@@ -2,6 +2,7 @@
 purchase_requisition / purchase.requisition     / procurement_id (many2one)     : DEL relation: procurement.order
 purchase_requisition / purchase.requisition     / website_message_ids (one2many): NEW relation: mail.message
 purchase_requisition / purchase.requisition.line / move_dest_id (many2one)       : NEW relation: stock.move
+purchase_requisition / stock.move               / requistion_line_ids (one2many): NEW relation: purchase.requisition.line
 ---XML records in module 'purchase_requisition'---
 NEW ir.ui.view: purchase_requisition.res_config_settings_view_form
 NEW ir.ui.view: purchase_requisition.view_purchase_requisition_kanban

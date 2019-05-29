@@ -28,6 +28,12 @@ NEW ir.rule: sale.account_invoice_report_rule_see_all (noupdate)
 NEW ir.rule: sale.account_invoice_report_rule_see_personal (noupdate)
 NEW ir.rule: sale.sale_order_line_rule_portal (noupdate)
 NEW ir.rule: sale.sale_order_rule_portal (noupdate)
+DEL ir.rule: portal_sale.portal_account_invoice_line_rule (noupdate)
+DEL ir.rule: portal_sale.portal_account_invoice_user_rule (noupdate)
+DEL ir.rule: portal_sale.portal_personal_contact (noupdate)
+DEL ir.rule: portal_sale.portal_sale_order_line_rule (noupdate)
+DEL ir.rule: portal_sale.portal_sale_order_user_rule (noupdate)
+NEW ir.ui.menu: sale.menu_product_category_config_sale
 NEW ir.ui.menu: sale.menu_sale_config
 NEW ir.ui.menu: sale.menu_sale_general_settings
 NEW ir.ui.menu: sale.menu_sale_report
@@ -54,10 +60,13 @@ NEW ir.ui.view: sale.portal_order_error
 NEW ir.ui.view: sale.portal_order_page
 NEW ir.ui.view: sale.portal_order_success
 NEW ir.ui.view: sale.product_pricelist_view_kanban
+NEW ir.ui.view: sale.qunit_suite
 NEW ir.ui.view: sale.report_all_channels_sales_view_pivot
 NEW ir.ui.view: sale.report_all_channels_sales_view_search
 NEW ir.ui.view: sale.report_saleorder_pro_forma
 NEW ir.ui.view: sale.res_config_settings_view_form
+DEL ir.ui.view: portal_sale.view_account_invoice_filter_share
+DEL ir.ui.view: sale.view_account_config
 DEL ir.ui.view: sale.view_sales_config
 DEL ir.values: sale.sale_order_line_make_invoice
 DEL mail.message: sale.module_install_notification (noupdate)

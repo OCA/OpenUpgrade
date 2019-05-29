@@ -10,6 +10,7 @@ sale_stock   / stock.picking            / sale_id (many2one)            : not a 
 ---XML records in module 'sale_stock'---
 DEL ir.model.access: sale_stock.access_procurement_manager
 DEL ir.model.access: sale_stock.access_procurement_salesman
+NEW ir.rule: sale_stock.stock_picking_rule_portal
 NEW ir.ui.view: sale_stock.product_template_view_form_inherit_sale
 NEW ir.ui.view: sale_stock.product_template_view_form_inherit_stock
 NEW ir.ui.view: sale_stock.res_config_settings_view_form_sale

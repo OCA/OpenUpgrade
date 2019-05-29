@@ -10,7 +10,7 @@ sales_team   / crm.team                 / website_message_ids (one2many): NEW re
 NEW ir.actions.act_window: sales_team.mail_activity_type_action_config_sales
 DEL ir.actions.act_window: sales_team.action_sale_config
 DEL ir.actions.act_window: sales_team.crm_team_act
-DEL ir.rule: sales_team.crm_rule_own_salesteam
+NEW ir.rule: sales_team.crm_rule_all_salesteam
 DEL ir.ui.menu: sales_team.menu_action_currency_form
 DEL ir.ui.menu: sales_team.menu_action_res_bank_form
 DEL ir.ui.menu: sales_team.menu_action_res_partner_bank_form

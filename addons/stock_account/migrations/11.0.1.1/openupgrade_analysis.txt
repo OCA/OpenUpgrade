@@ -8,21 +8,20 @@ stock_account / stock.move               / remaining_value (float)       : NEW
 stock_account / stock.move               / to_refund (boolean)           : NEW 
 stock_account / stock.move               / value (float)                 : NEW 
 ---XML records in module 'stock_account'---
+NEW ir.actions.act_window: stock_account.action_stock_inventory_valuation
 NEW ir.actions.act_window: stock_account.product_valuation_action
-NEW ir.actions.act_window: stock_account.stock_move_valuation_action
 DEL ir.actions.act_window: stock_account.action_stock_history
 DEL ir.actions.act_window: stock_account.action_wizard_stock_valuation_history
-NEW ir.actions.server: stock_account.action_stock_account_valuation_report (noupdate)
 DEL ir.model.access: stock_account.access_stock_history_stock_manager
 DEL ir.rule: stock_account.stock_history_rule
 NEW ir.ui.menu: stock_account.menu_valuation
 DEL ir.ui.menu: stock_account.menu_action_wizard_valuation_history
-NEW ir.ui.view: stock_account.product_template_valuation_form_view
-NEW ir.ui.view: stock_account.product_valuation_form_view
-NEW ir.ui.view: stock_account.product_valuation_tree
 NEW ir.ui.view: stock_account.res_config_settings_view_form
 NEW ir.ui.view: stock_account.view_move_form_inherit
-NEW ir.ui.view: stock_account.view_move_tree_valuation
+NEW ir.ui.view: stock_account.view_move_tree_valuation_at_date
+NEW ir.ui.view: stock_account.view_stock_account_aml
+NEW ir.ui.view: stock_account.view_stock_product_tree2
+NEW ir.ui.view: stock_account.view_stock_quantity_history
 NEW ir.ui.view: stock_account.view_stock_return_picking_form_inherit_stock_account
 DEL ir.ui.view: stock_account.view_picking_inherit_form2
 DEL ir.ui.view: stock_account.view_stock_config_settings_inherit

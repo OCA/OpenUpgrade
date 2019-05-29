@@ -5,6 +5,7 @@ hr_timesheet / project.task             / child_ids (one2many)          : module
 hr_timesheet / project.task             / parent_id (many2one)          : module is now 'project' ('hr_timesheet')
 hr_timesheet / project.task             / subtask_count (integer)       : module is now 'project' ('hr_timesheet')
 hr_timesheet / project.task             / subtask_project_id (many2one) : module is now 'project' ('hr_timesheet')
+project_issue_sheet / account.analytic.line    / issue_id (many2one)           : DEL relation: project.issue
 ---XML records in module 'hr_timesheet'---
 NEW ir.actions.act_window: hr_timesheet.hr_timesheet_config_settings_action
 NEW ir.actions.act_window: hr_timesheet.timesheet_action_all
@@ -32,10 +33,18 @@ NEW ir.model.access: hr_timesheet.access_project_task
 DEL ir.model.access: hr_timesheet.access_hr_account_analytic_line
 DEL ir.model.access: hr_timesheet.access_hr_account_analytic_line_employee
 DEL ir.model.access: hr_timesheet.access_product_template_hr_timesheet
+DEL ir.model.access: project_issue_sheet.access_account_analytic_line_project_manager
+DEL ir.model.access: project_issue_sheet.access_account_analytic_line_project_user
+DEL ir.model.access: project_issue_sheet.access_account_invoice_project_manager
+DEL ir.model.access: project_issue_sheet.access_account_invoice_project_user
+DEL ir.model.access: project_issue_sheet.access_analytic_account_line_project_user
+DEL ir.model.access: project_issue_sheet.access_hr_timesheet_sheet_sheet_project_manager
+DEL ir.model.access: project_issue_sheet.access_hr_timesheet_sheet_sheet_project_user
 DEL ir.model.access: website_project_timesheet.access_timesheets_portal
 NEW ir.rule: hr_timesheet.timesheet_line_rule_manager (noupdate)
 NEW ir.rule: hr_timesheet.timesheet_line_rule_user
 NEW ir.rule: hr_timesheet.timesheet_rule_portal (noupdate)
+DEL ir.rule: project_issue_sheet.portal_issue_sheet_rule (noupdate)
 DEL ir.rule: website_project_timesheet.portal_task_timesheet_rule (noupdate)
 NEW ir.ui.menu: hr_timesheet.hr_timesheet_config_settings_menu_action
 NEW ir.ui.menu: hr_timesheet.hr_timesheet_menu_configuration
@@ -52,5 +61,7 @@ NEW ir.ui.view: hr_timesheet.timesheet_view_calendar
 NEW ir.ui.view: hr_timesheet.timesheet_view_form_user
 NEW ir.ui.view: hr_timesheet.timesheet_view_tree_user
 NEW ir.ui.view: hr_timesheet.view_kanban_account_analytic_line
+DEL ir.ui.view: project_issue_sheet.project_issue_form_view
+DEL ir.ui.view: project_issue_sheet.project_issue_tree_view_inherited
 DEL ir.ui.view: website_project_timesheet.my_task
 NEW res.groups: hr_timesheet.group_timesheet_manager (noupdate)

@@ -23,12 +23,14 @@ DEL ir.actions.act_window: payment.payment_transaction_action_child
 NEW ir.model.access: payment.payment_icon_all
 NEW ir.model.access: payment.payment_icon_system
 NEW ir.model.access: payment.payment_icon_user
+DEL ir.model.access: payment.payment_acquirer_user
 NEW ir.ui.menu: payment.payment_icon_menu
 NEW ir.ui.view: payment.assets_frontend
 NEW ir.ui.view: payment.confirm
 NEW ir.ui.view: payment.pay
 NEW ir.ui.view: payment.pay_meth_link
 NEW ir.ui.view: payment.pay_methods
+NEW ir.ui.view: payment.payment_confirmation_status
 NEW ir.ui.view: payment.payment_icon_form_view
 NEW ir.ui.view: payment.payment_tokens_list
 NEW ir.ui.view: payment.transaction_view_kanban

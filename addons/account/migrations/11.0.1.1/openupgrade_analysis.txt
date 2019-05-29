@@ -2,6 +2,7 @@
 account      / account.account          / group_id (many2one)           : NEW relation: account.group
 account      / account.account.tag      / active (boolean)              : NEW 
 account      / account.account.template / group_id (many2one)           : NEW relation: account.group
+account      / account.analytic.line    / currency_id (False)           : NEW mode: modify
 account      / account.bank.statement   / website_message_ids (one2many): NEW relation: mail.message
 account      / account.bank.statement.line / journal_entry_ids (one2many)  : relation is now 'account.move.line' ('account.move')
 account      / account.cash.rounding    / account_id (many2one)         : NEW relation: account.account
@@ -78,6 +79,7 @@ DEL ir.actions.act_window: account.act_account_tax_net_posted
 DEL ir.actions.act_window: account.act_account_tax_tax
 DEL ir.actions.act_window: account.act_account_tax_tax_posted
 DEL ir.actions.act_window: account.action_account_invoice_cancel
+DEL ir.actions.act_window: account.action_account_report_tree_hierarchy
 NEW ir.actions.act_window.view: account.action_invoice_in_refund_form
 NEW ir.actions.act_window.view: account.action_invoice_in_refund_tree
 NEW ir.actions.act_window.view: account.action_invoice_out_refund_form
@@ -111,6 +113,7 @@ NEW ir.ui.menu: account.menu_finance_receivables_master_data
 NEW ir.ui.menu: account.product_product_menu_purchasable
 NEW ir.ui.menu: account.product_product_menu_sellable
 DEL ir.ui.menu: account.account_tag_menu
+DEL ir.ui.menu: account.menu_account_report_tree_hierarchy
 DEL ir.ui.menu: account.menu_action_analytic_account_tree2
 DEL ir.ui.menu: account.menu_config_multi_currency
 DEL ir.ui.menu: account.menu_product_template_action
@@ -160,6 +163,7 @@ DEL ir.ui.view: account.account_invoice_report_duplicate
 DEL ir.ui.view: account.account_invoice_report_duplicate_main
 DEL ir.ui.view: account.external_layout_footer
 DEL ir.ui.view: account.view_account_config_settings
+DEL ir.ui.view: account.view_account_report_tree_hierarchy
 DEL ir.ui.view: account.view_move_line_form2
 DEL ir.ui.view: account_tax_cash_basis.view_account_config_cash_basis_inherit_form
 DEL ir.ui.view: account_tax_cash_basis.view_tax_form_cash_basis_inherit
@@ -172,5 +176,6 @@ DEL ir.values: account.action_account_partner_ledger_values
 DEL ir.values: account.validate_account_move_values
 NEW mail.template: account.mail_template_data_payment_receipt (noupdate)
 NEW res.groups: account.group_cash_rounding
+NEW res.groups: base.group_system
 DEL res.groups: account.group_proforma_invoices
 NEW res.users: base.user_root (noupdate)

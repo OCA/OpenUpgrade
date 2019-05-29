@@ -20,6 +20,8 @@ DEL ir.actions.act_window: crm.crm_activity_action
 DEL ir.actions.act_window: crm.crm_activity_log_action
 DEL ir.actions.act_window: crm.crm_activity_report_action_tree
 DEL ir.actions.act_window: crm.crm_activity_schedule_action
+NEW ir.actions.server: crm.action_mark_activities_done
+NEW ir.actions.server: crm.action_mark_late_activities_done
 DEL ir.model.access: crm.access_base_action_rule_manager
 DEL ir.model.access: crm.access_crm_activity_manager
 DEL ir.model.access: crm.access_crm_activity_salesman
