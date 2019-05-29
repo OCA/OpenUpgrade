@@ -194,11 +194,13 @@ class account_register_payments(models.TransientModel):
         '''
         amount = self._compute_payment_amount(invoices) if self.multi else self.amount
         payment_type = ('inbound' if amount > 0 else 'outbound') if self.multi else self.payment_type
+        communication = (' '.join([inv.reference or inv.number for inv in invoices])
+                         if self.multi else self.communication)
         return {
             'journal_id': self.journal_id.id,
             'payment_method_id': self.payment_method_id.id,
             'payment_date': self.payment_date,
-            'communication': self.communication,
+            'communication': communication,  # DO NOT FORWARD PORT TO V12 OR ABOVE
             'invoice_ids': [(6, 0, invoices.ids)],
             'payment_type': payment_type,
             'amount': abs(amount),
@@ -740,3 +742,17 @@ class account_payment(models.Model):
             })
 
         return vals
+
+    def _get_invoice_payment_amount(self, inv):
+        """
+        Computes the amount covered by the current payment in the given invoice.
+
+        :param inv: an invoice object
+        :returns: the amount covered by the payment in the invoice
+        """
+        self.ensure_one()
+        return sum([
+            data['amount']
+            for data in inv._get_payments_vals()
+            if data['account_payment_id'] == self.id
+        ])
