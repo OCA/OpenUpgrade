@@ -56,7 +56,7 @@ class StockPicking(models.Model):
 
 
     @api.one
-    @api.depends('move_line_ids')
+    @api.depends('move_line_ids', 'move_line_ids.result_package_id')
     def _compute_packages(self):
         self.ensure_one()
         packs = set()
@@ -66,7 +66,7 @@ class StockPicking(models.Model):
         self.package_ids = list(packs)
 
     @api.one
-    @api.depends('move_line_ids')
+    @api.depends('move_line_ids', 'move_line_ids.result_package_id', 'move_line_ids.product_uom_id', 'move_line_ids.qty_done')
     def _compute_bulk_weight(self):
         weight = 0.0
         for move_line in self.move_line_ids:
@@ -101,7 +101,7 @@ class StockPicking(models.Model):
         for picking in self:
             picking.weight_uom_id = weight_uom_id
 
-    @api.depends('move_lines')
+    @api.depends('move_lines', 'move_ids_without_package')
     def _cal_weight(self):
         for picking in self:
             picking.weight = sum(move.weight for move in picking.move_lines if move.state != 'cancel')

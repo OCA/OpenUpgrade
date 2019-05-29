@@ -54,6 +54,7 @@ var db = {
             code: {string: "code", type: 'integer'},
             name: {string: "Displayed name", type: 'char'},
             company_id: {string: "Company", type: 'many2one', relation: 'res.company'},
+            deprecated: {string: "Deprecated", type: 'boolean'},
         },
         records: [
             {id: 282, code: 100000, name: "100000 Fixed Asset Account", company_id: 1},
@@ -584,6 +585,7 @@ odoo.define('account.reconciliation_tests', function (require) {
 "use strict";
 
 var ReconciliationClientAction = require('account.ReconciliationClientAction');
+var ReconciliationRenderer = require('account.ReconciliationRenderer');
 var demoData = require('account.reconciliation_tests.data');
 
 var testUtils = require('web.test_utils');
@@ -591,7 +593,13 @@ var testUtils = require('web.test_utils');
 QUnit.module('account', {
     beforeEach: function () {
         this.params = demoData.getParams();
-    }
+        testUtils.patch(ReconciliationRenderer.LineRenderer, {
+            MV_LINE_DEBOUNCE: 0,
+        });
+    },
+    afterEach: function () {
+        testUtils.unpatch(ReconciliationRenderer.LineRenderer);
+    },
 }, function () {
     QUnit.module('Reconciliation');
 

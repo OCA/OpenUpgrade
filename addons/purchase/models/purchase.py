@@ -192,7 +192,7 @@ class PurchaseOrder(models.Model):
         if not self.partner_id:
             self.fiscal_position_id = False
             self.payment_term_id = False
-            self.currency_id = False
+            self.currency_id = self.env.user.company_id.currency_id.id
         else:
             self.fiscal_position_id = self.env['account.fiscal.position'].with_context(company_id=self.company_id.id).get_fiscal_position(self.partner_id.id)
             self.payment_term_id = self.partner_id.property_supplier_payment_term_id.id
@@ -413,6 +413,8 @@ class PurchaseOrder(models.Model):
             # Do not set an invoice_id if we want to create a new bill.
             if not create_bill:
                 result['res_id'] = self.invoice_ids.id or False
+        result['context']['default_origin'] = self.name
+        result['context']['default_reference'] = self.partner_ref
         return result
 
     @api.multi

@@ -10,14 +10,15 @@ var Widget = require('web.Widget');
 
 var QWeb = core.qweb;
 var _t = core._t;
+var _lt = core._lt;
 
 var ORDER = {
     ASC: 1, // visually, ascending order of message IDs (from top to bottom)
     DESC: -1, // visually, descending order of message IDs (from top to bottom)
 };
 
-var READ_MORE = _t("read more");
-var READ_LESS = _t("read less");
+var READ_MORE = _lt("read more");
+var READ_LESS = _lt("read less");
 
 /**
  * This is a generic widget to render a thread.
@@ -475,7 +476,7 @@ var ThreadWidget = Widget.extend({
                     return message.getID() === messageID;
                 });
                 return QWeb.render('mail.widget.Thread.Message.MailTooltip', {
-                    data: message.getCustomerEmailData()
+                    data: message.hasCustomerEmailData() ? message.getCustomerEmailData() : [],
                 });
             },
         });

@@ -13,8 +13,10 @@ var DateWidget = Widget.extend({
     type_of_date: "date",
     events: {
         'change.datetimepicker': 'changeDatetime',
+        'error.datetimepicker': 'errorDatetime',
         'change .o_datepicker_input': 'changeDatetime',
         'input input': '_onInput',
+        'keydown': '_onKeydown',
         'show.datetimepicker': '_onDateTimePickerShow',
     },
     /**
@@ -101,6 +103,12 @@ var DateWidget = Widget.extend({
                 this.trigger("datetime_changed");
             }
         }
+    },
+    /**
+     * Library clears the wrong date format so just ignore error
+     */
+    errorDatetime: function (e) {
+        return false;
     },
     /**
      * Focuses the datepicker input. This function must be called in order to
@@ -237,6 +245,17 @@ var DateWidget = Widget.extend({
     _onDateTimePickerShow: function () {
         if (this.$input.val().length !== 0 && this.isValid()) {
             this.$input.select();
+        }
+    },
+    /**
+     * @private
+     * @param {KeyEvent} ev
+     */
+    _onKeydown: function (ev) {
+        if (ev.which === $.ui.keyCode.ESCAPE) {
+            this.__libInput++;
+            this.$el.datetimepicker('hide');
+            this.__libInput--;
         }
     },
     /**

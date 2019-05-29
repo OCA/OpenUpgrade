@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Bill Hsu <hcm86@icloud.com>, 2018
+# Jason Au Yeung <auyeung112002@gmail.com>, 2018
 # amos lin <seeing@edirect168.com>, 2018
 # Martin Trigaux, 2018
 # sejun huang <sejun.huang@gmail.com>, 2019
@@ -12132,7 +12133,7 @@ msgid ""
 "Disabling this option will also uninstall the following modules \n"
 "%s"
 msgstr ""
-"停用此選項也會卸載以下模組 \\n\n"
+"停用此選項也會卸載以下模組\n"
 "%s"
 
 #. module: base
@@ -24649,8 +24650,9 @@ msgid ""
 "- deletion: you may be trying to delete a record while other records still reference it\n"
 "- creation/update: a mandatory field is not correctly set"
 msgstr ""
-"該操作無法完成，可能是由於以下原因：\\n - 刪除：您可能正試圖刪除一個記錄，但是仍有其它記錄引用到它 \\n - "
-"創建/更新：一個強制字段沒有正確設定"
+"該操作無法完成，可能是由於以下原因：\n"
+"- 刪除：您可能正試圖刪除一個記錄，但是仍有其它記錄引用到它\n"
+"- 創建/更新：一個強制字段沒有正確設定"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_model_fields__domain
@@ -24785,6 +24787,13 @@ msgid ""
 msgstr ""
 "將要呈現的報表的類型，每個報表都有其自己的呈現方法。HTML 表示將直接在瀏覽器中打開報表。PDF 表示報表將使用 Wkhtmltopdf "
 "進行呈現並由使用者下載。"
+
+#. module: base
+#: code:addons/base/models/res_users.py:117
+#: code:addons/base/models/res_users.py:404
+#, python-format
+msgid "The user cannot have more than one user types."
+msgstr ""
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_filters__user_id

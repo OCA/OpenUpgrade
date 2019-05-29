@@ -10,10 +10,10 @@
 # Thomas Pot <thomas@open2bizz.nl>, 2018
 # Cas Vissers <c.vissers@brahoo.nl>, 2018
 # Eric Geens <ericgeens@yahoo.com>, 2018
-# Cas Vissers <casvissers@brahoo.nl>, 2018
 # Martin Trigaux, 2018
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2019
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2019
+# Cas Vissers <casvissers@brahoo.nl>, 2019
 # 
 msgid ""
 msgstr ""
@@ -21,7 +21,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-09 10:38+0000\n"
 "PO-Revision-Date: 2018-08-24 09:14+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2019\n"
+"Last-Translator: Cas Vissers <casvissers@brahoo.nl>, 2019\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3977,13 +3977,13 @@ msgstr ""
 "Beheer vakantieaanvragen en toewijzingen\n"
 "=====================================\n"
 "\n"
-"Deze applicatie beheerd de vakantieschema's van uw bedrijf. Het staat werknemers toe om verlofaanvragen te doen. Vervolgens kunnen managers vakantieaanvragen controleren en ze vervolgens goedkeuren of afwijzen. Op deze manier kan u de algemene vakanties plannen voor uw bedrijf of afdeling.\n"
+"Deze applicatie beheerd de verlofschema's van uw bedrijf. Het staat werknemers toe om verlofaanvragen te doen. Vervolgens kunnen managers vakantieaanvragen controleren en ze vervolgens goedkeuren of afwijzen. Op deze manier kan u de algemene verlof plannen voor uw bedrijf of afdeling.\n"
 "\n"
 "U kan verschillende soorten aanvragen configureren (ziekte, betaalde dagen, ...) en u kan vakantie snel toewijzen aan een werknemer of afdeling door vakantie toewijzingen. Een werknemer kan ook een aanvraag doen voor meer vakantie toewijzingen. Het verhoogt het aantal beschikbare dagen voor dat type vakantie (als het verzoek is goedgekeurd).\n"
 "\n"
-"U kan vakanties opvolgen op verschillende manieren volgen:\n"
+"U kan verlof opvolgen op verschillende manieren volgen:\n"
 "\n"
-"* Vakantiesamenvattingen\n"
+"* Verlofsamenvattingen\n"
 "* Vakantie op afdeling\n"
 "* Vakantie analyse\n"
 "\n"
@@ -11208,7 +11208,7 @@ msgstr "Bedrijfsnaam entiteit"
 #: model:ir.actions.act_window,name:base.ir_property_form
 #: model:ir.ui.menu,name:base.menu_ir_property_form_all
 msgid "Company Properties"
-msgstr "Bedrijf opties"
+msgstr "Bedrijfsopties"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_property
@@ -12596,7 +12596,7 @@ msgid ""
 "Disabling this option will also uninstall the following modules \n"
 "%s"
 msgstr ""
-"Indien u deze optie uitschakelt worden de volgende modules geïnstalleerd: \n"
+"Indien u deze optie uitschakelt worden de volgende modules gedeïnstalleerd: \n"
 "%s"
 
 #. module: base
@@ -24371,7 +24371,7 @@ msgstr "Abonnementen"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_sequence__date_range_ids
 msgid "Subsequences"
-msgstr "Subsequenties"
+msgstr "Subreeksen"
 
 #. module: base
 #: model:res.country,name:base.sd
@@ -26245,7 +26245,7 @@ msgid ""
 "\n"
 "Can not separate file to save as attachment because the report's template does not contains the attributes 'data-oe-model' and 'data-oe-id' on the div with 'article' classname."
 msgstr ""
-"De sjabloon van het rapport '%s' is verkeerd, neem contact op met uw beheerder.\n"
+"Het sjabloon van het rapport '%s' is verkeerd, neem contact op met uw beheerder.\n"
 "\n"
 "Kan het bestand niet scheiden om op te slaan als bijlage, omdat de rapportsjabloon niet de kenmerken 'data-oe-model' en 'data-oe-id' op de div bevat met 'article' classname."
 
@@ -26329,6 +26329,13 @@ msgstr ""
 "HTML betekend dat het rapport direct te openen is in uw webbrowser. PDF "
 "betekend dat het rapport gegeneerd wordt door gebruik te maken van "
 "Wkhtmltopdf en gedownload kan worden door de gebruiker."
+
+#. module: base
+#: code:addons/base/models/res_users.py:117
+#: code:addons/base/models/res_users.py:404
+#, python-format
+msgid "The user cannot have more than one user types."
+msgstr "De gebruiker kan niet meer dan een type hebben."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_filters__user_id
@@ -28075,7 +28082,7 @@ msgid ""
 "When subsequences per date range are used, you can prefix variables with 'range_'\n"
 "                                to use the beginning of the range instead of the current date, e.g. %(range_year)s instead of %(year)s."
 msgstr ""
-"Wanneer subsequenties per datum worden gebruikt, kan u variabelen prefixen met 'range_'\n"
+"Wanneer subreeksen per datum worden gebruikt, kunt u variabelen prefixen met 'range_'\n"
 "om het begin van de range te gebruiken in plaats van de huidige datum, bijv. %(range_year)s in plaats van %(year)s."
 
 #. module: base
