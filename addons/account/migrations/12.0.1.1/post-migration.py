@@ -6,6 +6,9 @@ from psycopg2.extensions import AsIs
 
 
 def disable_account_payment_term_comp_rule(env):
+    # This rule is disabled (active=False), because if not, when migrating
+    # we will get missing payment terms in a multi-company environment
+    # (as previously there wasn't a record rule).
     payment_rule = env.ref('account.account_payment_term_comp_rule')
     payment_rule.active = False
 
