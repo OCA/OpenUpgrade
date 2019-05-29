@@ -157,6 +157,7 @@ def fill_account_journal_alias_id(env):
 
 def fill_account_move_reverse_entry_id(env):
     all_moves = env['account.move'].search([])
+    moves_linked_to_reversals = env['account.move']
     if openupgrade.table_exists(env.cr, 'account_move_reverse'):
         reversal_moves = all_moves.filtered(
             lambda m: m.auto_reverse and not m.reverse_entry_id)
@@ -167,19 +168,21 @@ def fill_account_move_reverse_entry_id(env):
             'domain': [('auto_reverse', '=', True),
                        ('reverse_date', '=', '2999-12-31')],
         })
-    else:
-        installed_langs = env['res.lang'].search([])  # search only active
-        for lang in installed_langs:
-            reversal_text = env['ir.translation']._get_source(
-                name=False, types='code', lang=lang.code,
-                source='reversal of: ')
-            reversal_moves = all_moves.filtered(
-                lambda m: m.ref and m.ref.startswith(reversal_text))
-            for move in reversal_moves:
-                name = move.ref.partition(reversal_text)[2]
-                origin = all_moves.filtered(lambda m: m.name == name)
-                if origin and not origin[0].reverse_entry_id:
-                    origin[0].reverse_entry_id = move.id
+        moves_linked_to_reversals += all_moves.filtered(
+            lambda m: m.reverse_entry_id)
+    installed_langs = env['res.lang'].search([])  # search only active
+    for lang in installed_langs:
+        reversal_text = env['ir.translation']._get_source(
+            name=False, types='code', lang=lang.code,
+            source='reversal of: ')
+        reversal_moves = all_moves.filtered(
+            lambda m: m.ref and m.ref.startswith(reversal_text)
+            and m not in moves_linked_to_reversals)
+        for move in reversal_moves:
+            name = move.ref.partition(reversal_text)[2]
+            origin = all_moves.filtered(lambda m: m.name == name)
+            if origin and not origin[0].reverse_entry_id:
+                origin[0].reverse_entry_id = move.id
 
 
 def recompute_invoice_taxes_add_analytic_tags(env):
