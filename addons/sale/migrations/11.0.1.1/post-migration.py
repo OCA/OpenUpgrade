@@ -25,4 +25,10 @@ def migrate(env, version):
     openupgrade.load_data(
         env.cr, 'sale', 'migrations/11.0.1.1/noupdate_changes.xml',
     )
+    openupgrade.delete_record_translations(
+        env.cr, 'sale', [
+            'email_template_edi_sale',
+            'mail_template_data_notification_email_sale_order',
+        ],
+    )
     activate_proforma(env)

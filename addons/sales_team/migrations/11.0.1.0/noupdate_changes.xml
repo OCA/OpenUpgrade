@@ -1,6 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="salesteam_website_sales" model="crm.team">
+    <field name="name">Website</field>
     <field name="team_type" eval="'website'"/>
+    <field name="active" eval="False"/>
+  </record>
+  <record id="team_sales_department" model="crm.team">
+    <field name="name">Sales</field>
   </record>
 </odoo>

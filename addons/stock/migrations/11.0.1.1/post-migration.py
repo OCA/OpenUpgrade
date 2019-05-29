@@ -489,3 +489,6 @@ def migrate(env, version):
     create_stock_move_line_reserved(env)
     create_stock_move_line_from_inventory_moves(env)
     recompute_stock_move_line_qty_different_uom(env)
+    openupgrade.load_data(
+        env.cr, 'stock', 'migrations/11.0.1.1/noupdate_changes.xml',
+    )
