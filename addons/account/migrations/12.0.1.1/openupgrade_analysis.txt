@@ -197,6 +197,7 @@ NEW ir.model.access: account.access_account_incoterms_all
 NEW ir.model.access: account.access_account_incoterms_manager
 DEL ir.model.access: account.access_account_financial_report
 DEL ir.model.access: account.access_account_financial_report_invoice
+NEW ir.rule: account.account_analytic_line_rule_billing_user
 NEW ir.rule: account.account_payment_term_comp_rule (noupdate)
 NEW ir.ui.menu: account.account_analytic_group_menu
 NEW ir.ui.menu: account.action_account_reconcile_model_menu
@@ -293,9 +294,9 @@ NEW res.groups: account.group_fiscal_year
 NEW res.groups: account.group_products_in_bills
 NEW res.groups: account.group_show_line_subtotals_tax_excluded
 NEW res.groups: account.group_show_line_subtotals_tax_included
-NEW res.groups: base.group_portal [moved from sale module]
-NEW res.groups: base.group_public [moved from sale module]
-NEW res.groups: base.group_user [moved from sale module] (noupdate)
+NEW res.groups: base.group_portal [potentially moved from sale module]
+NEW res.groups: base.group_public [potentially moved from sale module]
+NEW res.groups: base.group_user [potentially moved from sale module] (noupdate)
 DEL res.request.link: account.req_link_invoice (noupdate)
 NEW res.users: base.user_admin (noupdate)
 DEL res.users: base.user_root (noupdate)

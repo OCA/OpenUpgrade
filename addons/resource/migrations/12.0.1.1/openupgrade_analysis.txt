@@ -7,3 +7,4 @@ resource     / resource.calendar.leaves / tz (selection)                : DEL se
 resource     / resource.resource        / tz (selection)                : NEW required: required, selection_keys: function, req_default: function
 resource     / resource.test            / resource_calendar_id (many2one): is now stored
 ---XML records in module 'resource'---
+NEW ir.rule: resource.resource_calendar_leaves_rule_group_admin_modify (noupdate)

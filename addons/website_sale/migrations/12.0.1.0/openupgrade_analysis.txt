@@ -34,6 +34,10 @@ NEW ir.model.access: website_sale.access_product_template_attribute_exclusion
 NEW ir.model.access: website_sale.access_product_template_attribute_line_public
 DEL ir.model.access: website_sale.access_product_attribute_line_public
 DEL ir.model.access: website_sale.access_product_attribute_price_public
+NEW ir.rule: product.product_pricelist_comp_rule (noupdate)
+NEW ir.rule: product.product_pricelist_item_comp_rule (noupdate)
+NEW ir.rule: website_sale.product_pricelist_comp_rule (noupdate)
+NEW ir.rule: website_sale.product_pricelist_item_comp_rule (noupdate)
 NEW ir.ui.menu: website_sale.menu_ecommerce_payment_icons
 NEW ir.ui.menu: website_sale.menu_ecommerce_payment_tokens
 NEW ir.ui.menu: website_sale.menu_ecommerce_payment_transactions
