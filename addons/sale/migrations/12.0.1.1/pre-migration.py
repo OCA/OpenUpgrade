@@ -1,4 +1,5 @@
 # Copyright 2019 Eficent <http://www.eficent.com>
+# Copyright 2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -30,6 +31,19 @@ def fill_sale_order_line_sections(cr):
     possible new rows added in the migration"""
     cr.execute(
         "ALTER TABLE sale_order_line ADD COLUMN display_type varchar",
+    )
+    openupgrade.logged_query(
+        cr, """
+        UPDATE sale_order_line sol
+        SET sequence = sub.rank * 5
+        FROM (
+            SELECT id, rank()
+            OVER (
+                PARTITION BY order_id ORDER BY sequence, id
+            ) FROM sale_order_line
+        ) sub
+        WHERE sol.id = sub.id
+        """,
     )
     openupgrade.logged_query(
         cr, """
