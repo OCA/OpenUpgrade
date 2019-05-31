@@ -156,31 +156,32 @@ def fill_account_journal_alias_id(env):
 
 
 def fill_account_move_reverse_entry_id(env):
-    all_moves = env['account.move'].search([])
-    moves_linked_to_reversals = env['account.move']
+    AccountMove = env['account.move']
     if openupgrade.table_exists(env.cr, 'account_move_reverse'):
-        reversal_moves = all_moves.filtered(
-            lambda m: m.auto_reverse and not m.reverse_entry_id)
+        reversal_moves = AccountMove.search([
+            ('auto_reverse', '=', True),
+            ('reverse_entry_id', '=', False),
+        ])
         reversal_moves.write({'reverse_date': '2999-12-31'})
         env['ir.filters'].create({
             'name': 'To be reversed (undetermined date)',
             'model_id': 'account.move',
-            'domain': [('auto_reverse', '=', True),
-                       ('reverse_date', '=', '2999-12-31')],
+            'domain': "[('auto_reverse', '=', True),"
+                      "('reverse_entry_id', '=', False),"
+                      "('reverse_date', '=', '2999-12-31')]",
         })
-        moves_linked_to_reversals += all_moves.filtered(
-            lambda m: m.reverse_entry_id)
+    domain = [('reverse_entry_id', '=', False)]
     installed_langs = env['res.lang'].search([])  # search only active
     for lang in installed_langs:
         reversal_text = env['ir.translation']._get_source(
             name=False, types='code', lang=lang.code,
             source='reversal of: ')
-        reversal_moves = all_moves.filtered(
-            lambda m: m.ref and m.ref.startswith(reversal_text)
-            and m not in moves_linked_to_reversals)
+        reversal_moves = AccountMove.search(
+            domain + [('ref', '=like', '%s%%' % reversal_text)]
+        )
         for move in reversal_moves:
             name = move.ref.partition(reversal_text)[2]
-            origin = all_moves.filtered(lambda m: m.name == name)
+            origin = AccountMove.search([('name', '=', name)], limit=1)
             if origin and not origin[0].reverse_entry_id:
                 origin[0].reverse_entry_id = move.id
 
