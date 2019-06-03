@@ -34,6 +34,9 @@ merged_modules = {
     'website_rating_project': 'project',
     'website_sale_options': 'website_sale',
     'website_sale_stock_options': 'website_sale_stock',
+    # OCA/account-financial-reporting
+    'customer_activity_statement': 'partner_statement',
+    'customer_outstanding_statement': 'partner_statement',
     # OCA/account-financial-tools
     'account_reversal': 'account',
     # OCA/partner-contact
