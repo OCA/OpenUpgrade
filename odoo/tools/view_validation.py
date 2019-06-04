@@ -17,12 +17,13 @@ def valid_view(arch):
     for pred in _validators[arch.tag]:
 
         # OpenUpgrade: Force warning here as we ignore all view errors.
-        check = pred(arch) or 'warning'
+        check = pred(arch) or 'Warning'
         if not check:
             _logger.error("Invalid XML: %s", pred.__doc__)
             return False
         if check == "Warning":
-            _logger.warning("Invalid XML: %s", pred.__doc__)
+            # OpenUpgrade: Don't show this warning as useless and too much verbose
+            # _logger.warning("Invalid XML: %s", pred.__doc__)
             return "Warning"
     return True
 
