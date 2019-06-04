@@ -84,6 +84,8 @@ def fieldprint(old, new, field, text, reprs):
         old['module'], old['model'], fieldrepr)
     if not text:
         text = "%s is now '%s' ('%s')" % (field, new[field], old[field])
+        if field == 'relation':
+            text += ' [nothing to do]'
     reprs[module_map(old['module'])].append("%s: %s" % (fullrepr, text))
     if field == 'module':
         text = "previously in module %s" % old[field]
