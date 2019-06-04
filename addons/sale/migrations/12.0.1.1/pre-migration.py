@@ -3,6 +3,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
+_column_copies = {
+    'sale_order_line': [
+        ('qty_delivered', None, None),
+    ],
+}
+
 _column_renames = {
     'payment_transaction': [
         ('sale_order_id', None),
@@ -11,13 +17,6 @@ _column_renames = {
         ('payment_tx_id', None),
     ],
 }
-
-_field_renames = [
-    ('sale.order.line', 'sale_order_line', 'amt_invoiced',
-     'untaxed_amount_invoiced'),
-    ('sale.order.line', 'sale_order_line', 'amt_to_invoice',
-     'untaxed_amount_to_invoice'),
-]
 
 _field_renames_order_dates = [
     ('sale.order', 'sale_order', 'commitment_date',
@@ -64,10 +63,10 @@ def fill_sale_order_line_sections(cr):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.copy_columns(env.cr, _column_copies)
     if openupgrade.column_exists(env.cr, 'sale_order', 'payment_tx_id'):
         # from sale_payment module
         openupgrade.rename_columns(env.cr, _column_renames)
-    openupgrade.rename_fields(env, _field_renames)
     if openupgrade.column_exists(env.cr, 'sale_order', 'requested_date'):
         # from sale_order_dates module
         openupgrade.rename_fields(env, _field_renames_order_dates)
