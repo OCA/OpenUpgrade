@@ -46,7 +46,7 @@ sale_management / sale.quote.template      / note (text)                   : pre
 sale_management / sale.quote.template      / number_of_days (integer)      : previously in module website_quote
 ---XML records in module 'sale_management'---
 NEW digest.digest: digest.digest_digest_default (noupdate)
-NEW ir.actions.act_window: sale.action_quotations [moved from sale_quotation_builder module]
+NEW ir.actions.act_window: sale.action_quotations [potentially moved from sale_quotation_builder module]
 NEW ir.actions.act_window: sale_management.sale_order_template_action
 NEW ir.model.access: sale_management.access_sale_order_option
 NEW ir.model.access: sale_management.access_sale_order_option_all
