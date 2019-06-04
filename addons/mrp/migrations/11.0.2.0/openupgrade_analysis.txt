@@ -35,6 +35,7 @@ mrp          / stock.production.lot     / use_next_on_work_order_id (many2one): 
 mrp          / stock.quant              / consumed_quant_ids (many2many): DEL relation: stock.quant
 mrp          / stock.quant              / produced_quant_ids (many2many): DEL relation: stock.quant
 ---XML records in module 'mrp'---
+DEL ir.actions.act_window: mrp.mrp_bom_line_action_from_bom
 NEW ir.model.access: mrp.access_mrp_document_mrp_manager
 NEW ir.model.access: mrp.access_mrp_document_mrp_user
 NEW ir.model.access: mrp.access_product_price_history_mrp_manager
@@ -53,9 +54,11 @@ NEW ir.ui.view: mrp.res_config_settings_view_form
 NEW ir.ui.view: mrp.stock_warn_insufficient_qty_unbuild_form_view
 NEW ir.ui.view: mrp.track_production_move_template
 NEW ir.ui.view: mrp.view_document_form
+NEW ir.ui.view: mrp.view_finisehd_move_line
 NEW ir.ui.view: mrp.view_mrp_message_kanban
 NEW ir.ui.view: mrp.view_mrp_workcenter_productivity_loss_kanban
 NEW ir.ui.view: mrp.view_picking_type_form_inherit_mrp
+DEL ir.ui.view: mrp.mrp_bom_line_tree_view
 DEL ir.ui.view: mrp.view_mrp_config
 DEL ir.ui.view: mrp.view_procurement_form_inherit
 DEL ir.values: mrp.ir_BOM_structure

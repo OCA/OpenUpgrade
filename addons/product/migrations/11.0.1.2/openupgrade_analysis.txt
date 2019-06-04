@@ -12,6 +12,7 @@ product      / product.template         / variant_seller_ids (one2many) : NEW re
 product      / product.template         / warranty (float)              : DEL 
 product      / product.template         / website_message_ids (one2many): previously in module website_sale
 ---XML records in module 'product'---
+NEW ir.ui.view: product.product_packaging_form_view2
 NEW ir.ui.view: product.product_pricelist_view_kanban
 NEW ir.ui.view: product.res_config_settings_view_form
 DEL ir.ui.view: product.inherit_view_general_configuration

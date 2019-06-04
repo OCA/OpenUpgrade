@@ -7,6 +7,8 @@ hr_payroll   / hr.contract.advantage.template / name (char)                   : 
 hr_payroll   / hr.contract.advantage.template / upper_bound (float)           : NEW 
 ---XML records in module 'hr_payroll'---
 NEW ir.actions.act_window: hr_payroll.hr_contract_advantage_template_action
+DEL ir.actions.act_window: hr_payroll.action_hr_salary_rule_category_tree_view
+DEL ir.actions.act_window: hr_payroll.action_view_hr_payroll_structure_tree
 NEW ir.model.access: hr_payroll.access_hr_contract_advantage_template
 NEW ir.model.access: hr_payroll.access_hr_contract_advantage_template_hr_user
 NEW ir.model.access: hr_payroll.access_hr_payroll_structure_hr_user
@@ -17,6 +19,8 @@ DEL ir.model.access: hr_payroll.access_hr_rule_input
 NEW ir.rule: hr_payroll.hr_payroll_rule_officer (noupdate)
 NEW ir.rule: hr_payroll.hr_payslip_rule_manager (noupdate)
 NEW ir.ui.menu: hr_payroll.hr_contract_advantage_template_menu_action
+DEL ir.ui.menu: hr_payroll.menu_hr_payroll_structure_tree
+DEL ir.ui.menu: hr_payroll.menu_hr_salary_rule_category_tree_view
 NEW ir.ui.view: hr_payroll.hr_contract_advantage_template_view_form
 NEW ir.ui.view: hr_payroll.hr_contract_advantage_template_view_tree
 NEW ir.ui.view: hr_payroll.hr_contribution_register_view_kanban
@@ -25,5 +29,6 @@ NEW ir.ui.view: hr_payroll.hr_payslip_run_view_kanban
 NEW ir.ui.view: hr_payroll.hr_payslip_view_kanban
 NEW ir.ui.view: hr_payroll.hr_salary_rule_view_kanban
 NEW ir.ui.view: hr_payroll.res_config_settings_view_form
+DEL ir.ui.view: hr_payroll.hr_salary_rule_category_tree_view
 DEL ir.ui.view: hr_payroll.view_hr_payroll_configuration
 DEL ir.values: hr_payroll.payslip_lines_contribution_register_value

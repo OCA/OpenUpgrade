@@ -1,9 +1,41 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+  <record id="email_template_edi_purchase_done" model="mail.template">
+    <field name="body_html"><![CDATA[
+<p>Dear ${object.partner_id.name}
+% if object.partner_id.parent_id:
+    (<i>${object.partner_id.parent_id.name}</i>)
+% endif
+,</p>
+<p>
+Please find in attachment a <strong>${object.state in ('draft', 'sent') and 'request for quotation' or 'purchase order confirmation'} ${object.name}</strong>
+% if object.partner_ref:
+    with reference: ${object.partner_ref}
+% endif
+% if object.origin:
+    (RFQ origin: ${object.origin})
+% endif
+amounting <strong>${format_amount(object.amount_total, object.currency_id)}</strong>
+from ${object.company_id.name}.
+</p>
+
+<p>You can reply to this email if you have any questions.</p>
+<p>Thank you,</p>
+<p style="color:#888888;">
+% if object.sudo().create_uid and object.sudo().create_uid.signature:
+    ${object.sudo().create_uid.signature | safe}
+% endif
+</p>
+]]></field>
+    <field name="email_from">${(object.sudo().create_uid.email and '"%s" &lt;%s&gt;' % (object.sudo().create_uid.name, object.sudo().create_uid.email) or '')|safe}</field>
+  </record>
+  <record id="route_warehouse0_buy" model="stock.location.route">
+    <field name="company_id"/>
+  </record>
   <record id="email_template_edi_purchase" model="mail.template">
     <field name="body_html"><![CDATA[
 <p>Dear
-% if object.partner_id.is_company and object.child_ids:
+% if object.partner_id.is_company and object.partner_id.child_ids:
     ${object.partner_id.child_ids[0].name}
 % else :
     ${object.partner_id.name}
@@ -16,17 +48,18 @@ Here is, in attachment, a ${object.state in ('draft', 'sent') and 'request for q
 % if object.origin:
     (RFQ origin: ${object.origin})
 % endif
-amounting in <strong>${object.amount_total} ${object.currency_id.name}</strong>
+amounting in <strong>${format_amount(object.amount_total, object.currency_id)}</strong>
 from ${object.company_id.name}.
 </p>
 
-<p>Do not hesitate to contact us, further you have any question.</p>
+<p>Do not hesitate to contact us if you have any further question.</p>
 <p>Best regards,</p>
 <p style="color:#888888;">
-% if object.user_id and object.user_id.signature:
-    ${object.user_id.signature | safe}
+% if object.sudo().create_uid and object.sudo().create_uid.signature:
+    ${object.sudo().create_uid.signature | safe}
 % endif
 </p>
 ]]></field>
+    <field name="email_from">${(object.sudo().create_uid.email and '"%s" &lt;%s&gt;' % (object.sudo().create_uid.name, object.sudo().create_uid.email) or '')|safe}</field>
   </record>
 </odoo>

@@ -1,5 +1,6 @@
 ---Fields in module 'fleet'---
 fleet        / fleet.service.type       / category (selection)          : selection_keys is now '['contract', 'service']' ('['both', 'contract', 'service']')
+fleet        / fleet.vehicle            / fuel_type (selection)         : selection_keys is now '['diesel', 'electric', 'gasoline', 'hybrid', 'lpg']' ('['diesel', 'electric', 'gasoline', 'hybrid']')
 fleet        / fleet.vehicle            / model_year (char)             : NEW 
 fleet        / fleet.vehicle            / residual_value (float)        : NEW 
 fleet        / fleet.vehicle.cost       / description (char)            : NEW 

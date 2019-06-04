@@ -11,6 +11,7 @@ website_sale / rating.rating            / website_published (boolean)   : module
 website_sale / sale.order               / cart_recovery_email_sent (boolean): NEW 
 website_sale / sale.order               / payment_acquirer_id (many2one): module is now 'sale_payment' ('website_sale')
 website_sale / sale.order               / payment_tx_id (many2one)      : module is now 'sale_payment' ('website_sale')
+website_sale / sale.order               / website_order_line (one2many) : now a function
 ---XML records in module 'website_sale'---
 NEW ir.actions.act_window: website_sale.action_abandoned_orders_ecommerce
 NEW ir.actions.act_window: website_sale.payment_transaction_action_payments_to_capture

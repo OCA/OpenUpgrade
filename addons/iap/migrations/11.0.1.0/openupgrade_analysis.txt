@@ -1,0 +1,14 @@
+---Fields in module 'iap'---
+iap          / iap.account              / account_token (char)          : NEW 
+iap          / iap.account              / company_id (many2one)         : NEW relation: res.company
+iap          / iap.account              / service_name (char)           : NEW 
+---XML records in module 'iap'---
+NEW ir.actions.act_window: iap.iap_account_action
+NEW ir.model.access: iap.access_client_iap_account_manager
+NEW ir.model.access: iap.access_client_iap_account_user
+NEW ir.rule: iap.user_iap_account
+NEW ir.ui.menu: iap.iap_account_menu
+NEW ir.ui.menu: iap.iap_root_menu
+NEW ir.ui.view: iap.assets_backend
+NEW ir.ui.view: iap.iap_account_view_form
+NEW ir.ui.view: iap.iap_account_view_tree

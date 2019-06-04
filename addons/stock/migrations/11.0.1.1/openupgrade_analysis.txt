@@ -1,23 +1,13 @@
 ---Fields in module 'stock'---
-stock        / procurement.group        / __last_update (datetime)      : previously in module procurement
-stock        / procurement.group        / display_name (char)           : previously in module procurement
-stock        / procurement.group        / move_type (selection)         : previously in module procurement
-stock        / procurement.group        / name (char)                   : previously in module procurement
-stock        / procurement.rule         / __last_update (datetime)      : previously in module procurement
-stock        / procurement.rule         / action (selection)            : previously in module procurement
-stock        / procurement.rule         / active (boolean)              : previously in module procurement
-stock        / procurement.rule         / company_id (many2one)         : previously in module procurement
-stock        / procurement.rule         / display_name (char)           : previously in module procurement
-stock        / procurement.rule         / group_id (many2one)           : previously in module procurement
-stock        / procurement.rule         / group_propagation_option (selection): previously in module procurement
-stock        / procurement.rule         / name (char)                   : previously in module procurement
+procurement  / procurement.group        / procurement_ids (one2many)    : DEL relation: procurement.order
+procurement  / procurement.rule         / action (selection)            : selection_keys is now '['move']' ('function')
 stock        / procurement.rule         / route_id (many2one)           : now required
-stock        / procurement.rule         / sequence (integer)            : previously in module procurement
 stock        / product.putaway          / method (selection)            : DEL required: required, selection_keys: function, req_default: function
 stock        / product.template         / description_pickingin (text)  : NEW 
 stock        / product.template         / description_pickingout (text) : NEW 
 stock        / product.template         / property_stock_procurement (many2one): DEL relation: stock.location
 stock        / product.template         / responsible_id (many2one)     : NEW relation: res.users, required: required, req_default: function
+stock        / stock.location           / quant_ids (one2many)          : NEW relation: stock.quant
 stock        / stock.location.path      / route_id (many2one)           : now required
 stock        / stock.move               / additional (boolean)          : NEW 
 stock        / stock.move               / has_tracking (selection)      : previously in module mrp
@@ -85,16 +75,25 @@ stock        / stock.warehouse.orderpoint / procurement_ids (one2many)    : DEL 
 ---XML records in module 'stock'---
 NEW ir.actions.act_window: stock.action_stock_quantity_history
 NEW ir.actions.act_window: stock.stock_move_line_action
+DEL ir.actions.act_window: procurement.action_compute_schedulers
+DEL ir.actions.act_window: procurement.do_view_procurements
+DEL ir.actions.act_window: procurement.procurement_action
+DEL ir.actions.act_window: procurement.procurement_action5
+DEL ir.actions.act_window: procurement.procurement_order_action_exceptions
+DEL ir.actions.act_window: procurement.procurement_order_action_product_product_stat
+DEL ir.actions.act_window: procurement.procurement_order_action_product_template_stat
 DEL ir.actions.act_window: stock.act_make_procurement
 DEL ir.actions.act_window: stock.action_deliver_move
-DEL ir.actions.act_window: stock.action_inventory_line_tree
 DEL ir.actions.act_window: stock.action_receive_move
 DEL ir.actions.act_window: stock.action_stock_line_date
 DEL ir.actions.act_window: stock.do_view_procurement_op
 DEL ir.actions.act_window: stock.pack_details
 DEL ir.actions.act_window: stock.procrules
+NEW ir.actions.act_window.view: stock.action_stock_move_kanban_all
 NEW ir.actions.client: stock.action_stock_report
+DEL ir.actions.server: procurement.procurement_order_server_action
 NEW ir.cron: stock.ir_cron_scheduler_action (noupdate)
+DEL ir.cron: procurement.ir_cron_scheduler_action (noupdate)
 NEW ir.model.access: stock.access_procurement_group
 NEW ir.model.access: stock.access_procurement_rule
 NEW ir.model.access: stock.access_stock_move_line_all
@@ -105,6 +104,9 @@ NEW ir.model.access: stock.access_stock_move_portal
 NEW ir.model.access: stock.access_stock_picking_portal
 NEW ir.model.access: stock.access_stock_picking_type_portal
 NEW ir.model.access: stock.access_stock_warehouse_orderpoint_portal
+DEL ir.model.access: procurement.access_procurement
+DEL ir.model.access: procurement.access_procurement_group
+DEL ir.model.access: procurement.access_procurement_rule
 DEL ir.model.access: stock.access_stock_lines_date_manager
 DEL ir.model.access: stock.access_stock_lines_date_user
 DEL ir.model.access: stock.access_stock_move_operation_link_all
@@ -116,10 +118,12 @@ DEL ir.model.access: stock.access_stock_pack_operation_lot_manager
 DEL ir.model.access: stock.access_stock_pack_operation_lot_user
 DEL ir.model.access: stock.access_stock_pack_operation_manager
 DEL ir.model.access: stock.access_stock_pack_operation_user
+DEL ir.model.access: stock.access_stock_production_lot_manager
 DEL ir.property: stock.property_stock_procurement (noupdate)
-NEW ir.rule: stock.stock_move_line_rule_portal (noupdate)
-NEW ir.rule: stock.stock_picking_rule_portal (noupdate)
+DEL ir.rule: procurement.procurement_rule (noupdate)
+DEL ir.rule: procurement.product_pulled_flow_comp_rule (noupdate)
 NEW ir.sequence: stock.sequence_proc_group (noupdate)
+DEL ir.sequence: procurement.sequence_proc_group (noupdate)
 NEW ir.ui.menu: stock.menu_product_packagings
 NEW ir.ui.menu: stock.menu_valuation
 NEW ir.ui.menu: stock.product_uom_menu
@@ -159,10 +163,13 @@ NEW ir.ui.view: stock.view_move_kandan
 NEW ir.ui.view: stock.view_move_line_form
 NEW ir.ui.view: stock.view_move_line_tree
 NEW ir.ui.view: stock.view_overprocessed_transfer
+NEW ir.ui.view: stock.view_picking_move_tree
 NEW ir.ui.view: stock.view_procurement_rule_filter
 NEW ir.ui.view: stock.view_procurement_rule_form
 NEW ir.ui.view: stock.view_procurement_rule_tree
+NEW ir.ui.view: stock.view_production_lot_form_simple
 NEW ir.ui.view: stock.view_quant_package_kanban
+NEW ir.ui.view: stock.view_quant_package_picking_tree
 NEW ir.ui.view: stock.view_stock_inventory_kanban
 NEW ir.ui.view: stock.view_stock_move_kanban
 NEW ir.ui.view: stock.view_stock_move_line_kanban
@@ -171,6 +178,16 @@ NEW ir.ui.view: stock.view_stock_move_nosuggest_operations
 NEW ir.ui.view: stock.view_stock_move_operations
 NEW ir.ui.view: stock.view_stock_quantity_history
 NEW ir.ui.view: stock.view_stock_warehouse_orderpoint_kanban
+DEL ir.ui.view: procurement.procurement_form_view
+DEL ir.ui.view: procurement.procurement_group_form_view
+DEL ir.ui.view: procurement.procurement_tree_view
+DEL ir.ui.view: procurement.product_product_view_form_procurement_button
+DEL ir.ui.view: procurement.product_template_view_form_procurement_button
+DEL ir.ui.view: procurement.view_compute_schedulers_wizard
+DEL ir.ui.view: procurement.view_procurement_filter
+DEL ir.ui.view: procurement.view_procurement_rule_filter
+DEL ir.ui.view: procurement.view_procurement_rule_form
+DEL ir.ui.view: procurement.view_procurement_rule_tree
 DEL ir.ui.view: stock.external_layout_barcode_right
 DEL ir.ui.view: stock.external_layout_header_barcode_right
 DEL ir.ui.view: stock.procurement_group_form_view_herited
@@ -191,4 +208,5 @@ DEL ir.ui.view: stock.view_procurement_rule_tree_stock_inherit
 DEL ir.ui.view: stock.view_procurement_tree_stock_inherit
 DEL ir.ui.view: stock.view_stock_config_settings
 DEL ir.ui.view: stock.view_stock_quant_graph_value
+DEL ir.values: procurement.run_procurement_order_action
 DEL mail.message: stock.module_install_notification (noupdate)

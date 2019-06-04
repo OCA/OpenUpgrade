@@ -114,4 +114,10 @@ def migrate(env, version):
     openupgrade.load_data(
         env.cr, 'purchase', 'migrations/11.0.1.2/noupdate_changes.xml',
     )
+    openupgrade.delete_record_translations(
+        env.cr, 'sale', [
+            'email_template_edi_purchase',
+            'email_template_edi_purchase_done',
+        ],
+    )
     activate_vendor_pricelists(env)
