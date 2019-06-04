@@ -29,6 +29,8 @@ xmlid_renames = [
     ('auth_signup.default_template_user_config',
      'base.default_template_user_config'),
     ('product.group_uom', 'uom.group_uom'),
+    ('product.product_uom_gram', 'uom.product_uom_gram'),
+    ('product.product_uom_qt', 'uom.product_uom_qt'),
     ('product.product_uom_categ_unit', 'uom.product_uom_categ_unit'),
     ('product.product_uom_categ_kgm', 'uom.product_uom_categ_kgm'),
     ('product.uom_categ_wtime', 'uom.uom_categ_wtime'),
