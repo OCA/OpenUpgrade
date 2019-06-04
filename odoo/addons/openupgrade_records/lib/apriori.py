@@ -39,6 +39,8 @@ merged_modules = {
     'customer_outstanding_statement': 'partner_statement',
     # OCA/account-financial-tools
     'account_reversal': 'account',
+    # OCA/e-commerce
+    'website_sale_default_country': 'website_sale',
     # OCA/partner-contact
     'base_partner_merge': 'base',
     # OCA/server-auth
