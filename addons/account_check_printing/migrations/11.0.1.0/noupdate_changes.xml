@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="account_payment_method_check" model="account.payment.method">
+    <field name="name">Checks</field>
+  </record>
+  <record id="action_account_print_checks" model="ir.actions.server">
+    <field name="state">code</field>
+    <field name="binding_model_id" ref="account.model_account_payment"/>
+  </record>
+</odoo>

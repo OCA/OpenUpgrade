@@ -1,0 +1,7 @@
+---Fields in module 'account_check_printing'---
+---XML records in module 'account_check_printing'---
+NEW ir.ui.view: account_check_printing.view_account_bank_journal_form_inherited_check_printing
+# NOTHING TO DO
+
+DEL ir.values: account_check_printing.account_print_checks (noupdate)
+# NOTHING TO DO: handled in base
