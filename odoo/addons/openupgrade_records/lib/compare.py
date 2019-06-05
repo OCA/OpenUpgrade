@@ -84,6 +84,8 @@ def fieldprint(old, new, field, text, reprs):
         old['module'], old['model'], fieldrepr)
     if not text:
         text = "%s is now '%s' ('%s')" % (field, new[field], old[field])
+        if field == 'relation':
+            text += ' [nothing to do]'
     reprs[module_map(old['module'])].append("%s: %s" % (fullrepr, text))
     if field == 'module':
         text = "previously in module %s" % old[field]
@@ -250,8 +252,11 @@ def compare_sets(old_records, new_records):
             continue
         if column['mode'] == 'create':
             column['mode'] = ''
+        printkeys_plus = printkeys.copy()
+        if column['isfunction'] or column['isrelated']:
+            printkeys_plus.extend(['isfunction', 'isrelated', 'stored'])
         extra_message = ", ".join(
-            [k + ': ' + str(column[k]) for k in printkeys if column[k]]
+            [k + ': ' + str(column[k]) for k in printkeys_plus if column[k]]
         )
         if extra_message:
             extra_message = " " + extra_message
