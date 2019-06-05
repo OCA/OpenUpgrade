@@ -4,13 +4,11 @@ website_event_track / event.track              / kanban_state (selection)      :
 # Nothing to do
 
 website_event_track / event.track              / speaker_ids (many2many)       : DEL relation: res.partner
-# Nothing to do
+# DONE: post-migration: used it to fill partner_id if the record doesn't have a partner_id
 
 website_event_track / event.track              / stage_id (many2one)           : NEW relation: event.track.stage, required: required, req_default: function
-# Nothing to do
-
 website_event_track / event.track              / state (selection)             : DEL required: required, selection_keys: ['announced', 'cancel', 'confirmed', 'draft', 'published', 'refused'], req_default: function
-# Nothing to do
+# DONE: post-migration: filled the stage_id using the stage with the same state as name
 
 website_event_track / event.track              / website_message_ids (one2many): NEW relation: mail.message
 # Nothing to do
