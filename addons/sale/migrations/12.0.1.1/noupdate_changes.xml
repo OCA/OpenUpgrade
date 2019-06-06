@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="email_template_edi_sale" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        % set doc_name = 'quotation' if object.state in ('draft', 'sent') else 'order'
+        Dear ${object.partner_id.name}
+        % if object.partner_id.parent_id:
+            (${object.partner_id.parent_id.name})
+        % endif
+        <br/><br/>
+        Here is
+        % if ctx.get('proforma')
+            in attachment your pro-forma invoice
+        % else
+            the ${doc_name} <strong>${object.name}</strong>
+        % endif
+        % if object.origin:
+            (with reference: ${object.origin} )
+        % endif
+        amounting in <strong>${format_amount(object.amount_total, object.pricelist_id.currency_id)}</strong>
+        from ${object.company_id.name}.
+        <br/><br/>
+        Do not hesitate to contact us if you have any question.
+    </p>
+      </div>
+    </field>
+    <field name="name">Sales Order: Send by email</field>
+    <field name="email_from">${object.user_id.email_formatted |safe}</field>
+    <field name="report_name">${(object.name or '').replace('/','_')}</field>
+    <field name="user_signature" eval="False"/>
+  </record>
+  <record id="mt_salesteam_order_sent" model="mail.message.subtype">
+    <field name="default" eval="True"/>
+  </record>
+  <record id="mt_salesteam_order_confirmed" model="mail.message.subtype">
+    <field name="default" eval="True"/>
+  </record>
+</odoo>
