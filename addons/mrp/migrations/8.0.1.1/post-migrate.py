@@ -104,31 +104,19 @@ def fix_domains(cr, pool):
     openupgrade.logged_query(cr, sql)
 
 
-def update_stock_moves(env):
-    stock_move_obj = env['stock.move']
-    mrp_production_obj = env['mrp.production']
-    ir_property_obj = env['ir.property']
-    # find all locations that are used as production location
-    locations = [
-        ir_property_obj.get_by_record(p)
-        for p in ir_property_obj.search(
-            [('name', '=', 'property_stock_production')])]
-    location_ids = list(set(x.id for x in locations if x))
-    for move in stock_move_obj.search(
-            [('location_dest_id', 'in', location_ids)]):
-        productions = mrp_production_obj.search([
-            '|',
-            # don't rely on many2manys with domain ignoring it on search
-            ('move_lines', '=', move.id),
-            ('move_lines2', '=', move.id),
-        ])
-        if len(productions) == 1:
-            env.cr.execute(
-                'UPDATE stock_move SET raw_material_production_id=%s '
-                'WHERE id=%s', (productions.id, move.id))
-        else:
-            logger.warning("Couldn't find unique production order for %s "
-                           "(candidates are %s)", move.id, productions.ids)
+def update_stock_moves(cr):
+    """
+    'Production order move_lines, move_lines2 needs migration from many2many to
+    one2many on the stock move's raw_material_production_id field.
+    """
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE stock_move sm
+        SET raw_material_production_id=rel.production_id
+        FROM mrp_production_move_ids rel
+        WHERE rel.move_id=sm.id
+        """)
 
 
 def update_stock_picking_name(cr, pool):
@@ -227,12 +215,11 @@ def migrate_procurement_order(cr, pool):
 @openupgrade.migrate()
 def migrate(cr, version):
     with api.Environment.manage():
-        env = api.Environment(cr, SUPERUSER_ID, {})
         pool = pooler.get_pool(cr.dbname)
         bom_product_template(cr)
         migrate_bom_lines(cr, pool)
         fix_domains(cr, pool)
-        update_stock_moves(env)
+        update_stock_moves(cr)
         update_stock_picking_name(cr, pool)
         migrate_product_supply_method(cr, pool)
         migrate_product(cr, pool)
