@@ -23,7 +23,6 @@ merged_modules = {
     'auth_crypt': 'base',
     'account_cash_basis_base_account': 'account',
     'account_invoicing': 'account',
-    'event_registration_mass_mailing': 'mass_mailing_event',
     'rating_project': 'project',
     'sale_order_dates': 'sale',
     'sale_payment': 'sale',
@@ -41,6 +40,8 @@ merged_modules = {
     'account_reversal': 'account',
     # OCA/e-commerce
     'website_sale_default_country': 'website_sale',
+    # OCA/event
+    'event_registration_mass_mailing': 'mass_mailing_event',
     # OCA/partner-contact
     'base_partner_merge': 'base',
     # OCA/server-auth
@@ -50,6 +51,7 @@ merged_modules = {
     'web_sheet_full_width': 'web_responsive',
 }
 
+# only used here for openupgrade_records analysis:
 renamed_models = {
     # Odoo
     'hr.holidays': 'hr.leave',
