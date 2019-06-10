@@ -83,6 +83,11 @@ def fill_account_invoice_line_sections(cr):
     )
     openupgrade.logged_query(
         cr, """
+        ALTER TABLE account_invoice_line ALTER COLUMN account_id DROP not null
+        """,
+    )
+    openupgrade.logged_query(
+        cr, """
         INSERT INTO account_invoice_line (invoice_id, layout_category_id,
             sequence, name, price_unit, quantity, display_type,
             create_uid, create_date, write_uid, write_date)
