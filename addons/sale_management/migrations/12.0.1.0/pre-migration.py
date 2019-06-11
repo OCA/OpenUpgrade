@@ -86,6 +86,18 @@ def fill_sale_order_template_line_sections(cr):
     )
     openupgrade.logged_query(
         cr, """
+        ALTER TABLE sale_order_template_line
+        ALTER COLUMN product_id DROP not null
+        """,
+    )
+    openupgrade.logged_query(
+        cr, """
+        ALTER TABLE sale_order_template_line
+        ALTER COLUMN product_uom_id DROP not null
+        """,
+    )
+    openupgrade.logged_query(
+        cr, """
         INSERT INTO sale_order_template_line (sale_order_template_id,
             layout_category_id, sequence, name, price_unit, product_uom_qty,
             display_type, create_uid, create_date, write_uid, write_date)
