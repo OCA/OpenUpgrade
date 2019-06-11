@@ -43,6 +43,9 @@ merged_modules = {
     'website_sale_default_country': 'website_sale',
     # OCA/event
     'event_registration_mass_mailing': 'mass_mailing_event',
+    # OCA/manufacture-reporting
+    'mrp_bom_structure_html': 'mrp',
+    'mrp_bom_structure_report': 'mrp',
     # OCA/partner-contact
     'base_country_state_translatable': 'l10n_multilang',
     'base_partner_merge': 'base',
