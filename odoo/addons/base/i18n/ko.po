@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-09 10:38+0000\n"
+"POT-Creation-Date: 2019-05-22 11:56+0000\n"
 "PO-Revision-Date: 2018-08-24 09:14+0000\n"
 "Last-Translator: JH CHOI <hwangtog@gmail.com>, 2019\n"
 "Language-Team: Korean (https://www.transifex.com/odoo/teams/41243/ko/)\n"
@@ -9730,9 +9730,7 @@ msgid "Application"
 msgstr "응용 프로그램"
 
 #. module: base
-#: code:addons/base/models/res_users.py:968
 #: model_terms:ir.ui.view,arch_db:base.user_groups_view
-#, python-format
 msgid "Application Accesses"
 msgstr "응용 프로그램 사용"
 
@@ -10642,22 +10640,22 @@ msgstr "C5E 24  163 x 229 mm"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_crm
 msgid "CRM"
-msgstr "고객 관계 관리(CRM)"
+msgstr "고객 관계 관리"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_gamification_sale_crm
 msgid "CRM Gamification"
-msgstr "고객 관계 관리(CRM) 업적 시스템"
+msgstr "고객 관계 관리 업적 시스템"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_crm_livechat
 msgid "CRM Livechat"
-msgstr "고객 관계 관리(CRM) 실시간 채팅"
+msgstr "고객 관계 관리 실시간 채팅"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_crm_enterprise
 msgid "CRM enterprise"
-msgstr "고객 관계 관리(CRM) 유료버전"
+msgstr "고객 관계 관리 유료버전"
 
 #. module: base
 #: selection:base.language.export,format:0
@@ -11103,7 +11101,7 @@ msgstr "클라이언트 동작 태그"
 #: model_terms:ir.ui.view,arch_db:base.view_base_module_update
 #: model_terms:ir.ui.view,arch_db:base.wizard_lang_export
 msgid "Close"
-msgstr "마감"
+msgstr "닫기"
 
 #. module: base
 #: model:res.country,name:base.cc
@@ -21405,8 +21403,7 @@ msgid "Original currency"
 msgstr "원본 통화"
 
 #. module: base
-#: code:addons/base/models/res_users.py:995
-#: code:addons/base/models/res_users.py:1178
+#: code:addons/base/models/res_users.py:1222
 #: model_terms:ir.ui.view,arch_db:base.user_groups_view
 #, python-format
 msgid "Other"
@@ -21820,7 +21817,7 @@ msgstr "Paypal 결제 매입사"
 #: model:ir.module.category,name:base.module_category_hr_payroll
 #: model:ir.module.module,shortdesc:base.module_hr_payroll
 msgid "Payroll"
-msgstr "급여"
+msgstr "급여 관리"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_payroll_account
@@ -25647,6 +25644,7 @@ msgstr "기술 이름"
 #. module: base
 #: model:ir.module.category,name:base.module_category_hidden
 #: model:ir.module.category,name:base.module_category_technical_settings
+#: model_terms:ir.ui.view,arch_db:base.user_groups_view
 msgid "Technical Settings"
 msgstr "설정 관리"
 
@@ -27297,9 +27295,7 @@ msgid "User Login"
 msgstr "사용자 로그인"
 
 #. module: base
-#: code:addons/base/models/res_users.py:967
 #: model_terms:ir.ui.view,arch_db:base.user_groups_view
-#, python-format
 msgid "User Type"
 msgstr "사용자 유형"
 
