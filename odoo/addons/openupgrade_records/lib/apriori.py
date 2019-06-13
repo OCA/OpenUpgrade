@@ -50,6 +50,7 @@ merged_modules = [
     ('im_odoo_support', 'im_livechat'),
     ('marketing', 'marketing_campaign'),
     ('website_sale_stock_control', 'website_sale_stock'),
+    ('test_pylint', 'test_lint'),
     # OCA/account-invoicing
     ('purchase_stock_picking_return_invoicing_open_qty',
      'purchase_stock_picking_return_invoicing'),
