@@ -1,6 +1,8 @@
 # Copyright 2018-19 Eficent <http://www.eficent.com>
 # Copyright 2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+from psycopg2.extensions import AsIs
+
 from openupgradelib import openupgrade
 
 
@@ -14,6 +16,15 @@ def assign_theme(env):
     websites = env['website'].search([])
     if theme_module:
         websites.write({'theme_id': theme_module.id})
+
+
+def enable_multiwebsites(env):
+    websites = env["website"].search([])
+    if len(websites) > 1:
+        wizard = env["res.config.settings"].create({
+            "group_multi_website": True,
+        })
+        wizard.execute()
 
 
 def fill_website_socials(cr):
@@ -32,35 +43,65 @@ def fill_website_socials(cr):
     )
 
 
-def apply_bootstrap_4(view):
-    text = view.arch_db
-    # TO BE FILLED
-    view.arch_db = text
-
-
-def bootstrap_4_migration(env):
-    pages = env['website.page'].search([])
-    views = pages.mapped('view_id').filtered(
-        lambda v: v.type == 'qweb' and not v.xml_id)
-    for view in views:
-        apply_bootstrap_4(view)
-
-
-def apply_copy_views(env):
+def sync_menu_views_pages_websites(env):
+    # Main menu and children must be website-agnostic
+    main_menu = env.ref('website.main_menu')
+    child_menus = env["website.menu"].search([
+        ("id", "child_of", main_menu.id),
+        ("website_id", "!=", False),
+    ])
+    child_menus.write({"website_id": False})
+    # Duplicate the main menu for main website
+    website = env["website"].get_current_website()
+    website.copy_menu_hierarchy(main_menu)
+    # Find views that were website-specified in pre stage
+    col_name = openupgrade.get_legacy_name("bs4_migrated_from")
     env.cr.execute(
-        """
-        SELECT website_page_id, website_id
-        FROM website_website_page_rel
-        """
+        "SELECT %s, id FROM %s WHERE %s IS NOT NULL",
+        (
+            AsIs(col_name),
+            AsIs(env["ir.ui.view"]._table),
+            AsIs(col_name),
+        )
     )
-    pages = {}
-    for page_id, website_id in env.cr.fetchall():
-        if page_id not in pages:
-            pages[page_id] = []
-        pages[page_id].append(website_id)
-    for page in env['website.page'].browse(list(pages)):
-        for website in env['website'].browse(list(pages[page.id])):
-            page.copy({'website_id': website.id})
+    for agnostic_view_id, specific_view_id in env.cr.fetchall():
+        # Create website-specific page for the copied view
+        agnostic_view = env["ir.ui.view"].browse(agnostic_view_id)
+        specific_view = env["ir.ui.view"].browse(specific_view_id)
+        agnostic_page = agnostic_view.first_page_id
+        if not agnostic_page:
+            continue
+        specific_page = env["website.page"].search([
+            ("url", "=", agnostic_page.url),
+            ("website_id", "=", specific_view.website_id.id),
+        ])
+        if not specific_page:
+            specific_page = agnostic_page.copy({
+                "is_published": agnostic_page.is_published,
+                "url": agnostic_page.url,
+                "view_id": specific_view_id,
+                "website_id": specific_view.website_id.id,
+            })
+        elif specific_page.view_id == agnostic_view:
+            specific_page.view_id = specific_view_id
+        # Create website-specific menu for the copied page
+        specific_menu = env["website.menu"].search([
+            ("website_id", "=", specific_page.website_id.id),
+            ("url", "=", specific_page.url),
+        ], limit=1)
+        if specific_menu:
+            if specific_menu.page_id:
+                specific_menu.page_id = specific_page
+        else:
+            agnostic_menu = env["website.menu"].search([
+                ("website_id", "=", False),
+                ("url", "=", specific_page.url),
+            ], limit=1)
+            if agnostic_menu:
+                agnostic_menu.copy({
+                    "website_id": specific_page.website_id.id,
+                    "page_id": agnostic_menu.page_id.id and specific_page.id,
+                })
 
 
 @openupgrade.migrate()
@@ -69,8 +110,6 @@ def migrate(env, version):
     assign_theme(env)
     fill_website_socials(cr)
     env['website.menu']._parent_store_compute()
-    bootstrap_4_migration(env)
-    apply_copy_views(env)
     openupgrade.load_data(
         cr, 'website', 'migrations/12.0.1.0/noupdate_changes.xml')
     openupgrade.delete_records_safely_by_xml_id(
@@ -80,3 +119,5 @@ def migrate(env, version):
             'website.action_module_website',
         ],
     )
+    enable_multiwebsites(env)
+    sync_menu_views_pages_websites(env)
