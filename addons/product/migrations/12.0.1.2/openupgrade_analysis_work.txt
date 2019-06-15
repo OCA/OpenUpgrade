@@ -9,8 +9,10 @@ product      / product.attribute        / create_variant (boolean)      : type i
 # DONE: post-migration: mapped values
 
 product      / product.attribute.value  / price_ids (one2many)          : DEL relation: product.attribute.price
+# NOTHING TO DO (one2many)
+
 product      / product.attribute.value  / product_ids (many2many)       : DEL relation: product.product
-# NOTHING TO DO (lost in the refactor)
+# NOTHING TO DO (the relation still exists in product.product with field attribute_value_ids)
 
 product      / product.category         / parent_left (integer)         : DEL
 product      / product.category         / parent_path (char)            : NEW
