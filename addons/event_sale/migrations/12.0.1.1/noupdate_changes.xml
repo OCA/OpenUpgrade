@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="product_product_event" model="product.product">
+    <field name="categ_id" ref="event_sale.product_category_events"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="default_code">EVENT_REG</field>
+  </record>
+</odoo>
