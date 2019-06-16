@@ -33,6 +33,7 @@ xmlid_renames = [
     ('product.product_uom_qt', 'uom.product_uom_qt'),
     ('product.product_uom_categ_unit', 'uom.product_uom_categ_unit'),
     ('product.product_uom_categ_kgm', 'uom.product_uom_categ_kgm'),
+    ('product.product_uom_categ_vol', 'uom.product_uom_categ_vol'),
     ('product.uom_categ_wtime', 'uom.uom_categ_wtime'),
     ('product.uom_categ_length', 'uom.uom_categ_length'),
     ('product.product_uom_unit', 'uom.product_uom_unit'),
