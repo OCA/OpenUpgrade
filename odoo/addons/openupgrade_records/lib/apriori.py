@@ -74,6 +74,7 @@ merged_modules = [
     # OCA/website
     ('website_blog_mgmt', 'website_blog'),
     ('website_blog_share', 'website_blog'),
+    ('website_img_bg_style', 'website'),
     # OCA/l10n-brazil
     ('l10n_br_data_base', 'l10n_br_base'),
     ('l10n_br_data_account', 'l10n_br_account'),
