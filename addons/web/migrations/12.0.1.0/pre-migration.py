@@ -9,7 +9,7 @@ def remove_web_planner_constraints(env):
     """Remove foreign constraints on merged `web_planner` module for avoiding
     errors when removing referenced records.
     """
-    constraint_list =  [
+    constraint_list = [
         'web_planner_create_uid_fkey',
         'web_planner_menu_id_fkey',
         'web_planner_view_id_fkey',
