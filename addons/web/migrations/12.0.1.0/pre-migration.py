@@ -18,7 +18,7 @@ def remove_web_planner_constraints(env):
     for constraint in constraint_list:
         openupgrade.logged_query(
             env.cr, "ALTER TABLE web_planner DROP CONSTRAINT %s",
-            (AsIs(constraint))
+            (AsIs(constraint), ),
         )
 
 
