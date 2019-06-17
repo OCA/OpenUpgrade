@@ -15,6 +15,8 @@ hr_expense   / hr.expense               / product_uom_id (many2one)     : relati
 # NOTHING TO DO: handled in base module
 
 hr_expense   / hr.expense               / state (selection)             : selection_keys is now '['approved', 'done', 'draft', 'refused', 'reported']' ('['done', 'draft', 'refused', 'reported']')
+# DONE: post-migration: Put 'approved' state for the records that match the condition
+
 hr_expense   / hr.expense               / total_amount_company (float)  : NEW
 # NOTHING TO DO
 
