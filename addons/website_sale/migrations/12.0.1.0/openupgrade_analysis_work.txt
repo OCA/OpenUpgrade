@@ -6,10 +6,14 @@ website_sale / product.attribute        / type (selection)              : now re
 website_sale / product.attribute.value  / html_color (char)             : module is now 'sale' ('website_sale')
 # NOTHING TO DO
 
+website_sale / product.template         / website_description (html)    : previously in module website_quote
+# DONE: post-migration - Convert BS3 to BS4
+
 website_sale / product.product          / website_description (html)    : previously in module website_quote
+# NOTHING TO DO: Related field by delegated inheritance. Already converted in template
+
 website_sale / product.public.category  / website_id (many2one)         : NEW relation: website
 website_sale / product.public.category  / website_meta_og_img (char)    : NEW
-website_sale / product.template         / website_description (html)    : previously in module website_quote
 website_sale / product.template         / website_id (many2one)         : NEW relation: website
 website_sale / product.template         / website_meta_og_img (char)    : NEW
 website_sale_options / product.product          / optional_product_ids (many2many): module is now 'sale' ('website_sale_options')
@@ -19,13 +23,15 @@ website_sale_options / product.template         / optional_product_ids (many2man
 website_sale / product.template         / is_published (boolean)        : NEW
 website_sale / product.template         / website_published (boolean)   : not stored anymore
 website_sale / product.template         / website_published (boolean)   : now a function
-# DONE: pre-migration: renamed the column
+# DONE: pre-migration: renamed the field
 
 website_sale / res.company              / website_sale_onboarding_payment_acquirer_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
 # DONE: post-migration: marked as 'done'
 
 website_sale / res.partner              / last_website_so_id (many2one) : not stored anymore
 website_sale / res.partner              / last_website_so_id (many2one) : now a function
+# DONE: pre-migration: renamed the column for avoiding false results fetched from DB
+
 website_sale / sale.order               / can_directly_mark_as_paid (boolean): DEL
 website_sale / sale.order               / website_id (many2one)         : NEW relation: website
 # NOTHING TO DO

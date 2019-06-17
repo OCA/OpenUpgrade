@@ -7,7 +7,12 @@ _field_renames = [
      'website_published', 'is_published'),
 ]
 
+_column_renames = {
+    'res_partner': [('last_website_so_id', None)],
+}
+
 
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
+    openupgrade.rename_columns(env.cr, _column_renames)

@@ -1,6 +1,7 @@
 # Copyright 2019 Eficent <http://www.eficent.com>
+# Copyright 2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from openupgradelib import openupgrade
+from openupgradelib import openupgrade, openupgrade_120
 from ast import literal_eval
 
 
@@ -49,8 +50,14 @@ def migrate(env, version):
     fill_website_config_parameters(env)
     openupgrade.load_data(
         cr, 'website_sale', 'migrations/12.0.1.0/noupdate_changes.xml')
+    openupgrade.delete_record_translations(
+        env.cr, 'website_sale', ['mail_template_sale_cart_recovery'],
+    )
     openupgrade.delete_records_safely_by_xml_id(
         env, [
             'website_sale.group_website_multi_image',
         ],
+    )
+    openupgrade_120.convert_field_bootstrap_3to4(
+        env, 'product.template', 'website_description',
     )

@@ -1,9 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="product.list0" model="product.pricelist">
-    <field name="website_id" eval="False"/>
-    <field name="selectable" eval="True"/>
-  </record>
   <record id="mail_template_sale_cart_recovery" model="mail.template">
     <field name="subject">You left items in your cart!</field>
     <field name="body_html" type="xml">
