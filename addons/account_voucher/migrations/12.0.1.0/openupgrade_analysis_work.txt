@@ -1,5 +1,8 @@
 ---Fields in module 'account_voucher'---
 account_voucher / account.voucher          / company_id (many2one)         : is now stored
+# DONE: pre-migration: assure it's filled because of _check_company_id method, it's required.
+# In v8 this field was stored and thus, maybe some databases have this column with empty cases.
+
 account_voucher / account.voucher          / currency_id (many2one)        : is now stored
 account_voucher / account.voucher          / message_last_post (datetime)  : DEL
 account_voucher / account.voucher          / message_main_attachment_id (many2one): NEW relation: ir.attachment
