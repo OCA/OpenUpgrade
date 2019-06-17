@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="product_product_fixed_cost" model="product.product">
+    <field name="default_code">EXP_GEN</field>
+    <field name="categ_id" ref="product.cat_expense"/>
+  </record>
+  <record id="mail_alias_expense" model="mail.alias">
+    <field name="alias_user_id" ref="base.user_admin"/>
+  </record>
+</odoo>
