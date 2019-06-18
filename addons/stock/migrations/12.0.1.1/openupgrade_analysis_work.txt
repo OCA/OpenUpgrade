@@ -1,7 +1,7 @@
 ---Fields in module 'stock'---
 stock        / product.putaway          / product_location_ids (one2many): NEW relation: stock.fixed.putaway.strat
 stock        / stock.fixed.putaway.strat / product_id (many2one)         : NEW relation: product.product
-# DONE: pre-migration: Filled if stock_putaway_product module is installed
+# DONE: pre-migration: Renamed table and columns if stock_putaway_product module is installed
 
 stock        / stock.incoterms          / __last_update (datetime)      : module is now 'account' ('stock')
 stock        / stock.incoterms          / active (boolean)              : module is now 'account' ('stock')
@@ -14,7 +14,7 @@ stock        / stock.inventory.line     / location_name (char)          : DEL
 stock        / stock.inventory.line     / prodlot_name (char)           : DEL
 stock        / stock.inventory.line     / product_code (char)           : DEL
 stock        / stock.inventory.line     / product_name (char)           : DEL
-# NOTHING TO DO
+# NOTHING TO DO: Removed related fields with no extra data
 
 stock        / stock.inventory.line     / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
 stock        / stock.move               / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
@@ -26,12 +26,12 @@ stock        / stock.warehouse.orderpoint / product_uom (many2one)        : rela
 # NOTHING TO DO: handled in base pre-migration
 
 stock        / stock.location           / parent_left (integer)         : DEL
-stock        / stock.location           / parent_path (char)            : NEW 
-stock        / stock.location           / parent_right (integer)        : DEL 
+stock        / stock.location           / parent_path (char)            : NEW
+stock        / stock.location           / parent_right (integer)        : DEL
 # DONE: post-migration: called _parent_store_compute
 
 stock        / stock.move               / ordered_qty (float)           : DEL
-stock        / stock.move.line          / ordered_qty (float)           : DEL 
+stock        / stock.move.line          / ordered_qty (float)           : DEL
 # NOTHING TO DO: they are a copy of the initial value of product_uom_qty, but not used more anywhere
 
 stock        / stock.move               / package_level_id (many2one)   : NEW relation: stock.package_level
@@ -43,14 +43,14 @@ stock        / stock.package_level      / package_id (many2one)         : NEW re
 stock        / stock.package_level      / picking_id (many2one)         : NEW relation: stock.picking
 stock        / stock.picking            / package_level_ids (one2many)  : NEW relation: stock.package_level
 stock        / stock.picking            / package_level_ids_details (one2many): NEW relation: stock.package_level
-DONE: post-migration: filled model (tentative).
+DONE: post-migration: create records of this model when in sml, package_id = result_package_id (full package is transferred)
 
 stock        / stock.picking            / activity_date_deadline (date) : not related anymore
 stock        / stock.picking            / activity_date_deadline (date) : not stored anymore
 stock        / stock.picking            / activity_date_deadline (date) : now a function
 stock        / stock.picking            / backorder_ids (one2many)      : NEW relation: stock.picking
-stock        / stock.picking            / immediate_transfer (boolean)  : NEW 
-stock        / stock.picking            / message_last_post (datetime)  : DEL 
+stock        / stock.picking            / immediate_transfer (boolean)  : NEW
+stock        / stock.picking            / message_last_post (datetime)  : DEL
 stock        / stock.picking            / message_main_attachment_id (many2one): NEW relation: ir.attachment
 stock        / stock.picking            / move_ids_without_package (one2many): NEW relation: stock.move
 stock        / stock.picking            / move_line_ids_without_package (one2many): NEW relation: stock.move.line
@@ -63,7 +63,7 @@ stock        / stock.picking.type       / barcode_nomenclature_id (many2one): DE
 # NOTHING TO DO: handled in barcodes module
 
 stock        / stock.production.lot     / activity_ids (one2many)       : NEW relation: mail.activity
-stock        / stock.production.lot     / message_last_post (datetime)  : DEL 
+stock        / stock.production.lot     / message_last_post (datetime)  : DEL
 stock        / stock.production.lot     / message_main_attachment_id (many2one): NEW relation: ir.attachment
 # NOTHING TO DO
 

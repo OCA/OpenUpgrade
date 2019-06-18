@@ -103,57 +103,34 @@ def merge_stock_location_path_stock_rule(env):
         )
 
 
-def merge_stock_putaway_strategy_product(env):
-    openupgrade.logged_query(
-        env.cr, """
-        INSERT INTO stock_fixed_putaway_strat (product_id, putaway_id,
-            fixed_location_id, sequence, create_uid,
-            create_date, write_uid, write_date, %s)
-        SELECT product_product_id, putaway_id, fixed_location_id, sequence,
-            create_uid, create_date, write_uid, write_date, id
-        FROM stock_product_putaway_strategy
-        """, (AsIs(openupgrade.get_legacy_name('putaway_strategy_id')), ),
-    )
-
-
 def fill_stock_package_level(env):
-    all_moves = env['stock.move'].search([])
-    all_pickings = env['stock.picking'].search([])
-
-    # case 1:
-    moves = all_moves.filtered(lambda m: m.state == 'assigned')
-    for move in moves:
-        move.mapped('picking_id')._check_entire_pack()
-
-    # case 2:
-    pickings = all_pickings.filtered(
-        lambda p: p.state not in ('done', 'cancel'))
-    for picking in pickings:
-        move_line_ids = picking.move_line_ids.filtered(
-            lambda ml: ml.qty_done > 0 and ml.result_package_id)
-        if move_line_ids and len(
-                move_line_ids.mapped('location_dest_id')) == 1:
-            package = move_line_ids.result_package_id
-            env['stock.package_level'].create({
-                'package_id': package.id,
-                'picking_id': picking.id,
-                'location_id': False,
-                'location_dest_id': move_line_ids.mapped(
-                    'location_dest_id').id,
-                'move_line_ids': [(6, 0, move_line_ids.ids)]
+    """Only stock.move.line records with package_id = result_package_id means
+    that a package level should be created, as in previous version,
+    result_package_id was only written when entire package was transferred.
+    """
+    StockPackageLevel = env['stock.package_level']
+    StockMoveLine = env['stock.move.line']
+    criteria = [
+        'picking_id',
+        'package_id',
+        'result_package_id',
+        'location_id',
+        'location_dest_id',
+    ]
+    groups = StockMoveLine.read_group(
+        [('result_package_id', '!=', False), ('package_id', '!=', False)],
+        criteria, criteria, lazy=False,
+    )
+    for group in groups:
+        if group['package_id'] == group['result_package_id']:
+            move_lines = StockMoveLine.search(group['__domain'])
+            StockPackageLevel.create({
+                'package_id': group['result_package_id'][0],
+                'picking_id': group['picking_id'][0],
+                'location_id': group['location_id'][0],
+                'location_dest_id': group['location_dest_id'][0],
+                'move_line_ids': [(6, 0, move_lines.ids)]
             })
-
-    # case 3:
-    moves = all_moves.filtered(
-        lambda m: m.picking_id and m.state not in ('done', 'cancel'))
-    for move in moves:
-        move.mapped('package_level_id').write({
-            'picking_id': move.picking_id.id,
-        })
-
-    # case 4:
-    moves = all_moves.filtered(lambda m: m.state == 'assigned')
-    moves.mapped('package_level_id').write({'is_done': True})
 
 
 @openupgrade.migrate()
@@ -163,8 +140,6 @@ def migrate(env, version):
     map_stock_rule_action(cr)
     fill_stock_picking_type_barcode(env)
     merge_stock_location_path_stock_rule(env)
-    if openupgrade.table_exists(cr, 'stock_product_putaway_strategy'):
-        merge_stock_putaway_strategy_product(env)
     fill_stock_package_level(env)
     openupgrade.load_data(
         cr, 'stock', 'migrations/12.0.1.1/noupdate_changes.xml')
