@@ -22,7 +22,7 @@ def create_and_populate_department(cr):
           GROUP BY user_id
        )
        UPDATE account_analytic_line aal SET department_id=departments.dpt_id
-       FROM departments WHERE aal.user_id = departments.user_id;
+       FROM departments WHERE aal.user_id = departments.user_id AND aal.department_id IS NULL;
     ''')
 
 
