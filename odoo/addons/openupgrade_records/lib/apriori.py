@@ -16,6 +16,8 @@ renamed_modules = {
     # OCA/crm > OCA/partner-contact
     'crm_deduplicate_acl': 'partner_deduplicate_acl',
     'crm_deduplicate_filter': 'partner_deduplicate_filter',
+    # OCA/hr
+    'hr_employee_seniority': 'hr_employee_service_contract',
 }
 
 merged_modules = {
