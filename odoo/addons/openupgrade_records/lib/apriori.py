@@ -53,7 +53,6 @@ merged_modules = {
     # OCA/stock-logistics-warehouse
     'stock_putaway_product': 'stock',
     # OCA/web
-    'web_no_bubble': 'web',
     'web_sheet_full_width': 'web_responsive',
     # OCA/website
     'website_form_metadata': 'website_form',
