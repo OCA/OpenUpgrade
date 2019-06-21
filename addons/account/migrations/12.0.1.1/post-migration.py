@@ -192,8 +192,8 @@ def fill_account_move_reverse_entry_id(env):
 def recompute_invoice_taxes_add_analytic_tags(env):
     analytic_taxes = env['account.tax'].search([('analytic', '=', True)])
     taxes = env['account.tax'].search([
-        ('id', 'parent_of', analytic_taxes.ids),
-    ])
+        ('children_tax_ids', 'in', analytic_taxes.ids),
+    ]) | analytic_taxes
     invoice_lines = env['account.invoice.line'].search(
         [('invoice_line_tax_ids', 'in', taxes.ids)])
     invoices = invoice_lines.mapped('invoice_id')
