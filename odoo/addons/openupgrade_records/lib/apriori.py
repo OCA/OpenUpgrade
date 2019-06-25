@@ -18,6 +18,8 @@ renamed_modules = {
     'crm_deduplicate_filter': 'partner_deduplicate_filter',
     # OCA/hr
     'hr_employee_seniority': 'hr_employee_service_contract',
+    # OCA/stock-logistics-workflow
+    'stock_pack_operation_auto_fill': 'stock_move_line_auto_fill',
 }
 
 merged_modules = {
