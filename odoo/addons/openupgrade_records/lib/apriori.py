@@ -7,6 +7,8 @@ renamed_modules = {
     'base_vat_autocomplete': 'partner_autocomplete',
     'mrp_repair': 'repair',
     'product_extended': 'mrp_bom_cost',
+    # OCA/account-financial-reporting
+    'customer_activity_statement': 'partner_statement',
     # OCA/account-payment
     'account_payment_return_import_sepa_pain': (
         'account_payment_return_import_iso20022'
@@ -46,6 +48,8 @@ merged_modules = {
     'website_sale_default_country': 'website_sale',
     # OCA/event
     'event_registration_mass_mailing': 'mass_mailing_event',
+    # OCA/hr
+    ''
     # OCA/manufacture-reporting
     'mrp_bom_structure_html': 'mrp',
     'mrp_bom_structure_report': 'mrp',
