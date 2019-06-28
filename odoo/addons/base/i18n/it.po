@@ -8410,6 +8410,8 @@ msgid ""
 "Account holder name, in case it is different than the name of the Account "
 "Holder"
 msgstr ""
+"Nome per il titolare del conto, nel caso sia diverso da quello del titolare "
+"del conto stesso."
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_accounting
@@ -10145,6 +10147,12 @@ msgstr "Annulla avanzamento"
 #: code:addons/models.py:2118
 #, python-format
 msgid "Cannot aggregate field %r."
+msgstr ""
+
+#. module: base
+#: code:addons/base/models/ir_translation.py:256
+#, python-format
+msgid "Cannot be translated; record not accessible."
 msgstr ""
 
 #. module: base
