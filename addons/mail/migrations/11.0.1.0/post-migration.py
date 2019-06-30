@@ -11,7 +11,8 @@ def move_notify_email_to_notification_type_field(env):
         ('inbox', 'none'),
     ]
     for item in mapping:
-        env.cr.execute("""
+        openupgrade.logged_query(
+            env.cr, """
             UPDATE res_users ru SET notification_type = %s
             FROM res_partner rp
             WHERE ru.partner_id = rp.id
