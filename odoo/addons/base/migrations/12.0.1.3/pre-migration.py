@@ -138,6 +138,13 @@ def fill_ir_ui_view_key(cr):
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
+    # Deactivate the noupdate flag (hardcoded on initial SQL load) for allowing
+    # to update changed data on this group.
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE ir_model_data SET noupdate=False
+        WHERE  module='base' AND name='group_user'""",
+    )
     openupgrade.update_module_names(
         env.cr, apriori.renamed_modules.items())
     openupgrade.update_module_names(

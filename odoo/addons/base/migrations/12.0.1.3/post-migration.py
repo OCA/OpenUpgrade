@@ -40,3 +40,9 @@ def migrate(env, version):
     update_res_company_onboarding_company_state(env)
     openupgrade.load_data(
         env.cr, 'base', 'migrations/12.0.1.3/noupdate_changes.xml')
+    # Activate back the noupdate flag on the group
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE ir_model_data SET noupdate=True
+        WHERE  module='base' AND name='group_user'""",
+    )
