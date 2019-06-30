@@ -1212,6 +1212,20 @@ def migrate(env, version):
     cr.execute('UPDATE account_tax set amount=amount*100 '
                "WHERE amount_type='percent'")
 
+    # if it is a grouped tax, amount is parent tax * amount/100
+    cr.execute("""
+    UPDATE account_tax query
+      SET amount_type = 'percent',
+          amount = subquery.amount * query.amount / 100.0
+    FROM (SELECT
+            at.id as id,
+            atp.amount as amount
+        FROM account_tax at
+        JOIN account_tax atp ON at.parent_id = atp.id
+    ) AS subquery
+    WHERE query.id = subquery.id
+    """)
+
     registry = RegistryManager.get(cr.dbname)
     openupgrade.m2o_to_x2m(
         cr, registry['account.bank.statement.line'],
