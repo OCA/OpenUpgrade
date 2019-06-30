@@ -106,6 +106,9 @@ def fill_account_invoice_line_sections(cr):
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
+    openupgrade.delete_records_safely_by_xml_id(
+        env, ['account.action_view_account_move_line_reconcile'],
+    )
     openupgrade.copy_columns(cr, _column_copies)
     openupgrade.rename_columns(cr, _column_renames)
     openupgrade.rename_fields(env, _field_renames)

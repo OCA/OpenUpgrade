@@ -234,6 +234,10 @@ NEW account.incoterms: account.incoterm_FCA
 NEW account.incoterms: account.incoterm_FOB
 # NOTHING TO DO: renamed xmlids in base module
 
+DEL ir.actions.act_window: account.action_view_account_move_line_reconcile
+NEW ir.actions.client: account.action_view_account_move_line_reconcile
+# DONE: pre-migration: Removed all record before adding new one
+
 NEW account.payment.term: account.account_payment_term_2months (noupdate)
 NEW account.payment.term: account.account_payment_term_45days (noupdate)
 NEW account.reconcile.model: account.reconciliation_model_default_rule (noupdate)
@@ -261,11 +265,9 @@ DEL ir.actions.act_window: account.action_account_report_pl
 DEL ir.actions.act_window: account.action_account_tax_report
 DEL ir.actions.act_window: account.action_all_partner_invoices
 DEL ir.actions.act_window: account.action_invoice_tree2
-DEL ir.actions.act_window: account.action_view_account_move_line_reconcile
 DEL ir.actions.act_window: account.action_wizard_multi_chart
 DEL ir.actions.act_window: account.analytic_line_reporting_pivot
 DEL ir.actions.act_window_close: account.setup_wizard_close
-NEW ir.actions.client: account.action_view_account_move_line_reconcile
 DEL ir.actions.report: account.action_report_account_tax
 DEL ir.actions.report: account.action_report_financial
 DEL ir.actions.report: account.action_report_general_ledger
