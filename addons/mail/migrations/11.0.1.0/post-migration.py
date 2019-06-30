@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
-# © 2017 bloopark systems (<http://bloopark.de>)
+# Copyright 2017 bloopark systems (<http://bloopark.de>)
+# Copyright 2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
@@ -7,18 +7,16 @@ from openupgradelib import openupgrade
 
 def move_notify_email_to_notification_type_field(env):
     mapping = [
-        ('always', 'email'),
-        ('none', 'inbox')
+        ('email', 'always'),
+        ('inbox', 'none'),
     ]
     for item in mapping:
         env.cr.execute("""
-            UPDATE res_users SET notification_type = '%s'
-            WHERE id IN (
-                SELECT u.id
-                FROM res_users u JOIN res_partner p ON u.partner_id = p.id
-                WHERE p.notify_email = '%s'
-            );
-        """ % item)
+            UPDATE res_users ru SET notification_type = %s
+            FROM res_partner rp
+            WHERE ru.partner_id = rp.id
+                AND rp.notify_email = %s""", item,
+        )
 
 
 def set_binding_model_id_in_action_window(env):
