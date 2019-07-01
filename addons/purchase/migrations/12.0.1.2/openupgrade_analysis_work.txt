@@ -38,7 +38,7 @@ purchase     / purchase.order.line      / product_uom (many2one)        : relati
 # NOTHING TO DO: handled in base module
 
 purchase     / purchase.order.line      / product_uom_qty (float)       : NEW
-# DONE: pre-migration: new computed field, but assure it can be computed, ie, don't fail
+# DONE: pre-migration: pre-compute field, avoiding not coherent UoM when possible
 
 purchase     / purchase.order.line      / qty_received (float)          : not a function anymore
 # NOTHING TO DO
@@ -77,10 +77,14 @@ DEL ir.ui.view: purchase.res_config_settings_view_form_stock
 DEL ir.ui.view: purchase.stock_move_purchase
 DEL ir.ui.view: purchase.view_warehouse_inherited
 DEL ir.ui.view: purchase.view_warehouse_orderpoint_purchase_form
-DEL mail.template: purchase.mail_template_data_notification_email_purchase_order (noupdate)
 DEL res.groups: purchase.group_analytic_accounting
-DEL res.request.link: purchase.req_link_purchase_order (noupdate)
 # NOTHING TO DO
 
+DEL res.request.link: purchase.req_link_purchase_order (noupdate)
+# NOTHING TO DO: Missing model, so no need to remove the record
+
+DEL mail.template: purchase.mail_template_data_notification_email_purchase_order (noupdate)
+# DONE: post-migration: Try to delete the record
+
 DEL stock.location.route: purchase.route_warehouse0_buy (noupdate)
-# NOTHING TO DO: handled in purchase_stock
+# DONE: pre-migration Renamed XML-ID for proper module
