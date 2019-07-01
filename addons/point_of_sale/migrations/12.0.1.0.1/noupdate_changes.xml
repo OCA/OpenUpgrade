@@ -1,11 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="pos_config_main" model="pos.config">
-    <field name="name">Shop</field>
-  </record>
   <record id="product_product_consumable" model="product.product">
-    <field name="uom_po_id" ref="uom.product_uom_unit"/>
-    <field name="uom_id" ref="uom.product_uom_unit"/>
     <field name="categ_id" ref="point_of_sale.product_category_pos"/>
     <field name="available_in_pos">True</field>
   </record>

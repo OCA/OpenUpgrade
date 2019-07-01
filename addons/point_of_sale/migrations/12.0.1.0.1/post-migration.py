@@ -5,16 +5,12 @@ from openupgradelib import openupgrade
 
 def fill_pos_order_amounts(env):
     """Avoid null values in required fields."""
-    pos_order_model = env["pos.order"]
-    orders = pos_order_model.search([])
-    orders._onchange_amount_all()
+    env["pos.order"].search([])._compute_batch_amount_all()
 
 
 def fill_pos_order_line_prices(env):
     """Avoid null values in required fields."""
-    pos_order_line_model = env["pos.order.line"]
-    order_lines = pos_order_line_model.search([])
-    order_lines._onchange_amount_line_all()
+    env["pos.order.line"].search([])._onchange_amount_line_all()
 
 
 @openupgrade.migrate()

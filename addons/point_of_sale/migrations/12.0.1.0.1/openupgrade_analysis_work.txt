@@ -1,7 +1,7 @@
 ---Fields in module 'point_of_sale'---
-point_of_sale / digest.digest            / kpi_pos_total (boolean)       : NEW 
-point_of_sale / pos.config               / group_pricelist_item (boolean): DEL 
-point_of_sale / pos.config               / group_sale_pricelist (boolean): DEL 
+point_of_sale / digest.digest            / kpi_pos_total (boolean)       : NEW
+point_of_sale / pos.config               / group_pricelist_item (boolean): DEL
+point_of_sale / pos.config               / group_sale_pricelist (boolean): DEL
 # NOTHING TO DO
 
 point_of_sale / pos.config               / iface_invoicing (boolean)     : DEL
@@ -52,4 +52,4 @@ DEL ir.model.access: point_of_sale.access_product_uom_manager
 
 DEL product.uom.categ: product.product_uom_categ_unit (noupdate)
 NEW uom.category: uom.product_uom_categ_unit (noupdate)
-# DONE: pre-migration: renamed xmlid
+# NOTHING TO DO: Already handled in base module
