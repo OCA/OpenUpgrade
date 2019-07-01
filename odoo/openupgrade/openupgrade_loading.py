@@ -150,6 +150,7 @@ def log_model(model, local_registry):
             'isrelated': isrelated(model, k),
             'relation': v.comodel_name if v.type in (
                 'many2many', 'many2one', 'one2many') else '',
+            'table': v.relation if v.type == 'many2many' else '',
             'required': v.required and 'required' or '',
             'stored': v.store and 'stored' or '',
             'selection_keys': '',

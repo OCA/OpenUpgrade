@@ -206,19 +206,19 @@ def compare_sets(old_records, new_records):
     matched_direct = match(
         ['module', 'mode', 'model', 'field'],
         ['relation', 'type', 'selection_keys', 'inherits', 'stored',
-         'isfunction', 'isrelated', 'required', 'oldname'])
+         'isfunction', 'isrelated', 'required', 'table', 'oldname'])
 
     # other module, same type and operation
     matched_other_module = match(
         ['mode', 'model', 'field', 'type'],
         ['module', 'relation', 'selection_keys', 'inherits', 'stored',
-         'isfunction', 'isrelated', 'required', 'oldname'])
+         'isfunction', 'isrelated', 'required', 'table', 'oldname'])
 
     # other module, same operation, other type
     matched_other_type = match(
         ['mode', 'model', 'field'],
         ['relation', 'type', 'selection_keys', 'inherits', 'stored',
-         'isfunction', 'isrelated', 'required', 'oldname'])
+         'isfunction', 'isrelated', 'required', 'table', 'oldname'])
 
     # fields with other names
     # matched_other_name = match(
