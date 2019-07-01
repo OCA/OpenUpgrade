@@ -5,7 +5,7 @@ account_payment / account.invoice          / payment_tx_ids (one2many)     : DEL
 # NOTHING TO DO
 
 account_payment / payment.transaction      / account_invoice_id (many2one) : DEL relation: account.invoice
-# DONE: post-migration: convert in invoice_ids many2many
+# NOTHING TO DO: the new field `invoice_ids` is already filled in `payment` module
 
 ---XML records in module 'account_payment'---
 NEW ir.ui.view: account_payment.portal_invoice_payment
