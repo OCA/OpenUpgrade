@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="product_product_consumable" model="product.product">
+    <field name="categ_id" ref="point_of_sale.product_category_pos"/>
+    <field name="available_in_pos">True</field>
+  </record>
+  <record id="product_product_tip" model="product.product">
+    <field name="categ_id" ref="point_of_sale.product_category_pos"/>
+    <field name="default_code">TIPS</field>
+    <field name="available_in_pos" eval="True"/>
+  </record>
+</odoo>

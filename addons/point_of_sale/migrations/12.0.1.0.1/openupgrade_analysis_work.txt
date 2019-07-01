@@ -1,0 +1,55 @@
+---Fields in module 'point_of_sale'---
+point_of_sale / digest.digest            / kpi_pos_total (boolean)       : NEW
+point_of_sale / pos.config               / group_pricelist_item (boolean): DEL
+point_of_sale / pos.config               / group_sale_pricelist (boolean): DEL
+# NOTHING TO DO
+
+point_of_sale / pos.config               / iface_invoicing (boolean)     : DEL
+point_of_sale / pos.config               / module_account (boolean)      : NEW
+# NOTHING TO DO: pre-migration: renamed field
+
+point_of_sale / pos.order                / amount_paid (float)           : not a function anymore
+point_of_sale / pos.order                / amount_paid (float)           : is now stored
+point_of_sale / pos.order                / amount_paid (float)           : now required
+point_of_sale / pos.order                / amount_return (float)         : not a function anymore
+point_of_sale / pos.order                / amount_return (float)         : is now stored
+point_of_sale / pos.order                / amount_return (float)         : now required
+point_of_sale / pos.order                / amount_tax (float)            : not a function anymore
+point_of_sale / pos.order                / amount_tax (float)            : is now stored
+point_of_sale / pos.order                / amount_tax (float)            : now required
+point_of_sale / pos.order                / amount_total (float)          : not a function anymore
+point_of_sale / pos.order                / amount_total (float)          : is now stored
+point_of_sale / pos.order                / amount_total (float)          : now required
+point_of_sale / pos.order.line           / price_subtotal (float)        : not a function anymore
+point_of_sale / pos.order.line           / price_subtotal (float)        : is now stored
+point_of_sale / pos.order.line           / price_subtotal (float)        : now required
+point_of_sale / pos.order.line           / price_subtotal_incl (float)   : not a function anymore
+point_of_sale / pos.order.line           / price_subtotal_incl (float)   : is now stored
+point_of_sale / pos.order.line           / price_subtotal_incl (float)   : now required
+# DONE: post-migration: called onchanges to fill these old computed fields that are now stored and required
+
+point_of_sale / uom.category             / is_pos_groupable (boolean)    : NEW
+# NOTHING TO DO: same is_pos_groupable field of old product.uom.category
+
+---XML records in module 'point_of_sale'---
+NEW digest.digest: digest.digest_digest_default (noupdate)
+NEW ir.actions.act_window: point_of_sale.action_pos_configuration
+NEW ir.actions.act_window: point_of_sale.action_pos_sale_graph
+DEL ir.actions.act_window: point_of_sale.action_pos_discount
+NEW ir.ui.menu: point_of_sale.menu_point_of_sale_customer
+NEW ir.ui.menu: point_of_sale.menu_pos_global_settings
+NEW ir.ui.view: point_of_sale.digest_digest_view_form
+NEW ir.ui.view: point_of_sale.res_config_settings_view_form
+NEW ir.ui.view: point_of_sale.res_users_view_form
+DEL ir.ui.view: point_of_sale.res_users_form_view
+DEL ir.ui.view: point_of_sale.view_pos_discount
+NEW product.category: point_of_sale.product_category_pos (noupdate)
+# NOTHING TO DO
+
+NEW ir.model.access: point_of_sale.access_uom_uom_manager
+DEL ir.model.access: point_of_sale.access_product_uom_manager
+# DONE: pre-migration: Renamed xmlid
+
+DEL product.uom.categ: product.product_uom_categ_unit (noupdate)
+NEW uom.category: uom.product_uom_categ_unit (noupdate)
+# NOTHING TO DO: Already handled in base module
