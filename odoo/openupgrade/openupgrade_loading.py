@@ -153,6 +153,7 @@ def log_model(model, local_registry):
             'stored': v.store and 'stored' or '',
             'selection_keys': '',
             'req_default': '',
+            'hasdefault': model._fields[k].default and 'hasdefault' or '',
             'inherits': '',
             }
         if hasattr(v, 'oldname'):
