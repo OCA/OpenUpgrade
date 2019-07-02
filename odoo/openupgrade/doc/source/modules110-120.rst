@@ -27,7 +27,7 @@ missing in the new release are marked with |del|.
 +--------------------------------------------+-------------------------------------------------+
 |account_analytic_default                    |                                                 |
 +--------------------------------------------+-------------------------------------------------+
-| |del| account_asset                        |                                                 |
+| |del| account_asset                        | Replaced by OCA module [#account_asset]_        |
 +--------------------------------------------+-------------------------------------------------+
 |account_bank_statement_import               | Nothing to do                                   |
 +--------------------------------------------+-------------------------------------------------+
@@ -637,6 +637,10 @@ missing in the new release are marked with |del|.
 +--------------------------------------------+-------------------------------------------------+
 |website_twitter                             |                                                 |
 +--------------------------------------------+-------------------------------------------------+
+
+.. [#account_asset] 'Account Asset' module is replaced by the Odoo Community Association module
+    'Account Asset Management' (not exactly the same but does the same):
+    See : https://github.com/OCA/account-financial-tools/tree/12.0/account_asset_management
 
 OCA modules
 ===========
