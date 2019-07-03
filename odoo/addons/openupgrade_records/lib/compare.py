@@ -100,7 +100,7 @@ def report_generic(new, old, attrs, reprs):
             if old[attr] != new['required'] and new['required']:
                 text = "now required"
                 if new['req_default']:
-                    text += ', default = %s' % new['req_default']
+                    text += ', req_default: %s' % new['req_default']
                 fieldprint(old, new, '', text, reprs)
         elif attr == 'stored':
             if old[attr] != new[attr]:
@@ -206,19 +206,19 @@ def compare_sets(old_records, new_records):
     matched_direct = match(
         ['module', 'mode', 'model', 'field'],
         ['relation', 'type', 'selection_keys', 'inherits', 'stored',
-         'isfunction', 'isrelated', 'required', 'oldname'])
+         'isfunction', 'isrelated', 'required', 'table', 'oldname'])
 
     # other module, same type and operation
     matched_other_module = match(
         ['mode', 'model', 'field', 'type'],
         ['module', 'relation', 'selection_keys', 'inherits', 'stored',
-         'isfunction', 'isrelated', 'required', 'oldname'])
+         'isfunction', 'isrelated', 'required', 'table', 'oldname'])
 
     # other module, same operation, other type
     matched_other_type = match(
         ['mode', 'model', 'field'],
         ['relation', 'type', 'selection_keys', 'inherits', 'stored',
-         'isfunction', 'isrelated', 'required', 'oldname'])
+         'isfunction', 'isrelated', 'required', 'table', 'oldname'])
 
     # fields with other names
     # matched_other_name = match(
@@ -245,6 +245,9 @@ def compare_sets(old_records, new_records):
         fieldprint(
             column, '', '', "DEL" + extra_message, reprs)
 
+    printkeys.extend([
+        'hasdefault',
+    ])
     for column in new_records:
         # we do not care about newly added non stored function fields
         if not column['stored'] and (

@@ -69,6 +69,8 @@ class Record(models.Model):
             'stored',
             'selection_keys',
             'req_default',
+            'hasdefault',
+            'table',
             'inherits',
             ]
 
