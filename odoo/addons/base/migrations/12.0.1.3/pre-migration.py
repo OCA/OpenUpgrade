@@ -161,10 +161,22 @@ def migrate(env, version):
     # Make the system and admin user XML ids refer to the same entry for now to
     # prevent errors when base data is loaded. The users are picked apart in
     # this module's end stage migration script.
-    env.cr.execute(
-        """ INSERT INTO ir_model_data
-        (module, name, model, res_id, noupdate)
-        VALUES('base', 'user_admin', 'res.users', 1, true)""")
+    # Safely, we check first if the `base.user_admin` already exists to
+    # avoid possible conflicts: very old databases may have this record.
+    env.cr.execute("""
+        SELECT id
+        FROM ir_model_data
+        WHERE name='user_admin' AND module='base' AND model='res.users'""")
+    if env.cr.fetchone():
+        env.cr.execute("""
+            UPDATE ir_model_data
+            SET model='res.users',res_id=1,noupdate=true
+            WHERE name='user_admin' AND module='base' AND model='res.users'""")
+    else:
+        env.cr.execute("""
+            INSERT INTO ir_model_data
+            (module, name, model, res_id, noupdate)
+            VALUES('base', 'user_admin', 'res.users', 1, true)""")
     env.cr.execute(
         """ INSERT INTO ir_model_data
         (module, name, model, res_id, noupdate)
