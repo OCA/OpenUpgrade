@@ -46,6 +46,8 @@ mail         / mail.channel             / moderator_ids (many2many)     : NEW re
 # NOTHING TO DO
 
 mail         / mail.message             / add_sign (boolean)            : NEW
+# DONE: pre-migration: filled this new field using sql query for faster migration
+
 mail         / mail.message             / layout (char)                 : NEW 
 mail         / mail.message             / moderation_status (selection) : NEW selection_keys: ['accepted', 'pending_moderation', 'rejected']
 mail         / mail.message             / moderator_id (many2one)       : NEW relation: res.users
