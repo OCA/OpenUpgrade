@@ -136,6 +136,22 @@ def fill_ir_ui_view_key(cr):
     )
 
 
+def fill_ir_attachment_res_model_name(cr):
+    # fast compute the res_model_name in ir.attachment
+    if not openupgrade.column_exists(cr, 'ir_attachment', 'res_model_name'):
+        openupgrade.logged_query(
+            cr, """
+            ALTER TABLE ir_attachment ADD COLUMN res_model_name varchar""",
+        )
+        openupgrade.logged_query(
+            cr, """
+            UPDATE ir_attachment ia
+            SET res_model_name = im.name
+            FROM ir_model im
+            WHERE im.model = ia.res_model""",
+        )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     # Deactivate the noupdate flag (hardcoded on initial SQL load) for allowing
@@ -185,6 +201,8 @@ def migrate(env, version):
         """)
     fix_lang_constraints(env)
     fix_lang_table(env)
+    # fast compute of res_model_name
+    fill_ir_attachment_res_model_name(env.cr)
     # for migration of web module
     openupgrade.rename_columns(
         env.cr, {'res_company': [('external_report_layout', None)]})
