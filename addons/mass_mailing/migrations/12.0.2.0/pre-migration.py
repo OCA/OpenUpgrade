@@ -8,6 +8,16 @@ _column_renames = {
         ('unsubscription_date', None),
     ],
 }
+_xmlid_renames = [
+    ("website_mass_mailing.page_unsubscribe",
+     "mass_mailing.page_unsubscribe"),
+    ("website_mass_mailing.page_unsubscribed",
+     "mass_mailing.page_unsubscribed"),
+    ("website_mass_mailing.unsubscribe",
+     "mass_mailing.unsubscribe"),
+    ("website_mass_mailing.unsubscribed",
+     "mass_mailing.unsubscribed"),
+]
 
 
 def complete_mail_mass_mailing_contact_list_rel_db_layout(cr):
@@ -42,3 +52,4 @@ def complete_mail_mass_mailing_contact_list_rel_db_layout(cr):
 def migrate(cr, version):
     openupgrade.rename_columns(cr, _column_renames)
     complete_mail_mass_mailing_contact_list_rel_db_layout(cr)
+    openupgrade.rename_xmlids(cr, _xmlid_renames)
