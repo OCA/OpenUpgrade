@@ -77,7 +77,7 @@ def bootstrap_4_migration(env):
         ("report_type", "=like", "qweb-%"),
     ]).mapped("report_name")
     # Find updatable views, to be excluded; standard addon update is enough
-    udpatable_ids = env["ir.model.data"].search([
+    updatable_ids = env["ir.model.data"].search([
         ("model", "=", "ir.ui.view"),
         ("noupdate", "=", False),
     ]).mapped("res_id")
@@ -105,7 +105,7 @@ def bootstrap_4_migration(env):
         )
     # Find views to convert
     all_views = env['ir.ui.view'].with_context(active_test=False).search([
-        ("id", "not in", udpatable_ids),
+        ("id", "not in", updatable_ids),
         ("key", "not in", report_names),
         ("type", "=", "qweb"),
     ])
@@ -250,10 +250,10 @@ def migrate(env, version):
     cr = env.cr
     openupgrade.rename_fields(env, _field_renames)
     openupgrade.rename_xmlids(cr, _xml_ids_renames)
-    noupdate_changes(env)
     fill_website_company_id(cr)
     fill_website_name(cr)
     fill_website_redirect_type(cr)
     fill_website_redirect_urls(cr)
     disable_less_customizations(env)
     bootstrap_4_migration(env)
+    noupdate_changes(env)
