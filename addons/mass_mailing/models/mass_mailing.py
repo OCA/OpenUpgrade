@@ -308,7 +308,7 @@ class MassMailingCampaign(models.Model):
     _rec_name = "campaign_id"
     _inherits = {'utm.campaign': 'campaign_id'}
 
-    stage_id = fields.Many2one('mail.mass_mailing.stage', string='Stage', ondelete='restrict', required=True, 
+    stage_id = fields.Many2one('mail.mass_mailing.stage', string='Stage', ondelete='restrict', required=True,
         default=lambda self: self.env['mail.mass_mailing.stage'].search([], limit=1),
         group_expand='_group_expand_stage_ids')
     user_id = fields.Many2one(

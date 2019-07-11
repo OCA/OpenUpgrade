@@ -32,9 +32,9 @@ def complete_mail_mass_mailing_contact_list_rel_db_layout(cr):
         )""",
     )
     openupgrade.logged_query(
-        cr,
-        "ALTER SEQUENCE mail_mass_mailing_contact_list_rel_id_seq"
-        "OWNED BY mail_mass_mailing_contact_list_rel.id",
+        cr, """
+        ALTER SEQUENCE mail_mass_mailing_contact_list_rel_id_seq
+        OWNED BY mail_mass_mailing_contact_list_rel.id""",
     )
 
 
