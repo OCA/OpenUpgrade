@@ -1,0 +1,35 @@
+---Fields in module 'website_event_track'---
+website_event_track / event.event              / track_menu_ids (one2many)     : NEW relation: website.event.menu
+website_event_track / event.event              / track_proposal_menu_ids (one2many): NEW relation: website.event.menu
+website_event_track / event.event              / website_track (boolean)       : is now stored
+website_event_track / event.event              / website_track (boolean)       : not a function anymore
+website_event_track / event.event              / website_track_proposal (boolean): is now stored
+website_event_track / event.event              / website_track_proposal (boolean): not a function anymore
+website_event_track / website.event.menu       / event_id (many2one)           : NEW relation: event.event
+website_event_track / website.event.menu       / menu_id (many2one)            : NEW relation: website.menu
+website_event_track / website.event.menu       / menu_type (selection)         : NEW selection_keys: ['track', 'track_proposal']
+# DONE: post-migration: see _website_track_menu()
+
+website_event_track / event.track              / activity_date_deadline (date) : not related anymore
+website_event_track / event.track              / activity_date_deadline (date) : not stored anymore
+website_event_track / event.track              / activity_date_deadline (date) : now a function
+# NOTHING TO DO: new feature from mail module, with good defaults
+
+website_event_track / event.track              / message_last_post (datetime)  : DEL
+# NOTHING TO DO: Feature removed from mail.thread
+
+website_event_track / event.track              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+# NOTHING TO DO: Filling of this field done on mail end-migration
+
+website_event_track / event.track              / website_meta_og_img (char)    : NEW
+# NOTHING TO DO: new feature with good default method in case of empty value
+
+website_event_track / event.track              / is_published (boolean)        : NEW
+website_event_track / event.track              / website_published (boolean)   : not stored anymore
+website_event_track / event.track              / website_published (boolean)   : now related
+# DONE: pre-migration: column renamed
+
+---XML records in module 'website_event_track'---
+NEW ir.model.access: website_event_track.access_website_event_menu_manager
+NEW ir.model.access: website_event_track.access_website_event_menu_public
+# NOTHING TO DO: new permissions are ok for this new model
