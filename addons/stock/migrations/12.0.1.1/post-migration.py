@@ -133,6 +133,20 @@ def fill_stock_package_level(env):
             })
 
 
+def merge_stock_putaway_product(cr):
+    if openupgrade.table_exists(cr, 'stock_product_putaway_strategy'):
+        openupgrade.logged_query(
+            cr, """
+            INSERT INTO stock_fixed_putaway_strat (product_id, putaway_id,
+                fixed_location_id, sequence,
+                create_uid, create_date, write_uid, write_date, %s)
+            SELECT product_product_id, putaway_id, fixed_location_id, sequence,
+                create_uid, create_date, write_uid, write_date, id
+            FROM stock_product_putaway_strategy
+        """, (AsIs(openupgrade.get_legacy_name('old_strat_id')), ),
+        )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
@@ -141,6 +155,7 @@ def migrate(env, version):
     fill_stock_picking_type_barcode(env)
     merge_stock_location_path_stock_rule(env)
     fill_stock_package_level(env)
+    merge_stock_putaway_product(cr)
     openupgrade.load_data(
         cr, 'stock', 'migrations/12.0.1.1/noupdate_changes.xml')
     openupgrade.delete_records_safely_by_xml_id(

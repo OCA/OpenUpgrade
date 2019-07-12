@@ -38,11 +38,9 @@ def migrate(cr, version):
         """.format(openupgrade.get_legacy_name('loc_path_id'))
     )
     if openupgrade.table_exists(cr, 'stock_product_putaway_strategy'):
-        openupgrade.rename_tables(cr, [
-            ('stock_product_putaway_strategy', 'stock_fixed_putaway_strat'),
-        ])
-        openupgrade.rename_columns(cr, {
-            'stock_fixed_putaway_strat': [
-                ('product_product_id', 'product_id'),
-            ],
-        })
+        cr.execute(
+            """
+            ALTER TABLE stock_fixed_putaway_strat
+            ADD COLUMN {} integer;
+            """.format(openupgrade.get_legacy_name('old_strat_id'))
+        )
