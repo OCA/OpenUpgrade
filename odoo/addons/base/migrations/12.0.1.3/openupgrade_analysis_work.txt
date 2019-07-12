@@ -4,7 +4,7 @@ base         / ir.actions.report        / report_type (selection)       : select
 base         / ir.attachment            / active (boolean)              : NEW
 # Nothing to do: default True is applied to all records
 base         / ir.attachment            / res_model_name (char)         : NEW
-# NOTHING TO DO: new field
+# DONE: pre-migration: computed this new field using sql queries for fast migration
 base         / ir.attachment            / thumbnail (binary)            : NEW attachment: True
 # Done: create thumbnails for all applicable attachments
 base         / ir.model                 / rule_ids (one2many)           : NEW relation: ir.rule
