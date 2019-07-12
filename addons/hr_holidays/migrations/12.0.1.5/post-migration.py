@@ -140,32 +140,33 @@ def subscribe_new_subtypes(env):
     """
     subtype_mapping = [
         ('mt_department_holidays_approved',
-         'mt_department_leave_allocation_approved',
-         'mt_department_leave_approved'),
+         ['mt_department_leave_allocation_approved',
+          'mt_department_leave_approved']),
         ('mt_department_holidays_refused',
-         'mt_department_leave_allocation_refused',
-         'mt_department_leave_refused'),
+         ['mt_department_leave_allocation_refused',
+          'mt_department_leave_refused']),
         ('mt_holidays_approved',
-         'mt_leave_allocation_approved',
-         'mt_leave_approved'),
+         ['mt_leave_allocation_approved',
+          'mt_leave_approved']),
         ('mt_holidays_refused',
-         'mt_leave_allocation_refused',
-         'mt_leave_refused'),
+         ['mt_leave_allocation_refused',
+          'mt_leave_refused']),
     ]
-    Followers = env['mail.followers']
-    for old_id, new_id1, new_id2 in subtype_mapping:
-        old_mt = env.ref('hr_holidays.' + old_id)
-        followers = Followers.search([('subtype_ids', '=', old_mt.id)])
-        if followers:
-            new_mt1 = env.ref('hr_holidays.' + new_id1)
-            new_mt2 = env.ref('hr_holidays.' + new_id2)
-            subtype_ids = (new_mt1 + new_mt2).ids
-            partner_ids = followers.mapped('partner_id').ids
-            Followers._insert_followers(
-                followers[0].res_model, list(set(followers.mapped('res_id'))),
-                partner_ids,
-                dict((pid, subtype_ids) for pid in partner_ids),
-                [], False, check_existing=True, existing_policy='update',
+    for old, new in subtype_mapping:
+        old_id = env.ref('hr_holidays.' + old).id
+        for i, model in enumerate(['hr.leave.allocation', 'hr.leave']):
+            new_id = env.ref('hr_holidays.' + new[i]).id
+            openupgrade.logged_query(
+                env.cr, """
+                UPDATE mail_followers_mail_message_subtype_rel rel
+                SET mail_message_subtype_id = %s
+                FROM mail_followers mf, mail_message_subtype mms
+                WHERE mf.id = rel.mail_followers_id
+                    AND mms.id = rel.mail_message_subtype_id
+                    AND mms.res_model = 'hr.holidays'
+                    AND mf.res_model = %s
+                    AND rel.mail_message_subtype_id = %s
+                """, (new_id, model, old_id, )
             )
 
 
