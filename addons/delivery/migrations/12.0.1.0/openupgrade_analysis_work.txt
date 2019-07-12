@@ -1,0 +1,28 @@
+---Fields in module 'delivery'---
+delivery     / product.product          / hs_code (char)                : module is now 'delivery_hs_code' ('delivery')
+delivery     / product.template         / hs_code (char)                : module is now 'delivery_hs_code' ('delivery')
+# DONE: pre-migration: Updated field module
+
+delivery     / stock.move               / weight_uom_id (many2one)      : DEL relation: product.uom, required: required, req_default: function
+# NOTHING TO DO: Not used anywhere
+
+delivery     / stock.picking            / weight_uom_id (many2one)      : not stored anymore
+delivery     / stock.picking            / weight_uom_id (many2one)      : now a function
+delivery     / stock.picking            / weight_uom_id (many2one)      : relation is now 'uom.uom' ('product.uom')
+# DONE: pre-migration: renamed column and as 'product.weight_in_lbs' is not populated through data, measure continues unaltered
+
+delivery     / stock.picking            / number_of_packages (integer)  : DEL
+# NOTHING TO DO: Lost field whose SQL column is kept by OpenUpgrade
+
+---XML records in module 'delivery'---
+NEW ir.actions.act_window: delivery.act_delivery_trackers_url
+NEW ir.ui.view: delivery.delivery_tracking_url_warning_form
+NEW ir.ui.view: delivery.view_quant_package_packaging_tree
+DEL ir.ui.view: delivery.product_template_hs_code
+# NOTHING TO DO: Updateable/deleteable records
+
+DEL mail.template: delivery.mail_template_data_delivery_notification (noupdate)
+# DONE: pre-migration: Try to remove this record
+
+NEW product.category: delivery.product_category_deliveries (noupdate)
+# NOTHING TO DO: New data
