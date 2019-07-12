@@ -65,10 +65,12 @@ NEW ir.ui.view: mass_mailing.mass_mailing_list_merge_view_form
 NEW ir.ui.view: mass_mailing.mass_mailing_mail_layout
 NEW ir.ui.view: mass_mailing.mass_mailing_mail_style
 NEW ir.ui.view: mass_mailing.mass_mailing_schedule_date_view_form
+NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_list_form_simplified
+DEL ir.ui.view: mass_mailing.view_company_form_inherit_mass_mailing
+# NOTHING TO DO
+
 NEW ir.ui.view: mass_mailing.page_unsubscribe
 NEW ir.ui.view: mass_mailing.page_unsubscribed
 NEW ir.ui.view: mass_mailing.unsubscribe
 NEW ir.ui.view: mass_mailing.unsubscribed
-NEW ir.ui.view: mass_mailing.view_mail_mass_mailing_list_form_simplified
-DEL ir.ui.view: mass_mailing.view_company_form_inherit_mass_mailing
-# NOTHING TO DO
+# DONE: pre-migration: moved from website_mass_mailing
