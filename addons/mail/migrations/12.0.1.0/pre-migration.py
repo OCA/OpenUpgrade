@@ -14,8 +14,23 @@ _field_renames = [
 ]
 
 
+def fill_mail_message_add_sign_default(env):
+    """Faster way to fill this new field"""
+    openupgrade.logged_query(
+        env.cr, """
+        ALTER TABLE mail_message
+        ADD COLUMN add_sign boolean
+        DEFAULT TRUE""",
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        ALTER TABLE mail_message ALTER COLUMN add_sign DROP DEFAULT""",
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
     openupgrade.rename_columns(cr, _column_renames)
     openupgrade.rename_fields(env, _field_renames)
+    fill_mail_message_add_sign_default(env)
