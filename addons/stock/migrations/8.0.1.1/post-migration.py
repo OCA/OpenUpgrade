@@ -929,13 +929,14 @@ def migrate_stock_qty(cr, registry):
 
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
-        moves = env['stock.move'].search(
-            [('state', 'in', ['assigned', 'done'])], order="date")
-        for move in moves:
-            if move.state == 'assigned':
-                _move_assign(env, move)
-            else:
-                _move_done(env, move)
+        done_moves = env['stock.move'].search(
+            [('state', '=', 'done')], order="date")
+        for done_move in done_moves:
+            _move_done(env, done_move)
+        assigned_moves = env['stock.move'].search(
+            [('state', '=', 'assigned')], order="date")
+        for assigned_move in assigned_moves:
+            _move_assign(env, assigned_move)
 
 
 def migrate_stock_production_lot(cr, registry):
