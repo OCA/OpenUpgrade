@@ -1,6 +1,8 @@
 # Copyright 2018-19 Eficent <http://www.eficent.com>
 # Copyright 2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+import json
+
 from psycopg2.extensions import AsIs
 
 from openupgradelib import openupgrade
@@ -47,13 +49,13 @@ def sync_menu_views_pages_websites(env):
     # Main menu and children must be website-agnostic
     main_menu = env.ref('website.main_menu')
     child_menus = env["website.menu"].search([
-        ("id", "child_of", main_menu.id),
+        ("id", "child_of", main_menu.ids),
         ("website_id", "!=", False),
     ])
     child_menus.write({"website_id": False})
-    # Duplicate the main menu for main website
-    website = env["website"].get_current_website()
-    website.copy_menu_hierarchy(main_menu)
+    # Duplicate the main menu for all websites
+    for website in env["website"].search([]):
+        website.copy_menu_hierarchy(main_menu)
     # Find views that were website-specified in pre stage
     col_name = openupgrade.get_legacy_name("bs4_migrated_from")
     env.cr.execute(
@@ -64,44 +66,49 @@ def sync_menu_views_pages_websites(env):
             AsIs(col_name),
         )
     )
-    for agnostic_view_id, specific_view_id in env.cr.fetchall():
-        # Create website-specific page for the copied view
-        agnostic_view = env["ir.ui.view"].browse(agnostic_view_id)
+    for data, specific_view_id in env.cr.fetchall():
+        data = json.loads(data)
         specific_view = env["ir.ui.view"].browse(specific_view_id)
-        agnostic_page = agnostic_view.first_page_id
-        if not agnostic_page:
-            continue
-        specific_page = env["website.page"].search([
-            ("url", "=", agnostic_page.url),
-            ("website_id", "=", specific_view.website_id.id),
-        ])
-        if not specific_page:
-            specific_page = agnostic_page.copy({
-                "is_published": agnostic_page.is_published,
-                "url": agnostic_page.url,
-                "view_id": specific_view_id,
-                "website_id": specific_view.website_id.id,
-            })
-        elif specific_page.view_id == agnostic_view:
-            specific_page.view_id = specific_view_id
-        # Create website-specific menu for the copied page
-        specific_menu = env["website.menu"].search([
-            ("website_id", "=", specific_page.website_id.id),
-            ("url", "=", specific_page.url),
-        ], limit=1)
-        if specific_menu:
-            if specific_menu.page_id:
-                specific_menu.page_id = specific_page
-        else:
-            agnostic_menu = env["website.menu"].search([
-                ("website_id", "=", False),
-                ("url", "=", specific_page.url),
-            ], limit=1)
-            if agnostic_menu:
-                agnostic_menu.copy({
-                    "website_id": specific_page.website_id.id,
-                    "page_id": agnostic_menu.page_id.id and specific_page.id,
+        for page in specific_view.page_ids:
+            menus = env["website.menu"].search([
+                ("id", "child_of", page.website_id.menu_id.ids),
+                ("url", "=", page.url),
+            ])
+            # If menus exist, it means the agnostic view wasn't removed and
+            # they already contain all the needed information, except that they
+            # are linked to the website-agnostic page. Let's fix that.
+            if menus:
+                menus.write({
+                    "page_id": page.id,
                 })
+            # In case the menus disappeared, it's possibly because the
+            # website-agnostic view was removed during the normal module update
+            # and the cascade FK removed the pages and menus. In such
+            # case, let's recreate them.
+            else:
+                for menu in data["menus"]:
+                    if menu["url"] != page.url:
+                        continue
+                    # Find the new website-specific parent menu
+                    agnostic_parent = \
+                        env["website.menu"].browse(menu["parent_id"])
+                    specific_parent = env["website.menu"].search([
+                        ("id", "child_of", page.website_id.menu_id.ids),
+                        ("name", "=", agnostic_parent.name),
+                        ("url", "=", agnostic_parent.url),
+                        "|", ("parent_id", "=", page.website_id.menu_id.id),
+                        "&", ("parent_id.name", "=",
+                              agnostic_parent.parent_id.name),
+                             ("parent_id.url", "=",
+                              agnostic_parent.parent_id.url)
+                    ]) or page.website_id.menu_id
+                    # Re-create the menu
+                    menus.create(dict(
+                        menu,
+                        page_id=page.id,
+                        parent_id=specific_parent.id,
+                        website_id=page.website_id.id,
+                    ))
 
 
 @openupgrade.migrate()
