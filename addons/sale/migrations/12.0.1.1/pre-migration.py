@@ -81,3 +81,7 @@ def migrate(env, version):
         # from sale_order_dates module
         openupgrade.rename_fields(env, _field_renames_order_dates)
     fill_sale_order_line_sections(env.cr)
+    openupgrade.logged_query(
+        env.cr,
+        "ALTER TABLE sale_order_line ADD COLUMN qty_delivered_method varchar",
+    )
