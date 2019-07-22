@@ -220,6 +220,42 @@ def set_default_taxes(env):
         })
 
 
+def fill_res_company_invoice_reference_type(cr):
+    cr.execute("""
+        SELECT company_id
+        FROM (
+            SELECT company_id, count(row_num) as count_ref_type
+            FROM (
+                SELECT company_id, %s,
+                    row_number() over (partition by company_id) row_num
+                FROM account_invoice
+                WHERE %s IS NOT NULL AND %s != 'none' AND type = 'out_invoice'
+                GROUP BY company_id, %s) ai
+            GROUP BY company_id) t
+        WHERE count_ref_type = 1""", (
+            AsIs(openupgrade.get_legacy_name('reference_type')),
+            AsIs(openupgrade.get_legacy_name('reference_type')),
+            AsIs(openupgrade.get_legacy_name('reference_type')),
+            AsIs(openupgrade.get_legacy_name('reference_type')),
+        )
+    )
+    for company_id in [x[0] for x in cr.fetchall()]:
+        openupgrade.logged_query(
+            cr, """
+            UPDATE res_company rc
+            SET invoice_reference_type = ai.%s
+            FROM account_invoice ai
+            WHERE ai.%s IS NOT NULL AND ai.%s != 'none'
+                AND ai.type = 'out_invoice' AND ai.company_id = rc.id
+                AND rc.id = %s""", (
+                AsIs(openupgrade.get_legacy_name('reference_type')),
+                AsIs(openupgrade.get_legacy_name('reference_type')),
+                AsIs(openupgrade.get_legacy_name('reference_type')),
+                company_id,
+            )
+        )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
@@ -235,6 +271,7 @@ def migrate(env, version):
     fill_account_move_reverse_entry_id(env)
     recompute_invoice_taxes_add_analytic_tags(env)
     set_default_taxes(env)
+    fill_res_company_invoice_reference_type(cr)
     openupgrade.load_data(
         cr, 'account', 'migrations/12.0.1.1/noupdate_changes.xml')
     openupgrade.delete_record_translations(

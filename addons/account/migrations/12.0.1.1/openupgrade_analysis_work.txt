@@ -54,7 +54,6 @@ account      / account.invoice          / message_last_post (datetime)  : DEL
 account      / account.invoice          / message_main_attachment_id (many2one): NEW relation: ir.attachment
 # NOTHING TO DO
 
-account      / account.invoice          / reference_type (selection)    : DEL required: required, selection_keys: function, req_default: function
 account      / account.invoice          / source_email (char)           : NEW
 # NOTHING TO DO
 
@@ -199,9 +198,12 @@ account      / res.company              / accounts_code_digits (integer): DEL
 account      / res.company              / incoterm_id (many2one)        : previously in module l10n_be_intrastat
 account      / res.company              / invoice_is_email (boolean)    : NEW
 account      / res.company              / invoice_is_print (boolean)    : NEW
-account      / res.company              / invoice_reference_type (selection): NEW selection_keys: function
 account      / res.company              / qr_code (boolean)             : NEW
 # NOTHING TO DO
+
+account      / account.invoice          / reference_type (selection)    : DEL required: required, selection_keys: function, req_default: function
+account      / res.company              / invoice_reference_type (selection): NEW selection_keys: function
+# DONE: post-migration: mapped when possible (https://github.com/odoo/odoo/commit/b5bb5bd421ad5c643f72602f6a0f97a4a0eb8711)
 
 account      / res.company              / transfer_account_code_prefix (char): NEW
 # DONE: post-migration: put the same as the calculated for the account chart template
