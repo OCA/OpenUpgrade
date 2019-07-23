@@ -104,6 +104,52 @@ def sync_menu_views_pages_websites(env):
                 })
 
 
+def website_views_add_children(env):
+    """Add all expected children to website-specific views.
+
+    The COW system would duplicate children views when duplicating the parent
+    one, but that system wasn't loaded in the pre-migration stage, where many
+    views were COW-ed manually to perform BS4 migration on them.
+
+    Now that the COW system is loaded, it's time to ensure all views have
+    all their children in place.
+    """
+    for website in env["website"].search([]):
+        done_views = View = env["ir.ui.view"].with_context(
+            # We need to duplicate inactive views to allow users enable them
+            # from the "Customize" menu
+            active_test=False,
+            # This key enables the COW system in views
+            website_id=website.id,
+        )
+        while True:
+            # Find all views specific for this website
+            todo_views = View.search([
+                ("id", "not in", done_views.ids),
+                ("key", "!=", False),
+                ("website_id", "=", website.id),
+            ])
+            if not todo_views:
+                break
+            for parent_view in todo_views:
+                # A child view could delete a parent view in the COW process,
+                # so we need to ensure it exists before anything else
+                if not parent_view.exists():
+                    continue
+                # Search website-agnostic child views by key instead of by ID
+                child_views = View.search([
+                    ("website_id", "=", False),
+                    ("inherit_id.key", "=", parent_view.key),
+                ])
+                # Trigger the COW system in write(), which will make sure that
+                # website-specific children views inherit from their
+                # website-specific parent, creating the missing children
+                # views if needed
+                child_views.write({"inherit_id": parent_view.id})
+            # Skip these views next loop
+            done_views |= todo_views
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
@@ -121,3 +167,4 @@ def migrate(env, version):
     )
     enable_multiwebsites(env)
     sync_menu_views_pages_websites(env)
+    website_views_add_children(env)
