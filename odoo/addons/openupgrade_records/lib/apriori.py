@@ -102,6 +102,7 @@ merged_modules = {
     'stock_picking_transfer_lot_autoassign': 'stock_pack_operation_auto_fill',
     # OCA/web
     'web_sheet_full_width': 'web_responsive',
+    'web_widget_datepicker_options': 'web',
     'web_widget_domain_v11': 'web',
     # OCA/website
     'website_seo_redirection': 'website',
