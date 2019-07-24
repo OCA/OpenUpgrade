@@ -1197,6 +1197,8 @@ msgstr "Vyberte si datum, kdy chcete získat inventář k tomuto datu"
 msgid ""
 "Choose to analyze the current inventory or from a specific date in the past."
 msgstr ""
+"Zvolte, zda chcete analyzovat aktuální inventář nebo konkrétní datum v "
+"minulosti."
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.view_stock_quantity_history
@@ -1726,12 +1728,12 @@ msgstr "PŘIJATÝ V TERMINÁLU"
 #. module: stock
 #: model:stock.incoterms,name:stock.incoterm_DDP
 msgid "DELIVERED DUTY PAID"
-msgstr ""
+msgstr "ZAPLACENÉ CLO"
 
 #. module: stock
 #: model:stock.incoterms,name:stock.incoterm_DDU
 msgid "DELIVERED DUTY UNPAID"
-msgstr ""
+msgstr "NEZAPLACENÉ CLO"
 
 #. module: stock
 #: model:stock.incoterms,name:stock.incoterm_DEQ
@@ -2875,7 +2877,7 @@ msgstr "Příchozí zásilky"
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_incoterms_code
 msgid "Incoterm Standard Code"
-msgstr ""
+msgstr "Standardní kód Incoterm"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_incoterms_tree
@@ -2894,6 +2896,9 @@ msgid ""
 "costs and responsibilities between buyer and seller and reflect state-of-"
 "the-art transportation practices."
 msgstr ""
+"Incoterms je řada prodejních podmínek. Používají se k rozdělení transakčních"
+" nákladů a odpovědnosti mezi kupujícím a prodávajícím a odrážejí "
+"nejmodernější převodní postupy."
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move_product_uom_qty
@@ -5093,6 +5098,10 @@ msgid ""
 "In a context with a single Warehouse, this includes goods leaving the Stock Location of this Warehouse, or any of its children.\n"
 "Otherwise, this includes goods leaving any Stock Location with 'internal' type."
 msgstr ""
+"Množství plánovaných odchozích produktů.\n"
+"V souvislosti s jednou skladovou lokalitou se jedná o zboží opouštějící toto místo nebo o jakékoli jeho podřazené zboží.\n"
+"V kontextu s jedním skladem to zahrnuje zboží opouštějící skladové umístění tohoto skladu nebo některé z jeho podřazeného zboží.\n"
+"V opačném případě se jedná o zboží opouštějící jakoukoli skladovou polohu s typovým označením „vnitřní“ ."
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_quant_quantity
@@ -5309,6 +5318,8 @@ msgid ""
 "Rescheduling applies to any chain of operations (e.g. Make To Order, Pick Pack Ship). In the case of MTO sales, a vendor delay (updated incoming date) impacts the expected delivery date to the customer. \n"
 " This option allows to not propagate the rescheduling if the change is not critical."
 msgstr ""
+"Změna plánování se vztahuje na jakýkoli řetězec operací (např. Make To Order, Pick Pack Ship). V případě prodeje MTO prodlení dodavatele (aktualizované datum příchodu) ovlivní očekávaný termín dodání zákazníkovi.\n"
+"Tato možnost neumožňuje provést změnu plánování, pokud změna není kritická."
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.res_config_settings_view_form
@@ -5652,7 +5663,7 @@ msgstr "Sekvenční balení"
 #: code:addons/stock/models/stock_warehouse.py:714
 #, python-format
 msgid "Sequence picking"
-msgstr ""
+msgstr "Sekvenční vychystávání"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_inventory_line_prodlot_name
@@ -5691,7 +5702,7 @@ msgstr ""
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.res_config_settings_view_form
 msgid "Set owner on stored products"
-msgstr ""
+msgstr "Nastavit vlastníka na uložené produkty"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.res_config_settings_view_form
@@ -5794,7 +5805,7 @@ msgstr "Krátký název sloužící k identifikaci vašeho skladu"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_picking_show_check_availability
 msgid "Show Check Availability"
-msgstr ""
+msgstr "Zobrazit kontrolu dostupnosti"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move_show_operations
@@ -6354,7 +6365,7 @@ msgstr ""
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_move_line_picking_id
 msgid "The stock operation where the packing has been made"
-msgstr ""
+msgstr "Skladová operace, kde bylo provedeno balení"
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_procurement_rule_warehouse_id
@@ -6415,6 +6426,9 @@ msgid ""
 "routes put another location. If it is empty, it will check for the customer "
 "location on the partner. "
 msgstr ""
+"Toto je výchozí cílové umístění, když vytváříte vychystávání ručně s tímto "
+"typem operace. Je však možné ji změnit, nebo že cesty změní na jiné místo. "
+"Pokud je prázdné, zkontroluje polohu zákazníka u partnera."
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_picking_type_default_location_src_id
@@ -6718,7 +6732,7 @@ msgstr "Přesuny"
 #. module: stock
 #: selection:stock.location,usage:0
 msgid "Transit Location"
-msgstr ""
+msgstr "tranzitní umístění"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.quant_search_view
