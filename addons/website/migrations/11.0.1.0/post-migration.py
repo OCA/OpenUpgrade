@@ -79,12 +79,24 @@ def import_website_seo_redirection_data(env):
     """
     if not openupgrade.table_exists(env.cr, 'website_seo_redirection'):
         return
+    # Transfer normal redirections directly
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO website_redirect
         (type, url_from, url_to, active, sequence)
         SELECT '301', wsr.origin, wsr.destination, True, 10
         FROM website_seo_redirection wsr""",
+    )
+    # Find relocated pages and relocate them
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE website_page wp
+        SET wp.url = wsr.url_to
+        FROM website_seo_redirection wsr
+        WHERE
+            wp.url = wsr.url_from AND
+            wsr.relocate_controller AND
+            wsr.url_from LIKE '/page/%'"""
     )
 
 
