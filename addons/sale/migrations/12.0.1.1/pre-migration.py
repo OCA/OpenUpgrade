@@ -18,6 +18,12 @@ _column_renames = {
     ],
 }
 
+_column_renames2 = {
+    'sale_order': [
+        ('require_payment', None),
+    ],
+}
+
 _field_renames_order_dates = [
     ('sale.order', 'sale_order', 'commitment_date',
      openupgrade.get_legacy_name('commitment_date')),
@@ -80,6 +86,9 @@ def migrate(env, version):
     if openupgrade.column_exists(env.cr, 'sale_order', 'requested_date'):
         # from sale_order_dates module
         openupgrade.rename_fields(env, _field_renames_order_dates)
+    if openupgrade.table_exists(env.cr, 'sale_quote_line'):
+        # from website_quote module
+        openupgrade.rename_columns(env.cr, _column_renames2)
     fill_sale_order_line_sections(env.cr)
     openupgrade.logged_query(
         env.cr,
