@@ -14,12 +14,12 @@ sale_management / sale.order.option        / product_id (many2one)         : pre
 sale_management / sale.order.option        / quantity (float)              : previously in module website_quote
 sale_management / sale.order.option        / sequence (integer)            : previously in module website_quote
 sale_management / sale.order.option        / uom_id (many2one)             : previously in module website_quote
-sale_management / sale.order.template      / require_signature (boolean)   : NEW
+sale_management / sale.order.template      / require_signature (boolean)   : NEW hasdefault
 sale_management / sale.order.template      / sale_order_template_line_ids (one2many): NEW relation: sale.order.template.line
 sale_management / sale.order.template      / sale_order_template_option_ids (one2many): NEW relation: sale.order.template.option
-sale_management / sale.order.template.line / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section']
-sale_management / sale.order.template.line / sale_order_template_id (many2one): NEW relation: sale.order.template, required: required
-sale_management / sale.order.template.option / sale_order_template_id (many2one): NEW relation: sale.order.template, required: required
+sale_management / sale.order.template.line / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section'], hasdefault
+sale_management / sale.order.template.line / sale_order_template_id (many2one): NEW relation: sale.order.template, required
+sale_management / sale.order.template.option / sale_order_template_id (many2one): NEW relation: sale.order.template, required
 sale_management / sale.quote.line          / __last_update (datetime)      : previously in module website_quote
 sale_management / sale.quote.line          / discount (float)              : previously in module website_quote
 sale_management / sale.quote.line          / display_name (char)           : previously in module website_quote

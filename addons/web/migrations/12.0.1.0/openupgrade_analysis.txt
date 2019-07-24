@@ -1,7 +1,7 @@
 ---Fields in module 'web'---
 web          / report.layout            / image (char)                  : NEW
 web          / report.layout            / pdf (char)                    : NEW
-web          / report.layout            / view_id (many2one)            : NEW relation: ir.ui.view, required: required
+web          / report.layout            / view_id (many2one)            : NEW relation: ir.ui.view, required
 ---XML records in module 'web'---
 DEL ir.actions.act_window: web_planner.web_planner_action
 NEW ir.model.access: web.access_report_layout

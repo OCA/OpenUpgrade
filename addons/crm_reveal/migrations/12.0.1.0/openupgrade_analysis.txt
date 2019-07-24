@@ -4,21 +4,21 @@ crm_reveal   / crm.lead                 / reveal_id (char)              : NEW
 crm_reveal   / crm.lead                 / reveal_ip (char)              : NEW
 crm_reveal   / crm.lead                 / reveal_rule_id (many2one)     : NEW relation: crm.reveal.rule
 crm_reveal   / crm.reveal.industry      / color (integer)               : NEW
-crm_reveal   / crm.reveal.industry      / name (char)                   : NEW required: required
-crm_reveal   / crm.reveal.industry      / reveal_id (char)              : NEW required: required
+crm_reveal   / crm.reveal.industry      / name (char)                   : NEW required
+crm_reveal   / crm.reveal.industry      / reveal_id (char)              : NEW required
 crm_reveal   / crm.reveal.role          / color (integer)               : NEW
-crm_reveal   / crm.reveal.role          / name (char)                   : NEW required: required
-crm_reveal   / crm.reveal.role          / reveal_id (char)              : NEW required: required
-crm_reveal   / crm.reveal.rule          / active (boolean)              : NEW
+crm_reveal   / crm.reveal.role          / name (char)                   : NEW required
+crm_reveal   / crm.reveal.role          / reveal_id (char)              : NEW required
+crm_reveal   / crm.reveal.rule          / active (boolean)              : NEW hasdefault
 crm_reveal   / crm.reveal.rule          / company_size_max (integer)    : NEW
 crm_reveal   / crm.reveal.rule          / company_size_min (integer)    : NEW
 crm_reveal   / crm.reveal.rule          / country_ids (many2many)       : NEW relation: res.country
 crm_reveal   / crm.reveal.rule          / extra_contacts (integer)      : NEW
 crm_reveal   / crm.reveal.rule          / industry_tag_ids (many2many)  : NEW relation: crm.reveal.industry
-crm_reveal   / crm.reveal.rule          / lead_for (selection)          : NEW required: required, selection_keys: ['companies', 'people'], req_default: function
+crm_reveal   / crm.reveal.rule          / lead_for (selection)          : NEW required, selection_keys: ['companies', 'people'], req_default: function, hasdefault
 crm_reveal   / crm.reveal.rule          / lead_ids (one2many)           : NEW relation: crm.lead
-crm_reveal   / crm.reveal.rule          / lead_type (selection)         : NEW required: required, selection_keys: ['lead', 'opportunity'], req_default: function
-crm_reveal   / crm.reveal.rule          / name (char)                   : NEW required: required
+crm_reveal   / crm.reveal.rule          / lead_type (selection)         : NEW required, selection_keys: ['lead', 'opportunity'], req_default: function, hasdefault
+crm_reveal   / crm.reveal.rule          / name (char)                   : NEW required
 crm_reveal   / crm.reveal.rule          / other_role_ids (many2many)    : NEW relation: crm.reveal.role
 crm_reveal   / crm.reveal.rule          / preferred_role_id (many2one)  : NEW relation: crm.reveal.role
 crm_reveal   / crm.reveal.rule          / priority (selection)          : NEW selection_keys: ['0', '1', '2', '3']
@@ -29,11 +29,11 @@ crm_reveal   / crm.reveal.rule          / suffix (char)                 : NEW
 crm_reveal   / crm.reveal.rule          / tag_ids (many2many)           : NEW relation: crm.lead.tag
 crm_reveal   / crm.reveal.rule          / team_id (many2one)            : NEW relation: crm.team
 crm_reveal   / crm.reveal.rule          / user_id (many2one)            : NEW relation: res.users
-crm_reveal   / crm.reveal.seniority     / name (char)                   : NEW required: required
-crm_reveal   / crm.reveal.seniority     / reveal_id (char)              : NEW required: required
+crm_reveal   / crm.reveal.seniority     / name (char)                   : NEW required
+crm_reveal   / crm.reveal.seniority     / reveal_id (char)              : NEW required
 crm_reveal   / crm.reveal.view          / reveal_ip (char)              : NEW
 crm_reveal   / crm.reveal.view          / reveal_rule_id (many2one)     : NEW relation: crm.reveal.rule
-crm_reveal   / crm.reveal.view          / reveal_state (selection)      : NEW selection_keys: ['not_found', 'to_process']
+crm_reveal   / crm.reveal.view          / reveal_state (selection)      : NEW selection_keys: ['not_found', 'to_process'], hasdefault
 ---XML records in module 'crm_reveal'---
 NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_1
 NEW crm.reveal.industry: crm_reveal.crm_reveal_industry_10

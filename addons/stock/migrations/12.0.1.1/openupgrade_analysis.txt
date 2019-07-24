@@ -12,7 +12,7 @@ stock        / stock.inventory.line     / location_name (char)          : DEL
 stock        / stock.inventory.line     / prodlot_name (char)           : DEL
 stock        / stock.inventory.line     / product_code (char)           : DEL
 stock        / stock.inventory.line     / product_name (char)           : DEL
-stock        / stock.inventory.line     / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+stock        / stock.inventory.line     / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
 stock        / stock.location           / parent_left (integer)         : DEL
 stock        / stock.location           / parent_path (char)            : NEW
 stock        / stock.location           / parent_right (integer)        : DEL
@@ -21,22 +21,22 @@ stock        / stock.location.route     / push_ids (one2many)           : DEL re
 stock        / stock.location.route     / rule_ids (one2many)           : NEW relation: stock.rule
 stock        / stock.move               / ordered_qty (float)           : DEL
 stock        / stock.move               / package_level_id (many2one)   : NEW relation: stock.package_level
-stock        / stock.move               / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+stock        / stock.move               / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom') [nothing to do]
 stock        / stock.move               / push_rule_id (many2one)       : DEL relation: stock.location.path
-stock        / stock.move               / rule_id (many2one)            : relation is now 'stock.rule' ('procurement.rule')
+stock        / stock.move               / rule_id (many2one)            : relation is now 'stock.rule' ('procurement.rule') [nothing to do]
 stock        / stock.move.line          / ordered_qty (float)           : DEL
 stock        / stock.move.line          / package_level_id (many2one)   : NEW relation: stock.package_level
-stock        / stock.move.line          / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+stock        / stock.move.line          / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
 stock        / stock.package_level      / location_dest_id (many2one)   : NEW relation: stock.location
 stock        / stock.package_level      / move_ids (one2many)           : NEW relation: stock.move
 stock        / stock.package_level      / move_line_ids (one2many)      : NEW relation: stock.move.line
-stock        / stock.package_level      / package_id (many2one)         : NEW relation: stock.quant.package, required: required
+stock        / stock.package_level      / package_id (many2one)         : NEW relation: stock.quant.package, required
 stock        / stock.package_level      / picking_id (many2one)         : NEW relation: stock.picking
 stock        / stock.picking            / activity_date_deadline (date) : not related anymore
 stock        / stock.picking            / activity_date_deadline (date) : not stored anymore
 stock        / stock.picking            / activity_date_deadline (date) : now a function
 stock        / stock.picking            / backorder_ids (one2many)      : NEW relation: stock.picking
-stock        / stock.picking            / immediate_transfer (boolean)  : NEW
+stock        / stock.picking            / immediate_transfer (boolean)  : NEW hasdefault
 stock        / stock.picking            / message_last_post (datetime)  : DEL
 stock        / stock.picking            / message_main_attachment_id (many2one): NEW relation: ir.attachment
 stock        / stock.picking            / move_ids_without_package (one2many): NEW relation: stock.move
@@ -48,16 +48,16 @@ stock        / stock.picking.type       / barcode_nomenclature_id (many2one): DE
 stock        / stock.production.lot     / activity_ids (one2many)       : NEW relation: mail.activity
 stock        / stock.production.lot     / message_last_post (datetime)  : DEL
 stock        / stock.production.lot     / message_main_attachment_id (many2one): NEW relation: ir.attachment
-stock        / stock.production.lot     / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
-stock        / stock.quant              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+stock        / stock.production.lot     / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
+stock        / stock.quant              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
 stock        / stock.quant.package      / company_id (many2one)         : is now stored
 stock        / stock.quant.package      / location_id (many2one)        : is now stored
 stock        / stock.quant.package      / move_line_ids (one2many)      : DEL relation: stock.move.line
-stock        / stock.rule               / auto (selection)              : NEW required: required, selection_keys: ['manual', 'transparent'], req_default: function
-stock        / stock.scrap              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+stock        / stock.rule               / auto (selection)              : NEW required, selection_keys: ['manual', 'transparent'], req_default: function, hasdefault
+stock        / stock.scrap              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
 stock        / stock.warehouse          / default_resupply_wh_id (many2one): DEL relation: stock.warehouse
-stock        / stock.warehouse          / mto_pull_id (many2one)        : relation is now 'stock.rule' ('procurement.rule')
-stock        / stock.warehouse.orderpoint / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+stock        / stock.warehouse          / mto_pull_id (many2one)        : relation is now 'stock.rule' ('procurement.rule') [nothing to do]
+stock        / stock.warehouse.orderpoint / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom') [nothing to do]
 ---XML records in module 'stock'---
 NEW ir.actions.act_window: stock.action_product_replenish
 NEW ir.actions.act_window: stock.action_rules_form

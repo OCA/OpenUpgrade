@@ -23,7 +23,7 @@ website_quote / sale.order.option        / product_id (many2one)         : now r
 website_quote / sale.order.option        / quantity (float)              : module is now 'sale_management' ('website_quote')
 website_quote / sale.order.option        / sequence (integer)            : module is now 'sale_management' ('website_quote')
 website_quote / sale.order.option        / uom_id (many2one)             : module is now 'sale_management' ('website_quote')
-website_quote / sale.order.option        / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
+website_quote / sale.order.option        / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom') [nothing to do]
 website_quote / sale.quote.line          / __last_update (datetime)      : module is now 'sale_management' ('website_quote')
 website_quote / sale.quote.line          / discount (float)              : module is now 'sale_management' ('website_quote')
 website_quote / sale.quote.line          / display_name (char)           : module is now 'sale_management' ('website_quote')
@@ -32,9 +32,9 @@ website_quote / sale.quote.line          / name (text)                   : modul
 website_quote / sale.quote.line          / price_unit (float)            : module is now 'sale_management' ('website_quote')
 website_quote / sale.quote.line          / product_id (many2one)         : module is now 'sale_management' ('website_quote')
 website_quote / sale.quote.line          / product_uom_id (many2one)     : module is now 'sale_management' ('website_quote')
-website_quote / sale.quote.line          / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+website_quote / sale.quote.line          / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
 website_quote / sale.quote.line          / product_uom_qty (float)       : module is now 'sale_management' ('website_quote')
-website_quote / sale.quote.line          / quote_id (many2one)           : DEL relation: sale.quote.template, required: required
+website_quote / sale.quote.line          / quote_id (many2one)           : DEL relation: sale.quote.template, required
 website_quote / sale.quote.line          / sequence (integer)            : module is now 'sale_management' ('website_quote')
 website_quote / sale.quote.option        / __last_update (datetime)      : module is now 'sale_management' ('website_quote')
 website_quote / sale.quote.option        / discount (float)              : module is now 'sale_management' ('website_quote')
@@ -44,9 +44,9 @@ website_quote / sale.quote.option        / name (text)                   : modul
 website_quote / sale.quote.option        / price_unit (float)            : module is now 'sale_management' ('website_quote')
 website_quote / sale.quote.option        / product_id (many2one)         : module is now 'sale_management' ('website_quote')
 website_quote / sale.quote.option        / quantity (float)              : module is now 'sale_management' ('website_quote')
-website_quote / sale.quote.option        / template_id (many2one)        : DEL relation: sale.quote.template, required: required
+website_quote / sale.quote.option        / template_id (many2one)        : DEL relation: sale.quote.template, required
 website_quote / sale.quote.option        / uom_id (many2one)             : module is now 'sale_management' ('website_quote')
-website_quote / sale.quote.option        / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
+website_quote / sale.quote.option        / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom') [nothing to do]
 website_quote / sale.quote.template      / __last_update (datetime)      : module is now 'sale_management' ('website_quote')
 website_quote / sale.quote.template      / active (boolean)              : module is now 'sale_management' ('website_quote')
 website_quote / sale.quote.template      / display_name (char)           : module is now 'sale_management' ('website_quote')

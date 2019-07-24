@@ -2,12 +2,12 @@
 hr_expense   / hr.employee              / expense_manager_id (many2one) : NEW relation: res.users
 hr_expense   / hr.expense               / activity_ids (one2many)       : NEW relation: mail.activity
 hr_expense   / hr.expense               / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
-hr_expense   / hr.expense               / company_currency_id (many2one): NEW relation: res.currency
+hr_expense   / hr.expense               / company_currency_id (many2one): NEW relation: res.currency, isrelated: related, stored
 hr_expense   / hr.expense               / message_last_post (datetime)  : DEL
 hr_expense   / hr.expense               / message_main_attachment_id (many2one): NEW relation: ir.attachment
-hr_expense   / hr.expense               / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+hr_expense   / hr.expense               / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
 hr_expense   / hr.expense               / state (selection)             : selection_keys is now '['approved', 'done', 'draft', 'refused', 'reported']' ('['done', 'draft', 'refused', 'reported']')
-hr_expense   / hr.expense               / total_amount_company (float)  : NEW
+hr_expense   / hr.expense               / total_amount_company (float)  : NEW isfunction: function, stored
 hr_expense   / hr.expense.sheet         / activity_ids (one2many)       : NEW relation: mail.activity
 hr_expense   / hr.expense.sheet         / message_last_post (datetime)  : DEL
 hr_expense   / hr.expense.sheet         / message_main_attachment_id (many2one): NEW relation: ir.attachment

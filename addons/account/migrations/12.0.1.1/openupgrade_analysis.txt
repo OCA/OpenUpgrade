@@ -1,10 +1,10 @@
 ---Fields in module 'account'---
-account      / account.account          / internal_group (selection)    : NEW selection_keys: function
+account      / account.account          / internal_group (selection)    : NEW selection_keys: function, isrelated: related, stored
 account      / account.account.type     / internal_group (selection)    : NEW selection_keys: ['asset', 'equity', 'expense', 'income', 'liability']
 account      / account.analytic.line    / amount_currency (float)       : DEL
 account      / account.analytic.line    / currency_id (False)           : DEL mode: modify
 account      / account.analytic.line    / product_uom_id (many2one)     : module is now 'analytic' ('account')
-account      / account.analytic.line    / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+account      / account.analytic.line    / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
 account      / account.bank.statement   / accounting_date (date)        : NEW
 account      / account.bank.statement   / message_last_post (datetime)  : DEL
 account      / account.bank.statement   / message_main_attachment_id (many2one): NEW relation: ir.attachment
@@ -12,12 +12,12 @@ account      / account.bank.statement.line / account_number (char)         : NEW
 account      / account.chart.template   / bank_account_code_prefix (char): now required
 account      / account.chart.template   / cash_account_code_prefix (char): now required
 account      / account.chart.template   / company_id (many2one)         : DEL relation: res.company
-account      / account.chart.template   / transfer_account_code_prefix (char): NEW required: required
-account      / account.chart.template   / transfer_account_id (many2one): DEL relation: account.account.template, required: required
-account      / account.fiscal.year      / company_id (many2one)         : NEW relation: res.company, required: required, req_default: function
-account      / account.fiscal.year      / date_from (date)              : NEW required: required
-account      / account.fiscal.year      / date_to (date)                : NEW required: required
-account      / account.fiscal.year      / name (char)                   : NEW required: required
+account      / account.chart.template   / transfer_account_code_prefix (char): NEW required
+account      / account.chart.template   / transfer_account_id (many2one): DEL relation: account.account.template, required
+account      / account.fiscal.year      / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+account      / account.fiscal.year      / date_from (date)              : NEW required
+account      / account.fiscal.year      / date_to (date)                : NEW required
+account      / account.fiscal.year      / name (char)                   : NEW required
 account      / account.group            / parent_left (integer)         : DEL
 account      / account.group            / parent_path (char)            : NEW
 account      / account.group            / parent_right (integer)        : DEL
@@ -27,22 +27,22 @@ account      / account.invoice          / activity_date_deadline (date) : now a 
 account      / account.invoice          / incoterm_id (many2one)        : previously in module l10n_be_intrastat
 account      / account.invoice          / message_last_post (datetime)  : DEL
 account      / account.invoice          / message_main_attachment_id (many2one): NEW relation: ir.attachment
-account      / account.invoice          / reference_type (selection)    : DEL required: required, selection_keys: function, req_default: function
+account      / account.invoice          / reference_type (selection)    : DEL required, selection_keys: function, req_default: function
 account      / account.invoice          / source_email (char)           : NEW
 account      / account.invoice          / state (selection)             : selection_keys is now '['cancel', 'draft', 'in_payment', 'open', 'paid']' ('['cancel', 'draft', 'open', 'paid']')
 account      / account.invoice          / vendor_bill_id (many2one)     : NEW relation: account.invoice
-account      / account.invoice          / vendor_display_name (char)    : NEW
-account      / account.invoice.line     / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section']
-account      / account.invoice.line     / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom')
+account      / account.invoice          / vendor_display_name (char)    : NEW isfunction: function, stored
+account      / account.invoice.line     / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section'], hasdefault
+account      / account.invoice.line     / uom_id (many2one)             : relation is now 'uom.uom' ('product.uom') [nothing to do]
 account      / account.invoice.tax      / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
 account      / account.journal          / alias_id (many2one)           : NEW relation: mail.alias
 account      / account.journal          / bank_statements_source (selection): selection_keys is now 'function' ('['manual', 'undefined']')
 account      / account.journal          / post_at_bank_rec (boolean)    : NEW
-account      / account.move             / auto_reverse (boolean)        : NEW
+account      / account.move             / auto_reverse (boolean)        : NEW hasdefault
 account      / account.move             / reverse_date (date)           : NEW
 account      / account.move             / reverse_entry_id (many2one)   : NEW relation: account.move
 account      / account.move             / tax_type_domain (char)        : NEW
-account      / account.move.line        / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+account      / account.move.line        / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
 account      / account.move.line        / recompute_tax_line (boolean)  : NEW
 account      / account.move.line        / tax_line_grouping_key (char)  : NEW
 account      / account.payment          / company_id (many2one)         : not stored anymore
@@ -62,14 +62,14 @@ account      / account.reconcile.model  / match_amount_min (float)      : NEW
 account      / account.reconcile.model  / match_journal_ids (many2many) : NEW relation: account.journal
 account      / account.reconcile.model  / match_label (selection)       : NEW selection_keys: ['contains', 'match_regex', 'not_contains']
 account      / account.reconcile.model  / match_label_param (char)      : NEW
-account      / account.reconcile.model  / match_nature (selection)      : NEW required: required, selection_keys: ['amount_paid', 'amount_received', 'both'], req_default: function
+account      / account.reconcile.model  / match_nature (selection)      : NEW required, selection_keys: ['amount_paid', 'amount_received', 'both'], req_default: function, hasdefault
 account      / account.reconcile.model  / match_partner (boolean)       : NEW
 account      / account.reconcile.model  / match_partner_category_ids (many2many): NEW relation: res.partner.category
 account      / account.reconcile.model  / match_partner_ids (many2many) : NEW relation: res.partner
-account      / account.reconcile.model  / match_same_currency (boolean) : NEW
-account      / account.reconcile.model  / match_total_amount (boolean)  : NEW
-account      / account.reconcile.model  / match_total_amount_param (float): NEW
-account      / account.reconcile.model  / rule_type (selection)         : NEW required: required, selection_keys: ['invoice_matching', 'writeoff_button', 'writeoff_suggestion'], req_default: function
+account      / account.reconcile.model  / match_same_currency (boolean) : NEW hasdefault
+account      / account.reconcile.model  / match_total_amount (boolean)  : NEW hasdefault
+account      / account.reconcile.model  / match_total_amount_param (float): NEW hasdefault
+account      / account.reconcile.model  / rule_type (selection)         : NEW required, selection_keys: ['invoice_matching', 'writeoff_button', 'writeoff_suggestion'], req_default: function, hasdefault
 account      / account.reconcile.model  / second_analytic_tag_ids (many2many): NEW relation: account.analytic.tag
 account      / account.reconcile.model.template / auto_reconcile (boolean)      : NEW
 account      / account.reconcile.model.template / force_second_tax_included (boolean): NEW
@@ -80,14 +80,14 @@ account      / account.reconcile.model.template / match_amount_min (float)      
 account      / account.reconcile.model.template / match_journal_ids (many2many) : NEW relation: account.journal
 account      / account.reconcile.model.template / match_label (selection)       : NEW selection_keys: ['contains', 'match_regex', 'not_contains']
 account      / account.reconcile.model.template / match_label_param (char)      : NEW
-account      / account.reconcile.model.template / match_nature (selection)      : NEW required: required, selection_keys: ['amount_paid', 'amount_received', 'both'], req_default: function
+account      / account.reconcile.model.template / match_nature (selection)      : NEW required, selection_keys: ['amount_paid', 'amount_received', 'both'], req_default: function, hasdefault
 account      / account.reconcile.model.template / match_partner (boolean)       : NEW
 account      / account.reconcile.model.template / match_partner_category_ids (many2many): NEW relation: res.partner.category
 account      / account.reconcile.model.template / match_partner_ids (many2many) : NEW relation: res.partner
-account      / account.reconcile.model.template / match_same_currency (boolean) : NEW
-account      / account.reconcile.model.template / match_total_amount (boolean)  : NEW
-account      / account.reconcile.model.template / match_total_amount_param (float): NEW
-account      / account.reconcile.model.template / rule_type (selection)         : NEW required: required, selection_keys: ['invoice_matching', 'writeoff_button', 'writeoff_suggestion'], req_default: function
+account      / account.reconcile.model.template / match_same_currency (boolean) : NEW hasdefault
+account      / account.reconcile.model.template / match_total_amount (boolean)  : NEW hasdefault
+account      / account.reconcile.model.template / match_total_amount_param (float): NEW hasdefault
+account      / account.reconcile.model.template / rule_type (selection)         : NEW required, selection_keys: ['invoice_matching', 'writeoff_button', 'writeoff_suggestion'], req_default: function, hasdefault
 account      / account.tax              / cash_basis_account (many2one) : was renamed to cash_basis_account_id [nothing to do]
 account      / account.tax              / tax_adjustment (boolean)      : DEL
 account      / account.tax              / type_tax_use (selection)      : selection_keys is now '['adjustment', 'none', 'purchase', 'sale']' ('['none', 'purchase', 'sale']')
@@ -98,26 +98,26 @@ account      / account.tax.template     / tax_adjustment (boolean)      : DEL
 account      / account.tax.template     / type_tax_use (selection)      : selection_keys is now '['adjustment', 'none', 'purchase', 'sale']' ('['none', 'purchase', 'sale']')
 account      / digest.digest            / kpi_account_total_revenue (boolean): NEW
 account      / res.company              / account_bank_reconciliation_start (date): NEW
-account      / res.company              / account_dashboard_onboarding_state (selection): NEW selection_keys: ['closed', 'done', 'just_done', 'not_done']
-account      / res.company              / account_invoice_onboarding_state (selection): NEW selection_keys: ['closed', 'done', 'just_done', 'not_done']
-account      / res.company              / account_onboarding_invoice_layout_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
-account      / res.company              / account_onboarding_sale_tax_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
-account      / res.company              / account_onboarding_sample_invoice_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_dashboard_onboarding_state (selection): NEW selection_keys: ['closed', 'done', 'just_done', 'not_done'], hasdefault
+account      / res.company              / account_invoice_onboarding_state (selection): NEW selection_keys: ['closed', 'done', 'just_done', 'not_done'], hasdefault
+account      / res.company              / account_onboarding_invoice_layout_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault
+account      / res.company              / account_onboarding_sale_tax_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault
+account      / res.company              / account_onboarding_sample_invoice_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault
 account      / res.company              / account_purchase_tax_id (many2one): NEW relation: account.tax
 account      / res.company              / account_sale_tax_id (many2one): NEW relation: account.tax
 account      / res.company              / account_setup_bank_data_done (boolean): DEL
-account      / res.company              / account_setup_bank_data_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_setup_bank_data_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault
 account      / res.company              / account_setup_bar_closed (boolean): DEL
 account      / res.company              / account_setup_coa_done (boolean): DEL
-account      / res.company              / account_setup_coa_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_setup_coa_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault
 account      / res.company              / account_setup_company_data_done (boolean): DEL
 account      / res.company              / account_setup_fy_data_done (boolean): DEL
-account      / res.company              / account_setup_fy_data_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+account      / res.company              / account_setup_fy_data_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault
 account      / res.company              / accounts_code_digits (integer): DEL
 account      / res.company              / incoterm_id (many2one)        : previously in module l10n_be_intrastat
-account      / res.company              / invoice_is_email (boolean)    : NEW
-account      / res.company              / invoice_is_print (boolean)    : NEW
-account      / res.company              / invoice_reference_type (selection): NEW selection_keys: function
+account      / res.company              / invoice_is_email (boolean)    : NEW hasdefault
+account      / res.company              / invoice_is_print (boolean)    : NEW hasdefault
+account      / res.company              / invoice_reference_type (selection): NEW selection_keys: function, hasdefault
 account      / res.company              / qr_code (boolean)             : NEW
 account      / res.company              / transfer_account_code_prefix (char): NEW
 account      / stock.incoterms          / __last_update (datetime)      : previously in module stock
