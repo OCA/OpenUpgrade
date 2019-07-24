@@ -96,7 +96,7 @@ def import_website_seo_redirection_data(env):
         WHERE
             wp.url = wsr.origin AND
             wsr.relocate_controller AND
-            wsr.origin LIKE '/page/%'"""
+            wsr.origin LIKE '/page/%%'"""
     )
 
 
