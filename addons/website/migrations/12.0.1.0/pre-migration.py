@@ -1,6 +1,8 @@
 # Copyright 2019 Eficent <http://www.eficent.com>
 # Copyright 2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+import json
+
 from base64 import b64encode
 from itertools import chain, product
 from os import listdir
@@ -68,7 +70,7 @@ def bootstrap_4_migration(env):
     if not openupgrade.column_exists(env.cr, table_name, col_name):
         openupgrade.logged_query(
             env.cr,
-            "ALTER TABLE %s ADD COLUMN %s INTEGER",
+            "ALTER TABLE %s ADD COLUMN %s TEXT",
             (AsIs(table_name), AsIs(col_name)),
         )
     # Find report views, which should never be converted here
@@ -163,13 +165,49 @@ def bootstrap_4_migration(env):
             "arch_db": new_arch,
             "key": oldview.key,  # Avoid automatic deduplication
         })
+        # Website-specific copy of the related website.page record
+        openupgrade.logged_query(
+            env.cr,
+            """INSERT INTO website_page (
+                    create_date, create_uid, write_date, write_uid,
+                    date_publish, is_published, url, website_indexed, view_id)
+               SELECT
+                    create_date, create_uid, write_date, write_uid,
+                    date_publish, is_published, url, website_indexed, %(new)s
+               FROM website_page
+               WHERE view_id = %(old)s""",
+            {"new": newview.id, "old": oldview.id},
+        )
+        # Obtain related website.menu details
+        env.cr.execute(
+            """SELECT
+                    wm.create_date, wm.create_uid, wm.write_date, wm.write_uid,
+                    wm.name, wm.url, wm.new_window, wm.sequence, wm.parent_id
+               FROM website_menu AS wm
+               INNER JOIN website_page AS wp ON wm.page_id = wp.id
+               INNER JOIN ir_ui_view AS v ON wp.view_id = v.id
+               WHERE view_id = %s AND wm.website_id IS NULL""",
+            (oldview.id,)
+        )
+        menus = []
+        # Use only JSON-serializable types
+        for menu in env.cr.dictfetchall():
+            for key in menu:
+                if not isinstance(menu[key], (str, int, float,
+                                              bool, type(None))):
+                    menu[key] = str(menu[key])
+            menus.append(menu)
+        # Store needed info in the migration column
         openupgrade.logged_query(
             env.cr,
             "UPDATE %s SET %s = %s, website_id = %s WHERE id = %s",
             (
                 AsIs(table_name),
                 AsIs(col_name),
-                oldview.id,
+                json.dumps({
+                    "menus": menus,
+                    "view_id": oldview.id,
+                }),
                 website_id,
                 newview.id,
             )
@@ -250,10 +288,10 @@ def migrate(env, version):
     cr = env.cr
     openupgrade.rename_fields(env, _field_renames)
     openupgrade.rename_xmlids(cr, _xml_ids_renames)
-    noupdate_changes(env)
     fill_website_company_id(cr)
     fill_website_name(cr)
     fill_website_redirect_type(cr)
     fill_website_redirect_urls(cr)
     disable_less_customizations(env)
     bootstrap_4_migration(env)
+    noupdate_changes(env)
