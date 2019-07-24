@@ -14,14 +14,9 @@ def fill_purchase_order_user_id(cr):
     )
 
 
-def reset_domain_purchase_rfq(env):
-    env.ref('purchase.purchase_rfq').domain = False
-
-
 @openupgrade.migrate()
 def migrate(env, version):
     fill_purchase_order_user_id(env.cr)
-    reset_domain_purchase_rfq(env)
     openupgrade.load_data(
         env.cr, 'purchase', 'migrations/12.0.1.2/noupdate_changes.xml')
     openupgrade.delete_record_translations(
