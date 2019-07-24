@@ -91,7 +91,7 @@ def import_website_seo_redirection_data(env):
     openupgrade.logged_query(
         env.cr, """
         UPDATE website_page wp
-        SET wp.url = wsr.destination
+        SET url = wsr.destination
         FROM website_seo_redirection wsr
         WHERE
             wp.url = wsr.origin AND
