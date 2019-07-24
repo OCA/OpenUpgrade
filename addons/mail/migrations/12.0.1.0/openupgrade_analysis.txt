@@ -1,28 +1,28 @@
 ---Fields in module 'mail'---
 mail         / ir.actions.act_window.view / view_mode (False)             : NEW selection_keys: ['activity', 'calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'tree'], mode: modify
 mail         / ir.actions.server        / activity_date_deadline_range (integer): NEW
-mail         / ir.actions.server        / activity_date_deadline_range_type (selection): NEW selection_keys: ['days', 'months', 'weeks']
+mail         / ir.actions.server        / activity_date_deadline_range_type (selection): NEW selection_keys: ['days', 'months', 'weeks'], hasdefault
 mail         / ir.actions.server        / activity_note (html)          : NEW
 mail         / ir.actions.server        / activity_summary (char)       : NEW
 mail         / ir.actions.server        / activity_type_id (many2one)   : NEW relation: mail.activity.type
-mail         / ir.actions.server        / activity_user_field_name (char): NEW
+mail         / ir.actions.server        / activity_user_field_name (char): NEW hasdefault
 mail         / ir.actions.server        / activity_user_id (many2one)   : NEW relation: res.users
-mail         / ir.actions.server        / activity_user_type (selection): NEW required: required, selection_keys: ['generic', 'specific'], req_default: function
+mail         / ir.actions.server        / activity_user_type (selection): NEW required, selection_keys: ['generic', 'specific'], req_default: function, hasdefault
 mail         / ir.actions.server        / state (False)                 : selection_keys is now '['code', 'email', 'followers', 'multi', 'next_activity', 'object_create', 'object_write']' ('['code', 'email', 'followers', 'multi', 'object_create', 'object_write']')
 mail         / ir.ui.view               / type (False)                  : NEW selection_keys: ['activity', 'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree'], mode: modify
 mail         / mail.activity            / automated (boolean)           : NEW
-mail         / mail.activity            / create_user_id (many2one)     : NEW relation: res.users
-mail         / mail.activity.type       / active (boolean)              : NEW
+mail         / mail.activity            / create_user_id (many2one)     : NEW relation: res.users, hasdefault
+mail         / mail.activity.type       / active (boolean)              : NEW hasdefault
 mail         / mail.activity.type       / days (integer)                : was renamed to delay_count [nothing to do]
 mail         / mail.activity.type       / decoration_type (selection)   : NEW selection_keys: ['danger', 'warning']
 mail         / mail.activity.type       / default_next_type_id (many2one): NEW relation: mail.activity.type
-mail         / mail.activity.type       / delay_from (selection)        : NEW required: required, selection_keys: ['current_date', 'previous_activity'], req_default: function
-mail         / mail.activity.type       / delay_unit (selection)        : NEW required: required, selection_keys: ['days', 'months', 'weeks'], req_default: function
-mail         / mail.activity.type       / force_next (boolean)          : NEW
+mail         / mail.activity.type       / delay_from (selection)        : NEW required, selection_keys: ['current_date', 'previous_activity'], req_default: function, hasdefault
+mail         / mail.activity.type       / delay_unit (selection)        : NEW required, selection_keys: ['days', 'months', 'weeks'], req_default: function, hasdefault
+mail         / mail.activity.type       / force_next (boolean)          : NEW hasdefault
 mail         / mail.activity.type       / mail_template_ids (many2many) : NEW relation: mail.template
-mail         / mail.activity.type       / res_model_change (boolean)    : NEW
-mail         / mail.blacklist           / active (boolean)              : NEW
-mail         / mail.blacklist           / email (char)                  : NEW required: required
+mail         / mail.activity.type       / res_model_change (boolean)    : NEW hasdefault
+mail         / mail.blacklist           / active (boolean)              : NEW hasdefault
+mail         / mail.blacklist           / email (char)                  : NEW required
 mail         / mail.blacklist           / message_follower_ids (one2many): NEW relation: mail.followers
 mail         / mail.blacklist           / message_ids (one2many)        : NEW relation: mail.message
 mail         / mail.blacklist           / message_main_attachment_id (many2one): NEW relation: ir.attachment
@@ -35,18 +35,18 @@ mail         / mail.channel             / moderation_ids (one2many)     : NEW re
 mail         / mail.channel             / moderation_notify (boolean)   : NEW
 mail         / mail.channel             / moderation_notify_msg (text)  : NEW
 mail         / mail.channel             / moderator_ids (many2many)     : NEW relation: res.users
-mail         / mail.message             / add_sign (boolean)            : NEW
+mail         / mail.message             / add_sign (boolean)            : NEW hasdefault
 mail         / mail.message             / layout (char)                 : NEW
 mail         / mail.message             / moderation_status (selection) : NEW selection_keys: ['accepted', 'pending_moderation', 'rejected']
 mail         / mail.message             / moderator_id (many2one)       : NEW relation: res.users
-mail         / mail.moderation          / channel_id (many2one)         : NEW relation: mail.channel, required: required
-mail         / mail.moderation          / email (char)                  : NEW required: required
-mail         / mail.moderation          / status (selection)            : NEW required: required, selection_keys: ['allow', 'ban']
+mail         / mail.moderation          / channel_id (many2one)         : NEW relation: mail.channel, required
+mail         / mail.moderation          / email (char)                  : NEW required
+mail         / mail.moderation          / status (selection)            : NEW required, selection_keys: ['allow', 'ban']
 mail         / mail.notification        / email_status (selection)      : selection_keys is now '['bounce', 'canceled', 'exception', 'ready', 'sent']' ('['bounce', 'exception', 'ready', 'sent']')
 mail         / mail.notification        / failure_reason (text)         : NEW
 mail         / mail.notification        / failure_type (selection)      : NEW selection_keys: ['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN']
 mail         / mail.notification        / mail_id (many2one)            : NEW relation: mail.mail
-mail         / mail.shortcode           / shortcode_type (selection)    : DEL required: required, selection_keys: ['image', 'text'], req_default: function
+mail         / mail.shortcode           / shortcode_type (selection)    : DEL required, selection_keys: ['image', 'text'], req_default: function
 mail         / mail.shortcode           / unicode_source (char)         : DEL
 mail         / mail.test                / __last_update (datetime)      : module is now 'test_mail' ('mail')
 mail         / mail.test                / _inherits (False)             : module is now 'test_mail' ('mail')
@@ -88,7 +88,7 @@ mail         / mail.test.simple         / message_partner_ids (many2many): modul
 mail         / mail.test.simple         / message_unread (boolean)      : module is now 'test_mail' ('mail')
 mail         / mail.test.simple         / message_unread_counter (integer): module is now 'test_mail' ('mail')
 mail         / mail.test.simple         / name (char)                   : module is now 'test_mail' ('mail')
-mail         / mail.tracking.value      / track_sequence (integer)      : NEW
+mail         / mail.tracking.value      / track_sequence (integer)      : NEW hasdefault
 mail         / res.partner              / activity_date_deadline (date) : not related anymore
 mail         / res.partner              / activity_date_deadline (date) : not stored anymore
 mail         / res.partner              / activity_date_deadline (date) : now a function

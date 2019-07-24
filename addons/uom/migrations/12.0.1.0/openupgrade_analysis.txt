@@ -12,7 +12,7 @@ uom          / product.uom.categ        / __last_update (datetime)      : previo
 uom          / product.uom.categ        / display_name (char)           : previously in module product
 uom          / product.uom.categ        / name (char)                   : previously in module product
 uom          / uom.category             / measure_type (selection)      : NEW selection_keys: ['length', 'time', 'unit', 'volume', 'weight']
-uom          / uom.uom                  / measure_type (selection)      : NEW selection_keys: function
+uom          / uom.uom                  / measure_type (selection)      : NEW selection_keys: function, isrelated: related, stored
 ---XML records in module 'uom'---
 NEW ir.actions.act_window: uom.product_uom_categ_form_action
 NEW ir.actions.act_window: uom.product_uom_form_action

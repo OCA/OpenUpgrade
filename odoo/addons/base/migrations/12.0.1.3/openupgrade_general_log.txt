@@ -1,11 +1,11 @@
 ---Fields in module 'general'---
-# 7360 fields matched,
-# Direct match: 6974
-# Found in other module: 155
+# 7368 fields matched,
+# Direct match: 6981
+# Found in other module: 156
 # Found with different name: 0
 # Found with different type: 2
 # In obsolete models: 229
-# New columns: 1365
+# New columns: 1367
 # Not matched: 245
 new model account.analytic.distribution
 new model account.analytic.group
@@ -96,19 +96,317 @@ obsolete model stock.location.path
 obsolete model web.planner
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
+---Fields in module 'sale_payment'---
+---XML records in module 'sale_payment'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'website_rating_project'---
+---XML records in module 'website_rating_project'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'web_planner'---
+---XML records in module 'web_planner'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'sale_order_dates'---
+---XML records in module 'sale_order_dates'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'website_forum_doc'---
+website_forum_doc / forum.post               / color (integer)               : DEL
+website_forum_doc / forum.post               / documentation_stage_id (many2one): DEL relation: forum.documentation.stage
+website_forum_doc / forum.post               / documentation_toc_id (many2one): DEL relation: forum.documentation.toc
+---XML records in module 'website_forum_doc'---
+DEL forum.documentation.stage: website_forum_doc.stage_draft (noupdate)
+DEL forum.documentation.stage: website_forum_doc.stage_ideas (noupdate)
+DEL forum.documentation.stage: website_forum_doc.stage_publish (noupdate)
+DEL forum.documentation.stage: website_forum_doc.stage_review (noupdate)
+DEL ir.actions.act_url: website_forum_doc.action_open_documentation
+DEL ir.actions.act_window: website_forum_doc.action_documentation_toc
+DEL ir.actions.act_window: website_forum_doc.action_forum_doc_post
+DEL ir.actions.todo: base.open_menu
+DEL ir.model.access: website_forum_doc.all_documentation_toc
+DEL ir.model.access: website_forum_doc.users_documentation_stage
+DEL ir.model.access: website_forum_doc.users_documentation_stage_all
+DEL ir.model.access: website_forum_doc.users_documentation_toc
+DEL ir.ui.menu: website_forum_doc.menu_documentation
+DEL ir.ui.menu: website_forum_doc.menu_forum_doc_posts
+DEL ir.ui.view: website_forum_doc.assets_frontend
+DEL ir.ui.view: website_forum_doc.breadcrumb
+DEL ir.ui.view: website_forum_doc.documentation
+DEL ir.ui.view: website_forum_doc.documentation_post
+DEL ir.ui.view: website_forum_doc.forum_question_doc
+DEL ir.ui.view: website_forum_doc.header_footer_custom
+DEL ir.ui.view: website_forum_doc.promote_question
+DEL ir.ui.view: website_forum_doc.toc
+DEL ir.ui.view: website_forum_doc.view_documentation_toc_list
+DEL ir.ui.view: website_forum_doc.view_forum_post_doc_form
+DEL ir.ui.view: website_forum_doc.view_forum_post_doc_list
+DEL ir.ui.view: website_forum_doc.view_forum_post_kanban
+DEL website.menu: website_forum_doc.menu_questions (noupdate)
+ERROR: module not in list of installed modules:
+---Fields in module 'l10n_be_intrastat_2019'---
+l10n_be_intrastat_2019 / account.invoice.line     / intrastat_product_origin_country_id (many2one): DEL relation: res.country
+---XML records in module 'l10n_be_intrastat_2019'---
+DEL ir.ui.view: l10n_be_intrastat_2019.invoice_line_be_intrastat_data_form
+DEL ir.ui.view: l10n_be_intrastat_2019.report_intrastatinvoice_document_2019
+DEL ir.ui.view: l10n_be_intrastat_2019.report_invoice_document_intrastat_2019
+DEL ir.ui.view: l10n_be_intrastat_2019.report_invoice_layouted_intrastat_2019
+ERROR: module not in list of installed modules:
+---Fields in module 'website_quote'---
+---XML records in module 'website_quote'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'mrp_repair'---
+---XML records in module 'mrp_repair'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'pos_data_drinks'---
+---XML records in module 'pos_data_drinks'---
+DEL ir.actions.todo: base.open_menu
+DEL pos.category: pos_data_drinks.alcohol (noupdate)
+DEL pos.category: pos_data_drinks.beer (noupdate)
+DEL pos.category: pos_data_drinks.beverage (noupdate)
+DEL pos.category: pos_data_drinks.cocktail (noupdate)
+DEL pos.category: pos_data_drinks.hot (noupdate)
+DEL pos.category: pos_data_drinks.milkshake (noupdate)
+DEL pos.category: pos_data_drinks.soft (noupdate)
+DEL pos.category: pos_data_drinks.wine (noupdate)
+DEL product.product: pos_data_drinks.bacardi (noupdate)
+DEL product.product: pos_data_drinks.baileys (noupdate)
+DEL product.product: pos_data_drinks.bloody_mary (noupdate)
+DEL product.product: pos_data_drinks.budweiser (noupdate)
+DEL product.product: pos_data_drinks.caipirinha (noupdate)
+DEL product.product: pos_data_drinks.captain_morgan (noupdate)
+DEL product.product: pos_data_drinks.capuccino (noupdate)
+DEL product.product: pos_data_drinks.carlsberg (noupdate)
+DEL product.product: pos_data_drinks.coffee (noupdate)
+DEL product.product: pos_data_drinks.coke (noupdate)
+DEL product.product: pos_data_drinks.corona (noupdate)
+DEL product.product: pos_data_drinks.cosmopolitan (noupdate)
+DEL product.product: pos_data_drinks.cuba_libre (noupdate)
+DEL product.product: pos_data_drinks.daiquiri (noupdate)
+DEL product.product: pos_data_drinks.disaronno (noupdate)
+DEL product.product: pos_data_drinks.efes (noupdate)
+DEL product.product: pos_data_drinks.espresso (noupdate)
+DEL product.product: pos_data_drinks.fanta (noupdate)
+DEL product.product: pos_data_drinks.fosters (noupdate)
+DEL product.product: pos_data_drinks.gordon (noupdate)
+DEL product.product: pos_data_drinks.green_tea (noupdate)
+DEL product.product: pos_data_drinks.guinness (noupdate)
+DEL product.product: pos_data_drinks.ice_tea (noupdate)
+DEL product.product: pos_data_drinks.irish_coffee (noupdate)
+DEL product.product: pos_data_drinks.jack_daniels (noupdate)
+DEL product.product: pos_data_drinks.jim_beam (noupdate)
+DEL product.product: pos_data_drinks.malibu (noupdate)
+DEL product.product: pos_data_drinks.manhattan (noupdate)
+DEL product.product: pos_data_drinks.margarita (noupdate)
+DEL product.product: pos_data_drinks.martini (noupdate)
+DEL product.product: pos_data_drinks.martini_cocktail (noupdate)
+DEL product.product: pos_data_drinks.milkshake_banana (noupdate)
+DEL product.product: pos_data_drinks.milkshake_cherry (noupdate)
+DEL product.product: pos_data_drinks.milkshake_chocolate (noupdate)
+DEL product.product: pos_data_drinks.milkshake_strawberry (noupdate)
+DEL product.product: pos_data_drinks.milkshake_vanilla (noupdate)
+DEL product.product: pos_data_drinks.miller (noupdate)
+DEL product.product: pos_data_drinks.minute_maid (noupdate)
+DEL product.product: pos_data_drinks.mojito (noupdate)
+DEL product.product: pos_data_drinks.nescafe (noupdate)
+DEL product.product: pos_data_drinks.pina_colada (noupdate)
+DEL product.product: pos_data_drinks.red_label (noupdate)
+DEL product.product: pos_data_drinks.red_wine (noupdate)
+DEL product.product: pos_data_drinks.redbull (noupdate)
+DEL product.product: pos_data_drinks.rose_wine (noupdate)
+DEL product.product: pos_data_drinks.safari (noupdate)
+DEL product.product: pos_data_drinks.schweppes (noupdate)
+DEL product.product: pos_data_drinks.smirnoff (noupdate)
+DEL product.product: pos_data_drinks.sprite (noupdate)
+DEL product.product: pos_data_drinks.stella_artois (noupdate)
+DEL product.product: pos_data_drinks.tea (noupdate)
+DEL product.product: pos_data_drinks.tequila (noupdate)
+DEL product.product: pos_data_drinks.tuborg (noupdate)
+DEL product.product: pos_data_drinks.water (noupdate)
+DEL product.product: pos_data_drinks.white_russian (noupdate)
+DEL product.product: pos_data_drinks.white_wine (noupdate)
+ERROR: module not in list of installed modules:
+---Fields in module 'website_sale_stock_options'---
+---XML records in module 'website_sale_stock_options'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'anonymization'---
+---XML records in module 'anonymization'---
+DEL ir.actions.act_window: anonymization.action_ir_model_fields_anonymization_history_tree
+DEL ir.actions.act_window: anonymization.action_ir_model_fields_anonymization_tree
+DEL ir.actions.act_window: anonymization.action_ir_model_fields_anonymize_wizard
+DEL ir.model.access: anonymization.access_ir_model_fields_anonymization_group_system
+DEL ir.model.access: anonymization.access_ir_model_fields_anonymization_history_group_system
+DEL ir.model.access: anonymization.access_ir_model_fields_anonymization_history_user
+DEL ir.model.access: anonymization.access_ir_model_fields_anonymization_migration_fix
+DEL ir.model.access: anonymization.access_ir_model_fields_anonymization_user
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_analytic_line_amount
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_amount_tax
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_amount_total
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_amount_untaxed
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_line_price_subtotal
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_line_price_unit
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_residual
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_tax_amount
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_move_line_amount_currency
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_move_line_credit
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_move_line_debit
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_product_name
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_purchase_order_amount_tax
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_purchase_order_amount_total
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_purchase_order_amount_untaxed
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_purchase_order_line_price_unit
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_city
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_code
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_display_name
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_email
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_mobile
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_name
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_phone
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_street
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_street2
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_zip
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_users_signature
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_amount_tax
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_amount_total
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_amount_untaxed
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_line_discount
+DEL ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_line_price_unit
+DEL ir.ui.menu: anonymization.menu_administration_anonymization
+DEL ir.ui.menu: anonymization.menu_administration_anonymization_fields
+DEL ir.ui.menu: anonymization.menu_administration_anonymization_history
+DEL ir.ui.menu: anonymization.menu_administration_anonymization_wizard
+DEL ir.ui.view: anonymization.view_ir_model_fields_anonymization_form
+DEL ir.ui.view: anonymization.view_ir_model_fields_anonymization_history_form
+DEL ir.ui.view: anonymization.view_ir_model_fields_anonymization_history_tree
+DEL ir.ui.view: anonymization.view_ir_model_fields_anonymization_tree
+DEL ir.ui.view: anonymization.view_ir_model_fields_anonymize_wizard_form
+DEL ir.ui.view: anonymization.view_ir_model_fields_nonymization_kanban
+ERROR: module not in list of installed modules:
+---Fields in module 'website_sale_options'---
+---XML records in module 'website_sale_options'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'account_invoicing'---
+---XML records in module 'account_invoicing'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'base_vat_autocomplete'---
+---XML records in module 'base_vat_autocomplete'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'report_intrastat'---
+report_intrastat / product.template         / intrastat_id (many2one)       : DEL relation: report.intrastat.code
+report_intrastat / res.country              / intrastat (boolean)           : DEL
+---XML records in module 'report_intrastat'---
+DEL ir.actions.act_window: report_intrastat.action_report_intrastat_code_tree
+DEL ir.actions.act_window: report_intrastat.action_report_intrastat_tree_all
+DEL ir.actions.report: report_intrastat.account_intrastatinvoices
+DEL ir.model.access: report_intrastat.access_report_intrastat
+DEL ir.model.access: report_intrastat.access_report_intrastat_code
+DEL ir.model.access: report_intrastat.access_report_intrastat_code_purchase_manager
+DEL ir.model.access: report_intrastat.access_report_intrastat_code_sale_manager
+DEL ir.model.access: report_intrastat.access_report_intrastat_code_stock_manager
+DEL ir.rule: report_intrastat.invoice_analysis_comp_rule
+DEL ir.ui.menu: report_intrastat.menu_report_intrastat_all
+DEL ir.ui.menu: report_intrastat.menu_report_intrastat_code
+DEL ir.ui.view: report_intrastat.product_template_form_view
+DEL ir.ui.view: report_intrastat.report_intrastatinvoice
+DEL ir.ui.view: report_intrastat.report_intrastatinvoice_document
+DEL ir.ui.view: report_intrastat.view_country_form
+DEL ir.ui.view: report_intrastat.view_country_tree
+DEL ir.ui.view: report_intrastat.view_report_intrastat_code_form
+DEL ir.ui.view: report_intrastat.view_report_intrastat_code_tree
+DEL ir.ui.view: report_intrastat.view_report_intrastat_kanban
+DEL ir.ui.view: report_intrastat.view_report_intrastat_search
+DEL ir.ui.view: report_intrastat.view_report_intrastat_tree
+DEL res.country: base.at (noupdate)
+DEL res.country: base.be (noupdate)
+DEL res.country: base.cy (noupdate)
+DEL res.country: base.cz (noupdate)
+DEL res.country: base.de (noupdate)
+DEL res.country: base.dk (noupdate)
+DEL res.country: base.ee (noupdate)
+DEL res.country: base.es (noupdate)
+DEL res.country: base.fi (noupdate)
+DEL res.country: base.fr (noupdate)
+DEL res.country: base.gr (noupdate)
+DEL res.country: base.hu (noupdate)
+DEL res.country: base.ie (noupdate)
+DEL res.country: base.it (noupdate)
+DEL res.country: base.lt (noupdate)
+DEL res.country: base.lu (noupdate)
+DEL res.country: base.lv (noupdate)
+DEL res.country: base.mt (noupdate)
+DEL res.country: base.nl (noupdate)
+DEL res.country: base.pl (noupdate)
+DEL res.country: base.pt (noupdate)
+DEL res.country: base.se (noupdate)
+DEL res.country: base.si (noupdate)
+DEL res.country: base.sk (noupdate)
+DEL res.country: base.uk (noupdate)
+ERROR: module not in list of installed modules:
 ---Fields in module 'product_extended'---
 ---XML records in module 'product_extended'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
+---Fields in module 'auth_crypt'---
+---XML records in module 'auth_crypt'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'account_budget'---
+account_budget / account.analytic.account / crossovered_budget_line (one2many): DEL relation: crossovered.budget.lines
+---XML records in module 'account_budget'---
+DEL ir.actions.act_window: account_budget.act_account_analytic_account_cb_lines
+DEL ir.actions.act_window: account_budget.act_crossovered_budget_lines_view
+DEL ir.actions.act_window: account_budget.act_crossovered_budget_view
+DEL ir.actions.act_window: account_budget.open_budget_post_form
+DEL ir.model.access: account_budget.access_account_budget_post
+DEL ir.model.access: account_budget.access_account_budget_post_accountant
+DEL ir.model.access: account_budget.access_budget
+DEL ir.model.access: account_budget.access_crossovered_budget
+DEL ir.model.access: account_budget.access_crossovered_budget_accountant
+DEL ir.model.access: account_budget.access_crossovered_budget_lines_accountant
+DEL ir.rule: account_budget.budget_comp_rule (noupdate)
+DEL ir.rule: account_budget.budget_lines_comp_rule (noupdate)
+DEL ir.rule: account_budget.budget_post_comp_rule (noupdate)
+DEL ir.ui.menu: account_budget.menu_act_crossovered_budget_lines_view
+DEL ir.ui.menu: account_budget.menu_act_crossovered_budget_view
+DEL ir.ui.menu: account_budget.menu_budget_post_form
+DEL ir.ui.view: account_budget.crossovered_budget_view_form
+DEL ir.ui.view: account_budget.crossovered_budget_view_tree
+DEL ir.ui.view: account_budget.res_config_settings_view_form
+DEL ir.ui.view: account_budget.view_account_analytic_account_form_inherit_budget
+DEL ir.ui.view: account_budget.view_budget_post_form
+DEL ir.ui.view: account_budget.view_budget_post_search
+DEL ir.ui.view: account_budget.view_budget_post_tree
+DEL ir.ui.view: account_budget.view_crossovered_budget_kanban
+DEL ir.ui.view: account_budget.view_crossovered_budget_line_form
+DEL ir.ui.view: account_budget.view_crossovered_budget_line_search
+DEL ir.ui.view: account_budget.view_crossovered_budget_line_tree
+DEL ir.ui.view: account_budget.view_crossovered_budget_search
+DEL res.users: base.user_root (noupdate)
+ERROR: module not in list of installed modules:
+---Fields in module 'account_asset'---
+---XML records in module 'account_asset'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'account_cash_basis_base_account'---
+---XML records in module 'account_cash_basis_base_account'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
 ---Fields in module 'l10n_be_intrastat'---
 l10n_be_intrastat / account.invoice          / incoterm_id (many2one)        : module is now 'account' ('l10n_be_intrastat')
-l10n_be_intrastat / account.invoice          / incoterm_id (many2one)        : relation is now 'account.incoterms' ('stock.incoterms')
+l10n_be_intrastat / account.invoice          / incoterm_id (many2one)        : relation is now 'account.incoterms' ('stock.incoterms') [nothing to do]
 l10n_be_intrastat / account.invoice          / intrastat_country_id (many2one): DEL relation: res.country
 l10n_be_intrastat / account.invoice          / transport_mode_id (many2one)  : DEL relation: l10n_be_intrastat.transport_mode
 l10n_be_intrastat / account.invoice.line     / intrastat_transaction_id (many2one): DEL relation: l10n_be_intrastat.transaction
 l10n_be_intrastat / product.category         / intrastat_id (many2one)       : DEL relation: report.intrastat.code
 l10n_be_intrastat / res.company              / incoterm_id (many2one)        : module is now 'account' ('l10n_be_intrastat')
-l10n_be_intrastat / res.company              / incoterm_id (many2one)        : relation is now 'account.incoterms' ('stock.incoterms')
+l10n_be_intrastat / res.company              / incoterm_id (many2one)        : relation is now 'account.incoterms' ('stock.incoterms') [nothing to do]
 l10n_be_intrastat / res.company              / region_id (many2one)          : DEL relation: l10n_be_intrastat.region
 l10n_be_intrastat / res.company              / transport_mode_id (many2one)  : DEL relation: l10n_be_intrastat.transport_mode
 l10n_be_intrastat / stock.warehouse          / region_id (many2one)          : DEL relation: l10n_be_intrastat.region
@@ -9534,349 +9832,6 @@ DEL report.intrastat.code: l10n_be_intrastat.intrastat_category_2014_99600000
 DEL report.intrastat.code: l10n_be_intrastat.intrastat_category_2014_99700000
 DEL res.groups: l10n_be_intrastat.intrastat_extended
 ERROR: module not in list of installed modules:
----Fields in module 'website_quote'---
----XML records in module 'website_quote'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'web_planner'---
----XML records in module 'web_planner'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
 ---Fields in module 'rating_project'---
 ---XML records in module 'rating_project'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'website_sale_stock_options'---
----XML records in module 'website_sale_stock_options'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'website_forum_doc'---
-website_forum_doc / forum.post               / color (integer)               : DEL
-website_forum_doc / forum.post               / documentation_stage_id (many2one): DEL relation: forum.documentation.stage
-website_forum_doc / forum.post               / documentation_toc_id (many2one): DEL relation: forum.documentation.toc
----XML records in module 'website_forum_doc'---
-DEL forum.documentation.stage: website_forum_doc.stage_draft (noupdate)
-DEL forum.documentation.stage: website_forum_doc.stage_ideas (noupdate)
-DEL forum.documentation.stage: website_forum_doc.stage_publish (noupdate)
-DEL forum.documentation.stage: website_forum_doc.stage_review (noupdate)
-DEL ir.actions.act_url: website_forum_doc.action_open_documentation
-DEL ir.actions.act_window: website_forum_doc.action_documentation_toc
-DEL ir.actions.act_window: website_forum_doc.action_forum_doc_post
-DEL ir.actions.todo: base.open_menu
-DEL ir.model.access: website_forum_doc.all_documentation_toc
-DEL ir.model.access: website_forum_doc.users_documentation_stage
-DEL ir.model.access: website_forum_doc.users_documentation_stage_all
-DEL ir.model.access: website_forum_doc.users_documentation_toc
-DEL ir.ui.menu: website_forum_doc.menu_documentation
-DEL ir.ui.menu: website_forum_doc.menu_forum_doc_posts
-DEL ir.ui.view: website_forum_doc.assets_frontend
-DEL ir.ui.view: website_forum_doc.breadcrumb
-DEL ir.ui.view: website_forum_doc.documentation
-DEL ir.ui.view: website_forum_doc.documentation_post
-DEL ir.ui.view: website_forum_doc.forum_question_doc
-DEL ir.ui.view: website_forum_doc.header_footer_custom
-DEL ir.ui.view: website_forum_doc.promote_question
-DEL ir.ui.view: website_forum_doc.toc
-DEL ir.ui.view: website_forum_doc.view_documentation_toc_list
-DEL ir.ui.view: website_forum_doc.view_forum_post_doc_form
-DEL ir.ui.view: website_forum_doc.view_forum_post_doc_list
-DEL ir.ui.view: website_forum_doc.view_forum_post_kanban
-DEL website.menu: website_forum_doc.menu_questions (noupdate)
-ERROR: module not in list of installed modules:
----Fields in module 'anonymization'---
----XML records in module 'anonymization'---
-DEL ir.actions.act_window: anonymization.action_ir_model_fields_anonymization_history_tree
-DEL ir.actions.act_window: anonymization.action_ir_model_fields_anonymization_tree
-DEL ir.actions.act_window: anonymization.action_ir_model_fields_anonymize_wizard
-DEL ir.model.access: anonymization.access_ir_model_fields_anonymization_group_system
-DEL ir.model.access: anonymization.access_ir_model_fields_anonymization_history_group_system
-DEL ir.model.access: anonymization.access_ir_model_fields_anonymization_history_user
-DEL ir.model.access: anonymization.access_ir_model_fields_anonymization_migration_fix
-DEL ir.model.access: anonymization.access_ir_model_fields_anonymization_user
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_analytic_line_amount
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_amount_tax
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_amount_total
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_amount_untaxed
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_line_price_subtotal
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_line_price_unit
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_residual
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_invoice_tax_amount
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_move_line_amount_currency
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_move_line_credit
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_account_move_line_debit
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_product_name
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_purchase_order_amount_tax
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_purchase_order_amount_total
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_purchase_order_amount_untaxed
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_purchase_order_line_price_unit
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_city
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_code
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_display_name
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_email
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_mobile
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_name
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_phone
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_street
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_street2
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_partner_zip
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_res_users_signature
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_amount_tax
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_amount_total
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_amount_untaxed
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_line_discount
-DEL ir.model.fields.anonymization: anonymization.anonymization_field_sale_order_line_price_unit
-DEL ir.ui.menu: anonymization.menu_administration_anonymization
-DEL ir.ui.menu: anonymization.menu_administration_anonymization_fields
-DEL ir.ui.menu: anonymization.menu_administration_anonymization_history
-DEL ir.ui.menu: anonymization.menu_administration_anonymization_wizard
-DEL ir.ui.view: anonymization.view_ir_model_fields_anonymization_form
-DEL ir.ui.view: anonymization.view_ir_model_fields_anonymization_history_form
-DEL ir.ui.view: anonymization.view_ir_model_fields_anonymization_history_tree
-DEL ir.ui.view: anonymization.view_ir_model_fields_anonymization_tree
-DEL ir.ui.view: anonymization.view_ir_model_fields_anonymize_wizard_form
-DEL ir.ui.view: anonymization.view_ir_model_fields_nonymization_kanban
-ERROR: module not in list of installed modules:
----Fields in module 'account_asset'---
-account_asset / account.invoice.line     / asset_category_id (many2one)  : DEL relation: account.asset.category
-account_asset / account.invoice.line     / asset_end_date (date)         : DEL
-account_asset / account.invoice.line     / asset_mrr (float)             : DEL
-account_asset / account.invoice.line     / asset_start_date (date)       : DEL
-account_asset / account.move             / asset_depreciation_ids (one2many): DEL relation: account.asset.depreciation.line
-account_asset / product.template         / asset_category_id (many2one)  : DEL relation: account.asset.category
-account_asset / product.template         / deferred_revenue_category_id (many2one): DEL relation: account.asset.category
----XML records in module 'account_asset'---
-DEL ir.actions.act_window: account_asset.action_account_asset_asset_form
-DEL ir.actions.act_window: account_asset.action_account_asset_asset_list_normal_purchase
-DEL ir.actions.act_window: account_asset.action_asset_asset_report
-DEL ir.actions.act_window: account_asset.action_asset_depreciation_confirmation_wizard
-DEL ir.actions.act_window: account_asset.action_asset_modify
-DEL ir.cron: account_asset.account_asset_cron
-DEL ir.model.access: account_asset.access_account_asset_asset
-DEL ir.model.access: account_asset.access_account_asset_asset_invoicing_payment
-DEL ir.model.access: account_asset.access_account_asset_asset_manager
-DEL ir.model.access: account_asset.access_account_asset_category
-DEL ir.model.access: account_asset.access_account_asset_category_invoicing_payment
-DEL ir.model.access: account_asset.access_account_asset_category_manager
-DEL ir.model.access: account_asset.access_account_asset_depreciation_line
-DEL ir.model.access: account_asset.access_account_asset_depreciation_line_invoicing_payment
-DEL ir.model.access: account_asset.access_account_asset_depreciation_line_manager
-DEL ir.model.access: account_asset.access_asset_asset_report
-DEL ir.model.access: account_asset.access_asset_asset_report_manager
-DEL ir.rule: account_asset.account_asset_asset_multi_company_rule (noupdate)
-DEL ir.rule: account_asset.account_asset_category_multi_company_rule (noupdate)
-DEL ir.ui.menu: account_asset.menu_action_account_asset_asset_form
-DEL ir.ui.menu: account_asset.menu_action_account_asset_asset_list_normal_purchase
-DEL ir.ui.menu: account_asset.menu_action_asset_asset_report
-DEL ir.ui.menu: account_asset.menu_asset_depreciation_confirmation_wizard
-DEL ir.ui.menu: account_asset.menu_finance_config_assets
-DEL ir.ui.view: account_asset.action_account_asset_report_graph
-DEL ir.ui.view: account_asset.action_account_asset_report_pivot
-DEL ir.ui.view: account_asset.asset_modify_form
-DEL ir.ui.view: account_asset.assets_backend
-DEL ir.ui.view: account_asset.qunit_suite
-DEL ir.ui.view: account_asset.res_config_settings_view_form
-DEL ir.ui.view: account_asset.view_account_asset_asset_category_kanban
-DEL ir.ui.view: account_asset.view_account_asset_asset_form
-DEL ir.ui.view: account_asset.view_account_asset_asset_kanban
-DEL ir.ui.view: account_asset.view_account_asset_asset_purchase_tree
-DEL ir.ui.view: account_asset.view_account_asset_category_form
-DEL ir.ui.view: account_asset.view_account_asset_category_search
-DEL ir.ui.view: account_asset.view_account_asset_category_tree
-DEL ir.ui.view: account_asset.view_account_asset_search
-DEL ir.ui.view: account_asset.view_asset_asset_report_search
-DEL ir.ui.view: account_asset.view_asset_depreciation_confirmation_wizard
-DEL ir.ui.view: account_asset.view_invoice_asset_category
-DEL ir.ui.view: account_asset.view_product_template_form_inherit
-ERROR: module not in list of installed modules:
----Fields in module 'sale_order_dates'---
----XML records in module 'sale_order_dates'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'sale_payment'---
----XML records in module 'sale_payment'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'l10n_be_intrastat_2019'---
-l10n_be_intrastat_2019 / account.invoice.line     / intrastat_product_origin_country_id (many2one): DEL relation: res.country
----XML records in module 'l10n_be_intrastat_2019'---
-DEL ir.ui.view: l10n_be_intrastat_2019.invoice_line_be_intrastat_data_form
-ERROR: module not in list of installed modules:
----Fields in module 'pos_data_drinks'---
----XML records in module 'pos_data_drinks'---
-DEL ir.actions.todo: base.open_menu
-DEL pos.category: pos_data_drinks.alcohol (noupdate)
-DEL pos.category: pos_data_drinks.beer (noupdate)
-DEL pos.category: pos_data_drinks.beverage (noupdate)
-DEL pos.category: pos_data_drinks.cocktail (noupdate)
-DEL pos.category: pos_data_drinks.hot (noupdate)
-DEL pos.category: pos_data_drinks.milkshake (noupdate)
-DEL pos.category: pos_data_drinks.soft (noupdate)
-DEL pos.category: pos_data_drinks.wine (noupdate)
-DEL product.product: pos_data_drinks.bacardi (noupdate)
-DEL product.product: pos_data_drinks.baileys (noupdate)
-DEL product.product: pos_data_drinks.bloody_mary (noupdate)
-DEL product.product: pos_data_drinks.budweiser (noupdate)
-DEL product.product: pos_data_drinks.caipirinha (noupdate)
-DEL product.product: pos_data_drinks.captain_morgan (noupdate)
-DEL product.product: pos_data_drinks.capuccino (noupdate)
-DEL product.product: pos_data_drinks.carlsberg (noupdate)
-DEL product.product: pos_data_drinks.coffee (noupdate)
-DEL product.product: pos_data_drinks.coke (noupdate)
-DEL product.product: pos_data_drinks.corona (noupdate)
-DEL product.product: pos_data_drinks.cosmopolitan (noupdate)
-DEL product.product: pos_data_drinks.cuba_libre (noupdate)
-DEL product.product: pos_data_drinks.daiquiri (noupdate)
-DEL product.product: pos_data_drinks.disaronno (noupdate)
-DEL product.product: pos_data_drinks.efes (noupdate)
-DEL product.product: pos_data_drinks.espresso (noupdate)
-DEL product.product: pos_data_drinks.fanta (noupdate)
-DEL product.product: pos_data_drinks.fosters (noupdate)
-DEL product.product: pos_data_drinks.gordon (noupdate)
-DEL product.product: pos_data_drinks.green_tea (noupdate)
-DEL product.product: pos_data_drinks.guinness (noupdate)
-DEL product.product: pos_data_drinks.ice_tea (noupdate)
-DEL product.product: pos_data_drinks.irish_coffee (noupdate)
-DEL product.product: pos_data_drinks.jack_daniels (noupdate)
-DEL product.product: pos_data_drinks.jim_beam (noupdate)
-DEL product.product: pos_data_drinks.malibu (noupdate)
-DEL product.product: pos_data_drinks.manhattan (noupdate)
-DEL product.product: pos_data_drinks.margarita (noupdate)
-DEL product.product: pos_data_drinks.martini (noupdate)
-DEL product.product: pos_data_drinks.martini_cocktail (noupdate)
-DEL product.product: pos_data_drinks.milkshake_banana (noupdate)
-DEL product.product: pos_data_drinks.milkshake_cherry (noupdate)
-DEL product.product: pos_data_drinks.milkshake_chocolate (noupdate)
-DEL product.product: pos_data_drinks.milkshake_strawberry (noupdate)
-DEL product.product: pos_data_drinks.milkshake_vanilla (noupdate)
-DEL product.product: pos_data_drinks.miller (noupdate)
-DEL product.product: pos_data_drinks.minute_maid (noupdate)
-DEL product.product: pos_data_drinks.mojito (noupdate)
-DEL product.product: pos_data_drinks.nescafe (noupdate)
-DEL product.product: pos_data_drinks.pina_colada (noupdate)
-DEL product.product: pos_data_drinks.red_label (noupdate)
-DEL product.product: pos_data_drinks.red_wine (noupdate)
-DEL product.product: pos_data_drinks.redbull (noupdate)
-DEL product.product: pos_data_drinks.rose_wine (noupdate)
-DEL product.product: pos_data_drinks.safari (noupdate)
-DEL product.product: pos_data_drinks.schweppes (noupdate)
-DEL product.product: pos_data_drinks.smirnoff (noupdate)
-DEL product.product: pos_data_drinks.sprite (noupdate)
-DEL product.product: pos_data_drinks.stella_artois (noupdate)
-DEL product.product: pos_data_drinks.tea (noupdate)
-DEL product.product: pos_data_drinks.tequila (noupdate)
-DEL product.product: pos_data_drinks.tuborg (noupdate)
-DEL product.product: pos_data_drinks.water (noupdate)
-DEL product.product: pos_data_drinks.white_russian (noupdate)
-DEL product.product: pos_data_drinks.white_wine (noupdate)
-ERROR: module not in list of installed modules:
----Fields in module 'website_rating_project'---
----XML records in module 'website_rating_project'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'base_vat_autocomplete'---
----XML records in module 'base_vat_autocomplete'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'report_intrastat'---
-report_intrastat / product.template         / intrastat_id (many2one)       : DEL relation: report.intrastat.code
-report_intrastat / res.country              / intrastat (boolean)           : DEL
----XML records in module 'report_intrastat'---
-DEL ir.actions.act_window: report_intrastat.action_report_intrastat_code_tree
-DEL ir.actions.act_window: report_intrastat.action_report_intrastat_tree_all
-DEL ir.actions.report: report_intrastat.account_intrastatinvoices
-DEL ir.model.access: report_intrastat.access_report_intrastat
-DEL ir.model.access: report_intrastat.access_report_intrastat_code
-DEL ir.model.access: report_intrastat.access_report_intrastat_code_purchase_manager
-DEL ir.model.access: report_intrastat.access_report_intrastat_code_sale_manager
-DEL ir.model.access: report_intrastat.access_report_intrastat_code_stock_manager
-DEL ir.rule: report_intrastat.invoice_analysis_comp_rule
-DEL ir.ui.menu: report_intrastat.menu_report_intrastat_all
-DEL ir.ui.menu: report_intrastat.menu_report_intrastat_code
-DEL ir.ui.view: report_intrastat.product_template_form_view
-DEL ir.ui.view: report_intrastat.report_intrastatinvoice
-DEL ir.ui.view: report_intrastat.report_intrastatinvoice_document
-DEL ir.ui.view: report_intrastat.view_country_form
-DEL ir.ui.view: report_intrastat.view_country_tree
-DEL ir.ui.view: report_intrastat.view_report_intrastat_code_form
-DEL ir.ui.view: report_intrastat.view_report_intrastat_code_tree
-DEL ir.ui.view: report_intrastat.view_report_intrastat_kanban
-DEL ir.ui.view: report_intrastat.view_report_intrastat_search
-DEL ir.ui.view: report_intrastat.view_report_intrastat_tree
-DEL res.country: base.at (noupdate)
-DEL res.country: base.be (noupdate)
-DEL res.country: base.cy (noupdate)
-DEL res.country: base.cz (noupdate)
-DEL res.country: base.de (noupdate)
-DEL res.country: base.dk (noupdate)
-DEL res.country: base.ee (noupdate)
-DEL res.country: base.es (noupdate)
-DEL res.country: base.fi (noupdate)
-DEL res.country: base.fr (noupdate)
-DEL res.country: base.gr (noupdate)
-DEL res.country: base.hu (noupdate)
-DEL res.country: base.ie (noupdate)
-DEL res.country: base.it (noupdate)
-DEL res.country: base.lt (noupdate)
-DEL res.country: base.lu (noupdate)
-DEL res.country: base.lv (noupdate)
-DEL res.country: base.mt (noupdate)
-DEL res.country: base.nl (noupdate)
-DEL res.country: base.pl (noupdate)
-DEL res.country: base.pt (noupdate)
-DEL res.country: base.se (noupdate)
-DEL res.country: base.si (noupdate)
-DEL res.country: base.sk (noupdate)
-DEL res.country: base.uk (noupdate)
-ERROR: module not in list of installed modules:
----Fields in module 'auth_crypt'---
----XML records in module 'auth_crypt'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'account_invoicing'---
----XML records in module 'account_invoicing'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'account_cash_basis_base_account'---
----XML records in module 'account_cash_basis_base_account'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'account_budget'---
-account_budget / account.analytic.account / crossovered_budget_line (one2many): DEL relation: crossovered.budget.lines
----XML records in module 'account_budget'---
-DEL ir.actions.act_window: account_budget.act_account_analytic_account_cb_lines
-DEL ir.actions.act_window: account_budget.act_crossovered_budget_lines_view
-DEL ir.actions.act_window: account_budget.act_crossovered_budget_view
-DEL ir.actions.act_window: account_budget.open_budget_post_form
-DEL ir.model.access: account_budget.access_account_budget_post
-DEL ir.model.access: account_budget.access_account_budget_post_accountant
-DEL ir.model.access: account_budget.access_budget
-DEL ir.model.access: account_budget.access_crossovered_budget
-DEL ir.model.access: account_budget.access_crossovered_budget_accountant
-DEL ir.model.access: account_budget.access_crossovered_budget_lines_accountant
-DEL ir.rule: account_budget.budget_comp_rule (noupdate)
-DEL ir.rule: account_budget.budget_lines_comp_rule (noupdate)
-DEL ir.rule: account_budget.budget_post_comp_rule (noupdate)
-DEL ir.ui.menu: account_budget.menu_act_crossovered_budget_lines_view
-DEL ir.ui.menu: account_budget.menu_act_crossovered_budget_view
-DEL ir.ui.menu: account_budget.menu_budget_post_form
-DEL ir.ui.view: account_budget.crossovered_budget_view_form
-DEL ir.ui.view: account_budget.crossovered_budget_view_tree
-DEL ir.ui.view: account_budget.res_config_settings_view_form
-DEL ir.ui.view: account_budget.view_account_analytic_account_form_inherit_budget
-DEL ir.ui.view: account_budget.view_budget_post_form
-DEL ir.ui.view: account_budget.view_budget_post_search
-DEL ir.ui.view: account_budget.view_budget_post_tree
-DEL ir.ui.view: account_budget.view_crossovered_budget_kanban
-DEL ir.ui.view: account_budget.view_crossovered_budget_line_form
-DEL ir.ui.view: account_budget.view_crossovered_budget_line_search
-DEL ir.ui.view: account_budget.view_crossovered_budget_line_tree
-DEL ir.ui.view: account_budget.view_crossovered_budget_search
-DEL res.users: base.user_root (noupdate)
-ERROR: module not in list of installed modules:
----Fields in module 'website_sale_options'---
----XML records in module 'website_sale_options'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'mrp_repair'---
----XML records in module 'mrp_repair'---
 ---nothing has changed in this module--

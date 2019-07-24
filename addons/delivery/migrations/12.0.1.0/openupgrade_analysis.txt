@@ -1,11 +1,11 @@
 ---Fields in module 'delivery'---
 delivery     / product.product          / hs_code (char)                : module is now 'delivery_hs_code' ('delivery')
 delivery     / product.template         / hs_code (char)                : module is now 'delivery_hs_code' ('delivery')
-delivery     / stock.move               / weight_uom_id (many2one)      : DEL relation: product.uom, required: required, req_default: function
+delivery     / stock.move               / weight_uom_id (many2one)      : DEL relation: product.uom, required, req_default: function
 delivery     / stock.picking            / number_of_packages (integer)  : DEL
 delivery     / stock.picking            / weight_uom_id (many2one)      : not stored anymore
 delivery     / stock.picking            / weight_uom_id (many2one)      : now a function
-delivery     / stock.picking            / weight_uom_id (many2one)      : relation is now 'uom.uom' ('product.uom')
+delivery     / stock.picking            / weight_uom_id (many2one)      : relation is now 'uom.uom' ('product.uom') [nothing to do]
 ---XML records in module 'delivery'---
 NEW ir.actions.act_window: delivery.act_delivery_trackers_url
 NEW ir.ui.view: delivery.delivery_tracking_url_warning_form

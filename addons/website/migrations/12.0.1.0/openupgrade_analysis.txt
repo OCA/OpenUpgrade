@@ -5,9 +5,9 @@ website      / ir.ui.view               / page_ids (one2many)           : is now
 website      / ir.ui.view               / page_ids (one2many)           : not a function anymore
 website      / ir.ui.view               / website_meta_og_img (char)    : NEW
 website      / res.partner              / website_id (many2one)         : NEW relation: website
-website      / res.users                / website_id (many2one)         : NEW relation: website
-website      / website                  / auth_signup_uninvited (selection): NEW selection_keys: ['b2b', 'b2c']
-website      / website                  / company_id (many2one)         : now required, default = function
+website      / res.users                / website_id (many2one)         : NEW relation: website, isrelated: related, stored
+website      / website                  / auth_signup_uninvited (selection): NEW selection_keys: ['b2b', 'b2c'], hasdefault
+website      / website                  / company_id (many2one)         : now required, req_default: function
 website      / website                  / country_group_ids (many2many) : NEW relation: res.country.group
 website      / website                  / google_maps_api_key (char)    : NEW
 website      / website                  / name (char)                   : now required
@@ -18,7 +18,7 @@ website      / website                  / social_github (char)          : is now
 website      / website                  / social_github (char)          : not related anymore
 website      / website                  / social_googleplus (char)      : is now stored
 website      / website                  / social_googleplus (char)      : not related anymore
-website      / website                  / social_instagram (char)       : NEW
+website      / website                  / social_instagram (char)       : NEW hasdefault
 website      / website                  / social_linkedin (char)        : is now stored
 website      / website                  / social_linkedin (char)        : not related anymore
 website      / website                  / social_twitter (char)         : is now stored
@@ -37,7 +37,7 @@ website      / website.page             / website_id (many2one)         : is now
 website      / website.page             / website_ids (many2many)       : DEL relation: website
 website      / website.page             / website_published (boolean)   : not stored anymore
 website      / website.page             / website_published (boolean)   : now a function
-website      / website.redirect         / type (selection)              : now required, default = function
+website      / website.redirect         / type (selection)              : now required, req_default: function
 website      / website.redirect         / url_from (char)               : now required
 website      / website.redirect         / url_to (char)                 : now required
 ---XML records in module 'website'---

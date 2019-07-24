@@ -1,9 +1,9 @@
 ---Fields in module 'partner_autocomplete'---
-partner_autocomplete / res.company              / partner_gid (integer)         : NEW
+partner_autocomplete / res.company              / partner_gid (integer)         : NEW isrelated: related, stored
 partner_autocomplete / res.partner              / additional_info (char)        : NEW
 partner_autocomplete / res.partner              / partner_gid (integer)         : NEW
 partner_autocomplete / res.partner.autocomplete.sync / partner_id (many2one)         : NEW relation: res.partner
-partner_autocomplete / res.partner.autocomplete.sync / synched (boolean)             : NEW
+partner_autocomplete / res.partner.autocomplete.sync / synched (boolean)             : NEW hasdefault
 ---XML records in module 'partner_autocomplete'---
 NEW ir.cron: partner_autocomplete.ir_cron_partner_autocomplete
 NEW ir.model.access: partner_autocomplete.access_partner_autocomplete_sync_all_all

@@ -2,20 +2,20 @@
 mrp_repair   / mrp.repair               / activity_date_deadline (date) : not related anymore
 mrp_repair   / mrp.repair               / activity_date_deadline (date) : not stored anymore
 mrp_repair   / mrp.repair               / activity_date_deadline (date) : now a function
-mrp_repair   / mrp.repair               / fees_lines (one2many)         : relation is now 'repair.fee' ('mrp.repair.fee')
-mrp_repair   / mrp.repair               / location_dest_id (many2one)   : DEL relation: stock.location, required: required
+mrp_repair   / mrp.repair               / fees_lines (one2many)         : relation is now 'repair.fee' ('mrp.repair.fee') [nothing to do]
+mrp_repair   / mrp.repair               / location_dest_id (many2one)   : DEL relation: stock.location, required
 mrp_repair   / mrp.repair               / message_last_post (datetime)  : DEL
-mrp_repair   / mrp.repair               / operations (one2many)         : relation is now 'repair.line' ('mrp.repair.line')
-mrp_repair   / mrp.repair               / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
+mrp_repair   / mrp.repair               / operations (one2many)         : relation is now 'repair.line' ('mrp.repair.line') [nothing to do]
+mrp_repair   / mrp.repair               / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom') [nothing to do]
 mrp_repair   / mrp.repair.fee           / name (char)                   : type is now 'text' ('char')
 mrp_repair   / mrp.repair.fee           / price_subtotal (float)        : is now stored
-mrp_repair   / mrp.repair.fee           / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
-mrp_repair   / mrp.repair.fee           / repair_id (many2one)          : relation is now 'repair.order' ('mrp.repair')
+mrp_repair   / mrp.repair.fee           / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom') [nothing to do]
+mrp_repair   / mrp.repair.fee           / repair_id (many2one)          : relation is now 'repair.order' ('mrp.repair') [nothing to do]
 mrp_repair   / mrp.repair.line          / name (char)                   : type is now 'text' ('char')
 mrp_repair   / mrp.repair.line          / price_subtotal (float)        : is now stored
-mrp_repair   / mrp.repair.line          / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
-mrp_repair   / mrp.repair.line          / repair_id (many2one)          : relation is now 'repair.order' ('mrp.repair')
-mrp_repair   / stock.move               / repair_id (many2one)          : relation is now 'repair.order' ('mrp.repair')
+mrp_repair   / mrp.repair.line          / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom') [nothing to do]
+mrp_repair   / mrp.repair.line          / repair_id (many2one)          : relation is now 'repair.order' ('mrp.repair') [nothing to do]
+mrp_repair   / stock.move               / repair_id (many2one)          : relation is now 'repair.order' ('mrp.repair') [nothing to do]
 repair       / repair.order             / message_main_attachment_id (many2one): NEW relation: ir.attachment
 ---XML records in module 'repair'---
 NEW ir.actions.act_window: repair.act_repair_invoice

@@ -1,7 +1,7 @@
 ---Fields in module 'sale_purchase'---
 sale_purchase / product.template         / service_to_purchase (boolean) : NEW
 sale_purchase / purchase.order.line      / sale_line_id (many2one)       : previously in module stock_dropshipping
-sale_purchase / purchase.order.line      / sale_order_id (many2one)      : NEW relation: sale.order
+sale_purchase / purchase.order.line      / sale_order_id (many2one)      : NEW relation: sale.order, isrelated: related, stored
 sale_purchase / sale.order.line          / purchase_line_ids (one2many)  : previously in module stock_dropshipping
 ---XML records in module 'sale_purchase'---
 NEW ir.ui.view: sale_purchase.exception_purchase_on_sale_cancellation

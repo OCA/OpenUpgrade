@@ -1,25 +1,25 @@
 ---Fields in module 'base'---
 auth_crypt   / res.users                / password_crypt (char)         : DEL
 base         / ir.actions.report        / report_type (selection)       : selection_keys is now '['qweb-html', 'qweb-pdf', 'qweb-text']' ('['qweb-html', 'qweb-pdf']')
-base         / ir.attachment            / active (boolean)              : NEW
-base         / ir.attachment            / res_model_name (char)         : NEW
+base         / ir.attachment            / active (boolean)              : NEW hasdefault
+base         / ir.attachment            / res_model_name (char)         : NEW isfunction: function, stored
 base         / ir.attachment            / thumbnail (binary)            : NEW attachment: True
 base         / ir.model                 / rule_ids (one2many)           : NEW relation: ir.rule
 base         / ir.model.fields          / copy (boolean)                : was renamed to copied [nothing to do]
-base         / ir.model.fields          / related_field_id (many2one)   : NEW relation: ir.model.fields
-base         / ir.model.fields          / relation_field_id (many2one)  : NEW relation: ir.model.fields
-base         / ir.module.module         / to_buy (boolean)              : NEW
+base         / ir.model.fields          / related_field_id (many2one)   : NEW relation: ir.model.fields, isfunction: function, stored
+base         / ir.model.fields          / relation_field_id (many2one)  : NEW relation: ir.model.fields, isfunction: function, stored
+base         / ir.module.module         / to_buy (boolean)              : NEW hasdefault
 base         / ir.server.object.lines   / type (selection)              : selection_keys is now '['equation', 'reference', 'value']' ('['equation', 'value']')
 base         / ir.translation           / type (selection)              : selection_keys is now '['code', 'constraint', 'model', 'model_terms', 'selection', 'sql_constraint']' ('['code', 'constraint', 'field', 'help', 'model', 'report', 'selection', 'sql_constraint', 'view']')
 base         / ir.ui.menu               / parent_left (integer)         : DEL
 base         / ir.ui.menu               / parent_path (char)            : NEW
 base         / ir.ui.menu               / parent_right (integer)        : DEL
-base         / res.company              / base_onboarding_company_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
+base         / res.company              / base_onboarding_company_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault
 base         / res.company              / external_report_layout (selection): DEL selection_keys: ['background', 'boxed', 'clean', 'standard']
 base         / res.company              / external_report_layout_id (many2one): NEW relation: ir.ui.view
 base         / res.currency             / decimal_places (integer)      : is now stored
 base         / res.groups               / is_portal (boolean)           : DEL
-base         / res.lang                 / week_start (selection)        : NEW required: required, selection_keys: [1, 2, 3, 4, 5, 6, 7], req_default: function
+base         / res.lang                 / week_start (selection)        : NEW required, selection_keys: [1, 2, 3, 4, 5, 6, 7], req_default: function, hasdefault
 base         / res.partner              / commercial_partner_country_id (many2one): DEL relation: res.country
 base         / res.partner.bank         / acc_holder_name (char)        : NEW
 base         / res.partner.bank         / acc_type (char)               : selection_keys is now 'function' ('False')
@@ -79,6 +79,36 @@ DEL ir.ui.view: base.action_view_company_form_link_2_currencies
 DEL ir.ui.view: base.res_request_link-view
 DEL ir.ui.view: base.res_request_link_search_view
 DEL ir.ui.view: base.res_request_link_tree-view
+NEW res.country.state: base.state_mn_01
+NEW res.country.state: base.state_mn_02
+NEW res.country.state: base.state_mn_03
+NEW res.country.state: base.state_mn_04
+NEW res.country.state: base.state_mn_05
+NEW res.country.state: base.state_mn_06
+NEW res.country.state: base.state_mn_07
+NEW res.country.state: base.state_mn_08
+NEW res.country.state: base.state_mn_09
+NEW res.country.state: base.state_mn_10
+NEW res.country.state: base.state_mn_11
+NEW res.country.state: base.state_mn_12
+NEW res.country.state: base.state_mn_13
+NEW res.country.state: base.state_mn_14
+NEW res.country.state: base.state_mn_15
+NEW res.country.state: base.state_mn_16
+NEW res.country.state: base.state_mn_17
+NEW res.country.state: base.state_mn_18
+NEW res.country.state: base.state_mn_19
+NEW res.country.state: base.state_mn_20
+NEW res.country.state: base.state_mn_23
+NEW res.country.state: base.state_mn_24
+NEW res.country.state: base.state_mn_25
+NEW res.country.state: base.state_mn_26
+NEW res.country.state: base.state_mn_27
+NEW res.country.state: base.state_mn_28
+NEW res.country.state: base.state_mn_29
+NEW res.country.state: base.state_mn_32
+NEW res.country.state: base.state_mn_34
+NEW res.country.state: base.state_mn_35
 NEW res.lang: base.lang_ar
 NEW res.lang: base.lang_bn_IN
 NEW res.lang: base.lang_en_CA

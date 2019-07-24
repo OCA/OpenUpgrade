@@ -2,27 +2,27 @@
 l10n_it_edi  / account.invoice          / l10n_it_ddt_id (many2one)     : NEW relation: l10n_it.ddt
 l10n_it_edi  / account.invoice          / l10n_it_einvoice_id (many2one): NEW relation: ir.attachment
 l10n_it_edi  / account.invoice          / l10n_it_einvoice_name (char)  : NEW
-l10n_it_edi  / account.invoice          / l10n_it_send_state (selection): NEW selection_keys: ['delivered', 'delivered_accepted', 'delivered_expired', 'delivered_refused', 'failed_delivery', 'invalid', 'new', 'other', 'sent', 'to_send']
-l10n_it_edi  / account.invoice          / l10n_it_stamp_duty (float)    : NEW
+l10n_it_edi  / account.invoice          / l10n_it_send_state (selection): NEW selection_keys: ['delivered', 'delivered_accepted', 'delivered_expired', 'delivered_refused', 'failed_delivery', 'invalid', 'new', 'other', 'sent', 'to_send'], hasdefault
+l10n_it_edi  / account.invoice          / l10n_it_stamp_duty (float)    : NEW hasdefault
 l10n_it_edi  / account.tax              / l10n_it_has_exoneration (boolean): NEW
-l10n_it_edi  / account.tax              / l10n_it_kind_exoneration (selection): NEW selection_keys: ['N1', 'N2', 'N3', 'N4', 'N5', 'N6', 'N7']
+l10n_it_edi  / account.tax              / l10n_it_kind_exoneration (selection): NEW selection_keys: ['N1', 'N2', 'N3', 'N4', 'N5', 'N6', 'N7'], hasdefault
 l10n_it_edi  / account.tax              / l10n_it_law_reference (char)  : NEW
-l10n_it_edi  / account.tax              / l10n_it_vat_due_date (selection): NEW selection_keys: ['D', 'I', 'S']
+l10n_it_edi  / account.tax              / l10n_it_vat_due_date (selection): NEW selection_keys: ['D', 'I', 'S'], hasdefault
 l10n_it_edi  / fetchmail.server         / l10n_it_is_pec (boolean)      : NEW
-l10n_it_edi  / fetchmail.server         / l10n_it_last_uid (integer)    : NEW
-l10n_it_edi  / l10n_it.ddt              / date (date)                   : NEW required: required
+l10n_it_edi  / fetchmail.server         / l10n_it_last_uid (integer)    : NEW hasdefault
+l10n_it_edi  / l10n_it.ddt              / date (date)                   : NEW required
 l10n_it_edi  / l10n_it.ddt              / invoice_id (one2many)         : NEW relation: account.invoice
-l10n_it_edi  / l10n_it.ddt              / name (char)                   : NEW required: required
+l10n_it_edi  / l10n_it.ddt              / name (char)                   : NEW required
 l10n_it_edi  / res.company              / l10n_it_address_recipient_fatturapa (char): NEW
 l10n_it_edi  / res.company              / l10n_it_address_send_fatturapa (char): NEW
-l10n_it_edi  / res.company              / l10n_it_codice_fiscale (char) : NEW
+l10n_it_edi  / res.company              / l10n_it_codice_fiscale (char) : NEW isrelated: related, stored
 l10n_it_edi  / res.company              / l10n_it_eco_index_liquidation_state (selection): NEW selection_keys: ['LN', 'LS']
 l10n_it_edi  / res.company              / l10n_it_eco_index_number (char): NEW
 l10n_it_edi  / res.company              / l10n_it_eco_index_office (many2one): NEW relation: res.country.state
-l10n_it_edi  / res.company              / l10n_it_eco_index_share_capital (float): NEW
+l10n_it_edi  / res.company              / l10n_it_eco_index_share_capital (float): NEW hasdefault
 l10n_it_edi  / res.company              / l10n_it_eco_index_sole_shareholder (selection): NEW selection_keys: ['NO', 'SM', 'SU']
-l10n_it_edi  / res.company              / l10n_it_has_eco_index (boolean): NEW
-l10n_it_edi  / res.company              / l10n_it_has_tax_representative (boolean): NEW
+l10n_it_edi  / res.company              / l10n_it_has_eco_index (boolean): NEW hasdefault
+l10n_it_edi  / res.company              / l10n_it_has_tax_representative (boolean): NEW hasdefault
 l10n_it_edi  / res.company              / l10n_it_mail_pec_server_id (many2one): NEW relation: ir.mail_server
 l10n_it_edi  / res.company              / l10n_it_tax_representative_partner_id (many2one): NEW relation: res.partner
 l10n_it_edi  / res.company              / l10n_it_tax_system (selection): NEW selection_keys: ['RF01', 'RF02', 'RF04', 'RF05', 'RF06', 'RF07', 'RF08', 'RF09', 'RF10', 'RF11', 'RF12', 'RF13', 'RF14', 'RF15', 'RF16', 'RF17', 'RF18', 'RF19']

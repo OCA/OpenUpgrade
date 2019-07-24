@@ -2,31 +2,32 @@
 purchase     / account.invoice          / vendor_bill_purchase_id (many2one): NEW relation: purchase.bill.union
 purchase     / procurement.rule         / action (False)                : module is now 'purchase_stock' ('purchase')
 purchase     / procurement.rule         / action (False)                : selection_keys is now '['buy', 'manufacture', 'pull', 'pull_push', 'push']' ('['buy', 'manufacture', 'move']')
+purchase     / product.template         / route_ids (False)             : module is now 'purchase_stock' ('purchase')
 purchase     / purchase.order           / access_token (char)           : NEW
 purchase     / purchase.order           / activity_date_deadline (date) : not related anymore
 purchase     / purchase.order           / activity_date_deadline (date) : not stored anymore
 purchase     / purchase.order           / activity_date_deadline (date) : now a function
 purchase     / purchase.order           / default_location_dest_id_usage (selection): module is now 'purchase_stock' ('purchase')
 purchase     / purchase.order           / group_id (many2one)           : module is now 'purchase_stock' ('purchase')
-purchase     / purchase.order           / incoterm_id (many2one)        : relation is now 'account.incoterms' ('stock.incoterms')
+purchase     / purchase.order           / incoterm_id (many2one)        : relation is now 'account.incoterms' ('stock.incoterms') [nothing to do]
 purchase     / purchase.order           / is_shipped (boolean)          : module is now 'purchase_stock' ('purchase')
 purchase     / purchase.order           / message_last_post (datetime)  : DEL
 purchase     / purchase.order           / message_main_attachment_id (many2one): NEW relation: ir.attachment
 purchase     / purchase.order           / picking_count (integer)       : module is now 'purchase_stock' ('purchase')
 purchase     / purchase.order           / picking_ids (many2many)       : module is now 'purchase_stock' ('purchase')
 purchase     / purchase.order           / picking_type_id (many2one)    : module is now 'purchase_stock' ('purchase')
-purchase     / purchase.order           / user_id (many2one)            : NEW relation: res.users
+purchase     / purchase.order           / user_id (many2one)            : NEW relation: res.users, hasdefault
 purchase     / purchase.order.line      / move_dest_ids (one2many)      : module is now 'purchase_stock' ('purchase')
 purchase     / purchase.order.line      / move_ids (one2many)           : module is now 'purchase_stock' ('purchase')
 purchase     / purchase.order.line      / orderpoint_id (many2one)      : module is now 'purchase_stock' ('purchase')
-purchase     / purchase.order.line      / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
-purchase     / purchase.order.line      / product_uom_qty (float)       : NEW
+purchase     / purchase.order.line      / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom') [nothing to do]
+purchase     / purchase.order.line      / product_uom_qty (float)       : NEW isfunction: function, stored
 purchase     / purchase.order.line      / qty_received (float)          : not a function anymore
 purchase     / stock.move               / created_purchase_line_id (many2one): module is now 'purchase_stock' ('purchase')
 purchase     / stock.move               / purchase_line_id (many2one)   : module is now 'purchase_stock' ('purchase')
 purchase     / stock.picking            / purchase_id (many2one)        : module is now 'purchase_stock' ('purchase')
 purchase     / stock.warehouse          / buy_pull_id (many2one)        : module is now 'purchase_stock' ('purchase')
-purchase     / stock.warehouse          / buy_pull_id (many2one)        : relation is now 'stock.rule' ('procurement.rule')
+purchase     / stock.warehouse          / buy_pull_id (many2one)        : relation is now 'stock.rule' ('procurement.rule') [nothing to do]
 purchase     / stock.warehouse          / buy_to_resupply (boolean)     : module is now 'purchase_stock' ('purchase')
 ---XML records in module 'purchase'---
 DEL ir.actions.act_window: purchase.action_purchase_line_product_tree

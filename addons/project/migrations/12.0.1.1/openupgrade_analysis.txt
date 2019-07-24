@@ -1,6 +1,6 @@
 ---Fields in module 'project'---
 project      / account.analytic.account / company_uom_id (many2one)     : module is now 'hr_timesheet' ('project')
-project      / account.analytic.account / company_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+project      / account.analytic.account / company_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
 project      / account.analytic.account / project_count (integer)       : module is now 'hr_timesheet' ('project')
 project      / account.analytic.account / project_ids (one2many)        : module is now 'hr_timesheet' ('project')
 project      / digest.digest            / kpi_project_task_opened (boolean): NEW
@@ -23,7 +23,7 @@ project      / project.task             / message_main_attachment_id (many2one):
 project      / project.task             / remaining_hours (float)       : module is now 'hr_timesheet' ('project')
 project      / project.task             / remaining_hours (float)       : now a function
 project      / res.company              / project_time_mode_id (many2one): module is now 'hr_timesheet' ('project')
-project      / res.company              / project_time_mode_id (many2one): relation is now 'uom.uom' ('product.uom')
+project      / res.company              / project_time_mode_id (many2one): relation is now 'uom.uom' ('product.uom') [nothing to do]
 ---XML records in module 'project'---
 NEW digest.digest: digest.digest_digest_default (noupdate)
 NEW digest.tip: project.digest_tip_project_0

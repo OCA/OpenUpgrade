@@ -1,36 +1,36 @@
 ---Fields in module 'mrp'---
 mrp          / mrp.bom                  / message_last_post (datetime)  : DEL
 mrp          / mrp.bom                  / message_main_attachment_id (many2one): NEW relation: ir.attachment
-mrp          / mrp.bom                  / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
-mrp          / mrp.bom.line             / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+mrp          / mrp.bom                  / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
+mrp          / mrp.bom.line             / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
 mrp          / mrp.production           / activity_date_deadline (date) : not related anymore
 mrp          / mrp.production           / activity_date_deadline (date) : not stored anymore
 mrp          / mrp.production           / activity_date_deadline (date) : now a function
 mrp          / mrp.production           / message_last_post (datetime)  : DEL
 mrp          / mrp.production           / message_main_attachment_id (many2one): NEW relation: ir.attachment
-mrp          / mrp.production           / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
-mrp          / mrp.production           / product_uom_qty (float)       : NEW
+mrp          / mrp.production           / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
+mrp          / mrp.production           / product_uom_qty (float)       : NEW isfunction: function, stored
 mrp          / mrp.unbuild              / activity_date_deadline (date) : not related anymore
 mrp          / mrp.unbuild              / activity_date_deadline (date) : not stored anymore
 mrp          / mrp.unbuild              / activity_date_deadline (date) : now a function
 mrp          / mrp.unbuild              / message_last_post (datetime)  : DEL
 mrp          / mrp.unbuild              / message_main_attachment_id (many2one): NEW relation: ir.attachment
-mrp          / mrp.unbuild              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
-mrp          / mrp.workcenter           / costs_hour (float)            : NEW
+mrp          / mrp.unbuild              / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
+mrp          / mrp.workcenter           / costs_hour (float)            : NEW hasdefault
 mrp          / mrp.workcenter           / resource_calendar_id (many2one): is now stored
 mrp          / mrp.workcenter.productivity.loss / loss_id (many2one)            : NEW relation: mrp.workcenter.productivity.loss.type
 mrp          / mrp.workcenter.productivity.loss / loss_type (selection)         : now related
 mrp          / mrp.workcenter.productivity.loss / loss_type (selection)         : selection_keys is now 'function' ('['availability', 'performance', 'productive', 'quality']')
-mrp          / mrp.workcenter.productivity.loss.type / loss_type (selection)         : NEW required: required, selection_keys: ['availability', 'performance', 'productive', 'quality'], req_default: function
+mrp          / mrp.workcenter.productivity.loss.type / loss_type (selection)         : NEW required, selection_keys: ['availability', 'performance', 'productive', 'quality'], req_default: function, hasdefault
 mrp          / mrp.workorder            / message_last_post (datetime)  : DEL
 mrp          / mrp.workorder            / message_main_attachment_id (many2one): NEW relation: ir.attachment
-mrp          / mrp.workorder            / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom')
+mrp          / mrp.workorder            / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
 mrp          / procurement.rule         / action (False)                : selection_keys is now '['manufacture', 'pull', 'pull_push', 'push']' ('['manufacture', 'move']')
 mrp          / product.product          / bom_line_ids (one2many)       : NEW relation: mrp.bom.line
 mrp          / product.product          / variant_bom_ids (one2many)    : NEW relation: mrp.bom
 mrp          / product.template         / bom_line_ids (one2many)       : NEW relation: mrp.bom.line
-mrp          / stock.warehouse          / manufacture_pull_id (many2one): relation is now 'stock.rule' ('procurement.rule')
-mrp          / stock.warehouse          / manufacture_steps (selection) : NEW required: required, selection_keys: ['mrp_one_step', 'pbm', 'pbm_sam'], req_default: function
+mrp          / stock.warehouse          / manufacture_pull_id (many2one): relation is now 'stock.rule' ('procurement.rule') [nothing to do]
+mrp          / stock.warehouse          / manufacture_steps (selection) : NEW required, selection_keys: ['mrp_one_step', 'pbm', 'pbm_sam'], req_default: function, hasdefault
 mrp          / stock.warehouse          / pbm_loc_id (many2one)         : NEW relation: stock.location
 mrp          / stock.warehouse          / pbm_mto_pull_id (many2one)    : NEW relation: stock.rule
 mrp          / stock.warehouse          / pbm_route_id (many2one)       : NEW relation: stock.location.route
