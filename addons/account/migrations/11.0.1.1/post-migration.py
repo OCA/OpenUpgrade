@@ -1,5 +1,6 @@
-# © 2017 bloopark systems (<http://bloopark.de>)
-# © 2018 Opener B.V. <https://opener.amsterdam>
+# Copyright 2017 bloopark systems (<http://bloopark.de>)
+# Copyright 2018 Opener B.V. <https://opener.amsterdam>
+# Copyright 2018-2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from psycopg2.extensions import AsIs
 from openupgradelib import openupgrade
@@ -90,8 +91,14 @@ def fill_account_invoice_line_total(env):
     rest_lines = line_obj.search([]) - empty_lines - simple_lines
     openupgrade.logger.debug("Compute the rest of the account.invoice.line"
                              "totals: %s" % len(rest_lines))
-    # This has been extracted from `_compute_price` method
     for line in rest_lines:
+        # avoid error on taxes with other type of computation ('code' for
+        # example, provided by module `account_tax_python`). We will need to
+        # add the computation on the corresponding module post-migration.
+        types = ['percent', 'fixed', 'group', 'division']
+        if any(x.amount_type not in types for x in line.invoice_line_tax_ids):
+            continue
+        # This has been extracted from `_compute_price` method
         currency = line.invoice_id and line.invoice_id.currency_id or None
         price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
         taxes = line.invoice_line_tax_ids.compute_all(
