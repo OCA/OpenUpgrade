@@ -64,7 +64,18 @@ def fill_mail_thread_message_main_attachment_id(env):
         )
 
 
+def remove_activity_date_deadline_column(env):
+    activity_mixin_models = [k for k in env.registry if issubclass(
+        type(env[k]), type(env['mail.activity.mixin'])) and env[k]._auto]
+    _column_renames = {
+        env[model]._table: [('activity_date_deadline', None)]
+        for model in activity_mixin_models if openupgrade.column_exists(
+            env.cr, env[model]._table, 'activity_date_deadline')}
+    openupgrade.rename_columns(env.cr, _column_renames)
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     fill_mail_tracking_value_track_sequence(env)
     fill_mail_thread_message_main_attachment_id(env)
+    remove_activity_date_deadline_column(env)

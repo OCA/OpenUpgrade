@@ -126,6 +126,11 @@ mail         / res.partner              / opt_out (boolean)             : DEL
 mail         / res.users                / moderation_channel_ids (many2many): NEW relation: mail.channel
 # NOTHING TO DO
 
+mail         / mail.activity.mixin      / activity_date_deadline (date) : not related anymore
+mail         / mail.activity.mixin      / activity_date_deadline (date) : not stored anymore
+mail         / mail.activity.mixin      / activity_date_deadline (date) : now a function
+# DONE: end-migration: remove activity_date_deadline column in all tables of models that inherit this mixin
+
 mail         / mail.thread              / message_main_attachment_id (many2one): NEW relation: ir.attachment
 # DONE: end-migration: filled the message_main_attachment_id as _message_post_after_hook method
 
