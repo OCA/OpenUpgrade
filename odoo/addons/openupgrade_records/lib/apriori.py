@@ -64,6 +64,9 @@ merged_modules = {
     'website_project_issue': 'project',
     'website_project_timesheet': 'hr_timesheet',
     'test_pylint': 'test_lint',
+    # OCA/account-analytic
+    'purchase_procurement_analytic': 'procurement_mto_analytic',
+    'sale_procurement_analytic': 'procurement_mto_analytic',
     # OCA/account-invoice-reporting
     'product_brand_invoice_report': 'product_brand',
     # OCA/account-financial-reporting
