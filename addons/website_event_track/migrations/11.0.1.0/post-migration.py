@@ -43,6 +43,17 @@ def fill_event_track_partner_id(cr):
         WHERE et.partner_id IS NULL AND rel.event_track_id = et.id
         """
     )
+    # We need to fill related email if partner_id.email is filled for avoiding
+    # error on message composer in the track
+    openupgrade.logged_query(
+        cr, """
+        UPDATE event_track et
+        SET partner_email = rp.email
+        FROM res_partner rp
+        WHERE et.partner_id = rp.id
+            AND rp.email IS NOT NULL
+            AND et.partner_email IS NULL""",
+    )
 
 
 @openupgrade.migrate()
