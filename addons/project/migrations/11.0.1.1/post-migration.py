@@ -93,6 +93,8 @@ def convert_issues(env):
                 new_follower = new_project.message_follower_ids.filtered(
                     lambda x: x.partner_id == follower.partner_id
                 )
+                if not new_follower:
+                    continue
                 for subtype in subtype_dict:
                     if subtype in follower.subtype_ids:
                         new_follower.subtype_ids = [
