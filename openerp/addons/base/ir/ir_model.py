@@ -737,6 +737,11 @@ class ir_model_relation(Model):
 
         # drop m2m relation tables
         for table in to_drop_table:
+            # OpenUpgrade: do not run the new table cleanup
+            openupgrade.message(
+                cr, 'Unknown', False, False,
+                "Not dropping the many2many table %s", table)
+            continue
             cr.execute('DROP TABLE %s CASCADE'% table,)
             _logger.info('Dropped table %s', table)
 
