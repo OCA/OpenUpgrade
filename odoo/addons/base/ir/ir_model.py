@@ -1130,6 +1130,11 @@ class IrModelRelation(models.Model):
 
         # drop m2m relation tables
         for table in to_drop:
+            # OpenUpgrade: do not run the new table cleanup
+            openupgrade.message(
+                self._cr, 'Unknown', False, False,
+                "Not dropping the many2many table %s", table)
+            continue
             self._cr.execute('DROP TABLE "%s" CASCADE' % table,)
             _logger.info('Dropped table %s', table)
 
