@@ -348,7 +348,8 @@ def merge_supplier_invoice_refs(env):
         SET reference = supplier_invoice_number || ' - ' || reference
         WHERE type IN ('in_invoice', 'in_refund')
             AND reference IS NOT NULL
-            AND supplier_invoice_number IS NOT NULL"""
+            AND supplier_invoice_number IS NOT NULL
+            AND reference != supplier_invoice_number""",
     )
     openupgrade.logged_query(
         env.cr, """
