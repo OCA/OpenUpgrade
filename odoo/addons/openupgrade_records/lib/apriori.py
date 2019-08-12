@@ -61,6 +61,8 @@ merged_modules = [
     ('website_sale_b2c', 'sale'),  # used groups are in sale
     # OCA/manufacture
     ('mrp_production_unreserve', 'mrp'),
+    # OCA/purchase-workflow
+    ('purchase_fiscal_position_update', 'purchase'),
     # OCA/sale-workflow
     ('sale_order_back2draft', 'sale'),
     ('product_customer_code_sale',
