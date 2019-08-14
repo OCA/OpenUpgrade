@@ -51,6 +51,20 @@ def link_websites_with_pages(env):
     )
 
 
+def add_redirections(env):
+    """Redirect controllers that have been moved."""
+    redirections = (
+        ("/page/contactus", "/contactus"),
+        ("/page/homepage", "/"),
+    )
+    for from_, to in redirections:
+        env["website.redirect"].create({
+            "type": "301",
+            "url_from": from_,
+            "url_to": to,
+        })
+
+
 def add_website_homepages(env):
     # Add homepage for websites
     openupgrade.logged_query(
@@ -66,6 +80,16 @@ def add_website_homepages(env):
             iuv.key = 'website.homepage' AND
             iuv.id = wp.view_id""",
     )
+
+
+def update_menu_urls(env):
+    """Update some menu URLs that must change."""
+    # Fix menus that include the "website." prefix
+    menus = env["website.menu"].search([
+        ("url", "=like", "/page/website.%"),
+    ])
+    for menu in menus:
+        menu.url = menu.url.replace("website.", "", 1)
 
 
 def delete_noupdate_records(env):
@@ -127,10 +151,12 @@ def update_social_media(env):
 def migrate(env, version):
     fill_website_pages(env)
     link_websites_with_pages(env)
+    add_redirections(env)
     add_website_homepages(env)
     delete_noupdate_records(env)
     update_social_media(env)
     import_website_seo_redirection_data(env)
+    update_menu_urls(env)
     openupgrade.load_data(
         env.cr, 'website', 'migrations/11.0.1.0/noupdate_changes.xml',
     )
