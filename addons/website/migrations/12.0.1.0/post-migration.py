@@ -57,13 +57,13 @@ def sync_menu_views_pages_websites(env):
     for website in env["website"].search([]):
         website.copy_menu_hierarchy(main_menu)
     # Find views that were website-specified in pre stage
-    col_name = openupgrade.get_legacy_name("bs4_migrated_from")
+    old_metadata_col = openupgrade.get_legacy_name("bs4_migration_metadata")
     env.cr.execute(
         "SELECT %s, id FROM %s WHERE %s IS NOT NULL",
         (
-            AsIs(col_name),
+            AsIs(old_metadata_col),
             AsIs(env["ir.ui.view"]._table),
-            AsIs(col_name),
+            AsIs(old_metadata_col),
         )
     )
     for data, specific_view_id in env.cr.fetchall():
