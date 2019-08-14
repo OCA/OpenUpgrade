@@ -120,10 +120,20 @@ def create_stock_move_lines_from_stock_move_lots(env):
             sm.restrict_partner_id,
             sm.picking_id,
             sm.product_id,
-            0,
-            sm.product_uom,
-            0,
-            sm.product_uom_qty as qty_done,
+            CASE WHEN sml.lot_id IS NOT NULL AND NOT sm.is_done
+                 THEN sml.quantity
+            ELSE 0
+            END as product_qty,
+            CASE WHEN sml.lot_id IS NOT NULL THEN spl.product_uom_id
+            ELSE sm.product_uom
+            END as product_uom_id,
+            CASE WHEN sml.lot_id IS NOT NULL AND NOT sm.is_done
+                 THEN sml.quantity
+            ELSE 0
+            END as product_uom_qty,
+            CASE WHEN sml.lot_id IS NOT NULL THEN sml.quantity_done
+            ELSE sm.product_uom_qty
+            END as qty_done,
             sm.name,
             sm.state,
             current_timestamp,
@@ -132,12 +142,11 @@ def create_stock_move_lines_from_stock_move_lots(env):
             TRUE,
             sml.lot_produced_id,
             sml.lot_produced_qty,
-            NULL,
+            COALESCE(sml.production_id, sm.production_id) as production_id,
             sml.workorder_id"""
     from_ = """stock_move sm
         INNER JOIN mrp_production mp ON sm.production_id = mp.id
-        LEFT JOIN stock_move_lots sml ON (sml.move_id = sm.id
-            AND sml.production_id = mp.id)
+        LEFT JOIN stock_move_lots sml ON sml.move_id = sm.id
         LEFT JOIN stock_production_lot spl ON sml.lot_id = spl.id"""
     openupgrade.logged_query(
         env.cr, """
@@ -145,7 +154,8 @@ def create_stock_move_lines_from_stock_move_lots(env):
         )
         SELECT %(select)s
         FROM %(from)s
-        WHERE sm.state NOT IN ('cancel', 'confirmed')
+        WHERE sm.state NOT IN ('cancel') AND (sml.lot_id IS NOT NULL OR
+            sm.state NOT IN ('confirmed'))
             AND sm.id NOT IN (SELECT sq.reservation_id
                               FROM stock_quant sq
                               WHERE sq.reservation_id IS NOT NULL)
