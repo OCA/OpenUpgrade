@@ -1,9 +1,10 @@
 # Copyright 2019 Eficent <http://www.eficent.com>
+# Copyright 2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
 _field_renames = [
-    ('website.partner', 'website_partner',
+    ('res.partner', 'res_partner',
      'website_published', 'is_published'),
 ]
 
