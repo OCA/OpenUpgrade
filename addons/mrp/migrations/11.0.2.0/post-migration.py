@@ -75,7 +75,9 @@ def create_stock_move_lines_from_stock_move_lots(env):
             CASE WHEN sm.is_done = TRUE THEN 0
             ELSE sm.product_uom_qty
             END as product_uom_qty,
-            sm.product_uom_qty as qty_done,
+            CASE WHEN sml.lot_id IS NOT NULL THEN sml.quantity_done
+            ELSE sm.product_uom_qty
+            END as qty_done,
             sm.name,
             sm.state,
             current_timestamp,
