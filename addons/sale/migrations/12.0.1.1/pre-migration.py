@@ -31,6 +31,19 @@ _field_renames_order_dates = [
 ]
 
 
+_config_param_renames = [
+    ('sale_payment.automatic_invoice', 'sale.automatic_invoice'),
+    ('sale_payment.default_email_template', 'sale.default_email_template'),
+]
+
+
+def rename_sale_payment_config_parameters(cr, keys_spec):
+    for (old, new) in keys_spec:
+        query = ("UPDATE ir_config_parameter SET key = %s "
+                 "WHERE key = %s")
+        openupgrade.logged_query(cr, query, (new, old))
+
+
 def fill_sale_order_line_sections(cr):
     """It's done here instead of post-migration to avoid
     possible new rows added in the migration"""
@@ -83,6 +96,7 @@ def migrate(env, version):
     if openupgrade.column_exists(env.cr, 'sale_order', 'payment_tx_id'):
         # from sale_payment module
         openupgrade.rename_columns(env.cr, _column_renames)
+        rename_sale_payment_config_parameters(env.cr, _config_param_renames)
     if openupgrade.column_exists(env.cr, 'sale_order', 'requested_date'):
         # from sale_order_dates module
         openupgrade.rename_fields(env, _field_renames_order_dates)
