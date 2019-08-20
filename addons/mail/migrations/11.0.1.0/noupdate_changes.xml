@@ -15,4 +15,7 @@
         <field name="code">model.update_notification(None)</field>
     </record>
 
+    <record id="base.user_root" model="res.users">
+        <field name="notification_type">inbox</field>
+    </record>
 </odoo>
