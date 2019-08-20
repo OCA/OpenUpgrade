@@ -259,4 +259,7 @@
     <field name="email_to">${object.partner_id.email or object.email|safe}</field>
     <field name="name">Event: Registration</field>
   </record>
+  <record id="base.default_user" model="res.users">
+    <field name="groups_id" eval="[(4,ref('event.group_event_manager'))]"/>
+  </record>
 </odoo>
