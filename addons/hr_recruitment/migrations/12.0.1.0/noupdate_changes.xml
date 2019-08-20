@@ -212,4 +212,7 @@
   <record id="mail_alias_jobs" model="mail.alias">
     <field name="alias_user_id" ref="base.user_admin"/>
   </record>
+  <record id="digest.digest_digest_default" model="digest.digest">
+    <field name="kpi_hr_recruitment_new_colleagues">True</field>
+  </record>
 </odoo>
