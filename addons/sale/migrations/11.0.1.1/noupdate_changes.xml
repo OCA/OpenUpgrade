@@ -126,4 +126,9 @@ from ${object.company_id.name}.
                 </html>
             ]]></field>
   </record>
+  <record id="sales_team.team_sales_department" model="crm.team">
+    <field name="dashboard_graph_model">sale.report</field>
+    <field name="use_invoices" eval="True"/>
+    <field name="use_quotations" eval="True"/>
+  </record>
 </odoo>
