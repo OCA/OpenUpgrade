@@ -7,4 +7,13 @@
     <field name="active" eval="True"/>
     <field name="dashboard_graph_period">week</field>
   </record>
+  <record id="base.group_portal" model="res.groups">
+    <field name="implied_ids" eval="[(4, ref('sale.group_delivery_invoice_address'))]"/>
+  </record>
+  <record id="base.group_public" model="res.groups">
+    <field name="implied_ids" eval="[(4, ref('sale.group_delivery_invoice_address'))]"/>
+  </record>
+  <record id="base.group_user" model="res.groups">
+    <field name="implied_ids" eval="[(4, ref('sale.group_delivery_invoice_address'))]"/>
+  </record>
 </odoo>
