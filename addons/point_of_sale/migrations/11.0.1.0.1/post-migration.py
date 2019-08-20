@@ -44,3 +44,6 @@ def migrate(env, version):
     set_default_values(env)
     migrate_iface_tax_included(env)
     migrate_rescue(env)
+    openupgrade.load_data(
+        env.cr, 'point_of_sale', 'migrations/11.0.1.0.1/noupdate_changes.xml',
+    )
