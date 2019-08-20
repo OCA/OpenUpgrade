@@ -4,4 +4,7 @@
     <field name="body"><![CDATA[<p>Record sale orders, register payments, compute change to return, create invoices, and manage refunds through a specific web touch-screen interface.</p>
 <p>You can interface Odoo with retail hardware: barcode scanners, printers, cash registers, weighing machines, credit card payment terminals.</p>]]></field>
   </record>
+  <record id="base.default_user" model="res.users">
+    <field name="groups_id" eval="[(4,ref('point_of_sale.group_pos_manager'))]"/>
+  </record>
 </odoo>
