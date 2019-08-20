@@ -139,7 +139,7 @@ def get_records(addon_dir):
     return records_update, records_noupdate
 
 
-def main_analysis(old_update, old_noupdate, new_update, new_noupdate):
+def main_analysis(old_update, old_noupdate, new_update, new_noupdate, module):
 
     odoo = etree.Element("odoo")
 
@@ -235,10 +235,12 @@ def main(argv=None):
     print("\n")
 
     if arguments.mode == "module":
-        print(arguments.olddir.split('/')[-1] + ":\n")
+        module_name = arguments.olddir.split('/')[-1]
+        print(module_name + ":\n")
         old_update, old_noupdate = get_records(arguments.olddir)
         new_update, new_noupdate = get_records(arguments.newdir)
-        main_analysis(old_update, old_noupdate, new_update, new_noupdate)
+        main_analysis(old_update, old_noupdate,
+                      new_update, new_noupdate, module_name)
 
     elif arguments.mode == "repository":
         old_module_list, new_module_list = [], []
@@ -257,7 +259,8 @@ def main(argv=None):
                 opj(arguments.olddir, module_name))
             new_update, new_noupdate = get_records(
                 opj(arguments.newdir, module_name))
-            main_analysis(old_update, old_noupdate, new_update, new_noupdate)
+            main_analysis(old_update, old_noupdate,
+                          new_update, new_noupdate, module_name)
 
 
 if __name__ == "__main__":
