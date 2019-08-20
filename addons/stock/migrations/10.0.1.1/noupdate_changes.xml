@@ -7,4 +7,7 @@ watch your stock valuation, and track production lots (based on serial numbers).
   <record id="req_link_tracking" model="res.request.link">
     <field name="name">Lot/Serial Number</field>
   </record>
+  <record id="base.default_user" model="res.users">
+    <field name="groups_id" eval="[(4,ref('stock.group_stock_manager'))]"/>
+  </record>
 </odoo>
