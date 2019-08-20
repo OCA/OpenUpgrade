@@ -16,4 +16,7 @@
   <record id="mail_activity_data_email" model="mail.activity.type">
     <field name="sequence">3</field>
   </record>
+  <record id="base.ir_cron_act" model="ir.actions.act_window">
+    <field name="domain" eval="[('id','!=', ref('mail.ir_cron_module_update_notification'))]"/>
+  </record>
 </odoo>
