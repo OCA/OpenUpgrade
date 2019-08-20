@@ -6,4 +6,14 @@
   <record id="action_open_website" model="ir.actions.act_url">
     <field name="url">/shop</field>
   </record>
+  <record id="product.list0" model="product.pricelist">
+    <field name="selectable" eval="False"/>
+    <field name="website_id" ref="website.default_website"/>
+  </record>
+  <record id="sales_team.group_sale_manager" model="res.groups">
+    <field name="implied_ids" eval="[(4, ref('website.group_website_publisher'))]"/>
+  </record>
+  <record id="sales_team.salesteam_website_sales" model="crm.team">
+    <field name="use_quotations" eval="False"/>
+  </record>
 </odoo>
