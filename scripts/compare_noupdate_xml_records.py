@@ -34,6 +34,8 @@ def nodeattr2bool(node, attr, default=False):
 
 def get_node_dict(element):
     res = {}
+    if element is None:
+        return res
     for child in element:
         if 'name' in child.attrib:
             key = "./%s[@name='%s']" % (
@@ -144,12 +146,17 @@ def main_analysis(old_update, old_noupdate, new_update, new_noupdate):
     for xml_id in sorted(new_noupdate.keys()):
         record_new = new_noupdate[xml_id]
         record_old = None
-        if xml_id in old_update:
+        if xml_id in old_update and xml_id not in old_noupdate:
             record_old = old_update[xml_id]
         elif xml_id in old_noupdate:
             record_old = old_noupdate[xml_id]
 
-        if record_old is None:
+        if '.' in xml_id:
+            module_xmlid = xml_id.split('.', 1)[0]
+        else:
+            module_xmlid = ''
+
+        if record_old is None and not module_xmlid:
             continue
 
         element = etree.Element(
@@ -179,7 +186,7 @@ def main_analysis(old_update, old_noupdate, new_update, new_noupdate):
                     element.append(deepcopy(record_new_dict[key]))
 
         for key in record_new_dict.keys():
-            if not record_old.xpath(key):
+            if record_old is None or not record_old.xpath(key):
                 element.append(deepcopy(record_new_dict[key]))
 
         if len(element):
