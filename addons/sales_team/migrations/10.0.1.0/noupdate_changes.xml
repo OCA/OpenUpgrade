@@ -8,4 +8,7 @@
   <record id="salesteam_website_sales" model="crm.team">
     <field name="company_id" eval="False"/>
   </record>
+  <record id="base.default_user" model="res.users">
+    <field name="groups_id" eval="[(4,ref('sales_team.group_sale_manager'))]"/>
+  </record>
 </odoo>
