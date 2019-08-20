@@ -42,4 +42,7 @@ from ${object.company_id.name}.
   <record id="decimal_payment" model="decimal.precision">
     <field name="name">Payment Terms</field>
   </record>
+  <record id="base.default_user" model="res.users">
+    <field name="groups_id" eval="[(4,ref('account.group_account_manager'))]"/>
+  </record>
 </odoo>
