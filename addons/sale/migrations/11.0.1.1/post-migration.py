@@ -102,19 +102,19 @@ def fill_sale_order_line_computed(env):
     # Finally, launch an ORM computation of lines with different invoice
     # currency than sales order one
     env.cr.execute(
-        """SELECT ail.id
-        FROM account_invoice_line ail
+        """SELECT sol.id
+        FROM sale_order_line sol
         INNER JOIN sale_order_line_invoice_rel rel
-            ON rel.invoice_line_id = ail.id
-        INNER JOIN sale_order_line sol
-            on sol.id = rel.order_line_id
+            ON rel.order_line_id = sol.id
+        INNER JOIN account_invoice_line ail
+            on ail.id = rel.invoice_line_id
         WHERE ail.currency_id != sol.currency_id
         """
     )
-    inv_lines = env['account.invoice.line'].browse([
+    so_lines = env['sale.order.line'].browse([
         x[0] for x in env.cr.fetchall()
     ])
-    inv_lines._compute_invoice_amount()
+    so_lines._compute_invoice_amount()
 
 
 @openupgrade.migrate()
