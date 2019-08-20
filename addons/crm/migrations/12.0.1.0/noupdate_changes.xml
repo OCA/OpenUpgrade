@@ -14,4 +14,8 @@
   <record id="sales_team.team_sales_department" model="crm.team">
     <field name="dashboard_graph_model">crm.lead</field>
   </record>
+  <record id="digest.digest_digest_default" model="digest.digest">
+    <field name="kpi_crm_opportunities_won">True</field>
+    <field name="kpi_crm_lead_created">True</field>
+  </record>
 </odoo>
