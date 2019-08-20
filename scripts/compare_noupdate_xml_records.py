@@ -141,7 +141,8 @@ def main_analysis(old_update, old_noupdate, new_update, new_noupdate):
 
     odoo = etree.Element("odoo")
 
-    for xml_id, record_new in new_noupdate.items():
+    for xml_id in sorted(new_noupdate.keys()):
+        record_new = new_noupdate[xml_id]
         record_old = None
         if xml_id in old_update:
             record_old = old_update[xml_id]
@@ -158,7 +159,7 @@ def main_analysis(old_update, old_noupdate, new_update, new_noupdate):
             element.attrib['forcecreate'] = record_new.attrib['forcecreate']
         record_old_dict = get_node_dict(record_old)
         record_new_dict = get_node_dict(record_new)
-        for key in record_old_dict.keys():
+        for key in sorted(record_old_dict.keys()):
             if not record_new.xpath(key):
                 # The element is no longer present.
                 # Overwrite an existing value with an
@@ -243,7 +244,7 @@ def main(argv=None):
                 lambda m: os.path.isfile(
                     opj(arguments.newdir, m, mname)),
                 os.listdir(arguments.newdir))
-        for module_name in set(old_module_list).intersection(new_module_list):
+        for module_name in sorted(set(old_module_list) & set(new_module_list)):
             print(module_name + ":\n")
             old_update, old_noupdate = get_records(
                 opj(arguments.olddir, module_name))
