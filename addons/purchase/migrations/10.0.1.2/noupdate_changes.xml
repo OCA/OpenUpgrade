@@ -47,4 +47,7 @@ from ${object.company_id.name}.
 <p>Best regards,</p>
 ]]></field>
   </record>
+  <record id="base.default_user" model="res.users">
+    <field name="groups_id" eval="[(4,ref('purchase.group_purchase_manager'))]"/>
+  </record>
 </odoo>
