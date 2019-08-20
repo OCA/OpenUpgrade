@@ -9,4 +9,10 @@
     <field name="default_code">TIPS</field>
     <field name="available_in_pos" eval="True"/>
   </record>
+  <record id="digest.digest_digest_default" model="digest.digest">
+    <field name="kpi_pos_total">True</field>
+  </record>
+  <record id="uom.product_uom_categ_unit" model="uom.category">
+    <field name="is_pos_groupable">True</field>
+  </record>
 </odoo>
