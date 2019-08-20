@@ -192,13 +192,15 @@ def main_analysis(old_update, old_noupdate, new_update, new_noupdate, module):
         if len(element):
             odoo.append(element)
 
+    if not len(odoo):
+        return ''
     document = etree.ElementTree(odoo)
     diff = etree.tostring(
         document, pretty_print=True, xml_declaration=True, encoding='utf-8')
     if version_info[0] > 2:
         diff = diff.decode('utf-8')
 
-    print(diff)
+    return diff
 
 
 def main(argv=None):
@@ -236,11 +238,15 @@ def main(argv=None):
 
     if arguments.mode == "module":
         module_name = arguments.olddir.split('/')[-1]
-        print(module_name + ":\n")
         old_update, old_noupdate = get_records(arguments.olddir)
         new_update, new_noupdate = get_records(arguments.newdir)
-        main_analysis(old_update, old_noupdate,
-                      new_update, new_noupdate, module_name)
+        diff = main_analysis(old_update, old_noupdate,
+                             new_update, new_noupdate, module_name)
+        print(module_name + ":\n")
+        if diff:
+            print(diff)
+        else:
+            print("No differences.")
 
     elif arguments.mode == "repository":
         old_module_list, new_module_list = [], []
@@ -254,13 +260,15 @@ def main(argv=None):
                     opj(arguments.newdir, m, mname)),
                 os.listdir(arguments.newdir))
         for module_name in sorted(set(old_module_list) & set(new_module_list)):
-            print(module_name + ":\n")
             old_update, old_noupdate = get_records(
                 opj(arguments.olddir, module_name))
             new_update, new_noupdate = get_records(
                 opj(arguments.newdir, module_name))
-            main_analysis(old_update, old_noupdate,
-                          new_update, new_noupdate, module_name)
+            diff = main_analysis(old_update, old_noupdate,
+                                 new_update, new_noupdate, module_name)
+            if diff:
+                print(module_name + ":\n")
+                print(diff)
 
 
 if __name__ == "__main__":
