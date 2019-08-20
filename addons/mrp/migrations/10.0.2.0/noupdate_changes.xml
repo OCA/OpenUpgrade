@@ -7,4 +7,7 @@ This application supports complete integration and production scheduling for sto
   <record id="sequence_mrp_prod" model="ir.sequence">
     <field name="prefix">MO/</field>
   </record>
+  <record id="base.default_user" model="res.users">
+    <field name="groups_id" eval="[(4,ref('mrp.group_mrp_manager'))]"/>
+  </record>
 </odoo>
