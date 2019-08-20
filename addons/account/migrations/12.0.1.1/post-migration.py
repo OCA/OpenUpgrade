@@ -96,7 +96,7 @@ def fill_account_chart_template_account_code_prefix(cr):
     openupgrade.logged_query(
         cr, """
         UPDATE account_chart_template act
-        SET transfer_account_code_prefix = trim(leading '0' from aat.code)
+        SET transfer_account_code_prefix = trim(trailing '0' from aat.code)
         FROM account_account_template aat
         WHERE act.%s = aat.id
         """, (AsIs(openupgrade.get_legacy_name('transfer_account_id')), ),
