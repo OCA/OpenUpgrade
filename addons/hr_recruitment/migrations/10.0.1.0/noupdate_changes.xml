@@ -4,4 +4,7 @@
     <field name="body"><![CDATA[<p>Manage job positions and your company's recruitment process. This application may be integrated with the Survey application to help you define interviews for different jobs.</p>
 <p>Job applications sent by email will automatically be integrated in Odoo.</p>]]></field>
   </record>
+  <record id="base.default_user" model="res.users">
+    <field name="groups_id" eval="[(4,ref('hr_recruitment.group_hr_recruitment_manager'))]"/>
+  </record>
 </odoo>
