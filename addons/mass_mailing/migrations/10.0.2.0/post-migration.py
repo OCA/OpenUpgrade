@@ -32,3 +32,6 @@ def convert_campaigns_to_utm(env):
 @openupgrade.migrate()
 def migrate(env, version):
     convert_campaigns_to_utm(env)
+    openupgrade.load_data(
+        env.cr, 'mass_mailing', 'migrations/10.0.2.0/noupdate_changes.xml',
+    )
