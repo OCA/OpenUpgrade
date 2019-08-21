@@ -22,7 +22,7 @@ base         / ir.translation           / type (selection)              : select
 # Nothing to do: types field, help and view were deprecated in 11.0 already. It's likely that these translation types are added in a module and will be reloaded automatically on module update as long as the translation file itself was updated.
 # Done: update type of xml structured field types to 'model_terms'
 base         / ir.ui.menu               / parent_left (integer)         : DEL
-base         / ir.ui.menu               / parent_path (char)            : NEW 
+base         / ir.ui.menu               / parent_path (char)            : NEW
 base         / ir.ui.menu               / parent_right (integer)        : DEL
 # Done: call _parent_store_compute on the model (TODO: make this automatic for all affected models?)
 base         / res.company              / base_onboarding_company_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done']
@@ -45,8 +45,8 @@ base         / res.partner.bank         / acc_type (char)               : type i
 # Nothing to do: static value ('bank', 'iban') is now dynamically computed
 base         / res.partner.bank         / partner_id (many2one)         : now required
 # Nothing to do: missing entries need to be provided manually
-base         / res.partner.category     / parent_left (integer)         : DEL 
-base         / res.partner.category     / parent_path (char)            : NEW 
+base         / res.partner.category     / parent_left (integer)         : DEL
+base         / res.partner.category     / parent_path (char)            : NEW
 base         / res.partner.category     / parent_right (integer)        : DEL
 # Done: call _parent_store_compute
 base         / res.users                / password (char)               : not stored anymore
@@ -107,7 +107,7 @@ DEL res.request.link: base.req_link_partner (noupdate)
 
 NEW ir.config_parameter: base.default_template_user_config
 NEW res.users: base.template_portal_user_id
-# Done: moved these XMLIDs from auth_signup
+# Done: pre-migration: moved these XMLIDs from auth_signup and set noupdate=0
 
 NEW res.users: base.user_admin (noupdate)
 NEW res.partner: base.partner_admin (noupdate)

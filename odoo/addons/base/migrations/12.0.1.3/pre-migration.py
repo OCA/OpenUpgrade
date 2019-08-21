@@ -70,6 +70,18 @@ xmlid_renames = [
     ('stock.incoterm_FOB', 'account.incoterm_FOB'),
 ]
 
+def switch_noupdate_flag(env):
+    """"Some renamed XML-IDs have changed their noupdate status, so we change
+    it as well.
+    """
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE ir_model_data
+        SET noupdate=False
+        WHERE module='base' AND name
+            IN ('default_template_user_config', 'template_portal_user_id')""",
+    )
+
 
 def eliminate_duplicate_translations(cr):
     # Deduplicate code translations
@@ -172,6 +184,7 @@ def migrate(env, version):
         openupgrade.rename_models(env.cr, model_renames_stock)
         openupgrade.rename_tables(env.cr, table_renames_stock)
     openupgrade.rename_xmlids(env.cr, xmlid_renames)
+    switch_noupdate_flag(env)
     eliminate_duplicate_translations(env.cr)
 
     # Make the system and admin user XML ids refer to the same entry for now to

@@ -6,4 +6,4 @@ DEL ir.ui.view: auth_signup.res_users_form_view
 
 DEL ir.config_parameter: auth_signup.default_template_user_config (noupdate)
 DEL res.users: auth_signup.default_template_user (noupdate)
-# DONE: Renamed XML-ID in base module
+# DONE: Renamed XML-ID and set noupdate=0 in base module
