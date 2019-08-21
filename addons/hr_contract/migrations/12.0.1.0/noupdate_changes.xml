@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="base.default_user" model="res.users">
+    <field name="groups_id" eval="[(4,ref('hr_contract.group_hr_contract_manager'))]"/>
+  </record>
+</odoo>

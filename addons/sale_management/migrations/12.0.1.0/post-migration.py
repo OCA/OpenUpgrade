@@ -28,3 +28,5 @@ def migrate(env, version):
             cr, 'sale_order_template',
             openupgrade.get_legacy_name('require_payment')):
         fill_sale_order_template_requires(cr)
+    openupgrade.load_data(
+        env.cr, 'sale_management', 'migrations/12.0.1.0/noupdate_changes.xml')

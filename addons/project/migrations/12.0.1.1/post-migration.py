@@ -22,6 +22,8 @@ def migrate(env, version):
     openupgrade.load_data(
         env.cr, 'project', 'migrations/12.0.1.1/noupdate_changes.xml',
         mode='init_no_create')
+    openupgrade.load_data(
+        env.cr, 'project', 'migrations/12.0.1.1/noupdate_changes2.xml')
     openupgrade.delete_records_safely_by_xml_id(
         env, [
             'project.msg_task_data_14_attach',

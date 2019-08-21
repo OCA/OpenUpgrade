@@ -34,6 +34,8 @@ def nodeattr2bool(node, attr, default=False):
 
 def get_node_dict(element):
     res = {}
+    if element is None:
+        return res
     for child in element:
         if 'name' in child.attrib:
             key = "./%s[@name='%s']" % (
@@ -137,18 +139,24 @@ def get_records(addon_dir):
     return records_update, records_noupdate
 
 
-def main_analysis(old_update, old_noupdate, new_update, new_noupdate):
+def main_analysis(old_update, old_noupdate, new_update, new_noupdate, module):
 
     odoo = etree.Element("odoo")
 
-    for xml_id, record_new in new_noupdate.items():
+    for xml_id in sorted(new_noupdate.keys()):
+        record_new = new_noupdate[xml_id]
         record_old = None
-        if xml_id in old_update:
+        if xml_id in old_update and xml_id not in old_noupdate:
             record_old = old_update[xml_id]
         elif xml_id in old_noupdate:
             record_old = old_noupdate[xml_id]
 
-        if record_old is None:
+        if '.' in xml_id:
+            module_xmlid = xml_id.split('.', 1)[0]
+        else:
+            module_xmlid = ''
+
+        if record_old is None and not module_xmlid:
             continue
 
         element = etree.Element(
@@ -158,7 +166,7 @@ def main_analysis(old_update, old_noupdate, new_update, new_noupdate):
             element.attrib['forcecreate'] = record_new.attrib['forcecreate']
         record_old_dict = get_node_dict(record_old)
         record_new_dict = get_node_dict(record_new)
-        for key in record_old_dict.keys():
+        for key in sorted(record_old_dict.keys()):
             if not record_new.xpath(key):
                 # The element is no longer present.
                 # Overwrite an existing value with an
@@ -178,19 +186,21 @@ def main_analysis(old_update, old_noupdate, new_update, new_noupdate):
                     element.append(deepcopy(record_new_dict[key]))
 
         for key in record_new_dict.keys():
-            if not record_old.xpath(key):
+            if record_old is None or not record_old.xpath(key):
                 element.append(deepcopy(record_new_dict[key]))
 
         if len(element):
             odoo.append(element)
 
+    if not len(odoo):
+        return ''
     document = etree.ElementTree(odoo)
     diff = etree.tostring(
         document, pretty_print=True, xml_declaration=True, encoding='utf-8')
     if version_info[0] > 2:
         diff = diff.decode('utf-8')
 
-    print(diff)
+    return diff
 
 
 def main(argv=None):
@@ -227,10 +237,16 @@ def main(argv=None):
     print("\n")
 
     if arguments.mode == "module":
-        print(arguments.olddir.split('/')[-1] + ":\n")
+        module_name = arguments.olddir.split('/')[-1]
         old_update, old_noupdate = get_records(arguments.olddir)
         new_update, new_noupdate = get_records(arguments.newdir)
-        main_analysis(old_update, old_noupdate, new_update, new_noupdate)
+        diff = main_analysis(old_update, old_noupdate,
+                             new_update, new_noupdate, module_name)
+        print(module_name + ":\n")
+        if diff:
+            print(diff)
+        else:
+            print("No differences.")
 
     elif arguments.mode == "repository":
         old_module_list, new_module_list = [], []
@@ -243,13 +259,16 @@ def main(argv=None):
                 lambda m: os.path.isfile(
                     opj(arguments.newdir, m, mname)),
                 os.listdir(arguments.newdir))
-        for module_name in set(old_module_list).intersection(new_module_list):
-            print(module_name + ":\n")
+        for module_name in sorted(set(old_module_list) & set(new_module_list)):
             old_update, old_noupdate = get_records(
                 opj(arguments.olddir, module_name))
             new_update, new_noupdate = get_records(
                 opj(arguments.newdir, module_name))
-            main_analysis(old_update, old_noupdate, new_update, new_noupdate)
+            diff = main_analysis(old_update, old_noupdate,
+                                 new_update, new_noupdate, module_name)
+            if diff:
+                print(module_name + ":\n")
+                print(diff)
 
 
 if __name__ == "__main__":

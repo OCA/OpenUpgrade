@@ -13,3 +13,5 @@ def add_group_hr_contract_manager(env):
 @openupgrade.migrate()
 def migrate(env, version):
     add_group_hr_contract_manager(env)
+    openupgrade.load_data(
+        env.cr, 'hr_contract', 'migrations/12.0.1.0/noupdate_changes.xml')

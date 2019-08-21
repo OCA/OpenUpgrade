@@ -108,4 +108,13 @@
     <field name="auto_delete" eval="False"/>
     <field name="user_signature" eval="False"/>
   </record>
+  <record id="digest.digest_digest_default" model="digest.digest">
+    <field name="kpi_website_sale_total">True</field>
+  </record>
+  <record id="product.product_pricelist_comp_rule" model="ir.rule">
+    <field name="active" eval="False"/>
+  </record>
+  <record id="product.product_pricelist_item_comp_rule" model="ir.rule">
+    <field name="active" eval="False"/>
+  </record>
 </odoo>
