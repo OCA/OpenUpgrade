@@ -70,6 +70,7 @@ xmlid_renames = [
     ('stock.incoterm_FOB', 'account.incoterm_FOB'),
 ]
 
+
 def switch_noupdate_flag(env):
     """"Some renamed XML-IDs have changed their noupdate status, so we change
     it as well.
