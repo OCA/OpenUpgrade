@@ -98,6 +98,18 @@ def migrate_translations(cr):
                  OR ir_translation.module IS NULL); """)
 
 
+def switch_noupdate_flag(cr):
+    """"Some XML-IDs have changed their noupdate status, so we change it as
+    well.
+    """
+    openupgrade.logged_query(
+        cr, """
+        UPDATE ir_model_data
+        SET noupdate=False
+        WHERE module='base' AND name IN ('group_public', 'group_portal')""",
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -115,6 +127,7 @@ def migrate(env, version):
     cleanup_modules(cr)
     map_res_partner_type(cr)
     migrate_translations(env.cr)
+    switch_noupdate_flag(env.cr)
 
 
 def pre_create_columns(cr):
