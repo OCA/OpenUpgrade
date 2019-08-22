@@ -12,4 +12,7 @@
   <record id="survey_input_manager_access" model="ir.rule">
     <field name="groups" eval="[(4, ref('group_survey_manager'))]"/>
   </record>
+  <record id="base.default_user" model="res.users">
+    <field name="groups_id" eval="[(4,ref('group_survey_manager'))]"/>
+  </record>
 </odoo>
