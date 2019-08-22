@@ -74,7 +74,7 @@ def convert_issues(env):
             project = env['project.project'].browse(row['id'])
             new_project = project.copy({
                 'name': project.name + ' (Issues)',
-                'task_ids': False,
+                'tasks': False,
                 'label_tasks': row['label_issues'],
             })
             # Track from what project this was duplicated
