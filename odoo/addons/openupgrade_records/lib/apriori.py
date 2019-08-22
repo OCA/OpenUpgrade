@@ -47,6 +47,8 @@ merged_modules = {
     'website_sale_default_country': 'website_sale',
     # OCA/event
     'event_registration_mass_mailing': 'mass_mailing_event',
+    # OCA/hr
+    'hr_expense_analytic_tag': 'hr_expense',
     # OCA/manufacture-reporting
     'mrp_bom_structure_html': 'mrp',
     'mrp_bom_structure_report': 'mrp',
