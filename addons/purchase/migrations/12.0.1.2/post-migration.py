@@ -14,9 +14,15 @@ def fill_purchase_order_user_id(cr):
     )
 
 
+def reset_context_purchase_actions(env):
+    env.ref('purchase.purchase_rfq').context = '{}'
+    env.ref('purchase.purchase_form_action').context = '{}'
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_purchase_order_user_id(env.cr)
+    reset_context_purchase_actions(env)
     openupgrade.load_data(
         env.cr, 'purchase', 'migrations/12.0.1.2/noupdate_changes.xml')
     openupgrade.delete_record_translations(
