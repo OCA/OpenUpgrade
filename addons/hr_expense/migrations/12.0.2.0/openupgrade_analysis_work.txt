@@ -32,6 +32,9 @@ hr_expense   / hr.expense.sheet         / state (selection)             : select
 # NOTHING TO DO
 
 ---XML records in module 'hr_expense'---
+ir.actions.act_window: hr_expense.hr_expense_actions_my_unsubmitted (deleted domain)
+# DONE: post-migration: reset the domain
+
 NEW ir.actions.act_window: hr_expense.action_unsubmitted_expense
 NEW ir.actions.act_window: hr_expense.mail_activity_type_action_config_hr_expense
 DEL ir.actions.act_window: hr_expense.action_hr_expense_sheet_my_refused

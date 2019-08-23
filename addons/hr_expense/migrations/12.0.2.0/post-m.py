@@ -15,9 +15,14 @@ def update_hr_expense_state(env):
     )
 
 
+def reset_domain_actions_my_unsubmitted(env):
+    env.ref('hr_expense.hr_expense_actions_my_unsubmitted').domain = False
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     update_hr_expense_state(env)
+    reset_domain_actions_my_unsubmitted(env)
     openupgrade.load_data(
         env.cr, 'hr_expense', 'migrations/12.0.2.0/noupdate_changes.xml')
     openupgrade.delete_records_safely_by_xml_id(
