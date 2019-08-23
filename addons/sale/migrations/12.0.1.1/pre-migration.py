@@ -31,6 +31,7 @@ def fill_sale_order_line_sections(cr):
     cr.execute(
         "ALTER TABLE sale_order_line ADD COLUMN display_type varchar",
     )
+    # First sort sales order line by layout category and sequence
     openupgrade.logged_query(
         cr, """
         UPDATE sale_order_line sol
@@ -38,7 +39,7 @@ def fill_sale_order_line_sections(cr):
         FROM (
             SELECT id, rank()
             OVER (
-                PARTITION BY order_id ORDER BY sequence, id
+                PARTITION BY order_id ORDER BY layout_category_id, sequence, id
             ) FROM sale_order_line
         ) sub
         WHERE sol.id = sub.id
