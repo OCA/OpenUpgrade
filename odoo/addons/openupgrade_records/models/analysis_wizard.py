@@ -66,7 +66,8 @@ class AnalysisWizard(models.TransientModel):
 
         # Retrieve xml id representations and compare
         flds = ['module', 'model', 'name', 'noupdate',
-                'prefix', 'suffix', 'original_module']
+                'prefix', 'suffix', 'original_module',
+                'domain']
         local_xml_records = [
             dict([(field, record[field]) for field in flds])
             for record in local_record_obj.search([('type', '=', 'xmlid')])]

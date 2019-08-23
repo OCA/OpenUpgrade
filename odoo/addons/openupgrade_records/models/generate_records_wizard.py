@@ -55,6 +55,21 @@ class GenerateWizard(models.TransientModel):
         self.env.cr.commit()
         Registry.new(self.env.cr.dbname, update_module=True)
 
+        # Set domain property
+        self.env.cr.execute(
+            """ UPDATE openupgrade_record our
+            SET domain = iaw.domain
+            FROM ir_model_data imd
+            JOIN ir_act_window iaw ON imd.res_id = iaw.id
+            WHERE our.type = 'xmlid'
+                AND imd.model = 'ir.actions.act_window'
+                AND our.model = imd.model
+                AND our.name = imd.module || '.' || imd.name
+            """)
+        self.env.cache.invalidate([
+            (self.env['openupgrade.record']._fields['domain'], None),
+        ])
+
         # Set noupdate property from ir_model_data
         self.env.cr.execute(
             """ UPDATE openupgrade_record our
