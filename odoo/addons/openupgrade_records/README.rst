@@ -57,4 +57,4 @@ promote its widespread use.
 
 To contribute to this module, please visit https://odoo-community.org.
 
-TEST
+TEST2
