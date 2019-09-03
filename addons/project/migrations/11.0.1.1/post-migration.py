@@ -128,9 +128,8 @@ def convert_issues(env):
                 WHEN pi.priority='2' THEN '1'
                 ELSE pi.priority
             END
-        FROM project_issue pi,
-            project_project pp
-        WHERE pi.project_id = pp.id
+        FROM project_issue pi
+            LEFT JOIN project_project pp ON pp.id = pi.project_id
         """, {
             'project_column': AsIs(issue_project_column),
             'issue_column': AsIs(origin_issue_column),
