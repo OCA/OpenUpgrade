@@ -100,7 +100,12 @@ class MigrationManager(object):
         }
         state = pkg.state if stage in ('pre', 'post') else getattr(pkg, 'load_state', None)
 
-        if not (hasattr(pkg, 'update') or state == 'to upgrade') or state == 'to install':
+        # In openupgrade, also run migration scripts upon installation.
+        # We want to always pass in pre and post migration files and use a new
+        # argument in the migrate decorator (explained in the docstring)
+        # to decide if we want to do something if a new module is installed
+        # during the migration.
+        if not (hasattr(pkg, 'update') or state in ('to upgrade', 'to install')):
             return
 
         def convert_version(version):

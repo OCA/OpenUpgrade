@@ -150,12 +150,13 @@ def get_attrs_field_names(env, arch, model, editable):
 
 def valid_view(arch, **kwargs):
     for pred in _validators[arch.tag]:
-        check = pred(arch, **kwargs)
+        check = pred(arch, **kwargs) or 'Warning'
         if not check:
             _logger.error("Invalid XML: %s", pred.__doc__)
             return False
         if check == "Warning":
-            _logger.warning("Invalid XML: %s", pred.__doc__)
+            # OpenUpgrade: Don't show this warning as useless and too much verbose
+            # _logger.warning("Invalid XML: %s", pred.__doc__)
             return "Warning"
     return True
 
