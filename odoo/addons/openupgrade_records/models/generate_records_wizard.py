@@ -17,6 +17,15 @@ class GenerateWizard(models.TransientModel):
     state = fields.Selection(
         [('init', 'init'), ('ready', 'ready')], default='init')
 
+    def quirk_standard_calendar_attendances(self):
+        """ Introduced in Odoo 13. The reinstallation causes a one2many value
+        in [(0, 0, {})] format to be loaded on top of the first load, causing a
+        violation of database constraint. """
+        for cal in ('resource_calendar_std_35h', 'resource_calendar_std_38h'):
+            record = self.env.ref('resource.%s' % cal, False)
+            if record:
+                record.attendance_ids.unlink()
+
     def generate(self):
         """ Main wizard step. Make sure that all modules are up-to-date,
         then reinitialize all installed modules.
@@ -33,6 +42,9 @@ class GenerateWizard(models.TransientModel):
             self.env.cr.execute(
                 'TRUNCATE openupgrade_attribute, openupgrade_record;'
                 )
+
+        # Run any quirks
+        self.quirk_standard_calendar_attendances()
 
         # Need to get all modules in state 'installed'
         modules = self.env['ir.module.module'].search(

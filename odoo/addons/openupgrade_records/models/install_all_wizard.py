@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
+from odoo.osv.expression import AND
 from odoo.modules.registry import Registry
 from odoo.addons.openupgrade_records.blacklist import BLACKLIST_MODULES
 
@@ -30,14 +31,17 @@ class InstallAll(models.TransientModel):
         res['to_install'] = len(modules)
         return res
 
-    def install_all(self):
+    def install_all(self, extra_domain=None):
         """ Main wizard step. Set all installable modules to install
         and actually install them. Exclude testing modules. """
-        modules = self.env['ir.module.module'].search([
-            ('state', 'not in', ['uninstallable', 'unknown']),
+        domain = [
+            '&', '&', ('state', 'not in', ['uninstallable', 'unknown']),
             ('category_id.name', '!=', 'Tests'),
             ('name', 'not in', BLACKLIST_MODULES),
-        ])
+        ]
+        if extra_domain:
+            domain = AND([domain, extra_domain])
+        modules = self.env['ir.module.module'].search(domain)
         if modules:
             modules.write({'state': 'to install'})
             self.env.cr.commit()
