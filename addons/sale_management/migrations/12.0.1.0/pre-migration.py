@@ -14,6 +14,7 @@ _column_renames = {
 
 _field_renames = [
     ('sale.order', 'sale_order', 'template_id', 'sale_order_template_id'),
+    ('sale.order', 'sale_order', 'options', 'sale_order_option_ids'),
     ('sale.quote.line', 'sale_quote_line', 'quote_id',
      'sale_order_template_id'),
     ('sale.quote.option', 'sale_quote_option', 'template_id',
@@ -22,6 +23,8 @@ _field_renames = [
      'sale_order_option_ids'),
     ('sale.quote.template', 'sale_quote_template', 'options',
      'sale_order_template_option_ids'),
+    ('sale.quote.template', 'sale_quote_template', 'quote_line',
+     'sale_order_template_line_ids'),
 ]
 
 _model_renames = [
@@ -55,6 +58,12 @@ _white_list_fields = {
         "create_date", "write_uid", "write_date", "__last_update"),
 }
 
+_white_list_models = {
+    'sale.quote.template': 'sale_order_template',
+    'sale.quote.line': 'sale_order_template_line',
+    'sale.quote.option': 'sale_order_template_option',
+}
+
 
 def put_in_correct_module(cr, white_list):
     # avoid ir_model_data_module_name_uniq_index error
@@ -63,6 +72,12 @@ def put_in_correct_module(cr, white_list):
         openupgrade.update_module_moved_fields(
             cr, model, white_list[model],
             'sale_quotation_builder', 'sale_management')
+        openupgrade.logged_query(
+            cr, """
+            UPDATE ir_model_data
+            SET module = 'sale_management'
+            WHERE name = %s""", ('model_' + _white_list_models[model], ),
+        )
 
 
 def fill_sale_order_template_line_sections(cr):
@@ -117,6 +132,7 @@ def fill_sale_order_template_line_sections(cr):
 def migrate(env, version):
     cr = env.cr
     if openupgrade.table_exists(env.cr, 'sale_quote_line'):
+        # from website_quote module
         openupgrade.rename_columns(cr, _column_renames)
         openupgrade.rename_fields(env, _field_renames)
         put_in_correct_module(cr, _white_list_fields)
