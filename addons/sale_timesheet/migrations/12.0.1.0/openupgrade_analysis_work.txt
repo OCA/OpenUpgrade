@@ -55,3 +55,6 @@ NEW ir.ui.view: sale_timesheet.qunit_suite
 DEL ir.ui.view: sale_timesheet.hr_timesheet_employee_extd_form
 DEL ir.ui.view: sale_timesheet.product_template_search_view_sale_timesheet
 # NOTHING TO DO
+
+DEL ir.rule: sale_timesheet.account_analytic_line_rule_billing_user (noupdate)
+# DONE: Renamed in account module

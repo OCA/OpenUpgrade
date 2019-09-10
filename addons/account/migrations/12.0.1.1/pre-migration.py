@@ -54,6 +54,8 @@ xmlid_renames = [
      'account.group_show_line_subtotals_tax_excluded'),
     ('sale.group_show_price_total',
      'account.group_show_line_subtotals_tax_included'),
+    ('sale_timesheet.account_analytic_line_rule_billing_user',
+     'account.account_analytic_line_rule_billing_user'),
 ]
 
 
