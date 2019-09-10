@@ -395,6 +395,9 @@ NEW res.groups: account.group_show_line_subtotals_tax_excluded
 NEW res.groups: account.group_show_line_subtotals_tax_included
 # DONE: pre-migration: renamed groups from sale module
 
+NEW ir.rule: account.account_analytic_line_rule_billing_user
+# DONE: pre-migration: Renamed from sale_timesheet module
+
 NEW res.groups: base.group_portal
 NEW res.groups: base.group_public
 NEW res.groups: base.group_user (noupdate)
