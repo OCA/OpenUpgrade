@@ -1,0 +1,9 @@
+---Fields in module 'stock_dropshipping'---
+stock_dropshipping / purchase.order.line      / sale_line_id (many2one)       : module is now 'sale_purchase' ('stock_dropshipping')
+stock_dropshipping / sale.order.line          / purchase_line_ids (one2many)  : module is now 'sale_purchase' ('stock_dropshipping')
+# NOTHING TO DO: They are not translatable fields, so XML-IDs will be created through regular process
+
+---XML records in module 'stock_dropshipping'---
+DEL procurement.rule: stock_dropshipping.procurement_rule_drop_shipping (noupdate)
+NEW stock.rule: stock_dropshipping.stock_rule_drop_shipping (noupdate)
+# DONE: pre-migration: Renamed XML-ID
