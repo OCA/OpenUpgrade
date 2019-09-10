@@ -1,3 +1,9 @@
+---Models in module 'base'---
+obsolete model res.request.link
+new model ir.demo
+new model ir.demo_failure
+new model ir.demo_failure.wizard
+new model ir.qweb.field.many2many
 ---Fields in module 'base'---
 auth_crypt   / res.users                / password_crypt (char)         : DEL
 base         / ir.actions.report        / report_type (selection)       : selection_keys is now '['qweb-html', 'qweb-pdf', 'qweb-text']' ('['qweb-html', 'qweb-pdf']')
@@ -28,17 +34,20 @@ base         / res.partner.bank         / partner_id (many2one)         : now re
 base         / res.partner.category     / parent_left (integer)         : DEL
 base         / res.partner.category     / parent_path (char)            : NEW
 base         / res.partner.category     / parent_right (integer)        : DEL
+base         / res.request.link         / name (char)                   : DEL required
+base         / res.request.link         / object (char)                 : DEL required
+base         / res.request.link         / priority (integer)            : DEL
 base         / res.users                / password (char)               : not stored anymore
 base         / res.users                / password (char)               : now a function
 ---XML records in module 'base'---
 NEW ir.actions.act_window: base.action_open_base_onboarding_company
-NEW ir.actions.act_window: base.action_partner_deduplicate
-NEW ir.actions.act_window: base.action_partner_merge
+NEW ir.actions.act_window: base.action_partner_deduplicate [renamed from crm module]
+NEW ir.actions.act_window: base.action_partner_merge [renamed from crm module]
 NEW ir.actions.act_window: base.demo_force_install_action
 DEL ir.actions.act_window: base.res_request_link-act
 NEW ir.actions.server: base.demo_failure_action
 NEW ir.actions.todo: base.demo_failure_todo
-NEW ir.config_parameter: base.default_template_user_config
+NEW ir.config_parameter: base.default_template_user_config [renamed from auth_signup module]
 DEL ir.mail_server: base.ir_mail_server_localhost0 (noupdate)
 DEL ir.model.access: base.access_res_request_link_group_system
 DEL ir.model.access: base.access_res_request_link_group_user

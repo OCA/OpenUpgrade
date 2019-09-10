@@ -1,3 +1,15 @@
+---Models in module 'stock'---
+obsolete model procurement.rule (renamed to stock.rule)
+obsolete model stock.incoterms (renamed to account.incoterms)
+obsolete model stock.location.path
+new model product.replenish
+new model report.stock.report_stock_rule
+new model stock.package.destination
+new model stock.package_level
+new model stock.rule (renamed from procurement.rule)
+new model stock.rules.report
+new model stock.track.confirmation
+new model stock.track.line
 ---Fields in module 'stock'---
 stock        / procurement.rule         / action (selection)            : selection_keys is now '['pull', 'pull_push', 'push']' ('['move']')
 stock        / procurement.rule         / location_id (many2one)        : now required
@@ -16,6 +28,19 @@ stock        / stock.inventory.line     / product_uom_id (many2one)     : relati
 stock        / stock.location           / parent_left (integer)         : DEL
 stock        / stock.location           / parent_path (char)            : NEW
 stock        / stock.location           / parent_right (integer)        : DEL
+stock        / stock.location.path      / active (boolean)              : DEL
+stock        / stock.location.path      / auto (selection)              : DEL required, selection_keys: ['manual', 'transparent'], req_default: function
+stock        / stock.location.path      / company_id (many2one)         : DEL relation: res.company
+stock        / stock.location.path      / delay (integer)               : DEL
+stock        / stock.location.path      / location_dest_id (many2one)   : DEL relation: stock.location, required
+stock        / stock.location.path      / location_from_id (many2one)   : DEL relation: stock.location, required
+stock        / stock.location.path      / name (char)                   : DEL required
+stock        / stock.location.path      / picking_type_id (many2one)    : DEL relation: stock.picking.type, required
+stock        / stock.location.path      / propagate (boolean)           : DEL
+stock        / stock.location.path      / route_id (many2one)           : DEL relation: stock.location.route, required
+stock        / stock.location.path      / route_sequence (integer)      : DEL
+stock        / stock.location.path      / sequence (integer)            : DEL
+stock        / stock.location.path      / warehouse_id (many2one)       : DEL relation: stock.warehouse
 stock        / stock.location.route     / pull_ids (one2many)           : DEL relation: procurement.rule
 stock        / stock.location.route     / push_ids (one2many)           : DEL relation: stock.location.path
 stock        / stock.location.route     / rule_ids (one2many)           : NEW relation: stock.rule
@@ -63,7 +88,7 @@ NEW ir.actions.act_window: stock.action_product_replenish
 NEW ir.actions.act_window: stock.action_rules_form
 NEW ir.actions.act_window: stock.action_stock_rules_report
 NEW ir.actions.act_window: stock.stock_product_normal_action
-DEL ir.actions.act_window: stock.action_incoterms_tree
+DEL ir.actions.act_window: stock.action_incoterms_tree [renamed to account module]
 DEL ir.actions.act_window: stock.action_view_change_product_quantity
 DEL ir.actions.act_window: stock.stolocpath
 NEW ir.actions.report: stock.action_report_lot_label
@@ -99,7 +124,7 @@ DEL ir.model.access: stock.access_stock_location_path_stock_user
 DEL ir.model.access: stock.access_stock_location_path_user
 DEL ir.rule: stock.stock_location_path_comp_rule (noupdate)
 NEW ir.ui.menu: stock.menu_action_rules_form
-DEL ir.ui.menu: stock.menu_action_incoterm_open
+DEL ir.ui.menu: stock.menu_action_incoterm_open [renamed to account module]
 NEW ir.ui.view: stock.exception_on_picking
 NEW ir.ui.view: stock.package_level_form_view
 NEW ir.ui.view: stock.package_level_tree_view_picking

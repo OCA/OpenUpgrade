@@ -1,239 +1,263 @@
+---Models in module 'general'---
+obsolete model account.aged.trial.balance [module account]
+obsolete model account.asset.asset [module account_asset_management]
+obsolete model account.asset.category [module account_asset_management]
+obsolete model account.asset.depreciation.line [module account_asset_management]
+obsolete model account.balance.report [module account]
+obsolete model account.bank.accounts.wizard [module account]
+obsolete model account.budget.post [module account_budget]
+obsolete model account.common.account.report [module account]
+obsolete model account.common.partner.report [module account]
+obsolete model account.financial.report [module account]
+obsolete model accounting.report [module account]
+obsolete model account.move.line.reconcile [module account]
+obsolete model account.move.line.reconcile.writeoff [module account]
+obsolete model account.opening [module account]
+obsolete model account.report.general.ledger [module account]
+obsolete model account.report.partner.ledger [module account]
+obsolete model account.tax.report [module account]
+obsolete model asset.asset.report [module account_asset_management]
+obsolete model asset.depreciation.confirmation.wizard [module account_asset_management]
+obsolete model asset.modify [module account_asset_management]
+obsolete model crm.lead.report.assign [module website_crm_partner_assign]
+obsolete model crm.opportunity.report [module crm]
+obsolete model crossovered.budget [module account_budget]
+obsolete model crossovered.budget.lines [module account_budget]
+obsolete model forum.documentation.stage [module website_forum_doc]
+obsolete model forum.documentation.toc [module website_forum_doc]
+obsolete model hr.holidays (renamed to hr.leave) [module hr_holidays]
+obsolete model hr.holidays.remaining.leaves.user [module hr_holidays]
+obsolete model hr.holidays.status (renamed to hr.leave.type) [module hr_holidays]
+obsolete model ir.model.fields.anonymization [module anonymization]
+obsolete model ir.model.fields.anonymization.history [module anonymization]
+obsolete model ir.model.fields.anonymization.migration.fix [module anonymization]
+obsolete model ir.model.fields.anonymize.wizard [module anonymization]
+obsolete model l10n_be_intrastat.region [module l10n_be_intrastat]
+obsolete model l10n_be_intrastat.transaction [module l10n_be_intrastat]
+obsolete model l10n_be_intrastat.transport_mode [module l10n_be_intrastat]
+obsolete model l10n_be_intrastat_xml.xml_decl [module l10n_be_intrastat]
+obsolete model mrp.message [module mrp]
+obsolete model mrp.repair (renamed to repair.order) [module repair]
+obsolete model mrp.repair.cancel (renamed to repair.cancel) [module repair]
+obsolete model mrp.repair.fee (renamed to repair.fee) [module repair]
+obsolete model mrp.repair.line (renamed to repair.line) [module repair]
+obsolete model mrp.repair.make_invoice (renamed to repair.order.make_invoice) [module repair]
+obsolete model pos.discount [module point_of_sale]
+obsolete model procurement.rule (renamed to stock.rule) [module stock]
+obsolete model product.attribute.line (renamed to product.template.attribute.line) [module product]
+obsolete model product.attribute.price (renamed to product.template.attribute.value) [module product]
+obsolete model product.uom (renamed to uom.uom) [module product]
+obsolete model product.uom.categ (renamed to uom.category) [module product]
+obsolete model project.task.merge.wizard [module project]
+obsolete model report.account.report_financial [module account]
+obsolete model report.account.report_generalledger [module account]
+obsolete model report.account.report_overdue [module account]
+obsolete model report.account.report_partnerledger [module account]
+obsolete model report.account.report_tax [module account]
+obsolete model report.account.report_trialbalance [module account]
+obsolete model report.intrastat [module report_intrastat]
+obsolete model report.intrastat.code [module report_intrastat]
+obsolete model report.mrp.mrp_bom_cost_report [module mrp]
+obsolete model report.mrp.mrp_bom_structure_report [module mrp]
+obsolete model res.request.link [module base]
+obsolete model sale.layout_category [module sale]
+obsolete model sale.quote.line (renamed to sale.order.template.line) [module sale_quotation_builder]
+obsolete model sale.quote.option (renamed to sale.order.template.option) [module sale_quotation_builder]
+obsolete model sale.quote.template (renamed to sale.order.template) [module sale_quotation_builder]
+obsolete model stock.incoterms (renamed to account.incoterms) [module stock]
+obsolete model stock.location.path [module stock]
+obsolete model web.planner [module web]
+obsolete model wizard.multi.charts.accounts [module account]
+new model account.analytic.distribution [module analytic]
+new model account.analytic.group [module analytic]
+new model account.fiscal.year [module account]
+new model account.incoterms (renamed from stock.incoterms) [module account]
+new model account.invoice.import.wizard [module account]
+new model account.invoice.send [module account]
+new model account.reconciliation.widget [module account]
+new model account.setup.bank.manual.config [module account]
+new model base_import.mapping [module base_import]
+new model base_import.tests.models.complex [module base_import]
+new model base_import.tests.models.float [module base_import]
+new model blog.tag.category [module website_blog]
+new model crm.reveal.industry [module crm_reveal]
+new model crm.reveal.role [module crm_reveal]
+new model crm.reveal.rule [module crm_reveal]
+new model crm.reveal.seniority [module crm_reveal]
+new model crm.reveal.view [module crm_reveal]
+new model digest.digest [module digest]
+new model digest.tip [module digest]
+new model fleet.vehicle.assignation.log [module fleet]
+new model hr.leave (renamed from hr.holidays) [module hr_holidays]
+new model hr.leave.allocation [module hr_holidays]
+new model hr.leave.report [module hr_holidays]
+new model hr.leave.type (renamed from hr.holidays.status) [module hr_holidays]
+new model ir.demo [module base]
+new model ir.demo_failure [module base]
+new model ir.demo_failure.wizard [module base]
+new model ir.qweb.field.many2many [module base]
+new model l10n_it.ddt [module l10n_it_edi]
+new model mail.blacklist [module mail]
+new model mail.blacklist.mixin [module mail]
+new model mail.bot [module mail_bot]
+new model mail.mass_mailing.list_contact_rel [module mass_mailing]
+new model mail.moderation [module mail]
+new model mail.resend.cancel [module mail]
+new model mail.resend.message [module mail]
+new model mail.resend.partner [module mail]
+new model mail.test.activity [module test_mail]
+new model mail.test.full [module test_mail]
+new model mail.test.track [module test_mail]
+new model mass.mail.test [module test_mass_mailing]
+new model mass.mail.test.bl [module test_mass_mailing]
+new model mass.mailing.list.merge [module mass_mailing]
+new model mass.mailing.schedule.date [module mass_mailing]
+new model mrp.workcenter.productivity.loss.type [module mrp]
+new model payment.acquirer.onboarding.wizard [module payment]
+new model portal.share [module portal]
+new model product.attribute.custom.value [module sale]
+new model product.replenish [module stock]
+new model product.template.attribute.exclusion [module product]
+new model product.template.attribute.line (renamed from product.attribute.line) [module product]
+new model product.template.attribute.value (renamed from product.attribute.price) [module product]
+new model project.create.invoice [module sale_timesheet]
+new model project.create.sale.order [module sale_timesheet]
+new model project.create.sale.order.line [module sale_timesheet]
+new model project.profitability.report [module sale_timesheet]
+new model project.sale.line.employee.map [module sale_timesheet]
+new model project.task.assign.sale [module sale_timesheet]
+new model purchase.bill.union [module purchase]
+new model repair.cancel (renamed from mrp.repair.cancel) [module repair]
+new model repair.fee (renamed from mrp.repair.fee) [module repair]
+new model repair.line (renamed from mrp.repair.line) [module repair]
+new model repair.order (renamed from mrp.repair) [module repair]
+new model repair.order.make_invoice (renamed from mrp.repair.make_invoice) [module repair]
+new model report.account.report_invoice_with_payments [module account]
+new model report.layout [module web]
+new model report.mrp.report_bom_structure [module mrp]
+new model report.stock.report_stock_rule [module stock]
+new model res.partner.autocomplete.sync [module partner_autocomplete]
+new model sale.order.template (renamed from sale.quote.template) [module sale_management]
+new model sale.order.template.line (renamed from sale.quote.line) [module sale_management]
+new model sale.order.template.option (renamed from sale.quote.option) [module sale_management]
+new model sale.payment.acquirer.onboarding.wizard [module sale]
+new model sale.product.configurator [module sale]
+new model snailmail.letter [module snailmail]
+new model stock.package.destination [module stock]
+new model stock.package_level [module stock]
+new model stock.rule (renamed from procurement.rule) [module stock]
+new model stock.rules.report [module stock]
+new model stock.track.confirmation [module stock]
+new model stock.track.line [module stock]
+new model theme.ir.attachment [module website_theme_install]
+new model theme.ir.ui.view [module website_theme_install]
+new model theme.utils [module website_theme_install]
+new model theme.website.menu [module website_theme_install]
+new model theme.website.page [module website_theme_install]
+new model uom.category (renamed from product.uom.categ) [module uom]
+new model uom.uom (renamed from product.uom) [module uom]
+new model website.event.menu [module website_event_track]
+new model website.multi.mixin [module website]
+new model website.published.multi.mixin [module website]
+new model website.sale.payment.acquirer.onboarding.wizard [module website_sale]
 ---Fields in module 'general'---
-# 7368 fields matched,
+# 7139 fields matched,
 # Direct match: 6981
 # Found in other module: 156
-# Found with different name: 0
 # Found with different type: 2
 # In obsolete models: 229
 # New columns: 1367
-# Not matched: 245
-new model account.analytic.distribution
-new model account.analytic.group
-new model account.fiscal.year
-new model account.incoterms
-new model base_import.mapping
-new model base_import.tests.models.complex
-new model base_import.tests.models.float
-new model blog.tag.category
-new model crm.reveal.industry
-new model crm.reveal.role
-new model crm.reveal.rule
-new model crm.reveal.seniority
-new model crm.reveal.view
-new model digest.digest
-new model digest.tip
-new model fleet.vehicle.assignation.log
-new model hr.leave
-new model hr.leave.allocation
-new model hr.leave.type
-new model l10n_it.ddt
-new model mail.blacklist
-new model mail.mass_mailing.list_contact_rel
-new model mail.moderation
-new model mail.test.activity
-new model mail.test.full
-new model mail.test.track
-new model mass.mail.test
-new model mass.mail.test.bl
-new model mrp.workcenter.productivity.loss.type
-new model product.attribute.custom.value
-new model product.template.attribute.exclusion
-new model product.template.attribute.line
-new model product.template.attribute.value
-new model project.sale.line.employee.map
-new model repair.fee
-new model repair.line
-new model repair.order
-new model report.layout
-new model res.partner.autocomplete.sync
-new model sale.order.template
-new model sale.order.template.line
-new model sale.order.template.option
-new model snailmail.letter
-new model stock.package_level
-new model stock.rule
-new model theme.ir.attachment
-new model theme.ir.ui.view
-new model theme.website.menu
-new model theme.website.page
-new model uom.category
-new model uom.uom
-new model website.event.menu
-obsolete model account.asset.asset
-obsolete model account.asset.category
-obsolete model account.asset.depreciation.line
+# Not matched: 474
+---XML records in module 'general'---
+ERROR: module not in list of installed modules:
+---Models in module 'account_asset'---
+---Fields in module 'account_asset'---
+---XML records in module 'account_asset'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Models in module 'account_budget'---
 obsolete model account.budget.post
-obsolete model account.financial.report
 obsolete model crossovered.budget
 obsolete model crossovered.budget.lines
-obsolete model forum.documentation.stage
-obsolete model forum.documentation.toc
-obsolete model hr.holidays (renamed to hr.leave)
-obsolete model hr.holidays.status (renamed to hr.leave.type)
+---Fields in module 'account_budget'---
+account_budget / account.analytic.account / crossovered_budget_line (one2many): DEL relation: crossovered.budget.lines
+account_budget / account.budget.post      / account_ids (many2many)       : DEL relation: account.account
+account_budget / account.budget.post      / company_id (many2one)         : DEL relation: res.company, required, req_default: function
+account_budget / account.budget.post      / crossovered_budget_line (one2many): DEL relation: crossovered.budget.lines
+account_budget / account.budget.post      / name (char)                   : DEL required
+account_budget / crossovered.budget       / company_id (many2one)         : DEL relation: res.company, required, req_default: function
+account_budget / crossovered.budget       / creating_user_id (many2one)   : DEL relation: res.users
+account_budget / crossovered.budget       / crossovered_budget_line (one2many): DEL relation: crossovered.budget.lines
+account_budget / crossovered.budget       / date_from (date)              : DEL required
+account_budget / crossovered.budget       / date_to (date)                : DEL required
+account_budget / crossovered.budget       / message_follower_ids (one2many): DEL relation: mail.followers
+account_budget / crossovered.budget       / message_ids (one2many)        : DEL relation: mail.message
+account_budget / crossovered.budget       / message_last_post (datetime)  : DEL
+account_budget / crossovered.budget       / name (char)                   : DEL required
+account_budget / crossovered.budget       / state (selection)             : DEL required, selection_keys: ['cancel', 'confirm', 'done', 'draft', 'validate'], req_default: function
+account_budget / crossovered.budget       / website_message_ids (one2many): DEL relation: mail.message
+account_budget / crossovered.budget.lines / analytic_account_id (many2one): DEL relation: account.analytic.account
+account_budget / crossovered.budget.lines / company_id (many2one)         : DEL relation: res.company
+account_budget / crossovered.budget.lines / crossovered_budget_id (many2one): DEL relation: crossovered.budget, required
+account_budget / crossovered.budget.lines / date_from (date)              : DEL required
+account_budget / crossovered.budget.lines / date_to (date)                : DEL required
+account_budget / crossovered.budget.lines / general_budget_id (many2one)  : DEL relation: account.budget.post, required
+account_budget / crossovered.budget.lines / paid_date (date)              : DEL
+account_budget / crossovered.budget.lines / planned_amount (float)        : DEL required
+---XML records in module 'account_budget'---
+DEL ir.actions.act_window: account_budget.act_account_analytic_account_cb_lines
+DEL ir.actions.act_window: account_budget.act_crossovered_budget_lines_view
+DEL ir.actions.act_window: account_budget.act_crossovered_budget_view
+DEL ir.actions.act_window: account_budget.open_budget_post_form
+DEL ir.model.access: account_budget.access_account_budget_post
+DEL ir.model.access: account_budget.access_account_budget_post_accountant
+DEL ir.model.access: account_budget.access_budget
+DEL ir.model.access: account_budget.access_crossovered_budget
+DEL ir.model.access: account_budget.access_crossovered_budget_accountant
+DEL ir.model.access: account_budget.access_crossovered_budget_lines_accountant
+DEL ir.rule: account_budget.budget_comp_rule (noupdate)
+DEL ir.rule: account_budget.budget_lines_comp_rule (noupdate)
+DEL ir.rule: account_budget.budget_post_comp_rule (noupdate)
+DEL ir.ui.menu: account_budget.menu_act_crossovered_budget_lines_view
+DEL ir.ui.menu: account_budget.menu_act_crossovered_budget_view
+DEL ir.ui.menu: account_budget.menu_budget_post_form
+DEL ir.ui.view: account_budget.crossovered_budget_view_form
+DEL ir.ui.view: account_budget.crossovered_budget_view_tree
+DEL ir.ui.view: account_budget.res_config_settings_view_form
+DEL ir.ui.view: account_budget.view_account_analytic_account_form_inherit_budget
+DEL ir.ui.view: account_budget.view_budget_post_form
+DEL ir.ui.view: account_budget.view_budget_post_search
+DEL ir.ui.view: account_budget.view_budget_post_tree
+DEL ir.ui.view: account_budget.view_crossovered_budget_kanban
+DEL ir.ui.view: account_budget.view_crossovered_budget_line_form
+DEL ir.ui.view: account_budget.view_crossovered_budget_line_search
+DEL ir.ui.view: account_budget.view_crossovered_budget_line_tree
+DEL ir.ui.view: account_budget.view_crossovered_budget_search
+DEL res.users: base.user_root (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'anonymization'---
 obsolete model ir.model.fields.anonymization
 obsolete model ir.model.fields.anonymization.history
 obsolete model ir.model.fields.anonymization.migration.fix
-obsolete model l10n_be_intrastat.region
-obsolete model l10n_be_intrastat.transaction
-obsolete model l10n_be_intrastat.transport_mode
-obsolete model mrp.message
-obsolete model mrp.repair (renamed to repair.order)
-obsolete model mrp.repair.fee (renamed to repair.fee)
-obsolete model mrp.repair.line (renamed to repair.line)
-obsolete model procurement.rule (renamed to stock.rule)
-obsolete model product.attribute.line (renamed to product.template.attribute.line)
-obsolete model product.attribute.price (renamed to product.template.attribute.value)
-obsolete model product.uom (renamed to uom.uom)
-obsolete model product.uom.categ (renamed to uom.category)
-obsolete model report.intrastat.code
-obsolete model res.request.link
-obsolete model sale.layout_category
-obsolete model sale.quote.line (renamed to sale.order.template.line)
-obsolete model sale.quote.option (renamed to sale.order.template.option)
-obsolete model sale.quote.template (renamed to sale.order.template)
-obsolete model stock.incoterms (renamed to account.incoterms)
-obsolete model stock.location.path
-obsolete model web.planner
----XML records in module 'general'---
-ERROR: module not in list of installed modules:
----Fields in module 'sale_payment'---
----XML records in module 'sale_payment'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'website_rating_project'---
----XML records in module 'website_rating_project'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'web_planner'---
----XML records in module 'web_planner'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'sale_order_dates'---
----XML records in module 'sale_order_dates'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'website_forum_doc'---
-website_forum_doc / forum.post               / color (integer)               : DEL
-website_forum_doc / forum.post               / documentation_stage_id (many2one): DEL relation: forum.documentation.stage
-website_forum_doc / forum.post               / documentation_toc_id (many2one): DEL relation: forum.documentation.toc
----XML records in module 'website_forum_doc'---
-DEL forum.documentation.stage: website_forum_doc.stage_draft (noupdate)
-DEL forum.documentation.stage: website_forum_doc.stage_ideas (noupdate)
-DEL forum.documentation.stage: website_forum_doc.stage_publish (noupdate)
-DEL forum.documentation.stage: website_forum_doc.stage_review (noupdate)
-DEL ir.actions.act_url: website_forum_doc.action_open_documentation
-DEL ir.actions.act_window: website_forum_doc.action_documentation_toc
-DEL ir.actions.act_window: website_forum_doc.action_forum_doc_post
-DEL ir.actions.todo: base.open_menu
-DEL ir.model.access: website_forum_doc.all_documentation_toc
-DEL ir.model.access: website_forum_doc.users_documentation_stage
-DEL ir.model.access: website_forum_doc.users_documentation_stage_all
-DEL ir.model.access: website_forum_doc.users_documentation_toc
-DEL ir.ui.menu: website_forum_doc.menu_documentation
-DEL ir.ui.menu: website_forum_doc.menu_forum_doc_posts
-DEL ir.ui.view: website_forum_doc.assets_frontend
-DEL ir.ui.view: website_forum_doc.breadcrumb
-DEL ir.ui.view: website_forum_doc.documentation
-DEL ir.ui.view: website_forum_doc.documentation_post
-DEL ir.ui.view: website_forum_doc.forum_question_doc
-DEL ir.ui.view: website_forum_doc.header_footer_custom
-DEL ir.ui.view: website_forum_doc.promote_question
-DEL ir.ui.view: website_forum_doc.toc
-DEL ir.ui.view: website_forum_doc.view_documentation_toc_list
-DEL ir.ui.view: website_forum_doc.view_forum_post_doc_form
-DEL ir.ui.view: website_forum_doc.view_forum_post_doc_list
-DEL ir.ui.view: website_forum_doc.view_forum_post_kanban
-DEL website.menu: website_forum_doc.menu_questions (noupdate)
-ERROR: module not in list of installed modules:
----Fields in module 'l10n_be_intrastat_2019'---
-l10n_be_intrastat_2019 / account.invoice.line     / intrastat_product_origin_country_id (many2one): DEL relation: res.country
----XML records in module 'l10n_be_intrastat_2019'---
-DEL ir.ui.view: l10n_be_intrastat_2019.invoice_line_be_intrastat_data_form
-DEL ir.ui.view: l10n_be_intrastat_2019.report_intrastatinvoice_document_2019
-DEL ir.ui.view: l10n_be_intrastat_2019.report_invoice_document_intrastat_2019
-DEL ir.ui.view: l10n_be_intrastat_2019.report_invoice_layouted_intrastat_2019
-ERROR: module not in list of installed modules:
----Fields in module 'website_quote'---
----XML records in module 'website_quote'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'mrp_repair'---
----XML records in module 'mrp_repair'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'pos_data_drinks'---
----XML records in module 'pos_data_drinks'---
-DEL ir.actions.todo: base.open_menu
-DEL pos.category: pos_data_drinks.alcohol (noupdate)
-DEL pos.category: pos_data_drinks.beer (noupdate)
-DEL pos.category: pos_data_drinks.beverage (noupdate)
-DEL pos.category: pos_data_drinks.cocktail (noupdate)
-DEL pos.category: pos_data_drinks.hot (noupdate)
-DEL pos.category: pos_data_drinks.milkshake (noupdate)
-DEL pos.category: pos_data_drinks.soft (noupdate)
-DEL pos.category: pos_data_drinks.wine (noupdate)
-DEL product.product: pos_data_drinks.bacardi (noupdate)
-DEL product.product: pos_data_drinks.baileys (noupdate)
-DEL product.product: pos_data_drinks.bloody_mary (noupdate)
-DEL product.product: pos_data_drinks.budweiser (noupdate)
-DEL product.product: pos_data_drinks.caipirinha (noupdate)
-DEL product.product: pos_data_drinks.captain_morgan (noupdate)
-DEL product.product: pos_data_drinks.capuccino (noupdate)
-DEL product.product: pos_data_drinks.carlsberg (noupdate)
-DEL product.product: pos_data_drinks.coffee (noupdate)
-DEL product.product: pos_data_drinks.coke (noupdate)
-DEL product.product: pos_data_drinks.corona (noupdate)
-DEL product.product: pos_data_drinks.cosmopolitan (noupdate)
-DEL product.product: pos_data_drinks.cuba_libre (noupdate)
-DEL product.product: pos_data_drinks.daiquiri (noupdate)
-DEL product.product: pos_data_drinks.disaronno (noupdate)
-DEL product.product: pos_data_drinks.efes (noupdate)
-DEL product.product: pos_data_drinks.espresso (noupdate)
-DEL product.product: pos_data_drinks.fanta (noupdate)
-DEL product.product: pos_data_drinks.fosters (noupdate)
-DEL product.product: pos_data_drinks.gordon (noupdate)
-DEL product.product: pos_data_drinks.green_tea (noupdate)
-DEL product.product: pos_data_drinks.guinness (noupdate)
-DEL product.product: pos_data_drinks.ice_tea (noupdate)
-DEL product.product: pos_data_drinks.irish_coffee (noupdate)
-DEL product.product: pos_data_drinks.jack_daniels (noupdate)
-DEL product.product: pos_data_drinks.jim_beam (noupdate)
-DEL product.product: pos_data_drinks.malibu (noupdate)
-DEL product.product: pos_data_drinks.manhattan (noupdate)
-DEL product.product: pos_data_drinks.margarita (noupdate)
-DEL product.product: pos_data_drinks.martini (noupdate)
-DEL product.product: pos_data_drinks.martini_cocktail (noupdate)
-DEL product.product: pos_data_drinks.milkshake_banana (noupdate)
-DEL product.product: pos_data_drinks.milkshake_cherry (noupdate)
-DEL product.product: pos_data_drinks.milkshake_chocolate (noupdate)
-DEL product.product: pos_data_drinks.milkshake_strawberry (noupdate)
-DEL product.product: pos_data_drinks.milkshake_vanilla (noupdate)
-DEL product.product: pos_data_drinks.miller (noupdate)
-DEL product.product: pos_data_drinks.minute_maid (noupdate)
-DEL product.product: pos_data_drinks.mojito (noupdate)
-DEL product.product: pos_data_drinks.nescafe (noupdate)
-DEL product.product: pos_data_drinks.pina_colada (noupdate)
-DEL product.product: pos_data_drinks.red_label (noupdate)
-DEL product.product: pos_data_drinks.red_wine (noupdate)
-DEL product.product: pos_data_drinks.redbull (noupdate)
-DEL product.product: pos_data_drinks.rose_wine (noupdate)
-DEL product.product: pos_data_drinks.safari (noupdate)
-DEL product.product: pos_data_drinks.schweppes (noupdate)
-DEL product.product: pos_data_drinks.smirnoff (noupdate)
-DEL product.product: pos_data_drinks.sprite (noupdate)
-DEL product.product: pos_data_drinks.stella_artois (noupdate)
-DEL product.product: pos_data_drinks.tea (noupdate)
-DEL product.product: pos_data_drinks.tequila (noupdate)
-DEL product.product: pos_data_drinks.tuborg (noupdate)
-DEL product.product: pos_data_drinks.water (noupdate)
-DEL product.product: pos_data_drinks.white_russian (noupdate)
-DEL product.product: pos_data_drinks.white_wine (noupdate)
-ERROR: module not in list of installed modules:
----Fields in module 'website_sale_stock_options'---
----XML records in module 'website_sale_stock_options'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
+obsolete model ir.model.fields.anonymize.wizard
 ---Fields in module 'anonymization'---
+anonymization / ir.model.fields.anonymization / field_id (many2one)           : DEL relation: ir.model.fields
+anonymization / ir.model.fields.anonymization / field_name (char)             : DEL required
+anonymization / ir.model.fields.anonymization / model_id (many2one)           : DEL relation: ir.model
+anonymization / ir.model.fields.anonymization / model_name (char)             : DEL required
+anonymization / ir.model.fields.anonymization / state (selection)             : DEL required, selection_keys: ['anonymized', 'clear', 'new', 'not_existing'], req_default: function
+anonymization / ir.model.fields.anonymization.history / date (datetime)               : DEL required
+anonymization / ir.model.fields.anonymization.history / direction (selection)         : DEL required, selection_keys: ['anonymized -> clear', 'clear -> anonymized']
+anonymization / ir.model.fields.anonymization.history / field_ids (many2many)         : DEL relation: ir.model.fields.anonymization
+anonymization / ir.model.fields.anonymization.history / filepath (char)               : DEL
+anonymization / ir.model.fields.anonymization.history / msg (text)                    : DEL
+anonymization / ir.model.fields.anonymization.history / state (selection)             : DEL required, selection_keys: ['done', 'in_exception', 'started']
+anonymization / ir.model.fields.anonymization.migration.fix / field_name (char)             : DEL
+anonymization / ir.model.fields.anonymization.migration.fix / model_name (char)             : DEL
+anonymization / ir.model.fields.anonymization.migration.fix / query (text)                  : DEL
+anonymization / ir.model.fields.anonymization.migration.fix / query_type (selection)        : DEL selection_keys: ['python', 'sql']
+anonymization / ir.model.fields.anonymization.migration.fix / sequence (integer)            : DEL
+anonymization / ir.model.fields.anonymization.migration.fix / target_version (char)         : DEL
 ---XML records in module 'anonymization'---
 DEL ir.actions.act_window: anonymization.action_ir_model_fields_anonymization_history_tree
 DEL ir.actions.act_window: anonymization.action_ir_model_fields_anonymization_tree
@@ -286,125 +310,27 @@ DEL ir.ui.view: anonymization.view_ir_model_fields_anonymization_tree
 DEL ir.ui.view: anonymization.view_ir_model_fields_anonymize_wizard_form
 DEL ir.ui.view: anonymization.view_ir_model_fields_nonymization_kanban
 ERROR: module not in list of installed modules:
----Fields in module 'website_sale_options'---
----XML records in module 'website_sale_options'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'account_invoicing'---
----XML records in module 'account_invoicing'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'base_vat_autocomplete'---
----XML records in module 'base_vat_autocomplete'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'report_intrastat'---
-report_intrastat / product.template         / intrastat_id (many2one)       : DEL relation: report.intrastat.code
-report_intrastat / res.country              / intrastat (boolean)           : DEL
----XML records in module 'report_intrastat'---
-DEL ir.actions.act_window: report_intrastat.action_report_intrastat_code_tree
-DEL ir.actions.act_window: report_intrastat.action_report_intrastat_tree_all
-DEL ir.actions.report: report_intrastat.account_intrastatinvoices
-DEL ir.model.access: report_intrastat.access_report_intrastat
-DEL ir.model.access: report_intrastat.access_report_intrastat_code
-DEL ir.model.access: report_intrastat.access_report_intrastat_code_purchase_manager
-DEL ir.model.access: report_intrastat.access_report_intrastat_code_sale_manager
-DEL ir.model.access: report_intrastat.access_report_intrastat_code_stock_manager
-DEL ir.rule: report_intrastat.invoice_analysis_comp_rule
-DEL ir.ui.menu: report_intrastat.menu_report_intrastat_all
-DEL ir.ui.menu: report_intrastat.menu_report_intrastat_code
-DEL ir.ui.view: report_intrastat.product_template_form_view
-DEL ir.ui.view: report_intrastat.report_intrastatinvoice
-DEL ir.ui.view: report_intrastat.report_intrastatinvoice_document
-DEL ir.ui.view: report_intrastat.view_country_form
-DEL ir.ui.view: report_intrastat.view_country_tree
-DEL ir.ui.view: report_intrastat.view_report_intrastat_code_form
-DEL ir.ui.view: report_intrastat.view_report_intrastat_code_tree
-DEL ir.ui.view: report_intrastat.view_report_intrastat_kanban
-DEL ir.ui.view: report_intrastat.view_report_intrastat_search
-DEL ir.ui.view: report_intrastat.view_report_intrastat_tree
-DEL res.country: base.at (noupdate)
-DEL res.country: base.be (noupdate)
-DEL res.country: base.cy (noupdate)
-DEL res.country: base.cz (noupdate)
-DEL res.country: base.de (noupdate)
-DEL res.country: base.dk (noupdate)
-DEL res.country: base.ee (noupdate)
-DEL res.country: base.es (noupdate)
-DEL res.country: base.fi (noupdate)
-DEL res.country: base.fr (noupdate)
-DEL res.country: base.gr (noupdate)
-DEL res.country: base.hu (noupdate)
-DEL res.country: base.ie (noupdate)
-DEL res.country: base.it (noupdate)
-DEL res.country: base.lt (noupdate)
-DEL res.country: base.lu (noupdate)
-DEL res.country: base.lv (noupdate)
-DEL res.country: base.mt (noupdate)
-DEL res.country: base.nl (noupdate)
-DEL res.country: base.pl (noupdate)
-DEL res.country: base.pt (noupdate)
-DEL res.country: base.se (noupdate)
-DEL res.country: base.si (noupdate)
-DEL res.country: base.sk (noupdate)
-DEL res.country: base.uk (noupdate)
-ERROR: module not in list of installed modules:
----Fields in module 'product_extended'---
----XML records in module 'product_extended'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'auth_crypt'---
----XML records in module 'auth_crypt'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'account_budget'---
-account_budget / account.analytic.account / crossovered_budget_line (one2many): DEL relation: crossovered.budget.lines
----XML records in module 'account_budget'---
-DEL ir.actions.act_window: account_budget.act_account_analytic_account_cb_lines
-DEL ir.actions.act_window: account_budget.act_crossovered_budget_lines_view
-DEL ir.actions.act_window: account_budget.act_crossovered_budget_view
-DEL ir.actions.act_window: account_budget.open_budget_post_form
-DEL ir.model.access: account_budget.access_account_budget_post
-DEL ir.model.access: account_budget.access_account_budget_post_accountant
-DEL ir.model.access: account_budget.access_budget
-DEL ir.model.access: account_budget.access_crossovered_budget
-DEL ir.model.access: account_budget.access_crossovered_budget_accountant
-DEL ir.model.access: account_budget.access_crossovered_budget_lines_accountant
-DEL ir.rule: account_budget.budget_comp_rule (noupdate)
-DEL ir.rule: account_budget.budget_lines_comp_rule (noupdate)
-DEL ir.rule: account_budget.budget_post_comp_rule (noupdate)
-DEL ir.ui.menu: account_budget.menu_act_crossovered_budget_lines_view
-DEL ir.ui.menu: account_budget.menu_act_crossovered_budget_view
-DEL ir.ui.menu: account_budget.menu_budget_post_form
-DEL ir.ui.view: account_budget.crossovered_budget_view_form
-DEL ir.ui.view: account_budget.crossovered_budget_view_tree
-DEL ir.ui.view: account_budget.res_config_settings_view_form
-DEL ir.ui.view: account_budget.view_account_analytic_account_form_inherit_budget
-DEL ir.ui.view: account_budget.view_budget_post_form
-DEL ir.ui.view: account_budget.view_budget_post_search
-DEL ir.ui.view: account_budget.view_budget_post_tree
-DEL ir.ui.view: account_budget.view_crossovered_budget_kanban
-DEL ir.ui.view: account_budget.view_crossovered_budget_line_form
-DEL ir.ui.view: account_budget.view_crossovered_budget_line_search
-DEL ir.ui.view: account_budget.view_crossovered_budget_line_tree
-DEL ir.ui.view: account_budget.view_crossovered_budget_search
-DEL res.users: base.user_root (noupdate)
-ERROR: module not in list of installed modules:
----Fields in module 'account_asset'---
----XML records in module 'account_asset'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'account_cash_basis_base_account'---
----XML records in module 'account_cash_basis_base_account'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
+---Models in module 'l10n_be_intrastat'---
+obsolete model l10n_be_intrastat.region
+obsolete model l10n_be_intrastat.transaction
+obsolete model l10n_be_intrastat.transport_mode
+obsolete model l10n_be_intrastat_xml.xml_decl
 ---Fields in module 'l10n_be_intrastat'---
 l10n_be_intrastat / account.invoice          / incoterm_id (many2one)        : module is now 'account' ('l10n_be_intrastat')
 l10n_be_intrastat / account.invoice          / incoterm_id (many2one)        : relation is now 'account.incoterms' ('stock.incoterms') [nothing to do]
 l10n_be_intrastat / account.invoice          / intrastat_country_id (many2one): DEL relation: res.country
 l10n_be_intrastat / account.invoice          / transport_mode_id (many2one)  : DEL relation: l10n_be_intrastat.transport_mode
 l10n_be_intrastat / account.invoice.line     / intrastat_transaction_id (many2one): DEL relation: l10n_be_intrastat.transaction
+l10n_be_intrastat / l10n_be_intrastat.region / code (char)                   : DEL required
+l10n_be_intrastat / l10n_be_intrastat.region / country_id (many2one)         : DEL relation: res.country
+l10n_be_intrastat / l10n_be_intrastat.region / description (char)            : DEL
+l10n_be_intrastat / l10n_be_intrastat.region / name (char)                   : DEL
+l10n_be_intrastat / l10n_be_intrastat.transaction / code (char)                   : DEL required
+l10n_be_intrastat / l10n_be_intrastat.transaction / description (text)            : DEL
+l10n_be_intrastat / l10n_be_intrastat.transport_mode / code (char)                   : DEL required
+l10n_be_intrastat / l10n_be_intrastat.transport_mode / name (char)                   : DEL
 l10n_be_intrastat / product.category         / intrastat_id (many2one)       : DEL relation: report.intrastat.code
+l10n_be_intrastat / report.intrastat.code    / description (text)            : DEL mode: modify
 l10n_be_intrastat / res.company              / incoterm_id (many2one)        : module is now 'account' ('l10n_be_intrastat')
 l10n_be_intrastat / res.company              / incoterm_id (many2one)        : relation is now 'account.incoterms' ('stock.incoterms') [nothing to do]
 l10n_be_intrastat / res.company              / region_id (many2one)          : DEL relation: l10n_be_intrastat.region
@@ -9832,6 +9758,186 @@ DEL report.intrastat.code: l10n_be_intrastat.intrastat_category_2014_99600000
 DEL report.intrastat.code: l10n_be_intrastat.intrastat_category_2014_99700000
 DEL res.groups: l10n_be_intrastat.intrastat_extended
 ERROR: module not in list of installed modules:
----Fields in module 'rating_project'---
----XML records in module 'rating_project'---
----nothing has changed in this module--
+---Models in module 'l10n_be_intrastat_2019'---
+---Fields in module 'l10n_be_intrastat_2019'---
+l10n_be_intrastat_2019 / account.invoice.line     / intrastat_product_origin_country_id (many2one): DEL relation: res.country
+---XML records in module 'l10n_be_intrastat_2019'---
+DEL ir.ui.view: l10n_be_intrastat_2019.invoice_line_be_intrastat_data_form
+DEL ir.ui.view: l10n_be_intrastat_2019.report_intrastatinvoice_document_2019
+DEL ir.ui.view: l10n_be_intrastat_2019.report_invoice_document_intrastat_2019
+DEL ir.ui.view: l10n_be_intrastat_2019.report_invoice_layouted_intrastat_2019
+ERROR: module not in list of installed modules:
+---Models in module 'pos_data_drinks'---
+---Fields in module 'pos_data_drinks'---
+---XML records in module 'pos_data_drinks'---
+DEL ir.actions.todo: base.open_menu
+DEL pos.category: pos_data_drinks.alcohol (noupdate)
+DEL pos.category: pos_data_drinks.beer (noupdate)
+DEL pos.category: pos_data_drinks.beverage (noupdate)
+DEL pos.category: pos_data_drinks.cocktail (noupdate)
+DEL pos.category: pos_data_drinks.hot (noupdate)
+DEL pos.category: pos_data_drinks.milkshake (noupdate)
+DEL pos.category: pos_data_drinks.soft (noupdate)
+DEL pos.category: pos_data_drinks.wine (noupdate)
+DEL product.product: pos_data_drinks.bacardi (noupdate)
+DEL product.product: pos_data_drinks.baileys (noupdate)
+DEL product.product: pos_data_drinks.bloody_mary (noupdate)
+DEL product.product: pos_data_drinks.budweiser (noupdate)
+DEL product.product: pos_data_drinks.caipirinha (noupdate)
+DEL product.product: pos_data_drinks.captain_morgan (noupdate)
+DEL product.product: pos_data_drinks.capuccino (noupdate)
+DEL product.product: pos_data_drinks.carlsberg (noupdate)
+DEL product.product: pos_data_drinks.coffee (noupdate)
+DEL product.product: pos_data_drinks.coke (noupdate)
+DEL product.product: pos_data_drinks.corona (noupdate)
+DEL product.product: pos_data_drinks.cosmopolitan (noupdate)
+DEL product.product: pos_data_drinks.cuba_libre (noupdate)
+DEL product.product: pos_data_drinks.daiquiri (noupdate)
+DEL product.product: pos_data_drinks.disaronno (noupdate)
+DEL product.product: pos_data_drinks.efes (noupdate)
+DEL product.product: pos_data_drinks.espresso (noupdate)
+DEL product.product: pos_data_drinks.fanta (noupdate)
+DEL product.product: pos_data_drinks.fosters (noupdate)
+DEL product.product: pos_data_drinks.gordon (noupdate)
+DEL product.product: pos_data_drinks.green_tea (noupdate)
+DEL product.product: pos_data_drinks.guinness (noupdate)
+DEL product.product: pos_data_drinks.ice_tea (noupdate)
+DEL product.product: pos_data_drinks.irish_coffee (noupdate)
+DEL product.product: pos_data_drinks.jack_daniels (noupdate)
+DEL product.product: pos_data_drinks.jim_beam (noupdate)
+DEL product.product: pos_data_drinks.malibu (noupdate)
+DEL product.product: pos_data_drinks.manhattan (noupdate)
+DEL product.product: pos_data_drinks.margarita (noupdate)
+DEL product.product: pos_data_drinks.martini (noupdate)
+DEL product.product: pos_data_drinks.martini_cocktail (noupdate)
+DEL product.product: pos_data_drinks.milkshake_banana (noupdate)
+DEL product.product: pos_data_drinks.milkshake_cherry (noupdate)
+DEL product.product: pos_data_drinks.milkshake_chocolate (noupdate)
+DEL product.product: pos_data_drinks.milkshake_strawberry (noupdate)
+DEL product.product: pos_data_drinks.milkshake_vanilla (noupdate)
+DEL product.product: pos_data_drinks.miller (noupdate)
+DEL product.product: pos_data_drinks.minute_maid (noupdate)
+DEL product.product: pos_data_drinks.mojito (noupdate)
+DEL product.product: pos_data_drinks.nescafe (noupdate)
+DEL product.product: pos_data_drinks.pina_colada (noupdate)
+DEL product.product: pos_data_drinks.red_label (noupdate)
+DEL product.product: pos_data_drinks.red_wine (noupdate)
+DEL product.product: pos_data_drinks.redbull (noupdate)
+DEL product.product: pos_data_drinks.rose_wine (noupdate)
+DEL product.product: pos_data_drinks.safari (noupdate)
+DEL product.product: pos_data_drinks.schweppes (noupdate)
+DEL product.product: pos_data_drinks.smirnoff (noupdate)
+DEL product.product: pos_data_drinks.sprite (noupdate)
+DEL product.product: pos_data_drinks.stella_artois (noupdate)
+DEL product.product: pos_data_drinks.tea (noupdate)
+DEL product.product: pos_data_drinks.tequila (noupdate)
+DEL product.product: pos_data_drinks.tuborg (noupdate)
+DEL product.product: pos_data_drinks.water (noupdate)
+DEL product.product: pos_data_drinks.white_russian (noupdate)
+DEL product.product: pos_data_drinks.white_wine (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'report_intrastat'---
+obsolete model report.intrastat
+obsolete model report.intrastat.code
+---Fields in module 'report_intrastat'---
+report_intrastat / product.template         / intrastat_id (many2one)       : DEL relation: report.intrastat.code
+report_intrastat / report.intrastat.code    / description (char)            : DEL
+report_intrastat / report.intrastat.code    / name (char)                   : DEL
+report_intrastat / res.country              / intrastat (boolean)           : DEL
+---XML records in module 'report_intrastat'---
+DEL ir.actions.act_window: report_intrastat.action_report_intrastat_code_tree
+DEL ir.actions.act_window: report_intrastat.action_report_intrastat_tree_all
+DEL ir.actions.report: report_intrastat.account_intrastatinvoices
+DEL ir.model.access: report_intrastat.access_report_intrastat
+DEL ir.model.access: report_intrastat.access_report_intrastat_code
+DEL ir.model.access: report_intrastat.access_report_intrastat_code_purchase_manager
+DEL ir.model.access: report_intrastat.access_report_intrastat_code_sale_manager
+DEL ir.model.access: report_intrastat.access_report_intrastat_code_stock_manager
+DEL ir.rule: report_intrastat.invoice_analysis_comp_rule
+DEL ir.ui.menu: report_intrastat.menu_report_intrastat_all
+DEL ir.ui.menu: report_intrastat.menu_report_intrastat_code
+DEL ir.ui.view: report_intrastat.product_template_form_view
+DEL ir.ui.view: report_intrastat.report_intrastatinvoice
+DEL ir.ui.view: report_intrastat.report_intrastatinvoice_document
+DEL ir.ui.view: report_intrastat.view_country_form
+DEL ir.ui.view: report_intrastat.view_country_tree
+DEL ir.ui.view: report_intrastat.view_report_intrastat_code_form
+DEL ir.ui.view: report_intrastat.view_report_intrastat_code_tree
+DEL ir.ui.view: report_intrastat.view_report_intrastat_kanban
+DEL ir.ui.view: report_intrastat.view_report_intrastat_search
+DEL ir.ui.view: report_intrastat.view_report_intrastat_tree
+DEL res.country: base.at (noupdate)
+DEL res.country: base.be (noupdate)
+DEL res.country: base.cy (noupdate)
+DEL res.country: base.cz (noupdate)
+DEL res.country: base.de (noupdate)
+DEL res.country: base.dk (noupdate)
+DEL res.country: base.ee (noupdate)
+DEL res.country: base.es (noupdate)
+DEL res.country: base.fi (noupdate)
+DEL res.country: base.fr (noupdate)
+DEL res.country: base.gr (noupdate)
+DEL res.country: base.hu (noupdate)
+DEL res.country: base.ie (noupdate)
+DEL res.country: base.it (noupdate)
+DEL res.country: base.lt (noupdate)
+DEL res.country: base.lu (noupdate)
+DEL res.country: base.lv (noupdate)
+DEL res.country: base.mt (noupdate)
+DEL res.country: base.nl (noupdate)
+DEL res.country: base.pl (noupdate)
+DEL res.country: base.pt (noupdate)
+DEL res.country: base.se (noupdate)
+DEL res.country: base.si (noupdate)
+DEL res.country: base.sk (noupdate)
+DEL res.country: base.uk (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'website_forum_doc'---
+obsolete model forum.documentation.stage
+obsolete model forum.documentation.toc
+---Fields in module 'website_forum_doc'---
+website_forum_doc / forum.documentation.stage / name (char)                   : DEL required
+website_forum_doc / forum.documentation.stage / sequence (integer)            : DEL
+website_forum_doc / forum.documentation.toc  / child_ids (one2many)          : DEL relation: forum.documentation.toc
+website_forum_doc / forum.documentation.toc  / forum_id (many2one)           : DEL relation: forum.forum, required
+website_forum_doc / forum.documentation.toc  / introduction (html)           : DEL
+website_forum_doc / forum.documentation.toc  / name (char)                   : DEL required
+website_forum_doc / forum.documentation.toc  / parent_id (many2one)          : DEL relation: forum.documentation.toc
+website_forum_doc / forum.documentation.toc  / parent_left (integer)         : DEL
+website_forum_doc / forum.documentation.toc  / parent_right (integer)        : DEL
+website_forum_doc / forum.documentation.toc  / post_ids (one2many)           : DEL relation: forum.post
+website_forum_doc / forum.documentation.toc  / sequence (integer)            : DEL
+website_forum_doc / forum.documentation.toc  / website_meta_description (text): DEL
+website_forum_doc / forum.documentation.toc  / website_meta_keywords (char)  : DEL
+website_forum_doc / forum.documentation.toc  / website_meta_title (char)     : DEL
+website_forum_doc / forum.post               / color (integer)               : DEL
+website_forum_doc / forum.post               / documentation_stage_id (many2one): DEL relation: forum.documentation.stage
+website_forum_doc / forum.post               / documentation_toc_id (many2one): DEL relation: forum.documentation.toc
+---XML records in module 'website_forum_doc'---
+DEL forum.documentation.stage: website_forum_doc.stage_draft (noupdate)
+DEL forum.documentation.stage: website_forum_doc.stage_ideas (noupdate)
+DEL forum.documentation.stage: website_forum_doc.stage_publish (noupdate)
+DEL forum.documentation.stage: website_forum_doc.stage_review (noupdate)
+DEL ir.actions.act_url: website_forum_doc.action_open_documentation
+DEL ir.actions.act_window: website_forum_doc.action_documentation_toc
+DEL ir.actions.act_window: website_forum_doc.action_forum_doc_post
+DEL ir.actions.todo: base.open_menu
+DEL ir.model.access: website_forum_doc.all_documentation_toc
+DEL ir.model.access: website_forum_doc.users_documentation_stage
+DEL ir.model.access: website_forum_doc.users_documentation_stage_all
+DEL ir.model.access: website_forum_doc.users_documentation_toc
+DEL ir.ui.menu: website_forum_doc.menu_documentation
+DEL ir.ui.menu: website_forum_doc.menu_forum_doc_posts
+DEL ir.ui.view: website_forum_doc.assets_frontend
+DEL ir.ui.view: website_forum_doc.breadcrumb
+DEL ir.ui.view: website_forum_doc.documentation
+DEL ir.ui.view: website_forum_doc.documentation_post
+DEL ir.ui.view: website_forum_doc.forum_question_doc
+DEL ir.ui.view: website_forum_doc.header_footer_custom
+DEL ir.ui.view: website_forum_doc.promote_question
+DEL ir.ui.view: website_forum_doc.toc
+DEL ir.ui.view: website_forum_doc.view_documentation_toc_list
+DEL ir.ui.view: website_forum_doc.view_forum_post_doc_form
+DEL ir.ui.view: website_forum_doc.view_forum_post_doc_list
+DEL ir.ui.view: website_forum_doc.view_forum_post_kanban
+DEL website.menu: website_forum_doc.menu_questions (noupdate)

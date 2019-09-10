@@ -1,3 +1,31 @@
+---Models in module 'account'---
+obsolete model account.aged.trial.balance
+obsolete model account.balance.report
+obsolete model account.bank.accounts.wizard
+obsolete model account.common.account.report
+obsolete model account.common.partner.report
+obsolete model account.financial.report
+obsolete model accounting.report
+obsolete model account.move.line.reconcile
+obsolete model account.move.line.reconcile.writeoff
+obsolete model account.opening
+obsolete model account.report.general.ledger
+obsolete model account.report.partner.ledger
+obsolete model account.tax.report
+obsolete model report.account.report_financial
+obsolete model report.account.report_generalledger
+obsolete model report.account.report_overdue
+obsolete model report.account.report_partnerledger
+obsolete model report.account.report_tax
+obsolete model report.account.report_trialbalance
+obsolete model wizard.multi.charts.accounts
+new model account.fiscal.year
+new model account.incoterms (renamed from stock.incoterms)
+new model account.invoice.import.wizard
+new model account.invoice.send
+new model account.reconciliation.widget
+new model account.setup.bank.manual.config
+new model report.account.report_invoice_with_payments
 ---Fields in module 'account'---
 account      / account.account          / internal_group (selection)    : NEW selection_keys: function, isrelated: related, stored
 account      / account.account.type     / internal_group (selection)    : NEW selection_keys: ['asset', 'equity', 'expense', 'income', 'liability']
@@ -14,6 +42,18 @@ account      / account.chart.template   / cash_account_code_prefix (char): now r
 account      / account.chart.template   / company_id (many2one)         : DEL relation: res.company
 account      / account.chart.template   / transfer_account_code_prefix (char): NEW required
 account      / account.chart.template   / transfer_account_id (many2one): DEL relation: account.account.template, required
+account      / account.financial.report / account_ids (many2many)       : DEL relation: account.account
+account      / account.financial.report / account_report_id (many2one)  : DEL relation: account.financial.report
+account      / account.financial.report / account_type_ids (many2many)  : DEL relation: account.account.type
+account      / account.financial.report / children_ids (one2many)       : DEL relation: account.financial.report
+account      / account.financial.report / display_detail (selection)    : DEL selection_keys: ['detail_flat', 'detail_with_hierarchy', 'no_detail']
+account      / account.financial.report / level (integer)               : DEL
+account      / account.financial.report / name (char)                   : DEL required
+account      / account.financial.report / parent_id (many2one)          : DEL relation: account.financial.report
+account      / account.financial.report / sequence (integer)            : DEL
+account      / account.financial.report / sign (selection)              : DEL required, selection_keys: [-1, 1], req_default: function
+account      / account.financial.report / style_overwrite (selection)   : DEL selection_keys: [0, 1, 2, 3, 4, 5, 6]
+account      / account.financial.report / type (selection)              : DEL selection_keys: ['account_report', 'account_type', 'accounts', 'sum']
 account      / account.fiscal.year      / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
 account      / account.fiscal.year      / date_from (date)              : NEW required
 account      / account.fiscal.year      / date_to (date)                : NEW required
@@ -155,7 +195,7 @@ NEW account.reconcile.model: account.reconciliation_model_default_rule (noupdate
 NEW digest.digest: digest.digest_digest_default (noupdate)
 NEW ir.actions.act_window: account.account_invoice_import_wizard_action
 NEW ir.actions.act_window: account.action_account_payments_transfer
-NEW ir.actions.act_window: account.action_incoterms_tree
+NEW ir.actions.act_window: account.action_incoterms_tree [renamed from stock module]
 NEW ir.actions.act_window: account.action_open_account_onboarding_invoice_layout
 NEW ir.actions.act_window: account.action_open_account_onboarding_sale_tax
 NEW ir.actions.act_window: account.action_open_account_onboarding_sample_invoice
@@ -197,11 +237,11 @@ NEW ir.model.access: account.access_account_incoterms_all
 NEW ir.model.access: account.access_account_incoterms_manager
 DEL ir.model.access: account.access_account_financial_report
 DEL ir.model.access: account.access_account_financial_report_invoice
-NEW ir.rule: account.account_analytic_line_rule_billing_user
+NEW ir.rule: account.account_analytic_line_rule_billing_user [renamed from sale_timesheet module]
 NEW ir.rule: account.account_payment_term_comp_rule (noupdate)
 NEW ir.ui.menu: account.account_analytic_group_menu
 NEW ir.ui.menu: account.action_account_reconcile_model_menu
-NEW ir.ui.menu: account.menu_action_incoterm_open
+NEW ir.ui.menu: account.menu_action_incoterm_open [renamed from stock module]
 DEL ir.ui.menu: account.account_reports_business_intelligence_menu
 DEL ir.ui.menu: account.menu_account_financial_reports_tree
 DEL ir.ui.menu: account.menu_account_report

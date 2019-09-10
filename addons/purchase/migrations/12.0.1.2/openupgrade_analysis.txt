@@ -1,3 +1,5 @@
+---Models in module 'purchase'---
+new model purchase.bill.union
 ---Fields in module 'purchase'---
 purchase     / account.invoice          / vendor_bill_purchase_id (many2one): NEW relation: purchase.bill.union
 purchase     / procurement.rule         / action (False)                : module is now 'purchase_stock' ('purchase')
@@ -31,27 +33,27 @@ purchase     / stock.warehouse          / buy_pull_id (many2one)        : relati
 purchase     / stock.warehouse          / buy_to_resupply (boolean)     : module is now 'purchase_stock' ('purchase')
 ---XML records in module 'purchase'---
 DEL ir.actions.act_window: purchase.action_purchase_line_product_tree
-DEL ir.actions.act_window: purchase.purchase_open_picking
+DEL ir.actions.act_window: purchase.purchase_open_picking [renamed to purchase_stock module]
 NEW ir.actions.server: purchase.model_purchase_order_action_share (noupdate)
 NEW ir.model.access: purchase.access_purchase_bill_union
 NEW ir.model.access: purchase.access_uom_category_purchase_manager
 NEW ir.model.access: purchase.access_uom_uom_purchase_manager
 DEL ir.model.access: purchase.access_product_uom_categ_purchase_manager
 DEL ir.model.access: purchase.access_product_uom_purchase_manager
-DEL ir.model.access: purchase.access_purchase_order_line_stock_worker
-DEL ir.model.access: purchase.access_purchase_order_stock_worker
-DEL ir.model.access: purchase.access_stock_location_purchase_manager
-DEL ir.model.access: purchase.access_stock_location_purchase_user
-DEL ir.model.access: purchase.access_stock_location_purchase_user_manager
-DEL ir.model.access: purchase.access_stock_move_purchase_user
-DEL ir.model.access: purchase.access_stock_move_purchase_user_manager
-DEL ir.model.access: purchase.access_stock_picking_purchase_user
-DEL ir.model.access: purchase.access_stock_picking_purchase_user_manager
-DEL ir.model.access: purchase.access_stock_warehouse_orderpoint_manager
-DEL ir.model.access: purchase.access_stock_warehouse_purchase_user
-DEL ir.model.access: purchase.access_stock_warehouse_purchase_user_manager
+DEL ir.model.access: purchase.access_purchase_order_line_stock_worker [renamed to purchase_stock module]
+DEL ir.model.access: purchase.access_purchase_order_stock_worker [renamed to purchase_stock module]
+DEL ir.model.access: purchase.access_stock_location_purchase_manager [renamed to purchase_stock module]
+DEL ir.model.access: purchase.access_stock_location_purchase_user [renamed to purchase_stock module]
+DEL ir.model.access: purchase.access_stock_location_purchase_user_manager [renamed to purchase_stock module]
+DEL ir.model.access: purchase.access_stock_move_purchase_user [renamed to purchase_stock module]
+DEL ir.model.access: purchase.access_stock_move_purchase_user_manager [renamed to purchase_stock module]
+DEL ir.model.access: purchase.access_stock_picking_purchase_user [renamed to purchase_stock module]
+DEL ir.model.access: purchase.access_stock_picking_purchase_user_manager [renamed to purchase_stock module]
+DEL ir.model.access: purchase.access_stock_warehouse_orderpoint_manager [renamed to purchase_stock module]
+DEL ir.model.access: purchase.access_stock_warehouse_purchase_user [renamed to purchase_stock module]
+DEL ir.model.access: purchase.access_stock_warehouse_purchase_user_manager [renamed to purchase_stock module]
 NEW ir.rule: purchase.purchase_bill_union_comp_rule (noupdate)
-DEL ir.ui.menu: purchase.menu_action_picking_tree_in_move
+DEL ir.ui.menu: purchase.menu_action_picking_tree_in_move [renamed to purchase_stock module]
 NEW ir.ui.view: purchase.product_normal_form_view_inherit_purchase
 NEW ir.ui.view: purchase.view_purchase_bill_union_filter
 NEW ir.ui.view: purchase.view_purchase_bill_union_tree
@@ -63,4 +65,4 @@ DEL ir.ui.view: purchase.view_warehouse_orderpoint_purchase_form
 DEL mail.template: purchase.mail_template_data_notification_email_purchase_order (noupdate)
 DEL res.groups: purchase.group_analytic_accounting
 DEL res.request.link: purchase.req_link_purchase_order (noupdate)
-DEL stock.location.route: purchase.route_warehouse0_buy (noupdate)
+DEL stock.location.route: purchase.route_warehouse0_buy [renamed to purchase_stock module] (noupdate)

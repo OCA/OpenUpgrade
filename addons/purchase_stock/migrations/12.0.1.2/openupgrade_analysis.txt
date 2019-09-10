@@ -1,3 +1,4 @@
+---Models in module 'purchase_stock'---
 ---Fields in module 'purchase_stock'---
 purchase_stock / procurement.rule         / action (False)                : previously in module purchase
 purchase_stock / product.template         / route_ids (False)             : previously in module purchase
@@ -16,21 +17,21 @@ purchase_stock / stock.picking            / purchase_id (many2one)        : prev
 purchase_stock / stock.warehouse          / buy_pull_id (many2one)        : previously in module purchase
 purchase_stock / stock.warehouse          / buy_to_resupply (boolean)     : previously in module purchase
 ---XML records in module 'purchase_stock'---
-NEW ir.actions.act_window: purchase_stock.purchase_open_picking
-NEW ir.model.access: purchase_stock.access_purchase_order_line_stock_worker
-NEW ir.model.access: purchase_stock.access_purchase_order_stock_worker
-NEW ir.model.access: purchase_stock.access_stock_location_purchase_manager
-NEW ir.model.access: purchase_stock.access_stock_location_purchase_user
-NEW ir.model.access: purchase_stock.access_stock_location_purchase_user_manager
-NEW ir.model.access: purchase_stock.access_stock_move_purchase_user
-NEW ir.model.access: purchase_stock.access_stock_move_purchase_user_manager
-NEW ir.model.access: purchase_stock.access_stock_picking_purchase_user
-NEW ir.model.access: purchase_stock.access_stock_picking_purchase_user_manager
-NEW ir.model.access: purchase_stock.access_stock_warehouse_orderpoint_manager
+NEW ir.actions.act_window: purchase_stock.purchase_open_picking [renamed from purchase module]
+NEW ir.model.access: purchase_stock.access_purchase_order_line_stock_worker [renamed from purchase module]
+NEW ir.model.access: purchase_stock.access_purchase_order_stock_worker [renamed from purchase module]
+NEW ir.model.access: purchase_stock.access_stock_location_purchase_manager [renamed from purchase module]
+NEW ir.model.access: purchase_stock.access_stock_location_purchase_user [renamed from purchase module]
+NEW ir.model.access: purchase_stock.access_stock_location_purchase_user_manager [renamed from purchase module]
+NEW ir.model.access: purchase_stock.access_stock_move_purchase_user [renamed from purchase module]
+NEW ir.model.access: purchase_stock.access_stock_move_purchase_user_manager [renamed from purchase module]
+NEW ir.model.access: purchase_stock.access_stock_picking_purchase_user [renamed from purchase module]
+NEW ir.model.access: purchase_stock.access_stock_picking_purchase_user_manager [renamed from purchase module]
+NEW ir.model.access: purchase_stock.access_stock_warehouse_orderpoint_manager [renamed from purchase module]
 NEW ir.model.access: purchase_stock.access_stock_warehouse_orderpoint_user
-NEW ir.model.access: purchase_stock.access_stock_warehouse_purchase_user
-NEW ir.model.access: purchase_stock.access_stock_warehouse_purchase_user_manager
-NEW ir.ui.menu: purchase_stock.menu_action_picking_tree_in_move
+NEW ir.model.access: purchase_stock.access_stock_warehouse_purchase_user [renamed from purchase module]
+NEW ir.model.access: purchase_stock.access_stock_warehouse_purchase_user_manager [renamed from purchase module]
+NEW ir.ui.menu: purchase_stock.menu_action_picking_tree_in_move [renamed from purchase module]
 NEW ir.ui.view: purchase_stock.exception_on_po
 NEW ir.ui.view: purchase_stock.purchase_order_line_view_form_inherit
 NEW ir.ui.view: purchase_stock.purchase_order_view_form_inherit
@@ -45,5 +46,5 @@ NEW ir.ui.view: purchase_stock.stock_production_lot_view_form
 NEW ir.ui.view: purchase_stock.stock_production_lot_view_form_simple
 NEW ir.ui.view: purchase_stock.view_stock_rule_form_stock_inherit_purchase_stock
 NEW ir.ui.view: purchase_stock.view_warehouse_inherited
-NEW stock.location.route: purchase_stock.route_warehouse0_buy (noupdate)
+NEW stock.location.route: purchase_stock.route_warehouse0_buy [renamed from purchase module] (noupdate)
 NEW stock.warehouse: stock.warehouse0 (noupdate)

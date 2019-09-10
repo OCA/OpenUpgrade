@@ -1,3 +1,8 @@
+---Models in module 'sale'---
+obsolete model sale.layout_category
+new model product.attribute.custom.value
+new model sale.payment.acquirer.onboarding.wizard
+new model sale.product.configurator
 ---Fields in module 'sale'---
 sale         / account.invoice.line     / layout_category_id (many2one) : DEL relation: sale.layout_category
 sale         / account.invoice.line     / layout_category_sequence (integer): DEL
@@ -21,6 +26,10 @@ sale         / res.company              / sale_onboarding_order_confirmation_sta
 sale         / res.company              / sale_onboarding_payment_method (selection): NEW selection_keys: ['digital_signature', 'manual', 'other', 'paypal', 'stripe']
 sale         / res.company              / sale_onboarding_sample_quotation_state (selection): NEW selection_keys: ['done', 'just_done', 'not_done'], hasdefault
 sale         / res.company              / sale_quotation_onboarding_state (selection): NEW selection_keys: ['closed', 'done', 'just_done', 'not_done'], hasdefault
+sale         / sale.layout_category     / name (char)                   : DEL required
+sale         / sale.layout_category     / pagebreak (boolean)           : DEL
+sale         / sale.layout_category     / sequence (integer)            : DEL required, req_default: function
+sale         / sale.layout_category     / subtotal (boolean)            : DEL
 sale         / sale.order               / activity_date_deadline (date) : not related anymore
 sale         / sale.order               / activity_date_deadline (date) : not stored anymore
 sale         / sale.order               / activity_date_deadline (date) : now a function

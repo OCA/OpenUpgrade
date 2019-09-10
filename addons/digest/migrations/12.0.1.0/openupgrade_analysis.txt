@@ -1,3 +1,6 @@
+---Models in module 'digest'---
+new model digest.digest
+new model digest.tip
 ---Fields in module 'digest'---
 digest       / digest.digest            / company_id (many2one)         : NEW relation: res.company, hasdefault
 digest       / digest.digest            / kpi_mail_message_total (boolean): NEW

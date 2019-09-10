@@ -1,8 +1,22 @@
+---Models in module 'mrp'---
+obsolete model mrp.message
+obsolete model report.mrp.mrp_bom_cost_report
+obsolete model report.mrp.mrp_bom_structure_report
+new model mrp.workcenter.productivity.loss.type
+new model report.mrp.report_bom_structure
 ---Fields in module 'mrp'---
 mrp          / mrp.bom                  / message_last_post (datetime)  : DEL
 mrp          / mrp.bom                  / message_main_attachment_id (many2one): NEW relation: ir.attachment
 mrp          / mrp.bom                  / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
 mrp          / mrp.bom.line             / product_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]
+mrp          / mrp.message              / bom_id (many2one)             : DEL relation: mrp.bom
+mrp          / mrp.message              / message (html)                : DEL required
+mrp          / mrp.message              / name (text)                   : DEL
+mrp          / mrp.message              / product_id (many2one)         : DEL relation: product.product
+mrp          / mrp.message              / product_tmpl_id (many2one)    : DEL relation: product.template
+mrp          / mrp.message              / routing_id (many2one)         : DEL relation: mrp.routing
+mrp          / mrp.message              / valid_until (date)            : DEL required, req_default: function
+mrp          / mrp.message              / workcenter_id (many2one)      : DEL relation: mrp.workcenter
 mrp          / mrp.production           / activity_date_deadline (date) : not related anymore
 mrp          / mrp.production           / activity_date_deadline (date) : not stored anymore
 mrp          / mrp.production           / activity_date_deadline (date) : now a function

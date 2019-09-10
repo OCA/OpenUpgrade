@@ -1,3 +1,4 @@
+---Models in module 'test_performance'---
 ---Fields in module 'test_performance'---
 test_performance / test_performance.mail    / __last_update (datetime)      : module is now 'test_mail' ('test_performance')
 test_performance / test_performance.mail    / display_name (char)           : module is now 'test_mail' ('test_performance')
@@ -18,4 +19,4 @@ test_performance / test_performance.mail    / value (integer)               : mo
 test_performance / test_performance.mail    / value_pc (float)              : module is now 'test_mail' ('test_performance')
 test_performance / test_performance.mail    / website_message_ids (one2many): module is now 'test_mail' ('test_performance')
 ---XML records in module 'test_performance'---
-DEL ir.model.access: test_performance.access_test_performance_mail
+DEL ir.model.access: test_performance.access_test_performance_mail [renamed to test_mail module]

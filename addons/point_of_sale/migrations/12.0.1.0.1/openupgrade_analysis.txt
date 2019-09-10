@@ -1,3 +1,5 @@
+---Models in module 'point_of_sale'---
+obsolete model pos.discount
 ---Fields in module 'point_of_sale'---
 point_of_sale / digest.digest            / kpi_pos_total (boolean)       : NEW
 point_of_sale / pos.config               / group_pricelist_item (boolean): DEL
@@ -38,5 +40,5 @@ NEW ir.ui.view: point_of_sale.res_users_view_form
 DEL ir.ui.view: point_of_sale.res_users_form_view
 DEL ir.ui.view: point_of_sale.view_pos_discount
 NEW product.category: point_of_sale.product_category_pos (noupdate)
-DEL product.uom.categ: product.product_uom_categ_unit [renamed to point_of_sale module] (noupdate)
-NEW uom.category: uom.product_uom_categ_unit [renamed from point_of_sale module] (noupdate)
+DEL product.uom.categ: product.product_uom_categ_unit (noupdate)
+NEW uom.category: uom.product_uom_categ_unit (noupdate)

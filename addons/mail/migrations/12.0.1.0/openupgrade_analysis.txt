@@ -1,3 +1,10 @@
+---Models in module 'mail'---
+new model mail.blacklist
+new model mail.blacklist.mixin
+new model mail.moderation
+new model mail.resend.cancel
+new model mail.resend.message
+new model mail.resend.partner
 ---Fields in module 'mail'---
 mail         / ir.actions.act_window.view / view_mode (False)             : NEW selection_keys: ['activity', 'calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'tree'], mode: modify
 mail         / ir.actions.server        / activity_date_deadline_range (integer): NEW
@@ -111,9 +118,9 @@ NEW ir.cron: mail.ir_cron_mail_notify_channel_moderators (noupdate)
 NEW ir.model.access: mail.access_mail_activity_type_system
 NEW ir.model.access: mail.access_mail_blacklist_system
 NEW ir.model.access: mail.access_mail_moderation_user
-DEL ir.model.access: mail.access_mail_test_portal
+DEL ir.model.access: mail.access_mail_test_portal [renamed to test_mail module]
 DEL ir.model.access: mail.access_mail_test_simple
-DEL ir.model.access: mail.access_mail_test_user
+DEL ir.model.access: mail.access_mail_test_user [renamed to test_mail module]
 NEW ir.rule: mail.mail_moderation_rule_user (noupdate)
 NEW ir.ui.menu: mail.mail_blacklist_menu
 NEW ir.ui.menu: mail.mail_moderation_menu
