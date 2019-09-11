@@ -11,6 +11,17 @@ column_copies = {
 }
 
 
+def migrate_account_analytic_distribution_pre(cr):
+    """Prepare data for migrating OCA module."""
+    # Check if the module was installed in previous version checking the
+    # existence of one of its tables
+    if openupgrade.table_exists(cr, 'account_analytic_distribution'):
+        openupgrade.rename_tables(
+            cr, [('account_analytic_distribution', None)],
+        )
+
+
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     openupgrade.copy_columns(cr, column_copies)
+    migrate_account_analytic_distribution_pre(cr)

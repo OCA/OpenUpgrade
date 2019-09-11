@@ -38,6 +38,9 @@ merged_modules = {
     'website_sale_options': 'website_sale',
     'website_sale_stock_options': 'website_sale_stock',
     'test_pylint': 'test_lint',
+    # OCA/account-analytic
+    # although model is defined in "analytic", logic is in "account"
+    'account_analytic_distribution': 'account',
     # OCA/account-financial-reporting
     'customer_activity_statement': 'partner_statement',
     'customer_outstanding_statement': 'partner_statement',
