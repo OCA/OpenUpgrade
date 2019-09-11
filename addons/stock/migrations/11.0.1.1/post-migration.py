@@ -112,11 +112,119 @@ def set_partially_available_state(env):
         WHERE partially_available AND state != 'done'"""
     )
 
+@openupgrade.logging()
+def fill_stock_operation_lot_with_move(env):
+    """link stock_pack_operation_lot to the appropriate move_id so we can later use it to retrieve serial numbers in stock.move.line"""
+    if not openupgrade.column_exists(env.cr, 'stock_pack_operation_lot', 'move_id'):
+        openupgrade.add_fields(env, [
+            ('move_id', 'stock.pack.operation.lot', 'stock_pack_operation_lot', 'many2one',
+             False, 'sale_move'),
+        ])
+    # Get the stock.pack.operation.lot that has lot_id
+    env.cr.execute(
+        """SELECT spol.id, spo.id, spo.product_id, spol.qty, spol.lot_id, spol.lot_name
+        FROM stock_pack_operation_lot spol
+        INNER JOIN stock_pack_operation spo ON spo.id = spol.operation_id
+        WHERE spol.lot_id IS NOT NULL""",
+    )
+    # Fill the move_id column
+    for row in env.cr.fetchall():
+        if row[1]:
+            env.cr.execute(
+                """SELECT move_id
+                FROM stock_move_operation_link spol
+                WHERE operation_id = %s""", (row[1], ),
+            )
+            spol = env.cr.fetchone()
+            if spol and spol[0]:
+                env.cr.execute(
+                    """UPDATE stock_pack_operation_lot
+                    SET move_id = %s
+                    WHERE id = %s""",
+                    (spol[0], row[0]),
+                )
+
+@openupgrade.logging()
+def create_stock_move_line_from_operation_lot(env):
+    """In this method we will create stock_move_line for stock_pack_operation that have pack_lot_ids"""
+    # Get the stock.pack.operation who has lot_id and move_id (that we created & filled it in the previous method)
+    env.cr.execute(
+        """SELECT DISTINCT spo.id
+        FROM stock_pack_operation_lot spol
+        INNER JOIN stock_pack_operation spo ON spo.id = spol.operation_id
+        WHERE spol.lot_id IS NOT NULL AND spol.move_id IS NOT NULL
+        ORDER BY spo.id""",
+    )
+    spo_ids = tuple(sum(env.cr.fetchall(), ()))
+    lot_column = 'openupgrade_legacy_9_0_lot_id'
+    if openupgrade.column_exists(env.cr, 'stock_pack_operation', lot_column):
+        lot_expr = "COALESCE(spol.lot_id, %s)" % lot_column
+    else:
+        lot_expr = 'spol.lot_id'
+    openupgrade.logged_query(
+        env.cr, """
+            INSERT INTO stock_move_line (
+                create_date,
+                create_uid,
+                date,
+                location_dest_id,
+                location_id,
+                lot_id,
+                lot_name,
+                move_id,
+                ordered_qty,
+                owner_id,
+                package_id,
+                picking_id,
+                product_id,
+                product_qty,
+                product_uom_id,
+                product_uom_qty,
+                qty_done,
+                reference,
+                state,
+                result_package_id,
+                write_date,
+                write_uid
+            )
+            SELECT
+                spo.create_date,
+                spo.create_uid,
+                spo.date,
+                spo.location_dest_id,
+                spo.location_id,
+                %s,
+                spl.name,
+                sm.id,
+                spol.qty,
+                spo.owner_id,
+                spo.package_id,
+                spo.picking_id,
+                spo.product_id,
+                spol.qty,
+                spo.product_uom_id,
+                spol.qty,
+                spol.qty,
+                COALESCE(sp.name, sm.name),
+                'done',
+                spo.result_package_id,
+                spo.write_date,
+                spo.write_uid
+            FROM stock_pack_operation spo
+                INNER JOIN stock_pack_operation_lot spol
+                    ON spol.operation_id = spo.id
+                INNER JOIN stock_move sm ON sm.id = spol.move_id
+                INNER JOIN product_product pp ON spo.product_id = pp.id
+                LEFT JOIN stock_picking sp ON sp.id = spo.picking_id
+                LEFT JOIN stock_production_lot spl ON spl.id = spol.lot_id
+            WHERE sm.state = 'done' AND spo.id in %s
+            """, (AsIs(lot_expr), spo_ids,),
+    )
 
 @openupgrade.logging()
 def create_stock_move_line(env):
     """This method creates stock.move.line recreated from old
-    stock.pack.operation records. These records are created only for done
+    stock.pack.operation records that are not linked to pack_lot_ids. These records are created only for done
     moves, as for those not done, it's handled later:
 
     * For outgoing or internal transfers without reserved quantity, clicking on
@@ -131,6 +239,15 @@ def create_stock_move_line(env):
     stock.move lines with the same product in the same operation record, making
     impossible to split the lot quantity across each move.
     """
+    # Get the stock.pack.operation who has lot
+    env.cr.execute(
+        """SELECT DISTINCT spo.id
+        FROM stock_pack_operation_lot spol
+        INNER JOIN stock_pack_operation spo ON spo.id = spol.operation_id
+        WHERE spol.lot_id IS NOT NULL AND spol.move_id IS NOT NULL
+        ORDER BY spo.id""",
+    )
+    spo_ids = tuple(sum(env.cr.fetchall(), ()))
     # If coming from v8, chances of having stock_move_operation_link (smol)
     # `reserved_quant_id` filled are low, so `lot_id` will remain empty on
     # created sml on lot of cases. As in v8 there's no stock.pack.operation
@@ -197,8 +314,8 @@ def create_stock_move_line(env):
             LEFT JOIN stock_picking sp ON sp.id = spo.picking_id
             LEFT JOIN stock_quant sq ON sq.id = smol.reserved_quant_id
             LEFT JOIN stock_production_lot spl ON spl.id = sq.lot_id
-        WHERE sm.state = 'done'
-        """, (AsIs(lot_expr), ),
+        WHERE sm.state = 'done' AND spo.id not in %s
+        """, (AsIs(lot_expr), spo_ids,),
     )
 
 
@@ -483,6 +600,8 @@ def migrate(env, version):
     )
     # TODO: Get is_initial_demand_editable, is_locked values in stock.move
     set_partially_available_state(env)
+    fill_stock_operation_lot_with_move(env)
+    create_stock_move_line_from_operation_lot(env)
     create_stock_move_line(env)
     fill_missing_lots_for_sml(env)
     create_stock_move_line_incoming(env)
