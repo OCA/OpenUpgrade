@@ -8,18 +8,14 @@ OpenUpgrade project:
     representations of installed modules on different versions of
     OpenUpgrade server.  Status: stable.
 
-  * A logging facility that dumps the Odoo database layout in a
-    format that can be processed further.  It is included in the server
-    distribution.  This functionality has been implemented for Odoo 5,
-    6.0 and 6.1. Status: deprecated by the OpenUpgrade Records module.
-
   * A number of scripts to process the database dump.  The scripts are
     included in the server distribution.  Status: deprecated by the
     OpenUpgrade Records module.
 
-  * A libary with support functions to be called from the migration
-    scripts.  See :doc:`API`. This library is included in the server
-    distribution.  Status: stable.
+  * The *OpenUpgradelib* python library with support functions to be
+    called from the migration scripts in this distribution or in the migration
+    script of any community or private module to deal with migrations
+    during the module lifecycle. See :doc:`API`. Status: stable.
 
   * A report facility that displays the user notes per module after an
     upgrade, and performs an analysis of required fields that were left
@@ -44,11 +40,12 @@ earlier editions, see `<https://doc.therp.nl/openupgrade/status.html>`_
 .. toctree::
    :maxdepth: 2
 
-   modules50-60
-   modules60-61
-   modules61-70
-   modules70-80
-   modules80-90
-   modules90-100
-   modules100-110
+   modules120-130
    modules110-120
+   modules100-110
+   modules90-100
+   modules80-90
+   modules70-80
+   modules61-70
+   modules60-61
+   modules50-60
