@@ -36,6 +36,19 @@ def migrate_project_issue_sheet(env):
     )
 
 
+def recompute_tasks_from_issues_fields(env):
+    """This module adds several computed stored fields to project.task (for
+    example, effective_hours and remaining_hours). Issues converted to tasks,
+    being inserted by SQL, don't have these fields computed, so we force here
+    its recomputation.
+    """
+    origin_issue_column = openupgrade.get_legacy_name('origin_issue_id')
+    env.cr.execute("SELECT id FROM project_task WHERE %s IS NOT NULL",
+                   (AsIs(origin_issue_column), ))
+    tasks = env['project.task'].browse([x[0] for x in env.cr.fetchall()])
+    tasks._hours_get()
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(
@@ -43,3 +56,4 @@ def migrate(env, version):
     )
     update_employee_id(env)
     migrate_project_issue_sheet(env)
+    recompute_tasks_from_issues_fields(env)
