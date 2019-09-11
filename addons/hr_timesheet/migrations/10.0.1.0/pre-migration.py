@@ -12,8 +12,12 @@ COLUMN_RENAMES = {
 
 
 def create_and_populate_department(cr):
+    """
+    Add and fill field department_id if field is not added by module
+    analytic_base_department
+    """
     cr.execute('''
-       ALTER TABLE account_analytic_line ADD COLUMN department_id INT;
+       ALTER TABLE account_analytic_line ADD COLUMN IF NOT EXISTS department_id INT;
 
        WITH departments AS (
           SELECT r.user_id AS user_id, MAX(e.department_id) AS dpt_id
@@ -22,7 +26,7 @@ def create_and_populate_department(cr):
           GROUP BY user_id
        )
        UPDATE account_analytic_line aal SET department_id=departments.dpt_id
-       FROM departments WHERE aal.user_id = departments.user_id;
+       FROM departments WHERE aal.user_id = departments.user_id AND aal.department_id IS NULL;
     ''')
 
 
