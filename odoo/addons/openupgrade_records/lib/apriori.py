@@ -15,6 +15,7 @@ renamed_modules = {
     'partner_financial_risk': 'account_financial_risk',
     'partner_payment_return_risk': 'account_payment_return_financial_risk',
     'partner_sale_risk': 'sale_financial_risk',
+    'partner_stock_risk': 'stock_financial_risk',
     # OCA/crm
     'crm_sector': 'crm_industry',
     # OCA/account-payment
