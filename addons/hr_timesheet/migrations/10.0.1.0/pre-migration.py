@@ -12,6 +12,10 @@ COLUMN_RENAMES = {
 
 
 def create_and_populate_department(cr):
+    """
+    Add and fill field department_id if field is not added by module
+    analytic_base_department
+    """
     cr.execute('''
        ALTER TABLE account_analytic_line ADD COLUMN IF NOT EXISTS department_id INT;
 
