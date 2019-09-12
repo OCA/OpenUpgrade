@@ -31,6 +31,10 @@ _table_renames = [
      'product_attribute_value_product_template_attribute_line_rel'),
 ]
 
+xmlid_renames = [
+    ('hr_expense.cat_expense', 'product.cat_expense'),
+]
+
 
 def avoid_new_constraint_in_product_template_attribute_line(cr):
     # now, all attribute lines should be linked to an attribute value
@@ -51,4 +55,5 @@ def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
     openupgrade.rename_models(cr, _model_renames)
     openupgrade.rename_tables(cr, _table_renames)
+    openupgrade.rename_xmlids(cr, xmlid_renames)
     avoid_new_constraint_in_product_template_attribute_line(cr)
