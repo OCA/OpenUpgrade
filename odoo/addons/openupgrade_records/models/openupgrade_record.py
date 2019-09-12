@@ -28,7 +28,7 @@ class Record(models.Model):
             'existing field, set to Modify.',
             readonly=True)
     type = fields.Selection(  # Uh oh, reserved keyword
-            [('field', 'Field'), ('xmlid', 'XML ID')],
+            [('field', 'Field'), ('xmlid', 'XML ID'), ('model', 'Model')],
             readonly=True)
     attribute_ids = fields.One2many(
             'openupgrade.attribute', 'record_id',

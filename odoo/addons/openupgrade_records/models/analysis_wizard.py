@@ -78,7 +78,7 @@ class AnalysisWizard(models.TransientModel):
         res_xml = compare.compare_xml_sets(
             remote_xml_records, local_xml_records)
 
-        affected_modules = list(
+        affected_modules = sorted(
             set(record['module'] for record in
                 remote_records + local_records +
                 remote_xml_records + local_xml_records
