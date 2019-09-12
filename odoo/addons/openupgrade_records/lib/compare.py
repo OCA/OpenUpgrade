@@ -52,9 +52,12 @@ def compare_records(dict_old, dict_new, fields):
         elif field == 'model':
             if model_map(dict_old['model']) != dict_new['model']:
                 return False
-        elif field == 'original_module':
-            if dict_old['original_module'] != dict_old['prefix'] or \
-                    dict_new['original_module'] != dict_new['prefix']:
+        elif field == 'other_prefix':
+            if dict_old['module'] != dict_old['prefix'] or \
+                    dict_new['module'] != dict_new['prefix']:
+                return False
+            if dict_old['model'] == 'ir.ui.view':
+                # basically, to avoid the assets_backend case
                 return False
         elif dict_old[field] != dict_new[field]:
             return False
@@ -309,8 +312,8 @@ def compare_xml_sets(old_records, new_records):
     # other module, same full xmlid
     moved_records = match(['model', 'name'], 'moved')
 
-    # other module, same suffix, other prefix (with original_module == prefix)
-    renamed_records = match(['model', 'suffix', 'original_module'], 'renamed')
+    # other module, same suffix, other prefix
+    renamed_records = match(['model', 'suffix', 'other_prefix'], 'renamed')
 
     for record in old_records:
         record['old'] = True
