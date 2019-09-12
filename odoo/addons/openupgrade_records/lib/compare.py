@@ -285,51 +285,52 @@ def compare_sets(old_records, new_records):
 def compare_xml_sets(old_records, new_records):
     reprs = collections.defaultdict(list)
 
+    def match(match_fields, match_type='direct'):
+        matched_records = []
+        for column in copy.copy(old_records):
+            found = search(column, new_records, match_fields)
+            if found:
+                old_records.remove(column)
+                new_records.remove(found)
+                if match_type != 'direct':
+                    column['old'] = True
+                    found['new'] = True
+                    column[match_type] = found['module']
+                    found[match_type] = module_map(column['module'])
+                if column['domain'] != found['domain'] and \
+                        column['domain'] != '[]' and \
+                        found['domain'] is False:
+                    column['domain'] = False
+                    found['domain'] = True
+                else:
+                    column['domain'] = False
+                    found['domain'] = False
+                if match_type != 'direct':
+                    matched_records.append(column)
+                    matched_records.append(found)
+                elif match_type == 'direct' and found['domain']:
+                    matched_records.append(found)
+        return matched_records
+
     # direct match
-    match_fields = ['module', 'model', 'name']
-    for column in copy.copy(old_records):
-        found = search(column, new_records, match_fields)
-        if found:
-            old_records.remove(column)
-            new_records.remove(found)
+    modified_records = match(['module', 'model', 'name'])
 
     # other module, same full xmlid
-    match_fields = ['model', 'name']
-    moved_records = []
-    for column in copy.copy(old_records):
-        found = search(column, new_records, match_fields)
-        if found:
-            old_records.remove(column)
-            new_records.remove(found)
-            column['old'] = True
-            found['new'] = True
-            column['moved'] = found['module']
-            found['moved'] = module_map(column['module'])
-            moved_records.append(column)
-            moved_records.append(found)
+    moved_records = match(['model', 'name'], 'moved')
 
     # other module, same suffix, other prefix (with original_module == prefix)
-    match_fields = ['model', 'suffix', 'original_module']
-    renamed_records = []
-    for column in copy.copy(old_records):
-        found = search(column, new_records, match_fields)
-        if found:
-            old_records.remove(column)
-            new_records.remove(found)
-            column['old'] = True
-            found['new'] = True
-            column['renamed'] = found['module']
-            found['renamed'] = module_map(column['module'])
-            renamed_records.append(column)
-            renamed_records.append(found)
+    renamed_records = match(['model', 'suffix', 'original_module'], 'renamed')
 
     for record in old_records:
         record['old'] = True
+        record['domain'] = False
     for record in new_records:
         record['new'] = True
+        record['domain'] = False
 
     sorted_records = sorted(
-        old_records + new_records + moved_records + renamed_records,
+        old_records + new_records + moved_records + renamed_records +
+        modified_records,
         key=lambda k: (k['model'], 'old' in k, k['name'])
     )
     for entry in sorted_records:
@@ -346,6 +347,10 @@ def compare_xml_sets(old_records, new_records):
                 content += ' [potentially moved from %(moved)s module]' % entry
             elif 'renamed' in entry:
                 content += ' [renamed from %(renamed)s module]' % entry
+        if 'old' not in entry and 'new' not in entry:
+            content = '%(model)s: %(name)s' % entry
+        if entry['domain']:
+            content += ' (deleted domain)'
         if entry['noupdate']:
             content += ' (noupdate)'
         reprs[module_map(entry['module'])].append(content)
