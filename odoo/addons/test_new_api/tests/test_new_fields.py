@@ -74,6 +74,13 @@ class TestFields(common.TransactionCase):
         field = self.env['test_new_api.message']._fields['x_bool_false_computed']
         self.assertFalse(field.depends)
 
+    def test_10_display_name(self):
+        """ test definition of automatic field 'display_name' """
+        field = type(self.env['test_new_api.discussion']).display_name
+        self.assertTrue(field.automatic)
+        self.assertTrue(field.compute)
+        self.assertEqual(field.depends, ('name',))
+
     def test_10_non_stored(self):
         """ test non-stored fields """
         # a field declared with store=False should not have a column
@@ -227,6 +234,11 @@ class TestFields(common.TransactionCase):
         message.invalidate_cache()
         double_size = message.double_size
         self.assertEqual(double_size, message.size)
+
+        record = self.env['test_new_api.cascade'].create({'foo': "Hi"})
+        self.assertEqual(record.baz, "<[Hi]>")
+        record.foo = "Ho"
+        self.assertEqual(record.baz, "<[Ho]>")
 
     def test_13_inverse(self):
         """ test inverse computation of fields """
