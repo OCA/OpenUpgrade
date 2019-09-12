@@ -367,14 +367,18 @@ def compare_model_sets(old_records, new_records):
             if model not in new_models:
                 if model_map(model) not in new_models:
                     obsolete_models.append(model)
-                    reprs[module_map(column['module'])].append(
-                        'obsolete model %s' % model)
+                    text = 'obsolete model %s' % model
+                    if column['model_type']:
+                        text += " [%s]" % column['model_type']
+                    reprs[module_map(column['module'])].append(text)
                     reprs['general'].append('obsolete model %s [module %s]' % (
                         model, module_map(column['module'])))
                 else:
-                    reprs[module_map(column['module'])].append(
-                        'obsolete model %s (renamed to %s)' % (
-                            model, model_map(model)))
+                    text = 'obsolete model %s (renamed to %s)' % (
+                        model, model_map(model))
+                    if column['model_type']:
+                        text += " [%s]" % column['model_type']
+                    reprs[module_map(column['module'])].append(text)
                     reprs['general'].append(
                         'obsolete model %s (renamed to %s) [module %s]' % (
                             model, model_map(model),
@@ -385,14 +389,18 @@ def compare_model_sets(old_records, new_records):
         if model in new_models:
             if model not in old_models:
                 if inv_model_map(model) not in old_models:
-                    reprs[module_map(column['module'])].append(
-                        'new model %s' % model)
+                    text = 'new model %s' % model
+                    if column['model_type']:
+                        text += " [%s]" % column['model_type']
+                    reprs[module_map(column['module'])].append(text)
                     reprs['general'].append('new model %s [module %s]' % (
                         model, module_map(column['module'])))
                 else:
-                    reprs[module_map(column['module'])].append(
-                        'new model %s (renamed from %s)' % (
-                            model, inv_model_map(model)))
+                    text = 'new model %s (renamed from %s)' % (
+                        model, inv_model_map(model))
+                    if column['model_type']:
+                        text += " [%s]" % column['model_type']
+                    reprs[module_map(column['module'])].append(text)
                     reprs['general'].append(
                         'new model %s (renamed from %s) [module %s]' % (
                             model, inv_model_map(model),
