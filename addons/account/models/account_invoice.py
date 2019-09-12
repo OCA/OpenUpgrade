@@ -114,8 +114,10 @@ class AccountInvoice(models.Model):
             if line.currency_id == self.currency_id:
                 residual += line.amount_residual_currency if line.currency_id else line.amount_residual
             else:
-                from_currency = (line.currency_id and line.currency_id.with_context(date=line.date)) or line.company_id.currency_id.with_context(date=line.date)
-                residual += from_currency.compute(line.amount_residual, self.currency_id)
+                if line.currency_id:
+                    residual += line.currency_id.with_context(date=line.date).compute(line.amount_residual_currency, self.currency_id)
+                else:
+                    residual += line.company_id.currency_id.with_context(date=line.date).compute(line.amount_residual, self.currency_id)
         self.residual_company_signed = abs(residual_company_signed) * sign
         self.residual_signed = abs(residual) * sign
         self.residual = abs(residual)
@@ -1657,7 +1659,7 @@ class AccountInvoiceLine(models.Model):
             return
         if not self.product_id:
             fpos = self.invoice_id.fiscal_position_id
-            self.invoice_line_tax_ids = fpos.map_tax(self.account_id.tax_ids, partner=self.partner_id).ids
+            self.invoice_line_tax_ids = fpos.map_tax(self.account_id.tax_ids, partner=self.partner_id)
         elif not self.price_unit:
             self._set_taxes()
 

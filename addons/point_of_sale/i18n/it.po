@@ -9,15 +9,15 @@
 # David Minneci <david@numeko.it>, 2018
 # Giovanni Perteghella <giovanni@perteghella.org>, 2018
 # Matteo Boscolo <matteo.boscolo.76@gmail.com>, 2018
-# p_amoruso <p.amoruso@elvenstudio.it>, 2018
 # Francesco Garganese <francesco.garganese@aeromnia.aero>, 2018
-# Martin Trigaux, 2018
 # Paolo Valier, 2018
 # Alessandro Forte <a.forte1010@gmail.com>, 2018
 # efraimbiffi <eab@odoo.com>, 2018
-# mymage <stefano.consolaro@mymage.it>, 2018
-# Sergio Zanchetta <primes2h@gmail.com>, 2019
+# mymage <stefano.consolaro@mymage.it>, 2019
+# Martin Trigaux, 2019
+# p_amoruso <p.amoruso@elvenstudio.it>, 2019
 # Giacomo Grasso <giacomo.grasso.82@gmail.com>, 2019
+# Sergio Zanchetta <primes2h@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
@@ -25,7 +25,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-29 09:07+0000\n"
 "PO-Revision-Date: 2017-09-20 10:21+0000\n"
-"Last-Translator: Giacomo Grasso <giacomo.grasso.82@gmail.com>, 2019\n"
+"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2019\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -114,8 +114,7 @@ msgstr "<i class=\"fa fa-eye-slash\"/>Nascondi"
 #: model:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "<i class=\"fa fa-fw fa-arrow-right\"/>How to manage tax-included prices"
 msgstr ""
-"<i class=\"fa fa-fw fa-arrow-right\"/>Come gestire i prezzi a imposta "
-"inclusa"
+"<i class=\"fa fa-fw fa-arrow-right\"/>Come gestire i prezzi imposta inclusa"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1475,6 +1474,10 @@ msgid ""
 "administrator in a multi-company setup, with the administrator account set "
 "to the wrong company."
 msgstr ""
+"Errore: l'utente deve appartenere allo stessa azienda del punto vendita. "
+"Probabilmente si sta cercando di caricare il punto vendita come "
+"amministratore di una configurazione multi-azienda, ma con l'account "
+"impostato sull'azienda sbagliata."
 
 #. module: point_of_sale
 #. openerp-web
@@ -1828,7 +1831,7 @@ msgstr "Fatturazione"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_is_installed_account_accountant
 msgid "Is Installed Account Accountant"
-msgstr "È installato Account Accountant"
+msgstr "È installato «Account Accountant»"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_module_pos_restaurant
@@ -1942,7 +1945,7 @@ msgstr "Riga n."
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_pos_order_line
 msgid "Lines of Point of Sale Orders"
-msgstr "Righe degli ordini del punto vendita"
+msgstr "Righe ordini del punto vendita"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/wizard/pos_open_statement.py:33
@@ -1962,7 +1965,7 @@ msgstr "Caricamento"
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_location_id
 #: model:ir.model.fields,field_description:point_of_sale.field_report_pos_order_location_id
 msgid "Location"
-msgstr "Posizione"
+msgstr "Ubicazione"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_session_login_number
@@ -1986,7 +1989,7 @@ msgstr "Nome lotto"
 #: code:addons/point_of_sale/static/src/js/models.js:2371
 #, python-format
 msgid "Lot/Serial Number(s) Required"
-msgstr "Richiesto numero(i) di lotto/serie"
+msgstr "Richiesti numeri di lotto/serie"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_line_pack_lot_ids
@@ -2053,9 +2056,9 @@ msgid ""
 "128x128px image, with aspect ratio preserved. Use this field in form views "
 "or some kanban views."
 msgstr ""
-"Immagine della categoria, di dimensione media, automaticamente "
-"ridimensionata a 128x128 px con rapporto di forma conservato. Usare questo "
-"campo nelle viste modulo o in alcune viste kanban."
+"Immagine di media dimensione della categoria. Ridimensionata automaticamente"
+" a 128x128 px con rapporto di forma conservato. Usare questo campo nelle "
+"viste modulo o in alcune viste kanban."
 
 #. module: point_of_sale
 #. openerp-web
@@ -2272,7 +2275,7 @@ msgstr "Apri menù POS"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_open_statement
 msgid "Open Registers"
-msgstr ""
+msgstr "Registri Aperti"
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_pos_details_wizard
@@ -2549,7 +2552,7 @@ msgstr "Modalità pagamento"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_make_payment_payment_name
 msgid "Payment Reference"
-msgstr ""
+msgstr "Riferimento pagamento"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_iface_payment_terminal
@@ -2651,7 +2654,7 @@ msgstr "Confermare l'importo elevato"
 #: code:addons/point_of_sale/models/pos_order.py:369
 #, python-format
 msgid "Please define income account for this product: \"%s\" (id:%d)."
-msgstr ""
+msgstr "Definire un conto di ricavo per questo prodotto: \"%s\" (id:%d)."
 
 #. module: point_of_sale
 #. openerp-web
@@ -3061,7 +3064,7 @@ msgstr "Leggi valore bilancia"
 #: code:addons/point_of_sale/static/src/js/tour.js:14
 #, python-format
 msgid "Ready to launch your <b>point of sale</b>? <i>Click here</i>."
-msgstr "Pronti ad avviare il <b>punto vendita</b>? <i>Fare clic qui</i>."
+msgstr "Pronto ad avviare il <b>punto vendita</b>? <i>Fai clic qui</i>."
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
@@ -3137,7 +3140,7 @@ msgstr "Responsabile"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_restrict_price_control
 msgid "Restrict Price Modifications to Managers"
-msgstr "Modifiche prezzi limitate ai responsabili"
+msgstr "Limita le modifiche dei prezzi ai supervisori"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
@@ -3308,7 +3311,7 @@ msgstr "Selezionare imposta"
 #: code:addons/point_of_sale/models/pos_order.py:249
 #, python-format
 msgid "Selected orders do not have the same session!"
-msgstr "Gli ordini selezionati non appartengono alla stessa sessione!"
+msgstr "Gli ordini selezionati non appartengono alla stessa sessione."
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_category_sequence
@@ -3389,7 +3392,7 @@ msgstr "Imposta cliente"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_start_category
 msgid "Set Start Category"
-msgstr "Impostazione categoria iniziale"
+msgstr "Impostare categoria iniziale"
 
 #. module: point_of_sale
 #. openerp-web
@@ -3428,7 +3431,7 @@ msgstr "Mostra ai clienti la pagina di pagamento su uno schermo esterno."
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_group_pricelist_item
 msgid "Show pricelists to customers"
-msgstr ""
+msgstr "Mostra listino al cliente"
 
 #. module: point_of_sale
 #. openerp-web
@@ -3454,9 +3457,9 @@ msgid ""
 "image, with aspect ratio preserved. Use this field anywhere a small image is"
 " required."
 msgstr ""
-"Immagine piccola della categoria. Viene automaticamente ridimensionata a "
-"64x64px, conservando le proporzioni. Questo campo viene usato ovunque un "
-"immagine piccola è richiesta."
+"Immagine piccola per la categoria. Ridimensionata automaticamente a 64x64px "
+"con proporzioni conservate. Usare questo campo dove è richiesta un'immagine "
+"di piccole dimensioni."
 
 #. module: point_of_sale
 #. openerp-web
@@ -3900,8 +3903,8 @@ msgid ""
 "There are pending operations that could not be saved into the database, are "
 "you sure you want to exit?"
 msgstr ""
-"Sono presenti operazioni in sospeso che non è stato possibile salvare nel "
-"database, sei sicuro di voler uscire?"
+"Sono presenti operazioni in sospeso che non è possibile salvare nel "
+"database. Uscire veramente?"
 
 #. module: point_of_sale
 #. openerp-web
@@ -3934,7 +3937,7 @@ msgstr ""
 #: code:addons/point_of_sale/models/pos_order.py:835
 #, python-format
 msgid "There is no receivable account defined to make payment."
-msgstr "Non è stato definito un conto ricevibile per effettuare un pagamento"
+msgstr "Non è stato definito alcun conto cliente per effettuare pagamenti."
 
 #. module: point_of_sale
 #. openerp-web
@@ -4039,7 +4042,7 @@ msgid ""
 "This sequence is automatically created by Odoo but you can change it to "
 "customize the reference numbers of your orders lines."
 msgstr ""
-"Questa sequenza è generata automaticamente da Odoo ma è possibile "
+"Questa sequenza è generata automaticamente da Odoo, ma è possibile "
 "modificarla per personalizzare i numeri di riferimento delle righe d'ordine."
 
 #. module: point_of_sale
@@ -4048,8 +4051,8 @@ msgid ""
 "This sequence is automatically created by Odoo but you can change it to "
 "customize the reference numbers of your orders."
 msgstr ""
-"La sequenza viene automaticamente creata da Odoo, ma è possibile modificarla"
-" per personalizzare i numeri di riferimento all'interno degli ordini."
+"Questa sequenza è generata automaticamente da Odoo, ma è possibile "
+"modificarla per personalizzare i numeri di riferimento degli ordini."
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_order.py:699
@@ -4216,7 +4219,7 @@ msgstr "Non utilizzato"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_use_existing_lots
 msgid "Use Existing Lots/Serial Numbers"
-msgstr ""
+msgstr "Utilizzare Lotti / Numeri di Serie esistenti"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
@@ -4449,7 +4452,7 @@ msgstr ""
 #: code:addons/point_of_sale/models/pos_order.py:999
 #, python-format
 msgid "You have to select a pricelist in the sale form !"
-msgstr "Deve essere selezionato un listino prezzi dal modulo vendite !"
+msgstr "Deve essere selezionato un listino prezzi nel modulo vendita."
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_order.py:985
@@ -4501,7 +4504,7 @@ msgstr "Per fatturare un ordine è necessario prima selezionare il cliente."
 #: code:addons/point_of_sale/models/pos_session.py:166
 #, python-format
 msgid "You should assign a Point of Sale to your session."
-msgstr "Dovrebbe essere assegnato un punto vendita alla sessione."
+msgstr "Deve essere assegnato un punto vendita alla sessione."
 
 #. module: point_of_sale
 #. openerp-web
@@ -4576,7 +4579,7 @@ msgstr "camptocamp.com"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1578
 #, python-format
 msgid "caps lock"
-msgstr ""
+msgstr "caps lock"
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_cash_box_in
@@ -4639,7 +4642,7 @@ msgstr "per un ordine di"
 #: code:addons/point_of_sale/models/pos_config.py:329
 #, python-format
 msgid "not used"
-msgstr ""
+msgstr "inutilizzato"
 
 #. module: point_of_sale
 #. openerp-web

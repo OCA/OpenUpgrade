@@ -2418,6 +2418,15 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         cls._setup_done = True
 
+        # 5. determine and validate rec_name
+        if cls._rec_name:
+            assert cls._rec_name in cls._fields, \
+                "Invalid rec_name %s for model %s" % (cls._rec_name, cls._name)
+        elif 'name' in cls._fields:
+            cls._rec_name = 'name'
+        elif 'x_name' in cls._fields:
+            cls._rec_name = 'x_name'
+
     @api.model
     def _setup_fields(self):
         """ Setup the fields, except for recomputation triggers. """
@@ -2441,6 +2450,12 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         for name in bad_fields:
             del cls._fields[name]
             delattr(cls, name)
+
+        # fix up _rec_name
+        if 'x_name' in bad_fields and cls._rec_name == 'x_name':
+            cls._rec_name = None
+            field = cls._fields['display_name']
+            field.depends = tuple(name for name in field.depends if name != 'x_name')
 
         # map each field to the fields computed with the same method
         groups = defaultdict(list)
@@ -2469,15 +2484,6 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         # register constraints and onchange methods
         cls._init_constraints_onchanges()
-
-        # validate rec_name
-        if cls._rec_name:
-            assert cls._rec_name in cls._fields, \
-                "Invalid rec_name %s for model %s" % (cls._rec_name, cls._name)
-        elif 'name' in cls._fields:
-            cls._rec_name = 'name'
-        elif 'x_name' in cls._fields:
-            cls._rec_name = 'x_name'
 
         # make sure parent_order is set when necessary
         if cls._parent_store and not cls._parent_order:
@@ -4903,7 +4909,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                     target0 = self
                 else:
                     env = self.env(user=SUPERUSER_ID, context={'active_test': False})
-                    target0 = env[model_name].search([(path, 'in', self.ids)])
+                    target0 = env[model_name].search([(path, 'in', self.ids)], order='id')
                     target0 = target0.with_env(self.env)
                 # prepare recomputation for each field on linked records
                 for field in stored:

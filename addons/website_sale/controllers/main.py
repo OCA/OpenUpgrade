@@ -9,7 +9,7 @@ from odoo.http import request
 from odoo.addons.base.ir.ir_qweb.fields import nl2br
 from odoo.addons.http_routing.models.ir_http import slug
 from odoo.addons.website.controllers.main import QueryURL
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from odoo.addons.website.controllers.main import Website
 from odoo.addons.website_form.controllers.main import WebsiteForm
 from odoo.osv import expression
@@ -341,9 +341,11 @@ class WebsiteSale(http.Controller):
     @http.route(['/shop/pricelist'], type='http', auth="public", website=True, sitemap=False)
     def pricelist(self, promo, **post):
         redirect = post.get('r', '/shop/cart')
-        pricelist = request.env['product.pricelist'].sudo().search([('code', '=', promo)], limit=1)
-        if not pricelist or (pricelist and not request.website.is_pricelist_available(pricelist.id)):
-            return request.redirect("%s?code_not_available=1" % redirect)
+        # empty promo code is used to reset/remove pricelist (see `sale_get_order()`)
+        if promo:
+            pricelist = request.env['product.pricelist'].sudo().search([('code', '=', promo)], limit=1)
+            if (not pricelist or (pricelist and not request.website.is_pricelist_available(pricelist.id))):
+                return request.redirect("%s?code_not_available=1" % redirect)
 
         request.website.sale_get_order(code=promo)
         return request.redirect(redirect)
@@ -893,6 +895,43 @@ class WebsiteSale(http.Controller):
                 return request.redirect('/shop/payment/validate?success=False&error=%s' % res)
             return request.redirect('/shop/payment/validate?success=True')
         return request.redirect('/shop/payment/validate')
+
+    @http.route('/shop/payment/json_token', type='json', auth='public', website=True)
+    def payment_token_json(self, pm_id=None, **kwargs):
+        """ Method that handles payment using saved tokens
+
+        :param int pm_id: id of the payment.token that we want to use to pay.
+        """
+        order = request.website.sale_get_order()
+        # do not crash if the user has already paid and try to pay again
+        if not order:
+            raise UserError(_('Invalid Order'))
+
+        assert order.partner_id.id != request.website.partner_id.id
+
+        try:
+            pm_id = int(pm_id)
+        except ValueError:
+            raise UserError(_('Invalid Token'))
+
+        # We retrieve the token the user want to use to pay
+        token = request.env['payment.token'].sudo().browse(pm_id)
+        if not token:
+            raise UserError(_('Invalid Token'))
+
+        # we retrieve an existing transaction (if it exists obviously)
+        tx = request.website.sale_get_transaction() or request.env['payment.transaction'].sudo()
+        # we check if the transaction is Ok, if not then we create it
+        tx = tx._check_or_create_sale_tx(order, token.acquirer_id, payment_token=token, tx_type='server2server')
+        # we set the transaction id into the session (so `sale_get_transaction` can retrieve it )
+        request.session['sale_transaction_id'] = tx.id
+        # we proceed the s2s payment
+        res = tx.with_context(off_session=False).confirm_sale_token()
+        tx_info = tx._get_json_info()
+        return {
+            'tx_info': tx_info,
+            'redirect': '/shop/payment/validate',
+        }
 
     @http.route('/shop/payment/get_status/<int:sale_order_id>', type='json', auth="public", website=True)
     def payment_get_status(self, sale_order_id, **post):
