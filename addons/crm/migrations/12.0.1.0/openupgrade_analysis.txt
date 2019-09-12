@@ -1,3 +1,5 @@
+---Models in module 'crm'---
+obsolete model crm.opportunity.report
 ---Fields in module 'crm'---
 crm          / crm.lead                 / activity_date_deadline (date) : not related anymore
 crm          / crm.lead                 / activity_date_deadline (date) : not stored anymore
@@ -12,8 +14,8 @@ crm          / digest.digest            / kpi_crm_opportunities_won (boolean): N
 ---XML records in module 'crm'---
 NEW digest.digest: digest.digest_digest_default (noupdate)
 NEW digest.tip: crm.digest_tip_crm_0
-DEL ir.actions.act_window: crm.action_partner_deduplicate
-DEL ir.actions.act_window: crm.action_partner_merge
+DEL ir.actions.act_window: crm.action_partner_deduplicate [renamed to base module]
+DEL ir.actions.act_window: crm.action_partner_merge [renamed to base module]
 NEW ir.actions.act_window.view: crm.crm_lead_all_leads_view_calendar
 NEW ir.actions.act_window.view: crm.crm_lead_all_leads_view_graph
 NEW ir.actions.act_window.view: crm.crm_lead_all_leads_view_kanban

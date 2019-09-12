@@ -1,3 +1,14 @@
+---Models in module 'repair'---
+obsolete model mrp.repair (renamed to repair.order)
+obsolete model mrp.repair.cancel (renamed to repair.cancel)
+obsolete model mrp.repair.fee (renamed to repair.fee)
+obsolete model mrp.repair.line (renamed to repair.line)
+obsolete model mrp.repair.make_invoice (renamed to repair.order.make_invoice)
+new model repair.cancel (renamed from mrp.repair.cancel)
+new model repair.fee (renamed from mrp.repair.fee)
+new model repair.line (renamed from mrp.repair.line)
+new model repair.order (renamed from mrp.repair)
+new model repair.order.make_invoice (renamed from mrp.repair.make_invoice)
 ---Fields in module 'repair'---
 mrp_repair   / mrp.repair               / activity_date_deadline (date) : not related anymore
 mrp_repair   / mrp.repair               / activity_date_deadline (date) : not stored anymore
@@ -19,18 +30,18 @@ mrp_repair   / stock.move               / repair_id (many2one)          : relati
 repair       / repair.order             / message_main_attachment_id (many2one): NEW relation: ir.attachment
 ---XML records in module 'repair'---
 NEW ir.actions.act_window: repair.act_repair_invoice
-NEW ir.actions.act_window: repair.action_cancel_repair
-NEW ir.actions.act_window: repair.action_repair_order_tree
+NEW ir.actions.act_window: repair.action_cancel_repair [renamed from repair module]
+NEW ir.actions.act_window: repair.action_repair_order_tree [renamed from repair module]
 DEL ir.actions.act_window: mrp_repair.act_mrp_repair_invoice
-DEL ir.actions.act_window: mrp_repair.action_cancel_repair
-DEL ir.actions.act_window: mrp_repair.action_repair_order_tree
+DEL ir.actions.act_window: mrp_repair.action_cancel_repair [renamed to repair module]
+DEL ir.actions.act_window: mrp_repair.action_repair_order_tree [renamed to repair module]
 NEW ir.actions.report: repair.action_report_repair_order
 DEL ir.actions.report: mrp_repair.action_report_mrp_repair_order
-NEW ir.model.access: repair.access_account_tax_user
+NEW ir.model.access: repair.access_account_tax_user [renamed from repair module]
 NEW ir.model.access: repair.access_repair_fee_user
 NEW ir.model.access: repair.access_repair_line_user
 NEW ir.model.access: repair.access_repair_user
-NEW ir.model.access: repair.access_stock_production_lot_user
+NEW ir.model.access: repair.access_stock_production_lot_user [renamed from repair module]
 DEL ir.model.access: mrp_repair.access_account_invoice_line_manager
 DEL ir.model.access: mrp_repair.access_account_invoice_line_user
 DEL ir.model.access: mrp_repair.access_account_invoice_manager
@@ -39,7 +50,7 @@ DEL ir.model.access: mrp_repair.access_account_invoice_user
 DEL ir.model.access: mrp_repair.access_account_journal_manager
 DEL ir.model.access: mrp_repair.access_account_journal_user
 DEL ir.model.access: mrp_repair.access_account_tax_manager
-DEL ir.model.access: mrp_repair.access_account_tax_user
+DEL ir.model.access: mrp_repair.access_account_tax_user [renamed to repair module]
 DEL ir.model.access: mrp_repair.access_mrp_repair_fee_manager
 DEL ir.model.access: mrp_repair.access_mrp_repair_fee_mgr
 DEL ir.model.access: mrp_repair.access_mrp_repair_fee_user
@@ -50,13 +61,13 @@ DEL ir.model.access: mrp_repair.access_mrp_repair_manager
 DEL ir.model.access: mrp_repair.access_mrp_repair_user
 DEL ir.model.access: mrp_repair.access_product_pricelist_user
 DEL ir.model.access: mrp_repair.access_stock_production_lot_manager
-DEL ir.model.access: mrp_repair.access_stock_production_lot_user
+DEL ir.model.access: mrp_repair.access_stock_production_lot_user [renamed to repair module]
 NEW ir.rule: repair.repair_rule (noupdate)
 DEL ir.rule: mrp_repair.mrp_repair_rule (noupdate)
 NEW ir.sequence: repair.seq_repair (noupdate)
 DEL ir.sequence: mrp_repair.seq_mrp_repair (noupdate)
-NEW ir.ui.menu: repair.menu_repair_order
-DEL ir.ui.menu: mrp_repair.menu_repair_order
+NEW ir.ui.menu: repair.menu_repair_order [renamed from repair module]
+DEL ir.ui.menu: mrp_repair.menu_repair_order [renamed to repair module]
 NEW ir.ui.view: repair.report_repairorder
 NEW ir.ui.view: repair.report_repairorder2
 NEW ir.ui.view: repair.stock_warn_insufficient_qty_repair_form_view

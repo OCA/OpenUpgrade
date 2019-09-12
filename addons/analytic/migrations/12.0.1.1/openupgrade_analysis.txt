@@ -1,3 +1,6 @@
+---Models in module 'analytic'---
+new model account.analytic.distribution
+new model account.analytic.group
 ---Fields in module 'analytic'---
 analytic     / account.analytic.account / group_id (many2one)           : NEW relation: account.analytic.group
 analytic     / account.analytic.account / message_last_post (datetime)  : DEL

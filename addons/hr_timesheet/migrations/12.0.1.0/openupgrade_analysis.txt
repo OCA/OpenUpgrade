@@ -1,3 +1,4 @@
+---Models in module 'hr_timesheet'---
 ---Fields in module 'hr_timesheet'---
 hr_timesheet / account.analytic.account / company_uom_id (many2one)     : previously in module project
 hr_timesheet / account.analytic.account / project_count (integer)       : previously in module project
@@ -17,10 +18,10 @@ NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_from_employee
 NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_from_employee_list
 DEL ir.actions.act_window.view: hr_timesheet.timesheet_action_view_all_calendar
 DEL ir.actions.act_window.view: hr_timesheet.timesheet_action_view_calendar
-NEW ir.model.access: hr_timesheet.access_account_analytic_account_manager
-NEW ir.model.access: hr_timesheet.access_account_analytic_account_portal
-NEW ir.model.access: hr_timesheet.access_account_analytic_account_user
-NEW ir.model.access: hr_timesheet.access_account_analytic_line_project
+NEW ir.model.access: hr_timesheet.access_account_analytic_account_manager [renamed from project module]
+NEW ir.model.access: hr_timesheet.access_account_analytic_account_portal [renamed from project module]
+NEW ir.model.access: hr_timesheet.access_account_analytic_account_user [renamed from project module]
+NEW ir.model.access: hr_timesheet.access_account_analytic_line_project [renamed from project module]
 NEW ir.model.access: hr_timesheet.access_uom_uom_hr_timesheet
 DEL ir.model.access: hr_timesheet.access_product_product_user
 DEL ir.model.access: hr_timesheet.access_product_template_timesheet_user

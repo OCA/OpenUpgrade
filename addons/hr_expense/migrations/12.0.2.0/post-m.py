@@ -29,6 +29,5 @@ def migrate(env, version):
         env, [
             'hr_expense.mt_department_expense_confirmed',
             'hr_expense.mt_expense_confirmed',
-            'hr_expense.cat_expense',
         ],
     )

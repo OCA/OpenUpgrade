@@ -1,3 +1,9 @@
+---Models in module 'website_theme_install'---
+new model theme.ir.attachment
+new model theme.ir.ui.view
+new model theme.utils
+new model theme.website.menu
+new model theme.website.page
 ---Fields in module 'website_theme_install'---
 website_theme_install / ir.attachment            / theme_template_id (many2one)  : NEW relation: theme.ir.attachment
 website_theme_install / ir.ui.view               / theme_template_id (many2one)  : NEW relation: theme.ir.ui.view

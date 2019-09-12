@@ -1,3 +1,6 @@
+---Models in module 'uom'---
+new model uom.category (renamed from product.uom.categ)
+new model uom.uom (renamed from product.uom)
 ---Fields in module 'uom'---
 uom          / product.uom              / __last_update (datetime)      : previously in module product
 uom          / product.uom              / active (boolean)              : previously in module product
@@ -14,8 +17,8 @@ uom          / product.uom.categ        / name (char)                   : previo
 uom          / uom.category             / measure_type (selection)      : NEW selection_keys: ['length', 'time', 'unit', 'volume', 'weight']
 uom          / uom.uom                  / measure_type (selection)      : NEW selection_keys: function, isrelated: related, stored
 ---XML records in module 'uom'---
-NEW ir.actions.act_window: uom.product_uom_categ_form_action
-NEW ir.actions.act_window: uom.product_uom_form_action
+NEW ir.actions.act_window: uom.product_uom_categ_form_action [renamed from product module]
+NEW ir.actions.act_window: uom.product_uom_form_action [renamed from product module]
 NEW ir.model.access: uom.access_uom_category_manager
 NEW ir.model.access: uom.access_uom_category_user
 NEW ir.model.access: uom.access_uom_uom_manager
@@ -23,7 +26,7 @@ NEW ir.model.access: uom.access_uom_uom_user
 NEW ir.ui.view: uom.product_uom_categ_form_view
 NEW ir.ui.view: uom.product_uom_form_view
 NEW ir.ui.view: uom.product_uom_tree_view
-NEW res.groups: uom.group_uom
+NEW res.groups: uom.group_uom [renamed from product module]
 NEW uom.category: uom.product_uom_categ_kgm [renamed from product module] (noupdate)
 NEW uom.category: uom.product_uom_categ_unit [renamed from product module] (noupdate)
 NEW uom.category: uom.product_uom_categ_vol [renamed from product module] (noupdate)

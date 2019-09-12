@@ -82,4 +82,22 @@ class GenerateWizard(models.TransientModel):
         self.env.cache.invalidate([
             (self.env['openupgrade.record']._fields['noupdate'], None),
         ])
+
+        # Log model records
+        self.env.cr.execute(
+            """INSERT INTO openupgrade_record
+            (module, name, model, type)
+            SELECT imd2.module, imd2.module || '.' || imd.name AS name,
+                im.model, 'model' AS type
+            FROM (
+                SELECT min(id) as id, name, res_id
+                FROM ir_model_data
+                WHERE name LIKE 'model_%' AND model = 'ir.model'
+                GROUP BY name, res_id
+                ) imd
+            JOIN ir_model_data imd2 ON imd2.id = imd.id
+            JOIN ir_model im ON imd.res_id = im.id
+            ORDER BY imd.name, imd.id""",
+        )
+
         return self.write({'state': 'ready'})

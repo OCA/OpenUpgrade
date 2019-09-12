@@ -1,7 +1,18 @@
+---Models in module 'web'---
+obsolete model web.planner
+new model report.layout
 ---Fields in module 'web'---
 web          / report.layout            / image (char)                  : NEW
 web          / report.layout            / pdf (char)                    : NEW
 web          / report.layout            / view_id (many2one)            : NEW relation: ir.ui.view, required
+web_planner  / web.planner              / active (boolean)              : DEL
+web_planner  / web.planner              / data (text)                   : DEL
+web_planner  / web.planner              / menu_id (many2one)            : DEL relation: ir.ui.menu, required
+web_planner  / web.planner              / name (char)                   : DEL required
+web_planner  / web.planner              / planner_application (selection): DEL required, selection_keys: function
+web_planner  / web.planner              / progress (integer)            : DEL
+web_planner  / web.planner              / tooltip_planner (html)        : DEL
+web_planner  / web.planner              / view_id (many2one)            : DEL relation: ir.ui.view, required
 ---XML records in module 'web'---
 DEL ir.actions.act_window: web_planner.web_planner_action
 NEW ir.model.access: web.access_report_layout

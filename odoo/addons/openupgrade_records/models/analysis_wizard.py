@@ -81,10 +81,26 @@ class AnalysisWizard(models.TransientModel):
         res_xml = compare.compare_xml_sets(
             remote_xml_records, local_xml_records)
 
-        affected_modules = list(
+        # Retrieve model representations and compare
+        flds = ['module', 'model', 'name', 'original_module']
+        local_model_records = [
+            dict([(field, record[field]) for field in flds])
+            for record in local_record_obj.search([('type', '=', 'model')])]
+        remote_model_record_ids = remote_record_obj.search(
+            [('type', '=', 'model')])
+        remote_model_records = [
+            dict([(field, record[field]) for field in flds])
+            for record in remote_record_obj.read(
+                remote_model_record_ids, flds)
+        ]
+        res_model = compare.compare_model_sets(
+            remote_model_records, local_model_records)
+
+        affected_modules = sorted(
             set(record['module'] for record in
                 remote_records + local_records +
-                remote_xml_records + local_xml_records
+                remote_xml_records + local_xml_records +
+                remote_model_records + local_model_records
                 ))
 
         # reorder and output the result
@@ -95,7 +111,12 @@ class AnalysisWizard(models.TransientModel):
                 [('state', '=', 'installed')]))
         general = ''
         for key in keys:
-            contents = "---Fields in module '%s'---\n" % key
+            contents = "---Models in module '%s'---\n" % key
+            if key in res_model:
+                contents += '\n'.join([str(line) for line in res_model[key]])
+                if res_model[key]:
+                    contents += '\n'
+            contents += "---Fields in module '%s'---\n" % key
             if key in res:
                 contents += '\n'.join(
                     [str(line) for line in sorted(res[key])])
@@ -106,15 +127,18 @@ class AnalysisWizard(models.TransientModel):
                 contents += '\n'.join([str(line) for line in res_xml[key]])
                 if res_xml[key]:
                     contents += '\n'
-            if key not in res and key not in res_xml:
+            if key not in res and key not in res_xml and key not in res_model:
                 contents += '---nothing has changed in this module--\n'
             if key == 'general':
                 general += contents
                 continue
-            if key not in modules:
+            if compare.module_map(key) not in modules:
                 general += (
                     "ERROR: module not in list of installed modules:\n" +
                     contents)
+                continue
+            if key not in modules:
+                # no need to log in general the merged/renamed modules
                 continue
             if self.write_files:
                 error = write_file(

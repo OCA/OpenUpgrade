@@ -1,3 +1,11 @@
+---Models in module 'product'---
+obsolete model product.attribute.line (renamed to product.template.attribute.line)
+obsolete model product.attribute.price (renamed to product.template.attribute.value)
+obsolete model product.uom (renamed to uom.uom)
+obsolete model product.uom.categ (renamed to uom.category)
+new model product.template.attribute.exclusion
+new model product.template.attribute.line (renamed from product.attribute.line)
+new model product.template.attribute.value (renamed from product.attribute.price)
 ---Fields in module 'product'---
 product      / product.attribute        / attribute_line_ids (one2many) : relation is now 'product.template.attribute.line' ('product.attribute.line') [nothing to do]
 product      / product.attribute        / create_variant (boolean)      : now required, req_default: function
@@ -46,8 +54,8 @@ product      / product.uom.categ        / __last_update (datetime)      : module
 product      / product.uom.categ        / display_name (char)           : module is now 'uom' ('product')
 product      / product.uom.categ        / name (char)                   : module is now 'uom' ('product')
 ---XML records in module 'product'---
-DEL ir.actions.act_window: product.product_uom_categ_form_action
-DEL ir.actions.act_window: product.product_uom_form_action
+DEL ir.actions.act_window: product.product_uom_categ_form_action [renamed to uom module]
+DEL ir.actions.act_window: product.product_uom_form_action [renamed to uom module]
 NEW ir.actions.report: product.report_product_packaging
 NEW ir.actions.report: product.report_product_product_barcode
 NEW ir.actions.report: product.report_product_template_barcode
@@ -85,7 +93,7 @@ DEL ir.ui.view: product.product_attribute_value_view_tree
 DEL ir.ui.view: product.product_uom_categ_form_view
 DEL ir.ui.view: product.product_uom_form_view
 DEL ir.ui.view: product.product_uom_tree_view
-NEW product.category: product.cat_expense (noupdate)
+NEW product.category: product.cat_expense [renamed from hr_expense module] (noupdate)
 DEL product.uom: product.product_uom_cm [renamed to uom module] (noupdate)
 DEL product.uom: product.product_uom_day [renamed to uom module] (noupdate)
 DEL product.uom: product.product_uom_dozen [renamed to uom module] (noupdate)
@@ -110,5 +118,5 @@ DEL product.uom.categ: product.product_uom_categ_unit [renamed to uom module] (n
 DEL product.uom.categ: product.product_uom_categ_vol [renamed to uom module] (noupdate)
 DEL product.uom.categ: product.uom_categ_length [renamed to uom module] (noupdate)
 DEL product.uom.categ: product.uom_categ_wtime [renamed to uom module] (noupdate)
-DEL res.groups: product.group_uom
+DEL res.groups: product.group_uom [renamed to uom module]
 DEL res.request.link: product.req_link_product (noupdate)

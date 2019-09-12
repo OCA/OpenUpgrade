@@ -1,3 +1,7 @@
+---Models in module 'test_mail'---
+new model mail.test.activity
+new model mail.test.full
+new model mail.test.track
 ---Fields in module 'test_mail'---
 test_mail    / mail.test                / __last_update (datetime)      : previously in module mail
 test_mail    / mail.test                / _inherits (False)             : previously in module mail
@@ -93,13 +97,13 @@ NEW ir.model.access: test_mail.access_mail_test_activity_portal
 NEW ir.model.access: test_mail.access_mail_test_activity_user
 NEW ir.model.access: test_mail.access_mail_test_full_portal
 NEW ir.model.access: test_mail.access_mail_test_full_user
-NEW ir.model.access: test_mail.access_mail_test_portal
+NEW ir.model.access: test_mail.access_mail_test_portal [renamed from mail module]
 NEW ir.model.access: test_mail.access_mail_test_simple_portal
 NEW ir.model.access: test_mail.access_mail_test_simple_user
 NEW ir.model.access: test_mail.access_mail_test_track_portal
 NEW ir.model.access: test_mail.access_mail_test_track_user
-NEW ir.model.access: test_mail.access_mail_test_user
-NEW ir.model.access: test_mail.access_test_performance_mail
+NEW ir.model.access: test_mail.access_mail_test_user [renamed from mail module]
+NEW ir.model.access: test_mail.access_test_performance_mail [renamed from test_performance module]
 NEW mail.activity.type: test_mail.mail_act_test_call
 NEW mail.activity.type: test_mail.mail_act_test_meeting
 NEW mail.activity.type: test_mail.mail_act_test_todo

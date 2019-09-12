@@ -1,3 +1,5 @@
+---Models in module 'payment'---
+new model payment.acquirer.onboarding.wizard
 ---Fields in module 'payment'---
 payment      / account.invoice          / transaction_ids (many2many)   : NEW relation: payment.transaction
 payment      / payment.acquirer         / qr_code (boolean)             : NEW
