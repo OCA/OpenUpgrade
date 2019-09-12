@@ -37,17 +37,39 @@ class Record(models.Model):
     domain = fields.Char(readonly=True)
     prefix = fields.Char(compute='_compute_prefix_and_suffix')
     suffix = fields.Char(compute='_compute_prefix_and_suffix')
-    original_module = fields.Char(compute='_compute_original_module')
+    model_original_module = fields.Char(
+        compute='_compute_model_original_module')
+    model_type = fields.Char(compute='_compute_model_type')
 
     @api.depends('name')
     def _compute_prefix_and_suffix(self):
         for rec in self:
             rec.prefix, rec.suffix = rec.name.split('.', 1)
 
-    @api.depends('model')
-    def _compute_original_module(self):
+    @api.depends('model', 'type')
+    def _compute_model_original_module(self):
         for rec in self:
-            rec.original_module = self.env[rec.model]._original_module
+            if rec.type == 'model':
+                rec.model_original_module = \
+                    self.env[rec.model]._original_module
+            else:
+                rec.model_original_module = ''
+
+    @api.depends('model', 'type')
+    def _compute_model_type(self):
+        for rec in self:
+            if rec.type == 'model':
+                model = self.env[rec.model]
+                if model._auto and model._transient:
+                    rec.model_type = 'transient'
+                elif model._auto:
+                    rec.model_type = ''
+                elif not model._auto and model._abstract:
+                    rec.model_type = 'abstract'
+                else:
+                    rec.model_type = 'sql_view'
+            else:
+                rec.model_type = ''
 
     @api.model
     def field_dump(self):
