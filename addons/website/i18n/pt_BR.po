@@ -3,27 +3,31 @@
 # * website
 # 
 # Translators:
-# Mateus Lopes <mateus1@gmail.com>, 2016
-# Luiz Carlos de Lima <luiz.carlos@akretion.com.br>, 2016
-# Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2016
-# grazziano <gra.negocia@gmail.com>, 2016
-# Martin Trigaux, 2016
-# Rui Andrada <shingonoide@gmail.com>, 2016
-# danimaribeiro <danimaribeiro@gmail.com>, 2016
 # Adriel Kotviski <kotviski@gmail.com>, 2016
 # AlexSandro Cruz <alex@sapienzae.com.br>, 2016
 # falexandresilva <falexandresilva@gmail.com>, 2016
+# Rui Andrada <shingonoide@gmail.com>, 2016
+# Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2016
+# Luiz Carlos de Lima <luiz.carlos@akretion.com.br>, 2016
 # Wagner Pereira <wagner@wagner.pereira.nom.br>, 2016
 # Alessandro de Lima Folk <sandrofolk@hotmail.com>, 2016
+# Martin Trigaux, 2016
+# Mateus Lopes <mateus1@gmail.com>, 2016
+# grazziano <gra.negocia@gmail.com>, 2016
 # Marcos Abreu <marcoos.abreu@gmail.com>, 2016
-# Silmar <pinheirosilmar@gmail.com>, 2017
+# danimaribeiro <danimaribeiro@gmail.com>, 2018
+# Silmar <pinheirosilmar@gmail.com>, 2018
+# Eduardo Aparicio <eduardo.caparica@gmail.com>, 2019
+# Lauro de Lima <lauro@ciclix.com>, 2019
+# Marcel Savegnago <marcel.savegnago@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:27+0000\n"
-"PO-Revision-Date: 2017-06-23 13:27+0000\n"
-"Last-Translator: Silmar <pinheirosilmar@gmail.com>, 2017\n"
+"PO-Revision-Date: 2016-09-07 09:31+0000\n"
+"Last-Translator: Marcel Savegnago <marcel.savegnago@gmail.com>, 2019\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/41243/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -171,7 +175,7 @@ msgstr "<b>Um Pequeno Subtítulo</b>"
 #: code:addons/website/static/src/js/website.tour.banner.js:15
 #, python-format
 msgid "<b>Click Edit</b> to start designing your homepage."
-msgstr ""
+msgstr "<b>Clique Editar</b> para iniciar o desenho da sua homepage."
 
 #. module: website
 #. openerp-web
@@ -181,6 +185,8 @@ msgid ""
 "<b>Click on a text</b> to start editing it. <i>It's that easy to edit your "
 "content!</i>"
 msgstr ""
+"<b>Clique em um texto</b> para começar a editá-lo. <i>É assim que você edita"
+" seu conteúdo!</i>"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.s_text_block
@@ -211,7 +217,7 @@ msgstr ""
 #: code:addons/website/static/src/js/website.tour.banner.js:72
 #, python-format
 msgid "<b>Install a contact form</b> to improve this page."
-msgstr ""
+msgstr "<b>Instale o formulário de contato</b> para aprimorar a sua página."
 
 #. module: website
 #. openerp-web
@@ -221,6 +227,8 @@ msgid ""
 "<b>Install new apps</b> to get more features. Let's install the <i>'Contact "
 "form'</i> app."
 msgstr ""
+"<b>Instale novos aplicativos</b> para incluir mais funções. Vamos instalar o"
+" aplicativo <i>'Formulário de Contato'</i>."
 
 #. module: website
 #: model:ir.actions.act_window,help:website.action_module_theme
@@ -944,6 +952,7 @@ msgstr ""
 #, python-format
 msgid "After having checked how it looks on mobile, <b>close the preview</b>."
 msgstr ""
+"Depois de ter verificado pelo celular, <b>feche a pré-visualização</b>."
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
@@ -1425,7 +1434,7 @@ msgstr "Painel"
 #: model:ir.model.fields,field_description:website.field_website_config_settings_default_lang_id
 #: model:ir.model.fields,field_description:website.field_website_default_lang_id
 msgid "Default Language"
-msgstr ""
+msgstr "Idioma Padrão"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_config_settings_default_lang_code
@@ -1922,7 +1931,7 @@ msgstr "Google Maps"
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_config_settings_google_maps_api_key
 msgid "Google Maps API Key"
-msgstr ""
+msgstr "Chave da API do Google Maps"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
@@ -3569,7 +3578,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.backend.xml:18
 #, python-format
 msgid "Visits"
-msgstr ""
+msgstr "Visitas"
 
 #. module: website
 #. openerp-web
@@ -3653,7 +3662,7 @@ msgstr "Domínio do Site"
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_favicon
 msgid "Website Favicon"
-msgstr ""
+msgstr "Favicon do Site"
 
 #. module: website
 #: model:ir.actions.act_url,name:website.action_website_homepage
@@ -3720,7 +3729,7 @@ msgstr "Website URL"
 #. module: website
 #: model:ir.model.fields,field_description:website.field_ir_act_server_website_url
 msgid "Website Url"
-msgstr ""
+msgstr "Site Url"
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.menu_tree
@@ -3960,7 +3969,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.backend.xml:40
 #, python-format
 msgid "You do not seem to have access to this Analytics Account."
-msgstr ""
+msgstr "Você não parece ter acesso a essa conta do Google Analytics."
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
@@ -3974,7 +3983,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.backend.xml:39
 #, python-format
 msgid "You need to log in to your Google Account before:"
-msgstr ""
+msgstr "Você precisa fazer login na sua conta do Google antes de:"
 
 #. module: website
 #: model:ir.actions.act_window,help:website.action_module_theme
@@ -4029,7 +4038,7 @@ msgstr "Título do Seu Site"
 #: code:addons/website/static/src/xml/website.editor.xml:27
 #, python-format
 msgid "Your current changes will be saved automatically."
-msgstr ""
+msgstr "Suas alterações atuais serão salvas automaticamente."
 
 #. module: website
 #: model:ir.ui.view,arch_db:website.website_planner
