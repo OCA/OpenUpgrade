@@ -41,6 +41,7 @@ Contributors
 * Pedro M. Baeza <pedro.baeza@gmail.com>
 * Ferdinand Gassauer <gass@cc-l-12.chircar.at>
 * Florent Xicluna <florent.xicluna@gmail.com>
+* Miquel Raïch <miquel.raich@eficent.com>
 
 Maintainer
 ----------

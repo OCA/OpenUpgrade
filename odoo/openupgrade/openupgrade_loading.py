@@ -160,7 +160,7 @@ def log_model(model, local_registry):
             }
         if hasattr(v, 'oldname'):
             properties['oldname'] = v.oldname
-        if v.type == 'selection':
+        if v.type in ('selection', 'reference'):
             if isinstance(v.selection, (tuple, list)):
                 properties['selection_keys'] = pycompat.text_type(
                     sorted([x[0] for x in v.selection]))
