@@ -2,23 +2,10 @@
 # Copyright 2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
-from psycopg2.extensions import AsIs
-
-
-def fill_project_project_inherits_values(cr):
-    openupgrade.logged_query(
-        cr, """UPDATE project_project pp
-        SET name = aaa.name, partner_id = aaa.partner_id,
-            company_id = aaa.company_id
-        FROM account_analytic_account aaa
-        WHERE pp.%s = aaa.id
-        """, (AsIs(openupgrade.get_legacy_name('analytic_account_id')), ),
-    )
 
 
 @openupgrade.migrate()
 def migrate(env, version):
-    fill_project_project_inherits_values(env.cr)
     openupgrade.load_data(
         env.cr, 'project', 'migrations/12.0.1.1/noupdate_changes.xml',
         mode='init_no_create')
