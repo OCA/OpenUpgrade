@@ -3,15 +3,15 @@ Module coverage 6.1 -> 7.0
 
 Status :
 
-     * Empty : No information available : Please see the 'openupgrade_analysis.txt' file of the module and share your analyse ; 
+     * Empty : No information available : Please see the 'openupgrade_analysis.txt' file of the module and share your analyse ;
 
-     * 'No change' : No change between 6.1 and 7.0 ; 
+     * 'No change' : No change between 6.1 and 7.0 ;
 
      * 'Nothing to do' : Analyse has been done, and there is nothing to do.
 
-     * 'work in progress' : Analyse / work in progress. Please review the merge proposals at https://code.launchpad.net/openupgrade-addons/+activereviews ; 
+     * 'work in progress' : Analyse / work in progress. Please review the merge proposals at https://code.launchpad.net/openupgrade-addons/+activereviews ;
 
-     * 'Done' : Analyse has been done & work has been merged into trunk project ; 
+     * 'Done' : Analyse has been done & work has been merged into trunk project ;
 
 +-----------------------------------+-----------------------------------+
 |Module                             |Status                             |
@@ -388,7 +388,7 @@ Status :
 +-----------------------------------+-----------------------------------+
 |stock_invoice_directly             | No change                         |
 +-----------------------------------+-----------------------------------+
-|stock_location                     |                                   |
+|stock_location                     | Done                              |
 +-----------------------------------+-----------------------------------+
 |stock_no_autopicking               | No change                         |
 +-----------------------------------+-----------------------------------+
