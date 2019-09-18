@@ -15,6 +15,8 @@ renamed_modules = {
     'product_uom_unece': 'uom_unece',
     # OCA/crm > OCA/partner-contact
     'crm_deduplicate_acl': 'partner_deduplicate_acl',
+    'crm_deduplicate_by_ref': 'partner_deduplicate_by_ref',
+    'crm_deduplicate_by_website': 'partner_deduplicate_by_website',
     'crm_deduplicate_filter': 'partner_deduplicate_filter',
     # OCA/hr
     'hr_employee_seniority': 'hr_employee_service_contract',
