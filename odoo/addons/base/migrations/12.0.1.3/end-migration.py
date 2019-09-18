@@ -58,8 +58,9 @@ def fork_off_system_user(env):
     )
     user_root.write({
         'partner_id': partner_root.id,
-        'email': 'root@example.com',
+        'email': partner_admin.email,
     })
+    partner_admin.email = False
     env.cr.execute(
         """ UPDATE ir_model_data SET res_id = %s
         WHERE module = 'base' AND name = 'user_admin'""", (user_admin.id,))
