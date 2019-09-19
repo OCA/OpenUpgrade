@@ -36,7 +36,7 @@ setup(
         'mock',
         'ofxparse',
         'openerp-client-lib==1.1.2',
-        'openupgradelib>=2.0.0',
+        'openupgradelib>=3.0.0',
         'passlib',
         'pillow',  # windows binary http://www.lfd.uci.edu/~gohlke/pythonlibs/
         'psutil',  # windows binary code.google.com/p/psutil/downloads/list
