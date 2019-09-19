@@ -67,6 +67,18 @@ def update_node(target, source):
         target.append(element)
 
 
+def adapt_version(major_version, version):
+    if version == major_version or not version.startswith(major_version + '.'):
+        version = '%s.%s' % (major_version, version)
+    return version
+
+
+def get_version(major_version, addon_dir):
+    addon_dir = addon_dir.rstrip(os.sep)
+    manifest = read_manifest(addon_dir)
+    return adapt_version(major_version, manifest.get('version') or '1.0')
+
+
 def get_records(addon_dir):
     addon_dir = addon_dir.rstrip(os.sep)
     addon_name = os.path.basename(addon_dir)
@@ -203,6 +215,28 @@ def main_analysis(old_update, old_noupdate, new_update, new_noupdate, module):
     return diff
 
 
+def write_file(major_version, module_path, content,
+               filename='noupdate_changes.xml'):
+    version = get_version(major_version, module_path)
+    if not module_path:
+        return "ERROR: could not find module path:\n"
+    full_path = os.path.join(
+        module_path, 'migrations', version)
+    if not os.path.exists(full_path):
+        try:
+            os.makedirs(full_path)
+        except os.error:
+            return "ERROR: could not create migrations directory:\n"
+    logfile = os.path.join(full_path, filename)
+    try:
+        f = open(logfile, 'w')
+    except Exception:
+        return "ERROR: could not open file %s for writing:\n" % logfile
+    f.write(content)
+    f.close()
+    return None
+
+
 def main(argv=None):
     """
     Attempt to represent the differences in data records flagged with
@@ -233,6 +267,9 @@ def main(argv=None):
         'newdir', metavar='newer_directory')
     parser.add_argument(
         '--mode', metavar='module/repository', default='module')
+    parser.add_argument(
+        '--write', metavar='new_version', default=False)
+    # example: "--write 13.0"
     arguments = parser.parse_args(argv)
     print("\n")
 
@@ -245,6 +282,8 @@ def main(argv=None):
         print(module_name + ":\n")
         if diff:
             print(diff)
+            if arguments.write:
+                write_file(arguments.write, arguments.newdir, diff)
         else:
             print("No differences.")
 
@@ -269,6 +308,9 @@ def main(argv=None):
             if diff:
                 print(module_name + ":\n")
                 print(diff)
+                if arguments.write:
+                    write_file(arguments.write,
+                               opj(arguments.newdir, module_name), diff)
 
 
 if __name__ == "__main__":
