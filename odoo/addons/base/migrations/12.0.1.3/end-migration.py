@@ -60,7 +60,7 @@ def fork_off_system_user(env):
         'partner_id': partner_root.id,
         'email': partner_admin.email,
     })
-    partner_admin.email = False
+    partner_admin.email = 'root@example.com'
     env.cr.execute(
         """ UPDATE ir_model_data SET res_id = %s
         WHERE module = 'base' AND name = 'user_admin'""", (user_admin.id,))
