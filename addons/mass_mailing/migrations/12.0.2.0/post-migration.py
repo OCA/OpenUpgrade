@@ -29,6 +29,7 @@ def fill_mass_mailing_user_id(cr):
         WHERE user_id IS NULL""",
     )
 
+
 def correct_domain_for_list_mailings(env):
     """Overwrite mailing_domain with the one expected by Odoo when selecting
     mailing lists, as the previous domain might be invalid.
