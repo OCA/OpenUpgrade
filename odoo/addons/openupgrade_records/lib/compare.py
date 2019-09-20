@@ -19,8 +19,13 @@ def module_map(module):
         module, apriori.merged_modules.get(module, module))
 
 
-def model_map(model):
+def model_rename_map(model):
     return apriori.renamed_models.get(model, model)
+
+
+def model_map(model):
+    return apriori.renamed_models.get(
+        model, apriori.merged_models.get(model, model))
 
 
 def inv_model_map(model):
@@ -50,7 +55,7 @@ def compare_records(dict_old, dict_new, fields):
             if module_map(dict_old['module']) != dict_new['module']:
                 return False
         elif field == 'model':
-            if model_map(dict_old['model']) != dict_new['model']:
+            if model_rename_map(dict_old['model']) != dict_new['model']:
                 return False
         elif field == 'other_prefix':
             if dict_old['module'] != dict_old['prefix'] or \

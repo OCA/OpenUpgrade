@@ -90,9 +90,14 @@ renamed_models = {
     'sale.quote.option': 'sale.order.template.option',
     'sale.quote.template': 'sale.order.template',
     'stock.incoterms': 'account.incoterms',
-    # 'stock.location.path': 'stock.rule', handled in 'stock'
     # OCA/account-financial-tools
     'account.asset.asset': 'account.asset',
     'account.asset.depreciation.line': 'account.asset.line',
     'account.asset.category': 'account.asset.profile',
+}
+
+# only used here for openupgrade_records analysis:
+merged_models = {
+    # Odoo
+    'stock.location.path': 'stock.rule',
 }
