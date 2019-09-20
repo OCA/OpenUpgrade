@@ -29,8 +29,24 @@ def fill_mass_mailing_user_id(cr):
         WHERE user_id IS NULL""",
     )
 
+def correct_domain_for_list_mailings(env):
+    """Overwrite mailing_domain with the one expected by Odoo when selecting
+    mailing lists, as the previous domain might be invalid.
+    """
+    mailings = env['mail.mass_mailing'].search([
+        ('mailing_model_name', '=', 'mail.mass_mailing.list')
+    ])
+    for mailing in mailings:
+        mailing.write({
+            'mailing_domain': repr(
+                [('list_ids', 'in', mailing.contact_list_ids.ids)]
+            )
+        })
 
-@openupgrade.migrate(use_env=False)
-def migrate(cr, version):
+
+@openupgrade.migrate()
+def migrate(env, version):
+    cr = env.cr
     fill_mass_mailing_list_contact_rel_data(cr)
     fill_mass_mailing_user_id(cr)
+    correct_domain_for_list_mailings(env)
