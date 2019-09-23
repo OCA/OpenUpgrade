@@ -54,8 +54,12 @@ def link_websites_with_pages(env):
 def add_redirections(env):
     """Redirect controllers that have been moved."""
     redirections = (
+        ("/page/aboutus", "/aboutus"),
+        ("/page/website.aboutus", "/aboutus"),
         ("/page/contactus", "/contactus"),
+        ("/page/website.contactus", "/contactus"),
         ("/page/homepage", "/"),
+        ("/page/website.homepage", "/"),
     )
     for from_, to in redirections:
         env["website.redirect"].create({
