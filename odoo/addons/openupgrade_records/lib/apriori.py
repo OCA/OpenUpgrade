@@ -21,6 +21,8 @@ renamed_modules = {
     # OCA/hr
     'hr_employee_seniority': 'hr_employee_service_contract',
     'hr_family': 'hr_employee_relative',
+    # OCA/server-brand
+    'res_config_settings_enterprise_remove': 'remove_odoo_enterprise',
     # OCA/stock-logistics-workflow
     'stock_pack_operation_auto_fill': 'stock_move_line_auto_fill',
 }
