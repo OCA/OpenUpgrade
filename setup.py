@@ -75,7 +75,7 @@ def py2exe_options():
                     "skip_archive": 1,
                     "optimize": 0, # keep the assert running, because the integrated tests rely on them.
                     "dist_dir": 'dist',
-                    "packages": [ "DAV", "HTMLParser", "pillow", "asynchat", "asyncore", "commands", "dateutil", "decimal", "docutils", "email", "encodings", "imaplib", "jinja2", "lxml", "lxml._elementpath", "lxml.builder", "lxml.etree", "lxml.objectify", "mako", "openerp", "poplib", "pychart", "pydot", "pyparsing", "pytz", "reportlab", "select", "simplejson", "smtplib", "uuid", "vatnumber", "vobject", "xml", "xml.dom", "yaml", ],
+                    "packages": [ "DAV", "HTMLParser", "pillow", "asynchat", "asyncore", "commands", "dateutil", "decimal", "docutils", "email", "encodings", "imaplib", "jinja2", "lxml", "lxml._elementpath", "lxml.builder", "lxml.etree", "lxml.objectify", "mako", "openerp", "poplib", "python-chart", "pydot", "pyparsing", "pytz", "reportlab", "select", "simplejson", "smtplib", "uuid", "vatnumber", "vobject", "xml", "xml.dom", "yaml", ],
                     "excludes" : ["Tkconstants","Tkinter","tcl"],
                 }
             }
@@ -111,10 +111,9 @@ setuptools.setup(
       scripts          = ['openerp-server'],
       data_files       = data(),
       packages         = setuptools.find_packages(),
-      dependency_links = ['http://download.gna.org/pychart/'],
       #include_package_data = True,
       install_requires = [
-          'pychart', # not on pypi, use: pip install http://download.gna.org/pychart/PyChart-1.39.tar.gz
+          'python-chart',
           'babel',
           'docutils',
           'feedparser',
