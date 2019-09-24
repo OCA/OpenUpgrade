@@ -42,6 +42,9 @@ def recompute_tasks_from_issues_fields(env):
     being inserted by SQL, don't have these fields computed, so we force here
     its recomputation.
     """
+    if not openupgrade.column_exists(
+            env.cr, 'account_analytic_line', 'issue_id'):
+        return
     origin_issue_column = openupgrade.get_legacy_name('origin_issue_id')
     env.cr.execute("SELECT id FROM project_task WHERE %s IS NOT NULL",
                    (AsIs(origin_issue_column), ))
