@@ -23,10 +23,10 @@ def migrate_project_issue_sheet(env):
     and then fill `task_id` field in analytic lines with the tasks created
     from issues.
     """
-    if not openupgrade.column_exists(
-            env.cr, 'account_analytic_line', 'issue_id'):
-        return
     origin_issue_column = openupgrade.get_legacy_name('origin_issue_id')
+    if not openupgrade.column_exists(env.cr, 'account_analytic_line',
+                                     origin_issue_column):
+        return
     openupgrade.logged_query(
         env.cr, """
         UPDATE account_analytic_line aal
@@ -43,6 +43,9 @@ def recompute_tasks_from_issues_fields(env):
     its recomputation.
     """
     origin_issue_column = openupgrade.get_legacy_name('origin_issue_id')
+    if not openupgrade.column_exists(env.cr, 'project_task',
+                                     origin_issue_column):
+        return
     env.cr.execute("SELECT id FROM project_task WHERE %s IS NOT NULL",
                    (AsIs(origin_issue_column), ))
     tasks = env['project.task'].browse([x[0] for x in env.cr.fetchall()])
