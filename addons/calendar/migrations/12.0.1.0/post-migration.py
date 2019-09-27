@@ -16,12 +16,23 @@ def migrate(env, version):
             'calendar_template_meeting_reminder',
         ],
     )
-    openupgrade.delete_records_safely_by_xml_id(
-        env, [
-            'calendar.categ_meet1',
-            'calendar.categ_meet2',
-            'calendar.categ_meet3',
-            'calendar.categ_meet4',
-            'calendar.categ_meet5',
-        ],
-    )
+    event_calendar_type_xml_ids = [
+        'calendar.categ_meet1',
+        'calendar.categ_meet2',
+        'calendar.categ_meet3',
+        'calendar.categ_meet4',
+        'calendar.categ_meet5',
+    ]
+    CalendarEvent = env['calendar.event']
+    IrModelData = env['ir.model.data']
+    for xml_id in event_calendar_type_xml_ids:
+        record = env.ref(xml_id)
+        if CalendarEvent.search([('categ_ids', '=', record.id)]):
+            # delete only XML-ID, as type is used, but not "safely" detected
+            module, name = xml_id.split('.')
+            IrModelData.search([
+                ('module', '=', module),
+                ('name', '=', name),
+            ]).unlink()
+        else:
+            openupgrade.delete_records_safely_by_xml_id(env, [xml_id])
