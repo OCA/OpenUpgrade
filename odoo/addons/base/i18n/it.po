@@ -4,7 +4,6 @@
 # 
 # Translators:
 # Davide Corio <enlightx@gmail.com>, 2018
-# Alessandro Camilli <alessandrocamilli@openforce.it>, 2018
 # Alex Siviero <dolanblu@gmail.com>, 2018
 # Luca Tralli, 2018
 # Niccolò Lubello <nlubello@gmail.com>, 2018
@@ -31,10 +30,11 @@
 # Simone Bernini <simone@aperturelabs.it>, 2018
 # Paolo Valier, 2018
 # Martin Trigaux, 2018
-# mymage <stefano.consolaro@mymage.it>, 2019
 # Lorenzo Battistini <lorenzo.battistini@agilebg.com>, 2019
 # Léonie Bouchat <lbo@odoo.com>, 2019
+# mymage <stefano.consolaro@mymage.it>, 2019
 # Sergio Zanchetta <primes2h@gmail.com>, 2019
+# Luigia Cimmino Caserta <lcc@odoo.com>, 2019
 # 
 msgid ""
 msgstr ""
@@ -42,7 +42,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-22 11:56+0000\n"
 "PO-Revision-Date: 2018-08-24 09:14+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2019\n"
+"Last-Translator: Luigia Cimmino Caserta <lcc@odoo.com>, 2019\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1645,6 +1645,9 @@ msgid ""
 "Add the ability to create products from the document module.\n"
 "and to get the option to send products' attachments to the documents app.\n"
 msgstr ""
+"\n"
+"Aggiungi l'abilità per creare prodotti dal modulo documenti.\n"
+"e per avere l'opzione di inviare allegati del prodotto all'app documenti.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_documents_sign
@@ -3554,6 +3557,8 @@ msgid ""
 "\n"
 "It links the module iot with the pos restaurant, so you don't have to call the  \n"
 msgstr ""
+"\n"
+"Collega il modulo IoT con il punto vendita ristorante, così non devi chiamare il  \n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_stock_landed_costs
@@ -6987,6 +6992,20 @@ msgid ""
 "* Stock Inventory Value at given date (support dates in the past)\n"
 "    "
 msgstr ""
+"\n"
+"WMS modulo contabilità\n"
+"======================\n"
+"Questo modulo collega i moduli \"magazzino\" e \"contabilità\" e consente di creare registrazioni contabili per valorizzare i movimenti di magazzino\n"
+"\n"
+"Caratteristiche chiave\n"
+"------------\n"
+"* Valorizzazionei di magazzino (periodica o automatica)\n"
+"* Fatturazione da prelievo\n"
+"\n"
+"Bacheca / Report della gestione magazzino includono:\n"
+"------------------------------------------------------\n"
+"* Valutazione del magazzino alla data (con date nel passato)\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_helpdesk_forum
@@ -8566,7 +8585,7 @@ msgstr "Uso azione"
 #. module: base
 #: model:ir.model,name:base.model_ir_actions_act_window
 msgid "Action Window"
-msgstr ""
+msgstr "Finestra azione"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_actions_act_window_close
@@ -9607,6 +9626,12 @@ msgid "Barcode scan in Mobile"
 msgstr "Lettura di codice a barre su cellulare"
 
 #. module: base
+#: code:addons/base/models/ir_qweb_fields.py:607
+#, python-format
+msgid "Barcode symbology"
+msgstr ""
+
+#. module: base
 #: code:addons/base/models/ir_qweb_fields.py:603
 #, python-format
 msgid "Barcode type"
@@ -10217,7 +10242,7 @@ msgstr "Chad"
 #. module: base
 #: model:ir.actions.act_window,name:base.action_res_users_my
 msgid "Change My Preferences"
-msgstr "Cambia le Mie Preferenze"
+msgstr "Modifica preferenze personali"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.change_password_wizard_action
@@ -11754,13 +11779,13 @@ msgstr ""
 #: code:addons/base/models/ir_qweb_fields.py:511
 #, python-format
 msgid "Date unit"
-msgstr ""
+msgstr "Unità data"
 
 #. module: base
 #: code:addons/base/models/ir_qweb_fields.py:511
 #, python-format
 msgid "Date unit used for comparison and formatting"
-msgstr ""
+msgstr "Unità di data usata per comparazione e formattazione"
 
 #. module: base
 #: code:addons/base/models/ir_qweb_fields.py:512
@@ -11769,6 +11794,8 @@ msgid ""
 "Date unit used for the rounding. The value must be smaller than 'hour' if "
 "you use the digital formating."
 msgstr ""
+"Unità di data usata per arrotondare. Il valore deve essere più piccolo di "
+"\"ora\" se si usa il formato digitale."
 
 #. module: base
 #: code:addons/base/models/ir_qweb_fields.py:395
@@ -12946,7 +12973,7 @@ msgstr "Nome esportato"
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.wizard_lang_export
 msgid "Export Settings"
-msgstr "Esporta Impostazioni"
+msgstr "Esporta impostazioni"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_wizard_lang_export
@@ -13454,7 +13481,7 @@ msgstr "Campi"
 #. module: base
 #: model:ir.model,name:base.model_ir_fields_converter
 msgid "Fields Converter"
-msgstr ""
+msgstr "Convertitore Campi"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_model_form
@@ -14680,7 +14707,7 @@ msgstr "Nascondi secondi"
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_attachment_form
 msgid "History"
-msgstr "Storico"
+msgstr "Cronologia"
 
 #. module: base
 #: model:res.country,name:base.va
@@ -15565,7 +15592,7 @@ msgstr "Parametro 'raggruppa per' non valido"
 #: code:addons/models.py:2120
 #, python-format
 msgid "Invalid aggregation function %r."
-msgstr ""
+msgstr "Funzione di aggregazione invalida %r."
 
 #. module: base
 #: code:addons/base/models/ir_fields.py:330
@@ -15699,7 +15726,7 @@ msgstr "Fatture da documenti"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account
 msgid "Invoicing"
-msgstr "Contabilità"
+msgstr "Fatturazione"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_account_voucher
@@ -17340,7 +17367,7 @@ msgstr "Accesso modello"
 #. module: base
 #: model:ir.model,name:base.model_ir_model_constraint
 msgid "Model Constraint"
-msgstr ""
+msgstr "Limite Modello"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_model_constraint
@@ -17702,7 +17729,7 @@ msgstr "Nuova lingua (modello di traduzione vuoto)"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_change_password_user__new_passwd
 msgid "New Password"
-msgstr "Nuova Password"
+msgstr "Nuova password"
 
 #. module: base
 #: selection:ir.actions.act_url,target:0
@@ -20425,7 +20452,7 @@ msgstr "Il nome %r è utilizzato due volte."
 #: model:ir.model.fields,field_description:base.field_base_language_import__overwrite
 #: model:ir.model.fields,field_description:base.field_base_language_install__overwrite
 msgid "Overwrite Existing Terms"
-msgstr "Sovrascrivere termini esistenti"
+msgstr "Sovrascrivi termini esistenti"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_attachment_search
@@ -21492,7 +21519,7 @@ msgstr "Campo qweb"
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_barcode
 msgid "Qweb Field Barcode"
-msgstr ""
+msgstr "Campo Qweb Codice a Barre"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_contact
@@ -21729,7 +21756,7 @@ msgstr "Azienda Collegata"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_fields__related
 msgid "Related Field"
-msgstr ""
+msgstr "Campo Collegato"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_users__partner_id
@@ -21744,7 +21771,7 @@ msgstr "Azione server collegata"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_fields__related_field_id
 msgid "Related field"
-msgstr ""
+msgstr "Campo collegato"
 
 #. module: base
 #: code:addons/base/models/ir_model.py:440
@@ -21756,7 +21783,7 @@ msgstr ""
 #: code:addons/base/models/ir_model.py:438
 #, python-format
 msgid "Related field '%s' does not have type '%s'"
-msgstr ""
+msgstr "Il campo collegato '%s' non ha il tipo '%s'"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_fields__relation_field
@@ -24641,7 +24668,7 @@ msgstr ""
 #: code:addons/base/models/res_users.py:404
 #, python-format
 msgid "The user cannot have more than one user types."
-msgstr ""
+msgstr "L'utente non può avere più di una tipologia di utente."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_filters__user_id
@@ -26850,8 +26877,8 @@ msgstr "es. it_IT"
 #: model_terms:ir.ui.view,arch_db:base.view_company_form
 #: model_terms:ir.ui.view,arch_db:base.view_partner_address_form
 #: model_terms:ir.ui.view,arch_db:base.view_partner_form
-msgid "e.g. www.odoo.com"
-msgstr "es. www.odoo.com"
+msgid "e.g. https://www.odoo.com"
+msgstr "es. https://www.odoo.com"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_ebay
