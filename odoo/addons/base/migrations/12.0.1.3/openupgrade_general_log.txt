@@ -65,7 +65,7 @@ obsolete model sale.quote.line (renamed to sale.order.template.line) [module sal
 obsolete model sale.quote.option (renamed to sale.order.template.option) [module sale_quotation_builder]
 obsolete model sale.quote.template (renamed to sale.order.template) [module sale_quotation_builder]
 obsolete model stock.incoterms (renamed to account.incoterms) [module stock]
-obsolete model stock.location.path [module stock]
+obsolete model stock.location.path (renamed to stock.rule) [module stock]
 obsolete model web.planner [module web]
 obsolete model wizard.multi.charts.accounts [module account]
 new model account.analytic.distribution [module analytic]
@@ -161,13 +161,13 @@ new model website.multi.mixin [module website]
 new model website.published.multi.mixin [module website]
 new model website.sale.payment.acquirer.onboarding.wizard [module website_sale]
 ---Fields in module 'general'---
-# 7139 fields matched,
-# Direct match: 6981
+# 7147 fields matched,
+# Direct match: 6989
 # Found in other module: 156
 # Found with different type: 2
-# In obsolete models: 229
-# New columns: 1367
-# Not matched: 474
+# In obsolete models: 214
+# New columns: 1369
+# Not matched: 475
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'account_asset'---
@@ -239,7 +239,7 @@ ERROR: module not in list of installed modules:
 obsolete model ir.model.fields.anonymization
 obsolete model ir.model.fields.anonymization.history
 obsolete model ir.model.fields.anonymization.migration.fix
-obsolete model ir.model.fields.anonymize.wizard
+obsolete model ir.model.fields.anonymize.wizard [transient]
 ---Fields in module 'anonymization'---
 anonymization / ir.model.fields.anonymization / field_id (many2one)           : DEL relation: ir.model.fields
 anonymization / ir.model.fields.anonymization / field_name (char)             : DEL required
@@ -314,7 +314,7 @@ ERROR: module not in list of installed modules:
 obsolete model l10n_be_intrastat.region
 obsolete model l10n_be_intrastat.transaction
 obsolete model l10n_be_intrastat.transport_mode
-obsolete model l10n_be_intrastat_xml.xml_decl
+obsolete model l10n_be_intrastat_xml.xml_decl [transient]
 ---Fields in module 'l10n_be_intrastat'---
 l10n_be_intrastat / account.invoice          / incoterm_id (many2one)        : module is now 'account' ('l10n_be_intrastat')
 l10n_be_intrastat / account.invoice          / incoterm_id (many2one)        : relation is now 'account.incoterms' ('stock.incoterms') [nothing to do]
@@ -9837,7 +9837,7 @@ DEL product.product: pos_data_drinks.white_russian (noupdate)
 DEL product.product: pos_data_drinks.white_wine (noupdate)
 ERROR: module not in list of installed modules:
 ---Models in module 'report_intrastat'---
-obsolete model report.intrastat
+obsolete model report.intrastat [sql_view]
 obsolete model report.intrastat.code
 ---Fields in module 'report_intrastat'---
 report_intrastat / product.template         / intrastat_id (many2one)       : DEL relation: report.intrastat.code

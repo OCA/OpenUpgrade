@@ -1,5 +1,5 @@
 ---Models in module 'mail_bot'---
-new model mail.bot
+new model mail.bot [abstract]
 ---Fields in module 'mail_bot'---
 mail_bot     / res.users                / odoobot_state (selection)     : NEW required, selection_keys: ['disabled', 'idle', 'not_initialized', 'onboarding_attachement', 'onboarding_command', 'onboarding_emoji', 'onboarding_ping'], req_default: function, hasdefault
 ---XML records in module 'mail_bot'---

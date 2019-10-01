@@ -1,15 +1,15 @@
 ---Models in module 'stock'---
 obsolete model procurement.rule (renamed to stock.rule)
 obsolete model stock.incoterms (renamed to account.incoterms)
-obsolete model stock.location.path
-new model product.replenish
-new model report.stock.report_stock_rule
-new model stock.package.destination
+obsolete model stock.location.path (renamed to stock.rule)
+new model product.replenish [transient]
+new model report.stock.report_stock_rule [abstract]
+new model stock.package.destination [transient]
 new model stock.package_level
 new model stock.rule (renamed from procurement.rule)
-new model stock.rules.report
-new model stock.track.confirmation
-new model stock.track.line
+new model stock.rules.report [transient]
+new model stock.track.confirmation [transient]
+new model stock.track.line [transient]
 ---Fields in module 'stock'---
 stock        / procurement.rule         / action (selection)            : selection_keys is now '['pull', 'pull_push', 'push']' ('['move']')
 stock        / procurement.rule         / location_id (many2one)        : now required

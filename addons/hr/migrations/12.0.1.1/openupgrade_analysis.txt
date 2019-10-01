@@ -27,5 +27,6 @@ hr           / mail.channel             / subscription_department_ids (many2many
 ---XML records in module 'hr'---
 NEW hr.employee: hr.employee_admin (noupdate)
 DEL hr.employee: hr.employee_root (noupdate)
+NEW ir.rule: hr.hr_employee_comp_rule (noupdate)
 NEW ir.ui.view: hr.mail_channel_view_form_
 NEW ir.ui.view: hr.view_users_form_simple_modif_resource

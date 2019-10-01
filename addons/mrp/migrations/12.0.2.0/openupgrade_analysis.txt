@@ -1,9 +1,9 @@
 ---Models in module 'mrp'---
 obsolete model mrp.message
-obsolete model report.mrp.mrp_bom_cost_report
-obsolete model report.mrp.mrp_bom_structure_report
+obsolete model report.mrp.mrp_bom_cost_report [abstract]
+obsolete model report.mrp.mrp_bom_structure_report [abstract]
 new model mrp.workcenter.productivity.loss.type
-new model report.mrp.report_bom_structure
+new model report.mrp.report_bom_structure [abstract]
 ---Fields in module 'mrp'---
 mrp          / mrp.bom                  / message_last_post (datetime)  : DEL
 mrp          / mrp.bom                  / message_main_attachment_id (many2one): NEW relation: ir.attachment

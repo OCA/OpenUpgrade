@@ -20,8 +20,8 @@ NEW digest.digest: digest.digest_digest_default (noupdate)
 NEW digest.tip: digest.digest_tip_mail_0
 NEW digest.tip: digest.digest_tip_mail_1
 NEW ir.actions.act_window: digest.digest_digest_action
-NEW ir.config_parameter: digest.default_digest
-NEW ir.config_parameter: digest.default_emails_digest
+NEW ir.config_parameter: digest.default_digest (noupdate)
+NEW ir.config_parameter: digest.default_emails_digest (noupdate)
 NEW ir.cron: digest.ir_cron_digest_scheduler_action
 NEW ir.model.access: digest.access_digest_digest_system
 NEW ir.model.access: digest.access_digest_digest_user

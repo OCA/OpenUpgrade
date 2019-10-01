@@ -1,14 +1,14 @@
 ---Models in module 'repair'---
 obsolete model mrp.repair (renamed to repair.order)
-obsolete model mrp.repair.cancel (renamed to repair.cancel)
+obsolete model mrp.repair.cancel (renamed to repair.cancel) [transient]
 obsolete model mrp.repair.fee (renamed to repair.fee)
 obsolete model mrp.repair.line (renamed to repair.line)
-obsolete model mrp.repair.make_invoice (renamed to repair.order.make_invoice)
-new model repair.cancel (renamed from mrp.repair.cancel)
+obsolete model mrp.repair.make_invoice (renamed to repair.order.make_invoice) [transient]
+new model repair.cancel (renamed from mrp.repair.cancel) [transient]
 new model repair.fee (renamed from mrp.repair.fee)
 new model repair.line (renamed from mrp.repair.line)
 new model repair.order (renamed from mrp.repair)
-new model repair.order.make_invoice (renamed from mrp.repair.make_invoice)
+new model repair.order.make_invoice (renamed from mrp.repair.make_invoice) [transient]
 ---Fields in module 'repair'---
 mrp_repair   / mrp.repair               / activity_date_deadline (date) : not related anymore
 mrp_repair   / mrp.repair               / activity_date_deadline (date) : not stored anymore
