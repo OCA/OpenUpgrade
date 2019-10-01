@@ -613,7 +613,7 @@ msgstr "Zrušit"
 #: code:addons/web/static/src/js/views/graph/graph_renderer.js:92
 #, python-format
 msgid "Cannot render chart with mode : "
-msgstr ""
+msgstr "Nelze vykreslit graf v režimu:"
 
 #. module: web
 #. openerp-web
@@ -1183,7 +1183,7 @@ msgstr "Externí ID"
 #: code:addons/web/static/src/js/chrome/view_manager.js:496
 #, python-format
 msgid "Failed to evaluate search criterions"
-msgstr ""
+msgstr "Hodnocení kritérií vyhledávání se nezdařilo"
 
 #. module: web
 #. openerp-web
@@ -1268,7 +1268,7 @@ msgstr "Filtrovat: %s"
 #: code:addons/web/static/src/js/chrome/search_menus.js:93
 #, python-format
 msgid "Filter with same name already exists."
-msgstr ""
+msgstr "Filtr se stejným názvem již existuje."
 
 #. module: web
 #. openerp-web
@@ -1320,7 +1320,7 @@ msgstr "Získejte tuto funkci a mnohem více s Odoo Enterprise!"
 #: code:addons/web/static/src/js/services/crash_manager.js:18
 #, python-format
 msgid "Global Business Error"
-msgstr ""
+msgstr "Globální chyba podnikání"
 
 #. module: web
 #. openerp-web
@@ -1400,6 +1400,8 @@ msgid ""
 "Invalid database name. Only alphanumerical characters, underscore, hyphen "
 "and dot are allowed."
 msgstr ""
+"Neplatný název databáze. Povoleny jsou pouze alfanumerické znaky, "
+"podtržítko, spojovník a tečka."
 
 #. module: web
 #. openerp-web
@@ -1606,7 +1608,7 @@ msgstr "Metoda:"
 #: code:addons/web/static/src/js/services/crash_manager.js:16
 #, python-format
 msgid "Missing Record"
-msgstr ""
+msgstr "Chybějící záznam"
 
 #. module: web
 #. openerp-web
@@ -1903,6 +1905,13 @@ msgid "Only Integer Value should be valid."
 msgstr "Platná by měla být pouze celočíselná hodnota."
 
 #. module: web
+#. openerp-web
+#: code:addons/web/static/src/js/fields/basic_fields.js:1982
+#, python-format
+msgid "Only Integer or Float Value should be valid."
+msgstr ""
+
+#. module: web
 #: code:addons/web/controllers/main.py:494
 #, python-format
 msgid ""
@@ -1987,6 +1996,8 @@ msgid ""
 "Pie chart cannot display all zero numbers.. Try to change your domain to "
 "display positive results"
 msgstr ""
+"Výsečový graf nemůže zobrazit všechna nulová čísla. Zkuste zkusit změnit "
+"svou doménu tak, aby zobrazovala kladné výsledky"
 
 #. module: web
 #. openerp-web
@@ -2056,7 +2067,7 @@ msgstr "Prosíme vyberte pole k uložení exportovaného seznamu..."
 #, python-format
 msgid ""
 "Please use the copy button to report the error to your support service."
-msgstr ""
+msgstr "Pomocí tlačítka Kopírovat nahláste chybu své podpoře."
 
 #. module: web
 #: model:ir.ui.view,arch_db:web.menu_secondary
@@ -2301,7 +2312,7 @@ msgstr ""
 #: code:addons/web/static/src/xml/base.xml:615
 #, python-format
 msgid "Select a model to add a filter."
-msgstr ""
+msgstr "Vybrat model pro přidání filtru."
 
 #. module: web
 #. openerp-web
@@ -2527,6 +2538,8 @@ msgid ""
 "There are too many rows (%s rows, limit: 65535) to export as Excel 97-2003 "
 "(.xls) format. Consider splitting the export."
 msgstr ""
+"Existuje příliš mnoho řádků (%s řádků, limit: 65535) pro export ve formátu "
+"Excel 97-2003 (.xls). Zvažte rozdělení exportu."
 
 #. module: web
 #. openerp-web
@@ -2883,14 +2896,14 @@ msgstr "Jste zpět online"
 #: code:addons/web/static/src/js/fields/relational_fields.js:71
 #, python-format
 msgid "You are creating a new %s, are you sure it does not exist yet?"
-msgstr ""
+msgstr "Vytváříte nový %s, jste si jisti, že ještě neexistuje?"
 
 #. module: web
 #. openerp-web
 #: code:addons/web/static/src/js/widgets/model_field_selector.js:455
 #, python-format
 msgid "You cannot follow relations for this field chain construction"
-msgstr ""
+msgstr "Pro tuto konstrukci řetězového pole nemůžete sledovat vztahy"
 
 #. module: web
 #: code:addons/web/controllers/main.py:794
