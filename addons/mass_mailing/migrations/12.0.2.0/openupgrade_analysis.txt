@@ -1,7 +1,7 @@
 ---Models in module 'mass_mailing'---
 new model mail.mass_mailing.list_contact_rel
-new model mass.mailing.list.merge
-new model mass.mailing.schedule.date
+new model mass.mailing.list.merge [transient]
+new model mass.mailing.schedule.date [transient]
 ---Fields in module 'mass_mailing'---
 mass_mailing / mail.mail.statistics     / email (char)                  : NEW
 mass_mailing / mail.mail.statistics     / ignored (datetime)            : NEW

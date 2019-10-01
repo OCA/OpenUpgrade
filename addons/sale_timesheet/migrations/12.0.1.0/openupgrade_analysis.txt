@@ -1,10 +1,10 @@
 ---Models in module 'sale_timesheet'---
-new model project.create.invoice
-new model project.create.sale.order
-new model project.create.sale.order.line
-new model project.profitability.report
+new model project.create.invoice [transient]
+new model project.create.sale.order [transient]
+new model project.create.sale.order.line [transient]
+new model project.profitability.report [sql_view]
 new model project.sale.line.employee.map
-new model project.task.assign.sale
+new model project.task.assign.sale [transient]
 ---Fields in module 'sale_timesheet'---
 sale_timesheet / account.analytic.line    / timesheet_invoice_type (selection): now a function
 sale_timesheet / account.analytic.line    / timesheet_revenue (float)     : DEL

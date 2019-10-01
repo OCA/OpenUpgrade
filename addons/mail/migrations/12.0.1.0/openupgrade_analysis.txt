@@ -1,10 +1,10 @@
 ---Models in module 'mail'---
 new model mail.blacklist
-new model mail.blacklist.mixin
+new model mail.blacklist.mixin [abstract]
 new model mail.moderation
-new model mail.resend.cancel
-new model mail.resend.message
-new model mail.resend.partner
+new model mail.resend.cancel [transient]
+new model mail.resend.message [transient]
+new model mail.resend.partner [transient]
 ---Fields in module 'mail'---
 mail         / ir.actions.act_window.view / view_mode (False)             : NEW selection_keys: ['activity', 'calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'tree'], mode: modify
 mail         / ir.actions.server        / activity_date_deadline_range (integer): NEW

@@ -1,9 +1,9 @@
 ---Models in module 'base'---
 obsolete model res.request.link
-new model ir.demo
-new model ir.demo_failure
-new model ir.demo_failure.wizard
-new model ir.qweb.field.many2many
+new model ir.demo [transient]
+new model ir.demo_failure [transient]
+new model ir.demo_failure.wizard [transient]
+new model ir.qweb.field.many2many [abstract]
 ---Fields in module 'base'---
 auth_crypt   / res.users                / password_crypt (char)         : DEL
 base         / ir.actions.report        / report_type (selection)       : selection_keys is now '['qweb-html', 'qweb-pdf', 'qweb-text']' ('['qweb-html', 'qweb-pdf']')
@@ -122,6 +122,7 @@ NEW res.lang: base.lang_ar
 NEW res.lang: base.lang_bn_IN
 NEW res.lang: base.lang_en_CA
 NEW res.lang: base.lang_fil
+NEW res.lang: base.lang_pt_AO
 NEW res.partner: base.partner_admin (noupdate)
 DEL res.request.link: base.req_link_partner (noupdate)
 NEW res.users: base.template_portal_user_id

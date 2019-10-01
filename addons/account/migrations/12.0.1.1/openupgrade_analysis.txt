@@ -1,31 +1,31 @@
 ---Models in module 'account'---
-obsolete model account.aged.trial.balance
-obsolete model account.balance.report
-obsolete model account.bank.accounts.wizard
-obsolete model account.common.account.report
-obsolete model account.common.partner.report
+obsolete model account.aged.trial.balance [transient]
+obsolete model account.balance.report [transient]
+obsolete model account.bank.accounts.wizard [transient]
+obsolete model account.common.account.report [transient]
+obsolete model account.common.partner.report [transient]
 obsolete model account.financial.report
-obsolete model accounting.report
-obsolete model account.move.line.reconcile
-obsolete model account.move.line.reconcile.writeoff
-obsolete model account.opening
-obsolete model account.report.general.ledger
-obsolete model account.report.partner.ledger
-obsolete model account.tax.report
-obsolete model report.account.report_financial
-obsolete model report.account.report_generalledger
-obsolete model report.account.report_overdue
-obsolete model report.account.report_partnerledger
-obsolete model report.account.report_tax
-obsolete model report.account.report_trialbalance
-obsolete model wizard.multi.charts.accounts
+obsolete model accounting.report [transient]
+obsolete model account.move.line.reconcile [transient]
+obsolete model account.move.line.reconcile.writeoff [transient]
+obsolete model account.opening [transient]
+obsolete model account.report.general.ledger [transient]
+obsolete model account.report.partner.ledger [transient]
+obsolete model account.tax.report [transient]
+obsolete model report.account.report_financial [abstract]
+obsolete model report.account.report_generalledger [abstract]
+obsolete model report.account.report_overdue [abstract]
+obsolete model report.account.report_partnerledger [abstract]
+obsolete model report.account.report_tax [abstract]
+obsolete model report.account.report_trialbalance [abstract]
+obsolete model wizard.multi.charts.accounts [transient]
 new model account.fiscal.year
 new model account.incoterms (renamed from stock.incoterms)
-new model account.invoice.import.wizard
-new model account.invoice.send
-new model account.reconciliation.widget
-new model account.setup.bank.manual.config
-new model report.account.report_invoice_with_payments
+new model account.invoice.import.wizard [transient]
+new model account.invoice.send [transient]
+new model account.reconciliation.widget [abstract]
+new model account.setup.bank.manual.config [transient]
+new model report.account.report_invoice_with_payments [abstract]
 ---Fields in module 'account'---
 account      / account.account          / internal_group (selection)    : NEW selection_keys: function, isrelated: related, stored
 account      / account.account.type     / internal_group (selection)    : NEW selection_keys: ['asset', 'equity', 'expense', 'income', 'liability']

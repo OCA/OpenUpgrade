@@ -1,5 +1,5 @@
 ---Models in module 'project'---
-obsolete model project.task.merge.wizard
+obsolete model project.task.merge.wizard [transient]
 ---Fields in module 'project'---
 project      / account.analytic.account / company_uom_id (many2one)     : module is now 'hr_timesheet' ('project')
 project      / account.analytic.account / company_uom_id (many2one)     : relation is now 'uom.uom' ('product.uom') [nothing to do]

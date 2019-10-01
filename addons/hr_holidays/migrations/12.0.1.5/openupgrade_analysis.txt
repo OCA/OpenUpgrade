@@ -1,10 +1,10 @@
 ---Models in module 'hr_holidays'---
 obsolete model hr.holidays (renamed to hr.leave)
-obsolete model hr.holidays.remaining.leaves.user
+obsolete model hr.holidays.remaining.leaves.user [sql_view]
 obsolete model hr.holidays.status (renamed to hr.leave.type)
 new model hr.leave (renamed from hr.holidays)
 new model hr.leave.allocation
-new model hr.leave.report
+new model hr.leave.report [sql_view]
 new model hr.leave.type (renamed from hr.holidays.status)
 ---Fields in module 'hr_holidays'---
 hr_holidays  / hr.employee              / current_leave_id (many2one)   : relation is now 'hr.leave.type' ('hr.holidays.status') [nothing to do]
