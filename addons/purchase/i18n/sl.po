@@ -10,6 +10,8 @@
 # Vida Potočnik <vida.potocnik@mentis.si>, 2018
 # jl2035 <jaka.luthar@gmail.com>, 2018
 # Matjaz Mozetic <m.mozetic@matmoz.si>, 2019
+# Grega Vavtar <grega@hbs.si>, 2019
+# Jasmina Macur <jasmina@hbs.si>, 2019
 # Tadej Lupšina <tadej@hbs.si>, 2019
 # 
 msgid ""
@@ -140,7 +142,7 @@ msgstr ""
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_res_config_settings_module_account_3way_match
 msgid "3-way matching: purchases, receptions and bills"
-msgstr ""
+msgstr "Tri stransko ujemanje: nakupi, sprejemi in računi"
 
 #. module: purchase
 #: model:mail.template,body_html:purchase.mail_template_data_notification_email_purchase_order
@@ -341,7 +343,7 @@ msgstr ""
 #. module: purchase
 #: model:res.groups,name:purchase.group_warning_purchase
 msgid "A warning can be set on a product or a customer (Purchase)"
-msgstr ""
+msgstr "Na izdelek ali stranko je mogoče nastaviti opozorilo (Nabava)"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_account_invoice_purchase_id
@@ -388,7 +390,7 @@ msgstr "Analitični konti za nabave"
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_date_approve
 msgid "Approval Date"
-msgstr ""
+msgstr "Datum odobritve"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.purchase_order_form
@@ -425,17 +427,17 @@ msgstr ""
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line_qty_invoiced
 msgid "Billed Qty"
-msgstr ""
+msgstr "Zaračunana Kol."
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.track_po_line_template
 msgid "Billed Quantity:"
-msgstr ""
+msgstr "Zaračunana količina:"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_invoice_status
 msgid "Billing Status"
-msgstr ""
+msgstr "Status obračuna"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_invoice_ids
@@ -650,7 +652,7 @@ msgstr "Dni za Potrditi"
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid "Define your terms and conditions ..."
-msgstr ""
+msgstr "Določite svoja pravila in pogoje ..."
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_picking_type_id
@@ -872,7 +874,7 @@ msgstr "Obračun"
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_is_shipped
 msgid "Is Shipped"
-msgstr ""
+msgstr "Je poslano"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_res_config_settings_is_installed_sale
@@ -940,6 +942,7 @@ msgstr "Logistika"
 msgid ""
 "Make sure you only pay bills for which you received the goods you ordered"
 msgstr ""
+"Prepričajte se, da plačate samo račune, za katere ste prejeli naročeno blago"
 
 #. module: purchase
 #: model:res.groups,name:purchase.group_manage_vendor_price
@@ -1050,7 +1053,7 @@ msgstr "Najnovejše"
 #. module: purchase
 #: selection:purchase.order,invoice_status:0
 msgid "No Bill to Receive"
-msgstr ""
+msgstr "Ni računa za prevzem"
 
 #. module: purchase
 #: selection:product.template,purchase_line_warn:0
@@ -1078,7 +1081,7 @@ msgstr "Beležke"
 #. module: purchase
 #: selection:purchase.order,invoice_status:0
 msgid "Nothing to Bill"
-msgstr ""
+msgstr "Ničesar za obračunati"
 
 #. module: purchase
 #: selection:product.template,purchase_method:0
@@ -1613,7 +1616,7 @@ msgstr "Vračila"
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.res_config_settings_view_form_stock
 msgid "Schedule receivings earlier to avoid delays"
-msgstr ""
+msgstr "Načrtujte prejeme prej, da se izognete zamudam"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_date_planned
@@ -1806,6 +1809,7 @@ msgid ""
 "There is no vendor associated to the product %s. Please define a vendor for "
 "this product."
 msgstr ""
+"Ni povezanega dobavitelja za izdelek %s. Določite dobavitelja za ta izdelke."
 
 #. module: purchase
 #: model:ir.model.fields,help:purchase.field_product_category_property_account_creditor_price_difference_categ
@@ -1954,7 +1958,7 @@ msgstr "Merske enote"
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid "Unlock"
-msgstr ""
+msgstr "Odkleni"
 
 #. module: purchase
 #: model:ir.ui.view,arch_db:purchase.view_purchase_order_filter
