@@ -25,6 +25,10 @@ point_of_sale / pos.config               / use_pricelist (boolean)       : NEW
 point_of_sale / pos.session              / rescue (boolean)              : NEW 
 point_of_sale / product.uom.categ        / is_pos_groupable (boolean)    : NEW 
 ---XML records in module 'point_of_sale'---
+barcode.rule: point_of_sale.barcode_rule_cashier (noupdate) (noupdate switched)
+barcode.rule: point_of_sale.barcode_rule_client (noupdate) (noupdate switched)
+barcode.rule: point_of_sale.barcode_rule_discount (noupdate) (noupdate switched)
+barcode.rule: point_of_sale.barcode_rule_price_two_dec (noupdate) (noupdate switched)
 NEW ir.actions.act_window: point_of_sale.account_cashbox_line_action
 NEW ir.actions.act_window: point_of_sale.account_journal_action_point_of_sale
 NEW ir.actions.act_window: point_of_sale.product_category_action

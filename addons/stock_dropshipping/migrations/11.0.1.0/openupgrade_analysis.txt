@@ -2,3 +2,4 @@
 stock_dropshipping / purchase.order.line      / sale_line_id (many2one)       : NEW relation: sale.order.line
 stock_dropshipping / sale.order.line          / purchase_line_ids (one2many)  : NEW relation: purchase.order.line
 ---XML records in module 'stock_dropshipping'---
+NEW ir.ui.view: stock_dropshipping.view_order_form_inherit_sale_stock

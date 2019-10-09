@@ -1,3 +1,5 @@
 ---Fields in module 'test_access_rights'---
+test_access_rights / test_access_right.obj_categ / name (char)                   : NEW required: required
+test_access_rights / test_access_right.some_obj / categ_id (many2one)           : NEW relation: test_access_right.obj_categ
 ---XML records in module 'test_access_rights'---
----nothing has changed in this module--
+NEW ir.model.access: test_access_rights.access_test_access_right_obj_categ

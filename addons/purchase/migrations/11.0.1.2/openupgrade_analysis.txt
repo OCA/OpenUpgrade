@@ -1,5 +1,6 @@
 ---Fields in module 'purchase'---
 purchase     / procurement.rule         / action (False)                : NEW selection_keys: ['buy', 'manufacture', 'move'], mode: modify
+purchase     / product.template         / route_ids (False)             : NEW mode: modify
 purchase     / purchase.order           / activity_ids (one2many)       : NEW relation: mail.activity
 purchase     / purchase.order           / website_message_ids (one2many): NEW relation: mail.message
 purchase     / purchase.order.line      / move_dest_ids (one2many)      : NEW relation: stock.move
