@@ -47,7 +47,7 @@ NEW ir.actions.act_window: base.demo_force_install_action
 DEL ir.actions.act_window: base.res_request_link-act
 NEW ir.actions.server: base.demo_failure_action
 NEW ir.actions.todo: base.demo_failure_todo
-NEW ir.config_parameter: base.default_template_user_config [renamed from auth_signup module]
+NEW ir.config_parameter: base.default_template_user_config [renamed from auth_signup module] (noupdate switched)
 DEL ir.mail_server: base.ir_mail_server_localhost0 (noupdate)
 DEL ir.model.access: base.access_res_request_link_group_system
 DEL ir.model.access: base.access_res_request_link_group_user
@@ -84,6 +84,7 @@ NEW ir.ui.view: base.onboarding_confetti
 NEW ir.ui.view: base.onboarding_container
 NEW ir.ui.view: base.onboarding_step
 NEW ir.ui.view: base.view_company_document_template_form
+ir.ui.view: base.view_menu (noupdate switched)
 DEL ir.ui.view: base.action_view_company_form_link_2_currencies
 DEL ir.ui.view: base.res_request_link-view
 DEL ir.ui.view: base.res_request_link_search_view
@@ -122,6 +123,7 @@ NEW res.lang: base.lang_ar
 NEW res.lang: base.lang_bn_IN
 NEW res.lang: base.lang_en_CA
 NEW res.lang: base.lang_fil
+res.lang: base.lang_km (noupdate switched)
 NEW res.lang: base.lang_pt_AO
 NEW res.partner: base.partner_admin (noupdate)
 DEL res.request.link: base.req_link_partner (noupdate)

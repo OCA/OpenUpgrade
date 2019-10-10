@@ -146,6 +146,7 @@ DEL fleet.vehicle.tag: fleet.vehicle_tag_purchased
 DEL fleet.vehicle.tag: fleet.vehicle_tag_sedan
 DEL fleet.vehicle.tag: fleet.vehicle_tag_senior
 NEW ir.actions.act_window: fleet.mail_activity_type_action_config_fleet
+ir.cron: fleet.ir_cron_contract_costs_generator (noupdate) (noupdate switched)
 NEW ir.model.access: fleet.access_fleet_vehicle_assignation_log_fleet_group_user
 NEW ir.model.access: fleet.access_mail_activity_type_fleet_manager
 NEW ir.ui.menu: fleet.fleet_menu_config_activity_type
