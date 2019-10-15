@@ -12,3 +12,10 @@ def migrate(env, version):
         ('customer_facing_display_html', 'pos.config', 'pos_config', 'html',
          False, 'point_of_sale'),
     ])
+    openupgrade.set_xml_ids_noupdate_value(
+        env, 'point_of_sale', [
+            'barcode_rule_cashier',
+            'barcode_rule_client',
+            'barcode_rule_discount',
+            'barcode_rule_price_two_dec',
+        ], True)

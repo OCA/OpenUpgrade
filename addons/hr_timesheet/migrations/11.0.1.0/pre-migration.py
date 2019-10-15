@@ -12,3 +12,5 @@ _xmlid_renames = [
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
+    openupgrade.set_xml_ids_noupdate_value(
+        env, 'hr_timesheet', ['group_hr_timesheet_user'], True)

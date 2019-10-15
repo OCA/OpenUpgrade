@@ -102,3 +102,5 @@ def migrate(env, version):
         UPDATE ir_cron SET interval_type = 'days'
         WHERE interval_type = 'work_days'""")
     fill_cron_action_server_pre(env)
+    openupgrade.set_xml_ids_noupdate_value(
+        env, 'base', ['lang_km'], True)
