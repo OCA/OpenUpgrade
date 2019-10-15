@@ -127,3 +127,5 @@ def migrate(env, version):
             env.cr, """
             ALTER TABLE res_company ADD COLUMN incoterm_id INTEGER""",
         )
+    openupgrade.set_xml_ids_noupdate_value(
+        env, 'account', ['account_analytic_line_rule_billing_user'], False)

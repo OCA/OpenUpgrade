@@ -222,3 +222,9 @@ def migrate(env, version):
         env.cr, {'res_company': [('external_report_layout', None)]})
     # for migration of website module
     fill_ir_ui_view_key(env.cr)
+    openupgrade.set_xml_ids_noupdate_value(
+        env, 'base', [
+            'default_template_user_config',
+            'view_menu',
+            'lang_km',
+        ], False)

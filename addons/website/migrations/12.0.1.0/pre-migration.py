@@ -50,16 +50,6 @@ def _preserve_v11_dummy_images(env):
     return replacements
 
 
-def noupdate_changes(env):
-    """Set some specific noupdate=1 records to noupdate=0"""
-    noupdates = env["ir.model.data"].search([
-        ("module", "=", "website"),
-        ("name", "in", ["aboutus", "contactus", "homepage"]),
-        ("noupdate", "=", True),
-    ])
-    noupdates.write({"noupdate": False})
-
-
 def bootstrap_4_migration(env):
     """Convert customized website views to Bootstrap 4 and multiwebsite.
 
@@ -347,4 +337,5 @@ def migrate(env, version):
     fill_website_redirect_urls(cr)
     disable_less_customizations(env)
     bootstrap_4_migration(env)
-    noupdate_changes(env)
+    openupgrade.set_xml_ids_noupdate_value(
+        env, 'website', ['aboutus', 'contactus', 'homepage'], False)

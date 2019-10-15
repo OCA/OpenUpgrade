@@ -34,3 +34,5 @@ def migrate(env, version):
     openupgrade.rename_columns(cr, _column_renames)
     openupgrade.rename_fields(env, _field_renames)
     fill_mail_message_add_sign_default(env)
+    openupgrade.set_xml_ids_noupdate_value(
+        env, 'mail', ['mail_channel_rule'], False)

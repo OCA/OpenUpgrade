@@ -174,3 +174,5 @@ def migrate(env, _):
     keep_old_data_fleet_vehicle_model(cr)
     keep_old_data_fleet_service_type(cr)
     keep_old_data_fleet_vehicle_tag(cr)
+    openupgrade.set_xml_ids_noupdate_value(
+        env, 'fleet', ['ir_cron_contract_costs_generator'], True)
