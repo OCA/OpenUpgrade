@@ -18,3 +18,9 @@ COLUMN_RENAMES = {
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_columns(env.cr, COLUMN_RENAMES)
+    openupgrade.set_xml_ids_noupdate_value(
+        env, 'website', [
+            'aboutus',
+            'contactus',
+            'homepage',
+        ], True)

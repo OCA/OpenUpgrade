@@ -251,28 +251,61 @@ def compare_sets(old_records, new_records):
 
 def compare_xml_sets(old_records, new_records):
     reprs = collections.defaultdict(list)
-    match_fields = ['module', 'model', 'name']
-    for column in copy.copy(old_records):
-        found = search(column, new_records, match_fields)
-        if found:
-            old_records.remove(column)
-            new_records.remove(found)
+
+    def match(match_fields, match_type='direct'):
+        matched_records = []
+        for column in copy.copy(old_records):
+            found = search(column, new_records, match_fields)
+            if found:
+                old_records.remove(column)
+                new_records.remove(found)
+                if match_type != 'direct':
+                    column['old'] = True
+                    found['new'] = True
+                    column[match_type] = found['module']
+                    found[match_type] = module_map(column['module'])
+                column['noupdate_switched'] = False
+                found['noupdate_switched'] = \
+                    column['noupdate'] != found['noupdate']
+                if match_type != 'direct':
+                    matched_records.append(column)
+                    matched_records.append(found)
+                elif found['noupdate_switched']:
+                    matched_records.append(found)
+        return matched_records
+
+    # direct match
+    modified_records = match(['module', 'model', 'name'])
+
+    # other module, same full xmlid
+    moved_records = match(['model', 'name'], 'moved')
 
     for record in old_records:
         record['old'] = True
+        record['noupdate_switched'] = False
     for record in new_records:
         record['new'] = True
+        record['noupdate_switched'] = False
 
     sorted_records = sorted(
-        old_records + new_records,
+        old_records + new_records + moved_records + modified_records,
         key=lambda k: (k['model'], 'old' in k, k['name'])
     )
     for entry in sorted_records:
+        content = ''
         if 'old' in entry:
             content = 'DEL %(model)s: %(name)s' % entry
+            if 'moved' in entry:
+                content += ' [potentially moved to %(moved)s module]' % entry
         elif 'new' in entry:
             content = 'NEW %(model)s: %(name)s' % entry
+            if 'moved' in entry:
+                content += ' [potentially moved from %(moved)s module]' % entry
+        if 'old' not in entry and 'new' not in entry:
+            content = '%(model)s: %(name)s' % entry
         if entry['noupdate']:
             content += ' (noupdate)'
+        if entry['noupdate_switched']:
+            content += ' (noupdate switched)'
         reprs[module_map(entry['module'])].append(content)
     return reprs

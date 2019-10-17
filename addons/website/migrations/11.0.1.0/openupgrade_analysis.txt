@@ -37,6 +37,8 @@ NEW ir.ui.menu: website.menu_website_pages_list
 NEW ir.ui.menu: website.menu_website_redirect_list
 DEL ir.ui.menu: website.menu_website (noupdate)
 NEW ir.ui.view: portal.portal_show_sign_in
+ir.ui.view: website.aboutus (noupdate) (noupdate switched)
+ir.ui.view: website.contactus (noupdate) (noupdate switched)
 NEW ir.ui.view: website.default_css
 NEW ir.ui.view: website.default_csv
 NEW ir.ui.view: website.default_js
@@ -44,6 +46,7 @@ NEW ir.ui.view: website.default_less
 NEW ir.ui.view: website.default_xml
 NEW ir.ui.view: website.edit_website_pages
 NEW ir.ui.view: website.external_snippets
+ir.ui.view: website.homepage (noupdate) (noupdate switched)
 NEW ir.ui.view: website.index_management
 NEW ir.ui.view: website.qunit_suite
 NEW ir.ui.view: website.res_config_settings_view_form

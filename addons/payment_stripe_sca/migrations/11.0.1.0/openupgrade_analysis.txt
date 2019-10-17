@@ -1,0 +1,9 @@
+---Fields in module 'payment_stripe_sca'---
+payment_stripe_sca / payment.token            / stripe_payment_method (char)  : NEW 
+payment_stripe_sca / payment.transaction      / stripe_payment_intent (char)  : NEW 
+payment_stripe_sca / payment.transaction      / stripe_payment_intent_secret (char): NEW 
+---XML records in module 'payment_stripe_sca'---
+NEW ir.ui.view: payment_stripe_sca.assets_frontend
+NEW ir.ui.view: payment_stripe_sca.payment_tokens_list
+NEW ir.ui.view: payment_stripe_sca.stripe_form
+NEW ir.ui.view: payment_stripe_sca.stripe_s2s_form

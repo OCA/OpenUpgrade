@@ -1,11 +1,11 @@
 ---Fields in module 'general'---
-# 6886 fields matched,
-# Direct match: 6421
+# 6887 fields matched,
+# Direct match: 6422
 # Found in other module: 22
 # Found with different name: 0
 # Found with different type: 1
 # In obsolete models: 442
-# New columns: 1161
+# New columns: 1177
 # Not matched: 380
 new model account.cash.rounding
 new model account.group
@@ -31,6 +31,7 @@ new model res.partner.industry
 new model resource.test
 new model stock.move.line
 new model stock.picking.batch
+new model test_access_right.obj_categ
 new model test_performance.base
 new model test_performance.line
 new model test_performance.mail
@@ -70,64 +71,25 @@ obsolete model workflow.triggers
 obsolete model workflow.workitem
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
----Fields in module 'stock_picking_wave'---
----XML records in module 'stock_picking_wave'---
+---Fields in module 'account_accountant'---
+---XML records in module 'account_accountant'---
+DEL ir.ui.menu: account.menu_account_config
+DEL ir.ui.menu: account.menu_finance [potentially moved to account_invoicing module]
+DEL ir.ui.menu: account.menu_finance_reports
+DEL ir.ui.view: account_accountant.assets_backend
+DEL mail.message: account_accountant.module_install_notification (noupdate)
+DEL res.users: base.user_root [potentially moved to mail module] (noupdate)
+ERROR: module not in list of installed modules:
+---Fields in module 'account_tax_cash_basis'---
+---XML records in module 'account_tax_cash_basis'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
----Fields in module 'website_portal'---
----XML records in module 'website_portal'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'website_project_issue'---
----XML records in module 'website_project_issue'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'subscription'---
----XML records in module 'subscription'---
-DEL ir.actions.act_window: subscription.action_document_form
-DEL ir.actions.act_window: subscription.action_subscription_form
-DEL ir.model.access: subscription.access_ir_cron_user
-DEL ir.model.access: subscription.access_res_partner_user
-DEL ir.model.access: subscription.access_subscription_document_fields
-DEL ir.model.access: subscription.access_subscription_document_user
-DEL ir.model.access: subscription.access_subscription_subscription_history_user
-DEL ir.model.access: subscription.access_subscription_subscription_user
-DEL ir.ui.menu: subscription.menu_action_document_form
-DEL ir.ui.menu: subscription.menu_action_subscription_form
-DEL ir.ui.view: subscription.document_fields_form
-DEL ir.ui.view: subscription.document_fields_tree
-DEL ir.ui.view: subscription.document_form
-DEL ir.ui.view: subscription.document_tree
-DEL ir.ui.view: subscription.subscription_subscription_history_form
-DEL ir.ui.view: subscription.subscription_subscription_history_tree
-DEL ir.ui.view: subscription.view_subscription_document_filter
-DEL ir.ui.view: subscription.view_subscription_filter
-DEL ir.ui.view: subscription.view_subscription_form
-DEL ir.ui.view: subscription.view_subscription_tree
-ERROR: module not in list of installed modules:
----Fields in module 'portal_gamification'---
----XML records in module 'portal_gamification'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'rating_project_issue'---
----XML records in module 'rating_project_issue'---
-DEL ir.actions.act_window: rating_project_issue.rating_rating_action_issue
-DEL ir.ui.view: rating_project_issue.project_issue_view_form_inherit_rating
-DEL ir.ui.view: rating_project_issue.project_issue_view_kanban_inherit_rating
-DEL ir.ui.view: rating_project_issue.project_issue_view_rating
-DEL mail.message.subtype: rating_project_issue.mt_issue_rating
-DEL mail.message.subtype: rating_project_issue.mt_project_issue_rating
-ERROR: module not in list of installed modules:
----Fields in module 'project_issue_sheet'---
----XML records in module 'project_issue_sheet'---
+---Fields in module 'base_action_rule'---
+---XML records in module 'base_action_rule'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'crm_project_issue'---
 ---XML records in module 'crm_project_issue'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'website_project'---
----XML records in module 'website_project'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'hr_timesheet_sheet'---
@@ -163,31 +125,6 @@ DEL mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_approved (n
 DEL mail.message.subtype: hr_timesheet_sheet.mt_department_timesheet_confirmed (noupdate)
 DEL mail.message.subtype: hr_timesheet_sheet.mt_timesheet_approved (noupdate)
 DEL mail.message.subtype: hr_timesheet_sheet.mt_timesheet_confirmed (noupdate)
-ERROR: module not in list of installed modules:
----Fields in module 'procurement'---
----XML records in module 'procurement'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'portal_sale'---
----XML records in module 'portal_sale'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'account_tax_cash_basis'---
----XML records in module 'account_tax_cash_basis'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'website_rating_project_issue'---
----XML records in module 'website_rating_project_issue'---
----nothing has changed in this module--
-ERROR: module not in list of installed modules:
----Fields in module 'account_accountant'---
----XML records in module 'account_accountant'---
-DEL ir.ui.menu: account.menu_account_config
-DEL ir.ui.menu: account.menu_finance
-DEL ir.ui.menu: account.menu_finance_reports
-DEL ir.ui.view: account_accountant.assets_backend
-DEL mail.message: account_accountant.module_install_notification (noupdate)
-DEL res.users: base.user_root (noupdate)
 ERROR: module not in list of installed modules:
 ---Fields in module 'marketing_campaign'---
 ---XML records in module 'marketing_campaign'---
@@ -247,26 +184,41 @@ DEL res.groups: marketing_campaign.group_lead_automation_manager
 DEL res.groups: marketing_campaign.group_lead_automation_user
 DEL res.users: base.default_user (noupdate)
 ERROR: module not in list of installed modules:
----Fields in module 'web_kanban'---
----XML records in module 'web_kanban'---
+---Fields in module 'portal_gamification'---
+---XML records in module 'portal_gamification'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
----Fields in module 'website_project_issue_sheet'---
----XML records in module 'website_project_issue_sheet'---
-DEL ir.model.access: website_project_issue_sheet.access_timesheets_portal
-DEL ir.rule: website_project_issue_sheet.portal_issue_sheet_rule (noupdate)
-DEL ir.ui.view: website_project_issue_sheet.my_issues_issue
+---Fields in module 'portal_sale'---
+---XML records in module 'portal_sale'---
+---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'portal_stock'---
 ---XML records in module 'portal_stock'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
----Fields in module 'report'---
----XML records in module 'report'---
+---Fields in module 'procurement'---
+---XML records in module 'procurement'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
----Fields in module 'base_action_rule'---
----XML records in module 'base_action_rule'---
+---Fields in module 'project_issue'---
+---XML records in module 'project_issue'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'project_issue_sheet'---
+---XML records in module 'project_issue_sheet'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'rating_project_issue'---
+---XML records in module 'rating_project_issue'---
+DEL ir.actions.act_window: rating_project_issue.rating_rating_action_issue
+DEL ir.ui.view: rating_project_issue.project_issue_view_form_inherit_rating
+DEL ir.ui.view: rating_project_issue.project_issue_view_kanban_inherit_rating
+DEL ir.ui.view: rating_project_issue.project_issue_view_rating
+DEL mail.message.subtype: rating_project_issue.mt_issue_rating
+DEL mail.message.subtype: rating_project_issue.mt_project_issue_rating
+ERROR: module not in list of installed modules:
+---Fields in module 'report'---
+---XML records in module 'report'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'stock_calendar'---
@@ -280,22 +232,71 @@ DEL ir.ui.view: stock_calendar.view_procurement_form_stock_inherit
 DEL ir.ui.view: stock_calendar.view_resource_calendar_attendance_tree_procurement_group
 DEL ir.ui.view: stock_calendar.view_warehouse_orderpoint_form_inherit
 ERROR: module not in list of installed modules:
----Fields in module 'website_project_timesheet'---
----XML records in module 'website_project_timesheet'---
+---Fields in module 'stock_picking_wave'---
+---XML records in module 'stock_picking_wave'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'subscription'---
+---XML records in module 'subscription'---
+DEL ir.actions.act_window: subscription.action_document_form
+DEL ir.actions.act_window: subscription.action_subscription_form
+DEL ir.model.access: subscription.access_ir_cron_user
+DEL ir.model.access: subscription.access_res_partner_user
+DEL ir.model.access: subscription.access_subscription_document_fields
+DEL ir.model.access: subscription.access_subscription_document_user
+DEL ir.model.access: subscription.access_subscription_subscription_history_user
+DEL ir.model.access: subscription.access_subscription_subscription_user
+DEL ir.ui.menu: subscription.menu_action_document_form
+DEL ir.ui.menu: subscription.menu_action_subscription_form
+DEL ir.ui.view: subscription.document_fields_form
+DEL ir.ui.view: subscription.document_fields_tree
+DEL ir.ui.view: subscription.document_form
+DEL ir.ui.view: subscription.document_tree
+DEL ir.ui.view: subscription.subscription_subscription_history_form
+DEL ir.ui.view: subscription.subscription_subscription_history_tree
+DEL ir.ui.view: subscription.view_subscription_document_filter
+DEL ir.ui.view: subscription.view_subscription_filter
+DEL ir.ui.view: subscription.view_subscription_form
+DEL ir.ui.view: subscription.view_subscription_tree
+ERROR: module not in list of installed modules:
+---Fields in module 'web_calendar'---
+---XML records in module 'web_calendar'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'web_kanban'---
+---XML records in module 'web_kanban'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
 ---Fields in module 'website_issue'---
 ---XML records in module 'website_issue'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
+---Fields in module 'website_portal'---
+---XML records in module 'website_portal'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
 ---Fields in module 'website_portal_sale'---
 ---XML records in module 'website_portal_sale'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
----Fields in module 'project_issue'---
----XML records in module 'project_issue'---
+---Fields in module 'website_project'---
+---XML records in module 'website_project'---
 ---nothing has changed in this module--
 ERROR: module not in list of installed modules:
----Fields in module 'web_calendar'---
----XML records in module 'web_calendar'---
+---Fields in module 'website_project_issue'---
+---XML records in module 'website_project_issue'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'website_project_issue_sheet'---
+---XML records in module 'website_project_issue_sheet'---
+DEL ir.model.access: website_project_issue_sheet.access_timesheets_portal
+DEL ir.rule: website_project_issue_sheet.portal_issue_sheet_rule (noupdate)
+DEL ir.ui.view: website_project_issue_sheet.my_issues_issue
+ERROR: module not in list of installed modules:
+---Fields in module 'website_project_timesheet'---
+---XML records in module 'website_project_timesheet'---
+---nothing has changed in this module--
+ERROR: module not in list of installed modules:
+---Fields in module 'website_rating_project_issue'---
+---XML records in module 'website_rating_project_issue'---
 ---nothing has changed in this module--

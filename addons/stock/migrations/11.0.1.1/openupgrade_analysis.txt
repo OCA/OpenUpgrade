@@ -73,6 +73,10 @@ stock        / stock.quant.package      / parent_right (integer)        : DEL
 stock        / stock.scrap              / scrap_location_id (many2one)  : now required, default = function
 stock        / stock.warehouse.orderpoint / procurement_ids (one2many)    : DEL relation: procurement.order
 ---XML records in module 'stock'---
+barcode.rule: stock.barcode_rule_location (noupdate) (noupdate switched)
+barcode.rule: stock.barcode_rule_lot (noupdate) (noupdate switched)
+barcode.rule: stock.barcode_rule_package (noupdate) (noupdate switched)
+barcode.rule: stock.barcode_rule_weight_three_dec (noupdate) (noupdate switched)
 NEW ir.actions.act_window: stock.action_stock_quantity_history
 NEW ir.actions.act_window: stock.stock_move_line_action
 DEL ir.actions.act_window: procurement.action_compute_schedulers

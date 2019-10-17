@@ -6,6 +6,19 @@ hr_payroll   / hr.contract.advantage.template / lower_bound (float)           : 
 hr_payroll   / hr.contract.advantage.template / name (char)                   : NEW required: required
 hr_payroll   / hr.contract.advantage.template / upper_bound (float)           : NEW 
 ---XML records in module 'hr_payroll'---
+decimal.precision: hr_payroll.decimal_payroll (noupdate switched)
+decimal.precision: hr_payroll.decimal_payroll_rate (noupdate switched)
+hr.contribution.register: hr_payroll.contrib_register_employees (noupdate switched)
+hr.payroll.structure: hr_payroll.structure_base (noupdate switched)
+hr.salary.rule: hr_payroll.hr_rule_basic (noupdate switched)
+hr.salary.rule: hr_payroll.hr_rule_net (noupdate switched)
+hr.salary.rule: hr_payroll.hr_rule_taxable (noupdate switched)
+hr.salary.rule.category: hr_payroll.ALW (noupdate switched)
+hr.salary.rule.category: hr_payroll.BASIC (noupdate switched)
+hr.salary.rule.category: hr_payroll.COMP (noupdate switched)
+hr.salary.rule.category: hr_payroll.DED (noupdate switched)
+hr.salary.rule.category: hr_payroll.GROSS (noupdate switched)
+hr.salary.rule.category: hr_payroll.NET (noupdate switched)
 NEW ir.actions.act_window: hr_payroll.hr_contract_advantage_template_action
 DEL ir.actions.act_window: hr_payroll.action_hr_salary_rule_category_tree_view
 DEL ir.actions.act_window: hr_payroll.action_view_hr_payroll_structure_tree

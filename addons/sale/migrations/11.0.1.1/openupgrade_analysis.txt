@@ -1,4 +1,5 @@
 ---Fields in module 'sale'---
+sale         / account.invoice          / comment (False)               : NEW mode: modify
 sale         / crm.team                 / currency_id (many2one)        : module is now 'sales_team' ('sale')
 sale         / crm.team                 / dashboard_graph_model (False) : NEW selection_keys: ['account.invoice.report', 'crm.opportunity.report', 'sale.report'], mode: modify
 sale         / product.product          / track_service (selection)     : was renamed to service_type [nothing to do]

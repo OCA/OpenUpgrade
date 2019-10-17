@@ -101,3 +101,10 @@ def migrate(env, version):
              'stock'),
         ],
     )
+    openupgrade.set_xml_ids_noupdate_value(
+        env, 'stock', [
+            'barcode_rule_location',
+            'barcode_rule_lot',
+            'barcode_rule_package',
+            'barcode_rule_weight_three_dec',
+        ], True)
