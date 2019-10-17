@@ -41,7 +41,7 @@ DEL ir.actions.act_window: rating_project.rating_rating_action_view_project_rati
 DEL ir.actions.act_window: rating_project.rating_rating_action_view_project_rating_task
 DEL ir.attachment: project.msg_task_data_14_attach (noupdate)
 DEL ir.attachment: project.msg_task_data_8_attach (noupdate)
-NEW ir.cron: project.ir_cron_rating_project [renamed from project module] (noupdate)
+NEW ir.cron: project.ir_cron_rating_project [renamed from project module] (noupdate) (noupdate switched)
 DEL ir.cron: rating_project.ir_cron_rating_project [renamed to project module]
 NEW ir.model.access: project.access_mail_activity_type_project_manager
 DEL ir.model.access: project.access_account_analytic_account_manager [renamed to hr_timesheet module]
@@ -88,7 +88,7 @@ NEW mail.message.subtype: project.mt_task_rating [renamed from project module]
 DEL mail.message.subtype: rating_project.mt_project_task_rating [renamed to project module]
 DEL mail.message.subtype: rating_project.mt_task_rating [renamed to project module]
 NEW mail.template: project.mail_template_data_project_task (noupdate)
-NEW mail.template: project.rating_project_request_email_template [renamed from project module] (noupdate)
+NEW mail.template: project.rating_project_request_email_template [renamed from project module] (noupdate) (noupdate switched)
 DEL mail.template: project.mail_template_data_module_install_project (noupdate)
 DEL mail.template: rating_project.rating_project_request_email_template [renamed to project module]
 DEL project.task: project.project_task_data_8 (noupdate)

@@ -18,3 +18,5 @@ _xmlid_renames = [
 def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
+    openupgrade.set_xml_ids_noupdate_value(
+        env, 'hr_expense', ['hr_expense_template_refuse_reason'], True)

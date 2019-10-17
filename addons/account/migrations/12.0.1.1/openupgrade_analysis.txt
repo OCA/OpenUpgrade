@@ -237,7 +237,7 @@ NEW ir.model.access: account.access_account_incoterms_all
 NEW ir.model.access: account.access_account_incoterms_manager
 DEL ir.model.access: account.access_account_financial_report
 DEL ir.model.access: account.access_account_financial_report_invoice
-NEW ir.rule: account.account_analytic_line_rule_billing_user [renamed from sale_timesheet module]
+NEW ir.rule: account.account_analytic_line_rule_billing_user [renamed from sale_timesheet module] (noupdate switched)
 NEW ir.rule: account.account_payment_term_comp_rule (noupdate)
 NEW ir.ui.menu: account.account_analytic_group_menu
 NEW ir.ui.menu: account.action_account_reconcile_model_menu

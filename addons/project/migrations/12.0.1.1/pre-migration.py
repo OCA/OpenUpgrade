@@ -56,3 +56,6 @@ def migrate(env, version):
     fill_project_project_inherits_values(env)
     openupgrade.copy_columns(env.cr, column_copies)
     compute_project_task_rating_last_value(env)
+    openupgrade.set_xml_ids_noupdate_value(
+        env, 'project', ['ir_cron_rating_project',
+                         'rating_project_request_email_template'], True)
