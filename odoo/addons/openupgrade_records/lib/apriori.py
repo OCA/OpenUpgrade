@@ -82,6 +82,8 @@ merged_modules = {
     'crm_lead_website': 'crm',
     # OCA/hr-timesheet
     'hr_timesheet_sheet_week_start_day': 'hr_timesheet_sheet',
+    # OCA/l10n-italy:
+    'l10n_it_fiscalcode_invoice': 'l10n_it_fiscalcode',
     # OCA/product-variant
     'product_variant_supplierinfo': 'product',
     'sale_stock_variant_configurator': 'sale_variant_configurator',
