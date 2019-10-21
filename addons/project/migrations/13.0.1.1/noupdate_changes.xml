@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_template_data_project_task" model="mail.template">
+    <field name="lang">${object.partner_id.lang}</field>
+  </record>
+  <record id="project_comp_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="project_public_members_rule" model="ir.rule">
+    <field name="domain_force">['|',
+                                        ('privacy_visibility', '!=', 'followers'),
+                                        '|',
+                                            ('message_partner_ids', 'in', [user.partner_id.id]),
+                                            ('message_channel_ids', 'in', user.partner_id.channel_ids.ids),
+                                    ]</field>
+  </record>
+  <record id="project_tag_data" model="project.tags" forcecreate="False">
+    <field name="name">Need Assistance</field>
+  </record>
+  <record id="rating_project_request_email_template" model="mail.template">
+    <field name="email_from">${(object.rating_get_rated_partner_id().email_formatted if object.rating_get_rated_partner_id() else user.email_formatted) | safe}</field>
+    <field name="lang">${object.rating_get_partner_id().lang}</field>
+  </record>
+  <record id="report_project_task_user_report_comp_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="task_comp_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+  </record>
+</odoo>

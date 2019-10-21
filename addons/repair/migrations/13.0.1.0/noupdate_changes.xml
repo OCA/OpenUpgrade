@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_template_repair_quotation" model="mail.template">
+    <field name="email_from">${(object.create_uid.email_formatted or user.email_formatted) | safe}</field>
+  </record>
+  <record id="repair_rule" model="ir.rule">
+    <field name="domain_force">['|',('company_id', 'in', company_ids),('company_id','=',False)]</field>
+  </record>
+</odoo>

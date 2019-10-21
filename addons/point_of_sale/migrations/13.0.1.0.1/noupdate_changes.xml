@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="pos_config_main" model="pos.config">
+    <field name="picking_type_id"/>
+  </record>
+  <record id="product_product_consumable" model="product.product">
+    <field name="default_code">DISC</field>
+    <field name="image" type="base64" file="point_of_sale/static/img/product_product_49-image.jpg"/>
+    <field name="list_price">0.00</field>
+    <field name="name">Discount</field>
+    <field name="standard_price">0.00</field>
+    <field name="weight">0.00</field>
+    <field name="purchase_ok">False</field>
+  </record>
+  <record id="product_product_tip" model="product.product">
+    <field name="taxes_id" eval="[(5,)]"/>
+    <field name="weight">0.01</field>
+  </record>
+  <record id="seq_pos_session" model="ir.sequence">
+    <field name="padding">5</field>
+    <field name="prefix">POS/</field>
+  </record>
+</odoo>

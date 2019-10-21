@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_acquirer_authorize" model="payment.acquirer">
+    <field name="authorize_login"/>
+    <field name="authorize_transaction_key"/>
+    <field name="environment"/>
+    <field name="image" type="base64" file="payment_authorize/static/src/img/authorize_icon.png"/>
+    <field name="pre_msg"/>
+    <field name="image_128" type="base64" file="payment_authorize/static/src/img/authorize_icon.png"/>
+  </record>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mrp_bom_rule" model="ir.rule">
+    <field name="domain_force">['|',('company_id', 'in', company_ids),('company_id','=',False)]</field>
+  </record>
+  <record id="mrp_production_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="mrp_routing_rule" model="ir.rule">
+    <field name="domain_force">['|',('company_id', 'in', company_ids),('company_id','=',False)]</field>
+  </record>
+  <record id="mrp_routing_workcenter_rule" model="ir.rule">
+    <field name="domain_force">['|',('company_id', 'in', company_ids),('company_id','=',False)]</field>
+  </record>
+  <record id="mrp_workcenter_rule" model="ir.rule">
+    <field name="domain_force">['|',('company_id', 'in', company_ids),('company_id','=',False)]</field>
+  </record>
+</odoo>

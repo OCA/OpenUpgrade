@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="ar" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s %(state_name)s %(zip)s\n%(country_name)s'" name="address_format"/>
+    <field name="vat_label">CUIT</field>
+  </record>
+  <record id="main_company" model="res.company">
+    <field name="favicon" model="res.company" eval="obj()._get_default_favicon(original=True)"/>
+  </record>
+  <record id="main_partner" model="res.partner">
+    <field name="customer"/>
+    <field name="image" type="base64" file="base/static/img/res_company_logo.png"/>
+    <field name="image_1920" type="base64" file="base/static/img/res_company_logo.png"/>
+  </record>
+  <record id="partner_admin" model="res.partner">
+    <field name="customer"/>
+    <field name="image" type="base64" file="base/static/img/avatar.png"/>
+    <field name="image_1920" type="base64" file="base/static/img/avatar_grey.png"/>
+  </record>
+  <record id="partner_root" model="res.partner">
+    <field name="customer"/>
+  </record>
+  <record id="public_user" model="res.users">
+    <field name="image" type="base64" file="base/static/img/public_user-image.png"/>
+    <field name="image_1920" type="base64" file="base/static/img/public_user-image.png"/>
+  </record>
+  <record id="res_company_rule_employee" model="ir.rule">
+    <field name="domain_force">[('id','in', company_ids)]</field>
+  </record>
+  <record id="res_company_rule_portal" model="ir.rule">
+    <field name="domain_force">[('id','in', company_ids)]</field>
+  </record>
+  <record id="res_company_rule_public" model="ir.rule">
+    <field name="domain_force">[('id','in', company_ids)]</field>
+  </record>
+  <record id="res_currency_rate_rule" model="ir.rule">
+    <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="res_partner_bank_rule" model="ir.rule">
+    <field name="domain_force">['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
+  </record>
+  <record id="res_users_rule" model="ir.rule">
+    <field name="domain_force">[('company_ids', 'in', company_ids)]</field>
+  </record>
+  <record id="sr" model="res.country">
+    <field name="currency_id" ref="SRD"/>
+  </record>
+  <record id="tm" model="res.country">
+    <field name="currency_id" ref="TMT"/>
+  </record>
+  <record id="user_root" model="res.users">
+    <field name="email">root@example.com</field>
+  </record>
+  <record id="zm" model="res.country">
+    <field name="currency_id" ref="ZMW"/>
+  </record>
+  <record id="zw" model="res.country">
+    <field name="currency_id" ref="ZWL"/>
+  </record>
+</odoo>

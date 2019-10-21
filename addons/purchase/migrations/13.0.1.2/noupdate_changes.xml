@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="email_template_edi_purchase" model="mail.template">
+    <field name="email_from"/>
+  </record>
+  <record id="email_template_edi_purchase_done" model="mail.template">
+    <field name="email_from"/>
+  </record>
+  <record id="model_purchase_order_action_share" model="ir.actions.server">
+    <field name="binding_view_types">form</field>
+  </record>
+  <record id="purchase_bill_union_comp_rule" model="ir.rule">
+    <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="purchase_order_comp_rule" model="ir.rule">
+    <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="purchase_order_line_comp_rule" model="ir.rule">
+    <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="purchase_order_report_comp_rule" model="ir.rule">
+    <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="seq_purchase_order" model="ir.sequence">
+    <field name="prefix">P</field>
+  </record>
+</odoo>

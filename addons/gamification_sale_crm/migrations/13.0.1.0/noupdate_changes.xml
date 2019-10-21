@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="definition_crm_nbr_customer_refunds" model="gamification.goal.definition">
+    <field name="domain">[('state','!=','cancel'),('invoice_user_id','=',user.id),('type','=','out_refund')]</field>
+    <field name="field_date_id" eval="ref('account.field_account_invoice_report__invoice_date')"/>
+  </record>
+  <record id="definition_crm_nbr_paid_sale_order" model="gamification.goal.definition">
+    <field name="domain">[('state','=','paid'),('invoice_user_id','=',user.id),('type','=','out_invoice')]</field>
+    <field name="field_date_id" eval="ref('account.field_account_invoice_report__invoice_date')"/>
+  </record>
+  <record id="definition_crm_tot_customer_refunds" model="gamification.goal.definition">
+    <field name="domain">[('state','!=','cancel'),('invoice_user_id','=',user.id),('type','=','out_refund')]</field>
+    <field name="field_date_id" eval="ref('account.field_account_invoice_report__invoice_date')"/>
+    <field name="field_id" eval="ref('account.field_account_invoice_report__price_subtotal')"/>
+  </record>
+  <record id="definition_crm_tot_invoices" model="gamification.goal.definition">
+    <field name="domain">[('state','!=','cancel'),('invoice_user_id','=',user.id),('type','=','out_invoice')]</field>
+    <field name="field_date_id" eval="ref('account.field_account_invoice_report__invoice_date')"/>
+    <field name="field_id" eval="ref('account.field_account_invoice_report__price_subtotal')"/>
+  </record>
+  <record id="definition_crm_tot_paid_sale_order" model="gamification.goal.definition">
+    <field name="domain">[('state','=','paid'),('invoice_user_id','=',user.id),('type','=','out_invoice')]</field>
+    <field name="field_date_id" eval="ref('account.field_account_invoice_report__invoice_date')"/>
+    <field name="field_id" eval="ref('account.field_account_invoice_report__price_subtotal')"/>
+  </record>
+</odoo>

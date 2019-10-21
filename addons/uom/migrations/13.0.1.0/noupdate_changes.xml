@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="product_uom_day" model="uom.uom">
+    <field name="name">Days</field>
+  </record>
+  <record id="product_uom_dozen" model="uom.uom">
+    <field name="name">Dozens</field>
+  </record>
+  <record id="product_uom_gal" model="uom.uom">
+    <field name="name">gals</field>
+  </record>
+  <record id="product_uom_hour" model="uom.uom">
+    <field name="name">Hours</field>
+  </record>
+  <record id="product_uom_inch" model="uom.uom">
+    <field name="name">inches</field>
+  </record>
+  <record id="product_uom_lb" model="uom.uom">
+    <field name="name">lbs</field>
+  </record>
+  <record id="product_uom_litre" model="uom.uom">
+    <field name="name">Liters</field>
+  </record>
+  <record id="product_uom_mile" model="uom.uom">
+    <field name="name">miles</field>
+  </record>
+  <record id="product_uom_oz" model="uom.uom">
+    <field name="name">ozs</field>
+  </record>
+  <record id="product_uom_unit" model="uom.uom">
+    <field name="name">Units</field>
+  </record>
+  <record id="uom_categ_wtime" model="uom.category">
+    <field name="measure_type">working_time</field>
+  </record>
+</odoo>
