@@ -1,0 +1,7 @@
+---Models in module 'iap'---
+---Fields in module 'iap'---
+iap          / iap.account              / company_id (many2one)         : DEL relation: res.company
+iap          / iap.account              / company_ids (many2many)       : NEW relation: res.company
+---XML records in module 'iap'---
+NEW ir.actions.server: iap.open_iap_account
+NEW ir.ui.view: iap.res_config_settings_view_form

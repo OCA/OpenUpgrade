@@ -1,0 +1,74 @@
+---Models in module 'hr_skills'---
+new model hr.employee.skill
+new model hr.resume.line
+new model hr.resume.line.type
+new model hr.skill
+new model hr.skill.level
+new model hr.skill.type
+---Fields in module 'hr_skills'---
+hr_skills    / hr.employee              / employee_skill_ids (one2many) : NEW relation: hr.employee.skill
+hr_skills    / hr.employee              / resume_line_ids (one2many)    : NEW relation: hr.resume.line
+hr_skills    / hr.employee.skill        / employee_id (many2one)        : NEW relation: hr.employee, required
+hr_skills    / hr.employee.skill        / skill_id (many2one)           : NEW relation: hr.skill, required
+hr_skills    / hr.employee.skill        / skill_level_id (many2one)     : NEW relation: hr.skill.level, required
+hr_skills    / hr.employee.skill        / skill_type_id (many2one)      : NEW relation: hr.skill.type, required
+hr_skills    / hr.resume.line           / date_end (date)               : NEW
+hr_skills    / hr.resume.line           / date_start (date)             : NEW required
+hr_skills    / hr.resume.line           / description (text)            : NEW
+hr_skills    / hr.resume.line           / display_type (selection)      : NEW selection_keys: ['classic'], hasdefault
+hr_skills    / hr.resume.line           / employee_id (many2one)        : NEW relation: hr.employee, required
+hr_skills    / hr.resume.line           / line_type_id (many2one)       : NEW relation: hr.resume.line.type
+hr_skills    / hr.resume.line           / name (char)                   : NEW required
+hr_skills    / hr.resume.line.type      / name (char)                   : NEW required
+hr_skills    / hr.resume.line.type      / sequence (integer)            : NEW hasdefault
+hr_skills    / hr.skill                 / name (char)                   : NEW required
+hr_skills    / hr.skill                 / skill_type_id (many2one)      : NEW relation: hr.skill.type
+hr_skills    / hr.skill.level           / level_progress (integer)      : NEW
+hr_skills    / hr.skill.level           / name (char)                   : NEW required
+hr_skills    / hr.skill.level           / skill_type_id (many2one)      : NEW relation: hr.skill.type
+hr_skills    / hr.skill.type            / name (char)                   : NEW required
+hr_skills    / hr.skill.type            / skill_ids (one2many)          : NEW relation: hr.skill
+hr_skills    / hr.skill.type            / skill_level_ids (one2many)    : NEW relation: hr.skill.level
+---XML records in module 'hr_skills'---
+NEW hr.resume.line.type: hr_skills.resume_type_education
+NEW hr.resume.line.type: hr_skills.resume_type_experience
+NEW ir.actions.act_window: hr_skills.hr_resume_type_action
+NEW ir.actions.act_window: hr_skills.hr_skill_type_action
+NEW ir.model.access: hr_skills.access_hr_employee_skill
+NEW ir.model.access: hr_skills.access_hr_employee_skill_employee
+NEW ir.model.access: hr_skills.access_hr_resume_line
+NEW ir.model.access: hr_skills.access_hr_resume_line_employee
+NEW ir.model.access: hr_skills.access_hr_resume_line_type
+NEW ir.model.access: hr_skills.access_hr_resume_line_type_employee
+NEW ir.model.access: hr_skills.access_hr_skill
+NEW ir.model.access: hr_skills.access_hr_skill_employee
+NEW ir.model.access: hr_skills.access_hr_skill_level
+NEW ir.model.access: hr_skills.access_hr_skill_level_employee
+NEW ir.model.access: hr_skills.access_hr_skill_type
+NEW ir.model.access: hr_skills.access_hr_skill_type_employee
+NEW ir.rule: hr_skills.hr_resume_rule_employee
+NEW ir.rule: hr_skills.hr_resume_rule_employee_hr_user
+NEW ir.rule: hr_skills.hr_skill_rule_employee
+NEW ir.rule: hr_skills.hr_skill_rule_employee_update
+NEW ir.rule: hr_skills.hr_skill_rule_hr_user
+NEW ir.rule: hr_skills.hr_skills_rule_employee_update
+NEW ir.ui.menu: hr_skills.hr_resume_line_type_menu
+NEW ir.ui.menu: hr_skills.hr_skill_type_menu
+NEW ir.ui.menu: hr_skills.menu_human_resources_configuration_resume
+NEW ir.ui.view: hr_skills.assets_backend
+NEW ir.ui.view: hr_skills.employee_skill_level_view_form
+NEW ir.ui.view: hr_skills.employee_skill_level_view_tree
+NEW ir.ui.view: hr_skills.employee_skill_view_form
+NEW ir.ui.view: hr_skills.employee_skill_view_tree
+NEW ir.ui.view: hr_skills.hr_employee_public_view_form_inherit
+NEW ir.ui.view: hr_skills.hr_employee_public_view_search
+NEW ir.ui.view: hr_skills.hr_employee_skill_type_view_form
+NEW ir.ui.view: hr_skills.hr_employee_view_form
+NEW ir.ui.view: hr_skills.hr_employee_view_search
+NEW ir.ui.view: hr_skills.hr_resume_line_type_tree_view
+NEW ir.ui.view: hr_skills.hr_skill_type_view_tree
+NEW ir.ui.view: hr_skills.hr_skill_view_form
+NEW ir.ui.view: hr_skills.qunit_suite
+NEW ir.ui.view: hr_skills.res_users_view_form
+NEW ir.ui.view: hr_skills.resume_line_view_form
+NEW ir.ui.view: hr_skills.resume_line_view_search

@@ -1,0 +1,36 @@
+---Models in module 'website_slides_survey'---
+---Fields in module 'website_slides_survey'---
+website_slides_survey / slide.channel            / nbr_certification (integer)   : NEW isfunction: function, stored
+website_slides_survey / slide.slide              / nbr_certification (integer)   : NEW isfunction: function, stored
+website_slides_survey / slide.slide              / slide_type (False)            : NEW selection_keys: ['certification', 'document', 'infographic', 'presentation', 'quiz', 'video', 'webpage'], mode: modify
+website_slides_survey / slide.slide              / survey_id (many2one)          : NEW relation: survey.survey
+website_slides_survey / slide.slide.partner      / survey_quizz_passed (boolean) : NEW isfunction: function, stored
+website_slides_survey / slide.slide.partner      / user_input_ids (one2many)     : NEW relation: survey.user_input
+website_slides_survey / survey.user_input        / slide_id (many2one)           : NEW relation: slide.slide
+website_slides_survey / survey.user_input        / slide_partner_id (many2one)   : NEW relation: slide.slide.partner
+---XML records in module 'website_slides_survey'---
+NEW gamification.badge: website_slides.badge_data_certification
+NEW gamification.goal.definition: website_slides.badge_data_certification_goal
+NEW ir.actions.act_window: website_slides_survey.slide_slide_action_certification
+NEW ir.actions.act_window: website_slides_survey.survey_survey_action_slides
+NEW ir.actions.act_window: website_slides_survey.survey_survey_action_slides_report
+NEW ir.ui.menu: website_slides_survey.website_slides_menu_courses_certification
+NEW ir.ui.menu: website_slides_survey.website_slides_menu_report_certification
+NEW ir.ui.view: website_slides_survey.all_user_card
+NEW ir.ui.view: website_slides_survey.assets_frontend
+NEW ir.ui.view: website_slides_survey.course_card_inherit_survey
+NEW ir.ui.view: website_slides_survey.course_main
+NEW ir.ui.view: website_slides_survey.course_slides_list_slide_inherit_survey
+NEW ir.ui.view: website_slides_survey.courses_home_inherit_survey
+NEW ir.ui.view: website_slides_survey.display_certificate
+NEW ir.ui.view: website_slides_survey.o_wss_certification_icon
+NEW ir.ui.view: website_slides_survey.slide_channel_view_form
+NEW ir.ui.view: website_slides_survey.slide_channel_view_kanban
+NEW ir.ui.view: website_slides_survey.slide_content_detailed
+NEW ir.ui.view: website_slides_survey.slide_fullscreen_sidebar_category
+NEW ir.ui.view: website_slides_survey.slide_icon_inherit_survey
+NEW ir.ui.view: website_slides_survey.slide_slide_view_form
+NEW ir.ui.view: website_slides_survey.survey_templates_inherit_website_slides
+NEW ir.ui.view: website_slides_survey.top3_user_card
+NEW ir.ui.view: website_slides_survey.user_profile_content
+NEW mail.template: website_slides_survey.mail_template_user_input_certification_failed (noupdate)

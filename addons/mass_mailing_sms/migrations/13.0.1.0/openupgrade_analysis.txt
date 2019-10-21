@@ -1,0 +1,61 @@
+---Models in module 'mass_mailing_sms'---
+new model mailing.sms.test [transient]
+---Fields in module 'mass_mailing_sms'---
+mass_mailing_sms / mailing.contact          / mobile (char)                 : NEW
+mass_mailing_sms / mailing.contact          / phone_sanitized (char)        : NEW isfunction: function, stored
+mass_mailing_sms / mailing.mailing          / body_plaintext (text)         : NEW
+mass_mailing_sms / mailing.mailing          / mailing_type (False)          : NEW selection_keys: ['mail', 'sms'], mode: modify
+mass_mailing_sms / mailing.mailing          / sms_allow_unsubscribe (boolean): NEW hasdefault
+mass_mailing_sms / mailing.mailing          / sms_force_send (boolean)      : NEW
+mass_mailing_sms / mailing.mailing          / sms_template_id (many2one)    : NEW relation: sms.template
+mass_mailing_sms / mailing.trace            / failure_type (False)          : NEW selection_keys: ['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN', 'sms_blacklist', 'sms_credit', 'sms_duplicate', 'sms_number_format', 'sms_number_missing', 'sms_server'], mode: modify
+mass_mailing_sms / mailing.trace            / sms_code (char)               : NEW
+mass_mailing_sms / mailing.trace            / sms_number (char)             : NEW
+mass_mailing_sms / mailing.trace            / sms_sms_id (many2one)         : NEW relation: sms.sms
+mass_mailing_sms / mailing.trace            / sms_sms_id_int (integer)      : NEW
+mass_mailing_sms / mailing.trace            / trace_type (False)            : NEW selection_keys: ['mail', 'sms'], mode: modify
+mass_mailing_sms / sms.sms                  / mailing_id (many2one)         : NEW relation: mailing.mailing
+mass_mailing_sms / sms.sms                  / mailing_trace_ids (one2many)  : NEW relation: mailing.trace
+mass_mailing_sms / utm.campaign             / mailing_sms_ids (one2many)    : NEW relation: mailing.mailing
+---XML records in module 'mass_mailing_sms'---
+NEW ir.actions.act_window: mass_mailing_sms.mailing_contact_action_sms
+NEW ir.actions.act_window: mass_mailing_sms.mailing_list_action_sms
+NEW ir.actions.act_window: mass_mailing_sms.mailing_mailing_action_sms
+NEW ir.actions.act_window: mass_mailing_sms.mailing_sms_test_action
+NEW ir.actions.act_window: mass_mailing_sms.mailing_trace_report_action_sms
+NEW ir.actions.act_window.view: mass_mailing_sms.mailing_mailing_action_sms_view_kanban
+NEW ir.actions.act_window.view: mass_mailing_sms.mailing_mailing_action_sms_view_tree
+NEW ir.ui.menu: mass_mailing_sms.link_tracker_menu
+NEW ir.ui.menu: mass_mailing_sms.mailing_contact_menu_sms
+NEW ir.ui.menu: mass_mailing_sms.mailing_list_menu_sms
+NEW ir.ui.menu: mass_mailing_sms.mass_mailing_sms_menu_configuration
+NEW ir.ui.menu: mass_mailing_sms.mass_mailing_sms_menu_contacts
+NEW ir.ui.menu: mass_mailing_sms.mass_mailing_sms_menu_mass_sms
+NEW ir.ui.menu: mass_mailing_sms.mass_mailing_sms_menu_reporting
+NEW ir.ui.menu: mass_mailing_sms.mass_mailing_sms_menu_root
+NEW ir.ui.menu: mass_mailing_sms.menu_email_campaigns
+NEW ir.ui.menu: mass_mailing_sms.phone_blacklist_menu
+NEW ir.ui.view: mass_mailing_sms.blacklist_main
+NEW ir.ui.view: mass_mailing_sms.blacklist_number
+NEW ir.ui.view: mass_mailing_sms.mailing_contact_view_form
+NEW ir.ui.view: mass_mailing_sms.mailing_contact_view_kanban
+NEW ir.ui.view: mass_mailing_sms.mailing_contact_view_search
+NEW ir.ui.view: mass_mailing_sms.mailing_contact_view_tree_sms
+NEW ir.ui.view: mass_mailing_sms.mailing_mailing_view_form_mixed
+NEW ir.ui.view: mass_mailing_sms.mailing_mailing_view_form_sms
+NEW ir.ui.view: mass_mailing_sms.mailing_mailing_view_kanban_sms
+NEW ir.ui.view: mass_mailing_sms.mailing_mailing_view_search_sms
+NEW ir.ui.view: mass_mailing_sms.mailing_mailing_view_tree_sms
+NEW ir.ui.view: mass_mailing_sms.mailing_sms_test_view_form
+NEW ir.ui.view: mass_mailing_sms.mailing_trace_report_view_graph
+NEW ir.ui.view: mass_mailing_sms.mailing_trace_report_view_pivot
+NEW ir.ui.view: mass_mailing_sms.mailing_trace_report_view_search
+NEW ir.ui.view: mass_mailing_sms.mailing_trace_view_form
+NEW ir.ui.view: mass_mailing_sms.mailing_trace_view_form_sms
+NEW ir.ui.view: mass_mailing_sms.mailing_trace_view_search
+NEW ir.ui.view: mass_mailing_sms.mailing_trace_view_tree
+NEW ir.ui.view: mass_mailing_sms.mailing_trace_view_tree_sms
+NEW ir.ui.view: mass_mailing_sms.sms_composer_view_form
+NEW ir.ui.view: mass_mailing_sms.utm_campaign_view_form
+NEW ir.ui.view: mass_mailing_sms.utm_campaign_view_kanban
+NEW utm.medium: mass_mailing_sms.utm_medium_sms (noupdate)

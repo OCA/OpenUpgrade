@@ -1,0 +1,21 @@
+---Models in module 'l10n_latam_base'---
+new model l10n_latam.identification.type
+---Fields in module 'l10n_latam_base'---
+l10n_latam_base / l10n_latam.identification.type / active (boolean)              : NEW hasdefault
+l10n_latam_base / l10n_latam.identification.type / country_id (many2one)         : NEW relation: res.country
+l10n_latam_base / l10n_latam.identification.type / description (char)            : NEW
+l10n_latam_base / l10n_latam.identification.type / is_vat (boolean)              : NEW
+l10n_latam_base / l10n_latam.identification.type / name (char)                   : NEW required
+l10n_latam_base / l10n_latam.identification.type / sequence (integer)            : NEW hasdefault
+l10n_latam_base / res.partner              / l10n_latam_identification_type_id (many2one): NEW relation: l10n_latam.identification.type, hasdefault
+---XML records in module 'l10n_latam_base'---
+NEW ir.actions.act_window: l10n_latam_base.action_l10n_latam_identification_type
+NEW ir.model.access: l10n_latam_base.access_latam_identification_type_all
+NEW ir.model.access: l10n_latam_base.access_latam_identification_type_manager
+NEW ir.ui.menu: l10n_latam_base.menu_l10n_latam_identification_type
+NEW ir.ui.view: l10n_latam_base.view_l10n_latam_identification_type_search
+NEW ir.ui.view: l10n_latam_base.view_l10n_latam_identification_type_tree
+NEW ir.ui.view: l10n_latam_base.view_partner_latam_form
+NEW l10n_latam.identification.type: l10n_latam_base.it_fid
+NEW l10n_latam.identification.type: l10n_latam_base.it_pass
+NEW l10n_latam.identification.type: l10n_latam_base.it_vat

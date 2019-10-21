@@ -1,0 +1,15 @@
+---Models in module 'hr_presence'---
+---Fields in module 'hr_presence'---
+hr_presence  / hr.employee              / email_sent (boolean)          : NEW hasdefault
+hr_presence  / hr.employee              / hr_presence_state_display (selection): NEW selection_keys: ['absent', 'present', 'to_define']
+hr_presence  / hr.employee              / ip_connected (boolean)        : NEW hasdefault
+hr_presence  / hr.employee              / manually_set_present (boolean): NEW hasdefault
+hr_presence  / res.company              / hr_presence_last_compute_date (datetime): NEW
+hr_presence  / res.users.log            / ip (char)                     : NEW
+---XML records in module 'hr_presence'---
+NEW ir.actions.server: hr_presence.ir_actions_server_action_open_presence_view
+NEW ir.ui.menu: hr_presence.menu_hr_presence_view
+NEW ir.ui.view: hr_presence.hr_employee_view_kanban
+NEW ir.ui.view: hr_presence.hr_employee_view_search
+NEW mail.template: hr_presence.mail_template_presence (noupdate)
+NEW sms.template: hr_presence.sms_template_data_hr_presence (noupdate)

@@ -1,0 +1,16 @@
+---Models in module 'website_sale_slides'---
+---Fields in module 'website_sale_slides'---
+website_sale_slides / product.product          / channel_ids (one2many)        : NEW relation: slide.channel
+website_sale_slides / slide.channel            / enroll (False)                : NEW selection_keys: ['invite', 'payment', 'public'], mode: modify
+website_sale_slides / slide.channel            / product_id (many2one)         : NEW relation: product.product
+---XML records in module 'website_sale_slides'---
+NEW ir.actions.act_window: website_sale_slides.sale_report_action_slides
+NEW ir.ui.menu: website_sale_slides.website_slides_menu_report_revenues
+NEW ir.ui.view: website_sale_slides.assets_frontend
+NEW ir.ui.view: website_sale_slides.course_sidebar
+NEW ir.ui.view: website_sale_slides.course_sidebar_buy_now_course
+NEW ir.ui.view: website_sale_slides.lesson_content_quiz
+NEW ir.ui.view: website_sale_slides.sale_report_view_graph_slides
+NEW ir.ui.view: website_sale_slides.slide_channel_view_form
+NEW ir.ui.view: website_sale_slides.slide_channel_view_kanban
+NEW ir.ui.view: website_sale_slides.slide_fullscreen

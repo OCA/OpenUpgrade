@@ -1,0 +1,16 @@
+---Models in module 'website_sale_coupon'---
+---Fields in module 'website_sale_coupon'---
+website_sale_coupon / sale.coupon.program      / website_id (many2one)         : NEW relation: website
+---XML records in module 'website_sale_coupon'---
+NEW ir.ui.menu: website_sale_coupon.menu_coupon_type_config
+NEW ir.ui.menu: website_sale_coupon.menu_promotion_type_config
+NEW ir.ui.view: website_sale_coupon.assets_tests
+NEW ir.ui.view: website_sale_coupon.cart_discount
+NEW ir.ui.view: website_sale_coupon.cart_popover
+NEW ir.ui.view: website_sale_coupon.cart_summary
+NEW ir.ui.view: website_sale_coupon.reduction_coupon_code
+NEW ir.ui.view: website_sale_coupon.res_config_settings_view_form
+NEW ir.ui.view: website_sale_coupon.sale_coupon_program_view_form_common_website
+NEW ir.ui.view: website_sale_coupon.sale_coupon_program_view_tree_website
+NEW ir.ui.view: website_sale_coupon.sale_coupon_result
+NEW ir.ui.view: website_sale_coupon.website_sale_coupon_cart_hide_qty

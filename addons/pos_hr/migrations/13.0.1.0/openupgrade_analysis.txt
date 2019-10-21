@@ -1,0 +1,12 @@
+---Models in module 'pos_hr'---
+---Fields in module 'pos_hr'---
+pos_hr       / pos.config               / employee_ids (many2many)      : NEW relation: hr.employee
+pos_hr       / pos.order                / cashier (char)                : NEW isfunction: function, stored
+pos_hr       / pos.order                / employee_id (many2one)        : NEW relation: hr.employee
+---XML records in module 'pos_hr'---
+NEW ir.ui.view: pos_hr.assets
+NEW ir.ui.view: pos_hr.pos_config_form_view_inherit
+NEW ir.ui.view: pos_hr.pos_order_form_inherit
+NEW ir.ui.view: pos_hr.pos_order_list_select_inherit
+NEW ir.ui.view: pos_hr.view_pos_order_tree_inherit
+NEW ir.ui.view: pos_hr.view_report_pos_order_search_inherit

@@ -1,0 +1,54 @@
+---Models in module 'mail'---
+obsolete model mail.blacklist.mixin (renamed to mail.thread.blacklist) [abstract]
+new model mail.address.mixin [abstract]
+new model mail.thread.blacklist (renamed from mail.blacklist.mixin) [abstract]
+new model mail.thread.cc [abstract]
+---Fields in module 'mail'---
+mail         / ir.actions.act_window.view / view_mode (False)             : selection_keys is now '['activity', 'calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'tree']' ('['activity', 'calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'tree']')
+mail         / ir.model                 / is_mail_activity (boolean)    : NEW hasdefault
+mail         / ir.model                 / is_mail_blacklist (boolean)   : NEW hasdefault
+mail         / ir.model.fields          / track_visibility (selection)  : DEL selection_keys: ['always', 'onchange']
+mail         / ir.model.fields          / tracking (integer)            : NEW
+mail         / mail.activity            / create_user_id (many2one)     : DEL relation: res.users
+mail         / mail.activity            / feedback (html)               : DEL
+mail         / mail.activity            / res_id (integer)              : relation is now 'res_model' ('False') [nothing to do]
+mail         / mail.activity            / res_id (integer)              : type is now 'many2one_reference' ('integer')
+mail         / mail.activity.type       / category (selection)          : selection_keys is now '['default', 'upload_file']' ('['default']')
+mail         / mail.activity.type       / default_description (html)    : NEW
+mail         / mail.activity.type       / default_user_id (many2one)    : NEW relation: res.users
+mail         / mail.channel             / image (binary)                : DEL attachment: True
+mail         / mail.channel             / image_128 (binary)            : NEW attachment: True, hasdefault
+mail         / mail.channel             / image_medium (binary)         : DEL attachment: True
+mail         / mail.channel             / image_small (binary)          : DEL attachment: True
+mail         / mail.channel.partner     / custom_channel_name (char)    : NEW
+mail         / mail.channel.partner     / fetched_message_id (many2one) : NEW relation: mail.message
+mail         / mail.followers           / res_id (integer)              : relation is now 'res_model' ('False') [nothing to do]
+mail         / mail.followers           / res_id (integer)              : type is now 'many2one_reference' ('integer')
+mail         / mail.mail                / res_id (integer)              : relation is now 'model' ('False') [nothing to do]
+mail         / mail.mail                / res_id (integer)              : type is now 'many2one_reference' ('integer')
+mail         / mail.message             / canned_response_ids (one2many): NEW relation: mail.shortcode
+mail         / mail.message             / email_layout_xmlid (char)     : NEW
+mail         / mail.message             / layout (char)                 : DEL
+mail         / mail.message             / mail_ids (one2many)           : NEW relation: mail.mail
+mail         / mail.message             / message_type (selection)      : selection_keys is now '['comment', 'email', 'notification', 'user_notification']' ('['comment', 'email', 'notification']')
+mail         / mail.message             / needaction_partner_ids (many2many): DEL relation: res.partner
+mail         / mail.message             / notified_partner_ids (many2many): NEW relation: res.partner
+mail         / mail.message             / res_id (integer)              : relation is now 'model' ('False') [nothing to do]
+mail         / mail.message             / res_id (integer)              : type is now 'many2one_reference' ('integer')
+mail         / mail.notification        / email_status (selection)      : DEL selection_keys: ['bounce', 'canceled', 'exception', 'ready', 'sent']
+mail         / mail.notification        / is_email (boolean)            : DEL
+mail         / mail.notification        / notification_status (selection): NEW selection_keys: ['bounce', 'canceled', 'exception', 'ready', 'sent'], hasdefault
+mail         / mail.notification        / notification_type (selection) : NEW required, selection_keys: ['email', 'inbox'], req_default: function, hasdefault
+mail         / mail.notification        / read_date (datetime)          : NEW
+mail         / mail.shortcode           / message_ids (many2one)        : NEW relation: mail.message
+mail         / mail.tracking.value      / track_sequence (integer)      : DEL
+mail         / mail.tracking.value      / tracking_sequence (integer)   : NEW hasdefault
+mail         / res.partner              / email_normalized (char)       : NEW isfunction: function, stored
+mail         / res.users                / out_of_office_message (char)  : NEW
+---XML records in module 'mail'---
+NEW ir.actions.act_window: mail.mail_activity_action
+NEW ir.cron: mail.ir_cron_delete_notification (noupdate)
+NEW ir.ui.menu: mail.menu_mail_activities
+NEW ir.ui.view: mail.res_partner_view_activity
+DEL ir.ui.view: mail.qunit_mobile_suite
+NEW mail.activity.type: mail.mail_activity_data_upload_document (noupdate)

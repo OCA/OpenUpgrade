@@ -1,0 +1,43 @@
+---Models in module 'hr_work_entry'---
+new model hr.user.work.entry.employee
+new model hr.work.entry
+new model hr.work.entry.type
+---Fields in module 'hr_work_entry'---
+hr_work_entry / hr.user.work.entry.employee / active (boolean)              : NEW hasdefault
+hr_work_entry / hr.user.work.entry.employee / employee_id (many2one)        : NEW relation: hr.employee, required
+hr_work_entry / hr.user.work.entry.employee / user_id (many2one)            : NEW relation: res.users, required, req_default: function, hasdefault
+hr_work_entry / hr.work.entry            / active (boolean)              : NEW hasdefault
+hr_work_entry / hr.work.entry            / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+hr_work_entry / hr.work.entry            / conflict (boolean)            : NEW isfunction: function, stored
+hr_work_entry / hr.work.entry            / date_start (datetime)         : NEW required
+hr_work_entry / hr.work.entry            / date_stop (datetime)          : NEW
+hr_work_entry / hr.work.entry            / duration (float)              : NEW isfunction: function, stored
+hr_work_entry / hr.work.entry            / employee_id (many2one)        : NEW relation: hr.employee, required
+hr_work_entry / hr.work.entry            / name (char)                   : NEW required
+hr_work_entry / hr.work.entry            / state (selection)             : NEW selection_keys: ['cancelled', 'conflict', 'draft', 'validated'], hasdefault
+hr_work_entry / hr.work.entry            / work_entry_type_id (many2one) : NEW relation: hr.work.entry.type
+hr_work_entry / hr.work.entry.type       / active (boolean)              : NEW hasdefault
+hr_work_entry / hr.work.entry.type       / code (char)                   : NEW required
+hr_work_entry / hr.work.entry.type       / color (integer)               : NEW hasdefault
+hr_work_entry / hr.work.entry.type       / name (char)                   : NEW required
+hr_work_entry / hr.work.entry.type       / sequence (integer)            : NEW hasdefault
+hr_work_entry / resource.calendar.attendance / work_entry_type_id (many2one) : NEW relation: hr.work.entry.type, hasdefault
+hr_work_entry / resource.calendar.leaves / work_entry_type_id (many2one) : NEW relation: hr.work.entry.type
+---XML records in module 'hr_work_entry'---
+NEW hr.work.entry.type: hr_work_entry.work_entry_type_attendance
+NEW ir.actions.act_window: hr_work_entry.hr_work_entry_action
+NEW ir.actions.act_window: hr_work_entry.hr_work_entry_action_conflict
+NEW ir.actions.act_window: hr_work_entry.hr_work_entry_type_action
+NEW ir.model.access: hr_work_entry.access_hr_work_entry_employee
+NEW ir.model.access: hr_work_entry.access_hr_work_entry_officer
+NEW ir.model.access: hr_work_entry.access_hr_work_entry_type_manager
+NEW ir.model.access: hr_work_entry.access_hr_work_entry_type_officer
+NEW ir.rule: hr_work_entry.hr_user_work_entry_employee (noupdate)
+NEW ir.ui.view: hr_work_entry.hr_work_entry_type_view_form
+NEW ir.ui.view: hr_work_entry.hr_work_entry_type_view_kanban
+NEW ir.ui.view: hr_work_entry.hr_work_entry_type_view_search
+NEW ir.ui.view: hr_work_entry.hr_work_entry_type_view_tree
+NEW ir.ui.view: hr_work_entry.hr_work_entry_view_calendar
+NEW ir.ui.view: hr_work_entry.hr_work_entry_view_form
+NEW ir.ui.view: hr_work_entry.hr_work_entry_view_search
+NEW ir.ui.view: hr_work_entry.hr_work_entry_view_tree

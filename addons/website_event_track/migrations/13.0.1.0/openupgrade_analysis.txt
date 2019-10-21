@@ -1,0 +1,7 @@
+---Models in module 'website_event_track'---
+---Fields in module 'website_event_track'---
+website_event_track / event.sponsor            / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+website_event_track / event.sponsor            / image_medium (binary)         : DEL attachment: True
+website_event_track / event.track              / date_end (datetime)           : NEW isfunction: function, stored
+website_event_track / event.track.tag          / name (char)                   : now required
+---XML records in module 'website_event_track'---

@@ -1,0 +1,21 @@
+---Models in module 'mrp_subcontracting'---
+---Fields in module 'mrp_subcontracting'---
+mrp_subcontracting / mrp.bom                  / subcontractor_ids (many2many) : NEW relation: res.partner
+mrp_subcontracting / mrp.bom                  / type (False)                  : NEW selection_keys: ['normal', 'phantom', 'subcontract'], mode: modify
+mrp_subcontracting / res.company              / subcontracting_location_id (many2one): NEW relation: stock.location
+mrp_subcontracting / res.partner              / property_stock_subcontractor (many2one): NEW relation: stock.location, hasdefault
+mrp_subcontracting / stock.move               / is_subcontract (boolean)      : NEW
+mrp_subcontracting / stock.warehouse          / subcontracting_mto_pull_id (many2one): NEW relation: stock.rule
+mrp_subcontracting / stock.warehouse          / subcontracting_pull_id (many2one): NEW relation: stock.rule
+mrp_subcontracting / stock.warehouse          / subcontracting_route_id (many2one): NEW relation: stock.location.route
+mrp_subcontracting / stock.warehouse          / subcontracting_to_resupply (boolean): NEW hasdefault
+mrp_subcontracting / stock.warehouse          / subcontracting_type_id (many2one): NEW relation: stock.picking.type
+---XML records in module 'mrp_subcontracting'---
+NEW ir.ui.view: mrp_subcontracting.mrp_bom_form_view
+NEW ir.ui.view: mrp_subcontracting.mrp_subcontracting_move_form_view
+NEW ir.ui.view: mrp_subcontracting.mrp_subcontracting_move_tree_view
+NEW ir.ui.view: mrp_subcontracting.product_supplierinfo_subcontractor_tree_view
+NEW ir.ui.view: mrp_subcontracting.stock_picking_form_view
+NEW ir.ui.view: mrp_subcontracting.view_partner_mrp_subcontracting_form
+NEW ir.ui.view: mrp_subcontracting.view_warehouse_inherit_mrp_subcontracting
+NEW stock.location.route: mrp_subcontracting.route_resupply_subcontractor_mto (noupdate)

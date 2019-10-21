@@ -1,0 +1,8 @@
+---Models in module 'hr_skills_survey'---
+---Fields in module 'hr_skills_survey'---
+hr_skills_survey / hr.resume.line           / display_type (False)          : NEW selection_keys: ['certification', 'classic'], mode: modify
+hr_skills_survey / hr.resume.line           / survey_id (many2one)          : NEW relation: survey.survey
+---XML records in module 'hr_skills_survey'---
+NEW hr.resume.line.type: hr_skills_survey.resume_type_certification
+NEW ir.ui.view: hr_skills_survey.assets_backend
+NEW ir.ui.view: hr_skills_survey.resume_survey_line_view_form

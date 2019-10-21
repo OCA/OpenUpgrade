@@ -1,0 +1,26 @@
+---Models in module 'repair'---
+new model repair.tags
+---Fields in module 'repair'---
+repair       / account.move             / repair_ids (one2many)         : NEW relation: repair.order
+repair       / account.move.line        / repair_fee_ids (one2many)     : NEW relation: repair.fee
+repair       / account.move.line        / repair_line_ids (one2many)    : NEW relation: repair.line
+repair       / repair.fee               / invoice_line_id (many2one)    : relation is now 'account.move.line' ('account.invoice.line') [nothing to do]
+repair       / repair.line              / invoice_line_id (many2one)    : relation is now 'account.move.line' ('account.invoice.line') [nothing to do]
+repair       / repair.order             / invoice_id (many2one)         : relation is now 'account.move' ('account.invoice') [nothing to do]
+repair       / repair.order             / tag_ids (many2many)           : NEW relation: repair.tags
+repair       / repair.order             / user_id (many2one)            : NEW relation: res.users, hasdefault
+repair       / repair.tags              / color (integer)               : NEW
+repair       / repair.tags              / name (char)                   : NEW required
+---XML records in module 'repair'---
+NEW ir.actions.act_window: repair.action_repair_order_graph
+NEW ir.actions.act_window: repair.action_repair_order_tag
+NEW ir.model.access: repair.access_repair_tag_user
+NEW ir.ui.menu: repair.repair_menu
+NEW ir.ui.menu: repair.repair_menu_config
+NEW ir.ui.menu: repair.repair_menu_reporting
+NEW ir.ui.menu: repair.repair_menu_tag
+NEW ir.ui.view: repair.view_repair_graph
+NEW ir.ui.view: repair.view_repair_pivot
+NEW ir.ui.view: repair.view_repair_tag_form
+NEW ir.ui.view: repair.view_repair_tag_search
+NEW ir.ui.view: repair.view_repair_tag_tree

@@ -1,0 +1,12 @@
+---Models in module 'payment_ingenico'---
+---Fields in module 'payment_ingenico'---
+payment_ogone / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'ogone']' ('['adyen', 'authorize', 'buckaroo', 'manual', 'ogone']')
+---XML records in module 'payment_ingenico'---
+NEW ir.ui.view: payment_ingenico.acquirer_form_ogone
+NEW ir.ui.view: payment_ingenico.ogone_form
+NEW ir.ui.view: payment_ingenico.ogone_s2s_form
+DEL ir.ui.view: payment_ogone.acquirer_form_ogone
+DEL ir.ui.view: payment_ogone.ogone_form
+DEL ir.ui.view: payment_ogone.ogone_s2s_form
+NEW payment.acquirer: payment.payment_acquirer_ingenico (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_ogone (noupdate)

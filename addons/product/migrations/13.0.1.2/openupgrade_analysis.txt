@@ -1,0 +1,66 @@
+---Models in module 'product'---
+obsolete model product.price.history
+---Fields in module 'product'---
+product      / product.attribute        / product_tmpl_ids (many2many)  : NEW relation: product.template, isfunction: function, stored
+product      / product.attribute.value  / pav_attribute_line_ids (many2many): NEW relation: product.template.attribute.line
+product      / product.packaging        / company_id (many2one)         : NEW relation: res.company
+product      / product.price.history    / company_id (many2one)         : DEL relation: res.company, required, req_default: function
+product      / product.price.history    / cost (float)                  : DEL
+product      / product.price.history    / datetime (datetime)           : DEL
+product      / product.price.history    / product_id (many2one)         : DEL relation: product.product, required
+product      / product.pricelist        / discount_policy (selection)   : previously in module sale
+product      / product.pricelist.item   / active (boolean)              : NEW isrelated: related, stored
+product      / product.pricelist.item   / compute_price (selection)     : now required, req_default: function
+product      / product.pricelist.item   / pricelist_id (many2one)       : now required, req_default: function
+product      / product.product          / attribute_value_ids (many2many): DEL relation: product.attribute.value
+product      / product.product          / can_image_variant_1024_be_zoomed (boolean): NEW isfunction: function, stored
+product      / product.product          / combination_indices (char)    : NEW isfunction: function, stored
+product      / product.product          / image_variant (binary)        : DEL attachment: True
+product      / product.product          / image_variant_1024 (binary)   : NEW attachment: True, isrelated: related, stored
+product      / product.product          / image_variant_128 (binary)    : NEW attachment: True, isrelated: related, stored
+product      / product.product          / image_variant_1920 (binary)   : NEW attachment: True
+product      / product.product          / image_variant_256 (binary)    : NEW attachment: True, isrelated: related, stored
+product      / product.product          / image_variant_512 (binary)    : NEW attachment: True, isrelated: related, stored
+product      / product.product          / product_template_attribute_value_ids (many2many): is now stored
+product      / product.product          / product_template_attribute_value_ids (many2many): not a function anymore
+product      / product.product          / product_template_attribute_value_ids (many2many): table is now 'product_variant_combination' ('False')
+product      / product.product          / website_message_ids (one2many): module is now 'portal' ('product')
+product      / product.template         / can_image_1024_be_zoomed (boolean): NEW isfunction: function, stored
+product      / product.template         / has_configurable_attributes (boolean): NEW isfunction: function, stored
+product      / product.template         / image (binary)                : DEL attachment: True
+product      / product.template         / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
+product      / product.template         / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+product      / product.template         / image_1920 (binary)           : NEW attachment: True
+product      / product.template         / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
+product      / product.template         / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+product      / product.template         / image_medium (binary)         : DEL attachment: True
+product      / product.template         / image_small (binary)          : DEL attachment: True
+product      / product.template         / item_ids (one2many)           : DEL relation: product.pricelist.item
+product      / product.template         / website_message_ids (one2many): module is now 'portal' ('product')
+product      / product.template         / weight_uom_name (char)        : not related anymore
+product      / product.template         / weight_uom_name (char)        : now a function
+product      / product.template.attribute.line / active (boolean)              : NEW hasdefault
+product      / product.template.attribute.line / product_template_value_ids (many2many): is now stored
+product      / product.template.attribute.line / product_template_value_ids (many2many): not a function anymore
+product      / product.template.attribute.line / product_template_value_ids (many2many): type is now 'one2many' ('many2many')
+product      / product.template.attribute.value / attribute_id (many2one)       : is now stored
+product      / product.template.attribute.value / attribute_line_id (many2one)  : NEW relation: product.template.attribute.line, required
+product      / product.template.attribute.value / product_tmpl_id (many2one)    : now related
+product      / product.template.attribute.value / ptav_active (boolean)         : NEW hasdefault
+product      / product.template.attribute.value / ptav_product_variant_ids (many2many): NEW relation: product.product
+---XML records in module 'product'---
+NEW decimal.precision: product.decimal_volume (noupdate)
+NEW ir.actions.act_window: product.product_pricelist_item_action
+DEL ir.actions.act_window: product.variants_action
+DEL ir.model.access: product.access_product_price_history_employee
+DEL ir.model.access: product.access_product_price_history_manager
+NEW ir.rule: product.product_packaging_comp_rule (noupdate)
+NEW ir.ui.view: product.product_pricelist_item_tree_view_from_product
+NEW ir.ui.view: product.product_pricelist_item_view_search
+NEW ir.ui.view: product.product_pricelist_view_inherit
+NEW ir.ui.view: product.product_product_view_activity
+NEW ir.ui.view: product.product_template_attribute_value_view_search
+NEW ir.ui.view: product.product_template_view_activity
+DEL ir.ui.view: product.variants_tree_view
+NEW res.groups: product.group_discount_per_so_line [renamed from sale module]
+DEL res.groups: product.group_pricelist_item

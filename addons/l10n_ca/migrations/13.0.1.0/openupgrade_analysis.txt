@@ -1,0 +1,24 @@
+---Models in module 'l10n_ca'---
+---Fields in module 'l10n_ca'---
+l10n_ca      / res.partner              / l10n_ca_pst (char)            : NEW
+---XML records in module 'l10n_ca'---
+DEL account.account.tag: l10n_ca.tag_gst (noupdate)
+DEL account.account.tag: l10n_ca.tag_gst_purc (noupdate)
+DEL account.account.tag: l10n_ca.tag_gst_sale (noupdate)
+DEL account.account.tag: l10n_ca.tag_gstpst_bc_purc (noupdate)
+DEL account.account.tag: l10n_ca.tag_gstpst_bc_sale (noupdate)
+DEL account.account.tag: l10n_ca.tag_gstpst_mb_purc (noupdate)
+DEL account.account.tag: l10n_ca.tag_gstpst_mb_sale (noupdate)
+DEL account.account.tag: l10n_ca.tag_gstpst_sk_purc (noupdate)
+DEL account.account.tag: l10n_ca.tag_gstpst_sk_sale (noupdate)
+DEL account.account.tag: l10n_ca.tag_gstqst_purc (noupdate)
+DEL account.account.tag: l10n_ca.tag_gstqst_sale (noupdate)
+DEL account.account.tag: l10n_ca.tag_hst13_purc (noupdate)
+DEL account.account.tag: l10n_ca.tag_hst13_sale (noupdate)
+DEL account.account.tag: l10n_ca.tag_hst14_purc (noupdate)
+DEL account.account.tag: l10n_ca.tag_hst14_sale (noupdate)
+DEL account.account.tag: l10n_ca.tag_hst15_purc (noupdate)
+DEL account.account.tag: l10n_ca.tag_hst15_sale (noupdate)
+NEW account.account.template: l10n_ca.chart11511_en
+NEW ir.ui.view: l10n_ca.l10n_ca_report_invoice_document_inherit
+NEW ir.ui.view: l10n_ca.res_partner_form_inherit_ca

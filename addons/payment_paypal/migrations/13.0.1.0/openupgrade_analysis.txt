@@ -1,0 +1,11 @@
+---Models in module 'payment_paypal'---
+---Fields in module 'payment_paypal'---
+payment_paypal / payment.acquirer         / paypal_api_access_token (char): DEL
+payment_paypal / payment.acquirer         / paypal_api_access_token_validity (datetime): DEL
+payment_paypal / payment.acquirer         / paypal_api_enabled (boolean)  : DEL
+payment_paypal / payment.acquirer         / paypal_api_password (char)    : DEL
+payment_paypal / payment.acquirer         / paypal_api_username (char)    : DEL
+payment_paypal / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'ogone', 'paypal']' ('['adyen', 'authorize', 'buckaroo', 'manual', 'ogone', 'paypal']')
+---XML records in module 'payment_paypal'---
+NEW ir.ui.view: payment_paypal.mail_template_paypal_invite_user_to_configure
+ir.ui.view: payment_paypal.paypal_form (noupdate) (noupdate switched)

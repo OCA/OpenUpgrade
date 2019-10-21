@@ -1,0 +1,9 @@
+---Models in module 'test_performance'---
+new model test_performance.bacon
+new model test_performance.eggs
+---Fields in module 'test_performance'---
+test_performance / test_performance.bacon   / property_eggs (many2one)      : NEW relation: test_performance.eggs, hasdefault
+test_performance / test_performance.eggs    / name (char)                   : NEW
+---XML records in module 'test_performance'---
+NEW ir.model.access: test_performance.access_test_performance_bacon
+NEW ir.model.access: test_performance.access_test_performance_eggs

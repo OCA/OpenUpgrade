@@ -1,0 +1,25 @@
+---Models in module 'hr_timesheet'---
+---Fields in module 'hr_timesheet'---
+hr_timesheet / account.analytic.account / project_count (integer)       : module is now 'project' ('hr_timesheet')
+hr_timesheet / account.analytic.account / project_ids (one2many)        : module is now 'project' ('hr_timesheet')
+hr_timesheet / project.project          / analytic_account_id (many2one): module is now 'project' ('hr_timesheet')
+---XML records in module 'hr_timesheet'---
+DEL ir.actions.act_window: hr_timesheet.project_task_action_view_timesheet
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_employee_graph
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_project_graph
+NEW ir.actions.act_window.view: hr_timesheet.timesheet_action_view_report_by_task_graph
+DEL ir.model.access: hr_timesheet.access_account_analytic_account_manager [renamed to project module]
+DEL ir.model.access: hr_timesheet.access_account_analytic_account_portal
+DEL ir.model.access: hr_timesheet.access_account_analytic_account_user [renamed to project module]
+DEL ir.model.access: hr_timesheet.access_account_analytic_line_portal
+DEL ir.model.access: hr_timesheet.access_account_analytic_line_project [renamed to project module]
+NEW ir.module.category: base.module_category_operations_timesheets (noupdate)
+DEL ir.rule: hr_timesheet.timesheet_rule_portal (noupdate)
+NEW ir.ui.view: hr_timesheet.portal_layout
+NEW ir.ui.view: hr_timesheet.portal_my_home_timesheet
+NEW ir.ui.view: hr_timesheet.portal_my_timesheets
+NEW ir.ui.view: hr_timesheet.portal_timesheet_table
+NEW ir.ui.view: hr_timesheet.view_hr_timesheet_line_graph
+DEL ir.ui.view: hr_timesheet.account_analytic_account_view_form_inherit
+NEW res.groups: hr_timesheet.group_hr_timesheet_approver
+res.groups: hr_timesheet.group_timesheet_manager (noupdate switched)
