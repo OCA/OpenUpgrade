@@ -295,7 +295,7 @@ def compare_xml_sets(old_records, new_records):
                     column['old'] = True
                     found['new'] = True
                     column[match_type] = found['module']
-                    found[match_type] = module_map(column['module'])
+                    found[match_type] = column['module']
                 found['domain'] = column['domain'] != found['domain'] and \
                     column['domain'] != '[]' and found['domain'] is False
                 column['domain'] = False

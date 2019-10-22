@@ -30,18 +30,18 @@ mrp_repair   / stock.move               / repair_id (many2one)          : relati
 repair       / repair.order             / message_main_attachment_id (many2one): NEW relation: ir.attachment
 ---XML records in module 'repair'---
 NEW ir.actions.act_window: repair.act_repair_invoice
-NEW ir.actions.act_window: repair.action_cancel_repair [renamed from repair module]
-NEW ir.actions.act_window: repair.action_repair_order_tree [renamed from repair module]
+NEW ir.actions.act_window: repair.action_cancel_repair [renamed from mrp_repair module]
+NEW ir.actions.act_window: repair.action_repair_order_tree [renamed from mrp_repair module]
 DEL ir.actions.act_window: mrp_repair.act_mrp_repair_invoice
 DEL ir.actions.act_window: mrp_repair.action_cancel_repair [renamed to repair module]
 DEL ir.actions.act_window: mrp_repair.action_repair_order_tree [renamed to repair module]
 NEW ir.actions.report: repair.action_report_repair_order
 DEL ir.actions.report: mrp_repair.action_report_mrp_repair_order
-NEW ir.model.access: repair.access_account_tax_user [renamed from repair module]
+NEW ir.model.access: repair.access_account_tax_user [renamed from mrp_repair module]
 NEW ir.model.access: repair.access_repair_fee_user
 NEW ir.model.access: repair.access_repair_line_user
 NEW ir.model.access: repair.access_repair_user
-NEW ir.model.access: repair.access_stock_production_lot_user [renamed from repair module]
+NEW ir.model.access: repair.access_stock_production_lot_user [renamed from mrp_repair module]
 DEL ir.model.access: mrp_repair.access_account_invoice_line_manager
 DEL ir.model.access: mrp_repair.access_account_invoice_line_user
 DEL ir.model.access: mrp_repair.access_account_invoice_manager
@@ -66,7 +66,7 @@ NEW ir.rule: repair.repair_rule (noupdate)
 DEL ir.rule: mrp_repair.mrp_repair_rule (noupdate)
 NEW ir.sequence: repair.seq_repair (noupdate)
 DEL ir.sequence: mrp_repair.seq_mrp_repair (noupdate)
-NEW ir.ui.menu: repair.menu_repair_order [renamed from repair module]
+NEW ir.ui.menu: repair.menu_repair_order [renamed from mrp_repair module]
 DEL ir.ui.menu: mrp_repair.menu_repair_order [renamed to repair module]
 NEW ir.ui.view: repair.report_repairorder
 NEW ir.ui.view: repair.report_repairorder2
