@@ -365,8 +365,8 @@ def compare_model_sets(old_records, new_records):
     """
     reprs = collections.defaultdict(list)
 
-    new_models = [column['model'] for column in new_records]
-    old_models = [column['model'] for column in old_records]
+    new_models = {column['model']: column['module'] for column in new_records}
+    old_models = {column['model']: column['module'] for column in old_records}
 
     obsolete_models = []
     for column in copy.copy(old_records):
@@ -382,8 +382,13 @@ def compare_model_sets(old_records, new_records):
                     reprs['general'].append('obsolete model %s [module %s]' % (
                         model, module_map(column['module'])))
                 else:
-                    text = 'obsolete model %s (renamed to %s)' % (
-                        model, model_map(model))
+                    moved_module = ''
+                    if module_map(column['module']) != new_models[model_map(
+                            model)]:
+                        moved_module = ' in module %s' % new_models[model_map(
+                            model)]
+                    text = 'obsolete model %s (renamed to %s%s)' % (
+                        model, model_map(model), moved_module)
                     if column['model_type']:
                         text += " [%s]" % column['model_type']
                     reprs[module_map(column['module'])].append(text)
@@ -391,6 +396,17 @@ def compare_model_sets(old_records, new_records):
                         'obsolete model %s (renamed to %s) [module %s]' % (
                             model, model_map(model),
                             module_map(column['module'])))
+            else:
+                if module_map(column['module']) != new_models[model]:
+                    text = 'model %s (moved to %s)' % (
+                        model, new_models[model])
+                    if column['model_type']:
+                        text += " [%s]" % column['model_type']
+                    reprs[module_map(column['module'])].append(text)
+                    text = 'model %s (moved from %s)' % (
+                        model, old_models[model])
+                    if column['model_type']:
+                        text += " [%s]" % column['model_type']
 
     for column in copy.copy(new_records):
         model = column['model']
@@ -400,17 +416,28 @@ def compare_model_sets(old_records, new_records):
                     text = 'new model %s' % model
                     if column['model_type']:
                         text += " [%s]" % column['model_type']
-                    reprs[module_map(column['module'])].append(text)
+                    reprs[column['module']].append(text)
                     reprs['general'].append('new model %s [module %s]' % (
-                        model, module_map(column['module'])))
+                        model, column['module']))
                 else:
-                    text = 'new model %s (renamed from %s)' % (
-                        model, inv_model_map(model))
+                    moved_module = ''
+                    if column['module'] != module_map(old_models[inv_model_map(
+                            model)]):
+                        moved_module = ' in module %s' % old_models[
+                            inv_model_map(model)]
+                    text = 'new model %s (renamed from %s%s)' % (
+                        model, inv_model_map(model), moved_module)
                     if column['model_type']:
                         text += " [%s]" % column['model_type']
-                    reprs[module_map(column['module'])].append(text)
+                    reprs[column['module']].append(text)
                     reprs['general'].append(
                         'new model %s (renamed from %s) [module %s]' % (
-                            model, inv_model_map(model),
-                            module_map(column['module'])))
+                            model, inv_model_map(model), column['module']))
+            else:
+                if column['module'] != module_map(old_models[model]):
+                    text = 'model %s (moved from %s)' % (
+                        model, old_models[model])
+                    if column['model_type']:
+                        text += " [%s]" % column['model_type']
+                    reprs[column['module']].append(text)
     return reprs

@@ -1,8 +1,8 @@
 ---Models in module 'product'---
 obsolete model product.attribute.line (renamed to product.template.attribute.line)
 obsolete model product.attribute.price (renamed to product.template.attribute.value)
-obsolete model product.uom (renamed to uom.uom)
-obsolete model product.uom.categ (renamed to uom.category)
+obsolete model product.uom (renamed to uom.uom in module uom)
+obsolete model product.uom.categ (renamed to uom.category in module uom)
 new model product.template.attribute.exclusion
 new model product.template.attribute.line (renamed from product.attribute.line)
 new model product.template.attribute.value (renamed from product.attribute.price)

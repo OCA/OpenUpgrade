@@ -1,7 +1,8 @@
 ---Models in module 'sale_management'---
-new model sale.order.template (renamed from sale.quote.template)
-new model sale.order.template.line (renamed from sale.quote.line)
-new model sale.order.template.option (renamed from sale.quote.option)
+model sale.order.option (moved from website_quote)
+new model sale.order.template (renamed from sale.quote.template in module website_quote)
+new model sale.order.template.line (renamed from sale.quote.line in module website_quote)
+new model sale.order.template.option (renamed from sale.quote.option in module website_quote)
 ---Fields in module 'sale_management'---
 sale_management / digest.digest            / kpi_all_sale_total (boolean)  : NEW
 sale_management / sale.order               / sale_order_option_ids (one2many): NEW relation: sale.order.option
