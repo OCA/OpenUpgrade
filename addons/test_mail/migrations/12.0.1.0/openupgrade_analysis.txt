@@ -1,7 +1,10 @@
 ---Models in module 'test_mail'---
+model mail.test (moved from mail)
 new model mail.test.activity
 new model mail.test.full
+model mail.test.simple (moved from mail)
 new model mail.test.track
+model test_performance.mail (moved from test_performance)
 ---Fields in module 'test_mail'---
 test_mail    / mail.test                / __last_update (datetime)      : previously in module mail
 test_mail    / mail.test                / _inherits (False)             : previously in module mail

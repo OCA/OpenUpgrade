@@ -1,4 +1,6 @@
 ---Models in module 'crm'---
+model base.partner.merge.automatic.wizard (moved to base) [transient]
+model base.partner.merge.line (moved to base) [transient]
 obsolete model crm.opportunity.report [sql_view]
 ---Fields in module 'crm'---
 crm          / crm.lead                 / activity_date_deadline (date) : not related anymore

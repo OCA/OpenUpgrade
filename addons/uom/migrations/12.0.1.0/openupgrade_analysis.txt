@@ -1,6 +1,6 @@
 ---Models in module 'uom'---
-new model uom.category (renamed from product.uom.categ)
-new model uom.uom (renamed from product.uom)
+new model uom.category (renamed from product.uom.categ in module product)
+new model uom.uom (renamed from product.uom in module product)
 ---Fields in module 'uom'---
 uom          / product.uom              / __last_update (datetime)      : previously in module product
 uom          / product.uom              / active (boolean)              : previously in module product
