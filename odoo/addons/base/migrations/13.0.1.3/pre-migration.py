@@ -1,5 +1,6 @@
 # Copyright 2020 Andrii Skrypka
 # Copyright 2020 Opener B.V. (stefan@opener.amsterdam)
+# Copyright 2019-2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
@@ -464,13 +465,28 @@ lang_code_renames = [
     ('fil', 'fil_PH'),
 ]
 
+column_copies = {
+    "ir_actions": [("binding_type", None, None)],
+}
+
 column_renames = {
+    'ir_act_window': [
+        ("multi", None)
+    ],
+    'ir_model_fields': [
+        ('selection', None),
+    ],
     'ir_attachment': [
         ('name', None),
         ('datas_fname', 'name'),
+        ("res_name", None)
     ],
     'res_lang': [
         ('week_start', None),
+    ],
+    'res_partner': [
+        ("customer", None),
+        ("supplier", None)
     ],
 }
 
@@ -478,9 +494,6 @@ field_renames = [
     ('ir.server.object.lines',
      'ir_server_object_lines',
      'type', 'evaluation_type'),
-    ('res.company',
-     'res_company',
-     'favicon_backend', 'favicon'),
 ]
 
 
@@ -494,8 +507,98 @@ def fix_lang_table(cr):
         )
 
 
+def remove_offending_translations(env):
+    """Remove translations that has changed its way of working (constraint,
+    sql_constraint and selection), as there's no easy way to convert them,
+    and leaving them will lead to "selection value not valid" errors.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        "DELETE FROM ir_translation WHERE type IN "
+        "('constraint', 'sql_constraint', 'selection')",
+    )
+
+
+def handle_web_favicon_module(env):
+    """If web_favicon is installed in previous version, we can reuse
+    that icon for the native favicon feature.
+    """
+    if openupgrade.column_exists(env.cr, "res_company", "favicon_backend"):
+        openupgrade.rename_fields(
+            env,
+            [("res.company", "res_company", "favicon_backend", "favicon")],
+            no_deep=True,
+        )
+
+
+def add_res_lang_url_code(env):
+    """Add field and filled it with same logic as core (iso_code or code)."""
+    openupgrade.add_fields(
+        env, [("url_code", "res.lang", "res_lang", "char", False, "base")]
+    )
+    openupgrade.logged_query(
+        env.cr, "UPDATE res_lang SET url_code = COALESCE(iso_code, code)"
+    )
+
+
+def switch_noupdate_records(env):
+    openupgrade.set_xml_ids_noupdate_value(
+        env,
+        "base",
+        [
+            "module_category_hidden",
+            "module_category_human_resources",
+            "module_category_localization",
+            "module_category_manufacturing",
+            "module_category_theme",
+            "module_category_website",
+        ],
+        True,
+    )
+    openupgrade.set_xml_ids_noupdate_value(
+        env,
+        "base",
+        [
+            "state_DO_01",
+            "state_DO_02",
+            "state_DO_03",
+            "state_DO_04",
+            "state_DO_05",
+            "state_DO_06",
+            "state_DO_07",
+            "state_DO_08",
+            "state_DO_09",
+            "state_DO_10",
+            "state_DO_11",
+            "state_DO_12",
+            "state_DO_13",
+            "state_DO_14",
+            "state_DO_15",
+            "state_DO_16",
+            "state_DO_17",
+            "state_DO_18",
+            "state_DO_19",
+            "state_DO_20",
+            "state_DO_21",
+            "state_DO_22",
+            "state_DO_23",
+            "state_DO_24",
+            "state_DO_25",
+            "state_DO_26",
+            "state_DO_27",
+            "state_DO_28",
+            "state_DO_29",
+            "state_DO_30",
+            "state_DO_31",
+            "state_DO_32",
+        ],
+        False,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.copy_columns(env.cr, column_copies)
     openupgrade.rename_columns(env.cr, column_renames)
     openupgrade.rename_fields(env, field_renames, no_deep=True)
     openupgrade.update_module_names(
@@ -506,6 +609,10 @@ def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_module_category)
     openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_model_access)
     fix_lang_table(env.cr)
+    remove_offending_translations(env)
+    handle_web_favicon_module(env)
+    add_res_lang_url_code(env)
+    switch_noupdate_records(env)
 
     openupgrade.logged_query(
         env.cr,
