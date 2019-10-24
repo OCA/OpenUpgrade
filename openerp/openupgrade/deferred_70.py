@@ -28,6 +28,7 @@ being run multiple times on the same database.
 """
 
 import logging
+from openupgradelib.openupgrade import savepoint
 from openerp import SUPERUSER_ID
 
 logger = logging.getLogger("OpenUpgrade")
@@ -46,10 +47,24 @@ def sync_commercial_fields(cr, pool):
     logger.info(
         "Syncing commercial fields between %s partners",
         len(partner_ids))
+    good = True
     for partner in partner_obj.browse(
             cr, SUPERUSER_ID, partner_ids):
-        partner_obj._commercial_sync_from_company(
-            cr, SUPERUSER_ID, partner)
+        try:
+            with savepoint(cr):
+                partner_obj._commercial_sync_from_company(
+                    cr, SUPERUSER_ID, partner)
+        except Exception:
+            good = False
+            logger.exception(
+                "Failed syncing commercial fields for partner %d",
+                partner_obj.id,
+            )
+    if not good:
+        raise Exception(
+            "Syncing partners' commercial fields failed. "
+            "Check the logs, fix and retry."
+        )
 
 
 def migrate_deferred(cr, pool):
