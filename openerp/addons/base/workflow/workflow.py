@@ -81,7 +81,7 @@ class wkf_activity(osv.osv):
         'join_mode': fields.selection([('XOR', 'Xor'), ('AND', 'And')], 'Join Mode', size=3, required=True),
         'kind': fields.selection([('dummy', 'Dummy'), ('function', 'Function'), ('subflow', 'Subflow'), ('stopall', 'Stop All')], 'Kind', required=True),
         'action': fields.text('Python Action'),
-        'action_id': fields.many2one('ir.actions.server', 'Server Action', ondelete='set null'),
+        'action_id': fields.many2one('ir.actions.server', 'Server Action', select=True, ondelete='set null'),
         'flow_start': fields.boolean('Flow Start'),
         'flow_stop': fields.boolean('Flow Stop'),
         'subflow_id': fields.many2one('workflow', 'Subflow'),
@@ -192,8 +192,8 @@ class wkf_triggers(osv.osv):
     _columns = {
         'res_id': fields.integer('Resource ID', size=128),
         'model': fields.char('Object'),
-        'instance_id': fields.many2one('workflow.instance', 'Destination Instance', ondelete="cascade"),
-        'workitem_id': fields.many2one('workflow.workitem', 'Workitem', required=True, ondelete="cascade"),
+        'instance_id': fields.many2one('workflow.instance', 'Destination Instance', select=True, ondelete="cascade"),
+        'workitem_id': fields.many2one('workflow.workitem', 'Workitem', required=True, select=True, ondelete="cascade"),
     }
     def _auto_init(self, cr, context=None):
         res = super(wkf_triggers, self)._auto_init(cr, context)
