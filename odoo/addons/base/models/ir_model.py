@@ -1715,6 +1715,9 @@ class IrModelData(models.Model):
                                 res_id, model)
                         # /OpenUpgrade
                     else:
+                        # OpenUpgrade: don't delete xmlids. Use database_cleanup instead
+                        continue
+                        # /OpenUpgrade
                         bad_imd_ids.append(id)
         if bad_imd_ids:
             self.browse(bad_imd_ids).unlink()
