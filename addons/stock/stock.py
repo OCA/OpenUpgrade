@@ -612,7 +612,7 @@ class stock_quant(osv.osv):
         self.write(cr, SUPERUSER_ID, ids, {'cost': newprice}, context=context)
 
     def quants_unreserve(self, cr, uid, move, context=None):
-        related_quants = [x.id for x in move.reserved_quant_ids]
+        related_quants = move.reserved_quant_ids.ids
         if related_quants:
             #if move has a picking_id, write on that picking that pack_operation might have changed and need to be recomputed
             if move.picking_id:

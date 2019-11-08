@@ -21,6 +21,7 @@
 ##############################################################################
 
 import logging
+from datetime import datetime
 from openerp import api, SUPERUSER_ID
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp.modules.registry import RegistryManager
@@ -765,9 +766,9 @@ def _move_assign(env, move):
     operations = set()
     todo_moves = []
 
-    if move.state not in ('confirmed', 'waiting', 'assigned'):
+    if move.state not in {'confirmed', 'waiting', 'assigned'}:
         return True
-    if move.location_id.usage in ('supplier', 'inventory', 'production'):
+    if move.location_id.usage in {'supplier', 'inventory', 'production'}:
         to_assign_moves.add(move.id)
         # in case the move is returned, we want to try to find
         # quants before forcing the assignment
@@ -811,29 +812,29 @@ def _move_assign(env, move):
         # first try to find quants based on specific domains given by
         # linked operations
         for record in ops.linked_move_operation_ids:
-            move = record.move_id
-            if move.id in main_domain:
-                domain = main_domain[move.id] + record.get_specific_domain()
+            _move = record.move_id
+            if _move.id in main_domain:
+                domain = main_domain[_move.id] + record.get_specific_domain()
                 qty = record.qty
                 if qty:
                     quants = quant_obj.quants_get_prefered_domain(
-                        ops.location_id, move.product_id, qty, domain=domain,
+                        ops.location_id, _move.product_id, qty, domain=domain,
                         prefered_domain_list=[],
-                        restrict_lot_id=move.restrict_lot_id.id,
-                        restrict_partner_id=move.restrict_partner_id.id)
-                    quant_obj.quants_reserve(quants, move, record)
-    for move in todo_moves:
+                        restrict_lot_id=_move.restrict_lot_id.id,
+                        restrict_partner_id=_move.restrict_partner_id.id)
+                    quant_obj.quants_reserve(quants, _move, record)
+    for _move in todo_moves:
         # then if the move isn't totally assigned,
         # try to find quants without any specific domain
-        if move.state != 'assigned':
-            qty_already_assigned = move.reserved_availability
-            qty = move.product_qty - qty_already_assigned
+        if _move.state != 'assigned':
+            qty_already_assigned = _move.reserved_availability
+            qty = _move.product_qty - qty_already_assigned
             quants = quant_obj.quants_get_prefered_domain(
-                move.location_id, move.product_id, qty,
-                domain=main_domain[move.id], prefered_domain_list=[],
-                restrict_lot_id=move.restrict_lot_id.id,
-                restrict_partner_id=move.restrict_partner_id.id)
-            quant_obj.quants_reserve(quants, move)
+                _move.location_id, _move.product_id, qty,
+                domain=main_domain[_move.id], prefered_domain_list=[],
+                restrict_lot_id=_move.restrict_lot_id.id,
+                restrict_partner_id=_move.restrict_partner_id.id)
+            quant_obj.quants_reserve(quants, _move)
 
 
 def _move_done(env, move):
@@ -859,7 +860,7 @@ def _move_done(env, move):
             pickings.add(ops.picking_id.id)
         main_domain = [('qty', '>', 0)]
         for record in ops.linked_move_operation_ids:
-            move = record.move_id
+            _move = record.move_id
 
             prefered_domain = [('reservation_id', '=', move.id)]
             fallback_domain = [('reservation_id', '=', False)]
@@ -870,10 +871,10 @@ def _move_done(env, move):
             dom = main_domain + env[
                 'stock.move.operation.link'].get_specific_domain(record)
             quants = quant_obj.quants_get_prefered_domain(
-                ops.location_id, move.product_id, record.qty,
+                ops.location_id, _move.product_id, record.qty,
                 domain=dom, prefered_domain_list=prefered_domain_list,
-                restrict_lot_id=move.restrict_lot_id.id,
-                restrict_partner_id=move.restrict_partner_id.id)
+                restrict_lot_id=_move.restrict_lot_id.id,
+                restrict_partner_id=_move.restrict_partner_id.id)
 
             if ops.product_id:
                 # If a product is given, the result is always
@@ -887,12 +888,12 @@ def _move_done(env, move):
                 quant_dest_package_id = False
                 quant_obj = quant_obj.with_context(entire_pack=True)
             quant_obj.quants_move(
-                quants, move, ops.location_dest_id,
+                quants, _move, ops.location_dest_id,
                 location_from=ops.location_id, lot_id=ops.lot_id.id,
                 owner_id=ops.owner_id.id,
                 src_package_id=ops.package_id.id,
                 dest_package_id=quant_dest_package_id)
-            move_qty[move.id] -= record.qty
+            move_qty[_move.id] -= record.qty
     # Check for remaining qtys and unreserve/check move_dest_id in
     move_qty_cmp = float_compare(
         move_qty[move.id], 0,
@@ -926,16 +927,87 @@ def migrate_stock_qty(cr, registry):
         UPDATE stock_move SET restrict_lot_id = {}
     '''.format(openupgrade.get_legacy_name('prodlot_id'))
     openupgrade.logged_query(cr, sql)
+    # Faster migration with required indexes
+    create_index = """
+        CREATE INDEX IF NOT EXISTS {table}_{col}_index
+        ON {table} USING BTREE({col})
+    """
+    to_index = {
+        "stock_move_operation_link": [
+            "move_id",
+            "operation_id",
+            "reserved_quant_id",
+        ],
+        "stock_pack_operation": [
+            "location_id",
+            "product_id",
+        ],
+    }
+    for table, cols in to_index.items():
+        for col in cols:
+            openupgrade.logged_query(
+                cr,
+                create_index.format(table=table, col=col),
+            )
 
     with api.Environment.manage():
-        env = api.Environment(cr, SUPERUSER_ID, {})
+        env = api.Environment(cr, SUPERUSER_ID, {'prefetch_fields': False})
+        # Force prefetching fields and records that will be used a lot
+        logger.info("Prefetching records")
+        start = datetime.now()
         moves = env['stock.move'].search(
             [('state', 'in', ['assigned', 'done'])], order="date")
-        for move in moves:
+        moves.read([
+            'linked_move_operation_ids',
+            'location_dest_id',
+            'location_id',
+            'move_orig_ids',
+            'origin_returned_move_id',
+            'partially_available',
+            'picking_id',
+            'product_id',
+            'product_qty',
+            'reserved_availability',
+            'reserved_quant_ids',
+            'restrict_lot_id',
+            'restrict_partner_id',
+            'split_from',
+            'state',
+        ])
+        locations = moves.mapped("location_id")
+        locations.read([
+            "usage",
+        ])
+        products = moves.mapped("product_id")
+        products.read([
+            'standard_price',
+            'type',
+            'uom_id',
+        ])
+        uoms = products.mapped("uom_id")
+        uoms.read([
+            "rounding",
+        ])
+        total_moves = len(moves)
+        logger.info(
+            "Prefetched %d moves, %d locations, %d products and %d uoms in %s",
+            total_moves,
+            len(locations),
+            len(products),
+            len(uoms),
+            datetime.now() - start,
+        )
+        start = datetime.now()
+        # Process all stock moves
+        for n, move in enumerate(moves):
+            logger.info(
+                "Reprocessing stock.move %d/%d with ID %d",
+                n, total_moves, move.id)
             if move.state == 'assigned':
                 _move_assign(env, move)
             else:
                 _move_done(env, move)
+        logger.info("Reprocessed in %s", datetime.now() - start)
 
 
 def migrate_stock_production_lot(cr, registry):
