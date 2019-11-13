@@ -199,12 +199,34 @@ def migrate_stock_move_warehouse(cr):
     openupgrade.logged_query(
         cr,
         """
+        CREATE INDEX IF NOT EXISTS procurement_order_move_dest_id_index
+        ON procurement_order USING BTREE(move_dest_id)
+        """,
+    )
+    openupgrade.logged_query(
+        cr,
+        """
+        CREATE INDEX IF NOT EXISTS stock_move_procurement_id_index
+        ON stock_move USING BTREE(procurement_id)
+        """,
+    )
+    openupgrade.logged_query(
+        cr,
+        """
         UPDATE stock_move sm
         SET warehouse_id = po.warehouse_id
         FROM procurement_order po
         WHERE sm.procurement_id = po.id
             OR po.move_dest_id = sm.id
         """)
+    openupgrade.logged_query(
+        cr,
+        "DROP INDEX procurement_order_move_dest_id_index",
+    )
+    openupgrade.logged_query(
+        cr,
+        "DROP INDEX stock_move_procurement_id_index",
+    )
 
 
 def migrate_deferred(cr, pool):
