@@ -58,7 +58,7 @@ def sync_commercial_fields(cr, pool):
             good = False
             logger.exception(
                 "Failed syncing commercial fields for partner %d",
-                partner_obj.id,
+                partner.id,
             )
     if not good:
         raise Exception(
