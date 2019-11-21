@@ -69,8 +69,8 @@ def fix_act_window(env):
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     copy_global_rules(env)
-    delete_quants_for_consumable(env)
     drop_slow_constraint(env)
+    delete_quants_for_consumable(env)
     fix_act_window(env)
     openupgrade.update_module_moved_fields(
         env.cr, 'stock.move', ['has_tracking'], 'mrp', 'stock',
