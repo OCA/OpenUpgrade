@@ -21,6 +21,9 @@ renamed_modules = {
     # OCA/hr
     'hr_employee_seniority': 'hr_employee_service_contract',
     'hr_family': 'hr_employee_relative',
+    # OCA/sale-workflow
+    'sale_procurement_group_by_requested_date':
+        'sale_procurement_group_by_commitment_date',
     # OCA/server-brand
     'res_config_settings_enterprise_remove': 'remove_odoo_enterprise',
     # OCA/stock-logistics-workflow
