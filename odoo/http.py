@@ -1024,6 +1024,11 @@ class OpenERPSession(werkzeug.contrib.sessions.Session):
         env = odoo.api.Environment(request.cr, self.uid, self.context)
         # here we check if the session is still valid
         if not security.check_session(self, env):
+            # OpenUpgrade: when asking openupgrade_records to generate records
+            # over jsonrpc, a query on res_users in the call above locks this
+            # table for the sql operations that are triggered by the
+            # reinstallation of the base module
+            env.cr.rollback()
             raise SessionExpiredException("Session expired")
 
     def logout(self, keep_db=False):
