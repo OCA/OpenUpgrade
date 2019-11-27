@@ -1176,6 +1176,11 @@ def preload_registries(dbnames):
                     for module_name in module_names:
                         result = run_unit_tests(module_name, position='post_install')
                         registry._assertion_report.record_result(result)
+                    # OpenUpgrade: run deferred unit tests
+                    for module_name, prefix in registry.openupgrade_test_prefixes:
+                        result = run_unit_tests(module_name, position='post_install', openupgrade_prefix=prefix)
+                        registry._assertion_report.record_result(result)
+
                 _logger.info("All post-tested in %.2fs, %s queries",
                              time.time() - t0, odoo.sql_db.sql_counter - t0_sql)
 

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment_acquirer_adyen" model="payment.acquirer">
+    <field name="image" type="base64" file="payment_adyen/static/src/img/adyen_icon.png"/>
+    <field name="display_as">Credit Card (powered by Adyen)</field>
+    <field name="image_128" type="base64" file="payment_adyen/static/src/img/adyen_icon.png"/>
+  </record>
+  <record id="payment_acquirer_authorize" model="payment.acquirer">
+    <field name="description" type="html">
+      <p>
+                A payment gateway to accept online payments via credit cards and e-checks.
+            </p>
+      <ul class="list-inline">
+        <li class="list-inline-item"><i class="fa fa-check"/>Online Payment</li>
+        <li class="list-inline-item"><i class="fa fa-check"/>Payment Status Tracking</li>
+        <li class="list-inline-item"><i class="fa fa-check"/>Subscriptions</li>
+        <li class="list-inline-item"><i class="fa fa-check"/>Save Cards</li>
+        <li class="list-inline-item"><i class="fa fa-check"/>Manual Capture</li>
+        <li class="list-inline-item"><i class="fa fa-check"/>Embedded Credit Card Form</li>
+      </ul>
+    </field>
+    <field name="image" type="base64" file="payment_authorize/static/src/img/authorize_icon.png"/>
+    <field name="display_as">Credit Card (powered by Authorize)</field>
+    <field name="image_128" type="base64" file="payment_authorize/static/src/img/authorize_icon.png"/>
+  </record>
+  <record id="payment_acquirer_buckaroo" model="payment.acquirer">
+    <field name="image" type="base64" file="payment_buckaroo/static/src/img/buckaroo_icon.png"/>
+    <field name="display_as">Credit Card (powered by Buckaroo)</field>
+    <field name="image_128" type="base64" file="payment_buckaroo/static/src/img/buckaroo_icon.png"/>
+  </record>
+  <record id="payment_acquirer_paypal" model="payment.acquirer">
+    <field name="image" type="base64" file="payment_paypal/static/src/img/paypal_icon.png"/>
+    <field name="name">PayPal</field>
+    <field name="image_128" type="base64" file="payment_paypal/static/src/img/paypal_icon.png"/>
+  </record>
+  <record id="payment_acquirer_payu" model="payment.acquirer">
+    <field name="image" type="base64" file="payment_payumoney/static/src/img/payumoney_icon.png"/>
+    <field name="display_as">Credit Card (powered by PayUmoney)</field>
+    <field name="image_128" type="base64" file="payment_payumoney/static/src/img/payumoney_icon.png"/>
+  </record>
+  <record id="payment_acquirer_sips" model="payment.acquirer">
+    <field name="image" type="base64" file="payment_sips/static/src/img/sips_icon.png"/>
+    <field name="display_as">Credit Card (powered by Sips)</field>
+    <field name="image_128" type="base64" file="payment_sips/static/src/img/sips_icon.png"/>
+  </record>
+  <record id="payment_acquirer_stripe" model="payment.acquirer">
+    <field name="image" type="base64" file="payment_stripe/static/src/img/stripe_icon.png"/>
+    <field name="display_as">Credit Card (powered by Stripe)</field>
+    <field name="image_128" type="base64" file="payment_stripe/static/src/img/stripe_icon.png"/>
+  </record>
+  <record id="payment_acquirer_transfer" model="payment.acquirer">
+    <field name="image" type="base64" file="payment_transfer/static/src/img/transfer_icon.png"/>
+    <field name="image_128" type="base64" file="payment_transfer/static/src/img/transfer_icon.png"/>
+  </record>
+</odoo>

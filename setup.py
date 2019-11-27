@@ -35,6 +35,8 @@ setup(
         'mako',
         'mock',
         'ofxparse',
+        'odoorpc==0.7.0',
+        'openupgradelib>=2.0.0',
         'passlib',
         'pillow',  # windows binary http://www.lfd.uci.edu/~gohlke/pythonlibs/
         'polib',

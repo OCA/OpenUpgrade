@@ -1,0 +1,35 @@
+---Models in module 'l10n_latam_invoice_document'---
+new model l10n_latam.document.type
+---Fields in module 'l10n_latam_invoice_document'---
+l10n_latam_invoice_document / account.journal          / l10n_latam_use_documents (boolean): NEW
+l10n_latam_invoice_document / account.move             / l10n_latam_document_type_id (many2one): NEW relation: l10n_latam.document.type, isfunction: function, stored
+l10n_latam_invoice_document / account.move.line        / l10n_latam_document_type_id (many2one): NEW relation: l10n_latam.document.type, isrelated: related, stored
+l10n_latam_invoice_document / ir.sequence              / l10n_latam_document_type_id (many2one): NEW relation: l10n_latam.document.type
+l10n_latam_invoice_document / ir.sequence              / l10n_latam_journal_id (many2one): NEW relation: account.journal
+l10n_latam_invoice_document / l10n_latam.document.type / active (boolean)              : NEW hasdefault
+l10n_latam_invoice_document / l10n_latam.document.type / code (char)                   : NEW
+l10n_latam_invoice_document / l10n_latam.document.type / country_id (many2one)         : NEW relation: res.country, required
+l10n_latam_invoice_document / l10n_latam.document.type / doc_code_prefix (char)        : NEW
+l10n_latam_invoice_document / l10n_latam.document.type / internal_type (selection)     : NEW selection_keys: ['credit_note', 'debit_note', 'invoice']
+l10n_latam_invoice_document / l10n_latam.document.type / name (char)                   : NEW required
+l10n_latam_invoice_document / l10n_latam.document.type / report_name (char)            : NEW
+l10n_latam_invoice_document / l10n_latam.document.type / sequence (integer)            : NEW required, req_default: function, hasdefault
+---XML records in module 'l10n_latam_invoice_document'---
+NEW ir.actions.act_window: l10n_latam_invoice_document.action_document_type
+NEW ir.model.access: l10n_latam_invoice_document.access_l10n_latam_document_type_account_manager
+NEW ir.model.access: l10n_latam_invoice_document.access_l10n_latam_document_type_all
+NEW ir.ui.menu: l10n_latam_invoice_document.menu_document_type
+NEW ir.ui.view: l10n_latam_invoice_document.report_invoice_document
+NEW ir.ui.view: l10n_latam_invoice_document.sequence_view
+NEW ir.ui.view: l10n_latam_invoice_document.sequence_view_tree
+NEW ir.ui.view: l10n_latam_invoice_document.view_account_invoice_filter
+NEW ir.ui.view: l10n_latam_invoice_document.view_account_invoice_report_search
+NEW ir.ui.view: l10n_latam_invoice_document.view_account_journal_form
+NEW ir.ui.view: l10n_latam_invoice_document.view_account_move_filter
+NEW ir.ui.view: l10n_latam_invoice_document.view_account_move_line_filter
+NEW ir.ui.view: l10n_latam_invoice_document.view_account_move_reversal
+NEW ir.ui.view: l10n_latam_invoice_document.view_document_type_filter
+NEW ir.ui.view: l10n_latam_invoice_document.view_document_type_form
+NEW ir.ui.view: l10n_latam_invoice_document.view_document_type_tree
+NEW ir.ui.view: l10n_latam_invoice_document.view_move_form
+NEW ir.ui.view: l10n_latam_invoice_document.view_sequence_search

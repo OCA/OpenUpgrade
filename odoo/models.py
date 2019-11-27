@@ -61,6 +61,7 @@ from .tools.safe_eval import safe_eval
 from .tools.translate import _
 from .tools import date_utils
 
+
 _logger = logging.getLogger(__name__)
 _schema = logging.getLogger(__name__ + '.schema')
 _unlink = logging.getLogger(__name__ + '.unlink')
@@ -1001,6 +1002,8 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             if xid:
                 xid = xid if '.' in xid else "%s.%s" % (current_module, xid)
                 batch_xml_ids.update(ModelData._generate_xmlids(xid, self))
+                # Openupgrade: log csv records
+                odoo.openupgrade.openupgrade_log.log_xml_id(self.env.cr, current_module, xid)
             elif id:
                 record['id'] = id
             batch.append((xid, record, info))

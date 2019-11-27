@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_template_user_signup_account_created" model="mail.template">
+    <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+    <field name="lang">${object.lang}</field>
+  </record>
+  <record id="reset_password_email" model="mail.template">
+    <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+    <field name="lang">${object.lang}</field>
+  </record>
+  <record id="set_password_email" model="mail.template">
+    <field name="email_from">"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+    <field name="lang">${object.lang}</field>
+  </record>
+</odoo>

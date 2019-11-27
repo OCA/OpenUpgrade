@@ -10,6 +10,7 @@ import logging
 import sys
 import threading
 import time
+import os
 
 import odoo
 import odoo.modules.db
@@ -20,6 +21,9 @@ import odoo.tools as tools
 
 from odoo import api, SUPERUSER_ID
 from odoo.modules.module import adapt_version, initialize_sys_path, load_openerp_module
+
+from odoo.openupgrade import openupgrade_loading
+
 
 _logger = logging.getLogger(__name__)
 _test_logger = logging.getLogger('odoo.tests')
@@ -118,7 +122,7 @@ def force_demo(cr):
 
 
 def load_module_graph(cr, graph, status=None, perform_checks=True,
-                      skip_modules=None, report=None, models_to_check=None):
+                      skip_modules=None, report=None, models_to_check=None, upg_registry=None):
     """Migrates+Updates or Installs all module nodes from ``graph``
        :param graph: graph of module nodes to load
        :param status: deprecated parameter, unused, left to avoid changing signature in 8.0
@@ -141,6 +145,9 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
             # avoid keeping stale xml_id, etc. in cache
             odoo.registry(cr.dbname).clear_caches()
 
+    if skip_modules is None:
+        skip_modules = []
+
     if models_to_check is None:
         models_to_check = set()
 
@@ -150,6 +157,12 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
     migrations = odoo.modules.migration.MigrationManager(cr, graph)
     module_count = len(graph)
     _logger.info('loading %d modules...', module_count)
+
+    # suppress commits to have the upgrade of one module in just one transaction
+    cr.commit_org = cr.commit
+    cr.commit = lambda *args: None
+    cr.rollback_org = cr.rollback
+    cr.rollback = lambda *args: None
 
     # register, instantiate and initialize models for each modules
     t0 = time.time()
@@ -161,7 +174,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
         module_name = package.name
         module_id = package.id
 
-        if skip_modules and module_name in skip_modules:
+        if module_name in skip_modules or module_name in loaded_modules:
             continue
 
         _logger.debug('loading module %s (%d/%d)', module_name, index, module_count)
@@ -192,6 +205,16 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
             models_updated |= set(model_names)
             models_to_check -= set(model_names)
             registry.setup_models(cr)
+            # OpenUpgrade: rebuild the local registry based on the loaded models
+            local_registry = {}
+            env = api.Environment(cr, SUPERUSER_ID, {})
+            for model in env.values():
+                if not model._auto:
+                    continue
+                openupgrade_loading.log_model(model, local_registry)
+            openupgrade_loading.compare_registries(
+                cr, package.name, upg_registry, local_registry)
+            # OpenUpgrade end
             registry.init_models(cr, model_names, {'module': package.name})
         elif package.state != 'to remove':
             # The current module has simply been loaded. The models extended by this module
@@ -224,7 +247,14 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
             cr.execute('update ir_module_module set demo=%s where id=%s', (demo_loaded, module_id))
             module.invalidate_cache(['demo'])
 
-            migrations.migrate_module(package, 'post')
+            # OpenUpgrade: add 'try' block for logging exceptions
+            # as errors in post scripts seem to be dropped
+            try:
+                migrations.migrate_module(package, 'post')
+            except Exception as exc:
+                _logger.error('Error executing post migration script for module %s: %s',
+                              package, exc)
+                raise
 
             # Update translations for all installed languages
             overwrite = odoo.tools.config["overwrite_existing_translations"]
@@ -245,7 +275,9 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
             # need to commit any modification the module's installation or
             # update made to the schema or data so the tests can run
             # (separately in their own transaction)
-            cr.commit()
+            # OpenUpgrade: commit after processing every module as well, for
+            # easier debugging and continuing an interrupted migration
+            cr.commit_org()
 
             if tools.config.options['test_enable']:
                 report.record_result(load_test(idref, mode))
@@ -255,6 +287,12 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
                 # tests may have reset the environment
                 env = api.Environment(cr, SUPERUSER_ID, {})
                 module = env['ir.module.module'].browse(module_id)
+
+            # OpenUpgrade: run tests
+            if os.environ.get('OPENUPGRADE_TESTS') and package.name is not None:
+                prefix = '.migrations.%s' % adapt_version(package.data['version'])
+                registry.openupgrade_test_prefixes[package.name] = prefix
+                report.record_result(odoo.modules.module.run_unit_tests(module_name, openupgrade_prefix=prefix))
 
             processed_modules.append(package.name)
 
@@ -275,6 +313,10 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
 
     _logger.log(25, "%s modules loaded in %.2fs, %s queries", len(graph), time.time() - t0, odoo.sql_db.sql_counter - t0_sql)
 
+    # Openupgrade: restore commit method
+    cr.commit = cr.commit_org
+    cr.commit()
+
     return loaded_modules, processed_modules
 
 def _check_module_names(cr, module_names):
@@ -292,7 +334,7 @@ def _check_module_names(cr, module_names):
             _logger.warning('invalid module names, ignored: %s', ", ".join(incorrect_names))
 
 def load_marked_modules(cr, graph, states, force, progressdict, report,
-                        loaded_modules, perform_checks, models_to_check=None):
+                        loaded_modules, perform_checks, models_to_check=None, upg_registry=None):
     """Loads modules marked with ``states``, adding them to ``graph`` and
        ``loaded_modules`` and returns a list of installed/upgraded modules."""
 
@@ -303,13 +345,15 @@ def load_marked_modules(cr, graph, states, force, progressdict, report,
     while True:
         cr.execute("SELECT name from ir_module_module WHERE state IN %s" ,(tuple(states),))
         module_list = [name for (name,) in cr.fetchall() if name not in graph]
+        module_list = openupgrade_loading.add_module_dependencies(cr, module_list)
         if not module_list:
             break
         graph.add_modules(cr, module_list, force)
         _logger.debug('Updating graph with %d more modules', len(module_list))
         loaded, processed = load_module_graph(
             cr, graph, progressdict, report=report, skip_modules=loaded_modules,
-            perform_checks=perform_checks, models_to_check=models_to_check
+            perform_checks=perform_checks, models_to_check=models_to_check,
+            upg_registry=upg_registry,
         )
         processed_modules.extend(processed)
         loaded_modules.extend(loaded)
@@ -324,6 +368,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
     if force_demo:
         force.append('demo')
 
+    upg_registry = {}
     models_to_check = set()
 
     with db.cursor() as cr:
@@ -358,7 +403,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         report = registry._assertion_report
         loaded_modules, processed_modules = load_module_graph(
             cr, graph, status, perform_checks=update_module,
-            report=report, models_to_check=models_to_check)
+            report=report, models_to_check=models_to_check, upg_registry=upg_registry)
 
         load_lang = tools.config.pop('load_language')
         if load_lang or update_module:
@@ -386,7 +431,18 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
 
             module_names = [k for k, v in tools.config['update'].items() if v]
             if module_names:
-                modules = Module.search([('state', '=', 'installed'), ('name', 'in', module_names)])
+                # OpenUpgrade: in standard Odoo, '--update all' just means:
+                # '--update base + upward (installed) dependencies. This breaks
+                # the chain when new glue modules are encountered.
+                # E.g. purchase in 8.0 depends on stock_account and report,
+                # both of which are new. They may be installed, but purchase as
+                # an upward dependency is not selected for upgrade.
+                # Therefore, explicitely select all installed modules for
+                # upgrading in OpenUpgrade in that case.
+                domain = [('state', '=', 'installed')]
+                if 'all' not in module_names:
+                    domain.append(('name', 'in', module_names))
+                modules = Module.search(domain)
                 if modules:
                     modules.button_upgrade()
 
@@ -413,11 +469,11 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
             previously_processed = len(processed_modules)
             processed_modules += load_marked_modules(cr, graph,
                 ['installed', 'to upgrade', 'to remove'],
-                force, status, report, loaded_modules, update_module, models_to_check)
+                force, status, report, loaded_modules, update_module, models_to_check, upg_registry)
             if update_module:
                 processed_modules += load_marked_modules(cr, graph,
                     ['to install'], force, status, report,
-                    loaded_modules, update_module, models_to_check)
+                    loaded_modules, update_module, models_to_check, upg_registry)
 
         registry.loaded = True
         registry.setup_models(cr)
@@ -519,6 +575,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
 
         # STEP 9: save installed/updated modules for post-install tests
         registry.updated_modules += processed_modules
+
 
 def reset_modules_state(db_name):
     """

@@ -1,0 +1,34 @@
+---Models in module 'test_mail'---
+new model mail.test.cc
+new model mail.test.gateway
+new model mail.test.multi.company
+---Fields in module 'test_mail'---
+test_mail    / mail.test.cc             / email_cc (char)               : NEW
+test_mail    / mail.test.cc             / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.test.cc             / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.test.cc             / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.cc             / name (char)                   : NEW
+test_mail    / mail.test.cc             / website_message_ids (one2many): NEW relation: mail.message
+test_mail    / mail.test.gateway        / custom_field (char)           : NEW
+test_mail    / mail.test.gateway        / email_from (char)             : NEW
+test_mail    / mail.test.gateway        / email_normalized (char)       : NEW isfunction: function, stored
+test_mail    / mail.test.gateway        / message_bounce (integer)      : NEW hasdefault
+test_mail    / mail.test.gateway        / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.test.gateway        / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.test.gateway        / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.gateway        / name (char)                   : NEW
+test_mail    / mail.test.gateway        / website_message_ids (one2many): NEW relation: mail.message
+test_mail    / mail.test.multi.company  / company_id (many2one)         : NEW relation: res.company
+test_mail    / mail.test.multi.company  / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.test.multi.company  / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.test.multi.company  / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.multi.company  / name (char)                   : NEW
+test_mail    / mail.test.multi.company  / website_message_ids (one2many): NEW relation: mail.message
+---XML records in module 'test_mail'---
+NEW ir.model.access: test_mail.access_mail_test_cc_portal
+NEW ir.model.access: test_mail.access_mail_test_cc_user
+NEW ir.model.access: test_mail.access_mail_test_gateway_portal
+NEW ir.model.access: test_mail.access_mail_test_gateway_user
+NEW ir.model.access: test_mail.access_mail_test_multi_company_portal
+NEW ir.model.access: test_mail.access_mail_test_multi_company_user
+NEW ir.rule: test_mail.mail_test_multi_company_rule (noupdate)

@@ -1,0 +1,35 @@
+---Models in module 'l10n_fr_pos_cert'---
+model account.sale.closing (moved from l10n_fr_sale_closing)
+new model report.l10n_fr_pos_cert.report_pos_hash_integrity [abstract]
+---Fields in module 'l10n_fr_pos_cert'---
+l10n_fr_pos_cert / account.sale.closing     / __last_update (datetime)      : previously in module l10n_fr_sale_closing
+l10n_fr_pos_cert / account.sale.closing     / company_id (many2one)         : previously in module l10n_fr_sale_closing
+l10n_fr_pos_cert / account.sale.closing     / cumulative_total (float)      : previously in module l10n_fr_sale_closing
+l10n_fr_pos_cert / account.sale.closing     / currency_id (many2one)        : previously in module l10n_fr_sale_closing
+l10n_fr_pos_cert / account.sale.closing     / date_closing_start (datetime) : previously in module l10n_fr_sale_closing
+l10n_fr_pos_cert / account.sale.closing     / date_closing_stop (datetime)  : previously in module l10n_fr_sale_closing
+l10n_fr_pos_cert / account.sale.closing     / display_name (char)           : previously in module l10n_fr_sale_closing
+l10n_fr_pos_cert / account.sale.closing     / frequency (selection)         : previously in module l10n_fr_sale_closing
+l10n_fr_pos_cert / account.sale.closing     / last_order_hash (char)        : NEW
+l10n_fr_pos_cert / account.sale.closing     / last_order_id (many2one)      : NEW relation: pos.order
+l10n_fr_pos_cert / account.sale.closing     / name (char)                   : previously in module l10n_fr_sale_closing
+l10n_fr_pos_cert / account.sale.closing     / sequence_number (integer)     : previously in module l10n_fr_sale_closing
+l10n_fr_pos_cert / account.sale.closing     / total_interval (float)        : previously in module l10n_fr_sale_closing
+---XML records in module 'l10n_fr_pos_cert'---
+NEW ir.actions.act_window: l10n_fr_pos_cert.action_list_view_account_sale_closing [renamed from l10n_fr_sale_closing module]
+NEW ir.actions.report: l10n_fr_pos_cert.action_report_pos_hash_integrity
+NEW ir.actions.server: l10n_fr_pos_cert.action_check_pos_hash_integrity
+DEL ir.actions.server: l10n_fr_pos_cert.action_check_hash_integrity_pos_orders
+NEW ir.cron: l10n_fr_pos_cert.account_sale_closing_annually [renamed from l10n_fr_sale_closing module]
+NEW ir.cron: l10n_fr_pos_cert.account_sale_closing_daily [renamed from l10n_fr_sale_closing module]
+NEW ir.cron: l10n_fr_pos_cert.account_sale_closing_monthly [renamed from l10n_fr_sale_closing module]
+NEW ir.model.access: l10n_fr_pos_cert.access_l10n_fr_pos_cert_account_sale_closing_user
+NEW ir.rule: l10n_fr_pos_cert.account_sale_closing_multi_company [renamed from l10n_fr_sale_closing module]
+NEW ir.ui.menu: l10n_fr_pos_cert.menu_account_closing_reporting [renamed from l10n_fr_sale_closing module]
+NEW ir.ui.menu: l10n_fr_pos_cert.menu_check_move_integrity_reporting [renamed from l10n_fr_certification module]
+DEL ir.ui.menu: l10n_fr_pos_cert.menu_check_pos_order_integrity
+NEW ir.ui.view: l10n_fr_pos_cert.assets
+NEW ir.ui.view: l10n_fr_pos_cert.form_view_account_sale_closing
+NEW ir.ui.view: l10n_fr_pos_cert.list_view_account_sale_closing
+NEW ir.ui.view: l10n_fr_pos_cert.pos_order_form_inherit
+NEW ir.ui.view: l10n_fr_pos_cert.report_pos_hash_integrity

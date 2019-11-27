@@ -113,6 +113,7 @@ class Registry(Mapping):
         # modules fully loaded (maintained during init phase by `loading` module)
         self._init_modules = set()
         self.updated_modules = []       # installed/updated modules
+        self.openupgrade_test_prefixes = {}
         self.loaded_xmlids = set()
 
         self.db_name = db_name

@@ -1,0 +1,76 @@
+---Models in module 'l10n_sg'---
+---Fields in module 'l10n_sg'---
+l10n_sg      / account.invoice          / l10n_sg_permit_number (char)  : DEL
+l10n_sg      / account.invoice          / l10n_sg_permit_number_date (date): DEL
+l10n_sg      / account.move             / l10n_sg_permit_number (char)  : NEW
+l10n_sg      / account.move             / l10n_sg_permit_number_date (date): NEW
+---XML records in module 'l10n_sg'---
+DEL account.account.tag: l10n_sg.tag_sg_01 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_02 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_03 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_04 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_05 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_06 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_07 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_08 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_09 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_10 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_11 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_12 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_13 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_14 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_15 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_16 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_17 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_18 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_19 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_20 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_21 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_22 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_23 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_24 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_25 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_26 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_27 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_28 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_29 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_30 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_31 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_32 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_33 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_34 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_35 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_36 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_37 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_38 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_39 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_40 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_41 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_42 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_43 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_44 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_45 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_46 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_47 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_48 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_49 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_50 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_51 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_52 (noupdate)
+DEL account.account.tag: l10n_sg.tag_sg_53 (noupdate)
+NEW account.account.template: l10n_sg.account_account_737
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_applicable
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_applicable_goods_imported_value
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_exempt_supplies
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_inp_tax_refund_claim
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_output_tax_due
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_purchases
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_revenues
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_revenues_accounting_period
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_std_rated_supplies
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_supplies
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_taxes
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_total_gst_paid_iras
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_total_supplies
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_total_taxable_purchases
+NEW account.tax.report.line: l10n_sg.account_tax_report_line_zero_rated_supplies

@@ -1,0 +1,6 @@
+---Models in module 'payment_test'---
+---Fields in module 'payment_test'---
+payment_test / payment.acquirer         / provider (False)              : NEW selection_keys: ['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'ogone', 'paypal', 'payulatam', 'payumoney', 'sips', 'stripe', 'test'], mode: modify
+---XML records in module 'payment_test'---
+NEW ir.ui.view: payment_test.test_s2s_form
+NEW payment.acquirer: payment_test.payment_acquirer_test (noupdate)

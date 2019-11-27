@@ -1,0 +1,12 @@
+---Models in module 'pos_adyen'---
+---Fields in module 'pos_adyen'---
+pos_adyen    / pos.config               / adyen_ask_customer_for_tip (boolean): NEW
+pos_adyen    / pos.payment.method       / adyen_api_key (char)          : NEW
+pos_adyen    / pos.payment.method       / adyen_latest_diagnosis (char) : NEW
+pos_adyen    / pos.payment.method       / adyen_latest_response (char)  : NEW
+pos_adyen    / pos.payment.method       / adyen_terminal_identifier (char): NEW
+pos_adyen    / pos.payment.method       / adyen_test_mode (boolean)     : NEW
+---XML records in module 'pos_adyen'---
+NEW ir.ui.view: pos_adyen.assets
+NEW ir.ui.view: pos_adyen.pos_config_view_form
+NEW ir.ui.view: pos_adyen.pos_payment_method_view_form_inherit_pos_adyen

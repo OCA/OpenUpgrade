@@ -1,0 +1,16 @@
+---Models in module 'web_editor'---
+new model web_editor.assets [abstract]
+---Fields in module 'web_editor'---
+web_editor   / web_editor.converter.test / selection (selection)         : DEL selection_keys: [1, 2, 3, 4]
+---XML records in module 'web_editor'---
+NEW ir.ui.view: web_editor._assets_frontend_minimal_js
+NEW ir.ui.view: web_editor._assets_secondary_variables
+NEW ir.ui.view: web_editor.assets_wysiwyg
+NEW ir.ui.view: web_editor.compiled_assets_wysiwyg
+NEW ir.ui.view: web_editor.s_hr
+NEW ir.ui.view: web_editor.wysiwyg_iframe_editor_assets
+DEL ir.ui.view: web_editor.FieldTextHtml
+DEL ir.ui.view: web_editor.assets_editor
+DEL ir.ui.view: web_editor.js_tests_assets
+DEL ir.ui.view: web_editor.layout
+DEL ir.ui.view: web_editor.webclient_bootstrap

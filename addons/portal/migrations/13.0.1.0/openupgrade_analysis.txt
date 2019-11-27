@@ -1,0 +1,17 @@
+---Models in module 'portal'---
+---Fields in module 'portal'---
+portal       / crm.team                 / website_message_ids (one2many): previously in module sales_team
+portal       / event.event              / website_message_ids (one2many): module is now 'event' ('portal')
+portal       / event.registration       / website_message_ids (one2many): module is now 'event' ('portal')
+portal       / lunch.supplier           / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.mass_mailing.contact / website_message_ids (one2many): previously in module mass_mailing
+portal       / mailing.mailing          / website_message_ids (one2many): NEW relation: mail.message
+portal       / phone.blacklist          / website_message_ids (one2many): NEW relation: mail.message
+portal       / product.product          / website_message_ids (one2many): previously in module product
+portal       / product.template         / website_message_ids (one2many): previously in module product
+---XML records in module 'portal'---
+NEW ir.ui.view: portal.assets_tests
+NEW ir.ui.view: portal.portal_404
+NEW ir.ui.view: portal.signature_form
+DEL ir.ui.view: portal.assets_common
+DEL ir.ui.view: portal.portal_signature

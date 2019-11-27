@@ -1,0 +1,9 @@
+---Models in module 'calendar'---
+---Fields in module 'calendar'---
+calendar     / calendar.alarm           / alarm_type (selection)        : NEW required, selection_keys: ['email', 'notification'], req_default: function, hasdefault
+calendar     / calendar.alarm           / type (selection)              : DEL required, selection_keys: ['email', 'notification'], req_default: function
+calendar     / calendar.event           / event_tz (selection)          : NEW selection_keys: function, hasdefault
+calendar     / mail.activity.type       / category (False)              : selection_keys is now '['default', 'meeting', 'upload_file']' ('['default', 'meeting']')
+---XML records in module 'calendar'---
+DEL ir.ui.view: calendar.mail_activity_type_view_form
+DEL ir.ui.view: calendar.view_calendar_event_form_popup

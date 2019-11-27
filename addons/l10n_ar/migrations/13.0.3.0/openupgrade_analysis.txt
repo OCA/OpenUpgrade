@@ -1,0 +1,969 @@
+---Models in module 'l10n_ar'---
+new model l10n_ar.afip.responsibility.type
+---Fields in module 'l10n_ar'---
+l10n_ar      / account.fiscal.position  / l10n_ar_afip_responsibility_type_ids (many2many): NEW relation: l10n_ar.afip.responsibility.type
+l10n_ar      / account.fiscal.position.template / l10n_ar_afip_responsibility_type_ids (many2many): NEW relation: l10n_ar.afip.responsibility.type
+l10n_ar      / account.journal          / l10n_ar_afip_pos_number (integer): NEW
+l10n_ar      / account.journal          / l10n_ar_afip_pos_partner_id (many2one): NEW relation: res.partner
+l10n_ar      / account.journal          / l10n_ar_afip_pos_system (selection): NEW selection_keys: function
+l10n_ar      / account.journal          / l10n_ar_sequence_ids (one2many): NEW relation: ir.sequence
+l10n_ar      / account.journal          / l10n_ar_share_sequences (boolean): NEW
+l10n_ar      / account.move             / l10n_ar_afip_responsibility_type_id (many2one): NEW relation: l10n_ar.afip.responsibility.type
+l10n_ar      / account.move             / l10n_ar_afip_service_end (date): NEW
+l10n_ar      / account.move             / l10n_ar_afip_service_start (date): NEW
+l10n_ar      / account.move             / l10n_ar_currency_rate (float) : NEW
+l10n_ar      / account.tax.group        / l10n_ar_tribute_afip_code (selection): NEW selection_keys: ['01', '02', '03', '04', '06', '07', '08', '09', '99']
+l10n_ar      / account.tax.group        / l10n_ar_vat_afip_code (selection): NEW selection_keys: ['0', '1', '2', '3', '4', '5', '6', '8', '9']
+l10n_ar      / ir.sequence              / l10n_ar_letter (selection)    : NEW selection_keys: function
+l10n_ar      / l10n_ar.afip.responsibility.type / active (boolean)              : NEW hasdefault
+l10n_ar      / l10n_ar.afip.responsibility.type / code (char)                   : NEW required
+l10n_ar      / l10n_ar.afip.responsibility.type / name (char)                   : NEW required
+l10n_ar      / l10n_ar.afip.responsibility.type / sequence (integer)            : NEW
+l10n_ar      / l10n_latam.document.type / l10n_ar_letter (selection)    : NEW selection_keys: function
+l10n_ar      / l10n_latam.document.type / purchase_aliquots (selection) : NEW selection_keys: ['not_zero', 'zero']
+l10n_ar      / l10n_latam.identification.type / l10n_ar_afip_code (char)      : NEW
+l10n_ar      / res.company              / l10n_ar_afip_start_date (date): NEW
+l10n_ar      / res.country              / l10n_ar_afip_code (char)      : NEW
+l10n_ar      / res.country              / l10n_ar_legal_entity_vat (char): NEW
+l10n_ar      / res.country              / l10n_ar_natural_vat (char)    : NEW
+l10n_ar      / res.country              / l10n_ar_other_vat (char)      : NEW
+l10n_ar      / res.currency             / l10n_ar_afip_code (char)      : NEW
+l10n_ar      / res.partner              / l10n_ar_afip_responsibility_type_id (many2one): NEW relation: l10n_ar.afip.responsibility.type
+l10n_ar      / res.partner              / l10n_ar_gross_income_number (char): NEW
+l10n_ar      / res.partner              / l10n_ar_gross_income_type (selection): NEW selection_keys: ['exempt', 'local', 'multilateral']
+l10n_ar      / res.partner              / l10n_ar_special_purchase_document_type_ids (many2many): NEW relation: l10n_latam.document.type
+l10n_ar      / uom.uom                  / l10n_ar_afip_code (char)      : NEW
+---XML records in module 'l10n_ar'---
+DEL account.account.tag: l10n_ar.tag_ar_01
+DEL account.account.tag: l10n_ar.tag_ar_02
+DEL account.account.tag: l10n_ar.tag_ar_03
+DEL account.account.tag: l10n_ar.tag_ar_04
+DEL account.account.tag: l10n_ar.tag_ar_05
+DEL account.account.tag: l10n_ar.tag_ar_06
+DEL account.account.tag: l10n_ar.tag_ar_07
+DEL account.account.tag: l10n_ar.tag_ar_08
+DEL account.account.tag: l10n_ar.tag_ar_09
+DEL account.account.tag: l10n_ar.tag_ar_10
+DEL account.account.tag: l10n_ar.tag_ar_11
+DEL account.account.tag: l10n_ar.tag_ar_12
+DEL account.account.tag: l10n_ar.tag_ar_13
+DEL account.account.tag: l10n_ar.tag_ar_14
+DEL account.account.tag: l10n_ar.tag_ar_15
+DEL account.account.tag: l10n_ar.tag_ar_16
+DEL account.account.tag: l10n_ar.tag_ar_17
+DEL account.account.tag: l10n_ar.tag_ar_18
+DEL account.account.tag: l10n_ar.tag_ar_19
+DEL account.account.tag: l10n_ar.tag_ar_20
+DEL account.account.tag: l10n_ar.tag_ar_21
+DEL account.account.tag: l10n_ar.tag_ar_22
+DEL account.account.tag: l10n_ar.tag_ar_23
+NEW account.account.template: l10n_ar.base_acreedores_varios
+NEW account.account.template: l10n_ar.base_ajuste_por_redondeo
+NEW account.account.template: l10n_ar.base_ajuste_resultados
+NEW account.account.template: l10n_ar.base_ajustes_de_capital
+NEW account.account.template: l10n_ar.base_alquileres_a_pagar
+NEW account.account.template: l10n_ar.base_alquileres_administrativos
+NEW account.account.template: l10n_ar.base_alquileres_comerciales
+NEW account.account.template: l10n_ar.base_alquileres_produccion
+NEW account.account.template: l10n_ar.base_amortizacion_acumulada_derechos_de_marca
+NEW account.account.template: l10n_ar.base_amortizacion_acumulada_instalaciones
+NEW account.account.template: l10n_ar.base_amortizacion_acumulada_maq_y_equipos
+NEW account.account.template: l10n_ar.base_amortizacion_acumulada_muebles_utiles
+NEW account.account.template: l10n_ar.base_amortizacion_acumulada_rodados
+NEW account.account.template: l10n_ar.base_anticipo_ganancias
+NEW account.account.template: l10n_ar.base_anticipo_proveedores
+NEW account.account.template: l10n_ar.base_anticipos_de_clientes
+NEW account.account.template: l10n_ar.base_anticipos_imp_a_las_ganancias_a_pagar
+NEW account.account.template: l10n_ar.base_aportes_no_capitalizados
+NEW account.account.template: l10n_ar.base_aportes_no_reembolsables
+NEW account.account.template: l10n_ar.base_aportes_sindicales_a_pagar
+NEW account.account.template: l10n_ar.base_art_a_pagar
+NEW account.account.template: l10n_ar.base_articulos_de_libreria
+NEW account.account.template: l10n_ar.base_cadeteria_y_franqueo
+NEW account.account.template: l10n_ar.base_capital
+NEW account.account.template: l10n_ar.base_cargas_sociales_administrativos
+NEW account.account.template: l10n_ar.base_cargas_sociales_comerciales
+NEW account.account.template: l10n_ar.base_cargas_sociales_produccion
+NEW account.account.template: l10n_ar.base_cheques_de_terceros
+NEW account.account.template: l10n_ar.base_cheques_de_terceros_rechazados
+NEW account.account.template: l10n_ar.base_cheques_diferidos
+NEW account.account.template: l10n_ar.base_cheques_rechazados
+NEW account.account.template: l10n_ar.base_cmv
+NEW account.account.template: l10n_ar.base_comisiones
+NEW account.account.template: l10n_ar.base_compra_mercaderia
+NEW account.account.template: l10n_ar.base_contrapartida_auxiliar
+NEW account.account.template: l10n_ar.base_cta_particular_socio_x
+NEW account.account.template: l10n_ar.base_derechos_de_marca
+NEW account.account.template: l10n_ar.base_descuentos_obtenidos
+NEW account.account.template: l10n_ar.base_deudores_por_ventas
+NEW account.account.template: l10n_ar.base_deudores_por_ventas_pos
+NEW account.account.template: l10n_ar.base_diferencias_de_cambio
+NEW account.account.template: l10n_ar.base_embargos_a_depositar
+NEW account.account.template: l10n_ar.base_fondo_comun_de_inversion
+NEW account.account.template: l10n_ar.base_futuras_inversiones
+NEW account.account.template: l10n_ar.base_gastos_bancarios
+NEW account.account.template: l10n_ar.base_gastos_varios_administrativos
+NEW account.account.template: l10n_ar.base_gastos_varios_comerciales
+NEW account.account.template: l10n_ar.base_gastos_varios_produccion
+NEW account.account.template: l10n_ar.base_giro_en_descubierto
+NEW account.account.template: l10n_ar.base_haberes_administrativos
+NEW account.account.template: l10n_ar.base_haberes_comerciales
+NEW account.account.template: l10n_ar.base_haberes_produccion
+NEW account.account.template: l10n_ar.base_higiene_y_seguridad
+NEW account.account.template: l10n_ar.base_honorarios_administracion
+NEW account.account.template: l10n_ar.base_honorarios_comercial
+NEW account.account.template: l10n_ar.base_honorarios_produccion
+NEW account.account.template: l10n_ar.base_iibb_a_pagar
+NEW account.account.template: l10n_ar.base_imp_debitos_computables
+NEW account.account.template: l10n_ar.base_impuesto_ganancias_a_pagar
+NEW account.account.template: l10n_ar.base_impuesto_inmobiliario_produccion
+NEW account.account.template: l10n_ar.base_impuestos_a_las_ganancias
+NEW account.account.template: l10n_ar.base_impuestos_debitos_y_creditos
+NEW account.account.template: l10n_ar.base_impuestos_iibb_ba
+NEW account.account.template: l10n_ar.base_impuestos_iibb_caba
+NEW account.account.template: l10n_ar.base_impuestos_iibb_co
+NEW account.account.template: l10n_ar.base_impuestos_iibb_sf
+NEW account.account.template: l10n_ar.base_instalaciones
+NEW account.account.template: l10n_ar.base_intereses_a_pagar
+NEW account.account.template: l10n_ar.base_intereses_fiscales
+NEW account.account.template: l10n_ar.base_intereses_por_descubierto
+NEW account.account.template: l10n_ar.base_intereses_por_venta_de_valores
+NEW account.account.template: l10n_ar.base_mantenimiento_y_limpieza
+NEW account.account.template: l10n_ar.base_mantenimiento_y_reparaciones_produccion
+NEW account.account.template: l10n_ar.base_maq_y_equipos
+NEW account.account.template: l10n_ar.base_materia_prima
+NEW account.account.template: l10n_ar.base_mercaderia_reventa
+NEW account.account.template: l10n_ar.base_movilidad_y_viaticos
+NEW account.account.template: l10n_ar.base_muebles_y_utiles
+NEW account.account.template: l10n_ar.base_otras_deudas_documentadas
+NEW account.account.template: l10n_ar.base_otros_creditos
+NEW account.account.template: l10n_ar.base_patentes_comercial
+NEW account.account.template: l10n_ar.base_percepcion_ganancias_sufrida
+NEW account.account.template: l10n_ar.base_percepcion_iibb_ba_sufrida
+NEW account.account.template: l10n_ar.base_percepcion_iibb_caba_sufrida
+NEW account.account.template: l10n_ar.base_percepcion_iibb_co_sufrida
+NEW account.account.template: l10n_ar.base_percepcion_iibb_sf_sufrida
+NEW account.account.template: l10n_ar.base_plan_de_iibb_a_pagar
+NEW account.account.template: l10n_ar.base_plan_iva_a_pagar
+NEW account.account.template: l10n_ar.base_plan_tasa_municipal_a_pagar
+NEW account.account.template: l10n_ar.base_planes_a_pagar_afip
+NEW account.account.template: l10n_ar.base_plazo_fijo
+NEW account.account.template: l10n_ar.base_prestamo_banco_x
+NEW account.account.template: l10n_ar.base_prevision_gastos
+NEW account.account.template: l10n_ar.base_prevision_para_despidos
+NEW account.account.template: l10n_ar.base_prevision_sac_a_pagar
+NEW account.account.template: l10n_ar.base_productos_en_proceso
+NEW account.account.template: l10n_ar.base_productos_terminados
+NEW account.account.template: l10n_ar.base_proveedores
+NEW account.account.template: l10n_ar.base_proveedores_largo_plazo
+NEW account.account.template: l10n_ar.base_provision_imp_a_las_ganancias
+NEW account.account.template: l10n_ar.base_publicidad
+NEW account.account.template: l10n_ar.base_r_e_c_p_a_m
+NEW account.account.template: l10n_ar.base_recupero_de_gastos
+NEW account.account.template: l10n_ar.base_reserva_estatuitaria
+NEW account.account.template: l10n_ar.base_reserva_legal
+NEW account.account.template: l10n_ar.base_reservas_facultativas
+NEW account.account.template: l10n_ar.base_resultado_acumulados
+NEW account.account.template: l10n_ar.base_resultado_del_ejercicio
+NEW account.account.template: l10n_ar.base_resultado_intereses_ganados
+NEW account.account.template: l10n_ar.base_resultado_intereses_y_recargos
+NEW account.account.template: l10n_ar.base_resultado_venta_bienes_de_uso
+NEW account.account.template: l10n_ar.base_ret_percepcion_tasa_municipal
+NEW account.account.template: l10n_ar.base_retencion_ganancias_sufrida
+NEW account.account.template: l10n_ar.base_retencion_iibb_ba_sufrida
+NEW account.account.template: l10n_ar.base_retencion_iibb_caba_sufrida
+NEW account.account.template: l10n_ar.base_retencion_iibb_co_sufrida
+NEW account.account.template: l10n_ar.base_retencion_iibb_sf_sufrida
+NEW account.account.template: l10n_ar.base_retencion_suss_sufrida
+NEW account.account.template: l10n_ar.base_rodados
+NEW account.account.template: l10n_ar.base_saldo_a_favor_suss
+NEW account.account.template: l10n_ar.base_saldo_a_favor_tasa_municipal
+NEW account.account.template: l10n_ar.base_saldo_favor_ganancias
+NEW account.account.template: l10n_ar.base_saldo_favor_iibb_ba
+NEW account.account.template: l10n_ar.base_saldo_favor_iibb_caba
+NEW account.account.template: l10n_ar.base_saldo_favor_iibb_co
+NEW account.account.template: l10n_ar.base_saldo_favor_iibb_sf
+NEW account.account.template: l10n_ar.base_seguro_de_vida_a_pagar
+NEW account.account.template: l10n_ar.base_seguros_administracion
+NEW account.account.template: l10n_ar.base_seguros_comercial
+NEW account.account.template: l10n_ar.base_seguros_produccion
+NEW account.account.template: l10n_ar.base_sellados_y_certificaciones
+NEW account.account.template: l10n_ar.base_servicio_de_agua_administrativos
+NEW account.account.template: l10n_ar.base_servicio_de_agua_comercial
+NEW account.account.template: l10n_ar.base_servicio_de_agua_produccion
+NEW account.account.template: l10n_ar.base_servicio_de_gas_administrativos
+NEW account.account.template: l10n_ar.base_servicio_de_gas_comercial
+NEW account.account.template: l10n_ar.base_servicio_de_gas_produccion
+NEW account.account.template: l10n_ar.base_servicio_de_internet
+NEW account.account.template: l10n_ar.base_servicio_de_luz_administrativos
+NEW account.account.template: l10n_ar.base_servicio_de_luz_produccion
+NEW account.account.template: l10n_ar.base_servicios_de_luz_ecomercial
+NEW account.account.template: l10n_ar.base_sircreb
+NEW account.account.template: l10n_ar.base_sistema_y_software
+NEW account.account.template: l10n_ar.base_sueldos_a_pagar
+NEW account.account.template: l10n_ar.base_suss_a_pagar
+NEW account.account.template: l10n_ar.base_tasa_municipal
+NEW account.account.template: l10n_ar.base_tasa_municipal_a_pagar
+NEW account.account.template: l10n_ar.base_venta_de_mercaderia
+NEW account.account.template: l10n_ar.base_venta_de_servicios
+NEW account.account.template: l10n_ar.ri_iva_credito_fiscal
+NEW account.account.template: l10n_ar.ri_iva_debito_fiscal
+NEW account.account.template: l10n_ar.ri_iva_saldo_a_pagar
+NEW account.account.template: l10n_ar.ri_iva_saldo_libre_disponibilidad
+NEW account.account.template: l10n_ar.ri_iva_saldo_tecnico_favor
+NEW account.account.template: l10n_ar.ri_percepcion_ganancias_aplicada
+NEW account.account.template: l10n_ar.ri_percepcion_iibb_aplicada
+NEW account.account.template: l10n_ar.ri_percepcion_iva_aplicada
+NEW account.account.template: l10n_ar.ri_percepcion_iva_sufrida
+NEW account.account.template: l10n_ar.ri_retencion_ganancias_aplicada
+NEW account.account.template: l10n_ar.ri_retencion_iibb_a_pagar
+NEW account.account.template: l10n_ar.ri_retencion_iibb_aplicada
+NEW account.account.template: l10n_ar.ri_retencion_iva_aplicada
+NEW account.account.template: l10n_ar.ri_retencion_iva_sufrida
+NEW account.account.template: l10n_ar.ri_retencion_sicore_a_pagar
+DEL account.account.template: l10n_ar.121
+DEL account.account.template: l10n_ar.122
+DEL account.account.template: l10n_ar.123
+DEL account.account.template: l10n_ar.124
+DEL account.account.template: l10n_ar.125
+DEL account.account.template: l10n_ar.131
+DEL account.account.template: l10n_ar.132
+DEL account.account.template: l10n_ar.133
+DEL account.account.template: l10n_ar.134
+DEL account.account.template: l10n_ar.135
+DEL account.account.template: l10n_ar.136
+DEL account.account.template: l10n_ar.137
+DEL account.account.template: l10n_ar.138
+DEL account.account.template: l10n_ar.139
+DEL account.account.template: l10n_ar.141
+DEL account.account.template: l10n_ar.142
+DEL account.account.template: l10n_ar.143
+DEL account.account.template: l10n_ar.144
+DEL account.account.template: l10n_ar.151_01
+DEL account.account.template: l10n_ar.152
+DEL account.account.template: l10n_ar.153
+DEL account.account.template: l10n_ar.154
+DEL account.account.template: l10n_ar.155
+DEL account.account.template: l10n_ar.156
+DEL account.account.template: l10n_ar.157
+DEL account.account.template: l10n_ar.161
+DEL account.account.template: l10n_ar.162
+DEL account.account.template: l10n_ar.163
+DEL account.account.template: l10n_ar.164
+DEL account.account.template: l10n_ar.165
+DEL account.account.template: l10n_ar.171
+DEL account.account.template: l10n_ar.172
+DEL account.account.template: l10n_ar.173
+DEL account.account.template: l10n_ar.174
+DEL account.account.template: l10n_ar.211
+DEL account.account.template: l10n_ar.212
+DEL account.account.template: l10n_ar.213
+DEL account.account.template: l10n_ar.221
+DEL account.account.template: l10n_ar.222
+DEL account.account.template: l10n_ar.223
+DEL account.account.template: l10n_ar.224
+DEL account.account.template: l10n_ar.225
+DEL account.account.template: l10n_ar.231
+DEL account.account.template: l10n_ar.232
+DEL account.account.template: l10n_ar.233
+DEL account.account.template: l10n_ar.234
+DEL account.account.template: l10n_ar.235
+DEL account.account.template: l10n_ar.236
+DEL account.account.template: l10n_ar.241
+DEL account.account.template: l10n_ar.242
+DEL account.account.template: l10n_ar.243
+DEL account.account.template: l10n_ar.244
+DEL account.account.template: l10n_ar.251
+DEL account.account.template: l10n_ar.252
+DEL account.account.template: l10n_ar.253
+DEL account.account.template: l10n_ar.254
+DEL account.account.template: l10n_ar.261
+DEL account.account.template: l10n_ar.262
+DEL account.account.template: l10n_ar.263
+DEL account.account.template: l10n_ar.311
+DEL account.account.template: l10n_ar.312
+DEL account.account.template: l10n_ar.313
+DEL account.account.template: l10n_ar.314
+DEL account.account.template: l10n_ar.321
+DEL account.account.template: l10n_ar.322
+DEL account.account.template: l10n_ar.331
+DEL account.account.template: l10n_ar.341
+DEL account.account.template: l10n_ar.342
+DEL account.account.template: l10n_ar.343
+DEL account.account.template: l10n_ar.344
+DEL account.account.template: l10n_ar.351
+DEL account.account.template: l10n_ar.352
+DEL account.account.template: l10n_ar.353
+DEL account.account.template: l10n_ar.354
+DEL account.account.template: l10n_ar.411_01
+DEL account.account.template: l10n_ar.412
+DEL account.account.template: l10n_ar.413
+DEL account.account.template: l10n_ar.414
+DEL account.account.template: l10n_ar.415
+DEL account.account.template: l10n_ar.416
+DEL account.account.template: l10n_ar.417
+DEL account.account.template: l10n_ar.418
+DEL account.account.template: l10n_ar.421
+DEL account.account.template: l10n_ar.422
+DEL account.account.template: l10n_ar.423
+DEL account.account.template: l10n_ar.424
+DEL account.account.template: l10n_ar.425
+DEL account.account.template: l10n_ar.426
+DEL account.account.template: l10n_ar.511_01
+DEL account.account.template: l10n_ar.512
+DEL account.account.template: l10n_ar.513
+DEL account.account.template: l10n_ar.514
+DEL account.account.template: l10n_ar.515
+DEL account.account.template: l10n_ar.516
+DEL account.account.template: l10n_ar.517
+DEL account.account.template: l10n_ar.518
+DEL account.account.template: l10n_ar.519
+DEL account.account.template: l10n_ar.521
+DEL account.account.template: l10n_ar.522
+DEL account.account.template: l10n_ar.523
+DEL account.account.template: l10n_ar.524
+DEL account.account.template: l10n_ar.61_01
+DEL account.account.template: l10n_ar.62
+DEL account.account.template: l10n_ar.63
+DEL account.account.template: l10n_ar.64
+DEL account.account.type: l10n_ar.account_account_type_NCLASIFICADO
+NEW account.chart.template: l10n_ar.l10nar_base_chart_template (noupdate)
+NEW account.chart.template: l10n_ar.l10nar_ex_chart_template (noupdate)
+NEW account.chart.template: l10n_ar.l10nar_ri_chart_template (noupdate)
+DEL account.chart.template: l10n_ar.ar_chart_template
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_exento
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_no_gravado
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_tax_compras_0
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_tax_compras_10
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_tax_compras_21
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_tax_compras_27
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_tax_ventas_0
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_tax_ventas_10
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_tax_ventas_21
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_tax_ventas_27
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_free_zone_tax_compras_0
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_free_zone_tax_compras_10
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_free_zone_tax_compras_21
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_free_zone_tax_compras_27
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_free_zone_tax_ventas_0
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_free_zone_tax_ventas_10
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_free_zone_tax_ventas_21
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_free_zone_tax_ventas_27
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_iva_no_corresponde_exento
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_iva_no_corresponde_no_gravado
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_iva_no_corresponde_tax_0
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_iva_no_corresponde_tax_10
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_iva_no_corresponde_tax_21
+NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_iva_no_corresponde_tax_27
+NEW account.fiscal.position.template: l10n_ar.fiscal_position_template_exempt_operations
+NEW account.fiscal.position.template: l10n_ar.fiscal_position_template_free_zone
+NEW account.fiscal.position.template: l10n_ar.fiscal_position_template_iva_no_corresponde
+NEW account.group: l10n_ar.account_group_activo (noupdate)
+NEW account.group: l10n_ar.account_group_activo_corriente (noupdate)
+NEW account.group: l10n_ar.account_group_activo_no_corriente (noupdate)
+NEW account.group: l10n_ar.account_group_activos_fijos (noupdate)
+NEW account.group: l10n_ar.account_group_activos_intangibles (noupdate)
+NEW account.group: l10n_ar.account_group_bancos (noupdate)
+NEW account.group: l10n_ar.account_group_bienes_de_cambio (noupdate)
+NEW account.group: l10n_ar.account_group_caja (noupdate)
+NEW account.group: l10n_ar.account_group_cajas_y_bancos (noupdate)
+NEW account.group: l10n_ar.account_group_capital_social (noupdate)
+NEW account.group: l10n_ar.account_group_costo_de_mercadería_vendida (noupdate)
+NEW account.group: l10n_ar.account_group_creditos_fiscales (noupdate)
+NEW account.group: l10n_ar.account_group_creditos_fiscales_ganancias (noupdate)
+NEW account.group: l10n_ar.account_group_creditos_fiscales_iibb (noupdate)
+NEW account.group: l10n_ar.account_group_creditos_fiscales_iva (noupdate)
+NEW account.group: l10n_ar.account_group_creditos_fiscales_municipales (noupdate)
+NEW account.group: l10n_ar.account_group_creditos_fiscales_suss (noupdate)
+NEW account.group: l10n_ar.account_group_creditos_por_ventas (noupdate)
+NEW account.group: l10n_ar.account_group_cuentas_particulares (noupdate)
+NEW account.group: l10n_ar.account_group_cuentas_puentes (noupdate)
+NEW account.group: l10n_ar.account_group_derechos_de_marcas (noupdate)
+NEW account.group: l10n_ar.account_group_deudas_comerciales (noupdate)
+NEW account.group: l10n_ar.account_group_deudas_comerciales_a_largo_plazo (noupdate)
+NEW account.group: l10n_ar.account_group_deudas_financieras (noupdate)
+NEW account.group: l10n_ar.account_group_deudas_fiscales (noupdate)
+NEW account.group: l10n_ar.account_group_deudas_iibb (noupdate)
+NEW account.group: l10n_ar.account_group_deudas_imp_ganancias (noupdate)
+NEW account.group: l10n_ar.account_group_deudas_iva (noupdate)
+NEW account.group: l10n_ar.account_group_deudas_tasas_municipales (noupdate)
+NEW account.group: l10n_ar.account_group_egresos (noupdate)
+NEW account.group: l10n_ar.account_group_gastos_administrativos (noupdate)
+NEW account.group: l10n_ar.account_group_gastos_comerciales (noupdate)
+NEW account.group: l10n_ar.account_group_gastos_de_producción (noupdate)
+NEW account.group: l10n_ar.account_group_gastos_financieros (noupdate)
+NEW account.group: l10n_ar.account_group_gastos_operativos (noupdate)
+NEW account.group: l10n_ar.account_group_iibb (noupdate)
+NEW account.group: l10n_ar.account_group_imp_a_las_ganancias (noupdate)
+NEW account.group: l10n_ar.account_group_impuestos (noupdate)
+NEW account.group: l10n_ar.account_group_ingresos (noupdate)
+NEW account.group: l10n_ar.account_group_ingresos_extraordinarios (noupdate)
+NEW account.group: l10n_ar.account_group_ingresos_por_resultados_financieros (noupdate)
+NEW account.group: l10n_ar.account_group_ingresos_por_ventas (noupdate)
+NEW account.group: l10n_ar.account_group_instalaciones (noupdate)
+NEW account.group: l10n_ar.account_group_inversiones (noupdate)
+NEW account.group: l10n_ar.account_group_maquinarias_y_equipos (noupdate)
+NEW account.group: l10n_ar.account_group_muebles_y_útiles (noupdate)
+NEW account.group: l10n_ar.account_group_otros_creditos (noupdate)
+NEW account.group: l10n_ar.account_group_otros_impuestos (noupdate)
+NEW account.group: l10n_ar.account_group_pasivo (noupdate)
+NEW account.group: l10n_ar.account_group_pasivo_corriente (noupdate)
+NEW account.group: l10n_ar.account_group_pasivo_no_corriente (noupdate)
+NEW account.group: l10n_ar.account_group_patrimonio_neto (noupdate)
+NEW account.group: l10n_ar.account_group_previsiones (noupdate)
+NEW account.group: l10n_ar.account_group_remueraciones_y_cargas_sociales (noupdate)
+NEW account.group: l10n_ar.account_group_reservas (noupdate)
+NEW account.group: l10n_ar.account_group_resultados (noupdate)
+NEW account.group: l10n_ar.account_group_rodados (noupdate)
+NEW account.group: l10n_ar.account_group_tasas_municipales (noupdate)
+NEW account.tax.group: account.tax_group_taxes (noupdate)
+NEW account.tax.group: l10n_ar.tax_group_iva_0 (noupdate)
+NEW account.tax.group: l10n_ar.tax_group_iva_025 (noupdate)
+NEW account.tax.group: l10n_ar.tax_group_iva_5 (noupdate)
+NEW account.tax.group: l10n_ar.tax_group_iva_exento (noupdate)
+NEW account.tax.group: l10n_ar.tax_group_iva_no_corresponde (noupdate)
+NEW account.tax.group: l10n_ar.tax_group_iva_no_gravado (noupdate)
+NEW account.tax.group: l10n_ar.tax_group_otras_percepciones (noupdate)
+NEW account.tax.group: l10n_ar.tax_group_percepcion_ganancias (noupdate)
+NEW account.tax.group: l10n_ar.tax_group_percepcion_iibb (noupdate)
+NEW account.tax.group: l10n_ar.tax_group_percepcion_iva (noupdate)
+NEW account.tax.group: l10n_ar.tax_group_percepcion_municipal (noupdate)
+NEW account.tax.group: l10n_ar.tax_impuestos_internos (noupdate)
+DEL account.tax.group: l10n_ar.tax_group_iva_2 (noupdate)
+NEW account.tax.template: l10n_ar.ri_tax_ganancias_iva_adicional
+NEW account.tax.template: l10n_ar.ri_tax_percepcion_ganancias_aplicada
+NEW account.tax.template: l10n_ar.ri_tax_percepcion_ganancias_sufrida
+NEW account.tax.template: l10n_ar.ri_tax_percepcion_iibb_aplicada
+NEW account.tax.template: l10n_ar.ri_tax_percepcion_iibb_ba_sufrida
+NEW account.tax.template: l10n_ar.ri_tax_percepcion_iibb_caba_sufrida
+NEW account.tax.template: l10n_ar.ri_tax_percepcion_iibb_co_sufrida
+NEW account.tax.template: l10n_ar.ri_tax_percepcion_iibb_sf_sufrida
+NEW account.tax.template: l10n_ar.ri_tax_percepcion_iva_aplicada
+NEW account.tax.template: l10n_ar.ri_tax_percepcion_iva_sufrida
+NEW account.tax.template: l10n_ar.ri_tax_vat_0_compras
+NEW account.tax.template: l10n_ar.ri_tax_vat_0_ventas
+NEW account.tax.template: l10n_ar.ri_tax_vat_10_compras
+NEW account.tax.template: l10n_ar.ri_tax_vat_10_ventas
+NEW account.tax.template: l10n_ar.ri_tax_vat_21_compras
+NEW account.tax.template: l10n_ar.ri_tax_vat_21_ventas
+NEW account.tax.template: l10n_ar.ri_tax_vat_25_compras
+NEW account.tax.template: l10n_ar.ri_tax_vat_25_ventas
+NEW account.tax.template: l10n_ar.ri_tax_vat_27_compras
+NEW account.tax.template: l10n_ar.ri_tax_vat_27_ventas
+NEW account.tax.template: l10n_ar.ri_tax_vat_5_compras
+NEW account.tax.template: l10n_ar.ri_tax_vat_5_ventas
+NEW account.tax.template: l10n_ar.ri_tax_vat_exento_compras
+NEW account.tax.template: l10n_ar.ri_tax_vat_exento_ventas
+NEW account.tax.template: l10n_ar.ri_tax_vat_no_corresponde_compras
+NEW account.tax.template: l10n_ar.ri_tax_vat_no_corresponde_ventas
+NEW account.tax.template: l10n_ar.ri_tax_vat_no_gravado_compras
+NEW account.tax.template: l10n_ar.ri_tax_vat_no_gravado_ventas
+DEL account.tax.template: l10n_ar.ITAX_105
+DEL account.tax.template: l10n_ar.ITAX_21
+DEL account.tax.template: l10n_ar.ITAX_27
+DEL account.tax.template: l10n_ar.OTAX_02
+DEL account.tax.template: l10n_ar.OTAX_105
+DEL account.tax.template: l10n_ar.OTAX_21
+DEL account.tax.template: l10n_ar.OTAX_27
+NEW ir.actions.act_window: l10n_ar.action_afip_responsibility_type
+NEW ir.actions.act_window: l10n_ar.action_document_type_argentina
+NEW ir.actions.act_window: l10n_ar.action_iibb_purchases_by_state_and_account_pivot
+NEW ir.actions.act_window: l10n_ar.action_iibb_sales_by_state_and_account_pivot
+NEW ir.model.access: l10n_ar.access_l10n_ar_afip_responsibility_type_all
+NEW ir.ui.menu: l10n_ar.menu_afip_config
+NEW ir.ui.menu: l10n_ar.menu_afip_responsibility_type
+NEW ir.ui.menu: l10n_ar.menu_document_type_argentina
+NEW ir.ui.menu: l10n_ar.menu_iibb_purchases_by_state_and_account
+NEW ir.ui.menu: l10n_ar.menu_iibb_sales_by_state_and_account
+NEW ir.ui.view: l10n_ar.argentinian_extra_info
+NEW ir.ui.view: l10n_ar.base_view_partner_form
+NEW ir.ui.view: l10n_ar.external_layout_background
+NEW ir.ui.view: l10n_ar.external_layout_boxed
+NEW ir.ui.view: l10n_ar.external_layout_clean
+NEW ir.ui.view: l10n_ar.external_layout_standard
+NEW ir.ui.view: l10n_ar.product_uom_form_view
+NEW ir.ui.view: l10n_ar.product_uom_tree_view
+NEW ir.ui.view: l10n_ar.sequence_view
+NEW ir.ui.view: l10n_ar.sequence_view_tree
+NEW ir.ui.view: l10n_ar.view_account_invoice_report_search_inherit
+NEW ir.ui.view: l10n_ar.view_account_journal_form
+NEW ir.ui.view: l10n_ar.view_account_move_filter
+NEW ir.ui.view: l10n_ar.view_account_position_form
+NEW ir.ui.view: l10n_ar.view_afip_responsibility_type_form
+NEW ir.ui.view: l10n_ar.view_afip_responsibility_type_tree
+NEW ir.ui.view: l10n_ar.view_company_form
+NEW ir.ui.view: l10n_ar.view_currency_form
+NEW ir.ui.view: l10n_ar.view_document_type_filter
+NEW ir.ui.view: l10n_ar.view_document_type_form
+NEW ir.ui.view: l10n_ar.view_document_type_tree
+NEW ir.ui.view: l10n_ar.view_move_form
+NEW ir.ui.view: l10n_ar.view_partner_property_form
+NEW ir.ui.view: l10n_ar.view_res_country_form
+NEW ir.ui.view: l10n_ar.view_res_country_tree
+NEW ir.ui.view: l10n_ar.view_res_partner_filter
+NEW ir.ui.view: l10n_ar.view_sequence_search
+NEW l10n_ar.afip.responsibility.type: l10n_ar.res_CF
+NEW l10n_ar.afip.responsibility.type: l10n_ar.res_EVENTUAL
+NEW l10n_ar.afip.responsibility.type: l10n_ar.res_EVENTUAL_SOCIAL
+NEW l10n_ar.afip.responsibility.type: l10n_ar.res_EXT
+NEW l10n_ar.afip.responsibility.type: l10n_ar.res_IVAE
+NEW l10n_ar.afip.responsibility.type: l10n_ar.res_IVANR
+NEW l10n_ar.afip.responsibility.type: l10n_ar.res_IVARI
+NEW l10n_ar.afip.responsibility.type: l10n_ar.res_IVARI_AP
+NEW l10n_ar.afip.responsibility.type: l10n_ar.res_IVARNI
+NEW l10n_ar.afip.responsibility.type: l10n_ar.res_IVA_LIB
+NEW l10n_ar.afip.responsibility.type: l10n_ar.res_MON_SOCIAL
+NEW l10n_ar.afip.responsibility.type: l10n_ar.res_NOCATEG
+NEW l10n_ar.afip.responsibility.type: l10n_ar.res_RM
+NEW l10n_latam.document.type: l10n_ar.dc_a_cvl
+NEW l10n_latam.document.type: l10n_ar.dc_a_f
+NEW l10n_latam.document.type: l10n_ar.dc_a_l
+NEW l10n_latam.document.type: l10n_ar.dc_a_nc
+NEW l10n_latam.document.type: l10n_ar.dc_a_nd
+NEW l10n_latam.document.type: l10n_ar.dc_a_nvc
+NEW l10n_latam.document.type: l10n_ar.dc_a_o_rg1415
+NEW l10n_latam.document.type: l10n_ar.dc_a_r
+NEW l10n_latam.document.type: l10n_ar.dc_a_rf
+NEW l10n_latam.document.type: l10n_ar.dc_a_rg1415
+NEW l10n_latam.document.type: l10n_ar.dc_a_t
+NEW l10n_latam.document.type: l10n_ar.dc_aa_dj_neg
+NEW l10n_latam.document.type: l10n_ar.dc_aa_dj_pos
+NEW l10n_latam.document.type: l10n_ar.dc_ac_dis_cf
+NEW l10n_latam.document.type: l10n_ar.dc_ac_dis_df
+NEW l10n_latam.document.type: l10n_ar.dc_ac_inc_cf
+NEW l10n_latam.document.type: l10n_ar.dc_ac_inc_df
+NEW l10n_latam.document.type: l10n_ar.dc_aduana
+NEW l10n_latam.document.type: l10n_ar.dc_b_cvl
+NEW l10n_latam.document.type: l10n_ar.dc_b_f
+NEW l10n_latam.document.type: l10n_ar.dc_b_l
+NEW l10n_latam.document.type: l10n_ar.dc_b_nc
+NEW l10n_latam.document.type: l10n_ar.dc_b_nd
+NEW l10n_latam.document.type: l10n_ar.dc_b_nvc
+NEW l10n_latam.document.type: l10n_ar.dc_b_o_rg1415
+NEW l10n_latam.document.type: l10n_ar.dc_b_r
+NEW l10n_latam.document.type: l10n_ar.dc_b_rg1415
+NEW l10n_latam.document.type: l10n_ar.dc_b_t
+NEW l10n_latam.document.type: l10n_ar.dc_bs_no_reg
+NEW l10n_latam.document.type: l10n_ar.dc_c_f
+NEW l10n_latam.document.type: l10n_ar.dc_c_l
+NEW l10n_latam.document.type: l10n_ar.dc_c_nc
+NEW l10n_latam.document.type: l10n_ar.dc_c_nd
+NEW l10n_latam.document.type: l10n_ar.dc_c_nvc
+NEW l10n_latam.document.type: l10n_ar.dc_c_o_rg1415
+NEW l10n_latam.document.type: l10n_ar.dc_c_r
+NEW l10n_latam.document.type: l10n_ar.dc_c_rg1415
+NEW l10n_latam.document.type: l10n_ar.dc_cert_ele_gr
+NEW l10n_latam.document.type: l10n_ar.dc_cfcp
+NEW l10n_latam.document.type: l10n_ar.dc_com_a_m
+NEW l10n_latam.document.type: l10n_ar.dc_com_b_m
+NEW l10n_latam.document.type: l10n_ar.dc_con_a_m
+NEW l10n_latam.document.type: l10n_ar.dc_con_b_m
+NEW l10n_latam.document.type: l10n_ar.dc_cptag
+NEW l10n_latam.document.type: l10n_ar.dc_cptfg
+NEW l10n_latam.document.type: l10n_ar.dc_desp_imp
+NEW l10n_latam.document.type: l10n_ar.dc_e_f
+NEW l10n_latam.document.type: l10n_ar.dc_e_fs
+NEW l10n_latam.document.type: l10n_ar.dc_e_nc
+NEW l10n_latam.document.type: l10n_ar.dc_e_nd
+NEW l10n_latam.document.type: l10n_ar.dc_f1116
+NEW l10n_latam.document.type: l10n_ar.dc_f1116b
+NEW l10n_latam.document.type: l10n_ar.dc_f1116c
+NEW l10n_latam.document.type: l10n_ar.dc_fce_a_f
+NEW l10n_latam.document.type: l10n_ar.dc_fce_a_nc
+NEW l10n_latam.document.type: l10n_ar.dc_fce_a_nd
+NEW l10n_latam.document.type: l10n_ar.dc_fce_b_f
+NEW l10n_latam.document.type: l10n_ar.dc_fce_b_nc
+NEW l10n_latam.document.type: l10n_ar.dc_fce_b_nd
+NEW l10n_latam.document.type: l10n_ar.dc_fce_c_f
+NEW l10n_latam.document.type: l10n_ar.dc_fce_c_nc
+NEW l10n_latam.document.type: l10n_ar.dc_fce_c_nd
+NEW l10n_latam.document.type: l10n_ar.dc_imp_serv
+NEW l10n_latam.document.type: l10n_ar.dc_liq_prim_gr
+NEW l10n_latam.document.type: l10n_ar.dc_liq_s_a
+NEW l10n_latam.document.type: l10n_ar.dc_liq_s_b
+NEW l10n_latam.document.type: l10n_ar.dc_liq_sec_gr
+NEW l10n_latam.document.type: l10n_ar.dc_liq_uci_a
+NEW l10n_latam.document.type: l10n_ar.dc_liq_uci_b
+NEW l10n_latam.document.type: l10n_ar.dc_liq_uci_c
+NEW l10n_latam.document.type: l10n_ar.dc_m_cvl
+NEW l10n_latam.document.type: l10n_ar.dc_m_f
+NEW l10n_latam.document.type: l10n_ar.dc_m_l
+NEW l10n_latam.document.type: l10n_ar.dc_m_nc
+NEW l10n_latam.document.type: l10n_ar.dc_m_nd
+NEW l10n_latam.document.type: l10n_ar.dc_m_nvc
+NEW l10n_latam.document.type: l10n_ar.dc_m_o_rg1415
+NEW l10n_latam.document.type: l10n_ar.dc_m_r
+NEW l10n_latam.document.type: l10n_ar.dc_m_rg1415
+NEW l10n_latam.document.type: l10n_ar.dc_mandato
+NEW l10n_latam.document.type: l10n_ar.dc_na
+NEW l10n_latam.document.type: l10n_ar.dc_nc
+NEW l10n_latam.document.type: l10n_ar.dc_nc_liq_uci_a
+NEW l10n_latam.document.type: l10n_ar.dc_nc_liq_uci_b
+NEW l10n_latam.document.type: l10n_ar.dc_nc_liq_uci_c
+NEW l10n_latam.document.type: l10n_ar.dc_nc_rg1415
+NEW l10n_latam.document.type: l10n_ar.dc_nca
+NEW l10n_latam.document.type: l10n_ar.dc_nd_liq_uci_a
+NEW l10n_latam.document.type: l10n_ar.dc_nd_liq_uci_b
+NEW l10n_latam.document.type: l10n_ar.dc_nd_liq_uci_c
+NEW l10n_latam.document.type: l10n_ar.dc_nd_rg1415
+NEW l10n_latam.document.type: l10n_ar.dc_oc_c
+NEW l10n_latam.document.type: l10n_ar.dc_oc_nc
+NEW l10n_latam.document.type: l10n_ar.dc_oc_ncrg3419
+NEW l10n_latam.document.type: l10n_ar.dc_oc_nd
+NEW l10n_latam.document.type: l10n_ar.dc_oc_se
+NEW l10n_latam.document.type: l10n_ar.dc_r_r
+NEW l10n_latam.document.type: l10n_ar.dc_reciclado
+NEW l10n_latam.document.type: l10n_ar.dc_remito_x
+NEW l10n_latam.document.type: l10n_ar.dc_rfc
+NEW l10n_latam.document.type: l10n_ar.dc_sp_c
+NEW l10n_latam.document.type: l10n_ar.dc_sp_nc
+NEW l10n_latam.document.type: l10n_ar.dc_sp_nd
+NEW l10n_latam.document.type: l10n_ar.dc_t
+NEW l10n_latam.document.type: l10n_ar.dc_t_c
+NEW l10n_latam.document.type: l10n_ar.dc_t_m
+NEW l10n_latam.document.type: l10n_ar.dc_t_nc
+NEW l10n_latam.document.type: l10n_ar.dc_t_nc_a
+NEW l10n_latam.document.type: l10n_ar.dc_t_nc_b
+NEW l10n_latam.document.type: l10n_ar.dc_t_nc_c
+NEW l10n_latam.document.type: l10n_ar.dc_t_nc_m
+NEW l10n_latam.document.type: l10n_ar.dc_t_nd_a
+NEW l10n_latam.document.type: l10n_ar.dc_t_nd_b
+NEW l10n_latam.document.type: l10n_ar.dc_t_nd_c
+NEW l10n_latam.document.type: l10n_ar.dc_t_nd_m
+NEW l10n_latam.document.type: l10n_ar.dc_usados
+NEW l10n_latam.document.type: l10n_ar.dc_zeta
+NEW l10n_latam.document.type: l10n_ar.fa_exterior
+NEW l10n_latam.document.type: l10n_ar.nc_exterior
+NEW l10n_latam.identification.type: l10n_ar.it_AN
+NEW l10n_latam.identification.type: l10n_ar.it_CBA
+NEW l10n_latam.identification.type: l10n_ar.it_CCat
+NEW l10n_latam.identification.type: l10n_ar.it_CCor
+NEW l10n_latam.identification.type: l10n_ar.it_CCorr
+NEW l10n_latam.identification.type: l10n_ar.it_CDI
+NEW l10n_latam.identification.type: l10n_ar.it_CIBAR
+NEW l10n_latam.identification.type: l10n_ar.it_CICha
+NEW l10n_latam.identification.type: l10n_ar.it_CIChu
+NEW l10n_latam.identification.type: l10n_ar.it_CIER
+NEW l10n_latam.identification.type: l10n_ar.it_CIF
+NEW l10n_latam.identification.type: l10n_ar.it_CIJ
+NEW l10n_latam.identification.type: l10n_ar.it_CILP
+NEW l10n_latam.identification.type: l10n_ar.it_CILR
+NEW l10n_latam.identification.type: l10n_ar.it_CIMen
+NEW l10n_latam.identification.type: l10n_ar.it_CIMis
+NEW l10n_latam.identification.type: l10n_ar.it_CIN
+NEW l10n_latam.identification.type: l10n_ar.it_CIRN
+NEW l10n_latam.identification.type: l10n_ar.it_CIS
+NEW l10n_latam.identification.type: l10n_ar.it_CISC
+NEW l10n_latam.identification.type: l10n_ar.it_CISF
+NEW l10n_latam.identification.type: l10n_ar.it_CISJ
+NEW l10n_latam.identification.type: l10n_ar.it_CISL
+NEW l10n_latam.identification.type: l10n_ar.it_CISdE
+NEW l10n_latam.identification.type: l10n_ar.it_CIT
+NEW l10n_latam.identification.type: l10n_ar.it_CITdF
+NEW l10n_latam.identification.type: l10n_ar.it_CPF
+NEW l10n_latam.identification.type: l10n_ar.it_CUIL
+NEW l10n_latam.identification.type: l10n_ar.it_CdM
+NEW l10n_latam.identification.type: l10n_ar.it_ET
+NEW l10n_latam.identification.type: l10n_ar.it_LC
+NEW l10n_latam.identification.type: l10n_ar.it_LE
+NEW l10n_latam.identification.type: l10n_ar.it_Sigd
+NEW l10n_latam.identification.type: l10n_ar.it_UpApP
+NEW l10n_latam.identification.type: l10n_ar.it_cuit
+NEW l10n_latam.identification.type: l10n_ar.it_dni
+NEW l10n_latam.identification.type: l10n_latam_base.it_fid
+NEW l10n_latam.identification.type: l10n_latam_base.it_pass
+NEW res.country: base.ad (noupdate)
+NEW res.country: base.ae (noupdate)
+NEW res.country: base.af (noupdate)
+NEW res.country: base.ag (noupdate)
+NEW res.country: base.ai (noupdate)
+NEW res.country: base.al (noupdate)
+NEW res.country: base.am (noupdate)
+NEW res.country: base.ao (noupdate)
+NEW res.country: base.aq (noupdate)
+NEW res.country: base.ar (noupdate)
+NEW res.country: base.as (noupdate)
+NEW res.country: base.at (noupdate)
+NEW res.country: base.au (noupdate)
+NEW res.country: base.aw (noupdate)
+NEW res.country: base.az (noupdate)
+NEW res.country: base.ba (noupdate)
+NEW res.country: base.bb (noupdate)
+NEW res.country: base.bd (noupdate)
+NEW res.country: base.be (noupdate)
+NEW res.country: base.bf (noupdate)
+NEW res.country: base.bg (noupdate)
+NEW res.country: base.bh (noupdate)
+NEW res.country: base.bi (noupdate)
+NEW res.country: base.bj (noupdate)
+NEW res.country: base.bm (noupdate)
+NEW res.country: base.bn (noupdate)
+NEW res.country: base.bo (noupdate)
+NEW res.country: base.bq (noupdate)
+NEW res.country: base.br (noupdate)
+NEW res.country: base.bs (noupdate)
+NEW res.country: base.bt (noupdate)
+NEW res.country: base.bw (noupdate)
+NEW res.country: base.by (noupdate)
+NEW res.country: base.bz (noupdate)
+NEW res.country: base.ca (noupdate)
+NEW res.country: base.cc (noupdate)
+NEW res.country: base.cd (noupdate)
+NEW res.country: base.cf (noupdate)
+NEW res.country: base.cg (noupdate)
+NEW res.country: base.ch (noupdate)
+NEW res.country: base.ci (noupdate)
+NEW res.country: base.ck (noupdate)
+NEW res.country: base.cl (noupdate)
+NEW res.country: base.cm (noupdate)
+NEW res.country: base.cn (noupdate)
+NEW res.country: base.co (noupdate)
+NEW res.country: base.cr (noupdate)
+NEW res.country: base.cu (noupdate)
+NEW res.country: base.cv (noupdate)
+NEW res.country: base.cx (noupdate)
+NEW res.country: base.cy (noupdate)
+NEW res.country: base.cz (noupdate)
+NEW res.country: base.de (noupdate)
+NEW res.country: base.dj (noupdate)
+NEW res.country: base.dk (noupdate)
+NEW res.country: base.dm (noupdate)
+NEW res.country: base.do (noupdate)
+NEW res.country: base.dz (noupdate)
+NEW res.country: base.ec (noupdate)
+NEW res.country: base.ee (noupdate)
+NEW res.country: base.eg (noupdate)
+NEW res.country: base.er (noupdate)
+NEW res.country: base.es (noupdate)
+NEW res.country: base.et (noupdate)
+NEW res.country: base.fi (noupdate)
+NEW res.country: base.fj (noupdate)
+NEW res.country: base.fk (noupdate)
+NEW res.country: base.fm (noupdate)
+NEW res.country: base.fr (noupdate)
+NEW res.country: base.ga (noupdate)
+NEW res.country: base.gd (noupdate)
+NEW res.country: base.ge (noupdate)
+NEW res.country: base.gg (noupdate)
+NEW res.country: base.gh (noupdate)
+NEW res.country: base.gi (noupdate)
+NEW res.country: base.gl (noupdate)
+NEW res.country: base.gm (noupdate)
+NEW res.country: base.gn (noupdate)
+NEW res.country: base.gq (noupdate)
+NEW res.country: base.gr (noupdate)
+NEW res.country: base.gt (noupdate)
+NEW res.country: base.gu (noupdate)
+NEW res.country: base.gw (noupdate)
+NEW res.country: base.gy (noupdate)
+NEW res.country: base.hk (noupdate)
+NEW res.country: base.hn (noupdate)
+NEW res.country: base.hr (noupdate)
+NEW res.country: base.ht (noupdate)
+NEW res.country: base.hu (noupdate)
+NEW res.country: base.id (noupdate)
+NEW res.country: base.ie (noupdate)
+NEW res.country: base.il (noupdate)
+NEW res.country: base.im (noupdate)
+NEW res.country: base.in (noupdate)
+NEW res.country: base.iq (noupdate)
+NEW res.country: base.ir (noupdate)
+NEW res.country: base.is (noupdate)
+NEW res.country: base.it (noupdate)
+NEW res.country: base.je (noupdate)
+NEW res.country: base.jm (noupdate)
+NEW res.country: base.jo (noupdate)
+NEW res.country: base.jp (noupdate)
+NEW res.country: base.ke (noupdate)
+NEW res.country: base.kg (noupdate)
+NEW res.country: base.kh (noupdate)
+NEW res.country: base.ki (noupdate)
+NEW res.country: base.km (noupdate)
+NEW res.country: base.kn (noupdate)
+NEW res.country: base.kp (noupdate)
+NEW res.country: base.kr (noupdate)
+NEW res.country: base.kw (noupdate)
+NEW res.country: base.ky (noupdate)
+NEW res.country: base.kz (noupdate)
+NEW res.country: base.la (noupdate)
+NEW res.country: base.lb (noupdate)
+NEW res.country: base.lc (noupdate)
+NEW res.country: base.li (noupdate)
+NEW res.country: base.lk (noupdate)
+NEW res.country: base.lr (noupdate)
+NEW res.country: base.ls (noupdate)
+NEW res.country: base.lt (noupdate)
+NEW res.country: base.lu (noupdate)
+NEW res.country: base.lv (noupdate)
+NEW res.country: base.ly (noupdate)
+NEW res.country: base.ma (noupdate)
+NEW res.country: base.mc (noupdate)
+NEW res.country: base.md (noupdate)
+NEW res.country: base.me (noupdate)
+NEW res.country: base.mg (noupdate)
+NEW res.country: base.mh (noupdate)
+NEW res.country: base.mk (noupdate)
+NEW res.country: base.ml (noupdate)
+NEW res.country: base.mm (noupdate)
+NEW res.country: base.mn (noupdate)
+NEW res.country: base.mo (noupdate)
+NEW res.country: base.mp (noupdate)
+NEW res.country: base.mr (noupdate)
+NEW res.country: base.ms (noupdate)
+NEW res.country: base.mt (noupdate)
+NEW res.country: base.mu (noupdate)
+NEW res.country: base.mv (noupdate)
+NEW res.country: base.mw (noupdate)
+NEW res.country: base.mx (noupdate)
+NEW res.country: base.my (noupdate)
+NEW res.country: base.mz (noupdate)
+NEW res.country: base.na (noupdate)
+NEW res.country: base.ne (noupdate)
+NEW res.country: base.nf (noupdate)
+NEW res.country: base.ng (noupdate)
+NEW res.country: base.ni (noupdate)
+NEW res.country: base.nl (noupdate)
+NEW res.country: base.no (noupdate)
+NEW res.country: base.np (noupdate)
+NEW res.country: base.nr (noupdate)
+NEW res.country: base.nu (noupdate)
+NEW res.country: base.nz (noupdate)
+NEW res.country: base.om (noupdate)
+NEW res.country: base.pa (noupdate)
+NEW res.country: base.pe (noupdate)
+NEW res.country: base.pf (noupdate)
+NEW res.country: base.pg (noupdate)
+NEW res.country: base.ph (noupdate)
+NEW res.country: base.pk (noupdate)
+NEW res.country: base.pl (noupdate)
+NEW res.country: base.pm (noupdate)
+NEW res.country: base.pn (noupdate)
+NEW res.country: base.pr (noupdate)
+NEW res.country: base.ps (noupdate)
+NEW res.country: base.pt (noupdate)
+NEW res.country: base.pw (noupdate)
+NEW res.country: base.py (noupdate)
+NEW res.country: base.qa (noupdate)
+NEW res.country: base.ro (noupdate)
+NEW res.country: base.rs (noupdate)
+NEW res.country: base.ru (noupdate)
+NEW res.country: base.rw (noupdate)
+NEW res.country: base.sa (noupdate)
+NEW res.country: base.sb (noupdate)
+NEW res.country: base.sc (noupdate)
+NEW res.country: base.sd (noupdate)
+NEW res.country: base.se (noupdate)
+NEW res.country: base.sg (noupdate)
+NEW res.country: base.sh (noupdate)
+NEW res.country: base.si (noupdate)
+NEW res.country: base.sj (noupdate)
+NEW res.country: base.sk (noupdate)
+NEW res.country: base.sl (noupdate)
+NEW res.country: base.sm (noupdate)
+NEW res.country: base.sn (noupdate)
+NEW res.country: base.so (noupdate)
+NEW res.country: base.sr (noupdate)
+NEW res.country: base.st (noupdate)
+NEW res.country: base.sv (noupdate)
+NEW res.country: base.sy (noupdate)
+NEW res.country: base.sz (noupdate)
+NEW res.country: base.tc (noupdate)
+NEW res.country: base.td (noupdate)
+NEW res.country: base.tg (noupdate)
+NEW res.country: base.th (noupdate)
+NEW res.country: base.tj (noupdate)
+NEW res.country: base.tk (noupdate)
+NEW res.country: base.tl (noupdate)
+NEW res.country: base.tm (noupdate)
+NEW res.country: base.tn (noupdate)
+NEW res.country: base.to (noupdate)
+NEW res.country: base.tr (noupdate)
+NEW res.country: base.tt (noupdate)
+NEW res.country: base.tv (noupdate)
+NEW res.country: base.tw (noupdate)
+NEW res.country: base.tz (noupdate)
+NEW res.country: base.ua (noupdate)
+NEW res.country: base.ug (noupdate)
+NEW res.country: base.uk (noupdate)
+NEW res.country: base.us (noupdate)
+NEW res.country: base.uy (noupdate)
+NEW res.country: base.uz (noupdate)
+NEW res.country: base.va (noupdate)
+NEW res.country: base.vc (noupdate)
+NEW res.country: base.ve (noupdate)
+NEW res.country: base.vg (noupdate)
+NEW res.country: base.vi (noupdate)
+NEW res.country: base.vn (noupdate)
+NEW res.country: base.vu (noupdate)
+NEW res.country: base.ws (noupdate)
+NEW res.country: base.ye (noupdate)
+NEW res.country: base.za (noupdate)
+NEW res.country: base.zm (noupdate)
+NEW res.country: base.zw (noupdate)
+NEW res.currency: base.ANG (noupdate)
+NEW res.currency: base.ARS (noupdate)
+NEW res.currency: base.AUD (noupdate)
+NEW res.currency: base.BOB (noupdate)
+NEW res.currency: base.BRL (noupdate)
+NEW res.currency: base.CAD (noupdate)
+NEW res.currency: base.CHF (noupdate)
+NEW res.currency: base.CLP (noupdate)
+NEW res.currency: base.CNY (noupdate)
+NEW res.currency: base.COP (noupdate)
+NEW res.currency: base.CZK (noupdate)
+NEW res.currency: base.DKK (noupdate)
+NEW res.currency: base.DOP (noupdate)
+NEW res.currency: base.ECS (noupdate)
+NEW res.currency: base.EGP (noupdate)
+NEW res.currency: base.EUR (noupdate)
+NEW res.currency: base.GBP (noupdate)
+NEW res.currency: base.GTQ (noupdate)
+NEW res.currency: base.HKD (noupdate)
+NEW res.currency: base.HNL (noupdate)
+NEW res.currency: base.HUF (noupdate)
+NEW res.currency: base.ILS (noupdate)
+NEW res.currency: base.INR (noupdate)
+NEW res.currency: base.ITL (noupdate)
+NEW res.currency: base.JMD (noupdate)
+NEW res.currency: base.JPY (noupdate)
+NEW res.currency: base.KWD (noupdate)
+NEW res.currency: base.MAD (noupdate)
+NEW res.currency: base.MXN (noupdate)
+NEW res.currency: base.NIO (noupdate)
+NEW res.currency: base.NOK (noupdate)
+NEW res.currency: base.PAB (noupdate)
+NEW res.currency: base.PEN (noupdate)
+NEW res.currency: base.PLN (noupdate)
+NEW res.currency: base.PYG (noupdate)
+NEW res.currency: base.RON (noupdate)
+NEW res.currency: base.SAR (noupdate)
+NEW res.currency: base.SEK (noupdate)
+NEW res.currency: base.SGD (noupdate)
+NEW res.currency: base.THB (noupdate)
+NEW res.currency: base.TWD (noupdate)
+NEW res.currency: base.USD (noupdate)
+NEW res.currency: base.UYU (noupdate)
+NEW res.currency: base.VEF (noupdate)
+NEW res.currency: base.ZAR (noupdate)
+NEW res.partner: l10n_ar.par_cfa (noupdate)
+NEW res.partner: l10n_ar.par_iibb_pagar (noupdate)
+NEW res.partner: l10n_ar.partner_afip (noupdate)
+NEW uom.uom: uom.product_uom_cm (noupdate)
+NEW uom.uom: uom.product_uom_day (noupdate)
+NEW uom.uom: uom.product_uom_dozen (noupdate)
+NEW uom.uom: uom.product_uom_floz (noupdate)
+NEW uom.uom: uom.product_uom_foot (noupdate)
+NEW uom.uom: uom.product_uom_gal (noupdate)
+NEW uom.uom: uom.product_uom_gram (noupdate)
+NEW uom.uom: uom.product_uom_hour (noupdate)
+NEW uom.uom: uom.product_uom_inch (noupdate)
+NEW uom.uom: uom.product_uom_kgm (noupdate)
+NEW uom.uom: uom.product_uom_km (noupdate)
+NEW uom.uom: uom.product_uom_lb (noupdate)
+NEW uom.uom: uom.product_uom_litre (noupdate)
+NEW uom.uom: uom.product_uom_meter (noupdate)
+NEW uom.uom: uom.product_uom_mile (noupdate)
+NEW uom.uom: uom.product_uom_oz (noupdate)
+NEW uom.uom: uom.product_uom_qt (noupdate)
+NEW uom.uom: uom.product_uom_ton (noupdate)
+NEW uom.uom: uom.product_uom_unit (noupdate)

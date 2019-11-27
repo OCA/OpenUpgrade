@@ -1,0 +1,7 @@
+---Models in module 'hr_maintenance'---
+---Fields in module 'hr_maintenance'---
+hr_maintenance / hr.employee              / equipment_ids (one2many)      : NEW relation: maintenance.equipment
+hr_maintenance / res.users                / equipment_ids (one2many)      : NEW relation: maintenance.equipment
+---XML records in module 'hr_maintenance'---
+NEW ir.ui.view: hr_maintenance.hr_employee_view_form
+NEW ir.ui.view: hr_maintenance.res_users_view_form_preference

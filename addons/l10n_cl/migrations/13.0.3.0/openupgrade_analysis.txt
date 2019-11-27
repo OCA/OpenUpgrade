@@ -1,0 +1,755 @@
+---Models in module 'l10n_cl'---
+---Fields in module 'l10n_cl'---
+l10n_cl      / account.journal          / l10n_cl_sequence_ids (many2many): NEW relation: ir.sequence
+l10n_cl      / account.tax              / l10n_cl_sii_code (integer)    : NEW
+l10n_cl      / account.tax.template     / l10n_cl_sii_code (integer)    : NEW
+l10n_cl      / ir.sequence              / l10n_cl_journal_ids (many2many): NEW relation: account.journal
+l10n_cl      / l10n_latam.document.type / internal_type (False)         : NEW selection_keys: ['credit_note', 'debit_note', 'invoice', 'invoice_in', 'receipt_invoice'], mode: modify
+l10n_cl      / res.bank                 / l10n_cl_sbif_code (char)      : NEW
+l10n_cl      / res.country              / l10n_cl_customs_abbreviation (char): NEW
+l10n_cl      / res.country              / l10n_cl_customs_code (char)   : NEW
+l10n_cl      / res.country              / l10n_cl_customs_name (char)   : NEW
+l10n_cl      / res.currency             / l10n_cl_currency_code (char)  : NEW
+l10n_cl      / res.currency             / l10n_cl_short_name (char)     : NEW
+l10n_cl      / res.partner              / l10n_cl_sii_taxpayer_type (selection): NEW selection_keys: ['1', '2', '3', '4']
+l10n_cl      / uom.uom                  / l10n_cl_sii_code (char)       : NEW
+---XML records in module 'l10n_cl'---
+NEW account.account.tag: l10n_cl.tag_cl_fees_amount
+NEW account.account.tag: l10n_cl.tag_cl_impuesto_unico_trabajadores
+NEW account.account.tag: l10n_cl.tag_cl_purchase_imp_42
+NEW account.account.tag: l10n_cl.tag_cl_purchase_imp_sin_cred
+NEW account.account.tag: l10n_cl.tag_cl_purchase_imp_sin_credito
+NEW account.account.tag: l10n_cl.tag_cl_purchase_imp_vehic
+NEW account.account.tag: l10n_cl.tag_cl_purchase_iva_no_ret
+NEW account.account.tag: l10n_cl.tag_cl_purchase_iva_no_reten
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_exe
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_iva
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_iva_actf
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_iva_actf_no_recup
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_iva_actf_uso_comun
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_iva_no_rec
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_iva_supermercado
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_iva_uso_comun
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_neto
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_neto_actf
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_neto_no_recup
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_neto_supermercado
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_neto_uso_comun
+NEW account.account.tag: l10n_cl.tag_cl_purchase_mnt_otros_imp
+NEW account.account.tag: l10n_cl.tag_cl_purchase_tab_cigar
+NEW account.account.tag: l10n_cl.tag_cl_purchase_tab_elab
+NEW account.account.tag: l10n_cl.tag_cl_purchase_tab_puros
+NEW account.account.tag: l10n_cl.tag_cl_remanente_cf
+NEW account.account.tag: l10n_cl.tag_cl_sale_cred_ec
+NEW account.account.tag: l10n_cl.tag_cl_sale_dep_env
+NEW account.account.tag: l10n_cl.tag_cl_sale_exento_vta_pasajes_internacional
+NEW account.account.tag: l10n_cl.tag_cl_sale_exento_vta_pasajes_nacional
+NEW account.account.tag: l10n_cl.tag_cl_sale_iva_18211
+NEW account.account.tag: l10n_cl.tag_cl_sale_iva_comisiones
+NEW account.account.tag: l10n_cl.tag_cl_sale_iva_no_retenido
+NEW account.account.tag: l10n_cl.tag_cl_sale_iva_propio
+NEW account.account.tag: l10n_cl.tag_cl_sale_iva_ret_parcial
+NEW account.account.tag: l10n_cl.tag_cl_sale_iva_ret_total
+NEW account.account.tag: l10n_cl.tag_cl_sale_iva_terceros
+NEW account.account.tag: l10n_cl.tag_cl_sale_mnt_exe
+NEW account.account.tag: l10n_cl.tag_cl_sale_mnt_fuera_plazo
+NEW account.account.tag: l10n_cl.tag_cl_sale_mnt_iva
+NEW account.account.tag: l10n_cl.tag_cl_sale_mnt_neto
+NEW account.account.tag: l10n_cl.tag_cl_sale_monto_no_facturable
+NEW account.account.tag: l10n_cl.tag_cl_sale_otros_imp
+NEW account.account.tag: l10n_cl.tag_cl_sale_valor_comisiones_no_afecto
+NEW account.account.tag: l10n_cl.tag_cl_sale_valor_neto_comis
+DEL account.account.tag: l10n_cl.tag_cl_01
+DEL account.account.tag: l10n_cl.tag_cl_02
+DEL account.account.tag: l10n_cl.tag_cl_03
+DEL account.account.tag: l10n_cl.tag_cl_04
+DEL account.account.tag: l10n_cl.tag_cl_05
+DEL account.account.tag: l10n_cl.tag_cl_06
+DEL account.account.tag: l10n_cl.tag_cl_07
+DEL account.account.tag: l10n_cl.tag_cl_08
+DEL account.account.tag: l10n_cl.tag_cl_09
+DEL account.account.tag: l10n_cl.tag_cl_10
+DEL account.account.tag: l10n_cl.tag_cl_11
+DEL account.account.tag: l10n_cl.tag_cl_12
+DEL account.account.tag: l10n_cl.tag_cl_13
+DEL account.account.tag: l10n_cl.tag_cl_14
+DEL account.account.tag: l10n_cl.tag_cl_15
+DEL account.account.tag: l10n_cl.tag_cl_16
+DEL account.account.tag: l10n_cl.tag_cl_17
+DEL account.account.tag: l10n_cl.tag_cl_18
+DEL account.account.tag: l10n_cl.tag_cl_19
+DEL account.account.tag: l10n_cl.tag_cl_20
+NEW account.account.template: l10n_cl.account_110210
+NEW account.account.template: l10n_cl.account_110220
+NEW account.account.template: l10n_cl.account_110310
+NEW account.account.template: l10n_cl.account_110420
+NEW account.account.template: l10n_cl.account_110421
+NEW account.account.template: l10n_cl.account_110430
+NEW account.account.template: l10n_cl.account_110440
+NEW account.account.template: l10n_cl.account_110450
+NEW account.account.template: l10n_cl.account_110510
+NEW account.account.template: l10n_cl.account_110520
+NEW account.account.template: l10n_cl.account_110530
+NEW account.account.template: l10n_cl.account_110540
+NEW account.account.template: l10n_cl.account_110550
+NEW account.account.template: l10n_cl.account_110560
+NEW account.account.template: l10n_cl.account_110570
+NEW account.account.template: l10n_cl.account_110580
+NEW account.account.template: l10n_cl.account_110585
+NEW account.account.template: l10n_cl.account_110590
+NEW account.account.template: l10n_cl.account_110610
+NEW account.account.template: l10n_cl.account_110612
+NEW account.account.template: l10n_cl.account_110615
+NEW account.account.template: l10n_cl.account_110620
+NEW account.account.template: l10n_cl.account_110625
+NEW account.account.template: l10n_cl.account_110630
+NEW account.account.template: l10n_cl.account_110640
+NEW account.account.template: l10n_cl.account_110650
+NEW account.account.template: l10n_cl.account_110660
+NEW account.account.template: l10n_cl.account_110670
+NEW account.account.template: l10n_cl.account_110710
+NEW account.account.template: l10n_cl.account_110720
+NEW account.account.template: l10n_cl.account_110730
+NEW account.account.template: l10n_cl.account_110740
+NEW account.account.template: l10n_cl.account_110750
+NEW account.account.template: l10n_cl.account_110810
+NEW account.account.template: l10n_cl.account_110820
+NEW account.account.template: l10n_cl.account_110830
+NEW account.account.template: l10n_cl.account_110910
+NEW account.account.template: l10n_cl.account_110920
+NEW account.account.template: l10n_cl.account_111010
+NEW account.account.template: l10n_cl.account_111110
+NEW account.account.template: l10n_cl.account_111210
+NEW account.account.template: l10n_cl.account_111310
+NEW account.account.template: l10n_cl.account_111410
+NEW account.account.template: l10n_cl.account_11320
+NEW account.account.template: l10n_cl.account_11410
+NEW account.account.template: l10n_cl.account_11700
+NEW account.account.template: l10n_cl.account_120110
+NEW account.account.template: l10n_cl.account_120120
+NEW account.account.template: l10n_cl.account_121110
+NEW account.account.template: l10n_cl.account_121120
+NEW account.account.template: l10n_cl.account_121130
+NEW account.account.template: l10n_cl.account_121140
+NEW account.account.template: l10n_cl.account_121210
+NEW account.account.template: l10n_cl.account_121310
+NEW account.account.template: l10n_cl.account_121320
+NEW account.account.template: l10n_cl.account_121330
+NEW account.account.template: l10n_cl.account_130110
+NEW account.account.template: l10n_cl.account_130112
+NEW account.account.template: l10n_cl.account_130114
+NEW account.account.template: l10n_cl.account_130116
+NEW account.account.template: l10n_cl.account_130120
+NEW account.account.template: l10n_cl.account_130130
+NEW account.account.template: l10n_cl.account_130140
+NEW account.account.template: l10n_cl.account_130150
+NEW account.account.template: l10n_cl.account_130160
+NEW account.account.template: l10n_cl.account_190110
+NEW account.account.template: l10n_cl.account_190210
+NEW account.account.template: l10n_cl.account_190310
+NEW account.account.template: l10n_cl.account_190410
+NEW account.account.template: l10n_cl.account_210110
+NEW account.account.template: l10n_cl.account_210120
+NEW account.account.template: l10n_cl.account_210140
+NEW account.account.template: l10n_cl.account_210150
+NEW account.account.template: l10n_cl.account_210160
+NEW account.account.template: l10n_cl.account_210170
+NEW account.account.template: l10n_cl.account_210180
+NEW account.account.template: l10n_cl.account_210190
+NEW account.account.template: l10n_cl.account_210195
+NEW account.account.template: l10n_cl.account_210210
+NEW account.account.template: l10n_cl.account_210220
+NEW account.account.template: l10n_cl.account_210230
+NEW account.account.template: l10n_cl.account_210310
+NEW account.account.template: l10n_cl.account_210320
+NEW account.account.template: l10n_cl.account_210330
+NEW account.account.template: l10n_cl.account_210410
+NEW account.account.template: l10n_cl.account_210420
+NEW account.account.template: l10n_cl.account_210430
+NEW account.account.template: l10n_cl.account_210440
+NEW account.account.template: l10n_cl.account_210450
+NEW account.account.template: l10n_cl.account_210510
+NEW account.account.template: l10n_cl.account_210520
+NEW account.account.template: l10n_cl.account_210550
+NEW account.account.template: l10n_cl.account_210560
+NEW account.account.template: l10n_cl.account_210565
+NEW account.account.template: l10n_cl.account_210610
+NEW account.account.template: l10n_cl.account_210620
+NEW account.account.template: l10n_cl.account_210710
+NEW account.account.template: l10n_cl.account_210720
+NEW account.account.template: l10n_cl.account_210730
+NEW account.account.template: l10n_cl.account_210740
+NEW account.account.template: l10n_cl.account_210750
+NEW account.account.template: l10n_cl.account_210760
+NEW account.account.template: l10n_cl.account_220120
+NEW account.account.template: l10n_cl.account_220130
+NEW account.account.template: l10n_cl.account_220210
+NEW account.account.template: l10n_cl.account_220310
+NEW account.account.template: l10n_cl.account_220320
+NEW account.account.template: l10n_cl.account_220330
+NEW account.account.template: l10n_cl.account_230110
+NEW account.account.template: l10n_cl.account_230120
+NEW account.account.template: l10n_cl.account_230130
+NEW account.account.template: l10n_cl.account_230140
+NEW account.account.template: l10n_cl.account_230210
+NEW account.account.template: l10n_cl.account_230220
+NEW account.account.template: l10n_cl.account_230230
+NEW account.account.template: l10n_cl.account_230240
+NEW account.account.template: l10n_cl.account_230250
+NEW account.account.template: l10n_cl.account_230260
+NEW account.account.template: l10n_cl.account_230270
+NEW account.account.template: l10n_cl.account_230280
+NEW account.account.template: l10n_cl.account_230290
+NEW account.account.template: l10n_cl.account_230300
+NEW account.account.template: l10n_cl.account_230310
+NEW account.account.template: l10n_cl.account_230510
+NEW account.account.template: l10n_cl.account_290110
+NEW account.account.template: l10n_cl.account_290210
+NEW account.account.template: l10n_cl.account_290220
+NEW account.account.template: l10n_cl.account_290230
+NEW account.account.template: l10n_cl.account_310110
+NEW account.account.template: l10n_cl.account_310115
+NEW account.account.template: l10n_cl.account_310120
+NEW account.account.template: l10n_cl.account_310125
+NEW account.account.template: l10n_cl.account_310130
+NEW account.account.template: l10n_cl.account_320210
+NEW account.account.template: l10n_cl.account_320220
+NEW account.account.template: l10n_cl.account_320225
+NEW account.account.template: l10n_cl.account_320230
+NEW account.account.template: l10n_cl.account_320235
+NEW account.account.template: l10n_cl.account_320240
+NEW account.account.template: l10n_cl.account_320245
+NEW account.account.template: l10n_cl.account_320250
+NEW account.account.template: l10n_cl.account_320255
+NEW account.account.template: l10n_cl.account_320260
+NEW account.account.template: l10n_cl.account_320265
+NEW account.account.template: l10n_cl.account_320270
+NEW account.account.template: l10n_cl.account_320275
+NEW account.account.template: l10n_cl.account_320280
+NEW account.account.template: l10n_cl.account_320285
+NEW account.account.template: l10n_cl.account_410110
+NEW account.account.template: l10n_cl.account_410115
+NEW account.account.template: l10n_cl.account_410120
+NEW account.account.template: l10n_cl.account_410125
+NEW account.account.template: l10n_cl.account_410130
+NEW account.account.template: l10n_cl.account_410135
+NEW account.account.template: l10n_cl.account_410140
+NEW account.account.template: l10n_cl.account_410145
+NEW account.account.template: l10n_cl.account_410150
+NEW account.account.template: l10n_cl.account_410155
+NEW account.account.template: l10n_cl.account_410160
+NEW account.account.template: l10n_cl.account_410165
+NEW account.account.template: l10n_cl.account_410170
+NEW account.account.template: l10n_cl.account_410175
+NEW account.account.template: l10n_cl.account_410180
+NEW account.account.template: l10n_cl.account_410185
+NEW account.account.template: l10n_cl.account_410190
+NEW account.account.template: l10n_cl.account_410195
+NEW account.account.template: l10n_cl.account_410200
+NEW account.account.template: l10n_cl.account_410205
+NEW account.account.template: l10n_cl.account_410210
+NEW account.account.template: l10n_cl.account_410215
+NEW account.account.template: l10n_cl.account_410220
+NEW account.account.template: l10n_cl.account_410225
+NEW account.account.template: l10n_cl.account_410230
+NEW account.account.template: l10n_cl.account_410231
+NEW account.account.template: l10n_cl.account_410232
+NEW account.account.template: l10n_cl.account_410233
+NEW account.account.template: l10n_cl.account_410235
+NEW account.account.template: l10n_cl.account_410240
+NEW account.account.template: l10n_cl.account_410245
+NEW account.account.template: l10n_cl.account_410250
+NEW account.account.template: l10n_cl.account_410255
+NEW account.account.template: l10n_cl.account_420110
+NEW account.account.template: l10n_cl.account_420120
+NEW account.account.template: l10n_cl.account_420140
+NEW account.account.template: l10n_cl.account_420150
+NEW account.account.template: l10n_cl.account_420170
+NEW account.account.template: l10n_cl.account_420220
+NEW account.account.template: l10n_cl.account_440210
+DEL account.account.template: l10n_cl.112
+DEL account.account.template: l10n_cl.113_001
+DEL account.account.template: l10n_cl.115
+DEL account.account.template: l10n_cl.116
+DEL account.account.template: l10n_cl.121
+DEL account.account.template: l10n_cl.122
+DEL account.account.template: l10n_cl.123
+DEL account.account.template: l10n_cl.124
+DEL account.account.template: l10n_cl.125
+DEL account.account.template: l10n_cl.131
+DEL account.account.template: l10n_cl.132
+DEL account.account.template: l10n_cl.133
+DEL account.account.template: l10n_cl.134
+DEL account.account.template: l10n_cl.135
+DEL account.account.template: l10n_cl.136
+DEL account.account.template: l10n_cl.137
+DEL account.account.template: l10n_cl.138
+DEL account.account.template: l10n_cl.139
+DEL account.account.template: l10n_cl.141
+DEL account.account.template: l10n_cl.142
+DEL account.account.template: l10n_cl.143
+DEL account.account.template: l10n_cl.144
+DEL account.account.template: l10n_cl.151_01
+DEL account.account.template: l10n_cl.152
+DEL account.account.template: l10n_cl.153
+DEL account.account.template: l10n_cl.154
+DEL account.account.template: l10n_cl.155
+DEL account.account.template: l10n_cl.156
+DEL account.account.template: l10n_cl.157
+DEL account.account.template: l10n_cl.161
+DEL account.account.template: l10n_cl.162
+DEL account.account.template: l10n_cl.163
+DEL account.account.template: l10n_cl.164
+DEL account.account.template: l10n_cl.165
+DEL account.account.template: l10n_cl.171
+DEL account.account.template: l10n_cl.172
+DEL account.account.template: l10n_cl.173
+DEL account.account.template: l10n_cl.174
+DEL account.account.template: l10n_cl.211
+DEL account.account.template: l10n_cl.212
+DEL account.account.template: l10n_cl.213
+DEL account.account.template: l10n_cl.221
+DEL account.account.template: l10n_cl.222
+DEL account.account.template: l10n_cl.223
+DEL account.account.template: l10n_cl.224
+DEL account.account.template: l10n_cl.225
+DEL account.account.template: l10n_cl.231
+DEL account.account.template: l10n_cl.232
+DEL account.account.template: l10n_cl.241
+DEL account.account.template: l10n_cl.242
+DEL account.account.template: l10n_cl.243
+DEL account.account.template: l10n_cl.244
+DEL account.account.template: l10n_cl.251
+DEL account.account.template: l10n_cl.252
+DEL account.account.template: l10n_cl.253
+DEL account.account.template: l10n_cl.254
+DEL account.account.template: l10n_cl.261
+DEL account.account.template: l10n_cl.262
+DEL account.account.template: l10n_cl.263
+DEL account.account.template: l10n_cl.311
+DEL account.account.template: l10n_cl.312
+DEL account.account.template: l10n_cl.313
+DEL account.account.template: l10n_cl.314
+DEL account.account.template: l10n_cl.321
+DEL account.account.template: l10n_cl.322
+DEL account.account.template: l10n_cl.331
+DEL account.account.template: l10n_cl.341
+DEL account.account.template: l10n_cl.342
+DEL account.account.template: l10n_cl.343
+DEL account.account.template: l10n_cl.344
+DEL account.account.template: l10n_cl.351
+DEL account.account.template: l10n_cl.352
+DEL account.account.template: l10n_cl.353
+DEL account.account.template: l10n_cl.354
+DEL account.account.template: l10n_cl.411_01
+DEL account.account.template: l10n_cl.412
+DEL account.account.template: l10n_cl.413
+DEL account.account.template: l10n_cl.414
+DEL account.account.template: l10n_cl.415
+DEL account.account.template: l10n_cl.416
+DEL account.account.template: l10n_cl.417
+DEL account.account.template: l10n_cl.418
+DEL account.account.template: l10n_cl.421
+DEL account.account.template: l10n_cl.422
+DEL account.account.template: l10n_cl.423
+DEL account.account.template: l10n_cl.424
+DEL account.account.template: l10n_cl.425
+DEL account.account.template: l10n_cl.426
+DEL account.account.template: l10n_cl.511_01
+DEL account.account.template: l10n_cl.512
+DEL account.account.template: l10n_cl.513
+DEL account.account.template: l10n_cl.514
+DEL account.account.template: l10n_cl.515
+DEL account.account.template: l10n_cl.516
+DEL account.account.template: l10n_cl.517
+DEL account.account.template: l10n_cl.518
+DEL account.account.template: l10n_cl.519
+DEL account.account.template: l10n_cl.521
+DEL account.account.template: l10n_cl.522
+DEL account.account.template: l10n_cl.523
+DEL account.account.template: l10n_cl.524
+DEL account.account.template: l10n_cl.61_01
+DEL account.account.template: l10n_cl.62
+DEL account.account.template: l10n_cl.63
+DEL account.account.template: l10n_cl.64
+DEL account.account.template: l10n_cl.711
+DEL account.account.template: l10n_cl.712
+DEL account.account.template: l10n_cl.713
+DEL account.account.template: l10n_cl.714
+DEL account.account.template: l10n_cl.715
+DEL account.account.template: l10n_cl.721
+DEL account.account.template: l10n_cl.722
+DEL account.account.template: l10n_cl.723
+DEL account.account.type: l10n_cl.account_account_type_NCLASIFICADO
+NEW account.fiscal.position.tax.template: l10n_cl.afpt_fixed_asset_tax
+NEW account.fiscal.position.tax.template: l10n_cl.afpt_non_recoverable_vat_1_tax
+NEW account.fiscal.position.tax.template: l10n_cl.afpt_non_recoverable_vat_2_tax
+NEW account.fiscal.position.tax.template: l10n_cl.afpt_non_recoverable_vat_3_tax
+NEW account.fiscal.position.tax.template: l10n_cl.afpt_non_recoverable_vat_4_tax
+NEW account.fiscal.position.tax.template: l10n_cl.afpt_non_recoverable_vat_9_tax
+NEW account.fiscal.position.template: l10n_cl.afpt_fixed_asset
+NEW account.fiscal.position.template: l10n_cl.afpt_non_recoverable_vat_1
+NEW account.fiscal.position.template: l10n_cl.afpt_non_recoverable_vat_2
+NEW account.fiscal.position.template: l10n_cl.afpt_non_recoverable_vat_3
+NEW account.fiscal.position.template: l10n_cl.afpt_non_recoverable_vat_4
+NEW account.fiscal.position.template: l10n_cl.afpt_non_recoverable_vat_9
+NEW account.tax.group: l10n_cl.tax_group_2da_categ (noupdate)
+NEW account.tax.group: l10n_cl.tax_group_ila (noupdate)
+NEW account.tax.group: l10n_cl.tax_group_impuestos_especificos (noupdate)
+NEW account.tax.group: l10n_cl.tax_group_retenciones (noupdate)
+NEW account.tax.report.line: l10n_cl.tax_report_base_imponible_ventas
+NEW account.tax.report.line: l10n_cl.tax_report_base_retencion_segunda_categ
+NEW account.tax.report.line: l10n_cl.tax_report_compras_activo_fijo
+NEW account.tax.report.line: l10n_cl.tax_report_compras_activo_fijo_no_recup
+NEW account.tax.report.line: l10n_cl.tax_report_compras_activo_fijo_uso_comun
+NEW account.tax.report.line: l10n_cl.tax_report_compras_iva_activo_fijo
+NEW account.tax.report.line: l10n_cl.tax_report_compras_iva_activo_fijo_no_recup
+NEW account.tax.report.line: l10n_cl.tax_report_compras_iva_activo_fijo_uso_comun
+NEW account.tax.report.line: l10n_cl.tax_report_compras_iva_no_recup
+NEW account.tax.report.line: l10n_cl.tax_report_compras_iva_recup
+NEW account.tax.report.line: l10n_cl.tax_report_compras_iva_supermercado
+NEW account.tax.report.line: l10n_cl.tax_report_compras_iva_uso_comun
+NEW account.tax.report.line: l10n_cl.tax_report_compras_netas_gr_iva_no_recuperable
+NEW account.tax.report.line: l10n_cl.tax_report_compras_netas_gr_iva_recup
+NEW account.tax.report.line: l10n_cl.tax_report_compras_netas_gr_iva_uso_comun
+NEW account.tax.report.line: l10n_cl.tax_report_compras_no_gravadas_iva
+NEW account.tax.report.line: l10n_cl.tax_report_compras_supermercado
+NEW account.tax.report.line: l10n_cl.tax_report_impuestos_originados_venta
+NEW account.tax.report.line: l10n_cl.tax_report_impuestos_pagados_compra
+NEW account.tax.report.line: l10n_cl.tax_report_impuestos_renta
+NEW account.tax.report.line: l10n_cl.tax_report_iva_debito_fiscal
+NEW account.tax.report.line: l10n_cl.tax_report_ppm
+NEW account.tax.report.line: l10n_cl.tax_report_retencion_segunda_categ
+NEW account.tax.report.line: l10n_cl.tax_report_ventas_exentas
+NEW account.tax.report.line: l10n_cl.tax_report_ventas_netas_gravadas_c_iva
+NEW account.tax.template: l10n_cl.I_IU2C
+NEW account.tax.template: l10n_cl.especifico_compra
+NEW account.tax.template: l10n_cl.iva_activo_fijo
+NEW account.tax.template: l10n_cl.iva_activo_fijo_uso_comun
+NEW account.tax.template: l10n_cl.iva_activo_fijo_uso_no_recup
+NEW ir.actions.act_window: l10n_cl.sale_invoices_credit_notes
+NEW ir.actions.act_window: l10n_cl.vendor_bills_and_refunds
+NEW ir.ui.menu: l10n_cl.menu_sale_invoices_credit_notes
+NEW ir.ui.menu: l10n_cl.menu_vendor_bills_and_refunds
+NEW ir.ui.view: l10n_cl.res_config_settings_view_form
+NEW ir.ui.view: l10n_cl.sequence_view
+NEW ir.ui.view: l10n_cl.sequence_view_tree
+NEW ir.ui.view: l10n_cl.view_account_journal_form_inherit_l10n_cl
+NEW ir.ui.view: l10n_cl.view_account_tax_form
+NEW ir.ui.view: l10n_cl.view_account_tax_template_form
+NEW ir.ui.view: l10n_cl.view_account_tax_template_tree
+NEW ir.ui.view: l10n_cl.view_complete_invoice_refund_tree
+NEW ir.ui.view: l10n_cl.view_move_form
+NEW ir.ui.view: l10n_cl.view_move_form_inherit_l10n_cl
+NEW ir.ui.view: l10n_cl.view_res_bank_form
+NEW ir.ui.view: l10n_cl.view_res_bank_tree
+NEW ir.ui.view: l10n_cl.view_res_country_form
+NEW ir.ui.view: l10n_cl.view_res_country_tree
+NEW ir.ui.view: l10n_cl.view_sequence_search
+NEW ir.ui.view: l10n_cl.view_tax_sii_code_tree
+NEW l10n_latam.document.type: l10n_cl.dc_I_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_a_f_dte
+NEW l10n_latam.document.type: l10n_cl.dc_a_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_awb
+NEW l10n_latam.document.type: l10n_cl.dc_b_e_dte
+NEW l10n_latam.document.type: l10n_cl.dc_b_e_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_b_f_dte
+NEW l10n_latam.document.type: l10n_cl.dc_b_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_bl_cemb
+NEW l10n_latam.document.type: l10n_cl.dc_bzf_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_cd_bol
+NEW l10n_latam.document.type: l10n_cl.dc_cont
+NEW l10n_latam.document.type: l10n_cl.dc_cpor
+NEW l10n_latam.document.type: l10n_cl.dc_din_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_dizf_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_dus
+NEW l10n_latam.document.type: l10n_cl.dc_fc_f_dte
+NEW l10n_latam.document.type: l10n_cl.dc_fc_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_fe_dte
+NEW l10n_latam.document.type: l10n_cl.dc_fichc
+NEW l10n_latam.document.type: l10n_cl.dc_frr_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_ftf_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_ftt_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_fzf_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_hem
+NEW l10n_latam.document.type: l10n_cl.dc_hes
+NEW l10n_latam.document.type: l10n_cl.dc_l_f_dte
+NEW l10n_latam.document.type: l10n_cl.dc_l_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_li
+NEW l10n_latam.document.type: l10n_cl.dc_m_d_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_m_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_mic_dta
+NEW l10n_latam.document.type: l10n_cl.dc_migo
+NEW l10n_latam.document.type: l10n_cl.dc_nc_f_dte
+NEW l10n_latam.document.type: l10n_cl.dc_nc_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_ncex_dte
+NEW l10n_latam.document.type: l10n_cl.dc_nd_f_dte
+NEW l10n_latam.document.type: l10n_cl.dc_nd_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_ndex_dte
+NEW l10n_latam.document.type: l10n_cl.dc_ndp
+NEW l10n_latam.document.type: l10n_cl.dc_oc
+NEW l10n_latam.document.type: l10n_cl.dc_pasap
+NEW l10n_latam.document.type: l10n_cl.dc_prchc
+NEW l10n_latam.document.type: l10n_cl.dc_res_sna
+NEW l10n_latam.document.type: l10n_cl.dc_resol
+NEW l10n_latam.document.type: l10n_cl.dc_s_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_tca_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_tcd_f_dtn
+NEW l10n_latam.document.type: l10n_cl.dc_vp_pren
+NEW l10n_latam.document.type: l10n_cl.dc_y_f_dte
+NEW l10n_latam.document.type: l10n_cl.dc_y_f_dtn
+NEW l10n_latam.identification.type: l10n_cl.it_DNI
+NEW l10n_latam.identification.type: l10n_cl.it_RUN
+NEW l10n_latam.identification.type: l10n_cl.it_RUT
+NEW product.product: l10n_cl.product_product_ad_valorem (noupdate)
+NEW res.bank: l10n_cl.bank_001_0
+NEW res.bank: l10n_cl.bank_001_1
+NEW res.bank: l10n_cl.bank_001_2
+NEW res.bank: l10n_cl.bank_001_3
+NEW res.bank: l10n_cl.bank_001_4
+NEW res.bank: l10n_cl.bank_009_0
+NEW res.bank: l10n_cl.bank_012_0
+NEW res.bank: l10n_cl.bank_014_0
+NEW res.bank: l10n_cl.bank_016_0
+NEW res.bank: l10n_cl.bank_016_1
+NEW res.bank: l10n_cl.bank_016_2
+NEW res.bank: l10n_cl.bank_017_0
+NEW res.bank: l10n_cl.bank_027_0
+NEW res.bank: l10n_cl.bank_027_1
+NEW res.bank: l10n_cl.bank_028_0
+NEW res.bank: l10n_cl.bank_031_0
+NEW res.bank: l10n_cl.bank_037_0
+NEW res.bank: l10n_cl.bank_037_1
+NEW res.bank: l10n_cl.bank_039_0
+NEW res.bank: l10n_cl.bank_041_0
+NEW res.bank: l10n_cl.bank_043_0
+NEW res.bank: l10n_cl.bank_049_0
+NEW res.bank: l10n_cl.bank_051_0
+NEW res.bank: l10n_cl.bank_052_0
+NEW res.bank: l10n_cl.bank_053_0
+NEW res.bank: l10n_cl.bank_054_0
+NEW res.bank: l10n_cl.bank_055_0
+NEW res.bank: l10n_cl.bank_056_0
+NEW res.bank: l10n_cl.bank_057_0
+NEW res.bank: l10n_cl.bank_059_0
+NEW res.bank: l10n_cl.bank_504_0
+NEW res.bank: l10n_cl.bank_504_1
+NEW res.country: base.ad (noupdate)
+NEW res.country: base.af (noupdate)
+NEW res.country: base.ag (noupdate)
+NEW res.country: base.al (noupdate)
+NEW res.country: base.am (noupdate)
+NEW res.country: base.ao (noupdate)
+NEW res.country: base.ar (noupdate)
+NEW res.country: base.at (noupdate)
+NEW res.country: base.au (noupdate)
+NEW res.country: base.aw (noupdate)
+NEW res.country: base.az (noupdate)
+NEW res.country: base.bb (noupdate)
+NEW res.country: base.bd (noupdate)
+NEW res.country: base.bf (noupdate)
+NEW res.country: base.bg (noupdate)
+NEW res.country: base.bi (noupdate)
+NEW res.country: base.bj (noupdate)
+NEW res.country: base.bm (noupdate)
+NEW res.country: base.bo (noupdate)
+NEW res.country: base.br (noupdate)
+NEW res.country: base.bs (noupdate)
+NEW res.country: base.bw (noupdate)
+NEW res.country: base.by (noupdate)
+NEW res.country: base.ca (noupdate)
+NEW res.country: base.cg (noupdate)
+NEW res.country: base.ch (noupdate)
+NEW res.country: base.ci (noupdate)
+NEW res.country: base.ck (noupdate)
+NEW res.country: base.cl (noupdate)
+NEW res.country: base.cn (noupdate)
+NEW res.country: base.co (noupdate)
+NEW res.country: base.cr (noupdate)
+NEW res.country: base.cu (noupdate)
+NEW res.country: base.cv (noupdate)
+NEW res.country: base.cy (noupdate)
+NEW res.country: base.de (noupdate)
+NEW res.country: base.dj (noupdate)
+NEW res.country: base.dk (noupdate)
+NEW res.country: base.dm (noupdate)
+NEW res.country: base.dz (noupdate)
+NEW res.country: base.ec (noupdate)
+NEW res.country: base.ee (noupdate)
+NEW res.country: base.eg (noupdate)
+NEW res.country: base.er (noupdate)
+NEW res.country: base.es (noupdate)
+NEW res.country: base.fi (noupdate)
+NEW res.country: base.fj (noupdate)
+NEW res.country: base.fm (noupdate)
+NEW res.country: base.fr (noupdate)
+NEW res.country: base.ga (noupdate)
+NEW res.country: base.gd (noupdate)
+NEW res.country: base.ge (noupdate)
+NEW res.country: base.gg (noupdate)
+NEW res.country: base.gh (noupdate)
+NEW res.country: base.gi (noupdate)
+NEW res.country: base.gl (noupdate)
+NEW res.country: base.gm (noupdate)
+NEW res.country: base.gn (noupdate)
+NEW res.country: base.gq (noupdate)
+NEW res.country: base.gr (noupdate)
+NEW res.country: base.gt (noupdate)
+NEW res.country: base.gu (noupdate)
+NEW res.country: base.gy (noupdate)
+NEW res.country: base.hn (noupdate)
+NEW res.country: base.hr (noupdate)
+NEW res.country: base.ht (noupdate)
+NEW res.country: base.id (noupdate)
+NEW res.country: base.ie (noupdate)
+NEW res.country: base.il (noupdate)
+NEW res.country: base.in (noupdate)
+NEW res.country: base.iq (noupdate)
+NEW res.country: base.ir (noupdate)
+NEW res.country: base.is (noupdate)
+NEW res.country: base.it (noupdate)
+NEW res.country: base.je (noupdate)
+NEW res.country: base.jm (noupdate)
+NEW res.country: base.jo (noupdate)
+NEW res.country: base.ke (noupdate)
+NEW res.country: base.kh (noupdate)
+NEW res.country: base.ki (noupdate)
+NEW res.country: base.kp (noupdate)
+NEW res.country: base.kr (noupdate)
+NEW res.country: base.kw (noupdate)
+NEW res.country: base.la (noupdate)
+NEW res.country: base.li (noupdate)
+NEW res.country: base.lk (noupdate)
+NEW res.country: base.lr (noupdate)
+NEW res.country: base.ls (noupdate)
+NEW res.country: base.lt (noupdate)
+NEW res.country: base.lv (noupdate)
+NEW res.country: base.ly (noupdate)
+NEW res.country: base.ma (noupdate)
+NEW res.country: base.mc (noupdate)
+NEW res.country: base.md (noupdate)
+NEW res.country: base.mg (noupdate)
+NEW res.country: base.mh (noupdate)
+NEW res.country: base.ml (noupdate)
+NEW res.country: base.mn (noupdate)
+NEW res.country: base.mo (noupdate)
+NEW res.country: base.mp (noupdate)
+NEW res.country: base.mq (noupdate)
+NEW res.country: base.mr (noupdate)
+NEW res.country: base.mt (noupdate)
+NEW res.country: base.mu (noupdate)
+NEW res.country: base.mw (noupdate)
+NEW res.country: base.mx (noupdate)
+NEW res.country: base.my (noupdate)
+NEW res.country: base.mz (noupdate)
+NEW res.country: base.na (noupdate)
+NEW res.country: base.nc (noupdate)
+NEW res.country: base.ne (noupdate)
+NEW res.country: base.ng (noupdate)
+NEW res.country: base.ni (noupdate)
+NEW res.country: base.nl (noupdate)
+NEW res.country: base.no (noupdate)
+NEW res.country: base.np (noupdate)
+NEW res.country: base.nr (noupdate)
+NEW res.country: base.nu (noupdate)
+NEW res.country: base.om (noupdate)
+NEW res.country: base.pa (noupdate)
+NEW res.country: base.pe (noupdate)
+NEW res.country: base.pf (noupdate)
+NEW res.country: base.ph (noupdate)
+NEW res.country: base.pk (noupdate)
+NEW res.country: base.pl (noupdate)
+NEW res.country: base.pr (noupdate)
+NEW res.country: base.pt (noupdate)
+NEW res.country: base.py (noupdate)
+NEW res.country: base.qa (noupdate)
+NEW res.country: base.rw (noupdate)
+NEW res.country: base.sc (noupdate)
+NEW res.country: base.sd (noupdate)
+NEW res.country: base.se (noupdate)
+NEW res.country: base.sg (noupdate)
+NEW res.country: base.si (noupdate)
+NEW res.country: base.sl (noupdate)
+NEW res.country: base.sm (noupdate)
+NEW res.country: base.sn (noupdate)
+NEW res.country: base.so (noupdate)
+NEW res.country: base.sr (noupdate)
+NEW res.country: base.sv (noupdate)
+NEW res.country: base.sy (noupdate)
+NEW res.country: base.td (noupdate)
+NEW res.country: base.tg (noupdate)
+NEW res.country: base.tm (noupdate)
+NEW res.country: base.tt (noupdate)
+NEW res.country: base.tv (noupdate)
+NEW res.country: base.tz (noupdate)
+NEW res.country: base.ua (noupdate)
+NEW res.country: base.ug (noupdate)
+NEW res.country: base.uk (noupdate)
+NEW res.country: base.uy (noupdate)
+NEW res.country: base.uz (noupdate)
+NEW res.country: base.vc (noupdate)
+NEW res.country: base.ve (noupdate)
+NEW res.country: base.vn (noupdate)
+NEW res.country: base.vu (noupdate)
+NEW res.country: base.zm (noupdate)
+NEW res.country: base.zw (noupdate)
+NEW res.currency: base.AED (noupdate)
+NEW res.currency: base.ARS (noupdate)
+NEW res.currency: base.AUD (noupdate)
+NEW res.currency: base.BOB (noupdate)
+NEW res.currency: base.BRL (noupdate)
+NEW res.currency: base.CAD (noupdate)
+NEW res.currency: base.CHF (noupdate)
+NEW res.currency: base.CLP (noupdate)
+NEW res.currency: base.CNY (noupdate)
+NEW res.currency: base.COP (noupdate)
+NEW res.currency: base.ECS (noupdate)
+NEW res.currency: base.EUR (noupdate)
+NEW res.currency: base.GBR
+NEW res.currency: base.HKD (noupdate)
+NEW res.currency: base.INR (noupdate)
+NEW res.currency: base.JPY (noupdate)
+NEW res.currency: base.MXN (noupdate)
+NEW res.currency: base.NOK (noupdate)
+NEW res.currency: base.NZD (noupdate)
+NEW res.currency: base.PEN (noupdate)
+NEW res.currency: base.PYG (noupdate)
+NEW res.currency: base.SEK (noupdate)
+NEW res.currency: base.SGD (noupdate)
+NEW res.currency: base.TWD (noupdate)
+NEW res.currency: base.UF
+NEW res.currency: base.USD (noupdate)
+NEW res.currency: base.UTM
+NEW res.currency: base.UYU (noupdate)
+NEW res.currency: base.VEF (noupdate)
+NEW res.currency: base.ZAR (noupdate)
+NEW res.currency: l10n_cl.OTR
+NEW res.partner: l10n_cl.par_cfa (noupdate)
+NEW res.partner: l10n_cl.par_sii (noupdate)
+NEW res.partner: l10n_cl.par_tgr (noupdate)
+NEW uom.category: l10n_cl.uom_categ_energy (noupdate)
+NEW uom.category: l10n_cl.uom_categ_others (noupdate)
+NEW uom.uom: l10n_cl.product_uom_bar (noupdate)
+NEW uom.uom: l10n_cl.product_uom_carton (noupdate)
+NEW uom.uom: l10n_cl.product_uom_hl (noupdate)
+NEW uom.uom: l10n_cl.product_uom_knfc (noupdate)
+NEW uom.uom: l10n_cl.product_uom_kwh (noupdate)
+NEW uom.uom: l10n_cl.product_uom_mcub (noupdate)
+NEW uom.uom: l10n_cl.product_uom_mkwh (noupdate)
+NEW uom.uom: l10n_cl.product_uom_mm (noupdate)
+NEW uom.uom: l10n_cl.product_uom_mt2 (noupdate)
+NEW uom.uom: l10n_cl.product_uom_par (noupdate)
+NEW uom.uom: l10n_cl.product_uom_qmb (noupdate)
+NEW uom.uom: l10n_cl.product_uom_qnt (noupdate)
+NEW uom.uom: l10n_cl.product_uom_sum (noupdate)
+NEW uom.uom: l10n_cl.product_uom_sum_99 (noupdate)
+NEW uom.uom: l10n_cl.product_uom_tmb (noupdate)
+NEW uom.uom: l10n_cl.product_uom_tmn (noupdate)
+NEW uom.uom: l10n_cl.product_uom_u (noupdate)
+NEW uom.uom: uom.product_uom_dozen (noupdate)
+NEW uom.uom: uom.product_uom_foot (noupdate)
+NEW uom.uom: uom.product_uom_gram (noupdate)
+NEW uom.uom: uom.product_uom_kgm (noupdate)
+NEW uom.uom: uom.product_uom_litre (noupdate)
+NEW uom.uom: uom.product_uom_meter (noupdate)
+NEW uom.uom: uom.product_uom_unit (noupdate)

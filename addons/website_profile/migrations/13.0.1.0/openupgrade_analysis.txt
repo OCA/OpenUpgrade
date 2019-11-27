@@ -1,0 +1,27 @@
+---Models in module 'website_profile'---
+---Fields in module 'website_profile'---
+website_profile / gamification.badge       / is_published (boolean)        : NEW hasdefault
+website_profile / website                  / karma_profile_min (integer)   : NEW hasdefault
+---XML records in module 'website_profile'---
+NEW ir.model.access: website_profile.gamification_karma_rank_access_website_publisher
+NEW ir.ui.view: website_profile.all_user_card
+NEW ir.ui.view: website_profile.assets_frontend
+NEW ir.ui.view: website_profile.badge_content
+NEW ir.ui.view: website_profile.email_validation_banner
+NEW ir.ui.view: website_profile.gamification_badge_view_form
+NEW ir.ui.view: website_profile.pager_nobox
+NEW ir.ui.view: website_profile.private_profile
+NEW ir.ui.view: website_profile.profile_next_rank_card
+NEW ir.ui.view: website_profile.rank_badge_main
+NEW ir.ui.view: website_profile.top3_user_card
+NEW ir.ui.view: website_profile.user_badges
+NEW ir.ui.view: website_profile.user_profile_content
+NEW ir.ui.view: website_profile.user_profile_edit_content
+NEW ir.ui.view: website_profile.user_profile_edit_main
+NEW ir.ui.view: website_profile.user_profile_header
+NEW ir.ui.view: website_profile.user_profile_main
+NEW ir.ui.view: website_profile.user_profile_sub_nav
+NEW ir.ui.view: website_profile.users_page_content
+NEW ir.ui.view: website_profile.users_page_header
+NEW ir.ui.view: website_profile.users_page_main
+NEW mail.template: website_profile.validation_email [renamed from website_forum module] (noupdate)

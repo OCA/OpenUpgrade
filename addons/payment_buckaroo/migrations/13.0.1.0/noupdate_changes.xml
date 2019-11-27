@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_acquirer_buckaroo" model="payment.acquirer">
+    <field name="brq_secretkey"/>
+    <field name="brq_websitekey"/>
+    <field name="environment"/>
+    <field name="image" type="base64" file="payment_buckaroo/static/src/img/buckaroo_icon.png"/>
+    <field name="pre_msg"/>
+    <field name="image_128" type="base64" file="payment_buckaroo/static/src/img/buckaroo_icon.png"/>
+  </record>
+</odoo>

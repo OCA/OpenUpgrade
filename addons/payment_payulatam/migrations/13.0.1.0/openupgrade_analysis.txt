@@ -1,0 +1,10 @@
+---Models in module 'payment_payulatam'---
+---Fields in module 'payment_payulatam'---
+payment_payulatam / payment.acquirer         / payulatam_account_id (char)   : NEW
+payment_payulatam / payment.acquirer         / payulatam_api_key (char)      : NEW
+payment_payulatam / payment.acquirer         / payulatam_merchant_id (char)  : NEW
+payment_payulatam / payment.acquirer         / provider (False)              : NEW selection_keys: ['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'ogone', 'paypal', 'payulatam'], mode: modify
+---XML records in module 'payment_payulatam'---
+NEW ir.ui.view: payment_payulatam.payment_acquirer_form_inherit_payment_payulatam
+NEW ir.ui.view: payment_payulatam.payulatam_form
+NEW payment.acquirer: payment.payment_acquirer_payulatam (noupdate)

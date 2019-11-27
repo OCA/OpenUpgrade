@@ -1,0 +1,12 @@
+---Models in module 'stock_sms'---
+new model confirm.stock.sms [transient]
+---Fields in module 'stock_sms'---
+stock_sms    / res.company              / has_received_warning_stock_sms (boolean): NEW
+stock_sms    / res.company              / stock_move_sms_validation (boolean): NEW hasdefault
+stock_sms    / res.company              / stock_sms_confirmation_template_id (many2one): NEW relation: sms.template, hasdefault
+---XML records in module 'stock_sms'---
+NEW ir.model.access: stock_sms.access_sms_template_stock_manager
+NEW ir.rule: stock_sms.ir_rule_sms_template_stock_manager
+NEW ir.ui.view: stock_sms.res_config_settings_view_form_stock
+NEW ir.ui.view: stock_sms.view_confirm_stock_sms
+NEW sms.template: stock_sms.sms_template_data_stock_delivery (noupdate)

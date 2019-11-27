@@ -1,0 +1,39 @@
+---Models in module 'test_mail_full'---
+new model mail.test.sms
+new model mail.test.sms.bl
+new model mail.test.sms.partner
+---Fields in module 'test_mail_full'---
+test_mail_full / mail.test.sms            / customer_id (many2one)        : NEW relation: res.partner
+test_mail_full / mail.test.sms            / email_from (char)             : NEW
+test_mail_full / mail.test.sms            / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail_full / mail.test.sms            / message_ids (one2many)        : NEW relation: mail.message
+test_mail_full / mail.test.sms            / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail_full / mail.test.sms            / mobile_nbr (char)             : NEW
+test_mail_full / mail.test.sms            / name (char)                   : NEW
+test_mail_full / mail.test.sms            / phone_nbr (char)              : NEW
+test_mail_full / mail.test.sms            / subject (char)                : NEW
+test_mail_full / mail.test.sms            / website_message_ids (one2many): NEW relation: mail.message
+test_mail_full / mail.test.sms.bl         / customer_id (many2one)        : NEW relation: res.partner
+test_mail_full / mail.test.sms.bl         / email_from (char)             : NEW
+test_mail_full / mail.test.sms.bl         / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail_full / mail.test.sms.bl         / message_ids (one2many)        : NEW relation: mail.message
+test_mail_full / mail.test.sms.bl         / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail_full / mail.test.sms.bl         / mobile_nbr (char)             : NEW
+test_mail_full / mail.test.sms.bl         / name (char)                   : NEW
+test_mail_full / mail.test.sms.bl         / phone_nbr (char)              : NEW
+test_mail_full / mail.test.sms.bl         / phone_sanitized (char)        : NEW isfunction: function, stored
+test_mail_full / mail.test.sms.bl         / subject (char)                : NEW
+test_mail_full / mail.test.sms.bl         / website_message_ids (one2many): NEW relation: mail.message
+test_mail_full / mail.test.sms.partner    / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail_full / mail.test.sms.partner    / message_ids (one2many)        : NEW relation: mail.message
+test_mail_full / mail.test.sms.partner    / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail_full / mail.test.sms.partner    / name (char)                   : NEW
+test_mail_full / mail.test.sms.partner    / partner_id (many2one)         : NEW relation: res.partner
+test_mail_full / mail.test.sms.partner    / website_message_ids (one2many): NEW relation: mail.message
+---XML records in module 'test_mail_full'---
+NEW ir.model.access: test_mail_full.access_mail_test_sms_all
+NEW ir.model.access: test_mail_full.access_mail_test_sms_bl_all
+NEW ir.model.access: test_mail_full.access_mail_test_sms_bl_user
+NEW ir.model.access: test_mail_full.access_mail_test_sms_partner_all
+NEW ir.model.access: test_mail_full.access_mail_test_sms_partner_user
+NEW ir.model.access: test_mail_full.access_mail_test_sms_user

@@ -1,0 +1,5 @@
+---Models in module 'membership'---
+---Fields in module 'membership'---
+membership   / membership.membership_line / account_invoice_id (many2one) : relation is now 'account.move' ('account.invoice') [nothing to do]
+membership   / membership.membership_line / account_invoice_line (many2one): relation is now 'account.move.line' ('account.invoice.line') [nothing to do]
+---XML records in module 'membership'---

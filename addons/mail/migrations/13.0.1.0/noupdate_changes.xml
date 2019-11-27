@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_activity_rule_user" model="ir.rule">
+    <field name="domain_force">['|', ('user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+    <field name="name">mail.activity: user: write/unlink only (created or assigned)</field>
+  </record>
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="base.module_category_human_resources_contracts" model="ir.module.category">
+    <field name="description">Helps you manage your contracts.</field>
+    <field name="sequence">10</field>
+  </record>
+  <record id="group_hr_contract_manager" model="res.groups">
+    <field name="category_id" ref="base.module_category_human_resources_contracts"/>
+    <field name="name">Administrator</field>
+    <field name="implied_ids" eval="[(4, ref('base.group_user')), (4, ref('hr.group_hr_user'))]"/>
+  </record>
+</odoo>

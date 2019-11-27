@@ -1,0 +1,9 @@
+---Models in module 'payment_authorize'---
+---Fields in module 'payment_authorize'---
+payment_authorize / payment.acquirer         / authorize_client_key (char)   : NEW
+payment_authorize / payment.acquirer         / authorize_signature_key (char): is now stored
+payment_authorize / payment.acquirer         / authorize_signature_key (char): not a function anymore
+payment_authorize / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'manual']' ('['adyen', 'authorize', 'manual']')
+---XML records in module 'payment_authorize'---
+NEW ir.ui.view: payment_authorize.assets_frontend (noupdate)
+ir.ui.view: payment_authorize.authorize_s2s_form (noupdate) (noupdate switched)

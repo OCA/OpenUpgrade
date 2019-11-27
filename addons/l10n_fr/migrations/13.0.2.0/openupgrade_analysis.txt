@@ -1,0 +1,242 @@
+---Models in module 'l10n_fr'---
+model account.sale.closing (moved to l10n_fr_pos_cert)
+---Fields in module 'l10n_fr'---
+l10n_fr_sale_closing / account.sale.closing     / __last_update (datetime)      : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
+l10n_fr_sale_closing / account.sale.closing     / company_id (many2one)         : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
+l10n_fr_sale_closing / account.sale.closing     / cumulative_total (float)      : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
+l10n_fr_sale_closing / account.sale.closing     / currency_id (many2one)        : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
+l10n_fr_sale_closing / account.sale.closing     / date_closing_start (datetime) : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
+l10n_fr_sale_closing / account.sale.closing     / date_closing_stop (datetime)  : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
+l10n_fr_sale_closing / account.sale.closing     / display_name (char)           : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
+l10n_fr_sale_closing / account.sale.closing     / frequency (selection)         : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
+l10n_fr_sale_closing / account.sale.closing     / last_move_hash (char)         : DEL
+l10n_fr_sale_closing / account.sale.closing     / last_move_id (many2one)       : DEL relation: account.move
+l10n_fr_sale_closing / account.sale.closing     / name (char)                   : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
+l10n_fr_sale_closing / account.sale.closing     / sequence_number (integer)     : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
+l10n_fr_sale_closing / account.sale.closing     / total_interval (float)        : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
+---XML records in module 'l10n_fr'---
+DEL account.account.tag: l10n_fr.tag_fr_01 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_02 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_03 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_04 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_05 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_06 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_07 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_08 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_09 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_10 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_11 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_12 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_13 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_14 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_15 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_16 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_17 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_18 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_19 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_20 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_22 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_23 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_24 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_25 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_26 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_27 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_28 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_29 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_30 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_31 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_32 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_33 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_34 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_35 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_36 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_37 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_38 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_39 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_40 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_41 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_42 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_43 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_44 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_45 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_46 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_47 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_48 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_49 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_50 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_51 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_52 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_53 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_54 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_55 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_56 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_57 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_58 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_59 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_60 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_61 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_62 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_63 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_64 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_65 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_66 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_67 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_68 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_69 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_70 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_71 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_72 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_73 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_74 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_75 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_76 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_77 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_78 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_79 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_80 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_81 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_82 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_83 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_84 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_85 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_86 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_87 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_88 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_89 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_90 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_91 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_92 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_93 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_94 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_95 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_96 (noupdate)
+DEL account.account.tag: l10n_fr.tag_fr_97 (noupdate)
+NEW account.account.template: l10n_fr.fr_pcg_recv_pos
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_impexp_ha_encaissement
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_impexp_ha_encaissement_reduite
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_impexp_ha_encaissement_super_reduite
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_impexp_vt_intermediaire_encaissement
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_impexp_vt_intermediaire_encaissement_ttc
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_encaissement_acq
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_encaissement_deduc
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_encaissement_reduite_acq
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_encaissement_reduite_deduc
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_encaissement_super_reduite_acq
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_encaissement_super_reduite_deduc
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_vt_intermediaire_encaissement
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_vt_intermediaire_encaissement_ttc
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_10
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_19_6
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_20
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_2_1
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_5_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_7
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_8_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_immo
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_immo_10
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_immo_19_6
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_immo_20
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_immo_2_1
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_immo_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_immo_5_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_immo_7
+NEW account.tax.report.line: l10n_fr.tax_report_base_acq_immo_8_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_coll
+NEW account.tax.report.line: l10n_fr.tax_report_base_coll_10
+NEW account.tax.report.line: l10n_fr.tax_report_base_coll_19_6
+NEW account.tax.report.line: l10n_fr.tax_report_base_coll_20
+NEW account.tax.report.line: l10n_fr.tax_report_base_coll_2_1
+NEW account.tax.report.line: l10n_fr.tax_report_base_coll_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_coll_5_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_coll_7
+NEW account.tax.report.line: l10n_fr.tax_report_base_coll_8_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_ded_intra
+NEW account.tax.report.line: l10n_fr.tax_report_base_ded_intra_10
+NEW account.tax.report.line: l10n_fr.tax_report_base_ded_intra_19_6
+NEW account.tax.report.line: l10n_fr.tax_report_base_ded_intra_20
+NEW account.tax.report.line: l10n_fr.tax_report_base_ded_intra_2_1
+NEW account.tax.report.line: l10n_fr.tax_report_base_ded_intra_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_ded_intra_5_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_ded_intra_7
+NEW account.tax.report.line: l10n_fr.tax_report_base_ded_intra_8_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_due_intra
+NEW account.tax.report.line: l10n_fr.tax_report_base_due_intra_10
+NEW account.tax.report.line: l10n_fr.tax_report_base_due_intra_19_6
+NEW account.tax.report.line: l10n_fr.tax_report_base_due_intra_20
+NEW account.tax.report.line: l10n_fr.tax_report_base_due_intra_2_1
+NEW account.tax.report.line: l10n_fr.tax_report_base_due_intra_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_due_intra_5_5
+NEW account.tax.report.line: l10n_fr.tax_report_base_due_intra_7
+NEW account.tax.report.line: l10n_fr.tax_report_base_due_intra_8_5
+NEW account.tax.report.line: l10n_fr.tax_report_non_imp
+NEW account.tax.report.line: l10n_fr.tax_report_non_imp_achats_import
+NEW account.tax.report.line: l10n_fr.tax_report_non_imp_hors_ue
+NEW account.tax.report.line: l10n_fr.tax_report_non_imp_livraisons_intra
+NEW account.tax.report.line: l10n_fr.tax_report_non_imp_non_ca3
+NEW account.tax.report.line: l10n_fr.tax_report_non_imp_non_imposables
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_10
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_19_6
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_20
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_2_1
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_5_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_7
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_8_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_immo
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_immo_10
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_immo_19_6
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_immo_20
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_immo_2_1
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_immo_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_immo_5_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_immo_7
+NEW account.tax.report.line: l10n_fr.tax_report_tva_acq_immo_8_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_coll
+NEW account.tax.report.line: l10n_fr.tax_report_tva_coll_10
+NEW account.tax.report.line: l10n_fr.tax_report_tva_coll_19_6
+NEW account.tax.report.line: l10n_fr.tax_report_tva_coll_20
+NEW account.tax.report.line: l10n_fr.tax_report_tva_coll_2_1
+NEW account.tax.report.line: l10n_fr.tax_report_tva_coll_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_coll_5_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_coll_7
+NEW account.tax.report.line: l10n_fr.tax_report_tva_coll_8_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_ded_intra
+NEW account.tax.report.line: l10n_fr.tax_report_tva_ded_intra_10
+NEW account.tax.report.line: l10n_fr.tax_report_tva_ded_intra_19_6
+NEW account.tax.report.line: l10n_fr.tax_report_tva_ded_intra_20
+NEW account.tax.report.line: l10n_fr.tax_report_tva_ded_intra_2_1
+NEW account.tax.report.line: l10n_fr.tax_report_tva_ded_intra_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_ded_intra_5_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_ded_intra_7
+NEW account.tax.report.line: l10n_fr.tax_report_tva_ded_intra_8_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_due_intra
+NEW account.tax.report.line: l10n_fr.tax_report_tva_due_intra_10
+NEW account.tax.report.line: l10n_fr.tax_report_tva_due_intra_19_6
+NEW account.tax.report.line: l10n_fr.tax_report_tva_due_intra_20
+NEW account.tax.report.line: l10n_fr.tax_report_tva_due_intra_2_1
+NEW account.tax.report.line: l10n_fr.tax_report_tva_due_intra_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_due_intra_5_5
+NEW account.tax.report.line: l10n_fr.tax_report_tva_due_intra_7
+NEW account.tax.report.line: l10n_fr.tax_report_tva_due_intra_8_5
+NEW account.tax.template: l10n_fr.tva_acq_encaissement
+NEW account.tax.template: l10n_fr.tva_acq_encaissement_TTC
+NEW account.tax.template: l10n_fr.tva_acq_encaissement_reduite
+NEW account.tax.template: l10n_fr.tva_acq_encaissement_reduite_TTC
+NEW account.tax.template: l10n_fr.tva_acq_encaissement_super_reduite
+NEW account.tax.template: l10n_fr.tva_acq_encaissement_super_reduite_TTC
+NEW account.tax.template: l10n_fr.tva_acq_intermediaire_encaissement
+NEW account.tax.template: l10n_fr.tva_acq_intermediaire_encaissement_TTC
+NEW account.tax.template: l10n_fr.tva_intermediaire_encaissement
+NEW account.tax.template: l10n_fr.tva_intermediaire_encaissement_ttc
+DEL ir.actions.act_window: l10n_fr_sale_closing.action_list_view_account_sale_closing [renamed to l10n_fr_pos_cert module]
+DEL ir.cron: l10n_fr_sale_closing.account_sale_closing_annually [renamed to l10n_fr_pos_cert module]
+DEL ir.cron: l10n_fr_sale_closing.account_sale_closing_daily [renamed to l10n_fr_pos_cert module]
+DEL ir.cron: l10n_fr_sale_closing.account_sale_closing_monthly [renamed to l10n_fr_pos_cert module]
+DEL ir.model.access: l10n_fr_sale_closing.access_l10n_fr_sale_closing_account_sale_closing_user
+DEL ir.rule: l10n_fr_sale_closing.account_sale_closing_multi_company [renamed to l10n_fr_pos_cert module]
+DEL ir.ui.menu: l10n_fr_sale_closing.menu_account_closing_reporting [renamed to l10n_fr_pos_cert module]
+DEL ir.ui.view: l10n_fr_sale_closing.form_view_account_sale_closing
+DEL ir.ui.view: l10n_fr_sale_closing.list_view_account_sale_closing

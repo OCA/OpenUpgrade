@@ -422,16 +422,17 @@ def adapt_version(version):
         version = '%s.%s' % (serie, version)
     return version
 
-def get_test_modules(module):
+def get_test_modules(module, openupgrade_prefix=None):
     """ Return a list of module for the addons potentially containing tests to
     feed unittest.TestLoader.loadTestsFromModule() """
     # Try to import the module
     modpath = 'odoo.addons.' + module
+    name = (openupgrade_prefix or '') + '.tests'
     try:
-        mod = importlib.import_module('.tests', modpath)
+        mod = importlib.import_module(name, modpath)
     except ImportError as e:  # will also catch subclass ModuleNotFoundError of P3.6
         # Hide ImportErrors on `tests` sub-module, but display other exceptions
-        if e.name == modpath + '.tests' and e.msg.startswith('No module named'):
+        if e.name == modpath + name and e.msg.startswith('No module named'):
             return []
         _logger.exception('Can not `import %s`.', module)
         return []
@@ -563,8 +564,10 @@ class OdooTestRunner(object):
 
 current_test = None
 
-def run_unit_tests(module_name, position='at_install'):
+def run_unit_tests(module_name, position='at_install', openupgrade_prefix=None):
     """
+    :param openupgrade_prefix: extension to be able to insert '.migrations.<version>' to the path
+    of test files to be loaded (expecting tests in '<module_name>/migrations/<version>/tests/test_migration.py')
     :returns: ``True`` if all of ``module_name``'s tests succeeded, ``False``
               if any of them failed.
     :rtype: bool
@@ -572,7 +575,7 @@ def run_unit_tests(module_name, position='at_install'):
     global current_test
     from odoo.tests.common import TagsSelector # Avoid import loop
     current_test = module_name
-    mods = get_test_modules(module_name)
+    mods = get_test_modules(module_name, openupgrade_prefix=openupgrade_prefix)
     threading.currentThread().testing = True
     config_tags = TagsSelector(tools.config['test_tags'])
     position_tag = TagsSelector(position)
@@ -584,7 +587,8 @@ def run_unit_tests(module_name, position='at_install'):
         if suite.countTestCases():
             t0 = time.time()
             t0_sql = odoo.sql_db.sql_counter
-            _logger.info('%s running tests.', m.__name__)
+            name = (openupgrade_prefix + '.' if openupgrade_prefix else '') + 'tests'
+            _logger.info('%s running %s.', m.__name__, name)
             result = OdooTestRunner().run(suite)
             if time.time() - t0 > 5:
                 _logger.log(25, "%s tested in %.2fs, %s queries", m.__name__, time.time() - t0, odoo.sql_db.sql_counter - t0_sql)

@@ -1,0 +1,55 @@
+---Models in module 'website_forum'---
+---Fields in module 'website_forum'---
+website_forum / forum.forum              / allow_discussion (boolean)    : DEL
+website_forum / forum.forum              / allow_link (boolean)          : DEL
+website_forum / forum.forum              / allow_question (boolean)      : DEL
+website_forum / forum.forum              / default_post_type (selection) : DEL required, selection_keys: ['discussion', 'link', 'question'], req_default: function
+website_forum / forum.forum              / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
+website_forum / forum.forum              / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+website_forum / forum.forum              / image_1920 (binary)           : NEW attachment: True
+website_forum / forum.forum              / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
+website_forum / forum.forum              / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+website_forum / forum.forum              / mode (selection)              : NEW required, selection_keys: ['discussions', 'questions'], req_default: function, hasdefault
+website_forum / forum.forum              / post_ids (one2many)           : NEW relation: forum.post
+website_forum / forum.forum              / sequence (integer)            : NEW hasdefault
+website_forum / forum.post               / content_link (char)           : DEL
+website_forum / forum.post               / post_type (selection)         : DEL required, selection_keys: ['discussion', 'link', 'question'], req_default: function
+website_forum / gamification.badge       / level (selection)             : module is now 'gamification' ('website_forum')
+website_forum / gamification.badge.user  / level (selection)             : module is now 'gamification' ('website_forum')
+website_forum / gamification.challenge   / category (False)              : selection_keys is now '['certification', 'forum', 'hr', 'other']' ('['forum', 'hr', 'other']')
+website_forum / res.users                / bronze_badge (integer)        : module is now 'gamification' ('website_forum')
+website_forum / res.users                / gold_badge (integer)          : module is now 'gamification' ('website_forum')
+website_forum / res.users                / karma (integer)               : module is now 'gamification' ('website_forum')
+website_forum / res.users                / silver_badge (integer)        : module is now 'gamification' ('website_forum')
+---XML records in module 'website_forum'---
+NEW ir.ui.menu: website_forum.menu_forum_rank_global
+NEW ir.ui.view: website_forum.assets_tests
+NEW ir.ui.view: website_forum.author_box
+NEW ir.ui.view: website_forum.display_activities
+NEW ir.ui.view: website_forum.forum_all_all_entries
+NEW ir.ui.view: website_forum.forum_all_oe_structure_forum_all_top
+NEW ir.ui.view: website_forum.forum_nav_header
+NEW ir.ui.view: website_forum.question_dropdown
+NEW ir.ui.view: website_forum.user_profile_content
+NEW ir.ui.view: website_forum.user_profile_sub_nav
+NEW ir.ui.view: website_forum.user_sidebar
+DEL ir.ui.view: website_forum.badge
+DEL ir.ui.view: website_forum.badge_form_view_forum
+DEL ir.ui.view: website_forum.edit_profile
+DEL ir.ui.view: website_forum.edit_welcome_message
+DEL ir.ui.view: website_forum.forum_user_tooltip
+DEL ir.ui.view: website_forum.new_discussion
+DEL ir.ui.view: website_forum.new_link
+DEL ir.ui.view: website_forum.res_users_view_form_preference
+DEL ir.ui.view: website_forum.user_badges
+DEL ir.ui.view: website_forum.user_detail_full
+DEL ir.ui.view: website_forum.users
+mail.message.subtype: website_forum.mt_answer_edit (noupdate) (noupdate switched)
+mail.message.subtype: website_forum.mt_answer_new (noupdate) (noupdate switched)
+mail.message.subtype: website_forum.mt_forum_answer_new (noupdate) (noupdate switched)
+mail.message.subtype: website_forum.mt_forum_question_new (noupdate) (noupdate switched)
+mail.message.subtype: website_forum.mt_question_edit (noupdate) (noupdate switched)
+mail.message.subtype: website_forum.mt_question_new (noupdate) (noupdate switched)
+DEL mail.template: website_forum.validation_email [renamed to website_profile module] (noupdate)
+DEL res.users: base.user_admin [potentially moved to gamification module] (noupdate)
+DEL res.users: base.user_root [potentially moved to gamification module] (noupdate)

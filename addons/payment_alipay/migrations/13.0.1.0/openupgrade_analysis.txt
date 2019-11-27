@@ -1,0 +1,11 @@
+---Models in module 'payment_alipay'---
+---Fields in module 'payment_alipay'---
+payment_alipay / payment.acquirer         / alipay_md5_signature_key (char): NEW
+payment_alipay / payment.acquirer         / alipay_merchant_partner_id (char): NEW
+payment_alipay / payment.acquirer         / alipay_payment_method (selection): NEW selection_keys: ['express_checkout', 'standard_checkout'], hasdefault
+payment_alipay / payment.acquirer         / alipay_seller_email (char)    : NEW
+payment_alipay / payment.acquirer         / provider (False)              : NEW selection_keys: ['adyen', 'alipay', 'manual'], mode: modify
+---XML records in module 'payment_alipay'---
+NEW ir.ui.view: payment_alipay.alipay_form
+NEW ir.ui.view: payment_alipay.payment_acquirer_view_form_inherit_payment_alipay
+NEW payment.acquirer: payment.payment_acquirer_alipay (noupdate)

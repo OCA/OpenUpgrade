@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="ir_cron_mass_mailing_queue" model="ir.cron">
+    <field name="model_id" ref="model_mailing_mailing"/>
+    <field name="name">Email Marketing: Process queue</field>
+  </record>
+</odoo>

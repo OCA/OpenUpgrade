@@ -1,0 +1,15 @@
+---Models in module 'l10n_it_edi'---
+---Fields in module 'l10n_it_edi'---
+l10n_it_edi  / account.invoice          / l10n_it_ddt_id (many2one)     : DEL relation: l10n_it.ddt
+l10n_it_edi  / account.invoice          / l10n_it_einvoice_id (many2one): DEL relation: ir.attachment
+l10n_it_edi  / account.invoice          / l10n_it_einvoice_name (char)  : DEL
+l10n_it_edi  / account.invoice          / l10n_it_send_state (selection): DEL selection_keys: ['delivered', 'delivered_accepted', 'delivered_expired', 'delivered_refused', 'failed_delivery', 'invalid', 'new', 'other', 'sent', 'to_send']
+l10n_it_edi  / account.invoice          / l10n_it_stamp_duty (float)    : DEL
+l10n_it_edi  / account.move             / l10n_it_ddt_id (many2one)     : NEW relation: l10n_it.ddt
+l10n_it_edi  / account.move             / l10n_it_einvoice_id (many2one): NEW relation: ir.attachment
+l10n_it_edi  / account.move             / l10n_it_einvoice_name (char)  : NEW
+l10n_it_edi  / account.move             / l10n_it_send_state (selection): NEW selection_keys: ['delivered', 'delivered_accepted', 'delivered_expired', 'delivered_refused', 'failed_delivery', 'invalid', 'new', 'other', 'sent', 'to_send'], hasdefault
+l10n_it_edi  / account.move             / l10n_it_stamp_duty (float)    : NEW hasdefault
+l10n_it_edi  / l10n_it.ddt              / invoice_id (one2many)         : relation is now 'account.move' ('account.invoice') [nothing to do]
+---XML records in module 'l10n_it_edi'---
+DEL ir.ui.view: l10n_it_edi.account_invoice_supplier_form_l10n_it

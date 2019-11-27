@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="crm_lead_company_rule" model="ir.rule">
+    <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="email_template_opportunity_mail" model="mail.template">
+    <field name="name">Lead/Opportunity: Mass Mail</field>
+    <field name="lang">${object.partner_id.lang}</field>
+  </record>
+  <record id="sales_team.ebay_sales_team" model="crm.team" forcecreate="False">
+    <field name="use_opportunities" eval="False"/>
+  </record>
+  <record id="sales_team.pos_sales_team" model="crm.team" forcecreate="False">
+    <field name="use_opportunities" eval="False"/>
+  </record>
+  <record id="sales_team.salesteam_website_sales" model="crm.team" forcecreate="False">
+    <field name="use_opportunities" eval="False"/>
+  </record>
+  <record id="stage_lead1" model="crm.stage">
+    <field name="on_change"/>
+    <field name="probability"/>
+  </record>
+  <record id="stage_lead2" model="crm.stage">
+    <field name="on_change"/>
+    <field name="probability"/>
+  </record>
+  <record id="stage_lead3" model="crm.stage">
+    <field name="on_change"/>
+    <field name="probability"/>
+  </record>
+  <record id="stage_lead4" model="crm.stage">
+    <field name="on_change"/>
+    <field name="probability"/>
+    <field name="is_won">True</field>
+  </record>
+</odoo>
