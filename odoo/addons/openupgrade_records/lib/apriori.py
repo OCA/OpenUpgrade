@@ -64,6 +64,8 @@ merged_modules = {
     # OCA/partner-contact
     'base_country_state_translatable': 'l10n_multilang',
     'base_partner_merge': 'base',
+    # OCA/pos
+    'pos_config_show_accounting': 'point_of_sale',
     # OCA/server-auth
     'auth_brute_force': 'base',
     # OCA/stock-logistics-warehouse
