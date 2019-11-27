@@ -87,35 +87,36 @@ def switch_noupdate_flag(env):
 def eliminate_duplicate_translations(cr):
     # Deduplicate code translations
     openupgrade.logged_query(
-        cr, """ DELETE FROM ir_translation WHERE id IN (
-        SELECT it2.id FROM ir_translation it1
-        JOIN ir_translation it2 ON it1.type = 'code'
-            AND it1.type = it2.type
-            AND it1.src = it2.src
-            AND it1.lang = it2.lang
-            AND it1.id < it2.id); """)
+        cr, """
+        DELETE FROM ir_translation WHERE id IN (
+            SELECT id FROM (
+                SELECT id, row_number() over (
+                    partition BY type, src, lang ORDER BY id
+                ) AS rnum FROM ir_translation WHERE type = 'code'
+            ) t WHERE t.rnum > 1
+        )""")
     # Deduplicate model translations on the same record
     openupgrade.logged_query(
-        cr, """ DELETE FROM ir_translation WHERE id IN (
-        SELECT it2.id FROM ir_translation it1
-        JOIN ir_translation it2 ON it1.type = 'model'
-            AND it1.type = it2.type
-            AND it1.name = it2.name
-            AND it1.res_id = it2.res_id
-            AND it1.lang = it2.lang
-            AND it1.id < it2.id); """)
+        cr, """
+        DELETE FROM ir_translation WHERE id IN (
+            SELECT id FROM (
+                SELECT id, row_number() over (
+                    partition BY type, name, res_id, lang ORDER BY id
+                ) AS rnum FROM ir_translation WHERE type = 'model'
+            ) t WHERE t.rnum > 1
+        )""")
     # Deduplicate various
     openupgrade.logged_query(
-        cr, """ DELETE FROM ir_translation WHERE id IN (
-        SELECT it2.id FROM ir_translation it1
-        JOIN ir_translation it2 ON it1.type IN
-                ('selection', 'constraint', 'sql_constraint',
-                'view', 'field', 'help', 'xsl', 'report')
-            AND it1.type = it2.type
-            AND it1.name = it2.name
-            AND it1.src = it2.src
-            AND it1.lang = it2.lang
-            AND it1.id < it2.id); """)
+        cr, """
+        DELETE FROM ir_translation WHERE id IN (
+            SELECT id FROM (
+                SELECT id, row_number() over (
+                    partition BY type, name, src, lang ORDER BY id
+                ) AS rnum FROM ir_translation WHERE
+                    type IN ('selection', 'constraint', 'sql_constraint',
+                             'view', 'field', 'help', 'xsl', 'report')
+            ) t WHERE t.rnum > 1
+        )""")
 
 
 def fix_lang_constraints(env):
