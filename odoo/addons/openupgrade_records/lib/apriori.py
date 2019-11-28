@@ -50,6 +50,7 @@ merged_modules = {
     'customer_outstanding_statement': 'partner_statement',
     # OCA/account-financial-tools
     'account_asset': 'account_asset_management',
+    'account_asset_depr_line_cancel': 'account_asset_management',
     'account_asset_disposal': 'account_asset_management',
     'account_reversal': 'account',
     # OCA/e-commerce
