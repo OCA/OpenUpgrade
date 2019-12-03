@@ -1,0 +1,19 @@
+---Fields in module 'hr_timesheet_attendance'---
+hr_timesheet_attendance / res.company              / timesheet_max_difference (float): DEL
+# NOTHING TO DO: Timesheet sheet is no longer community. Maybe OCA can provide a replacement and restore this field behavior
+
+---XML records in module 'hr_timesheet_attendance'---
+DEL ir.actions.act_window: hr_timesheet_attendance.act_hr_timesheet_sheet_sheet_2_hr_analytic_timesheet
+DEL ir.actions.act_window: hr_timesheet_attendance.act_hr_timesheet_sheet_sheet_2_hr_attendance
+DEL ir.actions.act_window: hr_timesheet_attendance.act_hr_timesheet_sheet_sheet_by_account
+DEL ir.actions.act_window: hr_timesheet_attendance.act_hr_timesheet_sheet_sheet_by_day
+DEL ir.model.access: hr_timesheet_attendance.access_hr_timesheet_sheet_sheet_day
+DEL ir.model.access: hr_timesheet_attendance.access_hr_timesheet_sheet_sheet_day_user
+DEL ir.ui.view: hr_timesheet_attendance.hr_attendance_view_filter
+DEL ir.ui.view: hr_timesheet_attendance.hr_attendance_view_form
+DEL ir.ui.view: hr_timesheet_attendance.hr_timesheet_day_tree
+DEL ir.ui.view: hr_timesheet_attendance.hr_timesheet_sheet_form
+DEL ir.ui.view: hr_timesheet_attendance.hr_timesheet_sheet_tree_simplified
+DEL ir.ui.view: hr_timesheet_attendance.view_attendance_tree
+DEL ir.ui.view: hr_timesheet_attendance.view_config_settings_form_inherit_hr_timesheet_attendance
+# NOTHING TO DO: noupdate=0 records
