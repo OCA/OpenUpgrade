@@ -4,6 +4,7 @@
 # © 2016 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
 # © 2016 Opener B.V. - Stefan Rijnhart
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+from pprint import pformat
 
 from openupgradelib import openupgrade
 from openerp import api, SUPERUSER_ID
@@ -85,14 +86,51 @@ def set_so_line_computed_rest(env):
     """Emulate the computation of the rest of the computed fields through
     equivalente SQL querys.
     """
+    uom_precision = env['decimal.precision'].precision_get('Product Unit of Measure')
     openupgrade.logged_query(
         env.cr, """
         UPDATE sale_order_line
         SET price_reduce = CASE
-            WHEN abs(product_uom_qty) > 0.00001
+            -- ROUND() missing in original code, but it's a bug
+            WHEN ROUND(product_uom_qty, %(uom_precision)s) != 0
                 THEN price_subtotal / product_uom_qty
             ELSE 0.0
-        END""")
+        END""",
+        {"uom_precision": uom_precision})
+    # Fail if there are UoM mismatches
+    openupgrade.logged_query(
+        env.cr,
+        """
+            SELECT
+                rel.order_line_id,
+                sol_u.id AS order_line_uom_id,
+                sol_u.category_id AS order_line_uom_category_id,
+                sol.product_id AS order_line_product_id,
+                rel.invoice_line_id,
+                ail_u.id AS invoice_line_uom_id,
+                ail_u.category_id AS invoice_line_uom_category_id,
+                ail_pp.id AS invoice_line_product_id,
+                ail_pt.name AS invoice_line_product_template_name
+            FROM sale_order_line_invoice_rel rel
+                JOIN sale_order_line sol ON
+                    rel.order_line_id = sol.id
+                JOIN account_invoice_line ail ON
+                    rel.invoice_line_id = ail.id
+                JOIN product_product ail_pp ON ail_pp.id = ail.product_id
+                JOIN product_template ail_pt ON ail_pt.id = ail_pp.product_tmpl_id
+                JOIN account_invoice ai ON ai.id = ail.invoice_id
+                JOIN product_uom ail_u on (ail_u.id = ail.uom_id)
+                JOIN product_uom sol_u on (sol_u.id = sol.product_uom)
+            WHERE
+                ail_u.category_id != sol_u.category_id
+        """
+    )
+    uom_category_mismatches = env.cr.dictfetchall()
+    if uom_category_mismatches:
+        raise Exception(
+            "Found these mismatching UoM in related sale.order.line "
+            "and account.invoice.line records: %s" %
+            pformat(uom_category_mismatches))
     openupgrade.logged_query(
         env.cr, """
         UPDATE sale_order_line sol
@@ -114,7 +152,7 @@ def set_so_line_computed_rest(env):
                 JOIN account_invoice ai ON ai.id = ail.invoice_id
                 JOIN product_uom u on (u.id = ail.uom_id)
                 JOIN product_uom u2 on (u2.id = sol2.product_uom)
-            WHERE ai.state != ('cancel')
+            WHERE ai.state != 'cancel'
             GROUP BY rel.order_line_id
         ) AS sub
         WHERE sol.id = sub.order_line_id""")
@@ -139,36 +177,52 @@ def set_so_line_computed_rest(env):
         env.cr, """
         UPDATE sale_order_line sol
         SET invoice_status = CASE
-            WHEN sol.state IN ('sale', 'done') THEN 'no'
-            WHEN abs(sol.qty_to_invoice) > 0.00001 THEN 'to invoice'
+            WHEN sol.state NOT IN ('sale', 'done') THEN 'no'
+            WHEN ROUND(sol.qty_to_invoice, %(uom_precision)s) != 0 THEN 'to invoice'
             WHEN sol.state = 'sale' AND pt.invoice_policy = 'order' AND
-                (sol.qty_delivered - sol.product_uom_qty) > 0.00001
+                ROUND(sol.qty_delivered, %(uom_precision)s) > ROUND(sol.product_uom_qty, %(uom_precision)s)
                     THEN 'upselling'
-            WHEN sol.qty_invoiced >= sol.product_uom_qty THEN 'invoiced'
+            WHEN ROUND(sol.qty_invoiced, %(uom_precision)s) >= ROUND(sol.product_uom_qty, %(uom_precision)s)
+                THEN 'invoiced'
             ELSE 'no'
         END
         FROM sale_order_line sol2
             JOIN product_product pp ON pp.id = sol2.product_id
             JOIN product_template pt ON pt.id = pp.product_tmpl_id
-        WHERE sol2.id = sol.id""")
+        WHERE sol2.id = sol.id""",
+        {"uom_precision": uom_precision})
     openupgrade.logged_query(
         env.cr, """
         UPDATE sale_order so
         SET invoice_status = CASE
             WHEN so.state NOT IN ('sale', 'done') THEN 'no'
-            WHEN id = ANY(
-                SELECT order_id FROM sale_order_line sol
-                WHERE sol.order_id = so.id
-                    AND sol.invoice_status = 'to invoice'
-            ) THEN 'to invoice'
-            WHEN id = ALL(SELECT order_id FROM sale_order_line sol
-                WHERE sol.order_id = so.id
-                    AND sol.invoice_status IN ('invoiced', 'upselling'))
-                THEN 'upselling'
-            WHEN id = ALL(SELECT order_id FROM sale_order_line sol
-                WHERE sol.order_id = so.id
-                    AND sol.invoice_status = 'invoiced')
+            -- Check if at least there's one line to invoice
+            WHEN 'to invoice' = ANY(
+                    SELECT invoice_status FROM sale_order_line sol
+                    WHERE sol.order_id = so.id
+                )
+                THEN 'to invoice'
+            -- Check if all lines are invoiced
+            WHEN 'invoiced' = ALL(
+                    SELECT invoice_status
+                    FROM sale_order_line sol
+                    WHERE sol.order_id = so.id
+                )
                 THEN 'invoiced'
+            WHEN
+                -- Check if all lines are either invoiced or upselling
+                0 = (
+                    SELECT COUNT(*)
+                    FROM sale_order_line sol
+                    WHERE sol.order_id = so.id
+                    AND sol.invoice_status NOT IN ('invoiced', 'upselling')
+                -- ... and that at least one is upselling
+                ) AND 'upselling' = ANY(
+                    SELECT invoice_status
+                    FROM sale_order_line sol
+                    WHERE sol.order_id = so.id
+                )
+                THEN 'upselling'
             ELSE 'no'
         END""")
     openupgrade.logged_query(
