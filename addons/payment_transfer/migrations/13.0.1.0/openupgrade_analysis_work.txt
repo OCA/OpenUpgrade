@@ -1,0 +1,11 @@
+---Models in module 'payment_transfer'---
+---Fields in module 'payment_transfer'---
+payment_transfer / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'ogone', 'paypal', 'payulatam', 'payumoney', 'sips', 'stripe', 'test', 'transfer']' ('['adyen', 'authorize', 'buckaroo', 'manual', 'ogone', 'paypal', 'payumoney', 'sips', 'stripe', 'transfer']')
+# NOTHING TO DO: new option 'alipay'
+
+---XML records in module 'payment_transfer'---
+ir.ui.view: payment_transfer.transfer_form (noupdate) (noupdate switched)
+# DONE: pre-migration: handled noupdate switched
+
+DEL payment.acquirer: payment.payment_acquirer_custom (noupdate)
+# DONE: post-migration: try to delete
