@@ -1,0 +1,79 @@
+---Models in module 'stock_account'---
+new model stock.valuation.layer
+# DONE: post-migration: try to use data from product.price.history in some way (?)
+
+---Fields in module 'stock_account'---
+stock_account / account.move.line        / is_anglo_saxon_line (boolean) : NEW
+# TODO (?): is there a way to know which lines are anglosaxon??
+
+stock_account / product.product          / valuation (char)              : selection_keys is now 'function' ('False')
+stock_account / product.product          / valuation (char)              : type is now 'selection' ('char')
+stock_account / product.product          / cost_method (char)            : selection_keys is now 'function' ('False')
+stock_account / product.product          / cost_method (char)            : type is now 'selection' ('char')
+stock_account / product.template         / cost_method (char)            : not a function anymore
+stock_account / product.template         / cost_method (char)            : now related
+stock_account / product.template         / cost_method (char)            : selection_keys is now 'function' ('False')
+stock_account / product.template         / cost_method (char)            : type is now 'selection' ('char')
+stock_account / product.template         / valuation (char)              : not a function anymore
+stock_account / product.template         / valuation (char)              : now related
+stock_account / product.template         / valuation (char)              : selection_keys is now 'function' ('False')
+stock_account / product.template         / valuation (char)              : type is now 'selection' ('char')
+# NOTHING TO DO: they are non stored fields
+
+stock_account / product.template         / property_cost_method (selection): DEL selection_keys: ['average', 'fifo', 'standard']
+stock_account / product.template         / property_stock_account_input (many2one): DEL relation: account.account
+stock_account / product.template         / property_stock_account_output (many2one): DEL relation: account.account
+stock_account / product.template         / property_valuation (selection): DEL selection_keys: ['manual_periodic', 'real_time']
+# NOTHING TO DO: they use now the same fields from product.category instead
+
+stock_account / stock.move               / remaining_qty (float)         : DEL
+stock_account / stock.move               / remaining_value (float)       : DEL
+stock_account / stock.move               / value (float)                 : DEL
+stock_account / stock.valuation.layer    / remaining_qty (float)         : NEW
+stock_account / stock.valuation.layer    / remaining_value (float)       : NEW
+stock_account / stock.valuation.layer    / value (float)                 : NEW
+# NOTHING TO DO: the relation between moves and valuation layers is new
+# TODO (?): if the link with the stock move is found, then fill values
+
+stock_account / stock.valuation.layer    / account_move_id (many2one)    : NEW relation: account.move
+stock_account / stock.valuation.layer    / company_id (many2one)         : NEW relation: res.company, required
+stock_account / stock.valuation.layer    / description (char)            : NEW
+stock_account / stock.valuation.layer    / product_id (many2one)         : NEW relation: product.product, required
+stock_account / stock.valuation.layer    / quantity (float)              : NEW
+stock_account / stock.valuation.layer    / stock_move_id (many2one)      : NEW relation: stock.move
+stock_account / stock.valuation.layer    / unit_cost (float)             : NEW
+stock_account / stock.valuation.layer    / stock_valuation_layer_id (many2one): NEW relation: stock.valuation.layer
+stock_account / account.move             / stock_valuation_layer_ids (one2many): NEW relation: stock.valuation.layer
+stock_account / product.product          / stock_valuation_layer_ids (one2many): NEW relation: stock.valuation.layer
+stock_account / stock.move               / stock_valuation_layer_ids (one2many): NEW relation: stock.valuation.layer
+stock_account / stock.valuation.layer    / stock_valuation_layer_ids (one2many): NEW relation: stock.valuation.layer
+# DONE: post-migration: handle the new model (try to use data from product.price.history in some way?)
+
+---XML records in module 'stock_account'---
+NEW ir.actions.act_window: stock_account.stock_valuation_layer_action
+DEL ir.actions.act_window: stock_account.product_valuation_action
+NEW ir.model.access: stock_account.access_stock_valuation_layer
+NEW ir.rule: stock_account.stock_valuation_layer_company_rule
+NEW ir.ui.view: stock_account.product_template_tree_view
+NEW ir.ui.view: stock_account.stock_valuation_layer_form
+NEW ir.ui.view: stock_account.stock_valuation_layer_picking
+NEW ir.ui.view: stock_account.stock_valuation_layer_search
+NEW ir.ui.view: stock_account.stock_valuation_layer_tree
+NEW ir.ui.view: stock_account.view_inventory_tree
+NEW ir.ui.view: stock_account.view_stock_quant_tree_editable_inherit
+NEW ir.ui.view: stock_account.view_stock_quant_tree_inherit
+DEL ir.ui.view: stock_account.view_move_tree_valuation_at_date
+DEL ir.ui.view: stock_account.view_stock_account_aml
+DEL ir.ui.view: stock_account.view_stock_product_tree2
+DEL ir.ui.view: stock_account.view_stock_quantity_history
+# NOTHING TO DO
+
+NEW ir.ui.view: stock_account.product_product_normal_form_view_inherit
+DEL ir.ui.view: stock_account.product_normal_form_view_inherit
+# DONE: pre-migration: xmlid renamed (to avoid a xpath issue)
+
+DEL ir.property: stock_account.default_cost_method (noupdate)
+DEL ir.property: stock_account.default_valuation (noupdate)
+DEL ir.property: stock_account.property_stock_account_input_prd (noupdate)
+DEL ir.property: stock_account.property_stock_account_output_prd (noupdate)
+# DONE: post-migration: try to delete
