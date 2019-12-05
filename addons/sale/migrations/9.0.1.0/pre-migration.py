@@ -67,3 +67,26 @@ def migrate(env, version):
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_tables(cr, table_renames)
     map_order_state(cr)
+    # For avoiding cost computations - It will be handled in post
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE sale_order_line ADD price_reduce numeric")
+    openupgrade.add_fields(
+        env, [
+            ('price_subtotal', 'sale.order.line', 'sale_order_line',
+             'monetary', False, 'sale'),
+            ('price_tax', 'sale.order.line', 'sale_order_line',
+             'monetary', False, 'sale'),
+            ('price_total', 'sale.order.line', 'sale_order_line',
+             'monetary', False, 'sale'),
+            ('qty_invoiced', 'sale.order.line', 'sale_order_line',
+             'float', False, 'sale'),
+            ('qty_to_invoice', 'sale.order.line', 'sale_order_line',
+             'float', False, 'sale'),
+            ('invoice_status', 'sale.order.line', 'sale_order_line',
+             'selection', False, 'sale'),
+            ('currency_id', 'sale.order.line', 'sale_order_line',
+             'many2one', False, 'sale'),
+            ('invoice_status', 'sale.order', 'sale_order',
+             'selection', False, 'sale'),
+        ]
+    )
