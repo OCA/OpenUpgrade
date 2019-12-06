@@ -390,6 +390,23 @@ def migrate(env, version):
         "update account_account set reconcile=True "
         "where type in ('receivable', 'payable')"
     )
+
+    # Move obsolete table from connector_ecommerce out of the way to
+    # prevent name conflict with new Odoo table
+    if openupgrade.table_exists(cr, 'account_tax_group'):
+        cr.execute(
+            """ SELECT count(*) FROM ir_model_data
+            WHERE name = 'model_account_tax_group'
+            AND module = 'connector_ecommerce' """)
+        if cr.fetchone()[0]:
+            logger.info(
+                "Moving connector_ecommerce's account_tax_group "
+                "table out of the way.")
+            openupgrade.rename_columns(
+                cr, {'account_tax': [('group_id', None)]})
+            openupgrade.rename_tables(
+                cr, [('account_tax_group', None)])
+
     openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
