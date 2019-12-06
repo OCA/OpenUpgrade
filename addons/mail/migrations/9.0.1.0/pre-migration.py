@@ -62,3 +62,7 @@ def migrate(env, version):
             ADD COLUMN %s integer;
             """ % openupgrade.get_legacy_name('alias_id')
         )
+
+    # This view blocks the quick resize of mail_message.model, forcing
+    # Odoo to go the slow way of creating a new column and copy the data
+    env.cr.execute("DROP VIEW IF EXISTS crm_claim_report")
