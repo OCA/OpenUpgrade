@@ -37,6 +37,7 @@ from operator import itemgetter
 import babel.dates
 import dateutil.relativedelta
 import psycopg2
+from psycopg2 import sql
 from lxml import etree
 
 import openerp
@@ -2428,8 +2429,7 @@ class BaseModel(object):
         # (re-)create the FK
         self._m2o_add_foreign_key_checked(source_field, dest_model, ondelete)
 
-
-    def _set_default_value_on_column(self, cr, column_name, context=None):
+    def _set_default_value_on_column(self, cr, column_name, dont_write=False, context=None):
         # ideally, we should use default_get(), but it fails due to ir.values
         # not being ready
 
@@ -2446,6 +2446,9 @@ class BaseModel(object):
         write_default = (db_default is not None if column._type != 'boolean'
                             else db_default)
         if write_default:
+            # OpenUpgrade: collect all defaults to write in a single query
+            if dont_write:
+                return ss[0], db_default
             _logger.debug("Table '%s': setting default value of new column %s to %r",
                           self._table, column_name, default)
             query = 'UPDATE "%s" SET "%s"=%s WHERE "%s" is NULL' % (
@@ -2511,6 +2514,8 @@ class BaseModel(object):
             # iterate on the "object columns"
             column_data = self._select_column_data(cr)
 
+            defaults = []
+            classic_writes = []
             for k, f in self._columns.iteritems():
                 if k == 'id': # FIXME: maybe id should be a regular column?
                     continue
@@ -2675,6 +2680,10 @@ class BaseModel(object):
                     # The field doesn't exist in database. Create it if necessary.
                     else:
                         if f._classic_write:
+                            # OpenUpgrade: remember columns for which we defer the creation of constraints
+                            # until after the defaults have been set
+                            classic_writes.append((k, f))
+                            # / Openupgrade
                             # add the missing field
                             cr.execute('ALTER TABLE "%s" ADD COLUMN "%s" %s' % (self._table, k, get_pg_type(f)[1]))
                             cr.execute("COMMENT ON COLUMN %s.\"%s\" IS %%s" % (self._table, k), (f.string,))
@@ -2683,7 +2692,9 @@ class BaseModel(object):
 
                             # initialize it
                             if has_rows:
-                                self._set_default_value_on_column(cr, k, context=context)
+                                default = self._set_default_value_on_column(cr, k, dont_write=True, context=context)
+                                if default:
+                                    defaults.append((k, default))
 
                             # remember the functions to call for the stored fields
                             if isinstance(f, fields.function):
@@ -2696,6 +2707,21 @@ class BaseModel(object):
                             if k in self._fields and self._fields[k].depends:
                                 stored_fields.append(self._fields[k])
 
+            # Openupgrade: set defaults in one query
+            if defaults:
+                from openupgradelib import openupgrade
+                openupgrade.logged_query(
+                    cr, sql.SQL(
+                        "UPDATE \"{}\" SET ".format(self._table) + (
+                            ", ".join(("\"{}\" = {}".format(k, default[0]))
+                                      for k, default in defaults))),
+                    tuple(default[1] for k, default in defaults))
+
+            # Openupgrade: run the deferred creation of constraints
+            for k, f in classic_writes:
+                if True:  # Preserve indentation level
+                    if True:  # Preserve indentation level
+                        if True:  # Preserve indentation level
                             # and add constraints if needed
                             if isinstance(f, fields.many2one) or (isinstance(f, fields.function) and f._type == 'many2one' and f.store):
                                 if f._obj not in self.pool:
@@ -2722,7 +2748,6 @@ class BaseModel(object):
                                         "If it doesn't work, update records and execute manually:\n"\
                                         "ALTER TABLE %s ALTER COLUMN %s SET NOT NULL"
                                     _logger.warning(msg, k, self._table, self._table, k, exc_info=True)
-                            cr.commit()
 
         else:
             cr.execute("SELECT relname FROM pg_class WHERE relkind IN ('r','v') AND relname=%s", (self._table,))
