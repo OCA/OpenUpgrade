@@ -47,13 +47,13 @@ script:
     - cat odoo/addons/base/migrations/*/tests/*.yml addons/*/migrations/*/tests/*.yml > ../test_data90.yml || true
     # Roundtrip to previous release to update the test database with additional test data
     # Loading and committing test data without triggering post tests needs https://github.com/odoo/odoo/pull/13146. This is now included in OpenUpgrade.
+    - old_commit="$(git rev-parse HEAD)"
     - git fetch --depth 2 origin 9.0
     - git reset --hard `git ls-remote |grep refs/heads/9.0 |awk '{print $1}'`
     - pip install -q -r requirements.txt
     # this crashes if there is no test data
     - if [ -s ../test_data90.yml ]; then ./openerp-server --database=$DB --test-file=`readlink -f ../test_data90.yml` --test-commit --stop-after-init; fi
-    # Line below may fail quite often due to Travis bug:
-    - git reset -q --hard $TRAVIS_COMMIT
+    - git reset -q --hard $old_commit
     # Remove obsolete directories with .pyc files to prevent them from being imported (such as 'openerp')
     - git clean -xfdq
     # Install Python requirements of target release
