@@ -47,6 +47,7 @@ script:
     - cat odoo/addons/base/migrations/*/tests/*.yml addons/*/migrations/*/tests/*.yml > ../test_data100.yml || true
     # Roundtrip to previous release to update the test database with additional test data
     # Loading and committing test data without triggering post tests needs https://github.com/odoo/odoo/pull/13146. This is now included in OpenUpgrade.
+    - old_commit="$(git rev-parse HEAD)"
     - git fetch --depth 2 origin 10.0
     - git reset --hard `git ls-remote |grep refs/heads/10.0 |awk '{print $1}'`
     - source ~/virtualenv/python2.7/bin/activate
@@ -54,8 +55,7 @@ script:
     # this crashes if there is no test data
     - if [ -s ../test_data100.yml ]; then ./odoo-bin --database=$DB --test-file=`readlink -f ../test_data100.yml` --test-commit --stop-after-init; fi
     - source ~/virtualenv/python3.5/bin/activate
-    # Line below may fail quite often due to Travis bug:
-    - git reset -q --hard $TRAVIS_COMMIT
+    - git reset -q --hard $old_commit
     # Install Python requirements of target release
     - pip install -q -r requirements.txt
     # don't use pypi's openupgradelib, but the one from source to avoid choking
