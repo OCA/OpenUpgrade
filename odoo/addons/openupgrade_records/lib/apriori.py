@@ -22,6 +22,7 @@ merged_modules = {
     'hw_screen': 'hw_drivers',
     'l10n_fr_certification': 'account',
     'l10n_fr_sale_closing': 'l10n_fr',
+    'mrp_bom_cost': 'mrp_account',
     'mrp_byproduct': 'mrp',
     'payment_stripe_sca': 'payment_stripe',
     'stock_zebra': 'stock',
@@ -56,6 +57,7 @@ renamed_models = {
     'sms.send_sms': 'sms.composer',
     'stock.fixed.putaway.strat': 'stock.putaway.rule',
     'survey.mail.compose.message': 'survey.invite',
+    'website.redirect': 'website.rewrite',
     # OCA/...
 }
 
@@ -69,5 +71,6 @@ merged_models = {
     'account.voucher.line': 'account.move.line',
     'lunch.order.line': 'lunch.order',
     'slide.category': 'slide.slide',
+    'survey.page': 'survey.question',
     # OCA/...
 }

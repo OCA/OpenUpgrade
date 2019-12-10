@@ -36,7 +36,7 @@ script:
     - flake8 odoo/addons/openupgrade* --max-line-length=120 --filename=__init__.py --ignore=F401
     - flake8 odoo/addons/openupgrade* --max-line-length=120 --exclude=__init__.py
 # only flake8 migration scripts from the openupgrade project, presumably
-# identifyable by using the openupgrade helpers
+# identifiable by using the openupgrade helpers
     - flake8 --max-line-length=120 scripts $(find . \( -name 'pre-*.py' -or -name 'post-*.py' \) -exec grep -q openupgrade {} \; -print)
     - flake8 odoo/addons/*/migrations/*/tests/ --max-line-length=120
     - flake8 addons/*/migrations/*/tests/ --max-line-length=120
@@ -45,8 +45,8 @@ script:
     - wget -q -O- https://github.com/OCA/OpenUpgrade/releases/download/databases/12.0.psql | pg_restore -d $DB --no-owner
     # TODO: create test data in Odoo 12.0 which does not support yml anymore
     # Roundtrip to previous release to update the test database with additional test data
-    # - git fetch --depth 2 origin 11.0
-    # - git reset --hard `git ls-remote |grep refs/heads/11.0 |awk '{print $1}'`
+    # - git fetch --depth 2 origin 12.0
+    # - git reset --hard `git ls-remote |grep refs/heads/12.0 |awk '{print $1}'`
     # - pip install -q -r requirements.txt
     # Line below may fail quite often due to Travis bug:
     # - git reset -q --hard $TRAVIS_COMMIT
