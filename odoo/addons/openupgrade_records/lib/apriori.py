@@ -70,6 +70,8 @@ merged_modules = {
     # OCA/partner-contact
     'base_country_state_translatable': 'l10n_multilang',
     'base_partner_merge': 'base',
+    # OCA/purchase-workflow
+    'product_supplierinfo_discount': 'purchase_discount',
     # OCA/pos
     'pos_config_show_accounting': 'point_of_sale',
     # OCA/server-auth
