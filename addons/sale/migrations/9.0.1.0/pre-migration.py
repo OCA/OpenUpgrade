@@ -59,6 +59,12 @@ def map_order_state(cr):
         WHERE sol.order_id = so.id""")
 
 
+@openupgrade.logging()
+def drop_workflows(env):
+    """Drop sale workflows, removed in v9."""
+    openupgrade.delete_model_workflow(env.cr, "sale.order")
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -67,6 +73,7 @@ def migrate(env, version):
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_tables(cr, table_renames)
     map_order_state(cr)
+    drop_workflows(env)
     # For avoiding cost computations - It will be handled in post
     openupgrade.logged_query(
         env.cr, "ALTER TABLE sale_order_line ADD price_reduce numeric")
