@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="product_wishlist_rule" model="ir.rule">
+    <field name="domain_force">[('partner_id','=', user.partner_id.id)]</field>
+    <field name="groups" eval="[(5,), (4, ref('base.group_portal')), (4, ref('base.group_user'))]"/>
+  </record>
+</odoo>
