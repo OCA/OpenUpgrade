@@ -63,6 +63,12 @@ def purchase_invoice_lines(cr):
         WHERE rel.invoice_id = ail.id """)
 
 
+@openupgrade.logging()
+def drop_workflows(env):
+    """Drop sale workflows, removed in v9."""
+    openupgrade.delete_model_workflow(env.cr, "sale.order")
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -72,4 +78,5 @@ def migrate(env, version):
     openupgrade.rename_columns(env.cr, column_renames)
     openupgrade.rename_tables(env.cr, table_renames)
     map_order_state(cr)
+    drop_workflows(env)
     purchase_invoice_lines(cr)
