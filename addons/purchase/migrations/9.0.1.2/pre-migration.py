@@ -81,10 +81,11 @@ def migrate(env, version):
     purchase_invoice_lines(cr)
     drop_workflows(env)
     # For avoiding costly computations - It will be handled in post+end
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE purchase_order_line ADD price_subtotal NUMERIC",
+    )
     openupgrade.add_fields(
         env, [
-            ('price_subtotal', 'purchase.order.line', 'purchase_order_line',
-             'monetary', False, 'purchase'),
             ('price_tax', 'purchase.order.line', 'purchase_order_line',
              'monetary', False, 'purchase'),
             ('price_total', 'purchase.order.line', 'purchase_order_line',
