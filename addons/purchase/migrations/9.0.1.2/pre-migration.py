@@ -63,6 +63,12 @@ def purchase_invoice_lines(cr):
         WHERE rel.invoice_id = ail.id """)
 
 
+@openupgrade.logging()
+def drop_workflows(env):
+    """Drop purchase workflows, removed in v9."""
+    openupgrade.delete_model_workflow(env.cr, "purchase.order")
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -73,3 +79,24 @@ def migrate(env, version):
     openupgrade.rename_tables(env.cr, table_renames)
     map_order_state(cr)
     purchase_invoice_lines(cr)
+    drop_workflows(env)
+    # For avoiding costly computations - It will be handled in post+end
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE purchase_order_line ADD price_subtotal NUMERIC",
+    )
+    openupgrade.add_fields(
+        env, [
+            ('price_tax', 'purchase.order.line', 'purchase_order_line',
+             'monetary', False, 'purchase'),
+            ('price_total', 'purchase.order.line', 'purchase_order_line',
+             'monetary', False, 'purchase'),
+            ('qty_invoiced', 'purchase.order.line', 'purchase_order_line',
+             'float', False, 'purchase'),
+            ('qty_received', 'purchase.order.line', 'purchase_order_line',
+             'float', False, 'purchase'),
+            ('currency_id', 'purchase.order.line', 'purchase_order_line',
+             'many2one', False, 'purchase'),
+            ('invoice_status', 'purchase.order', 'purchase_order',
+             'selection', False, 'purchase'),
+        ]
+    )
