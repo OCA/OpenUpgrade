@@ -974,6 +974,80 @@ def fill_move_line_invoice(cr):
     )
 
 
+@openupgrade.logging()
+def fast_compute_cash_basis(env):
+    """Recompute faster these fields"""
+    # Replace https://github.com/OCA/OpenUpgrade/blob/7a49881f87c0aa6ef29c/addons/account/models/account_move.py#L44-L62
+    openupgrade.logged_query(
+        env.cr,
+        """
+            UPDATE account_move
+            SET matched_percentage = sub.matched_percentage
+            FROM (
+                SELECT
+                    aml.move_id,
+                    CASE
+                        WHEN 0.0 = ROUND(
+                            SUM(ABS(COALESCE(aml.debit, 0.0) - COALESCE(aml.credit, 0.0))),
+                            CASE
+                                WHEN MAX(COALESCE(rc.rounding, 0)) BETWEEN 0 AND 1
+                                THEN CEIL(LOG(1 / MAX(rc.rounding)))
+                                ELSE 0
+                            END::INTEGER
+                        )
+                        THEN 1.0
+                        ELSE SUM(COALESCE(apr.amount, 0)) / SUM(ABS(COALESCE(aml.debit, 0) - COALESCE(aml.credit, 0)))
+                    END AS matched_percentage
+                FROM
+                    account_move_line aml
+                    LEFT JOIN account_partial_reconcile apr
+                    ON aml.id = apr.credit_move_id OR aml.id = apr.debit_move_id
+                    LEFT JOIN res_currency rc ON aml.currency_id = rc.id
+                    LEFT JOIN account_account_type aat ON aml.user_type_id = aat.id
+                WHERE aat.type IN ('receivable', 'payable')
+                GROUP BY aml.move_id
+            ) AS sub
+            WHERE id = sub.move_id
+        """,
+    )
+    # Replace https://github.com/OCA/OpenUpgrade/blob/7a49881f87c0aa6ef2/addons/account/models/account_move.py#L352-L361
+    openupgrade.logged_query(
+        env.cr,
+        """
+            UPDATE account_move_line main
+            SET debit_cash_basis = aml.debit * am.matched_percentage,
+                credit_cash_basis = aml.credit * am.matched_percentage
+            FROM
+                account_move_line aml
+                JOIN account_move am ON aml.move_id = am.id
+                JOIN account_journal aj ON aml.journal_id = aj.id
+            WHERE
+                main.id = aml.id AND aj.type IN ('sale', 'purchase')
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+            UPDATE account_move_line main
+            SET debit_cash_basis = aml.debit,
+                credit_cash_basis = aml.credit
+            FROM
+                account_move_line aml
+                JOIN account_move am ON aml.move_id = am.id
+                JOIN account_journal aj ON aml.journal_id = aj.id
+            WHERE
+                main.id = aml.id AND aj.type NOT IN ('sale', 'purchase')
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+            UPDATE account_move_line
+            SET balance_cash_basis = debit_cash_basis - credit_cash_basis
+        """,
+    )
+
+
 def merge_invoice_journals(env, refund_journal_ids=None, journal_mapping=None):
     """Move invoices and entries from refund journals to normal ones.
 
@@ -1233,6 +1307,7 @@ def migrate(env, version):
     fill_move_taxes(env)
     fill_account_invoice_tax_taxes(env)
     fill_blacklisted_fields(cr)
+    fast_compute_cash_basis(env)
     reset_blacklist_field_recomputation()
     fill_move_line_invoice(cr)
     merge_invoice_journals(env)
