@@ -424,7 +424,18 @@ def migrate(env, version):
 
     # Fast Create new fields
     fast_create(env, FAST_CREATIONS)
-
+    openupgrade.add_fields(
+        env, [
+            ('matched_percentage', 'account.move', 'account_move',
+             'float', False, 'account'),
+            ('debit_cash_basis', 'account.move.line', 'account_move_line',
+             'monetary', False, 'account'),
+            ('credit_cash_basis', 'account.move.line', 'account_move_line',
+             'monetary', False, 'account'),
+            ('balance_cash_basis', 'account.move.line', 'account_move_line',
+             'monetary', False, 'account'),
+        ]
+    )
     # Fast create other fields, in the simple case of mono currency
     cr.execute("""
     SELECT ai.currency_id, rc.currency_id
