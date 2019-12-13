@@ -411,6 +411,8 @@ NEW mrp.workcenter.productivity.loss: mrp.block_reason6
 NEW mrp.workcenter.productivity.loss: mrp.block_reason7
 DEL res.groups: mrp.group_rounding_efficiency
 NEW res.users: base.default_user
+# NOTHING TO DO
+
 DEL workflow: mrp.wkf_prod
 DEL workflow.activity: mrp.prod_act_cancel
 DEL workflow.activity: mrp.prod_act_confirmed
@@ -426,4 +428,4 @@ DEL workflow.transition: mrp.prod_trans_in_production_done
 DEL workflow.transition: mrp.prod_trans_picking_ready
 DEL workflow.transition: mrp.prod_trans_ready_cancel
 DEL workflow.transition: mrp.prod_trans_ready_in_production
-# NOTHING TO DO
+# DONE: pre-migration: Deleted faster

@@ -53,6 +53,8 @@ DEL ir.ui.view: purchase_requisition.view_bid_line_qty
 DEL ir.ui.view: purchase_requisition.view_purchase_requisition_partner
 NEW purchase.requisition.type: purchase_requisition.type_multi
 NEW purchase.requisition.type: purchase_requisition.type_single
+# Nothing to do
+
 DEL workflow: purchase_requisition.purchase_requisition_workflow
 DEL workflow.activity: purchase_requisition.act_cancel
 DEL workflow.activity: purchase_requisition.act_done
@@ -64,4 +66,4 @@ DEL workflow.transition: purchase_requisition.trans_draft_sent
 DEL workflow.transition: purchase_requisition.trans_open_done
 DEL workflow.transition: purchase_requisition.trans_sent_cancel
 DEL workflow.transition: purchase_requisition.trans_sent_open
-# Nothing to do
+# DONE: pre-migration: Deleted faster
