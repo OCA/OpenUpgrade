@@ -9,6 +9,8 @@ NEW ir.ui.view: hr_holidays.resource_calendar_form_inherit
 NEW res.groups: hr_holidays.group_hr_holidays_manager
 NEW res.groups: hr_holidays.group_hr_holidays_user
 NEW res.users: base.default_user
+# Nothing to do
+
 DEL workflow: hr_holidays.wkf_holidays
 DEL workflow.activity: hr_holidays.act_confirm
 DEL workflow.activity: hr_holidays.act_draft
@@ -24,4 +26,4 @@ DEL workflow.transition: hr_holidays.holiday_refuse2draft
 DEL workflow.transition: hr_holidays.holiday_validate1_refuse
 DEL workflow.transition: hr_holidays.holiday_validate1_validate
 DEL workflow.transition: hr_holidays.holiday_validate2refuse
-# Nothing to do
+# DONE: pre-migration: Deleted faster

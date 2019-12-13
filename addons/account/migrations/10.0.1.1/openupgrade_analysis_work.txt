@@ -69,7 +69,7 @@ account      / account.reconcile.model.template / label (char)                  
 account      / account.reconcile.model.template / second_account_id (many2one)  : NEW relation: account.account.template
 account      / account.reconcile.model.template / second_amount (float)         : NEW required: required, req_default: function
 account      / account.reconcile.model.template / second_amount_type (selection): NEW required: required, selection_keys: ['fixed', 'percentage'], req_default: function
-account      / account.reconcile.model.template / second_label (char)           : NEW 
+account      / account.reconcile.model.template / second_label (char)           : NEW
 account      / account.reconcile.model.template / second_tax_id (many2one)      : NEW relation: account.tax.template
 account      / account.reconcile.model.template / tax_id (many2one)             : NEW relation: account.tax.template
 
@@ -77,7 +77,7 @@ account      / account.reconcile.model.template / tax_id (many2one)             
 account      / account.tax              / tax_adjustment (boolean)      : NEW
 # NOTHING TO DO
 
-account      / account.tax.template     / tax_adjustment (boolean)      : NEW 
+account      / account.tax.template     / tax_adjustment (boolean)      : NEW
 # NOTHING TO DO
 
 account      / account.tax.template     / tax_group_id (many2one)       : NEW relation: account.tax.group
@@ -152,6 +152,7 @@ NEW ir.values: account.action_account_partner_ledger_values
 NEW mail.template: account.mail_template_data_notification_email_account_invoice
 NEW res.groups: account.group_warning_account
 NEW res.users: base.default_user
+
 DEL workflow: account.wkf
 DEL workflow.activity: account.act_cancel
 DEL workflow.activity: account.act_draft
@@ -169,3 +170,4 @@ DEL workflow.transition: account.t14
 DEL workflow.transition: account.t4
 DEL workflow.transition: account.t8
 DEL workflow.transition: account.t9
+# DONE: pre-migration: Deleted faster

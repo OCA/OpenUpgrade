@@ -161,6 +161,7 @@ def prepopulate_fields(cr):
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
+    openupgrade.delete_model_workflow(env.cr, "mrp.production")
     rename_mrp_workorder(cr)
     openupgrade.copy_columns(cr, _column_copies)
     if openupgrade.column_exists(cr, 'mrp_workorder', 'state'):

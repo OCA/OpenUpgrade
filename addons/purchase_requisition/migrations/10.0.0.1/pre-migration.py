@@ -7,5 +7,6 @@ from openupgradelib import openupgrade
 
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.delete_model_workflow(env.cr, "purchase.requisition")
     # Avoid error on not null constraint
     openupgrade.lift_constraints(env.cr, 'purchase_requisition', 'type_id')
