@@ -990,7 +990,7 @@ def fast_compute_cash_basis(env):
                         WHEN 0.0 = ROUND(
                             SUM(ABS(COALESCE(aml.debit, 0.0) - COALESCE(aml.credit, 0.0))),
                             CASE
-                                WHEN MAX(COALESCE(rc.rounding, 0)) BETWEEN 0 AND 1
+                                WHEN MAX(rc.rounding) < 1
                                 THEN CEIL(LOG(1 / MAX(rc.rounding)))
                                 ELSE 0
                             END::INTEGER
