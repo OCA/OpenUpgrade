@@ -4,10 +4,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
-from openerp.addons.account_voucher.account_voucher import \
-    account_voucher_line
-
-account_voucher_line._openupgrade_recompute_fields_blacklist = []
 
 
 column_copies = {
@@ -41,14 +37,9 @@ def migrate(env, version):
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_fields(env, field_renames)
     delete_payment_views(cr)
-    cr.execute('SELECT count(*) FROM account_voucher WHERE tax_id IS NOT NULL')
-    taxed_vouchers = cr.fetchone()[0]
-    if not taxed_vouchers:
-        # If you have a DB where all account vouchers have no tax applied (we
-        # do), the new field price_subtotal can be computed from price_unit
-        # (amount) and quantity (1).
-        #
-        # See the post migration script to have the full idea.
-        account_voucher_line._openupgrade_recompute_fields_blacklist.append(
-            'price_subtotal'
-        )
+    openupgrade.add_fields(
+        env, [
+            ('price_subtotal', 'account.voucher.line', 'account_voucher_line',
+             'monetary', False, 'account_voucher'),
+        ],
+    )

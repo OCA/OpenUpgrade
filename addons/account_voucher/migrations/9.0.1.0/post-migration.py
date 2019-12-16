@@ -2,8 +2,6 @@
 # © 2016 Therp BV <http://therp.nl>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
-from openerp.addons.account_voucher.account_voucher import \
-    account_voucher_line
 
 
 def create_payments_from_vouchers(env):
@@ -113,16 +111,31 @@ def create_voucher_line_tax_lines(env):
         "where v.tax_id is not null")
 
 
+@openupgrade.logging()
+def set_voucher_line_amount(env):
+    """We replicate here the code of the compute function and set the value
+    finally via SQL for avoiding the trigger of the rest of the computed
+    fields that depends on this field.
+    """
+    lines = env['account.voucher.line'].search([])
+    for line in openupgrade.chunked(lines):
+        if line.tax_ids:
+            taxes = line.tax_ids.compute_all(
+                line.price_unit, line.voucher_id.currency_id, line.quantity,
+                product=line.product_id, partner=line.voucher_id.partner_id)
+            price_subtotal = taxes['total_excluded']
+        else:
+            price_subtotal = line.quantity * line.price_unit
+        env.cr.execute(
+            """UPDATE account_voucher_line
+            SET price_subtotal = %s
+            WHERE id = %s""", (price_subtotal, line.id),
+        )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     """Control function for account_voucher migration."""
     create_payments_from_vouchers(env)
     create_voucher_line_tax_lines(env)
-
-    if 'price_subtotal' in account_voucher_line._openupgrade_recompute_fields_blacklist:
-        # This means we have no taxes and we can update the price_subtotal
-        # quite simply.
-        openupgrade.logged_query(
-            env.cr,
-            'UPDATE account_voucher_line SET price_subtotal = quantity * price_unit'
-        )
+    set_voucher_line_amount(env)
