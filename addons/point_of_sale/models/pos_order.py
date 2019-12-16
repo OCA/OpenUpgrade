@@ -238,7 +238,7 @@ class PosOrder(models.Model):
         inv_line.update(price_unit=line.price_unit, discount=line.discount, name=inv_name)
         return InvoiceLine.sudo().create(inv_line)
 
-    def _create_account_move_line(self, session=None, move=None):
+    def _prepare_account_move_and_lines(self, session=None, move=None):
         def _flatten_tax_and_children(taxes, group_done=None):
             children = self.env['account.tax']
             if group_done is None:
@@ -460,6 +460,17 @@ class PosOrder(models.Model):
         if self and order.company_id.anglo_saxon_accounting:
             add_anglosaxon_lines(grouped_data)
 
+        return {
+            'grouped_data': grouped_data,
+            'move': move,
+        }
+
+    def _create_account_move_line(self, session=None, move=None):
+        vals = self._prepare_account_move_and_lines(session, move)
+
+        grouped_data = vals['grouped_data']
+        move = vals['move']
+
         all_lines = []
         for group_key, group_data in grouped_data.items():
             for value in group_data:
@@ -670,7 +681,7 @@ class PosOrder(models.Model):
             Invoice += new_invoice
 
             for line in order.lines:
-                self.with_context(local_context)._action_create_invoice_line(line, new_invoice.id)
+                order.with_context(local_context)._action_create_invoice_line(line, new_invoice.id)
 
             new_invoice.with_context(local_context).sudo().compute_taxes()
             order.sudo().write({'state': 'invoiced'})
@@ -711,7 +722,7 @@ class PosOrder(models.Model):
         order_ids = []
 
         for tmp_order in orders_to_save:
-            to_invoice = tmp_order['to_invoice']
+            to_invoice = tmp_order['to_invoice'] or tmp_order['data'].get('to_invoice')
             order = tmp_order['data']
             if to_invoice:
                 self._match_payment_to_invoice(order)
@@ -728,7 +739,9 @@ class PosOrder(models.Model):
 
             if to_invoice:
                 pos_order.action_pos_order_invoice()
-                pos_order.invoice_id.sudo().with_context(force_company=self.env.user.company_id.id).action_invoice_open()
+                pos_order.invoice_id.sudo().with_context(
+                    force_company=self.env.user.company_id.id, pos_picking_id=pos_order.picking_id
+                ).action_invoice_open()
                 pos_order.account_move = pos_order.invoice_id.move_id
         return order_ids
 

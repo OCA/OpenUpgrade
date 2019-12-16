@@ -6,10 +6,10 @@
 # Zoriana Zaiats, 2017
 # Анатолій Пономаренко <aponomarenko020@gmail.com>, 2017
 # ТАрас <tratatuta@i.ua>, 2017
-# Bohdan Lisnenko, 2018
 # trolka <trolka.olug@gmail.com>, 2018
 # Martin Trigaux, 2019
 # Alina Lisnenko <alinasemeniuk1@gmail.com>, 2019
+# Bohdan Lisnenko, 2019
 # 
 msgid ""
 msgstr ""
@@ -17,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-03 15:06+0000\n"
 "PO-Revision-Date: 2017-09-20 10:24+0000\n"
-"Last-Translator: Alina Lisnenko <alinasemeniuk1@gmail.com>, 2019\n"
+"Last-Translator: Bohdan Lisnenko, 2019\n"
 "Language-Team: Ukrainian (https://www.transifex.com/odoo/teams/41243/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -74,7 +74,7 @@ msgstr ""
 "* Чернетка: ще не підтверджено і не буде заплановано до підтвердження.\n"
 "  * Очікування ще однієї операції: чекає черговий перехід, перш ніж він стане автоматично доступним (наприклад, у процесах \"Зворотнє замовлення\").\n"
 "  * Очікування: якщо він не готовий до відправлення, оскільки необхідні товари не можуть бути зарезервовані.\n"
-"  * Готово: товари зарезервовані та готові до відправки. Якщо політика доставки - \"якомога швидше\", це станеться, як тільки щось зарезервовано.\n"
+"  * Виконано: товари зарезервовані та готові до відправки. Якщо політика доставки - \"якомога швидше\", це станеться, як тільки щось зарезервовано.\n"
 "  * Виконано: було оброблено, більше не можна змінювати або скасовувати.\n"
 "  * Скасовано: було скасовано, більше не може бути підтверджено."
 
@@ -2287,7 +2287,7 @@ msgstr ""
 #: selection:stock.move,state:0 selection:stock.picking,state:0
 #: selection:stock.scrap,state:0
 msgid "Done"
-msgstr "Готово"
+msgstr "Виконано"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_picking_tree_done
@@ -2745,13 +2745,13 @@ msgstr "ID"
 #: code:addons/stock/models/stock_inventory.py:421
 #, python-format
 msgid "INV:"
-msgstr "INV:"
+msgstr "РАХ:"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_change_product_qty.py:97
 #, python-format
 msgid "INV: %s"
-msgstr "INV: %s"
+msgstr "РАХ: %s"
 
 #. module: stock
 #: model:stock.location,name:stock.stock_location_3
@@ -4175,7 +4175,7 @@ msgid ""
 "No products to return (only lines in Done state and not fully returned yet "
 "can be returned)!"
 msgstr ""
-"Ніяких товарів для повернення (тільки рядки в стані Готово і не повністю "
+"Ніяких товарів для повернення (тільки рядки в стані Виконано і не повністю "
 "повернуті ще можна повернути)!"
 
 #. module: stock
@@ -7041,7 +7041,7 @@ msgstr "Загальна кількість маршрутів"
 #: model:ir.ui.view,arch_db:stock.res_config_settings_view_form
 #: model:ir.ui.view,arch_db:stock.view_template_property_form
 msgid "Traceability"
-msgstr "Переміщення"
+msgstr "Відстеження"
 
 #. module: stock
 #: model:ir.ui.view,arch_db:stock.report_stock_body_print
@@ -7805,7 +7805,8 @@ msgstr ""
 #, python-format
 msgid "You cannot cancel a stock move that has been set to 'Done'."
 msgstr ""
-"Ви не можете скасувати складське переміщення, яке встановлене як \"Готово\"."
+"Ви не можете скасувати складське переміщення, яке встановлене як "
+"\"Виконано\"."
 
 #. module: stock
 #: code:addons/stock/models/stock_location.py:96
