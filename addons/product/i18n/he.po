@@ -11,8 +11,8 @@
 # Yihya Hugirat <hugirat@gmail.com>, 2018
 # hed shefetr <hed@laylinetech.com>, 2019
 # דודי מלכה <Dudimalka6@gmail.com>, 2019
-# ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019
 # Amit Spilman <amit@laylinetech.com>, 2019
+# ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
@@ -20,7 +20,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-29 09:08+0000\n"
 "PO-Revision-Date: 2017-09-20 10:22+0000\n"
-"Last-Translator: Amit Spilman <amit@laylinetech.com>, 2019\n"
+"Last-Translator: ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,7 +54,7 @@ msgstr "%s %% הנחה"
 #: code:addons/product/models/product_pricelist.py:448
 #, python-format
 msgid "%s %% discount and %s surcharge"
-msgstr ""
+msgstr "%s %% הנחה ו %sתשלום נוסף"
 
 #. module: product
 #: code:addons/product/models/product_template.py:333
@@ -133,6 +133,9 @@ msgid ""
 "                            <span attrs=\"{'invisible':[('base', '!=', 'standard_price')]}\">Cost  -  </span>\n"
 "                            <span attrs=\"{'invisible':[('base', '!=', 'pricelist')]}\">Other Pricelist  -  </span>"
 msgstr ""
+"<span attrs=\"{'invisible':[('base', '!=', 'list_price')]}\">מחיר פומבי  -  </span>\n"
+"                            <span attrs=\"{'invisible':[('base', '!=', 'standard_price')]}\">עלות  -  </span>\n"
+"                            <span attrs=\"{'invisible':[('base', '!=', 'pricelist')]}\">מחירון אחר -  </span>"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_category_form_view
@@ -147,7 +150,7 @@ msgstr "<span>ק\"ג</span>"
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_variant_easy_edit_view
 msgid "<span>m³</span>"
-msgstr ""
+msgstr "<span>מ\"ק</span>"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.report_pricelist
@@ -162,7 +165,7 @@ msgstr "<strong>תיאור</strong>"
 #. module: product
 #: model:ir.ui.view,arch_db:product.report_pricelist
 msgid "<strong>Price List Name</strong>:<br/>"
-msgstr ""
+msgstr "<strong>שם מחירון</strong>:<br/>"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.report_pricelist
@@ -176,6 +179,9 @@ msgid ""
 "                        will delete and recreate existing variants and lead\n"
 "                        to the loss of their possible customizations."
 msgstr ""
+"<strong>אזהרה</strong>: הוספה או מחיקה של תכונות\n"
+"                        תמחק ותשחזר גרסאות קיימות ותוביל\n"
+"                        לאובדן ההתאמות האישיות שלהן."
 
 #. module: product
 #: sql_constraint:product.product:0
@@ -190,6 +196,8 @@ msgid ""
 " This description will be copied to every Sales Order, Delivery Order and "
 "Customer Invoice/Credit Note"
 msgstr ""
+"תיאור של המוצר שברצונך להעביר ללקוחות שלך. תיאור זה יועתק לכל הזמנת לקוח, "
+"הזמנת משלוח וחשבונית / תעודת משלוח של הלקוח"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_description_purchase
@@ -271,7 +279,7 @@ msgstr "כל המוצרים"
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_variant_easy_edit_view
 msgid "All general settings about this product are managed on"
-msgstr ""
+msgstr "כל ההגדרות הכלליות לגבי מוצר זה מנוהלות"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_res_config_settings_group_sale_pricelist
@@ -279,6 +287,8 @@ msgid ""
 "Allows to manage different prices based on rules per category of customers.\n"
 "                Example: 10% for retailers, promotion of 5 EUR on this product, etc."
 msgstr ""
+"מאפשר לנהל מחירים שונים על פי כללים לכל קטגוריית לקוחות.\n"
+"                דוגמא: 10% לקמעונאים, קידום של 5 אירו על מוצר זה וכו '."
 
 #. module: product
 #: model:product.product,website_description:product.product_product_8
@@ -333,7 +343,7 @@ msgstr "התווסף לארכיון"
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_sequence
 msgid "Assigns the priority to the list of product vendor."
-msgstr ""
+msgstr "מקצה את העדיפות לרשימת ספקי המוצרים."
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_line_attribute_id
@@ -350,7 +360,7 @@ msgstr "שם מאפיין"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_value_price_extra
 msgid "Attribute Price Extra"
-msgstr ""
+msgstr "מחיר תכונה נוסף"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_value_price_ids
@@ -401,7 +411,7 @@ msgstr "ברקוד"
 #. module: product
 #: model:ir.model.fields,help:product.field_product_packaging_barcode
 msgid "Barcode used for packaging identification."
-msgstr ""
+msgstr "ברקוד המשמש לזיהוי אריזה."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item_base
@@ -411,6 +421,10 @@ msgid ""
 "Cost Price : The base price will be the cost price.\n"
 "Other Pricelist : Computation of the base price based on another Pricelist."
 msgstr ""
+"מחיר בסיס לחישוב.\n"
+"מחיר ציבורי: מחיר הבסיס יהיה מחיר המכירה / מחיר הציבורי.\n"
+"מחיר עלות: מחיר הבסיס יהיה מחיר העלות.\n"
+"מחירון אחר: חישוב מחיר הבסיס על בסיס מחירון אחר."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_list_price
@@ -463,7 +477,7 @@ msgstr "יחס גדול יותר"
 #. module: product
 #: selection:product.uom,uom_type:0
 msgid "Bigger than the reference Unit of Measure"
-msgstr ""
+msgstr "גדול מיחידת המידה הבסיסית"
 
 #. module: product
 #: model:product.attribute.value,name:product.product_attribute_value_4
@@ -514,7 +528,7 @@ msgstr ""
 #. module: product
 #: model:ir.ui.view,arch_db:product.view_product_price_list
 msgid "Calculate Product Price per Unit Based on Pricelist Version."
-msgstr ""
+msgstr "חישוב מחיר מוצר ליחידה על סמך גרסת מחירון."
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_purchase_ok
@@ -581,7 +595,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,help:product.field_product_attribute_create_variant
 msgid "Check this if you want to create multiple variants for this attribute."
-msgstr ""
+msgstr "סמן זאת אם ברצונך ליצור מספר וריאנטים עבור תכונה זו."
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_category_child_id
@@ -651,7 +665,7 @@ msgstr ""
 #. module: product
 #: model:ir.ui.view,arch_db:product.res_config_settings_view_form
 msgid "Common Product Catalog"
-msgstr ""
+msgstr "קטלוג מוצרים נפוץ"
 
 #. module: product
 #: model:ir.model,name:product.model_res_company
@@ -730,7 +744,7 @@ msgstr "עלות"
 #: model:ir.model.fields,field_description:product.field_product_product_cost_currency_id
 #: model:ir.model.fields,field_description:product.field_product_template_cost_currency_id
 msgid "Cost Currency"
-msgstr ""
+msgstr "מטבע עלות"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_standard_price
@@ -739,6 +753,9 @@ msgid ""
 "in average/fifo. Also used as a base price for pricelists. Expressed in the "
 "default unit of measure of the product."
 msgstr ""
+"עלות המשמשת להערכת שווי מלאי במחיר סטנדרטי וכמחיר ראשוני שנקבע בממוצע / "
+"FIFO. משמשת גם כמחיר בסיס עבור מחירונים. באה לידי ביטוי ביחידת מידה ברירת "
+"מחדל של המוצר."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_template_standard_price
@@ -869,7 +886,7 @@ msgstr "ימים"
 #: code:addons/product/models/res_company.py:59
 #, python-format
 msgid "Default %(currency)s pricelist for %(company)s"
-msgstr ""
+msgstr "ברירת מחדל %(currency)s מחירון עבור %(company)s"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_uom_id
@@ -976,12 +993,12 @@ msgstr "תאריך סיום"
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_date_end
 msgid "End date for this vendor price"
-msgstr ""
+msgstr "תאריך סיום של מחיר ספק זה"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item_date_end
 msgid "Ending valid for the pricelist item validation"
-msgstr ""
+msgstr "סיום תוקף למוצרי המחירון"
 
 #. module: product
 #: code:addons/product/models/product.py:56
@@ -1001,7 +1018,7 @@ msgstr ""
 msgid ""
 "Error! It is not allowed to choose more than one value for a given "
 "attribute."
-msgstr ""
+msgstr "שגיאה! אסור לבחור יותר מערך אחד עבור תכונה נתונה."
 
 #. module: product
 #: code:addons/product/models/product_pricelist.py:427
@@ -1090,7 +1107,7 @@ msgstr ""
 #: model:ir.model.fields,help:product.field_product_pricelist_item_name
 #: model:ir.model.fields,help:product.field_product_pricelist_item_price
 msgid "Explicit rule name for this pricelist line."
-msgstr ""
+msgstr "שם כלל מפורש עבור שורת מחירון זו"
 
 #. module: product
 #: model:product.product,name:product.service_cost_01
@@ -1120,6 +1137,8 @@ msgid ""
 "For the rule to apply, bought/sold quantity must be greater than or equal to the minimum quantity specified in this field.\n"
 "Expressed in the default unit of measure of the product."
 msgstr ""
+"כדי שהכלל יחול, הכמות שנרכשה / נמכרה חייבת להיות גדולה או שווה לכמות המינימלית שצוינה בשדה זה.\n"
+"בא לידי ביטוי ביחידת המידות של ברירת המחדל של המוצר."
 
 #. module: product
 #: selection:product.pricelist.item,compute_price:0
@@ -1173,13 +1192,13 @@ msgstr ""
 #: model:ir.model.fields,help:product.field_product_product_packaging_ids
 #: model:ir.model.fields,help:product.field_product_template_packaging_ids
 msgid "Gives the different ways to package the same product."
-msgstr ""
+msgstr "נותן את הדרכים השונות לארוז את אותו מוצר."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_sequence
 #: model:ir.model.fields,help:product.field_product_template_sequence
 msgid "Gives the sequence order when displaying a product list"
-msgstr ""
+msgstr "נותן את סדר הרצף בעת הצגת רשימת מוצרים"
 
 #. module: product
 #: selection:product.pricelist.item,applied_on:0
@@ -1190,7 +1209,7 @@ msgstr "גלובלי"
 #: code:addons/product/models/product_template.py:30
 #, python-format
 msgid "Go to Internal Categories"
-msgstr ""
+msgstr "עבור לקטגוריות פנימיות"
 
 #. module: product
 #: model:product.product,name:product.membership_0
@@ -1268,6 +1287,8 @@ msgid ""
 "How many times this Unit of Measure is bigger than the reference Unit of "
 "Measure in this category: 1 * (this unit) = ratio * (reference unit)"
 msgstr ""
+"כמה פעמים יחידת מידה זו גדולה יותר מיחידת המדידה המתייחסת בקטגוריה זו: 1 * "
+"(יחידה זו) = יחס * (יחידת מידה בסיסית)"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_uom_factor
@@ -1275,6 +1296,8 @@ msgid ""
 "How much bigger or smaller this unit is compared to the reference Unit of "
 "Measure for this category: 1 * (reference unit) = ratio * (this unit)"
 msgstr ""
+"כמה יחידה זו גדולה יותר או קטנה יותר ביחס ליחידת המדידה הבסיסית של קטגוריה "
+"זו: 1 * (יחידת מידה בסיסית) = יחס * (יחידה זו)"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_11
@@ -1320,14 +1343,14 @@ msgstr ""
 #: model:ir.model.fields,help:product.field_product_pricelist_active
 msgid ""
 "If unchecked, it will allow you to hide the pricelist without removing it."
-msgstr ""
+msgstr "אם לא מסומן, הדבר יאפשר להסתיר את המחירון מבלי להסיר אותו."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_active
 #: model:ir.model.fields,help:product.field_product_template_active
 msgid ""
 "If unchecked, it will allow you to hide the product without removing it."
-msgstr ""
+msgstr "אם לא מסומן, הדבר יאפשר להסתיר את המוצר מבלי להסיר אותו."
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_template_image
@@ -1341,20 +1364,22 @@ msgid ""
 " It is automatically resized as a 1024x1024px image, with aspect ratio "
 "preserved."
 msgstr ""
+"תמונה של וריאנט המוצר (תמונה בגודל גדול של תבנית מוצר אם היא שגויה). שינוי "
+"גודל זה באופן אוטומטי כתמונה בגודל 1024x1024 פיקסלים, עם יחס רוחב-גובה שמור."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_image_medium
 msgid ""
 "Image of the product variant (Medium-sized image of product template if "
 "false)."
-msgstr ""
+msgstr "תמונה של וריאנט המוצר (תמונה בינונית של תבנית מוצר אם היא שגויה)."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_image_small
 msgid ""
 "Image of the product variant (Small-sized image of product template if "
 "false)."
-msgstr ""
+msgstr "תמונה של וריאנט המוצר (תמונה בגודל קטן של תבנית מוצר אם היא שגויה)."
 
 #. module: product
 #: model:product.product,website_description:product.product_product_8
@@ -1407,12 +1432,12 @@ msgstr "מלאי"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_is_product_variant
 msgid "Is Product Variant"
-msgstr ""
+msgstr "הוא וריאנט מוצר"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_template_is_product_variant
 msgid "Is a product variant"
-msgstr ""
+msgstr "הוא וריאנט מוצר"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_7
@@ -1508,6 +1533,8 @@ msgid ""
 "receipt of the products in your warehouse. Used by the scheduler for "
 "automatic computation of the purchase order planning."
 msgstr ""
+"זמן אספקה בימים בין אישור הזמנת הרכש לבין קבלת המוצרים למחסן שלך. משמש ע\"י "
+"המתזמן לחישוב אוטומטי של תכנון הזמנת הרכש."
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_category_parent_left
@@ -1527,7 +1554,7 @@ msgstr "שורות"
 #. module: product
 #: model:product.uom,name:product.product_uom_litre
 msgid "Liter(s)"
-msgstr ""
+msgstr "ליטרים"
 
 #. module: product
 #: model:product.product,name:product.consu_delivery_02
@@ -1538,17 +1565,17 @@ msgstr "שרת קטן"
 #. module: product
 #: model:res.groups,name:product.group_uom
 msgid "Manage Multiple Units of Measure"
-msgstr ""
+msgstr "נהל יחידות מידה מרובות"
 
 #. module: product
 #: model:res.groups,name:product.group_pricelist_item
 msgid "Manage Pricelist Items"
-msgstr ""
+msgstr "נהל פריטי מחירון"
 
 #. module: product
 #: model:res.groups,name:product.group_stock_packaging
 msgid "Manage Product Packaging"
-msgstr ""
+msgstr "נהל אריזת מוצרים "
 
 #. module: product
 #: model:res.groups,name:product.group_product_variant
@@ -1558,12 +1585,12 @@ msgstr "נהל וריאנט מוצר"
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_pricelist_item_form_view
 msgid "Max. Margin"
-msgstr ""
+msgstr "מרווח מקסימלי"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_pricelist_item_price_max_margin
 msgid "Max. Price Margin"
-msgstr ""
+msgstr "מרווח מחיר מקסימילי"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_image_medium
@@ -1578,6 +1605,9 @@ msgid ""
 "128x128px image, with aspect ratio preserved, only when the image exceeds "
 "one of those sizes. Use this field in form views or some kanban views."
 msgstr ""
+"תמונה בגודל בינוני של המוצר. גודל זה משתנה באופן אוטומטי כתמונת 128x128px, "
+"כששמור על יחס גובה-רוחב, רק כאשר התמונה עולה על אחד מאותם הגדלים. השתמש בשדה"
+" זה בתצוגות טופס או בתצוגות מסוימות של קאנבן."
 
 #. module: product
 #: model:product.attribute,name:product.product_attribute_1
@@ -1587,12 +1617,12 @@ msgstr "זיכרון"
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_pricelist_item_form_view
 msgid "Min. Margin"
-msgstr ""
+msgstr "מרווח מינימלי"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_pricelist_item_price_min_margin
 msgid "Min. Price Margin"
-msgstr ""
+msgstr "מרווח מחיר מינימלי"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_pricelist_item_min_quantity
@@ -1761,7 +1791,7 @@ msgstr "מחיר"
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_pricelist_item_form_view
 msgid "Price Computation"
-msgstr ""
+msgstr "חישוב מחיר"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_pricelist_item_price_discount
@@ -1797,7 +1827,7 @@ msgstr "עיגול מחיר"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_pricelist_item_price_surcharge
 msgid "Price Surcharge"
-msgstr ""
+msgstr "תשלום נוסף"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_kanban_view
@@ -1823,12 +1853,12 @@ msgstr "מחירון"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_pricelist_item_ids
 msgid "Pricelist Item"
-msgstr ""
+msgstr "פריט מחירון"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item_applied_on
 msgid "Pricelist Item applicable on selected option"
-msgstr ""
+msgstr "החל פריט מחירון על האפשרות שנבחרה"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_pricelist_item_ids
@@ -1866,7 +1896,7 @@ msgstr "מחירונים במוצר"
 #. module: product
 #: model:ir.ui.view,arch_db:product.view_partner_property_form
 msgid "Pricelists are managed on"
-msgstr ""
+msgstr "מחירונים מנוהלים ב"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_template_form_view
@@ -1918,13 +1948,13 @@ msgstr "ערך מאפיין מוצר"
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_attribute_line_form
 msgid "Product Attribute and Values"
-msgstr ""
+msgstr "תכונה וערכי מוצר"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_attribute_line_ids
 #: model:ir.model.fields,field_description:product.field_product_template_attribute_line_ids
 msgid "Product Attributes"
-msgstr ""
+msgstr "תכונות מוצר"
 
 #. module: product
 #: model:ir.actions.act_window,name:product.product_category_action_form
@@ -1952,12 +1982,12 @@ msgstr "שם מוצר"
 #: model:ir.model.fields,field_description:product.field_res_config_settings_group_stock_packaging
 #: model:ir.ui.view,arch_db:product.product_packaging_tree_view
 msgid "Product Packages"
-msgstr ""
+msgstr "חבילות מוצר"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_packaging_form_view
 msgid "Product Packaging"
-msgstr ""
+msgstr "אריזת מוצרים "
 
 #. module: product
 #: model:ir.model,name:product.model_product_template
@@ -1984,7 +2014,7 @@ msgstr "יחידת מדידה של מוצר"
 #. module: product
 #: model:ir.model,name:product.model_product_uom_categ
 msgid "Product UoM Categories"
-msgstr ""
+msgstr "קטגוריות יחידת מידה של מוצר"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_supplierinfo_product_id
@@ -2111,7 +2141,7 @@ msgstr "הפניה"
 #. module: product
 #: selection:product.uom,uom_type:0
 msgid "Reference Unit of Measure for this category"
-msgstr ""
+msgstr "יחידת מידה בסיסית לקטגוריה זו"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_5b
@@ -2270,6 +2300,9 @@ msgid ""
 "Rounding is applied after the discount and before the surcharge.\n"
 "To have prices that end in 9.99, set rounding 10, surcharge -0.01"
 msgstr ""
+"מגדיר את המחיר כך שהוא כפולה של ערך זה.\n"
+"עיגול מיושם לאחר ההנחה ולפני התוספת.\n"
+"כדי לקבל מחירים המסתיימים ב- 9.99, קבע עיגול 10, תשלום נוסף 0.01-."
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_res_config_settings_company_share_product
@@ -2283,6 +2316,9 @@ msgid ""
 " * Checked : Product are visible for every company, even if a company is defined on the partner.\n"
 " * Unchecked : Each company can see only its product (product where company is defined). Product not related to a company are visible for all companies."
 msgstr ""
+"שתף את המוצר שלך לכל החברות שהוגדרו במקרה שלך.\n"
+" * נבדק: המוצר גלוי לכל חברה, גם אם מוגדרת חברה על השותף.\n"
+" * לא מסומן: כל חברה יכולה לראות רק את המוצר שלה (מוצר שבו מוגדרת החברה). מוצר שאינו קשור לחברה גלוי לעיני כל החברות."
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_template_search_view
@@ -2292,7 +2328,7 @@ msgstr "הצג את כל הרשומות שתאריך הפעולה הבא שלה�
 #. module: product
 #: model:ir.model.fields,field_description:product.field_res_config_settings_group_product_pricelist
 msgid "Show pricelists On Products"
-msgstr ""
+msgstr "הצג מחירונים במוצרים"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_res_config_settings_group_pricelist_item
@@ -2324,11 +2360,13 @@ msgid ""
 "image, with aspect ratio preserved. Use this field anywhere a small image is"
 " required."
 msgstr ""
+"תמונה בגודל קטן של המוצר. שינוי גודל זה באופן אוטומטי כתמונת 64x64 פיקסלים, "
+"עם יחס רוחב-גובה שמור. השתמש בשדה זה בכל מקום בו נדרשת תמונה קטנה."
 
 #. module: product
 #: selection:product.uom,uom_type:0
 msgid "Smaller than the reference Unit of Measure"
-msgstr ""
+msgstr "קטן מיחידת המידה הבסיסית"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_5b
@@ -2349,20 +2387,22 @@ msgid ""
 "Specify a product category if this rule only applies to products belonging "
 "to this category or its children categories. Keep empty otherwise."
 msgstr ""
+"ציין קטגוריית מוצרים אם כלל זה חל רק על מוצרים השייכים לקטגוריה זו או על תתי"
+" הקטגוריות שלה. אחרת שמור ריק."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item_product_id
 msgid ""
 "Specify a product if this rule only applies to one product. Keep empty "
 "otherwise."
-msgstr ""
+msgstr "ציין מוצר אם כלל זה חל רק על מוצר אחד.אחרת שמור ריק."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item_product_tmpl_id
 msgid ""
 "Specify a template if this rule only applies to one product template. Keep "
 "empty otherwise."
-msgstr ""
+msgstr "ציין תבנית אם כלל זה חל רק על תבנית מוצר אחת. שמור ריק אחרת."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_sale_ok
@@ -2375,17 +2415,17 @@ msgstr ""
 msgid ""
 "Specify the fixed amount to add or substract(if negative) to the amount "
 "calculated with the discount."
-msgstr ""
+msgstr "ציין את הסכום הקבוע להוסיף או לחסר (אם שלילי) לסכום המחושב עם ההנחה."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item_price_max_margin
 msgid "Specify the maximum amount of margin over the base price."
-msgstr ""
+msgstr "ציין את הסכום המרבי של מרווח מעל למחיר הבסיס."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item_price_min_margin
 msgid "Specify the minimum amount of margin over the base price."
-msgstr ""
+msgstr "ציין את סכום המרווח המינימלי מעל מחיר הבסיס."
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_pricelist_item_date_start
@@ -2401,7 +2441,7 @@ msgstr "תאריך התחלתי למחיר הנוכחי של הספק"
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item_date_start
 msgid "Starting date for the pricelist item validation"
-msgstr ""
+msgstr "תאריך התחלה לתיקוף הפריט במחירון"
 
 #. module: product
 #: selection:product.template,type:0
@@ -2445,7 +2485,7 @@ msgstr ""
 #: model:ir.model.fields,help:product.field_product_template_pricelist_id
 msgid ""
 "Technical field. Used for searching on pricelists, not stored in database."
-msgstr ""
+msgstr "שדה טכני. משמש לחיפוש במחירון, לא שמור בבסיס הנתונים."
 
 #. module: product
 #: model:product.product,website_description:product.product_product_7
@@ -2485,7 +2525,7 @@ msgstr ""
 msgid ""
 "The computed price is expressed in the default Unit of Measure of the "
 "product."
-msgstr ""
+msgstr "המחיר המחושב מבוטא ביחידת המידה שהיא ברירת המחדל של המוצר"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_uom_rounding
@@ -2493,11 +2533,13 @@ msgid ""
 "The computed quantity will be a multiple of this value. Use 1.0 for a Unit "
 "of Measure that cannot be further split, such as a piece."
 msgstr ""
+"הכמות המחושבת תהיה כפולה מערך זה. השתמש ב 1.0 עבור יחידת מידה שלא ניתן לפצל "
+"אותה עוד יותר, כגון חתיכה."
 
 #. module: product
 #: sql_constraint:product.uom:0
 msgid "The conversion ratio for a unit of measure cannot be 0!"
-msgstr ""
+msgstr "יחס ההמרה של יחידת מידה לא יכול להיות 0 !"
 
 #. module: product
 #: model:product.product,website_description:product.product_product_8
@@ -2508,7 +2550,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,help:product.field_product_packaging_sequence
 msgid "The first in the sequence is the default one."
-msgstr ""
+msgstr "הראשון ברצף הוא ברירת המחדל."
 
 #. module: product
 #: model:product.product,website_description:product.product_product_4
@@ -2540,13 +2582,15 @@ msgid ""
 "Product Unit of Measure if not any, in the default unit of measure of the "
 "product otherwise."
 msgstr ""
+"הכמות המינימלית לרכישה מספק זה, הבאה לידי ביטוי ביחידת המידה של המוצר. אם לא"
+" מוגדרת אז ביחידת מידת ברירת המחדל של המוצר."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_category_product_count
 msgid ""
 "The number of products under this category (Does not consider the children "
 "categories)"
-msgstr ""
+msgstr "מספר המוצרים בקטגוריה זו (לא מתחשב בתתי קטגוריות)"
 
 #. module: product
 #: code:addons/product/models/product_attribute.py:75
@@ -2555,11 +2599,13 @@ msgid ""
 "The operation cannot be completed:\n"
 "You are trying to delete an attribute value with a reference on a product variant."
 msgstr ""
+"לא ניתן להשלים את הפעולה:\n"
+"אתה מנסה למחוק ערך תכונה המתייחס לוריאנט מוצר."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_price
 msgid "The price to purchase a product"
-msgstr ""
+msgstr "המחיר לרכישת מוצר"
 
 #. module: product
 #: model:ir.actions.act_window,help:product.product_normal_action
@@ -2621,7 +2667,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields,help:product.field_product_packaging_qty
 msgid "The total number of products you can have per pallet or box."
-msgstr ""
+msgstr "המספר הכולל של המוצרים שיכולים להיות לך בכל משטח או קופסה."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_volume
@@ -2668,12 +2714,12 @@ msgstr ""
 #. module: product
 #: sql_constraint:product.attribute.value:0
 msgid "This attribute value already exists !"
-msgstr ""
+msgstr "ערך תכונה זה כבר קיים!"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_product_uom
 msgid "This comes from the product form."
-msgstr ""
+msgstr "זה בא מטופס המוצר."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_image_variant
@@ -2681,6 +2727,8 @@ msgid ""
 "This field holds the image used as image for the product variant, limited to"
 " 1024x1024px."
 msgstr ""
+"שדה זה מכיל את התמונה המשמשת כתמונה עבור וריאנט המוצר, מוגבלת ל- 1024x1024 "
+"פיקסלים."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_template_image
@@ -2688,11 +2736,12 @@ msgid ""
 "This field holds the image used as image for the product, limited to "
 "1024x1024px."
 msgstr ""
+"שדה זה מכיל את התמונה המשמשת כתמונה עבור המוצר, מוגבלת ל- 1024x1024 פיקסלים."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product_price_extra
 msgid "This is the sum of the extra price of all attributes"
-msgstr ""
+msgstr "זהו סכום המחיר הנוסף של כל התכונות"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_template_form_view
@@ -2710,7 +2759,7 @@ msgstr ""
 msgid ""
 "This pricelist will be used, instead of the default one, for sales to the "
 "current partner"
-msgstr ""
+msgstr "מחירון זה ישמש, במקום ברירת המחדל, למכירות ללקוח הנוכחי"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_product_code
@@ -2718,6 +2767,8 @@ msgid ""
 "This vendor's product code will be used when printing a request for "
 "quotation. Keep empty to use the internal one."
 msgstr ""
+"קוד המוצר של הספק הזה ישמש בעת הדפסת בקשת הצעת מחיר. השאר ריק כדי להשתמש "
+"בקוד הפנימי."
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo_product_name
@@ -2725,6 +2776,8 @@ msgid ""
 "This vendor's product name will be used when printing a request for "
 "quotation. Keep empty to use the internal one."
 msgstr ""
+"שם המוצר הזה של הספק ישמש בעת הדפסת בקשת הצעת מחיר. השאר ריק כדי להשתמש בשם "
+"הפנימי."
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_template_search_view
@@ -2766,7 +2819,7 @@ msgstr ""
 #: model:ir.model.fields,help:product.field_product_uom_active
 msgid ""
 "Uncheck the active field to disable a unit of measure without deleting it."
-msgstr ""
+msgstr "בטל את הסימון של שדה \"פעיל\" כדי להשבית את יחידת המידה ללא מחיקתה"
 
 #. module: product
 #: model:product.uom.categ,name:product.product_uom_categ_unit
@@ -2811,6 +2864,8 @@ msgid ""
 "            <i>'Time'</i>, you will have the following units of measure:\n"
 "            Hours, Days."
 msgstr ""
+"ניתן להמיר יחידות מידה השייכות לאותה קטגוריה.\n"
+"            לדוגמא: בקטגוריה:   <i>'זמן'</i>, יהיו יחידות המידה הבאות: שעות, ימים."
 
 #. module: product
 #: model:product.product,website_description:product.product_product_5b
@@ -2860,17 +2915,17 @@ msgstr "גרסה לספירה "
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_image_variant
 msgid "Variant Image"
-msgstr ""
+msgstr "תמונת וריאנט"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_variant_easy_edit_view
 msgid "Variant Information"
-msgstr ""
+msgstr "מידע וריאנט"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product_price_extra
 msgid "Variant Price Extra"
-msgstr ""
+msgstr "מחיר נוסף לוריאנט"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_template_form_view
@@ -2881,14 +2936,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_product_variant_seller_ids
 #: model:ir.model.fields,field_description:product.field_product_template_variant_seller_ids
 msgid "Variant Seller"
-msgstr ""
+msgstr "מוכר משתנה"
 
 #. module: product
 #: model:ir.actions.act_window,name:product.product_attribute_value_action
 #: model:ir.ui.view,arch_db:product.attribute_tree_view
 #: model:ir.ui.view,arch_db:product.variants_tree_view
 msgid "Variant Values"
-msgstr ""
+msgstr "ערכי וריאנט"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute_value_product_ids
@@ -3028,18 +3083,20 @@ msgid ""
 "You cannot define the decimal precision of 'Account' as greater than the "
 "rounding factor of the company's main currency"
 msgstr ""
+"אינך יכול להגדיר את הדיוק העשרוני של 'חשבון' כגודל המקדם המעוגל של המטבע "
+"הראשי של החברה"
 
 #. module: product
 #: code:addons/product/wizard/product_price_list.py:26
 #, python-format
 msgid "You have to set a logo or a layout for your company."
-msgstr ""
+msgstr "אתה צריך להגדיר לוגו או פריסה לחברה שלך."
 
 #. module: product
 #: code:addons/product/wizard/product_price_list.py:28
 #, python-format
 msgid "You have to set your reports's header and footer layout."
-msgstr ""
+msgstr "עליך להגדיר את פריסת הכותרת העליונה והתחתונה."
 
 #. module: product
 #: model:ir.actions.act_window,help:product.product_uom_form_action
@@ -3047,6 +3104,8 @@ msgid ""
 "You must define a conversion rate between several Units of\n"
 "            Measure within the same category."
 msgstr ""
+"עליך להגדיר יחס המרה בין מספר יחידות מידה \n"
+"שונות באותה קטגוריה"
 
 #. module: product
 #: model:ir.actions.act_window,help:product.product_normal_action
@@ -3071,7 +3130,7 @@ msgstr ""
 msgid ""
 "You must define at least one product category in order to be able to create "
 "products."
-msgstr ""
+msgstr "עליך להגדיר לפחות קטגוריית מוצר אחת על מנת שתוכל ליצור מוצרים."
 
 #. module: product
 #: model:product.product,website_description:product.product_product_11
@@ -3110,42 +3169,42 @@ msgstr "decimal.precision"
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_category_form_view
 msgid "e.g. Lamps"
-msgstr ""
+msgstr "למשל מנורות"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_variant_easy_edit_view
 msgid "e.g. Odoo Enterprise Subscription"
-msgstr ""
+msgstr "למשל מנוי Odoo Enterprise"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_pricelist_view
 msgid "e.g. USD Retailers"
-msgstr ""
+msgstr "למשל קמעונאים בדולר"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_uom_form_view
 msgid "e.g: 1 * (reference unit) = ratio * (this unit)"
-msgstr ""
+msgstr "למשל: 1 * (יחידה בסיסית) = יחס * (יחידה זו)"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_uom_form_view
 msgid "e.g: 1 * (this unit) = ratio * (reference unit)"
-msgstr ""
+msgstr "למשל 1 * (יחידה זו) = יחס * (יחידה בסיסית)"
 
 #. module: product
 #: model:product.uom,name:product.product_uom_floz
 msgid "fl oz"
-msgstr ""
+msgstr "אונקיה נוזלית"
 
 #. module: product
 #: model:product.uom,name:product.product_uom_foot
 msgid "foot(ft)"
-msgstr ""
+msgstr "רגל"
 
 #. module: product
 #: model:product.uom,name:product.product_uom_gal
 msgid "gal(s)"
-msgstr ""
+msgstr "גלילאו"
 
 #. module: product
 #: model:product.product,name:product.product_product_8
@@ -3193,7 +3252,7 @@ msgstr ""
 #. module: product
 #: model:product.uom,name:product.product_uom_inch
 msgid "inch(es)"
-msgstr ""
+msgstr "אינצ'ים"
 
 #. module: product
 #: model:product.uom,name:product.product_uom_kgm
@@ -3275,7 +3334,7 @@ msgstr "חברת אם"
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_variant_easy_edit_view
 msgid "the product template"
-msgstr ""
+msgstr "תבנית המוצר"
 
 #. module: product
 #: model:ir.ui.view,arch_db:product.product_supplierinfo_form_view
