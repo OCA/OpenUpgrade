@@ -6,7 +6,7 @@
 # yoav sc <yoav19991@gmail.com>, 2018
 # Fishfur A Banter <fishfurbanter@gmail.com>, 2018
 # Moshe Flam <pashute@gmail.com>, 2018
-# yacov mosbacher (‫יעקב מוסבכר‬‎) <ymosba@gmail.com>, 2018
+# yacov mosbacher <ymosba@gmail.com>, 2018
 # שהאב חוסיין <shhab89@gmail.com>, 2018
 # Martin Trigaux, 2018
 # ExcaliberX <excaliberx@gmail.com>, 2018
@@ -14,16 +14,16 @@
 # Yihya Hugirat <hugirat@gmail.com>, 2018
 # hed shefetr <hed@laylinetech.com>, 2018
 # דודי מלכה <Dudimalka6@gmail.com>, 2019
-# ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019
 # Amit Spilman <amit@laylinetech.com>, 2019
+# ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 10:09+0000\n"
+"POT-Creation-Date: 2019-11-04 14:42+0000\n"
 "PO-Revision-Date: 2018-08-24 09:35+0000\n"
-"Last-Translator: Amit Spilman <amit@laylinetech.com>, 2019\n"
+"Last-Translator: ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -103,7 +103,7 @@ msgid ""
 "                    <h1 style=\"color:#A9A9A9;\">THERE'S SOMETHING IN YOUR CART.</h1>\n"
 "                    Would you like to complete your purchase?<br/><br/>\n"
 "                    % if object.order_line:\n"
-"                        % for line in object.order_line:\n"
+"                        % for line in object.website_order_line:\n"
 "                            <hr/>\n"
 "                            <table width=\"100%\">\n"
 "                                <tr>\n"
@@ -171,7 +171,7 @@ msgstr ""
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.payment_confirmation_status
 msgid "<b>Communication: </b>"
-msgstr ""
+msgstr "<b>תקשורת: </b>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.confirmation
@@ -375,7 +375,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_sale.confirmation
 #: model_terms:ir.ui.view,arch_db:website_sale.total
 msgid "<strong>Total:</strong>"
-msgstr ""
+msgstr "<strong>סה\"כ:</strong>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.terms
@@ -491,7 +491,7 @@ msgstr "מספר חשבון"
 #: model_terms:ir.ui.view,arch_db:website_sale.cart_lines
 #: model_terms:ir.ui.view,arch_db:website_sale.product_quantity
 msgid "Add one"
-msgstr ""
+msgstr "הוסף אחד"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.product
@@ -503,7 +503,7 @@ msgstr "הוספה לסל"
 #: code:addons/website_sale/static/src/js/website_sale_options.js:88
 #, python-format
 msgid "Add to cart"
-msgstr ""
+msgstr "הוסף לעגלה"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.wizard_checkout
@@ -560,6 +560,8 @@ msgid ""
 "Apply manual discounts on sales order lines or display discounts computed "
 "from pricelists (option to activate in the pricelist configuration)."
 msgstr ""
+"החל הנחות ידניות על שורות הזמנת לקוח או הצג הנחות המחושבות ממחירונים (אפשרות"
+" להפעלה בתצורת מחירון)."
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
@@ -640,6 +642,9 @@ msgid ""
 "codes. Specific conditions can be set (products, customers, minimum purchase"
 " amount, period). Rewards can be discounts (% or amount) or free products."
 msgstr ""
+"הגדל את המכירות שלך עם שני סוגים של תוכניות הנחה: מבצעים וקודי קופונים. ניתן"
+" לקבוע תנאים ספציפיים (מוצרים, לקוחות, סכום רכישה מינימלי, תקופה). תגמולים "
+"יכולים להיות הנחות (אחוז או סכום) או מוצרים בחינם."
 
 #. module: website_sale
 #: model:product.public.category,name:website_sale.public_category_boxes
@@ -717,7 +722,7 @@ msgstr ""
 #. module: website_sale
 #: model:product.public.category,name:website_sale.public_category_chairs
 msgid "Chairs"
-msgstr ""
+msgstr "כסאות"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_product_public_category__child_id
@@ -812,7 +817,7 @@ msgstr "חשב עלויות המשלוח ושלח באמצעות bpost"
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
 msgid "Compute shipping costs on orders"
-msgstr ""
+msgstr "חישוב עלויות משלוח בהזמנות"
 
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_res_config_settings
@@ -845,7 +850,7 @@ msgstr "תאריך אישור"
 #: model_terms:ir.ui.view,arch_db:website_sale.sale_report_view_search_website
 #: model_terms:ir.ui.view,arch_db:website_sale.view_sales_order_filter_ecommerce
 msgid "Confirmed Orders"
-msgstr ""
+msgstr "הזמנות מאושרות"
 
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_res_partner
@@ -907,7 +912,7 @@ msgstr "מטבעות"
 #. module: website_sale
 #: selection:website.sale.payment.acquirer.onboarding.wizard,payment_method:0
 msgid "Custom payment instructions"
-msgstr ""
+msgstr "הוראות תשלום בהתאמה אישית"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.sale_report_view_search_website
@@ -917,7 +922,7 @@ msgstr "לקוח"
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.sale_report_view_search_website
 msgid "Customer Country"
-msgstr ""
+msgstr "ארץ לקוח"
 
 #. module: website_sale
 #: model:ir.ui.menu,name:website_sale.menu_orders_customers
@@ -942,7 +947,7 @@ msgstr "מחירון ברירת מחדל"
 #. module: website_sale
 #: model_terms:ir.actions.act_window,help:website_sale.product_public_category_action
 msgid "Define a new category"
-msgstr ""
+msgstr "הגדר קטגוריה חדשה"
 
 #. module: website_sale
 #: selection:res.config.settings,sale_delivery_settings:0
@@ -967,7 +972,7 @@ msgstr "תיאור עבור האתר"
 #. module: website_sale
 #: model:product.public.category,name:website_sale.public_category_desks
 msgid "Desks"
-msgstr ""
+msgstr "שולחנות עבודה"
 
 #. module: website_sale
 #: model:ir.model.fields,help:website_sale.field_product_product__website_sequence
@@ -983,7 +988,7 @@ msgstr "תקציר"
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_res_config_settings__module_website_sale_digital
 msgid "Digital Content"
-msgstr ""
+msgstr "תוכן דיגיטלי"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_product_image__display_name
@@ -1114,7 +1119,7 @@ msgstr "צור חשבונית מהזמנות מוכנות לחיוב."
 #: model_terms:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
 msgid ""
 "Generate the invoice automatically when the online payment is confirmed"
-msgstr ""
+msgstr "הפק את החשבונית באופן אוטומטי לאחר אישור התשלום המקוון"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.extra_info
@@ -1329,7 +1334,7 @@ msgstr ""
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
 msgid "Manage promotion &amp; coupon programs"
-msgstr ""
+msgstr "נהל תוכניות קידום וקופונים"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_product_public_category__image_medium
@@ -1494,7 +1499,7 @@ msgstr ""
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.product_price
 msgid "Option not available"
-msgstr ""
+msgstr "האפשרות אינה זמינה"
 
 #. module: website_sale
 #: code:addons/website_sale/models/sale_order.py:238
@@ -1589,27 +1594,27 @@ msgstr ""
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.payment
 msgid "Pay with"
-msgstr ""
+msgstr "שלם עם"
 
 #. module: website_sale
 #: selection:website.sale.payment.acquirer.onboarding.wizard,payment_method:0
 msgid "Pay with PayPal"
-msgstr ""
+msgstr "שלם באמצעות PayPal"
 
 #. module: website_sale
 #: selection:website.sale.payment.acquirer.onboarding.wizard,payment_method:0
 msgid "Pay with another payment acquirer"
-msgstr ""
+msgstr "שלם באמצעות ספק תשלומים מקוון אחר"
 
 #. module: website_sale
 #: selection:website.sale.payment.acquirer.onboarding.wizard,payment_method:0
 msgid "Pay with credit card (via Stripe)"
-msgstr ""
+msgstr "שלם באמצעות כרטיס אשראי (דרך Stripe)"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_website_sale_payment_acquirer_onboarding_wizard__paypal_email_account
 msgid "PayPal Email ID"
-msgstr ""
+msgstr "מזהה דוא\"ל של PayPal"
 
 #. module: website_sale
 #: model:ir.ui.menu,name:website_sale.menu_ecommerce_payment_acquirers
@@ -1624,7 +1629,7 @@ msgstr "סמלי תשלום"
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_website_sale_payment_acquirer_onboarding_wizard__manual_post_msg
 msgid "Payment Instructions"
-msgstr ""
+msgstr "הנחיות לתשלום"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_website_sale_payment_acquirer_onboarding_wizard__payment_method
@@ -1651,7 +1656,7 @@ msgstr "זיהוי סוחר פייפאל"
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_website_sale_payment_acquirer_onboarding_wizard__paypal_pdt_token
 msgid "Paypal PDT Token"
-msgstr ""
+msgstr "אסימון PDT של Paypal"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.address
@@ -1756,7 +1761,7 @@ msgstr ""
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_product_image
 msgid "Product Image"
-msgstr ""
+msgstr "תמונת מוצר"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.product_template_form_view
@@ -1891,7 +1896,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_sale.cart_lines
 #: model_terms:ir.ui.view,arch_db:website_sale.product_quantity
 msgid "Remove one"
-msgstr ""
+msgstr "הסר אחד"
 
 #. module: website_sale
 #: model:ir.ui.menu,name:website_sale.menu_reporting
@@ -2028,7 +2033,7 @@ msgstr ""
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
 msgid "Sell in several currencies"
-msgstr ""
+msgstr "מכור במספר מטבעות"
 
 #. module: website_sale
 #: model:ir.actions.server,name:website_sale.ir_actions_server_sale_cart_recovery_email
@@ -2089,7 +2094,7 @@ msgstr ""
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
 msgid "Shipping Costs"
-msgstr ""
+msgstr "עלויות משלוח"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_res_config_settings__sale_delivery_settings
@@ -2121,7 +2126,7 @@ msgstr ""
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.products_add_to_cart
 msgid "Shopping cart"
-msgstr ""
+msgstr "עגלת קניות"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.confirmation
@@ -2166,7 +2171,7 @@ msgstr ""
 #: code:addons/website_sale/static/src/xml/website_sale_dashboard.xml:108
 #, python-format
 msgid "Sold"
-msgstr ""
+msgstr "נמכר"
 
 #. module: website_sale
 #: code:addons/website_sale/controllers/main.py:539
@@ -2217,12 +2222,12 @@ msgstr ""
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_website_sale_payment_acquirer_onboarding_wizard__stripe_publishable_key
 msgid "Stripe Publishable Key"
-msgstr ""
+msgstr "Stripe מפתח שניתן לפרסם"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_website_sale_payment_acquirer_onboarding_wizard__stripe_secret_key
 msgid "Stripe Secret Key"
-msgstr ""
+msgstr "Stripe מפתח סודי של"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_product_style__name
@@ -2343,12 +2348,12 @@ msgstr ""
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
 msgid "This adds the choice of a currency on pricelists."
-msgstr ""
+msgstr "זה מוסיף את הבחירה של מטבע במחירונים"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.product
 msgid "This combination does not exist."
-msgstr ""
+msgstr "שילוב זה אינו קיים."
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.res_config_settings_view_form
@@ -2371,7 +2376,7 @@ msgstr ""
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.product
 msgid "This product has no valid combination."
-msgstr ""
+msgstr "למוצר זה אין שילוב תקף."
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.product
@@ -2457,6 +2462,13 @@ msgid ""
 "Warranty, issued to the purchaser of an article by its manufacturer, "
 "promising to repair or replace it if necessary within a specified period of "
 "time."
+msgstr ""
+
+#. module: website_sale
+#. openerp-web
+#: code:addons/website_sale/static/src/js/website_sale_validate.js:49
+#, python-format
+msgid "We are waiting the confirmation of the bank or payment provider"
 msgstr ""
 
 #. module: website_sale

@@ -429,15 +429,15 @@ class StockMove(models.Model):
             rounding = move.product_id.uom_id.rounding
 
             qty_done = move.product_uom._compute_quantity(move.quantity_done, move.product_id.uom_id)
+            qty = forced_qty or qty_done
             if float_is_zero(product_tot_qty_available, precision_rounding=rounding):
                 new_std_price = move._get_price_unit()
             elif float_is_zero(product_tot_qty_available + move.product_qty, precision_rounding=rounding) or \
-                    float_is_zero(product_tot_qty_available + qty_done, precision_rounding=rounding):
+                    float_is_zero(product_tot_qty_available + qty, precision_rounding=rounding):
                 new_std_price = move._get_price_unit()
             else:
                 # Get the standard price
                 amount_unit = std_price_update.get((move.company_id.id, move.product_id.id)) or move.product_id.standard_price
-                qty = forced_qty or qty_done
                 new_std_price = ((amount_unit * product_tot_qty_available) + (move._get_price_unit() * qty)) / (product_tot_qty_available + qty)
 
             tmpl_dict[move.product_id.id] += qty_done
@@ -721,7 +721,8 @@ class StockMove(models.Model):
 
         if self.company_id.anglo_saxon_accounting:
             #eventually reconcile together the invoice and valuation accounting entries on the stock interim accounts
-            self._get_related_invoices()._anglo_saxon_reconcile_valuation(product=self.product_id)
+            allowed_invoice_types = self._is_in() and ('in_invoice', 'out_refund') or ('in_refund', 'out_invoice')
+            self._get_related_invoices().filtered(lambda x: x.type in allowed_invoice_types)._anglo_saxon_reconcile_valuation(product=self.product_id)
 
     def _get_related_invoices(self): # To be overridden in purchase and sale_stock
         """ This method is overrided in both purchase and sale_stock modules to adapt

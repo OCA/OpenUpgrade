@@ -12,16 +12,16 @@
 # RGB Consulting <odoo@rgbconsulting.com>, 2018
 # Quim - eccit <quim@eccit.com>, 2018
 # Manel Fernandez <manelfera@outlook.com>, 2018
-# M Palau <mpalau@tda.ad>, 2019
 # Arnau Ros, 2019
+# M Palau <mpalau@tda.ad>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 10:09+0000\n"
+"POT-Creation-Date: 2019-11-04 14:42+0000\n"
 "PO-Revision-Date: 2018-08-24 09:35+0000\n"
-"Last-Translator: Arnau Ros, 2019\n"
+"Last-Translator: M Palau <mpalau@tda.ad>, 2019\n"
 "Language-Team: Catalan (https://www.transifex.com/odoo/teams/41243/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,7 +38,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_sale.confirmation
 #: model_terms:ir.ui.view,arch_db:website_sale.payment
 msgid "&amp; Shipping"
-msgstr ""
+msgstr "i enviament"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.brand_promotion
@@ -102,7 +102,7 @@ msgid ""
 "                    <h1 style=\"color:#A9A9A9;\">THERE'S SOMETHING IN YOUR CART.</h1>\n"
 "                    Would you like to complete your purchase?<br/><br/>\n"
 "                    % if object.order_line:\n"
-"                        % for line in object.order_line:\n"
+"                        % for line in object.website_order_line:\n"
 "                            <hr/>\n"
 "                            <table width=\"100%\">\n"
 "                                <tr>\n"
@@ -2506,6 +2506,13 @@ msgid ""
 msgstr ""
 "Garantia, remès al comprador d'un article pel seu fabricant, amb la promesa "
 "de reparar o substituir si és necessari en un termini determinat de temps."
+
+#. module: website_sale
+#. openerp-web
+#: code:addons/website_sale/static/src/js/website_sale_validate.js:49
+#, python-format
+msgid "We are waiting the confirmation of the bank or payment provider"
+msgstr ""
 
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_website

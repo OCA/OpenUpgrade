@@ -13,8 +13,8 @@
 # Yihya Hugirat <hugirat@gmail.com>, 2018
 # hed shefetr <hed@laylinetech.com>, 2018
 # דודי מלכה <Dudimalka6@gmail.com>, 2019
-# ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019
 # Amit Spilman <amit@laylinetech.com>, 2019
+# ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
@@ -22,7 +22,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-09 10:31+0000\n"
 "PO-Revision-Date: 2018-08-24 09:23+0000\n"
-"Last-Translator: Amit Spilman <amit@laylinetech.com>, 2019\n"
+"Last-Translator: ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -197,7 +197,7 @@ msgstr ""
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.view_project_kanban
 msgid "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
 
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.view_project_kanban
@@ -330,7 +330,7 @@ msgstr "אשר קבלת אי-מייל מ "
 #: model:ir.model.fields,field_description:project.field_project_project__access_warning
 #: model:ir.model.fields,field_description:project.field_project_task__access_warning
 msgid "Access warning"
-msgstr ""
+msgstr "אזהרת גישה"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_project__message_needaction
@@ -434,7 +434,7 @@ msgstr "ניתוח"
 #: model_terms:ir.ui.view,arch_db:project.view_project_project_filter
 #: model_terms:ir.ui.view,arch_db:project.view_task_search_form
 msgid "Archived"
-msgstr "התווסף לארכיון"
+msgstr "בארכיון"
 
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.view_task_form2
@@ -831,13 +831,13 @@ msgstr "דוא\"ל של לקוח"
 #: code:addons/project/static/src/js/project_task_kanban_examples.js:44
 #, python-format
 msgid "Customer Feedback"
-msgstr ""
+msgstr "משוב לקוח"
 
 #. module: project
 #: model:ir.model.fields,help:project.field_project_project__access_url
 #: model:ir.model.fields,help:project.field_project_task__access_url
 msgid "Customer Portal URL"
-msgstr ""
+msgstr "כתובת פורטל לקוח"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.rating_rating_action_project_report
@@ -1196,7 +1196,7 @@ msgstr ""
 #. module: project
 #: selection:project.task,kanban_state:0
 msgid "Grey"
-msgstr ""
+msgstr "אפור"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task_type__legend_normal
@@ -1453,17 +1453,17 @@ msgstr ""
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.rating_project_rating_page
 msgid "Last 3 months"
-msgstr ""
+msgstr "3 חודשים אחרונים"
 
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.rating_project_rating_page
 msgid "Last 30 days"
-msgstr ""
+msgstr "30 ימים אחרונים"
 
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.rating_project_rating_page
 msgid "Last 7 days"
-msgstr ""
+msgstr "7 ימים אחרונים"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_project____last_update
@@ -1616,7 +1616,7 @@ msgstr "הודעות"
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.view_task_search_form
 msgid "My Activities"
-msgstr "פעיליות שלי"
+msgstr "הפעילויות שלי"
 
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.view_project_project_filter
@@ -1702,7 +1702,7 @@ msgstr ""
 #: code:addons/project/controllers/portal.py:105
 #, python-format
 msgid "Newest"
-msgstr ""
+msgstr "הכי חדש"
 
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.project_task_view_tree_activity
@@ -1990,7 +1990,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:project.field_project_project__access_url
 #: model:ir.model.fields,field_description:project.field_project_task__access_url
 msgid "Portal Access URL"
-msgstr ""
+msgstr "כתובת גישה לפורטל"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task__priority
@@ -2347,7 +2347,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:project.field_project_project__access_token
 #: model:ir.model.fields,field_description:project.field_project_task__access_token
 msgid "Security Token"
-msgstr ""
+msgstr "אסימון אבטחה"
 
 #. module: project
 #. openerp-web
@@ -2398,7 +2398,7 @@ msgstr "הגדרות"
 #: model_terms:ir.ui.view,arch_db:project.view_task_form2
 #: model_terms:ir.ui.view,arch_db:project.view_task_kanban
 msgid "Share"
-msgstr "שיתוף"
+msgstr "שתף"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_project__is_favorite
@@ -2533,7 +2533,7 @@ msgstr ""
 #. module: project
 #: sql_constraint:project.tags:0
 msgid "Tag name already exists!"
-msgstr ""
+msgstr "שם התווית כבר קיים!"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.project_tags_action
@@ -2725,6 +2725,9 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"הבעלים של רשומות שנוצרו עם קבלת דוא\"ל בכינוי זה. אם שדה זה לא מוגדר, המערכת"
+" תנסה למצוא את הבעלים הנכון על סמך כתובת השולח (מאת), או שתשתמש בחשבון מנהל "
+"המערכת אם לא נמצא משתמש מערכת עבור אותה כתובת."
 
 #. module: project
 #: code:addons/project/models/project.py:253
@@ -2805,7 +2808,7 @@ msgstr ""
 msgid ""
 "This stage is folded in the kanban view when there are no records in that "
 "stage to display."
-msgstr ""
+msgstr "שלב זה מקופל בתצוגת הקנבן כאשר אין רשומות בשלב זה להצגה.."
 
 #. module: project
 #: model_terms:ir.ui.view,arch_db:project.task_type_edit
@@ -2892,7 +2895,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:project.view_task_project_user_search
 #: model_terms:ir.ui.view,arch_db:project.view_task_search_form
 msgid "Unassigned"
-msgstr ""
+msgstr "לא מוקצה"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_project__message_unread

@@ -1064,8 +1064,7 @@ class SaleOrderLine(models.Model):
         for line in self:
             fpos = line.order_id.fiscal_position_id or line.order_id.partner_id.property_account_position_id
             # If company_id is set, always filter taxes by the company
-            line_company_id = line.company_id or line.order_id.company_id
-            taxes = line.product_id.taxes_id.filtered(lambda r: not line_company_id or r.company_id == line_company_id)
+            taxes = line.product_id.taxes_id.filtered(lambda r: not line.company_id or r.company_id == line.company_id)
             line.tax_id = fpos.map_tax(taxes, line.product_id, line.order_id.partner_shipping_id) if fpos else taxes
 
     @api.model
@@ -1078,11 +1077,12 @@ class SaleOrderLine(models.Model):
         res = {}
         onchange_fields = ['name', 'price_unit', 'product_uom', 'tax_id']
         if values.get('order_id') and values.get('product_id') and any(f not in values for f in onchange_fields):
-            line = self.new(values)
-            line.product_id_change()
-            for field in onchange_fields:
-                if field not in values:
-                    res[field] = line._fields[field].convert_to_write(line[field], line)
+            with self.env.do_in_onchange():
+                line = self.new(values)
+                line.product_id_change()
+                for field in onchange_fields:
+                    if field not in values:
+                        res[field] = line._fields[field].convert_to_write(line[field], line)
         return res
 
     @api.model_create_multi
@@ -1216,7 +1216,7 @@ class SaleOrderLine(models.Model):
     untaxed_amount_to_invoice = fields.Monetary("Untaxed Amount To Invoice", compute='_compute_untaxed_amount_to_invoice', compute_sudo=True, store=True)
 
     salesman_id = fields.Many2one(related='order_id.user_id', store=True, string='Salesperson', readonly=True)
-    currency_id = fields.Many2one(related='order_id.currency_id', depends=['order_id'], store=True, string='Currency', readonly=True)
+    currency_id = fields.Many2one(related='order_id.currency_id', depends=['order_id.currency_id'], store=True, string='Currency', readonly=True)
     company_id = fields.Many2one(related='order_id.company_id', string='Company', store=True, readonly=True)
     order_partner_id = fields.Many2one(related='order_id.partner_id', store=True, string='Customer', readonly=False)
     analytic_tag_ids = fields.Many2many('account.analytic.tag', string='Analytic Tags')

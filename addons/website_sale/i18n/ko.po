@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 10:09+0000\n"
+"POT-Creation-Date: 2019-11-04 14:42+0000\n"
 "PO-Revision-Date: 2018-08-24 09:35+0000\n"
 "Last-Translator: JH CHOI <hwangtog@gmail.com>, 2019\n"
 "Language-Team: Korean (https://www.transifex.com/odoo/teams/41243/ko/)\n"
@@ -34,7 +34,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_sale.confirmation
 #: model_terms:ir.ui.view,arch_db:website_sale.payment
 msgid "&amp; Shipping"
-msgstr ""
+msgstr "&amp; 선적"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.brand_promotion
@@ -100,7 +100,7 @@ msgid ""
 "                    <h1 style=\"color:#A9A9A9;\">THERE'S SOMETHING IN YOUR CART.</h1>\n"
 "                    Would you like to complete your purchase?<br/><br/>\n"
 "                    % if object.order_line:\n"
-"                        % for line in object.order_line:\n"
+"                        % for line in object.website_order_line:\n"
 "                            <hr/>\n"
 "                            <table width=\"100%\">\n"
 "                                <tr>\n"
@@ -174,17 +174,17 @@ msgstr "<b>통신 : </b>"
 #: model_terms:ir.ui.view,arch_db:website_sale.confirmation
 #: model_terms:ir.ui.view,arch_db:website_sale.payment
 msgid "<b>Shipping: </b>"
-msgstr ""
+msgstr "<b>선적 : </b>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.cart_summary
 msgid "<b>Your order: </b>"
-msgstr ""
+msgstr "<b>귀하의 주문 : </b>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.payment
 msgid "<i class=\"fa fa-arrow-right\"/> Add payment acquirers"
-msgstr ""
+msgstr "<i class=\"fa fa-arrow-right\"/> 결제 대행사 추가"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.address_kanban
@@ -197,6 +197,8 @@ msgid ""
 "<i class=\"fa fa-chevron-left\"/>\n"
 "                                            <span>Back</span>"
 msgstr ""
+"<i class=\"fa fa-chevron-left\"/>\n"
+"                                            <span>돌아가기</span>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.checkout
@@ -204,11 +206,13 @@ msgid ""
 "<i class=\"fa fa-chevron-left\"/>\n"
 "                                    <span>Return to Cart</span>"
 msgstr ""
+"<i class=\"fa fa-chevron-left\"/>\n"
+"                                    <span>장바구니로 돌아가기</span>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.payment
 msgid "<i class=\"fa fa-edit\"/> Edit"
-msgstr ""
+msgstr "<i class=\"fa fa-edit\"/> 편집"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.checkout
@@ -216,6 +220,8 @@ msgid ""
 "<i class=\"fa fa-plus-square\"/>\n"
 "                                                        <span>Add an address</span>"
 msgstr ""
+"<i class=\"fa fa-plus-square\"/>\n"
+"                                                        <span>주소 추가</span>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.confirmation
@@ -247,6 +253,8 @@ msgid ""
 "<small class=\"text-muted float-right\">Source: https://termsfeed.com/blog"
 "/sample-terms-and-conditions-template</small>"
 msgstr ""
+"<small class=\"text-muted float-right\">출처 : https://termsfeed.com/blog"
+"/sample-terms-and-conditions-template</small>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.cart
@@ -268,6 +276,8 @@ msgid ""
 "<span class=\"fa fa-chevron-down fa-border float-right\" role=\"img\" aria-"
 "label=\"Details\" title=\"Details\"/>"
 msgstr ""
+"<span class=\"fa fa-chevron-down fa-border float-right\" role=\"img\" aria-"
+"label=\"Details\" title=\"Details\"/>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.product
@@ -283,6 +293,8 @@ msgid ""
 "<span class=\"fa fa-chevron-left\"/>\n"
 "                                        <span class=\"\">Continue Shopping</span>"
 msgstr ""
+"<span class=\"fa fa-chevron-left\"/>\n"
+"                                        <span class=\"\">쇼핑 계속하기</span>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.cart
@@ -290,11 +302,13 @@ msgid ""
 "<span class=\"fa fa-chevron-left\"/>\n"
 "                                    Continue<span class=\"d-none d-md-inline\"> Shopping</span>"
 msgstr ""
+"<span class=\"fa fa-chevron-left\"/>\n"
+"                                    <span class=\"d-none d-md-inline\"> 쇼핑</span> 계속하기"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.extra_info
 msgid "<span class=\"fa fa-chevron-left\"/> Previous"
-msgstr ""
+msgstr "<span class=\"fa fa-chevron-left\"/> 이전"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.product
@@ -339,11 +353,13 @@ msgid ""
 "<span>Next</span>\n"
 "                                            <i class=\"fa fa-chevron-right\"/>"
 msgstr ""
+"<span>다음</span>\n"
+"                                            <i class=\"fa fa-chevron-right\"/>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.confirmation
 msgid "<span>Order</span>"
-msgstr ""
+msgstr "<span>주문</span>"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.short_cart_summary
@@ -512,7 +528,7 @@ msgstr "장바구니에 담기"
 #: code:addons/website_sale/static/src/js/website_sale_options.js:88
 #, python-format
 msgid "Add to cart"
-msgstr ""
+msgstr "장바구니에 담기"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.wizard_checkout
@@ -730,7 +746,7 @@ msgstr ""
 #. module: website_sale
 #: model:product.public.category,name:website_sale.public_category_chairs
 msgid "Chairs"
-msgstr ""
+msgstr "의자"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_product_public_category__child_id
@@ -870,7 +886,7 @@ msgstr "연락처"
 #: code:addons/website_sale/static/src/js/website_sale_options.js:87
 #, python-format
 msgid "Continue Shopping"
-msgstr ""
+msgstr "쇼핑 계속하기"
 
 #. module: website_sale
 #. openerp-web
@@ -980,7 +996,7 @@ msgstr "웹 사이트에 대한 설명"
 #. module: website_sale
 #: model:product.public.category,name:website_sale.public_category_desks
 msgid "Desks"
-msgstr ""
+msgstr "책상"
 
 #. module: website_sale
 #: model:ir.model.fields,help:website_sale.field_product_product__website_sequence
@@ -1742,7 +1758,7 @@ msgstr "인쇄"
 #: code:addons/website_sale/static/src/js/website_sale_options.js:86
 #, python-format
 msgid "Proceed to Checkout"
-msgstr ""
+msgstr "결제 진행"
 
 #. module: website_sale
 #: model_terms:ir.actions.act_window,help:website_sale.action_unpaid_orders_ecommerce
@@ -2480,6 +2496,13 @@ msgid ""
 "promising to repair or replace it if necessary within a specified period of "
 "time."
 msgstr "보증서. 제조사에 의해 구매자에게 문서로 발행됩니다. 지정된 기간 내에 필요한 경우 수리하거나 교환하는 것을 약속합니다."
+
+#. module: website_sale
+#. openerp-web
+#: code:addons/website_sale/static/src/js/website_sale_validate.js:49
+#, python-format
+msgid "We are waiting the confirmation of the bank or payment provider"
+msgstr ""
 
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_website

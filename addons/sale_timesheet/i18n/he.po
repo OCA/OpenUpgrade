@@ -12,14 +12,15 @@
 # דודי מלכה <Dudimalka6@gmail.com>, 2019
 # hed shefetr <hed@laylinetech.com>, 2019
 # Amit Spilman <amit@laylinetech.com>, 2019
+# ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-08 06:49+0000\n"
+"POT-Creation-Date: 2019-11-14 07:34+0000\n"
 "PO-Revision-Date: 2018-08-24 09:25+0000\n"
-"Last-Translator: Amit Spilman <amit@laylinetech.com>, 2019\n"
+"Last-Translator: ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -417,6 +418,11 @@ msgid "Fixed Price Projects"
 msgstr ""
 
 #. module: sale_timesheet
+#: model_terms:ir.ui.view,arch_db:sale_timesheet.product_template_view_search_sale_timesheet
+msgid "Fixed price services"
+msgstr ""
+
+#. module: sale_timesheet
 #: model:ir.model.fields,field_description:sale_timesheet.field_sale_order_line__project_id
 msgid "Generated Project"
 msgstr ""
@@ -560,6 +566,7 @@ msgid "Manually set quantities on order"
 msgstr "קבע כמויות ידנית על הזמנה"
 
 #. module: sale_timesheet
+#: model:ir.model.fields,help:sale_timesheet.field_product_product__service_type
 #: model:ir.model.fields,help:sale_timesheet.field_product_template__service_type
 msgid ""
 "Manually set quantities on order: Invoice based on the manually entered quantity, without creating an analytic account.\n"
@@ -571,6 +578,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_timesheet.field_sale_order_line__qty_delivered_method
 msgid "Method to update delivered qty"
 msgstr "שיטה לעדכון כמות הנמסרת"
+
+#. module: sale_timesheet
+#: model_terms:ir.ui.view,arch_db:sale_timesheet.product_template_view_search_sale_timesheet
+msgid "Milestone services"
+msgstr ""
 
 #. module: sale_timesheet
 #: selection:product.template,service_policy:0
@@ -652,6 +664,7 @@ msgid "Number of timesheets"
 msgstr ""
 
 #. module: sale_timesheet
+#: model:ir.model.fields,help:sale_timesheet.field_product_product__service_tracking
 #: model:ir.model.fields,help:sale_timesheet.field_product_template__service_tracking
 msgid ""
 "On Sales order confirmation, this product can generate a project and/or "
@@ -682,6 +695,7 @@ msgid "Overview"
 msgstr "סקירה כללית"
 
 #. module: sale_timesheet
+#: model:ir.model,name:sale_timesheet.model_product_product
 #: model:ir.model.fields,field_description:sale_timesheet.field_project_profitability_report__product_id
 msgid "Product"
 msgstr "פריט"
@@ -727,6 +741,7 @@ msgstr ""
 #: code:addons/sale_timesheet/controllers/main.py:373
 #: code:addons/sale_timesheet/controllers/main.py:424
 #: model:ir.model,name:sale_timesheet.model_project_project
+#: model:ir.model.fields,field_description:sale_timesheet.field_product_product__project_id
 #: model:ir.model.fields,field_description:sale_timesheet.field_product_template__project_id
 #: model:ir.model.fields,field_description:sale_timesheet.field_project_create_invoice__project_id
 #: model:ir.model.fields,field_description:sale_timesheet.field_project_create_sale_order__project_id
@@ -770,6 +785,7 @@ msgid "Project Sales line, employee mapping"
 msgstr ""
 
 #. module: sale_timesheet
+#: model:ir.model.fields,field_description:sale_timesheet.field_product_product__project_template_id
 #: model:ir.model.fields,field_description:sale_timesheet.field_product_template__project_template_id
 msgid "Project Template"
 msgstr ""
@@ -863,7 +879,7 @@ msgstr ""
 #. module: sale_timesheet
 #: model:ir.model.fields,field_description:sale_timesheet.field_project_project__sale_order_id
 #: model:ir.model.fields,field_description:sale_timesheet.field_project_task__sale_order_id
-#: model_terms:ir.ui.view,arch_db:sale_timesheet.view_sale_service_inherit_form2
+#: model_terms:ir.ui.view,arch_db:sale_timesheet.project_task_view_form_sale_order
 msgid "Sales Order"
 msgstr "הזמנת מכירות"
 
@@ -878,7 +894,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_timesheet.field_project_task_assign_sale__sale_line_id
 #: model_terms:ir.ui.view,arch_db:sale_timesheet.view_sale_service_inherit_form2
 msgid "Sales Order Item"
-msgstr ""
+msgstr "פריט הזמנת לקוח"
 
 #. module: sale_timesheet
 #: model:ir.model,name:sale_timesheet.model_sale_order_line
@@ -899,6 +915,7 @@ msgid "Sales Orders"
 msgstr "הזמנות לקוחות"
 
 #. module: sale_timesheet
+#: model:ir.model.fields,help:sale_timesheet.field_product_product__project_id
 #: model:ir.model.fields,help:sale_timesheet.field_product_template__project_id
 msgid ""
 "Select a non billable project on which tasks can be created. This setting "
@@ -906,6 +923,7 @@ msgid ""
 msgstr ""
 
 #. module: sale_timesheet
+#: model:ir.model.fields,help:sale_timesheet.field_product_product__project_template_id
 #: model:ir.model.fields,help:sale_timesheet.field_product_template__project_template_id
 msgid ""
 "Select a non billable project to be the skeleton of the new created project "
@@ -945,11 +963,13 @@ msgid "Service"
 msgstr "שירו"
 
 #. module: sale_timesheet
+#: model:ir.model.fields,field_description:sale_timesheet.field_product_product__service_policy
 #: model:ir.model.fields,field_description:sale_timesheet.field_product_template__service_policy
 msgid "Service Invoicing Policy"
 msgstr ""
 
 #. module: sale_timesheet
+#: model:ir.model.fields,field_description:sale_timesheet.field_product_product__service_tracking
 #: model:ir.model.fields,field_description:sale_timesheet.field_product_template__service_tracking
 msgid "Service Tracking"
 msgstr ""
@@ -973,7 +993,7 @@ msgstr ""
 #: code:addons/sale_timesheet/controllers/main.py:249
 #, python-format
 msgid "Sold"
-msgstr ""
+msgstr "נמכר"
 
 #. module: sale_timesheet
 #: model_terms:ir.ui.view,arch_db:sale_timesheet.timesheet_plan
@@ -1118,8 +1138,13 @@ msgid "Time by people"
 msgstr ""
 
 #. module: sale_timesheet
+#: model_terms:ir.ui.view,arch_db:sale_timesheet.product_template_view_search_sale_timesheet
+msgid "Time-based services"
+msgstr ""
+
+#. module: sale_timesheet
 #. openerp-web
-#: code:addons/sale_timesheet/static/src/js/timesheet_plan.js:171
+#: code:addons/sale_timesheet/static/src/js/timesheet_plan.js:177
 #: model:ir.actions.act_window,name:sale_timesheet.action_timesheet_from_invoice
 #: model:ir.actions.act_window,name:sale_timesheet.timesheet_action_from_plan
 #: model:ir.actions.act_window,name:sale_timesheet.timesheet_action_plan_pivot
@@ -1185,7 +1210,7 @@ msgstr ""
 #. module: sale_timesheet
 #: model_terms:ir.ui.view,arch_db:sale_timesheet.timesheet_plan
 msgid "To invoice"
-msgstr ""
+msgstr "לחיוב"
 
 #. module: sale_timesheet
 #: model:ir.model.fields,help:sale_timesheet.field_project_create_invoice__amount_to_invoice
@@ -1195,9 +1220,10 @@ msgid ""
 msgstr ""
 
 #. module: sale_timesheet
+#: model:ir.model.fields,field_description:sale_timesheet.field_product_product__service_type
 #: model:ir.model.fields,field_description:sale_timesheet.field_product_template__service_type
 msgid "Track Service"
-msgstr ""
+msgstr "שירות מעקב"
 
 #. module: sale_timesheet
 #: model:ir.model.fields,field_description:sale_timesheet.field_project_create_sale_order__price_unit
@@ -1221,12 +1247,12 @@ msgstr "יחידות"
 #. module: sale_timesheet
 #: model:ir.model.fields,field_description:sale_timesheet.field_project_profitability_report__amount_untaxed_invoiced
 msgid "Untaxed Amount Invoiced"
-msgstr ""
+msgstr "סכום ללא מע\"מ שחויב"
 
 #. module: sale_timesheet
 #: model:ir.model.fields,field_description:sale_timesheet.field_project_profitability_report__amount_untaxed_to_invoice
 msgid "Untaxed Amount To Invoice"
-msgstr ""
+msgstr "סכום ללא מע\"מ לחיוב"
 
 #. module: sale_timesheet
 #: model:ir.model.fields,field_description:sale_timesheet.field_project_profitability_report__expense_amount_untaxed_to_invoice
@@ -1254,7 +1280,7 @@ msgstr "אשף"
 #. module: sale_timesheet
 #: model:ir.model.fields,help:sale_timesheet.field_project_task_assign_sale__partner_id
 msgid "You can find a customer by its Name, TIN, Email or Internal Reference."
-msgstr ""
+msgstr "אתה יכול למצוא לקוח לפי שם, דוא\"ל או מזהה פנימי."
 
 #. module: sale_timesheet
 #: code:addons/sale_timesheet/models/account.py:62

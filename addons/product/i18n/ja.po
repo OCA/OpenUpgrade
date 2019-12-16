@@ -2240,12 +2240,12 @@ msgstr "すべての属性の追加料金の合計です。"
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_template_form_view
 msgid "This note is only for internal purposes."
-msgstr ""
+msgstr "このメモは内部参照用です。"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_template_form_view
 msgid "This note will show up on sales orders & invoices."
-msgstr "このノートは販売オーダや請求書に表示されます。"
+msgstr "このメモは販売オーダや請求書に表示されます。"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_res_partner__property_product_pricelist
@@ -2689,6 +2689,7 @@ msgid ""
 "                The product form contains information to simplify the sale process:\n"
 "                price, notes in the quotation, accounting data, procurement methods, etc."
 msgstr ""
+"販売または購買するもの(在庫品、消耗品、サービス品等)は、プロダクトとして登録する必要があります。プロダクトフォームは販売プロセスを容易にするための情報(価格、見積書の備考、会計データ、調達方法等)を含みます。"
 
 #. module: product
 #: code:addons/product/models/product_template.py:31

@@ -9,8 +9,9 @@
 # 城谷 龍弥 <tatsuya.shirotani@pro-spire.co.jp>, 2018
 # 高木正勝 <masakatsu.takagi@pro-spire.co.jp>, 2018
 # Martin Trigaux, 2019
-# Yoshi Tashiro <tashiro@roomsfor.hk>, 2019
 # Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2019
+# Yoshi Tashiro <tashiro@roomsfor.hk>, 2019
+# Tim Siu Lai <tl@roomsfor.hk>, 2019
 # 
 msgid ""
 msgstr ""
@@ -18,7 +19,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-09 10:31+0000\n"
 "PO-Revision-Date: 2018-08-24 09:19+0000\n"
-"Last-Translator: Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2019\n"
+"Last-Translator: Tim Siu Lai <tl@roomsfor.hk>, 2019\n"
 "Language-Team: Japanese (https://www.transifex.com/odoo/teams/41243/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,7 +46,7 @@ msgstr ""
 #: code:addons/hr_holidays/models/hr_leave_type.py:265
 #, python-format
 msgid " hours"
-msgstr ""
+msgstr "時間"
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.report_holidayssummary
@@ -391,12 +392,12 @@ msgstr ""
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_view_form
 msgid "<span class=\"ml8\">Days</span>"
-msgstr ""
+msgstr "<span class=\"ml8\">日</span>"
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_view_form
 msgid "<span class=\"ml8\">Hours</span>"
-msgstr ""
+msgstr "<span class=\"ml8\">時間</span>"
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_allocation_view_form_manager
@@ -420,6 +421,9 @@ msgid ""
 "                                    To\n"
 "                                </span>"
 msgstr ""
+"<span class=\"oe_inline\" attrs=\"{'invisible': ['|', ('request_unit_half', '=', True), ('request_unit_hours', '=', True)]}\">\n"
+"                                    至\n"
+"                                </span>"
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_view_kanban
@@ -570,7 +574,7 @@ msgstr "全て"
 #. module: hr_holidays
 #: model:ir.actions.act_window,name:hr_holidays.hr_leave_allocation_action_all
 msgid "All Allocations"
-msgstr ""
+msgstr "全ての休暇割当"
 
 #. module: hr_holidays
 #: model:ir.actions.act_window,name:hr_holidays.action_hr_holidays_dashboard
@@ -710,7 +714,7 @@ msgstr "承認済休暇"
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.view_hr_holidays_filter_report
 msgid "Approved Requests"
-msgstr ""
+msgstr "承認済"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__message_attachment_count
@@ -923,7 +927,7 @@ msgstr "今年"
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__request_unit_hours
 msgid "Custom Hours"
-msgstr ""
+msgstr "カスタム時間"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__request_date_from_period
@@ -971,7 +975,7 @@ msgstr "部門"
 #. module: hr_holidays
 #: model:ir.actions.act_window,name:hr_holidays.hr_leave_allocation_action_approve_department
 msgid "Department Allocation to Approve"
-msgstr ""
+msgstr "部門の休暇割当"
 
 #. module: hr_holidays
 #: model:ir.actions.act_window,name:hr_holidays.hr_leave_action_action_approve_department
@@ -1024,12 +1028,12 @@ msgstr "日数"
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__number_of_days
 msgid "Duration (Days)"
-msgstr ""
+msgstr "休暇期間（日）"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_allocation__number_of_days_display
 msgid "Duration (days)"
-msgstr ""
+msgstr "休暇期間（日）"
 
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave_allocation__number_of_hours_display
@@ -1231,7 +1235,7 @@ msgstr "HR 従業員別休暇サマリレポート"
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__request_unit_half
 msgid "Half Day"
-msgstr ""
+msgstr "半日"
 
 #. module: hr_holidays
 #: model:ir.model,name:hr_holidays.model_report_hr_holidays_report_holidayssummary
@@ -1715,7 +1719,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:hr_holidays.hr_leave_allocation_action_my
 #: model_terms:ir.ui.view,arch_db:hr_holidays.view_hr_leave_allocation_filter
 msgid "My Allocations"
-msgstr ""
+msgstr "割当申請"
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.view_hr_holidays_filter
@@ -2060,7 +2064,7 @@ msgstr "申請却下"
 #. module: hr_holidays
 #: model:ir.model.fields,field_description:hr_holidays.field_hr_leave__duration_display
 msgid "Requested (Days/Hours)"
-msgstr ""
+msgstr "リクエスト(日数/時間数)"
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_allocation_view_form_manager
@@ -2415,7 +2419,7 @@ msgstr "承認者"
 #: model_terms:ir.ui.view,arch_db:hr_holidays.view_hr_holidays_filter
 #: model_terms:ir.ui.view,arch_db:hr_holidays.view_hr_leave_allocation_filter
 msgid "Validator"
-msgstr ""
+msgstr "承認者"
 
 #. module: hr_holidays
 #: model_terms:ir.ui.view,arch_db:hr_holidays.edit_holiday_status_form
@@ -2540,6 +2544,7 @@ msgstr ""
 
 #. module: hr_holidays
 #: code:addons/hr_holidays/models/hr_leave_allocation.py:222
+#: code:addons/hr_holidays/models/hr_leave_allocation.py:330
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_allocation_view_kanban
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_report_kanban
 #: model_terms:ir.ui.view,arch_db:hr_holidays.hr_leave_view_kanban
@@ -2561,6 +2566,7 @@ msgstr "時間"
 
 #. module: hr_holidays
 #: code:addons/hr_holidays/models/hr_leave_allocation.py:222
+#: code:addons/hr_holidays/models/hr_leave_allocation.py:330
 #, python-format
 msgid "hours"
 msgstr "時間"

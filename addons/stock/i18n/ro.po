@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 10:08+0000\n"
+"POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:25+0000\n"
 "Last-Translator: Dorin Hongu <dhongu@gmail.com>, 2019\n"
 "Language-Team: Romanian (https://www.transifex.com/odoo/teams/41243/ro/)\n"
@@ -213,6 +213,11 @@ msgid "<span class=\"o_stat_text\">On Hand</span>"
 msgstr "<span class=\"o_stat_text\">În stoc</span>"
 
 #. module: stock
+#: model_terms:ir.ui.view,arch_db:stock.view_picking_form
+msgid "<span class=\"o_stat_text\">Operations</span>"
+msgstr ""
+
+#. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.report_mrp_line
 msgid ""
 "<span role=\"img\" class=\"o_stock_reports_stream\" title=\"Traceability "
@@ -256,6 +261,8 @@ msgid ""
 "<strong>\n"
 "                                            Product Barcode</strong>"
 msgstr ""
+"<strong>\n"
+"                                            Cod bare produs</strong>"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.message_head
@@ -503,7 +510,7 @@ msgstr "Adresa"
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_rule__partner_address_id
 msgid "Address where goods should be delivered. Optional."
-msgstr ""
+msgstr "Adresa de livrare a bunurilor. Opțional."
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.res_config_settings_view_form
@@ -541,6 +548,8 @@ msgid ""
 "All items couldn't be shipped, the remaining ones will be shipped as soon as"
 " they become available."
 msgstr ""
+"Nu toate articolele au putut fi expediate, celelalte vor fi expediate "
+"imediat ce devin disponibile."
 
 #. module: stock
 #: code:addons/stock/models/stock_inventory.py:113
@@ -992,32 +1001,32 @@ msgstr "Calculează"
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.res_config_settings_view_form
 msgid "Compute shipping costs and ship with DHL"
-msgstr ""
+msgstr "Calculați costurile de transport și expediați cu DHL"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.res_config_settings_view_form
 msgid "Compute shipping costs and ship with Easypost"
-msgstr ""
+msgstr "Calculați costurile de transport și expediați cu Easypost"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.res_config_settings_view_form
 msgid "Compute shipping costs and ship with FedEx"
-msgstr ""
+msgstr "Calculați costurile de transport și expediați cu FedEx"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.res_config_settings_view_form
 msgid "Compute shipping costs and ship with UPS"
-msgstr ""
+msgstr "Calculați costurile de transport și expediați cu UPS"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.res_config_settings_view_form
 msgid "Compute shipping costs and ship with USPS"
-msgstr ""
+msgstr "Calculați costurile de transport și expediați cu USPS"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.res_config_settings_view_form
 msgid "Compute shipping costs and ship with bpost"
-msgstr ""
+msgstr "Calculați costurile de transport și expediați cu bpost"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_move_picking_form
@@ -1175,6 +1184,9 @@ msgid ""
 "                        products later. Do not create a backorder if you will not\n"
 "                        process the remaining products."
 msgstr ""
+"Creați o comandă restantă dacă doriți să procesați ulterior cantitățile "
+"rămase. Nu creați o comandă restantă dacă produsele rămase nu vor fi "
+"furnizate."
 
 #. module: stock
 #: model_terms:ir.actions.act_window,help:stock.action_inventory_form
@@ -1492,6 +1504,8 @@ msgid ""
 "Define a minimum stock rule so that Odoo creates automatically requests for "
 "quotations or draft manufacturing orders to resupply your stock."
 msgstr ""
+"Definiți o regulă minimă de stoc, astfel încât Odoo să creeze automat cereri"
+" de ofertă sau comenzi de fabricație pentru a vă reaproviziona stocul."
 
 #. module: stock
 #: model_terms:ir.actions.act_window,help:stock.action_picking_form
@@ -1551,7 +1565,7 @@ msgstr "Livrare directă bunuri (1 pas)"
 #: code:addons/stock/models/stock_warehouse.py:526
 #, python-format
 msgid "Deliver in 1 step (ship)"
-msgstr ""
+msgstr "Livrați într-un pas"
 
 #. module: stock
 #: code:addons/stock/models/stock_warehouse.py:526
@@ -1703,7 +1717,7 @@ msgstr ""
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_package_destination__location_dest_id
 msgid "Destination location"
-msgstr ""
+msgstr "Locația destinație"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move__route_ids
@@ -1797,6 +1811,7 @@ msgstr "Afișează numărul de serie și lotul la livrare"
 #: model_terms:ir.ui.view,arch_db:stock.view_move_search
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_internal_search
+#: model_terms:ir.ui.view,arch_db:stock.view_picking_move_tree
 #: selection:stock.move,state:0 selection:stock.package_level,state:0
 #: selection:stock.picking,state:0 selection:stock.scrap,state:0
 msgid "Done"
@@ -2125,7 +2140,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock.field_product_replenish__product_has_variants
 #: model:ir.model.fields,field_description:stock.field_stock_rules_report__product_has_variants
 msgid "Has variants"
-msgstr ""
+msgstr "Are variante"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_location__posz
@@ -2403,11 +2418,12 @@ msgstr "Recepție"
 #: model:ir.model.fields,field_description:stock.field_stock_move__product_uom_qty
 #: model_terms:ir.ui.view,arch_db:stock.view_move_kandan
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
+#: model_terms:ir.ui.view,arch_db:stock.view_picking_move_tree
 msgid "Initial Demand"
 msgstr "Cerința inițială"
 
 #. module: stock
-#: code:addons/stock/models/stock_warehouse.py:444
+#: code:addons/stock/models/stock_warehouse.py:453
 #, python-format
 msgid "Input"
 msgstr "Intrare"
@@ -2894,6 +2910,11 @@ msgstr "Mișcări asociate"
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_inventory_form
 msgid "List view of lines"
+msgstr ""
+
+#. module: stock
+#: model_terms:ir.ui.view,arch_db:stock.view_picking_form
+msgid "List view of operations"
 msgstr ""
 
 #. module: stock
@@ -4364,7 +4385,7 @@ msgstr ""
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
 msgid "Put in Pack"
-msgstr ""
+msgstr "Pune în Pachet"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.res_config_settings_view_form
@@ -4763,6 +4784,7 @@ msgstr "Rezervări"
 #: model:ir.model.fields,field_description:stock.field_stock_move_line__product_uom_qty
 #: model_terms:ir.ui.view,arch_db:stock.view_move_picking_form
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
+#: model_terms:ir.ui.view,arch_db:stock.view_picking_move_tree
 #: model_terms:ir.ui.view,arch_db:stock.view_stock_quant_tree
 #: selection:stock.package_level,state:0
 msgid "Reserved"
@@ -5185,6 +5207,10 @@ msgid ""
 " labels and request carrier picking at your warehouse to ship to the "
 "customer. Apply shipping connector from delivery methods."
 msgstr ""
+"Conectorii de transport permit calcularea costurilor de transport exacte, "
+"tipărirea etichetelor de transport și solicitarea ridicării "
+"transportatorului la depozitul dvs. pentru a fi expediate clientului. "
+"Aplicați conectorul de livrare din metodele de livrare."
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_warehouse__code
@@ -5436,6 +5462,7 @@ msgstr "Mișcare stoc"
 #: model_terms:ir.ui.view,arch_db:stock.view_move_picking_tree
 #: model_terms:ir.ui.view,arch_db:stock.view_move_search
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
+#: model_terms:ir.ui.view,arch_db:stock.view_picking_move_tree
 msgid "Stock Moves"
 msgstr "Mișcări stoc"
 
@@ -5953,6 +5980,8 @@ msgid ""
 "This note will show up on internal transfer orders (e.g. where to pick the "
 "product in the warehouse)."
 msgstr ""
+"Această notă va apărea pe comenzile de transfer intern (de exemplu, de unde "
+"să luați produsul din depozit)."
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_template_property_form
@@ -5960,6 +5989,8 @@ msgid ""
 "This note will show up on receipt orders (e.g. where to store the product in"
 " the warehouse)."
 msgstr ""
+"Această notă va apărea în recepții (de exemplu, unde se va stoca produsul în"
+" depozit)."
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_stock_return_picking_form
@@ -6237,6 +6268,7 @@ msgstr "Unitate produs"
 #: model_terms:ir.ui.view,arch_db:stock.view_move_tree_receipt_picking
 #: model_terms:ir.ui.view,arch_db:stock.view_move_tree_receipt_picking_board
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
+#: model_terms:ir.ui.view,arch_db:stock.view_picking_move_tree
 #: model_terms:ir.ui.view,arch_db:stock.view_stock_move_line_kanban
 #: model_terms:ir.ui.view,arch_db:stock.view_stock_move_line_operation_tree
 msgid "Unit of Measure"

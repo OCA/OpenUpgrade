@@ -12,17 +12,17 @@
 # Hans Henrik Gabelgaard <hhg@gabelgaard.org>, 2018
 # Jonathan Stein <cgs@image.dk>, 2018
 # JonathanStein <jstein@image.dk>, 2018
-# Sanne Kristensen <sanne@vkdata.dk>, 2018
 # Joe Hansen <joedalton2@yahoo.dk>, 2019
 # Ejner Sønniksen <ejner@vkdata.dk>, 2019
 # Pernille Kristensen <pernillekristensen1994@gmail.com>, 2019
+# Sanne Kristensen <sanne@vkdata.dk>, 2019
 # lhmflexerp <lhm@flexerp.dk>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-08 13:50+0000\n"
+"POT-Creation-Date: 2019-11-14 07:34+0000\n"
 "PO-Revision-Date: 2018-08-24 09:20+0000\n"
 "Last-Translator: lhmflexerp <lhm@flexerp.dk>, 2019\n"
 "Language-Team: Danish (https://www.transifex.com/odoo/teams/41243/da/)\n"
@@ -1195,7 +1195,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/systray.xml:35
 #, python-format
 msgid "Chat"
-msgstr ""
+msgstr "Chat"
 
 #. module: mail
 #: selection:mail.channel,channel_type:0
@@ -1508,7 +1508,7 @@ msgstr "Kære"
 #: model:ir.model.fields,field_description:mail.field_mail_activity__activity_decoration
 #: model:ir.model.fields,field_description:mail.field_mail_activity_type__decoration_type
 msgid "Decoration Type"
-msgstr ""
+msgstr "Dekorationstype"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_message_subtype__default
@@ -1518,7 +1518,7 @@ msgstr "Standard"
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_activity_type__default_next_type_id
 msgid "Default Next Activity"
-msgstr ""
+msgstr "Standard næste aktivitet"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_email_template_preview__null_value
@@ -1668,7 +1668,7 @@ msgstr "Beskeder"
 #. module: mail
 #: model:ir.model,name:mail.model_mail_channel
 msgid "Discussion Channel"
-msgstr ""
+msgstr "Diskussionskanaler"
 
 #. module: mail
 #: model:mail.message.subtype,name:mail.mt_comment
@@ -2627,7 +2627,7 @@ msgstr ""
 #: code:addons/mail/models/mail_blacklist.py:35
 #, python-format
 msgid "Invalid email address %r"
-msgstr ""
+msgstr "Ugyldig e-mail adresse %r"
 
 #. module: mail
 #: code:addons/mail/models/mail_alias.py:88
@@ -3147,7 +3147,7 @@ msgstr "Markér som udført"
 #: code:addons/mail/static/src/xml/thread.xml:346
 #, python-format
 msgid "Mark as Read"
-msgstr ""
+msgstr "Markér som læst"
 
 #. module: mail
 #. openerp-web
@@ -5413,11 +5413,12 @@ msgstr ""
 msgid ""
 "Type of server action. The following values are available:\n"
 "- 'Execute Python Code': a block of python code that will be executed\n"
-"- 'Create or Copy a new Record': create a new record with new values, or copy an existing record in your database\n"
-"- 'Write on a Record': update the values of a record\n"
+"- 'Create': create a new record with new values\n"
+"- 'Update a Record': update the values of a record\n"
 "- 'Execute several actions': define an action that triggers several other server actions\n"
-"- 'Add Followers': add followers to a record (available in Discuss)\n"
-"- 'Send Email': automatically send an email (available in email_template)"
+"- 'Send Email': automatically send an email (Discuss)\n"
+"- 'Add Followers': add followers to a record (Discuss)\n"
+"- 'Create Next Activity': create an activity (Discuss)"
 msgstr ""
 
 #. module: mail
@@ -6018,12 +6019,12 @@ msgstr ""
 #. module: mail
 #: selection:mail.activity.type,delay_from:0
 msgid "after previous activity deadline"
-msgstr ""
+msgstr "Efter forrige aktivitetsdeadline"
 
 #. module: mail
 #: selection:mail.activity.type,delay_from:0
 msgid "after validation date"
-msgstr ""
+msgstr "efter godkendelses dato"
 
 #. module: mail
 #: code:addons/mail/models/mail_thread.py:1074
@@ -6122,7 +6123,7 @@ msgstr "fra:"
 #. module: mail
 #: model:mail.channel,name:mail.channel_all_employees
 msgid "general"
-msgstr ""
+msgstr "generelt"
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.message_origin_link
@@ -6307,15 +6308,23 @@ msgid "to close for"
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/models/mail_thread.py:1074
+#: code:addons/mail/models/mail_thread.py:1081
 #, python-format
 msgid "unknown error"
 msgstr "ukendt fejl"
 
 #. module: mail
-#: code:addons/mail/models/mail_thread.py:1014
+#: code:addons/mail/models/mail_thread.py:1021
 #, python-format
 msgid "unknown target model %s"
+msgstr ""
+
+#. module: mail
+#. openerp-web
+#: code:addons/mail/static/src/js/attachment_box.js:40
+#: code:addons/mail/static/src/js/models/messages/abstract_message.js:52
+#, python-format
+msgid "unnamed"
 msgstr ""
 
 #. module: mail

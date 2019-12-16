@@ -2,12 +2,24 @@
 # This file contains the translation of the following modules:
 # * base_automation
 # 
+# Translators:
+# Martin Trigaux, 2019
+# oihane <oihanecruce@gmail.com>, 2019
+# Esther Martín Menéndez <esthermartin001@gmail.com>, 2019
+# ibinka lete <ilete@fpbidasoa.net>, 2019
+# Gorka Toledo <gorka.toledo@gmail.com>, 2019
+# Eneko <eastigarraga@codesyntax.com>, 2019
+# Mikel Lizarralde <mikellizarralde@gmail.com>, 2019
+# Naomi Hidalgo <naomihid96@gmail.com>, 2019
+# Victor Laskurain <blaskurain@binovo.es>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 10:09+0000\n"
+"POT-Creation-Date: 2019-11-14 07:34+0000\n"
 "PO-Revision-Date: 2018-08-24 09:16+0000\n"
+"Last-Translator: Victor Laskurain <blaskurain@binovo.es>, 2019\n"
 "Language-Team: Basque (https://www.transifex.com/odoo/teams/41243/eu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,44 +33,35 @@ msgid "<div>Email automation</div>"
 msgstr ""
 
 #. module: base_automation
-#: model:ir.model.fields,help:base_automation.field_base_automation__website_published
-msgid ""
-"A code server action can be executed from the website, using a dedicated "
-"controller. The address is <base>/website/action/<website_path>. Set this "
-"field as True to allow users to run this action. If it is set to False the "
-"action cannot be run through the website."
-msgstr ""
-
-#. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__help
 msgid "Action Description"
-msgstr ""
+msgstr "Ekintzaren deskribapena"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__name
 msgid "Action Name"
-msgstr ""
+msgstr "Ekintzaren izena"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__state
 msgid "Action To Do"
-msgstr ""
+msgstr "Egitekoa"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__type
 msgid "Action Type"
-msgstr ""
+msgstr "Ekintza mota"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__active
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__active
 msgid "Active"
-msgstr ""
+msgstr "Aktiboa"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__activity_type_id
 msgid "Activity"
-msgstr ""
+msgstr "Jarduera"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__activity_user_type
@@ -95,7 +98,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:base_automation.base_automation_act
 #: model:ir.ui.menu,name:base_automation.menu_base_automation_form
 msgid "Automated Actions"
-msgstr ""
+msgstr "Akzio automatizatuak "
 
 #. module: base_automation
 #: model:ir.model,name:base_automation.model_base_automation_line_test
@@ -110,12 +113,7 @@ msgstr ""
 #. module: base_automation
 #: model_terms:ir.ui.view,arch_db:base_automation.view_base_automation_tree
 msgid "Automation"
-msgstr ""
-
-#. module: base_automation
-#: model:ir.model.fields,field_description:base_automation.field_base_automation__website_published
-msgid "Available on the Website"
-msgstr ""
+msgstr "Automatizazioa"
 
 #. module: base_automation
 #: model:ir.actions.server,name:base_automation.ir_cron_data_base_automation_check_ir_actions_server
@@ -194,7 +192,7 @@ msgstr ""
 #. module: base_automation
 #: selection:base.automation.lead.test,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Ezeztatua"
 
 #. module: base_automation
 #: model:ir.model.fields,help:base_automation.field_base_automation_lead_test__customer
@@ -218,7 +216,7 @@ msgstr ""
 #. module: base_automation
 #: selection:base.automation.lead.test,state:0
 msgid "Closed"
-msgstr ""
+msgstr "Itxita"
 
 #. module: base_automation
 #: model:ir.model.fields,help:base_automation.field_base_automation__on_change_fields
@@ -235,24 +233,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__create_uid
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_line_test__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Nork sortua"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__create_date
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__create_date
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_line_test__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Noiz sortua"
 
 #. module: base_automation
 #: selection:base.automation,trg_date_range_type:0
 msgid "Days"
-msgstr ""
+msgstr "Egunak"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__deadline
 msgid "Deadline"
-msgstr ""
+msgstr "Epemuga "
 
 #. module: base_automation
 #: model:ir.model.fields,help:base_automation.field_base_automation__trg_date_range
@@ -282,7 +280,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__display_name
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_line_test__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Izena erakutsi"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__activity_date_deadline_range
@@ -297,29 +295,24 @@ msgstr ""
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__template_id
 msgid "Email Template"
-msgstr ""
+msgstr "Eposta txantiloia "
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__xml_id
 msgid "External ID"
-msgstr ""
+msgstr "Kanpo ID"
 
 #. module: base_automation
 #: selection:base.automation,trg_date_range_type:0
 msgid "Hours"
-msgstr ""
+msgstr "Orduak"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__id
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__id
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_line_test__id
 msgid "ID"
-msgstr ""
-
-#. module: base_automation
-#: model:ir.model.fields,help:base_automation.field_base_automation__xml_id
-msgid "ID of the action if defined in a XML file"
-msgstr ""
+msgstr "ID"
 
 #. module: base_automation
 #: model:ir.model.fields,help:base_automation.field_base_automation__filter_domain
@@ -338,24 +331,24 @@ msgstr ""
 #. module: base_automation
 #: selection:base.automation.lead.test,state:0
 msgid "In Progress"
-msgstr ""
+msgstr "Lanean"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__customer
 msgid "Is a Customer"
-msgstr ""
+msgstr "Bezeroa bat da"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__date_action_last
 msgid "Last Action"
-msgstr ""
+msgstr "Azken ekintza "
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation____last_update
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test____last_update
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_line_test____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Azken aldaketa"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__last_run
@@ -367,24 +360,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__write_uid
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_line_test__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Azkenengoz eguneratu zuena"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__write_date
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__write_date
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_line_test__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Azken eguneraketa noiz"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_line_test__lead_id
 msgid "Lead"
-msgstr ""
+msgstr "Ekimena"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__line_ids
 msgid "Line"
-msgstr ""
+msgstr "Lerro"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__link_field_id
@@ -394,17 +387,17 @@ msgstr ""
 #. module: base_automation
 #: selection:base.automation,trg_date_range_type:0
 msgid "Minutes"
-msgstr ""
+msgstr "Minutuak"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__model_id
 msgid "Model"
-msgstr ""
+msgstr "Eredua"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__model_name
 msgid "Model Name"
-msgstr ""
+msgstr "Ereduaren izena"
 
 #. module: base_automation
 #: model:ir.model.fields,help:base_automation.field_base_automation__crud_model_id
@@ -421,22 +414,22 @@ msgstr ""
 #. module: base_automation
 #: selection:base.automation,trg_date_range_type:0
 msgid "Months"
-msgstr ""
+msgstr "Hilabeteak"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_line_test__name
 msgid "Name"
-msgstr ""
+msgstr "Izena"
 
 #. module: base_automation
 #: selection:base.automation.lead.test,state:0
 msgid "New"
-msgstr ""
+msgstr "Berria"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__activity_note
 msgid "Note"
-msgstr ""
+msgstr "Oharra"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__on_change_fields
@@ -473,17 +466,17 @@ msgstr ""
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "Kidea"
 
 #. module: base_automation
 #: selection:base.automation.lead.test,state:0
 msgid "Pending"
-msgstr ""
+msgstr "Zain"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__priority
 msgid "Priority"
-msgstr ""
+msgstr "Lehentasuna"
 
 #. module: base_automation
 #: model:ir.model.fields,help:base_automation.field_base_automation__link_field_id
@@ -495,23 +488,23 @@ msgstr ""
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__code
 msgid "Python Code"
-msgstr ""
+msgstr "Python Kodea"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__activity_user_id
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__user_id
 msgid "Responsible"
-msgstr ""
+msgstr "Arduraduna"
 
 #. module: base_automation
 #: selection:ir.actions.server,usage:0
 msgid "Scheduled Action"
-msgstr ""
+msgstr "Akzioa programatu agendan"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sekuentzia"
 
 #. module: base_automation
 #: selection:ir.actions.server,usage:0
@@ -539,17 +532,17 @@ msgstr ""
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__state
 msgid "Status"
-msgstr ""
+msgstr "Egoera"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_lead_test__name
 msgid "Subject"
-msgstr ""
+msgstr "Gaia"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__activity_summary
 msgid "Summary"
-msgstr ""
+msgstr "Laburpena"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__crud_model_name
@@ -570,11 +563,6 @@ msgid ""
 msgstr ""
 
 #. module: base_automation
-#: model:ir.model.fields,help:base_automation.field_base_automation__website_url
-msgid "The full URL to access the server action through the website."
-msgstr ""
-
-#. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__trigger
 msgid "Trigger Condition"
 msgstr ""
@@ -589,18 +577,19 @@ msgstr ""
 msgid ""
 "Type of server action. The following values are available:\n"
 "- 'Execute Python Code': a block of python code that will be executed\n"
-"- 'Create or Copy a new Record': create a new record with new values, or copy an existing record in your database\n"
-"- 'Write on a Record': update the values of a record\n"
+"- 'Create': create a new record with new values\n"
+"- 'Update a Record': update the values of a record\n"
 "- 'Execute several actions': define an action that triggers several other server actions\n"
-"- 'Add Followers': add followers to a record (available in Discuss)\n"
-"- 'Send Email': automatically send an email (available in email_template)"
+"- 'Send Email': automatically send an email (Discuss)\n"
+"- 'Add Followers': add followers to a record (Discuss)\n"
+"- 'Create Next Activity': create an activity (Discuss)"
 msgstr ""
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__usage
 #: model:ir.model.fields,field_description:base_automation.field_ir_actions_server__usage
 msgid "Usage"
-msgstr ""
+msgstr "Erabilera"
 
 #. module: base_automation
 #: model:ir.model.fields,help:base_automation.field_base_automation__activity_user_type
@@ -628,7 +617,7 @@ msgstr ""
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation_line_test__user_id
 msgid "User"
-msgstr ""
+msgstr "Erabiltzailea"
 
 #. module: base_automation
 #: model:ir.model.fields,field_description:base_automation.field_base_automation__activity_user_field_name
@@ -644,17 +633,7 @@ msgstr ""
 #: code:addons/base_automation/models/base_automation.py:86
 #, python-format
 msgid "Warning"
-msgstr ""
-
-#. module: base_automation
-#: model:ir.model.fields,field_description:base_automation.field_base_automation__website_path
-msgid "Website Path"
-msgstr ""
-
-#. module: base_automation
-#: model:ir.model.fields,field_description:base_automation.field_base_automation__website_url
-msgid "Website Url"
-msgstr ""
+msgstr "Abisua"
 
 #. module: base_automation
 #: model:ir.model.fields,help:base_automation.field_base_automation__trg_date_calendar_id

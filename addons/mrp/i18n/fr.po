@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 10:09+0000\n"
+"POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:21+0000\n"
 "Last-Translator: Oriane Malburny <oma@odoo.com>, 2019\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
@@ -199,6 +199,11 @@ msgstr "<span class=\"o_stat_text\">Charge du poste de travail</span>"
 #: model_terms:ir.ui.view,arch_db:mrp.mrp_production_form_view
 msgid "<span class=\"o_stat_text\">Work Orders</span>"
 msgstr "<span class=\"o_stat_text\">Ordres de Travail</span>"
+
+#. module: mrp
+#: model_terms:ir.ui.view,arch_db:mrp.label_production_view_pdf
+msgid "<span>1.0</span>"
+msgstr ""
 
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.report_mrp_bom
@@ -1129,7 +1134,7 @@ msgstr "Brouillon"
 #: model:product.product,name:mrp.product_product_drawer_drawer
 #: model:product.template,name:mrp.product_product_drawer_drawer_product_template
 msgid "Drawer Black"
-msgstr ""
+msgstr "Tiroir noir"
 
 #. module: mrp
 #: model:product.product,name:mrp.product_product_drawer_case
@@ -1141,7 +1146,7 @@ msgstr "Cassetto nero"
 #: model:product.product,description:mrp.product_product_drawer_drawer
 #: model:product.template,description:mrp.product_product_drawer_drawer_product_template
 msgid "Drawer on casters for great usability."
-msgstr ""
+msgstr "Tiroirs sur roulettes pour une bonne facilité d'utilisation."
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_routing_workcenter__time_cycle
@@ -1615,6 +1620,11 @@ msgid "Is the Current User Working"
 msgstr "L'utilisateur actuel travaille-t-il ?"
 
 #. module: mrp
+#: model:ir.model.fields,field_description:mrp.field_mrp_workorder__is_first_wo
+msgid "Is the first WO to produce"
+msgstr ""
+
+#. module: mrp
 #: code:addons/mrp/models/mrp_workcenter.py:163
 #, python-format
 msgid "It has already been unblocked."
@@ -1729,6 +1739,7 @@ msgstr "Activités en retard"
 #: model:product.template,description:mrp.product_product_wood_ply_product_template
 msgid "Layers that are stick together to assemble wood panels."
 msgstr ""
+"Couches qui sont collées ensemble pour assembler les panneaux de bois."
 
 #. module: mrp
 #: code:addons/mrp/models/mrp_production.py:492
@@ -2390,7 +2401,7 @@ msgstr "Nomenclature mère"
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_bom_line__parent_product_tmpl_id
 msgid "Parent Product Template"
-msgstr ""
+msgstr "Modèle de produit parent"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_routing_workcenter__routing_id
@@ -2527,7 +2538,7 @@ msgstr "Planning"
 #: model:product.product,name:mrp.product_product_plastic_laminate
 #: model:product.template,name:mrp.product_product_plastic_laminate_product_template
 msgid "Plastic Laminate"
-msgstr ""
+msgstr "Stratifié en plastique"
 
 #. module: mrp
 #: code:addons/mrp/wizard/mrp_product_produce.py:103
@@ -2549,13 +2560,13 @@ msgstr ""
 #: model:product.product,name:mrp.product_product_wood_ply
 #: model:product.template,name:mrp.product_product_wood_ply_product_template
 msgid "Ply Layer"
-msgstr ""
+msgstr "Couche de pli"
 
 #. module: mrp
 #: model:product.product,name:mrp.product_product_ply_veneer
 #: model:product.template,name:mrp.product_product_ply_veneer_product_template
 msgid "Ply Veneer"
-msgstr ""
+msgstr "Plis de placage"
 
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.mrp_production_form_view
@@ -2592,6 +2603,7 @@ msgid "Processed Disassembly Lines"
 msgstr "Lignes de désassemblage traitées"
 
 #. module: mrp
+#: model:ir.model,name:mrp.model_procurement_group
 #: model:ir.model.fields,field_description:mrp.field_mrp_production__procurement_group_id
 msgid "Procurement Group"
 msgstr "Groupe d'approvisionnement"
@@ -2716,7 +2728,6 @@ msgstr "Document de production"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_production__production_location_id
-#: model:ir.model.fields,field_description:mrp.field_mrp_routing__location_id
 #: model_terms:ir.ui.view,arch_db:mrp.mrp_routing_search_view
 msgid "Production Location"
 msgstr "Emplacement de production"
@@ -2891,6 +2902,7 @@ msgstr "Matières premières"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_production__location_src_id
+#: model:ir.model.fields,field_description:mrp.field_mrp_routing__location_id
 msgid "Raw Materials Location"
 msgstr "Emplacement de matière première"
 
@@ -3403,13 +3415,13 @@ msgstr "sous-nomenclature"
 #: model:product.product,name:mrp.product_product_computer_desk
 #: model:product.template,name:mrp.product_product_computer_desk_product_template
 msgid "Table (MTO)"
-msgstr ""
+msgstr "Table (MTO)"
 
 #. module: mrp
 #: model:product.product,name:mrp.product_product_table_kit
 #: model:product.template,name:mrp.product_product_table_kit_product_template
 msgid "Table Kit"
-msgstr ""
+msgstr "Table en kit"
 
 #. module: mrp
 #: model:product.product,name:mrp.product_product_computer_desk_leg
@@ -3421,13 +3433,13 @@ msgstr "Pied de table"
 #: model:product.product,name:mrp.product_product_computer_desk_head
 #: model:product.template,name:mrp.product_product_computer_desk_head_product_template
 msgid "Table Top"
-msgstr ""
+msgstr "Dessus de table"
 
 #. module: mrp
 #: model:product.product,description:mrp.product_product_table_kit
 #: model:product.template,description:mrp.product_product_table_kit_product_template
 msgid "Table kit"
-msgstr ""
+msgstr "Table en kit"
 
 #. module: mrp
 #: model:ir.model.fields,help:mrp.field_stock_move__is_done
@@ -3449,6 +3461,11 @@ msgid ""
 msgstr ""
 "Champ Technique qui est Faux si temporairement rempli dans l'ordre de "
 "travail"
+
+#. module: mrp
+#: model:ir.model.fields,help:mrp.field_mrp_bom_line__valid_product_attribute_value_ids
+msgid "Technical compute"
+msgstr ""
 
 #. module: mrp
 #: model:ir.model.fields,help:mrp.field_mrp_workorder__is_user_working
@@ -3803,7 +3820,7 @@ msgstr "Activités du Jour"
 #: model:product.product,description:mrp.product_product_wood_wear
 #: model:product.template,description:mrp.product_product_wood_wear_product_template
 msgid "Top layer of a wood panel."
-msgstr ""
+msgstr "Couche supérieure d'un panneau en bois."
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_workcenter__workorder_late_count
@@ -4039,6 +4056,11 @@ msgstr ""
 "opérations de réapprovisionnement et de fabrication."
 
 #. module: mrp
+#: model:ir.model.fields,field_description:mrp.field_mrp_bom_line__valid_product_attribute_value_ids
+msgid "Valid Product Attribute Values"
+msgstr ""
+
+#. module: mrp
 #. openerp-web
 #: code:addons/mrp/static/src/xml/mrp.xml:21
 #, python-format
@@ -4104,7 +4126,7 @@ msgstr "Avertissement"
 #: model:product.product,name:mrp.product_product_wood_wear
 #: model:product.template,name:mrp.product_product_wood_wear_product_template
 msgid "Wear Layer"
-msgstr ""
+msgstr "Couche d'usure"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_document__website_id
@@ -4171,7 +4193,7 @@ msgstr ""
 #: model:product.product,name:mrp.product_product_wood_panel
 #: model:product.template,name:mrp.product_product_wood_panel_product_template
 msgid "Wood Panel"
-msgstr ""
+msgstr "Panneau de bois"
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_mrp_workcenter
@@ -4472,6 +4494,12 @@ msgstr ""
 "numéros de série encodés."
 
 #. module: mrp
+#: code:addons/mrp/models/mrp_bom.py:109
+#, python-format
+msgid "You cannot create a new Bill of Material from here."
+msgstr ""
+
+#. module: mrp
 #: code:addons/mrp/models/mrp_unbuild.py:88
 #, python-format
 msgid "You cannot delete an unbuild order if the state is 'Done'."
@@ -4482,7 +4510,7 @@ msgstr ""
 #: code:addons/mrp/models/mrp_production.py:533
 #, python-format
 msgid "You cannot produce a MO with a bom kit product."
-msgstr ""
+msgstr "Vous ne pouvez produire un OF avec une nomenclature de type kit."
 
 #. module: mrp
 #: code:addons/mrp/wizard/mrp_product_produce.py:82

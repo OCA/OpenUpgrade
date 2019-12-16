@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 10:08+0000\n"
+"POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:33+0000\n"
 "Last-Translator: Lux Sok <sok.lux@gmail.com>, 2019\n"
 "Language-Team: Khmer (https://www.transifex.com/odoo/teams/41243/km/)\n"
@@ -972,7 +972,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Alert"
-msgstr ""
+msgstr "ការដាស់តឿន"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_company_team
@@ -1078,7 +1078,7 @@ msgstr "ថយក្រោយ"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
 msgid "Background"
-msgstr ""
+msgstr "ប្រវត្តិ"
 
 #. module: website
 #. openerp-web
@@ -1126,7 +1126,7 @@ msgstr ""
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Bordered"
-msgstr ""
+msgstr "មានព្រំប្រទល់ជាប់"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
@@ -1166,13 +1166,19 @@ msgstr ""
 
 #. module: website
 #. openerp-web
-#: code:addons/website/static/src/js/backend/dashboard.js:103
-#: code:addons/website/static/src/js/menu/new_content.js:271
+#: code:addons/website/static/src/js/backend/dashboard.js:106
+#: code:addons/website/static/src/js/menu/new_content.js:286
 #: code:addons/website/static/src/xml/website.xml:27
 #: model_terms:ir.ui.view,arch_db:website.500
 #, python-format
 msgid "Cancel"
 msgstr "លុបចោល"
+
+#. module: website
+#: code:addons/website/models/res_lang.py:15
+#, python-format
+msgid "Cannot deactivate a language that is currently used on a website."
+msgstr ""
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
@@ -1206,7 +1212,7 @@ msgstr ""
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Center"
-msgstr ""
+msgstr "កណ្ដាល"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_features_grid
@@ -1314,7 +1320,7 @@ msgstr "បិទ"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
 msgid "Colors"
-msgstr ""
+msgstr "ពណ៌"
 
 #. module: website
 #: model:ir.model,name:website.model_res_company
@@ -1738,7 +1744,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.contentMenu.xml:47
 #, python-format
 msgid "Drag a menu to the right to create a sub-menu"
-msgstr ""
+msgstr "ទាញម៉ឺនុយនៅខាងស្តាំដើម្បីបង្កើតម៉ឺនុយរង"
 
 #. module: website
 #. openerp-web
@@ -1816,7 +1822,7 @@ msgstr ""
 #: code:addons/website/static/src/xml/website.contentMenu.xml:16
 #, python-format
 msgid "Edit menu"
-msgstr ""
+msgstr "ការកែប្រែមីនុយ"
 
 #. module: website
 #. openerp-web
@@ -1937,7 +1943,7 @@ msgstr ""
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Fast"
-msgstr ""
+msgstr "លឿន"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_res_config_settings__favicon
@@ -2452,7 +2458,7 @@ msgstr "គណនីInstagram "
 #: code:addons/website/static/src/js/menu/new_content.js:240
 #, python-format
 msgid "Install"
-msgstr ""
+msgstr "ដំឡើង។"
 
 #. module: website
 #: model:ir.model,name:website.model_base_language_install
@@ -2574,6 +2580,7 @@ msgid "Keywords"
 msgstr ""
 
 #. module: website
+#: model:ir.model,name:website.model_res_lang
 #: model:ir.model.fields,field_description:website.field_res_config_settings__language_ids
 #: model:ir.model.fields,field_description:website.field_website__language_ids
 msgid "Languages"
@@ -2638,7 +2645,7 @@ msgstr "សប្ដាហ៍​មុន "
 #: code:addons/website/static/src/xml/website.backend.xml:73
 #, python-format
 msgid "Last Year"
-msgstr ""
+msgstr "ឆ្នាំមុន "
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
@@ -2998,7 +3005,7 @@ msgstr ""
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_menu__new_window
 msgid "New Window"
-msgstr ""
+msgstr "ផ្ទាំងWindowថ្មី"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.user_navbar
@@ -3241,7 +3248,7 @@ msgstr ""
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_page__website_indexed
 msgid "Page Indexed"
-msgstr ""
+msgstr "លិបិក្រមទំព័រ "
 
 #. module: website
 #. openerp-web
@@ -3431,12 +3438,12 @@ msgstr "គុណភាព "
 #. module: website
 #: model:ir.model,name:website.model_ir_qweb
 msgid "Qweb"
-msgstr ""
+msgstr "Qweb"
 
 #. module: website
 #: model:ir.model,name:website.model_ir_qweb_field_contact
 msgid "Qweb Field Contact"
-msgstr ""
+msgstr "ទំនាក់ទំនងជំនាញ Qweb "
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_btn
@@ -3699,7 +3706,7 @@ msgstr "ចែករំលែក"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_tabs
 msgid "Shipping"
-msgstr ""
+msgstr "ការដឹកជញ្ជូន"
 
 #. module: website
 #: model:ir.model.fields,help:website.field_website__auto_redirect_lang
@@ -3751,14 +3758,14 @@ msgstr ""
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Slow"
-msgstr ""
+msgstr "យឺត"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Small"
-msgstr ""
+msgstr "តូច"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
@@ -3857,6 +3864,8 @@ msgid ""
 "Technical field used to resolve multiple attachments in a multi-website "
 "environment."
 msgstr ""
+"ផ្នែកបច្ចេកទេសត្រូវបានប្រើដើម្បីដោះស្រាយឯកសារភ្ជាប់ជាច្រើននៅក្នុងបរិយាកាសនៃគេហទំព័រច្រើន។"
+" "
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.show_website_info
@@ -4005,7 +4014,7 @@ msgstr ""
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website__theme_id
 msgid "Theme"
-msgstr ""
+msgstr "ផ្ទៃ"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.list_website_pages
@@ -4630,7 +4639,7 @@ msgstr ""
 #: model:ir.ui.menu,name:website.menu_website_websites_list
 #: model_terms:ir.ui.view,arch_db:website.view_website_tree
 msgid "Websites"
-msgstr ""
+msgstr "គេហទំព័រ"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_base_language_install__website_ids
@@ -4873,7 +4882,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website.field_res_config_settings__website_id
 #: model_terms:ir.ui.view,arch_db:website.menu_search
 msgid "website"
-msgstr ""
+msgstr "គេហទំព័រ"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.brand_promotion

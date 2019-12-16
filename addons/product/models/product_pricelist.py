@@ -5,6 +5,7 @@ from itertools import chain
 
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools import float_repr
 
 from odoo.addons import decimal_precision as dp
 
@@ -208,7 +209,7 @@ class Pricelist(models.Model):
                         continue
 
                 if rule.base == 'pricelist' and rule.base_pricelist_id:
-                    price_tmp = rule.base_pricelist_id._compute_price_rule([(product, qty, partner)])[product.id][0]  # TDE: 0 = price, 1 = rule
+                    price_tmp = rule.base_pricelist_id._compute_price_rule([(product, qty, partner)], date, uom_id)[product.id][0]  # TDE: 0 = price, 1 = rule
                     price = rule.base_pricelist_id.currency_id._convert(price_tmp, self.currency_id, self.env.user.company_id, date, round=False)
                 else:
                     # if base option is public price take sale price else cost price of product
@@ -487,7 +488,13 @@ class PricelistItem(models.Model):
             self.name = _("All Products")
 
         if self.compute_price == 'fixed':
-            self.price = ("%s %s") % (self.fixed_price, self.pricelist_id.currency_id.name)
+            self.price = ("%s %s") % (
+                float_repr(
+                    self.fixed_price,
+                    self.pricelist_id.currency_id.decimal_places,
+                ),
+                self.pricelist_id.currency_id.name
+            )
         elif self.compute_price == 'percentage':
             self.price = _("%s %% discount") % (self.percent_price)
         else:

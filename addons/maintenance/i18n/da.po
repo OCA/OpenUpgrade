@@ -11,8 +11,8 @@
 # Pernille Kristensen <pernillekristensen1994@gmail.com>, 2018
 # Jesper Carstensen <info@danodoo.dk>, 2018
 # Ejner Sønniksen <ejner@vkdata.dk>, 2018
-# lhmflexerp <lhm@flexerp.dk>, 2018
 # Martin Trigaux, 2019
+# lhmflexerp <lhm@flexerp.dk>, 2019
 # Sanne Kristensen <sanne@vkdata.dk>, 2019
 # 
 msgid ""
@@ -42,7 +42,7 @@ msgstr "<b>Modelnummer:</b>"
 #. module: maintenance
 #: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_kanban
 msgid "<b>Request to:</b>"
-msgstr ""
+msgstr "<b>Forespørgsel til:</b>"
 
 #. module: maintenance
 #: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_view_kanban
@@ -57,7 +57,7 @@ msgstr ""
 #. module: maintenance
 #: model_terms:ir.ui.view,arch_db:maintenance.maintenance_team_kanban
 msgid "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
 
 #. module: maintenance
 #: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_form
@@ -154,7 +154,7 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_todo_request_action_from_dashboard
 #: model_terms:ir.actions.act_window,help:maintenance.maintenance_request_action_reports
 msgid "Add a new maintenance request"
-msgstr ""
+msgstr "Tilføj en ny vedligeholdelses forespørgsel"
 
 #. module: maintenance
 #: model_terms:ir.actions.act_window,help:maintenance.hr_equipment_stage_action
@@ -753,12 +753,12 @@ msgstr "Vedligeholdelsesanmodning oprettet"
 #. module: maintenance
 #: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_stage_view_tree
 msgid "Maintenance Request Stage"
-msgstr ""
+msgstr "Vedligeholdelsesstadier"
 
 #. module: maintenance
 #: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_stage_view_search
 msgid "Maintenance Request Stages"
-msgstr ""
+msgstr "Vedligeholdelsesstadier"
 
 #. module: maintenance
 #: model:mail.message.subtype,description:maintenance.mt_req_created
@@ -871,7 +871,7 @@ msgstr "Navn"
 #. module: maintenance
 #: model:maintenance.stage,name:maintenance.stage_0
 msgid "New Request"
-msgstr ""
+msgstr "Ny forespørgsel"
 
 #. module: maintenance
 #: model:ir.model.fields,field_description:maintenance.field_maintenance_equipment__activity_date_deadline
@@ -916,7 +916,7 @@ msgstr "Antal handlinger"
 #. module: maintenance
 #: model:ir.model.fields,field_description:maintenance.field_maintenance_team__todo_request_count
 msgid "Number of Requests"
-msgstr ""
+msgstr "Antal forespørgsler"
 
 #. module: maintenance
 #: model:ir.model.fields,field_description:maintenance.field_maintenance_team__todo_request_count_block
@@ -1130,6 +1130,8 @@ msgstr "Anmodning udført"
 #, python-format
 msgid "Request planned for <a href=\"#\" data-oe-model=\"%s\" data-oe-id=\"%s\">%s</a>"
 msgstr ""
+"Forespørgsel planlagt for <a href=\"#\" data-oe-model=\"%s\" data-oe-"
+"id=\"%s\">%s</a>"
 
 #. module: maintenance
 #: model_terms:ir.ui.view,arch_db:maintenance.hr_equipment_request_view_form

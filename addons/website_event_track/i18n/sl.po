@@ -7,9 +7,10 @@
 # laznikd <laznik@mentis.si>, 2019
 # matjaz k <matjaz@mentis.si>, 2019
 # Martin Trigaux, 2019
-# Boris Kodelja <boris@hbs.si>, 2019
 # Grega Vavtar <grega@hbs.si>, 2019
+# Boris Kodelja <boris@hbs.si>, 2019
 # Matjaz Mozetic <m.mozetic@matmoz.si>, 2019
+# Tadej Lupšina <tadej@hbs.si>, 2019
 # Jasmina Macur <jasmina@hbs.si>, 2019
 # 
 msgid ""
@@ -82,6 +83,8 @@ msgid ""
 "<br/>\n"
 "                            <b>Duration</b><br/>"
 msgstr ""
+"<br/>\n"
+"                            <b>Trajanje</b><br/>"
 
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.track_view
@@ -93,7 +96,7 @@ msgstr ""
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.agenda
 msgid "<span id=\"search_number\">0</span> Found"
-msgstr ""
+msgstr "<span id=\"search_number\">0</span> najdenih"
 
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.event_track_proposal
@@ -509,7 +512,7 @@ msgstr "Zelena"
 #. module: website_event_track
 #: selection:event.track,kanban_state:0
 msgid "Grey"
-msgstr ""
+msgstr "Siva"
 
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.view_event_track_search
@@ -705,7 +708,7 @@ msgstr "Glavna priponka"
 #. module: website_event_track
 #: selection:event.track,priority:0
 msgid "Medium"
-msgstr "Srednje"
+msgstr "Medij"
 
 #. module: website_event_track
 #: model:ir.model.fields,help:website_event_track.field_event_sponsor__image_medium
@@ -1051,9 +1054,9 @@ msgid ""
 "Planned: Future activities."
 msgstr ""
 "Status na podlagi aktivnosti\n"
-"Zapadel: Datum zapadlosti je v preteklosti\n"
+"Zapadel: Rok je že prekoračen\n"
 "Danes: Datum aktivnosti je danes\n"
-"Planned: Bodoče aktivnosti."
+"Planirano: Bodoče aktivnosti."
 
 #. module: website_event_track
 #: model_terms:ir.ui.view,arch_db:website_event_track.event_track_proposal

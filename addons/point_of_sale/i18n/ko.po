@@ -9,15 +9,15 @@
 # Seongseok Shin <shinss61@hotmail.com>, 2018
 # Martin Trigaux, 2018
 # Link Up링크업 <linkup.way@gmail.com>, 2018
-# Linkup <link-up@naver.com>, 2019
 # Goh Gangtai <gangtai.goh@gmail.com>, 2019
+# Linkup <link-up@naver.com>, 2019
 # JH CHOI <hwangtog@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 10:09+0000\n"
+"POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:22+0000\n"
 "Last-Translator: JH CHOI <hwangtog@gmail.com>, 2019\n"
 "Language-Team: Korean (https://www.transifex.com/odoo/teams/41243/ko/)\n"
@@ -77,7 +77,7 @@ msgstr "&nbsp;"
 #: code:addons/point_of_sale/models/pos_order.py:89
 #, python-format
 msgid "(RESCUE FOR %(session)s)"
-msgstr ""
+msgstr "(%(session)s에 대한 복구)"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_pos_form
@@ -90,11 +90,6 @@ msgid "+ Transactions"
 msgstr "+ 거래목록"
 
 #. module: point_of_sale
-#: model_terms:ir.ui.view,arch_db:point_of_sale.customer_facing_display_snippets
-msgid "<b>Set Custom Image...</b>"
-msgstr "<b>사용자 정의 이미지 설정...</b>"
-
-#. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
 msgid "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
 msgstr "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
@@ -102,12 +97,12 @@ msgstr "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.customer_facing_display_snippets
 msgid "<i class=\"fa fa-eye-slash\"/>Hide"
-msgstr ""
+msgstr "<i class=\"fa fa-eye-slash\"/>숨기기"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "<i class=\"fa fa-fw fa-arrow-right\"/>How to manage tax-included prices"
-msgstr ""
+msgstr "<i class=\"fa fa-fw fa-arrow-right\"/>세금 포함 가격을 관리하는 방법"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_partner_pos_kanban
@@ -136,17 +131,17 @@ msgstr ""
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "<span class=\"o_form_label\">Journal Entries</span>"
-msgstr ""
+msgstr "<span class=\"o_form_label\">분개 기입 항목</span>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "<span class=\"o_form_label\">Order Reference</span>"
-msgstr ""
+msgstr "<span class=\"o_form_label\">주문 참조</span>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "<span class=\"o_form_label\">Payment Methods</span>"
-msgstr ""
+msgstr "<span class=\"o_form_label\">결제 방법</span>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_open_statement
@@ -166,7 +161,7 @@ msgstr ""
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
 msgid "<span class=\"o_stat_text\">Set Closing Balance</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">결산 잔액 설정</span>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
@@ -183,25 +178,25 @@ msgstr ""
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "<span class=\"oe_inline\"><b>Skip Preview Screen</b></span>"
-msgstr ""
+msgstr "<span class=\"oe_inline\"><b>미리보기 화면 통과</b></span>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model_terms:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "<span class=\"pos-change_amount\">$ 0.86</span>"
-msgstr ""
+msgstr "<span class=\"pos-change_amount\">$ 0.86</span>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model_terms:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "<span class=\"pos-change_title\">Change</span>"
-msgstr ""
+msgstr "<span class=\"pos-change_title\">변경</span>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model_terms:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "<span class=\"total-amount-formatting\">TOTAL</span>"
-msgstr ""
+msgstr "<span class=\"total-amount-formatting\">총계</span>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
@@ -213,23 +208,23 @@ msgstr "<span id=\"total-amount\" class=\"pos_total-amount\">$ 469.14</span>"
 #: model_terms:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model_terms:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "<span>$ 470.00</span>"
-msgstr ""
+msgstr "<span>$ 470.00</span>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.customer_facing_display_html
 #: model_terms:pos.config,customer_facing_display_html:point_of_sale.pos_config_main
 msgid "<span>Cash (USD):</span>"
-msgstr ""
+msgstr "<span>현금(USD) :</span>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
 msgid "<span>Cash Balance</span>"
-msgstr ""
+msgstr "<span>현금 잔액</span>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
 msgid "<span>Last Closing Date</span>"
-msgstr ""
+msgstr "<span>최근 마감일</span>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
@@ -244,27 +239,27 @@ msgstr "<span>보기</span>"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.report_statement
 msgid "<strong>Company</strong>:<br/>"
-msgstr ""
+msgstr "<strong>회사</strong>:<br/>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.report_statement
 msgid "<strong>Ending Balance</strong>:<br/>"
-msgstr ""
+msgstr "<strong>결산 잔액</strong>:<br/>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.report_statement
 msgid "<strong>Journal</strong>:<br/>"
-msgstr ""
+msgstr "<strong>분개장</strong>:<br/>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.report_statement
 msgid "<strong>Opening Date</strong>:<br/>"
-msgstr ""
+msgstr "<strong>시작일</strong>:<br/>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.report_statement
 msgid "<strong>Starting Balance</strong>:<br/>"
-msgstr "<strong>시작 잔액</strong>:<br/>"
+msgstr "<strong>기초 잔액</strong>:<br/>"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.report_statement
@@ -764,7 +759,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:pos.category,name:point_of_sale.pos_category_chairs
 msgid "Chairs"
-msgstr ""
+msgstr "의자"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1265,7 +1260,7 @@ msgstr "미결제 주문을 삭제할까요 ?"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1436
 #, python-format
 msgid "Delete order"
-msgstr ""
+msgstr "주문 삭제"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1286,12 +1281,12 @@ msgstr "데스크 주최자"
 #: model:product.product,name:point_of_sale.desk_pad
 #: model:product.template,name:point_of_sale.desk_pad_product_template
 msgid "Desk Pad"
-msgstr ""
+msgstr "책상 패드"
 
 #. module: point_of_sale
 #: model:pos.category,name:point_of_sale.pos_category_desks
 msgid "Desks"
-msgstr ""
+msgstr "책상"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1674,14 +1669,21 @@ msgstr "POS 그룹 제품"
 
 #. module: point_of_sale
 #. openerp-web
-#: code:addons/point_of_sale/static/src/xml/pos.xml:1372
+#: code:addons/point_of_sale/static/src/js/models.js:142
+#, python-format
+msgid "HTTPS connection to IoT Box failed"
+msgstr ""
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/xml/pos.xml:1375
 #, python-format
 msgid "Hardware Events"
 msgstr "하드웨어 이벤트"
 
 #. module: point_of_sale
 #. openerp-web
-#: code:addons/point_of_sale/static/src/xml/pos.xml:1367
+#: code:addons/point_of_sale/static/src/xml/pos.xml:1370
 #, python-format
 msgid "Hardware Status"
 msgstr "하드웨어 상태"
@@ -1694,7 +1696,7 @@ msgstr "현금 제어"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "Header"
-msgstr ""
+msgstr "머리말"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config__is_header_or_footer
@@ -1899,7 +1901,7 @@ msgstr "Kpi Pos 총합"
 #: model:product.product,name:point_of_sale.led_lamp
 #: model:product.template,name:point_of_sale.led_lamp_product_template
 msgid "LED Lamp"
-msgstr ""
+msgstr "LED 램프"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config__iface_big_scrollbars
@@ -1968,7 +1970,7 @@ msgstr ""
 #: model:product.product,name:point_of_sale.letter_tray
 #: model:product.template,name:point_of_sale.letter_tray_product_template
 msgid "Letter Tray"
-msgstr ""
+msgstr "편지꽂이"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_line__name
@@ -2053,7 +2055,7 @@ msgstr ""
 #: model:product.product,name:point_of_sale.magnetic_board
 #: model:product.template,name:point_of_sale.magnetic_board_product_template
 msgid "Magnetic Board"
-msgstr ""
+msgstr "마그네틱 보드"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_payment
@@ -2067,6 +2069,15 @@ msgid ""
 " pricelist to specific customers from their contact form (in Sales tab). To "
 "be valid, this pricelist must be listed here as an available pricelist. "
 "Otherwise the default pricelist will apply."
+msgstr ""
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/models.js:144
+#, python-format
+msgid ""
+"Make sure you are using IoT Box v18.12 or higher. Navigate to %s to accept "
+"the certificate of your IoT Box."
 msgstr ""
 
 #. module: point_of_sale
@@ -2171,7 +2182,7 @@ msgstr ""
 #: model:product.product,name:point_of_sale.newspaper_rack
 #: model:product.template,name:point_of_sale.newspaper_rack_product_template
 msgid "Newspaper Rack"
-msgstr ""
+msgstr "신문 걸이대"
 
 #. module: point_of_sale
 #. openerp-web
@@ -2763,7 +2774,7 @@ msgstr "점포판매시스템 주문"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.product_template_form_view
 msgid "Point Of Sale"
-msgstr ""
+msgstr "점포판매시스템"
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_pos_config_kanban
@@ -3010,7 +3021,14 @@ msgstr "인쇄"
 #. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/xml/pos.xml:716
-#: code:addons/point_of_sale/static/src/xml/pos.xml:1375
+#, python-format
+msgid "Print Invoice"
+msgstr "청구서 인쇄"
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/xml/pos.xml:719
+#: code:addons/point_of_sale/static/src/xml/pos.xml:1378
 #, python-format
 msgid "Print Receipt"
 msgstr "영수증 인쇄"
@@ -3524,8 +3542,13 @@ msgid "Sessions"
 msgstr "세션"
 
 #. module: point_of_sale
+#: model_terms:ir.ui.view,arch_db:point_of_sale.customer_facing_display_snippets
+msgid "Set Custom Image..."
+msgstr ""
+
+#. module: point_of_sale
 #. openerp-web
-#: code:addons/point_of_sale/static/src/js/screens.js:1218
+#: code:addons/point_of_sale/static/src/js/screens.js:1277
 #, python-format
 msgid "Set Customer"
 msgstr "고객 설정"
@@ -3613,7 +3636,7 @@ msgstr ""
 #: model:product.product,name:point_of_sale.small_shelf
 #: model:product.template,name:point_of_sale.small_shelf_product_template
 msgid "Small Shelf"
-msgstr ""
+msgstr "작은 선반"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_category__image_small
@@ -3632,9 +3655,22 @@ msgstr ""
 
 #. module: point_of_sale
 #. openerp-web
-#: code:addons/point_of_sale/static/src/js/gui.js:333
+#: code:addons/point_of_sale/static/src/js/gui.js:324
 #, python-format
-msgid "Some orders could not be submitted to"
+msgid ""
+"Some orders could not be submitted to the server due to configuration "
+"errors. You can exit the Point of Sale, but do not close the session before "
+"the issue has been resolved."
+msgstr ""
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/gui.js:329
+#, python-format
+msgid ""
+"Some orders could not be submitted to the server due to internet connection "
+"issues. You can exit the Point of Sale, but do not close the session before "
+"the issue has been resolved."
 msgstr ""
 
 #. module: point_of_sale
@@ -4498,7 +4534,7 @@ msgstr "가상 키보드"
 #: model:product.product,name:point_of_sale.wall_shelf
 #: model:product.template,name:point_of_sale.wall_shelf_product_template
 msgid "Wall Shelf Unit"
-msgstr ""
+msgstr "벽 선박 부품"
 
 #. module: point_of_sale
 #. openerp-web

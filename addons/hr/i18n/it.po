@@ -5,7 +5,6 @@
 # Translators:
 # Luigi Di Naro <gigidn@gmail.com>, 2018
 # Simone Bernini <simone@aperturelabs.it>, 2018
-# Giacomo Grasso <giacomo.grasso.82@gmail.com>, 2018
 # Christian <chris@effeci.info>, 2018
 # Pietro Della Notte <pdellanotte@gmail.com>, 2018
 # David Minneci <david@numeko.it>, 2018
@@ -17,7 +16,7 @@
 # Francesco Garganese <francesco.garganese@aeromnia.aero>, 2018
 # Martin Trigaux, 2018
 # Valeria Torrisi <valeriatorrisi93@gmail.com>, 2018
-# Lorenzo Battistini <lorenzo.battistini@agilebg.com>, 2019
+# Lorenzo Battistini <lb@takobi.online>, 2019
 # SebastianoPistore <SebastianoPistore.info@protonmail.ch>, 2019
 # Léonie Bouchat <lbo@odoo.com>, 2019
 # Sergio Zanchetta <primes2h@gmail.com>, 2019
@@ -417,7 +416,7 @@ msgstr "Nome completo"
 #. module: hr
 #: model:ir.model,name:hr.model_res_config_settings
 msgid "Config Settings"
-msgstr "Impostazioni configurazione"
+msgstr "Impostazioni di configurazione"
 
 #. module: hr
 #: model:ir.ui.menu,name:hr.menu_human_resources_configuration
@@ -546,7 +545,7 @@ msgstr "Titolo di studio"
 #. module: hr
 #: model:ir.model,name:hr.model_mail_alias
 msgid "Email Aliases"
-msgstr "Alias Email"
+msgstr "Alias e-mail"
 
 #. module: hr
 #: model:ir.model,name:hr.model_mail_alias_mixin
@@ -1038,7 +1037,7 @@ msgstr "Specialista o ingegnere in scienze informatiche"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__image_medium
 msgid "Medium-sized photo"
-msgstr "Foto grandezza media"
+msgstr "Foto di media dimensione"
 
 #. module: hr
 #: model:ir.model.fields,help:hr.field_hr_employee__image_medium
@@ -1103,7 +1102,7 @@ msgstr "Riepilogo prossima attività"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__activity_type_id
 msgid "Next Activity Type"
-msgstr "Tipo Prossima Attività"
+msgstr "Tipologia prossima attività"
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_ceo
@@ -1229,7 +1228,7 @@ msgstr "Il nostro team al lavoro"
 #. module: hr
 #: selection:hr.employee,activity_state:0
 msgid "Overdue"
-msgstr "Scaduto"
+msgstr "In ritardo"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_department__parent_id
@@ -1270,7 +1269,7 @@ msgstr "Luogo di nascita"
 #. module: hr
 #: selection:hr.employee,activity_state:0
 msgid "Planned"
-msgstr "Pianificato"
+msgstr "Pianificata"
 
 #. module: hr
 #: model:ir.model.fields,help:hr.field_crm_team__alias_contact
@@ -1348,7 +1347,7 @@ msgstr "Dipendenti collegati"
 #. module: hr
 #: model:ir.model.fields,help:hr.field_hr_employee__user_id
 msgid "Related user name for the resource to manage its access."
-msgstr "Nome utente per controllare accessi per la risorsa"
+msgstr "Nome utente collegato per gestire l'accesso alla risorsa."
 
 #. module: hr
 #: model:ir.ui.menu,name:hr.menu_hr_reporting_timesheet
@@ -1461,7 +1460,7 @@ msgstr "Competenze"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__image_small
 msgid "Small-sized photo"
-msgstr "Foto piccola"
+msgstr "Foto di piccola dimensione"
 
 #. module: hr
 #: model:ir.model.fields,help:hr.field_hr_employee__image_small
@@ -1536,7 +1535,7 @@ msgstr "Subordinati"
 #. module: hr
 #: sql_constraint:hr.employee.category:0
 msgid "Tag name already exists !"
-msgstr "Il nome del Tag esiste già !"
+msgstr "Nome etichetta già esistente."
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__category_ids
@@ -1743,7 +1742,7 @@ msgstr "Messaggi sito web"
 #: model:ir.model.fields,help:hr.field_hr_employee__website_message_ids
 #: model:ir.model.fields,help:hr.field_hr_job__website_message_ids
 msgid "Website communication history"
-msgstr "Cronologia comunicazioni sito"
+msgstr "Cronologia comunicazioni sito web"
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_ceo
@@ -1817,7 +1816,7 @@ msgstr "Indirizzo di lavoro"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__work_email
 msgid "Work Email"
-msgstr "E-mail di lavoro"
+msgstr "E-mail lavoro"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form

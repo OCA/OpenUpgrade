@@ -8,19 +8,19 @@
 # kent_ocean <ke.tanabe@gmail.com>, 2018
 # NOKA Shigekazu <shigekazu.noka@gmail.com>, 2018
 # 高木正勝 <masakatsu.takagi@pro-spire.co.jp>, 2018
-# Tim Siu Lai <tl@roomsfor.hk>, 2018
 # SHIMIZU Taku <shimizu.taku@gmail.com>, 2018
 # Martin Trigaux, 2018
 # Manami Hashi <manami@roomsfor.hk>, 2018
 # Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2018
 # nle_odoo, 2018
+# Tim Siu Lai <tl@roomsfor.hk>, 2019
 # Yoshi Tashiro <tashiro@roomsfor.hk>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-08 13:50+0000\n"
+"POT-Creation-Date: 2019-11-14 07:34+0000\n"
 "PO-Revision-Date: 2018-08-24 09:20+0000\n"
 "Last-Translator: Yoshi Tashiro <tashiro@roomsfor.hk>, 2019\n"
 "Language-Team: Japanese (https://www.transifex.com/odoo/teams/41243/ja/)\n"
@@ -99,7 +99,7 @@ msgstr ""
 #: code:addons/mail/models/mail_activity.py:341
 #, python-format
 msgid "%s: %s assigned to you"
-msgstr ""
+msgstr "%s: %s が割り当てられました"
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_notification_paynow
@@ -275,6 +275,12 @@ msgid ""
 "                            </span>\n"
 "                            <span name=\"document_followers_text\" attrs=\"{'invisible':['|', ('model', '=', False), ('composition_mode', '=', 'mass_mail')]}\">Followers of the document and</span>"
 msgstr ""
+"<span attrs=\"{'invisible': [('composition_mode', '!=', 'mass_mail')]}\">\n"
+"<strong>Email mass mailing</strong> on\n"
+"<span attrs=\"{'invisible': [('use_active_domain', '=', True)]}\">選択されたレコード</span>\n"
+"<span attrs=\"{'invisible': [('use_active_domain', '=', False)]}\">現在の検索フィルタ</span>.\n"
+"</span>\n"
+"<span name=\"document_followers_text\" attrs=\"{'invisible':['|', ('model', '=', False), ('composition_mode', '=', 'mass_mail')]}\">ドキュメントのフォロワー及び</span>"
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.email_compose_message_wizard_form
@@ -524,7 +530,7 @@ msgstr "追加"
 #: code:addons/mail/static/src/xml/chatter.xml:30
 #, python-format
 msgid "Add Attachments"
-msgstr ""
+msgstr "添付を追加"
 
 #. module: mail
 #. openerp-web
@@ -1505,7 +1511,7 @@ msgstr "親愛なる"
 #: model:ir.model.fields,field_description:mail.field_mail_activity__activity_decoration
 #: model:ir.model.fields,field_description:mail.field_mail_activity_type__decoration_type
 msgid "Decoration Type"
-msgstr ""
+msgstr "デコレーションタイプ"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_message_subtype__default
@@ -1515,7 +1521,7 @@ msgstr "デフォルト"
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_activity_type__default_next_type_id
 msgid "Default Next Activity"
-msgstr ""
+msgstr "デフォルト次の活動"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_email_template_preview__null_value
@@ -4230,7 +4236,7 @@ msgstr "計画済の活動"
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_activity_type_view_tree
 msgid "Planned in"
-msgstr ""
+msgstr "予定日"
 
 #. module: mail
 #. openerp-web
@@ -5385,11 +5391,12 @@ msgstr ""
 msgid ""
 "Type of server action. The following values are available:\n"
 "- 'Execute Python Code': a block of python code that will be executed\n"
-"- 'Create or Copy a new Record': create a new record with new values, or copy an existing record in your database\n"
-"- 'Write on a Record': update the values of a record\n"
+"- 'Create': create a new record with new values\n"
+"- 'Update a Record': update the values of a record\n"
 "- 'Execute several actions': define an action that triggers several other server actions\n"
-"- 'Add Followers': add followers to a record (available in Discuss)\n"
-"- 'Send Email': automatically send an email (available in email_template)"
+"- 'Send Email': automatically send an email (Discuss)\n"
+"- 'Add Followers': add followers to a record (Discuss)\n"
+"- 'Create Next Activity': create an activity (Discuss)"
 msgstr ""
 
 #. module: mail
@@ -6278,16 +6285,24 @@ msgid "to close for"
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/models/mail_thread.py:1074
+#: code:addons/mail/models/mail_thread.py:1081
 #, python-format
 msgid "unknown error"
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/models/mail_thread.py:1014
+#: code:addons/mail/models/mail_thread.py:1021
 #, python-format
 msgid "unknown target model %s"
 msgstr "不明なターゲットモデル %s"
+
+#. module: mail
+#. openerp-web
+#: code:addons/mail/static/src/js/attachment_box.js:40
+#: code:addons/mail/static/src/js/models/messages/abstract_message.js:52
+#, python-format
+msgid "unnamed"
+msgstr ""
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.message_notification_email

@@ -12,17 +12,17 @@
 # Yihya Hugirat <hugirat@gmail.com>, 2018
 # hed shefetr <hed@laylinetech.com>, 2019
 # דודי מלכה <Dudimalka6@gmail.com>, 2019
-# ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019
 # שהאב חוסיין <shhab89@gmail.com>, 2019
 # Amit Spilman <amit@laylinetech.com>, 2019
+# ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-08 13:50+0000\n"
+"POT-Creation-Date: 2019-11-14 07:34+0000\n"
 "PO-Revision-Date: 2018-08-24 09:20+0000\n"
-"Last-Translator: Amit Spilman <amit@laylinetech.com>, 2019\n"
+"Last-Translator: ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -104,7 +104,7 @@ msgstr ""
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_notification_paynow
 msgid "&amp;nbsp;"
-msgstr ""
+msgstr "ו"
 
 #. module: mail
 #. openerp-web
@@ -209,6 +209,10 @@ msgid ""
 "attrs=\"{'invisible': [('is_blacklisted', '=', False)]}\" "
 "groups=\"base.group_user\"/>"
 msgstr ""
+"<i class=\"fa fa-ban\" style=\"color: red;\" role=\"img\" title=\"This email"
+" is blacklisted for mass mailing\" aria-label=\"Blacklisted\" "
+"attrs=\"{'invisible': [('is_blacklisted', '=', False)]}\" "
+"groups=\"base.group_user\"/>"
 
 #. module: mail
 #. openerp-web
@@ -316,7 +320,7 @@ msgstr ""
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.message_activity_done
 msgid "<strong> Feedback</strong>"
-msgstr ""
+msgstr "<strong> משוב</strong>"
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.message_notification_email
@@ -509,7 +513,7 @@ msgstr "הוסף"
 #: code:addons/mail/static/src/xml/chatter.xml:30
 #, python-format
 msgid "Add Attachments"
-msgstr ""
+msgstr "הוסף קבצים מצורפים"
 
 #. module: mail
 #. openerp-web
@@ -763,7 +767,7 @@ msgstr "החל"
 #: model_terms:ir.ui.view,arch_db:mail.mail_activity_type_view_search
 #: model_terms:ir.ui.view,arch_db:mail.mail_blacklist_view_search
 msgid "Archived"
-msgstr "התווסף לארכיון"
+msgstr "בארכיון"
 
 #. module: mail
 #: code:addons/mail/wizard/mail_resend_message.py:122
@@ -1038,7 +1042,7 @@ msgstr ""
 #: selection:mail.notification,email_status:0
 #, python-format
 msgid "Canceled"
-msgstr ""
+msgstr "בוטל"
 
 #. module: mail
 #: selection:mail.mail,state:0
@@ -2105,7 +2109,7 @@ msgstr "מועדף על ידי"
 #: model:ir.model.fields,field_description:mail.field_mail_activity__feedback
 #, python-format
 msgid "Feedback"
-msgstr ""
+msgstr "משוב"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_email_template_preview__model_object_field
@@ -3090,7 +3094,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/activity.xml:80
 #, python-format
 msgid "Mark Done"
-msgstr ""
+msgstr "סמן כבוצע"
 
 #. module: mail
 #. openerp-web
@@ -3472,7 +3476,7 @@ msgstr "חודשים"
 #: model_terms:ir.ui.view,arch_db:mail.mail_activity_view_search
 #: model_terms:ir.ui.view,arch_db:mail.res_partner_view_search_inherit_mail
 msgid "My Activities"
-msgstr "פעיליות שלי"
+msgstr "הפעילויות שלי"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_email_template_preview__name
@@ -4194,7 +4198,7 @@ msgstr "תכנן"
 #: code:addons/mail/static/src/xml/activity.xml:6
 #, python-format
 msgid "Planned activities"
-msgstr ""
+msgstr "פעולות מתוכננות"
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_activity_type_view_tree
@@ -4648,7 +4652,7 @@ msgstr ""
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_activity_view_form_popup
 msgid "Schedule"
-msgstr ""
+msgstr "לוח זמנים"
 
 #. module: mail
 #. openerp-web
@@ -5152,6 +5156,9 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"הבעלים של רשומות שנוצרו עם קבלת דוא\"ל בכינוי זה. אם שדה זה לא מוגדר, המערכת"
+" תנסה למצוא את הבעלים הנכון על סמך כתובת השולח (מאת), או שתשתמש בחשבון מנהל "
+"המערכת אם לא נמצא משתמש מערכת עבור אותה כתובת."
 
 #. module: mail
 #: code:addons/mail/models/mail_activity.py:243
@@ -5345,11 +5352,12 @@ msgstr ""
 msgid ""
 "Type of server action. The following values are available:\n"
 "- 'Execute Python Code': a block of python code that will be executed\n"
-"- 'Create or Copy a new Record': create a new record with new values, or copy an existing record in your database\n"
-"- 'Write on a Record': update the values of a record\n"
+"- 'Create': create a new record with new values\n"
+"- 'Update a Record': update the values of a record\n"
 "- 'Execute several actions': define an action that triggers several other server actions\n"
-"- 'Add Followers': add followers to a record (available in Discuss)\n"
-"- 'Send Email': automatically send an email (available in email_template)"
+"- 'Send Email': automatically send an email (Discuss)\n"
+"- 'Add Followers': add followers to a record (Discuss)\n"
+"- 'Create Next Activity': create an activity (Discuss)"
 msgstr ""
 
 #. module: mail
@@ -5727,7 +5735,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/activity.xml:96
 #, python-format
 msgid "Write Feedback"
-msgstr ""
+msgstr "כתוב משוב"
 
 #. module: mail
 #. openerp-web
@@ -6013,6 +6021,8 @@ msgid ""
 "done\n"
 "        by"
 msgstr ""
+"בוצע\n"
+"        ע\"י"
 
 #. module: mail
 #. openerp-web
@@ -6234,15 +6244,23 @@ msgid "to close for"
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/models/mail_thread.py:1074
+#: code:addons/mail/models/mail_thread.py:1081
 #, python-format
 msgid "unknown error"
 msgstr "שגיאה לא ידועה"
 
 #. module: mail
-#: code:addons/mail/models/mail_thread.py:1014
+#: code:addons/mail/models/mail_thread.py:1021
 #, python-format
 msgid "unknown target model %s"
+msgstr ""
+
+#. module: mail
+#. openerp-web
+#: code:addons/mail/static/src/js/attachment_box.js:40
+#: code:addons/mail/static/src/js/models/messages/abstract_message.js:52
+#, python-format
+msgid "unnamed"
 msgstr ""
 
 #. module: mail

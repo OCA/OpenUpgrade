@@ -9,6 +9,7 @@
 # 高木正勝 <masakatsu.takagi@pro-spire.co.jp>, 2018
 # Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2018
 # Yoshi Tashiro <tashiro@roomsfor.hk>, 2019
+# Tim Siu Lai <tl@roomsfor.hk>, 2019
 # 
 msgid ""
 msgstr ""
@@ -16,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-09 10:31+0000\n"
 "PO-Revision-Date: 2018-08-24 09:18+0000\n"
-"Last-Translator: Yoshi Tashiro <tashiro@roomsfor.hk>, 2019\n"
+"Last-Translator: Tim Siu Lai <tl@roomsfor.hk>, 2019\n"
 "Language-Team: Japanese (https://www.transifex.com/odoo/teams/41243/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -59,7 +60,7 @@ msgstr ""
 #. module: hr_attendance
 #: model_terms:ir.ui.view,arch_db:hr_attendance.res_config_settings_view_form
 msgid "<span class=\"o_form_label\">Employee PIN</span>"
-msgstr ""
+msgstr "<span class=\"o_form_label\">従業員PIN</span>"
 
 #. module: hr_attendance
 #: model_terms:ir.ui.view,arch_db:hr_attendance.view_employee_form_inherit_hr_attendance
@@ -266,7 +267,7 @@ msgstr "設定"
 #. module: hr_attendance
 #: model_terms:ir.actions.act_window,help:hr_attendance.hr_employee_attendance_action_kanban
 msgid "Create a new employee"
-msgstr ""
+msgstr "新しい従業員を作成"
 
 #. module: hr_attendance
 #: model:ir.model.fields,field_description:hr_attendance.field_hr_attendance__create_uid
@@ -646,6 +647,12 @@ msgid "Signed Out"
 msgstr ""
 
 #. module: hr_attendance
+#: code:addons/hr_attendance/models/hr_employee.py:155
+#, python-format
+msgid "Such grouping is not allowed."
+msgstr ""
+
+#. module: hr_attendance
 #: sql_constraint:hr.employee:0
 msgid ""
 "The Badge ID must be unique, this one is already assigned to another "
@@ -712,7 +719,7 @@ msgstr ""
 msgid ""
 "Warning : Your user should be linked to an employee to use attendance. "
 "Please contact your administrator."
-msgstr ""
+msgstr "警告：「チェックイン/チェックアウト」を使用するため、ユーザを従業員に設定必要があります。管理者に連絡してください。"
 
 #. module: hr_attendance
 #. openerp-web

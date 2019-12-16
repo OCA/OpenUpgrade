@@ -657,7 +657,13 @@ QUnit.module('account', {
                         position: "before",
                         symbol: "$"
                     }
-                }
+                },
+                user_has_group: function (group) {
+                    if (group === 'analytic.group_analytic_tags' || group === 'analytic.group_analytic_accounting') {
+                        return $.when(true);
+                    }
+                    return this._super.apply(this, arguments);
+                },
             },
         });
         clientAction.appendTo($('#qunit-fixture'));
@@ -1292,6 +1298,39 @@ QUnit.module('account', {
         clientAction.destroy();
     });
 
+    QUnit.test('Reconciliation fetch correct reconciliation models', function (assert) {
+        assert.expect(1);
+
+        _.extend(this.params.options.context, {
+            active_model: 'account.journal', // On account dashboard, click "Reconcile" on a journal
+            active_ids: [1,2], // Active journals
+            company_ids: [3,4], // Active companies
+        });
+
+        var clientAction = new ReconciliationClientAction.StatementAction(null, this.params.options);
+
+        testUtils.addMockEnvironment(clientAction, {
+            data: this.params.data,
+            mockRPC: function (route, args) {
+                if (args.model === 'account.reconcile.model' && args.method === 'search_read') {
+                    assert.deepEqual(
+                        args.kwargs.domain, [
+                            ['company_id', 'in', [3,4]],
+                            '|',
+                            ['match_journal_ids', '=', false],
+                            ['match_journal_ids', 'in', [1, 2]],
+                        ],
+                        'The domain to get reconcile models should contain the right fields and values'
+                    );
+                }
+                return this._super.apply(this, arguments);
+            }
+        });
+        clientAction.appendTo($('#qunit-fixture'));
+
+        clientAction.destroy();
+    });
+
     QUnit.test('Reconciliation manual', function (assert) {
         assert.expect(13);
 
@@ -1801,7 +1840,13 @@ QUnit.module('account', {
                         position: "before",
                         symbol: "$"
                     }
-                }
+                },
+                user_has_group: function (group) {
+                    if (group === 'analytic.group_analytic_tags' || group === 'analytic.group_analytic_accounting') {
+                        return $.when(true);
+                    }
+                    return this._super.apply(this, arguments);
+                },
             },
         });
 

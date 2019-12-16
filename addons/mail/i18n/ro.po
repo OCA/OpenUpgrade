@@ -4,16 +4,16 @@
 # 
 # Translators:
 # Cozmin Candea <office@terrabit.ro>, 2018
-# Dorin Hongu <dhongu@gmail.com>, 2019
 # Martin Trigaux, 2019
+# Dorin Hongu <dhongu@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-08 13:50+0000\n"
+"POT-Creation-Date: 2019-11-14 07:34+0000\n"
 "PO-Revision-Date: 2018-08-24 09:20+0000\n"
-"Last-Translator: Martin Trigaux, 2019\n"
+"Last-Translator: Dorin Hongu <dhongu@gmail.com>, 2019\n"
 "Language-Team: Romanian (https://www.transifex.com/odoo/teams/41243/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -936,7 +936,7 @@ msgstr "Șterge automat"
 #: model:ir.model.fields,field_description:mail.field_mail_activity__force_next
 #: model:ir.model.fields,field_description:mail.field_mail_activity_type__force_next
 msgid "Auto Schedule Next Activity"
-msgstr ""
+msgstr "Programare automată activitate următoare"
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_channel_view_form
@@ -1558,7 +1558,7 @@ msgstr "Implicit"
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_activity_type__default_next_type_id
 msgid "Default Next Activity"
-msgstr ""
+msgstr "Activitate următoare"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_email_template_preview__null_value
@@ -5315,7 +5315,7 @@ msgstr ""
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.message_origin_link
 msgid "This"
-msgstr "Acest"
+msgstr "Acestă"
 
 #. module: mail
 #. openerp-web
@@ -5486,11 +5486,12 @@ msgstr ""
 msgid ""
 "Type of server action. The following values are available:\n"
 "- 'Execute Python Code': a block of python code that will be executed\n"
-"- 'Create or Copy a new Record': create a new record with new values, or copy an existing record in your database\n"
-"- 'Write on a Record': update the values of a record\n"
+"- 'Create': create a new record with new values\n"
+"- 'Update a Record': update the values of a record\n"
 "- 'Execute several actions': define an action that triggers several other server actions\n"
-"- 'Add Followers': add followers to a record (available in Discuss)\n"
-"- 'Send Email': automatically send an email (available in email_template)"
+"- 'Send Email': automatically send an email (Discuss)\n"
+"- 'Add Followers': add followers to a record (Discuss)\n"
+"- 'Create Next Activity': create an activity (Discuss)"
 msgstr ""
 
 #. module: mail
@@ -5868,7 +5869,7 @@ msgstr ""
 #. module: mail
 #: model:ir.model.fields,help:mail.field_ir_model__is_mail_thread
 msgid "Whether this model supports messages and notifications."
-msgstr ""
+msgstr "Dacă acest model acceptă mesaje și notificări."
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_channel_view_form
@@ -6104,12 +6105,12 @@ msgstr ""
 #. module: mail
 #: selection:mail.activity.type,delay_from:0
 msgid "after previous activity deadline"
-msgstr ""
+msgstr "după terminare activitate anterioară"
 
 #. module: mail
 #: selection:mail.activity.type,delay_from:0
 msgid "after validation date"
-msgstr ""
+msgstr "după data de validare"
 
 #. module: mail
 #: code:addons/mail/models/mail_thread.py:1074
@@ -6153,7 +6154,7 @@ msgstr "."
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.message_origin_link
 msgid "created"
-msgstr "creat"
+msgstr "creată"
 
 #. module: mail
 #: selection:mail.activity.type,delay_unit:0
@@ -6380,7 +6381,7 @@ msgstr "livrare"
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_bounce_catchall
 msgid "team."
-msgstr ""
+msgstr "echipa."
 
 #. module: mail
 #. openerp-web
@@ -6395,21 +6396,29 @@ msgid "to close for"
 msgstr "pentru a închide în"
 
 #. module: mail
-#: code:addons/mail/models/mail_thread.py:1074
+#: code:addons/mail/models/mail_thread.py:1081
 #, python-format
 msgid "unknown error"
 msgstr ""
 
 #. module: mail
-#: code:addons/mail/models/mail_thread.py:1014
+#: code:addons/mail/models/mail_thread.py:1021
 #, python-format
 msgid "unknown target model %s"
 msgstr ""
 
 #. module: mail
+#. openerp-web
+#: code:addons/mail/static/src/js/attachment_box.js:40
+#: code:addons/mail/static/src/js/models/messages/abstract_message.js:52
+#, python-format
+msgid "unnamed"
+msgstr "fără nume"
+
+#. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.message_notification_email
 msgid "using"
-msgstr ""
+msgstr " utilizând"
 
 #. module: mail
 #: selection:mail.activity.type,delay_unit:0

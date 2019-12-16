@@ -18,14 +18,15 @@
 # Mario Riva <mario.riva@gmail.com>, 2019
 # Léonie Bouchat <lbo@odoo.com>, 2019
 # Sergio Zanchetta <primes2h@gmail.com>, 2019
+# Giovanni S <giovanni@gslab.it>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 10:09+0000\n"
+"POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:23+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2019\n"
+"Last-Translator: Giovanni S <giovanni@gslab.it>, 2019\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -125,6 +126,24 @@ msgid ""
 "    </p>\n"
 "</div>"
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Spett.le ${object.partner_id.name}\n"
+"        % if object.partner_id.parent_id:\n"
+"            (${object.partner_id.parent_id.name})\n"
+"        % endif\n"
+"        <br/><br/>\n"
+"        Siamo ad inviarLe la richiesta di preventivo <strong>${object.name}</strong>\n"
+"        % if object.partner_ref:\n"
+"            con riferimento: ${object.partner_ref}\n"
+"        % endif\n"
+"        da ${object.company_id.name}.\n"
+"        <br/><br/>\n"
+"        Per ulteriori domande, non esiti a contattarci.\n"
+"        <br/><br/>\n"
+"        Cordiali saluti,\n"
+"    </p>\n"
+"</div>"
 
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.res_config_settings_view_form_purchase
@@ -176,11 +195,9 @@ msgstr ""
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid ""
-"<span class=\"o_form_label\" string=\"Request for Quotation \" attrs=\"{'invisible': [('state','not in',('draft','sent'))]}\"/>\n"
-"                        <span class=\"o_form_label\" string=\"Purchase Order \" attrs=\"{'invisible': [('state','in',('draft','sent'))]}\"/>"
+"<span class=\"o_form_label\" attrs=\"{'invisible': [('state','not in',('draft','sent'))]}\">Request for Quotation </span>\n"
+"                        <span class=\"o_form_label\" attrs=\"{'invisible': [('state','in',('draft','sent'))]}\">Purchase Order </span>"
 msgstr ""
-"<span class=\"o_form_label\" string=\"Richiesta di preventivo\" attrs=\"{'invisible': [('state','not in',('draft','sent'))]}\"/>\n"
-"                        <span class=\"o_form_label\" string=\"Ordine di acquisto\" attrs=\"{'invisible': [('state','in',('draft','sent'))]}\"/>"
 
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.product_normal_form_view_inherit_purchase
@@ -525,7 +542,7 @@ msgstr "Componi email"
 #. module: purchase
 #: model:ir.model,name:purchase.model_res_config_settings
 msgid "Config Settings"
-msgstr "Impostazioni configurazione"
+msgstr "Impostazioni di configurazione"
 
 #. module: purchase
 #: model:ir.ui.menu,name:purchase.menu_purchase_config
@@ -535,7 +552,7 @@ msgstr "Configurazione"
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid "Confirm Order"
-msgstr "Conferma Ordine"
+msgstr "Conferma ordine"
 
 #. module: purchase
 #: selection:res.company,po_double_validation:0
@@ -561,7 +578,7 @@ msgstr "Controllo"
 #: model:ir.model.fields,field_description:purchase.field_product_product__purchase_method
 #: model:ir.model.fields,field_description:purchase.field_product_template__purchase_method
 msgid "Control Policy"
-msgstr "Politica Controllo"
+msgstr "Politica di controllo"
 
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.purchase_order_form
@@ -646,7 +663,7 @@ msgstr "Giorni dalla validazione"
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid "Define your terms and conditions ..."
-msgstr "Imposta i tuoi Termini e condizioni..."
+msgstr "Definire termini e condizioni..."
 
 #. module: purchase
 #: selection:res.config.settings,default_purchase_method:0
@@ -1056,12 +1073,12 @@ msgstr "Scadenza attività successiva"
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order__activity_summary
 msgid "Next Activity Summary"
-msgstr "Riepilogo attività successiva"
+msgstr "Riepilogo prossima attività"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order__activity_type_id
 msgid "Next Activity Type"
-msgstr "Tipo attività successiva"
+msgstr "Tipologia prossima attività"
 
 #. module: purchase
 #: selection:purchase.order,invoice_status:0
@@ -1192,7 +1209,7 @@ msgstr "Altre informazioni"
 #. module: purchase
 #: selection:purchase.order,activity_state:0
 msgid "Overdue"
-msgstr "Scaduto"
+msgstr "In ritardo"
 
 #. module: purchase
 #: model:mail.template,report_name:purchase.email_template_edi_purchase_done
@@ -1217,7 +1234,7 @@ msgstr "Termini di pagamento"
 #. module: purchase
 #: selection:purchase.order,activity_state:0
 msgid "Planned"
-msgstr "Pianificato"
+msgstr "Pianificata"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order__access_url
@@ -1578,7 +1595,7 @@ msgstr "RDP e Acquisti"
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid "Re-Send by Email"
-msgstr "Reinviare per email"
+msgstr "Reinvia con e-mail"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line__qty_received
@@ -1717,12 +1734,12 @@ msgstr ""
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid "Send PO by Email"
-msgstr "Invia OA con email"
+msgstr "Invia OA con e-mail"
 
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid "Send by Email"
-msgstr "Invia con email"
+msgstr "Invia con e-mail"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line__sequence
@@ -1748,7 +1765,7 @@ msgstr "Impostazioni"
 #. module: purchase
 #: model:ir.actions.server,name:purchase.model_purchase_order_action_share
 msgid "Share"
-msgstr "Condivisione"
+msgstr "Condividi"
 
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.view_purchase_order_filter
@@ -1790,7 +1807,7 @@ msgstr ""
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line__price_subtotal
 msgid "Subtotal"
-msgstr "Subtotale"
+msgstr "Imponibile"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_res_partner__property_purchase_currency_id
@@ -2004,7 +2021,7 @@ msgstr "Contatore messaggi non letti"
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.purchase_order_tree
 msgid "Untaxed"
-msgstr "Non tassato"
+msgstr "Imponibile"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order__amount_untaxed
