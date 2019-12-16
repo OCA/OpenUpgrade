@@ -35,21 +35,23 @@ def _migrate_pack_operation(env):
     mark pickings that need to recreate pack operations, and update new field
     qty_done on stock.pack.operation for transferred pickings.
     """
-    env.cr.execute(
-        "select o.id, o.%(lot_id)s, p.state, o.qty_done "
-        "from stock_pack_operation o "
-        "join stock_picking p on o.picking_id=p.id "
-        "where o.%(lot_id)s is not null "
-        "group by o.id, o.%(lot_id)s, p.state, o.qty_done",
+    openupgrade.logged_query(
+        env.cr,
+        """ INSERT INTO stock_pack_operation_lot (
+            id, lot_id, operation_id, qty_todo, qty,
+            create_uid, write_uid, create_date, write_date)
+        SELECT
+            nextval('stock_pack_operation_lot_id_seq'),
+            %(lot_id)s, o.id,
+            CASE WHEN p.state != 'done' THEN o.product_qty ELSE 0 END,
+            CASE WHEN p.state = 'done' THEN o.product_qty ELSE 0 END,
+            o.create_uid, o.write_uid, o.create_date, o.write_date
+        FROM stock_pack_operation o
+        JOIN stock_picking p ON o.picking_id = p.id
+        WHERE %(lot_id)s IS NOT NULL""",
         {'lot_id': AsIs(openupgrade.get_legacy_name('lot_id'))})
-    for operation_id, lot_id, state, qty_done in env.cr.fetchall():
-        env['stock.pack.operation.lot'].create({
-            'lot_id': lot_id,
-            'operation_id': operation_id,
-            'qty': 0 if state not in ['done'] else qty_done,
-            'qty_todo': 0 if state in ['done'] else qty_done,
-        })
-    env.cr.execute(
+    openupgrade.logged_query(
+        env.cr,
         "update stock_pack_operation "
         "set fresh_record = (%(processed)s = 'false')",
         {'processed': AsIs(openupgrade.get_legacy_name('processed'))})
