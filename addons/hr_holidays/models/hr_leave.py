@@ -190,7 +190,7 @@ class HolidaysRequest(models.Model):
     # change the column type in stable and it was defined as an int4 column
     #
     request_hour_from = fields.Selection([
-        (0, '12:00 PM'), (-1, '0:30 AM'),
+        (0, '12:00 AM'), (-1, '0:30 AM'),
         (1, '1:00 AM'), (-2, '1:30 AM'),
         (2, '2:00 AM'), (-3, '2:30 AM'),
         (3, '3:00 AM'), (-4, '3:30 AM'),
@@ -202,7 +202,7 @@ class HolidaysRequest(models.Model):
         (9, '9:00 AM'), (-10, '9:30 AM'),
         (10, '10:00 AM'), (-11, '10:30 AM'),
         (11, '11:00 AM'), (-12, '11:30 AM'),
-        (12, '12:00 AM'), (-13, '0:30 PM'),
+        (12, '12:00 PM'), (-13, '0:30 PM'),
         (13, '1:00 PM'), (-14, '1:30 PM'),
         (14, '2:00 PM'), (-15, '2:30 PM'),
         (15, '3:00 PM'), (-16, '3:30 PM'),
@@ -215,7 +215,7 @@ class HolidaysRequest(models.Model):
         (22, '10:00 PM'), (-23, '10:30 PM'),
         (23, '11:00 PM'), (-24, '11:30 PM')], string='Hour from')
     request_hour_to = fields.Selection([
-        (0, '12:00 PM'), (-1, '0:30 AM'),
+        (0, '12:00 AM'), (-1, '0:30 AM'),
         (1, '1:00 AM'), (-2, '1:30 AM'),
         (2, '2:00 AM'), (-3, '2:30 AM'),
         (3, '3:00 AM'), (-4, '3:30 AM'),
@@ -227,7 +227,7 @@ class HolidaysRequest(models.Model):
         (9, '9:00 AM'), (-10, '9:30 AM'),
         (10, '10:00 AM'), (-11, '10:30 AM'),
         (11, '11:00 AM'), (-12, '11:30 AM'),
-        (12, '12:00 AM'), (-13, '0:30 PM'),
+        (12, '12:00 PM'), (-13, '0:30 PM'),
         (13, '1:00 PM'), (-14, '1:30 PM'),
         (14, '2:00 PM'), (-15, '2:30 PM'),
         (15, '3:00 PM'), (-16, '3:30 PM'),
@@ -591,6 +591,12 @@ class HolidaysRequest(models.Model):
     @api.multi
     def copy_data(self, default=None):
         raise UserError(_('A leave cannot be duplicated.'))
+
+    @api.model
+    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
+        if not self.user_has_groups('hr_holidays.group_hr_holidays_user') and 'name' in groupby:
+            raise UserError(_('Such grouping is not allowed.'))
+        return super(HolidaysRequest, self).read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby, lazy=lazy)
 
     ####################################################
     # Business methods

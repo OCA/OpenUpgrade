@@ -12,15 +12,15 @@
 # Nuno Silva <nuno.silva@arxi.pt>, 2018
 # Nelson Costa <nelson.costa@isangola.com>, 2018
 # Diogo Fonseca <dsf@thinkopensolutions.pt>, 2018
-# Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2019
 # Martin Trigaux, 2019
+# Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2019
 # Marcelo Pereira <marcelo.pereira@arxi.pt>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 10:09+0000\n"
+"POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:23+0000\n"
 "Last-Translator: Marcelo Pereira <marcelo.pereira@arxi.pt>, 2019\n"
 "Language-Team: Portuguese (https://www.transifex.com/odoo/teams/41243/pt/)\n"
@@ -135,7 +135,7 @@ msgstr ""
 "        % endif\n"
 "        de ${object.company_id.name}.\n"
 "        <br/><br/>\n"
-"        Se tiver alguma dúvida, não exite em contactar-nos.\n"
+"        Se tiver alguma dúvida, não hesite em contactar-nos.\n"
 "        <br/><br/>\n"
 "        Os melhores cumprimentos,\n"
 "    </p>\n"
@@ -186,8 +186,8 @@ msgstr ""
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid ""
-"<span class=\"o_form_label\" string=\"Request for Quotation \" attrs=\"{'invisible': [('state','not in',('draft','sent'))]}\"/>\n"
-"                        <span class=\"o_form_label\" string=\"Purchase Order \" attrs=\"{'invisible': [('state','in',('draft','sent'))]}\"/>"
+"<span class=\"o_form_label\" attrs=\"{'invisible': [('state','not in',('draft','sent'))]}\">Request for Quotation </span>\n"
+"                        <span class=\"o_form_label\" attrs=\"{'invisible': [('state','in',('draft','sent'))]}\">Purchase Order </span>"
 msgstr ""
 
 #. module: purchase
@@ -1453,7 +1453,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:purchase.view_purchase_order_filter
 #: model_terms:ir.ui.view,arch_db:purchase.view_purchase_order_search
 msgid "Purchase Representative"
-msgstr ""
+msgstr "Responsável de Compras"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_res_config_settings__group_warning_purchase
@@ -2100,7 +2100,7 @@ msgstr "Aviso na Ordem de Compra"
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.view_product_supplier_inherit
 msgid "Warning when Purchasing this Product"
-msgstr "Atenção quando Adquerir este Produto"
+msgstr "Aviso ao Comprar este Artigo"
 
 #. module: purchase
 #: model_terms:ir.ui.view,arch_db:purchase.res_config_settings_view_form_purchase

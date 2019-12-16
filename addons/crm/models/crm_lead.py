@@ -112,6 +112,7 @@ class Lead(models.Model):
     partner_address_name = fields.Char('Partner Contact Name', related='partner_id.name', readonly=True)
     partner_address_email = fields.Char('Partner Contact Email', related='partner_id.email', readonly=True)
     partner_address_phone = fields.Char('Partner Contact Phone', related='partner_id.phone', readonly=True)
+    partner_address_mobile = fields.Char('Partner Contact Mobile', related='partner_id.mobile', readonly=True)
     partner_is_blacklisted = fields.Boolean('Partner is blacklisted', related='partner_id.is_blacklisted', readonly=True)
     company_currency = fields.Many2one(string='Currency', related='company_id.currency_id', readonly=True, relation="res.currency")
     user_email = fields.Char('User Email', related='user_id.email', readonly=True)
@@ -859,6 +860,8 @@ class Lead(models.Model):
         """
         partner_ids = {}
         for lead in self:
+            if partner_id:
+                lead.partner_id = partner_id
             if lead.partner_id:
                 partner_ids[lead.id] = lead.partner_id.id
                 continue
@@ -866,8 +869,6 @@ class Lead(models.Model):
                 partner = lead._create_lead_partner()
                 partner_id = partner.id
                 partner.team_id = lead.team_id
-            if partner_id:
-                lead.partner_id = partner_id
             partner_ids[lead.id] = partner_id
         return partner_ids
 

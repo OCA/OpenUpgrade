@@ -30,7 +30,7 @@ var DateWidget = Widget.extend({
             locale: moment.locale(),
             format : this.type_of_date === 'datetime' ? time.getLangDatetimeFormat() : time.getLangDateFormat(),
             minDate: moment({ y: 1900 }),
-            maxDate: moment().add(200, "y"),
+            maxDate: moment({ y: 9999, M: 11, d: 31 }),
             useCurrent: false,
             icons: {
                 time: 'fa fa-clock-o',
@@ -200,7 +200,8 @@ var DateWidget = Widget.extend({
             this.$warning.attr('title', title);
             this.$input.after(this.$warning);
         }
-        if (currentDate && currentDate.isAfter(moment())) {
+        // Get rid of time and TZ crap for comparison
+        if (currentDate && currentDate.format('YYYY-MM-DD') > moment().format('YYYY-MM-DD')) {
             this.$warning.show();
         } else {
             this.$warning.hide();

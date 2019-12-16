@@ -4,30 +4,30 @@
 # 
 # Translators:
 # Daniel C Santos <dcs@thinkopensolutions.pt>, 2018
-# cafonso <cafonso62@gmail.com>, 2018
 # Ricardo Correia <rcorreiavv@gmail.com>, 2018
-# José Gomes <jg@opencloud.pro>, 2018
 # Manuela Silva <inactive+h_manuela_rodsilva@transifex.com>, 2018
+# José Gomes <jg@opencloud.pro>, 2018
+# Martin Trigaux, 2018
 # Joao Felix <jrmfelix@gmail.com>, 2018
 # Ricardo Martins <ricardo.nbs.martins@gmail.com>, 2018
 # Diogo Fonseca <dsf@thinkopensolutions.pt>, 2018
 # Ricardo Santa Ana <ricardosantana@gmail.com>, 2019
-# Martin Trigaux, 2019
 # Manuela Silva <manuelarodsilva@gmail.com>, 2019
 # Cbasilio <carlos.basilio@gmail.com>, 2019
 # Catarina Rocha <cr@opencloud.pro>, 2019
 # Pedro Castro Silva <pedrocs@exo.pt>, 2019
 # Tiago Santos <tiago.santos@arxi.pt>, 2019
-# Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2019
 # Nuno Silva <nuno.silva@arxi.pt>, 2019
+# Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2019
+# cafonso <cafonso62@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-08 13:35+0000\n"
+"POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:14+0000\n"
-"Last-Translator: Nuno Silva <nuno.silva@arxi.pt>, 2019\n"
+"Last-Translator: cafonso <cafonso62@gmail.com>, 2019\n"
 "Language-Team: Portuguese (https://www.transifex.com/odoo/teams/41243/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -850,6 +850,7 @@ msgstr "Aviso de Acesso"
 #: model:ir.model.fields,field_description:account.field_account_move_line__account_id
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__account_id
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__account_id
+#: model:ir.model.fields,field_description:account.field_res_config_settings__module_account_accountant
 #: model_terms:ir.ui.view,arch_db:account.report_journal
 #: model_terms:ir.ui.view,arch_db:account.view_account_form
 #: model_terms:ir.ui.view,arch_db:account.view_account_move_line_filter
@@ -1177,7 +1178,6 @@ msgid "Account; Reverse entries"
 msgstr ""
 
 #. module: account
-#: model:ir.model.fields,field_description:account.field_res_config_settings__module_account_accountant
 #: model:ir.ui.menu,name:account.account_account_menu
 #: model:ir.ui.menu,name:account.menu_finance_entries
 #: model_terms:ir.ui.view,arch_db:account.product_template_form_view
@@ -3886,7 +3886,7 @@ msgid ""
 msgstr ""
 "Exmo. Senhor/Senhora,\n"
 "\n"
-"Os nossos registos indicam que alguns pagamentos na sua conta, ainda se encontram por liquidar. Por favor, encontre os detalhes abaixo.\n"
+"Os nossos registos indicam que alguns pagamentos na sua conta ainda se encontram por liquidar. Por favor, encontre os detalhes abaixo.\n"
 "Se o valor já tiver sido pago, por favor, ignore este aviso. Caso contrário, por favor, envie-nos o total indicado abaixo.\n"
 "Se tiver quaisquer dúvidas em relação à sua conta, por favor, contacte-nos.\n"
 "\n"
@@ -4084,7 +4084,6 @@ msgstr "Descrever as razões para tirar dinheiro da caixa registadora:"
 #: code:addons/account/static/src/xml/account_reconciliation.xml:310
 #: model:ir.model.fields,field_description:account.field_account_account_type__note
 #: model:ir.model.fields,field_description:account.field_account_invoice_line__name
-#: model:ir.model.fields,field_description:account.field_account_invoice_send__description
 #: model_terms:ir.ui.view,arch_db:account.view_account_payment_search
 #: model_terms:ir.ui.view,arch_db:account.view_account_type_form
 #: model_terms:ir.ui.view,arch_db:account.view_invoice_line_form
@@ -4655,6 +4654,7 @@ msgstr "Períodos Fiscais"
 #: model:ir.model.fields,field_description:account.field_account_invoice_report__fiscal_position_id
 #: model:ir.model.fields,field_description:account.field_res_partner__property_account_position_id
 #: model:ir.model.fields,field_description:account.field_res_users__property_account_position_id
+#: model_terms:ir.ui.view,arch_db:account.view_account_position_filter
 #: model_terms:ir.ui.view,arch_db:account.view_account_position_form
 #: model_terms:ir.ui.view,arch_db:account.view_account_position_template_search
 #: model_terms:ir.ui.view,arch_db:account.view_account_position_template_tree
@@ -6806,11 +6806,6 @@ msgid "Message Record Name"
 msgstr "Nome do Registro da Mensagem"
 
 #. module: account
-#: model:ir.model.fields,help:account.field_account_invoice_send__description
-msgid "Message description: either the subject, or the beginning of the body"
-msgstr "Descrição da Mensagem: ou o assunto, ou o começo do corpo"
-
-#. module: account
 #: model:ir.model.fields,field_description:account.field_res_partner__invoice_warn_msg
 #: model:ir.model.fields,field_description:account.field_res_users__invoice_warn_msg
 msgid "Message for Invoice"
@@ -8258,11 +8253,6 @@ msgid "Properties"
 msgstr "Propriedades"
 
 #. module: account
-#: model:ir.model.fields,field_description:account.field_account_invoice_send__website_published
-msgid "Published"
-msgstr "Publicado"
-
-#. module: account
 #: selection:account.journal,type:0
 #: model_terms:ir.ui.view,arch_db:account.view_account_tax_search
 #: model_terms:ir.ui.view,arch_db:account.view_account_tax_template_search
@@ -8272,7 +8262,7 @@ msgstr "Compras"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.invoice_supplier_form
 msgid "Purchase Representative"
-msgstr ""
+msgstr "Responsável de Compras"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -9574,13 +9564,15 @@ msgstr "Movimentos alvo"
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/xml/account_reconciliation.xml:185
+#: code:addons/account/static/src/xml/account_reconciliation.xml:186
 #: model:ir.model,name:account.model_account_tax
 #: model:ir.model.fields,field_description:account.field_account_invoice__amount_tax
 #: model:ir.model.fields,field_description:account.field_account_invoice_tax__tax_id
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__tax_id
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__tax_id
 #: model_terms:ir.ui.view,arch_db:account.account_tax_view_search
+#: model_terms:ir.ui.view,arch_db:account.invoice_supplier_tree
+#: model_terms:ir.ui.view,arch_db:account.invoice_tree
 #: model_terms:ir.ui.view,arch_db:account.view_account_reconcile_model_form
 #: model_terms:ir.ui.view,arch_db:account.view_account_tax_search
 #, python-format
@@ -10397,6 +10389,7 @@ msgstr ""
 #, python-format
 msgid "The lock date for advisors is irreversible and can't be removed."
 msgstr ""
+"A data de fecho para consultores é irreversível e não pode ser alterada."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_move_line__move_id
@@ -10414,6 +10407,8 @@ msgstr "O nome que será utilizado na linha de movimentos contabilísticos"
 msgid ""
 "The new lock date for advisors must be set after the previous lock date."
 msgstr ""
+"A nova data de fecho para consultores deve ser estabecida posteriormente à "
+"data de fecho anterior."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_journal__refund_sequence_number_next
@@ -11051,11 +11046,6 @@ msgid "Total Payable"
 msgstr "Total a Pagar"
 
 #. module: account
-#: model_terms:ir.ui.view,arch_db:account.report_invoice_document
-msgid "Total Price"
-msgstr "Preço Total"
-
-#. module: account
 #: model:ir.model.fields,field_description:account.field_res_partner__credit
 #: model:ir.model.fields,field_description:account.field_res_users__credit
 msgid "Total Receivable"
@@ -11630,7 +11620,7 @@ msgstr "Fornecedores"
 #: code:addons/account/static/src/xml/account_payment.xml:82
 #, python-format
 msgid "View"
-msgstr "Vista"
+msgstr "Ver"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_partner_property_form
@@ -11638,17 +11628,12 @@ msgid "View accounts detail"
 msgstr "Ver detalhes da conta"
 
 #. module: account
-#: model:ir.model.fields,help:account.field_account_invoice_send__website_published
-msgid "Visible on the website as a comment"
-msgstr "Visível no site da Web como um comentário"
-
-#. module: account
 #: selection:res.partner,invoice_warn:0
 msgid "Warning"
 msgstr "Aviso"
 
 #. module: account
-#: code:addons/account/models/account_invoice.py:808
+#: code:addons/account/models/account_invoice.py:852
 #, python-format
 msgid "Warning for %s"
 msgstr "Aviso para %s"
@@ -11901,6 +11886,9 @@ msgid ""
 "You cannot define stricter conditions on advisors than on users. Please make"
 " sure that the lock date on advisor is set before the lock date for users."
 msgstr ""
+"Não pode definir condições mais estritas para consultores do que para "
+"utilizadores. Assegure-se de que a data de fecho de consultores fica "
+"estabelecida antes da data de fecho para utilizadores."
 
 #. module: account
 #: code:addons/account/models/account_payment.py:611
@@ -11986,6 +11974,9 @@ msgid ""
 "You cannot lock a period that is not finished yet. Please make sure that the"
 " lock date for advisors is not set after the last day of the previous month."
 msgstr ""
+"Não pode fechar um período que ainda não tenha terminado, Assegure-se de que"
+" a data de fecho para consultores seja definida não ultrapassando o último "
+"dia do mês anterior."
 
 #. module: account
 #. openerp-web
@@ -12276,14 +12267,14 @@ msgstr ""
 
 #. module: account
 #. openerp-web
-#: code:addons/account/static/src/xml/account_reconciliation.xml:318
+#: code:addons/account/static/src/xml/account_reconciliation.xml:323
 #, python-format
 msgid "have been reconciled automatically."
 msgstr ""
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_send__invoice_without_email
-msgid "number of invoice(s) that will not be sent"
+msgid "invoice(s) that will not be sent"
 msgstr ""
 
 #. module: account

@@ -268,14 +268,12 @@ return AbstractModel.extend({
         return this._loadCalendar();
     },
     /**
-     * @param {Moment} start
+     * @param {Moment} start. in local TZ
      */
     setDate: function (start) {
         // keep highlight/target_date in localtime
         this.data.highlight_date = this.data.target_date = start.clone();
-        // set dates in UTC with timezone applied manually
         this.data.start_date = this.data.end_date = start;
-
         switch (this.data.scale) {
             case 'month':
                 var monthStart = this.data.start_date.clone().startOf('month');
@@ -295,16 +293,32 @@ return AbstractModel.extend({
                 this.data.end_date = this.data.start_date.clone().add(5, 'week').day(this.week_stop).endOf('day');
                 break;
             case 'week':
-                this.data.start_date = this.data.start_date.clone().day(this.week_start).startOf('day');
-                this.data.end_date = this.data.end_date.clone().day(this.week_stop).endOf('day');
+                var weekStart = this.data.start_date.clone().startOf('week');
+                var weekStartDay = this.week_start;
+                if (this.data.start_date.day() < this.week_start) {
+                    // The week's first day is after our current day
+                    // Then we should go back to the previous week
+                    weekStartDay -= 7;
+                }
+                this.data.start_date = this.data.start_date.clone().day(weekStartDay).startOf('day');
+                this.data.end_date = this.data.end_date.clone().day(weekStartDay + 6).endOf('day');
                 break;
             default:
                 this.data.start_date = this.data.start_date.clone().startOf('day');
                 this.data.end_date = this.data.end_date.clone().endOf('day');
         }
+        // We have set start/stop datetime as definite begin/end boundaries of a period (month, week, day)
+        // in local TZ (what is the begining of the week *I am* in ?)
+        // The following code:
+        // - converts those to UTC using our homemade method (testable)
+        // - sets the moment UTC flag to true, to ensure compatibility with third party libs
+        var manualUtcDateStart = this.data.start_date.clone().add(-this.getSession().getTZOffset(this.data.start_date), 'minutes');
+        var formattedUtcDateStart = manualUtcDateStart.format('YYYY-MM-DDTHH:mm:ss') + 'Z';
+        this.data.start_date = moment.utc(formattedUtcDateStart);
 
-        this.data.start_date.utc();
-        this.data.end_date.utc();
+        var manualUtcDateEnd = this.data.end_date.clone().add(-this.getSession().getTZOffset(this.data.start_date), 'minutes');
+        var formattedUtcDateEnd = manualUtcDateEnd.format('YYYY-MM-DDTHH:mm:ss') + 'Z';
+        this.data.end_date = moment.utc(formattedUtcDateEnd);
     },
     /**
      * @param {string} scale the scale to set
@@ -436,7 +450,8 @@ return AbstractModel.extend({
      * Return a domain from the date range
      *
      * @private
-     * @returns {Array}
+     * @returns {Array} A domain containing datetimes start and stop in UTC
+     *  those datetimes are formatted according to server's standards
      */
     _getRangeDomain: function () {
         // Build OpenERP Domain to filter object by this.mapping.date_start field

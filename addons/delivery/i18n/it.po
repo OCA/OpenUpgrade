@@ -8,18 +8,18 @@
 # Giacomo Grasso <giacomo.grasso.82@gmail.com>, 2018
 # SebastianoPistore <SebastianoPistore.info@protonmail.ch>, 2018
 # Massimo Bianchi <bianchi.massimo@gmail.com>, 2018
-# Paolo Valier, 2018
 # David Minneci <david@numeko.it>, 2018
 # Niccolò Lubello <nlubello@gmail.com>, 2018
 # mymage <stefano.consolaro@mymage.it>, 2018
 # Léonie Bouchat <lbo@odoo.com>, 2019
+# Paolo Valier, 2019
 # Sergio Zanchetta <primes2h@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 10:09+0000\n"
+"POT-Creation-Date: 2019-11-14 07:34+0000\n"
 "PO-Revision-Date: 2018-08-24 09:17+0000\n"
 "Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2019\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
@@ -252,6 +252,13 @@ msgid "Debug logging"
 msgstr "Registrazione richieste"
 
 #. module: delivery
+#. openerp-web
+#: code:addons/delivery/static/src/js/delivery_translations.js:13
+#, python-format
+msgid "Debug requests"
+msgstr ""
+
+#. module: delivery
 #: model_terms:ir.actions.act_window,help:delivery.action_delivery_carrier_form
 msgid "Define a new delivery method"
 msgstr "Definire un nuovo metodo di consegna"
@@ -324,12 +331,12 @@ msgstr "Imballaggio di consegna"
 #. module: delivery
 #: model:ir.model,name:delivery.model_delivery_price_rule
 msgid "Delivery Price Rules"
-msgstr "Regole per le tariffe di consegna"
+msgstr "Regole prezzo di consegna"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier__product_id
 msgid "Delivery Product"
-msgstr "Prodotto «Consegna»"
+msgstr "Prodotto consegna"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_sale_order__delivery_rating_success
@@ -345,6 +352,13 @@ msgstr "Disponibilità destinazione"
 #: model:ir.model.fields,help:delivery.field_delivery_carrier__sequence
 msgid "Determine the display order"
 msgstr "Determina l'ordine di visualizzazione"
+
+#. module: delivery
+#. openerp-web
+#: code:addons/delivery/static/src/js/delivery_translations.js:14
+#, python-format
+msgid "Disable debug"
+msgstr ""
 
 #. module: delivery
 #: model_terms:ir.ui.view,arch_db:delivery.choose_delivery_package_view_form
@@ -375,6 +389,13 @@ msgstr ""
 "                a ogni metodo."
 
 #. module: delivery
+#. openerp-web
+#: code:addons/delivery/static/src/js/delivery_translations.js:16
+#, python-format
+msgid "Enable debug"
+msgstr ""
+
+#. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier__prod_environment
 msgid "Environment"
 msgstr "Ambiente"
@@ -390,7 +411,7 @@ msgstr ""
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_sale_order__delivery_price
 msgid "Estimated Delivery Price"
-msgstr "Costo di consegna stimato"
+msgstr "Prezzo di consegna stimato"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_sale_order__carrier_id
@@ -587,12 +608,19 @@ msgid "No carrier set for this order."
 msgstr "Nessun vettore impostato per questo ordine."
 
 #. module: delivery
+#. openerp-web
+#: code:addons/delivery/static/src/js/delivery_translations.js:15
+#, python-format
+msgid "No debug"
+msgstr ""
+
+#. module: delivery
 #: code:addons/delivery/models/delivery_grid.py:102
 #, python-format
 msgid "No price rule matching this order; delivery cost cannot be computed."
 msgstr ""
-"Impossibile calcolare le spese di consegna ordine, nessuna regola tariffaria"
-" corrisponde."
+"Impossibile calcolare i costi di consegna, nessuna regola sul prezzo "
+"corrisponde all'ordine."
 
 #. module: delivery
 #: model:delivery.carrier,name:delivery.normal_delivery_carrier
@@ -652,8 +680,8 @@ msgid ""
 "Please use \"Check price\" in order to compute a shipping price for this "
 "quotation."
 msgstr ""
-"Utilizzare «Controlla prezzo» per calcolare il costo di spedizione per "
-"questo preventivo."
+"Utilizzare «Controlla prezzo» per calcolare il prezzo di spedizione del "
+"preventivo."
 
 #. module: delivery
 #: selection:delivery.price.rule,variable:0
@@ -665,7 +693,7 @@ msgstr "Prezzo"
 #: model_terms:ir.ui.view,arch_db:delivery.view_delivery_price_rule_form
 #: model_terms:ir.ui.view,arch_db:delivery.view_delivery_price_rule_tree
 msgid "Price Rules"
-msgstr "Regole tariffarie"
+msgstr "Regole sul prezzo"
 
 #. module: delivery
 #: model_terms:ir.ui.view,arch_db:delivery.view_delivery_carrier_form
@@ -686,6 +714,13 @@ msgstr "Movimenti del prodotto (riga movimento magazzino)"
 #: model:ir.model,name:delivery.model_product_packaging
 msgid "Product Packaging"
 msgstr "Imballaggio prodotto"
+
+#. module: delivery
+#. openerp-web
+#: code:addons/delivery/static/src/js/delivery_translations.js:9
+#, python-format
+msgid "Production Environment"
+msgstr "Ambiente di Produzione"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_carrier__delivery_type
@@ -734,7 +769,7 @@ msgstr "Salva"
 #. module: delivery
 #: model_terms:ir.ui.view,arch_db:delivery.view_picking_withcarrier_out_form
 msgid "Send Confirmation Email"
-msgstr "Invia email di conferma"
+msgstr "Invia e-mail di conferma"
 
 #. module: delivery
 #: model_terms:ir.ui.view,arch_db:delivery.view_picking_withcarrier_out_form
@@ -791,6 +826,27 @@ msgid "Stock Move"
 msgstr "Movimento di magazzino"
 
 #. module: delivery
+#. openerp-web
+#: code:addons/delivery/static/src/js/delivery_translations.js:12
+#, python-format
+msgid "Switch to production environment"
+msgstr "Passa all'ambiente di produzione"
+
+#. module: delivery
+#. openerp-web
+#: code:addons/delivery/static/src/js/delivery_translations.js:10
+#, python-format
+msgid "Switch to test environment"
+msgstr "Passa all'ambiente di test"
+
+#. module: delivery
+#. openerp-web
+#: code:addons/delivery/static/src/js/delivery_translations.js:11
+#, python-format
+msgid "Test Environment"
+msgstr "Ambiente di Test"
+
+#. module: delivery
 #: model:delivery.carrier,name:delivery.delivery_carrier
 #: model:product.product,name:delivery.product_product_delivery_poste
 #: model:product.template,name:delivery.product_product_delivery_poste_product_template
@@ -820,7 +876,7 @@ msgid ""
 "                according to your settings; on the sales order (based on the\n"
 "                quotation) or the invoice (based on the delivery orders)."
 msgstr ""
-"Questo metodo consente il calcolo automatico delle spese di consegna,\n"
+"Questo metodo consente il calcolo automatico del prezzo di consegna,\n"
 "                secondo le impostazioni dell'ordine di vendita (basato sul\n"
 "                preventivo) o della fattura (basato sugli ordini di consegna)."
 
@@ -931,8 +987,7 @@ msgstr "Etichetta unità di misura del peso"
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_stock_quant_package__shipping_weight
 msgid "Weight used to compute the price of the delivery (if applicable)."
-msgstr ""
-"Peso utilizzato per calcolare il prezzo della consegna (se applicabile)."
+msgstr "Peso utilizzato per calcolare il prezzo di consegna (se applicabile)."
 
 #. module: delivery
 #: model_terms:ir.ui.view,arch_db:delivery.report_package_barcode_delivery
@@ -965,7 +1020,7 @@ msgstr ""
 #, python-format
 msgid "You can add delivery price only on unconfirmed quotations."
 msgstr ""
-"È possibile aggiungere le spese di consegna solo a preventivi non "
+"È possibile aggiungere i prezzi di consegna solo a preventivi non "
 "confermati."
 
 #. module: delivery

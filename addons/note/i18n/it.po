@@ -6,14 +6,13 @@
 # Francesco Garganese <francesco.garganese@aeromnia.aero>, 2018
 # Martin Trigaux, 2018
 # Luigi Di Naro <gigidn@gmail.com>, 2018
-# Giacomo Grasso <giacomo.grasso.82@gmail.com>, 2018
 # Christian <chris@effeci.info>, 2018
 # Paolo Valier, 2018
 # Cécile Collart <cco@odoo.com>, 2018
 # Pietro Della Notte <pdellanotte@gmail.com>, 2018
 # Léonie Bouchat <lbo@odoo.com>, 2018
 # SebastianoPistore <SebastianoPistore.info@protonmail.ch>, 2019
-# Lorenzo Battistini <lorenzo.battistini@agilebg.com>, 2019
+# Lorenzo Battistini <lb@takobi.online>, 2019
 # Sergio Zanchetta <primes2h@gmail.com>, 2019
 # 
 msgid ""
@@ -312,7 +311,7 @@ msgstr "Riepilogo prossima attività"
 #. module: note
 #: model:ir.model.fields,field_description:note.field_note_note__activity_type_id
 msgid "Next Activity Type"
-msgstr "Tipo prossima attività"
+msgstr "Tipologia prossima attività"
 
 #. module: note
 #: model:ir.model,name:note.model_note_note
@@ -393,7 +392,7 @@ msgstr "Altro"
 #. module: note
 #: selection:note.note,activity_state:0
 msgid "Overdue"
-msgstr "Scaduto"
+msgstr "In ritardo"
 
 #. module: note
 #: model:ir.model.fields,field_description:note.field_note_note__user_id
@@ -409,7 +408,7 @@ msgstr "Proprietario fase della nota"
 #. module: note
 #: selection:note.note,activity_state:0
 msgid "Planned"
-msgstr "Pianificato"
+msgstr "Pianificata"
 
 #. module: note
 #: model:ir.model.fields,field_description:note.field_mail_activity__note_id
@@ -514,7 +513,7 @@ msgstr "Nome etichetta"
 #. module: note
 #: sql_constraint:note.tag:0
 msgid "Tag name already exists !"
-msgstr "Nome etichetta già esistente !"
+msgstr "Nome etichetta già esistente."
 
 #. module: note
 #: model:ir.actions.act_window,name:note.note_tag_action

@@ -3,16 +3,17 @@
 # * crm_reveal
 # 
 # Translators:
+# David Minneci <david@numeko.it>, 2019
 # Francesco Garganese <francesco.garganese@aeromnia.aero>, 2019
 # Martin Trigaux, 2019
-# Lorenzo Battistini <lorenzo.battistini@agilebg.com>, 2019
+# Lorenzo Battistini <lb@takobi.online>, 2019
 # Luigi Di Naro <gigidn@gmail.com>, 2019
 # SebastianoPistore <SebastianoPistore.info@protonmail.ch>, 2019
 # Paolo Valier, 2019
-# David Minneci <david@numeko.it>, 2019
 # Léonie Bouchat <lbo@odoo.com>, 2019
 # mymage <stefano.consolaro@mymage.it>, 2019
 # Sergio Zanchetta <primes2h@gmail.com>, 2019
+# Luana Andronico <andronicoluana@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
@@ -20,7 +21,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-01 06:19+0000\n"
 "PO-Revision-Date: 2019-07-01 06:20+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2019\n"
+"Last-Translator: Luana Andronico <andronicoluana@gmail.com>, 2019\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -66,7 +67,7 @@ msgstr "<b>Telefono :</b>"
 #. module: crm_reveal
 #: model_terms:ir.ui.view,arch_db:crm_reveal.lead_message_template
 msgid "<b>Timezone : </b>"
-msgstr ""
+msgstr "<b>Fuso orario:</b>"
 
 #. module: crm_reveal
 #: model_terms:ir.ui.view,arch_db:crm_reveal.crm_reveal_rule_form
@@ -236,7 +237,7 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_162
 msgid "Capital Goods"
-msgstr ""
+msgstr "Beni strumentali"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_177
@@ -352,7 +353,7 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_30
 msgid "Consumer Discretionary"
-msgstr ""
+msgstr "Beni di consumo voluttuari"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_31
@@ -367,12 +368,12 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_150
 msgid "Consumer Services"
-msgstr ""
+msgstr "Servizi al consumatore"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_33
 msgid "Consumer Staples"
-msgstr ""
+msgstr "Beni di consumo di base"
 
 #. module: crm_reveal
 #: model_terms:ir.ui.view,arch_db:crm_reveal.crm_reveal_rule_form
@@ -472,17 +473,17 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_151
 msgid "Diversified Consumer Services"
-msgstr ""
+msgstr "Servizi al consumatore diversificati"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_158
 msgid "Diversified Financial Services"
-msgstr ""
+msgstr "Servizi finanziari diversificati"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_159
 msgid "Diversified Financials"
-msgstr ""
+msgstr "Finanziari diversificati"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_199
@@ -552,7 +553,7 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_156
 msgid "Energy Equipment & Services"
-msgstr ""
+msgstr "Impianti e servizi energetici"
 
 #. module: crm_reveal
 #: code:addons/crm_reveal/models/crm_reveal_rule.py:73
@@ -633,7 +634,7 @@ msgstr "Alimentare"
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_153
 msgid "Food & Staples Retailing"
-msgstr ""
+msgstr "Vendita al dettaglio di alimenti e beni di prima necessità"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_54
@@ -738,7 +739,7 @@ msgstr ""
 #. module: crm_reveal
 #: selection:crm.reveal.rule,priority:0
 msgid "High"
-msgstr "Alto"
+msgstr "Alta"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_62
@@ -1054,7 +1055,7 @@ msgstr ""
 #. module: crm_reveal
 #: selection:crm.reveal.rule,priority:0
 msgid "Low"
-msgstr "Basso"
+msgstr "Bassa"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_81
@@ -1119,7 +1120,7 @@ msgstr ""
 #. module: crm_reveal
 #: selection:crm.reveal.rule,priority:0
 msgid "Medium"
-msgstr "Medio"
+msgstr "Media"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_197
@@ -1294,12 +1295,12 @@ msgstr "Pagamenti"
 #. module: crm_reveal
 #: model:ir.model,name:crm_reveal.model_crm_reveal_role
 msgid "People Role"
-msgstr ""
+msgstr "Ruolo delle persone"
 
 #. module: crm_reveal
 #: model:ir.model,name:crm_reveal.model_crm_reveal_seniority
 msgid "People Seniority"
-msgstr ""
+msgstr "Anzianità delle persone"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_101
@@ -1319,7 +1320,7 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_161
 msgid "Pharmaceuticals, Biotechnology & Life Sciences"
-msgstr ""
+msgstr "Farmaceutica, biotecnologie e scienze della vita"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_103
@@ -1450,7 +1451,7 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_152
 msgid "Retailing"
-msgstr ""
+msgstr "Vendita al dettaglio"
 
 #. module: crm_reveal
 #: model:ir.model.fields,field_description:crm_reveal.field_crm_reveal_industry__reveal_id
@@ -1522,7 +1523,7 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_164
 msgid "Semiconductors & Semiconductor Equipment"
-msgstr ""
+msgstr "Semiconduttori e apparecchiature con semiconduttori"
 
 #. module: crm_reveal
 #: model:ir.model.fields,field_description:crm_reveal.field_crm_reveal_rule__seniority_id
@@ -1607,7 +1608,7 @@ msgstr "Nome etichetta"
 #. module: crm_reveal
 #: sql_constraint:crm.reveal.industry:0
 msgid "Tag name already exists!"
-msgstr "Questo nome etichetta esiste già!"
+msgstr "Nome etichetta già esistente."
 
 #. module: crm_reveal
 #: model:ir.model.fields,field_description:crm_reveal.field_crm_reveal_rule__tag_ids
@@ -1627,7 +1628,7 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_166
 msgid "Technology Hardware & Equipment"
-msgstr ""
+msgstr "Tecnologia hardware e apparecchiature"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_195
@@ -1733,7 +1734,7 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_138
 msgid "Utilities"
-msgstr ""
+msgstr "Servizi di pubblica utilità"
 
 #. module: crm_reveal
 #: model:crm.reveal.industry,name:crm_reveal.crm_reveal_industry_139
@@ -1783,7 +1784,7 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.role,name:crm_reveal.crm_reveal_role_1
 msgid "ceo"
-msgstr ""
+msgstr "Amministratore delegato"
 
 #. module: crm_reveal
 #: model:crm.reveal.role,name:crm_reveal.crm_reveal_role_2
@@ -1793,7 +1794,7 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.role,name:crm_reveal.crm_reveal_role_3
 msgid "consulting"
-msgstr ""
+msgstr "Consulenza"
 
 #. module: crm_reveal
 #: model_terms:ir.ui.view,arch_db:crm_reveal.crm_reveal_rule_form
@@ -1818,7 +1819,7 @@ msgstr "es. visitatori USA"
 #. module: crm_reveal
 #: model:crm.reveal.role,name:crm_reveal.crm_reveal_role_5
 msgid "education"
-msgstr ""
+msgstr "Formazione"
 
 #. module: crm_reveal
 #: model:crm.reveal.role,name:crm_reveal.crm_reveal_role_6
@@ -1838,7 +1839,7 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.role,name:crm_reveal.crm_reveal_role_8
 msgid "founder"
-msgstr ""
+msgstr "Fondatore"
 
 #. module: crm_reveal
 #: model:crm.reveal.role,name:crm_reveal.crm_reveal_role_9
@@ -1858,17 +1859,17 @@ msgstr ""
 #. module: crm_reveal
 #: model:crm.reveal.role,name:crm_reveal.crm_reveal_role_12
 msgid "legal"
-msgstr ""
+msgstr "Legale"
 
 #. module: crm_reveal
 #: model:crm.reveal.seniority,name:crm_reveal.crm_reveal_seniority_3
 msgid "manager"
-msgstr ""
+msgstr "Direttore"
 
 #. module: crm_reveal
 #: model:crm.reveal.role,name:crm_reveal.crm_reveal_role_13
 msgid "marketing"
-msgstr ""
+msgstr "Marketing"
 
 #. module: crm_reveal
 #: model:crm.reveal.role,name:crm_reveal.crm_reveal_role_14
@@ -1903,14 +1904,14 @@ msgstr "real_estate"
 #. module: crm_reveal
 #: model:crm.reveal.role,name:crm_reveal.crm_reveal_role_20
 msgid "recruiting"
-msgstr ""
+msgstr "Assumere"
 
 #. module: crm_reveal
 #: model:crm.reveal.role,name:crm_reveal.crm_reveal_role_21
 msgid "research"
-msgstr ""
+msgstr "Ricerca"
 
 #. module: crm_reveal
 #: model:crm.reveal.role,name:crm_reveal.crm_reveal_role_22
 msgid "sale"
-msgstr ""
+msgstr "Vendita"

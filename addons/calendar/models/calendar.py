@@ -159,7 +159,7 @@ class Attendee(models.Model):
         raise UserError(_('You cannot duplicate a calendar attendee.'))
 
     @api.multi
-    def _send_mail_to_attendees(self, template_xmlid, force_send=False):
+    def _send_mail_to_attendees(self, template_xmlid, force_send=False, force_event_id=None):
         """ Send mail for event invitation to event attendees.
             :param template_xmlid: xml id of the email template to use to send the invitation
             :param force_send: if set to True, the mail(s) will be sent immediately (instead of the next queue processing)
@@ -173,7 +173,7 @@ class Attendee(models.Model):
         invitation_template = self.env.ref(template_xmlid)
 
         # get ics file for all meetings
-        ics_files = self.mapped('event_id')._get_ics_file()
+        ics_files = force_event_id._get_ics_file() if force_event_id else self.mapped('event_id')._get_ics_file()
 
         # prepare rendering context for mail template
         colors = {
@@ -187,7 +187,8 @@ class Attendee(models.Model):
             'color': colors,
             'action_id': self.env['ir.actions.act_window'].search([('view_id', '=', calendar_view.id)], limit=1).id,
             'dbname': self._cr.dbname,
-            'base_url': self.env['ir.config_parameter'].sudo().get_param('web.base.url', default='http://localhost:8069')
+            'base_url': self.env['ir.config_parameter'].sudo().get_param('web.base.url', default='http://localhost:8069'),
+            'force_event_id': force_event_id,
         })
         invitation_template = invitation_template.with_context(rendering_context)
 
@@ -196,7 +197,8 @@ class Attendee(models.Model):
         for attendee in self:
             if attendee.email or attendee.partner_id.email:
                 # FIXME: is ics_file text or bytes?
-                ics_file = ics_files.get(attendee.event_id.id)
+                event_id = force_event_id.id if force_event_id else attendee.event_id.id
+                ics_file = ics_files.get(event_id)
                 mail_id = invitation_template.send_mail(attendee.id, notif_layout='mail.mail_notification_light')
 
                 vals = {}
@@ -445,7 +447,7 @@ class AlarmManager(models.AbstractModel):
 
         result = False
         if alarm.type == 'email':
-            result = meeting.attendee_ids.filtered(lambda r: r.state != 'declined')._send_mail_to_attendees('calendar.calendar_template_meeting_reminder', force_send=True)
+            result = meeting.attendee_ids.filtered(lambda r: r.state != 'declined')._send_mail_to_attendees('calendar.calendar_template_meeting_reminder', force_send=True, force_event_id=meeting)
         return result
 
     def do_notif_reminder(self, alert):
@@ -459,6 +461,7 @@ class AlarmManager(models.AbstractModel):
             delta = delta.seconds + delta.days * 3600 * 24
 
             return {
+                'alarm_id': alarm.id,
                 'event_id': meeting.id,
                 'title': meeting.name,
                 'message': message,
@@ -697,15 +700,15 @@ class Meeting(models.Model):
         lang = self._context.get("lang")
         lang_params = {}
         if lang:
-            record_lang = self.env['res.lang'].search([("code", "=", lang)], limit=1)
+            record_lang = self.env['res.lang'].with_context(active_test=False).search([("code", "=", lang)], limit=1)
             lang_params = {
                 'date_format': record_lang.date_format,
                 'time_format': record_lang.time_format
             }
 
         # formats will be used for str{f,p}time() which do not support unicode in Python 2, coerce to str
-        format_date = pycompat.to_native(lang_params.get("date_format", '%B-%d-%Y'))
-        format_time = pycompat.to_native(lang_params.get("time_format", '%I-%M %p'))
+        format_date = pycompat.to_native(lang_params.get("date_format") or '%B-%d-%Y')
+        format_time = pycompat.to_native(lang_params.get("time_format") or '%I-%M %p')
         return (format_date, format_time)
 
     @api.model
@@ -739,7 +742,7 @@ class Meeting(models.Model):
         if zallday:
             display_time = _("AllDay , %s") % (date_str)
         elif zduration < 24:
-            duration = date + timedelta(hours=zduration)
+            duration = date + timedelta(minutes=round(zduration*60))
             duration_time = to_text(duration.strftime(format_time))
             display_time = _(u"%s at (%s To %s) (%s)") % (
                 date_str,
@@ -964,7 +967,11 @@ class Meeting(models.Model):
         if self.start_datetime:
             start = self.start_datetime
             self.start = self.start_datetime
-            self.stop = start + timedelta(hours=self.duration) - timedelta(seconds=1)
+            # Round the duration (in hours) to the minute to avoid weird situations where the event
+            # stops at 4:19:59, later displayed as 4:19.
+            self.stop = start + timedelta(minutes=round(self.duration * 60))
+            if self.allday:
+                self.stop -= timedelta(seconds=1)
 
     @api.onchange('start_date')
     def _onchange_start_date(self):
@@ -1055,6 +1062,9 @@ class Meeting(models.Model):
                     'email': partner.email,
                     'event_id': meeting.id,
                 }
+
+                if self._context.get('google_internal_event_id', False):
+                    values['google_internal_event_id'] = self._context.get('google_internal_event_id')
 
                 # current user don't have to accept his own meeting
                 if partner == self.env.user.partner_id:

@@ -32,7 +32,7 @@ from decorator import decorator
 from lxml import etree, html
 
 from odoo.models import BaseModel
-from odoo.osv.expression import normalize_domain
+from odoo.osv.expression import normalize_domain, TRUE_LEAF, FALSE_LEAF
 from odoo.tools import pycompat
 from odoo.tools import single_email_re
 from odoo.tools.misc import find_in_path
@@ -711,6 +711,12 @@ class ChromeBrowser():
         _id = self._websocket_send('Network.setCookie', params=params)
         return self._websocket_wait_id(_id)
 
+    def delete_cookie(self, name, **kwargs):
+        params = {kw:kwargs[kw] for kw in kwargs if kw in ['url', 'domain', 'path']}
+        params.update({'name': name})
+        _id = self._websocket_send('Network.deleteCookies', params=params)
+        return self._websocket_wait_id(_id)
+
     def _wait_ready(self, ready_code, timeout=60):
         self._logger.info('Evaluate ready code "%s"', ready_code)
         awaited_result = {'result': {'type': 'boolean', 'value': True}}
@@ -880,6 +886,9 @@ class HttpCase(TransactionCase):
     def authenticate(self, user, password):
         # stay non-authenticated
         if user is None:
+            if self.session:
+                odoo.http.root.session_store.delete(self.session)
+            self.browser.delete_cookie('session_id', domain=HOST)
             return
 
         db = get_db_name()
@@ -1201,6 +1210,10 @@ class Form(object):
                 contexts[fname] = ctx
 
             descr = fvg['fields'].get(fname) or {'type': None}
+            # FIXME: better widgets support
+            # NOTE: selection breaks because of m2o widget=selection
+            if f.get('widget') in ['many2many']:
+                descr['type'] = f.get('widget')
             if level and descr['type'] == 'one2many':
                 self._o2m_set_edition_view(descr, f, level)
 
@@ -1280,14 +1293,37 @@ class Form(object):
                 e1 = stack.pop()
                 e2 = stack.pop()
                 stack.append(e1 or e2)
-            elif isinstance(it, list):
+            elif isinstance(it, tuple):
+                if it == TRUE_LEAF:
+                    stack.append(True)
+                    continue
+                elif it == FALSE_LEAF:
+                    stack.append(False)
+                    continue
                 f, op, val = it
                 # hack-ish handling of parent.<field> modifiers
                 f, n = re.subn(r'^parent\.', '', f, 1)
-                field_val = (vals['•parent•'] if n else vals)[f]
+                if n:
+                    field_val = vals['•parent•'][f]
+                else:
+                    field_val = vals[f]
+                    # apparent artefact of JS data representation: m2m field
+                    # values are assimilated to lists of ids?
+                    # FIXME: SSF should do that internally, but the requirement
+                    #        of recursively post-processing to generate lists of
+                    #        commands on save (e.g. m2m inside an o2m) means the
+                    #        data model needs proper redesign
+                    # we're looking up the "current view" so bits might be
+                    # missing when processing o2ms in the parent (see
+                    # values_to_save:1450 or so)
+                    f_ = self._view['fields'].get(f, {'type': None})
+                    if f_['type'] == 'many2many':
+                        # field value should be [(6, _, ids)], we want just the ids
+                        field_val = field_val[0][2] if field_val else []
+
                 stack.append(self._OPS[op](field_val, val))
             else:
-                raise ValueError("Unknown domain element %s" % it)
+                raise ValueError("Unknown domain element %s" % [it])
         [result] = stack
         return result
     _OPS = {

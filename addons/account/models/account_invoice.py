@@ -601,7 +601,14 @@ class AccountInvoice(models.Model):
     def _get_partner_bank_id(self, company_id):
         company = self.env['res.company'].browse(company_id)
         if company.partner_id:
-            return self.env['res.partner.bank'].search([('partner_id', '=', company.partner_id.id)], limit=1)
+            bank = self.env['res.partner.bank'].search([
+                ('partner_id', '=', company.partner_id.id), ('company_id', '=', company.id)
+            ], limit=1)
+            if not bank:
+                bank = self.env['res.partner.bank'].search([
+                    ('partner_id', '=', company.partner_id.id), ('company_id', '=', False)
+                ], limit=1)
+            return bank
 
     @api.model
     def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
@@ -839,7 +846,7 @@ class AccountInvoice(models.Model):
                 payment_term_id = p.property_payment_term_id.id
 
             delivery_partner_id = self.get_delivery_partner_id()
-            fiscal_position = self.env['account.fiscal.position'].get_fiscal_position(self.partner_id.id, delivery_id=delivery_partner_id)
+            fiscal_position = p.env['account.fiscal.position'].get_fiscal_position(self.partner_id.id, delivery_id=delivery_partner_id)
 
             # If partner has no warning, check its company
             if p.invoice_warn == 'no-message' and p.parent_id:
@@ -897,7 +904,7 @@ class AccountInvoice(models.Model):
         elif self.date_due and (date_invoice > self.date_due):
             self.date_due = date_invoice
 
-    @api.onchange('cash_rounding_id', 'invoice_line_ids', 'tax_line_ids')
+    @api.onchange('cash_rounding_id', 'invoice_line_ids', 'tax_line_ids', 'amount_total')
     def _onchange_cash_rounding(self):
         # Drop previous cash rounding lines
         lines_to_remove = self.invoice_line_ids.filtered(lambda l: l.is_rounding_line)
@@ -1183,13 +1190,13 @@ class AccountInvoice(models.Model):
         done_taxes = []
         # loop the invoice.tax.line in reversal sequence
         for tax_line in sorted(self.tax_line_ids, key=lambda x: -x.sequence):
-            if tax_line.amount_total:
-                tax = tax_line.tax_id
-                if tax.amount_type == "group":
-                    for child_tax in tax.children_tax_ids:
-                        done_taxes.append(child_tax.id)
+            tax = tax_line.tax_id
+            if tax.amount_type == "group":
+                for child_tax in tax.children_tax_ids:
+                    done_taxes.append(child_tax.id)
 
-                analytic_tag_ids = [(4, analytic_tag.id, None) for analytic_tag in tax_line.analytic_tag_ids]
+            analytic_tag_ids = [(4, analytic_tag.id, None) for analytic_tag in tax_line.analytic_tag_ids]
+            if tax_line.amount_total:
                 res.append({
                     'invoice_tax_line_id': tax_line.id,
                     'tax_line_id': tax_line.tax_id.id,
@@ -1202,9 +1209,9 @@ class AccountInvoice(models.Model):
                     'account_analytic_id': tax_line.account_analytic_id.id,
                     'analytic_tag_ids': analytic_tag_ids,
                     'invoice_id': self.id,
-                    'tax_ids': [(6, 0, list(done_taxes))] if tax_line.tax_id.include_base_amount else []
+                    'tax_ids': [(6, 0, list(done_taxes))] if done_taxes and tax_line.tax_id.include_base_amount else []
                 })
-                done_taxes.append(tax.id)
+            done_taxes.append(tax.id)
         return res
 
     def inv_line_characteristic_hashcode(self, invoice_line):

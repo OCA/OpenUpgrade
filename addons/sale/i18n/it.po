@@ -17,7 +17,7 @@
 # David Minneci <david@numeko.it>, 2018
 # Martin Trigaux, 2018
 # Manuela Feliciani <mfeliciani@alice.it>, 2018
-# Lorenzo Battistini <lorenzo.battistini@agilebg.com>, 2019
+# Lorenzo Battistini <lb@takobi.online>, 2019
 # Léonie Bouchat <lbo@odoo.com>, 2019
 # Paolo Valier, 2019
 # Mario Riva <mario.riva@gmail.com>, 2019
@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-08 13:35+0000\n"
+"POT-Creation-Date: 2019-11-14 07:34+0000\n"
 "PO-Revision-Date: 2018-08-24 09:24+0000\n"
 "Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2019\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
@@ -402,7 +402,7 @@ msgstr "<strong>Data preventivo:</strong>"
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.report_saleorder_document
 msgid "<strong>Salesperson:</strong>"
-msgstr "<strong>Commerciale:</strong>"
+msgstr "<strong>Addetto vendite:</strong>"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.report_invoice_document_inherit_sale
@@ -469,7 +469,7 @@ msgstr "Deve essere specificato un registro per il sistema %s."
 #: code:addons/sale/models/sale.py:804
 #, python-format
 msgid "A payment acquirer is required to create a transaction."
-msgstr "Per creare una transazione è necessario un sistema di pagamento."
+msgstr "Per creare una transazione è richiesto un sistema di pagamento."
 
 #. module: sale
 #: selection:res.config.settings,sale_pricelist_setting:0
@@ -563,7 +563,7 @@ msgstr "Conto utilizzato per i versamenti"
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order__message_needaction
 msgid "Action Needed"
-msgstr "Azione Necessaria"
+msgstr "Azione richiesta"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order__activity_ids
@@ -643,7 +643,6 @@ msgstr "Ti consente di inviare una fattura Pro-Forma."
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.report_saleorder_document
-#: model_terms:ir.ui.view,arch_db:sale.sale_order_portal_content
 msgid "Amount"
 msgstr "Importo"
 
@@ -651,6 +650,12 @@ msgstr "Importo"
 #: model:ir.model.fields,field_description:sale.field_sale_order__amount_undiscounted
 msgid "Amount Before Discount"
 msgstr "Importo non scontato"
+
+#. module: sale
+#: code:addons/sale/models/payment.py:90
+#, python-format
+msgid "Amount Mismatch (%s)"
+msgstr "Importo non corrispondente (%s)"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_crm_team__quotations_amount
@@ -726,7 +731,7 @@ msgstr "Attributo"
 #. module: sale
 #: model:ir.model,name:sale.model_product_attribute_value
 msgid "Attribute Value"
-msgstr "Valore dell'attributo"
+msgstr "Valore attributo"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.res_config_settings_view_form
@@ -939,7 +944,7 @@ msgstr "Calcola i costi di spedizione degli ordini"
 #. module: sale
 #: model:ir.model,name:sale.model_res_config_settings
 msgid "Config Settings"
-msgstr "Impostazioni configurazione"
+msgstr "Impostazioni di configurazione"
 
 #. module: sale
 #: model:ir.ui.menu,name:sale.menu_sale_config
@@ -1839,7 +1844,7 @@ msgstr "Indirizzo di fatturazione:"
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.sale_order_portal_content
 msgid "Invoicing and Shipping Address"
-msgstr "Indirizzo di fatturazione e di spedizione"
+msgstr "Indirizzo di fatturazione e spedizione"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.report_saleorder_document
@@ -1949,8 +1954,7 @@ msgstr "Attività in ritardo"
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.res_config_settings_view_form
 msgid "Let your customers log in to see their documents"
-msgstr ""
-"Consenti ai tuoi clienti di connettersi per visualizzare i loro documenti. "
+msgstr "Consentire l'accesso ai clienti per visualizzare i loro documenti"
 
 #. module: sale
 #. openerp-web
@@ -2088,7 +2092,7 @@ msgstr "Le mie attività"
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.view_sales_order_filter
 msgid "My Orders"
-msgstr "Ordini"
+msgstr "I miei ordini"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.sale_order_view_search_inherit_quotation
@@ -2126,12 +2130,12 @@ msgstr "Scadenza prossima attività"
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order__activity_summary
 msgid "Next Activity Summary"
-msgstr "Riepilogo attività successiva"
+msgstr "Riepilogo prossima attività"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order__activity_type_id
 msgid "Next Activity Type"
-msgstr "Tipo attività successiva"
+msgstr "Tipologia prossima attività"
 
 #. module: sale
 #: selection:product.template,expense_policy:0
@@ -2387,7 +2391,7 @@ msgstr "Ordine da fatturare"
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.view_order_form
 msgid "Ordered Qty"
-msgstr "Q.tà ordinata"
+msgstr "Quantità ordinata"
 
 #. module: sale
 #: code:addons/sale/models/sale.py:1057
@@ -2449,7 +2453,7 @@ msgstr "Altre informazioni"
 #. module: sale
 #: selection:sale.order,activity_state:0
 msgid "Overdue"
-msgstr "Scaduto"
+msgstr "In ritardo"
 
 #. module: sale
 #: model:ir.actions.report,name:sale.action_report_pro_forma_invoice
@@ -2582,13 +2586,13 @@ msgstr "Flusso"
 #. module: sale
 #: selection:sale.order,activity_state:0
 msgid "Planned"
-msgstr "Pianificato"
+msgstr "Pianificata"
 
 #. module: sale
 #: code:addons/sale/models/sale.py:450
 #, python-format
 msgid "Please define an accounting sales journal for this company."
-msgstr "Definire un registro vendite per questa azienda."
+msgstr "Definire un registro vendite per l'azienda."
 
 #. module: sale
 #: code:addons/sale/models/sale.py:1318
@@ -2973,7 +2977,7 @@ msgstr "Rimuovere"
 #: model:ir.ui.menu,name:sale.menu_sale_report
 #: model_terms:ir.ui.view,arch_db:sale.view_order_form
 msgid "Reporting"
-msgstr "Report"
+msgstr "Rendicontazione"
 
 #. module: sale
 #: model:ir.model.fields,help:sale.field_sale_order__require_signature
@@ -3321,6 +3325,7 @@ msgstr "Invia Fattura PRO-FORMA"
 #: model_terms:ir.ui.view,arch_db:sale.res_config_settings_view_form
 msgid "Send a product-specific email once the invoice is validated"
 msgstr ""
+"Invia una e-mail relativa al prodotto dopo la validazione della fattura"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.sale_onboarding_sample_quotation_step
@@ -3335,7 +3340,7 @@ msgstr "Invio di un preventivo campione."
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.view_order_form
 msgid "Send by Email"
-msgstr "Invia per Email"
+msgstr "Invia con e-mail"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.sale_onboarding_sample_quotation_step
@@ -3569,7 +3574,7 @@ msgstr "Chiave privata Stripe"
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order_line__price_subtotal
 msgid "Subtotal"
-msgstr "Subtotale"
+msgstr "Imponibile"
 
 #. module: sale
 #: model:ir.model.fields,help:sale.field_crm_team__invoiced_target
@@ -3710,6 +3715,14 @@ msgid ""
 msgstr ""
 "Il margine è calcolato come la somma dei prezzi di vendita dei prodotti meno"
 " il costo definito nei loro moduli di dettaglio."
+
+#. module: sale
+#: code:addons/sale/models/payment.py:97
+#, python-format
+msgid ""
+"The order was not confirmed despite response from the acquirer (%s): order "
+"total is %r but acquirer replied with %r."
+msgstr ""
 
 #. module: sale
 #: model:ir.model.fields,help:sale.field_sale_order__reference
@@ -3956,7 +3969,6 @@ msgstr "Totale"
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.report_all_channels_sales_view_pivot
 #: model_terms:ir.ui.view,arch_db:sale.report_saleorder_document
-#: model_terms:ir.ui.view,arch_db:sale.sale_order_portal_content
 msgid "Total Price"
 msgstr "Prezzo totale"
 
@@ -4133,7 +4145,7 @@ msgstr "Valido fino"
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.sale_order_portal_template
 msgid "Validate Order"
-msgstr "Conferma Ordine"
+msgstr "Valida ordine"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order__validity_date

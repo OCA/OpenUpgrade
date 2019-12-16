@@ -198,11 +198,12 @@ def normalize_domain(domain):
         if expected == 0:                   # more than expected, like in [A, B]
             result[0:0] = [AND_OPERATOR]             # put an extra '&' in front
             expected = 1
-        result.append(token)
         if isinstance(token, (list, tuple)):  # domain term
             expected -= 1
+            token = tuple(token)
         else:
             expected += op_arity.get(token, 0) - 1
+        result.append(token)
     assert expected == 0, 'This domain is syntactically not correct: %s' % (domain)
     return result
 
@@ -1010,7 +1011,7 @@ class expression(object):
                         push(create_substitution_leaf(leaf, ('id', 'in', ids2), model))
                     else:
                         subquery = 'SELECT "%s" FROM "%s" WHERE "%s" IN %%s' % (rel_id1, rel_table, rel_id2)
-                        push(create_substitution_leaf(leaf, ('id', 'inselect', (subquery, [tuple(ids2)])), internal=True))
+                        push(create_substitution_leaf(leaf, ('id', 'inselect', (subquery, [tuple(ids2) or (None,)])), internal=True))
 
                 elif right is not False:
                     # determine ids2 in comodel

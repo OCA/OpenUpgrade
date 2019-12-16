@@ -423,13 +423,17 @@ class Product(models.Model):
                 raise UserError(msg)
         return res
 
+    def _is_phantom_bom(self):
+        self.ensure_one()
+        return False
+
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     responsible_id = fields.Many2one(
         'res.users', string='Responsible', default=lambda self: self.env.uid, required=True,
         help="This user will be responsible of the next activities related to logistic operations for this product.")
-    type = fields.Selection(selection_add=[('product', 'Storable Product')])
+    type = fields.Selection(selection_add=[('product', 'Storable Product')], track_visibility='onchange')
     property_stock_production = fields.Many2one(
         'stock.location', "Production Location",
         company_dependent=True, domain=[('usage', 'like', 'production')],
