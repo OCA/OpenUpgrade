@@ -647,7 +647,7 @@ missing in the new release are marked with |del|.
 +--------------------------------------------+-------------------------------------------------+
 |website_theme_install                       | Nothing to do                                   |
 +--------------------------------------------+-------------------------------------------------+
-|website_twitter                             |                                                 |
+|website_twitter                             | Nothing to do                                   |
 +--------------------------------------------+-------------------------------------------------+
 
 .. [#account_asset] 'Account Asset' module is replaced by the Odoo Community Association module
