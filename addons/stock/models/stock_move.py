@@ -301,7 +301,7 @@ class StockMove(models.Model):
         if self.state == 'done':
             self.availability = self.product_qty
         else:
-            total_availability = self.env['stock.quant']._get_available_quantity(self.product_id, self.location_id)
+            total_availability = self.env['stock.quant']._get_available_quantity(self.product_id, self.location_id) if self.product_id else 0.0
             self.availability = min(self.product_qty, total_availability)
 
     def _compute_string_qty_information(self):
@@ -1148,7 +1148,7 @@ class StockMove(models.Model):
         for result_package in moves_todo\
                 .mapped('move_line_ids.result_package_id')\
                 .filtered(lambda p: p.quant_ids and len(p.quant_ids) > 1):
-            if len(result_package.quant_ids.filtered(lambda q: float_is_zero(abs(q.quantity) + abs(q.reserved_quantity), precision_rounding=q.product_uom_id.rounding)).mapped('location_id')) > 1:
+            if len(result_package.quant_ids.filtered(lambda q: not float_is_zero(abs(q.quantity) + abs(q.reserved_quantity), precision_rounding=q.product_uom_id.rounding)).mapped('location_id')) > 1:
                 raise UserError(_('You cannot move the same package content more than once in the same transfer or split the same package into two location.'))
         picking = moves_todo.mapped('picking_id')
         moves_todo.write({'state': 'done', 'date': fields.Datetime.now()})
