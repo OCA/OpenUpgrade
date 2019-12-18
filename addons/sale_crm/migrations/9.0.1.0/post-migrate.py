@@ -18,21 +18,6 @@ def get_sale_order_opportunity_id(env):
          AsIs(openupgrade.get_legacy_name('ref2'))))
 
 
-def get_sale_order_link_id(env, link):
-    openupgrade.logged_query(
-        env.cr, """\
-        UPDATE sale_order so
-        SET %(link)s_id = uc.id
-        FROM utm_%(link)s uc
-        WHERE so.%(legacy)s IS NOT NULL
-            AND so.%(legacy)s = uc.crm_tracking_%(link)s_id""", {
-            'link': AsIs(link),
-            'legacy': AsIs(openupgrade.get_legacy_name('%s_id' % link)),
-        })
-
-
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     get_sale_order_opportunity_id(env)
-    for link in 'campaign', 'medium', 'source':
-        get_sale_order_link_id(env, link)

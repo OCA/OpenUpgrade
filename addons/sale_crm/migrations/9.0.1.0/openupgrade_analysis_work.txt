@@ -8,8 +8,8 @@ sale_crm     / sale.order               / tag_ids (many2many)           : NEW re
 sale_crm     / sale.order               / campaign_id (many2one)        : relation is now 'utm.campaign' ('crm.tracking.campaign')
 sale_crm     / sale.order               / medium_id (many2one)          : relation is now 'utm.medium' ('crm.tracking.medium')
 sale_crm     / sale.order               / source_id (many2one)          : relation is now 'utm.source' ('crm.tracking.source')
-# Done: select link ids from tables migrated in crm module
-sale_crm     / res.users                / target_sales_invoiced (integer): NEW 
+# NOTHING TO DO: Models renamed in base
+sale_crm     / res.users                / target_sales_invoiced (integer): NEW
 # Nothing to do: new field with no logic associated to it, just for reference purposes.
 ---XML records in module 'sale_crm'---
 NEW ir.actions.act_window: crm.crm_lead_opportunities
