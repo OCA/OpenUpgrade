@@ -2,6 +2,7 @@
 # Copyright 2017 Therp BV
 # Copyright 2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+from odoo import _
 from openupgradelib import openupgrade
 
 
@@ -120,7 +121,7 @@ def migrate(env, version):
     # gather non-zero bank statement lines that have journal entries,
     # but no linked payments, meaning they are reconciled, but no
     # payment was created.
-    cr.execute('''
+    openupgrade.logged_query(cr, '''
         select l.id
         from account_bank_statement_line l
         join account_move m
@@ -161,8 +162,8 @@ def migrate(env, version):
             state='reconciled',
             amount=abs(total),
             communication=communication,
-            name=st_line.statement_id.name or
-                _('Bank Statement %s') % st_line.date
+            name=st_line.statement_id.name or _(
+                'Bank Statement %s') % st_line.date
         ))
 
         # link this new payment to the statement line
@@ -171,4 +172,3 @@ def migrate(env, version):
             ('name', '=', st_line.move_name),
         ])
         move.line_ids.write(dict(payment_id=payment.id))
-
