@@ -13,7 +13,7 @@ crm          / crm.activity             / team_id (many2one)            : NEW re
 
 crm          / crm.lead                 / campaign_id (many2one)        : relation is now 'utm.campaign' ('crm.tracking.campaign')
 
-# Data is moved to utm_campaign and ids updated
+# base pre-migration: model renamed
 
 crm          / crm.lead                 / categ_ids (many2many)         : DEL relation: crm.case.categ
 crm          / crm.lead                 / tag_ids (many2many)           : NEW relation: crm.lead.tag
@@ -28,7 +28,7 @@ crm          / crm.lead                 / lost_reason (many2one)        : NEW re
 
 crm          / crm.lead                 / medium_id (many2one)          : relation is now 'utm.medium' ('crm.tracking.medium')
 
-# Data is moved to utm_medium and ids updates
+# base pre-migration: model renamed
 
 crm          / crm.lead                 / message_follower_ids (many2many): not a function anymore
 crm          / crm.lead                 / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
@@ -55,7 +55,7 @@ crm          / crm.lead                 / section_id (many2one)         : was re
 
 crm          / crm.lead                 / source_id (many2one)          : relation is now 'utm.source' ('crm.tracking.source')
 
-# Data is moved to utm_source and ids updated
+# base pre-migration: model renamed
 
 crm          / crm.lead                 / stage_id (many2one)           : relation is now 'crm.stage' ('crm.case.stage')
 

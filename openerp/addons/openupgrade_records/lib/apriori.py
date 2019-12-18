@@ -139,4 +139,7 @@ merged_modules = [
 ]
 
 renamed_models = {
+    "crm.tracking.campaign": "utm.campaign",
+    "crm.tracking.medium": "utm.medium",
+    "crm.tracking.source": "utm.source",
 }
