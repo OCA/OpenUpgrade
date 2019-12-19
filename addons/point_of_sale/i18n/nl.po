@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-14 09:46+0000\n"
+"POT-Creation-Date: 2019-12-05 12:32+0000\n"
 "PO-Revision-Date: 2019-08-26 09:12+0000\n"
 "Last-Translator: Yenthe Van Ginneken <yenthespam@gmail.com>, 2019\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
@@ -497,7 +497,7 @@ msgstr "Sta globale kortingen op orders toe"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config__allowed_pricelist_ids
 msgid "Allowed Pricelists"
-msgstr ""
+msgstr "Toegestane prijslijsten"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_make_payment__amount
@@ -538,6 +538,7 @@ msgid "Another session is already opened for this point of sale."
 msgstr "Er is al een andere sessie geopend voor deze kassa."
 
 #. module: point_of_sale
+#: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_config_search
 msgid "Archived"
 msgstr "Gearchiveerd"
@@ -658,7 +659,6 @@ msgstr "Bankafschriftregel"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:0
 #: code:addons/point_of_sale/static/src/xml/pos.xml:0
 #: model:ir.model.fields,field_description:point_of_sale.field_res_partner__barcode
-#: model:ir.model.fields,field_description:point_of_sale.field_res_users__barcode
 #: model_terms:ir.ui.view,arch_db:point_of_sale.report_userlabel
 #, python-format
 msgid "Barcode"
@@ -2717,7 +2717,7 @@ msgstr "Order"
 #: code:addons/point_of_sale/static/src/js/models.js:0
 #, python-format
 msgid "Order %s"
-msgstr ""
+msgstr "Order %s"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_order.py:0
@@ -3708,7 +3708,7 @@ msgstr "Beperk het aanpassen van prijzen tot managers"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
 msgid "Resume"
-msgstr "CV"
+msgstr "Hervatten"
 
 #. module: point_of_sale
 #. openerp-web
@@ -4489,8 +4489,8 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_order__currency_rate
 msgid ""
-"The rate of the currency to the currency of rate 1 applicable at the date of"
-" the order"
+"The rate of the currency to the currency of rate applicable at the date of "
+"the order"
 msgstr ""
 "De koers van de valuta naar de valuta van tarief 1 van toepassing op de "
 "datum van de bestelling"
@@ -5020,7 +5020,6 @@ msgstr "Gebruik een betaalterminal"
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_res_partner__barcode
-#: model:ir.model.fields,help:point_of_sale.field_res_users__barcode
 msgid "Use a barcode to identify this contact from the Point of Sale."
 msgstr "Gebruik een barcode om dit contact te identificeren vanuit de kassa."
 

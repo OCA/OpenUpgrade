@@ -462,6 +462,8 @@ logic. They are used as elements or sets of elements in form views.
   ``attrs``
     standard dynamic attributes based on record values
 
+  .. note:: Note that ``notebook`` should not be placed within ``group``
+
 ``group``
   used to define column layouts in forms. By default, groups define 2 columns
   and most direct children of groups take a single column. ``field`` direct
@@ -537,9 +539,6 @@ system. Available semantic components are:
       floats_ the field to the corresponding direction
     ``oe_read_only``, ``oe_edit_only``
       only displays the field in the corresponding form mode
-    ``oe_no_button``
-      avoids displaying the navigation button in a
-      :class:`~odoo.fields.Many2one`
     ``oe_avatar``
       for image fields, displays images as "avatar" (square, 90x90 maximum
       size, some image decorations)
