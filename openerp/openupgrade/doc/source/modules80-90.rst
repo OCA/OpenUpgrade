@@ -474,7 +474,7 @@ missing in the new release are marked with |del|.
 +----------------------------------------+------------------------------------------+
 | |del| purchase_analytic_plans          | Moved to OCA [#purchase_analytic_plans]_ |
 +----------------------------------------+------------------------------------------+
-| |del| purchase_double_validation       |                                          |
+| |del| purchase_double_validation       | Done (merged in purchase)                |
 +----------------------------------------+------------------------------------------+
 |purchase_requisition                    | Done                                     |
 +----------------------------------------+------------------------------------------+
