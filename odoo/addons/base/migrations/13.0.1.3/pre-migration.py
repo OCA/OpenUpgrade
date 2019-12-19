@@ -1,6 +1,7 @@
 # Copyright 2020 Andrii Skrypka
 # Copyright 2020 Opener B.V. (stefan@opener.amsterdam)
 # Copyright 2019-2020 Tecnativa - Pedro M. Baeza
+# Copyright 2020 ForgeFlow
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
@@ -447,13 +448,60 @@ xmlid_renames_res_country_state = [
 ]
 
 xmlid_renames_ir_module_category = [
-    ('base.module_category_hr_timesheet', 'base.module_category_operations_timesheets'),
-    ('base.module_category_mass_mailing', 'base.module_category_marketing_email_marketing'),
-    ('base.module_category_manufacturing', 'base.module_category_manufacturing_manufacturing'),
-    ('base.module_category_sales_management', 'base.module_category_sales_sales'),
-    ('base.module_category_project_management', 'base.module_category_operations_project'),
-    ('base.module_category_warehouse_management', 'base.module_category_operations_inventory'),
-    ('base.module_category_website', 'base.module_category_website_website'),
+    ("base.module_category_accounting_and_finance",
+     "base.module_category_accounting_accounting"),
+    ("base.module_category_administration",
+     "base.module_category_administration_administration"),
+    ("base.module_category_crm", "base.module_category_sales_crm"),
+    ("base.module_category_event_management",
+     "base.module_category_marketing_events"),
+    ("base.module_category_helpdesk",
+     "base.module_category_operations_helpdesk"),
+    ("base.module_category_hr_appraisal",
+     "base.module_category_human_resources_appraisals"),
+    ("base.module_category_hr_attendance",
+     "base.module_category_human_resources_attendances"),
+    ("base.module_category_hr_contract",
+     "base.module_category_human_resources_contracts"),
+    ("base.module_category_hr_expense",
+     "base.module_category_accounting_expenses"),
+    ("base.module_category_hr_holidays",
+     "base.module_category_human_resources_time_off"),
+    ("base.module_category_hr_recruitment",
+     "base.module_category_human_resources_recruitment"),
+    ("base.module_category_hr_timesheet",
+     "base.module_category_operations_timesheets"),
+    ("base.module_category_human_resources",
+     "base.module_category_human_resources_employees"),
+    ("base.module_category_manufacturing",
+     "base.module_category_manufacturing_manufacturing"),
+    ("base.module_category_mass_mailing",
+     "base.module_category_marketing_email_marketing"),
+    ("base.module_category_payment_acquirer",
+     "base.module_category_accounting_payment"),
+    ("base.module_category_point_of_sale",
+     "base.module_category_sales_point_of_sale"),
+    ("base.module_category_project_management",
+     "base.module_category_operations_project"),
+    ("base.module_category_purchase_management",
+     "base.module_category_operations_purchase"),
+    ("base.module_category_sales_management",
+     "base.module_category_sales_sales"),
+    ("base.module_category_sign", "base.module_category_sales_sign"),
+    ("base.module_category_stock",
+     "base.module_category_operations_inventory_delivery"),
+    ("base.module_category_survey",
+     "base.module_category_marketing_survey"),
+    ("base.module_category_warehouse_management",
+     "base.module_category_operations_inventory"),
+    ("base.module_category_website",
+     "base.module_category_website_website"),
+    ("fleet.module_fleet_category",
+     "base.module_category_human_resources_fleet"),
+    ("im_livechat.module_category_im_livechat",
+     "base.module_category_website_live_chat"),
+    ("lunch.module_lunch_category",
+     "base.module_category_human_resources_lunch"),
 ]
 
 xmlid_renames_ir_model_access = [
@@ -496,6 +544,27 @@ field_renames = [
      'type', 'evaluation_type'),
 ]
 
+_obsolete_tables = (
+    "account_invoice",
+    "account_invoice_import_wizard",
+    "account_invoice_line",
+    "account_invoice_tax",
+    "account_voucher",
+    "account_voucher_line",
+    "lunch_order_line",
+    "slide_category",
+    "survey_page",
+    "account_analytic_tag_account_invoice_line_rel",
+    "account_analytic_tag_account_invoice_tax_rel",
+    "account_invoice_account_move_line_rel",
+    "account_invoice_import_wizard_ir_attachment_rel",
+    "account_invoice_line_tax",
+    "account_invoice_payment_rel",
+    "sale_order_line_invoice_rel",
+    "summary_dept_rel",
+    "project_task_assign_so_line_rel",
+)
+
 
 def fix_lang_table(cr):
     """Avoid error on normal update process due to changed language codes"""
@@ -505,6 +574,32 @@ def fix_lang_table(cr):
             "UPDATE res_lang SET code=%s WHERE code=%s",
             (new_code, old_code)
         )
+
+
+def remove_invoice_table_relations(env):
+    # for custom modules that have many2many relations to invoice models
+    openupgrade.logged_query(
+        env.cr, """
+        DELETE FROM ir_model_relation imr
+        USING ir_model im
+        WHERE imr.model = im.id AND im.model IN (
+            'account.invoice',
+            'account.invoice.import.wizard',
+            'account.invoice.line',
+            'account.invoice.tax',
+            'account.voucher',
+            'account.voucher.line')""",
+    )
+
+
+def fill_ir_model_data_noupdate(env):
+    """In previous version, true noupdate data by default was saved as null."""
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE ir_model_data
+        SET noupdate = TRUE
+        WHERE noupdate IS NULL"""
+    )
 
 
 def remove_offending_translations(env):
@@ -546,12 +641,23 @@ def switch_noupdate_records(env):
         env,
         "base",
         [
-            "module_category_hidden",
-            "module_category_human_resources",
-            "module_category_localization",
-            "module_category_manufacturing",
-            "module_category_theme",
-            "module_category_website",
+            "module_category_accounting_accounting",
+            "module_category_marketing_events",
+            "module_category_human_resources_attendances",
+            "module_category_human_resources_contracts",
+            "module_category_accounting_expenses",
+            "module_category_human_resources_time_off",
+            "module_category_human_resources_recruitment",
+            "module_category_operations_timesheets",
+            "module_category_marketing_email_marketing",
+            "module_category_operations_project",
+            "module_category_operations_purchase",
+            "module_category_sales_sales",
+            "module_category_marketing_survey",
+            "module_category_operations_inventory",
+            "module_category_human_resources_fleet",
+            "module_category_website_live_chat",
+            "module_category_human_resources_lunch",
         ],
         True,
     )
@@ -598,16 +704,26 @@ def switch_noupdate_records(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.copy_columns(env.cr, column_copies)
-    openupgrade.rename_columns(env.cr, column_renames)
-    openupgrade.rename_fields(env, field_renames, no_deep=True)
+    openupgrade.remove_tables_fks(env.cr, _obsolete_tables)
+    remove_invoice_table_relations(env)
+    # Deactivate the noupdate flag (hardcoded on initial SQL load) for allowing
+    # to update changed data on this group.
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE ir_model_data SET noupdate=False
+        WHERE module='base' AND name='group_user'""",
+    )
     openupgrade.update_module_names(
         env.cr, apriori.renamed_modules.items())
     openupgrade.update_module_names(
         env.cr, apriori.merged_modules.items(), merge_modules=True)
+    openupgrade.copy_columns(env.cr, column_copies)
+    openupgrade.rename_columns(env.cr, column_renames)
+    openupgrade.rename_fields(env, field_renames, no_deep=True)
     openupgrade.rename_xmlids(env.cr, xmlid_renames_res_country_state)
     openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_module_category)
     openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_model_access)
+    fill_ir_model_data_noupdate(env)
     fix_lang_table(env.cr)
     remove_offending_translations(env)
     handle_web_favicon_module(env)

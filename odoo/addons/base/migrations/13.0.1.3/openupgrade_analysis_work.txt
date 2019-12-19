@@ -187,11 +187,23 @@ DEL ir.model.access: base.access_ir_attachment_all
 DEL ir.model.access: base.access_ir_attachment_portal
 DEL ir.model.access: decimal_precision.access_decimal_precision_all
 DEL ir.model.access: decimal_precision.access_decimal_precision_test_all
+# NOTHING TO DO: noupdate=0 records
+
+ir.module.category: base.module_category_hidden (noupdate) (noupdate switched)
+ir.module.category: base.module_category_human_resources (noupdate) (noupdate switched)
+ir.module.category: base.module_category_localization (noupdate) (noupdate switched)
+ir.module.category: base.module_category_manufacturing (noupdate) (noupdate switched)
+ir.module.category: base.module_category_theme (noupdate) (noupdate switched)
+ir.module.category: base.module_category_website (noupdate) (noupdate switched)
 NEW ir.module.category: base.module_category_administration_administration
 NEW ir.module.category: base.module_category_human_resources_appraisals
 NEW ir.module.category: base.module_category_operations_helpdesk
 NEW ir.module.category: base.module_category_payroll_localization
 NEW ir.module.category: base.module_category_sales_sign
+NEW ir.module.category: base.module_category_accounting_accounting (noupdate)
+NEW ir.module.category: base.module_category_marketing (noupdate)
+NEW ir.module.category: base.module_category_operations (noupdate)
+NEW ir.module.category: base.module_category_sales (noupdate)
 DEL ir.module.category: base.module_category_account_voucher
 DEL ir.module.category: base.module_category_accounting_and_finance
 DEL ir.module.category: base.module_category_event_management
@@ -214,6 +226,9 @@ DEL ir.module.category: base.module_category_sales_management
 DEL ir.module.category: base.module_category_sign
 DEL ir.module.category: base.module_category_specific_industry_applications
 DEL ir.module.category: base.module_category_survey
+DEL ir.module.category: base.module_category_warehouse_management
+# DONE: pre-migration: handled renamed categories and switch noupdate value when needed
+
 NEW ir.ui.menu: base.ir_model_model_fields_selection
 NEW ir.ui.menu: base.menu_apps
 NEW ir.ui.menu: base.menu_config
@@ -241,7 +256,6 @@ DEL ir.ui.view: base.view_company_report_form
 DEL ir.ui.view: base.view_company_report_form_with_print
 DEL ir.ui.view: decimal_precision.view_decimal_precision_form
 DEL ir.ui.view: decimal_precision.view_decimal_precision_tree
-DEL ir.module.category: base.module_category_warehouse_management
 NEW res.country.state: base.state_cl_01
 NEW res.country.state: base.state_cl_02
 NEW res.country.state: base.state_cl_03
@@ -327,20 +341,8 @@ DEL ir.ui.menu: decimal_precision.menu_decimal_precision_form [renamed to base m
 # NOTHING TO DO: Module decimal_precision is merged into base already
 
 NEW ir.attachment: base.main_company_scss (noupdate)
-NEW ir.module.category: base.module_category_accounting_accounting (noupdate)
-NEW ir.module.category: base.module_category_marketing (noupdate)
-NEW ir.module.category: base.module_category_operations (noupdate)
-NEW ir.module.category: base.module_category_sales (noupdate)
 NEW ir.module.module: base.module_payment_sepa_direct_debit (noupdate)
 # NOTHING TO DO: New noupdate=1 records
-
-ir.module.category: base.module_category_hidden (noupdate) (noupdate switched)
-ir.module.category: base.module_category_human_resources (noupdate) (noupdate switched)
-ir.module.category: base.module_category_localization (noupdate) (noupdate switched)
-ir.module.category: base.module_category_manufacturing (noupdate) (noupdate switched)
-ir.module.category: base.module_category_theme (noupdate) (noupdate switched)
-ir.module.category: base.module_category_website (noupdate) (noupdate switched)
-# DONE: pre-migration: Switch noupdate value
 
 DEL ir.module.module: base.module_website_form_editor (noupdate)
 DEL ir.rule: base.res_partner_rule (noupdate)

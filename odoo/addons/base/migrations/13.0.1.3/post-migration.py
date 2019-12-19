@@ -1,6 +1,7 @@
 # Copyright 2020 Andrii Skrypka
 # Copyright 2020 Opener B.V. (stefan@opener.amsterdam)
 # Copyright 2019-2020 Tecnativa - Pedro M. Baeza
+# Copyright 2020 ForgeFlow
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import pytz
 from psycopg2 import sql
@@ -103,3 +104,9 @@ def migrate(env, version):
         env.cr, 'base', 'migrations/13.0.1.3/noupdate_changes.xml')
     fill_ir_attachment_legacy_name(env)
     delete_noupdate_records(env)
+    # Activate back the noupdate flag on the group
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE ir_model_data SET noupdate=True
+        WHERE  module='base' AND name='group_user'""",
+    )
