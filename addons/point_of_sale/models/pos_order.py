@@ -139,7 +139,6 @@ class PosOrder(models.Model):
 
         if pos_order.to_invoice and pos_order.state == 'paid':
             pos_order.action_pos_order_invoice()
-            pos_order.account_move.sudo().with_context(force_company=self.env.user.company_id.id).post()
 
         return pos_order.id
 
@@ -189,6 +188,7 @@ class PosOrder(models.Model):
             'price_unit': order_line.price_unit,
             'name': order_line.product_id.display_name,
             'tax_ids': [(6, 0, order_line.tax_ids.ids)],
+            'product_uom_id': order_line.product_uom_id.id,
         }
 
     def _get_pos_anglo_saxon_price_unit(self, product, partner_id, quantity):
@@ -373,7 +373,7 @@ class PosOrder(models.Model):
                 # considering partner's sale pricelist's currency
                 'currency_id': order.pricelist_id.currency_id.id,
                 'invoice_user_id': order.user_id.id,
-                'invoice_date': fields.Date.today(),
+                'invoice_date': order.date_order.date(),
                 'fiscal_position_id': order.fiscal_position_id.id,
                 'invoice_line_ids': [(0, None, order._prepare_invoice_line(line)) for line in order.lines],
             }
@@ -383,6 +383,7 @@ class PosOrder(models.Model):
             message = _("This invoice has been created from the point of sale session: <a href=# data-oe-model=pos.order data-oe-id=%d>%s</a>") % (order.id, order.name)
             new_move.message_post(body=message)
             order.write({'account_move': new_move.id, 'state': 'invoiced'})
+            new_move.sudo().with_context(force_company=order.company_id.id).post()
             moves += new_move
 
         if not moves:
@@ -422,8 +423,9 @@ class PosOrder(models.Model):
         for order in orders:
             existing_order = False
             if 'server_id' in order['data']:
-                existing_order = self.env['pos.order'].search([('id', '=', order['data']['server_id'])], limit=1)
-            order_ids.append(self._process_order(order, draft, existing_order))
+                existing_order = self.env['pos.order'].search(['|', ('id', '=', order['data']['server_id']), ('pos_reference', '=', order['data']['name'])], limit=1)
+            if (existing_order and existing_order.state == 'draft') or not existing_order:
+                order_ids.append(self._process_order(order, draft, existing_order))
 
         return self.env['pos.order'].search_read(domain = [('id', 'in', order_ids)], fields = ['id', 'pos_reference'])
 
@@ -604,12 +606,16 @@ class PosOrder(models.Model):
                 'amount_paid': 0,
             })
             for line in order.lines:
+                PosOrderLineLot = self.env['pos.pack.operation.lot']
+                for pack_lot in line.pack_lot_ids:
+                    PosOrderLineLot += pack_lot.copy()
                 line.copy({
                     'name': line.name + _(' REFUND'),
                     'qty': -line.qty,
                     'order_id': refund_order.id,
                     'price_subtotal': -line.price_subtotal,
                     'price_subtotal_incl': -line.price_subtotal_incl,
+                    'pack_lot_ids': PosOrderLineLot,
                     })
             refund_orders |= refund_order
 
@@ -854,7 +860,7 @@ class ReportSaleDetails(models.AbstractModel):
         domain = [('state', 'in', ['paid','invoiced','done'])]
 
         if (session_ids):
-            AND([domain, [('session_id', 'in', session_ids)]])
+            domain = AND([domain, [('session_id', 'in', session_ids.ids)]])
         else:
             if date_start:
                 date_start = fields.Datetime.from_string(date_start)
@@ -873,13 +879,13 @@ class ReportSaleDetails(models.AbstractModel):
                 # stop by default today 23:59:59
                 date_stop = date_start + timedelta(days=1, seconds=-1)
 
-            AND([domain,
+            domain = AND([domain,
                 [('date_order', '>=', fields.Datetime.to_string(date_start)),
                 ('date_order', '<=', fields.Datetime.to_string(date_stop))]
             ])
 
             if config_ids:
-                AND([domain, [('config_id', 'in', config_ids)]])
+                domain = AND([domain, [('config_id', 'in', config_ids.ids)]])
 
         orders = self.env['pos.order'].search(domain)
 
@@ -911,18 +917,16 @@ class ReportSaleDetails(models.AbstractModel):
                     taxes.setdefault(0, {'name': _('No Taxes'), 'tax_amount':0.0, 'base_amount':0.0})
                     taxes[0]['base_amount'] += line.price_subtotal_incl
 
-        st_line_ids = self.env["account.bank.statement.line"].search([('pos_statement_id', 'in', orders.ids)]).ids
-        if st_line_ids:
+        payment_ids = self.env["pos.payment"].search([('pos_order_id', 'in', orders.ids)]).ids
+        if payment_ids:
             self.env.cr.execute("""
-                SELECT aj.name, sum(amount) total
-                FROM account_bank_statement_line AS absl,
-                     account_bank_statement AS abs,
-                     account_journal AS aj
-                WHERE absl.statement_id = abs.id
-                    AND abs.journal_id = aj.id
-                    AND absl.id IN %s
-                GROUP BY aj.name
-            """, (tuple(st_line_ids),))
+                SELECT method.name, sum(amount) total
+                FROM pos_payment AS payment,
+                     pos_payment_method AS method
+                WHERE payment.payment_method_id = method.id
+                    AND payment.id IN %s
+                GROUP BY method.name
+            """, (tuple(payment_ids),))
             payments = self.env.cr.dictfetchall()
         else:
             payments = []

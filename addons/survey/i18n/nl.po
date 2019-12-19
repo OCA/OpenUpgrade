@@ -8,16 +8,16 @@
 # Maxim Vandenbroucke <mxv@odoo.com>, 2019
 # Charles Vervaecke <cvk@odoo.com>, 2019
 # Martin Trigaux, 2019
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2019
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2019
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 07:13+0000\n"
+"POT-Creation-Date: 2019-12-05 12:34+0000\n"
 "PO-Revision-Date: 2019-08-26 09:14+0000\n"
-"Last-Translator: Yenthe Van Ginneken <yenthespam@gmail.com>, 2019\n"
+"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2019\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -639,6 +639,7 @@ msgid "Appears in"
 msgstr "Komt voor in"
 
 #. module: survey
+#: model_terms:ir.ui.view,arch_db:survey.survey_form
 #: model_terms:ir.ui.view,arch_db:survey.survey_survey_view_search
 msgid "Archived"
 msgstr "Gearchiveerd"
@@ -1209,11 +1210,6 @@ msgid "Except Test Entries"
 msgstr ""
 
 #. module: survey
-#: model_terms:ir.ui.view,arch_db:survey.survey_survey_view_search
-msgid "Exception Activities"
-msgstr "Uitzondering activiteiten"
-
-#. module: survey
 #: model:ir.model.fields,field_description:survey.field_survey_invite__existing_partner_ids
 msgid "Existing Partner"
 msgstr "Bestaande relatie"
@@ -1466,7 +1462,7 @@ msgstr "Invoer moet een e-mail zijn"
 #: code:addons/survey/models/survey_survey.py:0
 #, python-format
 msgid "Invalid performance computation"
-msgstr "Foutieve performantieberekening"
+msgstr "Foutieve prestatieberekening"
 
 #. module: survey
 #: model:ir.model.fields.selection,name:survey.selection__survey_user_input__input_type__link
@@ -1960,7 +1956,7 @@ msgstr "Uitgaande mailserver"
 #: code:addons/survey/static/src/js/survey_result.js:0
 #, python-format
 msgid "Overall Performance %.2f%s"
-msgstr "Algemene performantie %.2f%s"
+msgstr "Algemene prestatie %.2f%s"
 
 #. module: survey
 #: model:survey.label,value:survey.survey_feedback_p2_q1_sug5

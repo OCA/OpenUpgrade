@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-18 09:46+0000\n"
+"POT-Creation-Date: 2019-12-05 12:32+0000\n"
 "PO-Revision-Date: 2019-08-26 09:12+0000\n"
 "Last-Translator: ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
@@ -140,17 +140,17 @@ msgstr "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.workcenter_line_kanban
 msgid "<i class=\"fa fa-pause\" role=\"img\" aria-label=\"Pause\" title=\"Pause\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-pause\" role=\"img\" aria-label=\"Pause\" title=\"Pause\"/>"
 
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.workcenter_line_kanban
 msgid "<i class=\"fa fa-play\" role=\"img\" aria-label=\"Run\" title=\"Run\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-play\" role=\"img\" aria-label=\"Run\" title=\"Run\"/>"
 
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.workcenter_line_kanban
 msgid "<i class=\"fa fa-stop\" role=\"img\" aria-label=\"Stop\" title=\"Stop\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-stop\" role=\"img\" aria-label=\"Stop\" title=\"Stop\"/>"
 
 #. module: mrp
 #: code:addons/mrp/models/mrp_bom.py:0
@@ -406,7 +406,7 @@ msgstr "פעילויות"
 #: model:ir.model.fields,field_description:mrp.field_mrp_unbuild__activity_exception_decoration
 #: model:ir.model.fields,field_description:mrp.field_mrp_workorder__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "עיטור פעילות חריגה"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_production__activity_state
@@ -450,7 +450,7 @@ msgstr ""
 #. module: mrp
 #: model:res.groups,name:mrp.group_mrp_manager
 msgid "Administrator"
-msgstr ""
+msgstr "מנהל"
 
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.stock_production_type_kanban
@@ -508,7 +508,7 @@ msgstr ""
 msgid ""
 "An unbuild order is used to break down a finished product into its "
 "components."
-msgstr ""
+msgstr "הוראת פירוק משמשת לפירוק מוצר מוגמר לרכיביו."
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_bom_line__bom_product_template_attribute_value_ids
@@ -521,7 +521,10 @@ msgid "Approve"
 msgstr "אשר"
 
 #. module: mrp
+#: model_terms:ir.ui.view,arch_db:mrp.mrp_bom_form_view
+#: model_terms:ir.ui.view,arch_db:mrp.mrp_routing_form_view
 #: model_terms:ir.ui.view,arch_db:mrp.mrp_routing_search_view
+#: model_terms:ir.ui.view,arch_db:mrp.mrp_workcenter_view
 #: model_terms:ir.ui.view,arch_db:mrp.view_mrp_bom_filter
 #: model_terms:ir.ui.view,arch_db:mrp.view_mrp_workcenter_search
 msgid "Archived"
@@ -612,10 +615,9 @@ msgstr "דו\"ח מבנה עץ המוצר"
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_bom_line__child_line_ids
 msgid "BOM lines of the referred bom"
-msgstr ""
+msgstr "שורות עץ מוצר של עץ המוצר המוזכר"
 
 #. module: mrp
-#: model_terms:ir.ui.view,arch_db:mrp.label_production_view_pdf
 #: model_terms:ir.ui.view,arch_db:mrp.report_mrporder
 msgid "Barcode"
 msgstr "ברקוד"
@@ -888,7 +890,7 @@ msgstr "בדוק זמינות"
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_document__checksum
 msgid "Checksum/SHA1"
-msgstr ""
+msgstr "Checksum/SHA1"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_workcenter__code
@@ -1020,7 +1022,7 @@ msgstr "קווי פירוק נצרכים"
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_stock_move__consume_unbuild_id
 msgid "Consumed Disassembly Order"
-msgstr ""
+msgstr "הוראת פירוק נצרכה"
 
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.report_mrporder
@@ -1108,7 +1110,7 @@ msgstr "צור ביצועי הזמנות עבודה חדשות"
 #. module: mrp
 #: model_terms:ir.actions.act_window,help:mrp.mrp_unbuild
 msgid "Create an unbuild order"
-msgstr ""
+msgstr "צור הוראת פירוק"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_stock_move__created_production_id
@@ -1464,7 +1466,7 @@ msgstr "מספר סידורי / אצווה גמורים"
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_stock_move__finished_lots_exist
 msgid "Finished Lots Exist"
-msgstr ""
+msgstr "אצוות מוכנות קיימות"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_workorder__move_finished_ids
@@ -1671,7 +1673,7 @@ msgstr "סמל"
 #: model:ir.model.fields,help:mrp.field_mrp_unbuild__activity_exception_icon
 #: model:ir.model.fields,help:mrp.field_mrp_workorder__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "סמל לציין פעילות חריגה."
 
 #. module: mrp
 #: model:ir.model.fields,help:mrp.field_mrp_bom__product_id
@@ -2452,7 +2454,7 @@ msgstr "מספר הוראות ייצור לביצוע"
 #: model:ir.model.fields,field_description:mrp.field_mrp_unbuild__message_has_error_counter
 #: model:ir.model.fields,field_description:mrp.field_mrp_workorder__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "מספר השגיאות"
 
 #. module: mrp
 #: model:ir.model.fields,help:mrp.field_mrp_bom__message_needaction_counter
@@ -2852,7 +2854,7 @@ msgstr "תהליך פעולות ספציפיים בתחנות העבודה על 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_unbuild__produce_line_ids
 msgid "Processed Disassembly Lines"
-msgstr ""
+msgstr "שורות פירוק מעובדות"
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_procurement_group
@@ -3007,7 +3009,7 @@ msgstr ""
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_stock_move__production_id
 msgid "Production Order for finished products"
-msgstr ""
+msgstr "הזמנת ייצור למוצרים מוגמרים"
 
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.mrp_production_workorder_form_view_inherit
@@ -3023,7 +3025,7 @@ msgstr "ייצור התחיל מאוחר"
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.view_production_gantt
 msgid "Productions"
-msgstr ""
+msgstr "ייצור"
 
 #. module: mrp
 #: model:ir.model.fields.selection,name:mrp.selection__mrp_workcenter_productivity_loss_type__loss_type__productive
@@ -3159,7 +3161,6 @@ msgstr "כמות ליצור "
 #. module: mrp
 #. openerp-web
 #: code:addons/mrp/static/src/xml/mrp.xml:0
-#: model_terms:ir.ui.view,arch_db:mrp.label_production_view_pdf
 #, python-format
 msgid "Quantity:"
 msgstr "כמות:"
@@ -3199,6 +3200,8 @@ msgid ""
 "Recursion error!  A product with a Bill of Material should not have itself "
 "in its BoM or child BoMs!"
 msgstr ""
+"שגיאת רקורסיה! מוצר עם עץ מוצר לא צריך להיות בתוך עץ המוצר שלו עצמו או בעץ "
+"המוצר של הבן שלו!"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_bom__code
@@ -3217,7 +3220,7 @@ msgstr "מזהה חייב להיות ייחודית לכל חברה!"
 #: model:ir.model.fields,help:mrp.field_mrp_production__origin
 msgid ""
 "Reference of the document that generated this production order request."
-msgstr ""
+msgstr "מזהה למסמך שייצר הוראת ייצור זו."
 
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.report_mrp_bom
@@ -3337,6 +3340,8 @@ msgid ""
 "                done to realize a Manufacturing Order. Each operation from\n"
 "                a Routing is done at a specific Work Center and has a specific duration."
 msgstr ""
+"ניתובים מגדירים את הפעולות הרצופות שצריכות להתבצע  כדי לממש הוראת ייצור.\n"
+"כל פעולה מניתוב מתבצעת בתחנת עבודה ספציפית ומשך זמן מסוים."
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_bom__message_has_sms_error
@@ -3344,7 +3349,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp.field_mrp_unbuild__message_has_sms_error
 #: model:ir.model.fields,field_description:mrp.field_mrp_workorder__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "שגיאת שליחת SMS"
 
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.view_mrp_product_produce_wizard
@@ -3489,7 +3494,7 @@ msgstr "הגדרות"
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_production__show_final_lots
 msgid "Show Final Lots"
-msgstr ""
+msgstr "הצג אצוות סופיות"
 
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.mrp_unbuild_search_view
@@ -4190,7 +4195,7 @@ msgstr "סוג הפעולה"
 #: model:ir.model.fields,help:mrp.field_mrp_unbuild__activity_exception_decoration
 #: model:ir.model.fields,help:mrp.field_mrp_workorder__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "סוג פעילות חריגה ברשומה."
 
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.mrp_production_workorder_form_view_inherit
@@ -4213,7 +4218,7 @@ msgstr "הוראות ניפוק"
 #: code:addons/mrp/models/mrp_unbuild.py:0
 #, python-format
 msgid "Unbuild Order product quantity has to be strictly positive."
-msgstr ""
+msgstr "כמות המוצר בהוראת הפירוק צריכה להיות חיובית."
 
 #. module: mrp
 #: model:ir.actions.act_window,name:mrp.mrp_unbuild
@@ -4434,7 +4439,7 @@ msgstr "מחסן"
 #. module: mrp
 #: model:ir.model,name:mrp.model_stock_warn_insufficient_qty_unbuild
 msgid "Warn Insufficient Unbuild Quantity"
-msgstr ""
+msgstr "הזהר כאשר אין כמות מספקת לפירוק"
 
 #. module: mrp
 #: code:addons/mrp/models/mrp_abstract_workorder.py:0

@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 07:13+0000\n"
+"POT-Creation-Date: 2019-11-25 15:03+0000\n"
 "PO-Revision-Date: 2019-08-26 09:13+0000\n"
 "Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2019\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
@@ -729,7 +729,7 @@ msgstr "Sectie toevoegen"
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.res_config_settings_view_form
 msgid "Add several variants to an order from a grid"
-msgstr "Voeg meerdere varianten toe aan de verkooporder vanuit een grid"
+msgstr "Voeg meerdere varianten toe aan de verkooporder vanuit een matrix"
 
 #. module: sale
 #: model:res.groups,name:sale.group_delivery_invoice_address
@@ -766,6 +766,12 @@ msgstr "Bedrag"
 #: model:ir.model.fields,field_description:sale.field_sale_order__amount_undiscounted
 msgid "Amount Before Discount"
 msgstr "Totaal voor korting"
+
+#. module: sale
+#: code:addons/sale/models/payment.py:0
+#, python-format
+msgid "Amount Mismatch (%s)"
+msgstr "Verschil bedrag (%s)"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_crm_team__quotations_amount
@@ -3752,7 +3758,7 @@ msgstr ""
 " is."
 
 #. module: sale
-#: code:addons/sale/models/payment.py:97
+#: code:addons/sale/models/payment.py:0
 #, python-format
 msgid ""
 "The order was not confirmed despite response from the acquirer (%s): order "

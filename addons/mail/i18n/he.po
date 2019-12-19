@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 07:12+0000\n"
+"POT-Creation-Date: 2019-12-05 12:33+0000\n"
 "PO-Revision-Date: 2019-08-26 09:11+0000\n"
 "Last-Translator: ZVI BLONDER <ZVIBLONDER@gmail.com>, 2019\n"
 "Language-Team: Hebrew (https://www.transifex.com/odoo/teams/41243/he/)\n"
@@ -501,7 +501,7 @@ msgstr "פעילות"
 #: model:ir.model.fields,field_description:mail.field_res_partner__activity_exception_decoration
 #: model:ir.model.fields,field_description:mail.field_res_users__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "עיטור פעילות חריגה"
 
 #. module: mail
 #: model:ir.model,name:mail.model_mail_activity_mixin
@@ -778,6 +778,7 @@ msgid "Apply"
 msgstr "החל"
 
 #. module: mail
+#: model_terms:ir.ui.view,arch_db:mail.mail_activity_type_view_form
 #: model_terms:ir.ui.view,arch_db:mail.mail_activity_type_view_search
 #: model_terms:ir.ui.view,arch_db:mail.mail_blacklist_view_search
 msgid "Archived"
@@ -2018,7 +2019,7 @@ msgstr ""
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_thread_cc__email_cc
 msgid "Email cc"
-msgstr ""
+msgstr "עותק דוא\"ל"
 
 #. module: mail
 #: model:ir.model,name:mail.model_mail_compose_message
@@ -2125,11 +2126,6 @@ msgstr "כולם"
 #: model:mail.activity.type,name:mail.mail_activity_data_warning
 msgid "Exception"
 msgstr "חריגה"
-
-#. module: mail
-#: model_terms:ir.ui.view,arch_db:mail.res_partner_view_search_inherit_mail
-msgid "Exception Activities"
-msgstr ""
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.view_mail_search
@@ -2536,7 +2532,7 @@ msgstr "סמל"
 #: model:ir.model.fields,help:mail.field_res_partner__activity_exception_icon
 #: model:ir.model.fields,help:mail.field_res_users__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "סמל לציין פעילות חריגה."
 
 #. module: mail
 #: model:ir.model.fields,help:mail.field_mail_followers__res_id
@@ -3002,7 +2998,7 @@ msgstr ""
 #. module: mail
 #: model:ir.model.fields,help:mail.field_mail_thread_cc__email_cc
 msgid "List of cc from incoming emails."
-msgstr ""
+msgstr "רשימת מכותבים מהודעות דוא\"ל נכנסות."
 
 #. module: mail
 #: model:ir.model.fields,help:mail.field_mail_wizard_invite__channel_ids
@@ -3870,7 +3866,7 @@ msgstr "אף אחד"
 #: model:ir.model.fields,field_description:mail.field_res_partner__email_normalized
 #: model:ir.model.fields,field_description:mail.field_res_users__email_normalized
 msgid "Normalized Email"
-msgstr ""
+msgstr "דוא\"ל מנורמל"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_ir_actions_server__activity_note
@@ -3954,7 +3950,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mail.field_res_partner__message_has_error_counter
 #: model:ir.model.fields,field_description:mail.field_res_users__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "מספר השגיאות"
 
 #. module: mail
 #: model:ir.model.fields,help:mail.field_mail_blacklist__message_needaction_counter
@@ -4390,6 +4386,7 @@ msgstr ""
 #. openerp-web
 #: code:addons/mail/static/src/xml/discuss.xml:0
 #: code:addons/mail/static/src/xml/discuss.xml:0
+#: code:addons/mail/static/src/xml/thread.xml:0
 #, python-format
 msgid "Please wait..."
 msgstr ""
@@ -4871,7 +4868,7 @@ msgstr ""
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_activity_view_form_popup
 msgid "Schedule"
-msgstr ""
+msgstr "לוח זמנים"
 
 #. module: mail
 #. openerp-web
@@ -5031,7 +5028,7 @@ msgstr "שלח הודעה"
 #. module: mail
 #: model:ir.actions.act_window,name:mail.action_partner_mass_mail
 msgid "Send email"
-msgstr ""
+msgstr "שלח דוא\"ל"
 
 #. module: mail
 #. openerp-web
@@ -5392,6 +5389,9 @@ msgid ""
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
 msgstr ""
+"הבעלים של רשומות שנוצרו עם קבלת דוא\"ל בכינוי זה. אם שדה זה לא מוגדר, המערכת"
+" תנסה למצוא את הבעלים הנכון על סמך כתובת השולח (מאת), או שתשתמש בחשבון מנהל "
+"המערכת אם לא נמצא משתמש מערכת עבור אותה כתובת."
 
 #. module: mail
 #: code:addons/mail/models/mail_message.py:0
@@ -5440,6 +5440,8 @@ msgid ""
 "This field is used to search on email address as the primary email field can"
 " contain more than strictly an email address."
 msgstr ""
+"שדה זה משמש לחיפוש בכתובת דוא\"ל שכן שדה הדוא\"ל הראשי יכול להכיל יותר מרק "
+"את כתובת הדוא\"ל."
 
 #. module: mail
 #: model:ir.model.fields,help:mail.field_mail_channel__public
@@ -5596,7 +5598,7 @@ msgstr ""
 #: model:ir.model.fields,help:mail.field_res_partner__activity_exception_decoration
 #: model:ir.model.fields,help:mail.field_res_users__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "סוג פעילות חריגה ברשומה."
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_channel__uuid
