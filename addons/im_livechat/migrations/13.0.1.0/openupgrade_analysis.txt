@@ -10,6 +10,7 @@ im_livechat  / mail.channel             / livechat_operator_id (many2one): NEW r
 im_livechat  / res.users                / livechat_username (char)      : NEW
 ---XML records in module 'im_livechat'---
 NEW im_livechat.channel: im_livechat.im_livechat_channel_data
+NEW ir.rule: im_livechat.im_livechat_rule_manager_read_all_mail_channel
 NEW ir.ui.view: im_livechat.im_livechat_channel_view_search
 NEW ir.ui.view: im_livechat.livechat_email_template (noupdate)
 NEW ir.ui.view: im_livechat.res_users_form_view

@@ -4,6 +4,8 @@ website_crm  / crm.lead                 / visitor_ids (many2many)       : NEW re
 website_crm  / website.visitor          / lead_ids (many2many)          : NEW relation: crm.lead
 ---XML records in module 'website_crm'---
 NEW ir.actions.act_window: website_crm.website_visitor_crm_lead_action
+NEW ir.model.access: website_crm.access_website_track_salesman
+NEW ir.model.access: website_crm.access_website_visitor_salesman
 NEW ir.ui.view: website_crm.assets_editor
 NEW ir.ui.view: website_crm.assets_tests
 NEW ir.ui.view: website_crm.crm_lead_view_form

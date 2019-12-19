@@ -1,6 +1,6 @@
 ---Models in module 'website'---
-obsolete model website.redirect
-new model website.rewrite
+obsolete model website.redirect (renamed to website.rewrite)
+new model website.rewrite (renamed from website.redirect)
 new model website.route
 new model website.track
 new model website.visitor
@@ -22,20 +22,10 @@ website      / website                  / social_googleplus (char)      : DEL
 website      / website.menu             / group_ids (many2many)         : NEW relation: res.groups
 website      / website.menu             / mega_menu_classes (char)      : NEW
 website      / website.menu             / mega_menu_content (html)      : NEW
-website      / website.redirect         / active (boolean)              : DEL
-website      / website.redirect         / sequence (integer)            : DEL
 website      / website.redirect         / type (selection)              : DEL required, selection_keys: ['301', '302'], req_default: function
-website      / website.redirect         / url_from (char)               : DEL required
-website      / website.redirect         / url_to (char)                 : DEL required
-website      / website.redirect         / website_id (many2one)         : DEL relation: website
-website      / website.rewrite          / active (boolean)              : NEW hasdefault
 website      / website.rewrite          / name (char)                   : NEW required
 website      / website.rewrite          / redirect_type (selection)     : NEW selection_keys: ['301', '302', '308', '404'], hasdefault
 website      / website.rewrite          / route_id (many2one)           : NEW relation: website.route
-website      / website.rewrite          / sequence (integer)            : NEW
-website      / website.rewrite          / url_from (char)               : NEW
-website      / website.rewrite          / url_to (char)                 : NEW
-website      / website.rewrite          / website_id (many2one)         : NEW relation: website
 website      / website.route            / path (char)                   : NEW
 website      / website.track            / page_id (many2one)            : NEW relation: website.page
 website      / website.track            / url (text)                    : NEW
@@ -68,7 +58,6 @@ NEW ir.model.access: website.access_website_route_designer
 NEW ir.model.access: website.access_website_track_designer
 NEW ir.model.access: website.access_website_track_system
 NEW ir.model.access: website.access_website_visitor_designer
-NEW ir.model.access: website.access_website_visitor_system
 DEL ir.model.access: website.access_website_redirect
 DEL ir.model.access: website.access_website_redirect_designer
 NEW ir.module.category: base.module_category_website_website (noupdate)
