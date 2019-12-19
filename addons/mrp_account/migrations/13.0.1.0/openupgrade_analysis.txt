@@ -6,7 +6,14 @@ mrp_account  / mrp.workcenter.productivity / cost_already_recorded (boolean): NE
 ---XML records in module 'mrp_account'---
 NEW ir.actions.server: mrp_account.action_compute_price_bom_product [renamed from mrp_bom_cost module]
 NEW ir.actions.server: mrp_account.action_compute_price_bom_template [renamed from mrp_bom_cost module]
+DEL ir.actions.server: mrp_bom_cost.action_compute_price_bom_product [renamed to mrp_account module]
+DEL ir.actions.server: mrp_bom_cost.action_compute_price_bom_template [renamed to mrp_account module]
+NEW ir.model.access: mrp_account.access_mrp_bom_invoice_bom
+NEW ir.model.access: mrp_account.access_mrp_bom_line_invoice_bom
 NEW ir.ui.view: mrp_account.mrp_production_form_view_inherited
 NEW ir.ui.view: mrp_account.product_product_ext_form_view2
 NEW ir.ui.view: mrp_account.product_product_view_form_normal_inherit_extended
 NEW ir.ui.view: mrp_account.product_variant_easy_edit_view_bom_inherit
+DEL ir.ui.view: mrp_bom_cost.product_product_ext_form_view2
+DEL ir.ui.view: mrp_bom_cost.product_product_view_form_normal_inherit_extended
+DEL ir.ui.view: mrp_bom_cost.product_variant_easy_edit_view_bom_inherit

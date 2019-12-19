@@ -7,6 +7,8 @@ purchase_product_matrix / purchase.order           / report_grids (boolean)     
 purchase_product_matrix / purchase.order.line      / product_no_variant_attribute_value_ids (many2many): NEW relation: product.template.attribute.value
 ---XML records in module 'purchase_product_matrix'---
 NEW ir.ui.view: purchase_product_matrix.assets_backend_inherit_purchase
+NEW ir.ui.view: purchase_product_matrix.assets_tests
 NEW ir.ui.view: purchase_product_matrix.grid_purchaseorder_inherit
 NEW ir.ui.view: purchase_product_matrix.grid_report_purchaseorder_template_inherit
 NEW ir.ui.view: purchase_product_matrix.purchase_order_form_matrix
+NEW ir.ui.view: purchase_product_matrix.qunit_suite

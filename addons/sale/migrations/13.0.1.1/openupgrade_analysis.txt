@@ -36,6 +36,8 @@ DEL crm.team: sales_team.team_sales_department (noupdate)
 NEW ir.actions.act_window: sale.action_sale_order_generate_link
 DEL ir.actions.act_window: sale.action_open_sale_onboarding_quotation_layout
 NEW ir.config_parameter: sale.default_confirmation_template (noupdate)
+NEW ir.model.access: sale.access_account_account_tag_sale_salesman
+NEW ir.model.access: sale.access_account_account_type_sale_salesman
 NEW ir.model.access: sale.access_account_move_manager
 NEW ir.model.access: sale.access_account_move_salesman
 DEL ir.model.access: sale.access_account_invoice_line_salesman

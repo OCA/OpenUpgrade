@@ -66,13 +66,13 @@ obsolete model slide.category (renamed to slide.slide) [module website_slides]
 obsolete model sms.send_sms (renamed to sms.composer) [module sms]
 obsolete model stock.fixed.putaway.strat (renamed to stock.putaway.rule) [module stock]
 obsolete model survey.mail.compose.message (renamed to survey.invite) [module survey]
-obsolete model survey.page [module survey]
+obsolete model survey.page (renamed to survey.question) [module survey]
 obsolete model survey.stage [module survey]
 obsolete model test_access_right.container [module test_access_rights]
 obsolete model test_access_right.obj_categ [module test_access_rights]
 obsolete model test_access_right.some_obj [module test_access_rights]
 obsolete model test_convert.test_model [module test_convert]
-obsolete model website.redirect [module website]
+obsolete model website.redirect (renamed to website.rewrite) [module website]
 obsolete model yearly.salary.detail [module l10n_in_hr_payroll]
 new model account.accrual.accounting.wizard [module account]
 new model account.journal.group [module account]
@@ -202,18 +202,18 @@ new model utm.stage (renamed from mail.mass_mailing.stage) [module utm]
 new model utm.tag (renamed from mail.mass_mailing.tag) [module utm]
 new model web_editor.assets [module web_editor]
 new model website.mass_mailing.popup [module website_mass_mailing]
-new model website.rewrite [module website]
+new model website.rewrite (renamed from website.redirect) [module website]
 new model website.route [module website]
 new model website.track [module website]
 new model website.visitor [module website]
 ---Fields in module 'general'---
-# 7556 fields matched,
-# Direct match: 7452
+# 7563 fields matched,
+# Direct match: 7459
 # Found in other module: 104
 # Found with different type: 0
-# In obsolete models: 228
-# New columns: 2299
-# Not matched: 960
+# In obsolete models: 213
+# New columns: 2301
+# Not matched: 954
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'crm_project'---
@@ -2429,15 +2429,6 @@ DEL account.tax.template: l10n_in_schedule6.schedule6_sgst_sale_2_5
 DEL account.tax.template: l10n_in_schedule6.schedule6_sgst_sale_5
 DEL account.tax.template: l10n_in_schedule6.schedule6_sgst_sale_6
 DEL account.tax.template: l10n_in_schedule6.schedule6_sgst_sale_9
-ERROR: module not in list of installed modules:
----Models in module 'mrp_bom_cost'---
----Fields in module 'mrp_bom_cost'---
----XML records in module 'mrp_bom_cost'---
-DEL ir.actions.server: mrp_bom_cost.action_compute_price_bom_product [renamed to mrp_account module]
-DEL ir.actions.server: mrp_bom_cost.action_compute_price_bom_template [renamed to mrp_account module]
-DEL ir.ui.view: mrp_bom_cost.product_product_ext_form_view2
-DEL ir.ui.view: mrp_bom_cost.product_product_view_form_normal_inherit_extended
-DEL ir.ui.view: mrp_bom_cost.product_variant_easy_edit_view_bom_inherit
 ERROR: module not in list of installed modules:
 ---Models in module 'test_access_rights'---
 obsolete model test_access_right.container
