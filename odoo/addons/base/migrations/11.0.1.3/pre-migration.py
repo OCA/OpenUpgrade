@@ -24,6 +24,10 @@ model_renames_ir_actions_report = [
     ('ir.actions.report.xml', 'ir.actions.report')
 ]
 
+_obsolete_tables = (
+    "procurement_order",
+)
+
 
 def handle_partner_sector(env):
     if openupgrade.table_exists(env.cr, 'res_partner_sector'):
@@ -63,6 +67,7 @@ def fill_cron_action_server_pre(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.remove_tables_fks(env.cr, _obsolete_tables)
     openupgrade.update_module_names(
         env.cr, apriori.renamed_modules.items()
     )
