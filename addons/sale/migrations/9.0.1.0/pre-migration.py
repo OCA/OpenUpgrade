@@ -77,10 +77,10 @@ def migrate(env, version):
     # For avoiding cost computations - It will be handled in post
     openupgrade.logged_query(
         env.cr, "ALTER TABLE sale_order_line ADD price_reduce numeric")
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE sale_order_line ADD price_subtotal numeric")
     openupgrade.add_fields(
         env, [
-            ('price_subtotal', 'sale.order.line', 'sale_order_line',
-             'monetary', False, 'sale'),
             ('price_tax', 'sale.order.line', 'sale_order_line',
              'monetary', False, 'sale'),
             ('price_total', 'sale.order.line', 'sale_order_line',
