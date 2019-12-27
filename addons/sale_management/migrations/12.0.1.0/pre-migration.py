@@ -122,21 +122,13 @@ def fill_sale_order_template_line_sections(cr):
             min(sotl.write_uid), min(sotl.write_date)
         FROM sale_order_template_line sotl
         LEFT JOIN sale_layout_category slc ON slc.id = sotl.layout_category_id
+        WHERE sotl.sale_order_template_id IN (
+            SELECT sale_order_template_id
+            FROM sale_order_template_line
+            WHERE layout_category_id IS NOT NULL)
         GROUP BY sale_order_template_id, layout_category_id
         ORDER BY sale_order_template_id, layout_category_id, sequence
         """
-    )
-    # We remove recently created sale.order.template.line for sections on
-    # templates where there's no sections at all
-    openupgrade.logged_query(
-        cr, """
-        DELETE FROM sale_order_template_line
-        WHERE layout_category_id IS NULL
-            AND display_type = 'line_section'
-            AND sale_order_template_id NOT IN (
-                SELECT sale_order_template_id FROM sale_order_template_line
-                WHERE layout_category_id IS NOT NULL
-            )""",
     )
 
 
