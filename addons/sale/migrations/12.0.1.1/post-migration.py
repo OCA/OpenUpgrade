@@ -51,7 +51,7 @@ def fill_sale_order_line_qty_delivered_method(cr):
             SET qty_delivered_method = 'stock_move'
             FROM product_product pp
             LEFT JOIN product_template pt ON pp.product_tmpl_id = pt.id
-            WHERE sol.product_id = pp.id AND NOT sol.is_expense
+            WHERE sol.product_id = pp.id AND sol.is_expense IS NOT TRUE
                 AND pt.type IN ('consu', 'product')
             """
         )
@@ -62,7 +62,7 @@ def fill_sale_order_line_qty_delivered_method(cr):
         SET qty_delivered_method = 'timesheet'
         FROM product_product pp
         LEFT JOIN product_template pt ON pp.product_tmpl_id = pt.id
-        WHERE sol.product_id = pp.id AND NOT sol.is_expense
+        WHERE sol.product_id = pp.id AND sol.is_expense IS NOT TRUE
             AND pt.type = 'service' AND pt.service_type = 'timesheet'
         """
     )
