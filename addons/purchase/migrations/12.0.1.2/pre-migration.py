@@ -54,7 +54,23 @@ def precompute_pol_product_uom_qty(env):
     )
 
 
+def fill_purchase_order_user_id(cr):
+    if not openupgrade.column_exists(cr, 'purchase_order', 'user_id'):
+        # Done here because user_id is filled automatically when upgrading
+        cr.execute(
+            """
+            ALTER TABLE purchase_order ADD COLUMN user_id integer;
+            """)
+    openupgrade.logged_query(
+        cr, """
+        UPDATE purchase_order
+        SET user_id = create_uid
+        WHERE user_id IS NULL""",
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
+    fill_purchase_order_user_id(env.cr)
     precompute_pol_product_uom_qty(env)
     openupgrade.rename_xmlids(env.cr, xmlid_renames)
