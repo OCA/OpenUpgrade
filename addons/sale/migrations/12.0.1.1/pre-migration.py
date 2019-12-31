@@ -86,21 +86,13 @@ def fill_sale_order_line_sections(cr):
             min(sol.write_uid), min(sol.write_date)
         FROM sale_order_line sol
         LEFT JOIN sale_layout_category slc ON slc.id = sol.layout_category_id
+        WHERE sol.order_id IN (
+            SELECT order_id
+            FROM sale_order_line
+            WHERE layout_category_id IS NOT NULL)
         GROUP BY order_id, layout_category_id
         ORDER BY order_id, layout_category_id, sequence
         """
-    )
-    # We remove recently created sale.order.line for sections on sales orders
-    # where there's no sections at all
-    openupgrade.logged_query(
-        cr, """
-        DELETE FROM sale_order_line
-        WHERE layout_category_id IS NULL
-            AND display_type = 'line_section'
-            AND order_id NOT IN (
-                SELECT order_id FROM sale_order_line
-                WHERE layout_category_id IS NOT NULL
-            )""",
     )
 
 

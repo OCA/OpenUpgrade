@@ -99,21 +99,13 @@ def fill_account_invoice_line_sections(cr):
             min(ail.write_uid), min(ail.write_date)
         FROM account_invoice_line ail
         LEFT JOIN sale_layout_category slc ON slc.id = ail.layout_category_id
+        WHERE ail.invoice_id in (
+            SELECT invoice_id
+            FROM account_invoice_line
+            WHERE layout_category_id IS NOT NULL)
         GROUP BY invoice_id, layout_category_id
         ORDER BY invoice_id, layout_category_id, sequence
         """
-    )
-    # We remove recently created account.invoice.line for sections on invoices
-    # where there's no sections at all
-    openupgrade.logged_query(
-        cr, """
-        DELETE FROM account_invoice_line
-        WHERE layout_category_id IS NULL
-            AND display_type = 'line_section'
-            AND invoice_id NOT IN (
-                SELECT invoice_id FROM account_invoice_line
-                WHERE layout_category_id IS NOT NULL
-            )""",
     )
 
 
