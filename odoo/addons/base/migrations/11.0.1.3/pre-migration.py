@@ -25,7 +25,36 @@ model_renames_ir_actions_report = [
 ]
 
 _obsolete_tables = (
+    "base_action_rule",
+    "base_action_rule_lead_test",
+    "base_action_rule_line_test",
+    "crm_activity",
+    "hr_timesheet_sheet_sheet",
+    "ir_values",
+    "marketing_campaign",
+    "marketing_campaign_activity",
+    "marketing_campaign_segment",
+    "marketing_campaign_transition",
+    "marketing_campaign_workitem",
     "procurement_order",
+    "project_issue",
+    "report",
+    "res_font",
+    "stock_move_lots",
+    "stock_move_operation_link",
+    "stock_pack_operation",
+    "stock_pack_operation_lot",
+    "stock_picking_wave",
+    "subscription_document",
+    "subscription_document_fields",
+    "subscription_subscription",
+    "subscription_subscription_history",
+    "wkf",
+    "wkf_activity",
+    "wkf_instance",
+    "wkf_transition",
+    "wkf_triggers",
+    "wkf_workitem",
 )
 
 
