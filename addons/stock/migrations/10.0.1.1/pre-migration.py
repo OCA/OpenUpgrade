@@ -64,6 +64,39 @@ def warning_update_module_names_partial(cr):
     openupgrade.logged_query(cr, query, (new_name, old_name, tuple(field_ids)))
 
 
+def add_stock_move_field_scrap_location(env):
+    """The field scrap_location is now a stored field.
+    Use SQL request to bypass ORM"""
+    if not openupgrade.column_exists(env.cr, 'stock_move', 'scrapped'):
+        openupgrade.logged_query(
+            env.cr, "ALTER TABLE stock_move ADD COLUMN scrapped bool")
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE stock_move sm
+        SET scrapped = sl.scrap_location
+        FROM stock_location sl
+        WHERE sl.id = sm.location_dest_id"""
+    )
+
+
+def add_stock_production_lot_field_product_uom_id(env):
+    """The field product_uom_id is new a stored related field.
+    Use SQL request to bypass ORM"""
+    if not openupgrade.column_exists(env.cr, 'stock_production_lot', 'product_uom_id'):
+        openupgrade.add_fields(env, [
+            ('product_uom_id', 'stock.production.lot', 'stock_production_lot', 'many2one',
+             False, 'stock'),
+        ])
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE stock_production_lot spl
+        SET product_uom_id = pt.uom_id
+        FROM product_product pp, product_template pt
+        WHERE pt.id=pp.product_tmpl_id
+            AND pp.id = spl.product_id"""
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -73,3 +106,5 @@ def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, xmlid_renames)
     openupgrade.rename_fields(env, field_renames)
     warning_update_module_names_partial(cr)
+    add_stock_move_field_scrap_location(env)
+    add_stock_production_lot_field_product_uom_id(env)
