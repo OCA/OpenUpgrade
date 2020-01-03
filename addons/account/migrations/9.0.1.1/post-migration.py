@@ -4,10 +4,13 @@
 # Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import logging
 import operator
 from openupgradelib import openupgrade, openupgrade_90
 from openerp.modules.registry import RegistryManager
 from psycopg2.extensions import AsIs
+
+_logger = logging.getLogger('account.migrations.9.0.1.1.post_migration')
 
 
 account_type_map = [
@@ -16,6 +19,23 @@ account_type_map = [
     ('account.conf_account_type_tax',
      'account.data_account_type_current_liabilities'),
 ]
+
+
+def recompute_multicurrency_invoices(env):
+    """ Overwrite the simple non multicurrency SQL computations
+    by triggering the compute method for multicurrency invoices. """
+    env.cr.execute(
+        """ SELECT ai.id
+        FROM account_invoice ai
+        JOIN res_company rc ON ai.company_id = rc.id
+        WHERE ai.currency_id != rc.currency_id """)
+    invoice_ids = [invoice_id for invoice_id, in env.cr.fetchall()]
+    _logger.info(
+        'Triggering recompute of amount fields for %s multicurrency '
+        'invoices', len(invoice_ids))
+    model = env['account.invoice']
+    env.add_todo(model._fields['amount_tax'], model.browse(invoice_ids))
+    model.recompute()
 
 
 def map_bank_state(cr):
@@ -1216,6 +1236,7 @@ def fill_bank_accounts(cr):
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
+    recompute_multicurrency_invoices(env)
     map_bank_state(cr)
     map_type_tax_use(cr)
     map_type_tax_use_template(cr)

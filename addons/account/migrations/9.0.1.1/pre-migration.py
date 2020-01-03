@@ -163,10 +163,9 @@ FAST_CREATIONS = [
     UPDATE account_invoice
     SET amount_total_signed = - amount_total
     WHERE type IN ('in_refund', 'out_refund');
-    """)
-]
-
-MONO_CURRENCY_FAST_CREATIONS = [
+    """),
+    # For multicurrency invoices, these values will be overwritten
+    # in the post script
     ('account_invoice', 'amount_total_company_signed', 'numeric', """
     UPDATE account_invoice
     SET amount_total_company_signed = amount_total_signed;
@@ -436,13 +435,3 @@ def migrate(env, version):
              'monetary', False, 'account'),
         ]
     )
-    # Fast create other fields, in the simple case of mono currency
-    cr.execute("""
-    SELECT ai.currency_id, rc.currency_id
-    FROM account_invoice ai
-    INNER JOIN res_company rc on ai.company_id = rc.id
-    WHERE ai.currency_id != rc.currency_id;
-    """)
-    multi_currency = cr.fetchone()
-    if not multi_currency:
-        fast_create(env, MONO_CURRENCY_FAST_CREATIONS)
