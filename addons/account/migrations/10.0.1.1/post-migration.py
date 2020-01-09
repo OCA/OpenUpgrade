@@ -2,6 +2,7 @@
 # Copyright 2017 Therp BV
 # Copyright 2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+from odoo import _
 from openupgradelib import openupgrade
 
 
@@ -116,3 +117,58 @@ def migrate(env, version):
     openupgrade.load_data(
         cr, 'account', 'migrations/10.0.1.1/noupdate_changes.xml',
     )
+
+    # gather non-zero bank statement lines that have journal entries,
+    # but no linked payments, meaning they are reconciled, but no
+    # payment was created.
+    openupgrade.logged_query(cr, '''
+        select l.id
+        from account_bank_statement_line l
+        join account_move m
+            on m.statement_line_id = l.id
+        join account_move_line ml
+            on ml.move_id = m.id
+        left join account_payment ap
+            on ml.payment_id = ap.id
+        where abs(l.amount) > 0.0001
+        group by l.id
+        having (
+            sum(case when ap.id is not null then 1 else 0 end) = 0
+            and sum(case when ml.id is not null then 1 else 0 end) > 0
+        )
+    ''')
+    statement_lines = env['account.bank.statement.line'].browse([
+        row[0] for row in cr.fetchall()])
+
+    # create payments for these
+    for chunk in openupgrade.chunked(statement_lines):
+        for st_line in chunk:
+            total = st_line.amount
+            journal = st_line.journal_id
+            currency = journal.currency_id or st_line.company_id.currency_id
+            payment_methods = journal.inbound_payment_method_ids \
+                if total > 0 else journal.outbound_payment_method_ids
+            communication = st_line._get_communication(
+                payment_methods[0] if payment_methods else False)
+            payment = env['account.payment'].create(dict(
+                partner_id=st_line.partner_id.id or False,
+                payment_method_id=payment_methods[:1].id,
+                partner_type=(total < 0) and 'supplier' or 'customer',
+                currency_id=currency.id,
+                payment_reference=st_line.move_name,
+                payment_type=(total > 0) and 'inbound' or 'outbound',
+                journal_id=journal.id,
+                payment_date=st_line.date,
+                state='reconciled',
+                amount=abs(total),
+                communication=communication,
+                name=st_line.statement_id.name or _(
+                    'Bank Statement %s') % st_line.date
+            ))
+
+            # link this new payment to the statement line
+            move = env['account.move'].search([
+                ('statement_line_id', '=', st_line.id),
+                ('name', '=', st_line.move_name),
+            ])
+            move.line_ids.write(dict(payment_id=payment.id))
