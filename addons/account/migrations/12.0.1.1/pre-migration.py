@@ -109,6 +109,17 @@ def fill_account_invoice_line_sections(cr):
     )
 
 
+def prefill_account_chart_template_transfer_account_prefix(env):
+    """We do this for avoiding a temporary warning on null values."""
+    openupgrade.add_fields(
+        env, [('transfer_account_code_prefix', 'account.chart.template',
+               'account_chart_template', 'char', False, 'account')],
+    )
+    openupgrade.logged_query(
+        env.cr, "UPDATE account_chart_template "
+                "SET transfer_account_code_prefix = 'OUB'")
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
@@ -131,5 +142,6 @@ def migrate(env, version):
             env.cr, """
             ALTER TABLE res_company ADD COLUMN incoterm_id INTEGER""",
         )
+    prefill_account_chart_template_transfer_account_prefix(env)
     openupgrade.set_xml_ids_noupdate_value(
         env, 'account', ['account_analytic_line_rule_billing_user'], False)
