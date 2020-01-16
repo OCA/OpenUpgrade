@@ -1532,8 +1532,12 @@ DEL account.account.template: l10n_es.pgc_7990_child
 DEL account.account.template: l10n_es.pgc_7991_child
 DEL account.account.template: l10n_es.pgc_7992_child
 DEL account.account.template: l10n_es.pgc_7993_child
+# Nothing to do: All noupdate=0 records
+
 DEL account.account.type: l10n_es.account_type_financieras
 DEL account.account.type: l10n_es.account_type_terceros
+# Done: pre-migration: Replaced in account.account records; also done with OCA/l10n-spain similar records
+
 NEW account.chart.template: l10n_es.account_chart_template_assoc
 NEW account.chart.template: l10n_es.account_chart_template_full
 NEW account.chart.template: l10n_es.account_chart_template_pymes
@@ -2307,5 +2311,4 @@ DEL account.tax.template: l10n_es.re_buy_05
 DEL account.tax.template: l10n_es.re_buy_14
 DEL account.tax.template: l10n_es.re_buy_52
 DEL ir.ui.menu: l10n_es.account_reports_es_statements_menu
-
 # Nothing to do: All noupdate=0 records
