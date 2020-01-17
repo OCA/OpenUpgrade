@@ -32,7 +32,7 @@ purchase     / purchase.order           / message_main_attachment_id (many2one):
 # NOTHING TO DO
 
 purchase     / purchase.order           / user_id (many2one)            : NEW relation: res.users
-# DONE: post-migration: filled from create_uid
+# DONE: pre-migration: filled from create_uid
 
 purchase     / purchase.order.line      / product_uom (many2one)        : relation is now 'uom.uom' ('product.uom')
 # NOTHING TO DO: handled in base module

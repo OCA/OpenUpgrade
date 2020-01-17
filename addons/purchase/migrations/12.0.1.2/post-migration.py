@@ -5,15 +5,6 @@
 from openupgradelib import openupgrade
 
 
-def fill_purchase_order_user_id(cr):
-    openupgrade.logged_query(
-        cr, """
-        UPDATE purchase_order
-        SET user_id = create_uid
-        WHERE user_id IS NULL""",
-    )
-
-
 def reset_context_purchase_actions(env):
     env.ref('purchase.purchase_rfq').context = '{}'
     env.ref('purchase.purchase_form_action').context = '{}'
@@ -21,7 +12,6 @@ def reset_context_purchase_actions(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    fill_purchase_order_user_id(env.cr)
     reset_context_purchase_actions(env)
     openupgrade.load_data(
         env.cr, 'purchase', 'migrations/12.0.1.2/noupdate_changes.xml')
