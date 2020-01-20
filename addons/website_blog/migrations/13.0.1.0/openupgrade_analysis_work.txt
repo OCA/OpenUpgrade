@@ -1,0 +1,71 @@
+---Models in module 'website_blog'---
+---Fields in module 'website_blog'---
+website_blog / blog.blog                / content (html)                : NEW
+website_blog / blog.blog                / cover_properties (text)       : NEW hasdefault
+# NOTHING TO DO
+
+---XML records in module 'website_blog'---
+DEL ir.attachment: website_blog.blog_post_cover_01 (noupdate)
+DEL ir.attachment: website_blog.blog_post_cover_02 (noupdate)
+# DONE: post-migration: try to delete
+
+NEW ir.ui.view: website_blog.blog_post_content
+NEW ir.ui.view: website_blog.blog_post_sidebar
+NEW ir.ui.view: website_blog.blogs_nav
+NEW ir.ui.view: website_blog.date_selector
+NEW ir.ui.view: website_blog.opt_blog_cards_design
+NEW ir.ui.view: website_blog.opt_blog_cover_post
+NEW ir.ui.view: website_blog.opt_blog_cover_post_fullwidth_design
+NEW ir.ui.view: website_blog.opt_blog_list_view
+NEW ir.ui.view: website_blog.opt_blog_post_archive_display
+NEW ir.ui.view: website_blog.opt_blog_post_blogs_display
+NEW ir.ui.view: website_blog.opt_blog_post_breadcrumb
+NEW ir.ui.view: website_blog.opt_blog_post_comment
+NEW ir.ui.view: website_blog.opt_blog_post_read_next
+NEW ir.ui.view: website_blog.opt_blog_post_readable
+NEW ir.ui.view: website_blog.opt_blog_post_regular_cover
+NEW ir.ui.view: website_blog.opt_blog_post_share_links_display
+NEW ir.ui.view: website_blog.opt_blog_post_sidebar
+NEW ir.ui.view: website_blog.opt_blog_post_tags_display
+NEW ir.ui.view: website_blog.opt_blog_readable
+NEW ir.ui.view: website_blog.opt_blog_sidebar_show
+NEW ir.ui.view: website_blog.opt_posts_loop_show_author
+NEW ir.ui.view: website_blog.opt_posts_loop_show_cover
+NEW ir.ui.view: website_blog.opt_posts_loop_show_stats
+NEW ir.ui.view: website_blog.opt_posts_loop_show_teaser
+NEW ir.ui.view: website_blog.opt_sidebar_blog_index_archives
+NEW ir.ui.view: website_blog.opt_sidebar_blog_index_follow_us
+NEW ir.ui.view: website_blog.opt_sidebar_blog_index_tags
+NEW ir.ui.view: website_blog.post_author
+NEW ir.ui.view: website_blog.post_breadcrumbs
+NEW ir.ui.view: website_blog.post_cover_image
+NEW ir.ui.view: website_blog.post_heading
+NEW ir.ui.view: website_blog.post_info
+NEW ir.ui.view: website_blog.post_teaser
+NEW ir.ui.view: website_blog.posts_loop
+NEW ir.ui.view: website_blog.sidebar_blog_index
+NEW ir.ui.view: website_blog.tags_list
+DEL ir.ui.view: website_blog.blog_breadcrumb
+DEL ir.ui.view: website_blog.blog_cover
+DEL ir.ui.view: website_blog.index_right
+DEL ir.ui.view: website_blog.latest_blogs
+DEL ir.ui.view: website_blog.opt_blog_post_author_avatar
+DEL ir.ui.view: website_blog.opt_blog_post_complete_comment
+DEL ir.ui.view: website_blog.opt_blog_post_complete_read_next
+DEL ir.ui.view: website_blog.opt_blog_post_cover_image
+DEL ir.ui.view: website_blog.opt_blog_post_grid_layout
+DEL ir.ui.view: website_blog.opt_blog_rc_about_us
+DEL ir.ui.view: website_blog.opt_blog_rc_blogs
+DEL ir.ui.view: website_blog.opt_blog_rc_follow_us
+DEL ir.ui.view: website_blog.opt_blog_rc_history
+DEL ir.ui.view: website_blog.opt_blog_rc_status
+DEL ir.ui.view: website_blog.opt_blog_rc_tags
+DEL ir.ui.view: website_blog.tag_category
+# NOTHING TO DO
+
+mail.message.subtype: website_blog.mt_blog_blog_published (noupdate) (noupdate switched)
+# DONE: pre-migration: handled noupdate switch
+
+NEW website.menu: website_blog.menu_blog (noupdate)
+DEL website.menu: website_blog.menu_news (noupdate)
+# DONE: pre-migration: renamed xmlid
