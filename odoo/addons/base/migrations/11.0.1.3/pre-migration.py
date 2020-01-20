@@ -24,6 +24,39 @@ model_renames_ir_actions_report = [
     ('ir.actions.report.xml', 'ir.actions.report')
 ]
 
+_obsolete_tables = (
+    "base_action_rule",
+    "base_action_rule_lead_test",
+    "base_action_rule_line_test",
+    "crm_activity",
+    "hr_timesheet_sheet_sheet",
+    "ir_values",
+    "marketing_campaign",
+    "marketing_campaign_activity",
+    "marketing_campaign_segment",
+    "marketing_campaign_transition",
+    "marketing_campaign_workitem",
+    "procurement_order",
+    "project_issue",
+    "report",
+    "res_font",
+    "stock_move_lots",
+    "stock_move_operation_link",
+    "stock_pack_operation",
+    "stock_pack_operation_lot",
+    "stock_picking_wave",
+    "subscription_document",
+    "subscription_document_fields",
+    "subscription_subscription",
+    "subscription_subscription_history",
+    "wkf",
+    "wkf_activity",
+    "wkf_instance",
+    "wkf_transition",
+    "wkf_triggers",
+    "wkf_workitem",
+)
+
 
 def handle_partner_sector(env):
     if openupgrade.table_exists(env.cr, 'res_partner_sector'):
@@ -63,6 +96,7 @@ def fill_cron_action_server_pre(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.remove_tables_fks(env.cr, _obsolete_tables)
     openupgrade.update_module_names(
         env.cr, apriori.renamed_modules.items()
     )
