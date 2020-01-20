@@ -28,7 +28,10 @@ being run multiple times on the same database.
 """
 
 import logging
-from openupgradelib.openupgrade import savepoint
+
+from psycopg2 import sql
+
+from openupgradelib.openupgrade import logged_query, savepoint
 from openerp import SUPERUSER_ID
 
 logger = logging.getLogger("OpenUpgrade")
@@ -44,9 +47,144 @@ def sync_commercial_fields(cr, pool):
         cr, SUPERUSER_ID,
         [('parent_id', '!=', False)],
         context={'active_test': False})
+    # This will be just ['vat'] unless you have installed addons that
+    # add more fields to sync; all core addons that override this method are
+    # supported; without weird scenarios, it will be optimized
+    commercial_fields = partner_obj._commercial_fields(cr, SUPERUSER_ID)
+    for field in commercial_fields:
+        # TODO: Support m2m field optimization, if ever needed
+        if partner_obj._all_columns[field].column._type == 'many2many':
+            logger.warning(
+                'Field %s cannot be optimized; falling back to ORM sync',
+                field,
+            )
+            _sync_commercial_fields_orm(cr, pool, partner_ids)
+            break
+    else:
+        # Use optimized sync for most records
+        _sync_commercial_fields_sql(cr, pool, commercial_fields)
+        # Companies with parent_id are subcompanies; this is a rare case,
+        # which requires recursion to find its commercial partner
+        subcompanies_ids = partner_obj.search(
+            cr, SUPERUSER_ID,
+            [('is_company', '=', True), ('parent_id', '!=', False)],
+            context={'active_test': False},
+        )
+        _sync_commercial_fields_orm(cr, pool, subcompanies_ids)
+
+
+def _sync_commercial_fields_sql(cr, pool, commercial_fields):
+    """Perform optimized commercial fields sync."""
+    ResPartner = pool.get("res.partner")
+    # Separate raw from property fields
+    property_fields, raw_fields = [], []
+    for field in commercial_fields:
+        multi = getattr(ResPartner._all_columns[field].column, '_multi', None)
+        if multi == 'properties':
+            property_fields.append(field)
+        else:
+            raw_fields.append(field)
+    # Sync raw fields
     logger.info(
-        "Syncing commercial fields between %s partners",
+        "Syncing raw commercial fields between all partners using SQL")
+    set_sentence = sql.SQL(", ").join(
+        sql.SQL("{0} = parent.{0}").format(sql.Identifier(field))
+        for field in raw_fields
+    )
+    logged_query(
+        cr,
+        sql.SQL(
+            """
+            UPDATE res_partner AS contact
+            SET {set_sentence}
+            FROM res_partner AS parent
+            WHERE
+                NOT contact.is_company AND
+                contact.parent_id = parent.id
+            """
+        ).format(set_sentence=set_sentence),
+    )
+    # Sync property fields
+    logger.info(
+        "Syncing property commercial fields between all partners using SQL")
+    # Delete property fields from contacts that belong to a company
+    logged_query(
+        cr,
+        """
+        DELETE FROM ir_property
+        WHERE
+            name = ANY(%(property_fields)s) AND
+            res_id IN (
+                SELECT 'res.partner,' || id
+                FROM res_partner
+                WHERE
+                    NOT is_company AND
+                    parent_id IS NOT NULL
+            )
+        """,
+        {'property_fields': property_fields},
+    )
+    logged_query(
+        cr,
+        """
+        INSERT INTO ir_property (
+            company_id,
+            create_date,
+            create_uid,
+            fields_id,
+            name,
+            res_id,
+            type,
+            value_binary,
+            value_datetime,
+            value_float,
+            value_integer,
+            value_reference,
+            value_text,
+            write_date,
+            write_uid
+        )
+        SELECT
+            company_id,
+            create_date,
+            create_uid,
+            fields_id,
+            name,
+            subpartner.child_ref,
+            type,
+            value_binary,
+            value_datetime,
+            value_float,
+            value_integer,
+            value_reference,
+            value_text,
+            write_date,
+            write_uid
+        FROM ir_property
+        INNER JOIN
+            (
+                SELECT
+                    'res.partner,' || id AS child_ref,
+                    'res.partner,' || parent_id AS parent_ref
+                FROM res_partner
+                WHERE
+                    NOT is_company AND
+                    parent_id IS NOT NULL
+            ) AS subpartner
+            ON ir_property.res_id = subpartner.parent_ref
+        WHERE
+            name = ANY(%(property_fields)s)
+        """,
+        {'property_fields': property_fields},
+    )
+
+
+def _sync_commercial_fields_orm(cr, pool, partner_ids):
+    """Sync commercial fields using ORM with slow core methods."""
+    logger.info(
+        "Syncing commercial fields between %s partners using ORM",
         len(partner_ids))
+    partner_obj = pool.get('res.partner')
     good = True
     for partner in partner_obj.browse(
             cr, SUPERUSER_ID, partner_ids):
