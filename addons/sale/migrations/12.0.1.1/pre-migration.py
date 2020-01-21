@@ -5,7 +5,7 @@ from openupgradelib import openupgrade
 
 _column_copies = {
     'sale_order_line': [
-        ('qty_delivered', None, None),
+        ('qty_delivered', 'qty_delivered_manual', None),
     ],
 }
 
