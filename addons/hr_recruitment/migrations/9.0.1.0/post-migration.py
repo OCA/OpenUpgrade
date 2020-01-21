@@ -2,7 +2,7 @@
 # © 2016 Tecnativa <vicent.cubells@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
-from openerp import fields
+from openerp import api, fields, SUPERUSER_ID
 from datetime import timedelta
 
 
@@ -27,22 +27,18 @@ def update_applicant_availability(cr):
 
 
 def migrate_applicant_source(cr):
-    cr.execute(
-        """
-            SELECT id
-            FROM hr_recruitment_source
-        """)
-    for old_id in cr.fetchall():
-        cr.execute("INSERT INTO utm_source (name) "
-                   "SELECT name "
-                   "FROM %s "
-                   "RETURNING id",
-                   (openupgrade.get_legacy_name('hr_recruitment_source'),))
-        new_id = cr.fetchone()[0]
-        cr.execute("UPDATE hr_applicant "
-                   "SET source_id = %s "
-                   "WHERE source_id = %s",
-                   (new_id, old_id[0]))
+    env = api.Environment(cr, SUPERUSER_ID, {})
+    uso = env['utm.source']
+    cr.execute("SELECT id, name FROM hr_recruitment_source")
+    for (recruit_src_id, recruit_src_name) in cr.fetchall():
+        utm_source = uso.create({
+            'name': recruit_src_name,
+            })
+        cr.execute(
+            'UPDATE hr_applicant SET source_id=%s WHERE ' +
+            openupgrade.get_legacy_name('source_id') +
+            '=%s',
+            (utm_source.id, recruit_src_id))
 
 
 @openupgrade.migrate()
