@@ -88,7 +88,6 @@ sale         / sale.order.line          / qty_delivered_method (selection): NEW 
 # DONE pre-migration: copied column qty_delivered to qty_delivered_manual
 # DONE: pre-migration: create column qty_delivered_method to avoid the compute
 # DONE: post-migration: filled qty_delivered_method based on conditions
-# DONE: end-migration: recomputed qty_delivered by calling _compute_qty_delivered() in orm
 
 sale         / sale.order.line          / amt_invoiced (float)          : DEL
 sale         / sale.order.line          / amt_to_invoice (float)        : DEL
