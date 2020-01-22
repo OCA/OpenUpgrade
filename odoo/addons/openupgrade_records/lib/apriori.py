@@ -32,7 +32,8 @@ merged_modules = {
     'website_crm_phone_validation': 'website_crm',
     'website_sale_link_tracker': 'website_sale',
     'website_survey': 'survey',
-    # OCA/...
+    # OCA/web
+    'web_widget_color': 'web',
 }
 
 # only used here for openupgrade_records analysis:
