@@ -20,6 +20,9 @@
 #
 ##############################################################################
 import logging
+
+from psycopg2 import sql
+
 from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp import pooler, SUPERUSER_ID as uid
 from openerp.models import AUTOINIT_RECALCULATE_STORED_FIELDS
@@ -129,6 +132,27 @@ def migrate_procurement_order(cr):
     supplier or production location to stock) are also recorded on the
     procurement. For purchase procurements, gather them here.
     """
+    legacy_purchase_id = openupgrade.get_legacy_name('purchase_id')
+    # Add indexes to fasten next queries
+    openupgrade.logged_query(
+        cr,
+        """
+        CREATE INDEX IF NOT EXISTS procurement_order_purchase_line_id_index
+        ON procurement_order (purchase_line_id)
+        """,
+    )
+    openupgrade.logged_query(
+        cr,
+        sql.SQL(
+            """
+            CREATE INDEX IF NOT EXISTS {}
+            ON procurement_order ({})
+            """,
+        ).format(
+            sql.Identifier("procurement_order_%s_index" % legacy_purchase_id),
+            sql.Identifier(legacy_purchase_id),
+        )
+    )
     openupgrade.logged_query(
         cr,
         """
@@ -139,7 +163,7 @@ def migrate_procurement_order(cr):
              AND pol.{move_dest_id} IS NOT NULL
              AND pol.{move_dest_id} = proc.move_dest_id
         """.format(
-            purchase_id=openupgrade.get_legacy_name('purchase_id'),
+            purchase_id=legacy_purchase_id,
             move_dest_id=openupgrade.get_legacy_name('move_dest_id')))
 
     openupgrade.logged_query(
@@ -155,8 +179,7 @@ def migrate_procurement_order(cr):
                  SELECT purchase_line_id
                  FROM procurement_order
                  WHERE purchase_line_id IS NOT NULL)
-        """.format(
-            purchase_id=openupgrade.get_legacy_name('purchase_id')))
+        """.format(purchase_id=legacy_purchase_id))
 
     # Warn about dangling procurements
     cr.execute(
@@ -165,8 +188,7 @@ def migrate_procurement_order(cr):
         WHERE purchase_line_id IS NULL
             AND {purchase_id} IS NOT NULL
             AND state NOT IN ('done', 'exception')
-        """.format(
-            purchase_id=openupgrade.get_legacy_name('purchase_id')))
+        """.format(purchase_id=legacy_purchase_id))
     count = cr.fetchone()[0]
     if count:
         logger.warning(
