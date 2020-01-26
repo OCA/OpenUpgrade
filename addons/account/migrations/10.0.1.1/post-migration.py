@@ -148,11 +148,12 @@ def migrate(env, version):
             currency = journal.currency_id or st_line.company_id.currency_id
             payment_methods = journal.inbound_payment_method_ids \
                 if total > 0 else journal.outbound_payment_method_ids
-            communication = st_line._get_communication(
-                payment_methods[0] if payment_methods else False)
+            if not payment_methods:
+                continue
+            communication = st_line._get_communication(payment_methods[0])
             payment = env['account.payment'].create(dict(
                 partner_id=st_line.partner_id.id or False,
-                payment_method_id=payment_methods[:1].id,
+                payment_method_id=payment_methods[0].id,
                 partner_type=(total < 0) and 'supplier' or 'customer',
                 currency_id=currency.id,
                 payment_reference=st_line.move_name,
