@@ -114,3 +114,11 @@ def migrate(env, version):
         env.cr,
         "ALTER TABLE sale_order_line ADD COLUMN qty_delivered_method varchar",
     )
+    openupgrade.logged_query(
+        env.cr,
+        "ALTER TABLE sale_order_line ADD COLUMN untaxed_amount_invoiced "
+        "NUMERIC")
+    openupgrade.logged_query(
+        env.cr,
+        "ALTER TABLE sale_order_line ADD COLUMN untaxed_amount_to_invoice "
+        "NUMERIC")

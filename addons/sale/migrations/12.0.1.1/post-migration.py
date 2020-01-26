@@ -76,6 +76,69 @@ def fill_sale_order_line_qty_delivered_method(cr):
     )
 
 
+def fill_sale_order_line_untaxed_amount_invoiced(env):
+    """Fill by SQL this computed stored field when possible, because it's
+    very slow by ORM.
+    """
+    # Code that mimicks by SQL: https://github.com/OCA/OpenUpgrade/blob/27d82a/addons/sale/models/sale.py#L1333-L1351
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE sale_order_line sol
+        SET untaxed_amount_invoiced = sub.amount
+        FROM (
+            SELECT rel.order_line_id,
+                SUM(CASE
+                    WHEN ai.type = 'out_invoice' THEN ail.price_subtotal
+                    WHEN ai.type = 'out_refund' THEN -ail.price_subtotal
+                END) AS amount
+            FROM sale_order_line_invoice_rel rel
+                JOIN account_invoice_line ail ON rel.invoice_line_id = ail.id
+                JOIN account_invoice ai ON ai.id = ail.invoice_id
+            WHERE ai.state IN ('open', 'in_payment', 'paid')
+            GROUP BY rel.order_line_id
+        ) AS sub
+        WHERE sol.id = sub.order_line_id""")
+    # Now recompute by ORM those with different currency
+    env.cr.execute(
+        """SELECT DISTINCT(sol.id)
+        FROM sale_order_line_invoice_rel rel
+            JOIN account_invoice_line ail ON rel.invoice_line_id = ail.id
+            JOIN sale_order_line sol ON rel.order_line_id = sol.id
+        WHERE sol.currency_id != ail.currency_id""")
+    env['sale.order.line'].browse(
+        [x[0] for x in env.cr.fetchall()])._compute_untaxed_amount_invoiced()
+
+
+def fill_sale_order_line_untaxed_amount_to_invoice(env):
+    """Fill by SQL this computed stored field because it's very slow by ORM."""
+    # Code that mimicks by SQL: https://github.com/OCA/OpenUpgrade/blob/27d82a/addons/sale/models/sale.py#L1354-L1377
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE sale_order_line sol
+        SET untaxed_amount_to_invoice = sub.amount
+        FROM (
+            SELECT sol2.id AS id,
+                (
+                    CASE WHEN sol2.state IN ('sale', 'done') THEN (
+                        CASE WHEN pt.invoice_policy = 'delivery' THEN
+                            sol2.price_reduce * sol2.qty_delivered -
+                            sol2.untaxed_amount_invoiced
+                        ELSE
+                            sol2.price_reduce * sol2.product_uom_qty -
+                            sol2.untaxed_amount_invoiced
+                        END
+                    )
+                    ELSE 0.0
+                    END
+                ) AS amount
+            FROM sale_order_line sol2
+            JOIN product_product pp ON pp.id = sol2.product_id
+            JOIN product_template pt ON pt.id = pp.product_tmpl_id
+        ) AS sub
+        WHERE sub.id = sol.id
+        """)
+
+
 def set_group_sale_order_dates(cr):
     cr.execute(
         """SELECT res_id FROM ir_model_data WHERE module = 'base'
@@ -121,6 +184,8 @@ def migrate(env, version):
     fill_res_company_portal_confirmation(env.cr)
     fill_sale_order_line_is_expense(env.cr)
     fill_sale_order_line_qty_delivered_method(env.cr)
+    fill_sale_order_line_untaxed_amount_invoiced(env)
+    fill_sale_order_line_untaxed_amount_to_invoice(env)
     if openupgrade.column_exists(
             env.cr, 'sale_order',
             openupgrade.get_legacy_name('commitment_date')):
