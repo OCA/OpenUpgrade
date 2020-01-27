@@ -14,20 +14,22 @@ def _migrate_tracking(cr):
         "track_all or track_incoming or track_outgoing")
     # some of them might be better off as serial tracking, we use lots
     # of size 1 as indicator for that
-    cr.execute(
+    openupgrade.logged_query(
+        cr,
         "with lot_quantities as "
-        "(select l.id, l.product_id, sum(qty) sum_qty "
+        "(select l.id, l.product_id, sum(qty) sum_qty, count(*) num "
         "from stock_production_lot l "
         "join stock_quant q on q.lot_id=l.id "
         "group by l.id, l.product_id) "
-        "update product_template "
+        "update product_template pt "
         "set tracking='serial' "
-        "where id in "
+        "from product_product pp "
+        "where pp.product_tmpl_id = pt.id AND pp.id in "
         "(select product_id from lot_quantities lq "
         "where not exists "
         "(select id from lot_quantities "
         "where lot_quantities.product_id=lq.product_id and "
-        "lot_quantities.sum_qty<>1))")
+        "(lot_quantities.sum_qty<>1 or lot_quantities.num > 1)))")
 
 
 def _migrate_pack_operation(env):
