@@ -126,6 +126,8 @@ merged_modules = [
     ('sale_fiscal_position_update', 'sale'),
     ('sale_documents_comments', 'sale_comment_propagation'),
     # from OCA/bank-payment
+    ('account_banking_payment_export', 'account_payment_order'),
+    ('account_direct_debit', 'account_payment_order'),
     ('account_payment_sale_stock', 'account_payment_sale'),
     # from OCA/website
     ('website_event_register_free', 'website_event'),
