@@ -8,16 +8,13 @@ from openupgradelib.openupgrade_tools import convert_html_fragment,\
 _SNIPPET_BLOG_POST_REPLACEMENTS = (
     _r(selector='div[data-template="snippet_latest_posts.'
                 'media_list_template"]',
-       attr_rm={"data-template": "snippet_latest_posts.media_list_template"},
+       attr_rm={"data-template"},
        attr_add={
            "data-template": "website_blog.s_latest_posts_list_template",
        }),
     _r(selector='div[data-template="snippet_latest_posts.'
                 's_latest_posts_big_picture_template"]',
-       attr_rm={
-           "data-template":
-               "snippet_latest_posts.s_latest_posts_big_picture_template"
-       },
+       attr_rm={"data-template"},
        attr_add={
            "data-template":
                "website_blog.s_latest_posts_big_picture_template"}),
