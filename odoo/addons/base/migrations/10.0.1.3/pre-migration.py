@@ -85,33 +85,54 @@ def ensure_country_state_id_on_existing_records(cr):
                 }
             )
             found_id = cr.fetchone()
-            if not found_id:
-                continue
-            # fourth: if found, ensure it has the same xmlid as the csv record
-            openupgrade.logged_query(
-                cr,
-                """
-                UPDATE ir_model_data
-                SET name = '%(data_name)s', module = 'base'
-                WHERE id = %(data_id)s AND model = 'res.country.state'
-                """ % {
-                    'data_name': data_name,
-                    'data_id': found_id[0],
-                }
-            )
-            cr.execute(
-                """
-                UPDATE res_country_state rcs
-                SET name = $$%(name)s$$
-                FROM ir_model_data imd
-                WHERE imd.id = %(data_id)s
-                    AND imd.model = 'res.country.state'
-                    AND imd.res_id = rcs.id
-                """ % {
-                    'name': name,
-                    'data_id': found_id[0],
-                }
-            )
+            if found_id:
+                # fourth: if found, ensure it has the same xmlid as the csv
+                # record
+                openupgrade.logged_query(
+                    cr,
+                    """
+                    UPDATE ir_model_data
+                    SET name = '%(data_name)s', module = 'base'
+                    WHERE id = %(data_id)s AND model = 'res.country.state'
+                    """ % {
+                        'data_name': data_name,
+                        'data_id': found_id[0],
+                    }
+                )
+                cr.execute(
+                    """
+                    UPDATE res_country_state rcs
+                    SET name = $$%(name)s$$
+                    FROM ir_model_data imd
+                    WHERE imd.id = %(data_id)s
+                        AND imd.model = 'res.country.state'
+                        AND imd.res_id = rcs.id
+                    """ % {
+                        'name': name,
+                        'data_id': found_id[0],
+                    }
+                )
+            else:
+                # if res.country.state was created by hand via Odoo web
+                # interface, it won't have any ir_model_data entry
+                # -> we create one.
+                cr.execute(
+                    """
+                    SELECT rcs.id
+                    FROM res_country_state rcs
+                    LEFT JOIN res_country rc ON rc.id=rcs.country_id
+                    WHERE rcs.code='%(state_code)s'
+                    AND rc.code = '%(country_code)s'
+                    LIMIT 1
+                    """ % {
+                        'country_code': country_code.upper(),
+                        'state_code': state_code.upper(),
+                    }
+                )
+                found_id = cr.fetchone()
+                if found_id:
+                    openupgrade.add_xmlid(
+                        cr, 'base', state[0], 'res.country.state', found_id)
         # fifth: search for duplicates, just in case, due to new constraint
         cr.execute(
             """
