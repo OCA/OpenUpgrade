@@ -51,11 +51,11 @@ def set_product_template_invoice_policy_delivery(env):
         SET invoice_policy = 'delivery'
         FROM product_product pp
         JOIN stock_move sm ON sm.product_id = pp.id
-        JOIN (SELECT product_id, max(sm_sub.create_date) maxDate
+        JOIN (SELECT sm_sub.product_id, max(sm_sub.create_date) maxDate
               FROM stock_move sm_sub
               JOIN stock_location sl ON sm_sub.location_dest_id = sl.id
                  AND sl.usage = 'customer' AND NOT sl.scrap_location
-              GROUP BY product_id) sm_date
+              GROUP BY sm_sub.product_id) sm_date
             ON sm.product_id = sm_date.product_id
                 AND sm.create_date = sm_date.maxDate
         WHERE pt.id = pp.product_tmpl_id
