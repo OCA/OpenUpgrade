@@ -14,9 +14,10 @@
 # Cas Vissers <casvissers@brahoo.nl>, 2018
 # Thomas Pot <thomas@open2bizz.nl>, 2018
 # dpms <pieter.van.de.wygaert@telenet.be>, 2019
-# Yenthe Van Ginneken <yenthespam@gmail.com>, 2019
 # Martin Trigaux, 2019
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2019
+# Maxim Vandenbroucke <mxv@odoo.com>, 2019
+# Yenthe Van Ginneken <yenthespam@gmail.com>, 2019
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2020
 # 
 msgid ""
 msgstr ""
@@ -24,7 +25,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-29 09:07+0000\n"
 "PO-Revision-Date: 2017-09-20 10:13+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2019\n"
+"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2020\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2266,7 +2267,7 @@ msgstr "Toepasbaarheid"
 #. module: account
 #: selection:tax.adjustments.wizard,adjustment_type:0
 msgid "Applied on credit journal item"
-msgstr "Toegepast op debet boeking"
+msgstr "Toegepast op credit boeking"
 
 #. module: account
 #: selection:tax.adjustments.wizard,adjustment_type:0
@@ -4363,6 +4364,12 @@ msgid ""
 "balance."
 msgstr ""
 "Verschil tussen het berekende eindsaldo en het gespecificeerde eindsoldo"
+
+#. module: account
+#: code:addons/account/models/account_move.py:235
+#, python-format
+msgid "Difference debit - credit: "
+msgstr "Verschillende debet - credit:"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
@@ -7589,7 +7596,7 @@ msgstr "Begin Dagboek"
 #: model:ir.model.fields,field_description:account.field_res_company_account_opening_move_id
 #, python-format
 msgid "Opening Journal Entry"
-msgstr "Openingsboeking"
+msgstr "Openingsbalans"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_opening_opening_move_line_ids
@@ -7599,7 +7606,7 @@ msgstr "Openingsboekingsregels"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_financial_year_op_opening_move_posted
 msgid "Opening Move Posted"
-msgstr "Openingsboeking geboekt"
+msgstr "Openingsbalans geboekt"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_cashbox_line_number
@@ -7844,7 +7851,7 @@ msgstr "Bedrijfsnaam relatie"
 #: model:ir.ui.menu,name:account.menu_partner_ledger
 #: model:ir.ui.view,arch_db:account.report_partnerledger
 msgid "Partner Ledger"
-msgstr "Saldilijst per relatie"
+msgstr "Saldilijst per klant/leverancier"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line_partner_name
@@ -10410,7 +10417,7 @@ msgid ""
 "currency. You should remove the secondary currency on the account."
 msgstr ""
 "De geselecteerde rekening van uw boeking vraagt om een tweede valuta. U "
-"dient de tweede valuta op de rekening verwijderen op deze rekening."
+"dient de tweede valuta op de rekening verwijderen."
 
 #. module: account
 #: code:addons/account/models/account_invoice.py:1612
