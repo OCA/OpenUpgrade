@@ -220,14 +220,19 @@ class AccountMove(models.Model):
         prec = self.env['decimal.precision'].precision_get('Account')
 
         self._cr.execute("""\
-            SELECT      move_id
+            SELECT      move_id, abs(sum(debit) - sum(credit))
             FROM        account_move_line
             WHERE       move_id in %s
             GROUP BY    move_id
             HAVING      abs(sum(debit) - sum(credit)) > %s
             """, (tuple(self.ids), 10 ** (-max(5, prec))))
-        if len(self._cr.fetchall()) != 0:
-            raise UserError(_("Cannot create unbalanced journal entry."))
+
+        res = self._cr.fetchone()
+        if res:
+            raise UserError(
+                _("Cannot create unbalanced journal entry.") +
+                "\n\n{}{}".format(_('Difference debit - credit: '), res[1])
+            )
         return True
 
     @api.multi
@@ -1148,7 +1153,7 @@ class AccountMoveLine(models.Model):
         writeoff_move.post()
 
         # Return the writeoff move.line which is to be reconciled
-        return writeoff_move.line_ids.filtered(lambda r: r.account_id == self[0].account_id)
+        return writeoff_move.line_ids.filtered(lambda r: r.account_id == self[0].account_id).sorted(key='id')[:1]
 
     @api.multi
     def _prepare_writeoff_first_line_values(self, values):
