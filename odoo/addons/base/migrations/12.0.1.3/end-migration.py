@@ -123,6 +123,7 @@ def fill_res_users_password_from_password_crypt(cr):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.disable_invalid_filters(env)
     update_model_terms_translations(env)
     fork_off_system_user(env)
     if openupgrade.column_exists(env.cr, 'res_users', 'password_crypt'):
