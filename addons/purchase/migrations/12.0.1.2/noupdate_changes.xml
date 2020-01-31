@@ -2,7 +2,7 @@
 <odoo>
   <record id="email_template_edi_purchase" model="mail.template">
     <field name="name">Purchase Order: Send RFQ</field>
-    <field name="email_from">${object.create_uid.email_formatted | safe}</field>
+    <field name="email_from"/>
     <field name="body_html" type="html">
       <div style="margin: 0px; padding: 0px;">
         <p style="margin: 0px; padding: 0px; font-size: 13px;">
@@ -27,7 +27,7 @@
   </record>
   <record id="email_template_edi_purchase_done" model="mail.template">
     <field name="name">Purchase Order: Send PO</field>
-    <field name="email_from">${object.create_uid.email_formatted | safe}</field>
+    <field name="email_from"/>
     <field name="body_html" type="html">
       <div style="margin: 0px; padding: 0px;">
         <p style="margin: 0px; padding: 0px; font-size: 13px;">

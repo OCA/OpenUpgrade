@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mx_coa" model="account.chart.template">
+    <field name="transfer_account_id"/>
+    <field name="transfer_account_code_prefix">102.01.01</field>
+    <field name="property_stock_account_input_categ_id" ref="cuenta205_06_01"/>
+    <field name="property_stock_account_output_categ_id" ref="cuenta107_05_01"/>
+    <field name="property_stock_valuation_account_id" ref="cuenta115_01"/>
+  </record>
+  <record id="tax1" model="account.tax.template">
+    <field name="cash_basis_account"/>
+    <field name="cash_basis_base_account_id" ref="cuenta801_01_99"/>
+    <field name="cash_basis_account_id" ref="cuenta216_10_20"/>
+  </record>
+  <record id="tax12" model="account.tax.template">
+    <field name="cash_basis_account"/>
+    <field name="cash_basis_base_account_id" ref="cuenta801_01_99"/>
+    <field name="cash_basis_account_id" ref="cuenta208_01"/>
+  </record>
+  <record id="tax13" model="account.tax.template">
+    <field name="cash_basis_account"/>
+    <field name="cash_basis_base_account_id" ref="cuenta801_01_99"/>
+    <field name="cash_basis_account_id" ref="cuenta118_01"/>
+  </record>
+  <record id="tax14" model="account.tax.template">
+    <field name="cash_basis_account"/>
+    <field name="cash_basis_base_account_id" ref="cuenta801_01_99"/>
+    <field name="cash_basis_account_id" ref="cuenta118_01"/>
+  </record>
+  <record id="tax16" model="account.tax.template">
+    <field name="cash_basis_account"/>
+    <field name="cash_basis_account_id" ref="cuenta118_01"/>
+  </record>
+  <record id="tax17" model="account.tax.template">
+    <field name="cash_basis_account"/>
+    <field name="cash_basis_account_id" ref="cuenta208_01"/>
+  </record>
+  <record id="tax2" model="account.tax.template">
+    <field name="cash_basis_account"/>
+    <field name="cash_basis_base_account_id" ref="cuenta801_01_99"/>
+    <field name="cash_basis_account_id" ref="cuenta216_10_20"/>
+  </record>
+  <record id="tax7" model="account.tax.template">
+    <field name="cash_basis_account"/>
+    <field name="cash_basis_base_account_id" ref="cuenta801_01_99"/>
+    <field name="cash_basis_account_id" ref="cuenta216_10_20"/>
+  </record>
+  <record id="tax8" model="account.tax.template">
+    <field name="cash_basis_account"/>
+    <field name="cash_basis_base_account_id" ref="cuenta801_01_99"/>
+    <field name="cash_basis_account_id" ref="cuenta216_10_20"/>
+  </record>
+  <record id="tax9" model="account.tax.template">
+    <field name="cash_basis_account"/>
+    <field name="cash_basis_base_account_id" ref="cuenta801_01_99"/>
+    <field name="cash_basis_account_id" ref="cuenta208_01"/>
+  </record>
+</odoo>

@@ -10,14 +10,14 @@
                     </span></td><td valign="middle" align="right"><img src="${'/logo.png?company=%s' % object.company_id.id}" style="padding: 0px; margin: 0px; height: auto; width: 80px;" alt="${'%s' % object.company_id.name}"/></td></tr><tr><td colspan="2" style="text-align:center;"><hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/></td></tr></table></td></tr><!-- EVENT DESCRIPTION --><tr><td align="center" style="min-width: 590px;"><table width="590" border="0" cellpadding="0" cellspacing="0" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;"><tr><td valign="top" style="font-size: 14px;"><div>
                         Hello ${object.name},<br/>
                         We are excited to remind you that the event
-                        % if 'website_url' in object.event_id and object.event_id.website_url:
+                        % if 'website_published' in object.event_id and object.event_id.website_published:
                             <a href="${object.event_id.website_url}" style="color:#875A7B;text-decoration:none;">${object.event_id.name}</a>
                         % else:
                             <strong>${object.event_id.name}</strong>
                         % endif
                         is starting <strong>${object.get_date_range_str()}</strong>.
                     </div>
-                    % if 'website_url' in object.event_id and object.event_id.website_url:
+                    % if 'website_published' in object.event_id and object.event_id.website_published:
                     <div style="margin: 16px 0px 16px 0px;"><a href="${object.event_id.website_url}" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:16px;">View Event</a><br/></div>
                     % endif
                     <div>
@@ -124,14 +124,14 @@
                     </span></td><td valign="middle" align="right"><img src="${'/logo.png?company=%s' % object.company_id.id}" style="padding: 0px; margin: 0px; height: auto; width: 80px;" alt="${'%s' % object.company_id.name}"/></td></tr><tr><td colspan="2" style="text-align:center;"><hr width="100%" style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;"/></td></tr></table></td></tr><!-- EVENT DESCRIPTION --><tr><td align="center" style="min-width: 590px;"><table width="590" border="0" cellpadding="0" cellspacing="0" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;"><tr><td valign="top" style="font-size: 14px;"><div>
                         Hello ${object.name or ''},<br/>
                         We are happy to confirm your registration to the event
-                        % if 'website_url' in object.event_id and object.event_id.website_url:
+                        % if 'website_published' in object.event_id and object.event_id.website_published:
                             <a href="${object.event_id.website_url}" style="color:#875A7B;text-decoration:none;">${object.event_id.name}</a>
                         % else:
                             <strong>${object.event_id.name}</strong>
                         % endif
                         for attendee ${object.name}.
                     </div>
-                    % if 'website_url' in object.event_id and object.event_id.website_url:
+                    % if 'website_published' in object.event_id and object.event_id.website_published:
                     <div style="margin: 16px 0px 16px 0px;"><a href="${object.event_id.website_url}" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:16px;">View Event</a><br/></div>
                     % endif
                     <div>

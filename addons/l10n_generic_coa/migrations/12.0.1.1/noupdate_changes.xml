@@ -1,11 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="conf_cas_interim1" model="account.account.template">
-    <field name="reconcile" eval="True"/>
-  </record>
-  <record id="conf_cas_interim2" model="account.account.template">
-    <field name="reconcile" eval="True"/>
-  </record>
 <!--  Handled in postmigration of 'account' module:
   <record id="configurable_chart_template" model="account.chart.template">
     <field name="transfer_account_id"/>

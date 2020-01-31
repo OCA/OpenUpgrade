@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="sales_team.team_sales_department" model="crm.team" forcecreate="False">
+    <field name="dashboard_graph_model">crm.lead</field>
+    <field name="use_leads"/>
+  </record>
+</odoo>

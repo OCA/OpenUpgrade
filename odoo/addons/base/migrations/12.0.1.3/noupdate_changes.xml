@@ -171,7 +171,13 @@ System</span>]]></field>
   <record id="dm" model="res.country">
     <field eval="1767" name="phone_code"/>
   </record>
-  <record id="mr" model="res.country">
-    <field name="currency_id" ref="MRU"/>
+  <record id="ARS" model="res.currency">
+    <field name="position">before</field>
+  </record>
+  <record id="hr" model="res.country">
+    <field eval="'%(street)s \n%(street2)s \n%(zip)s %(city)s \n%(country_name)s'" name="address_format"/>
+  </record>
+  <record id="mu" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(city)s %(state_code)s %(zip)s\n%(country_name)s'" name="address_format"/>
   </record>
 </odoo>

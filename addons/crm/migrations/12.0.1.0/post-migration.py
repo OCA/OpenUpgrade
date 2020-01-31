@@ -36,6 +36,9 @@ def migrate(env, version):
     map_crm_team_dashboard_graph_model(env.cr)
     openupgrade.load_data(
         env.cr, 'crm', 'migrations/12.0.1.0/noupdate_changes.xml')
+    openupgrade.load_data(
+        env.cr, 'crm', 'migrations/12.0.1.0/noupdate_changes2.xml',
+        mode='init_no_create')
     openupgrade.delete_records_safely_by_xml_id(
         env, [
             'crm.crm_rule_all_lead_report',
