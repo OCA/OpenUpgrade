@@ -6,6 +6,9 @@
         <field name="model_id" ref="model_mail_mail"/>
         <field name="state">code</field>
         <field name="code">model.process_email_queue()</field>
+<!--        <field name="args"/>-->
+<!--        <field name="function"/>-->
+<!--        <field name="model"/>-->
     </record>
 
     <record id="ir_cron_module_update_notification" model="ir.cron">
@@ -13,6 +16,10 @@
         <field name="model_id" ref="model_publisher_warranty_contract"/>
         <field name="state">code</field>
         <field name="code">model.update_notification(None)</field>
+<!--        <field name="active"/>-->
+<!--        <field name="args"/>-->
+<!--        <field name="function"/>-->
+<!--        <field name="model"/>-->
     </record>
 
     <record id="base.user_root" model="res.users">

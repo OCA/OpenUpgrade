@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="impuestos_plantilla_isv_por_cobrar" model="account.tax.template">
+    <field name="tax_group_id" ref="tax_group_iva_15"/>
+  </record>
+  <record id="impuestos_plantilla_isv_por_pagar" model="account.tax.template">
+    <field name="tax_group_id" ref="tax_group_iva_15"/>
+  </record>
+</odoo>

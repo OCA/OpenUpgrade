@@ -1,13 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-
   <record id="ir_cron_scheduler_alarm" model="ir.cron" forcecreate="True">
+<!--    <field name="function"/>-->
+<!--    <field name="model"/>-->
     <field name="name">Calendar: Event Reminder</field>
     <field name="code">model.get_next_mail()</field>
     <field name="model_id" ref="model_calendar_alarm_manager"/>
     <field name="state">code</field>
   </record>
-
+  <record id="alarm_mail_1" model="calendar.alarm">
+    <field name="name">3 Hour(s), by e-mail</field>
+  </record>
+  <record id="alarm_mail_2" model="calendar.alarm">
+    <field name="name">6 Hour(s), by e-mail</field>
+  </record>
   <record id="calendar_template_meeting_reminder" model="mail.template">
     <field name="body_html"><![CDATA[
 <div summary="o_mail_template" style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
@@ -92,7 +98,6 @@
     </table>
 </div>]]></field>
   </record>
-
   <record id="calendar_template_meeting_changedate" model="mail.template">
     <field name="body_html"><![CDATA[
 <div summary="o_mail_template" style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
@@ -177,7 +182,6 @@
     </table>
 </div>]]></field>
   </record>
-
   <record id="calendar_template_meeting_invitation" model="mail.template">
     <field name="body_html"><![CDATA[
 <div summary="o_mail_template" style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
@@ -261,7 +265,6 @@
     </table>
 </div>]]></field>
   </record>
-
   <record id="mail.mail_activity_data_meeting" model="mail.activity.type">
     <field name="category">meeting</field>
   </record>

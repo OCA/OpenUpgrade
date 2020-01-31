@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="payment.payment_acquirer_transfer" model="payment.acquirer">
+<!--    <field name="auto_confirm"/>-->
     <field name="pre_msg"><![CDATA[
         <p>Transfer information will be provided after choosing the payment aquirer.</p>]]></field>
     <field name="view_template_id" ref="transfer_form"/>

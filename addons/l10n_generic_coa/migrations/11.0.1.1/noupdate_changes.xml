@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="conf_cog" model="account.account.template">
+    <field name="name">Cost of Goods Sold</field>
+  </record>
+  <record id="purchase_tax_template" model="account.tax.template">
+    <field name="tax_group_id" ref="tax_group_15"/>
+  </record>
+  <record id="sale_tax_template" model="account.tax.template">
+    <field name="tax_group_id" ref="tax_group_15"/>
+  </record>
+</odoo>

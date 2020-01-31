@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="free_delivery_carrier" model="delivery.carrier">
+    <field name="fixed_price">0.0</field>
+    <field name="free_if_more_than"/>
+    <field name="product_sale_ok"/>
+    <field name="product_type"/>
+    <field name="free_over" eval="True"/>
+    <field name="product_id" ref="delivery.product_product_delivery"/>
+  </record>
+</odoo>

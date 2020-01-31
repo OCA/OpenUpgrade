@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment.payment_acquirer_stripe" model="payment.acquirer">
+    <field name="view_template_id" ref="stripe_form"/>
+  </record>
+</odoo>
