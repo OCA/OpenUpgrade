@@ -147,6 +147,7 @@ class AccountInvoice(models.Model):
             domain = [('account_id', '=', self.account_id.id),
                       ('partner_id', '=', self.env['res.partner']._find_accounting_partner(self.partner_id).id),
                       ('reconciled', '=', False),
+                      ('move_id.state', '=', 'posted'),
                       '|',
                         '&', ('amount_residual_currency', '!=', 0.0), ('currency_id','!=', None),
                         '&', ('amount_residual_currency', '=', 0.0), '&', ('currency_id','=', None), ('amount_residual', '!=', 0.0)]
@@ -435,10 +436,12 @@ class AccountInvoice(models.Model):
                 ran_num = str(uuid.uuid4().int)
                 identification_number = int(ran_num[:5] + ran_num[-5:])
             prefix = self.number
-        else:
-            #self.company_id.invoice_reference_type == 'partner'
+        elif self.company_id.invoice_reference_type == 'partner':
             identification_number = self.partner_id.id
             prefix = 'CUST'
+        else:
+            return ''
+
         return '%s/%s' % (prefix, str(identification_number % 97).rjust(2, '0'))
 
     # Load all Vendor Bill lines
@@ -475,7 +478,7 @@ class AccountInvoice(models.Model):
         for invoice in self:
             invoice.access_url = '/my/invoices/%s' % (invoice.id)
 
-    @api.depends('state', 'journal_id', 'date_invoice')
+    @api.depends('state', 'journal_id', 'date', 'date_invoice')
     def _get_sequence_prefix(self):
         """ computes the prefix of the number that will be assigned to the first invoice/bill/refund of a journal, in order to
         let the user manually change it.
@@ -487,9 +490,10 @@ class AccountInvoice(models.Model):
             return
         for invoice in self:
             journal_sequence, domain = invoice._get_seq_number_next_stuff()
+            sequence_date = invoice.date or invoice.date_invoice
             if (invoice.state == 'draft') and not self.search(domain, limit=1):
-                prefix, dummy = journal_sequence.with_context(ir_sequence_date=invoice.date_invoice,
-                                                              ir_sequence_date_range=invoice.date_invoice)._get_prefix_suffix()
+                prefix, dummy = journal_sequence.with_context(ir_sequence_date=sequence_date,
+                                                              ir_sequence_date_range=sequence_date)._get_prefix_suffix()
                 invoice.sequence_number_next_prefix = prefix
             else:
                 invoice.sequence_number_next_prefix = False
@@ -502,7 +506,8 @@ class AccountInvoice(models.Model):
         for invoice in self:
             journal_sequence, domain = invoice._get_seq_number_next_stuff()
             if (invoice.state == 'draft') and not self.search(domain, limit=1):
-                number_next = journal_sequence._get_current_sequence().number_next_actual
+                sequence_date = invoice.date or invoice.date_invoice
+                number_next = journal_sequence._get_current_sequence(sequence_date=sequence_date).number_next_actual
                 invoice.sequence_number_next = '%%0%sd' % journal_sequence.padding % number_next
             else:
                 invoice.sequence_number_next = ''
@@ -518,7 +523,8 @@ class AccountInvoice(models.Model):
         result = re.match("(0*)([0-9]+)", nxt)
         if result and journal_sequence:
             # use _get_current_sequence to manage the date range sequences
-            sequence = journal_sequence._get_current_sequence()
+            sequence_date = self.date or self.date_invoice
+            sequence = journal_sequence._get_current_sequence(sequence_date=sequence_date)
             sequence.number_next = int(result.group(2))
 
     @api.multi
@@ -1535,6 +1541,7 @@ class AccountInvoice(models.Model):
         values['origin'] = invoice.number
         values['payment_term_id'] = False
         values['refund_invoice_id'] = invoice.id
+        values['reference'] = False
 
         if values['type'] == 'in_refund':
             partner_bank_result = self._get_partner_bank_id(values['company_id'])

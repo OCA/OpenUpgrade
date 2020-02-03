@@ -430,7 +430,8 @@ class StockMove(models.Model):
 
             qty_done = move.product_uom._compute_quantity(move.quantity_done, move.product_id.uom_id)
             qty = forced_qty or qty_done
-            if float_is_zero(product_tot_qty_available, precision_rounding=rounding):
+            # If the current stock is negative, we should not average it with the incoming one
+            if float_is_zero(product_tot_qty_available, precision_rounding=rounding) or product_tot_qty_available < 0:
                 new_std_price = move._get_price_unit()
             elif float_is_zero(product_tot_qty_available + move.product_qty, precision_rounding=rounding) or \
                     float_is_zero(product_tot_qty_available + qty, precision_rounding=rounding):
@@ -758,3 +759,5 @@ class ProcurementGroup(models.Model):
     def _run_scheduler_tasks(self, use_new_cursor=False, company_id=False):
         super(ProcurementGroup, self)._run_scheduler_tasks(use_new_cursor=use_new_cursor, company_id=company_id)
         self.env['stock.move']._run_fifo_vacuum()
+        if use_new_cursor:
+            self._cr.commit()

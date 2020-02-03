@@ -11,8 +11,6 @@ from odoo.tools import pycompat
 
 _logger = logging.getLogger(__name__)
 
-EDITING_ATTRIBUTES = ['data-oe-model', 'data-oe-id', 'data-oe-field', 'data-oe-xpath', 'data-note-id']
-
 
 class IrUiView(models.Model):
     _inherit = 'ir.ui.view'
@@ -72,6 +70,7 @@ class IrUiView(models.Model):
         xpath = etree.Element('xpath', expr="//*[hasclass('oe_structure')][@id='{}']".format(el.get('id')), position="replace")
         arch.append(xpath)
         structure = etree.Element(el.tag, attrib=el.attrib)
+        structure.text = el.text
         xpath.append(structure)
         for child in el.iterchildren(tag=etree.Element):
             structure.append(copy.deepcopy(child))
@@ -138,11 +137,6 @@ class IrUiView(models.Model):
         # Note: after a standard edition, the tail *must not* be replaced
         if replace_tail:
             root.tail = replacement.tail
-        # update attributes
-        root.attrib.clear()
-        root.attrib.update(replacement.attrib)
-        for attribute in EDITING_ATTRIBUTES:
-            root.attrib.pop(attribute, None)
         # replace all children
         del root[:]
         for child in replacement:

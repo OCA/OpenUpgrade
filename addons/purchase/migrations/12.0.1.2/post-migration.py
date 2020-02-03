@@ -5,14 +5,8 @@
 from openupgradelib import openupgrade
 
 
-def reset_context_purchase_actions(env):
-    env.ref('purchase.purchase_rfq').context = '{}'
-    env.ref('purchase.purchase_form_action').context = '{}'
-
-
 @openupgrade.migrate()
 def migrate(env, version):
-    reset_context_purchase_actions(env)
     openupgrade.load_data(
         env.cr, 'purchase', 'migrations/12.0.1.2/noupdate_changes.xml')
     openupgrade.delete_record_translations(

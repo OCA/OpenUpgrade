@@ -1,10 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="seq_purchase_tender" model="ir.sequence">
-    <field name="name">Call for Tender</field>
-    <field name="code">purchase.requisition.purchase.tender</field>
-    <field name="company_id" eval="False"/>
-  </record>
   <record id="type_multi" model="purchase.requisition.type">
     <field name="name">Call for Tender</field>
   </record>

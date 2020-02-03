@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="definition_crm_lead_delay_close" model="gamification.goal.definition">
+    <field name="field_date_id" eval="ref('crm.field_crm_lead__date_open')"/>
+    <field name="field_id" eval="ref('crm.field_crm_lead__day_open')"/>
+    <field name="model_id" eval="ref('crm.model_crm_lead')"/>
+  </record>
+  <record id="definition_crm_lead_delay_open" model="gamification.goal.definition">
+    <field name="field_date_id" eval="ref('crm.field_crm_lead__date_closed')"/>
+    <field name="field_id" eval="ref('crm.field_crm_lead__day_close')"/>
+    <field name="model_id" eval="ref('crm.model_crm_lead')"/>
+  </record>
+  <record id="definition_crm_nbr_customer_refunds" model="gamification.goal.definition">
+    <field name="field_date_id" eval="ref('account.field_account_invoice_report__date')"/>
+  </record>
+  <record id="definition_crm_nbr_new_opportunities" model="gamification.goal.definition">
+    <field name="field_date_id" eval="ref('crm.field_crm_lead__date_open')"/>
+  </record>
+  <record id="definition_crm_nbr_paid_sale_order" model="gamification.goal.definition">
+    <field name="field_date_id" eval="ref('account.field_account_invoice_report__date')"/>
+  </record>
+  <record id="definition_crm_nbr_sale_order_created" model="gamification.goal.definition">
+    <field name="field_date_id" eval="ref('sale.field_sale_order__date_order')"/>
+  </record>
+  <record id="definition_crm_tot_customer_refunds" model="gamification.goal.definition">
+    <field name="field_date_id" eval="ref('account.field_account_invoice_report__date')"/>
+    <field name="field_id" eval="ref('account.field_account_invoice_report__price_total')"/>
+  </record>
+  <record id="definition_crm_tot_invoices" model="gamification.goal.definition">
+    <field name="field_date_id" eval="ref('account.field_account_invoice_report__date')"/>
+    <field name="field_id" eval="ref('account.field_account_invoice_report__price_total')"/>
+  </record>
+  <record id="definition_crm_tot_paid_sale_order" model="gamification.goal.definition">
+    <field name="field_date_id" eval="ref('account.field_account_invoice_report__date')"/>
+    <field name="field_id" eval="ref('account.field_account_invoice_report__price_total')"/>
+  </record>
+</odoo>

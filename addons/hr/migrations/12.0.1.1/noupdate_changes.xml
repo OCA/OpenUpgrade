@@ -1,12 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="employee_admin" model="hr.employee">
-    <field name="name" eval="obj(ref('base.partner_admin')).name" model="res.partner"/>
-    <field name="address_home_id" ref="base.partner_admin"/>
-    <field name="address_id" ref="base.partner_admin"/>
-    <field name="image" eval="obj(ref('base.partner_admin')).image" model="res.partner"/>
-    <field name="user_id" ref="base.user_admin"/>
-  </record>
   <record id="mail_template_data_unknown_employee_email_address" model="mail.template">
     <field name="body_html" type="html">
       <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
