@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="gst_purc_en" model="account.tax.template">
+    <field name="description">GST 5%</field>
+    <field name="tax_group_id" ref="tax_group_gst_5"/>
+  </record>
+  <record id="gst_sale_en" model="account.tax.template">
+    <field name="description">GST 5%</field>
+    <field name="tax_group_id" ref="tax_group_gst_5"/>
+  </record>
+  <record id="gstpst_bc_purc_en" model="account.tax.template">
+    <field name="description">GST + PST</field>
+    <field name="tax_group_id" ref="tax_group_fix"/>
+  </record>
+  <record id="gstpst_bc_sale_en" model="account.tax.template">
+    <field name="description">GST + PST</field>
+    <field name="tax_group_id" ref="tax_group_fix"/>
+  </record>
+  <record id="gstpst_mb_purc_en" model="account.tax.template">
+    <field name="description">GST + PST</field>
+    <field name="tax_group_id" ref="tax_group_fix"/>
+  </record>
+  <record id="gstpst_mb_sale_en" model="account.tax.template">
+    <field name="description">GST + PST</field>
+    <field name="tax_group_id" ref="tax_group_fix"/>
+  </record>
+  <record id="gstpst_purc_bc_gst_en" model="account.tax.template">
+    <field name="description">GST 5%</field>
+    <field name="tax_group_id" ref="tax_group_gst_5"/>
+  </record>
+  <record id="gstpst_purc_mb_gst_en" model="account.tax.template">
+    <field name="description">GST 5%</field>
+    <field name="tax_group_id" ref="tax_group_gst_5"/>
+  </record>
+  <record id="gstpst_purc_sk_gst_en" model="account.tax.template">
+    <field name="description">GST 5%</field>
+    <field name="tax_group_id" ref="tax_group_gst_5"/>
+  </record>
+  <record id="gstpst_sale_bc_gst_en" model="account.tax.template">
+    <field name="description">GST 5%</field>
+    <field name="tax_group_id" ref="tax_group_gst_5"/>
+  </record>
+  <record id="gstpst_sale_mb_gst_en" model="account.tax.template">
+    <field name="description">GST 5%</field>
+    <field name="tax_group_id" ref="tax_group_gst_5"/>
+  </record>
+  <record id="gstpst_sale_sk_gst_en" model="account.tax.template">
+    <field name="description">GST 5%</field>
+    <field name="tax_group_id" ref="tax_group_gst_5"/>
+  </record>
+  <record id="gstpst_sk_purc_en" model="account.tax.template">
+    <field name="description">GST + PST</field>
+    <field name="tax_group_id" ref="tax_group_fix"/>
+  </record>
+  <record id="gstpst_sk_sale_en" model="account.tax.template">
+    <field name="description">GST + PST</field>
+    <field name="tax_group_id" ref="tax_group_fix"/>
+  </record>
+  <record id="gstqst_purc_en" model="account.tax.template">
+    <field name="description">GST + QST</field>
+    <field name="tax_group_id" ref="tax_group_fix"/>
+  </record>
+  <record id="gstqst_purc_gst_en" model="account.tax.template">
+    <field name="description">GST 5%</field>
+    <field name="tax_group_id" ref="tax_group_gst_5"/>
+  </record>
+  <record id="gstqst_sale_en" model="account.tax.template">
+    <field name="description">GST + QST</field>
+    <field name="tax_group_id" ref="tax_group_fix"/>
+  </record>
+  <record id="gstqst_sale_gst_en" model="account.tax.template">
+    <field name="description">GST 5%</field>
+    <field name="tax_group_id" ref="tax_group_gst_5"/>
+  </record>
+  <record id="hst13_purc_en" model="account.tax.template">
+    <field name="description">HST 13%</field>
+    <field name="tax_group_id" ref="tax_group_hst_13"/>
+  </record>
+  <record id="hst13_sale_en" model="account.tax.template">
+    <field name="description">HST 13%</field>
+    <field name="tax_group_id" ref="tax_group_hst_13"/>
+  </record>
+  <record id="hst14_purc_en" model="account.tax.template">
+    <field name="description">HST 14%</field>
+    <field name="tax_group_id" ref="tax_group_hst_14"/>
+  </record>
+  <record id="hst14_sale_en" model="account.tax.template">
+    <field name="description">HST 14%</field>
+    <field name="tax_group_id" ref="tax_group_hst_14"/>
+  </record>
+  <record id="hst15_purc_en" model="account.tax.template">
+    <field name="description">HST 15%</field>
+    <field name="tax_group_id" ref="tax_group_hst_15"/>
+  </record>
+  <record id="hst15_sale_en" model="account.tax.template">
+    <field name="description">HST 15%</field>
+    <field name="tax_group_id" ref="tax_group_hst_15"/>
+  </record>
+  <record id="pst_bc_purc_en" model="account.tax.template">
+    <field name="description">PST 7%</field>
+    <field name="tax_group_id" ref="tax_group_gst_7"/>
+  </record>
+  <record id="pst_bc_sale_en" model="account.tax.template">
+    <field name="description">PST 7%</field>
+    <field name="tax_group_id" ref="tax_group_gst_7"/>
+  </record>
+  <record id="pst_mb_purc_en" model="account.tax.template">
+    <field name="description">PST 8%</field>
+    <field name="tax_group_id" ref="tax_group_pst_8"/>
+  </record>
+  <record id="pst_mb_sale_en" model="account.tax.template">
+    <field name="description">PST 8%</field>
+    <field name="tax_group_id" ref="tax_group_gst_8"/>
+  </record>
+  <record id="pst_sk_purc_en" model="account.tax.template">
+    <field name="description">PST 5%</field>
+    <field name="tax_group_id" ref="tax_group_pst_5"/>
+  </record>
+  <record id="pst_sk_sale_en" model="account.tax.template">
+    <field name="description">PST 5%</field>
+    <field name="tax_group_id" ref="tax_group_pst_5"/>
+  </record>
+  <record id="qst_purc_en" model="account.tax.template">
+    <field name="description">QST 9.975%</field>
+    <field name="tax_group_id" ref="tax_group_qst_9975"/>
+  </record>
+  <record id="qst_sale_en" model="account.tax.template">
+    <field name="description">QST 9.975%</field>
+    <field name="tax_group_id" ref="tax_group_qst_9975"/>
+  </record>
+</odoo>

@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
     <record id="ir_cron_update_membership" model="ir.cron">
+<!--        <field name="function"/>-->
+<!--        <field name="model"/>-->
         <field name="name">Membership: update memberships</field>
         <field name="code">model._cron_update_membership()</field>
         <field name="model_id" ref="base.model_res_partner"/>
