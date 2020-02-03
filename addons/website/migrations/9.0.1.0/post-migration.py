@@ -15,3 +15,5 @@ def migrate(env, version):
     openupgrade.load_data(
         env.cr, 'website', 'migrations/9.0.1.0/noupdate_changes.xml',
     )
+    # Remove action from main website backend menu
+    env.ref("website.menu_website_configuration").action = False
