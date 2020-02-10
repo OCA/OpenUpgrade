@@ -1,11 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="email_template_edi_purchase" model="mail.template">
-    <field name="email_from"/>
-  </record>
-  <record id="email_template_edi_purchase_done" model="mail.template">
-    <field name="email_from"/>
-  </record>
   <record id="model_purchase_order_action_share" model="ir.actions.server">
     <field name="binding_view_types">form</field>
   </record>

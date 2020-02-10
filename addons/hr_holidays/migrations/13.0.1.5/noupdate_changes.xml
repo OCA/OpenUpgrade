@@ -4,28 +4,28 @@
     <field name="name">Paid Time Off</field>
     <field name="validity_start" eval="time.strftime('%Y-%m-01')"/>
     <field name="validity_stop"/>
-    <field name="validation_type">both</field>
-    <field name="responsible_id" ref="base.user_admin"/>
     <field name="allocation_notif_subtype_id" eval="ref('mt_leave_allocation')"/>
     <field name="leave_notif_subtype_id" eval="ref('mt_leave')"/>
+    <field name="responsible_id" ref="base.user_admin"/>
+    <field name="validation_type">both</field>
   </record>
   <record id="holiday_status_comp" model="hr.leave.type">
     <field name="validity_start" eval="False"/>
     <field name="validity_stop"/>
-    <field name="validation_type">both</field>
-    <field name="responsible_id" ref="base.user_admin"/>
     <field name="leave_notif_subtype_id" eval="ref('mt_leave')"/>
+    <field name="responsible_id" ref="base.user_admin"/>
+    <field name="validation_type">both</field>
   </record>
   <record id="holiday_status_sl" model="hr.leave.type">
     <field name="name">Sick Time Off</field>
-    <field name="responsible_id" ref="base.user_admin"/>
     <field name="leave_notif_subtype_id" eval="ref('mt_leave_sick')"/>
+    <field name="responsible_id" ref="base.user_admin"/>
   </record>
   <record id="holiday_status_unpaid" model="hr.leave.type">
     <field name="allocation_type">no</field>
-    <field name="responsible_id" ref="base.user_admin"/>
     <field name="leave_notif_subtype_id" eval="ref('mt_leave_unpaid')"/>
     <field name="request_unit">hour</field>
+    <field name="responsible_id" ref="base.user_admin"/>
   </record>
   <record id="mail_act_leave_approval" model="mail.activity.type">
     <field name="name">Time Off Approval</field>

@@ -136,14 +136,14 @@
         </tr>
       </table>
     </field>
-    <field name="user_signature" eval="False"/>
     <field name="auto_delete" eval="True"/>
+    <field name="user_signature" eval="False"/>
   </record>
   <record id="email_template_goal_reminder" model="mail.template">
     <field name="name">Goal: Reminder for Goal Update</field>
+    <field name="auto_delete" eval="True"/>
     <field name="partner_to">${object.user_id.partner_id.id}</field>
     <field name="user_signature" eval="False"/>
-    <field name="auto_delete" eval="True"/>
   </record>
   <record id="goal_global_multicompany" model="ir.rule">
     <field name="domain_force">[('user_id.company_id', 'in', company_ids)]</field>

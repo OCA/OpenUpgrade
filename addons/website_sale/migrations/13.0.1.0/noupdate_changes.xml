@@ -106,6 +106,12 @@
     <field name="email_from">${(object.user_id.email_formatted or user.email_formatted or '') | safe}</field>
     <field name="name">Sales Order: Cart Recovery Email</field>
   </record>
+  <record id="product_pricelist_comp_rule" model="ir.rule">
+    <field name="domain_force">['|', ('company_id', 'in', [False,website.company_id.id]), ('company_id', 'in', company_ids)]</field>
+  </record>
+  <record id="product_pricelist_item_comp_rule" model="ir.rule">
+    <field name="domain_force">['|', ('company_id', 'in', [False,website.company_id.id]), ('company_id', 'in', company_ids)]</field>
+  </record>
   <record id="sales_team.salesteam_website_sales" model="crm.team">
     <field name="company_id"/>
     <field name="dashboard_graph_model"/>
