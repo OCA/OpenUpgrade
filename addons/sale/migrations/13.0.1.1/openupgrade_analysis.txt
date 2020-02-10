@@ -40,12 +40,17 @@ NEW ir.model.access: sale.access_account_account_tag_sale_salesman
 NEW ir.model.access: sale.access_account_account_type_sale_salesman
 NEW ir.model.access: sale.access_account_move_manager
 NEW ir.model.access: sale.access_account_move_salesman
+NEW ir.model.access: sale.access_account_partial_reconcile_salesman
 DEL ir.model.access: sale.access_account_invoice_line_salesman
 DEL ir.model.access: sale.access_account_invoice_manager
 DEL ir.model.access: sale.access_account_invoice_salesman
 DEL ir.model.access: sale.access_account_invoice_tax_sale_manager
 DEL ir.model.access: sale.access_account_invoice_tax_salesman
 DEL ir.model.access: sale.access_product_price_history_salemanager
+NEW ir.rule: sale.account_move_line_personal_rule (noupdate)
+NEW ir.rule: sale.account_move_line_see_all (noupdate)
+NEW ir.rule: sale.account_move_personal_rule (noupdate)
+NEW ir.rule: sale.account_move_see_all (noupdate)
 NEW ir.ui.view: sale.account_invoice_view_tree
 NEW ir.ui.view: sale.assets_tests
 NEW ir.ui.view: sale.product_template_sale_form_view

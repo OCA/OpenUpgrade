@@ -77,7 +77,7 @@ website_slides / slide.channel.partner    / channel_id (many2one)         : NEW 
 website_slides / slide.channel.partner    / completed (boolean)           : NEW
 website_slides / slide.channel.partner    / completion (integer)          : NEW
 website_slides / slide.channel.partner    / partner_id (many2one)         : NEW relation: res.partner, required
-website_slides / slide.channel.tag        / channel_ids (many2many)       : NEW relation: slide.channel.tag
+website_slides / slide.channel.tag        / channel_ids (many2many)       : NEW relation: slide.channel
 website_slides / slide.channel.tag        / group_id (many2one)           : NEW relation: slide.channel.tag.group, required
 website_slides / slide.channel.tag        / group_sequence (integer)      : NEW isrelated: related, stored
 website_slides / slide.channel.tag        / name (char)                   : NEW required
