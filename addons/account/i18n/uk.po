@@ -11,7 +11,7 @@
 # Sergey Doroshenko <sdoroshenko@artwebny.com>, 2019
 # Bohdan Lisnenko, 2019
 # Martin Trigaux, 2019
-# Alina Lisnenko <alinasemeniuk1@gmail.com>, 2019
+# Alina Lisnenko <alinasemeniuk1@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -19,7 +19,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-05 12:32+0000\n"
 "PO-Revision-Date: 2019-08-26 09:06+0000\n"
-"Last-Translator: Alina Lisnenko <alinasemeniuk1@gmail.com>, 2019\n"
+"Last-Translator: Alina Lisnenko <alinasemeniuk1@gmail.com>, 2020\n"
 "Language-Team: Ukrainian (https://www.transifex.com/odoo/teams/41243/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -7279,7 +7279,7 @@ msgstr "Переміщення узгоджено"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_reversal__move_type
 msgid "Move Type"
-msgstr ""
+msgstr "Тип переміщення"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -9180,7 +9180,7 @@ msgstr "Дата сторнування"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move__reversed_entry_id
 msgid "Reversal of"
-msgstr ""
+msgstr "Сторнування"
 
 #. module: account
 #: code:addons/account/models/account_move.py:0
@@ -10852,12 +10852,24 @@ msgid "The account %s (%s) is deprecated."
 msgstr "Рахунок %s (%s) застарілий."
 
 #. module: account
+#: code:addons/account/models/account.py:0
+#, python-format
+msgid ""
+"The account is already in use in a 'sale' or 'purchase' journal. This means "
+"that the account's type couldn't be 'receivable' or 'payable'."
+msgstr ""
+"Рахунок вже використовується у журналі 'продажі' або 'купівлі'. Це означає, "
+"що тип рахунку не може бути 'дебіторським' або 'оплачуваним'."
+
+#. module: account
 #: code:addons/account/models/account_move.py:0
 #, python-format
 msgid ""
 "The account selected on your journal entry forces to provide a secondary "
 "currency. You should remove the secondary currency on the account."
 msgstr ""
+"Рахунок, обраний у вашому журналі, вимагає отримання вторинної валюти. Слід "
+"видалити вторинну валюту з рахунку."
 
 #. module: account
 #: code:addons/account/models/account_move.py:0
@@ -10903,10 +10915,14 @@ msgstr ""
 #: model:ir.model.constraint,message:account.constraint_account_move_line_check_amount_currency_balance_sign
 msgid ""
 "The amount expressed in the secondary currency must be positive when account"
-" is debited and negative when account is credited."
+" is debited and negative when account is credited. Moreover, the currency "
+"field has to be left empty when the amount is expressed in the company "
+"currency."
 msgstr ""
-"Сума, зазначена у вторинній валюті, повинна бути позитивною, коли рахунок "
-"списаний і негативний, коли рахунок кредитований."
+"Сума виражена у другій валюті повинна бути більше нуля, коли  in the "
+"secondary currencyповинні бути позитивними при списанні рахунку та "
+"негативними, коли рахунок зараховується. Більше того, поле валюти повинно "
+"залишатися порожнім, коли сума виражається у валюті компанії."
 
 #. module: account
 #: code:addons/account/models/account_bank_statement.py:0
@@ -11482,6 +11498,16 @@ msgstr ""
 #: model:ir.model.fields,help:account.field_account_cash_rounding__rounding_method
 msgid "The tie-breaking rule used for float rounding operations"
 msgstr "Правило розбиття крапок використовується для операцій округлення"
+
+#. module: account
+#: code:addons/account/models/account.py:0
+#, python-format
+msgid ""
+"The type of the journal's default credit/debit account shouldn't be "
+"'receivable' or 'payable'."
+msgstr ""
+"Тип кредиторського/дебеторського рахунку журналу за замовчуванням не повинен"
+" бути «дебіторським» або «кредиторським»."
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.portal_my_invoices
@@ -13277,6 +13303,8 @@ msgid ""
 "You can't change the company of your account since there are some journal "
 "items linked to it."
 msgstr ""
+"Ви не можете змінювати компанію вашого рахунка оскільки з ним пов'язані "
+"деякі статті журналу."
 
 #. module: account
 #: code:addons/account/models/account.py:0
@@ -13285,6 +13313,8 @@ msgid ""
 "You can't change the company of your journal since there are some journal "
 "entries linked to it."
 msgstr ""
+"Ви не можете змінювати компанію вашого журналу, оскільки з ним пов'язані "
+"деякі статті журналу."
 
 #. module: account
 #: code:addons/account/models/account.py:0
@@ -13293,6 +13323,8 @@ msgid ""
 "You can't change the company of your tax since there are some journal items "
 "linked to it."
 msgstr ""
+"Ви не можете змінювати компанію вашого податку, оскільки з ним пов'язані "
+"деякі елементи журналу."
 
 #. module: account
 #: code:addons/account/models/account_analytic_line.py:0
@@ -13301,6 +13333,8 @@ msgid ""
 "You can't set a different company on your analytic account since there are "
 "some journal items linked to it."
 msgstr ""
+"Ви не можете встановити різні компанії на ваш аналітичний рахунок, оскільки "
+"з ним пов'язані деякі елементи журналу."
 
 #. module: account
 #: code:addons/account/models/account_analytic_line.py:0
@@ -13309,3 +13343,5 @@ msgid ""
 "You can't set a different company on your analytic tags since there are some"
 " journal items linked to it."
 msgstr ""
+"Ви не можете встановити різні компанії на ваші аналітичні мітки, оскільки з "
+"ними пов'язані деякі елементи журналу."

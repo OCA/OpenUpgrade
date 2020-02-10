@@ -78,7 +78,7 @@ class StockPicking(models.Model):
     carrier_price = fields.Float(string="Shipping Cost")
     delivery_type = fields.Selection(related='carrier_id.delivery_type', readonly=True)
     carrier_id = fields.Many2one("delivery.carrier", string="Carrier", check_company=True)
-    volume = fields.Float(copy=False)
+    volume = fields.Float(copy=False, digits='Volume')
     weight = fields.Float(compute='_cal_weight', digits='Stock Weight', store=True, help="Total weight of the products in the picking.", compute_sudo=True)
     carrier_tracking_ref = fields.Char(string='Tracking Reference', copy=False)
     carrier_tracking_url = fields.Char(string='Tracking URL', compute='_compute_carrier_tracking_url')
@@ -106,6 +106,8 @@ class StockPicking(models.Model):
         for picking in self:
             if picking.carrier_id:
                 picking.return_label_ids = self.env['ir.attachment'].search([('res_model', '=', 'stock.picking'), ('res_id', '=', picking.id), ('name', 'like', '%s%%' % picking.carrier_id.get_return_label_prefix())])
+            else:
+                picking.return_label_ids = False
 
     @api.depends('move_lines')
     def _cal_weight(self):
@@ -170,12 +172,13 @@ class StockPicking(models.Model):
         sale_order = self.sale_id
         if sale_order and self.carrier_id.invoice_policy == 'real' and self.carrier_price:
             delivery_lines = sale_order.order_line.filtered(lambda l: l.is_delivery and l.currency_id.is_zero(l.price_unit) and l.product_id == self.carrier_id.product_id)
+            carrier_price = self.carrier_price * (1.0 + (float(self.carrier_id.margin) / 100.0))
             if not delivery_lines:
-                sale_order._create_delivery_line(self.carrier_id, self.carrier_price)
+                sale_order._create_delivery_line(self.carrier_id, carrier_price)
             else:
                 delivery_line = delivery_lines[0]
                 delivery_line[0].write({
-                    'price_unit': self.carrier_price,
+                    'price_unit': carrier_price,
                     # remove the estimated price from the description
                     'name': sale_order.carrier_id.with_context(lang=self.partner_id.lang).name,
                 })

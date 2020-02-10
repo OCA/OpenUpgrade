@@ -10,8 +10,10 @@
 # Martin Trigaux, 2019
 # Baskhuu Lodoikhuu <baskhuujacara@gmail.com>, 2019
 # Otgonbayar.A <gobi.mn@gmail.com>, 2019
-# tserendavaa tsogtoo <tseegii011929@gmail.com>, 2019
 # Minj P <pminj322@gmail.com>, 2019
+# Батболд Цэнд-Аюуш <batbold.ts@gmail.com>, 2019
+# tserendavaa tsogtoo <tseegii011929@gmail.com>, 2019
+# baaska sh <sh.baaskash@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -19,7 +21,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-05 12:33+0000\n"
 "PO-Revision-Date: 2019-08-26 09:11+0000\n"
-"Last-Translator: Minj P <pminj322@gmail.com>, 2019\n"
+"Last-Translator: baaska sh <sh.baaskash@gmail.com>, 2020\n"
 "Language-Team: Mongolian (https://www.transifex.com/odoo/teams/41243/mn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -967,7 +969,7 @@ msgstr ""
 #. module: mail
 #: model:ir.model,name:mail.model_ir_autovacuum
 msgid "Automatic Vacuum"
-msgstr ""
+msgstr "Автомат вакум"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_channel__moderation_notify
@@ -1029,7 +1031,7 @@ msgstr "Хүндэтгэсэн,"
 #: model:ir.model.fields,field_description:mail.field_res_partner__is_blacklisted
 #: model:ir.model.fields,field_description:mail.field_res_users__is_blacklisted
 msgid "Blacklist"
-msgstr ""
+msgstr "Хар жагсаалт"
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_blacklist_view_tree
@@ -2707,6 +2709,8 @@ msgid ""
 "If the email address is on the blacklist, the contact won't receive mass "
 "mailing anymore, from any list"
 msgstr ""
+"Хэрэв имэйл хаяг нь хар жагсаалтанд байгаа бол тухайн харилцагч ямар ч "
+"мэйлийн жагсаалтаас масс мэйлийг хүлээн авахгүй."
 
 #. module: mail
 #: model:ir.model.fields,help:mail.field_res_config_settings__alias_domain
@@ -3750,7 +3754,7 @@ msgstr "Үйлдэл шаардлагатай хүлээн авалт"
 #: code:addons/mail/static/src/xml/discuss.xml:0
 #, python-format
 msgid "New Channel"
-msgstr ""
+msgstr "Шинэ суваг"
 
 #. module: mail
 #. openerp-web
@@ -4670,7 +4674,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/thread_window.xml:0
 #, python-format
 msgid "Read more"
-msgstr ""
+msgstr "Дэлгэрэнгүй унших"
 
 #. module: mail
 #. openerp-web
@@ -4743,7 +4747,7 @@ msgstr "Бичлэгийн Мөчирийн ID"
 #: code:addons/mail/models/mail_message.py:0
 #, python-format
 msgid "Records:"
-msgstr ""
+msgstr "Бичлэгүүд:"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_mail__references
@@ -4854,7 +4858,7 @@ msgstr "Энэ дагагчийг хасах"
 #: code:addons/mail/static/src/js/discuss.js:0
 #, python-format
 msgid "Rename"
-msgstr ""
+msgstr "Нэр өөрчлөх"
 
 #. module: mail
 #. openerp-web
@@ -5494,7 +5498,7 @@ msgstr "Богино кодыг солигч html код"
 #: model:ir.model.fields,help:mail.field_res_partner__user_id
 #: model:ir.model.fields,help:mail.field_res_users__user_id
 msgid "The internal user in charge of this contact."
-msgstr ""
+msgstr "Энэ гэрээнд системын хэрэглэгч холбогдсон байна."
 
 #. module: mail
 #: model:ir.model.fields,help:mail.field_mail_alias__alias_model_id
@@ -6209,6 +6213,13 @@ msgstr "Та <b>@%s</b> -тай хувийн хөөрөлдөөн хийж ба�
 #, python-format
 msgid "You are in channel <b>#%s</b>."
 msgstr "Та <b>#%s</b> сувагт байна."
+
+#. module: mail
+#. openerp-web
+#: code:addons/mail/static/src/js/attachment_box.js:0
+#, python-format
+msgid "You are not allowed to upload an attachment here."
+msgstr ""
 
 #. module: mail
 #. openerp-web

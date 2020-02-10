@@ -1007,9 +1007,12 @@ class IrModelFields(models.Model):
         fields_data = self._get_manual_field_data(model._name)
         for name, field_data in fields_data.items():
             if name not in model._fields and field_data['state'] == 'manual':
-                field = self._instanciate(field_data)
-                if field:
-                    model._add_field(name, field)
+                try:
+                    field = self._instanciate(field_data)
+                    if field:
+                        model._add_field(name, field)
+                except Exception:
+                    _logger.exception("Failed to load field %s.%s: skipped", model._name, field_data['name'])
 
 
 class IrModelSelection(models.Model):
@@ -1506,6 +1509,8 @@ class IrModelAccess(models.Model):
             _logger.error('Missing model %s', model)
         elif self.env[model].is_transient():
             return True
+
+        self.flush(self._fields)
 
         # We check if a specific rule exists
         self._cr.execute("""SELECT MAX(CASE WHEN perm_{mode} THEN 1 ELSE 0 END)

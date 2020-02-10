@@ -280,13 +280,33 @@ class AccountAccount(models.Model):
         if self._cr.fetchone():
             raise UserError(_("You can't change the company of your account since there are some journal items linked to it."))
 
+    @api.constrains('user_type_id')
+    def _check_user_type_id(self):
+        if not self:
+            return
+
+        self.flush(['user_type_id'])
+        self._cr.execute('''
+            SELECT account.id
+            FROM account_account account
+            JOIN account_account_type acc_type ON account.user_type_id = acc_type.id
+            JOIN account_journal journal ON journal.default_credit_account_id = account.id OR journal.default_debit_account_id = account.id
+            WHERE account.id IN %s
+            AND acc_type.type IN ('receivable', 'payable')
+            AND journal.type IN ('sale', 'purchase')
+            LIMIT 1;
+        ''', [tuple(self.ids)])
+
+        if self._cr.fetchone():
+            raise ValidationError(_("The account is already in use in a 'sale' or 'purchase' journal. This means that the account's type couldn't be 'receivable' or 'payable'."))
+
     @api.depends('code')
     def _compute_account_root(self):
         # this computes the first 2 digits of the account.
         # This field should have been a char, but the aim is to use it in a side panel view with hierarchy, and it's only supported by many2one fields so far.
         # So instead, we make it a many2one to a psql view with what we need as records.
         for record in self:
-            record.root_id = record.code and (ord(record.code[0]) * 1000 + ord(record.code[1])) or False
+            record.root_id = (ord(record.code[0]) * 1000 + ord(record.code[1:2] or ' ')) if record.code else False
 
     def _search_used(self, operator, value):
         if operator not in ['=', '!='] or not isinstance(value, bool):
@@ -314,11 +334,10 @@ class AccountAccount(models.Model):
             if record.company_id.account_opening_move_id:
                 for line in self.env['account.move.line'].search([('account_id', '=', record.id),
                                                                  ('move_id','=', record.company_id.account_opening_move_id.id)]):
-                    #could be executed at most twice: once for credit, once for debit
                     if line.debit:
-                        opening_debit = line.debit
+                        opening_debit += line.debit
                     elif line.credit:
-                        opening_credit = line.credit
+                        opening_credit += line.credit
             record.opening_debit = opening_debit
             record.opening_credit = opening_credit
 
@@ -341,21 +360,30 @@ class AccountAccount(models.Model):
 
         if opening_move.state == 'draft':
             # check whether we should create a new move line or modify an existing one
-            opening_move_line = self.env['account.move.line'].search([('account_id', '=', self.id),
+            account_op_lines = self.env['account.move.line'].search([('account_id', '=', self.id),
                                                                       ('move_id','=', opening_move.id),
                                                                       (field,'!=', False),
                                                                       (field,'!=', 0.0)]) # 0.0 condition important for import
 
-            counter_part_map = {'debit': opening_move_line.credit, 'credit': opening_move_line.debit}
-            # No typo here! We want the credit value when treating debit and debit value when treating credit
+            if account_op_lines:
+                op_aml_debit = sum(account_op_lines.mapped('debit'))
+                op_aml_credit = sum(account_op_lines.mapped('credit'))
 
-            if opening_move_line:
+                # There might be more than one line on this account if the opening entry was manually edited
+                # If so, we need to merge all those lines into one before modifying its balance
+                opening_move_line = account_op_lines[0]
+                if len(account_op_lines) > 1:
+                    merge_write_cmd = [(1, opening_move_line.id, {'debit': op_aml_debit, 'credit': op_aml_credit, 'partner_id': None ,'name': _("Opening balance")})]
+                    unlink_write_cmd = [(2, line.id) for line in account_op_lines[1:]]
+                    opening_move.write({'line_ids': merge_write_cmd + unlink_write_cmd})
+
                 if amount:
                     # modify the line
                     opening_move_line.with_context(check_move_validity=False)[field] = amount
-                elif counter_part_map[field]:
+                else:
                     # delete the line (no need to keep a line with value = 0)
                     opening_move_line.with_context(check_move_validity=False).unlink()
+
             elif amount:
                 # create a new line, as none existed before
                 self.env['account.move.line'].with_context(check_move_validity=False).create({
@@ -440,7 +468,7 @@ class AccountAccount(models.Model):
         if default.get('code', False):
             return super(AccountAccount, self).copy(default)
         try:
-            default['code'] = (str(int(self.code) + 10) or '')
+            default['code'] = (str(int(self.code) + 10) or '').zfill(len(self.code))
             default.setdefault('name', _("%s (copy)") % (self.name or ''))
             while self.env['account.account'].search([('code', '=', default['code']),
                                                       ('company_id', '=', default.get('company_id', False) or self.company_id.id)], limit=1):
@@ -819,6 +847,13 @@ class AccountJournal(models.Model):
         ''', [tuple(self.ids)])
         if self._cr.fetchone():
             raise UserError(_("You can't change the company of your journal since there are some journal entries linked to it."))
+
+    @api.constrains('type', 'default_credit_account_id', 'default_debit_account_id')
+    def _check_type_default_credit_account_id_type(self):
+        journals_to_check = self.filtered(lambda journal: journal.type in ('sale', 'purchase'))
+        accounts_to_check = journals_to_check.mapped('default_debit_account_id') + journals_to_check.mapped('default_credit_account_id')
+        if any(account.user_type_id.type in ('receivable', 'payable') for account in accounts_to_check):
+            raise ValidationError(_("The type of the journal's default credit/debit account shouldn't be 'receivable' or 'payable'."))
 
     @api.onchange('default_debit_account_id')
     def onchange_debit_account_id(self):
@@ -1418,7 +1453,7 @@ class AccountTax(models.Model):
             return base_amount - (base_amount / (1 + self.amount / 100))
         # base / (1 - tax_amount) = new_base
         if self.amount_type == 'division' and not price_include:
-            return base_amount / (1 - self.amount / 100) - base_amount
+            return base_amount / (1 - self.amount / 100) - base_amount if (1 - self.amount / 100) else 0.0
         # <=> new_base * (1 - tax_amount) = base
         if self.amount_type == 'division' and price_include:
             return base_amount - (base_amount * (self.amount / 100))
@@ -1513,10 +1548,8 @@ class AccountTax(models.Model):
         # precision of the currency.
         # The context key 'round' allows to force the standard behavior.
         round_tax = False if company.tax_calculation_rounding_method == 'round_globally' else True
-        round_total = True
         if 'round' in self.env.context:
             round_tax = bool(self.env.context['round'])
-            round_total = bool(self.env.context['round'])
 
         if not round_tax:
             prec += 5
@@ -1544,7 +1577,33 @@ class AccountTax(models.Model):
             # (145 - 15) / (1.0 + 30%) * 90% = 130 / 1.3 * 90% = 90
             return (base_amount - fixed_amount) / (1.0 + percent_amount / 100.0) * (100 - division_amount) / 100
 
-        base = round(price_unit * quantity, prec)
+        # The first/last base must absolutely be rounded to work in round globally.
+        # Indeed, the sum of all taxes ('taxes' key in the result dictionary) must be strictly equals to
+        # 'price_included' - 'price_excluded' whatever the rounding method.
+        #
+        # Example using the global rounding without any decimals:
+        # Suppose two invoice lines: 27000 and 10920, both having a 19% price included tax.
+        #
+        #                   Line 1                      Line 2
+        # -----------------------------------------------------------------------
+        # total_included:   27000                       10920
+        # tax:              27000 / 1.19 = 4310.924     10920 / 1.19 = 1743.529
+        # total_excluded:   22689.076                   9176.471
+        #
+        # If the rounding of the total_excluded isn't made at the end, it could lead to some rounding issues
+        # when summing the tax amounts, e.g. on invoices.
+        # In that case:
+        #  - amount_untaxed will be 22689 + 9176 = 31865
+        #  - amount_tax will be 4310.924 + 1743.529 = 6054.453 ~ 6054
+        #  - amount_total will be 31865 + 6054 = 37919 != 37920 = 27000 + 10920
+        #
+        # By performing a rounding at the end to compute the price_excluded amount, the amount_tax will be strictly
+        # equals to 'price_included' - 'price_excluded' after rounding and then:
+        #   Line 1: sum(taxes) = 27000 - 22689 = 4311
+        #   Line 2: sum(taxes) = 10920 - 2176 = 8744
+        #   amount_tax = 4311 + 8744 = 13055
+        #   amount_total = 31865 + 13055 = 37920
+        base = currency.round(price_unit * quantity)
 
         # For the computation of move lines, we could have a negative base value.
         # In this case, compute all with positive values and negate them at the end.
@@ -1592,7 +1651,7 @@ class AccountTax(models.Model):
                         store_included_tax_total = False
                 i -= 1
 
-        total_excluded = recompute_base(base, incl_fixed_amount, incl_percent_amount, incl_division_amount)
+        total_excluded = currency.round(recompute_base(base, incl_fixed_amount, incl_percent_amount, incl_division_amount))
 
         # 5) Iterate the taxes in the sequence order to compute missing tax amounts.
         # Start the computation of accumulated amounts at the total_excluded value.
@@ -1677,9 +1736,9 @@ class AccountTax(models.Model):
         return {
             'base_tags': taxes.mapped(is_refund and 'refund_repartition_line_ids' or 'invoice_repartition_line_ids').filtered(lambda x: x.repartition_type == 'base').mapped('tag_ids').ids,
             'taxes': taxes_vals,
-            'total_excluded': sign * (currency.round(total_excluded) if round_total else total_excluded),
-            'total_included': sign * (currency.round(total_included) if round_total else total_included),
-            'total_void': sign * (currency.round(total_void) if round_total else total_void),
+            'total_excluded': sign * total_excluded,
+            'total_included': sign * currency.round(total_included),
+            'total_void': sign * currency.round(total_void),
         }
 
     @api.model
