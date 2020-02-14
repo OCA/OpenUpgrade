@@ -59,11 +59,11 @@ def migrate(cr, version):
     openupgrade.rename_xmlids(cr, xml_ids)
     openupgrade.check_values_selection_field(
         cr, 'ir_act_report_xml', 'report_type',
-        ['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit'])
+        ['controller', 'pdf', 'qweb-html', 'qweb-pdf', 'sxw', 'webkit', 'aeroo', 'cvs'])
     openupgrade.check_values_selection_field(
         cr, 'ir_ui_view', 'type', [
             'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban',
-            'qweb', 'search', 'tree'])
+            'qweb', 'search', 'tree', 'tree_account_reconciliation'])
 
     # The tables stock.picking.in and stock.picking.out are merged into
     # stock.picking
