@@ -1,0 +1,7 @@
+---Models in module 'stock_dropshipping'---
+---Fields in module 'stock_dropshipping'---
+---XML records in module 'stock_dropshipping'---
+DEL ir.sequence: stock_dropshipping.seq_picking_type_dropship (noupdate)
+DEL stock.picking.type: stock_dropshipping.picking_type_dropship (noupdate)
+DEL stock.rule: stock_dropshipping.stock_rule_drop_shipping (noupdate)
+# DONE: post-migration: create new records with dropshipping_functions
