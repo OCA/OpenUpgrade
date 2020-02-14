@@ -1,0 +1,27 @@
+---Models in module 'delivery'---
+new model choose.delivery.carrier [transient]
+# NOTHING TO DO
+
+---Fields in module 'delivery'---
+delivery     / delivery.carrier         / get_return_label_from_portal (boolean): NEW
+delivery     / delivery.carrier         / invoice_policy (selection)    : NEW required, selection_keys: ['estimated', 'real'], req_default: function, hasdefault
+delivery     / delivery.carrier         / margin (integer)              : type is now 'float' ('integer')
+delivery     / delivery.carrier         / return_label_on_delivery (boolean): NEW
+delivery     / sale.order               / delivery_price (float)        : DEL
+delivery     / sale.order               / invoice_shipping_on_delivery (boolean): DEL
+# NOTHING TO DO
+
+delivery     / sale.order               / recompute_delivery_price (boolean): NEW
+# DONE: post-migration: marked as True if it has carrier
+
+---XML records in module 'delivery'---
+NEW ir.ui.view: delivery.choose_delivery_carrier_view_form
+NEW ir.ui.view: delivery.product_template_hs_code
+NEW ir.ui.view: delivery.sale_order_portal_content_inherit_sale_stock_inherit_website_sale_delivery
+NEW ir.ui.view: delivery.vpicktree_view_tree
+DEL ir.ui.view: delivery.assets_backend
+DEL ir.ui.view: delivery_hs_code.product_template_hs_code
+# NOTHING TO DO
+
+DEL mail.template: delivery.mail_template_data_delivery_confirmation [renamed to stock module] (noupdate)
+# NOTHING TO DO: handled in stock
