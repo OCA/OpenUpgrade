@@ -1,0 +1,33 @@
+---Models in module 'stock_landed_costs'---
+---Fields in module 'stock_landed_costs'---
+stock_landed_costs / account.move.line        / is_landed_costs_line (boolean): NEW
+# DONE: post-migration: filled it when corresponding
+
+stock_landed_costs / product.template         / split_method (selection)      : DEL selection_keys: ['by_current_cost_price', 'by_quantity', 'by_volume', 'by_weight', 'equal']
+# NOTHING TO DO: it's used instead the split_method of stock.landed.cost.lines
+
+stock_landed_costs / res.company              / lc_journal_id (many2one)      : NEW relation: account.journal
+stock_landed_costs / stock.landed.cost        / activity_ids (one2many)       : NEW relation: mail.activity
+stock_landed_costs / stock.landed.cost        / vendor_bill_id (many2one)     : NEW relation: account.move
+stock_landed_costs / account.move             / landed_costs_ids (one2many)   : NEW relation: stock.landed.cost
+# NOTHING TO DO: new feature
+
+stock_landed_costs / stock.valuation.adjustment.lines / former_cost_per_unit (float)  : DEL
+# NOTHING TO DO: it was a stored compute but not used anymore
+
+stock_landed_costs / stock.move               / landed_cost_value (float)     : DEL
+stock_landed_costs / stock.valuation.layer    / stock_landed_cost_id (many2one): NEW relation: stock.landed.cost
+stock_landed_costs / stock.landed.cost        / stock_valuation_layer_ids (one2many): NEW relation: stock.valuation.layer
+# TODO: to check if we could use the landed_cost_value in the new layer implementation
+
+---XML records in module 'stock_landed_costs'---
+DEL ir.actions.act_window: stock_landed_costs.stock_landed_cost_type_action
+DEL ir.actions.act_window.view: stock_landed_costs.stock_landed_cost_type_action1
+DEL ir.actions.act_window.view: stock_landed_costs.stock_landed_cost_type_action2
+DEL ir.ui.menu: stock_landed_costs.menu_stock_landed_cost_type
+NEW ir.ui.view: stock_landed_costs.account_view_move_form_inherited
+NEW ir.ui.view: stock_landed_costs.stock_valuation_layer_form_inherited
+NEW ir.ui.view: stock_landed_costs.view_stock_landed_cost_tree2
+DEL ir.ui.view: stock_landed_costs.stock_landed_cost_tree_view
+DEL ir.ui.view: stock_landed_costs.view_stock_landed_cost_type_form
+# NOTHING TO DO
