@@ -197,7 +197,7 @@ def main_analysis(old_update, old_noupdate, new_update, new_noupdate, module):
                 if oldrepr != newrepr:
                     element.append(deepcopy(record_new_dict[key]))
 
-        for key in record_new_dict.keys():
+        for key in sorted(record_new_dict.keys()):
             if record_old is None or not record_old.xpath(key):
                 element.append(deepcopy(record_new_dict[key]))
 
