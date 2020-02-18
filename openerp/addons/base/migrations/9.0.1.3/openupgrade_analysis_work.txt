@@ -81,10 +81,12 @@ base         / res.country              / phone_code (integer)          : NEW
 base         / res.country              / state_ids (one2many)          : NEW relation: res.country.state
 base         / res.currency             / accuracy (integer)            : DEL 
 base         / res.currency             / base (boolean)                : DEL 
-base         / res.currency             / company_id (many2one)         : DEL relation: res.company
-base         / res.currency.rate        / company_id (many2one)         : NEW relation: res.company
 base         / res.groups               / color (integer)               : NEW 
 # Nothing to do
+
+base         / res.currency             / company_id (many2one)         : DEL relation: res.company
+base         / res.currency.rate        / company_id (many2one)         : NEW relation: res.company
+# DONE: pre-migration: Propagate the company from currency to rate
 
 base         / res.partner              / company_type (selection)      : NEW selection_keys: ['company', 'person']
 # Done: company_type must match is_company.
