@@ -13,21 +13,21 @@ _BG_SIZES = ("25%", "50%", "75%", "auto")
 REPLACEMENTS = [
     # Replacements to remove website_img_bg_style
     _r("bg-center-h bg-bottom", "oe_img_bg o_bg_img_opt_custom",
-       styles={"background-position": "50% 100%"}),
+       style_add={"background-position": "50% 100%"}),
     _r("bg-center-h bg-top", "oe_img_bg o_bg_img_opt_custom",
-       styles={"background-position": "50% 0%"}),
+       style_add={"background-position": "50% 0%"}),
     _r("bg-center-v bg-left", "oe_img_bg o_bg_img_opt_custom",
-       styles={"background-position": "0% 50%"}),
+       style_add={"background-position": "0% 50%"}),
     _r("bg-center-v bg-right", "oe_img_bg o_bg_img_opt_custom",
-       styles={"background-position": "100% 50%"}),
+       style_add={"background-position": "100% 50%"}),
     _r("bg-left bg-bottom", "oe_img_bg o_bg_img_opt_custom",
-       styles={"background-position": "0% 100%"}),
+       style_add={"background-position": "0% 100%"}),
     _r("bg-left bg-top", "oe_img_bg o_bg_img_opt_custom",
-       styles={"background-position": "0% 0%"}),
+       style_add={"background-position": "0% 0%"}),
     _r("bg-right bg-bottom", "oe_img_bg o_bg_img_opt_custom",
-       styles={"background-position": "100% 100%"}),
+       style_add={"background-position": "100% 100%"}),
     _r("bg-right bg-top", "oe_img_bg o_bg_img_opt_custom",
-       styles={"background-position": "100% 0%"}),
+       style_add={"background-position": "100% 0%"}),
     _r("bg-size-contain-v", "oe_img_bg o_bg_img_opt_contain"),
     _r("bg-size-contain-v", "oe_img_bg o_bg_img_opt_contain"),
     _r("bg-size-cover-v", "oe_img_bg"),
@@ -46,7 +46,7 @@ for h, v in product(_BG_SIZES, _BG_SIZES):
     REPLACEMENTS.append(_r(
         "bg-size-%s-h bg-size-%s-v" % (h.strip("%"), v.strip("%")),
         "oe_img_bg o_bg_img_opt_custom",
-        styles={"background-size": "%s %s" % (h, v)}))
+        style_add={"background-size": "%s %s" % (h, v)}))
 
 
 def update_website_views(env):
