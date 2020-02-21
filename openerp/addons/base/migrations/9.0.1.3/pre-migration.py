@@ -145,6 +145,19 @@ def switch_noupdate_flag(cr):
     )
 
 
+def propagate_currency_company(env):
+    openupgrade.add_fields(
+        env, [('company_id', 'res.currency.rate', 'res_currency_rate',
+               'many2one', False, 'base')],
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE res_currency_rate rcr SET company_id = rc.company_id
+        FROM res_currency rc WHERE rc.id = rcr.currency_id
+        """,
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -164,6 +177,7 @@ def migrate(env, version):
     migrate_translations(env.cr)
     switch_noupdate_flag(env.cr)
     rename_utm(env)
+    propagate_currency_company(env)
 
 
 def pre_create_columns(cr):
