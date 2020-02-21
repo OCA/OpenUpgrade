@@ -145,6 +145,8 @@ account      / account.chart.template   / company_id (many2one)         : NEW re
 
 
 account      / account.chart.template   / currency_id (many2one)        : now required
+# In pre-migration script, set currency to account.configurable_chart_template data
+# as it is marked as noupdate="1"
 
 account      / account.chart.template   / expense_currency_exchange_account_id (many2one): NEW relation: account.account.template
 account      / account.chart.template   / income_currency_exchange_account_id (many2one): NEW relation: account.account.template
