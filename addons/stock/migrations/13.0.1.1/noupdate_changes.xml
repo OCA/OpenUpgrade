@@ -22,7 +22,7 @@
     <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
   </record>
   <record id="stock_move_rule" model="ir.rule">
-    <field name="domain_force">['|', ('company_id', 'in', company_ids), ('location_dest_id.company_id', '=', False)]</field>
+    <field name="domain_force">['|', ('company_id', 'in', company_ids), '&amp;', ('location_dest_id.company_id', '=', False), ('location_dest_id.usage', '=', 'transit')]</field>
   </record>
   <record id="stock_picking_rule" model="ir.rule">
     <field name="domain_force">[('company_id', 'in', company_ids)]</field>

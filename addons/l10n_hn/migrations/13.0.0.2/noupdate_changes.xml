@@ -7,14 +7,14 @@
     <field name="account_id"/>
     <field name="refund_account_id"/>
     <field name="tag_ids"/>
-    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('cta110301'),                 }),             ]"/>
     <field name="invoice_repartition_line_ids" eval="[(5,0,0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('cta110301'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('cta110301'),                 }),             ]"/>
   </record>
   <record id="impuestos_plantilla_isv_por_pagar" model="account.tax.template">
     <field name="account_id"/>
     <field name="refund_account_id"/>
     <field name="tag_ids"/>
-    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('cta210201'),                 }),             ]"/>
     <field name="invoice_repartition_line_ids" eval="[(5,0,0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('cta210201'),                 }),             ]"/>
+    <field name="refund_repartition_line_ids" eval="[(5, 0, 0),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'base',                 }),                 (0,0, {                     'factor_percent': 100,                     'repartition_type': 'tax',                     'account_id': ref('cta210201'),                 }),             ]"/>
   </record>
 </odoo>

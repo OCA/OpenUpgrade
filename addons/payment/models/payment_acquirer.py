@@ -97,7 +97,7 @@ class PaymentAcquirer(models.Model):
     state = fields.Selection([
         ('disabled', 'Disabled'),
         ('enabled', 'Enabled'),
-        ('test', 'Test Mode')], required=True, default='disabled',
+        ('test', 'Test Mode')], required=True, default='disabled', copy=False,
         help="""In test mode, a fake payment is processed through a test
              payment interface. This mode is advised when setting up the
              acquirer. Watch out, test and production modes require
@@ -414,7 +414,7 @@ class PaymentAcquirer(models.Model):
                 'partner_zip': partner.zip,
                 'partner_city': partner.city,
                 'partner_address': _partner_format_address(partner.street, partner.street2),
-                'partner_country_id': partner.country_id.id,
+                'partner_country_id': partner.country_id.id or self.env['res.company']._company_default_get().country_id.id,
                 'partner_country': partner.country_id,
                 'partner_phone': partner.phone,
                 'partner_state': partner.state_id,

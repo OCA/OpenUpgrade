@@ -4,6 +4,12 @@
     <field eval="'%(street)s\n%(street2)s\n%(city)s %(state_name)s %(zip)s\n%(country_name)s'" name="address_format"/>
     <field name="vat_label">CUIT</field>
   </record>
+  <record id="co" model="res.country">
+    <field name="vat_label">NIT</field>
+  </record>
+  <record id="hr" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s \n%(country_name)s'" name="address_format"/>
+  </record>
   <record id="main_company" model="res.company">
     <field name="favicon" model="res.company" eval="obj()._get_default_favicon(original=True)"/>
   </record>
@@ -39,8 +45,12 @@
   <record id="res_partner_bank_rule" model="ir.rule">
     <field name="domain_force">['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
   </record>
+  <record id="res_partner_rule" model="ir.rule">
+    <field name="active"/>
+    <field name="domain_force">['|', '|', ('partner_share', '=', False), ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
+  </record>
   <record id="res_users_rule" model="ir.rule">
-    <field name="domain_force">[('company_ids', 'in', company_ids)]</field>
+    <field name="domain_force">['|', ('share', '=', False), ('company_ids', 'in', company_ids)]</field>
   </record>
   <record id="sr" model="res.country">
     <field name="currency_id" ref="SRD"/>

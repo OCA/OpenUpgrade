@@ -109,7 +109,7 @@ class ProductProduct(models.Model):
         In FIFO: value of the last unit that left the stock (automatically computed).
         Used to value the product when the purchase cost is not known (e.g. inventory adjustment).
         Used to compute margins on sale orders.""")
-    volume = fields.Float('Volume')
+    volume = fields.Float('Volume', digits='Volume')
     weight = fields.Float('Weight', digits='Stock Weight')
 
     pricelist_item_count = fields.Integer("Number of price rules", compute="_compute_variant_item_count")
@@ -327,6 +327,7 @@ class ProductProduct(models.Model):
         if 'active' in values:
             # prefetched o2m have to be reloaded (because of active_test)
             # (eg. product.template: product_variant_ids)
+            self.flush()
             self.invalidate_cache()
             # `_get_first_possible_variant_id` depends on variants active state
             self.clear_caches()
