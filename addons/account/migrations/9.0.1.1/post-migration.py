@@ -297,6 +297,11 @@ def move_view_accounts(env):
             AsIs(openupgrade.get_legacy_name('type')),
         )
     )
+    # Truncate this transient model table that refers to view accounts
+    openupgrade.logged_query(
+        env.cr,
+        """TRUNCATE account_vat_declaration,
+            account_journal_account_vat_declaration_rel""")
     # Remove constraint that delete in cascade children accounts
     openupgrade.logged_query(
         env.cr, """
