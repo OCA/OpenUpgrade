@@ -14,20 +14,12 @@
     <field name="favicon" model="res.company" eval="obj()._get_default_favicon(original=True)"/>
   </record>
   <record id="main_partner" model="res.partner">
-    <field name="customer"/>
-    <field name="image" type="base64" file="base/static/img/res_company_logo.png"/>
     <field name="image_1920" type="base64" file="base/static/img/res_company_logo.png"/>
   </record>
   <record id="partner_admin" model="res.partner">
-    <field name="customer"/>
-    <field name="image" type="base64" file="base/static/img/avatar.png"/>
     <field name="image_1920" type="base64" file="base/static/img/avatar_grey.png"/>
   </record>
-  <record id="partner_root" model="res.partner">
-    <field name="customer"/>
-  </record>
   <record id="public_user" model="res.users">
-    <field name="image" type="base64" file="base/static/img/public_user-image.png"/>
     <field name="image_1920" type="base64" file="base/static/img/public_user-image.png"/>
   </record>
   <record id="res_company_rule_employee" model="ir.rule">
