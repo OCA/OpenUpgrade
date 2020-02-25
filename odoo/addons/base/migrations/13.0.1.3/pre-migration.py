@@ -453,12 +453,7 @@ xmlid_renames_ir_module_category = [
     ('base.module_category_website', 'base.module_category_website_website'),
 ]
 
-xmlid_renames_ir_ui_view = [
-    ('decimal_precision.menu_decimal_precision_form', 'base.menu_decimal_precision_form'),
-]
-
 xmlid_renames_ir_model_access = [
-    ('decimal_precision.access_decimal_precision_config', 'base.access_decimal_precision_config'),
     ('web.access_report_layout', 'base.access_report_layout'),
 ]
 
@@ -486,6 +481,5 @@ def migrate(env, version):
         env.cr, apriori.merged_modules.items(), merge_modules=True)
     openupgrade.rename_xmlids(env.cr, xmlid_renames_res_country_state)
     openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_module_category)
-    openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_ui_view)
     openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_model_access)
     fix_lang_table(env.cr, lang_code_renames)

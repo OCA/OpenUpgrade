@@ -2,8 +2,11 @@
 ---Fields in module 'base_setup'---
 ---XML records in module 'base_setup'---
 DEL ir.actions.client: web_settings_dashboard.web_settings_dashboard_action
+# NOTHING TO DO
 DEL ir.ui.menu: web_settings_dashboard.web_dashboard_menu
+# DONE: Post-migration
 NEW ir.ui.view: base_setup.assets_backend
 DEL ir.ui.view: web_settings_dashboard.assets_backend
-DEL ir.ui.view: web_settings_dashboard.dashboard_qunit_suite
 # NOTHING TO DO
+DEL ir.ui.view: web_settings_dashboard.dashboard_qunit_suite
+# DONE: Post-migration
