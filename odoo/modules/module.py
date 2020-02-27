@@ -587,18 +587,18 @@ current_test = None
 
 def run_unit_tests(module_name, position='at_install', openupgrade_prefix=None):
     """
-    :param openupgrade_prefix: extension to be able to insert '.migrations.<version>' to the path
-    of test files to be loaded (expecting tests in '<module_name>/migrations/<version>/tests/test_migration.py')
+    :param openupgrade_prefix: extension to be able to insert '.migrations' to the path
+    of test files to be loaded (expecting tests in '<module_name>/migrations/tests/test_migration.py')
     :returns: ``True`` if all of ``module_name``'s tests succeeded, ``False``
               if any of them failed.
     :rtype: bool
     """
     global current_test
-    from odoo.tests.common import TagsSelector # Avoid import loop
+    from odoo.tests.common import TagsSelector  # Avoid import loop
     current_test = module_name
     mods = get_test_modules(module_name, openupgrade_prefix=openupgrade_prefix)
     threading.currentThread().testing = True
-    config_tags = TagsSelector(tools.config['test_tags'])
+    config_tags = TagsSelector(tools.config['test_tags'] or '')
     position_tag = TagsSelector(position)
     r = True
     for m in mods:

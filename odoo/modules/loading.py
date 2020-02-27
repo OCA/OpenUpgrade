@@ -290,7 +290,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
 
             # OpenUpgrade: run tests
             if os.environ.get('OPENUPGRADE_TESTS') and package.name is not None:
-                prefix = '.migrations.%s' % adapt_version(package.data['version'])
+                prefix = '.migrations'
                 registry.openupgrade_test_prefixes[package.name] = prefix
                 report.record_result(odoo.modules.module.run_unit_tests(module_name, openupgrade_prefix=prefix))
 
