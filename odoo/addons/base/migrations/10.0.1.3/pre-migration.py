@@ -162,6 +162,33 @@ def ensure_country_state_id_on_existing_records(cr):
                 rows.append(row)
 
 
+def precreate_partner_fields(cr):
+    """ Emulate stored computed methods in a single SQL query """
+    cr.execute(
+        """ALTER TABLE res_partner
+        ADD COLUMN IF NOT EXISTS commercial_company_name VARCHAR,
+        ADD COLUMN IF NOT EXISTS partner_share BOOLEAN
+        """)
+    openupgrade.logged_query(
+        cr,
+        """UPDATE res_partner rp
+        SET commercial_company_name = crp.name
+        FROM res_partner crp
+        WHERE crp.id = rp.commercial_partner_id
+            AND crp.is_company AND COALESCE(crp.name, '') != ''
+        """)
+    openupgrade.logged_query(
+        cr,
+        """UPDATE res_partner rp
+        SET partner_share = NOT EXISTS (
+            SELECT 1 FROM res_users
+            WHERE partner_id = rp.id AND active)
+        OR EXISTS (
+            SELECT 1 FROM res_users
+            WHERE partner_id = rp.id AND active AND share)
+        """)
+
+
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     openupgrade.update_module_names(
@@ -209,6 +236,7 @@ def migrate(cr, version):
         'res.lang', id
         from res_lang''')
     ensure_country_state_id_on_existing_records(cr)
+    precreate_partner_fields(cr)
     openupgrade.update_module_names(
         cr, apriori.merged_modules, merge_modules=True,
     )
