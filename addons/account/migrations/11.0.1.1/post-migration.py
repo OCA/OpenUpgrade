@@ -91,21 +91,66 @@ def fill_account_invoice_line_total(env):
     rest_lines = line_obj.search([]) - empty_lines - simple_lines
     openupgrade.logger.debug("Compute the rest of the account.invoice.line"
                              "totals: %s" % len(rest_lines))
-    for line in rest_lines:
+
+    # We group invoice lines that have the same price_unit, discount,
+    # currency_id, quantity, product_id and invoice_line_tax_ids since they
+    # will have the same price_total
+    env.cr.execute("""
+        SELECT
+                STRING_AGG(id::CHARACTER varying, ',') id,
+                price_unit, discount, currency_id, quantity,
+                product_id, tax_id
+        FROM (
+            SELECT aml.*, ailt.tax_id AS tax_id
+            FROM account_invoice_line AS aml
+            LEFT JOIN (
+                    SELECT invoice_line_id,
+                        STRING_AGG(tax_id::CHARACTER varying, ',') tax_id
+                    FROM account_invoice_line_tax
+                    GROUP BY invoice_line_id) AS ailt
+                ON aml.id = ailt.invoice_line_id
+            WHERE aml.id IN %s
+                AND currency_id IS NOT NULL
+                AND product_id IS NOT null
+                AND tax_id IS NOT NULL) AS sub
+        GROUP BY price_unit, discount, currency_id, quantity, product_id,
+                tax_id;
+    """, (tuple(rest_lines.ids),))
+
+    # We iterate over every group of account invoice lines where:
+    # row[0] : (invoice_line_id_1, invoice_line_id_2, ...) invoice_line_ids
+    # row[1] : price_unit
+    # row[2] : discount
+    # row[3] : currency_id
+    # row[4] : quantity
+    # row[5] : product_id
+    # row[6] : (tax_id_1, tax_id_2, ...) invoice_line_tax_ids
+    for row in env.cr.fetchall():
+        # This has been extracted from `_compute_price` method and adapted
+        price = row[1] * (1 - (row[2] or 0.0) / 100.0)
+        invoice_line_tax_ids = env["account.tax"].browse(
+            [int(line_id) for line_id in row[6].split(",")])
+
         # avoid error on taxes with other type of computation ('code' for
         # example, provided by module `account_tax_python`). We will need to
         # add the computation on the corresponding module post-migration.
         types = ['percent', 'fixed', 'group', 'division']
-        if any(x.amount_type not in types for x in line.invoice_line_tax_ids):
+        if any(x.amount_type not in types for x in invoice_line_tax_ids):
             continue
-        # This has been extracted from `_compute_price` method
-        currency = line.invoice_id and line.invoice_id.currency_id or None
-        price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-        taxes = line.invoice_line_tax_ids.compute_all(
-            price, currency, line.quantity, product=line.product_id,
-            partner=line.invoice_id.partner_id,
+
+        currency_id = env["res.currency"].browse(int(row[3]))
+        product_id = env["product.product"].browse(int(row[5]))
+        price_total = invoice_line_tax_ids.compute_all(
+            price, currency_id, row[4], product=product_id,
+            partner=False)['total_included']
+        openupgrade.logged_query(
+            env.cr, """
+                    UPDATE account_invoice_line
+                    SET price_total = %s
+                    WHERE id IN %s
+            """, (price_total,
+                  tuple([int(line_id) for line_id in row[0].split(",")]))
         )
-        line.price_total = taxes['total_included']
     openupgrade.logger.debug("Compute finished")
 
 
