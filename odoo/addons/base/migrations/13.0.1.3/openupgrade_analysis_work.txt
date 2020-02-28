@@ -109,7 +109,7 @@ base         / res.lang                 / url_code (char)               : NEW re
 # Done: post-migration
 
 base         / res.lang                 / week_start (selection)        : selection_keys is now '['1', '2', '3', '4', '5', '6', '7']' ('[1, 2, 3, 4, 5, 6, 7]')
-# NOTHING TO DO
+# Done: pre-migration (copy value) and post-migration (restore old value)
 
 base         / res.partner              / barcode (char)                : module is now 'point_of_sale' ('base')
 base         / res.partner              / customer (boolean)            : DEL

@@ -462,15 +462,22 @@ lang_code_renames = [
     ('fil', 'fil_PH'),
 ]
 
+column_renames = {
+    'res_lang': [
+        ('week_start', None),
+    ],
+}
 
-def fix_lang_table(cr, code_pairs):
+
+def fix_lang_table(cr):
     """Avoid error on normal update process due to changed language codes"""
-    for old_code, new_code in code_pairs:
+    for old_code, new_code in lang_code_renames:
         openupgrade.logged_query(
             cr,
             "UPDATE res_lang SET code=%s WHERE code=%s",
             (new_code, old_code)
         )
+    openupgrade.rename_columns(cr, column_renames)
 
 
 @openupgrade.migrate(use_env=True)
@@ -482,4 +489,4 @@ def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, xmlid_renames_res_country_state)
     openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_module_category)
     openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_model_access)
-    fix_lang_table(env.cr, lang_code_renames)
+    fix_lang_table(env.cr)
