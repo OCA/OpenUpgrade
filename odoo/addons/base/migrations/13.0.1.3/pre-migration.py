@@ -1,3 +1,5 @@
+# Copyright 2020 Andrii Skrypka
+# Copyright 2020 Opener B.V. (stefan@opener.amsterdam)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
@@ -463,10 +465,20 @@ lang_code_renames = [
 ]
 
 column_renames = {
+    'ir_attachment': [
+        ('name', None),
+        ('datas_fname', 'name'),
+    ],
     'res_lang': [
         ('week_start', None),
     ],
 }
+
+field_renames = [
+    ('ir.server.object.lines',
+     'ir_server_object_lines',
+     'type', 'evaluation_type'),
+]
 
 
 def fix_lang_table(cr):
@@ -477,11 +489,12 @@ def fix_lang_table(cr):
             "UPDATE res_lang SET code=%s WHERE code=%s",
             (new_code, old_code)
         )
-    openupgrade.rename_columns(cr, column_renames)
 
 
-@openupgrade.migrate(use_env=True)
+@openupgrade.migrate()
 def migrate(env, version):
+    openupgrade.rename_columns(env.cr, column_renames)
+    openupgrade.rename_fields(env, field_renames, no_deep=True)
     openupgrade.update_module_names(
         env.cr, apriori.renamed_modules.items())
     openupgrade.update_module_names(
@@ -490,3 +503,14 @@ def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_module_category)
     openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_model_access)
     fix_lang_table(env.cr)
+
+    openupgrade.logged_query(
+        env.cr,
+        """ UPDATE ir_model_constraint
+        SET create_date = date_init
+        WHERE create_date IS NULL AND date_init IS NOT NULL """)
+    openupgrade.logged_query(
+        env.cr,
+        """ UPDATE ir_model_constraint
+        SET write_date = date_update
+        WHERE write_date IS NULL AND date_update IS NOT NULL """)

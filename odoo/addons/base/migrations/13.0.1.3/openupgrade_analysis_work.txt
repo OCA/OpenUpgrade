@@ -9,54 +9,61 @@ new model reset.view.arch.wizard [transient]
 
 ---Fields in module 'base'---
 base         / ir.actions.act_url       / binding_type (selection)      : selection_keys is now '['action', 'report']' ('['action', 'action_form_only', 'report']')
+base         / ir.actions.act_window    / binding_type (selection)      : selection_keys is now '['action', 'report']' ('['action', 'action_form_only', 'report']')
+base         / ir.actions.act_window_close / binding_type (selection)      : selection_keys is now '['action', 'report']' ('['action', 'action_form_only', 'report']')
+base         / ir.actions.actions       / binding_type (selection)      : selection_keys is now '['action', 'report']' ('['action', 'action_form_only', 'report']')
+base         / ir.actions.client        / binding_type (selection)      : selection_keys is now '['action', 'report']' ('['action', 'action_form_only', 'report']')
+base         / ir.actions.report        / binding_type (selection)      : selection_keys is now '['action', 'report']' ('['action', 'action_form_only', 'report']')
+base         / ir.actions.server        / binding_type (selection)      : selection_keys is now '['action', 'report']' ('['action', 'action_form_only', 'report']')
 base         / ir.actions.act_url       / binding_view_types (char)     : NEW hasdefault
-# NOTHING TO DO
+base         / ir.actions.act_window    / binding_view_types (char)     : NEW hasdefault
+base         / ir.actions.act_window_close / binding_view_types (char)     : NEW hasdefault
+base         / ir.actions.actions       / binding_view_types (char)     : NEW hasdefault
+base         / ir.actions.client        / binding_view_types (char)     : NEW hasdefault
+base         / ir.actions.report        / binding_view_types (char)     : NEW hasdefault
+base         / ir.actions.server        / binding_view_types (char)     : NEW hasdefault
+# Done. Set binding_view_types to 'form' where 'action_form_only' was set.
 
 base         / ir.actions.act_window    / auto_search (boolean)         : DEL
-base         / ir.actions.act_window    / binding_type (selection)      : selection_keys is now '['action', 'report']' ('['action', 'action_form_only', 'report']')
-base         / ir.actions.act_window    / binding_view_types (char)     : NEW hasdefault
 base         / ir.actions.act_window    / multi (boolean)               : DEL
+# Nothing to do
+
 base         / ir.actions.act_window    / src_model (char)              : DEL
+# Done: migrating to binding_model_id if that value is missing
+
 base         / ir.actions.act_window    / view_type (selection)         : DEL required, selection_keys: ['form', 'tree'], req_default: function
-# NOTHING TO DO
+# NOTHING TO DO, Obsolete remnant of the old hierarchical 'tree' view.
 
-base         / ir.actions.act_window_close / binding_type (selection)      : selection_keys is now '['action', 'report']' ('['action', 'action_form_only', 'report']')
-base         / ir.actions.act_window_close / binding_view_types (char)     : NEW hasdefault
-# NOTHING TO DO
-
-base         / ir.actions.actions       / binding_type (selection)      : selection_keys is now '['action', 'report']' ('['action', 'action_form_only', 'report']')
-base         / ir.actions.actions       / binding_view_types (char)     : NEW hasdefault
-# NOTHING TO DO
-
-base         / ir.actions.client        / binding_type (selection)      : selection_keys is now '['action', 'report']' ('['action', 'action_form_only', 'report']')
-base         / ir.actions.client        / binding_view_types (char)     : NEW hasdefault
-# NOTHING TO DO
-
-base         / ir.actions.report        / binding_type (selection)      : selection_keys is now '['action', 'report']' ('['action', 'action_form_only', 'report']')
-base         / ir.actions.report        / binding_view_types (char)     : NEW hasdefault
-# NOTHING TO DO
-
-base         / ir.actions.server        / binding_type (selection)      : selection_keys is now '['action', 'report']' ('['action', 'action_form_only', 'report']')
-base         / ir.actions.server        / binding_view_types (char)     : NEW hasdefault
 base         / ir.actions.server        / groups_id (many2many)         : NEW relation: res.groups
 # NOTHING TO DO
 
 base         / ir.attachment            / active (boolean)              : DEL
+# Nothing to do. This will make attachments that were split up into separate PDFs, or set to inactive manually, visible again
+# functionality can be recreated in some customization if required
+
 base         / ir.attachment            / datas_fname (char)            : DEL
+# Done: the semantics of the `name` field changed to that of this field (c.q. the filename of the attachment). Renamed columns accordingly.
+
 base         / ir.attachment            / res_id (integer)              : relation is now 'res_model' ('False') [nothing to do]
 base         / ir.attachment            / res_id (integer)              : type is now 'many2one_reference' ('integer')
+# Nothing to do, artifacts of the new field type
+
 base         / ir.attachment            / res_model_name (char)         : DEL
 base         / ir.attachment            / res_name (char)               : not stored anymore
+# Nothing to do, removal of denormalized data
+
 base         / ir.attachment            / thumbnail (binary)            : DEL attachment: True
-# NOTHING TO DO
+# Nothing to do. Replaced by Image mixin
 
 base         / ir.cron                  / lastcall (datetime)           : NEW
-# NOTHING TO DO
+# Nothing to do, just for reference. Will be filled after next call
 
 base         / ir.model.constraint      / date_init (datetime)          : DEL
 base         / ir.model.constraint      / date_update (datetime)        : DEL
+# Done, moving data over to create_date/write_date.
+
 base         / ir.model.constraint      / message (char)                : NEW
-# NOTHING TO DO
+# Nothing to do, populated automatically by the ORM
 
 base         / ir.model.fields          / selection (char)              : not stored anymore
 base         / ir.model.fields          / selection (char)              : now a function
@@ -79,10 +86,10 @@ base         / ir.module.module.dependency / auto_install_required (boolean): NE
 
 base         / ir.server.object.lines   / evaluation_type (selection)   : NEW required, selection_keys: ['equation', 'reference', 'value'], req_default: function, hasdefault
 base         / ir.server.object.lines   / type (selection)              : DEL required, selection_keys: ['equation', 'reference', 'value'], req_default: function
-# NOTHING TO DO
+# Done, renamed column
 
 base         / ir.translation           / type (selection)              : selection_keys is now '['code', 'model', 'model_terms']' ('['code', 'constraint', 'model', 'model_terms', 'selection', 'sql_constraint']')
-# NOTHING TO DO
+# TODO: for now, this means that existing, customized translations for selection values and constraint errors will be overwritten by the default translations.
 
 base         / ir.ui.view               / arch_prev (text)              : NEW
 base         / ir.ui.view               / arch_updated (boolean)        : NEW
