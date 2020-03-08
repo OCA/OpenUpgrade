@@ -9,19 +9,15 @@ column_renames = {
     'hr_applicant': [
         ('priority', None),
         ('availability', None),
+        ('source_id', None),
     ]}
 
 model_renames = [
     ('hr.applicant_category', 'hr.applicant.category'),
 ]
 
-table_renames = [
-    ('hr_recruitment_source', None),
-]
-
 
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
-    openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_models(cr, model_renames)
