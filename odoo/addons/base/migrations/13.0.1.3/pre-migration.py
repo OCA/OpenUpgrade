@@ -478,6 +478,9 @@ field_renames = [
     ('ir.server.object.lines',
      'ir_server_object_lines',
      'type', 'evaluation_type'),
+    ('res.company',
+     'res_company',
+     'favicon_backend', 'favicon'),
 ]
 
 
