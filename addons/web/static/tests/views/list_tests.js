@@ -1412,6 +1412,26 @@ QUnit.module('Views', {
         list.destroy();
     });
 
+    QUnit.test('aggregates digits can be set with digits field attribute', async function (assert) {
+        assert.expect(2);
+
+        var list = await createView({
+            View: ListView,
+            model: 'foo',
+            data: this.data,
+            arch: '<tree>' +
+                    '<field name="amount" widget="monetary" sum="Sum" digits="[69,3]"/>' +
+                '</tree>',
+        });
+
+        assert.strictEqual(list.$('.o_data_row td:nth(1)').text(), '1200.00',
+            "field should still be formatted based on currency");
+        assert.strictEqual(list.$('tfoot td:nth(1)').text(), '2000.000',
+            "aggregates monetary use digits attribute if available");
+
+        list.destroy();
+    });
+
     QUnit.test('groups can be sorted on aggregates', async function (assert) {
         assert.expect(10);
         var list = await createView({
@@ -1691,6 +1711,47 @@ QUnit.module('Views', {
         assert.strictEqual(form.el.querySelector('.o_list_record_remove_header').style.width, '32px');
 
         form.destroy();
+    });
+
+    QUnit.test('empty editable list with the handle widget and no content help', async function (assert) {
+        assert.expect(4);
+
+        // no records for the foo model
+        this.data.foo.records = [];
+
+        const list = await createView({
+            View: ListView,
+            model: 'foo',
+            data: this.data,
+            arch: `<tree editable="bottom">
+                    <field name="int_field" widget="handle" />
+                    <field name="foo" />
+                </tree>`,
+            viewOptions: {
+                action: {
+                    help: '<p class="hello">click to add a foo</p>'
+                }
+            },
+        });
+
+        // as help is being provided in the action, table won't be rendered until a record exists
+        assert.containsNone(list, '.o_list_table', " there should not be any records in the view.");
+        assert.containsOnce(list, '.o_view_nocontent', "should have no content help");
+
+        // click on create button
+        await testUtils.dom.click(list.$('.o_list_button_add'));
+        const handleWidgetMinWidth = "33px";
+        const handleWidgetHeader = list.$('thead > tr > th.o_handle_cell');
+        assert.strictEqual(handleWidgetHeader.css('min-width'), handleWidgetMinWidth,
+            "While creating first record, min-width should be applied to handle widget.");
+
+        // creating one record
+        await testUtils.fields.editInput(list.$("tr.o_selected_row input[name='foo']"), 'test_foo');
+        await testUtils.dom.click(list.$('.o_list_button_save'));
+        assert.strictEqual(handleWidgetHeader.css('min-width'), handleWidgetMinWidth,
+            "After creation of the first record, min-width of the handle widget should remain as it is");
+
+        list.destroy();
     });
 
     QUnit.test('editable list: overflowing table', async function (assert) {
@@ -6875,6 +6936,64 @@ QUnit.module('Views', {
         ]);
 
         list.destroy();
+    });
+
+    QUnit.test('add filter in a grouped list with a pager', async function (assert) {
+        assert.expect(11);
+
+        const actionManager = await createActionManager({
+            data: this.data,
+            actions: [{
+                id: 11,
+                name: 'Action 11',
+                res_model: 'foo',
+                type: 'ir.actions.act_window',
+                views: [[3, 'list']],
+                search_view_id: [9, 'search'],
+                flags: {
+                    context: { group_by: ['int_field'] },
+                },
+            }],
+            archs: {
+               'foo,3,list': '<tree groups_limit="3"><field name="foo"/></tree>',
+               'foo,9,search': `
+                    <search>
+                        <filter string="Not Bar" name="not bar" domain="[['bar','=',False]]"/>
+                    </search>`,
+            },
+            mockRPC: function (route, args) {
+                if (args.method === 'web_read_group') {
+                    assert.step(JSON.stringify(args.kwargs.domain) + ', ' + args.kwargs.offset);
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        await actionManager.doAction(11);
+
+        assert.containsOnce(actionManager, '.o_list_view');
+        assert.strictEqual(actionManager.$('.o_pager_counter').text().trim(), '1-3 / 4');
+        assert.containsN(actionManager, '.o_group_header', 3); // page 1
+
+        await testUtils.dom.click(actionManager.$('.o_pager_next')); // switch to page 2
+
+        assert.strictEqual(actionManager.$('.o_pager_counter').text().trim(), '4-4 / 4');
+        assert.containsN(actionManager, '.o_group_header', 1); // page 2
+
+        // toggle a filter -> there should be only one group left (on page 1)
+        await testUtils.dom.click(actionManager.$('.o_control_panel .o_search_options .o_filters_menu_button'));
+        await testUtils.dom.click(actionManager.$('.o_control_panel .o_search_options .o_filters_menu .o_menu_item:first'));
+
+        assert.strictEqual(actionManager.$('.o_pager_counter').text().trim(), '1-1 / 1');
+        assert.containsN(actionManager, '.o_group_header', 1); // page 1
+
+        assert.verifySteps([
+            '[], undefined',
+            '[], 3',
+            '[["bar","=",false]], undefined',
+        ]);
+
+        actionManager.destroy();
     });
 
     QUnit.test('editable grouped lists', async function (assert) {

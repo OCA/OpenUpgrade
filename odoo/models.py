@@ -986,7 +986,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                     # Failed to write, log to messages, rollback savepoint (to
                     # avoid broken transaction) and keep going
                 except Exception as e:
-                    _logger.exception("Error while loading record")
+                    _logger.debug("Error while loading record", exc_info=True)
                     info = rec_data['info']
                     message = (_(u'Unknown error during import:') + u' %s: %s' % (type(e), e))
                     moreinfo = _('Resolve other errors first')
@@ -2967,14 +2967,6 @@ Fields:
             else:
                 _logger.warning("%s.read() with unknown field '%s'", self._name, name)
 
-        env = self.env
-        cr, user, context, su = env.args
-
-        # make a query object for selecting ids, and apply security rules to it
-        param_ids = object()
-        query = Query(['"%s"' % self._table], ['"%s".id IN %%s' % self._table], [param_ids])
-        self._apply_ir_rules(query, 'read')
-
         # determine the fields that are stored as columns in tables; ignore 'id'
         fields_pre = [
             field
@@ -2984,30 +2976,42 @@ Fields:
             if not (field.inherited and callable(field.base_field.translate))
         ]
 
-        # the query may involve several tables: we need fully-qualified names
-        def qualify(field):
-            col = field.name
-            res = self._inherits_join_calc(self._table, field.name, query)
-            if field.type == 'binary' and (context.get('bin_size') or context.get('bin_size_' + col)):
-                # PG 9.2 introduces conflicting pg_size_pretty(numeric) -> need ::cast
-                res = 'pg_size_pretty(length(%s)::bigint)' % res
-            return '%s as "%s"' % (res, col)
+        if fields_pre:
+            env = self.env
+            cr, user, context, su = env.args
 
-        # selected fields are: 'id' followed by fields_pre
-        qual_names = [qualify(name) for name in [self._fields['id']] + fields_pre]
+            # make a query object for selecting ids, and apply security rules to it
+            param_ids = object()
+            query = Query(['"%s"' % self._table], ['"%s".id IN %%s' % self._table], [param_ids])
+            self._apply_ir_rules(query, 'read')
 
-        # determine the actual query to execute
-        from_clause, where_clause, params = query.get_sql()
-        query_str = "SELECT %s FROM %s WHERE %s" % (",".join(qual_names), from_clause, where_clause)
+            # the query may involve several tables: we need fully-qualified names
+            def qualify(field):
+                col = field.name
+                res = self._inherits_join_calc(self._table, field.name, query)
+                if field.type == 'binary' and (context.get('bin_size') or context.get('bin_size_' + col)):
+                    # PG 9.2 introduces conflicting pg_size_pretty(numeric) -> need ::cast
+                    res = 'pg_size_pretty(length(%s)::bigint)' % res
+                return '%s as "%s"' % (res, col)
 
-        # fetch one list of record values per field
-        param_pos = params.index(param_ids)
+            # selected fields are: 'id' followed by fields_pre
+            qual_names = [qualify(name) for name in [self._fields['id']] + fields_pre]
 
-        result = []
-        for sub_ids in cr.split_for_in_conditions(self.ids):
-            params[param_pos] = tuple(sub_ids)
-            cr.execute(query_str, params)
-            result += cr.fetchall()
+            # determine the actual query to execute
+            from_clause, where_clause, params = query.get_sql()
+            query_str = "SELECT %s FROM %s WHERE %s" % (",".join(qual_names), from_clause, where_clause)
+
+            # fetch one list of record values per field
+            param_pos = params.index(param_ids)
+
+            result = []
+            for sub_ids in cr.split_for_in_conditions(self.ids):
+                params[param_pos] = tuple(sub_ids)
+                cr.execute(query_str, params)
+                result += cr.fetchall()
+        else:
+            self.check_access_rule('read')
+            result = [(id_,) for id_ in self.ids]
 
         fetched = self.browse()
         if result:
@@ -4282,8 +4286,14 @@ Record ids: %(records)s
         return order_by_clause and (' ORDER BY %s ' % order_by_clause) or ''
 
     @api.model
-    def _flush_search(self, domain, fields=None, order=None):
+    def _flush_search(self, domain, fields=None, order=None, seen=None):
         """ Flush all the fields appearing in `domain`, `fields` and `order`. """
+        if seen is None:
+            seen = set()
+        elif self._name in seen:
+            return
+        seen.add(self._name)
+
         to_flush = defaultdict(set)             # {model_name: field_names}
         if fields:
             to_flush[self._name].update(fields)
@@ -4315,7 +4325,7 @@ Record ids: %(records)s
                             to_flush[model._name].add(f)
                             if rfield.type in ('many2one', 'one2many', 'many2many'):
                                 model = self.env[rfield.comodel_name]
-                                if rfield.type == 'one2many':
+                                if rfield.type == 'one2many' and rfield.inverse_name:
                                     to_flush[rfield.comodel_name].add(rfield.inverse_name)
                 if field.comodel_name:
                     model_name = field.comodel_name
@@ -4329,8 +4339,11 @@ Record ids: %(records)s
         order_spec = order or self._order
         for order_part in order_spec.split(','):
             order_field = order_part.split()[0]
-            if order_field in self._fields:
+            field = self._fields.get(order_field)
+            if field is not None:
                 to_flush[self._name].add(order_field)
+                if field.relational:
+                    self.env[field.comodel_name]._flush_search([], seen=seen)
 
         if 'active' in self:
             to_flush[self._name].add('active')
@@ -5614,11 +5627,17 @@ Record ids: %(records)s
             (:class:`Field` instance), including ``self``.
             Return at most ``limit`` records.
         """
+        # This method returns records that are either all real, or all new.
+        # Those records are aimed at being either fetched, or computed.  But the
+        # method '_fetch_field' is not correct with new records: it considers
+        # them as forbidden records, and clears their cache!  On the other hand,
+        # compute methods are not invoked with a mix of real and new records for
+        # the sake of code simplicity.
+        kind = bool(self.id)
         recs = self.browse(unique(self._prefetch_ids))
         ids = [self.id]
         for record_id in self.env.cache.get_missing_ids(recs - self, field):
-            if not record_id:
-                # Do not prefetch `NewId`
+            if bool(record_id) != kind:
                 continue
             ids.append(record_id)
             if limit and limit <= len(ids):
@@ -5751,6 +5770,9 @@ Record ids: %(records)s
             if not recs:
                 return
             if field.compute and field.store:
+                # do not force recomputation on new records; those will be
+                # recomputed by accessing the field on the records
+                recs = recs.filtered('id')
                 try:
                     recs.mapped(field.name)
                 except MissingError:
@@ -5767,9 +5789,8 @@ Record ids: %(records)s
 
         if fnames is None:
             # recompute everything
-            fields_to_compute = self.env.fields_to_compute()
-            while fields_to_compute:
-                process(next(iter(fields_to_compute)))
+            for field in list(self.env.fields_to_compute()):
+                process(field)
         else:
             fields = [self._fields[fname] for fname in fnames]
 

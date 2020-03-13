@@ -25,7 +25,6 @@
 # Felix Schubert <felix.schubert@go-erp.com>, 2019
 # Bettina Pfeifer <betzilla@web.de>, 2019
 # Philipp Fürstos <pfu@odoo.com>, 2019
-# Franziska Schutte <fsc@odoo.com>, 2019
 # e2f <projects@e2f.com>, 2019
 # Wolfgang Taferner, 2019
 # JackTheHunter <Maximilian.N98@gmail.com>, 2019
@@ -39,10 +38,13 @@
 # Markus Mair <mm@aster.bz>, 2019
 # Patrick Heuel <patrick.heuel@odoo-bs.com>, 2019
 # Leon Grill <leg@odoo.com>, 2019
-# Philip Kuß <philip.kuss@gmx.de>, 2019
+# philku79 <philip.kuss@gmx.de>, 2019
 # Ermin Trevisan <trevi@twanda.com>, 2020
 # Chris Egal <sodaswed@web.de>, 2020
 # Florian Pose <fp@igh.de>, 2020
+# Gustav Gans <grafgustav6@gmail.com>, 2020
+# Robert Förster <hello@suppliot.eu>, 2020
+# JEK Odoo <jek@odoo.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -50,7 +52,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-05 12:32+0000\n"
 "PO-Revision-Date: 2019-08-26 09:06+0000\n"
-"Last-Translator: Florian Pose <fp@igh.de>, 2020\n"
+"Last-Translator: JEK Odoo <jek@odoo.com>, 2020\n"
 "Language-Team: German (https://www.transifex.com/odoo/teams/41243/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,7 +78,7 @@ msgstr ""
 "- Steuergruppe: Die Steuer setzt sich aus einer Reihe von Nebensteuern zusammen.\n"
 "- Fix: Der Steuerbetrag bleibt gleich, unabhängig vom Preis.\n"
 "- Prozentsatz des Preises: Der Steuerbetrag ist ein % des Preises:\n"
-"Beispiel: 100 * 10% = 110 ( nicht im Preis inbegriffen)\n"
+"Beispiel: 100 * 10% = 110 (nicht im Preis inbegriffen)\n"
 "Beispiel: 110 / (1 + 10%) = 100 (im Preis inbegriffen.)\n"
 "Prozentsatz der enthaltenen Preissteuer: Der Steuerbetrag stellt sich aus der Aufteilung des Preises zusammen:\n"
 "Beispiel: 180 / (1 - 10%) = 200 (nicht im Preis inbegriffen)\n"
@@ -85,7 +87,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_chart_template__code_digits
 msgid "# of Digits"
-msgstr "Stellenzahl"
+msgstr "# Stellen"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_cashbox_line__number
@@ -622,6 +624,11 @@ msgid "<span>Quantity</span>"
 msgstr "<span>Menge</span>"
 
 #. module: account
+#: model_terms:ir.ui.view,arch_db:account.report_payment_receipt_document
+msgid "<span>Reference</span>"
+msgstr "<span>Referenz</span>"
+
+#. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
 msgid "<span>Reporting</span>"
 msgstr "<span>Berichte</span>"
@@ -913,6 +920,10 @@ msgid ""
 "either in 'Tax-Included' or in 'Tax-Excluded' mode\n"
 "(or switch twice the mode if you are already in the desired one)."
 msgstr ""
+"Ein Benutzer kann nicht sowohl Tax B2B als auch Tax B2C haben.\n"
+"Sie sollten in den Allgemeinen Einstellungen gehen und wählen, ob die Produktpreise\n"
+"entweder im Modus 'Steuer inbegriffen' oder 'Steuer ausgeschlossen' \n"
+"(oder wechseln Sie den Modus zwei Mal, wenn Sie sich bereits im gewünschten Modus befinden)."
 
 #. module: account
 #: model:res.groups,name:account.group_warning_account
@@ -9146,7 +9157,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account.view_account_move_reversal
 #: model_terms:ir.ui.view,arch_db:account.view_move_line_tree_grouped
 msgid "Reverse"
-msgstr "Rücklieferung"
+msgstr "Stornieren"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_move_form
@@ -11363,6 +11374,14 @@ msgstr ""
 #: code:addons/account/models/account_payment.py:0
 #, python-format
 msgid ""
+"There is more than one receivable/payable account in the concerned invoices."
+" You cannot group payments in that case."
+msgstr ""
+
+#. module: account
+#: code:addons/account/models/account_payment.py:0
+#, python-format
+msgid ""
 "There is no Transfer Account defined in the accounting settings. Please "
 "define one to be able to confirm this transfer."
 msgstr ""
@@ -13119,9 +13138,9 @@ msgid ""
 msgstr ""
 
 #. module: account
+#. module: account
 #: code:addons/account/models/account_analytic_line.py:0
-#, python-format
-msgid ""
-"You can't set a different company on your analytic tags since there are some"
-" journal items linked to it."
+#: code:addons/account/models/account.py:56
+#, python-format, python-format
+msgid "A tag defined to be used on taxes must always have a country set."
 msgstr ""

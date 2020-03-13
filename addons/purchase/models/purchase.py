@@ -9,7 +9,7 @@ from odoo.osv import expression
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.tools.float_utils import float_compare
 from odoo.exceptions import AccessError, UserError, ValidationError
-from odoo.tools.misc import formatLang
+from odoo.tools.misc import formatLang, get_lang
 
 
 class PurchaseOrder(models.Model):
@@ -207,7 +207,6 @@ class PurchaseOrder(models.Model):
         self = self.with_context(force_company=self.company_id.id)
         if not self.partner_id:
             self.fiscal_position_id = False
-            self.payment_term_id = False
             self.currency_id = self.env.company.currency_id.id
         else:
             self.fiscal_position_id = self.env['account.fiscal.position'].get_fiscal_position(self.partner_id.id)
@@ -427,8 +426,8 @@ class PurchaseOrder(models.Model):
             # Do not set an invoice_id if we want to create a new bill.
             if not create_bill:
                 result['res_id'] = self.invoice_ids.id or False
-        result['context']['default_origin'] = self.name
-        result['context']['default_reference'] = self.partner_ref
+        result['context']['default_invoice_origin'] = self.name
+        result['context']['default_ref'] = self.partner_ref
         return result
 
 
@@ -639,7 +638,7 @@ class PurchaseOrderLine(models.Model):
 
         self.product_uom = self.product_id.uom_po_id or self.product_id.uom_id
         product_lang = self.product_id.with_context(
-            lang=self.partner_id.lang,
+            lang=get_lang(self.env, self.partner_id.lang).code,
             partner_id=self.partner_id.id,
             company_id=self.company_id.id,
         )

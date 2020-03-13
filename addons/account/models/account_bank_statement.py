@@ -89,10 +89,10 @@ class AccountBankStmtCashWizard(models.Model):
 
     def _validate_cashbox(self):
         for cashbox in self:
-            if self.start_bank_stmt_ids:
-                self.start_bank_stmt_ids.write({'balance_start': self.total})
-            if self.end_bank_stmt_ids:
-                self.end_bank_stmt_ids.write({'balance_end_real': self.total})
+            if cashbox.start_bank_stmt_ids:
+                cashbox.start_bank_stmt_ids.write({'balance_start': cashbox.total})
+            if cashbox.end_bank_stmt_ids:
+                cashbox.end_bank_stmt_ids.write({'balance_end_real': cashbox.total})
 
 
 class AccountBankStmtCloseCheck(models.TransientModel):
@@ -493,6 +493,7 @@ class AccountBankStatementLine(models.Model):
             'journal_id': self.statement_id.journal_id.id,
             'currency_id': self.statement_id.currency_id.id,
             'date': self.statement_id.accounting_date or self.date,
+            'partner_id': self.partner_id.id,
             'ref': ref,
         }
         if self.move_name:
@@ -648,6 +649,17 @@ class AccountBankStatementLine(models.Model):
             'communication': self._get_communication(payment_methods[0] if payment_methods else False),
             'name': self.statement_id.name or _("Bank Statement %s") %  self.date,
         }
+
+    def _find_or_create_bank_account(self):
+        bank_account = self.env['res.partner.bank'].search(
+            [('company_id', '=', self.company_id.id), ('acc_number', '=', self.account_number)])
+        if not bank_account:
+            bank_account = self.env['res.partner.bank'].create({
+                'acc_number': self.account_number,
+                'partner_id': self.partner_id.id,
+                'company_id': self.company_id.id,
+            })
+        return bank_account
 
     def process_reconciliation(self, counterpart_aml_dicts=None, payment_aml_rec=None, new_aml_dicts=None):
         """ Match statement lines with existing payments (eg. checks) and/or payables/receivables (eg. invoices and credit notes) and/or new move lines (eg. write-offs).
@@ -807,12 +819,7 @@ class AccountBankStatementLine(models.Model):
         if self.account_number and self.partner_id and not self.bank_account_id:
             # Search bank account without partner to handle the case the res.partner.bank already exists but is set
             # on a different partner.
-            bank_account = self.env['res.partner.bank'].search([('company_id', '=', self.company_id.id),('acc_number', '=', self.account_number)])
-            if not bank_account:
-                bank_account = self.env['res.partner.bank'].create({
-                    'acc_number': self.account_number, 'partner_id': self.partner_id.id
-                })
-            self.bank_account_id = bank_account
+            self.bank_account_id = self._find_or_create_bank_account()
 
         counterpart_moves._check_balanced()
         return counterpart_moves
@@ -847,7 +854,8 @@ class AccountBankStatementLine(models.Model):
             aml_dict['currency_id'] = statement_currency.id
 
     def _check_invoice_state(self, invoice):
-        invoice._compute_amount()
+        if invoice.is_invoice(include_receipts=True):
+            invoice._compute_amount()
 
     def button_confirm_bank(self):
         self.statement_id.button_confirm_bank()

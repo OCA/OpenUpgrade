@@ -401,6 +401,14 @@ msgid "Archived"
 msgstr "보존"
 
 #. module: mass_mailing
+#: code:addons/mass_mailing/models/mass_mailing.py:146
+#, python-format
+msgid ""
+"At least one of the mailing list you are trying to archive is used in an "
+"ongoing mailing campaign."
+msgstr "보관하려는 메일 목록 중 하나 이상이 진행중인 메일 캠페인에서 사용됩니다."
+
+#. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.view_mail_mass_mailing_form
 msgid "Attach a file"
 msgstr "파일 첨부"
@@ -1022,7 +1030,7 @@ msgstr "그룹별"
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.mailing_trace_report_view_search
 msgid "Group By..."
-msgstr "그룹화..."
+msgstr "그룹별..."
 
 #. module: mass_mailing
 #: model:ir.model.fields,field_description:mass_mailing.field_mailing_contact__id

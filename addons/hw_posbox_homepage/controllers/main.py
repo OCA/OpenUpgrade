@@ -15,7 +15,6 @@ from odoo.tools import misc
 from pathlib import Path
 import threading
 
-from uuid import getnode as get_mac
 from odoo.addons.hw_proxy.controllers import main as hw_proxy
 from odoo.addons.web.controllers import main as web
 from odoo.modules.module import get_resource_path
@@ -64,8 +63,6 @@ class IoTboxHomepage(web.Home):
 
     def get_homepage_data(self):
         hostname = str(socket.gethostname())
-        mac = get_mac()
-        h = iter(hex(mac)[2:].zfill(12))
         ssid = helpers.get_ssid()
         wired = subprocess.check_output(['cat', '/sys/class/net/eth0/operstate']).decode('utf-8').strip('\n')
         if wired == 'up':
@@ -82,14 +79,14 @@ class IoTboxHomepage(web.Home):
         for device in iot_devices:
             iot_device.append({
                 'name': iot_devices[device].device_name + ' : ' + str(iot_devices[device].data['value']),
-                'type': iot_devices[device].device_type,
+                'type': iot_devices[device].device_type.replace('_', ' '),
                 'message': iot_devices[device].device_identifier + iot_devices[device].get_message()
             })
 
         return {
             'hostname': hostname,
             'ip': helpers.get_ip(),
-            'mac': ":".join(i + next(h) for i in h),
+            'mac': helpers.get_mac_address(),
             'iot_device_status': iot_device,
             'server_status': helpers.get_odoo_server_url() or 'Not Configured',
             'six_terminal': self.get_six_terminal(),
