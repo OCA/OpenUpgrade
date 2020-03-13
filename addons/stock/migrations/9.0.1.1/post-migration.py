@@ -16,20 +16,22 @@ def _migrate_tracking(cr):
     # of size 1 as indicator for that
     openupgrade.logged_query(
         cr,
-        "with lot_quantities as "
-        "(select l.id, l.product_id, sum(qty) sum_qty, count(*) num "
-        "from stock_production_lot l "
-        "join stock_quant q on q.lot_id=l.id "
-        "group by l.id, l.product_id) "
-        "update product_template pt "
-        "set tracking='serial' "
-        "from product_product pp "
-        "where pp.product_tmpl_id = pt.id AND pp.id in "
-        "(select product_id from lot_quantities lq "
-        "where not exists "
-        "(select id from lot_quantities "
-        "where lot_quantities.product_id=lq.product_id and "
-        "(lot_quantities.sum_qty<>1 or lot_quantities.num > 1)))")
+        """ WITH lot_quantities AS (
+            SELECT l.id, l.product_id, pp.product_tmpl_id,
+                SUM(qty) sum_qty
+            FROM stock_production_lot l
+            JOIN product_product pp ON pp.id = l.product_id
+            JOIN stock_quant q ON q.lot_id = l.id
+            GROUP BY l.id, pp.product_tmpl_id, l.product_id)
+        UPDATE product_template pt
+        SET tracking='serial'
+        FROM lot_quantities
+        WHERE pt.id = lot_quantities.product_tmpl_id
+            AND pt.tracking = 'lot'
+            AND NOT EXISTS (
+                SELECT id FROM lot_quantities
+                WHERE pt.id = lot_quantities.product_tmpl_id
+                    AND lot_quantities.sum_qty <> 1); """)
 
 
 def _migrate_pack_operation(env):
