@@ -10,7 +10,7 @@ new model sale.coupon.rule
 sale_coupon  / sale.coupon              / code (char)                   : NEW required, req_default: function, hasdefault
 sale_coupon  / sale.coupon              / order_id (many2one)           : NEW relation: sale.order
 sale_coupon  / sale.coupon              / partner_id (many2one)         : NEW relation: res.partner
-sale_coupon  / sale.coupon              / program_id (many2one)         : NEW relation: sale.coupon.program
+sale_coupon  / sale.coupon              / program_id (many2one)         : NEW relation: sale.coupon.program, required
 sale_coupon  / sale.coupon              / sales_order_id (many2one)     : NEW relation: sale.order
 sale_coupon  / sale.coupon              / state (selection)             : NEW required, selection_keys: ['expired', 'new', 'reserved', 'used'], req_default: function, hasdefault
 sale_coupon  / sale.coupon.program      / _inherits (False)             : NEW

@@ -172,8 +172,8 @@ DEL ir.ui.view: survey.survey_user_input_tree
 DEL ir.ui.view: survey.view_survey_user_input_kanban
 DEL ir.ui.view: website_survey.assets_frontend
 DEL ir.ui.view: website_survey.survey_login_layout
-NEW mail.template: survey.mail_template_certification (noupdate)
-NEW mail.template: survey.mail_template_user_input_invite (noupdate)
+NEW mail.template: survey.mail_template_certification
+NEW mail.template: survey.mail_template_user_input_invite
 DEL mail.template: survey.email_template_survey (noupdate)
 DEL survey.stage: survey.stage_closed (noupdate)
 DEL survey.stage: survey.stage_draft (noupdate)

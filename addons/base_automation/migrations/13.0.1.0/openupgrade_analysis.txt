@@ -1,16 +1,8 @@
 ---Models in module 'base_automation'---
-new model base.automation.link.test
-new model base.automation.linked.test
 ---Fields in module 'base_automation'---
 base_automation / base.automation          / trigger_field_ids (many2many) : NEW relation: ir.model.fields
 base_automation / base.automation.lead.test / customer (boolean)            : DEL
 base_automation / base.automation.lead.test / employee (boolean)            : NEW isfunction: function, stored
-base_automation / base.automation.link.test / linked_id (many2one)          : NEW relation: base.automation.linked.test
-base_automation / base.automation.link.test / name (char)                   : NEW
-base_automation / base.automation.linked.test / another_field (char)          : NEW
-base_automation / base.automation.linked.test / name (char)                   : NEW
 ---XML records in module 'base_automation'---
-NEW ir.model.access: base_automation.access_base_automation_link_test
-NEW ir.model.access: base_automation.access_base_automation_linked_test
 NEW ir.ui.view: base_automation.assets_backend
 NEW ir.ui.view: base_automation.qunit_suite

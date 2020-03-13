@@ -35,6 +35,7 @@ sale         / utm.campaign             / company_id (many2one)         : NEW re
 DEL crm.team: sales_team.team_sales_department (noupdate)
 NEW ir.actions.act_window: sale.action_sale_order_generate_link
 DEL ir.actions.act_window: sale.action_open_sale_onboarding_quotation_layout
+NEW ir.actions.server: sale.model_sale_order_action_quotation_sent
 NEW ir.config_parameter: sale.default_confirmation_template (noupdate)
 NEW ir.model.access: sale.access_account_account_tag_sale_salesman
 NEW ir.model.access: sale.access_account_account_type_sale_salesman
@@ -54,6 +55,7 @@ NEW ir.rule: sale.account_move_see_all (noupdate)
 NEW ir.ui.view: sale.account_invoice_view_tree
 NEW ir.ui.view: sale.assets_tests
 NEW ir.ui.view: sale.product_template_sale_form_view
+NEW ir.ui.view: sale.report_assets_common_inherit_sale
 NEW ir.ui.view: sale.sale_order_view_activity
 NEW ir.ui.view: sale.utm_campaign_view_form
 NEW ir.ui.view: sale.utm_campaign_view_kanban

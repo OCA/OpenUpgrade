@@ -8,6 +8,7 @@ web          / report.layout            / image (char)                  : module
 web          / report.layout            / pdf (char)                    : module is now 'base' ('web')
 web          / report.layout            / view_id (many2one)            : module is now 'base' ('web')
 ---XML records in module 'web'---
+NEW ir.attachment: web.asset_styles_company_report
 DEL ir.model.access: web.access_report_layout [renamed to base module]
 NEW ir.ui.view: web._assets_common_minimal_js
 NEW ir.ui.view: web._assets_frontend_minimal_js
@@ -21,5 +22,6 @@ NEW ir.ui.view: web.brand_promotion_message
 NEW ir.ui.view: web.conditional_assets_tests
 NEW ir.ui.view: web.debug_icon
 NEW ir.ui.view: web.frontend_layout
+NEW ir.ui.view: web.styles_company_report
 DEL ir.ui.view: web.report_assets_editor
 DEL res.company: base.main_company (noupdate)
