@@ -7,7 +7,7 @@
 # 高木正勝 <masakatsu.takagi@pro-spire.co.jp>, 2017
 # Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2017
 # Martin Trigaux, 2017
-# Yoshi Tashiro <tashiro@roomsfor.hk>, 2019
+# Yoshi Tashiro <tashiro@roomsfor.hk>, 2020
 # 
 msgid ""
 msgstr ""
@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-19 13:43+0000\n"
 "PO-Revision-Date: 2017-09-20 10:25+0000\n"
-"Last-Translator: Yoshi Tashiro <tashiro@roomsfor.hk>, 2019\n"
+"Last-Translator: Yoshi Tashiro <tashiro@roomsfor.hk>, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/odoo/teams/41243/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -324,7 +324,7 @@ msgstr "含有"
 #: code:addons/web_editor/static/src/xml/translator.xml:7
 #, python-format
 msgid "Content to translate"
-msgstr "翻訳するコンテンツ"
+msgstr "未翻訳コンテンツ"
 
 #. module: web_editor
 #. openerp-web
@@ -741,6 +741,7 @@ msgid ""
 "In this mode, you can only translate texts. To change the structure of the page, you must edit the master page.\n"
 "        Each modification on the master page is automatically applied to all translated versions."
 msgstr ""
+"このモードではテキストの翻訳のみ可能です。ページの構成を変更するには、マスターページを編集してください。マスターページへの変更は自動的に翻訳版に反映されます。"
 
 #. module: web_editor
 #. openerp-web
@@ -965,7 +966,7 @@ msgstr "OK"
 #: code:addons/web_editor/static/src/js/editor/translator.js:93
 #, python-format
 msgid "Ok, never show me this again"
-msgstr ""
+msgstr "今後このメッセージを表示しない"
 
 #. module: web_editor
 #. openerp-web
@@ -1429,14 +1430,14 @@ msgstr "翻訳属性"
 #: code:addons/web_editor/static/src/xml/translator.xml:8
 #, python-format
 msgid "Translated content"
-msgstr "翻訳されたコンテンツ"
+msgstr "翻訳済コンテンツ"
 
 #. module: web_editor
 #. openerp-web
 #: code:addons/web_editor/static/src/js/editor/translator.js:91
 #, python-format
 msgid "Translation Info"
-msgstr ""
+msgstr "翻訳情報"
 
 #. module: web_editor
 #. openerp-web

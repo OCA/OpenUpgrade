@@ -772,7 +772,7 @@ class Field(MetaField('DummyField', (object,), {})):
 
     @property
     def _description_sortable(self):
-        return self.store or (self.inherited and self.related_field._description_sortable)
+        return (self.column_type and self.store) or (self.inherited and self.related_field._description_sortable)
 
     def _description_string(self, env):
         if self.string and env.lang:
@@ -1353,7 +1353,7 @@ class _String(Field):
         super(_String, self).__init__(string=string, **kwargs)
 
     def _setup_attrs(self, model, name):
-        super()._setup_attrs(model, name)
+        super(_String, self)._setup_attrs(model, name)
         if self.prefetch is None:
             # do not prefetch complex translated fields by default
             self.prefetch = not callable(self.translate)
@@ -1488,7 +1488,7 @@ class Html(_String):
 
     def _get_attrs(self, model, name):
         # called by _setup_attrs(), working together with _String._setup_attrs()
-        attrs = super()._get_attrs(model, name)
+        attrs = super(Html, self)._get_attrs(model, name)
         # Translated sanitized html fields must use html_translate or a callable.
         if attrs.get('translate') is True and attrs.get('sanitize', True):
             attrs['translate'] = html_translate
