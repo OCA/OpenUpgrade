@@ -93,6 +93,7 @@ class TestPayment(AccountingTestCase):
             'payment_date': time.strftime('%Y') + '-07-15',
             'journal_id': self.bank_journal_euro.id,
             'payment_method_id': self.payment_method_manual_in.id,
+            'group_invoices': True,
         })
         register_payments.create_payments()
         payment = self.payment_model.search([], order="id desc", limit=1)
@@ -251,6 +252,7 @@ class TestPayment(AccountingTestCase):
             'payment_date': time.strftime('%Y') + '-07-15',
             'journal_id': self.bank_journal_euro.id,
             'payment_method_id': self.payment_method_manual_in.id,
+            'group_invoices': True,
         })
 
         # Perform the partial payment by setting the amount at 300 instead of 500
@@ -572,7 +574,7 @@ class TestPayment(AccountingTestCase):
         self.assertEqual(payment_two.mapped('move_line_ids.move_id.state'), ['draft'], "A posted payment (payment_two) in a bank journal with the 'post at bank reconciliation' option activated should correspond to a draft account.move")
 
         # Reconcile the two payments with an invoice, whose full amount is equal to their sum
-        invoice = self.create_invoice(amount=53, partner=self.partner_agrolait.id)
+        invoice = self.create_invoice(amount=53, partner=self.partner_agrolait.id, account_id=self.partner_agrolait.property_account_receivable_id.id)
         (payment_one.move_line_ids + payment_two.move_line_ids + invoice.move_id.line_ids).filtered(lambda x: x.account_id.user_type_id.type == 'receivable').reconcile()
 
         self.assertTrue(invoice.reconciled, "Invoice should have been reconciled with the payments")
@@ -605,6 +607,7 @@ class TestPayment(AccountingTestCase):
 
         batch_payment = self.env['account.register.payments'].with_context(active_ids=(inv1 + inv2).ids).create({
             'amount': 70,
+            'group_invoices': True,
             'partner_id': inv1.partner_id.id,
             'journal_id': self.bank_journal_usd.id,
             'invoice_ids': [(6, False, (inv1 + inv2).ids)],
@@ -778,7 +781,7 @@ class TestPayment(AccountingTestCase):
             'partner_id': self.partner_agrolait.id,
             'currency_id': self.currency_usd_id,
             'name': 'out_invoice',
-            'account_id': self.account_receivable.id,
+            'account_id': self.partner_agrolait.property_account_receivable_id.id,
             'type': 'out_invoice',
             'date_invoice': time.strftime('%Y') + '-01-01',
         })

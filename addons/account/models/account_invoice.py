@@ -76,12 +76,6 @@ class AccountInvoice(models.Model):
             invoice.amount_untaxed_invoice_signed = invoice.amount_untaxed * sign
             invoice.amount_tax_signed = invoice.amount_tax * sign
 
-    @api.onchange('amount_total')
-    def _onchange_amount_total(self):
-        for inv in self:
-            if float_compare(inv.amount_total, 0.0, precision_rounding=inv.currency_id.rounding) == -1:
-                raise Warning(_('You cannot validate an invoice with a negative total amount. You should create a credit note instead.'))
-
     @api.model
     def _default_journal(self):
         if self._context.get('default_journal_id', False):
@@ -221,8 +215,11 @@ class AccountInvoice(models.Model):
             if float_is_zero(amount_to_show, precision_rounding=self.currency_id.rounding):
                 continue
             payment_ref = payment.move_id.name
+            invoice_view_id = None
             if payment.move_id.ref:
                 payment_ref += ' (' + payment.move_id.ref + ')'
+            if payment.invoice_id:
+                invoice_view_id = payment.invoice_id.get_formview_id()
             payment_vals.append({
                 'name': payment.name,
                 'journal_name': payment.journal_id.name,
@@ -234,6 +231,7 @@ class AccountInvoice(models.Model):
                 'payment_id': payment.id,
                 'account_payment_id': payment.payment_id.id,
                 'invoice_id': payment.invoice_id.id,
+                'invoice_view_id': invoice_view_id,
                 'move_id': payment.move_id.id,
                 'ref': payment_ref,
             })
@@ -936,6 +934,10 @@ class AccountInvoice(models.Model):
                             biggest_tax_line = tax_line
                     biggest_tax_line.amount_rounding += rounding_amount
                 elif self.cash_rounding_id.strategy == 'add_invoice_line':
+                    if rounding_amount > 0.0:
+                        account_id = self.cash_rounding_id._get_loss_account_id().id
+                    else:
+                        account_id = self.cash_rounding_id._get_profit_account_id().id
                     # Create a new invoice line to perform the rounding
                     rounding_line = self.env['account.invoice.line'].new({
                         'name': self.cash_rounding_id.name,
@@ -1068,7 +1070,7 @@ class AccountInvoice(models.Model):
         tax_grouped = {}
         round_curr = self.currency_id.round
         for line in self.invoice_line_ids:
-            if not line.account_id:
+            if not line.account_id or line.display_type:
                 continue
             price_unit = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
             taxes = line.invoice_line_tax_ids.compute_all(price_unit, self.currency_id, line.quantity, line.product_id, self.partner_id)['taxes']
@@ -1431,6 +1433,8 @@ class AccountInvoice(models.Model):
         if name:
             invoice_ids = self._search([('number', '=', name)] + args, limit=limit, access_rights_uid=name_get_uid)
         if not invoice_ids:
+            invoice_ids = self._search([('number', operator, name)] + args, limit=limit, access_rights_uid=name_get_uid)
+        if not invoice_ids:
             invoice_ids = self._search([('name', operator, name)] + args, limit=limit, access_rights_uid=name_get_uid)
         return self.browse(invoice_ids).name_get()
 
@@ -1694,8 +1698,9 @@ class AccountInvoiceLine(models.Model):
 
     @api.model
     def _default_account(self):
-        if self._context.get('journal_id'):
-            journal = self.env['account.journal'].browse(self._context.get('journal_id'))
+        journal_id = self._context.get('journal_id') or self._context.get('default_journal_id')
+        if journal_id:
+            journal = self.env['account.journal'].browse(journal_id)
             if self._context.get('type') in ('out_invoice', 'in_refund'):
                 return journal.default_credit_account_id.id
             return journal.default_debit_account_id.id
@@ -1829,6 +1834,8 @@ class AccountInvoiceLine(models.Model):
             if type not in ('in_invoice', 'in_refund'):
                 self.price_unit = 0.0
             domain['uom_id'] = []
+            if fpos:
+                self.account_id = fpos.map_account(self.account_id)
         else:
             self_lang = self
             if part.lang:
