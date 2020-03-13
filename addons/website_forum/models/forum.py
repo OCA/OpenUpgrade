@@ -720,7 +720,8 @@ class Post(models.Model):
             'subtype': 'mail.mt_comment',
             'date': self.create_date,
         }
-        new_message = question.with_context(mail_create_nosubscribe=True).message_post(**values)
+        # done with the author user to have create_uid correctly set
+        new_message = question.with_user(self_sudo.create_uid.id).with_context(mail_create_nosubscribe=True).message_post(**values)
 
         # unlink the original answer, using SUPERUSER_ID to avoid karma issues
         self.sudo().unlink()
@@ -761,6 +762,7 @@ class Post(models.Model):
             'forum_id': question.forum_id.id,
             'content': comment.body,
             'parent_id': question.id,
+            'name': _('Re: %s') % (question.name or ''),
         }
         # done with the author user to have create_uid correctly set
         new_post = self.with_user(post_create_uid).create(post_values)

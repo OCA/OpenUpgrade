@@ -783,7 +783,11 @@ var utils = {
         return [
             '&',
             ['res_model', '=', 'ir.ui.view'],
-            ['name', 'like', 'assets_']
+            '|', '|', '|',
+            ['name', '=like', '%.assets\_%.css'],
+            ['name', '=like', '%.assets\_%.js'],
+            ['name', '=', 'web_editor.summernote.css'],
+            ['name', '=', 'web_editor.summernote.js'],
         ];
     },
 };

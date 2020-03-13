@@ -827,7 +827,6 @@ var StatementModel = BasicModel.extend({
                 }
                 values.push(values_dict);
                 line.reconciled = true;
-                self.valuenow++;
             }));
 
             _.each(self.lines, function(other_line) {
@@ -851,6 +850,7 @@ var StatementModel = BasicModel.extend({
                 })
                 .then(self._validatePostProcess.bind(self))
                 .then(function () {
+                    self.valuenow += handles.length;
                     return {handles: handles};
                 });
         });
@@ -1478,7 +1478,9 @@ var ManualModel = StatementModel.extend({
             });
 
         var domainReconcile = [];
-        var company_ids = context && context.company_ids || [session.company_id];
+        var session_allowed_company_ids = session.user_context.allowed_company_ids || []
+        var company_ids = context && context.company_ids || session_allowed_company_ids.slice(0, 1);
+
         if (company_ids) {
             domainReconcile.push(['company_id', 'in', company_ids]);
         }
@@ -1541,6 +1543,20 @@ var ManualModel = StatementModel.extend({
             }
         });
     },
+
+    /**
+     * Reload data by calling load
+     * It overrides super.reload() because
+     * it is not adapted for this model.
+     *
+     * Use case: coming back to manual reconcilation
+     *           in breadcrumb
+     */
+    reload: function () {
+        this.lines = {};
+        return this.load(this.context);
+    },
+
     /**
      * Load more partners/accounts
      * overridden in ManualModel
@@ -1638,7 +1654,7 @@ var ManualModel = StatementModel.extend({
                 if (line.reconciled) {
                     return;
                 }
-                line.filter = "";
+                line.filter_match = "";
                 defs.push(self._performMoveLine(handle, 'match').then(function () {
                     if(!line.mv_lines_match.length) {
                         self.valuenow++;
@@ -1729,7 +1745,7 @@ var ManualModel = StatementModel.extend({
             reconciled: false,
             mode: 'inactive',
             limitMoveLines: this.limitMoveLines,
-            filter: "",
+            filter_match: "",
             reconcileModels: this.reconcileModels,
             account_id: this._formatNameGet([data.account_id, data.account_name]),
             st_line: data,
@@ -1810,7 +1826,7 @@ var ManualModel = StatementModel.extend({
         var excluded_ids = _.map(_.union(line.reconciliation_proposition, line.mv_lines_match), function (prop) {
             return _.isNumber(prop.id) ? prop.id : null;
         }).filter(id => id != null);
-        var filter = line.filter || "";
+        var filter = line.filter_match || "";
         var args = [line.account_id.id, line.partner_id, excluded_ids, filter, 0, limit];
         return this._rpc({
                 model: 'account.reconciliation.widget',
@@ -1839,7 +1855,7 @@ var ManualModel = StatementModel.extend({
         line.mv_lines_match = _.uniq((line.mv_lines_match || []).concat(mv_lines), l => l.id);
         this._formatLineProposition(line, mv_lines);
 
-        if (line.mode !== 'create' && !line.mv_lines_match.length && !line.filter.length) {
+        if (line.mode !== 'create' && !line.mv_lines_match.length && !line.filter_match.length) {
             line.mode = this.avoidCreate || !line.balance.amount ? 'inactive' : 'create';
             if (line.mode === 'create') {
                 return this._computeLine(line).then(function () {
