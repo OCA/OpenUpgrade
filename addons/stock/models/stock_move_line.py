@@ -180,7 +180,7 @@ class StockMoveLine(models.Model):
 
         mls = super(StockMoveLine, self).create(vals_list)
 
-        for ml in mls:
+        for ml, vals in izip(mls, vals_list):
             if ml.state == 'done':
                 if 'qty_done' in vals:
                     ml.move_id.product_uom_qty = ml.move_id.quantity_done
@@ -200,7 +200,6 @@ class StockMoveLine(models.Model):
                 next_moves = ml.move_id.move_dest_ids.filtered(lambda move: move.state not in ('done', 'cancel'))
                 next_moves._do_unreserve()
                 next_moves._action_assign()
-
         return mls
 
     def write(self, vals):
@@ -425,8 +424,9 @@ class StockMoveLine(models.Model):
                 rounding = ml.product_uom_id.rounding
 
                 # if this move line is force assigned, unreserve elsewhere if needed
-                if not ml.location_id.should_bypass_reservation() and float_compare(ml.qty_done, ml.product_qty, precision_rounding=rounding) > 0:
-                    extra_qty = ml.qty_done - ml.product_qty
+                if not ml.location_id.should_bypass_reservation() and float_compare(ml.qty_done, ml.product_uom_qty, precision_rounding=rounding) > 0:
+                    qty_done_product_uom = ml.product_uom_id._compute_quantity(ml.qty_done, ml.product_id.uom_id, rounding_method='HALF-UP')
+                    extra_qty = qty_done_product_uom - ml.product_qty
                     ml._free_reservation(ml.product_id, ml.location_id, extra_qty, lot_id=ml.lot_id, package_id=ml.package_id, owner_id=ml.owner_id, ml_to_ignore=done_ml)
                 # unreserve what's been reserved
                 if not ml.location_id.should_bypass_reservation() and ml.product_id.type == 'product' and ml.product_qty:

@@ -600,6 +600,11 @@ msgid "<span>Quantity</span>"
 msgstr "<span>Menge</span>"
 
 #. module: account
+#: model_terms:ir.ui.view,arch_db:account.report_payment_receipt_document
+msgid "<span>Reference</span>"
+msgstr ""
+
+#. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
 msgid "<span>Reporting</span>"
 msgstr "<span>Berichte</span>"
@@ -1236,7 +1241,7 @@ msgstr ""
 #: model:ir.cron,cron_name:account.ir_cron_reverse_entry
 #: model:ir.cron,name:account.ir_cron_reverse_entry
 msgid "Account; Reverse entries"
-msgstr "Konto; Einträge umkehren"
+msgstr "Konto; Buchungen stornieren"
 
 #. module: account
 #: model:ir.ui.menu,name:account.account_account_menu
