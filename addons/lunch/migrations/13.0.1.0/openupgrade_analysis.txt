@@ -167,6 +167,7 @@ DEL ir.model.access: lunch.order_line_manager
 DEL ir.model.access: lunch.order_line_user
 NEW ir.rule: lunch.ir_rule_lunch_location_multi_company (noupdate)
 NEW ir.rule: lunch.ir_rule_lunch_product_multi_company (noupdate)
+NEW ir.rule: lunch.ir_rule_lunch_product_report_multi_company (noupdate)
 NEW ir.rule: lunch.ir_rule_lunch_supplier_multi_company (noupdate)
 NEW ir.rule: lunch.lunch_order_rule_delete
 NEW ir.rule: lunch.lunch_order_rule_write

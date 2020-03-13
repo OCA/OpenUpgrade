@@ -1,0 +1,9 @@
+---Models in module 'account_debit_note'---
+new model account.debit.note [transient]
+---Fields in module 'account_debit_note'---
+account_debit_note / account.move             / debit_note_ids (one2many)     : NEW relation: account.move
+account_debit_note / account.move             / debit_origin_id (many2one)    : NEW relation: account.move
+---XML records in module 'account_debit_note'---
+NEW ir.actions.act_window: account_debit_note.action_view_account_move_debit
+NEW ir.ui.view: account_debit_note.view_account_debit_note
+NEW ir.ui.view: account_debit_note.view_move_form_debit

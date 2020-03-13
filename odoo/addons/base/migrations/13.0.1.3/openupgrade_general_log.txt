@@ -75,14 +75,13 @@ obsolete model test_convert.test_model [module test_convert]
 obsolete model website.redirect (renamed to website.rewrite) [module website]
 obsolete model yearly.salary.detail [module l10n_in_hr_payroll]
 new model account.accrual.accounting.wizard [module account]
+new model account.debit.note [module account_debit_note]
 new model account.journal.group [module account]
 new model account.payment.register (renamed from account.register.payments) [module account]
 new model account.root [module account]
 new model account.tax.repartition.line [module account]
 new model account.tax.repartition.line.template [module account]
 new model account.tax.report.line [module account]
-new model base.automation.link.test [module base_automation]
-new model base.automation.linked.test [module base_automation]
 new model base.document.layout [module base]
 new model base.geo_provider [module base_geolocalize]
 new model base.geocoder [module base_geolocalize]
@@ -214,7 +213,7 @@ new model website.visitor [module website]
 # Found in other module: 104
 # Found with different type: 0
 # In obsolete models: 213
-# New columns: 2314
+# New columns: 2309
 # Not matched: 954
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
