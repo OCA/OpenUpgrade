@@ -2,8 +2,6 @@
 # © 2017 bloopark systems (<http://bloopark.de>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import json
-from psycopg2.extensions import AsIs
-
 from odoo.tools import pickle
 
 from openupgradelib import openupgrade
@@ -34,32 +32,6 @@ def map_ir_actions_server_fields(cr):
         UPDATE ir_actions ia
         SET binding_type = 'action'
         WHERE binding_type != 'report' """)
-
-
-def set_currency_rate_dates(cr):
-    """Set currency rate date per company's most popular timezone.
-    Rates without a company will be cast to UTC date automatically."""
-    cr.execute("SELECT id FROM res_company")
-    for company_id, in cr.fetchall():
-        cr.execute(
-            """
-            SELECT rp.tz, count(rp) as cnt
-            FROM res_users ru
-            JOIN res_partner rp ON ru.partner_id = rp.id
-            WHERE ru.company_id = %s
-            GROUP BY rp.tz ORDER BY cnt DESC LIMIT 1""",
-            (company_id,))
-        row = cr.fetchone()
-        tz = row[0] if row and row[0] else 'UTC'
-        cr.execute(
-            """
-            UPDATE res_currency_rate
-            SET name = (
-                %s::TIMESTAMP at TIME ZONE 'UTC'
-                AT TIME ZONE %s)::DATE
-            WHERE company_id = %s""", (
-                AsIs(openupgrade.get_legacy_name('name')),
-                tz, company_id))
 
 
 def merge_default_ir_values(cr):
@@ -148,7 +120,6 @@ def fill_cron_action_server_post(env):
 @openupgrade.migrate()
 def migrate(env, version):
     map_ir_actions_server_fields(env.cr)
-    set_currency_rate_dates(env.cr)
     merge_default_ir_values(env.cr)
     fill_cron_action_server_post(env)
     openupgrade.load_data(
