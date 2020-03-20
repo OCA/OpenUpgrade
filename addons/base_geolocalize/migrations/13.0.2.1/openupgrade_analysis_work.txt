@@ -1,0 +1,22 @@
+---Models in module 'base_geolocalize'---
+new model base.geo_provider
+new model base.geocoder [abstract]
+# Nothing to do
+
+---Fields in module 'base_geolocalize'---
+base_geolocalize / base.geo_provider        / name (char)                   : NEW
+base_geolocalize / base.geo_provider        / tech_name (char)              : NEW
+# Nothing to do. New model
+
+base_geolocalize / res.partner              / partner_latitude (float)      : module is now 'base' ('base_geolocalize')
+base_geolocalize / res.partner              / partner_longitude (float)     : module is now 'base' ('base_geolocalize')
+base_geolocalize / res.users                / partner_latitude (float)      : module is now 'base' ('base_geolocalize')
+base_geolocalize / res.users                / partner_longitude (float)     : module is now 'base' ('base_geolocalize')
+# Done in a base module
+
+---XML records in module 'base_geolocalize'---
+NEW base.geo_provider: base_geolocalize.geoprovider_google_map
+NEW base.geo_provider: base_geolocalize.geoprovider_open_street
+NEW ir.model.access: base_geolocalize.access_base_geo_provider
+NEW ir.ui.view: base_geolocalize.res_config_settings_view_form
+# Nothing to do
