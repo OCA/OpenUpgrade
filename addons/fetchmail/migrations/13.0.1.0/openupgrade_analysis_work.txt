@@ -1,0 +1,7 @@
+---Models in module 'fetchmail'---
+---Fields in module 'fetchmail'---
+fetchmail    / fetchmail.server         / server_type (selection)       : NEW required, selection_keys: ['imap', 'local', 'pop'], req_default: function, hasdefault
+fetchmail    / fetchmail.server         / type (selection)              : DEL required, selection_keys: ['imap', 'local', 'pop'], req_default: function
+# Done in pre-migration script
+
+---XML records in module 'fetchmail'---
