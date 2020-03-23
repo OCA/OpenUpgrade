@@ -1,0 +1,33 @@
+---Models in module 'phone_validation'---
+new model mail.thread.phone [abstract]
+new model phone.blacklist
+# Nothing to do
+
+---Fields in module 'phone_validation'---
+phone_validation / phone.blacklist          / active (boolean)              : NEW hasdefault
+phone_validation / phone.blacklist          / message_follower_ids (one2many): NEW relation: mail.followers
+phone_validation / phone.blacklist          / message_ids (one2many)        : NEW relation: mail.message
+phone_validation / phone.blacklist          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+phone_validation / phone.blacklist          / number (char)                 : NEW required
+# Nothing to do
+
+phone_validation / res.company              / phone_international_format (selection): DEL selection_keys: ['no_prefix', 'prefix']
+# Nothing to do
+
+---XML records in module 'phone_validation'---
+NEW ir.actions.act_window: phone_validation.phone_blacklist_action
+# Nothing to do
+
+NEW ir.model.access: phone_validation.access_phone_blacklist_all
+NEW ir.model.access: phone_validation.access_phone_blacklist_system
+# Nothing to do
+
+NEW ir.ui.menu: phone_validation.phone_blacklist_menu
+NEW ir.ui.menu: phone_validation.phone_menu_main
+# Nothing to do
+
+NEW ir.ui.view: phone_validation.phone_blacklist_view_form
+NEW ir.ui.view: phone_validation.phone_blacklist_view_search
+NEW ir.ui.view: phone_validation.phone_blacklist_view_tree
+DEL ir.ui.view: phone_validation.res_company_view_form_phone_validation
+# Nothing to do
