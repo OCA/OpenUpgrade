@@ -92,10 +92,9 @@ def fill_cron_action_server_pre(env):
 
 def set_currency_rate_dates(env):
     """Set currency rate date by creation user timezone."""
-    openupgrade.add_fields(env, [
-        ('name', 'res.currency.rate', 'res_currency_rate', 'date',
-         False, 'base'),
-    ])
+    openupgrade.logged_query(
+        env.cr,
+        "ALTER TABLE res_currency_rate ADD COLUMN name DATE")
     cr = env.cr
     openupgrade.logged_query(
         cr, """
