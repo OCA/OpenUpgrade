@@ -32,6 +32,8 @@ merged_modules = {
     'website_crm_phone_validation': 'website_crm',
     'website_sale_link_tracker': 'website_sale',
     'website_survey': 'survey',
+    # OCA/account-reconcile
+    'account_set_reconcilable': 'account',
     # OCA/timesheet
     'sale_timesheet_existing_project': 'sale_timesheet',
     # OCA/web
