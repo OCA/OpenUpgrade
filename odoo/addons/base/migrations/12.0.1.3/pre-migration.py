@@ -70,6 +70,10 @@ xmlid_renames = [
     ('stock.incoterm_FOB', 'account.incoterm_FOB'),
 ]
 
+_obsolete_tables = (
+    "stock_location_path",
+)
+
 
 def switch_noupdate_flag(env):
     """"Some renamed XML-IDs have changed their noupdate status, so we change
@@ -168,6 +172,7 @@ def fill_ir_attachment_res_model_name(cr):
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
+    openupgrade.remove_tables_fks(env.cr, _obsolete_tables)
     # Deactivate the noupdate flag (hardcoded on initial SQL load) for allowing
     # to update changed data on this group.
     openupgrade.logged_query(
