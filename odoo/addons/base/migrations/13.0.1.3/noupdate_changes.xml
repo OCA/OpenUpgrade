@@ -16,26 +16,26 @@
   <record id="hr" model="res.country">
     <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s \n%(country_name)s'" name="address_format"/>
   </record>
-  <record id="main_company" model="res.company">
-    <field name="favicon" model="res.company" eval="obj()._get_default_favicon(original=True)"/>
-  </record>
-  <record id="main_partner" model="res.partner">
+<!--  <record id="main_company" model="res.company">-->
+<!--    <field name="favicon" model="res.company" eval="obj()._get_default_favicon(original=True)"/>-->
+<!--  </record>-->
+<!--  <record id="main_partner" model="res.partner">-->
 <!--    <field name="customer"/>-->
 <!--    <field name="image" type="base64" file="base/static/img/res_company_logo.png"/>-->
-    <field name="image_1920" type="base64" file="base/static/img/res_company_logo.png"/>
-  </record>
-  <record id="partner_admin" model="res.partner">
+<!--    <field name="image_1920" type="base64" file="base/static/img/res_company_logo.png"/>-->
+<!--  </record>-->
+<!--  <record id="partner_admin" model="res.partner">-->
 <!--    <field name="customer"/>-->
 <!--    <field name="image" type="base64" file="base/static/img/avatar.png"/>-->
-    <field name="image_1920" type="base64" file="base/static/img/avatar_grey.png"/>
-  </record>
+<!--    <field name="image_1920" type="base64" file="base/static/img/avatar_grey.png"/>-->
+<!--  </record>-->
 <!--  <record id="partner_root" model="res.partner">-->
 <!--    <field name="customer"/>-->
 <!--  </record>-->
-  <record id="public_user" model="res.users">
+<!--  <record id="public_user" model="res.users">-->
 <!--    <field name="image" type="base64" file="base/static/img/public_user-image.png"/>-->
-    <field name="image_1920" type="base64" file="base/static/img/public_user-image.png"/>
-  </record>
+<!--    <field name="image_1920" type="base64" file="base/static/img/public_user-image.png"/>-->
+<!--  </record>-->
   <record id="res_company_rule_employee" model="ir.rule">
     <field name="domain_force">[('id','in', company_ids)]</field>
   </record>
@@ -64,9 +64,9 @@
   <record id="tm" model="res.country">
     <field name="currency_id" ref="TMT"/>
   </record>
-  <record id="user_root" model="res.users">
-    <field name="email">root@example.com</field>
-  </record>
+<!--  <record id="user_root" model="res.users">-->
+<!--    <field name="email">root@example.com</field>-->
+<!--  </record>-->
   <record id="zm" model="res.country">
     <field name="currency_id" ref="ZMW"/>
   </record>

@@ -1990,16 +1990,22 @@ class IrModelData(models.Model):
                         bad_imd_ids.append(id)
                         continue
 
-                    # OpenUpgrade: don't delete xmlids linked to records
-                    # Note: A regular module update in a regular (non-openupgrade) Odoo instance will remove this xmlids
+                    _logger.info('Deleting %s@%s (%s)', res_id, model, xmlid)
                     record = self.env[model].browse(res_id)
                     if record.exists():
-                        continue
-                        record.unlink()
+                        # OpenUpgrade: never break on unlink of obsolete records
+                        try:
+                            self.env.cr.execute('SAVEPOINT ir_model_data_delete');
+                            record.unlink()
+                        except Exception:
+                            self.env.cr.execute('ROLLBACK TO SAVEPOINT ir_model_data_delete');
+                            _logger.warning(
+                                'Could not delete obsolete record with id: %d of model %s\n'
+                                'Please refer to the log message right above',
+                                res_id, model)
+                        # /OpenUpgrade
                     else:
-                        _logger.info('Deleting %s@%s (%s)', res_id, model, xmlid)
                         bad_imd_ids.append(id)
-                    # /OpenUpgrade
         if bad_imd_ids:
             self.browse(bad_imd_ids).unlink()
         loaded_xmlids.clear()
