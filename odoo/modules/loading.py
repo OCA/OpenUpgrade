@@ -303,6 +303,10 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
             ver = adapt_version(package.data['version'])
             # Set new modules and dependencies
             module.write({'state': 'installed', 'latest_version': ver})
+            # OpenUpgrade: commit module_n state and version immediatly
+            # to avoid invalid database state if module_n+1 raises an
+            # exception
+            cr.commit_org()
 
             package.load_state = package.state
             package.load_version = package.installed_version
