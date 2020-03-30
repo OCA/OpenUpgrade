@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="product_comp_rule" model="ir.rule">
-    <field name="active"/>
+    <!--in v12 it was active = False-->
+    <field name="active" eval="True"/>
     <field name="domain_force"> ['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
   </record>
   <record id="product_pricelist_comp_rule" model="ir.rule">
