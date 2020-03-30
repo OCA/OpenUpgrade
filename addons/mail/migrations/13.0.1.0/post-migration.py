@@ -1,9 +1,9 @@
 # Copyright 2020 Andrii Skrypka
 # Copyright 2020 Opener B.V. (stefan@opener.amsterdam)
+# Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
-from odoo import fields
 
 
 @openupgrade.migrate()
@@ -24,13 +24,18 @@ def migrate(env, version):
         """ UPDATE mail_message_res_partner_needaction_rel
         SET notification_type = 'email'
         WHERE is_email; """)
-    # Populate missing message_type values in mail_message
+    # Populate missing message_type values in mail_message following
+    # https://github.com/OCA/OpenUpgrade/blob/d76498/addons/mail/models/mail_thread.py#L2192
+    # to https://github.com/OCA/OpenUpgrade/blob/d76498/odoo/tools/mail.py#L442
     openupgrade.logged_query(
         env.cr,
         """ UPDATE mail_message
         SET message_type = 'user_notification'
         WHERE message_type = 'notification' and message_id like '%openerp-message-notify%'""")
     # Populate missing read_date values mail.notification
-    env['mail.notification'].search([('is_read', '=', True)]).write({
-        'read_date': fields.Datetime.today(),
-    })
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE mail_message_res_partner_needaction_rel
+        SET read_date = now() AT TIME ZONE 'UTC'
+        WHERE is_read""",
+    )
