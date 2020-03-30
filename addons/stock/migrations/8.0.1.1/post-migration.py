@@ -46,6 +46,13 @@ default_spec = {
 }
 
 
+@openupgrade.logging()
+def _migrate_security(env):
+    group_stock_manager = env.ref("stock.group_stock_manager")
+    group_account_user = env.ref("account.group_account_user")
+    group_stock_manager.implied_ids -= group_account_user
+
+
 def migrate_product(cr, registry):
     """Migrate track_incoming, track_outgoing"""
     prod_tmpl_obj = registry['product.template']
@@ -1125,14 +1132,15 @@ def populate_stock_move_fields(cr, registry):
         WHERE sm1.id = res.id""")
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
     """
     It can be the case that procurement was not installed in the 7.0 database,
     as in 7.0 stock was a dependency of procurement and not the other way
     around like it is in 8.0. So we need to check if we are migrating a
     database in which procurement related stuff needs to be migrated.
     """
+    cr = env.cr
     registry = RegistryManager.get(cr.dbname)
     populate_stock_move_fields(cr, registry)
     have_procurement = openupgrade.column_exists(
@@ -1159,3 +1167,4 @@ def migrate(cr, version):
         cr, uid, registry, ['stock.production.lot', 'stock.picking'])
     migrate_move_inventory(cr, registry)
     reset_warehouse_data_ids(cr, registry)
+    _migrate_security(env)
