@@ -1,0 +1,113 @@
+---Models in module 'mail'---
+obsolete model mail.blacklist.mixin (renamed to mail.thread.blacklist) [abstract]
+new model mail.thread.blacklist (renamed from mail.blacklist.mixin) [abstract]
+# Done in pre-migration script
+
+new model mail.address.mixin [abstract]
+new model mail.thread.cc [abstract]
+# Nothing to do
+
+---Fields in module 'mail'---
+mail         / ir.actions.act_window.view / view_mode (False)             : selection_keys is now '['activity', 'calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'tree']' ('['activity', 'calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'tree']')
+# Nothing to do
+
+mail         / ir.model                 / is_mail_activity (boolean)    : NEW hasdefault
+mail         / ir.model                 / is_mail_blacklist (boolean)   : NEW hasdefault
+# Nothing to do
+
+mail         / ir.model.fields          / track_visibility (selection)  : DEL selection_keys: ['always', 'onchange']
+mail         / ir.model.fields          / tracking (integer)            : NEW
+# Done in post-migration script
+
+mail         / mail.activity            / create_user_id (many2one)     : DEL relation: res.users
+mail         / mail.activity            / feedback (html)               : DEL
+mail         / mail.activity            / res_id (integer)              : relation is now 'res_model' ('False') [nothing to do]
+mail         / mail.activity            / res_id (integer)              : type is now 'many2one_reference' ('integer')
+# Nothing to do
+
+mail         / mail.activity.type       / category (selection)          : selection_keys is now '['default', 'upload_file']' ('['default']')
+# Nothing to do
+
+mail         / mail.activity.type       / default_description (html)    : NEW
+mail         / mail.activity.type       / default_user_id (many2one)    : NEW relation: res.users
+# Nothing to do. Use as default values for note and user_id fields of mail.activity model
+
+mail         / mail.channel             / image (binary)                : DEL attachment: True [renamed to image_128]
+mail         / mail.channel             / image_128 (binary)            : NEW attachment: True, hasdefault [renamed from image]
+# Done in pre-migration script
+
+mail         / mail.channel             / image_medium (binary)         : DEL attachment: True
+mail         / mail.channel             / image_small (binary)          : DEL attachment: True
+# Nothing to do
+
+mail         / mail.channel.partner     / custom_channel_name (char)    : NEW
+# Nothing to do
+
+mail         / mail.channel.partner     / fetched_message_id (many2one) : NEW relation: mail.message
+# I think nothing to do
+# Commit https://github.com/odoo/odoo/commit/844fb2b51ea7cfa557b19466c0a53dde19433e7a
+
+mail         / mail.followers           / res_id (integer)              : relation is now 'res_model' ('False') [nothing to do]
+mail         / mail.followers           / res_id (integer)              : type is now 'many2one_reference' ('integer')
+# Nothing to do
+
+mail         / mail.mail                / res_id (integer)              : relation is now 'model' ('False') [nothing to do]
+mail         / mail.mail                / res_id (integer)              : type is now 'many2one_reference' ('integer')
+# Nothing to do
+
+mail         / mail.message             / mail_ids (one2many)           : NEW relation: mail.mail
+# Nothing to do
+
+mail         / mail.message             / message_type (selection)      : selection_keys is now '['comment', 'email', 'notification', 'user_notification']' ('['comment', 'email', 'notification']')
+# Done in post-migration
+# PR https://github.com/odoo/odoo/pull/32404/commits
+# Commit https://github.com/odoo/odoo/commit/d917b2d072a837d0d7deb0429b7552d680f26b6f
+
+mail         / mail.message             / email_layout_xmlid (char)     : NEW [renamed from layout]
+mail         / mail.message             / layout (char)                 : DEL [renamed to email_layout_xmlid]
+mail         / mail.message             / needaction_partner_ids (many2many): DEL relation: res.partner [renamed to notified_partner_ids]
+mail         / mail.message             / notified_partner_ids (many2many): NEW relation: res.partner [renamed from needaction_partner_ids]
+# Done in pre migration script
+
+mail         / mail.message             / res_id (integer)              : relation is now 'model' ('False') [nothing to do]
+mail         / mail.message             / res_id (integer)              : type is now 'many2one_reference' ('integer')
+# Nothing to do
+
+mail         / mail.message             / canned_response_ids (one2many): NEW relation: mail.shortcode [inverse for message_ids]
+mail         / mail.shortcode           / message_ids (many2one)        : NEW relation: mail.message
+# Nothing to do
+# Commit https://github.com/odoo/odoo/commit/66a08369741369946df219ac92b8881711fbb484
+
+mail         / mail.notification        / email_status (selection)      : DEL selection_keys: ['bounce', 'canceled', 'exception', 'ready', 'sent'] [renamed to email_status]
+mail         / mail.notification        / notification_status (selection): NEW selection_keys: ['bounce', 'canceled', 'exception', 'ready', 'sent'], hasdefault [renamed from email_status]
+# Done in pre-migration script
+
+mail         / mail.notification        / notification_type (selection) : NEW required, selection_keys: ['email', 'inbox'], req_default: function, hasdefault
+# Done in post-migration script. Tips from commit: [notification_type: notification.is_email and 'email' else 'inbox']
+
+mail         / mail.notification        / read_date (datetime)          : NEW
+# Done in post-migration script
+# Commit https://github.com/odoo/odoo/commit/0c37b9fb39005eab70ee8b39da84f79c981b2695
+
+mail         / mail.notification        / is_email (boolean)            : DEL
+# Nothing to do
+
+mail         / mail.tracking.value      / track_sequence (integer)      : DEL [renamed to tracking_sequence]
+mail         / mail.tracking.value      / tracking_sequence (integer)   : NEW hasdefault [renamed from track_sequence]
+# Done in pre-migration script
+
+mail         / res.partner              / email_normalized (char)       : NEW isfunction: function, stored
+# Nothing to do
+
+mail         / res.users                / out_of_office_message (char)  : NEW
+# Nothing to do
+# Commit https://github.com/odoo/odoo/commit/b60224c41cb6c9817fd328bb60b21681e619fb26
+
+---XML records in module 'mail'---
+NEW ir.actions.act_window: mail.mail_activity_action
+NEW ir.cron: mail.ir_cron_delete_notification (noupdate)
+NEW ir.ui.menu: mail.menu_mail_activities
+NEW ir.ui.view: mail.res_partner_view_activity
+NEW mail.activity.type: mail.mail_activity_data_upload_document (noupdate)
+DEL ir.ui.view: mail.qunit_mobile_suite
+# Nothing to do
