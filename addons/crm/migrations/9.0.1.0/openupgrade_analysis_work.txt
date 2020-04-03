@@ -102,6 +102,19 @@ crm          / res.users                / target_sales_won (integer)    : NEW
 # nothing to do
 
 ---XML records in module 'crm'---
+DEL crm.case.stage: crm.stage_lead1
+DEL crm.case.stage: crm.stage_lead2
+DEL crm.case.stage: crm.stage_lead3
+DEL crm.case.stage: crm.stage_lead4
+DEL crm.case.stage: crm.stage_lead5
+DEL crm.case.stage: crm.stage_lead6
+DEL crm.case.stage: crm.stage_lead7
+NEW crm.stage: crm.stage_lead1
+NEW crm.stage: crm.stage_lead2
+NEW crm.stage: crm.stage_lead3
+NEW crm.stage: crm.stage_lead5
+# DONE: pre-migration: map possible crm.case.stage to their corresponding new crm.stage ones and delete XML-IDs of the deprecated ones
+
 NEW crm.activity: crm.crm_activity_data_call
 NEW crm.activity: crm.crm_activity_data_email
 NEW crm.activity: crm.crm_activity_data_meeting
@@ -116,13 +129,6 @@ DEL crm.case.categ: crm.categ_oppor8
 DEL crm.case.categ: crm.categ_phone1
 DEL crm.case.categ: crm.categ_phone2
 DEL crm.case.section: sales_team.section_sales_department
-DEL crm.case.stage: crm.stage_lead1
-DEL crm.case.stage: crm.stage_lead2
-DEL crm.case.stage: crm.stage_lead3
-DEL crm.case.stage: crm.stage_lead4
-DEL crm.case.stage: crm.stage_lead5
-DEL crm.case.stage: crm.stage_lead6
-DEL crm.case.stage: crm.stage_lead7
 NEW crm.lost.reason: crm.lost_reason_1
 NEW crm.lost.reason: crm.lost_reason_2
 NEW crm.lost.reason: crm.lost_reason_3
@@ -130,10 +136,6 @@ DEL crm.payment.mode: crm.payment_mode_1
 DEL crm.payment.mode: crm.payment_mode_2
 DEL crm.payment.mode: crm.payment_mode_3
 DEL crm.payment.mode: crm.payment_mode_4
-NEW crm.stage: crm.stage_lead1
-NEW crm.stage: crm.stage_lead2
-NEW crm.stage: crm.stage_lead3
-NEW crm.stage: crm.stage_lead5
 NEW crm.team: sales_team.team_sales_department
 DEL crm.tracking.medium: crm.crm_medium_banner
 DEL crm.tracking.medium: crm.crm_medium_direct

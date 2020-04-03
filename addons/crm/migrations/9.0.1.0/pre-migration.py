@@ -36,6 +36,24 @@ column_copys = {
     ],
 }
 
+xmlid_renames = [
+    ('crm.stage_lead3', 'crm.stage_lead2'),
+    ('crm.stage_lead4', 'crm.stage_lead3'),
+    ('crm.stage_lead6', 'crm.stage_lead5'),
+]
+
+
+def _adjust_crm_stages(cr):
+    """Delete XML-IDs of deprecated stages (for not conflicting with new ones
+    with same name), and rename those of the equivalent ones.
+    """
+    openupgrade.logged_query(
+        cr,
+        "DELETE FROM ir_model_data WHERE module = 'crm' AND name IN "
+        "('stage_lead2', 'stage_lead5', 'stage_lead_7')",
+    )
+    openupgrade.rename_xmlids(cr, xmlid_renames)
+
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
@@ -52,3 +70,4 @@ def migrate(env, version):
     cr.execute("update crm_lead set type='opportunity' where type is null")
     if openupgrade.table_exists(cr, 'crm_lead_lost_reason'):
         openupgrade.rename_tables(cr, [('crm_lead_lost_reason', 'crm_lost_reason')])
+    _adjust_crm_stages(cr)
