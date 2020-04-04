@@ -54,7 +54,6 @@ renamed_models = {
     'mail.mail.statistics': 'mailing.trace',
     'mail.mail.statistics.report': 'mailing.trace.report',
     'mail.mass_mailing': 'mailing.mailing',
-    'mail.mass_mailing.campaign': 'utm.campaign',
     'mail.mass_mailing.contact': 'mailing.contact',
     'mail.mass_mailing.list': 'mailing.list',
     'mail.mass_mailing.list.merge': 'mailing.list.merge',
@@ -78,6 +77,7 @@ merged_models = {
     'account.voucher': 'account.move',
     'account.voucher.line': 'account.move.line',
     'lunch.order.line': 'lunch.order',
+    'mail.mass_mailing.campaign': 'utm.campaign',
     'slide.category': 'slide.slide',
     'survey.page': 'survey.question',
     # OCA/...
