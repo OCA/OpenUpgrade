@@ -1,4 +1,5 @@
 # Copyright 2020 ForgeFLow <http://www.forgeflow.com>
+# Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -7,23 +8,23 @@ _xmlid_renames = [
 ]
 
 
-def rename_image_attachments(env):
-    for old, new in [("image_variant", "image_variant_1024")]:
-        openupgrade.logged_query(
-            env.cr,
-            """
-            UPDATE ir_attachment SET res_field = %s
-            WHERE res_field = %s AND res_model = 'product.product'""",
-            (new, old),
-        )
-    for old, new in [("image", "image_1024"), ("image_medium", "image_128")]:
-        openupgrade.logged_query(
-            env.cr,
-            """
-            UPDATE ir_attachment SET res_field = %s
-            WHERE res_field = %s AND res_model = 'product.template'""",
-            (new, old),
-        )
+def fill_product_pricelist_item_prices(env):
+    """These fields are now required. They were probably already populated,
+    as they can't be empty through UI, but let's make sure putting these
+    sane defaults.
+    """
+    # fill compute_price
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE product_pricelist_item
+        SET compute_price = 'fixed'
+        WHERE compute_price IS NULL
+        """,
+    )
+    # delete records with empty pricelist_id, as they were
+    openupgrade.logged_query(
+        env.cr, "DELETE FROM product_pricelist_item WHERE pricelist_id IS NULL"
+    )
 
 
 def fill_product_pricelist_item_active_default(env):
@@ -71,10 +72,20 @@ def calculate_product_product_combination_indices(env):
     )
 
 
+def add_product_template_attribute_value__attribute_id_column(env):
+    """For avoiding that ORM fills it. We fill it later on post-migration."""
+    openupgrade.logged_query(
+        env.cr,
+        "ALTER TABLE product_template_attribute_value "
+        "ADD COLUMN attribute_id INT4",
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
     openupgrade.rename_xmlids(cr, _xmlid_renames)
-    rename_image_attachments(env)
+    fill_product_pricelist_item_prices(env)
     fill_product_pricelist_item_active_default(env)
     calculate_product_product_combination_indices(env)
+    add_product_template_attribute_value__attribute_id_column(env)

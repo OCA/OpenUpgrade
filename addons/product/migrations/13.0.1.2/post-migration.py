@@ -1,34 +1,7 @@
 # Copyright 2020 ForgeFlow <http://www.forgeflow.com>
+# Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
-
-
-def fill_product_pricelist_item_prices(env):
-    # fill compute_price
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE product_pricelist_item
-        SET compute_price = 'fixed'
-        WHERE compute_price IS NULL
-        """,
-    )
-    # fill pricelist_id
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE product_pricelist_item ppi
-        SET pricelist_id = (
-            SELECT max(grouped_pp.id)
-            FROM (
-                SELECT max(id) as id, company_id
-                FROM product_pricelist
-                WHERE active = TRUE
-                GROUP BY company_id
-            ) grouped_pp
-            WHERE grouped_pp.company_id IS NULL OR
-                grouped_pp.company_id = ppi.company_id
-        )
-        WHERE ppi.pricelist_id IS NULL""",
-    )
 
 
 def fill_product_template_attribute_value_attribute_line_id(env):
@@ -46,7 +19,7 @@ def fill_product_template_attribute_value_attribute_line_id(env):
     )
 
 
-def fill_product_template_attribute_value_attribute_id_default(env):
+def fill_product_template_attribute_value__attribute_id_related(env):
     openupgrade.logged_query(
         env.cr, """
         UPDATE product_template_attribute_value ptav
@@ -59,9 +32,9 @@ def fill_product_template_attribute_value_attribute_id_default(env):
 def fill_product_variant_combination_table(env):
     openupgrade.logged_query(
         env.cr, """
-        UPDATE product_variant_combination pvc
-        SET product_product_id = pavppr.product_product_id,
-            product_template_attribute_value_id = ptav.id
+        INSERT INTO product_variant_combination
+        (product_product_id, product_template_attribute_value_id)
+        SELECT pavppr.product_product_id, ptav.id
         FROM product_attribute_value_product_product_rel pavppr
         JOIN product_template_attribute_value ptav ON
             ptav.product_attribute_value_id = pavppr.product_attribute_value_id
@@ -69,11 +42,27 @@ def fill_product_variant_combination_table(env):
     )
 
 
+def convert_image_attachments(env):
+    mapping = {
+        'product.product': "image_variant",
+        'product.template': "image",
+    }
+    for model, field in mapping.items():
+        Model = env[model]
+        attachments = env['ir.attachment'].search([
+            ('res_model', '=', model),
+            ('res_field', '=', field),
+            ('res_id', '!=', False),
+        ])
+        for attachment in attachments:
+            Model.browse(attachment.res_id).image_1920 = attachment.datas
+
+
 @openupgrade.migrate()
 def migrate(env, version):
-    fill_product_pricelist_item_prices(env)
     fill_product_template_attribute_value_attribute_line_id(env)
-    fill_product_template_attribute_value_attribute_id_default(env)
+    fill_product_template_attribute_value__attribute_id_related(env)
     fill_product_variant_combination_table(env)
     openupgrade.load_data(
         env.cr, "product", "migrations/13.0.1.2/noupdate_changes.xml")
+    convert_image_attachments(env)

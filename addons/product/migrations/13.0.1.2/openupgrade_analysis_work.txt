@@ -1,13 +1,13 @@
 ---Models in module 'product'---
 obsolete model product.price.history
-# NOTHING TO DO: totally removed, replaced in a weird way by 'stock.valuation.layer' in stock_account
+# NOTHING TO DO: totally removed, replaced in a weird way by 'stock.valuation.layer' in stock_account. To be checked later in that module.
 
 ---Fields in module 'product'---
 product      / product.attribute        / product_tmpl_ids (many2many)  : NEW relation: product.template, isfunction: function, stored
 # NOTHING TO DO: is a new compute, so we could precreate and fill to speed up, but not needed because usually there are few records
 
 product      / product.attribute.value  / pav_attribute_line_ids (many2many): NEW relation: product.template.attribute.line
-# NOTHING TO DO: New many2many
+# NOTHING TO DO: Inverse many2many of an existing m2m table
 
 product      / product.packaging        / company_id (many2one)         : NEW relation: res.company
 # NOTHING TO DO: New field not required that restricts per company visibility, so we leave it empty
@@ -28,8 +28,10 @@ product      / product.pricelist.item   / active (boolean)              : NEW is
 # DONE: pre-migration: precreated and filled column to speed up
 
 product      / product.pricelist.item   / compute_price (selection)     : now required, req_default: function
+# DONE: pre-migration: filled the field when empty
+
 product      / product.pricelist.item   / pricelist_id (many2one)       : now required, req_default: function
-# DONE: post-migration: filled the field when empty
+# DONE: pre-migration: delete records when empty
 
 product      / product.product          / attribute_value_ids (many2many): DEL relation: product.attribute.value
 product      / product.template.attribute.value / ptav_product_variant_ids (many2many): NEW relation: product.product
@@ -80,7 +82,7 @@ product      / product.template.attribute.line / product_template_value_ids (man
 product      / product.template.attribute.line / product_template_value_ids (many2many): not a function anymore
 product      / product.template.attribute.line / product_template_value_ids (many2many): type is now 'one2many' ('many2many')
 product      / product.template.attribute.value / attribute_line_id (many2one)  : NEW relation: product.template.attribute.line, required
-# DONE: post-migration: filled field (using the same compute method of v12)
+# DONE: post-migration: filled field (using the same approach than in OU v12)
 
 ---XML records in module 'product'---
 NEW decimal.precision: product.decimal_volume (noupdate)
