@@ -1,0 +1,105 @@
+---Models in module 'product'---
+obsolete model product.price.history
+# NOTHING TO DO: totally removed, replaced in a weird way by 'stock.valuation.layer' in stock_account. To be checked later in that module.
+
+---Fields in module 'product'---
+product      / product.attribute        / product_tmpl_ids (many2many)  : NEW relation: product.template, isfunction: function, stored
+# NOTHING TO DO: is a new compute, so we could precreate and fill to speed up, but not needed because usually there are few records
+
+product      / product.attribute.value  / pav_attribute_line_ids (many2many): NEW relation: product.template.attribute.line
+# NOTHING TO DO: Inverse many2many of an existing m2m table
+
+product      / product.packaging        / company_id (many2one)         : NEW relation: res.company
+# NOTHING TO DO: New field not required that restricts per company visibility, so we leave it empty
+
+product      / product.price.history    / company_id (many2one)         : DEL relation: res.company, required, req_default: function
+product      / product.price.history    / cost (float)                  : DEL
+product      / product.price.history    / datetime (datetime)           : DEL
+product      / product.price.history    / product_id (many2one)         : DEL relation: product.product, required
+# NOTHING TO DO: Removed model. Check later in stock_account for 'stock.valuation.layer'.
+
+product      / product.pricelist        / discount_policy (selection)   : previously in module sale
+product      / product.template         / weight_uom_name (char)        : not related anymore
+product      / product.template         / weight_uom_name (char)        : now a function
+product      / product.template.attribute.value / product_tmpl_id (many2one)    : now related
+# NOTHING TO DO
+
+product      / product.pricelist.item   / active (boolean)              : NEW isrelated: related, stored
+# DONE: pre-migration: precreated and filled column to speed up
+
+product      / product.pricelist.item   / compute_price (selection)     : now required, req_default: function
+# DONE: pre-migration: filled the field when empty
+
+product      / product.pricelist.item   / pricelist_id (many2one)       : now required, req_default: function
+# DONE: pre-migration: delete records when empty
+
+product      / product.product          / attribute_value_ids (many2many): DEL relation: product.attribute.value
+product      / product.template.attribute.value / ptav_product_variant_ids (many2many): NEW relation: product.product
+product      / product.product          / product_template_attribute_value_ids (many2many): is now stored
+product      / product.product          / product_template_attribute_value_ids (many2many): not a function anymore
+product      / product.product          / product_template_attribute_value_ids (many2many): table is now 'product_variant_combination' ('False')
+# DONE: post-migration: filled table 'product_variant_combination' using the old many2many
+
+product      / product.template         / can_image_1024_be_zoomed (boolean): NEW isfunction: function, stored
+product      / product.product          / can_image_variant_1024_be_zoomed (boolean): NEW isfunction: function, stored
+# NOTHING TO DO
+
+product      / product.product          / combination_indices (char)    : NEW isfunction: function, stored
+# DONE: pre-migration: filled to avoid product_product_combination_unique constrain
+
+product      / product.product          / image_variant (binary)        : DEL attachment: True
+product      / product.product          / image_variant_1024 (binary)   : NEW attachment: True, isrelated: related, stored
+product      / product.product          / image_variant_128 (binary)    : NEW attachment: True, isrelated: related, stored
+product      / product.product          / image_variant_1920 (binary)   : NEW attachment: True
+product      / product.product          / image_variant_256 (binary)    : NEW attachment: True, isrelated: related, stored
+product      / product.product          / image_variant_512 (binary)    : NEW attachment: True, isrelated: related, stored
+product      / product.template         / image (binary)                : DEL attachment: True
+product      / product.template         / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
+product      / product.template         / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+product      / product.template         / image_1920 (binary)           : NEW attachment: True
+product      / product.template         / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
+product      / product.template         / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+product      / product.template         / image_medium (binary)         : DEL attachment: True
+product      / product.template         / image_small (binary)          : DEL attachment: True
+# DONE: pre-migration: renamed fields
+
+product      / product.product          / website_message_ids (one2many): module is now 'portal' ('product')
+product      / product.template         / website_message_ids (one2many): module is now 'portal' ('product')
+product      / product.template         / item_ids (one2many)           : DEL relation: product.pricelist.item
+# NOTHING TO DO: One2many
+
+product      / product.template         / has_configurable_attributes (boolean): NEW isfunction: function, stored
+# NOTHING TO DO: we could try to precreate and fill in pre-migration to speed up, but it a priori is not needed.
+
+product      / product.template.attribute.line / active (boolean)              : NEW hasdefault
+product      / product.template.attribute.value / ptav_active (boolean)         : NEW hasdefault
+# NOTHING TO DO: New field that has default, will be automatically filled
+
+product      / product.template.attribute.value / attribute_id (many2one)       : is now stored
+# DONE: post-migration: filled field (done in post-migration because it's a related to a new field)
+
+product      / product.template.attribute.line / product_template_value_ids (many2many): is now stored
+product      / product.template.attribute.line / product_template_value_ids (many2many): not a function anymore
+product      / product.template.attribute.line / product_template_value_ids (many2many): type is now 'one2many' ('many2many')
+product      / product.template.attribute.value / attribute_line_id (many2one)  : NEW relation: product.template.attribute.line, required
+# DONE: post-migration: filled field (using the same approach than in OU v12)
+
+---XML records in module 'product'---
+NEW decimal.precision: product.decimal_volume (noupdate)
+NEW ir.actions.act_window: product.product_pricelist_item_action
+DEL ir.actions.act_window: product.variants_action
+DEL ir.model.access: product.access_product_price_history_employee
+DEL ir.model.access: product.access_product_price_history_manager
+NEW ir.rule: product.product_packaging_comp_rule (noupdate)
+NEW ir.ui.view: product.product_pricelist_item_tree_view_from_product
+NEW ir.ui.view: product.product_pricelist_item_view_search
+NEW ir.ui.view: product.product_pricelist_view_inherit
+NEW ir.ui.view: product.product_product_view_activity
+NEW ir.ui.view: product.product_template_attribute_value_view_search
+NEW ir.ui.view: product.product_template_view_activity
+DEL ir.ui.view: product.variants_tree_view
+DEL res.groups: product.group_pricelist_item
+# NOTHING TO DO
+
+NEW res.groups: product.group_discount_per_so_line [renamed from sale module]
+# DONE: pre-migration: renamed xmlid
