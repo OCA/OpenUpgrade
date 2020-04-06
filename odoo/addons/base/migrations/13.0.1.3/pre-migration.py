@@ -5,6 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
+from openupgradelib import openupgrade_merge_records
 from odoo.addons.openupgrade_records.lib import apriori
 
 xmlid_renames_res_country_state = [
@@ -702,6 +703,24 @@ def switch_noupdate_records(env):
     )
 
 
+def rename_ir_module_category(env):
+    for old_xmlid, new_xmlid in xmlid_renames_ir_module_category:
+        module, name = new_xmlid.split('.')
+        sql = "SELECT res_id FROM ir_model_data WHERE module=%s AND name=%s"
+        env.cr.execute(sql, (module, name))
+        new_row = env.cr.fetchone()
+        if new_row:
+            module, name = old_xmlid.split('.')
+            env.cr.execute(sql, (module, name))
+            old_row = env.cr.fetchone()
+            if old_row:
+                openupgrade_merge_records.merge_records(
+                    env, "ir.module.category", [old_row[0]], new_row[0],
+                    method="sql")
+        else:
+            openupgrade.rename_xmlids(env.cr, [(old_xmlid, new_xmlid)])
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.remove_tables_fks(env.cr, _obsolete_tables)
@@ -721,7 +740,6 @@ def migrate(env, version):
     openupgrade.rename_columns(env.cr, column_renames)
     openupgrade.rename_fields(env, field_renames, no_deep=True)
     openupgrade.rename_xmlids(env.cr, xmlid_renames_res_country_state)
-    openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_module_category)
     openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_model_access)
     fill_ir_model_data_noupdate(env)
     fix_lang_table(env.cr)
@@ -729,7 +747,7 @@ def migrate(env, version):
     handle_web_favicon_module(env)
     add_res_lang_url_code(env)
     switch_noupdate_records(env)
-
+    rename_ir_module_category(env)
     openupgrade.logged_query(
         env.cr,
         """ UPDATE ir_model_constraint
