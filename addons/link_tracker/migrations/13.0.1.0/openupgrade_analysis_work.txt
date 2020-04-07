@@ -1,0 +1,42 @@
+---Models in module 'link_tracker'---
+---Fields in module 'link_tracker'---
+link_tracker / link.tracker.click       / campaign_id (many2one)        : NEW relation: utm.campaign, isrelated: related, stored
+# NOTHING TO DO: Filled by standard update mechanism being a related. Possible improvement: being filled by SQL for performance.
+
+link_tracker / link.tracker.click       / click_date (date)             : DEL
+# NOTHING TO DO: This field was not used at all in previous version
+
+link_tracker / link.tracker.code        / code (char)                   : now required
+# DONE: post-migration: filled the field when empty
+
+---XML records in module 'link_tracker'---
+NEW ir.actions.act_window: link_tracker.link_tracker_action
+NEW ir.actions.act_window: link_tracker.link_tracker_action_campaign
+NEW ir.actions.act_window: link_tracker.link_tracker_click_action_statistics
+DEL ir.actions.act_window: link_tracker.action_link_tracker
+DEL ir.actions.act_window: link_tracker.action_link_tracker_stats
+DEL ir.actions.act_window: link_tracker.action_view_click_statistics
+NEW ir.model.access: link_tracker.access_link_tracker_click_system
+NEW ir.model.access: link_tracker.access_link_tracker_code_system
+NEW ir.model.access: link_tracker.access_link_tracker_system
+NEW ir.ui.menu: link_tracker.link_tracker_menu_main
+DEL ir.ui.menu: link_tracker.menu_url_shortener_main
+NEW ir.ui.view: link_tracker.link_tracker_click_view_form
+NEW ir.ui.view: link_tracker.link_tracker_click_view_graph
+NEW ir.ui.view: link_tracker.link_tracker_click_view_tree
+NEW ir.ui.view: link_tracker.link_tracker_view_search
+NEW ir.ui.view: link_tracker.link_tracker_view_form
+NEW ir.ui.view: link_tracker.link_tracker_view_graph
+NEW ir.ui.view: link_tracker.link_tracker_view_tree
+DEL ir.ui.view: link_tracker.view_link_tracker_click_form
+DEL ir.ui.view: link_tracker.view_link_tracker_click_graph
+DEL ir.ui.view: link_tracker.view_link_tracker_click_tree
+DEL ir.ui.view: link_tracker.view_link_tracker_filter
+DEL ir.ui.view: link_tracker.view_link_tracker_form
+DEL ir.ui.view: link_tracker.view_link_tracker_graph
+DEL ir.ui.view: link_tracker.view_link_tracker_tree
+NEW ir.ui.view: link_tracker.link_tracker_click_view_search
+NEW ir.ui.view: link_tracker.utm_campaign_view_form
+NEW ir.ui.view: link_tracker.utm_campaign_view_kanban
+DEL ir.ui.view: link_tracker.view_link_tracker_form_stats
+# NOTHING TO DO: noupdate=0 records
