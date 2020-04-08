@@ -1,0 +1,87 @@
+---Models in module 'fleet'---
+---Fields in module 'fleet'---
+fleet        / fleet.vehicle            / future_driver_id (many2one)   : NEW relation: res.partner
+fleet        / fleet.vehicle            / net_car_value (float)         : NEW
+fleet        / fleet.vehicle            / next_assignation_date (date)  : NEW
+fleet        / fleet.vehicle            / plan_to_change_car (boolean)  : NEW isrelated: related, stored
+# NOTHING TO DO: New features
+
+fleet        / fleet.vehicle.cost       / company_id (many2one)         : NEW relation: res.company, hasdefault
+# DONE: Post-migration: Filled with vehicle company_id
+
+fleet        / fleet.vehicle.model      / manager_id (many2one)         : NEW relation: res.users, hasdefault
+# DONE: Pre-migration: Pre created field to avoid uid=1 default value
+
+fleet        / res.partner              / plan_to_change_car (boolean)  : NEW hasdefault
+
+fleet        / fleet.vehicle.model.brand / image (binary)                : DEL attachment: True
+fleet        / fleet.vehicle.model.brand / image_128 (binary)            : NEW attachment: True
+fleet        / fleet.vehicle.model.brand / image_medium (binary)         : DEL attachment: True
+fleet        / fleet.vehicle.model.brand / image_small (binary)          : DEL attachment: True
+# DONE: Pre-migration
+
+---XML records in module 'fleet'---
+NEW fleet.vehicle.model: fleet.model_a1
+NEW fleet.vehicle.model: fleet.model_a3
+NEW fleet.vehicle.model: fleet.model_a4
+NEW fleet.vehicle.model: fleet.model_a5
+NEW fleet.vehicle.model: fleet.model_a6
+NEW fleet.vehicle.model: fleet.model_a7
+NEW fleet.vehicle.model: fleet.model_a8
+NEW fleet.vehicle.model: fleet.model_agila
+NEW fleet.vehicle.model: fleet.model_ampera
+NEW fleet.vehicle.model: fleet.model_antara
+NEW fleet.vehicle.model: fleet.model_astra
+NEW fleet.vehicle.model: fleet.model_astragtc
+NEW fleet.vehicle.model: fleet.model_classa
+NEW fleet.vehicle.model: fleet.model_classb
+NEW fleet.vehicle.model: fleet.model_classc
+NEW fleet.vehicle.model: fleet.model_classcl
+NEW fleet.vehicle.model: fleet.model_classcls
+NEW fleet.vehicle.model: fleet.model_classe
+NEW fleet.vehicle.model: fleet.model_classgl
+NEW fleet.vehicle.model: fleet.model_classglk
+NEW fleet.vehicle.model: fleet.model_classm
+NEW fleet.vehicle.model: fleet.model_classr
+NEW fleet.vehicle.model: fleet.model_classs
+NEW fleet.vehicle.model: fleet.model_classslk
+NEW fleet.vehicle.model: fleet.model_classsls
+NEW fleet.vehicle.model: fleet.model_combotour
+NEW fleet.vehicle.model: fleet.model_corsa
+NEW fleet.vehicle.model: fleet.model_insignia
+NEW fleet.vehicle.model: fleet.model_meriva
+NEW fleet.vehicle.model: fleet.model_mokka
+NEW fleet.vehicle.model: fleet.model_q3
+NEW fleet.vehicle.model: fleet.model_q5
+NEW fleet.vehicle.model: fleet.model_q7
+NEW fleet.vehicle.model: fleet.model_serie1
+NEW fleet.vehicle.model: fleet.model_serie3
+NEW fleet.vehicle.model: fleet.model_serie5
+NEW fleet.vehicle.model: fleet.model_serie6
+NEW fleet.vehicle.model: fleet.model_serie7
+NEW fleet.vehicle.model: fleet.model_seriehybrid
+NEW fleet.vehicle.model: fleet.model_seriem
+NEW fleet.vehicle.model: fleet.model_seriex
+NEW fleet.vehicle.model: fleet.model_seriez4
+NEW fleet.vehicle.model: fleet.model_tt
+NEW fleet.vehicle.model: fleet.model_zafira
+NEW fleet.vehicle.model: fleet.model_zafiratourer
+# NOTHING TO DO: New records
+
+NEW fleet.vehicle.model.brand: fleet.brand_corre_la_licorne
+DEL fleet.vehicle.model.brand: fleet.brand_corre la licorne
+NEW fleet.vehicle.model.brand: fleet.brand_land_rover
+DEL fleet.vehicle.model.brand: fleet.brand_land rover
+NEW fleet.vehicle.model.brand: fleet.brand_tesla_motors
+DEL fleet.vehicle.model.brand: fleet.brand_tesla motors
+NEW ir.actions.act_window: fleet.fleet_config_settings_action [renamed from l10n_be_hr_payroll_fleet module]
+NEW ir.ui.menu: fleet.fleet_config_settings_menu [renamed from l10n_be_hr_payroll_fleet module]
+# DONE: Pre-migration (renamed)
+
+NEW ir.rule: fleet.ir_rule_fleet_vehicle (noupdate)
+NEW ir.ui.view: fleet.fleet_vehicle_log_contract_view_activity
+NEW ir.ui.view: fleet.fleet_vehicle_model_view_kanban
+NEW ir.ui.view: fleet.fleet_vehicle_tag_view_view_tree
+NEW ir.ui.view: fleet.fleet_vehicle_view_activity
+NEW ir.ui.view: fleet.res_config_settings_view_form
+# NOTHING TO DO: New records
