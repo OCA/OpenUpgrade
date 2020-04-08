@@ -3,7 +3,7 @@
   <record id="holiday_status_cl" model="hr.leave.type">
     <field name="name">Paid Time Off</field>
     <field name="validity_start" eval="time.strftime('%Y-%m-01')"/>
-    <field name="validity_stop"/>
+    <field name="validity_stop" eval="None"/>
     <field name="allocation_notif_subtype_id" eval="ref('mt_leave_allocation')"/>
     <field name="leave_notif_subtype_id" eval="ref('mt_leave')"/>
     <field name="responsible_id" ref="base.user_admin"/>
@@ -11,7 +11,7 @@
   </record>
   <record id="holiday_status_comp" model="hr.leave.type">
     <field name="validity_start" eval="False"/>
-    <field name="validity_stop"/>
+    <field name="validity_stop" eval="None"/>
     <field name="leave_notif_subtype_id" eval="ref('mt_leave')"/>
     <field name="responsible_id" ref="base.user_admin"/>
     <field name="validation_type">both</field>

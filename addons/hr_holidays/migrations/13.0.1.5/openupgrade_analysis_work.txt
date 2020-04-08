@@ -1,0 +1,90 @@
+---Models in module 'hr_holidays'---
+obsolete model hr.holidays.summary.dept [transient]
+# NOTHING TO DO
+
+---Fields in module 'hr_holidays'---
+hr_holidays  / hr.employee              / leave_manager_id (many2one)   : NEW relation: res.users
+# NOTHING TO DO
+
+hr_holidays  / hr.leave                 / request_hour_from (selection) : selection_keys is now '['0', '0.5', '1', '1.5', '10', '10.5', '11', '11.5', '12', '12.5', '13', '13.5', '14', '14.5', '15', '15.5', '16', '16.5', '17', '17.5', '18', '18.5', '19', '19.5', '2', '2.5', '20', '20.5', '21', '21.5', '22', '22.5', '23', '23.5', '3', '3.5', '4', '4.5', '5', '5.5', '6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5']' ('[-24, -23, -22, -21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]')
+hr_holidays  / hr.leave                 / request_hour_to (selection)   : selection_keys is now '['0', '0.5', '1', '1.5', '10', '10.5', '11', '11.5', '12', '12.5', '13', '13.5', '14', '14.5', '15', '15.5', '16', '16.5', '17', '17.5', '18', '18.5', '19', '19.5', '2', '2.5', '20', '20.5', '21', '21.5', '22', '22.5', '23', '23.5', '3', '3.5', '4', '4.5', '5', '5.5', '6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5']' ('[-24, -23, -22, -21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]')
+# DONE: post-migration: mapped values
+
+hr_holidays  / hr.leave.allocation      / accrual (boolean)             : DEL
+hr_holidays  / hr.leave.allocation      / manager_id (many2one)         : NEW relation: hr.employee
+# NOTHING TO DO
+
+hr_holidays  / hr.leave.allocation      / allocation_type (selection)   : NEW required, selection_keys: ['accrual', 'regular'], req_default: function, hasdefault
+hr_holidays  / hr.leave.type            / create_calendar_meeting (boolean): NEW hasdefault
+# DONE: post-migration: filled the field when empty
+
+hr_holidays  / hr.leave.type            / categ_id (many2one)           : DEL relation: calendar.event.type
+hr_holidays  / hr.leave.type            / allocation_notif_subtype_id (many2one): NEW relation: mail.message.subtype, hasdefault
+hr_holidays  / hr.leave.type            / code (char)                   : NEW
+hr_holidays  / hr.leave.type            / leave_notif_subtype_id (many2one): NEW relation: mail.message.subtype, hasdefault
+hr_holidays  / hr.leave.type            / request_unit (selection)      : selection_keys is now '['day', 'half_day', 'hour']' ('['day', 'hour']')
+hr_holidays  / hr.leave.type            / responsible_id (many2one)     : NEW relation: res.users
+hr_holidays  / hr.leave.type            / validation_type (selection)   : selection_keys is now '['both', 'hr', 'manager', 'no_validation']' ('['both', 'hr', 'manager']')
+# NOTHING TO DO
+
+---XML records in module 'hr_holidays'---
+NEW ir.actions.act_window: hr_holidays.hr_leave_action_my_request
+DEL ir.actions.act_window: hr_holidays.act_hr_employee_holiday_request
+DEL ir.actions.act_window: hr_holidays.action_hr_holidays_summary_dept
+DEL ir.actions.act_window: hr_holidays.open_company_allocation
+NEW ir.actions.act_window.view: hr_holidays.action_view_form_manager_approve
+NEW ir.actions.act_window.view: hr_holidays.action_view_kanban_manager_approve
+NEW ir.actions.act_window.view: hr_holidays.action_view_tree_manager_approve
+NEW ir.actions.act_window.view: hr_holidays.hr_leave_action_my_request_view_form
+NEW ir.actions.server: hr_holidays.act_hr_employee_holiday_request
+NEW ir.actions.server: hr_holidays.action_hr_approval
+NEW ir.actions.server: hr_holidays.action_manager_approval
+NEW ir.actions.server: hr_holidays.action_report_to_payslip
+NEW ir.actions.server: hr_holidays.ir_actions_server_approve_allocations
+NEW ir.module.category: base.module_category_human_resources_time_off (noupdate)
+NEW ir.rule: hr_holidays.resource_leaves_base_user
+NEW ir.rule: hr_holidays.hr_leave_rule_employee_unlink
+DEL ir.rule: hr_holidays.hr_leave_rule_officer_read
+# NOTHING TO DO
+
+NEW ir.actions.act_window.view: hr_holidays.hr_leave_action_new_request_view_form
+DEL ir.actions.act_window.view: hr_holidays.hhr_leave_action_new_request_view_form
+DEL ir.rule: hr_holidays.resource_leaves_officer
+NEW ir.rule: hr_holidays.resource_leaves_holidays_user
+# DONE: pre-migration
+
+NEW ir.ui.menu: hr_holidays.menu_hr_holidays_summary_all
+# NOTHING TO DO
+
+DEL ir.ui.menu: hr_holidays.menu_hr_holidays_summary_dept
+DEL ir.ui.menu: hr_holidays.menu_open_company_allocation
+NEW ir.ui.view: hr_holidays.hr_employee_public_form_view_inherit
+NEW ir.ui.view: hr_holidays.hr_leave_allocation_view_activity
+NEW ir.ui.view: hr_holidays.hr_leave_allocation_view_form_dashboard
+NEW ir.ui.view: hr_holidays.hr_leave_view_activity
+NEW ir.ui.view: hr_holidays.hr_leave_view_dashboard
+NEW ir.ui.view: hr_holidays.hr_leave_view_form_dashboard
+NEW ir.ui.view: hr_holidays.hr_leave_view_form_manager_approve
+NEW ir.ui.view: hr_holidays.qunit_suite
+NEW ir.ui.view: hr_holidays.res_users_view_form
+DEL ir.ui.view: hr_holidays.view_hr_holidays_summary_dept
+# NOTHING TO DO
+
+NEW mail.message.subtype: hr_holidays.mt_leave_allocation (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_leave_allocation_approved (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_leave (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_leave_approved (noupdate)
+# DONE: pre-migration
+
+NEW mail.message.subtype: hr_holidays.mt_leave_home_working (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_leave_sick (noupdate)
+NEW mail.message.subtype: hr_holidays.mt_leave_unpaid (noupdate)
+# NOTHING TO DO
+
+DEL mail.message.subtype: hr_holidays.mt_department_leave_allocation_approved (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_department_leave_allocation_refused (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_department_leave_approved (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_department_leave_refused (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_leave_allocation_refused (noupdate)
+DEL mail.message.subtype: hr_holidays.mt_leave_refused (noupdate)
+# DONE: post-migration
