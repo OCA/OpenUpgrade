@@ -1,0 +1,97 @@
+---Models in module 'hr'---
+new model hr.departure.wizard [transient]
+new model hr.employee.base [abstract]
+new model hr.employee.public [sql_view]
+new model hr.plan
+new model hr.plan.activity.type
+new model hr.plan.wizard [transient]
+# NOTHING TO DO: New Models
+
+---Fields in module 'hr'---
+hr           / hr.employee              / barcode (char)                : previously in module hr_attendance
+hr           / hr.employee              / pin (char)                    : previously in module hr_attendance
+hr           / hr.employee              / departure_description (text)  : NEW
+hr           / hr.employee              / departure_reason (selection)  : NEW selection_keys: ['fired', 'resigned', 'retired']
+hr           / hr.employee              / google_drive_link (char)      : DEL
+# NOTHING TO DO: New features
+
+hr           / hr.employee              / image (binary)                : DEL attachment: True
+hr           / hr.employee              / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
+hr           / hr.employee              / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+hr           / hr.employee              / image_1920 (binary)           : NEW attachment: True, hasdefault
+hr           / hr.employee              / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
+hr           / hr.employee              / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+hr           / hr.employee              / image_medium (binary)         : DEL attachment: True
+hr           / hr.employee              / image_small (binary)          : DEL attachment: True
+# DONE: post-migration: converted images
+
+hr           / hr.plan                  / active (boolean)              : NEW hasdefault
+hr           / hr.plan                  / name (char)                   : NEW required
+hr           / hr.plan                  / plan_activity_type_ids (many2many): NEW relation: hr.plan.activity.type
+hr           / hr.plan.activity.type    / activity_type_id (many2one)   : NEW relation: mail.activity.type, hasdefault
+hr           / hr.plan.activity.type    / note (html)                   : NEW
+hr           / hr.plan.activity.type    / responsible (selection)       : NEW required, selection_keys: ['coach', 'employee', 'manager', 'other'], req_default: function, hasdefault
+hr           / hr.plan.activity.type    / responsible_id (many2one)     : NEW relation: res.users
+hr           / hr.plan.activity.type    / summary (char)                : NEW
+# NOTHING TO DO: new models
+
+hr           / res.company              / hr_presence_control_email_amount (integer): NEW
+hr           / res.company              / hr_presence_control_ip_list (char): NEW
+hr           / res.users                / barcode (char)                : previously in module base
+# NOTHING TO DO: New features
+
+---XML records in module 'hr'---
+NEW hr.plan: hr.offboarding_plan (noupdate)
+NEW hr.plan: hr.onboarding_plan (noupdate)
+NEW hr.plan.activity.type: hr.offboarding_setup_compute_out_delais (noupdate)
+NEW hr.plan.activity.type: hr.offboarding_take_back_hr_materials (noupdate)
+NEW hr.plan.activity.type: hr.onboarding_plan_training (noupdate)
+NEW hr.plan.activity.type: hr.onboarding_setup_it_materials (noupdate)
+NEW hr.plan.activity.type: hr.onboarding_training (noupdate)
+NEW ir.actions.act_window: hr.hr_departure_wizard_action
+NEW ir.actions.act_window: hr.hr_employee_action_from_user
+NEW ir.actions.act_window: hr.hr_employee_public_action
+NEW ir.actions.act_window: hr.hr_plan_action
+NEW ir.actions.act_window: hr.hr_plan_activity_type_action
+NEW ir.actions.act_window: hr.plan_wizard_action
+NEW ir.actions.act_window: hr.res_users_action_my
+DEL ir.actions.act_window: hr.hr_employee_action_subordinate_hierachy
+# NOTHING TO DO: New records or noupdate=0
+
+NEW ir.actions.report: hr.hr_employee_print_badge [renamed from hr_attendance module]
+# DONE: pre-migration (renamed)
+
+NEW ir.config_parameter: hr.hr_presence_control_login (noupdate)
+NEW ir.model.access: hr.access_hr_employee_public_user
+NEW ir.model.access: hr.access_hr_plan_activity_type_employee
+NEW ir.model.access: hr.access_hr_plan_activity_type_hr_user
+NEW ir.model.access: hr.access_hr_plan_employee
+NEW ir.model.access: hr.access_hr_plan_hr_user
+NEW ir.module.category: base.module_category_human_resources_employees (noupdate)
+NEW ir.rule: hr.hr_employee_public_comp_rule (noupdate)
+NEW ir.ui.menu: hr.hr_menu_hr_reports
+NEW ir.ui.menu: hr.menu_config_plan
+NEW ir.ui.menu: hr.menu_config_plan_plan
+NEW ir.ui.menu: hr.menu_config_plan_types
+NEW ir.ui.menu: hr.menu_hr_employee
+NEW ir.ui.menu: hr.menu_hr_employee_payroll
+NEW ir.ui.menu: hr.menu_human_resources_configuration_employee
+NEW ir.ui.menu: hr.menu_hr_employee_user
+DEL ir.ui.menu: hr.open_view_employee_list_my
+NEW ir.ui.view: hr.hr_departure_wizard_view_form
+NEW ir.ui.view: hr.hr_employee_public_view_form
+NEW ir.ui.view: hr.hr_employee_public_view_kanban
+NEW ir.ui.view: hr.hr_employee_public_view_search
+NEW ir.ui.view: hr.hr_employee_public_view_tree
+NEW ir.ui.view: hr.hr_employee_view_activity
+NEW ir.ui.view: hr.hr_plan_activity_type_view_form
+NEW ir.ui.view: hr.hr_plan_activity_type_view_tree
+NEW ir.ui.view: hr.hr_plan_view_form
+NEW ir.ui.view: hr.hr_plan_view_search
+NEW ir.ui.view: hr.hr_plan_view_tree
+NEW ir.ui.view: hr.plan_wizard
+NEW ir.ui.view: hr.print_employee_badge
+NEW ir.ui.view: hr.res_users_view_form
+NEW ir.ui.view: hr.res_users_view_form_profile
+NEW ir.ui.view: hr.res_users_view_form_simple_modif
+# NOTHING TO DO: New records or noupdate=0
