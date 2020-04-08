@@ -48,18 +48,18 @@ def move_mailing_campaign_to_utm_campaign(env):
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
+    openupgrade.rename_models(cr, _model_renames)
     if openupgrade.table_exists(cr, 'mail_mass_mailing_stage'):
-        openupgrade.rename_models(cr, _model_renames)
         openupgrade.rename_tables(cr, _table_renames)
         move_mailing_campaign_to_utm_campaign(env)
-        openupgrade.rename_xmlids(cr, _xmlid_renames)
-        openupgrade.set_xml_ids_noupdate_value(
-            env,
-            "utm",
-            [
-                "campaign_stage_1",
-                "campaign_stage_2",
-                "campaign_stage_3",
-            ],
-            False,
-        )
+    openupgrade.rename_xmlids(cr, _xmlid_renames)
+    openupgrade.set_xml_ids_noupdate_value(
+        env,
+        "utm",
+        [
+            "campaign_stage_1",
+            "campaign_stage_2",
+            "campaign_stage_3",
+        ],
+        False,
+    )
