@@ -1,0 +1,11 @@
+---Models in module 'stock_picking_batch'---
+---Fields in module 'stock_picking_batch'---
+stock_picking_batch / stock.picking.batch      / message_last_post (datetime)  : DEL
+# NOTHING TO DO: feature removed from mail.thread
+
+stock_picking_batch / stock.picking.batch      / message_main_attachment_id (many2one): NEW relation: ir.attachment
+# NOTHING TO DO: filling of this field done on mail end-migration
+
+---XML records in module 'stock_picking_batch'---
+NEW ir.actions.report: stock_picking_batch.action_report_picking_batch
+NEW ir.ui.view: stock_picking_batch.report_picking_batch
