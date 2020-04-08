@@ -1,0 +1,44 @@
+---Models in module 'hr_contract'---
+obsolete model hr.contract.type
+# NOTHING TO DO: removed
+
+---Fields in module 'hr_contract'---
+hr_contract  / hr.contract              / company_id (many2one)         : now required, req_default: function
+# DONE: post-migration: filled the field when empty
+hr_contract  / hr.contract              / hr_responsible_id (many2one)  : NEW relation: res.users
+hr_contract  / hr.contract              / reported_to_secretariat (boolean): DEL
+# NOTHING TO DO
+hr_contract  / hr.contract              / kanban_state (selection)      : NEW selection_keys: ['blocked', 'done', 'normal'], hasdefault
+hr_contract  / hr.contract              / state (selection)             : selection_keys is now '['cancel', 'close', 'draft', 'open']' ('['cancel', 'close', 'draft', 'open', 'pending']')
+# DONE: post-migration: mapped selections
+hr_contract  / hr.contract              / type_id (many2one)            : DEL relation: hr.contract.type, required, req_default: function
+hr_contract  / hr.contract.type         / name (char)                   : DEL required
+hr_contract  / hr.contract.type         / sequence (integer)            : DEL
+# NOTHING TO DO: model has been removed
+hr_contract  / hr.employee              / contract_id (many2one)        : is now stored
+hr_contract  / hr.employee              / contract_id (many2one)        : not a function anymore
+# DONE: post-migration: filled the field when empty
+hr_contract  / hr.employee              / contract_warning (boolean)    : NEW isfunction: function, stored
+hr_contract  / hr.employee              / manager (boolean)             : DEL
+# NOTHING TO DO
+
+---XML records in module 'hr_contract'---
+DEL hr.contract.type: hr_contract.hr_contract_type_emp (noupdate)
+DEL hr.contract.type: hr_contract.hr_contract_type_sub (noupdate)
+DEL hr.contract.type: hr_contract.hr_contract_type_wrkr (noupdate)
+# DONE: post-migration
+DEL ir.actions.act_window: hr_contract.action_hr_contract_type
+DEL ir.model.access: hr_contract.access_hr_contract_type_manager
+NEW ir.module.category: base.module_category_human_resources_contracts (noupdate)
+NEW ir.rule: hr_contract.ir_rule_hr_contract_multi_company (noupdate)
+NEW ir.ui.menu: hr_contract.menu_human_resources_configuration_contract
+DEL ir.ui.menu: hr_contract.hr_menu_contract_type
+NEW ir.ui.view: hr_contract.assets_backend
+NEW ir.ui.view: hr_contract.hr_contract_view_activity
+NEW ir.ui.view: hr_contract.hr_employee_view_kanban
+NEW ir.ui.view: hr_contract.hr_employee_view_search
+NEW ir.ui.view: hr_contract.hr_user_view_form
+DEL ir.ui.view: hr_contract.hr_contract_type_view_form
+DEL ir.ui.view: hr_contract.hr_contract_type_view_search
+DEL ir.ui.view: hr_contract.hr_contract_type_view_tree
+# NOTHING TO DO
