@@ -1,0 +1,16 @@
+---Models in module 'event'---
+---Fields in module 'event'---
+event        / event.event              / activity_ids (one2many)       : NEW relation: mail.activity
+event        / event.event              / website_message_ids (one2many): previously in module portal
+event        / event.registration       / activity_ids (one2many)       : NEW relation: mail.activity
+event        / event.registration       / mobile (char)                 : NEW
+event        / event.registration       / website_message_ids (one2many): previously in module portal
+event        / event.type               / sequence (integer)            : NEW
+event        / event.mail               / notification_type (selection) : NEW required, selection_keys: ['mail'], req_default: function, hasdefault
+event        / event.type.mail          / notification_type (selection) : NEW required, selection_keys: ['mail'], req_default: function, hasdefault
+# NOTHING TO DO: New features with default data if required
+
+---XML records in module 'event'---
+NEW ir.module.category: base.module_category_marketing_events (noupdate)
+NEW ir.ui.view: event.event_registration_view_kanban
+# NOTHING TO DO: New records
