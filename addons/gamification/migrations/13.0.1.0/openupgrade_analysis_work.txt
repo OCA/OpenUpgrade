@@ -1,0 +1,61 @@
+---Models in module 'gamification'---
+new model gamification.karma.rank
+# NOTHING TO DO: New model
+
+---Fields in module 'gamification'---
+gamification / gamification.badge       / image (binary)                : DEL attachment: True
+gamification / gamification.badge       / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
+gamification / gamification.badge       / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+gamification / gamification.badge       / image_1920 (binary)           : NEW attachment: True
+gamification / gamification.badge       / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
+gamification / gamification.badge       / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+# DONE: post-migration: Converted images
+
+gamification / gamification.badge       / level (selection)             : previously in module website_forum
+gamification / gamification.badge.user  / level (selection)             : previously in module website_forum
+# NOTHING TO DO: Just moved here no data loss
+
+gamification / gamification.karma.rank  / description (html)            : NEW
+gamification / gamification.karma.rank  / description_motivational (html): NEW
+gamification / gamification.karma.rank  / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
+gamification / gamification.karma.rank  / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+gamification / gamification.karma.rank  / image_1920 (binary)           : NEW attachment: True
+gamification / gamification.karma.rank  / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
+gamification / gamification.karma.rank  / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+gamification / gamification.karma.rank  / karma_min (integer)           : NEW
+gamification / gamification.karma.rank  / name (text)                   : NEW required
+gamification / gamification.karma.rank  / user_ids (one2many)           : NEW relation: res.users
+# NOTHING TO DO: New model
+
+gamification / res.users                / badge_ids (one2many)          : previously in module hr_gamification
+gamification / res.users                / bronze_badge (integer)        : previously in module website_forum
+gamification / res.users                / gold_badge (integer)          : previously in module website_forum
+gamification / res.users                / karma (integer)               : previously in module website_forum
+gamification / res.users                / next_rank_id (many2one)       : NEW relation: gamification.karma.rank
+gamification / res.users                / rank_id (many2one)            : NEW relation: gamification.karma.rank
+gamification / res.users                / silver_badge (integer)        : previously in module website_forum
+# NOTHING TO DO: Just moved here no data loss
+
+---XML records in module 'gamification'---
+NEW gamification.karma.rank: gamification.rank_bachelor (noupdate)
+NEW gamification.karma.rank: gamification.rank_doctor (noupdate)
+NEW gamification.karma.rank: gamification.rank_master (noupdate)
+NEW gamification.karma.rank: gamification.rank_newbie (noupdate)
+NEW gamification.karma.rank: gamification.rank_student (noupdate)
+NEW ir.actions.act_window: gamification.gamification_karma_ranks_action
+NEW ir.model.access: gamification.gamification_karma_rank_access_all
+NEW ir.model.access: gamification.gamification_karma_rank_access_user_manager
+NEW ir.ui.menu: gamification.gamification_karma_ranks_menu
+NEW ir.ui.view: gamification.gamification_badge_view_search
+NEW ir.ui.view: gamification.gamification_karma_rank_view_form
+NEW ir.ui.view: gamification.gamification_karma_ranks_view_search
+NEW ir.ui.view: gamification.gamification_karma_ranks_view_tree
+NEW mail.template: gamification.mail_template_data_new_rank_reached
+# NOTHING TO DO: New Records
+
+NEW res.users: base.user_admin [potentially moved from website_forum module] (noupdate)
+NEW res.users: base.user_root [potentially moved from website_forum module] (noupdate)
+# NOTHING TO DO: Xml name doen't changed
+
+DEL mail.message.subtype: gamification.mt_badge_granted (noupdate)
+# DONE: post-migration
