@@ -1,0 +1,25 @@
+---Models in module 'website_mass_mailing'---
+new model website.mass_mailing.popup
+# NOTHING TO DO
+
+---Fields in module 'website_mass_mailing'---
+website_mass_mailing / mail.mass_mailing.list   / popup_content (html)          : DEL
+website_mass_mailing / mailing.list             / website_popup_ids (one2many)  : NEW relation: website.mass_mailing.popup
+website_mass_mailing / website.mass_mailing.popup / mailing_list_id (many2one)    : NEW relation: mailing.list
+website_mass_mailing / website.mass_mailing.popup / popup_content (html)          : NEW hasdefault
+website_mass_mailing / website.mass_mailing.popup / website_id (many2one)         : NEW relation: website
+# DONE: post-migration moved popup_content to website.mass_mailing.popup
+website_mass_mailing / mail.mass_mailing.list   / popup_redirect_url (char)     : DEL
+website_mass_mailing / mailing.list             / toast_content (html)          : NEW hasdefault
+# NOTHING TO DO
+
+---XML records in module 'website_mass_mailing'---
+NEW ir.model.access: website_mass_mailing.access_mass_mailing_popup
+NEW ir.ui.view: website_mass_mailing.iframe_css_assets_edit
+NEW ir.ui.view: website_mass_mailing.mailing_list_view_form
+NEW ir.ui.view: website_mass_mailing.s_newsletter_block
+NEW ir.ui.view: website_mass_mailing.view_mail_mass_mailing_popup_form
+DEL ir.ui.view: website_mass_mailing.res_config_settings_view_form
+DEL ir.ui.view: website_mass_mailing.view_mail_mass_mailing_list_form
+DEL res.groups: website_mass_mailing.group_website_popup_on_exit
+# NOTHING TO DO
