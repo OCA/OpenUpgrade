@@ -1,0 +1,359 @@
+---Models in module 'website_slides'---
+obsolete model slide.category (renamed to slide.slide)
+# NOTHING TO DO: model merged into slide.slide
+
+new model slide.answer
+new model slide.channel.invite [transient]
+new model slide.channel.partner
+new model slide.channel.tag
+new model slide.channel.tag.group
+new model slide.question
+new model slide.slide.link
+new model slide.slide.partner
+# NOTHING TO DO
+
+---Fields in module 'website_slides'---
+website_slides / gamification.challenge   / category (False)              : NEW selection_keys: ['certification', 'forum', 'hr', 'other', 'slides'], mode: modify
+website_slides / res.partner              / slide_channel_ids (many2many) : NEW relation: slide.channel
+website_slides / slide.answer             / is_correct (boolean)          : NEW
+website_slides / slide.answer             / question_id (many2one)        : NEW relation: slide.question, required
+website_slides / slide.answer             / text_value (char)             : NEW required
+# NOTHING TO DO
+
+website_slides / slide.category           / channel_id (many2one)         : DEL relation: slide.channel, required
+website_slides / slide.category           / name (char)                   : DEL required
+website_slides / slide.category           / nbr_documents (integer)       : DEL
+website_slides / slide.category           / nbr_infographics (integer)    : DEL
+website_slides / slide.category           / nbr_presentations (integer)   : DEL
+website_slides / slide.category           / nbr_videos (integer)          : DEL
+website_slides / slide.category           / sequence (integer)            : DEL
+website_slides / slide.category           / slide_ids (one2many)          : DEL relation: slide.slide
+website_slides / slide.category           / total (integer)               : DEL
+# NOTHING TO DO: model merged into slide.slide
+
+website_slides / slide.channel            / access_token (char)           : NEW hasdefault
+website_slides / slide.channel            / allow_comment (boolean)       : NEW hasdefault
+website_slides / slide.channel            / category_ids (one2many)       : DEL relation: slide.category
+website_slides / slide.channel            / channel_partner_ids (one2many): NEW relation: slide.channel.partner
+website_slides / slide.channel            / channel_type (selection)      : NEW required, selection_keys: ['documentation', 'training'], req_default: function, hasdefault
+website_slides / slide.channel            / color (integer)               : NEW hasdefault
+website_slides / slide.channel            / custom_slide_id (many2one)    : DEL relation: slide.slide
+website_slides / slide.channel            / description (html)            : type is now 'text' ('html')
+website_slides / slide.channel            / description_html (html)       : NEW
+website_slides / slide.channel            / enroll (selection)            : NEW required, selection_keys: ['invite', 'public'], req_default: function, hasdefault
+website_slides / slide.channel            / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
+website_slides / slide.channel            / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+website_slides / slide.channel            / image_1920 (binary)           : NEW attachment: True
+website_slides / slide.channel            / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
+website_slides / slide.channel            / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+website_slides / slide.channel            / karma_gen_channel_finish (integer): NEW hasdefault
+website_slides / slide.channel            / karma_gen_channel_rank (integer): NEW hasdefault
+website_slides / slide.channel            / karma_gen_slide_vote (integer): NEW hasdefault
+website_slides / slide.channel            / karma_review (integer)        : NEW hasdefault
+website_slides / slide.channel            / karma_slide_comment (integer) : NEW hasdefault
+website_slides / slide.channel            / karma_slide_vote (integer)    : NEW hasdefault
+website_slides / slide.channel            / nbr_quiz (integer)            : NEW isfunction: function, stored
+website_slides / slide.channel            / nbr_webpage (integer)         : NEW isfunction: function, stored
+website_slides / slide.channel            / partner_ids (many2many)       : NEW relation: res.partner
+website_slides / slide.channel            / promote_strategy (selection)  : selection_keys is now '['latest', 'most_viewed', 'most_voted']' ('['custom', 'latest', 'most_viewed', 'most_voted', 'none']')
+website_slides / slide.channel            / promoted_slide_id (many2one)  : DEL relation: slide.slide
+website_slides / slide.channel            / rating_ids (one2many)         : NEW relation: rating.rating
+website_slides / slide.channel            / rating_last_value (float)     : NEW isfunction: function, stored
+website_slides / slide.channel            / slide_last_update (date)      : NEW isfunction: function, stored
+website_slides / slide.channel            / slide_partner_ids (one2many)  : NEW relation: slide.slide.partner
+website_slides / slide.channel            / tag_ids (many2many)           : NEW relation: slide.channel.tag
+website_slides / slide.channel            / total_time (float)            : NEW isfunction: function, stored
+website_slides / slide.channel            / total_views (integer)         : NEW isfunction: function, stored
+website_slides / slide.channel            / total_votes (integer)         : NEW isfunction: function, stored
+website_slides / slide.channel            / user_id (many2one)            : NEW relation: res.users, hasdefault
+website_slides / slide.channel            / visibility (selection)        : selection_keys is now '['members', 'public']' ('['partial', 'private', 'public']')
+# NOTHING TO DO
+
+website_slides / slide.channel            / enroll_group_ids (many2many)  : NEW relation: res.groups
+website_slides / slide.channel            / enroll_msg (html)             : NEW hasdefault
+website_slides / slide.channel            / nbr_document (integer)        : NEW isfunction: function, stored
+website_slides / slide.channel            / nbr_infographic (integer)     : NEW isfunction: function, stored
+website_slides / slide.channel            / nbr_presentation (integer)    : NEW isfunction: function, stored
+website_slides / slide.channel            / nbr_video (integer)           : NEW isfunction: function, stored
+website_slides / slide.channel            / total_slides (integer)        : NEW isfunction: function, stored
+website_slides / slide.channel            / group_ids (many2many)         : DEL relation: res.groups
+website_slides / slide.channel            / access_error_msg (html)       : DEL
+website_slides / slide.channel            / nbr_documents (integer)       : DEL
+website_slides / slide.channel            / nbr_infographics (integer)    : DEL
+website_slides / slide.channel            / nbr_presentations (integer)   : DEL
+website_slides / slide.channel            / nbr_videos (integer)          : DEL
+website_slides / slide.channel            / total (integer)               : DEL
+# DONE: pre-migration: renamed
+
+website_slides / slide.channel.partner    / channel_id (many2one)         : NEW relation: slide.channel, required
+website_slides / slide.channel.partner    / completed (boolean)           : NEW
+website_slides / slide.channel.partner    / completion (integer)          : NEW
+website_slides / slide.channel.partner    / partner_id (many2one)         : NEW relation: res.partner, required
+website_slides / slide.channel.tag        / channel_ids (many2many)       : NEW relation: slide.channel
+website_slides / slide.channel.tag        / group_id (many2one)           : NEW relation: slide.channel.tag.group, required
+website_slides / slide.channel.tag        / group_sequence (integer)      : NEW isrelated: related, stored
+website_slides / slide.channel.tag        / name (char)                   : NEW required
+website_slides / slide.channel.tag        / sequence (integer)            : NEW required, req_default: function, hasdefault
+website_slides / slide.channel.tag.group  / is_published (boolean)        : NEW hasdefault
+website_slides / slide.channel.tag.group  / name (char)                   : NEW required
+website_slides / slide.channel.tag.group  / sequence (integer)            : NEW required, req_default: function, hasdefault
+website_slides / slide.channel.tag.group  / tag_ids (one2many)            : NEW relation: slide.channel.tag
+website_slides / slide.question           / answer_ids (one2many)         : NEW relation: slide.answer
+website_slides / slide.question           / question (char)               : NEW required
+website_slides / slide.question           / sequence (integer)            : NEW hasdefault
+website_slides / slide.question           / slide_id (many2one)           : NEW relation: slide.slide, required
+# NOTHING TO DO: new models
+
+website_slides / slide.slide              / category_id (many2one)        : now a function
+website_slides / slide.slide              / category_id (many2one)        : relation is now 'slide.slide' ('slide.category') [nothing to do]
+website_slides / slide.slide              / completion_time (float)       : NEW
+website_slides / slide.slide              / dislikes (integer)            : now a function
+website_slides / slide.slide              / download_security (selection) : DEL required, selection_keys: ['none', 'public', 'user'], req_default: function
+website_slides / slide.slide              / embed_views (integer)         : DEL
+# NOTHING TO DO
+
+website_slides / slide.slide              / image (binary)                : DEL attachment: True
+website_slides / slide.slide              / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
+website_slides / slide.slide              / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
+website_slides / slide.slide              / image_1920 (binary)           : NEW attachment: True
+website_slides / slide.slide              / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
+website_slides / slide.slide              / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+website_slides / slide.slide              / image_medium (binary)         : DEL attachment: True
+website_slides / slide.slide              / image_thumb (binary)          : DEL attachment: True
+# DONE: post-migration converted
+
+website_slides / slide.slide              / html_content (html)           : NEW
+website_slides / slide.slide              / index_content (text)          : DEL
+# DONE: pre-migration renamed
+
+website_slides / slide.slide              / is_category (boolean)         : NEW hasdefault
+website_slides / slide.slide              / is_preview (boolean)          : NEW hasdefault
+website_slides / slide.slide              / likes (integer)               : now a function
+website_slides / slide.slide              / link_ids (one2many)           : NEW relation: slide.slide.link
+website_slides / slide.slide              / nbr_document (integer)        : NEW isfunction: function, stored
+website_slides / slide.slide              / nbr_infographic (integer)     : NEW isfunction: function, stored
+website_slides / slide.slide              / nbr_presentation (integer)    : NEW isfunction: function, stored
+website_slides / slide.slide              / nbr_quiz (integer)            : NEW isfunction: function, stored
+website_slides / slide.slide              / nbr_video (integer)           : NEW isfunction: function, stored
+website_slides / slide.slide              / nbr_webpage (integer)         : NEW isfunction: function, stored
+website_slides / slide.slide              / partner_ids (many2many)       : NEW relation: res.partner
+website_slides / slide.slide              / public_views (integer)        : NEW
+website_slides / slide.slide              / question_ids (one2many)       : NEW relation: slide.question
+website_slides / slide.slide              / quiz_first_attempt_reward (integer): NEW hasdefault
+website_slides / slide.slide              / quiz_fourth_attempt_reward (integer): NEW hasdefault
+website_slides / slide.slide              / quiz_second_attempt_reward (integer): NEW hasdefault
+website_slides / slide.slide              / quiz_third_attempt_reward (integer): NEW hasdefault
+website_slides / slide.slide              / sequence (integer)            : NEW hasdefault
+website_slides / slide.slide              / slide_ids (one2many)          : NEW relation: slide.slide
+website_slides / slide.slide              / slide_partner_ids (one2many)  : NEW relation: slide.slide.partner
+website_slides / slide.slide              / slide_type (selection)        : selection_keys is now '['document', 'infographic', 'presentation', 'quiz', 'video', 'webpage']' ('['document', 'infographic', 'presentation', 'video']')
+website_slides / slide.slide              / slide_views (integer)         : now a function
+website_slides / slide.slide              / total_slides (integer)        : NEW isfunction: function, stored
+website_slides / slide.slide              / user_id (many2one)            : NEW relation: res.users, hasdefault
+# NOTHING TO DO
+
+website_slides / slide.slide.link         / link (char)                   : NEW required
+website_slides / slide.slide.link         / name (char)                   : NEW required
+website_slides / slide.slide.link         / slide_id (many2one)           : NEW relation: slide.slide, required
+# NOTHING TO DO: new model
+
+website_slides / slide.slide.partner      / channel_id (many2one)         : NEW relation: slide.channel, isrelated: related, stored
+website_slides / slide.slide.partner      / completed (boolean)           : NEW
+website_slides / slide.slide.partner      / partner_id (many2one)         : NEW relation: res.partner, required
+website_slides / slide.slide.partner      / quiz_attempts_count (integer) : NEW hasdefault
+website_slides / slide.slide.partner      / slide_id (many2one)           : NEW relation: slide.slide, required
+website_slides / slide.slide.partner      / vote (integer)                : NEW hasdefault
+# NOTHING TO DO: new model
+
+---XML records in module 'website_slides'---
+NEW gamification.badge: website_slides.badge_data_certification
+NEW gamification.badge: website_slides.badge_data_course
+NEW gamification.badge: website_slides.badge_data_karma
+NEW gamification.badge: website_slides.badge_data_profile
+NEW gamification.badge: website_slides.badge_data_register
+NEW gamification.challenge: website_slides.badge_data_certification_challenge
+NEW gamification.challenge: website_slides.badge_data_course_challenge
+NEW gamification.challenge: website_slides.badge_data_karma_challenge
+NEW gamification.challenge: website_slides.badge_data_profile_challenge
+NEW gamification.challenge: website_slides.badge_data_register_challenge
+NEW gamification.challenge.line: website_slides.badge_data_certification_challenge_line_0
+NEW gamification.challenge.line: website_slides.badge_data_course_challenge_line_0
+NEW gamification.challenge.line: website_slides.badge_data_karma_challenge_line_0
+NEW gamification.challenge.line: website_slides.badge_data_profile_challenge_line_0
+NEW gamification.challenge.line: website_slides.badge_data_register_challenge_line_0
+NEW gamification.goal.definition: website_slides.badge_data_certification_goal
+NEW gamification.goal.definition: website_slides.badge_data_course_goal
+NEW gamification.goal.definition: website_slides.badge_data_karma_goal
+NEW gamification.goal.definition: website_slides.badge_data_profile_goal
+NEW gamification.goal.definition: website_slides.badge_data_register_goal
+# NOTHING TO DO
+
+DEL ir.actions.act_url: website_slides.action_open_channels (noupdate)
+# DONE: post-migration
+
+NEW ir.actions.act_window: website_slides.rating_rating_action_slide_channel
+NEW ir.actions.act_window: website_slides.rating_rating_action_slide_channel_report
+NEW ir.actions.act_window: website_slides.slide_channel_action_overview
+NEW ir.actions.act_window: website_slides.slide_channel_action_report
+NEW ir.actions.act_window: website_slides.slide_channel_partner_action
+NEW ir.actions.act_window: website_slides.slide_channel_tag_action
+NEW ir.actions.act_window: website_slides.slide_channel_tag_group_action
+NEW ir.actions.act_window: website_slides.slide_question_action_report
+NEW ir.actions.act_window: website_slides.slide_slide_action
+NEW ir.actions.act_window: website_slides.slide_slide_action_report
+NEW ir.actions.act_window: website_slides.website_slides_action_settings
+DEL ir.actions.act_window: website_slides.action_ir_slide_category
+DEL ir.actions.act_window: website_slides.action_slide_channels
+DEL ir.actions.act_window: website_slides.action_slides_slides
+NEW ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_report_view_graph
+NEW ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_report_view_pivot
+NEW ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_report_view_tree
+DEL ir.actions.todo: base.open_menu
+NEW ir.model.access: website_slides.access_slide_answer_all
+NEW ir.model.access: website_slides.access_slide_answer_publisher
+NEW ir.model.access: website_slides.access_slide_channel_all
+NEW ir.model.access: website_slides.access_slide_channel_partners_all
+NEW ir.model.access: website_slides.access_slide_channel_partners_system
+NEW ir.model.access: website_slides.access_slide_channel_publisher
+NEW ir.model.access: website_slides.access_slide_channel_tag_all
+NEW ir.model.access: website_slides.access_slide_channel_tag_group_all
+NEW ir.model.access: website_slides.access_slide_channel_tag_group_user
+NEW ir.model.access: website_slides.access_slide_channel_tag_user
+NEW ir.model.access: website_slides.access_slide_question_all
+NEW ir.model.access: website_slides.access_slide_question_publisher
+NEW ir.model.access: website_slides.access_slide_slide_all
+NEW ir.model.access: website_slides.access_slide_slide_link_all
+NEW ir.model.access: website_slides.access_slide_slide_link_publisher
+NEW ir.model.access: website_slides.access_slide_slide_partner_all
+NEW ir.model.access: website_slides.access_slide_slide_partner_system
+NEW ir.model.access: website_slides.access_slide_slide_publisher
+NEW ir.model.access: website_slides.access_slide_tag_all
+NEW ir.model.access: website_slides.access_slide_tag_publisher
+DEL ir.model.access: website_slides.access_slide_category_portal
+DEL ir.model.access: website_slides.access_slide_category_public
+DEL ir.model.access: website_slides.access_slide_category_user
+DEL ir.model.access: website_slides.access_slide_channel_portal
+DEL ir.model.access: website_slides.access_slide_channel_public
+DEL ir.model.access: website_slides.access_slide_channel_user
+DEL ir.model.access: website_slides.access_slide_slide_portal
+DEL ir.model.access: website_slides.access_slide_slide_public
+DEL ir.model.access: website_slides.access_slide_slide_user
+DEL ir.model.access: website_slides.access_slide_tag_portal
+DEL ir.model.access: website_slides.access_slide_tag_public
+DEL ir.model.access: website_slides.access_slide_tag_user
+NEW ir.rule: website_slides.rule_slide_channel_not_website
+NEW ir.rule: website_slides.rule_slide_channel_website
+NEW ir.rule: website_slides.rule_slide_slide_not_website
+NEW ir.rule: website_slides.rule_slide_slide_website
+# NOTHING TO DO
+
+ir.rule: website_slides.rule_slide_channel_global (noupdate switched)
+ir.rule: website_slides.rule_slide_slide_global (noupdate switched)
+# DONE: pre-migration noupdate disabled
+
+DEL ir.rule: website_slides.rule_slide_channel_public (noupdate)
+DEL ir.rule: website_slides.rule_slide_slide_public (noupdate)
+# DONE: post-migration
+
+NEW ir.ui.menu: website_slides.website_slides_menu_config_content_tags
+NEW ir.ui.menu: website_slides.website_slides_menu_config_course_tags
+NEW ir.ui.menu: website_slides.website_slides_menu_config_settings
+NEW ir.ui.menu: website_slides.website_slides_menu_configuration
+NEW ir.ui.menu: website_slides.website_slides_menu_courses
+NEW ir.ui.menu: website_slides.website_slides_menu_courses_content
+NEW ir.ui.menu: website_slides.website_slides_menu_courses_courses
+NEW ir.ui.menu: website_slides.website_slides_menu_courses_reviews
+NEW ir.ui.menu: website_slides.website_slides_menu_report
+NEW ir.ui.menu: website_slides.website_slides_menu_report_contents
+NEW ir.ui.menu: website_slides.website_slides_menu_report_courses
+NEW ir.ui.menu: website_slides.website_slides_menu_report_quizzes
+NEW ir.ui.menu: website_slides.website_slides_menu_report_reviews
+NEW ir.ui.menu: website_slides.website_slides_menu_root
+DEL ir.ui.menu: website_slides.menu_action_ir_slide_category_global
+DEL ir.ui.menu: website_slides.menu_action_slide_channels_global
+DEL ir.ui.menu: website_slides.menu_slide_tag
+DEL ir.ui.menu: website_slides.menu_website_slides_root
+DEL ir.ui.menu: website_slides.menu_website_slides_root_global
+NEW ir.ui.view: website_slides.achievement_card
+NEW ir.ui.view: website_slides.assets_backend
+NEW ir.ui.view: website_slides.assets_tests
+NEW ir.ui.view: website_slides.course_card
+NEW ir.ui.view: website_slides.course_main
+NEW ir.ui.view: website_slides.course_nav
+NEW ir.ui.view: website_slides.course_sidebar
+NEW ir.ui.view: website_slides.course_slides_cards
+NEW ir.ui.view: website_slides.course_slides_list
+NEW ir.ui.view: website_slides.course_slides_list_slide
+NEW ir.ui.view: website_slides.courses_all
+NEW ir.ui.view: website_slides.courses_footer
+NEW ir.ui.view: website_slides.courses_home
+NEW ir.ui.view: website_slides.display_course
+NEW ir.ui.view: website_slides.lesson_card
+NEW ir.ui.view: website_slides.lesson_content_quiz
+NEW ir.ui.view: website_slides.private_profile
+NEW ir.ui.view: website_slides.rating_rating_view_graph_slide_channel
+NEW ir.ui.view: website_slides.rating_rating_view_kanban_slide_channel
+NEW ir.ui.view: website_slides.rating_rating_view_pivot_slide_channel
+NEW ir.ui.view: website_slides.rating_rating_view_search_slide_channel
+NEW ir.ui.view: website_slides.res_partner_view_form
+NEW ir.ui.view: website_slides.slide_aside_card
+NEW ir.ui.view: website_slides.slide_aside_documentation
+NEW ir.ui.view: website_slides.slide_aside_training
+NEW ir.ui.view: website_slides.slide_aside_training_category
+NEW ir.ui.view: website_slides.slide_channel_invite_view_form
+NEW ir.ui.view: website_slides.slide_channel_partner_view_search
+NEW ir.ui.view: website_slides.slide_channel_partner_view_tree
+NEW ir.ui.view: website_slides.slide_channel_tag_group_view_form
+NEW ir.ui.view: website_slides.slide_channel_tag_group_view_search
+NEW ir.ui.view: website_slides.slide_channel_tag_group_view_tree
+NEW ir.ui.view: website_slides.slide_channel_tag_view_form
+NEW ir.ui.view: website_slides.slide_channel_tag_view_search
+NEW ir.ui.view: website_slides.slide_channel_tag_view_tree
+NEW ir.ui.view: website_slides.slide_channel_view_graph
+NEW ir.ui.view: website_slides.slide_channel_view_kanban
+NEW ir.ui.view: website_slides.slide_channel_view_tree
+NEW ir.ui.view: website_slides.slide_channel_view_tree_report
+NEW ir.ui.view: website_slides.slide_content_detailed
+NEW ir.ui.view: website_slides.slide_fullscreen
+NEW ir.ui.view: website_slides.slide_fullscreen_sidebar_category
+NEW ir.ui.view: website_slides.slide_icon
+NEW ir.ui.view: website_slides.slide_main
+NEW ir.ui.view: website_slides.slide_question_view_form
+NEW ir.ui.view: website_slides.slide_question_view_search
+NEW ir.ui.view: website_slides.slide_question_view_tree
+NEW ir.ui.view: website_slides.slide_question_view_tree_report
+NEW ir.ui.view: website_slides.slide_slide_view_graph
+NEW ir.ui.view: website_slides.slide_slide_view_kanban
+NEW ir.ui.view: website_slides.slide_slide_view_pivot
+NEW ir.ui.view: website_slides.slides_home_achievements_small
+NEW ir.ui.view: website_slides.slides_home_user_achievements_small
+NEW ir.ui.view: website_slides.slides_home_user_profile_small
+NEW ir.ui.view: website_slides.slides_home_users_small
+NEW ir.ui.view: website_slides.slides_misc_user_image
+NEW ir.ui.view: website_slides.toggle_latest_achievements
+NEW ir.ui.view: website_slides.toggle_leaderboard
+NEW ir.ui.view: website_slides.user_profile_content
+NEW ir.ui.view: website_slides.user_quickkarma_card
+DEL ir.ui.view: website_slides.channel_not_found
+DEL ir.ui.view: website_slides.channels
+DEL ir.ui.view: website_slides.home
+DEL ir.ui.view: website_slides.opt_subscription_on_channels
+DEL ir.ui.view: website_slides.related_slides
+DEL ir.ui.view: website_slides.slide_detail_view
+DEL ir.ui.view: website_slides.slides_channel_header
+DEL ir.ui.view: website_slides.slides_grid_view
+DEL ir.ui.view: website_slides.slides_search
+DEL ir.ui.view: website_slides.view_slide_channel_tree
+DEL ir.ui.view: website_slides.view_slide_slide_graph
+DEL ir.ui.view: website_slides.view_slides_category_form
+DEL ir.ui.view: website_slides.view_slides_category_tree
+NEW mail.template: website_slides.mail_template_slide_channel_invite (noupdate)
+# NOTHING TO DO
+
+DEL slide.channel: website_slides.channel_partial (noupdate)
+DEL slide.channel: website_slides.channel_private (noupdate)
+DEL slide.channel: website_slides.channel_public (noupdate)
+# DONE: post-migration
+
+NEW slide.channel.tag.group: website_slides.slide_channel_tag_group_data_other (noupdate)
+# NOTHING TO DO
