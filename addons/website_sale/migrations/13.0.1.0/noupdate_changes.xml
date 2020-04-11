@@ -112,9 +112,9 @@
   <record id="product_pricelist_item_comp_rule" model="ir.rule">
     <field name="domain_force">['|', ('company_id', 'in', [False,website.company_id.id]), ('company_id', 'in', company_ids)]</field>
   </record>
-  <record id="sales_team.salesteam_website_sales" model="crm.team">
+<!--  <record id="sales_team.salesteam_website_sales" model="crm.team">
     <field name="company_id"/>
     <field name="dashboard_graph_model"/>
     <field name="dashboard_graph_period"/>
-  </record>
+  </record>-->
 </odoo>
