@@ -15,14 +15,14 @@
     <field name="default_pos_receivable_account_id" ref="pos_receivable"/>
   </record>
   <record id="purchase_tax_template" model="account.tax.template">
-    <field name="account_id"/>
-    <field name="refund_account_id"/>
+<!--    <field name="account_id"/>
+    <field name="refund_account_id"/>-->
     <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'base',             }),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'tax',                 'account_id': ref('tax_paid'),             }),         ]"/>
     <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'base',             }),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'tax',                 'account_id': ref('tax_paid'),             }),         ]"/>
   </record>
   <record id="sale_tax_template" model="account.tax.template">
-    <field name="account_id"/>
-    <field name="refund_account_id"/>
+<!--    <field name="account_id"/>
+    <field name="refund_account_id"/>-->
     <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'base',             }),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'tax',                 'account_id': ref('tax_received'),             }),         ]"/>
     <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'base',             }),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'tax',                 'account_id': ref('tax_received'),             }),         ]"/>
   </record>
