@@ -716,7 +716,7 @@ def rename_ir_module_category(env):
             if old_row:
                 openupgrade_merge_records.merge_records(
                     env, "ir.module.category", [old_row[0]], new_row[0],
-                    method="sql")
+                    method="sql", model_table="ir_module_category")
         else:
             openupgrade.rename_xmlids(env.cr, [(old_xmlid, new_xmlid)])
 
