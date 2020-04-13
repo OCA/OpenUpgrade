@@ -1,0 +1,255 @@
+---Models in module 'stock'---
+obsolete model product.putaway
+new model stock.assign.serial [transient]
+new model stock.picking.responsible [transient]
+# NOTHING TO DO: new transient models
+
+obsolete model report.stock.forecast [sql_view]
+obsolete model stock.fixed.putaway.strat (renamed to stock.putaway.rule)
+new model report.stock.quantity [sql_view]
+new model stock.putaway.rule (renamed from stock.fixed.putaway.strat)
+# DONE: models and tables renamed
+
+---Fields in module 'stock'---
+stock        / product.category         / putaway_rule_ids (one2many)   : NEW relation: stock.putaway.rule
+stock        / product.product          / putaway_rule_ids (one2many)   : NEW relation: stock.putaway.rule
+# NOTHING TO DO: one2many
+
+stock        / product.putaway          / fixed_location_ids (one2many) : DEL relation: stock.fixed.putaway.strat
+stock        / product.putaway          / name (char)                   : DEL required
+stock        / product.putaway          / product_location_ids (one2many): DEL relation: stock.fixed.putaway.strat
+# NOTHING TO DO: model removed
+
+stock        / product.template         / responsible_id (many2one)     : not stored anymore
+# NOTHING TO DO
+
+stock        / res.company              / propagation_minimum_delta (integer): DEL
+stock        / res.company              / stock_mail_confirmation_template_id (many2one): NEW relation: mail.template, hasdefault
+stock        / res.company              / stock_move_email_validation (boolean): NEW hasdefault
+# NOTHING TO DO: has default values
+
+stock        / stock.fixed.putaway.strat / fixed_location_id (many2one)  : DEL relation: stock.location, required
+stock        / stock.putaway.rule       / location_out_id (many2one)    : NEW relation: stock.location, required
+# DONE: pre-migration: renamed field
+
+stock        / stock.fixed.putaway.strat / putaway_id (many2one)         : DEL relation: product.putaway, required
+# NOTHING TO DO: model removed
+
+stock        / stock.putaway.rule       / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+# DONE: post-migration: filled the field when empty
+
+stock        / stock.putaway.rule       / location_in_id (many2one)     : NEW relation: stock.location, required, req_default: function, hasdefault
+# NOTHING TO DO: has default value
+
+stock        / stock.inventory          / category_id (many2one)        : DEL relation: product.category
+stock        / stock.inventory          / exhausted (boolean)           : DEL
+stock        / stock.inventory          / filter (selection)            : DEL required, selection_keys: function, req_default: function
+stock        / stock.inventory          / lot_id (many2one)             : DEL relation: stock.production.lot
+stock        / stock.inventory          / package_id (many2one)         : DEL relation: stock.quant.package
+stock        / stock.inventory          / partner_id (many2one)         : DEL relation: res.partner
+stock        / stock.inventory          / prefill_counted_quantity (selection): NEW selection_keys: ['counted', 'zero'], hasdefault
+stock        / stock.inventory          / start_empty (boolean)         : NEW
+# NOTHING TO DO
+
+stock        / stock.inventory          / location_id (many2one)        : DEL relation: stock.location, required, req_default: function
+stock        / stock.inventory          / location_ids (many2many)      : NEW relation: stock.location
+stock        / stock.inventory          / product_id (many2one)         : DEL relation: product.product
+stock        / stock.inventory          / product_ids (many2many)       : NEW relation: product.product
+# DONE: post-migration: transformed the many2one to many2many
+
+stock        / stock.inventory.line     / categ_id (many2one)           : NEW relation: product.category, isrelated: related, stored
+stock        / stock.inventory.line     / inventory_date (datetime)     : NEW hasdefault
+stock        / stock.inventory.line     / is_editable (boolean)         : NEW
+stock        / stock.inventory.line     / theoretical_qty (float)       : not a function anymore
+# NOTHING TO DO: new fields with defaults
+
+stock        / stock.location           / partner_id (many2one)         : DEL relation: res.partner
+stock        / stock.location           / putaway_rule_ids (one2many)   : NEW relation: stock.putaway.rule
+stock        / stock.location           / putaway_strategy_id (many2one): DEL relation: product.putaway
+stock        / stock.location           / usage (selection)             : selection_keys is now '['customer', 'internal', 'inventory', 'production', 'supplier', 'transit', 'view']' ('['customer', 'internal', 'inventory', 'procurement', 'production', 'supplier', 'transit', 'view']')
+stock        / stock.move               / delay_alert (boolean)         : NEW
+stock        / stock.move               / description_picking (text)    : NEW
+stock        / stock.move               / next_serial (char)            : NEW
+stock        / stock.move               / next_serial_count (integer)   : NEW
+stock        / stock.move               / product_packaging (many2one)  : DEL relation: product.packaging
+stock        / stock.move               / propagate (boolean)           : DEL
+stock        / stock.move               / propagate_cancel (boolean)    : NEW hasdefault
+stock        / stock.move               / propagate_date (boolean)      : NEW
+stock        / stock.move               / propagate_date_minimum_delta (integer): NEW
+# NOTHING TO DO
+
+stock        / stock.move.line          / company_id (many2one)         : NEW relation: res.company, required
+stock        / stock.move.line          / description_picking (text)    : NEW
+stock        / stock.package_level      / company_id (many2one)         : NEW relation: res.company, required
+# DONE: post-migration: filled the field when empty
+
+stock        / stock.picking            / company_id (many2one)         : now related
+stock        / stock.picking            / move_ids_without_package (one2many): not stored anymore
+stock        / stock.picking            / move_ids_without_package (one2many): now a function
+stock        / stock.picking            / move_line_nosuggest_ids (one2many): NEW relation: stock.move.line
+stock        / stock.picking            / user_id (many2one)            : NEW relation: res.users, hasdefault
+# NOTHING TO DO
+
+stock        / stock.picking.type       / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+stock        / stock.picking.type       / sequence_code (char)          : NEW required
+stock        / stock.production.lot     / company_id (many2one)         : NEW relation: res.company, required
+stock        / stock.production.lot     / note (html)                   : NEW
+# DONE: post-migration: filled the field when empty
+
+stock        / stock.rule               / propagate (boolean)           : DEL
+stock        / stock.rule               / propagate_cancel (boolean)    : NEW hasdefault
+# DONE: pre-migration renamed field
+
+stock        / stock.rule               / delay_alert (boolean)         : NEW
+stock        / stock.rule               / procure_method (selection)    : selection_keys is now '['make_to_order', 'make_to_stock', 'mts_else_mto']' ('['make_to_order', 'make_to_stock']')
+stock        / stock.rule               / propagate_date (boolean)      : NEW hasdefault
+stock        / stock.rule               / propagate_date_minimum_delta (integer): NEW hasdefault
+# NOTHING TO DO: new fields with defaults
+
+stock        / stock.scrap              / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+# DONE: post-migration: filled the field when empty
+
+stock        / stock.scrap              / date_done (datetime)          : NEW
+stock        / stock.scrap              / date_expected (datetime)      : DEL
+# DONE: pre-migration renamed field
+
+stock        / stock.scrap              / message_follower_ids (one2many): NEW relation: mail.followers
+stock        / stock.scrap              / message_ids (one2many)        : NEW relation: mail.message
+stock        / stock.scrap              / message_main_attachment_id (many2one): NEW relation: ir.attachment
+stock        / stock.scrap              / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO: new fields relational or not required
+
+stock        / stock.warehouse          / sequence (integer)            : NEW hasdefault
+# NOTHING TO DO: new field with default
+
+---XML records in module 'stock'---
+NEW ir.actions.act_window: stock.act_assign_serial_numbers
+NEW ir.actions.act_window: stock.action_change_product_quantity
+NEW ir.actions.act_window: stock.action_putaway_tree
+NEW ir.actions.act_window: stock.category_open_putaway
+NEW ir.actions.act_window: stock.location_open_putaway
+NEW ir.actions.act_window: stock.report_stock_quantity_action
+NEW ir.actions.act_window: stock.report_stock_quantity_action_product
+DEL ir.actions.act_window: stock.act_stock_warehouse_2_stock_warehouse_orderpoint
+DEL ir.actions.act_window: stock.action_inventory_line_tree
+DEL ir.actions.act_window: stock.action_picking_tree
+DEL ir.actions.act_window: stock.action_picking_tree_done
+DEL ir.actions.act_window: stock.action_picking_tree_done_grouped
+DEL ir.actions.act_window: stock.action_stock_level_forecast_report_product
+DEL ir.actions.act_window: stock.action_stock_level_forecast_report_template
+DEL ir.actions.act_window: stock.action_stock_quantity_history
+DEL ir.actions.act_window: stock.lot_open_quants
+DEL ir.actions.act_window: stock.product_open_quants
+DEL ir.actions.act_window: stock.quantsact
+# NOTHING TO DO: noupdate=0
+
+NEW ir.actions.report: stock.action_label_transfer_template_pdf
+NEW ir.actions.report: stock.action_label_transfer_template_zpl
+DEL ir.actions.report: stock_zebra.label_transfer_template
+# NOTHING TO DO
+
+NEW ir.actions.report: stock.label_barcode_product_product [renamed from stock_zebra module]
+NEW ir.actions.report: stock.label_barcode_product_template [renamed from stock_zebra module]
+NEW ir.actions.report: stock.label_lot_template [renamed from stock_zebra module]
+NEW ir.actions.report: stock.label_package_template [renamed from stock_zebra module]
+NEW ir.actions.report: stock.label_picking_type [renamed from stock_zebra module]
+NEW ir.actions.report: stock.label_product_packaging [renamed from stock_zebra module]
+NEW ir.actions.report: stock.label_product_product [renamed from stock_zebra module]
+NEW ir.actions.report: stock.label_product_template [renamed from stock_zebra module]
+DEL ir.actions.report: stock_zebra.label_barcode_product_product [renamed to stock module]
+DEL ir.actions.report: stock_zebra.label_barcode_product_template [renamed to stock module]
+DEL ir.actions.report: stock_zebra.label_lot_template [renamed to stock module]
+DEL ir.actions.report: stock_zebra.label_package_template [renamed to stock module]
+DEL ir.actions.report: stock_zebra.label_picking_type [renamed to stock module]
+DEL ir.actions.report: stock_zebra.label_product_packaging [renamed to stock module]
+DEL ir.actions.report: stock_zebra.label_product_product [renamed to stock module]
+DEL ir.actions.report: stock_zebra.label_product_template [renamed to stock module]
+# DONE: pre-migration (renamed)
+
+NEW ir.actions.server: stock.action_view_quants
+NEW ir.actions.server: stock.model_stock_inventory_line_action_recompute_quantity
+NEW ir.actions.server: stock.model_stock_inventory_line_action_reset_product_qty
+# NOTHING TO DO
+
+NEW ir.model.access: stock.access_stock_putaway_manager
+NEW ir.model.access: stock.access_stock_putaway_all
+NEW ir.model.access: stock.access_report_stock_quantity
+DEL ir.model.access: stock.access_stock_fixed_putaway_strat
+DEL ir.model.access: stock.access_stock_fixed_putaway_user
+DEL ir.model.access: stock.access_stock_forecast_user
+# DONE: pre-migration (renamed)
+
+NEW ir.model.access: stock.access_stock_scrap_manager
+DEL ir.model.access: stock.access_product_price_history_stock_manager
+DEL ir.model.access: stock.access_product_price_history_stock_user
+DEL ir.model.access: stock.access_product_putaway_all
+DEL ir.model.access: stock.access_product_putaway_manager
+DEL ir.model.access: stock.access_stock_forecast_manager
+# NOTHING TO DO
+
+NEW ir.module.category: base.module_category_operations_inventory (noupdate)
+# NOTHING TO DO: new xml
+
+DEL ir.property: stock.property_stock_inventory (noupdate)
+DEL ir.property: stock.property_stock_production (noupdate)
+# DONE: post-migration (removed)
+
+NEW ir.rule: stock.report_stock_quantity_flow_comp_rule (noupdate)
+NEW ir.rule: stock.stock_move_line_rule (noupdate)
+NEW ir.rule: stock.stock_production_lot_rule (noupdate)
+NEW ir.rule: stock.stock_putaway_rule_rule (noupdate)
+NEW ir.rule: stock.stock_quant_package_comp_rule (noupdate)
+NEW ir.rule: stock.stock_scrap_company_rule (noupdate)
+# NOTHING TO DO: new xmls
+
+DEL ir.sequence: stock.sequence_stock_scrap (noupdate)
+# DONE: post-migration (removed)
+
+NEW ir.ui.menu: stock.menu_forecast_inventory
+NEW ir.ui.menu: stock.menu_putaway
+DEL ir.ui.menu: stock.menu_variants_action
+NEW ir.ui.view: stock.label_barcode_product_product_view
+NEW ir.ui.view: stock.label_barcode_product_template_view
+NEW ir.ui.view: stock.label_lot_template_view
+NEW ir.ui.view: stock.label_package_template_view
+NEW ir.ui.view: stock.label_picking_type_view
+NEW ir.ui.view: stock.label_product_packaging_view
+NEW ir.ui.view: stock.label_product_product_view
+NEW ir.ui.view: stock.label_product_template_view
+NEW ir.ui.view: stock.label_transfer_template_view_pdf
+NEW ir.ui.view: stock.label_transfer_template_view_zpl
+NEW ir.ui.view: stock.qunit_suite
+NEW ir.ui.view: stock.report_stock_rule_vertical_bar
+NEW ir.ui.view: stock.stock_putaway_list
+NEW ir.ui.view: stock.stock_report_view_graph
+NEW ir.ui.view: stock.stock_report_view_search
+NEW ir.ui.view: stock.view_assign_serial_numbers
+NEW ir.ui.view: stock.view_putaway_search
+NEW ir.ui.view: stock.view_stock_move_line_detailed_operation_tree
+NEW ir.ui.view: stock.view_stock_quant_tree_editable
+DEL ir.ui.view: stock.stock_fixed_putaway_strat_form
+DEL ir.ui.view: stock.view_move_picking_form
+DEL ir.ui.view: stock.view_production_lot_form_simple
+DEL ir.ui.view: stock.view_putaway
+DEL ir.ui.view: stock.view_stock_level_forecast_filter
+DEL ir.ui.view: stock.view_stock_level_forecast_graph
+DEL ir.ui.view: stock.view_stock_level_forecast_pivot
+DEL ir.ui.view: stock_zebra.label_barcode_product_product_view
+DEL ir.ui.view: stock_zebra.label_barcode_product_template_view
+DEL ir.ui.view: stock_zebra.label_lot_template_view
+DEL ir.ui.view: stock_zebra.label_package_template_view
+DEL ir.ui.view: stock_zebra.label_picking_type_view
+DEL ir.ui.view: stock_zebra.label_product_packaging_view
+DEL ir.ui.view: stock_zebra.label_product_product_view
+DEL ir.ui.view: stock_zebra.label_product_template_view
+DEL ir.ui.view: stock_zebra.label_transfer_template_view
+# NOTHING TO DO: noupdate=0
+
+NEW mail.template: stock.mail_template_data_delivery_confirmation [renamed from delivery module] (noupdate)
+# DONE: pre-migration (renamed)
+
+DEL stock.location: stock.location_inventory (noupdate)
+DEL stock.location: stock.location_procurement (noupdate)
+DEL stock.location: stock.location_production (noupdate)
+DEL stock.location: stock.stock_location_scrapped (noupdate)
+# DONE: post-migration (removed)
