@@ -1,0 +1,137 @@
+---Models in module 'website'---
+obsolete model website.redirect (renamed to website.rewrite)
+new model website.rewrite (renamed from website.redirect)
+# DONE: pre-migration: renamed models
+
+new model website.route
+new model website.track
+new model website.visitor
+# NOTHING TO DO
+
+---Fields in module 'website'---
+website      / ir.ui.view               / track (boolean)               : NEW hasdefault
+website      / mrp.document             / key (char)                    : previously in module mrp
+website      / mrp.document             / website_id (many2one)         : previously in module mrp
+website      / mrp.document             / website_url (char)            : previously in module mrp
+website      / res.partner              / is_published (boolean)        : previously in module website_partner
+website      / res.partner              / visitor_ids (many2many)       : NEW relation: website.visitor
+website      / res.partner              / website_published (boolean)   : previously in module website_partner
+website      / res.partner              / website_url (char)            : previously in module website_partner
+website      / res.users                / is_published (boolean)        : previously in module website_partner
+website      / res.users                / website_published (boolean)   : previously in module website_partner
+website      / res.users                / website_url (char)            : previously in module website_partner
+website      / website                  / default_lang_code (char)      : DEL
+website      / website                  / logo (binary)                 : NEW attachment: True, hasdefault
+website      / website                  / social_googleplus (char)      : DEL
+website      / website.menu             / group_ids (many2many)         : NEW relation: res.groups
+website      / website.menu             / mega_menu_classes (char)      : NEW
+website      / website.menu             / mega_menu_content (html)      : NEW
+website      / website.rewrite          / name (char)                   : NEW required
+website      / website.rewrite          / route_id (many2one)           : NEW relation: website.route
+# NOTHING TO DO
+
+website      / website.redirect         / type (selection)              : DEL required, selection_keys: ['301', '302'], req_default: function
+website      / website.rewrite          / redirect_type (selection)     : NEW selection_keys: ['301', '302', '308', '404'], hasdefault
+# DONE: pre-migration (renamed)
+
+website      / website.route            / path (char)                   : NEW
+website      / website.track            / page_id (many2one)            : NEW relation: website.page
+website      / website.track            / url (text)                    : NEW
+website      / website.track            / visit_datetime (datetime)     : NEW required, req_default: function, hasdefault
+website      / website.track            / visitor_id (many2one)         : NEW relation: website.visitor, required
+website      / website.visitor          / access_token (char)           : NEW required, req_default: function, hasdefault
+website      / website.visitor          / active (boolean)              : NEW hasdefault
+website      / website.visitor          / country_id (many2one)         : NEW relation: res.country
+website      / website.visitor          / lang_id (many2one)            : NEW relation: res.lang
+website      / website.visitor          / last_connection_datetime (datetime): NEW hasdefault
+website      / website.visitor          / name (char)                   : NEW
+website      / website.visitor          / partner_id (many2one)         : NEW relation: res.partner
+website      / website.visitor          / timezone (selection)          : NEW selection_keys: function
+website      / website.visitor          / visit_count (integer)         : NEW hasdefault
+website      / website.visitor          / website_id (many2one)         : NEW relation: website
+website      / website.visitor          / website_track_ids (one2many)  : NEW relation: website.track
+# NOTHING TO DO: new models
+
+---XML records in module 'website'---
+NEW ir.actions.act_window: website.action_website_rewrite_list
+NEW ir.actions.act_window: website.visitor_partner_action
+NEW ir.actions.act_window: website.website_visitor_page_action
+NEW ir.actions.act_window: website.website_visitor_view_action
+NEW ir.actions.act_window: website.website_visitors_action
+DEL ir.actions.act_window: website.action_website_redirect_list
+NEW ir.attachment: website.library_image_17 (noupdate)
+NEW ir.attachment: website.s_mega_menu_menu_image_menu_default_image (noupdate)
+NEW ir.cron: website.website_visitor_cron
+NEW ir.model.access: website.access_website_route_designer
+NEW ir.model.access: website.access_website_track_designer
+NEW ir.model.access: website.access_website_track_system
+NEW ir.model.access: website.access_website_visitor_designer
+# NOTHING TO DO
+
+NEW ir.model.access: website.access_website_rewrite
+NEW ir.model.access: website.access_website_rewrite_designer
+DEL ir.model.access: website.access_website_redirect
+DEL ir.model.access: website.access_website_redirect_designer
+# DONE: pre-migration rename xmlid
+
+NEW ir.module.category: base.module_category_website_website (noupdate)
+NEW ir.rule: website.website_menu
+NEW ir.ui.menu: website.menu_visitor_sub_menu
+NEW ir.ui.menu: website.menu_visitor_view_menu
+NEW ir.ui.menu: website.menu_website_rewrite
+NEW ir.ui.menu: website.website_visitor_menu
+DEL ir.ui.menu: website.menu_website_redirect_list
+NEW ir.ui.view: website.action_website_rewrite_tree
+NEW ir.ui.view: website.assets_tests
+NEW ir.ui.view: website.assets_wysiwyg
+NEW ir.ui.view: website.compiled_assets_wysiwyg
+NEW ir.ui.view: website.portal_404
+NEW ir.ui.view: website.qweb_500
+NEW ir.ui.view: website.record_cover
+NEW ir.ui.view: website.s_mega_menu_menu_image_menu
+NEW ir.ui.view: website.s_mega_menu_multi_menus
+NEW ir.ui.view: website.view_rewrite_search
+NEW ir.ui.view: website.view_website_rewrite_form
+NEW ir.ui.view: website.website_pages_view_search
+NEW ir.ui.view: website.website_visitor_page_view_graph
+NEW ir.ui.view: website.website_visitor_page_view_search
+NEW ir.ui.view: website.website_visitor_page_view_tree
+NEW ir.ui.view: website.website_visitor_track_view_graph
+NEW ir.ui.view: website.website_visitor_track_view_tree
+NEW ir.ui.view: website.website_visitor_view_form
+NEW ir.ui.view: website.website_visitor_view_graph
+NEW ir.ui.view: website.website_visitor_view_kanban
+NEW ir.ui.view: website.website_visitor_view_search
+NEW ir.ui.view: website.website_visitor_view_tree
+DEL ir.ui.view: portal.portal_show_sign_in
+DEL ir.ui.view: website.403
+DEL ir.ui.view: website.404
+DEL ir.ui.view: website.500
+DEL ir.ui.view: website.assets_common
+DEL ir.ui.view: website.http_error
+DEL ir.ui.view: website.http_error_debug
+DEL ir.ui.view: website.layout_footer_copyright
+DEL ir.ui.view: website.option_font_body_02_variables
+DEL ir.ui.view: website.option_font_body_03_variables
+DEL ir.ui.view: website.option_font_body_04_variables
+DEL ir.ui.view: website.option_font_body_05_variables
+DEL ir.ui.view: website.option_font_body_06_variables
+DEL ir.ui.view: website.option_font_button_02_variables
+DEL ir.ui.view: website.option_font_button_03_variables
+DEL ir.ui.view: website.option_font_button_04_variables
+DEL ir.ui.view: website.option_font_button_05_variables
+DEL ir.ui.view: website.option_font_button_06_variables
+DEL ir.ui.view: website.option_font_navbar_02_variables
+DEL ir.ui.view: website.option_font_navbar_03_variables
+DEL ir.ui.view: website.option_font_navbar_04_variables
+DEL ir.ui.view: website.option_font_navbar_05_variables
+DEL ir.ui.view: website.option_font_navbar_06_variables
+DEL ir.ui.view: website.option_font_title_02_variables
+DEL ir.ui.view: website.option_font_title_03_variables
+DEL ir.ui.view: website.option_font_title_04_variables
+DEL ir.ui.view: website.option_font_title_05_variables
+DEL ir.ui.view: website.option_font_title_06_variables
+DEL ir.ui.view: website.view_redirect_search
+DEL ir.ui.view: website.website_redirect_form_view
+DEL ir.ui.view: website.website_redirect_tree_view
+# NOTHING TO DO
