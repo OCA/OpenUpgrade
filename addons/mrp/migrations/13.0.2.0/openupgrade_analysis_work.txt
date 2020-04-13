@@ -1,0 +1,142 @@
+---Models in module 'mrp'---
+obsolete model mrp.subproduct (renamed to mrp.bom.byproduct)
+new model mrp.bom.byproduct (renamed from mrp.subproduct)
+# DONE: pre-migration: renamed models and tables
+
+new model mrp.abstract.workorder [abstract]
+new model mrp.abstract.workorder.line [abstract]
+new model mrp.workorder.line
+# NOTHING TO DO: new models
+
+---Fields in module 'mrp'---
+mrp          / mrp.bom                  / byproduct_ids (one2many)      : NEW relation: mrp.bom.byproduct
+mrp          / mrp.bom                  / consumption (selection)       : NEW selection_keys: ['flexible', 'strict'], hasdefault
+# NOTHING TO DO: has default value
+
+mrp          / mrp.bom.byproduct        / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
+mrp          / mrp.bom.byproduct        / routing_id (many2one)         : NEW relation: mrp.routing, isrelated: related, stored
+mrp          / mrp.bom.line             / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
+# NOTHING TO DO: new features with related relation
+
+mrp          / mrp.bom.line             / attribute_value_ids (many2many): DEL relation: product.attribute.value
+mrp          / mrp.bom.line             / bom_product_template_attribute_value_ids (many2many): NEW relation: product.template.attribute.value
+# DONE: pre-migration: field and relation table renamed
+
+mrp          / mrp.document             / key (char)                    : module is now 'website' ('mrp')
+mrp          / mrp.document             / res_id (integer)              : relation is now 'res_model' ('False') [nothing to do]
+mrp          / mrp.document             / res_id (integer)              : type is now 'many2one_reference' ('integer')
+mrp          / mrp.document             / website_id (many2one)         : module is now 'website' ('mrp')
+mrp          / mrp.document             / website_url (char)            : module is now 'website' ('mrp')
+# NOTHING TO DO
+
+mrp          / mrp.production           / availability (selection)      : DEL selection_keys: ['assigned', 'none', 'partially_available', 'waiting']
+mrp          / mrp.production           / reservation_state (selection) : NEW selection_keys: ['assigned', 'confirmed', 'waiting'], isfunction: function, stored
+mrp          / mrp.production           / propagate (boolean)           : DEL
+mrp          / mrp.production           / propagate_cancel (boolean)    : NEW
+# DONE: pre-migration (renamed)
+
+mrp          / mrp.production           / date_deadline (datetime)      : NEW
+mrp          / mrp.production           / date_start_wo (datetime)      : NEW
+mrp          / mrp.production           / orderpoint_id (many2one)      : NEW relation: stock.warehouse.orderpoint
+mrp          / mrp.production           / propagate_date (boolean)      : NEW
+mrp          / mrp.production           / propagate_date_minimum_delta (integer): NEW
+mrp          / mrp.production           / state (selection)             : now a function
+mrp          / mrp.production           / state (selection)             : selection_keys is now '['cancel', 'confirmed', 'done', 'draft', 'planned', 'progress', 'to_close']' ('['cancel', 'confirmed', 'done', 'planned', 'progress']')
+mrp          / mrp.routing              / location_id (many2one)        : DEL relation: stock.location
+mrp          / mrp.routing.workcenter   / worksheet_google_slide (char) : NEW
+mrp          / mrp.routing.workcenter   / worksheet_type (selection)    : NEW selection_keys: ['google_slide', 'pdf'], hasdefault
+mrp          / mrp.workcenter           / alternative_workcenter_ids (many2many): NEW relation: mrp.workcenter
+# NOTHING TO DO: new features
+
+mrp          / mrp.unbuild              / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+# DONE: post-migration: filled the field when empty
+
+mrp          / mrp.workcenter.productivity / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+# NOTHING TO DO: has proper default function
+
+mrp          / mrp.workorder            / final_lot_id (many2one)       : DEL relation: stock.production.lot
+mrp          / mrp.workorder            / finished_lot_id (many2one)    : NEW relation: stock.production.lot
+# DONE: pre-migration (renamed)
+
+mrp          / mrp.workorder            / consumption (selection)       : NEW required, selection_keys: ['flexible', 'strict']
+mrp          / mrp.workorder            / active_move_line_ids (one2many): DEL relation: stock.move.line
+mrp          / mrp.workorder            / activity_ids (one2many)       : NEW relation: mail.activity
+mrp          / mrp.workorder            / date_planned_finished (datetime): now a function
+mrp          / mrp.workorder            / date_planned_start (datetime) : now a function
+mrp          / mrp.workorder            / finished_workorder_line_ids (one2many): NEW relation: mrp.workorder.line
+mrp          / mrp.workorder            / leave_id (many2one)           : NEW relation: resource.calendar.leaves
+mrp          / mrp.workorder            / move_finished_ids (one2many)  : NEW relation: stock.move
+mrp          / mrp.workorder            / raw_workorder_line_ids (one2many): NEW relation: mrp.workorder.line
+# NOTHING TO DO: new features
+
+mrp          / mrp.workorder            / product_uom_id (many2one)     : is now stored
+mrp          / mrp.workorder            / product_uom_id (many2one)     : not related anymore
+mrp          / mrp.workorder            / product_uom_id (many2one)     : now required
+# DONE: post-migration: filled related values
+
+mrp          / mrp.workorder.line       / finished_workorder_id (many2one): NEW relation: mrp.workorder
+mrp          / mrp.workorder.line       / lot_id (many2one)             : NEW relation: stock.production.lot
+mrp          / mrp.workorder.line       / move_id (many2one)            : NEW relation: stock.move
+mrp          / mrp.workorder.line       / product_id (many2one)         : NEW relation: product.product, required
+mrp          / mrp.workorder.line       / product_uom_id (many2one)     : NEW relation: uom.uom
+mrp          / mrp.workorder.line       / qty_done (float)              : NEW
+mrp          / mrp.workorder.line       / qty_reserved (float)          : NEW
+mrp          / mrp.workorder.line       / qty_to_consume (float)        : NEW
+mrp          / mrp.workorder.line       / raw_workorder_id (many2one)   : NEW relation: mrp.workorder
+# NOTHING TO DO: new model
+
+mrp          / stock.move               / active_move_line_ids (one2many): DEL relation: stock.move.line
+mrp          / stock.move               / byproduct_id (many2one)       : NEW relation: mrp.bom.byproduct
+mrp          / stock.move.line          / done_wo (boolean)             : DEL
+# NOTHING TO DO: new feature
+
+mrp          / stock.move.line          / lot_produced_id (many2one)    : DEL relation: stock.production.lot
+mrp          / stock.move.line          / lot_produced_ids (many2many)  : NEW relation: stock.production.lot
+# DONE: post-migration: transformed the many2one to many2many
+
+mrp          / stock.picking.type       / use_create_components_lots (boolean): NEW hasdefault
+mrp          / stock.production.lot     / use_next_on_work_order_id (many2one): DEL relation: mrp.workorder
+mrp          / stock.warehouse          / manufacture_mto_pull_id (many2one): NEW relation: stock.rule
+# NOTHING TO DO: new feature
+
+mrp_byproduct / mrp.bom                  / sub_products (one2many)       : DEL relation: mrp.subproduct
+mrp_byproduct / stock.move               / subproduct_id (many2one)      : DEL relation: mrp.subproduct
+# NOTHING TO DO
+
+---XML records in module 'mrp'---
+NEW ir.actions.report: mrp.label_manufacture_template
+# NOTHING TO DO: new xml
+
+NEW ir.model.access: mrp.access_mrp_bom_byproduct_manager
+NEW ir.model.access: mrp.access_mrp_bom_byproduct_user
+DEL ir.model.access: mrp_byproduct.access_mrp_subproduct_manager
+DEL ir.model.access: mrp_byproduct.access_mrp_subproduct_user
+# DONE: pre-migration (renamed)
+
+NEW ir.model.access: mrp.access_mrp_workorder_line_mrp_manager
+NEW ir.model.access: mrp.access_mrp_workorder_line_mrp_user
+DEL ir.model.access: mrp.access_product_price_history_mrp_manager
+DEL ir.model.access: mrp_byproduct.access_mrp_subproduct_all
+# NOTHING TO DO: noupdate=0
+
+NEW ir.module.category: base.module_category_manufacturing_manufacturing (noupdate)
+NEW ir.rule: mrp.mrp_bom_byproduct_rule (noupdate)
+NEW ir.rule: mrp.mrp_bom_line_rule (noupdate)
+NEW ir.rule: mrp.mrp_unbuild_rule (noupdate)
+NEW ir.rule: mrp.mrp_workcenter_productivity (noupdate)
+NEW ir.rule: mrp.mrp_workorder_rule (noupdate)
+# NOTHING TO DO: new xml
+
+DEL ir.sequence: mrp.sequence_mrp_unbuild (noupdate)
+# DONE: post-migration (removed)
+
+DEL ir.ui.menu: mrp.menu_mrp_workcenter_productivity_loss
+DEL ir.ui.menu: mrp.menu_view_resource_calendar_search_mrp
+NEW ir.ui.view: mrp.label_production_view
+NEW ir.ui.view: mrp.mrp_bom_byproduct_form_view
+NEW ir.ui.view: mrp.mrp_product_produce_line_form
+NEW ir.ui.view: mrp.mrp_product_produce_line_kanban
+NEW ir.ui.view: mrp.view_stock_move_raw_tree
+DEL ir.ui.view: mrp_byproduct.mrp_subproduct_view
+NEW res.groups: mrp.group_mrp_byproducts
+# NOTHING TO DO: noupdate=0
