@@ -6,6 +6,19 @@ from psycopg2.extensions import AsIs
 from openupgradelib import openupgrade
 
 
+@openupgrade.logging()
+def _migrate_security(env):
+    """Update security-related changes."""
+    group_account_invoice = env.ref("account.group_account_invoice")
+    group_account_manager = env.ref("account.group_account_manager")
+    group_account_user = env.ref("account.group_account_user")
+    group_account_user.implied_ids -= group_account_invoice
+    group_account_manager.implied_ids = (
+        group_account_manager.implied_ids -
+        group_account_user + group_account_invoice
+    )
+
+
 def migrate_account_tax_cash_basis(env):
     # Migrate tax exigibility settings
     if not openupgrade.column_exists(
@@ -188,6 +201,7 @@ def migrate(env, version):
     migrate_account_tax_cash_basis(env)
     fill_account_invoice_line_total(env)
     fill_account_move_line_tax_base_amount(env)
+    _migrate_security(env)
 
     openupgrade.load_data(
         env.cr, 'account', 'migrations/11.0.1.1/noupdate_changes.xml',
