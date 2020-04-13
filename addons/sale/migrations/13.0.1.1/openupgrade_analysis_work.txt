@@ -1,0 +1,115 @@
+---Models in module 'sale'---
+model sale.product.configurator (moved to sale_product_configurator) [transient]
+# NOTHING TO DO
+
+---Fields in module 'sale'---
+sale         / account.invoice          / comment (False)               : DEL mode: modify
+sale         / account.invoice          / partner_shipping_id (many2one): DEL relation: res.partner
+sale         / account.invoice          / team_id (many2one)            : DEL relation: crm.team
+sale         / account.move             / partner_shipping_id (many2one): NEW relation: res.partner
+sale         / account.move             / team_id (many2one)            : NEW relation: crm.team, hasdefault
+# DONE: Post-migration: Updated records ids
+
+sale         / account.move             / campaign_id (many2one)        : NEW relation: utm.campaign
+sale         / account.move             / medium_id (many2one)          : NEW relation: utm.medium
+sale         / account.move             / source_id (many2one)          : NEW relation: utm.source
+# NOTHING TO DO: fields moved from sale_crm module
+
+sale         / account.invoice.line     / sale_line_ids (many2many)     : DEL relation: sale.order.line
+sale         / account.move.line        / sale_line_ids (many2many)     : NEW relation: sale.order.line
+# NOTHING TO DO: models renamed in account module and relation tables hasn't changed
+
+sale         / crm.team                 / dashboard_graph_model (False) : DEL selection_keys: ['account.invoice.report', 'crm.lead', 'sale.report'], mode: modify
+sale         / crm.team                 / use_invoices (boolean)        : DEL
+# NOTHING TO DO
+
+sale         / product.attribute        / display_type (selection)      : NEW required, selection_keys: ['color', 'radio', 'select'], req_default: function, hasdefault
+sale         / product.attribute        / type (selection)              : DEL required, selection_keys: ['color', 'radio', 'select'], req_default: function
+# DONE: pre-migration: fields renamed
+
+sale         / product.attribute.custom.value / attribute_value_id (many2one) : DEL relation: product.attribute.value
+sale         / product.attribute.custom.value / custom_product_template_attribute_value_id (many2one): NEW relation: product.template.attribute.value, required
+# DONE: Post-migration: Records updated with new relation
+
+sale         / product.attribute.custom.value / sale_order_line_id (many2one) : now required
+sale         / product.pricelist        / discount_policy (selection)   : module is now 'product' ('sale')
+sale         / product.product          / optional_product_ids (many2many): module is now 'sale_product_configurator' ('sale')
+sale         / product.template         / optional_product_ids (many2many): module is now 'sale_product_configurator' ('sale')
+sale         / res.company              / sale_note (text)              : DEL
+sale         / sale.order               / campaign_id (many2one)        : previously in module sale_crm
+sale         / sale.order               / company_id (many2one)         : now required, req_default: function
+sale         / sale.order               / medium_id (many2one)          : previously in module sale_crm
+sale         / sale.order               / source_id (many2one)          : previously in module sale_crm
+# NOTHING TO DO
+
+sale         / sale.order               / confirmation_date (datetime)  : DEL
+sale         / sale.order               / signed_on (datetime)          : NEW
+# DONE: pre-migration: fields renamed
+
+sale         / sale.order               / invoice_ids (many2many)       : relation is now 'account.move' ('account.invoice') [nothing to do]
+# NOTHING TO DO: computed field
+
+sale         / sale.order.line          / invoice_lines (many2many)     : relation is now 'account.move.line' ('account.invoice.line') [nothing to do]
+# DONE: Post-migration: Updated relation table with new ids
+
+sale         / utm.campaign             / company_id (many2one)         : NEW relation: res.company, hasdefault
+# NOTHING TO DO: new feature with default value
+
+---XML records in module 'sale'---
+DEL crm.team: sales_team.team_sales_department (noupdate)
+# NOTHING TO DO: It's from sales_team module
+
+NEW ir.actions.act_window: sale.action_sale_order_generate_link
+DEL ir.actions.act_window: sale.action_open_sale_onboarding_quotation_layout
+NEW ir.actions.server: sale.model_sale_order_action_quotation_sent
+NEW ir.config_parameter: sale.default_confirmation_template (noupdate)
+# NOTHING TO DO: noupdate=0 or new xmls
+
+NEW ir.model.access: sale.access_account_move_manager
+NEW ir.model.access: sale.access_account_move_salesman
+DEL ir.model.access: sale.access_account_invoice_manager
+DEL ir.model.access: sale.access_account_invoice_salesman
+# DONE: pre-migration (renamed)
+
+NEW ir.model.access: sale.access_account_account_tag_sale_salesman
+NEW ir.model.access: sale.access_account_account_type_sale_salesman
+NEW ir.model.access: sale.access_account_partial_reconcile_salesman
+DEL ir.model.access: sale.access_account_invoice_line_salesman
+DEL ir.model.access: sale.access_account_invoice_tax_sale_manager
+DEL ir.model.access: sale.access_account_invoice_tax_salesman
+DEL ir.model.access: sale.access_product_price_history_salemanager
+NEW ir.rule: sale.account_move_line_personal_rule (noupdate)
+NEW ir.rule: sale.account_move_line_see_all (noupdate)
+NEW ir.rule: sale.account_move_personal_rule (noupdate)
+NEW ir.rule: sale.account_move_see_all (noupdate)
+NEW ir.ui.view: sale.account_invoice_view_tree
+NEW ir.ui.view: sale.assets_tests
+NEW ir.ui.view: sale.product_template_sale_form_view
+NEW ir.ui.view: sale.report_assets_common_inherit_sale
+NEW ir.ui.view: sale.sale_order_view_activity
+NEW ir.ui.view: sale.utm_campaign_view_form
+NEW ir.ui.view: sale.utm_campaign_view_kanban
+NEW ir.ui.view: sale.view_sales_order_auto_done_setting
+DEL ir.ui.view: sale.account_invoice_line_form
+DEL ir.ui.view: sale.account_invoice_line_tree
+DEL ir.ui.view: sale.account_invoice_supplier_form
+DEL ir.ui.view: sale.optional_product_items
+DEL ir.ui.view: sale.optional_products_modal
+DEL ir.ui.view: sale.product_configurator_configure
+DEL ir.ui.view: sale.product_configurator_configure_optional_products
+DEL ir.ui.view: sale.product_pricelist_view_form
+DEL ir.ui.view: sale.product_pricelist_view_kanban
+DEL ir.ui.view: sale.product_pricelist_view_tree
+DEL ir.ui.view: sale.report_all_channels_sales_view_pivot
+DEL ir.ui.view: sale.report_all_channels_sales_view_search
+DEL ir.ui.view: sale.sale_onboarding_quotation_layout_form
+DEL ir.ui.view: sale.sale_product_configurator_view_form
+DEL ir.ui.view: sale.variants_tree_view
+DEL ir.ui.view: sale.view_order_form_editable_list
+NEW mail.template: sale.mail_template_sale_confirmation (noupdate)
+NEW res.groups: sale.group_auto_done_setting
+DEL res.groups: sale.group_sale_order_dates
+# NOTHING TO DO: noupdate=0 or new xmls
+
+DEL res.groups: sale.group_discount_per_so_line [renamed to product module]
+# NOTHING TO DO: Should be done in product module
