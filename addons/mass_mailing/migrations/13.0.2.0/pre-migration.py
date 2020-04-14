@@ -9,6 +9,9 @@ _model_renames = [
     ('mail.mass_mailing.list', 'mailing.list'),
     ('mail.statistics.report', 'mailing.trace.report'),
     ('mail.mass_mailing.list_contact_rel', 'mailing.contact.subscription'),
+    ('mail.mass_mailing.test', 'mailing.mailing.test'),
+    ('mass.mailing.list.merge', 'mailing.list.merge'),
+    ('mass.mailing.schedule.date', 'mailing.mailing.schedule.date'),
 ]
 
 _table_renames = [
@@ -19,6 +22,10 @@ _table_renames = [
     # many2many tables
     ('mail_mass_mailing_contact_res_partner_category_rel', 'mailing_contact_res_partner_category_rel'),
     ('mail_mass_mailing_contact_list_rel', 'mailing_contact_list_rel'),
+    # transients
+    ('mail_mass_mailing_test', 'mailing_mailing_test'),
+    ('mass_mailing_list_merge', 'mailing_list_merge'),
+    ('mass_mailing_schedule_date', 'mailing_mailing_schedule_date'),
 ]
 
 _field_renames = [
