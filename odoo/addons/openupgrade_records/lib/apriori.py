@@ -52,7 +52,7 @@ renamed_models = {
     'crm.reveal.seniority': 'crm.iap.lead.seniority',
     'mail.blacklist.mixin': 'mail.thread.blacklist',
     'mail.mail.statistics': 'mailing.trace',
-    'mail.mail.statistics.report': 'mailing.trace.report',
+    'mail.statistics.report': 'mailing.trace.report',
     'mail.mass_mailing': 'mailing.mailing',
     'mail.mass_mailing.contact': 'mailing.contact',
     'mail.mass_mailing.list': 'mailing.list',
