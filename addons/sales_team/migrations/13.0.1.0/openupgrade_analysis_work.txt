@@ -1,0 +1,17 @@
+---Models in module 'sales_team'---
+---Fields in module 'sales_team'---
+sales_team   / crm.team                 / dashboard_graph_group (selection): DEL selection_keys: ['day', 'month', 'user', 'week']
+sales_team   / crm.team                 / dashboard_graph_model (selection): DEL selection_keys: []
+sales_team   / crm.team                 / dashboard_graph_period (selection): DEL selection_keys: ['month', 'week', 'year']
+sales_team   / crm.team                 / reply_to (char)               : DEL
+sales_team   / crm.team                 / sequence (integer)            : NEW hasdefault
+sales_team   / crm.team                 / team_type (selection)         : DEL required, selection_keys: ['sales', 'website'], req_default: function
+sales_team   / crm.team                 / website_message_ids (one2many): module is now 'portal' ('sales_team')
+# NOTHING TO DO
+---XML records in module 'sales_team'---
+NEW crm.team: sales_team.pos_sales_team [renamed from pos_sale module] (noupdate)
+# DONE: Pre-migration renamed
+NEW crm.team: sales_team.ebay_sales_team (noupdate)
+NEW ir.actions.act_window: sales_team.crm_team_salesteams_pipelines_act
+NEW ir.module.category: base.module_category_sales_sales (noupdate)
+# NOTHING TO DO
