@@ -5,8 +5,8 @@ new model stock.picking.responsible [transient]
 # NOTHING TO DO: new transient models
 
 obsolete model report.stock.forecast [sql_view]
-obsolete model stock.fixed.putaway.strat (renamed to stock.putaway.rule)
 new model report.stock.quantity [sql_view]
+obsolete model stock.fixed.putaway.strat (renamed to stock.putaway.rule)
 new model stock.putaway.rule (renamed from stock.fixed.putaway.strat)
 # DONE: models and tables renamed
 
@@ -15,15 +15,12 @@ stock        / product.category         / putaway_rule_ids (one2many)   : NEW re
 stock        / product.product          / putaway_rule_ids (one2many)   : NEW relation: stock.putaway.rule
 # NOTHING TO DO: one2many
 
-stock        / product.putaway          / fixed_location_ids (one2many) : DEL relation: stock.fixed.putaway.strat
 stock        / product.putaway          / name (char)                   : DEL required
-stock        / product.putaway          / product_location_ids (one2many): DEL relation: stock.fixed.putaway.strat
 # NOTHING TO DO: model removed
 
 stock        / product.template         / responsible_id (many2one)     : not stored anymore
-# NOTHING TO DO
+# NOTHING TO DO: non stored
 
-stock        / res.company              / propagation_minimum_delta (integer): DEL
 stock        / res.company              / stock_mail_confirmation_template_id (many2one): NEW relation: mail.template, hasdefault
 stock        / res.company              / stock_move_email_validation (boolean): NEW hasdefault
 # NOTHING TO DO: has default values
@@ -32,24 +29,31 @@ stock        / stock.fixed.putaway.strat / fixed_location_id (many2one)  : DEL r
 stock        / stock.putaway.rule       / location_out_id (many2one)    : NEW relation: stock.location, required
 # DONE: pre-migration: renamed field
 
-stock        / stock.fixed.putaway.strat / putaway_id (many2one)         : DEL relation: product.putaway, required
-# NOTHING TO DO: model removed
-
 stock        / stock.putaway.rule       / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
 # DONE: post-migration: filled the field when empty
 
 stock        / stock.putaway.rule       / location_in_id (many2one)     : NEW relation: stock.location, required, req_default: function, hasdefault
-# NOTHING TO DO: has default value
+stock        / stock.location           / putaway_rule_ids (one2many)   : NEW relation: stock.putaway.rule
+stock        / product.putaway          / fixed_location_ids (one2many) : DEL relation: stock.fixed.putaway.strat
+stock        / product.putaway          / product_location_ids (one2many): DEL relation: stock.fixed.putaway.strat
+stock        / stock.fixed.putaway.strat / putaway_id (many2one)         : DEL relation: product.putaway, required
+stock        / stock.location           / putaway_strategy_id (many2one): DEL relation: product.putaway
+# NOTHING TO DO: filled location_in_id using old product.putaway locations relation
 
-stock        / stock.inventory          / category_id (many2one)        : DEL relation: product.category
 stock        / stock.inventory          / exhausted (boolean)           : DEL
+# NOTHING TO DO: not necessary
+
 stock        / stock.inventory          / filter (selection)            : DEL required, selection_keys: function, req_default: function
+stock        / stock.inventory          / start_empty (boolean)         : NEW
+# DONE: post-migration: filled start_empty = TRUE if filter = 'partial'
+
 stock        / stock.inventory          / lot_id (many2one)             : DEL relation: stock.production.lot
 stock        / stock.inventory          / package_id (many2one)         : DEL relation: stock.quant.package
 stock        / stock.inventory          / partner_id (many2one)         : DEL relation: res.partner
+# DONE: post-migration: filled the corresponding inventory line fields when empty by this old ones
+
 stock        / stock.inventory          / prefill_counted_quantity (selection): NEW selection_keys: ['counted', 'zero'], hasdefault
-stock        / stock.inventory          / start_empty (boolean)         : NEW
-# NOTHING TO DO
+# NOTHING TO DO: new feature
 
 stock        / stock.inventory          / location_id (many2one)        : DEL relation: stock.location, required, req_default: function
 stock        / stock.inventory          / location_ids (many2many)      : NEW relation: stock.location
@@ -57,26 +61,29 @@ stock        / stock.inventory          / product_id (many2one)         : DEL re
 stock        / stock.inventory          / product_ids (many2many)       : NEW relation: product.product
 # DONE: post-migration: transformed the many2one to many2many
 
+stock        / stock.inventory          / category_id (many2one)        : DEL relation: product.category
 stock        / stock.inventory.line     / categ_id (many2one)           : NEW relation: product.category, isrelated: related, stored
+# DONE: post-migration: moved content
+
 stock        / stock.inventory.line     / inventory_date (datetime)     : NEW hasdefault
 stock        / stock.inventory.line     / is_editable (boolean)         : NEW
 stock        / stock.inventory.line     / theoretical_qty (float)       : not a function anymore
 # NOTHING TO DO: new fields with defaults
 
 stock        / stock.location           / partner_id (many2one)         : DEL relation: res.partner
-stock        / stock.location           / putaway_rule_ids (one2many)   : NEW relation: stock.putaway.rule
-stock        / stock.location           / putaway_strategy_id (many2one): DEL relation: product.putaway
+# NOTHING TO DO: unused field
+
 stock        / stock.location           / usage (selection)             : selection_keys is now '['customer', 'internal', 'inventory', 'production', 'supplier', 'transit', 'view']' ('['customer', 'internal', 'inventory', 'procurement', 'production', 'supplier', 'transit', 'view']')
+# DONE: post-migration: mapped 'procurement' option
+
 stock        / stock.move               / delay_alert (boolean)         : NEW
 stock        / stock.move               / description_picking (text)    : NEW
 stock        / stock.move               / next_serial (char)            : NEW
 stock        / stock.move               / next_serial_count (integer)   : NEW
+# NOTHING TO DO: new features
+
 stock        / stock.move               / product_packaging (many2one)  : DEL relation: product.packaging
-stock        / stock.move               / propagate (boolean)           : DEL
-stock        / stock.move               / propagate_cancel (boolean)    : NEW hasdefault
-stock        / stock.move               / propagate_date (boolean)      : NEW
-stock        / stock.move               / propagate_date_minimum_delta (integer): NEW
-# NOTHING TO DO
+# NOTHING TO DO: it was removed because it was not used anywhere
 
 stock        / stock.move.line          / company_id (many2one)         : NEW relation: res.company, required
 stock        / stock.move.line          / description_picking (text)    : NEW
@@ -91,20 +98,31 @@ stock        / stock.picking            / user_id (many2one)            : NEW re
 # NOTHING TO DO
 
 stock        / stock.picking.type       / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
-stock        / stock.picking.type       / sequence_code (char)          : NEW required
 stock        / stock.production.lot     / company_id (many2one)         : NEW relation: res.company, required
-stock        / stock.production.lot     / note (html)                   : NEW
 # DONE: post-migration: filled the field when empty
 
+stock        / stock.picking.type       / sequence_code (char)          : NEW required
+# DONE: post-migration: used an heuristic mechanism to fill this field
+
+stock        / stock.move               / propagate (boolean)           : DEL
+stock        / stock.move               / propagate_cancel (boolean)    : NEW hasdefault
 stock        / stock.rule               / propagate (boolean)           : DEL
 stock        / stock.rule               / propagate_cancel (boolean)    : NEW hasdefault
 # DONE: pre-migration renamed field
 
+stock        / stock.production.lot     / note (html)                   : NEW
 stock        / stock.rule               / delay_alert (boolean)         : NEW
 stock        / stock.rule               / procure_method (selection)    : selection_keys is now '['make_to_order', 'make_to_stock', 'mts_else_mto']' ('['make_to_order', 'make_to_stock']')
+# NOTHING TO DO: new features
+
+stock        / stock.move               / propagate_date (boolean)      : NEW
 stock        / stock.rule               / propagate_date (boolean)      : NEW hasdefault
+# DONE: post-migration: match cases using old 'use_propagation_minimum_delta' of ir.config.parameter
+
+stock        / res.company              / propagation_minimum_delta (integer): DEL
+stock        / stock.move               / propagate_date_minimum_delta (integer): NEW
 stock        / stock.rule               / propagate_date_minimum_delta (integer): NEW hasdefault
-# NOTHING TO DO: new fields with defaults
+# DONE: post-migration: match cases using company's old column 'propagation_minimum_delta'
 
 stock        / stock.scrap              / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
 # DONE: post-migration: filled the field when empty
@@ -203,7 +221,8 @@ NEW ir.rule: stock.stock_scrap_company_rule (noupdate)
 # NOTHING TO DO: new xmls
 
 DEL ir.sequence: stock.sequence_stock_scrap (noupdate)
-# DONE: post-migration (removed)
+# DONE: post-migration: nullify its code (if having one) and generate new sequence
+# DONE: post-migration (removed if possible)
 
 NEW ir.ui.menu: stock.menu_forecast_inventory
 NEW ir.ui.menu: stock.menu_putaway
@@ -247,9 +266,13 @@ DEL ir.ui.view: stock_zebra.label_transfer_template_view
 
 NEW mail.template: stock.mail_template_data_delivery_confirmation [renamed from delivery module] (noupdate)
 # DONE: pre-migration (renamed)
+# DONE: post-migration: delete translation
 
 DEL stock.location: stock.location_inventory (noupdate)
-DEL stock.location: stock.location_procurement (noupdate)
 DEL stock.location: stock.location_production (noupdate)
 DEL stock.location: stock.stock_location_scrapped (noupdate)
-# DONE: post-migration (removed)
+# DONE: post-migration: mapped them to new locations
+# DONE: end-migration (removed if possible) (end-migration because they will be used in other modules like mrp)
+
+DEL stock.location: stock.location_procurement (noupdate)
+# NOTHING TO DO: don't delete because it may be linked to old quants/moves
