@@ -1,0 +1,71 @@
+---Models in module 'purchase'---
+---Fields in module 'purchase'---
+purchase     / account.invoice          / purchase_id (many2one)        : DEL relation: purchase.order
+purchase     / account.move             / purchase_id (many2one)        : NEW relation: purchase.order
+# NOTHING TO DO: the new field becomes non stored
+
+purchase     / account.invoice          / vendor_bill_purchase_id (many2one): DEL relation: purchase.bill.union
+purchase     / account.move             / purchase_vendor_bill_id (many2one): NEW relation: purchase.bill.union
+# NOTHING TO DO: the new field becomes non stored
+
+purchase     / account.invoice.line     / purchase_line_id (many2one)   : DEL relation: purchase.order.line
+purchase     / account.move.line        / purchase_line_id (many2one)   : NEW relation: purchase.order.line
+purchase     / purchase.order.line      / invoice_lines (one2many)      : relation is now 'account.move.line' ('account.invoice.line') [nothing to do]
+# DONE: post-migration: mapping
+
+purchase     / purchase.order           / currency_rate (float)         : NEW isfunction: function, stored
+# NOTHING TO DO: new field to compute every PO in the company currency
+
+purchase     / purchase.order           / date_approve (date)           : type is now 'datetime' ('date')
+# DONE: handled the change of type from 'date' to 'datetime'
+
+purchase     / purchase.order           / date_planned (datetime)       : not a function anymore
+# NOTHING TO DO: Previously, "date_planned" was computed and set while the creation of PO, now field will be empty until user fills it
+
+purchase     / purchase.order           / invoice_ids (many2many)       : relation is now 'account.move' ('account.invoice') [nothing to do]
+purchase     / purchase.order           / invoice_ids (many2many)       : table is now 'account_move_purchase_order_rel' ('account_invoice_purchase_order_rel')
+# DONE: post-migration: fill account_move_purchase_order_rel table
+
+purchase     / purchase.order.line      / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section'], hasdefault
+# NOTHING TO DO: new feature: add section and note on order line
+
+purchase     / purchase.order.line      / qty_received (float)          : now a function
+purchase     / purchase.order.line      / qty_received_manual (float)   : NEW
+purchase     / purchase.order.line      / qty_received_method (selection): NEW selection_keys: ['manual'], isfunction: function, stored
+# DONE: pre/post/end-migration: done the same as done in v12 sale module for qty_delivered*
+
+---XML records in module 'purchase'---
+DEL ir.actions.act_window: purchase.action_invoice_pending
+DEL ir.actions.act_window: purchase.purchase_open_invoice
+DEL ir.actions.act_window.view: purchase.action_invoice__supplier_tree1_view2
+DEL ir.actions.act_window.view: purchase.action_invoice_supplier_tree1_view1
+# NOTHING TO DO: noupdate=0 records
+
+NEW ir.model.access: purchase.access_account_move_purchase
+DEL ir.model.access: purchase.access_account_invoice_purchase
+NEW ir.model.access: purchase.access_account_move_purchase_manager
+DEL ir.model.access: purchase.access_account_invoice_purchase_manager
+# DONE: pre-migration: renamed xmlids
+
+DEL ir.model.access: purchase.access_account_invoice_line_purchase
+DEL ir.model.access: purchase.access_account_invoice_line_purchase_manager
+DEL ir.model.access: purchase.access_account_invoice_tax_purchase
+DEL ir.model.access: purchase.access_product_price_history_purchase_manager
+DEL ir.model.access: purchase.access_product_price_history_purchase_user
+# NOTHING TO DO: noupdate=0 records
+
+NEW ir.module.category: base.module_category_operations_purchase (noupdate)
+# NOTHING TO DO: New noupdate=1 records
+
+NEW ir.ui.menu: purchase.menu_purchase_products
+NEW ir.ui.menu: purchase.menu_report_purchase
+DEL ir.ui.menu: purchase.menu_procurement_management_pending_invoice
+DEL ir.ui.menu: purchase.menu_purchase_control
+NEW ir.ui.view: purchase.purchase_order_view_activity
+NEW ir.ui.view: purchase.purchase_order_view_search
+NEW ir.ui.view: purchase.purchase_order_view_tree
+NEW ir.ui.view: purchase.view_move_form_inherit_purchase
+DEL ir.ui.view: purchase.view_invoice_line_form_inherit_purchase
+DEL ir.ui.view: purchase.view_invoice_supplier_purchase_form
+DEL res.groups: purchase.group_manage_vendor_price
+# NOTHING TO DO: noupdate=0 records
