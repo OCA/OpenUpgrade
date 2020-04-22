@@ -29,6 +29,8 @@ renamed_modules = {
     # OCA/stock-logistics-workflow
     'stock_batch_picking': 'stock_picking_batch_extended',
     'stock_pack_operation_auto_fill': 'stock_move_line_auto_fill',
+    # OCA/web
+    'web_advanced_filters': 'web_advanced_filter',
 }
 
 merged_modules = {
