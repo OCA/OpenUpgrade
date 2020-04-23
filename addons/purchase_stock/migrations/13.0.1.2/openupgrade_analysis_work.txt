@@ -1,0 +1,16 @@
+---Models in module 'purchase_stock'---
+---Fields in module 'purchase_stock'---
+purchase_stock / purchase.order.line      / propagate_cancel (boolean)    : NEW hasdefault
+# DONE: post-migration: set propagate_cancel = False when is not propagated, by default is True
+
+purchase_stock / purchase.order.line      / propagate_date (boolean)      : NEW
+purchase_stock / purchase.order.line      / propagate_date_minimum_delta (integer): NEW
+# DONE: post-migration: done similar as done in stock module
+
+purchase_stock / purchase.order.line      / qty_received_method (False)   : NEW selection_keys: ['manual', 'stock_moves'], mode: modify
+# NOTHING TO DO: handled in purchase module
+
+---XML records in module 'purchase_stock'---
+DEL ir.ui.menu: purchase_stock.menu_action_picking_tree_in_move
+DEL ir.ui.view: purchase_stock.stock_production_lot_view_form_simple
+# NOTHING TO DO
