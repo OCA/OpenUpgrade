@@ -1,0 +1,15 @@
+---Models in module 'maintenance'---
+---Fields in module 'maintenance'---
+maintenance  / maintenance.request      / email_cc (char)               : NEW
+# NOTHING TO DO: new feature
+
+---XML records in module 'maintenance'---
+mail.activity.type: maintenance.mail_act_maintenance_request (noupdate) (noupdate switched)
+mail.alias: maintenance.mail_alias_equipment (noupdate) (noupdate switched)
+mail.message.subtype: maintenance.mt_cat_mat_assign (noupdate) (noupdate switched)
+mail.message.subtype: maintenance.mt_cat_req_created (noupdate) (noupdate switched)
+mail.message.subtype: maintenance.mt_mat_assign (noupdate) (noupdate switched)
+mail.message.subtype: maintenance.mt_req_created (noupdate) (noupdate switched)
+mail.message.subtype: maintenance.mt_req_status (noupdate) (noupdate switched)
+maintenance.team: maintenance.equipment_team_maintenance (noupdate) (noupdate switched)
+# DONE: handled noupdate switched
