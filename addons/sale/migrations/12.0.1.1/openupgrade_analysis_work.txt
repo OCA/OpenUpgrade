@@ -10,11 +10,6 @@ sale         / payment.acquirer         / so_reference_type (selection) : NEW se
 sale         / sale.order               / reference (char)              : NEW
 # NOTHING TO DO: new optional features
 
-sale         / payment.transaction      / sale_order_ids (many2many)    : NEW relation: sale.order
-sale_payment / payment.transaction      / sale_order_id (many2one)      : DEL relation: sale.order
-# DONE: pre-migration: renamed `sale_order_id` to None
-# DONE: post-migration: transformed the many2one to many2many if sale_payment was installed
-
 sale         / product.attribute        / type (selection)              : previously in module website_sale
 sale         / product.attribute.value  / html_color (char)             : previously in module website_sale
 sale         / product.product          / optional_product_ids (many2many): previously in module website_sale_options
@@ -56,10 +51,14 @@ sale         / sale.order               / signature (binary)            : NEW at
 sale         / sale.order               / signed_by (char)              : NEW
 # NOTHING TO DO: new optional feature
 
-sale         / sale.order               / transaction_ids (many2many)   : NEW relation: payment.transaction
 sale_payment / sale.order               / payment_tx_id (many2one)      : DEL relation: payment.transaction
 # DONE: pre-migration: renamed `payment_tx_id` to None
-# DONE: post-migration: transformed the many2one to many2many if sale_payment was installed
+
+sale_payment / payment.transaction      / sale_order_id (many2one)      : DEL relation: sale.order
+sale         / sale.order               / transaction_ids (many2many)   : NEW relation: payment.transaction
+sale         / payment.transaction      / sale_order_ids (many2many)    : NEW relation: sale.order
+# DONE: pre-migration: renamed `sale_order_id` to None
+# DONE: post-migration: transformed the many2one to many2many if sale_payment was installed. Inverse m2m is guaranteed
 
 sale_payment / sale.order               / payment_tx_ids (one2many)     : DEL relation: payment.transaction
 # NOTHING TO DO: inverse field already handled

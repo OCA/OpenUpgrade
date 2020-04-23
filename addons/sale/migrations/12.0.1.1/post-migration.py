@@ -5,13 +5,8 @@ from openupgradelib import openupgrade
 
 def type_change_payment_transaction_and_sale_order(env):
     if openupgrade.column_exists(
-            env.cr, 'sale.order',
-            openupgrade.get_legacy_name('payment_tx_id')):
-        openupgrade.m2o_to_x2m(
-            env.cr,
-            env['sale.order'], 'sale_order',
-            'transaction_ids', openupgrade.get_legacy_name('payment_tx_id')
-        )
+            env.cr, 'payment_transaction',
+            openupgrade.get_legacy_name('sale_order_id')):
         openupgrade.m2o_to_x2m(
             env.cr,
             env['payment.transaction'], 'payment_transaction',
