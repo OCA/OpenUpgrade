@@ -115,6 +115,9 @@ merged_modules = {
     'web_widget_domain_v11': 'web',
     # OCA/website
     'website_seo_redirection': 'website',
+    # OCA/bank-statement-import
+    'account_bank_statement_import_camt':
+    'account_bank_statement_import_camt_oca',
 }
 
 renamed_models = {
