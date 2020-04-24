@@ -748,14 +748,14 @@ def _fill_account_invoice_tax_taxes_recursive(env, base_code_id, tax_code_id,
                     FROM account_tax t
                     LEFT JOIN ir_translation tr
                     ON tr.name='account.tax,name' AND tr.res_id = t.id
-                    WHERE (
+                    WHERE ((
                         base_code_id IS NOT DISTINCT FROM %(base_code_id)s AND
                         tax_code_id IS NOT DISTINCT FROM %(tax_code_id)s
                     ) OR (
                         ref_base_code_id IS NOT DISTINCT FROM %(base_code_id)s
                         AND
                         ref_tax_code_id IS NOT DISTINCT FROM %(tax_code_id)s
-                    )
+                    ))
                     AND t.company_id = %(company_id)s
                     AND (
                         t.name = %(name)s OR
