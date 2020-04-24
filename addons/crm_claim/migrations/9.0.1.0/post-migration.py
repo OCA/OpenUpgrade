@@ -5,8 +5,9 @@ from psycopg2.extensions import AsIs
 from openupgradelib import openupgrade
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     cr.execute(
         "alter table crm_claim_category add column lead_tag_id int")
     cr.execute(
@@ -28,6 +29,11 @@ def migrate(cr, version):
         "WHERE res_id = ccc.lead_tag_id "
         "AND module = 'crm_claim' "
         "AND imd.name LIKE 'categ_claim%%'")
-    openupgrade.load_data(
-        cr, 'crm_claim', 'migrations/9.0.1.0/noupdate_changes.xml',
-    )
+    # Patch action's outdated attributes
+    try:
+        env.ref("crm_claim.crm_claim_categ_action").write({
+            "domain": False,
+            "context": "{}",
+        })
+    except ValueError:
+        pass  # action is missing, nothing to do

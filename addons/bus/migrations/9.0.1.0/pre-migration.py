@@ -6,5 +6,6 @@ from openupgradelib import openupgrade
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    if openupgrade.is_module_installed(cr, 'im_chat'):
+    if openupgrade.table_exists(cr, 'im_chat_presence'):
+        openupgrade.rename_models(cr, [('im_chat.presence', 'bus.presence')])
         openupgrade.rename_tables(cr, [('im_chat_presence', 'bus_presence')])

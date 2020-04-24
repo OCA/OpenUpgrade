@@ -12,7 +12,7 @@ addons:
             - python-simplejson
             - python-serial
             - python-yaml
-    postgresql: "9.4"
+    postgresql: "9.6"
 
 env:
   - DB=openupgrade ODOO=./openerp-server
@@ -43,11 +43,12 @@ script:
     - cat openerp/addons/base/migrations/*/tests/*.yml addons/*/migrations/*/tests/*.yml > ../test_data80.yml
     # Roundtrip to previous release to update the test database with additional test data
     # Loading and committing test data without triggering post tests needs https://github.com/odoo/odoo/pull/13146. This is now included in OpenUpgrade.
+    - old_commit="$(git rev-parse HEAD)"
     - git fetch --depth 2 origin 8.0
     - git reset --hard `git ls-remote |grep refs/heads/8.0 |awk '{print $1}'`
     - pip install -q -r requirements.txt
     - $ODOO --database=$DB --test-file=`readlink -f ../test_data80.yml` --test-commit --stop-after-init
-    - git reset -q --hard $TRAVIS_COMMIT
+    - git reset -q --hard $old_commit
     # Install Python requirements of target release
     - pip install -q -r requirements.txt
     # don't use pypi's openupgradelib, but the one from source to avoid choking

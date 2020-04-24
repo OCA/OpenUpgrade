@@ -39,7 +39,7 @@ def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, xmlid_renames)
     # Remove noupdate records
     xml_ids = [
-        'mail.mail_group_public_and_joined',
+        'mail_group_public_and_joined',
         'mail_followers_read_write_others',
         'mail_notification_read_write_own',
         'ir_cron_mail_garbage_collect_attachments',
@@ -48,3 +48,21 @@ def migrate(env, version):
         rule = env.ref('mail.' + xml_id, False)
         if rule:
             rule.unlink()
+
+    if openupgrade.table_exists(env.cr, 'im_chat_session'):
+        env.cr.execute(
+            """
+            ALTER TABLE mail_channel
+            ADD COLUMN %s integer;
+            """ % openupgrade.get_legacy_name('old_id')
+        )
+        env.cr.execute(
+            """
+            ALTER TABLE im_chat_session
+            ADD COLUMN %s integer;
+            """ % openupgrade.get_legacy_name('alias_id')
+        )
+
+    # This view blocks the quick resize of mail_message.model, forcing
+    # Odoo to go the slow way of creating a new column and copy the data
+    env.cr.execute("DROP VIEW IF EXISTS crm_claim_report")

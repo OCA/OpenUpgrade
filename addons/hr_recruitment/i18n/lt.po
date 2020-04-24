@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-18 08:11+0000\n"
-"PO-Revision-Date: 2017-06-02 09:28+0000\n"
-"Last-Translator: Martin Trigaux\n"
+"POT-Creation-Date: 2016-09-22 13:16+0000\n"
+"PO-Revision-Date: 2018-10-03 19:48+0000\n"
+"Last-Translator: Linas Versada <paulius.sladkevicius@gmail.com>\n"
 "Language-Team: Lithuanian (http://www.transifex.com/odoo/odoo-9/language/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: lt\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. module: hr_recruitment
 #: model:mail.template,body_html:hr_recruitment.hr_welcome_new_employee
@@ -36,42 +36,42 @@ msgstr ""
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.recruitment_1_3_1
 msgid "0-15"
-msgstr ""
+msgstr "0-15"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.recruitment_1_3_2
 msgid "16-20"
-msgstr ""
+msgstr "16-20"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.recruitment_1_3_3
 msgid "21-30"
-msgstr ""
+msgstr "21-30"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.recruitment_1_3_4
 msgid "31-40"
-msgstr ""
+msgstr "31-40"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.recruitment_1_3_5
 msgid "41-50"
-msgstr ""
+msgstr "41-50"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.recruitment_1_3_6
 msgid "51-60"
-msgstr ""
+msgstr "51-60"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.recruitment_1_3_7
 msgid "61-70"
-msgstr ""
+msgstr "61-70"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.recruitment_1_3_8
 msgid "71+"
-msgstr ""
+msgstr "71+"
 
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.hr_kanban_view_applicant
@@ -158,7 +158,7 @@ msgstr "<span>Vaizdas</span>"
 msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
 "creating new records for this alias."
-msgstr ""
+msgstr "Python žodynas, kuris bus įvertinamas numatytųjų reikšmių nustatymui, kai šiam slapyvardžiui sukuriami nauji įrašai."
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_message_needaction
@@ -173,7 +173,7 @@ msgstr "Aktyvus"
 #. module: hr_recruitment
 #: model:survey.question,question:hr_recruitment.recruitment_2_4
 msgid "Activities"
-msgstr ""
+msgstr "Veiklos"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,help:hr_recruitment.field_hr_job_address_id
@@ -218,7 +218,7 @@ msgstr ""
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.crm_case_form_view_job
 msgid "Answer related job question"
-msgstr ""
+msgstr "Atsakyti į su darbu susijusį klausimą"
 
 #. module: hr_recruitment
 #: model:ir.model,name:hr_recruitment.model_hr_applicant
@@ -373,7 +373,7 @@ msgstr "Bakalauro išsilavinimas"
 #. module: hr_recruitment
 #: model:survey.page,title:hr_recruitment.recruitment_1
 msgid "Basic information"
-msgstr ""
+msgstr "Pagrindinė informacija"
 
 #. module: hr_recruitment
 #: model:ir.filters,name:hr_recruitment.filter_recruitment_report_departmnet
@@ -417,7 +417,7 @@ msgstr "Kandidatų kategorija"
 msgid ""
 "Choose an interview form for this job position and you will be able to "
 "print/answer this interview from all applicants who apply for this job"
-msgstr ""
+msgstr "Pasirinkite interviu formą šiai darbo pozicijai ir galėsite atspausdinti/atsakyti šį interviu visiems kandidatams, kurie kandidatuoja į šią poziciją"
 
 #. module: hr_recruitment
 #: model:ir.actions.act_window,help:hr_recruitment.action_hr_job
@@ -651,13 +651,13 @@ msgstr "Aprašymas"
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rrow_2_1_4
 msgid "Desk space"
-msgstr ""
+msgstr "Darbo vieta"
 
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.hr_job_survey
 #: model:ir.ui.view,arch_db:hr_recruitment.view_hr_job_kanban
 msgid "Display Interview Form"
-msgstr ""
+msgstr "Rodyti interviu formą"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_category_display_name
@@ -704,17 +704,17 @@ msgstr "Nepamirškite nustatyti departamento jei įdarbinimo procesas\n         
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rrow_2_1_11
 msgid "Dress code"
-msgstr ""
+msgstr "Aprangos kodas"
 
 #. module: hr_recruitment
 #: model:survey.question,question:hr_recruitment.recruitment_2_2
 msgid "Education"
-msgstr ""
+msgstr "Išsilavinimas"
 
 #. module: hr_recruitment
 #: model:survey.page,title:hr_recruitment.recruitment_2
 msgid "Education and Activities"
-msgstr ""
+msgstr "Išsilavinimas ir veiklos"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_email_from
@@ -781,7 +781,7 @@ msgstr "Planuojamas atlyginimo priedas"
 #. module: hr_recruitment
 #: model:survey.question,question:hr_recruitment.recruitment_2_3
 msgid "Experience"
-msgstr ""
+msgstr "Patirtis"
 
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.view_hr_recruitment_report_search
@@ -836,17 +836,17 @@ msgstr "Prenumeratoriai (partneriai)"
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rrow_2_1_8
 msgid "Freebies such as tea, coffee and stationery"
-msgstr ""
+msgstr "Nemokamos smulkmenos, tokios kaip arbata, kava ir biuro prekės"
 
 #. module: hr_recruitment
 #: model:survey.question,question:hr_recruitment.recruitment_1_1
 msgid "From which university will you graduate?"
-msgstr ""
+msgstr "Kokį universitetą baigsite?"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rrow_2_1_2
 msgid "Getting on with colleagues"
-msgstr ""
+msgstr "Geri santykiai su kolegomis"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,help:hr_recruitment.field_hr_recruitment_degree_sequence
@@ -867,17 +867,17 @@ msgstr "Gerai"
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rrow_2_1_7
 msgid "Good management"
-msgstr ""
+msgstr "Geras vadovavimas"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rrow_2_1_1
 msgid "Good pay"
-msgstr ""
+msgstr "Geras atlygis"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rrow_2_1_13
 msgid "Good social life"
-msgstr ""
+msgstr "Geras socialinis gyvenimas"
 
 #. module: hr_recruitment
 #: model:hr.recruitment.degree,name:hr_recruitment.degree_graduate
@@ -957,12 +957,12 @@ msgstr "Pažymėjus, kad konkretus objektas yra neaktyvus, tas objektas bus pasl
 #. module: hr_recruitment
 #: model:survey.page,title:hr_recruitment.recruitment_3
 msgid "Importance"
-msgstr ""
+msgstr "Svarbumas"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rcol_3_1_3
 msgid "Important"
-msgstr ""
+msgstr "Svarbu"
 
 #. module: hr_recruitment
 #: model:hr.recruitment.stage,name:hr_recruitment.stage_job1
@@ -1045,7 +1045,7 @@ msgstr "Pareigų susiję dokumentai"
 #. module: hr_recruitment
 #: model:survey.question,question:hr_recruitment.recruitment_2_1
 msgid "Knowledge"
-msgstr ""
+msgstr "Žinojimas"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_message_last_post
@@ -1124,11 +1124,6 @@ msgid "Messages"
 msgstr "Pranešimai"
 
 #. module: hr_recruitment
-#: model:ir.model.fields,help:hr_recruitment.field_hr_applicant_message_ids
-msgid "Messages and communication history"
-msgstr "Pranešimų ir komunikacijos istorija"
-
-#. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_partner_mobile
 msgid "Mobile"
 msgstr "Mobilus tel."
@@ -1146,7 +1141,7 @@ msgstr "Daugiau <i class=\"fa fa-caret-down\"/>"
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rcol_3_1_5
 msgid "Most important"
-msgstr ""
+msgstr "Svarbiausia"
 
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.view_crm_case_jobs_filter
@@ -1230,7 +1225,7 @@ msgstr "Sekantys veiksmai"
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.view_hr_job_kanban
 msgid "No Interview Form"
-msgstr ""
+msgstr "Nėra interviu formos"
 
 #. module: hr_recruitment
 #: code:addons/hr_recruitment/models/hr_recruitment.py:395
@@ -1241,7 +1236,7 @@ msgstr "Nėra temos"
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rrow_2_1_10
 msgid "No out of hours working"
-msgstr ""
+msgstr "Nėra viršvalandžių"
 
 #. module: hr_recruitment
 #: selection:hr.applicant,priority:0
@@ -1252,7 +1247,7 @@ msgstr "Įprasta"
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rcol_3_1_1
 msgid "Not important"
-msgstr ""
+msgstr "Nesvarbu"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_message_needaction_counter
@@ -1296,12 +1291,12 @@ msgstr "Odoo padeda sekti įdarbinimo proceso kandidatus\n                ir sek
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rrow_2_1_3
 msgid "Office environment"
-msgstr ""
+msgstr "Biuro aplinka"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rrow_2_1_6
 msgid "Office location"
-msgstr ""
+msgstr "Biuro vieta"
 
 #. module: hr_recruitment
 #: model:ir.actions.client,name:hr_recruitment.action_client_hr_recruitment_menu
@@ -1337,7 +1332,7 @@ msgid ""
 "Parent model holding the alias. The model holding the alias reference is not"
 " necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
-msgstr ""
+msgstr "Tėvinis modelis, turintis pseudonimą. Modelis turintis pseudonimo nurodą nebūtinai yra modelis, suteiktas alias_model_id (pvz.: project (parent_model) ir užduotis (model))"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_recruitment_report_partner_id
@@ -1347,7 +1342,7 @@ msgstr "Partneris"
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rrow_2_1_9
 msgid "Perks such as free parking, gym passes"
-msgstr ""
+msgstr "Privalumai, tokie kaip nemokama automobilio aikštelė, sporto klubas"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_partner_phone
@@ -1360,13 +1355,13 @@ msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document\n"
-msgstr ""
+"- followers: only followers of the related document or members of following channels\n"
+msgstr "Žinutės paskelbimo prie dokumento naudojant pašto serverį politika.\n- visi: visi gali paskelbti\n- partneriai: tik patvirtinti partneriai\n- sekėjai: tik susijusio dokumento sekėjai arba sekančių kanalų nariai\n"
 
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.crm_case_form_view_job
 msgid "Print interview report"
-msgstr ""
+msgstr "Spausdinti darbo pokalbio ataskaitą"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_probability
@@ -1376,34 +1371,34 @@ msgstr "Tikimybė"
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_salary_proposed
 msgid "Proposed Salary"
-msgstr ""
+msgstr "Siūlomas atlyginimas"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_salary_proposed_extra
 msgid "Proposed Salary Extra"
-msgstr ""
+msgstr "Siūlomas atlyginimo priedas"
 
 #. module: hr_recruitment
 #: model:survey.question,question:hr_recruitment.recruitment_3_1
 msgid "Rate the Importance"
-msgstr ""
+msgstr "Įvertinkite svarbą"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_job_alias_force_thread_id
 msgid "Record Thread ID"
-msgstr ""
+msgstr "Įrašo temos ID"
 
 #. module: hr_recruitment
 #: model:ir.ui.menu,name:hr_recruitment.menu_hr_recruitment_root
 #: model:ir.ui.view,arch_db:hr_recruitment.view_hr_job_kanban
 #: model:ir.ui.view,arch_db:hr_recruitment.view_hr_recruitment_configuration
 msgid "Recruitment"
-msgstr ""
+msgstr "Įdarbinimas"
 
 #. module: hr_recruitment
 #: model:ir.actions.act_window,name:hr_recruitment.hr_job_stage_act
 msgid "Recruitment / Applicants Stages"
-msgstr ""
+msgstr "Įdarbinimas / Kandidatų etapai"
 
 #. module: hr_recruitment
 #: model:ir.actions.act_window,name:hr_recruitment.action_hr_recruitment_report_all
@@ -1413,17 +1408,17 @@ msgstr ""
 #: model:ir.ui.view,arch_db:hr_recruitment.view_hr_recruitment_report_pivot
 #: model:ir.ui.view,arch_db:hr_recruitment.view_hr_recruitment_report_search
 msgid "Recruitment Analysis"
-msgstr ""
+msgstr "Darbinimo analizė"
 
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.view_hr_job_kanban
 msgid "Recruitment Done"
-msgstr ""
+msgstr "Įdarbinimas atliktas"
 
 #. module: hr_recruitment
 #: model:survey.survey,title:hr_recruitment.recruitment_form
 msgid "Recruitment Form"
-msgstr ""
+msgstr "Įdarbinimo forma"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_job_user_id
@@ -1433,12 +1428,12 @@ msgstr ""
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.hr_department_view_kanban
 msgid "Recruitments"
-msgstr ""
+msgstr "Įdarabinimai"
 
 #. module: hr_recruitment
 #: model:ir.model,name:hr_recruitment.model_hr_recruitment_report
 msgid "Recruitments Statistics"
-msgstr ""
+msgstr "Įdarbinimo statistika"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_reference
@@ -1453,7 +1448,7 @@ msgstr "Atmesti"
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rrow_2_1_12
 msgid "Regular meetings"
-msgstr ""
+msgstr "Įprastiniai susitikimai"
 
 #. module: hr_recruitment
 #: model:ir.ui.menu,name:hr_recruitment.report_hr_recruitment
@@ -1474,7 +1469,7 @@ msgstr ""
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_response_id
 msgid "Response"
-msgstr ""
+msgstr "Atsakymas"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_user_id
@@ -1492,17 +1487,17 @@ msgstr ""
 #: model:ir.actions.act_window,name:hr_recruitment.hr_applicant_resumes
 #: model:ir.ui.menu,name:hr_recruitment.menu_crm_case_categ0_act_job02
 msgid "Resumes and Letters"
-msgstr ""
+msgstr "Gyvenimo aprašymai ir laiškai"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_recruitment_report_salary_exp
 msgid "Salary Expected"
-msgstr ""
+msgstr "TIkisi atlygio"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,help:hr_recruitment.field_hr_applicant_salary_expected
 msgid "Salary Expected by Applicant"
-msgstr ""
+msgstr "Atlygis, kurio tikisi kandidatas"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,help:hr_recruitment.field_hr_applicant_salary_expected_extra
@@ -1512,7 +1507,7 @@ msgstr ""
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_recruitment_report_salary_prop
 msgid "Salary Proposed"
-msgstr ""
+msgstr "Siūlytas atlyginimas"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,help:hr_recruitment.field_hr_applicant_salary_proposed
@@ -1527,17 +1522,17 @@ msgstr ""
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.hr_kanban_view_applicant
 msgid "Schedule Interview"
-msgstr ""
+msgstr "Suplanuoti darbo pokalbį"
 
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.crm_case_form_view_job
 msgid "Schedule interview with this applicant"
-msgstr ""
+msgstr "Suplanuoti darbo pokalbį su šiuo kandidatu"
 
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.view_crm_case_jobs_filter
 msgid "Search Applicants"
-msgstr ""
+msgstr "Ieškoti kandidatų"
 
 #. module: hr_recruitment
 #: model:ir.actions.act_window,help:hr_recruitment.hr_applicant_resumes
@@ -1547,7 +1542,7 @@ msgstr ""
 #. module: hr_recruitment
 #: model:hr.recruitment.stage,name:hr_recruitment.stage_job3
 msgid "Second Interview"
-msgstr ""
+msgstr "Antras darbo pokalbis"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_recruitment_degree_sequence
@@ -1564,7 +1559,7 @@ msgstr "Nustatymai"
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rcol_3_1_2
 msgid "Somewhat important"
-msgstr ""
+msgstr "Kažkiek svarbu"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_source_id
@@ -1576,7 +1571,7 @@ msgstr "Terminas"
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_recruitment_source_name
 msgid "Source Name"
-msgstr ""
+msgstr "Šaltinio pavadinimas"
 
 #. module: hr_recruitment
 #: model:ir.model,name:hr_recruitment.model_hr_recruitment_source
@@ -1612,7 +1607,7 @@ msgstr "Pakeistas etapas"
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.hr_recruitment_stage_form
 msgid "Stage Definition"
-msgstr ""
+msgstr "Etapo aprašymas"
 
 #. module: hr_recruitment
 #: model:mail.message.subtype,description:hr_recruitment.mt_applicant_stage_changed
@@ -1622,12 +1617,12 @@ msgstr "Pakeistas etapas"
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_recruitment_stage_name
 msgid "Stage name"
-msgstr ""
+msgstr "Etapo pavadinimas"
 
 #. module: hr_recruitment
 #: model:ir.model,name:hr_recruitment.model_hr_recruitment_stage
 msgid "Stage of Recruitment"
-msgstr ""
+msgstr "Įdarbinimo etapas"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,help:hr_recruitment.field_hr_applicant_last_stage_id
@@ -1646,22 +1641,22 @@ msgstr "Etapai"
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.view_hr_job_kanban
 msgid "Start Recruitment"
-msgstr ""
+msgstr "Pradėti įdarbinimą"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rrow_2_1_5
 msgid "State of the art technology"
-msgstr ""
+msgstr "Nepaprastos technologijos"
 
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.view_crm_case_jobs_filter
 msgid "Subject / Applicant"
-msgstr ""
+msgstr "Tema / Kandidatas"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_name
 msgid "Subject / Application Name"
-msgstr ""
+msgstr "Tema / Kandidato vardas"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_survey
@@ -1688,7 +1683,7 @@ msgstr "Žymos"
 #: model:survey.question,validation_error_msg:hr_recruitment.recruitment_2_4
 #: model:survey.question,validation_error_msg:hr_recruitment.recruitment_3_1
 msgid "The answer you entered has an invalid format."
-msgstr ""
+msgstr "Atsakymas, kurį įvedėte, yra netinkamo formato."
 
 #. module: hr_recruitment
 #: model:ir.model.fields,help:hr_recruitment.field_hr_applicant_availability
@@ -1701,7 +1696,7 @@ msgid ""
 "The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
 " email that does not reply to an existing record will cause the creation of "
 "a new record of this model (e.g. a Project Task)"
-msgstr ""
+msgstr "Modelis (Odoo dokumento rūšis), su kuriuo susijęs šis pseudonimas. Visi gaunami laiškai, kurie neatsako į egzistuojantį įrašą, sukurs naują šio modelio įrašą (pvz. projekto užduotį)"
 
 #. module: hr_recruitment
 #: sql_constraint:hr.recruitment.degree:0
@@ -1713,7 +1708,7 @@ msgstr ""
 msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
-msgstr ""
+msgstr "El. pašto slapyvardžio pavadinimas, pvz. \"darbai\", jei norite gauti <darbai@pavyzdys.odoo.com>"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,help:hr_recruitment.field_hr_job_alias_user_id
@@ -1722,7 +1717,7 @@ msgid ""
 "field is not set the system will attempt to find the right owner based on "
 "the sender (From) address, or will use the Administrator account if no "
 "system user is found for that address."
-msgstr ""
+msgstr "Įrašų, sukuriamų gaunant laiškus šiuo vardu, šeimininkas. Jei šis laukas nėra nustatytas, sistema bandys surasti tikrąjį šeimininką pagal siuntėjo (nuo) adresą arba naudos administratoriaus paskyrą, jei tam adresui sistemoje nerandamas vartotojas."
 
 #. module: hr_recruitment
 #: model:ir.model.fields,help:hr_recruitment.field_hr_applicant_email_cc
@@ -1746,7 +1741,7 @@ msgstr "Šie metai"
 #: model:survey.survey,description:hr_recruitment.recruitment_form
 msgid ""
 "This form is intended to help the responsible of a recruitment interview."
-msgstr ""
+msgstr "Šios formos tikslas - padėti už darbo pokalbį atsakingam asmeniui."
 
 #. module: hr_recruitment
 #: model:ir.model.fields,help:hr_recruitment.field_hr_applicant_campaign_id
@@ -1779,14 +1774,14 @@ msgstr ""
 #: model:survey.question,constr_error_msg:hr_recruitment.recruitment_2_4
 #: model:survey.question,constr_error_msg:hr_recruitment.recruitment_3_1
 msgid "This question requires an answer."
-msgstr ""
+msgstr "Šis klausimas reikalauja atsakymo."
 
 #. module: hr_recruitment
 #: model:ir.model.fields,help:hr_recruitment.field_hr_recruitment_stage_fold
 msgid ""
 "This stage is folded in the kanban view when there are no records in that "
 "stage to display."
-msgstr ""
+msgstr "Ši stadija bus suskleista kanban tipo rodinyje, jei nebus nė vieno įrašo šioje stadijoje."
 
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.view_crm_case_jobs_filter
@@ -1831,12 +1826,12 @@ msgstr "Naudotojo el. paštas"
 #: selection:hr.applicant,priority:0
 #: selection:hr.recruitment.report,priority:0
 msgid "Very Good"
-msgstr ""
+msgstr "Labai gerai"
 
 #. module: hr_recruitment
 #: model:survey.label,value:hr_recruitment.rcol_3_1_4
 msgid "Very important"
-msgstr ""
+msgstr "Labai svarbu"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant_email_cc
@@ -1861,12 +1856,12 @@ msgstr ""
 #. module: hr_recruitment
 #: model:survey.question,question:hr_recruitment.recruitment_1_3
 msgid "What age group do you belong to?"
-msgstr ""
+msgstr "Kokiai amžiaus grupei priklausote?"
 
 #. module: hr_recruitment
 #: model:survey.question,question:hr_recruitment.recruitment_1_2
 msgid "What is your gender?"
-msgstr ""
+msgstr "Kokia Jūsų lytis?"
 
 #. module: hr_recruitment
 #: model:ir.actions.act_window,help:hr_recruitment.action_hr_job_no_employee
@@ -1874,7 +1869,7 @@ msgid ""
 "With just a quick glance on the Odoo employee screen, you\n"
 "                can easily find all the information you need for each person;\n"
 "                contact data, job position, availability, etc."
-msgstr ""
+msgstr "Vos užmetę akį į Odoo darbuotojų vaizdą jūs\n                galėsite rasti visą reikiamą informaciją apie kiekvieną žmogų;\n                kontaktinius duomenis, poziciją, pasiekiamumą ir kt."
 
 #. module: hr_recruitment
 #: code:addons/hr_recruitment/models/hr_recruitment.py:432
@@ -1885,20 +1880,20 @@ msgstr ""
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.crm_case_form_view_job
 msgid "e.g. Call for interview"
-msgstr ""
+msgstr "pvz. skambutis darbo pokalbiui"
 
 #. module: hr_recruitment
 #: model:ir.model,name:hr_recruitment.model_hr_recruitment_config_settings
 msgid "hr.recruitment.config.settings"
-msgstr ""
+msgstr "hr.recruitment.config.settings"
 
 #. module: hr_recruitment
 #: code:addons/hr_recruitment/models/hr_recruitment.py:300
 #, python-format
 msgid "job applicants"
-msgstr ""
+msgstr "kandidatai"
 
 #. module: hr_recruitment
 #: model:ir.ui.view,arch_db:hr_recruitment.hr_kanban_view_applicant
 msgid "oe_kanban_text_red"
-msgstr ""
+msgstr "oe_kanban_text_red"

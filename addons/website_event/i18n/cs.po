@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-29 10:27+0000\n"
-"PO-Revision-Date: 2017-04-03 17:25+0000\n"
-"Last-Translator: Martin Trigaux\n"
+"PO-Revision-Date: 2018-09-21 11:58+0000\n"
+"Last-Translator: J. Podhorecky <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech (http://www.transifex.com/odoo/odoo-9/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: cs\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #. module: website_event
 #: code:addons/website_event/controllers/main.py:210
@@ -79,7 +79,7 @@ msgstr ""
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_attendee_details
 msgid "<strong>Email</strong>"
-msgstr ""
+msgstr "<strong>Email</strong>"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_attendee_details
@@ -113,7 +113,7 @@ msgstr ""
 #: code:addons/website_event/controllers/main.py:116
 #, python-format
 msgid "All Countries"
-msgstr ""
+msgstr "Všechny země"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.layout
@@ -208,7 +208,7 @@ msgstr ""
 msgid ""
 "Creates menus Introduction, Location and Register on the page  of the event "
 "on the website."
-msgstr ""
+msgstr "Vytváří nabídky Úvod, Umístění a Registrace na stránce události na webu."
 
 #. module: website_event
 #. openerp-web
@@ -247,7 +247,7 @@ msgstr ""
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.registration_complete
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #. module: website_event
 #: model:ir.ui.view,arch_db:website_event.view_event_sale_form

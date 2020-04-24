@@ -125,3 +125,11 @@ def migrate(env, version):
     cr.execute(
         "update product_pricelist set active=False where type='purchase'"
     )
+
+    # if weight_net != 0.0 in product_template, override weight
+    # if not, do nothing
+    openupgrade.logged_query(cr, """
+            UPDATE product_template
+            SET weight = weight_net
+            WHERE weight_net != '0.0'
+            """)

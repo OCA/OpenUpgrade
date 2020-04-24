@@ -9,8 +9,8 @@ purchase     / product.template         / property_account_creditor_price_differ
 purchase     / product.template         / purchase_method (selection)   : NEW selection_keys: ['purchase', 'receive']
 #Nothing To Do : New Functionality added, default is receive (which will be automatically set to all products)
 
-purchase     / purchase.order           / bid_date (date)               : DEL 
-purchase     / purchase.order           / bid_validity (date)           : DEL 
+purchase     / purchase.order           / bid_date (date)               : DEL
+purchase     / purchase.order           / bid_validity (date)           : DEL
 #Nothing To Do : Functionality removed now no longer needed.
 
 purchase     / purchase.order           / fiscal_position (many2one)    : was renamed to fiscal_position_id [nothing to to]
@@ -35,14 +35,14 @@ purchase     / purchase.order           / message_follower_ids (many2many): type
 # TODO : ???  # Concerns module Mail (has to be done in another migration script specifically for that module) ---> Nothing to do
 
 purchase     / purchase.order           / pricelist_id (many2one)       : DEL relation: product.pricelist, required: required, req_default: function
-#Nothing To Do : Functionality removed now no longer needed. 
+#Nothing To Do : Functionality removed now no longer needed.
 
-purchase     / purchase.order           / shipped (boolean)             : DEL 
+purchase     / purchase.order           / shipped (boolean)             : DEL
 #Nothing To Do : Functionality removed now no longer needed.
 
 purchase     / purchase.order           / state (selection)             : selection_keys is now '['cancel', 'done', 'draft', 'purchase', 'sent', 'to approve']' ('['approved', 'bid', 'cancel', 'confirmed', 'done', 'draft', 'except_invoice', 'except_picking', 'sent']')
-TODO : To map the state values as per new values. 
-#Done : Mapped the values as per new state values 
+TODO : To map the state values as per new values.
+#Done : Mapped the values as per new state values
 
 purchase     / purchase.order           / validator (many2one)          : DEL relation: res.users
 #Nothing To Do : Functionality removed now no longer needed.
@@ -53,21 +53,20 @@ purchase     / purchase.order.line      / date_planned (date)           : type i
 purchase     / purchase.order.line      / invoice_lines (many2many)     : type is now 'one2many' ('many2many')
 #Done: migrated Many2many table to Many2one field on the invoice line (purchase_line_id)
 
-purchase     / purchase.order.line      / invoiced (boolean)            : DEL 
+purchase     / purchase.order.line      / invoiced (boolean)            : DEL
 #Nothing To Do : Functionality removed now no longer needed.
 
 purchase     / purchase.order.line      / product_id (many2one)         : now required
 #TODO : Maybe To create product from description. (need more analysis on this)
-#Done : Created Service type product and assigned purchase.order.line where product_id is null. 
+#Done : Created Service type product and assigned purchase.order.line where product_id is null.
 
 purchase     / purchase.order.line      / state (selection)             : DEL required: required, selection_keys: ['cancel', 'confirmed', 'done', 'draft'], req_default: function
-TODO : To map the state values as per new values. 
+TODO : To map the state values as per new values.
 #Done : Mapped the values as per new state values, done in pre-migration script.
 
 purchase     / res.company              / po_double_validation (selection): NEW selection_keys: ['one_step', 'two_step']
-purchase     / res.company              / po_double_validation_amount (float): NEW 
-#TODO : Saved it for later use (moved to purchase module in v9 from purchase_double_validation module in v8).
-#Done : need some help (the value is retrieved but need to delete the workflow at the same time)
+purchase     / res.company              / po_double_validation_amount (float): NEW
+#Done : Filled from purchase_double_validation old logic
 
 purchase     / res.partner              / property_product_pricelist_purchase (many2one): DEL relation: product.pricelist
 purchase     / res.partner              / property_purchase_currency_id (many2one): NEW relation: res.currency

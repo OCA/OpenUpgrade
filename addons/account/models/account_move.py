@@ -55,7 +55,8 @@ class AccountMove(models.Model):
                     total_amount += amount
                     for partial_line in (line.matched_debit_ids + line.matched_credit_ids):
                         total_reconciled += partial_line.amount
-            if float_is_zero(total_amount, precision_rounding=move.currency_id.rounding):
+            precision_currency = move.currency_id or move.company_id.currency_id
+            if float_is_zero(total_amount, precision_rounding=precision_currency.rounding):
                 move.matched_percentage = 1.0
             else:
                 move.matched_percentage = total_reconciled / total_amount
@@ -154,6 +155,8 @@ class AccountMove(models.Model):
             if not move.journal_id.update_posted:
                 raise UserError(_('You cannot modify a posted entry of this journal.\nFirst you should set the journal to allow cancelling entries.'))
         if self.ids:
+            self.check_access_rights('write')
+            self.check_access_rule('write')
             self._check_lock_date()
             self._cr.execute('UPDATE account_move '\
                        'SET state=%s '\
@@ -209,6 +212,15 @@ class AccountMove(models.Model):
             raise UserError(_("Cannot create unbalanced journal entry."))
         return True
 
+    # Do not forward port in >= saas-14
+    def _reconcile_reversed_pair(self, move, reversed_move):
+        amls_to_reconcile = (move.line_ids + reversed_move.line_ids).filtered(lambda l: not l.reconciled)
+        accounts_reconcilable = amls_to_reconcile.mapped('account_id').filtered(lambda a: a.reconcile)
+        for account in accounts_reconcilable:
+            amls_for_account = amls_to_reconcile.filtered(lambda l: l.account_id.id == account.id)
+            amls_for_account.reconcile()
+            amls_to_reconcile = amls_to_reconcile - amls_for_account
+
     @api.multi
     def reverse_moves(self, date=None, journal_id=None):
         date = date or fields.Date.today()
@@ -223,6 +235,7 @@ class AccountMove(models.Model):
                     'credit': acm_line.debit,
                     'amount_currency': -acm_line.amount_currency
                     })
+            self._reconcile_reversed_pair(ac_move, reversed_move)
             reversed_moves |= reversed_move
         if reversed_moves:
             reversed_moves._post_validate()
@@ -250,7 +263,7 @@ class AccountMoveLine(models.Model):
         if not cr.fetchone():
             cr.execute('CREATE INDEX account_move_line_partner_id_ref_idx ON account_move_line (partner_id, ref)')
 
-    @api.depends('debit', 'credit', 'amount_currency', 'currency_id', 'matched_debit_ids', 'matched_credit_ids', 'matched_debit_ids.amount', 'matched_credit_ids.amount', 'account_id.currency_id', 'move_id.state')
+    @api.depends('debit', 'credit', 'amount_currency', 'currency_id', 'matched_debit_ids', 'matched_credit_ids', 'matched_debit_ids.amount', 'matched_credit_ids.amount', 'move_id.state')
     def _amount_residual(self):
         """ Computes the residual amount of a move line from a reconciliable account in the company currency and the line's currency.
             This amount will be 0 for fully reconciled lines or lines from a non-reconciliable account, the original line amount
@@ -400,7 +413,7 @@ class AccountMoveLine(models.Model):
         help="This field is used for payable and receivable journal entries. You can put the limit date for the payment of this line.")
     date = fields.Date(related='move_id.date', string='Date', required=True, index=True, default=fields.Date.context_today, store=True, copy=False)
     analytic_line_ids = fields.One2many('account.analytic.line', 'move_id', string='Analytic lines', oldname="analytic_lines")
-    tax_ids = fields.Many2many('account.tax', string='Taxes')
+    tax_ids = fields.Many2many('account.tax', string='Taxes', domain=['|', ('active', '=', False), ('active', '=', True)])
     tax_line_id = fields.Many2one('account.tax', string='Originator tax', ondelete='restrict')
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
     company_id = fields.Many2one('res.company', related='account_id.company_id', string='Company', store=True)
@@ -432,7 +445,7 @@ class AccountMoveLine(models.Model):
                 raise UserError(_("You cannot create journal items with a secondary currency without filling both 'currency' and 'amount currency' field."))
 
     @api.multi
-    @api.constrains('amount_currency')
+    @api.constrains('amount_currency', 'debit', 'credit')
     def _check_currency_amount(self):
         for line in self:
             if line.amount_currency:
@@ -797,7 +810,7 @@ class AccountMoveLine(models.Model):
         elif self._context.get('skip_full_reconcile_check') == 'amount_currency_only':
             field = 'amount_residual_currency'
         #target the pair of move in self that are the oldest
-        sorted_moves = sorted(self, key=lambda a: a.date)
+        sorted_moves = sorted(self, key=lambda a: a.date_maturity or a.date)
         debit = credit = False
         for aml in sorted_moves:
             if credit and debit:
@@ -1204,7 +1217,7 @@ class AccountMoveLine(models.Model):
                 raise UserError(_('You cannot do this modification on a reconciled entry. You can just change some non legal fields or you must unreconcile first.\n%s.') % err_msg)
             if line.move_id.id not in move_ids:
                 move_ids.add(line.move_id.id)
-            self.env['account.move'].browse(list(move_ids))._check_lock_date()
+        self.env['account.move'].browse(list(move_ids))._check_lock_date()
         return True
 
     ####################################################
@@ -1243,9 +1256,8 @@ class AccountMoveLine(models.Model):
         """ Create analytic items upon validation of an account.move.line having an analytic account. This
             method first remove any existing analytic item related to the line before creating any new one.
         """
+        self.mapped('analytic_line_ids').unlink()
         for obj_line in self:
-            if obj_line.analytic_line_ids:
-                obj_line.analytic_line_ids.unlink()
             if obj_line.analytic_account_id:
                 vals_line = obj_line._prepare_analytic_line()[0]
                 self.env['account.analytic.line'].create(vals_line)

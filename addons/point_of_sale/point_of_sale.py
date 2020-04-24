@@ -1042,10 +1042,10 @@ class pos_order(osv.osv):
                     'location_id': location_id,
                     'location_dest_id': destination_id,
                 }
-                pos_qty = any([x.qty > 0 for x in order.lines])
+                pos_qty = any([x.qty > 0 for x in order.lines if x.product_id.type in ['product', 'consu']])
                 if pos_qty:
                     order_picking_id = picking_obj.create(cr, uid, picking_vals.copy(), context=context)
-                neg_qty = any([x.qty < 0 for x in order.lines])
+                neg_qty = any([x.qty < 0 for x in order.lines if x.product_id.type in ['product', 'consu']])
                 if neg_qty:
                     return_vals = picking_vals.copy()
                     return_vals.update({
@@ -1319,7 +1319,40 @@ class pos_order(osv.osv):
         grouped_data = {}
         have_to_group_by = session and session.config_id.group_by or False
         rounding_method = session and session.config_id.company_id.tax_calculation_rounding_method
+        def add_anglosaxon_lines(grouped_data):
+            Product = self.pool['product.product']
+            Analytic = self.pool['account.analytic.account']
+            for product_key in list(grouped_data.keys()):
+                if product_key[0] == "product":
+                    line = grouped_data[product_key][0]
+                    product = Product.browse(cr, uid, line['product_id'], context=context)
+                    # In the SO part, the entries will be inverted by function compute_invoice_totals
+                    price_unit = - product._get_anglo_saxon_price_unit()
+                    account_analytic = Analytic.browse(cr, uid, line.get('analytic_account_id'), context=context)
+                    res = Product._anglo_saxon_sale_move_lines(cr, uid,
+                        line['name'], product, product.uom_id, line['quantity'], price_unit,
+                            fiscal_position=order.fiscal_position_id,
+                            account_analytic=account_analytic, context=context)
+                    if res:
+                        line1, line2 = res
+                        line1 = Product._convert_prepared_anglosaxon_line(cr, uid, line1, order.partner_id, context=context)
+                        insert_data('counter_part', {
+                            'name': line1['name'],
+                            'account_id': line1['account_id'],
+                            'credit': line1['credit'] or 0.0,
+                            'debit': line1['debit'] or 0.0,
+                            'partner_id': line1['partner_id']
 
+                        })
+
+                        line2 = Product._convert_prepared_anglosaxon_line(cr, uid, line2, order.partner_id, context=context)
+                        insert_data('counter_part', {
+                            'name': line2['name'],
+                            'account_id': line2['account_id'],
+                            'credit': line2['credit'] or 0.0,
+                            'debit': line2['debit'] or 0.0,
+                            'partner_id': line2['partner_id']
+                        })
         for order in self.browse(cr, uid, ids, context=context):
             if order.account_move:
                 continue
@@ -1463,6 +1496,9 @@ class pos_order(osv.osv):
 
             order.write({'state':'done', 'account_move': move_id})
 
+        if ids and order.company_id.anglo_saxon_accounting:
+            add_anglosaxon_lines(grouped_data)
+            
         all_lines = []
         for group_key, group_data in grouped_data.iteritems():
             for value in group_data:
@@ -1505,6 +1541,22 @@ class pos_order_line(osv.osv):
             product = self.pool['product.product'].browse(cr, uid, line[2]['product_id'], context=context)
             line[2]['tax_ids'] = [(6, 0, [x.id for x in product.taxes_id])]
         return line
+
+    @api.onchange('product_id')
+    def _onchange_product_id(self):
+        if not self.product_id:
+            return
+        if not self.order_id.pricelist_id:
+           raise UserError(
+               _('You have to select a pricelist in the sale form !\n' \
+               'Please set one before choosing a product.'))
+
+        self.tax_ids = self.product_id.taxes_id.filtered(lambda r: not self.company_id or r.company_id == self.company_id)
+        fpos = self.order_id.fiscal_position_id
+        tax_ids_after_fiscal_position = fpos.map_tax(self.tax_ids) if fpos else self.tax_ids
+        price = self.order_id.pricelist_id.price_get(
+            self.product_id.id, self.qty or 1.0, self.order_id.partner_id.id)[self.order_id.pricelist_id.id]
+        self.price_unit = self.env['account.tax']._fix_tax_included_price(price, self.product_id.taxes_id, tax_ids_after_fiscal_position)
 
     def onchange_product_id(self, cr, uid, ids, pricelist, product_id, qty=0, partner_id=False, context=None):
         context = context or {}
@@ -1556,7 +1608,7 @@ class pos_order_line(osv.osv):
     def create(self, values):
         if values.get('order_id') and not values.get('name'):
             # set name based on the sequence specified on the config
-            config_id = self.env['pos.order'].browse(values['order_id']).session_id.config_id.id
+            config_id = self.order_id.browse(values['order_id']).session_id.config_id.id
             # HACK: sequence created in the same transaction as the config
             # cf TODO master is pos.config create
             # remove me saas-15
@@ -1597,20 +1649,14 @@ class pos_order_line(osv.osv):
     @api.depends('price_unit', 'tax_ids', 'qty', 'discount', 'product_id')
     def _compute_amount_line_all(self):
         for line in self:
-            currency = line.order_id.pricelist_id.currency_id
-            taxes = line.tax_ids.filtered(lambda tax: tax.company_id.id == line.order_id.company_id.id)
-            fiscal_position_id = line.order_id.fiscal_position_id
-            if fiscal_position_id:
-                taxes = fiscal_position_id.map_tax(taxes)
+            fpos = line.order_id.fiscal_position_id
+            tax_ids_after_fiscal_position = fpos.map_tax(line.tax_ids) if fpos else line.tax_ids
             price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-            line.price_subtotal = line.price_subtotal_incl = price * line.qty
-            if taxes:
-                taxes = taxes.compute_all(price, currency, line.qty, product=line.product_id, partner=line.order_id.partner_id or False)
-                line.price_subtotal = taxes['total_excluded']
-                line.price_subtotal_incl = taxes['total_included']
-
-            line.price_subtotal = currency.round(line.price_subtotal)
-            line.price_subtotal_incl = currency.round(line.price_subtotal_incl)
+            taxes = tax_ids_after_fiscal_position.compute_all(price, line.order_id.pricelist_id.currency_id, line.qty, product=line.product_id, partner=line.order_id.partner_id)
+            line.update({
+                'price_subtotal_incl': taxes['total_included'],
+                'price_subtotal': taxes['total_excluded'],
+            })
 
     # DEPRECATED, REMOVE ME IN v10
     def _amount_line_all(self, cr, uid, ids, field_names, arg, context=None):
@@ -1721,6 +1767,7 @@ class res_partner(osv.osv):
             del partner['id']
             self.write(cr, uid, [partner_id], partner, context=context)
         else:
+            partner['lang'] = self.pool['res.users'].browse(cr, uid, [uid]).lang
             partner_id = self.create(cr, uid, partner, context=context)
         
         return partner_id

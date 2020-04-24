@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-22 07:25+0000\n"
-"PO-Revision-Date: 2017-05-31 06:25+0000\n"
-"Last-Translator: Martin Trigaux\n"
+"PO-Revision-Date: 2018-09-09 06:58+0000\n"
+"Last-Translator: Dorin Hongu <dhongu@gmail.com>\n"
 "Language-Team: Romanian (http://www.transifex.com/odoo/odoo-9/language/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -5526,7 +5526,7 @@ msgstr "Module de exportat"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_base_module_upgrade_module_info
 msgid "Apps to Update"
-msgstr ""
+msgstr "App de actualizat"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -5758,7 +5758,7 @@ msgstr "Azerbaidjan"
 #: code:addons/translate.py:1046
 #, python-format
 msgid "Bad file format: %s"
-msgstr ""
+msgstr "Format greșit fișier %s"
 
 #. module: base
 #: model:res.country,name:base.bs
@@ -8002,7 +8002,7 @@ msgstr "Diagramă"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sign
 msgid "Digital Signatures"
-msgstr ""
+msgstr "Semnături digitale"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_lang_direction
@@ -8236,7 +8236,7 @@ msgstr "Dr."
 #: model:ir.module.module,shortdesc:base.module_stock_dropshipping
 #: model:ir.module.module,summary:base.module_stock_dropshipping
 msgid "Drop Shipping"
-msgstr ""
+msgstr "Drop Shipping"
 
 #. module: base
 #: selection:workflow.activity,kind:0
@@ -8427,7 +8427,7 @@ msgstr "Guineea Ecuatoriala"
 #. module: base
 #: model:res.groups,name:base.group_equipment_manager
 msgid "Equipment Manager"
-msgstr ""
+msgstr "Manager echipament"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_equipment
@@ -8819,7 +8819,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_fields_help
 msgid "Field Help"
-msgstr ""
+msgstr "Câmp ajutor"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_fields_field_description
@@ -9174,7 +9174,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_fr_hr_payroll
 msgid "French Payroll"
-msgstr ""
+msgstr "Stat de plată francez"
 
 #. module: base
 #: model:res.country,name:base.tf
@@ -10251,7 +10251,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_in_hr_payroll
 msgid "Indian Payroll"
-msgstr ""
+msgstr "Stat de plată Indian"
 
 #. module: base
 #: selection:res.partner,company_type:0
@@ -10313,7 +10313,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_setup
 msgid "Initial Setup Tools"
-msgstr ""
+msgstr "Instrumente de configurare inițială"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_constraint_date_init
@@ -10825,7 +10825,7 @@ msgstr "LGPL Versiunea 3"
 #. module: base
 #: model:ir.module.module,summary:base.module_stock_landed_costs
 msgid "Landed Costs"
-msgstr ""
+msgstr "Costuri depozitare"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_base_language_export_lang
@@ -11620,7 +11620,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base.view_model_relation_form
 #: model:ir.ui.view,arch_db:base.view_model_relation_list
 msgid "ManyToMany Relations"
-msgstr ""
+msgstr "Relații ManyToMany"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_product_margin
@@ -11887,6 +11887,18 @@ msgid "Model"
 msgstr "Model"
 
 #. module: base
+#: code:addons/base/ir/ir_model.py:382
+#, python-format
+msgid "Model %s does not exist"
+msgstr ""
+
+#. module: base
+#: code:addons/base/ir/ir_model.py:383
+#, python-format
+msgid "Please specify a valid model for the object relation"
+msgstr ""
+
+#. module: base
 #: code:addons/base/ir/ir_model.py:454
 #, python-format
 msgid "Model %s does not exist!"
@@ -11909,7 +11921,7 @@ msgstr "Model (doar modificare)"
 #: model:ir.ui.view,arch_db:base.view_model_constraint_form
 #: model:ir.ui.view,arch_db:base.view_model_constraint_list
 msgid "Model Constraints"
-msgstr ""
+msgstr "Restricții Model"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_model_data_id
@@ -12450,7 +12462,7 @@ msgstr "Note"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_module_category_module_nr
 msgid "Number of Apps"
-msgstr ""
+msgstr "Număr de aplicații"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_cron_numbercall
@@ -12574,7 +12586,7 @@ msgstr ""
 #. module: base
 #: model:res.groups,name:base.group_hr_user
 msgid "Officer"
-msgstr ""
+msgstr "Ofițer"
 
 #. module: base
 #: model:ir.module.module,description:base.module_payment_ogone
@@ -12614,7 +12626,7 @@ msgstr ""
 msgid ""
 "One of the documents you are trying to access has been deleted, please try "
 "again after refreshing."
-msgstr ""
+msgstr "Unul dintre documentele pe care încercați să le accesați a fost șters, încercați din nou după reîmprospătare."
 
 #. module: base
 #: code:addons/models.py:3915
@@ -13109,7 +13121,7 @@ msgstr ""
 #: model:ir.module.category,name:base.module_category_localization_payroll
 #: model:ir.module.module,shortdesc:base.module_hr_payroll
 msgid "Payroll"
-msgstr ""
+msgstr "Stat de plată"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_payroll_account
@@ -13773,7 +13785,7 @@ msgstr ""
 #: model:ir.ui.menu,name:base.menu_action_rule
 #: model:ir.ui.view,arch_db:base.view_rule_search
 msgid "Record Rules"
-msgstr ""
+msgstr "Reguli Înregistrare"
 
 #. module: base
 #: code:addons/base/ir/ir_cron.py:271
@@ -13825,7 +13837,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_act_server_ref_object
 msgid "Reference record"
-msgstr ""
+msgstr "Referință înregistrare"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.res_request_link-act
@@ -14357,12 +14369,12 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_mrp
 msgid "Sales and MRP Management"
-msgstr ""
+msgstr "Managementul Vânzărilor și MRP"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_stock
 msgid "Sales and Warehouse Management"
-msgstr ""
+msgstr "Managementul Vânzărilor și al Depozitului"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_partner_user_id
@@ -14493,7 +14505,7 @@ msgstr "Vezi toate valorile posibile"
 #: code:addons/common.py:42
 #, python-format
 msgid "See http://openerp.com"
-msgstr ""
+msgstr "Vezi http://openerp.com"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_act_server_model_object_field
@@ -14621,7 +14633,7 @@ msgstr "Secvență"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_sequence_code
 msgid "Sequence Code"
-msgstr ""
+msgstr "Cod secvență"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_sequence_padding
@@ -15183,7 +15195,7 @@ msgstr "Nume judet"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_country_state_ids
 msgid "States"
-msgstr ""
+msgstr "Stări"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_base_language_install_state
@@ -16105,7 +16117,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,help:base.field_res_lang_code
 msgid "This field is used to set/get locales for user"
-msgstr ""
+msgstr "Acest camp este folosit pentru a seta/obține setări regionale pentru utilizator"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.wizard_lang_export
@@ -16900,7 +16912,7 @@ msgstr ""
 #: model:ir.ui.menu,name:base.menu_values_form_defaults
 #: model:ir.ui.view,arch_db:base.values_view_form_defaults
 msgid "User-defined Defaults"
-msgstr ""
+msgstr "Valori implicite utilizator"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_ir_filters
@@ -17070,7 +17082,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_act_window_view_mode
 msgid "View Mode"
-msgstr ""
+msgstr "Mod Vizualizare"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_name
@@ -17103,7 +17115,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_mode
 msgid "View inheritance mode"
-msgstr ""
+msgstr "Mod moștenire vizualizare"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_act_window_view_type
@@ -17164,7 +17176,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_landed_costs
 msgid "WMS Landed Costs"
-msgstr ""
+msgstr "Costuri adiționale"
 
 #. module: base
 #: model:res.country,name:base.wf
@@ -17428,7 +17440,7 @@ msgid ""
 " node or arrow, you can only change fields that are empty or set to the "
 "default value. If you don't do that, your customization will be overwrited "
 "at the next update or upgrade to a future version of Odoo."
-msgstr ""
+msgstr "Când personalizați un flux de lucru, asigurați-vă că nu modificați un nod sau săgeată existentă, ci adăugați noduri sau săgeți noi. Dacă aveți absolut nevoie să modificați un nod sau o săgeată, puteți modifica numai câmpurile goale sau setate la valoarea implicită. Dacă nu faceți acest lucru, personalizarea dvs. va fi suprascrisă la următoarea actualizare sau upgrade la o versiune viitoare a Odoo."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_act_server_sequence
@@ -17927,7 +17939,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base.view_partner_form
 #: model:ir.ui.view,arch_db:base.view_partner_simple_form
 msgid "e.g. Sales Director"
-msgstr ""
+msgstr "ex. Director vânzări"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_server_action_form
@@ -17937,7 +17949,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_base_import_language
 msgid "e.g. en_US"
-msgstr ""
+msgstr "ex. ro_RO"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_company_form

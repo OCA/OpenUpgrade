@@ -31,7 +31,8 @@ _logger = logging.getLogger(__name__)
 _test_logger = logging.getLogger('openerp.tests')
 
 
-def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=None, report=None, upg_registry=None):
+def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=None, report=None,
+                      models_to_check=None, upg_registry=None):
     """Migrates+Updates or Installs all module nodes from ``graph``
        :param graph: graph of module nodes to load
        :param status: deprecated parameter, unused, left to avoid changing signature in 8.0
@@ -108,6 +109,9 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     if skip_modules is None:
         skip_modules = []
 
+    if models_to_check is None:
+        models_to_check = set()
+
     processed_modules = []
     loaded_modules = []
     registry = openerp.registry(cr.dbname)
@@ -127,6 +131,8 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
     t0 = time.time()
     t0_sql = openerp.sql_db.sql_counter
 
+    models_updated = set()
+
     for index, package in enumerate(graph):
         module_name = package.name
         module_id = package.id
@@ -134,7 +140,16 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
         if module_name in skip_modules or module_name in loaded_modules:
             continue
 
-        migrations.migrate_module(package, 'pre')
+        needs_update = (
+            hasattr(package, "init")
+            or hasattr(package, "update")
+            or package.state in ("to install", "to upgrade")
+        )
+        if needs_update:
+            if package.name != 'base':
+                registry.setup_models(cr, partial=True)
+            migrations.migrate_module(package, 'pre')
+
         load_openerp_module(package.name)
 
         new_install = package.state == 'to install'
@@ -145,9 +160,12 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
                 getattr(py_module, pre_init)(cr)
 
         models = registry.load(cr, package)
+        model_names = [m._name for m in models]
 
         loaded_modules.append(package.name)
-        if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
+        if needs_update:
+            models_updated |= set(model_names)
+            models_to_check -= set(model_names)
             registry.setup_models(cr, partial=True)
             # OpenUpgrade: add this module's models to the registry
             local_registry = {}
@@ -158,6 +176,13 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
             openupgrade_loading.compare_registries(
                 cr, package.name, upg_registry, local_registry)
             init_module_models(cr, package.name, models)
+        elif package.state != 'to remove':
+            # The current module has simply been loaded. The models extended by this module
+            # and for which we updated the schema, must have their schema checked again.
+            # This is because the extension may have changed the model,
+            # e.g. adding required=True to an existing field, but the schema has not been
+            # updated by this module because it's not marked as 'to upgrade/to install'.
+            models_to_check |= set(model_names) & models_updated
 
         idref = {}
 
@@ -165,7 +190,7 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, skip_modules=
         if hasattr(package, 'init') or package.state == 'to install':
             mode = 'init'
 
-        if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
+        if needs_update:
             # Can't put this line out of the loop: ir.module.module will be
             # registered by init_module_models() above.
             modobj = registry['ir.module.module']
@@ -284,9 +309,14 @@ def _check_module_names(cr, module_names):
             incorrect_names = mod_names.difference([x['name'] for x in cr.dictfetchall()])
             _logger.warning('invalid module names, ignored: %s', ", ".join(incorrect_names))
 
-def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_modules, perform_checks, upg_registry):
+def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_modules,
+                        perform_checks, models_to_check=None, upg_registry=None):
     """Loads modules marked with ``states``, adding them to ``graph`` and
        ``loaded_modules`` and returns a list of installed/upgraded modules."""
+
+    if models_to_check is None:
+        models_to_check = set()
+
     processed_modules = []
     while True:
         cr.execute("SELECT name from ir_module_module WHERE state IN %s" ,(tuple(states),))
@@ -296,7 +326,10 @@ def load_marked_modules(cr, graph, states, force, progressdict, report, loaded_m
             break
         graph.add_modules(cr, module_list, force)
         _logger.debug('Updating graph with %d more modules', len(module_list))
-        loaded, processed = load_module_graph(cr, graph, progressdict, report=report, skip_modules=loaded_modules, perform_checks=perform_checks, upg_registry=upg_registry)
+        loaded, processed = load_module_graph(
+            cr, graph, progressdict, report=report, skip_modules=loaded_modules,
+            perform_checks=perform_checks, models_to_check=models_to_check, upg_registry=upg_registry
+        )
         processed_modules.extend(processed)
         loaded_modules.extend(loaded)
         if not processed:
@@ -311,6 +344,8 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         force.append('demo')
 
     upg_registry = {}
+    models_to_check = set()
+
     cr = db.cursor()
     try:
         if not openerp.modules.db.is_initialized(cr):
@@ -339,7 +374,10 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
         # processed_modules: for cleanup step after install
         # loaded_modules: to avoid double loading
         report = registry._assertion_report
-        loaded_modules, processed_modules = load_module_graph(cr, graph, status, perform_checks=update_module, report=report, upg_registry=upg_registry)
+        loaded_modules, processed_modules = load_module_graph(
+            cr, graph, status, perform_checks=update_module,
+            report=report, models_to_check=models_to_check, upg_registry=upg_registry
+        )
 
         load_lang = tools.config.pop('load_language')
         if load_lang or update_module:
@@ -405,11 +443,11 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
             previously_processed = len(processed_modules)
             processed_modules += load_marked_modules(cr, graph,
                 ['installed', 'to upgrade', 'to remove'],
-                force, status, report, loaded_modules, update_module, upg_registry)
+                force, status, report, loaded_modules, update_module, models_to_check, upg_registry)
             if update_module:
                 processed_modules += load_marked_modules(cr, graph,
                     ['to install'], force, status, report,
-                    loaded_modules, update_module, upg_registry)
+                    loaded_modules, update_module, models_to_check, upg_registry)
 
         registry.setup_models(cr)
 
@@ -423,7 +461,7 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
             cr.execute("""select model,name from ir_model where id NOT IN (select distinct model_id from ir_model_access)""")
             for (model, name) in cr.fetchall():
                 if model in registry and not registry[model].is_transient() and not isinstance(registry[model], openerp.osv.orm.AbstractModel):
-                    _logger.warning('The model %s has no access rules, consider adding one. E.g. access_%s,access_%s,model_%s,,1,0,0,0',
+                    _logger.warning('The model %s has no access rules, consider adding one. E.g. access_%s,access_%s,model_%s,base.group_user,1,0,0,0',
                         model, model.replace('.', '_'), model.replace('.', '_'), model.replace('.', '_'))
 
             # Temporary warning while we remove access rights on osv_memory objects, as they have
@@ -475,12 +513,25 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
                 openerp.api.Environment.reset()
                 return openerp.modules.registry.RegistryManager.new(cr.dbname, force_demo, status, update_module)
 
+        # STEP 5.5: Verify extended fields on every model
+        # This will fix the schema of all models in a situation such as:
+        #   - module A is loaded and defines model M;
+        #   - module B is installed/upgraded and extends model M;
+        #   - module C is loaded and extends model M;
+        #   - module B and C depend on A but not on each other;
+        # The changes introduced by module C are not taken into account by the upgrade of B.
+        if models_to_check:
+            module_objs_to_check = [registry.models[m] for m in models_to_check]
+            init_module_models(cr, 'verification in progress', module_objs_to_check)
+
         # STEP 6: verify custom views on every model
         if update_module:
             Views = registry['ir.ui.view']
             for model in registry.models.keys():
-                if not Views._validate_custom_views(cr, SUPERUSER_ID, model):
-                    _logger.warning('Invalid custom view(s) for model %s', model)
+                try:
+                    Views._validate_custom_views(cr, SUPERUSER_ID, model)
+                except Exception as e:
+                    _logger.warning('invalid custom view(s) for model %s: %s', model, tools.ustr(e))
 
         if report.failures:
             _logger.error('At least one test failed when loading the modules.')

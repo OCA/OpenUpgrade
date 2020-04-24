@@ -61,7 +61,7 @@ _unlink = logging.getLogger(__name__ + '.unlink')
 regex_order = re.compile('^(\s*([a-z0-9:_]+|"[a-z0-9:_]+")(\s+(desc|asc))?\s*(,|$))+(?<!,)$', re.I)
 regex_object_name = re.compile(r'^[a-z0-9_.]+$')
 regex_pg_name = re.compile(r'^[a-z_][a-z0-9_$]*$', re.I)
-onchange_v7 = re.compile(r"^(\w+)\((.*)\)$")
+onchange_v7 = re.compile(r"^([a-zA-Z]\w+)\((.*)\)$")
 
 AUTOINIT_RECALCULATE_STORED_FIELDS = 1000
 
@@ -1949,7 +1949,8 @@ class BaseModel(object):
                     order = '"%s" %s' % (order_field, '' if len(order_split) == 1 else order_split[1])
                     orderby_terms.append(order)
             elif order_field in aggregated_fields:
-                orderby_terms.append(order_part)
+                order_split[0] = '"' + order_field + '"'
+                orderby_terms.append(' '.join(order_split))
             else:
                 # Cannot order by a field that will not appear in the results (needs to be grouped or aggregated)
                 _logger.warn('%s: read_group order by `%s` ignored, cannot sort on empty columns (not grouped/aggregated)',
@@ -2661,10 +2662,16 @@ class BaseModel(object):
                                         "Use a search view instead if you simply want to make the field searchable."
                                     _schema.warning(msg, self._table, f._type, k)
                             if res2 and not f.select:
-                                cr.execute('DROP INDEX "%s_%s_index"' % (self._table, k))
-                                cr.commit()
-                                msg = "Table '%s': dropping index for column '%s' of type '%s' as it is not required anymore"
-                                _schema.debug(msg, self._table, k, f._type)
+                                # OpenUpgrade: do not drop indexes
+                                # Odoo will drop any index that is defined in any other module than the module
+                                # that adds the column itself. Such indexes were supposedly added by customization
+                                # modules because they were needed in real life scenarios. Typically, removing
+                                # such indexes are harmful to the performance of the migration, plus it adds the
+                                # cost of re-adding the indexes on the upgrade of the module that defines them.
+                                # cr.execute('DROP INDEX "%s_%s_index"' % (self._table, k))
+                                # cr.commit()
+                                msg = "Table '%s': not dropping index for column '%s'"
+                                _schema.debug(msg, self._table, k)
 
                             if isinstance(f, fields.many2one) or (isinstance(f, fields.function) and f._type == 'many2one' and f.store):
                                 dest_model = self.pool[f._obj]
@@ -4657,6 +4664,15 @@ class BaseModel(object):
                 return True
             return False
 
+        if self.is_transient():
+            # One single implicit access rule for transient models: owner only!
+            # This is ok because we assert that TransientModels always have
+            # log_access enabled, so that 'create_uid' is always there.
+            domain = [('create_uid', '=', uid)]
+            tquery = self._where_calc(cr, uid, domain, active_test=False)
+            apply_rule(tquery.where_clause, tquery.where_clause_params, tquery.tables)
+            return
+
         # apply main rules on the object
         rule_obj = self.pool.get('ir.rule')
         rule_where_clause, rule_where_clause_params, rule_tables = rule_obj.domain_get(cr, uid, self._name, mode, context=context)
@@ -4828,10 +4844,6 @@ class BaseModel(object):
         if context is None:
             context = {}
         self.check_access_rights(cr, access_rights_uid or user, 'read')
-
-        # For transient models, restrict access to the current user, except for the super-user
-        if self.is_transient() and self._log_access and user != SUPERUSER_ID:
-            args = expression.AND(([('create_uid', '=', user)], args or []))
 
         query = self._where_calc(cr, user, args, context=context)
         self._apply_ir_rules(cr, user, query, 'read', context=context)
@@ -5830,16 +5842,19 @@ class BaseModel(object):
         return RecordCache(self)
 
     @api.model
-    def _in_cache_without(self, field):
-        """ Make sure ``self`` is present in cache (for prefetching), and return
-            the records of model ``self`` in cache that have no value for ``field``
-            (:class:`Field` instance).
+    def _in_cache_without(self, field, limit=PREFETCH_MAX):
+        """ Return records to prefetch that have no value in cache for ``field``
+            (:class:`Field` instance), including ``self``.
+            Return at most ``limit`` records.
         """
         env = self.env
         prefetch_ids = env.prefetch[self._name]
         prefetch_ids.update(self._ids)
         ids = filter(None, prefetch_ids - set(env.cache[field]))
-        return self.browse(ids)
+        recs = self.browse(ids)
+        if limit and len(recs) > limit:
+            recs = self + (recs - self)[:(limit - len(self))]
+        return recs
 
     @api.model
     def refresh(self):

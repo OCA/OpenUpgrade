@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-15 10:41+0000\n"
-"PO-Revision-Date: 2017-03-21 08:33+0000\n"
-"Last-Translator: Shaima Safar <shaima.safar@open-inside.com>\n"
+"POT-Creation-Date: 2016-09-22 13:16+0000\n"
+"PO-Revision-Date: 2018-09-19 06:19+0000\n"
+"Last-Translator: Mostafa Hanafy <mostafa.s.hanafy@gmail.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/odoo/odoo-9/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -53,7 +53,7 @@ msgstr "<I>أنت شغوف</i>"
 #: model:hr.job,website_description:hr.job_developer
 #: model:hr.job,website_description:hr.job_trainee
 msgid "<i>You autonomously and quickly learn</i>"
-msgstr ""
+msgstr "أنت تتعلم تلقائيا و بسرعة"
 
 #. module: hr
 #: model:hr.job,website_description:hr.job_ceo
@@ -61,14 +61,14 @@ msgstr ""
 #: model:hr.job,website_description:hr.job_hrm
 #: model:hr.job,website_description:hr.job_marketing
 msgid "<i>You easily manage them</i>"
-msgstr ""
+msgstr "أنت تديرهم بسهولة"
 
 #. module: hr
 #: model:ir.ui.view,arch_db:hr.hr_kanban_view_employees
 msgid ""
 "<span class=\"o_unfollow\">Unfollow</span>\n"
 "                                    <span class=\"o_following\">Following</span>"
-msgstr ""
+msgstr "<span class=\"o_unfollow\">إلغاء المتابعة</span>\n                                    <span class=\"o_following\">متابع</span>"
 
 #. module: hr
 #: model:ir.ui.view,arch_db:hr.hr_department_view_kanban
@@ -109,7 +109,7 @@ msgstr ""
 #: model:hr.job,website_description:hr.job_marketing
 #: model:hr.job,website_description:hr.job_trainee
 msgid "A good job in a young and dynamic team"
-msgstr ""
+msgstr "وظيفة جيدة في فريق شاب وديناميكي"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_department_message_needaction
@@ -126,7 +126,7 @@ msgstr "نشط"
 #. module: hr
 #: model:hr.job,website_description:hr.job_consultant
 msgid "Analyse needs, write specification documents and quotation"
-msgstr ""
+msgstr "أحتياجات التحليل ، كتابة وثائق المواصفات والاقتباس"
 
 #. module: hr
 #: model:ir.ui.view,arch_db:hr.view_employee_filter
@@ -190,7 +190,7 @@ msgstr "الأقسام الفرعية"
 #. module: hr
 #: model:ir.ui.view,arch_db:hr.view_employee_form
 msgid "Citizenship & Other Information"
-msgstr ""
+msgstr "الجنسية و معلومات أخرى"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee_city
@@ -286,7 +286,7 @@ msgstr "معلومات التواصل"
 #: model:hr.job,website_description:hr.job_developer
 #: model:hr.job,website_description:hr.job_trainee
 msgid "Contributions to open source projects"
-msgstr ""
+msgstr "مساهمات لفتح مشاريع مفتوحة المصدر"
 
 #. module: hr
 #: model:ir.actions.act_window,name:hr.view_department_form_installer
@@ -438,17 +438,15 @@ msgstr "هيكل الموظفين"
 #. module: hr
 #: model:ir.ui.view,arch_db:hr.view_employee_category_list
 msgid "Employees Tags"
-msgstr ""
+msgstr "الكلمات الدليلية للموظف"
 
 #. module: hr
-#: code:addons/hr/hr.py:299 constraint:hr.department:0
-#, python-format
+#: constraint:hr.department:0
 msgid "Error! You cannot create recursive departments."
 msgstr "خطأ! لا يمكنك انشاء أقسام متداخلة."
 
 #. module: hr
-#: code:addons/hr/hr.py:269 constraint:hr.employee:0
-#, python-format
+#: constraint:hr.employee:0
 msgid "Error! You cannot create recursive hierarchy of Employee(s)."
 msgstr "خطأ! لا يمكنك إنشاء التسلسل الهرمي العودي من الموظف ."
 
@@ -466,7 +464,7 @@ msgstr "عدد الموظفين المتوقعين لهذا المنصب بعد 
 #. module: hr
 #: model:hr.job,name:hr.job_developer
 msgid "Experienced Developer"
-msgstr ""
+msgstr "مطور خبير"
 
 #. module: hr
 #: selection:hr.employee,gender:0
@@ -509,6 +507,11 @@ msgstr "المتابعون (الشرماء)"
 #: model:ir.model.fields,field_description:hr.field_hr_employee_gender
 msgid "Gender"
 msgstr "الجنس"
+
+#. module: hr
+#: model:web.tip,description:hr.hr_tip_1
+msgid "Get all applications related to this job position."
+msgstr ""
 
 #. module: hr
 #: model:hr.job,website_description:hr.job_developer
@@ -638,7 +641,7 @@ msgstr "عند التفعيل، توجد رسالة جديدة"
 msgid ""
 "If the active field is set to False, it will allow you to hide the resource "
 "record without removing it."
-msgstr ""
+msgstr "إذا تم تعيين الحقل النشط إلى خطأ، سيسمح لك بإخفاء سجل المورد بدون إزالته."
 
 #. module: hr
 #: model:hr.job,website_description:hr.job_ceo
@@ -749,11 +752,6 @@ msgid "Last Modified on"
 msgstr "آخر تعديل في"
 
 #. module: hr
-#: model:ir.model.fields,field_description:hr.field_res_users_last_website_so_id
-msgid "Last Online Sale Order"
-msgstr "اخر امر بيع عبر الانترنت"
-
-#. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_department_write_uid
 #: model:ir.model.fields,field_description:hr.field_hr_employee_category_write_uid
 #: model:ir.model.fields,field_description:hr.field_hr_employee_write_uid
@@ -818,7 +816,7 @@ msgstr "الحالة الاجتماعية"
 #. module: hr
 #: model:hr.job,name:hr.job_marketing
 msgid "Marketing and Community Manager"
-msgstr ""
+msgstr "التسويق ومدير المجتمع"
 
 #. module: hr
 #: selection:hr.employee,marital:0
@@ -984,6 +982,11 @@ msgid "Parent Department"
 msgstr "قسم رئيسي"
 
 #. module: hr
+#: model:ir.model,name:hr.model_res_partner
+msgid "Partner"
+msgstr "الشريك"
+
+#. module: hr
 #: model:hr.job,website_description:hr.job_developer
 msgid "Passion for the Internet and its culture"
 msgstr ""
@@ -1118,7 +1121,7 @@ msgstr ""
 #: model:ir.model.fields,help:hr.field_hr_job_state
 msgid ""
 "Set whether the recruitment process is open or closed for this job position."
-msgstr ""
+msgstr "حدد ما إذا كانت عملية التوظيف مفتوحة أو مغلقة لهذا المنصب الوظيفي."
 
 #. module: hr
 #: model:ir.ui.view,arch_db:hr.hr_department_view_kanban
@@ -1223,7 +1226,7 @@ msgid ""
 "resource put alone on a phase of 5 days with 5 tasks assigned to him, will "
 "show a load of 100% for this phase by default, but if we put a efficiency of"
 " 200%, then his load will only be 50%."
-msgstr ""
+msgstr "هذا الحقل يصف كفائة المورد لإكمال المهام. مثلا عن تعيين مرحلة من 5 أيام و5 مهام سوف يظهر 100% إشغال لهذه المرحلة بشكل إفتراضي. لكن إذا وضعنا كفائة 200% سوف يكون الإشغال فقط 50%"
 
 #. module: hr
 #: model:ir.model.fields,help:hr.field_hr_employee_image
@@ -1355,7 +1358,7 @@ msgid ""
 "With just a quick glance on the Odoo employee screen, you\n"
 "                can easily find all the information you need for each person;\n"
 "                contact data, job position, availability, etc."
-msgstr ""
+msgstr "مع نظرة سريعة على شاشة الموظف في اودوو ، أنت\nيمكنك بسهولة العثور على جميع المعلومات التي تحتاجها لكل شخص ؛\nبيانات الاتصال ، وموقع الوظيفة ، والتوافر ، وما إلى ذلك."
 
 #. module: hr
 #: model:hr.job,website_description:hr.job_ceo

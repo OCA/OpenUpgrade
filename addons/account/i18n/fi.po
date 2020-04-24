@@ -11,7 +11,7 @@
 # Marko Happonen <marko.happonen@sprintit.fi>, 2016
 # Miku Laitinen <miku.laitinen@gmail.com>, 2016
 # Pekko Tuomisto <pekko.tuomisto@web-veistamo.fi>, 2016
-# salmemik <salmemik@gmail.com>, 2016
+# Mikko Salmela <salmemik@gmail.com>, 2016
 # Svante Suominen <svante.suominen@web-veistamo.fi>, 2016
 # Timo Koukkari <ti.ko@netikka.fi>, 2015
 # Tuomo Aura <tuomo.aura@web-veistamo.fi>, 2016
@@ -20,8 +20,8 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-22 13:16+0000\n"
-"PO-Revision-Date: 2017-05-28 18:57+0000\n"
-"Last-Translator: Martin Trigaux\n"
+"PO-Revision-Date: 2018-09-14 12:28+0000\n"
+"Last-Translator: Tuomo Aura <tuomo.aura@web-veistamo.fi>\n"
 "Language-Team: Finnish (http://www.transifex.com/odoo/odoo-9/language/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1470,10 +1470,17 @@ msgstr "Sallii analyyttisen tilien käytön."
 #: model:ir.model.fields,field_description:account.field_cash_box_in_amount
 #: model:ir.model.fields,field_description:account.field_cash_box_out_amount
 #: model:ir.ui.view,arch_db:account.report_invoice_document
+#: model:ir.ui.view,arch_db:account.view_account_payment_tree
+#: model:ir.ui.view,arch_db:account.view_account_supplier_payment_tree
 #: model:ir.ui.view,arch_db:account.view_move_line_form
 #, python-format
 msgid "Amount"
 msgstr "Määrä"
+
+#. module: account
+#: model:ir.model.fields,field_description:account.field_account_analytic_line_analytic_amount_currency
+msgid "Amount Currency"
+msgstr "Valuuttamäärä"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_residual
@@ -1498,6 +1505,11 @@ msgstr "Määrä johon tämä täsmäytys liittyy. Oletettavasti aina positiivin
 #: model:ir.model.fields,field_description:account.field_account_move_line_amount_currency
 msgid "Amount currency"
 msgstr "Valuuttamäärä"
+
+#. module: account
+#: model:ir.ui.view,arch_db:account.invoice_tree
+msgid "Amount due"
+msgstr ""
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_partial_reconcile_amount_currency
@@ -4753,6 +4765,11 @@ msgid "Invoices to validate"
 msgstr "Vahvistettavaa laskua"
 
 #. module: account
+#: model:ir.ui.menu,name:account.menu_finance
+msgid "Invoicing"
+msgstr "Laskutus"
+
+#. module: account
 #: model:ir.ui.view,arch_db:account.view_account_config_settings
 msgid "Invoicing & Payments"
 msgstr "Laskutus ja maksut"
@@ -4790,7 +4807,7 @@ msgstr "Se ilmaisee että lasku on maksettu ja laskun päiväkirja merkintä on 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice_sent
 msgid "It indicates that the invoice has been sent."
-msgstr ""
+msgstr "Merkitsee, että lasku on lähetetty."
 
 #. module: account
 #: code:addons/account/models/account_move.py:811
@@ -5557,7 +5574,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_move_filter
 #: model:ir.ui.view,arch_db:account.view_account_move_line_filter
 msgid "Move"
-msgstr ""
+msgstr "Kirjaus"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_analytic_line_move_id
@@ -5567,7 +5584,7 @@ msgstr "Kirjausrivi"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_payment_move_line_ids
 msgid "Move line ids"
-msgstr ""
+msgstr "Siirtorivien id:t"
 
 #. module: account
 #: code:addons/account/models/account_move.py:1026
@@ -5651,7 +5668,7 @@ msgstr "Uusi tapahtuma"
 #: code:addons/account/models/account_move.py:1004
 #, python-format
 msgid "New expected payment date: "
-msgstr ""
+msgstr "Uusi oletettu maksupäivä:"
 
 #. module: account
 #. openerp-web
@@ -5828,8 +5845,8 @@ msgstr "Lokakuu"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
-msgid "Odoo Accounting has many free extra-features:"
-msgstr "Odoo kirjanpidossa on monia lisäominaisuuksia:"
+msgid "Odoo Accounting has many extra-features:"
+msgstr ""
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_bank_statement_line
@@ -7125,7 +7142,7 @@ msgstr "Raportit"
 #. module: account
 #: model:ir.ui.view,arch_db:account.invoice_form
 msgid "Reset to Draft"
-msgstr ""
+msgstr "Palauta luonnokseksi"
 
 #. module: account
 #. openerp-web
@@ -7166,7 +7183,7 @@ msgstr "Vastakirjaus"
 #: model:ir.ui.view,arch_db:account.view_account_move_reversal
 #, python-format
 msgid "Reverse Moves"
-msgstr ""
+msgstr "Käänteiset siirrot"
 
 #. module: account
 #: selection:account.financial.report,sign:0
@@ -7549,7 +7566,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account.view_account_move_filter
 #: model:ir.ui.view,arch_db:account.view_move_line_form
 msgid "States"
-msgstr ""
+msgstr "Osavaltio/Maakunta"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_fiscal_position_states_count
@@ -8085,6 +8102,12 @@ msgid ""
 msgstr ""
 
 #. module: account
+#: code:addons/account/models/company.py:81
+#, python-format
+msgid "The lock date for advisors is irreversible and can't be removed."
+msgstr ""
+
+#. module: account
 #: model:ir.model.fields,help:account.field_account_move_line_move_id
 msgid "The move of this entry line."
 msgstr ""
@@ -8101,6 +8124,13 @@ msgstr "Monivaluutta -optio mahdollistaa yrityksesi lähettää tai vastaanottaa
 #: model:ir.model.fields,help:account.field_account_invoice_name
 msgid "The name that will be used on account move lines"
 msgstr "Nimi jota käytetään siirtoriveillä"
+
+#. module: account
+#: code:addons/account/models/company.py:85
+#, python-format
+msgid ""
+"The new lock date for advisors must be set after the previous lock date."
+msgstr ""
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_bank_statement_line_currency_id
@@ -8196,6 +8226,35 @@ msgstr "Päiväkirjan %s järjestys ei ole käytössä."
 msgid ""
 "There are still unposted entries in the period you want to lock. You should "
 "either post or delete them."
+msgstr ""
+
+#. module: account
+#: code:addons/account/models/company.py:81
+#, python-format
+msgid "The lock date for advisors is irreversible and can't be removed."
+msgstr ""
+
+#. module: account
+#: code:addons/account/models/company.py:85
+#, python-format
+msgid ""
+"The new lock date for advisors must be set after the previous lock date."
+msgstr ""
+
+#. module: account
+#: code:addons/account/models/company.py:96
+#, python-format
+msgid ""
+"You cannot lock a period that is not finished yet. Please make sure that the"
+" lock date for advisors is not set after the last day of the previous month."
+msgstr ""
+
+#. module: account
+#: code:addons/account/models/company.py:107
+#, python-format
+msgid ""
+"You cannot define stricter conditions on advisors than on users. Please make"
+" sure that the lock date on advisor is set before the lock date for users."
 msgstr ""
 
 #. module: account
@@ -8533,7 +8592,12 @@ msgid ""
 msgstr ""
 
 #. module: account
-#: code:addons/account/models/account_move.py:776
+#: model:ir.ui.view,arch_db:account.invoice_supplier_tree
+msgid "To pay"
+msgstr ""
+
+#. module: account
+#: code:addons/account/models/account_move.py:895
 #, python-format
 msgid "To reconcile the entries company should be the same for all entries!"
 msgstr "Kirjausten täsmäytyksessä yrityksen pitää olla sama kaikissa vienneissä."
@@ -9239,6 +9303,14 @@ msgid ""
 msgstr "Et voi peruuttaa laskua joka on osittain maksettu. Ennen sitä tulee laskuun liittyvät täsmäytykset peruuttaa."
 
 #. module: account
+#: code:addons/account/models/company.py:118
+#, python-format
+msgid ""
+"You cannot change the currency of the company since some journal items "
+"already exist"
+msgstr ""
+
+#. module: account
 #: code:addons/account/models/account.py:162
 #, python-format
 msgid ""
@@ -9613,7 +9685,7 @@ msgstr ""
 #. module: account
 #: model:ir.ui.view,arch_db:account.invoice_form
 msgid "outstanding payments"
-msgstr ""
+msgstr "täsmäyttämättömiä maksuja"
 
 #. module: account
 #. openerp-web

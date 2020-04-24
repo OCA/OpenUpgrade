@@ -18,6 +18,7 @@ field_renames = [
      'can_be_expensed'),
     ('hr.expense', 'hr_expense', 'note', 'description'),
     ('hr.expense.line', 'hr_expense_line', 'unit_quantity', 'quantity'),
+    ('hr.expense.line', 'hr_expense_line', 'date_value', 'date'),
 ]
 
 table_renames = [

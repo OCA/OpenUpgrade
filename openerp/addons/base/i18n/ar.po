@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-22 07:25+0000\n"
-"PO-Revision-Date: 2017-03-27 09:57+0000\n"
-"Last-Translator: Shaima Safar <shaima.safar@open-inside.com>\n"
+"PO-Revision-Date: 2018-09-28 05:27+0000\n"
+"Last-Translator: Abdulmajeed Alomar <majeeed87@gmail.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/odoo/odoo-9/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -314,7 +314,7 @@ msgstr "\nتحويل مكالمات الآلي  ، وسجلات ورسائل ا�
 msgid ""
 "\n"
 "        Enable a cache on products for a lower POS loading time."
-msgstr ""
+msgstr "\nتمكين ذاكرة التخزين المؤقت على المنتجات للحصول على وقت تحميل أقل في نقاط البيع"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_sepa
@@ -6249,7 +6249,7 @@ msgstr "لا يمكنك ترقية الوحدة البرمجية '%s' لأنها
 #: code:addons/base/ir/ir_model.py:518
 #, python-format
 msgid "Can only rename one field at a time!"
-msgstr ""
+msgstr "في كل مرة يمكن تغيير اسم حقل واحد فقط"
 
 #. module: base
 #: model:res.country,name:base.ca
@@ -7055,7 +7055,7 @@ msgstr ""
 #: model:ir.ui.menu,name:base.menu_partner_category_form
 #: model:ir.ui.view,arch_db:base.view_partner_category_list
 msgid "Contact Tags"
-msgstr ""
+msgstr "علامات الاتصال"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_partner_title_contact
@@ -8035,7 +8035,7 @@ msgstr "Disabling this option will also uninstall the following modules \n%s"
 #: model:ir.module.category,name:base.module_category_discuss
 #: model:ir.module.module,shortdesc:base.module_mail
 msgid "Discuss"
-msgstr ""
+msgstr "المحادثة"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_mail
@@ -10640,7 +10640,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_attachment_public
 msgid "Is public document"
-msgstr ""
+msgstr "هل هو مستند عام"
 
 #. module: base
 #: model:res.country,name:base.im
@@ -10867,7 +10867,7 @@ msgstr "حزمة لغة"
 #: code:addons/base/res/res_lang.py:187
 #, python-format
 msgid "Language code cannot be modified."
-msgstr ""
+msgstr "رمز اللغة لا يمكن تعديله"
 
 #. module: base
 #: sql_constraint:ir.translation:0
@@ -11896,6 +11896,18 @@ msgid "Model"
 msgstr "النموذج"
 
 #. module: base
+#: code:addons/base/ir/ir_model.py:382
+#, python-format
+msgid "Model %s does not exist"
+msgstr ""
+
+#. module: base
+#: code:addons/base/ir/ir_model.py:383
+#, python-format
+msgid "Please specify a valid model for the object relation"
+msgstr ""
+
+#. module: base
 #: code:addons/base/ir/ir_model.py:454
 #, python-format
 msgid "Model %s does not exist!"
@@ -12459,7 +12471,7 @@ msgstr "ملاحظات"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_module_category_module_nr
 msgid "Number of Apps"
-msgstr ""
+msgstr "عدد التطبيقات"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_cron_numbercall
@@ -14047,7 +14059,7 @@ msgstr "الكائن"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_attachment_res_field
 msgid "Resource Field"
-msgstr ""
+msgstr "حقل المصدر"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_attachment_res_id

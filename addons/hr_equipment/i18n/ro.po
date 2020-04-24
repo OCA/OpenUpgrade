@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-22 13:18+0000\n"
-"PO-Revision-Date: 2017-04-21 13:00+0000\n"
-"Last-Translator: Martin Trigaux\n"
+"PO-Revision-Date: 2018-09-09 06:28+0000\n"
+"Last-Translator: Dorin Hongu <dhongu@gmail.com>\n"
 "Language-Team: Romanian (http://www.transifex.com/odoo/odoo-9/language/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +25,7 @@ msgstr "<b>Categorie:</b>"
 #. module: hr_equipment
 #: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_view_kanban
 msgid "<b>Model Number:</b>"
-msgstr ""
+msgstr "Numar model"
 
 #. module: hr_equipment
 #: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_request_view_kanban
@@ -95,7 +95,7 @@ msgstr "Model de Alias"
 #. module: hr_equipment
 #: sql_constraint:hr.equipment:0
 msgid "Another asset already exists with this serial number!"
-msgstr ""
+msgstr "Un alt activ exista deja cu acest numar de serial"
 
 #. module: hr_equipment
 #: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_config_settings_view_form
@@ -143,7 +143,7 @@ msgstr "Atribuit lui"
 #. module: hr_equipment
 #: model:ir.model.fields,field_description:hr_equipment.field_hr_equipment_department_id
 msgid "Assigned to Department"
-msgstr ""
+msgstr "Atribuit la departament"
 
 #. module: hr_equipment
 #: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_view_search
@@ -153,7 +153,7 @@ msgstr ""
 #. module: hr_equipment
 #: model:ir.model.fields,field_description:hr_equipment.field_hr_equipment_employee_id
 msgid "Assigned to Employee"
-msgstr ""
+msgstr "Atribuit la angajatul"
 
 #. module: hr_equipment
 #: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_view_search
@@ -198,23 +198,23 @@ msgstr "Numele categoriei"
 #. module: hr_equipment
 #: model:ir.actions.act_window,help:hr_equipment.hr_equipment_action_from_category_form
 msgid "Click to add a new Engine."
-msgstr ""
+msgstr "Clic pentru a adauga un nou Motor"
 
 #. module: hr_equipment
 #: model:ir.actions.act_window,help:hr_equipment.hr_equipment_category_action
 msgid "Click to add a new equipment category."
-msgstr ""
+msgstr "Clic pentru a adauga o noua categorie de echipamente"
 
 #. module: hr_equipment
 #: model:ir.actions.act_window,help:hr_equipment.hr_equipment_action
 msgid "Click to add a new equipment."
-msgstr ""
+msgstr "Clic pentru a aduga un nou echipament"
 
 #. module: hr_equipment
 #: model:ir.actions.act_window,help:hr_equipment.hr_equipment_request_action
 #: model:ir.actions.act_window,help:hr_equipment.hr_equipment_request_action_link
 msgid "Click to add a new maintenance request."
-msgstr ""
+msgstr "Clic pentru a aduga o noua cerere de mentenanta"
 
 #. module: hr_equipment
 #: model:ir.actions.act_window,help:hr_equipment.hr_equipment_stage_action
@@ -367,7 +367,7 @@ msgstr "Echipament"
 #: model:mail.message.subtype,name:hr_equipment.mt_cat_mat_assign
 #: model:mail.message.subtype,name:hr_equipment.mt_mat_assign
 msgid "Equipment Assigned"
-msgstr ""
+msgstr "Echipament atribuit"
 
 #. module: hr_equipment
 #: model:ir.actions.act_window,name:hr_equipment.hr_equipment_category_action
@@ -633,7 +633,7 @@ msgstr "Echipamentele mele"
 #. module: hr_equipment
 #: model:ir.ui.view,arch_db:hr_equipment.hr_equipment_request_view_search
 msgid "My Requests"
-msgstr ""
+msgstr "Cererile mele"
 
 #. module: hr_equipment
 #: model:ir.model.fields,field_description:hr_equipment.field_hr_equipment_stage_name

@@ -322,14 +322,14 @@ class Slide(models.Model):
         base_url = self.env['ir.config_parameter'].get_param('web.base.url')
         for record in self:
             if record.datas and (not record.document_id or record.slide_type in ['document', 'presentation']):
-                record.embed_code = '<iframe src="%s/slides/embed/%s?page=1" allowFullScreen="true" height="%s" width="%s" frameborder="0"></iframe>' % (base_url, record.id, 315, 420)
+                record.embed_code = '<iframe src="%s/slides/embed/%s?page=1" class="o_wslides_iframe_viewer" allowFullScreen="true" height="%s" width="%s" frameborder="0"></iframe>' % (base_url, record.id, 315, 420)
             elif record.slide_type == 'video' and record.document_id:
                 if not record.mime_type:
                     # embed youtube video
                     record.embed_code = '<iframe src="//www.youtube.com/embed/%s?theme=light" allowFullScreen="true" frameborder="0"></iframe>' % (record.document_id)
                 else:
                     # embed google doc video
-                    record.embed_code = '<embed src="https://video.google.com/get_player?ps=docs&partnerid=30&docid=%s" type="application/x-shockwave-flash"></embed>' % (record.document_id)
+                    record.embed_code = '<iframe src="//drive.google.com/file/d/%s/preview" allowFullScreen="true" frameborder="0"></iframe>' % (record.document_id)
             else:
                 record.embed_code = False
 
@@ -341,7 +341,14 @@ class Slide(models.Model):
         #link_tracker is not in dependencies, so use it to shorten url only if installed.
         if self.env.registry.get('link.tracker'):
             LinkTracker = self.env['link.tracker']
-            res.update({(slide.id, LinkTracker.sudo().create({'url': '%s/slides/slide/%s' % (base_url, slug(slide))}).short_url) for slide in self})
+            res.update({
+                (slide.id,
+                 LinkTracker.sudo().create({
+                     'url': '%s/slides/slide/%s' % (base_url, slug(slide)),
+                     'title': slide.name,
+                 }).short_url)
+                for slide in self
+            })
         else:
             res.update({(slide.id, '%s/slides/slide/%s' % (base_url, slug(slide))) for slide in self})
         return res
@@ -355,7 +362,7 @@ class Slide(models.Model):
             values['image'] = values['datas']
         if values.get('website_published') and not values.get('date_published'):
             values['date_published'] = datetime.datetime.now()
-        if values.get('url'):
+        if values.get('url') and not values.get('document_id'):
             doc_data = self._parse_document_url(values['url']).get('values', dict())
             for key, value in doc_data.iteritems():
                 values.setdefault(key, value)
@@ -369,7 +376,7 @@ class Slide(models.Model):
 
     @api.multi
     def write(self, values):
-        if values.get('url'):
+        if values.get('url') and values['url'] != self.url:
             doc_data = self._parse_document_url(values['url']).get('values', dict())
             for key, value in doc_data.iteritems():
                 values.setdefault(key, value)
@@ -503,6 +510,7 @@ class Slide(models.Model):
                 'name': snippet['title'],
                 'image': self._fetch_data(snippet['thumbnails']['high']['url'], {}, 'image')['values'],
                 'description': snippet['description'],
+                'mime_type': False,
             })
         return {'values': values}
 

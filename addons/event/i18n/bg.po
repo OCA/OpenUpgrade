@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-01 06:27+0000\n"
-"PO-Revision-Date: 2016-12-10 10:38+0000\n"
-"Last-Translator: Martin Trigaux\n"
+"POT-Creation-Date: 2016-09-22 13:16+0000\n"
+"PO-Revision-Date: 2018-08-28 13:58+0000\n"
+"Last-Translator: Maria Boyadjieva <marabo2000@gmail.com>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/odoo/odoo-9/language/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,8 +51,8 @@ msgstr ""
 #. module: event
 #: model:event.event,description:event.event_2
 msgid ""
-"<em>(Chamber Works reserves the right to cancel, re-name or re-"
-"locate<br/>the event or change the dates on which it is held.)</em>"
+"<em>(Chamber Works reserves the right to cancel, re-name or re-locate<br>the"
+" event or change the dates on which it is held.)</em>"
 msgstr ""
 
 #. module: event
@@ -778,7 +778,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:event.field_event_event_name
 #: model:ir.ui.view,arch_db:event.view_event_form
 msgid "Event Name"
-msgstr ""
+msgstr "Име на събитие"
 
 #. module: event
 #: model:ir.ui.view,arch_db:event.view_event_calendar
@@ -934,7 +934,7 @@ msgstr ""
 #. module: event
 #: model:event.event,name:event.event_1
 msgid "Functional Webinar"
-msgstr ""
+msgstr "Функционален уеб семинар"
 
 #. module: event
 #: model:event.event,description:event.event_2
@@ -1095,12 +1095,12 @@ msgstr "е последовател"
 #. module: event
 #: model:ir.model.fields,help:event.field_event_type_default_registration_max
 msgid "It will select this default maximum value when you choose this event"
-msgstr ""
+msgstr "Когато изберете това събитие, ше подбере тази максимална стойност по подразбиране"
 
 #. module: event
 #: model:ir.model.fields,help:event.field_event_type_default_registration_min
 msgid "It will select this default minimum value when you choose this event"
-msgstr ""
+msgstr "Когато изберете това събитие, ще подбере тази минимална стойност по подразбиране"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_event_color
@@ -1150,7 +1150,7 @@ msgstr "Последно обновено на"
 #. module: event
 #: selection:event.event,seats_availability:0
 msgid "Limited"
-msgstr ""
+msgstr "Ограничен"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_event_address_id
@@ -1230,12 +1230,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:event.field_event_registration_message_ids
 msgid "Messages"
 msgstr "Съобщения"
-
-#. module: event
-#: model:ir.model.fields,help:event.field_event_event_message_ids
-#: model:ir.model.fields,help:event.field_event_registration_message_ids
-msgid "Messages and communication history"
-msgstr "История на събщенията и комуникациите"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_event_seats_min
@@ -1359,7 +1353,7 @@ msgstr ""
 #. module: event
 #: model:event.event,name:event.event_0
 msgid "Open Days in Los Angeles"
-msgstr ""
+msgstr "Открити дни в Лос Анджелис"
 
 #. module: event
 #: model:ir.actions.client,name:event.action_client_event_menu
@@ -1374,7 +1368,7 @@ msgstr "Организатор"
 #. module: event
 #: model:ir.ui.view,arch_db:event.view_registration_search
 msgid "Participant"
-msgstr ""
+msgstr "Участник"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_report_event_registration_name_registration
@@ -1412,7 +1406,7 @@ msgstr "Телефон"
 #. module: event
 #: model:event.event,description:event.event_2
 msgid "Point of Sale (POS), Introduction to report customization."
-msgstr ""
+msgstr "Център за продажби (POS), Въведение в отчитането на персонализацията."
 
 #. module: event
 #: model:event.event,description:event.event_2
@@ -1476,7 +1470,7 @@ msgstr ""
 #. module: event
 #: model:ir.ui.view,arch_db:event.view_registration_search
 msgid "Registration ID"
-msgstr ""
+msgstr "ИН на регистрация"
 
 #. module: event
 #: model:ir.model,name:event.model_event_mail_registration
@@ -1550,7 +1544,7 @@ msgstr "Изисквания"
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_event_seats_reserved
 msgid "Reserved Seats"
-msgstr ""
+msgstr "Резервирани места"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_event_user_id
@@ -1611,7 +1605,7 @@ msgstr "Настройки"
 #. module: event
 #: model:event.type,name:event.event_type_3
 msgid "Show"
-msgstr ""
+msgstr "Покажете"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_registration_origin
@@ -1631,7 +1625,7 @@ msgstr ""
 #. module: event
 #: model:ir.ui.view,arch_db:event.view_event_search
 msgid "Start Month"
-msgstr ""
+msgstr "Стартиращ месец"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_event_state
@@ -1688,7 +1682,7 @@ msgstr ""
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_config_settings_module_event_sale
 msgid "Tickets"
-msgstr ""
+msgstr "Билети"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_event_date_tz
@@ -1710,7 +1704,7 @@ msgstr ""
 #. module: event
 #: model:event.type,name:event.event_type_4
 msgid "Training"
-msgstr ""
+msgstr "Обучение"
 
 #. module: event
 #: model:event.event,description:event.event_0
@@ -1728,7 +1722,7 @@ msgstr "Непотвърдено"
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_event_seats_unconfirmed
 msgid "Unconfirmed Seat Reservations"
-msgstr ""
+msgstr "Непотвърдено резервиране на местата"
 
 #. module: event
 #: model:event.event,description:event.event_0
@@ -1814,16 +1808,6 @@ msgid ""
 msgstr "Внимание: Това събитие не е достигнало минималната граница за брой регистрации. Сигурни ли сте, искате да го потвърдите?"
 
 #. module: event
-#: model:ir.model.fields,field_description:event.field_event_event_website_message_ids
-msgid "Website Messages"
-msgstr ""
-
-#. module: event
-#: model:ir.model.fields,help:event.field_event_event_website_message_ids
-msgid "Website communication history"
-msgstr ""
-
-#. module: event
 #: selection:event.mail,interval_unit:0
 msgid "Week(s)"
 msgstr "Седмица(ци)"
@@ -1860,7 +1844,7 @@ msgstr "Последователности от действия"
 msgid ""
 "You have already set a registration for this event as 'Attended'. Please "
 "reset it to draft if you want to cancel this event."
-msgstr ""
+msgstr "Вече сте настроили регистрацията на това събитие като 'Посетено'. Моля, пренастройте го за чернова, в случай че желаете да го отмените."
 
 #. module: event
 #: code:addons/event/models/event.py:355

@@ -29,8 +29,6 @@ def hr_expense(env):
             journal_id = ot.journal_id,
             employee_id = ot.employee_id,
             state = ot.state,
-            name = ot.name,
-            date = ot.date,
             account_move_id = ot.account_move_id,
             payment_mode = 'own_account'
         FROM %(old_table)s ot
@@ -40,6 +38,22 @@ def hr_expense(env):
                 openupgrade.get_legacy_name('hr_expense_expense')
             )
         },
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE ir_attachment
+        SET res_model='hr.expense', res_id=hr_expense.id
+        FROM hr_expense
+        WHERE res_model='hr.expense.expense' AND hr_expense.expense_id=res_id
+        """
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE mail_message
+        SET model='hr.expense', res_id=hr_expense.id
+        FROM hr_expense
+        WHERE model='hr.expense.expense' AND hr_expense.expense_id=res_id
+        """
     )
     Expense = env['hr.expense']
     expenses = Expense.search([])

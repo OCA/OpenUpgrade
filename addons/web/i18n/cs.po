@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-18 04:43+0000\n"
-"PO-Revision-Date: 2017-03-25 10:18+0000\n"
-"Last-Translator: Martin Trigaux\n"
+"PO-Revision-Date: 2018-09-20 21:09+0000\n"
+"Last-Translator: J. Podhorecky <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech (http://www.transifex.com/odoo/odoo-9/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: cs\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #. module: web
 #. openerp-web
@@ -193,7 +193,7 @@ msgstr "(%d záznamů)"
 #: code:addons/web/static/src/xml/base.xml:106
 #, python-format
 msgid "(Community Edition)"
-msgstr ""
+msgstr "(Community Edition)"
 
 #. module: web
 #. openerp-web
@@ -288,7 +288,7 @@ msgstr "ID akce:"
 #: code:addons/web/static/src/js/views/form_widgets.js:660
 #, python-format
 msgid "Activate"
-msgstr ""
+msgstr "aktivovat"
 
 #. module: web
 #. openerp-web
@@ -367,7 +367,7 @@ msgstr "Pokročilé hledání..."
 #: code:addons/web/static/src/js/framework/dialog.js:162
 #, python-format
 msgid "Alert"
-msgstr ""
+msgstr "Výstraha"
 
 #. module: web
 #. openerp-web
@@ -397,7 +397,7 @@ msgstr "Použít"
 #: code:addons/web/static/src/js/views/list_view.js:308
 #, python-format
 msgid "Archive"
-msgstr ""
+msgstr "Archivovat"
 
 #. module: web
 #. openerp-web
@@ -874,6 +874,13 @@ msgid "Error"
 msgstr "Chyba"
 
 #. module: web
+#. openerp-web
+#: code:addons/web/static/src/js/views/form_widgets.js:458
+#, python-format
+msgid "Error: Bad domain"
+msgstr ""
+
+#. module: web
 #: code:addons/web/controllers/main.py:838
 #, python-format
 msgid "Error, password not changed !"
@@ -1141,6 +1148,15 @@ msgstr "Neaktivní"
 #: code:addons/web/static/src/js/views/graph_widget.js:197
 #, python-format
 msgid "Invalid data"
+msgstr ""
+
+#. module: web
+#: code:addons/web/controllers/main.py:655
+#: code:addons/web/controllers/main.py:669
+#, python-format
+msgid ""
+"Invalid database name. Only alphanumerical characters, underscore, hyphen "
+"and dot are allowed."
 msgstr ""
 
 #. module: web
@@ -1502,7 +1518,7 @@ msgstr ""
 #. openerp-web
 #: code:addons/web/static/src/js/views/form_relational_widgets.js:328
 #, python-format
-msgid "No value found for the field  for value "
+msgid "No value found for the field %s for value %s"
 msgstr ""
 
 #. module: web
@@ -1783,8 +1799,8 @@ msgstr "Vytisknout pracovní postup"
 #: code:addons/web/static/src/xml/base.xml:578
 #: code:addons/web/static/src/xml/base.xml:610
 #, python-format
-msgid "Quantity"
-msgstr "Množství"
+msgid "Count"
+msgstr ""
 
 #. module: web
 #. openerp-web
@@ -2083,6 +2099,13 @@ msgstr "Běžte si udělat kafe<br />protože probíhá načítání..."
 #, python-format
 msgid "Technical Translation"
 msgstr "Technický překlad"
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/js/views/form_widgets.js:458
+#, python-format
+msgid "The domain is wrong."
+msgstr ""
 
 #. module: web
 #. openerp-web
@@ -2462,6 +2485,12 @@ msgstr "Zadali jste špatnou hodnotu!"
 #, python-format
 msgid "XML ID:"
 msgstr "XML ID:"
+
+#. module: web
+#: code:addons/web/controllers/main.py:513
+#, python-format
+msgid "Wrong login/password"
+msgstr ""
 
 #. module: web
 #. openerp-web

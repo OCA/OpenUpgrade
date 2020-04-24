@@ -1,34 +1,32 @@
 ---Fields in module 'crm'---
 crm          / calendar.event           / phonecall_id (many2one)       : DEL relation: crm.phonecall
-crm          / crm.activity             / _inherits (False)             : NEW 
+crm          / crm.activity             / _inherits (False)             : NEW
 crm          / crm.activity             / activity_1_id (many2one)      : NEW relation: crm.activity
 crm          / crm.activity             / activity_2_id (many2one)      : NEW relation: crm.activity
 crm          / crm.activity             / activity_3_id (many2one)      : NEW relation: crm.activity
-crm          / crm.activity             / days (integer)                : NEW 
-crm          / crm.activity             / sequence (integer)            : NEW 
+crm          / crm.activity             / days (integer)                : NEW
+crm          / crm.activity             / sequence (integer)            : NEW
 crm          / crm.activity             / subtype_id (many2one)         : NEW relation: mail.message.subtype, required: required
 crm          / crm.activity             / team_id (many2one)            : NEW relation: crm.team
 
 # New model replacing phone calls et al. We create a message for every phone call on the lead/partner (or user if not set) with crm_activity_data_call's message type
 
 crm          / crm.lead                 / campaign_id (many2one)        : relation is now 'utm.campaign' ('crm.tracking.campaign')
-
-# Data is moved to utm_campaign and ids updated
+crm          / crm.lead                 / medium_id (many2one)          : relation is now 'utm.medium' ('crm.tracking.medium')
+crm          / crm.lead                 / source_id (many2one)          : relation is now 'utm.source' ('crm.tracking.source')
+# NOTHING TO DO: Models renamed in base
 
 crm          / crm.lead                 / categ_ids (many2many)         : DEL relation: crm.case.categ
 crm          / crm.lead                 / tag_ids (many2many)           : NEW relation: crm.lead.tag
 
 # renamed categ_ids to tag_ids and crm.case.categ to crm.lead.tag
 
-crm          / crm.lead                 / date_conversion (datetime)    : NEW 
+crm          / crm.lead                 / date_conversion (datetime)    : NEW
 crm          / crm.lead                 / last_activity_id (many2one)   : NEW relation: crm.activity
 crm          / crm.lead                 / lost_reason (many2one)        : NEW relation: crm.lost.reason
 
 # nothing to do
 
-crm          / crm.lead                 / medium_id (many2one)          : relation is now 'utm.medium' ('crm.tracking.medium')
-
-# Data is moved to utm_medium and ids updates
 
 crm          / crm.lead                 / message_follower_ids (many2many): not a function anymore
 crm          / crm.lead                 / message_follower_ids (many2many): relation is now 'mail.followers' ('res.partner')
@@ -43,8 +41,8 @@ crm          / crm.lead                 / priority (selection)          : select
 
 # 4 is mapped to 3
 
-crm          / crm.lead                 / ref (reference)               : DEL 
-crm          / crm.lead                 / ref2 (reference)              : DEL 
+crm          / crm.lead                 / ref (reference)               : DEL
+crm          / crm.lead                 / ref2 (reference)              : DEL
 
 # Migrated to sale order's opportunity field in sale_crm where applicable
 
@@ -52,10 +50,6 @@ crm          / crm.lead                 / section_id (many2one)         : relati
 crm          / crm.lead                 / section_id (many2one)         : was renamed to team_id [nothing to to]
 
 # Nothing to do (model is renamed in sales_team migration)
-
-crm          / crm.lead                 / source_id (many2one)          : relation is now 'utm.source' ('crm.tracking.source')
-
-# Data is moved to utm_source and ids updated
 
 crm          / crm.lead                 / stage_id (many2one)           : relation is now 'crm.stage' ('crm.case.stage')
 
@@ -69,45 +63,58 @@ crm          / crm.lead                 / website_message_ids (one2many): NEW re
 
 # nothing to do
 
-crm          / crm.lead.tag             / color (integer)               : NEW 
+crm          / crm.lead.tag             / color (integer)               : NEW
 crm          / crm.lead.tag             / name (char)                   : NEW required: required
 crm          / crm.lead.tag             / team_id (many2one)            : NEW relation: crm.team
 
 # renamed from crm.case.categ
 
-crm          / crm.lost.reason          / active (boolean)              : NEW 
+crm          / crm.lost.reason          / active (boolean)              : NEW
 crm          / crm.lost.reason          / name (char)                   : NEW required: required
 
 # nothing to do
 
-crm          / crm.stage                / fold (boolean)                : NEW 
-crm          / crm.stage                / legend_priority (text)        : NEW 
+crm          / crm.stage                / fold (boolean)                : NEW
+crm          / crm.stage                / legend_priority (text)        : NEW
 crm          / crm.stage                / name (char)                   : NEW required: required
-crm          / crm.stage                / on_change (boolean)           : NEW 
+crm          / crm.stage                / on_change (boolean)           : NEW
 crm          / crm.stage                / probability (float)           : NEW required: required, req_default: 10.0
-crm          / crm.stage                / requirements (text)           : NEW 
-crm          / crm.stage                / sequence (integer)            : NEW 
+crm          / crm.stage                / requirements (text)           : NEW
+crm          / crm.stage                / sequence (integer)            : NEW
 crm          / crm.stage                / team_ids (many2many)          : NEW relation: crm.team
 crm          / crm.stage                / type (selection)              : NEW required: required, selection_keys: ['both', 'lead', 'opportunity'], req_default: both
 
 # renamed from crm.case.stage, renamed pivot table for team_ids
 
-crm          / crm.team                 / _inherits (False)             : NEW 
+crm          / crm.team                 / _inherits (False)             : NEW
 crm          / crm.team                 / alias_id (many2one)           : NEW relation: mail.alias, required: required
 crm          / crm.team                 / resource_calendar_id (many2one): NEW relation: resource.calendar
 crm          / crm.team                 / stage_ids (many2many)         : NEW relation: crm.stage
-crm          / crm.team                 / use_leads (boolean)           : NEW 
-crm          / crm.team                 / use_opportunities (boolean)   : NEW 
+crm          / crm.team                 / use_leads (boolean)           : NEW
+crm          / crm.team                 / use_opportunities (boolean)   : NEW
 
 # nothing to do (crm.team#stage_ids is the inverse of crm.team#team_ids)
 
 crm          / res.partner              / phonecall_ids (one2many)      : DEL relation: crm.phonecall
-crm          / res.users                / target_sales_done (integer)   : NEW 
-crm          / res.users                / target_sales_won (integer)    : NEW 
+crm          / res.users                / target_sales_done (integer)   : NEW
+crm          / res.users                / target_sales_won (integer)    : NEW
 
 # nothing to do
 
 ---XML records in module 'crm'---
+DEL crm.case.stage: crm.stage_lead1
+DEL crm.case.stage: crm.stage_lead2
+DEL crm.case.stage: crm.stage_lead3
+DEL crm.case.stage: crm.stage_lead4
+DEL crm.case.stage: crm.stage_lead5
+DEL crm.case.stage: crm.stage_lead6
+DEL crm.case.stage: crm.stage_lead7
+NEW crm.stage: crm.stage_lead1
+NEW crm.stage: crm.stage_lead2
+NEW crm.stage: crm.stage_lead3
+NEW crm.stage: crm.stage_lead5
+# DONE: pre-migration: map possible crm.case.stage to their corresponding new crm.stage ones and delete XML-IDs of the deprecated ones
+
 NEW crm.activity: crm.crm_activity_data_call
 NEW crm.activity: crm.crm_activity_data_email
 NEW crm.activity: crm.crm_activity_data_meeting
@@ -122,13 +129,6 @@ DEL crm.case.categ: crm.categ_oppor8
 DEL crm.case.categ: crm.categ_phone1
 DEL crm.case.categ: crm.categ_phone2
 DEL crm.case.section: sales_team.section_sales_department
-DEL crm.case.stage: crm.stage_lead1
-DEL crm.case.stage: crm.stage_lead2
-DEL crm.case.stage: crm.stage_lead3
-DEL crm.case.stage: crm.stage_lead4
-DEL crm.case.stage: crm.stage_lead5
-DEL crm.case.stage: crm.stage_lead6
-DEL crm.case.stage: crm.stage_lead7
 NEW crm.lost.reason: crm.lost_reason_1
 NEW crm.lost.reason: crm.lost_reason_2
 NEW crm.lost.reason: crm.lost_reason_3
@@ -136,10 +136,6 @@ DEL crm.payment.mode: crm.payment_mode_1
 DEL crm.payment.mode: crm.payment_mode_2
 DEL crm.payment.mode: crm.payment_mode_3
 DEL crm.payment.mode: crm.payment_mode_4
-NEW crm.stage: crm.stage_lead1
-NEW crm.stage: crm.stage_lead2
-NEW crm.stage: crm.stage_lead3
-NEW crm.stage: crm.stage_lead5
 NEW crm.team: sales_team.team_sales_department
 DEL crm.tracking.medium: crm.crm_medium_banner
 DEL crm.tracking.medium: crm.crm_medium_direct

@@ -15,12 +15,12 @@
 # Gary Wei <Gary.wei@elico-corp.com>, 2015
 # Haorui Wang <yui12349856@live.com>, 2015
 # H_Tang <h_tang@foxmail.com>, 2015
-# Jeffery CHEN <jeffery9@gmail.com>, 2015-2016
-# Jeffery CHEN <jeffery9@gmail.com>, 2016
+# Jeffery CHEN Fan <jeffery9@gmail.com>, 2015-2016
+# Jeffery CHEN Fan <jeffery9@gmail.com>, 2016
 # Joray <13637815@qq.com>, 2016
 # Joray <13637815@qq.com>, 2016
 # Kai Zhu <parahexen@gmail.com>, 2016
-# liAnGjiA <liangjia@qq.com>, 2015,2017
+# 珠海-杜哥 <liangjia@qq.com>, 2015,2017
 # Martin Trigaux, 2015
 # Martin Trigaux, 2015
 # Seven Floor <my7floor@gmail.com>, 2016
@@ -28,21 +28,21 @@
 # Si Ling Lau <happy8645@hotmail.com>, 2016
 # waveyeung <waveyeung@qq.com>, 2015
 # Wei "oldrev" Li <liwei@sandwych.com>, 2016
-# zhangpeiqing <zpq001@live.com>, 2015
+# zpq001 <zpq001@live.com>, 2015
 # zhining wu <wzn63@21cn.com>, 2015
 # Олег <pehotaolega.ru@mail.ru>, 2016
 # 卓忆科技 <zhanghao@jointd.com>, 2016
 # 尘 王 <2119205914@qq.com>, 2016
 # 榴莲 <nocoolyoyo@bengentea.top>, 2016
-# liAnGjiA <liangjia@qq.com>, 2015
+# 珠海-杜哥 <liangjia@qq.com>, 2015
 # 钟小华 <mackz@sina.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-22 13:16+0000\n"
-"PO-Revision-Date: 2017-03-29 08:40+0000\n"
-"Last-Translator: Martin Trigaux\n"
+"PO-Revision-Date: 2018-09-30 10:41+0000\n"
+"Last-Translator: keecome <7017511@qq.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/odoo/odoo-9/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1491,10 +1491,17 @@ msgstr "允许使用分析会计"
 #: model:ir.model.fields,field_description:account.field_cash_box_in_amount
 #: model:ir.model.fields,field_description:account.field_cash_box_out_amount
 #: model:ir.ui.view,arch_db:account.report_invoice_document
+#: model:ir.ui.view,arch_db:account.view_account_payment_tree
+#: model:ir.ui.view,arch_db:account.view_account_supplier_payment_tree
 #: model:ir.ui.view,arch_db:account.view_move_line_form
 #, python-format
 msgid "Amount"
 msgstr "金额"
+
+#. module: account
+#: model:ir.model.fields,field_description:account.field_account_analytic_line_analytic_amount_currency
+msgid "Amount Currency"
+msgstr "币种金额"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_residual
@@ -1519,6 +1526,11 @@ msgstr "这种匹配的总计，全部设定为正值"
 #: model:ir.model.fields,field_description:account.field_account_move_line_amount_currency
 msgid "Amount currency"
 msgstr "外币金额"
+
+#. module: account
+#: model:ir.ui.view,arch_db:account.invoice_tree
+msgid "Amount due"
+msgstr ""
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_partial_reconcile_amount_currency
@@ -4774,6 +4786,11 @@ msgid "Invoices to validate"
 msgstr "待确认发票"
 
 #. module: account
+#: model:ir.ui.menu,name:account.menu_finance
+msgid "Invoicing"
+msgstr "开票"
+
+#. module: account
 #: model:ir.ui.view,arch_db:account.view_account_config_settings
 msgid "Invoicing & Payments"
 msgstr "开票和付款"
@@ -5287,7 +5304,7 @@ msgstr "法律提到必须打印在发票上的"
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_form
 msgid "Less Cost of Revenue"
-msgstr ""
+msgstr "主营业务成本"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.view_account_form
@@ -5849,8 +5866,8 @@ msgstr "10月"
 
 #. module: account
 #: model:ir.ui.view,arch_db:account.account_planner
-msgid "Odoo Accounting has many free extra-features:"
-msgstr "Odoo财务有很多免费的额外特性"
+msgid "Odoo Accounting has many extra-features:"
+msgstr "Odoo 会计有很多额外的功能："
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_bank_statement_line
@@ -8106,6 +8123,12 @@ msgid ""
 msgstr "为保证全部总量被分配，最后一行的计算类型应该是 \"余额\""
 
 #. module: account
+#: code:addons/account/models/company.py:81
+#, python-format
+msgid "The lock date for advisors is irreversible and can't be removed."
+msgstr "锁定日期是不可删除"
+
+#. module: account
 #: model:ir.model.fields,help:account.field_account_move_line_move_id
 msgid "The move of this entry line."
 msgstr "这条分录行的移动"
@@ -8122,6 +8145,13 @@ msgstr "多币种选项，可以用不同的货币发送或接收发票\n，设�
 #: model:ir.model.fields,help:account.field_account_invoice_name
 msgid "The name that will be used on account move lines"
 msgstr "会计分录行的名称"
+
+#. module: account
+#: code:addons/account/models/company.py:85
+#, python-format
+msgid ""
+"The new lock date for advisors must be set after the previous lock date."
+msgstr "新的锁定日期必须与先前的锁定日期后进行设置"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_bank_statement_line_currency_id
@@ -8217,7 +8247,36 @@ msgstr "日记账%s的序列号不可用"
 msgid ""
 "There are still unposted entries in the period you want to lock. You should "
 "either post or delete them."
-msgstr ""
+msgstr "在你想要锁定期还未发布的条目。您应该张贴或删除它们。"
+
+#. module: account
+#: code:addons/account/models/company.py:81
+#, python-format
+msgid "The lock date for advisors is irreversible and can't be removed."
+msgstr "锁定日期是不可删除"
+
+#. module: account
+#: code:addons/account/models/company.py:85
+#, python-format
+msgid ""
+"The new lock date for advisors must be set after the previous lock date."
+msgstr "新的锁定日期必须与先前的锁定日期后进行设置"
+
+#. module: account
+#: code:addons/account/models/company.py:96
+#, python-format
+msgid ""
+"You cannot lock a period that is not finished yet. Please make sure that the"
+" lock date for advisors is not set after the last day of the previous month."
+msgstr "你不能锁定未完成的会计期间。请确保所设置的锁定日期早于上月的最后一天。"
+
+#. module: account
+#: code:addons/account/models/company.py:107
+#, python-format
+msgid ""
+"You cannot define stricter conditions on advisors than on users. Please make"
+" sure that the lock date on advisor is set before the lock date for users."
+msgstr "您无法在总账模块上定义比用户更严格的条件。请确保在用户锁定日期之前设置总账模块上的锁定日期。"
 
 #. module: account
 #: code:addons/account/models/account_bank_statement.py:170
@@ -8554,7 +8613,12 @@ msgid ""
 msgstr "当给公司开发票用到税的时候，Odoo用到了“财政状态”这个概念：能够根据客户所在国家和所在地区自动的设置正确的税和科目"
 
 #. module: account
-#: code:addons/account/models/account_move.py:776
+#: model:ir.ui.view,arch_db:account.invoice_supplier_tree
+msgid "To pay"
+msgstr "待支付"
+
+#. module: account
+#: code:addons/account/models/account_move.py:895
 #, python-format
 msgid "To reconcile the entries company should be the same for all entries!"
 msgstr "调节录入对公司的所有录入应该是一致的。"
@@ -9258,6 +9322,14 @@ msgid ""
 "You cannot cancel an invoice which is partially paid. You need to "
 "unreconcile related payment entries first."
 msgstr "已经部分付款的发票不能被取消，需要先取消调节部分付款的分录　"
+
+#. module: account
+#: code:addons/account/models/company.py:118
+#, python-format
+msgid ""
+"You cannot change the currency of the company since some journal items "
+"already exist"
+msgstr "已经存在 journal items，不能修改公司的币种"
 
 #. module: account
 #: code:addons/account/models/account.py:162

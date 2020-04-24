@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-22 07:25+0000\n"
-"PO-Revision-Date: 2017-05-10 12:16+0000\n"
+"PO-Revision-Date: 2018-04-17 20:09+0000\n"
 "Last-Translator: Martin Trigaux\n"
 "Language-Team: Croatian (http://www.transifex.com/odoo/odoo-9/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -5921,7 +5921,7 @@ msgstr "Osnovni modul uvoza"
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_act_server_model_id
 msgid "Base model on which the server action runs."
-msgstr ""
+msgstr "Osnovni model na kojem sepokreće serverska radnja"
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_partner
@@ -11781,7 +11781,7 @@ msgstr "Poruka"
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_users_form
 msgid "Messaging and Social"
-msgstr ""
+msgstr "Poruke i društvene mreže"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_cron_function
@@ -11893,6 +11893,18 @@ msgstr "Način"
 #: model:ir.ui.view,arch_db:base.view_server_action_search
 msgid "Model"
 msgstr "Model"
+
+#. module: base
+#: code:addons/base/ir/ir_model.py:382
+#, python-format
+msgid "Model %s does not exist"
+msgstr ""
+
+#. module: base
+#: code:addons/base/ir/ir_model.py:383
+#, python-format
+msgid "Please specify a valid model for the object relation"
+msgstr ""
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:454
@@ -13839,7 +13851,7 @@ msgstr "Referentni zapis"
 #: model:ir.actions.act_window,name:base.res_request_link-act
 #: model:ir.ui.menu,name:base.menu_res_request_link_act
 msgid "Referenceable Models"
-msgstr ""
+msgstr "Referencirani modeli"
 
 #. module: base
 #: code:addons/base/res/res_company.py:108
@@ -15857,7 +15869,7 @@ msgstr ""
 msgid ""
 "The internal user that is in charge of communicating with this contact if "
 "any."
-msgstr ""
+msgstr "Korisnik koji je zadužen za komunikaciju za ovim kontaktom, ukoliko postoji."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_model_inherited_model_ids
@@ -16600,7 +16612,7 @@ msgstr "Nije moguće obrisati ovaj dokument jer se koristi kao zadano svojstvo"
 msgid ""
 "Unable to install module \"%s\" because an external dependency is not met: "
 "%s"
-msgstr ""
+msgstr "Nije moguće instalirati modul \" %s\", jer vanjska ovisnost nije zadovoljena: %s"
 
 #. module: base
 #: code:addons/base/module/module.py:364
@@ -16616,7 +16628,7 @@ msgstr ""
 msgid ""
 "Unable to upgrade module \"%s\" because an external dependency is not met: "
 "%s"
-msgstr ""
+msgstr "Nije moguće nadograditi modul \" %s\", jer vanjska ovisnost nije zadovoljena: %s"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_uncategorized
@@ -16827,7 +16839,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_sequence_use_date_range
 msgid "Use subsequences per date_range"
-msgstr ""
+msgstr "Koristi sekvence po razdobljima"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_gamification
@@ -17111,7 +17123,7 @@ msgstr "Pogledaj i izradi izvješća"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_mode
 msgid "View inheritance mode"
-msgstr ""
+msgstr "Prikaži mode nasljeđivanja"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_act_window_view_type
@@ -17457,7 +17469,7 @@ msgstr ""
 msgid ""
 "When subsequences per date range are used, you can prefix variables with 'range_'\n"
 "                                to use the beginning of the range instead of the current date, e.g. %(range_year)s instead of %(year)s."
-msgstr ""
+msgstr "Kada koristite sekvence po razdobljima varijablama možete dodati prefiks 'range_'\n                                kako bi koristili datume iz razdoblja umjesto trenutnog datuma, npr. %(range_year)s umjesto %(year)s."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_wkf_transition_signal

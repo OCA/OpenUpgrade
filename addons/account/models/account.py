@@ -100,7 +100,7 @@ class AccountAccount(models.Model):
         help="Forces all moves for this account to have this account currency.")
     code = fields.Char(size=64, required=True, index=True)
     deprecated = fields.Boolean(index=True, default=False)
-    user_type_id = fields.Many2one('account.account.type', string='Type', required=True, oldname="user_type", 
+    user_type_id = fields.Many2one('account.account.type', string='Type', required=True, oldname="user_type",
         help="Account Type is used for information purpose, to generate country-specific legal reports, and set the rules to close a fiscal year and generate opening entries.")
     internal_type = fields.Selection(related='user_type_id.type', store=True, readonly=True)
     #has_unreconciled_entries = fields.Boolean(compute='_compute_has_unreconciled_entries',
@@ -136,6 +136,8 @@ class AccountAccount(models.Model):
     def onchange_internal_type(self):
         if self.internal_type in ('receivable', 'payable'):
             self.reconcile = True
+        if self.internal_type == 'liquidity':
+            self.reconcile = False
 
     @api.multi
     @api.depends('name', 'code')
@@ -167,6 +169,12 @@ class AccountAccount(models.Model):
             move_lines = self.env['account.move.line'].search([('account_id', 'in', self.ids)], limit=1)
             if len(move_lines):
                 raise UserError(_('You cannot change the value of the reconciliation on this account as it already has some moves'))
+
+        if vals.get('currency_id'):
+            for account in self:
+                if self.env['account.move.line'].search_count([('account_id', '=', account.id), ('currency_id', 'not in', (False, vals['currency_id']))]):
+                    raise UserError(_('You cannot set a currency on this account as it already has some journal entries having a different foreign currency.'))
+
         return super(AccountAccount, self).write(vals)
 
     @api.multi
@@ -323,6 +331,8 @@ class AccountJournal(models.Model):
             if ('company_id' in vals and journal.company_id.id != vals['company_id']):
                 if self.env['account.move'].search([('journal_id', 'in', self.ids)], limit=1):
                     raise UserError(_('This journal already contains items, therefore you cannot modify its company.'))
+                if self.bank_account_id:
+                    self.bank_account_id.company_id = vals['company_id']
             if ('code' in vals and journal.code != vals['code']):
                 if self.env['account.move'].search([('journal_id', 'in', self.ids)], limit=1):
                     raise UserError(_('This journal already contains items, therefore you cannot modify its short name.'))
@@ -336,6 +346,8 @@ class AccountJournal(models.Model):
                     self.default_debit_account_id.currency_id = vals['currency_id']
                 if not 'default_credit_account_id' in vals and self.default_credit_account_id:
                     self.default_credit_account_id.currency_id = vals['currency_id']
+                if self.bank_account_id:
+                    self.bank_account_id.currency_id = vals['currency_id']
             if 'bank_acc_number' in vals and not vals.get('bank_acc_number') and journal.bank_account_id:
                 raise UserError(_('You cannot empty the account number once set.\nIf you would like to delete the account number, you can do it from the Bank Accounts list.'))
         result = super(AccountJournal, self).write(vals)
@@ -506,7 +518,7 @@ class AccountTaxGroup(models.Model):
 class AccountTax(models.Model):
     _name = 'account.tax'
     _description = 'Tax'
-    _order = 'sequence'
+    _order = 'sequence,id'
 
     @api.model
     def _default_tax_group(self):

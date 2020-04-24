@@ -41,72 +41,46 @@ def remove_obsolete(cr):
         """.format(OBSOLETE_RULES))
 
 
+@openupgrade.logging()
+def rename_utm(env):
+    """Handle crm.tracking.* -> utm.* renames.
+
+    This must be done in base because utm is a new module in v9, and crm
+    depends on it. This means that utm will not execute migration scripts
+    (because it's installed, not migrated), and crm migration scripts will
+    have all utm data already in place.
+
+    What we do here instead is to migrate minimal parts before utm
+    is even installed.
+    """
+    if openupgrade.table_exists(env.cr, "crm_tracking_campaign"):
+        openupgrade.rename_models(env.cr, [
+            ("crm.tracking.campaign", "utm.campaign"),
+            ("crm.tracking.medium", "utm.medium"),
+            ("crm.tracking.source", "utm.source"),
+        ])
+        openupgrade.rename_tables(env.cr, [
+            ("crm_tracking_campaign", "utm_campaign"),
+            ("crm_tracking_medium", "utm_medium"),
+            ("crm_tracking_source", "utm_source"),
+        ])
+        openupgrade.rename_xmlids(env.cr, [
+            ("crm.crm_medium_banner", "utm.utm_medium_banner"),
+            ("crm.crm_medium_direct", "utm.utm_medium_direct"),
+            ("crm.crm_medium_email", "utm.utm_medium_email"),
+            ("crm.crm_medium_phone", "utm.utm_medium_phone"),
+            ("crm.crm_medium_website", "utm.utm_medium_website"),
+            ("crm.crm_source_mailing", "utm.utm_source_mailing"),
+            ("crm.crm_source_newsletter", "utm.utm_source_newsletter"),
+            ("crm.crm_source_search_engine", "utm.utm_source_search_engine"),
+        ])
+
+
 def cleanup_modules(cr):
     """Don't report as missing these modules, as they are integrated in
     other modules."""
     openupgrade.update_module_names(
-        cr, [
-            ('account_chart', 'account'),
-            ('account_followup', 'account_credit_control'),
-            ('contacts', 'mail'),
-            ('marketing_crm', 'crm'),
-            ('email_template', 'mail'),  # mail_template class
-            ('portal_project', 'project'),
-            ('portal_project_issue', 'project_issue'),
-            ('procurement_jit_stock', 'procurement_jit'),
-            ('web_gantt', 'web'),
-            ('web_graph', 'web'),
-            ('web_kanban_sparkline', 'web'),
-            ('web_tests', 'web'),
-            ('website_report', 'report'),
-            # from OCA/account-financial-tools - Features changed
-            ('account_move_line_no_default_search', 'account'),
-            ('account_tax_chart_interval', 'account'),
-            # from OCA/account-financial-reporting
-            ('account_journal_report_xls', 'account_journal_report'),
-            ('account_financial_report_webkit_xls',
-             'account_financial_report_qweb'),
-            ('account_tax_report_no_zeroes', 'account'),
-            # from OCA/account_payment
-            ('account_payment_term_multi_day',
-             'account_payment_term_extension'),
-            # from OCA/bank-statement-reconcile
-            ('account_easy_reconcile', 'account_mass_reconcile'),
-            ('account_advanced_reconcile', 'account_mass_reconcile'),
-            ('account_bank_statement_period_from_line_date', 'account'),
-            # from OCA/connector-telephony
-            ('asterisk_click2dial_crm', 'crm_phone'),
-            # from OCA/server-tools - features included now in core
-            ('base_concurrency', 'base'),
-            ('base_debug4all', 'base'),
-            ('cron_run_manually', 'base'),
-            ('shell', 'base'),
-            # from OCA/social - included in core
-            ('website_mail_snippet_table_edit', 'mass_mailing'),
-            ('mass_mailing_sending_queue', 'mass_mailing'),
-            ('website_mail_snippet_bg_color',
-             'web_editor_background_color'),  # this one now located in OCA/web
-            # from OCA/crm - included in core
-            ('crm_lead_lost_reason', 'crm'),
-            # from OCA/sale-workflow - included in core
-            ('account_invoice_reorder_lines', 'account'),
-            ('sale_order_back2draft', 'sale'),
-            ('partner_prepayment', 'sale_delivery_block'),
-            ('sale_fiscal_position_update', 'sale'),
-            ('sale_documents_comments', 'sale_comment_propagation'),
-            # from OCA/bank-payment
-            ('account_payment_sale_stock', 'account_payment_sale'),
-            # from OCA/website
-            ('website_event_register_free', 'website_event'),
-            ('website_event_register_free_with_sale', 'website_event_sale'),
-            ('website_sale_collapse_categories', 'website_sale'),
-            # OCA/reporting-engine
-            ('report_xls', 'report_xlsx'),
-            # OCA/l10n-spain
-            ('l10n_es_account_financial_report', 'account_journal_report'),
-            # OCA/stock-logistics-workflow
-            ('stock_dropshipping_dual_invoice', 'stock_dropshipping'),
-        ], merge_modules=True,
+        cr, apriori.merged_modules, merge_modules=True,
     )
 
 
@@ -159,6 +133,31 @@ def migrate_translations(cr):
                  OR ir_translation.module IS NULL); """)
 
 
+def switch_noupdate_flag(cr):
+    """"Some XML-IDs have changed their noupdate status, so we change it as
+    well.
+    """
+    openupgrade.logged_query(
+        cr, """
+        UPDATE ir_model_data
+        SET noupdate=False
+        WHERE module='base' AND name IN ('group_public', 'group_portal')""",
+    )
+
+
+def propagate_currency_company(env):
+    openupgrade.add_fields(
+        env, [('company_id', 'res.currency.rate', 'res_currency_rate',
+               'many2one', False, 'base')],
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE res_currency_rate rcr SET company_id = rc.company_id
+        FROM res_currency rc WHERE rc.id = rcr.currency_id
+        """,
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -176,6 +175,9 @@ def migrate(env, version):
     cleanup_modules(cr)
     map_res_partner_type(cr)
     migrate_translations(env.cr)
+    switch_noupdate_flag(env.cr)
+    rename_utm(env)
+    propagate_currency_company(env)
 
 
 def pre_create_columns(cr):

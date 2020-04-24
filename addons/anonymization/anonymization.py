@@ -4,14 +4,11 @@
 from lxml import etree
 import os
 import base64
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
 import random
 import datetime
 from openerp.release import version_info
 from openerp.osv import fields, osv
+from openerp.tools import pickle
 from openerp.tools.translate import _
 from openerp.tools.safe_eval import safe_eval as eval
 
@@ -356,6 +353,8 @@ class ir_model_fields_anonymize_wizard(osv.osv_memory):
         raise UserError('%s: %s' % (error_type, error_msg))
 
     def anonymize_database(self, cr, uid, ids, context=None):
+        raise UserError("""The Odoo Migration Platform no longer accepts anonymized databases.\n
+            If you wish for your data to remain private during migration, please contact us at upgrade@odoo.com""")
         """Sets the 'anonymized' state to defined fields"""
 
         # create a new history record:
@@ -447,7 +446,7 @@ class ir_model_fields_anonymize_wizard(osv.osv_memory):
 
         # save pickle:
         fn = open(abs_filepath, 'w')
-        pickle.dump(data, fn, pickle.HIGHEST_PROTOCOL)
+        pickle.dump(data, fn, -1)
 
         # update the anonymization fields:
         values = {

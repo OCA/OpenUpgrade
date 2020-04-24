@@ -119,6 +119,7 @@ def create_delivery_products(env):
     for row in env.cr.fetchall():
         product = Product.create({
             'name': row[1] + ": " + row[2],
+            'type': 'service',
         })
         env.cr.execute(
             "UPDATE delivery_grid SET product_id=%s WHERE id=%s",

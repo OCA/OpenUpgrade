@@ -166,7 +166,7 @@ class website(osv.osv):
         'social_youtube': fields.char('Youtube Account'),
         'social_googleplus': fields.char('Google+ Account'),
         'google_analytics_key': fields.char('Google Analytics Key'),
-        'user_id': fields.many2one('res.users', string='Public User'),
+        'user_id': fields.many2one('res.users', string='Public User', required=True),
         'compress_html': fields.boolean('Compress HTML'),
         'cdn_activated': fields.boolean('Activate CDN for assets'),
         'cdn_url': fields.char('CDN Base URL'),
@@ -645,6 +645,9 @@ class ir_attachment(osv.osv):
     _columns = {
         'website_url': fields.related("local_url", string="Attachment URL", type='char', deprecated=True), # related for backward compatibility with saas-6
     }
+
+    def get_serving_groups(self):
+        return super(ir_attachment, self).get_serving_groups() + ['base.group_website_designer']
 
 class res_partner(osv.osv):
     _inherit = "res.partner"

@@ -2,7 +2,7 @@
 # Copyright 2015 Eficent Business and IT Consulting Services S.L. -
 # Jordi Ballester Alomar
 # Copyright 2015 Serpent Consulting Services Pvt. Ltd. - Sudhir Arya
-# Copyright 2017 Tecnativa - Pedro M. Baeza
+# Copyright 2017-2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
@@ -63,6 +63,38 @@ def purchase_invoice_lines(cr):
         WHERE rel.invoice_id = ail.id """)
 
 
+def migrate_purchase_double_validation(env):
+    """Check if the module is installed and if so, set limit + 2 step."""
+    if not openupgrade.column_exists(
+            env.cr, 'purchase_config_settings', 'limit_amount'):
+        return
+    openupgrade.add_fields(
+        env, [
+            ('po_double_validation_amount', 'res.company', 'res_company',
+             'monetary', False, 'purchase'),
+            ('po_double_validation', 'res.company', 'res_company',
+             'selection', False, 'purchase'),
+        ],
+    )
+    words = env.ref('purchase.trans_confirmed_double_gt').condition.split()
+    try:
+        limit = float(words[-1])
+    except ValueError:
+        limit = 5000.0
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE res_company
+        SET po_double_validation = 'two_step',
+            po_double_validation_amount = %s""", (limit, ),
+    )
+
+
+@openupgrade.logging()
+def drop_workflows(env):
+    """Drop purchase workflows, removed in v9."""
+    openupgrade.delete_model_workflow(env.cr, "purchase.order")
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -73,3 +105,25 @@ def migrate(env, version):
     openupgrade.rename_tables(env.cr, table_renames)
     map_order_state(cr)
     purchase_invoice_lines(cr)
+    migrate_purchase_double_validation(env)
+    drop_workflows(env)
+    # For avoiding costly computations - It will be handled in post+end
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE purchase_order_line ADD price_subtotal NUMERIC",
+    )
+    openupgrade.add_fields(
+        env, [
+            ('price_tax', 'purchase.order.line', 'purchase_order_line',
+             'monetary', False, 'purchase'),
+            ('price_total', 'purchase.order.line', 'purchase_order_line',
+             'monetary', False, 'purchase'),
+            ('qty_invoiced', 'purchase.order.line', 'purchase_order_line',
+             'float', False, 'purchase'),
+            ('qty_received', 'purchase.order.line', 'purchase_order_line',
+             'float', False, 'purchase'),
+            ('currency_id', 'purchase.order.line', 'purchase_order_line',
+             'many2one', False, 'purchase'),
+            ('invoice_status', 'purchase.order', 'purchase_order',
+             'selection', False, 'purchase'),
+        ]
+    )

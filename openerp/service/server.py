@@ -74,12 +74,11 @@ class BaseWSGIServerNoBind(LoggingBaseWSGIServerMixIn, werkzeug.serving.BaseWSGI
     use this class, sets the socket and calls the process_request() manually
     """
     def __init__(self, app):
-        werkzeug.serving.BaseWSGIServer.__init__(self, "1", "1", app)
-    def server_bind(self):
-        # we dont bind beause we use the listen socket of PreforkServer#socket
-        # instead we close the socket
+        werkzeug.serving.BaseWSGIServer.__init__(self, "127.0.0.1", 0, app)
+        # Directly close the socket. It will be replaced by WorkerHTTP when processing requests
         if self.socket:
             self.socket.close()
+
     def server_activate(self):
         # dont listen as we use PreforkServer#socket
         pass
@@ -92,9 +91,6 @@ class RequestHandler(werkzeug.serving.WSGIRequestHandler):
         me = threading.currentThread()
         me.name = 'openerp.service.http.request.%s' % (me.ident,)
 
-# _reexec() should set LISTEN_* to avoid connection refused during reload time. It
-# should also work with systemd socket activation. This is currently untested
-# and not yet used.
 
 class ThreadedWSGIServerReloadable(LoggingBaseWSGIServerMixIn, werkzeug.serving.ThreadedWSGIServer):
     """ werkzeug Threaded WSGI Server patched to allow reusing a listen socket
@@ -106,14 +102,15 @@ class ThreadedWSGIServerReloadable(LoggingBaseWSGIServerMixIn, werkzeug.serving.
                                                            handler=RequestHandler)
 
     def server_bind(self):
-        envfd = os.environ.get('LISTEN_FDS')
-        if envfd and os.environ.get('LISTEN_PID') == str(os.getpid()):
+        SD_LISTEN_FDS_START = 3
+        if os.environ.get('LISTEN_FDS') == '1' and os.environ.get('LISTEN_PID') == str(os.getpid()):
             self.reload_socket = True
-            self.socket = socket.fromfd(int(envfd), socket.AF_INET, socket.SOCK_STREAM)
-            # should we os.close(int(envfd)) ? it seem python duplicate the fd.
+            self.socket = socket.fromfd(SD_LISTEN_FDS_START, socket.AF_INET, socket.SOCK_STREAM)
+            _logger.info('HTTP service (werkzeug) running through socket activation')
         else:
             self.reload_socket = False
             super(ThreadedWSGIServerReloadable, self).server_bind()
+            _logger.info('HTTP service (werkzeug) running on %s:%s', self.server_name, self.server_port)
 
     def server_activate(self):
         if not self.reload_socket:
@@ -255,7 +252,6 @@ class ThreadedServer(CommonServer):
         t = threading.Thread(target=self.http_thread, name="openerp.service.httpd")
         t.setDaemon(True)
         t.start()
-        _logger.info('HTTP service (werkzeug) running on %s:%s', self.interface, self.port)
 
     def start(self, stop=False):
         _logger.debug("Setting signal handlers")
@@ -565,6 +561,7 @@ class PreforkServer(CommonServer):
 
         if self.address:
             # listen to socket
+            _logger.info('HTTP service (werkzeug) running on %s:%s', *self.address)
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             self.socket.setblocking(0)
@@ -732,7 +729,7 @@ class WorkerHTTP(Worker):
     """ HTTP Request workers """
     def process_request(self, client, addr):
         client.setblocking(1)
-        client.settimeout(0.5)
+        client.settimeout(2)
         client.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         # Prevent fd inherientence close_on_exec
         flags = fcntl.fcntl(client, fcntl.F_GETFD) | fcntl.FD_CLOEXEC
@@ -798,7 +795,6 @@ class WorkerCron(Worker):
 
             import openerp.addons.base as base
             base.ir.ir_cron.ir_cron._acquire_job(db_name)
-            openerp.modules.registry.RegistryManager.delete(db_name)
 
             # dont keep cursors in multi database mode
             if len(db_names) > 1:
@@ -853,7 +849,8 @@ def _reexec(updated_modules=None):
         args += ["-u", ','.join(updated_modules)]
     if not args or args[0] != exe:
         args.insert(0, exe)
-    os.execv(sys.executable, args)
+    # We should keep the LISTEN_* environment variabled in order to support socket activation on reexec
+    os.execve(sys.executable, args, os.environ)
 
 def load_test_file_yml(registry, test_file):
     with registry.cursor() as cr:

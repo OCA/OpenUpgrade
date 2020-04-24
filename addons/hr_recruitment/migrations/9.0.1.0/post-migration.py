@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
-# © 2016 Tecnativa <vicent.cubells@tecnativa.com>
+# Copyright 2016 Tecnativa <vicent.cubells@tecnativa.com>
+# Copyright 2020 Akretion - Alexis de Lattre
+# Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 from openerp import fields
 from datetime import timedelta
+from psycopg2 import sql
 
 
 def update_applicant_availability(cr):
@@ -27,22 +30,25 @@ def update_applicant_availability(cr):
 
 
 def migrate_applicant_source(cr):
-    cr.execute(
-        """
-            SELECT id
-            FROM hr_recruitment_source
-        """)
-    for old_id in cr.fetchall():
-        cr.execute("INSERT INTO utm_source (name) "
-                   "SELECT name "
-                   "FROM %s "
-                   "RETURNING id",
-                   (openupgrade.get_legacy_name('hr_recruitment_source'),))
-        new_id = cr.fetchone()[0]
-        cr.execute("UPDATE hr_applicant "
-                   "SET source_id = %s "
-                   "WHERE source_id = %s",
-                   (new_id, old_id[0]))
+    column = openupgrade.get_legacy_name('hr_recruitment_source')
+    openupgrade.logged_query(cr, sql.SQL(
+        "ALTER TABLE utm_source ADD {} INT4").format(sql.Identifier(column)))
+    openupgrade.logged_query(
+        cr, sql.SQL("""
+        INSERT INTO utm_source
+        (create_uid, create_date, write_uid, write_date, name, {})
+        SELECT create_uid, create_date, write_uid, write_date, name, id
+        FROM hr_recruitment_source
+        """).format(sql.Identifier(column)),
+    )
+    openupgrade.logged_query(
+        cr, sql.SQL("""
+        UPDATE hr_applicant ha SET source_id = us.id
+        FROM utm_source us WHERE us.{} = ha.{}
+        """).format(
+            sql.Identifier(column),
+            sql.Identifier(openupgrade.get_legacy_name('source_id'))),
+    )
 
 
 @openupgrade.migrate()

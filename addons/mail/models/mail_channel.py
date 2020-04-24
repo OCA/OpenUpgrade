@@ -186,7 +186,7 @@ class Channel(models.Model):
         # http://blogs.technet.com/b/exchange/archive/2006/10/06/3395024.aspx
         headers['X-Auto-Response-Suppress'] = 'OOF'
         if self.alias_domain and self.alias_name:
-            headers['List-Id'] = '%s.%s' % (self.alias_name, self.alias_domain)
+            headers['List-Id'] = '<%s.%s>' % (self.alias_name, self.alias_domain)
             headers['List-Post'] = '<mailto:%s@%s>' % (self.alias_name, self.alias_domain)
             # Avoid users thinking it was a personal message
             # X-Forge-To: will replace To: after SMTP envelope is determined by ir.mail.server
@@ -361,8 +361,8 @@ class Channel(models.Model):
                     AND P.partner_id IN %s
                     AND channel_type LIKE 'chat'
                 GROUP BY P.channel_id
-                HAVING COUNT(P.partner_id) = %s
-            """, (tuple(partners_to), len(partners_to),))
+                HAVING array_agg(P.partner_id ORDER BY P.partner_id) = %s
+            """, (tuple(partners_to), sorted(list(partners_to)),))
             result = self.env.cr.dictfetchall()
             if result:
                 # get the existing channel between the given partners

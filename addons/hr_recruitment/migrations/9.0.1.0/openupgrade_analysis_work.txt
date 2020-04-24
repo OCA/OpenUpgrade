@@ -8,8 +8,16 @@ hr_recruitment / hr.applicant             / availability (integer)        : type
 hr_recruitment / hr.applicant             / campaign_id (many2one)        : NEW relation: utm.campaign
 # Nothing to do
 
+NEW hr.applicant.category: hr_recruitment.tag_applicant_it
+NEW hr.applicant.category: hr_recruitment.tag_applicant_manager
+NEW hr.applicant.category: hr_recruitment.tag_applicant_reserve
+NEW hr.applicant.category: hr_recruitment.tag_applicant_sales
+DEL hr.applicant_category: hr_recruitment.tag_applicant_it
+DEL hr.applicant_category: hr_recruitment.tag_applicant_manager
+DEL hr.applicant_category: hr_recruitment.tag_applicant_reserve
+DEL hr.applicant_category: hr_recruitment.tag_applicant_sales
 hr_recruitment / hr.applicant             / categ_ids (many2many)         : relation is now 'hr.applicant.category' ('hr.applicant_category')
-# Nothing to do
+# DONE: pre-migration: Model renamed hr.applicant_category > hr.applicant.category
 
 hr_recruitment / hr.applicant             / medium_id (many2one)          : NEW relation: utm.medium
 # Nothing to do
@@ -55,14 +63,6 @@ hr_recruitment / hr.recruitment.stage     / template_id (many2one)        : rela
 ---XML records in module 'hr_recruitment'---
 DEL email.template: hr_recruitment.applicant_interest
 DEL email.template: hr_recruitment.applicant_refuse
-NEW hr.applicant.category: hr_recruitment.tag_applicant_it
-NEW hr.applicant.category: hr_recruitment.tag_applicant_manager
-NEW hr.applicant.category: hr_recruitment.tag_applicant_reserve
-NEW hr.applicant.category: hr_recruitment.tag_applicant_sales
-DEL hr.applicant_category: hr_recruitment.tag_applicant_it
-DEL hr.applicant_category: hr_recruitment.tag_applicant_manager
-DEL hr.applicant_category: hr_recruitment.tag_applicant_reserve
-DEL hr.applicant_category: hr_recruitment.tag_applicant_sales
 DEL hr.recruitment.source: hr_recruitment.source_linkedin
 DEL hr.recruitment.source: hr_recruitment.source_monster
 DEL hr.recruitment.source: hr_recruitment.source_website_company

@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-12-18 13:40+0000\n"
-"PO-Revision-Date: 2016-05-06 19:21+0000\n"
-"Last-Translator: ТАрас <tratatuta@i.ua>\n"
+"PO-Revision-Date: 2018-10-08 10:19+0000\n"
+"Last-Translator: Alina Lisnenko <alinasemeniuk1@gmail.com>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/odoo/odoo-9/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #. module: base_import
 #. openerp-web
@@ -184,7 +184,7 @@ msgstr "ID країни/бази даних: унікальний Odoo ID для
 #: code:addons/base_import/static/src/xml/import.xml:160
 #, python-format
 msgid "Country/External ID: base.be"
-msgstr ""
+msgstr "Країна/Зовнішній ID: base.be"
 
 #. module: base_import
 #. openerp-web
@@ -295,7 +295,7 @@ msgstr "Кодування:"
 #: code:addons/base_import/models.py:204
 #, python-format
 msgid "Error cell found while reading XLS/XLSX file: %s"
-msgstr ""
+msgstr "Знайдено помилку під час читання файлу XLS/XLSX: %s"
 
 #. module: base_import
 #. openerp-web
@@ -354,7 +354,7 @@ msgstr "Файл для деяких пропозицій"
 #. module: base_import
 #: model:ir.model.fields,help:base_import.field_base_import_import_file
 msgid "File to check and/or import, raw binary (not base64)"
-msgstr ""
+msgstr "Файл для перевірки та/або імпорту, бінарний файл (не base64)"
 
 #. module: base_import
 #. openerp-web
@@ -368,7 +368,7 @@ msgstr "Файл:"
 #: code:addons/base_import/static/src/xml/import.xml:384
 #, python-format
 msgid "For CSV files, the issue could be an incorrect encoding."
-msgstr ""
+msgstr "Для файлів CSV проблема може бути некоректною кодуванням."
 
 #. module: base_import
 #. openerp-web
@@ -413,14 +413,14 @@ msgstr "Запитання й відповіді"
 #: code:addons/base_import/static/src/js/import.js:490
 #, python-format
 msgid "Get all possible values"
-msgstr ""
+msgstr "Отримайте всі можливі значення"
 
 #. module: base_import
 #. openerp-web
 #: code:addons/base_import/static/src/js/import.js:477
 #, python-format
 msgid "Here are the possible values:"
-msgstr ""
+msgstr "Тут можливі значення:"
 
 #. module: base_import
 #. openerp-web
@@ -524,7 +524,7 @@ msgid ""
 "                the column names, Odoo can try auto-detecting the\n"
 "                field corresponding to the column. This makes imports\n"
 "                simpler especially when the file has many columns."
-msgstr ""
+msgstr "Якщо файл містить\nназву стовпців, Odoo може спробувати автоматично виявляти\nполе, що відповідає колонці. Це робить імпорт\nпростіше, особливо якщо файл має багато стовпчиків."
 
 #. module: base_import
 #. openerp-web
@@ -534,7 +534,7 @@ msgid ""
 "If the model uses openchatter, history tracking                             "
 "will set up subscriptions and send notifications"
 "                             during the import, but lead to a slower import."
-msgstr ""
+msgstr "Якщо модель використовує openchatter, відстеження історії встановить підписки та надсилатиме сповіщення під час імпорту, але призведе до повільного імпорту."
 
 #. module: base_import
 #. openerp-web
@@ -739,7 +739,7 @@ msgstr "Потрібно імпортувати дані з іншої прог�
 #: code:addons/base_import/static/src/js/import.js:363
 #, python-format
 msgid "Normal Fields"
-msgstr ""
+msgstr "Нормальні поля"
 
 #. module: base_import
 #. openerp-web
@@ -756,7 +756,7 @@ msgstr ""
 #. module: base_import
 #: model:ir.model.fields,field_description:base_import.field_base_import_tests_models_preview_othervalue
 msgid "Other Variable"
-msgstr ""
+msgstr "Інша змінна"
 
 #. module: base_import
 #. openerp-web
@@ -956,14 +956,14 @@ msgstr "Історія переміщень під час імпорту"
 #: code:addons/base_import/models.py:173
 #, python-format
 msgid "Unable to load \"{extension}\" file: requires Python module \"{modname}\""
-msgstr ""
+msgstr "Неможливо завантажити файл \"{extension}\": потрібен модуль Python \"{modname}\""
 
 #. module: base_import
 #: code:addons/base_import/models.py:174
 #, python-format
 msgid ""
 "Unsupported file format \"{}\", import only supports CSV, ODS, XLS and XLSX"
-msgstr ""
+msgstr "Формат файлу \"{}\" не підтримується, імпорт підтримує лише CSV, ODS, XLS та XLSX"
 
 #. module: base_import
 #. openerp-web
@@ -1098,79 +1098,79 @@ msgstr "в рядку %d"
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_import
 msgid "base_import.import"
-msgstr ""
+msgstr "base_import.import"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_char
 msgid "base_import.tests.models.char"
-msgstr ""
+msgstr "base_import.tests.models.char"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_char_noreadonly
 msgid "base_import.tests.models.char.noreadonly"
-msgstr ""
+msgstr "base_import.tests.models.char.noreadonly"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_char_readonly
 msgid "base_import.tests.models.char.readonly"
-msgstr ""
+msgstr "base_import.tests.models.char.readonly"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_char_required
 msgid "base_import.tests.models.char.required"
-msgstr ""
+msgstr "base_import.tests.models.char.required"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_char_states
 msgid "base_import.tests.models.char.states"
-msgstr ""
+msgstr "base_import.tests.models.char.states"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_char_stillreadonly
 msgid "base_import.tests.models.char.stillreadonly"
-msgstr ""
+msgstr "base_import.tests.models.char.stillreadonly"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_m2o
 msgid "base_import.tests.models.m2o"
-msgstr ""
+msgstr "base_import.tests.models.m2o"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_m2o_related
 msgid "base_import.tests.models.m2o.related"
-msgstr ""
+msgstr "base_import.tests.models.m2o.related"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_m2o_required
 msgid "base_import.tests.models.m2o.required"
-msgstr ""
+msgstr "base_import.tests.models.m2o.required"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_m2o_required_related
 msgid "base_import.tests.models.m2o.required.related"
-msgstr ""
+msgstr "base_import.tests.models.m2o.required.related"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_o2m
 msgid "base_import.tests.models.o2m"
-msgstr ""
+msgstr "base_import.tests.models.o2m"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_o2m_child
 msgid "base_import.tests.models.o2m.child"
-msgstr ""
+msgstr "base_import.tests.models.o2m.child"
 
 #. module: base_import
 #: model:ir.model,name:base_import.model_base_import_tests_models_preview
 msgid "base_import.tests.models.preview"
-msgstr ""
+msgstr "base_import.tests.models.preview"
 
 #. module: base_import
 #. openerp-web
 #: code:addons/base_import/static/src/js/import.js:462
 #, python-format
 msgid "between rows %d and %d"
-msgstr ""
+msgstr "між рядками %d та %d"
 
 #. module: base_import
 #. openerp-web

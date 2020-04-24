@@ -5,7 +5,12 @@
 # Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import logging
+from psycopg2.extensions import AsIs
+
 from openupgradelib import openupgrade
+
+logger = logging.getLogger('OpenUpgrade')
 
 column_renames = {
     'account_account_type': [
@@ -142,6 +147,40 @@ PROPERTY_FIELDS = {
 }
 
 
+FAST_CREATIONS = [
+    ('account_invoice_tax', 'currency_id', 'integer', """
+    UPDATE account_invoice_tax ait SET currency_id = ai.currency_id
+    FROM account_invoice ai where ai.id = ait.invoice_id;
+    """),
+    ('account_bank_statement', 'difference', 'numeric', """
+    UPDATE account_bank_statement abs
+    SET difference = balance_end_real - balance_end;
+    """),
+    ('account_invoice', 'amount_total_signed', 'numeric', """
+    UPDATE account_invoice
+    SET amount_total_signed = amount_total
+    WHERE type IN ('in_invoice', 'out_invoice');
+    UPDATE account_invoice
+    SET amount_total_signed = - amount_total
+    WHERE type IN ('in_refund', 'out_refund');
+    """),
+    # For multicurrency invoices, these values will be overwritten
+    # in the post script
+    ('account_invoice', 'amount_total_company_signed', 'numeric', """
+    UPDATE account_invoice
+    SET amount_total_company_signed = amount_total_signed;
+    """),
+    ('account_invoice', 'amount_untaxed_signed', 'numeric', """
+    UPDATE account_invoice
+    SET amount_untaxed_signed = amount_untaxed
+    WHERE type IN ('in_invoice', 'out_invoice');
+    UPDATE account_invoice
+    SET amount_untaxed_signed = - amount_untaxed
+    WHERE type IN ('in_refund', 'out_refund');
+    """)
+]
+
+
 def migrate_properties(cr):
     for model, name_v8, name_v9 in PROPERTY_FIELDS:
         openupgrade.logged_query(cr, """
@@ -157,28 +196,12 @@ def migrate_properties(cr):
             """.format(name_v8=name_v8, name_v9=name_v9))
 
 
-def no_remove_moves_exception_modules():
-    """ In some countries the odoo standard closing procedure is not used,
-    and the special periods should not be deleted."""
-    return ['l10n_es_fiscal_year_closing']
-
-
 def remove_account_moves_from_special_periods(cr):
     """We first search for journal entries in a special period, in the
     first reported fiscal year of the company, and we take them out of the
     special period, into a normal period, because we assume that this is
     the starting balance of the company, and should be maintained.
     Then we delete all the moves associated to special periods."""
-
-    module_names = no_remove_moves_exception_modules()
-    cr.execute("""
-        SELECT * FROM ir_module_module
-        WHERE name in %s
-        AND state='installed'
-    """, (tuple(module_names),))
-    if cr.fetchall():
-        return True
-
     cr.execute("""
         SELECT id FROM account_move
         WHERE period_id in (SELECT id FROM account_period WHERE special = True
@@ -232,12 +255,23 @@ def map_account_tax_type(cr):
     """ The tax type 'code' is not an option in the account module for v9.
     We need to assign a temporary 'dummy' value until module
     account_tax_python is installed. In post-migration we will
-    restore the original value."""
+    restore the original value.
+
+    Also, the value `none` is not accepted anymore. We switch to `percent` +
+    value = 0.
+    """
     openupgrade.map_values(
         cr,
         openupgrade.get_legacy_name('type'), 'type',
         [('code', 'group')],
         table='account_tax', write='sql')
+    openupgrade.logged_query(
+        cr, """
+        UPDATE account_tax
+        SET type='percent',
+            amount=0.0
+        WHERE type='none'""",
+    )
 
 
 def map_account_tax_template_type(cr):
@@ -247,6 +281,21 @@ def map_account_tax_template_type(cr):
         openupgrade.get_legacy_name('type'), 'type',
         [('code', 'group')],
         table='account_tax_template', write='sql')
+
+
+def map_payment_term_line_value(cr):
+    """ Someone fixed a Flemishism and payment terms percentages are now
+    over 100, not over 1.
+    """
+    openupgrade.logged_query(
+        cr,
+        """UPDATE account_payment_term_line
+        SET value = 'percent' WHERE value = 'procent';""")
+    openupgrade.logged_query(
+        cr, """
+        UPDATE account_payment_term_line
+        SET value_amount = value_amount * 100 WHERE value = 'percent'""",
+    )
 
 
 def blacklist_field_recomputation(env):
@@ -298,7 +347,8 @@ def merge_supplier_invoice_refs(env):
         SET reference = supplier_invoice_number || ' - ' || reference
         WHERE type IN ('in_invoice', 'in_refund')
             AND reference IS NOT NULL
-            AND supplier_invoice_number IS NOT NULL"""
+            AND supplier_invoice_number IS NOT NULL
+            AND reference != supplier_invoice_number""",
     )
     openupgrade.logged_query(
         env.cr, """
@@ -310,6 +360,27 @@ def merge_supplier_invoice_refs(env):
     )
 
 
+def set_date_maturity(env):
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move_line
+        SET date_maturity = date
+        WHERE date_maturity IS NULL"""
+    )
+
+
+def fast_create(env, settings):
+    for setting in settings:
+        (table_name, field_name, sql_type, sql_request) = setting
+        logger.info(
+            "Fast creation of the field '%s' (table '%s')" % (
+                field_name, table_name))
+        env.cr.execute(
+            "ALTER TABLE %s ADD COLUMN %s %s;",
+            (AsIs(table_name), AsIs(field_name), AsIs(sql_type)),)
+        env.cr.execute(sql_request)
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -318,6 +389,23 @@ def migrate(env, version):
         "update account_account set reconcile=True "
         "where type in ('receivable', 'payable')"
     )
+
+    # Move obsolete table from connector_ecommerce out of the way to
+    # prevent name conflict with new Odoo table
+    if openupgrade.table_exists(cr, 'account_tax_group'):
+        cr.execute(
+            """ SELECT count(*) FROM ir_model_data
+            WHERE name = 'model_account_tax_group'
+            AND module = 'connector_ecommerce' """)
+        if cr.fetchone()[0]:
+            logger.info(
+                "Moving connector_ecommerce's account_tax_group "
+                "table out of the way.")
+            openupgrade.rename_columns(
+                cr, {'account_tax': [('group_id', None)]})
+            openupgrade.rename_tables(
+                cr, [('account_tax_group', None)])
+
     openupgrade.rename_tables(cr, table_renames)
     openupgrade.rename_columns(cr, column_renames)
     openupgrade.rename_xmlids(cr, xmlid_renames)
@@ -326,7 +414,24 @@ def migrate(env, version):
     install_account_tax_python(cr)
     map_account_tax_type(cr)
     map_account_tax_template_type(cr)
+    map_payment_term_line_value(cr)
     remove_account_moves_from_special_periods(cr)
     blacklist_field_recomputation(env)
     merge_supplier_invoice_refs(env)
     openupgrade.rename_fields(env, field_renames)
+    set_date_maturity(env)
+
+    # Fast Create new fields
+    fast_create(env, FAST_CREATIONS)
+    openupgrade.add_fields(
+        env, [
+            ('matched_percentage', 'account.move', 'account_move',
+             'float', False, 'account'),
+            ('debit_cash_basis', 'account.move.line', 'account_move_line',
+             'monetary', False, 'account'),
+            ('credit_cash_basis', 'account.move.line', 'account_move_line',
+             'monetary', False, 'account'),
+            ('balance_cash_basis', 'account.move.line', 'account_move_line',
+             'monetary', False, 'account'),
+        ]
+    )

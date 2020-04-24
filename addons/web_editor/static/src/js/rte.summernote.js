@@ -428,7 +428,7 @@ $.summernote.pluginEvents.visible = function (event, editor, layoutInfo) {
     if (($node.is('[data-oe-type="html"]') || $node.is('[data-oe-field="arch"]')) &&
         $node.hasClass("o_editable") &&
         !$node[0].children.length &&
-        "h1 h2 h3 h4 h5 h6 p b bold i u code sup strong small pre th td".toUpperCase().indexOf($node[0].nodeName) === -1) {
+        "h1 h2 h3 h4 h5 h6 p b bold i u code sup strong small pre th td label".toUpperCase().indexOf($node[0].nodeName) === -1) {
         var p = $('<p><br/></p>')[0];
         $node.append( p );
         range.createFromNode(p.firstChild).select();
@@ -485,7 +485,12 @@ function prettify_html(html) {
             level--;
         }
 
-        result += token.trim().replace(/\s+/, ' ');
+        // don't trim inline content (which could change appearance)
+        if (!inline) {
+            token = token.trim();
+        }
+
+        result += token.replace(/\s+/, ' ');
 
         if (inline_level > level) {
             result += '\n';
@@ -630,7 +635,15 @@ function summernote_mousedown (event) {
     }
 
     // restore range if range lost after clicking on non-editable area
-    var r = range.create();
+    try {
+        var r = range.create();
+    } catch (e) {
+        // If this code is running inside an iframe-editor and that the range
+        // is outside of this iframe, this will fail as the iframe does not have
+        // the permission to check the outside content this way. In that case,
+        // we simply ignore the exception as it is as if there was no range.
+        return;
+    }
     var editables = $(".o_editable[contenteditable], .note-editable[contenteditable]");
     var r_editable = editables.has((r||{}).sc);
     if (!r_editable.closest('.note-editor').is($editable) && !r_editable.filter('.o_editable').is(editables)) {

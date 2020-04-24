@@ -259,6 +259,22 @@ def update_product_supplierinfo(env):
             AND pp.suppinfo_id = ps.id
         """)
 
+    # Set supplierinfo currencies when suppliers have a specific pricelist
+    # that is not in the company currency
+    openupgrade.logged_query(
+        env.cr,
+        """ UPDATE product_supplierinfo ps
+        SET currency_id = pp.currency_id
+        FROM product_pricelist pp
+            JOIN ir_property ip
+                ON ip.value_reference = 'product.pricelist,'||pp.id
+            JOIN res_company rc ON ip.company_id = rc.id
+            JOIN res_partner rp ON ip.res_id = 'res.partner,'||rp.id
+        WHERE ip.name = 'property_product_pricelist_purchase'
+            AND ps.company_id = rc.id
+            AND rp.id = ps.name
+            AND rc.currency_id != pp.currency_id """)
+
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
