@@ -66,3 +66,5 @@ def hr_expense(env):
 def migrate(env, version):
     map_expense_state(env)
     hr_expense(env)
+    openupgrade.load_data(
+        env.cr, "hr_expense", "migrations/9.0.2.0/noupdate_changes.xml")
