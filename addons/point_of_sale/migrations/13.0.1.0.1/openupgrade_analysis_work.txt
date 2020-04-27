@@ -1,21 +1,32 @@
 ---Models in module 'point_of_sale'---
 obsolete model pos.open.statement [transient]
 new model closing.balance.confirm.wizard [transient]
+# NOTHING TO DO
+
 new model pos.payment
 new model pos.payment.method
-# NOTHING TO DO
+# DONE: created some records as explained below (created pos.payment record from statement lines)
 
 ---Fields in module 'point_of_sale'---
 point_of_sale / account.bank.statement.cashbox / is_a_template (boolean)       : NEW hasdefault
-point_of_sale / account.bank.statement.cashbox / pos_config_ids (one2many)     : NEW relation: pos.config
 # NOTHING TO DO: has default
 
 point_of_sale / account.cashbox.line     / default_pos_id (many2one)     : DEL relation: pos.config
+point_of_sale / pos.config               / default_cashbox_id (many2one) : NEW relation: account.bank.statement.cashbox
+point_of_sale / pos.config               / default_cashbox_lines_ids (one2many): DEL relation: account.cashbox.line
+point_of_sale / account.bank.statement.cashbox / pos_config_ids (one2many)     : NEW relation: pos.config
+DONE: post-migration: filled default_cashbox_id using default_pos_id relation
+
 point_of_sale / account.journal          / amount_authorized_diff (float): DEL
+point_of_sale / pos.config               / amount_authorized_diff (float): NEW
+# DONE: post-migration: mapping
+
 point_of_sale / account.journal          / journal_user (boolean)        : DEL
-point_of_sale / account.journal          / pos_payment_method_ids (one2many): NEW relation: pos.payment.method
+# NOTHING TO DO: old technical field used to mark which journals could be used in the pos config
+
+point_of_sale / pos.order                / invoice_id (many2one)         : DEL relation: account.invoice
 point_of_sale / account.move             / pos_order_ids (one2many)      : NEW relation: pos.order
-# NOTHING TO DO
+# DONE: post-migration: assured the merge account.invoice -> account.move is handled correctly
 
 point_of_sale / pos.category             / image (binary)                : DEL attachment: True
 point_of_sale / pos.category             / image_128 (binary)            : NEW attachment: True
@@ -23,34 +34,39 @@ point_of_sale / pos.category             / image_medium (binary)         : DEL a
 point_of_sale / pos.category             / image_small (binary)          : DEL attachment: True
 # DONE: pre-migration (renamed)
 
-point_of_sale / pos.config               / amount_authorized_diff (float): NEW
 point_of_sale / pos.config               / barcode_nomenclature_id (many2one): now required, req_default: function
+# DONE: post-migration: filled empty cases
+
+point_of_sale / pos.config               / module_pos_hr (boolean)       : NEW
+# DONE: post-migration: marked as True if hr is installed, because the new pos_hr module has auto_install = True
+
+point_of_sale / pos.config               / group_by (boolean)            : DEL
+point_of_sale / pos.config               / journal_ids (many2many)       : DEL relation: account.journal
+point_of_sale / pos.config               / payment_method_ids (many2many): NEW relation: pos.payment.method, hasdefault
+point_of_sale / account.journal          / pos_payment_method_ids (one2many): NEW relation: pos.payment.method
+# DONE: end-migration: for each journal in journal_ids, created a pos.payment.method record with cash_journal_id pointing the corresponding journal
+
 point_of_sale / pos.config               / barcode_scanner (boolean)     : DEL
 point_of_sale / pos.config               / customer_facing_display_html (html): not stored anymore
 point_of_sale / pos.config               / customer_facing_display_html (html): now a function
-point_of_sale / pos.config               / default_cashbox_id (many2one) : NEW relation: account.bank.statement.cashbox
-point_of_sale / pos.config               / default_cashbox_lines_ids (one2many): DEL relation: account.cashbox.line
-point_of_sale / pos.config               / group_by (boolean)            : DEL
 point_of_sale / pos.config               / iface_available_categ_ids (many2many): NEW relation: pos.category
 point_of_sale / pos.config               / iface_payment_terminal (boolean): DEL
-point_of_sale / pos.config               / journal_ids (many2many)       : DEL relation: account.journal
 point_of_sale / pos.config               / limit_categories (boolean)    : NEW
-point_of_sale / pos.config               / module_pos_hr (boolean)       : NEW
 point_of_sale / pos.config               / other_devices (boolean)       : NEW
-point_of_sale / pos.config               / payment_method_ids (many2many): NEW relation: pos.payment.method, hasdefault
 point_of_sale / pos.config               / stock_location_id (many2one)  : DEL relation: stock.location, required, req_default: function
 # NOTHING TO DO
 
-point_of_sale / pos.order                / currency_rate (float)         : previously in module pos_sale
-point_of_sale / pos.order                / invoice_id (many2one)         : DEL relation: account.invoice
 point_of_sale / pos.order                / payment_ids (one2many)        : NEW relation: pos.payment
 point_of_sale / pos.order                / statement_ids (one2many)      : DEL relation: account.bank.statement.line
-point_of_sale / pos.order                / to_invoice (boolean)          : NEW
-# NOTHING TO DO: one2many fields
+# DONE: end-migration: for each statement line in statement_ids, created a pos.payment record with pos_order_id pointing the corresponding statement line
 
+point_of_sale / pos.order                / currency_rate (float)         : previously in module pos_sale
+point_of_sale / pos.order                / to_invoice (boolean)          : NEW
 point_of_sale / pos.order.line           / company_id (many2one)         : now related
-point_of_sale / pos.order.line           / order_id (many2one)           : now required
 # NOTHING TO DO
+
+point_of_sale / pos.order.line           / order_id (many2one)           : now required
+# DONE: post-migration: deleted empty cases
 
 point_of_sale / pos.payment              / amount (float)                : NEW required
 point_of_sale / pos.payment              / card_type (char)              : NEW
@@ -70,24 +86,32 @@ point_of_sale / pos.payment.method       / split_transactions (boolean)  : NEW h
 point_of_sale / pos.payment.method       / use_payment_terminal (selection): NEW selection_keys: function
 # NOTHING TO DO: new models
 
-point_of_sale / pos.session              / activity_ids (one2many)       : NEW relation: mail.activity
 point_of_sale / pos.session              / cash_register_balance_end (float): not related anymore
 point_of_sale / pos.session              / cash_register_balance_end (float): now a function
 point_of_sale / pos.session              / cash_register_difference (float): not related anymore
 point_of_sale / pos.session              / cash_register_difference (float): now a function
 point_of_sale / pos.session              / cash_register_total_entry_encoding (float): not related anymore
 point_of_sale / pos.session              / cash_register_total_entry_encoding (float): now a function
+point_of_sale / pos.session              / state (selection)             : selection_keys is now '['closed', 'closing_control', 'new_session', 'opened', 'opening_control']' ('['closed', 'closing_control', 'opened', 'opening_control']')
+# NOTHING TO DO
+
+point_of_sale / pos.session              / activity_ids (one2many)       : NEW relation: mail.activity
 point_of_sale / pos.session              / message_follower_ids (one2many): NEW relation: mail.followers
 point_of_sale / pos.session              / message_ids (one2many)        : NEW relation: mail.message
 point_of_sale / pos.session              / message_main_attachment_id (many2one): NEW relation: ir.attachment
-point_of_sale / pos.session              / move_id (many2one)            : NEW relation: account.move
-point_of_sale / pos.session              / state (selection)             : selection_keys is now '['closed', 'closing_control', 'new_session', 'opened', 'opening_control']' ('['closed', 'closing_control', 'opened', 'opening_control']')
 point_of_sale / pos.session              / website_message_ids (one2many): NEW relation: mail.message
+# NOTHING TO DO: mail activity and mail thread fields
+
+point_of_sale / pos.session              / move_id (many2one)            : NEW relation: account.move
+# DONE: post-migration: filled empty cases for closed sessions
+
 point_of_sale / res.partner              / barcode (char)                : previously in module base
 point_of_sale / res.partner              / pos_order_ids (one2many)      : NEW relation: pos.order
 point_of_sale / res.users                / pos_security_pin (char)       : DEL
-point_of_sale / stock.warehouse          / pos_type_id (many2one)        : NEW relation: stock.picking.type
 # NOTHING TO DO
+
+point_of_sale / stock.warehouse          / pos_type_id (many2one)        : NEW relation: stock.picking.type
+# DONE: post-migration: fill with _create_or_update_sequences_and_picking_types method
 
 ---XML records in module 'point_of_sale'---
 DEL account.journal: point_of_sale.pos_sale_journal (noupdate)
@@ -106,7 +130,7 @@ DEL ir.actions.act_window: point_of_sale.action_pos_open_statement
 # NOTHING TO DO: noupdate=0
 
 DEL ir.actions.report: point_of_sale.action_report_account_statement [renamed to account module]
-# DONE: pre-migration (renamed)
+# NOTHING TO DO: should be renamed in account migration, but don't needed (noupdate=0)
 
 NEW ir.model.access: point_of_sale.access_decimal_precision_user
 NEW ir.model.access: point_of_sale.access_pos_payment_method_manager
