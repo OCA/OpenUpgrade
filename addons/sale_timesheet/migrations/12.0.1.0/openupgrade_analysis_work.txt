@@ -13,6 +13,7 @@ sale_timesheet / product.template         / project_template_id (many2one): NEW 
 sale_timesheet / project.project          / billable_type (selection)     : NEW selection_keys: ['employee_rate', 'no', 'task_rate']
 sale_timesheet / project.project          / sale_line_employee_ids (one2many): NEW relation: project.sale.line.employee.map
 sale_timesheet / project.project          / sale_order_id (many2one)      : NEW relation: sale.order
+# DONE: filled sale_order_id from sale_order_line.order_id as there is new sql constraints sale_order_required_if_sale_line
 sale_timesheet / project.sale.line.employee.map / employee_id (many2one)        : NEW relation: hr.employee, required: required
 sale_timesheet / project.sale.line.employee.map / project_id (many2one)         : NEW relation: project.project, required: required, req_default: function
 sale_timesheet / project.sale.line.employee.map / sale_line_id (many2one)       : NEW relation: sale.order.line, required: required
