@@ -254,7 +254,7 @@ class SaleOrder(models.Model):
     def _compute_remaining_validity_days(self):
         for record in self:
             if record.validity_date:
-                record.remaining_validity_days = (record.validity_date - fields.Date.today()).days + 1
+                record.remaining_validity_days = (record.validity_date - fields.Date.context_today(record)).days + 1
             else:
                 record.remaining_validity_days = 0
 
@@ -469,12 +469,12 @@ class SaleOrder(models.Model):
             .default_get(['journal_id'])['journal_id'])
         if not journal_id:
             raise UserError(_('Please define an accounting sales journal for this company.'))
-        vinvoice = self.env['account.invoice'].new({'partner_id': self.partner_invoice_id.id})
+        vinvoice = self.env['account.invoice'].new({'partner_id': self.partner_invoice_id.id, 'type': 'out_invoice'})
         # Get partner extra fields
         vinvoice._onchange_partner_id()
         invoice_vals = vinvoice._convert_to_write(vinvoice._cache)
         invoice_vals.update({
-            'name': self.client_order_ref or '',
+            'name': (self.client_order_ref or '')[:2000],
             'origin': self.name,
             'type': 'out_invoice',
             'account_id': self.partner_invoice_id.property_account_receivable_id.id,
@@ -614,7 +614,7 @@ class SaleOrder(models.Model):
             self.env['account.invoice.line'].create(line_vals_list)
 
         for group_key in invoices:
-            invoices[group_key].write({'name': ', '.join(invoices_name[group_key]),
+            invoices[group_key].write({'name': ', '.join(invoices_name[group_key])[:2000],
                                        'origin': ', '.join(invoices_origin[group_key])})
             sale_orders = references[invoices[group_key]]
             if len(sale_orders) == 1:

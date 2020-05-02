@@ -969,7 +969,7 @@ class Meeting(models.Model):
             self.start = self.start_datetime
             # Round the duration (in hours) to the minute to avoid weird situations where the event
             # stops at 4:19:59, later displayed as 4:19.
-            self.stop = start + timedelta(minutes=round(self.duration * 60))
+            self.stop = start + timedelta(minutes=round((self.duration or 1.0) * 60))
             if self.allday:
                 self.stop -= timedelta(seconds=1)
 
@@ -1768,7 +1768,9 @@ class Meeting(models.Model):
                 new_arg = (arg[0], arg[1], get_real_ids(arg[2]))
             new_args.append(new_arg)
 
-        if not self._context.get('virtual_id', True):
+        # update_custom_fields: context used by the ORM to check if custom fields (studio) should be updated
+        virtual_id_fallback = not self._context.get('update_custom_fields')
+        if not self._context.get('virtual_id', virtual_id_fallback):
             return super(Meeting, self)._search(new_args, offset=offset, limit=limit, order=order, count=count, access_rights_uid=access_rights_uid)
 
         if any(arg[0] == 'start' for arg in args) and \
@@ -1807,7 +1809,7 @@ class Meeting(models.Model):
             if values.get('name'):
                 activity_values['summary'] = values['name']
             if values.get('description'):
-                activity_values['note'] = values['description']
+                activity_values['note'] = tools.plaintext2html(values['description'])
             if values.get('start'):
                 # self.start is a datetime UTC *only when the event is not allday*
                 # activty.date_deadline is a date (No TZ, but should represent the day in which the user's TZ is)

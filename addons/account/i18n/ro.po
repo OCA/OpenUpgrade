@@ -3,9 +3,9 @@
 # * account
 # 
 # Translators:
-# Cozmin Candea <office@terrabit.ro>, 2018
 # Sorin Trifu <sorin.trifu@bizconsulting.ro>, 2018
 # Martin Trigaux, 2019
+# Cozmin Candea <office@terrabit.ro>, 2020
 # Dorin Hongu <dhongu@gmail.com>, 2020
 # 
 msgid ""
@@ -1058,7 +1058,7 @@ msgstr "Șablon Cont"
 #: model:ir.model.fields,field_description:account.field_account_chart_template__property_stock_valuation_account_id
 #: model:ir.model.fields,field_description:account.field_res_company__property_stock_valuation_account_id
 msgid "Account Template for Stock Valuation"
-msgstr ""
+msgstr "Șablon de cont pentru evaluarea stocurilor"
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_template_form
@@ -2823,6 +2823,8 @@ msgid ""
 "Check this box if this account allows invoices & payments matching of "
 "journal items."
 msgstr ""
+"Bifează această casetă dacă acest cont permite potrivirea facturilor și "
+"plăților elementelor din jurnal."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_journal__refund_sequence
@@ -2888,7 +2890,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account.account_invoice_onboarding_sale_tax_form
 #: model_terms:ir.ui.view,arch_db:account.onboarding_sale_tax_step
 msgid "Choose a default sales tax for your products."
-msgstr ""
+msgstr "Alege taxa pe vânzare implicită pentru produse"
 
 #. module: account
 #. openerp-web
@@ -3162,7 +3164,7 @@ msgstr "Configurați un produs"
 #. module: account
 #: model:ir.actions.act_window,name:account.action_open_account_onboarding_invoice_layout
 msgid "Configure your document layout"
-msgstr ""
+msgstr "Configurați aspectul documentului"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_bnk_stmt_cashbox
@@ -3631,6 +3633,7 @@ msgstr "Cont credit"
 #: model:ir.model.fields,help:account.field_account_move_line__matched_credit_ids
 msgid "Credit journal items that are matched with this journal item."
 msgstr ""
+"Elementele jurnal de credit care se potrivesc cu acest element de jurnal."
 
 #. module: account
 #: model:ir.ui.menu,name:account.menu_action_currency_form
@@ -4464,7 +4467,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,help:account.field_account_fiscal_year__date_to
 msgid "Ending Date, included in the fiscal year."
-msgstr ""
+msgstr "Data de încheiere, inclusă în anul fiscal."
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_move_line_form
@@ -4703,7 +4706,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:account.actions_account_fiscal_year
 #: model:ir.model.fields,field_description:account.field_res_config_settings__group_fiscal_year
 msgid "Fiscal Years"
-msgstr ""
+msgstr "Anii fiscali"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_financial_year_op__fiscalyear_last_day
@@ -5066,7 +5069,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_payment__hide_payment_method
 #: model:ir.model.fields,field_description:account.field_account_register_payments__hide_payment_method
 msgid "Hide Payment Method"
-msgstr ""
+msgstr "Ascunde metoda de plată"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_tax__hide_tax_exigibility
@@ -6558,7 +6561,7 @@ msgstr "Scrie o notă internă"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.onboarding_invoice_layout_step
 msgid "Looks great!"
-msgstr ""
+msgstr "Arată grozav!"
 
 #. module: account
 #: code:addons/account/models/account_bank_statement.py:175
@@ -7100,7 +7103,7 @@ msgstr "Nu conține"
 #: selection:res.company,account_setup_coa_state:0
 #: selection:res.company,account_setup_fy_data_state:0
 msgid "Not done"
-msgstr ""
+msgstr "Nerealizat"
 
 #. module: account
 #. openerp-web
@@ -7817,7 +7820,7 @@ msgstr "Tip de plată:"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_payment_term_form
 msgid "Payment term explanation for the customer..."
-msgstr "Explicatia termenului de plata pentru client..."
+msgstr "Explicația termenului de plată pentru client..."
 
 #. module: account
 #: model:account.payment.term,note:account.account_payment_term_15days
@@ -7857,7 +7860,7 @@ msgstr "Termen plată: plată imediată"
 #. module: account
 #: model:ir.model.fields,help:account.field_account_move_line__payment_id
 msgid "Payment that created this entry"
-msgstr ""
+msgstr "Plata care a creat această intrare"
 
 #. module: account
 #: code:addons/account/models/account_payment.py:370
@@ -8414,7 +8417,7 @@ msgstr "Înregistrați o nouă factură de furnizor"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
 msgid "Record transactions in foreign currencies"
-msgstr ""
+msgstr "Înregistrați tranzacțiile în valute străine"
 
 #. module: account
 #: code:addons/account/models/account.py:930
@@ -8802,13 +8805,13 @@ msgstr "Potrivire cu aceeași monedă"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.onboarding_sample_invoice_step
 msgid "Sample Invoice"
-msgstr ""
+msgstr "Factură de probă"
 
 #. module: account
 #: code:addons/account/models/company.py:462
 #, python-format
 msgid "Sample invoice"
-msgstr ""
+msgstr "Factură de probă"
 
 #. module: account
 #: code:addons/account/models/company.py:468
@@ -8825,7 +8828,7 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.onboarding_sample_invoice_step
 msgid "Sample invoice sent!"
-msgstr ""
+msgstr "Factură de probă trimisă!"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_setup_bank_manual_config__sanitized_acc_number
@@ -9003,6 +9006,7 @@ msgstr ""
 #: model:ir.model.fields,help:account.field_account_payment_term_line__value
 msgid "Select here the kind of valuation related to this payment terms line."
 msgstr ""
+"Selectați aici tipul de evaluare aferent acestei linii de condiții de plată."
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -9069,7 +9073,7 @@ msgstr ""
 #. module: account
 #: model:ir.actions.act_window,name:account.action_open_account_onboarding_sample_invoice
 msgid "Send a sample invoice"
-msgstr ""
+msgstr "Trimite o factură de probă"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.onboarding_sample_invoice_step
@@ -9686,7 +9690,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_tax__type_tax_use
 #: model:ir.model.fields,field_description:account.field_account_tax_template__type_tax_use
 msgid "Tax Scope"
-msgstr ""
+msgstr "Scop taxă"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_fiscal_position_tax_template__tax_src_id
@@ -9864,8 +9868,8 @@ msgstr ""
 #: model:ir.model.fields,help:account.field_account_payment__multi
 #: model:ir.model.fields,help:account.field_account_register_payments__multi
 msgid ""
-"Technical field indicating if the user selected invoices from multiple "
-"partners or from different types."
+"Technical field indicating if the registering payment will generate multiple"
+" payments or not."
 msgstr ""
 
 #. module: account
@@ -10102,7 +10106,7 @@ msgstr ""
 #: code:addons/account/models/account_bank_statement.py:319
 #, python-format
 msgid "The amount of a cash transaction cannot be 0."
-msgstr ""
+msgstr "Valoarea unei tranzacții în numerar nu poate fi 0."
 
 #. module: account
 #: code:addons/account/models/account.py:932
@@ -11091,7 +11095,7 @@ msgstr "Preț unitar"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.invoice_form
 msgid "Unit Price:"
-msgstr ""
+msgstr "Preț unitar:"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_line__uom_id
@@ -11200,7 +11204,7 @@ msgstr "Actualizați automat ratele de schimb"
 #: code:addons/account/static/src/xml/bills_tree_upload_views.xml:5
 #, python-format
 msgid "Upload"
-msgstr ""
+msgstr "Încărcare "
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_invoice_import_wizard_form_view
@@ -11670,6 +11674,8 @@ msgid ""
 "You can not have an overlap between two fiscal years, please correct the "
 "start and/or end dates of your fiscal years."
 msgstr ""
+"Nu puteți avea o suprapunere între doi ani fiscali, vă rugăm să corectați "
+"datele de început și / sau de încheiere ale exercițiilor dvs. fiscale."
 
 #. module: account
 #: code:addons/account/models/account_invoice.py:1784

@@ -53,6 +53,8 @@
 # Hugo Santos <hugo.santos@factorlibre.com>, 2020
 # Sergio Lop Sanz <slop@sdi.es>, 2020
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2020
+# Gelo Joga Landoo <gj@landoo.es>, 2020
+# Nelson Ramírez Sánchez <info@konos.cl>, 2020
 # Pedro M. Baeza <pedro.baeza@gmail.com>, 2020
 # 
 msgid ""
@@ -625,7 +627,7 @@ msgstr "<span>Cantidad</span>"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_payment_receipt_document
 msgid "<span>Reference</span>"
-msgstr ""
+msgstr "<span>Referencia</span>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
@@ -2458,7 +2460,7 @@ msgstr "Pertenece a los usuarios actuales de la empresa"
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
 #: model_terms:ir.ui.view,arch_db:account.invoice_supplier_form
 msgid "Bill"
-msgstr "Cuenta"
+msgstr "Factura"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.invoice_supplier_form
@@ -2931,7 +2933,7 @@ msgid ""
 " credit notes made from this journal"
 msgstr ""
 "Marque esta casilla si no desea compartir la misma secuencia de facturas y "
-"notas de crédito de este diario"
+"facturas rectificativas de este diario"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_journal__update_posted
@@ -9989,7 +9991,7 @@ msgstr "Impuesto B2C"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice__amount_tax_signed
 msgid "Tax in Invoice Currency"
-msgstr ""
+msgstr "Impuesto en la moneda de la factura"
 
 #. module: account
 #: sql_constraint:account.tax:0 sql_constraint:account.tax.template:0
@@ -10133,11 +10135,9 @@ msgstr ""
 #: model:ir.model.fields,help:account.field_account_payment__multi
 #: model:ir.model.fields,help:account.field_account_register_payments__multi
 msgid ""
-"Technical field indicating if the user selected invoices from multiple "
-"partners or from different types."
+"Technical field indicating if the registering payment will generate multiple"
+" payments or not."
 msgstr ""
-"Campo técnico que indica si el usuario seleccionó facturas de múltiples "
-"socios o de diferentes tipos."
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_refund__refund_only

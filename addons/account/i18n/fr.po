@@ -11,7 +11,6 @@
 # e2f <projects@e2f.com>, 2018
 # bb76cd9ac0cb7e20167a14728edb858b, 2018
 # Fabien Pinckaers <fp@openerp.com>, 2018
-# Laura Piraux <lap@odoo.com>, 2018
 # 6534c450c77b2549e41c52e2051f5839, 2018
 # Jérôme Tanché <jerome.tanche@ouest-dsi.fr>, 2018
 # Marie Willemyns <mwi@odoo.com>, 2018
@@ -32,18 +31,23 @@
 # Antoine Lorence <antoine.lorence@gmail.com>, 2019
 # Damien Bouvy <dbo@odoo.com>, 2019
 # Alex T <alt@odoo.com>, 2019
-# Valaeys Stéphane <svalaeys@fiefmanage.ch>, 2019
 # Aurélien Pillevesse <aurelienpillevesse@hotmail.fr>, 2019
 # thomas quertinmont <tqu@odoo.com>, 2019
 # Martin Trigaux, 2019
 # Herve GUERIN <herve.guerin@auguria.fr>, 2019
 # Florian Hatat, 2019
 # Moka Tourisme <hello@mokatourisme.fr>, 2019
-# Cécile Collart <cco@odoo.com>, 2019
-# Jonathan <jcs@odoo.com>, 2019
 # Alexandra Jubert <aju@odoo.com>, 2020
 # Vincent Luba <vincent@biz-4-africa.com>, 2020
 # romrik_, 2020
+# Laura Piraux <lap@odoo.com>, 2020
+# Cécile Collart <cco@odoo.com>, 2020
+# Valaeys Stéphane <svalaeys@fiefmanage.ch>, 2020
+# Sylvain Dubuisson <sylvain@orderly.fr>, 2020
+# Christelle Pinchart <cpi@odoo.com>, 2020
+# Jonathan <jcs@odoo.com>, 2020
+# Priscilla Sanchez <prs@odoo.com>, 2020
+# Vallen Delobel <edv@odoo.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -51,7 +55,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:14+0000\n"
-"Last-Translator: romrik_, 2020\n"
+"Last-Translator: Vallen Delobel <edv@odoo.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -614,7 +618,7 @@ msgstr "<span>Quantité</span>"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_payment_receipt_document
 msgid "<span>Reference</span>"
-msgstr ""
+msgstr "<span>Référence</span>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
@@ -1723,25 +1727,25 @@ msgstr "Montant dû en devise de la facture"
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_total_amount
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_total_amount
 msgid "Amount Matching"
-msgstr ""
+msgstr "Correspondance des montants"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_total_amount_param
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_total_amount_param
 msgid "Amount Matching %"
-msgstr ""
+msgstr "Pourcentage de correspondance des montants"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_amount_max
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_amount_max
 msgid "Amount Max Parameter"
-msgstr ""
+msgstr "Paramètre Montant maximum"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_amount_min
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_amount_min
 msgid "Amount Min Parameter"
-msgstr ""
+msgstr "Paramètre montant minimum"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_nature
@@ -2169,7 +2173,7 @@ msgstr "Import automatique"
 #: code:addons/account/models/account_move.py:399
 #, python-format
 msgid "Automatic reversal of: %s"
-msgstr "extourne :"
+msgstr "Extourne automatique de : %s"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_report__price_average
@@ -2373,7 +2377,7 @@ msgstr "Banque et liquidités"
 #. module: account
 #: model:ir.model,name:account.model_account_setup_bank_manual_config
 msgid "Bank setup manual config"
-msgstr ""
+msgstr "Configuration manuelle des paramètre de la banque"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line__statement_line_id
@@ -2743,7 +2747,7 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_cash_box_out
 msgid "Cash Box Out"
-msgstr ""
+msgstr "Sortie de caisse"
 
 #. module: account
 #: code:addons/account/models/account_bank_statement.py:212
@@ -3244,7 +3248,7 @@ msgstr "Solde calculé"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_reconcile_model_form
 msgid "Conditions on Bank Statement Line"
-msgstr ""
+msgstr "Conditions sur les lignes de relevé bancaire"
 
 #. module: account
 #: model:ir.model,name:account.model_res_config_settings
@@ -4132,7 +4136,7 @@ msgstr "Imposte predefinite usate per l'acquisto del prodotto"
 #: model:ir.model.fields,help:account.field_product_product__taxes_id
 #: model:ir.model.fields,help:account.field_product_template__taxes_id
 msgid "Default taxes used when selling the product."
-msgstr ""
+msgstr "Taxes utilisées par défaut lors de la vente du produit."
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -5400,6 +5404,8 @@ msgid ""
 "If this checkbox is ticked, this entry will be automatically reversed at the"
 " reversal date you defined."
 msgstr ""
+"Si cette case est cochée, cette pièce comptable sera automatiquement "
+"extournée à la date indiquée."
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -6418,7 +6424,7 @@ msgstr "Libellé"
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_label_param
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_label_param
 msgid "Label Parameter"
-msgstr ""
+msgstr "Paramètre du libellé"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_tax__description
@@ -6868,7 +6874,7 @@ msgstr ""
 #: code:addons/account/models/chart_template.py:932
 #, python-format
 msgid "Manually create a write-off on clicked button."
-msgstr ""
+msgstr "Créez manuellement une radiation en cliquant sur le bouton"
 
 #. module: account
 #: selection:res.company,fiscalyear_last_month:0
@@ -6915,7 +6921,7 @@ msgstr "Match Regex"
 #: code:addons/account/models/chart_template.py:934
 #, python-format
 msgid "Match existing invoices/bills."
-msgstr ""
+msgstr "Faire correspondre les factures existantes."
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line__matched_credit_ids
@@ -7535,7 +7541,7 @@ msgstr "Balance ouverte"
 #. module: account
 #: model:ir.model,name:account.model_account_financial_year_op
 msgid "Opening Balance of Financial Year"
-msgstr ""
+msgstr "Solde initial de l'année fiscale"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_financial_year_op__opening_date
@@ -7844,12 +7850,12 @@ msgstr "Contrats partenaire"
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_partner
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_partner
 msgid "Partner Is Set"
-msgstr ""
+msgstr "Le partenaire est défini"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_reconcile_model_form
 msgid "Partner Is Set & Matches"
-msgstr ""
+msgstr "Le partenaire est défini et correspond"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line__partner_name
@@ -7934,7 +7940,7 @@ msgstr "Différence de paiement"
 #: model:ir.model.fields,field_description:account.field_account_payment__payment_difference_handling
 #: model:ir.model.fields,field_description:account.field_account_register_payments__payment_difference_handling
 msgid "Payment Difference Handling"
-msgstr ""
+msgstr "Traitement des écarts de paiement"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_abstract_payment__journal_id
@@ -8575,7 +8581,7 @@ msgstr "Destinataires"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line__recompute_tax_line
 msgid "Recompute Tax Line"
-msgstr ""
+msgstr "Recalculer la ligne de taxe"
 
 #. module: account
 #. openerp-web
@@ -8867,7 +8873,7 @@ msgstr "Limitez les catégories de partenaires à"
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_partner_ids
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_partner_ids
 msgid "Restrict Partners to"
-msgstr ""
+msgstr "Limitez les partenaires à"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_reconcile_model__match_same_currency
@@ -9036,7 +9042,7 @@ msgstr "Vendeur"
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_same_currency
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_same_currency
 msgid "Same Currency Matching"
-msgstr ""
+msgstr "Correspondance des devises"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.onboarding_sample_invoice_step
@@ -9123,7 +9129,7 @@ msgstr "Cherche un modèle de plan de comptes"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_position_filter
 msgid "Search Fiscal Positions"
-msgstr ""
+msgstr "Chercher des positions fiscales"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_invoice_filter
@@ -9199,13 +9205,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__force_second_tax_included
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__force_second_tax_included
 msgid "Second Tax Included in Price"
-msgstr ""
+msgstr "Seconde taxe inclue dans le prix"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__second_amount
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__second_amount
 msgid "Second Write-off Amount"
-msgstr ""
+msgstr "Second montant radié"
 
 #. module: account
 #: selection:account.invoice.line,display_type:0
@@ -9241,7 +9247,7 @@ msgstr "Sélectionner un tiers ou une contre-partie"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.invoice_supplier_form
 msgid "Select an old vendor bill"
-msgstr ""
+msgstr "Sélectionnez une ancienne facture fournisseur"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_payment_term_line__value
@@ -9750,7 +9756,7 @@ msgstr "Suggérer un ajustement"
 #: code:addons/account/models/account_reconcile_model.py:20
 #, python-format
 msgid "Suggest counterpart values."
-msgstr ""
+msgstr "Suggérer des valeurs de contrepartie."
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -9903,7 +9909,7 @@ msgstr "Groupe de taxe"
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__force_tax_included
 #, python-format
 msgid "Tax Included in Price"
-msgstr ""
+msgstr "Taxe inclue dans le prix"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice__tax_line_ids
@@ -10135,11 +10141,11 @@ msgstr ""
 #: model:ir.model.fields,help:account.field_account_payment__multi
 #: model:ir.model.fields,help:account.field_account_register_payments__multi
 msgid ""
-"Technical field indicating if the user selected invoices from multiple "
-"partners or from different types."
+"Technical field indicating if the registering payment will generate multiple"
+" payments or not."
 msgstr ""
-"Champ technique indiquant si l'utilisateur a sélectionné des factures de "
-"plusieurs partenaires ou de différents types."
+"Champ technique indiquant si l'enregistrement du paiement générera des "
+"paiements multiples ou non."
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_refund__refund_only
@@ -10489,6 +10495,8 @@ msgid ""
 "The currency of the bank statement line must be different than the statement"
 " currency."
 msgstr ""
+"La devise de la ligne du relevé bancaire doit être différente de la devise "
+"du relevé."
 
 #. module: account
 #: code:addons/account/models/account.py:551
@@ -10566,6 +10574,7 @@ msgstr ""
 msgid ""
 "The fiscal position determines the taxes/accounts used for this contact."
 msgstr ""
+"La position fiscale détermine les taxes / comptes utilisés pour ce contact."
 
 #. module: account
 #: code:addons/account/wizard/account_invoice_send.py:59
@@ -10738,6 +10747,8 @@ msgid ""
 "The reconciliation model will only be applied to the selected "
 "customer/vendor categories."
 msgstr ""
+"Le modèle de lettrage ne sera appliqué qu'aux catégories de clients / "
+"fournisseurs sélectionnées."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_reconcile_model__match_partner_ids
@@ -10746,6 +10757,8 @@ msgid ""
 "The reconciliation model will only be applied to the selected "
 "customers/vendors."
 msgstr ""
+"Le modèle de lettrage ne sera appliqué qu'aux clients / fournisseurs "
+"sélectionnés."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_reconcile_model__match_nature
@@ -10767,6 +10780,8 @@ msgstr ""
 msgid ""
 "The reconciliation model will only be applied when a customer/vendor is set."
 msgstr ""
+"Le modèle de lettrage ne sera appliqué que lorsqu'un client / fournisseur "
+"est défini."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_reconcile_model__match_amount
@@ -10775,6 +10790,8 @@ msgid ""
 "The reconciliation model will only be applied when the amount being lower "
 "than, greater than or between specified amount(s)."
 msgstr ""
+"Le modèle de lettrage ne sera appliqué que lorsque le montant est plus petit"
+" que, plus grand que, ou entre le(s) montant(s) spécifié(s)."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_reconcile_model__match_label
@@ -10785,6 +10802,10 @@ msgid ""
 "        * Not Contains: Negation of \"Contains\".\n"
 "        * Match Regex: Define your own regular expression."
 msgstr ""
+"Le modèle de lettrage ne sera appliqué que lorsque le libellé :\n"
+"        * Contient : la proposition de libellé doit contenir cette chaine (insensible à la casse).\n"
+"        * Ne contient pas : l'opposé de \"Contient\".\n"
+"        * Match Regex : définissez vos propres expressions régulières."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_reconcile_model__match_journal_ids
@@ -10792,6 +10813,8 @@ msgstr ""
 msgid ""
 "The reconciliation model will only be available from the selected journals."
 msgstr ""
+"Le modèle de lettrage ne sera disponible que depuis les journaux "
+"sélectionnés."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_move_line__amount_residual_currency
@@ -11144,6 +11167,8 @@ msgid ""
 "This parameter will be bypassed in case of a statement line communication "
 "matching exactly existing entries"
 msgstr ""
+"Ce paramètre sera contourné si la communication de la ligne de relevé "
+"correspond exactement aux écritures existantes."
 
 #. module: account
 #. openerp-web
@@ -11755,6 +11780,7 @@ msgid ""
 "Validate the statement line automatically (reconciliation based on your "
 "rule)."
 msgstr ""
+"Valide la ligne du relevé automatiquement (lettrage basé sur votre règle)."
 
 #. module: account
 #: selection:account.bank.statement,state:0
@@ -12306,6 +12332,8 @@ msgid ""
 "You cannot register payments for customer invoices and credit notes at the "
 "same time."
 msgstr ""
+"Vous ne pouvez pas enregistrer des paiements sur les factures clients et des"
+" avoirs en même temps."
 
 #. module: account
 #: code:addons/account/models/account_payment.py:96
@@ -12314,6 +12342,8 @@ msgid ""
 "You cannot register payments for vendor bills and supplier refunds at the "
 "same time."
 msgstr ""
+"Vous ne pouvez pas enregistrer des paiements sur les factures fournisseurs "
+"et des remboursements fournisseurs en même temps."
 
 #. module: account
 #: code:addons/account/models/account.py:644
@@ -12555,7 +12585,7 @@ msgstr "ont été réconciliés automatiquement."
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_send__invoice_without_email
 msgid "invoice(s) that will not be sent"
-msgstr ""
+msgstr "facture(s) qui ne seront pas envoyées"
 
 #. module: account
 #. openerp-web
@@ -12610,7 +12640,7 @@ msgstr "secondes par transaction."
 #: code:addons/account/static/src/xml/account_reconciliation.xml:319
 #, python-format
 msgid "statement lines"
-msgstr ""
+msgstr "Lignes de relevé"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_partner_property_form

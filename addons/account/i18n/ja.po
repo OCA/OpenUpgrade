@@ -19,6 +19,7 @@
 # Yoon Nankyung <nankyung.yoon@pro-spire.co.jp>, 2019
 # Martin Trigaux, 2019
 # Tim Siu Lai <tl@roomsfor.hk>, 2019
+# Hau Dao <hau@quartile.co>, 2020
 # Yoshi Tashiro <tashiro@roomsfor.hk>, 2020
 # 
 msgid ""
@@ -457,12 +458,12 @@ msgstr "<span>請求先</span>"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_payment_receipt_document
 msgid "<span>Amount Paid</span>"
-msgstr ""
+msgstr "<span>消込額</span>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_payment_receipt_document
 msgid "<span>Balance</span>"
-msgstr ""
+msgstr "<span>残高</span>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
@@ -482,12 +483,12 @@ msgstr "<span>仕入先請求インポート</span>"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_payment_receipt_document
 msgid "<span>Invoice Date</span>"
-msgstr ""
+msgstr "<span>請求日</span>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_payment_receipt_document
 msgid "<span>Invoice Number</span>"
-msgstr ""
+msgstr "<span>請求書番号</span>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
@@ -517,7 +518,7 @@ msgstr "<span>処理</span>"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_payment_receipt_document
 msgid "<span>Original Amount</span>"
-msgstr ""
+msgstr "<span>消込前残高</span>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
@@ -527,7 +528,7 @@ msgstr "<span>数量</span>"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_payment_receipt_document
 msgid "<span>Reference</span>"
-msgstr ""
+msgstr "<span>参照</span>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
@@ -576,7 +577,7 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.portal_invoice_page
 msgid "<strong class=\"text-muted\">Your Contact</strong>"
-msgstr ""
+msgstr "<strong class=\"text-muted\">担当者</strong>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document_with_payments
@@ -1571,7 +1572,7 @@ msgstr "未消込額 (請求書通貨)"
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_total_amount
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_total_amount
 msgid "Amount Matching"
-msgstr ""
+msgstr "金額が一致"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_total_amount_param
@@ -1595,25 +1596,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_nature
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_nature
 msgid "Amount Nature"
-msgstr ""
+msgstr "金額の性質"
 
 #. module: account
 #: selection:account.reconcile.model,match_nature:0
 #: selection:account.reconcile.model.template,match_nature:0
 msgid "Amount Paid"
-msgstr "支払済金額"
+msgstr "支払った金額"
 
 #. module: account
 #: selection:account.reconcile.model,match_nature:0
 #: selection:account.reconcile.model.template,match_nature:0
 msgid "Amount Paid/Received"
-msgstr ""
+msgstr "受領した/支払った金額"
 
 #. module: account
 #: selection:account.reconcile.model,match_nature:0
 #: selection:account.reconcile.model.template,match_nature:0
 msgid "Amount Received"
-msgstr ""
+msgstr "受領した金額"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_line__price_subtotal_signed
@@ -1950,7 +1951,7 @@ msgstr "自動検出"
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__auto_reconcile
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__auto_reconcile
 msgid "Auto-validate"
-msgstr ""
+msgstr "自動検証"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -3015,7 +3016,7 @@ msgstr "計算残高"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_reconcile_model_form
 msgid "Conditions on Bank Statement Line"
-msgstr ""
+msgstr "銀行取引明細での条件"
 
 #. module: account
 #: model:ir.model,name:account.model_res_config_settings
@@ -3165,7 +3166,7 @@ msgstr "相手方口座"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_reconcile_model_form
 msgid "Counterpart Values"
-msgstr ""
+msgstr "相手方項目値を提案"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_fiscal_position__country_id
@@ -4271,7 +4272,7 @@ msgstr ""
 #: code:addons/account/models/account_move.py:973
 #, python-format
 msgid "Either pass both debit and credit or none."
-msgstr ""
+msgstr "借方と貸方の両方を渡すか、どれも渡さない。"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_send__is_email
@@ -4650,12 +4651,12 @@ msgstr "フォロワー (取引先)"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_journal__inbound_payment_method_ids
 msgid "For Incoming Payments"
-msgstr ""
+msgstr "入金用設定"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_journal__outbound_payment_method_ids
 msgid "For Outgoing Payments"
-msgstr ""
+msgstr "支払用設定"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_payment_term_line__value_amount
@@ -6474,7 +6475,7 @@ msgstr ""
 #: code:addons/account/models/chart_template.py:932
 #, python-format
 msgid "Manually create a write-off on clicked button."
-msgstr ""
+msgstr "ボタンをクリックして償却を作成"
 
 #. module: account
 #: selection:res.company,fiscalyear_last_month:0
@@ -6512,7 +6513,7 @@ msgstr ""
 #: selection:account.reconcile.model,match_label:0
 #: selection:account.reconcile.model.template,match_label:0
 msgid "Match Regex"
-msgstr ""
+msgstr "次の正規表現にマッチする"
 
 #. module: account
 #: selection:account.reconcile.model,rule_type:0
@@ -6521,7 +6522,7 @@ msgstr ""
 #: code:addons/account/models/chart_template.py:934
 #, python-format
 msgid "Match existing invoices/bills."
-msgstr ""
+msgstr "既存の顧客/仕入先請求書と照合"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line__matched_credit_ids
@@ -6891,7 +6892,7 @@ msgstr "普通"
 #: selection:account.reconcile.model,match_label:0
 #: selection:account.reconcile.model.template,match_label:0
 msgid "Not Contains"
-msgstr ""
+msgstr "次を含まない"
 
 #. module: account
 #: selection:res.company,account_dashboard_onboarding_state:0
@@ -7303,7 +7304,7 @@ msgstr "督促メッセージ"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_invoice_filter
 msgid "Overdue invoices, maturity date passed"
-msgstr ""
+msgstr "延滞した請求書、及び満期日が過ぎました"
 
 #. module: account
 #: model:ir.ui.menu,name:account.menu_board_journal_1
@@ -7415,12 +7416,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_partner
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_partner
 msgid "Partner Is Set"
-msgstr ""
+msgstr "取引先設定あり"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_reconcile_model_form
 msgid "Partner Is Set & Matches"
-msgstr ""
+msgstr "取引先設定があり一致"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line__partner_name
@@ -7814,7 +7815,7 @@ msgstr "全仕訳を記帳"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_journal__post_at_bank_rec
 msgid "Post At Bank Reconciliation"
-msgstr ""
+msgstr "銀行照合時に記帳"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_payment_from_invoices
@@ -8406,13 +8407,13 @@ msgstr "担当者"
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_partner_category_ids
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_partner_category_ids
 msgid "Restrict Partner Categories to"
-msgstr ""
+msgstr "次の取引先カテゴリのみに適用"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_partner_ids
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_partner_ids
 msgid "Restrict Partners to"
-msgstr ""
+msgstr "次の取引先のみに適用"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_reconcile_model__match_same_currency
@@ -8581,7 +8582,7 @@ msgstr "販売担当者"
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__match_same_currency
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__match_same_currency
 msgid "Same Currency Matching"
-msgstr ""
+msgstr "通貨が一致"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.onboarding_sample_invoice_step
@@ -9223,6 +9224,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"活動に基づく状態\n"
+"延滞：期限は既に過ぎました\n"
+"当日：活動日は本日です\n"
+"予定：将来の活動。"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.onboarding_bank_account_step
@@ -9264,7 +9269,7 @@ msgstr ""
 #: code:addons/account/models/account_reconcile_model.py:20
 #, python-format
 msgid "Suggest counterpart values."
-msgstr ""
+msgstr "相手方項目値を提案"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -9635,8 +9640,8 @@ msgstr ""
 #: model:ir.model.fields,help:account.field_account_payment__multi
 #: model:ir.model.fields,help:account.field_account_register_payments__multi
 msgid ""
-"Technical field indicating if the user selected invoices from multiple "
-"partners or from different types."
+"Technical field indicating if the registering payment will generate multiple"
+" payments or not."
 msgstr ""
 
 #. module: account
@@ -10507,7 +10512,7 @@ msgstr ""
 msgid ""
 "This parameter will be bypassed in case of a statement line communication "
 "matching exactly existing entries"
-msgstr ""
+msgstr "取引明細と既存エントリの摘要が一致する場合はこのパラメタは無視"
 
 #. module: account
 #. openerp-web
@@ -11324,7 +11329,7 @@ msgstr "償却"
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model__amount
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__amount
 msgid "Write-off Amount"
-msgstr ""
+msgstr "償却金額"
 
 #. module: account
 #. openerp-web
@@ -11672,7 +11677,7 @@ msgstr ""
 #: code:addons/account/models/account_invoice.py:1683
 #, python-format
 msgid "You must first select a partner."
-msgstr ""
+msgstr "取引先を選択してください。"
 
 #. module: account
 #. openerp-web
