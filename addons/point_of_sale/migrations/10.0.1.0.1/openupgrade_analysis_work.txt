@@ -13,7 +13,7 @@ point_of_sale / pos.config               / state (selection)             : DEL r
 point_of_sale / pos.config               / default_fiscal_position_id (many2one): NEW relation: account.fiscal.position
 point_of_sale / pos.config               / iface_fullscreen (boolean)    : DEL
 point_of_sale / pos.config               / invoice_journal_id (many2one) : NEW relation: account.journal
-# NOTHING TO DO
+# Done: pre-migration. We set the invoice_journal_id with the journal_id value, because, default function return bad journal in multicompany context. We populate the value only if the column doesn't exist. (that is the case if the OCA module pos_invoice_journal is installed in previous version)
 
 point_of_sale / pos.order.line           / pack_lot_ids (one2many)       : NEW relation: pos.pack.operation.lot
 # NOTHING TO DO
