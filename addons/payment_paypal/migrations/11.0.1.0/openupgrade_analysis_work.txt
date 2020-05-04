@@ -5,5 +5,7 @@ payment_paypal / payment.acquirer         / paypal_pdt_token (char)       : NEW
 ---XML records in module 'payment_paypal'---
 NEW ir.ui.view: payment_paypal.paypal_form
 DEL ir.ui.view: payment_paypal.payment_paypal_option_config
-DEL ir.ui.view: payment_paypal.paypal_acquirer_button
 # Nothing to do
+
+DEL ir.ui.view: payment_paypal.paypal_acquirer_button
+# DONE: Re-assign payment acquirers that has this view assigned
