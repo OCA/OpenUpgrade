@@ -11,6 +11,8 @@ renamed_modules = {
     # connector and queue_job. We need to do this to correct upgrade both
     # modules.
     'connector': 'queue_job',
+    # OCA/connector-magento
+    'magentoerpconnect': 'connector_magento',
     # OCA/e-commerce
     'website_sale_qty': 'website_sale_price_tier',
     # OCA/hr
