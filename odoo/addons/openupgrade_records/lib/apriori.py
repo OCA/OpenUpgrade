@@ -20,6 +20,8 @@ renamed_modules = {
     'crm_sector': 'crm_industry',
     # OCA/account-payment
     'account_due_list_aging_comments': 'account_due_list_aging_comment',
+    # OCA/l10n-netherlands:
+    'l10n_nl_intrastat': 'l10n_nl_tax_statement_icp',
     # OCA/partner-contact
     'partner_sector': 'partner_industry_secondary',
     'partner_street_number': 'base_address_extended',
