@@ -17,6 +17,7 @@ def _replace_paypal_view_template_id(env):
         'view_template_id': env.ref('payment_paypal.paypal_form').id,
     })
 
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.load_data(
