@@ -18,19 +18,21 @@ sale         / product.template         / invoice_policy (selection)    : select
 # DONE: post-migration: map value 'cost' to new value
 
 sale         / product.template         / sale_line_warn (selection)    : NEW required: required, selection_keys: ['block', 'no-message', 'warning'], req_default: no-message
-sale         / product.template         / sale_line_warn_msg (text)     : NEW 
+sale         / product.template         / sale_line_warn_msg (text)     : NEW
 sale         / res.partner              / sale_warn (selection)         : NEW required: required, selection_keys: ['block', 'no-message', 'warning'], req_default: no-message
-sale         / res.partner              / sale_warn_msg (text)          : NEW 
+sale         / res.partner              / sale_warn_msg (text)          : NEW
 # DONE: pre-migration: partial "update_module_names" process (old module warning)
 
 ##### NEW MODEL SALE.LAYOUT.CATEGORY ####
 sale         / sale.layout_category     / name (char)                   : NEW required: required
-sale         / sale.layout_category     / pagebreak (boolean)           : NEW 
+sale         / sale.layout_category     / pagebreak (boolean)           : NEW
 sale         / sale.layout_category     / sequence (integer)            : NEW required: required, req_default: function
-sale         / sale.layout_category     / subtotal (boolean)            : NEW 
+sale         / sale.layout_category     / subtotal (boolean)            : NEW
 # DONE: pre-migration: update_module_names (old module sale_layout)
 
 sale         / sale.order               / confirmation_date (datetime)  : NEW
+# DONE: post-migration: Take value from mail.tracking.value
+
 sale         / sale.order.line          / analytic_tag_ids (many2many)  : NEW relation: account.analytic.tag
 # NOTHING TO DO
 
