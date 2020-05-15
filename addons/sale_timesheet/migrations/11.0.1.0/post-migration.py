@@ -36,7 +36,7 @@ def migrate_project_sale_line(env):
                         product_template pt
                     WHERE sol.product_id = pd.id
                         AND sol.order_id = so.id
-                        AND so.analytic_account_id = pj.id
+                        AND so.analytic_account_id = pj.analytic_account_id
                         AND pt.id = pd.product_tmpl_id
                         AND so.state in ('sale', 'done')
                         AND pt.%s in ('task', 'timesheet')
