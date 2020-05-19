@@ -26,6 +26,8 @@ renamed_modules = {
         'sale_procurement_group_by_commitment_date',
     # OCA/server-brand
     'res_config_settings_enterprise_remove': 'remove_odoo_enterprise',
+    # OCA/server-tools
+    'attachment_base_synchronize': 'attachment_queue',
     # OCA/stock-logistics-workflow
     'stock_batch_picking': 'stock_picking_batch_extended',
     'stock_pack_operation_auto_fill': 'stock_move_line_auto_fill',
