@@ -41,6 +41,8 @@ merged_modules = {
     # OCA/web
     'web_favicon': 'base',
     'web_widget_color': 'web',
+    # OCA/website
+    'website_canonical_url': 'website',
 }
 
 # only used here for openupgrade_records analysis:
