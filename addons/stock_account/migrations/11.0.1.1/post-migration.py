@@ -116,13 +116,11 @@ def update_stock_move_value_fifo(env):
                 SELECT sum(sq.quantity*sq.cost) as remaining_value,
                     sum(sq.quantity) as remaining_qty
                 FROM stock_quant_move_rel sqsm
-                INNER JOIN stock_move sm
-                ON sqsm.move_id = sm.id
                 INNER JOIN stock_quant sq
                 ON sqsm.quant_id = sq.id
                 INNER JOIN stock_location sl
                 ON sq.location_id = sl.id
-                WHERE sm.id = %s
+                WHERE sqsm.move_id = %s
                     AND (sl.company_id IS NOT NULL
                         OR sl.usage = 'internal')
                 ) AS q1
@@ -135,13 +133,9 @@ def update_stock_move_value_fifo(env):
             FROM (
                 SELECT sum(sq.quantity*sq.cost) as value
                 FROM stock_quant_move_rel sqsm
-                INNER JOIN stock_move sm
-                ON sqsm.move_id = sm.id
                 INNER JOIN stock_quant sq
                 ON sqsm.quant_id = sq.id
-                INNER JOIN stock_location sl
-                ON sq.location_id = sl.id
-                WHERE sm.id = %s
+                WHERE sqsm.move_id = %s
                 ) AS q1
             WHERE to_update.id = %s
         """, (move, move))
@@ -172,13 +166,9 @@ def update_stock_move_value_fifo(env):
             FROM (
                 SELECT sum(sq.quantity*sq.cost) as value
                 FROM stock_quant_move_rel sqsm
-                INNER JOIN stock_move sm
-                ON sqsm.move_id = sm.id
                 INNER JOIN stock_quant sq
                 ON sqsm.quant_id = sq.id
-                INNER JOIN stock_location sl
-                ON sq.location_id = sl.id
-                WHERE sm.id = %s
+                WHERE sqsm.move_id = %s
                 ) AS q1
             WHERE to_update.id = %s
         """, (move, move))
