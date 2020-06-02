@@ -9,9 +9,9 @@ new model mrp.workorder.line
 # NOTHING TO DO: new models
 
 ---Fields in module 'mrp'---
-mrp          / mrp.bom                  / byproduct_ids (one2many)      : NEW relation: mrp.bom.byproduct
 mrp          / mrp.bom                  / consumption (selection)       : NEW selection_keys: ['flexible', 'strict'], hasdefault
-# NOTHING TO DO: has default value
+mrp          / mrp.workorder            / consumption (selection)       : NEW required, selection_keys: ['flexible', 'strict']
+# DONE: pre-migration: set 'flexible' for normal bom and workorder
 
 mrp          / mrp.bom.byproduct        / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
 mrp          / mrp.bom.byproduct        / routing_id (many2one)         : NEW relation: mrp.routing, isrelated: related, stored
@@ -20,7 +20,7 @@ mrp          / mrp.bom.line             / company_id (many2one)         : NEW re
 
 mrp          / mrp.bom.line             / attribute_value_ids (many2many): DEL relation: product.attribute.value
 mrp          / mrp.bom.line             / bom_product_template_attribute_value_ids (many2many): NEW relation: product.template.attribute.value
-# DONE: pre-migration: field and relation table renamed
+# DONE: pre-migration: relation table renamed and mapped value
 
 mrp          / mrp.document             / key (char)                    : module is now 'website' ('mrp')
 mrp          / mrp.document             / res_id (integer)              : relation is now 'res_model' ('False') [nothing to do]
@@ -31,6 +31,10 @@ mrp          / mrp.document             / website_url (char)            : module
 
 mrp          / mrp.production           / availability (selection)      : DEL selection_keys: ['assigned', 'none', 'partially_available', 'waiting']
 mrp          / mrp.production           / reservation_state (selection) : NEW selection_keys: ['assigned', 'confirmed', 'waiting'], isfunction: function, stored
+# DONE: pre-migration: copy `availability`
+# post-migration: set NULL IF availability == 'none' OR state in ('done', 'cancel')
+#                 set 'assign' or 'confirm' according to _compute_state function
+
 mrp          / mrp.production           / propagate (boolean)           : DEL
 mrp          / mrp.production           / propagate_cancel (boolean)    : NEW
 # DONE: pre-migration (renamed)
@@ -58,16 +62,19 @@ mrp          / mrp.workorder            / final_lot_id (many2one)       : DEL re
 mrp          / mrp.workorder            / finished_lot_id (many2one)    : NEW relation: stock.production.lot
 # DONE: pre-migration (renamed)
 
-mrp          / mrp.workorder            / consumption (selection)       : NEW required, selection_keys: ['flexible', 'strict']
 mrp          / mrp.workorder            / active_move_line_ids (one2many): DEL relation: stock.move.line
 mrp          / mrp.workorder            / activity_ids (one2many)       : NEW relation: mail.activity
-mrp          / mrp.workorder            / date_planned_finished (datetime): now a function
-mrp          / mrp.workorder            / date_planned_start (datetime) : now a function
-mrp          / mrp.workorder            / finished_workorder_line_ids (one2many): NEW relation: mrp.workorder.line
 mrp          / mrp.workorder            / leave_id (many2one)           : NEW relation: resource.calendar.leaves
 mrp          / mrp.workorder            / move_finished_ids (one2many)  : NEW relation: stock.move
-mrp          / mrp.workorder            / raw_workorder_line_ids (one2many): NEW relation: mrp.workorder.line
 # NOTHING TO DO: new features
+
+mrp          / mrp.workorder            / date_planned_finished (datetime): now a function
+mrp          / mrp.workorder            / date_planned_start (datetime) : now a function
+# DONE: post-migration: set where empty
+
+mrp          / mrp.workorder            / finished_workorder_line_ids (one2many): NEW relation: mrp.workorder.line
+mrp          / mrp.workorder            / raw_workorder_line_ids (one2many): NEW relation: mrp.workorder.line
+# DONE: post-migration: generate new records where need
 
 mrp          / mrp.workorder            / product_uom_id (many2one)     : is now stored
 mrp          / mrp.workorder            / product_uom_id (many2one)     : not related anymore
@@ -86,9 +93,8 @@ mrp          / mrp.workorder.line       / raw_workorder_id (many2one)   : NEW re
 # NOTHING TO DO: new model
 
 mrp          / stock.move               / active_move_line_ids (one2many): DEL relation: stock.move.line
-mrp          / stock.move               / byproduct_id (many2one)       : NEW relation: mrp.bom.byproduct
 mrp          / stock.move.line          / done_wo (boolean)             : DEL
-# NOTHING TO DO: new feature
+# NOTHING TO DO
 
 mrp          / stock.move.line          / lot_produced_id (many2one)    : DEL relation: stock.production.lot
 mrp          / stock.move.line          / lot_produced_ids (many2many)  : NEW relation: stock.production.lot
@@ -96,12 +102,16 @@ mrp          / stock.move.line          / lot_produced_ids (many2many)  : NEW re
 
 mrp          / stock.picking.type       / use_create_components_lots (boolean): NEW hasdefault
 mrp          / stock.production.lot     / use_next_on_work_order_id (many2one): DEL relation: mrp.workorder
-mrp          / stock.warehouse          / manufacture_mto_pull_id (many2one): NEW relation: stock.rule
 # NOTHING TO DO: new feature
 
+mrp          / stock.warehouse          / manufacture_mto_pull_id (many2one): NEW relation: stock.rule
+# Done: post-migration: generate for warehouses where manufacture_to_resupply is set True
+
+mrp          / mrp.bom                  / byproduct_ids (one2many)      : NEW relation: mrp.bom.byproduct
+mrp          / stock.move               / byproduct_id (many2one)       : NEW relation: mrp.bom.byproduct
 mrp_byproduct / mrp.bom                  / sub_products (one2many)       : DEL relation: mrp.subproduct
 mrp_byproduct / stock.move               / subproduct_id (many2one)      : DEL relation: mrp.subproduct
-# NOTHING TO DO
+# DONE: pre-migration: field renamed
 
 ---XML records in module 'mrp'---
 NEW ir.actions.report: mrp.label_manufacture_template
