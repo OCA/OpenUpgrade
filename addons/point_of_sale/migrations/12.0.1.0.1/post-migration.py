@@ -22,7 +22,11 @@ def fill_pos_order_line_prices(env):
             " for all pos.order.line, because pos_pricelist was installed")
         return
 
-    env["pos.order.line"].search([])._onchange_amount_line_all()
+    for lines in openupgrade.chunked(
+        env["pos.order.line"].search([]),
+        single=False
+    ):
+        lines._onchange_amount_line_all()
 
 
 def fill_pos_order_amounts(env):
