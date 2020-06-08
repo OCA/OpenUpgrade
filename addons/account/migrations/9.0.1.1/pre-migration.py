@@ -101,6 +101,7 @@ column_copies = {
     'account_tax': [
         ('type_tax_use', None, None),
         ('type', None, None),
+        ('tax_code_id', 'tax_group_id', None),
     ],
     'account_tax_template': [
         ('type_tax_use', None, None),
