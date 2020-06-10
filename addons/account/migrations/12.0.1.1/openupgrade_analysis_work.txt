@@ -32,7 +32,8 @@ account      / account.fiscal.year      / company_id (many2one)         : NEW re
 account      / account.fiscal.year      / date_from (date)              : NEW required: required
 account      / account.fiscal.year      / date_to (date)                : NEW required: required
 account      / account.fiscal.year      / name (char)                   : NEW required: required
-# NOTHING TO DO (new model)
+# Done: post-migration: populate with old account.fiscalyear model
+# if we come from a 8.0 database.
 
 account      / account.group            / parent_left (integer)         : DEL
 account      / account.group            / parent_path (char)            : NEW

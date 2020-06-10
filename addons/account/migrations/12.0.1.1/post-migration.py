@@ -220,6 +220,23 @@ def set_default_taxes(env):
         })
 
 
+def populate_fiscal_years(env):
+    if openupgrade.table_exists(env.cr, 'account_fiscalyear'):
+        # An old 8.0 table is still present with fiscal years
+        # We populate the new table with the old values
+        openupgrade.logged_query(
+            env.cr, """
+            INSERT INTO account_fiscal_year (
+                id, name, company_id, date_from, date_to,
+                create_date, create_uid, write_date, write_uid
+            )
+            SELECT
+                id, name, company_id, date_start, date_stop,
+                create_date, create_uid, write_date, write_uid
+            FROM account_fiscalyear;
+            """)
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
@@ -235,6 +252,7 @@ def migrate(env, version):
     fill_account_move_reverse_entry_id(env)
     recompute_invoice_taxes_add_analytic_tags(env)
     set_default_taxes(env)
+    populate_fiscal_years(env)
     openupgrade.load_data(
         cr, 'account', 'migrations/12.0.1.1/noupdate_changes.xml')
     openupgrade.delete_record_translations(
