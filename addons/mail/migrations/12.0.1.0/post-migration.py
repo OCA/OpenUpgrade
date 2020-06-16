@@ -31,9 +31,25 @@ def fill_mail_notification_mail_id(cr):
     )
 
 
+def remove_admin_alias_owner(cr):
+    """Admin's aliases would fail.
+
+    Admin is going to be disabled later in base end-migration.
+    When that happens, any aliases belonging to him would fail.
+
+    By removing the alias owner, we let Odoo decide the default, which will
+    be __system__ usually, the new admin replacement.
+    """
+    openupgrade.logged_query(
+        cr,
+        "UPDATE mail_alias SET alias_user_id = NULL WHERE alias_user_id = 1",
+    )
+
+
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     fill_mail_blacklist_res_partner(cr)
     fill_mail_notification_mail_id(cr)
+    remove_admin_alias_owner(cr)
     openupgrade.load_data(
         cr, 'mail', 'migrations/12.0.1.0/noupdate_changes.xml')
