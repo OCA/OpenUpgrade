@@ -1,5 +1,5 @@
 # Copyright 2019 Eficent <http://www.eficent.com>
-# Copyright 2019-2020 Tecnativa - Pedro M. Baeza
+# Copyright 2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -12,6 +12,9 @@ _column_renames = {
         ('double_validation', None),
         ('limit', None),
     ],
+    'resource_calendar_leaves': [
+        ('holiday_id', None),
+    ]
  }
 
 _field_renames = [
