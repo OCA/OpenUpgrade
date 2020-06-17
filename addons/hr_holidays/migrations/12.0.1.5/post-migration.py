@@ -2,6 +2,7 @@
 # Copyright 2019 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+from psycopg2 import sql
 from psycopg2.extensions import AsIs
 
 
@@ -82,6 +83,20 @@ def fill_hr_leave(env):
     ids = [x[0] for x in env.cr.fetchall()]
     if ids:
         _move_model_in_data(env, ids, 'hr.holidays', 'hr.leave')
+
+
+def restore_resource_calendar_leave_link(env):
+    """We set this now from the renamed column as can't be done previously
+    or we will get fkey violation.
+    """
+    openupgrade.logged_query(
+        env.cr, sql.SQL(
+            """UPDATE resource_calendar_leaves SET holiday_id = {}
+            WHERE holiday_id IS NULL"""
+        ).format(
+            sql.Identifier(openupgrade.get_legacy_name("holiday_id"))
+        )
+    )
 
 
 def fill_hr_leave_request_dates(cr):
@@ -177,6 +192,7 @@ def migrate(env, version):
     fill_hr_leave_type_validation_type(cr)
     fill_hr_leave_type_allocation_type(cr)
     fill_hr_leave(env)
+    restore_resource_calendar_leave_link(env)
     fill_hr_leave_request_dates(cr)
     fill_hr_leave_allocation(env)
     set_max_sequences(env)
