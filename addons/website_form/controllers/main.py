@@ -122,7 +122,7 @@ class WebsiteForm(http.Controller):
 
         authorized_fields = model.sudo()._get_form_writable_fields()
         error_fields = []
-
+        custom_fields = []
 
         for field_name, field_value in values.items():
             # If the value of the field if a file
@@ -151,7 +151,9 @@ class WebsiteForm(http.Controller):
 
             # If it's a custom field
             elif field_name != 'context':
-                data['custom'] += u"%s : %s\n" % (field_name, field_value)
+                custom_fields.append((field_name, field_value))
+
+        data['custom'] = "\n".join([u"%s : %s" % v for v in custom_fields])
 
         # Add metadata if enabled
         environ = request.httprequest.headers.environ
@@ -208,7 +210,7 @@ class WebsiteForm(http.Controller):
                     'no_auto_thread': False,
                     'res_id': record.id,
                 }
-                mail_id = request.env['mail.message'].sudo().create(values)
+                mail_id = request.env['mail.message'].with_user(SUPERUSER_ID).create(values)
 
         return record.id
 

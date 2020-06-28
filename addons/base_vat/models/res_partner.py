@@ -460,11 +460,23 @@ class ResPartner(models.Model):
         except ImportError:
             return True
 
+    def check_vat_ua(self, vat):
+        if self.is_company:
+            if len(vat) == 12:
+                return True
+        else:
+            if len(vat) == 10 or len(vat) == 9:
+                return True
+        return False
+
     def default_compact(self, vat):
         return vat
 
-    def _fix_vat_number(self, vat):
+    def _fix_vat_number(self, vat, country_id):
+        code = self.env['res.country'].browse(country_id).code if country_id else False
         vat_country, vat_number = self._split_vat(vat)
+        if code and code.lower() != vat_country:
+            return vat
         check_func_name = 'compact_' + vat_country
         check_func = globals().get(check_func_name) or getattr(self, 'default_compact')
         vat_number = check_func(vat_number)
@@ -473,11 +485,13 @@ class ResPartner(models.Model):
     @api.model
     def create(self, values):
         if values.get('vat'):
-            values['vat'] = self._fix_vat_number(values['vat'])
+            country_id = values.get('country_id')
+            values['vat'] = self._fix_vat_number(values['vat'], country_id)
         return super(ResPartner, self).create(values)
 
     def write(self, values):
-        if values.get('vat'):
-            values['vat'] = self._fix_vat_number(values['vat'])
+        if values.get('vat') and len(self.mapped('country_id')) == 1:
+            country_id = values.get('country_id', self.country_id.id)
+            values['vat'] = self._fix_vat_number(values['vat'], country_id)
         return super(ResPartner, self).write(values)
-        
+

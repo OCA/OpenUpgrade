@@ -653,11 +653,15 @@ class Survey(models.Model):
         for question in scored_questions:
             question_answer_correct = question.labels_ids.filtered(lambda answer: answer.is_correct)
             for user_answer in user_answers:
+                if question not in user_answer.question_ids:
+                    # the question may be in the survey, but not be selected by the random selection
+                    continue
+
                 user_answer_lines_question = user_answer.user_input_line_ids.filtered(lambda line: line.question_id == question)
                 user_answer_correct = user_answer_lines_question.filtered(lambda line: line.answer_is_correct and not line.skipped).mapped('value_suggested')
                 user_answer_incorrect = user_answer_lines_question.filtered(lambda line: not line.answer_is_correct and not line.skipped)
 
-                if user_answer_correct == question_answer_correct:
+                if question_answer_correct and user_answer_correct == question_answer_correct:
                     res[user_answer]['correct'] += 1
                 elif user_answer_correct and user_answer_correct < question_answer_correct:
                     res[user_answer]['partial'] += 1

@@ -4,9 +4,9 @@
 # 
 # Translators:
 # peso <peer.sommerlund@gmail.com>, 2019
+# Hans Henrik Gabelgaard <hhg@gabelgaard.org>, 2019
 # Per Rasmussen <perhgrasmussen@gmail.com>, 2019
 # Joe Hansen <joedalton2@yahoo.dk>, 2019
-# Hans Henrik Gabelgaard <hhg@gabelgaard.org>, 2019
 # JonathanStein <jstein@image.dk>, 2019
 # jonas jensen <j.jensen@tcomp.dk>, 2019
 # Jesper Carstensen <info@danodoo.dk>, 2019
@@ -16,16 +16,17 @@
 # Ejner Sønniksen <ejner@vkdata.dk>, 2019
 # Pernille Kristensen <pernillekristensen1994@gmail.com>, 2019
 # Martin Trigaux, 2019
-# Sanne Kristensen <sanne@vkdata.dk>, 2020
 # lhmflexerp <lhm@flexerp.dk>, 2020
+# Sanne Kristensen <sanne@vkdata.dk>, 2020
+# Walther Barnett <wba@miracle.dk>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-05 12:32+0000\n"
+"POT-Creation-Date: 2020-04-27 09:21+0000\n"
 "PO-Revision-Date: 2019-08-26 09:12+0000\n"
-"Last-Translator: lhmflexerp <lhm@flexerp.dk>, 2020\n"
+"Last-Translator: Walther Barnett <wba@miracle.dk>, 2020\n"
 "Language-Team: Danish (https://www.transifex.com/odoo/teams/41243/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -397,7 +398,7 @@ msgstr "Aktiviteter"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_session__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Aktivitet undtagelse markering"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_session__activity_state
@@ -850,7 +851,7 @@ msgstr ""
 #: code:addons/point_of_sale/static/src/xml/pos.xml:0
 #, python-format
 msgid "Change"
-msgstr "Ændre"
+msgstr "Byttepenge"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1319,7 +1320,7 @@ msgstr "Standard konteringsgruppe"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "Default Opening"
-msgstr "Standard åbning"
+msgstr "Standardåbning"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config__pricelist_id
@@ -1923,7 +1924,7 @@ msgstr "Ikon"
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_session__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Ikon for uventet aktivitet."
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_session__message_needaction
@@ -3363,16 +3364,12 @@ msgid "Pricing"
 msgstr "Priser"
 
 #. module: point_of_sale
-#: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_details_wizard
-msgid "Print"
-msgstr "Udskriv"
-
-#. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/xml/pos.xml:0
+#: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_details_wizard
 #, python-format
-msgid "Print Invoice"
-msgstr "Udskriv faktura"
+msgid "Print"
+msgstr "Udskriv"
 
 #. module: point_of_sale
 #. openerp-web
@@ -3673,7 +3670,7 @@ msgstr "Begræns prisændringer til ledere"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
 msgid "Resume"
-msgstr "CV"
+msgstr "Genoptag"
 
 #. module: point_of_sale
 #. openerp-web
@@ -4206,7 +4203,7 @@ msgstr "TOTAL"
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_pos_box_out
 msgid "Take Money In/Out"
-msgstr "Tilfør/frafør penge"
+msgstr "Tilføj/fjern penge"
 
 #. module: point_of_sale
 #. openerp-web
@@ -4379,6 +4376,15 @@ msgstr "Denne ordre kunne ikke sendes til serveren grundet en ukendt fejl"
 msgid ""
 "The order has been synchronized earlier. Please make the invoice from the "
 "backend for the order: "
+msgstr ""
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/xml/pos.xml:0
+#, python-format
+msgid ""
+"The order has been synchronized earlier. To print the invoice please refer "
+"to the order in the backend"
 msgstr ""
 
 #. module: point_of_sale
@@ -4834,7 +4840,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_session__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Type af undtagelsesaktivitet registreret "
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_session.py:0
@@ -5179,18 +5185,6 @@ msgid "You have to select a pricelist in the sale form."
 msgstr ""
 
 #. module: point_of_sale
-#: code:addons/point_of_sale/wizard/pos_details.py:0
-#, python-format
-msgid "You have to set a logo or a layout for your company."
-msgstr "Du skal angive et logo eller layout for din virksomhed."
-
-#. module: point_of_sale
-#: code:addons/point_of_sale/wizard/pos_details.py:0
-#, python-format
-msgid "You have to set your reports's header and footer layout."
-msgstr "Du skal indstille layoutet for din rapports sidehoved og -fod."
-
-#. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/js/gui.js:0
 #, python-format
@@ -5198,6 +5192,13 @@ msgid ""
 "You must be connected to the internet to save your changes.\n"
 "\n"
 "Orders that where not synced before will be synced next time you close an order while connected to the internet or when you close the session."
+msgstr ""
+
+#. module: point_of_sale
+#: code:addons/point_of_sale/models/pos_config.py:0
+#, python-format
+msgid ""
+"You must configure an intermediary account for the payment methods: %s."
 msgstr ""
 
 #. module: point_of_sale

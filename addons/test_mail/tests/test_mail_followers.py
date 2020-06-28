@@ -117,6 +117,16 @@ class BaseFollowersTest(common.BaseFunctionalTest):
                 'channel_id': self.channel_listen.id,
             })
 
+    def test_followers_default_partner_context(self):
+        """Test that a follower partner_id is not taken from context
+           when channel id is also defined.
+        """
+        test_record = self.test_record.with_user(self.user_employee)
+        test_record.with_context(default_partner_id=1).message_subscribe(
+            partner_ids=[self.user_employee.partner_id.id, self.user_admin.partner_id.id],
+            channel_ids=[self.channel_listen.id]
+        )
+
 
 class AdvancedFollowersTest(common.BaseFunctionalTest):
     @classmethod
@@ -241,3 +251,29 @@ class DuplicateNotificationTest(common.BaseFunctionalTest):
         self.assertEqual(len(partner_notif), 1)
         self.assertEqual(partner_notif[0][5], 'email')
 
+@tagged('post_install', '-at_install')
+class UnlinkedNotificationTest(common.BaseFunctionalTest):
+    def test_unlinked_notification(self):
+        """
+        Check that we unlink the created user_notification after unlinked the related document
+
+        Post install because we need the registery to be ready to send notification
+        """
+        common_partner = self.env['res.partner'].create({"name": "demo1", "email": "demo1@test.com"})
+        user_1 = self.env['res.users'].create({'login': 'demo1', 'partner_id': common_partner.id, 'notification_type': 'inbox'})
+
+        test = self.env['mail.test.track'].create({"name": "Test Track", "user_id": user_1.id})
+        test_id = test.id
+        mail_message = self.env['mail.message'].search([
+             ('res_id', '=', test_id),
+             ('model', '=', 'mail.test.track'),
+             ('message_type', '=', 'user_notification')
+        ])
+        self.assertEqual(len(mail_message), 1)
+        test.unlink()
+        mail_message = self.env['mail.message'].search([
+             ('res_id', '=', test_id),
+             ('model', '=', 'mail.test.track'),
+             ('message_type', '=', 'user_notification')
+        ])
+        self.assertEqual(len(mail_message), 0)

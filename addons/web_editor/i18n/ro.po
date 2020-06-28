@@ -6,15 +6,16 @@
 # sharkutz <sharkutz4life@yahoo.com>, 2019
 # Cozmin Candea <office@terrabit.ro>, 2019
 # Martin Trigaux, 2019
-# Dorin Hongu <dhongu@gmail.com>, 2019
+# Dorin Hongu <dhongu@gmail.com>, 2020
+# Foldi Robert <foldirobert@nexterp.ro>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 07:13+0000\n"
+"POT-Creation-Date: 2020-04-27 09:22+0000\n"
 "PO-Revision-Date: 2019-08-26 09:15+0000\n"
-"Last-Translator: Dorin Hongu <dhongu@gmail.com>, 2019\n"
+"Last-Translator: Foldi Robert <foldirobert@nexterp.ro>, 2020\n"
 "Language-Team: Romanian (https://www.transifex.com/odoo/teams/41243/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -303,7 +304,7 @@ msgstr ""
 #: code:addons/web_editor/static/src/js/editor/rte.summernote.js:0
 #, python-format
 msgid "Bold"
-msgstr ""
+msgstr "Bold"
 
 #. module: web_editor
 #. openerp-web
@@ -349,6 +350,7 @@ msgstr ""
 #. openerp-web
 #: code:addons/web_editor/static/src/js/editor/rte.summernote.js:0
 #: code:addons/web_editor/static/src/js/wysiwyg/widgets/crop_dialog.js:0
+#: code:addons/web_editor/static/src/xml/ace.xml:0
 #: code:addons/web_editor/static/src/xml/ace.xml:0
 #, python-format
 msgid "Close"
@@ -409,7 +411,7 @@ msgstr ""
 #: code:addons/web_editor/static/src/xml/editor.xml:0
 #, python-format
 msgid "Cover"
-msgstr ""
+msgstr "Copertă"
 
 #. module: web_editor
 #: model:ir.model.fields,field_description:web_editor.field_web_editor_converter_test_sub__create_uid
@@ -752,7 +754,7 @@ msgstr ""
 #: code:addons/web_editor/static/src/xml/editor.xml:0
 #, python-format
 msgid "Horizontal"
-msgstr ""
+msgstr "Orizontal"
 
 #. module: web_editor
 #. openerp-web
@@ -776,7 +778,7 @@ msgid ""
 "can cancel to return to the edition mode."
 msgstr ""
 "Dacă renunțați la editarea curentă, toate modificările nesalvate vor fi "
-"pierdute. Puteți anula pentru a reveni la modul editare."
+"pierdute. Puteți abandona pentru a reveni la modul editare."
 
 #. module: web_editor
 #. openerp-web
@@ -786,6 +788,8 @@ msgid ""
 "If you edit and save this file, you will never receive updates from Odoo "
 "anymore unless you reset your customizations."
 msgstr ""
+"Dacă editați și salvați acest fișier, nu veți mai primi actualizări de la "
+"Odoo decât dacă vă resetați personalizările."
 
 #. module: web_editor
 #. openerp-web
@@ -836,7 +840,7 @@ msgstr ""
 #: code:addons/web_editor/static/src/js/editor/rte.summernote.js:0
 #, python-format
 msgid "Image URL"
-msgstr ""
+msgstr "Imagine URL"
 
 #. module: web_editor
 #: model:ir.model.fields,field_description:web_editor.field_ir_attachment__image_width
@@ -977,7 +981,7 @@ msgstr "Link"
 #: code:addons/web_editor/static/src/xml/wysiwyg.xml:0
 #, python-format
 msgid "Link Label"
-msgstr ""
+msgstr "Etichetă de legătură"
 
 #. module: web_editor
 #. openerp-web
@@ -1015,6 +1019,13 @@ msgstr "Mediu"
 #, python-format
 msgid "Name"
 msgstr "Nume"
+
+#. module: web_editor
+#. openerp-web
+#: code:addons/web_editor/static/src/xml/snippets.xml:0
+#, python-format
+msgid "No color"
+msgstr "Fără culoare"
 
 #. module: web_editor
 #. openerp-web
@@ -1189,7 +1200,7 @@ msgstr "Calitate"
 #: code:addons/web_editor/static/src/xml/wysiwyg.xml:0
 #, python-format
 msgid "Quick Upload"
-msgstr ""
+msgstr "Încărcare rapidă"
 
 #. module: web_editor
 #. openerp-web
@@ -1211,7 +1222,7 @@ msgstr ""
 #. module: web_editor
 #: model:ir.model,name:web_editor.model_ir_qweb_field_contact
 msgid "Qweb Field Contact"
-msgstr ""
+msgstr "Contact Câmp Qweb"
 
 #. module: web_editor
 #: model:ir.model,name:web_editor.model_ir_qweb_field_date
@@ -1241,7 +1252,7 @@ msgstr ""
 #. module: web_editor
 #: model:ir.model,name:web_editor.model_ir_qweb_field_image
 msgid "Qweb Field Image"
-msgstr ""
+msgstr "Imagine Câmp Qweb"
 
 #. module: web_editor
 #: model:ir.model,name:web_editor.model_ir_qweb_field_integer
@@ -1290,7 +1301,7 @@ msgstr ""
 #: code:addons/web_editor/static/src/js/editor/rte.summernote.js:0
 #, python-format
 msgid "Redo"
-msgstr ""
+msgstr "Refacere"
 
 #. module: web_editor
 #. openerp-web
@@ -1374,7 +1385,7 @@ msgstr "Resetează"
 #: code:addons/web_editor/static/src/xml/wysiwyg.xml:0
 #, python-format
 msgid "Reset Image"
-msgstr ""
+msgstr "Resetare Imagine"
 
 #. module: web_editor
 #. openerp-web
@@ -1438,7 +1449,7 @@ msgstr ""
 #: code:addons/web_editor/static/src/xml/wysiwyg.xml:0
 #, python-format
 msgid "Rounded"
-msgstr ""
+msgstr "Rotunjit"
 
 #. module: web_editor
 #. openerp-web
@@ -1787,7 +1798,7 @@ msgstr "Subliniat"
 #: code:addons/web_editor/static/src/js/editor/rte.summernote.js:0
 #, python-format
 msgid "Undo"
-msgstr ""
+msgstr "Anulare"
 
 #. module: web_editor
 #. openerp-web
@@ -2013,7 +2024,7 @@ msgstr ""
 #: code:addons/web_editor/static/src/xml/wysiwyg.xml:0
 #, python-format
 msgid "px"
-msgstr ""
+msgstr "px"
 
 #. module: web_editor
 #. openerp-web

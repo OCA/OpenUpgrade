@@ -971,8 +971,9 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             except Exception:
                 pass
 
+            errors = 0
             # try again, this time record by record
-            for rec_data in data_list:
+            for i, rec_data in enumerate(data_list, 1):
                 try:
                     with cr.savepoint():
                         rec = self._load_records([rec_data], mode == 'update')
@@ -985,6 +986,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                     messages.append(dict(info, type='error', **PGERROR_TO_OE[e.pgcode](self, fg, info, e)))
                     # Failed to write, log to messages, rollback savepoint (to
                     # avoid broken transaction) and keep going
+                    errors += 1
                 except Exception as e:
                     _logger.debug("Error while loading record", exc_info=True)
                     info = rec_data['info']
@@ -993,6 +995,13 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                     messages.append(dict(info, type='error', message=message, moreinfo=moreinfo))
                     # Failed for some reason, perhaps due to invalid data supplied,
                     # rollback savepoint and keep going
+                    errors += 1
+                if errors >= 10 and (errors >= i / 10):
+                    messages.append({
+                        'type': 'warning',
+                        'message': _(u"Found more than 10 errors and more than one error per 10 records, interrupted to avoid showing too many errors.")
+                    })
+                    break
 
         # make 'flush' available to the methods below, in the case where XMLID
         # resolution fails, for instance
@@ -5421,6 +5430,12 @@ Record ids: %(records)s
                     id_vals = self.env.all.towrite.pop(model_name)
                     process(self.env[model_name], id_vals)
 
+            # missing for one2many fields, flush their inverse
+            for fname in fnames:
+                field = self._fields[fname]
+                if field.type == 'one2many' and field.inverse_name:
+                    self.env[field.comodel_name].flush([field.inverse_name])
+
     #
     # New records - represent records that do not exist in the database yet;
     # they are used to perform onchanges.
@@ -5747,6 +5762,9 @@ Record ids: %(records)s
 
                         # TODO: find a better fix
                         if key.model_name == records._name:
+                            if not any(self._ids):
+                                # if self are new, records should be new as well
+                                records = records.browse(it and NewId(it) for it in records._ids)
                             break
                 else:
                     new_records = self.filtered(lambda r: not r.id)

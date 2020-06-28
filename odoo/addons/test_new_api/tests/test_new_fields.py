@@ -121,6 +121,78 @@ class TestFields(common.TransactionCase):
         field = self.env['test_new_api.message']._fields['x_bool_false_computed']
         self.assertFalse(field.depends)
 
+    def test_10_computed_custom_invalid_transitive_depends(self):
+        self.patch(type(self.env["ir.model.fields"]), "_check_depends", lambda self: True)
+        self.env["ir.model.fields"].create(
+            {
+                "name": "x_computed_custom_valid_depends",
+                "model_id": self.env.ref("test_new_api.model_test_new_api_foo").id,
+                "state": "manual",
+                "field_description": "A compute with a valid depends",
+                "compute": "for r in self: r['x_computed_custom_valid_depends'] = False",
+                "depends": "value1",
+                "store": False,
+                "ttype": "boolean",
+            }
+        )
+        self.env["ir.model.fields"].create(
+            {
+                "name": "x_computed_custom_valid_transitive_depends",
+                "model_id": self.env.ref("test_new_api.model_test_new_api_foo").id,
+                "state": "manual",
+                "field_description": "A compute with a valid transitive depends",
+                "compute": "for r in self: r['x_computed_custom_valid_transitive_depends'] = False",
+                "depends": "x_computed_custom_valid_depends",
+                "store": False,
+                "ttype": "boolean",
+            }
+        )
+        self.env["ir.model.fields"].create(
+            {
+                "name": "x_computed_custom_invalid_depends",
+                "model_id": self.env.ref("test_new_api.model_test_new_api_foo").id,
+                "state": "manual",
+                "field_description": "A compute with an invalid depends",
+                "compute": "for r in self: r['x_computed_custom_invalid_depends'] = False",
+                "depends": "bar",
+                "store": False,
+                "ttype": "boolean",
+            }
+        )
+        self.env["ir.model.fields"].create(
+            {
+                "name": "x_computed_custom_invalid_transitive_depends",
+                "model_id": self.env.ref("test_new_api.model_test_new_api_foo").id,
+                "state": "manual",
+                "field_description": "A compute with an invalid transitive depends",
+                "compute": "for r in self: r['x_computed_custom_invalid_transitive_depends'] = False",
+                "depends": "x_computed_custom_invalid_depends",
+                "store": False,
+                "ttype": "boolean",
+            }
+        )
+        fields = self.env["test_new_api.foo"]._fields
+        triggers = self.env.registry.field_triggers
+        value1 = fields["value1"]
+        valid_depends = fields["x_computed_custom_valid_depends"]
+        valid_transitive_depends = fields["x_computed_custom_valid_transitive_depends"]
+        invalid_depends = fields["x_computed_custom_invalid_depends"]
+        invalid_transitive_depends = fields["x_computed_custom_invalid_transitive_depends"]
+        # `x_computed_custom_valid_depends` in the triggers of the field `value1`
+        self.assertTrue(valid_depends in triggers[value1][None])
+        # `x_computed_custom_valid_transitive_depends` in the triggers `x_computed_custom_valid_depends` and `value1`
+        self.assertTrue(valid_transitive_depends in triggers[valid_depends][None])
+        self.assertTrue(valid_transitive_depends in triggers[value1][None])
+        # `x_computed_custom_invalid_depends` not in any triggers, as it was invalid and was skipped
+        self.assertEqual(
+            sum(invalid_depends in field_triggers.get(None, []) for field_triggers in triggers.values()), 0
+        )
+        # `x_computed_custom_invalid_transitive_depends` in the triggers of `x_computed_custom_invalid_depends` only
+        self.assertTrue(invalid_transitive_depends in triggers[invalid_depends][None])
+        self.assertEqual(
+            sum(invalid_transitive_depends in field_triggers.get(None, []) for field_triggers in triggers.values()), 1
+        )
+
     def test_10_display_name(self):
         """ test definition of automatic field 'display_name' """
         field = type(self.env['test_new_api.discussion']).display_name
@@ -586,6 +658,33 @@ class TestFields(common.TransactionCase):
             records.write({'amount': amount})
             for record in records:
                 self.check_monetary(record, amount, currency, 'multi write(amount)')
+
+    def test_20_monetary_opw_2223134(self):
+        """ test monetary fields with cache override """
+        model = self.env['test_new_api.monetary_order']
+        currency = self.env.ref('base.USD')
+
+        def check(value):
+            self.assertEqual(record.total, value)
+            record.flush()
+            self.cr.execute('SELECT total FROM test_new_api_monetary_order WHERE id=%s', [record.id])
+            [total] = self.cr.fetchone()
+            self.assertEqual(total, value)
+
+        # create, and compute amount
+        record = model.create({
+            'currency_id': currency.id,
+            'line_ids': [(0, 0, {'subtotal': 1.0})],
+        })
+        check(1.0)
+
+        # delete and add a line: the deletion of the line clears the cache, then
+        # the recomputation of 'total' must prefetch record.currency_id without
+        # screwing up the new value in cache
+        record.write({
+            'line_ids': [(2, record.line_ids.id), (0, 0, {'subtotal': 1.0})],
+        })
+        check(1.0)
 
     def test_21_date(self):
         """ test date fields """
@@ -1250,6 +1349,29 @@ class TestFields(common.TransactionCase):
         self.assertNotEqual(new_disc.participants, disc.participants)
         self.assertEqual(new_disc.participants._origin, disc.participants)
 
+    def test_41_new_compute(self):
+        """ Check recomputation of fields on new records. """
+        move = self.env['test_new_api.move'].create({
+            'line_ids': [(0, 0, {'quantity': 1}), (0, 0, {'quantity': 1})],
+        })
+        move.flush()
+        line = move.line_ids[0]
+
+        new_move = move.new(origin=move)
+        new_line = line.new(origin=line)
+
+        # move_id is fetched from origin
+        self.assertEqual(new_line.move_id, move)
+        self.assertEqual(new_move.quantity, 2)
+        self.assertEqual(move.quantity, 2)
+
+        # modifying new_line must trigger recomputation on new_move, even if
+        # new_line.move_id is not new_move!
+        new_line.quantity = 2
+        self.assertEqual(new_line.move_id, move)
+        self.assertEqual(new_move.quantity, 3)
+        self.assertEqual(move.quantity, 2)
+
     @mute_logger('odoo.addons.base.models.ir_model')
     def test_41_new_related(self):
         """ test the behavior of related fields starting on new records. """
@@ -1379,6 +1501,37 @@ class TestFields(common.TransactionCase):
         self.assertEqual(discussion.messages, messages + message)
         self.assertEqual(demo_discussion.messages, discussion.messages)
 
+    def test_71_relational_inverse(self):
+        """ Check the consistency of relational fields with inverse(s). """
+        move1 = self.env['test_new_api.move'].create({})
+        move2 = self.env['test_new_api.move'].create({})
+        line = self.env['test_new_api.move_line'].create({'move_id': move1.id})
+        line.flush()
+
+        self.env.cache.invalidate()
+        line.with_context(prefetch_fields=False).move_id
+
+        # Setting 'move_id' updates the one2many field that is based on it,
+        # which has a domain.  Here we check that evaluating the domain does not
+        # accidentally override 'move_id' (by prefetch).
+        line.move_id = move2
+        self.assertEqual(line.move_id, move2)
+
+    def test_72_relational_inverse(self):
+        """ Check the consistency of relational fields with inverse(s). """
+        move1 = self.env['test_new_api.move'].create({})
+        move2 = self.env['test_new_api.move'].create({})
+
+        # makes sure that line.move_id is flushed before search
+        line = self.env['test_new_api.move_line'].create({'move_id': move1.id})
+        moves = self.env['test_new_api.move'].search([('line_ids', 'in', line.id)])
+        self.assertEqual(moves, move1)
+
+        # makes sure that line.move_id is flushed before search
+        line.move_id = move2
+        moves = self.env['test_new_api.move'].search([('line_ids', 'in', line.id)])
+        self.assertEqual(moves, move2)
+
     def test_80_copy(self):
         Translations = self.env['ir.translation']
         discussion = self.env.ref('test_new_api.discussion_0')
@@ -1411,6 +1564,27 @@ class TestFields(common.TransactionCase):
         discussion.copy({'messages': [(6, 0, message1.ids)]})
         self.assertEqual(count(message), 1)
         self.assertEqual(count(message1), 0)
+
+    def test_85_binary_guess_zip(self):
+        from odoo.addons.base.tests.test_mimetypes import ZIP
+        # Regular ZIP files can be uploaded by non-admin users
+        self.env['test_new_api.binary_svg'].with_user(
+            self.env.ref('base.user_demo'),
+        ).create({
+            'name': 'Test without attachment',
+            'image_wo_attachment': base64.b64decode(ZIP),
+        })
+
+    def test_86_text_base64_guess_svg(self):
+        from odoo.addons.base.tests.test_mimetypes import SVG
+        with self.assertRaises(UserError) as e:
+            self.env['test_new_api.binary_svg'].with_user(
+                self.env.ref('base.user_demo'),
+            ).create({
+                'name': 'Test without attachment',
+                'image_wo_attachment': SVG.decode("utf-8"),
+            })
+        self.assertEqual(e.exception.name, 'Only admins can upload SVG files.')
 
     def test_90_binary_svg(self):
         from odoo.addons.base.tests.test_mimetypes import SVG
@@ -2304,3 +2478,16 @@ class TestMany2oneReference(common.TransactionCase):
         # fake record to emulate the unlink of a non-existant record
         foo = m.browse(1 if not ids[0] else (ids[0] + 1))
         self.assertTrue(foo.unlink())
+
+
+@common.tagged('selection_abstract')
+class TestSelectionDeleteUpdate(common.TransactionCase):
+
+    MODEL_ABSTRACT = 'test_new_api.state_mixin'
+
+    def test_unlink_asbtract(self):
+        self.env['ir.model.fields.selection'].search([
+            ('field_id.model', '=', self.MODEL_ABSTRACT),
+            ('field_id.name', '=', 'state'),
+            ('value', '=', 'confirmed'),
+        ], limit=1).unlink()

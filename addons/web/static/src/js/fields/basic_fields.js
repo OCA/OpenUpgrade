@@ -692,6 +692,11 @@ var FieldDateRange = InputField.extend({
                 self.$el.data('daterangepicker').hide();
             }
         });
+
+        // Prevent bootstrap from focusing on modal (which breaks hours drop-down in firefox)
+        this.$pickerContainer.on('focusin.bs.modal', 'select', function (ev) {
+            ev.stopPropagation();
+        });
     },
 });
 
@@ -755,7 +760,7 @@ var FieldDate = InputField.extend({
      */
     activate: function () {
         if (this.isFocusable() && this.datewidget) {
-            this.datewidget.focus();
+            this.datewidget.$input.select();
             return true;
         }
         return false;
@@ -1332,7 +1337,7 @@ var FieldPercentage = FieldFloat.extend({
 var FieldText = InputField.extend(TranslatableFieldMixin, {
     description: _lt("Multiline Text"),
     className: 'o_field_text',
-    supportedFieldTypes: ['text'],
+    supportedFieldTypes: ['text', 'html'],
     tagName: 'span',
 
     /**
@@ -2301,7 +2306,7 @@ var StateSelectionWidget = AbstractField.extend({
             .addClass(currentState.state_class)
             .prop('special_click', true)
             .parent().attr('title', currentState.state_name)
-            .attr('aria-label', currentState.state_name);
+            .attr('aria-label', this.string + ": " + currentState.state_name);
 
         // Render "FormSelection.Items" and move it into "FormSelection"
         var $items = $(qweb.render('FormSelection.items', {

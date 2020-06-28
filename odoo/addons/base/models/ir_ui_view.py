@@ -259,7 +259,7 @@ actual arch.
          """)
 
     @api.depends('arch_db', 'arch_fs', 'arch_updated')
-    @api.depends_context('read_arch_from_file')
+    @api.depends_context('read_arch_from_file', 'lang')
     def _compute_arch(self):
         def resolve_external_ids(arch_fs, view_xml_id):
             def replacer(m):
@@ -297,6 +297,10 @@ actual arch.
                     data['arch_fs'] = '/'.join(path_info[0:2])
                     data['arch_updated'] = False
             view.write(data)
+        # the field 'arch' depends on the context and has been implicitly
+        # modified in all languages; the invalidation below ensures that the
+        # field does not keep an old value in another environment
+        self.invalidate_cache(['arch'], self._ids)
 
     @api.depends('arch')
     @api.depends_context('read_arch_from_file')
@@ -378,8 +382,6 @@ actual arch.
         # Any exception raised below will cause a transaction rollback.
         self = self.with_context(check_field_names=True)
         for view in self:
-            if not view.arch:
-                continue
             view_arch = etree.fromstring(view.arch.encode('utf-8'))
             view._valid_inheritance(view_arch)
             view_def = view.read_combined(['arch'])
@@ -476,7 +478,7 @@ actual arch.
     def write(self, vals):
         # Keep track if view was modified. That will be useful for the --dev mode
         # to prefer modified arch over file arch.
-        if ('arch' in vals or 'arch_base' in vals) and 'install_filename' not in self._context:
+        if 'arch_updated' not in vals and ('arch' in vals or 'arch_base' in vals) and 'install_filename' not in self._context:
             vals['arch_updated'] = True
 
         # drop the corresponding view customizations (used for dashboards for example), otherwise
@@ -488,13 +490,27 @@ actual arch.
         self.clear_caches()
         if 'arch_db' in vals and not self.env.context.get('no_save_prev'):
             vals['arch_prev'] = self.arch_db
-        return super(View, self).write(self._compute_defaults(vals))
+
+        res = super(View, self).write(self._compute_defaults(vals))
+
+        # Check the xml of the view if it gets re-activated.
+        # Ideally, `active` shoud have been added to the `api.constrains` of `_check_xml`,
+        # but the ORM writes and validates regular field (such as `active`) before inverse fields (such as `arch`),
+        # and therefore when writing `active` and `arch` at the same time, `_check_xml` is called twice,
+        # and the first time it tries to validate the view without the modification to the arch,
+        # which is problematic if the user corrects the view at the same time he re-enables it.
+        if vals.get('active'):
+            # Call `_validate_fields` instead of `_check_xml` to have the regular constrains error dialog
+            # instead of the traceback dialog.
+            self._validate_fields(['arch_db'])
+
+        return res
 
     def unlink(self):
         # if in uninstall mode and has children views, emulate an ondelete cascade
         if self.env.context.get('_force_unlink', False) and self.inherit_children_ids:
             self.inherit_children_ids.unlink()
-        super(View, self).unlink()
+        return super(View, self).unlink()
 
     @api.returns('self', lambda value: value.id)
     def copy(self, default=None):
@@ -872,6 +888,7 @@ actual arch.
                 self.with_context(
                     base_model_name=model,
                     check_field_names=False,  # field validation is a bit more tricky and done apart
+                    check_field_names_original=self.env.context.get('check_field_names'),
                     view_is_editable=False,
                 ).postprocess_and_fields(model, searchpanel[0], view_id)
 
@@ -1144,7 +1161,7 @@ actual arch.
         :rtype: boolean
         """
         return any(
-            (attr in ('data-oe-model', 'group') or (attr.startswith('t-')))
+            (attr in ('data-oe-model', 'groups') or (attr.startswith('t-')))
             for attr in node.attrib
         )
 
@@ -1339,6 +1356,37 @@ actual arch.
                 view._check_xml()
             except Exception as e:
                 self.raise_view_error("Can't validate view:\n%s" % e, view.id)
+
+    def _create_all_specific_views(self, processed_modules):
+        """To be overriden and have specific view behaviour on create"""
+        pass
+
+    def _get_specific_views(self):
+        """ Given a view, return a record set containing all the specific views
+            for that view's key.
+        """
+        self.ensure_one()
+        # Only qweb views have a specific conterpart
+        if self.type != 'qweb':
+            return self.env['ir.ui.view']
+        # A specific view can have a xml_id if exported/imported but it will not be equals to it's key (only generic view will).
+        return self.with_context(active_test=False).search([('key', '=', self.key)]).filtered(lambda r: not r.xml_id == r.key)
+
+    def _load_records_write(self, values):
+        """ During module update, when updating a generic view, we should also
+            update its specific views (COW'd).
+            Note that we will only update unmodified fields. That will mimic the
+            noupdate behavior on views having an ir.model.data.
+        """
+        if self.type == 'qweb':
+            # Update also specific views
+            for cow_view in self._get_specific_views():
+                authorized_vals = {}
+                for key in values:
+                    if cow_view[key] == self[key]:
+                        authorized_vals[key] = values[key]
+                cow_view.write(authorized_vals)
+        super(View, self)._load_records_write(values)
 
 
 class ResetViewArchWizard(models.TransientModel):

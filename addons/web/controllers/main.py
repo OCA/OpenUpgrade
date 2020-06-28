@@ -657,6 +657,8 @@ class GroupsTreeNode:
         """ Return field names of exported field having a group operator """
         aggregated_field_names = []
         for field_name in self._export_field_names:
+            if field_name == '.id':
+                field_name = 'id'
             if '/' in field_name:
                 # Currently no support of aggregated value for nested record fields
                 # e.g. line_ids/analytic_line_ids/amount
@@ -1838,7 +1840,7 @@ class ExportFormat(object):
         if not import_compat and groupby:
             groupby_type = [Model._fields[x.split(':')[0]].type for x in groupby]
             domain = [('id', 'in', ids)] if ids else domain
-            groups_data = Model.read_group(domain, field_names, groupby, lazy=False)
+            groups_data = Model.read_group(domain, [x if x != '.id' else 'id' for x in field_names], groupby, lazy=False)
 
             # read_group(lazy=False) returns a dict only for final groups (with actual data),
             # not for intermediary groups. The full group tree must be re-constructed.
@@ -1923,6 +1925,8 @@ class ExcelExport(ExportFormat, http.Controller):
         with ExportXlsxWriter(fields, len(rows)) as xlsx_writer:
             for row_index, row in enumerate(rows):
                 for cell_index, cell_value in enumerate(row):
+                    if isinstance(cell_value, (list, tuple)):
+                        cell_value = pycompat.to_text(cell_value)
                     xlsx_writer.write_cell(row_index + 1, cell_index, cell_value)
 
         return xlsx_writer.value

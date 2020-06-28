@@ -317,7 +317,9 @@ class Slide(models.Model):
             elif record.slide_type == 'video' and record.document_id:
                 if not record.mime_type:
                     # embed youtube video
-                    record.embed_code = '<iframe src="//www.youtube.com/embed/%s?theme=light" allowFullScreen="true" frameborder="0"></iframe>' % (record.document_id)
+                    query = urls.url_parse(record.url).query
+                    query = query + '&theme=light' if query else 'theme=light'
+                    record.embed_code = '<iframe src="//www.youtube.com/embed/%s?%s" allowFullScreen="true" frameborder="0"></iframe>' % (record.document_id, query)
                 else:
                     # embed google doc video
                     record.embed_code = '<iframe src="//drive.google.com/file/d/%s/preview" allowFullScreen="true" frameborder="0"></iframe>' % (record.document_id)
@@ -432,6 +434,11 @@ class Slide(models.Model):
         rec = super(Slide, self).copy(default)
         rec.sequence = 0
         return rec
+
+    def unlink(self):
+        if self.question_ids and self.channel_id.channel_partner_ids:
+            raise UserError(_("People already took this quiz. To keep course progression it should not be deleted."))
+        super(Slide, self).unlink()
 
     # ---------------------------------------------------------
     # Mail/Rating

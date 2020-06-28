@@ -2192,6 +2192,7 @@ var FieldMany2ManyTags = AbstractField.extend({
     fieldsToFetch: {
         display_name: {type: 'char'},
     },
+    limit: 1000,
 
     /**
      * @constructor
@@ -2634,7 +2635,11 @@ var FieldStatus = AbstractField.extend({
         // Retro-compatibility: clickable used to be defined in the field attrs
         // instead of options.
         // If not set, the statusbar is not clickable.
-        this.isClickable = !!this.attrs.clickable || !!this.nodeOptions.clickable;
+        try {
+            this.isClickable = !!JSON.parse(this.attrs.clickable);
+        } catch (_) {
+            this.isClickable = !!this.nodeOptions.clickable;
+        }
     },
 
     //--------------------------------------------------------------------------
