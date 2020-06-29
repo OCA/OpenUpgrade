@@ -364,6 +364,7 @@ class account_payment(models.Model):
 
     @api.depends('invoice_ids', 'payment_type', 'partner_type', 'partner_id')
     def _compute_destination_account_id(self):
+        self.destination_account_id = False
         for payment in self:
             if payment.invoice_ids:
                 payment.destination_account_id = payment.invoice_ids[0].mapped(
@@ -374,15 +375,16 @@ class account_payment(models.Model):
                     raise UserError(_('There is no Transfer Account defined in the accounting settings. Please define one to be able to confirm this transfer.'))
                 payment.destination_account_id = payment.company_id.transfer_account_id.id
             elif payment.partner_id:
+                partner = self.partner_id.with_context(force_company=payment.company_id.id)
                 if payment.partner_type == 'customer':
-                    payment.destination_account_id = payment.partner_id.property_account_receivable_id.id
+                    payment.destination_account_id = partner.property_account_receivable_id.id
                 else:
-                    payment.destination_account_id = payment.partner_id.property_account_payable_id.id
+                    payment.destination_account_id = partner.property_account_payable_id.id
             elif payment.partner_type == 'customer':
-                default_account = self.env['ir.property'].get('property_account_receivable_id', 'res.partner')
+                default_account = self.env['ir.property'].with_context(force_company=payment.company_id.id).get('property_account_receivable_id', 'res.partner')
                 payment.destination_account_id = default_account.id
             elif payment.partner_type == 'supplier':
-                default_account = self.env['ir.property'].get('property_account_payable_id', 'res.partner')
+                default_account = self.env['ir.property'].with_context(force_company=payment.company_id.id).get('property_account_payable_id', 'res.partner')
                 payment.destination_account_id = default_account.id
 
     @api.depends('move_line_ids.matched_debit_ids', 'move_line_ids.matched_credit_ids')
@@ -708,7 +710,7 @@ class account_payment(models.Model):
         moves = self.mapped('move_line_ids.move_id')
         moves.filtered(lambda move: move.state == 'posted').button_draft()
         moves.with_context(force_delete=True).unlink()
-        self.write({'state': 'draft'})
+        self.write({'state': 'draft', 'invoice_ids': False})
 
     def _get_invoice_payment_amount(self, inv):
         """
@@ -786,6 +788,12 @@ class payment_register(models.TransientModel):
             return {'domain': {'payment_method_id': domain_payment, 'journal_id': domain_journal}}
         return {}
 
+    def _prepare_communication(self, invoices):
+        '''Define the value for communication field
+        Append all invoice's references together.
+        '''
+        return " ".join(i.invoice_payment_ref or i.ref or i.name for i in invoices)
+
     def _prepare_payment_vals(self, invoices):
         '''Create the payment values.
 
@@ -799,7 +807,7 @@ class payment_register(models.TransientModel):
             'journal_id': self.journal_id.id,
             'payment_method_id': self.payment_method_id.id,
             'payment_date': self.payment_date,
-            'communication': " ".join(i.invoice_payment_ref or i.ref or i.name for i in invoices),
+            'communication': self._prepare_communication(invoices),
             'invoice_ids': [(6, 0, invoices.ids)],
             'payment_type': ('inbound' if amount > 0 else 'outbound'),
             'amount': abs(amount),
@@ -810,6 +818,12 @@ class payment_register(models.TransientModel):
         }
         return values
 
+    def _get_payment_group_key(self, invoice):
+        """ Returns the grouping key to use for the given invoice when group_payment
+        option has been ticked in the wizard.
+        """
+        return (invoice.commercial_partner_id, invoice.currency_id, invoice.invoice_partner_bank_id, MAP_INVOICE_TYPE_PARTNER_TYPE[invoice.type])
+
     def get_payments_vals(self):
         '''Compute the values for payments.
 
@@ -818,7 +832,7 @@ class payment_register(models.TransientModel):
         grouped = defaultdict(lambda: self.env["account.move"])
         for inv in self.invoice_ids:
             if self.group_payment:
-                grouped[(inv.commercial_partner_id, inv.currency_id, inv.invoice_partner_bank_id, MAP_INVOICE_TYPE_PARTNER_TYPE[inv.type])] += inv
+                grouped[self._get_payment_group_key(inv)] += inv
             else:
                 grouped[inv.id] += inv
         return [self._prepare_payment_vals(invoices) for invoices in grouped.values()]

@@ -714,10 +714,13 @@ var StatementModel = BasicModel.extend({
                 switch(value.operation) {
                     case "ADD_M2M":
                         prop.__tax_to_recompute = true;
-                        if (!_.findWhere(prop.tax_ids, {id: value.ids.id})) {
-                            value.ids.price_include = self.taxes[value.ids.id] ? self.taxes[value.ids.id].price_include : false;
-                            prop.tax_ids.push(value.ids);
-                        }
+                        var vids = _.isArray(value.ids) ? value.ids : [value.ids];
+                        _.each(vids, function(val){
+                            if (!_.findWhere(prop.tax_ids, {id: val.id})) {
+                                value.ids.price_include = self.taxes[val.id] ? self.taxes[val.id].price_include : false;
+                                prop.tax_ids.push(val);
+                            }
+                        });
                         break;
                     case "FORGET":
                         prop.__tax_to_recompute = true;
@@ -1503,7 +1506,7 @@ var ManualModel = StatementModel.extend({
                             self.manualLines = result;
                             self.valuenow = 0;
                             self.valuemax = Object.keys(self.manualLines).length;
-                            var lines = self.manualLines.splice(0, self.defaultDisplayQty);
+                            var lines = self.manualLines.slice(0, self.defaultDisplayQty);
                             self.pagerIndex = lines.length;
                             return self.loadData(lines);
                         });
@@ -1518,7 +1521,7 @@ var ManualModel = StatementModel.extend({
                             self.manualLines = result;
                             self.valuenow = 0;
                             self.valuemax = Object.keys(self.manualLines).length;
-                            var lines = self.manualLines.splice(0, self.defaultDisplayQty);
+                            var lines = self.manualLines.slice(0, self.defaultDisplayQty);
                             self.pagerIndex = lines.length;
                             return self.loadData(lines);
                         });
@@ -1536,7 +1539,7 @@ var ManualModel = StatementModel.extend({
                             self.manualLines = [].concat(result.accounts, result.customers, result.suppliers);
                             self.valuenow = 0;
                             self.valuemax = Object.keys(self.manualLines).length;
-                            var lines = self.manualLines.splice(0, self.defaultDisplayQty);
+                            var lines = self.manualLines.slice(0, self.defaultDisplayQty);
                             self.pagerIndex = lines.length;
                             return self.loadData(lines);
                         });
@@ -1568,7 +1571,7 @@ var ManualModel = StatementModel.extend({
         if (qty === undefined) {
             qty = this.defaultDisplayQty;
         }
-        var lines = this.manualLines.splice(this.pagerIndex, qty);
+        var lines = this.manualLines.slice(this.pagerIndex, this.pagerIndex + qty);
         this.pagerIndex += qty;
         return this.loadData(lines);
     },
@@ -1663,7 +1666,7 @@ var ManualModel = StatementModel.extend({
                         if (line.type === 'accounts') {
                             account_ids.push(line.account_id.id);
                         } else {
-                            partner_ids.push(line.partner_id.id);
+                            partner_ids.push(line.partner_id);
                         }
                     }
                 }));
@@ -1689,6 +1692,7 @@ var ManualModel = StatementModel.extend({
             line.reconciliation_proposition = _.filter(line.reconciliation_proposition, function (p) {
                 return p.id !== prop.id && p.id !== prop.link && p.link !== prop.id && (!p.link || p.link !== prop.link);
             });
+            line.mv_lines_match = line.mv_lines_match || [];
             line.mv_lines_match.unshift(prop);
 
             // No proposition left and then, reset the st_line partner.

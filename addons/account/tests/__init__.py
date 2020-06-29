@@ -30,3 +30,5 @@ from . import test_reconciliation_matching_rules
 from . import test_account_onboarding
 from . import test_portal_attachment
 from . import test_reconciliation_heavy_load
+from . import test_account_incoming_supplier_invoice
+from . import test_reconcile_account

@@ -1049,6 +1049,7 @@ options.styleTags = weDefaultOptions.styleTags;
 
 $.summernote.pluginEvents.insertTable = function (event, editor, layoutInfo, sDim) {
   var $editable = layoutInfo.editable();
+  $editable.focus();
   var dimension = sDim.split('x');
   var r = range.create();
   if (!r) return;
@@ -1676,6 +1677,7 @@ function isFormatNode(node) {
 
 $.summernote.pluginEvents.insertUnorderedList = function (event, editor, layoutInfo, type) {
     var $editable = layoutInfo.editable();
+    $editable.focus();
     $editable.data('NoteHistory').recordUndo($editable);
 
     type = type || "UL";
@@ -1810,6 +1812,7 @@ $.summernote.pluginEvents.indent = function (event, editor, layoutInfo, outdent)
     var flag = false;
     function indentUL(UL, start, end) {
         var next;
+        var previous;
         var tagName = UL.tagName;
         var node = UL.firstChild;
         var ul = document.createElement(tagName);
@@ -1826,7 +1829,15 @@ $.summernote.pluginEvents.indent = function (event, editor, layoutInfo, outdent)
         while (node) {
             if (flag === 1 || node === start || $.contains(node, start)) {
                 flag = true;
-                node.parentNode.insertBefore(li, node);
+                if (previous) {
+                    if (dom.isList(previous.lastChild)) {
+                        ul = previous.lastChild;
+                    } else {
+                        previous.appendChild(ul);
+                    }
+                } else {
+                    node.parentNode.insertBefore(li, node);
+                }
             }
             next = dom.nextElementSibling(node);
             if (flag) {
@@ -1836,6 +1847,7 @@ $.summernote.pluginEvents.indent = function (event, editor, layoutInfo, outdent)
                 flag = false;
                 break;
             }
+            previous = node;
             node = next;
         }
 
@@ -1873,14 +1885,22 @@ $.summernote.pluginEvents.indent = function (event, editor, layoutInfo, outdent)
             }
             next = dom.nextElementSibling(node);
             if (flag) {
+                var $succeeding = $(node).nextAll();
                 ul = node.parentNode;
-                li.parentNode.insertBefore(node, li);
+                if (dom.previousElementSibling(ul)) {
+                    dom.insertAfter(node, li);
+                } else {
+                    li.parentNode.insertBefore(node, li);
+                }
+                $succeeding.insertAfter(node);
                 if (!ul.children.length) {
-                    if (ul.parentNode.tagName === "LI") {
+                    if (ul.parentNode.tagName === "LI" && !dom.previousElementSibling(ul)) {
                         ul = ul.parentNode;
                     }
                     ul.parentNode.removeChild(ul);
                 }
+                flag = false;
+                break;
             }
 
             if (node === end || $.contains(node, end)) {
@@ -1912,9 +1932,13 @@ $.summernote.pluginEvents.indent = function (event, editor, layoutInfo, outdent)
     var $dom = $(ancestor);
 
     if (!dom.isList(ancestor)) {
-        // to indent a selection, we indent the child nodes of the common
-        // ancestor that contains this selection
-        $dom = $(dom.node(ancestor)).children();
+        if (dom.isList(ancestor.parentNode)) {
+            $dom = $(ancestor.parentNode);
+        } else {
+            // to indent a selection, we indent the child nodes of the common
+            // ancestor that contains this selection
+            $dom = $(dom.node(ancestor)).children();
+        }
     }
     if (!$dom.not('br').length) {
         // if selection is inside a list, we indent its list items
@@ -1982,6 +2006,7 @@ $.summernote.pluginEvents.outdent = function (event, editor, layoutInfo) {
 $.summernote.pluginEvents.formatBlock = function (event, editor, layoutInfo, sTagName) {
     $.summernote.pluginEvents.applyFont(event, editor, layoutInfo, null, null, "Default");
     var $editable = layoutInfo.editable();
+    $editable.focus();
     $editable.data('NoteHistory').recordUndo($editable);
     event.preventDefault();
 

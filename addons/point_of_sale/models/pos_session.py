@@ -283,9 +283,19 @@ class PosSession(models.Model):
     def _validate_session(self):
         self.ensure_one()
         self._check_if_no_draft_orders()
-        self._create_account_move()
+        # Users without any accounting rights won't be able to create the journal entry. If this
+        # case, switch to sudo for creation and posting.
+        sudo = False
+        if (
+            not self.env['account.move'].check_access_rights('create', raise_exception=False)
+            and self.user_has_groups('point_of_sale.group_pos_user')
+        ):
+            sudo = True
+            self.sudo()._create_account_move()
+        else:
+            self._create_account_move()
         if self.move_id.line_ids:
-            self.move_id.post()
+            self.move_id.post() if not sudo else self.move_id.sudo().post()
             # Set the uninvoiced orders' state to 'done'
             self.env['pos.order'].search([('session_id', '=', self.id), ('state', '=', 'paid')]).write({'state': 'done'})
         else:
@@ -373,7 +383,7 @@ class PosSession(models.Model):
                 key = order.partner_id.property_account_receivable_id.id
                 invoice_receivables[key] = self._update_amounts(invoice_receivables[key], {'amount': order._get_amount_receivable()}, order.date_order)
                 # side loop to gather receivable lines by account for reconciliation
-                for move_line in order.account_move.line_ids.filtered(lambda aml: aml.account_id.internal_type == 'receivable'):
+                for move_line in order.account_move.line_ids.filtered(lambda aml: aml.account_id.internal_type == 'receivable' and not aml.reconciled):
                     order_account_move_receivable_lines[move_line.account_id.id] |= move_line
             else:
                 order_taxes = defaultdict(tax_amounts)
@@ -404,10 +414,15 @@ class PosSession(models.Model):
                     for amount_key, amount in amounts.items():
                         taxes[tax_key][amount_key] += amount
 
-                if self.company_id.anglo_saxon_accounting:
+                if self.company_id.anglo_saxon_accounting and order.picking_id.id:
                     # Combine stock lines
+                    order_pickings = self.env['stock.picking'].search([
+                        '|',
+                        ('origin', '=', order.name),
+                        ('id', '=', order.picking_id.id)
+                    ])
                     stock_moves = self.env['stock.move'].search([
-                        ('picking_id', '=', order.picking_id.id),
+                        ('picking_id', 'in', order_pickings.ids),
                         ('company_id.anglo_saxon_accounting', '=', True),
                         ('product_id.categ_id.property_valuation', '=', 'real_time')
                     ])
@@ -530,7 +545,9 @@ class PosSession(models.Model):
         for receivable_account_id, amounts in invoice_receivables.items():
             invoice_receivable_vals[receivable_account_id].append(self._get_invoice_receivable_vals(receivable_account_id, amounts['amount'], amounts['amount_converted']))
         for receivable_account_id, vals in invoice_receivable_vals.items():
-            invoice_receivable_lines[receivable_account_id] = MoveLine.create(vals)
+            receivable_line = MoveLine.create(vals)
+            if (not receivable_line.reconciled):
+                invoice_receivable_lines[receivable_account_id] = receivable_line
 
         data.update({'invoice_receivable_lines': invoice_receivable_lines})
         return data
@@ -587,14 +604,18 @@ class PosSession(models.Model):
         # reconcile invoice receivable lines
         for account_id in order_account_move_receivable_lines:
             ( order_account_move_receivable_lines[account_id]
-            | invoice_receivable_lines[account_id]
+            | invoice_receivable_lines.get(account_id, self.env['account.move.line'])
             ).reconcile()
 
         # reconcile stock output lines
-        stock_moves = self.env['stock.move'].search([('picking_id', 'in', self.order_ids.filtered(lambda order: not order.is_invoiced).mapped('picking_id').ids)])
+        orders_to_invoice = self.order_ids.filtered(lambda order: not order.is_invoiced)
+        stock_moves = (
+            orders_to_invoice.mapped('picking_id') +
+            self.env['stock.picking'].search([('origin', 'in', orders_to_invoice.mapped('name'))])
+        ).mapped('move_lines')
         stock_account_move_lines = self.env['account.move'].search([('stock_move_id', 'in', stock_moves.ids)]).mapped('line_ids')
         for account_id in stock_output_lines:
-            ( stock_output_lines[account_id]
+            ( stock_output_lines[account_id].filtered(lambda aml: not aml.reconciled)
             | stock_account_move_lines.filtered(lambda aml: aml.account_id == account_id)
             ).reconcile()
         return data
@@ -617,8 +638,16 @@ class PosSession(models.Model):
 
         tax_ids = order_line.tax_ids_after_fiscal_position\
                     .filtered(lambda t: t.company_id.id == order_line.order_id.company_id.id)
-        price = order_line.price_unit * (1 - (order_line.discount or 0.0) / 100.0)
-        taxes = tax_ids.compute_all(price_unit=price, quantity=order_line.qty, currency=self.currency_id, is_refund=order_line.qty<0).get('taxes', [])
+        sign = -1 if order_line.qty >= 0 else 1
+        price = sign * order_line.price_unit * (1 - (order_line.discount or 0.0) / 100.0)
+        # The 'is_refund' parameter is used to compute the tax tags. Ultimately, the tags are part
+        # of the key used for summing taxes. Since the POS UI doesn't support the tags, inconsistencies
+        # may arise in 'Round Globally'.
+        if self.company_id.tax_calculation_rounding_method == 'round_globally':
+            is_refund = all(line.qty < 0 for line in order_line.order_id.lines)
+        else:
+            is_refund = order_line.qty < 0
+        taxes = tax_ids.compute_all(price_unit=price, quantity=abs(order_line.qty), currency=self.currency_id, is_refund=is_refund).get('taxes', [])
         date_order = order_line.order_id.date_order
         taxes = [{'date_order': date_order, **tax} for tax in taxes]
         return {
@@ -681,11 +710,11 @@ class PosSession(models.Model):
             'name': tax.name,
             'account_id': account_id,
             'move_id': self.move_id.id,
-            'tax_base_amount': base_amount_converted,
+            'tax_base_amount': abs(base_amount_converted),
             'tax_repartition_line_id': repartition_line_id,
             'tag_ids': [(6, 0, tag_ids)],
         }
-        return self._credit_amounts(partial_args, amount, amount_converted)
+        return self._debit_amounts(partial_args, amount, amount_converted)
 
     def _get_stock_expense_vals(self, exp_account, amount, amount_converted):
         partial_args = {'account_id': exp_account.id, 'move_id': self.move_id.id}

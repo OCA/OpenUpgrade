@@ -251,6 +251,7 @@
             display: block;
             margin-bottom: $o-kanban-inner-hmargin;
             line-height: 1.2;
+            word-break: break-all;
 
             .o_tag {
                 display: inline-block;
@@ -554,6 +555,8 @@
 
     // Kanban UN-grouped Layout
     &.o_kanban_ungrouped {
+        min-height: 100%;
+        align-content: flex-start;
         flex-flow: row wrap;
         justify-content: flex-start;
 

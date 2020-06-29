@@ -15,7 +15,6 @@
 # Franciele Neiva <franciele.neiva@br.ey.com>, 2019
 # Alessandro de Lima Folk <sandrofolk@hotmail.com>, 2019
 # Silmar <pinheirosilmar@gmail.com>, 2019
-# danimaribeiro <danimaribeiro@gmail.com>, 2019
 # Wagner Pereira <wagner@wagner.pereira.nom.br>, 2019
 # Emanuel Martins <emanuel.breno@gmail.com>, 2019
 # Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2019
@@ -27,16 +26,19 @@
 # Caio Leonardo Mendes de Sousa <caleozao@gmail.com>, 2019
 # Marcelo Costa <marcelo@comdesk.com.br>, 2019
 # Eduardo Aparicio <eduardo.caparica@gmail.com>, 2019
-# Rafael H L Moretti <rafael.moretti@gmail.com>, 2020
 # Marcel Savegnago <marcel.savegnago@gmail.com>, 2020
+# Rafael H L Moretti <rafael.moretti@gmail.com>, 2020
+# Luiz Fernando <lfpsgs@outlook.com>, 2020
+# Fernando Colus <fcolus1@gmail.com>, 2020
+# danimaribeiro <danimaribeiro@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-18 09:46+0000\n"
+"POT-Creation-Date: 2020-04-27 09:21+0000\n"
 "PO-Revision-Date: 2019-08-26 09:15+0000\n"
-"Last-Translator: Marcel Savegnago <marcel.savegnago@gmail.com>, 2020\n"
+"Last-Translator: danimaribeiro <danimaribeiro@gmail.com>, 2020\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/odoo/teams/41243/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,6 +60,18 @@ msgid "\" alert with a"
 msgstr "\" alertar com um"
 
 #. module: website
+#: code:addons/website/models/website_rewrite.py:0
+#, python-format
+msgid "\"URL to\" can not be empty."
+msgstr ""
+
+#. module: website
+#: code:addons/website/models/website_rewrite.py:0
+#, python-format
+msgid "\"URL to\" must start with a leading slash."
+msgstr ""
+
+#. module: website
 #: model:ir.model.fields,field_description:website.field_website_visitor__page_count
 msgid "# Visited Pages"
 msgstr "# Páginas visitadas"
@@ -72,7 +86,7 @@ msgstr "%s (id:%s)"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.show_website_info
 msgid "&amp;times;"
-msgstr "&amp;vezes;"
+msgstr "&amp;times;"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.sitemap_index_xml
@@ -375,6 +389,13 @@ msgstr ""
 msgid ""
 "<i class=\"fa fa-arrow-right\"/>\n"
 "                                            Create a Google Project and Get a Key"
+msgstr ""
+
+#. module: website
+#: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
+msgid ""
+"<i class=\"fa fa-arrow-right\"/>\n"
+"                                            Enable billing on your Google Project"
 msgstr ""
 
 #. module: website
@@ -863,6 +884,11 @@ msgid ""
 "field as True to allow users to run this action. If it is set to False the "
 "action cannot be run through the website."
 msgstr ""
+"Uma ação do servidor de código pode ser executada no site, usando um "
+"controlador dedicado. O endereço é <base> /website/action/ <website_path>. "
+"Defina este campo como \"Verdadeiro\" para permitir que os usuários executem"
+" esta ação. Se estiver definido como \"Falso\", a ação não poderá ser "
+"executada no site."
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_text_block
@@ -1333,6 +1359,13 @@ msgid "Change Icons"
 msgstr "Alterar Ícones"
 
 #. module: website
+#. openerp-web
+#: code:addons/website/static/src/js/widgets/theme.js:0
+#, python-format
+msgid "Changing this color will regenerate the default theme color scheme"
+msgstr ""
+
+#. module: website
 #: model:ir.model.fields,field_description:website.field_website_page__field_parent
 msgid "Child Field"
 msgstr "Campo inferior(filho)"
@@ -1447,6 +1480,7 @@ msgstr ""
 #. openerp-web
 #: code:addons/website/static/src/js/editor/wysiwyg_multizone_translate.js:0
 #: code:addons/website/static/src/xml/website.gallery.xml:0
+#: code:addons/website/static/src/xml/website.xml:0
 #: model_terms:ir.ui.view,arch_db:website.qweb_500
 #: model_terms:ir.ui.view,arch_db:website.show_website_info
 #, python-format
@@ -2293,7 +2327,7 @@ msgstr ""
 #. module: website
 #: model:ir.model.fields.selection,name:website.selection__website__auth_signup_uninvited__b2c
 msgid "Free sign up"
-msgstr ""
+msgstr "Registre-se Grátis"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
@@ -2770,7 +2804,10 @@ msgid "Indexed"
 msgstr "Indexado"
 
 #. module: website
+#. openerp-web
+#: code:addons/website/static/src/xml/website.pageProperties.xml:0
 #: model_terms:ir.ui.view,arch_db:website.theme_customize
+#, python-format
 msgid "Info"
 msgstr "Informations"
 
@@ -3669,7 +3706,7 @@ msgstr "No Site"
 #. module: website
 #: model:ir.model.fields.selection,name:website.selection__website__auth_signup_uninvited__b2b
 msgid "On invitation"
-msgstr ""
+msgstr "Com convite"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
@@ -4208,7 +4245,7 @@ msgstr "Metadados SEO"
 #: model:ir.model.fields,field_description:website.field_website_seo_metadata__is_seo_optimized
 #: model_terms:ir.ui.view,arch_db:website.one_page_line
 msgid "SEO optimized"
-msgstr ""
+msgstr "Mecanismos de Pesquisa Otimizados"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_features_grid
@@ -5509,7 +5546,7 @@ msgstr "Url do site"
 #: model:ir.model,name:website.model_website_visitor
 #: model_terms:ir.ui.view,arch_db:website.website_visitor_view_form
 msgid "Website Visitor"
-msgstr ""
+msgstr "Visitante do site"
 
 #. module: website
 #: code:addons/website/models/website_visitor.py:0
@@ -5563,7 +5600,7 @@ msgstr "Meta título site"
 #: model:ir.model.fields,field_description:website.field_website_page__website_meta_og_img
 #: model:ir.model.fields,field_description:website.field_website_seo_metadata__website_meta_og_img
 msgid "Website opengraph image"
-msgstr ""
+msgstr "Imagem de gráfico aberto do site"
 
 #. module: website
 #: model:ir.model,name:website.model_website_rewrite
@@ -5616,6 +5653,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "White"
 msgstr "Branco"
+
+#. module: website
+#: model:ir.model.fields,help:website.field_res_config_settings__website_domain
+#: model:ir.model.fields,help:website.field_website__domain
+msgid "Will be prefixed by http in canonical URLs if no scheme is specified"
+msgstr ""
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_quotes_carousel
@@ -5859,11 +5902,6 @@ msgstr "px"
 #, python-format
 msgid "signs to get your website ready in no time."
 msgstr ""
-
-#. module: website
-#: model_terms:ir.ui.view,arch_db:website.robots
-msgid "sitemap.xml"
-msgstr "sitemap.xml"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.menu_search

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo.addons.account.tests.invoice_test_common import InvoiceTestCommon
+from odoo.addons.account.tests.account_test_savepoint import AccountTestInvoicingCommon
 from odoo.tests.common import Form
 from odoo.tests import tagged
 from odoo.exceptions import UserError
@@ -7,11 +7,11 @@ from odoo import fields
 
 
 @tagged('post_install', '-at_install')
-class TestAccountMoveOutRefundOnchanges(InvoiceTestCommon):
+class TestAccountMoveOutRefundOnchanges(AccountTestInvoicingCommon):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestAccountMoveOutRefundOnchanges, cls).setUpClass()
+    def setUpClass(cls, chart_template_ref=None):
+        super().setUpClass(chart_template_ref=chart_template_ref)
 
         cls.invoice = cls.init_invoice('out_refund')
 
@@ -337,6 +337,7 @@ class TestAccountMoveOutRefundOnchanges(InvoiceTestCommon):
                 **self.term_line_vals_1,
                 'name': 'turlututu',
                 'partner_id': self.partner_b.id,
+                'account_id': self.partner_b.property_account_receivable_id.id,
                 'price_unit': -987.0,
                 'price_subtotal': -987.0,
                 'price_total': -987.0,
@@ -347,6 +348,7 @@ class TestAccountMoveOutRefundOnchanges(InvoiceTestCommon):
                 **self.term_line_vals_1,
                 'name': 'turlututu',
                 'partner_id': self.partner_b.id,
+                'account_id': self.partner_b.property_account_receivable_id.id,
                 'price_unit': -423.0,
                 'price_subtotal': -423.0,
                 'price_total': -423.0,

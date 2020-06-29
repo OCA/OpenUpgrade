@@ -6,6 +6,7 @@ var Class = require('web.Class');
 var core = require('web.core');
 var ColorpickerDialog = require('web.ColorpickerDialog');
 var mixins = require('web.mixins');
+const session = require('web.session');
 var fonts = require('wysiwyg.fonts');
 var weContext = require('web_editor.context');
 var rte = require('web_editor.rte');
@@ -15,15 +16,20 @@ var weWidgets = require('wysiwyg.widgets');
 var QWeb = core.qweb;
 var _t = core._t;
 
-ajax.jsonRpc('/web/dataset/call_kw', 'call', {
-    'model': 'ir.ui.view',
-    'method': 'read_template',
-    'args': ['web_editor.colorpicker'],
-    'kwargs': {
-        'context': weContext.get(),
+session.is_bound.then(() => {
+    if (session.is_website_user) {
+        return;
     }
-}).then(function (data) {
-    QWeb.add_template('<templates>' + data + '</templates>');
+    ajax.jsonRpc('/web/dataset/call_kw', 'call', {
+        'model': 'ir.ui.view',
+        'method': 'read_template',
+        'args': ['web_editor.colorpicker'],
+        'kwargs': {
+            'context': weContext.get(),
+        }
+    }).then(function (data) {
+        QWeb.add_template('<templates>' + data + '</templates>');
+    });
 });
 
 // Summernote Lib (neek change to make accessible: method and object)
@@ -60,11 +66,9 @@ var fn_createPalette = renderer.createPalette;
 renderer.createPalette = function ($container, options) {
     fn_createPalette.call(this, $container, options);
 
-    if (!QWeb.has_template('web_editor.colorpicker')) {
-        return;
-    }
-
-    var $clpicker = $(QWeb.render('web_editor.colorpicker'));
+    const $clpicker = QWeb.has_template('web_editor.colorpicker')
+        ? $(QWeb.render('web_editor.colorpicker'))
+        : $(document.createElement('colorpicker'));
 
     var groups;
     if ($clpicker.is("colorpicker")) {
@@ -75,17 +79,20 @@ renderer.createPalette = function ($container, options) {
         groups = [$clpicker.find("button").empty()];
     }
 
-    var html = "<h6 class='mt-2'>" + _t("Theme colors") + "</h6>" + _.map(groups, function ($group) {
-        var $row = $("<div/>", {"class": "note-color-row mb8"}).append($group);
-        var $after_breaks = $row.find(".o_small + :not(.o_small)");
-        if ($after_breaks.length === 0) {
-            $after_breaks = $row.find(":nth-child(8n+9)");
-        }
-        $after_breaks.addClass("o_clear");
-        return $row[0].outerHTML;
-    }).join("") + "<h6 class='mt-2'>" + _t("Common colors") + "</h6>";
     var $palettes = $container.find(".note-color .note-color-palette");
-    $palettes.prepend(html);
+
+    if (groups.length) {
+        var html = "<h6 class='mt-2'>" + _t("Theme colors") + "</h6>" + _.map(groups, function ($group) {
+            var $row = $("<div/>", {"class": "note-color-row mb8"}).append($group);
+            var $after_breaks = $row.find(".o_small + :not(.o_small)");
+            if ($after_breaks.length === 0) {
+                $after_breaks = $row.find(":nth-child(8n+9)");
+            }
+            $after_breaks.addClass("o_clear");
+            return $row[0].outerHTML;
+        }).join("") + "<h6 class='mt-2'>" + _t("Common colors") + "</h6>";
+        $palettes.prepend(html);
+    }
 
     // Find the custom colors which are used in the page and add them to the color palette
     var colors = [];
@@ -492,7 +499,7 @@ eventHandler.modules.imageDialog.showImageDialog = function ($editable) {
               ($editable.data('options') && $editable.data('options').noVideos),
         },
         onSave: function (media) {
-            if(!document.body.contains(media)) {
+            if(media && !document.body.contains(media)) {
             r.insertNode(media);
             };
         },
@@ -1169,7 +1176,7 @@ var SummernoteManager = Class.extend(mixins.EventDispatcherMixin, ServicesMixin,
      * @returns {Promise}
      */
     saveCroppedImages: function ($editable) {
-        var defs = _.map($editable.find('.o_cropped_img_to_save'), croppedImg => {
+        var defs = _.map($editable.find('.o_cropped_img_to_save'), async croppedImg => {
             var $croppedImg = $(croppedImg);
             $croppedImg.removeClass('o_cropped_img_to_save');
 
@@ -1180,10 +1187,10 @@ var SummernoteManager = Class.extend(mixins.EventDispatcherMixin, ServicesMixin,
             var originalSrc = $croppedImg.data('crop:originalSrc');
 
             var datas = $croppedImg.attr('src').split(',')[1];
-
+            let attachmentID = cropID;
             if (!cropID) {
                 var name = originalSrc + '.crop';
-                return this._rpc({
+                attachmentID = await this._rpc({
                     model: 'ir.attachment',
                     method: 'create',
                     args: [{
@@ -1194,22 +1201,20 @@ var SummernoteManager = Class.extend(mixins.EventDispatcherMixin, ServicesMixin,
                         mimetype: mimetype,
                         url: originalSrc, // To save the original image that was cropped
                     }],
-                }).then(attachmentID => {
-                    return this._rpc({
-                        model: 'ir.attachment',
-                        method: 'generate_access_token',
-                        args: [[attachmentID]],
-                    }).then(access_token => {
-                        $croppedImg.attr('src', '/web/image/' + attachmentID + '?access_token=' + access_token[0]);
-                    });
                 });
             } else {
-                return this._rpc({
+                await this._rpc({
                     model: 'ir.attachment',
                     method: 'write',
                     args: [[cropID], {datas: datas}],
                 });
             }
+            const access_token = await this._rpc({
+                model: 'ir.attachment',
+                method: 'generate_access_token',
+                args: [[attachmentID]],
+            });
+            $croppedImg.attr('src', '/web/image/' + attachmentID + '?access_token=' + access_token[0]);
         });
         return Promise.all(defs);
     },

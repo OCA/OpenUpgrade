@@ -1583,6 +1583,9 @@ options.registry.topMenuColor = options.registry.colorpicker.extend({
             params: ['header_overlay'],
             onSuccess: value => {
                 this.$el.toggleClass('d-none', !value);
+                if (!value) {
+                    this.$el.find('button.selected').removeClass('selected');
+                }
             },
         });
     },
@@ -1604,6 +1607,16 @@ options.registry.topMenuColor = options.registry.colorpicker.extend({
             params: [{name: 'header_color', value: color}],
         });
     },
+    /**
+     * @override
+     */
+    _onColorResetButtonClick: function () {
+        this._super.apply(this, arguments);
+        this.trigger_up('action_demand', {
+            actionName: 'toggle_page_option',
+            params: [{name: 'header_color', value: ''}],
+        });
+    },
 });
 
 /**
@@ -1620,7 +1633,8 @@ options.registry.anchorName = options.Class.extend({
      * @override
      */
     onClone: function () {
-        this.$target.removeAttr('id data-anchor');
+        this.$target.removeAttr('data-anchor');
+        this.$target.filter(':not(.carousel)').removeAttr('id');
     },
 
     //--------------------------------------------------------------------------

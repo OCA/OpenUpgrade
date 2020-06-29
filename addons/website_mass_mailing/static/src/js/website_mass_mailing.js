@@ -50,7 +50,9 @@ publicWidget.registry.subscribe = publicWidget.Widget.extend({
      * @override
      */
     destroy: function () {
-        this.$target.addClass('d-none');
+        if (!this.editableMode) {
+            this.$target.addClass('d-none');
+        }
         this._super.apply(this, arguments);
     },
 
@@ -167,7 +169,7 @@ publicWidget.registry.newsletter_popup = publicWidget.Widget.extend({
             $content: $('<div/>').html(content),
             $parentNode: this.$target,
             backdrop: !this.editableMode,
-            dialogClass: 'p-0' + (this.editableMode ? ' o_editable oe_structure oe_empty' : ''),
+            dialogClass: 'p-0' + (this.editableMode ? ' oe_structure oe_empty' : ''),
             renderFooter: false,
             size: 'medium',
         });

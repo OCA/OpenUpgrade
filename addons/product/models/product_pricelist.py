@@ -307,8 +307,11 @@ class Pricelist(models.Model):
         return pricelist.get_products_price(
             list(zip(**products_by_qty_by_partner)))
 
-    def _get_partner_pricelist_multi_search_domain_hook(self):
-        return [('active', '=', True)]
+    def _get_partner_pricelist_multi_search_domain_hook(self, company_id):
+        return [
+            ('active', '=', True),
+            ('company_id', 'in', [company_id, False]),
+        ]
 
     def _get_partner_pricelist_multi_filter_hook(self):
         return self.filtered('active')
@@ -331,10 +334,11 @@ class Pricelist(models.Model):
         # `partner_ids` might be ID from inactive uers. We should use active_test
         # as we will do a search() later (real case for website public user).
         Partner = self.env['res.partner'].with_context(active_test=False)
+        company_id = company_id or self.env.company.id
 
-        Property = self.env['ir.property'].with_context(force_company=company_id or self.env.company.id)
+        Property = self.env['ir.property'].with_context(force_company=company_id)
         Pricelist = self.env['product.pricelist']
-        pl_domain = self._get_partner_pricelist_multi_search_domain_hook()
+        pl_domain = self._get_partner_pricelist_multi_search_domain_hook(company_id)
 
         # if no specific property, try to find a fitting pricelist
         result = Property.get_multi('property_product_pricelist', Partner._name, partner_ids)
@@ -405,7 +409,7 @@ class PricelistItem(models.Model):
              "Expressed in the default unit of measure of the product.")
     applied_on = fields.Selection([
         ('3_global', 'All Products'),
-        ('2_product_category', ' Product Category'),
+        ('2_product_category', 'Product Category'),
         ('1_product', 'Product'),
         ('0_product_variant', 'Product Variant')], "Apply On",
         default='3_global', required=True,

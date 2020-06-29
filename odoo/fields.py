@@ -895,7 +895,7 @@ class Field(MetaField('DummyField', (object,), {})):
                 model.flush([self.name])
 
         if self.required and not has_notnull:
-            model.pool.post_constraint(sql.set_not_null, model._cr, model._table, self.name)
+            model.pool.post_constraint(apply_required, model, self.name)
         elif not self.required and has_notnull:
             sql.drop_not_null(model._cr, model._table, self.name)
 
@@ -986,10 +986,16 @@ class Field(MetaField('DummyField', (object,), {})):
         if self.compute and (record.id in env.all.tocompute.get(self, ())) \
                 and not env.is_protected(self, record):
             # self must be computed on record
-            recs = record if self.recursive else env.records_to_compute(self)
+            if self.recursive:
+                recs = record
+            else:
+                recs = env.records_to_compute(self)
+                # compute the field on real records only (if 'record' is real)
+                # or new records only (if 'record' is new)
+                recs = recs.filtered(lambda rec: bool(rec.id) == bool(record.id))
             try:
                 self.compute_value(recs)
-            except AccessError:
+            except (AccessError, MissingError):
                 self.compute_value(record)
 
         try:
@@ -1018,7 +1024,7 @@ class Field(MetaField('DummyField', (object,), {})):
                     recs = record if self.recursive else record._in_cache_without(self)
                     try:
                         self.compute_value(recs)
-                    except AccessError:
+                    except (AccessError, MissingError):
                         self.compute_value(record)
                     value = env.cache.get(record, self)
 
@@ -1129,6 +1135,7 @@ class Field(MetaField('DummyField', (object,), {})):
 
 
 class Boolean(Field):
+    """ Encapsulates a :class:`bool`. """
     type = 'boolean'
     column_type = ('bool', 'bool')
 
@@ -1143,6 +1150,7 @@ class Boolean(Field):
 
 
 class Integer(Field):
+    """ Encapsulates an :class:`int`. """
     type = 'integer'
     column_type = ('int4', 'int4')
     _slots = {
@@ -1181,7 +1189,9 @@ class Integer(Field):
 
 
 class Float(Field):
-    """The precision digits are given by the (optional) digits attribute.
+    """ Encapsulates a :class:`float`.
+
+    The precision digits are given by the (optional) ``digits`` attribute.
 
     :param digits: a pair (total, decimal) or a string referencing a
         :class:`~odoo.addons.base.models.decimal_precision.DecimalPrecision` record name.
@@ -1246,9 +1256,13 @@ class Float(Field):
 
 
 class Monetary(Field):
-    """ The decimal precision and currency symbol are taken from the attribute
+    """ Encapsulates a :class:`float` expressed in a given
+    :class:`res_currency<odoo.addons.base.models.res_currency.Currency>`.
 
-    :param str currency_field: name of the field holding the currency
+    The decimal precision and currency symbol are taken from the ``currency_field`` attribute.
+
+    :param str currency_field: name of the :class:`Many2one` field
+        holding the :class:`res_currency <odoo.addons.base.models.res_currency.Currency>`
         this monetary field is expressed in (default: `\'currency_id\'`)
     """
     type = 'monetary'
@@ -1293,7 +1307,9 @@ class Monetary(Field):
         else:
             # Note: this is wrong if 'record' is several records with different
             # currencies, which is functional nonsense and should not happen
-            currency = record[:1][self.currency_field]
+            # BEWARE: do not prefetch other fields, because 'value' may be in
+            # cache, and would be overridden by the value read from database!
+            currency = record[:1].with_context(prefetch_fields=False)[self.currency_field]
 
         value = float(value or 0.0)
         if currency:
@@ -1306,7 +1322,9 @@ class Monetary(Field):
         if value and validate:
             # FIXME @rco-odoo: currency may not be already initialized if it is
             # a function or related field!
-            currency = record.sudo()[self.currency_field]
+            # BEWARE: do not prefetch other fields, because 'value' may be in
+            # cache, and would be overridden by the value read from database!
+            currency = record.sudo().with_context(prefetch_fields=False)[self.currency_field]
             if len(currency) > 1:
                 raise ValueError("Got multiple currencies while assigning values of monetary field %s" % str(self))
             elif currency:
@@ -1431,7 +1449,10 @@ class _String(Field):
             if self.translate is True and cache_value is not None:
                 tname = "%s,%s" % (records._name, self.name)
                 records.env['ir.translation']._set_source(tname, real_recs._ids, value)
-                records.invalidate_cache(fnames=[self.name], ids=records.ids)
+            if self.translate:
+                # invalidate the field in the other languages
+                cache.invalidate([(self, records.ids)])
+                cache.update(records, self, [cache_value] * len(records))
 
         if update_trans:
             if callable(self.translate):
@@ -1531,7 +1552,7 @@ class Char(_String):
 
 
 class Text(_String):
-    """ Very similar to :class:`~.Char` but used for longer contents, does not
+    """ Very similar to :class:`Char` but used for longer contents, does not
     have a size and usually displayed as a multiline text box.
 
     :param translate: enable the translation of the field's values; use
@@ -1552,6 +1573,18 @@ class Text(_String):
 
 
 class Html(_String):
+    """ Encapsulates an html code content.
+
+    :param bool sanitize: whether value must be sanitized (default: ``True``)
+    :param bool sanitize_tags: whether to sanitize tags
+        (only a white list of attributes is accepted, default: ``True``)
+    :param bool sanitize_attributes: whether to sanitize attributes
+        (only a white list of attributes is accepted, default: ``True``)
+    :param bool sanitize_style: whether to sanitize style attributes (default: ``True``)
+    :param bool strip_style: whether to strip style attributes
+        (removed and therefore not sanitized, default: ``False``)
+    :param bool strip_classes: whether to strip classes attributes (default: ``False``)
+    """
     type = 'html'
     column_type = ('text', 'text')
     _slots = {
@@ -1613,9 +1646,7 @@ class Html(_String):
 
 
 class Date(Field):
-    """ This field type encapsulates a python date object.
-    :type date:
-    """
+    """ Encapsulates a python :class:`date <datetime.date>` object. """
     type = 'date'
     column_type = ('date', 'date')
     column_cast_from = ('timestamp',)
@@ -1714,9 +1745,7 @@ class Date(Field):
 
 
 class Datetime(Field):
-    """ This field type encapsulates a python datetime object.
-    :type datetime:
-    """
+    """ Encapsulates a python :class:`datetime <datetime.datetime>` object. """
     type = 'datetime'
     column_type = ('timestamp', 'timestamp')
     column_cast_from = ('date',)
@@ -1825,6 +1854,11 @@ _BINARY = memoryview
 
 
 class Binary(Field):
+    """Encapsulates a binary content (e.g. a file).
+
+    :param bool attachment: whether the field should be stored as `ir_attachment`
+        or in a column of the model's table (default: ``True``).
+    """
     type = 'binary'
     _slots = {
         'prefetch': False,                  # not prefetched by default
@@ -1849,8 +1883,17 @@ class Binary(Field):
             return None
         # Detect if the binary content is an SVG for restricting its upload
         # only to system users.
-        if value[:1] in (b'P', 'P'):  # Fast detection of first 6 bits of '<' (0x3C)
-            decoded_value = base64.b64decode(value)
+        magic_bytes = {
+            b'P',  # first 6 bits of '<' (0x3C) b64 encoded
+            b'<',  # plaintext XML tag opening
+        }
+        if isinstance(value, str):
+            value = value.encode()
+        if value[:1] in magic_bytes:
+            try:
+                decoded_value = base64.b64decode(value.translate(None, delete=b'\r\n'), validate=True)
+            except binascii.Error:
+                decoded_value = value
             # Full mimetype detection
             if (guess_mimetype(decoded_value).startswith('image/svg') and
                     not record.env.is_system()):
@@ -2000,6 +2043,22 @@ class Binary(Field):
 
 
 class Image(Binary):
+    """Encapsulates an image, extending :class:`Binary`.
+
+    If image size is greater than the ``max_width``/``max_height`` limit of pixels, the image will be
+    resized to the limit by keeping aspect ratio.
+
+    :param int max_width: the maximum width of the image (default: ``0``, no limit)
+    :param int max_height: the maximum height of the image (default: ``0``, no limit)
+    :param bool verify_resolution: whether the image resolution should be verified
+        to ensure it doesn't go over the maximum image resolution (default: ``True``).
+        See :class:`odoo.tools.image.ImageProcess` for maximum image resolution (default: ``45e6``).
+
+    .. note::
+
+        If no ``max_width``/``max_height`` is specified (or is set to 0) and ``verify_resolution`` is False,
+        the field content won't be verified at all and a :class:`Binary` field should be used.
+    """
     _slots = {
         'max_width': 0,
         'max_height': 0,
@@ -2040,7 +2099,8 @@ class Image(Binary):
 
 
 class Selection(Field):
-    """
+    """ Encapsulates an exclusive choice between different values.
+
     :param selection: specifies the possible values for this field.
         It is given as either a list of pairs ``(value, label)``, or a model
         method, or a method name.
@@ -2102,9 +2162,11 @@ class Selection(Field):
                     ):
                         _logger.warning("%s: selection=%r overrides existing selection; use selection_add instead", self, selection)
                     values = [kv[0] for kv in selection]
-                    labels.update(selection)
+                    labels = dict(selection)
                 else:
                     self.selection = selection
+                    values = None
+                    labels = {}
 
             if 'selection_add' in field.args:
                 selection_add = field.args['selection_add']
@@ -2190,6 +2252,11 @@ class Selection(Field):
 
 
 class Reference(Selection):
+    """ Pseudo-relational field (no FK in database).
+
+    The field value is stored as a :class:`string <str>` following the pattern
+    ``"res_model.res_id"`` in database.
+    """
     type = 'reference'
 
     @property
@@ -2480,15 +2547,15 @@ class Many2one(_Relational):
         # update the cache of self
         cache.update(records, self, [cache_value] * len(records))
 
-        # update the cache of one2many fields of new corecord
-        self._update_inverses(records, cache_value)
-
         # update towrite
         if self.store:
             towrite = records.env.all.towrite[self.model_name]
             for record in records.filtered('id'):
                 # cache_value is already in database format
                 towrite[record.id][self.name] = cache_value
+
+        # update the cache of one2many fields of new corecord
+        self._update_inverses(records, cache_value)
 
         return records
 
@@ -2526,6 +2593,16 @@ class Many2one(_Relational):
 
 
 class Many2oneReference(Integer):
+    """ Pseudo-relational field (no FK in database).
+
+    The field value is stored as an :class:`integer <int>` id in database.
+
+    Contrary to :class:`Reference` fields, the model has to be specified
+    in a :class:`Char` field, whose name has to be specified in the
+    `model_field` attribute for the current :class:`Many2oneReference` field.
+
+    :param str model_field: name of the :class:`Char` where the model name is stored.
+    """
     type = 'many2one_reference'
     _slots = {
         'model_field': None,
@@ -3545,6 +3622,16 @@ def prefetch_x2many_ids(record, field):
     records = record.browse(record._prefetch_ids)
     ids_list = record.env.cache.get_values(records, field)
     return unique(id_ for ids in ids_list for id_ in ids)
+
+
+def apply_required(model, field_name):
+    """ Set a NOT NULL constraint on the given field, if necessary. """
+    # At the time this function is called, the model's _fields may have been reset, although
+    # the model's class is still the same. Retrieve the field to see whether the NOT NULL
+    # constraint still applies
+    field = model._fields[field_name]
+    if field.store and field.required:
+        sql.set_not_null(model.env.cr, model._table, field_name)
 
 
 # imported here to avoid dependency cycle issues
