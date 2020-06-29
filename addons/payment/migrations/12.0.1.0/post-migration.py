@@ -50,6 +50,18 @@ def fill_invoice_ids(env):
     env['payment.transaction'].search([])._compute_invoice_ids_nbr()
 
 
+def fill_missing_acquirers_journals(env):
+    """There's a new check in sale.order._create_payment_transaction() method
+    that avoids to create the payment transaction (although is not needed at
+    all), so we prevent the problem creating/assigning the missing journals
+    in payment acquirers through the helper that the core offers.
+    """
+    companies = env["res.company"].search([])
+    Acquirer = env["payment.acquirer"]
+    for company in companies:
+        Acquirer._create_missing_journal_for_acquirers(company=company)
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
@@ -57,5 +69,6 @@ def migrate(env, version):
     fill_payment_transaction_is_processed(cr)
     fill_payment_transaction_payment_id(cr)
     fill_invoice_ids(env)
+    fill_missing_acquirers_journals(env)
     openupgrade.load_data(
         cr, 'payment', 'migrations/12.0.1.0/noupdate_changes.xml')
