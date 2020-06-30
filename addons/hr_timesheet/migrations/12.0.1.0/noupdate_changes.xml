@@ -6,4 +6,11 @@
   <record id="group_hr_timesheet_user" model="res.groups">
     <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
   </record>
+  <!-- they aren't defined as noupdate in this module, but are on the original one -->
+  <record id="uom.product_uom_day" model="uom.uom">
+    <field name="timesheet_widget">float_toggle</field>
+  </record>
+  <record id="uom.product_uom_hour" model="uom.uom">
+    <field name="timesheet_widget">float_time</field>
+  </record>
 </odoo>
