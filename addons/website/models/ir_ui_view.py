@@ -165,14 +165,7 @@ class View(models.Model):
                     view.with_context(website_id=website.id).write({'name': view.name})
 
         specific_views = self.env['ir.ui.view']
-
-        # OpenUpgrade: force a False condition to never enter this code block.
-        # This is needed because the update process could correctly unlink
-        # website-agnostic views, but we don't want the website-specific
-        # equivalents to be removed during the migration.
-        if False and self and self.pool._init:
-        # OpenUpgrade: end of modification
-
+        if self and self.pool._init:
             for view in self.filtered(lambda view: not view.website_id):
                 specific_views += view._get_specific_views()
 
