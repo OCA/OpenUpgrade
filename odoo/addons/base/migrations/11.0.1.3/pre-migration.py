@@ -124,6 +124,19 @@ def set_currency_rate_dates(env):
     )
 
 
+def rename_mass_mailing_event(env):
+    env.cr.execute("""
+        SELECT id
+        FROM ir_module_module
+        WHERE name = 'mass_mailing_event' AND state <> 'uninstalled'""")
+    row = env.cr.fetchone()
+    if row:
+        openupgrade.update_module_names(
+            env.cr,
+            [("mass_mailing_event", "mass_mailing_event_registration_exclude")],
+            merge_modules=True)
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.remove_tables_fks(env.cr, _obsolete_tables)
@@ -168,3 +181,7 @@ def migrate(env, version):
     openupgrade.set_xml_ids_noupdate_value(
         env, 'base', ['lang_km'], True)
     set_currency_rate_dates(env)
+
+    # Rename 'mass_mailing_event' module to not collide with the new
+    # core module with the same name.
+    rename_mass_mailing_event(env)
