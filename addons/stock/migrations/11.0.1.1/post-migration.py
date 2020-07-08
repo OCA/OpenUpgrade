@@ -52,7 +52,7 @@ def product_assign_responsible(env):
     openupgrade.logged_query(
         env.cr, """
         UPDATE product_template
-        SET responsible_id = create_uid
+        SET responsible_id = COALESCE(create_uid, 1)
         """
     )
 
