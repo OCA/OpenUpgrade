@@ -5,6 +5,21 @@
 from openupgradelib import openupgrade
 
 
+def migrate_use_timesheets(env):
+    openupgrade.logged_query(
+        env.cr,
+        """
+        UPDATE account_analytic_account aaa
+        SET %s = True
+        FROM account_analytic_line aal
+        WHERE aaa.id = aal.account_id
+        AND aal.%s = True
+        """ % (openupgrade.get_legacy_name('use_timesheets'),
+               openupgrade.get_legacy_name('is_timesheet')
+               )
+        )
+
+
 def migrate_allow_timesheets(env):
     openupgrade.logged_query(
         env.cr,
@@ -25,7 +40,7 @@ def migrate_missing_projects(env):
         SELECT aaa.id, aaa.company_id, aaa.name, aaa.active
         FROM account_analytic_account aaa
         LEFT JOIN project_project pp ON pp.analytic_account_id = aaa.id
-        WHERE %s = True
+        WHERE aaa.%s = True
         AND pp.id IS NULL
         """ %
         openupgrade.get_legacy_name('use_timesheets')
@@ -79,13 +94,15 @@ def fill_analytic_line_project(env):
         FROM project_project pp
         WHERE pp.analytic_account_id = aal.account_id
         AND aal.project_id IS NULL
-        AND aal.is_timesheet IS True
-        """,
+        AND aal.%s IS True
+        """ %
+        openupgrade.get_legacy_name('is_timesheet'),
     )
 
 
 @openupgrade.migrate()
 def migrate(env, version):
+    migrate_use_timesheets(env)
     migrate_allow_timesheets(env)
     migrate_missing_projects(env)
     fill_analytic_line_project(env)

@@ -7,6 +7,9 @@ from openupgradelib import openupgrade
 COLUMN_RENAMES = {
     'account_analytic_account': [
         ('use_timesheets', None),
+    ],
+    'account_analytic_line': [
+        ('is_timesheet', None),
     ]
 }
 
