@@ -84,6 +84,29 @@ def _migrate_account_types(env):
         )
 
 
+def _rename_account_template_xmlids(env):
+    """Rename XML-IDs for all the account templates for avoiding errors with
+    the cleanup process due to linked old records.
+    """
+    for old_coa, new_coa,  in {
+        "": "common",
+        "_full": "full",
+        "_assoc": "assoc",
+        "_pymes": "pymes"
+    }.items():
+        openupgrade.logged_query(
+            env.cr, """
+            UPDATE ir_model_data
+            SET name = regexp_replace(name, %(old_pattern)s, %(new_pattern)s)
+            WHERE module = 'l10n_es' AND name ~ %(old_pattern)s
+            """ % {
+                'old_pattern': r"$$pgc%s_([0-9]*)_child$$" % old_coa,
+                'new_pattern': r"$$account_%s_\1$$" % new_coa,
+            }
+        )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     _migrate_account_types(env)
+    _rename_account_template_xmlids(env)
