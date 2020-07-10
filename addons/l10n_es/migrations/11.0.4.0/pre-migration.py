@@ -88,7 +88,7 @@ def _rename_account_template_xmlids(env):
     """Rename XML-IDs for all the account templates for avoiding errors with
     the cleanup process due to linked old records.
     """
-    for old_coa, new_coa,  in {
+    for old_coa, new_coa in {
         "": "common",
         "_full": "full",
         "_assoc": "assoc",
