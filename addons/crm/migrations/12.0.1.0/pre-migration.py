@@ -70,7 +70,7 @@ def identify_act_window_views(env):
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.copy_columns(env.cr, column_copies)
-    openupgrade.rename_fields(env, _field_renames)
     openupgrade.rename_columns(env.cr, _column_renames)
+    openupgrade.rename_fields(env, _field_renames)
     openupgrade.rename_xmlids(env.cr, _xml_ids_renames)
     identify_act_window_views(env)
