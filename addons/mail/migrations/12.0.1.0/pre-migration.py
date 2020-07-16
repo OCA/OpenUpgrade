@@ -11,6 +11,8 @@ _column_renames = {
 
 _field_renames = [
     ('mail.activity.type', 'mail_activity_type', 'days', 'delay_count'),
+    # for preserving filters et al that have the same meaning
+    ('res.partner', 'res_partner', 'opt_out', 'is_blacklisted'),
 ]
 
 
