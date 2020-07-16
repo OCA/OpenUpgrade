@@ -22,13 +22,14 @@ def migrate_missing_projects(env):
     """Create a project and link it to the orphaned analytic accounts"""
     env.cr.execute(
         """
-        SELECT aaa.id, aaa.company_id, aaa.name, aaa.active
+        SELECT aaa.id, aaa.company_id, aaa.name, aaa.active, aaa.%(column)s
         FROM account_analytic_account aaa
+        LEFT JOIN account_analytic_line aal ON aal.account_id = aaa.id
         LEFT JOIN project_project pp ON pp.analytic_account_id = aaa.id
-        WHERE %s = True
-        AND pp.id IS NULL
-        """ %
-        openupgrade.get_legacy_name('use_timesheets')
+        WHERE ((aal.is_timesheet AND aal.id IS NOT NULL) OR aaa.%(column)s)
+            AND pp.id IS NULL
+        GROUP BY aaa.id, aaa.company_id, aaa.name, aaa.active, aaa.%(column)s
+        """ % {"column": openupgrade.get_legacy_name('use_timesheets')}
     )
     aaa_rows = env.cr.fetchall()
     project_obj = env['project.project']
@@ -39,7 +40,7 @@ def migrate_missing_projects(env):
             'company_id': aaa_row[1],
             'name': aaa_row[2],
             'active': aaa_row[3],
-            'allow_timesheets': True,
+            'allow_timesheets': aaa_row[4],
         })
 
 
