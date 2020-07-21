@@ -14,6 +14,8 @@ def _replace_paypal_view_template_id(env):
         ('view_template_id', '=', env.ref(
             'payment_paypal.paypal_acquirer_button').id),
     ])
+    if not acquirers:
+        return
     # Do it through SQL for avoiding other validations
     openupgrade.logged_query(
         env.cr, """
