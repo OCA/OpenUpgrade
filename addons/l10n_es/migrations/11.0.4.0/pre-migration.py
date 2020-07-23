@@ -82,6 +82,15 @@ def _migrate_account_types(env):
             """,
             params,
         )
+    # Adjust related field according mappings. Actually, we keep the field
+    # synced, no matter if changed here, but for the sake of simplicity
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move_line aml
+        SET user_type_id = aa.user_type_id
+        FROM account_account aa
+        WHERE aa.id = aml.account_id AND aml.user_type_id != aa.user_type_id"""
+    )
 
 
 def _rename_account_template_xmlids(env):
