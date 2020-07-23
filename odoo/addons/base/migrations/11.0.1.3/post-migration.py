@@ -143,6 +143,7 @@ def _adjust_res_partner_category_colors(env):
         table="res_partner_category",
     )
 
+
 @openupgrade.migrate()
 def migrate(env, version):
     map_ir_actions_server_fields(env.cr)
