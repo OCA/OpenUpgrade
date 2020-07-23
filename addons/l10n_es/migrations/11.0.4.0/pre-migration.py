@@ -89,7 +89,8 @@ def _migrate_account_types(env):
         UPDATE account_move_line aml
         SET user_type_id = aa.user_type_id
         FROM account_account aa
-        WHERE aa.id = aml.account_id AND aml.user_type_id != aa.user_type_id"""
+        WHERE aa.id = aml.account_id AND
+        (aml.user_type_id != aa.user_type_id OR aml.user_type_id IS NULL)"""
     )
 
 
