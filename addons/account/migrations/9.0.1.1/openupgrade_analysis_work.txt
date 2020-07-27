@@ -468,6 +468,7 @@ account      / account.tax              / tag_ids (many2many)           : NEW re
 
 account      / account.tax              / tax_code_id (many2one)        : DEL relation: account.tax.code
 account      / account.tax              / tax_group_id (many2one)       : NEW relation: account.tax.group, required: required, req_default: function
+# Done in pre-migration. copying tax_code_id into tax_group_id.
 account      / account.tax              / tax_sign (float)              : DEL 
 account      / account.tax              / type (selection)              : was renamed to amount_type [nothing to to]
 
