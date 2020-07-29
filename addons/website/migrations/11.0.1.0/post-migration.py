@@ -16,7 +16,13 @@ def fill_website_pages(env):
         INSERT INTO website_page
             (url, view_id, website_indexed, website_published, create_uid,
              create_date, write_uid, write_date)
-        SELECT COALESCE(wm.url, '/page/' || iuv.name), iuv.id, TRUE, TRUE,
+        SELECT COALESCE(
+                wm.url,
+                '/page/' || COALESCE(
+                    substring(iuv.key from 9), imd.name, iuv.name
+                )
+            ),
+            iuv.id, TRUE, TRUE,
             iuv.create_uid,
             iuv.create_date, iuv.write_uid, iuv.write_date
         FROM
@@ -28,6 +34,10 @@ def fill_website_pages(env):
             AND (wm.website_id = iuv.website_id
             OR wm.website_id IS NULL
             OR iuv.website_id IS NULL)
+        LEFT JOIN
+            ir_model_data imd ON imd.module='website'
+            AND imd.model='ir.ui.view'
+            AND imd.res_id=iuv.id
         WHERE
             wp.id IS NULL
             AND iuv.page = TRUE""",
