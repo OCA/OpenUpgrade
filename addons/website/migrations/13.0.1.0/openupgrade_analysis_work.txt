@@ -9,32 +9,42 @@ new model website.visitor
 # NOTHING TO DO
 
 ---Fields in module 'website'---
-website      / ir.ui.view               / track (boolean)               : NEW hasdefault
 website      / mrp.document             / key (char)                    : previously in module mrp
 website      / mrp.document             / website_id (many2one)         : previously in module mrp
 website      / mrp.document             / website_url (char)            : previously in module mrp
+# NOTHING TO DO: mrp.document inherits from ir.attachment (and mrp was installed before than website when doing this analysis)
+
 website      / res.partner              / is_published (boolean)        : previously in module website_partner
-website      / res.partner              / visitor_ids (many2many)       : NEW relation: website.visitor
 website      / res.partner              / website_published (boolean)   : previously in module website_partner
 website      / res.partner              / website_url (char)            : previously in module website_partner
 website      / res.users                / is_published (boolean)        : previously in module website_partner
 website      / res.users                / website_published (boolean)   : previously in module website_partner
 website      / res.users                / website_url (char)            : previously in module website_partner
+# NOTHING TO DO: moved field
+
 website      / website                  / default_lang_code (char)      : DEL
+# NOTHING TO DO: unwanted related, because is preferred to choose from default_lang_id the code or the url_code
+
+website      / ir.ui.view               / track (boolean)               : NEW hasdefault
+website      / res.partner              / visitor_ids (many2many)       : NEW relation: website.visitor
 website      / website                  / logo (binary)                 : NEW attachment: True, hasdefault
 website      / website                  / social_googleplus (char)      : DEL
 website      / website.menu             / group_ids (many2many)         : NEW relation: res.groups
 website      / website.menu             / mega_menu_classes (char)      : NEW
 website      / website.menu             / mega_menu_content (html)      : NEW
-website      / website.rewrite          / name (char)                   : NEW required
-website      / website.rewrite          / route_id (many2one)           : NEW relation: website.route
 # NOTHING TO DO
+
+website      / website.rewrite          / name (char)                   : NEW required
+# DONE: pre-migration: filled name with some heuristic name
 
 website      / website.redirect         / type (selection)              : DEL required, selection_keys: ['301', '302'], req_default: function
 website      / website.rewrite          / redirect_type (selection)     : NEW selection_keys: ['301', '302', '308', '404'], hasdefault
 # DONE: pre-migration (renamed)
 
+website      / website.rewrite          / route_id (many2one)           : NEW relation: website.route
 website      / website.route            / path (char)                   : NEW
+# NOTHING TO DO: new model website.route
+
 website      / website.track            / page_id (many2one)            : NEW relation: website.page
 website      / website.track            / url (text)                    : NEW
 website      / website.track            / visit_datetime (datetime)     : NEW required, req_default: function, hasdefault

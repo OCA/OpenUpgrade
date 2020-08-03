@@ -1,28 +1,28 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="aboutus_page" model="website.page">
-    <!--<field name="website_published"/>-->
-    <field name="is_published">True</field>
-    <field name="track">True</field>
-  </record>
+<!--  <record id="aboutus_page" model="website.page">-->
+<!--    <field name="website_published"/>-->
+<!--    <field name="is_published">True</field>-->
+<!--    <field name="track">True</field>-->
+<!--  </record>-->
   <record id="business_conference" model="ir.attachment">
     <!--<field name="datas_fname"/>-->
     <field name="name">business_conference.jpg</field>
   </record>
-  <record id="contactus_page" model="website.page">
-    <!--<field name="website_published"/>-->
-    <field name="is_published">True</field>
-    <field name="track">True</field>
-  </record>
+<!--  <record id="contactus_page" model="website.page">-->
+<!--    <field name="website_published"/>-->
+<!--    <field name="is_published">True</field>-->
+<!--    <field name="track">True</field>-->
+<!--  </record>-->
   <record id="default_website" model="website">
     <field name="favicon" type="base64" file="web/static/src/img/favicon.ico"/>
-    <field name="homepage_id"/>
+<!--    <field name="homepage_id"/>-->
   </record>
-  <record id="homepage_page" model="website.page">
-    <!--<field name="website_published"/>-->
-    <field name="is_published">True</field>
-    <field name="track">True</field>
-  </record>
+<!--  <record id="homepage_page" model="website.page">-->
+<!--    <field name="website_published"/>-->
+<!--    <field name="is_published">True</field>-->
+<!--    <field name="track">True</field>-->
+<!--  </record>-->
   <record id="library_image_01" model="ir.attachment">
     <!--<field name="datas_fname"/>-->
     <field name="name">bridge.jpg</field>
