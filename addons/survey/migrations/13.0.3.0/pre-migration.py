@@ -1,4 +1,5 @@
 # Copyright 2020 Payam Yasaie <https://www.tashilgostar.com>
+# Copyright 2020 ForgeFlow <https://www.forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -13,6 +14,8 @@ _table_renames = [
 _field_renames = [
     ('survey.label', 'survey_label', 'quizz_mark', 'answer_score'),
     ('survey.question', 'survey_question', 'type', 'question_type'),
+    ('survey.question', 'survey_question', 'question', 'title'),
+    ('survey.survey', 'survey_survey', 'auth_required', 'users_login_required'),
     ('survey.survey', 'survey_survey', 'email_template_id', 'certification_mail_template_id'),
     ('survey.user_input', 'survey_user_input', 'type', 'input_type'),
     ('survey.user_input', 'survey_user_input', 'date_create', 'start_datetime'),
@@ -20,12 +23,10 @@ _field_renames = [
     ('survey.user_input_line', 'survey_user_input_line', 'quizz_mark', 'answer_score'),
 ]
 
-_field_adds = [
-    ("title", "survey.question", "survey_question", "char", False, "survey"),
-    ("is_page", "survey.question", "survey_question", "boolean", False, "survey"),
-]
-
 _column_renames = {
+    'survey_survey': [
+        ('stage_id', None),
+    ],
     'survey_user_input': [
         ('last_displayed_page_id', None),
     ],
@@ -57,21 +58,27 @@ _xmlid_renames = [
 ]
 
 
-def move_survey_page_to_survey_question(env):
-    openupgrade.add_fields(env, _field_adds)
+def add_helper_survey_question_page_rel(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE survey_question
-        ADD COLUMN survey_id INT4
-        """,
+        ADD COLUMN old_page_id integer""",
+    )
+
+
+def fill_survey_user_input_line_question_sequence(env):
+    """Faster way"""
+    openupgrade.logged_query(
+        env.cr, """
+        ALTER TABLE survey_user_input_line
+        ADD COLUMN question_sequence integer""",
     )
     openupgrade.logged_query(
         env.cr, """
-        UPDATE survey_question sq
-        SET title = sp.title, survey_id = sp.survey_id, is_page = TRUE
-        FROM survey_page sp
-        WHERE sp.id = sq.{}
-        """.format(openupgrade.get_legacy_name('page_id'))
+        UPDATE survey_user_input_line suil
+        SET question_sequence = sq.sequence
+        FROM survey_question sq
+        WHERE suil.question_id = sq.id""",
     )
 
 
@@ -82,7 +89,8 @@ def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
     openupgrade.rename_columns(env.cr, _column_renames)
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
-    move_survey_page_to_survey_question(env)
+    add_helper_survey_question_page_rel(env)
+    fill_survey_user_input_line_question_sequence(env)
     openupgrade.set_xml_ids_noupdate_value(
         env,
         "survey",

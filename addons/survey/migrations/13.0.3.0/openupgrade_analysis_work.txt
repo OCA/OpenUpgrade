@@ -4,7 +4,7 @@ new model survey.invite (renamed from survey.mail.compose.message) [transient]
 # DONE: pre-migration: renamed model and table
 
 obsolete model survey.page (renamed to survey.question)
-# NOTHING TO DO: merged into survey.question
+# DONE: post-migration: merged into survey.question
 
 obsolete model survey.stage
 # NOTHING TO DO: model removed
@@ -21,22 +21,35 @@ survey       / survey.label             / quizz_mark (float)            : DEL
 # DONE: pre-migration (renamed)
 
 survey       / survey.page              / description (html)            : DEL
-survey       / survey.page              / sequence (integer)            : DEL
-# NOTHING TO DO: removed
-
 survey       / survey.page              / question_ids (one2many)       : DEL relation: survey.question
+survey       / survey.page              / sequence (integer)            : DEL
 survey       / survey.page              / survey_id (many2one)          : DEL relation: survey.survey, required
-survey       / survey.page              / title (char)                  : DEL required
-survey       / survey.question          / title (char)                  : NEW required
-survey       / survey.question          / survey_id (many2one)          : is now stored
-survey       / survey.question          / survey_id (many2one)          : not related anymore
+# DONE: post-migration: merged this model to survey.question
+
 survey       / survey.question          / is_page (boolean)             : NEW
-# DONE: pre-migration: merged into survey.question
+# DONE: post-migration: marked as True for old pages
 
 survey       / survey.question          / page_id (many2one)            : now a function
 survey       / survey.question          / page_id (many2one)            : relation is now 'survey.question' ('survey.page') [nothing to do]
+survey       / survey.question          / survey_id (many2one)          : is now stored
+survey       / survey.question          / survey_id (many2one)          : not related anymore
+survey       / survey.survey            / page_ids (one2many)           : not stored anymore
+survey       / survey.survey            / page_ids (one2many)           : now a function
+survey       / survey.survey            / page_ids (one2many)           : relation is now 'survey.question' ('survey.page') [nothing to do]
+survey       / survey.survey            / question_and_page_ids (one2many): NEW relation: survey.question
+survey       / survey.user_input        / last_displayed_page_id (many2one): relation is now 'survey.question' ('survey.page') [nothing to do]
+survey       / survey.user_input_line   / page_id (many2one)            : relation is now 'survey.question' ('survey.page') [nothing to do]
+# DONE: post-migration: filled empty survey_id of survey.question with survey_id of old page_id
+# DONE: post-migration: adapt last_displayed_page_id
+# NOTHING TO DO: page_id of survey.user_input_line is a related non stored field
+
 survey       / survey.question          / question (char)               : not stored anymore
 survey       / survey.question          / question (char)               : now related
+survey       / survey.page              / title (char)                  : DEL required
+survey       / survey.question          / title (char)                  : NEW required
+# DONE: pre-migration: field renamed from question to title
+# DONE: post-migration: move title page to title question
+
 survey       / survey.question          / random_questions_count (integer): NEW hasdefault
 survey       / survey.question          / validation_max_datetime (datetime): NEW
 survey       / survey.question          / validation_min_datetime (datetime): NEW
@@ -53,11 +66,15 @@ survey       / survey.stage             / sequence (integer)            : DEL
 # NOTHING TO DO: model removed
 
 survey       / survey.survey            / auth_required (boolean)       : DEL
+survey       / survey.survey            / users_login_required (boolean): NEW
+# DONE: pre-migration: field renamed
+
 survey       / survey.survey            / quizz_mode (boolean)          : DEL
 # NOTHING TO DO
 
 survey       / survey.survey            / stage_id (many2one)           : DEL relation: survey.stage
-# NOTHING TO DO: model removed
+survey       / survey.survey            / state (selection)             : NEW required, selection_keys: ['closed', 'draft', 'open'], req_default: function, hasdefault
+# DONE: post-migration: filled state using stage_id
 
 survey       / survey.survey            / email_template_id (many2one)  : DEL relation: mail.template
 survey       / survey.survey            / certification_mail_template_id (many2one): NEW relation: mail.template
@@ -72,27 +89,20 @@ survey       / survey.survey            / certification_badge_id (many2one): NEW
 survey       / survey.survey            / certification_give_badge (boolean): NEW
 survey       / survey.survey            / is_attempts_limited (boolean) : NEW
 survey       / survey.survey            / is_time_limited (boolean)     : NEW
-survey       / survey.survey            / page_ids (one2many)           : not stored anymore
-survey       / survey.survey            / page_ids (one2many)           : now a function
-survey       / survey.survey            / page_ids (one2many)           : relation is now 'survey.question' ('survey.page') [nothing to do]
 survey       / survey.survey            / passing_score (float)         : NEW required, req_default: function, hasdefault
-survey       / survey.survey            / question_and_page_ids (one2many): NEW relation: survey.question
 survey       / survey.survey            / questions_layout (selection)  : NEW required, selection_keys: ['one_page', 'page_per_question', 'page_per_section'], req_default: function, hasdefault
 survey       / survey.survey            / questions_selection (selection): NEW required, selection_keys: ['all', 'random'], req_default: function, hasdefault
 survey       / survey.survey            / scoring_type (selection)      : NEW required, selection_keys: ['no_scoring', 'scoring_with_answers', 'scoring_without_answers'], req_default: function, hasdefault
-survey       / survey.survey            / state (selection)             : NEW required, selection_keys: ['closed', 'draft', 'open'], req_default: function, hasdefault
 survey       / survey.survey            / time_limit (float)            : NEW
-survey       / survey.survey            / users_login_required (boolean): NEW
 # NOTHING TO DO: new feature with proper defaults
 
 survey       / survey.user_input        / input_type (selection)        : NEW required, selection_keys: ['link', 'manually'], req_default: function, hasdefault
 survey       / survey.user_input        / type (selection)              : DEL required, selection_keys: ['link', 'manually'], req_default: function
+# DONE: pre-migration (renamed)
+
 survey       / survey.user_input        / date_create (datetime)        : DEL required, req_default: function
 survey       / survey.user_input        / start_datetime (datetime)     : NEW
 # DONE: pre-migration (renamed)
-
-survey       / survey.user_input        / last_displayed_page_id (many2one): relation is now 'survey.question' ('survey.page') [nothing to do]
-# DONE: pre-migration (replaced ids)
 
 survey       / survey.user_input        / invite_token (char)           : NEW
 survey       / survey.user_input        / question_ids (many2many)      : NEW relation: survey.question
@@ -102,16 +112,17 @@ survey       / survey.user_input        / quizz_score (float)           : is now
 
 survey       / survey.user_input_line   / date_create (datetime)        : DEL required, req_default: function
 survey       / survey.user_input_line   / value_datetime (datetime)     : NEW
+# DONE: pre-migration (renamed)
+
 survey       / survey.user_input_line   / answer_score (float)          : NEW
 survey       / survey.user_input_line   / quizz_mark (float)            : DEL
 # DONE: pre-migration (renamed)
 
-survey       / survey.user_input_line   / page_id (many2one)            : relation is now 'survey.question' ('survey.page') [nothing to do]
-# NOTHING TO DO: It's related now
-
 survey       / survey.user_input_line   / answer_type (selection)       : selection_keys is now '['date', 'datetime', 'free_text', 'number', 'suggestion', 'text']' ('['date', 'free_text', 'number', 'suggestion', 'text']')
+# NOTHING TO DO: new key 'datetime'
+
 survey       / survey.user_input_line   / question_sequence (integer)   : NEW isrelated: related, stored
-# NOTHING TO DO:
+ DONE: pre/post-migration: try to fill with query
 
 ---XML records in module 'survey'---
 NEW ir.actions.act_window: survey.res_partner_action_certifications
