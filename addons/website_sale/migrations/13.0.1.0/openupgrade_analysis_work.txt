@@ -2,8 +2,11 @@
 ---Fields in module 'website_sale'---
 website_sale / account.invoice          / website_id (many2one)         : DEL relation: website
 website_sale / account.move             / website_id (many2one)         : NEW relation: website, isrelated: related, stored
+# DONE: post-migration: moved website_id from invoices to moves
+
 website_sale / product.image            / can_image_1024_be_zoomed (boolean): NEW isfunction: function, stored
 # NOTHING TO DO
+
 website_sale / product.image            / image (binary)                : DEL attachment: True
 website_sale / product.image            / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
 website_sale / product.image            / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
@@ -11,7 +14,10 @@ website_sale / product.image            / image_1920 (binary)           : NEW re
 website_sale / product.image            / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
 website_sale / product.image            / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
 # DONE: post-migration converted
+
 website_sale / product.image            / name (char)                   : now required
+# DONE: post-migration: filled heuristically when empty
+
 website_sale / product.image            / product_variant_id (many2one) : NEW relation: product.product
 website_sale / product.image            / sequence (integer)            : NEW hasdefault
 website_sale / product.image            / video_url (char)              : NEW
@@ -19,6 +25,7 @@ website_sale / product.product          / product_variant_image_ids (one2many): 
 website_sale / product.product          / website_url (char)            : not related anymore
 website_sale / product.product          / website_url (char)            : now a function
 # NOTHING TO DO
+
 website_sale / product.public.category  / image (binary)                : DEL attachment: True
 website_sale / product.public.category  / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
 website_sale / product.public.category  / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
@@ -28,13 +35,16 @@ website_sale / product.public.category  / image_512 (binary)            : NEW at
 website_sale / product.public.category  / image_medium (binary)         : DEL attachment: True
 website_sale / product.public.category  / image_small (binary)          : DEL attachment: True
 # DONE: post-migration converted
+
 website_sale / product.public.category  / parent_path (char)            : NEW
 website_sale / product.public.category  / product_tmpl_ids (many2many)  : NEW relation: product.template
 website_sale / product.public.category  / website_description (html)    : NEW
 # NOTHING TO DO
+
 website_sale / product.template         / product_image_ids (one2many)  : DEL relation: product.image
 website_sale / product.template         / product_template_image_ids (one2many): NEW relation: product.image
 # DONE: pre-migration: renamed
+
 website_sale / website                  / all_pricelist_ids (one2many)  : NEW relation: product.pricelist
 website_sale / website                  / shop_ppg (integer)            : NEW hasdefault
 website_sale / website                  / shop_ppr (integer)            : NEW hasdefault
@@ -44,9 +54,11 @@ website_sale / website.track            / product_id (many2one)         : NEW re
 ---XML records in module 'website_sale'---
 NEW ir.actions.act_window: website_sale.website_sale_visitor_product_action
 # NOTHING TO DO
+
 DEL ir.rule: website_sale.payment_token_salesman_rule (noupdate)
 DEL ir.rule: website_sale.payment_transaction_salesman_rule (noupdate)
 # DONE: post-migration
+
 DEL ir.ui.menu: website_sale.menu_catalog_variants_action
 NEW ir.ui.view: website_sale._assets_primary_variables
 NEW ir.ui.view: website_sale.account_move_view_form
