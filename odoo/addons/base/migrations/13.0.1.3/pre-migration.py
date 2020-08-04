@@ -709,16 +709,16 @@ def rename_ir_module_category(env):
         sql = "SELECT res_id FROM ir_model_data WHERE module=%s AND name=%s"
         env.cr.execute(sql, (module, name))
         new_row = env.cr.fetchone()
-        if new_row:
-            module, name = old_xmlid.split('.')
-            env.cr.execute(sql, (module, name))
-            old_row = env.cr.fetchone()
-            if old_row:
+        module, name = old_xmlid.split('.')
+        env.cr.execute(sql, (module, name))
+        old_row = env.cr.fetchone()
+        if old_row:
+            if new_row:
                 openupgrade_merge_records.merge_records(
                     env, "ir.module.category", [old_row[0]], new_row[0],
                     method="sql", model_table="ir_module_category")
-        else:
-            openupgrade.rename_xmlids(env.cr, [(old_xmlid, new_xmlid)])
+            else:
+                openupgrade.rename_xmlids(env.cr, [(old_xmlid, new_xmlid)])
 
 
 @openupgrade.migrate()
