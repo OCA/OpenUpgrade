@@ -1,0 +1,24 @@
+---Models in module 'pos_sale'---
+---Fields in module 'pos_sale'---
+pos_sale     / crm.team                 / dashboard_graph_group_pos (selection): DEL selection_keys: ['day', 'month', 'pos', 'user', 'week']
+# NOTHING TO DO: graph configuration fields have been removed
+
+pos_sale     / crm.team                 / team_type (False)             : DEL selection_keys: ['pos', 'sales', 'website'], mode: modify
+# NOTHING TO DO: removed field, every team should be able to handle a POS or a website for example
+
+pos_sale     / pos.order                / crm_team_id (many2one)        : NEW relation: crm.team
+# NOTHING TO DO: new feature
+
+pos_sale     / pos.order                / currency_rate (float)         : module is now 'point_of_sale' ('pos_sale')
+# NOTHING TO DO: Will be handled by ORM on module update
+
+---XML records in module 'pos_sale'---
+NEW crm.team: sales_team.pos_sales_team (noupdate)
+DEL ir.ui.view: pos_sale.crm_team_view_form_inherit_pos_sale
+# NOTHING TO DO
+
+DEL crm.team: pos_sale.pos_sales_team [renamed to sales_team module] (noupdate)
+# NOTHING TO DO: renamed xmlids in sales_team
+
+DEL pos.config: point_of_sale.pos_config_main (noupdate)
+# DONE: post-migration: Try to delete record
