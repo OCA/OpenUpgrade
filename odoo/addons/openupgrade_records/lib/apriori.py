@@ -47,6 +47,8 @@ merged_modules = {
     # OCA/website
     'website_canonical_url': 'website',
     'website_logo': 'website',
+    # OCA/l10n-spain
+    'l10n_es_account_invoice_sequence': 'l10n_es',
 }
 
 # only used here for openupgrade_records analysis:
