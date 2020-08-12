@@ -1,6 +1,7 @@
 # Copyright 2020 ForgeFlow <http://www.forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+from odoo.tools import create_model_table
 
 _model_renames = [
     ('mail.mass_mailing.stage', 'utm.stage'),
@@ -63,3 +64,5 @@ def migrate(env, version):
             ],
             False,
         )
+    else:
+        create_model_table(cr, "utm_stage", "Campaign Stage")
