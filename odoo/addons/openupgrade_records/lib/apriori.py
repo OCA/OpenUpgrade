@@ -41,6 +41,7 @@ merged_modules = {
     # OCA/web
     'web_favicon': 'base',
     'web_widget_color': 'web',
+    'web_widget_many2many_tags_multi_selection': 'web',
     # OCA/website
     'website_canonical_url': 'website',
 }
