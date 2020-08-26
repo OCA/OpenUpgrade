@@ -12,9 +12,6 @@ _column_copies = {
     'account_payment_term_line': [
         ('option', None, None),
     ],
-    'account_move_line': [
-        ('id', None, None),
-    ],
 }
 
 _column_renames = {
