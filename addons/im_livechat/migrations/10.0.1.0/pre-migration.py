@@ -11,5 +11,4 @@ xml_ids = [
 
 @openupgrade.migrate()
 def migrate(env, version):
-    for xml_id in xml_ids:
-        env.ref(xml_id).unlink()
+    openupgrade.delete_records_safely_by_xml_id(env, xml_ids)
