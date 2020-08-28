@@ -44,11 +44,7 @@ General Tips
 
 * When installing the openupgradelib make sure you check out the latest version from github to get the latest updates and fixes::
 
-    $ pip install git+git://github.com/OCA/openupgradelib.git
-
-* You must use the appropriate *pip* version, it is specific to the version of Python that will run OpenUpgrade (for a detailed explanation see https://realpython.com/lessons/why-cant-python-find-my-modules/). Otherwise you will have import error like :
-
-   $ ImportError: No module named <package_name>
+    $ pip/pip3 install git+git://github.com/OCA/openupgradelib.git
  
 
 Configuration options
