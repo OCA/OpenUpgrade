@@ -41,6 +41,7 @@ merged_modules = [
     ('account_full_reconcile', 'account'),
     ('mail_tip', 'mail'),
     ('mrp_operations', 'mrp'),
+    ('product_uos', 'sale'),
     ('project_timesheet', 'hr_timesheet'),
     ('sale_service', 'sale_timesheet'),
     ('share', 'base'),
