@@ -32,10 +32,10 @@ merged_modules = {
     'website_crm_phone_validation': 'website_crm',
     'website_sale_link_tracker': 'website_sale',
     'website_survey': 'survey',
-    # OCA/account-reconcile
-    'account_set_reconcilable': 'account',
     # OCA/account-financial-tools
     'account_move_chatter': 'account',
+    # OCA/account-reconcile
+    'account_set_reconcilable': 'account',
     # OCA/social
     'mass_mailing_unique': 'mass_mailing',
     # OCA/timesheet
