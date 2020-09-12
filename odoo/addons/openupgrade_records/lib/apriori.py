@@ -34,6 +34,8 @@ merged_modules = {
     'website_survey': 'survey',
     # OCA/account-reconcile
     'account_set_reconcilable': 'account',
+    # OCA/account-financial-tools
+    'account_move_chatter': 'account',
     # OCA/social
     'mass_mailing_unique': 'mass_mailing',
     # OCA/timesheet
