@@ -20,8 +20,19 @@ def migrate_account_analytic_distribution_pre(cr):
             cr, [('account_analytic_distribution', None)],
         )
 
+def fill_analytic_line_empty_names(cr):
+    openupgrade.logged_query(
+        cr,
+        """
+        UPDATE account_analytic_line
+        SET name = '(No description)'
+        WHERE name IS NULL
+        """,
+    )
+
 
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     openupgrade.copy_columns(cr, column_copies)
     migrate_account_analytic_distribution_pre(cr)
+    fill_analytic_line_empty_names(cr)
