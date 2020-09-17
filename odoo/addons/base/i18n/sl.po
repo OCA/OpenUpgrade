@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Dejan Sraka <dejan.sraka@picolabs.si>, 2019
-# Borut Jures, 2019
+# 025aa31cb7deb4d52a7a587a91994bd9_c519582, 2019
 # Vida Potočnik <vida.potocnik@mentis.si>, 2019
 # laznikd <laznik@mentis.si>, 2019
 # Simon Hohler <simon.hohler@gmail.com>, 2019
@@ -12,9 +12,9 @@
 # jl2035 <jaka.luthar@gmail.com>, 2019
 # Boris Kodelja <boris@hbs.si>, 2019
 # Grega Vavtar <grega@hbs.si>, 2019
-# Martin Trigaux, 2019
 # Tadej Lupšina <tadej@hbs.si>, 2019
 # Jasmina Macur <jasmina@hbs.si>, 2020
+# Martin Trigaux, 2020
 # Matjaz Mozetic <m.mozetic@matmoz.si>, 2020
 # 
 msgid ""
@@ -270,6 +270,22 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"\n"
+"Overview:\n"
+"---------\n"
+"\n"
+"* Chart of Accounts and Taxes template for companies in Japan.\n"
+"* This probably does not cover all the necessary accounts for a company. You are expected to add/delete/modify accounts based on this template.\n"
+"\n"
+"Note:\n"
+"-----\n"
+"\n"
+"* Fiscal positions '内税' and '外税' have been added to handle special requirements which might arise from POS implementation. [1]  You may not need to use these at all under normal circumstances.\n"
+"\n"
+"[1] See https://github.com/odoo/odoo/pull/6470 for detail.\n"
+"\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_deferred_revenue
@@ -892,6 +908,13 @@ msgid ""
 "          templates to target objects.\n"
 "    "
 msgstr ""
+"\n"
+"    * Multi language support for Chart of Accounts, Taxes, Tax Codes, Journals,\n"
+"      Accounting Templates, Analytic Chart of Accounts and Analytic Journals.\n"
+"    * Setup wizard changes\n"
+"        - Copy translations for COA, Tax, Tax Code and Fiscal Position from\n"
+"          templates to target objects.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_quality_mrp_workorder
@@ -1145,6 +1168,10 @@ msgid ""
 "==========================================\n"
 "    "
 msgstr ""
+"\n"
+"Accounting Data for Belgian Payroll Rules.\n"
+"==========================================\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_reports
@@ -2331,6 +2358,54 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"EU Mini One Stop Shop (MOSS) VAT for telecommunications, broadcasting and electronic services\n"
+"=============================================================================================\n"
+"\n"
+"As of January 1rst, 2015, telecommunications, broadcasting\n"
+"and electronic services sold within the European Union\n"
+"have to be always taxed in the country where the customer\n"
+"belongs. In order to simplify the application of this EU\n"
+"directive, the Mini One Stop Shop (MOSS) registration scheme\n"
+"allows businesses to make a unique tax declaration.\n"
+"\n"
+"This module makes it possible by helping with the creation\n"
+"of the required EU fiscal positions and taxes in order to\n"
+"automatically apply and record the required taxes.\n"
+"\n"
+"This module installs a wizard to help setup fiscal positions\n"
+"and taxes for selling electronic services inside EU.\n"
+"\n"
+"The wizard lets you select:\n"
+" - the EU countries to which you are selling these\n"
+"   services\n"
+" - your national VAT tax for services, to be mapped\n"
+"   to the target country's tax\n"
+" - optionally: a template fiscal position, in order\n"
+"   to copy the account mapping. Should be your\n"
+"   existing B2C Intra-EU fiscal position. (defaults\n"
+"   to no account mapping)\n"
+" - optionally: an account to use for collecting the\n"
+"   tax amounts (defaults to the account used by your\n"
+"   national VAT tax for services)\n"
+"\n"
+"It creates the corresponding fiscal positions and taxes,\n"
+"automatically applicable for EU sales with a customer\n"
+"in the selected countries.\n"
+"The wizard can be run again for adding more countries.\n"
+"\n"
+"The wizard creates a separate Chart of Taxes for collecting the\n"
+"VAT amounts of the MOSS declaration, so extracting the MOSS\n"
+"data should be easy.\n"
+"Look for a Chart of Taxes named \"EU MOSS VAT Chart\" in the\n"
+"Taxes Report menu (Generic Accounting Report).\n"
+"\n"
+"References\n"
+"++++++++++\n"
+"- Directive 2008/8/EC\n"
+"- Council Implementing Regulation (EU) No 1042/2013\n"
+"\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_utm
@@ -2801,9 +2876,9 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Upravljanje cen z vključeno dostavo\n"
-"==============================\n"
-"Ta modul omogoča dodajanje dodatnih stroškov na zbirnike in odločanje o razdeljevanju teh stroškov med premike zalog, da bi bili upoštevani pri vrednotenju zalog.\n"
+"Upravljanje cen z odvisnimi stroški dobave\n"
+"=====================================\n"
+"Ta modul omogoča dodajanje dodatnih stroškov prevzemanja in razporejanje teh stroškov med premike zalog, da bi bili upoštevani pri vrednotenju zalog.\n"
 "    "
 
 #. module: base
@@ -3392,6 +3467,12 @@ msgid ""
 "\n"
 "In future this module will include some payroll rules for ME .\n"
 msgstr ""
+"\n"
+"Odoo Arabic localization for most arabic countries and Saudi Arabia.\n"
+"\n"
+"This initially includes chart of accounts of USA translated to Arabic.\n"
+"\n"
+"In future this module will include some payroll rules for ME .\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_ocn_client
@@ -3809,6 +3890,9 @@ msgid ""
 "Send KPI Digests periodically\n"
 "=============================\n"
 msgstr ""
+"\n"
+"Periodično pošlji povzetek s ključnimi kazalniki\n"
+"=============================\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_delivery_bpost
@@ -5025,6 +5109,13 @@ msgid ""
 "membership products (schemes).\n"
 "    "
 msgstr ""
+"\n"
+"This module is to configure modules related to an association.\n"
+"==============================================================\n"
+"\n"
+"It installs the profile for associations to manage events, registrations, memberships, \n"
+"membership products (schemes).\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_check_printing
@@ -5067,6 +5158,13 @@ msgid ""
 "from sales order. It adds sales name and sales Reference on production order.\n"
 "    "
 msgstr ""
+"\n"
+"This module provides facility to the user to install mrp and sales modulesat a time.\n"
+"====================================================================================\n"
+"\n"
+"It is basically used when we want to keep track of production orders generated\n"
+"from sales order. It adds sales name and sales Reference on production order.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_iot
@@ -5098,6 +5196,10 @@ msgid ""
 "============================================================================================================= \n"
 "Please keep in mind that you should review and adapt it with your Accountant, before using it in a live Environment.\n"
 msgstr ""
+"\n"
+"This module provides the standard Accounting Chart for Austria which is based on the Template from BMF.gv.at.\n"
+"============================================================================================================= \n"
+"Please keep in mind that you should review and adapt it with your Accountant, before using it in a live Environment.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_note_pad
@@ -5368,16 +5470,16 @@ msgid ""
 msgstr ""
 "\n"
 "Modul za materialno knjigovodstvo\n"
-"======================\n"
+"=================================\n"
 "Ta modul poveže modula 'stock' in 'account' in omogoči ustvarjanje knjigovodskih vnosov za vrednotenje premikov zalog\n"
 "\n"
 "Ključne funkcije\n"
-"------------\n"
+"----------------\n"
 "* vrednotenje zalog (periodično ali samodejno)\n"
 "* obračun iz zbirnika\n"
 "\n"
 "Nadzorna plošča / Poročila za upravljanje skladišča vključuje:\n"
-"------------------------------------------------------\n"
+"--------------------------------------------------------------\n"
 "* Vrednost zalog na dani datum (podpira datume iz preteklosti)\n"
 "    "
 
@@ -5442,6 +5544,11 @@ msgid ""
 "Works with Worldline keys version 2.0, contains implementation of\n"
 "payments acquirer using Worldline SIPS."
 msgstr ""
+"\n"
+"Worldline SIPS Payment Acquirer for online payments\n"
+"\n"
+"Works with Worldline keys version 2.0, contains implementation of\n"
+"payments acquirer using Worldline SIPS."
 
 #. module: base
 #: code:addons/base/models/ir_ui_view.py:1091
@@ -11309,7 +11416,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_ir_module_module__exclusion_ids
 #: model_terms:ir.ui.view,arch_db:base.module_form
 msgid "Exclusions"
-msgstr "Izjeme"
+msgstr "Konflikti"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_module_category__exclusive
@@ -14245,7 +14352,7 @@ msgstr "K FINANČNE IN ZAVAROVALNIŠKE DEJAVNOSTI"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_digest
 msgid "KPI Digests"
-msgstr ""
+msgstr "Povzetki s ključnimi kazalniki"
 
 #. module: base
 #: selection:ir.actions.act_window.view,view_mode:0
@@ -14330,7 +14437,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_stock_landed_costs
 msgid "Landed Costs"
-msgstr "Cene z dostavo"
+msgstr "Odvisni stroški dobave"
 
 #. module: base
 #: selection:report.paperformat,orientation:0
@@ -20209,7 +20316,7 @@ msgstr "Nastavitev gesla"
 #: model_terms:ir.ui.view,arch_db:base.config_wizard_step_view_form
 #: model_terms:ir.ui.view,arch_db:base.ir_actions_todo_tree
 msgid "Set as Todo"
-msgstr "Nastavi kot opravek"
+msgstr "Nastavi za obdelavo"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_open_base_onboarding_company
@@ -20641,7 +20748,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_country__state_ids
 msgid "States"
-msgstr "Pokrajine"
+msgstr "Regije"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_base_language_install__state
@@ -21949,6 +22056,14 @@ msgid "The list of models that extends the current model."
 msgstr "Seznam modelov, ki razširjajo trenutni model."
 
 #. module: base
+#: code:addons/base/models/ir_model.py:522
+#, python-format
+msgid ""
+"The m2o field %s is required but declares its ondelete policy as being 'set "
+"null'. Only 'restrict' and 'cascade' make sense."
+msgstr ""
+
+#. module: base
 #: model:ir.model.fields,help:base.field_ir_filters__action_id
 msgid ""
 "The menu action this filter applies to. When left empty the filter applies "
@@ -22031,6 +22146,9 @@ msgid ""
 "specified as a Python expression defining a list of triplets. For example: "
 "[('color','=','red')]"
 msgstr ""
+"The optional domain to restrict possible values for relationship fields, "
+"specified as a Python expression defining a list of triplets. For example: "
+"[('color','=','red')]"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_partner__tz
@@ -22179,6 +22297,8 @@ msgid ""
 "The user this filter is private to. When left empty the filter is public and"
 " available to all users."
 msgstr ""
+"The user this filter is private to. When left empty the filter is public and"
+" available to all users."
 
 #. module: base
 #: code:addons/models.py:5537
@@ -22214,6 +22334,8 @@ msgid ""
 "There is already a shared filter set as default for %(model)s, delete or "
 "change it before setting a new default"
 msgstr ""
+"There is already a shared filter set as default for %(model)s, delete or "
+"change it before setting a new default"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.base_partner_merge_automatic_wizard_form
@@ -22271,6 +22393,10 @@ msgid ""
 " and reference view. The result is returned as an ordered list of pairs "
 "(view_id,view_mode)."
 msgstr ""
+"This function field computes the ordered list of views that should be "
+"enabled when displaying the result of an action, federating view mode, views"
+" and reference view. The result is returned as an ordered list of pairs "
+"(view_id,view_mode)."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_actions_report__attachment
@@ -22279,6 +22405,9 @@ msgid ""
 "Keep empty to not save the printed reports. You can use a python expression "
 "with the object and time variables."
 msgstr ""
+"This is the filename of the attachment used to store the printing result. "
+"Keep empty to not save the printed reports. You can use a python expression "
+"with the object and time variables."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_actions_report__print_report_name
@@ -22488,7 +22617,7 @@ msgstr ""
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.ir_actions_todo_tree
 msgid "Todo"
-msgstr "Opravek"
+msgstr "Za obdelavo"
 
 #. module: base
 #: model:res.country,name:base.tg
@@ -23671,7 +23800,7 @@ msgstr "Materialno knjigovodstvo"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_landed_costs
 msgid "WMS Landed Costs"
-msgstr "Upravljanje skladišča - cena vključno z dostavo"
+msgstr "Upravljanje skladišča - odvisni stroški dobave"
 
 #. module: base
 #: model:res.country,name:base.wf
@@ -23686,7 +23815,7 @@ msgstr "Skladišče"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_picking_batch
 msgid "Warehouse Management: Batch Picking"
-msgstr "Upravljanje skladišča: serijski zbirniki"
+msgstr "Upravljanje skladišča: serijski zbirniki - komisioniranje svežnja"
 
 #. module: base
 #: code:addons/base/models/ir_mail_server.py:499

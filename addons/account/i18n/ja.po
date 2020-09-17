@@ -21,6 +21,7 @@
 # Tim Siu Lai <tl@roomsfor.hk>, 2019
 # Hau Dao <hau@quartile.co>, 2020
 # Yoshi Tashiro <tashiro@roomsfor.hk>, 2020
+# Tsuda Ryoko <ryoko04nov@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -28,7 +29,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:14+0000\n"
-"Last-Translator: Yoshi Tashiro <tashiro@roomsfor.hk>, 2020\n"
+"Last-Translator: Tsuda Ryoko <ryoko04nov@gmail.com>, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/odoo/teams/41243/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -418,7 +419,7 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
 msgid "<span name=\"button_import_placeholder\"/> Statements"
-msgstr ""
+msgstr "<span name=\"button_import_placeholder\"/> 取引明細書"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
@@ -1290,7 +1291,7 @@ msgstr "メモ追加"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
 msgid "Add a payment QR code to your invoices"
-msgstr ""
+msgstr "請求書に支払用のQRコードを追加"
 
 #. module: account
 #: selection:account.cash.rounding,strategy:0
@@ -2208,7 +2209,7 @@ msgstr "銀行取引明細書"
 #: code:addons/account/models/account_journal_dashboard.py:36
 #, python-format
 msgid "Bank: Balance"
-msgstr ""
+msgstr "銀行：残高"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_invoice_tax__base
@@ -2594,7 +2595,7 @@ msgstr ""
 #: code:addons/account/models/account_journal_dashboard.py:34
 #, python-format
 msgid "Cash: Balance"
-msgstr ""
+msgstr "現金：残高"
 
 #. module: account
 #: model:ir.model,name:account.model_account_cashbox_line
@@ -2895,7 +2896,7 @@ msgstr "カラーインデクス"
 #: model:ir.model.fields,field_description:account.field_account_invoice__commercial_partner_id
 #: model:ir.model.fields,help:account.field_account_invoice_report__commercial_partner_id
 msgid "Commercial Entity"
-msgstr "商業体"
+msgstr "企業体"
 
 #. module: account
 #: code:addons/account/models/account_invoice.py:519
@@ -4863,7 +4864,7 @@ msgstr "請求書明細グループ化"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_register_payments__group_invoices
 msgid "Group Invoices"
-msgstr ""
+msgstr "請求書をまとめる"
 
 #. module: account
 #: selection:account.tax,amount_type:0
@@ -6571,7 +6572,7 @@ msgstr "メモ"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_payment_from_invoices
 msgid "Memo will be computed from invoices"
-msgstr ""
+msgstr "メモは各請求書ごとに計算されます。"
 
 #. module: account
 #. openerp-web
@@ -6921,14 +6922,14 @@ msgstr "ノート"
 msgid ""
 "Note that the easiest way to create a credit note is to do it directly\n"
 "                from the customer invoice."
-msgstr ""
+msgstr "クレジットノートを作成する一番簡単な方法は、顧客請求書から直接作成することです。"
 
 #. module: account
 #: model_terms:ir.actions.act_window,help:account.action_invoice_in_refund
 msgid ""
 "Note that the easiest way to create a vendor credit note it to do it "
 "directly from the vendor bill."
-msgstr ""
+msgstr "仕入先クレジットノートを作成する一番簡単な方法は、仕入先請求書から直接作成することです。"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line__note
@@ -8283,7 +8284,7 @@ msgstr "支払登録"
 #. module: account
 #: model_terms:ir.actions.act_window,help:account.action_bank_statement_tree
 msgid "Register a bank statement"
-msgstr ""
+msgstr "銀行取引明細書の登録"
 
 #. module: account
 #: model_terms:ir.actions.act_window,help:account.action_account_payments
@@ -10288,7 +10289,7 @@ msgstr ""
 msgid ""
 "There are still unposted entries in the period you want to lock. You should "
 "either post or delete them."
-msgstr ""
+msgstr "ロックしようとしている期間に未記帳の会計仕訳が存在します。先にこれらを記帳または削除してください。"
 
 #. module: account
 #: code:addons/account/models/account_payment.py:452
@@ -11412,7 +11413,7 @@ msgstr ""
 #, python-format
 msgid ""
 "You cannot add/modify entries prior to and inclusive of the lock date %s"
-msgstr ""
+msgstr "ロック日 %s 以前の日付で仕訳を作成/修正することはできません。"
 
 #. module: account
 #: code:addons/account/models/account_move.py:375
@@ -11421,6 +11422,7 @@ msgid ""
 "You cannot add/modify entries prior to and inclusive of the lock date %s. "
 "Check the company settings or ask someone with the 'Adviser' role"
 msgstr ""
+"ロック日 %s 以前の日付で仕訳を作成/修正することはできません。会社設定を確認するか、「請求マネジャー」権限を持つユーザにご相談ください。"
 
 #. module: account
 #: code:addons/account/models/company.py:283
@@ -11466,7 +11468,7 @@ msgstr ""
 #: code:addons/account/models/account_payment.py:611
 #, python-format
 msgid "You cannot delete a payment that is already posted."
-msgstr ""
+msgstr "記帳済の支払は削除できません。"
 
 #. module: account
 #: code:addons/account/models/account_invoice.py:786
@@ -11508,6 +11510,8 @@ msgid ""
 "You cannot do this modification on a reconciled entry. You can just change some non legal fields or you must unreconcile first.\n"
 "%s."
 msgstr ""
+"この操作は消込済の仕訳では受け付けられません。会計実績に影響する項目を調整するには、まず消込を取り消してください。\n"
+"%s"
 
 #. module: account
 #: code:addons/account/models/account.py:64
@@ -11544,7 +11548,7 @@ msgstr ""
 #: code:addons/account/models/account_move.py:124
 #, python-format
 msgid "You cannot modify a journal entry linked to a posted payment."
-msgstr ""
+msgstr "記帳済の支払に紐づく仕訳は修正できません。"
 
 #. module: account
 #: code:addons/account/models/account_move.py:331
@@ -11711,6 +11715,12 @@ msgid ""
 "You should configure the 'Loss Exchange Rate Account' in the accounting "
 "settings, to manage automatically the booking of accounting entries related "
 "to differences between exchange rates."
+msgstr ""
+
+#. module: account
+#: code:addons/account/models/account_cash_rounding.py:33
+#, python-format
+msgid "Please set a positive rounding value."
 msgstr ""
 
 #. module: account

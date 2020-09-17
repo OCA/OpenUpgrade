@@ -875,11 +875,12 @@ class StockMove(models.Model):
                 taken_quantity = 0
 
         try:
-            if not float_is_zero(taken_quantity, precision_rounding=self.product_id.uom_id.rounding):
-                quants = self.env['stock.quant']._update_reserved_quantity(
-                    self.product_id, location_id, taken_quantity, lot_id=lot_id,
-                    package_id=package_id, owner_id=owner_id, strict=strict
-                )
+            with self.env.cr.savepoint():
+                if not float_is_zero(taken_quantity, precision_rounding=self.product_id.uom_id.rounding):
+                    quants = self.env['stock.quant']._update_reserved_quantity(
+                        self.product_id, location_id, taken_quantity, lot_id=lot_id,
+                        package_id=package_id, owner_id=owner_id, strict=strict
+                    )
         except UserError:
             taken_quantity = 0
 
@@ -1137,15 +1138,6 @@ class StockMove(models.Model):
                 # Need to do some kind of conversion here
                 qty_split = move.product_uom._compute_quantity(move.product_uom_qty - move.quantity_done, move.product_id.uom_id, rounding_method='HALF-UP')
                 new_move = move._split(qty_split)
-                for move_line in move.move_line_ids:
-                    if move_line.product_qty and move_line.qty_done:
-                        # FIXME: there will be an issue if the move was partially available
-                        # By decreasing `product_qty`, we free the reservation.
-                        # FIXME: if qty_done > product_qty, this could raise if nothing is in stock
-                        try:
-                            move_line.write({'product_uom_qty': move_line.qty_done})
-                        except UserError:
-                            pass
                 move._unreserve_initial_demand(new_move)
         moves_todo.mapped('move_line_ids')._action_done()
         # Check the consistency of the result packages; there should be an unique location across
@@ -1153,7 +1145,7 @@ class StockMove(models.Model):
         for result_package in moves_todo\
                 .mapped('move_line_ids.result_package_id')\
                 .filtered(lambda p: p.quant_ids and len(p.quant_ids) > 1):
-            if len(result_package.quant_ids.filtered(lambda q: not float_is_zero(abs(q.quantity) + abs(q.reserved_quantity), precision_rounding=q.product_uom_id.rounding)).mapped('location_id')) > 1:
+            if len(result_package.quant_ids.filtered(lambda q: not float_is_zero(abs(q.quantity) + abs(q.reserved_quantity), precision_rounding=q.product_id.uom_id.rounding)).mapped('location_id')) > 1:
                 raise UserError(_('You cannot move the same package content more than once in the same transfer or split the same package into two location.'))
         picking = moves_todo.mapped('picking_id')
         moves_todo.write({'state': 'done', 'date': fields.Datetime.now()})
