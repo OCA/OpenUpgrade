@@ -5,15 +5,16 @@
 # Translators:
 # José Gomes <jg@opencloud.pro>, 2018
 # Joao Felix <jrmfelix@gmail.com>, 2018
-# Manuela Silva <inactive+h_manuela_rodsilva@transifex.com>, 2018
+# 425fe09b3064b9f906f637fff94056ae_a00ea56 <0fa3588fa89906bfcb3a354600956e0e_308047>, 2018
 # Ricardo Martins <ricardo.nbs.martins@gmail.com>, 2018
 # Diogo Fonseca <dsf@thinkopensolutions.pt>, 2018
 # Ricardo Correia <rcorreiavv@gmail.com>, 2019
 # Martin Trigaux, 2019
 # Pedro Filipe <pedro2.10@hotmail.com>, 2019
-# Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2019
-# Manuela Silva <manuelarodsilva@gmail.com>, 2019
 # Nuno Silva <nuno.silva@arxi.pt>, 2020
+# Marcelo Pereira <marcelo.pereira@arxi.pt>, 2020
+# Manuela Silva <manuelarodsilva@gmail.com>, 2020
+# Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2020
 # 
 msgid ""
 msgstr ""
@@ -21,7 +22,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-14 07:34+0000\n"
 "PO-Revision-Date: 2018-08-24 09:24+0000\n"
-"Last-Translator: Nuno Silva <nuno.silva@arxi.pt>, 2020\n"
+"Last-Translator: Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2020\n"
 "Language-Team: Portuguese (https://www.transifex.com/odoo/teams/41243/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -247,6 +248,8 @@ msgid ""
 "<span class=\"d-none d-md-inline\">Sales Order #</span>\n"
 "                            <span class=\"d-block d-md-none\">Ref.</span>"
 msgstr ""
+"<span class=\"d-none d-md-inline\">Ordens de Venda #</span>\n"
+"                            <span class=\"d-block d-md-none\">Ref.</span>"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.res_config_settings_view_form
@@ -439,13 +442,13 @@ msgstr "<strong>Vossa Referência:</strong>"
 #: code:addons/sale/models/sale.py:811
 #, python-format
 msgid "A journal must be specified of the acquirer %s."
-msgstr ""
+msgstr "Tem de ser especificado um diário para o método de pagamento %s."
 
 #. module: sale
 #: code:addons/sale/models/sale.py:804
 #, python-format
 msgid "A payment acquirer is required to create a transaction."
-msgstr ""
+msgstr "É necessário um método de pagamento para criar uma transação."
 
 #. module: sale
 #: selection:res.config.settings,sale_pricelist_setting:0
@@ -568,7 +571,7 @@ msgstr "Adicionar uma secção "
 #: model_terms:ir.ui.view,arch_db:sale.product_configurator_configure
 #: model_terms:ir.ui.view,arch_db:sale.product_configurator_configure_optional_products
 msgid "Add one"
-msgstr ""
+msgstr "Adicionar um"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_account_invoice__comment
@@ -1786,7 +1789,7 @@ msgstr "Endereço de Faturação:"
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.sale_order_portal_content
 msgid "Invoicing and Shipping Address"
-msgstr ""
+msgstr "Endereço de Faturação e de Entrega:"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.report_saleorder_document
@@ -2408,7 +2411,7 @@ msgstr "Pagar e Confirmar"
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.sale_order_portal_template
 msgid "Pay &amp; Confirm"
-msgstr ""
+msgstr "Pagar &amp; Confirmar"
 
 #. module: sale
 #: code:addons/sale/models/payment.py:160
@@ -2440,7 +2443,7 @@ msgstr ""
 #: selection:res.company,sale_onboarding_payment_method:0
 #: selection:sale.payment.acquirer.onboarding.wizard,payment_method:0
 msgid "Pay with another payment acquirer"
-msgstr ""
+msgstr "Pague com outra instituição  de pagamentos"
 
 #. module: sale
 #: selection:sale.payment.acquirer.onboarding.wizard,payment_method:0
@@ -2531,7 +2534,7 @@ msgstr ""
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order__access_url
 msgid "Portal Access URL"
-msgstr ""
+msgstr "URL de Acesso Portal"
 
 #. module: sale
 #: selection:sale.report,state:0
@@ -2866,7 +2869,7 @@ msgstr "Rádio"
 #: model:ir.model.fields,field_description:sale.field_product_product__expense_policy
 #: model:ir.model.fields,field_description:sale.field_product_template__expense_policy
 msgid "Re-Invoice Policy"
-msgstr ""
+msgstr "Política de Refaturação"
 
 #. module: sale
 #: code:addons/sale/controllers/portal.py:52
@@ -2894,7 +2897,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale.product_configurator_configure
 #: model_terms:ir.ui.view,arch_db:sale.product_configurator_configure_optional_products
 msgid "Remove one"
-msgstr ""
+msgstr "Remover um"
 
 #. module: sale
 #: model:ir.ui.menu,name:sale.menu_sale_report
@@ -3472,17 +3475,17 @@ msgstr "Movimentos de Stock"
 #. module: sale
 #: selection:res.company,sale_onboarding_payment_method:0
 msgid "Stripe"
-msgstr ""
+msgstr "Stripe"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_payment_acquirer_onboarding_wizard__stripe_publishable_key
 msgid "Stripe Publishable Key"
-msgstr ""
+msgstr "Código Plublicável Stripe"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_payment_acquirer_onboarding_wizard__stripe_secret_key
 msgid "Stripe Secret Key"
-msgstr ""
+msgstr "Cópdigo Secreto Stripe"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order_line__price_subtotal
@@ -3973,13 +3976,13 @@ msgstr "Montante sem imposto"
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_report__untaxed_amount_invoiced
 msgid "Untaxed Amount Invoiced"
-msgstr ""
+msgstr "Valor Não Tributado Faturado"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order_line__untaxed_amount_to_invoice
 #: model:ir.model.fields,field_description:sale.field_sale_report__untaxed_amount_to_invoice
 msgid "Untaxed Amount To Invoice"
-msgstr ""
+msgstr "Valor Não Tributado Por Faturar"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order_line__untaxed_amount_invoiced
@@ -4092,7 +4095,7 @@ msgstr "Histórico de Comunicação do Website"
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_advance_payment_inv__advance_payment_method
 msgid "What do you want to invoice?"
-msgstr "Quer faturar o quê?"
+msgstr "O que quer faturar?"
 
 #. module: sale
 #: selection:res.company,sale_onboarding_payment_method:0

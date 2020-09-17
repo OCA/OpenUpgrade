@@ -53,7 +53,7 @@ class AccountInvoice(models.Model):
 
     @api.one
     @api.depends('invoice_line_ids.price_subtotal', 'tax_line_ids.amount', 'tax_line_ids.amount_rounding',
-                 'currency_id', 'company_id', 'date_invoice', 'type')
+                 'currency_id', 'company_id', 'date_invoice', 'type', 'date')
     def _compute_amount(self):
         round_curr = self.currency_id.round
         self.amount_untaxed = sum(line.price_subtotal for line in self.invoice_line_ids)
@@ -63,8 +63,9 @@ class AccountInvoice(models.Model):
         amount_untaxed_signed = self.amount_untaxed
         if self.currency_id and self.company_id and self.currency_id != self.company_id.currency_id:
             currency_id = self.currency_id
-            amount_total_company_signed = currency_id._convert(self.amount_total, self.company_id.currency_id, self.company_id, self.date_invoice or fields.Date.today())
-            amount_untaxed_signed = currency_id._convert(self.amount_untaxed, self.company_id.currency_id, self.company_id, self.date_invoice or fields.Date.today())
+            rate_date = self._get_currency_rate_date() or fields.Date.today()
+            amount_total_company_signed = currency_id._convert(self.amount_total, self.company_id.currency_id, self.company_id, rate_date)
+            amount_untaxed_signed = currency_id._convert(self.amount_untaxed, self.company_id.currency_id, self.company_id, rate_date)
         sign = self.type in ['in_refund', 'out_refund'] and -1 or 1
         self.amount_total_company_signed = amount_total_company_signed * sign
         self.amount_total_signed = self.amount_total * sign
@@ -867,7 +868,8 @@ class AccountInvoice(models.Model):
                     self.partner_id = False
 
         self.account_id = account_id
-        self.payment_term_id = payment_term_id
+        if payment_term_id:
+            self.payment_term_id = payment_term_id
         self.date_due = False
         self.fiscal_position_id = fiscal_position
 
@@ -1543,14 +1545,16 @@ class AccountInvoice(models.Model):
         values['state'] = 'draft'
         values['number'] = False
         values['origin'] = invoice.number
-        values['payment_term_id'] = False
         values['refund_invoice_id'] = invoice.id
         values['reference'] = False
 
         if values['type'] == 'in_refund':
+            values['payment_term_id'] = invoice.partner_id.property_supplier_payment_term_id.id
             partner_bank_result = self._get_partner_bank_id(values['company_id'])
             if partner_bank_result:
                 values['partner_bank_id'] = partner_bank_result.id
+        else:
+            values['payment_term_id'] = invoice.partner_id.property_payment_term_id.id
 
         if date:
             values['date'] = date

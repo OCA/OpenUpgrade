@@ -525,7 +525,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         cls._inherits = {}
         cls._depends = {}
         cls._constraints = {}
-        cls._sql_constraints = []
+        cls._sql_constraints = {}
 
         for base in reversed(cls.__bases__):
             if not getattr(base, 'pool', None):
@@ -546,10 +546,12 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                 # cons may override a constraint with the same function name
                 cls._constraints[getattr(cons[0], '__name__', id(cons[0]))] = cons
 
-            cls._sql_constraints += base._sql_constraints
+            for cons in base._sql_constraints:
+                cls._sql_constraints[cons[0]] = cons
 
         cls._sequence = cls._sequence or (cls._table + '_id_seq')
         cls._constraints = list(cls._constraints.values())
+        cls._sql_constraints = list(cls._sql_constraints.values())
 
         # update _inherits_children of parent models
         for parent_name in cls._inherits:
@@ -2024,6 +2026,8 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                     if gb['tz_convert']:
                         tzinfo = range_start.tzinfo
                         range_start = range_start.astimezone(pytz.utc)
+                        # take into account possible hour change between start and end
+                        range_end = tzinfo.localize(range_end.replace(tzinfo=None))
                         range_end = range_end.astimezone(pytz.utc)
 
                     range_start = range_start.strftime(fmt)
@@ -2549,6 +2553,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                 if field.ondelete.lower() not in ('cascade', 'restrict'):
                     field.ondelete = 'cascade'
                 self._inherits[field.comodel_name] = field.name
+                self.pool[field.comodel_name]._inherits_children.add(self._name)
 
     @api.model
     def _prepare_setup(self):
@@ -4350,7 +4355,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             # mark missing records in cache with a failed value
             exc = MissingError(
                 _("Record does not exist or has been deleted.")
-                + '\n\n({} {}, {} {})'.format(_('Records:'), (self - existing).ids[:6], _('User:'), self._uid)
+                + '\n\n({} {}, {} {})'.format(_('Records:'), (self - existing)[:6], _('User:'), self._uid)
             )
             self.env.cache.set_failed(self - existing, self._fields.values(), exc)
         return existing

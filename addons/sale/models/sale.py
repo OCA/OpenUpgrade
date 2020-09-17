@@ -293,12 +293,12 @@ class SaleOrder(models.Model):
         return super(SaleOrder, self)._track_subtype(init_values)
 
     @api.multi
-    @api.onchange('partner_shipping_id', 'partner_id')
+    @api.onchange('partner_shipping_id', 'partner_id', 'company_id')
     def onchange_partner_shipping_id(self):
         """
         Trigger the change of fiscal position when the shipping address is modified.
         """
-        self.fiscal_position_id = self.env['account.fiscal.position'].get_fiscal_position(self.partner_id.id, self.partner_shipping_id.id)
+        self.fiscal_position_id = self.env['account.fiscal.position'].with_context(force_company=self.company_id.id).get_fiscal_position(self.partner_id.id, self.partner_shipping_id.id)
         return {}
 
     @api.multi
@@ -333,6 +333,9 @@ class SaleOrder(models.Model):
 
         if self.partner_id.team_id:
             values['team_id'] = self.partner_id.team_id.id
+
+        if self.user_id.id == values.get('user_id'):
+            del values['user_id']
         self.update(values)
 
     @api.onchange('partner_id')
@@ -932,6 +935,9 @@ class SaleOrder(models.Model):
         self.ensure_one()
         return 'form_save' if self.require_payment else 'form'
 
+    def add_option_to_order_with_taxcloud(self):
+        self.ensure_one()
+
 
 class SaleOrderLine(models.Model):
     _name = 'sale.order.line'
@@ -1158,7 +1164,7 @@ class SaleOrderLine(models.Model):
     product_updatable = fields.Boolean(compute='_compute_product_updatable', string='Can Edit Product', readonly=True, default=True)
     product_uom_qty = fields.Float(string='Ordered Quantity', digits=dp.get_precision('Product Unit of Measure'), required=True, default=1.0)
     product_uom = fields.Many2one('uom.uom', string='Unit of Measure')
-    product_custom_attribute_value_ids = fields.One2many('product.attribute.custom.value', 'sale_order_line_id', string='User entered custom product attribute values')
+    product_custom_attribute_value_ids = fields.One2many('product.attribute.custom.value', 'sale_order_line_id', string='User entered custom product attribute values', copy=True)
 
     # M2M holding the values of product.attribute with create_variant field set to 'no_variant'
     # It allows keeping track of the extra_price associated to those attribute values and add them to the SO line description
@@ -1455,7 +1461,7 @@ class SaleOrderLine(models.Model):
             return product.with_context(pricelist=self.order_id.pricelist_id.id).price
         product_context = dict(self.env.context, partner_id=self.order_id.partner_id.id, date=self.order_id.date_order, uom=self.product_uom.id)
 
-        final_price, rule_id = self.order_id.pricelist_id.with_context(product_context).get_product_price_rule(self.product_id, self.product_uom_qty or 1.0, self.order_id.partner_id)
+        final_price, rule_id = self.order_id.pricelist_id.with_context(product_context).get_product_price_rule(product or self.product_id, self.product_uom_qty or 1.0, self.order_id.partner_id)
         base_price, currency = self.with_context(product_context)._get_real_price_currency(product, rule_id, self.product_uom_qty, self.product_uom, self.order_id.pricelist_id.id)
         if currency != self.order_id.pricelist_id.currency_id:
             base_price = currency._convert(
@@ -1573,7 +1579,7 @@ class SaleOrderLine(models.Model):
         PricelistItem = self.env['product.pricelist.item']
         field_name = 'lst_price'
         currency_id = None
-        product_currency = None
+        product_currency = product.currency_id
         if rule_id:
             pricelist_item = PricelistItem.browse(rule_id)
             if pricelist_item.pricelist_id.discount_policy == 'without_discount':
@@ -1583,13 +1589,13 @@ class SaleOrderLine(models.Model):
 
             if pricelist_item.base == 'standard_price':
                 field_name = 'standard_price'
-            if pricelist_item.base == 'pricelist' and pricelist_item.base_pricelist_id:
+                product_currency = product.cost_currency_id
+            elif pricelist_item.base == 'pricelist' and pricelist_item.base_pricelist_id:
                 field_name = 'price'
                 product = product.with_context(pricelist=pricelist_item.base_pricelist_id.id)
                 product_currency = pricelist_item.base_pricelist_id.currency_id
             currency_id = pricelist_item.pricelist_id.currency_id
 
-        product_currency = product_currency or(product.company_id and product.company_id.currency_id) or self.env.user.company_id.currency_id
         if not currency_id:
             currency_id = product_currency
             cur_factor = 1.0

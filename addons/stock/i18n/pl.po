@@ -748,6 +748,12 @@ msgid "Available Products"
 msgstr "Dostępne produkty"
 
 #. module: stock
+#: code:addons/stock/models/product.py:581
+#, python-format
+msgid "Available quantity should be set to zero before changing type"
+msgstr ""
+
+#. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move__backorder_id
 #: model:ir.model.fields,field_description:stock.field_stock_picking__backorder_id
 msgid "Back Order of"
@@ -2595,7 +2601,7 @@ msgstr ""
 #: code:addons/stock/models/product.py:254
 #, python-format
 msgid "Invalid domain left operand %s"
-msgstr ""
+msgstr "Niepoprawny operator opuszczenia domeny %s"
 
 #. module: stock
 #: code:addons/stock/models/product.py:256
@@ -4479,7 +4485,7 @@ msgstr "Propagacja grup zapotrzebowania"
 #. module: stock
 #: selection:stock.rule,action:0
 msgid "Pull & Push"
-msgstr ""
+msgstr "Pociągnij i popchnij"
 
 #. module: stock
 #: selection:stock.rule,action:0
@@ -6830,14 +6836,8 @@ msgstr "Produkt ważony"
 #: model:ir.model.fields,help:stock.field_stock_location_route__warehouse_selectable
 msgid ""
 "When a warehouse is selected for this route, this route should be seen as "
-"the default route when products pass through this warehouse.  This behaviour"
-" can be overridden by the routes on the Product/Product Categories or by the"
-" Preferred Routes on the Procurement"
+"the default route when products pass through this warehouse."
 msgstr ""
-"Po wybraniu magazynu dla tej trasy, powinna ona być postrzegana jako "
-"domyślna, gdy produkty przechodzą przez ten magazyn. To zachowanie może "
-"zostać nadpisane przez trasy w produkcie / kategoriach produktów lub przez "
-"preferowane trasy w zapotrzebowaniu"
 
 #. module: stock
 #: selection:stock.picking,move_type:0
@@ -6848,18 +6848,13 @@ msgstr "Kiedy wszystkie produkty są dostępne"
 #: model:ir.model.fields,help:stock.field_stock_location_route__product_selectable
 msgid ""
 "When checked, the route will be selectable in the Inventory tab of the "
-"Product form.  It will take priority over the Warehouse route. "
+"Product form."
 msgstr ""
-"Po zaznaczeniu ścieżka będzie dostępna do wyboru w karcie Magazynowanie, w "
-"formularzu Produkt. Otrzyma pierwszeństwo nad ścieżką magazynu."
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_location_route__product_categ_selectable
-msgid ""
-"When checked, the route will be selectable on the Product Category.  It will"
-" take priority over the Warehouse route. "
+msgid "When checked, the route will be selectable on the Product Category."
 msgstr ""
-"Po zaznaczeniu ścieżka będzie dostępna do wyboru w kategorii produktu."
 
 #. module: stock
 #: code:addons/stock/models/stock_rule.py:113

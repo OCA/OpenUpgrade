@@ -34,7 +34,7 @@
 # Jhonsons Jimenez <jhonson1195@gmail.com>, 2019
 # Luis Marin <marin.guadarrama@gmail.com>, 2019
 # Edilianny Sanchez - https://www.vauxoo.com/ <esanchez@vauxoo.com>, 2019
-# Gabriel Umana <gabriel.umana@delfixcr.com>, 2019
+# gabriumaa <gabriel.umana@delfixcr.com>, 2019
 # Hector Hernandez <info@ronandez.com>, 2019
 # Angel Moya - PESOL <angel.moya@pesol.es>, 2019
 # Christian García <shopificame@gmail.com>, 2019
@@ -52,10 +52,12 @@
 # Jon Perez <jop@odoo.com>, 2019
 # Hugo Santos <hugo.santos@factorlibre.com>, 2020
 # Sergio Lop Sanz <slop@sdi.es>, 2020
-# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2020
 # Gelo Joga Landoo <gj@landoo.es>, 2020
 # Nelson Ramírez Sánchez <info@konos.cl>, 2020
+# Carlos Dauden <carlos.dauden@tecnativa.com>, 2020
+# Haider Ilich López Areiza <hlopez@itsoluciones.com.co>, 2020
 # Pedro M. Baeza <pedro.baeza@gmail.com>, 2020
+# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2020
 # 
 msgid ""
 msgstr ""
@@ -63,7 +65,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:14+0000\n"
-"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>, 2020\n"
+"Last-Translator: Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2020\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -685,7 +687,7 @@ msgstr "<strong class=\"text-muted\">Su Contacto</strong>"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document_with_payments
 msgid "<strong>Amount Due</strong>"
-msgstr "<strong>Importe vencido</strong>"
+msgstr "<strong>Importe adeudado</strong>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_journal
@@ -2198,7 +2200,7 @@ msgstr "Deudor Malo"
 #: selection:account.payment.term.line,value:0
 #: model:ir.model.fields,field_description:account.field_account_move_line__balance
 msgid "Balance"
-msgstr "Saldo pendiente"
+msgstr "Saldo"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line__balance_cash_basis
@@ -7670,7 +7672,7 @@ msgstr "Emisor del pago"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line__tax_line_id
 msgid "Originator tax"
-msgstr "Creador de Impuesto"
+msgstr "Impuesto (cuota)"
 
 #. module: account
 #: model:account.account.type,name:account.data_account_type_other_income
@@ -8764,12 +8766,12 @@ msgstr "Valoraciones relacionadas"
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice__residual_company_signed
 msgid "Remaining amount due in the currency of the company."
-msgstr "Importe restante debido a la divisa de la compañía."
+msgstr "Importe adeudado en la divisa de la compañía."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice__residual_signed
 msgid "Remaining amount due in the currency of the invoice."
-msgstr "Importe restante debido a la divisa de la factura."
+msgstr "Importe adeudado en la divisa de la factura."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_invoice__residual
@@ -11537,7 +11539,7 @@ msgstr "Empresa desconocida"
 #: model:ir.actions.act_window,name:account.act_account_journal_2_account_invoice_opened
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
 msgid "Unpaid Invoices"
-msgstr "Facturas por pagar"
+msgstr "Facturas por cobrar"
 
 #. module: account
 #: selection:account.move,state:0
@@ -12522,6 +12524,12 @@ msgstr ""
 "Debería configurar la 'Cuenta de pérdidas por tasa de cambio' en las "
 "opciones de contabilidad para gestionar automáticamente los asientos "
 "relacionados con diferencias entre tipos de cambio."
+
+#. module: account
+#: code:addons/account/models/account_cash_rounding.py:33
+#, python-format
+msgid "Please set a positive rounding value."
+msgstr "Establezca un valor de redondeo positivo."
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_invoice_refund

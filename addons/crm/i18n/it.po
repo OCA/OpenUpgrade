@@ -15,9 +15,8 @@
 # David Minneci <david@numeko.it>, 2018
 # Léonie Bouchat <lbo@odoo.com>, 2019
 # Lorenzo Battistini <lb@takobi.online>, 2019
-# Simone Sanfilippo <s.sanfilippo@hinge16.eu>, 2019
-# Sergio Zanchetta <primes2h@gmail.com>, 2020
 # Iacopo Simonelli <lsi@odoo.com>, 2020
+# Sergio Zanchetta <primes2h@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -25,7 +24,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-09 10:31+0000\n"
 "PO-Revision-Date: 2018-08-24 09:17+0000\n"
-"Last-Translator: Iacopo Simonelli <lsi@odoo.com>, 2020\n"
+"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2020\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -847,7 +846,9 @@ msgstr "Nome visualizzato"
 #: code:addons/crm/models/digest.py:18 code:addons/crm/models/digest.py:29
 #, python-format
 msgid "Do not have access, skip this data for user's digest email"
-msgstr "Non hai accesso, salta questi dati per l'e-mail digest dell'utente"
+msgstr ""
+"Accesso non consentito, non utilizzare questi dati nell'e-mail di riepilogo "
+"dell'utente"
 
 #. module: crm
 #: selection:crm.lead2opportunity.partner,action:0
@@ -1460,32 +1461,32 @@ msgstr "Assegnazione manuale e-mail in ingresso"
 #. module: crm
 #: model:ir.actions.server,name:crm.action_mark_activities_done
 msgid "Mark All Activities as Done"
-msgstr "Segna tutte le attività come completate"
+msgstr "Segna complete tutte le attività"
 
 #. module: crm
 #: model:ir.actions.server,name:crm.action_mark_late_activities_done
 msgid "Mark Late Activities as Done"
-msgstr "Segna attività in ritardo come completate"
+msgstr "Segna complete le attività in ritardo"
 
 #. module: crm
 #: model_terms:ir.ui.view,arch_db:crm.crm_case_form_view_oppor
 msgid "Mark Lost"
-msgstr "Imposta a persa"
+msgstr "Segna come persa"
 
 #. module: crm
 #: model_terms:ir.ui.view,arch_db:crm.crm_case_form_view_oppor
 msgid "Mark Won"
-msgstr "Segna vinta"
+msgstr "Segna come vinta"
 
 #. module: crm
 #: model_terms:ir.ui.view,arch_db:crm.crm_case_form_view_leads
 msgid "Mark as Lost"
-msgstr "Segna persa"
+msgstr "Segna come persa"
 
 #. module: crm
 #: model:ir.actions.server,name:crm.action_mark_as_lost
 msgid "Mark as lost"
-msgstr "Segna persa"
+msgstr "Segna come persa"
 
 #. module: crm
 #: model_terms:ir.ui.view,arch_db:crm.crm_case_form_view_oppor
@@ -1615,6 +1616,7 @@ msgstr "Il mio flusso"
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead_tag__name
 #: model:ir.model.fields,field_description:crm.field_crm_lost_reason__name
+#: model_terms:ir.ui.view,arch_db:crm.quick_create_opportunity_form
 msgid "Name"
 msgstr "Nome"
 
@@ -2448,8 +2450,8 @@ msgid ""
 "This is the source of the link, e.g. Search Engine, another domain, or name "
 "of email list"
 msgstr ""
-"Origine del link: es. motore di ricerca, altro dominio o nome dell'elenco "
-"e-mail"
+"Origine del collegamento: es. motore di ricerca, altro dominio o nome "
+"dell'elenco e-mail"
 
 #. module: crm
 #. openerp-web
@@ -2570,7 +2572,7 @@ msgstr "Messaggi non letti"
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_lead__message_unread_counter
 msgid "Unread Messages Counter"
-msgstr "Contatore messaggi non letti"
+msgstr "Numero messaggi non letti"
 
 #. module: crm
 #: model_terms:ir.ui.view,arch_db:crm.res_config_settings_view_form
@@ -2592,8 +2594,8 @@ msgid ""
 msgstr ""
 "Usare i contatti se è necessaria una fase di qualifica prima di creare\n"
 "                    un'opportunità o un cliente. Può essere un biglietto da visita ricevuto,\n"
-"                    un modulo di contatto compilato nel sito web o un file di prospettive\n"
-"                    non qualificate importate ecc."
+"                    un modulo di contatto compilato nel sito web o un file di potenziali clienti\n"
+"                    non qualificati importato ecc."
 
 #. module: crm
 #: model_terms:ir.ui.view,arch_db:crm.res_config_settings_view_form
@@ -2606,8 +2608,8 @@ msgid ""
 msgstr ""
 "Usare i contatti se è necessaria una fase di qualifica prima di creare "
 "un'opportunità o un cliente. Può essere un biglietto da visita ricevuto, un "
-"modulo di contatto compilato nel sito web o un file di prospettive non "
-"qualificate importate ecc. Dopo tale qualifica, il contatto può essere "
+"modulo di contatto compilato nel sito web o un file di potenziali clienti "
+"non qualificati importato ecc. Dopo tale qualifica, il contatto può essere "
 "convertito in un'opportunità aziendale e/o in un nuovo cliente della "
 "rubrica."
 
