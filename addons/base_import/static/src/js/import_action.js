@@ -60,7 +60,6 @@ var DataImport = Widget.extend(ControlPanelMixin, {
     events: {
         // 'change .oe_import_grid input': 'import_dryrun',
         'change .oe_import_file': 'loaded_file',
-        'click .oe_import_file_reload': 'loaded_file',
         'change input.oe_import_has_header, .js_import_options input': 'settings_changed',
         'change input.oe_import_advanced_mode': function (e) {
             this.do_not_change_match = true;
@@ -249,8 +248,7 @@ var DataImport = Widget.extend(ControlPanelMixin, {
     onfile_loaded: function () {
         var file = this.$('.oe_import_file')[0].files[0];
         this.$('.oe_import_file_show').val(file !== undefined && file.name || '');
-        this.$buttons.filter('.o_import_button').add(this.$('.oe_import_file_reload'))
-                .prop('disabled', true);
+        this.$buttons.filter('.o_import_button').prop('disabled', true);
         if (!this.$('input.oe_import_file').val()) { return this['settings_changed'](); }
         this.$('.oe_import_date_format').val('');
         this.$('.oe_import_datetime_format').val('');
@@ -269,14 +267,18 @@ var DataImport = Widget.extend(ControlPanelMixin, {
     },
     onpreviewing: function () {
         var self = this;
-        this.$buttons.filter('.o_import_button').add(this.$('.oe_import_file_reload'))
-                .prop('disabled', true);
+        this.$buttons.filter('.o_import_button').prop('disabled', true);
         this.$el.addClass('oe_import_with_file');
         // TODO: test that write // succeeded?
         this.$el.removeClass('oe_import_preview_error oe_import_error');
         this.$el.toggleClass(
             'oe_import_noheaders',
             !this.$('input.oe_import_has_header').prop('checked'));
+
+        // Clear the input value to allow onchange to be triggered
+        // if the file is the same (for all browsers)
+        self.$('input.oe_import_file').val('');
+
         this._rpc({
                 model: 'base_import.import',
                 method: 'parse_preview',
@@ -289,7 +291,6 @@ var DataImport = Widget.extend(ControlPanelMixin, {
     },
     onpreview_error: function (event, from, to, result) {
         this.$('.oe_import_options').show();
-        this.$('.oe_import_file_reload').prop('disabled', false);
         this.$el.addClass('oe_import_preview_error oe_import_error');
         this.$('.oe_import_error_report').html(
                 QWeb.render('ImportView.preview.error', result));
@@ -298,8 +299,7 @@ var DataImport = Widget.extend(ControlPanelMixin, {
         var self = this;
         this.$buttons.filter('.o_import_import').removeClass('btn-primary');
         this.$buttons.filter('.o_import_validate').addClass('btn-primary');
-        this.$buttons.filter('.o_import_button').add(this.$('.oe_import_file_reload'))
-                .prop('disabled', false);
+        this.$buttons.filter('.o_import_button').prop('disabled', false);
         this.$el.addClass('oe_import_preview');
         this.$('.oe_import_grid').html(QWeb.render('ImportView.preview', result));
 

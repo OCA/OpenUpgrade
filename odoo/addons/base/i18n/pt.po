@@ -4,16 +4,15 @@
 # 
 # Translators:
 # Tiago Baptista, 2018
-# Manuela Silva <inactive+alfalb@transifex.com>, 2018
+# c48d9e6f0d53f7afa4484fd46f953e4a_b05c777 <b89b26df936935dfaaba9a285ffbf73d_440731>, 2018
 # Joao Felix <jrmfelix@gmail.com>, 2018
-# Manuela Silva <inactive+h_manuela_rodsilva@transifex.com>, 2018
+# 425fe09b3064b9f906f637fff94056ae_a00ea56 <0fa3588fa89906bfcb3a354600956e0e_308047>, 2018
 # Ricardo Correia <rcorreiavv@gmail.com>, 2018
 # Andre Mendes <afm@thinkopen.solutions>, 2018
 # José Gomes <jg@opencloud.pro>, 2018
 # Ricardo Martins <ricardo.nbs.martins@gmail.com>, 2018
 # Vitor Fernandes <vmlf01@gmail.com>, 2018
 # Daniel C Santos <dcs@thinkopensolutions.pt>, 2018
-# Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2018
 # Diogo Fonseca <dsf@thinkopensolutions.pt>, 2018
 # Catarina Rocha <cr@opencloud.pro>, 2019
 # Ricardo Santa Ana <ricardosantana@gmail.com>, 2019
@@ -21,8 +20,9 @@
 # Marcelo Pereira <marcelo.pereira@arxi.pt>, 2019
 # Martin Trigaux, 2019
 # Pedro Filipe <pedro2.10@hotmail.com>, 2019
-# Manuela Silva <manuelarodsilva@gmail.com>, 2020
 # Nuno Silva <nuno.silva@arxi.pt>, 2020
+# Manuela Silva <manuelarodsilva@gmail.com>, 2020
+# Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2020
 # 
 msgid ""
 msgstr ""
@@ -30,7 +30,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-03 15:05+0000\n"
 "PO-Revision-Date: 2017-09-20 10:13+0000\n"
-"Last-Translator: Nuno Silva <nuno.silva@arxi.pt>, 2020\n"
+"Last-Translator: Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2020\n"
 "Language-Team: Portuguese (https://www.transifex.com/odoo/teams/41243/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -87,6 +87,17 @@ msgid ""
 " - Hungarian Bank information\n"
 " "
 msgstr ""
+"\n"
+"\n"
+"Módulo base para localização Húngara\n"
+"==========================================\n"
+"\n"
+"Este módulo consiste em :\n"
+"\n"
+" - Plano de contas Húngaro genérico\n"
+" - Impostos Húngaros\n"
+" - Informação Bancária Húngara\n"
+" "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_do
@@ -510,6 +521,9 @@ msgid ""
 "        Bill timesheets logged on helpdesk tickets.\n"
 "    "
 msgstr ""
+"\n"
+"        Faturar timesheets registadas em tickets de helpdesk.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_maintenance
@@ -4885,6 +4899,11 @@ msgid ""
 "Works with Worldline keys version 2.0, contains implementation of\n"
 "payments acquirer using Worldline SIPS."
 msgstr ""
+"\n"
+"Instituição de Pagamentos Worldline SIPS para pagamentos <i>on-line</i>\n"
+"\n"
+"Funciona com códigos de Worldline, versão 2.0, contém implementação de\n"
+"instituição de pagamentos, utilizando Worldline SIPS."
 
 #. module: base
 #: code:addons/base/ir/ir_ui_view.py:1054
@@ -5163,12 +5182,12 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
 msgid "5. %H:%M:%S      ==&gt; 18:25:20"
-msgstr ""
+msgstr "5. %H:%M:%S      ==&gt; 18:25:20"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
 msgid "6. %I:%M:%S %p  ==&gt; 06:25:20 PM"
-msgstr ""
+msgstr "6. %I:%M:%S %p  ==&gt; 06:25:20 PM"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
@@ -5178,7 +5197,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
 msgid "8. %S              ==&gt; 20"
-msgstr ""
+msgstr "8. %S              ==&gt; 20"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
@@ -5275,7 +5294,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_currency_kanban
 msgid "<strong><span>Current Rate: </span></strong>"
-msgstr ""
+msgstr "<strong><span>Taxa Atual: </span></strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -5295,7 +5314,7 @@ msgstr "<strong>Dependências:</strong>"
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_res_company_kanban
 msgid "<strong>Email:</strong>"
-msgstr ""
+msgstr "<strong>Email:</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -5675,7 +5694,7 @@ msgstr ""
 #. module: base
 #: model:res.partner.industry,full_name:base.res_partner_industry_A
 msgid "A AGRICULTURE, FORESTRY AND FISHING"
-msgstr ""
+msgstr "A AGRICULTURA, FLORESTAS E PESCAS"
 
 #. module: base
 #: code:addons/models.py:2826
@@ -6473,7 +6492,7 @@ msgstr ""
 #. module: base
 #: model:res.country,name:base.ad
 msgid "Andorra"
-msgstr ""
+msgstr "Andorra"
 
 #. module: base
 #: model:res.country,name:base.ao
@@ -7323,6 +7342,8 @@ msgstr "Módulo ponte para adquirentes e website."
 #: model:ir.module.module,summary:base.module_website_helpdesk
 msgid "Bridge module for helpdesk modules using the website."
 msgstr ""
+"Módulo de ligação para os módulos do centro de apoio utilizando o site da "
+"Web"
 
 #. module: base
 #: model:res.country,name:base.io
@@ -8430,7 +8451,7 @@ msgstr "Criar direito de acesso"
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_server_action_form
 msgid "Create Contextual Action"
-msgstr ""
+msgstr "Criar Ação Contextual"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_logging_create_date
@@ -10051,7 +10072,7 @@ msgstr "Etiópia - contabilidade"
 #. module: base
 #: model:res.country.group,name:base.europe
 msgid "Europe"
-msgstr ""
+msgstr "Europa"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_server_object_lines_type
@@ -10071,7 +10092,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_event_barcode_mobile
 msgid "Event Barcode scan in Mobile"
-msgstr ""
+msgstr "Digitalização do Código de Barras do Evento no Telemóvel"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_event_management
@@ -10235,7 +10256,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_address_extended
 msgid "Extended Addresses"
-msgstr ""
+msgstr "Moradas Estendidas"
 
 #. module: base
 #: selection:ir.ui.view,mode:0
@@ -11058,7 +11079,7 @@ msgstr "GPL-3 ou versão mais atual"
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_in_purchase
 msgid "GST Purchase Report"
-msgstr ""
+msgstr "Relatório de Compras GST"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_in_sale
@@ -11073,7 +11094,7 @@ msgstr ""
 #. module: base
 #: model:res.country,vat_label:base.in
 msgid "GSTIN"
-msgstr ""
+msgstr "GSTIN"
 
 #. module: base
 #: model:res.country,name:base.ga
@@ -11180,7 +11201,7 @@ msgstr "Gibraltar"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mail_github
 msgid "Github Integration with Discuss"
-msgstr ""
+msgstr "Integração GitHub com Discuss"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_rule_global
@@ -11796,7 +11817,7 @@ msgstr "Hungria"
 #. module: base
 #: model:res.partner.industry,full_name:base.res_partner_industry_I
 msgid "I ACCOMMODATION AND FOOD SERVICE ACTIVITIES"
-msgstr ""
+msgstr "I ALOJAMENTO E ATIVIDADES DE SERVIÇO DE COMIDA"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_iban
@@ -12148,7 +12169,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_base_module_uninstall_module_ids
 msgid "Impacted modules"
-msgstr ""
+msgstr "Módulos inspecionados"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_sequence_implementation
@@ -13765,7 +13786,7 @@ msgstr "Marketing"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_marketing_automation
 msgid "Marketing Automation"
-msgstr ""
+msgstr "Automação de Marketing"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_ma
@@ -16414,7 +16435,7 @@ msgstr "Abrir uma Janela"
 #: code:addons/base/ir/ir_model.py:1215 code:addons/models.py:2888
 #, python-format
 msgid "Operation:"
-msgstr ""
+msgstr "Operação:"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_crm
@@ -17602,7 +17623,7 @@ msgstr "Compra"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_purchase_requisition
 msgid "Purchase Agreements"
-msgstr ""
+msgstr "Acordos de Compra"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_purchase
@@ -17724,7 +17745,7 @@ msgstr ""
 #. module: base
 #: model:res.country,vat_label:base.do
 msgid "RNC"
-msgstr ""
+msgstr "RNC"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_currency_rate_rate
@@ -18250,7 +18271,7 @@ msgstr ""
 #. module: base
 #: model:res.country,name:base.kn
 msgid "Saint Kitts and Nevis"
-msgstr ""
+msgstr "Saint Kitts e Nevis"
 
 #. module: base
 #: model:res.country,name:base.lc
@@ -18295,7 +18316,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_coupon_delivery
 msgid "Sale Coupon Delivery"
-msgstr ""
+msgstr "Entrega do Cupão de Venda"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_service_rating
@@ -19046,7 +19067,7 @@ msgstr "Spain - Accounting (PGCE 2008)"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_es_reports
 msgid "Spain - Accounting (PGCE 2008) Reports"
-msgstr ""
+msgstr "Espanha - Relatórios de Contabilidade (PGCE 2008)"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_sparse_field
@@ -19241,7 +19262,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_studio
 msgid "Studio"
-msgstr ""
+msgstr "Studio"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_request_link_search_view
@@ -20386,6 +20407,14 @@ msgid "The list of models that extends the current model."
 msgstr "A lista de modelos que extendem o modelo corrente."
 
 #. module: base
+#: code:addons/base/ir/ir_model.py:522
+#, python-format
+msgid ""
+"The m2o field %s is required but declares its ondelete policy as being 'set "
+"null'. Only 'restrict' and 'cascade' make sense."
+msgstr ""
+
+#. module: base
 #: model:ir.model.fields,help:base.field_ir_filters_action_id
 msgid ""
 "The menu action this filter applies to. When left empty the filter applies "
@@ -20461,7 +20490,7 @@ msgstr "As únicas variáveis predefinidas são"
 #: code:addons/model.py:121
 #, python-format
 msgid "The operation cannot be completed:"
-msgstr ""
+msgstr "A operação não pdoe ser concluída:"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_model_fields_domain
@@ -21167,7 +21196,7 @@ msgstr "URL"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_us_reports
 msgid "US - Accounting Reports"
-msgstr ""
+msgstr "EUA - Relatórios de Contabilidade"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_us_check_printing
@@ -22070,7 +22099,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_helpdesk
 msgid "Website Helpdesk"
-msgstr ""
+msgstr "Centro de Apoio do Site da Web"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_helpdesk_livechat
@@ -22090,7 +22119,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_mail
 msgid "Website Mail"
-msgstr ""
+msgstr "Correio do Site da Web"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_mass_mailing
@@ -22100,7 +22129,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_website_mail
 msgid "Website Module for Mail"
-msgstr ""
+msgstr "Módulo do Site da Web para o Correio"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_partner
@@ -22110,7 +22139,7 @@ msgstr "Site da Web do Parceiro"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_rating
 msgid "Website Rating"
-msgstr ""
+msgstr "Classificação do Site da Web"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_rating_project
@@ -23007,7 +23036,7 @@ msgstr ""
 #. module: base
 #: selection:ir.model.fields,ttype:0
 msgid "many2many"
-msgstr ""
+msgstr "many2many"
 
 #. module: base
 #: selection:ir.model.fields,ttype:0
@@ -23050,7 +23079,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pos_cache
 msgid "pos_cache"
-msgstr ""
+msgstr "pos_cache"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pos_sale

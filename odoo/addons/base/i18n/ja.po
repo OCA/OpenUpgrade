@@ -13,6 +13,7 @@
 # Takuya Sawada <takuya@tuntunkun.com>, 2017
 # Martin Trigaux, 2019
 # Tim Siu Lai <tl@roomsfor.hk>, 2019
+# Hau Dao <hau@quartile.co>, 2020
 # Yoshi Tashiro <tashiro@roomsfor.hk>, 2020
 # 
 msgid ""
@@ -61,6 +62,10 @@ msgid ""
 "Allow cashier to reprint receipts\n"
 "\n"
 msgstr ""
+"\n"
+"\n"
+"レジでのレシート再発行を許可\n"
+"\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_hu
@@ -8003,7 +8008,7 @@ msgstr "金額の前"
 #, python-format
 msgid ""
 "Before clicking on 'Change Password', you have to write a new password."
-msgstr ""
+msgstr "[パスワードの変更]をクリックする前に、新しいパスワードを作成する必要があります。"
 
 #. module: base
 #: model:res.country,name:base.by
@@ -8841,13 +8846,13 @@ msgstr "コメント"
 #: model:ir.model.fields,field_description:base.field_res_partner_commercial_partner_id
 #: model:ir.model.fields,field_description:base.field_res_users_commercial_partner_id
 msgid "Commercial Entity"
-msgstr "取引先"
+msgstr "企業体"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_partner_commercial_partner_country_id
 #: model:ir.model.fields,field_description:base.field_res_users_commercial_partner_country_id
 msgid "Commercial Entity's Country"
-msgstr ""
+msgstr "企業体の国"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_data_drinks
@@ -8922,7 +8927,7 @@ msgstr "会社名"
 #: model:ir.model.fields,field_description:base.field_res_partner_commercial_company_name
 #: model:ir.model.fields,field_description:base.field_res_users_commercial_company_name
 msgid "Company Name Entity"
-msgstr "会社名エントリー"
+msgstr "企業体名"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.ir_property_form
@@ -20805,6 +20810,14 @@ msgid "The list of models that extends the current model."
 msgstr "現在のモデルを拡張したモデルのリスト。"
 
 #. module: base
+#: code:addons/base/ir/ir_model.py:522
+#, python-format
+msgid ""
+"The m2o field %s is required but declares its ondelete policy as being 'set "
+"null'. Only 'restrict' and 'cascade' make sense."
+msgstr ""
+
+#. module: base
 #: model:ir.model.fields,help:base.field_ir_filters_action_id
 msgid ""
 "The menu action this filter applies to. When left empty the filter applies "
@@ -20971,7 +20984,7 @@ msgstr "選択されたモジュールは更新あるいはインストールさ
 msgid ""
 "The server is busy right now, module operations are not possible at this "
 "time, please try again later."
-msgstr ""
+msgstr "現在サーバに処理中のプロセスがあり、モジュールの操作ができません。少し時間を置いて再度お試しください。"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_country_state_code

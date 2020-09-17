@@ -8,7 +8,7 @@
 # Fırat Kaya <firat.kaya@mechsoft.com.tr>, 2017
 # Nurettin Emre Ozbakir <emre.ozbakir@gamareklam.com>, 2017
 # Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2017
-# Alper Çiftçi <inactive+alprciftci@transifex.com>, 2017
+# 8bbc36517816c0507c9ca350a0e523fd_9e68207 <90a3963e59612d1681dec64fbc906ae0_331927>, 2017
 # Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2017
 # Ramiz Deniz Öner <deniz@denizoner.com>, 2017
 # Saban Yildiz <sabany@projetgrup.com>, 2017
@@ -22,6 +22,9 @@
 # Martin Trigaux, 2019
 # Murat Kaplan <muratk@projetgrup.com>, 2019
 # Umur Akın <umura@projetgrup.com>, 2019
+# Murat Durmuş <muratd@projetgrup.com>, 2020
+# Tugay Hatıl <tugayh@projetgrup.com>, 2020
+# abc Def <hdogan1974@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -29,7 +32,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-03 15:05+0000\n"
 "PO-Revision-Date: 2017-09-20 10:13+0000\n"
-"Last-Translator: Umur Akın <umura@projetgrup.com>, 2019\n"
+"Last-Translator: abc Def <hdogan1974@gmail.com>, 2020\n"
 "Language-Team: Turkish (https://www.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -505,6 +508,8 @@ msgid ""
 "        Accounting reports send to HMRC\n"
 "    "
 msgstr ""
+"\n"
+"         HMRC'ye Muhasebe bildirimlerini gönder"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_extension
@@ -528,6 +533,10 @@ msgid ""
 "        Colloquially known as \"Month 13\"\n"
 "    "
 msgstr ""
+"\n"
+"Kapanış kaydı için geçici mizan oluşturulmasına izin verin.\n"
+"\n"
+"Konuşma diliyle \"Ay 13\" olarak bilinir"
 
 #. module: base
 #: model:ir.module.module,description:base.module_voip
@@ -1331,6 +1340,8 @@ msgid ""
 "Adds the possibility to specify the origin country of goods and the partner VAT in the Intrastat XML report.\n"
 "    "
 msgstr ""
+"\n"
+"Intrastat XML raporunda malların menşe ülkesini ve iş ortağı KDV'sini belirleme imkanı ekler. "
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_calendar
@@ -1782,6 +1793,23 @@ msgid ""
 "No modified version is certified and supported by Odoo SA.\n"
 "    "
 msgstr ""
+"\n"
+"Belçika Kayıtlı Yazar Kasa\n"
+"================================\n"
+"\n"
+"Bu modül Satış Noktası modülünü sertifikalı bir Belçikalı kasaya dönüştürür.\n"
+"\n"
+"Daha fazla bilgi:\n"
+"   * http://www.systemedecaisseenregistreuse.be/\n"
+"   * http://www.geregistreerdkassasysteem.be/\n"
+"\n"
+"Yasal\n"
+"-----\n"
+"** pos_blackbox_be kaynaklarının kullanımı sadece odoo.com SaaS platformunda onaylanmıştır\n"
+"sürüm 11.0 için. ** pos_blackbox_be modülünü kurmadan önce Odoo SA ile irtibata geçin.\n"
+"\n"
+"Şirket içi kurulum istekleri için pos_blackbox_be'nin gizlenmiş ve onaylı bir sürümü sağlanabilir.\n"
+"Değiştirilmiş hiçbir sürüm Odoo SA tarafından onaylanmamış ve desteklenmemiştir."
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_bo
@@ -6188,7 +6216,7 @@ msgstr ""
 #: code:addons/base/ir/ir_ui_view.py:1054
 #, python-format
 msgid " - %r in %s=%r"
-msgstr ""
+msgstr " - %r in %s=%r"
 
 #. module: base
 #: model:ir.module.module,description:base.module_inter_company_rules
@@ -6209,6 +6237,8 @@ msgid ""
 " another model requires the record being deleted. If possible, archive it "
 "instead."
 msgstr ""
+"Kayıt silinmişse başka bir model gerektirir. Mümkünse bunun yerine "
+"arşivleyin."
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
@@ -6357,6 +6387,8 @@ msgid ""
 "- Create/update: a mandatory field is not set.\n"
 "- Delete: another model requires the record being deleted. If possible, archive it instead."
 msgstr ""
+"- Oluştur / güncelle: Zorunlu bir alan ayarlanmamış.\n"
+"- Sil: Başka bir model kaydın silinmesini gerektirir. Mümkünse arşivleyin."
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -6481,7 +6513,7 @@ msgstr "7. %j              ==&gt; 340"
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
 msgid "8. %S              ==&gt; 20"
-msgstr ""
+msgstr "8. %S              ==&gt; 20"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
@@ -6511,6 +6543,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base.view_server_action_form
 msgid "<code>Warning</code>: Warning Exception to use with <code>raise</code>"
 msgstr ""
+"<code>Uyarı</code>:  İstisna Uyarısı<code>yükseltme ile kullanımda</code>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_model_fields_form
@@ -7040,7 +7073,7 @@ msgstr "API yi test etmek için bir modül."
 #. module: base
 #: model:ir.module.module,description:base.module_test_rpc
 msgid "A module to test the RPC requests."
-msgstr ""
+msgstr "RPC isteklerini test etmek için bir modül."
 
 #. module: base
 #: model:ir.module.module,description:base.module_test_uninstall
@@ -7201,7 +7234,7 @@ msgstr "Erişim Kuralları"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_attachment_access_token
 msgid "Access Token"
-msgstr "Acess Token"
+msgstr "Erişim Simgesi"
 
 #. module: base
 #: model:res.groups,name:base.group_private_addresses
@@ -7256,12 +7289,12 @@ msgstr "Account TaxCloud"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sale_account_taxcloud
 msgid "Account TaxCloud - Ecommerce"
-msgstr "Hesap TaxCloud - Eticaret"
+msgstr "Vergi Bulut Hesabı - E-ticaret"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_account_taxcloud
 msgid "Account TaxCloud - Sale"
-msgstr "Hesap TaxCloud - Satış"
+msgstr "Vergi Bulut Hesabı - Satış"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_account_payment
@@ -7598,6 +7631,72 @@ msgid ""
 "         user with the same login (and a blank password), then rename this new\n"
 "         user to a username that does not exist in LDAP, and setup its groups\n"
 msgstr ""
+"Adds support for authentication by LDAP server.\n"
+"===============================================\n"
+"This module allows users to login with their LDAP username and password, and\n"
+"will automatically create Odoo users for them on the fly.\n"
+"\n"
+"**Note:** This module only work on servers who have Python's ``ldap`` module installed.\n"
+"\n"
+"Configuration:\n"
+"--------------\n"
+"After installing this module, you need to configure the LDAP parameters in the\n"
+"General Settings menu. Different companies may have different\n"
+"LDAP servers, as long as they have unique usernames (usernames need to be unique\n"
+"in Odoo, even across multiple companies).\n"
+"\n"
+"Anonymous LDAP binding is also supported (for LDAP servers that allow it), by\n"
+"simply keeping the LDAP user and password empty in the LDAP configuration.\n"
+"This does not allow anonymous authentication for users, it is only for the master\n"
+"LDAP account that is used to verify if a user exists before attempting to\n"
+"authenticate it.\n"
+"\n"
+"Securing the connection with STARTTLS is available for LDAP servers supporting\n"
+"it, by enabling the TLS option in the LDAP configuration.\n"
+"\n"
+"For further options configuring the LDAP settings, refer to the ldap.conf\n"
+"manpage: manpage:`ldap.conf(5)`.\n"
+"\n"
+"Security Considerations:\n"
+"------------------------\n"
+"Users' LDAP passwords are never stored in the Odoo database, the LDAP server\n"
+"is queried whenever a user needs to be authenticated. No duplication of the\n"
+"password occurs, and passwords are managed in one place only.\n"
+"\n"
+"Odoo does not manage password changes in the LDAP, so any change of password\n"
+"should be conducted by other means in the LDAP directory directly (for LDAP users).\n"
+"\n"
+"It is also possible to have local Odoo users in the database along with\n"
+"LDAP-authenticated users (the Administrator account is one obvious example).\n"
+"\n"
+"Here is how it works:\n"
+"---------------------\n"
+"    * The system first attempts to authenticate users against the local Odoo\n"
+"      database;\n"
+"    * if this authentication fails (for example because the user has no local\n"
+"      password), the system then attempts to authenticate against LDAP;\n"
+"\n"
+"As LDAP users have blank passwords by default in the local Odoo database\n"
+"(which means no access), the first step always fails and the LDAP server is\n"
+"queried to do the authentication.\n"
+"\n"
+"Enabling STARTTLS ensures that the authentication query to the LDAP server is\n"
+"encrypted.\n"
+"\n"
+"User Template:\n"
+"--------------\n"
+"In the LDAP configuration on the General Settings, it is possible to select a *User\n"
+"Template*. If set, this user will be used as template to create the local users\n"
+"whenever someone authenticates for the first time via LDAP authentication. This\n"
+"allows pre-setting the default groups and menus of the first-time users.\n"
+"\n"
+"**Warning:** if you set a password for the user template, this password will be\n"
+"         assigned as local password for each new LDAP user, effectively setting\n"
+"         a *master password* for these users (until manually changed). You\n"
+"         usually do not want this. One easy way to setup a template user is to\n"
+"         login once with a valid LDAP user, let Odoo create a blank local\n"
+"         user with the same login (and a blank password), then rename this new\n"
+"         user to a username that does not exist in LDAP, and setup its groups\n"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_administration
@@ -8408,7 +8507,7 @@ msgstr "Temel görünüm"
 #: model:ir.cron,cron_name:base.autovacuum_job
 #: model:ir.cron,name:base.autovacuum_job
 msgid "Base: Auto-vacuum internal data"
-msgstr ""
+msgstr "Temel: Dahili verileri otomatik çekme"
 
 #. module: base
 #: model:ir.actions.server,name:base.action_server_module_immediate_install
@@ -9561,7 +9660,7 @@ msgstr "Sınırlama Türü"
 #: code:addons/model.py:153
 #, python-format
 msgid "Constraint:"
-msgstr ""
+msgstr "Kısıtlama:"
 
 #. module: base
 #: sql_constraint:ir.model.constraint:0
@@ -9583,7 +9682,7 @@ msgstr "Danışmanlık Hizmetleri"
 #: model:ir.ui.view,arch_db:base.view_partner_simple_form
 #: selection:res.partner,type:0
 msgid "Contact"
-msgstr "Kontak"
+msgstr "Temas"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_partner_form
@@ -10521,7 +10620,7 @@ msgstr "Bağımlılık"
 #. module: base
 #: model:ir.module.module,description:base.module_test_pylint
 msgid "Deprecated empty module in favor of test-lint."
-msgstr ""
+msgstr "Test-lint lehine kullanımdan kaldırılmış boş kip"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_attachment_description
@@ -10838,7 +10937,7 @@ msgstr "Döküman modeli"
 #: code:addons/models.py:2888
 #, python-format
 msgid "Document type:"
-msgstr ""
+msgstr "Belge türü:"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_forum_doc
@@ -11869,7 +11968,7 @@ msgstr "Fedex Kargo"
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_fr_fec
 msgid "Fichier d'Échange Informatisé (FEC) for France"
-msgstr ""
+msgstr "Fransa için Fichier d'Échange Informatisé (FEC)"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_fr_fec
@@ -12258,7 +12357,7 @@ msgstr "Form"
 #: selection:ir.actions.report,binding_type:0
 #: selection:ir.actions.server,binding_type:0
 msgid "Form-only"
-msgstr ""
+msgstr "Yalnızca-şekil"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_partner_email_formatted
@@ -13586,7 +13685,7 @@ msgstr "Döviz kurlarını internetten  içe aktar.\n"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_reports_cash_flow
 msgid "Improved Cash Flow Statement"
-msgstr ""
+msgstr "Geliştirilmiş Nakit Akışı Tablosu"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_fields_modules
@@ -15302,6 +15401,8 @@ msgid ""
 "Methods that start with `get_default_` are deprecated. Override `get_values`"
 " instead(Method %s)"
 msgstr ""
+"`Get_default_` ile başlayan yöntemler kullanımdan kaldırılmıştır. Bunun "
+"yerine \"get_values\" değerini geçersiz kıl (Yöntem %s)"
 
 #. module: base
 #: code:addons/base/res/res_config.py:544
@@ -15310,6 +15411,8 @@ msgid ""
 "Methods that start with `set_` are deprecated. Override `set_values` instead"
 " (Method %s)"
 msgstr ""
+"`Set_` ile başlayan yöntemler kullanımdan kaldırılmıştır. Bunun yerine "
+"\"set_values\" değerini geçersiz kıl (Yöntem %s)"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_mx_edi
@@ -16606,7 +16709,7 @@ msgstr "Odoo Meksika Yerelleştirme Raporları"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_mx_reports_closing
 msgid "Odoo Mexican Localization Reports for Closing"
-msgstr ""
+msgstr "Kapanış için Odoo Meksika Yerelleştirme Raporları"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_mx_edi_customs
@@ -16622,7 +16725,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_mx_edi_landing
 msgid "Odoo Mexico Localization for Stock/Landing"
-msgstr ""
+msgstr "Stok / İniş için Odoo Meksika Yerelleştirmesi"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_web_mobile
@@ -17493,7 +17596,7 @@ msgstr "Bir Pencere Aç"
 #: code:addons/base/ir/ir_model.py:1215 code:addons/models.py:2888
 #, python-format
 msgid "Operation:"
-msgstr ""
+msgstr "İşlem:"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_crm
@@ -18209,7 +18312,7 @@ msgstr "Ödeme Alıcısı: Stripe Uygulaması"
 #. module: base
 #: model:ir.module.module,summary:base.module_payment_stripe_sca
 msgid "Payment Acquirer: Stripe Implementation for the EU PSD2"
-msgstr ""
+msgstr "Ödeme Alıcısı: AB PSD2 için Şerit Uygulaması"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_payment_transfer
@@ -18316,7 +18419,7 @@ msgstr "Planlayıcı"
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_pt
 msgid "Plano de contas SNC para Portugal"
-msgstr ""
+msgstr "Portekiz için SNC hesapları planı"
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:1192
@@ -21295,7 +21398,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sale_taxcloud_delivery
 msgid "TaxCloud and Delivery - Ecommerce"
-msgstr ""
+msgstr "Vergi Bulut ve Teslimat - E-ticaret"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_account_taxcloud
@@ -21373,7 +21476,7 @@ msgstr "Performansı Test Et"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_rpc
 msgid "Test RPC"
-msgstr ""
+msgstr "RPC Sınama"
 
 #. module: base
 #: model:ir.module.module,description:base.module_test_access_rights
@@ -21641,6 +21744,14 @@ msgid "The list of models that extends the current model."
 msgstr "Mevcut modeli genişleten modellerin listesi."
 
 #. module: base
+#: code:addons/base/ir/ir_model.py:522
+#, python-format
+msgid ""
+"The m2o field %s is required but declares its ondelete policy as being 'set "
+"null'. Only 'restrict' and 'cascade' make sense."
+msgstr ""
+
+#. module: base
 #: model:ir.model.fields,help:base.field_ir_filters_action_id
 msgid ""
 "The menu action this filter applies to. When left empty the filter applies "
@@ -21714,7 +21825,7 @@ msgstr "Sadece önceden tanımlanmış değişkenler"
 #: code:addons/model.py:121
 #, python-format
 msgid "The operation cannot be completed:"
-msgstr ""
+msgstr "İşlem tamamlanamadı:"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_model_fields_domain
@@ -21823,6 +21934,8 @@ msgid ""
 "The server is busy right now, module operations are not possible at this "
 "time, please try again later."
 msgstr ""
+"Sunucu şu anda meşgul, kip işlemleri gerçekleştirilemiyor, lütfen daha sonra"
+" tekrar deneyin."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_country_state_code
@@ -22422,7 +22535,7 @@ msgstr "Birleşik Krallık - Muhasebe Raporları"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_uk_reports_hmrc
 msgid "UK - Accounting Reports to HMRC"
-msgstr ""
+msgstr "Birleşik Krallık - HMRC'ye Muhasebe Bildirimleri"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_delivery_ups
@@ -22574,7 +22687,7 @@ msgstr "Bilinmeyen"
 #: code:addons/models.py:833
 #, python-format
 msgid "Unknown database error: '%s'"
-msgstr ""
+msgstr "Bilinmeyen veritabanı hatası:'%s'"
 
 #. module: base
 #: code:addons/models.py:996
@@ -23568,7 +23681,7 @@ msgstr "İş Emri, Planlama, Stok Raporları"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_payment_sips
 msgid "Worldline SIPS"
-msgstr ""
+msgstr "Worldline SIPS"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_access_perm_write
@@ -23822,7 +23935,7 @@ msgstr "_bilinmeyen"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_online_sync
 msgid "account_online_sync"
-msgstr ""
+msgstr "account_online_sync"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_plaid
@@ -24018,7 +24131,7 @@ msgstr ""
 #: code:addons/base/res/res_lang.py:248
 #, python-format
 msgid "format() must be given exactly one %char format specifier"
-msgstr ""
+msgstr "format() tam olarak bir %cformat belirleyici verilmelidir"
 
 #. module: base
 #: model:ir.model,name:base.model_format_address_mixin
@@ -24402,7 +24515,7 @@ msgstr "Erişim izinleri ve kuralları testi"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_read_group
 msgid "test read_group"
-msgstr ""
+msgstr "test read_group"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_assetsbundle
@@ -24447,12 +24560,12 @@ msgstr "test-sınırlar"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_lint
 msgid "test-lint"
-msgstr ""
+msgstr "test-lint"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_translation_import
 msgid "test-translation-import"
-msgstr ""
+msgstr "test-translation-import"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_uninstall

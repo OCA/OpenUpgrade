@@ -126,6 +126,10 @@ class AccountMove(models.Model):
     def create(self, vals):
         move = super(AccountMove, self.with_context(check_move_validity=False, partner_id=vals.get('partner_id'))).create(vals)
         move.assert_balanced()
+
+        if 'line_ids' in vals:
+            move.update_lines_tax_exigibility()
+
         return move
 
     @api.multi
@@ -133,9 +137,25 @@ class AccountMove(models.Model):
         if 'line_ids' in vals:
             res = super(AccountMove, self.with_context(check_move_validity=False)).write(vals)
             self.assert_balanced()
+            self.update_lines_tax_exigibility()
         else:
             res = super(AccountMove, self).write(vals)
+
         return res
+
+    @api.multi
+    def update_lines_tax_exigibility(self):
+        if all(account.user_type_id.type not in {'payable', 'receivable'} for account in self.mapped('line_ids.account_id')):
+            self.line_ids.write({'tax_exigible': True})
+        else:
+            tax_lines_caba = self.line_ids.filtered(lambda x: x.tax_line_id.tax_exigibility == 'on_payment')
+            base_lines_caba = self.line_ids.filtered(lambda x: any(tax.tax_exigibility == 'on_payment'
+                                                                   or (tax.amount_type == 'group'
+                                                                       and 'on_payment' in tax.mapped('children_tax_ids.tax_exigibility'))
+                                                               for tax in x.tax_ids))
+            caba_lines = tax_lines_caba + base_lines_caba
+            caba_lines.write({'tax_exigible': False})
+            (self.line_ids - caba_lines).write({'tax_exigible': True})
 
     @api.multi
     def post(self):
@@ -172,6 +192,8 @@ class AccountMove(models.Model):
         for move in self:
             if not move.journal_id.update_posted:
                 raise UserError(_('You cannot modify a posted entry of this journal.\nFirst you should set the journal to allow cancelling entries.'))
+            # We remove all the analytics entries for this journal
+            move.mapped('line_ids.analytic_line_ids').unlink()
         if self.ids:
             self.check_access_rights('write')
             self.check_access_rule('write')
@@ -185,10 +207,7 @@ class AccountMove(models.Model):
 
     @api.multi
     def unlink(self):
-        for move in self:
-            #check the lock date + check if some entries are reconciled
-            move.line_ids._update_check()
-            move.line_ids.unlink()
+        self.mapped('line_ids').unlink()
         return super(AccountMove, self).unlink()
 
     @api.multi
@@ -469,7 +488,7 @@ class AccountMoveLine(models.Model):
     counterpart = fields.Char("Counterpart", compute='_get_counterpart', help="Compute the counter part accounts of this journal item for this journal entry. This can be needed in reports.")
 
     # TODO: put the invoice link and partner_id on the account_move
-    invoice_id = fields.Many2one('account.invoice', oldname="invoice")
+    invoice_id = fields.Many2one('account.invoice', oldname="invoice", copy=False)
     partner_id = fields.Many2one('res.partner', string='Partner', ondelete='restrict')
     user_type_id = fields.Many2one('account.account.type', related='account_id.user_type_id', index=True, store=True, oldname="user_type", readonly=True)
     tax_exigible = fields.Boolean(string='Appears in VAT report', default=True,
@@ -1361,8 +1380,7 @@ class AccountMoveLine(models.Model):
                 vals['amount_currency'] = 0.0
             else:
                 ctx = {}
-                if 'date' in vals:
-                    ctx['date'] = vals['date']
+                ctx['date'] = vals.get('date') or vals.get('date_maturity') or fields.Date.today()
                 vals['amount_currency'] = account.company_id.currency_id.with_context(ctx).compute(amount, account.currency_id)
 
         if not ok:
@@ -1372,16 +1390,6 @@ class AccountMoveLine(models.Model):
         tax_lines_vals = []
         if context.get('apply_taxes') and vals.get('tax_ids'):
             tax_lines_vals = self._apply_taxes(vals, amount)
-
-        #Toggle the 'tax_exigible' field to False in case it is not yet given and the tax in 'tax_line_id' or one of
-        #the 'tax_ids' is a cash based tax.
-        taxes = False
-        if vals.get('tax_line_id'):
-            taxes = [{'tax_exigibility': self.env['account.tax'].browse(vals['tax_line_id']).tax_exigibility}]
-        if vals.get('tax_ids'):
-            taxes = self.env['account.move.line'].resolve_2many_commands('tax_ids', vals['tax_ids'])
-        if taxes and any([tax['tax_exigibility'] == 'on_payment' for tax in taxes]) and not vals.get('tax_exigible'):
-            vals['tax_exigible'] = False
 
         new_line = super(AccountMoveLine, self).create(vals)
         for tax_line_vals in tax_lines_vals:
@@ -1800,6 +1808,7 @@ class AccountPartialReconcile(models.Model):
         return {
             'name': line.name,
             'account_id': account_id,
+            'journal_id': new_move.journal_id.id,
             'tax_exigible': True,
             'tax_ids': [(6, 0, [tax])],
             'move_id': new_move.id,
@@ -1845,7 +1854,10 @@ class AccountPartialReconcile(models.Model):
                         percentage_before = percentage_before_rec[move.id]
                         percentage_after = line._get_matched_percentage()[move.id]
                         #amount is the current cash_basis amount minus the one before the reconciliation
-                        amount = line.balance * percentage_after - line.balance * percentage_before
+                        if percentage_after == 1.0 and line.amount_residual:
+                            amount = line.amount_residual
+                        else:
+                            amount = line.balance * percentage_after - line.balance * percentage_before
                         rounded_amt = self._get_amount_tax_cash_basis(amount, line)
                         if float_is_zero(rounded_amt, precision_rounding=line.company_id.currency_id.rounding):
                             continue
@@ -1866,6 +1878,7 @@ class AccountPartialReconcile(models.Model):
                                 'currency_id': line.currency_id.id,
                                 'move_id': newly_created_move.id,
                                 'partner_id': line.partner_id.id,
+                                'journal_id': newly_created_move.journal_id.id,
                             })
                             # Group by cash basis account and tax
                             self.env['account.move.line'].with_context(check_move_validity=False).create({
@@ -1882,8 +1895,9 @@ class AccountPartialReconcile(models.Model):
                                 'currency_id': line.currency_id.id,
                                 'move_id': newly_created_move.id,
                                 'partner_id': line.partner_id.id,
+                                'journal_id': newly_created_move.journal_id.id,
                             })
-                            if line.account_id.reconcile:
+                            if line.account_id.reconcile and not line.reconciled:
                                 #setting the account to allow reconciliation will help to fix rounding errors
                                 to_clear_aml |= line
                                 to_clear_aml.reconcile()
