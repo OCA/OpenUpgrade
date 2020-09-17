@@ -28,6 +28,8 @@
 # Wahyu Setiawan <wahyusetiaaa@gmail.com>, 2019
 # Ryanto The <ry.the77@gmail.com>, 2019
 # PAS IRVANUS <ipankbiz@gmail.com>, 2019
+# pnyet <david@zeromail.us>, 2020
+# whenweresober <gulmugurzu@yevme.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -35,7 +37,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-03 15:05+0000\n"
 "PO-Revision-Date: 2017-09-20 10:13+0000\n"
-"Last-Translator: PAS IRVANUS <ipankbiz@gmail.com>, 2019\n"
+"Last-Translator: whenweresober <gulmugurzu@yevme.com>, 2020\n"
 "Language-Team: Indonesian (https://www.transifex.com/odoo/teams/41243/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -870,6 +872,9 @@ msgid ""
 "    Module linking the attendance module to the timesheet app.\n"
 "    "
 msgstr ""
+"\n"
+"    Hubungan module antara modul absensi pada aplikasi bagan lembar waktu.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_payment_payumoney
@@ -1890,6 +1895,12 @@ msgid ""
 "German accounting chart and localization.\n"
 "    "
 msgstr ""
+"\n"
+"Dieses  Modul beinhaltet einen deutschen Kontenrahmen basierend auf dem SKR03.\n"
+"==============================================================================\n"
+"\n"
+"Chart Akuntansi dan lokalisasi bahasa Jerman.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_de_skr04
@@ -2443,6 +2454,18 @@ msgid ""
 "internal transfer document is needed.\n"
 "\n"
 msgstr ""
+"\n"
+"Kelola order pengiriman dropship\n"
+"=========================== \n"
+"\n"
+"Modul ini menambahkan jenis operasi Pengiriman Dropship yang sudah dikonfigurasikan\n"
+"serta rute pengadaan yang memungkinkan mengkonfigurasi Produk\n"
+"Dropship dan order pengiriman.\n"
+"\n"
+"Ketika pengiriman dropship digunakan, barang langsung ditransfer\n"
+"dari vendor ke pelanggan (pengiriman langsung) tanpa\n"
+"melalui gudang pengecer. Dalam hal ini tidak\n"
+"diperlukan dokumen transfer internal.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_expense
@@ -2465,6 +2488,23 @@ msgid ""
 "This module also uses analytic accounting and is compatible with the invoice on timesheet module so that you are able to automatically re-invoice your customers' expenses if your work by project.\n"
 "    "
 msgstr ""
+"\n"
+"Mengelola pengeluaran berdasarkan Karyawan\n"
+"============================\n"
+"\n"
+"Aplikasi ini memungkinkan Anda untuk mengelola biaya pengeluaran harian karyawan Anda. Ini memberikan Anda akses pada catatan biaya karyawan Anda dan memberikan Anda kewajiban untuk menyelesaikan dan memvalidasi atau menolak catatan itu. Setelah validasi telah diberikan maka akan membuat faktur untuk karyawan.\n"
+"EKaryawan dapat memgatur pengeluaran mereka sendiri dan alur validasi dipasang secara otomatis pada akuntansi setelah validasi oleh manager.  \n"
+"\n"
+"\n"
+"Seluruh alur diimplementasikan sebagai:\n"
+"---------------------------------\n"
+"* Konsep Pengeluaran\n"
+"* Dilayangkan oleh karyawan pada manager mereka\n"
+"* Disetujui oleh manager mereka\n"
+"* Validasi oleh akuntan dan pembuatan entri akuntan\n"
+"\n"
+"Modul ini juga menggunakan akuntansi analitik dan kompatibel dengan faktur pada modul bagan lembar waktu sehingga Anda dapat secara otomatis mengeluarkan faktur untuk pengeluaran pelanggan Anda jika Anda bekerja berdasarkan proyek.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_holidays
@@ -2918,6 +2958,10 @@ msgid ""
 "==========================\n"
 "\n"
 msgstr ""
+"\n"
+"Widget Web Editor Odoo.\n"
+"==========================\n"
+"\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_web
@@ -3845,6 +3889,12 @@ msgid ""
 "Romanian accounting chart and localization.\n"
 "    "
 msgstr ""
+"\n"
+"Ini adalah modul untuk mengelola Bagan Akuntansi, struktur PPN, Posisi Fiskal dan Pemetaan Pajak.\n"
+"Itu juga menambahkan Nomor Registrasi untuk Rumania di Odoo.\n"
+"================================================== ================================================== ============ \n"
+"\n"
+"Bagan dan pelokalan akuntansi Rumania."
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_ca
@@ -4462,6 +4512,18 @@ msgid ""
 "project.\n"
 "        "
 msgstr ""
+"\n"
+"Integrasi Transifex\n"
+"===================== \n"
+"Modul ini akan menambahkan tautan ke proyek Transifex dalam tampilan terjemahan.\n"
+"Tujuan dari modul ini adalah untuk mempercepat terjemahan dari modul-modul utama.\n"
+"\n"
+"Untuk cara kerja, Odoo menggunakan file konfigurasi Transifex `.tx/config` untuk mendeteksi file\n"
+"sumber proyek. Modul khusus tidak akan diterjemahkan (karena tidak dipublikasikan pada\n"
+"proyek Transifex utama) .\n"
+"\n"
+"Bahasa yang coba diterjemahkan oleh pengguna harus diaktifkan pada proyek\n"
+"Transifex."
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_tr
@@ -4735,12 +4797,12 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
 msgid "%Y - Year with century.\""
-msgstr ""
+msgstr "%Y - Tahun dengan Abad.\""
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
 msgid "%a - Abbreviated weekday name."
-msgstr ""
+msgstr "%a - Nama hari yang disingkat."
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
@@ -4755,7 +4817,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
 msgid "%j - Day of the year [001,366].\""
-msgstr ""
+msgstr "%j - Hari di Tahun [001,366].\""
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.res_lang_form
@@ -4870,7 +4932,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "- relation ="
-msgstr ""
+msgstr "- hubungan ="
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -4890,7 +4952,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.module_form
 msgid "-This module does not create report."
-msgstr ""
+msgstr "-Module ini tidak membuat laporan."
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.module_form
@@ -5132,7 +5194,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
 msgid "<strong>Rq</strong>"
-msgstr ""
+msgstr "<strong>Rq</strong>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -5488,7 +5550,7 @@ msgstr ""
 #: model:ir.module.module,description:base.module_test_exceptions
 #: model:ir.module.module,description:base.module_test_mimetypes
 msgid "A module to generate exceptions."
-msgstr ""
+msgstr "Sebuah modul untuk menghasilkan pengecualian."
 
 #. module: base
 #: model:ir.module.module,description:base.module_test_pylint
@@ -6121,7 +6183,7 @@ msgstr "Setelah Jumlah"
 #. module: base
 #: model:res.partner.industry,name:base.res_partner_industry_A
 msgid "Agriculture"
-msgstr ""
+msgstr "Agrikultur"
 
 #. module: base
 #: model:res.country,name:base.al
@@ -6210,7 +6272,7 @@ msgstr ""
 #. module: base
 #: model:res.country,name:base.as
 msgid "American Samoa"
-msgstr ""
+msgstr "Samoa Amerika"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_act_client_tag
@@ -6450,7 +6512,7 @@ msgstr ""
 #: code:addons/base/res/res_lang.py:53
 #, python-format
 msgid "At least one language must be active."
-msgstr ""
+msgstr "Setidaknya ada satu bahasa yang harus aktif."
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_attachment_search
@@ -6542,7 +6604,7 @@ msgstr "Nama Pembuat"
 #: model:ir.module.module,description:base.module_payment_authorize
 #: model:ir.module.module,shortdesc:base.module_payment_authorize
 msgid "Authorize.Net Payment Acquirer"
-msgstr ""
+msgstr "Penerima Pembayaran Authorize.Net"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_act_window_auto_search
@@ -6572,7 +6634,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_gengo
 msgid "Automated Translations through Gengo API"
-msgstr ""
+msgstr "Terjemahan Otomatis melalui Gengo API"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_module_module_auto_install
@@ -6595,7 +6657,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.menu,name:base.menu_automation
 msgid "Automation"
-msgstr ""
+msgstr "Otomatisasi"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.ir_filters_view_form
@@ -6840,7 +6902,7 @@ msgstr ""
 #: model:ir.cron,cron_name:base.autovacuum_job
 #: model:ir.cron,name:base.autovacuum_job
 msgid "Base: Auto-vacuum internal data"
-msgstr ""
+msgstr "Basis: Bersihkan otomatis internal data"
 
 #. module: base
 #: model:ir.actions.server,name:base.action_server_module_immediate_install
@@ -7276,7 +7338,7 @@ msgstr ""
 #: code:addons/base/ir/ir_model.py:581
 #, python-format
 msgid "Cannot rename/delete fields that are still present in views:"
-msgstr ""
+msgstr "Tidak dapat merubah nama/menghapus kolom yang masih ada dalam bagan:"
 
 #. module: base
 #: code:addons/base/res/res_lang.py:221
@@ -7894,7 +7956,7 @@ msgstr "Wisaya Konfigurasi"
 #. module: base
 #: model:ir.module.module,summary:base.module_timesheet_grid_sale
 msgid "Configure timesheet invoicing"
-msgstr ""
+msgstr "Konfigurasi faktur jadwal"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_base_module_uninstall
@@ -8162,7 +8224,7 @@ msgstr "Membuat Hak Akses"
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_server_action_form
 msgid "Create Contextual Action"
-msgstr ""
+msgstr "Buat Tindakan Kontekstual"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_logging_create_date
@@ -8668,7 +8730,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_server_action_form
 msgid "Data to Write"
-msgstr ""
+msgstr "Data untuk di Tulis"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.ir_logging_search_view
@@ -8711,6 +8773,8 @@ msgid ""
 "Database fetch misses ids ({}) and has extra ids ({}), may be caused by a "
 "type incoherence in a previous request"
 msgstr ""
+"Pengambilan databasis dengan id yang hilang ({}) dan mempunyai tambahan id "
+"({}), mungkin dikarenakan kesalahan jenis data di permintaan sebelumnya"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_currency_date
@@ -9779,7 +9843,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_event_barcode_mobile
 msgid "Event Barcode scan in Mobile"
-msgstr ""
+msgstr "Pindai Barcode Acara di Mobile"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_event_management
@@ -9849,7 +9913,7 @@ msgstr ""
 #. module: base
 #: selection:ir.actions.server,state:0
 msgid "Execute several actions"
-msgstr ""
+msgstr "Laksanakan beberapa tindakan"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.ir_cron_view_search
@@ -9939,7 +10003,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_address_extended
 msgid "Extended Addresses"
-msgstr ""
+msgstr "Alamat Tambahan"
 
 #. module: base
 #: selection:ir.ui.view,mode:0
@@ -9965,7 +10029,7 @@ msgstr "ID Eksternal"
 #: model:ir.model.fields,field_description:base.field_ir_model_data_name
 #: model:ir.ui.view,arch_db:base.view_model_data_search
 msgid "External Identifier"
-msgstr ""
+msgstr "Pengenal Eksternal"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_model_data
@@ -10600,7 +10664,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_res_partner_email_formatted
 #: model:ir.model.fields,field_description:base.field_res_users_email_formatted
 msgid "Formatted Email"
-msgstr ""
+msgstr "Email yang telah diformat"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_forum
@@ -10626,7 +10690,7 @@ msgstr ""
 #. module: base
 #: model:res.country,name:base.fr
 msgid "France"
-msgstr ""
+msgstr "Perancis"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_fr
@@ -10709,7 +10773,7 @@ msgstr ""
 #: selection:ir.actions.act_window,target:0
 #: selection:ir.actions.client,target:0
 msgid "Full Screen"
-msgstr ""
+msgstr "Tampilan Layar Penuh"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_logging_func
@@ -10724,7 +10788,7 @@ msgstr ""
 #. module: base
 #: selection:ir.module.module,license:0
 msgid "GPL Version 2"
-msgstr ""
+msgstr "GPL Versi 2"
 
 #. module: base
 #: selection:ir.module.module,license:0
@@ -10813,12 +10877,12 @@ msgstr "Pengaturan Umum"
 #: model:ir.ui.menu,name:base.menu_wizard_update_translations
 #: model:ir.ui.view,arch_db:base.wizard_update_translations
 msgid "Generate Missing Terms"
-msgstr ""
+msgstr "Buat istilah yang hilang"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.ir_property_view_search
 msgid "Generic"
-msgstr ""
+msgstr "Umum"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_generic_coa
@@ -10866,7 +10930,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mail_github
 msgid "Github Integration with Discuss"
-msgstr ""
+msgstr "Integrasi Github dengan Discuss"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_rule_global
@@ -10960,7 +11024,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_google_drive
 msgid "Google Drive™ integration"
-msgstr ""
+msgstr "Integrasi Google Drive™"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_google_spreadsheet
@@ -10970,7 +11034,7 @@ msgstr "Google Spreadsheet"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_google_account
 msgid "Google Users"
-msgstr ""
+msgstr "Pengguna Google"
 
 #. module: base
 #: selection:ir.actions.act_window.view,view_mode:0
@@ -11012,7 +11076,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_grid
 msgid "Grid View"
-msgstr ""
+msgstr "Tampilan Garis Grid"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_access_group_id
@@ -11079,7 +11143,7 @@ msgstr ""
 #. module: base
 #: model:res.country,name:base.gp
 msgid "Guadeloupe"
-msgstr ""
+msgstr "Guadeloupe"
 
 #. module: base
 #: model:res.country,name:base.gu
@@ -11109,7 +11173,7 @@ msgstr ""
 #. module: base
 #: model:res.country,name:base.gw
 msgid "Guinea-Bissau"
-msgstr ""
+msgstr "Gugini-Bissau"
 
 #. module: base
 #: model:res.country,name:base.gy
@@ -11277,7 +11341,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.category,description:base.module_category_hr_timesheet
 msgid "Helps you manage the timesheets."
-msgstr ""
+msgstr "Membantu Anda mengelola bagan lembar waktu."
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_event_management
@@ -11297,7 +11361,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.category,description:base.module_category_hr_expense
 msgid "Helps you manage your expenses."
-msgstr ""
+msgstr "Membantu Anda dalam mengelola pengeluaran."
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_warehouse_management
@@ -11432,7 +11496,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:base.view_model_fields_form
 #: model:ir.ui.view,arch_db:base.view_model_form
 msgid "How to define a computed field"
-msgstr ""
+msgstr "Bagaimana mendefinisikan kolom yang dikomputasi"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_recruitment_survey
@@ -11467,7 +11531,7 @@ msgstr ""
 #. module: base
 #: model:res.partner.industry,full_name:base.res_partner_industry_I
 msgid "I ACCOMMODATION AND FOOD SERVICE ACTIVITIES"
-msgstr ""
+msgstr "I Akomodasi dan Kegiatan Pelayanan Pangan"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_iban
@@ -11794,7 +11858,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_base_module_uninstall_module_ids
 msgid "Impacted modules"
-msgstr ""
+msgstr "Modul yang terkena dampak"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_sequence_implementation
@@ -11972,7 +12036,7 @@ msgstr "Tampilan Turunan"
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_view_form
 msgid "Inherited Views"
-msgstr ""
+msgstr "Tampilan Turunan"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_inherited_model_ids
@@ -12125,7 +12189,7 @@ msgstr "Referensi internal"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_translation_src
 msgid "Internal Source"
-msgstr ""
+msgstr "Sumber Internal"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_users_search
@@ -12256,7 +12320,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_stock_account
 msgid "Inventory, Logistic, Valuation, Accounting"
-msgstr ""
+msgstr "Stok Persediaan. Logistik, Pemeriksaan, Akuntansi"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_stock
@@ -13325,6 +13389,8 @@ msgid ""
 "Manage sectors of activity to better classify partners for tracking and "
 "analysis purposes."
 msgstr ""
+"Mengelola sektor aktivitas untuk lebih baik mengklasifikasikan rekanan untuk"
+" tujuan pelacakan dan analisis."
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_partner_title_contact
@@ -13499,7 +13565,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_wizard_ir_model_menu_create_name
 msgid "Menu Name"
-msgstr ""
+msgstr "Nama Menu"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_module_module_menus_by_module
@@ -13824,6 +13890,8 @@ msgid ""
 "Module loading %s failed: file %s could not be processed:\n"
 " %s"
 msgstr ""
+"Pemasangan modul %s gagal: berkas %s tidak dapat diproses:\n"
+" %s"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_translation_module
@@ -13940,7 +14008,7 @@ msgstr "Penyaring saya"
 #. module: base
 #: model:res.country,name:base.mm
 msgid "Myanmar"
-msgstr ""
+msgstr "Myanmar"
 
 #. module: base
 #: model:res.partner.industry,full_name:base.res_partner_industry_N
@@ -14915,6 +14983,63 @@ msgid ""
 "The real time collaborative writings on notes makes it the perfect tool to collaborate on meeting minutes. Attendees will be able to contribute to the minutes, attach important documents or discuss on the related thread.\n"
 "\n"
 msgstr ""
+"Catatan Odoo\n"
+"---------- \n"
+"\n"
+"Organisasi dan Atur diri Anda dengan <a href=\"https://www.odoo.com/page/notes\"> daftar todo dan catatan secara efisien</a>.\n"
+"Dari tugas pribadi hingga rapat sejenak yang kolaboratif, tingkatkan produktivitas pengguna Anda\n"
+"dengan memberi mereka alat untuk memprioritaskan pekerjaan mereka, bagikan\n"
+"ide merekadan kolaborasi melalui dokumen.\n"
+"\n"
+"Daftar tugas pribadi yang berfungsi\n"
+"------------------------------- \n"
+"\n"
+"Buat to-dos dengan cepat, organisasikan secara horizontal untuk jangka menengah (hari ini, minggu ini, bulan ini, ...), prioritaskan secara vertikal untuk jangka pendek dan grup dengan menetapkan warna. Pendekatan kanban memungkinkan organisasi visual sederhana dari to-dos. Anda\n"
+"\n"
+"### Mengalahkan Kerja Berlebih\n"
+"\n"
+"Rasakan betapa bagusnya mengandalkan cara terstruktur untuk mengatur pekerjaan Anda alih-alih menyimpan semuanya dalam ingatan. Gunakan catatan untuk [Get Things Done] (http://en.wikipedia.org/wiki/Getting_Things_Done) .\n"
+"\n"
+"### Prioritaskan Secara Efisien\n"
+"\n"
+"Kebanyakan orang tersesat dalam arus tugas harian yang mendesak dan memiliki kesulitan untuk mengerjakan tugas-tugas penting dan jangka panjang. Catatan memberi Anda cara sederhana untuk mengalokasikan waktu harian untuk melakukan tugas-tugas penting, tetapi kurang mendesak .\n"
+"\n"
+"### Temukan Motivasi untuk Menyelesaikan Tugas\n"
+"\n"
+"Orang biasa mengerjakan tugas yang mereka sukai dan bukan tugas penting. Mulailah merasa baik dengan memeriksa tugas yang telah selesai .\n"
+"\n"
+"Beradaptasi dengan Proses Kreatif Anda\n"
+"------------------------------- \n"
+"\n"
+"### Sesuaikan dengan alur kerja Anda sendiri\n"
+"\n"
+"Setiap orang memiliki cara mereka sendiri untuk mengatur kegiatan. Pendekatan kanban cerdas Odoo Notes memungkinkan setiap pengguna untuk menyesuaikan langkah mereka sendiri untuk memproses tiap to-dos dan catatan.\n"
+"\n"
+"### Seseorang yang Kreatif\n"
+"\n"
+"Orang yang kreatif akan mengatur catatan berdasarkan tingkat kematangan ide: Konsep Draf **Ide Matang **Ditentukan **Untuk Dilakukan\n"
+"\n"
+"### Seorang Pelancong yang sering Bepergian\n"
+"\n"
+"Seorang karyawan yang sering bepergian dapat mengatur tugas mereka berdasarkan konteks untuk melakukan tugas tersebut: Kantor A.S. | Kantor London | Untuk Ditinjau selama Penerbangan | Di Rumah\n"
+"\n"
+"### Seorang Manajer\n"
+"\n"
+"Seorang manajer akan mengatur jumlah tugas mereka yang tinggi berdasarkan pada prioritas: Todo Hari Ini | Minggu Ini | Bulan Ini | Nanti\n"
+"\n"
+"Catatan Pribadi\n"
+"--------------- \n"
+"\n"
+"### Catatan bersifat pribadi tetapi dapat dibagikan\n"
+"\n"
+"Tulis ide-ide Anda dalam catatan, simpan catatan Anda di ujung jari Anda, lampirkan dokumen terkait dan gunakan tag dan warna untuk mengatur informasi. Setelah ide Anda matang, Anda dapat membagikannya kepada pengguna lain, mulai membahasnya dan berkolaborasi dengan meningkatkan spesifikasi di buku catatan .\n"
+"\n"
+"Rapat Sejenak yang Kolaboratif\n"
+"----------------------------- \n"
+"\n"
+"### Pembagian catatan dengan waktu realtime dan penggunaan edisi catatan\n"
+"\n"
+"Tulisan kolaboratif dengan waktu realtime pada catatan menjadikannya alat yang sempurna untuk berkolaborasi pada rapat sejenak. Peserta akan dapat berkontribusi pada notulen, melampirkan dokumen penting atau berdiskusi di utas terkait .\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_point_of_sale
@@ -15643,7 +15768,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_crm
 msgid "Opportunity to Quotation"
-msgstr ""
+msgstr "Kesempatan sampai Penawaran"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_act_window_domain
@@ -15684,7 +15809,7 @@ msgstr "Sandi opsional untuk autentikasi SMTP"
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_mail_server_smtp_user
 msgid "Optional username for SMTP authentication"
-msgstr ""
+msgstr "Nama pengguna opsional untuk auntetikasi SMTP"
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_event_track
@@ -16222,7 +16347,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_payment_transfer
 msgid "Payment Acquirer: Transfer Implementation"
-msgstr ""
+msgstr "Pengakuisisi Pembayaran : Implementasi pemindahan transfer"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_reports_followup
@@ -16752,6 +16877,8 @@ msgid ""
 "Provide the field used to link the newly created record on the record on "
 "used by the server action."
 msgstr ""
+"Menyediakan kolom yang biasa dikaitkan dengan data yang baru dibuat pada "
+"data yang digunakan oleh proses server"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_hw_screen
@@ -16851,7 +16978,7 @@ msgstr "Kode Python"
 #. module: base
 #: selection:ir.server.object.lines,type:0
 msgid "Python expression"
-msgstr ""
+msgstr "Ekspresi Python"
 
 #. module: base
 #: model:res.partner.industry,full_name:base.res_partner_industry_Q
@@ -17344,7 +17471,7 @@ msgstr "Faktor Pembulatan"
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_rule_form
 msgid "Rule Definition (Domain Filter)"
-msgstr ""
+msgstr "Definisi Aturan (Filter Domain)"
 
 #. module: base
 #: sql_constraint:ir.rule:0
@@ -17457,7 +17584,7 @@ msgstr ""
 #. module: base
 #: model:res.country,name:base.kn
 msgid "Saint Kitts and Nevis"
-msgstr ""
+msgstr "Saint Kitts dan Nevis"
 
 #. module: base
 #: model:res.country,name:base.lc
@@ -17502,7 +17629,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_coupon_delivery
 msgid "Sale Coupon Delivery"
-msgstr ""
+msgstr "Pengiriman Kupon Penjualan"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_service_rating
@@ -17778,7 +17905,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_timesheet
 msgid "Sell based on timesheets"
-msgstr ""
+msgstr "Penjualan berdasarkan jadwal"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_account
@@ -17847,7 +17974,7 @@ msgstr ""
 #. module: base
 #: model:res.country,name:base.sn
 msgid "Senegal"
-msgstr ""
+msgstr "Senegal"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_lang_grouping
@@ -17964,6 +18091,8 @@ msgid ""
 "Setting a value makes this action available in the sidebar for the given "
 "model."
 msgstr ""
+"Menetapkan sebuah nilai membuat tindakan ini menjadi tersedia pada bagan "
+"sisi untuk model tersebut."
 
 #. module: base
 #: code:addons/base/res/res_users.py:567
@@ -18023,7 +18152,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_currency_search
 msgid "Show active currencies"
-msgstr ""
+msgstr "Tampilkan mata uang yang aktif"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_currency_search
@@ -18621,7 +18750,7 @@ msgstr "NPWP"
 #. module: base
 #: selection:ir.mail_server,smtp_encryption:0
 msgid "TLS (STARTTLS)"
-msgstr ""
+msgstr "TLS (STARTTLS)"
 
 #. module: base
 #: selection:report.paperformat,format:0
@@ -18647,7 +18776,7 @@ msgstr "Tag"
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_partner_form
 msgid "Tags..."
-msgstr ""
+msgstr "Tags..."
 
 #. module: base
 #: model:res.country,name:base.tw
@@ -19339,7 +19468,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,description:base.module_test_access_rights
 msgid "Testing of access restrictions"
-msgstr ""
+msgstr "Pengujian pembatasan akses"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_tests
@@ -19389,6 +19518,8 @@ msgid ""
 "The ISO country code in two chars. \n"
 "You can use this field for quick search."
 msgstr ""
+"Kode ISO negara dalam dua karakter.\n"
+"Anda dapat menggunakan kolom ini untuk pencarian cepat."
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:366
@@ -19573,11 +19704,21 @@ msgid "The list of models that extends the current model."
 msgstr ""
 
 #. module: base
+#: code:addons/base/ir/ir_model.py:522
+#, python-format
+msgid ""
+"The m2o field %s is required but declares its ondelete policy as being 'set "
+"null'. Only 'restrict' and 'cascade' make sense."
+msgstr ""
+
+#. module: base
 #: model:ir.model.fields,help:base.field_ir_filters_action_id
 msgid ""
 "The menu action this filter applies to. When left empty the filter applies "
 "to all menus for this model."
 msgstr ""
+"Filter untuk Tindakan pada Menu Apabila dikosongkan maka filter berlaku pada"
+" semua menu untuk model ini."
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:135
@@ -19622,7 +19763,7 @@ msgstr "Nama bahasa harus unik"
 #. module: base
 #: sql_constraint:ir.module.module:0
 msgid "The name of the module must be unique!"
-msgstr ""
+msgstr "Nama module harus unik!"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_sequence_number_increment
@@ -20581,7 +20722,7 @@ msgstr "Url"
 #. module: base
 #: model:res.country,name:base.uy
 msgid "Uruguay"
-msgstr ""
+msgstr "Uruguay"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_uy_reports
@@ -20620,6 +20761,11 @@ msgid ""
 "This allow the user to send badges to employees instead of simple users.\n"
 "Badge received are displayed on the user profile.\n"
 msgstr ""
+"Gunakan sumberdaya HR untuk proses pengelolaan.\n"
+"\n"
+"Karyawan HR sekarang dapat mengelola dan rintangan dan badges.\n"
+"Ini memungkinkan pengguna mengirimkan badges pada karyawan alih alih pada pengguna biasa.\n"
+"Badge yang diterima ditampilkan pada profil pengguna.\n"
 
 #. module: base
 #: code:addons/base/ir/ir_fields.py:209 code:addons/base/ir/ir_fields.py:241
@@ -20870,7 +21016,7 @@ msgstr ""
 #. module: base
 #: model:res.country,name:base.vu
 msgid "Vanuatu"
-msgstr ""
+msgstr "Vanuatu"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_server_action_form
@@ -20964,7 +21110,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_name
 msgid "View Name"
-msgstr ""
+msgstr "Nama Tampilan"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_act_window_view_id
@@ -21029,7 +21175,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_ui_view_inherit_children_ids
 msgid "Views which inherit from this one"
-msgstr ""
+msgstr "Bagan yang diturunkan dari yang satu ini"
 
 #. module: base
 #: model:res.country,name:base.vg
@@ -21099,7 +21245,7 @@ msgstr "Peringatan"
 #. module: base
 #: model:res.partner.industry,name:base.res_partner_industry_E
 msgid "Water supply"
-msgstr ""
+msgstr "Sumber Air"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_base_module_upgrade_install
@@ -21131,7 +21277,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_gantt
 msgid "Web Gantt"
-msgstr ""
+msgstr "Gantt Web"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_ui_menu_web_icon
@@ -22190,7 +22336,7 @@ msgstr "pos_sale"
 #. module: base
 #: selection:ir.model.fields,ttype:0
 msgid "reference"
-msgstr ""
+msgstr "Referensi"
 
 #. module: base
 #: model:ir.model,name:base.model_report_base_report_irmodulereference

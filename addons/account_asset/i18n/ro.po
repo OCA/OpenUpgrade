@@ -3,19 +3,22 @@
 # * account_asset
 # 
 # Translators:
-# Dorin Hongu <dhongu@gmail.com>, 2017
-# Martin Trigaux, 2017
-# Cozmin Candea <office@terrabit.ro>, 2017
 # Sergiu Baltariu <s_baltariu@yahoo.com>, 2017
 # Iulian Cutui <iulian.cutui@gmail.com>, 2017
+# Cozmin Candea <office@terrabit.ro>, 2017
 # Fekete Mihai <mihai.fekete@forestandbiomass.ro>, 2017
+# Martin Trigaux, 2017
+# Dorin Hongu <dhongu@gmail.com>, 2018
+# Foldi Robert <foldirobert@nexterp.ro>, 2020
+# Hongu Cosmin <cosmin513@gmail.com>, 2020
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-30 13:11+0000\n"
-"PO-Revision-Date: 2017-11-30 13:11+0000\n"
-"Last-Translator: Fekete Mihai <mihai.fekete@forestandbiomass.ro>, 2017\n"
+"PO-Revision-Date: 2017-09-20 10:14+0000\n"
+"Last-Translator: Hongu Cosmin <cosmin513@gmail.com>, 2020\n"
 "Language-Team: Romanian (https://www.transifex.com/odoo/teams/41243/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,6 +74,8 @@ msgstr "Înregistrare contabilă"
 #: model:ir.model.fields,help:account_asset.field_account_asset_category_account_depreciation_id
 msgid "Account used in the depreciation entries, to decrease the asset value."
 msgstr ""
+"Cont utilizat în intrările de amortizare, pentru a reduce valoarea "
+"activului."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset_category_account_depreciation_expense_id
@@ -78,12 +83,15 @@ msgid ""
 "Account used in the periodical entries, to record a part of the asset as "
 "expense."
 msgstr ""
+"Cont utilizat în intrările periodice, pentru a înregistra o parte din activ "
+"ca cheltuială."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset_category_account_asset_id
 msgid ""
 "Account used to record the purchase of the asset at its original price."
 msgstr ""
+"Cont utilizat pentru înregistrarea achiziției bunului la prețul inițial."
 
 #. module: account_asset
 #. openerp-web
@@ -198,7 +206,7 @@ msgstr "Categorie de  active"
 #: code:addons/account_asset/models/account_asset.py:286
 #, python-format
 msgid "Asset created"
-msgstr ""
+msgstr "Activ creat"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_asset_depreciation_line
@@ -210,6 +218,8 @@ msgstr "Linia de devalorizare a activelor"
 #, python-format
 msgid "Asset sold or disposed. Accounting entry awaiting for validation."
 msgstr ""
+"Activ vândut sau eliminat.  Înregistrare contabilă în așteptare pentru "
+"validare"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_asset_asset
@@ -446,7 +456,7 @@ msgstr "Data devalorizarii"
 #. module: account_asset
 #: model:ir.ui.view,arch_db:account_asset.view_account_asset_category_form
 msgid "Deferred Revenue Account"
-msgstr ""
+msgstr "Cantitate de venituri decalate"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_product_product_deferred_revenue_category_id
@@ -458,7 +468,7 @@ msgstr ""
 #. module: account_asset
 #: model:ir.ui.view,arch_db:account_asset.view_account_asset_category_search
 msgid "Deferred Revenues"
-msgstr ""
+msgstr "Venituri decalate"
 
 #. module: account_asset
 #: selection:account.asset.asset,method:0
@@ -754,7 +764,7 @@ msgstr "Modifica Activele"
 #. module: account_asset
 #: model:ir.ui.view,arch_db:account_asset.view_account_asset_asset_form
 msgid "Modify Depreciation"
-msgstr ""
+msgstr "Modifică amortizarea"
 
 #. module: account_asset
 #: model:ir.ui.view,arch_db:account_asset.view_account_asset_search
@@ -764,7 +774,7 @@ msgstr "Luna"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_invoice_line_asset_mrr
 msgid "Monthly Recurring Revenue"
-msgstr ""
+msgstr "Venituri Recurente Lunare"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_depreciation_line_remaining_value

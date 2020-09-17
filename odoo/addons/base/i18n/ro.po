@@ -3,12 +3,14 @@
 # * base
 # 
 # Translators:
-# Fekete Mihai <mihai.fekete@forestandbiomass.ro>, 2017
 # Iulian Cutui <iulian.cutui@gmail.com>, 2017
 # Cozmin Candea <office@terrabit.ro>, 2018
 # sharkutz <sharkutz4life@yahoo.com>, 2019
 # Martin Trigaux, 2019
+# Fekete Mihai <mihai.fekete@forestandbiomass.ro>, 2020
 # Dorin Hongu <dhongu@gmail.com>, 2020
+# Hongu Cosmin <cosmin513@gmail.com>, 2020
+# Foldi Robert <foldirobert@nexterp.ro>, 2020
 # 
 msgid ""
 msgstr ""
@@ -16,7 +18,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-03 15:05+0000\n"
 "PO-Revision-Date: 2017-09-20 10:13+0000\n"
-"Last-Translator: Dorin Hongu <dhongu@gmail.com>, 2020\n"
+"Last-Translator: Foldi Robert <foldirobert@nexterp.ro>, 2020\n"
 "Language-Team: Romanian (https://www.transifex.com/odoo/teams/41243/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -694,6 +696,8 @@ msgid ""
 "        Print amount in words on checks issued for expenses\n"
 "    "
 msgstr ""
+"\n"
+"Tipăriți suma în cuvinte pe cecurile emise pentru cheltuieli"
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_sparse_field
@@ -1351,6 +1355,11 @@ msgid ""
 "You can define your own carrier for prices. When creating\n"
 "invoices from picking, the system is able to add and compute the shipping line.\n"
 msgstr ""
+"\n"
+"Vă permite să adăugați metode de livrare la comenzile de vânzare și la ridicare.\n"
+"===========================================================================\n"
+"\n"
+"Vă puteți defini propriul operator de transport . Când creați facturile din livrare, sistemul este capabil să adauge și să calculeze  transportul.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_mrp_account
@@ -5765,7 +5774,7 @@ msgstr ""
 #: model:ir.module.module,description:base.module_test_exceptions
 #: model:ir.module.module,description:base.module_test_mimetypes
 msgid "A module to generate exceptions."
-msgstr ""
+msgstr "Un modul pentru a genera excepții."
 
 #. module: base
 #: model:ir.module.module,description:base.module_test_pylint
@@ -5815,7 +5824,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,description:base.module_test_limits
 msgid "A module with dummy methods."
-msgstr ""
+msgstr "Un modul cu metode fictive."
 
 #. module: base
 #: code:addons/base/ir/ir_qweb/fields.py:397
@@ -5996,7 +6005,7 @@ msgstr "Numărul de cont trebuie să fie unic"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_taxcloud
 msgid "Account TaxCloud"
-msgstr ""
+msgstr "Cont TaxCloud"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sale_account_taxcloud
@@ -6834,7 +6843,7 @@ msgstr "Nume autor"
 #: model:ir.module.module,description:base.module_payment_authorize
 #: model:ir.module.module,shortdesc:base.module_payment_authorize
 msgid "Authorize.Net Payment Acquirer"
-msgstr ""
+msgstr "Colector plată Authorize.Net  "
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_act_window_auto_search
@@ -6849,7 +6858,7 @@ msgstr ""
 #. module: base
 #: selection:ir.actions.server,usage:0
 msgid "Automated Action"
-msgstr ""
+msgstr "Acțiune automată "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_automation
@@ -7154,7 +7163,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_batch_deposit
 msgid "Batch Deposit"
-msgstr ""
+msgstr "Lot Depozit"
 
 #. module: base
 #: selection:res.country,name_position:0
@@ -7274,7 +7283,7 @@ msgstr "Binar"
 #: model:ir.model.fields,field_description:base.field_ir_actions_binding_model_id_274
 #: model:ir.model.fields,field_description:base.field_ir_cron_binding_model_id
 msgid "Binding Model"
-msgstr ""
+msgstr "Model legare"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_act_client_binding_type
@@ -7286,7 +7295,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:base.field_ir_actions_binding_type_275
 #: model:ir.model.fields,field_description:base.field_ir_cron_binding_type
 msgid "Binding Type"
-msgstr ""
+msgstr "Tip Legare"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hw_blackbox_be
@@ -7351,7 +7360,7 @@ msgstr "Insula Bouvet"
 #. module: base
 #: selection:res.company,external_report_layout:0
 msgid "Boxed"
-msgstr ""
+msgstr "În cutie"
 
 #. module: base
 #: model:res.country,name:base.br
@@ -7841,7 +7850,7 @@ msgstr ""
 #. module: base
 #: selection:res.company,external_report_layout:0
 msgid "Clean"
-msgstr ""
+msgstr "Curat"
 
 #. module: base
 #: model:ir.actions.act_window,help:base.action_ui_view_custom
@@ -8808,12 +8817,12 @@ msgstr "Cursuri valutare"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_currency_currency_subunit_label
 msgid "Currency Subunit"
-msgstr ""
+msgstr "Subunitate valutară"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_currency_currency_subunit_label
 msgid "Currency Subunit Name"
-msgstr ""
+msgstr "Nume subunitate valutară"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_currency_currency_unit_label
@@ -9088,7 +9097,7 @@ msgstr "Depanare"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_currency_decimal_places
 msgid "Decimal Places"
-msgstr ""
+msgstr "Zecimale"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_decimal_precision
@@ -9133,7 +9142,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_deferred_revenue
 msgid "Deferred Revenues"
-msgstr ""
+msgstr "Venituri decalate"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_subscription_asset
@@ -9920,7 +9929,7 @@ msgstr "Email gateway"
 #: model:ir.module.category,name:base.module_category_mass_mailing
 #: model:ir.module.module,shortdesc:base.module_mass_mailing
 msgid "Email Marketing"
-msgstr ""
+msgstr "Marketing E-mail"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_users_form_simple_modif
@@ -10928,7 +10937,7 @@ msgstr "Format adresă de email  \"Name <email@domain>\""
 #: model:ir.model.fields,field_description:base.field_res_partner_email_formatted
 #: model:ir.model.fields,field_description:base.field_res_users_email_formatted
 msgid "Formatted Email"
-msgstr ""
+msgstr "E-mail formatat"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_forum
@@ -13364,7 +13373,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_link_tracker
 msgid "Link Tracker"
-msgstr ""
+msgstr "Urmărire Link"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_sale
@@ -14101,6 +14110,8 @@ msgid ""
 "Model for record creation / update. Set this field only to specify a "
 "different model than the base model."
 msgstr ""
+"Model pentru crearea / actualizarea înregistrărilor. Setați acest câmp doar "
+"pentru a specifica un model diferit de modelul de bază."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_act_window_res_model
@@ -14117,7 +14128,7 @@ msgstr "Model negăsit: %(model)s"
 #: model:ir.model.fields,help:base.field_ir_act_server_model_id
 #: model:ir.model.fields,help:base.field_ir_cron_model_id
 msgid "Model on which the server action runs."
-msgstr ""
+msgstr "Model pe care se execută acțiunea serverului."
 
 #. module: base
 #: code:addons/model.py:142 code:addons/model.py:152
@@ -16586,7 +16597,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_payment_authorize
 msgid "Payment Acquirer: Authorize.net Implementation"
-msgstr ""
+msgstr "Procesator Plată: Implementare Authorize.net"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_payment_buckaroo
@@ -16638,7 +16649,7 @@ msgstr ""
 #: model:ir.module.module,description:base.module_payment_paypal
 #: model:ir.module.module,shortdesc:base.module_payment_paypal
 msgid "Paypal Payment Acquirer"
-msgstr ""
+msgstr "Procesator Plată Paypal"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_hr_payroll
@@ -16907,7 +16918,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_hr_expense_check
 msgid "Print amount in words on checks issued for expenses"
-msgstr ""
+msgstr "Tipăriți suma în cuvinte pe cecurile emise pentru cheltuieli"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_print_docsaway
@@ -17216,7 +17227,7 @@ msgstr "Achiziție"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_purchase_requisition
 msgid "Purchase Agreements"
-msgstr ""
+msgstr "Acorduri Achiziție"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_purchase
@@ -17424,7 +17435,7 @@ msgstr "Reguli de înregistrare"
 #: code:addons/models.py:3235 code:addons/models.py:4020
 #, python-format
 msgid "Records:"
-msgstr ""
+msgstr "Înregistrări:"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_hr_recruitment
@@ -18371,6 +18382,8 @@ msgid ""
 "Setting a value makes this action available in the sidebar for the given "
 "model."
 msgstr ""
+"Setarea unei valori face această acțiune disponibilă în bara laterală pentru"
+" modelul dat."
 
 #. module: base
 #: code:addons/base/res/res_users.py:567
@@ -18450,7 +18463,7 @@ msgstr "Sierra Leone"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sign
 msgid "Sign"
-msgstr ""
+msgstr "Semn"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_users_signature
@@ -18510,7 +18523,7 @@ msgstr "Omite"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_slides
 msgid "Slides"
-msgstr ""
+msgstr "Diapozitive"
 
 #. module: base
 #: model:res.country,name:base.sk
@@ -19997,6 +20010,14 @@ msgid "The list of models that extends the current model."
 msgstr ""
 
 #. module: base
+#: code:addons/base/ir/ir_model.py:522
+#, python-format
+msgid ""
+"The m2o field %s is required but declares its ondelete policy as being 'set "
+"null'. Only 'restrict' and 'cascade' make sense."
+msgstr ""
+
+#. module: base
 #: model:ir.model.fields,help:base.field_ir_filters_action_id
 msgid ""
 "The menu action this filter applies to. When left empty the filter applies "
@@ -20178,6 +20199,8 @@ msgid ""
 "The server is busy right now, module operations are not possible at this "
 "time, please try again later."
 msgstr ""
+"Serverul este ocupat chiar acum, operațiunile modulului nu sunt posibile în "
+"acest moment, încercați din nou mai târziu."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_country_state_code
@@ -20518,7 +20541,7 @@ msgstr "Interfața cu ecran tactil pentru magazine"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_tour
 msgid "Tours"
-msgstr ""
+msgstr "Ture"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_event
@@ -21813,6 +21836,8 @@ msgid ""
 "When dealing with multiple actions, the execution order is based on the "
 "sequence. Low number means high priority."
 msgstr ""
+"Atunci când aveți de-a face cu mai multe acțiuni, ordinea de execuție se "
+"bazează pe secvență. Număr redus înseamnă prioritate mare"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_mail_server_sequence

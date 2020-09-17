@@ -69,7 +69,7 @@ class StockMoveLine(models.Model):
         if move.state == 'done':
             correction_value = move._run_valuation(res.qty_done)
             if move.product_id.valuation == 'real_time' and (move._is_in() or move._is_out()):
-                move.with_context(force_valuation_amount=correction_value)._account_entry_move()
+                move.with_context(force_valuation_amount=correction_value, forced_quantity=res.qty_done)._account_entry_move()
         return res
 
     @api.multi
@@ -323,6 +323,7 @@ class StockMove(models.Model):
 
     def _run_valuation(self, quantity=None):
         self.ensure_one()
+        value_to_return = 0
         if self._is_in():
             valued_move_lines = self.move_line_ids.filtered(lambda ml: not ml.location_id._should_be_valued() and ml.location_dest_id._should_be_valued() and not ml.owner_id)
             valued_quantity = 0
@@ -334,18 +335,20 @@ class StockMove(models.Model):
             vals = {}
             price_unit = self._get_price_unit()
             value = price_unit * (quantity or valued_quantity)
+            value_to_return = value if quantity is None or not self.value else self.value
             vals = {
                 'price_unit': price_unit,
-                'value': value if quantity is None or not self.value else self.value,
+                'value': value_to_return,
                 'remaining_value': value if quantity is None else self.remaining_value + value,
             }
             vals['remaining_qty'] = valued_quantity if quantity is None else self.remaining_qty + quantity
 
             if self.product_id.cost_method == 'standard':
                 value = self.product_id.standard_price * (quantity or valued_quantity)
+                value_to_return = value if quantity is None or not self.value else self.value
                 vals.update({
                     'price_unit': self.product_id.standard_price,
-                    'value': value if quantity is None or not self.value else self.value,
+                    'value': value_to_return,
                 })
             self.write(vals)
         elif self._is_out():
@@ -353,12 +356,13 @@ class StockMove(models.Model):
             valued_quantity = 0
             for valued_move_line in valued_move_lines:
                 valued_quantity += valued_move_line.product_uom_id._compute_quantity(valued_move_line.qty_done, self.product_id.uom_id)
-            self.env['stock.move']._run_fifo(self, quantity=quantity)
+            value_to_return = self.env['stock.move']._run_fifo(self, quantity=quantity)
             if self.product_id.cost_method in ['standard', 'average']:
                 curr_rounding = self.company_id.currency_id.rounding
                 value = -float_round(self.product_id.standard_price * (valued_quantity if quantity is None else quantity), precision_rounding=curr_rounding)
+                value_to_return = value if quantity is None else self.value + value
                 self.write({
-                    'value': value if quantity is None else self.value + value,
+                    'value': value_to_return,
                     'price_unit': value / valued_quantity,
                 })
         elif self._is_dropshipped() or self._is_dropshipped_returned():
@@ -370,12 +374,14 @@ class StockMove(models.Model):
             else:
                 price_unit = self.product_id.standard_price
             value = float_round(self.product_qty * price_unit, precision_rounding=curr_rounding)
+            value_to_return = value if self._is_dropshipped() else -value
             # In move have a positive value, out move have a negative value, let's arbitrary say
             # dropship are positive.
             self.write({
-                'value': value if self._is_dropshipped() else -value,
+                'value': value_to_return,
                 'price_unit': price_unit if self._is_dropshipped() else -price_unit,
             })
+        return value_to_return
 
     def _action_done(self):
         self.product_price_update_before_done()
@@ -508,10 +514,8 @@ class StockMove(models.Model):
             'product_variant_ids')
         fifo_valued_categories = self.env['product.category'].search([('property_cost_method', '=', 'fifo')])
         fifo_valued_products |= self.env['product.product'].search([('categ_id', 'child_of', fifo_valued_categories.ids)])
-        moves_to_vacuum = self.env['stock.move']
-        for product in fifo_valued_products:
-            moves_to_vacuum |= self.search(
-                [('product_id', '=', product.id), ('remaining_qty', '<', 0)] + self._get_all_base_domain())
+        moves_to_vacuum = self.search(
+            [('product_id', 'in', fifo_valued_products.ids), ('remaining_qty', '<', 0)] + self._get_all_base_domain())
         moves_to_vacuum._fifo_vacuum()
 
     @api.multi

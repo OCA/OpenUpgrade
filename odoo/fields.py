@@ -920,10 +920,17 @@ class Field(MetaField('DummyField', (object,), {})):
             if model._table_has_rows():
                 model._init_column(self.name)
 
-        if self.required and not has_notnull:
-            sql.set_not_null(model._cr, model._table, self.name)
-        elif not self.required and has_notnull:
-            sql.drop_not_null(model._cr, model._table, self.name)
+        if self.required:
+            if not has_notnull:
+                err_msg = sql.set_not_null(model._cr, model._table, self.name)
+                if err_msg:
+                    model.pool._notnull_errors.setdefault((model._table, self.name), err_msg)
+        else:
+            if has_notnull:
+                sql.drop_not_null(model._cr, model._table, self.name)
+            # the NOT NULL constraint should not be there, so make sure to not
+            # log an error message about its absence
+            model.pool._notnull_errors.pop((model._table, self.name), None)
 
     def update_db_index(self, model, column):
         """ Add or remove the index corresponding to ``self``.
@@ -1699,6 +1706,12 @@ class Binary(Field):
     @property
     def column_type(self):
         return None if self.attachment else ('bytea', 'bytea')
+
+    def _get_attrs(self, model, name):
+        attrs = super(Binary, self)._get_attrs(model, name)
+        if not attrs.get('store', True):
+            attrs['attachment'] = False
+        return attrs
 
     _description_attachment = property(attrgetter('attachment'))
 
