@@ -49,13 +49,15 @@ account      / account.account.type     / internal_group (selection)    : select
 account      / account.bank.statement.cashbox / end_bank_stmt_ids (one2many)  : NEW relation: account.bank.statement
 account      / account.bank.statement.cashbox / start_bank_stmt_ids (one2many): NEW relation: account.bank.statement
 account      / account.bank.statement.line / transaction_type (char)       : NEW
-account      / account.chart.template   / default_cash_difference_expense_account_id (many2one): NEW relation: account.account.template
-account      / account.chart.template   / default_cash_difference_income_account_id (many2one): NEW relation: account.account.template
-account      / account.chart.template   / default_pos_receivable_account_id (many2one): NEW relation: account.account.template
 account      / account.chart.template   / property_advance_tax_payment_account_id (many2one): NEW relation: account.account.template
 account      / account.chart.template   / property_tax_payable_account_id (many2one): NEW relation: account.account.template
 account      / account.chart.template   / property_tax_receivable_account_id (many2one): NEW relation: account.account.template
 # NOTHING TO DO: (tentative)
+
+account      / account.chart.template   / default_cash_difference_expense_account_id (many2one): NEW relation: account.account.template
+account      / account.chart.template   / default_cash_difference_income_account_id (many2one): NEW relation: account.account.template
+account      / account.chart.template   / default_pos_receivable_account_id (many2one): NEW relation: account.account.template
+# NOTHING TO DO: Filled by each localization module (l10n_xx)
 
 account      / account.fiscal.position  / company_id (many2one)         : now required, req_default: function
 # DONE: post-migration: filled empty cases
@@ -505,11 +507,13 @@ account      / account.tax.template     / refund_repartition_line_ids (one2many)
 # DONE: post-migration: apply similar changes done for account.tax
 
 account      / res.company              / account_default_pos_receivable_account_id (many2one): NEW relation: account.account
-account      / res.company              / accrual_default_journal_id (many2one): NEW relation: account.journal
 account      / res.company              / default_cash_difference_expense_account_id (many2one): NEW relation: account.account
 account      / res.company              / default_cash_difference_income_account_id (many2one): NEW relation: account.account
+# DONE: end-migration: created (if not yet existing) and assigned
+
+account      / res.company              / accrual_default_journal_id (many2one): NEW relation: account.journal
 account      / res.company              / expense_accrual_account_id (many2one): NEW relation: account.account
-# NOTHING TO DO: new features
+# NOTHING TO DO: Non required values that are not filled when loading char template
 
 account      / res.company              / fiscalyear_last_month (selection): selection_keys is now '['1', '10', '11', '12', '2', '3', '4', '5', '6', '7', '8', '9']' ('[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]')
 # DONE: post-migration: mapped values

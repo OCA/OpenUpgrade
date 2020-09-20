@@ -162,8 +162,8 @@ def migration_invoice_moves(env):
         ai.source_email, ai.vendor_display_name, ai.cash_rounding_id,
         ai.create_uid, ai.create_date, ai.write_uid, ai.write_date)
         FROM account_invoice ai
-        WHERE am.old_invoice_id = ai.id AND ai.state not in ('draft', 'cancel')
-        RETURNING am.old_invoice_id, am.id
+        WHERE am.id = ai.move_id AND ai.state not in ('draft', 'cancel')
+        RETURNING ai.id, am.id
         """,
     )
     ids1 = env.cr.fetchall()
