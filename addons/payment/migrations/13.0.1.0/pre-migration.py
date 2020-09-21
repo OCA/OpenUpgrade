@@ -1,20 +1,20 @@
 # Copyright 2020 Payam Yasaie <https://www.tashilgostar.com>
+# Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib import openupgrade
+from psycopg2 import sql
 
-_column_copies = {
-    'account_invoice_transaction_rel': [
-        ('invoice_id', None, None),
-    ],
-
-}
+_tables_rename = [
+    ("account_invoice_transaction_rel", "openupgrade_legacy_13_0_ait_rel")
+]
 
 _column_renames = {
-    'payment_acquirer': [
-        ('website_published', None),
-    ],
+    'payment_acquirer': [('website_published', None)],
+}
 
+_column_copies = {
+    'payment_acquirer': [('environment', None, None)],  # Preserve source value
 }
 
 _field_renames = [
@@ -27,10 +27,30 @@ _xmlid_renames = [
 ]
 
 
+def map_payment_acquirer_state(cr):
+    """ Adapt payment acquirer states to new definition.
+
+    Done here for avoiding possible errors due to invalid state value when
+    updating records.
+    """
+    openupgrade.logged_query(
+        cr,
+        sql.SQL(
+            """UPDATE payment_acquirer
+            SET state = CASE WHEN {} THEN 'enabled' ELSE 'disabled' END
+            WHERE {} = 'prod'"""
+        ).format(
+            sql.Identifier(openupgrade.get_legacy_name('website_published')),
+            sql.Identifier(openupgrade.get_legacy_name('environment'))
+        )
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
-    openupgrade.rename_fields(env, _field_renames)
     openupgrade.copy_columns(env.cr, _column_copies)
+    openupgrade.rename_tables(env.cr, _tables_rename)
+    openupgrade.rename_fields(env, _field_renames)
     openupgrade.rename_columns(env.cr, _column_renames)
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
     # Fix image of payment.acquirer after renaming column to image_128
@@ -42,3 +62,4 @@ def migrate(env, version):
         WHERE res_field = 'image_medium' and res_model = 'payment.acquirer'
         """,
     )
+    map_payment_acquirer_state(env.cr)
