@@ -17,3 +17,5 @@ def migrate(env, version):
     openupgrade.load_data(
         env.cr, 'point_of_sale', 'migrations/10.0.1.0.1/noupdate_changes.xml',
     )
+    openupgrade.set_xml_ids_noupdate_value(
+        env, "point_of_sale", ["seq_picking_type_posout"], True)
