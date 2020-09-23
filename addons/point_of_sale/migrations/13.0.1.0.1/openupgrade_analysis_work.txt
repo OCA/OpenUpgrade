@@ -174,5 +174,7 @@ DEL ir.ui.view: point_of_sale.view_account_bank_journal_form_inherited_pos
 DEL ir.ui.view: point_of_sale.view_account_journal_search_inherit_point_of_sale
 DEL ir.ui.view: point_of_sale.view_pos_open_statement
 NEW mail.activity.type: point_of_sale.mail_activity_old_session
-DEL stock.picking.type: point_of_sale.picking_type_posout
 # NOTHING TO DO: noupdate=0
+
+DEL stock.picking.type: point_of_sale.picking_type_posout
+# DONE: post-migration: Remove XML-ID, as the picking type may be in use

@@ -86,37 +86,6 @@ def delete_pos_order_line_with_empty_order_id(env):
     )
 
 
-def fill_stock_warehouse_pos_type_id(env):
-    warehouses = env['stock.warehouse'].search([('pos_type_id', '=', False)])
-    for warehouse in warehouses:
-        all_used_colors = [res['color'] for res in env[
-            'stock.picking.type'].search_read(
-            [('warehouse_id', '!=', False), ('color', '!=', False)],
-            ['color'], order='color')]
-        available_colors = [
-            zef for zef in range(0, 12) if zef not in all_used_colors]
-        color = available_colors[0] if available_colors else 0
-        sequence = env['ir.sequence'].sudo().create({
-            'name': warehouse.name + ' ' + 'Picking POS',
-            'prefix': warehouse.code + '/POS/',
-            'padding': 5,
-            'company_id': warehouse.company_id.id,
-        })
-        pos_type = env['stock.picking.type'].create({
-            'name': 'PoS Orders',
-            'code': 'outgoing',
-            'default_location_src_id': warehouse.lot_stock_id.id,
-            'default_location_dest_id': env.ref(
-                'stock.stock_location_customers').id,
-            'sequence': sequence.id,
-            'sequence_code': 'POS',
-            'company_id': warehouse.company_id.id,
-            'warehouse_id': warehouse.id,
-            'color': color,
-        })
-        warehouse.write({'pos_type_id': pos_type.id})
-
-
 @openupgrade.migrate()
 def migrate(env, version):
     fill_pos_config_default_cashbox_id(env)
@@ -126,6 +95,5 @@ def migrate(env, version):
     fill_pos_config_barcode_nomenclature_id(env)
     fill_pos_config_module_pos_hr(env)
     delete_pos_order_line_with_empty_order_id(env)
-    fill_stock_warehouse_pos_type_id(env)
     openupgrade.delete_records_safely_by_xml_id(env, _unlink_by_xmlid)
     openupgrade.load_data(env.cr, 'point_of_sale', 'migrations/13.0.1.0.1/noupdate_changes.xml')
