@@ -182,7 +182,7 @@ DEL ir.actions.report: stock_zebra.label_picking_type [renamed to stock module]
 DEL ir.actions.report: stock_zebra.label_product_packaging [renamed to stock module]
 DEL ir.actions.report: stock_zebra.label_product_product [renamed to stock module]
 DEL ir.actions.report: stock_zebra.label_product_template [renamed to stock module]
-# DONE: pre-migration (renamed)
+# NOTHING TO DO (automatically done in merge)
 
 NEW ir.actions.server: stock.action_view_quants
 NEW ir.actions.server: stock.model_stock_inventory_line_action_recompute_quantity
@@ -272,7 +272,7 @@ DEL stock.location: stock.location_inventory (noupdate)
 DEL stock.location: stock.location_production (noupdate)
 DEL stock.location: stock.stock_location_scrapped (noupdate)
 # DONE: post-migration: mapped them to new locations
-# DONE: end-migration (removed if possible) (end-migration because they will be used in other modules like mrp)
+# DONE: end-migration delete XML-ID (end-migration because they will be used in other modules like mrp)
 
 DEL stock.location: stock.location_procurement (noupdate)
-# NOTHING TO DO: don't delete because it may be linked to old quants/moves
+# DONE: end-migration: delete XML-ID for avoiding the automatic removal in case of coming from older versions (<=v10)

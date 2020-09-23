@@ -44,15 +44,6 @@ _xmlid_renames = [
     ('stock.access_stock_fixed_putaway_strat', 'stock.access_stock_putaway_manager'),
     ('stock.access_stock_fixed_putaway_user', 'stock.access_stock_putaway_all'),
     ('stock.access_stock_forecast_user', 'stock.access_report_stock_quantity'),
-    # ir.actions.report
-    ('stock_zebra.label_barcode_product_product', 'stock.label_barcode_product_product'),
-    ('stock_zebra.label_barcode_product_template', 'stock.label_barcode_product_template'),
-    ('stock_zebra.label_lot_template', 'stock.label_lot_template'),
-    ('stock_zebra.label_package_template', 'stock.label_package_template'),
-    ('stock_zebra.label_picking_type', 'stock.label_picking_type'),
-    ('stock_zebra.label_product_packaging', 'stock.label_product_packaging'),
-    ('stock_zebra.label_product_product', 'stock.label_product_product'),
-    ('stock_zebra.label_product_template', 'stock.label_product_template'),
 ]
 
 
