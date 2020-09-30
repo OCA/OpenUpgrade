@@ -398,9 +398,6 @@ account      / account.payment          / reconciled_invoice_ids (many2many): re
 account      / account.payment          / multi (boolean)               : DEL
 # NOTHING TO DO: it's somewhat related to the removed 'multi' from 'ir.actions.act_window'
 
-account      / account.payment.term.line / option (selection)            : selection_keys is now '['day_after_invoice_date', 'day_current_month', 'day_following_month']' ('['after_invoice_month', 'day_after_invoice_date', 'day_current_month', 'day_following_month']')
-# DONE: post-migration: reallocated 'after_invoice_month' option to 'day_following_month'
-
 account      / account.reconcile.model  / analytic_tag_ids (many2many)  : table is now 'account_reconcile_model_analytic_tag_rel' ('account_analytic_tag_account_reconcile_model_rel')
 account      / account.reconcile.model  / second_analytic_tag_ids (many2many): table is now 'account_reconcile_model_second_analytic_tag_rel' ('account_analytic_tag_account_reconcile_model_rel')
 # DONE: pre-migration: many2many table rename of analytic_tag_ids (we cannot do the same for second_analytic_tag_ids)

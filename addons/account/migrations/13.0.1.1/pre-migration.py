@@ -9,9 +9,6 @@ _column_copies = {
     'res_company': [
         ('fiscalyear_last_month', None, None),
     ],
-    'account_payment_term_line': [
-        ('option', None, None),
-    ],
 }
 
 _column_renames = {
@@ -42,6 +39,8 @@ _field_renames = [
 
 _field_sale_renames = [
     ('res.company', 'res_company', 'sale_note', 'invoice_terms'),
+    ('res.config.settings', 'res_config_settings',
+     'use_sale_note', 'use_invoice_terms'),
 ]
 
 _model_renames = [
@@ -259,6 +258,13 @@ def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
     if openupgrade.table_exists(cr, 'sale_order'):
         openupgrade.rename_fields(env, _field_sale_renames)
+        # https://github.com/odoo/odoo/commit/ca25a692bd19fdca2b2600f2054eb419aae28999
+        openupgrade.logged_query(
+            env.cr, """
+            UPDATE ir_config_parameter
+            SET key = 'account.use_invoice_terms'
+            WHERE key = 'sale.use_sale_note'"""
+        )
     openupgrade.rename_models(cr, _model_renames)
     openupgrade.rename_tables(cr, _table_renames)
     type_change_account_fiscal_position_zips(env)

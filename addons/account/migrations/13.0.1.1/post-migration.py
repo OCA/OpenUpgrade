@@ -87,18 +87,13 @@ def fill_account_journal_restrict_mode_hash_table(env):
         UPDATE account_journal
         SET restrict_mode_hash_table = TRUE
         WHERE {} != TRUE
+        RETURNING id
         """.format(openupgrade.get_legacy_name('update_posted'))
     )
-
-
-def map_account_payment_term_line_option_after_invoice_month(env):
-    openupgrade.map_values(
-        env.cr,
-        openupgrade.get_legacy_name('option'),
-        'option',
-        [('after_invoice_month', 'day_following_month')],
-        table='account_payment_term_line',
-    )
+    ids = [x[0] for x in env.cr.fetchall()]
+    if ids:
+        env['account.journal'].browse(ids)._create_secure_sequence(
+            ['secure_sequence_id'])
 
 
 def archive_account_tax_type_tax_use_adjustment(env):
@@ -154,8 +149,7 @@ def migration_invoice_moves(env):
         ai.amount_untaxed_signed, ai.amount_tax_company_signed, COALESCE(
         ai.amount_total_company_signed, ai.amount_total_signed),
         COALESCE(ai.residual_company_signed, ai.residual_signed),
-        ai.fiscal_position_id, ai.user_id, CASE WHEN ai.state = 'cancel'
-        THEN 'cancel' ELSE 'posted' END, CASE WHEN ai.state IN (
+        ai.fiscal_position_id, ai.user_id, 'posted', CASE WHEN ai.state IN (
         'in_payment', 'paid') THEN ai.state ELSE 'not_paid' END,
         ai.date_invoice, ai.date_due, ai.name, ai.sent, ai.origin,
         ai.payment_term_id, ai.partner_bank_id, ai.incoterm_id,
@@ -234,18 +228,20 @@ def migration_invoice_moves(env):
         env.cr, """
         INSERT INTO account_move_line (company_id, account_id,
         exclude_from_invoice_tab, sequence, name, quantity, price_unit, discount,
-        price_subtotal, price_total, currency_id, partner_id, product_uom_id,
+        price_subtotal, price_total, company_currency_id, currency_id, partner_id, product_uom_id
         product_id, analytic_account_id, display_type, is_rounding_line,
         move_id, old_invoice_line_id, create_uid, create_date, write_uid,
         write_date)
         SELECT ail.company_id, ail.account_id, FALSE, ail.sequence, ail.name,
         ail.quantity, ail.price_unit, ail.discount, ail.price_subtotal,
-        ail.price_total, ail.currency_id, ail.partner_id, ail.uom_id,
+        ail.price_total, rc.currency_id, CASE WHEN rc.currency_id != ail.currency_id
+        THEN ail.currency_id ELSE NULL END, ail.partner_id, ail.uom_id,
         ail.product_id, ail.account_analytic_id, ail.display_type,
         ail.is_rounding_line, COALESCE(ai.move_id, am.id), ail.id,
         ail.create_uid, ail.create_date, ail.write_uid, ail.write_date
         FROM account_invoice_line ail
             JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state IN ('draft', 'cancel')
+            LEFT JOIN res_company rc ON ail.company_id = rc.id
         LEFT JOIN account_move am ON am.old_invoice_id = ai.id
         LEFT JOIN account_account aa ON ai.account_id = aa.id
         WHERE am.id IS NOT NULL AND
@@ -272,11 +268,13 @@ def migration_invoice_moves(env):
         INSERT INTO account_move_line (company_id, account_id,
         sequence, name, price_unit, currency_id, tax_base_amount,
         tax_line_id, analytic_account_id, move_id, old_invoice_tax_id,
+        exclude_from_invoice_tab, parent_state, quantity, partner_id,
         create_uid, create_date, write_uid, write_date)
         SELECT ait.company_id, ait.account_id, ait.sequence, ait.name,
         ait.amount, ait.currency_id, ait.base, ait.tax_id,
         ait.account_analytic_id, COALESCE(ai.move_id, am.id),
-        ait.id, ait.create_uid, ait.create_date, ait.write_uid, ait.write_date
+        ait.id,  TRUE, am.state, 1.0, ai.commercial_partner_id,
+        ait.create_uid, ait.create_date, ait.write_uid, ait.write_date
         FROM account_invoice_tax ait
         JOIN account_invoice ai ON ait.invoice_id = ai.id AND ai.state IN ('draft', 'cancel')
         LEFT JOIN account_move am ON am.old_invoice_id = ai.id
@@ -330,12 +328,34 @@ def migration_invoice_moves(env):
         WHERE amlatr.account_tax_id IS NULL
         """,
     )
+    # Allow pass check_balance constrain
+    openupgrade.logged_query(
+        env.cr, """
+            UPDATE account_move_line aml
+            SET credit = 0.0
+            WHERE credit IS NULL
+            """,
+    )
+    openupgrade.logged_query(
+        env.cr, """
+            UPDATE account_move_line aml
+            SET debit = 0.0
+            WHERE debit IS NULL
+            """,
+    )
     # Compute balance for Draft Invoice Lines
-    draft_invoices = env['account.move'].search([('state', 'in', ('draft', 'cancel'))])
-    for invoice_line in draft_invoices.line_ids:
-        vals = invoice_line._get_fields_onchange_subtotal()
-        invoice_line.write(vals)
-    draft_invoices.with_context(check_move_validity=False)._recompute_dynamic_lines()
+    draft_invoices = env['account.move'].search(
+        [('state', 'in', ('draft', 'cancel'))]).with_context(
+        check_move_validity=False)
+    draft_invoices.line_ids.read([
+        'price_unit', 'quantity', 'discount', 'currency_id', 'product_id',
+        'partner_id', 'tax_ids', 'move_id', 'price_subtotal',
+        'recompute_tax_line',
+        'exclude_from_invoice_tab', 'amount_currency', 'balance',
+        'tax_repartition_line_id',
+    ])
+    draft_invoices.line_ids._onchange_price_subtotal()
+    draft_invoices._recompute_dynamic_lines(recompute_all_taxes=True)
 
 
 def migration_voucher_moves(env):
@@ -352,10 +372,8 @@ def migration_voucher_moves(env):
         CASE WHEN av.voucher_type = 'purchase' THEN 'in_receipt'
         ELSE 'out_receipt' END, av.journal_id, av.company_id,
         av.currency_id, av.partner_id, av.tax_amount, av.amount,
-        CASE WHEN av.state = 'proforma' THEN 'posted' ELSE av.state END,
-        CASE WHEN av.state = 'cancel' THEN 'not_paid' ELSE 'paid' END,
-        av.account_date, av.date_due, av.name, av.create_uid, av.create_date,
-        av.write_uid, av.write_date)
+        'posted', 'paid', av.account_date, av.date_due, av.name,
+        av.create_uid, av.create_date, av.write_uid, av.write_date)
         FROM account_voucher av
         WHERE am.old_voucher_id = av.id AND av.state not in (
             'draft', 'cancel', 'proforma')
@@ -373,7 +391,8 @@ def migration_voucher_moves(env):
         SELECT message_main_attachment_id, COALESCE(number, '/'), date,
         reference, narration, CASE WHEN voucher_type = 'purchase'
         THEN 'in_receipt' ELSE 'out_receipt' END, journal_id, company_id,
-        currency_id, partner_id, tax_amount, amount, state, 'not_paid',
+        currency_id, partner_id, tax_amount, amount, CASE WHEN av.state = 'proforma'
+        THEN 'posted' ELSE av.state END, 'not_paid',
         account_date, date_due, name, id, create_uid, create_date, write_uid,
         write_date
         FROM account_voucher av
@@ -745,7 +764,6 @@ def migrate(env, version):
     fill_account_account_type_internal_group(env)
     map_account_journal_post_at_bank_rec(env)
     fill_account_journal_restrict_mode_hash_table(env)
-    map_account_payment_term_line_option_after_invoice_month(env)
     archive_account_tax_type_tax_use_adjustment(env)
     fill_account_journal_invoice_reference_type(env)
     migration_invoice_moves(env)
