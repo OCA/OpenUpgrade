@@ -1,6 +1,6 @@
 ---Models in module 'l10n_no'---
 ---Fields in module 'l10n_no'---
-l10n_no      / account.journal          / invoice_reference_model (False): NEW selection_keys: ['ch', 'euro', 'no', 'odoo'], mode: modify
+l10n_no      / account.journal          / invoice_reference_model (False): NEW selection_keys: ['ch', 'euro', 'fi', 'fi_rf', 'no', 'odoo'], mode: modify
 ---XML records in module 'l10n_no'---
 DEL account.account.tag: l10n_no.tag_no_01 (noupdate)
 DEL account.account.tag: l10n_no.tag_no_02 (noupdate)
@@ -490,6 +490,7 @@ account.account.template: l10n_no.chart8990 (noupdate switched)
 account.account.template: l10n_no.chart9970 (noupdate switched)
 account.account.template: l10n_no.chart9990 (noupdate switched)
 account.account.template: l10n_no.no_a_cash (noupdate switched)
+account.chart.template: l10n_no.no_chart_template (noupdate switched)
 NEW account.tax.report.line: l10n_no.account_tax_report_line_beregnet_inngaende_avgift_hoy_sats
 NEW account.tax.report.line: l10n_no.account_tax_report_line_beregnet_inngaende_avgift_lav_sats
 NEW account.tax.report.line: l10n_no.account_tax_report_line_beregnet_inngaende_avgift_mellom_sats
