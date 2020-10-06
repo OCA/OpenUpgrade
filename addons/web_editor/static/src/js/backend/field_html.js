@@ -252,7 +252,7 @@ var FieldHtml = basic_fields.DebouncedField.extend(TranslatableFieldMixin, {
             dataPointID: this.dataPointID,
             changes: _.object([this.fieldNameAttachment], [{
                 operation: 'ADD_M2M',
-                ids: attachments
+                ids: attachments.data,
             }])
         });
     },
@@ -449,6 +449,19 @@ var FieldHtml = basic_fields.DebouncedField.extend(TranslatableFieldMixin, {
         $lis.not('[id]').each(function () {
             $(this).attr('id', 'checklist-id-' + (++max));
         });
+    },
+    /**
+     * Allows Enter keypress in a textarea (source mode)
+     *
+     * @private
+     * @param {OdooEvent} ev
+     */
+    _onKeydown: function (ev) {
+        if (ev.which === $.ui.keyCode.ENTER && $(ev.target).is('textarea')) {
+            ev.stopPropagation();
+            return;
+        }
+        this._super.apply(this, arguments);
     },
     /**
      * Method called when wysiwyg triggers a change.

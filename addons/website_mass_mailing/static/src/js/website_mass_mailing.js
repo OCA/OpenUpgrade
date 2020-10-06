@@ -32,9 +32,13 @@ publicWidget.registry.subscribe = publicWidget.Widget.extend({
         var always = function (data) {
             var isSubscriber = data.is_subscriber;
             self.$('.js_subscribe_btn').prop('disabled', isSubscriber);
-            self.$('input.js_subscribe_email')
-                .val(data.email || "")
-                .prop('disabled', isSubscriber);
+            var $input = self.$('input.js_subscribe_email');
+            // Handle removed input (eg. inside sanitized Html field)
+            $input = $input.length ? $input : $(
+                '<input type="email" name="email" class="js_subscribe_email form-control"/>'
+            ).prependTo(self.$el);
+            $input.val(data.email || "").prop('disabled', isSubscriber);
+            // Compat: remove d-none for DBs that have the button saved with it.
             self.$target.removeClass('d-none');
             self.$('.js_subscribe_btn').toggleClass('d-none', !!isSubscriber);
             self.$('.js_subscribed_btn').toggleClass('d-none', !isSubscriber);
@@ -45,15 +49,6 @@ publicWidget.registry.subscribe = publicWidget.Widget.extend({
                 'list_id': this.$target.data('list-id'),
             },
         }).then(always).guardedCatch(always)]);
-    },
-    /**
-     * @override
-     */
-    destroy: function () {
-        if (!this.editableMode) {
-            this.$target.addClass('d-none');
-        }
-        this._super.apply(this, arguments);
     },
 
     //--------------------------------------------------------------------------

@@ -233,7 +233,10 @@ class StockQuant(models.Model):
     def check_quantity(self):
         for quant in self:
             if float_compare(quant.quantity, 1, precision_rounding=quant.product_uom_id.rounding) > 0 and quant.lot_id and quant.product_id.tracking == 'serial':
-                raise ValidationError(_('A serial number should only be linked to a single product.'))
+                message_base = _('A serial number should only be linked to a single product.')
+                message_quant = _('Please check the following serial number (name, id): ')
+                message_sn = '(%s, %s)' % (quant.lot_id.name, quant.lot_id.id)
+                raise ValidationError("\n".join([message_base, message_quant, message_sn]))
 
     @api.constrains('location_id')
     def check_location_id(self):
@@ -720,6 +723,11 @@ class QuantPackage(models.Model):
             ])
             move_line_to_modify.write({'package_id': False})
             package.mapped('quant_ids').sudo().write({'package_id': False})
+
+        # Quant clean-up, mostly to avoid multiple quants of the same product. For example, unpack
+        # 2 packages of 50, then reserve 100 => a quant of -50 is created at transfer validation.
+        self.env['stock.quant']._merge_quants()
+        self.env['stock.quant']._unlink_zero_quants()
 
     def action_view_picking(self):
         action = self.env.ref('stock.action_picking_tree_all').read()[0]
