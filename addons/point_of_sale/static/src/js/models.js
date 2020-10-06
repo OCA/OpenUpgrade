@@ -2007,6 +2007,7 @@ exports.Orderline = Backbone.Model.extend({
             });
             product_taxes.push.apply(product_taxes, self._map_tax_fiscal_position(tax));
         });
+        product_taxes = _.uniq(product_taxes, function(tax) { return tax.id; });
 
         var all_taxes = this.compute_all(product_taxes, price_unit, this.get_quantity(), this.pos.currency.rounding);
         var all_taxes_before_discount = this.compute_all(product_taxes, this.get_unit_price(), this.get_quantity(), this.pos.currency.rounding);
@@ -2477,7 +2478,7 @@ exports.Order = Backbone.Model.extend({
                 hour: date.getHours(),
                 minute: date.getMinutes() ,
                 isostring: date.toISOString(),
-                localestring: date.toLocaleString(),
+                localestring: this.formatted_validation_date,
             },
             company:{
                 email: company.email,
@@ -2485,7 +2486,7 @@ exports.Order = Backbone.Model.extend({
                 company_registry: company.company_registry,
                 contact_address: company.partner_id[1],
                 vat: company.vat,
-                vat_label: company.country && company.country.vat_label || '',
+                vat_label: company.country && company.country.vat_label || _t('Tax ID'),
                 name: company.name,
                 phone: company.phone,
                 logo:  this.pos.company_logo_base64,

@@ -54,7 +54,6 @@
 # Shiping Lv <lvshiping@sina.com>, 2019
 # niulin lnc. <admin@niulin.net>, 2019
 # guohuadeng <guohuadeng@hotmail.com>, 2020
-# Jeffery CHEN Fan <jeffery9@gmail.com>, 2020
 # e2f <projects@e2f.com>, 2020
 # Martin Trigaux, 2020
 # liAnGjiA <liangjia@qq.com>, 2020
@@ -64,14 +63,16 @@
 # 敬雲 林 <chingyun@yuanchih-consult.com>, 2020
 # rejen he <251442037@qq.com>, 2020
 # as co02 <asco02@163.com>, 2020
+# Jeffery CHEN Fan <jeffery9@gmail.com>, 2020
+# Mandy Choy <mnc@odoo.com>, 2020
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0+e\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-25 09:16+0000\n"
+"POT-Creation-Date: 2020-07-23 15:12+0000\n"
 "PO-Revision-Date: 2019-08-26 09:06+0000\n"
-"Last-Translator: as co02 <asco02@163.com>, 2020\n"
+"Last-Translator: Mandy Choy <mnc@odoo.com>, 2020\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/odoo/teams/41243/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1118,7 +1119,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"       此模块允许通过网格条目选择产品变量数量来快速\n"
+"       此模块允许通过网格条目选择产品变体数量来快速\n"
 "       填写销售订单。\n"
 "    "
 
@@ -1131,7 +1132,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"       此模块允许通过网格条目选择产品变量数量来快速\n"
+"       此模块允许通过网格条目选择产品变体数量来快速\n"
 "       填写销售订单。\n"
 "    "
 
@@ -1325,7 +1326,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"       通过订单网格条目向购买订单添加变量.\n"
+"       通过订单网格条目向购买订单添加变体.\n"
 "    "
 
 #. module: base
@@ -1346,7 +1347,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"       技术模块:矩阵实施\n"
+"       技术模块:矩阵实现\n"
 "    "
 
 #. module: base
@@ -1635,7 +1636,7 @@ msgid ""
 "Setup\n"
 "-----\n"
 "\n"
-"- *Configuration > Journals*\n"
+"- *Account > Configuration > invoicing > Journals*\n"
 "\n"
 "    If needed, create new journal or choose an existing journal with **Type**\n"
 "    set to *“Bank”*.\n"
@@ -1644,28 +1645,9 @@ msgid ""
 "\n"
 "    On the **Bank Account** tab, enter the **Account Number**.\n"
 "\n"
-"- *Configuration > Bank Accounts*\n"
-"\n"
-"    Account will show up in list as the journal name.\n"
-"\n"
-"    Editing will show the **Account Number**.  This is important as it is used by\n"
-"    the ABA process.\n"
-"\n"
-"    **Bank** is optional.\n"
-"\n"
-"- *Sales > Configuration > Bank Accounts > Bank Accounts*\n"
-"\n"
-"    Account will show up in list as the account number.\n"
-"\n"
-"    **ABA Payments** - Set to *“Account for Making ABA Payments”*.\n"
+"    On the same tab, ensure the ABA transfer information is set up.\n"
 "\n"
 "    **BSB** - Required, 6 digits, and will be auto formatted.\n"
-"\n"
-"    **Account Holder** - Optional.\n"
-"\n"
-"    **Account / Payee Name** - Required.  Generally not validated by the banks\n"
-"    on ABA file transfers, and may show up on the payee bank statement against\n"
-"    the payment.\n"
 "\n"
 "    **Financial Institution Code** - Required (provided by bank or can be found\n"
 "    on Google).  It is three uppercase 3 characters.\n"
@@ -1674,30 +1656,42 @@ msgid ""
 "    may reject the ABA file if the Supplying User Name is not as expected.  It\n"
 "    cannot be longer than 26 characters.\n"
 "\n"
-"    **Identification Number (APCA)** - User Identification number is bank\n"
+"    **APCA Identification Number** - User Identification number is bank\n"
 "    allocated.  It is 6 digits.\n"
 "\n"
 "    **Include Self Balancing Transaction** - Some institutions require that the\n"
 "    last be a self balancing transaction which is used as a verification.\n"
 "\n"
+"- *Accounting > Configuration > Payments > Bank Accounts*\n"
+"\n"
+"    Account will show up in list as the journal name.\n"
+"\n"
+"    Editing will show the **Account Number**.  This is important as it is used by\n"
+"    the ABA process.\n"
+"\n"
+"    **Bank** is optional.\n"
+"\n"
+"- *Contacts > Configuration > Bank Accounts > Bank Accounts*\n"
+"\n"
+"    Paying account will show up in list as the account number.\n"
+"\n"
+"    **Account Holder Name** - Can be entered here, if Required.  Generally not\n"
+"    validated by the banks on ABA file transfers, but may show up on the payee\n"
+"    bank statement against the payment.\n"
+"\n"
 "- Vendor bank accounts can be set up in the same place, however, it is\n"
 "  generally easier to set them up from the partner from for the Vendor.\n"
 "\n"
-"- *Accounting > Purchases > Vendors*\n"
+"- *Accounting > Vendors > Vendors*\n"
 "\n"
-"    On **Sales & Purchases** tab, click on *\"Bank account(s)\"* from where a\n"
+"    On **Accounting** tab, click on *\"View accounts detail\"* from where a\n"
 "    vendor bank account can be created or edited.\n"
 "\n"
-"    **Account Number** - Required.\n"
-"\n"
-"    **ABA Payments** - Set to *“Allow ABA Payments to this Account”*.\n"
+"    **Account Number** - Required, must be less than 9 digits.\n"
 "\n"
 "    **BSB** - Required, 6 digits, and will be auto formatted.\n"
 "\n"
-"    **Account Holder** - Optional.\n"
-"\n"
-"    **Account / Payee Name** - Required.  Generally not validated by the\n"
-"    banks.\n"
+"    **Account Holder Name** - Optional.\n"
 "\n"
 "Use\n"
 "---\n"
@@ -1711,118 +1705,23 @@ msgid ""
 "    Select **ABA Credit Transfer** radio button.\n"
 "\n"
 "    If the vendor has multiple bank account, you may need to select the\n"
-"    correct **Recipient Bank Account**.\n"
+"    correct **Recipient Bank Account**.  Or if paying a vendor bill, it may\n"
+"    need the correct bank account associated with it.\n"
 "\n"
 "    Enter payment amount, etc.\n"
 "\n"
-"- *Purchases > Payments*\n"
+"- *Vendors > Payments*\n"
 "\n"
 "    After payment(s) are confirmed, they will show up in the payments list.\n"
 "\n"
 "    Using filters, or sorting, select the payments to be included.  Under\n"
-"    *Actions* choose *Download ABA Payment*.  A pop up appears with the ABA\n"
-"    file from which you can click on the file to download locally.  This\n"
-"    file can then be uploaded to the bank.\n"
+"    *Actions* choose *Create batch payment*.\n"
+"\n"
+"- *Vendors > Batch Payments*\n"
+"\n"
+"    When validating a batch payment, the ABA file will be generated.  It can\n"
+"    be regenerated.  This file can then be uploaded to the bank.\n"
 msgstr ""
-"\n"
-"ABA 信用传递\n"
-"===================\n"
-"\n"
-"该模块允许支付批量处理ABA（澳大利亚\n"
-"银行家协会）文本文件.  生成的 'aba' 文件可以上传\n"
-"对许多澳大利亚银行来说.\n"
-"\n"
-"设置方法如下\n"
-"-----\n"
-"\n"
-"- *Configuration > Journals*\n"
-"\n"
-"    If needed, create new journal or choose an existing journal with **Type**\n"
-"    set to *“Bank”*.\n"
-"\n"
-"    On **Advanced Settings**, ensure ABA Credit Transfer is ticked.\n"
-"\n"
-"    On the **Bank Account** tab, enter the **Account Number**.\n"
-"\n"
-"- *Configuration > Bank Accounts*\n"
-"\n"
-"    Account will show up in list as the journal name.\n"
-"\n"
-"    Editing will show the **Account Number**.  This is important as it is used by\n"
-"    the ABA process.\n"
-"\n"
-"    **Bank** is optional.\n"
-"\n"
-"- *Sales > Configuration > Bank Accounts > Bank Accounts*\n"
-"\n"
-"    Account will show up in list as the account number.\n"
-"\n"
-"    **ABA Payments** - Set to *“Account for Making ABA Payments”*.\n"
-"\n"
-"    **BSB** - Required, 6 digits, and will be auto formatted.\n"
-"\n"
-"    **Account Holder** - Optional.\n"
-"\n"
-"    **Account / Payee Name** - Required.  Generally not validated by the banks\n"
-"    on ABA file transfers, and may show up on the payee bank statement against\n"
-"    the payment.\n"
-"\n"
-"    **Financial Institution Code** - Required (provided by bank or can be found\n"
-"    on Google).  It is three uppercase 3 characters.\n"
-"\n"
-"    **Supplying User Name** - Some banks allow this to be freeform, some banks\n"
-"    may reject the ABA file if the Supplying User Name is not as expected.  It\n"
-"    cannot be longer than 26 characters.\n"
-"\n"
-"    **Identification Number (APCA)** - User Identification number is bank\n"
-"    allocated.  It is 6 digits.\n"
-"\n"
-"    **Include Self Balancing Transaction** - Some institutions require that the\n"
-"    last be a self balancing transaction which is used as a verification.\n"
-"\n"
-"- Vendor bank accounts can be set up in the same place, however, it is\n"
-"  generally easier to set them up from the partner from for the Vendor.\n"
-"\n"
-"- *Accounting > Purchases > Vendors*\n"
-"\n"
-"    On **Sales & Purchases** tab, click on *\"Bank account(s)\"* from where a\n"
-"    vendor bank account can be created or edited.\n"
-"\n"
-"    **Account Number** - Required.\n"
-"\n"
-"    **ABA Payments** - Set to *“Allow ABA Payments to this Account”*.\n"
-"\n"
-"    **BSB** - Required, 6 digits, and will be auto formatted.\n"
-"\n"
-"    **Account Holder** - Optional.\n"
-"\n"
-"    **Account / Payee Name** - Required.  Generally not validated by the\n"
-"    banks.\n"
-"\n"
-"Use\n"
-"---\n"
-"\n"
-"- Create a vendor payment in the normal way.\n"
-"\n"
-"    Ensure the **Vendor** is one with a valid ABA payment account.\n"
-"\n"
-"    Choose the correct **Payment Journal** which is set for ABA payments.\n"
-"\n"
-"    Select **ABA Credit Transfer** radio button.\n"
-"\n"
-"    If the vendor has multiple bank account, you may need to select the\n"
-"    correct **Recipient Bank Account**.\n"
-"\n"
-"    Enter payment amount, etc.\n"
-"\n"
-"- *Purchases > Payments*\n"
-"\n"
-"    After payment(s) are confirmed, they will show up in the payments list.\n"
-"\n"
-"    Using filters, or sorting, select the payments to be included.  Under\n"
-"    *Actions* choose *Download ABA Payment*.  A pop up appears with the ABA\n"
-"    file from which you can click on the file to download locally.  This\n"
-"    file can then be uploaded to the bank.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_auto_transfer
@@ -1891,7 +1790,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"比利时薪酬规则的会计数据.\n"
+"比利时工资册规则的会计数据.\n"
 "==========================================\n"
 "    "
 
@@ -2127,8 +2026,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"为产品添加电子邮件模板来发送发票确认。\n"
-"有了这个模块，连接你的产品发送完整的信息和工具给您的客户。\n"
+"为产品模板添加电子邮件模板来发送发票确认。\n"
+"有了这个模块，连接你的产品模板发送完整的信息和工具给您的客户。\n"
 "例如为培训开票的时候，培训日程和材料将被自动发送到您的客户。“"
 
 #. module: base
@@ -2473,7 +2372,7 @@ msgstr ""
 "*成本结构报告\n"
 "此外，允许计算基于其BoM的产品成本，使用其组件和工作中心操作的成本。.\n"
 "它在产品本身上添加了一个按钮，还在产品列表视图中添加了一个操作。.\n"
-"如果自动库存评估处于启用状态，将创建必要的会计条目.\n"
+"如果自动库存评估处于启用状态，将创建必要的会计凭证.\n"
 "\n"
 
 #. module: base
@@ -2522,7 +2421,7 @@ msgstr ""
 "资产管理\n"
 "=================\n"
 "管理一个公司或一个人拥有的资产。\n"
-"跟踪贬值的，并创建相应的日记账分录。"
+"跟踪贬值的，并创建相应的会计凭证。"
 
 #. module: base
 #: model:ir.module.module,description:base.module_attachment_indexation
@@ -6359,7 +6258,7 @@ msgstr ""
 "\n"
 "该模块增加了以下功能：\n"
 "\n"
-" 不可更改性：取消或取消修改POS订单，发票和日记账分录的关键数据的所有方法\n"
+" 不可更改性：取消或取消修改POS订单，发票和会计凭证的关键数据的所有方法\n"
 "\n"
 " 安全性：链接算法验证不可比性\n"
 "\n"
@@ -6486,8 +6385,8 @@ msgstr ""
 " 这是在 Odoo 中管理产品和价格表的基础模块。\n"
 "========================================================================\n"
 "\n"
-" 产品支持变量、不同的定价方式、供应商信息、=========\n"
-" 按库存/订单生产、不同的计量单位、包装和属性。\n"
+" 产品支持产品变体、不同的定价方式、供应商信息、=========\n"
+" 按库存/订单生产、不同的计量单位、包装和产品变体。\n"
 "\n"
 " 价格表支持：\n"
 "-------------------\n"
@@ -6960,11 +6859,11 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"此模块为您的电子商务商店添加了一个比较工具，以便您的购物者可以根据其属性轻松比较产品。它将大大加快他们的购买决策。\n"
+"此模块为您的电子商务商店添加了一个比较工具，以便您的购物者可以根据其产品变体轻松比较产品。它将大大加快他们的购买决策。\n"
 "\n"
-"要配置产品属性，请在网站设置中启用*属性和变量*。这将在产品表单中添加专用部分。在配置中，此模块将类别字段添加到产品属性，以便构建购物者的比较表。\n"
+"要配置产品变体，请在网站设置中启用*产品变体和产品变体*。这将在产品表单中添加专用部分。在配置中，此模块将类别字段添加到产品变体，以便构建购物者的比较表。\n"
 "\n"
-"最后，该模块附带一个选项，用于在产品网页中显示属性摘要表（可在“自定义”菜单中找到）。\n"
+"最后，该模块附带一个选项，用于在产品网页中显示产品变体摘要表（可在“自定义”菜单中找到）。\n"
 "    "
 
 #. module: base
@@ -8370,6 +8269,14 @@ msgid ", required"
 msgstr ",必须的"
 
 #. module: base
+#: code:addons/models.py:0
+#, python-format
+msgid ""
+"- %(record)r belongs to company %(company)r and %(field)r (%(fname)s: "
+"%(values)s) belongs to another company."
+msgstr ""
+
+#. module: base
 #: code:addons/model.py:0
 #, python-format
 msgid ""
@@ -8378,6 +8285,14 @@ msgid ""
 msgstr ""
 "- 创建/更新: 未设置强制字段.\n"
 "- 删除: 另一个模型要求删除记录。如果可能的话，把它存档"
+
+#. module: base
+#: code:addons/models.py:0
+#, python-format
+msgid ""
+"- Record is company %(company)r and %(field)r (%(fname)s: %(values)s) "
+"belongs to another company."
+msgstr ""
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -9458,7 +9373,7 @@ msgstr "会计发票导出"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_invoice_extract_purchase
 msgid "Account Invoice Extract Purchase"
-msgstr ""
+msgstr "会计发票提取采购"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_company__account_no
@@ -9832,7 +9747,7 @@ msgstr "在群发邮件中添加UTM的销售订单信息"
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_product_matrix
 msgid "Add variants to Sales Order through a grid entry."
-msgstr "在销售订单中为单品Sku增加表格输入"
+msgstr "在销售订单中为变体增加表格输入"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.contact
@@ -10458,7 +10373,7 @@ msgstr "架构差异"
 #: model_terms:ir.ui.view,arch_db:base.view_sequence_search
 #: model_terms:ir.ui.view,arch_db:base.view_users_form
 msgid "Archived"
-msgstr "已停用"
+msgstr "已归档"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.base_partner_merge_automatic_wizard_form
@@ -12415,7 +12330,7 @@ msgstr "不能建立没有电子邮件地址的联系人！"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model__count
 msgid "Count (Incl. Archived)"
-msgstr "个数 (包括停用)"
+msgstr "个数 (包括归档)"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_country
@@ -12576,7 +12491,7 @@ msgstr "创建一个新公司"
 #. module: base
 #: model_terms:ir.actions.act_window,help:base.action_partner_category_form
 msgid "Create a new contact tag"
-msgstr "创建一个新联系人标签"
+msgstr "创建一个新的联系人标签"
 
 #. module: base
 #: model_terms:ir.actions.act_window,help:base.action_partner_customer_form
@@ -13180,7 +13095,7 @@ msgstr "天数"
 #: model:ir.module.module,shortdesc:base.module_account_debit_note
 #: model:ir.module.module,summary:base.module_account_debit_note
 msgid "Debit Notes"
-msgstr ""
+msgstr "Debit Notes"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_mail_server__smtp_debug
@@ -14044,7 +13959,7 @@ msgstr ""
 "------\n"
 "\n"
 " - 在税收中可以设置账户“基本税收账户”即\n"
-" 将在现金基础日记账分录和创建的行上设置的账户\n"
+" 将在收付实现制会计凭证和创建的行上设置的账户\n"
 " 用于跟踪税基金额，此账户不被视为in\n"
 " 墨西哥的报道\n"
 "\n"
@@ -15404,7 +15319,7 @@ msgstr "常规设置"
 #: model:ir.ui.menu,name:base.menu_wizard_update_translations
 #: model_terms:ir.ui.view,arch_db:base.wizard_update_translations
 msgid "Generate Missing Terms"
-msgstr "生成缺少的术语"
+msgstr "生成缺失的术语"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_crm
@@ -16641,7 +16556,7 @@ msgstr ""
 msgid ""
 "Implements the registered cash system, adhering to guidelines by FPS "
 "Finance."
-msgstr "实施注册现金制度，遵守 FPS 财务准则。"
+msgstr "实施注册现金制度，遵守 FPS规定的 财务准则。"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_translation_export
@@ -21287,7 +21202,7 @@ msgstr ""
 "-----------------------------------\n"
 "\n"
 "使用反映您的业务的成本核算方法：标准价格、平均\n"
-"价格、先进先出或后进先出。实时获取您的会计分录和正确的存货\n"
+"价格、先进先出或后进先出。实时获取您的会计凭证和正确的存货\n"
 "估价；Odoo 透明地为您管理一切。\n"
 "\n"
 "导入供应商价格表\n"
@@ -21456,7 +21371,7 @@ msgstr ""
 "编辑”*方法使网站创建变得非常简单。没有更复杂的\n"
 "后端； 只需点击任意位置即可更改任何内容。\n"
 "\n"
-"“想要更改产品的价格？或者用粗体表示？想要更改\n"
+"“想要更改产品模板的价格？或者用粗体表示？想要更改\n"
 "博客标题？”只需单击进行更改即可。眼见为实、信息实时。\n"
 "\n"
 "非常棒。非常美观。\n"
@@ -21464,7 +21379,7 @@ msgstr ""
 "\n"
 "使用 Odoo 构建块您可以设计出传统的 WYSIWYG 页面编辑器无法实现的现代网站。\n"
 "\n"
-"无论是产品描述，博客还是静态页面，即使您不是专业设计人员也可以创建出清晰的内容。只需拖放和\n"
+"无论是产品模板描述，博客还是静态页面，即使您不是专业设计人员也可以创建出清晰的内容。只需拖放和\n"
 "定制预定义的构建块。\n"
 "\n"
 "企业功能准备就绪，开箱即用\n"
@@ -21539,7 +21454,7 @@ msgstr ""
 "\n"
 "### 电子商务\n"
 "\n"
-"推广产品、在线销售、优化访客的购物体验。\n"
+"推广产品模板、在线销售、优化访客的购物体验。\n"
 "\n"
 "\n"
 "### 博客\n"
@@ -21764,7 +21679,7 @@ msgstr ""
 "----------------------\n"
 "\n"
 "全面掌控产品目录页面中产品的展示方式：\n"
-"促销区、产品的相关尺寸、折扣、单品Sku、网格/列表\n"
+"促销区、产品的相关尺寸、折扣、产品变体、网格/列表\n"
 "视图等。\n"
 "\n"
 "对任何产品进行行内编辑，根据随客户需求对网站进行调整。\n"
@@ -21799,7 +21714,7 @@ msgstr ""
 "受益于 Odoo 的强大功能，您的网上商店包含：强大的税收引擎、\n"
 "灵活的定价结构、真正的库存管理解决方案、经销商\n"
 "界面、支持具有不同行为的产品；实物商品、\n"
-"活动、服务、单品Sku和选项等。\n"
+"活动、服务、产品变体和选项等。\n"
 "\n"
 "您无需与仓库、销售或会计软件进行交互。 \n"
 "一切都与 Odoo 相集成。毫不费力，实时进行。\n"
@@ -21820,7 +21735,7 @@ msgstr ""
 "\n"
 "- 移动界面\n"
 "- 销售产品、活动或服务\n"
-"- 灵活的价格表n- 产品多种单品Sku\n"
+"- 灵活的价格表n- 产品多种产品变体\n"
 "- 多个商店\n"
 "-极佳的结算流程\n"
 "\n"
@@ -23213,7 +23128,7 @@ msgstr "预览pdf src"
 #: code:addons/base/models/ir_ui_view.py:0
 #, python-format
 msgid "Previous Arch"
-msgstr "预览视图"
+msgstr "前结构"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_ui_view__arch_prev
@@ -23308,7 +23223,7 @@ msgstr "产品比较"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_product_email_template
 msgid "Product Email Template"
-msgstr "产品 Email 模板"
+msgstr "产品电子邮件模板"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mrp_plm
@@ -25427,22 +25342,6 @@ msgid "Somalia"
 msgstr "索马里"
 
 #. module: base
-#: code:addons/models.py:0
-#, python-format
-msgid ""
-"Some records are incompatible with the company of the %(document_descr)s.\n"
-"\n"
-"Incompatibilities:\n"
-"Fields: %(fields)s\n"
-"Record ids: %(records)s\n"
-msgstr ""
-"有些记录与公司信息 %(document_descr)s.\n"
-"\n"
-"不兼容:\n"
-"字段: %(fields)s\n"
-"记录 ids: %(records)s\n"
-
-#. module: base
 #: model:ir.model.fields,help:base.field_res_bank__bic
 #: model:ir.model.fields,help:base.field_res_partner_bank__bank_bic
 msgid "Sometimes called BIC or Swift."
@@ -25563,7 +25462,7 @@ msgstr "西班牙 － 会计(PGCE 2008)"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_es_reports
 msgid "Spain - Accounting (PGCE 2008) Reports"
-msgstr "西班牙 － 会计(PGCE 2008)报表"
+msgstr "西班牙 － 会计报表(PGCE 2008)"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_sparse_field
@@ -26526,7 +26425,7 @@ msgstr "语言名称必须唯一"
 #. module: base
 #: model:ir.model.constraint,message:base.constraint_ir_module_module_name_uniq
 msgid "The name of the module must be unique!"
-msgstr "模型名称必须唯一"
+msgstr "模块名称必须唯一"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_sequence__number_increment
@@ -26987,6 +26886,14 @@ msgid ""
 msgstr ""
 "组允许此操作：\n"
 "%(groups_list)s"
+
+#. module: base
+#: code:addons/base/ir/ir_sequence.py:56
+#, python-format
+msgid ""
+"This transaction wasn't executed because another transaction is already "
+"using the same no-gap sequence. Please try again later."
+msgstr ""
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_lang__thousands_sep
@@ -27876,7 +27783,7 @@ msgid ""
 "This allow the user to send badges to employees instead of simple users.\n"
 "Badge received are displayed on the user profile.\n"
 msgstr ""
-"将 HR 资源用于游戏化过程。\n"
+"使用HR 资源于游戏化过程。\n"
 "\n"
 "人力资源专员现在可以管理挑战和徽章。\n"
 "这使得用户可以向员工（而非简单用户）发送徽章。\n"
@@ -28755,7 +28662,7 @@ msgstr "正在试图删除一个已安装或正要安装的模块"
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_users_form
 msgid "You can archive the contact"
-msgstr "你可以停用联系人"
+msgstr "你可以归档联系人"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_attachment__type
@@ -28808,7 +28715,7 @@ msgstr "你不能启用超级用户。"
 #: code:addons/base/models/res_partner.py:0
 #, python-format
 msgid "You cannot archive a contact linked to an internal user."
-msgstr "您无法停用链接到内部用户的联系人。"
+msgstr "您无法归档链接到内部用户的联系人。"
 
 #. module: base
 #: code:addons/base/models/res_partner.py:0

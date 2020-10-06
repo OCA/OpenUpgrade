@@ -15,6 +15,13 @@ class AccountMove(models.Model):
         states={'draft': [('readonly', False)]},
         string='Purchase Order',
         help="Auto-complete from a past purchase order.")
+    
+    def _get_invoice_reference(self):
+        self.ensure_one()
+        vendor_refs = [ref for ref in set(self.line_ids.mapped('purchase_line_id.order_id.partner_ref')) if ref]
+        if self.ref:
+            return [ref for ref in self.ref.split(', ') if ref and ref not in vendor_refs] + vendor_refs
+        return vendor_refs
 
     @api.onchange('purchase_vendor_bill_id', 'purchase_id')
     def _onchange_purchase_auto_complete(self):
@@ -57,9 +64,8 @@ class AccountMove(models.Model):
         self.invoice_origin = ','.join(list(origins))
 
         # Compute ref.
-        refs = set(self.line_ids.mapped('purchase_line_id.order_id.partner_ref'))
-        refs = [ref for ref in refs if ref]
-        self.ref = ','.join(refs)
+        refs = self._get_invoice_reference()
+        self.ref = ', '.join(refs)
 
         # Compute invoice_payment_ref.
         if len(refs) == 1:
@@ -72,18 +78,19 @@ class AccountMove(models.Model):
     @api.onchange('partner_id', 'company_id')
     def _onchange_partner_id(self):
         res = super(AccountMove, self)._onchange_partner_id()
-        if not self.env.context.get('default_journal_id') and self.partner_id and\
+        if self.partner_id and\
                 self.type in ['in_invoice', 'in_refund'] and\
                 self.currency_id != self.partner_id.property_purchase_currency_id and\
                 self.partner_id.property_purchase_currency_id.id:
-            journal_domain = [
-                ('type', '=', 'purchase'),
-                ('company_id', '=', self.company_id.id),
-                ('currency_id', '=', self.partner_id.property_purchase_currency_id.id),
-            ]
-            default_journal_id = self.env['account.journal'].search(journal_domain, limit=1)
-            if default_journal_id:
-                self.journal_id = default_journal_id
+            if not self.env.context.get('default_journal_id'):
+                journal_domain = [
+                    ('type', '=', 'purchase'),
+                    ('company_id', '=', self.company_id.id),
+                    ('currency_id', '=', self.partner_id.property_purchase_currency_id.id),
+                ]
+                default_journal_id = self.env['account.journal'].search(journal_domain, limit=1)
+                if default_journal_id:
+                    self.journal_id = default_journal_id
             if self.env.context.get('default_currency_id'):
                 self.currency_id = self.env.context['default_currency_id']
             if self.partner_id.property_purchase_currency_id:

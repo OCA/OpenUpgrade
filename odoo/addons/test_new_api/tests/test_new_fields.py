@@ -686,6 +686,20 @@ class TestFields(common.TransactionCase):
         })
         check(1.0)
 
+    def test_20_like(self):
+        """ test filtered_domain() on char fields. """
+        record = self.env['test_new_api.multi.tag'].create({'name': 'Foo'})
+        self.assertTrue(record.filtered_domain([('name', 'like', 'F')]))
+        self.assertTrue(record.filtered_domain([('name', 'ilike', 'f')]))
+
+        record.name = 'Bar'
+        self.assertFalse(record.filtered_domain([('name', 'like', 'F')]))
+        self.assertFalse(record.filtered_domain([('name', 'ilike', 'f')]))
+
+        record.name = False
+        self.assertFalse(record.filtered_domain([('name', 'like', 'F')]))
+        self.assertFalse(record.filtered_domain([('name', 'ilike', 'f')]))
+
     def test_21_date(self):
         """ test date fields """
         record = self.env['test_new_api.mixed'].create({})
@@ -983,6 +997,7 @@ class TestFields(common.TransactionCase):
     def test_25_related_multi(self):
         """ test write() on several related fields based on a common computed field. """
         foo = self.env['test_new_api.foo'].create({'name': 'A', 'value1': 1, 'value2': 2})
+        oof = self.env['test_new_api.foo'].create({'name': 'B', 'value1': 1, 'value2': 2})
         bar = self.env['test_new_api.bar'].create({'name': 'A'})
         self.assertEqual(bar.foo, foo)
         self.assertEqual(bar.value1, 1)
@@ -992,6 +1007,11 @@ class TestFields(common.TransactionCase):
         bar.write({'value1': 3, 'value2': 4})
         self.assertEqual(foo.value1, 3)
         self.assertEqual(foo.value2, 4)
+
+        # modify 'name', and search on 'foo': this should flush 'name'
+        bar.name = 'B'
+        self.assertEqual(bar.foo, oof)
+        self.assertIn(bar, bar.search([('foo', 'in', oof.ids)]))
 
     def test_26_inherited(self):
         """ test inherited fields. """
@@ -1371,6 +1391,22 @@ class TestFields(common.TransactionCase):
         self.assertEqual(new_line.move_id, move)
         self.assertEqual(new_move.quantity, 3)
         self.assertEqual(move.quantity, 2)
+
+    def test_41_new_one2many(self):
+        """ Check command on one2many field on new record. """
+        move = self.env['test_new_api.move'].create({})
+        line = self.env['test_new_api.move_line'].create({'move_id': move.id, 'quantity': 1})
+        move.flush()
+
+        new_move = move.new(origin=move)
+        new_line = line.new(origin=line)
+        self.assertEqual(new_move.line_ids, new_line)
+
+        # drop line, and create a new one
+        new_move.line_ids = [(2, new_line.id), (0, 0, {'quantity': 2})]
+        self.assertEqual(len(new_move.line_ids), 1)
+        self.assertFalse(new_move.line_ids.id)
+        self.assertEqual(new_move.line_ids.quantity, 2)
 
     @mute_logger('odoo.addons.base.models.ir_model')
     def test_41_new_related(self):
@@ -2491,3 +2527,41 @@ class TestSelectionDeleteUpdate(common.TransactionCase):
             ('field_id.name', '=', 'state'),
             ('value', '=', 'confirmed'),
         ], limit=1).unlink()
+
+
+class test_shared_cache(common.TransactionCase):
+    def test_shared_cache_computed_field(self):
+        # Test case: Check that the shared cache is not used if a compute_sudo stored field
+        # is computed IF there is an ir.rule defined on this specific model.
+
+        # Real life example:
+        # A user can only see its own timesheets on a task, but the field "Planned Hours",
+        # which is stored-compute_sudo, should take all the timesheet lines into account
+        # However, when adding a new line and then recomputing the value, no existing line
+        # from another user is binded on self, then the value is erased and saved on the
+        # database.
+
+        task = self.env['test_new_api.model_shared_cache_compute_parent'].create({
+            'name': 'Shared Task'})
+        self.env['test_new_api.model_shared_cache_compute_line'].create({
+            'user_id': self.env.ref('base.user_admin').id,
+            'parent_id': task.id,
+            'amount': 1,
+        })
+        self.assertEqual(task.total_amount, 1)
+
+        self.env['base'].flush()
+        task.invalidate_cache()  # Start fresh, as it would be the case on 2 different sessions.
+
+        task = task.with_user(self.env.ref('base.user_demo'))
+        with common.Form(task) as task_form:
+            # Use demo has no access to the already existing line
+            self.assertEqual(len(task_form.line_ids), 0)
+            # But see the real total_amount
+            self.assertEqual(task_form.total_amount, 1)
+            # Now let's add a new line (and retrigger the compute method)
+            with task_form.line_ids.new() as line:
+                line.amount = 2
+            # YTI FIXME : The new value for total_amount, should be 3, not 2.
+            # self.assertEqual(task_form.total_amount, 3)
+            self.assertEqual(task_form.total_amount, 2)

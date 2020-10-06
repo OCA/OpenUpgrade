@@ -98,7 +98,7 @@ class SaleOrder(models.Model):
                         default_so_line_vals = OrderLine.default_get(OrderLine._fields.keys())
                     last_sequence = self.order_line[-1:].sequence
                     if last_sequence:
-                        default_so_line_vals['sequence'] = last_sequence + 1
+                        default_so_line_vals['sequence'] = last_sequence
                     new_lines.append((0, 0, dict(
                         default_so_line_vals,
                         product_id=product.id,
@@ -110,6 +110,7 @@ class SaleOrder(models.Model):
                 for line in self.order_line.filtered(lambda line: line.product_template_id == product_template):
                     line.product_id_change()
                     line._onchange_discount()
+                    line._onchange_product_id_set_customer_lead()
                     
 
     def _get_matrix(self, product_template):

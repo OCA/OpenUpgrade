@@ -288,6 +288,13 @@ msgstr "<p>Створіть канал тут.</p>"
 
 #. module: mail
 #. openerp-web
+#: code:addons/mail/static/src/js/tours/mail.js:26
+#, python-format
+msgid "<p>Create a public or private channel.</p>"
+msgstr ""
+
+#. module: mail
+#. openerp-web
 #: code:addons/mail/static/src/js/models/threads/create_mode_document_thread.js:0
 #, python-format
 msgid "<p>Creating a new record...</p>"
@@ -4755,7 +4762,7 @@ msgstr "Читати більше"
 #: code:addons/mail/static/src/xml/thread.xml:0
 #, python-format
 msgid "Ready"
-msgstr "Готово"
+msgstr "Підготовлено"
 
 #. module: mail
 #: model:ir.model.fields.selection,name:mail.selection__mail_notification__notification_status__ready
@@ -6397,6 +6404,16 @@ msgid ""
 msgstr ""
 "У вас немає прав змінювати поля, пов'язані з модерацією на одному з каналів,"
 " який ви змінюєте."
+
+#. module: mail
+#: code:addons/mail/models/mail_alias.py:89
+#, python-format
+msgid ""
+"You cannot use anything else than unaccented latin characters in the alias "
+"address."
+msgstr ""
+"Ви не можете використовувати нічого окрім приголосних латинських символів у "
+"адресі псевдоніму."
 
 #. module: mail
 #: code:addons/mail/models/mail_thread.py:0
