@@ -11,6 +11,15 @@ def update_fifo_cost_method(env):
     """
     openupgrade.logged_query(
         env.cr, """
+        UPDATE ir_default
+        SET json_value = '"fifo"'
+        WHERE field_id= (SELECT id FROM ir_model_fields 
+                         WHERE model = 'product.template' 
+                             AND name = 'cost_method')
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr, """
         UPDATE ir_property
         SET value_text = 'fifo'
         WHERE name='property_cost_method'
