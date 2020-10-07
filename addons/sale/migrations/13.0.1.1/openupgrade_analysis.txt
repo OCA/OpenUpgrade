@@ -55,7 +55,6 @@ NEW ir.rule: sale.account_move_see_all (noupdate)
 NEW ir.ui.view: sale.account_invoice_view_tree
 NEW ir.ui.view: sale.assets_tests
 NEW ir.ui.view: sale.product_template_sale_form_view
-NEW ir.ui.view: sale.report_assets_common_inherit_sale
 NEW ir.ui.view: sale.sale_order_view_activity
 NEW ir.ui.view: sale.utm_campaign_view_form
 NEW ir.ui.view: sale.utm_campaign_view_kanban
@@ -77,6 +76,7 @@ DEL ir.ui.view: sale.sale_product_configurator_view_form
 DEL ir.ui.view: sale.variants_tree_view
 DEL ir.ui.view: sale.view_order_form_editable_list
 NEW mail.template: sale.mail_template_sale_confirmation (noupdate)
+NEW res.groups: base.group_multi_currency
 NEW res.groups: sale.group_auto_done_setting
 DEL res.groups: sale.group_discount_per_so_line [renamed to product module]
 DEL res.groups: sale.group_sale_order_dates

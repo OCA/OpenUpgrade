@@ -33,6 +33,9 @@ NEW ir.actions.server: hr_holidays.action_report_to_payslip
 NEW ir.actions.server: hr_holidays.ir_actions_server_approve_allocations
 NEW ir.module.category: base.module_category_human_resources_time_off (noupdate)
 NEW ir.rule: hr_holidays.hr_leave_rule_employee_unlink
+NEW ir.rule: hr_holidays.hr_leave_rule_responsible_read
+NEW ir.rule: hr_holidays.hr_leave_rule_responsible_update
+NEW ir.rule: hr_holidays.hr_leave_rule_user_read
 NEW ir.rule: hr_holidays.resource_leaves_base_user
 NEW ir.rule: hr_holidays.resource_leaves_holidays_user
 DEL ir.rule: hr_holidays.hr_leave_rule_officer_read
@@ -63,3 +66,4 @@ DEL mail.message.subtype: hr_holidays.mt_leave_allocation_approved (noupdate)
 DEL mail.message.subtype: hr_holidays.mt_leave_allocation_refused (noupdate)
 DEL mail.message.subtype: hr_holidays.mt_leave_approved (noupdate)
 DEL mail.message.subtype: hr_holidays.mt_leave_refused (noupdate)
+NEW res.groups: hr_holidays.group_hr_holidays_responsible

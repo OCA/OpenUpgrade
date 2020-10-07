@@ -62,6 +62,7 @@ stock        / stock.production.lot     / note (html)                   : NEW
 stock        / stock.putaway.rule       / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
 stock        / stock.putaway.rule       / location_in_id (many2one)     : NEW relation: stock.location, required, req_default: function, hasdefault
 stock        / stock.putaway.rule       / location_out_id (many2one)    : NEW relation: stock.location, required
+stock        / stock.quant              / on_hand (boolean)             : NEW
 stock        / stock.rule               / delay_alert (boolean)         : NEW
 stock        / stock.rule               / procure_method (selection)    : selection_keys is now '['make_to_order', 'make_to_stock', 'mts_else_mto']' ('['make_to_order', 'make_to_stock']')
 stock        / stock.rule               / propagate (boolean)           : DEL
@@ -120,7 +121,6 @@ NEW ir.actions.server: stock.model_stock_inventory_line_action_reset_product_qty
 NEW ir.model.access: stock.access_report_stock_quantity
 NEW ir.model.access: stock.access_stock_putaway_all
 NEW ir.model.access: stock.access_stock_putaway_manager
-NEW ir.model.access: stock.access_stock_scrap_manager
 DEL ir.model.access: stock.access_product_price_history_stock_manager
 DEL ir.model.access: stock.access_product_price_history_stock_user
 DEL ir.model.access: stock.access_product_putaway_all

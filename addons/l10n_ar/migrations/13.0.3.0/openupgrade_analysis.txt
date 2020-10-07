@@ -327,9 +327,9 @@ DEL account.account.template: l10n_ar.62
 DEL account.account.template: l10n_ar.63
 DEL account.account.template: l10n_ar.64
 DEL account.account.type: l10n_ar.account_account_type_NCLASIFICADO
-NEW account.chart.template: l10n_ar.l10nar_base_chart_template (noupdate)
-NEW account.chart.template: l10n_ar.l10nar_ex_chart_template (noupdate)
-NEW account.chart.template: l10n_ar.l10nar_ri_chart_template (noupdate)
+NEW account.chart.template: l10n_ar.l10nar_base_chart_template
+NEW account.chart.template: l10n_ar.l10nar_ex_chart_template
+NEW account.chart.template: l10n_ar.l10nar_ri_chart_template
 DEL account.chart.template: l10n_ar.ar_chart_template
 NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_exento
 NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_no_gravado
@@ -475,14 +475,12 @@ NEW ir.ui.menu: l10n_ar.menu_afip_responsibility_type
 NEW ir.ui.menu: l10n_ar.menu_document_type_argentina
 NEW ir.ui.menu: l10n_ar.menu_iibb_purchases_by_state_and_account
 NEW ir.ui.menu: l10n_ar.menu_iibb_sales_by_state_and_account
-NEW ir.ui.view: l10n_ar.argentinian_extra_info
 NEW ir.ui.view: l10n_ar.base_view_partner_form
-NEW ir.ui.view: l10n_ar.external_layout_background
-NEW ir.ui.view: l10n_ar.external_layout_boxed
-NEW ir.ui.view: l10n_ar.external_layout_clean
-NEW ir.ui.view: l10n_ar.external_layout_standard
+NEW ir.ui.view: l10n_ar.custom_header
 NEW ir.ui.view: l10n_ar.product_uom_form_view
 NEW ir.ui.view: l10n_ar.product_uom_tree_view
+NEW ir.ui.view: l10n_ar.report_invoice_document
+NEW ir.ui.view: l10n_ar.report_invoice_document_with_payments
 NEW ir.ui.view: l10n_ar.sequence_view
 NEW ir.ui.view: l10n_ar.sequence_view_tree
 NEW ir.ui.view: l10n_ar.view_account_invoice_report_search_inherit

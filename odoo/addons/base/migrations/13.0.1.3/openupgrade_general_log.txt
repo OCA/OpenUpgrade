@@ -43,10 +43,10 @@ obsolete model mail.mass_mailing.list (renamed to mailing.list) [module mass_mai
 obsolete model mail.mass_mailing.list_contact_rel (renamed to mailing.contact.subscription) [module mass_mailing]
 obsolete model mail.mass_mailing.stage (renamed to utm.stage) [module mass_mailing]
 obsolete model mail.mass_mailing.tag (renamed to utm.tag) [module mass_mailing]
-obsolete model mail.mass_mailing.test [module mass_mailing]
-obsolete model mail.statistics.report [module mass_mailing]
-obsolete model mass.mailing.list.merge [module mass_mailing]
-obsolete model mass.mailing.schedule.date [module mass_mailing]
+obsolete model mail.mass_mailing.test (renamed to mailing.mailing.test) [module mass_mailing]
+obsolete model mail.statistics.report (renamed to mailing.trace.report) [module mass_mailing]
+obsolete model mass.mailing.list.merge (renamed to mailing.list.merge) [module mass_mailing]
+obsolete model mass.mailing.schedule.date (renamed to mailing.mailing.schedule.date) [module mass_mailing]
 obsolete model mrp.subproduct (renamed to mrp.bom.byproduct) [module mrp]
 obsolete model payment.advice.report [module l10n_in_hr_payroll]
 obsolete model payslip.lines.contribution.register [module hr_payroll]
@@ -102,6 +102,7 @@ new model hr.departure.wizard [module hr]
 new model hr.employee.base [module hr]
 new model hr.employee.public [module hr]
 new model hr.employee.skill [module hr_skills]
+new model hr.leave.report.calendar [module hr_holidays_calendar]
 new model hr.plan [module hr]
 new model hr.plan.activity.type [module hr]
 new model hr.plan.wizard [module hr]
@@ -117,6 +118,7 @@ new model iap.enrich.api [module crm_iap_lead_enrich]
 new model image.mixin [module base]
 new model ir.model.fields.selection [module base]
 new model l10n_ar.afip.responsibility.type [module l10n_ar]
+new model l10n_id_efaktur.efaktur.range [module l10n_id_efaktur]
 new model l10n_in.account.invoice.report [module l10n_in]
 new model l10n_in.advances.payment.adjustment.report [module l10n_in]
 new model l10n_in.advances.payment.report [module l10n_in]
@@ -146,13 +148,13 @@ new model mail.thread.phone [module phone_validation]
 new model mailing.contact (renamed from mail.mass_mailing.contact) [module mass_mailing]
 new model mailing.contact.subscription (renamed from mail.mass_mailing.list_contact_rel) [module mass_mailing]
 new model mailing.list (renamed from mail.mass_mailing.list) [module mass_mailing]
-new model mailing.list.merge [module mass_mailing]
+new model mailing.list.merge (renamed from mass.mailing.list.merge) [module mass_mailing]
 new model mailing.mailing (renamed from mail.mass_mailing) [module mass_mailing]
-new model mailing.mailing.schedule.date [module mass_mailing]
-new model mailing.mailing.test [module mass_mailing]
+new model mailing.mailing.schedule.date (renamed from mass.mailing.schedule.date) [module mass_mailing]
+new model mailing.mailing.test (renamed from mail.mass_mailing.test) [module mass_mailing]
 new model mailing.sms.test [module mass_mailing_sms]
 new model mailing.trace (renamed from mail.mail.statistics) [module mass_mailing]
-new model mailing.trace.report [module mass_mailing]
+new model mailing.trace.report (renamed from mail.statistics.report) [module mass_mailing]
 new model mrp.abstract.workorder [module mrp]
 new model mrp.abstract.workorder.line [module mrp]
 new model mrp.bom.byproduct (renamed from mrp.subproduct) [module mrp]
@@ -208,13 +210,13 @@ new model website.route [module website]
 new model website.track [module website]
 new model website.visitor [module website]
 ---Fields in module 'general'---
-# 7563 fields matched,
-# Direct match: 7459
-# Found in other module: 104
+# 7552 fields matched,
+# Direct match: 7452
+# Found in other module: 100
 # Found with different type: 0
 # In obsolete models: 213
-# New columns: 2309
-# Not matched: 954
+# New columns: 2367
+# Not matched: 972
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'crm_project'---
