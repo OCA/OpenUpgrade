@@ -13,7 +13,7 @@ def update_fifo_cost_method(env):
         env.cr, """
         UPDATE ir_default
         SET json_value = '"fifo"'
-        WHERE field_id= (SELECT id FROM ir_model_fields 
+        WHERE field_id in (SELECT id FROM ir_model_fields 
                          WHERE model = 'product.template' 
                              AND name = 'cost_method')
         """,
