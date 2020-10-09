@@ -10,14 +10,13 @@ def update_fifo_cost_method(env):
     is 'average'. Values mapped according this.
     """
     openupgrade.logged_query(
-        env.cr, """
+    env.cr, """
         UPDATE ir_default
         SET json_value = '"fifo"'
-        WHERE field_id in (SELECT id FROM ir_model_fields 
-                         WHERE model = 'product.template' 
-                             AND name = 'cost_method'
-                             AND json_value = '"real"')
-        """,
+        WHERE field_id in (SELECT id FROM ir_model_fields
+                        WHERE model = 'product.template'
+                            AND name = 'cost_method'
+                            AND json_value = '"real"')""",
     )
     openupgrade.logged_query(
         env.cr, """
