@@ -46,6 +46,7 @@ merged_modules = {
     'web_widget_many2many_tags_multi_selection': 'web',
     # OCA/website
     'website_canonical_url': 'website',
+    'website_logo': 'website',
 }
 
 # only used here for openupgrade_records analysis:
