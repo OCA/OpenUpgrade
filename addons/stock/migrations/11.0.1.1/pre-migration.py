@@ -2,21 +2,106 @@
 # Copyright 2017-2018 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from psycopg2.extensions import AsIs
 from openupgradelib import openupgrade
 
 
-def copy_global_rules(env):
-    """Copy global rules to another table and remove them from main one."""
+def _get_dummy_route_id(env, default):
+    """ Return an inactive dummy route. Create on demand """
+    if default:
+        return default
+    env.cr.execute(
+        """ INSERT INTO stock_location_route
+        (create_date, create_uid, name, active)
+        VALUES(now() at time zone 'UTC', 1,
+        'OpenUpgrade 11.0 Dummy Route for inactive rules & paths',
+        False) RETURNING id """)
+    return env.cr.fetchone()[0]
+
+
+@openupgrade.logging()
+def create_specific_procurement_rules_from_globals(env):
+    """Procurement rules and location paths without a route were considered
+    global in Odoo 10. Now that the route_id is a required field in both
+    tables, expand active rules and paths without a route so that we will end
+    up with one record for each route. Don't expand inactive records or expand
+    records for inactive routes. If necessary, create a dummy inactive route
+    to assign to inactive records without a route.
+
+    Note that rules and paths are left dangling if you unlink their route.
+    Before starting the migration, check to see which of your 'global'
+    rules need to be set to inactive to prevent the unexpected expansion
+    of such rules and paths.
+    """
+    dummy_route_id = False
+    # Pick an arbitrary active route to assign to dangling records.
+    # New records will be created down below for all other routes.
+    env.cr.execute(
+        "SELECT id FROM stock_location_route WHERE active LIMIT 1")
+    row = env.cr.fetchone()
+    first_route_id = (
+        row[0] if row else _get_dummy_route_id(env, dummy_route_id))
+
     for table in ['procurement_rule', 'stock_location_path']:
         openupgrade.logged_query(
             env.cr, """
             CREATE TABLE %s AS (
                 SELECT * FROM %s
                 WHERE route_id IS NULL
-            )""" % (openupgrade.get_legacy_name(table), table)
-        )
+            )
+            """, (AsIs(openupgrade.get_legacy_name(table)), AsIs(table)))
+
+        # Check for inactive items
+        env.cr.execute(
+            """SELECT COUNT(*) FROM %s
+            WHERE route_id IS NULL AND active IS NOT TRUE""",
+            (AsIs(table),))
+        res = env.cr.fetchone()
+        if res[0]:
+            dummy_route_id = _get_dummy_route_id(env, dummy_route_id)
+            openupgrade.logged_query(
+                env.cr,
+                """UPDATE %s SET route_id = %s
+                WHERE route_id IS NULL AND active IS NOT TRUE""",
+                (AsIs(table), dummy_route_id))
+
+        # Assign the first route to the original dangling records
         openupgrade.logged_query(
-            env.cr, "DELETE FROM %s WHERE route_id IS NULL" % table,
+            env.cr, """
+            UPDATE %s
+            SET route_id = %s WHERE route_id IS NULL """, (
+                AsIs(table),
+                first_route_id,
+            ),
+        )
+
+        # Perform the expansion, creating copies for all other routes
+        env.cr.execute(
+            """SELECT column_name
+            FROM information_schema.columns
+            WHERE table_name = %s
+                AND column_name != 'id'
+            ORDER BY ordinal_position""",
+            (table, ),
+        )
+        dest_columns = [x[0] for x in env.cr.fetchall()]
+        src_columns = [
+            ('t.' + x) if x != 'route_id' else 'slr.id' for x in dest_columns
+        ]
+        openupgrade.logged_query(
+            env.cr, """
+            INSERT INTO %s
+            (%s)
+            SELECT %s
+            FROM %s t, stock_location_route slr
+            WHERE t.route_id IS NULL AND t.active
+            AND slr.active AND slr.id != %s """, (
+                AsIs(table),
+                AsIs(", ".join(dest_columns)),
+                AsIs(", ".join(src_columns)),
+                AsIs(openupgrade.get_legacy_name(table)),
+                first_route_id,
+            ),
         )
 
 
@@ -57,7 +142,7 @@ def fix_act_window(env):
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
-    copy_global_rules(env)
+    create_specific_procurement_rules_from_globals(env)
     delete_quants_for_consumable(env)
     fix_act_window(env)
     openupgrade.update_module_moved_fields(

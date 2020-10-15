@@ -58,38 +58,6 @@ def product_assign_responsible(env):
 
 
 @openupgrade.logging()
-def create_specific_procurement_rules_from_globals(env):
-    """Create one record per route for the global rules found in previous
-    version.
-    """
-    for table in ['procurement_rule', 'stock_location_path']:
-        env.cr.execute(
-            """SELECT column_name
-            FROM information_schema.columns
-            WHERE table_name = %s
-                AND column_name != 'id'
-            ORDER BY ordinal_position""",
-            (table, ),
-        )
-        dest_columns = [x[0] for x in env.cr.fetchall()]
-        src_columns = [
-            ('t.' + x) if x != 'route_id' else 'slr.id' for x in dest_columns
-        ]
-        openupgrade.logged_query(
-            env.cr, """
-            INSERT INTO %s
-            (%s)
-            SELECT %s
-            FROM %s t, stock_location_route slr""", (
-                AsIs(table),
-                AsIs(", ".join(dest_columns)),
-                AsIs(", ".join(src_columns)),
-                AsIs(openupgrade.get_legacy_name(table)),
-            ),
-        )
-
-
-@openupgrade.logging()
 def set_quant_reserved_qty(env):
     """If there was a reserved move, then the entire quantity was reserved,
     so we have to put quant qty as the reserved qty. Later on end migration,
@@ -475,7 +443,6 @@ def migrate(env, version):
     compute_stock_move_reference(env)
     compute_picking_scheduled_date(env)
     product_assign_responsible(env)
-    create_specific_procurement_rules_from_globals(env)
     set_quant_reserved_qty(env)
     openupgrade.m2o_to_x2m(
         env.cr, env['stock.move'], 'stock_move', 'move_dest_ids',
