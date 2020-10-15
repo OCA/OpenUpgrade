@@ -25,9 +25,11 @@ website      / res.users                / website_url (char)            : previo
 website      / website                  / default_lang_code (char)      : DEL
 # NOTHING TO DO: unwanted related, because is preferred to choose from default_lang_id the code or the url_code
 
+website      / website                  / logo (binary)                 : NEW attachment: True, hasdefault
+# DONE: post-migration: put company logo
+
 website      / ir.ui.view               / track (boolean)               : NEW hasdefault
 website      / res.partner              / visitor_ids (many2many)       : NEW relation: website.visitor
-website      / website                  / logo (binary)                 : NEW attachment: True, hasdefault
 website      / website                  / social_googleplus (char)      : DEL
 website      / website.menu             / group_ids (many2many)         : NEW relation: res.groups
 website      / website.menu             / mega_menu_classes (char)      : NEW
