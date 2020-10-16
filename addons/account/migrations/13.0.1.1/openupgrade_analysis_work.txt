@@ -225,8 +225,10 @@ account_voucher / account.voucher.line     / account_analytic_id (many2one): DEL
 account      / account.invoice.line     / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
 account      / account.invoice.tax      / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
 account_voucher / account.voucher.line     / analytic_tag_ids (many2many)  : DEL relation: account.analytic.tag
-account      / account.move.line        / tag_ids (many2many)           : NEW relation: account.account.tag
 # DONE: post-migration: filled account_analytic_tag_account_move_line_rel accordingly
+
+account      / account.move.line        / tag_ids (many2many)           : NEW relation: account.account.tag
+# DONE: post-migration: filled account_account_tag_account_move_line_rel accordingly
 
 account      / account.invoice.line     / invoice_line_tax_ids (many2many): DEL relation: account.tax
 account_voucher / account.voucher.line     / tax_ids (many2many)           : DEL relation: account.tax
@@ -368,11 +370,14 @@ account      / account.move.line        / display_type (selection)      : NEW se
 # NOTHING TO DO: field that comes from account.invoice.line
 
 account      / account.move.line        / exclude_from_invoice_tab (boolean): NEW
-# DONE: post-migration: marked old move lines with exclude_from_invoice_tab = TRUE
+# DONE: post-migration: marked old moves unlinked to invoice lines (also grouped invoice lines) with exclude_from_invoice_tab = TRUE
 
 account      / account.move.line        / move_name (char)              : NEW isrelated: related, stored
 # DONE: pre-migration: filled (existing cases)
 # DONE: post-migration: filled (new cases)
+
+account      / account.move.line        / tax_repartition_line_id (many2one): NEW relation: account.tax.repartition.line
+# DONE: post-migration: filled for old invoice taxes
 
 account      / account.move.line        / account_root_id (many2one)    : NEW relation: account.root, isrelated: related, stored
 account      / account.move.line        / discount (float)              : NEW hasdefault
@@ -383,7 +388,6 @@ account      / account.move.line        / reconcile_model_id (many2one) : NEW re
 account      / account.move.line        / sequence (integer)            : NEW hasdefault
 account      / account.move.line        / tax_audit (char)              : NEW isfunction: function, stored
 account      / account.move.line        / tax_group_id (many2one)       : NEW relation: account.tax.group, isrelated: related, stored
-account      / account.move.line        / tax_repartition_line_id (many2one): NEW relation: account.tax.repartition.line
 # NOTHING TO DO: (tentative)
 
 account      / account.payment          / activity_ids (one2many)       : NEW relation: mail.activity
@@ -462,7 +466,7 @@ account      / account.tax.template     / type_tax_use (selection)      : select
 account      / account.tax.group        / property_advance_tax_payment_account_id (many2one): NEW relation: account.account, hasdefault
 account      / account.tax.group        / property_tax_payable_account_id (many2one): NEW relation: account.account, hasdefault
 account      / account.tax.group        / property_tax_receivable_account_id (many2one): NEW relation: account.account, hasdefault
-# NOTHING TO DO: new model
+# NOTHING TO DO: has default
 
 account      / account.tax.repartition.line / account_id (many2one)         : NEW relation: account.account
 account      / account.tax.repartition.line / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault

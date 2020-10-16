@@ -194,50 +194,136 @@ def migration_invoice_moves(env):
         _move_model_in_data(
             env, ids1 + ids2, 'account.invoice', 'account.move')
     # Not Draft or Cancel Invoice Lines
+    # 1st: update the ungrouped ones
     openupgrade.logged_query(
         env.cr, """
         UPDATE account_move_line aml
         SET exclude_from_invoice_tab = FALSE, sequence = ail.sequence,
         price_unit = ail.price_unit, discount = ail.discount, price_subtotal = ail.price_subtotal,
         price_total = ail.price_total, display_type = ail.display_type,
-        is_rounding_line = ail.is_rounding_line, old_invoice_line_id = ail.id,
+        is_rounding_line = ail.is_rounding_line, old_invoice_line_id = ail.id, date = ai.date_invoice,
         create_uid = ail.create_uid, create_date = ail.create_date
         FROM account_invoice_line ail
             JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
             JOIN account_move am ON ail.invoice_id = am.old_invoice_id
         WHERE am.id = aml.move_id AND ail.company_id = aml.company_id AND ail.account_id = aml.account_id
             AND ail.partner_id = aml.partner_id
+            AND ail.name = aml.name
+            AND ail.quantity = aml.quantity
             AND ((ail.product_id IS NULL AND aml.product_id IS NULL) OR ail.product_id = aml.product_id)
             AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
             AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
-            OR ail.account_analytic_id = aml.analytic_account_id)
+                OR ail.account_analytic_id = aml.analytic_account_id)
         RETURNING aml.id""",
     )
     aml_ids = tuple(x[0] for x in env.cr.fetchall())
+    # 2st: exclude from invoice_tab the grouped ones, and create a new separated ones
+    if aml_ids:
+        openupgrade.logged_query(
+            env.cr, """
+            UPDATE account_move_line aml
+            SET exclude_from_invoice_tab = TRUE, sequence = ail.sequence,
+            name = '(OLD GROUPED ITEM)' || aml.name, date = ai.date_invoice,
+            create_uid = ail.create_uid, create_date = ail.create_date
+            FROM account_invoice_line ail
+                JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
+                JOIN account_move am ON ail.invoice_id = am.old_invoice_id
+            WHERE am.id = aml.move_id AND ail.company_id = aml.company_id AND ail.account_id = aml.account_id
+                AND ail.partner_id = aml.partner_id
+                AND ((ail.product_id IS NULL AND aml.product_id IS NULL) OR ail.product_id = aml.product_id)
+                AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
+                AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
+                    OR ail.account_analytic_id = aml.analytic_account_id)
+                AND aml.id NOT IN %s
+            RETURNING aml.id""", (aml_ids, ),
+        )
+    else:
+        openupgrade.logged_query(
+            env.cr, """
+            UPDATE account_move_line aml
+            SET exclude_from_invoice_tab = TRUE, sequence = ail.sequence,
+            name = '(OLD GROUPED ITEM)' || aml.name, date = ai.date_invoice,
+            create_uid = ail.create_uid, create_date = ail.create_date
+            FROM account_invoice_line ail
+                JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
+                JOIN account_move am ON ail.invoice_id = am.old_invoice_id
+            WHERE am.id = aml.move_id AND ail.company_id = aml.company_id AND ail.account_id = aml.account_id
+                AND ail.partner_id = aml.partner_id
+                AND ((ail.product_id IS NULL AND aml.product_id IS NULL) OR ail.product_id = aml.product_id)
+                AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
+                AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
+                    OR ail.account_analytic_id = aml.analytic_account_id)
+            RETURNING aml.id""",
+        )
+    aml_ids2 = tuple(x[0] for x in env.cr.fetchall())
+    if aml_ids2:
+        openupgrade.logged_query(
+            env.cr, """
+            SELECT ail.id
+            FROM account_invoice_line ail
+                JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
+                JOIN account_move am ON ail.invoice_id = am.old_invoice_id
+                JOIN account_move_line aml ON am.id = aml.move_id
+            WHERE ail.company_id = aml.company_id AND ail.account_id = aml.account_id
+                AND ail.partner_id = aml.partner_id
+                AND ((ail.product_id IS NULL AND aml.product_id IS NULL) OR ail.product_id = aml.product_id)
+                AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
+                AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
+                    OR ail.account_analytic_id = aml.analytic_account_id)
+                AND aml.id IN %s""", (aml_ids2, ),
+        )
+        ail_ids = tuple(x[0] for x in env.cr.fetchall())
+        if ail_ids:
+            openupgrade.logged_query(
+                env.cr, """
+                INSERT INTO account_move_line (company_id, account_id,
+                exclude_from_invoice_tab, sequence, name, quantity, price_unit, discount,
+                price_subtotal, price_total, company_currency_id, currency_id, partner_id, product_uom_id,
+                product_id, analytic_account_id, display_type, is_rounding_line,
+                move_id, old_invoice_line_id, date, create_uid, create_date, write_uid,
+                write_date)
+                SELECT ail.company_id, ail.account_id, FALSE, ail.sequence, ail.name,
+                ail.quantity, ail.price_unit, ail.discount, ail.price_subtotal,
+                ail.price_total, rc.currency_id, CASE WHEN rc.currency_id != ail.currency_id
+                THEN ail.currency_id ELSE NULL END, ail.partner_id, ail.uom_id,
+                ail.product_id, ail.account_analytic_id, ail.display_type,
+                ail.is_rounding_line, COALESCE(ai.move_id, am.id), ail.id, ai.date_invoice,
+                ail.create_uid, ail.create_date, ail.write_uid, ail.write_date
+                FROM account_invoice_line ail
+                    JOIN account_invoice ai ON ail.invoice_id = ai.id
+                    JOIN account_move am ON am.old_invoice_id = ai.id
+                    LEFT JOIN res_company rc ON ail.company_id = rc.id
+                WHERE ail.id IN %s
+                RETURNING id""", (ail_ids, ),
+            )
+            aml_ids += tuple(x[0] for x in env.cr.fetchall())
+    # 3rd: assure they have a corresponding old_invoice_line_id. If not, exclude them from invoice tab
     if aml_ids:
         openupgrade.logged_query(
             env.cr, """
             UPDATE account_move_line aml
             SET exclude_from_invoice_tab = TRUE
             FROM account_move_line aml2
-            WHERE aml.move_id = aml2.move_id AND aml2.id IN %s AND aml.old_invoice_line_id IS NULL
-            """, (aml_ids,),
+            WHERE aml.move_id = aml2.move_id
+                AND aml2.id IN %s AND aml.id NOT IN %s
+                AND aml.old_invoice_line_id IS NULL
+            """, (aml_ids, aml_ids),
         )
     # Draft or Cancel Invoice Lines
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO account_move_line (company_id, account_id,
         exclude_from_invoice_tab, sequence, name, quantity, price_unit, discount,
-        price_subtotal, price_total, company_currency_id, currency_id, partner_id, product_uom_id
+        price_subtotal, price_total, company_currency_id, currency_id, partner_id, product_uom_id,
         product_id, analytic_account_id, display_type, is_rounding_line,
-        move_id, old_invoice_line_id, create_uid, create_date, write_uid,
+        move_id, old_invoice_line_id, date, create_uid, create_date, write_uid,
         write_date)
         SELECT ail.company_id, ail.account_id, FALSE, ail.sequence, ail.name,
         ail.quantity, ail.price_unit, ail.discount, ail.price_subtotal,
         ail.price_total, rc.currency_id, CASE WHEN rc.currency_id != ail.currency_id
         THEN ail.currency_id ELSE NULL END, ail.partner_id, ail.uom_id,
         ail.product_id, ail.account_analytic_id, ail.display_type,
-        ail.is_rounding_line, COALESCE(ai.move_id, am.id), ail.id,
+        ail.is_rounding_line, COALESCE(ai.move_id, am.id), ail.id, ai.date_invoice,
         ail.create_uid, ail.create_date, ail.write_uid, ail.write_date
         FROM account_invoice_line ail
             JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state IN ('draft', 'cancel')
@@ -251,7 +337,7 @@ def migration_invoice_moves(env):
     openupgrade.logged_query(
         env.cr, """
         UPDATE account_move_line aml
-        SET sequence = ait.sequence, price_unit = ait.amount,
+        SET exclude_from_invoice_tab = TRUE, sequence = ait.sequence, price_unit = ait.amount,
         old_invoice_tax_id = ait.id,
         create_uid = ait.create_uid, create_date = ait.create_date
         FROM account_invoice_tax ait
@@ -268,12 +354,12 @@ def migration_invoice_moves(env):
         INSERT INTO account_move_line (company_id, account_id,
         sequence, name, price_unit, currency_id, tax_base_amount,
         tax_line_id, analytic_account_id, move_id, old_invoice_tax_id,
-        exclude_from_invoice_tab, parent_state, quantity, partner_id,
+        exclude_from_invoice_tab, parent_state, quantity, partner_id, date,
         create_uid, create_date, write_uid, write_date)
         SELECT ait.company_id, ait.account_id, ait.sequence, ait.name,
         ait.amount, ait.currency_id, ait.base, ait.tax_id,
         ait.account_analytic_id, COALESCE(ai.move_id, am.id),
-        ait.id,  TRUE, am.state, 1.0, ai.commercial_partner_id,
+        ait.id, TRUE, am.state, 1.0, ai.commercial_partner_id, ai.date_invoice,
         ait.create_uid, ait.create_date, ait.write_uid, ait.write_date
         FROM account_invoice_tax ait
         JOIN account_invoice ai ON ait.invoice_id = ai.id AND ai.state IN ('draft', 'cancel')
@@ -343,6 +429,9 @@ def migration_invoice_moves(env):
             WHERE debit IS NULL
             """,
     )
+
+
+def compute_balance_for_draft_invoice_lines(env):
     # Compute balance for Draft Invoice Lines
     draft_invoices = env['account.move'].search(
         [('state', 'in', ('draft', 'cancel'))]).with_context(
@@ -606,9 +695,12 @@ def try_to_fill_account_account_tag_country_id(env):
 def create_account_tax_repartition_lines(env):
     # account_tax_repartition_line
     all_taxes = env['account.tax'].with_context(active_test=False).search([])
+    taxes_with_children = env['account.tax'].with_context(active_test=False).search(
+        [('children_tax_ids', '!=', False)])
+    # taxes_children = taxes_with_children.mapped('children_tax_ids')
     complete_taxes = env['account.tax.repartition.line'].search(
         [('tax_id', '!=', False)]).mapped('tax_id')
-    tax_ids = (all_taxes - complete_taxes).ids
+    tax_ids = (all_taxes - taxes_with_children - complete_taxes).ids
     if tax_ids:
         openupgrade.logged_query(
             env.cr, """
@@ -669,11 +761,14 @@ def create_account_tax_repartition_lines(env):
     # account_tax_repartition_line_template
     all_taxes = env['account.tax.template'].with_context(
         active_test=False).search([])
+    taxes_with_children = env['account.tax.template'].with_context(
+        active_test=False).search([('children_tax_ids', '!=', False)])
+    # taxes_children = taxes_with_children('children_tax_ids')
     complete_taxes = env['account.tax.repartition.line.template'].search(
         [('invoice_tax_id', '!=', False)]).mapped('invoice_tax_id') | env[
         'account.tax.repartition.line.template'].search(
         [('refund_tax_id', '!=', False)]).mapped('refund_tax_id')
-    tax_ids = (all_taxes - complete_taxes).ids
+    tax_ids = (all_taxes - taxes_with_children - complete_taxes).ids
     if tax_ids:
         openupgrade.logged_query(
             env.cr, """
@@ -755,6 +850,78 @@ def move_tags_from_taxes_to_repartition_lines(env):
     )
 
 
+def assign_tax_repartition_line_to_move_lines(env):
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move_line aml
+        SET tax_repartition_line_id = atrl.id
+        FROM account_move_line aml2
+        JOIN account_move am ON aml2.move_id = am.id
+        JOIN account_invoice_tax ait ON aml2.old_invoice_tax_id = ait.id
+        JOIN account_tax at ON ait.tax_id = at.id
+        JOIN account_tax_repartition_line atrl ON (
+            atrl.invoice_tax_id = at.id AND atrl.repartition_type = 'tax')
+        WHERE aml.id = aml2.id
+            AND am.type in ('out_invoice', 'in_invoice')"""
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move_line aml
+        SET tax_repartition_line_id = atrl.id
+        FROM account_move_line aml2
+        JOIN account_move am ON aml2.move_id = am.id
+        JOIN account_invoice_tax ait ON aml2.old_invoice_tax_id = ait.id
+        JOIN account_tax at ON ait.tax_id = at.id
+        JOIN account_tax_repartition_line atrl ON (
+            atrl.refund_tax_id = at.id AND atrl.repartition_type = 'tax')
+        WHERE aml.id = aml2.id
+            AND am.type in ('out_refund', 'in_refund')"""
+    )
+
+
+def assign_account_tags_to_move_lines(env):
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO account_account_tag_account_move_line_rel (
+            account_move_line_id, account_account_tag_id)
+        SELECT aml.id, aat_atr_rel.account_account_tag_id
+        FROM account_move_line aml
+        JOIN account_tax_repartition_line atrl ON aml.tax_repartition_line_id = atrl.id
+        JOIN account_account_tag_account_tax_repartition_line_rel aat_atr_rel ON
+            aat_atr_rel.account_tax_repartition_line_id = atrl.id"""
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO account_account_tag_account_move_line_rel (
+            account_move_line_id, account_account_tag_id)
+        SELECT aml.id, aat_atr_rel.account_account_tag_id
+        FROM account_move_line aml
+        JOIN account_move am ON aml.move_id = am.id
+        JOIN account_move_line_account_tax_rel amlatr ON amlatr.account_move_line_id = aml.id
+        JOIN account_tax_repartition_line atrl ON (
+            atrl.invoice_tax_id = amlatr.account_tax_id AND atrl.repartition_type = 'base')
+        JOIN account_account_tag_account_tax_repartition_line_rel aat_atr_rel ON
+            aat_atr_rel.account_tax_repartition_line_id = atrl.id
+        WHERE aml.old_invoice_tax_id IS NOT NULL AND am.type in ('out_invoice', 'in_invoice')
+        """
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO account_account_tag_account_move_line_rel (
+            account_move_line_id, account_account_tag_id)
+        SELECT aml.id, aat_atr_rel.account_account_tag_id
+        FROM account_move_line aml
+        JOIN account_move am ON aml.move_id = am.id
+        JOIN account_move_line_account_tax_rel amlatr ON amlatr.account_move_line_id = aml.id
+        JOIN account_tax_repartition_line atrl ON (
+            atrl.refund_tax_id = amlatr.account_tax_id AND atrl.repartition_type = 'base')
+        JOIN account_account_tag_account_tax_repartition_line_rel aat_atr_rel ON
+            aat_atr_rel.account_tax_repartition_line_id = atrl.id
+        WHERE aml.old_invoice_tax_id IS NOT NULL AND am.type in ('out_refund', 'in_refund')
+        """
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_account_reconcile_model_second_analytic_tag_rel_table(env)
@@ -777,6 +944,9 @@ def migrate(env, version):
     try_to_fill_account_account_tag_country_id(env)
     create_account_tax_repartition_lines(env)
     move_tags_from_taxes_to_repartition_lines(env)
+    assign_tax_repartition_line_to_move_lines(env)
+    assign_account_tags_to_move_lines(env)
+    compute_balance_for_draft_invoice_lines(env)
     openupgrade.load_data(
         env.cr, "account", "migrations/13.0.1.1/noupdate_changes.xml")
     openupgrade.delete_record_translations(
