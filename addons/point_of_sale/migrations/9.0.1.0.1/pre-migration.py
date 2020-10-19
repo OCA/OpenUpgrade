@@ -33,6 +33,27 @@ column_renames = {
 }
 
 
+def populate_pos_order_tax_ids(cr):
+    if not openupgrade.is_module_installed(cr, "pos_pricelist"):
+        return
+
+    openupgrade.logged_query(
+        cr,
+        "ALTER TABLE pline_tax_rel"
+        " RENAME TO account_tax_pos_order_line_rel;")
+
+    openupgrade.logged_query(
+        cr,
+        "ALTER TABLE account_tax_pos_order_line_rel"
+        " RENAME COLUMN pos_line_id TO pos_order_line_id;")
+
+    openupgrade.logged_query(
+        cr,
+        "ALTER TABLE account_tax_pos_order_line_rel"
+        " RENAME COLUMN tax_id TO account_tax_id;")
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
+    populate_pos_order_tax_ids(cr)
