@@ -36,6 +36,8 @@ merged_modules = {
     'account_move_chatter': 'account',
     # OCA/account-reconcile
     'account_set_reconcilable': 'account',
+    # OCA/server-backend
+    'base_suspend_security': 'base',
     # OCA/social
     'mass_mailing_unique': 'mass_mailing',
     # OCA/timesheet
