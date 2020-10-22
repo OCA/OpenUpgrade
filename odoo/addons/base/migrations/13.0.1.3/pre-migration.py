@@ -746,8 +746,8 @@ def migrate(env, version):
     remove_offending_translations(env)
     handle_web_favicon_module(env)
     add_res_lang_url_code(env)
-    switch_noupdate_records(env)
     rename_ir_module_category(env)
+    switch_noupdate_records(env)
     openupgrade.logged_query(
         env.cr,
         """ UPDATE ir_model_constraint
