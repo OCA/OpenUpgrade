@@ -36,6 +36,8 @@ merged_modules = {
     'account_move_chatter': 'account',
     # OCA/account-reconcile
     'account_set_reconcilable': 'account',
+    # OCA/l10n-spain
+    'l10n_es_aeat_sii': 'l10n_es_aeat_sii_oca',
     # OCA/server-backend
     'base_suspend_security': 'base',
     # OCA/social
