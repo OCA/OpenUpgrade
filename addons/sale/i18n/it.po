@@ -15,7 +15,6 @@
 # Cesare Cugnasco <cesare.cugnasco@gmail.com>, 2018
 # Luigi Di Naro <gigidn@gmail.com>, 2018
 # David Minneci <david@numeko.it>, 2018
-# Martin Trigaux, 2018
 # Manuela Feliciani <mfeliciani@alice.it>, 2018
 # Lorenzo Battistini <lb@takobi.online>, 2019
 # Léonie Bouchat <lbo@odoo.com>, 2019
@@ -23,6 +22,7 @@
 # Mario Riva <mario.riva@gmail.com>, 2019
 # SebastianoPistore <SebastianoPistore.info@protonmail.ch>, 2019
 # Luigia Cimmino Caserta <lcc@odoo.com>, 2019
+# Martin Trigaux, 2020
 # Sergio Zanchetta <primes2h@gmail.com>, 2020
 # 
 msgid ""
@@ -2140,7 +2140,7 @@ msgstr "Tipologia prossima attività"
 #. module: sale
 #: selection:product.template,expense_policy:0
 msgid "No"
-msgstr "N°"
+msgstr "No"
 
 #. module: sale
 #: selection:product.template,sale_line_warn:0
@@ -3724,6 +3724,8 @@ msgid ""
 "The order was not confirmed despite response from the acquirer (%s): order "
 "total is %r but acquirer replied with %r."
 msgstr ""
+"L'ordine non è stato confermato malgrado la risposta del sistema (%s): il "
+"totale ordine è %r ma il sistema ha risposto %r."
 
 #. module: sale
 #: model:ir.model.fields,help:sale.field_sale_order__reference
@@ -3768,12 +3770,12 @@ msgstr "Il valore dell'anticipo deve essere positivo"
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.portal_my_orders
 msgid "There are currently no orders for your account."
-msgstr "Nel conto non sono attualmente presenti ordini."
+msgstr "Al momento non sono presenti ordini nell'account."
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.portal_my_quotations
 msgid "There are currently no quotations for your account."
-msgstr "Nel conto non sono attualmente presenti preventivi."
+msgstr "Al momento non sono presenti preventivi nell'account."
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.res_config_settings_view_form

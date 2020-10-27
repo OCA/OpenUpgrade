@@ -5,11 +5,12 @@
 # Translators:
 # José Gomes <jg@opencloud.pro>, 2018
 # Martin Trigaux, 2018
-# Manuela Silva <inactive+h_manuela_rodsilva@transifex.com>, 2018
+# 425fe09b3064b9f906f637fff94056ae_a00ea56 <0fa3588fa89906bfcb3a354600956e0e_308047>, 2018
 # Ricardo Martins <ricardo.nbs.martins@gmail.com>, 2018
 # Manuela Silva <manuelarodsilva@gmail.com>, 2018
 # Joao Felix <jrmfelix@gmail.com>, 2018
 # Diogo Fonseca <dsf@thinkopensolutions.pt>, 2018
+# Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2020
 # Nuno Silva <nuno.silva@arxi.pt>, 2020
 # 
 msgid ""
@@ -72,7 +73,7 @@ msgstr "1 ano"
 #: model:product.product,description_sale:product.product_product_4d
 #: model:product.template,description_sale:product.product_product_4b_product_template
 msgid "160x80cm, with large legs."
-msgstr ""
+msgstr "160x80cm, pernas grandes."
 
 #. module: product
 #: model:product.attribute.value,name:product.product_attribute_value_6
@@ -2296,6 +2297,16 @@ msgstr ""
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_supplierinfo__product_code
+#: code:addons/product/models/product_uom.py:63
+#, python-format
+msgid ""
+"This rounding precision is higher than the Decimal Accuracy (%s digits).\n"
+"This may cause inconsistencies in reservations.\n"
+"Please set a precision between %s and 1."
+msgstr ""
+
+#. module: product
+#: model:ir.model.fields,help:product.field_product_supplierinfo_product_code
 msgid ""
 "This vendor's product code will be used when printing a request for "
 "quotation. Keep empty to use the internal one."
@@ -2613,6 +2624,15 @@ msgstr "Histórico de Comunicação do Website"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product__weight
 #: model:ir.model.fields,field_description:product.field_product_template__weight
+#: code:addons/product/models/product_uom.py:63
+#, python-format
+msgid "Warning!"
+msgstr "Aviso!"
+
+#. module: product
+#: model:ir.model.fields,field_description:product.field_product_product_weight
+#: model:ir.model.fields,field_description:product.field_product_template_weight
+#: model:product.uom.categ,name:product.product_uom_categ_kgm
 msgid "Weight"
 msgstr "Peso"
 
