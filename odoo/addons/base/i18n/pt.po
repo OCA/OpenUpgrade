@@ -13302,7 +13302,7 @@ msgstr "Lesoto"
 #. module: base
 #: model:ir.module.module,description:base.module_website_sale_wishlist
 msgid "Let returning shoppers save products in a wishlist"
-msgstr ""
+msgstr "Permita que os clientes regulares guardem artigos numa wishlist"
 
 #. module: base
 #: selection:report.paperformat,format:0
@@ -20762,6 +20762,14 @@ msgstr "Este módulo irá despoletar a desinstalação  dos seguintes módulos."
 msgid ""
 "This theme module is exclusively for master to keep the support of "
 "Bootswatch themes which were previously part of the website module in 8.0."
+msgstr ""
+
+#. module: base
+#: code:addons/base/ir/ir_sequence.py:56
+#, python-format
+msgid ""
+"This transaction wasn't executed because another transaction is already "
+"using the same no-gap sequence. Please try again later."
 msgstr ""
 
 #. module: base

@@ -14,8 +14,9 @@
 # Stefan Stieranka <stieranka@itec.sk>, 2020
 # Adam Levrinc <adam.levrinc@26house.com>, 2020
 # Alexandra Brencicova <alexandra.brencicova@gmail.com>, 2020
-# karolína schusterová <karolina.schusterova@vdp.sk>, 2020
 # Rastislav Brencic <rastislav.brencic@azet.sk>, 2020
+# karolína schusterová <karolina.schusterova@vdp.sk>, 2020
+# Damian Brencic <brencicdamian12313@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -23,7 +24,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-03 15:05+0000\n"
 "PO-Revision-Date: 2017-09-20 10:13+0000\n"
-"Last-Translator: Rastislav Brencic <rastislav.brencic@azet.sk>, 2020\n"
+"Last-Translator: Damian Brencic <brencicdamian12313@gmail.com>, 2020\n"
 "Language-Team: Slovak (https://www.transifex.com/odoo/teams/41243/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2817,6 +2818,16 @@ msgid ""
 "\n"
 "        "
 msgstr ""
+"\n"
+"Podpora živého chatu\n"
+"==========================\n"
+"\n"
+"Umožnite spustenie widgetov okamžitých správ na každú webovú stránku, ktorá bude komunikovať\n"
+"so súčasným serverom a požiadavkou na odoslanie z niekoľkých živých návštevníkov\n"
+"operátori chatu.\n"
+"Pomôžte svojim zákazníkom s týmto chatom a analyzujte ich spätnú väzbu.\n"
+"\n"
+"        "
 
 #. module: base
 #: model:ir.module.module,description:base.module_mrp_maintenance
@@ -3623,6 +3634,13 @@ msgid ""
 "(N+1, N+2, direct subordinates)\n"
 "        "
 msgstr ""
+"\n"
+"Organizačná štruktúra pre HR\n"
+"=======================\n"
+"\n"
+"Tento modul rozširuje formulár zamestnancov o organizačnú schému.\n"
+"(N+1, N+2, priami podriadení)\n"
+"        "
 
 #. module: base
 #: model:ir.module.module,description:base.module_event
@@ -6000,6 +6018,8 @@ msgid ""
 "<code>records</code>: recordset of all records on which the action is "
 "triggered in multi mode; may be void"
 msgstr ""
+"<code>záznamy</code>: sada záznamov všetkých záznamov, pri ktorých sa spustí"
+" akcia v režime viacerých režimov; môže byť neplatný"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_model_fields_form
@@ -7842,7 +7862,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_iap
 msgid "Basic models and helpers to support In-App purchases."
-msgstr ""
+msgstr "Základné modely a pomocníci na podporu nákupov v aplikácii."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_batch_deposit
@@ -8887,7 +8907,7 @@ msgstr "Nastavenie krokov sprievodcu"
 #. module: base
 #: model:ir.actions.server,name:base.action_run_ir_action_todo
 msgid "Config: Run Remaining Action Todo"
-msgstr ""
+msgstr "Konfigurácia: Spustiť zostávajúcu úlohu"
 
 #. module: base
 #: model:ir.ui.menu,name:base.menu_reporting_config
@@ -11821,7 +11841,7 @@ msgstr "GPL-3 alebo novšia"
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_in_purchase
 msgid "GST Purchase Report"
-msgstr ""
+msgstr "Správa o nákupe GST"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_in_sale
@@ -14568,12 +14588,12 @@ msgstr "Témy hromadných mailov"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mass_mailing_event
 msgid "Mass mailing on attendees"
-msgstr ""
+msgstr "Hromadné zasielanie pošty na účastníkov"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mass_mailing_event_track
 msgid "Mass mailing on track speakers"
-msgstr ""
+msgstr "Hromadné zasielanie pošty na stopové reproduktory"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mrp_mps
@@ -14889,7 +14909,7 @@ msgstr "Model, na ktorom beží akcia servera."
 #: code:addons/model.py:142 code:addons/model.py:152
 #, python-format
 msgid "Model:"
-msgstr ""
+msgstr "Model:"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_model_model
@@ -18602,7 +18622,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_sepa_direct_debit
 msgid "SEPA Direct Debit"
-msgstr ""
+msgstr "SEPA inkaso"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sms
@@ -18820,7 +18840,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_mrp_maintenance
 msgid "Schedule and manage maintenance on machine and tools."
-msgstr ""
+msgstr "Plánujte a spravujte údržbu strojov a nástrojov."
 
 #. module: base
 #: model:ir.module.module,summary:base.module_project_timesheet_holidays
@@ -19725,7 +19745,7 @@ msgstr "Prieskumy"
 #. module: base
 #: model:res.country,name:base.sj
 msgid "Svalbard and Jan Mayen"
-msgstr ""
+msgstr "Svalbard a Jan Mayen"
 
 #. module: base
 #: model:res.country,name:base.sz
@@ -20461,12 +20481,12 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sale_taxcloud_delivery
 msgid "TaxCloud and Delivery - Ecommerce"
-msgstr ""
+msgstr "TaxCloud a doručenie - Eobchodu"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_account_taxcloud
 msgid "TaxCloud make it easy for business to comply with sales tax law"
-msgstr ""
+msgstr "TaxCloud uľahčuje podnikom dodržiavanie zákonov o dani z obratu"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_hr
@@ -20529,7 +20549,7 @@ msgstr "Test pripojenia"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_main_flows
 msgid "Test Main Flow"
-msgstr ""
+msgstr "Vyskúšajte hlavný tok"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_performance
@@ -20539,7 +20559,7 @@ msgstr "Test výkonnosti"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_rpc
 msgid "Test RPC"
-msgstr ""
+msgstr "Test RPC"
 
 #. module: base
 #: model:ir.module.module,description:base.module_test_access_rights
@@ -20555,7 +20575,7 @@ msgstr "Testy"
 #. module: base
 #: model:ir.module.module,description:base.module_test_read_group
 msgid "Tests for read_group"
-msgstr ""
+msgstr "Testy pre skupinu read_group"
 
 #. module: base
 #: model:ir.module.module,description:base.module_test_converter
@@ -20586,7 +20606,7 @@ msgstr "Thajsko - účtovné výkazy"
 #: code:addons/base/res/res_users.py:295
 #, python-format
 msgid "The \"App Switcher\" action cannot be selected as home action."
-msgstr ""
+msgstr "Akciu „Prepínač aplikácií“ nie je možné zvoliť ako domácu akciu."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_country_code
@@ -20703,7 +20723,7 @@ msgstr "Kód meny musí byť jedinečný!"
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_attachment_res_model
 msgid "The database object this attachment will be attached to."
-msgstr ""
+msgstr "Databázový objekt, ku ktorému bude pripojená táto príloha."
 
 #. module: base
 #: code:addons/base/ir/ir_model.py:561
@@ -21164,12 +21184,12 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_website_helpdesk_livechat
 msgid "Ticketing, Support, Livechat"
-msgstr ""
+msgstr "Predaj lístkov, podpora, živý čet"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_helpdesk_slides
 msgid "Ticketing, Support, Slides"
-msgstr ""
+msgstr "Predaj lístkov, Podpora, Diapozitívy"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_lang_time_format
@@ -21217,7 +21237,7 @@ msgstr "Odchýlka časovej zóny"
 #. module: base
 #: model:res.country,name:base.tl
 msgid "Timor-Leste"
-msgstr ""
+msgstr "Timor-Leste"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_partner_title
@@ -21275,7 +21295,7 @@ msgstr ""
 #. module: base
 #: model:ir.ui.view,arch_db:base.view_server_action_form
 msgid "To return an action, assign: <code>action = {...}</code>"
-msgstr ""
+msgstr "Akciu chcete vrátiť, priraďte ju: <code>akcia = {...}</code>"
 
 #. module: base
 #: model:ir.ui.view,arch_db:base.ir_actions_todo_tree
@@ -21589,7 +21609,7 @@ msgstr "URL"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_us_reports
 msgid "US - Accounting Reports"
-msgstr ""
+msgstr "USA - účtovné správy"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_us_check_printing
@@ -21727,7 +21747,7 @@ msgstr "Neznáme"
 #: code:addons/models.py:833
 #, python-format
 msgid "Unknown database error: '%s'"
-msgstr ""
+msgstr "Neznáma chyba databázy: '%s'"
 
 #. module: base
 #: code:addons/models.py:996
@@ -22081,7 +22101,7 @@ msgstr "VOIP"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_voip_onsip
 msgid "VOIP OnSIP"
-msgstr ""
+msgstr "VOIP NaSIP"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_crm_phone_validation
@@ -22349,7 +22369,7 @@ msgstr "WMS náklady pri dodaní"
 #. module: base
 #: model:res.country,name:base.wf
 msgid "Wallis and Futuna"
-msgstr ""
+msgstr "Wallis a Futuna"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_warehouse
@@ -22418,7 +22438,7 @@ msgstr "Webový editor"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_enterprise
 msgid "Web Enterprise"
-msgstr ""
+msgstr "Webový Podnik"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_gantt
@@ -22493,12 +22513,12 @@ msgstr "Webová stránka Google Mapa"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_helpdesk
 msgid "Website Helpdesk"
-msgstr ""
+msgstr "Webová Stránka Helpdesk"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_helpdesk_livechat
 msgid "Website IM Livechat Helpdesk"
-msgstr ""
+msgstr "Webová stránka IM živý čet Helpdesk"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_links
@@ -22568,7 +22588,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_helpdesk_slides
 msgid "Website Slides Helpdesk"
-msgstr ""
+msgstr "Helpdesk pre prezentácie webových stránok"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_studio
@@ -22578,7 +22598,7 @@ msgstr "Webstránka Studio"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_theme_install
 msgid "Website Theme Install"
-msgstr ""
+msgstr "Inštalácia témy webových stránok"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_version
@@ -23022,7 +23042,7 @@ msgstr "boolean"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_delivery_bpost
 msgid "bpost Shipping"
-msgstr ""
+msgstr "bpost Preprava"
 
 #. module: base
 #: selection:ir.model.fields,ttype:0
@@ -23172,7 +23192,7 @@ msgstr ""
 #: code:addons/base/res/res_lang.py:248
 #, python-format
 msgid "format() must be given exactly one %char format specifier"
-msgstr ""
+msgstr "formát() musí byť uvedený presne jeden špecifikátor formátu %c char"
 
 #. module: base
 #: model:ir.model,name:base.model_format_address_mixin
@@ -23448,12 +23468,12 @@ msgstr "ir.ui.view.custom"
 #. module: base
 #: selection:ir.model.fields,ttype:0
 msgid "many2many"
-msgstr ""
+msgstr "veľa2veľa"
 
 #. module: base
 #: selection:ir.model.fields,ttype:0
 msgid "many2one"
-msgstr ""
+msgstr "veľa2jeden"
 
 #. module: base
 #: selection:ir.model.fields,ttype:0
@@ -23496,7 +23516,7 @@ msgstr "pos_cache"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pos_sale
 msgid "pos_sale"
-msgstr ""
+msgstr "pos_zľava"
 
 #. module: base
 #: selection:ir.model.fields,ttype:0
@@ -23546,7 +23566,7 @@ msgstr "výber"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_mimetypes
 msgid "test mimetypes-guessing"
-msgstr ""
+msgstr "otestujte hádanie-mimetypov"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_access_rights
@@ -23556,12 +23576,12 @@ msgstr "test prístupových práv a pravidiel"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_read_group
 msgid "test read_group"
-msgstr ""
+msgstr "test prečítaná_skupina"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_assetsbundle
 msgid "test-assetsbundle"
-msgstr ""
+msgstr "test-balík aktív"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_pylint
@@ -23601,7 +23621,7 @@ msgstr "test-limits"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_lint
 msgid "test-lint"
-msgstr ""
+msgstr "test-lint"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_translation_import
