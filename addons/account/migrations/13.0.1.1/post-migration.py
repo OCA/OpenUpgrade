@@ -880,6 +880,7 @@ def assign_tax_repartition_line_to_move_lines(env):
 
 
 def assign_account_tags_to_move_lines(env):
+    # move lines with tax repartition lines
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO account_account_tag_account_move_line_rel (
@@ -890,6 +891,7 @@ def assign_account_tags_to_move_lines(env):
         JOIN account_account_tag_account_tax_repartition_line_rel aat_atr_rel ON
             aat_atr_rel.account_tax_repartition_line_id = atrl.id"""
     )
+    # move lines with taxes
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO account_account_tag_account_move_line_rel (
@@ -902,7 +904,7 @@ def assign_account_tags_to_move_lines(env):
             atrl.invoice_tax_id = amlatr.account_tax_id AND atrl.repartition_type = 'base')
         JOIN account_account_tag_account_tax_repartition_line_rel aat_atr_rel ON
             aat_atr_rel.account_tax_repartition_line_id = atrl.id
-        WHERE aml.old_invoice_tax_id IS NOT NULL AND am.type in ('out_invoice', 'in_invoice')
+        WHERE aml.old_invoice_line_id IS NOT NULL AND am.type in ('out_invoice', 'in_invoice')
         """
     )
     openupgrade.logged_query(
@@ -917,7 +919,7 @@ def assign_account_tags_to_move_lines(env):
             atrl.refund_tax_id = amlatr.account_tax_id AND atrl.repartition_type = 'base')
         JOIN account_account_tag_account_tax_repartition_line_rel aat_atr_rel ON
             aat_atr_rel.account_tax_repartition_line_id = atrl.id
-        WHERE aml.old_invoice_tax_id IS NOT NULL AND am.type in ('out_refund', 'in_refund')
+        WHERE aml.old_invoice_line_id IS NOT NULL AND am.type in ('out_refund', 'in_refund')
         """
     )
 
