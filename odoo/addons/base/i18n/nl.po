@@ -12243,7 +12243,7 @@ msgid ""
 "Create and manage the companies that will be managed by Odoo from here. "
 "Shops or subsidiaries can be created and maintained from here."
 msgstr ""
-"Maak en beheer de bedrijven welke worden beheert door Odoo, hier aan. "
+"Maak en beheer de bedrijven welke worden beheerd door Odoo, hier aan. "
 "Winkels en dochterondernemingen kunnen vanaf hier worden aangemaakt en "
 "beheert."
 
@@ -27682,6 +27682,14 @@ msgid "This module will trigger the uninstallation of below modules."
 msgstr ""
 "Deze module zal ervoor zorgen dat onderstaande modules ook worden "
 "gedeinstalleerd."
+
+#. module: base
+#: code:addons/base/ir/ir_sequence.py:56
+#, python-format
+msgid ""
+"This transaction wasn't executed because another transaction is already "
+"using the same no-gap sequence. Please try again later."
+msgstr ""
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_lang__thousands_sep

@@ -210,7 +210,7 @@ msgstr "Mostra Tipo"
 #, python-format
 msgid "Do not have access, skip this data for user's digest email"
 msgstr ""
-"Accesso non consentito, non utilizzare questi dati nell'e-mail di riepilogo "
+"Accesso non consentito, saltare questi dati nell'e-mail di riepilogo "
 "dell'utente"
 
 #. module: sale_management
@@ -245,6 +245,8 @@ msgid ""
 "If unchecked, it will allow you to hide the quotation template without "
 "removing it."
 msgstr ""
+"Se non selezionata, consente di nascondere la modello di preventivo senza "
+"rimuoverlo."
 
 #. module: sale_management
 #: model:ir.model.fields,field_description:sale_management.field_digest_digest__kpi_all_sale_total_value
@@ -373,28 +375,28 @@ msgstr "Validità preventivo"
 #: model_terms:ir.ui.view,arch_db:sale_management.sale_order_template_view_form
 #: model_terms:ir.ui.view,arch_db:sale_management.sale_order_template_view_tree
 msgid "Quotation Template"
-msgstr "Modello di preventivo"
+msgstr "Modello preventivo"
 
 #. module: sale_management
 #: model:ir.model,name:sale_management.model_sale_order_template_line
 msgid "Quotation Template Line"
-msgstr "Riga del modello di preventivo"
+msgstr "Riga modello di preventivo"
 
 #. module: sale_management
 #: model_terms:ir.ui.view,arch_db:sale_management.sale_order_template_view_form
 msgid "Quotation Template Lines"
-msgstr "Righe del modello di preventivo"
+msgstr "Righe modello di preventivo"
 
 #. module: sale_management
 #: model:ir.model,name:sale_management.model_sale_order_template_option
 msgid "Quotation Template Option"
-msgstr "Opzione del modello di preventivo"
+msgstr "Opzione modello di preventivo"
 
 #. module: sale_management
 #: model:ir.model.fields,field_description:sale_management.field_sale_order_template_line__sale_order_template_id
 #: model:ir.model.fields,field_description:sale_management.field_sale_order_template_option__sale_order_template_id
 msgid "Quotation Template Reference"
-msgstr "Riferimento del modello di preventivo"
+msgstr "Riferimento modello di preventivo"
 
 #. module: sale_management
 #: model:ir.actions.act_window,name:sale_management.sale_order_template_action
@@ -403,7 +405,7 @@ msgstr "Riferimento del modello di preventivo"
 #: model_terms:ir.ui.view,arch_db:sale_management.res_config_settings_view_form
 #: model:res.groups,name:sale_management.group_sale_order_template
 msgid "Quotation Templates"
-msgstr "Modelli di preventivo"
+msgstr "Modelli preventivo"
 
 #. module: sale_management
 #: model_terms:ir.ui.view,arch_db:sale_management.sale_order_template_view_form

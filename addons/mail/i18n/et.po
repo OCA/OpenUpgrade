@@ -14,6 +14,8 @@
 # Wanradt Koell <wanradt@gmail.com>, 2019
 # Algo Kärp <algokarp@gmail.com>, 2020
 # Eneli Õigus <enelioigus@gmail.com>, 2020
+# Triine Aavik <triine@avalah.ee>, 2020
+# Piia Paurson <piia@avalah.ee>, 2020
 # 
 msgid ""
 msgstr ""
@@ -21,7 +23,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-14 07:34+0000\n"
 "PO-Revision-Date: 2018-08-24 09:20+0000\n"
-"Last-Translator: Eneli Õigus <enelioigus@gmail.com>, 2020\n"
+"Last-Translator: Piia Paurson <piia@avalah.ee>, 2020\n"
 "Language-Team: Estonian (https://www.transifex.com/odoo/teams/41243/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,7 +47,7 @@ msgstr ""
 #: code:addons/mail/wizard/invite.py:31
 #, python-format
 msgid "%(user_name)s invited you to follow a new document."
-msgstr ""
+msgstr "%(user_name)s kutsus teid jälgima uut dokumenti."
 
 #. module: mail
 #. openerp-web
@@ -808,7 +810,7 @@ msgstr "Manus"
 #: model:ir.model.fields,field_description:mail.field_res_partner__message_attachment_count
 #: model:ir.model.fields,field_description:mail.field_res_users__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Manuste arv"
 
 #. module: mail
 #. openerp-web
@@ -1491,7 +1493,7 @@ msgstr "Tere"
 #: model:ir.model.fields,field_description:mail.field_mail_activity__activity_decoration
 #: model:ir.model.fields,field_description:mail.field_mail_activity_type__decoration_type
 msgid "Decoration Type"
-msgstr ""
+msgstr "Dekoratsiooni tüüp"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_message_subtype__default
@@ -1501,7 +1503,7 @@ msgstr "Vaikimisi"
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_activity_type__default_next_type_id
 msgid "Default Next Activity"
-msgstr ""
+msgstr "Vaikimisi järgmine tegevus"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_email_template_preview__null_value
@@ -1557,12 +1559,12 @@ msgstr "Kustuta"
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_compose_message__auto_delete
 msgid "Delete Emails"
-msgstr ""
+msgstr "Kustutage e-kirju"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_compose_message__auto_delete_message
 msgid "Delete Message Copy"
-msgstr ""
+msgstr "Kustutage sõnumikoopia"
 
 #. module: mail
 #: model:ir.model.fields,help:mail.field_mail_compose_message__auto_delete
@@ -2471,7 +2473,7 @@ msgstr "Kui kontrollitud, siis uued sõnumid nõuavad Su tähelepanu."
 #: model:ir.model.fields,help:mail.field_res_partner__message_has_error
 #: model:ir.model.fields,help:mail.field_res_users__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Kui valitud, on mõningate sõnumitel saatmiserror."
 
 #. module: mail
 #: model:ir.model.fields,help:mail.field_mail_wizard_invite__send_mail
@@ -2546,7 +2548,7 @@ msgstr "Pilt"
 #: code:addons/mail/models/mail_alias.py:130
 #, python-format
 msgid "Inactive Alias"
-msgstr ""
+msgstr "Mitteaktiivne alias"
 
 #. module: mail
 #. openerp-web
@@ -3464,6 +3466,8 @@ msgid ""
 "Modifying the model can have an impact on existing activities using this "
 "activity type, be careful."
 msgstr ""
+"Mudeli muutmine võib avaldada mõju sama tegevusetüüpi kasutavatele "
+"olemasolevatele tegevustele, olge hoolikas."
 
 #. module: mail
 #: model:ir.model,name:mail.model_base_module_uninstall
@@ -3813,7 +3817,7 @@ msgstr "Tegutsemist nõudvate sõnumite arv"
 #: model:ir.model.fields,help:mail.field_res_partner__message_has_error_counter
 #: model:ir.model.fields,help:mail.field_res_users__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Kohaletoimetamise veateatega sõnumite arv"
 
 #. module: mail
 #: model:ir.model.fields,help:mail.field_mail_blacklist__message_unread_counter
@@ -4679,7 +4683,7 @@ msgstr "Planeeri tegevus"
 #: code:addons/mail/models/mail_activity.py:395
 #, python-format
 msgid "Schedule an Activity"
-msgstr ""
+msgstr "Planeeri tegevus"
 
 #. module: mail
 #. openerp-web
@@ -5473,7 +5477,7 @@ msgstr "Lugemata sõnumite loendur"
 #: model_terms:ir.ui.view,arch_db:mail.view_message_search
 #, python-format
 msgid "Unread messages"
-msgstr ""
+msgstr "Lugemata sõnumid"
 
 #. module: mail
 #. openerp-web
@@ -5508,14 +5512,14 @@ msgstr "Tühista kõik tähistatud sõnumid"
 #: code:addons/mail/static/src/js/discuss.js:341
 #, python-format
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Tühista tellimine"
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/js/services/mail_notification_manager.js:454
 #, python-format
 msgid "Unsubscribed"
-msgstr ""
+msgstr "Tellimine tühistatud"
 
 #. module: mail
 #: code:addons/mail/models/mail_template.py:473
@@ -5933,7 +5937,7 @@ msgstr ""
 #: code:addons/mail/static/src/js/services/mail_notification_manager.js:439
 #, python-format
 msgid "You unsubscribed from <b>%s</b>."
-msgstr ""
+msgstr "Te tühistasite tellimise 1%s1."
 
 #. module: mail
 #. openerp-web
@@ -5992,12 +5996,12 @@ msgstr ""
 #. module: mail
 #: selection:mail.activity.type,delay_from:0
 msgid "after previous activity deadline"
-msgstr ""
+msgstr "Pärast eelneva tegevuse tähtaega"
 
 #. module: mail
 #: selection:mail.activity.type,delay_from:0
 msgid "after validation date"
-msgstr ""
+msgstr "pärast kinnitamise kuupäeva"
 
 #. module: mail
 #: code:addons/mail/models/mail_thread.py:1074
@@ -6308,4 +6312,4 @@ msgstr ""
 #. module: mail
 #: selection:mail.activity.type,delay_unit:0
 msgid "weeks"
-msgstr ""
+msgstr "nädalad"
