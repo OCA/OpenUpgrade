@@ -699,7 +699,9 @@ def create_account_tax_repartition_lines(env):
         [('children_tax_ids', '!=', False)])
     # taxes_children = taxes_with_children.mapped('children_tax_ids')
     complete_taxes = env['account.tax.repartition.line'].search(
-        [('tax_id', '!=', False)]).mapped('tax_id')
+        [('invoice_tax_id', '!=', False)]).mapped('invoice_tax_id') | env[
+        'account.tax.repartition.line'].search(
+        [('refund_tax_id', '!=', False)]).mapped('refund_tax_id')
     tax_ids = (all_taxes - taxes_with_children - complete_taxes).ids
     if tax_ids:
         openupgrade.logged_query(
