@@ -964,10 +964,10 @@ def migrate(env, version):
         env, [
             "account_voucher.mt_voucher_state_change",
             "account.model_account_invoice_action_share",
-            "ir.rule: account.account_invoice_line_comp_rule",
-            "ir.rule: account.invoice_comp_rule",
-            "ir.rule: account_voucher.voucher_comp_rule",
-            "ir.rule: account_voucher.voucher_line_comp_rule",
+            "account.account_invoice_line_comp_rule",
+            "account.invoice_comp_rule",
+            "account.voucher_comp_rule",
+            "account.voucher_line_comp_rule",
             "account.account_payment_term_net",
             "account.reconciliation_model_default_rule",
         ]
