@@ -386,7 +386,7 @@ def migration_invoice_moves(env):
         LEFT JOIN account_analytic_tag_account_move_line_rel aatamlr
         ON aml.id = aatamlr.account_move_line_id AND aatailr.account_analytic_tag_id = aatamlr.account_analytic_tag_id
         WHERE aatamlr.account_analytic_tag_id IS NULL
-        """,
+        ON CONFLICT DO NOTHING""",
     )
     openupgrade.logged_query(
         env.cr, """
@@ -399,7 +399,7 @@ def migration_invoice_moves(env):
         LEFT JOIN account_analytic_tag_account_move_line_rel aatamlr
         ON aml.id = aatamlr.account_move_line_id AND aataitr.account_analytic_tag_id = aatamlr.account_analytic_tag_id
         WHERE aatamlr.account_analytic_tag_id IS NULL
-        """,
+        ON CONFLICT DO NOTHING""",
     )
     openupgrade.logged_query(
         env.cr, """
@@ -412,7 +412,7 @@ def migration_invoice_moves(env):
         LEFT JOIN account_move_line_account_tax_rel amlatr
         ON aml.id = amlatr.account_move_line_id AND ailt.tax_id = amlatr.account_tax_id
         WHERE amlatr.account_tax_id IS NULL
-        """,
+        ON CONFLICT DO NOTHING""",
     )
     # Allow pass check_balance constrain
     openupgrade.logged_query(
@@ -515,7 +515,7 @@ def migration_voucher_moves(env):
         FROM account_analytic_tag_account_voucher_line_rel aatavlr
         JOIN account_move_line aml
         ON aml.old_voucher_line_id = aatavlr.account_voucher_line_id
-        """,
+        ON CONFLICT DO NOTHING""",
     )
     openupgrade.logged_query(
         env.cr, """
@@ -525,7 +525,7 @@ def migration_voucher_moves(env):
         FROM account_tax_account_voucher_line_rel atavlr
         JOIN account_move_line aml
         ON aml.old_voucher_line_id = atavlr.account_voucher_line_id
-        """,
+        ON CONFLICT DO NOTHING""",
     )
 
 
@@ -699,7 +699,9 @@ def create_account_tax_repartition_lines(env):
         [('children_tax_ids', '!=', False)])
     # taxes_children = taxes_with_children.mapped('children_tax_ids')
     complete_taxes = env['account.tax.repartition.line'].search(
-        [('tax_id', '!=', False)]).mapped('tax_id')
+        [('invoice_tax_id', '!=', False)]).mapped('invoice_tax_id') | env[
+        'account.tax.repartition.line'].search(
+        [('refund_tax_id', '!=', False)]).mapped('refund_tax_id')
     tax_ids = (all_taxes - taxes_with_children - complete_taxes).ids
     if tax_ids:
         openupgrade.logged_query(
@@ -836,7 +838,8 @@ def move_tags_from_taxes_to_repartition_lines(env):
         FROM account_tax_account_tag atat
         JOIN account_tax_repartition_line atrl ON
             (atat.account_tax_id = atrl.invoice_tax_id OR
-             atat.account_tax_id = atrl.refund_tax_id)"""
+             atat.account_tax_id = atrl.refund_tax_id)
+        ON CONFLICT DO NOTHING"""
     )
     openupgrade.logged_query(
         env.cr, """
@@ -846,7 +849,8 @@ def move_tags_from_taxes_to_repartition_lines(env):
         FROM account_account_tag_account_tax_template_rel aatattr
         JOIN account_tax_repartition_line_template atrlt ON
             (aatattr.account_tax_template_id = atrlt.invoice_tax_id OR
-             aatattr.account_tax_template_id = atrlt.refund_tax_id)"""
+             aatattr.account_tax_template_id = atrlt.refund_tax_id)
+        ON CONFLICT DO NOTHING"""
     )
 
 
@@ -889,7 +893,8 @@ def assign_account_tags_to_move_lines(env):
         FROM account_move_line aml
         JOIN account_tax_repartition_line atrl ON aml.tax_repartition_line_id = atrl.id
         JOIN account_account_tag_account_tax_repartition_line_rel aat_atr_rel ON
-            aat_atr_rel.account_tax_repartition_line_id = atrl.id"""
+            aat_atr_rel.account_tax_repartition_line_id = atrl.id
+        ON CONFLICT DO NOTHING"""
     )
     # move lines with taxes
     openupgrade.logged_query(
@@ -905,7 +910,7 @@ def assign_account_tags_to_move_lines(env):
         JOIN account_account_tag_account_tax_repartition_line_rel aat_atr_rel ON
             aat_atr_rel.account_tax_repartition_line_id = atrl.id
         WHERE aml.old_invoice_line_id IS NOT NULL AND am.type in ('out_invoice', 'in_invoice')
-        """
+        ON CONFLICT DO NOTHING"""
     )
     openupgrade.logged_query(
         env.cr, """
@@ -920,7 +925,7 @@ def assign_account_tags_to_move_lines(env):
         JOIN account_account_tag_account_tax_repartition_line_rel aat_atr_rel ON
             aat_atr_rel.account_tax_repartition_line_id = atrl.id
         WHERE aml.old_invoice_line_id IS NOT NULL AND am.type in ('out_refund', 'in_refund')
-        """
+        ON CONFLICT DO NOTHING"""
     )
 
 
@@ -961,10 +966,10 @@ def migrate(env, version):
         env, [
             "account_voucher.mt_voucher_state_change",
             "account.model_account_invoice_action_share",
-            "ir.rule: account.account_invoice_line_comp_rule",
-            "ir.rule: account.invoice_comp_rule",
-            "ir.rule: account_voucher.voucher_comp_rule",
-            "ir.rule: account_voucher.voucher_line_comp_rule",
+            "account.account_invoice_line_comp_rule",
+            "account.invoice_comp_rule",
+            "account.voucher_comp_rule",
+            "account.voucher_line_comp_rule",
             "account.account_payment_term_net",
             "account.reconciliation_model_default_rule",
         ]
