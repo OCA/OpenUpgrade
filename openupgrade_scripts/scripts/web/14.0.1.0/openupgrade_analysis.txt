@@ -1,0 +1,15 @@
+---Models in module 'web'---
+model base.document.layout (moved from base) [transient]
+---Fields in module 'web'---
+---XML records in module 'web'---
+NEW ir.actions.act_window: web.action_base_document_layout_configurator [renamed from base module]
+NEW ir.model.access: web.access_base_document_layout
+NEW ir.ui.view: web.assets_backend_prod_only
+NEW ir.ui.view: web.html_preview_container
+NEW ir.ui.view: web.qunit_mobile_suite_tests
+NEW ir.ui.view: web.qunit_suite_tests
+NEW ir.ui.view: web.report_invoice_wizard_preview
+NEW ir.ui.view: web.report_preview_layout
+NEW ir.ui.view: web.tests_assets
+NEW ir.ui.view: web.view_base_document_layout
+DEL ir.ui.view: web.js_tests_assets

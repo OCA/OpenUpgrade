@@ -1,0 +1,14 @@
+---Models in module 'web_tour'---
+---Fields in module 'web_tour'---
+---XML records in module 'web_tour'---
+DEL ir.actions.act_window: web_tour.edit_tour_action
+DEL ir.model.access: web_tour.access_web_tour_tour
+DEL ir.model.access: web_tour.access_web_tour_tour_admin
+DEL ir.rule: web_tour.own_tours
+DEL ir.ui.menu: web_tour.menu_tour_action
+DEL ir.ui.view: web_tour.assets_backend
+DEL ir.ui.view: web_tour.assets_common
+DEL ir.ui.view: web_tour.assets_common_disable_tour (noupdate)
+DEL ir.ui.view: web_tour.assets_frontend
+DEL ir.ui.view: web_tour.edit_tour_list
+DEL ir.ui.view: web_tour.edit_tour_search
