@@ -8,12 +8,10 @@
             <form string="OpenUpgrade Generate Records Wizard">
                 <field name="state" invisible="1"/>
                 <group states="init" colspan="4">
-                    <label string="This will reinitialize all the modules installed on this database. Do not continue if you use this database in production."
-                           />
+                    <p>This will reinitialize all the modules installed on this database. Do not continue if you use this database in production.</p>
                 </group>
                 <group states="ready" colspan="4">
-                    <label string="Modules initialized and records created"
-                           />
+                    <p>Modules initialized and records created</p>
                 </group>
                 <footer>
                     <button string="Continue"
