@@ -7,10 +7,10 @@
     <field name="domain_force">['|',('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
   </record>
   <record id="ir_rule_hr_expense_manager" model="ir.rule">
-    <field name="groups" eval="[                 (4, ref('account.group_account_user')),                 (4, ref('hr_expense.group_hr_expense_user'))]"/>
+    <field name="groups" eval="[(5, 0, 0),                 (4, ref('account.group_account_user')),                 (4, ref('hr_expense.group_hr_expense_user'))]"/>
   </record>
   <record id="ir_rule_hr_expense_sheet_manager" model="ir.rule">
-    <field name="groups" eval="[                 (4, ref('account.group_account_user')),                 (4, ref('hr_expense.group_hr_expense_user'))]"/>
+    <field name="groups" eval="[(5, 0, 0),                 (4, ref('account.group_account_user')),                 (4, ref('hr_expense.group_hr_expense_user'))]"/>
   </record>
   <record id="mt_expense_paid" model="mail.message.subtype">
     <field name="default" eval="True"/>
