@@ -7,7 +7,9 @@ renamed_modules = {
     'crm_reveal': 'crm_iap_lead',
     'document': 'attachment_indexation',
     'payment_ogone': 'payment_ingenico',
-    # OCA/...
+    # OCA/hr
+    # TODO: Transform possible data
+    'hr_skill': 'hr_skills'
 }
 
 merged_modules = {
