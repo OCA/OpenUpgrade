@@ -201,7 +201,7 @@ def migration_invoice_moves(env):
         SET exclude_from_invoice_tab = FALSE, sequence = ail.sequence,
         price_unit = ail.price_unit, discount = ail.discount, price_subtotal = ail.price_subtotal,
         price_total = ail.price_total, display_type = ail.display_type,
-        is_rounding_line = ail.is_rounding_line, old_invoice_line_id = ail.id, date = ai.date_invoice,
+        is_rounding_line = ail.is_rounding_line, old_invoice_line_id = ail.id,
         create_uid = ail.create_uid, create_date = ail.create_date
         FROM account_invoice_line ail
             JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
@@ -223,7 +223,7 @@ def migration_invoice_moves(env):
             env.cr, """
             UPDATE account_move_line aml
             SET exclude_from_invoice_tab = TRUE, sequence = ail.sequence,
-            name = '(OLD GROUPED ITEM)' || aml.name, date = ai.date_invoice,
+            name = '(OLD GROUPED ITEM)' || aml.name,
             create_uid = ail.create_uid, create_date = ail.create_date
             FROM account_invoice_line ail
                 JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
@@ -242,7 +242,7 @@ def migration_invoice_moves(env):
             env.cr, """
             UPDATE account_move_line aml
             SET exclude_from_invoice_tab = TRUE, sequence = ail.sequence,
-            name = '(OLD GROUPED ITEM)' || aml.name, date = ai.date_invoice,
+            name = '(OLD GROUPED ITEM)' || aml.name,
             create_uid = ail.create_uid, create_date = ail.create_date
             FROM account_invoice_line ail
                 JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
@@ -287,7 +287,7 @@ def migration_invoice_moves(env):
                 ail.price_total, rc.currency_id, CASE WHEN rc.currency_id != ail.currency_id
                 THEN ail.currency_id ELSE NULL END, ail.partner_id, ail.uom_id,
                 ail.product_id, ail.account_analytic_id, ail.display_type,
-                ail.is_rounding_line, COALESCE(ai.move_id, am.id), ail.id, ai.date_invoice,
+                ail.is_rounding_line, COALESCE(ai.move_id, am.id), ail.id, COALESCE(ai.date, ai.date_invoice),
                 ail.create_uid, ail.create_date, ail.write_uid, ail.write_date
                 FROM account_invoice_line ail
                     JOIN account_invoice ai ON ail.invoice_id = ai.id
@@ -323,7 +323,7 @@ def migration_invoice_moves(env):
         ail.price_total, rc.currency_id, CASE WHEN rc.currency_id != ail.currency_id
         THEN ail.currency_id ELSE NULL END, ail.partner_id, ail.uom_id,
         ail.product_id, ail.account_analytic_id, ail.display_type,
-        ail.is_rounding_line, COALESCE(ai.move_id, am.id), ail.id, ai.date_invoice,
+        ail.is_rounding_line, COALESCE(ai.move_id, am.id), ail.id, COALESCE(ai.date, ai.date_invoice),
         ail.create_uid, ail.create_date, ail.write_uid, ail.write_date
         FROM account_invoice_line ail
             JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state IN ('draft', 'cancel')
@@ -359,7 +359,7 @@ def migration_invoice_moves(env):
         SELECT ait.company_id, ait.account_id, ait.sequence, ait.name,
         ait.amount, ait.currency_id, ait.base, ait.tax_id,
         ait.account_analytic_id, COALESCE(ai.move_id, am.id),
-        ait.id, TRUE, am.state, 1.0, ai.commercial_partner_id, ai.date_invoice,
+        ait.id, TRUE, am.state, 1.0, ai.commercial_partner_id, COALESCE(ai.date, ai.date_invoice),
         ait.create_uid, ait.create_date, ait.write_uid, ait.write_date
         FROM account_invoice_tax ait
         JOIN account_invoice ai ON ait.invoice_id = ai.id AND ai.state IN ('draft', 'cancel')
@@ -492,18 +492,50 @@ def migration_voucher_moves(env):
     if ids1 or ids2:
         _move_model_in_data(
             env, ids1 + ids2, 'account.voucher', 'account.move')
+    # Not draft, cancel, proforma voucher lines
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move_line aml
+        SET exclude_from_invoice_tab = FALSE, sequence = avl.sequence,
+        price_unit = avl.price_unit, price_subtotal = avl.price_subtotal,
+        old_voucher_line_id = avl.id,
+        create_uid = avl.create_uid, create_date = avl.create_date
+        FROM account_voucher_line avl
+            JOIN account_voucher av ON avl.voucher_id = av.id AND av.state NOT IN ('draft', 'cancel', 'proforma')
+            JOIN account_move am ON av.id = am.old_voucher_id
+        WHERE am.id = aml.move_id AND avl.company_id = aml.company_id AND avl.account_id = aml.account_id
+            AND avl.name = aml.name
+            AND avl.quantity = aml.quantity
+            AND ((avl.product_id IS NULL AND aml.product_id IS NULL) OR avl.product_id = aml.product_id)
+            AND ((avl.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
+                OR avl.account_analytic_id = aml.analytic_account_id)
+        RETURNING aml.id""",
+    )
+    aml_ids = tuple(x[0] for x in env.cr.fetchall())
+    if aml_ids:
+        openupgrade.logged_query(
+            env.cr, """
+            UPDATE account_move_line aml
+            SET exclude_from_invoice_tab = TRUE
+            FROM account_move_line aml2
+            WHERE aml.move_id = aml2.move_id
+                AND aml2.id IN %s AND aml.id NOT IN %s
+                AND aml.old_voucher_line_id IS NULL
+            """, (aml_ids, aml_ids),
+        )
+    # Draft, cancel & proforma voucher lines
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO account_move_line (company_id, account_id,
-        sequence, name, quantity, price_unit, price_subtotal,
+        exclude_from_invoice_tab, sequence, name, quantity, price_unit, price_subtotal,
         product_id, analytic_account_id, move_id, old_voucher_line_id,
-        create_uid, create_date, write_uid, write_date)
-        SELECT avl.company_id, avl.account_id, avl.sequence, avl.name,
+        date, create_uid, create_date, write_uid, write_date)
+        SELECT avl.company_id, avl.account_id, FALSE, avl.sequence, avl.name,
         avl.quantity, avl.price_unit, avl.price_subtotal, avl.product_id,
         avl.account_analytic_id, COALESCE(av.move_id, am.id), avl.id,
-        avl.create_uid, avl.create_date, avl.write_uid, avl.write_date
+        COALESCE(am.date, avl.create_date), avl.create_uid, avl.create_date, avl.write_uid, avl.write_date
         FROM account_voucher_line avl
-        LEFT JOIN account_voucher av ON avl.voucher_id = av.id
+        JOIN account_voucher av ON avl.voucher_id = av.id AND av.state in ('draft', 'cancel', 'proforma')
         LEFT JOIN account_move am ON am.old_voucher_id = av.id
         WHERE COALESCE(av.move_id, am.id) IS NOT NULL""",
     )
