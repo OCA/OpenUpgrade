@@ -10,3 +10,6 @@ _xmlid_renames = [
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
+    openupgrade.update_module_moved_fields(
+        env.cr, "hr.employee", ["barcode", "pin"], "hr_attendance", "hr",
+    )

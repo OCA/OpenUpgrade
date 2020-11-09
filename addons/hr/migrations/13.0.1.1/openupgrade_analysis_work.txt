@@ -10,19 +10,21 @@ new model hr.plan.wizard [transient]
 ---Fields in module 'hr'---
 hr           / hr.employee              / barcode (char)                : previously in module hr_attendance
 hr           / hr.employee              / pin (char)                    : previously in module hr_attendance
+# DONE: pre-migration: Updated module in fields
+
 hr           / hr.employee              / departure_description (text)  : NEW
 hr           / hr.employee              / departure_reason (selection)  : NEW selection_keys: ['fired', 'resigned', 'retired']
 hr           / hr.employee              / google_drive_link (char)      : DEL
 # NOTHING TO DO: New features
 
 hr           / hr.employee              / image (binary)                : DEL attachment: True
+hr           / hr.employee              / image_medium (binary)         : DEL attachment: True
+hr           / hr.employee              / image_small (binary)          : DEL attachment: True
 hr           / hr.employee              / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored
 hr           / hr.employee              / image_128 (binary)            : NEW attachment: True, isrelated: related, stored
 hr           / hr.employee              / image_1920 (binary)           : NEW attachment: True, hasdefault
 hr           / hr.employee              / image_256 (binary)            : NEW attachment: True, isrelated: related, stored
 hr           / hr.employee              / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
-hr           / hr.employee              / image_medium (binary)         : DEL attachment: True
-hr           / hr.employee              / image_small (binary)          : DEL attachment: True
 # DONE: post-migration: converted images
 
 hr           / hr.plan                  / active (boolean)              : NEW hasdefault

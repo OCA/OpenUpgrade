@@ -15,6 +15,8 @@ def convert_image_attachments(env):
             ('res_id', '!=', False),
         ])
         for attachment in attachments:
+            # for not having dangling attachments
+            attachment.res_field = "image_1920"
             Model.browse(attachment.res_id).image_1920 = attachment.datas
 
 
