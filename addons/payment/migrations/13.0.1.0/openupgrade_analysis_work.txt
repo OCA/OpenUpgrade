@@ -1,0 +1,54 @@
+---Models in module 'payment'---
+new model payment.link.wizard [transient]
+# NOTHING TO DO
+
+---Fields in module 'payment'---
+payment      / account.invoice          / transaction_ids (many2many)   : DEL relation: payment.transaction
+payment      / account.move             / transaction_ids (many2many)   : NEW relation: payment.transaction
+payment      / payment.transaction      / invoice_ids (many2many)       : relation is now 'account.move' ('account.invoice') [nothing to do]
+# DONE: post-migration updated new ids
+
+payment      / payment.acquirer         / auth_msg (html)               : NEW hasdefault
+payment      / payment.acquirer         / check_validity (boolean)      : NEW
+payment      / payment.acquirer         / color (integer)               : NEW isfunction: function, stored
+payment      / payment.acquirer         / display_as (char)             : NEW
+# NOTHING TO DO
+
+payment      / payment.acquirer         / website_published (boolean)   : DEL
+payment      / payment.acquirer         / environment (selection)       : DEL required, selection_keys: ['prod', 'test'], req_default: function
+payment      / payment.acquirer         / state (selection)             : NEW required, selection_keys: ['disabled', 'enabled', 'test'], req_default: function, hasdefault
+# DONE: Pre-migration renamed 'environment' to 'state'. Set enabled/disabled if website_published is True/False.
+
+payment      / payment.acquirer         / image (binary)                : DEL attachment: True
+payment      / payment.acquirer         / image_128 (binary)            : NEW attachment: True
+payment      / payment.acquirer         / image_medium (binary)         : DEL attachment: True
+payment      / payment.acquirer         / image_small (binary)          : DEL attachment: True
+# DONE: Pre-migration renamed to image_128
+
+payment      / payment.acquirer         / module_state (selection)      : is now stored
+payment      / payment.acquirer         / post_msg (html)               : DEL
+payment      / payment.acquirer         / specific_countries (boolean)  : DEL
+payment      / payment.acquirer         / error_msg (html)              : DEL
+payment      / payment.token            / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
+# NOTHING TO DO
+
+---XML records in module 'payment'---
+NEW ir.actions.act_window: payment.action_invoice_order_generate_link
+NEW ir.ui.view: payment.payment_link_wizard_view_form
+NEW payment.acquirer: payment.payment_acquirer_alipay (noupdate)
+NEW payment.acquirer: payment.payment_acquirer_payulatam (noupdate)
+NEW payment.acquirer: payment.payment_acquirer_sepa_direct_debit (noupdate)
+NEW payment.icon: payment.payment_icon_cc_codensa_easy_credit
+NEW payment.icon: payment.payment_icon_cc_ideal
+NEW payment.icon: payment.payment_icon_cc_webmoney
+NEW payment.icon: payment.payment_icon_cc_western_union
+DEL ir.ui.menu: payment.root_payment_menu [renamed to account module]
+DEL ir.ui.view: payment.view_account_payment_invoice_form_inherit_payment
+# NOTHING TO DO
+
+DEL payment.acquirer: payment.payment_acquirer_custom (noupdate)
+# DONE: Post-migration
+
+NEW payment.acquirer: payment.payment_acquirer_ingenico (noupdate)
+DEL payment.acquirer: payment.payment_acquirer_ogone (noupdate)
+# DONE: Pre-migrations renamed
