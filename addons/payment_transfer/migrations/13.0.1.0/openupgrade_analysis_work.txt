@@ -5,7 +5,7 @@ payment_transfer / payment.acquirer         / provider (False)              : se
 
 ---XML records in module 'payment_transfer'---
 ir.ui.view: payment_transfer.transfer_form (noupdate) (noupdate switched)
-# DONE: pre-migration: handled noupdate switched
+# DONE: post-migration: handled noupdate switched, but after Odoo has updated to current valid definition
 
 DEL payment.acquirer: payment.payment_acquirer_custom (noupdate)
-# DONE: post-migration: try to delete
+# NOTHING TO DO: Already tried to remove on payment
