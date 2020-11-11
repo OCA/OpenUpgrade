@@ -48,6 +48,7 @@ def fill_project_task_company_id(cr):
         """
     )
 
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
