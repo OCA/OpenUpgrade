@@ -3,7 +3,7 @@
 project      / account.analytic.account / project_count (integer)       : previously in module hr_timesheet
 project      / account.analytic.account / project_ids (one2many)        : previously in module hr_timesheet
 project      / project.project          / analytic_account_id (many2one): previously in module hr_timesheet
-# NOTHING TO DO: Moved to another module no data loss
+# DONE: pre-migration: Update field definition
 
 project      / project.project          / percentage_satisfaction_project (integer): DEL
 project      / project.project          / percentage_satisfaction_task (integer): DEL
@@ -21,7 +21,6 @@ project      / project.task.type        / legend_priority (char)        : DEL
 # NOTHING TO DO: Features removed
 
 ---XML records in module 'project'---
-NEW ir.actions.act_window: project.portal_share_action
 NEW ir.model.access: project.access_account_analytic_account_manager [renamed from hr_timesheet module]
 NEW ir.model.access: project.access_account_analytic_account_user [renamed from hr_timesheet module]
 NEW ir.model.access: project.access_account_analytic_line_project [renamed from hr_timesheet module]
@@ -30,12 +29,13 @@ NEW ir.model.access: project.access_account_analytic_line_project [renamed from 
 NEW ir.module.category: base.module_category_operations_project (noupdate)
 # NOTHING TO DO: New record
 
+NEW ir.actions.act_window: project.portal_share_action
 NEW ir.ui.view: project.account_analytic_account_view_form_inherit
 NEW ir.ui.view: project.project_project_view_form_simplified_footer
 NEW ir.ui.view: project.project_tags_tree_view
 NEW ir.ui.view: project.project_task_view_activity
 DEL ir.ui.view: project.qunit_suite
-# NOTHING TO DO: noupdate=0
+# NOTHING TO DO: noupdate=0 ir records
 
 mail.message.subtype: project.mt_project_task_blocked (noupdate) (noupdate switched)
 mail.message.subtype: project.mt_project_task_new (noupdate) (noupdate switched)
