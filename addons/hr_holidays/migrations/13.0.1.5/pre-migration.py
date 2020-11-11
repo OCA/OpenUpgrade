@@ -2,19 +2,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
-_column_copies = {
-    'hr_leave': [
-        ('request_hour_from', None, None),
-        ('request_hour_to', None, None),
-    ],
-}
-
 _column_renames = {
+    'hr_leave': [
+        ('request_hour_from', None),
+        ('request_hour_to', None),
+    ],
     'hr_leave_allocation': [
         ('accrual', None),
-    ],
-    'hr_leave_type': [
-        ('categ_id', None),
     ],
 }
 
@@ -31,6 +25,5 @@ _xmlid_renames = [
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.copy_columns(env.cr, _column_copies)
     openupgrade.rename_columns(env.cr, _column_renames)
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)

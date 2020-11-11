@@ -40,6 +40,32 @@ _unlink_by_xmlid = [
 ]
 
 
+def assign_employee_leave_manager(env):
+    """Asign as default leave manager the employee responsible, which is the
+    one assigned by Odoo itself, and add them to the proper group, also
+    following Odoo's logic.
+
+    This is because although the field is not strictly required, all the
+    approval logic needs it implicitly, and Odoo has put code in create/write
+    methods for being sure a value is set.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE hr_employee he
+        SET leave_manager_id = he_parent.user_id
+        FROM hr_employee he_parent
+        WHERE he_parent.id = he.parent_id AND he.leave_manager_id IS NULL""",
+    )
+    leave_managers = env["hr.employee"].search([]).mapped("leave_manager_id")
+    approver_group = env.ref(
+        "hr_holidays.group_hr_holidays_responsible", raise_if_not_found=False,
+    )
+    if approver_group:
+        approver_group.sudo().write({
+            'users': [(4, x) for x in leave_managers.ids]
+        })
+
+
 def map_hr_leave_request_hour_from(cr):
     openupgrade.map_values(
         cr,
@@ -59,30 +85,21 @@ def map_hr_leave_request_hour_to(cr):
 
 
 def fill_leave_allocation_allocation_type(cr):
+    """Switch type for accruals. The rest already have the proper type (default)."""
     openupgrade.logged_query(
         cr, """
         UPDATE hr_leave_allocation
         SET allocation_type = 'accrual'
-        WHERE {accrual} = TRUE
+        WHERE {accrual}
         """.format(accrual=openupgrade.get_legacy_name('accrual'))
-    )
-
-
-def fill_hr_leave_type_create_calendar_meeting(cr):
-    openupgrade.logged_query(
-        cr, """
-        UPDATE hr_leave_type
-        SET create_calendar_meeting = FALSE
-        WHERE {categ_id} IS NULL
-        """.format(categ_id=openupgrade.get_legacy_name('categ_id'))
     )
 
 
 @openupgrade.migrate()
 def migrate(env, version):
+    assign_employee_leave_manager(env)
     map_hr_leave_request_hour_from(env.cr)
     map_hr_leave_request_hour_to(env.cr)
     fill_leave_allocation_allocation_type(env.cr)
-    fill_hr_leave_type_create_calendar_meeting(env.cr)
     openupgrade.delete_records_safely_by_xml_id(env, _unlink_by_xmlid)
     openupgrade.load_data(env.cr, 'hr_holidays', 'migrations/13.0.1.5/noupdate_changes.xml')
