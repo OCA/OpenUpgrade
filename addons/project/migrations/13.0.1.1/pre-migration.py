@@ -38,7 +38,15 @@ def fill_project_task_company_id(cr):
         WHERE pp.id = pt.project_id AND pt.company_id IS NULL
         """
     )
-
+    # Fallbacking to this for tasks without project
+    openupgrade.logged_query(
+        cr, """
+        UPDATE project_task pt
+        SET company_id = ru.company_id
+        FROM res_users ru
+        WHERE pt.project_id IS NULL AND pt.company_id IS NULL AND pt.create_uid = ru.id
+        """
+    )
 
 @openupgrade.migrate()
 def migrate(env, version):
