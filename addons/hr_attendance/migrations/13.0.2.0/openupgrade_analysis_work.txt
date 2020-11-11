@@ -1,0 +1,24 @@
+---Models in module 'hr_attendance'---
+---Fields in module 'hr_attendance'---
+hr_attendance / hr.employee              / barcode (char)                : module is now 'hr' ('hr_attendance')
+hr_attendance / hr.employee              / pin (char)                    : module is now 'hr' ('hr_attendance')
+# NOTHING TO DO: Done on hr module
+
+hr_attendance / hr.employee              / last_check_in (datetime)      : NEW isrelated: related, stored
+hr_attendance / hr.employee              / last_check_out (datetime)     : NEW isrelated: related, stored
+# NOTHING TO DO: Done by framework. Can be optimized by SQL if the number of employees is very high
+
+---XML records in module 'hr_attendance'---
+DEL ir.actions.report: hr_attendance.hr_employee_print_badge [renamed to hr module]
+# NOTHING TO DO: Done on hr module
+
+NEW ir.module.category: base.module_category_human_resources_attendances (noupdate)
+# NOTHING TO DO: noupdate, but new record
+
+NEW ir.ui.view: hr_attendance.hr_attendance_view_form_inherit
+NEW ir.ui.view: hr_attendance.hr_user_view_form
+NEW ir.ui.view: hr_attendance.view_attendance_tree_inherit
+DEL ir.ui.view: hr_attendance.print_employee_badge
+DEL ir.ui.view: hr_attendance.view_employee_filter_inherit_hr_attendance
+DEL ir.ui.view: hr_attendance.view_employee_kanban_inherit_hr_attendance
+# NOTHING TO DO: noupdate=0 ir records
