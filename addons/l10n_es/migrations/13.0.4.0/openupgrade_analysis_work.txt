@@ -1,0 +1,96 @@
+---Models in module 'l10n_es'---
+---Fields in module 'l10n_es'---
+---XML records in module 'l10n_es'---
+NEW account.account.tag: l10n_es.mod_115_02
+NEW account.account.tag: l10n_es.mod_115_03
+NEW account.account.tag: l10n_es.mod_303_01
+NEW account.account.tag: l10n_es.mod_303_03
+NEW account.account.tag: l10n_es.mod_303_04
+NEW account.account.tag: l10n_es.mod_303_06
+NEW account.account.tag: l10n_es.mod_303_07
+NEW account.account.tag: l10n_es.mod_303_09
+NEW account.account.tag: l10n_es.mod_303_10
+NEW account.account.tag: l10n_es.mod_303_11
+NEW account.account.tag: l10n_es.mod_303_12
+NEW account.account.tag: l10n_es.mod_303_13
+NEW account.account.tag: l10n_es.mod_303_14_purchase
+NEW account.account.tag: l10n_es.mod_303_14_sale
+NEW account.account.tag: l10n_es.mod_303_15
+NEW account.account.tag: l10n_es.mod_303_16
+NEW account.account.tag: l10n_es.mod_303_18
+NEW account.account.tag: l10n_es.mod_303_19
+NEW account.account.tag: l10n_es.mod_303_21
+NEW account.account.tag: l10n_es.mod_303_22
+NEW account.account.tag: l10n_es.mod_303_24
+NEW account.account.tag: l10n_es.mod_303_25
+NEW account.account.tag: l10n_es.mod_303_26
+NEW account.account.tag: l10n_es.mod_303_28
+NEW account.account.tag: l10n_es.mod_303_29
+NEW account.account.tag: l10n_es.mod_303_30
+NEW account.account.tag: l10n_es.mod_303_31
+NEW account.account.tag: l10n_es.mod_303_32
+NEW account.account.tag: l10n_es.mod_303_33
+NEW account.account.tag: l10n_es.mod_303_34
+NEW account.account.tag: l10n_es.mod_303_35
+NEW account.account.tag: l10n_es.mod_303_36
+NEW account.account.tag: l10n_es.mod_303_37
+NEW account.account.tag: l10n_es.mod_303_38
+NEW account.account.tag: l10n_es.mod_303_39
+NEW account.account.tag: l10n_es.mod_303_40
+NEW account.account.tag: l10n_es.mod_303_41
+DEL account.account.tag: l10n_es.mod_115_02_03
+DEL account.account.tag: l10n_es.mod_303_01_03
+DEL account.account.tag: l10n_es.mod_303_04_06
+DEL account.account.tag: l10n_es.mod_303_07_09
+DEL account.account.tag: l10n_es.mod_303_10_11
+DEL account.account.tag: l10n_es.mod_303_12_13
+DEL account.account.tag: l10n_es.mod_303_14_15_purchase
+DEL account.account.tag: l10n_es.mod_303_14_15_sale
+DEL account.account.tag: l10n_es.mod_303_16_18
+DEL account.account.tag: l10n_es.mod_303_19_21
+DEL account.account.tag: l10n_es.mod_303_22_24
+DEL account.account.tag: l10n_es.mod_303_25_26
+DEL account.account.tag: l10n_es.mod_303_28_29
+DEL account.account.tag: l10n_es.mod_303_30_31
+DEL account.account.tag: l10n_es.mod_303_32_33
+DEL account.account.tag: l10n_es.mod_303_34_35
+DEL account.account.tag: l10n_es.mod_303_36_37
+DEL account.account.tag: l10n_es.mod_303_38_39
+DEL account.account.tag: l10n_es.mod_303_40_41
+# DONE: post-migration: substitute old tags in the many2many tables with new tags
+
+NEW account.account.template: l10n_es.account_common_4301
+NEW account.fiscal.position.template: l10n_es.fp_intra_private
+# NOTHING TO DO
+
+DEL account.tax.template: l10n_es.account_tax_template_p_iva10_ic_bc_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva10_ic_bc_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva10_ic_bi_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva10_ic_bi_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva10_isp_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva10_isp_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva10_sp_ex_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva10_sp_ex_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva10_sp_in_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva10_sp_in_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva21_ic_bc_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva21_ic_bc_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva21_ic_bi_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva21_ic_bi_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva21_isp_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva21_isp_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva21_sp_ex_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva21_sp_ex_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva21_sp_in_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva21_sp_in_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva4_ic_bc_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva4_ic_bc_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva4_ic_bi_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva4_ic_bi_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva4_isp_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva4_isp_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva4_sp_ex_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva4_sp_ex_2
+DEL account.tax.template: l10n_es.account_tax_template_p_iva4_sp_in_1
+DEL account.tax.template: l10n_es.account_tax_template_p_iva4_sp_in_2
+# DONE: generate new repartition lines and link them to corresponding account move lines
