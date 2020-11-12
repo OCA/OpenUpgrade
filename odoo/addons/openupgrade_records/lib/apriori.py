@@ -37,6 +37,7 @@ merged_modules = {
     # OCA/account-reconcile
     'account_set_reconcilable': 'account',
     # OCA/l10n-spain
+    'l10n_es_account_invoice_sequence': 'l10n_es',
     'l10n_es_aeat_sii': 'l10n_es_aeat_sii_oca',
     # OCA/server-backend
     'base_suspend_security': 'base',
@@ -51,8 +52,6 @@ merged_modules = {
     # OCA/website
     'website_canonical_url': 'website',
     'website_logo': 'website',
-    # OCA/l10n-spain
-    'l10n_es_account_invoice_sequence': 'l10n_es',
 }
 
 # only used here for openupgrade_records analysis:

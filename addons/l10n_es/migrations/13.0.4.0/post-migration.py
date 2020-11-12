@@ -1,6 +1,8 @@
 # Copyright 2020 ForgeFlow <http://www.forgeflow.com>
+# Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+from psycopg2 import sql
 
 
 def use_new_taxes_and_repartition_lines_on_move_lines(env):
@@ -35,99 +37,51 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
     companies_ids = [x[0] for x in env.cr.fetchall()]
     if not companies_ids:
         return
-    # select taxes with children that don't have repartition lines:
+    # select taxes with children that don't have repartition lines
     taxes_with_children = env['account.tax'].with_context(
         active_test=False).search(
         [('children_tax_ids', '!=', False), ('company_id', 'in', companies_ids)]
     ).filtered(lambda t: not t.invoice_repartition_line_ids
                and not t.refund_repartition_line_ids)
-    taxes_children = taxes_with_children.mapped('children_tax_ids').ids
+    children_tax_ids = taxes_with_children.mapped('children_tax_ids').ids
     tax_ids = taxes_with_children.ids
-    # create tax repartition lines:
+    # create tax repartition lines
     if tax_ids:
-        openupgrade.logged_query(
-            env.cr, """
-            INSERT INTO account_tax_repartition_line (
-                account_id, company_id, factor_percent, invoice_tax_id,
-                refund_tax_id, repartition_type, sequence,
-                create_uid, create_date, write_uid, write_date)
-            SELECT NULL, company_id, 100, id, NULL, 'base', 1,
-                create_uid, create_date, write_uid, write_date
-            FROM account_tax
-            WHERE id IN %s""", (tuple(tax_ids),),
+        refund_account_query = (
+            "CASE WHEN tax_exigibility = 'on_payment' "
+            "THEN cash_basis_account_id ELSE account_id END"
         )
-        openupgrade.logged_query(
-            env.cr, """
-            INSERT INTO account_tax_repartition_line (
-                account_id, company_id, factor_percent, invoice_tax_id,
-                refund_tax_id, repartition_type, sequence,
-                create_uid, create_date, write_uid, write_date)
-            SELECT CASE WHEN tax_exigibility = 'on_payment'
-                THEN cash_basis_account_id ELSE account_id END,
-                company_id, 100, id, NULL, 'tax', 1,
+        column_mapping = [
+            # (account_id, factor_percent, invoice_tax_id, refund_tax_id, repartition_type)
+            ("NULL", 100, "id", "NULL", "base"),
+            (refund_account_query, 100, "id", "NULL", "tax"),
+            (refund_account_query, -100, "id", "NULL", "tax"),
+            ("NULL", 100, "NULL", "id", "base"),
+            (refund_account_query, 100, "NULL", "id", "tax"),
+            (refund_account_query, -100, "NULL", "id", "tax"),
+        ]
+        for column in column_mapping:
+            openupgrade.logged_query(
+                env.cr,
+                """INSERT INTO account_tax_repartition_line (
+                    account_id, company_id, factor_percent, invoice_tax_id,
+                    refund_tax_id, repartition_type, sequence,
+                    create_uid, create_date, write_uid, write_date
+                )
+                SELECT %s, company_id, %s, %s, %s, '%s', 1,
                 create_uid, create_date, write_uid, write_date
-            FROM account_tax
-            WHERE id IN %s""", (tuple(tax_ids),),
-        )
-        openupgrade.logged_query(
-            env.cr, """
-            INSERT INTO account_tax_repartition_line (
-                account_id, company_id, factor_percent, invoice_tax_id,
-                refund_tax_id, repartition_type, sequence,
-                create_uid, create_date, write_uid, write_date)
-            SELECT CASE WHEN tax_exigibility = 'on_payment'
-                THEN cash_basis_account_id ELSE account_id END,
-                company_id, -100, id, NULL, 'tax', 1,
-                create_uid, create_date, write_uid, write_date
-            FROM account_tax
-            WHERE id IN %s""", (tuple(tax_ids),),
-        )
-        openupgrade.logged_query(
-            env.cr, """
-            INSERT INTO account_tax_repartition_line (
-                account_id, company_id, factor_percent, invoice_tax_id,
-                refund_tax_id, repartition_type, sequence,
-                create_uid, create_date, write_uid, write_date)
-            SELECT NULL, company_id, 100, NULL, id, 'base', 1,
-                create_uid, create_date, write_uid, write_date
-            FROM account_tax
-            WHERE id IN %s""", (tuple(tax_ids),),
-        )
-        openupgrade.logged_query(
-            env.cr, """
-            INSERT INTO account_tax_repartition_line (
-                account_id, company_id, factor_percent, invoice_tax_id,
-                refund_tax_id, repartition_type, sequence,
-                create_uid, create_date, write_uid, write_date)
-            SELECT CASE WHEN tax_exigibility = 'on_payment'
-                THEN cash_basis_account_id ELSE refund_account_id END,
-                company_id, 100, NULL, id, 'tax', 1,
-                create_uid, create_date, write_uid, write_date
-            FROM account_tax
-            WHERE id IN %s""", (tuple(tax_ids),),
-        )
-        openupgrade.logged_query(
-            env.cr, """
-            INSERT INTO account_tax_repartition_line (
-                account_id, company_id, factor_percent, invoice_tax_id,
-                refund_tax_id, repartition_type, sequence,
-                create_uid, create_date, write_uid, write_date)
-            SELECT CASE WHEN tax_exigibility = 'on_payment'
-                THEN cash_basis_account_id ELSE refund_account_id END,
-                company_id, -100, NULL, id, 'tax', 1,
-                create_uid, create_date, write_uid, write_date
-            FROM account_tax
-            WHERE id IN %s""", (tuple(tax_ids),),
-        )
-    if taxes_children:
+                FROM account_tax
+                WHERE id IN %%s""" % column, (tuple(tax_ids), ),
+            )
+    if children_tax_ids:
         # assure children taxes are not parent taxes
         openupgrade.logged_query(
             env.cr, """
             DELETE FROM account_tax_filiation_rel rel
             WHERE rel.parent_tax IN %s
-            """, (tuple(taxes_children), ),
+            """, (tuple(children_tax_ids), ),
         )
-        # update account move line tax_ids:
+        # update account move line tax_ids
         openupgrade.logged_query(
             env.cr, """
             INSERT INTO account_move_line_account_tax_rel (
@@ -140,47 +94,33 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
             JOIN account_tax_filiation_rel fil ON fil.child_tax = at.id
             JOIN account_tax at2 ON fil.parent_tax = at2.id
             WHERE at.id IN %s
-            ON CONFLICT DO NOTHING""", (tuple(taxes_children), ),
+            ON CONFLICT DO NOTHING""", (tuple(children_tax_ids), ),
         )
         openupgrade.logged_query(
             env.cr, """
             DELETE FROM account_move_line_account_tax_rel
             WHERE account_tax_id IN %s
-            """, (tuple(taxes_children), ),
+            """, (tuple(children_tax_ids), ),
         )
-        # update account move line tax_repartition_line_id:
-        openupgrade.logged_query(
-            env.cr, """
-            UPDATE account_move_line aml
-            SET tax_repartition_line_id = atrl2.id, name = at2.name,
-                tax_line_id = at2.id
-            FROM account_tax_repartition_line atrl
-            JOIN account_tax at ON atrl.invoice_tax_id = at.id
-            JOIN account_tax_filiation_rel rel ON rel.child_tax = at.id
-            JOIN account_tax at2 ON rel.parent_tax = at2.id
-            JOIN account_tax_repartition_line atrl2 ON (
-                atrl2.invoice_tax_id = at2.id
-                AND atrl2.repartition_type = atrl.repartition_type
-                AND SIGN(at.amount) = SIGN(atrl2.factor_percent))
-            WHERE aml.tax_repartition_line_id = atrl.id AND at.id IN %s
-            """, (tuple(taxes_children), ),
-        )
-        openupgrade.logged_query(
-            env.cr, """
-            UPDATE account_move_line aml
-            SET tax_repartition_line_id = atrl2.id, name = at2.name,
-                tax_line_id = at2.id
-            FROM account_tax_repartition_line atrl
-            JOIN account_tax at ON atrl.refund_tax_id = at.id
-            JOIN account_tax_filiation_rel rel ON rel.child_tax = at.id
-            JOIN account_tax at2 ON rel.parent_tax = at2.id
-            JOIN account_tax_repartition_line atrl2 ON (
-                atrl2.refund_tax_id = at2.id
-                AND atrl2.repartition_type = atrl.repartition_type
-                AND SIGN(at.amount) = SIGN(atrl2.factor_percent))
-            WHERE aml.tax_repartition_line_id = atrl.id AND at.id IN %s
-            """, (tuple(taxes_children), ),
-        )
+        # update account move line tax_repartition_line_id
+        for tax_column in ("invoice_tax_id", "refund_tax_id"):
+            openupgrade.logged_query(
+                env.cr, sql.SQL("""
+                UPDATE account_move_line aml
+                SET tax_repartition_line_id = atrl2.id, name = at2.name,
+                    tax_line_id = at2.id
+                FROM account_tax_repartition_line atrl
+                JOIN account_tax at ON atrl.{column} = at.id
+                JOIN account_tax_filiation_rel rel ON rel.child_tax = at.id
+                JOIN account_tax at2 ON rel.parent_tax = at2.id
+                JOIN account_tax_repartition_line atrl2 ON (
+                    atrl2.{column} = at2.id
+                    AND atrl2.repartition_type = atrl.repartition_type
+                    AND SIGN(at.amount) = SIGN(atrl2.factor_percent))
+                WHERE aml.tax_repartition_line_id = atrl.id AND at.id IN %s
+                """).format(column=sql.Identifier(tax_column)),
+                (tuple(children_tax_ids), ),
+            )
         # update amount of parent taxes:
         for company_id in companies_ids:
             for tax_xmlid in xmlid_names:
@@ -192,7 +132,7 @@ def use_new_taxes_and_repartition_lines_on_move_lines(env):
 
 
 def update_account_tags(env):
-    xmlsids = {
+    xmlids = {
         "mod_115_02_03": ["mod_115_02", "mod_115_03"],
         "mod_303_01_03": ["mod_303_01", "mod_303_03"],
         "mod_303_04_06": ["mod_303_04", "mod_303_06"],
@@ -221,7 +161,7 @@ def update_account_tags(env):
         "account_account_template_account_tag": "account_account_template_id",
     }
     old_tags = env["account.account.tag"]
-    for old_xmlid, data_new in xmlsids.items():
+    for old_xmlid, data_new in xmlids.items():
         old_tag = env.ref("l10n_es." + old_xmlid, raise_if_not_found=False)
         if not old_tag:
             continue
@@ -230,17 +170,22 @@ def update_account_tags(env):
             new_tag = env.ref("l10n_es." + new_xmlid)
             for table, field in tables.items():
                 openupgrade.logged_query(
-                    env.cr, """
-                    INSERT INTO %(table)s (
-                        %(field)s, account_account_tag_id)
-                    SELECT rel.%(field)s, %(new_tag)s
-                    FROM %(table)s rel
-                    WHERE rel.account_account_tag_id = %(old_tag)s
-                    ON CONFLICT DO NOTHING""" % {
-                        "table": table, "field": field,
-                        "old_tag": old_tag.id, "new_tag": new_tag.id,
-                    },
+                    env.cr, sql.SQL(
+                        """INSERT INTO {table}
+                        ({field}, account_account_tag_id)
+                        SELECT rel.{field}, %(new_tag)s
+                        FROM {table} rel
+                        WHERE rel.account_account_tag_id = %(old_tag)s
+                        ON CONFLICT DO NOTHING"""
+                    ).format(
+                        table=sql.Identifier(table),
+                        field=sql.Identifier(field),
+                    ), {
+                        "old_tag": old_tag.id,
+                        "new_tag": new_tag.id,
+                    }
                 )
+    # Pre-deleting m2m links for avoiding ondelete="restrict" constraint when unlinking
     if old_tags:
         for table, field in tables.items():
             openupgrade.logged_query(
@@ -253,14 +198,16 @@ def update_account_tags(env):
                 },
             )
     openupgrade.delete_records_safely_by_xml_id(
-        env, ["l10n_es." + x for x in xmlsids.keys()])
+        env, ["l10n_es." + x for x in xmlids.keys()])
+    # Make sure remaining tags that can't be removed don't fail when updating l10n_es
+    # module and Odoo tries to remove them
     openupgrade.logged_query(
         env.cr, """
         UPDATE ir_model_data imd
         SET noupdate = TRUE
         WHERE model = 'account.account.tag' AND module = 'l10n_es'
             AND name IN %s
-        """, (tuple(xmlsids), ),
+        """, (tuple(xmlids), ),
     )
 
 
@@ -268,4 +215,4 @@ def update_account_tags(env):
 def migrate(env, version):
     use_new_taxes_and_repartition_lines_on_move_lines(env)
     update_account_tags(env)
-    # ALERT, RUN AFTER account_chart_update from OCA/account-financial-tools
+    # ALERT: remember to run after account_chart_update from OCA/account-financial-tools
