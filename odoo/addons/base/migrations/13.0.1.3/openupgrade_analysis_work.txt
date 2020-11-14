@@ -121,8 +121,8 @@ base         / report.layout            / view_id (many2one)            : previo
 # NOTHING TO DO: Model moved from web module
 
 base         / res.company              / favicon (binary)              : NEW attachment: True, hasdefault
-# NOTHING TO DO: New feature for putting a favicon according company
 # DONE for web_favicon: pre-migration: Module merged + field renamed if exists
+# DONE: post-migration: If no favicon at all, put default one
 
 base         / res.company              / font (selection)              : NEW selection_keys: ['Lato', 'Montserrat', 'Open_Sans', 'Oswald', 'Raleway', 'Roboto'], hasdefault
 # NOTHING TO DO: New feature for selecting reports font. Default (Lato) is OK
