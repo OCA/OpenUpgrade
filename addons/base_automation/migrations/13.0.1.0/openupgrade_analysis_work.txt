@@ -1,0 +1,11 @@
+---Models in module 'base_automation'---
+---Fields in module 'base_automation'---
+base_automation / base.automation          / trigger_field_ids (many2many) : NEW relation: ir.model.fields
+# NOTHING TO DO: New feature. add to automated actions the fields to watch during update
+
+base_automation / base.automation.lead.test / customer (boolean)            : DEL
+base_automation / base.automation.lead.test / employee (boolean)            : NEW isrelated: related, stored
+# NOTHING TO DO: 'base.automation.lead.test' isa model created an used in test/test_base_automation.py
+
+---XML records in module 'base_automation'---
+# NOTHING TO DO
