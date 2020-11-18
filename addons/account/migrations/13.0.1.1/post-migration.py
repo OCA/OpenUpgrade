@@ -147,9 +147,16 @@ def migration_invoice_moves(env):
         ai.reference, ai.comment, ai.type, ai.journal_id, ai.company_id,
         ai.currency_id, ai.partner_id, ai.commercial_partner_id,
         ai.amount_untaxed, ai.amount_tax, ai.amount_total, ai.residual,
-        ai.amount_untaxed_signed, ai.amount_tax_company_signed, COALESCE(
-        ai.amount_total_company_signed, ai.amount_total_signed),
-        COALESCE(ai.residual_company_signed, ai.residual_signed),
+        CASE WHEN ai.type IN ('in_invoice', 'in_refund')
+        THEN -ai.amount_untaxed_signed ELSE ai.amount_untaxed_signed END,
+        CASE WHEN ai.type IN ('in_invoice', 'in_refund')
+        THEN -ai.amount_tax_company_signed ELSE ai.amount_tax_company_signed END,
+        CASE WHEN ai.type IN ('in_invoice', 'in_refund')
+        THEN -COALESCE(ai.amount_total_company_signed, ai.amount_total_signed)
+        ELSE COALESCE(ai.amount_total_company_signed, ai.amount_total_signed) END,
+        CASE WHEN ai.type IN ('in_invoice', 'in_refund')
+        THEN -COALESCE(ai.residual_company_signed, ai.residual_signed)
+        ELSE COALESCE(ai.residual_company_signed, ai.residual_signed) END,
         ai.fiscal_position_id, ai.user_id, 'posted', CASE WHEN ai.state IN (
         'in_payment', 'paid') THEN ai.state ELSE 'not_paid' END,
         ai.date_invoice, ai.date_due, ai.name, ai.sent, ai.origin,
@@ -180,9 +187,16 @@ def migration_invoice_moves(env):
         COALESCE(number, move_name, name, '/'), COALESCE(date, date_invoice,
         write_date), reference, comment, type, journal_id, company_id,
         currency_id, partner_id, commercial_partner_id, amount_untaxed,
-        amount_tax, amount_total, residual, amount_untaxed_signed,
-        amount_tax_company_signed, amount_total_company_signed,
-        residual_company_signed, fiscal_position_id, user_id,
+        amount_tax, amount_total, residual,
+        CASE WHEN type IN ('in_invoice', 'in_refund')
+        THEN -amount_untaxed_signed ELSE amount_untaxed_signed END,
+        CASE WHEN type IN ('in_invoice', 'in_refund')
+        THEN -amount_tax_company_signed ELSE amount_tax_company_signed END,
+        CASE WHEN type IN ('in_invoice', 'in_refund')
+        THEN -amount_total_company_signed ELSE amount_total_company_signed END,
+        CASE WHEN type IN ('in_invoice', 'in_refund')
+        THEN -residual_company_signed ELSE residual_company_signed END,
+        fiscal_position_id, user_id,
         state, 'not_paid', date_invoice, date_due, name, sent, origin,
         payment_term_id, partner_bank_id, incoterm_id, source_email,
         vendor_display_name, cash_rounding_id, id, create_uid, create_date,
