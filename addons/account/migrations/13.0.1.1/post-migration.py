@@ -127,6 +127,7 @@ def fill_account_journal_invoice_reference_type(env):
 
 
 def migration_invoice_moves(env):
+    # Transfer fields from invoices to linked moves
     openupgrade.logged_query(
         env.cr, """
         UPDATE account_move am
@@ -161,6 +162,7 @@ def migration_invoice_moves(env):
         """,
     )
     ids1 = env.cr.fetchall()
+    # Insert moves for draft or canceled invoices
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO account_move (message_main_attachment_id, access_token,
@@ -195,8 +197,7 @@ def migration_invoice_moves(env):
             env, ids1 + ids2, 'account.invoice', 'account.move')
     # Not Draft or Cancel Invoice Lines
     # 1st: update the ungrouped ones
-    openupgrade.logged_query(
-        env.cr, """
+    query = """
         UPDATE account_move_line aml
         SET exclude_from_invoice_tab = FALSE, sequence = ail.sequence,
         price_unit = ail.price_unit, discount = ail.discount, price_subtotal = ail.price_subtotal,
@@ -206,17 +207,30 @@ def migration_invoice_moves(env):
         FROM account_invoice_line ail
             JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
             JOIN account_move am ON ail.invoice_id = am.old_invoice_id
-        WHERE am.id = aml.move_id AND ail.company_id = aml.company_id AND ail.account_id = aml.account_id
-            AND ail.partner_id = aml.partner_id
-            AND ail.name = aml.name
+        """
+    minimal_where = """
+        WHERE am.id = aml.move_id
             AND ail.quantity = aml.quantity
             AND ((ail.product_id IS NULL AND aml.product_id IS NULL) OR ail.product_id = aml.product_id)
             AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
+        """
+    # Try first with a stricter criteria for matching invoice lines with account move lines
+    openupgrade.logged_query(
+        env.cr, query + minimal_where + """
+            AND ail.account_id = aml.account_id
+            AND ai.commercial_partner_id = aml.partner_id
             AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
                 OR ail.account_analytic_id = aml.analytic_account_id)
         RETURNING aml.id""",
     )
     aml_ids = tuple(x[0] for x in env.cr.fetchall())
+    # Try now with a more relaxed criteria, as it's possible that users change some data on amls
+    openupgrade.logged_query(
+        env.cr, query + minimal_where + """
+            AND aml.old_invoice_line_id IS NULL
+        RETURNING aml.id""",
+    )
+    aml_ids += tuple(x[0] for x in env.cr.fetchall())
     # 2st: exclude from invoice_tab the grouped ones, and create a new separated ones
     if aml_ids:
         openupgrade.logged_query(
