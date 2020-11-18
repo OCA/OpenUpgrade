@@ -70,7 +70,7 @@ def check_optional_products(env):
     env.cr.execute("SELECT COUNT(*) FROM product_optional_rel")
     if env.cr.fetchone()[0] > 0:
         module = env["ir.module.module"].search(
-            [("name", "=" "sale_product_configurator")]
+            [("name", "=", "sale_product_configurator")]
         )
         if module.state == "uninstalled":
             module.write({"state": "to install"})
