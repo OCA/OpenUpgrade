@@ -2,6 +2,7 @@
 # Copyright 2020 ForgeFlow <https://www.forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+import uuid
 
 _model_renames = [
     ('survey.mail.compose.message', 'survey.invite'),
@@ -82,6 +83,20 @@ def fill_survey_user_input_line_question_sequence(env):
     )
 
 
+def unique_survey_tokens(env):
+    """Populate a unique token for each existing survey, as default method
+    populates the same for all. Done this on pre-migration for avoiding the
+    unique constraint.
+    """
+    openupgrade.add_fields(env, [("access_token", "survey.survey", "survey_survey", "char", False, "survey")])
+    env.cr.execute("SELECT id FROM survey_survey")
+    for row in env.cr.fetchall():
+        env.cr.execute(
+            "UPDATE survey_survey SET access_token = %s WHERE id = %s",
+            (str(uuid.uuid4()), row[0])
+        )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_models(env.cr, _model_renames)
@@ -91,6 +106,7 @@ def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
     add_helper_survey_question_page_rel(env)
     fill_survey_user_input_line_question_sequence(env)
+    unique_survey_tokens(env)
     openupgrade.set_xml_ids_noupdate_value(
         env,
         "survey",

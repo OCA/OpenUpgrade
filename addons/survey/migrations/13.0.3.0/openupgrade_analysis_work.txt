@@ -81,7 +81,6 @@ survey       / survey.survey            / certification_mail_template_id (many2o
 # DONE: pre-migration (renamed)
 
 survey       / survey.survey            / access_mode (selection)       : NEW required, selection_keys: ['public', 'token'], req_default: function, hasdefault
-survey       / survey.survey            / access_token (char)           : NEW hasdefault
 survey       / survey.survey            / attempts_limit (integer)      : NEW hasdefault
 survey       / survey.survey            / category (selection)          : NEW required, selection_keys: ['default'], req_default: function, hasdefault
 survey       / survey.survey            / certificate (boolean)         : NEW
@@ -95,6 +94,9 @@ survey       / survey.survey            / questions_selection (selection): NEW r
 survey       / survey.survey            / scoring_type (selection)      : NEW required, selection_keys: ['no_scoring', 'scoring_with_answers', 'scoring_without_answers'], req_default: function, hasdefault
 survey       / survey.survey            / time_limit (float)            : NEW
 # NOTHING TO DO: new feature with proper defaults
+
+survey       / survey.survey            / access_token (char)           : NEW hasdefault
+# DONE: pre-migration: populate a unique UUID before the constraint is added, as the default brings the same for all
 
 survey       / survey.user_input        / input_type (selection)        : NEW required, selection_keys: ['link', 'manually'], req_default: function, hasdefault
 survey       / survey.user_input        / type (selection)              : DEL required, selection_keys: ['link', 'manually'], req_default: function
