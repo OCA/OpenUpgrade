@@ -1,0 +1,31 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Flake OpenUpgrade
+
+on:
+  push:
+    branches: ["13.0"]
+  pull_request:
+
+jobs:
+  flake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - uses: actions/checkout@v2
+      - name: Configuration
+        run: pip install flake8==3.4.1
+      - name: Flake8 Script
+        run: |
+          flake8 odoo/openupgrade --max-line-length=120
+          flake8 odoo/addons/openupgrade* --max-line-length=120 --filename=__init__.py --ignore=F401
+          flake8 odoo/addons/openupgrade* --max-line-length=120 --exclude=__init__.py
+          # only flake8 migration scripts from the openupgrade project, presumably
+          # identifiable by using the openupgrade helpers
+          flake8 --max-line-length=120 scripts $(find . \( -name 'pre-*.py' -or -name 'post-*.py' \) -exec grep -q openupgrade {} \; -print)
+          flake8 odoo/addons/*/migrations/*/tests/ --max-line-length=120
+          flake8 addons/*/migrations/*/tests/ --max-line-length=120
