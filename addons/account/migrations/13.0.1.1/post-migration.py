@@ -222,8 +222,15 @@ def migration_invoice_moves(env):
             JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
             JOIN account_move am ON ail.invoice_id = am.old_invoice_id
         """
+    # We assign to the move lines information from the matching invoice line.
+    # Everything that has a tax_line_id (originator tax) is by definition originating
+    # from the invoice taxes, not from invoice lines.
+    # The move lines that have a receivable or payable account (the same as the one
+    # from the invoice) are not associated to any invoice line.
     minimal_where = """
         WHERE am.id = aml.move_id
+            AND aml.tax_line_id IS NULL
+            AND aml.account_id <> ai.account_id
             AND ail.quantity = aml.quantity
             AND ((ail.product_id IS NULL AND aml.product_id IS NULL) OR ail.product_id = aml.product_id)
             AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
