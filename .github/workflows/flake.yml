@@ -26,6 +26,5 @@ jobs:
           flake8 odoo/addons/openupgrade* --max-line-length=120 --exclude=__init__.py
           # only flake8 migration scripts from the openupgrade project, presumably
           # identifiable by using the openupgrade helpers
-          flake8 --max-line-length=120 scripts $(find . \( -name 'pre-*.py' -or -name 'post-*.py' \) -exec grep -q openupgrade {} \; -print)
-          flake8 odoo/addons/*/migrations/*/tests/ --max-line-length=120
+          flake8 --max-line-length=120 scripts $(find . \( -name 'pre-*.py' -or -name 'post-*.py' -or -name 'end-*.py' \) -exec grep -q openupgrade {} \; -print)
           flake8 addons/*/migrations/*/tests/ --max-line-length=120
