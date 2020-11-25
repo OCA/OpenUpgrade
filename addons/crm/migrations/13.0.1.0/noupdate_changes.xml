@@ -16,7 +16,7 @@
   <record id="sales_team.salesteam_website_sales" model="crm.team" forcecreate="False">
     <field name="use_opportunities" eval="False"/>
   </record>
-  <record id="stage_lead1" model="crm.stage">
+  <!--<record id="stage_lead1" model="crm.stage">
     <field name="on_change"/>
     <field name="probability"/>
   </record>
@@ -27,10 +27,10 @@
   <record id="stage_lead3" model="crm.stage">
     <field name="on_change"/>
     <field name="probability"/>
-  </record>
+  </record>-->
   <record id="stage_lead4" model="crm.stage">
-    <field name="on_change"/>
-    <field name="probability"/>
+    <!--<field name="on_change"/>
+    <field name="probability"/>-->
     <field name="is_won">True</field>
   </record>
 </odoo>
