@@ -1,0 +1,40 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: OpenUpgrade documentation
+
+on:
+  push:
+    branches: ["13.0"]
+  pull_request:
+
+jobs:
+  documentation:
+    runs-on: ubuntu-latest
+    env:
+      DB: "openupgrade"
+      DB_USERNAME: "odoo"
+      DB_PASSWORD: "odoo"
+      DB_HOST: "localhost"
+      DB_PORT: 5432
+      ODOO: "./odoo-bin"
+      PGPASSWORD: "odoo"
+      PGHOST: "localhost"
+      PGUSER: "odoo"
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - uses: actions/checkout@v2
+      - name: Configuration
+        run: |
+          sudo apt update
+          sudo apt install libldap2-dev nodejs libxml2-dev libxslt1-dev libevent-dev libsasl2-dev expect unixodbc-dev expect-dev python-lxml python-simplejson python-serial python-yaml python-passlib python-psycopg2 python-werkzeug
+          pip install -r requirements.txt
+          pip install sphinx
+      - name: OpenUpgrade Docs
+        run: |
+          sh scripts/build_openupgrade_docs
+          # try to build the documentation
+          pip install sphinx

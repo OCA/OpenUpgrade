@@ -1,0 +1,77 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Test OpenUpgrade migration
+
+on:
+  push:
+    branches: ["13.0"]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      DB: "openupgrade"
+      DB_USERNAME: "odoo"
+      DB_PASSWORD: "odoo"
+      DB_HOST: "localhost"
+      DB_PORT: 5432
+      ODOO: "./odoo-bin"
+      PGPASSWORD: "odoo"
+      PGHOST: "localhost"
+      PGUSER: "odoo"
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Configure Postgres
+        uses: harmon758/postgresql-action@v1
+        with:
+          postgresql version: "10"
+          postgresql user: ${DB_USERNAME}
+          postgresql password: ${DB_PASSWORD}
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '10s'
+      - name: DB Creation
+        run: createdb $DB
+      - name: DB Restore
+        run: |
+          psql -d $DB -c "DROP SCHEMA IF EXISTS PUBLIC;"
+          wget -q -O- https://github.com/OCA/OpenUpgrade/releases/download/databases/12.0.psql | pg_restore -d $DB --no-owner
+          # TODO: create test data in Odoo 12.0 which does not support yml anymore
+          # Roundtrip to previous release to update the test database with additional test data
+          # - git fetch --depth 2 origin 12.0
+          # - git reset --hard `git ls-remote |grep refs/heads/12.0 |awk '{print $1}'`
+          # - pip install -q -r requirements.txt
+          # Line below may fail quite often due to Travis bug:
+          # - git reset -q --hard $TRAVIS_COMMIT
+          # Install Python requirements of target release
+      - uses: actions/checkout@v2
+      - name: Configuration
+        run: |
+          sudo apt update
+          sudo apt install libldap2-dev nodejs libxml2-dev libxslt1-dev libevent-dev libsasl2-dev expect unixodbc-dev expect-dev python-lxml python-simplejson python-serial python-yaml python-passlib python-psycopg2 python-werkzeug
+          pip install coveralls
+      - name: Requirements Installation
+        run: |
+          sudo npm install -g less less-plugin-clean-css
+          pip install -q -r requirements.txt
+          # don't use pypi's openupgradelib, but the one from source to avoid choking
+          # on unreleased features in openupgradelib
+          pip install --ignore-installed git+https://github.com/OCA/openupgradelib.git@master
+          # select modules and perform the upgrade
+      - name: OpenUpgrade test
+        run: |
+          MODULES_OLD=base,$(sed -n '/^+========/,$p'  odoo/openupgrade/doc/source/modules120-130.rst | grep "Done\|Partial\|Nothing" | grep -v "theme_" | sed -r -n 's/((^\| *\|del\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
+          MODULES_NEW=base,$(sed -n '/^+========/,$p'  odoo/openupgrade/doc/source/modules120-130.rst | grep "Done\|Partial\|Nothing" | grep -v "theme_" | sed -r -n 's/((^\| *\|new\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
+          psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')"
+          echo Testing modules $MODULES_NEW
+          OPENUPGRADE_TESTS=1 coverage run $ODOO --database=$DB --update=$MODULES_NEW --db_host=$DB_HOST --db_port=$DB_PORT --db_port=$DB_PORT --db_password=$DB_PASSWORD --db_user=$DB_USERNAME --stop-after-init
+      - name: Ending
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: coveralls
