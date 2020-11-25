@@ -47,3 +47,4 @@ def add_default_account_data(env):
 @openupgrade.migrate()
 def migrate(env, version):
     add_default_account_data(env)
+    # force very long line to trigger the new GitHub action workflow step for flake8 and this is still not enough to have the longest line. Now it is.
