@@ -44,6 +44,7 @@ merged_modules = {
     # OCA/server-backend
     'base_suspend_security': 'base',
     # OCA/social
+    'mail_history': 'mail',
     'mass_mailing_unique': 'mass_mailing',
     # OCA/timesheet
     'sale_timesheet_existing_project': 'sale_timesheet',
