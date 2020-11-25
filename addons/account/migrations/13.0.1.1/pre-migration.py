@@ -73,7 +73,7 @@ def type_change_account_fiscal_position_zips(env):
 
 
 def create_account_invoice_amount_tax_company_signed(env):
-    if not openupgrade.column_exists(
+    if not openupgrade.column_exists2(
             env.cr, "account_invoice", "amount_tax_company_signed"):
         openupgrade.logged_query(
             env.cr, """
