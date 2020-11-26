@@ -3,10 +3,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
-_column_renames = {
+_column_copies = {
     'product_template': [
-        ('service_tracking', None),
+        ('service_tracking', None, None),
     ],
+}
+_column_renames = {
     'account_analytic_line': [
         ('timesheet_invoice_id', None),
     ],
@@ -16,4 +18,5 @@ _column_renames = {
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
+    openupgrade.copy_columns(cr, _column_copies)
     openupgrade.rename_columns(cr, _column_renames)

@@ -6,9 +6,11 @@ obsolete model project.task.assign.sale [transient]
 sale_timesheet / account.analytic.line    / timesheet_invoice_id (many2one): relation is now 'account.move' ('account.invoice') [nothing to do]
 sale_timesheet / account.invoice          / timesheet_ids (one2many)      : DEL relation: account.analytic.line
 sale_timesheet / account.move             / timesheet_ids (one2many)      : NEW relation: account.analytic.line
+# DONE: pre-migration: renamed column for avoiding FK constraint
 # DONE: post-migration: mapped invoice to moves
 
 sale_timesheet / product.template         / service_tracking (selection)  : selection_keys is now '['no', 'project_only', 'task_global_project', 'task_in_project']' ('['no', 'project_only', 'task_global_project', 'task_new_project']')
+# DONE: pre-migration: copied column for preserving old values
 # DONE: post-migration: change 'task_new_project' by 'task_in_project'
 
 sale_timesheet / sale.order               / project_id (many2one)         : NEW relation: project.project
