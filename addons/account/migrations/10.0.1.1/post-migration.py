@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # Copyright 2017 Therp BV
 # Copyright 2018 Tecnativa - Pedro M. Baeza
+# Copyright 2020 Akretion France (http://www.akretion.com/)
+# Copyright 2020 Opener B.V. (https://opener.amsterdam)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-from odoo import _
 from openupgradelib import openupgrade
 
 
@@ -21,6 +22,101 @@ def fill_refund_invoice_id(env):
         WHERE rel.refund_invoice_id = ai.id"""
     )
     # TODO: Make a fuzzy match if the OCA module is not present
+
+
+def create_statement_lines_payments(cr):
+    """ Gather non-zero bank statement lines that have journal entries,
+    but no linked payments, meaning they are reconciled, but no payment
+    was created. """
+    openupgrade.logged_query(cr, '''
+        -- Create a temporary table to work with
+        CREATE TEMPORARY TABLE openupgrade_tmp_account_payment (
+            amount NUMERIC,
+            communication VARCHAR,
+            company_id INTEGER,
+            currency_id INTEGER,
+            journal_id INTEGER,
+            name VARCHAR,
+            partner_id INTEGER,
+            partner_type VARCHAR,
+            payment_date DATE,
+            payment_id INTEGER,
+            payment_method_id INTEGER,
+            payment_reference VARCHAR,
+            payment_type VARCHAR,
+            st_line_id INTEGER
+        );
+        -- Temporary column in the payment table to store the statement line
+        ALTER TABLE account_payment ADD COLUMN openupgrade_tmp_st_line_id
+            INTEGER;
+
+        -- Collect the payment data from the statement lines
+        WITH st_lines AS (
+            SELECT l.id
+            FROM account_bank_statement_line l
+            JOIN account_move m on m.statement_line_id = l.id
+            JOIN account_move_line ml ON ml.move_id = m.id
+            LEFT JOIN account_payment ap ON ml.payment_id = ap.id
+                 WHERE ABS(l.amount) > 0.0001
+            GROUP BY l.id
+            HAVING (
+                SUM(CASE WHEN ap.id IS NOT NULL THEN 1 ELSE 0 END) = 0
+                AND SUM(CASE WHEN ml.id IS NOT NULL THEN 1 ELSE 0 END) > 0))
+        INSERT INTO openupgrade_tmp_account_payment
+            (amount, communication, company_id,
+             currency_id, journal_id,
+             name, partner_id, partner_type, payment_date,
+             payment_reference, payment_type, st_line_id)
+        SELECT absl.amount, absl.name, absl.company_id,
+            COALESCE(aj.currency_id, rc.currency_id), absl.journal_id,
+            CASE WHEN COALESCE(abs.name, '') != '' THEN abs.name
+                ELSE 'Bank statement '||abs.date END,
+            absl.partner_id,
+            CASE WHEN absl.amount < 0 THEN 'supplier' ELSE 'customer' END,
+            absl.date, absl.move_name,
+            CASE WHEN absl.amount < 0 THEN 'outbound' ELSE 'inbound' END,
+            absl.id
+        FROM st_lines
+            JOIN account_bank_statement_line absl ON absl.id = st_lines.id
+            JOIN account_bank_statement abs ON abs.id = absl.statement_id
+            JOIN account_journal aj ON aj.id = absl.journal_id
+            JOIN res_company rc ON rc.id = absl.company_id;
+
+        -- Update the payment method based on the journal and the amount sign
+        UPDATE openupgrade_tmp_account_payment otap
+        SET payment_method_id = inbound_payment_method
+        FROM account_journal_inbound_payment_method_rel rel
+        WHERE rel.journal_id = otap.journal_id AND otap.amount > 0;
+        UPDATE openupgrade_tmp_account_payment otap
+        SET payment_method_id = outbound_payment_method
+        FROM account_journal_outbound_payment_method_rel rel
+        WHERE rel.journal_id = otap.journal_id AND otap.amount < 0;
+
+        -- Insert the payments from the temporary table, storing the created id
+        WITH payments AS (
+            INSERT INTO account_payment
+                (amount, communication, company_id, currency_id,
+                 journal_id, name, partner_id, partner_type, payment_date,
+                 payment_method_id, payment_reference, payment_type, state,
+                 openupgrade_tmp_st_line_id)
+            SELECT ABS(amount), communication, company_id, currency_id,
+                 journal_id, name, partner_id, partner_type, payment_date,
+                 payment_method_id, payment_reference, payment_type,
+                 'reconciled', st_line_id
+            FROM openupgrade_tmp_account_payment
+            WHERE payment_method_id IS NOT NULL
+            RETURNING id AS payment_id, openupgrade_tmp_st_line_id)
+
+        -- Link the payment to the statement line's move lines
+        UPDATE account_move_line aml SET payment_id = payments.payment_id
+        FROM payments
+            JOIN account_move am
+                 ON am.statement_line_id = payments.openupgrade_tmp_st_line_id
+        WHERE am.id = aml.move_id;
+
+        -- Clean up temporary column
+        ALTER TABLE account_payment DROP COLUMN openupgrade_tmp_st_line_id;
+    ''')
 
 
 @openupgrade.migrate(use_env=True)
@@ -118,58 +214,4 @@ def migrate(env, version):
         cr, 'account', 'migrations/10.0.1.1/noupdate_changes.xml',
     )
 
-    # gather non-zero bank statement lines that have journal entries,
-    # but no linked payments, meaning they are reconciled, but no
-    # payment was created.
-    openupgrade.logged_query(cr, '''
-        select l.id
-        from account_bank_statement_line l
-        join account_move m
-            on m.statement_line_id = l.id
-        join account_move_line ml
-            on ml.move_id = m.id
-        left join account_payment ap
-            on ml.payment_id = ap.id
-        where abs(l.amount) > 0.0001
-        group by l.id
-        having (
-            sum(case when ap.id is not null then 1 else 0 end) = 0
-            and sum(case when ml.id is not null then 1 else 0 end) > 0
-        )
-    ''')
-    statement_lines = env['account.bank.statement.line'].browse([
-        row[0] for row in cr.fetchall()])
-
-    # create payments for these
-    for chunk in openupgrade.chunked(statement_lines):
-        for st_line in chunk:
-            total = st_line.amount
-            journal = st_line.journal_id
-            currency = journal.currency_id or st_line.company_id.currency_id
-            payment_methods = journal.inbound_payment_method_ids \
-                if total > 0 else journal.outbound_payment_method_ids
-            if not payment_methods:
-                continue
-            communication = st_line._get_communication(payment_methods[0])
-            payment = env['account.payment'].create(dict(
-                partner_id=st_line.partner_id.id or False,
-                payment_method_id=payment_methods[0].id,
-                partner_type=(total < 0) and 'supplier' or 'customer',
-                currency_id=currency.id,
-                payment_reference=st_line.move_name,
-                payment_type=(total > 0) and 'inbound' or 'outbound',
-                journal_id=journal.id,
-                payment_date=st_line.date,
-                state='reconciled',
-                amount=abs(total),
-                communication=communication,
-                name=st_line.statement_id.name or _(
-                    'Bank Statement %s') % st_line.date
-            ))
-
-            # link this new payment to the statement line
-            move = env['account.move'].search([
-                ('statement_line_id', '=', st_line.id),
-                ('name', '=', st_line.move_name),
-            ])
-            move.line_ids.write(dict(payment_id=payment.id))
+    create_statement_lines_payments(env.cr)
