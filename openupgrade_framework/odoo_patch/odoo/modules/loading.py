@@ -22,8 +22,7 @@ _test_logger = logging.getLogger('odoo.tests')
 
 
 def _load_module_graph(cr, graph, status=None, perform_checks=True,
-                      skip_modules=None, report=None, models_to_check=None, upg_registry=None):
-    # <OpenUpgrade:CHANGED-SIGNATURE/>
+                      skip_modules=None, report=None, models_to_check=None):
     """Migrates+Updates or Installs all module nodes from ``graph``
        :param graph: graph of module nodes to load
        :param status: deprecated parameter, unused, left to avoid changing signature in 8.0
@@ -111,17 +110,6 @@ def _load_module_graph(cr, graph, status=None, perform_checks=True,
             models_updated |= set(model_names)
             models_to_check -= set(model_names)
             registry.setup_models(cr)
-            # <OpenUpgrade:ADD>
-            # rebuild the local registry based on the loaded models
-            local_registry = {}
-            env = api.Environment(cr, SUPERUSER_ID, {})
-            for model in env.values():
-                if not model._auto:
-                    continue
-                openupgrade_loading.log_model(model, local_registry)
-            openupgrade_loading.compare_registries(
-                cr, package.name, upg_registry, local_registry)
-            # </OpenUpgrade>
 
             registry.init_models(cr, model_names, {'module': package.name}, new_install)
         elif package.state != 'to remove':
@@ -276,8 +264,7 @@ def _load_module_graph(cr, graph, status=None, perform_checks=True,
 
 
 def _load_marked_modules(cr, graph, states, force, progressdict, report,
-                        loaded_modules, perform_checks, models_to_check=None, upg_registry=None):
-    # <OpenUpgrade:CHANGED-SIGNATURE/>
+                        loaded_modules, perform_checks, models_to_check=None):
     """Loads modules marked with ``states``, adding them to ``graph`` and
        ``loaded_modules`` and returns a list of installed/upgraded modules."""
 
@@ -295,14 +282,10 @@ def _load_marked_modules(cr, graph, states, force, progressdict, report,
             break
         graph.add_modules(cr, module_list, force)
         _logger.debug('Updating graph with %d more modules', len(module_list))
-        # <OpenUpgrade:CHANGE>
-        # add upg_registry
         loaded, processed = _load_module_graph(
             cr, graph, progressdict, report=report, skip_modules=loaded_modules,
             perform_checks=perform_checks, models_to_check=models_to_check,
-            upg_registry=upg_registry,
         )
-        # </OpenUpgrade>
         processed_modules.extend(processed)
         loaded_modules.extend(loaded)
         if not processed:
@@ -316,10 +299,6 @@ def _load_modules(db, force_demo=False, status=None, update_module=False):
     force = []
     if force_demo:
         force.append('demo')
-
-    # <OpenUpgrade:ADD>
-    upg_registry = {}
-    # </OpenUpgrade>
 
     models_to_check = set()
 
@@ -352,11 +331,9 @@ def _load_modules(db, force_demo=False, status=None, update_module=False):
         # processed_modules: for cleanup step after install
         # loaded_modules: to avoid double loading
         report = registry._assertion_report
-        # <OpenUpgrade:CHANGE>
-        # add upg_registry
         loaded_modules, processed_modules = _load_module_graph(
             cr, graph, status, perform_checks=update_module,
-            report=report, models_to_check=models_to_check, upg_registry=upg_registry)
+            report=report, models_to_check=models_to_check)
 
         # </OpenUpgrade>
         load_lang = tools.config.pop('load_language')
@@ -423,19 +400,13 @@ def _load_modules(db, force_demo=False, status=None, update_module=False):
         previously_processed = -1
         while previously_processed < len(processed_modules):
             previously_processed = len(processed_modules)
-            # <OpenUpgrade:CHANGE>
-            # add upg_registry
             processed_modules += _load_marked_modules(cr, graph,
                 ['installed', 'to upgrade', 'to remove'],
-                force, status, report, loaded_modules, update_module, models_to_check, upg_registry)
-            # </OpenUpgrade>
+                force, status, report, loaded_modules, update_module, models_to_check)
             if update_module:
-                # <OpenUpgrade:CHANGE>
-                # add upg_registry
                 processed_modules += _load_marked_modules(cr, graph,
                     ['to install'], force, status, report,
-                    loaded_modules, update_module, models_to_check, upg_registry)
-                # </OpenUpgrade>
+                    loaded_modules, update_module, models_to_check)
         # check that new module dependencies have been properly installed after a migration/upgrade
         cr.execute("SELECT name from ir_module_module WHERE state IN ('to install', 'to upgrade')")
         module_list = [name for (name,) in cr.fetchall()]
