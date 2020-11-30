@@ -112,6 +112,16 @@ def merge_stock_location_path_stock_rule(env):
         )
 
 
+def assure_stock_rule_company_is_correct(env):
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE stock_rule sr
+        SET company_id = sw.company_id
+        FROM stock_warehouse sw
+        WHERE sr.warehouse_id = sw.id"""
+    )
+
+
 def fill_stock_package_level(env):
     """Only stock.move.line records with package_id = result_package_id means
     that a package level should be created, as in previous version,
@@ -176,6 +186,7 @@ def migrate(env, version):
     map_stock_rule_action(cr)
     fill_stock_picking_type_barcode(env)
     merge_stock_location_path_stock_rule(env)
+    assure_stock_rule_company_is_correct(env)
     fill_stock_package_level(env)
     merge_stock_putaway_product(cr)
     openupgrade.load_data(
