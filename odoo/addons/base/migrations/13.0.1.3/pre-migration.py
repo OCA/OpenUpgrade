@@ -556,6 +556,7 @@ _obsolete_tables = (
     "account_voucher",
     "account_voucher_line",
     "lunch_order_line",
+    "mail_mass_mailing_campaign"
     "slide_category",
     "survey_page",
     "account_analytic_tag_account_invoice_line_rel",
@@ -567,6 +568,7 @@ _obsolete_tables = (
     "sale_order_line_invoice_rel",
     "summary_dept_rel",
     "project_task_assign_so_line_rel",
+    "mail_mass_mailing_tag_rel",
 )
 
 
