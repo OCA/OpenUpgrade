@@ -11,7 +11,6 @@ _model_renames = [
 _table_renames = [
     ('mail_mass_mailing_stage', 'utm_stage'),
     ('mail_mass_mailing_tag', 'utm_tag'),
-    ('mail_mass_mailing_tag_rel', 'utm_tag_rel'),
 ]
 
 _xmlid_renames = [
@@ -21,6 +20,7 @@ _xmlid_renames = [
      'utm.campaign_stage_2'),
     ('mass_mailing.campaign_stage_3',
      'utm.campaign_stage_3'),
+    ('mass_mailing.mass_mail_tag_1', 'utm.utm_tag_1'),
 ]
 
 
@@ -36,13 +36,6 @@ def move_mailing_campaign_to_utm_campaign(env):
         SET user_id = mmc.user_id, stage_id = mmc.stage_id, color = mmc.color
         FROM mail_mass_mailing_campaign mmc
         WHERE mmc.campaign_id = uc.id"""
-    )
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE utm_tag_rel utr
-        SET campaign_id = mmc.campaign_id
-        FROM mail_mass_mailing_campaign mmc
-        WHERE mmc.id = utr.campaign_id"""
     )
 
 
