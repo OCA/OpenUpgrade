@@ -65,7 +65,7 @@ msgstr "%s (کپی)"
 #. module: product
 #: model:product.attribute.value,name:product.product_attribute_value_5
 msgid "1 year"
-msgstr ""
+msgstr "1 سال"
 
 #. module: product
 #: model:product.product,description_sale:product.product_product_4
@@ -79,7 +79,7 @@ msgstr "160x80cm, با پایه های بزرگ."
 #. module: product
 #: model:product.attribute.value,name:product.product_attribute_value_6
 msgid "2 year"
-msgstr ""
+msgstr "2 سال"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_pricelist_view_kanban
@@ -181,6 +181,9 @@ msgid ""
 "A consumable product is a product for which stock is not managed.\n"
 "A service is a non-material product you provide."
 msgstr ""
+"یک محصول قابل نگهداری محصولی است که شما موجودی آن را مدیریت می‌کنید. برنامه انبار داری باید نصب شده باشد.\n"
+"محصول مصرفی محصولی است که موجودی آن مدیریت نمی‌شود.\n"
+"یک سرویس محصول غیر مادی است که شما ارائه می‌کنید."
 
 #. module: product
 #: model:product.product,name:product.product_product_25
@@ -579,7 +582,7 @@ msgstr "ایجاد یک محصول جدید"
 #: model_terms:ir.actions.act_window,help:product.product_normal_action_sell
 #: model_terms:ir.actions.act_window,help:product.product_variant_action
 msgid "Create a new product variant"
-msgstr ""
+msgstr "ایجا یک گونه جدید محصول"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute__create_uid
@@ -1013,7 +1016,7 @@ msgstr ""
 #: code:addons/product/models/product_template.py:573
 #, python-format
 msgid "Import Template for Products"
-msgstr ""
+msgstr "ایمپورت قالب برای محصولات"
 
 #. module: product
 #: code:addons/product/models/product.py:665
@@ -1398,7 +1401,7 @@ msgstr "دسته‌بندی مادر"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_category__parent_path
 msgid "Parent Path"
-msgstr ""
+msgstr "مسیر والد"
 
 #. module: product
 #: model:product.product,name:product.product_product_9
@@ -2047,7 +2050,7 @@ msgstr ""
 #. module: product
 #: model:ir.model,name:product.model_product_supplierinfo
 msgid "Supplier Pricelist"
-msgstr ""
+msgstr "لیست قیمت تامین کننده"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product__valid_archived_variant_ids
@@ -2240,17 +2243,16 @@ msgid ""
 msgstr ""
 
 #. module: product
-#: model:ir.model.fields,help:product.field_product_supplierinfo__product_code
-#: code:addons/product/models/product_uom.py:63
+#: code:addons/product/models/uom_uom.py:16
 #, python-format
 msgid ""
 "This rounding precision is higher than the Decimal Accuracy (%s digits).\n"
-"This may cause inconsistencies in reservations.\n"
+"This may cause inconsistencies in computations.\n"
 "Please set a precision between %s and 1."
 msgstr ""
 
 #. module: product
-#: model:ir.model.fields,help:product.field_product_supplierinfo_product_code
+#: model:ir.model.fields,help:product.field_product_supplierinfo__product_code
 msgid ""
 "This vendor's product code will be used when printing a request for "
 "quotation. Keep empty to use the internal one."
@@ -2550,6 +2552,13 @@ msgid "Volume"
 msgstr "حجم"
 
 #. module: product
+#: code:addons/product/models/decimal_precision.py:33
+#: code:addons/product/models/uom_uom.py:15
+#, python-format
+msgid "Warning!"
+msgstr "هشدار!"
+
+#. module: product
 #: model:ir.model.fields,field_description:product.field_product_product__website_message_ids
 #: model:ir.model.fields,field_description:product.field_product_template__website_message_ids
 msgid "Website Messages"
@@ -2564,14 +2573,6 @@ msgstr "تاریخچه ارتباط با وبسایت"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product__weight
 #: model:ir.model.fields,field_description:product.field_product_template__weight
-#: code:addons/product/models/product_uom.py:63
-#, python-format
-msgid "Warning!"
-msgstr "هشدار!"
-
-#. module: product
-#: model:ir.model.fields,field_description:product.field_product_product_weight
-#: model:ir.model.fields,field_description:product.field_product_template_weight
 #: model:product.uom.categ,name:product.product_uom_categ_kgm
 msgid "Weight"
 msgstr "وزن"
@@ -2614,6 +2615,16 @@ msgstr "وزنها"
 #: model:product.attribute.value,name:product.product_attribute_value_3
 msgid "White"
 msgstr "سفید"
+
+#. module: product
+#: code:addons/product/models/decimal_precision.py:34
+#, python-format
+msgid ""
+"You are setting a Decimal Accuracy less precise than the UOMs:\n"
+"%s\n"
+"This may cause inconsistencies in computations.\n"
+"Please increase the rounding of those units of measure, or the digits of this Decimal Accuracy."
+msgstr ""
 
 #. module: product
 #: code:addons/product/models/product_attribute.py:46

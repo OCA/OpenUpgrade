@@ -19,6 +19,7 @@
 # Tim Siu Lai <tl@roomsfor.hk>, 2019
 # Hau Dao <hau@quartile.co>, 2020
 # Yoshi Tashiro <tashiro@roomsfor.hk>, 2020
+# Noma Yuki, 2020
 # 
 msgid ""
 msgstr ""
@@ -26,7 +27,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:25+0000\n"
-"Last-Translator: Yoshi Tashiro <tashiro@roomsfor.hk>, 2020\n"
+"Last-Translator: Noma Yuki, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/odoo/teams/41243/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -154,7 +155,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock.stock_move_view_kanban
 #: model_terms:ir.ui.view,arch_db:stock.view_stock_inventory_kanban
 msgid "<i class=\"fa fa-clock-o\" role=\"img\" aria-label=\"Date\" title=\"Date\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-clock-o\" role=\"img\" aria-label=\"Date\" title=\"Date\"/>"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.stock_scrap_view_kanban
@@ -166,7 +167,7 @@ msgstr ""
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.stock_picking_type_kanban
 msgid "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.report_picking
@@ -1035,7 +1036,7 @@ msgstr "条件"
 #. module: stock
 #: model:ir.model,name:stock.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "コンフィグ設定"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_config_settings
@@ -1480,7 +1481,7 @@ msgstr "フォローするデフォルトの出立ルート"
 #: model:ir.model.fields,help:stock.field_stock_quant__product_uom_id
 #: model:ir.model.fields,help:stock.field_stock_warehouse_orderpoint__product_uom
 msgid "Default unit of measure used for all stock operations."
-msgstr ""
+msgstr "すべての在庫操作に使用されるデフォルトの測定単位。"
 
 #. module: stock
 #: selection:stock.move,procure_method:0
@@ -1856,7 +1857,7 @@ msgstr "有効日"
 #: model:ir.model.fields,help:stock.field_stock_move_line__tracking
 #: model:ir.model.fields,help:stock.field_stock_scrap__tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
-msgstr ""
+msgstr "倉庫に置いておける商品を追跡できるようにする"
 
 #. module: stock
 #. openerp-web
@@ -2046,7 +2047,7 @@ msgstr "将来の損益計算書"
 #: code:addons/stock/models/product.py:348
 #, python-format
 msgid "Future Productions"
-msgstr "将来の製品"
+msgstr "将来の製造"
 
 #. module: stock
 #: code:addons/stock/models/product.py:343
@@ -2223,7 +2224,7 @@ msgstr "チェックされている場合は、新しいメッセージに注意
 #: model:ir.model.fields,help:stock.field_stock_picking__message_has_error
 #: model:ir.model.fields,help:stock.field_stock_production_lot__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "チェックした場合、一部のメッセージが配信エラーが発生しています。"
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_move__propagate
@@ -3366,7 +3367,7 @@ msgstr "次の活動タイプ"
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.exception_on_picking
 msgid "Next transfer(s) impacted:"
-msgstr ""
+msgstr "影響を受ける次の転送(複数):"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_backorder_confirmation
@@ -4201,7 +4202,7 @@ msgstr "プロダクト移動"
 #. module: stock
 #: model:ir.model,name:stock.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "製品の移動(在庫移動ライン)"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_product_packagings
@@ -4270,7 +4271,7 @@ msgstr "トラッキング付プロダクト"
 #. module: stock
 #: selection:stock.location,usage:0
 msgid "Production"
-msgstr "本番"
+msgstr "製造"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_product_product__property_stock_production
