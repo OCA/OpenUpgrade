@@ -77,7 +77,7 @@ class AccountMove(models.Model):
                             # In case val_stock_move is a return move, its valuation entries have been made with the
                             # currency rate corresponding to the original stock move
                             valuation_date = val_stock_move.origin_returned_move_id.date or val_stock_move.date
-                            svl = val_stock_move.mapped('stock_valuation_layer_ids').filtered(lambda l: l.quantity)
+                            svl = val_stock_move.with_context(active_test=False).mapped('stock_valuation_layer_ids').filtered(lambda l: l.quantity)
                             layers_qty = sum(svl.mapped('quantity'))
                             layers_values = sum(svl.mapped('value'))
                             valuation_price_unit_total += line.company_currency_id._convert(
@@ -112,14 +112,17 @@ class AccountMove(models.Model):
                         move.company_id, fields.Date.today(), round=False
                     )
 
-
                 price_unit = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                if line.tax_ids:
+                if line.tax_ids and line.quantity:
                     # We do not want to round the price unit since :
                     # - It does not follow the currency precision
                     # - It may include a discount
+                    # Since compute_all still rounds the total, we use an ugly workaround:
+                    # multiply then divide the price unit.
+                    price_unit *= line.quantity
                     price_unit = line.tax_ids.with_context(round=False).compute_all(
                         price_unit, currency=move.currency_id, quantity=1.0, is_refund=move.type == 'in_refund')['total_excluded']
+                    price_unit /= line.quantity
 
                 price_unit_val_dif = price_unit - valuation_price_unit
                 price_subtotal = line.quantity * price_unit_val_dif
@@ -131,7 +134,6 @@ class AccountMove(models.Model):
                     not move.currency_id.is_zero(price_subtotal)
                     and float_compare(line["price_unit"], line.price_unit, precision_digits=price_unit_prec) == 0
                 ):
-
                     # Add price difference account line.
                     vals = {
                         'name': line.name[:64],
