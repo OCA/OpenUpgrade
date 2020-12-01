@@ -407,6 +407,9 @@ msgid ""
 "A consumable product is a product for which stock is not managed.\n"
 "A service is a non-material product you provide."
 msgstr ""
+"یک محصول قابل نگهداری محصولی است که شما موجودی آن را مدیریت می‌کنید. برنامه انبار داری باید نصب شده باشد.\n"
+"محصول مصرفی محصولی است که موجودی آن مدیریت نمی‌شود.\n"
+"یک سرویس محصول غیر مادی است که شما ارائه می‌کنید."
 
 #. module: stock
 #: model:res.groups,name:stock.group_warning_stock
@@ -1859,7 +1862,7 @@ msgstr ""
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.exception_on_picking
 msgid "Exception(s):"
-msgstr ""
+msgstr "استثنا(ها):"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move__date_expected
@@ -3856,7 +3859,7 @@ msgstr "مکان مادر"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_location__parent_path
 msgid "Parent Path"
-msgstr ""
+msgstr "مسیر والد"
 
 #. module: stock
 #: selection:procurement.group,move_type:0
@@ -5427,7 +5430,7 @@ msgstr ""
 #: model:ir.model,name:stock.model_stock_rule
 #: model:ir.model.fields,field_description:stock.field_stock_move__rule_id
 msgid "Stock Rule"
-msgstr ""
+msgstr "قانون موجودی انبار"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_stock_rules_report
@@ -5472,7 +5475,7 @@ msgstr ""
 #. module: stock
 #: model:ir.model,name:stock.model_report_stock_report_stock_rule
 msgid "Stock rule report"
-msgstr ""
+msgstr "گزارش قانون موجودی انبار"
 
 #. module: stock
 #: selection:product.template,type:0
@@ -5930,7 +5933,7 @@ msgstr "در دست اقدام"
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.stock_picking_type_kanban
 msgid "To Process"
-msgstr ""
+msgstr "برای پردازش"
 
 #. module: stock
 #: selection:stock.picking,activity_state:0
@@ -6212,7 +6215,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock.stock_inventory_line_tree2
 #: model_terms:ir.ui.view,arch_db:stock.view_inventory_form
 msgid "UoM"
-msgstr ""
+msgstr "واحد"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_uom_categ_form_action
