@@ -2,10 +2,25 @@
 <odoo>
   <record id="CLP" model="res.currency">
     <field name="rounding">1</field>
+    <field name="position">before</field>
+  </record>
+  <record id="IDR" model="res.currency">
+    <field name="rounding">1.00</field>
+  </record>
+  <record id="INR" model="res.currency">
+    <field name="position">before</field>
+  </record>
+  <record id="SGD" model="res.currency">
+    <field name="symbol">S$</field>
+    <field name="position">before</field>
   </record>
   <record id="ar" model="res.country">
     <field eval="'%(street)s\n%(street2)s\n%(city)s %(state_name)s %(zip)s\n%(country_name)s'" name="address_format"/>
     <field name="vat_label">CUIT</field>
+  </record>
+  <record id="at" model="res.country">
+    <field name="vat_label">USt</field>
+    <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s\n%(country_name)s'" name="address_format"/>
   </record>
   <record id="cn" model="res.country">
     <field eval="'%(country_name)s, %(zip)s\n%(state_name)s %(city)s %(street)s %(street2)s'" name="address_format"/>
@@ -16,6 +31,9 @@
   <record id="hr" model="res.country">
     <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s \n%(country_name)s'" name="address_format"/>
   </record>
+  <record id="id" model="res.country">
+    <field name="vat_label">NPWP</field>
+  </record>
 <!--  <record id="main_company" model="res.company">-->
 <!--    <field name="favicon" model="res.company" eval="obj()._get_default_favicon(original=True)"/>-->
 <!--  </record>-->
@@ -24,6 +42,9 @@
 <!--    <field name="image" type="base64" file="base/static/img/res_company_logo.png"/>-->
 <!--    <field name="image_1920" type="base64" file="base/static/img/res_company_logo.png"/>-->
 <!--  </record>-->
+  <record id="no" model="res.country">
+    <field eval="'%(street)s\n%(street2)s\n%(zip)s %(city)s\n%(country_name)s'" name="address_format"/>
+  </record>
 <!--  <record id="partner_admin" model="res.partner">-->
 <!--    <field name="customer"/>-->
 <!--    <field name="image" type="base64" file="base/static/img/avatar.png"/>-->
