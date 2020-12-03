@@ -1,8 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="cuentas_plantilla" model="account.chart.template">
-    <field name="default_pos_receivable_account_id" ref="cta110205"/>
-  </record>
   <record id="impuestos_plantilla_iva_por_cobrar" model="account.tax.template">
     <field name="account_id"/>
     <field name="refund_account_id"/>
