@@ -1,13 +1,17 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
   <record id="mail_activity_data_todo" model="mail.activity.type">
+<!--    <field name="days"/>-->
     <field name="name">To Do</field>
+    <field name="delay_count">5</field>
     <field name="sequence">12</field>
   </record>
   <record id="mt_activities" model="mail.message.subtype">
     <field name="default" eval="False"/>
   </record>
   <record id="mail_activity_data_call" model="mail.activity.type">
+<!--    <field name="days"/>-->
+    <field name="delay_count">2</field>
     <field name="sequence">6</field>
   </record>
   <record id="mail_activity_data_meeting" model="mail.activity.type">
