@@ -16,7 +16,7 @@ mrp          / mrp.workorder            / consumption (selection)       : NEW re
 mrp          / mrp.bom.byproduct        / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
 mrp          / mrp.bom.byproduct        / routing_id (many2one)         : NEW relation: mrp.routing, isrelated: related, stored
 mrp          / mrp.bom.line             / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
-# NOTHING TO DO: new features with related relation
+# DONE: pre-migration: precreated and filled (to go faster)
 
 mrp          / mrp.bom.line             / attribute_value_ids (many2many): DEL relation: product.attribute.value
 mrp          / mrp.bom.line             / bom_product_template_attribute_value_ids (many2many): NEW relation: product.template.attribute.value
@@ -39,11 +39,15 @@ mrp          / mrp.production           / propagate (boolean)           : DEL
 mrp          / mrp.production           / propagate_cancel (boolean)    : NEW
 # DONE: pre-migration (renamed)
 
+mrp          / mrp.production           / propagate_date (boolean)      : NEW
+# DONE: post-migration: filled empty field using old 'use_propagation_minimum_delta' ir.config.parameter
+
+mrp          / mrp.production           / propagate_date_minimum_delta (integer): NEW
+# DONE: post-migration: filled empty cases when they have company
+
 mrp          / mrp.production           / date_deadline (datetime)      : NEW
 mrp          / mrp.production           / date_start_wo (datetime)      : NEW
 mrp          / mrp.production           / orderpoint_id (many2one)      : NEW relation: stock.warehouse.orderpoint
-mrp          / mrp.production           / propagate_date (boolean)      : NEW
-mrp          / mrp.production           / propagate_date_minimum_delta (integer): NEW
 mrp          / mrp.production           / state (selection)             : now a function
 mrp          / mrp.production           / state (selection)             : selection_keys is now '['cancel', 'confirmed', 'done', 'draft', 'planned', 'progress', 'to_close']' ('['cancel', 'confirmed', 'done', 'planned', 'progress']')
 mrp          / mrp.routing              / location_id (many2one)        : DEL relation: stock.location
@@ -56,7 +60,7 @@ mrp          / mrp.unbuild              / company_id (many2one)         : NEW re
 # DONE: post-migration: filled the field when empty
 
 mrp          / mrp.workcenter.productivity / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
-# NOTHING TO DO: has proper default function
+# DONE: post-migration: filled correctly, not from env.
 
 mrp          / mrp.workorder            / final_lot_id (many2one)       : DEL relation: stock.production.lot
 mrp          / mrp.workorder            / finished_lot_id (many2one)    : NEW relation: stock.production.lot

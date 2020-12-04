@@ -8,6 +8,30 @@ _unlink_by_xmlid = [
 ]
 
 
+def fill_propagate_date_minimum_delta(env):
+    # mrp production
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE mrp_production mp
+        SET propagate_date_minimum_delta = rc.propagation_minimum_delta
+        FROM res_company rc
+        WHERE mp.company_id = rc.id AND
+            mp.propagate_date_minimum_delta IS NULL
+            AND rc.propagation_minimum_delta IS NOT NULL
+        """
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE mrp_production mp
+        SET propagate_date = TRUE
+        FROM ir_config_parameter icp
+        WHERE mp.propagate_date IS NULL
+            AND icp.key = 'stock.use_propagation_minimum_delta'
+            AND icp.value = 'True'
+        """
+    )
+
+
 def mapped_reservation_state(env):
     openupgrade.logged_query(
         env.cr, """
@@ -82,7 +106,39 @@ def convert_many2one_field(env):
     )
 
 
+def fill_mrp_workcenter_productivity_company_id(env):
+    # from mrp_workorder
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE mrp_workcenter_productivity mwp
+        SET company_id = mp.company_id
+        FROM mrp_workorder mw
+        JOIN mrp_production mp ON mw.production_id = mp.id
+        WHERE mwp.workorder_id = mw.id AND mp.company_id IS NOT NULL
+        """
+    )
+    # from mrp_workcenter
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE mrp_workcenter_productivity mwp
+        SET company_id = mw.company_id
+        FROM mrp_workcenter mw
+        WHERE mwp.workcenter_id = mw.id AND mw.company_id IS NOT NULL
+        """
+    )
+
+
 def fill_unbuild_company_id(cr):
+    # from mrp_bom
+    openupgrade.logged_query(
+        cr, """
+        UPDATE mrp_unbuild mu
+        SET company_id = mb.company_id
+        FROM mrp_bom mb
+        WHERE mu.bom_id = mb.id AND mb.company_id IS NOT NULL
+            AND mu.company_id IS NULL"""
+    )
+    # from stock_move/res_users
     openupgrade.logged_query(
         cr, """
         UPDATE mrp_unbuild mu
@@ -128,7 +184,7 @@ def handle_unbuild_sequence(env):
 
 
 def fill_manufacture_mto_pull(env):
-    warehouses = env['stock.warehouse'].search([
+    warehouses = env['stock.warehouse'].with_context(active_test=False).search([
         ('manufacture_to_resupply', '=', True),
         ('manufacture_mto_pull_id', '=', False),
     ])
@@ -137,7 +193,7 @@ def fill_manufacture_mto_pull(env):
         values = rule_details.get('update_values', {})
         values.update(rule_details['create_values'])
         values.update({'warehouse_id': wh.id})
-        wh['manufacture_mto_pull_id'] = env['stock.rule'].create(values).id
+        wh['manufacture_mto_pull_id'] = env['stock.rule'].create(values)
 
 
 def fill_mrp_workorder_product_uom_id(cr):
@@ -202,16 +258,18 @@ def fill_planned_datetime(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    fill_propagate_date_minimum_delta(env)
     mapped_reservation_state(env)
     convert_many2one_field(env)
+    fill_mrp_workcenter_productivity_company_id(env)
     fill_unbuild_company_id(env.cr)
     fill_stock_picking_type_sequence_code(env)
     handle_unbuild_sequence(env)
     fill_manufacture_mto_pull(env)
     fill_mrp_workorder_product_uom_id(env.cr)
     update_consumption(env)
-    openupgrade.delete_records_safely_by_xml_id(env, _unlink_by_xmlid)
     openupgrade.load_data(env.cr, 'mrp', 'migrations/13.0.2.0/noupdate_changes.xml')
+    openupgrade.delete_records_safely_by_xml_id(env, _unlink_by_xmlid)
     enable_group_mrp_byproducts(env)
     generate_wo_line(env)
     fill_planned_datetime(env)
