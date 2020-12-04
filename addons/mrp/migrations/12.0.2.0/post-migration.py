@@ -30,7 +30,7 @@ def fill_stock_warehouse_picking_types(env):
     # It breaks in purchase_stock if we do this in an end-migration instead.
     # We need to fill the new pbm_type_id field to assure calling in
     # _create_or_update_global_routes_rules() in other modules doesn't break.
-    warehouses = env['stock.warehouse'].search([])
+    warehouses = env['stock.warehouse'].with_context(active_test=False).search([])
     for warehouse in warehouses:
         warehouse.write(
             warehouse._create_or_update_sequences_and_picking_types())
