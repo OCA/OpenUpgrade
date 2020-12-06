@@ -1,14 +1,11 @@
-This module contains two folders:
+The `odoo_patch` folder contains python files in a tree that mimicks the
+folder tree of the Odoo project. It contains a number of monkey patches
+to improve the migration of an Odoo database between two major versions.
 
+So far, we are able to make everything work without overwriting large blocks
+of code, but if larger patches need to be added, please use the method
+described below:
 
-odoo_patch
-----------
-
-This folder contains python files, that correspond to python files present
-in the folder ``odoo`` of the Odoo project.
-
-it contains a lot of monkey patches, to make working an upgrade
-between two major versions.
 To see the patches added, you can use ``meld`` tools:
 
 ``meld PATH_TO_ODOO_FOLDER/odoo/ PATH_TO_OPENUPGRADE_FRAMEWORK_MODULE/odoo_patch``
@@ -53,8 +50,3 @@ To make more easy the diff analysis :
     # <OpenUpgrade:REMOVE>
     # Comment the code, instead of removing it.
     # </OpenUpgrade>
-
-openupgrade
------------
-
-Contains extra functions, called by the patches introduced in the first folder.
