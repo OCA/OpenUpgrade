@@ -1,4 +1,4 @@
-* call your odoo instance with the option ``--upgrade-path=/PATH_TO_openupgrade_scripts_MODULE``
+* call your odoo instance with the option ``--upgrade-path=/PATH_TO_openupgrade_scripts_MODULE/scripts/``
 
 or
 
@@ -7,4 +7,4 @@ or
 .. code-block:: shell
 
     [options]
-    upgrade_path = /PATH_TO_openupgrade_scripts_MODULE
+    upgrade_path = /PATH_TO_openupgrade_scripts_MODULE/scripts/
