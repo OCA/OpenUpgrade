@@ -74,8 +74,20 @@ def remove_activity_date_deadline_column(env):
     openupgrade.rename_columns(env.cr, _column_renames)
 
 
+def resubscribe_general_channel(env):
+    """After the migration is finished, the general channel is not subscribed
+    to itself, so no messages will be received. We are not sure how this
+    happens, but the best option is to manually re-subscribe it, as it's
+    neutral in case it's already subscribed.
+    """
+    channel = env.ref("mail.channel_all_employees", False)
+    if channel:
+        channel.message_subscribe(channel_ids=channel.ids)
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     fill_mail_tracking_value_track_sequence(env)
     fill_mail_thread_message_main_attachment_id(env)
     remove_activity_date_deadline_column(env)
+    resubscribe_general_channel(env)
