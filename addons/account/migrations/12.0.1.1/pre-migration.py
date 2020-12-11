@@ -10,6 +10,9 @@ _column_copies = {
     'account_payment_term_line': [
         ('option', None, None),
     ],
+    'account_invoice': [
+        ('reference_type', None, None),
+    ],
 }
 
 _column_renames = {
@@ -22,9 +25,6 @@ _column_renames = {
     'account_chart_template': [
         ('company_id', None),
         ('transfer_account_id', None)
-    ],
-    'account_invoice': [
-        ('reference_type', None),
     ],
 }
 
