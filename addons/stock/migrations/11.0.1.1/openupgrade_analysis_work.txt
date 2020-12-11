@@ -250,11 +250,15 @@ DEL ir.ui.view: stock.view_stock_quant_graph_value
 DEL mail.message: stock.module_install_notification (noupdate)
 # Nothing to do: Fake message
 
-NEW ir.cron: stock.ir_cron_scheduler_action (noupdate)
 NEW ir.rule: stock.stock_move_line_rule_portal (noupdate)
 NEW ir.rule: stock.stock_picking_rule_portal (noupdate)
 NEW ir.sequence: stock.sequence_proc_group (noupdate)
 # Nothing to do: New noupdate records
+
+DEL ir.cron: procurement.ir_cron_scheduler_action (noupdate)
+NEW ir.cron: stock.ir_cron_scheduler_action (noupdate)
+# No need to rename, as `procurement` is merged on `stock`
+# DONE: post-migration: update definition through noupdate changes
 
 DEL ir.property: stock.property_stock_procurement (noupdate)
 # Nothing to do: Dangled value that can remain undeleted

@@ -9,4 +9,11 @@
   <record id="stock_picking_type_rule" model="ir.rule">
     <field name="name">Stock Operation Type multi-company</field>
   </record>
+  <record id="ir_cron_scheduler_action" model="ir.cron">
+    <field name="name">Procurement: run scheduler</field>
+    <field name="model_id" ref="model_procurement_group"/>
+    <field name="code">
+model.run_scheduler(True)
+    </field>
+  </record>
 </odoo>
