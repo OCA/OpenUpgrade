@@ -1,0 +1,57 @@
+---Models in module 'website_event_track_quiz'---
+new model event.quiz
+new model event.quiz.answer
+new model event.quiz.question
+---Fields in module 'website_event_track_quiz'---
+website_event_track_quiz / event.quiz               / event_id (many2one)           : NEW relation: event.event, isrelated: related, stored
+website_event_track_quiz / event.quiz               / event_track_id (many2one)     : NEW relation: event.track, isfunction: function, stored
+website_event_track_quiz / event.quiz               / event_track_ids (one2many)    : NEW relation: event.track
+website_event_track_quiz / event.quiz               / name (char)                   : NEW required
+website_event_track_quiz / event.quiz               / question_ids (one2many)       : NEW relation: event.quiz.question
+website_event_track_quiz / event.quiz.answer        / awarded_points (integer)      : NEW
+website_event_track_quiz / event.quiz.answer        / comment (text)                : NEW
+website_event_track_quiz / event.quiz.answer        / question_id (many2one)        : NEW relation: event.quiz.question, required
+website_event_track_quiz / event.quiz.answer        / sequence (integer)            : NEW
+website_event_track_quiz / event.quiz.answer        / text_value (char)             : NEW required
+website_event_track_quiz / event.quiz.question      / answer_ids (one2many)         : NEW relation: event.quiz.answer
+website_event_track_quiz / event.quiz.question      / name (char)                   : NEW required
+website_event_track_quiz / event.quiz.question      / quiz_id (many2one)            : NEW relation: event.quiz, required
+website_event_track_quiz / event.quiz.question      / sequence (integer)            : NEW
+website_event_track_quiz / event.track              / quiz_id (many2one)            : NEW relation: event.quiz
+website_event_track_quiz / event.track.visitor      / quiz_completed (boolean)      : NEW
+website_event_track_quiz / event.track.visitor      / quiz_points (integer)         : NEW hasdefault
+---XML records in module 'website_event_track_quiz'---
+NEW ir.actions.act_window: website_event_track_quiz.event_quiz_action
+NEW ir.actions.act_window: website_event_track_quiz.event_quiz_question_action
+NEW ir.model.access: website_event_track_quiz.event_quiz_access_event_manager
+NEW ir.model.access: website_event_track_quiz.event_quiz_access_event_user
+NEW ir.model.access: website_event_track_quiz.event_quiz_answer_access_event_manager
+NEW ir.model.access: website_event_track_quiz.event_quiz_answer_access_event_user
+NEW ir.model.access: website_event_track_quiz.event_quiz_question_access_event_manager
+NEW ir.model.access: website_event_track_quiz.event_quiz_question_access_event_user
+NEW ir.ui.menu: website_event_track_quiz.event_quiz_menu
+NEW ir.ui.menu: website_event_track_quiz.event_quiz_question_menu
+NEW ir.ui.view: website_event_track_quiz.all_visitor_card
+NEW ir.ui.view: website_event_track_quiz.assets_frontend
+NEW ir.ui.view: website_event_track_quiz.event_event_view_form
+NEW ir.ui.view: website_event_track_quiz.event_leaderboard
+NEW ir.ui.view: website_event_track_quiz.event_quiz_question_view_form
+NEW ir.ui.view: website_event_track_quiz.event_quiz_question_view_form_from_quiz
+NEW ir.ui.view: website_event_track_quiz.event_quiz_question_view_search
+NEW ir.ui.view: website_event_track_quiz.event_quiz_question_view_tree
+NEW ir.ui.view: website_event_track_quiz.event_quiz_question_view_tree_from_quiz
+NEW ir.ui.view: website_event_track_quiz.event_quiz_view_form
+NEW ir.ui.view: website_event_track_quiz.event_quiz_view_form_from_track
+NEW ir.ui.view: website_event_track_quiz.event_quiz_view_search
+NEW ir.ui.view: website_event_track_quiz.event_quiz_view_tree
+NEW ir.ui.view: website_event_track_quiz.event_track_content
+NEW ir.ui.view: website_event_track_quiz.event_track_view_form
+NEW ir.ui.view: website_event_track_quiz.event_track_visitor_view_form
+NEW ir.ui.view: website_event_track_quiz.event_track_visitor_view_list
+NEW ir.ui.view: website_event_track_quiz.event_track_visitor_view_search
+NEW ir.ui.view: website_event_track_quiz.event_type_view_form
+NEW ir.ui.view: website_event_track_quiz.leaderboard_search_bar
+NEW ir.ui.view: website_event_track_quiz.pager_nobox
+NEW ir.ui.view: website_event_track_quiz.quiz_content
+NEW ir.ui.view: website_event_track_quiz.quiz_question
+NEW ir.ui.view: website_event_track_quiz.top3_visitor_card

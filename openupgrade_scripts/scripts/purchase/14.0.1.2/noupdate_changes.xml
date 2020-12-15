@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="base.group_user" model="res.groups">
+    <field name="implied_ids" eval="[(4, ref('purchase.group_send_reminder'))]"/>
+  </record>
+  <record id="email_template_edi_purchase_done" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear ${object.partner_id.name}
+        % if object.partner_id.parent_id:
+            (${object.partner_id.parent_id.name})
+        % endif
+        <br/><br/>
+        Here is in attachment a purchase order <strong>${object.name}</strong>
+        % if object.partner_ref:
+            with reference: ${object.partner_ref}
+        % endif
+        amounting in <strong>${format_amount(object.amount_total, object.currency_id)}</strong>
+        from ${object.company_id.name}.
+        <br/><br/>
+        % if object.date_planned:
+            The receipt is expected for <strong>${format_date(object.date_planned)}</strong>.
+            <br/><br/>
+            Could you please acknowledge the receipt of this order?
+        % endif
+    </p>
+      </div>
+    </field>
+  </record>
+  <record id="portal_purchase_order_line_rule" model="ir.rule">
+    <field name="name">Portal Purchase Order Lines</field>
+  </record>
+  <record id="purchase_bill_union_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="purchase_order_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="purchase_order_line_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="purchase_order_report_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="purchase_user_account_move_line_rule" model="ir.rule">
+    <field name="domain_force">[('move_id.move_type', 'in', ('in_invoice', 'in_refund', 'in_receipt'))]</field>
+  </record>
+  <record id="purchase_user_account_move_rule" model="ir.rule">
+    <field name="domain_force">[('move_type', 'in', ('in_invoice', 'in_refund', 'in_receipt'))]</field>
+  </record>
+</odoo>

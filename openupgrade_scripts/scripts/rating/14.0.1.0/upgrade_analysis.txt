@@ -1,0 +1,9 @@
+---Models in module 'rating'---
+---Fields in module 'rating'---
+rating       / rating.rating            / is_internal (boolean)         : NEW isrelated: related, stored
+---XML records in module 'rating'---
+NEW ir.actions.act_window: rating.rating_rating_view
+DEL ir.actions.act_window: rating.action_view_rating
+NEW ir.ui.menu: rating.rating_rating_menu_technical
+NEW ir.ui.view: rating.assets_frontend
+NEW ir.ui.view: rating.mail_message_view_form

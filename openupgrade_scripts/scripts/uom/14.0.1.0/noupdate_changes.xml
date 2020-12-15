@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="product_uom_day" model="uom.uom">
+    <field name="uom_type">reference</field>
+  </record>
+  <record id="product_uom_floz" model="uom.uom">
+    <field name="name">fl oz (US)</field>
+  </record>
+  <record id="product_uom_foot" model="uom.uom">
+    <field name="name">ft</field>
+  </record>
+  <record id="product_uom_gal" model="uom.uom">
+    <field name="name">gal (US)</field>
+  </record>
+  <record id="product_uom_inch" model="uom.uom">
+    <field name="name">in</field>
+  </record>
+  <record id="product_uom_kgm" model="uom.uom">
+    <field name="rounding"/>
+    <field name="uom_type">reference</field>
+  </record>
+  <record id="product_uom_lb" model="uom.uom">
+    <field name="name">lb</field>
+  </record>
+  <record id="product_uom_litre" model="uom.uom">
+    <field name="name">L</field>
+    <field name="uom_type">reference</field>
+  </record>
+  <record id="product_uom_meter" model="uom.uom">
+    <field name="uom_type">reference</field>
+  </record>
+  <record id="product_uom_mile" model="uom.uom">
+    <field name="name">mi</field>
+  </record>
+  <record id="product_uom_oz" model="uom.uom">
+    <field name="name">oz</field>
+  </record>
+  <record id="product_uom_qt" model="uom.uom">
+    <field name="name">qt (US)</field>
+  </record>
+  <record id="product_uom_unit" model="uom.uom">
+    <field name="rounding"/>
+    <field name="uom_type">reference</field>
+  </record>
+</odoo>

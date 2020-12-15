@@ -1,0 +1,92 @@
+---Models in module 'hr_holidays'---
+---Fields in module 'hr_holidays'---
+hr_holidays  / hr.employee              / hr_icon_display (False)       : NEW selection_keys: ['presence_absent', 'presence_absent_active', 'presence_holiday_absent', 'presence_holiday_present', 'presence_present', 'presence_to_define', 'presence_undetermined'], mode: modify
+hr_holidays  / hr.employee              / leave_manager_id (many2one)   : now a function
+hr_holidays  / hr.leave                 / category_id (many2one)        : now a function
+hr_holidays  / hr.leave                 / date_from (datetime)          : now a function
+hr_holidays  / hr.leave                 / date_to (datetime)            : now a function
+hr_holidays  / hr.leave                 / department_id (many2one)      : now a function
+hr_holidays  / hr.leave                 / duration_display (char)       : is now stored
+hr_holidays  / hr.leave                 / employee_id (many2one)        : now a function
+hr_holidays  / hr.leave                 / holiday_status_id (many2one)  : now a function
+hr_holidays  / hr.leave                 / manager_id (many2one)         : now a function
+hr_holidays  / hr.leave                 / message_has_sms_error (boolean): module is now 'sms' ('hr_holidays')
+hr_holidays  / hr.leave                 / mode_company_id (many2one)    : now a function
+hr_holidays  / hr.leave                 / name (char)                   : not stored anymore
+hr_holidays  / hr.leave                 / name (char)                   : now a function
+hr_holidays  / hr.leave                 / number_of_days (float)        : now a function
+hr_holidays  / hr.leave                 / private_name (char)           : NEW
+hr_holidays  / hr.leave                 / request_unit_custom (boolean) : now a function
+hr_holidays  / hr.leave                 / request_unit_half (boolean)   : now a function
+hr_holidays  / hr.leave                 / request_unit_hours (boolean)  : now a function
+hr_holidays  / hr.leave                 / state (selection)             : now a function
+hr_holidays  / hr.leave                 / website_message_ids (one2many): module is now 'portal' ('hr_holidays')
+hr_holidays  / hr.leave.allocation      / category_id (many2one)        : now a function
+hr_holidays  / hr.leave.allocation      / date_to (datetime)            : now a function
+hr_holidays  / hr.leave.allocation      / department_id (many2one)      : now a function
+hr_holidays  / hr.leave.allocation      / employee_id (many2one)        : now a function
+hr_holidays  / hr.leave.allocation      / holiday_status_id (many2one)  : now a function
+hr_holidays  / hr.leave.allocation      / interval_number (integer)     : now a function
+hr_holidays  / hr.leave.allocation      / interval_unit (selection)     : now a function
+hr_holidays  / hr.leave.allocation      / interval_unit (selection)     : selection_keys is now '['days', 'months', 'weeks', 'years']' ('['months', 'weeks', 'years']')
+hr_holidays  / hr.leave.allocation      / manager_id (many2one)         : now a function
+hr_holidays  / hr.leave.allocation      / message_has_sms_error (boolean): module is now 'sms' ('hr_holidays')
+hr_holidays  / hr.leave.allocation      / mode_company_id (many2one)    : now a function
+hr_holidays  / hr.leave.allocation      / name (char)                   : not stored anymore
+hr_holidays  / hr.leave.allocation      / name (char)                   : now a function
+hr_holidays  / hr.leave.allocation      / number_of_days (float)        : now a function
+hr_holidays  / hr.leave.allocation      / number_per_interval (float)   : now a function
+hr_holidays  / hr.leave.allocation      / private_name (char)           : NEW
+hr_holidays  / hr.leave.allocation      / unit_per_interval (selection) : now a function
+hr_holidays  / hr.leave.allocation      / website_message_ids (one2many): module is now 'portal' ('hr_holidays')
+hr_holidays  / hr.leave.type            / allocation_validation_type (selection): NEW selection_keys: ['both', 'hr', 'manager'], hasdefault
+hr_holidays  / hr.leave.type            / leave_validation_type (selection): NEW selection_keys: ['both', 'hr', 'manager', 'no_validation'], hasdefault
+hr_holidays  / hr.leave.type            / validation_type (selection)   : DEL selection_keys: ['both', 'hr', 'manager', 'no_validation']
+---XML records in module 'hr_holidays'---
+DEL ir.actions.act_window: hr_holidays.action_hr_holidays_dashboard
+DEL ir.actions.act_window: hr_holidays.hr_leave_action_all
+DEL ir.actions.act_window: hr_holidays.hr_leave_action_payroll
+NEW ir.actions.act_window.view: hr_holidays.action_view_activity_manager_approve
+NEW ir.actions.act_window.view: hr_holidays.action_view_calendar_manager_approve
+NEW ir.model.access: hr_holidays.access_hr_holidays_summary_employee
+NEW ir.model.access: hr_holidays.access_hr_leave_report_calendar [renamed from hr_holidays_calendar module]
+DEL ir.model.access: hr_holidays_calendar.access_hr_leave_report_calendar [renamed to hr_holidays module]
+ir.rule: hr_holidays.hr_holidays_status_rule_multi_company (noupdate) (noupdate switched)
+NEW ir.rule: hr_holidays.hr_leav_allocation_rule_employee_unlink (noupdate)
+ir.rule: hr_holidays.hr_leave_allocation_rule_employee (noupdate) (noupdate switched)
+ir.rule: hr_holidays.hr_leave_allocation_rule_employee_update (noupdate) (noupdate switched)
+ir.rule: hr_holidays.hr_leave_allocation_rule_manager (noupdate) (noupdate switched)
+ir.rule: hr_holidays.hr_leave_allocation_rule_officer_read (noupdate) (noupdate switched)
+ir.rule: hr_holidays.hr_leave_allocation_rule_officer_update (noupdate) (noupdate switched)
+NEW ir.rule: hr_holidays.hr_leave_report_calendar_rule_multi_company [renamed from hr_holidays_calendar module] (noupdate) (noupdate switched)
+ir.rule: hr_holidays.hr_leave_rule_employee (noupdate) (noupdate switched)
+ir.rule: hr_holidays.hr_leave_rule_employee_unlink (noupdate) (noupdate switched)
+ir.rule: hr_holidays.hr_leave_rule_employee_update (noupdate) (noupdate switched)
+ir.rule: hr_holidays.hr_leave_rule_manager (noupdate) (noupdate switched)
+ir.rule: hr_holidays.hr_leave_rule_multicompany (noupdate) (noupdate switched)
+ir.rule: hr_holidays.hr_leave_rule_officer_update (noupdate) (noupdate switched)
+ir.rule: hr_holidays.hr_leave_rule_responsible_read (noupdate) (noupdate switched)
+ir.rule: hr_holidays.hr_leave_rule_responsible_update (noupdate) (noupdate switched)
+ir.rule: hr_holidays.hr_leave_rule_user_read (noupdate) (noupdate switched)
+ir.rule: hr_holidays.resource_leaves_base_user (noupdate) (noupdate switched)
+ir.rule: hr_holidays.resource_leaves_holidays_user (noupdate) (noupdate switched)
+DEL ir.rule: hr_holidays_calendar.hr_leave_report_calendar_rule_multi_company [renamed to hr_holidays module]
+DEL ir.ui.menu: hr_holidays.hr_holidays_menu_manager_all
+DEL ir.ui.menu: hr_holidays.hr_holidays_menu_manager_all_allocations
+DEL ir.ui.menu: hr_holidays.hr_holidays_menu_manager_approve
+DEL ir.ui.menu: hr_holidays.hr_holidays_menu_manager_payroll
+DEL ir.ui.menu: hr_holidays.hr_holidays_menu_manager_payroll_to_report
+DEL ir.ui.menu: hr_holidays.menu_open_employee_leave
+NEW ir.ui.view: hr_holidays.hr_departure_wizard_view_form
+NEW ir.ui.view: hr_holidays.hr_kanban_view_public_employees_kanban
+NEW ir.ui.view: hr_holidays.hr_leave_allocation_view_search_manager
+NEW ir.ui.view: hr_holidays.hr_leave_allocation_view_search_my
+NEW ir.ui.view: hr_holidays.hr_leave_report_calendar_view
+NEW ir.ui.view: hr_holidays.hr_leave_report_calendar_view_form
+NEW ir.ui.view: hr_holidays.hr_leave_view_form_dashboard_new_time_off
+NEW ir.ui.view: hr_holidays.hr_leave_view_search_manager
+NEW ir.ui.view: hr_holidays.hr_leave_view_search_my
+NEW ir.ui.view: hr_holidays.view_employee_tree_inherit_leave
+DEL ir.ui.view: hr_holidays.hr_leave_view_form_manager_approve
+DEL ir.ui.view: hr_holidays_calendar.hr_leave_report_calendar_view
+DEL ir.ui.view: hr_holidays_calendar.hr_leave_report_calendar_view_form

@@ -1,0 +1,6 @@
+---Models in module 'mrp_landed_costs'---
+---Fields in module 'mrp_landed_costs'---
+mrp_landed_costs / stock.landed.cost        / mrp_production_ids (many2many): NEW relation: mrp.production
+mrp_landed_costs / stock.landed.cost        / target_model (False)          : NEW selection_keys: ['manufacturing', 'picking'], mode: modify
+---XML records in module 'mrp_landed_costs'---
+NEW ir.ui.view: mrp_landed_costs.view_mrp_landed_costs_form

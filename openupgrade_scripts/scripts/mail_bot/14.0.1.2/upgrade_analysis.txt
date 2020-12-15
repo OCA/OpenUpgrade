@@ -1,0 +1,8 @@
+---Models in module 'mail_bot'---
+---Fields in module 'mail_bot'---
+mail_bot     / res.users                / odoobot_failed (boolean)      : NEW
+---XML records in module 'mail_bot'---
+NEW ir.ui.view: mail_bot.tests_assets
+DEL ir.ui.view: mail_bot.view_users_form_inherit_mail_notification_alert
+DEL res.partner: base.partner_root [potentially moved to mail module] (noupdate)
+NEW res.users: base.user_root (noupdate)

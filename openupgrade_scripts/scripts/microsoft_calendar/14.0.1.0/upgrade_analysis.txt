@@ -1,0 +1,18 @@
+---Models in module 'microsoft_calendar'---
+new model microsoft.calendar.account.reset [transient]
+new model microsoft.calendar.sync [abstract]
+---Fields in module 'microsoft_calendar'---
+microsoft_calendar / calendar.event           / microsoft_id (char)           : NEW
+microsoft_calendar / calendar.event           / microsoft_recurrence_master_id (char): NEW
+microsoft_calendar / calendar.event           / need_sync_m (boolean)         : NEW hasdefault
+microsoft_calendar / calendar.recurrence      / microsoft_id (char)           : NEW
+microsoft_calendar / calendar.recurrence      / need_sync_m (boolean)         : NEW hasdefault
+microsoft_calendar / res.users                / microsoft_calendar_sync_token (char): NEW
+---XML records in module 'microsoft_calendar'---
+NEW ir.actions.act_window: microsoft_calendar.microsoft_calendar_reset_account_action
+NEW ir.cron: microsoft_calendar.ir_cron_sync_all_cals
+NEW ir.model.access: microsoft_calendar.microsoft_calendar_account_reset
+NEW ir.ui.view: microsoft_calendar.assets_backend
+NEW ir.ui.view: microsoft_calendar.microsoft_calendar_reset_account_view_form
+NEW ir.ui.view: microsoft_calendar.res_config_settings_view_form
+NEW ir.ui.view: microsoft_calendar.view_users_form

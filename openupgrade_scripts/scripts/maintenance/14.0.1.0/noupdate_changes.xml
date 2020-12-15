@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="maintenance_equipment_category_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="maintenance_equipment_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="maintenance_request_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="maintenance_team_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="mt_cat_mat_assign" model="mail.message.subtype">
+    <field name="parent_id" ref="mt_mat_assign"/>
+  </record>
+  <record id="mt_cat_req_created" model="mail.message.subtype">
+    <field name="parent_id" ref="mt_req_created"/>
+  </record>
+</odoo>

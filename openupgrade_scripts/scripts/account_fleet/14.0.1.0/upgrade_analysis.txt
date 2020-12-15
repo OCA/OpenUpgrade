@@ -1,0 +1,7 @@
+---Models in module 'account_fleet'---
+---Fields in module 'account_fleet'---
+account_fleet / account.move.line        / vehicle_id (many2one)         : NEW relation: fleet.vehicle
+---XML records in module 'account_fleet'---
+NEW fleet.service.type: account_fleet.data_fleet_service_type_vendor_bill
+NEW ir.ui.view: account_fleet.fleet_vehicle_view_form
+NEW ir.ui.view: account_fleet.view_move_form

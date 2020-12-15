@@ -1,0 +1,105 @@
+---Models in module 'base'---
+model base.document.layout (moved to web) [transient]
+new model ir.qweb.field.image_url [abstract]
+new model res.users.apikeys [sql_view]
+new model res.users.apikeys.description [transient]
+new model res.users.apikeys.show [abstract]
+new model res.users.identitycheck [transient]
+---Fields in module 'base'---
+base         / ir.model                 / order (char)                  : NEW required, req_default: function, hasdefault
+base         / ir.model.data            / date_init (datetime)          : DEL
+base         / ir.model.data            / date_update (datetime)        : DEL
+base         / ir.model.data            / res_id (integer)              : relation is now 'model' ('False') [nothing to do]
+base         / ir.model.data            / res_id (integer)              : type is now 'many2one_reference' ('integer')
+base         / ir.model.fields          / copied (boolean)              : now a function
+base         / ir.model.fields          / group_expand (boolean)        : NEW
+base         / ir.ui.view               / model_ids (one2many)          : DEL relation: ir.model.data
+base         / ir.ui.view               / type (selection)              : selection_keys is now '['calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']' ('['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']')
+base         / report.layout            / sequence (integer)            : NEW hasdefault
+base         / res.company              / account_no (char)             : DEL
+base         / res.country              / image (binary)                : DEL attachment: True
+base         / res.country              / state_required (boolean)      : NEW hasdefault
+base         / res.country              / zip_required (boolean)        : NEW hasdefault
+base         / res.currency.rate        / currency_id (many2one)        : now required
+base         / res.lang                 / flag_image (binary)           : NEW attachment: True
+base         / res.partner              / barcode (char)                : previously in module point_of_sale
+base         / res.partner.bank         / active (boolean)              : NEW hasdefault
+base         / res.users                / api_key_ids (one2many)        : NEW relation: res.users.apikeys
+base         / res.users                / barcode (char)                : previously in module hr
+---XML records in module 'base'---
+NEW ir.actions.act_window: base.action_apikeys_admin
+NEW ir.actions.act_window: base.action_res_users_keys_description
+DEL ir.actions.act_window: base.action_base_document_layout_configurator [renamed to web module]
+DEL ir.actions.act_window: base.action_partner_employee_form
+DEL ir.actions.act_window: base.action_partner_other_form
+DEL ir.actions.act_window: base.company_normal_action_tree
+NEW ir.model.access: base.access_base_language_export
+NEW ir.model.access: base.access_base_language_import
+NEW ir.model.access: base.access_base_language_install
+NEW ir.model.access: base.access_base_module_uninstall
+NEW ir.model.access: base.access_base_module_update
+NEW ir.model.access: base.access_base_module_upgrade
+NEW ir.model.access: base.access_base_partner_merge_automatic_wizard
+NEW ir.model.access: base.access_base_partner_merge_line
+NEW ir.model.access: base.access_base_update_translations
+NEW ir.model.access: base.access_change_password_user
+NEW ir.model.access: base.access_change_password_wizard
+NEW ir.model.access: base.access_ir_demo
+NEW ir.model.access: base.access_ir_demo_failure
+NEW ir.model.access: base.access_ir_demo_failure_wizard
+NEW ir.model.access: base.access_ir_property_group_system
+NEW ir.model.access: base.access_res_config
+NEW ir.model.access: base.access_res_config_installer
+NEW ir.model.access: base.access_res_config_settings
+NEW ir.model.access: base.access_res_country_group_system
+NEW ir.model.access: base.access_res_users_apikeys_access_employee
+NEW ir.model.access: base.access_res_users_apikeys_access_portal
+NEW ir.model.access: base.access_res_users_apikeys_description_employee
+NEW ir.model.access: base.access_res_users_apikeys_description_portal
+NEW ir.model.access: base.access_res_users_apikeys_show_employee
+NEW ir.model.access: base.access_res_users_identitycheck_employee
+NEW ir.model.access: base.access_res_users_identitycheck_portal
+NEW ir.model.access: base.access_reset_view_arch_wizard
+NEW ir.model.access: base.access_reset_view_arch_wizard_group_system
+NEW ir.model.access: base.access_wizard_ir_model_menu_create
+DEL ir.model.access: base.access_ir_actions_act_url_all
+DEL ir.model.access: base.access_ir_actions_act_window_all
+DEL ir.model.access: base.access_ir_actions_act_window_close_all
+DEL ir.model.access: base.access_ir_actions_act_window_view_all
+DEL ir.model.access: base.access_ir_actions_all
+DEL ir.model.access: base.access_ir_actions_report_all
+DEL ir.model.access: base.access_ir_actions_server_all
+DEL ir.model.access: base.access_ir_property_group_user_manager
+DEL ir.model.access: base.access_ir_server_object_lines_all
+NEW ir.module.category: base.module_category_accounting (noupdate)
+NEW ir.module.category: base.module_category_accounting_localizations (noupdate)
+NEW ir.module.category: base.module_category_accounting_localizations_account_charts (noupdate)
+NEW ir.module.category: base.module_category_customizations
+NEW ir.module.category: base.module_category_inventory (noupdate)
+NEW ir.module.category: base.module_category_productivity (noupdate)
+NEW ir.module.category: base.module_category_services (noupdate)
+NEW ir.module.category: base.module_category_services_helpdesk
+DEL ir.module.category: base.module_category_localization (noupdate)
+DEL ir.module.category: base.module_category_localization_account_charts
+DEL ir.module.category: base.module_category_operations (noupdate)
+DEL ir.module.category: base.module_category_operations_helpdesk
+NEW ir.module.module: base.module_planning (noupdate)
+DEL ir.module.module: base.module_project_forecast (noupdate)
+NEW ir.rule: base.api_key_admin (noupdate)
+NEW ir.rule: base.api_key_public (noupdate)
+NEW ir.rule: base.api_key_user (noupdate)
+NEW ir.rule: base.change_password_rule (noupdate)
+NEW ir.rule: base.res_users_identity_check (noupdate)
+NEW ir.ui.view: base.form_res_users_key_description
+NEW ir.ui.view: base.form_res_users_key_show
+NEW ir.ui.view: base.identity_check_wizard
+NEW ir.ui.view: base.view_apikeys
+NEW ir.ui.view: base.view_model_constraint_search
+DEL ir.ui.view: base.layout_preview
+DEL ir.ui.view: base.view_base_document_layout
+DEL ir.ui.view: base.view_menu
+DEL ir.ui.view: base.view_partner_short_form
+NEW res.country.group: base.sepa_zone (noupdate)
+NEW res.groups: base.group_allow_export
+NEW res.lang: base.lang_en_IN
+DEL res.lang: base.lang_fil

@@ -1,0 +1,75 @@
+---Models in module 'sale_coupon'---
+obsolete model report.sale_coupon.report_coupon [abstract]
+obsolete model sale.coupon
+obsolete model sale.coupon.generate [transient]
+obsolete model sale.coupon.program
+obsolete model sale.coupon.reward
+obsolete model sale.coupon.rule
+---Fields in module 'sale_coupon'---
+sale_coupon  / coupon.coupon            / order_id (many2one)           : NEW relation: sale.order
+sale_coupon  / coupon.coupon            / sales_order_id (many2one)     : NEW relation: sale.order
+sale_coupon  / sale.coupon              / code (char)                   : DEL required, req_default: function
+sale_coupon  / sale.coupon              / order_id (many2one)           : DEL relation: sale.order
+sale_coupon  / sale.coupon              / partner_id (many2one)         : DEL relation: res.partner
+sale_coupon  / sale.coupon              / program_id (many2one)         : DEL relation: sale.coupon.program, required
+sale_coupon  / sale.coupon              / sales_order_id (many2one)     : DEL relation: sale.order
+sale_coupon  / sale.coupon              / state (selection)             : DEL required, selection_keys: ['expired', 'new', 'reserved', 'used'], req_default: function
+sale_coupon  / sale.coupon.program      / _inherits (False)             : DEL
+sale_coupon  / sale.coupon.program      / active (boolean)              : DEL
+sale_coupon  / sale.coupon.program      / company_id (many2one)         : DEL relation: res.company
+sale_coupon  / sale.coupon.program      / coupon_ids (one2many)         : DEL relation: sale.coupon
+sale_coupon  / sale.coupon.program      / maximum_use_number (integer)  : DEL
+sale_coupon  / sale.coupon.program      / name (char)                   : DEL required
+sale_coupon  / sale.coupon.program      / program_type (selection)      : DEL selection_keys: ['coupon_program', 'promotion_program']
+sale_coupon  / sale.coupon.program      / promo_applicability (selection): DEL selection_keys: ['on_current_order', 'on_next_order']
+sale_coupon  / sale.coupon.program      / promo_code (char)             : DEL
+sale_coupon  / sale.coupon.program      / promo_code_usage (selection)  : DEL selection_keys: ['code_needed', 'no_code_needed']
+sale_coupon  / sale.coupon.program      / reward_id (many2one)          : DEL relation: sale.coupon.reward, required
+sale_coupon  / sale.coupon.program      / rule_id (many2one)            : DEL relation: sale.coupon.rule, required
+sale_coupon  / sale.coupon.program      / sequence (integer)            : DEL
+sale_coupon  / sale.coupon.program      / validity_duration (integer)   : DEL
+sale_coupon  / sale.coupon.reward       / discount_apply_on (selection) : DEL selection_keys: ['cheapest_product', 'on_order', 'specific_products']
+sale_coupon  / sale.coupon.reward       / discount_fixed_amount (float) : DEL
+sale_coupon  / sale.coupon.reward       / discount_line_product_id (many2one): DEL relation: product.product
+sale_coupon  / sale.coupon.reward       / discount_max_amount (float)   : DEL
+sale_coupon  / sale.coupon.reward       / discount_percentage (float)   : DEL
+sale_coupon  / sale.coupon.reward       / discount_specific_product_ids (many2many): DEL relation: product.product
+sale_coupon  / sale.coupon.reward       / discount_type (selection)     : DEL selection_keys: ['fixed_amount', 'percentage']
+sale_coupon  / sale.coupon.reward       / reward_description (char)     : DEL
+sale_coupon  / sale.coupon.reward       / reward_product_id (many2one)  : DEL relation: product.product
+sale_coupon  / sale.coupon.reward       / reward_product_quantity (integer): DEL
+sale_coupon  / sale.coupon.reward       / reward_type (selection)       : DEL selection_keys: ['discount', 'product']
+sale_coupon  / sale.coupon.rule         / rule_date_from (datetime)     : DEL
+sale_coupon  / sale.coupon.rule         / rule_date_to (datetime)       : DEL
+sale_coupon  / sale.coupon.rule         / rule_min_quantity (integer)   : DEL
+sale_coupon  / sale.coupon.rule         / rule_minimum_amount (float)   : DEL
+sale_coupon  / sale.coupon.rule         / rule_minimum_amount_tax_inclusion (selection): DEL selection_keys: ['tax_excluded', 'tax_included']
+sale_coupon  / sale.coupon.rule         / rule_partners_domain (char)   : DEL
+sale_coupon  / sale.coupon.rule         / rule_products_domain (char)   : DEL
+sale_coupon  / sale.order               / applied_coupon_ids (one2many) : relation is now 'coupon.coupon' ('sale.coupon') [nothing to do]
+sale_coupon  / sale.order               / code_promo_program_id (many2one): relation is now 'coupon.program' ('sale.coupon.program') [nothing to do]
+sale_coupon  / sale.order               / generated_coupon_ids (one2many): relation is now 'coupon.coupon' ('sale.coupon') [nothing to do]
+sale_coupon  / sale.order               / no_code_promo_program_ids (many2many): relation is now 'coupon.program' ('sale.coupon.program') [nothing to do]
+sale_coupon  / sale.order               / no_code_promo_program_ids (many2many): table is now 'coupon_program_sale_order_rel' ('sale_coupon_program_sale_order_rel')
+---XML records in module 'sale_coupon'---
+DEL ir.actions.act_window: sale_coupon.sale_coupon_action
+DEL ir.actions.act_window: sale_coupon.sale_coupon_generate_action
+DEL ir.actions.act_window: sale_coupon.sale_coupon_program_action_coupon_program
+DEL ir.actions.act_window: sale_coupon.sale_coupon_program_action_promo_program
+DEL ir.actions.report: sale_coupon.report_coupon_code [renamed to coupon module]
+NEW ir.model.access: sale_coupon.access_sale_coupon_apply_code
+NEW ir.model.access: sale_coupon.access_sale_coupon_generate
+NEW ir.rule: sale_coupon.sale_coupon_apply_code_rule (noupdate)
+NEW ir.ui.view: sale_coupon.sale_coupon_program_view_coupon_program_form
+NEW ir.ui.view: sale_coupon.sale_coupon_view_coupon_program_kanban
+DEL ir.ui.view: sale_coupon.report_coupon
+DEL ir.ui.view: sale_coupon.report_coupon_i18n
+DEL ir.ui.view: sale_coupon.sale_coupon_generate_view_form
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_form
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_form_common
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_promo_program_search
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_promo_program_tree
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_search
+DEL ir.ui.view: sale_coupon.sale_coupon_program_view_tree
+DEL ir.ui.view: sale_coupon.view_sale_coupon_program_kanban
+DEL mail.template: sale_coupon.mail_template_sale_coupon [renamed to coupon module] (noupdate)

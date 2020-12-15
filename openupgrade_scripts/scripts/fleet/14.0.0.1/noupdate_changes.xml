@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="fleet_rule_contract_visibility_user" model="ir.rule">
+    <field name="domain_force">[('vehicle_id.driver_id','=',user.partner_id.id)]</field>
+  </record>
+  <record id="fleet_rule_service_visibility_user" model="ir.rule">
+    <field name="domain_force">[('vehicle_id.driver_id','=',user.partner_id.id)]</field>
+  </record>
+  <record id="fleet_vehicle_state_new_request" model="fleet.vehicle.state">
+    <field name="sequence">4</field>
+  </record>
+  <record id="ir_rule_fleet_vehicle" model="ir.rule">
+    <field name="global"/>
+  </record>
+</odoo>

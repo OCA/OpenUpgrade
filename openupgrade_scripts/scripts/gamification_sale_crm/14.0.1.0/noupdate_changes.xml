@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="challenge_crm_marketing" model="gamification.challenge">
+    <field name="user_domain" eval="str([('groups_id', 'in', [ref('sales_team.group_sale_salesman')])])"/>
+  </record>
+  <record id="challenge_crm_sale" model="gamification.challenge">
+    <field name="user_domain" eval="str([('groups_id', 'in', [ref('sales_team.group_sale_salesman')])])"/>
+  </record>
+  <record id="definition_crm_lead_delay_close" model="gamification.goal.definition">
+    <field name="domain">[]</field>
+    <field name="field_date_id" ref="crm.field_crm_lead__date_open"/>
+    <field name="field_id" ref="crm.field_crm_lead__day_open"/>
+    <field name="model_id" ref="crm.model_crm_lead"/>
+    <field name="batch_distinctive_field" ref="crm.field_crm_lead__user_id"/>
+    <field name="batch_mode">True</field>
+    <field name="batch_user_expression">user.id</field>
+  </record>
+  <record id="definition_crm_lead_delay_open" model="gamification.goal.definition">
+    <field name="domain">[('type', '=', 'lead')]</field>
+    <field name="field_date_id" ref="crm.field_crm_lead__date_closed"/>
+    <field name="field_id" ref="crm.field_crm_lead__day_close"/>
+    <field name="model_id" ref="crm.model_crm_lead"/>
+    <field name="batch_distinctive_field" ref="crm.field_crm_lead__user_id"/>
+    <field name="batch_mode">True</field>
+    <field name="batch_user_expression">user.id</field>
+  </record>
+  <record id="definition_crm_nbr_customer_refunds" model="gamification.goal.definition">
+    <field name="domain">[('state','!=','cancel'),('move_type','=','out_refund')]</field>
+    <field name="field_date_id" ref="account.field_account_invoice_report__invoice_date"/>
+    <field name="model_id" ref="account.model_account_invoice_report"/>
+    <field name="batch_distinctive_field" ref="account.field_account_invoice_report__invoice_user_id"/>
+    <field name="batch_mode">True</field>
+    <field name="batch_user_expression">user.id</field>
+  </record>
+  <record id="definition_crm_nbr_new_leads" model="gamification.goal.definition">
+    <field name="domain">['|', ('type', '=', 'lead'), ('type', '=', 'opportunity')]</field>
+    <field name="model_id" ref="crm.model_crm_lead"/>
+    <field name="batch_distinctive_field" ref="crm.field_crm_lead__user_id"/>
+    <field name="batch_mode">True</field>
+    <field name="batch_user_expression">user.id</field>
+  </record>
+  <record id="definition_crm_nbr_new_opportunities" model="gamification.goal.definition">
+    <field name="domain">[('type','=','opportunity')]</field>
+    <field name="field_date_id" ref="crm.field_crm_lead__date_open"/>
+    <field name="model_id" ref="crm.model_crm_lead"/>
+    <field name="batch_distinctive_field" ref="crm.field_crm_lead__user_id"/>
+    <field name="batch_mode">True</field>
+    <field name="batch_user_expression">user.id</field>
+  </record>
+  <record id="definition_crm_nbr_paid_sale_order" model="gamification.goal.definition">
+    <field name="domain">[('payment_state','in',('paid', 'in_payment')),('move_type','=','out_invoice')]</field>
+    <field name="field_date_id" ref="account.field_account_invoice_report__invoice_date"/>
+    <field name="model_id" ref="account.model_account_invoice_report"/>
+    <field name="batch_distinctive_field" ref="account.field_account_invoice_report__invoice_user_id"/>
+    <field name="batch_mode">True</field>
+    <field name="batch_user_expression">user.id</field>
+  </record>
+  <record id="definition_crm_nbr_sale_order_created" model="gamification.goal.definition">
+    <field name="domain">[('state','not in',('draft', 'sent', 'cancel'))]</field>
+    <field name="field_date_id" ref="sale.field_sale_order__date_order"/>
+    <field name="model_id" ref="sale.model_sale_order"/>
+    <field name="batch_distinctive_field" ref="sale.field_sale_order__user_id"/>
+    <field name="batch_mode">True</field>
+    <field name="batch_user_expression">user.id</field>
+  </record>
+  <record id="definition_crm_tot_customer_refunds" model="gamification.goal.definition">
+    <field name="domain">[('state','!=','cancel'),('move_type','=','out_refund')]</field>
+    <field name="field_date_id" ref="account.field_account_invoice_report__invoice_date"/>
+    <field name="field_id" ref="account.field_account_invoice_report__price_subtotal"/>
+    <field name="model_id" ref="account.model_account_invoice_report"/>
+    <field name="batch_distinctive_field" ref="account.field_account_invoice_report__invoice_user_id"/>
+    <field name="batch_mode">True</field>
+    <field name="batch_user_expression">user.id</field>
+  </record>
+  <record id="definition_crm_tot_invoices" model="gamification.goal.definition">
+    <field name="domain">[('state','!=','cancel'),('move_type','=','out_invoice')]</field>
+    <field name="field_date_id" ref="account.field_account_invoice_report__invoice_date"/>
+    <field name="field_id" ref="account.field_account_invoice_report__price_subtotal"/>
+    <field name="model_id" ref="account.model_account_invoice_report"/>
+    <field name="batch_distinctive_field" ref="account.field_account_invoice_report__invoice_user_id"/>
+    <field name="batch_mode">True</field>
+    <field name="batch_user_expression">user.id</field>
+  </record>
+  <record id="definition_crm_tot_paid_sale_order" model="gamification.goal.definition">
+    <field name="domain">[('payment_state','in',('paid', 'in_payment')),('move_type','=','out_invoice')]</field>
+    <field name="field_date_id" ref="account.field_account_invoice_report__invoice_date"/>
+    <field name="field_id" ref="account.field_account_invoice_report__price_subtotal"/>
+    <field name="model_id" ref="account.model_account_invoice_report"/>
+    <field name="batch_distinctive_field" ref="account.field_account_invoice_report__invoice_user_id"/>
+    <field name="batch_mode">True</field>
+    <field name="batch_user_expression">user.id</field>
+  </record>
+  <record id="line_crm_marketing1" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_crm_marketing"/>
+    <field name="definition_id" ref="definition_crm_nbr_new_leads"/>
+  </record>
+  <record id="line_crm_marketing2" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_crm_marketing"/>
+    <field name="definition_id" ref="definition_crm_lead_delay_open"/>
+  </record>
+  <record id="line_crm_marketing3" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_crm_marketing"/>
+    <field name="definition_id" ref="definition_crm_nbr_new_opportunities"/>
+  </record>
+  <record id="line_crm_sale1" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_crm_sale"/>
+    <field name="definition_id" ref="definition_crm_tot_invoices"/>
+  </record>
+</odoo>

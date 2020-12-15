@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_template_slide_channel_invite" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px; font-size: 13px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello<br/><br/>
+        You have been invited to join a new course: ${object.channel_id.name}.
+    </p>
+      </div>
+    </field>
+  </record>
+  <record id="rule_slide_channel_global" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="rule_slide_channel_not_website" model="ir.rule">
+    <field name="name">Channel: public/portal/user: restricted to published and (public or member only)</field>
+    <field name="perm_create" eval="0"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="0"/>
+    <field name="perm_write" eval="0"/>
+  </record>
+  <record id="rule_slide_slide_global" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="rule_slide_slide_not_website" model="ir.rule">
+    <field name="perm_create" eval="0"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="0"/>
+    <field name="perm_write" eval="0"/>
+  </record>
+  <record id="slide_template_published" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello<br/><br/>
+                        There is something new in the course <strong>${object.channel_id.name}</strong> you are following:<br/><br/>
+                        <center><strong>${object.name}</strong></center>
+                        % if object.image_1024
+                        <div style="margin: 16px 8px 16px 8px; text-align: center;"><a href="${object.website_url}"><img alt="${object.name}" src="${ctx['base_url']}/web/image/slide.slide/${object.id}/image_1024" style="height:auto; width:150px; margin: 16px;"/></a></div>
+                        % endif
+                        <div style="margin: 16px 8px 16px 8px; text-align: center;"><a href="${object.website_url}" style="background-color: #875a7b; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">View content</a></div>
+                        Enjoy this exclusive content!
+                        % if user.signature
+                            <br/>
+                            ${user.signature | safe}
+                        % endif
+                    </p>
+      </div>
+    </field>
+  </record>
+  <record id="slide_template_shared" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello<br/><br/>
+                        ${user.name} shared the ${object.slide_type} <strong>${object.name}</strong> with you!
+                        <div style="margin: 16px 8px 16px 8px; text-align: center;"><a href="${(object.website_url + '?fullscreen=1') if ctx['fullscreen'] else object.website_url | safe}"><img alt="${object.name}" src="${ctx['base_url']}/web/image/slide.slide/${object.id}/image_1024" style="height:auto; width:150px; margin: 16px;"/></a></div>
+                        <div style="margin: 16px 8px 16px 8px; text-align: center;"><a href="${(object.website_url + '?fullscreen=1') if ctx['fullscreen'] else object.website_url | safe}" style="background-color: #875a7b; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">View <strong>${object.name}</strong></a></div>
+                        % if user.signature
+                            <br/>
+                            ${user.signature | safe}
+                        % endif
+                    </p>
+      </div>
+    </field>
+  </record>
+</odoo>

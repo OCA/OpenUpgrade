@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="account_analytic_line_rule_billing_user" model="ir.rule">
+    <field name="perm_create"/>
+    <field name="perm_read"/>
+    <field name="perm_unlink"/>
+    <field name="perm_write"/>
+  </record>
+  <record id="account_bank_statement_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="account_bank_statement_line_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="account_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="account_fiscal_position_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="account_invoice_line_rule_portal" model="ir.rule">
+    <field name="domain_force">[('move_id.move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')), ('move_id.message_partner_ids','child_of',[user.commercial_partner_id.id])]</field>
+  </record>
+  <record id="account_invoice_rule_portal" model="ir.rule">
+    <field name="domain_force">[('move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')), ('message_partner_ids','child_of',[user.commercial_partner_id.id])]</field>
+  </record>
+  <record id="account_move_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="account_move_line_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="account_payment_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="account_reconcile_model_template_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="account_root_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="email_template_edi_invoice" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear
+        % if object.partner_id.parent_id:
+            ${object.partner_id.name} (${object.partner_id.parent_id.name}),
+        % else:
+            ${object.partner_id.name},
+        % endif
+        <br/><br/>
+        Here is your
+        % if object.name:
+            invoice <strong>${object.name}</strong>
+        % else:
+            invoice
+        %endif
+        % if object.invoice_origin:
+            (with reference: ${object.invoice_origin})
+        % endif
+        amounting in <strong>${format_amount(object.amount_total, object.currency_id)}</strong>
+        from ${object.company_id.name}.
+        % if object.payment_state in ('paid', 'in_payment'):
+            This invoice is already paid.
+        % else:
+            Please remit payment at your earliest convenience.
+            % if object.payment_reference:
+                <br/><br/>
+                Please use the following communication for your payment: <strong>${object.payment_reference}</strong>.
+            % endif
+        % endif
+        <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        % if object.invoice_user_id.signature:
+            <br/>
+            ${object.invoice_user_id.signature | safe}
+        % endif
+    </p>
+      </div>
+    </field>
+  </record>
+  <record id="invoice_analysis_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="journal_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="journal_group_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="mail_template_data_payment_receipt" model="mail.template">
+    <field name="body_html" type="xml">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear ${object.partner_id.name}<br/><br/>
+        Thank you for your payment.
+        Here is your payment receipt <strong>${(object.name or '').replace('/','-')}</strong> amounting
+        to <strong>${format_amount(object.amount, object.currency_id)}</strong> from ${object.company_id.name}.
+        <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        <br/><br/>
+        Best regards,
+        % if user.signature:
+            <br/>
+            ${user.signature | safe}
+        % endif
+    </p>
+      </div>
+    </field>
+  </record>
+  <record id="tax_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+</odoo>

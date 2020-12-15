@@ -1,0 +1,119 @@
+---Models in module 'adyen_platforms'---
+new model adyen.account
+new model adyen.address.mixin [abstract]
+new model adyen.bank.account
+new model adyen.id.mixin [abstract]
+new model adyen.payout
+new model adyen.shareholder
+new model adyen.transaction
+---Fields in module 'adyen_platforms'---
+adyen_platforms / adyen.account            / account_holder_code (char)    : NEW hasdefault
+adyen_platforms / adyen.account            / adyen_uuid (char)             : NEW
+adyen_platforms / adyen.account            / bank_account_ids (one2many)   : NEW relation: adyen.bank.account
+adyen_platforms / adyen.account            / city (char)                   : NEW required
+adyen_platforms / adyen.account            / company_id (many2one)         : NEW relation: res.company, hasdefault
+adyen_platforms / adyen.account            / country_id (many2one)         : NEW relation: res.country, required
+adyen_platforms / adyen.account            / date_of_birth (date)          : NEW
+adyen_platforms / adyen.account            / document_number (char)        : NEW
+adyen_platforms / adyen.account            / document_type (selection)     : NEW selection_keys: ['DRIVINGLICENSE', 'ID', 'PASSPORT', 'VISA'], hasdefault
+adyen_platforms / adyen.account            / doing_business_as (char)      : NEW
+adyen_platforms / adyen.account            / email (char)                  : NEW required
+adyen_platforms / adyen.account            / first_name (char)             : NEW
+adyen_platforms / adyen.account            / house_number_or_name (char)   : NEW required
+adyen_platforms / adyen.account            / id_back (binary)              : NEW attachment: True
+adyen_platforms / adyen.account            / id_back_filename (char)       : NEW
+adyen_platforms / adyen.account            / id_front (binary)             : NEW attachment: True
+adyen_platforms / adyen.account            / id_front_filename (char)      : NEW
+adyen_platforms / adyen.account            / id_type (selection)           : NEW selection_keys: ['DRIVING_LICENSE', 'ID_CARD', 'PASSPORT']
+adyen_platforms / adyen.account            / is_business (boolean)         : NEW required
+adyen_platforms / adyen.account            / kyc_status (selection)        : NEW required, selection_keys: ['awaiting_data', 'failed', 'passed', 'pending'], req_default: function, hasdefault
+adyen_platforms / adyen.account            / kyc_status_message (char)     : NEW
+adyen_platforms / adyen.account            / last_name (char)              : NEW
+adyen_platforms / adyen.account            / legal_business_name (char)    : NEW
+adyen_platforms / adyen.account            / message_follower_ids (one2many): NEW relation: mail.followers
+adyen_platforms / adyen.account            / message_ids (one2many)        : NEW relation: mail.message
+adyen_platforms / adyen.account            / message_main_attachment_id (many2one): NEW relation: ir.attachment
+adyen_platforms / adyen.account            / payout_ids (one2many)         : NEW relation: adyen.payout
+adyen_platforms / adyen.account            / phone_number (char)           : NEW required
+adyen_platforms / adyen.account            / proxy_token (char)            : NEW
+adyen_platforms / adyen.account            / registration_number (char)    : NEW
+adyen_platforms / adyen.account            / shareholder_ids (one2many)    : NEW relation: adyen.shareholder
+adyen_platforms / adyen.account            / state_id (many2one)           : NEW relation: res.country.state
+adyen_platforms / adyen.account            / street (char)                 : NEW required
+adyen_platforms / adyen.account            / transaction_ids (one2many)    : NEW relation: adyen.transaction
+adyen_platforms / adyen.account            / zip (char)                    : NEW required
+adyen_platforms / adyen.bank.account       / account_number (char)         : NEW
+adyen_platforms / adyen.bank.account       / account_type (selection)      : NEW selection_keys: ['checking', 'savings']
+adyen_platforms / adyen.bank.account       / adyen_account_id (many2one)   : NEW relation: adyen.account
+adyen_platforms / adyen.bank.account       / bank_account_reference (char) : NEW hasdefault
+adyen_platforms / adyen.bank.account       / bank_account_uuid (char)      : NEW
+adyen_platforms / adyen.bank.account       / bank_code (char)              : NEW
+adyen_platforms / adyen.bank.account       / bank_statement (binary)       : NEW attachment: True
+adyen_platforms / adyen.bank.account       / bank_statement_filename (char): NEW
+adyen_platforms / adyen.bank.account       / branch_code (char)            : NEW
+adyen_platforms / adyen.bank.account       / country_id (many2one)         : NEW relation: res.country, required
+adyen_platforms / adyen.bank.account       / currency_id (many2one)        : NEW relation: res.currency, required
+adyen_platforms / adyen.bank.account       / iban (char)                   : NEW
+adyen_platforms / adyen.bank.account       / kyc_status (selection)        : NEW required, selection_keys: ['awaiting_data', 'failed', 'passed', 'pending'], req_default: function, hasdefault
+adyen_platforms / adyen.bank.account       / kyc_status_message (char)     : NEW
+adyen_platforms / adyen.bank.account       / owner_city (char)             : NEW
+adyen_platforms / adyen.bank.account       / owner_country_id (many2one)   : NEW relation: res.country
+adyen_platforms / adyen.bank.account       / owner_house_number_or_name (char): NEW
+adyen_platforms / adyen.bank.account       / owner_name (char)             : NEW required
+adyen_platforms / adyen.bank.account       / owner_state_id (many2one)     : NEW relation: res.country.state
+adyen_platforms / adyen.bank.account       / owner_street (char)           : NEW
+adyen_platforms / adyen.bank.account       / owner_zip (char)              : NEW
+adyen_platforms / adyen.payout             / adyen_account_id (many2one)   : NEW relation: adyen.account
+adyen_platforms / adyen.payout             / adyen_bank_account_id (many2one): NEW relation: adyen.bank.account
+adyen_platforms / adyen.payout             / code (char)                   : NEW
+adyen_platforms / adyen.payout             / name (char)                   : NEW required, req_default: function, hasdefault
+adyen_platforms / adyen.payout             / next_scheduled_payout (date)  : NEW isfunction: function, stored
+adyen_platforms / adyen.payout             / payout_schedule (selection)   : NEW required, selection_keys: ['day', 'month', 'week'], req_default: function, hasdefault
+adyen_platforms / adyen.payout             / transaction_ids (one2many)    : NEW relation: adyen.transaction
+adyen_platforms / adyen.shareholder        / adyen_account_id (many2one)   : NEW relation: adyen.account
+adyen_platforms / adyen.shareholder        / city (char)                   : NEW required
+adyen_platforms / adyen.shareholder        / country_id (many2one)         : NEW relation: res.country, required
+adyen_platforms / adyen.shareholder        / date_of_birth (date)          : NEW required
+adyen_platforms / adyen.shareholder        / document_number (char)        : NEW
+adyen_platforms / adyen.shareholder        / first_name (char)             : NEW required
+adyen_platforms / adyen.shareholder        / house_number_or_name (char)   : NEW required
+adyen_platforms / adyen.shareholder        / id_back (binary)              : NEW attachment: True
+adyen_platforms / adyen.shareholder        / id_back_filename (char)       : NEW
+adyen_platforms / adyen.shareholder        / id_front (binary)             : NEW attachment: True
+adyen_platforms / adyen.shareholder        / id_front_filename (char)      : NEW
+adyen_platforms / adyen.shareholder        / id_type (selection)           : NEW selection_keys: ['DRIVING_LICENSE', 'ID_CARD', 'PASSPORT']
+adyen_platforms / adyen.shareholder        / kyc_status (selection)        : NEW required, selection_keys: ['awaiting_data', 'failed', 'passed', 'pending'], req_default: function, hasdefault
+adyen_platforms / adyen.shareholder        / kyc_status_message (char)     : NEW
+adyen_platforms / adyen.shareholder        / last_name (char)              : NEW required
+adyen_platforms / adyen.shareholder        / shareholder_reference (char)  : NEW hasdefault
+adyen_platforms / adyen.shareholder        / shareholder_uuid (char)       : NEW
+adyen_platforms / adyen.shareholder        / state_id (many2one)           : NEW relation: res.country.state
+adyen_platforms / adyen.shareholder        / street (char)                 : NEW required
+adyen_platforms / adyen.shareholder        / zip (char)                    : NEW required
+adyen_platforms / adyen.transaction        / adyen_account_id (many2one)   : NEW relation: adyen.account
+adyen_platforms / adyen.transaction        / adyen_payout_id (many2one)    : NEW relation: adyen.payout
+adyen_platforms / adyen.transaction        / amount (float)                : NEW
+adyen_platforms / adyen.transaction        / currency_id (many2one)        : NEW relation: res.currency
+adyen_platforms / adyen.transaction        / date (datetime)               : NEW
+adyen_platforms / adyen.transaction        / description (char)            : NEW
+adyen_platforms / adyen.transaction        / reference (char)              : NEW
+adyen_platforms / adyen.transaction        / status (selection)            : NEW selection_keys: ['Chargeback', 'ChargebackReceived', 'ChargebackReversed', 'ChargebackReversedReceived', 'Converted', 'CreditFailed', 'Credited', 'DebitFailed', 'DebitReversedReceived', 'Debited', 'DebitedReversed', 'FundTransfer', 'ManualCorrected', 'Payout', 'PayoutReversed', 'PendingCredit', 'PendingDebit', 'PendingFundTransfer']
+adyen_platforms / res.company              / adyen_account_id (many2one)   : NEW relation: adyen.account
+---XML records in module 'adyen_platforms'---
+NEW ir.actions.act_window: adyen_platforms.adyen_account_action_create
+NEW ir.config_parameter: adyen_platforms.adyen_platforms_onboarding_url (noupdate)
+NEW ir.config_parameter: adyen_platforms.adyen_platforms_proxy_url (noupdate)
+NEW ir.cron: adyen_platforms.adyen_sync_cron (noupdate)
+NEW ir.model.access: adyen_platforms.access_adyen_account_group_erp_manager
+NEW ir.model.access: adyen_platforms.access_adyen_bank_account_group_erp_manager
+NEW ir.model.access: adyen_platforms.access_adyen_payout_group_erp_manager
+NEW ir.model.access: adyen_platforms.access_adyen_shareholder_group_erp_manager
+NEW ir.model.access: adyen_platforms.access_adyen_transaction_group_erp_manager
+NEW ir.ui.view: adyen_platforms.adyen_account_view_form
+NEW ir.ui.view: adyen_platforms.adyen_bank_account_view_form
+NEW ir.ui.view: adyen_platforms.adyen_payout_view_form
+NEW ir.ui.view: adyen_platforms.adyen_shareholder_view_form
+NEW ir.ui.view: adyen_platforms.adyen_transaction_view_form
+NEW ir.ui.view: adyen_platforms.adyen_transaction_view_list
+NEW ir.ui.view: adyen_platforms.assets_backend
+NEW ir.ui.view: adyen_platforms.kyc_status_message

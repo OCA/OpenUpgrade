@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="base.open_menu" model="ir.actions.todo">
+    <field name="action_id" ref="action_website_edit"/>
+  </record>
+  <record id="business_conference" model="ir.attachment">
+    <field name="datas" type="base64" file="website/static/src/img/library/business_conference.jpg"/>
+    <field name="type">url</field>
+    <field name="url">/website/static/src/img/library/business_conference.jpg</field>
+  </record>
+  <record id="menu_contactus" model="website.menu">
+    <field name="page_id" ref="website.contactus_page"/>
+  </record>
+  <record id="menu_home" model="website.menu">
+    <field name="page_id" ref="website.homepage_page"/>
+  </record>
+  <record id="website_menu" model="ir.rule">
+    <field name="domain_force">['|', ('group_ids', '=', False), ('group_ids', 'in', user.groups_id.ids)]</field>
+  </record>
+</odoo>

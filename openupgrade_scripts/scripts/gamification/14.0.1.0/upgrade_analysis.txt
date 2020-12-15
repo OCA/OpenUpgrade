@@ -1,0 +1,26 @@
+---Models in module 'gamification'---
+new model gamification.karma.tracking
+---Fields in module 'gamification'---
+gamification / gamification.challenge   / category (selection)          : DEL required, selection_keys: ['hr', 'other'], req_default: function
+gamification / gamification.challenge   / challenge_category (selection): NEW required, selection_keys: ['hr', 'other'], req_default: function, hasdefault
+gamification / gamification.karma.rank  / karma_min (integer)           : now required, req_default: function
+gamification / gamification.karma.tracking / consolidated (boolean)        : NEW
+gamification / gamification.karma.tracking / new_value (integer)           : NEW required
+gamification / gamification.karma.tracking / old_value (integer)           : NEW required
+gamification / gamification.karma.tracking / tracking_date (date)          : NEW hasdefault
+gamification / gamification.karma.tracking / user_id (many2one)            : NEW relation: res.users, required
+gamification / res.users                / karma_tracking_ids (one2many) : NEW relation: gamification.karma.tracking
+---XML records in module 'gamification'---
+DEL gamification.goal.definition: gamification.definition_nbr_following (noupdate)
+NEW ir.actions.act_window: gamification.action_current_rank_users
+NEW ir.actions.act_window: gamification.gamification_karma_tracking_action
+NEW ir.cron: gamification.ir_cron_consolidate_last_month (noupdate)
+NEW ir.model.access: gamification.access_gamification_badge_user_wizard
+NEW ir.model.access: gamification.access_gamification_goal_wizard
+NEW ir.model.access: gamification.gamification_karma_tracking_access_all
+NEW ir.model.access: gamification.gamification_karma_tracking_access_user_manager
+NEW ir.ui.menu: gamification.gamification_karma_tracking_menu
+NEW ir.ui.view: gamification.gamification_karma_tracking_view_form
+NEW ir.ui.view: gamification.gamification_karma_tracking_view_search
+NEW ir.ui.view: gamification.gamification_karma_tracking_view_tree
+NEW ir.ui.view: gamification.res_users_view_form

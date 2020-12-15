@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="holiday_status_cl" model="hr.leave.type">
+    <field name="allocation_notif_subtype_id" ref="mt_leave_allocation"/>
+    <field name="leave_notif_subtype_id" ref="mt_leave"/>
+    <field name="allocation_validation_type">both</field>
+    <field name="leave_validation_type">both</field>
+  </record>
+  <record id="holiday_status_comp" model="hr.leave.type">
+    <field name="leave_notif_subtype_id" ref="mt_leave"/>
+    <field name="allocation_validation_type">manager</field>
+    <field name="leave_validation_type">manager</field>
+  </record>
+  <record id="holiday_status_sl" model="hr.leave.type">
+    <field name="leave_notif_subtype_id" ref="mt_leave_sick"/>
+  </record>
+  <record id="holiday_status_unpaid" model="hr.leave.type">
+    <field name="leave_notif_subtype_id" ref="mt_leave_unpaid"/>
+    <field name="allocation_validation_type">both</field>
+    <field name="leave_validation_type">both</field>
+  </record>
+  <record id="hr_holidays_status_rule_multi_company" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="hr_leave_allocation_rule_employee" model="ir.rule">
+    <field name="domain_force">[
+            '|',
+                ('employee_id.leave_manager_id', '=', user.id),
+                ('employee_id.user_id', '=', user.id),
+        ]</field>
+  </record>
+  <record id="hr_leave_allocation_rule_employee_update" model="ir.rule">
+    <field name="domain_force">[
+            ('holiday_status_id.allocation_type', '=', 'fixed_allocation'),
+            ('holiday_type', '=', 'employee'),
+            '|',
+                '&amp;',
+                    ('employee_id.user_id', '=', user.id),
+                    ('state', 'not in', ['validate', 'validate1']),
+                '&amp;',
+                    ('validation_type', 'in', ['manager', 'both']),
+                    ('employee_id.leave_manager_id', '=', user.id),
+        ]</field>
+    <field name="name">Allocations: base.group_user create/write</field>
+    <field name="perm_unlink" eval="False"/>
+  </record>
+  <record id="hr_leave_allocation_rule_officer_update" model="ir.rule">
+    <field name="domain_force">[
+            ('holiday_type', '=', 'employee'),
+            '|',
+                '&amp;',
+                    ('employee_id.user_id', '=', user.id),
+                    ('state', '!=', 'validate'),
+                '|',
+                    ('employee_id.user_id', '!=', user.id),
+                    ('employee_id.user_id', '=', False)
+        ]</field>
+    <field name="name">Allocations: holiday user : create/write</field>
+  </record>
+  <record id="hr_leave_rule_multicompany" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="hr_leave_rule_user_read" model="ir.rule">
+    <field name="perm_create" eval="True"/>
+    <field name="perm_unlink" eval="True"/>
+    <field name="perm_write" eval="True"/>
+  </record>
+</odoo>

@@ -1,0 +1,24 @@
+---Models in module 'product_expiry'---
+new model expiry.picking.confirmation [transient]
+---Fields in module 'product_expiry'---
+product_expiry / product.template         / expiration_time (integer)     : NEW
+product_expiry / product.template         / life_time (integer)           : DEL
+product_expiry / product.template         / use_expiration_date (boolean) : NEW
+product_expiry / stock.move.line          / expiration_date (datetime)    : NEW
+product_expiry / stock.production.lot     / expiration_date (datetime)    : NEW
+product_expiry / stock.production.lot     / life_date (datetime)          : DEL
+---XML records in module 'product_expiry'---
+NEW ir.model.access: product_expiry.access_expiry_picking_confirmation
+NEW ir.ui.view: product_expiry.confirm_expiry_view
+NEW ir.ui.view: product_expiry.label_lot_template_view_expiry
+NEW ir.ui.view: product_expiry.quant_search_view_inherit_product_expiry
+NEW ir.ui.view: product_expiry.report_lot_label_expiry
+NEW ir.ui.view: product_expiry.res_config_settings_view_form_stock
+NEW ir.ui.view: product_expiry.stock_report_delivery_document_inherit_product_expiry
+NEW ir.ui.view: product_expiry.stock_report_delivery_has_serial_move_line_inherit_product_expiry
+NEW ir.ui.view: product_expiry.view_stock_move_line_detailed_operation_tree_expiry
+NEW ir.ui.view: product_expiry.view_stock_move_line_operation_tree_expiry
+NEW ir.ui.view: product_expiry.view_stock_move_operations_expiry
+NEW ir.ui.view: product_expiry.view_stock_quant_tree_editable_expiry
+NEW ir.ui.view: product_expiry.view_stock_quant_tree_expiry
+NEW res.groups: product_expiry.group_expiry_date_on_delivery_slip

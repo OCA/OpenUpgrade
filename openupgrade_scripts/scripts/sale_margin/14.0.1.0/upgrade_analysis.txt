@@ -1,0 +1,7 @@
+---Models in module 'sale_margin'---
+---Fields in module 'sale_margin'---
+sale_margin  / sale.order               / margin_percent (float)        : NEW isfunction: function, stored
+sale_margin  / sale.order.line          / margin_percent (float)        : NEW isfunction: function, stored
+sale_margin  / sale.order.line          / purchase_price (float)        : now a function
+---XML records in module 'sale_margin'---
+NEW ir.ui.view: sale_margin.sale_margin_sale_order_pivot

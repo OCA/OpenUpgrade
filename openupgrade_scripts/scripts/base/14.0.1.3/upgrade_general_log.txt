@@ -1,0 +1,515 @@
+---Models in module 'general'---
+obsolete model account.accrual.accounting.wizard [module account]
+obsolete model account.bank.statement.import [module account_bank_statement_import]
+obsolete model account.bank.statement.import.journal.creation [module account_bank_statement_import]
+obsolete model account.fiscal.year [module account]
+obsolete model account.reconciliation.widget [module account]
+obsolete model accounting.assert.test [module account_test]
+obsolete model base.automation.lead.test [module base_automation]
+obsolete model base.automation.line.test [module base_automation]
+obsolete model base.gengo.translations [module base_gengo]
+obsolete model crm.lead.tag [module crm]
+obsolete model crm.partner.binding [module crm]
+obsolete model email_template.preview [module mail]
+obsolete model event.answer [module website_event_questions]
+obsolete model event.confirm [module event]
+obsolete model event.question.report [module website_event_questions]
+obsolete model fleet.vehicle.cost [module fleet]
+obsolete model fleet.vehicle.log.fuel [module fleet]
+obsolete model google.calendar [module google_calendar]
+obsolete model hr.expense.sheet.register.payment.wizard [module hr_expense]
+obsolete model lunch.order.temp [module lunch]
+obsolete model mail.address.mixin [module mail]
+obsolete model mail.test [module test_mail]
+obsolete model mail.test.activity [module test_mail]
+obsolete model mail.test.cc [module test_mail]
+obsolete model mail.test.full [module test_mail]
+obsolete model mail.test.gateway [module test_mail]
+obsolete model mail.test.multi.company [module test_mail]
+obsolete model mail.test.simple [module test_mail]
+obsolete model mail.test.sms [module test_mail_full]
+obsolete model mail.test.sms.bl [module test_mail_full]
+obsolete model mail.test.sms.partner [module test_mail_full]
+obsolete model mail.test.track [module test_mail]
+obsolete model mass.mail.test [module test_mass_mailing]
+obsolete model mass.mail.test.bl [module test_mass_mailing]
+obsolete model mrp.abstract.workorder [module mrp]
+obsolete model mrp.abstract.workorder.line [module mrp]
+obsolete model mrp.product.produce [module mrp]
+obsolete model mrp.product.produce.line [module mrp]
+obsolete model mrp.routing [module mrp]
+obsolete model mrp.workorder.line [module mrp]
+obsolete model openupgrade.analysis.wizard [module openupgrade_records]
+obsolete model openupgrade.attribute [module openupgrade_records]
+obsolete model openupgrade.comparison.config [module openupgrade_records]
+obsolete model openupgrade.generate.records.wizard [module openupgrade_records]
+obsolete model openupgrade.install.all.wizard [module openupgrade_records]
+obsolete model openupgrade.record [module openupgrade_records]
+obsolete model product.price_list [module product]
+obsolete model product.style [module website_sale]
+obsolete model repair.cancel [module repair]
+obsolete model report.account.report_agedpartnerbalance [module account]
+obsolete model report.account_test.report_accounttest [module account_test]
+obsolete model report.sale_coupon.report_coupon [module sale_coupon]
+obsolete model sale.coupon [module sale_coupon]
+obsolete model sale.coupon.generate [module sale_coupon]
+obsolete model sale.coupon.program [module sale_coupon]
+obsolete model sale.coupon.reward [module sale_coupon]
+obsolete model sale.coupon.rule [module sale_coupon]
+obsolete model stock.change.standard.price [module stock_account]
+obsolete model stock.overprocessed.transfer [module stock]
+obsolete model stock.picking.responsible [module stock]
+obsolete model survey.label [module survey]
+obsolete model survey.user_input_line [module survey]
+obsolete model test_performance.bacon [module test_performance]
+obsolete model test_performance.base [module test_performance]
+obsolete model test_performance.eggs [module test_performance]
+obsolete model test_performance.line [module test_performance]
+obsolete model test_performance.mail [module test_mail]
+obsolete model test_performance.tag [module test_performance]
+new model account.automatic.entry.wizard [module account]
+new model account.edi.document [module account_edi]
+new model account.edi.format [module account_edi]
+new model account.group.template [module account]
+new model account.reconcile.model.line [module account]
+new model account.reconcile.model.line.template [module account]
+new model account.reconcile.model.partner.mapping [module account]
+new model account.resequence.wizard [module account]
+new model account.tax.report [module account]
+new model account.tour.upload.bill [module account]
+new model account.tour.upload.bill.email.confirm [module account]
+new model adyen.account [module adyen_platforms]
+new model adyen.address.mixin [module adyen_platforms]
+new model adyen.bank.account [module adyen_platforms]
+new model adyen.id.mixin [module adyen_platforms]
+new model adyen.payout [module adyen_platforms]
+new model adyen.shareholder [module adyen_platforms]
+new model adyen.store [module pos_adyen]
+new model adyen.terminal [module pos_adyen]
+new model adyen.transaction [module adyen_platforms]
+new model applicant.get.refuse.reason [module hr_recruitment]
+new model auth_totp.wizard [module auth_totp]
+new model calendar.recurrence [module calendar]
+new model chat.room [module website_jitsi]
+new model chat.room.mixin [module website_jitsi]
+new model coupon.coupon [module coupon]
+new model coupon.generate.wizard [module coupon]
+new model coupon.program [module coupon]
+new model coupon.reward [module coupon]
+new model coupon.rule [module coupon]
+new model crm.recurring.plan [module crm]
+new model crm.tag [module sales_team]
+new model event.lead.rule [module event_crm]
+new model event.meeting.room [module website_event_meet]
+new model event.question.answer [module website_event_questions]
+new model event.quiz [module website_event_track_quiz]
+new model event.quiz.answer [module website_event_track_quiz]
+new model event.quiz.question [module website_event_track_quiz]
+new model event.stage [module event]
+new model event.tag [module event]
+new model event.tag.category [module event]
+new model event.track.tag.category [module website_event_track]
+new model event.track.visitor [module website_event_track]
+new model event.type.ticket [module event]
+new model expiry.picking.confirmation [module product_expiry]
+new model fleet.vehicle.cost.report [module fleet]
+new model gamification.karma.tracking [module gamification]
+new model google.calendar.account.reset [module google_calendar]
+new model google.calendar.sync [module google_calendar]
+new model hr.applicant.refuse.reason [module hr_recruitment]
+new model hr.payroll.structure.type [module hr_contract]
+new model ir.qweb.field.image_url [module base]
+new model mail.blacklist.remove [module mail]
+new model mail.render.mixin [module mail]
+new model mail.template.preview [module mail]
+new model microsoft.calendar.account.reset [module microsoft_calendar]
+new model microsoft.calendar.sync [module microsoft_calendar]
+new model microsoft.service [module microsoft_account]
+new model mrp.consumption.warning [module mrp]
+new model mrp.consumption.warning.line [module mrp]
+new model mrp.immediate.production [module mrp]
+new model mrp.immediate.production.line [module mrp]
+new model mrp.production.backorder [module mrp]
+new model mrp.production.backorder.line [module mrp]
+new model phone.blacklist.remove [module phone_validation]
+new model product.ribbon [module website_sale]
+new model project.delete.wizard [module project]
+new model project.task.create.sale.order [module sale_timesheet]
+new model project.task.create.timesheet [module hr_timesheet]
+new model project.task.recurrence [module project]
+new model project.task.type.delete.wizard [module project]
+new model report.account.report_invoice [module account]
+new model report.coupon.report_coupon [module coupon]
+new model report.stock.report_product_product_replenishment [module stock]
+new model report.stock.report_product_template_replenishment [module stock]
+new model res.users.apikeys [module base]
+new model res.users.apikeys.description [module base]
+new model res.users.apikeys.show [module base]
+new model res.users.identitycheck [module base]
+new model sale.order.cancel [module sale]
+new model sequence.mixin [module account]
+new model slide.slide.resource [module website_slides]
+new model snailmail.confirm [module snailmail]
+new model snailmail.confirm.invoice [module snailmail_account]
+new model stock.backorder.confirmation.line [module stock]
+new model stock.immediate.transfer.line [module stock]
+new model stock.orderpoint.snooze [module stock]
+new model stock.valuation.layer.revaluation [module stock_account]
+new model survey.question.answer [module survey]
+new model survey.user_input.line [module survey]
+new model upgrade.analysis [module upgrade_analysis]
+new model upgrade.attribute [module upgrade_analysis]
+new model upgrade.comparison.config [module upgrade_analysis]
+new model upgrade.generate.record.wizard [module upgrade_analysis]
+new model upgrade.install.wizard [module upgrade_analysis]
+new model upgrade.record [module upgrade_analysis]
+new model vendor.delay.report [module purchase_stock]
+new model website.cover_properties.mixin [module website]
+new model website.robots [module website]
+new model website.sale.extra.field [module website_sale]
+new model website.snippet.filter [module website]
+---Fields in module 'general'---
+# 8721 fields matched,
+# Direct match: 8647
+# Found in other module: 74
+# Found with different type: 0
+# In obsolete models: 581
+# New columns: 1705
+# Not matched: 908
+---XML records in module 'general'---
+ERROR: module not in list of installed modules:
+---Models in module 'account_bank_statement_import'---
+obsolete model account.bank.statement.import [transient]
+obsolete model account.bank.statement.import.journal.creation [transient]
+---Fields in module 'account_bank_statement_import'---
+account_bank_statement_import / account.bank.statement.line / unique_import_id (char)       : DEL
+---XML records in module 'account_bank_statement_import'---
+DEL ir.actions.act_window: account_bank_statement_import.action_account_bank_statement_import
+DEL ir.actions.act_window: account_bank_statement_import.install_more_import_formats_action
+DEL ir.ui.view: account_bank_statement_import.account_bank_statement_import_journal_creation_view
+DEL ir.ui.view: account_bank_statement_import.account_bank_statement_import_view
+DEL ir.ui.view: account_bank_statement_import.assets_backend
+DEL ir.ui.view: account_bank_statement_import.journal_dashboard_view_inherit
+ERROR: module not in list of installed modules:
+---Models in module 'account_test'---
+obsolete model accounting.assert.test
+obsolete model report.account_test.report_accounttest [abstract]
+---Fields in module 'account_test'---
+account_test / accounting.assert.test   / active (boolean)              : DEL
+account_test / accounting.assert.test   / code_exec (text)              : DEL required, req_default: function
+account_test / accounting.assert.test   / desc (text)                   : DEL
+account_test / accounting.assert.test   / name (char)                   : DEL required
+account_test / accounting.assert.test   / sequence (integer)            : DEL
+---XML records in module 'account_test'---
+DEL accounting.assert.test: account_test.account_test_01
+DEL accounting.assert.test: account_test.account_test_03
+DEL accounting.assert.test: account_test.account_test_05
+DEL accounting.assert.test: account_test.account_test_05_2
+DEL accounting.assert.test: account_test.account_test_06
+DEL accounting.assert.test: account_test.account_test_07
+DEL ir.actions.act_window: account_test.action_accounting_assert
+DEL ir.actions.report: account_test.account_assert_test_report
+DEL ir.model.access: account_test.access_accounting_assert_test
+DEL ir.model.access: account_test.access_accounting_assert_test_manager
+DEL ir.ui.menu: account_test.menu_action_license
+DEL ir.ui.view: account_test.account_assert_form
+DEL ir.ui.view: account_test.account_assert_tree
+DEL ir.ui.view: account_test.accounting_assert_test_view_search
+DEL ir.ui.view: account_test.report_accounttest
+ERROR: module not in list of installed modules:
+---Models in module 'base_gengo'---
+obsolete model base.gengo.translations [transient]
+---Fields in module 'base_gengo'---
+base_gengo   / ir.translation           / gengo_comment (text)          : DEL
+base_gengo   / ir.translation           / gengo_translation (selection) : DEL selection_keys: ['machine', 'pro', 'standard', 'ultra']
+base_gengo   / ir.translation           / order_id (char)               : DEL
+base_gengo   / res.company              / gengo_auto_approve (boolean)  : DEL
+base_gengo   / res.company              / gengo_comment (text)          : DEL
+base_gengo   / res.company              / gengo_private_key (char)      : DEL
+base_gengo   / res.company              / gengo_public_key (text)       : DEL
+base_gengo   / res.company              / gengo_sandbox (boolean)       : DEL
+---XML records in module 'base_gengo'---
+DEL ir.actions.act_window: base_gengo.action_wizard_base_gengo_translations
+DEL ir.cron: base_gengo.gengo_sync_receive_request_scheduler (noupdate)
+DEL ir.cron: base_gengo.gengo_sync_send_request_scheduler (noupdate)
+DEL ir.ui.menu: base_gengo.menu_action_wizard_base_gengo_translations
+DEL ir.ui.view: base_gengo.base_gengo_translation_wizard_from
+DEL ir.ui.view: base_gengo.res_config_settings_view_form
+DEL ir.ui.view: base_gengo.view_ir_translation_inherit_base_gengo_form
+DEL ir.ui.view: base_gengo.view_translation_search
+ERROR: module not in list of installed modules:
+---Models in module 'im_support'---
+---Fields in module 'im_support'---
+---XML records in module 'im_support'---
+DEL ir.ui.view: im_support.assets_backend
+DEL ir.ui.view: im_support.qunit_mobile_suite
+DEL ir.ui.view: im_support.qunit_suite
+DEL ir.ui.view: im_support.support_qunit_suite
+ERROR: module not in list of installed modules:
+---Models in module 'payment_test'---
+---Fields in module 'payment_test'---
+payment_test / payment.acquirer         / provider (False)              : module is now 'payment_odoo_by_adyen' ('payment_test')
+payment_test / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'odoo_adyen', 'ogone']' ('['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'ogone', 'paypal', 'payulatam', 'payumoney', 'sips', 'stripe', 'test']')
+---XML records in module 'payment_test'---
+DEL ir.ui.view: payment_test.test_s2s_form
+DEL payment.acquirer: payment_test.payment_acquirer_test (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'test_mail'---
+obsolete model mail.test
+obsolete model mail.test.activity
+obsolete model mail.test.cc
+obsolete model mail.test.full
+obsolete model mail.test.gateway
+obsolete model mail.test.multi.company
+obsolete model mail.test.simple
+obsolete model mail.test.track
+obsolete model test_performance.mail
+---Fields in module 'test_mail'---
+test_mail    / mail.test                / _inherits (False)             : DEL
+test_mail    / mail.test                / alias_id (many2one)           : DEL relation: mail.alias, required
+test_mail    / mail.test                / customer_id (many2one)        : DEL relation: res.partner
+test_mail    / mail.test                / description (text)            : DEL
+test_mail    / mail.test                / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail    / mail.test                / message_ids (one2many)        : DEL relation: mail.message
+test_mail    / mail.test                / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail    / mail.test                / name (char)                   : DEL
+test_mail    / mail.test                / website_message_ids (one2many): DEL relation: mail.message
+test_mail    / mail.test.activity       / active (boolean)              : DEL
+test_mail    / mail.test.activity       / activity_ids (one2many)       : DEL relation: mail.activity
+test_mail    / mail.test.activity       / email_from (char)             : DEL
+test_mail    / mail.test.activity       / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail    / mail.test.activity       / message_ids (one2many)        : DEL relation: mail.message
+test_mail    / mail.test.activity       / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail    / mail.test.activity       / name (char)                   : DEL
+test_mail    / mail.test.activity       / website_message_ids (one2many): DEL relation: mail.message
+test_mail    / mail.test.cc             / email_cc (char)               : DEL
+test_mail    / mail.test.cc             / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail    / mail.test.cc             / message_ids (one2many)        : DEL relation: mail.message
+test_mail    / mail.test.cc             / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail    / mail.test.cc             / name (char)                   : DEL
+test_mail    / mail.test.cc             / website_message_ids (one2many): DEL relation: mail.message
+test_mail    / mail.test.full           / count (integer)               : DEL
+test_mail    / mail.test.full           / customer_id (many2one)        : DEL relation: res.partner
+test_mail    / mail.test.full           / datetime (datetime)           : DEL
+test_mail    / mail.test.full           / email_from (char)             : DEL
+test_mail    / mail.test.full           / mail_template (many2one)      : DEL relation: mail.template
+test_mail    / mail.test.full           / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail    / mail.test.full           / message_ids (one2many)        : DEL relation: mail.message
+test_mail    / mail.test.full           / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail    / mail.test.full           / name (char)                   : DEL
+test_mail    / mail.test.full           / umbrella_id (many2one)        : DEL relation: mail.test
+test_mail    / mail.test.full           / user_id (many2one)            : DEL relation: res.users
+test_mail    / mail.test.full           / website_message_ids (one2many): DEL relation: mail.message
+test_mail    / mail.test.gateway        / custom_field (char)           : DEL
+test_mail    / mail.test.gateway        / email_from (char)             : DEL
+test_mail    / mail.test.gateway        / email_normalized (char)       : DEL
+test_mail    / mail.test.gateway        / message_bounce (integer)      : DEL
+test_mail    / mail.test.gateway        / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail    / mail.test.gateway        / message_ids (one2many)        : DEL relation: mail.message
+test_mail    / mail.test.gateway        / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail    / mail.test.gateway        / name (char)                   : DEL
+test_mail    / mail.test.gateway        / website_message_ids (one2many): DEL relation: mail.message
+test_mail    / mail.test.multi.company  / company_id (many2one)         : DEL relation: res.company
+test_mail    / mail.test.multi.company  / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail    / mail.test.multi.company  / message_ids (one2many)        : DEL relation: mail.message
+test_mail    / mail.test.multi.company  / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail    / mail.test.multi.company  / name (char)                   : DEL
+test_mail    / mail.test.multi.company  / website_message_ids (one2many): DEL relation: mail.message
+test_mail    / mail.test.simple         / email_from (char)             : DEL
+test_mail    / mail.test.simple         / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail    / mail.test.simple         / message_ids (one2many)        : DEL relation: mail.message
+test_mail    / mail.test.simple         / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail    / mail.test.simple         / name (char)                   : DEL
+test_mail    / mail.test.simple         / website_message_ids (one2many): DEL relation: mail.message
+test_mail    / mail.test.track          / company_id (many2one)         : DEL relation: res.company
+test_mail    / mail.test.track          / email_from (char)             : DEL
+test_mail    / mail.test.track          / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail    / mail.test.track          / message_ids (one2many)        : DEL relation: mail.message
+test_mail    / mail.test.track          / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail    / mail.test.track          / name (char)                   : DEL
+test_mail    / mail.test.track          / umbrella_id (many2one)        : DEL relation: mail.test
+test_mail    / mail.test.track          / user_id (many2one)            : DEL relation: res.users
+test_mail    / mail.test.track          / website_message_ids (one2many): DEL relation: mail.message
+test_mail    / test_performance.mail    / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail    / test_performance.mail    / message_ids (one2many)        : DEL relation: mail.message
+test_mail    / test_performance.mail    / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail    / test_performance.mail    / name (char)                   : DEL
+test_mail    / test_performance.mail    / partner_id (many2one)         : DEL relation: res.partner
+test_mail    / test_performance.mail    / track (char)                  : DEL
+test_mail    / test_performance.mail    / value (integer)               : DEL
+test_mail    / test_performance.mail    / value_pc (float)              : DEL
+test_mail    / test_performance.mail    / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'test_mail'---
+DEL ir.model.access: test_mail.access_mail_test_activity_portal
+DEL ir.model.access: test_mail.access_mail_test_activity_user
+DEL ir.model.access: test_mail.access_mail_test_cc_portal
+DEL ir.model.access: test_mail.access_mail_test_cc_user
+DEL ir.model.access: test_mail.access_mail_test_full_portal
+DEL ir.model.access: test_mail.access_mail_test_full_user
+DEL ir.model.access: test_mail.access_mail_test_gateway_portal
+DEL ir.model.access: test_mail.access_mail_test_gateway_user
+DEL ir.model.access: test_mail.access_mail_test_multi_company_portal
+DEL ir.model.access: test_mail.access_mail_test_multi_company_user
+DEL ir.model.access: test_mail.access_mail_test_portal
+DEL ir.model.access: test_mail.access_mail_test_simple_portal
+DEL ir.model.access: test_mail.access_mail_test_simple_user
+DEL ir.model.access: test_mail.access_mail_test_track_portal
+DEL ir.model.access: test_mail.access_mail_test_track_user
+DEL ir.model.access: test_mail.access_mail_test_user
+DEL ir.model.access: test_mail.access_test_performance_mail
+DEL ir.rule: test_mail.mail_test_multi_company_rule (noupdate)
+DEL mail.activity.type: test_mail.mail_act_test_call
+DEL mail.activity.type: test_mail.mail_act_test_meeting
+DEL mail.activity.type: test_mail.mail_act_test_todo
+ERROR: module not in list of installed modules:
+---Models in module 'test_mail_full'---
+obsolete model mail.test.sms
+obsolete model mail.test.sms.bl
+obsolete model mail.test.sms.partner
+---Fields in module 'test_mail_full'---
+test_mail_full / mail.test.sms            / customer_id (many2one)        : DEL relation: res.partner
+test_mail_full / mail.test.sms            / email_from (char)             : DEL
+test_mail_full / mail.test.sms            / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail_full / mail.test.sms            / message_ids (one2many)        : DEL relation: mail.message
+test_mail_full / mail.test.sms            / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail_full / mail.test.sms            / mobile_nbr (char)             : DEL
+test_mail_full / mail.test.sms            / name (char)                   : DEL
+test_mail_full / mail.test.sms            / phone_nbr (char)              : DEL
+test_mail_full / mail.test.sms            / subject (char)                : DEL
+test_mail_full / mail.test.sms            / website_message_ids (one2many): DEL relation: mail.message
+test_mail_full / mail.test.sms.bl         / customer_id (many2one)        : DEL relation: res.partner
+test_mail_full / mail.test.sms.bl         / email_from (char)             : DEL
+test_mail_full / mail.test.sms.bl         / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail_full / mail.test.sms.bl         / message_ids (one2many)        : DEL relation: mail.message
+test_mail_full / mail.test.sms.bl         / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail_full / mail.test.sms.bl         / mobile_nbr (char)             : DEL
+test_mail_full / mail.test.sms.bl         / name (char)                   : DEL
+test_mail_full / mail.test.sms.bl         / phone_nbr (char)              : DEL
+test_mail_full / mail.test.sms.bl         / phone_sanitized (char)        : DEL
+test_mail_full / mail.test.sms.bl         / subject (char)                : DEL
+test_mail_full / mail.test.sms.bl         / website_message_ids (one2many): DEL relation: mail.message
+test_mail_full / mail.test.sms.partner    / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail_full / mail.test.sms.partner    / message_ids (one2many)        : DEL relation: mail.message
+test_mail_full / mail.test.sms.partner    / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail_full / mail.test.sms.partner    / name (char)                   : DEL
+test_mail_full / mail.test.sms.partner    / partner_id (many2one)         : DEL relation: res.partner
+test_mail_full / mail.test.sms.partner    / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'test_mail_full'---
+DEL ir.model.access: test_mail_full.access_mail_test_sms_all
+DEL ir.model.access: test_mail_full.access_mail_test_sms_bl_all
+DEL ir.model.access: test_mail_full.access_mail_test_sms_bl_user
+DEL ir.model.access: test_mail_full.access_mail_test_sms_partner_all
+DEL ir.model.access: test_mail_full.access_mail_test_sms_partner_user
+DEL ir.model.access: test_mail_full.access_mail_test_sms_user
+ERROR: module not in list of installed modules:
+---Models in module 'test_main_flows'---
+---Fields in module 'test_main_flows'---
+---XML records in module 'test_main_flows'---
+DEL ir.ui.view: test_main_flows.assets_tests
+ERROR: module not in list of installed modules:
+---Models in module 'test_mass_mailing'---
+obsolete model mass.mail.test
+obsolete model mass.mail.test.bl
+---Fields in module 'test_mass_mailing'---
+test_mass_mailing / mass.mail.test           / email_from (char)             : DEL
+test_mass_mailing / mass.mail.test           / email_normalized (char)       : DEL
+test_mass_mailing / mass.mail.test           / message_follower_ids (one2many): DEL relation: mail.followers
+test_mass_mailing / mass.mail.test           / message_ids (one2many)        : DEL relation: mail.message
+test_mass_mailing / mass.mail.test           / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mass_mailing / mass.mail.test           / name (char)                   : DEL
+test_mass_mailing / mass.mail.test           / website_message_ids (one2many): DEL relation: mail.message
+test_mass_mailing / mass.mail.test.bl        / email_from (char)             : DEL
+test_mass_mailing / mass.mail.test.bl        / email_normalized (char)       : DEL
+test_mass_mailing / mass.mail.test.bl        / message_bounce (integer)      : DEL
+test_mass_mailing / mass.mail.test.bl        / message_follower_ids (one2many): DEL relation: mail.followers
+test_mass_mailing / mass.mail.test.bl        / message_ids (one2many)        : DEL relation: mail.message
+test_mass_mailing / mass.mail.test.bl        / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mass_mailing / mass.mail.test.bl        / name (char)                   : DEL
+test_mass_mailing / mass.mail.test.bl        / umbrella_id (many2one)        : DEL relation: mail.test
+test_mass_mailing / mass.mail.test.bl        / user_id (many2one)            : DEL relation: res.users
+test_mass_mailing / mass.mail.test.bl        / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'test_mass_mailing'---
+DEL ir.model.access: test_mass_mailing.access_mass_mail_test_all
+DEL ir.model.access: test_mass_mailing.access_mass_mail_test_bl_all
+DEL ir.model.access: test_mass_mailing.access_mass_mail_test_bl_user
+DEL ir.model.access: test_mass_mailing.access_mass_mail_test_user
+ERROR: module not in list of installed modules:
+---Models in module 'test_performance'---
+obsolete model test_performance.bacon
+obsolete model test_performance.base
+obsolete model test_performance.eggs
+obsolete model test_performance.line
+obsolete model test_performance.tag
+---Fields in module 'test_performance'---
+test_performance / test_performance.bacon   / property_eggs (many2one)      : DEL relation: test_performance.eggs
+test_performance / test_performance.base    / line_ids (one2many)           : DEL relation: test_performance.line
+test_performance / test_performance.base    / name (char)                   : DEL
+test_performance / test_performance.base    / partner_id (many2one)         : DEL relation: res.partner
+test_performance / test_performance.base    / tag_ids (many2many)           : DEL relation: test_performance.tag
+test_performance / test_performance.base    / total (integer)               : DEL
+test_performance / test_performance.base    / value (integer)               : DEL
+test_performance / test_performance.base    / value_pc (float)              : DEL
+test_performance / test_performance.eggs    / name (char)                   : DEL
+test_performance / test_performance.line    / base_id (many2one)            : DEL relation: test_performance.base, required
+test_performance / test_performance.line    / value (integer)               : DEL
+test_performance / test_performance.tag     / name (char)                   : DEL
+---XML records in module 'test_performance'---
+DEL ir.model.access: test_performance.access_test_performance_bacon
+DEL ir.model.access: test_performance.access_test_performance_base
+DEL ir.model.access: test_performance.access_test_performance_eggs
+DEL ir.model.access: test_performance.access_test_performance_line
+DEL ir.model.access: test_performance.access_test_performance_tag
+ERROR: module not in list of installed modules:
+---Models in module 'test_website'---
+---Fields in module 'test_website'---
+---XML records in module 'test_website'---
+DEL ir.ui.view: test_website.assets_frontend
+DEL ir.ui.view: test_website.assets_tests
+DEL ir.ui.view: test_website.test_error_view (noupdate)
+DEL ir.ui.view: test_website.test_page_view (noupdate)
+DEL ir.ui.view: test_website.test_view (noupdate)
+DEL ir.ui.view: test_website.test_view_child_broken (noupdate)
+DEL ir.ui.view: test_website.test_view_to_be_t_called (noupdate)
+DEL ir.ui.view: test_website.update_module_base_view (noupdate)
+DEL website.page: test_website.multi_url
+DEL website.page: test_website.test_page (noupdate)
+ERROR: module not in list of installed modules:
+---Models in module 'test_website_slides_full'---
+---Fields in module 'test_website_slides_full'---
+---XML records in module 'test_website_slides_full'---
+DEL ir.ui.view: test_website_slides_full.assets_tests
+ERROR: module not in list of installed modules:
+---Models in module 'theme_bootswatch'---
+---Fields in module 'theme_bootswatch'---
+---XML records in module 'theme_bootswatch'---
+DEL theme.ir.ui.view: theme_bootswatch._assets_frontend_helpers
+DEL theme.ir.ui.view: theme_bootswatch.theme_cerulean
+DEL theme.ir.ui.view: theme_bootswatch.theme_cerulean_bs_variables
+DEL theme.ir.ui.view: theme_bootswatch.theme_cosmo
+DEL theme.ir.ui.view: theme_bootswatch.theme_cosmo_bs_variables
+DEL theme.ir.ui.view: theme_bootswatch.theme_customize
+DEL theme.ir.ui.view: theme_bootswatch.theme_cyborg
+DEL theme.ir.ui.view: theme_bootswatch.theme_cyborg_bs_variables
+DEL theme.ir.ui.view: theme_bootswatch.theme_flatly
+DEL theme.ir.ui.view: theme_bootswatch.theme_flatly_bs_variables
+DEL theme.ir.ui.view: theme_bootswatch.theme_journal
+DEL theme.ir.ui.view: theme_bootswatch.theme_journal_bs_variables
+DEL theme.ir.ui.view: theme_bootswatch.theme_simplex
+DEL theme.ir.ui.view: theme_bootswatch.theme_simplex_bs_variables
+DEL theme.ir.ui.view: theme_bootswatch.theme_slate
+DEL theme.ir.ui.view: theme_bootswatch.theme_slate_bs_variables
+DEL theme.ir.ui.view: theme_bootswatch.theme_spacelab
+DEL theme.ir.ui.view: theme_bootswatch.theme_spacelab_bs_variables
+DEL theme.ir.ui.view: theme_bootswatch.theme_united
+DEL theme.ir.ui.view: theme_bootswatch.theme_united_bs_variables
+ERROR: module not in list of installed modules:
+---Models in module 'web_diagram'---
+---Fields in module 'web_diagram'---
+---XML records in module 'web_diagram'---
+DEL ir.ui.view: web_diagram.assets_backend
+DEL ir.ui.view: web_diagram.qunit_suite
+ERROR: module not in list of installed modules:
+---Models in module 'website_gengo'---
+---Fields in module 'website_gengo'---
+---XML records in module 'website_gengo'---
+DEL ir.ui.view: website_gengo.gengo_assets_editor

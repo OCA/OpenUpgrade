@@ -1,0 +1,37 @@
+---Models in module 'website_event_track_exhibitor'---
+---Fields in module 'website_event_track_exhibitor'---
+website_event_track_exhibitor / event.event              / exhibitor_menu (boolean)      : NEW isfunction: function, stored
+website_event_track_exhibitor / event.event              / exhibitor_menu_ids (one2many) : NEW relation: website.event.menu
+website_event_track_exhibitor / event.sponsor            / chat_room_id (many2one)       : NEW relation: chat.room
+website_event_track_exhibitor / event.sponsor            / hour_from (float)             : NEW hasdefault
+website_event_track_exhibitor / event.sponsor            / hour_to (float)               : NEW hasdefault
+website_event_track_exhibitor / event.sponsor            / is_exhibitor (boolean)        : NEW
+website_event_track_exhibitor / event.sponsor            / is_published (boolean)        : NEW hasdefault
+website_event_track_exhibitor / event.sponsor            / subtitle (char)               : NEW
+website_event_track_exhibitor / event.sponsor            / website_description (html)    : NEW isfunction: function, stored
+website_event_track_exhibitor / event.type               / exhibitor_menu (boolean)      : NEW isfunction: function, stored
+website_event_track_exhibitor / website.event.menu       / menu_type (False)             : NEW selection_keys: ['community', 'exhibitor', 'meeting_room', 'track', 'track_proposal'], mode: modify
+---XML records in module 'website_event_track_exhibitor'---
+NEW ir.actions.act_window: website_event_track.event_sponsor_action_from_event
+NEW ir.actions.act_window: website_event_track_exhibitor.event_sponsor_action
+NEW ir.model.access: website_event_track_exhibitor.chat_room_access_event_manager
+NEW ir.rule: website_event_track_exhibitor.event_sponsor_rule_share (noupdate)
+NEW ir.ui.view: website_event_track_exhibitor.assets_frontend
+NEW ir.ui.view: website_event_track_exhibitor.event_event_view_form
+NEW ir.ui.view: website_event_track_exhibitor.event_exhibitor_main
+NEW ir.ui.view: website_event_track_exhibitor.event_exhibitors
+NEW ir.ui.view: website_event_track_exhibitor.event_sponsor_edit_options
+NEW ir.ui.view: website_event_track_exhibitor.event_sponsor_view_form
+NEW ir.ui.view: website_event_track_exhibitor.event_sponsor_view_kanban
+NEW ir.ui.view: website_event_track_exhibitor.event_sponsor_view_search
+NEW ir.ui.view: website_event_track_exhibitor.event_sponsor_view_tree
+NEW ir.ui.view: website_event_track_exhibitor.event_type_view_form
+NEW ir.ui.view: website_event_track_exhibitor.exhibitor_aside
+NEW ir.ui.view: website_event_track_exhibitor.exhibitor_card
+NEW ir.ui.view: website_event_track_exhibitor.exhibitor_main
+NEW ir.ui.view: website_event_track_exhibitor.exhibitors_display_cards
+NEW ir.ui.view: website_event_track_exhibitor.exhibitors_main
+NEW ir.ui.view: website_event_track_exhibitor.exhibitors_search
+NEW ir.ui.view: website_event_track_exhibitor.exhibitors_topbar
+NEW ir.ui.view: website_event_track_exhibitor.exhibitors_topbar_country
+NEW ir.ui.view: website_event_track_exhibitor.exhibitors_topbar_sponsorship

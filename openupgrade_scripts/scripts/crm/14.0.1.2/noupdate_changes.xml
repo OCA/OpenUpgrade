@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="crm_activity_report_rule_multi_company" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="frequency_field_country_id" model="crm.lead.scoring.frequency.field">
+    <field name="field_id" ref="crm.field_crm_lead__country_id"/>
+  </record>
+  <record id="frequency_field_email_state" model="crm.lead.scoring.frequency.field">
+    <field name="field_id" ref="crm.field_crm_lead__email_state"/>
+  </record>
+  <record id="frequency_field_lang_id" model="crm.lead.scoring.frequency.field">
+    <field name="field_id" ref="crm.field_crm_lead__lang_id"/>
+  </record>
+  <record id="frequency_field_phone_state" model="crm.lead.scoring.frequency.field">
+    <field name="field_id" ref="crm.field_crm_lead__phone_state"/>
+  </record>
+  <record id="frequency_field_source_id" model="crm.lead.scoring.frequency.field">
+    <field name="field_id" ref="crm.field_crm_lead__source_id"/>
+  </record>
+  <record id="frequency_field_state_id" model="crm.lead.scoring.frequency.field">
+    <field name="field_id" ref="crm.field_crm_lead__state_id"/>
+  </record>
+  <record id="mt_lead_create" model="mail.message.subtype">
+    <field name="description">Lead/Opportunity created</field>
+  </record>
+  <record id="mt_salesteam_lead" model="mail.message.subtype">
+    <field name="parent_id" ref="mt_lead_create"/>
+  </record>
+  <record id="mt_salesteam_lead_lost" model="mail.message.subtype">
+    <field name="parent_id" ref="mt_lead_lost"/>
+  </record>
+  <record id="mt_salesteam_lead_restored" model="mail.message.subtype">
+    <field name="parent_id" ref="mt_lead_restored"/>
+  </record>
+  <record id="mt_salesteam_lead_stage" model="mail.message.subtype">
+    <field name="parent_id" ref="mt_lead_stage"/>
+  </record>
+  <record id="mt_salesteam_lead_won" model="mail.message.subtype">
+    <field name="parent_id" ref="mt_lead_won"/>
+  </record>
+  <record id="sales_team.team_sales_department" model="crm.team" forcecreate="False">
+    <field name="alias_name">info</field>
+    <field name="alias_user_id" ref="base.user_admin"/>
+  </record>
+</odoo>

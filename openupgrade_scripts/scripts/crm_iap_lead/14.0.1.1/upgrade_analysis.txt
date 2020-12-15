@@ -1,0 +1,9 @@
+---Models in module 'crm_iap_lead'---
+---Fields in module 'crm_iap_lead'---
+crm_iap_lead / crm.iap.lead.mining.request / tag_ids (many2many)           : relation is now 'crm.tag' ('crm.lead.tag') [nothing to do]
+crm_iap_lead / crm.iap.lead.mining.request / tag_ids (many2many)           : table is now 'crm_iap_lead_mining_request_crm_tag_rel' ('crm_iap_lead_mining_request_crm_lead_tag_rel')
+crm_iap_lead / crm.iap.lead.mining.request / team_id (many2one)            : now a function
+crm_iap_lead / crm.lead                 / reveal_id (char)              : module is now 'iap_crm' ('crm_iap_lead')
+---XML records in module 'crm_iap_lead'---
+NEW ir.ui.view: crm_iap_lead.enrich_company
+DEL ir.ui.view: crm_iap_lead.lead_message_template

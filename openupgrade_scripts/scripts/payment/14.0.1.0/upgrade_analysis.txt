@@ -1,0 +1,9 @@
+---Models in module 'payment'---
+---Fields in module 'payment'---
+---XML records in module 'payment'---
+NEW ir.model.access: payment.access_payment_acquirer_onboarding_wizard
+NEW ir.model.access: payment.access_payment_link_wizard
+NEW ir.rule: payment.payment_token_salesman_rule (noupdate)
+NEW ir.rule: payment.payment_transaction_billing_rule (noupdate)
+DEL ir.ui.view: payment.account_invoice_payment_acquirer_onboarding
+NEW payment.acquirer: payment.payment_acquirer_odoo_by_adyen (noupdate)

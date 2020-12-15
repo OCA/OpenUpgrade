@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="ir_rule_hr_contract_multi_company" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="mt_department_contract_pending" model="mail.message.subtype">
+    <field name="parent_id" ref="mt_contract_pending"/>
+  </record>
+</odoo>

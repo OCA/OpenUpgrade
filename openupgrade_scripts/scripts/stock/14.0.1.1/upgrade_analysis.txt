@@ -1,0 +1,118 @@
+---Models in module 'stock'---
+obsolete model stock.overprocessed.transfer [transient]
+obsolete model stock.picking.responsible [transient]
+new model report.stock.report_product_product_replenishment [abstract]
+new model report.stock.report_product_template_replenishment [abstract]
+new model stock.backorder.confirmation.line [transient]
+new model stock.immediate.transfer.line [transient]
+new model stock.orderpoint.snooze [transient]
+---Fields in module 'stock'---
+stock        / procurement.group        / stock_move_ids (one2many)     : NEW relation: stock.move
+stock        / stock.inventory          / activity_ids (one2many)       : NEW relation: mail.activity
+stock        / stock.inventory          / exhausted (boolean)           : NEW
+stock        / stock.inventory          / message_follower_ids (one2many): NEW relation: mail.followers
+stock        / stock.inventory          / message_ids (one2many)        : NEW relation: mail.message
+stock        / stock.inventory          / message_main_attachment_id (many2one): NEW relation: ir.attachment
+stock        / stock.inventory          / website_message_ids (one2many): NEW relation: mail.message
+stock        / stock.move               / date_deadline (datetime)      : NEW
+stock        / stock.move               / date_expected (datetime)      : DEL required, req_default: function
+stock        / stock.move               / delay_alert (boolean)         : DEL
+stock        / stock.move               / delay_alert_date (datetime)   : NEW isfunction: function, stored
+stock        / stock.move               / orderpoint_id (many2one)      : NEW relation: stock.warehouse.orderpoint
+stock        / stock.move               / priority (selection)          : now a function
+stock        / stock.move               / priority (selection)          : selection_keys is now '['0', '1']' ('['0', '1', '2', '3']')
+stock        / stock.move               / propagate_date (boolean)      : DEL
+stock        / stock.move               / propagate_date_minimum_delta (integer): DEL
+stock        / stock.picking            / date_deadline (datetime)      : NEW isfunction: function, stored
+stock        / stock.picking            / has_deadline_issue (boolean)  : NEW hasdefault, isfunction: function, stored
+stock        / stock.picking            / priority (selection)          : not a function anymore
+stock        / stock.picking            / priority (selection)          : selection_keys is now '['0', '1']' ('['0', '1', '2', '3']')
+stock        / stock.picking            / signature (binary)            : NEW attachment: True
+stock        / stock.rule               / delay_alert (boolean)         : DEL
+stock        / stock.rule               / propagate_date (boolean)      : DEL
+stock        / stock.rule               / propagate_date_minimum_delta (integer): DEL
+stock        / stock.warehouse.orderpoint / lead_days (integer)           : DEL
+stock        / stock.warehouse.orderpoint / lead_type (selection)         : DEL required, selection_keys: ['net', 'supplier'], req_default: function
+stock        / stock.warehouse.orderpoint / product_category_id (many2one): NEW relation: product.category, isrelated: related, stored
+stock        / stock.warehouse.orderpoint / qty_to_order (float)          : NEW isfunction: function, stored
+stock        / stock.warehouse.orderpoint / route_id (many2one)           : NEW relation: stock.location.route
+stock        / stock.warehouse.orderpoint / snoozed_until (date)          : NEW
+stock        / stock.warehouse.orderpoint / trigger (selection)           : NEW required, selection_keys: ['auto', 'manual'], req_default: function, hasdefault
+---XML records in module 'stock'---
+NEW digest.tip: stock.digest_tip_stock_0
+NEW ir.actions.act_window: stock.action_orderpoint
+NEW ir.actions.act_window: stock.action_orderpoint_replenish
+NEW ir.actions.act_window: stock.action_orderpoint_snooze
+NEW ir.actions.act_window: stock.action_prod_inv_location_form
+ir.actions.act_window: stock.report_stock_quantity_action (deleted domain)
+DEL ir.actions.act_window: stock.act_product_stock_move_open
+DEL ir.actions.act_window: stock.action_orderpoint_form
+DEL ir.actions.act_window: stock.action_receipt_picking_move
+DEL ir.actions.act_window: stock.product_open_orderpoint
+DEL ir.actions.act_window: stock.product_template_open_quants
+NEW ir.actions.client: stock.stock_replenishment_product_product_action
+NEW ir.actions.report: stock.stock_replenishment_report_product_product_action
+NEW ir.actions.report: stock.stock_replenishment_report_product_template_action
+NEW ir.actions.server: stock.action_open_routes
+NEW ir.actions.server: stock.action_replenishment
+NEW ir.actions.server: stock.action_unreserve_picking
+NEW ir.actions.server: stock.action_validate_picking
+NEW ir.model.access: stock.access_product_replenish
+NEW ir.model.access: stock.access_stock_assign_serial
+NEW ir.model.access: stock.access_stock_backorder_confirmation
+NEW ir.model.access: stock.access_stock_backorder_confirmation_line
+NEW ir.model.access: stock.access_stock_change_product_qty
+NEW ir.model.access: stock.access_stock_immediate_transfer
+NEW ir.model.access: stock.access_stock_immediate_transfer_line
+NEW ir.model.access: stock.access_stock_location_partner_manager
+NEW ir.model.access: stock.access_stock_orderpoint_snooze
+NEW ir.model.access: stock.access_stock_package_destination
+NEW ir.model.access: stock.access_stock_quantity_history
+NEW ir.model.access: stock.access_stock_return_picking
+NEW ir.model.access: stock.access_stock_return_picking_line
+NEW ir.model.access: stock.access_stock_rules_report
+NEW ir.model.access: stock.access_stock_scheduler_compute
+NEW ir.model.access: stock.access_stock_traceability_report
+NEW ir.model.access: stock.access_stock_track_confirmation
+NEW ir.model.access: stock.access_stock_track_line
+NEW ir.model.access: stock.access_stock_warn_insufficient_qty_scrap
+DEL ir.model.access: stock.access_ir_property_group_stock_manager
+DEL ir.model.access: stock.access_stock_location__partner_manager
+DEL ir.model.access: stock.access_stock_location_stock_manager
+DEL ir.model.access: stock.access_stock_move_line_portal
+DEL ir.model.access: stock.access_stock_move_portal
+DEL ir.model.access: stock.access_stock_picking_portal [renamed to sale_stock module]
+DEL ir.model.access: stock.access_stock_picking_type_portal
+DEL ir.model.access: stock.access_stock_rule
+DEL ir.model.access: stock.access_stock_rule_manager
+DEL ir.model.access: stock.access_stock_warehouse_orderpoint_portal
+NEW ir.module.category: base.module_category_inventory_inventory (noupdate)
+DEL ir.module.category: base.module_category_operations_inventory (noupdate)
+NEW ir.ui.menu: stock.menu_reordering_rules_replenish
+NEW ir.ui.view: stock.assets_common_replenishment_report
+NEW ir.ui.view: stock.package_level_form_edit_view
+NEW ir.ui.view: stock.report_generic_barcode
+NEW ir.ui.view: stock.report_product_product_replenishment
+NEW ir.ui.view: stock.report_product_template_replenishment
+NEW ir.ui.view: stock.report_replenishment_header
+NEW ir.ui.view: stock.stock_inventory_line_tree_no_product_create
+NEW ir.ui.view: stock.stock_reorder_report_search
+NEW ir.ui.view: stock.stock_report_delivery_aggregated_move_lines
+NEW ir.ui.view: stock.stock_report_delivery_has_serial_move_line
+NEW ir.ui.view: stock.stock_report_delivery_no_package_section_line
+NEW ir.ui.view: stock.stock_report_delivery_package_section_line
+NEW ir.ui.view: stock.view_stock_orderpoint_snooze
+NEW ir.ui.view: stock.view_stock_quant_form_editable
+NEW ir.ui.view: stock.view_warehouse_orderpoint_tree_editable
+NEW ir.ui.view: stock.view_warehouse_orderpoint_tree_editable_config
+DEL ir.ui.view: stock.stock_inventory_line_tree2
+DEL ir.ui.view: stock.stock_move_tree
+DEL ir.ui.view: stock.stock_move_view_kanban
+DEL ir.ui.view: stock.stock_warehouse_view_form_editable
+DEL ir.ui.view: stock.stock_warehouse_view_tree_editable
+DEL ir.ui.view: stock.view_move_picking_tree
+DEL ir.ui.view: stock.view_move_tree_receipt_picking_board
+DEL ir.ui.view: stock.view_overprocessed_transfer
+DEL ir.ui.view: stock.view_stock_move_kanban
+DEL ir.ui.view: stock.view_warehouse_orderpoint_tree
+NEW res.groups: stock.group_stock_sign_delivery

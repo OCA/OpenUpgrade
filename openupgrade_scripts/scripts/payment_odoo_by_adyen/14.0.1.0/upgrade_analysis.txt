@@ -1,0 +1,9 @@
+---Models in module 'payment_odoo_by_adyen'---
+---Fields in module 'payment_odoo_by_adyen'---
+payment_odoo_by_adyen / payment.acquirer         / odoo_adyen_payout_id (many2one): NEW relation: adyen.payout
+payment_odoo_by_adyen / payment.acquirer         / provider (False)              : previously in module payment_test
+payment_odoo_by_adyen / payment.token            / odoo_adyen_payment_method_type (char): NEW
+---XML records in module 'payment_odoo_by_adyen'---
+NEW ir.ui.view: payment_odoo_by_adyen.acquirer_form_odoo_by_adyen
+NEW ir.ui.view: payment_odoo_by_adyen.odoo_by_adyen_form (noupdate)
+NEW payment.acquirer: payment.payment_acquirer_odoo_by_adyen (noupdate)

@@ -1,0 +1,23 @@
+---Models in module 'hr'---
+---Fields in module 'hr'---
+hr           / hr.employee              / address_id (many2one)         : now a function
+hr           / hr.employee              / certificate (selection)       : selection_keys is now '['bachelor', 'doctor', 'graduate', 'master', 'other']' ('['bachelor', 'master', 'other']')
+hr           / hr.employee              / coach_id (many2one)           : now a function
+hr           / hr.employee              / company_id (many2one)         : now required, req_default: function
+hr           / hr.employee              / departure_date (date)         : NEW
+hr           / hr.employee              / job_title (char)              : now a function
+hr           / hr.employee              / parent_id (many2one)          : now a function
+hr           / hr.employee              / work_phone (char)             : now a function
+hr           / hr.plan.activity.type    / summary (char)                : now a function
+hr           / res.users                / barcode (char)                : module is now 'base' ('hr')
+---XML records in module 'hr'---
+NEW ir.actions.act_window: hr.hr_department_kanban_action
+NEW ir.actions.act_window: hr.hr_department_tree_action
+DEL ir.actions.act_window: hr.open_module_tree_department
+NEW ir.model.access: hr.access_hr_departure_wizard
+NEW ir.model.access: hr.access_hr_plan_wizard
+DEL ir.model.access: hr.access_ir_property_hr_user
+NEW ir.ui.menu: hr.menu_hr_department_kanban
+NEW ir.ui.view: hr.qunit_suite
+DEL mail.template: hr.mail_template_data_unknown_employee_email_address (noupdate)
+NEW res.partner: hr.res_partner_admin_private_address (noupdate)

@@ -1,0 +1,16 @@
+---Models in module 'im_livechat'---
+---Fields in module 'im_livechat'---
+im_livechat  / digest.digest            / kpi_livechat_conversations (boolean): NEW
+im_livechat  / digest.digest            / kpi_livechat_rating (boolean) : NEW
+im_livechat  / digest.digest            / kpi_livechat_response (boolean): NEW
+im_livechat  / im_livechat.channel      / button_background_color (char): NEW hasdefault
+im_livechat  / im_livechat.channel      / button_text_color (char)      : NEW hasdefault
+im_livechat  / im_livechat.channel      / header_background_color (char): NEW hasdefault
+im_livechat  / im_livechat.channel      / title_color (char)            : NEW hasdefault
+im_livechat  / mail.channel             / livechat_active (boolean)     : previously in module website_livechat
+---XML records in module 'im_livechat'---
+NEW digest.digest: digest.digest_digest_default (noupdate)
+NEW digest.tip: im_livechat.digest_tip_im_livechat_0
+NEW ir.actions.act_window: im_livechat.im_livechat_report_channel_time_to_answer_action
+ir.rule: im_livechat.im_livechat_rule_manager_read_all_mail_channel (noupdate) (noupdate switched)
+NEW ir.ui.view: im_livechat.digest_digest_view_form_inherit

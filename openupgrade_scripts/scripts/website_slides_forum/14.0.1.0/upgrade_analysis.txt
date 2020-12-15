@@ -1,0 +1,12 @@
+---Models in module 'website_slides_forum'---
+---Fields in module 'website_slides_forum'---
+website_slides_forum / forum.forum              / slide_channel_id (many2one)   : is now stored
+---XML records in module 'website_slides_forum'---
+NEW ir.model.access: website_slides_forum.access_forum_forum_website_slides_officer
+DEL ir.model.access: website_slides_forum.access_forum_forum_website_publisher
+NEW ir.rule: website_slides_forum.website_slides_forum_public (noupdate)
+NEW ir.rule: website_slides_forum.website_slides_forum_public_post (noupdate)
+NEW ir.rule: website_slides_forum.website_slides_forum_public_tag (noupdate)
+NEW ir.rule: website_slides_forum.website_slides_forum_website_slides_officer (noupdate)
+NEW ir.rule: website_slides_forum.website_slides_forum_website_slides_officer_post (noupdate)
+NEW ir.rule: website_slides_forum.website_slides_forum_website_slides_officer_tag (noupdate)

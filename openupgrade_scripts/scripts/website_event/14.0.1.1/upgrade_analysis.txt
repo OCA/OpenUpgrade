@@ -1,0 +1,56 @@
+---Models in module 'website_event'---
+model website.event.menu (moved from website_event_track)
+---Fields in module 'website_event'---
+website_event / event.event              / community_menu (boolean)      : NEW isfunction: function, stored
+website_event / event.event              / community_menu_ids (one2many) : NEW relation: website.event.menu
+website_event / event.event              / menu_register_cta (boolean)   : NEW isfunction: function, stored
+website_event / event.event              / seo_name (char)               : NEW
+website_event / event.event              / website_menu (boolean)        : now a function
+website_event / event.registration       / visitor_id (many2one)         : NEW relation: website.visitor
+website_event / event.type               / community_menu (boolean)      : NEW isfunction: function, stored
+website_event / event.type               / menu_register_cta (boolean)   : NEW isfunction: function, stored
+website_event / website.event.menu       / __last_update (datetime)      : previously in module website_event_track
+website_event / website.event.menu       / display_name (char)           : previously in module website_event_track
+website_event / website.event.menu       / event_id (many2one)           : previously in module website_event_track
+website_event / website.event.menu       / menu_id (many2one)            : previously in module website_event_track
+website_event / website.event.menu       / menu_type (selection)         : previously in module website_event_track
+website_event / website.visitor          / event_registration_ids (one2many): NEW relation: event.registration
+website_event / website.visitor          / parent_id (many2one)          : NEW relation: website.visitor
+---XML records in module 'website_event'---
+NEW ir.actions.act_window: website_event.event_registration_action_from_visitor
+NEW ir.actions.act_window: website_event.website_event_menu_action
+NEW ir.model.access: website_event.access_event_category_public
+NEW ir.model.access: website_event.access_event_event_ticket_portal
+NEW ir.model.access: website_event.access_event_event_ticket_public [renamed from website_event_sale module]
+NEW ir.model.access: website_event.access_event_tag_public
+NEW ir.model.access: website_event.access_website_event_menu_manager [renamed from website_event_track module]
+NEW ir.model.access: website_event.access_website_event_menu_public [renamed from website_event_track module]
+NEW ir.model.access: website_event.website_visitor_access_event_user
+ir.rule: website_event.event_event_public (noupdate) (noupdate switched)
+NEW ir.rule: website_event.ir_rule_event_event_ticket_public (noupdate)
+NEW ir.rule: website_event.ir_rule_event_tag_public (noupdate)
+NEW ir.ui.menu: website_event.menu_website_event_menu
+NEW ir.ui.view: website_event.assets_common
+NEW ir.ui.view: website_event.display_timer_widget
+NEW ir.ui.view: website_event.event_category_tag
+NEW ir.ui.view: website_event.event_event_view_form
+NEW ir.ui.view: website_event.event_event_view_list
+NEW ir.ui.view: website_event.event_registration_view_form
+NEW ir.ui.view: website_event.event_registration_view_tree
+NEW ir.ui.view: website_event.event_type_view_form
+NEW ir.ui.view: website_event.fold_register_details
+NEW ir.ui.view: website_event.searched_tags
+NEW ir.ui.view: website_event.website_event_menu_view_form
+NEW ir.ui.view: website_event.website_event_menu_view_search
+NEW ir.ui.view: website_event.website_event_menu_view_tree
+NEW ir.ui.view: website_event.website_visitor_view_form
+NEW ir.ui.view: website_event.website_visitor_view_kanban
+NEW ir.ui.view: website_event.website_visitor_view_search
+NEW ir.ui.view: website_event.website_visitor_view_tree
+DEL ir.ui.view: website_event.event_category
+DEL ir.ui.view: website_event.event_event_view_form_inherit_website
+DEL ir.ui.view: website_event.event_event_view_list_inherit_website
+DEL ir.ui.view: website_event.event_type_view_form_inherit_website
+DEL ir.ui.view: website_event.index_sidebar_categories
+DEL ir.ui.view: website_event.remove_external_snippets
+DEL ir.ui.view: website_event.ticket

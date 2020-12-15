@@ -1,0 +1,65 @@
+---Models in module 'mail'---
+obsolete model email_template.preview [transient]
+obsolete model mail.address.mixin [abstract]
+new model mail.blacklist.remove [transient]
+new model mail.render.mixin [abstract]
+new model mail.template.preview [transient]
+---Fields in module 'mail'---
+mail         / ir.ui.view               / type (False)                  : selection_keys is now '['activity', 'calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']' ('['activity', 'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']')
+mail         / mail.activity            / request_partner_id (many2one) : NEW relation: res.partner
+mail         / mail.alias               / alias_bounced_content (html)  : NEW
+mail         / mail.channel             / active (boolean)              : NEW hasdefault
+mail         / mail.mail                / description (char)            : previously in module website_mail
+mail         / mail.message             / description (char)            : previously in module website_mail
+mail         / mail.message             / is_internal (boolean)         : NEW
+mail         / mail.template            / copyvalue (char)              : not stored anymore
+mail         / mail.template            / model_object_field (many2one) : not stored anymore
+mail         / mail.template            / null_value (char)             : not stored anymore
+mail         / mail.template            / sub_model_object_field (many2one): not stored anymore
+mail         / mail.template            / sub_object (many2one)         : not stored anymore
+mail         / mail.template            / user_signature (boolean)      : DEL
+mail         / mail.tracking.value      / field (char)                  : relation is now 'ir.model.fields' ('False') [nothing to do]
+mail         / mail.tracking.value      / field (char)                  : type is now 'many2one' ('char')
+mail         / res.users                / alias_id (many2one)           : DEL relation: mail.alias
+mail         / res.users                / out_of_office_message (char)  : DEL
+---XML records in module 'mail'---
+NEW ir.actions.act_window: mail.mail_notification_action
+NEW ir.actions.act_window: mail.mail_template_preview_action
+DEL ir.actions.act_window: mail.wizard_email_template_preview
+NEW ir.model.access: mail.access_mail_blacklist_remove_system
+NEW ir.model.access: mail.access_mail_channel_partner_user
+NEW ir.model.access: mail.access_mail_compose_message
+NEW ir.model.access: mail.access_mail_compose_message_portal
+NEW ir.model.access: mail.access_mail_resend_cancel
+NEW ir.model.access: mail.access_mail_resend_message
+NEW ir.model.access: mail.access_mail_resend_partner
+NEW ir.model.access: mail.access_mail_template_preview
+NEW ir.model.access: mail.access_mail_wizard_invite
+NEW ir.model.access: mail.ir_actions_report_access_user
+DEL ir.model.access: mail.access mail_channel_partner_user
+DEL ir.model.access: mail.access_mail_followers_portal
+DEL ir.model.access: mail.access_mail_thread_all
+NEW ir.rule: mail.ir_rule_mail_channel_partner_group_user (noupdate)
+ir.rule: mail.mail_channel_rule (noupdate) (noupdate switched)
+NEW ir.rule: mail.mail_compose_message_rule (noupdate)
+DEL ir.rule: mail.mail_followers_read_write_own (noupdate)
+NEW ir.ui.menu: base.menu_email
+NEW ir.ui.menu: mail.mail_menu_technical
+NEW ir.ui.menu: mail.mail_notification_menu
+NEW ir.ui.view: mail.assets_backend_prod_only
+NEW ir.ui.view: mail.assets_tests
+NEW ir.ui.view: mail.mail_blacklist_remove_view_form
+NEW ir.ui.view: mail.mail_bounce_alias_security
+NEW ir.ui.view: mail.mail_message_view_form
+NEW ir.ui.view: mail.mail_notification_view_form
+NEW ir.ui.view: mail.mail_notification_view_tree
+NEW ir.ui.view: mail.mail_template_preview_view_form
+NEW ir.ui.view: mail.qunit_mobile_suite
+NEW ir.ui.view: mail.res_partner_view_kanban_inherit_mail
+NEW ir.ui.view: mail.res_partner_view_tree_inherit_mail
+NEW ir.ui.view: mail.tests_assets
+DEL ir.ui.view: mail.email_template_preview_form
+DEL ir.ui.view: mail.js_test_assets
+DEL ir.ui.view: mail.res_partner_view_form_short
+DEL ir.ui.view: mail.view_message_form
+NEW res.partner: base.partner_root [potentially moved from mail_bot module] (noupdate)

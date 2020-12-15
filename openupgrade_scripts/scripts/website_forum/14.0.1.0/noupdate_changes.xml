@@ -1,0 +1,380 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="challenge_chief_commentator" model="gamification.challenge">
+    <field name="reward_id" ref="badge_p_4"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_commentator" model="gamification.challenge">
+    <field name="reward_id" ref="badge_p_2"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_configure_profile" model="gamification.challenge">
+    <field name="reward_id" ref="badge_p_1"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_critic" model="gamification.challenge">
+    <field name="reward_id" ref="badge_5"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_disciplined" model="gamification.challenge">
+    <field name="reward_id" ref="badge_6"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_editor" model="gamification.challenge">
+    <field name="reward_id" ref="badge_7"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_enlightened" model="gamification.challenge">
+    <field name="reward_id" ref="badge_a_5"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_famous_question" model="gamification.challenge">
+    <field name="reward_id" ref="badge_q_3"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_favorite_question_1" model="gamification.challenge">
+    <field name="reward_id" ref="badge_q_4"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_favorite_question_5" model="gamification.challenge">
+    <field name="reward_id" ref="badge_q_5"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_good_answer" model="gamification.challenge">
+    <field name="reward_id" ref="badge_a_3"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_good_question" model="gamification.challenge">
+    <field name="reward_id" ref="badge_q_9"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_great_answer" model="gamification.challenge">
+    <field name="reward_id" ref="badge_a_4"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_great_question" model="gamification.challenge">
+    <field name="reward_id" ref="badge_q_10"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_guru" model="gamification.challenge">
+    <field name="reward_id" ref="badge_a_6"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_nice_answer" model="gamification.challenge">
+    <field name="reward_id" ref="badge_a_2"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_nice_question" model="gamification.challenge">
+    <field name="reward_id" ref="badge_q_8"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_notable_question" model="gamification.challenge">
+    <field name="reward_id" ref="badge_q_2"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_peer_pressure" model="gamification.challenge">
+    <field name="reward_id" ref="badge_23"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_popular_question" model="gamification.challenge">
+    <field name="reward_id" ref="badge_q_1"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_pundit" model="gamification.challenge">
+    <field name="reward_id" ref="badge_25"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_scholar" model="gamification.challenge">
+    <field name="reward_id" ref="badge_26"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_self_learner" model="gamification.challenge">
+    <field name="reward_id" ref="badge_a_8"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_stellar_question_25" model="gamification.challenge">
+    <field name="reward_id" ref="badge_q_6"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_student" model="gamification.challenge">
+    <field name="reward_id" ref="badge_q_7"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_supporter" model="gamification.challenge">
+    <field name="reward_id" ref="badge_31"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_taxonomist" model="gamification.challenge">
+    <field name="reward_id" ref="badge_32"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="challenge_teacher" model="gamification.challenge">
+    <field name="reward_id" ref="badge_a_1"/>
+    <field name="challenge_category">forum</field>
+  </record>
+  <record id="definition_commentator" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="mail.field_mail_message__author_id"/>
+    <field name="model_id" ref="mail.model_mail_message"/>
+  </record>
+  <record id="definition_configure_profile" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="base.field_res_users__id"/>
+    <field name="model_id" ref="base.model_res_users"/>
+  </record>
+  <record id="definition_critic" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post_vote__user_id"/>
+    <field name="model_id" ref="website_forum.model_forum_post_vote"/>
+  </record>
+  <record id="definition_disciplined" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_editor" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="mail.field_mail_message__author_id"/>
+    <field name="model_id" ref="mail.model_mail_message"/>
+  </record>
+  <record id="definition_enlightened" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_famous_question" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_favorite_question_1" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_favorite_question_5" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_good_answer" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_good_question" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_great_answer" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_great_question" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_guru" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_nice_answer" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_nice_question" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_notable_question" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_peer_pressure" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_popular_question" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_pundit" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_scholar" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_self_learner" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_stellar_question_25" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_student" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="definition_supporter" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post_vote__user_id"/>
+    <field name="model_id" ref="website_forum.model_forum_post_vote"/>
+  </record>
+  <record id="definition_taxonomist" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_tag__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_tag"/>
+  </record>
+  <record id="definition_teacher" model="gamification.goal.definition">
+    <field name="batch_distinctive_field" ref="website_forum.field_forum_post__create_uid"/>
+    <field name="model_id" ref="website_forum.model_forum_post"/>
+  </record>
+  <record id="line_chief_commentator" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_chief_commentator"/>
+    <field name="definition_id" ref="definition_commentator"/>
+  </record>
+  <record id="line_commentator" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_commentator"/>
+    <field name="definition_id" ref="definition_commentator"/>
+  </record>
+  <record id="line_configure_profile" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_configure_profile"/>
+    <field name="definition_id" ref="definition_configure_profile"/>
+  </record>
+  <record id="line_critic" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_critic"/>
+    <field name="definition_id" ref="definition_critic"/>
+  </record>
+  <record id="line_disciplined" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_disciplined"/>
+    <field name="definition_id" ref="definition_disciplined"/>
+  </record>
+  <record id="line_editor" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_editor"/>
+    <field name="definition_id" ref="definition_editor"/>
+  </record>
+  <record id="line_enlightened" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_enlightened"/>
+    <field name="definition_id" ref="definition_enlightened"/>
+  </record>
+  <record id="line_famous_question" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_famous_question"/>
+    <field name="definition_id" ref="definition_famous_question"/>
+  </record>
+  <record id="line_favorite_question_1" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_favorite_question_1"/>
+    <field name="definition_id" ref="definition_favorite_question_1"/>
+  </record>
+  <record id="line_favorite_question_5" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_favorite_question_5"/>
+    <field name="definition_id" ref="definition_favorite_question_5"/>
+  </record>
+  <record id="line_good_answer" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_good_answer"/>
+    <field name="definition_id" ref="definition_good_answer"/>
+  </record>
+  <record id="line_good_question" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_good_question"/>
+    <field name="definition_id" ref="definition_good_question"/>
+  </record>
+  <record id="line_great_answer" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_great_answer"/>
+    <field name="definition_id" ref="definition_great_answer"/>
+  </record>
+  <record id="line_great_question" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_great_question"/>
+    <field name="definition_id" ref="definition_great_question"/>
+  </record>
+  <record id="line_guru" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_guru"/>
+    <field name="definition_id" ref="definition_guru"/>
+  </record>
+  <record id="line_nice_answer" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_nice_answer"/>
+    <field name="definition_id" ref="definition_nice_answer"/>
+  </record>
+  <record id="line_nice_question" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_nice_question"/>
+    <field name="definition_id" ref="definition_nice_question"/>
+  </record>
+  <record id="line_notable_question" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_notable_question"/>
+    <field name="definition_id" ref="definition_notable_question"/>
+  </record>
+  <record id="line_peer_pressure" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_peer_pressure"/>
+    <field name="definition_id" ref="definition_peer_pressure"/>
+  </record>
+  <record id="line_popular_question" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_popular_question"/>
+    <field name="definition_id" ref="definition_popular_question"/>
+  </record>
+  <record id="line_pundit" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_pundit"/>
+    <field name="definition_id" ref="definition_pundit"/>
+  </record>
+  <record id="line_scholar" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_scholar"/>
+    <field name="definition_id" ref="definition_scholar"/>
+  </record>
+  <record id="line_self_learner" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_self_learner"/>
+    <field name="definition_id" ref="definition_self_learner"/>
+  </record>
+  <record id="line_stellar_question_25" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_stellar_question_25"/>
+    <field name="definition_id" ref="definition_stellar_question_25"/>
+  </record>
+  <record id="line_student" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_student"/>
+    <field name="definition_id" ref="definition_student"/>
+  </record>
+  <record id="line_supporter" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_supporter"/>
+    <field name="definition_id" ref="definition_supporter"/>
+  </record>
+  <record id="line_taxonomist" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_taxonomist"/>
+    <field name="definition_id" ref="definition_taxonomist"/>
+  </record>
+  <record id="line_teacher" model="gamification.challenge.line">
+    <field name="challenge_id" ref="challenge_teacher"/>
+    <field name="definition_id" ref="definition_teacher"/>
+  </record>
+  <record id="mt_forum_answer_new" model="mail.message.subtype">
+    <field name="parent_id" ref="mt_answer_new"/>
+  </record>
+  <record id="mt_forum_question_new" model="mail.message.subtype">
+    <field name="parent_id" ref="mt_question_new"/>
+  </record>
+  <record id="reason_1" model="forum.post.reason">
+    <field name="name">Duplicate post</field>
+  </record>
+  <record id="reason_11" model="forum.post.reason">
+    <field name="name">Insulting and offensive language</field>
+  </record>
+  <record id="reason_12" model="forum.post.reason">
+    <field name="name">Violent language</field>
+  </record>
+  <record id="reason_13" model="forum.post.reason">
+    <field name="name">Inappropriate and unacceptable statements</field>
+  </record>
+  <record id="reason_14" model="forum.post.reason">
+    <field name="name">Threatening language</field>
+  </record>
+  <record id="reason_15" model="forum.post.reason">
+    <field name="name">Racist and hate speech</field>
+  </record>
+  <record id="reason_2" model="forum.post.reason">
+    <field name="name">Off-topic or not relevant</field>
+  </record>
+  <record id="reason_3" model="forum.post.reason">
+    <field name="name">Too subjective and argumentative</field>
+  </record>
+  <record id="reason_4" model="forum.post.reason">
+    <field name="name">Not a real post</field>
+  </record>
+  <record id="reason_6" model="forum.post.reason">
+    <field name="name">Not relevant or out dated</field>
+  </record>
+  <record id="reason_7" model="forum.post.reason">
+    <field name="name">Contains offensive or malicious remarks</field>
+  </record>
+  <record id="reason_8" model="forum.post.reason">
+    <field name="name">Spam or advertising</field>
+  </record>
+  <record id="reason_9" model="forum.post.reason">
+    <field name="name">Too localized</field>
+  </record>
+</odoo>

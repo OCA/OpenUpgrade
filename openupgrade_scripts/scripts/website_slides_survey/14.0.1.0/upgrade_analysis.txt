@@ -1,0 +1,16 @@
+---Models in module 'website_slides_survey'---
+---Fields in module 'website_slides_survey'---
+website_slides_survey / slide.slide.partner      / survey_quizz_passed (boolean) : DEL
+website_slides_survey / slide.slide.partner      / survey_scoring_success (boolean): NEW isfunction: function, stored
+website_slides_survey / survey.survey            / slide_ids (one2many)          : NEW relation: slide.slide
+---XML records in module 'website_slides_survey'---
+NEW ir.model.access: website_slides_survey.access_survey_question_answer_slides_officer
+NEW ir.model.access: website_slides_survey.access_survey_question_slides_officer
+NEW ir.model.access: website_slides_survey.access_survey_slides_officer
+NEW ir.model.access: website_slides_survey.access_survey_user_input_line_slides_officer
+NEW ir.model.access: website_slides_survey.access_survey_user_input_slides_officer
+NEW ir.ui.view: website_slides_survey.badge_content
+NEW ir.ui.view: website_slides_survey.course_slides_list_inherit_survey
+NEW ir.ui.view: website_slides_survey.survey_fill_form_done_inherit_website_slides
+NEW ir.ui.view: website_slides_survey.survey_survey_view_form
+DEL ir.ui.view: website_slides_survey.survey_templates_inherit_website_slides

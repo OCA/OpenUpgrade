@@ -1,0 +1,6 @@
+---Models in module 'website_membership'---
+---Fields in module 'website_membership'---
+---XML records in module 'website_membership'---
+ir.rule: website_membership.membership_membership_line_public (noupdate) (noupdate switched)
+ir.rule: website_membership.membership_product_product_public (noupdate) (noupdate switched)
+DEL website.menu: website_membership.menu_members (noupdate)
