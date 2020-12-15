@@ -39,11 +39,11 @@
   <record id="jp" model="res.country">
     <field name="state_required">1</field>
   </record>
-  <record id="main_partner" model="res.partner">
+  <!-- record id="main_partner" model="res.partner">
     <field name="company_id" eval="None"/>
     <field name="email"/>
     <field name="website"/>
-  </record>
+  </record -->
   <record id="mk" model="res.country">
     <field name="name">North Macedonia</field>
   </record>
@@ -76,9 +76,9 @@
     <field name="state_required">1</field>
     <field name="vat_label">EIN</field>
   </record>
-  <record id="user_admin" model="res.users">
+  <!-- record id="user_admin" model="res.users">
     <field name="image_1920" type="base64" file="base/static/img/avatar_grey.png"/>
-  </record>
+  </record -->
   <record id="vn" model="res.country">
     <field name="zip_required">0</field>
   </record>
