@@ -269,6 +269,7 @@ def migration_invoice_moves(env):
                 AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
                 AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
                     OR ail.account_analytic_id = aml.analytic_account_id)
+                AND aml.tax_line_id IS NULL
                 AND aml.id NOT IN %s
             RETURNING aml.id""", (aml_ids, ),
         )
@@ -288,6 +289,7 @@ def migration_invoice_moves(env):
                 AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
                 AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
                     OR ail.account_analytic_id = aml.analytic_account_id)
+                AND aml.tax_line_id IS NULL
             RETURNING aml.id""",
         )
     aml_ids2 = tuple(x[0] for x in env.cr.fetchall())
@@ -305,6 +307,7 @@ def migration_invoice_moves(env):
                 AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
                 AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
                     OR ail.account_analytic_id = aml.analytic_account_id)
+                AND aml.tax_line_id IS NULL
                 AND aml.id IN %s""", (aml_ids2, ),
         )
         ail_ids = tuple(x[0] for x in env.cr.fetchall())
