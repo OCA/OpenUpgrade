@@ -38,9 +38,11 @@
   <record id="action_open_settings" model="ir.actions.act_window">
     <field name="context" eval="{'module': 'general_settings', 'bin_size': False}"/>
   </record>
+  <!--
   <record id="base.group_user" model="res.groups">
     <field name="implied_ids" eval="[(4, ref('account.group_show_line_subtotals_tax_excluded'))]"/>
   </record>
+  -->
   <record id="data_unaffected_earnings" model="account.account.type">
     <field name="internal_group">equity</field>
   </record>
