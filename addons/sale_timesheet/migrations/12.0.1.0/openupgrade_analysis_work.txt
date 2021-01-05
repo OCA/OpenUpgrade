@@ -19,8 +19,10 @@ sale_timesheet / project.sale.line.employee.map / project_id (many2one)         
 sale_timesheet / project.sale.line.employee.map / sale_line_id (many2one)       : NEW relation: sale.order.line, required: required
 sale_timesheet / project.task             / billable_type (selection)     : NEW selection_keys: ['employee_rate', 'no', 'task_rate']
 sale_timesheet / project.task             / sale_order_id (many2one)      : NEW relation: sale.order
-sale_timesheet / sale.order.line          / project_id (many2one)         : NEW relation: project.project
 # NOTHING TO DO: new features
+
+sale_timesheet / sale.order.line          / project_id (many2one)         : NEW relation: project.project
+# DONE: post-migration: Fill this with the project of the linked task (if any)
 
 sale_timesheet / sale.order.line          / qty_delivered_method (False)  : NEW selection_keys: ['analytic', 'manual', 'stock_move', 'timesheet'], mode: modify
 # NOTHING TO DO: Already filled in sale post-migration script
