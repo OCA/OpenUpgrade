@@ -27,6 +27,7 @@ def fill_sol_project(env):
         """,
     )
 
+
 @openupgrade.migrate()
 def migrate(env, version):
     migrate_project_sale_order(env)
