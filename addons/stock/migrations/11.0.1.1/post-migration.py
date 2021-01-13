@@ -142,6 +142,11 @@ def create_stock_move_line(env):
         lot_expr = 'sq.lot_id'
     openupgrade.logged_query(
         env.cr, """
+        ALTER TABLE stock_move_line
+        ADD COLUMN old_pack_id integer""",
+    )
+    openupgrade.logged_query(
+        env.cr, """
         INSERT INTO stock_move_line (
             create_date,
             create_uid,
@@ -164,7 +169,8 @@ def create_stock_move_line(env):
             state,
             result_package_id,
             write_date,
-            write_uid
+            write_uid,
+            old_pack_id
         )
         SELECT
             spo.create_date,
@@ -188,7 +194,8 @@ def create_stock_move_line(env):
             'done',
             spo.result_package_id,
             spo.write_date,
-            spo.write_uid
+            spo.write_uid,
+            spo.id
         FROM stock_pack_operation spo
             INNER JOIN stock_move_operation_link smol
                 ON smol.operation_id = spo.id
