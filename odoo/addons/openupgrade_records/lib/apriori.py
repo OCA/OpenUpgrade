@@ -79,6 +79,7 @@ renamed_models = {
     'mrp.subproduct': 'mrp.bom.byproduct',
     'sms.send_sms': 'sms.composer',
     'stock.fixed.putaway.strat': 'stock.putaway.rule',
+    'report.stock.forecast': 'report.stock.quantity',
     'survey.mail.compose.message': 'survey.invite',
     'website.redirect': 'website.rewrite',
     # OCA/...
