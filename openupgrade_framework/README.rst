@@ -13,11 +13,11 @@ Openupgrade Framework
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
-.. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fopenupgrade-lightgray.png?logo=github
-    :target: https://github.com/OCA/openupgrade/tree/14.0/openupgrade_framework
-    :alt: OCA/openupgrade
+.. |badge3| image:: https://img.shields.io/badge/github-OCA%2FOpenUpgrade-lightgray.png?logo=github
+    :target: https://github.com/OCA/OpenUpgrade/tree/14.0/openupgrade_framework
+    :alt: OCA/OpenUpgrade
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/openupgrade-14-0/openupgrade-14-0-openupgrade_framework
+    :target: https://translation.odoo-community.org/projects/OpenUpgrade-14-0/OpenUpgrade-14-0-openupgrade_framework
     :alt: Translate me on Weblate
 
 |badge1| |badge2| |badge3| |badge4| 
@@ -36,8 +36,6 @@ OpenUpgrade migration scripts:
   of some unforeseen dependency, the deletion will be cancelled and a message
   is logged, after which the migration continues.
 * Prevent a number of log messages that do not apply when using OpenUpgrade.
-* Suppress log messages containing instructions for developers of Odoo S.A.
-  with regards to their own set of closed source migration scripts.
 * Suppress log messages about failed view validation, which are to be expected
   during a migration.
 * Run migration scripts for modules that are installed as new dependencies
@@ -67,7 +65,7 @@ or
 .. code-block:: shell
 
     [options]
-    server_wide_modules =  web,openupgrade_framework
+    server_wide_modules = web,openupgrade_framework
 
 When you load the module in either way of these ways, and you have the
 `openupgrade_scripts` module in your addons path available, the
@@ -78,7 +76,7 @@ Development
 ===========
 
 The `odoo_patch` folder contains python files in a tree that mimicks the
-folter tree of the Odoo project. It contains a number of monkey patches
+folder tree of the Odoo project. It contains a number of monkey patches
 to improve the migration of an Odoo database between two major versions.
 
 So far, we are able to make everything work without overwriting large blocks
@@ -133,10 +131,10 @@ To make more easy the diff analysis :
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/openupgrade/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/OCA/OpenUpgrade/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/openupgrade/issues/new?body=module:%20openupgrade_framework%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/OpenUpgrade/issues/new?body=module:%20openupgrade_framework%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -177,6 +175,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/openupgrade <https://github.com/OCA/openupgrade/tree/14.0/openupgrade_framework>`_ project on GitHub.
+This module is part of the `OCA/OpenUpgrade <https://github.com/OCA/OpenUpgrade/tree/14.0/openupgrade_framework>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
