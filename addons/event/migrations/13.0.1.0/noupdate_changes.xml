@@ -117,7 +117,7 @@
     </field>
     <field name="email_from">${(object.event_id.organizer_id.email_formatted or object.event_id.user_id.email_formatted or '') | safe}</field>
     <field name="email_to">${(object.email and '"%s" &lt;%s&gt;' % (object.name, object.email) or object.partner_id.email_formatted or '') | safe}</field>
-    <field name="reply_to"/>
+<!--    <field name="reply_to"/>-->
     <field name="user_signature" eval="False"/>
   </record>
   <record id="event_subscription" model="mail.template">
@@ -218,7 +218,7 @@
     </field>
     <field name="email_from">${(object.event_id.organizer_id.email_formatted or object.event_id.user_id.email_formatted or '') | safe}</field>
     <field name="email_to">${(object.email and '"%s" &lt;%s&gt;' % (object.name, object.email) or object.partner_id.email_formatted or '') | safe}</field>
-    <field name="reply_to"/>
+<!--    <field name="reply_to"/>-->
     <field name="user_signature" eval="False"/>
   </record>
 </odoo>
