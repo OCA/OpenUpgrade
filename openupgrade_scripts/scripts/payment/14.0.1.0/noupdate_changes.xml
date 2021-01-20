@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="payment_token_user_rule" model="ir.rule">
+    <field name="domain_force">[('partner_id', 'child_of', user.partner_id.commercial_partner_id.id)]</field>
+  </record>
+  <record id="payment_transaction_user_rule" model="ir.rule">
+    <field name="domain_force">['|',('partner_id','=',False), ('partner_id','=',user.partner_id.id) ]</field>
+  </record>
+</odoo>

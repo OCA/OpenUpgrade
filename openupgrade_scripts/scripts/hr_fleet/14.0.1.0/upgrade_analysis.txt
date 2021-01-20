@@ -1,0 +1,8 @@
+---Models in module 'hr_fleet'---
+---Fields in module 'hr_fleet'---
+hr_fleet     / fleet.vehicle            / mobility_card (char)          : NEW isfunction: function, stored
+hr_fleet     / hr.employee              / mobility_card (char)          : NEW
+---XML records in module 'hr_fleet'---
+NEW ir.ui.view: hr_fleet.fleet_vehicle_view_form_inherit_hr
+NEW ir.ui.view: hr_fleet.fleet_vehicle_view_search_inherit_hr
+NEW ir.ui.view: hr_fleet.hr_departure_wizard_view_form

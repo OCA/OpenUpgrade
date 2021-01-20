@@ -1,0 +1,115 @@
+---Models in module 'project'---
+new model project.delete.wizard [transient]
+new model project.task.recurrence
+new model project.task.type.delete.wizard [transient]
+---Fields in module 'project'---
+project      / project.project          / allow_recurring_tasks (boolean): NEW hasdefault
+project      / project.project          / allow_subtasks (boolean)      : NEW hasdefault
+project      / project.project          / allowed_internal_user_ids (many2many): NEW relation: res.users, hasdefault
+project      / project.project          / allowed_portal_user_ids (many2many): NEW relation: res.users
+project      / project.project          / description (html)            : NEW
+project      / project.project          / partner_email (char)          : NEW isfunction: function, stored
+project      / project.project          / partner_phone (char)          : NEW isfunction: function, stored
+project      / project.project          / portal_show_rating (boolean)  : DEL
+project      / project.project          / rating_active (boolean)       : NEW hasdefault
+project      / project.project          / rating_status (selection)     : selection_keys is now '['periodic', 'stage']' ('['no', 'periodic', 'stage']')
+project      / project.project          / rating_status_period (selection): now required, req_default: function
+project      / project.project          / resource_calendar_id (many2one): not stored anymore
+project      / project.project          / resource_calendar_id (many2one): now related
+project      / project.task             / allowed_user_ids (many2many)  : NEW relation: res.users, isfunction: function, stored
+project      / project.task             / company_id (many2one)         : now a function
+project      / project.task             / email_from (char)             : now a function
+project      / project.task             / partner_email (char)          : NEW isfunction: function, stored
+project      / project.task             / partner_id (many2one)         : now a function
+project      / project.task             / partner_phone (char)          : NEW isfunction: function, stored
+project      / project.task             / project_id (many2one)         : now a function
+project      / project.task             / recurrence_id (many2one)      : NEW relation: project.task.recurrence
+project      / project.task             / recurrence_update (selection) : NEW selection_keys: ['all', 'subsequent', 'this'], hasdefault
+project      / project.task             / recurring_task (boolean)      : NEW
+project      / project.task             / stage_id (many2one)           : now a function
+project      / project.task.recurrence  / fri (boolean)                 : NEW
+project      / project.task.recurrence  / mon (boolean)                 : NEW
+project      / project.task.recurrence  / next_recurrence_date (date)   : NEW
+project      / project.task.recurrence  / recurrence_left (integer)     : NEW
+project      / project.task.recurrence  / repeat_day (selection)        : NEW selection_keys: ['1', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '2', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '3', '30', '31', '4', '5', '6', '7', '8', '9']
+project      / project.task.recurrence  / repeat_interval (integer)     : NEW hasdefault
+project      / project.task.recurrence  / repeat_month (selection)      : NEW selection_keys: ['april', 'august', 'december', 'february', 'january', 'july', 'june', 'march', 'may', 'november', 'october', 'september']
+project      / project.task.recurrence  / repeat_number (integer)       : NEW
+project      / project.task.recurrence  / repeat_on_month (selection)   : NEW selection_keys: ['date', 'day']
+project      / project.task.recurrence  / repeat_on_year (selection)    : NEW selection_keys: ['date', 'day']
+project      / project.task.recurrence  / repeat_type (selection)       : NEW selection_keys: ['after', 'forever', 'until'], hasdefault
+project      / project.task.recurrence  / repeat_unit (selection)       : NEW selection_keys: ['day', 'month', 'week', 'year'], hasdefault
+project      / project.task.recurrence  / repeat_until (date)           : NEW
+project      / project.task.recurrence  / repeat_week (selection)       : NEW selection_keys: ['first', 'last', 'second', 'third']
+project      / project.task.recurrence  / repeat_weekday (selection)    : NEW selection_keys: ['fri', 'mon', 'sat', 'sun', 'thu', 'tue', 'wed']
+project      / project.task.recurrence  / sat (boolean)                 : NEW
+project      / project.task.recurrence  / sun (boolean)                 : NEW
+project      / project.task.recurrence  / task_ids (one2many)           : NEW relation: project.task
+project      / project.task.recurrence  / thu (boolean)                 : NEW
+project      / project.task.recurrence  / tue (boolean)                 : NEW
+project      / project.task.recurrence  / wed (boolean)                 : NEW
+project      / project.task.type        / active (boolean)              : NEW hasdefault
+project      / project.task.type        / is_closed (boolean)           : NEW
+---XML records in module 'project'---
+NEW ir.actions.act_window: project.action_view_all_task
+NEW ir.actions.act_window: project.open_task_type_form_domain
+NEW ir.actions.act_window.view: project.rating_rating_action_project_report_form
+NEW ir.actions.act_window.view: project.rating_rating_action_project_report_graph
+NEW ir.actions.act_window.view: project.rating_rating_action_project_report_pivot
+NEW ir.actions.act_window.view: project.rating_rating_action_project_report_tree
+NEW ir.actions.act_window.view: project.rating_rating_action_task_form
+NEW ir.actions.act_window.view: project.rating_rating_action_task_graph
+NEW ir.actions.act_window.view: project.rating_rating_action_task_pivot
+NEW ir.actions.act_window.view: project.rating_rating_action_task_tree
+NEW ir.actions.act_window.view: project.rating_rating_action_view_project_rating_form
+NEW ir.actions.act_window.view: project.rating_rating_action_view_project_rating_graph
+NEW ir.actions.act_window.view: project.rating_rating_action_view_project_rating_pivot
+NEW ir.actions.act_window.view: project.rating_rating_action_view_project_rating_tree
+NEW ir.actions.server: project.unlink_project_action
+NEW ir.actions.server: project.unlink_task_type_action
+DEL ir.actions.server: project.ir_actions_server_project_sample
+NEW ir.cron: project.ir_cron_recurring_tasks (noupdate)
+DEL ir.filters: project.filter_task_report_cumulative_flow
+DEL ir.filters: project.filter_task_report_responsible
+DEL ir.filters: project.filter_task_report_task_pipe
+DEL ir.filters: project.filter_task_report_workload
+NEW ir.model.access: project.access_partner_task_user
+NEW ir.model.access: project.access_project_delete_wizard
+NEW ir.model.access: project.access_project_task_recurrence
+NEW ir.model.access: project.access_project_task_type_delete_wizard
+DEL ir.model.access: project.access_mail_alias
+DEL ir.model.access: project.access_partner_task user
+NEW ir.module.category: base.module_category_services_project (noupdate)
+DEL ir.module.category: base.module_category_operations_project (noupdate)
+NEW ir.ui.view: project.project_delete_wizard_form
+NEW ir.ui.view: project.rating_rating_view_form_project
+NEW ir.ui.view: project.rating_rating_view_graph
+NEW ir.ui.view: project.rating_rating_view_pivot
+NEW ir.ui.view: project.rating_rating_view_tree_project
+NEW ir.ui.view: project.view_project_task_type_delete_confirmation_wizard
+NEW ir.ui.view: project.view_project_task_type_delete_wizard
+DEL ir.ui.view: project.portal_project_rating_partner_stat
+DEL ir.ui.view: project.portal_project_rating_popover
+DEL ir.ui.view: project.portal_project_rating_progressbar
+DEL ir.ui.view: project.project_view_kanban
+DEL ir.ui.view: project.rating_index
+DEL ir.ui.view: project.rating_project_rating_page
+DEL mail.message: project.msg_task_4 (noupdate)
+DEL project.project: project.project_project_data (noupdate)
+DEL project.tags: project.project_tag_data (noupdate)
+DEL project.task: project.project_task_data_0 (noupdate)
+DEL project.task: project.project_task_data_1 (noupdate)
+DEL project.task: project.project_task_data_11 (noupdate)
+DEL project.task: project.project_task_data_12 (noupdate)
+DEL project.task: project.project_task_data_13 (noupdate)
+DEL project.task: project.project_task_data_14 (noupdate)
+DEL project.task: project.project_task_data_2 (noupdate)
+DEL project.task: project.project_task_data_4 (noupdate)
+DEL project.task: project.project_task_data_5 (noupdate)
+DEL project.task: project.project_task_data_6 (noupdate)
+DEL project.task: project.project_task_data_7 (noupdate)
+DEL project.task: project.project_task_data_9 (noupdate)
+DEL project.task.type: project.project_stage_data_0 (noupdate)
+DEL project.task.type: project.project_stage_data_1 (noupdate)
+DEL project.task.type: project.project_stage_data_2 (noupdate)
+NEW res.groups: project.group_project_recurring_tasks

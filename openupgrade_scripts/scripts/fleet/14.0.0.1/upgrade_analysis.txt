@@ -1,0 +1,124 @@
+---Models in module 'fleet'---
+obsolete model fleet.vehicle.cost
+obsolete model fleet.vehicle.log.fuel
+new model fleet.vehicle.cost.report [sql_view]
+---Fields in module 'fleet'---
+fleet        / fleet.vehicle            / description (text)            : NEW
+fleet        / fleet.vehicle            / log_fuel (one2many)           : DEL relation: fleet.vehicle.log.fuel
+fleet        / fleet.vehicle            / manager_id (many2one)         : is now stored
+fleet        / fleet.vehicle            / manager_id (many2one)         : not related anymore
+fleet        / fleet.vehicle            / manager_id (many2one)         : now a function
+fleet        / fleet.vehicle.cost       / amount (float)                : DEL
+fleet        / fleet.vehicle.cost       / auto_generated (boolean)      : DEL
+fleet        / fleet.vehicle.cost       / company_id (many2one)         : DEL relation: res.company
+fleet        / fleet.vehicle.cost       / contract_id (many2one)        : DEL relation: fleet.vehicle.log.contract
+fleet        / fleet.vehicle.cost       / cost_ids (one2many)           : DEL relation: fleet.vehicle.cost
+fleet        / fleet.vehicle.cost       / cost_subtype_id (many2one)    : DEL relation: fleet.service.type
+fleet        / fleet.vehicle.cost       / cost_type (selection)         : DEL required, selection_keys: ['contract', 'fuel', 'other', 'services'], req_default: function
+fleet        / fleet.vehicle.cost       / date (date)                   : DEL
+fleet        / fleet.vehicle.cost       / description (char)            : DEL
+fleet        / fleet.vehicle.cost       / name (char)                   : DEL
+fleet        / fleet.vehicle.cost       / odometer_id (many2one)        : DEL relation: fleet.vehicle.odometer
+fleet        / fleet.vehicle.cost       / parent_id (many2one)          : DEL relation: fleet.vehicle.cost
+fleet        / fleet.vehicle.cost       / vehicle_id (many2one)         : DEL relation: fleet.vehicle, required
+fleet        / fleet.vehicle.log.contract / _inherits (False)             : DEL
+fleet        / fleet.vehicle.log.contract / amount (float)                : is now stored
+fleet        / fleet.vehicle.log.contract / amount (float)                : not related anymore
+fleet        / fleet.vehicle.log.contract / company_id (many2one)         : is now stored
+fleet        / fleet.vehicle.log.contract / company_id (many2one)         : not related anymore
+fleet        / fleet.vehicle.log.contract / cost_amount (float)           : DEL
+fleet        / fleet.vehicle.log.contract / cost_id (many2one)            : DEL relation: fleet.vehicle.cost, required
+fleet        / fleet.vehicle.log.contract / cost_subtype_id (many2one)    : is now stored
+fleet        / fleet.vehicle.log.contract / cost_subtype_id (many2one)    : not related anymore
+fleet        / fleet.vehicle.log.contract / date (date)                   : is now stored
+fleet        / fleet.vehicle.log.contract / date (date)                   : not related anymore
+fleet        / fleet.vehicle.log.contract / generated_cost_ids (one2many) : DEL relation: fleet.vehicle.cost
+fleet        / fleet.vehicle.log.contract / name (text)                   : type is now 'char' ('text')
+fleet        / fleet.vehicle.log.contract / odometer (float)              : DEL
+fleet        / fleet.vehicle.log.contract / purchaser_id (many2one)       : not stored anymore
+fleet        / fleet.vehicle.log.contract / purchaser_id (many2one)       : now related
+fleet        / fleet.vehicle.log.contract / service_ids (many2many)       : NEW relation: fleet.service.type
+fleet        / fleet.vehicle.log.contract / state (selection)             : selection_keys is now '['closed', 'expired', 'futur', 'open']' ('['closed', 'diesoon', 'expired', 'futur', 'open']')
+fleet        / fleet.vehicle.log.contract / vehicle_id (many2one)         : is now stored
+fleet        / fleet.vehicle.log.contract / vehicle_id (many2one)         : not related anymore
+fleet        / fleet.vehicle.log.fuel   / _inherits (False)             : DEL
+fleet        / fleet.vehicle.log.fuel   / cost_amount (float)           : DEL
+fleet        / fleet.vehicle.log.fuel   / cost_id (many2one)            : DEL relation: fleet.vehicle.cost, required
+fleet        / fleet.vehicle.log.fuel   / inv_ref (char)                : DEL
+fleet        / fleet.vehicle.log.fuel   / liter (float)                 : DEL
+fleet        / fleet.vehicle.log.fuel   / notes (text)                  : DEL
+fleet        / fleet.vehicle.log.fuel   / price_per_liter (float)       : DEL
+fleet        / fleet.vehicle.log.fuel   / purchaser_id (many2one)       : DEL relation: res.partner
+fleet        / fleet.vehicle.log.fuel   / vendor_id (many2one)          : DEL relation: res.partner
+fleet        / fleet.vehicle.log.services / _inherits (False)             : DEL
+fleet        / fleet.vehicle.log.services / active (boolean)              : NEW hasdefault
+fleet        / fleet.vehicle.log.services / activity_ids (one2many)       : NEW relation: mail.activity
+fleet        / fleet.vehicle.log.services / amount (float)                : is now stored
+fleet        / fleet.vehicle.log.services / amount (float)                : not related anymore
+fleet        / fleet.vehicle.log.services / company_id (many2one)         : is now stored
+fleet        / fleet.vehicle.log.services / company_id (many2one)         : not related anymore
+fleet        / fleet.vehicle.log.services / cost_amount (float)           : DEL
+fleet        / fleet.vehicle.log.services / cost_id (many2one)            : DEL relation: fleet.vehicle.cost, required
+fleet        / fleet.vehicle.log.services / date (date)                   : is now stored
+fleet        / fleet.vehicle.log.services / date (date)                   : not related anymore
+fleet        / fleet.vehicle.log.services / description (char)            : is now stored
+fleet        / fleet.vehicle.log.services / description (char)            : not related anymore
+fleet        / fleet.vehicle.log.services / message_follower_ids (one2many): NEW relation: mail.followers
+fleet        / fleet.vehicle.log.services / message_ids (one2many)        : NEW relation: mail.message
+fleet        / fleet.vehicle.log.services / message_main_attachment_id (many2one): NEW relation: ir.attachment
+fleet        / fleet.vehicle.log.services / odometer (float)              : not related anymore
+fleet        / fleet.vehicle.log.services / odometer (float)              : now a function
+fleet        / fleet.vehicle.log.services / odometer_id (many2one)        : is now stored
+fleet        / fleet.vehicle.log.services / odometer_id (many2one)        : not related anymore
+fleet        / fleet.vehicle.log.services / purchaser_id (many2one)       : now a function
+fleet        / fleet.vehicle.log.services / service_type_id (many2one)    : NEW relation: fleet.service.type, required, req_default: function, hasdefault
+fleet        / fleet.vehicle.log.services / state (selection)             : NEW selection_keys: ['cancelled', 'done', 'running', 'todo'], hasdefault
+fleet        / fleet.vehicle.log.services / vehicle_id (many2one)         : is now stored
+fleet        / fleet.vehicle.log.services / vehicle_id (many2one)         : not related anymore
+fleet        / fleet.vehicle.model      / active (boolean)              : NEW hasdefault
+fleet        / fleet.vehicle.model      / vehicle_type (selection)      : NEW required, selection_keys: ['bike', 'car'], req_default: function, hasdefault
+fleet        / fleet.vehicle.model.brand / model_count (integer)         : NEW isfunction: function, stored
+fleet        / fleet.vehicle.model.brand / model_ids (one2many)          : NEW relation: fleet.vehicle.model
+---XML records in module 'fleet'---
+NEW fleet.vehicle.state: fleet.fleet_vehicle_state_downgraded (noupdate)
+NEW fleet.vehicle.state: fleet.fleet_vehicle_state_registered (noupdate)
+NEW fleet.vehicle.state: fleet.fleet_vehicle_state_to_order (noupdate)
+ir.actions.act_window: fleet.fleet_vehicle_service_types_action (deleted domain)
+DEL ir.actions.act_window: fleet.act_renew_contract
+DEL ir.actions.act_window: fleet.fleet_costs_reporting_non_effective_action
+DEL ir.actions.act_window: fleet.fleet_vehicle_contract_types_action
+DEL ir.actions.act_window: fleet.fleet_vehicle_costs_action
+DEL ir.actions.act_window: fleet.fleet_vehicle_log_fuel_action
+DEL ir.actions.act_window.view: fleet.fleet_reporting_graph_action
+DEL ir.actions.act_window.view: fleet.fleet_reporting_pivot_action
+DEL ir.actions.act_window.view: fleet.view_fleet_non_effective_graph_action
+DEL ir.actions.act_window.view: fleet.view_fleet_non_effective_pivot_action
+NEW ir.model.access: fleet.access_fleet_report_manager
+DEL ir.model.access: fleet.access_fleet_vehicle_cost
+DEL ir.model.access: fleet.access_fleet_vehicle_cost_user
+DEL ir.model.access: fleet.fleet_vehicle_log_fuel_access_right
+DEL ir.rule: fleet.fleet_rule_cost_visibility_manager (noupdate)
+DEL ir.rule: fleet.fleet_rule_cost_visibility_user (noupdate)
+DEL ir.rule: fleet.fleet_rule_fuel_log_visibility_manager (noupdate)
+DEL ir.rule: fleet.fleet_rule_fuel_log_visibility_user (noupdate)
+DEL ir.ui.menu: fleet.fleet_vehicle_contract_types_menu
+DEL ir.ui.menu: fleet.fleet_vehicle_costs_menu
+DEL ir.ui.menu: fleet.fleet_vehicle_log_fuel_menu
+DEL ir.ui.menu: fleet.menu_fleet_reporting_indicative_costs
+NEW ir.ui.view: fleet.fleet_costs_report_view_graph
+NEW ir.ui.view: fleet.fleet_costs_report_view_pivot
+NEW ir.ui.view: fleet.fleet_costs_report_view_search
+DEL ir.ui.view: fleet.fleet_vehicle_cost_indicative_view_graph
+DEL ir.ui.view: fleet.fleet_vehicle_cost_indicative_view_pivot
+DEL ir.ui.view: fleet.fleet_vehicle_cost_view_graph
+DEL ir.ui.view: fleet.fleet_vehicle_cost_view_kanban
+DEL ir.ui.view: fleet.fleet_vehicle_cost_view_pivot
+DEL ir.ui.view: fleet.fleet_vehicle_cost_view_tree
+DEL ir.ui.view: fleet.fleet_vehicle_costs_view_form
+DEL ir.ui.view: fleet.fleet_vehicle_costs_view_graph
+DEL ir.ui.view: fleet.fleet_vehicle_costs_view_search
+DEL ir.ui.view: fleet.fleet_vehicle_log_fuel_view_form
+DEL ir.ui.view: fleet.fleet_vehicle_log_fuel_view_graph
+DEL ir.ui.view: fleet.fleet_vehicle_log_fuel_view_kanban
+DEL ir.ui.view: fleet.fleet_vehicle_log_fuel_view_search
+DEL ir.ui.view: fleet.fleet_vehicle_log_fuel_view_tree

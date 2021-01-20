@@ -1,0 +1,134 @@
+---Models in module 'event'---
+obsolete model event.confirm [transient]
+model event.event.ticket (moved from event_sale)
+new model event.stage
+new model event.tag
+new model event.tag.category
+new model event.type.ticket
+---Fields in module 'event'---
+event        / event.event              / auto_confirm (boolean)        : now a function
+event        / event.event              / color (integer)               : DEL
+event        / event.event              / date_tz (selection)           : now a function
+event        / event.event              / event_mail_ids (one2many)     : now a function
+event        / event.event              / event_ticket_ids (one2many)   : previously in module event_sale
+event        / event.event              / is_online (boolean)           : DEL
+event        / event.event              / kanban_state (selection)      : NEW selection_keys: ['blocked', 'done', 'normal'], hasdefault
+event        / event.event              / kanban_state_label (char)     : NEW isfunction: function, stored
+event        / event.event              / note (text)                   : NEW
+event        / event.event              / seats_availability (selection): DEL required, selection_keys: ['limited', 'unlimited'], req_default: function
+event        / event.event              / seats_limited (boolean)       : NEW required, isfunction: function, stored
+event        / event.event              / seats_max (integer)           : now a function
+event        / event.event              / seats_min (integer)           : DEL
+event        / event.event              / stage_id (many2one)           : NEW relation: event.stage, hasdefault
+event        / event.event              / state (selection)             : DEL required, selection_keys: ['cancel', 'confirm', 'done', 'draft'], req_default: function
+event        / event.event              / tag_ids (many2many)           : NEW relation: event.tag, isfunction: function, stored
+event        / event.event              / twitter_hashtag (char)        : DEL
+event        / event.event.ticket       / __last_update (datetime)      : previously in module event_sale
+event        / event.event.ticket       / company_id (many2one)         : previously in module event_sale
+event        / event.event.ticket       / description (text)            : NEW
+event        / event.event.ticket       / display_name (char)           : previously in module event_sale
+event        / event.event.ticket       / end_sale_date (date)          : NEW
+event        / event.event.ticket       / event_id (many2one)           : previously in module event_sale
+event        / event.event.ticket       / event_type_id (many2one)      : previously in module event_sale
+event        / event.event.ticket       / is_expired (boolean)          : previously in module event_sale
+event        / event.event.ticket       / name (char)                   : previously in module event_sale
+event        / event.event.ticket       / registration_ids (one2many)   : previously in module event_sale
+event        / event.event.ticket       / seats_available (integer)     : previously in module event_sale
+event        / event.event.ticket       / seats_limited (boolean)       : NEW isfunction: function, stored
+event        / event.event.ticket       / seats_max (integer)           : previously in module event_sale
+event        / event.event.ticket       / seats_reserved (integer)      : previously in module event_sale
+event        / event.event.ticket       / seats_unconfirmed (integer)   : previously in module event_sale
+event        / event.event.ticket       / seats_used (integer)          : previously in module event_sale
+event        / event.event.ticket       / start_sale_date (date)        : NEW
+event        / event.registration       / date_closed (datetime)        : now a function
+event        / event.registration       / email (char)                  : now a function
+event        / event.registration       / event_ticket_id (many2one)    : previously in module event_sale
+event        / event.registration       / mobile (char)                 : now a function
+event        / event.registration       / name (char)                   : now a function
+event        / event.registration       / origin (char)                 : DEL
+event        / event.registration       / phone (char)                  : now a function
+event        / event.registration       / utm_campaign_id (many2one)    : NEW relation: utm.campaign
+event        / event.registration       / utm_medium_id (many2one)      : NEW relation: utm.medium
+event        / event.registration       / utm_source_id (many2one)      : NEW relation: utm.source
+event        / event.stage              / description (text)            : NEW
+event        / event.stage              / fold (boolean)                : NEW hasdefault
+event        / event.stage              / legend_blocked (char)         : NEW required, req_default: function, hasdefault
+event        / event.stage              / legend_done (char)            : NEW required, req_default: function, hasdefault
+event        / event.stage              / legend_normal (char)          : NEW required, req_default: function, hasdefault
+event        / event.stage              / name (char)                   : NEW required
+event        / event.stage              / pipe_end (boolean)            : NEW hasdefault
+event        / event.stage              / sequence (integer)            : NEW hasdefault
+event        / event.tag                / category_id (many2one)        : NEW relation: event.tag.category, required
+event        / event.tag                / color (integer)               : NEW hasdefault
+event        / event.tag                / name (char)                   : NEW required
+event        / event.tag                / sequence (integer)            : NEW hasdefault
+event        / event.tag.category       / name (char)                   : NEW required
+event        / event.tag.category       / sequence (integer)            : NEW hasdefault
+event        / event.tag.category       / tag_ids (one2many)            : NEW relation: event.tag
+event        / event.type               / default_hashtag (char)        : DEL
+event        / event.type               / default_registration_max (integer): DEL
+event        / event.type               / default_registration_min (integer): DEL
+event        / event.type               / event_type_mail_ids (one2many): now a function
+event        / event.type               / event_type_ticket_ids (one2many): NEW relation: event.type.ticket, isfunction: function, stored
+event        / event.type               / is_online (boolean)           : DEL
+event        / event.type               / seats_max (integer)           : NEW isfunction: function, stored
+event        / event.type               / tag_ids (many2many)           : NEW relation: event.tag
+event        / event.type               / use_hashtag (boolean)         : DEL
+event        / event.type               / use_ticket (boolean)          : NEW
+event        / event.type.ticket        / description (text)            : NEW
+event        / event.type.ticket        / event_type_id (many2one)      : NEW relation: event.type, required
+event        / event.type.ticket        / name (char)                   : NEW required, req_default: function, hasdefault
+event        / event.type.ticket        / seats_limited (boolean)       : NEW isfunction: function, stored
+event        / event.type.ticket        / seats_max (integer)           : NEW
+---XML records in module 'event'---
+NEW event.stage: event.event_stage_announced (noupdate)
+NEW event.stage: event.event_stage_booked (noupdate)
+NEW event.stage: event.event_stage_cancelled (noupdate)
+NEW event.stage: event.event_stage_done (noupdate)
+NEW event.stage: event.event_stage_new (noupdate)
+NEW event.type: event.event_type_data_conference (noupdate)
+NEW event.type: event.event_type_data_ticket (noupdate)
+DEL event.type: event.event_type_data_online (noupdate)
+DEL event.type: event.event_type_data_physical (noupdate)
+NEW ir.actions.act_window: event.event_registration_action
+NEW ir.actions.act_window: event.event_registration_action_tree
+NEW ir.actions.act_window: event.event_stage_action
+NEW ir.actions.act_window: event.event_tag_category_action_tree
+DEL ir.actions.act_window: event.action_event_confirm
+NEW ir.model.access: event.access_event_category
+NEW ir.model.access: event.access_event_category_manager
+NEW ir.model.access: event.access_event_event_ticket_manager
+NEW ir.model.access: event.access_event_event_ticket_user [renamed from event_sale module]
+NEW ir.model.access: event.access_event_registration_all
+NEW ir.model.access: event.access_event_stage_manager
+NEW ir.model.access: event.access_event_stage_user
+NEW ir.model.access: event.access_event_tag
+NEW ir.model.access: event.access_event_tag_manager
+NEW ir.model.access: event.access_event_type_ticket
+NEW ir.model.access: event.access_event_type_ticket_manager
+DEL ir.model.access: event.access_event_registration_employee
+DEL ir.model.access: event.access_event_registration_portal
+NEW ir.rule: event.ir_rule_event_event_ticket_company (noupdate)
+DEL ir.rule: event.event_registration_portal (noupdate)
+NEW ir.ui.menu: event.event_stage_menu
+NEW ir.ui.menu: event.menu_event_category
+NEW ir.ui.view: event.assets_common
+NEW ir.ui.view: event.event_default_descripton
+NEW ir.ui.view: event.event_event_ticket_form_view
+NEW ir.ui.view: event.event_event_ticket_view_form_from_event
+NEW ir.ui.view: event.event_event_ticket_view_kanban_from_event
+NEW ir.ui.view: event.event_event_ticket_view_tree
+NEW ir.ui.view: event.event_event_ticket_view_tree_from_event
+NEW ir.ui.view: event.event_event_view_form_quick_create
+NEW ir.ui.view: event.event_event_view_graph
+NEW ir.ui.view: event.event_stage_view_form
+NEW ir.ui.view: event.event_stage_view_tree
+NEW ir.ui.view: event.event_tag_category_view_form
+NEW ir.ui.view: event.event_tag_category_view_tree
+NEW ir.ui.view: event.event_tag_view_form
+NEW ir.ui.view: event.event_tag_view_tree
+NEW ir.ui.view: event.event_type_ticket_view_form
+NEW ir.ui.view: event.event_type_ticket_view_form_from_type
+NEW ir.ui.view: event.event_type_ticket_view_tree
+NEW ir.ui.view: event.event_type_ticket_view_tree_from_type
+DEL ir.ui.view: event.view_event_confirm

@@ -1,0 +1,22 @@
+---Models in module 'website_jitsi'---
+new model chat.room
+new model chat.room.mixin [abstract]
+---Fields in module 'website_jitsi'---
+website_jitsi / chat.room                / lang_id (many2one)            : NEW relation: res.lang, hasdefault
+website_jitsi / chat.room                / last_activity (datetime)      : NEW hasdefault
+website_jitsi / chat.room                / max_capacity (selection)      : NEW required, selection_keys: ['12', '16', '20', '4', '8', 'no_limit'], req_default: function, hasdefault
+website_jitsi / chat.room                / max_participant_reached (integer): NEW
+website_jitsi / chat.room                / name (char)                   : NEW required, req_default: function, hasdefault
+website_jitsi / chat.room                / participant_count (integer)   : NEW hasdefault
+---XML records in module 'website_jitsi'---
+NEW ir.actions.act_window: website_jitsi.chat_room_action
+NEW ir.model.access: website_jitsi.access_chat_room_all
+NEW ir.model.access: website_jitsi.access_chat_room_system
+NEW ir.model.access: website_jitsi.access_chat_room_user
+NEW ir.ui.menu: website_jitsi.chat_room_menu
+NEW ir.ui.view: website_jitsi.assets_frontend
+NEW ir.ui.view: website_jitsi.chat_room_join_button
+NEW ir.ui.view: website_jitsi.chat_room_view_form
+NEW ir.ui.view: website_jitsi.chat_room_view_search
+NEW ir.ui.view: website_jitsi.chat_room_view_tree
+NEW ir.ui.view: website_jitsi.res_config_settings_view_form

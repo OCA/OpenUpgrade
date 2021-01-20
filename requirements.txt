@@ -1,0 +1,7 @@
+# copy pasted from openupgrade project
+# TODO: explain why odoorpc is pinned
+odoorpc==0.7.0
+
+# We allways want to have the latest version of openupgradelib
+# more information : https://github.com/OCA/OpenUpgrade/pull/2194
+git+https://github.com/OCA/openupgradelib.git@master

@@ -1,0 +1,16 @@
+---Models in module 'mass_mailing_sms'---
+---Fields in module 'mass_mailing_sms'---
+mass_mailing_sms / mailing.mailing          / body_plaintext (text)         : now a function
+mass_mailing_sms / mailing.trace            / failure_type (False)          : selection_keys is now '['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN', 'sms_acc', 'sms_blacklist', 'sms_credit', 'sms_duplicate', 'sms_number_format', 'sms_number_missing', 'sms_server']' ('['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN', 'sms_blacklist', 'sms_credit', 'sms_duplicate', 'sms_number_format', 'sms_number_missing', 'sms_server']')
+---XML records in module 'mass_mailing_sms'---
+NEW ir.actions.act_window.view: mass_mailing_sms.mailing_trace_report_action_sms_view_graph
+NEW ir.actions.act_window.view: mass_mailing_sms.mailing_trace_report_action_sms_view_pivot
+NEW ir.model.access: mass_mailing_sms.access_mailing_sms_test
+NEW ir.model.access: mass_mailing_sms.access_phone_blacklist_remove_mass_mailing_user
+NEW ir.ui.view: mass_mailing_sms.mailing_contact_view_tree
+NEW ir.ui.view: mass_mailing_sms.mailing_trace_report_sms_view_graph
+NEW ir.ui.view: mass_mailing_sms.mailing_trace_report_sms_view_pivot
+DEL ir.ui.view: mass_mailing_sms.mailing_contact_view_tree_sms
+DEL ir.ui.view: mass_mailing_sms.mailing_trace_report_view_graph
+DEL ir.ui.view: mass_mailing_sms.mailing_trace_report_view_pivot
+DEL ir.ui.view: mass_mailing_sms.mailing_trace_report_view_search

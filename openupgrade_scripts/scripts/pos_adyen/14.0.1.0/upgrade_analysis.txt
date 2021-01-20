@@ -1,0 +1,32 @@
+---Models in module 'pos_adyen'---
+new model adyen.store
+new model adyen.terminal
+---Fields in module 'pos_adyen'---
+pos_adyen    / adyen.account            / store_ids (one2many)          : NEW relation: adyen.store
+pos_adyen    / adyen.account            / terminal_ids (one2many)       : NEW relation: adyen.terminal
+pos_adyen    / adyen.store              / adyen_account_id (many2one)   : NEW relation: adyen.account
+pos_adyen    / adyen.store              / city (char)                   : NEW required
+pos_adyen    / adyen.store              / country_id (many2one)         : NEW relation: res.country, required
+pos_adyen    / adyen.store              / house_number_or_name (char)   : NEW required
+pos_adyen    / adyen.store              / name (char)                   : NEW required
+pos_adyen    / adyen.store              / phone_number (char)           : NEW required
+pos_adyen    / adyen.store              / state_id (many2one)           : NEW relation: res.country.state
+pos_adyen    / adyen.store              / store_reference (char)        : NEW hasdefault
+pos_adyen    / adyen.store              / store_uuid (char)             : NEW
+pos_adyen    / adyen.store              / street (char)                 : NEW required
+pos_adyen    / adyen.store              / terminal_ids (one2many)       : NEW relation: adyen.terminal
+pos_adyen    / adyen.store              / zip (char)                    : NEW required
+pos_adyen    / adyen.terminal           / adyen_account_id (many2one)   : NEW relation: adyen.account
+pos_adyen    / adyen.terminal           / store_id (many2one)           : NEW relation: adyen.store
+pos_adyen    / adyen.terminal           / terminal_uuid (char)          : NEW
+pos_adyen    / pos.payment.method       / adyen_payout_id (many2one)    : NEW relation: adyen.payout
+pos_adyen    / pos.payment.method       / adyen_terminal_id (many2one)  : NEW relation: adyen.terminal
+---XML records in module 'pos_adyen'---
+NEW ir.actions.server: pos_adyen.action_pos_adyen_account
+NEW ir.model.access: pos_adyen.access_adyen_payout_group_pos_manager
+NEW ir.model.access: pos_adyen.access_adyen_store_group_erp_manager
+NEW ir.model.access: pos_adyen.access_adyen_terminal_group_pos_manager
+NEW ir.ui.menu: pos_adyen.menu_pos_adyen_account
+NEW ir.ui.view: pos_adyen.adyen_account_view_form
+NEW ir.ui.view: pos_adyen.adyen_store_view_form
+NEW ir.ui.view: pos_adyen.res_config_settings_view_form

@@ -1,0 +1,27 @@
+---Models in module 'account_edi'---
+new model account.edi.document
+new model account.edi.format
+---Fields in module 'account_edi'---
+account_edi  / account.edi.document     / attachment_id (many2one)      : NEW relation: ir.attachment
+account_edi  / account.edi.document     / edi_format_id (many2one)      : NEW relation: account.edi.format, required
+account_edi  / account.edi.document     / error (html)                  : NEW
+account_edi  / account.edi.document     / move_id (many2one)            : NEW relation: account.move, required
+account_edi  / account.edi.document     / state (selection)             : NEW selection_keys: ['cancelled', 'sent', 'to_cancel', 'to_send']
+account_edi  / account.edi.format       / code (char)                   : NEW required
+account_edi  / account.edi.format       / name (char)                   : NEW
+account_edi  / account.journal          / edi_format_ids (many2many)    : NEW relation: account.edi.format, isfunction: function, stored
+account_edi  / account.move             / edi_document_ids (one2many)   : NEW relation: account.edi.document
+account_edi  / account.move             / edi_state (selection)         : NEW selection_keys: ['cancelled', 'sent', 'to_cancel', 'to_send'], isfunction: function, stored
+---XML records in module 'account_edi'---
+NEW ir.actions.act_window: account_edi.action_open_edi_documents
+NEW ir.actions.act_window: account_edi.action_open_payment_edi_documents
+NEW ir.cron: account_edi.ir_cron_edi_network
+NEW ir.model.access: account_edi.access_account_edi_document_group_invoice
+NEW ir.model.access: account_edi.access_account_edi_document_readonly
+NEW ir.model.access: account_edi.access_account_edi_format_group_invoice
+NEW ir.model.access: account_edi.access_account_edi_format_readonly
+NEW ir.ui.view: account_edi.account_invoice_send_inherit_account_wizard_form
+NEW ir.ui.view: account_edi.view_account_journal_form_inherited
+NEW ir.ui.view: account_edi.view_move_form_inherit
+NEW ir.ui.view: account_edi.view_payment_form_inherit
+NEW ir.ui.view: account_edi.view_tree_account_edi_document

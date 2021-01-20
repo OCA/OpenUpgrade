@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="event.event_type_data_conference" model="event.type">
+    <field name="website_menu" eval="True"/>
+    <field name="website_track" eval="True"/>
+    <field name="website_track_proposal" eval="True"/>
+  </record>
+  <record id="event_sponsor_type1" model="event.sponsor.type">
+    <field name="display_ribbon_style">Bronze</field>
+  </record>
+  <record id="event_sponsor_type2" model="event.sponsor.type">
+    <field name="display_ribbon_style">Silver</field>
+  </record>
+  <record id="event_sponsor_type3" model="event.sponsor.type">
+    <field name="display_ribbon_style">Gold</field>
+  </record>
+  <record id="event_track_public" model="ir.rule">
+    <field name="name">Event Tracks: public/portal: published</field>
+  </record>
+  <record id="event_track_stage0" model="event.track.stage">
+    <field name="color">1</field>
+  </record>
+  <record id="event_track_stage1" model="event.track.stage">
+    <field name="color">2</field>
+  </record>
+  <record id="event_track_stage2" model="event.track.stage">
+    <field name="color">3</field>
+    <field name="is_accepted" eval="True"/>
+  </record>
+  <record id="event_track_stage3" model="event.track.stage">
+    <field name="color">4</field>
+    <field name="is_accepted" eval="True"/>
+  </record>
+  <record id="event_track_stage4" model="event.track.stage">
+    <field name="color">5</field>
+  </record>
+  <record id="mail_template_data_track_confirmation" model="mail.template">
+    <field name="body_html" type="xml">
+      <div>
+    Dear ${object.partner_name or ''}<br/>
+    We are pleased to inform you that your proposal ${object.name} has been accepted and confirmed for the event ${object.event_id.name}.
+    <br/>
+    You will find more details here:
+    <div style="margin: 16px 0px 16px 0px;"><a href="/event/${object.event_id.id}/track/${object.id}" style="padding: 8px 16px 8px 16px; font-size: 14px; color: #FFFFFF; text-decoration: none !important; background-color: #875A7B; border: 0px solid #875A7B; border-radius:3px">
+            View Talk
+        </a></div>
+    <br/><br/>
+    Thank you,
+    % if user.signature
+        <br/>
+        ${user.signature | safe}
+    % endif
+</div>
+    </field>
+  </record>
+</odoo>

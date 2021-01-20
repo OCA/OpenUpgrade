@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="decimal_product_uom" model="decimal.precision" forcecreate="True">
+    <field name="digits" eval="2"/>
+  </record>
+  <record id="product_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="product_packaging_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="product_pricelist_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="product_pricelist_item_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="product_supplierinfo_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+</odoo>

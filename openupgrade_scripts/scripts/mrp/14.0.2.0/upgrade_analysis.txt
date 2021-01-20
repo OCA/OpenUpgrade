@@ -1,0 +1,137 @@
+---Models in module 'mrp'---
+obsolete model mrp.abstract.workorder [abstract]
+obsolete model mrp.abstract.workorder.line [abstract]
+obsolete model mrp.product.produce [transient]
+obsolete model mrp.product.produce.line [transient]
+obsolete model mrp.routing
+obsolete model mrp.workorder.line
+new model mrp.consumption.warning [transient]
+new model mrp.consumption.warning.line [transient]
+new model mrp.immediate.production [transient]
+new model mrp.immediate.production.line [transient]
+new model mrp.production.backorder [transient]
+new model mrp.production.backorder.line [transient]
+---Fields in module 'mrp'---
+mrp          / mrp.bom                  / consumption (selection)       : now required, req_default: function
+mrp          / mrp.bom                  / consumption (selection)       : selection_keys is now '['flexible', 'strict', 'warning']' ('['flexible', 'strict']')
+mrp          / mrp.bom                  / operation_ids (one2many)      : NEW relation: mrp.routing.workcenter
+mrp          / mrp.bom                  / routing_id (many2one)         : DEL relation: mrp.routing
+mrp          / mrp.bom.byproduct        / routing_id (many2one)         : DEL relation: mrp.routing
+mrp          / mrp.bom.line             / routing_id (many2one)         : DEL relation: mrp.routing
+mrp          / mrp.document             / key (char)                    : previously in module website
+mrp          / mrp.document             / theme_template_id (many2one)  : previously in module website_theme_install
+mrp          / mrp.document             / website_id (many2one)         : previously in module website
+mrp          / mrp.document             / website_url (char)            : previously in module website
+mrp          / mrp.production           / backorder_sequence (integer)  : NEW hasdefault
+mrp          / mrp.production           / consumption (selection)       : NEW required, selection_keys: ['flexible', 'strict', 'warning'], req_default: function, hasdefault
+mrp          / mrp.production           / date_deadline (datetime)      : now a function
+mrp          / mrp.production           / date_start_wo (datetime)      : DEL
+mrp          / mrp.production           / lot_producing_id (many2one)   : NEW relation: stock.production.lot
+mrp          / mrp.production           / priority (selection)          : selection_keys is now '['0', '1']' ('['0', '1', '2', '3']')
+mrp          / mrp.production           / product_description_variants (char): NEW
+mrp          / mrp.production           / production_location_id (many2one): is now stored
+mrp          / mrp.production           / production_location_id (many2one): not related anymore
+mrp          / mrp.production           / production_location_id (many2one): now a function
+mrp          / mrp.production           / propagate_date (boolean)      : DEL
+mrp          / mrp.production           / propagate_date_minimum_delta (integer): DEL
+mrp          / mrp.production           / qty_producing (float)         : NEW
+mrp          / mrp.production           / routing_id (many2one)         : DEL relation: mrp.routing
+mrp          / mrp.production           / state (selection)             : selection_keys is now '['cancel', 'confirmed', 'done', 'draft', 'progress', 'to_close']' ('['cancel', 'confirmed', 'done', 'draft', 'planned', 'progress', 'to_close']')
+mrp          / mrp.routing              / active (boolean)              : DEL
+mrp          / mrp.routing              / code (char)                   : DEL
+mrp          / mrp.routing              / company_id (many2one)         : DEL relation: res.company
+mrp          / mrp.routing              / name (char)                   : DEL required
+mrp          / mrp.routing              / note (text)                   : DEL
+mrp          / mrp.routing              / operation_ids (one2many)      : DEL relation: mrp.routing.workcenter
+mrp          / mrp.routing.workcenter   / batch (selection)             : DEL required, selection_keys: ['no', 'yes'], req_default: function
+mrp          / mrp.routing.workcenter   / batch_size (float)            : DEL
+mrp          / mrp.routing.workcenter   / bom_id (many2one)             : NEW relation: mrp.bom
+mrp          / mrp.routing.workcenter   / company_id (many2one)         : not related anymore
+mrp          / mrp.routing.workcenter   / routing_id (many2one)         : DEL relation: mrp.routing, required
+mrp          / mrp.routing.workcenter   / worksheet_type (selection)    : selection_keys is now '['google_slide', 'pdf', 'text']' ('['google_slide', 'pdf']')
+mrp          / mrp.workorder            / activity_ids (one2many)       : DEL relation: mail.activity
+mrp          / mrp.workorder            / capacity (float)              : DEL
+mrp          / mrp.workorder            / consumption (selection)       : selection_keys is now '['flexible', 'strict', 'warning']' ('['flexible', 'strict']')
+mrp          / mrp.workorder            / finished_lot_id (many2one)    : not stored anymore
+mrp          / mrp.workorder            / finished_lot_id (many2one)    : now a function
+mrp          / mrp.workorder            / finished_workorder_line_ids (one2many): DEL relation: mrp.workorder.line
+mrp          / mrp.workorder            / message_follower_ids (one2many): DEL relation: mail.followers
+mrp          / mrp.workorder            / message_ids (one2many)        : DEL relation: mail.message
+mrp          / mrp.workorder            / message_main_attachment_id (many2one): DEL relation: ir.attachment
+mrp          / mrp.workorder            / qty_producing (float)         : not stored anymore
+mrp          / mrp.workorder            / qty_producing (float)         : now a function
+mrp          / mrp.workorder            / raw_workorder_line_ids (one2many): DEL relation: mrp.workorder.line
+mrp          / mrp.workorder            / website_message_ids (one2many): DEL relation: mail.message
+mrp          / mrp.workorder.line       / finished_workorder_id (many2one): DEL relation: mrp.workorder
+mrp          / mrp.workorder.line       / lot_id (many2one)             : DEL relation: stock.production.lot
+mrp          / mrp.workorder.line       / move_id (many2one)            : DEL relation: stock.move
+mrp          / mrp.workorder.line       / product_id (many2one)         : DEL relation: product.product, required
+mrp          / mrp.workorder.line       / product_uom_id (many2one)     : DEL relation: uom.uom
+mrp          / mrp.workorder.line       / qty_done (float)              : DEL
+mrp          / mrp.workorder.line       / qty_reserved (float)          : DEL
+mrp          / mrp.workorder.line       / qty_to_consume (float)        : DEL
+mrp          / mrp.workorder.line       / raw_workorder_id (many2one)   : DEL relation: mrp.workorder
+mrp          / procurement.group        / mrp_production_ids (one2many) : NEW relation: mrp.production
+mrp          / stock.move               / unit_factor (float)           : now a function
+mrp          / stock.move.line          / done_move (boolean)           : DEL
+mrp          / stock.move.line          / lot_produced_ids (many2many)  : DEL relation: stock.production.lot
+mrp          / stock.move.line          / lot_produced_qty (float)      : DEL
+mrp          / stock.warehouse.orderpoint / bom_id (many2one)             : NEW relation: mrp.bom
+---XML records in module 'mrp'---
+NEW digest.tip: mrp.digest_tip_mrp_0
+NEW ir.actions.act_window: mrp.action_mrp_consumption_warning
+NEW ir.actions.act_window: mrp.action_mrp_production_backorder
+NEW ir.actions.act_window: mrp.mrp_workorder_mrp_production_form
+DEL ir.actions.act_window: mrp.act_mrp_product_produce
+DEL ir.actions.act_window: mrp.act_product_mrp_production
+DEL ir.actions.act_window: mrp.action_mrp_unbuild_move_line
+DEL ir.actions.act_window: mrp.mrp_workcenter_productivity_loss_action
+DEL ir.actions.act_window: mrp.mrp_workorder_delta_report
+NEW ir.actions.server: mrp.action_production_order_mark_done
+NEW ir.actions.server: mrp.mrp_production_action_unreserve_tree
+NEW ir.model.access: mrp.access_change_production_qty
+NEW ir.model.access: mrp.access_mrp_consumption_warning
+NEW ir.model.access: mrp.access_mrp_consumption_warning_line
+NEW ir.model.access: mrp.access_mrp_immediate_production
+NEW ir.model.access: mrp.access_mrp_immediate_production_line
+NEW ir.model.access: mrp.access_mrp_production_backorder
+NEW ir.model.access: mrp.access_mrp_production_backorder_line
+NEW ir.model.access: mrp.access_stock_warn_insufficient_qty_unbuild
+DEL ir.model.access: mrp.access_mrp_resource_manager
+DEL ir.model.access: mrp.access_mrp_routing
+DEL ir.model.access: mrp.access_mrp_routing_manager
+DEL ir.model.access: mrp.access_mrp_workorder_line_mrp_manager
+DEL ir.model.access: mrp.access_mrp_workorder_line_mrp_user
+DEL ir.rule: mrp.mrp_routing_rule (noupdate)
+DEL ir.sequence: mrp.sequence_mrp_route (noupdate)
+NEW ir.ui.menu: mrp.menu_procurement_compute_mrp
+DEL ir.ui.menu: mrp.menu_mrp_dashboard
+NEW ir.ui.view: mrp.mrp_production_workorder_form_view_inherit_editable
+NEW ir.ui.view: mrp.mrp_production_workorder_tree_editable_view
+NEW ir.ui.view: mrp.mrp_production_workorder_tree_view
+NEW ir.ui.view: mrp.mrp_report_product_product_replenishment
+NEW ir.ui.view: mrp.mrp_unbuild_form_view_simplified
+NEW ir.ui.view: mrp.stock_report_delivery_document_inherit_mrp
+NEW ir.ui.view: mrp.stock_report_delivery_kit_sections
+NEW ir.ui.view: mrp.stock_report_delivery_no_kit_section
+NEW ir.ui.view: mrp.view_immediate_production
+NEW ir.ui.view: mrp.view_mrp_consumption_warning_form
+NEW ir.ui.view: mrp.view_mrp_document_form
+NEW ir.ui.view: mrp.view_mrp_production_backorder_form
+NEW ir.ui.view: mrp.view_stock_move_operations_finished
+NEW ir.ui.view: mrp.view_stock_move_operations_raw
+NEW ir.ui.view: mrp.view_warehouse_orderpoint_tree_editable_inherited_purchase
+DEL ir.ui.view: mrp.mrp_product_produce_line_form
+DEL ir.ui.view: mrp.mrp_product_produce_line_kanban
+DEL ir.ui.view: mrp.mrp_production_workorder_tree_view_inherit
+DEL ir.ui.view: mrp.mrp_routing_form_view
+DEL ir.ui.view: mrp.mrp_routing_kanban_view
+DEL ir.ui.view: mrp.mrp_routing_search_view
+DEL ir.ui.view: mrp.mrp_routing_tree_view
+DEL ir.ui.view: mrp.view_document_form
+DEL ir.ui.view: mrp.view_finisehd_move_line
+DEL ir.ui.view: mrp.view_move_kanban_inherit_mrp
+DEL ir.ui.view: mrp.view_mrp_product_produce_wizard
+DEL ir.ui.view: mrp.view_stock_move_lots
+DEL ir.ui.view: mrp.view_stock_move_raw_tree
+NEW res.groups: mrp.group_locked_by_default

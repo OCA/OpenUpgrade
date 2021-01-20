@@ -1,0 +1,6 @@
+---Models in module 'sale_expense'---
+---Fields in module 'sale_expense'---
+sale_expense / hr.expense               / sale_order_id (many2one)      : now a function
+---XML records in module 'sale_expense'---
+DEL digest.tip: sale_expense.digest_tip_sale_expense_0
+NEW ir.ui.view: sale_expense.hr_expense_tree_view_inherit_sale_expense

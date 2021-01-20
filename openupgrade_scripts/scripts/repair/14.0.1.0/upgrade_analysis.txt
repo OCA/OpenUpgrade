@@ -1,0 +1,16 @@
+---Models in module 'repair'---
+obsolete model repair.cancel [transient]
+---Fields in module 'repair'---
+repair       / repair.fee               / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
+repair       / repair.line              / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
+repair       / repair.line              / repair_id (many2one)          : now required
+repair       / repair.order             / company_id (many2one)         : now required, req_default: function
+---XML records in module 'repair'---
+DEL ir.actions.act_window: repair.action_cancel_repair
+NEW ir.model.access: repair.access_repair_order_make_invoice
+NEW ir.model.access: repair.access_stock_warn_insufficient_qty_repair
+NEW ir.rule: repair.repair_fee_rule (noupdate)
+NEW ir.rule: repair.repair_line_rule (noupdate)
+NEW ir.rule: repair.repair_order_rule (noupdate)
+DEL ir.rule: repair.repair_rule (noupdate)
+DEL ir.ui.view: repair.view_cancel_repair

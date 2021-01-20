@@ -1,0 +1,33 @@
+---Models in module 'product'---
+obsolete model product.price_list [transient]
+model product.attribute.custom.value (moved from sale)
+---Fields in module 'product'---
+product      / product.attribute        / display_type (selection)      : previously in module sale
+product      / product.attribute.custom.value / __last_update (datetime)      : previously in module sale
+product      / product.attribute.custom.value / custom_product_template_attribute_value_id (many2one): previously in module sale
+product      / product.attribute.custom.value / custom_value (char)           : previously in module sale
+product      / product.attribute.custom.value / display_name (char)           : previously in module sale
+product      / product.attribute.custom.value / name (char)                   : previously in module sale
+product      / product.attribute.value  / display_type (selection)      : previously in module sale
+product      / product.attribute.value  / html_color (char)             : previously in module sale
+product      / product.attribute.value  / is_custom (boolean)           : previously in module sale
+product      / product.pricelist        / discount_policy (selection)   : now required, req_default: function
+product      / product.pricelist.item   / date_end (date)               : type is now 'datetime' ('date')
+product      / product.pricelist.item   / date_start (date)             : type is now 'datetime' ('date')
+product      / product.pricelist.item   / min_quantity (integer)        : type is now 'float' ('integer')
+product      / product.template         / barcode (char)                : not related anymore
+product      / product.template         / barcode (char)                : now a function
+product      / product.template         / rental (boolean)              : DEL
+product      / product.template.attribute.value / display_type (selection)      : previously in module sale
+product      / product.template.attribute.value / html_color (char)             : previously in module sale
+product      / product.template.attribute.value / is_custom (boolean)           : previously in module sale
+---XML records in module 'product'---
+DEL ir.actions.act_window: product.action_product_price_list
+NEW ir.actions.server: product.action_product_price_list_report
+NEW ir.actions.server: product.action_product_template_price_list_report
+NEW ir.model.access: product.access_product_attribute_custom_value_manager
+NEW ir.model.access: product.access_product_attribute_custom_value_user
+NEW ir.ui.view: product.assets_backend
+NEW ir.ui.view: product.qunit_suite
+NEW ir.ui.view: product.report_pricelist_page
+DEL ir.ui.view: product.view_product_price_list

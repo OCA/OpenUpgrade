@@ -1,0 +1,24 @@
+---Models in module 'hr_contract'---
+new model hr.payroll.structure.type
+---Fields in module 'hr_contract'---
+hr_contract  / hr.contract              / advantages (text)             : DEL
+hr_contract  / hr.contract              / company_id (many2one)         : now a function
+hr_contract  / hr.contract              / department_id (many2one)      : now a function
+hr_contract  / hr.contract              / job_id (many2one)             : now a function
+hr_contract  / hr.contract              / message_has_sms_error (boolean): module is now 'sms' ('hr_contract')
+hr_contract  / hr.contract              / resource_calendar_id (many2one): now a function
+hr_contract  / hr.contract              / structure_type_id (many2one)  : NEW relation: hr.payroll.structure.type
+hr_contract  / hr.contract              / website_message_ids (one2many): module is now 'portal' ('hr_contract')
+hr_contract  / hr.employee              / medic_exam (date)             : DEL
+hr_contract  / hr.payroll.structure.type / country_id (many2one)         : NEW relation: res.country, hasdefault
+hr_contract  / hr.payroll.structure.type / default_resource_calendar_id (many2one): NEW relation: resource.calendar, hasdefault
+hr_contract  / hr.payroll.structure.type / name (char)                   : NEW
+---XML records in module 'hr_contract'---
+NEW hr.payroll.structure.type: hr_contract.structure_type_employee (noupdate)
+NEW hr.payroll.structure.type: hr_contract.structure_type_employee_cp200 (noupdate)
+NEW hr.payroll.structure.type: hr_contract.structure_type_employee_cp200_pfi (noupdate)
+NEW hr.payroll.structure.type: hr_contract.structure_type_worker (noupdate)
+NEW ir.model.access: hr_contract.access_hr_payroll_structure_type_hr_contract_manager
+NEW ir.rule: hr_contract.ir_rule_hr_payroll_structure_type_multi_company (noupdate)
+NEW ir.ui.view: hr_contract.hr_departure_wizard_view_form
+DEL ir.ui.view: hr_contract.hr_employee_view_kanban

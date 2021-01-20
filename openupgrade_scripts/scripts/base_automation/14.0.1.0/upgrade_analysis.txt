@@ -1,0 +1,24 @@
+---Models in module 'base_automation'---
+obsolete model base.automation.lead.test
+obsolete model base.automation.line.test
+---Fields in module 'base_automation'---
+base_automation / base.automation          / on_change_field_ids (many2many): NEW relation: ir.model.fields
+base_automation / base.automation          / on_change_fields (char)       : DEL
+base_automation / base.automation.lead.test / active (boolean)              : DEL
+base_automation / base.automation.lead.test / date_action_last (datetime)   : DEL
+base_automation / base.automation.lead.test / deadline (boolean)            : DEL
+base_automation / base.automation.lead.test / employee (boolean)            : DEL
+base_automation / base.automation.lead.test / is_assigned_to_admin (boolean): DEL
+base_automation / base.automation.lead.test / line_ids (one2many)           : DEL relation: base.automation.line.test
+base_automation / base.automation.lead.test / name (char)                   : DEL required
+base_automation / base.automation.lead.test / partner_id (many2one)         : DEL relation: res.partner
+base_automation / base.automation.lead.test / priority (boolean)            : DEL
+base_automation / base.automation.lead.test / state (selection)             : DEL selection_keys: ['cancel', 'done', 'draft', 'open', 'pending']
+base_automation / base.automation.lead.test / user_id (many2one)            : DEL relation: res.users
+base_automation / base.automation.line.test / lead_id (many2one)            : DEL relation: base.automation.lead.test
+base_automation / base.automation.line.test / name (char)                   : DEL
+base_automation / base.automation.line.test / user_id (many2one)            : DEL relation: res.users
+---XML records in module 'base_automation'---
+DEL ir.model.access: base_automation.access_base_automation
+DEL ir.model.access: base_automation.access_base_automation_lead_test
+DEL ir.model.access: base_automation.access_base_automation_line_test

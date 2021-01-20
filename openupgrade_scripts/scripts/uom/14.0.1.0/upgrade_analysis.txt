@@ -1,0 +1,8 @@
+---Models in module 'uom'---
+---Fields in module 'uom'---
+uom          / uom.category             / measure_type (selection)      : DEL selection_keys: ['length', 'unit', 'volume', 'weight', 'working_time']
+uom          / uom.uom                  / measure_type (selection)      : DEL selection_keys: function
+---XML records in module 'uom'---
+NEW uom.uom: uom.product_uom_cubic_foot (noupdate)
+NEW uom.uom: uom.product_uom_cubic_inch (noupdate)
+NEW uom.uom: uom.product_uom_cubic_meter (noupdate)

@@ -1,0 +1,85 @@
+---Models in module 'crm'---
+obsolete model crm.lead.tag
+obsolete model crm.partner.binding [transient]
+new model crm.recurring.plan
+---Fields in module 'crm'---
+crm          / crm.lead                 / automated_probability (float) : now a function
+crm          / crm.lead                 / city (char)                   : now a function
+crm          / crm.lead                 / contact_name (char)           : now a function
+crm          / crm.lead                 / country_id (many2one)         : now a function
+crm          / crm.lead                 / date_last_stage_update (datetime): now a function
+crm          / crm.lead                 / date_open (datetime)          : now a function
+crm          / crm.lead                 / email_from (char)             : now a function
+crm          / crm.lead                 / expected_revenue (float)      : not a function anymore
+crm          / crm.lead                 / function (char)               : now a function
+crm          / crm.lead                 / mobile (char)                 : now a function
+crm          / crm.lead                 / name (char)                   : now a function
+crm          / crm.lead                 / partner_name (char)           : now a function
+crm          / crm.lead                 / phone (char)                  : now a function
+crm          / crm.lead                 / phone_mobile_search (char)    : NEW
+crm          / crm.lead                 / phone_sanitized (char)        : NEW isfunction: function, stored
+crm          / crm.lead                 / planned_revenue (float)       : DEL
+crm          / crm.lead                 / probability (float)           : now a function
+crm          / crm.lead                 / prorated_revenue (float)      : NEW isfunction: function, stored
+crm          / crm.lead                 / recurring_plan (many2one)     : NEW relation: crm.recurring.plan
+crm          / crm.lead                 / recurring_revenue (float)     : NEW
+crm          / crm.lead                 / recurring_revenue_monthly (float): NEW isfunction: function, stored
+crm          / crm.lead                 / recurring_revenue_monthly_prorated (float): NEW isfunction: function, stored
+crm          / crm.lead                 / stage_id (many2one)           : now a function
+crm          / crm.lead                 / state_id (many2one)           : now a function
+crm          / crm.lead                 / street (char)                 : now a function
+crm          / crm.lead                 / street2 (char)                : now a function
+crm          / crm.lead                 / tag_ids (many2many)           : relation is now 'crm.tag' ('crm.lead.tag') [nothing to do]
+crm          / crm.lead                 / tag_ids (many2many)           : table is now 'crm_tag_rel' ('crm_lead_tag_rel')
+crm          / crm.lead                 / team_id (many2one)            : now a function
+crm          / crm.lead                 / title (many2one)              : now a function
+crm          / crm.lead                 / website (char)                : now a function
+crm          / crm.lead                 / zip (char)                    : now a function
+crm          / crm.lead.tag             / color (integer)               : DEL
+crm          / crm.lead.tag             / name (char)                   : DEL required
+crm          / crm.recurring.plan       / active (boolean)              : NEW hasdefault
+crm          / crm.recurring.plan       / name (char)                   : NEW required
+crm          / crm.recurring.plan       / number_of_months (integer)    : NEW required
+crm          / crm.recurring.plan       / sequence (integer)            : NEW hasdefault
+crm          / crm.team                 / opportunities_amount (integer): type is now 'float' ('integer')
+---XML records in module 'crm'---
+NEW crm.recurring.plan: crm.crm_recurring_plan_monthly (noupdate)
+NEW crm.recurring.plan: crm.crm_recurring_plan_over_3_years (noupdate)
+NEW crm.recurring.plan: crm.crm_recurring_plan_over_5_years (noupdate)
+NEW crm.recurring.plan: crm.crm_recurring_plan_yearly (noupdate)
+NEW crm.team: sales_team.team_sales_department (noupdate)
+NEW digest.tip: crm.digest_tip_crm_1
+NEW digest.tip: crm.digest_tip_crm_2
+NEW digest.tip: crm.digest_tip_crm_3
+NEW digest.tip: crm.digest_tip_crm_4
+NEW digest.tip: crm.digest_tip_crm_5
+NEW ir.actions.act_window: crm.crm_lead_act_window_compose
+NEW ir.actions.act_window: crm.crm_lead_action_my_activities
+NEW ir.actions.act_window: crm.crm_recurring_plan_action
+DEL ir.actions.act_window: crm.crm_lead_tag_action
+DEL ir.actions.act_window: crm.crm_team_act_tree
+DEL ir.actions.act_window: crm.relate_partner_opportunities
+NEW ir.actions.act_window.view: crm.crm_lead_action_my_activities_view_tree
+DEL ir.actions.act_window.view: crm.relate_partner_opportunities_kanban
+DEL ir.actions.act_window.view: crm.relate_partner_opportunities_tree
+DEL ir.config_parameter: crm.crm_pls_rebuild_threshold_param (noupdate)
+NEW ir.model.access: crm.access_crm_lead2opportunity_partner
+NEW ir.model.access: crm.access_crm_lead2opportunity_partner_mass
+NEW ir.model.access: crm.access_crm_lead_lost
+NEW ir.model.access: crm.access_crm_merge_opportunity
+NEW ir.model.access: crm.crm_recurring_plan_access_manager
+NEW ir.model.access: crm.crm_recurring_plan_access_salesman
+DEL ir.model.access: crm.access_crm_lead_tag
+DEL ir.model.access: crm.access_crm_lead_tag_manager
+DEL ir.model.access: crm.access_crm_lead_tag_salesman
+NEW ir.ui.menu: crm.crm_lead_menu_my_activities
+NEW ir.ui.menu: crm.crm_recurring_plan_menu_config
+NEW ir.ui.view: crm.crm_lead_view_list_activities
+NEW ir.ui.view: crm.crm_recurring_plan_view_search
+NEW ir.ui.view: crm.crm_recurring_plan_view_tree
+NEW ir.ui.view: crm.qunit_suite
+NEW ir.ui.view: crm.view_crm_case_my_activities_filter
+DEL ir.ui.view: crm.crm_lead_tag_form
+DEL ir.ui.view: crm.crm_lead_tag_tree
+DEL ir.ui.view: crm.crm_lead_view_tree_activity
+NEW res.groups: crm.group_use_recurring_revenues

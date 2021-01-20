@@ -1,0 +1,36 @@
+---Models in module 'website_event_meet'---
+new model event.meeting.room
+---Fields in module 'website_event_meet'---
+website_event_meet / event.event              / meeting_room_allow_creation (boolean): NEW isfunction: function, stored
+website_event_meet / event.event              / meeting_room_ids (one2many)   : NEW relation: event.meeting.room
+website_event_meet / event.meeting.room       / active (boolean)              : NEW hasdefault
+website_event_meet / event.meeting.room       / chat_room_id (many2one)       : NEW relation: chat.room, required
+website_event_meet / event.meeting.room       / event_id (many2one)           : NEW relation: event.event, required
+website_event_meet / event.meeting.room       / is_pinned (boolean)           : NEW
+website_event_meet / event.meeting.room       / is_published (boolean)        : NEW hasdefault
+website_event_meet / event.meeting.room       / name (char)                   : NEW required
+website_event_meet / event.meeting.room       / summary (char)                : NEW
+website_event_meet / event.meeting.room       / target_audience (char)        : NEW
+website_event_meet / event.type               / meeting_room_allow_creation (boolean): NEW isfunction: function, stored
+website_event_meet / website.event.menu       / menu_type (False)             : NEW selection_keys: ['community', 'meeting_room'], mode: modify
+---XML records in module 'website_event_meet'---
+NEW ir.actions.act_window: website_event_meet.event_meeting_room_action
+NEW ir.model.access: website_event_meet.chat_room_access_event_manager
+NEW ir.model.access: website_event_meet.chat_room_access_event_user
+NEW ir.model.access: website_event_meet.event_meeting_room_access_all
+NEW ir.model.access: website_event_meet.event_meeting_room_access_manager
+NEW ir.model.access: website_event_meet.event_meeting_room_access_user
+NEW ir.rule: website_event_meet.event_meeting_room_rule_share (noupdate)
+NEW ir.ui.view: website_event_meet.assets_frontend
+NEW ir.ui.view: website_event_meet.community_aside
+NEW ir.ui.view: website_event_meet.community_main
+NEW ir.ui.view: website_event_meet.event_event_view_form
+NEW ir.ui.view: website_event_meet.event_meet
+NEW ir.ui.view: website_event_meet.event_meet_main
+NEW ir.ui.view: website_event_meet.event_meeting_room_view_form
+NEW ir.ui.view: website_event_meet.event_meeting_room_view_search
+NEW ir.ui.view: website_event_meet.event_meeting_room_view_tree
+NEW ir.ui.view: website_event_meet.event_type_view_form
+NEW ir.ui.view: website_event_meet.meeting_room_aside
+NEW ir.ui.view: website_event_meet.meeting_room_card
+NEW ir.ui.view: website_event_meet.meeting_room_main

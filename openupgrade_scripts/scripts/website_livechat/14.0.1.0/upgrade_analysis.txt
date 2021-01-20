@@ -1,0 +1,8 @@
+---Models in module 'website_livechat'---
+---Fields in module 'website_livechat'---
+website_livechat / mail.channel             / livechat_active (boolean)     : module is now 'im_livechat' ('website_livechat')
+---XML records in module 'website_livechat'---
+ir.rule: website_livechat.im_livechat_channel_rule_public (noupdate) (noupdate switched)
+NEW ir.ui.view: website_livechat.assets_tests
+NEW ir.ui.view: website_livechat.qunit_suite
+DEL website.menu: website_livechat.menu_livechat (noupdate)

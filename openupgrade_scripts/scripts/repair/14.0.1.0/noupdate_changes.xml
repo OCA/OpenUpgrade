@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_template_repair_quotation" model="mail.template">
+    <field name="body_html" type="xml">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px;font-size: 13px;">
+        Hello ${object.partner_id.name},<br/>
+        Here is your repair order ${doc_name} <strong>${object.name}</strong>
+        % if object.origin:
+            (with reference: ${object.origin} )
+        % endif
+        % if object.invoice_method != 'none':
+            amounting in <strong>${format_amount(object.amount_total, object.pricelist_id.currency_id)}.</strong><br/>
+        % else:
+            .<br/>
+        % endif
+        You can reply to this email if you have any questions.
+        <br/><br/>
+        Thank you,
+        % if user.signature
+            <br/>
+            ${user.signature | safe}
+        % endif
+    </p>
+      </div>
+    </field>
+  </record>
+  <record id="seq_repair" model="ir.sequence">
+    <field name="company_id" eval="False"/>
+  </record>
+</odoo>

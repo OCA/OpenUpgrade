@@ -1,0 +1,14 @@
+---Models in module 'snailmail'---
+new model snailmail.confirm [abstract]
+---Fields in module 'snailmail'---
+snailmail    / mail.message             / message_type (False)          : selection_keys is now '['comment', 'email', 'notification', 'sms', 'snailmail', 'user_notification']' ('['comment', 'email', 'notification', 'snailmail', 'user_notification']')
+snailmail    / mail.notification        / failure_type (False)          : NEW selection_keys: ['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN', 'sms_acc', 'sms_credit', 'sms_number_format', 'sms_number_missing', 'sms_server', 'sn_credit', 'sn_error', 'sn_fields', 'sn_format', 'sn_price', 'sn_trial'], mode: modify
+snailmail    / mail.notification        / letter_id (many2one)          : NEW relation: snailmail.letter
+snailmail    / mail.notification        / notification_type (False)     : NEW selection_keys: ['email', 'inbox', 'sms', 'snail'], mode: modify
+snailmail    / snailmail.letter         / notification_ids (one2many)   : NEW relation: mail.notification
+---XML records in module 'snailmail'---
+NEW ir.model.access: snailmail.access_snailmail_letter_cancel
+NEW ir.model.access: snailmail.access_snailmail_letter_format_error
+NEW ir.model.access: snailmail.access_snailmail_letter_missing_required_fields
+NEW ir.ui.view: snailmail.snailmail_confirm_view
+NEW ir.ui.view: snailmail.tests_assets

@@ -1,0 +1,14 @@
+---Models in module 'auth_totp'---
+new model auth_totp.wizard [transient]
+---Fields in module 'auth_totp'---
+auth_totp    / res.users                / totp_secret (char)            : NEW
+---XML records in module 'auth_totp'---
+NEW ir.actions.server: auth_totp.action_disable_totp
+NEW ir.model.access: auth_totp.access_auth_totp_wizard
+NEW ir.rule: auth_totp.rule_auth_totp_wizard
+NEW ir.ui.view: auth_totp.assets_tests
+NEW ir.ui.view: auth_totp.auth_totp_form
+NEW ir.ui.view: auth_totp.view_totp_field
+NEW ir.ui.view: auth_totp.view_totp_form
+NEW ir.ui.view: auth_totp.view_totp_list
+NEW ir.ui.view: auth_totp.view_totp_wizard

@@ -1,0 +1,22 @@
+---Models in module 'google_calendar'---
+obsolete model google.calendar [abstract]
+new model google.calendar.account.reset [transient]
+new model google.calendar.sync [abstract]
+---Fields in module 'google_calendar'---
+google_calendar / calendar.attendee        / google_internal_event_id (char): DEL
+google_calendar / calendar.attendee        / oe_synchro_date (datetime)    : DEL
+google_calendar / calendar.event           / google_id (char)              : NEW isfunction: function, stored
+google_calendar / calendar.event           / need_sync (boolean)           : NEW hasdefault
+google_calendar / calendar.event           / oe_update_date (datetime)     : DEL
+google_calendar / calendar.recurrence      / active (boolean)              : NEW hasdefault
+google_calendar / calendar.recurrence      / google_id (char)              : NEW
+google_calendar / calendar.recurrence      / need_sync (boolean)           : NEW hasdefault
+google_calendar / res.users                / google_calendar_last_sync_date (datetime): DEL
+google_calendar / res.users                / google_calendar_sync_token (char): NEW
+---XML records in module 'google_calendar'---
+NEW ir.actions.act_window: google_calendar.google_calendar_reset_account_action
+NEW ir.model.access: google_calendar.google_calendar_account_reset
+DEL ir.model.access: google_calendar.access_google_calendar
+DEL ir.model.access: google_calendar.access_google_calendar_all
+NEW ir.ui.view: google_calendar.google_calendar_reset_account_view_form
+NEW ir.ui.view: google_calendar.qunit_mobile_suite

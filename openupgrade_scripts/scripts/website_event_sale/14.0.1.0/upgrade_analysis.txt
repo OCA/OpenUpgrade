@@ -1,0 +1,12 @@
+---Models in module 'website_event_sale'---
+---Fields in module 'website_event_sale'---
+---XML records in module 'website_event_sale'---
+NEW event.type: event.event_type_data_ticket (noupdate)
+DEL event.type: event_sale.event_type_data_sale (noupdate)
+DEL ir.model.access: website_event_sale.access_event_event_ticket_public [renamed to website_event module]
+DEL ir.model.access: website_event_sale.access_event_product_product_public
+DEL ir.model.access: website_event_sale.access_event_product_template_public
+ir.rule: website_event_sale.event_product_template_public (noupdate) (noupdate switched)
+DEL ir.rule: website_event_sale.event_event_ticket_public
+DEL ir.ui.view: website_event_sale.index
+DEL ir.ui.view: website_event_sale.registration_complete_inherit_website_event_sale

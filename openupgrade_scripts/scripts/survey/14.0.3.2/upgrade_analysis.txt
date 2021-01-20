@@ -1,0 +1,208 @@
+---Models in module 'survey'---
+obsolete model survey.label
+obsolete model survey.user_input_line
+new model survey.question.answer
+new model survey.user_input.line
+---Fields in module 'survey'---
+survey       / gamification.challenge   / category (False)              : DEL selection_keys: ['certification', 'hr', 'other'], mode: modify
+survey       / gamification.challenge   / challenge_category (False)    : NEW selection_keys: ['certification', 'hr', 'other'], mode: modify
+survey       / survey.label             / answer_score (float)          : DEL
+survey       / survey.label             / is_correct (boolean)          : DEL
+survey       / survey.label             / question_id (many2one)        : DEL relation: survey.question
+survey       / survey.label             / question_id_2 (many2one)      : DEL relation: survey.question
+survey       / survey.label             / sequence (integer)            : DEL
+survey       / survey.label             / value (char)                  : DEL required
+survey       / survey.question          / allow_value_image (boolean)   : NEW
+survey       / survey.question          / answer_date (date)            : NEW
+survey       / survey.question          / answer_datetime (datetime)    : NEW
+survey       / survey.question          / answer_numerical_box (float)  : NEW
+survey       / survey.question          / answer_score (float)          : NEW
+survey       / survey.question          / display_mode (selection)      : DEL selection_keys: ['columns', 'dropdown']
+survey       / survey.question          / is_conditional (boolean)      : NEW
+survey       / survey.question          / is_scored_question (boolean)  : NEW isfunction: function, stored
+survey       / survey.question          / is_time_limited (boolean)     : NEW
+survey       / survey.question          / labels_ids (one2many)         : DEL relation: survey.label
+survey       / survey.question          / labels_ids_2 (one2many)       : DEL relation: survey.label
+survey       / survey.question          / matrix_row_ids (one2many)     : NEW relation: survey.question.answer
+survey       / survey.question          / question_type (selection)     : now a function
+survey       / survey.question          / question_type (selection)     : selection_keys is now '['char_box', 'date', 'datetime', 'matrix', 'multiple_choice', 'numerical_box', 'simple_choice', 'text_box']' ('['date', 'datetime', 'free_text', 'matrix', 'multiple_choice', 'numerical_box', 'simple_choice', 'textbox']')
+survey       / survey.question          / save_as_email (boolean)       : NEW isfunction: function, stored
+survey       / survey.question          / save_as_nickname (boolean)    : NEW isfunction: function, stored
+survey       / survey.question          / suggested_answer_ids (one2many): NEW relation: survey.question.answer
+survey       / survey.question          / time_limit (integer)          : NEW
+survey       / survey.question          / triggering_answer_id (many2one): NEW relation: survey.question.answer, isfunction: function, stored
+survey       / survey.question          / triggering_question_id (many2one): NEW relation: survey.question, isfunction: function, stored
+survey       / survey.question          / user_input_line_ids (one2many): relation is now 'survey.user_input.line' ('survey.user_input_line') [nothing to do]
+survey       / survey.question.answer   / answer_score (float)          : NEW
+survey       / survey.question.answer   / is_correct (boolean)          : NEW
+survey       / survey.question.answer   / matrix_question_id (many2one) : NEW relation: survey.question
+survey       / survey.question.answer   / question_id (many2one)        : NEW relation: survey.question
+survey       / survey.question.answer   / sequence (integer)            : NEW hasdefault
+survey       / survey.question.answer   / value (char)                  : NEW required
+survey       / survey.question.answer   / value_image (binary)          : NEW attachment: True
+survey       / survey.survey            / background_image (binary)     : NEW attachment: True
+survey       / survey.survey            / category (selection)          : DEL required, selection_keys: ['default'], req_default: function
+survey       / survey.survey            / certificate (boolean)         : DEL
+survey       / survey.survey            / certification (boolean)       : NEW isfunction: function, stored
+survey       / survey.survey            / certification_give_badge (boolean): now a function
+survey       / survey.survey            / certification_report_layout (selection): NEW selection_keys: ['classic_blue', 'classic_gold', 'classic_purple', 'modern_blue', 'modern_gold', 'modern_purple'], hasdefault
+survey       / survey.survey            / description_done (html)       : NEW
+survey       / survey.survey            / is_attempts_limited (boolean) : now a function
+survey       / survey.survey            / passing_score (float)         : DEL required, req_default: function
+survey       / survey.survey            / progression_mode (selection)  : NEW selection_keys: ['number', 'percent'], hasdefault
+survey       / survey.survey            / scoring_success_min (float)   : NEW hasdefault
+survey       / survey.survey            / session_code (char)           : NEW hasdefault
+survey       / survey.survey            / session_question_id (many2one): NEW relation: survey.question
+survey       / survey.survey            / session_question_start_time (datetime): NEW
+survey       / survey.survey            / session_speed_rating (boolean): NEW
+survey       / survey.survey            / session_start_time (datetime) : NEW
+survey       / survey.survey            / session_state (selection)     : NEW selection_keys: ['in_progress', 'ready']
+survey       / survey.survey            / thank_you_message (html)      : DEL
+survey       / survey.user_input        / access_token (char)           : NEW required, req_default: function, hasdefault
+survey       / survey.user_input        / input_type (selection)        : DEL required, selection_keys: ['link', 'manually'], req_default: function
+survey       / survey.user_input        / is_session_answer (boolean)   : NEW
+survey       / survey.user_input        / nickname (char)               : NEW
+survey       / survey.user_input        / predefined_question_ids (many2many): NEW relation: survey.question
+survey       / survey.user_input        / question_ids (many2many)      : DEL relation: survey.question
+survey       / survey.user_input        / quizz_passed (boolean)        : DEL
+survey       / survey.user_input        / quizz_score (float)           : DEL
+survey       / survey.user_input        / scoring_percentage (float)    : NEW isfunction: function, stored
+survey       / survey.user_input        / scoring_success (boolean)     : NEW isfunction: function, stored
+survey       / survey.user_input        / scoring_total (float)         : NEW isfunction: function, stored
+survey       / survey.user_input        / state (selection)             : selection_keys is now '['done', 'in_progress', 'new']' ('['done', 'new', 'skip']')
+survey       / survey.user_input        / token (char)                  : DEL required, req_default: function
+survey       / survey.user_input        / user_input_line_ids (one2many): relation is now 'survey.user_input.line' ('survey.user_input_line') [nothing to do]
+survey       / survey.user_input.line   / answer_is_correct (boolean)   : NEW
+survey       / survey.user_input.line   / answer_score (float)          : NEW
+survey       / survey.user_input.line   / answer_type (selection)       : NEW selection_keys: ['char_box', 'date', 'datetime', 'numerical_box', 'suggestion', 'text_box']
+survey       / survey.user_input.line   / matrix_row_id (many2one)      : NEW relation: survey.question.answer
+survey       / survey.user_input.line   / question_id (many2one)        : NEW relation: survey.question, required
+survey       / survey.user_input.line   / question_sequence (integer)   : NEW isrelated: related, stored
+survey       / survey.user_input.line   / skipped (boolean)             : NEW
+survey       / survey.user_input.line   / suggested_answer_id (many2one): NEW relation: survey.question.answer
+survey       / survey.user_input.line   / survey_id (many2one)          : NEW relation: survey.survey, isrelated: related, stored
+survey       / survey.user_input.line   / user_input_id (many2one)      : NEW relation: survey.user_input, required
+survey       / survey.user_input.line   / value_char_box (char)         : NEW
+survey       / survey.user_input.line   / value_date (date)             : NEW
+survey       / survey.user_input.line   / value_datetime (datetime)     : NEW
+survey       / survey.user_input.line   / value_numerical_box (float)   : NEW
+survey       / survey.user_input.line   / value_text_box (text)         : NEW
+survey       / survey.user_input_line   / answer_score (float)          : DEL
+survey       / survey.user_input_line   / answer_type (selection)       : DEL selection_keys: ['date', 'datetime', 'free_text', 'number', 'suggestion', 'text']
+survey       / survey.user_input_line   / question_id (many2one)        : DEL relation: survey.question, required
+survey       / survey.user_input_line   / question_sequence (integer)   : DEL
+survey       / survey.user_input_line   / skipped (boolean)             : DEL
+survey       / survey.user_input_line   / survey_id (many2one)          : DEL relation: survey.survey
+survey       / survey.user_input_line   / user_input_id (many2one)      : DEL relation: survey.user_input, required
+survey       / survey.user_input_line   / value_date (date)             : DEL
+survey       / survey.user_input_line   / value_datetime (datetime)     : DEL
+survey       / survey.user_input_line   / value_free_text (text)        : DEL
+survey       / survey.user_input_line   / value_number (float)          : DEL
+survey       / survey.user_input_line   / value_suggested (many2one)    : DEL relation: survey.label
+survey       / survey.user_input_line   / value_suggested_row (many2one): DEL relation: survey.label
+survey       / survey.user_input_line   / value_text (char)             : DEL
+---XML records in module 'survey'---
+NEW ir.actions.act_window: survey.survey_question_answer_action
+NEW ir.actions.act_window: survey.survey_user_input_line_action
+DEL ir.actions.act_window: survey.action_survey_label_form
+DEL ir.actions.act_window: survey.action_survey_user_input_line
+NEW ir.model.access: survey.access_survey_invite
+NEW ir.model.access: survey.access_survey_question_answer_all
+NEW ir.model.access: survey.access_survey_question_answer_survey_manager
+NEW ir.model.access: survey.access_survey_question_answer_survey_user
+NEW ir.model.access: survey.access_survey_question_answer_user
+DEL ir.model.access: survey.access_survey_label_all
+DEL ir.model.access: survey.access_survey_label_survey_manager
+DEL ir.model.access: survey.access_survey_label_survey_user
+DEL ir.model.access: survey.access_survey_label_user
+NEW ir.module.category: base.module_category_marketing_surveys (noupdate)
+DEL ir.module.category: base.module_category_marketing_survey (noupdate)
+NEW ir.rule: survey.survey_question_answer_rule_survey_manager (noupdate)
+NEW ir.rule: survey.survey_question_answer_rule_survey_user_cw (noupdate)
+NEW ir.rule: survey.survey_question_answer_rule_survey_user_read (noupdate)
+DEL ir.rule: survey.survey_label_rule_survey_manager (noupdate)
+DEL ir.rule: survey.survey_label_rule_survey_user_cw (noupdate)
+DEL ir.rule: survey.survey_label_rule_survey_user_read (noupdate)
+NEW ir.ui.view: survey.certification_report_view_classic
+NEW ir.ui.view: survey.certification_report_view_modern
+NEW ir.ui.view: survey.question_char_box
+NEW ir.ui.view: survey.question_container
+NEW ir.ui.view: survey.question_date
+NEW ir.ui.view: survey.question_datetime
+NEW ir.ui.view: survey.question_matrix
+NEW ir.ui.view: survey.question_multiple_choice
+NEW ir.ui.view: survey.question_numerical_box
+NEW ir.ui.view: survey.question_result_choice
+NEW ir.ui.view: survey.question_result_comments
+NEW ir.ui.view: survey.question_result_matrix
+NEW ir.ui.view: survey.question_result_number_or_date
+NEW ir.ui.view: survey.question_result_text
+NEW ir.ui.view: survey.question_simple_choice
+NEW ir.ui.view: survey.question_suggested_value_image
+NEW ir.ui.view: survey.question_table_pagination
+NEW ir.ui.view: survey.question_text_box
+NEW ir.ui.view: survey.survey_403_page
+NEW ir.ui.view: survey.survey_auth_required
+NEW ir.ui.view: survey.survey_button_form_view
+NEW ir.ui.view: survey.survey_button_retake
+NEW ir.ui.view: survey.survey_closed_expired
+NEW ir.ui.view: survey.survey_fill_form
+NEW ir.ui.view: survey.survey_fill_form_done
+NEW ir.ui.view: survey.survey_fill_form_in_progress
+NEW ir.ui.view: survey.survey_fill_form_start
+NEW ir.ui.view: survey.survey_fill_header
+NEW ir.ui.view: survey.survey_navigation
+NEW ir.ui.view: survey.survey_page_fill
+NEW ir.ui.view: survey.survey_page_print
+NEW ir.ui.view: survey.survey_page_statistics
+NEW ir.ui.view: survey.survey_page_statistics_header
+NEW ir.ui.view: survey.survey_page_statistics_inner
+NEW ir.ui.view: survey.survey_page_statistics_question
+NEW ir.ui.view: survey.survey_progression
+NEW ir.ui.view: survey.survey_question_answer_view_search
+NEW ir.ui.view: survey.survey_question_answer_view_tree
+NEW ir.ui.view: survey.survey_response_line_view_tree
+NEW ir.ui.view: survey.survey_selection_key
+NEW ir.ui.view: survey.survey_session_code
+NEW ir.ui.view: survey.survey_user_input_line_view_form
+NEW ir.ui.view: survey.survey_user_input_line_view_search
+NEW ir.ui.view: survey.survey_user_input_session_assets
+NEW ir.ui.view: survey.survey_void_content
+NEW ir.ui.view: survey.user_input_session
+NEW ir.ui.view: survey.user_input_session_leaderboard
+NEW ir.ui.view: survey.user_input_session_manage
+NEW ir.ui.view: survey.user_input_session_manage_content
+NEW ir.ui.view: survey.user_input_session_open
+DEL ir.ui.view: survey.403
+DEL ir.ui.view: survey.auth_required
+DEL ir.ui.view: survey.back
+DEL ir.ui.view: survey.date
+DEL ir.ui.view: survey.datetime
+DEL ir.ui.view: survey.free_text
+DEL ir.ui.view: survey.matrix
+DEL ir.ui.view: survey.multiple_choice
+DEL ir.ui.view: survey.numerical_box
+DEL ir.ui.view: survey.page
+DEL ir.ui.view: survey.pagination
+DEL ir.ui.view: survey.question
+DEL ir.ui.view: survey.result
+DEL ir.ui.view: survey.result_choice
+DEL ir.ui.view: survey.result_comments
+DEL ir.ui.view: survey.result_matrix
+DEL ir.ui.view: survey.result_number
+DEL ir.ui.view: survey.result_text
+DEL ir.ui.view: survey.retake_survey_button
+DEL ir.ui.view: survey.sfinished
+DEL ir.ui.view: survey.simple_choice
+DEL ir.ui.view: survey.survey
+DEL ir.ui.view: survey.survey_expired
+DEL ir.ui.view: survey.survey_header
+DEL ir.ui.view: survey.survey_init
+DEL ir.ui.view: survey.survey_label_search
+DEL ir.ui.view: survey.survey_label_tree
+DEL ir.ui.view: survey.survey_print
+DEL ir.ui.view: survey.survey_response_line_search
+DEL ir.ui.view: survey.survey_response_line_tree
+DEL ir.ui.view: survey.survey_user_input_line_form
+DEL ir.ui.view: survey.survey_void
+DEL ir.ui.view: survey.textbox

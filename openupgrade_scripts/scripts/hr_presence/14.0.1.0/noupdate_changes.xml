@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_template_presence" model="mail.template">
+    <field name="body_html" type="xml">
+      <div>
+                    Dear ${object.name},<br/><br/>
+                    Exception made if there was a mistake of ours, it seems that you are not at your office and there is not request of time off from you.<br/>
+                    Please, take appropriate measures in order to carry out this work absence.<br/>
+                    Do not hesitate to contact your manager or the human resource department.
+                    <br/>Best Regards,<br/><br/>
+                </div>
+    </field>
+  </record>
+  <record id="sms_template_data_hr_presence" model="sms.template">
+    <field name="body">Exception made if there was a mistake of ours, it seems that you are not at your office and there is not request of time off from you.
+Please, take appropriate measures in order to carry out this work absence.
+Do not hesitate to contact your manager or the human resource department.</field>
+  </record>
+</odoo>

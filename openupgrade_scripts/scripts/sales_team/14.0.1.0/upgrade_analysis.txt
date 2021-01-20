@@ -1,0 +1,14 @@
+---Models in module 'sales_team'---
+new model crm.tag
+---Fields in module 'sales_team'---
+sales_team   / crm.tag                  / color (integer)               : NEW hasdefault
+sales_team   / crm.tag                  / name (char)                   : NEW required
+---XML records in module 'sales_team'---
+NEW ir.actions.act_window: sales_team.sales_team_crm_tag_action
+NEW ir.model.access: sales_team.access_crm_tag
+NEW ir.model.access: sales_team.access_crm_tag_manager
+NEW ir.model.access: sales_team.access_crm_tag_salesman
+ir.rule: sales_team.crm_rule_all_salesteam (noupdate) (noupdate switched)
+ir.rule: sales_team.sale_team_comp_rule (noupdate) (noupdate switched)
+NEW ir.ui.view: sales_team.sales_team_crm_tag_view_form
+NEW ir.ui.view: sales_team.sales_team_crm_tag_view_tree

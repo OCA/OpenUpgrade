@@ -1,0 +1,71 @@
+---Models in module 'coupon'---
+new model coupon.coupon
+new model coupon.generate.wizard [transient]
+new model coupon.program
+new model coupon.reward
+new model coupon.rule
+new model report.coupon.report_coupon [abstract]
+---Fields in module 'coupon'---
+coupon       / coupon.coupon            / code (char)                   : NEW required, req_default: function, hasdefault
+coupon       / coupon.coupon            / partner_id (many2one)         : NEW relation: res.partner
+coupon       / coupon.coupon            / program_id (many2one)         : NEW relation: coupon.program
+coupon       / coupon.coupon            / state (selection)             : NEW required, selection_keys: ['cancel', 'expired', 'new', 'reserved', 'sent', 'used'], req_default: function, hasdefault
+coupon       / coupon.program           / _inherits (False)             : NEW
+coupon       / coupon.program           / active (boolean)              : NEW hasdefault
+coupon       / coupon.program           / company_id (many2one)         : NEW relation: res.company, hasdefault
+coupon       / coupon.program           / coupon_ids (one2many)         : NEW relation: coupon.coupon
+coupon       / coupon.program           / maximum_use_number (integer)  : NEW
+coupon       / coupon.program           / name (char)                   : NEW required
+coupon       / coupon.program           / program_type (selection)      : NEW selection_keys: ['coupon_program', 'promotion_program']
+coupon       / coupon.program           / promo_applicability (selection): NEW selection_keys: ['on_current_order', 'on_next_order'], hasdefault
+coupon       / coupon.program           / promo_code (char)             : NEW
+coupon       / coupon.program           / promo_code_usage (selection)  : NEW selection_keys: ['code_needed', 'no_code_needed']
+coupon       / coupon.program           / reward_id (many2one)          : NEW relation: coupon.reward, required
+coupon       / coupon.program           / rule_id (many2one)            : NEW relation: coupon.rule, required
+coupon       / coupon.program           / sequence (integer)            : NEW
+coupon       / coupon.program           / validity_duration (integer)   : NEW hasdefault
+coupon       / coupon.reward            / discount_apply_on (selection) : NEW selection_keys: ['cheapest_product', 'on_order', 'specific_products'], hasdefault
+coupon       / coupon.reward            / discount_fixed_amount (float) : NEW
+coupon       / coupon.reward            / discount_line_product_id (many2one): NEW relation: product.product
+coupon       / coupon.reward            / discount_max_amount (float)   : NEW hasdefault
+coupon       / coupon.reward            / discount_percentage (float)   : NEW hasdefault
+coupon       / coupon.reward            / discount_specific_product_ids (many2many): NEW relation: product.product
+coupon       / coupon.reward            / discount_type (selection)     : NEW selection_keys: ['fixed_amount', 'percentage'], hasdefault
+coupon       / coupon.reward            / reward_description (char)     : NEW
+coupon       / coupon.reward            / reward_product_id (many2one)  : NEW relation: product.product
+coupon       / coupon.reward            / reward_product_quantity (integer): NEW hasdefault
+coupon       / coupon.reward            / reward_type (selection)       : NEW selection_keys: ['discount', 'product'], hasdefault
+coupon       / coupon.rule              / rule_date_from (datetime)     : NEW
+coupon       / coupon.rule              / rule_date_to (datetime)       : NEW
+coupon       / coupon.rule              / rule_min_quantity (integer)   : NEW hasdefault
+coupon       / coupon.rule              / rule_minimum_amount (float)   : NEW hasdefault
+coupon       / coupon.rule              / rule_minimum_amount_tax_inclusion (selection): NEW selection_keys: ['tax_excluded', 'tax_included'], hasdefault
+coupon       / coupon.rule              / rule_partners_domain (char)   : NEW
+coupon       / coupon.rule              / rule_products_domain (char)   : NEW hasdefault
+---XML records in module 'coupon'---
+NEW ir.actions.act_window: coupon.coupon_action
+NEW ir.actions.act_window: coupon.coupon_generate_action
+NEW ir.actions.act_window: coupon.coupon_program_action_coupon_program
+NEW ir.actions.act_window: coupon.coupon_program_action_promo_program
+NEW ir.actions.report: coupon.report_coupon_code [renamed from sale_coupon module]
+NEW ir.cron: coupon.expire_coupon_cron (noupdate)
+NEW ir.model.access: coupon.access_coupon_coupon
+NEW ir.model.access: coupon.access_coupon_generate_wizard
+NEW ir.model.access: coupon.access_coupon_program
+NEW ir.model.access: coupon.access_coupon_reward
+NEW ir.model.access: coupon.access_coupon_rule
+NEW ir.rule: coupon.sale_coupon_generate_rule (noupdate)
+NEW ir.ui.view: coupon.coupon_generate_view_form
+NEW ir.ui.view: coupon.coupon_program_view_coupon_program_form
+NEW ir.ui.view: coupon.coupon_program_view_form_common
+NEW ir.ui.view: coupon.coupon_program_view_promo_program_form
+NEW ir.ui.view: coupon.coupon_program_view_promo_program_search
+NEW ir.ui.view: coupon.coupon_program_view_promo_program_tree
+NEW ir.ui.view: coupon.coupon_program_view_search
+NEW ir.ui.view: coupon.coupon_program_view_tree
+NEW ir.ui.view: coupon.coupon_view_form
+NEW ir.ui.view: coupon.coupon_view_tree
+NEW ir.ui.view: coupon.report_coupon
+NEW ir.ui.view: coupon.report_coupon_i18n
+NEW ir.ui.view: coupon.view_coupon_program_kanban
+NEW mail.template: coupon.mail_template_sale_coupon [renamed from sale_coupon module] (noupdate)

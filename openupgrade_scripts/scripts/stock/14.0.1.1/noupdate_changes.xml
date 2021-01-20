@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="mail_template_data_delivery_confirmation" model="mail.template">
+    <field name="body_html" type="html">
+      <div style="margin: 0px; padding: 0px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello ${object.partner_id.name},<br/><br/>
+        We are glad to inform you that your order has been shipped.
+        %if object.carrier_tracking_ref:
+            Your tracking reference is
+            <strong>
+            %if object.carrier_tracking_url:
+                % set multiple_carrier_tracking = object.get_multiple_carrier_tracking()
+                %if multiple_carrier_tracking:
+                    % for line in multiple_carrier_tracking:
+                        <br/><a href="${line[1]}" target="_blank">${line[0]}</a>
+                    % endfor
+                %else:
+                    <a href="${object.carrier_tracking_url}" target="_blank">${object.carrier_tracking_ref}</a>.
+                %endif
+            %else:
+                ${object.carrier_tracking_ref}.
+            %endif
+            </strong>
+        %endif
+        <br/><br/>
+        Please find your delivery order attached for more details.<br/><br/>
+        Thank you,
+        % if user.signature:
+            <br/>
+            ${user.signature | safe}
+        % endif
+    </p>
+      </div>
+    </field>
+  </record>
+  <record id="product_pulled_flow_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="report_stock_quantity_flow_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="route_warehouse0_mto" model="stock.location.route">
+    <field name="active">False</field>
+  </record>
+  <record id="stock_inventory_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="stock_inventory_line_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="stock_location_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="stock_location_inter_wh" model="stock.location">
+    <field name="name">Inter-company transit</field>
+    <field name="active" eval="False"/>
+  </record>
+  <record id="stock_location_route_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="stock_move_line_rule" model="ir.rule">
+    <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    <field name="global"/>
+  </record>
+  <record id="stock_move_rule" model="ir.rule">
+    <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    <field name="global"/>
+  </record>
+  <record id="stock_picking_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="stock_picking_type_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="stock_production_lot_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="stock_putaway_rule_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="stock_quant_package_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="stock_quant_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="stock_scrap_company_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="stock_warehouse_comp_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="stock_warehouse_orderpoint_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="warehouse0" model="stock.warehouse">
+    <field name="name">San Francisco</field>
+  </record>
+</odoo>

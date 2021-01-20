@@ -1,0 +1,54 @@
+---Models in module 'sale'---
+model product.attribute.custom.value (moved to product)
+new model sale.order.cancel [transient]
+---Fields in module 'sale'---
+sale         / crm.team                 / invoiced (integer)            : type is now 'float' ('integer')
+sale         / crm.team                 / invoiced_target (integer)     : type is now 'float' ('integer')
+sale         / crm.team                 / quotations_amount (integer)   : type is now 'float' ('integer')
+sale         / product.attribute        / display_type (selection)      : module is now 'product' ('sale')
+sale         / product.attribute.custom.value / __last_update (datetime)      : module is now 'product' ('sale')
+sale         / product.attribute.custom.value / custom_product_template_attribute_value_id (many2one): module is now 'product' ('sale')
+sale         / product.attribute.custom.value / custom_value (char)           : module is now 'product' ('sale')
+sale         / product.attribute.custom.value / display_name (char)           : module is now 'product' ('sale')
+sale         / product.attribute.custom.value / name (char)                   : module is now 'product' ('sale')
+sale         / product.attribute.value  / display_type (selection)      : module is now 'product' ('sale')
+sale         / product.attribute.value  / html_color (char)             : module is now 'product' ('sale')
+sale         / product.attribute.value  / is_custom (boolean)           : module is now 'product' ('sale')
+sale         / product.template.attribute.value / display_type (selection)      : module is now 'product' ('sale')
+sale         / product.template.attribute.value / html_color (char)             : module is now 'product' ('sale')
+sale         / product.template.attribute.value / is_custom (boolean)           : module is now 'product' ('sale')
+sale         / sale.order               / currency_id (many2one)        : is now stored
+sale         / sale.order               / show_update_pricelist (boolean): NEW
+sale         / sale.order               / tag_ids (many2many)           : previously in module sale_crm
+---XML records in module 'sale'---
+DEL ir.actions.act_window: sale.action_open_sale_onboarding_sample_quotation
+NEW ir.model.access: sale.access_payment_link_wizard_sale
+NEW ir.model.access: sale.access_product_product_attribute_custom_value_sale_manager
+NEW ir.model.access: sale.access_sale_advance_payment_inv
+NEW ir.model.access: sale.access_sale_order_cancel
+NEW ir.model.access: sale.access_sale_order_line_readonly
+NEW ir.model.access: sale.access_sale_order_readonly
+NEW ir.model.access: sale.access_sale_payment_acquirer_onboarding_wizard
+DEL ir.model.access: sale.access_account_journal_sale_manager
+DEL ir.model.access: sale.access_ir_property_sales
+DEL ir.model.access: sale.access_product_product_attribute_custom_value
+NEW ir.rule: sale.account_invoice_line_rule_see_all (noupdate)
+NEW ir.rule: sale.account_invoice_line_rule_see_personal (noupdate)
+NEW ir.rule: sale.account_invoice_rule_see_all (noupdate)
+NEW ir.rule: sale.account_invoice_rule_see_personal (noupdate)
+NEW ir.rule: sale.sale_advance_payment_inv_rule (noupdate)
+NEW ir.rule: sale.sale_order_cancel_rule (noupdate)
+NEW ir.rule: sale.sale_payment_acquirer_onboarding_wizard_rule (noupdate)
+DEL ir.rule: sale.account_move_line_personal_rule (noupdate)
+DEL ir.rule: sale.account_move_line_see_all (noupdate)
+DEL ir.rule: sale.account_move_personal_rule (noupdate)
+DEL ir.rule: sale.account_move_see_all (noupdate)
+NEW ir.ui.menu: sale.menu_tag_config
+NEW ir.ui.view: sale.sale_order_cancel_view_form
+NEW ir.ui.view: sale.sale_order_line_view_kanban
+DEL ir.ui.view: sale.attribute_tree_view
+DEL ir.ui.view: sale.product_attribute_view_form
+DEL ir.ui.view: sale.product_template_attribute_line_form
+DEL ir.ui.view: sale.product_template_attribute_value_view_form_inherit
+DEL ir.ui.view: sale.product_template_attribute_value_view_tree_inherit
+DEL ir.ui.view: sale.sale_onboarding_sample_quotation_form

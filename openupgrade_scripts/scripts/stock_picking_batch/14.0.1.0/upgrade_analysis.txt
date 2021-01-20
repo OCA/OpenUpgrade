@@ -1,0 +1,11 @@
+---Models in module 'stock_picking_batch'---
+---Fields in module 'stock_picking_batch'---
+stock_picking_batch / stock.picking.batch      / picking_type_id (many2one)    : NEW relation: stock.picking.type
+stock_picking_batch / stock.picking.batch      / scheduled_date (datetime)     : NEW isfunction: function, stored
+stock_picking_batch / stock.picking.batch      / state (selection)             : now a function
+---XML records in module 'stock_picking_batch'---
+DEL ir.actions.act_window: stock_picking_batch.stock_picking_to_batch_action
+NEW ir.model.access: stock_picking_batch.access_stock_picking_to_batch
+NEW ir.ui.view: stock_picking_batch.view_move_line_tree
+NEW ir.ui.view: stock_picking_batch.view_picking_form_inherited
+NEW ir.ui.view: stock_picking_batch.view_picking_move_tree_inherited

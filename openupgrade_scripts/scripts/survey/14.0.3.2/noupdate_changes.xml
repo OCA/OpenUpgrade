@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="base.module_category_marketing_surveys" model="ir.module.category">
+    <field name="description">Helps you manage your survey for review of different-different users.</field>
+    <field name="sequence">20</field>
+  </record>
+  <record id="group_survey_manager" model="res.groups">
+    <field name="category_id" ref="base.module_category_marketing_surveys"/>
+  </record>
+  <record id="group_survey_user" model="res.groups">
+    <field name="category_id" ref="base.module_category_marketing_surveys"/>
+  </record>
+</odoo>

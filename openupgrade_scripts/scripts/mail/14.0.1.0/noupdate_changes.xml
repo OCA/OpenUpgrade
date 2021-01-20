@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="base.partner_root" model="res.partner">
+    <field name="email">odoobot@example.com</field>
+    <field name="image_1920" type="base64" file="mail/static/src/img/odoobot.png"/>
+    <field name="name">OdooBot</field>
+  </record>
+  <record id="mail_activity_data_warning" model="mail.activity.type">
+    <field name="active">False</field>
+  </record>
+  <record id="module_install_notification" model="mail.message">
+    <field name="channel_ids" eval="[(4, ref('mail.channel_all_employees'))]"/>
+  </record>
+</odoo>

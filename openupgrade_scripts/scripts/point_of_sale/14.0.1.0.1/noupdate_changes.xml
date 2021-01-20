@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="product_product_consumable" model="product.product">
+    <field name="available_in_pos">False</field>
+  </record>
+  <record id="product_product_tip" model="product.product">
+    <field name="available_in_pos">False</field>
+  </record>
+  <record id="rule_pos_config_multi_company" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="rule_pos_multi_company" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="rule_pos_order_report_multi_company" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="rule_pos_payment_method_multi_company" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="rule_pos_payment_multi_company" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="rule_pos_session_multi_company" model="ir.rule">
+    <field name="global"/>
+  </record>
+</odoo>

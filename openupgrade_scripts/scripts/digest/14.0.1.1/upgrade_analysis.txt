@@ -1,0 +1,24 @@
+---Models in module 'digest'---
+---Fields in module 'digest'---
+digest       / digest.digest            / periodicity (selection)       : selection_keys is now '['daily', 'monthly', 'quarterly', 'weekly']' ('['monthly', 'quarterly', 'weekly']')
+digest       / digest.digest            / template_id (many2one)        : DEL relation: mail.template, required, req_default: function
+digest       / digest.tip               / name (char)                   : NEW
+---XML records in module 'digest'---
+NEW digest.tip: digest.digest_tip_digest_0 (noupdate)
+NEW digest.tip: digest.digest_tip_digest_1 (noupdate)
+NEW digest.tip: digest.digest_tip_digest_2 (noupdate)
+NEW digest.tip: digest.digest_tip_digest_3 (noupdate)
+NEW digest.tip: digest.digest_tip_digest_4 (noupdate)
+DEL digest.tip: digest.digest_tip_mail_0
+DEL digest.tip: digest.digest_tip_mail_1
+DEL digest.tip: digest.digest_tip_mail_2
+NEW ir.actions.act_window: digest.digest_tip_action
+NEW ir.ui.menu: digest.digest_tip_menu
+NEW ir.ui.view: digest.digest_mail_layout (noupdate)
+NEW ir.ui.view: digest.digest_mail_main (noupdate)
+NEW ir.ui.view: digest.digest_section_mobile (noupdate)
+NEW ir.ui.view: digest.digest_tip_view_form
+NEW ir.ui.view: digest.digest_tip_view_search
+NEW ir.ui.view: digest.digest_tip_view_tree
+NEW ir.ui.view: digest.digest_tool_kpi (noupdate)
+DEL mail.template: digest.digest_mail_template

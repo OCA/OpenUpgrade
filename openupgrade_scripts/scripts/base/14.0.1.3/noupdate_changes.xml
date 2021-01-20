@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="ao" model="res.country">
+    <field name="zip_required">0</field>
+  </record>
+  <record id="ar" model="res.country">
+    <field name="state_required">1</field>
+  </record>
+  <record id="au" model="res.country">
+    <field name="state_required">1</field>
+  </record>
+  <record id="bj" model="res.country">
+    <field name="zip_required">0</field>
+  </record>
+  <record id="bz" model="res.country">
+    <field name="zip_required">0</field>
+  </record>
+  <record id="ca" model="res.country">
+    <field name="state_required">1</field>
+  </record>
+  <record id="default_user" model="res.users">
+    <field name="groups_id" eval="[(4, ref('base.group_partner_manager')), (4, ref('base.group_allow_export'))]"/>
+  </record>
+  <record id="hk" model="res.country">
+    <field name="zip_required">0</field>
+  </record>
+  <record id="id" model="res.country">
+    <field name="state_required">1</field>
+  </record>
+  <record id="ie" model="res.country">
+    <field name="zip_required">0</field>
+  </record>
+  <record id="in" model="res.country">
+    <field name="state_required">1</field>
+  </record>
+  <record id="it" model="res.country">
+    <field name="state_required">1</field>
+  </record>
+  <record id="jp" model="res.country">
+    <field name="state_required">1</field>
+  </record>
+  <!-- record id="main_partner" model="res.partner">
+    <field name="company_id" eval="None"/>
+    <field name="email"/>
+    <field name="website"/>
+  </record -->
+  <record id="mk" model="res.country">
+    <field name="name">North Macedonia</field>
+  </record>
+  <record id="mo" model="res.country">
+    <field name="zip_required">0</field>
+  </record>
+  <record id="mx" model="res.country">
+    <field name="state_required">1</field>
+  </record>
+  <record id="paperformat_euro" model="report.paperformat">
+    <field name="margin_bottom">32</field>
+  </record>
+  <record id="paperformat_us" model="report.paperformat">
+    <field name="margin_bottom">30</field>
+  </record>
+  <record id="res_partner_bank_rule" model="ir.rule">
+    <field name="global"/>
+  </record>
+  <record id="res_partner_rule_private_employee" model="ir.rule">
+    <field name="perm_create" eval="True"/>
+    <field name="perm_unlink" eval="True"/>
+    <field name="perm_write" eval="True"/>
+  </record>
+  <record id="res_partner_rule_private_group" model="ir.rule">
+    <field name="perm_create" eval="True"/>
+    <field name="perm_unlink" eval="True"/>
+    <field name="perm_write" eval="True"/>
+  </record>
+  <record id="us" model="res.country">
+    <field name="state_required">1</field>
+    <field name="vat_label">EIN</field>
+  </record>
+  <!-- record id="user_admin" model="res.users">
+    <field name="image_1920" type="base64" file="base/static/img/avatar_grey.png"/>
+  </record -->
+  <record id="vn" model="res.country">
+    <field name="zip_required">0</field>
+  </record>
+</odoo>

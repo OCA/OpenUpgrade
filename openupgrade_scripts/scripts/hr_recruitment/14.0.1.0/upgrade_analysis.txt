@@ -1,0 +1,30 @@
+---Models in module 'hr_recruitment'---
+new model applicant.get.refuse.reason [transient]
+new model hr.applicant.refuse.reason
+---Fields in module 'hr_recruitment'---
+hr_recruitment / hr.applicant             / company_id (many2one)         : now a function
+hr_recruitment / hr.applicant             / date_closed (datetime)        : now a function
+hr_recruitment / hr.applicant             / department_id (many2one)      : now a function
+hr_recruitment / hr.applicant             / email_from (char)             : now a function
+hr_recruitment / hr.applicant             / partner_mobile (char)         : now a function
+hr_recruitment / hr.applicant             / partner_phone (char)          : now a function
+hr_recruitment / hr.applicant             / refuse_reason_id (many2one)   : NEW relation: hr.applicant.refuse.reason
+hr_recruitment / hr.applicant             / stage_id (many2one)           : now a function
+hr_recruitment / hr.applicant             / user_id (many2one)            : now a function
+hr_recruitment / hr.applicant.refuse.reason / active (boolean)              : NEW hasdefault
+hr_recruitment / hr.applicant.refuse.reason / name (char)                   : NEW required
+hr_recruitment / hr.employee              / applicant_id (one2many)       : NEW relation: hr.applicant
+---XML records in module 'hr_recruitment'---
+NEW hr.applicant.refuse.reason: hr_recruitment.refuse_reason_1 (noupdate)
+NEW hr.applicant.refuse.reason: hr_recruitment.refuse_reason_2 (noupdate)
+NEW hr.applicant.refuse.reason: hr_recruitment.refuse_reason_3 (noupdate)
+ir.actions.act_window: hr_recruitment.action_hr_job_sources (deleted domain)
+NEW ir.actions.act_window: hr_recruitment.applicant_get_refuse_reason_action
+NEW ir.actions.act_window: hr_recruitment.hr_applicant_refuse_reason_action
+NEW ir.model.access: hr_recruitment.access_applicant_get_refuse_reason
+NEW ir.model.access: hr_recruitment.access_hr_recruitment_refuse_reason
+NEW ir.ui.menu: hr_recruitment.menu_hr_applicant_refuse_reason
+NEW ir.ui.view: hr_recruitment.applicant_get_refuse_reason_view_form
+NEW ir.ui.view: hr_recruitment.hr_applicant_refuse_reason_view_form
+NEW ir.ui.view: hr_recruitment.hr_applicant_refuse_reason_view_tree
+NEW ir.ui.view: hr_recruitment.hr_recruitment_source_view_search
