@@ -15,7 +15,12 @@ None
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[openupgrade_framework](openupgrade_framework/) | 14.0.1.0.0 | Module to integrate in the server_wide_modules option to make upgrades between two major revisions.
+[openupgrade_scripts](openupgrade_scripts/) | 14.0.1.0.0 | Module that contains all the migrations analysis and scripts for migrate Odoo SA modules.
 
 [//]: # (end addons)
 
