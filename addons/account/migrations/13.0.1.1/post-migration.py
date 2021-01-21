@@ -314,13 +314,13 @@ def migration_invoice_moves(env):
         if ail_ids:
             openupgrade.logged_query(
                 env.cr, """
-                INSERT INTO account_move_line (company_id, account_id,
+                INSERT INTO account_move_line (company_id, journal_id, account_id,
                 exclude_from_invoice_tab, sequence, name, quantity, price_unit, discount,
                 price_subtotal, price_total, company_currency_id, currency_id, partner_id, product_uom_id,
                 product_id, analytic_account_id, display_type, is_rounding_line,
                 move_id, old_invoice_line_id, date, create_uid, create_date, write_uid,
                 write_date)
-                SELECT ail.company_id, ail.account_id, FALSE, ail.sequence, ail.name,
+                SELECT ail.company_id, am.journal_id, ail.account_id, FALSE, ail.sequence, ail.name,
                 ail.quantity, ail.price_unit, ail.discount, ail.price_subtotal,
                 ail.price_total, rc.currency_id, CASE WHEN rc.currency_id != ail.currency_id
                 THEN ail.currency_id ELSE NULL END, ail.partner_id, ail.uom_id,
@@ -350,13 +350,13 @@ def migration_invoice_moves(env):
     # Draft or Cancel Invoice Lines
     openupgrade.logged_query(
         env.cr, """
-        INSERT INTO account_move_line (company_id, account_id,
+        INSERT INTO account_move_line (company_id, journal_id, account_id,
         exclude_from_invoice_tab, sequence, name, quantity, price_unit, discount,
         price_subtotal, price_total, company_currency_id, currency_id, partner_id, product_uom_id,
         product_id, analytic_account_id, display_type, is_rounding_line,
         move_id, old_invoice_line_id, date, create_uid, create_date, write_uid,
         write_date)
-        SELECT ail.company_id, ail.account_id, FALSE, ail.sequence, ail.name,
+        SELECT ail.company_id, am.journal_id, ail.account_id, FALSE, ail.sequence, ail.name,
         ail.quantity, ail.price_unit, ail.discount, ail.price_subtotal,
         ail.price_total, rc.currency_id, CASE WHEN rc.currency_id != ail.currency_id
         THEN ail.currency_id ELSE NULL END, ail.partner_id, ail.uom_id,
@@ -389,12 +389,12 @@ def migration_invoice_moves(env):
     # Draft or Cancel Invoice Taxes
     openupgrade.logged_query(
         env.cr, """
-        INSERT INTO account_move_line (company_id, account_id,
+        INSERT INTO account_move_line (company_id, journal_id, account_id,
         sequence, name, price_unit, currency_id, tax_base_amount,
         tax_line_id, analytic_account_id, move_id, old_invoice_tax_id,
         exclude_from_invoice_tab, parent_state, quantity, partner_id, date,
         create_uid, create_date, write_uid, write_date)
-        SELECT ait.company_id, ait.account_id, ait.sequence, ait.name,
+        SELECT ait.company_id, am.journal_id, ait.account_id, ait.sequence, ait.name,
         ait.amount, ait.currency_id, ait.base, ait.tax_id,
         ait.account_analytic_id, COALESCE(ai.move_id, am.id),
         ait.id, TRUE, am.state, 1.0, ai.commercial_partner_id, COALESCE(ai.date, ai.date_invoice),
@@ -564,11 +564,11 @@ def migration_voucher_moves(env):
     # Draft, cancel & proforma voucher lines
     openupgrade.logged_query(
         env.cr, """
-        INSERT INTO account_move_line (company_id, account_id,
+        INSERT INTO account_move_line (company_id, journal_id, account_id,
         exclude_from_invoice_tab, sequence, name, quantity, price_unit, price_subtotal,
         product_id, analytic_account_id, move_id, old_voucher_line_id,
         date, create_uid, create_date, write_uid, write_date)
-        SELECT avl.company_id, avl.account_id, FALSE, avl.sequence, avl.name,
+        SELECT avl.company_id, am.journal_id, avl.account_id, FALSE, avl.sequence, avl.name,
         avl.quantity, avl.price_unit, avl.price_subtotal, avl.product_id,
         avl.account_analytic_id, COALESCE(av.move_id, am.id), avl.id,
         COALESCE(am.date, avl.create_date), avl.create_uid, avl.create_date, avl.write_uid, avl.write_date
