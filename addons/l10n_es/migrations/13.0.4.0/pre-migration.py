@@ -34,9 +34,15 @@ def set_account_move_number_to_invoice_number(env):
     openupgrade.logged_query(
         env.cr, """
         UPDATE account_journal
-        SET sequence_id = invoice_sequence_id,
-            refund_sequence_id = refund_inv_sequence_id
+        SET sequence_id = invoice_sequence_id
         WHERE invoice_sequence_id IS NOT NULL"""
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_journal
+        SET refund_sequence_id = refund_inv_sequence_id,
+            refund_sequence = True
+        WHERE refund_inv_sequence_id IS NOT NULL"""
     )
 
 
