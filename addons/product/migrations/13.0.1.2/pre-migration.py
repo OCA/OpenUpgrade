@@ -1,7 +1,7 @@
 # Copyright 2020 ForgeFLow <http://www.forgeflow.com>
 # Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from openupgradelib import openupgrade
+from openupgradelib import openupgrade, openupgrade_merge_records
 from odoo.tools import sql
 
 _xmlid_renames = [
@@ -161,6 +161,33 @@ def insert_missing_product_template_attribute_value(env):
         )
 
 
+def merge_variants_with_same_attributes(env):
+    openupgrade.logged_query(
+        env.cr, """
+        WITH templates AS (
+            SELECT pt.id, pp.combination_indices, COUNT(*)
+            FROM product_product pp
+            JOIN product_template pt ON pt.id = pp.product_tmpl_id
+            WHERE pp.combination_indices IS NOT NULL
+            GROUP BY pt.id, pp.combination_indices
+            HAVING COUNT(*) > 1
+        )
+        SELECT pp.id, pp.product_tmpl_id
+        FROM product_product pp
+        JOIN product_template pt ON pt.id = pp.product_tmpl_id
+        JOIN templates ON (templates.id = pt.id
+            AND templates.combination_indices = pp.combination_indices)"""
+    )
+    templates = {}
+    for product_id, template_id in env.cr.fetchall():
+        templates.setdefault(template_id, []).append(product_id)
+    for template_id in templates:
+        openupgrade_merge_records.merge_records(
+            env, 'product.product', templates[template_id][1:],
+            templates[template_id][0], field_spec=None, method='sql',
+            delete=True, exclude_columns=None, model_table='product_product')
+
+
 def calculate_product_product_combination_indices(env):
     """Avoid product_product_combination_unique constraint + pre-compute
     combination_indices field.
@@ -187,6 +214,7 @@ def calculate_product_product_combination_indices(env):
         ) grouped_pvc
         WHERE grouped_pvc.product_product_id = pp.id""",
     )
+    merge_variants_with_same_attributes(env)
 
 
 def fill_product_template_attribute_value_attribute_line_id(env):
