@@ -1,0 +1,12 @@
+---Models in module 'stock_picking_batch'---
+---Fields in module 'stock_picking_batch'---
+stock_picking_batch / stock.picking.batch      / activity_ids (one2many)       : NEW relation: mail.activity
+# NOTHING TO DO: New feature - added activitities -
+
+stock_picking_batch / stock.picking.batch      / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+# DONE: post-migration: Fill field according picking company
+
+---XML records in module 'stock_picking_batch'---
+ir.sequence: stock_picking_batch.seq_picking_batch (noupdate) (noupdate switched)
+mail.message.subtype: stock_picking_batch.mt_batch_state (noupdate) (noupdate switched)
+# DONE: pre-migration: Switched no-update flag before possible changes (for preserving personalizations)
