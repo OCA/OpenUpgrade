@@ -62,6 +62,7 @@ merged_modules = {
     'account_asset': 'account_asset_management',
     'account_asset_depr_line_cancel': 'account_asset_management',
     'account_asset_disposal': 'account_asset_management',
+    'account_asset_management_xls': 'account_asset_management',
     'account_reversal': 'account',
     # OCA/e-commerce
     'website_sale_default_country': 'website_sale',
