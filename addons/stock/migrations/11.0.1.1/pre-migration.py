@@ -5,21 +5,6 @@
 from openupgradelib import openupgrade
 
 
-def copy_global_rules(env):
-    """Copy global rules to another table and remove them from main one."""
-    for table in ['procurement_rule', 'stock_location_path']:
-        openupgrade.logged_query(
-            env.cr, """
-            CREATE TABLE %s AS (
-                SELECT * FROM %s
-                WHERE route_id IS NULL
-            )""" % (openupgrade.get_legacy_name(table), table)
-        )
-        openupgrade.logged_query(
-            env.cr, "DELETE FROM %s WHERE route_id IS NULL" % table,
-        )
-
-
 def delete_quants_for_consumable(env):
     """On v11, consumable products don't generate quants, so we can remove them
     as soon as possible for cleaning the DB and avoid other computations (like
@@ -57,7 +42,6 @@ def fix_act_window(env):
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
-    copy_global_rules(env)
     delete_quants_for_consumable(env)
     fix_act_window(env)
     openupgrade.update_module_moved_fields(

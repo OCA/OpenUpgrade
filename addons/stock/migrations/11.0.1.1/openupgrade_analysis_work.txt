@@ -16,9 +16,7 @@ stock        / procurement.rule         / sequence (integer)            : previo
 
 stock        / procurement.rule         / route_id (many2one)           : now required
 stock        / stock.location.path      / route_id (many2one)           : now required
-# Done:
-#   pre-migration: Copy records with this field empty to another table
-#   post-migration: Create a record of these global rules for each existing route
+# Done: post-migration: Create a global route and link the global rules to that route
 
 stock        / product.putaway          / method (selection)            : DEL required: required, selection_keys: function, req_default: function
 # Nothing to do: Only one value used in core. If any community module extends it, an adaptation will be required on that module
