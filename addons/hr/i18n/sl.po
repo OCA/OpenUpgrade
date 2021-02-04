@@ -11,7 +11,7 @@
 # Boris Kodelja <boris@hbs.si>, 2020
 # Tadej Lupšina <tadej@hbs.si>, 2020
 # Martin Trigaux, 2020
-# Jasmina Macur <jasmina@hbs.si>, 2020
+# Jasmina Macur <jasmina@hbs.si>, 2021
 # 
 msgid ""
 msgstr ""
@@ -19,7 +19,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-27 09:21+0000\n"
 "PO-Revision-Date: 2019-08-26 09:10+0000\n"
-"Last-Translator: Jasmina Macur <jasmina@hbs.si>, 2020\n"
+"Last-Translator: Jasmina Macur <jasmina@hbs.si>, 2021\n"
 "Language-Team: Slovenian (https://www.transifex.com/odoo/teams/41243/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,7 +47,7 @@ msgstr "&amp;nbsp;"
 #. module: hr
 #: model:ir.actions.report,print_report_name:hr.hr_employee_print_badge
 msgid "'Print Badge - %s' % (object.name).replace('/', '')"
-msgstr ""
+msgstr "'Natisni značko - %s' % (object.name).replace('/', '')"
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_ceo
@@ -189,7 +189,7 @@ msgstr ""
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.res_config_settings_view_form
 msgid "<span class=\"o_form_label\">Presence Control</span>"
-msgstr ""
+msgstr "<span class=\"o_form_label\">Nadzor prisotnosti</span>"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.res_users_view_form_profile
@@ -319,7 +319,7 @@ msgstr ""
 #. module: hr
 #: model:ir.ui.menu,name:hr.menu_config_plan
 msgid "Activity Planning"
-msgstr ""
+msgstr "Načrtovanje aktivnosti"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__activity_state
@@ -377,7 +377,7 @@ msgstr ""
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_res_config_settings__module_hr_presence
 msgid "Advanced Presence Control"
-msgstr ""
+msgstr "Napredni nadzor prisotnosti "
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.res_config_settings_view_form
@@ -395,12 +395,12 @@ msgstr "Varnostne nastavitve vzdevka stika"
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.res_config_settings_view_form
 msgid "Allow employees to update their own data"
-msgstr ""
+msgstr "Omogočite zaposlenim, da posodabljajo lastne podatke"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.res_config_settings_view_form
 msgid "Allow employees to update their own data."
-msgstr ""
+msgstr "Omogočite zaposlenim, da posodabljajo lastne podatke."
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.hr_employee_public_view_form
@@ -513,7 +513,7 @@ msgstr ""
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_res_config_settings__module_hr_attendance
 msgid "Based on attendances"
-msgstr ""
+msgstr "Glede na prisotnost"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_res_config_settings__hr_presence_control_email
@@ -523,7 +523,7 @@ msgstr ""
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_res_config_settings__hr_presence_control_login
 msgid "Based on user status in system"
-msgstr ""
+msgstr "Glede na status uporabnika v sistemu"
 
 #. module: hr
 #: model:ir.model,name:hr.model_hr_employee_base
@@ -592,7 +592,7 @@ msgstr "Podrejeni oddelki"
 #: model_terms:ir.ui.view,arch_db:hr.res_users_view_form_profile
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form
 msgid "Citizenship"
-msgstr ""
+msgstr "Podatki o državljanstvu"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__coach_id
@@ -831,7 +831,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr.field_hr_departure_wizard__departure_reason
 #: model:ir.model.fields,field_description:hr.field_hr_employee__departure_reason
 msgid "Departure Reason"
-msgstr ""
+msgstr "Razlog odhoda"
 
 #. module: hr
 #: model:ir.model,name:hr.model_hr_departure_wizard
@@ -842,7 +842,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr.res_users_view_form_profile
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form
 msgid "Dependant"
-msgstr ""
+msgstr "Podatki o otrocih"
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_ceo
@@ -922,7 +922,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr.res_users_view_form_profile
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form
 msgid "Emergency"
-msgstr ""
+msgstr "Stik v sili"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__emergency_contact
@@ -966,7 +966,7 @@ msgstr "Imenik kadrov"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_res_config_settings__hr_employee_self_edit
 msgid "Employee Edition"
-msgstr ""
+msgstr "Posodobitve zaposlenih"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.print_employee_badge
@@ -988,7 +988,7 @@ msgstr "Oznake kadra"
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.res_config_settings_view_form
 msgid "Employee Update Rights"
-msgstr ""
+msgstr "Posodobitev pravic zaposlenih"
 
 #. module: hr
 #: model:ir.model.fields,help:hr.field_hr_employee__bank_account_id
@@ -1054,7 +1054,7 @@ msgstr "Oznake kadrov"
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.res_config_settings_view_form
 msgid "Enrich employee profiles with skills and resumes"
-msgstr ""
+msgstr "Obogatite profile zaposlenih z izkušnjami in življenjepisi"
 
 #. module: hr
 #: model:ir.model.fields,help:hr.field_hr_employee__address_home_id
@@ -1273,7 +1273,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr.field_hr_employee__identification_id
 #: model:ir.model.fields,field_description:hr.field_res_users__identification_id
 msgid "Identification No"
-msgstr "Identifikacijska št."
+msgstr "EMŠO"
 
 #. module: hr
 #: model:ir.model.fields,help:hr.field_hr_department__message_needaction
@@ -1416,7 +1416,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr.field_hr_employee__km_home_work
 #: model:ir.model.fields,field_description:hr.field_res_users__km_home_work
 msgid "Km Home-Work"
-msgstr ""
+msgstr "Razdalja dom-služba"
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_ceo
@@ -1804,7 +1804,7 @@ msgstr "Uradnik"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_res_config_settings__module_hr_org_chart
 msgid "Organizational Chart"
-msgstr ""
+msgstr "Organizacijska shema"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee_public__image_1920
@@ -1827,7 +1827,7 @@ msgstr "PIN"
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form
 msgid "PIN Code"
-msgstr ""
+msgstr "PIN koda"
 
 #. module: hr
 #: model:ir.model.fields,help:hr.field_hr_employee__pin
@@ -1918,7 +1918,7 @@ msgstr ""
 #. module: hr
 #: model:ir.ui.menu,name:hr.menu_config_plan_plan
 msgid "Plans"
-msgstr ""
+msgstr "Načrtovanje"
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_ceo
@@ -1956,7 +1956,7 @@ msgstr ""
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.res_config_settings_view_form
 msgid "Presence reporting screen, email and IP address control."
-msgstr ""
+msgstr "Zaslon za poročanje o prisotnosti, nadzor e-pošte in naslova IP."
 
 #. module: hr
 #: model:ir.model.fields.selection,name:hr.selection__hr_employee__hr_presence_state__present
@@ -1969,12 +1969,12 @@ msgstr ""
 #: model:ir.actions.report,name:hr.hr_employee_print_badge
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form
 msgid "Print Badge"
-msgstr ""
+msgstr "Natisni značko"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form
 msgid "Private Contact"
-msgstr ""
+msgstr "Osebni podatki"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__private_email
@@ -2199,7 +2199,7 @@ msgstr "Odgovoren"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_plan_activity_type__responsible_id
 msgid "Responsible Person"
-msgstr ""
+msgstr "Odgovorna oseba"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__activity_user_id
@@ -2211,7 +2211,7 @@ msgstr "Odgovorni uporabnik"
 #: model_terms:ir.ui.view,arch_db:hr.res_users_view_form_profile
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form
 msgid "Responsibles"
-msgstr ""
+msgstr "Odgovorni"
 
 #. module: hr
 #: model:ir.model.fields.selection,name:hr.selection__hr_departure_wizard__departure_reason__retired
@@ -2250,6 +2250,8 @@ msgstr "Šola"
 #: model_terms:ir.ui.view,arch_db:hr.res_config_settings_view_form
 msgid "Set default company schedule to manage your employees working time"
 msgstr ""
+"Nastavite privzeti delovnik podjetja za upravljanje delovnega časa "
+"zaposlenih"
 
 #. module: hr
 #: model:ir.model.fields,help:hr.field_hr_job__state
@@ -2278,7 +2280,7 @@ msgstr ""
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.res_config_settings_view_form
 msgid "Show organizational chart on employee form"
-msgstr "Prikaz organigrama na obrazcu kadra"
+msgstr "Prikaz organizacijske sheme na obrazcu kadra"
 
 #. module: hr
 #: model:ir.model.fields.selection,name:hr.selection__hr_employee__marital__single
@@ -2288,7 +2290,7 @@ msgstr "Samski"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_res_config_settings__module_hr_skills
 msgid "Skills Management"
-msgstr ""
+msgstr "Upravljanje z delovnimi izkušnjami"
 
 #. module: hr
 #: model:ir.model.fields,help:hr.field_hr_employee__sinid
@@ -2582,7 +2584,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr.field_hr_employee__visa_expire
 #: model:ir.model.fields,field_description:hr.field_res_users__visa_expire
 msgid "Visa Expire Date"
-msgstr "Potek veljanosti vize"
+msgstr "Potek veljavnosti vize"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__visa_no
