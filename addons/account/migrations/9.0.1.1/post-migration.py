@@ -135,17 +135,17 @@ def account_templates(env):
 
 
 def parent_id_to_m2m(cr):
-    cr.execute(
-        'insert into account_tax_template_filiation_rel '
-        '(parent_tax, child_tax) '
-        'select id, parent_id from account_tax_template '
-        'where parent_id is not null'
-    )
-    cr.execute(
-        'insert into account_tax_filiation_rel '
-        '(parent_tax, child_tax) '
-        'select id, parent_id from account_tax where parent_id is not null'
-    )
+    # Get parent_id from tax template and insert children_tax_ids (m2o => m2m)
+    cr.execute("""
+    INSERT INTO account_tax_template_filiation_rel (parent_tax, child_tax)
+    SELECT parent_id, id from account_tax_template WHERE parent_id IS NOT NULL
+    """)
+
+    # Get parent_id from tax and insert children_tax_ids (o2m => m2m)
+    cr.execute("""
+    INSERT INTO account_tax_filiation_rel (parent_tax, child_tax)
+    SELECT parent_id, id from account_tax WHERE parent_id IS NOT NULL
+    """)
 
 
 def parent_id_to_tag(env, model, tags_field='tag_ids', recursive=False):
@@ -1285,18 +1285,6 @@ def migrate(env, version):
     # Set display_on_footer to False
     cr.execute("""
     UPDATE account_journal SET display_on_footer = False
-    """)
-
-    # Logic to move from child_ids to children_tax_ids (o2m => m2m)
-    cr.execute("""
-    INSERT INTO account_tax_filiation_rel (parent_tax, child_tax)
-    SELECT parent_id, id from account_tax WHERE parent_id IS NOT NULL
-    """)
-
-    # Get parent_id and insert it into children_tax_ids (m2o => m2m)
-    cr.execute("""
-    INSERT INTO account_tax_template_filiation_rel (parent_tax, child_tax)
-    SELECT parent_id, id from account_tax_template WHERE parent_id IS NOT NULL
     """)
 
     # In v8, if child_depend == True, then in v9, set amount_type='group'
