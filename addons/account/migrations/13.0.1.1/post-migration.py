@@ -253,45 +253,25 @@ def migration_invoice_moves(env):
     )
     aml_ids += tuple(x[0] for x in env.cr.fetchall())
     # 2st: exclude from invoice_tab the grouped ones, and create a new separated ones
-    if aml_ids:
-        openupgrade.logged_query(
-            env.cr, """
-            UPDATE account_move_line aml
-            SET exclude_from_invoice_tab = TRUE, sequence = ail.sequence,
-            name = '(OLD GROUPED ITEM)' || aml.name,
-            create_uid = ail.create_uid, create_date = ail.create_date
-            FROM account_invoice_line ail
-                JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
-                JOIN account_move am ON ail.invoice_id = am.old_invoice_id
-            WHERE am.id = aml.move_id AND ail.company_id = aml.company_id AND ail.account_id = aml.account_id
-                AND ail.partner_id = aml.partner_id
-                AND ((ail.product_id IS NULL AND aml.product_id IS NULL) OR ail.product_id = aml.product_id)
-                AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
-                AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
-                    OR ail.account_analytic_id = aml.analytic_account_id)
-                AND aml.tax_line_id IS NULL
-                AND aml.id NOT IN %s
-            RETURNING aml.id""", (aml_ids, ),
-        )
-    else:
-        openupgrade.logged_query(
-            env.cr, """
-            UPDATE account_move_line aml
-            SET exclude_from_invoice_tab = TRUE, sequence = ail.sequence,
-            name = '(OLD GROUPED ITEM)' || aml.name,
-            create_uid = ail.create_uid, create_date = ail.create_date
-            FROM account_invoice_line ail
-                JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
-                JOIN account_move am ON ail.invoice_id = am.old_invoice_id
-            WHERE am.id = aml.move_id AND ail.company_id = aml.company_id AND ail.account_id = aml.account_id
-                AND ail.partner_id = aml.partner_id
-                AND ((ail.product_id IS NULL AND aml.product_id IS NULL) OR ail.product_id = aml.product_id)
-                AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
-                AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
-                    OR ail.account_analytic_id = aml.analytic_account_id)
-                AND aml.tax_line_id IS NULL
-            RETURNING aml.id""",
-        )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move_line aml
+        SET exclude_from_invoice_tab = TRUE, sequence = ail.sequence,
+        name = '(OLD GROUPED ITEM)' || aml.name,
+        create_uid = ail.create_uid, create_date = ail.create_date
+        FROM account_invoice_line ail
+            JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
+            JOIN account_move am ON ail.invoice_id = am.old_invoice_id
+        WHERE am.id = aml.move_id AND ail.company_id = aml.company_id AND ail.account_id = aml.account_id
+            AND ail.partner_id = aml.partner_id
+            AND ((ail.product_id IS NULL AND aml.product_id IS NULL) OR ail.product_id = aml.product_id)
+            AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
+            AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
+                OR ail.account_analytic_id = aml.analytic_account_id)
+            AND aml.tax_line_id IS NULL
+            AND aml.old_invoice_line_id IS NULL
+        RETURNING aml.id""",
+    )
     aml_ids2 = tuple(x[0] for x in env.cr.fetchall())
     if aml_ids2:
         openupgrade.logged_query(
@@ -339,13 +319,9 @@ def migration_invoice_moves(env):
     if aml_ids:
         openupgrade.logged_query(
             env.cr, """
-            UPDATE account_move_line aml
+            UPDATE account_move_line
             SET exclude_from_invoice_tab = TRUE
-            FROM account_move_line aml2
-            WHERE aml.move_id = aml2.move_id
-                AND aml2.id IN %s AND aml.id NOT IN %s
-                AND aml.old_invoice_line_id IS NULL
-            """, (aml_ids, aml_ids),
+            WHERE old_invoice_line_id IS NULL""",
         )
     # Draft or Cancel Invoice Lines
     openupgrade.logged_query(
@@ -551,9 +527,8 @@ def migration_voucher_moves(env):
             SET exclude_from_invoice_tab = TRUE
             FROM account_move_line aml2
             WHERE aml.move_id = aml2.move_id
-                AND aml2.id IN %s AND aml.id NOT IN %s
-                AND aml.old_voucher_line_id IS NULL
-            """, (aml_ids, aml_ids),
+                AND aml2.old_voucher_line_id IS NOT NULL
+                AND aml.old_voucher_line_id IS NULL""",
         )
     # Draft, cancel & proforma voucher lines
     openupgrade.logged_query(
