@@ -1,0 +1,18 @@
+---Models in module 'sale_expense'---
+---Fields in module 'sale_expense'---
+
+---XML records in module 'sale_expense'---
+DEL ir.model.access: sale_expense.access_sale_order_employee
+# NOTHING TO DO: removed from manifest
+
+DEL ir.rule: sale_expense.sale_order_rule_expense_user (noupdate)
+# DONE: post-migration: try to delete
+
+NEW ir.ui.view: sale_expense.assets_backend
+NEW ir.ui.view: sale_expense.hr_expense_form_view_inherit_account_manager
+NEW ir.ui.view: sale_expense.hr_expense_form_view_inherit_saleman
+NEW ir.ui.view: sale_expense.qunit_suite
+# NOTHING TO DO: new xmls
+
+DEL product.product: hr_expense.product_product_fixed_cost (noupdate)
+# DONE: post-migration: try to delete
