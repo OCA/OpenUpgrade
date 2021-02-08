@@ -1,0 +1,26 @@
+---Models in module 'im_livechat'---
+---Fields in module 'im_livechat'---
+im_livechat  / im_livechat.channel      / image (binary)                : DEL attachment: True
+im_livechat  / im_livechat.channel      / image_128 (binary)            : NEW attachment: True, hasdefault
+im_livechat  / im_livechat.channel      / image_medium (binary)         : DEL attachment: True
+im_livechat  / im_livechat.channel      / image_small (binary)          : DEL attachment: True
+# DONE: pre-migration: handled image rename
+
+im_livechat  / im_livechat.channel      / rating_ids (one2many)         : NEW relation: rating.rating
+im_livechat  / mail.channel             / country_id (many2one)         : NEW relation: res.country
+im_livechat  / res.users                / livechat_username (char)      : NEW
+# NOTHING TO DO (tentative)
+
+im_livechat  / mail.channel             / livechat_operator_id (many2one): NEW relation: res.partner
+# DONE: pre-migration: filled with the user_ids of im_livechat.channel
+
+---XML records in module 'im_livechat'---
+NEW im_livechat.channel: im_livechat.im_livechat_channel_data
+# DONE: pre-migration: renamed xmlid from website_livechat.im_livechat_channel_data_website is website_livechat is installed
+
+NEW ir.rule: im_livechat.im_livechat_rule_manager_read_all_mail_channel
+NEW ir.ui.view: im_livechat.im_livechat_channel_view_search
+NEW ir.ui.view: im_livechat.livechat_email_template (noupdate)
+NEW ir.ui.view: im_livechat.res_users_form_view
+NEW ir.ui.view: im_livechat.res_users_form_view_simple_modif
+# NOTHING TO DO
