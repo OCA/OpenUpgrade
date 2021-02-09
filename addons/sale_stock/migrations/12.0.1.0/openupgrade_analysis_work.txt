@@ -1,5 +1,7 @@
 ---Fields in module 'sale_stock'---
 sale_stock   / account.invoice          / incoterms_id (many2one)       : relation is now 'account.incoterms' ('stock.incoterms')
+# DONE: pre-migration: The model has been renamed in base, but the contents of it should be moved to the new field `incoterm_id`, that is the visible one. Both are filled as well when invoicing sales orders in this version, so no problem on that.
+
 sale_stock   / sale.order               / incoterm (many2one)           : relation is now 'account.incoterms' ('stock.incoterms')
 # handled in account migration
 
