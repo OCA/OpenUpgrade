@@ -85,7 +85,8 @@ def create_account_invoice_amount_tax_company_signed(env):
             SELECT ai.id, ai.amount_tax, ai.type, ai.currency_id,
                 ai.company_id, rc.currency_id, ai.date_invoice
             FROM account_invoice ai
-            JOIN res_company rc ON ai.company_id = rc.id"""
+            JOIN res_company rc ON ai.company_id = rc.id
+            WHERE ai.amount_tax != 0.0"""
         )
         for _id, tax, inv_type, curr, company, company_curr, date in \
                 env.cr.fetchall():
@@ -105,6 +106,12 @@ def create_account_invoice_amount_tax_company_signed(env):
                 SET amount_tax_company_signed = %s WHERE id = %s""",
                 (company_tax, _id),
             )
+        openupgrade.logged_query(
+            env.cr, """
+            UPDATE account_invoice
+            SET amount_tax_company_signed = 0.0
+            WHERE amount_tax_company_signed IS NULL""",
+        )
 
 
 def create_account_move_new_columns(env):
