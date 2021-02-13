@@ -9,7 +9,9 @@ renamed_modules = {
     'payment_ogone': 'payment_ingenico',
     # OCA/hr
     # TODO: Transform possible data
-    'hr_skill': 'hr_skills'
+    'hr_skill': 'hr_skills',
+    # OCA/manufacture
+    'quality_control': 'quality_control_oca',
 }
 
 merged_modules = {
