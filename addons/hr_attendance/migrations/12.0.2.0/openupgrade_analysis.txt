@@ -2,4 +2,5 @@
 ---Fields in module 'hr_attendance'---
 hr_attendance / hr.employee              / last_attendance_id (many2one) : is now stored
 ---XML records in module 'hr_attendance'---
+NEW ir.rule: hr_attendance.hr_attendance_rule_employee_company (noupdate)
 NEW ir.ui.view: hr_attendance.view_employee_filter_inherit_hr_attendance

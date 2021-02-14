@@ -17,8 +17,6 @@ snailmail    / snailmail.letter         / user_id (many2one)            : NEW re
 ---XML records in module 'snailmail'---
 NEW ir.actions.act_window: snailmail.action_mail_letters
 NEW ir.cron: snailmail.snailmail_print
-NEW ir.model.access: snailmail.access_snailmail_letter_all
-NEW ir.model.access: snailmail.access_snailmail_letter_portal
 NEW ir.model.access: snailmail.access_snailmail_letter_system
 NEW ir.model.access: snailmail.access_snailmail_letter_user
 NEW ir.ui.menu: snailmail.menu_snailmail_letters
