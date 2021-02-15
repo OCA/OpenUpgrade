@@ -12,13 +12,10 @@
 # All configuration values have a default value; values that are commented out
 # serve to show the default value.
 
-import os
-import sys
 
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
-sys.path += [os.path.abspath("../../"), os.path.abspath("../../../")]
 
 # General configuration
 # ---------------------
@@ -39,15 +36,18 @@ master_doc = "index"
 
 # General substitutions.
 project = "OpenUpgrade"
-copyright = "2012-2019, The OpenUpgrade team"
+
+# Rename to project_copyright after the release of Sphinx 3.5
+# pylint: disable=redefined-builtin
+copyright = "2012-2021, Odoo Community Association (OCA) / The OpenUpgrade developers"
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = "13.0"
+version = "14.0"
 # The full version, including alpha/beta/rc tags.
-release = "13.0"
+release = "14.0"
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -108,7 +108,7 @@ pygments_style = "sphinx"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = [".static"]
+# html_static_path = [".static"]
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
@@ -189,27 +189,3 @@ latex_documents = [
 
 # If false, no module index is generated.
 # latex_use_modindex = True
-
-
-# Use Mock classes for building on readthedocs.org
-# http://read-the-docs.readthedocs.org/en/latest/faq.html
-class Mock(object):
-    def __init__(self, *args, **kwargs):
-        pass
-
-    def __call__(self, *args, **kwargs):
-        return Mock()
-
-    @classmethod
-    def __getattr__(cls, name):
-        if name in ("__file__", "__path__"):
-            return "/dev/null"
-        elif name[0] == name[0].upper():
-            return type(name, (), {})
-        else:
-            return Mock()
-
-
-MOCK_MODULES = ["osv", "pooler", "tools"]
-for mod_name in MOCK_MODULES:
-    sys.modules[mod_name] = Mock()

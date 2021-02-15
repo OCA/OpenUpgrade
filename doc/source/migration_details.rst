@@ -1,30 +1,34 @@
-Manual migration
-================
+Running the migration
+=====================
 
 Check out the code manually and upgrade your database by calling odoo-bin,
 (or openerp-server) directly. You will want to do this when you are working on
 developing migration scripts for uncovered modules.
 
-1. Check out the OpenUpgrade source code from Github for the branches you
-   need. Each branch migrates to its version from the previous version, so
-   branch 7.0 migrates from 6.1 to 7.0. If you are skipping versions, you still
-   need to run all the branches in between.
+1. Make the `openupgrade_framework` and the `openupgrade_scripts` modules
+   available in the addons path in the Odoo instance of the new version.
 
-2. Compare your set of installed modules with the modules that are covered by
-   the OpenUpgrade Addons branch you are using. Upgrading a database that has
-   uncovered modules installed is likely to fail. Authoritative in this respect
-   is the existence and contents of a *user_notes.txt* file in the
-   migrations/[version] subdirectory of each module. We also try to indicate
-   module coverage in the documentation but it sometimes lags behind.
+   Or, for older versions: check out the OpenUpgrade source code from Github
+   for the branches you need. Each branch migrates to its version from the
+   previous version, so branch 13.0 migrates from 12.0 to 13.0. If you are
+   migrating across multiple versions, you need to run each version of
+   OpenUpgrade in order. Skipping versions is not supported.
+
+2. Check if there are migration scripts provided for the set of modules that
+   are installed in your Odoo database. If there are modules for which no
+   migration scripts have been developed yet, your migration may fail or the
+   integrity of your database may me lacking. Check the module coverage in
+   this documentation.
 
 3. Decide which database you are going to upgrade. You absolutely *must* make a
    backup of your live database before you start this process!
 
 4. Edit the configuration files and command line parameters to point to the
-   database you are going to upgrade. The parameters will probably be the same
-   as you use on your live server, except they point to the OpenUpgrade
-   addons source code, point to the database you want to upgrade, and add the
-   *--update all --stop-after-init* flags.
+   database you are going to upgrade. Run Odoo with the *--update all
+   --stop-after-init --load=web,openupgrade_framework* flags.
+
+   For versions earlier than 14.0 that are running the OpenUpgrade fork rather
+   than Odoo itself, you do not pass the `load` parameter.
 
 5. Run the upgrade and check for errors. You will probably learn a lot about
    your data and have to do some manual clean up before and after the upgrade.
@@ -32,26 +36,20 @@ developing migration scripts for uncovered modules.
    your data, and try again. If necessary, ask for help or report bugs on
    Github.
 
-6. Once the data migration is successful, run the official version of Odoo
-   against it to test how the migrated data behaves under the new version.
-   Remember that the OpenUpgrade version of the source code is only intended to
-   perform the migration, not run the Odoo server.
-
 General Tips
 ++++++++++++
 
-* If you migrate your database through multiple versions make sure you use separate directories. If you use one directory and just check out a new branch the remaining *.pyc* files will cause trouble.
-
-* When installing the openupgradelib make sure you check out the latest version from github to get the latest updates and fixes::
+* When installing the openupgradelib make sure you check out the latest version
+  from github to get the latest updates and fixes::
 
     $ pip install git+git://github.com/OCA/openupgradelib.git
 
-Configuration options
-+++++++++++++++++++++
+Configuration options (obsolete)
+++++++++++++++++++++++++++++++++
 
-OpenUpgrade allows for the following configuration options. Add these options
-to a separate stanza in the server configuration file under a header
-*[openupgrade]*
+Versions of OpenUpgrade earlier than 14.0 allow for the following configuration
+options. Add these options to a separate stanza in the server configuration
+file under a header *[openupgrade]*
 
 * *autoinstall* - A dictionary with module name keys and lists of module names
   as values. If a key module is installed on your database, the modules from

@@ -1,24 +1,7 @@
 Module coverage 12.0 -> 13.0
 ============================
 
-Status :
-
-* Empty : No information available : Please see the
-  'openupgrade_analysis.txt' file of the module and share your analyse;
-
-* 'Nothing to do' : Analyse has been done, and there is nothing to do or
-  there's no change between 12.0 and 13.0;
-
-* 'Work in progress' : Analyse / Work in progress.  Please review the
-  merge proposals at https://github.com/OCA/OpenUpgrade/pulls
-
-* 'Done' : Analyse has been done & work has been merged into trunk project ;
-
-Modules that are new in this release are marked with |new|. Modules that are
-missing in the new release are marked with |del|.
-
-.. |new| image:: images/new.png
-.. |del| image:: images/deleted.png
+.. include:: coverage_legend.rst
 
 +----------------------------------------------+-------------------------------------------------+
 |Module                                        |Status                                           |

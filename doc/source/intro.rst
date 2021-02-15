@@ -13,38 +13,29 @@ The project is hosted as two separate GitHub projects:
 * https://github.com/OCA/openupgrade
 * https://github.com/OCA/openupgradelib
 
-The branches in the first project are copies (forks in Git terminology) of the
-Odoo main project, but with extra commits that include migration scripts for
-each module. The second project contains a library with helper functions. It
+
+The branches in the first project contain the framework, as well as the
+database analysis and the migration scripts.
+
+The second project contains a library with helper functions. It
 can be used in the migration of any Odoo module.
 
-One
-migration script updates that part of a database that is governed by the module
-for which it is written.  We use the native upgrade mechanism in Odoo, which
-was used in older versions of the Odoo server and presumably is still
-there for the proprietary upgrade path.
+Older versions
+--------------
+Before Odoo 14.0, the branches in https://github.com/OCA/openupgrade
+contain copies (or forks in Git terminology) of the Odoo main project, but
+with extra commits that include the framework, and the analysis and the
+migration scripts for each module.
 
-This way, perfect modularity is achieved.  Any developer can contribute
-migration scripts for a single module.  Of course, for every new major release
-of Odoo, every substantial module needs a new migration script to cover the
-changes in that release.
+Contribute
+----------
+In order to contribute to the OpenUpgrade project, please
 
-By design, the project aims at user-friendliness too.  When all modules are
-provided migration scripts for, the user can simply install the OpenUpgrade
-software, run it on a copy of their Odoo database with the *--update all*
-flag and restore the upgraded database onto the next major release of Odoo.
-Of course, given the complexity of the software and the process this perfection
-is somewhat theoretical!
-
-Apart from a collection of migration scripts, this project aims at providing
-developers with a set of tools that they can use to extract the changes that
-their migration scripts need to cover. You can read more on that in the
-:doc:`analysis` section.
-
-Please do not use the OpenUpgrade software to run a live instance of your
-Odoo database.  It is not maintained for that purpose.  Use the official
-Odoo software for that.
-
+* Post your code contributions as pull requests on
+  https://github.com/oca/openupgrade
+* Donate to the Odoo Community Association (https://github.com/sponsors/OCA)
+* Hire any active contributor to this project to help you migrate your
+  database, and give back any code improvements developed during the project.
 
 Migrating your database
 =======================
