@@ -39,6 +39,7 @@ stock_account / stock.valuation.layer    / value (float)                 : NEW
 ---XML records in module 'stock_account'---
 NEW ir.actions.act_window: stock_account.stock_valuation_layer_action
 DEL ir.actions.act_window: stock_account.product_valuation_action
+NEW ir.model.access: stock_account.access_account_tag_stock_user
 NEW ir.model.access: stock_account.access_stock_valuation_layer
 DEL ir.property: stock_account.default_cost_method (noupdate)
 DEL ir.property: stock_account.default_valuation (noupdate)

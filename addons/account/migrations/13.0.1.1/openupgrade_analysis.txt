@@ -21,7 +21,6 @@ new model report.account.report_hash_integrity [abstract]
 ---Fields in module 'account'---
 account      / account.account          / last_time_entries_checked (datetime): DEL
 account      / account.account          / root_id (many2one)            : NEW relation: account.root, isfunction: function, stored
-account      / account.account          / used (boolean)                : NEW
 account      / account.account.tag      / country_id (many2one)         : NEW relation: res.country
 account      / account.account.tag      / tax_negate (boolean)          : NEW
 account      / account.account.tag      / tax_report_line_ids (many2many): NEW relation: account.tax.report.line

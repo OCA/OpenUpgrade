@@ -5,4 +5,5 @@ calendar_sms / calendar.alarm           / type (False)                  : DEL se
 ---XML records in module 'calendar_sms'---
 NEW ir.actions.act_window: calendar_sms.calendar_event_act_window_sms_composer_single
 DEL ir.actions.act_window: calendar_sms.sms_message_send_action_mutli
+NEW ir.rule: calendar_sms.ir_rule_sms_template_system
 NEW sms.template: calendar_sms.sms_template_data_calendar_reminder (noupdate)

@@ -8,6 +8,7 @@ hr_presence  / res.company              / hr_presence_last_compute_date (datetim
 hr_presence  / res.users.log            / ip (char)                     : NEW
 ---XML records in module 'hr_presence'---
 NEW ir.actions.server: hr_presence.ir_actions_server_action_open_presence_view
+NEW ir.rule: hr_presence.ir_rule_sms_template_hr_manager
 NEW ir.ui.menu: hr_presence.menu_hr_presence_view
 NEW ir.ui.view: hr_presence.hr_employee_view_kanban
 NEW ir.ui.view: hr_presence.hr_employee_view_search

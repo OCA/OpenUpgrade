@@ -1,8 +1,8 @@
 ---Models in module 'stock'---
 obsolete model product.putaway
-obsolete model report.stock.forecast [sql_view]
+obsolete model report.stock.forecast (renamed to report.stock.quantity) [sql_view]
 obsolete model stock.fixed.putaway.strat (renamed to stock.putaway.rule)
-new model report.stock.quantity [sql_view]
+new model report.stock.quantity (renamed from report.stock.forecast) [sql_view]
 new model stock.assign.serial [transient]
 new model stock.picking.responsible [transient]
 new model stock.putaway.rule (renamed from stock.fixed.putaway.strat)
@@ -82,6 +82,7 @@ NEW ir.actions.act_window: stock.act_assign_serial_numbers
 NEW ir.actions.act_window: stock.action_change_product_quantity
 NEW ir.actions.act_window: stock.action_putaway_tree
 NEW ir.actions.act_window: stock.category_open_putaway
+NEW ir.actions.act_window: stock.dashboard_open_quants
 NEW ir.actions.act_window: stock.location_open_putaway
 NEW ir.actions.act_window: stock.report_stock_quantity_action
 NEW ir.actions.act_window: stock.report_stock_quantity_action_product
