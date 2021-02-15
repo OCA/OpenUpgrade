@@ -177,6 +177,9 @@ System</span>]]></field>
   <record id="ARS" model="res.currency">
     <field name="position">before</field>
   </record>
+  <record id="LSL" model="res.currency">
+    <field name="symbol">M</field>
+  </record>
   <record id="hr" model="res.country">
     <field eval="'%(street)s \n%(street2)s \n%(zip)s %(city)s \n%(country_name)s'" name="address_format"/>
   </record>
