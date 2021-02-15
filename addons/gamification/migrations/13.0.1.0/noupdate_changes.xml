@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="action_new_simplified_res_users" model="ir.actions.act_window">
+  <!--<record id="action_new_simplified_res_users" model="ir.actions.act_window">
     <field name="view_type"/>
-  </record>
+  </record>-->
   <record id="badge_good_job" model="gamification.badge">
-    <field name="image" type="base64" file="gamification/static/img/badge_good_job-image.png"/>
+    <!--<field name="image" type="base64" file="gamification/static/img/badge_good_job-image.png"/>-->
     <field name="image_1920" type="base64" file="gamification/static/img/badge_good_job-image.png"/>
   </record>
   <record id="badge_hidden" model="gamification.badge">
-    <field name="image" type="base64" file="gamification/static/img/badge_hidden-image.png"/>
+    <!--<field name="image" type="base64" file="gamification/static/img/badge_hidden-image.png"/>-->
     <field name="image_1920" type="base64" file="gamification/static/img/badge_hidden-image.png"/>
   </record>
   <record id="badge_idea" model="gamification.badge">
-    <field name="image" type="base64" file="gamification/static/img/badge_idea-image.png"/>
+    <!--<field name="image" type="base64" file="gamification/static/img/badge_idea-image.png"/>-->
     <field name="image_1920" type="base64" file="gamification/static/img/badge_idea-image.png"/>
   </record>
   <record id="badge_problem_solver" model="gamification.badge">
-    <field name="image" type="base64" file="gamification/static/img/badge_problem_solver-image.png"/>
+    <!--<field name="image" type="base64" file="gamification/static/img/badge_problem_solver-image.png"/>-->
     <field name="image_1920" type="base64" file="gamification/static/img/badge_problem_solver-image.png"/>
   </record>
   <record id="base.user_admin" model="res.users">
