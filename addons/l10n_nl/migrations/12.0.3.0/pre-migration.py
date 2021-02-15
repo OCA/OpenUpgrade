@@ -22,7 +22,19 @@ def merge_res_country_states(cr):
     )
 
 
+def switch_noupdate_records(env):
+    openupgrade.set_xml_ids_noupdate_value(
+        env,
+        "l10n_nl",
+        [
+            "tag_nl_34",
+        ],
+        False,
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
+    switch_noupdate_records(env)
     merge_res_country_states(cr)
