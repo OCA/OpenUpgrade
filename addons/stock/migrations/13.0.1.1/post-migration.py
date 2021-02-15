@@ -358,7 +358,8 @@ def map_stock_locations(env, main_company):
     DELETE FROM ir_model_data imd
     WHERE imd.module = 'stock' AND imd.name IN (
         'property_stock_inventory', 'property_stock_production',
-        'stock_location_scrapped', 'location_inventory', 'location_production')
+        'stock_location_scrapped', 'location_inventory', 'location_production',
+        'location_procurement')
     """)
 
 

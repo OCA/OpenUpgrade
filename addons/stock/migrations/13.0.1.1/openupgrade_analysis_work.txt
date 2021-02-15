@@ -271,8 +271,6 @@ NEW mail.template: stock.mail_template_data_delivery_confirmation [renamed from 
 DEL stock.location: stock.location_inventory (noupdate)
 DEL stock.location: stock.location_production (noupdate)
 DEL stock.location: stock.stock_location_scrapped (noupdate)
-# DONE: post-migration: mapped them to new locations
-# DONE: end-migration delete XML-ID (end-migration because they will be used in other modules like mrp)
-
 DEL stock.location: stock.location_procurement (noupdate)
-# DONE: end-migration: delete XML-ID for avoiding the automatic removal in case of coming from older versions (<=v10)
+# DONE: post-migration: mapped them to new locations
+# DONE: post-migration: delete their ir model data
