@@ -6,7 +6,6 @@ hr_attendance / hr.employee              / last_check_out (datetime)     : NEW i
 hr_attendance / hr.employee              / pin (char)                    : module is now 'hr' ('hr_attendance')
 ---XML records in module 'hr_attendance'---
 DEL ir.actions.report: hr_attendance.hr_employee_print_badge [renamed to hr module]
-NEW ir.module.category: base.module_category_human_resources_attendances (noupdate)
 NEW ir.ui.view: hr_attendance.hr_attendance_view_form_inherit
 NEW ir.ui.view: hr_attendance.hr_user_view_form
 NEW ir.ui.view: hr_attendance.view_attendance_tree_inherit

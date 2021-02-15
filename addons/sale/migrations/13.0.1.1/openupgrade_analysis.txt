@@ -32,7 +32,6 @@ sale         / sale.order               / source_id (many2one)          : previo
 sale         / sale.order.line          / invoice_lines (many2many)     : relation is now 'account.move.line' ('account.invoice.line') [nothing to do]
 sale         / utm.campaign             / company_id (many2one)         : NEW relation: res.company, hasdefault
 ---XML records in module 'sale'---
-DEL crm.team: sales_team.team_sales_department (noupdate)
 NEW ir.actions.act_window: sale.action_sale_order_generate_link
 DEL ir.actions.act_window: sale.action_open_sale_onboarding_quotation_layout
 NEW ir.actions.server: sale.model_sale_order_action_quotation_sent
@@ -76,7 +75,6 @@ DEL ir.ui.view: sale.sale_product_configurator_view_form
 DEL ir.ui.view: sale.variants_tree_view
 DEL ir.ui.view: sale.view_order_form_editable_list
 NEW mail.template: sale.mail_template_sale_confirmation (noupdate)
-NEW res.groups: base.group_multi_currency
 NEW res.groups: sale.group_auto_done_setting
 DEL res.groups: sale.group_discount_per_so_line [renamed to product module]
 DEL res.groups: sale.group_sale_order_dates

@@ -463,7 +463,6 @@ DEL ir.ui.view: hr_payroll.view_hr_salary_rule_category_filter
 DEL ir.ui.view: hr_payroll.view_payslip_lines_contribution_register
 DEL res.groups: hr_payroll.group_hr_payroll_manager (noupdate)
 DEL res.groups: hr_payroll.group_hr_payroll_user (noupdate)
-DEL res.users: base.default_user (noupdate)
 ERROR: module not in list of installed modules:
 ---Models in module 'hr_payroll_account'---
 ---Fields in module 'hr_payroll_account'---
@@ -544,7 +543,6 @@ DEL hr.contribution.register: l10n_be_hr_payroll.contrib_register_onss
 DEL hr.contribution.register: l10n_be_hr_payroll.contrib_register_pp
 DEL hr.payroll.structure: l10n_be_hr_payroll.hr_payroll_salary_structure_employee
 DEL hr.payroll.structure: l10n_be_hr_payroll.hr_payroll_salary_structure_worker
-DEL hr.salary.rule: hr_payroll.hr_rule_basic
 DEL hr.salary.rule: l10n_be_hr_payroll.1
 DEL hr.salary.rule: l10n_be_hr_payroll.10
 DEL hr.salary.rule: l10n_be_hr_payroll.100
@@ -1979,7 +1977,6 @@ DEL hr.salary.rule: l10n_be_hr_payroll.hr_salary_rule_reduction_isolated_parent
 DEL hr.salary.rule: l10n_be_hr_payroll.hr_salary_rule_reduction_juniors
 DEL hr.salary.rule: l10n_be_hr_payroll.hr_salary_rule_reduction_seniors
 DEL hr.salary.rule: l10n_be_hr_payroll.hr_salary_rule_representation_fees
-DEL hr.salary.rule.category: hr_payroll.COMP
 DEL hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_child_alw
 DEL hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_div_impos
 DEL hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_div_net
@@ -1996,16 +1993,6 @@ DEL ir.ui.view: l10n_be_hr_payroll.hr_employee_form__l10n_be_view_for
 DEL res.partner: l10n_be_hr_payroll.res_partner_meal_vouchers
 DEL res.partner: l10n_be_hr_payroll.res_partner_onss
 DEL res.partner: l10n_be_hr_payroll.res_partner_pp
-ERROR: module not in list of installed modules:
----Models in module 'l10n_be_hr_payroll_account'---
----Fields in module 'l10n_be_hr_payroll_account'---
----XML records in module 'l10n_be_hr_payroll_account'---
-DEL hr.salary.rule: hr_payroll.hr_rule_basic
-DEL hr.salary.rule: hr_payroll.hr_rule_net
-DEL hr.salary.rule: l10n_be_hr_payroll.hr_payroll_rules_ch_worker
-DEL hr.salary.rule: l10n_be_hr_payroll.hr_payroll_rules_onss_rule
-DEL hr.salary.rule: l10n_be_hr_payroll.hr_payroll_rules_retained_net
-DEL hr.salary.rule: l10n_be_hr_payroll.hr_payroll_rules_suppl_net
 ERROR: module not in list of installed modules:
 ---Models in module 'l10n_be_hr_payroll_fleet'---
 ---Fields in module 'l10n_be_hr_payroll_fleet'---
@@ -2030,7 +2017,6 @@ DEL ir.ui.view: l10n_be_hr_payroll_fleet.fleet_vehicle_model_view_form
 DEL ir.ui.view: l10n_be_hr_payroll_fleet.fleet_vehicle_view_form
 DEL ir.ui.view: l10n_be_hr_payroll_fleet.hr_contract_view_form
 DEL ir.ui.view: l10n_be_hr_payroll_fleet.res_config_settings_view_form
-DEL res.groups: hr.group_hr_manager
 ERROR: module not in list of installed modules:
 ---Models in module 'l10n_in_hr_payroll'---
 obsolete model hr.payroll.advice
@@ -2460,7 +2446,6 @@ website_hr   / hr.employee              / public_info (char)            : DEL
 website_hr   / hr.employee              / website_id (many2one)         : DEL relation: website
 ---XML records in module 'website_hr'---
 DEL ir.actions.act_url: website_hr.action_open_website (noupdate)
-DEL ir.actions.todo: base.open_menu
 DEL ir.model.access: website_hr.access_hr_employee_portal
 DEL ir.model.access: website_hr.access_hr_employee_public
 DEL ir.model.access: website_hr.access_resource_portal

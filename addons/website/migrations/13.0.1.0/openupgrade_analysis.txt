@@ -60,7 +60,6 @@ NEW ir.model.access: website.access_website_track_system
 NEW ir.model.access: website.access_website_visitor_designer
 DEL ir.model.access: website.access_website_redirect
 DEL ir.model.access: website.access_website_redirect_designer
-NEW ir.module.category: base.module_category_website_website (noupdate)
 NEW ir.rule: website.website_menu
 NEW ir.ui.menu: website.menu_visitor_sub_menu
 NEW ir.ui.menu: website.menu_visitor_view_menu
@@ -89,7 +88,6 @@ NEW ir.ui.view: website.website_visitor_view_graph
 NEW ir.ui.view: website.website_visitor_view_kanban
 NEW ir.ui.view: website.website_visitor_view_search
 NEW ir.ui.view: website.website_visitor_view_tree
-DEL ir.ui.view: portal.portal_show_sign_in
 DEL ir.ui.view: website.403
 DEL ir.ui.view: website.404
 DEL ir.ui.view: website.500

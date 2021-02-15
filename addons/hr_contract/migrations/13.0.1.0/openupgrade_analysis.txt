@@ -19,7 +19,6 @@ DEL hr.contract.type: hr_contract.hr_contract_type_sub (noupdate)
 DEL hr.contract.type: hr_contract.hr_contract_type_wrkr (noupdate)
 DEL ir.actions.act_window: hr_contract.action_hr_contract_type
 DEL ir.model.access: hr_contract.access_hr_contract_type_manager
-NEW ir.module.category: base.module_category_human_resources_contracts (noupdate)
 NEW ir.rule: hr_contract.ir_rule_hr_contract_multi_company (noupdate)
 NEW ir.ui.menu: hr_contract.menu_human_resources_configuration_contract
 DEL ir.ui.menu: hr_contract.hr_menu_contract_type

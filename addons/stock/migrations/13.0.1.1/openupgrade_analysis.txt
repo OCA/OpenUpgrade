@@ -130,7 +130,6 @@ DEL ir.model.access: stock.access_stock_fixed_putaway_strat
 DEL ir.model.access: stock.access_stock_fixed_putaway_user
 DEL ir.model.access: stock.access_stock_forecast_manager
 DEL ir.model.access: stock.access_stock_forecast_user
-NEW ir.module.category: base.module_category_operations_inventory (noupdate)
 DEL ir.property: stock.property_stock_inventory (noupdate)
 DEL ir.property: stock.property_stock_production (noupdate)
 NEW ir.rule: stock.report_stock_quantity_flow_comp_rule (noupdate)

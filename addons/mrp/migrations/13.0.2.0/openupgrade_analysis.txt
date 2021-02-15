@@ -77,7 +77,6 @@ DEL ir.model.access: mrp.access_product_price_history_mrp_manager
 DEL ir.model.access: mrp_byproduct.access_mrp_subproduct_all
 DEL ir.model.access: mrp_byproduct.access_mrp_subproduct_manager
 DEL ir.model.access: mrp_byproduct.access_mrp_subproduct_user
-NEW ir.module.category: base.module_category_manufacturing_manufacturing (noupdate)
 NEW ir.rule: mrp.mrp_bom_byproduct_rule (noupdate)
 NEW ir.rule: mrp.mrp_bom_line_rule (noupdate)
 NEW ir.rule: mrp.mrp_unbuild_rule (noupdate)

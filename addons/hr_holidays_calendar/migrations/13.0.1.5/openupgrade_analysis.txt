@@ -2,7 +2,6 @@
 new model hr.leave.report.calendar [sql_view]
 ---Fields in module 'hr_holidays_calendar'---
 ---XML records in module 'hr_holidays_calendar'---
-NEW ir.actions.act_window: hr_holidays.action_hr_holidays_dashboard
 NEW ir.model.access: hr_holidays_calendar.access_hr_leave_report_calendar
 NEW ir.rule: hr_holidays_calendar.hr_leave_report_calendar_rule_multi_company
 NEW ir.ui.view: hr_holidays_calendar.hr_leave_report_calendar_view

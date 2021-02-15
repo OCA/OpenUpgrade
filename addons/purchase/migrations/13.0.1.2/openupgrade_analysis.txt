@@ -33,7 +33,6 @@ DEL ir.model.access: purchase.access_account_invoice_tax_purchase
 DEL ir.model.access: purchase.access_account_move
 DEL ir.model.access: purchase.access_product_price_history_purchase_manager
 DEL ir.model.access: purchase.access_product_price_history_purchase_user
-NEW ir.module.category: base.module_category_operations_purchase (noupdate)
 NEW ir.rule: purchase.purchase_user_account_move_line_rule (noupdate)
 NEW ir.rule: purchase.purchase_user_account_move_rule (noupdate)
 NEW ir.ui.menu: purchase.menu_purchase_products
