@@ -5,8 +5,8 @@ Writing migration scripts for Odoo is a lot of work, that can not be
 accomplished by a single party.  We need your help.
 
 If you are at all interested in discussing stategic, functional or
-technical issues, please sign up to the *drivers* team:
-`<https://launchpad.net/~openupgrade-drivers>`_.
+technical issues, please post an issue on the Github project:
+`<https://github.com/OCA/OpenUpgrade>`_.
 
 If you are a developer, give the OpenUpgrade software a go and give us
 feedback.  If you use the software, provide the project with your issue
