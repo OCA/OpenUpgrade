@@ -12,6 +12,8 @@ renamed_modules = {
     'hr_skill': 'hr_skills',
     # OCA/manufacture
     'quality_control': 'quality_control_oca',
+    # OCA/stock-logistics-warehouse
+    'stock_putaway_product_form': 'stock_putaway_product_template',
 }
 
 merged_modules = {
