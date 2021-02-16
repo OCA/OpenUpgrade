@@ -1,0 +1,36 @@
+---Models in module 'snailmail'---
+new model snailmail.letter.cancel [transient]
+new model snailmail.letter.format.error [transient]
+new model snailmail.letter.missing.required.fields [transient]
+# NOTHING TO DO
+
+---Fields in module 'snailmail'---
+snailmail    / mail.message             / letter_ids (one2many)         : NEW relation: snailmail.letter
+snailmail    / mail.message             / message_type (False)          : NEW selection_keys: ['comment', 'email', 'notification', 'snailmail', 'user_notification'], mode: modify
+snailmail    / res.company              / snailmail_cover (boolean)     : NEW hasdefault
+snailmail    / snailmail.letter         / city (char)                   : NEW
+snailmail    / snailmail.letter         / country_id (many2one)         : NEW relation: res.country
+snailmail    / snailmail.letter         / cover (boolean)               : NEW hasdefault
+snailmail    / snailmail.letter         / error_code (selection)        : NEW selection_keys: ['CREDIT_ERROR', 'FORMAT_ERROR', 'MISSING_REQUIRED_FIELDS', 'NO_PRICE_AVAILABLE', 'TRIAL_ERROR', 'UNKNOWN_ERROR']
+snailmail    / snailmail.letter         / message_id (many2one)         : NEW relation: mail.message
+snailmail    / snailmail.letter         / state_id (many2one)           : NEW relation: res.country.state
+snailmail    / snailmail.letter         / street (char)                 : NEW
+snailmail    / snailmail.letter         / street2 (char)                : NEW
+snailmail    / snailmail.letter         / zip (char)                    : NEW
+# NOTHING TO DO (?): new features
+
+snailmail    / snailmail.letter         / state (selection)             : now required, req_default: function
+snailmail    / snailmail.letter         / state (selection)             : selection_keys is now '['canceled', 'error', 'pending', 'sent']' ('['canceled', 'draft', 'error', 'pending', 'sent']')
+# DONE: post-migration: mapped 'draft' state to 'pending'
+
+---XML records in module 'snailmail'---
+NEW ir.actions.act_window: snailmail.snailmail_letter_cancel_action
+NEW ir.actions.act_window: snailmail.snailmail_letter_format_error_action
+NEW ir.actions.act_window: snailmail.snailmail_letter_missing_required_fields_action
+NEW ir.ui.view: snailmail.assets_backend
+NEW ir.ui.view: snailmail.qunit_suite
+NEW ir.ui.view: snailmail.snailmail_letter_cancel
+NEW ir.ui.view: snailmail.snailmail_letter_format_error
+NEW ir.ui.view: snailmail.snailmail_letter_missing_required_fields
+DEL ir.ui.view: snailmail.res_config_settings_view_form
+# NOTHING TO DO
