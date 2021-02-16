@@ -1,0 +1,13 @@
+---Models in module 'account_check_printing'---
+---Fields in module 'account_check_printing'---
+account_check_printing / account.journal          / check_next_number (integer)   : type is now 'char' ('integer')
+# NOTHING TO DO: Computed non stored field
+
+account_check_printing / account.payment          / check_number (integer)        : type is now 'char' ('integer')
+# DONE: pre-migration: Renamed for preserving
+# DONE: post-migration: Values converted to char
+
+---XML records in module 'account_check_printing'---
+DEL ir.ui.view: account_check_printing.view_account_payment_from_invoices_inherited
+DEL ir.ui.view: account_check_printing.view_account_payment_invoice_form_inherited
+# NOTHING TO DO
