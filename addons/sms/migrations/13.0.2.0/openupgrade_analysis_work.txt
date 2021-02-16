@@ -1,0 +1,83 @@
+---Models in module 'sms'---
+obsolete model sms.send_sms (renamed to sms.composer) [transient]
+new model sms.composer (renamed from sms.send_sms) [transient]
+# DONE: pre-migration: renamed models and tables
+
+new model sms.cancel [transient]
+new model sms.resend [transient]
+new model sms.resend.recipient [transient]
+new model sms.sms
+new model sms.template
+new model sms.template.preview [transient]
+# NOTHING TO DO
+
+---Fields in module 'sms'---
+sms          / ir.actions.server        / sms_mass_keep_log (boolean)   : NEW hasdefault
+sms          / ir.actions.server        / sms_template_id (many2one)    : NEW relation: sms.template
+sms          / ir.actions.server        / state (False)                 : NEW selection_keys: ['code', 'email', 'followers', 'multi', 'next_activity', 'object_create', 'object_write', 'sms'], mode: modify
+sms          / mail.message             / message_type (False)          : NEW selection_keys: ['comment', 'email', 'notification', 'sms', 'snailmail', 'user_notification'], mode: modify
+sms          / mail.notification        / failure_type (False)          : NEW selection_keys: ['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN', 'sms_credit', 'sms_number_format', 'sms_number_missing', 'sms_server'], mode: modify
+sms          / mail.notification        / notification_type (False)     : NEW selection_keys: ['email', 'inbox', 'sms'], mode: modify
+sms          / mail.notification        / sms_id (many2one)             : NEW relation: sms.sms
+sms          / mail.notification        / sms_number (char)             : NEW
+sms          / res.partner              / phone_sanitized (char)        : NEW isfunction: function, stored
+sms          / sms.sms                  / body (text)                   : NEW
+sms          / sms.sms                  / error_code (selection)        : NEW selection_keys: ['sms_blacklist', 'sms_credit', 'sms_duplicate', 'sms_number_format', 'sms_number_missing', 'sms_server']
+sms          / sms.sms                  / mail_message_id (many2one)    : NEW relation: mail.message
+sms          / sms.sms                  / number (char)                 : NEW
+sms          / sms.sms                  / partner_id (many2one)         : NEW relation: res.partner
+sms          / sms.sms                  / state (selection)             : NEW required, selection_keys: ['canceled', 'error', 'outgoing', 'sent'], req_default: function, hasdefault
+sms          / sms.template             / body (char)                   : NEW required
+sms          / sms.template             / copyvalue (char)              : NEW
+sms          / sms.template             / lang (char)                   : NEW
+sms          / sms.template             / model (char)                  : NEW isrelated: related, stored
+sms          / sms.template             / model_id (many2one)           : NEW relation: ir.model, required
+sms          / sms.template             / model_object_field (many2one) : NEW relation: ir.model.fields
+sms          / sms.template             / name (char)                   : NEW
+sms          / sms.template             / null_value (char)             : NEW
+sms          / sms.template             / sidebar_action_id (many2one)  : NEW relation: ir.actions.act_window
+sms          / sms.template             / sub_model_object_field (many2one): NEW relation: ir.model.fields
+sms          / sms.template             / sub_object (many2one)         : NEW relation: ir.model
+# NOTHING TO DO: new features
+
+---XML records in module 'sms'---
+NEW ir.actions.act_window: sms.res_partner_act_window_sms_composer_multi
+NEW ir.actions.act_window: sms.res_partner_act_window_sms_composer_single
+NEW ir.actions.act_window: sms.sms_cancel_action
+NEW ir.actions.act_window: sms.sms_resend_action
+NEW ir.actions.act_window: sms.sms_sms_action
+NEW ir.actions.act_window: sms.sms_template_action
+NEW ir.actions.act_window: sms.sms_template_preview_action
+DEL ir.actions.act_window: sms.send_sms_action
+# NOTHING TO DO
+
+DEL ir.actions.act_window: sms.send_sms_form_action
+NEW ir.actions.act_window: sms.sms_composer_action_form
+# NOTHING TO DO: it's a rename, but noupdate=0
+
+NEW ir.cron: sms.ir_cron_sms_scheduler_action (noupdate)
+NEW ir.model.access: sms.access_sms_sms_all
+NEW ir.model.access: sms.access_sms_sms_system
+NEW ir.model.access: sms.access_sms_template_all
+NEW ir.model.access: sms.access_sms_template_system
+NEW ir.model.access: sms.access_sms_template_user
+NEW ir.ui.menu: sms.sms_sms_menu
+NEW ir.ui.menu: sms.sms_template_menu
+NEW ir.ui.view: sms.ir_actions_server_view_form
+NEW ir.ui.view: sms.mail_resend_message_view_form
+NEW ir.ui.view: sms.res_config_settings_view_form
+NEW ir.ui.view: sms.sms_cancel
+NEW ir.ui.view: sms.sms_sms_view_search
+NEW ir.ui.view: sms.sms_sms_view_tree
+NEW ir.ui.view: sms.sms_template_preview_form
+NEW ir.ui.view: sms.sms_template_view_form
+NEW ir.ui.view: sms.sms_template_view_search
+NEW ir.ui.view: sms.sms_template_view_tree
+NEW ir.ui.view: sms.sms_tsms_view_form
+# NOTHING TO DO
+
+NEW ir.ui.view: sms.res_partner_view_form
+DEL ir.ui.view: sms.partner_form_send_sms_form_view
+NEW ir.ui.view: sms.sms_composer_view_form
+DEL ir.ui.view: sms.send_sms_view_form
+# NOTHING TO DO: it's a rename, but noupdate=0
