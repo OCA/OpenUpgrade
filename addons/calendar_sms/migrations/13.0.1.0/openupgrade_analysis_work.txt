@@ -1,0 +1,14 @@
+---Models in module 'calendar_sms'---
+
+---Fields in module 'calendar_sms'---
+calendar_sms / calendar.alarm           / alarm_type (False)            : NEW selection_keys: ['email', 'notification', 'sms'], mode: modify
+calendar_sms / calendar.alarm           / type (False)                  : DEL selection_keys: ['email', 'notification', 'sms'], mode: modify
+# NOTHING TO DO: Done in Calendar module
+
+---XML records in module 'calendar_sms'---
+NEW ir.actions.act_window: calendar_sms.calendar_event_act_window_sms_composer_single
+DEL ir.actions.act_window: calendar_sms.sms_message_send_action_mutli
+# NOTHING TO DO
+
+NEW sms.template: calendar_sms.sms_template_data_calendar_reminder (noupdate)
+# NOTHING TO DO: new xml
