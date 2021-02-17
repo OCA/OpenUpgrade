@@ -221,6 +221,7 @@ def migration_invoice_moves(env):
         FROM account_invoice_line ail
             JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
             JOIN account_move am ON ail.invoice_id = am.old_invoice_id
+            JOIN res_company rc ON ai.company_id = rc.id
         """
     # We assign to the move lines information from the matching invoice line.
     # Everything that has a tax_line_id (originator tax) is by definition originating
@@ -249,6 +250,7 @@ def migration_invoice_moves(env):
     openupgrade.logged_query(
         env.cr, query + minimal_where + """
             AND aml.old_invoice_line_id IS NULL
+            AND rc.anglo_saxon_accounting IS DISTINCT FROM TRUE
         RETURNING aml.id""",
     )
     aml_ids += tuple(x[0] for x in env.cr.fetchall())
