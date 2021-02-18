@@ -1,0 +1,26 @@
+---Models in module 'website_livechat'---
+---Fields in module 'website_livechat'---
+website_livechat / mail.channel             / livechat_active (boolean)     : NEW
+website_livechat / mail.channel             / livechat_visitor_id (many2one): NEW relation: website.visitor
+website_livechat / website.visitor          / livechat_operator_id (many2one): NEW relation: res.partner, isfunction: function, stored
+website_livechat / website.visitor          / mail_channel_ids (one2many)   : NEW relation: mail.channel
+# Nothing to do
+---XML records in module 'website_livechat'---
+DEL im_livechat.channel: website_livechat.im_livechat_channel_data_website (noupdate)
+# NOTHING TO DO: Renamed to im_livechat.im_livechat_channel_data in im_livechat
+NEW ir.actions.act_window: website.website_visitors_action
+NEW ir.actions.act_window: website_livechat.website_visitor_livechat_session_action
+NEW ir.actions.act_window.view: website_livechat.website_visitor_livechat_session_action_form
+NEW ir.actions.act_window.view: website_livechat.website_visitor_livechat_session_action_tree
+NEW ir.actions.server: website_livechat.website_livechat_send_chat_request_action_server
+NEW ir.model.access: website_livechat.access_website_track_livechat_users
+NEW ir.model.access: website_livechat.access_website_visitor_livechat_users
+NEW ir.ui.menu: website_livechat.website_livechat_visitor_menu
+NEW ir.ui.view: website_livechat.assets_backend
+NEW ir.ui.view: website_livechat.user_navbar_inherit_website_livechat
+NEW ir.ui.view: website_livechat.website_visitor_view_form
+NEW ir.ui.view: website_livechat.website_visitor_view_kanban
+NEW ir.ui.view: website_livechat.website_visitor_view_search
+NEW ir.ui.view: website_livechat.website_visitor_view_tree
+DEL ir.ui.view: website_livechat.user_navbar_inherit_website_livecaht
+# Nothing to do
