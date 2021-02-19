@@ -45,6 +45,8 @@ merged_modules = {
     # OCA/l10n-spain
     'l10n_es_account_invoice_sequence': 'l10n_es',
     'l10n_es_aeat_sii': 'l10n_es_aeat_sii_oca',
+    # OCA/product-attribute
+    'product_pricelist_show_product_ref': 'product',
     # OCA/server-backend
     'base_suspend_security': 'base',
     # OCA/social
