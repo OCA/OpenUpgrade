@@ -1,0 +1,30 @@
+---Models in module 'hr_recruitment'---
+---Fields in module 'hr_recruitment'---
+hr_recruitment / hr.applicant             / email_cc (text)               : type is now 'char' ('text')
+# NOTHING TO DO: Handled by Odoo core
+
+hr_recruitment / hr.applicant             / reference (char)              : DEL
+hr_recruitment / hr.job                   / favorite_user_ids (many2many) : NEW relation: res.users, hasdefault
+# NOTHING TO DO
+
+hr_recruitment / hr.recruitment.stage     / job_id (many2one)             : DEL relation: hr.job
+hr_recruitment / hr.recruitment.stage     / job_ids (many2many)           : NEW relation: hr.job
+# DONE: post-migration: transformed the many2one to many2many
+
+---XML records in module 'hr_recruitment'---
+DEL ir.actions.act_window: hr_recruitment.action_hr_job_no_employee
+DEL ir.actions.act_window: hr_recruitment.hr_applicant_resumes
+NEW ir.actions.server: hr_recruitment.hr_applicant_resumes_server
+NEW ir.module.category: base.module_category_human_resources_recruitment (noupdate)
+NEW ir.ui.menu: hr_recruitment.hr_applicant_report_menu
+DEL ir.ui.menu: hr_recruitment.menu_crm_case_categ0_act_job02
+NEW ir.ui.view: hr_recruitment.applicant_hired_template
+NEW ir.ui.view: hr_recruitment.assets_tests
+NEW ir.ui.view: hr_recruitment.hr_applicant_category_view_tree
+NEW ir.ui.view: hr_recruitment.hr_applicant_view_activity
+NEW ir.ui.view: hr_recruitment.hr_applicant_view_form
+NEW ir.ui.view: hr_recruitment.hr_applicant_view_search_bis
+NEW ir.ui.view: hr_recruitment.hr_job_search_view
+DEL ir.ui.view: hr_recruitment.crm_case_form_view_job
+DEL ir.ui.view: hr_recruitment.view_crm_case_jobs_filter
+# NOTHING TO DO: New records or noupdate=0
