@@ -1,5 +1,6 @@
 # Copyright 2020 Payam Yasaie <https://www.tashilgostar.com>
 # Copyright 2020 ForgeFlow <https://www.forgeflow.com>
+# Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
@@ -36,18 +37,19 @@ def move_fields_from_invoice_to_moves(env):
     )
 
 
-def fill_website_sale_product_image(env):
+def fill_website_sale_product_image_name(env):
     openupgrade.logged_query(
         env.cr, """
         UPDATE product_image
-        SET name = 'default_name_' || id
+        SET name = 'Image ' || id
         WHERE name IS NULL """,
     )
 
 
 @openupgrade.migrate()
 def migrate(env, version):
-    fill_website_sale_product_image(env)
+    env["product.public.category"]._parent_store_compute()
+    fill_website_sale_product_image_name(env)
     convert_image_attachments(env)
     move_fields_from_invoice_to_moves(env)
     openupgrade.delete_records_safely_by_xml_id(env, _unlink_by_xmlid)
