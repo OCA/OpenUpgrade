@@ -1,0 +1,21 @@
+---Models in module 'website_form'---
+
+---Fields in module 'website_form'---
+website_form / ir.model                 / website_form_key (char)       : NEW
+# NOTHING TO DO: new field for the action when form is submitted. Filled by subsequent modules in noupdate=0 data.
+
+---XML records in module 'website_form'---
+NEW ir.model: mail.model_mail_mail
+NEW ir.ui.view: website_form.assets_editor
+NEW ir.ui.view: website_form.assets_tests
+NEW ir.ui.view: website_form.contactus_form
+NEW ir.ui.view: website_form.ir_model_fields_view
+NEW ir.ui.view: website_form.ir_model_view
+NEW ir.ui.view: website_form.register_s_website_form
+NEW ir.ui.view: website_form.remove_external_snippets
+NEW ir.ui.view: website_form.s_website_form
+NEW ir.ui.view: website_form.snippet_options
+# NOTHING TO DO: new xmls
+
+NEW website.page: website_form.contactus_thanks [renamed from website_crm module]
+# DONE: pre-migration: Rename XML-ID and key
