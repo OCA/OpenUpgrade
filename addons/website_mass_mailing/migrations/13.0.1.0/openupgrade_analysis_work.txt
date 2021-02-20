@@ -9,6 +9,7 @@ website_mass_mailing / website.mass_mailing.popup / mailing_list_id (many2one)  
 website_mass_mailing / website.mass_mailing.popup / popup_content (html)          : NEW hasdefault
 website_mass_mailing / website.mass_mailing.popup / website_id (many2one)         : NEW relation: website
 # DONE: post-migration moved popup_content to website.mass_mailing.popup
+
 website_mass_mailing / mail.mass_mailing.list   / popup_redirect_url (char)     : DEL
 website_mass_mailing / mailing.list             / toast_content (html)          : NEW hasdefault
 # NOTHING TO DO
