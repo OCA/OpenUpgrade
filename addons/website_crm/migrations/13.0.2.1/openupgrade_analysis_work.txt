@@ -1,0 +1,20 @@
+---Models in module 'website_crm'---
+---Fields in module 'website_crm'---
+website_crm  / crm.lead                 / visitor_ids (many2many)       : NEW relation: website.visitor
+website_crm  / website.visitor          / lead_ids (many2many)          : NEW relation: crm.lead
+# Nothing to do
+
+---XML records in module 'website_crm'---
+NEW ir.actions.act_window: website_crm.website_visitor_crm_lead_action
+NEW ir.model.access: website_crm.access_website_track_salesman
+NEW ir.model.access: website_crm.access_website_visitor_salesman
+NEW ir.ui.view: website_crm.assets_editor
+NEW ir.ui.view: website_crm.assets_tests
+NEW ir.ui.view: website_crm.crm_lead_view_form
+NEW ir.ui.view: website_crm.website_visitor_view_form
+NEW ir.ui.view: website_crm.website_visitor_view_kanban
+NEW ir.ui.view: website_crm.website_visitor_view_search
+NEW ir.ui.view: website_crm.website_visitor_view_tree
+DEL ir.ui.view: website_crm.website_crm_tests
+DEL website.page: website_crm.contactus_thanks [renamed to website_form module]
+# Nothing to do: See website_form PR migration script
