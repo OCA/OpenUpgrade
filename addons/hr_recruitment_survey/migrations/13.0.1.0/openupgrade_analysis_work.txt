@@ -1,0 +1,53 @@
+---Models in module 'hr_recruitment_survey'---
+---Fields in module 'hr_recruitment_survey'---
+hr_recruitment_survey / survey.survey            / category (False)              : NEW selection_keys: ['default', 'hr_recruitment'], mode: modify
+# DONE: post-migration: Mark as hr_recruitment those surveys linked in jobs
+
+---XML records in module 'hr_recruitment_survey'---
+DEL ir.model.access: hr_recruitment_survey.access_survey_hr_user
+NEW ir.ui.view: hr_recruitment_survey.hr_applicant_view_form_inherit
+NEW ir.ui.view: hr_recruitment_survey.survey_survey_view_form
+DEL ir.ui.view: hr_recruitment_survey.crm_case_form_view_job_inherit
+# NOTHING TO DO: noupdate=0 IR stuff
+
+DEL survey.label: hr_recruitment_survey.rcol_3_1_1
+DEL survey.label: hr_recruitment_survey.rcol_3_1_2
+DEL survey.label: hr_recruitment_survey.rcol_3_1_3
+DEL survey.label: hr_recruitment_survey.rcol_3_1_4
+DEL survey.label: hr_recruitment_survey.rcol_3_1_5
+DEL survey.label: hr_recruitment_survey.recruitment_1_2_1
+DEL survey.label: hr_recruitment_survey.recruitment_1_2_2
+DEL survey.label: hr_recruitment_survey.recruitment_1_3_1
+DEL survey.label: hr_recruitment_survey.recruitment_1_3_2
+DEL survey.label: hr_recruitment_survey.recruitment_1_3_3
+DEL survey.label: hr_recruitment_survey.recruitment_1_3_4
+DEL survey.label: hr_recruitment_survey.recruitment_1_3_5
+DEL survey.label: hr_recruitment_survey.recruitment_1_3_6
+DEL survey.label: hr_recruitment_survey.recruitment_1_3_7
+DEL survey.label: hr_recruitment_survey.recruitment_1_3_8
+DEL survey.label: hr_recruitment_survey.rrow_2_1_1
+DEL survey.label: hr_recruitment_survey.rrow_2_1_10
+DEL survey.label: hr_recruitment_survey.rrow_2_1_11
+DEL survey.label: hr_recruitment_survey.rrow_2_1_12
+DEL survey.label: hr_recruitment_survey.rrow_2_1_13
+DEL survey.label: hr_recruitment_survey.rrow_2_1_2
+DEL survey.label: hr_recruitment_survey.rrow_2_1_3
+DEL survey.label: hr_recruitment_survey.rrow_2_1_4
+DEL survey.label: hr_recruitment_survey.rrow_2_1_5
+DEL survey.label: hr_recruitment_survey.rrow_2_1_6
+DEL survey.label: hr_recruitment_survey.rrow_2_1_7
+DEL survey.label: hr_recruitment_survey.rrow_2_1_8
+DEL survey.label: hr_recruitment_survey.rrow_2_1_9
+DEL survey.page: hr_recruitment_survey.recruitment_1
+DEL survey.page: hr_recruitment_survey.recruitment_2
+DEL survey.page: hr_recruitment_survey.recruitment_3
+DEL survey.question: hr_recruitment_survey.recruitment_1_1
+DEL survey.question: hr_recruitment_survey.recruitment_1_2
+DEL survey.question: hr_recruitment_survey.recruitment_1_3
+DEL survey.question: hr_recruitment_survey.recruitment_2_1
+DEL survey.question: hr_recruitment_survey.recruitment_2_2
+DEL survey.question: hr_recruitment_survey.recruitment_2_3
+DEL survey.question: hr_recruitment_survey.recruitment_2_4
+DEL survey.question: hr_recruitment_survey.recruitment_3_1
+DEL survey.survey: hr_recruitment_survey.recruitment_form
+# DONE: post-migration: Remove survey if not used in jobs and without answers
