@@ -1,6 +1,8 @@
 # Copyright 2020 ForgeFlow <http://www.forgeflow.com>
+# Copyright 2021 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+from psycopg2 import sql
 
 
 def fill_account_reconcile_model_second_analytic_tag_rel_table(env):
@@ -580,17 +582,25 @@ def _move_model_in_data(env, ids_map, old_model, new_model):
     ]
     for old_id, new_id in ids_map:
         for rename in renames:
-            openupgrade.logged_query(
-                env.cr, """
+            query = """
                 UPDATE {table}
-                SET {field1} = '{new_value1}', {field2} = {new_value2}
-                WHERE {field1} = '{old_value1}' AND {field2} = {old_value2}
-                """.format(
-                    table=rename[0], field1=rename[1], field2=rename[2],
-                    old_value1=old_model, new_value1=new_model,
-                    old_value2=old_id, new_value2=new_id,
-                )
-            )
+                SET {field1} = %(new_value1)s, {field2} = %(new_value2)s
+                WHERE {field1} = %(old_value1)s AND {field2} = %(old_value2)s"""
+            if rename[0] == 'mail_followers':
+                query += """ AND partner_id NOT IN (
+                    SELECT partner_id FROM mail_followers
+                    WHERE res_model = 'account.move' AND res_id = %(new_value2)s
+                )"""
+            env.cr.execute(sql.SQL(query).format(
+                table=sql.Identifier(rename[0]),
+                field1=sql.Identifier(rename[1]),
+                field2=sql.Identifier(rename[2])
+            ), {
+                "old_value1": old_model,
+                "new_value1": new_model,
+                "old_value2": old_id,
+                "new_value2": new_id,
+            })
 
 
 def fill_account_move_type(env):
