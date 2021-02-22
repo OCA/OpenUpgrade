@@ -64,11 +64,11 @@ def convert_slide_categories(env):
         env.cr, sql.SQL("""
         INSERT INTO slide_slide (
             create_date, create_uid, write_date, write_uid, is_category,
-            name, channel_id, old_category_id, sequence
+            name, channel_id, old_category_id, sequence, slide_type
         )
         SELECT
             sc.create_date, sc.create_uid, sc.write_date, sc.write_uid, True,
-            sc.name, sc.channel_id, sc.id, min(ss.sequence) - 1 as sequence
+            sc.name, sc.channel_id, sc.id, min(ss.sequence) - 1 as sequence, 'document'
         FROM slide_slide ss
         LEFT JOIN slide_category sc ON sc.id = ss.{category_id}
         WHERE ss.channel_id IN (
