@@ -1,0 +1,24 @@
+---Models in module 'event_sale'---
+new model event.event.configurator [transient]
+# NOTHING TO DO
+
+---Fields in module 'event_sale'---
+event_sale   / event.registration       / campaign_id (many2one)        : NEW relation: utm.campaign, isrelated: related, stored
+event_sale   / event.registration       / medium_id (many2one)          : NEW relation: utm.medium, isrelated: related, stored
+event_sale   / event.registration       / source_id (many2one)          : NEW relation: utm.source, isrelated: related, stored
+# NOTHING TO DO: Filled by standard update mechanism being a related. Possible improvement: being filled by SQL for performance.
+
+---XML records in module 'event_sale'---
+NEW ir.actions.act_window: event_sale.event_configurator_action
+DEL ir.model.access: event_sale.access_product_price_history_event_manager
+NEW ir.ui.view: event_sale.assets_backend
+NEW ir.ui.view: event_sale.assets_tests
+NEW ir.ui.view: event_sale.qunit_suite
+NEW ir.ui.view: event_sale.event_configurator_view_form
+DEL ir.ui.view: event_sale.assets_backend_inherit_event_sale
+DEL ir.ui.view: event_sale.view_order_form_inherit_event_sale_group_event_user
+# NOTHING TO DO
+
+NEW ir.ui.view: event_sale.sale_order_view_form
+DEL ir.ui.view: event_sale.view_sale_order_form_inherit_event
+# NOTHING TO DO: It is rename but there is no xml that inherits old xml.
