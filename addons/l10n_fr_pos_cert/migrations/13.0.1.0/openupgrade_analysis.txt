@@ -3,6 +3,7 @@ model account.sale.closing (moved from l10n_fr_sale_closing)
 new model report.l10n_fr_pos_cert.report_pos_hash_integrity [abstract]
 ---Fields in module 'l10n_fr_pos_cert'---
 l10n_fr_pos_cert / account.sale.closing     / __last_update (datetime)      : previously in module l10n_fr_sale_closing
+l10n_fr_pos_cert / account.sale.closing     / _order                        : previously in module l10n_fr_sale_closing
 l10n_fr_pos_cert / account.sale.closing     / company_id (many2one)         : previously in module l10n_fr_sale_closing
 l10n_fr_pos_cert / account.sale.closing     / cumulative_total (float)      : previously in module l10n_fr_sale_closing
 l10n_fr_pos_cert / account.sale.closing     / currency_id (many2one)        : previously in module l10n_fr_sale_closing

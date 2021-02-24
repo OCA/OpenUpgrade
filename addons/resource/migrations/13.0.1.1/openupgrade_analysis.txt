@@ -1,9 +1,11 @@
 ---Models in module 'resource'---
 ---Fields in module 'resource'---
 resource     / resource.calendar        / two_weeks_calendar (boolean)  : NEW
+resource     / resource.calendar.attendance / _order                        : _order is now 'week_type, dayofweek, hour_from' ('dayofweek, hour_from')
 resource     / resource.calendar.attendance / display_type (selection)      : NEW selection_keys: ['line_section'], hasdefault
 resource     / resource.calendar.attendance / resource_id (many2one)        : NEW relation: resource.resource
 resource     / resource.calendar.attendance / sequence (integer)            : NEW hasdefault
 resource     / resource.calendar.attendance / week_type (selection)         : NEW selection_keys: ['0', '1'], hasdefault
+resource     / resource.calendar.leaves / _order                        : _order is now 'date_from' ('id')
 ---XML records in module 'resource'---
 NEW ir.ui.view: resource.assets_backend

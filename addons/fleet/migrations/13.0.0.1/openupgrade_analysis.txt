@@ -4,6 +4,7 @@ fleet        / fleet.vehicle            / future_driver_id (many2one)   : NEW re
 fleet        / fleet.vehicle            / net_car_value (float)         : NEW
 fleet        / fleet.vehicle            / next_assignation_date (date)  : NEW
 fleet        / fleet.vehicle            / plan_to_change_car (boolean)  : NEW isrelated: related, stored
+fleet        / fleet.vehicle.assignation.log / _order                        : _order is now 'create_date desc, date_start desc' ('date_start')
 fleet        / fleet.vehicle.cost       / company_id (many2one)         : NEW relation: res.company, hasdefault
 fleet        / fleet.vehicle.model      / manager_id (many2one)         : NEW relation: res.users, hasdefault
 fleet        / fleet.vehicle.model.brand / image (binary)                : DEL attachment: True

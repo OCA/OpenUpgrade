@@ -9,6 +9,7 @@ purchase     / account.move.line        / purchase_line_id (many2one)   : NEW re
 purchase     / purchase.order           / currency_rate (float)         : NEW isfunction: function, stored
 purchase     / purchase.order           / date_approve (date)           : type is now 'datetime' ('date')
 purchase     / purchase.order           / date_planned (datetime)       : not a function anymore
+purchase     / purchase.order           / invoice_ids (many2many)       : column2 is now 'account_move_id' ('account_invoice_id') [account_invoice_purchase_order_rel]
 purchase     / purchase.order           / invoice_ids (many2many)       : relation is now 'account.move' ('account.invoice') [nothing to do]
 purchase     / purchase.order           / invoice_ids (many2many)       : table is now 'account_move_purchase_order_rel' ('account_invoice_purchase_order_rel')
 purchase     / purchase.order.line      / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section'], hasdefault

@@ -41,6 +41,7 @@ mail         / mail.notification        / notification_status (selection): NEW s
 mail         / mail.notification        / notification_type (selection) : NEW required, selection_keys: ['email', 'inbox'], req_default: function, hasdefault
 mail         / mail.notification        / read_date (datetime)          : NEW
 mail         / mail.shortcode           / message_ids (many2one)        : NEW relation: mail.message
+mail         / mail.tracking.value      / _order                        : _order is now 'tracking_sequence asc' ('track_sequence asc')
 mail         / mail.tracking.value      / track_sequence (integer)      : DEL
 mail         / mail.tracking.value      / tracking_sequence (integer)   : NEW hasdefault
 mail         / res.partner              / email_normalized (char)       : NEW isfunction: function, stored

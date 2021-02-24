@@ -2,6 +2,7 @@
 ---Fields in module 'website_sale'---
 website_sale / account.invoice          / website_id (many2one)         : DEL relation: website
 website_sale / account.move             / website_id (many2one)         : NEW relation: website, isrelated: related, stored
+website_sale / product.image            / _order                        : _order is now 'sequence, id' ('id')
 website_sale / product.image            / can_image_1024_be_zoomed (boolean): NEW isfunction: function, stored
 website_sale / product.image            / image (binary)                : DEL attachment: True
 website_sale / product.image            / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored

@@ -2,6 +2,7 @@
 new model crm.lead.scoring.frequency
 new model crm.lead.scoring.frequency.field
 ---Fields in module 'crm'---
+crm          / crm.lead                 / _order                        : _order is now 'priority desc, id desc' ('priority desc,activity_date_deadline,id desc')
 crm          / crm.lead                 / automated_probability (float) : NEW
 crm          / crm.lead                 / email_cc (text)               : type is now 'char' ('text')
 crm          / crm.lead                 / email_normalized (char)       : NEW isfunction: function, stored

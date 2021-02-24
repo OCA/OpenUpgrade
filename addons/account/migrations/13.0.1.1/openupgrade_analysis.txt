@@ -143,6 +143,7 @@ account      / account.journal.group    / company_id (many2one)         : NEW re
 account      / account.journal.group    / excluded_journal_ids (many2many): NEW relation: account.journal
 account      / account.journal.group    / name (char)                   : NEW required
 account      / account.journal.group    / sequence (integer)            : NEW hasdefault
+account      / account.move             / _order                        : _order is now 'date desc, name desc, id desc' ('date desc, id desc')
 account      / account.move             / access_token (char)           : NEW
 account      / account.move             / activity_ids (one2many)       : NEW relation: mail.activity
 account      / account.move             / amount (float)                : DEL
@@ -191,6 +192,7 @@ account      / account.move             / tax_type_domain (char)        : DEL
 account      / account.move             / to_check (boolean)            : NEW hasdefault
 account      / account.move             / type (selection)              : NEW required, selection_keys: ['entry', 'in_invoice', 'in_receipt', 'in_refund', 'out_invoice', 'out_receipt', 'out_refund'], req_default: function, hasdefault
 account      / account.move             / website_message_ids (one2many): NEW relation: mail.message
+account      / account.move.line        / _order                        : _order is now 'date desc, move_name desc, id' ('date desc, id desc')
 account      / account.move.line        / account_internal_type (selection): NEW selection_keys: function, isrelated: related, stored
 account      / account.move.line        / account_root_id (many2one)    : NEW relation: account.root, isrelated: related, stored
 account      / account.move.line        / balance_cash_basis (float)    : DEL

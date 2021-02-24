@@ -15,6 +15,7 @@ sale         / crm.team                 / dashboard_graph_model (False) : DEL se
 sale         / crm.team                 / use_invoices (boolean)        : DEL
 sale         / product.attribute        / display_type (selection)      : NEW required, selection_keys: ['color', 'radio', 'select'], req_default: function, hasdefault
 sale         / product.attribute        / type (selection)              : DEL required, selection_keys: ['color', 'radio', 'select'], req_default: function
+sale         / product.attribute.custom.value / _order                        : _order is now 'custom_product_template_attribute_value_id, id' ('id')
 sale         / product.attribute.custom.value / attribute_value_id (many2one) : DEL relation: product.attribute.value
 sale         / product.attribute.custom.value / custom_product_template_attribute_value_id (many2one): NEW relation: product.template.attribute.value, required
 sale         / product.attribute.custom.value / sale_order_line_id (many2one) : now required

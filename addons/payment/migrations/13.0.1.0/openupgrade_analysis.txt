@@ -3,6 +3,7 @@ new model payment.link.wizard [transient]
 ---Fields in module 'payment'---
 payment      / account.invoice          / transaction_ids (many2many)   : DEL relation: payment.transaction
 payment      / account.move             / transaction_ids (many2many)   : NEW relation: payment.transaction
+payment      / payment.acquirer         / _order                        : _order is now 'module_state, state, sequence, name' ('website_published desc, sequence, name')
 payment      / payment.acquirer         / auth_msg (html)               : NEW hasdefault
 payment      / payment.acquirer         / check_validity (boolean)      : NEW
 payment      / payment.acquirer         / color (integer)               : NEW isfunction: function, stored

@@ -22,6 +22,7 @@ website      / website                  / social_googleplus (char)      : DEL
 website      / website.menu             / group_ids (many2many)         : NEW relation: res.groups
 website      / website.menu             / mega_menu_classes (char)      : NEW
 website      / website.menu             / mega_menu_content (html)      : NEW
+website      / website.redirect         / _order                        : _order is now 'id' ('sequence, id')
 website      / website.redirect         / type (selection)              : DEL required, selection_keys: ['301', '302'], req_default: function
 website      / website.rewrite          / name (char)                   : NEW required
 website      / website.rewrite          / redirect_type (selection)     : NEW selection_keys: ['301', '302', '308', '404'], hasdefault

@@ -66,6 +66,7 @@ survey       / survey.user_input        / quizz_passed (boolean)        : NEW is
 survey       / survey.user_input        / quizz_score (float)           : is now stored
 survey       / survey.user_input        / start_datetime (datetime)     : NEW
 survey       / survey.user_input        / type (selection)              : DEL required, selection_keys: ['link', 'manually'], req_default: function
+survey       / survey.user_input_line   / _order                        : _order is now 'question_sequence,id' ('id')
 survey       / survey.user_input_line   / answer_score (float)          : NEW
 survey       / survey.user_input_line   / answer_type (selection)       : selection_keys is now '['date', 'datetime', 'free_text', 'number', 'suggestion', 'text']' ('['date', 'free_text', 'number', 'suggestion', 'text']')
 survey       / survey.user_input_line   / date_create (datetime)        : DEL required, req_default: function

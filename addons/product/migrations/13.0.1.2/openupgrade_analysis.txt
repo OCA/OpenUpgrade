@@ -39,10 +39,12 @@ product      / product.template         / item_ids (one2many)           : DEL re
 product      / product.template         / website_message_ids (one2many): module is now 'portal' ('product')
 product      / product.template         / weight_uom_name (char)        : not related anymore
 product      / product.template         / weight_uom_name (char)        : now a function
+product      / product.template.attribute.exclusion / _order                        : _order is now 'product_tmpl_id, id' ('id')
 product      / product.template.attribute.line / active (boolean)              : NEW hasdefault
 product      / product.template.attribute.line / product_template_value_ids (many2many): is now stored
 product      / product.template.attribute.line / product_template_value_ids (many2many): not a function anymore
 product      / product.template.attribute.line / product_template_value_ids (many2many): type is now 'one2many' ('many2many')
+product      / product.template.attribute.value / _order                        : _order is now 'attribute_line_id, product_attribute_value_id, id' ('product_attribute_value_id, id')
 product      / product.template.attribute.value / attribute_id (many2one)       : is now stored
 product      / product.template.attribute.value / attribute_line_id (many2one)  : NEW relation: product.template.attribute.line, required
 product      / product.template.attribute.value / product_tmpl_id (many2one)    : now related

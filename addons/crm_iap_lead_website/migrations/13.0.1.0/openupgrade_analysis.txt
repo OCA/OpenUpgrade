@@ -6,6 +6,7 @@ crm_iap_lead_website / crm.lead                 / reveal_iap_credits (integer)  
 crm_iap_lead_website / crm.lead                 / reveal_ip (char)              : previously in module crm_reveal
 crm_iap_lead_website / crm.lead                 / reveal_rule_id (many2one)     : previously in module crm_reveal
 crm_iap_lead_website / crm.reveal.rule          / __last_update (datetime)      : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.rule          / _order                        : previously in module crm_reveal
 crm_iap_lead_website / crm.reveal.rule          / active (boolean)              : previously in module crm_reveal
 crm_iap_lead_website / crm.reveal.rule          / company_size_max (integer)    : previously in module crm_reveal
 crm_iap_lead_website / crm.reveal.rule          / company_size_min (integer)    : previously in module crm_reveal
@@ -34,6 +35,7 @@ crm_iap_lead_website / crm.reveal.rule          / team_id (many2one)            
 crm_iap_lead_website / crm.reveal.rule          / user_id (many2one)            : previously in module crm_reveal
 crm_iap_lead_website / crm.reveal.rule          / website_id (many2one)         : NEW relation: website
 crm_iap_lead_website / crm.reveal.view          / __last_update (datetime)      : previously in module crm_reveal
+crm_iap_lead_website / crm.reveal.view          / _order                        : previously in module crm_reveal
 crm_iap_lead_website / crm.reveal.view          / display_name (char)           : previously in module crm_reveal
 crm_iap_lead_website / crm.reveal.view          / reveal_ip (char)              : previously in module crm_reveal
 crm_iap_lead_website / crm.reveal.view          / reveal_rule_id (many2one)     : previously in module crm_reveal

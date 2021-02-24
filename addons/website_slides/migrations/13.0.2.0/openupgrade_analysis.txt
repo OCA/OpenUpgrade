@@ -90,6 +90,7 @@ website_slides / slide.question           / answer_ids (one2many)         : NEW 
 website_slides / slide.question           / question (char)               : NEW required
 website_slides / slide.question           / sequence (integer)            : NEW hasdefault
 website_slides / slide.question           / slide_id (many2one)           : NEW relation: slide.slide, required
+website_slides / slide.slide              / _order                        : _order is now 'sequence asc, is_category asc, id asc' ('id')
 website_slides / slide.slide              / category_id (many2one)        : now a function
 website_slides / slide.slide              / category_id (many2one)        : relation is now 'slide.slide' ('slide.category') [nothing to do]
 website_slides / slide.slide              / completion_time (float)       : NEW
