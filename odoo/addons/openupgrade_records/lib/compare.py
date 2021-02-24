@@ -212,24 +212,24 @@ def compare_sets(old_records, new_records):
 
     matched_direct = match(
         ['module', 'mode', 'model', 'field'],
-        ['relation', 'type', 'selection_keys', 'inherits', 'stored',
+        ['relation', 'type', 'selection_keys', '_inherits', 'stored',
          'isfunction', 'isrelated', 'required', 'table'])
 
     # other module, same type and operation
     matched_other_module = match(
         ['mode', 'model', 'field', 'type'],
-        ['module', 'relation', 'selection_keys', 'inherits', 'stored',
+        ['module', 'relation', 'selection_keys', '_inherits', 'stored',
          'isfunction', 'isrelated', 'required', 'table'])
 
     # other module, same operation, other type
     matched_other_type = match(
         ['mode', 'model', 'field'],
-        ['module', 'relation', 'type', 'selection_keys', 'inherits', 'stored',
+        ['module', 'relation', 'type', 'selection_keys', '_inherits', 'stored',
          'isfunction', 'isrelated', 'required', 'table'])
 
     printkeys = [
         'relation', 'required', 'selection_keys',
-        'req_default', 'inherits', 'mode', 'attachment',
+        'req_default', '_inherits', 'mode', 'attachment',
         ]
     for column in old_records:
         # we do not care about removed non stored function fields

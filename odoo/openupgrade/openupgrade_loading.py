@@ -160,7 +160,6 @@ def log_model(model, local_registry):
             'selection_keys': '',
             'req_default': '',
             'hasdefault': model._fields[k].default and 'hasdefault' or '',
-            'inherits': '',
             }
         if v.type == 'selection':
             if isinstance(v.selection, (tuple, list)):

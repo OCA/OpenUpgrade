@@ -94,7 +94,7 @@ class Record(models.Model):
             'req_default',
             'hasdefault',
             'table',
-            'inherits',
+            '_inherits',
             ]
 
         template = dict([(x, False) for x in keys])
