@@ -95,6 +95,8 @@ class Record(models.Model):
             'hasdefault',
             'table',
             'inherits',
+            '_inherits',
+            '_order',
             ]
 
         template = dict([(x, False) for x in keys])
@@ -109,5 +111,12 @@ class Record(models.Model):
                 })
             repre.update(
                 dict([(x.name, x.value) for x in record.attribute_ids]))
+            if repre['table']:
+                repre.update({
+                    'column1': self.env[repre['model']]._fields[
+                        repre['field']].column1,
+                    'column2': self.env[repre['model']]._fields[
+                        repre['field']].column2,
+                })
             data.append(repre)
         return data

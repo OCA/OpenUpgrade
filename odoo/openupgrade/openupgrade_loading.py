@@ -142,6 +142,7 @@ def log_model(model, local_registry):
     if model._inherits:
         model_registry['_inherits'] = {
             '_inherits': pycompat.text_type(model._inherits)}
+    model_registry['_order'] = {'_order': str(model._order)}
     for k, v in model._fields.items():
         properties = {
             'type': typemap.get(v.type, v.type),
