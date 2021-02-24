@@ -64,6 +64,7 @@ merged_modules = {
     # OCA/website
     'website_canonical_url': 'website',
     'website_logo': 'website',
+    'website_snippet_anchor': 'website',
 }
 
 # only used here for openupgrade_records analysis:
