@@ -66,7 +66,8 @@ script:
     - MODULES_NEW=base,$(sed -n '/^+========/,$p'  odoo/openupgrade/doc/source/modules90-100.rst | grep "Done\|Partial\|Nothing" | grep -v "l10n_be"  | grep -v "theme_" | sed -r -n 's/((^\| *\|new\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
     - psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')"
     - echo Testing modules $MODULES_NEW
-    - OPENUPGRADE_TESTS=1 coverage run $ODOO --database=$DB --update=$MODULES_NEW --stop-after-init
+    # Silence redundant logs from unlinking records (1 line is enough) to prevent Travis log overflow
+    - OPENUPGRADE_TESTS=1 $ODOO --database=$DB --update=$MODULES_NEW --stop-after-init --log-handler odoo.models.unlink:WARNING
     # try to build the documentation
     - pip install sphinx
     - sh scripts/build_openupgrade_docs
