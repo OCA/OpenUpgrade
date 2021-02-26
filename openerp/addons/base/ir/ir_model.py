@@ -152,6 +152,18 @@ class ir_model(osv.osv):
                 # prevent screwing up fields that depend on these models' fields
                 model.field_id._prepare_update()
 
+        else:
+            # OpenUpgrade: prevent problems when unlinking models due to a FK constraint
+            # in ir_model_constraint. Backport from Odoo 10.0
+            imc = self.pool['ir.model.constraint'].search(cr, user, [('model', 'in', ids)], context=context)
+            self.pool['ir.model.constraint'].unlink(cr, user, imc, context=context)
+            # Also prevent other IntegrityErrors when deleting models
+            imf = self.pool['ir.model.fields'].search(cr, user, [('model_id', 'in', ids)], context=context)
+            self.pool['ir.model.fields'].unlink(cr, user, imf, context=context)
+            imr = self.pool['ir.model.relation'].search(cr, user, [('model', 'in', ids)], context=context)
+            self.pool['ir.model.relation'].unlink(cr, user, imr, context=context)
+            # /OpenUpgrade
+
         self._drop_table(cr, user, ids, context)
         res = super(ir_model, self).unlink(cr, user, ids, context)
         if not context.get(MODULE_UNINSTALL_FLAG):
@@ -460,7 +472,8 @@ class ir_model_fields(osv.osv):
             This method prevents the modification/deletion of many2one fields
             that have an inverse one2many, for instance.
         """
-        for record in self:
+        # OpenUpgrade: check manual fields only (backport from Odoo 10.0)
+        for record in self.filtered(lambda record: record.state == 'manual'):
             model = self.env[record.model]
             field = model._fields[record.name]
             if field.type == 'many2one' and model._field_inverses.get(field):
@@ -1344,23 +1357,38 @@ class ir_model_data(osv.osv):
 
         bad_imd_ids = []
         context = {MODULE_UNINSTALL_FLAG: True}
+        # OpenUpgrade: also purge models and fields (with noupdate set to NULL, not FALSE)
+        # (which Odoo SA themselves delete explicitely in their migration scripts)
         cr.execute("""SELECT id,name,model,res_id,module FROM ir_model_data
-                      WHERE module IN %s AND res_id IS NOT NULL AND noupdate=%s ORDER BY id DESC
+                      WHERE module IN %s AND res_id IS NOT NULL AND (noupdate=%s OR
+                      (noupdate IS NULL AND model IN ('ir.model', 'ir.model.fields')))
+                      ORDER BY id DESC
                    """, (tuple(modules), False))
         for (id, name, model, res_id, module) in cr.fetchall():
             if (module, name) not in self.loads:
                 if model in self.pool:
-                    _logger.info('Deleting %s@%s', res_id, model)
+                    # OpenUpgrade: backport reference count from Odoo 12.0
+                    if self.search(cr, uid, [
+                            ("model", "=", model),
+                            ("res_id", "=", res_id),
+                            ("id", "!=", id),
+                            ("id", "not in", bad_imd_ids),
+                    ]):
+                        # another external id is still linked to the same record, only deleting the old imd
+                        bad_imd_ids.append(id)
+                        continue
+                    # OpenUpgrade: backport from 10.0 to also log the xmlid in the line below
+                    _logger.info('Deleting %s@%s (%s.%s)', res_id, model, module, name)
                     try:
                         cr.execute('SAVEPOINT ir_model_data_delete');
-                        self.pool[model].unlink(cr, uid, [res_id])
+                        self.pool[model].unlink(cr, uid, [res_id], context=context)
                         cr.execute('RELEASE SAVEPOINT ir_model_data_delete')
                     except Exception:
                         cr.execute('ROLLBACK TO SAVEPOINT ir_model_data_delete');
                         _logger.warning(
                             'Could not delete obsolete record with id: %d of model %s\n'
                             'Please refer to the log message right above',
-                            res_id, model)
+                            res_id, model, exc_info=True)
                         bad_imd_ids.append(id)
         if bad_imd_ids:
             self.unlink(cr, uid, bad_imd_ids, context=context)
