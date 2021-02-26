@@ -98,7 +98,9 @@ def search(item, item_list, fields, get_all=False):
 
 
 def fieldprint(old, new, field, text, reprs):
-    fieldrepr = "%s (%s)" % (old['field'], old['type'])
+    fieldrepr = "%s" % old['field']
+    if old['field'] not in ('_inherits', '_order'):
+        fieldrepr += " (%s)" % old['type']
     fullrepr = '%-12s / %-24s / %-30s' % (
         old['module'], old['model'], fieldrepr)
     if not text:
@@ -223,25 +225,27 @@ def compare_sets(old_records, new_records):
     matched_direct = match(
         ['module', 'mode', 'model', 'field'],
         ['relation', 'type', 'selection_keys', '_inherits', 'stored',
-         'isfunction', 'isrelated', 'required', 'table'])
+         'isfunction', 'isrelated', 'required', 'table', '_order'])
 
     # other module, same type and operation
     matched_other_module = match(
         ['mode', 'model', 'field', 'type'],
         ['module', 'relation', 'selection_keys', '_inherits', 'stored',
-         'isfunction', 'isrelated', 'required', 'table'])
+         'isfunction', 'isrelated', 'required', 'table', '_order'])
 
     # other module, same operation, other type
     matched_other_type = match(
         ['mode', 'model', 'field'],
         ['module', 'relation', 'type', 'selection_keys', '_inherits', 'stored',
-         'isfunction', 'isrelated', 'required', 'table'])
+         'isfunction', 'isrelated', 'required', 'table', '_order'])
 
     printkeys = [
         'relation', 'required', 'selection_keys',
         'req_default', '_inherits', 'mode', 'attachment',
         ]
     for column in old_records:
+        if column['field'] == '_order':
+            continue
         # we do not care about removed non stored function fields
         if not column['stored'] and (
                 column['isfunction'] or column['isrelated']):
@@ -261,6 +265,8 @@ def compare_sets(old_records, new_records):
         'hasdefault',
     ])
     for column in new_records:
+        if column['field'] == '_order':
+            continue
         # we do not care about newly added non stored function fields
         if not column['stored'] and (
                 column['isfunction'] or column['isrelated']):
