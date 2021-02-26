@@ -191,6 +191,10 @@ class IrModel(models.Model):
         # delete fields whose comodel is being removed
         self.env['ir.model.fields'].search([('relation', 'in', self.mapped('model'))]).unlink()
 
+        # OpenUpgrade: also prevent other IntegrityErrors when deleting models
+        self.env['ir.model.relation'].search([('model', 'in', self.ids)]).unlink()
+        # /OpenUpgrade
+
         self._drop_table()
         res = super(IrModel, self).unlink()
 
@@ -271,6 +275,8 @@ class IrModel(models.Model):
                 cr.execute(""" INSERT INTO ir_model_data (module, name, model, res_id, date_init, date_update)
                                VALUES (%s, %s, %s, %s, (now() at time zone 'UTC'), (now() at time zone 'UTC')) """,
                            (self._context['module'], xmlid, record._name, record.id))
+            # OpenUpgrade: register the xmlid of the model as loaded
+            self.pool.model_data_reference_ids[(model._module, xmlid)] = ('ir.model', record.id)
 
         return record
 
@@ -591,6 +597,12 @@ class IrModelFields(models.Model):
         """
         failed_dependencies = []
         for rec in self:
+            # OpenUpgrade: obsolete ir.model.fields entries are deleted
+            # automatically. Backport fix from Odoo 12.0 to prevent a KeyError
+            # in the next line.
+            if rec.model not in self.env:
+                continue
+            # /OpenUpgrade
             model = self.env[rec.model]
             if rec.name in model._fields:
                 field = model._fields[rec.name]
@@ -829,7 +841,7 @@ class IrModelFields(models.Model):
             "SELECT f.*, d.module, d.id as xmlid_id, d.name as xmlid "
             "FROM ir_model_fields f LEFT JOIN ir_model_data d "
             "ON f.id=d.res_id and d.model='ir.model.fields' WHERE f.model=%s",
-            (self._name,))
+            (field.model_name,))
         for rec in self.env.cr.dictfetchall():
             if 'module' in self.env.context and\
                     rec['module'] and\
@@ -851,6 +863,13 @@ class IrModelFields(models.Model):
                         "UPDATE ir_model_data SET module=%(module)s "
                         "WHERE id=%(xmlid_id)s",
                         dict(rec, module=self.env.context['module']))
+            if ('module' in self.env.context and
+                rec['module'] and
+                rec['name'] in self._fields.keys() and
+                (rec['module'] == self.env.context['module'] or
+                 rec['module'] not in self.env.registry._init_modules)):
+                # Register the xmlid of the field as loaded
+                self.pool.model_data_reference_ids[(self.env.context['module'], rec['xmlid'])] = ('ir.model.fields', rec['id'])
         # OpenUpgrade edit end
 
         fields_data = self._existing_field_data(field.model_name)
@@ -874,6 +893,8 @@ class IrModelFields(models.Model):
                 cr.execute(""" INSERT INTO ir_model_data (module, name, model, res_id, date_init, date_update)
                                VALUES (%s, %s, %s, %s, (now() at time zone 'UTC'), (now() at time zone 'UTC')) """,
                            (module, xmlid, record._name, record.id))
+                # OpenUpgrade: register the xmlid of the new field as loaded
+                self.pool.model_data_reference_ids[(module, xmlid)] = ('ir.model.fields', record.id)
             # update fields_data (for recursive calls)
             fields_data[field.name] = dict(params, id=record.id)
             return record
@@ -1724,13 +1745,27 @@ class IrModelData(models.Model):
         bad_imd_ids = []
         self = self.with_context({MODULE_UNINSTALL_FLAG: True})
 
+        # OpenUpgrade: also purge models and fields (with noupdate set to NULL, not FALSE)
+        # (which Odoo SA themselves delete explicitely in their migration scripts)
         query = """ SELECT id, name, model, res_id, module FROM ir_model_data
-                    WHERE module IN %s AND res_id IS NOT NULL AND noupdate=%s ORDER BY id DESC
+                    WHERE module IN %s AND res_id IS NOT NULL AND (noupdate=%s OR
+                    (noupdate IS NULL AND model IN ('ir.model', 'ir.model.fields')))
+                    ORDER BY id DESC
                 """
         self._cr.execute(query, (tuple(modules), False))
         for (id, name, model, res_id, module) in self._cr.fetchall():
             if (module, name) not in self.loads:
                 if model in self.env:
+                    # OpenUpgrade: backport reference count from Odoo 12.0
+                    if self.search([
+                            ("model", "=", model),
+                            ("res_id", "=", res_id),
+                            ("id", "!=", id),
+                            ("id", "not in", bad_imd_ids),
+                    ]):
+                        # another external id is still linked to the same record, only deleting the old imd
+                        bad_imd_ids.append(id)
+                        continue
                     _logger.info('Deleting %s@%s (%s.%s)', res_id, model, module, name)
                     record = self.env[model].browse(res_id)
                     if record.exists():
@@ -1744,7 +1779,7 @@ class IrModelData(models.Model):
                             _logger.warning(
                                 'Could not delete obsolete record with id: %d of model %s\n'
                                 'Please refer to the log message right above',
-                                res_id, model)
+                                res_id, model, exc_info=True)
                         # /OpenUpgrade
                     else:
                         bad_imd_ids.append(id)
