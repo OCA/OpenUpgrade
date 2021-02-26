@@ -234,3 +234,10 @@ def migrate(env, version):
             'view_menu',
             'lang_km',
         ], False)
+    # In Odoo 12.0, fields xmlids are noupdate FALSE instead of NULL and are
+    # thus included when cleaning up obsolete data records in _process_end.
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE ir_model_data
+        SET noupdate=FALSE
+        WHERE model='ir.model.fields' AND noupdate IS NULL""")

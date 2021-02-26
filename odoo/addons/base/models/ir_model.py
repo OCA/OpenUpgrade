@@ -215,6 +215,10 @@ class IrModel(models.Model):
         # delete fields whose comodel is being removed
         self.env['ir.model.fields'].search([('relation', 'in', self.mapped('model'))]).unlink()
 
+        # OpenUpgrade: also prevent other IntegrityErrors when deleting models
+        self.env['ir.model.relation'].search([('model', 'in', self.ids)]).unlink()
+        # /OpenUpgrade
+
         self._drop_table()
         res = super(IrModel, self).unlink()
 
@@ -295,6 +299,8 @@ class IrModel(models.Model):
                 cr.execute(""" INSERT INTO ir_model_data (module, name, model, res_id, date_init, date_update)
                                VALUES (%s, %s, %s, %s, (now() at time zone 'UTC'), (now() at time zone 'UTC')) """,
                            (self._context['module'], xmlid, record._name, record.id))
+            # OpenUpgrade: register the xmlid of the model as loaded
+            self.pool.loaded_xmlids.add("%s.%s" % (model._module, xmlid))
 
         return record
 
@@ -880,7 +886,6 @@ class IrModelFields(models.Model):
         to_insert = []
         to_xmlids = []
         for name, field in model._fields.items():
-            openupgrade_loading.update_field_xmlid(self, field)
             old_vals = fields_data.get(name)
             new_vals = self._reflect_field_params(field)
             if old_vals is None:
@@ -1710,8 +1715,12 @@ class IrModelData(models.Model):
         self = self.with_context({MODULE_UNINSTALL_FLAG: True})
         loaded_xmlids = self.pool.loaded_xmlids
 
+        # OpenUpgrade: also purge ir.model entries which are still recorded
+        # with noupdate IS NULL
         query = """ SELECT id, module || '.' || name, model, res_id FROM ir_model_data
-                    WHERE module IN %s AND res_id IS NOT NULL AND noupdate=%s ORDER BY id DESC
+                    WHERE module IN %s AND res_id IS NOT NULL AND
+                    (noupdate=%s OR (noupdate IS NULL AND model='ir.model'))
+                    ORDER BY id DESC
                 """
         self._cr.execute(query, (tuple(modules), False))
         for (id, xmlid, model, res_id) in self._cr.fetchall():
@@ -1732,14 +1741,13 @@ class IrModelData(models.Model):
                     if record.exists():
                         # OpenUpgrade: never break on unlink of obsolete records
                         try:
-                            self.env.cr.execute('SAVEPOINT ir_model_data_delete');
-                            record.unlink()
+                            with self.env.cr.savepoint():
+                                record.unlink()
                         except Exception:
-                            self.env.cr.execute('ROLLBACK TO SAVEPOINT ir_model_data_delete');
                             _logger.warning(
                                 'Could not delete obsolete record with id: %d of model %s\n'
                                 'Please refer to the log message right above',
-                                res_id, model)
+                                res_id, model, exc_info=True)
                         # /OpenUpgrade
                     else:
                         bad_imd_ids.append(id)

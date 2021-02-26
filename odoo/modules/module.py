@@ -425,11 +425,11 @@ def adapt_version(version):
         version = '%s.%s' % (serie, version)
     return version
 
-def get_test_modules(module):
+def get_test_modules(module, openupgrade_prefix=None):
     """ Return a list of module for the addons potentially containing tests to
     feed unittest.TestLoader.loadTestsFromModule() """
     # Try to import the module
-    results = _get_tests_modules('odoo.addons', module)
+    results = _get_tests_modules('odoo.addons', module, openupgrade_prefix=openupgrade_prefix)
 
     try:
         importlib.import_module('odoo.addons.base.maintenance.migrations.%s' % module)
@@ -440,17 +440,22 @@ def get_test_modules(module):
 
     return results
 
-def _get_tests_modules(path, module):
+def _get_tests_modules(path, module, openupgrade_prefix=None):
+    if openupgrade_prefix is None:
+        openupgrade_prefix = ''
     modpath = '%s.%s' % (path, module)
+    name = openupgrade_prefix + '.tests'
     try:
-        mod = importlib.import_module('.tests', modpath)
+        mod = importlib.import_module(name, modpath)
     except ImportError as e:  # will also catch subclass ModuleNotFoundError of P3.6
         # Hide ImportErrors on `tests` sub-module, but display other exceptions
         if pycompat.PY2:
             if e.message.startswith('No module named') and e.message.endswith("tests"): # pylint: disable=exception-message-attribute
                 return []
         else:
-            if e.name == modpath + '.tests' and e.msg.startswith('No module named'):
+            # OpenUpgrade: modpath can include openupgrade_prefix
+            ## if e.name == modpath and e.msg.startswith('No module named'):
+            if e.name in (modpath + name, modpath + openupgrade_prefix) and e.msg.startswith('No module named'):
                 return []
         _logger.exception('Can not `import %s`.', module)
         return []
@@ -487,7 +492,7 @@ class TestStream(object):
 
 current_test = None
 
-def run_unit_tests(module_name, dbname, position='at_install'):
+def run_unit_tests(module_name, dbname, position='at_install', openupgrade_prefix=None):
     """
     :returns: ``True`` if all of ``module_name``'s tests succeeded, ``False``
               if any of them failed.
@@ -496,7 +501,7 @@ def run_unit_tests(module_name, dbname, position='at_install'):
     global current_test
     from odoo.tests.common import TagsSelector # Avoid import loop
     current_test = module_name
-    mods = get_test_modules(module_name)
+    mods = get_test_modules(module_name, openupgrade_prefix=openupgrade_prefix)
     threading.currentThread().testing = True
     config_tags = TagsSelector(tools.config['test_tags'])
     position_tag = TagsSelector(position)
@@ -508,7 +513,8 @@ def run_unit_tests(module_name, dbname, position='at_install'):
         if suite.countTestCases():
             t0 = time.time()
             t0_sql = odoo.sql_db.sql_counter
-            _logger.info('%s running tests.', m.__name__)
+            name = (openupgrade_prefix + '.' if openupgrade_prefix else '') + 'tests'
+            _logger.info('%s running %s.', m.__name__, name)
             result = unittest.TextTestRunner(verbosity=2, stream=TestStream(m.__name__)).run(suite)
             if time.time() - t0 > 5:
                 _logger.log(25, "%s tested in %.2fs, %s queries", m.__name__, time.time() - t0, odoo.sql_db.sql_counter - t0_sql)
