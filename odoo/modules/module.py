@@ -449,13 +449,17 @@ def get_test_modules(module, openupgrade_prefix=None):
     return results
 
 def _get_tests_modules(path, module, openupgrade_prefix=None):
+    if openupgrade_prefix is None:
+        openupgrade_prefix = ''
     modpath = '%s.%s' % (path, module)
-    name = (openupgrade_prefix or '') + '.tests'
+    name = openupgrade_prefix + '.tests'
     try:
         mod = importlib.import_module(name, modpath)
     except ImportError as e:  # will also catch subclass ModuleNotFoundError of P3.6
         # Hide ImportErrors on `tests` sub-module, but display other exceptions
-        if e.name == modpath + name and e.msg.startswith('No module named'):
+        # OpenUpgrade: modpath can include openupgrade_prefix
+        ## if e.name == modpath and e.msg.startswith('No module named'):
+        if e.name in (modpath + name, modpath + openupgrade_prefix) and e.msg.startswith('No module named'):
             return []
         _logger.exception('Can not `import %s`.', module)
         return []
