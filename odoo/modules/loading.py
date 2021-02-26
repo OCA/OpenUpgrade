@@ -293,9 +293,14 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
 
             # OpenUpgrade: run tests
             if os.environ.get('OPENUPGRADE_TESTS') and package.name is not None:
+                # Load tests in <module>/migrations/tests and enable standard tags if necessary
                 prefix = '.migrations'
                 registry.openupgrade_test_prefixes[package.name] = prefix
+                test_tags = tools.config['test_tags']
+                if not test_tags:
+                    tools.config['test_tags'] = '+standard'
                 report.record_result(odoo.modules.module.run_unit_tests(module_name, openupgrade_prefix=prefix))
+                tools.config['test_tags'] = test_tags
 
             processed_modules.append(package.name)
 

@@ -911,7 +911,6 @@ class IrModelFields(models.Model):
         to_insert = []
         to_xmlids = []
         for name, field in model._fields.items():
-            openupgrade_loading.update_field_xmlid(self, field)
             old_vals = fields_data.get(name)
             new_vals = self._reflect_field_params(field)
             if old_vals is None:
@@ -2032,14 +2031,13 @@ class IrModelData(models.Model):
                     if record.exists():
                         # OpenUpgrade: never break on unlink of obsolete records
                         try:
-                            self.env.cr.execute('SAVEPOINT ir_model_data_delete');
-                            record.unlink()
+                            with self.env.cr.savepoint():
+                                record.unlink()
                         except Exception:
-                            self.env.cr.execute('ROLLBACK TO SAVEPOINT ir_model_data_delete');
                             _logger.warning(
                                 'Could not delete obsolete record with id: %d of model %s\n'
                                 'Please refer to the log message right above',
-                                res_id, model)
+                                res_id, model, exc_info=True)
                         # /OpenUpgrade
                     else:
                         bad_imd_ids.append(id)

@@ -805,3 +805,10 @@ def migrate(env, version):
         """ UPDATE ir_model_constraint
         SET write_date = date_update
         WHERE write_date IS NULL AND date_update IS NOT NULL """)
+    # In Odoo 13.0, model xmlids are noupdate FALSE instead of NULL and are
+    # thus included when cleaning up obsolete data records in _process_end.
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE ir_model_data
+        SET noupdate=FALSE
+        WHERE model='ir.model' AND noupdate IS NULL""")
