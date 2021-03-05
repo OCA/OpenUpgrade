@@ -15,19 +15,19 @@ from odoo.osv import expression
 
 class CustomerPortal(CustomerPortal):
 
-    def _prepare_portal_layout_values(self):
-        values = super(CustomerPortal, self)._prepare_portal_layout_values()
+    def _prepare_home_portal_values(self):
+        values = super(CustomerPortal, self)._prepare_home_portal_values()
         partner = request.env.user.partner_id
 
         SaleOrder = request.env['sale.order']
         quotation_count = SaleOrder.search_count([
             ('message_partner_ids', 'child_of', [partner.commercial_partner_id.id]),
             ('state', 'in', ['sent', 'cancel'])
-        ])
+        ]) if SaleOrder.check_access_rights('read', raise_exception=False) else 0
         order_count = SaleOrder.search_count([
             ('message_partner_ids', 'child_of', [partner.commercial_partner_id.id]),
             ('state', 'in', ['sale', 'done'])
-        ])
+        ]) if SaleOrder.check_access_rights('read', raise_exception=False) else 0
 
         values.update({
             'quotation_count': quotation_count,
@@ -61,7 +61,7 @@ class CustomerPortal(CustomerPortal):
             sortby = 'date'
         sort_order = searchbar_sortings[sortby]['order']
 
-        archive_groups = self._get_archive_groups('sale.order', domain)
+        archive_groups = self._get_archive_groups('sale.order', domain) if values.get('my_details') else []
         if date_begin and date_end:
             domain += [('create_date', '>', date_begin), ('create_date', '<=', date_end)]
 
@@ -112,7 +112,7 @@ class CustomerPortal(CustomerPortal):
             sortby = 'date'
         sort_order = searchbar_sortings[sortby]['order']
 
-        archive_groups = self._get_archive_groups('sale.order', domain)
+        archive_groups = self._get_archive_groups('sale.order', domain) if values.get('my_details') else []
         if date_begin and date_end:
             domain += [('create_date', '>', date_begin), ('create_date', '<=', date_end)]
 
@@ -226,6 +226,7 @@ class CustomerPortal(CustomerPortal):
                 'signed_on': fields.Datetime.now(),
                 'signature': signature,
             })
+            request.env.cr.commit()
         except (TypeError, binascii.Error) as e:
             return {'error': _('Invalid signature data.')}
 
@@ -293,7 +294,7 @@ class CustomerPortal(CustomerPortal):
         # Create transaction
         vals = {
             'acquirer_id': acquirer_id,
-            'type': order._get_payment_type(),
+            'type': order._get_payment_type(save_token),
             'return_url': order.get_portal_url(),
         }
 
@@ -303,7 +304,7 @@ class CustomerPortal(CustomerPortal):
             order,
             submit_txt=_('Pay & Confirm'),
             render_values={
-                'type': order._get_payment_type(),
+                'type': order._get_payment_type(save_token),
                 'alias_usage': _('If we store your payment information on our server, subscription payments will be made automatically.'),
             }
         )

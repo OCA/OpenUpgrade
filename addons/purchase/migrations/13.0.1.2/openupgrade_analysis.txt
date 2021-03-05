@@ -9,6 +9,7 @@ purchase     / account.move.line        / purchase_line_id (many2one)   : NEW re
 purchase     / purchase.order           / currency_rate (float)         : NEW isfunction: function, stored
 purchase     / purchase.order           / date_approve (date)           : type is now 'datetime' ('date')
 purchase     / purchase.order           / date_planned (datetime)       : not a function anymore
+purchase     / purchase.order           / invoice_ids (many2many)       : column2 is now 'account_move_id' ('account_invoice_id') [account_invoice_purchase_order_rel]
 purchase     / purchase.order           / invoice_ids (many2many)       : relation is now 'account.move' ('account.invoice') [nothing to do]
 purchase     / purchase.order           / invoice_ids (many2many)       : table is now 'account_move_purchase_order_rel' ('account_invoice_purchase_order_rel')
 purchase     / purchase.order.line      / display_type (selection)      : NEW selection_keys: ['line_note', 'line_section'], hasdefault
@@ -23,14 +24,18 @@ DEL ir.actions.act_window.view: purchase.action_invoice__supplier_tree1_view2
 DEL ir.actions.act_window.view: purchase.action_invoice_supplier_tree1_view1
 NEW ir.model.access: purchase.access_account_move_purchase
 NEW ir.model.access: purchase.access_account_move_purchase_manager
+NEW ir.model.access: purchase.access_account_type
+NEW ir.model.access: purchase.account_partial_reconcile
 DEL ir.model.access: purchase.access_account_invoice_line_purchase
 DEL ir.model.access: purchase.access_account_invoice_line_purchase_manager
 DEL ir.model.access: purchase.access_account_invoice_purchase
 DEL ir.model.access: purchase.access_account_invoice_purchase_manager
 DEL ir.model.access: purchase.access_account_invoice_tax_purchase
+DEL ir.model.access: purchase.access_account_move
 DEL ir.model.access: purchase.access_product_price_history_purchase_manager
 DEL ir.model.access: purchase.access_product_price_history_purchase_user
-NEW ir.module.category: base.module_category_operations_purchase (noupdate)
+NEW ir.rule: purchase.purchase_user_account_move_line_rule (noupdate)
+NEW ir.rule: purchase.purchase_user_account_move_rule (noupdate)
 NEW ir.ui.menu: purchase.menu_purchase_products
 NEW ir.ui.menu: purchase.menu_report_purchase
 DEL ir.ui.menu: purchase.menu_procurement_management_pending_invoice

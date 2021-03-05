@@ -4,7 +4,6 @@ hr_expense   / hr.expense               / company_id (many2one)         : now re
 hr_expense   / hr.expense.sheet         / company_id (many2one)         : now required, req_default: function
 ---XML records in module 'hr_expense'---
 DEL ir.model.access: hr_expense.access_account_invoice_tax_user
-NEW ir.module.category: base.module_category_accounting_expenses (noupdate)
 NEW ir.rule: hr_expense.ir_rule_hr_expense_approver (noupdate)
 NEW ir.rule: hr_expense.ir_rule_hr_expense_sheet_approver (noupdate)
 DEL ir.rule: hr_expense.ir_rule_hr_expense_sheet_user (noupdate)

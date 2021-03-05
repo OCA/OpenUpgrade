@@ -12,9 +12,10 @@
 # Gunther Clauwaert <gclauwae@hotmail.com>, 2019
 # Martin Trigaux, 2019
 # Eric Geens <ericgeens@yahoo.com>, 2019
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2020
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2020
 # Antoine Gilard <ang@odoo.com>, 2020
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2020
+# Nasreddin Boulif <bon@odoo.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -22,7 +23,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-27 09:22+0000\n"
 "PO-Revision-Date: 2019-08-26 09:13+0000\n"
-"Last-Translator: Antoine Gilard <ang@odoo.com>, 2020\n"
+"Last-Translator: Nasreddin Boulif <bon@odoo.com>, 2020\n"
 "Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -275,10 +276,10 @@ msgstr ""
 "        <br/><br/>\n"
 "        % set transaction = object.get_portal_last_transaction()\n"
 "        U bestelling <strong>${object.name}</strong> voor het bedrag van <strong>${format_amount(object.amount_total, object.currency_id)}</strong>\n"
-"        % if object.state == 'Verkoop' or (transaction and transaction.state in ('done', 'authorized')) :\n"
+"        % if object.state == 'sale' or (transaction and transaction.state in ('done', 'authorized')) :\n"
 "            werd bevestigd.<br/>\n"
 "            Dank u voor uw vertrouwen!\n"
-"        % elif transaction and transaction.state == 'In afwachting' :\n"
+"        % elif transaction and transaction.state == 'pending' :\n"
 "            is in afwachting. Het zal worden bevestigd wanneer de betaling is ontvangen.\n"
 "            % if object.reference:\n"
 "                Uw betalingsreferentie is <strong>${object.reference}</strong>.\n"
@@ -294,7 +295,7 @@ msgstr ""
 "            <tr style=\"border-bottom: 2px solid #dee2e6;\">\n"
 "                <td width=\"18%\"><strong>Producten</strong></td>\n"
 "                <td/>\n"
-"                <td><strong>Hoeveelheid\n"
+"                <td><strong>Hoeveelheid</strong></td>\n"
 "                <td width=\"10%\" align=\"center\"><strong>Prijs</strong></td>\n"
 "            </tr>\n"
 "        </table>\n"
@@ -2213,7 +2214,7 @@ msgstr "Is vervallen"
 msgid ""
 "Is true if the sales order line comes from an expense or a vendor bills"
 msgstr ""
-"Is waar als de verkooporderlijn komt vanuit een declaratie of "
+"Is waar als de verkooporderregel komt vanuit een declaratie of "
 "leveranciersfactuur"
 
 #. module: sale

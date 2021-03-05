@@ -14,10 +14,6 @@ class TestMassMailing(models.TransientModel):
 
     def send_mail_test(self):
         self.ensure_one()
-        ctx = dict(self.env.context)
-        ctx.pop('default_state', None)
-        self = self.with_context(ctx)
-
         mails = self.env['mail.mail']
         mailing = self.mass_mailing_id
         test_emails = tools.email_split(self.email_to)
@@ -36,6 +32,7 @@ class TestMassMailing(models.TransientModel):
                 'mailing_id': mailing.id,
                 'attachment_ids': [(4, attachment.id) for attachment in mailing.attachment_ids],
                 'auto_delete': True,
+                'mail_server_id': mailing.mail_server_id.id,
             }
             mail = self.env['mail.mail'].create(mail_values)
             mails |= mail

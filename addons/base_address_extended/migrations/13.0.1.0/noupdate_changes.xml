@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="base.de" model="res.country">
+    <field eval="'%(street_name)s %(street_number)s/%(street_number2)s'" name="street_format"/>
+  </record>
+</odoo>

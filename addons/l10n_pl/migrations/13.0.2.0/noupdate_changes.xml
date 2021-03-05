@@ -3,7 +3,20 @@
   <record id="account_type_settlement" model="account.account.type">
     <field name="internal_group">off_balance</field>
   </record>
-  <record id="pl_chart_template" model="account.chart.template">
-    <field name="default_pos_receivable_account_id" ref="chart20000100"/>
+  <record id="fiscal_position_template_1" model="account.fiscal.position.template">
+    <field name="auto_apply" eval="True"/>
+    <field name="country_id" ref="base.pl"/>
+    <field name="sequence">1</field>
+    <field name="vat_required" eval="True"/>
+  </record>
+  <record id="fiscal_position_template_2" model="account.fiscal.position.template">
+    <field name="auto_apply" eval="True"/>
+    <field name="country_group_id" ref="base.europe"/>
+    <field name="sequence">3</field>
+    <field name="vat_required" eval="True"/>
+  </record>
+  <record id="fiscal_position_template_3" model="account.fiscal.position.template">
+    <field name="auto_apply" eval="True"/>
+    <field name="sequence">4</field>
   </record>
 </odoo>

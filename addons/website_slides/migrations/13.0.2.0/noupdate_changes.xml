@@ -30,7 +30,7 @@
     <field name="email_from">${user.email_formatted | safe}</field>
     <field name="email_to">${ctx.get('email', '')}</field>
   </record>
-  <record id="website_menu_slides" model="website.menu">
+<!-- <record id="website_menu_slides" model="website.menu">
     <field name="name">Courses</field>
-  </record>
+  </record> -->
 </odoo>

@@ -6,8 +6,8 @@ event        / event.mail               / notification_type (selection) : NEW re
 event        / event.registration       / activity_ids (one2many)       : NEW relation: mail.activity
 event        / event.registration       / mobile (char)                 : NEW
 event        / event.registration       / website_message_ids (one2many): previously in module portal
+event        / event.type               / _order                        : _order is now 'sequence, id' ('id')
 event        / event.type               / sequence (integer)            : NEW
 event        / event.type.mail          / notification_type (selection) : NEW required, selection_keys: ['mail'], req_default: function, hasdefault
 ---XML records in module 'event'---
-NEW ir.module.category: base.module_category_marketing_events (noupdate)
 NEW ir.ui.view: event.event_registration_view_kanban

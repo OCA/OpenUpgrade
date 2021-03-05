@@ -327,9 +327,9 @@ DEL account.account.template: l10n_ar.62
 DEL account.account.template: l10n_ar.63
 DEL account.account.template: l10n_ar.64
 DEL account.account.type: l10n_ar.account_account_type_NCLASIFICADO
-NEW account.chart.template: l10n_ar.l10nar_base_chart_template (noupdate)
-NEW account.chart.template: l10n_ar.l10nar_ex_chart_template (noupdate)
-NEW account.chart.template: l10n_ar.l10nar_ri_chart_template (noupdate)
+NEW account.chart.template: l10n_ar.l10nar_base_chart_template
+NEW account.chart.template: l10n_ar.l10nar_ex_chart_template
+NEW account.chart.template: l10n_ar.l10nar_ri_chart_template
 DEL account.chart.template: l10n_ar.ar_chart_template
 NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_exento
 NEW account.fiscal.position.tax.template: l10n_ar.fiscal_position_template_exempt_operations_no_gravado
@@ -416,7 +416,6 @@ NEW account.group: l10n_ar.account_group_reservas (noupdate)
 NEW account.group: l10n_ar.account_group_resultados (noupdate)
 NEW account.group: l10n_ar.account_group_rodados (noupdate)
 NEW account.group: l10n_ar.account_group_tasas_municipales (noupdate)
-NEW account.tax.group: account.tax_group_taxes (noupdate)
 NEW account.tax.group: l10n_ar.tax_group_iva_0 (noupdate)
 NEW account.tax.group: l10n_ar.tax_group_iva_025 (noupdate)
 NEW account.tax.group: l10n_ar.tax_group_iva_5 (noupdate)
@@ -475,14 +474,12 @@ NEW ir.ui.menu: l10n_ar.menu_afip_responsibility_type
 NEW ir.ui.menu: l10n_ar.menu_document_type_argentina
 NEW ir.ui.menu: l10n_ar.menu_iibb_purchases_by_state_and_account
 NEW ir.ui.menu: l10n_ar.menu_iibb_sales_by_state_and_account
-NEW ir.ui.view: l10n_ar.argentinian_extra_info
 NEW ir.ui.view: l10n_ar.base_view_partner_form
-NEW ir.ui.view: l10n_ar.external_layout_background
-NEW ir.ui.view: l10n_ar.external_layout_boxed
-NEW ir.ui.view: l10n_ar.external_layout_clean
-NEW ir.ui.view: l10n_ar.external_layout_standard
+NEW ir.ui.view: l10n_ar.custom_header
 NEW ir.ui.view: l10n_ar.product_uom_form_view
 NEW ir.ui.view: l10n_ar.product_uom_tree_view
+NEW ir.ui.view: l10n_ar.report_invoice_document
+NEW ir.ui.view: l10n_ar.report_invoice_document_with_payments
 NEW ir.ui.view: l10n_ar.sequence_view
 NEW ir.ui.view: l10n_ar.sequence_view_tree
 NEW ir.ui.view: l10n_ar.view_account_invoice_report_search_inherit
@@ -560,6 +557,10 @@ NEW l10n_latam.document.type: l10n_ar.dc_con_a_m
 NEW l10n_latam.document.type: l10n_ar.dc_con_b_m
 NEW l10n_latam.document.type: l10n_ar.dc_cptag
 NEW l10n_latam.document.type: l10n_ar.dc_cptfg
+NEW l10n_latam.document.type: l10n_ar.dc_cvl_sa_a
+NEW l10n_latam.document.type: l10n_ar.dc_cvl_sa_b
+NEW l10n_latam.document.type: l10n_ar.dc_cvl_sp_a
+NEW l10n_latam.document.type: l10n_ar.dc_cvl_sp_b
 NEW l10n_latam.document.type: l10n_ar.dc_desp_imp
 NEW l10n_latam.document.type: l10n_ar.dc_e_f
 NEW l10n_latam.document.type: l10n_ar.dc_e_fs
@@ -578,6 +579,25 @@ NEW l10n_latam.document.type: l10n_ar.dc_fce_c_f
 NEW l10n_latam.document.type: l10n_ar.dc_fce_c_nc
 NEW l10n_latam.document.type: l10n_ar.dc_fce_c_nd
 NEW l10n_latam.document.type: l10n_ar.dc_imp_serv
+NEW l10n_latam.document.type: l10n_ar.dc_liq_c_sa_a
+NEW l10n_latam.document.type: l10n_ar.dc_liq_c_sa_b
+NEW l10n_latam.document.type: l10n_ar.dc_liq_c_sp_a
+NEW l10n_latam.document.type: l10n_ar.dc_liq_c_sp_b
+NEW l10n_latam.document.type: l10n_ar.dc_liq_cca_a
+NEW l10n_latam.document.type: l10n_ar.dc_liq_cca_b
+NEW l10n_latam.document.type: l10n_ar.dc_liq_ccpc_a
+NEW l10n_latam.document.type: l10n_ar.dc_liq_ccpc_b
+NEW l10n_latam.document.type: l10n_ar.dc_liq_ccpc_c
+NEW l10n_latam.document.type: l10n_ar.dc_liq_cd_sa_a
+NEW l10n_latam.document.type: l10n_ar.dc_liq_cd_sa_b
+NEW l10n_latam.document.type: l10n_ar.dc_liq_cd_sa_c
+NEW l10n_latam.document.type: l10n_ar.dc_liq_cd_sp_a
+NEW l10n_latam.document.type: l10n_ar.dc_liq_cd_sp_b
+NEW l10n_latam.document.type: l10n_ar.dc_liq_cd_sp_c
+NEW l10n_latam.document.type: l10n_ar.dc_liq_cpc_a
+NEW l10n_latam.document.type: l10n_ar.dc_liq_cpc_b
+NEW l10n_latam.document.type: l10n_ar.dc_liq_cpst_a
+NEW l10n_latam.document.type: l10n_ar.dc_liq_cpst_b
 NEW l10n_latam.document.type: l10n_ar.dc_liq_prim_gr
 NEW l10n_latam.document.type: l10n_ar.dc_liq_s_a
 NEW l10n_latam.document.type: l10n_ar.dc_liq_s_b
@@ -585,6 +605,10 @@ NEW l10n_latam.document.type: l10n_ar.dc_liq_sec_gr
 NEW l10n_latam.document.type: l10n_ar.dc_liq_uci_a
 NEW l10n_latam.document.type: l10n_ar.dc_liq_uci_b
 NEW l10n_latam.document.type: l10n_ar.dc_liq_uci_c
+NEW l10n_latam.document.type: l10n_ar.dc_liq_vd_sa_a
+NEW l10n_latam.document.type: l10n_ar.dc_liq_vd_sa_b
+NEW l10n_latam.document.type: l10n_ar.dc_liq_vd_sp_a
+NEW l10n_latam.document.type: l10n_ar.dc_liq_vd_sp_b
 NEW l10n_latam.document.type: l10n_ar.dc_m_cvl
 NEW l10n_latam.document.type: l10n_ar.dc_m_f
 NEW l10n_latam.document.type: l10n_ar.dc_m_l
@@ -670,300 +694,6 @@ NEW l10n_latam.identification.type: l10n_ar.it_Sigd
 NEW l10n_latam.identification.type: l10n_ar.it_UpApP
 NEW l10n_latam.identification.type: l10n_ar.it_cuit
 NEW l10n_latam.identification.type: l10n_ar.it_dni
-NEW l10n_latam.identification.type: l10n_latam_base.it_fid
-NEW l10n_latam.identification.type: l10n_latam_base.it_pass
-NEW res.country: base.ad (noupdate)
-NEW res.country: base.ae (noupdate)
-NEW res.country: base.af (noupdate)
-NEW res.country: base.ag (noupdate)
-NEW res.country: base.ai (noupdate)
-NEW res.country: base.al (noupdate)
-NEW res.country: base.am (noupdate)
-NEW res.country: base.ao (noupdate)
-NEW res.country: base.aq (noupdate)
-NEW res.country: base.ar (noupdate)
-NEW res.country: base.as (noupdate)
-NEW res.country: base.at (noupdate)
-NEW res.country: base.au (noupdate)
-NEW res.country: base.aw (noupdate)
-NEW res.country: base.az (noupdate)
-NEW res.country: base.ba (noupdate)
-NEW res.country: base.bb (noupdate)
-NEW res.country: base.bd (noupdate)
-NEW res.country: base.be (noupdate)
-NEW res.country: base.bf (noupdate)
-NEW res.country: base.bg (noupdate)
-NEW res.country: base.bh (noupdate)
-NEW res.country: base.bi (noupdate)
-NEW res.country: base.bj (noupdate)
-NEW res.country: base.bm (noupdate)
-NEW res.country: base.bn (noupdate)
-NEW res.country: base.bo (noupdate)
-NEW res.country: base.bq (noupdate)
-NEW res.country: base.br (noupdate)
-NEW res.country: base.bs (noupdate)
-NEW res.country: base.bt (noupdate)
-NEW res.country: base.bw (noupdate)
-NEW res.country: base.by (noupdate)
-NEW res.country: base.bz (noupdate)
-NEW res.country: base.ca (noupdate)
-NEW res.country: base.cc (noupdate)
-NEW res.country: base.cd (noupdate)
-NEW res.country: base.cf (noupdate)
-NEW res.country: base.cg (noupdate)
-NEW res.country: base.ch (noupdate)
-NEW res.country: base.ci (noupdate)
-NEW res.country: base.ck (noupdate)
-NEW res.country: base.cl (noupdate)
-NEW res.country: base.cm (noupdate)
-NEW res.country: base.cn (noupdate)
-NEW res.country: base.co (noupdate)
-NEW res.country: base.cr (noupdate)
-NEW res.country: base.cu (noupdate)
-NEW res.country: base.cv (noupdate)
-NEW res.country: base.cx (noupdate)
-NEW res.country: base.cy (noupdate)
-NEW res.country: base.cz (noupdate)
-NEW res.country: base.de (noupdate)
-NEW res.country: base.dj (noupdate)
-NEW res.country: base.dk (noupdate)
-NEW res.country: base.dm (noupdate)
-NEW res.country: base.do (noupdate)
-NEW res.country: base.dz (noupdate)
-NEW res.country: base.ec (noupdate)
-NEW res.country: base.ee (noupdate)
-NEW res.country: base.eg (noupdate)
-NEW res.country: base.er (noupdate)
-NEW res.country: base.es (noupdate)
-NEW res.country: base.et (noupdate)
-NEW res.country: base.fi (noupdate)
-NEW res.country: base.fj (noupdate)
-NEW res.country: base.fk (noupdate)
-NEW res.country: base.fm (noupdate)
-NEW res.country: base.fr (noupdate)
-NEW res.country: base.ga (noupdate)
-NEW res.country: base.gd (noupdate)
-NEW res.country: base.ge (noupdate)
-NEW res.country: base.gg (noupdate)
-NEW res.country: base.gh (noupdate)
-NEW res.country: base.gi (noupdate)
-NEW res.country: base.gl (noupdate)
-NEW res.country: base.gm (noupdate)
-NEW res.country: base.gn (noupdate)
-NEW res.country: base.gq (noupdate)
-NEW res.country: base.gr (noupdate)
-NEW res.country: base.gt (noupdate)
-NEW res.country: base.gu (noupdate)
-NEW res.country: base.gw (noupdate)
-NEW res.country: base.gy (noupdate)
-NEW res.country: base.hk (noupdate)
-NEW res.country: base.hn (noupdate)
-NEW res.country: base.hr (noupdate)
-NEW res.country: base.ht (noupdate)
-NEW res.country: base.hu (noupdate)
-NEW res.country: base.id (noupdate)
-NEW res.country: base.ie (noupdate)
-NEW res.country: base.il (noupdate)
-NEW res.country: base.im (noupdate)
-NEW res.country: base.in (noupdate)
-NEW res.country: base.iq (noupdate)
-NEW res.country: base.ir (noupdate)
-NEW res.country: base.is (noupdate)
-NEW res.country: base.it (noupdate)
-NEW res.country: base.je (noupdate)
-NEW res.country: base.jm (noupdate)
-NEW res.country: base.jo (noupdate)
-NEW res.country: base.jp (noupdate)
-NEW res.country: base.ke (noupdate)
-NEW res.country: base.kg (noupdate)
-NEW res.country: base.kh (noupdate)
-NEW res.country: base.ki (noupdate)
-NEW res.country: base.km (noupdate)
-NEW res.country: base.kn (noupdate)
-NEW res.country: base.kp (noupdate)
-NEW res.country: base.kr (noupdate)
-NEW res.country: base.kw (noupdate)
-NEW res.country: base.ky (noupdate)
-NEW res.country: base.kz (noupdate)
-NEW res.country: base.la (noupdate)
-NEW res.country: base.lb (noupdate)
-NEW res.country: base.lc (noupdate)
-NEW res.country: base.li (noupdate)
-NEW res.country: base.lk (noupdate)
-NEW res.country: base.lr (noupdate)
-NEW res.country: base.ls (noupdate)
-NEW res.country: base.lt (noupdate)
-NEW res.country: base.lu (noupdate)
-NEW res.country: base.lv (noupdate)
-NEW res.country: base.ly (noupdate)
-NEW res.country: base.ma (noupdate)
-NEW res.country: base.mc (noupdate)
-NEW res.country: base.md (noupdate)
-NEW res.country: base.me (noupdate)
-NEW res.country: base.mg (noupdate)
-NEW res.country: base.mh (noupdate)
-NEW res.country: base.mk (noupdate)
-NEW res.country: base.ml (noupdate)
-NEW res.country: base.mm (noupdate)
-NEW res.country: base.mn (noupdate)
-NEW res.country: base.mo (noupdate)
-NEW res.country: base.mp (noupdate)
-NEW res.country: base.mr (noupdate)
-NEW res.country: base.ms (noupdate)
-NEW res.country: base.mt (noupdate)
-NEW res.country: base.mu (noupdate)
-NEW res.country: base.mv (noupdate)
-NEW res.country: base.mw (noupdate)
-NEW res.country: base.mx (noupdate)
-NEW res.country: base.my (noupdate)
-NEW res.country: base.mz (noupdate)
-NEW res.country: base.na (noupdate)
-NEW res.country: base.ne (noupdate)
-NEW res.country: base.nf (noupdate)
-NEW res.country: base.ng (noupdate)
-NEW res.country: base.ni (noupdate)
-NEW res.country: base.nl (noupdate)
-NEW res.country: base.no (noupdate)
-NEW res.country: base.np (noupdate)
-NEW res.country: base.nr (noupdate)
-NEW res.country: base.nu (noupdate)
-NEW res.country: base.nz (noupdate)
-NEW res.country: base.om (noupdate)
-NEW res.country: base.pa (noupdate)
-NEW res.country: base.pe (noupdate)
-NEW res.country: base.pf (noupdate)
-NEW res.country: base.pg (noupdate)
-NEW res.country: base.ph (noupdate)
-NEW res.country: base.pk (noupdate)
-NEW res.country: base.pl (noupdate)
-NEW res.country: base.pm (noupdate)
-NEW res.country: base.pn (noupdate)
-NEW res.country: base.pr (noupdate)
-NEW res.country: base.ps (noupdate)
-NEW res.country: base.pt (noupdate)
-NEW res.country: base.pw (noupdate)
-NEW res.country: base.py (noupdate)
-NEW res.country: base.qa (noupdate)
-NEW res.country: base.ro (noupdate)
-NEW res.country: base.rs (noupdate)
-NEW res.country: base.ru (noupdate)
-NEW res.country: base.rw (noupdate)
-NEW res.country: base.sa (noupdate)
-NEW res.country: base.sb (noupdate)
-NEW res.country: base.sc (noupdate)
-NEW res.country: base.sd (noupdate)
-NEW res.country: base.se (noupdate)
-NEW res.country: base.sg (noupdate)
-NEW res.country: base.sh (noupdate)
-NEW res.country: base.si (noupdate)
-NEW res.country: base.sj (noupdate)
-NEW res.country: base.sk (noupdate)
-NEW res.country: base.sl (noupdate)
-NEW res.country: base.sm (noupdate)
-NEW res.country: base.sn (noupdate)
-NEW res.country: base.so (noupdate)
-NEW res.country: base.sr (noupdate)
-NEW res.country: base.st (noupdate)
-NEW res.country: base.sv (noupdate)
-NEW res.country: base.sy (noupdate)
-NEW res.country: base.sz (noupdate)
-NEW res.country: base.tc (noupdate)
-NEW res.country: base.td (noupdate)
-NEW res.country: base.tg (noupdate)
-NEW res.country: base.th (noupdate)
-NEW res.country: base.tj (noupdate)
-NEW res.country: base.tk (noupdate)
-NEW res.country: base.tl (noupdate)
-NEW res.country: base.tm (noupdate)
-NEW res.country: base.tn (noupdate)
-NEW res.country: base.to (noupdate)
-NEW res.country: base.tr (noupdate)
-NEW res.country: base.tt (noupdate)
-NEW res.country: base.tv (noupdate)
-NEW res.country: base.tw (noupdate)
-NEW res.country: base.tz (noupdate)
-NEW res.country: base.ua (noupdate)
-NEW res.country: base.ug (noupdate)
-NEW res.country: base.uk (noupdate)
-NEW res.country: base.us (noupdate)
-NEW res.country: base.uy (noupdate)
-NEW res.country: base.uz (noupdate)
-NEW res.country: base.va (noupdate)
-NEW res.country: base.vc (noupdate)
-NEW res.country: base.ve (noupdate)
-NEW res.country: base.vg (noupdate)
-NEW res.country: base.vi (noupdate)
-NEW res.country: base.vn (noupdate)
-NEW res.country: base.vu (noupdate)
-NEW res.country: base.ws (noupdate)
-NEW res.country: base.ye (noupdate)
-NEW res.country: base.za (noupdate)
-NEW res.country: base.zm (noupdate)
-NEW res.country: base.zw (noupdate)
-NEW res.currency: base.ANG (noupdate)
-NEW res.currency: base.ARS (noupdate)
-NEW res.currency: base.AUD (noupdate)
-NEW res.currency: base.BOB (noupdate)
-NEW res.currency: base.BRL (noupdate)
-NEW res.currency: base.CAD (noupdate)
-NEW res.currency: base.CHF (noupdate)
-NEW res.currency: base.CLP (noupdate)
-NEW res.currency: base.CNY (noupdate)
-NEW res.currency: base.COP (noupdate)
-NEW res.currency: base.CZK (noupdate)
-NEW res.currency: base.DKK (noupdate)
-NEW res.currency: base.DOP (noupdate)
-NEW res.currency: base.ECS (noupdate)
-NEW res.currency: base.EGP (noupdate)
-NEW res.currency: base.EUR (noupdate)
-NEW res.currency: base.GBP (noupdate)
-NEW res.currency: base.GTQ (noupdate)
-NEW res.currency: base.HKD (noupdate)
-NEW res.currency: base.HNL (noupdate)
-NEW res.currency: base.HUF (noupdate)
-NEW res.currency: base.ILS (noupdate)
-NEW res.currency: base.INR (noupdate)
-NEW res.currency: base.ITL (noupdate)
-NEW res.currency: base.JMD (noupdate)
-NEW res.currency: base.JPY (noupdate)
-NEW res.currency: base.KWD (noupdate)
-NEW res.currency: base.MAD (noupdate)
-NEW res.currency: base.MXN (noupdate)
-NEW res.currency: base.NIO (noupdate)
-NEW res.currency: base.NOK (noupdate)
-NEW res.currency: base.PAB (noupdate)
-NEW res.currency: base.PEN (noupdate)
-NEW res.currency: base.PLN (noupdate)
-NEW res.currency: base.PYG (noupdate)
-NEW res.currency: base.RON (noupdate)
-NEW res.currency: base.SAR (noupdate)
-NEW res.currency: base.SEK (noupdate)
-NEW res.currency: base.SGD (noupdate)
-NEW res.currency: base.THB (noupdate)
-NEW res.currency: base.TWD (noupdate)
-NEW res.currency: base.USD (noupdate)
-NEW res.currency: base.UYU (noupdate)
-NEW res.currency: base.VEF (noupdate)
-NEW res.currency: base.ZAR (noupdate)
 NEW res.partner: l10n_ar.par_cfa (noupdate)
 NEW res.partner: l10n_ar.par_iibb_pagar (noupdate)
 NEW res.partner: l10n_ar.partner_afip (noupdate)
-NEW uom.uom: uom.product_uom_cm (noupdate)
-NEW uom.uom: uom.product_uom_day (noupdate)
-NEW uom.uom: uom.product_uom_dozen (noupdate)
-NEW uom.uom: uom.product_uom_floz (noupdate)
-NEW uom.uom: uom.product_uom_foot (noupdate)
-NEW uom.uom: uom.product_uom_gal (noupdate)
-NEW uom.uom: uom.product_uom_gram (noupdate)
-NEW uom.uom: uom.product_uom_hour (noupdate)
-NEW uom.uom: uom.product_uom_inch (noupdate)
-NEW uom.uom: uom.product_uom_kgm (noupdate)
-NEW uom.uom: uom.product_uom_km (noupdate)
-NEW uom.uom: uom.product_uom_lb (noupdate)
-NEW uom.uom: uom.product_uom_litre (noupdate)
-NEW uom.uom: uom.product_uom_meter (noupdate)
-NEW uom.uom: uom.product_uom_mile (noupdate)
-NEW uom.uom: uom.product_uom_oz (noupdate)
-NEW uom.uom: uom.product_uom_qt (noupdate)
-NEW uom.uom: uom.product_uom_ton (noupdate)
-NEW uom.uom: uom.product_uom_unit (noupdate)

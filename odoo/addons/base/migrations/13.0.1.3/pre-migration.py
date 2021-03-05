@@ -4,9 +4,12 @@
 # Copyright 2020 ForgeFlow
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import csv
 from openupgradelib import openupgrade
 from openupgradelib import openupgrade_merge_records
 from odoo.addons.openupgrade_records.lib import apriori
+from odoo.modules.module import get_module_resource
+
 
 xmlid_renames_res_country_state = [
     ('base.state_mx_q roo', 'base.state_mx_q_roo'),
@@ -553,6 +556,7 @@ _obsolete_tables = (
     "account_voucher",
     "account_voucher_line",
     "lunch_order_line",
+    "mail_mass_mailing_campaign"
     "slide_category",
     "survey_page",
     "account_analytic_tag_account_invoice_line_rel",
@@ -564,6 +568,7 @@ _obsolete_tables = (
     "sale_order_line_invoice_rel",
     "summary_dept_rel",
     "project_task_assign_so_line_rel",
+    "mail_mass_mailing_tag_rel",
 )
 
 
@@ -575,6 +580,47 @@ def fix_lang_table(cr):
             "UPDATE res_lang SET code=%s WHERE code=%s",
             (new_code, old_code)
         )
+
+
+def fix_country_state_xml_id_on_existing_records(cr):
+    """Suppose you have country states introduced manually.
+    This method ensure you don't have problems later in the migration when
+    loading the res.country.state.csv"""
+    with open(get_module_resource('base', 'data', 'res.country.state.csv'),
+              'r') as country_states_file:
+        states = csv.reader(country_states_file, delimiter=',', quotechar='"')
+        _ = next(states)
+        for row in states:
+            state_xml_id, country_xml_id, _, state_code = row
+            # find if csv record exists in ir_model_data
+            cr.execute(
+                """SELECT rcs.id, imd_rcs.id
+                FROM res_country_state rcs
+                INNER JOIN res_country rc ON rcs.country_id = rc.id
+                INNER JOIN ir_model_data imd_rc ON (
+                    imd_rc.res_id = rc.id AND
+                    imd_rc.model = 'res.country' AND
+                    imd_rc.module = 'base' AND
+                    imd_rc.name = %(country_xml_id)s
+                )
+                LEFT JOIN ir_model_data imd_rcs ON (
+                    imd_rcs.res_id = rcs.id AND
+                    imd_rcs.model = 'res.country.state' AND
+                    imd_rcs.module = 'base' AND
+                    imd_rcs.name = %(state_xml_id)s
+                )
+                WHERE rcs.code = %(state_code)s""", {
+                    "country_xml_id": country_xml_id,
+                    "state_code": state_code,
+                    "state_xml_id": state_xml_id,
+                }
+            )
+            row = cr.fetchone()
+            if not row:  # non existing record - It will be created later
+                continue
+            if not row[1]:  # Unexisting XML-ID - Create it
+                openupgrade.add_xmlid(
+                    cr, "base", state_xml_id, "res.country.state", row[0])
 
 
 def remove_invoice_table_relations(env):
@@ -743,11 +789,12 @@ def migrate(env, version):
     openupgrade.rename_xmlids(env.cr, xmlid_renames_ir_model_access)
     fill_ir_model_data_noupdate(env)
     fix_lang_table(env.cr)
+    fix_country_state_xml_id_on_existing_records(env.cr)
     remove_offending_translations(env)
     handle_web_favicon_module(env)
     add_res_lang_url_code(env)
-    switch_noupdate_records(env)
     rename_ir_module_category(env)
+    switch_noupdate_records(env)
     openupgrade.logged_query(
         env.cr,
         """ UPDATE ir_model_constraint
@@ -758,3 +805,10 @@ def migrate(env, version):
         """ UPDATE ir_model_constraint
         SET write_date = date_update
         WHERE write_date IS NULL AND date_update IS NOT NULL """)
+    # In Odoo 13.0, model xmlids are noupdate FALSE instead of NULL and are
+    # thus included when cleaning up obsolete data records in _process_end.
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE ir_model_data
+        SET noupdate=FALSE
+        WHERE model='ir.model' AND noupdate IS NULL""")

@@ -23,7 +23,7 @@ class AccountMove(models.Model):
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
         help="Delivery address for current invoice.")
 
-    @api.onchange('partner_shipping_id')
+    @api.onchange('partner_shipping_id', 'company_id')
     def _onchange_partner_shipping_id(self):
         """
         Trigger the change of fiscal position when the shipping address is modified.
@@ -53,7 +53,7 @@ class AccountMove(models.Model):
 
         # Recompute 'narration' based on 'company.invoice_terms'.
         if self.type == 'out_invoice':
-            self.narration = self.company_id.with_context(lang=self.partner_id.lang).invoice_terms
+            self.narration = self.company_id.with_context(lang=self.partner_id.lang or self.env.lang).invoice_terms
 
         return res
 

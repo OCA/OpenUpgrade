@@ -2,6 +2,7 @@
 model account.sale.closing (moved to l10n_fr_pos_cert)
 ---Fields in module 'l10n_fr'---
 l10n_fr_sale_closing / account.sale.closing     / __last_update (datetime)      : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
+l10n_fr_sale_closing / account.sale.closing     / _order                        : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
 l10n_fr_sale_closing / account.sale.closing     / company_id (many2one)         : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
 l10n_fr_sale_closing / account.sale.closing     / cumulative_total (float)      : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
 l10n_fr_sale_closing / account.sale.closing     / currency_id (many2one)        : module is now 'l10n_fr_pos_cert' ('l10n_fr_sale_closing')
@@ -112,19 +113,93 @@ DEL account.account.tag: l10n_fr.tag_fr_95 (noupdate)
 DEL account.account.tag: l10n_fr.tag_fr_96 (noupdate)
 DEL account.account.tag: l10n_fr.tag_fr_97 (noupdate)
 NEW account.account.template: l10n_fr.fr_pcg_recv_pos
+NEW account.account.template: l10n_fr.pcg_1013
+NEW account.account.template: l10n_fr.pcg_102
+NEW account.account.template: l10n_fr.pcg_1061
+NEW account.account.template: l10n_fr.pcg_1064
+NEW account.account.template: l10n_fr.pcg_1068
+NEW account.account.template: l10n_fr.pcg_157
+NEW account.account.template: l10n_fr.pcg_162
+NEW account.account.template: l10n_fr.pcg_1688
+NEW account.account.template: l10n_fr.pcg_2012 [renamed from l10n_syscohada module]
+NEW account.account.template: l10n_fr.pcg_2114
+NEW account.account.template: l10n_fr.pcg_2115
+NEW account.account.template: l10n_fr.pcg_21158
+NEW account.account.template: l10n_fr.pcg_2131
+NEW account.account.template: l10n_fr.pcg_21351
+NEW account.account.template: l10n_fr.pcg_21355
+NEW account.account.template: l10n_fr.pcg_213581
+NEW account.account.template: l10n_fr.pcg_213588
+NEW account.account.template: l10n_fr.pcg_2187
+NEW account.account.template: l10n_fr.pcg_2661
+NEW account.account.template: l10n_fr.pcg_278
+NEW account.account.template: l10n_fr.pcg_28081
+NEW account.account.template: l10n_fr.pcg_28187
+NEW account.account.template: l10n_fr.pcg_29081
+NEW account.account.template: l10n_fr.pcg_29187
+NEW account.account.template: l10n_fr.pcg_29787
+NEW account.account.template: l10n_fr.pcg_4091
+NEW account.account.template: l10n_fr.pcg_4452
+NEW account.account.template: l10n_fr.pcg_44571
+NEW account.account.template: l10n_fr.pcg_472
+NEW account.account.template: l10n_fr.pcg_473
+NEW account.account.template: l10n_fr.pcg_474
+NEW account.account.template: l10n_fr.pcg_475 [renamed from l10n_syscohada module]
+NEW account.account.template: l10n_fr.pcg_5021
+NEW account.account.template: l10n_fr.pcg_5022
+NEW account.account.template: l10n_fr.pcg_5121
+NEW account.account.template: l10n_fr.pcg_63511
+NEW account.account.template: l10n_fr.pcg_6612
+NEW account.account.template: l10n_fr.pcg_6741
+NEW account.account.template: l10n_fr.pcg_6742
+NEW account.account.template: l10n_fr.pcg_6811
+NEW account.account.template: l10n_fr.pcg_7612
+NEW account.account.template: l10n_fr.pcg_7741
+NEW account.account.template: l10n_fr.pcg_7742
+NEW account.account.template: l10n_fr.pcg_7811
+NEW account.account.template: l10n_fr.pcg_7816
+NEW account.account.template: l10n_fr.pcg_7817
+DEL account.account.template: l10n_fr.pcg_21141
+DEL account.account.template: l10n_fr.pcg_262 [renamed to l10n_dz module]
+DEL account.account.template: l10n_fr.pcg_2811 [renamed to l10n_dz module]
+DEL account.account.template: l10n_fr.pcg_2911 [renamed to l10n_dz module]
+DEL account.account.template: l10n_fr.pcg_445201
+DEL account.account.template: l10n_fr.pcg_445202
+DEL account.account.template: l10n_fr.pcg_445203
+DEL account.account.template: l10n_fr.pcg_445204
+DEL account.account.template: l10n_fr.pcg_445662
+DEL account.account.template: l10n_fr.pcg_445663
+DEL account.account.template: l10n_fr.pcg_445711
+DEL account.account.template: l10n_fr.pcg_445712
+DEL account.account.template: l10n_fr.pcg_445713
+DEL account.account.template: l10n_fr.pcg_489
+DEL account.account.template: l10n_fr.pcg_6081
+DEL account.account.template: l10n_fr.pcg_6082
+DEL account.account.template: l10n_fr.pcg_6084
+DEL account.account.template: l10n_fr.pcg_6085 [renamed to l10n_syscohada module]
+DEL account.account.template: l10n_fr.pcg_6086
+DEL account.account.template: l10n_fr.pcg_6087
+DEL account.account.template: l10n_fr.pcg_635111
+DEL account.account.template: l10n_fr.pcg_635112
+DEL account.account.template: l10n_fr.pcg_649
+DEL account.account.template: l10n_fr.pcg_697
+DEL account.account.template: l10n_fr.pcg_7073
 NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_impexp_ha_encaissement
 NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_impexp_ha_encaissement_reduite
 NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_impexp_ha_encaissement_super_reduite
 NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_impexp_vt_intermediaire_encaissement
 NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_impexp_vt_intermediaire_encaissement_ttc
-NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_encaissement_acq
 NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_encaissement_deduc
-NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_encaissement_reduite_acq
+NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_encaissement_deduc_intermediaire
 NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_encaissement_reduite_deduc
-NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_encaissement_super_reduite_acq
 NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_encaissement_super_reduite_deduc
 NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_vt_intermediaire_encaissement
 NEW account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_vt_intermediaire_encaissement_ttc
+DEL account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_intermediaire_acq
+DEL account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_normale_acq
+DEL account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_reduite_acq
+DEL account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_specifique_acq
+DEL account.fiscal.position.tax.template: l10n_fr.fp_tax_template_intraeub2b_ha_super_reduite_acq
 NEW account.tax.report.line: l10n_fr.tax_report_base_acq
 NEW account.tax.report.line: l10n_fr.tax_report_base_acq_10
 NEW account.tax.report.line: l10n_fr.tax_report_base_acq_19_6
@@ -229,8 +304,18 @@ NEW account.tax.template: l10n_fr.tva_acq_encaissement_super_reduite
 NEW account.tax.template: l10n_fr.tva_acq_encaissement_super_reduite_TTC
 NEW account.tax.template: l10n_fr.tva_acq_intermediaire_encaissement
 NEW account.tax.template: l10n_fr.tva_acq_intermediaire_encaissement_TTC
+NEW account.tax.template: l10n_fr.tva_import_outside_eu_10
+NEW account.tax.template: l10n_fr.tva_import_outside_eu_20
+NEW account.tax.template: l10n_fr.tva_import_outside_eu_2_1
+NEW account.tax.template: l10n_fr.tva_import_outside_eu_5_5
+NEW account.tax.template: l10n_fr.tva_import_outside_eu_8_5
 NEW account.tax.template: l10n_fr.tva_intermediaire_encaissement
 NEW account.tax.template: l10n_fr.tva_intermediaire_encaissement_ttc
+DEL account.tax.template: l10n_fr.tva_acq_intra_intermediaire
+DEL account.tax.template: l10n_fr.tva_acq_intra_normale
+DEL account.tax.template: l10n_fr.tva_acq_intra_reduite
+DEL account.tax.template: l10n_fr.tva_acq_intra_specifique
+DEL account.tax.template: l10n_fr.tva_acq_intra_super_reduite
 DEL ir.actions.act_window: l10n_fr_sale_closing.action_list_view_account_sale_closing [renamed to l10n_fr_pos_cert module]
 DEL ir.cron: l10n_fr_sale_closing.account_sale_closing_annually [renamed to l10n_fr_pos_cert module]
 DEL ir.cron: l10n_fr_sale_closing.account_sale_closing_daily [renamed to l10n_fr_pos_cert module]

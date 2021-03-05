@@ -90,6 +90,7 @@ website_slides / slide.question           / answer_ids (one2many)         : NEW 
 website_slides / slide.question           / question (char)               : NEW required
 website_slides / slide.question           / sequence (integer)            : NEW hasdefault
 website_slides / slide.question           / slide_id (many2one)           : NEW relation: slide.slide, required
+website_slides / slide.slide              / _order                        : _order is now 'sequence asc, is_category asc, id asc' ('id')
 website_slides / slide.slide              / category_id (many2one)        : now a function
 website_slides / slide.slide              / category_id (many2one)        : relation is now 'slide.slide' ('slide.category') [nothing to do]
 website_slides / slide.slide              / completion_time (float)       : NEW
@@ -178,7 +179,6 @@ DEL ir.actions.act_window: website_slides.action_slides_slides
 NEW ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_report_view_graph
 NEW ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_report_view_pivot
 NEW ir.actions.act_window.view: website_slides.rating_rating_action_slide_channel_report_view_tree
-DEL ir.actions.todo: base.open_menu
 NEW ir.model.access: website_slides.access_slide_answer_all
 NEW ir.model.access: website_slides.access_slide_answer_publisher
 NEW ir.model.access: website_slides.access_slide_channel_all
@@ -298,6 +298,7 @@ NEW ir.ui.view: website_slides.toggle_latest_achievements
 NEW ir.ui.view: website_slides.toggle_leaderboard
 NEW ir.ui.view: website_slides.user_profile_content
 NEW ir.ui.view: website_slides.user_quickkarma_card
+NEW ir.ui.view: website_slides.view_slide_slide_form_wo_channel_id
 DEL ir.ui.view: website_slides.channel_not_found
 DEL ir.ui.view: website_slides.channels
 DEL ir.ui.view: website_slides.home

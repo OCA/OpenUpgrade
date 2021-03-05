@@ -7,7 +7,7 @@ from werkzeug import urls
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
-from odoo.tools import ustr, consteq
+from odoo.tools import ustr, consteq, float_compare
 
 
 class PaymentLinkWizard(models.TransientModel):
@@ -46,7 +46,7 @@ class PaymentLinkWizard(models.TransientModel):
 
     @api.onchange('amount', 'description')
     def _onchange_amount(self):
-        if self.amount_max < self.amount:
+        if float_compare(self.amount_max, self.amount, precision_rounding=self.currency_id.rounding or 0.01) == -1:
             raise ValidationError(_("Please set an amount smaller than %s.") % (self.amount_max))
         if self.amount <= 0:
             raise ValidationError(_("The value of the payment amount must be positive."))
@@ -67,11 +67,11 @@ class PaymentLinkWizard(models.TransientModel):
             link.company_id = record.company_id if 'company_id' in record else False
 
     def _generate_link(self):
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         for payment_link in self:
+            record = self.env[payment_link.res_model].browse(payment_link.res_id)
             link = ('%s/website_payment/pay?reference=%s&amount=%s&currency_id=%s'
                     '&partner_id=%s&access_token=%s') % (
-                        base_url,
+                        record.get_base_url(),
                         urls.url_quote(payment_link.description),
                         payment_link.amount,
                         payment_link.currency_id.id,

@@ -7,7 +7,15 @@ renamed_modules = {
     'crm_reveal': 'crm_iap_lead',
     'document': 'attachment_indexation',
     'payment_ogone': 'payment_ingenico',
-    # OCA/...
+    # OCA/hr
+    # TODO: Transform possible data
+    'hr_skill': 'hr_skills',
+    # OCA/manufacture
+    'quality_control': 'quality_control_oca',
+    'quality_control_mrp': 'quality_control_mrp_oca',
+    'quality_control_stock': 'quality_control_stock_oca',
+    # OCA/stock-logistics-warehouse
+    'stock_putaway_product_form': 'stock_putaway_product_template',
 }
 
 merged_modules = {
@@ -32,17 +40,32 @@ merged_modules = {
     'website_crm_phone_validation': 'website_crm',
     'website_sale_link_tracker': 'website_sale',
     'website_survey': 'survey',
+    # OCA/account-financial-tools
+    'account_move_chatter': 'account',
     # OCA/account-reconcile
     'account_set_reconcilable': 'account',
+    # OCA/l10n-spain
+    'l10n_es_account_invoice_sequence': 'l10n_es',
+    'l10n_es_aeat_sii': 'l10n_es_aeat_sii_oca',
+    # OCA/product-attribute
+    'product_pricelist_show_product_ref': 'product',
+    # OCA/server-backend
+    'base_suspend_security': 'base',
     # OCA/social
+    'mail_history': 'mail',
     'mass_mailing_unique': 'mass_mailing',
+    # OCA/stock-logistics-warehouse
+    'sale_stock_info_popup': 'sale_stock',
     # OCA/timesheet
     'sale_timesheet_existing_project': 'sale_timesheet',
     # OCA/web
     'web_favicon': 'base',
     'web_widget_color': 'web',
+    'web_widget_many2many_tags_multi_selection': 'web',
     # OCA/website
     'website_canonical_url': 'website',
+    'website_logo': 'website',
+    'website_snippet_anchor': 'website',
 }
 
 # only used here for openupgrade_records analysis:
@@ -67,6 +90,7 @@ renamed_models = {
     'mrp.subproduct': 'mrp.bom.byproduct',
     'sms.send_sms': 'sms.composer',
     'stock.fixed.putaway.strat': 'stock.putaway.rule',
+    'report.stock.forecast': 'report.stock.quantity',
     'survey.mail.compose.message': 'survey.invite',
     'website.redirect': 'website.rewrite',
     # OCA/...

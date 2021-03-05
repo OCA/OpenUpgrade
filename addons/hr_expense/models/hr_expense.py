@@ -351,9 +351,9 @@ class HrExpense(models.Model):
                 raise UserError(_("No credit account found for the %s journal, please configure one.") % (self.sheet_id.bank_journal_id.name))
             account_dest = self.sheet_id.bank_journal_id.default_credit_account_id.id
         else:
-            if not self.employee_id.address_home_id:
+            if not self.employee_id.sudo().address_home_id:
                 raise UserError(_("No Home Address found for the employee %s, please configure one.") % (self.employee_id.name))
-            partner = self.employee_id.address_home_id.with_context(force_company=self.company_id.id)
+            partner = self.employee_id.sudo().address_home_id.with_context(force_company=self.company_id.id)
             account_dest = partner.property_account_payable_id.id or partner.parent_id.property_account_payable_id.id
         return account_dest
 
@@ -408,6 +408,13 @@ class HrExpense(models.Model):
                 if different_currency:
                     amount = expense.currency_id._convert(amount, company_currency, expense.company_id, account_date)
                     amount_currency = tax['amount']
+
+                if tax['tax_repartition_line_id']:
+                    rep_ln = self.env['account.tax.repartition.line'].browse(tax['tax_repartition_line_id'])
+                    base_amount = self.env['account.move']._get_base_amount_to_display(tax['base'], rep_ln)
+                else:
+                    base_amount = None
+
                 move_line_tax_values = {
                     'name': tax['name'],
                     'quantity': 1,
@@ -417,7 +424,7 @@ class HrExpense(models.Model):
                     'account_id': tax['account_id'] or move_line_src['account_id'],
                     'tax_repartition_line_id': tax['tax_repartition_line_id'],
                     'tag_ids': tax['tag_ids'],
-                    'tax_base_amount': tax['base'],
+                    'tax_base_amount': base_amount,
                     'expense_id': expense.id,
                     'partner_id': partner_id,
                     'currency_id': expense.currency_id.id if different_currency else False,
@@ -545,6 +552,10 @@ class HrExpense(models.Model):
 
         if not company:  # ultimate fallback, since company_id is required on expense
             company = self.env.company
+
+        # The expenses alias is the same for all companies, we need to set the proper context
+        # To select the product account
+        self = self.with_context(force_company=company.id)
 
         product, price, currency_id, expense_description = self._parse_expense_subject(expense_description, currencies)
         vals = {
@@ -694,7 +705,7 @@ class HrExpenseSheet(models.Model):
         return self.env['account.journal'].search([('type', 'in', ['cash', 'bank']), ('company_id', '=', default_company_id)], limit=1)
 
     name = fields.Char('Expense Report Summary', required=True)
-    expense_line_ids = fields.One2many('hr.expense', 'sheet_id', string='Expense Lines', states={'approve': [('readonly', True)], 'done': [('readonly', True)], 'post': [('readonly', True)]}, copy=False)
+    expense_line_ids = fields.One2many('hr.expense', 'sheet_id', string='Expense Lines', copy=False)
     state = fields.Selection([
         ('draft', 'Draft'),
         ('submit', 'Submitted'),

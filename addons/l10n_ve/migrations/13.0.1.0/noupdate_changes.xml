@@ -56,7 +56,4 @@
     <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'base',             }),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_2172003'),             }),         ]"/>
     <field name="refund_repartition_line_ids" eval="[(5, 0, 0),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'base',             }),             (0,0, {                 'factor_percent': 100,                 'repartition_type': 'tax',                 'account_id': ref('account_activa_account_2172003'),             }),         ]"/>
   </record>
-  <record id="ve_chart_template_amd" model="account.chart.template">
-    <field name="default_pos_receivable_account_id" ref="account_activa_account_1122003"/>
-  </record>
 </odoo>

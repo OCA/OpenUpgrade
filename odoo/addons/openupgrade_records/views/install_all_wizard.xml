@@ -8,13 +8,11 @@
             <form string="OpenUpgrade Install All Modules Wizard">
                 <field name="state" invisible="1"/>
                 <group states="init" colspan="4">
-                    <label string="This will install all modules on the database. Do not continue if you use this database in production." colspan="4"
-                           />
+                    <p>This will install all modules on the database. Do not continue if you use this database in production.</p>
                     <field name="to_install"/>
                 </group>
                 <group states="ready" colspan="4">
-                    <label string="Modules installed"
-                           />
+                    <p>Modules installed</p>
                 </group>
                 <footer>
                     <button class="btn-primary"

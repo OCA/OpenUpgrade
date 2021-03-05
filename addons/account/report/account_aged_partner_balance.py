@@ -51,7 +51,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
         move_state = ['draft', 'posted']
         if target_move == 'posted':
             move_state = ['posted']
-        arg_list = (tuple(move_state), tuple(account_type), date_from, date_from,)
+        arg_list = (tuple(move_state), tuple(account_type), date_from,)
         if 'partner_ids' in ctx:
             if ctx['partner_ids']:
                 partner_clause = 'AND (l.partner_id IN %s)'
@@ -76,16 +76,16 @@ class ReportAgedPartnerBalance(models.AbstractModel):
                 AND (account_account.internal_type IN %s)
                 AND (
                         l.reconciled IS NOT TRUE
-                        OR l.id IN(
-                            SELECT credit_move_id FROM account_partial_reconcile where max_date > %s
-                            UNION ALL
-                            SELECT debit_move_id FROM account_partial_reconcile where max_date > %s
+                        OR EXISTS (
+                            SELECT id FROM account_partial_reconcile where max_date > %s
+                            AND (credit_move_id = l.id OR debit_move_id = l.id)
                         )
                     )
                     ''' + partner_clause + '''
                 AND (l.date <= %s)
                 AND l.company_id IN %s
-            ORDER BY UPPER(res_partner.name)'''
+            ORDER BY UPPER(res_partner.name)
+            '''
         arg_list = (self.env.company.id,) + arg_list
         cr.execute(query, arg_list)
 
@@ -100,6 +100,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
         if not partner_ids:
             return [], [], {}
 
+        lines[False] = []
         # Use one query per period and store results in history (a list variable)
         # Each history will contain: history[1] = {'<partner_id>': <partner_debit-credit>}
         history = []
@@ -130,9 +131,15 @@ class ReportAgedPartnerBalance(models.AbstractModel):
                     ORDER BY COALESCE(l.date_maturity, l.date)'''
             cr.execute(query, args_list)
             partners_amount = {}
-            aml_ids = cr.fetchall()
-            aml_ids = aml_ids and [x[0] for x in aml_ids] or []
-            for line in self.env['account.move.line'].browse(aml_ids).with_context(prefetch_fields=False):
+            aml_ids = [x[0] for x in cr.fetchall()]
+            # prefetch the fields that will be used; this avoid cache misses,
+            # which look up the cache to determine the records to read, and has
+            # quadratic complexity when the number of records is large...
+            move_lines = self.env['account.move.line'].browse(aml_ids)
+            move_lines._read(['partner_id', 'company_id', 'balance', 'matched_debit_ids', 'matched_credit_ids'])
+            move_lines.matched_debit_ids._read(['max_date', 'company_id', 'amount'])
+            move_lines.matched_credit_ids._read(['max_date', 'company_id', 'amount'])
+            for line in move_lines:
                 partner_id = line.partner_id.id or False
                 if partner_id not in partners_amount:
                     partners_amount[partner_id] = 0.0
@@ -221,7 +228,8 @@ class ReportAgedPartnerBalance(models.AbstractModel):
             total[(i + 1)] += values['total']
             values['partner_id'] = partner['partner_id']
             if partner['partner_id']:
-                values['name'] = len(partner['name']) >= 45 and partner['name'][0:40] + '...' or partner['name']
+                name = partner['name'] or ''
+                values['name'] = len(name) >= 45 and not self.env.context.get('no_format') and name[0:41] + '...' or name
                 values['trust'] = partner['trust']
             else:
                 values['name'] = _('Unknown Partner')

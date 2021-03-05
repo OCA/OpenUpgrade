@@ -6,6 +6,8 @@ from odoo.tests import tagged
 from contextlib import contextmanager
 from unittest.mock import patch
 
+import datetime
+
 
 @tagged('post_install', '-at_install')
 class AccountTestInvoicingCommon(SavepointCase):
@@ -29,6 +31,8 @@ class AccountTestInvoicingCommon(SavepointCase):
         else:
             chart_template = cls.env.ref('l10n_generic_coa.configurable_chart_template', raise_if_not_found=False)
         if not chart_template:
+            cls.tearDownClass()
+            # skipTest raises exception
             cls.skipTest(cls, "Accounting Tests skipped because the user's company has no chart of accounts.")
 
         # Create user.
@@ -186,7 +190,7 @@ class AccountTestInvoicingCommon(SavepointCase):
                 account = cls.env['account.account'].search(domain, limit=1)
             return account
 
-        currency = cls.env.user.company_id.currency_id
+        currency = chart_template.currency_id
         company = cls.env['res.company'].create({
             'name': company_name,
             'currency_id': currency.id,
@@ -381,14 +385,22 @@ class AccountTestInvoicingCommon(SavepointCase):
         '''
 
         if isinstance(forced_today, str):
-            forced_today = fields.Date.from_string(forced_today)
+            forced_today_date = fields.Date.from_string(forced_today)
+            forced_today_datetime = fields.Datetime.from_string(forced_today)
+        elif isinstance(forced_today, datetime.datetime):
+            forced_today_datetime = forced_today
+            forced_today_date = forced_today_datetime.date()
+        else:
+            forced_today_date = forced_today
+            forced_today_datetime = datetime.datetime.combine(forced_today_date, datetime.time())
 
         def today(*args, **kwargs):
-            return forced_today
+            return forced_today_date
 
         with patch.object(fields.Date, 'today', today):
             with patch.object(fields.Date, 'context_today', today):
-                yield
+                with patch.object(fields.Datetime, 'now', return_value=forced_today_datetime):
+                    yield
 
 
 class AccountingSavepointCase(AccountTestInvoicingCommon):

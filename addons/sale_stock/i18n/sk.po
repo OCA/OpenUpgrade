@@ -6,7 +6,6 @@
 # Martin Trigaux, 2019
 # Jaroslav Bosansky <jaro.bosansky@ekoenergo.sk>, 2019
 # Stefan Stieranka <stieranka@itec.sk>, 2019
-# gebri <gebri@inmail.sk>, 2019
 # Jan Prokop, 2019
 # Rastislav Brencic <rastislav.brencic@azet.sk>, 2020
 # 
@@ -55,6 +54,9 @@ msgid ""
 "specific.\" role=\"img\" aria-label=\"Values set here are company-"
 "specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" role=\"img\" aria-label=\"Values set here are company-"
+"specific.\" groups=\"base.group_multi_company\"/>"
 
 #. module: sale_stock
 #: model_terms:ir.ui.view,arch_db:sale_stock.stock_production_lot_view_form
@@ -94,7 +96,7 @@ msgstr "<strong>Dodacie objednávky</strong>"
 #. module: sale_stock
 #: model_terms:ir.ui.view,arch_db:sale_stock.sale_order_portal_content_inherit_sale_stock
 msgid "<strong>Incoterm: </strong>"
-msgstr ""
+msgstr "<strong>Incoterm: </strong>"
 
 #. module: sale_stock
 #: model_terms:ir.ui.view,arch_db:sale_stock.report_saleorder_document_inherit_sale_stock
@@ -570,7 +572,7 @@ msgstr "Predané za posledných 365 dní"
 #. module: sale_stock
 #: model:ir.model,name:sale_stock.model_stock_move
 msgid "Stock Move"
-msgstr "Pohyb Skladu"
+msgstr "Pohyb skladu"
 
 #. module: sale_stock
 #: model:ir.model.fields,field_description:sale_stock.field_sale_order_line__move_ids
@@ -613,7 +615,7 @@ msgstr "Produkt je balený ako %.2f %s. Predajte %.2f %s."
 #: code:addons/sale_stock/static/src/xml/qty_at_date.xml:0
 #, python-format
 msgid "This product is replenished on demand."
-msgstr ""
+msgstr "Tento produkt je doplňovaný na požiadanie."
 
 #. module: sale_stock
 #: model:ir.model,name:sale_stock.model_stock_picking

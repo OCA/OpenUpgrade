@@ -1,0 +1,8 @@
+---Models in module 'product_expiry'---
+---Fields in module 'product_expiry'---
+product_expiry / stock.production.lot     / product_expiry_reminded (boolean): NEW
+---XML records in module 'product_expiry'---
+NEW ir.ui.view: product_expiry.view_production_lot_view_tree
+DEL ir.ui.view: product_expiry.view_move_form_expiry_simple
+# NOTHING TO DO: product_expiry.view_move_form_expiry_simple view will be
+# removed when update addon

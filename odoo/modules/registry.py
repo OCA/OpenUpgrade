@@ -85,7 +85,9 @@ class Registry(Mapping):
                     try:
                         odoo.modules.load_modules(registry._db, force_demo, status, update_module)
                     except Exception:
-                        odoo.modules.reset_modules_state(db_name)
+                        # OpenUpgrade: don't reset module states so that the migration
+                        # can be continued after fixing the error
+                        # odoo.modules.reset_modules_state(db_name)
                         raise
                 except Exception:
                     _logger.exception('Failed to load registry')
@@ -229,8 +231,15 @@ class Registry(Mapping):
         """ Complete the setup of models.
             This must be called after loading modules and before using the ORM.
         """
-        lazy_property.reset_all(self)
         env = odoo.api.Environment(cr, SUPERUSER_ID, {})
+
+        # Uninstall registry hooks. Because of the condition, this only happens
+        # on a fully loaded registry, and not on a registry being loaded.
+        if self.ready:
+            for model in env.values():
+                model._unregister_hook()
+
+        lazy_property.reset_all(self)
 
         if env.all.tocompute:
             _logger.error(
@@ -270,12 +279,10 @@ class Registry(Mapping):
         def transitive_dependencies(field, seen=[]):
             if field in seen:
                 return
-            for seq1 in dependencies[field]:
+            for seq1 in dependencies.get(field, ()):
                 yield seq1
-                exceptions = (Exception,) if field.base_field.manual else ()
-                with ignore(*exceptions):
-                    for seq2 in transitive_dependencies(seq1[-1], seen + [field]):
-                        yield concat(seq1[:-1], seq2)
+                for seq2 in transitive_dependencies(seq1[-1], seen + [field]):
+                    yield concat(seq1[:-1], seq2)
 
         def concat(seq1, seq2):
             if seq1 and seq2:
@@ -302,6 +309,13 @@ class Registry(Mapping):
 
         self.registry_invalidated = True
 
+        # Reinstall registry hooks. Because of the condition, this only happens
+        # on a fully loaded registry, and not on a registry being loaded.
+        if self.ready:
+            for model in env.values():
+                model._register_hook()
+            env['base'].flush()
+
     def post_init(self, func, *args, **kwargs):
         """ Register a function to call at the end of :meth:`~.init_models`. """
         self._post_init_queue.append(partial(func, *args, **kwargs))
@@ -309,20 +323,27 @@ class Registry(Mapping):
     def post_constraint(self, func, *args, **kwargs):
         """ Call the given function, and delay it if it fails during an upgrade. """
         try:
-            func(*args, **kwargs)
+            if (func, args, kwargs) not in self._constraint_queue:
+                # Module A may try to apply a constraint and fail but another module B inheriting
+                # from Module A may try to reapply the same constraint and succeed, however the
+                # constraint would already be in the _constraint_queue and would be executed again
+                # at the end of the registry cycle, this would fail (already-existing constraint)
+                # and generate an error, therefore a constraint should only be applied if it's
+                # not already marked as "to be applied".
+                func(*args, **kwargs)
         except Exception as e:
             if self._is_install:
                 _schema.error(*e.args)
             else:
                 _schema.info(*e.args)
-                self._constraint_queue.append(partial(func, *args, **kwargs))
+                self._constraint_queue.append((func, args, kwargs))
 
     def finalize_constraints(self):
         """ Call the delayed functions from above. """
         while self._constraint_queue:
-            func = self._constraint_queue.popleft()
+            func, args, kwargs = self._constraint_queue.popleft()
             try:
-                func()
+                func(*args, **kwargs)
             except Exception as e:
                 _schema.error(*e.args)
 

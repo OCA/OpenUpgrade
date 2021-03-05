@@ -2,19 +2,21 @@
 new model utm.stage (renamed from mail.mass_mailing.stage in module mass_mailing)
 new model utm.tag (renamed from mail.mass_mailing.tag in module mass_mailing)
 ---Fields in module 'utm'---
-utm          / mail.mass_mailing.campaign / color (integer)               : previously in module mass_mailing
-utm          / mail.mass_mailing.campaign / stage_id (many2one)           : previously in module mass_mailing
-utm          / mail.mass_mailing.campaign / tag_ids (many2many)           : previously in module mass_mailing
-utm          / mail.mass_mailing.campaign / user_id (many2one)            : previously in module mass_mailing
 utm          / mail.mass_mailing.stage  / __last_update (datetime)      : previously in module mass_mailing
+utm          / mail.mass_mailing.stage  / _order                        : previously in module mass_mailing
 utm          / mail.mass_mailing.stage  / display_name (char)           : previously in module mass_mailing
 utm          / mail.mass_mailing.stage  / name (char)                   : previously in module mass_mailing
 utm          / mail.mass_mailing.stage  / sequence (integer)            : previously in module mass_mailing
 utm          / mail.mass_mailing.tag    / __last_update (datetime)      : previously in module mass_mailing
+utm          / mail.mass_mailing.tag    / _order                        : previously in module mass_mailing
 utm          / mail.mass_mailing.tag    / color (integer)               : previously in module mass_mailing
 utm          / mail.mass_mailing.tag    / display_name (char)           : previously in module mass_mailing
 utm          / mail.mass_mailing.tag    / name (char)                   : previously in module mass_mailing
+utm          / utm.campaign             / color (integer)               : NEW
 utm          / utm.campaign             / is_website (boolean)          : NEW hasdefault
+utm          / utm.campaign             / stage_id (many2one)           : NEW relation: utm.stage, required, req_default: function, hasdefault
+utm          / utm.campaign             / tag_ids (many2many)           : NEW relation: utm.tag
+utm          / utm.campaign             / user_id (many2one)            : NEW relation: res.users, required, req_default: function, hasdefault
 ---XML records in module 'utm'---
 NEW ir.actions.act_window: utm.action_view_utm_stage
 NEW ir.actions.act_window: utm.action_view_utm_tag

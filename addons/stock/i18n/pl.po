@@ -853,6 +853,12 @@ msgid "Available Products"
 msgstr "Dostępne produkty"
 
 #. module: stock
+#: code:addons/stock/models/product.py:581
+#, python-format
+msgid "Available quantity should be set to zero before changing type"
+msgstr ""
+
+#. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move__backorder_id
 #: model:ir.model.fields,field_description:stock.field_stock_picking__backorder_id
 msgid "Back Order of"
@@ -4252,6 +4258,12 @@ msgid "Please add some items to move."
 msgstr "Dodaj obiekty do przesunięcia."
 
 #. module: stock
+#: code:addons/stock/models/stock_quant.py:92
+#, python-format
+msgid "Please check the following serial number (name, id): "
+msgstr ""
+
+#. module: stock
 #: code:addons/stock/wizard/stock_picking_return.py:0
 #, python-format
 msgid "Please specify at least one non-zero quantity."
@@ -6384,6 +6396,16 @@ msgstr ""
 "jeśli otrzymasz towary, które teraz zwracasz, pamiętaj, aby <b>odwrócić</b> "
 "zwrócony odbiór w celu uniknięcia ponownego uruchomienia reguł logistycznych"
 " (co spowodowałoby powielenie operacji)"
+
+#. module: stock
+#: code:addons/stock/models/product.py:0
+#, python-format
+msgid ""
+"This product has been used in at least one inventory movement. It is not "
+"advised to change the Product Type since it can lead to inconsistencies. A "
+"better solution could be to archive the product and create a new one "
+"instead."
+msgstr ""
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_change_product_qty__new_quantity

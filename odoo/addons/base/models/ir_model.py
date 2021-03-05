@@ -316,9 +316,13 @@ class IrModel(models.Model):
     def _add_manual_models(self):
         """ Add extra models to the registry. """
         # clean up registry first
-        custom_models = [name for name, model_class in self.pool.items() if model_class._custom]
-        for name in custom_models:
-            del self.pool.models[name]
+        for name, Model in list(self.pool.items()):
+            if Model._custom:
+                del self.pool.models[name]
+                # remove the model's name from its parents' _inherit_children
+                for Parent in Model.__bases__:
+                    if hasattr(Parent, 'pool'):
+                        Parent._inherit_children.discard(name)
         # add manual models
         cr = self.env.cr
         cr.execute('SELECT * FROM ir_model WHERE state=%s', ['manual'])
@@ -907,7 +911,6 @@ class IrModelFields(models.Model):
         to_insert = []
         to_xmlids = []
         for name, field in model._fields.items():
-            openupgrade_loading.update_field_xmlid(self, field)
             old_vals = fields_data.get(name)
             new_vals = self._reflect_field_params(field)
             if old_vals is None:
@@ -1895,6 +1898,19 @@ class IrModelData(models.Model):
             else:
                 records_items.append((data.model, data.res_id))
 
+        # avoid prefetching fields that are going to be deleted: during uninstall, it is
+        # possible to perform a recompute (via flush_env) after the database columns have been
+        # deleted but before the new registry has been created, meaning the recompute will
+        # be executed on a stale registry, and if some of the data for executing the compute
+        # methods is not in cache it will be fetched, and fields that exist in the registry but not
+        # in the database will be prefetched, this will of course fail and prevent the uninstall.
+        for ir_field in self.env['ir.model.fields'].browse(field_ids):
+            model = self.pool.get(ir_field.model)
+            if model is not None:
+                field = model._fields.get(ir_field.name)
+                if field is not None:
+                    field.prefetch = False
+
         # to collect external ids of records that cannot be deleted
         undeletable_ids = []
 
@@ -1911,18 +1927,23 @@ class IrModelData(models.Model):
 
             # special case for ir.model.fields
             if records._name == 'ir.model.fields':
+                missing = records - records.exists()
+                if missing:
+                    # delete orphan external ids right now;
+                    # an orphan ir.model.data can happen if the ir.model.field is deleted via
+                    # an ONDELETE CASCADE, in which case we must verify that the records we're
+                    # processing exist in the database otherwise a MissingError will be raised
+                    orphans = ref_data.filtered(lambda r: r.res_id in missing._ids)
+                    _logger.info('Deleting orphan ir_model_data %s', orphans)
+                    orphans.unlink()
+                    # /!\ this must go before any field accesses on `records`
+                    records -= missing
                 # do not remove LOG_ACCESS_COLUMNS unless _log_access is False
                 # on the model
                 records -= records.filtered(lambda f: f.name == 'id' or (
                     f.name in models.LOG_ACCESS_COLUMNS and
                     f.model in self.env and self.env[f.model]._log_access
                 ))
-                # delete orphan external ids right now
-                missing_ids = set(records.ids) - set(records.exists().ids)
-                orphans = ref_data.filtered(lambda r: r.res_id in missing_ids)
-                if orphans:
-                    _logger.info('Deleting orphan ir_model_data %s', orphans)
-                    orphans.unlink()
 
             # now delete the records
             _logger.info('Deleting %s', records)
@@ -2010,14 +2031,13 @@ class IrModelData(models.Model):
                     if record.exists():
                         # OpenUpgrade: never break on unlink of obsolete records
                         try:
-                            self.env.cr.execute('SAVEPOINT ir_model_data_delete');
-                            record.unlink()
+                            with self.env.cr.savepoint():
+                                record.unlink()
                         except Exception:
-                            self.env.cr.execute('ROLLBACK TO SAVEPOINT ir_model_data_delete');
                             _logger.warning(
                                 'Could not delete obsolete record with id: %d of model %s\n'
                                 'Please refer to the log message right above',
-                                res_id, model)
+                                res_id, model, exc_info=True)
                         # /OpenUpgrade
                     else:
                         bad_imd_ids.append(id)

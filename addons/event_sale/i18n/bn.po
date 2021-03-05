@@ -2,12 +2,18 @@
 # This file contains the translation of the following modules:
 # 	* event_sale
 # 
+# Translators:
+# Martin Trigaux, 2020
+# Khanstore <dmashraf@gmail.com>, 2020
+# Abu Zafar <azmikbal@gmail.com>, 2020
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-07 07:12+0000\n"
 "PO-Revision-Date: 2019-08-26 09:10+0000\n"
+"Last-Translator: Abu Zafar <azmikbal@gmail.com>, 2020\n"
 "Language-Team: Bengali (https://www.transifex.com/odoo/teams/41243/bn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,7 +49,7 @@ msgstr ""
 #. module: event_sale
 #: model_terms:ir.ui.view,arch_db:event_sale.event_configurator_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "বাতিল"
 
 #. module: event_sale
 #: model:ir.model.fields,help:event_sale.field_sale_order_line__event_id
@@ -62,7 +68,7 @@ msgstr ""
 #. module: event_sale
 #: model:ir.model.fields,field_description:event_sale.field_event_event_ticket__company_id
 msgid "Company"
-msgstr ""
+msgstr "কোম্পানি"
 
 #. module: event_sale
 #: model:ir.actions.act_window,name:event_sale.event_configurator_action
@@ -75,7 +81,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor__create_uid
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor_line__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "দ্বারা সৃষ্টি"
 
 #. module: event_sale
 #: model:ir.model.fields,field_description:event_sale.field_event_event_configurator__create_date
@@ -83,7 +89,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor__create_date
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor_line__create_date
 msgid "Created on"
-msgstr ""
+msgstr "তৈরি"
 
 #. module: event_sale
 #: model:ir.model.fields,help:event_sale.field_event_event_ticket__seats_max
@@ -99,7 +105,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor__display_name
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "প্রদর্শন নাম"
 
 #. module: event_sale
 #: model:ir.model,name:event_sale.model_registration_editor
@@ -119,7 +125,7 @@ msgstr ""
 #. module: event_sale
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor_line__email
 msgid "Email"
-msgstr ""
+msgstr "ই-মেইল"
 
 #. module: event_sale
 #: model:ir.model,name:event_sale.model_event_event
@@ -128,7 +134,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor_line__event_id
 #: model:ir.model.fields,field_description:event_sale.field_sale_order_line__event_id
 msgid "Event"
-msgstr ""
+msgstr "ইভেন্ট"
 
 #. module: event_sale
 #: model:ir.model,name:event_sale.model_event_type
@@ -151,7 +157,7 @@ msgstr ""
 #: model:product.product,name:event_sale.product_product_event
 #: model:product.template,name:event_sale.product_product_event_product_template
 msgid "Event Registration"
-msgstr ""
+msgstr "ইভেন্ট নিবন্ধন"
 
 #. module: event_sale
 #: model:ir.actions.act_window,name:event_sale.action_sale_order_event_registration
@@ -181,13 +187,13 @@ msgstr ""
 #. module: event_sale
 #: model_terms:ir.ui.view,arch_db:event_sale.event_sale_product_template_form
 msgid "Events"
-msgstr ""
+msgstr "ঘটনাবলী"
 
 #. module: event_sale
 #: code:addons/event_sale/models/event.py:0
 #, python-format
 msgid "Free"
-msgstr ""
+msgstr "ফ্রী"
 
 #. module: event_sale
 #: model:event.event.ticket,name:event_sale.event_4_ticket_1
@@ -200,7 +206,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor__id
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor_line__id
 msgid "ID"
-msgstr ""
+msgstr "আইডি "
 
 #. module: event_sale
 #: model:ir.model.fields,help:event_sale.field_product_product__event_ok
@@ -226,7 +232,7 @@ msgstr ""
 #. module: event_sale
 #: model:ir.model,name:event_sale.model_account_move
 msgid "Journal Entries"
-msgstr ""
+msgstr "জার্নাল এন্ট্রি"
 
 #. module: event_sale
 #: model:ir.model.fields,field_description:event_sale.field_event_event_configurator____last_update
@@ -234,7 +240,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor____last_update
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor_line____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "সর্বশেষ সংশোধিত"
 
 #. module: event_sale
 #: model:ir.model.fields,field_description:event_sale.field_event_event_configurator__write_uid
@@ -242,7 +248,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor__write_uid
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "সর্বশেষ আপডেট করেছেন"
 
 #. module: event_sale
 #: model:ir.model.fields,field_description:event_sale.field_event_event_configurator__write_date
@@ -250,7 +256,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor__write_date
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "সর্বশেষ আপডেট হয়েছে"
 
 #. module: event_sale
 #: model:ir.model.fields.selection,name:event_sale.selection__event_event_ticket__seats_availability__limited
@@ -270,7 +276,7 @@ msgstr ""
 #. module: event_sale
 #: model:ir.model.fields,field_description:event_sale.field_event_registration__medium_id
 msgid "Medium"
-msgstr ""
+msgstr "মধ্যম"
 
 #. module: event_sale
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor_line__mobile
@@ -283,7 +289,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:event_sale.field_registration_editor_line__name
 #, python-format
 msgid "Name"
-msgstr ""
+msgstr "নাম"
 
 #. module: event_sale
 #: code:addons/event_sale/models/event.py:0
@@ -301,12 +307,12 @@ msgstr ""
 #: code:addons/event_sale/models/event.py:0
 #, python-format
 msgid "None"
-msgstr ""
+msgstr "কিছুই না"
 
 #. module: event_sale
 #: model_terms:ir.ui.view,arch_db:event_sale.event_configurator_view_form
 msgid "Ok"
-msgstr ""
+msgstr "বেশ"
 
 #. module: event_sale
 #: model_terms:ir.ui.view,arch_db:event_sale.view_event_registration_ticket_form
@@ -322,7 +328,7 @@ msgstr ""
 #: code:addons/event_sale/models/event.py:0
 #, python-format
 msgid "Paid"
-msgstr ""
+msgstr "পরিশোধ"
 
 #. module: event_sale
 #: code:addons/event_sale/models/event.py:0
@@ -516,7 +522,7 @@ msgstr ""
 #. module: event_sale
 #: model:ir.model.fields.selection,name:event_sale.selection__event_event_ticket__seats_availability__unlimited
 msgid "Unlimited"
-msgstr ""
+msgstr "অসীম"
 
 #. module: event_sale
 #: model:event.event.ticket,name:event_sale.event_0_ticket_2

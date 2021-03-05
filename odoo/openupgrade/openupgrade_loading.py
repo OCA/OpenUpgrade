@@ -147,6 +147,7 @@ def log_model(model, local_registry):
     if model._inherits:
         model_registry['_inherits'] = {
             '_inherits': str(model._inherits)}
+    model_registry['_order'] = {'_order': model._order}
     for k, v in model._fields.items():
         properties = {
             'type': typemap.get(v.type, v.type),
@@ -160,7 +161,6 @@ def log_model(model, local_registry):
             'selection_keys': '',
             'req_default': '',
             'hasdefault': model._fields[k].default and 'hasdefault' or '',
-            'inherits': '',
             }
         if v.type == 'selection':
             if isinstance(v.selection, (tuple, list)):
@@ -247,44 +247,3 @@ def compare_registries(cr, module, registry, local_registry):
                             (key, value, record_id)
                             )
                     old_field[key] = value
-
-
-def update_field_xmlid(model, field):
-    """ OpenUpgrade edit start: In rare cases, an old module defined a field
-    on a model that is not defined in another module earlier in the
-    chain of inheritance. Then we need to assign the ir.model.fields'
-    xmlid to this other module, otherwise the column would be dropped
-    when uninstalling the first module.
-    An example is res.partner#display_name defined in 7.0 by
-    account_report_company, but now the field belongs to the base
-    module
-    Given that we arrive here in order of inheritance, we simply check
-    if the field's xmlid belongs to a module already loaded, and if not,
-    update the record with the correct module name. """
-    model.env.cr.execute(
-        "SELECT f.*, d.module, d.id as xmlid_id, d.name as xmlid "
-        "FROM ir_model_fields f LEFT JOIN ir_model_data d "
-        "ON f.id=d.res_id and d.model='ir.model.fields' WHERE f.model=%s",
-        (model._name,))
-    for rec in model.env.cr.dictfetchall():
-        if ('module' in model.env.context and
-                rec['module'] and
-                rec['name'] in model._fields.keys() and
-                rec['module'] != model.env.context['module'] and
-                rec['module'] not in model.env.registry._init_modules):
-            logging.getLogger(__name__).info(
-                'Moving XMLID for ir.model.fields record of %s#%s '
-                'from %s to %s', model._name, rec['name'], rec['module'],
-                model.env.context['module'])
-            model.env.cr.execute(
-                "SELECT id FROM ir_model_data WHERE module=%(module)s "
-                "AND name=%(xmlid)s",
-                dict(rec, module=model.env.context['module']))
-            if model.env.cr.fetchone():
-                logging.getLogger(__name__).info(
-                    'Aborting, an XMLID for this module already exists.')
-                continue
-            model.env.cr.execute(
-                "UPDATE ir_model_data SET module=%(module)s "
-                "WHERE id=%(xmlid_id)s",
-                dict(rec, module=model.env.context['module']))

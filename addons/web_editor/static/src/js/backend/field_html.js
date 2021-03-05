@@ -173,6 +173,7 @@ var FieldHtml = basic_fields.DebouncedField.extend(TranslatableFieldMixin, {
     _createWysiwygIntance: function () {
         var self = this;
         this.wysiwyg = new Wysiwyg(this, this._getWysiwygOptions());
+        this.wysiwyg.__extraAssetsForIframe = this.__extraAssetsForIframe || [];
 
         // by default this is synchronous because the assets are already loaded in willStart
         // but it can be async in the case of options such as iframe, snippets...
@@ -224,7 +225,7 @@ var FieldHtml = basic_fields.DebouncedField.extend(TranslatableFieldMixin, {
                         toolbar.splice(-1, 0, ['view', ['codeview']]);
                     }
                 }
-                if ("mailing.mailing" === self.model) {
+                if (self.field.sanitize && self.field.sanitize_tags) {
                     options.noVideos = true;
                 }
                 options.prettifyHtml = false;
@@ -252,7 +253,7 @@ var FieldHtml = basic_fields.DebouncedField.extend(TranslatableFieldMixin, {
             dataPointID: this.dataPointID,
             changes: _.object([this.fieldNameAttachment], [{
                 operation: 'ADD_M2M',
-                ids: attachments
+                ids: attachments.data,
             }])
         });
     },
@@ -449,6 +450,19 @@ var FieldHtml = basic_fields.DebouncedField.extend(TranslatableFieldMixin, {
         $lis.not('[id]').each(function () {
             $(this).attr('id', 'checklist-id-' + (++max));
         });
+    },
+    /**
+     * Allows Enter keypress in a textarea (source mode)
+     *
+     * @private
+     * @param {OdooEvent} ev
+     */
+    _onKeydown: function (ev) {
+        if (ev.which === $.ui.keyCode.ENTER && $(ev.target).is('textarea')) {
+            ev.stopPropagation();
+            return;
+        }
+        this._super.apply(this, arguments);
     },
     /**
      * Method called when wysiwyg triggers a change.

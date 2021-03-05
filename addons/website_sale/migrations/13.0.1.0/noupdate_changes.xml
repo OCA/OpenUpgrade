@@ -51,7 +51,7 @@
                     <div style="text-align: center; margin: 16px 0px 16px 0px; font-size: 14px;"><a href="${object.get_base_url()}/shop/cart?access_token=${object.access_token}" target="_blank" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
                             Resume order
                         </a></div>
-                    <div style="text-align: center;"><strong>Thank you for shopping with ${user.company_id.name}!</strong></div>
+                    <div style="text-align: center;"><strong>Thank you for shopping with ${company.name}!</strong></div>
                 </td>
                       </tr>
                       <tr>
@@ -112,9 +112,9 @@
   <record id="product_pricelist_item_comp_rule" model="ir.rule">
     <field name="domain_force">['|', ('company_id', 'in', [False,website.company_id.id]), ('company_id', 'in', company_ids)]</field>
   </record>
-  <record id="sales_team.salesteam_website_sales" model="crm.team">
+<!--  <record id="sales_team.salesteam_website_sales" model="crm.team">
     <field name="company_id"/>
     <field name="dashboard_graph_model"/>
     <field name="dashboard_graph_period"/>
-  </record>
+  </record>-->
 </odoo>

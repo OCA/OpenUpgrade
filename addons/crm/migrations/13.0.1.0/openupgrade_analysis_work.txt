@@ -1,0 +1,95 @@
+---Models in module 'crm'---
+new model crm.lead.scoring.frequency
+new model crm.lead.scoring.frequency.field
+# NOTHING TO DO
+
+---Fields in module 'crm'---
+crm          / crm.lead                 / automated_probability (float) : NEW
+crm          / crm.lead                 / email_cc (text)               : type is now 'char' ('text')
+crm          / crm.lead                 / email_normalized (char)       : NEW isfunction: function, stored
+crm          / crm.lead                 / email_state (selection)       : NEW selection_keys: ['correct', 'incorrect'], isfunction: function, stored
+crm          / crm.lead                 / lang_id (many2one)            : NEW relation: res.lang
+crm          / crm.lead                 / phone_state (selection)       : NEW selection_keys: ['correct', 'incorrect'], isfunction: function, stored
+# NOTHING TO DO: New features
+
+crm          / crm.lead.scoring.frequency / lost_count (float)            : NEW
+crm          / crm.lead.scoring.frequency / team_id (many2one)            : NEW relation: crm.team
+crm          / crm.lead.scoring.frequency / value (char)                  : NEW
+crm          / crm.lead.scoring.frequency / variable (char)               : NEW
+crm          / crm.lead.scoring.frequency / won_count (float)             : NEW
+crm          / crm.lead.scoring.frequency.field / field_id (many2one)           : NEW relation: ir.model.fields, required
+# NOTHING TO DO: New models
+
+crm          / crm.stage                / probability (float)           : DEL required, req_default: function
+crm          / crm.stage                / is_won (boolean)              : NEW
+# DONE: post-migration convert to is_won
+
+crm          / crm.stage                / legend_priority (text)        : DEL
+crm          / crm.stage                / on_change (boolean)           : DEL
+crm          / crm.team                 / dashboard_graph_group_pipeline (selection): DEL selection_keys: ['day', 'month', 'stage', 'user', 'week']
+crm          / crm.team                 / dashboard_graph_model (False) : DEL selection_keys: ['crm.lead'], mode: modify
+# NOTHING TO DO: Feature removed
+
+crm          / res.partner              / team_id (False)               : DEL mode: modify
+crm          / res.users                / team_id (False)               : DEL mode: modify
+# NOTHING TO DO: wrong analysis
+
+---XML records in module 'crm'---
+DEL crm.team: sales_team.team_sales_department (noupdate)
+# NOTHING TO DO: Don't remove it, still in sales_team module
+
+DEL ir.actions.act_window: crm.calendar_event_partner
+DEL ir.actions.act_window: crm.create_opportunity_simplified
+DEL ir.actions.act_window: crm.crm_lead_action_activities
+DEL ir.actions.act_window: crm.crm_opportunity_report_action_graph
+DEL ir.actions.act_window: crm.merge_opportunity_act
+DEL ir.actions.act_window.view: crm.action_crm_tag_form_view_salesteams_oppor11
+DEL ir.actions.act_window.view: crm.crm_lead_opportunities_tree_view_view_form
+DEL ir.actions.act_window.view: crm.crm_lead_opportunities_view_form
+DEL ir.actions.act_window.view: crm.relate_partner_opportunities_form
+DEL ir.actions.server: crm.action_mark_activities_done
+DEL ir.actions.server: crm.action_mark_late_activities_done
+DEL ir.ui.menu: crm.menu_crm_leads
+DEL ir.ui.view: crm.crm_case_form_view_leads
+DEL ir.ui.view: crm.view_create_opportunity_simplified
+DEL ir.ui.view: crm_phone_validation.res_config_settings_view_form
+DEL ir.actions.act_window: crm.crm_lead_opportunities_tree_view
+NEW ir.actions.act_window: crm.crm_lead_action_pipeline
+DEL ir.actions.act_window.view: crm.crm_lead_opportunities_tree_view_view_calendar
+NEW ir.actions.act_window.view: crm.crm_lead_action_pipeline_view_calendar
+DEL ir.actions.act_window.view: crm.crm_lead_opportunities_tree_view_view_graph
+NEW ir.actions.act_window.view: crm.crm_lead_action_pipeline_view_graph
+DEL ir.actions.act_window.view: crm.crm_lead_opportunities_tree_view_view_kanban
+NEW ir.actions.act_window.view: crm.crm_lead_action_pipeline_view_kanban
+DEL ir.actions.act_window.view: crm.crm_lead_opportunities_tree_view_view_pivot
+NEW ir.actions.act_window.view: crm.crm_lead_action_pipeline_view_pivot
+DEL ir.actions.act_window.view: crm.crm_lead_opportunities_tree_view_view_tree
+NEW ir.actions.act_window.view: crm.crm_lead_action_pipeline_view_tree
+DEL ir.ui.view: crm.crm_case_form_view_oppor
+NEW ir.ui.view: crm.crm_lead_view_form
+NEW crm.lead.scoring.frequency.field: crm.frequency_field_country_id (noupdate)
+NEW crm.lead.scoring.frequency.field: crm.frequency_field_email_state (noupdate)
+NEW crm.lead.scoring.frequency.field: crm.frequency_field_lang_id (noupdate)
+NEW crm.lead.scoring.frequency.field: crm.frequency_field_phone_state (noupdate)
+NEW crm.lead.scoring.frequency.field: crm.frequency_field_source_id (noupdate)
+NEW crm.lead.scoring.frequency.field: crm.frequency_field_state_id (noupdate)
+NEW crm.team: sales_team.ebay_sales_team (noupdate)
+NEW crm.team: sales_team.pos_sales_team (noupdate)
+NEW crm.team: sales_team.salesteam_website_sales (noupdate)
+NEW ir.actions.act_window: crm.crm_lead_action_team_overdue_opportunity
+NEW ir.actions.act_window: sales_team.crm_team_salesteams_pipelines_act
+NEW ir.config_parameter: crm.crm_pls_fields_param (noupdate)
+NEW ir.config_parameter: crm.crm_pls_rebuild_threshold_param (noupdate)
+NEW ir.config_parameter: crm.crm_pls_start_date_param (noupdate)
+NEW ir.cron: crm.website_crm_score_cron
+NEW ir.model.access: crm.access_crm_lead_scoring_frequency
+NEW ir.model.access: crm.access_crm_lead_scoring_frequency_field
+NEW ir.rule: crm.crm_activity_report_rule_multi_company (noupdate)
+NEW mail.message.subtype: crm.mt_lead_restored (noupdate)
+NEW mail.message.subtype: crm.mt_salesteam_lead_restored (noupdate)
+NEW ir.ui.view: crm.assets_tests
+NEW ir.ui.view: crm.crm_lead_view_activity
+NEW ir.ui.view: crm.crm_lost_reason_view_tree
+NEW ir.ui.view: crm.utm_campaign_view_form
+NEW ir.ui.view: crm.utm_campaign_view_kanban
+# NOTHING TO DO

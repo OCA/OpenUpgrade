@@ -3,12 +3,45 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 from functools import partial
+from odoo.tools.sql import column_exists, create_column
 from odoo.tools.misc import formatLang
 
 
 class AccountMove(models.Model):
 
     _inherit = "account.move"
+
+    def _auto_init(self):
+        # Skip the computation of the field `l10n_latam_document_type_id` at the module installation
+        # Without this, at the module installation,
+        # it would call `_compute_l10n_latam_document_type` on all existing records
+        # which can take quite a while if you already have a lot of moves. It can even fail with a MemoryError.
+        # In addition, it sets `_compute_l10n_latam_document_type = False` on all records
+        # because this field depends on the many2many `l10n_latam_available_document_type_ids`,
+        # which relies on having records for the model `l10n_latam.document.type`
+        # which only happens once the according localization module is loaded.
+        # The localization module is loaded afterwards, because the localization module depends on this module,
+        # (e.g. `l10n_cl` depends on `l10n_latam_invoice_document`, and therefore `l10n_cl` is loaded after)
+        # and therefore there are no records for the model `l10n_latam.document.type` at the time this fields
+        # gets computed on installation. Hence, all records' `_compute_l10n_latam_document_type` are set to `False`.
+        # In addition, multiple localization module depends on this module (e.g. `l10n_cl`, `l10n_ar`)
+        # So, imagine `l10n_cl` gets installed first, and then `l10n_ar` is installed next,
+        # if `l10n_latam_document_type_id` needed to be computed on install,
+        # the install of `l10n_cl` would call the compute method,
+        # because `l10n_latam_invoice_document` would be installed at the same time,
+        # but then `l10n_ar` would miss it, because `l10n_latam_invoice_document` would already be installed.
+        # Besides, this field is computed only for drafts invoices, as stated in the compute method:
+        # `for rec in self.filtered(lambda x: x.state == 'draft'):`
+        # So, if we want this field to be computed on install, it must be done only on draft invoices, and only once
+        # the localization modules are loaded.
+        # It should be done in a dedicated post init hook,
+        # filtering correctly the invoices for which it must be computed.
+        # Though I don't think this is needed.
+        # In practical, it's very rare to already have invoices (draft, in addition)
+        # for a Chilian or Argentian company (`res.company`) before installing `l10n_cl` or `l10n_ar`.
+        if not column_exists(self.env.cr, "account_move", "l10n_latam_document_type_id"):
+            create_column(self.env.cr, "account_move", "l10n_latam_document_type_id", "int4")
+        return super()._auto_init()
 
     l10n_latam_amount_untaxed = fields.Monetary(compute='_compute_l10n_latam_amount_and_taxes')
     l10n_latam_tax_ids = fields.One2many(compute="_compute_l10n_latam_amount_and_taxes", comodel_name='account.move.line')
@@ -55,7 +88,7 @@ class AccountMove(models.Model):
     def _compute_l10n_latam_sequence(self):
         recs_with_journal_id = self.filtered('journal_id')
         for rec in recs_with_journal_id:
-            rec.l10n_latam_sequence_id = rec._get_document_type_sequence()
+            rec.l10n_latam_sequence_id = rec._get_document_type_sequence()[:1]
         remaining = self - recs_with_journal_id
         remaining.l10n_latam_sequence_id = False
 
@@ -63,6 +96,7 @@ class AccountMove(models.Model):
         recs_invoice = self.filtered(lambda x: x.is_invoice())
         for invoice in recs_invoice:
             tax_lines = invoice.line_ids.filtered('tax_line_id')
+            currencies = invoice.line_ids.filtered(lambda x: x.currency_id == invoice.currency_id).mapped('currency_id')
             included_taxes = invoice.l10n_latam_document_type_id and \
                 invoice.l10n_latam_document_type_id._filter_taxes_included(tax_lines.mapped('tax_line_id'))
             if not included_taxes:
@@ -75,7 +109,8 @@ class AccountMove(models.Model):
                     sign = -1
                 else:
                     sign = 1
-                l10n_latam_amount_untaxed = invoice.amount_untaxed + sign * sum(included_invoice_taxes.mapped('balance'))
+                amount = 'amount_currency' if len(currencies) == 1 else 'balance'
+                l10n_latam_amount_untaxed = invoice.amount_untaxed + sign * sum(included_invoice_taxes.mapped(amount))
             invoice.l10n_latam_amount_untaxed = l10n_latam_amount_untaxed
             invoice.l10n_latam_tax_ids = not_included_invoice_taxes
         remaining = self - recs_invoice
@@ -134,6 +169,11 @@ class AccountMove(models.Model):
                 raise ValidationError(_('You can not use a %s document type with a refund invoice') % internal_type)
             elif internal_type == 'credit_note' and invoice_type in ['out_invoice', 'in_invoice']:
                 raise ValidationError(_('You can not use a %s document type with a invoice') % (internal_type))
+
+    def _get_name_invoice_report(self, report_xml_id):
+        """ method to be inherit by latam localizations that have an custom invoice reports """
+        self.ensure_one()
+        return report_xml_id
 
     def _get_l10n_latam_documents_domain(self):
         self.ensure_one()

@@ -7,19 +7,19 @@ obsolete model mail.mass_mailing.list (renamed to mailing.list)
 obsolete model mail.mass_mailing.list_contact_rel (renamed to mailing.contact.subscription)
 obsolete model mail.mass_mailing.stage (renamed to utm.stage in module utm)
 obsolete model mail.mass_mailing.tag (renamed to utm.tag in module utm)
-obsolete model mail.mass_mailing.test [transient]
-obsolete model mail.statistics.report [sql_view]
-obsolete model mass.mailing.list.merge [transient]
-obsolete model mass.mailing.schedule.date [transient]
+obsolete model mail.mass_mailing.test (renamed to mailing.mailing.test) [transient]
+obsolete model mail.statistics.report (renamed to mailing.trace.report) [sql_view]
+obsolete model mass.mailing.list.merge (renamed to mailing.list.merge) [transient]
+obsolete model mass.mailing.schedule.date (renamed to mailing.mailing.schedule.date) [transient]
 new model mailing.contact (renamed from mail.mass_mailing.contact)
 new model mailing.contact.subscription (renamed from mail.mass_mailing.list_contact_rel)
 new model mailing.list (renamed from mail.mass_mailing.list)
-new model mailing.list.merge [transient]
+new model mailing.list.merge (renamed from mass.mailing.list.merge) [transient]
 new model mailing.mailing (renamed from mail.mass_mailing)
-new model mailing.mailing.schedule.date [transient]
-new model mailing.mailing.test [transient]
+new model mailing.mailing.schedule.date (renamed from mass.mailing.schedule.date) [transient]
+new model mailing.mailing.test (renamed from mail.mass_mailing.test) [transient]
 new model mailing.trace (renamed from mail.mail.statistics)
-new model mailing.trace.report [sql_view]
+new model mailing.trace.report (renamed from mail.statistics.report) [sql_view]
 ---Fields in module 'mass_mailing'---
 mass_mailing / link.tracker             / mass_mailing_campaign_id (many2one): DEL relation: mail.mass_mailing.campaign
 mass_mailing / link.tracker             / mass_mailing_id (many2one)    : relation is now 'mailing.mailing' ('mail.mass_mailing') [nothing to do]
@@ -30,28 +30,29 @@ mass_mailing / link.tracker.click       / mass_mailing_id (many2one)    : relati
 mass_mailing / mail.mail                / mailing_id (many2one)         : relation is now 'mailing.mailing' ('mail.mass_mailing') [nothing to do]
 mass_mailing / mail.mail                / mailing_trace_ids (one2many)  : NEW relation: mailing.trace
 mass_mailing / mail.mail                / statistics_ids (one2many)     : DEL relation: mail.mail.statistics
+mass_mailing / mail.mail.statistics     / _order                        : _order is now 'scheduled DESC' ('message_id')
 mass_mailing / mail.mail.statistics     / mass_mailing_campaign_id (many2one): DEL relation: mail.mass_mailing.campaign
 mass_mailing / mail.mail.statistics     / mass_mailing_id (many2one)    : relation is now 'mailing.mailing' ('mail.mass_mailing') [nothing to do]
+mass_mailing / mail.mass_mailing        / contact_list_ids (many2many)  : column1 is now 'mailing_mailing_id' ('mail_mass_mailing_id') [mail_mass_mailing_list_rel]
+mass_mailing / mail.mass_mailing        / contact_list_ids (many2many)  : column2 is now 'mailing_list_id' ('mail_mass_mailing_list_id') [mail_mass_mailing_list_rel]
 mass_mailing / mail.mass_mailing        / contact_list_ids (many2many)  : relation is now 'mailing.list' ('mail.mass_mailing.list') [nothing to do]
 mass_mailing / mail.mass_mailing        / mass_mailing_campaign_id (many2one): DEL relation: mail.mass_mailing.campaign
 mass_mailing / mail.mass_mailing        / statistics_ids (one2many)     : DEL relation: mail.mail.statistics
-mass_mailing / mail.mass_mailing.campaign / _inherits (False)             : DEL
+mass_mailing / mail.mass_mailing.campaign / _inherits                     : DEL _inherits: {'utm.campaign': 'campaign_id'}
 mass_mailing / mail.mass_mailing.campaign / campaign_id (many2one)        : DEL relation: utm.campaign, required
-mass_mailing / mail.mass_mailing.campaign / color (integer)               : module is now 'utm' ('mass_mailing')
+mass_mailing / mail.mass_mailing.campaign / color (integer)               : DEL
 mass_mailing / mail.mass_mailing.campaign / mass_mailing_ids (one2many)   : DEL relation: mail.mass_mailing
 mass_mailing / mail.mass_mailing.campaign / medium_id (many2one)          : DEL relation: utm.medium
 mass_mailing / mail.mass_mailing.campaign / source_id (many2one)          : DEL relation: utm.source
-mass_mailing / mail.mass_mailing.campaign / stage_id (many2one)           : module is now 'utm' ('mass_mailing')
-mass_mailing / mail.mass_mailing.campaign / stage_id (many2one)           : relation is now 'utm.stage' ('mail.mass_mailing.stage') [nothing to do]
-mass_mailing / mail.mass_mailing.campaign / tag_ids (many2many)           : module is now 'utm' ('mass_mailing')
-mass_mailing / mail.mass_mailing.campaign / tag_ids (many2many)           : relation is now 'utm.tag' ('mail.mass_mailing.tag') [nothing to do]
-mass_mailing / mail.mass_mailing.campaign / tag_ids (many2many)           : table is now 'utm_tag_rel' ('mail_mass_mailing_tag_rel')
+mass_mailing / mail.mass_mailing.campaign / stage_id (many2one)           : DEL relation: mail.mass_mailing.stage, required, req_default: function
+mass_mailing / mail.mass_mailing.campaign / tag_ids (many2many)           : DEL relation: mail.mass_mailing.tag
 mass_mailing / mail.mass_mailing.campaign / unique_ab_testing (boolean)   : DEL
-mass_mailing / mail.mass_mailing.campaign / user_id (many2one)            : module is now 'utm' ('mass_mailing')
+mass_mailing / mail.mass_mailing.campaign / user_id (many2one)            : DEL relation: res.users, required, req_default: function
 mass_mailing / mail.mass_mailing.contact / is_email_valid (boolean)      : DEL
 mass_mailing / mail.mass_mailing.contact / list_ids (many2many)          : relation is now 'mailing.list' ('mail.mass_mailing.list') [nothing to do]
 mass_mailing / mail.mass_mailing.contact / list_ids (many2many)          : table is now 'mailing_contact_list_rel' ('mail_mass_mailing_contact_list_rel')
 mass_mailing / mail.mass_mailing.contact / subscription_list_ids (one2many): relation is now 'mailing.contact.subscription' ('mail.mass_mailing.list_contact_rel') [nothing to do]
+mass_mailing / mail.mass_mailing.contact / tag_ids (many2many)           : column1 is now 'mailing_contact_id' ('mail_mass_mailing_contact_id') [mail_mass_mailing_contact_res_partner_category_rel]
 mass_mailing / mail.mass_mailing.contact / tag_ids (many2many)           : table is now 'mailing_contact_res_partner_category_rel' ('mail_mass_mailing_contact_res_partner_category_rel')
 mass_mailing / mail.mass_mailing.contact / website_message_ids (one2many): module is now 'portal' ('mass_mailing')
 mass_mailing / mail.mass_mailing.list   / contact_ids (many2many)       : relation is now 'mailing.contact' ('mail.mass_mailing.contact') [nothing to do]
@@ -60,10 +61,12 @@ mass_mailing / mail.mass_mailing.list   / subscription_contact_ids (one2many): D
 mass_mailing / mail.mass_mailing.list_contact_rel / contact_id (many2one)         : relation is now 'mailing.contact' ('mail.mass_mailing.contact') [nothing to do]
 mass_mailing / mail.mass_mailing.list_contact_rel / list_id (many2one)            : relation is now 'mailing.list' ('mail.mass_mailing.list') [nothing to do]
 mass_mailing / mail.mass_mailing.stage  / __last_update (datetime)      : module is now 'utm' ('mass_mailing')
+mass_mailing / mail.mass_mailing.stage  / _order                        : module is now 'utm' ('mass_mailing')
 mass_mailing / mail.mass_mailing.stage  / display_name (char)           : module is now 'utm' ('mass_mailing')
 mass_mailing / mail.mass_mailing.stage  / name (char)                   : module is now 'utm' ('mass_mailing')
 mass_mailing / mail.mass_mailing.stage  / sequence (integer)            : module is now 'utm' ('mass_mailing')
 mass_mailing / mail.mass_mailing.tag    / __last_update (datetime)      : module is now 'utm' ('mass_mailing')
+mass_mailing / mail.mass_mailing.tag    / _order                        : module is now 'utm' ('mass_mailing')
 mass_mailing / mail.mass_mailing.tag    / color (integer)               : module is now 'utm' ('mass_mailing')
 mass_mailing / mail.mass_mailing.tag    / display_name (char)           : module is now 'utm' ('mass_mailing')
 mass_mailing / mail.mass_mailing.tag    / name (char)                   : module is now 'utm' ('mass_mailing')
@@ -127,7 +130,6 @@ DEL ir.model.access: mass_mailing.access_mass_mailing_list
 DEL ir.model.access: mass_mailing.access_mass_mailing_stage
 DEL ir.model.access: mass_mailing.access_mass_mailing_system
 DEL ir.model.access: mass_mailing.access_mass_mailing_tag
-NEW ir.module.category: base.module_category_marketing_email_marketing (noupdate)
 NEW ir.ui.menu: mass_mailing.link_tracker_menu_mass_mailing
 NEW ir.ui.menu: mass_mailing.mailing_mailing_menu_technical
 DEL ir.ui.menu: mass_mailing.menu_mass_mailing_configuration

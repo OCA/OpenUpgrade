@@ -18,11 +18,16 @@ class PurchaseOrder(models.Model):
     _description = "Purchase Order"
     _order = 'date_order desc, id desc'
 
+    def _default_currency_id(self):
+        company_id = self.env.context.get('force_company') or self.env.context.get('company_id') or self.env.company.id
+        return self.env['res.company'].browse(company_id).currency_id
+
     @api.depends('order_line.price_total')
     def _amount_all(self):
         for order in self:
             amount_untaxed = amount_tax = 0.0
             for line in order.order_line:
+                line._compute_amount()
                 amount_untaxed += line.price_subtotal
                 amount_tax += line.price_tax
             order.update({
@@ -95,7 +100,7 @@ class PurchaseOrder(models.Model):
         help="Put an address if you want to deliver directly from the vendor to the customer. "
              "Otherwise, keep empty to deliver to your own company.")
     currency_id = fields.Many2one('res.currency', 'Currency', required=True, states=READONLY_STATES,
-        default=lambda self: self.env.company.currency_id.id)
+        default=_default_currency_id)
     state = fields.Selection([
         ('draft', 'RFQ'),
         ('sent', 'RFQ Sent'),
@@ -174,12 +179,13 @@ class PurchaseOrder(models.Model):
 
     @api.model
     def create(self, vals):
+        company_id = vals.get('company_id', self.default_get(['company_id'])['company_id'])
         if vals.get('name', 'New') == 'New':
             seq_date = None
             if 'date_order' in vals:
                 seq_date = fields.Datetime.context_timestamp(self, fields.Datetime.to_datetime(vals['date_order']))
-            vals['name'] = self.env['ir.sequence'].next_by_code('purchase.order', sequence_date=seq_date) or '/'
-        return super(PurchaseOrder, self).create(vals)
+            vals['name'] = self.env['ir.sequence'].with_context(force_company=company_id).next_by_code('purchase.order', sequence_date=seq_date) or '/'
+        return super(PurchaseOrder, self.with_context(company_id=company_id)).create(vals)
 
     def write(self, vals):
         res = super(PurchaseOrder, self).write(vals)
@@ -545,8 +551,8 @@ class PurchaseOrderLine(models.Model):
     def _compute_tax_id(self):
         for line in self:
             fpos = line.order_id.fiscal_position_id or line.order_id.partner_id.with_context(force_company=line.company_id.id).property_account_position_id
-            # If company_id is set, always filter taxes by the company
-            taxes = line.product_id.supplier_taxes_id.filtered(lambda r: not line.company_id or r.company_id == line.company_id)
+            # If company_id is set in the order, always filter taxes by the company
+            taxes = line.product_id.supplier_taxes_id.filtered(lambda r: r.company_id == line.order_id.company_id)
             line.taxes_id = fpos.map_tax(taxes, line.product_id, line.order_id.partner_id) if fpos else taxes
 
     @api.depends('invoice_lines.move_id.state', 'invoice_lines.quantity')
@@ -760,22 +766,17 @@ class PurchaseOrderLine(models.Model):
         if float_compare(qty, 0.0, precision_rounding=self.product_uom.rounding) <= 0:
             qty = 0.0
 
-        if self.currency_id == move.company_id.currency_id:
-            currency = False
-        else:
-            currency = move.currency_id
-
         return {
             'name': '%s: %s' % (self.order_id.name, self.name),
             'move_id': move.id,
-            'currency_id': currency and currency.id or False,
+            'currency_id': move.currency_id.id,
             'purchase_line_id': self.id,
             'date_maturity': move.invoice_date_due,
             'product_uom_id': self.product_uom.id,
             'product_id': self.product_id.id,
             'price_unit': self.price_unit,
             'quantity': qty,
-            'partner_id': move.partner_id.id,
+            'partner_id': move.commercial_partner_id.id,
             'analytic_account_id': self.account_analytic_id.id,
             'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
             'tax_ids': [(6, 0, self.taxes_id.ids)],

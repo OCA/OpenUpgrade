@@ -1,12 +1,4 @@
 ---Models in module 'pos_cash_rounding'---
 ---Fields in module 'pos_cash_rounding'---
-pos_cash_rounding / account.cash.rounding    / loss_account_id (many2one)    : NEW relation: account.account
-pos_cash_rounding / pos.config               / cash_rounding (boolean)       : NEW
-pos_cash_rounding / pos.config               / only_round_cash_method (boolean): NEW
-pos_cash_rounding / pos.config               / rounding_method (many2one)    : NEW relation: account.cash.rounding
 ---XML records in module 'pos_cash_rounding'---
-NEW ir.ui.view: pos_cash_rounding.assets
-NEW ir.ui.view: pos_cash_rounding.pos_config_view_form_inherit_cash_rounding
-NEW ir.ui.view: pos_cash_rounding.pos_order_view_form_inherit_cash_rounding
-NEW ir.ui.view: pos_cash_rounding.pos_rounding_form_view_inherited
-NEW ir.ui.view: pos_cash_rounding.res_config_view_form_inherit_pos_cash_rounding
+---nothing has changed in this module--

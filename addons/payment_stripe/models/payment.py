@@ -5,6 +5,7 @@ import requests
 import pprint
 from requests.exceptions import HTTPError
 from werkzeug import urls
+from collections import namedtuple
 
 from odoo import api, fields, models, _
 from odoo.tools.float_utils import float_round
@@ -38,7 +39,6 @@ class PaymentAcquirerStripe(models.Model):
 
         base_url = self.get_base_url()
         stripe_session_data = {
-            'payment_method_types[0]': 'card',
             'line_items[][amount]': int(tx_values['amount'] if tx_values['currency'].name in INT_CURRENCIES else float_round(tx_values['amount'] * 100, 2)),
             'line_items[][currency]': tx_values['currency'].name,
             'line_items[][quantity]': 1,
@@ -49,13 +49,49 @@ class PaymentAcquirerStripe(models.Model):
             'payment_intent_data[description]': tx_values['reference'],
             'customer_email': tx_values.get('partner_email') or tx_values.get('billing_partner_email'),
         }
-        if tx_values.get('billing_partner_country').code and tx_values.get('billing_partner_country').code.lower() == 'nl' and \
-           tx_values.get('currency').name and tx_values.get('currency').name.lower() == 'eur':
-            # enable iDEAL for NL-based customers (€ payments only)
-            stripe_session_data['payment_method_types[1]'] = 'ideal'
-        tx_values['session_id'] = self._create_stripe_session(stripe_session_data)
+
+        self._add_available_payment_method_types(stripe_session_data, tx_values)
+
+        tx_values['session_id'] = self.with_context(stripe_manual_payment=True)._create_stripe_session(stripe_session_data)
 
         return tx_values
+
+    @api.model
+    def _add_available_payment_method_types(self, stripe_session_data, tx_values):
+        """
+        Add payment methods available for the given transaction
+
+        :param stripe_session_data: dictionary to add the payment method types to
+        :param tx_values: values of the transaction to consider the payment method types for
+        """
+        PMT = namedtuple('PaymentMethodType', ['name', 'countries', 'currencies', 'recurrence'])
+        all_payment_method_types = [
+            PMT('card', [], [], 'recurring'),
+            PMT('ideal', ['nl'], ['eur'], 'punctual'),
+            PMT('bancontact', ['be'], ['eur'], 'punctual'),
+            PMT('eps', ['at'], ['eur'], 'punctual'),
+            PMT('giropay', ['de'], ['eur'], 'punctual'),
+            PMT('p24', ['pl'], ['eur', 'pln'], 'punctual'),
+        ]
+
+        existing_icons = [(icon.name or '').lower() for icon in self.env['payment.icon'].search([])]
+        linked_icons = [(icon.name or '').lower() for icon in self.payment_icon_ids]
+
+        # We don't filter out pmt in the case the icon doesn't exist at all as it would be **implicit** exclusion
+        icon_filtered = filter(lambda pmt: pmt.name == 'card' or
+                                           pmt.name in linked_icons or
+                                           pmt.name not in existing_icons, all_payment_method_types)
+        country = (tx_values['billing_partner_country'].code or 'no_country').lower()
+        pmt_country_filtered = filter(lambda pmt: not pmt.countries or country in pmt.countries, icon_filtered)
+        currency = (tx_values.get('currency').name or 'no_currency').lower()
+        pmt_currency_filtered = filter(lambda pmt: not pmt.currencies or currency in pmt.currencies, pmt_country_filtered)
+        pmt_recurrence_filtered = filter(lambda pmt: tx_values.get('type') != 'form_save' or pmt.recurrence == 'recurring',
+                                    pmt_currency_filtered)
+
+        available_payment_method_types = map(lambda pmt: pmt.name, pmt_recurrence_filtered)
+
+        for idx, payment_method_type in enumerate(available_payment_method_types):
+            stripe_session_data[f'payment_method_types[{idx}]'] = payment_method_type
 
     def _stripe_request(self, url, data=False, method='POST'):
         self.ensure_one()
@@ -90,6 +126,8 @@ class PaymentAcquirerStripe(models.Model):
         if resp.get('payment_intent') and kwargs.get('client_reference_id'):
             tx = self.env['payment.transaction'].sudo().search([('reference', '=', kwargs['client_reference_id'])])
             tx.stripe_payment_intent = resp['payment_intent']
+        if 'id' not in resp and 'error' in resp:
+            _logger.error(resp['error']['message'])
         return resp['id']
 
     def _create_setup_intent(self, kwargs):
@@ -294,6 +332,7 @@ class PaymentTransactionStripe(models.Model):
             return True
         if status == 'requires_payment_method':
             self._set_transaction_cancel()
+            self.acquirer_id._stripe_request('payment_intents/%s/cancel' % self.stripe_payment_intent)
             return False
         else:
             error = tree.get("failure_message") or tree.get('error', {}).get('message')
@@ -304,7 +343,7 @@ class PaymentTransactionStripe(models.Model):
         invalid_parameters = []
         if data.get('amount') != int(self.amount if self.currency_id.name in INT_CURRENCIES else float_round(self.amount * 100, 2)):
             invalid_parameters.append(('Amount', data.get('amount'), self.amount * 100))
-        if data.get('currency').upper() != self.currency_id.name:
+        if data.get('currency') and data.get('currency').upper() != self.currency_id.name:
             invalid_parameters.append(('Currency', data.get('currency'), self.currency_id.name))
         if data.get('payment_intent') and data.get('payment_intent') != self.stripe_payment_intent:
             invalid_parameters.append(('Payment Intent', data.get('payment_intent'), self.stripe_payment_intent))

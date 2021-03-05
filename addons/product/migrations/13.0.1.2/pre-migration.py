@@ -52,10 +52,13 @@ def calculate_product_product_combination_indices(env):
         env.cr, """
         WITH pvc AS (
             SELECT pavppr.product_product_id,
-                ptav.id as product_template_attribute_value_id
+                ptav.id AS product_template_attribute_value_id
             FROM product_attribute_value_product_product_rel pavppr
-            JOIN product_template_attribute_value ptav ON
-            ptav.product_attribute_value_id = pavppr.product_attribute_value_id
+            JOIN product_product pp ON pp.id = pavppr.product_product_id
+            JOIN product_template_attribute_value ptav
+                ON ptav.product_attribute_value_id =
+                    pavppr.product_attribute_value_id
+                AND pp.product_tmpl_id = ptav.product_tmpl_id
         )
         UPDATE product_product pp
         SET combination_indices = grouped_pvc.indices
@@ -65,9 +68,9 @@ def calculate_product_product_combination_indices(env):
                 ORDER BY pvc.product_template_attribute_value_id) indices
             FROM pvc
             JOIN product_product pp ON pp.id = pvc.product_product_id
-            GROUP BY pvc.product_product_id) grouped_pvc
-        WHERE pp.active AND pp.product_tmpl_id IS NOT NULL
-            AND grouped_pvc.product_product_id = pp.id
+            GROUP BY pvc.product_product_id
+        ) grouped_pvc
+        WHERE grouped_pvc.product_product_id = pp.id
         """,
     )
 

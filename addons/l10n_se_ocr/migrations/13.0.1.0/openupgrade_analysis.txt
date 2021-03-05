@@ -1,0 +1,9 @@
+---Models in module 'l10n_se_ocr'---
+---Fields in module 'l10n_se_ocr'---
+l10n_se_ocr  / account.journal          / invoice_reference_model (False): NEW selection_keys: ['be', 'ch', 'euro', 'fi', 'fi_rf', 'no', 'odoo', 'se_ocr2', 'se_ocr3', 'se_ocr4'], mode: modify
+l10n_se_ocr  / account.journal          / l10n_se_invoice_ocr_length (integer): NEW hasdefault
+l10n_se_ocr  / res.partner              / l10n_se_check_vendor_ocr (boolean): NEW
+l10n_se_ocr  / res.partner              / l10n_se_default_vendor_payment_ref (char): NEW
+---XML records in module 'l10n_se_ocr'---
+NEW ir.ui.view: l10n_se_ocr.res_partner_ocr_form
+NEW ir.ui.view: l10n_se_ocr.view_account_journal_se_ocr_form

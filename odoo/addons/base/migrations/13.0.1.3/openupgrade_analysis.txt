@@ -33,6 +33,8 @@ base         / ir.attachment            / res_model_name (char)         : DEL
 base         / ir.attachment            / res_name (char)               : not stored anymore
 base         / ir.attachment            / thumbnail (binary)            : DEL attachment: True
 base         / ir.cron                  / lastcall (datetime)           : NEW
+base         / ir.mail_server           / _order                        : _order is now 'sequence' ('id')
+base         / ir.model.access          / _order                        : _order is now 'model_id,group_id,name,id' ('id')
 base         / ir.model.constraint      / date_init (datetime)          : DEL
 base         / ir.model.constraint      / date_update (datetime)        : DEL
 base         / ir.model.constraint      / message (char)                : NEW
@@ -47,12 +49,14 @@ base         / ir.model.fields.selection / value (char)                  : NEW r
 base         / ir.model.relation        / date_init (datetime)          : DEL
 base         / ir.model.relation        / date_update (datetime)        : DEL
 base         / ir.module.module.dependency / auto_install_required (boolean): NEW hasdefault
+base         / ir.rule                  / _order                        : _order is now 'model_id DESC,id' ('model_id DESC')
 base         / ir.server.object.lines   / evaluation_type (selection)   : NEW required, selection_keys: ['equation', 'reference', 'value'], req_default: function, hasdefault
 base         / ir.server.object.lines   / type (selection)              : DEL required, selection_keys: ['equation', 'reference', 'value'], req_default: function
 base         / ir.translation           / type (selection)              : selection_keys is now '['code', 'model', 'model_terms']' ('['code', 'constraint', 'model', 'model_terms', 'selection', 'sql_constraint']')
 base         / ir.ui.view               / arch_prev (text)              : NEW
 base         / ir.ui.view               / arch_updated (boolean)        : NEW
 base         / report.layout            / __last_update (datetime)      : previously in module web
+base         / report.layout            / _order                        : previously in module web
 base         / report.layout            / display_name (char)           : previously in module web
 base         / report.layout            / image (char)                  : previously in module web
 base         / report.layout            / name (char)                   : NEW
@@ -92,7 +96,6 @@ NEW ir.actions.act_window: base.action_decimal_precision_form [renamed from deci
 NEW ir.actions.act_window: base.action_model_fields_selection
 NEW ir.actions.act_window: base.reset_view_arch_wizard_action
 DEL ir.actions.act_window: decimal_precision.action_decimal_precision_form [renamed to base module]
-NEW ir.attachment: base.main_company_scss (noupdate)
 NEW ir.model.access: base.access_decimal_precision_config [renamed from decimal_precision module]
 NEW ir.model.access: base.access_ir_attachment_group_portal_public
 NEW ir.model.access: base.access_ir_model_fields_selection_group_erp_manager
@@ -303,6 +306,21 @@ NEW res.country.state: base.state_cn_XJ
 NEW res.country.state: base.state_cn_XZ
 NEW res.country.state: base.state_cn_YN
 NEW res.country.state: base.state_cn_ZJ
+NEW res.country.state: base.state_ee_37
+NEW res.country.state: base.state_ee_39
+NEW res.country.state: base.state_ee_44
+NEW res.country.state: base.state_ee_49
+NEW res.country.state: base.state_ee_51
+NEW res.country.state: base.state_ee_57
+NEW res.country.state: base.state_ee_59
+NEW res.country.state: base.state_ee_65
+NEW res.country.state: base.state_ee_67
+NEW res.country.state: base.state_ee_70
+NEW res.country.state: base.state_ee_74
+NEW res.country.state: base.state_ee_78
+NEW res.country.state: base.state_ee_82
+NEW res.country.state: base.state_ee_84
+NEW res.country.state: base.state_ee_86
 NEW res.country.state: base.state_et_1 [renamed from l10n_et module]
 NEW res.country.state: base.state_et_10 [renamed from l10n_et module]
 NEW res.country.state: base.state_et_11 [renamed from l10n_et module]
@@ -314,6 +332,25 @@ NEW res.country.state: base.state_et_6 [renamed from l10n_et module]
 NEW res.country.state: base.state_et_7 [renamed from l10n_et module]
 NEW res.country.state: base.state_et_8 [renamed from l10n_et module]
 NEW res.country.state: base.state_et_9 [renamed from l10n_et module]
+NEW res.country.state: base.state_fi_01
+NEW res.country.state: base.state_fi_02
+NEW res.country.state: base.state_fi_03
+NEW res.country.state: base.state_fi_04
+NEW res.country.state: base.state_fi_05
+NEW res.country.state: base.state_fi_06
+NEW res.country.state: base.state_fi_07
+NEW res.country.state: base.state_fi_08
+NEW res.country.state: base.state_fi_09
+NEW res.country.state: base.state_fi_10
+NEW res.country.state: base.state_fi_11
+NEW res.country.state: base.state_fi_12
+NEW res.country.state: base.state_fi_13
+NEW res.country.state: base.state_fi_14
+NEW res.country.state: base.state_fi_15
+NEW res.country.state: base.state_fi_16
+NEW res.country.state: base.state_fi_17
+NEW res.country.state: base.state_fi_18
+NEW res.country.state: base.state_fi_19
 NEW res.country.state: base.state_ie_1
 NEW res.country.state: base.state_ie_10
 NEW res.country.state: base.state_ie_11
@@ -346,6 +383,135 @@ NEW res.country.state: base.state_ie_6
 NEW res.country.state: base.state_ie_7
 NEW res.country.state: base.state_ie_8
 NEW res.country.state: base.state_ie_9
+NEW res.country.state: base.state_lt_al
+NEW res.country.state: base.state_lt_kl
+NEW res.country.state: base.state_lt_ku
+NEW res.country.state: base.state_lt_mr
+NEW res.country.state: base.state_lt_pn
+NEW res.country.state: base.state_lt_sa
+NEW res.country.state: base.state_lt_ta
+NEW res.country.state: base.state_lt_te
+NEW res.country.state: base.state_lt_ut
+NEW res.country.state: base.state_lt_vl
+NEW res.country.state: base.state_lv_001
+NEW res.country.state: base.state_lv_002
+NEW res.country.state: base.state_lv_003
+NEW res.country.state: base.state_lv_004
+NEW res.country.state: base.state_lv_005
+NEW res.country.state: base.state_lv_006
+NEW res.country.state: base.state_lv_007
+NEW res.country.state: base.state_lv_008
+NEW res.country.state: base.state_lv_009
+NEW res.country.state: base.state_lv_010
+NEW res.country.state: base.state_lv_011
+NEW res.country.state: base.state_lv_012
+NEW res.country.state: base.state_lv_013
+NEW res.country.state: base.state_lv_014
+NEW res.country.state: base.state_lv_015
+NEW res.country.state: base.state_lv_016
+NEW res.country.state: base.state_lv_017
+NEW res.country.state: base.state_lv_018
+NEW res.country.state: base.state_lv_019
+NEW res.country.state: base.state_lv_020
+NEW res.country.state: base.state_lv_021
+NEW res.country.state: base.state_lv_022
+NEW res.country.state: base.state_lv_023
+NEW res.country.state: base.state_lv_024
+NEW res.country.state: base.state_lv_025
+NEW res.country.state: base.state_lv_026
+NEW res.country.state: base.state_lv_027
+NEW res.country.state: base.state_lv_028
+NEW res.country.state: base.state_lv_029
+NEW res.country.state: base.state_lv_030
+NEW res.country.state: base.state_lv_031
+NEW res.country.state: base.state_lv_032
+NEW res.country.state: base.state_lv_033
+NEW res.country.state: base.state_lv_034
+NEW res.country.state: base.state_lv_035
+NEW res.country.state: base.state_lv_036
+NEW res.country.state: base.state_lv_037
+NEW res.country.state: base.state_lv_038
+NEW res.country.state: base.state_lv_039
+NEW res.country.state: base.state_lv_040
+NEW res.country.state: base.state_lv_041
+NEW res.country.state: base.state_lv_042
+NEW res.country.state: base.state_lv_043
+NEW res.country.state: base.state_lv_044
+NEW res.country.state: base.state_lv_045
+NEW res.country.state: base.state_lv_046
+NEW res.country.state: base.state_lv_047
+NEW res.country.state: base.state_lv_048
+NEW res.country.state: base.state_lv_049
+NEW res.country.state: base.state_lv_050
+NEW res.country.state: base.state_lv_051
+NEW res.country.state: base.state_lv_052
+NEW res.country.state: base.state_lv_053
+NEW res.country.state: base.state_lv_054
+NEW res.country.state: base.state_lv_055
+NEW res.country.state: base.state_lv_056
+NEW res.country.state: base.state_lv_057
+NEW res.country.state: base.state_lv_058
+NEW res.country.state: base.state_lv_059
+NEW res.country.state: base.state_lv_060
+NEW res.country.state: base.state_lv_061
+NEW res.country.state: base.state_lv_062
+NEW res.country.state: base.state_lv_063
+NEW res.country.state: base.state_lv_064
+NEW res.country.state: base.state_lv_065
+NEW res.country.state: base.state_lv_066
+NEW res.country.state: base.state_lv_067
+NEW res.country.state: base.state_lv_068
+NEW res.country.state: base.state_lv_069
+NEW res.country.state: base.state_lv_070
+NEW res.country.state: base.state_lv_071
+NEW res.country.state: base.state_lv_072
+NEW res.country.state: base.state_lv_073
+NEW res.country.state: base.state_lv_074
+NEW res.country.state: base.state_lv_075
+NEW res.country.state: base.state_lv_076
+NEW res.country.state: base.state_lv_077
+NEW res.country.state: base.state_lv_078
+NEW res.country.state: base.state_lv_079
+NEW res.country.state: base.state_lv_080
+NEW res.country.state: base.state_lv_081
+NEW res.country.state: base.state_lv_082
+NEW res.country.state: base.state_lv_083
+NEW res.country.state: base.state_lv_084
+NEW res.country.state: base.state_lv_085
+NEW res.country.state: base.state_lv_086
+NEW res.country.state: base.state_lv_087
+NEW res.country.state: base.state_lv_088
+NEW res.country.state: base.state_lv_089
+NEW res.country.state: base.state_lv_090
+NEW res.country.state: base.state_lv_091
+NEW res.country.state: base.state_lv_092
+NEW res.country.state: base.state_lv_093
+NEW res.country.state: base.state_lv_094
+NEW res.country.state: base.state_lv_095
+NEW res.country.state: base.state_lv_096
+NEW res.country.state: base.state_lv_097
+NEW res.country.state: base.state_lv_098
+NEW res.country.state: base.state_lv_099
+NEW res.country.state: base.state_lv_100
+NEW res.country.state: base.state_lv_101
+NEW res.country.state: base.state_lv_102
+NEW res.country.state: base.state_lv_103
+NEW res.country.state: base.state_lv_104
+NEW res.country.state: base.state_lv_105
+NEW res.country.state: base.state_lv_106
+NEW res.country.state: base.state_lv_107
+NEW res.country.state: base.state_lv_108
+NEW res.country.state: base.state_lv_109
+NEW res.country.state: base.state_lv_110
+NEW res.country.state: base.state_lv_dgv
+NEW res.country.state: base.state_lv_jel
+NEW res.country.state: base.state_lv_jkb
+NEW res.country.state: base.state_lv_jur
+NEW res.country.state: base.state_lv_lpx
+NEW res.country.state: base.state_lv_rez
+NEW res.country.state: base.state_lv_rix
+NEW res.country.state: base.state_lv_ven
+NEW res.country.state: base.state_lv_vmr
 NEW res.country.state: base.state_mx_q_roo
 NEW res.country.state: base.state_nl_bq1 [renamed from l10n_nl module]
 NEW res.country.state: base.state_nl_bq2 [renamed from l10n_nl module]
@@ -362,6 +528,19 @@ NEW res.country.state: base.state_nl_ov [renamed from l10n_nl module]
 NEW res.country.state: base.state_nl_ut [renamed from l10n_nl module]
 NEW res.country.state: base.state_nl_ze [renamed from l10n_nl module]
 NEW res.country.state: base.state_nl_zh [renamed from l10n_nl module]
+NEW res.country.state: base.state_no_03
+NEW res.country.state: base.state_no_11
+NEW res.country.state: base.state_no_15
+NEW res.country.state: base.state_no_18
+NEW res.country.state: base.state_no_21
+NEW res.country.state: base.state_no_22
+NEW res.country.state: base.state_no_30
+NEW res.country.state: base.state_no_34
+NEW res.country.state: base.state_no_38
+NEW res.country.state: base.state_no_42
+NEW res.country.state: base.state_no_46
+NEW res.country.state: base.state_no_50
+NEW res.country.state: base.state_no_54
 NEW res.country.state: base.state_pe_01
 NEW res.country.state: base.state_pe_02
 NEW res.country.state: base.state_pe_03
@@ -387,6 +566,27 @@ NEW res.country.state: base.state_pe_22
 NEW res.country.state: base.state_pe_23
 NEW res.country.state: base.state_pe_24
 NEW res.country.state: base.state_pe_25
+NEW res.country.state: base.state_se_ab
+NEW res.country.state: base.state_se_ac
+NEW res.country.state: base.state_se_bd
+NEW res.country.state: base.state_se_c
+NEW res.country.state: base.state_se_d
+NEW res.country.state: base.state_se_e
+NEW res.country.state: base.state_se_f
+NEW res.country.state: base.state_se_g
+NEW res.country.state: base.state_se_h
+NEW res.country.state: base.state_se_i
+NEW res.country.state: base.state_se_k
+NEW res.country.state: base.state_se_m
+NEW res.country.state: base.state_se_n
+NEW res.country.state: base.state_se_o
+NEW res.country.state: base.state_se_s
+NEW res.country.state: base.state_se_t
+NEW res.country.state: base.state_se_u
+NEW res.country.state: base.state_se_w
+NEW res.country.state: base.state_se_x
+NEW res.country.state: base.state_se_y
+NEW res.country.state: base.state_se_z
 NEW res.country.state: base.state_tr_01 [renamed from l10n_tr module]
 NEW res.country.state: base.state_tr_02 [renamed from l10n_tr module]
 NEW res.country.state: base.state_tr_03 [renamed from l10n_tr module]

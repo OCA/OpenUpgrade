@@ -44,7 +44,7 @@ General Tips
 
 * When installing the openupgradelib make sure you check out the latest version from github to get the latest updates and fixes::
 
-    $ pip install git+git://github.com/OCA/openupgradelib.git
+    $ pip/pip3 install git+git://github.com/OCA/openupgradelib.git
 
 Configuration options
 +++++++++++++++++++++

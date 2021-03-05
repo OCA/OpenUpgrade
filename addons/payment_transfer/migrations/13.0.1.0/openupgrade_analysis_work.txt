@@ -1,0 +1,11 @@
+---Models in module 'payment_transfer'---
+---Fields in module 'payment_transfer'---
+payment_transfer / payment.acquirer         / provider (False)              : selection_keys is now '['adyen', 'alipay', 'authorize', 'buckaroo', 'manual', 'ogone', 'paypal', 'payulatam', 'payumoney', 'sips', 'stripe', 'test', 'transfer']' ('['adyen', 'authorize', 'buckaroo', 'manual', 'ogone', 'paypal', 'payumoney', 'sips', 'stripe', 'transfer']')
+# NOTHING TO DO: new option 'alipay'
+
+---XML records in module 'payment_transfer'---
+ir.ui.view: payment_transfer.transfer_form (noupdate) (noupdate switched)
+# DONE: post-migration: handled noupdate switched, but after Odoo has updated to current valid definition
+
+DEL payment.acquirer: payment.payment_acquirer_custom (noupdate)
+# NOTHING TO DO: Already tried to remove on payment

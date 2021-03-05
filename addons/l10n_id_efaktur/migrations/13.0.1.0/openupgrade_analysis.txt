@@ -1,0 +1,27 @@
+---Models in module 'l10n_id_efaktur'---
+new model l10n_id_efaktur.efaktur.range
+---Fields in module 'l10n_id_efaktur'---
+l10n_id_efaktur / account.move             / l10n_id_attachment_id (many2one): NEW relation: ir.attachment
+l10n_id_efaktur / account.move             / l10n_id_kode_transaksi (selection): NEW selection_keys: ['01', '02', '03', '04', '06', '07', '08', '09']
+l10n_id_efaktur / account.move             / l10n_id_replace_invoice_id (many2one): NEW relation: account.move
+l10n_id_efaktur / account.move             / l10n_id_tax_number (char)     : NEW
+l10n_id_efaktur / l10n_id_efaktur.efaktur.range / available (integer)           : NEW isfunction: function, stored
+l10n_id_efaktur / l10n_id_efaktur.efaktur.range / company_id (many2one)         : NEW relation: res.company, required, req_default: function, hasdefault
+l10n_id_efaktur / l10n_id_efaktur.efaktur.range / max (char)                    : NEW isfunction: function, stored
+l10n_id_efaktur / l10n_id_efaktur.efaktur.range / min (char)                    : NEW isfunction: function, stored
+l10n_id_efaktur / res.partner              / l10n_id_kode_transaksi (selection): NEW selection_keys: ['01', '02', '03', '04', '06', '07', '08', '09']
+l10n_id_efaktur / res.partner              / l10n_id_nik (char)            : NEW
+l10n_id_efaktur / res.partner              / l10n_id_pkp (boolean)         : NEW isfunction: function, stored
+l10n_id_efaktur / res.partner              / l10n_id_tax_address (char)    : NEW
+l10n_id_efaktur / res.partner              / l10n_id_tax_name (char)       : NEW
+---XML records in module 'l10n_id_efaktur'---
+NEW ir.actions.act_window: l10n_id_efaktur.efaktur_invoice_action
+NEW ir.actions.server: l10n_id_efaktur.dowload_efaktur_action
+NEW ir.model.access: l10n_id_efaktur.access_efaktur_user
+NEW ir.ui.menu: l10n_id_efaktur.menu_efaktur_action
+NEW ir.ui.view: l10n_id_efaktur.account_move_efaktur_form_view
+NEW ir.ui.view: l10n_id_efaktur.account_move_efaktur_tree_view
+NEW ir.ui.view: l10n_id_efaktur.efaktur_tree_view
+NEW ir.ui.view: l10n_id_efaktur.res_config_settings_view_form
+NEW ir.ui.view: l10n_id_efaktur.res_partner_tax_form_view
+NEW ir.ui.view: l10n_id_efaktur.view_account_invoice_filter

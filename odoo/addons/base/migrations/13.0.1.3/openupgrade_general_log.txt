@@ -43,10 +43,10 @@ obsolete model mail.mass_mailing.list (renamed to mailing.list) [module mass_mai
 obsolete model mail.mass_mailing.list_contact_rel (renamed to mailing.contact.subscription) [module mass_mailing]
 obsolete model mail.mass_mailing.stage (renamed to utm.stage) [module mass_mailing]
 obsolete model mail.mass_mailing.tag (renamed to utm.tag) [module mass_mailing]
-obsolete model mail.mass_mailing.test [module mass_mailing]
-obsolete model mail.statistics.report [module mass_mailing]
-obsolete model mass.mailing.list.merge [module mass_mailing]
-obsolete model mass.mailing.schedule.date [module mass_mailing]
+obsolete model mail.mass_mailing.test (renamed to mailing.mailing.test) [module mass_mailing]
+obsolete model mail.statistics.report (renamed to mailing.trace.report) [module mass_mailing]
+obsolete model mass.mailing.list.merge (renamed to mailing.list.merge) [module mass_mailing]
+obsolete model mass.mailing.schedule.date (renamed to mailing.mailing.schedule.date) [module mass_mailing]
 obsolete model mrp.subproduct (renamed to mrp.bom.byproduct) [module mrp]
 obsolete model payment.advice.report [module l10n_in_hr_payroll]
 obsolete model payslip.lines.contribution.register [module hr_payroll]
@@ -61,7 +61,7 @@ obsolete model report.l10n_in_hr_payroll.report_hrsalarybymonth [module l10n_in_
 obsolete model report.l10n_in_hr_payroll.report_hryearlysalary [module l10n_in_hr_payroll]
 obsolete model report.l10n_in_hr_payroll.report_payrolladvice [module l10n_in_hr_payroll]
 obsolete model report.l10n_in_hr_payroll.report_payslipdetails [module l10n_in_hr_payroll]
-obsolete model report.stock.forecast [module stock]
+obsolete model report.stock.forecast (renamed to report.stock.quantity) [module stock]
 obsolete model slide.category (renamed to slide.slide) [module website_slides]
 obsolete model sms.send_sms (renamed to sms.composer) [module sms]
 obsolete model stock.fixed.putaway.strat (renamed to stock.putaway.rule) [module stock]
@@ -102,6 +102,7 @@ new model hr.departure.wizard [module hr]
 new model hr.employee.base [module hr]
 new model hr.employee.public [module hr]
 new model hr.employee.skill [module hr_skills]
+new model hr.leave.report.calendar [module hr_holidays_calendar]
 new model hr.plan [module hr]
 new model hr.plan.activity.type [module hr]
 new model hr.plan.wizard [module hr]
@@ -117,6 +118,7 @@ new model iap.enrich.api [module crm_iap_lead_enrich]
 new model image.mixin [module base]
 new model ir.model.fields.selection [module base]
 new model l10n_ar.afip.responsibility.type [module l10n_ar]
+new model l10n_id_efaktur.efaktur.range [module l10n_id_efaktur]
 new model l10n_in.account.invoice.report [module l10n_in]
 new model l10n_in.advances.payment.adjustment.report [module l10n_in]
 new model l10n_in.advances.payment.report [module l10n_in]
@@ -146,13 +148,13 @@ new model mail.thread.phone [module phone_validation]
 new model mailing.contact (renamed from mail.mass_mailing.contact) [module mass_mailing]
 new model mailing.contact.subscription (renamed from mail.mass_mailing.list_contact_rel) [module mass_mailing]
 new model mailing.list (renamed from mail.mass_mailing.list) [module mass_mailing]
-new model mailing.list.merge [module mass_mailing]
+new model mailing.list.merge (renamed from mass.mailing.list.merge) [module mass_mailing]
 new model mailing.mailing (renamed from mail.mass_mailing) [module mass_mailing]
-new model mailing.mailing.schedule.date [module mass_mailing]
-new model mailing.mailing.test [module mass_mailing]
+new model mailing.mailing.schedule.date (renamed from mass.mailing.schedule.date) [module mass_mailing]
+new model mailing.mailing.test (renamed from mail.mass_mailing.test) [module mass_mailing]
 new model mailing.sms.test [module mass_mailing_sms]
 new model mailing.trace (renamed from mail.mail.statistics) [module mass_mailing]
-new model mailing.trace.report [module mass_mailing]
+new model mailing.trace.report (renamed from mail.statistics.report) [module mass_mailing]
 new model mrp.abstract.workorder [module mrp]
 new model mrp.abstract.workorder.line [module mrp]
 new model mrp.bom.byproduct (renamed from mrp.subproduct) [module mrp]
@@ -166,7 +168,7 @@ new model repair.tags [module repair]
 new model report.account.report_hash_integrity [module account]
 new model report.l10n_fr_pos_cert.report_pos_hash_integrity [module l10n_fr_pos_cert]
 new model report.sale_coupon.report_coupon [module sale_coupon]
-new model report.stock.quantity [module stock]
+new model report.stock.quantity (renamed from report.stock.forecast) [module stock]
 new model reset.view.arch.wizard [module base]
 new model sale.coupon [module sale_coupon]
 new model sale.coupon.apply.code [module sale_coupon]
@@ -208,13 +210,13 @@ new model website.route [module website]
 new model website.track [module website]
 new model website.visitor [module website]
 ---Fields in module 'general'---
-# 7563 fields matched,
-# Direct match: 7459
-# Found in other module: 104
+# 7943 fields matched,
+# Direct match: 7837
+# Found in other module: 106
 # Found with different type: 0
-# In obsolete models: 213
-# New columns: 2309
-# Not matched: 954
+# In obsolete models: 235
+# New columns: 2431
+# Not matched: 1005
 ---XML records in module 'general'---
 ERROR: module not in list of installed modules:
 ---Models in module 'crm_project'---
@@ -461,7 +463,6 @@ DEL ir.ui.view: hr_payroll.view_hr_salary_rule_category_filter
 DEL ir.ui.view: hr_payroll.view_payslip_lines_contribution_register
 DEL res.groups: hr_payroll.group_hr_payroll_manager (noupdate)
 DEL res.groups: hr_payroll.group_hr_payroll_user (noupdate)
-DEL res.users: base.default_user (noupdate)
 ERROR: module not in list of installed modules:
 ---Models in module 'hr_payroll_account'---
 ---Fields in module 'hr_payroll_account'---
@@ -542,7 +543,6 @@ DEL hr.contribution.register: l10n_be_hr_payroll.contrib_register_onss
 DEL hr.contribution.register: l10n_be_hr_payroll.contrib_register_pp
 DEL hr.payroll.structure: l10n_be_hr_payroll.hr_payroll_salary_structure_employee
 DEL hr.payroll.structure: l10n_be_hr_payroll.hr_payroll_salary_structure_worker
-DEL hr.salary.rule: hr_payroll.hr_rule_basic
 DEL hr.salary.rule: l10n_be_hr_payroll.1
 DEL hr.salary.rule: l10n_be_hr_payroll.10
 DEL hr.salary.rule: l10n_be_hr_payroll.100
@@ -1977,7 +1977,6 @@ DEL hr.salary.rule: l10n_be_hr_payroll.hr_salary_rule_reduction_isolated_parent
 DEL hr.salary.rule: l10n_be_hr_payroll.hr_salary_rule_reduction_juniors
 DEL hr.salary.rule: l10n_be_hr_payroll.hr_salary_rule_reduction_seniors
 DEL hr.salary.rule: l10n_be_hr_payroll.hr_salary_rule_representation_fees
-DEL hr.salary.rule.category: hr_payroll.COMP
 DEL hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_child_alw
 DEL hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_div_impos
 DEL hr.salary.rule.category: l10n_be_hr_payroll.hr_payroll_head_div_net
@@ -1994,16 +1993,6 @@ DEL ir.ui.view: l10n_be_hr_payroll.hr_employee_form__l10n_be_view_for
 DEL res.partner: l10n_be_hr_payroll.res_partner_meal_vouchers
 DEL res.partner: l10n_be_hr_payroll.res_partner_onss
 DEL res.partner: l10n_be_hr_payroll.res_partner_pp
-ERROR: module not in list of installed modules:
----Models in module 'l10n_be_hr_payroll_account'---
----Fields in module 'l10n_be_hr_payroll_account'---
----XML records in module 'l10n_be_hr_payroll_account'---
-DEL hr.salary.rule: hr_payroll.hr_rule_basic
-DEL hr.salary.rule: hr_payroll.hr_rule_net
-DEL hr.salary.rule: l10n_be_hr_payroll.hr_payroll_rules_ch_worker
-DEL hr.salary.rule: l10n_be_hr_payroll.hr_payroll_rules_onss_rule
-DEL hr.salary.rule: l10n_be_hr_payroll.hr_payroll_rules_retained_net
-DEL hr.salary.rule: l10n_be_hr_payroll.hr_payroll_rules_suppl_net
 ERROR: module not in list of installed modules:
 ---Models in module 'l10n_be_hr_payroll_fleet'---
 ---Fields in module 'l10n_be_hr_payroll_fleet'---
@@ -2028,7 +2017,6 @@ DEL ir.ui.view: l10n_be_hr_payroll_fleet.fleet_vehicle_model_view_form
 DEL ir.ui.view: l10n_be_hr_payroll_fleet.fleet_vehicle_view_form
 DEL ir.ui.view: l10n_be_hr_payroll_fleet.hr_contract_view_form
 DEL ir.ui.view: l10n_be_hr_payroll_fleet.res_config_settings_view_form
-DEL res.groups: hr.group_hr_manager
 ERROR: module not in list of installed modules:
 ---Models in module 'l10n_in_hr_payroll'---
 obsolete model hr.payroll.advice
@@ -2458,7 +2446,6 @@ website_hr   / hr.employee              / public_info (char)            : DEL
 website_hr   / hr.employee              / website_id (many2one)         : DEL relation: website
 ---XML records in module 'website_hr'---
 DEL ir.actions.act_url: website_hr.action_open_website (noupdate)
-DEL ir.actions.todo: base.open_menu
 DEL ir.model.access: website_hr.access_hr_employee_portal
 DEL ir.model.access: website_hr.access_hr_employee_public
 DEL ir.model.access: website_hr.access_resource_portal

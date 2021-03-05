@@ -1,0 +1,477 @@
+---Models in module 'l10n_fi'---
+---Fields in module 'l10n_fi'---
+l10n_fi      / account.journal          / invoice_reference_model (False): NEW selection_keys: ['ch', 'euro', 'fi', 'fi_rf', 'odoo'], mode: modify
+---XML records in module 'l10n_fi'---
+NEW account.account.tag: l10n_fi.account_tag_accounts_payable (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_accounts_payable-current (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_accounts_receivable (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_accounts_receivable_from_associated_companies (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_accrued_liabilities_short-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_accrued_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_administrative_services (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_advance_payments_for_property (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_advance_payments_intangible (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_advances_received_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_advances_received_short-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_bills_of_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_bills_of_short-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_bonds_are_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_bonds_short-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_building_leases (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_buildings_owned (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_capital_loans_are_short-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_change_in_depreciation_difference (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_change_in_inventories (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_change_in_provisions (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_consolidated_long-term_liabilities (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_convertible_bonds_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_convertible_bonds_short-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_deferred_tax_assets (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_deferred_tax_assets_are_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_deferred_tax_liabilities_are_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_deferred_tax_liabilities_are_short-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_deferred_taxes (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_depreciation_according_to_plan (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_depreciation_difference (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_development_costs (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_external_services (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_financial_expenses_group (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_finished_goods_inventories (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_goods_in_transit (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_goodwill (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_group_contribution (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_group_short-term_liabilities (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_immaterial_rights (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_impairment_losses_financial_assets_current_assets (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_impairment_losses_on_investments_in_fixed_assets (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_impairment_of_fixed_assets (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_in_machinery_and_equipment_expenses (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_income_from_associated_company (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_income_from_shares_in_group (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_income_other (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_interest_and_financial_income_from_group (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_investment_income_other_current_assets_group (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_it_expenses (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_land_and_water_areas_owned (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_land_and_water_rights_lease (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_liquidity (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_loan_receivables_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_loans (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_loans_from_financial_institutions_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_loans_from_financial_institutions_short-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_machines_and_hardware (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_manufacturing_own_use (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_manufacturing_warehouse_change (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_marketing_expenses (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_materials_and_supplies_inventories (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_additional_expenses_other (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_additional_expenses_production (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_administrative_expenses (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_current_assets (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_financial_assets (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_financial_expenses (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_fixed_costs (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_interest_and_financial_income (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_investment_income_from_fixed_assets (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_long-term_liabilities (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_long-term_receivables (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_long_term_expenses (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_provisions (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_receivables (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_receivables_investments (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_reserves (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_shares_and_marketable_securities (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_shares_and_participations (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_short-term_liabilities (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_tangible_assets (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_other_tax (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_payables_to_associated_companies (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_payables_to_associated_companies_non-current (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_payments_on_account_tangible (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_pension_costs_of_production (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_pension_costs_other (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_pension_loans_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_pension_loans_short-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_personnel_other (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_premises_costs (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_prepaid_expenses_and_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_prepayments_and_accrued_income (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_profit_for_the_period (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_provisions_for_pensions (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_purchases (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_purchases_adjustment_items (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_receivables_from_associated_companies (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_receivables_from_associated_companies_investments (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_receivables_from_associated_companies_non-current (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_receivables_from_group (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_receivables_from_group_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_representation (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_research_and_development (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_reserve (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_retained_earnings (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_revaluation_reserve (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_sales (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_sales_adjustment_items (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_selling_expenses (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_share_premium_account (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_shares_in_associated_companies (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_shares_in_group_companies (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_shares_in_the_consolidated_financial_securities (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_stock_capital (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_subordinated_loans_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_tax_based_reservations (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_tax_provisions (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_taxes_for_the_period (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_the_articles_of_association_or_fund_under_the_rules (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_the_fair_value_reserve (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_the_invested_unrestricted_equity_fund (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_trade_group (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_trade_payables_to_associated_companies (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_trade_payables_to_group (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_trade_receivables_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_travelling (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_unpaid_contributions (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_unpaid_shares_of_long-term (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_vehicle_expenses (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_wages_and_salaries_in_production (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_wages_and_salaries_other (noupdate)
+NEW account.account.tag: l10n_fi.account_tag_work_in_progress (noupdate)
+NEW account.account.template: l10n_fi.account_1020
+NEW account.account.template: l10n_fi.account_1030
+NEW account.account.template: l10n_fi.account_1050
+NEW account.account.template: l10n_fi.account_1060
+NEW account.account.template: l10n_fi.account_1070
+NEW account.account.template: l10n_fi.account_1090
+NEW account.account.template: l10n_fi.account_1100
+NEW account.account.template: l10n_fi.account_1120
+NEW account.account.template: l10n_fi.account_1160
+NEW account.account.template: l10n_fi.account_1300
+NEW account.account.template: l10n_fi.account_1380
+NEW account.account.template: l10n_fi.account_1400
+NEW account.account.template: l10n_fi.account_1410
+NEW account.account.template: l10n_fi.account_1420
+NEW account.account.template: l10n_fi.account_1430
+NEW account.account.template: l10n_fi.account_1440
+NEW account.account.template: l10n_fi.account_1470
+NEW account.account.template: l10n_fi.account_1500
+NEW account.account.template: l10n_fi.account_1510
+NEW account.account.template: l10n_fi.account_1520
+NEW account.account.template: l10n_fi.account_1530
+NEW account.account.template: l10n_fi.account_1540
+NEW account.account.template: l10n_fi.account_1550
+NEW account.account.template: l10n_fi.account_1600
+NEW account.account.template: l10n_fi.account_1630
+NEW account.account.template: l10n_fi.account_1640
+NEW account.account.template: l10n_fi.account_1650
+NEW account.account.template: l10n_fi.account_1660
+NEW account.account.template: l10n_fi.account_1670
+NEW account.account.template: l10n_fi.account_1680
+NEW account.account.template: l10n_fi.account_1690
+NEW account.account.template: l10n_fi.account_1700
+NEW account.account.template: l10n_fi.account_1701
+NEW account.account.template: l10n_fi.account_1710
+NEW account.account.template: l10n_fi.account_1720
+NEW account.account.template: l10n_fi.account_1730
+NEW account.account.template: l10n_fi.account_1740
+NEW account.account.template: l10n_fi.account_1750
+NEW account.account.template: l10n_fi.account_1760
+NEW account.account.template: l10n_fi.account_1765
+NEW account.account.template: l10n_fi.account_1777
+NEW account.account.template: l10n_fi.account_1780
+NEW account.account.template: l10n_fi.account_1800
+NEW account.account.template: l10n_fi.account_1850
+NEW account.account.template: l10n_fi.account_1860
+NEW account.account.template: l10n_fi.account_1880
+NEW account.account.template: l10n_fi.account_1890
+NEW account.account.template: l10n_fi.account_1900
+NEW account.account.template: l10n_fi.account_1910
+NEW account.account.template: l10n_fi.account_1920
+NEW account.account.template: l10n_fi.account_1930
+NEW account.account.template: l10n_fi.account_1940
+NEW account.account.template: l10n_fi.account_1990
+NEW account.account.template: l10n_fi.account_2000
+NEW account.account.template: l10n_fi.account_2010
+NEW account.account.template: l10n_fi.account_2020
+NEW account.account.template: l10n_fi.account_2030
+NEW account.account.template: l10n_fi.account_2050
+NEW account.account.template: l10n_fi.account_2060
+NEW account.account.template: l10n_fi.account_2070
+NEW account.account.template: l10n_fi.account_2080
+NEW account.account.template: l10n_fi.account_2100
+NEW account.account.template: l10n_fi.account_2110
+NEW account.account.template: l10n_fi.account_2120
+NEW account.account.template: l10n_fi.account_2130
+NEW account.account.template: l10n_fi.account_2140
+NEW account.account.template: l10n_fi.account_2150
+NEW account.account.template: l10n_fi.account_2160
+NEW account.account.template: l10n_fi.account_2170
+NEW account.account.template: l10n_fi.account_2190
+NEW account.account.template: l10n_fi.account_2200
+NEW account.account.template: l10n_fi.account_2210
+NEW account.account.template: l10n_fi.account_2250
+NEW account.account.template: l10n_fi.account_2330
+NEW account.account.template: l10n_fi.account_2340
+NEW account.account.template: l10n_fi.account_2370
+NEW account.account.template: l10n_fi.account_2390
+NEW account.account.template: l10n_fi.account_2400
+NEW account.account.template: l10n_fi.account_2450
+NEW account.account.template: l10n_fi.account_2500
+NEW account.account.template: l10n_fi.account_2530
+NEW account.account.template: l10n_fi.account_2550
+NEW account.account.template: l10n_fi.account_2590
+NEW account.account.template: l10n_fi.account_2600
+NEW account.account.template: l10n_fi.account_2610
+NEW account.account.template: l10n_fi.account_2620
+NEW account.account.template: l10n_fi.account_2630
+NEW account.account.template: l10n_fi.account_2650
+NEW account.account.template: l10n_fi.account_2660
+NEW account.account.template: l10n_fi.account_2670
+NEW account.account.template: l10n_fi.account_2690
+NEW account.account.template: l10n_fi.account_2700
+NEW account.account.template: l10n_fi.account_2710
+NEW account.account.template: l10n_fi.account_2720
+NEW account.account.template: l10n_fi.account_2750
+NEW account.account.template: l10n_fi.account_2770
+NEW account.account.template: l10n_fi.account_2800
+NEW account.account.template: l10n_fi.account_2810
+NEW account.account.template: l10n_fi.account_2820
+NEW account.account.template: l10n_fi.account_2830
+NEW account.account.template: l10n_fi.account_2850
+NEW account.account.template: l10n_fi.account_2860
+NEW account.account.template: l10n_fi.account_2870
+NEW account.account.template: l10n_fi.account_2880
+NEW account.account.template: l10n_fi.account_2890
+NEW account.account.template: l10n_fi.account_2900
+NEW account.account.template: l10n_fi.account_2910
+NEW account.account.template: l10n_fi.account_2920
+NEW account.account.template: l10n_fi.account_2930
+NEW account.account.template: l10n_fi.account_2935
+NEW account.account.template: l10n_fi.account_2940
+NEW account.account.template: l10n_fi.account_2950
+NEW account.account.template: l10n_fi.account_2951
+NEW account.account.template: l10n_fi.account_2952
+NEW account.account.template: l10n_fi.account_2980
+NEW account.account.template: l10n_fi.account_3000
+NEW account.account.template: l10n_fi.account_3200
+NEW account.account.template: l10n_fi.account_3250
+NEW account.account.template: l10n_fi.account_3300
+NEW account.account.template: l10n_fi.account_3330
+NEW account.account.template: l10n_fi.account_3350
+NEW account.account.template: l10n_fi.account_3380
+NEW account.account.template: l10n_fi.account_3400
+NEW account.account.template: l10n_fi.account_3440
+NEW account.account.template: l10n_fi.account_3500
+NEW account.account.template: l10n_fi.account_3550
+NEW account.account.template: l10n_fi.account_3570
+NEW account.account.template: l10n_fi.account_3580
+NEW account.account.template: l10n_fi.account_3590
+NEW account.account.template: l10n_fi.account_3600
+NEW account.account.template: l10n_fi.account_3630
+NEW account.account.template: l10n_fi.account_3650
+NEW account.account.template: l10n_fi.account_3700
+NEW account.account.template: l10n_fi.account_3710
+NEW account.account.template: l10n_fi.account_3750
+NEW account.account.template: l10n_fi.account_3800
+NEW account.account.template: l10n_fi.account_3850
+NEW account.account.template: l10n_fi.account_3900
+NEW account.account.template: l10n_fi.account_3980
+NEW account.account.template: l10n_fi.account_4000
+NEW account.account.template: l10n_fi.account_4090
+NEW account.account.template: l10n_fi.account_4110
+NEW account.account.template: l10n_fi.account_4130
+NEW account.account.template: l10n_fi.account_4150
+NEW account.account.template: l10n_fi.account_4200
+NEW account.account.template: l10n_fi.account_4230
+NEW account.account.template: l10n_fi.account_4260
+NEW account.account.template: l10n_fi.account_4270
+NEW account.account.template: l10n_fi.account_4290
+NEW account.account.template: l10n_fi.account_4340
+NEW account.account.template: l10n_fi.account_4370
+NEW account.account.template: l10n_fi.account_4380
+NEW account.account.template: l10n_fi.account_4400
+NEW account.account.template: l10n_fi.account_4450
+NEW account.account.template: l10n_fi.account_4480
+NEW account.account.template: l10n_fi.account_4490
+NEW account.account.template: l10n_fi.account_5000
+NEW account.account.template: l10n_fi.account_5100
+NEW account.account.template: l10n_fi.account_5200
+NEW account.account.template: l10n_fi.account_5300
+NEW account.account.template: l10n_fi.account_5330
+NEW account.account.template: l10n_fi.account_5400
+NEW account.account.template: l10n_fi.account_5470
+NEW account.account.template: l10n_fi.account_5600
+NEW account.account.template: l10n_fi.account_5700
+NEW account.account.template: l10n_fi.account_5770
+NEW account.account.template: l10n_fi.account_5800
+NEW account.account.template: l10n_fi.account_5900
+NEW account.account.template: l10n_fi.account_5960
+NEW account.account.template: l10n_fi.account_5990
+NEW account.account.template: l10n_fi.account_6000
+NEW account.account.template: l10n_fi.account_6100
+NEW account.account.template: l10n_fi.account_6290
+NEW account.account.template: l10n_fi.account_6300
+NEW account.account.template: l10n_fi.account_6400
+NEW account.account.template: l10n_fi.account_6500
+NEW account.account.template: l10n_fi.account_6690
+NEW account.account.template: l10n_fi.account_6800
+NEW account.account.template: l10n_fi.account_6930
+NEW account.account.template: l10n_fi.account_6950
+NEW account.account.template: l10n_fi.account_6990
+NEW account.account.template: l10n_fi.account_7000
+NEW account.account.template: l10n_fi.account_7200
+NEW account.account.template: l10n_fi.account_7230
+NEW account.account.template: l10n_fi.account_7250
+NEW account.account.template: l10n_fi.account_7270
+NEW account.account.template: l10n_fi.account_7500
+NEW account.account.template: l10n_fi.account_7520
+NEW account.account.template: l10n_fi.account_7640
+NEW account.account.template: l10n_fi.account_7650
+NEW account.account.template: l10n_fi.account_7710
+NEW account.account.template: l10n_fi.account_7720
+NEW account.account.template: l10n_fi.account_7800
+NEW account.account.template: l10n_fi.account_7950
+NEW account.account.template: l10n_fi.account_8000
+NEW account.account.template: l10n_fi.account_8050
+NEW account.account.template: l10n_fi.account_8300
+NEW account.account.template: l10n_fi.account_8370
+NEW account.account.template: l10n_fi.account_8450
+NEW account.account.template: l10n_fi.account_8451
+NEW account.account.template: l10n_fi.account_8452
+NEW account.account.template: l10n_fi.account_8453
+NEW account.account.template: l10n_fi.account_8455
+NEW account.account.template: l10n_fi.account_8700
+NEW account.account.template: l10n_fi.account_8730
+NEW account.account.template: l10n_fi.account_8790
+NEW account.account.template: l10n_fi.account_8800
+NEW account.account.template: l10n_fi.account_8850
+NEW account.account.template: l10n_fi.account_8890
+NEW account.account.template: l10n_fi.account_8990
+NEW account.account.template: l10n_fi.account_9000
+NEW account.account.template: l10n_fi.account_9030
+NEW account.account.template: l10n_fi.account_9040
+NEW account.account.template: l10n_fi.account_9070
+NEW account.account.template: l10n_fi.account_9080
+NEW account.account.template: l10n_fi.account_9090
+NEW account.account.template: l10n_fi.account_9150
+NEW account.account.template: l10n_fi.account_9160
+NEW account.account.template: l10n_fi.account_9300
+NEW account.account.template: l10n_fi.account_9370
+NEW account.account.template: l10n_fi.account_9420
+NEW account.account.template: l10n_fi.account_9440
+NEW account.account.template: l10n_fi.account_9800
+NEW account.account.template: l10n_fi.account_9840
+NEW account.account.template: l10n_fi.account_9850
+NEW account.account.template: l10n_fi.account_9860
+NEW account.account.template: l10n_fi.account_9900
+NEW account.account.template: l10n_fi.account_9970
+NEW account.account.template: l10n_fi.account_9980
+NEW account.account.template: l10n_fi.account_9990
+NEW account.chart.template: l10n_fi.fi_chart_template
+NEW account.fiscal.position.tax.template: l10n_fi.aland_purchase_goods_10
+NEW account.fiscal.position.tax.template: l10n_fi.aland_purchase_goods_14
+NEW account.fiscal.position.tax.template: l10n_fi.aland_purchase_goods_24
+NEW account.fiscal.position.tax.template: l10n_fi.aland_purchase_service_10
+NEW account.fiscal.position.tax.template: l10n_fi.aland_purchase_service_14
+NEW account.fiscal.position.tax.template: l10n_fi.aland_purchase_service_24
+NEW account.fiscal.position.tax.template: l10n_fi.aland_sales_goods_10
+NEW account.fiscal.position.tax.template: l10n_fi.aland_sales_goods_14
+NEW account.fiscal.position.tax.template: l10n_fi.aland_sales_goods_24
+NEW account.fiscal.position.tax.template: l10n_fi.aland_sales_service_10
+NEW account.fiscal.position.tax.template: l10n_fi.aland_sales_service_14
+NEW account.fiscal.position.tax.template: l10n_fi.aland_sales_service_24
+NEW account.fiscal.position.tax.template: l10n_fi.construction_fiscpos_tax_1
+NEW account.fiscal.position.tax.template: l10n_fi.construction_fiscpos_tax_2
+NEW account.fiscal.position.tax.template: l10n_fi.eu_purchase_goods_10
+NEW account.fiscal.position.tax.template: l10n_fi.eu_purchase_goods_14
+NEW account.fiscal.position.tax.template: l10n_fi.eu_purchase_goods_24
+NEW account.fiscal.position.tax.template: l10n_fi.eu_purchase_service_10
+NEW account.fiscal.position.tax.template: l10n_fi.eu_purchase_service_14
+NEW account.fiscal.position.tax.template: l10n_fi.eu_purchase_service_24
+NEW account.fiscal.position.tax.template: l10n_fi.eu_sales_goods_10
+NEW account.fiscal.position.tax.template: l10n_fi.eu_sales_goods_14
+NEW account.fiscal.position.tax.template: l10n_fi.eu_sales_goods_24
+NEW account.fiscal.position.tax.template: l10n_fi.eu_sales_service_10
+NEW account.fiscal.position.tax.template: l10n_fi.eu_sales_service_14
+NEW account.fiscal.position.tax.template: l10n_fi.eu_sales_service_24
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_purchase_brutto_10
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_purchase_brutto_14
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_purchase_brutto_24
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_purchase_goods_10
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_purchase_goods_14
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_purchase_goods_24
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_purchase_service_10
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_purchase_service_14
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_purchase_service_24
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_sale_10
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_sale_14
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_sale_24
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_sale_service_10
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_sale_service_14
+NEW account.fiscal.position.tax.template: l10n_fi.non_eu_sale_service_24
+NEW account.fiscal.position.template: l10n_fi.aland
+NEW account.fiscal.position.template: l10n_fi.construction
+NEW account.fiscal.position.template: l10n_fi.eu
+NEW account.fiscal.position.template: l10n_fi.eu_no_vat
+NEW account.fiscal.position.template: l10n_fi.finland
+NEW account.fiscal.position.template: l10n_fi.non_eu
+NEW account.tax.group: l10n_fi.tax_group_0 (noupdate)
+NEW account.tax.group: l10n_fi.tax_group_10 (noupdate)
+NEW account.tax.group: l10n_fi.tax_group_14 (noupdate)
+NEW account.tax.group: l10n_fi.tax_group_24 (noupdate)
+NEW account.tax.report.line: l10n_fi.tax_report_base_import_goods_no_eu
+NEW account.tax.report.line: l10n_fi.tax_report_base_purchase_construct_service
+NEW account.tax.report.line: l10n_fi.tax_report_base_purchase_goods_eu
+NEW account.tax.report.line: l10n_fi.tax_report_base_purchase_service_eu
+NEW account.tax.report.line: l10n_fi.tax_report_base_sales_construct_service
+NEW account.tax.report.line: l10n_fi.tax_report_base_sales_goods_eu
+NEW account.tax.report.line: l10n_fi.tax_report_base_sales_service_eu
+NEW account.tax.report.line: l10n_fi.tax_report_base_turnover_0_vat
+NEW account.tax.report.line: l10n_fi.tax_report_deductible
+NEW account.tax.report.line: l10n_fi.tax_report_sales_10
+NEW account.tax.report.line: l10n_fi.tax_report_sales_14
+NEW account.tax.report.line: l10n_fi.tax_report_sales_24
+NEW account.tax.report.line: l10n_fi.tax_report_sales_title
+NEW account.tax.report.line: l10n_fi.tax_report_tax_import_goods_no_eu
+NEW account.tax.report.line: l10n_fi.tax_report_tax_payable
+NEW account.tax.report.line: l10n_fi.tax_report_tax_purchase_construct_service
+NEW account.tax.report.line: l10n_fi.tax_report_tax_purchase_goods_eu
+NEW account.tax.report.line: l10n_fi.tax_report_tax_purchase_service_eu
+NEW account.tax.report.line: l10n_fi.tax_report_vat_relief
+NEW account.tax.template: l10n_fi.aland_sales_0
+NEW account.tax.template: l10n_fi.import_deduct24
+NEW account.tax.template: l10n_fi.import_pay24
+NEW account.tax.template: l10n_fi.tax_construct_purchase_24
+NEW account.tax.template: l10n_fi.tax_construct_purchase_24_finland
+NEW account.tax.template: l10n_fi.tax_construct_sales_0
+NEW account.tax.template: l10n_fi.tax_dom_purchase_0
+NEW account.tax.template: l10n_fi.tax_dom_purchase_brutto_10
+NEW account.tax.template: l10n_fi.tax_dom_purchase_brutto_14
+NEW account.tax.template: l10n_fi.tax_dom_purchase_brutto_24
+NEW account.tax.template: l10n_fi.tax_dom_purchase_goods_10
+NEW account.tax.template: l10n_fi.tax_dom_purchase_goods_14
+NEW account.tax.template: l10n_fi.tax_dom_purchase_goods_24
+NEW account.tax.template: l10n_fi.tax_dom_purchase_service_10
+NEW account.tax.template: l10n_fi.tax_dom_purchase_service_14
+NEW account.tax.template: l10n_fi.tax_dom_purchase_service_24
+NEW account.tax.template: l10n_fi.tax_dom_sales_goods_0
+NEW account.tax.template: l10n_fi.tax_dom_sales_goods_10
+NEW account.tax.template: l10n_fi.tax_dom_sales_goods_14
+NEW account.tax.template: l10n_fi.tax_dom_sales_goods_24
+NEW account.tax.template: l10n_fi.tax_dom_sales_service_10
+NEW account.tax.template: l10n_fi.tax_dom_sales_service_14
+NEW account.tax.template: l10n_fi.tax_dom_sales_service_24
+NEW account.tax.template: l10n_fi.tax_eu_purchase_goods_10
+NEW account.tax.template: l10n_fi.tax_eu_purchase_goods_14
+NEW account.tax.template: l10n_fi.tax_eu_purchase_goods_24
+NEW account.tax.template: l10n_fi.tax_eu_purchase_service_10
+NEW account.tax.template: l10n_fi.tax_eu_purchase_service_14
+NEW account.tax.template: l10n_fi.tax_eu_purchase_service_24
+NEW account.tax.template: l10n_fi.tax_eu_sales_goods_0
+NEW account.tax.template: l10n_fi.tax_eu_sales_service_0
+NEW account.tax.template: l10n_fi.tax_non_eu_purchase_goods_10
+NEW account.tax.template: l10n_fi.tax_non_eu_purchase_goods_14
+NEW account.tax.template: l10n_fi.tax_non_eu_purchase_goods_24
+NEW account.tax.template: l10n_fi.triangulation_purchase
+NEW account.tax.template: l10n_fi.vat0export
+NEW account.tax.template: l10n_fi.vat0triangulation
+NEW ir.ui.menu: l10n_fi.account_reports_fi_statements_menu

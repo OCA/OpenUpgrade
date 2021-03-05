@@ -6,7 +6,6 @@
 # Dinar <gabbasov@it-projects.info>, 2019
 # Amaro Vita <vita.amaro@gmail.com>, 2019
 # Vitalius Sharkhun <al070572sva@gmail.com>, 2019
-# Denis Baranov <baranov@itlibertas.com>, 2019
 # 6da4f49c4b78e697e34b24b2a66289f5, 2019
 # Evgeny <transingularity@gmail.com>, 2019
 # Gennady Marchenko <gennadym@gmail.com>, 2019
@@ -25,19 +24,21 @@
 # sergeiruzkiicode <sergei.ruzki@icode.by>, 2020
 # Евгений Залевский <zal_ei@mail.ru>, 2020
 # Martin Trigaux, 2020
-# Ivan Yelizariev <yelizariev@it-projects.info>, 2020
 # Viktor Pogrebniak <vp@aifil.ru>, 2020
 # Артур Чеботарь <artcha.chebotar@gmail.com>, 2020
 # Vasiliy Korobatov <korobatov@gmail.com>, 2020
 # Алексей Хомяков <alexey.homyakov@gmail.com>, 2020
+# Denis Baranov <baranov@itlibertas.com>, 2020
+# Sergei Ruzki <sergei.ruzki@gmail.com>, 2021
+# Ivan Yelizariev <yelizariev@itpp.dev>, 2021
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0+e\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-25 09:16+0000\n"
+"POT-Creation-Date: 2020-07-23 15:12+0000\n"
 "PO-Revision-Date: 2019-08-26 09:06+0000\n"
-"Last-Translator: Алексей Хомяков <alexey.homyakov@gmail.com>, 2020\n"
+"Last-Translator: Ivan Yelizariev <yelizariev@itpp.dev>, 2021\n"
 "Language-Team: Russian (https://www.transifex.com/odoo/teams/41243/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1349,7 +1350,7 @@ msgid ""
 "Setup\n"
 "-----\n"
 "\n"
-"- *Configuration > Journals*\n"
+"- *Account > Configuration > invoicing > Journals*\n"
 "\n"
 "    If needed, create new journal or choose an existing journal with **Type**\n"
 "    set to *“Bank”*.\n"
@@ -1358,28 +1359,9 @@ msgid ""
 "\n"
 "    On the **Bank Account** tab, enter the **Account Number**.\n"
 "\n"
-"- *Configuration > Bank Accounts*\n"
-"\n"
-"    Account will show up in list as the journal name.\n"
-"\n"
-"    Editing will show the **Account Number**.  This is important as it is used by\n"
-"    the ABA process.\n"
-"\n"
-"    **Bank** is optional.\n"
-"\n"
-"- *Sales > Configuration > Bank Accounts > Bank Accounts*\n"
-"\n"
-"    Account will show up in list as the account number.\n"
-"\n"
-"    **ABA Payments** - Set to *“Account for Making ABA Payments”*.\n"
+"    On the same tab, ensure the ABA transfer information is set up.\n"
 "\n"
 "    **BSB** - Required, 6 digits, and will be auto formatted.\n"
-"\n"
-"    **Account Holder** - Optional.\n"
-"\n"
-"    **Account / Payee Name** - Required.  Generally not validated by the banks\n"
-"    on ABA file transfers, and may show up on the payee bank statement against\n"
-"    the payment.\n"
 "\n"
 "    **Financial Institution Code** - Required (provided by bank or can be found\n"
 "    on Google).  It is three uppercase 3 characters.\n"
@@ -1388,30 +1370,42 @@ msgid ""
 "    may reject the ABA file if the Supplying User Name is not as expected.  It\n"
 "    cannot be longer than 26 characters.\n"
 "\n"
-"    **Identification Number (APCA)** - User Identification number is bank\n"
+"    **APCA Identification Number** - User Identification number is bank\n"
 "    allocated.  It is 6 digits.\n"
 "\n"
 "    **Include Self Balancing Transaction** - Some institutions require that the\n"
 "    last be a self balancing transaction which is used as a verification.\n"
 "\n"
+"- *Accounting > Configuration > Payments > Bank Accounts*\n"
+"\n"
+"    Account will show up in list as the journal name.\n"
+"\n"
+"    Editing will show the **Account Number**.  This is important as it is used by\n"
+"    the ABA process.\n"
+"\n"
+"    **Bank** is optional.\n"
+"\n"
+"- *Contacts > Configuration > Bank Accounts > Bank Accounts*\n"
+"\n"
+"    Paying account will show up in list as the account number.\n"
+"\n"
+"    **Account Holder Name** - Can be entered here, if Required.  Generally not\n"
+"    validated by the banks on ABA file transfers, but may show up on the payee\n"
+"    bank statement against the payment.\n"
+"\n"
 "- Vendor bank accounts can be set up in the same place, however, it is\n"
 "  generally easier to set them up from the partner from for the Vendor.\n"
 "\n"
-"- *Accounting > Purchases > Vendors*\n"
+"- *Accounting > Vendors > Vendors*\n"
 "\n"
-"    On **Sales & Purchases** tab, click on *\"Bank account(s)\"* from where a\n"
+"    On **Accounting** tab, click on *\"View accounts detail\"* from where a\n"
 "    vendor bank account can be created or edited.\n"
 "\n"
-"    **Account Number** - Required.\n"
-"\n"
-"    **ABA Payments** - Set to *“Allow ABA Payments to this Account”*.\n"
+"    **Account Number** - Required, must be less than 9 digits.\n"
 "\n"
 "    **BSB** - Required, 6 digits, and will be auto formatted.\n"
 "\n"
-"    **Account Holder** - Optional.\n"
-"\n"
-"    **Account / Payee Name** - Required.  Generally not validated by the\n"
-"    banks.\n"
+"    **Account Holder Name** - Optional.\n"
 "\n"
 "Use\n"
 "---\n"
@@ -1425,21 +1419,23 @@ msgid ""
 "    Select **ABA Credit Transfer** radio button.\n"
 "\n"
 "    If the vendor has multiple bank account, you may need to select the\n"
-"    correct **Recipient Bank Account**.\n"
+"    correct **Recipient Bank Account**.  Or if paying a vendor bill, it may\n"
+"    need the correct bank account associated with it.\n"
 "\n"
 "    Enter payment amount, etc.\n"
 "\n"
-"- *Purchases > Payments*\n"
+"- *Vendors > Payments*\n"
 "\n"
 "    After payment(s) are confirmed, they will show up in the payments list.\n"
 "\n"
 "    Using filters, or sorting, select the payments to be included.  Under\n"
-"    *Actions* choose *Download ABA Payment*.  A pop up appears with the ABA\n"
-"    file from which you can click on the file to download locally.  This\n"
-"    file can then be uploaded to the bank.\n"
-msgstr ""
+"    *Actions* choose *Create batch payment*.\n"
 "\n"
-"Кредитный перевод ABA =================== Этот модуль позволяет генерировать платежные партии как ABA (Австралийский Ассоциация банкиров) текстовые файлы. Созданный файл `aba` может быть загружен для многих австралийских банков. Установите ----- - * Настройка&gt; Журналы При необходимости создайте новый журнал или выберите существующий журнал с ** Типом ** установленным на * `Банк` *. На ** расширенных настройках **, убедитесь, что флажок ABA Credit Transfer. На вкладке ** Банковский счет **, введите ** Номер счета **. - * Настройка&gt; Банковские счета * Счет будет показано в списке как название журнала. Редактирования показывать ** Номер счета **. Это важно, поскольку используется ABA. ** Банк ** необязателен. - * Продажи&gt; Настройка&gt; Банковские счета&gt; Банковские счета * Счет отобразится в списке как номер счета. ** Платежи ABA ** - Установите на * `Счет для осуществления платежей ABA» *. ** BSB ** - обязательный, 6 цифр и будет автоматически отформатирован. ** Владелец счета ** - Необязательное. ** Счет / Имя получателя платежа ** - Требуется. Вообще не подтверждено банками о передаче файлов ABA и может отображаться на выписке с банковского счета получателя платежа. ** Код финансового учреждения ** - необходимо (предоставляется банком или можно найти в Google). Это три большие буквы. ** Имя пользователя поставки ** - Некоторые банки позволяют в свободной форме, некоторые банки могут отклонить файл ABA, если имя пользователя, предоставляет, не соответствует ожидаемым. Это не может превышать 26 символов. ** Идентификационный номер (АРСА) ** - идентификационный номер пользователя выделяется банком. Это 6 цифр. ** Включите самобалансувальну транзакцию ** - некоторые учреждения требуют, чтобы последняя была самостоятельным балансировкой, которая используется как проверка .. - Банковские счета поставщика могут быть созданы в одном месте, однако, как правило, их легче установить от партнера для продавца. - * Бухучет&gt; Покупки&gt; Поставщики * На вкладке ** Продажи и Покупки **, нажмите на * `Банковские счета` *, где банковский счет поставщика можно создавать или редактировать. ** Номер счета ** - обязательный. ** Платежи ABA ** - Установите на * `Разрешить платежи ABA этом счете» *. ** BSB ** - Обязательно, 6 цифр, и будет автоматически отформатирован. ** Владелец счета ** - Необязательно. ** Счет / Имя получателя платежа ** - Обязательно. Обычно не проверяется банками. Используйте --- - Создайте платеж поставщика обычным путем. Убедитесь, что ** Поставщик ** является действительным платежным счету ABA. Выберите правильный ** Журнал платежа **, который устанавливается для платежей ABA. Выберите кнопку ** Кредитный перевод ABA **. Если поставщик имеет несколько банковских счетов, вам может понадобиться выбрать правильный ** банковский счет получателя **. Введите сумму оплаты и т.д. - * Покупки&gt; Платежи * После подтверждения платежей, они будут отображаться в списке платежей. С помощью фильтров или сортировки выберите платежи, которые нужно включить. Под * Действиями * выберите * Скачать платеж ABA *. Появляется всплывающее окно с файлом ABA, с которого вы можете нажать на файл для локального загрузки. Этот файл может быть загружен в банк.\n"
+"- *Vendors > Batch Payments*\n"
+"\n"
+"    When validating a batch payment, the ABA file will be generated.  It can\n"
+"    be regenerated.  This file can then be uploaded to the bank.\n"
+msgstr ""
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_auto_transfer
@@ -7509,6 +7505,14 @@ msgid ", required"
 msgstr ", требуется"
 
 #. module: base
+#: code:addons/models.py:0
+#, python-format
+msgid ""
+"- %(record)r belongs to company %(company)r and %(field)r (%(fname)s: "
+"%(values)s) belongs to another company."
+msgstr ""
+
+#. module: base
 #: code:addons/model.py:0
 #, python-format
 msgid ""
@@ -7517,6 +7521,14 @@ msgid ""
 msgstr ""
 "- Создать / обновить: обязательное поле не установлено. - Удалить другая "
 "модель требует удаления записи. Если это возможно, архивируйте его."
+
+#. module: base
+#: code:addons/models.py:0
+#, python-format
+msgid ""
+"- Record is company %(company)r and %(field)r (%(fname)s: %(values)s) "
+"belongs to another company."
+msgstr ""
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -7678,6 +7690,12 @@ msgid ""
 "                                <b attrs=\"{'invisible': [('type', '!=', 'private')]}\">Private Address</b>\n"
 "                                <b attrs=\"{'invisible': [('type', '!=', False)]}\">Address</b>"
 msgstr ""
+"<b attrs=\"{'invisible': [('type', '!=', 'contact')]}\">Адрес компании</b>\n"
+"                                <b attrs=\"{'invisible': [('type', '!=', 'invoice')]}\">Адрес выставления счёта</b>\n"
+"                                <b attrs=\"{'invisible': [('type', '!=', 'delivery')]}\">Адрес доставки</b>\n"
+"                                <b attrs=\"{'invisible': [('type', '!=', 'other')]}\">Другой адрес</b>\n"
+"                                <b attrs=\"{'invisible': [('type', '!=', 'private')]}\">Личный адрес</b>\n"
+"                                <b attrs=\"{'invisible': [('type', '!=', False)]}\">Адрес</b>"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_partner_short_form
@@ -10626,6 +10644,12 @@ msgstr ""
 #. module: base
 #: code:addons/base/models/res_lang.py:0
 #, python-format
+msgid "Cannot deactivate a language that is currently used by contacts."
+msgstr ""
+
+#. module: base
+#: code:addons/base/models/res_lang.py:0
+#, python-format
 msgid "Cannot deactivate a language that is currently used by users."
 msgstr "Невозможно отключить язык, пока используется пользователями."
 
@@ -11561,7 +11585,7 @@ msgstr "Невозможно создать контакт без адреса �
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model__count
 msgid "Count (Incl. Archived)"
-msgstr ""
+msgstr "Количество (включая архивные)"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_country
@@ -13953,7 +13977,7 @@ msgstr "Имя поля"
 #: model:ir.module.category,name:base.module_category_operations_field_service
 #: model:ir.module.module,shortdesc:base.module_industry_fsm
 msgid "Field Service"
-msgstr ""
+msgstr "Выездные сотрудники"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_industry_fsm_report
@@ -14572,7 +14596,7 @@ msgstr "Общие настройки"
 #: model:ir.ui.menu,name:base.menu_wizard_update_translations
 #: model_terms:ir.ui.view,arch_db:base.wizard_update_translations
 msgid "Generate Missing Terms"
-msgstr "Создать отсутствуют условия"
+msgstr "Найти недостающие термины"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_crm
@@ -17320,7 +17344,7 @@ msgstr "Загрузить перевод"
 #. module: base
 #: model:ir.actions.act_window,name:base.demo_force_install_action
 msgid "Load demo data"
-msgstr "Скачать демо-данные"
+msgstr "Загрузить демо-данные"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_lang__code
@@ -20620,6 +20644,12 @@ msgstr ""
 "еще раз после обновления ."
 
 #. module: base
+#: code:addons/base/models/ir_actions_report.py:0
+#, python-format
+msgid "One of the documents, you try to merge is encrypted"
+msgstr ""
+
+#. module: base
 #: code:addons/models.py:0
 #, python-format
 msgid ""
@@ -21128,7 +21158,7 @@ msgstr "Другое"
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__res_partner__type__other
 msgid "Other Address"
-msgstr ""
+msgstr "Другой адрес"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_extra
@@ -23291,7 +23321,7 @@ msgstr "Продажи"
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_partner_form
 msgid "Sales & Purchase"
-msgstr ""
+msgstr "Продажи и закупки"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_expense
@@ -24081,17 +24111,6 @@ msgstr "Соломоновы Острова"
 #: model:res.country,name:base.so
 msgid "Somalia"
 msgstr "Сомали"
-
-#. module: base
-#: code:addons/models.py:0
-#, python-format
-msgid ""
-"Some records are incompatible with the company of the %(document_descr)s.\n"
-"\n"
-"Incompatibilities:\n"
-"Fields: %(fields)s\n"
-"Record ids: %(records)s\n"
-msgstr ""
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_bank__bic

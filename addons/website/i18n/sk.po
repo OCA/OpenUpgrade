@@ -12,7 +12,7 @@
 # gebri <gebri@inmail.sk>, 2019
 # Jan Prokop, 2019
 # Rastislav Brenčič <rastislav.brencic99@gmail.com>, 2020
-# Damian brencic <brencicdamian12313@gmail.com>, 2020
+# Damian Brencic <brencicdamian12313@gmail.com>, 2020
 # Filip Brenčič <brencicf5@gmail.com>, 2020
 # Alexandra Brencicova <alexandra.brencicova@gmail.com>, 2020
 # Rastislav Brencic <rastislav.brencic@azet.sk>, 2020
@@ -1138,7 +1138,7 @@ msgstr ""
 #. module: website
 #: model:ir.model,name:website.model_website_route
 msgid "All Website Route"
-msgstr "Trasa všetkých webových stránok"
+msgstr "Trasa všetkých webstránok"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_features_grid
@@ -2084,7 +2084,7 @@ msgstr "Rozbaľovacie menu"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_features_grid
 msgid "Duplicate"
-msgstr "Duplikát"
+msgstr "Duplikovať"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_features_grid
@@ -3167,7 +3167,7 @@ msgstr "Posledná modifikácia"
 #: code:addons/website/static/src/xml/website.backend.xml:0
 #, python-format
 msgid "Last Month"
-msgstr "Posledný mesiac"
+msgstr "Minulý mesiac"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.website_visitor_view_kanban
@@ -4248,7 +4248,7 @@ msgstr "Presmerovanie"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_references
 msgid "References"
-msgstr "Ďalšie zdroje"
+msgstr "Referencie"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.view_website_rewrite_form
@@ -4667,7 +4667,7 @@ msgstr "Štvorec"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_comparisons
 msgid "Start now"
-msgstr "začni teraz"
+msgstr "Začnite teraz"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_image_text
@@ -5951,6 +5951,12 @@ msgid ""
 msgstr ""
 "Skryli ste túto stránku pred výsledkami vyhľadávania.Vyhľadávacie nástroje "
 "nebudú indexované."
+
+#. module: website
+#: code:addons/website/models/website.py:162
+#, python-format
+msgid "You must keep at least one website."
+msgstr ""
 
 #. module: website
 #. openerp-web

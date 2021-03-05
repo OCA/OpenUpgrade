@@ -14,10 +14,9 @@
 # José Vicente <txusev@gmail.com>, 2019
 # Carolina Gonzalez <cgo@odoo.com>, 2019
 # Carlos Lopez <celm1990@hotmail.com>, 2019
-# JOSE ALEJANDRO ECHEVERRI VALENCIA <josealejandroeche@gmail.com>, 2019
+# Jose Alejandro Echeverri Valencia <josealejandroeche@gmail.com>, 2019
 # Vivian Montana <vmo@odoo.com>, 2019
 # Luis González <lgonzalez@vauxoo.com>, 2019
-# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2019
 # Rick Hunter <rick_hunter_ec@yahoo.com>, 2019
 # Inigo Zuluaga <inigo_zuluaga@yahoo.es>, 2019
 # Cristopher Cravioto <ccr@odoo.com>, 2019
@@ -28,10 +27,11 @@
 # Jesse Garza <jga@odoo.com>, 2019
 # John Guardado <jgu@odoo.com>, 2019
 # RGB Consulting <odoo@rgbconsulting.com>, 2019
-# Pedro M. Baeza <pedro.baeza@gmail.com>, 2020
 # Jon Perez <jop@odoo.com>, 2020
 # VivianMontana23 <vivianpvm@gmail.com>, 2020
 # Osiris Román <osiris.roman@yachaytech.edu.ec>, 2020
+# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2020
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -39,7 +39,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-27 09:22+0000\n"
 "PO-Revision-Date: 2019-08-26 09:11+0000\n"
-"Last-Translator: Osiris Román <osiris.roman@yachaytech.edu.ec>, 2020\n"
+"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>, 2020\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -306,6 +306,13 @@ msgstr ""
 #, python-format
 msgid "<p>Create a channel here.</p>"
 msgstr "<p>Crear un canal aquí.</p>"
+
+#. module: mail
+#. openerp-web
+#: code:addons/mail/static/src/js/tours/mail.js:26
+#, python-format
+msgid "<p>Create a public or private channel.</p>"
+msgstr "<p>Crea un canal público o privado.</p>"
 
 #. module: mail
 #. openerp-web
@@ -1592,6 +1599,13 @@ msgstr ""
 "Se requiere al cliente para recibir notificaciones por correo electrónico"
 
 #. module: mail
+#: code:addons/mail/models/mail_notification.py:0
+#, python-format
+msgid "Can not update the message or recipient of a notification."
+msgstr ""
+"No se puede actualizar el mensaje o el destinatario de una notificación."
+
+#. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_mail__date
 #: model:ir.model.fields,field_description:mail.field_mail_message__date
 #: model_terms:ir.ui.view,arch_db:mail.view_mail_search
@@ -2466,6 +2480,12 @@ msgstr "Sólo seguidores"
 #, python-format
 msgid "Following"
 msgstr "Siguiendo"
+
+#. module: mail
+#: code:addons/mail/models/mail_channel.py:778
+#, python-format
+msgid "Following invites are invalid as user groups do not match: %s"
+msgstr ""
 
 #. module: mail
 #: model:ir.model.fields,help:mail.field_mail_activity__icon
@@ -5681,6 +5701,12 @@ msgstr ""
 "dirección."
 
 #. module: mail
+#: code:addons/mail/models/mail_channel.py:0
+#, python-format
+msgid "The partner can not join this channel"
+msgstr "El contacto no se puede unir a este canal"
+
+#. module: mail
 #: code:addons/mail/models/mail_message.py:0
 #: code:addons/mail/models/mail_message.py:0
 #, python-format
@@ -6419,6 +6445,24 @@ msgstr ""
 "Puede marcar cualquier mensaje como 'destacado', y se muestra en este buzón."
 
 #. module: mail
+#: code:addons/mail/models/mail_channel.py:0
+#, python-format
+msgid "You can not remove this partner from this channel"
+msgstr "No puede eliminar este contacto de este canal"
+
+#. module: mail
+#: code:addons/mail/models/mail_channel.py:0
+#, python-format
+msgid "You can not write on the record of other users"
+msgstr "No puede escribir en el registro de otros usuarios"
+
+#. module: mail
+#: code:addons/mail/models/mail_channel.py:0
+#, python-format
+msgid "You can not write on this field"
+msgstr "No puede escribir en este campo"
+
+#. module: mail
 #: code:addons/mail/models/res_users.py:0
 #, python-format
 msgid ""
@@ -6449,6 +6493,16 @@ msgstr ""
 "moderación en uno de los canales que está modificando."
 
 #. module: mail
+#: code:addons/mail/models/mail_alias.py:89
+#, python-format
+msgid ""
+"You cannot use anything else than unaccented latin characters in the alias "
+"address."
+msgstr ""
+"No puede utilizar nada más que caracteres latinos sin acento en la dirección"
+" de alias."
+
+#. module: mail
 #: code:addons/mail/models/mail_thread.py:0
 #, python-format
 msgid "You have been assigned to %s"
@@ -6463,8 +6517,8 @@ msgstr "Has sido asignado al"
 #. openerp-web
 #: code:addons/mail/static/src/js/services/mail_notification_manager.js:0
 #, python-format
-msgid "You have been invited to: "
-msgstr "Has sido invitado a:"
+msgid "You have been invited to: %s"
+msgstr "Le han invitado a: %s"
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_channel_notify_moderation

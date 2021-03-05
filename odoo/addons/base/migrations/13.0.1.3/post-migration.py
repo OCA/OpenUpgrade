@@ -93,6 +93,16 @@ def delete_noupdate_records(env):
     )
 
 
+def company_missing_favicons(env):
+    """If web_favicon was not installed, now Odoo gets no favicon by default,
+    so we need to restore it.
+    """
+    Company = env["res.company"]
+    Company.search([("favicon", "=", False)]).write({
+        "favicon": Company._get_default_favicon(original=True)
+    })
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     res_lang_week_start_map_values(env)
@@ -104,6 +114,7 @@ def migrate(env, version):
         env.cr, 'base', 'migrations/13.0.1.3/noupdate_changes.xml')
     fill_ir_attachment_legacy_name(env)
     delete_noupdate_records(env)
+    company_missing_favicons(env)
     # Activate back the noupdate flag on the group
     openupgrade.logged_query(
         env.cr, """

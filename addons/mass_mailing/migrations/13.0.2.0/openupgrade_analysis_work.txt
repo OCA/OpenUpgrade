@@ -45,6 +45,10 @@ mass_mailing / mail.mass_mailing.list_contact_rel / list_id (many2one)          
 mass_mailing / mail.mass_mailing.list   / contact_ids (many2many)       : relation is now 'mailing.contact' ('mail.mass_mailing.contact') [nothing to do]
 # NOTHING TO DO: Renamed models, but IDs don't change
 
+mass_mailing / mail.mass_mailing        / contact_list_ids (many2many)  : column1 is now 'mailing_mailing_id' ('mail_mass_mailing_id')
+mass_mailing / mail.mass_mailing        / contact_list_ids (many2many)  : column2 is now 'mailing_list_id' ('mail_mass_mailing_list_id')
+# DONE: pre-migration: renamed columns
+
 mass_mailing / link.tracker.click       / mail_stat_id (many2one)       : DEL relation: mail.mail.statistics
 mass_mailing / link.tracker.click       / mailing_trace_id (many2one)   : NEW relation: mailing.trace
 mass_mailing / mail.mail                / mailing_trace_ids (one2many)  : NEW relation: mailing.trace
@@ -64,6 +68,9 @@ mass_mailing / mail.mass_mailing.contact / list_ids (many2many)          : table
 mass_mailing / mail.mass_mailing.contact / tag_ids (many2many)           : table is now 'mailing_contact_res_partner_category_rel' ('mail_mass_mailing_contact_res_partner_category_rel')
 mass_mailing / mail.mass_mailing.list   / contact_ids (many2many)       : table is now 'mailing_contact_list_rel' ('mail_mass_mailing_contact_list_rel')
 # DONE: pre-migration renamed tables
+
+mass_mailing / mail.mass_mailing.contact / tag_ids (many2many)           : column1 is now 'mailing_contact_id' ('mail_mass_mailing_contact_id')
+# DONE: pre-migration: renamed column
 
 mass_mailing / mail.mass_mailing.contact / website_message_ids (one2many): module is now 'portal' ('mass_mailing')
 # NOTHING TO DO: Field relocated, but field definition XML-IDs are automatically handled by core

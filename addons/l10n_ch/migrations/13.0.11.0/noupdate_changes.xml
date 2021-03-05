@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="fiscal_position_tax_template_9" model="account.fiscal.position.tax.template">
+    <field name="tax_src_id" ref="vat_77_purchase_reverse"/>
+  </record>
+  <record id="fiscal_position_template_import" model="account.fiscal.position.template">
+    <field name="auto_apply" eval="True"/>
+    <field name="sequence">1</field>
+  </record>
+</odoo>

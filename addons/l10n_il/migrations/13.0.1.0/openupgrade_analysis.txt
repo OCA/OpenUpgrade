@@ -1,12 +1,13 @@
 ---Models in module 'l10n_il'---
 ---Fields in module 'l10n_il'---
 ---XML records in module 'l10n_il'---
-NEW account.account.template: l10n_il.il_account_100000
+NEW account.account.tag: l10n_il.account_tag_dividend_account
+NEW account.account.tag: l10n_il.account_tag_retention_tax_dividend_account
+NEW account.account.tag: l10n_il.account_tag_retention_tax_vendor_account
 NEW account.account.template: l10n_il.il_account_100100
 NEW account.account.template: l10n_il.il_account_100200
 NEW account.account.template: l10n_il.il_account_100300
 NEW account.account.template: l10n_il.il_account_100400
-NEW account.account.template: l10n_il.il_account_101000
 NEW account.account.template: l10n_il.il_account_101110
 NEW account.account.template: l10n_il.il_account_101120
 NEW account.account.template: l10n_il.il_account_101130
@@ -15,19 +16,16 @@ NEW account.account.template: l10n_il.il_account_101150
 NEW account.account.template: l10n_il.il_account_101160
 NEW account.account.template: l10n_il.il_account_101200
 NEW account.account.template: l10n_il.il_account_101201
-NEW account.account.template: l10n_il.il_account_101240
 NEW account.account.template: l10n_il.il_account_101250
 NEW account.account.template: l10n_il.il_account_101300
 NEW account.account.template: l10n_il.il_account_101410
 NEW account.account.template: l10n_il.il_account_101420
 NEW account.account.template: l10n_il.il_account_101430
 NEW account.account.template: l10n_il.il_account_101440
-NEW account.account.template: l10n_il.il_account_101600
 NEW account.account.template: l10n_il.il_account_101800
 NEW account.account.template: l10n_il.il_account_101810
 NEW account.account.template: l10n_il.il_account_101820
 NEW account.account.template: l10n_il.il_account_101830
-NEW account.account.template: l10n_il.il_account_102000
 NEW account.account.template: l10n_il.il_account_102110
 NEW account.account.template: l10n_il.il_account_102120
 NEW account.account.template: l10n_il.il_account_102130
@@ -93,10 +91,33 @@ NEW account.account.template: l10n_il.il_account_300110
 NEW account.account.template: l10n_il.il_account_300120
 NEW account.account.template: l10n_il.il_account_300130
 NEW account.account.template: l10n_il.il_account_300200
+NEW account.account.template: l10n_il.il_account_300270
 NEW account.chart.template: l10n_il.il_chart_template
+NEW account.fiscal.position.tax.template: l10n_il.account_fiscal_position_export_01
+NEW account.fiscal.position.tax.template: l10n_il.account_fiscal_position_palestinian_authority_01
+NEW account.fiscal.position.tax.template: l10n_il.account_fiscal_position_palestinian_authority_02
+NEW account.fiscal.position.template: l10n_il.account_fiscal_position_export
+NEW account.fiscal.position.template: l10n_il.account_fiscal_position_israel
+NEW account.fiscal.position.template: l10n_il.account_fiscal_position_palestinian_authority
+NEW account.tax.group: l10n_il.tax_group_retention_purchase (noupdate)
 NEW account.tax.group: l10n_il.tax_group_vat_16 (noupdate)
 NEW account.tax.group: l10n_il.tax_group_vat_17 (noupdate)
 NEW account.tax.group: l10n_il.tax_group_vat_exempt (noupdate)
+NEW account.tax.report.line: l10n_il.account_tax_report_line_in_balance
+NEW account.tax.report.line: l10n_il.account_tax_report_line_in_balance_17
+NEW account.tax.report.line: l10n_il.account_tax_report_line_in_balance_1_4
+NEW account.tax.report.line: l10n_il.account_tax_report_line_in_balance_2_3
+NEW account.tax.report.line: l10n_il.account_tax_report_line_in_balance_pa_16
+NEW account.tax.report.line: l10n_il.account_tax_report_line_out_balance
+NEW account.tax.report.line: l10n_il.account_tax_report_line_out_balance_pa
+NEW account.tax.report.line: l10n_il.account_tax_report_line_out_base
+NEW account.tax.report.line: l10n_il.account_tax_report_line_out_base_exempt
+NEW account.tax.report.line: l10n_il.account_tax_report_line_out_base_exempt_title
+NEW account.tax.report.line: l10n_il.account_tax_report_line_out_base_title
+NEW account.tax.report.line: l10n_il.account_tax_report_line_vat_due
+NEW account.tax.report.line: l10n_il.account_tax_report_line_vat_in_fa
+NEW account.tax.report.line: l10n_il.account_tax_report_line_vat_in_fa_title
+NEW account.tax.report.line: l10n_il.account_tax_report_line_vat_sales_tax
 NEW account.tax.template: l10n_il.il_vat_inputs_17
 NEW account.tax.template: l10n_il.il_vat_inputs_1_4_17
 NEW account.tax.template: l10n_il.il_vat_inputs_2_3_17
@@ -104,5 +125,10 @@ NEW account.tax.template: l10n_il.il_vat_inputs_fa_17
 NEW account.tax.template: l10n_il.il_vat_pa_purchase_16
 NEW account.tax.template: l10n_il.il_vat_pa_sales_17
 NEW account.tax.template: l10n_il.il_vat_purchase_exempt
+NEW account.tax.template: l10n_il.il_vat_retention_10
+NEW account.tax.template: l10n_il.il_vat_retention_25
+NEW account.tax.template: l10n_il.il_vat_retention_30
+NEW account.tax.template: l10n_il.il_vat_retention_35
 NEW account.tax.template: l10n_il.il_vat_sales_17
 NEW account.tax.template: l10n_il.il_vat_sales_exempt
+NEW account.tax.template: l10n_il.il_vat_self_inv_sale

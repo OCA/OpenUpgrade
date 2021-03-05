@@ -13,7 +13,7 @@ sale_coupon  / sale.coupon              / partner_id (many2one)         : NEW re
 sale_coupon  / sale.coupon              / program_id (many2one)         : NEW relation: sale.coupon.program, required
 sale_coupon  / sale.coupon              / sales_order_id (many2one)     : NEW relation: sale.order
 sale_coupon  / sale.coupon              / state (selection)             : NEW required, selection_keys: ['expired', 'new', 'reserved', 'used'], req_default: function, hasdefault
-sale_coupon  / sale.coupon.program      / _inherits (False)             : NEW
+sale_coupon  / sale.coupon.program      / _inherits                     : NEW _inherits: {'sale.coupon.rule': 'rule_id', 'sale.coupon.reward': 'reward_id'}
 sale_coupon  / sale.coupon.program      / active (boolean)              : NEW hasdefault
 sale_coupon  / sale.coupon.program      / company_id (many2one)         : NEW relation: res.company, hasdefault
 sale_coupon  / sale.coupon.program      / coupon_ids (one2many)         : NEW relation: sale.coupon

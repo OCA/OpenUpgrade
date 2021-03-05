@@ -8,6 +8,7 @@ new model lunch.product.report [sql_view]
 new model lunch.supplier
 new model lunch.topping
 ---Fields in module 'lunch'---
+lunch        / lunch.alert              / _order                        : _order is now 'write_date desc, id' ('id')
 lunch        / lunch.alert              / alert_type (selection)        : DEL required, selection_keys: ['days', 'specific', 'week'], req_default: function
 lunch        / lunch.alert              / end_hour (float)              : DEL required, req_default: function
 lunch        / lunch.alert              / friday (boolean)              : DEL
@@ -36,12 +37,14 @@ lunch        / lunch.alert              / tuesday (boolean)             : DEL
 lunch        / lunch.alert              / tz (selection)                : NEW required, selection_keys: function, req_default: function, hasdefault
 lunch        / lunch.alert              / until (date)                  : NEW
 lunch        / lunch.alert              / wednesday (boolean)           : DEL
+lunch        / lunch.cashmove           / _order                        : _order is now 'date desc' ('id')
 lunch        / lunch.cashmove           / currency_id (many2one)        : NEW relation: res.currency, hasdefault
 lunch        / lunch.cashmove           / order_id (many2one)           : DEL relation: lunch.order.line
 lunch        / lunch.cashmove           / state (selection)             : DEL selection_keys: ['order', 'payment']
 lunch        / lunch.location           / address (text)                : NEW
 lunch        / lunch.location           / company_id (many2one)         : NEW relation: res.company, hasdefault
 lunch        / lunch.location           / name (char)                   : NEW required
+lunch        / lunch.order              / _order                        : _order is now 'id desc' ('date desc')
 lunch        / lunch.order              / active (boolean)              : NEW hasdefault
 lunch        / lunch.order              / category_id (many2one)        : NEW relation: lunch.product.category, isrelated: related, stored
 lunch        / lunch.order              / company_id (many2one)         : not related anymore
@@ -68,6 +71,7 @@ lunch        / lunch.order.line         / product_id (many2one)         : DEL re
 lunch        / lunch.order.line         / state (selection)             : DEL selection_keys: ['cancelled', 'confirmed', 'new', 'ordered']
 lunch        / lunch.order.line         / supplier (many2one)           : DEL relation: res.partner
 lunch        / lunch.order.line         / user_id (many2one)            : DEL relation: res.users
+lunch        / lunch.product            / _order                        : _order is now 'name' ('id')
 lunch        / lunch.product            / company_id (many2one)         : NEW relation: res.company, isrelated: related, stored
 lunch        / lunch.product            / favorite_user_ids (many2many) : NEW relation: res.users
 lunch        / lunch.product            / image_1024 (binary)           : NEW attachment: True, isrelated: related, stored

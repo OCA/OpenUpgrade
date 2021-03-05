@@ -19,7 +19,13 @@ NEW ir.actions.act_window: l10n_latam_invoice_document.action_document_type
 NEW ir.model.access: l10n_latam_invoice_document.access_l10n_latam_document_type_account_manager
 NEW ir.model.access: l10n_latam_invoice_document.access_l10n_latam_document_type_all
 NEW ir.ui.menu: l10n_latam_invoice_document.menu_document_type
+NEW ir.ui.view: l10n_latam_invoice_document.external_layout_background
+NEW ir.ui.view: l10n_latam_invoice_document.external_layout_boxed
+NEW ir.ui.view: l10n_latam_invoice_document.external_layout_clean
+NEW ir.ui.view: l10n_latam_invoice_document.external_layout_standard
+NEW ir.ui.view: l10n_latam_invoice_document.report_invoice
 NEW ir.ui.view: l10n_latam_invoice_document.report_invoice_document
+NEW ir.ui.view: l10n_latam_invoice_document.report_invoice_with_payments
 NEW ir.ui.view: l10n_latam_invoice_document.sequence_view
 NEW ir.ui.view: l10n_latam_invoice_document.sequence_view_tree
 NEW ir.ui.view: l10n_latam_invoice_document.view_account_invoice_filter

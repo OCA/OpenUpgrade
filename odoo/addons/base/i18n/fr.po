@@ -66,20 +66,21 @@
 # Christelle Pinchart <cpi@odoo.com>, 2020
 # Vallen Delobel <edv@odoo.com>, 2020
 # Julien Goergen <jgo@odoo.com>, 2020
-# Cécile Collart <cco@odoo.com>, 2020
 # 44fd1b7fd1ad5b321e37d151521961ad, 2020
 # Martin Trigaux, 2020
 # Olivier Lenoir <olivier.lenoir@free.fr>, 2020
 # Vincent Luba <vincent@biz-4-africa.com>, 2020
-# Priscilla Sanchez <prs@odoo.com>, 2020
+# Priscilla (prs) Odoo <prs@odoo.com>, 2020
+# Fabrice Henrion, 2020
+# Cécile Collart <cco@odoo.com>, 2020
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0+e\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-25 09:16+0000\n"
+"POT-Creation-Date: 2020-07-23 15:12+0000\n"
 "PO-Revision-Date: 2019-08-26 09:06+0000\n"
-"Last-Translator: Priscilla Sanchez <prs@odoo.com>, 2020\n"
+"Last-Translator: Cécile Collart <cco@odoo.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -695,6 +696,9 @@ msgid ""
 "        Accounting reports for Sweden\n"
 "    "
 msgstr ""
+"\n"
+"        Rapports comptables pour la Suède\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_ch_reports
@@ -794,6 +798,9 @@ msgid ""
 "        Bridge module between sale_intrastat and l10n_be_intrastat.\n"
 "    "
 msgstr ""
+"\n"
+"        Module de lien entre sale_intrastat et l10n_be_intrastat.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_sale_product_configurator
@@ -1548,6 +1555,9 @@ msgid ""
 "    Under Construction\n"
 "    "
 msgstr ""
+"\n"
+"    En Construction\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_ebay
@@ -1621,7 +1631,7 @@ msgid ""
 "Setup\n"
 "-----\n"
 "\n"
-"- *Configuration > Journals*\n"
+"- *Account > Configuration > invoicing > Journals*\n"
 "\n"
 "    If needed, create new journal or choose an existing journal with **Type**\n"
 "    set to *“Bank”*.\n"
@@ -1630,28 +1640,9 @@ msgid ""
 "\n"
 "    On the **Bank Account** tab, enter the **Account Number**.\n"
 "\n"
-"- *Configuration > Bank Accounts*\n"
-"\n"
-"    Account will show up in list as the journal name.\n"
-"\n"
-"    Editing will show the **Account Number**.  This is important as it is used by\n"
-"    the ABA process.\n"
-"\n"
-"    **Bank** is optional.\n"
-"\n"
-"- *Sales > Configuration > Bank Accounts > Bank Accounts*\n"
-"\n"
-"    Account will show up in list as the account number.\n"
-"\n"
-"    **ABA Payments** - Set to *“Account for Making ABA Payments”*.\n"
+"    On the same tab, ensure the ABA transfer information is set up.\n"
 "\n"
 "    **BSB** - Required, 6 digits, and will be auto formatted.\n"
-"\n"
-"    **Account Holder** - Optional.\n"
-"\n"
-"    **Account / Payee Name** - Required.  Generally not validated by the banks\n"
-"    on ABA file transfers, and may show up on the payee bank statement against\n"
-"    the payment.\n"
 "\n"
 "    **Financial Institution Code** - Required (provided by bank or can be found\n"
 "    on Google).  It is three uppercase 3 characters.\n"
@@ -1660,30 +1651,42 @@ msgid ""
 "    may reject the ABA file if the Supplying User Name is not as expected.  It\n"
 "    cannot be longer than 26 characters.\n"
 "\n"
-"    **Identification Number (APCA)** - User Identification number is bank\n"
+"    **APCA Identification Number** - User Identification number is bank\n"
 "    allocated.  It is 6 digits.\n"
 "\n"
 "    **Include Self Balancing Transaction** - Some institutions require that the\n"
 "    last be a self balancing transaction which is used as a verification.\n"
 "\n"
+"- *Accounting > Configuration > Payments > Bank Accounts*\n"
+"\n"
+"    Account will show up in list as the journal name.\n"
+"\n"
+"    Editing will show the **Account Number**.  This is important as it is used by\n"
+"    the ABA process.\n"
+"\n"
+"    **Bank** is optional.\n"
+"\n"
+"- *Contacts > Configuration > Bank Accounts > Bank Accounts*\n"
+"\n"
+"    Paying account will show up in list as the account number.\n"
+"\n"
+"    **Account Holder Name** - Can be entered here, if Required.  Generally not\n"
+"    validated by the banks on ABA file transfers, but may show up on the payee\n"
+"    bank statement against the payment.\n"
+"\n"
 "- Vendor bank accounts can be set up in the same place, however, it is\n"
 "  generally easier to set them up from the partner from for the Vendor.\n"
 "\n"
-"- *Accounting > Purchases > Vendors*\n"
+"- *Accounting > Vendors > Vendors*\n"
 "\n"
-"    On **Sales & Purchases** tab, click on *\"Bank account(s)\"* from where a\n"
+"    On **Accounting** tab, click on *\"View accounts detail\"* from where a\n"
 "    vendor bank account can be created or edited.\n"
 "\n"
-"    **Account Number** - Required.\n"
-"\n"
-"    **ABA Payments** - Set to *“Allow ABA Payments to this Account”*.\n"
+"    **Account Number** - Required, must be less than 9 digits.\n"
 "\n"
 "    **BSB** - Required, 6 digits, and will be auto formatted.\n"
 "\n"
-"    **Account Holder** - Optional.\n"
-"\n"
-"    **Account / Payee Name** - Required.  Generally not validated by the\n"
-"    banks.\n"
+"    **Account Holder Name** - Optional.\n"
 "\n"
 "Use\n"
 "---\n"
@@ -1697,109 +1700,23 @@ msgid ""
 "    Select **ABA Credit Transfer** radio button.\n"
 "\n"
 "    If the vendor has multiple bank account, you may need to select the\n"
-"    correct **Recipient Bank Account**.\n"
+"    correct **Recipient Bank Account**.  Or if paying a vendor bill, it may\n"
+"    need the correct bank account associated with it.\n"
 "\n"
 "    Enter payment amount, etc.\n"
 "\n"
-"- *Purchases > Payments*\n"
+"- *Vendors > Payments*\n"
 "\n"
 "    After payment(s) are confirmed, they will show up in the payments list.\n"
 "\n"
 "    Using filters, or sorting, select the payments to be included.  Under\n"
-"    *Actions* choose *Download ABA Payment*.  A pop up appears with the ABA\n"
-"    file from which you can click on the file to download locally.  This\n"
-"    file can then be uploaded to the bank.\n"
+"    *Actions* choose *Create batch payment*.\n"
+"\n"
+"- *Vendors > Batch Payments*\n"
+"\n"
+"    When validating a batch payment, the ABA file will be generated.  It can\n"
+"    be regenerated.  This file can then be uploaded to the bank.\n"
 msgstr ""
-"\n"
-"Transfert de crédit ABA\n"
-"===================\n"
-"\n"
-"Ce module permet la génération de lots de paiement en ABA (Australian\n"
-"Bankers Association) fichiers texte. Le fichier 'aba' généré peut être téléchargé\n"
-"à de nombreuses banques australiennes.\n"
-"\n"
-"Configuration\n"
-"-----\n"
-"\n"
-"- *Configuration > Journaux*\n"
-"\n"
-"    Si nécessaire, créez un nouveau journal ou choisissez un journal existant de ** Type ** * \"Banque\" *.\n"
-"\n"
-"    Sur ** Paramètres avancés **, assurez-vous que ABA Credit Transfer est coché.\n"
-"\n"
-"    Dans l'onglet ** Compte bancaire **, entrez le ** Numéro de compte **.\n"
-"\n"
-"- * Configuration> Comptes bancaires *\n"
-"\n"
-"   Le compte apparaîtra dans la liste comme nom de journal.\n"
-"\n"
-"    L'édition affichera le ** Numéro de compte **. Ceci est important car il est utilisé par     le processus ABA.\n"
-"\n"
-"    **Banque** est optionel.\n"
-"\n"
-"- * Ventes> Configuration> Comptes bancaires> Comptes bancaires *\n"
-"\n"
-"    Le compte apparaîtra dans la liste comme numéro de compte.\n"
-"\n"
-"    ** Paiements ABA ** - Réglez sur * «Compte pour effectuer des paiements ABA» *.\n"
-"\n"
-"   ** BSB ** - Obligatoire, 6 chiffres, et sera automatiquement formaté.\n"
-"\n"
-"    ** Titulaire du compte ** - Facultatif.\n"
-"\n"
-"    ** Nom du compte / bénéficiaire ** - Obligatoire. Généralement non validé par les banques     sur les transferts de fichiers ABA, et peut apparaître sur le relevé bancaire du paiement.\n"
-"\n"
-"    ** Code de l'institution financière ** - Obligatoire (fourni par la banque ou peut être trouvé\n"
-"    sur Google). Il s'agit de trois caractères majuscules 3.\n"
-"\n"
-"    ** Fournir le nom d'utilisateur ** - Certaines banques autorisent ce format libre, certaines banques peuvent rejeter le fichier ABA si le nom d'utilisateur fournisseur n'est pas celui attendu. Il ne peut pas dépasser 26 caractères.\n"
-"\n"
-"   ** Numéro d'identification (APCA) ** - Le numéro d'identification de l'utilisateur est une alloué par une banque. Il est composé de 6 chiffres.\n"
-"\n"
-"    ** Inclure les transactions d'auto-équilibrage ** - Certaines institutions exigent qu'une transaction d'auto-équilibrage qui est utilisée comme vérification.\n"
-"\n"
-"- Les comptes bancaires des fournisseurs peuvent être créés au même endroit, mais il est\n"
-"généralement plus facile à mettre en place à partir du partenaire qu'à partir du vendeur.\n"
-"\n"
-"- *Comptabilité > Achats > Vendeurs*\n"
-"\n"
-"    Dans l'onglet ** Ventes et achats **, cliquez sur * \"Compte (s) bancaire (s)\" * d'où un compte bancaire du fournisseur peut être créé ou modifié.\n"
-"\n"
-"    **Numéro de compte** - Requis.\n"
-"\n"
-"    ** Paiements ABA ** - Réglez sur * «Autoriser les paiements ABA sur ce compte» *.\n"
-"  \n"
-"  ** BSB ** - Obligatoire, 6 chiffres, et sera automatiquement formaté.\n"
-"\n"
-"    ** Titulaire du compte ** - Facultatif\n"
-"\n"
-"    ** Nom du compte / bénéficiaire ** - Obligatoire. Généralement non validé par le\n"
-"    banques.\n"
-"\n"
-"Utilisation\n"
-"---\n"
-"\n"
-"- Créez un paiement fournisseur de la manière habituelle.\n"
-"\n"
-"    Assurez-vous que le ** fournisseur ** ne possède qu'un compte de paiement ABA valide.\n"
-"\n"
-"    Choisissez le ** Journal des paiements ** correct qui est défini pour les paiements ABA.\n"
-"\n"
-"    Sélectionnez le bouton radio ** ABA Credit Transfer **\n"
-"\n"
-"    Si le fournisseur possède plusieurs comptes bancaires, vous devrez peut-être sélectionner\n"
-"    correct ** Compte bancaire du destinataire **.\n"
-"\n"
-"    Entrez le montant du paiement, etc.\n"
-"\n"
-"- *Achats > Paiements*\n"
-"\n"
-"    Une fois les paiements confirmés, ils apparaîtront dans la liste des paiements.\n"
-"\n"
-"    À l'aide de filtres ou de tri, sélectionnez les paiements à inclure. En dessous de\n"
-"    *Actions* choisissez * Télécharger le paiement ABA *. Un pop-up apparaît avec le fichier\n"
-"    à partir duquel vous pouvez cliquer sur le fichier à télécharger localement. Ce\n"
-"    fichier peut ensuite être téléchargé vers la banque.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_auto_transfer
@@ -2610,6 +2527,11 @@ msgid ""
 "This is meant to be used with localization specific modules.\n"
 "    "
 msgstr ""
+"\n"
+"Module de base pour le reporting SAF-T\n"
+"===============================\n"
+"Ceci est destiné à être utilisé avec des modules spécifiques à la localisation.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_br
@@ -6882,6 +6804,10 @@ msgid ""
 "======================================================================\n"
 "This module applies to companies based in Algeria.\n"
 msgstr ""
+"\n"
+"Il s'agit du module pour gérer le plan comptable de l'Algérie dans Odoo.\n"
+"======================================================================\n"
+"Ce module s'applique aux entreprises basées en Algérie.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_fr
@@ -7198,6 +7124,9 @@ msgid ""
 "This module allows to configure commissions for resellers.\n"
 "    "
 msgstr ""
+"\n"
+"Ce module permet de configurer des commissions pour les revendeurs.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_automation
@@ -8456,6 +8385,14 @@ msgid ", required"
 msgstr ", requis"
 
 #. module: base
+#: code:addons/models.py:0
+#, python-format
+msgid ""
+"- %(record)r belongs to company %(company)r and %(field)r (%(fname)s: "
+"%(values)s) belongs to another company."
+msgstr ""
+
+#. module: base
 #: code:addons/model.py:0
 #, python-format
 msgid ""
@@ -8464,6 +8401,14 @@ msgid ""
 msgstr ""
 "- Créer / mettre à jour: un champ obligatoire n'est pas défini.\n"
 "- Supprimer: un autre modèle nécessite la suppression de l'enregistrement. Si possible, archivez-le."
+
+#. module: base
+#: code:addons/models.py:0
+#, python-format
+msgid ""
+"- Record is company %(company)r and %(field)r (%(fname)s: %(values)s) "
+"belongs to another company."
+msgstr ""
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -10248,7 +10193,7 @@ msgstr "Autoriser les visiteurs à rejoindre des canaux publics"
 #. module: base
 #: model:ir.module.module,summary:base.module_odoo_referral
 msgid "Allow you to refer your friends to Odoo and get rewards"
-msgstr ""
+msgstr "Vous permet de référer vos amis à Odoo et d'obtenir des récompenses"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_odoo_referral_portal
@@ -11065,7 +11010,7 @@ msgstr "La langue de base 'en_US' ne peut pas être supprimée."
 #. module: base
 #: model:ir.module.module,summary:base.module_payment
 msgid "Base Module for Payment Acquirers"
-msgstr ""
+msgstr "Module de base pour les intermédiaires de paiement"
 
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__ir_model__state__base
@@ -11631,6 +11576,12 @@ msgstr ""
 "Impossible de créer de nouveaux '%s' enregistrements à partir de leur seul "
 "nom. Veuillez créer ces enregistrements manuellement et réessayer "
 "d'importer."
+
+#. module: base
+#: code:addons/base/models/res_lang.py:0
+#, python-format
+msgid "Cannot deactivate a language that is currently used by contacts."
+msgstr ""
 
 #. module: base
 #: code:addons/base/models/res_lang.py:0
@@ -15237,7 +15188,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_fi
 msgid "Finnish Localization"
-msgstr ""
+msgstr "Localisation Finlandaise"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_lang__week_start
@@ -15409,6 +15360,8 @@ msgid ""
 "Found more than 10 errors and more than one error per 10 records, "
 "interrupted to avoid showing too many errors."
 msgstr ""
+"Plus de 10 erreurs trouvées et plus d'une erreur pour 10 enregistrements, "
+"interruption  pour éviter d'afficher trop d'erreurs."
 
 #. module: base
 #: code:addons/base/models/ir_fields.py:0
@@ -17597,7 +17550,7 @@ msgstr "Israël"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_il
 msgid "Israel - Accounting"
-msgstr ""
+msgstr "Israël - Comptabilité"
 
 #. module: base
 #: model:res.country,name:base.it
@@ -18394,7 +18347,7 @@ msgstr "Lituanie"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_lt
 msgid "Lithuania - Accounting"
-msgstr ""
+msgstr "Lituanie - Comptabilité"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_website_live_chat
@@ -22093,6 +22046,12 @@ msgstr ""
 "page puis réessayez."
 
 #. module: base
+#: code:addons/base/models/ir_actions_report.py:0
+#, python-format
+msgid "One of the documents, you try to merge is encrypted"
+msgstr ""
+
+#. module: base
 #: code:addons/models.py:0
 #, python-format
 msgid ""
@@ -22749,7 +22708,7 @@ msgstr "P ÉDUCATION"
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_pe
 msgid "PCGE Simplified"
-msgstr ""
+msgstr "PCGE simplifié"
 
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__ir_actions_report__report_type__qweb-pdf
@@ -25646,7 +25605,7 @@ msgstr "Twitter"
 #. module: base
 #: model:ir.module.module,summary:base.module_social_media
 msgid "Social media connectors for company settings."
-msgstr ""
+msgstr "Connecteurs de réseaux sociaux pour les paramètres de la société."
 
 #. module: base
 #: model:res.country,name:base.sb
@@ -25657,17 +25616,6 @@ msgstr "Îles Salomon"
 #: model:res.country,name:base.so
 msgid "Somalia"
 msgstr "Somalie"
-
-#. module: base
-#: code:addons/models.py:0
-#, python-format
-msgid ""
-"Some records are incompatible with the company of the %(document_descr)s.\n"
-"\n"
-"Incompatibilities:\n"
-"Fields: %(fields)s\n"
-"Record ids: %(records)s\n"
-msgstr ""
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_bank__bic
@@ -28734,6 +28682,10 @@ msgid ""
 "enhancing solutions through the use of advanced software for our clients "
 "worldwide. At Lumber Inc we bring operational experience combined..."
 msgstr ""
+"Nous sommes une société de conseil en technologie et de conseil stratégique "
+"qui crée des solutions améliorant la valeur grâce à l'utilisation de "
+"logiciels avancés pour nos clients du monde entier. Chez Lumber Inc, nous "
+"apportons une expérience opérationnelle combinée ..."
 
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_18

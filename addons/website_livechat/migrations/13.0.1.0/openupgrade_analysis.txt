@@ -6,7 +6,6 @@ website_livechat / website.visitor          / livechat_operator_id (many2one): N
 website_livechat / website.visitor          / mail_channel_ids (one2many)   : NEW relation: mail.channel
 ---XML records in module 'website_livechat'---
 DEL im_livechat.channel: website_livechat.im_livechat_channel_data_website (noupdate)
-NEW ir.actions.act_window: website.website_visitors_action
 NEW ir.actions.act_window: website_livechat.website_visitor_livechat_session_action
 NEW ir.actions.act_window.view: website_livechat.website_visitor_livechat_session_action_form
 NEW ir.actions.act_window.view: website_livechat.website_visitor_livechat_session_action_tree

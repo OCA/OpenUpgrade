@@ -22,6 +22,7 @@ website      / website                  / social_googleplus (char)      : DEL
 website      / website.menu             / group_ids (many2many)         : NEW relation: res.groups
 website      / website.menu             / mega_menu_classes (char)      : NEW
 website      / website.menu             / mega_menu_content (html)      : NEW
+website      / website.redirect         / _order                        : _order is now 'id' ('sequence, id')
 website      / website.redirect         / type (selection)              : DEL required, selection_keys: ['301', '302'], req_default: function
 website      / website.rewrite          / name (char)                   : NEW required
 website      / website.rewrite          / redirect_type (selection)     : NEW selection_keys: ['301', '302', '308', '404'], hasdefault
@@ -60,7 +61,6 @@ NEW ir.model.access: website.access_website_track_system
 NEW ir.model.access: website.access_website_visitor_designer
 DEL ir.model.access: website.access_website_redirect
 DEL ir.model.access: website.access_website_redirect_designer
-NEW ir.module.category: base.module_category_website_website (noupdate)
 NEW ir.rule: website.website_menu
 NEW ir.ui.menu: website.menu_visitor_sub_menu
 NEW ir.ui.menu: website.menu_visitor_view_menu
@@ -89,7 +89,6 @@ NEW ir.ui.view: website.website_visitor_view_graph
 NEW ir.ui.view: website.website_visitor_view_kanban
 NEW ir.ui.view: website.website_visitor_view_search
 NEW ir.ui.view: website.website_visitor_view_tree
-DEL ir.ui.view: portal.portal_show_sign_in
 DEL ir.ui.view: website.403
 DEL ir.ui.view: website.404
 DEL ir.ui.view: website.500

@@ -50,6 +50,16 @@ class TestSaleCouponProgramNumbers(TestSaleCouponCommon):
             'reward_product_id': self.largeMeetingTable.id,
             'rule_products_domain': '[["name","ilike","drawer black"]]',
         })
+        self.discount_coupon_program = self.env['sale.coupon.program'].create({
+            'name': '$100 coupon',
+            'program_type': 'coupon_program',
+            'reward_type': 'discount',
+            'discount_type': 'fixed_amount',
+            'discount_fixed_amount': 100,
+            'active': True,
+            'discount_apply_on': 'on_order',
+            'rule_minimum_amount': 100.00,
+        })
 
     def test_program_numbers_free_and_paid_product_qty(self):
         # These tests will focus on numbers (free product qty, SO total, reduction total..)
@@ -550,18 +560,8 @@ class TestSaleCouponProgramNumbers(TestSaleCouponCommon):
             'order_id': order.id,
         })
         self.assertEqual(order.amount_total, 165.0, "The order amount is not correct")
-        discount_coupon_program = self.env['sale.coupon.program'].create({
-            'name': '$100 coupon',
-            'program_type': 'coupon_program',
-            'reward_type': 'discount',
-            'discount_type': 'fixed_amount',
-            'discount_fixed_amount': 100,
-            'active': True,
-            'discount_apply_on': 'on_order',
-            'rule_minimum_amount': 100.00,
-        })
-        self.env['sale.coupon.generate'].with_context(active_id=discount_coupon_program.id).create({}).generate_coupon()
-        coupon = discount_coupon_program.coupon_ids[0]
+        self.env['sale.coupon.generate'].with_context(active_id=self.discount_coupon_program.id).create({}).generate_coupon()
+        coupon = self.discount_coupon_program.coupon_ids[0]
         self.env['sale.coupon.apply.code'].with_context(active_id=order.id).create({
             'coupon_code': coupon.code
         }).process_coupon()
@@ -603,18 +603,8 @@ class TestSaleCouponProgramNumbers(TestSaleCouponCommon):
         order.recompute_coupon_lines()
         self.assertEqual(order.amount_total, 65.0, "The promotion program should not be removed after recomputation")
 
-        discount_coupon_program = self.env['sale.coupon.program'].create({
-            'name': '$100 coupon',
-            'program_type': 'coupon_program',
-            'reward_type': 'discount',
-            'discount_type': 'fixed_amount',
-            'discount_fixed_amount': 100,
-            'active': True,
-            'discount_apply_on': 'on_order',
-            'rule_minimum_amount': 100.00,
-        })
-        self.env['sale.coupon.generate'].with_context(active_id=discount_coupon_program.id).create({}).generate_coupon()
-        coupon = discount_coupon_program.coupon_ids[0]
+        self.env['sale.coupon.generate'].with_context(active_id=self.discount_coupon_program.id).create({}).generate_coupon()
+        coupon = self.discount_coupon_program.coupon_ids[0]
         with self.assertRaises(UserError):
             self.env['sale.coupon.apply.code'].with_context(active_id=order.id).create({
                 'coupon_code': coupon.code
@@ -628,6 +618,182 @@ class TestSaleCouponProgramNumbers(TestSaleCouponCommon):
         orderline.write({'product_uom_qty': 5})
         order.recompute_coupon_lines()
         self.assertEqual(order.amount_total, 82.5, "The promotion programs should have been removed from the order to avoid negative amount")
+
+    def test_coupon_and_coupon_discount_fixed_amount_tax_excl(self):
+        """ Ensure multiple coupon can cohexists without making
+            the order go below 0
+            * Have an order of 300 (3 lines: 1 tax excl 15%, 2 notax)
+            * Apply a coupon A of 10% discount, unconditioned
+            * Apply a coupon B of 288.5 discount, unconditioned
+            * Order should not go below 0
+            * Even applying the coupon in reverse order should yield same result
+        """
+
+        coupon_program = self.env['sale.coupon.program'].create({
+            'name': '$288.5 coupon',
+            'program_type': 'coupon_program',
+            'reward_type': 'discount',
+            'discount_type': 'fixed_amount',
+            'discount_fixed_amount': 288.5,
+            'active': True,
+            'discount_apply_on': 'on_order',
+        })
+
+        order = self.empty_order
+        orderline = self.env['sale.order.line'].create([
+        {
+            'product_id': self.conferenceChair.id,
+            'name': 'Conference Chair',
+            'product_uom_qty': 1.0,
+            'price_unit': 100.0,
+            'order_id': order.id,
+            'tax_id': [(6, 0, (self.tax_15pc_excl.id,))],
+        },
+        {
+            'product_id': self.pedalBin.id,
+            'name': 'Computer Case',
+            'product_uom_qty': 1.0,
+            'price_unit': 100.0,
+            'order_id': order.id,
+            'tax_id': [(6, 0, [])],
+        },
+        {
+            'product_id': self.product_A.id,
+            'name': 'Computer Case',
+            'product_uom_qty': 1.0,
+            'price_unit': 100.0,
+            'order_id': order.id,
+            'tax_id': [(6, 0, [])],
+        },
+        ])
+
+        self.env['sale.coupon.apply.code'].with_context(active_id=order.id).create({
+                'coupon_code': 'test_10pc'
+            }).process_coupon()
+        self.assertEqual(order.amount_total, 283.5, "The promotion program should be correctly applied")
+
+        self.env['sale.coupon.generate'].with_context(active_id=coupon_program.id).create({
+            'generation_type': 'nbr_coupon',
+            'nbr_coupons': 1,
+        }).generate_coupon()
+        coupon = coupon_program.coupon_ids
+        self.env['sale.coupon.apply.code'].with_context(active_id=order.id).create({
+            'coupon_code': coupon.code
+        }).process_coupon()
+        order.recompute_coupon_lines()
+        #TODO fix numbers
+        # Need an in-depth inspection on the behavior with
+        # - multiple product with different VAT +
+        # - a fixed amount (greater than remaining amount to pay) +
+        # - discount amount
+        # And user should be able to swap the promotion order with a meaningful result.
+        self.assertEqual(order.amount_tax, 13.5)
+        self.assertEqual(order.amount_untaxed, 0.0, "The untaxed amount should not go below 0")
+        self.assertEqual(order.amount_total, 13.5, "The promotion program should not make the order total go below 0")
+
+        order.order_line[3:].unlink() #remove all coupon
+
+        order.recompute_coupon_lines()
+        self.assertEqual(len(order.order_line), 3, "The promotion program should be removed")
+        self.env['sale.coupon.apply.code'].with_context(active_id=order.id).create({
+            'coupon_code': coupon.code
+        }).process_coupon()
+        self.assertEqual(order.amount_total, 26.5, "The promotion program should be correctly applied")
+        order.recompute_coupon_lines()
+        self.env['sale.coupon.apply.code'].with_context(active_id=order.id).create({
+                'coupon_code': 'test_10pc'
+            }).process_coupon()
+        order.recompute_coupon_lines()
+        #TODO fix numbers
+        self.assertEqual(order.amount_tax, 13.5)
+        self.assertEqual(order.amount_untaxed, 0.0)
+        self.assertEqual(order.amount_total, 13.5, "The promotion program should not make the order total go below 0be altered after recomputation")
+
+    def test_coupon_and_coupon_discount_fixed_amount_tax_incl(self):
+        """ Ensure multiple coupon can cohexists without making
+            the order go below 0
+            * Have an order of 300 (3 lines: 1 tax incl 10%, 2 notax)
+            * Apply a coupon A of 10% discount, unconditioned
+            * Apply a coupon B of 290 discount, unconditioned
+            * Order should not go below 0
+            * Even applying the coupon in reverse order should yield same result
+        """
+
+        coupon_program = self.env['sale.coupon.program'].create({
+            'name': '$290 coupon',
+            'program_type': 'coupon_program',
+            'reward_type': 'discount',
+            'discount_type': 'fixed_amount',
+            'discount_fixed_amount': 290,
+            'active': True,
+            'discount_apply_on': 'on_order',
+        })
+
+        order = self.empty_order
+        orderline = self.env['sale.order.line'].create([
+        {
+            'product_id': self.conferenceChair.id,
+            'name': 'Conference Chair',
+            'product_uom_qty': 1.0,
+            'price_unit': 100.0,
+            'order_id': order.id,
+            'tax_id': [(6, 0, (self.tax_10pc_incl.id,))],
+        },
+        {
+            'product_id': self.pedalBin.id,
+            'name': 'Computer Case',
+            'product_uom_qty': 1.0,
+            'price_unit': 100.0,
+            'order_id': order.id,
+            'tax_id': [(6, 0, [])],
+        },
+        {
+            'product_id': self.product_A.id,
+            'name': 'Computer Case',
+            'product_uom_qty': 1.0,
+            'price_unit': 100.0,
+            'order_id': order.id,
+            'tax_id': [(6, 0, [])],
+        },
+        ])
+
+        self.env['sale.coupon.apply.code'].with_context(active_id=order.id).create({
+                'coupon_code': 'test_10pc'
+            }).process_coupon()
+        self.assertEqual(order.amount_total, 270.0, "The promotion program should be correctly applied")
+
+        self.env['sale.coupon.generate'].with_context(active_id=coupon_program.id).create({
+            'generation_type': 'nbr_coupon',
+            'nbr_coupons': 1,
+        }).generate_coupon()
+        coupon = coupon_program.coupon_ids
+        self.env['sale.coupon.apply.code'].with_context(active_id=order.id).create({
+            'coupon_code': coupon.code
+        }).process_coupon()
+        self.assertEqual(order.amount_total, 0.0, "The promotion program should not make the order total go below 0")
+        order.recompute_coupon_lines()
+        #TODO fix numbers
+        self.assertEqual(order.amount_total, 9.09, "The promotion program should not be altered after recomputation")
+        self.assertEqual(order.amount_tax, 8.18)
+        self.assertEqual(order.amount_untaxed, 0.91)
+
+        order.order_line[3:].unlink() #remove all coupon
+
+        order.recompute_coupon_lines()
+        self.assertEqual(len(order.order_line), 3, "The promotion program should be removed")
+        self.env['sale.coupon.apply.code'].with_context(active_id=order.id).create({
+            'coupon_code': coupon.code
+        }).process_coupon()
+        self.assertEqual(order.amount_total, 10.0, "The promotion program should be correctly applied")
+        order.recompute_coupon_lines()
+        self.env['sale.coupon.apply.code'].with_context(active_id=order.id).create({
+                'coupon_code': 'test_10pc'
+            }).process_coupon()
+        order.recompute_coupon_lines()
+        #TODO fix numbers
+        self.assertEqual(order.amount_tax, 9.01)
+        self.assertEqual(order.amount_untaxed, 0.08)
+        self.assertEqual(order.amount_total, 9.09, "The promotion program should not be altered after recomputation")
 
     def test_program_discount_on_multiple_specific_products(self):
         """ Ensure a discount on multiple specific products is correctly computed.
@@ -751,3 +917,84 @@ class TestSaleCouponProgramNumbers(TestSaleCouponCommon):
         sol1.write({'product_uom_qty': 2.0})
         order.recompute_coupon_lines()
         self.assertEqual(len(order.order_line.ids), 1, "The promotion lines should have been removed")
+
+    def test_program_step_percentages(self):
+        # test step-like percentages increase over amount
+        testprod = self.env['product.product'].create({
+            'name': 'testprod',
+            'lst_price': 118.0,
+        })
+
+        test10 = self.env['sale.coupon.program'].create({
+            'name': '10% discount',
+            'promo_code_usage': 'no_code_needed',
+            'program_type': 'promotion_program',
+            'discount_type': 'percentage',
+            'discount_percentage': 10.0,
+            'rule_minimum_amount': 1500.0,
+            'rule_minimum_amount_tax_inclusion': 'tax_included',
+        })
+        test15 = self.env['sale.coupon.program'].create({
+            'name': '15% discount',
+            'promo_code_usage': 'no_code_needed',
+            'program_type': 'promotion_program',
+            'discount_type': 'percentage',
+            'discount_percentage': 15.0,
+            'rule_minimum_amount': 1750.0,
+            'rule_minimum_amount_tax_inclusion': 'tax_included',
+        })
+        test20 = self.env['sale.coupon.program'].create({
+            'name': '20% discount',
+            'promo_code_usage': 'no_code_needed',
+            'program_type': 'promotion_program',
+            'discount_type': 'percentage',
+            'discount_percentage': 20.0,
+            'rule_minimum_amount': 2000.0,
+            'rule_minimum_amount_tax_inclusion': 'tax_included',
+        })
+        test25 = self.env['sale.coupon.program'].create({
+            'name': '25% discount',
+            'promo_code_usage': 'no_code_needed',
+            'program_type': 'promotion_program',
+            'discount_type': 'percentage',
+            'discount_percentage': 25.0,
+            'rule_minimum_amount': 2500.0,
+            'rule_minimum_amount_tax_inclusion': 'tax_included',
+        })
+
+        #apply 10%
+        order = self.empty_order
+        order_line = self.env['sale.order.line'].create({
+            'product_id': testprod.id,
+            'name': 'testprod',
+            'product_uom_qty': 14.0,
+            'price_unit': 118.0,
+            'order_id': order.id,
+            'tax_id': False,
+        })
+        order.recompute_coupon_lines()
+        self.assertEqual(order.amount_total, 1486.80, "10% discount should be applied")
+        self.assertEqual(len(order.order_line.ids), 2, "discount should be applied")
+
+        #switch to 15%
+        order_line.write({'product_uom_qty': 15})
+        self.assertEqual(order.amount_total, 1604.8, "Discount improperly applied")
+        self.assertEqual(len(order.order_line.ids), 2, "No discount applied while it should")
+
+        #switch to 20%
+        order_line.write({'product_uom_qty': 17})
+        order.recompute_coupon_lines()
+        self.assertEqual(order.amount_total, 1604.8, "Discount improperly applied")
+        self.assertEqual(len(order.order_line.ids), 2, "No discount applied while it should")
+
+        #still 20%
+        order_line.write({'product_uom_qty': 20})
+        order.recompute_coupon_lines()
+        self.assertEqual(order.amount_total, 1888.0, "Discount improperly applied")
+        self.assertEqual(len(order.order_line.ids), 2, "No discount applied while it should")
+
+        #back to 10%
+        order_line.write({'product_uom_qty': 14})
+        order.recompute_coupon_lines()
+        self.assertEqual(order.amount_total, 1486.80, "Discount improperly applied")
+        self.assertEqual(len(order.order_line.ids), 2, "No discount applied while it should")

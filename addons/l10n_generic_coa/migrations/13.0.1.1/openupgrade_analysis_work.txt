@@ -1,0 +1,65 @@
+---Models in module 'l10n_generic_coa'---
+---Fields in module 'l10n_generic_coa'---
+---XML records in module 'l10n_generic_coa'---
+NEW account.account.template: l10n_generic_coa.cash_diff_expense
+NEW account.account.template: l10n_generic_coa.cash_diff_income
+NEW account.account.template: l10n_generic_coa.expense_rd
+NEW account.account.template: l10n_generic_coa.expense_rent
+NEW account.account.template: l10n_generic_coa.expense_sales
+NEW account.account.template: l10n_generic_coa.pos_receivable
+NEW account.account.template: l10n_generic_coa.tax_receivable
+# NOTHING TO DO
+NEW account.account.template: l10n_generic_coa.capital
+NEW account.account.template: l10n_generic_coa.dividends
+NEW account.account.template: l10n_generic_coa.expense_finance
+NEW account.account.template: l10n_generic_coa.expense_invest
+NEW account.account.template: l10n_generic_coa.expense_salary
+NEW account.account.template: l10n_generic_coa.non_current_liabilities
+NEW account.account.template: l10n_generic_coa.expense
+NEW account.account.template: l10n_generic_coa.payable
+NEW account.account.template: l10n_generic_coa.receivable
+NEW account.account.template: l10n_generic_coa.tax_payable
+NEW account.account.template: l10n_generic_coa.income
+NEW account.account.template: l10n_generic_coa.stock_valuation
+NEW account.account.template: l10n_generic_coa.stock_in
+NEW account.account.template: l10n_generic_coa.stock_out
+NEW account.account.template: l10n_generic_coa.cost_of_goods_sold
+NEW account.account.template: l10n_generic_coa.tax_received
+NEW account.account.template: l10n_generic_coa.non_current_assets
+NEW account.account.template: l10n_generic_coa.other_income
+NEW account.account.template: l10n_generic_coa.tax_paid
+NEW account.account.template: l10n_generic_coa.prepayments
+NEW account.account.template: l10n_generic_coa.current_assets
+NEW account.account.template: l10n_generic_coa.fixed_assets
+NEW account.account.template: l10n_generic_coa.expense_currency_exchange
+NEW account.account.template: l10n_generic_coa.income_currency_exchange
+DEL account.account.template: l10n_generic_coa.a_capital
+DEL account.account.template: l10n_generic_coa.a_dividends
+DEL account.account.template: l10n_generic_coa.a_expense_finance
+DEL account.account.template: l10n_generic_coa.a_expense_invest
+DEL account.account.template: l10n_generic_coa.a_salary_expense
+DEL account.account.template: l10n_generic_coa.cas
+DEL account.account.template: l10n_generic_coa.conf_a_expense
+DEL account.account.template: l10n_generic_coa.conf_a_pay
+DEL account.account.template: l10n_generic_coa.conf_a_recv
+DEL account.account.template: l10n_generic_coa.conf_a_reserve_and_surplus
+DEL account.account.template: l10n_generic_coa.conf_a_sale
+DEL account.account.template: l10n_generic_coa.conf_cas
+DEL account.account.template: l10n_generic_coa.conf_cas_interim1
+DEL account.account.template: l10n_generic_coa.conf_cas_interim2
+DEL account.account.template: l10n_generic_coa.conf_cog
+DEL account.account.template: l10n_generic_coa.conf_iva
+DEL account.account.template: l10n_generic_coa.conf_ncas
+DEL account.account.template: l10n_generic_coa.conf_o_income
+DEL account.account.template: l10n_generic_coa.conf_ova
+DEL account.account.template: l10n_generic_coa.conf_prepayments
+DEL account.account.template: l10n_generic_coa.conf_stk
+DEL account.account.template: l10n_generic_coa.conf_xfa
+DEL account.account.template: l10n_generic_coa.exchange_fx_expense
+DEL account.account.template: l10n_generic_coa.exchange_fx_income
+# DONE: pre-migration: renamed xmlid
+
+account.chart.template: l10n_generic_coa.configurable_chart_template (noupdate switched)
+account.tax.template: l10n_generic_coa.purchase_tax_template (noupdate switched)
+account.tax.template: l10n_generic_coa.sale_tax_template (noupdate switched)
+# DONE: pre-migration: switched noupdate value

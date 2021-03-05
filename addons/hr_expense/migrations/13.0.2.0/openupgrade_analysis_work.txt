@@ -1,0 +1,36 @@
+---Models in module 'hr_expense'---
+---Fields in module 'hr_expense'---
+hr_expense   / hr.expense               / company_id (many2one)         : now required, req_default: function
+hr_expense   / hr.expense.sheet         / company_id (many2one)         : now required, req_default: function
+# DONE: post-migration: filled when empty
+
+---XML records in module 'hr_expense'---
+DEL ir.model.access: hr_expense.access_account_invoice_tax_user
+# NOTHING TO DO: noupdate=0 record
+
+NEW ir.module.category: base.module_category_accounting_expenses (noupdate)
+NEW ir.ui.view: hr_expense.hr_expense_template_register (noupdate)
+NEW ir.ui.view: hr_expense.hr_expense_template_register_no_user (noupdate)
+NEW ir.rule: hr_expense.ir_rule_hr_expense_approver (noupdate)
+NEW ir.rule: hr_expense.ir_rule_hr_expense_sheet_approver (noupdate)
+# NOTHING TO DO: New noupdate=1 record
+
+DEL ir.rule: hr_expense.ir_rule_hr_expense_user (noupdate)
+DEL ir.rule: hr_expense.ir_rule_hr_expense_sheet_user (noupdate)
+# DONE: post-migration: Remove them (we shouldn't rename XML-IDs to the new ones, as the rules are not exactly the same, so this is the quickest way)
+
+NEW ir.ui.view: hr_expense.assets_backend
+NEW ir.ui.view: hr_expense.assets_tests
+NEW ir.ui.view: hr_expense.hr_expense_sheet_view_activity
+NEW ir.ui.view: hr_expense.hr_expense_sheet_view_search
+NEW ir.ui.view: hr_expense.hr_expense_view_activity
+NEW ir.ui.view: hr_expense.hr_expense_view_search
+NEW ir.ui.view: hr_expense.res_users_view_form_preferences
+DEL ir.ui.view: hr_expense.assets_backend_expense
+DEL ir.ui.view: hr_expense.view_hr_expense_filter
+DEL ir.ui.view: hr_expense.view_hr_expense_sheet_filter
+NEW res.groups: hr_expense.group_hr_expense_team_approver
+# NOTHING TO DO: noupdate=0 records
+
+DEL product.product: hr_expense.product_product_fixed_cost (noupdate)
+# DONE: Try to remove it if not used

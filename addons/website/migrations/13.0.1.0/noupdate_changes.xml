@@ -1,217 +1,218 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-  <record id="aboutus_page" model="website.page">
-    <field name="website_published"/>
-    <field name="is_published">True</field>
-    <field name="track">True</field>
-  </record>
+<!--  <record id="aboutus_page" model="website.page">-->
+<!--    <field name="website_published"/>-->
+<!--    <field name="is_published">True</field>-->
+<!--    <field name="track">True</field>-->
+<!--  </record>-->
   <record id="business_conference" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">business_conference.jpg</field>
   </record>
-  <record id="contactus_page" model="website.page">
-    <field name="website_published"/>
-    <field name="is_published">True</field>
-    <field name="track">True</field>
-  </record>
-  <record id="default_website" model="website">
+<!--  <record id="contactus_page" model="website.page">-->
+<!--    <field name="website_published"/>-->
+<!--    <field name="is_published">True</field>-->
+<!--    <field name="track">True</field>-->
+<!--  </record>-->
+<!--  <record id="default_website" model="website">
     <field name="favicon" type="base64" file="web/static/src/img/favicon.ico"/>
-  </record>
-  <record id="homepage_page" model="website.page">
-    <field name="website_published"/>
-    <field name="is_published">True</field>
-    <field name="track">True</field>
-  </record>
+    <field name="homepage_id"/>
+  </record> -->
+<!--  <record id="homepage_page" model="website.page">-->
+<!--    <field name="website_published"/>-->
+<!--    <field name="is_published">True</field>-->
+<!--    <field name="track">True</field>-->
+<!--  </record>-->
   <record id="library_image_01" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">bridge.jpg</field>
   </record>
   <record id="library_image_02" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">deliver.jpg</field>
   </record>
   <record id="library_image_03" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">clock.jpg</field>
   </record>
   <record id="library_image_04" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">manufacturing.jpg</field>
   </record>
   <record id="library_image_05" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">compass.jpg</field>
   </record>
   <record id="library_image_06" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">gift.jpg</field>
   </record>
   <record id="library_image_07" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">mobile_device.jpg</field>
   </record>
   <record id="library_image_08" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">mobile.jpg</field>
   </record>
   <record id="library_image_09" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">office.jpg</field>
   </record>
   <record id="library_image_10" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">ice_coffe.jpg</field>
   </record>
   <record id="library_image_11" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">rocket.jpg</field>
   </record>
   <record id="library_image_12" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">sell.jpg</field>
   </record>
   <record id="library_image_13" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">shop.jpg</field>
   </record>
   <record id="library_image_14" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">sign.jpg</field>
   </record>
   <record id="library_image_15" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">sweet.jpg</field>
   </record>
   <record id="library_image_16" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">wine.jpg</field>
   </record>
   <record id="s_background_image_01" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_background_image_01.jpg</field>
   </record>
   <record id="s_background_image_02" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_background_image_02.jpg</field>
   </record>
   <record id="s_background_image_03" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_background_image_03.jpg</field>
   </record>
   <record id="s_background_image_04" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_background_image_04.jpg</field>
   </record>
   <record id="s_background_image_05" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_background_image_05.jpg</field>
   </record>
   <record id="s_background_image_06" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_background_image_06.jpg</field>
   </record>
   <record id="s_background_image_07" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_background_image_07.jpg</field>
   </record>
   <record id="s_background_image_08" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_background_image_08.jpg</field>
   </record>
   <record id="s_background_image_09" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_background_image_09.jpg</field>
   </record>
   <record id="s_banner_default_image" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_banner_default_image.jpg</field>
   </record>
   <record id="s_carousel_default_image_1" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_carousel_default_image_1.jpg</field>
   </record>
   <record id="s_carousel_default_image_2" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_carousel_default_image_2.jpg</field>
   </record>
   <record id="s_carousel_default_image_3" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_carousel_default_image_3.jpg</field>
   </record>
   <record id="s_company_team_image_1" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_company_team_image_1.png</field>
   </record>
   <record id="s_company_team_image_2" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_company_team_image_2.png</field>
   </record>
   <record id="s_company_team_image_3" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_company_team_image_3.png</field>
   </record>
   <record id="s_company_team_image_4" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_company_team_image_4.png</field>
   </record>
   <record id="s_cover_default_image" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_cover_default_image.jpg</field>
   </record>
   <record id="s_image_text_default_image" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_image_text_default_image.jpg</field>
   </record>
   <record id="s_parallax_default_image" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_parallax_default_image.jpg</field>
   </record>
   <record id="s_picture_default_image" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_picture_default_image.jpg</field>
   </record>
   <record id="s_quotes_carousel_demo_image_1" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_quotes_carousel_image_01.jpg</field>
   </record>
   <record id="s_quotes_carousel_demo_image_2" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_quotes_carousel_image_02.jpg</field>
   </record>
   <record id="s_quotes_carousel_demo_image_3" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_quotes_carousel_image_3.png</field>
   </record>
   <record id="s_quotes_carousel_demo_image_4" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_quotes_carousel_image_4.png</field>
   </record>
   <record id="s_quotes_carousel_demo_image_5" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_quotes_carousel_image_5.png</field>
   </record>
   <record id="s_reference_demo_image_1" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_reference_demo_image_1.png</field>
   </record>
   <record id="s_reference_demo_image_2" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_reference_demo_image_2.png</field>
   </record>
   <record id="s_reference_demo_image_3" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_reference_demo_image_3.png</field>
   </record>
   <record id="s_reference_demo_image_4" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_reference_demo_image_4.png</field>
   </record>
   <record id="s_reference_demo_image_5" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_reference_demo_image_5.png</field>
   </record>
   <record id="s_text_image_default_image" model="ir.attachment">
-    <field name="datas_fname"/>
+    <!--<field name="datas_fname"/>-->
     <field name="name">s_text_image_default_image.jpg</field>
   </record>
 </odoo>

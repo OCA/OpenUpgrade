@@ -10,16 +10,16 @@
 # heejun lee <tkm01b@gmail.com>, 2019
 # Link Up링크업 <linkup.way@gmail.com>, 2019
 # Martin Trigaux, 2020
-# JH CHOI <hwangtog@gmail.com>, 2020
 # Linkup <link-up@naver.com>, 2020
+# JH CHOI <hwangtog@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0+e\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-25 09:16+0000\n"
+"POT-Creation-Date: 2020-07-23 15:12+0000\n"
 "PO-Revision-Date: 2019-08-26 09:06+0000\n"
-"Last-Translator: Linkup <link-up@naver.com>, 2020\n"
+"Last-Translator: JH CHOI <hwangtog@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/odoo/teams/41243/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,6 +58,10 @@ msgid ""
 "- Kitchen Order Printing: allows you to print orders updates to kitchen or bar printers\n"
 "\n"
 msgstr ""
+"\n"
+"\n"
+"- 주방용 주문 인쇄 : 주방 또는 카운터 프린터로 주문 업데이트를 인쇄할 수 있습니다\n"
+"\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_at_reports
@@ -243,6 +247,88 @@ msgid ""
 "Copyright 2018 Odoo House ApS\n"
 "    "
 msgstr ""
+"\n"
+"\n"
+"덴마크 현지화 모듈\n"
+"===============================\n"
+"\n"
+"This is the module to manage the **accounting chart for Denmark**. Cover both one-man business as well as I/S, IVS, ApS and A/S\n"
+"\n"
+"**Modulet opsætter:**\n"
+"\n"
+"- **Dansk kontoplan**\n"
+"\n"
+"- Dansk moms\n"
+"        - 25% moms\n"
+"        - Resturationsmoms 6,25%\n"
+"        - Omvendt betalingspligt\n"
+"        \n"
+"- Konteringsgrupper\n"
+"        - EU (Virksomhed)\n"
+"        - EU (Privat)\n"
+"        - 3.lande\n"
+"\n"
+"- Finans raporter\n"
+"        - Resulttopgørelse\n"
+"        - Balance\n"
+"        - Momsafregning\n"
+"            - Afregning\n"
+"            - Rubrik A, B og C\n"
+"\n"
+"- **Anglo-Saxon regnskabsmetode**\n"
+"\n"
+".\n"
+"\n"
+"Produkt setup:\n"
+"==============\n"
+"\n"
+"**Vare**\n"
+"\n"
+"**Salgsmoms:**      Salgmoms 25%\n"
+"\n"
+"**Salgskonto:**     1010 Salg af vare, m/moms\n"
+"\n"
+"**Købsmoms:**       Købsmoms 25%\n"
+"\n"
+"**Købskonto:**      2010 Direkte omkostninger vare, m/moms\n"
+"\n"
+".\n"
+"\n"
+"**Ydelse**\n"
+"\n"
+"**Salgsmoms:**      Salgmoms 25%, ydelser\n"
+"\n"
+"**Salgskonto:**     1011 Salg af ydelser, m/moms\n"
+"\n"
+"**Købsmoms:**       Købsmoms 25%, ydelser\n"
+"\n"
+"**Købskonto:**      2011 Direkte omkostninger ydelser, m/moms\n"
+"\n"
+".\n"
+"\n"
+"**Vare med omvendt betalingspligt**\n"
+"\n"
+"**Salgsmoms:**      Salg omvendt betalingspligt\n"
+"\n"
+"**Salgskonto:**     1012 Salg af vare, u/moms\n"
+"\n"
+"**Købsmoms:**       Køb omvendt betalingspligt\n"
+"\n"
+"**Købskonto:**      2012 Direkte omkostninger vare, u/moms\n"
+"\n"
+"\n"
+".\n"
+"\n"
+"**Restauration**\n"
+"\n"
+"**Købsmoms:**       Restaurationsmoms 6,25%, købsmoms\n"
+"\n"
+"**Købskonto:**      4010 Restaurationsbesøg\n"
+"\n"
+".\n"
+"\n"
+"Copyright 2018 Odoo House ApS\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_do
@@ -616,6 +702,11 @@ msgid ""
 "        Contains Balance Sheet, Profit/Loss reports\n"
 "    "
 msgstr ""
+"\n"
+"        리투아니아에 대한 회계 보고서\n"
+"\n"
+"        Contains Balance Sheet, Profit/Loss reports\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_nl_reports
@@ -644,6 +735,9 @@ msgid ""
 "        Accounting reports for Sweden\n"
 "    "
 msgstr ""
+"\n"
+"        스웨덴 회계 보고서\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_ch_reports
@@ -747,6 +841,9 @@ msgid ""
 "        Bridge module between sale_intrastat and l10n_be_intrastat.\n"
 "    "
 msgstr ""
+"\n"
+"        sale_intrastat와 l10n_be_intrastat 사이의 연결 모듈.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_sale_product_configurator
@@ -803,6 +900,17 @@ msgid ""
 "        * Account Tags.\n"
 "    "
 msgstr ""
+"\n"
+"        리투아니아의 회계를 위한 계정과목표(COA) 서식.\n"
+"\n"
+"        This module also includes:\n"
+"\n"
+"        * List of available banks in Lithuania.\n"
+"        * Tax groups.\n"
+"        * Most common Lithuanian Taxes.\n"
+"        * Fiscal positions.\n"
+"        * Account Tags.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_helpdesk_fsm
@@ -823,6 +931,10 @@ msgid ""
 "        UNSPSC code for their products and uoms.  \n"
 "    "
 msgstr ""
+"\n"
+"        콜롬비아, 페루, 멕시코와 같은 나라들은 그들의 품목과 umoms에 \n"
+"         UNSPSC 코드를 사용할 수 있어야 합니다. \n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_form
@@ -916,6 +1028,29 @@ msgid ""
 "        you have not already sent to the government to reuse its number.\n"
 "    "
 msgstr ""
+"\n"
+"        E-Faktur 메뉴 (인도네시아)\n"
+"        Format : 010.000-16.00000001\n"
+"        * 2 (dua) digit pertama adalah Kode Transaksi\n"
+"        * 1 (satu) digit berikutnya adalah Kode Status\n"
+"        * 3 (tiga) digit berikutnya adalah Kode Cabang\n"
+"        * 2 (dua) digit pertama adalah Tahun Penerbitan\n"
+"        * 8 (delapan) digit berikutnya adalah Nomor Urut\n"
+"        \n"
+"        To be able to export customer invoices as e-Faktur,\n"
+"        you need to put the ranges of numbers you were assigned\n"
+"        by the government in Accounting > Customers > e-Faktur\n"
+"                    \n"
+"        When you validate an invoice, where the partner has the ID PKP\n"
+"        field checked, a tax number will be assigned to that invoice. \n"
+"        Afterwards, you can filter the invoices still to export in the\n"
+"        invoices list and click on Action > Download e-Faktur to download \n"
+"        the csv and upload it to the site of the government. \n"
+"        \n"
+"        You can replace an already sent invoice by another by indicating\n"
+"        the replaced invoice and the new one and you can reset an invoice\n"
+"        you have not already sent to the government to reuse its number.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_mx_reports
@@ -1426,6 +1561,24 @@ msgid ""
 "    but rather the amount of these lines will be deduced from the lines they apply to during tax computation.\n"
 "    "
 msgstr ""
+"\n"
+"    taxclouds 계산에서 할인을 관리합니다.\n"
+"    See https://taxcloud.com/support/discounts or\n"
+"    https://service.taxcloud.net/hc/en-us/articles/360015649791-How-can-discounts-be-applied-\n"
+"\n"
+"    Summary: all seller-provided discounts must be applied to the Sales Price before calculating sales tax.\n"
+"    Sellers should disclose their methodology to customers in a Discount Application Policy.\n"
+"\n"
+"    The algorithm is as follows:\n"
+"     - line-specific discounts are applied first, on the lines they are supposed to apply to.\n"
+"       This means product-specific discounts or discounts on the cheapest line.\n"
+"     - Then global discounts are applied evenly across paid lines, as much as possible.\n"
+"       If there is a remainder, it is applied sequentially, in the order of the lines,\n"
+"       until there is either no discount left or no discountable line left.\n"
+"\n"
+"    Note that discount lines (with a negative price) will have no taxes applied to them,\n"
+"    but rather the amount of these lines will be deduced from the lines they apply to during tax computation.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_sale_coupon_taxcloud_delivery
@@ -1439,6 +1592,14 @@ msgid ""
 "    With Sale coupon delivery, the discount computation does not apply on delivery lines.\n"
 "    "
 msgstr ""
+"\n"
+"    taxclouds 계산의 배송으로 할인을 관리하십시오.\n"
+"    This module follows the same logic as \"Account Taxcloud - Sale (coupon)\".\n"
+"    More information can be found there on how dicount computations are made for TaxCloud.\n"
+"\n"
+"    There is an added option for discount (free shipping) on deliveries.\n"
+"    With Sale coupon delivery, the discount computation does not apply on delivery lines.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_timesheet_attendance
@@ -1460,6 +1621,11 @@ msgid ""
 "    Necessary master data is also included.\n"
 "    "
 msgstr ""
+"\n"
+"    노르웨이 SAF-T는 XML 형식을 사용하여 다양한 유형의 회계 트랜잭션 데이터를 내보내는 표준 파일 형식입니다.\n"
+"    The first version of the SAF-T Financial is limited to the general ledger level including customer and supplier transactions.\n"
+"    Necessary master data is also included.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_payment_payumoney
@@ -1520,6 +1686,9 @@ msgid ""
 "    Under Construction\n"
 "    "
 msgstr ""
+"\n"
+"    공사중\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_ebay
@@ -1593,7 +1762,7 @@ msgid ""
 "Setup\n"
 "-----\n"
 "\n"
-"- *Configuration > Journals*\n"
+"- *Account > Configuration > invoicing > Journals*\n"
 "\n"
 "    If needed, create new journal or choose an existing journal with **Type**\n"
 "    set to *“Bank”*.\n"
@@ -1602,28 +1771,9 @@ msgid ""
 "\n"
 "    On the **Bank Account** tab, enter the **Account Number**.\n"
 "\n"
-"- *Configuration > Bank Accounts*\n"
-"\n"
-"    Account will show up in list as the journal name.\n"
-"\n"
-"    Editing will show the **Account Number**.  This is important as it is used by\n"
-"    the ABA process.\n"
-"\n"
-"    **Bank** is optional.\n"
-"\n"
-"- *Sales > Configuration > Bank Accounts > Bank Accounts*\n"
-"\n"
-"    Account will show up in list as the account number.\n"
-"\n"
-"    **ABA Payments** - Set to *“Account for Making ABA Payments”*.\n"
+"    On the same tab, ensure the ABA transfer information is set up.\n"
 "\n"
 "    **BSB** - Required, 6 digits, and will be auto formatted.\n"
-"\n"
-"    **Account Holder** - Optional.\n"
-"\n"
-"    **Account / Payee Name** - Required.  Generally not validated by the banks\n"
-"    on ABA file transfers, and may show up on the payee bank statement against\n"
-"    the payment.\n"
 "\n"
 "    **Financial Institution Code** - Required (provided by bank or can be found\n"
 "    on Google).  It is three uppercase 3 characters.\n"
@@ -1632,30 +1782,42 @@ msgid ""
 "    may reject the ABA file if the Supplying User Name is not as expected.  It\n"
 "    cannot be longer than 26 characters.\n"
 "\n"
-"    **Identification Number (APCA)** - User Identification number is bank\n"
+"    **APCA Identification Number** - User Identification number is bank\n"
 "    allocated.  It is 6 digits.\n"
 "\n"
 "    **Include Self Balancing Transaction** - Some institutions require that the\n"
 "    last be a self balancing transaction which is used as a verification.\n"
 "\n"
+"- *Accounting > Configuration > Payments > Bank Accounts*\n"
+"\n"
+"    Account will show up in list as the journal name.\n"
+"\n"
+"    Editing will show the **Account Number**.  This is important as it is used by\n"
+"    the ABA process.\n"
+"\n"
+"    **Bank** is optional.\n"
+"\n"
+"- *Contacts > Configuration > Bank Accounts > Bank Accounts*\n"
+"\n"
+"    Paying account will show up in list as the account number.\n"
+"\n"
+"    **Account Holder Name** - Can be entered here, if Required.  Generally not\n"
+"    validated by the banks on ABA file transfers, but may show up on the payee\n"
+"    bank statement against the payment.\n"
+"\n"
 "- Vendor bank accounts can be set up in the same place, however, it is\n"
 "  generally easier to set them up from the partner from for the Vendor.\n"
 "\n"
-"- *Accounting > Purchases > Vendors*\n"
+"- *Accounting > Vendors > Vendors*\n"
 "\n"
-"    On **Sales & Purchases** tab, click on *\"Bank account(s)\"* from where a\n"
+"    On **Accounting** tab, click on *\"View accounts detail\"* from where a\n"
 "    vendor bank account can be created or edited.\n"
 "\n"
-"    **Account Number** - Required.\n"
-"\n"
-"    **ABA Payments** - Set to *“Allow ABA Payments to this Account”*.\n"
+"    **Account Number** - Required, must be less than 9 digits.\n"
 "\n"
 "    **BSB** - Required, 6 digits, and will be auto formatted.\n"
 "\n"
-"    **Account Holder** - Optional.\n"
-"\n"
-"    **Account / Payee Name** - Required.  Generally not validated by the\n"
-"    banks.\n"
+"    **Account Holder Name** - Optional.\n"
 "\n"
 "Use\n"
 "---\n"
@@ -1669,18 +1831,22 @@ msgid ""
 "    Select **ABA Credit Transfer** radio button.\n"
 "\n"
 "    If the vendor has multiple bank account, you may need to select the\n"
-"    correct **Recipient Bank Account**.\n"
+"    correct **Recipient Bank Account**.  Or if paying a vendor bill, it may\n"
+"    need the correct bank account associated with it.\n"
 "\n"
 "    Enter payment amount, etc.\n"
 "\n"
-"- *Purchases > Payments*\n"
+"- *Vendors > Payments*\n"
 "\n"
 "    After payment(s) are confirmed, they will show up in the payments list.\n"
 "\n"
 "    Using filters, or sorting, select the payments to be included.  Under\n"
-"    *Actions* choose *Download ABA Payment*.  A pop up appears with the ABA\n"
-"    file from which you can click on the file to download locally.  This\n"
-"    file can then be uploaded to the bank.\n"
+"    *Actions* choose *Create batch payment*.\n"
+"\n"
+"- *Vendors > Batch Payments*\n"
+"\n"
+"    When validating a batch payment, the ABA file will be generated.  It can\n"
+"    be regenerated.  This file can then be uploaded to the bank.\n"
 msgstr ""
 "\n"
 "ABA 신용 이체\n"
@@ -1693,7 +1859,7 @@ msgstr ""
 "Setup\n"
 "-----\n"
 "\n"
-"- *Configuration > Journals*\n"
+"- *Account > Configuration > invoicing > Journals*\n"
 "\n"
 "    If needed, create new journal or choose an existing journal with **Type**\n"
 "    set to *“Bank”*.\n"
@@ -1702,28 +1868,9 @@ msgstr ""
 "\n"
 "    On the **Bank Account** tab, enter the **Account Number**.\n"
 "\n"
-"- *Configuration > Bank Accounts*\n"
-"\n"
-"    Account will show up in list as the journal name.\n"
-"\n"
-"    Editing will show the **Account Number**.  This is important as it is used by\n"
-"    the ABA process.\n"
-"\n"
-"    **Bank** is optional.\n"
-"\n"
-"- *Sales > Configuration > Bank Accounts > Bank Accounts*\n"
-"\n"
-"    Account will show up in list as the account number.\n"
-"\n"
-"    **ABA Payments** - Set to *“Account for Making ABA Payments”*.\n"
+"    On the same tab, ensure the ABA transfer information is set up.\n"
 "\n"
 "    **BSB** - Required, 6 digits, and will be auto formatted.\n"
-"\n"
-"    **Account Holder** - Optional.\n"
-"\n"
-"    **Account / Payee Name** - Required.  Generally not validated by the banks\n"
-"    on ABA file transfers, and may show up on the payee bank statement against\n"
-"    the payment.\n"
 "\n"
 "    **Financial Institution Code** - Required (provided by bank or can be found\n"
 "    on Google).  It is three uppercase 3 characters.\n"
@@ -1732,30 +1879,42 @@ msgstr ""
 "    may reject the ABA file if the Supplying User Name is not as expected.  It\n"
 "    cannot be longer than 26 characters.\n"
 "\n"
-"    **Identification Number (APCA)** - User Identification number is bank\n"
+"    **APCA Identification Number** - User Identification number is bank\n"
 "    allocated.  It is 6 digits.\n"
 "\n"
 "    **Include Self Balancing Transaction** - Some institutions require that the\n"
 "    last be a self balancing transaction which is used as a verification.\n"
 "\n"
+"- *Accounting > Configuration > Payments > Bank Accounts*\n"
+"\n"
+"    Account will show up in list as the journal name.\n"
+"\n"
+"    Editing will show the **Account Number**.  This is important as it is used by\n"
+"    the ABA process.\n"
+"\n"
+"    **Bank** is optional.\n"
+"\n"
+"- *Contacts > Configuration > Bank Accounts > Bank Accounts*\n"
+"\n"
+"    Paying account will show up in list as the account number.\n"
+"\n"
+"    **Account Holder Name** - Can be entered here, if Required.  Generally not\n"
+"    validated by the banks on ABA file transfers, but may show up on the payee\n"
+"    bank statement against the payment.\n"
+"\n"
 "- Vendor bank accounts can be set up in the same place, however, it is\n"
 "  generally easier to set them up from the partner from for the Vendor.\n"
 "\n"
-"- *Accounting > Purchases > Vendors*\n"
+"- *Accounting > Vendors > Vendors*\n"
 "\n"
-"    On **Sales & Purchases** tab, click on *\"Bank account(s)\"* from where a\n"
+"    On **Accounting** tab, click on *\"View accounts detail\"* from where a\n"
 "    vendor bank account can be created or edited.\n"
 "\n"
-"    **Account Number** - Required.\n"
-"\n"
-"    **ABA Payments** - Set to *“Allow ABA Payments to this Account”*.\n"
+"    **Account Number** - Required, must be less than 9 digits.\n"
 "\n"
 "    **BSB** - Required, 6 digits, and will be auto formatted.\n"
 "\n"
-"    **Account Holder** - Optional.\n"
-"\n"
-"    **Account / Payee Name** - Required.  Generally not validated by the\n"
-"    banks.\n"
+"    **Account Holder Name** - Optional.\n"
 "\n"
 "Use\n"
 "---\n"
@@ -1769,18 +1928,22 @@ msgstr ""
 "    Select **ABA Credit Transfer** radio button.\n"
 "\n"
 "    If the vendor has multiple bank account, you may need to select the\n"
-"    correct **Recipient Bank Account**.\n"
+"    correct **Recipient Bank Account**.  Or if paying a vendor bill, it may\n"
+"    need the correct bank account associated with it.\n"
 "\n"
 "    Enter payment amount, etc.\n"
 "\n"
-"- *Purchases > Payments*\n"
+"- *Vendors > Payments*\n"
 "\n"
 "    After payment(s) are confirmed, they will show up in the payments list.\n"
 "\n"
 "    Using filters, or sorting, select the payments to be included.  Under\n"
-"    *Actions* choose *Download ABA Payment*.  A pop up appears with the ABA\n"
-"    file from which you can click on the file to download locally.  This\n"
-"    file can then be uploaded to the bank.\n"
+"    *Actions* choose *Create batch payment*.\n"
+"\n"
+"- *Vendors > Batch Payments*\n"
+"\n"
+"    When validating a batch payment, the ABA file will be generated.  It can\n"
+"    be regenerated.  This file can then be uploaded to the bank.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_account_auto_transfer
@@ -1887,6 +2050,10 @@ msgid ""
 "=================================\n"
 "    "
 msgstr ""
+"\n"
+"덴마크 회계 보고서\n"
+"=================================\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_fi_reports
@@ -1897,6 +2064,11 @@ msgid ""
 "\n"
 "    "
 msgstr ""
+"\n"
+"핀란드 회계 보고서\n"
+"================================\n"
+"\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_fr_reports
@@ -1973,6 +2145,17 @@ msgid ""
 "For Vendor Bill support for Default Vendor Specific OCR is added and validation for OCR.\n"
 "    "
 msgstr ""
+"\n"
+"고객 송장 및 공급업체 청구서에 구조화된 커뮤니케이션 추가\n"
+"------------------------------------------------------------------\n"
+"\n"
+"OCR 구조적 커뮤니케이션을 사용하면 송장과 지불 간의 조정이 단순화됩니다.\n"
+"\n"
+"OCR 레벨 1-4에 대한 고객 송장 지원의 경우 OCR 번호는 파트너 또는\n"
+"송장.\n"
+"\n"
+"공급 업체의 경우 기본 공급 업체별 OCR에 대한 Bill 지원이 추가되고 OCR에 대한 유효성 검사가 추가됩니다.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_ar_reports
@@ -1984,6 +2167,12 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
+"\n"
+"아르헨티나의 법적 요구 사항이며 일정 기간 동안 이루어진 판매 또는 구매에 대한 VAT 세부 정보를 보유한 VAT 도서 보고서를 추가하십시오.\n"
+"\n"
+"Also add a VAT summary report that is used to analyze invoicing\n"
+"\n"
+"\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_contract_reports
@@ -2644,6 +2833,11 @@ msgid ""
 "This is meant to be used with localization specific modules.\n"
 "    "
 msgstr ""
+"\n"
+"SAF-T보고를 위한 기본 모듈\n"
+"===============================\n"
+"이는 현지화 특정 모듈과 함께 사용하기 위한 것입니다.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_br
@@ -2801,6 +2995,25 @@ msgid ""
 "No modified version is certified and supported by Odoo SA.\n"
 "    "
 msgstr ""
+"\n"
+"벨기에 등록 금전 등록기\n"
+"================================\n"
+"\n"
+"This module turns the Point Of Sale module into a certified Belgian cash register.\n"
+"\n"
+"More info:\n"
+"  * http://www.systemedecaisseenregistreuse.be/\n"
+"  * http://www.geregistreerdkassasysteem.be/\n"
+"\n"
+"Legal\n"
+"-----\n"
+"**The use of pos_blackbox_be sources is only certified on odoo.com SaaS platform\n"
+"for version 13.0.** Contact Odoo SA before installing pos_blackbox_be module.\n"
+"\n"
+"An obfuscated and certified version of the pos_blackbox_be may be provided on\n"
+"requests for on-premise installations.\n"
+"No modified version is certified and supported by Odoo SA.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_bo
@@ -2913,6 +3126,10 @@ msgid ""
 "=================================\n"
 "    "
 msgstr ""
+"\n"
+"회계 보고서의 현금주의\n"
+"=================================\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_skills_survey
@@ -3642,6 +3859,10 @@ msgid ""
 "============================================\n"
 "    "
 msgstr ""
+"\n"
+"룩셈부르크 전자 회계 보고서\n"
+"============================================\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_documents_hr_contract
@@ -3867,6 +4088,74 @@ msgid ""
 "For Development information go to http://www.afip.gob.ar/fe/documentos/WSBFEv1%20-%20Manual%20para%20el%20desarrollador.pdf\n"
 "\n"
 msgstr ""
+"\n"
+"기능\n"
+"----------\n"
+"\n"
+"Odoo에서 저널을 생성하여 전자 고객 송장을 작성한 후 (웹서버를 통해) AFP에 보고할 수 있습니다.\n"
+"사용 가능한 옵션은 다음과 같습니다 : \n"
+"\n"
+"    * Electronic Invoice - Web Service\n"
+"    * Export Voucher - Web Service\n"
+"    * Electronic Fiscal Bond - Web Service\n"
+"\n"
+"In the electronic journals if you validate an invoice this one will be validated in both Odoo and AFIP. This validation is\n"
+"made at the instant and we recieve and \"approved/approved with observation/rejected\" state from AFIP. If the invoice has\n"
+"been rejected by AFIP will not be post in the system and a pop up message will be shown with both the error detail (reject reasons)\n"
+"we recieve and a HINT about what the problem could be.\n"
+"\n"
+"For auditing and troubleshooting purposes we also add a menu \"Consulit Invoice in AFIP\" that let us to consult invoices previously\n"
+"sent to AFIP and last number used as support for any possible issues on the sequences synchronization between Odoo and AFIP.\n"
+"\n"
+"    NOTE: From the Journal's form view we are able to force a sync between the odoo sequences to each of the document types in\n"
+"    with the last numbers registered in AFIP.\n"
+"\n"
+"From vendor bills, we have added a functionality that can be configured in the accounting settings to be able to verify\n"
+"vendor bills in AFIP to check if the vendor bills are real (more information please review the setting description).\n"
+"\n"
+"Configuration:\n"
+"\n"
+"1. Go to the Accounting Settings > Argentinian Localization section\n"
+"\n"
+"    1.1. Configure the AFIP Web Services mode:\n"
+"\n"
+"    * Testing environment in order to use demo certificates that will be use to test the instance and to make NOT\n"
+"      real invoices to AFIP. is just for testing. For demo instaces is already pre-defined you will not need to configure\n"
+"      it (commonly named in AFIP as Homologation environment).\n"
+"    * Production environment in order to generate real certificates and legal invoices to AFIP,\n"
+"\n"
+"    1.2. Configure your AFIP Certificate: If you are in a demo instance this one will be have been set by default. If you\n"
+"         are in production instance just need to go to upload your AFIP Certificate\n"
+"\n"
+"    1.3. Optionally you can define if you like to be eable to verify vendor bills in AFIP.\n"
+"\n"
+"2. Create Sales journals that will represent each one of your AFIP POS (Available in AFIP Portal) you want to use in Odoo.\n"
+"\n"
+"    2.1. Use Documents field is set by default please dont change\n"
+"    2.2. Set AFIP POS System for one of the electronic ones.\n"
+"\n"
+"        * Electronic Invoice - Web Service'\n"
+"        * Electronic Fiscal Bond - Web Service'\n"
+"        * Export Voucher - Web Service'\n"
+"\n"
+"    2.3. Set the AFIP POS Number and AFIP POS Address taking into account what you have configured in your AFIP Portal.\n"
+"\n"
+"    NOTE: You can use the \"Check Available AFIP POS\" button in Journal's form to corroborate the to use to create the journals.\n"
+"\n"
+"For more information about Argentinian Electronic invoicing please go to http://www.afip.gob.ar/fe/ayuda.asp\n"
+"\n"
+"Technical\n"
+"---------\n"
+"\n"
+"The web services that are implemented are the ones that are the most common:\n"
+"\n"
+"* wsfev1 - \"Factura Electrónica\" (Electronic Invoice)\n"
+"* wsbfev1 - \"Bono Fiscal Electrónico\" (Electronic Fiscal Bond)\n"
+"* wsfexv1 - \"Factura de Exportación Electrónica\" (Electronic Exportation Invoice - same as Export Voucher)\n"
+"* wscdc - \"Constatación de Comprobantes\" (Invoices Verification)\n"
+"\n"
+"For Development information go to http://www.afip.gob.ar/fe/documentos/WSBFEv1%20-%20Manual%20para%20el%20desarrollador.pdf\n"
+"\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_latam_invoice_document
@@ -4352,6 +4641,11 @@ msgid ""
 "The wizard used is similar as the one for the credit note.\n"
 "    "
 msgstr ""
+"\n"
+"많은 국가에서 차변표는 기존 송장의 금액을 증가시키거나 \n"
+"대변표를 취소하기 위해 특정 경우에 사용됩니다.\n"
+"일반 송장과 같지만, 원본 송장과의 링크를 계속 추적해야 합니다.\n"
+"사용된 마법사는 대변표에 사용되는 마법사와 유사합니다."
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_cn
@@ -6721,6 +7015,17 @@ msgid ""
 "Set the payment reference type from the Sales Journal.\n"
 "    "
 msgstr ""
+"\n"
+"핀란드 회계 관리를 위한 Odoo 모듈입니다.\n"
+"============================================================\n"
+"\n"
+"After installing this module, you'll have access to :\n"
+"    * Finnish chart of account\n"
+"    * Fiscal positions\n"
+"    * Invoice Payment Reference Types (Finnish Standard Reference & Finnish Creditor Reference (RF))\n"
+"\n"
+"Set the payment reference type from the Sales Journal.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_uom
@@ -6994,6 +7299,11 @@ msgid ""
 "    - generic Indonesian chart of accounts\n"
 "    - tax structure"
 msgstr ""
+"\n"
+"다음은 중소기업을위한 Odoo 회계를 실행하는 데 필요한 최신 인도네시아 Odoo 현지화입니다 :\n"
+"=================================================================================================\n"
+"    - generic Indonesian chart of accounts\n"
+"    - tax structure"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_uk
@@ -7026,6 +7336,14 @@ msgid ""
 " - Israelian taxes\n"
 " "
 msgstr ""
+"\n"
+"이것은 이스라엘에서 Odoo를 운영하는 데 필요한 최신 기본 이스라엘 현지화입니다 :\n"
+"================================================================================\n"
+"\n"
+"This module consists:\n"
+" - Generic Israelian chart of accounts\n"
+" - Israelian taxes\n"
+" "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_za
@@ -7155,6 +7473,10 @@ msgid ""
 "======================================================================\n"
 "This module applies to companies based in Algeria.\n"
 msgstr ""
+"\n"
+"Odoo의 알제리에 대한 회계 계정을 관리하는 모듈입니다.\n"
+"======================================================================\n"
+"This module applies to companies based in Algeria.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_fr
@@ -7441,6 +7763,9 @@ msgid ""
 "This module allows Employees (and not users) to log in to the Point of Sale application using the fiscal data module\n"
 "    "
 msgstr ""
+"\n"
+"이 모듈을 사용하면 직원이 아닌 사용자가 회계 데이터 모듈을 사용하여 POS (Point of Sale) 응용 프로그램에 로그인 할 수 있습니다\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_rating
@@ -7480,6 +7805,9 @@ msgid ""
 "This module allows to configure commissions for resellers.\n"
 "    "
 msgstr ""
+"\n"
+"이 모듈을 사용하면 리셀러를 위한 커미션을 구성할 수 있습니다.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_base_automation
@@ -7743,6 +8071,8 @@ msgid ""
 "\n"
 "This module enables the pairing of the IoT Box with Odoo through odoo.com.\n"
 msgstr ""
+"\n"
+"이 모듈은 odoo.com을 통해 IoT Box와 Odoo를 페어링 할 수 있습니다.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_sms
@@ -7906,6 +8236,12 @@ msgid ""
 "As we don't want existing users to keep adding their personal accounts to remove them later, we add a technical\n"
 "module in order to minimize impact and support.\n"
 msgstr ""
+"\n"
+"이 모듈은 회사 페이지에 대한 지원을 추가하고 개인 계정에 대한 지원을 제거하려고합니다.\n"
+"이것은 완전한 \"스트림\"지원을 허용하는 social_linkedin 모듈의 다음 반복을 준비하기 위해 수행됩니다.\n"
+"즉, 게시물을 읽을 수있을 뿐만 아니라 게시할 수 있으며 회사 계정에만 해당됩니다.\n"
+"기존 사용자가 개인 계정을 계속 추가하여 나중에 제거하지 않도록 하기 때문에 영향과 지원을 최소화하기 위해 \n"
+"기술 모듈을 추가합니다.\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_association
@@ -8761,6 +9097,16 @@ msgid ", required"
 msgstr ", 필수"
 
 #. module: base
+#: code:addons/models.py:0
+#, python-format
+msgid ""
+"- %(record)r belongs to company %(company)r and %(field)r (%(fname)s: "
+"%(values)s) belongs to another company."
+msgstr ""
+"- %(record)r 은 %(company)r 회사에 소속되고 %(field)r (%(fname)s: %(values)s) 은 다른 "
+"회사에 소속되어 있습니다."
+
+#. module: base
 #: code:addons/model.py:0
 #, python-format
 msgid ""
@@ -8769,6 +9115,16 @@ msgid ""
 msgstr ""
 "- 생성 / 업데이트 : 필수 필드가 설정되지 않았습니다.\n"
 "- 삭제 : 다른 모델에서 레코드를 삭제해야 합니다. 가능하면 삭제 대신 보관하십시오."
+
+#. module: base
+#: code:addons/models.py:0
+#, python-format
+msgid ""
+"- Record is company %(company)r and %(field)r (%(fname)s: %(values)s) "
+"belongs to another company."
+msgstr ""
+"- 레코드는 %(company)r 회사이고  %(field)r (%(fname)s: %(values)s)은 다른 회사에 소속되어 "
+"있습니다."
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -8875,6 +9231,12 @@ msgid ""
 "… Understanding of commercial and logistical processes in your business and engaging your staff and efficient use of resources.<br><br>\n"
 "Above all, you need a reliable and professional advisors / companions who will listen, your challenges seriously and will implement it in your senses. And without you fool with limit time and on budget, an X for a U. Welcome to Federal"
 msgstr ""
+"ERP 프로젝트 이행을위한 파트너로 오늘 Federal을 선택해야하는 3 가지 이유 :\n"
+"Firstly, you have a software specialist, secondly, a hardware and performance specialist AND thirdly a business economist with expertise in project management. And what does this mean for you? It's simple ...<br>\n"
+"… Your individual requirements are mapped into the standard software<br>\n"
+"… professional design of the optimal sizing for your system landscape<br>\n"
+"… Understanding of commercial and logistical processes in your business and engaging your staff and efficient use of resources.<br><br>\n"
+"Above all, you need a reliable and professional advisors / companions who will listen, your challenges seriously and will implement it in your senses. And without you fool with limit time and on budget, an X for a U. Welcome to Federal"
 
 #. module: base
 #: model:res.partner,website_short_description:base.res_partner_1
@@ -8884,6 +9246,8 @@ msgid ""
 " secondly, a hardware and performance specialist AND thirdly a business "
 "economist with expertise in project management. And..."
 msgstr ""
+"오늘 ERP 프로젝트를 구현하기위한 파트너로 Federal을 선택해야하는 3 가지 이유 : 첫째, 소프트웨어 전문가, 둘째, 하드웨어 및"
+" 성능 전문가, 그리고 세 번째로 프로젝트 관리에 대한 전문 지식을 갖춘 비즈니스 경제학자입니다."
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.res_lang_form
@@ -8949,6 +9313,9 @@ msgid ""
 " \n"
 "The Jackson Group’s Odoo consulting services include: <br>"
 msgstr ""
+"<br><br>\n"
+" \n"
+"Jackson Group의 Odoo 컨설팅 서비스는 다음과 같습니다 : <br>"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_server_action_form
@@ -9540,7 +9907,7 @@ msgstr ""
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_10
 msgid "A highly-responsive support model"
-msgstr ""
+msgstr "반응이 빠른 지원 모델"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_hw_posbox_homepage
@@ -9586,7 +9953,7 @@ msgstr "번역 가져오기를 시험하는 모듈입니다."
 #. module: base
 #: model:ir.module.module,description:base.module_test_xlsx_export
 msgid "A module to test xlsx export."
-msgstr ""
+msgstr "xlsx 내보내기를 테스트하기 위한 모듈입니다."
 
 #. module: base
 #: model:ir.module.module,description:base.module_test_assetsbundle
@@ -9627,7 +9994,7 @@ msgstr ""
 #: model_terms:res.partner,website_description:base.res_partner_10
 msgid ""
 "A strategy that drives US Localization and adds new capabilities to Odoo"
-msgstr ""
+msgstr "미국 현지화를 주도하고 Odoo에 새로운 기능을 추가하는 전략"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_base_partner_merge_automatic_wizard__exclude_contact
@@ -9771,7 +10138,7 @@ msgstr "개인 주소 사용"
 #: code:addons/api.py:0 code:addons/api.py:0
 #, python-format
 msgid "Access to unauthorized or invalid companies."
-msgstr ""
+msgstr "무단 또는 무효 회사에 대한 액세스"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_analytic_default
@@ -9836,7 +10203,7 @@ msgstr "계정 청구서 추출"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_invoice_extract_purchase
 msgid "Account Invoice Extract Purchase"
-msgstr ""
+msgstr "계정 송장 추출 구매"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_company__account_no
@@ -9871,12 +10238,12 @@ msgstr "TaxCloud 계정 - 판매"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_coupon_taxcloud
 msgid "Account Taxcloud - Sale (coupon)"
-msgstr ""
+msgstr "Taxcloud 계정 - 판매(쿠폰)"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_coupon_taxcloud_delivery
 msgid "Account Taxcloud - Sale (coupon) - Delivery"
-msgstr ""
+msgstr "Taxcloud 계정 - 판매(쿠폰) - 배송"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_winbooks_import
@@ -10150,7 +10517,7 @@ msgstr "바코드 스캔 기능을 이벤트 관리에 추가합니다."
 #. module: base
 #: model:ir.module.module,summary:base.module_account_reports_cash_basis
 msgid "Add cash basis functionality for reports"
-msgstr ""
+msgstr "보고서에 현금 기반 기능 추가"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_slides_survey
@@ -10225,7 +10592,7 @@ msgstr "주소"
 #. module: base
 #: model:ir.model,name:base.model_format_address_mixin
 msgid "Address Format"
-msgstr ""
+msgstr "주소 형식"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_partner__type
@@ -10319,6 +10686,72 @@ msgid ""
 "         user with the same login (and a blank password), then rename this new\n"
 "         user to a username that does not exist in LDAP, and setup its groups\n"
 msgstr ""
+"LDAP 서버에 의한 인증 지원을 추가합니다.\n"
+"===============================================\n"
+"This module allows users to login with their LDAP username and password, and\n"
+"will automatically create Odoo users for them on the fly.\n"
+"\n"
+"**Note:** This module only work on servers that have Python's ``python-ldap`` module installed.\n"
+"\n"
+"Configuration:\n"
+"--------------\n"
+"After installing this module, you need to configure the LDAP parameters in the\n"
+"General Settings menu. Different companies may have different\n"
+"LDAP servers, as long as they have unique usernames (usernames need to be unique\n"
+"in Odoo, even across multiple companies).\n"
+"\n"
+"Anonymous LDAP binding is also supported (for LDAP servers that allow it), by\n"
+"simply keeping the LDAP user and password empty in the LDAP configuration.\n"
+"This does not allow anonymous authentication for users, it is only for the master\n"
+"LDAP account that is used to verify if a user exists before attempting to\n"
+"authenticate it.\n"
+"\n"
+"Securing the connection with STARTTLS is available for LDAP servers supporting\n"
+"it, by enabling the TLS option in the LDAP configuration.\n"
+"\n"
+"For further options configuring the LDAP settings, refer to the ldap.conf\n"
+"manpage: manpage:`ldap.conf(5)`.\n"
+"\n"
+"Security Considerations:\n"
+"------------------------\n"
+"Users' LDAP passwords are never stored in the Odoo database, the LDAP server\n"
+"is queried whenever a user needs to be authenticated. No duplication of the\n"
+"password occurs, and passwords are managed in one place only.\n"
+"\n"
+"Odoo does not manage password changes in the LDAP, so any change of password\n"
+"should be conducted by other means in the LDAP directory directly (for LDAP users).\n"
+"\n"
+"It is also possible to have local Odoo users in the database along with\n"
+"LDAP-authenticated users (the Administrator account is one obvious example).\n"
+"\n"
+"Here is how it works:\n"
+"---------------------\n"
+"    * The system first attempts to authenticate users against the local Odoo\n"
+"      database;\n"
+"    * if this authentication fails (for example because the user has no local\n"
+"      password), the system then attempts to authenticate against LDAP;\n"
+"\n"
+"As LDAP users have blank passwords by default in the local Odoo database\n"
+"(which means no access), the first step always fails and the LDAP server is\n"
+"queried to do the authentication.\n"
+"\n"
+"Enabling STARTTLS ensures that the authentication query to the LDAP server is\n"
+"encrypted.\n"
+"\n"
+"User Template:\n"
+"--------------\n"
+"In the LDAP configuration on the General Settings, it is possible to select a *User\n"
+"Template*. If set, this user will be used as template to create the local users\n"
+"whenever someone authenticates for the first time via LDAP authentication. This\n"
+"allows pre-setting the default groups and menus of the first-time users.\n"
+"\n"
+"**Warning:** if you set a password for the user template, this password will be\n"
+"         assigned as local password for each new LDAP user, effectively setting\n"
+"         a *master password* for these users (until manually changed). You\n"
+"         usually do not want this. One easy way to setup a template user is to\n"
+"         login once with a valid LDAP user, let Odoo create a blank local\n"
+"         user with the same login (and a blank password), then rename this new\n"
+"         user to a username that does not exist in LDAP, and setup its groups\n"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_administration
@@ -10451,7 +10884,7 @@ msgstr "알제리아"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_dz
 msgid "Algeria - Accounting"
-msgstr ""
+msgstr "알제리 - 회계"
 
 #. module: base
 #: model:ir.module.module,description:base.module_payment_alipay
@@ -10524,7 +10957,7 @@ msgstr "구매자가 제품을 장바구니에 담도록 허용"
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_cash_rounding
 msgid "Allow specific rounding in pos"
-msgstr ""
+msgstr "pos에서 특정 반올림 허용"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_mail_channel
@@ -10534,12 +10967,12 @@ msgstr "방문자가 공개 메일 채널에 가입하도록 허용"
 #. module: base
 #: model:ir.module.module,summary:base.module_odoo_referral
 msgid "Allow you to refer your friends to Odoo and get rewards"
-msgstr ""
+msgstr "친구에게 Odoo를 추천하고 보상을 받도록 허용"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_odoo_referral_portal
 msgid "Allow you to refer your friends to Odoo and get rewards - Deprecated"
-msgstr ""
+msgstr "친구에게 Odoo를 추천하고 보상을 받도록 허용 - 더 이상 사용되지 않음"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_users_form
@@ -10868,7 +11301,7 @@ msgstr "아르헨티나 회계 보고서"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_ar_edi
 msgid "Argentinian Electronic Invoicing"
-msgstr ""
+msgstr "아르헨티나 전자 송장"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_actions_client__params
@@ -11065,7 +11498,7 @@ msgstr "다운로드한 앱의 자동 설치가 현재 비활성화되어 있습
 msgid ""
 "Automatically finds the purchase order linked to a vendor bill when using "
 "invoice extraction"
-msgstr ""
+msgstr "송장 추출 사용시 공급업체 청구서에 연결된 구매 주문을 자동으로 찾습니다."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_translation__state
@@ -11096,6 +11529,8 @@ msgid ""
 "Axelor is a service company specializing in the integration of Open Source ERP. She is co-editor including the web version of Odoo and concentrates all its activities to Odoo integration and implementation of supply Saas (ASP) based on Odoo. Axelor can now claim many references to Odoo implementations in various industries.<br> <br>\n"
 "The company has its own R&amp;D performing many innovations to the continuous improvement of Odoo, such as the new web version, the plug-in MS Office and connectors to other applications. Its main advantages are its integration methodology and rigor to the management of major projects for the audit and design phase up to production and customer support."
 msgstr ""
+"Axelor는 오픈 소스 ERP 통합을 전문으로하는 서비스 회사입니다. She is co-editor including the web version of Odoo and concentrates all its activities to Odoo integration and implementation of supply Saas (ASP) based on Odoo. Axelor can now claim many references to Odoo implementations in various industries.<br> <br>\n"
+"The company has its own R&amp;D performing many innovations to the continuous improvement of Odoo, such as the new web version, the plug-in MS Office and connectors to other applications. Its main advantages are its integration methodology and rigor to the management of major projects for the audit and design phase up to production and customer support."
 
 #. module: base
 #: model:res.partner,website_short_description:base.res_partner_2
@@ -11104,6 +11539,8 @@ msgid ""
 "ERP. She is co-editor including the web version of Odoo and concentrates all"
 " its activities to Odoo integration and implementation of supply..."
 msgstr ""
+"Axelor는 오픈 소스 ERP 통합을 전문으로 하는 서비스 회사입니다. 그녀는 Odoo의 웹 버전을 포함하여 공동 편집자이며 모든 "
+"활동을 Odoo 통합 및 공급 구현에 집중합니다 ..."
 
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_address_16
@@ -11114,6 +11551,11 @@ msgid ""
 "                from 1 to 55 employees mostly by reselling services on\n"
 "                Odoo."
 msgstr ""
+"Ayaan은 <b>20년 전</b>부터 IT 분야에 종사하고 있습니다. He\n"
+"                develops software to help develop websites.  He sold his\n"
+"                first company at 30 years old and manage to grow OpenCorp\n"
+"                from 1 to 55 employees mostly by reselling services on\n"
+"                Odoo."
 
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_address_16
@@ -11121,6 +11563,8 @@ msgid ""
 "Ayaan is the <b>author of several books</b>, including Amazon best seller\n"
 "                \"How Odoo will change the business world!\"."
 msgstr ""
+"아얀은 아마존 베스트셀러를 포함한 <b>여러 책의 저자</b>이다.\n"
+"                 \"Odoo가 재계를 어떻게 변화시킬까요!\""
 
 #. module: base
 #: model:res.country,name:base.az
@@ -11430,7 +11874,7 @@ msgstr "벨기에 등록된 현금 등록기"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pos_hr_l10n_be
 msgid "Belgian Registered Cash Register Employee module"
-msgstr ""
+msgstr "벨기에 등록 금전 등록기 직원 모듈"
 
 #. module: base
 #: model:res.country,name:base.be
@@ -11501,6 +11945,11 @@ msgid ""
 "<br><br>\n"
 "Best Designers has now emerged serving the Small and Medium Business – SMB’s with lots of Free and Open Source Software's, Our team is proficient to deliver quick and quality solutions. With a blend of experts with proven track record, our enterprise solution Business Consultants, ERP Consultants, Network Engineers, Software Developers, Web Architects, Software Testers and Search Engine Optimizers makes it possible to offer our clients affordable solutions that are both innovative and highly influential."
 msgstr ""
+"Best Designers는 인도 뭄바이에 본사를 둔 3명의 업계 전문가가 설립한 IT 서비스 조직입니다. The organization serve customers with Open Source Enterprise Software applications. We are specialized in <b>ERP Implementation, CRM Implementation, E-Commerce to ERP Integrations, Document Management Systems and Open Source Training.</b> Our key products include <b>Odoo, Alfresco and Magento.</b> Our core objective is to deliver quality in <b>Odoo Implementation Services</b> incorporating supreme value to enterprises globally, at an affordable price. Our experience in managing projects right from selecting tools and platforms to implement solutions has shown results in <b>Reducing IT Budgets for SME making Technology Affordable. </b>\n"
+" <br> <br>\n"
+"Our ERP expertise is since 2005 and we mainly focus on Odoo Implementation across the globe, being an <b>Off-shore Development Partner from India</b>, we are also associated with other Odoo Partners across the globe to implement Odoo Business Applications. In order to provide world class ERP, E–Commerce and Enterprise Solutions, we have designed innovative Implementation Methodologies and concepts, which help us provide reliable business solutions that meet present as well as future demands.\n"
+"<br><br>\n"
+"Best Designers has now emerged serving the Small and Medium Business – SMB’s with lots of Free and Open Source Software's, Our team is proficient to deliver quick and quality solutions. With a blend of experts with proven track record, our enterprise solution Business Consultants, ERP Consultants, Network Engineers, Software Developers, Web Architects, Software Testers and Search Engine Optimizers makes it possible to offer our clients affordable solutions that are both innovative and highly influential."
 
 #. module: base
 #: model:res.partner,website_short_description:base.res_partner_12
@@ -11509,6 +11958,8 @@ msgid ""
 "experts headquartered at Mumbai, India. The organization serve customers "
 "with Open Source Enterprise Software applications. We are specialized in..."
 msgstr ""
+"Best Designers는 인도 뭄바이에 본사를 둔 3명의 업계 전문가가 설립한 IT 서비스 조직입니다. 조직은 고객에게 오픈 소스 "
+"엔터프라이즈 소프트웨어 애플리케이션을 제공합니다. 우리는 전문적인 ..."
 
 #. module: base
 #: model:res.country,name:base.bt
@@ -11884,6 +12335,12 @@ msgstr "이름만으로는 새 '%s' 레코드를 만들 수 없습니다. 이러
 #. module: base
 #: code:addons/base/models/res_lang.py:0
 #, python-format
+msgid "Cannot deactivate a language that is currently used by contacts."
+msgstr ""
+
+#. module: base
+#: code:addons/base/models/res_lang.py:0
+#, python-format
 msgid "Cannot deactivate a language that is currently used by users."
 msgstr "현재 사용자가 사용하고 있는 언어는 비활성화할 수 없습니다."
 
@@ -11912,7 +12369,7 @@ msgstr "계단식"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_reports_cash_basis
 msgid "Cash Basis Accounting Reports"
-msgstr ""
+msgstr "현금주의 회계 보고서"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_module_module__category_id
@@ -12256,7 +12713,7 @@ msgstr "콜롬비아 - 회계 보고서"
 #: model:ir.module.module,description:base.module_l10n_co_pos
 #: model:ir.module.module,shortdesc:base.module_l10n_co_pos
 msgid "Colombian - Point of Sale"
-msgstr ""
+msgstr "콜롬비아 - 점포판매시스템"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_co
@@ -12271,7 +12728,7 @@ msgstr "콜롬비아 EDI 문서에 대한 현지화"
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_co_edi_ubl_2_1
 msgid "Colombian Localization for EDI documents UBL 2.1"
-msgstr ""
+msgstr "EDI 문서 UBL 2.1에 대한 콜롬비아 현지화"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_groups__color
@@ -12565,7 +13022,7 @@ msgstr "마법사 환경 설정"
 #. module: base
 #: model:ir.module.module,summary:base.module_partner_commission
 msgid "Configure resellers commissions on subscription sale"
-msgstr ""
+msgstr "구독 판매시 리셀러 수수료 구성"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_timesheet_enterprise
@@ -13451,7 +13908,7 @@ msgstr "대시보드"
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_10
 msgid "Data Migration"
-msgstr ""
+msgstr "데이터 마이그레이션"
 
 #. module: base
 #: model:ir.module.module,description:base.module_test_convert
@@ -13570,7 +14027,7 @@ msgstr "일"
 #: model:ir.module.module,shortdesc:base.module_account_debit_note
 #: model:ir.module.module,summary:base.module_account_debit_note
 msgid "Debit Notes"
-msgstr ""
+msgstr "차변표"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_mail_server__smtp_debug
@@ -13748,12 +14205,12 @@ msgstr "덴마크"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_dk
 msgid "Denmark - Accounting"
-msgstr ""
+msgstr "덴마크 - 회계"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_dk_reports
 msgid "Denmark - Accounting Reports"
-msgstr ""
+msgstr "덴마크 - 회계 보고서"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_fields__depends
@@ -14235,7 +14692,7 @@ msgstr "도메인 값"
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_10
 msgid "Domestic US, near-shore and offshore based resources"
-msgstr ""
+msgstr "미국 국내, 근해 및 근해 기반 자원"
 
 #. module: base
 #: model:res.country,name:base.dm
@@ -14465,7 +14922,7 @@ msgstr "Carvajal과 함께 콜롬비아를 위한 전자 청구서"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_co_edi_ubl_2_1
 msgid "Electronic invoicing for Colombia with Carvajal UBL 2.1"
-msgstr ""
+msgstr "Carvajal UBL 2.1을 사용한 콜롬비아 전자 송장"
 
 #. module: base
 #: code:addons/template_inheritance.py:0 code:addons/template_inheritance.py:0
@@ -14816,7 +15273,7 @@ msgstr "급여 명세서 상의 비용"
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_10
 msgid "Experienced consulting services"
-msgstr ""
+msgstr "경험이 풍부한 컨설팅 서비스"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_report_paperformat__report_ids
@@ -15290,6 +15747,12 @@ msgid ""
 "Technical Details:\n"
 "%s"
 msgstr ""
+"잘못된 파일로 인해 파일 %r 을(를) 가져 오지 못했습니다.\n"
+"\n"
+"이 문제는 동일한 필드를 참조하는 중복 항목으로 인해 발생할 수 있습니다. 가져 오려는 파일의 내용을 확인하십시오.\n"
+"\n"
+"기술적 세부 사항:\n"
+"%s"
 
 #. module: base
 #: code:addons/base/wizard/base_import_language.py:0
@@ -15408,12 +15871,12 @@ msgstr "핀란드"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_fi_reports
 msgid "Finland - Accounting Reports"
-msgstr ""
+msgstr "핀란드 - 회계 보고서"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_fi
 msgid "Finnish Localization"
-msgstr ""
+msgstr "핀란드 현지화"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_lang__week_start
@@ -15592,7 +16055,7 @@ msgstr "강좌 포럼"
 msgid ""
 "Found more than 10 errors and more than one error per 10 records, "
 "interrupted to avoid showing too many errors."
-msgstr ""
+msgstr "10 개 이상의 오류와 10 개의 레코드 당 하나 이상의 오류가 발견되어 너무 많은 오류가 표시되지 않도록 중단되었습니다."
 
 #. module: base
 #: code:addons/base/models/ir_fields.py:0
@@ -15950,6 +16413,8 @@ msgid ""
 "competitive advantage through Free and Open Source software. Our experienced"
 " team can provide strategic advice, implementation, integration with exis..."
 msgstr ""
+"글로벌 솔루션은 모든 형태와 규모의 조직이 무료 및 오픈 소스 소프트웨어를 통해 경쟁 우위를 확보하도록 돕습니다. 우리의 경험이 풍부한 "
+"팀은 전략적 조언, 구현 등의 통합을 제공할 수 있습니다"
 
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_4
@@ -15958,6 +16423,9 @@ msgid ""
 " <br> <br>\n"
 "Founded in 2006, our clients range from SMEs to globally recognised brands and public sector organisations."
 msgstr ""
+"글로벌 솔루션은 모든 형태와 규모의 조직이 무료 및 오픈 소스 소프트웨어를 통해 경쟁 우위를 확보하도록 돕습니다. Our experienced team can provide strategic advice, implementation, integration with existing systems, hosting and support services for a wide range of open source applications. Working with our customers Global Solutions helps to select and deliver best-of-breed solutions using Open Source products. Key skills and partnerships include Ubuntu, vtiger CRM, OpenEMM, Alfresco and of course Odoo.\n"
+" <br> <br>\n"
+"Founded in 2006, our clients range from SMEs to globally recognised brands and public sector organisations."
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_rule_form
@@ -17042,7 +17510,7 @@ msgstr "구현"
 #: model_terms:res.partner,website_description:base.res_partner_10
 msgid ""
 "Implementation and Configuration (on-premise or on-demand environments)"
-msgstr ""
+msgstr "구현 및 환경 설정 (온-프레미스 또는 온 디맨드 환경)"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_base_sparse_field
@@ -17054,7 +17522,7 @@ msgstr "스파스 필드 구현"
 msgid ""
 "Implementations of feature rich, extensible, and cost-effective Open Source "
 "software (Odoo)"
-msgstr ""
+msgstr "풍부하고 확장 가능하며 비용 효율적인 기능의 오픈 소스 소프트웨어 (Odoo) 구현"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_blackbox_be
@@ -17222,12 +17690,12 @@ msgstr "인도네시아"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_id_efaktur
 msgid "Indonesia E-faktur"
-msgstr ""
+msgstr "인도네시아 전자 팩스"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_id
 msgid "Indonesian - Accounting"
-msgstr ""
+msgstr "인도네시아 - 회계"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.res_partner_industry_action
@@ -17385,7 +17853,7 @@ msgstr "쿠폰 메커니즘과 배송 비용을 통합합니다."
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_six
 msgid "Integrate your POS with a Six payment terminal"
-msgstr ""
+msgstr "6개의 결제 터미널과 POS 통합"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_adyen
@@ -17647,12 +18115,12 @@ msgstr "IoT Box 홈페이지"
 #. module: base
 #: model:ir.module.module,summary:base.module_iot_pairing
 msgid "IoT Box pairing through odoo.com."
-msgstr ""
+msgstr "odoo.com을 통한 IoT Box 페어링."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_iot_pairing
 msgid "IoT Pairing"
-msgstr ""
+msgstr "IoT 페어링"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mrp_workorder_iot
@@ -17713,7 +18181,7 @@ msgstr "이스라엘"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_il
 msgid "Israel - Accounting"
-msgstr ""
+msgstr "이스라엘 - 회계"
 
 #. module: base
 #: model:res.country,name:base.it
@@ -17889,7 +18357,7 @@ msgstr "LGPL 버전 3"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_lt_reports
 msgid "LT - Accounting Reports"
-msgstr ""
+msgstr "LT - 회계 보고서"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_stock_landed_costs
@@ -18456,7 +18924,7 @@ msgstr "POS 모듈과 판매 모듈 간의 연결 모듈"
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_hr_l10n_be
 msgid "Link module between Pos Blackbox Be and Pos HR"
-msgstr ""
+msgstr "Pos Blackbox Be와 Pos HR 간의 링크 모듈"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_actions_server__link_field_id
@@ -18477,7 +18945,7 @@ msgstr "음식점용 IoT 박스와 PoS 구성을 연결"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_social_linkedin_company_support
 msgid "LinkedIn Company Support"
-msgstr ""
+msgstr "LinkedIn 회사 지원"
 
 #. module: base
 #: code:addons/base/models/ir_qweb_fields.py:0
@@ -18503,7 +18971,7 @@ msgstr "리투아니아"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_lt
 msgid "Lithuania - Accounting"
-msgstr ""
+msgstr "리투아니아 - 회계"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_website_live_chat
@@ -18636,12 +19104,12 @@ msgstr "룩셈부르크 - 회계 보고서"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_lu_reports_electronic
 msgid "Luxembourg - Electronic Accounting Reports"
-msgstr ""
+msgstr "룩셈부르크 - 전자 회계 보고서"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_lu_saft
 msgid "Luxembourg Standard Audit File for Tax"
-msgstr ""
+msgstr "세금에 대한 룩셈부르크 표준 감사 파일"
 
 #. module: base
 #: model:res.partner.industry,full_name:base.res_partner_industry_M
@@ -18917,12 +19385,12 @@ msgstr "연락처 태그를 추적 및 분석 목적으로 더 잘 분류하도�
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_coupon_taxcloud_delivery
 msgid "Manage discounts in taxclouds computations with delivery."
-msgstr ""
+msgstr "배송을 통해  taxclouds 계산의 할인을 관리합니다."
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_coupon_taxcloud
 msgid "Manage discounts in taxclouds computations."
-msgstr ""
+msgstr "taxclouds 계산에서 할인을 관리합니다."
 
 #. module: base
 #: model:ir.module.module,summary:base.module_mrp_plm
@@ -19021,7 +19489,7 @@ msgstr "재고 및 물류 활동을 관리"
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_10
 msgid "Managed Services"
-msgstr ""
+msgstr "관리 서비스"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_manufacturing
@@ -19300,6 +19768,8 @@ msgid ""
 "areas include accounting, CRM, manufacturing, stock, logistics, and supply "
 "chain management.  The company has completed over 15 projects with intric..."
 msgstr ""
+"밀레니엄 인더스트리는 런던에 위치한 Odoo 파트너입니다. 전문 분야에는 회계, CRM, 제조, 재고, 물류 및 공급망 관리가 "
+"포함됩니다. 이 회사는 복잡한 프로젝트로 15 개가 넘는 프로젝트를 완료했습니다."
 
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_3
@@ -19311,6 +19781,12 @@ msgid ""
 "Last but not least, Millennium Industries is the only UK partner with their own Europe-based fully staffed development centre, aimed to deliver to the exact client specification projects of any complexity. <br> <br>\n"
 "Please contact Millennium Industries direct to discuss your business requirement and the company would be delighted to help."
 msgstr ""
+"밀레니엄 인더스트리는 런던에 위치한 Odoo 파트너입니다. 전문 분야에는 회계, CRM, 제조, 재고, 물류 및 공급망 관리가 포함됩니다. 이 회사는 참조를 제공 할 수 있는 복잡한 통합 및 재고 회계 요구 사항을 갖춘 15 개 이상의 프로젝트를 완료했습니다.<br> <br>\n"
+" \n"
+"Millennium Industries have developed several accounting modules for Odoo and are the leading experts in the UK for this area.  Additionally, a forefront success story of theirs is the nominal level data migrations from Sage Line 50 to Odoo that allows unprecedented efficiency in system switchover. <br> <br>\n"
+" \n"
+"Last but not least, Millennium Industries is the only UK partner with their own Europe-based fully staffed development centre, aimed to deliver to the exact client specification projects of any complexity. <br> <br>\n"
+"Please contact Millennium Industries direct to discuss your business requirement and the company would be delighted to help."
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_attachment__mimetype
@@ -19882,7 +20358,7 @@ msgstr "NIT"
 #. module: base
 #: model:res.country,vat_label:base.id
 msgid "NPWP"
-msgstr ""
+msgstr "NPWP"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_base_partner_merge_automatic_wizard__group_by_name
@@ -20188,7 +20664,7 @@ msgstr "노르웨이 - 회계"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_no_saft
 msgid "Norwegian Standard Audit File for Tax"
-msgstr ""
+msgstr "세금에 대한 노르웨이 표준 감사 파일"
 
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__ir_module_module__state__uninstalled
@@ -22413,12 +22889,12 @@ msgstr "Odoo는 공급 업체와 관련된 모든 활동을 쉽게 추적하도�
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_odoo_referral
 msgid "Odoo referral program"
-msgstr ""
+msgstr "Odoo 추천 프로그램"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_odoo_referral_portal
 msgid "Odoo referral program bridge with portal (Deprecated)"
-msgstr ""
+msgstr "포털이 있는 Odoo 추천 프로그램 브릿지 (더 이상 사용되지 않음)"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_sequence__padding
@@ -22477,6 +22953,12 @@ msgid ""
 msgstr "사용하려는 문서 중 하나가 삭제되었습니다. 새로 고침 후 다시 시도하십시오."
 
 #. module: base
+#: code:addons/base/models/ir_actions_report.py:0
+#, python-format
+msgid "One of the documents, you try to merge is encrypted"
+msgstr ""
+
+#. module: base
 #: code:addons/models.py:0
 #, python-format
 msgid ""
@@ -22490,7 +22972,7 @@ msgstr "수정하려는 레코드 중 하나가 이미 삭제되었습니다(문
 msgid ""
 "One or more of the selected modules have already been uninstalled, if you "
 "believe this to be an error, you may try again later or contact support."
-msgstr ""
+msgstr "선택한 모듈 중 하나 이상이 이미 제거되었습니다. 이것이 오류라고 생각되면 나중에 다시 시도하거나 지원 센터에 문의하십시오."
 
 #. module: base
 #: code:addons/base/models/res_partner.py:0
@@ -23166,7 +23648,7 @@ msgstr "POS Adyen"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pos_six
 msgid "POS Six"
-msgstr ""
+msgstr "POS Six"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pad_project
@@ -23653,7 +24135,7 @@ msgstr "점포판매시스템"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pos_cash_rounding
 msgid "Point of Sale Cash Rounding"
-msgstr ""
+msgstr "POS 현금 반올림"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pos_discount
@@ -23712,12 +24194,12 @@ msgstr "포르투갈 - 회계"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pos_kitchen_printer
 msgid "Pos Kitchen Printer"
-msgstr ""
+msgstr "Pos 주방용 프린터"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_social_linkedin_company_support
 msgid "Post on your LinkedIn company pages instead of you personnal accounts"
-msgstr ""
+msgstr "개인 계정 대신 LinkedIn 회사 페이지에 게시"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_model_constraint__definition
@@ -23863,7 +24345,7 @@ msgstr "비공개 방법(예 :  %s)은  원격으로 호출할 수 없습니다.
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_10
 msgid "Process Analysis"
-msgstr ""
+msgstr "공정 분석"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sale_stock
@@ -23923,12 +24405,12 @@ msgstr "교수"
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_10
 msgid "Program/Project Management"
-msgstr ""
+msgstr "프로그램 / 프로젝트 관리"
 
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_10
 msgid "Programming and Custom Module Development"
-msgstr ""
+msgstr "프로그래밍 및 맞춤형 모듈 개발"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_operations_project
@@ -24802,7 +25284,7 @@ msgstr "보고"
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_ar_reports
 msgid "Reporting for Argentinian Localization"
-msgstr ""
+msgstr "아르헨티나 현지화 보고서"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.ir_action_report
@@ -24827,7 +25309,7 @@ msgstr "대리점"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_partner_commission
 msgid "Resellers Commissions For Subscription"
-msgstr ""
+msgstr "리셀러 수수료"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_reset_view_arch_wizard__reset_mode
@@ -24901,7 +25383,7 @@ msgstr "식당"
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_kitchen_printer
 msgid "Restaurant Kitchen Printer extensions for the Point of Sale "
-msgstr ""
+msgstr "POS를 위한 식당 주방용 프린터 확장 "
 
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_restaurant
@@ -24931,7 +25413,7 @@ msgstr "오른쪽에서 왼쪽으로"
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_10
 msgid "Roadmap Development"
-msgstr ""
+msgstr "개발 로드맵"
 
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__res_company__font__roboto
@@ -25145,7 +25627,7 @@ msgstr "급여 내역 구성기"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_sale_intrastat
 msgid "Sale BE Intrastat Bridge"
-msgstr ""
+msgstr "판매 BE Intrastat Bridge"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_coupon
@@ -25998,22 +26480,6 @@ msgid "Somalia"
 msgstr "소말리아"
 
 #. module: base
-#: code:addons/models.py:0
-#, python-format
-msgid ""
-"Some records are incompatible with the company of the %(document_descr)s.\n"
-"\n"
-"Incompatibilities:\n"
-"Fields: %(fields)s\n"
-"Record ids: %(records)s\n"
-msgstr ""
-"일부 레코드는  %(document_descr)s 회사와 호환되지 ㅇ낳습니다.\n"
-"\n"
-"미호환 :\n"
-"필드 : %(fields)s\n"
-"레코드 ids: %(records)s\n"
-
-#. module: base
 #: model:ir.model.fields,help:base.field_res_bank__bic
 #: model:ir.model.fields,help:base.field_res_partner_bank__bank_bic
 msgid "Sometimes called BIC or Swift."
@@ -26183,7 +26649,7 @@ msgstr "표준"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_saft
 msgid "Standard Audit File for Tax Base module"
-msgstr ""
+msgstr "세금 기반 모듈에 대한 표준 감사 파일"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_base_module_upgrade_install
@@ -26489,17 +26955,17 @@ msgstr "스웨덴"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_se_reports
 msgid "Sweden - Accounting Reports"
-msgstr ""
+msgstr "스웨덴 - 회계 보고서"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_se_ocr
 msgid "Sweden - Structured Communication OCR"
-msgstr ""
+msgstr "스웨덴 - 구조적 커뮤니케이션 OCR"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_se
 msgid "Swedish - Accounting"
-msgstr ""
+msgstr "스웨덴 - 회계"
 
 #. module: base
 #: model:res.country,name:base.ch
@@ -26825,6 +27291,10 @@ msgid ""
 "Our goal is to help our clients become high-performing, competitive and profitable businesses.\n"
 "We leverage robust model that combines:<br>"
 msgstr ""
+"잭슨 그룹은 미국 Odoo의 활발하고 선도적인 파트너입니다.\n"
+"As Odoo's longest active US partner, we help our clients leverage new methods, cost-effective tools and fresh technologies to simplify infrastructure, lower cost, and improve operations.<br> <br>\n"
+"Our goal is to help our clients become high-performing, competitive and profitable businesses.\n"
+"We leverage robust model that combines:<br>"
 
 #. module: base
 #: model:res.partner,website_short_description:base.res_partner_10
@@ -26835,6 +27305,10 @@ msgid ""
 "lower cost, and improve operations. Our goal is to help our clients "
 "become..."
 msgstr ""
+"잭슨 그룹은 미국 Odoo의 활발하고 선도적인 파트너입니다. As Odoo's longest active US partner, we "
+"help our clients leverage new methods, cost-effective tools and fresh "
+"technologies to simplify infrastructure, lower cost, and improve operations."
+" Our goal is to help our clients become..."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_lang__url_code
@@ -27064,6 +27538,8 @@ msgid ""
 "The m2o field %s is required but declares its ondelete policy as being 'set "
 "null'. Only 'restrict' and 'cascade' make sense."
 msgstr ""
+"m2o 필드 %s가 필요하지만 ondelete 정책을 'set null'로 선언합니다. 'restrict'와 'cascade'만 의미가 "
+"있습니다."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_filters__action_id
@@ -27551,6 +28027,9 @@ msgid ""
 "contained in a separate module as it contains models used only to perform\n"
 "tests independently to functional aspects of other models. "
 msgstr ""
+"이 모듈에는 웹 코호트와 관련된 테스트가 포함되어 있습니다. \n"
+"이러한 모듈에는 다른 모델의 기능적 측면에 대해 독립적으로 테스트를 수행하는 데만 \n"
+"사용되는 모델이 포함되어 있으므로 별도의 모듈에 포함되어 있습니다."
 
 #. module: base
 #: model:ir.module.module,description:base.module_test_website
@@ -27641,7 +28120,7 @@ msgstr "휴가 관리"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_holidays_calendar
 msgid "Time Off - Calendar"
-msgstr ""
+msgstr "휴가 - 달력"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_holidays_gantt
@@ -27651,7 +28130,7 @@ msgstr "휴가 간트 차트"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_holidays_gantt_calendar
 msgid "Time off Gantt - Calendar"
-msgstr ""
+msgstr "휴가 간트 차트 - 달력"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_timesheet_grid
@@ -28104,7 +28583,7 @@ msgstr "영국 - 회계 보고서"
 #: model:ir.module.module,shortdesc:base.module_product_unspsc
 #: model:ir.module.module,summary:base.module_product_unspsc
 msgid "UNSPSC product codes"
-msgstr ""
+msgstr "UNSPSC 상품 코드"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_delivery_ups
@@ -28146,7 +28625,7 @@ msgstr "미국령 군소 제도"
 #. module: base
 #: model:res.country,vat_label:base.at
 msgid "USt"
-msgstr ""
+msgstr "USt"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_utm
@@ -28300,7 +28779,7 @@ msgstr "알 수 없음"
 #: code:addons/models.py:0
 #, python-format
 msgid "Unknown database error: '%s'"
-msgstr ""
+msgstr "알 수 없는 데이터베이스 오류 : '%s'"
 
 #. module: base
 #: code:addons/models.py:0
@@ -28985,6 +29464,8 @@ msgid ""
 "enhancing solutions through the use of advanced software for our clients "
 "worldwide. At Lumber Inc we bring operational experience combined..."
 msgstr ""
+"당사는 전 세계 고객을 위한 고급 소프트웨어 사용을 통해 가치 향상 솔루션을 창출하는 기술 컨설팅 및 전략적 자문 회사입니다. "
+"Woodle Inc.에서는 운영 경험을 결합하여 제공합니다."
 
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_18
@@ -28993,6 +29474,9 @@ msgid ""
 " <br> <br>\n"
 "At Lumber Inc we bring operational experience combined with technological acumen. We understand that any software that supports business operations needs to be designed in such a way that facilitates the execution of critical operational processes, and serves as a tool to the users rather than a barrier. Our approach is focused on the process first, ensuring that it contributes to the goals of the company, we then optimize it, and design the software solutions to best support it."
 msgstr ""
+"당사는 전 세계 고객을 위한 고급 소프트웨어 사용을 통해 가치 향상 솔루션을 창출하는 기술 컨설팅 및 전략적 자문 회사입니다.\n"
+" <br> <br>\n"
+"At Lumber Inc we bring operational experience combined with technological acumen. We understand that any software that supports business operations needs to be designed in such a way that facilitates the execution of critical operational processes, and serves as a tool to the users rather than a barrier. Our approach is focused on the process first, ensuring that it contributes to the goals of the company, we then optimize it, and design the software solutions to best support it."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web
@@ -29002,7 +29486,7 @@ msgstr "웹"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_web_cohort
 msgid "Web Cohort Tests"
-msgstr ""
+msgstr "웹 코호트 테스트"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_editor
@@ -29038,7 +29522,7 @@ msgstr "웹 라우팅"
 #. module: base
 #: model:ir.module.module,summary:base.module_test_web_cohort
 msgid "Web cohort Test"
-msgstr ""
+msgstr "웹 코호트 테스트"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_translation_search
@@ -29623,12 +30107,12 @@ msgstr "account_ponto"
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_lt
 msgid "accounting, Lithuanian"
-msgstr ""
+msgstr "회계, 리투아니아"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_lt_reports
 msgid "accounting, report, Lithuanian"
-msgstr ""
+msgstr "회계, 보고서, 리투아니아"
 
 #. module: base
 #: code:addons/models.py:0
@@ -29995,7 +30479,7 @@ msgstr "read_group 테스트"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_xlsx_export
 msgid "test xlsx export"
-msgstr ""
+msgstr "xlsx 내보내기 테스트"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_assetsbundle

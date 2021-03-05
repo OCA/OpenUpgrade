@@ -36,12 +36,14 @@ crm_reveal   / crm.lead                 / reveal_iap_credits (integer)  : module
 crm_reveal   / crm.lead                 / reveal_ip (char)              : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.lead                 / reveal_rule_id (many2one)     : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.rule          / __last_update (datetime)      : module is now 'crm_iap_lead_website' ('crm_reveal')
+crm_reveal   / crm.reveal.rule          / _order                        : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.rule          / active (boolean)              : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.rule          / company_size_max (integer)    : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.rule          / company_size_min (integer)    : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.rule          / country_ids (many2many)       : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.rule          / display_name (char)           : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.rule          / extra_contacts (integer)      : module is now 'crm_iap_lead_website' ('crm_reveal')
+crm_reveal   / crm.reveal.rule          / industry_tag_ids (many2many)  : column2 is now 'crm_iap_lead_industry_id' ('crm_reveal_industry_id') [crm_reveal_industry_crm_reveal_rule_rel]
 crm_reveal   / crm.reveal.rule          / industry_tag_ids (many2many)  : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.rule          / industry_tag_ids (many2many)  : relation is now 'crm.iap.lead.industry' ('crm.reveal.industry') [nothing to do]
 crm_reveal   / crm.reveal.rule          / industry_tag_ids (many2many)  : table is now 'crm_iap_lead_industry_crm_reveal_rule_rel' ('crm_reveal_industry_crm_reveal_rule_rel')
@@ -51,6 +53,7 @@ crm_reveal   / crm.reveal.rule          / lead_type (selection)         : module
 crm_reveal   / crm.reveal.rule          / leads_count (integer)         : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.rule          / name (char)                   : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.rule          / opportunity_count (integer)   : module is now 'crm_iap_lead_website' ('crm_reveal')
+crm_reveal   / crm.reveal.rule          / other_role_ids (many2many)    : column2 is now 'crm_iap_lead_role_id' ('crm_reveal_role_id') [crm_reveal_role_crm_reveal_rule_rel]
 crm_reveal   / crm.reveal.rule          / other_role_ids (many2many)    : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.rule          / other_role_ids (many2many)    : relation is now 'crm.iap.lead.role' ('crm.reveal.role') [nothing to do]
 crm_reveal   / crm.reveal.rule          / other_role_ids (many2many)    : table is now 'crm_iap_lead_role_crm_reveal_rule_rel' ('crm_reveal_role_crm_reveal_rule_rel')
@@ -66,6 +69,7 @@ crm_reveal   / crm.reveal.rule          / tag_ids (many2many)           : module
 crm_reveal   / crm.reveal.rule          / team_id (many2one)            : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.rule          / user_id (many2one)            : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.view          / __last_update (datetime)      : module is now 'crm_iap_lead_website' ('crm_reveal')
+crm_reveal   / crm.reveal.view          / _order                        : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.view          / display_name (char)           : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.view          / reveal_ip (char)              : module is now 'crm_iap_lead_website' ('crm_reveal')
 crm_reveal   / crm.reveal.view          / reveal_rule_id (many2one)     : module is now 'crm_iap_lead_website' ('crm_reveal')

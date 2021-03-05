@@ -77,7 +77,6 @@ DEL ir.model.access: mrp.access_product_price_history_mrp_manager
 DEL ir.model.access: mrp_byproduct.access_mrp_subproduct_all
 DEL ir.model.access: mrp_byproduct.access_mrp_subproduct_manager
 DEL ir.model.access: mrp_byproduct.access_mrp_subproduct_user
-NEW ir.module.category: base.module_category_manufacturing_manufacturing (noupdate)
 NEW ir.rule: mrp.mrp_bom_byproduct_rule (noupdate)
 NEW ir.rule: mrp.mrp_bom_line_rule (noupdate)
 NEW ir.rule: mrp.mrp_unbuild_rule (noupdate)
@@ -90,6 +89,7 @@ NEW ir.ui.view: mrp.label_production_view
 NEW ir.ui.view: mrp.mrp_bom_byproduct_form_view
 NEW ir.ui.view: mrp.mrp_product_produce_line_form
 NEW ir.ui.view: mrp.mrp_product_produce_line_kanban
+NEW ir.ui.view: mrp.view_move_kanban_inherit_mrp
 NEW ir.ui.view: mrp.view_stock_move_raw_tree
 DEL ir.ui.view: mrp_byproduct.mrp_subproduct_view
 NEW res.groups: mrp.group_mrp_byproducts

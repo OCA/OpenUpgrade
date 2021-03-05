@@ -9,7 +9,6 @@ sale_crm     / sale.order               / medium_id (many2one)          : module
 sale_crm     / sale.order               / source_id (many2one)          : module is now 'sale' ('sale_crm')
 ---XML records in module 'sale_crm'---
 NEW ir.actions.act_window: sale_crm.crm_quotation_partner_action
-NEW ir.actions.act_window: sales_team.crm_team_salesteams_act
 DEL ir.actions.act_window: sale_crm.sale_action_orders
 DEL ir.actions.act_window: sale_crm.sale_action_quotations
 NEW ir.ui.view: sale_crm.crm_quotation_partner_view_form

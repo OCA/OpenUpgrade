@@ -324,6 +324,17 @@ class MrpProduction(models.Model):
         - to_close: The quantity produced is greater than the quantity to
         produce and all work orders has been finished.
         """
+
+        # Manually track "state" and "reservation_state" since tracking doesn't work with computed
+        # fields.
+        tracking = not self._context.get("mail_notrack") and not self._context.get("tracking_disable")
+        initial_values = {}
+        if tracking:
+            initial_values = dict(
+                (production.id, {"state": production.state, "reservation_state": production.reservation_state})
+                for production in self
+            )
+
         # TODO: duplicated code with stock_picking.py
         for production in self:
             if not production.move_raw_ids:
@@ -365,6 +376,9 @@ class MrpProduction(models.Model):
                         production.reservation_state = 'confirmed'
                 elif relevant_move_state != 'draft':
                     production.reservation_state = relevant_move_state
+
+        if tracking and initial_values:
+            self.message_track(self.fields_get(["state", "reservation_state"]), initial_values)
 
     @api.depends('move_raw_ids', 'is_locked', 'state', 'move_raw_ids.quantity_done')
     def _compute_unreserve_visible(self):
@@ -644,6 +658,7 @@ class MrpProduction(models.Model):
                 return self.env['stock.move'], old_qty, quantity
         else:
             move_values = self._get_move_raw_values(bom_line, line_data)
+            move_values['state'] = 'confirmed'
             move = self.env['stock.move'].create(move_values)
             return move, 0, quantity
 
@@ -806,7 +821,6 @@ class MrpProduction(models.Model):
 
         # Initial qty producing
         quantity = max(self.product_qty - sum(self.move_finished_ids.filtered(lambda move: move.product_id == self.product_id).mapped('quantity_done')), 0)
-        quantity = self.product_id.uom_id._compute_quantity(quantity, self.product_uom_id)
         if self.product_id.tracking == 'serial':
             quantity = 1.0
 
@@ -914,6 +928,21 @@ class MrpProduction(models.Model):
 
     def post_inventory(self):
         for order in self:
+            # In case the routing allows multiple WO running at the same time, it is possible that
+            # the quantity produced in one of the workorders is lower than the quantity produced in
+            # the MO.
+            if order.product_id.tracking != "none" and any(
+                wo.state not in ["done", "cancel"]
+                and float_compare(wo.qty_produced, order.qty_produced, precision_rounding=order.product_uom_id.rounding) == -1
+                for wo in order.workorder_ids
+            ):
+                raise UserError(
+                    _(
+                        "At least one work order has a quantity produced lower than the quantity produced in the manufacturing order. "
+                        + "You must complete the work orders before posting the inventory."
+                    )
+                )
+
             moves_not_to_do = order.move_raw_ids.filtered(lambda x: x.state == 'done')
             moves_to_do = order.move_raw_ids.filtered(lambda x: x.state not in ('done', 'cancel'))
             for move in moves_to_do.filtered(lambda m: m.product_qty == 0.0 and m.quantity_done > 0):
@@ -1058,11 +1087,14 @@ class MrpProduction(models.Model):
 
     def _prepare_workorder_vals(self, operation, workorders, quantity):
         self.ensure_one()
+        todo_uom = self.product_uom_id.id
+        if self.product_id.tracking == 'serial' and self.product_uom_id.uom_type != 'reference':
+            todo_uom = self.env['uom.uom'].search([('category_id', '=', self.product_uom_id.category_id.id), ('uom_type', '=', 'reference')]).id
         return {
             'name': operation.name,
             'production_id': self.id,
             'workcenter_id': operation.workcenter_id.id,
-            'product_uom_id': self.product_id.uom_id.id,
+            'product_uom_id': todo_uom,
             'operation_id': operation.id,
             'state': len(workorders) == 0 and 'ready' or 'pending',
             'qty_producing': quantity,
