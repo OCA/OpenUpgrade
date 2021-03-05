@@ -2,6 +2,7 @@
 new model crm.lead.scoring.frequency
 new model crm.lead.scoring.frequency.field
 ---Fields in module 'crm'---
+crm          / crm.lead                 / _order                        : _order is now 'priority desc, id desc' ('priority desc,activity_date_deadline,id desc')
 crm          / crm.lead                 / automated_probability (float) : NEW
 crm          / crm.lead                 / email_cc (text)               : type is now 'char' ('text')
 crm          / crm.lead                 / email_normalized (char)       : NEW isfunction: function, stored
@@ -29,13 +30,8 @@ NEW crm.lead.scoring.frequency.field: crm.frequency_field_lang_id (noupdate)
 NEW crm.lead.scoring.frequency.field: crm.frequency_field_phone_state (noupdate)
 NEW crm.lead.scoring.frequency.field: crm.frequency_field_source_id (noupdate)
 NEW crm.lead.scoring.frequency.field: crm.frequency_field_state_id (noupdate)
-NEW crm.team: sales_team.ebay_sales_team (noupdate)
-NEW crm.team: sales_team.pos_sales_team (noupdate)
-NEW crm.team: sales_team.salesteam_website_sales (noupdate)
-DEL crm.team: sales_team.team_sales_department (noupdate)
 NEW ir.actions.act_window: crm.crm_lead_action_pipeline
 NEW ir.actions.act_window: crm.crm_lead_action_team_overdue_opportunity
-NEW ir.actions.act_window: sales_team.crm_team_salesteams_pipelines_act
 DEL ir.actions.act_window: crm.calendar_event_partner
 DEL ir.actions.act_window: crm.create_opportunity_simplified
 DEL ir.actions.act_window: crm.crm_lead_action_activities

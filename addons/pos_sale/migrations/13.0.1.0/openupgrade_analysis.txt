@@ -5,7 +5,5 @@ pos_sale     / crm.team                 / team_type (False)             : DEL se
 pos_sale     / pos.order                / crm_team_id (many2one)        : NEW relation: crm.team
 pos_sale     / pos.order                / currency_rate (float)         : module is now 'point_of_sale' ('pos_sale')
 ---XML records in module 'pos_sale'---
-NEW crm.team: sales_team.pos_sales_team (noupdate)
 DEL crm.team: pos_sale.pos_sales_team [renamed to sales_team module] (noupdate)
 DEL ir.ui.view: pos_sale.crm_team_view_form_inherit_pos_sale
-DEL pos.config: point_of_sale.pos_config_main (noupdate)

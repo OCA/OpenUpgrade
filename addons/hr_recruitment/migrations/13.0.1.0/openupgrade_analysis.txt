@@ -9,7 +9,6 @@ hr_recruitment / hr.recruitment.stage     / job_ids (many2many)           : NEW 
 DEL ir.actions.act_window: hr_recruitment.action_hr_job_no_employee
 DEL ir.actions.act_window: hr_recruitment.hr_applicant_resumes
 NEW ir.actions.server: hr_recruitment.hr_applicant_resumes_server
-NEW ir.module.category: base.module_category_human_resources_recruitment (noupdate)
 NEW ir.ui.menu: hr_recruitment.hr_applicant_report_menu
 DEL ir.ui.menu: hr_recruitment.menu_crm_case_categ0_act_job02
 NEW ir.ui.view: hr_recruitment.applicant_hired_template

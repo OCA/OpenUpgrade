@@ -33,6 +33,8 @@ base         / ir.attachment            / res_model_name (char)         : DEL
 base         / ir.attachment            / res_name (char)               : not stored anymore
 base         / ir.attachment            / thumbnail (binary)            : DEL attachment: True
 base         / ir.cron                  / lastcall (datetime)           : NEW
+base         / ir.mail_server           / _order                        : _order is now 'sequence' ('id')
+base         / ir.model.access          / _order                        : _order is now 'model_id,group_id,name,id' ('id')
 base         / ir.model.constraint      / date_init (datetime)          : DEL
 base         / ir.model.constraint      / date_update (datetime)        : DEL
 base         / ir.model.constraint      / message (char)                : NEW
@@ -47,12 +49,14 @@ base         / ir.model.fields.selection / value (char)                  : NEW r
 base         / ir.model.relation        / date_init (datetime)          : DEL
 base         / ir.model.relation        / date_update (datetime)        : DEL
 base         / ir.module.module.dependency / auto_install_required (boolean): NEW hasdefault
+base         / ir.rule                  / _order                        : _order is now 'model_id DESC,id' ('model_id DESC')
 base         / ir.server.object.lines   / evaluation_type (selection)   : NEW required, selection_keys: ['equation', 'reference', 'value'], req_default: function, hasdefault
 base         / ir.server.object.lines   / type (selection)              : DEL required, selection_keys: ['equation', 'reference', 'value'], req_default: function
 base         / ir.translation           / type (selection)              : selection_keys is now '['code', 'model', 'model_terms']' ('['code', 'constraint', 'model', 'model_terms', 'selection', 'sql_constraint']')
 base         / ir.ui.view               / arch_prev (text)              : NEW
 base         / ir.ui.view               / arch_updated (boolean)        : NEW
 base         / report.layout            / __last_update (datetime)      : previously in module web
+base         / report.layout            / _order                        : previously in module web
 base         / report.layout            / display_name (char)           : previously in module web
 base         / report.layout            / image (char)                  : previously in module web
 base         / report.layout            / name (char)                   : NEW

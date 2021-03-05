@@ -1,8 +1,8 @@
 ---Models in module 'stock'---
 obsolete model product.putaway
-obsolete model report.stock.forecast [sql_view]
+obsolete model report.stock.forecast (renamed to report.stock.quantity) [sql_view]
 obsolete model stock.fixed.putaway.strat (renamed to stock.putaway.rule)
-new model report.stock.quantity [sql_view]
+new model report.stock.quantity (renamed from report.stock.forecast) [sql_view]
 new model stock.assign.serial [transient]
 new model stock.picking.responsible [transient]
 new model stock.putaway.rule (renamed from stock.fixed.putaway.strat)
@@ -16,6 +16,7 @@ stock        / product.template         / responsible_id (many2one)     : not st
 stock        / res.company              / propagation_minimum_delta (integer): DEL
 stock        / res.company              / stock_mail_confirmation_template_id (many2one): NEW relation: mail.template, hasdefault
 stock        / res.company              / stock_move_email_validation (boolean): NEW hasdefault
+stock        / stock.fixed.putaway.strat / _order                        : _order is now 'sequence,product_id' ('sequence')
 stock        / stock.fixed.putaway.strat / fixed_location_id (many2one)  : DEL relation: stock.location, required
 stock        / stock.fixed.putaway.strat / putaway_id (many2one)         : DEL relation: product.putaway, required
 stock        / stock.inventory          / category_id (many2one)        : DEL relation: product.category
@@ -38,6 +39,7 @@ stock        / stock.location           / partner_id (many2one)         : DEL re
 stock        / stock.location           / putaway_rule_ids (one2many)   : NEW relation: stock.putaway.rule
 stock        / stock.location           / putaway_strategy_id (many2one): DEL relation: product.putaway
 stock        / stock.location           / usage (selection)             : selection_keys is now '['customer', 'internal', 'inventory', 'production', 'supplier', 'transit', 'view']' ('['customer', 'internal', 'inventory', 'procurement', 'production', 'supplier', 'transit', 'view']')
+stock        / stock.move               / _order                        : _order is now 'sequence, id' ('picking_id, sequence, id')
 stock        / stock.move               / delay_alert (boolean)         : NEW
 stock        / stock.move               / description_picking (text)    : NEW
 stock        / stock.move               / next_serial (char)            : NEW
@@ -76,12 +78,14 @@ stock        / stock.scrap              / message_follower_ids (one2many): NEW r
 stock        / stock.scrap              / message_ids (one2many)        : NEW relation: mail.message
 stock        / stock.scrap              / message_main_attachment_id (many2one): NEW relation: ir.attachment
 stock        / stock.scrap              / website_message_ids (one2many): NEW relation: mail.message
+stock        / stock.warehouse          / _order                        : _order is now 'sequence,id' ('id')
 stock        / stock.warehouse          / sequence (integer)            : NEW hasdefault
 ---XML records in module 'stock'---
 NEW ir.actions.act_window: stock.act_assign_serial_numbers
 NEW ir.actions.act_window: stock.action_change_product_quantity
 NEW ir.actions.act_window: stock.action_putaway_tree
 NEW ir.actions.act_window: stock.category_open_putaway
+NEW ir.actions.act_window: stock.dashboard_open_quants
 NEW ir.actions.act_window: stock.location_open_putaway
 NEW ir.actions.act_window: stock.report_stock_quantity_action
 NEW ir.actions.act_window: stock.report_stock_quantity_action_product
@@ -129,7 +133,6 @@ DEL ir.model.access: stock.access_stock_fixed_putaway_strat
 DEL ir.model.access: stock.access_stock_fixed_putaway_user
 DEL ir.model.access: stock.access_stock_forecast_manager
 DEL ir.model.access: stock.access_stock_forecast_user
-NEW ir.module.category: base.module_category_operations_inventory (noupdate)
 DEL ir.property: stock.property_stock_inventory (noupdate)
 DEL ir.property: stock.property_stock_production (noupdate)
 NEW ir.rule: stock.report_stock_quantity_flow_comp_rule (noupdate)

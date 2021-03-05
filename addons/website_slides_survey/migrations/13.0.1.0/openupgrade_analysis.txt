@@ -9,8 +9,6 @@ website_slides_survey / slide.slide.partner      / user_input_ids (one2many)    
 website_slides_survey / survey.user_input        / slide_id (many2one)           : NEW relation: slide.slide
 website_slides_survey / survey.user_input        / slide_partner_id (many2one)   : NEW relation: slide.slide.partner
 ---XML records in module 'website_slides_survey'---
-NEW gamification.badge: website_slides.badge_data_certification
-NEW gamification.goal.definition: website_slides.badge_data_certification_goal
 NEW ir.actions.act_window: website_slides_survey.slide_slide_action_certification
 NEW ir.actions.act_window: website_slides_survey.survey_survey_action_slides
 NEW ir.actions.act_window: website_slides_survey.survey_survey_action_slides_report
