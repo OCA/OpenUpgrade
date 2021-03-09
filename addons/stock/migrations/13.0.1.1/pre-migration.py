@@ -59,6 +59,20 @@ def assure_stock_rule_company_is_correct(env):
     )
 
 
+def fill_inventory_line_categ(env):
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE stock_inventory_line ADD categ_id int4",
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE stock_inventory_line sil
+        SET categ_id = pt.categ_id
+        FROM product_product pp
+        JOIN product_template pt ON pt.id = pp.product_tmpl_id
+        WHERE pp.id = sil.product_id"""
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.copy_columns(env.cr, _column_copies)
@@ -68,3 +82,4 @@ def migrate(env, version):
     openupgrade.rename_columns(env.cr, _column_renames)
     openupgrade.rename_xmlids(env.cr, _xmlid_renames)
     assure_stock_rule_company_is_correct(env)
+    fill_inventory_line_categ(env)

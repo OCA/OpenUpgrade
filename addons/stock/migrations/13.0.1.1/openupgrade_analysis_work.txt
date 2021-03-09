@@ -47,11 +47,6 @@ stock        / stock.inventory          / filter (selection)            : DEL re
 stock        / stock.inventory          / start_empty (boolean)         : NEW
 # DONE: post-migration: filled start_empty = TRUE if filter = 'partial'
 
-stock        / stock.inventory          / lot_id (many2one)             : DEL relation: stock.production.lot
-stock        / stock.inventory          / package_id (many2one)         : DEL relation: stock.quant.package
-stock        / stock.inventory          / partner_id (many2one)         : DEL relation: res.partner
-# DONE: post-migration: filled the corresponding inventory line fields when empty by this old ones
-
 stock        / stock.inventory          / prefill_counted_quantity (selection): NEW selection_keys: ['counted', 'zero'], hasdefault
 # NOTHING TO DO: new feature
 
@@ -62,8 +57,13 @@ stock        / stock.inventory          / product_ids (many2many)       : NEW re
 # DONE: post-migration: transformed the many2one to many2many
 
 stock        / stock.inventory          / category_id (many2one)        : DEL relation: product.category
+stock        / stock.inventory          / lot_id (many2one)             : DEL relation: stock.production.lot
+stock        / stock.inventory          / package_id (many2one)         : DEL relation: stock.quant.package
+stock        / stock.inventory          / partner_id (many2one)         : DEL relation: res.partner
+# DONE: pre-migration: Renamed for preservation
+
 stock        / stock.inventory.line     / categ_id (many2one)           : NEW relation: product.category, isrelated: related, stored
-# DONE: post-migration: moved content
+# DONE: pre-migration: Fill related column for speeding up process
 
 stock        / stock.inventory.line     / inventory_date (datetime)     : NEW hasdefault
 stock        / stock.inventory.line     / is_editable (boolean)         : NEW

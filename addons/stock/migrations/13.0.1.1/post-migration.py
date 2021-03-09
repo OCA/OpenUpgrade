@@ -153,45 +153,6 @@ def fill_stock_inventory_start_empty(env):
     )
 
 
-def fill_stock_inventory_fields(env):
-    # categ_id
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE stock_inventory_line sil
-        SET categ_id = si.{}
-        FROM stock_inventory si
-        WHERE sil.inventory_id = si.id AND sil.categ_id IS NULL
-        """.format(openupgrade.get_legacy_name('category_id'))
-    )
-    # prod_lot_id
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE stock_inventory_line sil
-        SET prod_lot_id = si.{}
-        FROM stock_inventory si
-        WHERE sil.inventory_id = si.id AND sil.prod_lot_id IS NULL
-        """.format(openupgrade.get_legacy_name('lot_id'))
-    )
-    # package_id
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE stock_inventory_line sil
-        SET package_id = si.{}
-        FROM stock_inventory si
-        WHERE sil.inventory_id = si.id AND sil.package_id IS NULL
-        """.format(openupgrade.get_legacy_name('package_id'))
-    )
-    # partner_id
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE stock_inventory_line sil
-        SET partner_id = si.{}
-        FROM stock_inventory si
-        WHERE sil.inventory_id = si.id AND sil.partner_id IS NULL
-        """.format(openupgrade.get_legacy_name('partner_id'))
-    )
-
-
 def map_stock_location_usage(env):
     openupgrade.map_values(
         env.cr,
@@ -229,18 +190,6 @@ def convert_many2one_stock_inventory_product_and_location(env):
         env['stock.inventory'], 'stock_inventory',
         'product_ids', openupgrade.get_legacy_name('product_id')
     )
-    if openupgrade.column_exists(env.cr, "stock_inventory", "product_domain"):
-        # if stock_inventory_preparation_filter is installed
-        openupgrade.m2o_to_x2m(
-            env.cr,
-            env["stock.inventory"], "stock_inventory",
-            "categ_ids", openupgrade.get_legacy_name("category_id"),
-        )
-        openupgrade.m2o_to_x2m(
-            env.cr,
-            env["stock.inventory"], "stock_inventory",
-            "lot_ids", openupgrade.get_legacy_name("lot_id"),
-        )
 
 
 def handle_stock_scrap_sequence(env, main_company):
@@ -370,7 +319,6 @@ def migrate(env, version):
     fill_stock_putaway_rule_location_in_id(env)
     fill_propagate_date_minimum_delta(env)
     fill_stock_inventory_start_empty(env)
-    fill_stock_inventory_fields(env)
     map_stock_location_usage(env)
     fill_stock_picking_type_sequence_code(env)
     handle_stock_scrap_sequence(env, main_company)
