@@ -100,9 +100,8 @@ def create_account_invoice_amount_tax_company_signed(env):
                     date or fields.Date.today())
             sign = inv_type in ['in_refund', 'out_refund'] and -1 or 1
             company_tax = company_tax * sign
-            openupgrade.logged_query(
-                env.cr, """
-                UPDATE account_invoice
+            env.cr.execute(
+                """UPDATE account_invoice
                 SET amount_tax_company_signed = %s WHERE id = %s""",
                 (company_tax, _id),
             )
