@@ -153,3 +153,7 @@ def migrate(env, version):
     openupgrade.load_data(
         env.cr, 'base', 'migrations/11.0.1.3/noupdate_changes.xml',
     )
+    if openupgrade.table_exists(env.cr, "report_paperformat"):
+        openupgrade.load_data(
+            env.cr, 'base', 'migrations/11.0.1.3/noupdate_changes_report.xml',
+        )
