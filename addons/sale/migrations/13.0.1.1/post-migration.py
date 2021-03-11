@@ -110,12 +110,11 @@ def fill_confirmation_date(env):
 
 def check_sale_auto_done(env):
     """System parameter has been replaced by a security group, so we need to
-    add such group if the system parameter was present.
+    add such group. The button action done should be visible (as it was in v12).
     """
-    if env["ir.config_parameter"].sudo().get_param("sale.auto_done_setting"):
-        env.ref("base.group_user").implied_ids = [
-            (4, env.ref("sale.group_auto_done_setting").id),
-        ]
+    env.ref("base.group_user").implied_ids = [
+        (4, env.ref("sale.group_auto_done_setting").id),
+    ]
 
 
 @openupgrade.migrate()
