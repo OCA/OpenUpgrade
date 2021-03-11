@@ -837,15 +837,16 @@ class IrModelFields(models.Model):
         # Given that we arrive here in order of inheritance, we simply check
         # if the field's xmlid belongs to a module already loaded, and if not,
         # update the record with the correct module name.
+        model = self.env[field.model_name]
         self.env.cr.execute(
             "SELECT f.*, d.module, d.id as xmlid_id, d.name as xmlid "
             "FROM ir_model_fields f LEFT JOIN ir_model_data d "
-            "ON f.id=d.res_id and d.model='ir.model.fields' WHERE f.model=%s",
-            (field.model_name,))
+            "ON f.id=d.res_id and d.model='ir.model.fields' WHERE f.name=%s AND f.model=%s",
+            (field.name, field.model_name,))
         for rec in self.env.cr.dictfetchall():
             if 'module' in self.env.context and\
                     rec['module'] and\
-                    rec['name'] in self._fields.keys() and\
+                    rec['name'] in model._fields.keys() and\
                     rec['module'] != self.env.context['module'] and\
                     rec['module'] not in self.env.registry._init_modules:
                 _logger.info(
@@ -865,7 +866,7 @@ class IrModelFields(models.Model):
                         dict(rec, module=self.env.context['module']))
             if ('module' in self.env.context and
                 rec['module'] and
-                rec['name'] in self._fields.keys() and
+                rec['name'] in model._fields.keys() and
                 (rec['module'] == self.env.context['module'] or
                  rec['module'] not in self.env.registry._init_modules)):
                 # Register the xmlid of the field as loaded
