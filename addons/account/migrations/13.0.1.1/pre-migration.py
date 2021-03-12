@@ -217,9 +217,6 @@ def add_helper_invoice_move_rel(env):
         WHERE ai.move_id = am.id
         """,
     )
-    index_name = '%s_%s_index' % ("account_move", "old_invoice_id")
-    sql.create_index(
-        env.cr, index_name, "account_move", ['"%s"' % "old_invoice_id"])
     openupgrade.logged_query(
         env.cr, """
         UPDATE account_move am
@@ -246,6 +243,14 @@ def add_helper_invoice_move_rel(env):
         ALTER TABLE account_move_line
         ADD COLUMN old_invoice_tax_id integer""",
     )
+    # Create index for these columns, as they are going to be accessed frequently
+    for table, field in (
+        "account_move", "old_invoice_id",
+        "account_move_line", "old_invoice_line_id",
+        "account_move_line", "old_invoice_tax_id",
+    ):
+        index_name = '%s_%s_index' % (table, field)
+        sql.create_index(env.cr, index_name, table, ['"%s"' % field])
 
 
 def add_helper_voucher_move_rel(env):
