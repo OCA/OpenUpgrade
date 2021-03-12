@@ -59,9 +59,9 @@ _table_renames = [
 
 def type_change_account_fiscal_position_zips(env):
     tables = ['account_fiscal_position', 'account_fiscal_position_template']
-    fields = ['zip_from', 'zip_to']
+    zip_fields = ['zip_from', 'zip_to']
     for table in tables:
-        for field in fields:
+        for field in zip_fields:
             openupgrade.logged_query(
                 env.cr,
                 "ALTER TABLE %(table)s "
@@ -70,6 +70,14 @@ def type_change_account_fiscal_position_zips(env):
                     'table': table,
                     'field': field,
                 })
+        openupgrade.logged_query(
+            env.cr,
+            "UPDATE %(table)s "
+            "SET zip_from = NULL, zip_to = NULL "
+            "WHERE country_id IS NOT NULL AND zip_from = '0' "
+            "AND zip_to = '0'" % {
+                'table': table,
+            })
 
 
 def create_account_invoice_amount_tax_company_signed(env):
