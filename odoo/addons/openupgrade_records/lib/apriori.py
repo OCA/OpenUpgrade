@@ -46,6 +46,8 @@ merged_modules = {
     'account_move_chatter': 'account',
     # OCA/account-reconcile
     'account_set_reconcilable': 'account',
+    # OCA/event
+    'website_event_share': 'website_event',
     # OCA/l10n-spain
     'l10n_es_account_invoice_sequence': 'l10n_es',
     'l10n_es_aeat_sii': 'l10n_es_aeat_sii_oca',
