@@ -1,0 +1,35 @@
+---Models in module 'website_event'---
+---Fields in module 'website_event'---
+website_event / event.event              / cover_properties (text)       : NEW hasdefault
+website_event / event.event              / subtitle (char)               : NEW
+# NOTHING TO DO: new functionalities
+
+---XML records in module 'website_event'---
+NEW ir.ui.view: website_event.assets_frontend
+NEW ir.ui.view: website_event.event_time
+NEW ir.ui.view: website_event.events_list
+NEW ir.ui.view: website_event.events_search_box
+NEW ir.ui.view: website_event.index_sidebar
+NEW ir.ui.view: website_event.index_sidebar_about_us
+NEW ir.ui.view: website_event.index_sidebar_categories
+NEW ir.ui.view: website_event.index_sidebar_country_event
+NEW ir.ui.view: website_event.index_sidebar_follow_us
+NEW ir.ui.view: website_event.index_sidebar_photos
+NEW ir.ui.view: website_event.index_sidebar_quotes
+NEW ir.ui.view: website_event.index_topbar
+NEW ir.ui.view: website_event.opt_events_list_cards
+NEW ir.ui.view: website_event.opt_events_list_categories
+NEW ir.ui.view: website_event.opt_events_list_columns
+NEW ir.ui.view: website_event.opt_index_sidebar
+NEW ir.ui.view: website_event.s_country_events
+NEW ir.ui.view: website_event.s_speaker_bio
+NEW ir.ui.view: website_event.snippet_options
+NEW ir.ui.view: website_event.snippets
+DEL ir.ui.view: website_event.brand_promotion
+DEL ir.ui.view: website_event.country_events
+DEL ir.ui.view: website_event.event_left_column
+DEL ir.ui.view: website_event.event_right_country_event
+DEL ir.ui.view: website_event.event_right_photos
+DEL ir.ui.view: website_event.event_right_quotes
+DEL ir.ui.view: website_event.event_script
+# NOTHING TO DO
