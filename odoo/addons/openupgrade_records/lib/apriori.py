@@ -66,6 +66,8 @@ merged_modules = {
     'account_reversal': 'account',
     # OCA/e-commerce
     'website_sale_default_country': 'website_sale',
+    # OCA/edi
+    'base_business_document_import_stock': 'base_business_document_import',
     # OCA/event
     'event_registration_mass_mailing': 'mass_mailing_event',
     # OCA/hr
