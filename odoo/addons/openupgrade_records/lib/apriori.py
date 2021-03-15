@@ -72,6 +72,8 @@ merged_modules = [
     ('sale_order_back2draft', 'sale'),
     ('product_customer_code_sale',
      'product_supplierinfo_for_customer_sale'),
+    # OCA/server-tools
+    ('admin_technical_features', 'base_technical_features'),
     # OCA/social
     ('mass_mailing_security_group', 'mass_mailing'),
     # OCA/stock-logistics-workflow
