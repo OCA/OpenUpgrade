@@ -18,6 +18,75 @@ def populate_stock_move_quantity_done_store(cr):
         """
     )
 
+def populate_stock_move_lots(cr):
+    # Raw materials with tracking:
+    openupgrade.logged_query(cr,
+        """
+        INSERT INTO
+          stock_move_lots (
+            move_id,
+            create_uid, create_date, write_uid, write_date,
+            product_id,
+            done_wo,
+            quantity_done,
+            quantity,
+            production_id,
+            lot_id,
+            done_move,
+            lot_produced_id )
+        SELECT
+          sm.id AS move_id,
+          sm.create_uid, sm.create_date, sm.write_uid, sm.write_date,
+          sm.product_id,
+          TRUE AS done_wo,
+          sm.product_uom_qty AS quantity_done,
+          sm.product_uom_qty AS quantity,
+          sm.raw_material_production_id,
+          sm.restrict_lot_id,
+          TRUE AS done_move,
+          sm2.restrict_lot_id AS lot_produced_id
+        FROM 
+          stock_move AS sm
+        INNER JOIN
+          stock_move AS sm2 ON sm.%s = sm2.id
+        WHERE 
+          sm.restrict_lot_id IS NOT NULL
+          AND sm.raw_material_production_id IS NOT NULL
+          AND sm.state = 'done'
+        """ % openupgrade.get_legacy_name("consumed_for")
+    )
+    # Finished products with tracking:
+    openupgrade.logged_query(cr,
+        """
+        INSERT INTO
+          stock_move_lots (
+            move_id,
+            create_uid, create_date, write_uid, write_date,
+            product_id,
+            done_wo,
+            quantity_done,
+            quantity,
+            production_id,
+            lot_id,
+            done_move)
+        SELECT
+          id,
+          create_uid, create_date, write_uid, write_date,
+          product_id,
+          TRUE as done_wo,
+          product_uom_qty,
+          product_uom_qty,
+          production_id,
+          restrict_lot_id,
+          TRUE as done_move
+        FROM stock_move
+        WHERE 
+          restrict_lot_id IS NOT NULL
+          AND production_id IS NOT NULL
+          AND state = 'done'
+        """
+    )
+    
 
 def archive_mrp_bom_date_stop(cr):
     cr.execute(
@@ -394,6 +463,7 @@ def populate_mrp_workcenter_productivity(env):
 def migrate(env, version):
     cr = env.cr
     populate_stock_move_quantity_done_store(cr)
+    populate_stock_move_lots(cr)
     archive_mrp_bom_date_stop(cr)
     update_mrp_workorder_hour(cr)
     update_mrp_workcenter_times(cr)
