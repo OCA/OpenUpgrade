@@ -238,24 +238,42 @@ def migration_invoice_moves(env):
             AND ((ail.product_id IS NULL AND aml.product_id IS NULL) OR ail.product_id = aml.product_id)
             AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
         """
-    # Try first with a stricter criteria for matching invoice lines with account move lines
-    openupgrade.logged_query(
-        env.cr, query + minimal_where + """
-            AND ail.account_id = aml.account_id
-            AND ai.commercial_partner_id = aml.partner_id
-            AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
-                OR ail.account_analytic_id = aml.analytic_account_id)
-        RETURNING aml.id""",
-    )
-    aml_ids = tuple(x[0] for x in env.cr.fetchall())
-    # Try now with a more relaxed criteria, as it's possible that users change some data on amls
-    openupgrade.logged_query(
-        env.cr, query + minimal_where + """
-            AND aml.old_invoice_line_id IS NULL
-            AND rc.anglo_saxon_accounting IS DISTINCT FROM TRUE
-        RETURNING aml.id""",
-    )
-    aml_ids += tuple(x[0] for x in env.cr.fetchall())
+    # Doing loop to fix where two or more move lines points to the same old invoice line
+    while True:
+        # Try first with a stricter criteria for matching invoice lines with account move lines
+        openupgrade.logged_query(
+            env.cr, query + """
+            LEFT JOIN account_move_line aml2 ON aml2.old_invoice_line_id = ail.id
+            """ + minimal_where + """
+                AND ail.account_id = aml.account_id
+                AND ai.commercial_partner_id = aml.partner_id
+                AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
+                    OR ail.account_analytic_id = aml.analytic_account_id)
+                AND aml.old_invoice_line_id IS NULL AND aml2.id IS NULL
+            RETURNING aml.id""",
+        )
+        # Try now with a more relaxed criteria, as it's possible that users change some data on amls
+        openupgrade.logged_query(
+            env.cr, query + """
+                LEFT JOIN account_move_line aml2 ON aml2.old_invoice_line_id = ail.id
+                """ + minimal_where + """
+                AND aml.old_invoice_line_id IS NULL AND aml2.id IS NULL
+                AND rc.anglo_saxon_accounting IS DISTINCT FROM TRUE
+            RETURNING aml.id""",
+        )
+        openupgrade.logged_query(
+            env.cr, """
+            UPDATE account_move_line aml
+            SET old_invoice_line_id = NULL
+            FROM (SELECT id, ROW_NUMBER() OVER (PARTITION BY old_invoice_line_id ORDER BY id) repeated_invoice_line
+                  FROM account_move_line
+                  WHERE old_invoice_line_id IS NOT NULL) aml2
+            WHERE aml.id = aml2.id AND aml2.repeated_invoice_line > 1
+            RETURNING aml.id""",
+        )
+        wrong_aml_ids = tuple(x[0] for x in env.cr.fetchall())
+        if not wrong_aml_ids:
+            break
     # 2st: exclude from invoice_tab the grouped ones, and create a new separated ones
     openupgrade.logged_query(
         env.cr, """
@@ -318,15 +336,13 @@ def migration_invoice_moves(env):
                 WHERE ail.id IN %s
                 RETURNING id""", (ail_ids, ),
             )
-            aml_ids += tuple(x[0] for x in env.cr.fetchall())
     # 3rd: assure they have a corresponding old_invoice_line_id. If not, exclude them from invoice tab
-    if aml_ids:
-        openupgrade.logged_query(
-            env.cr, """
-            UPDATE account_move_line
-            SET exclude_from_invoice_tab = TRUE
-            WHERE old_invoice_line_id IS NULL""",
-        )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move_line
+        SET exclude_from_invoice_tab = TRUE
+        WHERE old_invoice_line_id IS NULL""",
+    )
     # Draft or Cancel Invoice Lines
     openupgrade.logged_query(
         env.cr, """
