@@ -8,13 +8,13 @@ addons:
     apt:
         packages:
             - expect-dev  # provides unbuffer utility
-            - python-lxml  # because pip installation is slow
-            - python-simplejson
-            - python-serial
-            - python-yaml
-            - python-passlib
-            - python-psycopg2
-            - python-werkzeug
+            - python3-lxml  # because pip installation is slow
+            - python3-simplejson
+            - python3-serial
+            - python3-yaml
+            - python3-passlib
+            - python3-psycopg2
+            - python3-werkzeug
             - realpath
     postgresql: "10"
 

@@ -54,7 +54,7 @@ jobs:
       - name: Configuration
         run: |
           sudo apt update
-          sudo apt install libldap2-dev nodejs libxml2-dev libxslt1-dev libevent-dev libsasl2-dev expect unixodbc-dev expect-dev python-lxml python-simplejson python-serial python-yaml python-passlib python-psycopg2 python-werkzeug
+          sudo apt install libldap2-dev nodejs libxml2-dev libxslt1-dev libevent-dev libsasl2-dev expect unixodbc-dev expect-dev python3-lxml python3-simplejson python3-serial python3-yaml python3-passlib python3-psycopg2 python3-werkzeug
       - name: Requirements Installation
         run: |
           sudo npm install -g less less-plugin-clean-css
