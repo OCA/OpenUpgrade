@@ -319,6 +319,16 @@ def map_stock_locations(env, main_company):
     """)
 
 
+def recompute_stock_location_complete_name(env):
+    # In 12.0, the displayed name of the locations was obtained by the
+    # name_get method. This method limited the location path up to a parent
+    # location of type view is found. In 13.0, complete_name is used for
+    # this purpose, and this one used to be stored with full path in v12.
+    # We need to recompute it.
+    locations = env["stock.location"].search([])
+    locations._compute_complete_name()
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     main_company = _get_main_company(env.cr)
@@ -340,3 +350,4 @@ def migrate(env, version):
                 'mail_template_data_delivery_confirmation',
             ],
         )
+    recompute_stock_location_complete_name(env)
