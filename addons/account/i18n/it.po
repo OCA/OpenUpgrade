@@ -5045,6 +5045,9 @@ msgid ""
 "customers or sales orders/invoices. The default value comes from the "
 "customer."
 msgstr ""
+"Le posizioni fiscali vengono usate per adeguare le imposte e i conti di "
+"specifici clienti oppure ordini di vendita/fatture. Il valore predefinito "
+"proviene dal cliente."
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_financial_year_op__fiscalyear_last_day
@@ -5424,7 +5427,7 @@ msgstr "Contiene fatture"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move__has_reconciled_entries
 msgid "Has Reconciled Entries"
-msgstr ""
+msgstr "Ha registrazioni riconciliate"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_partner__has_unreconciled_entries
@@ -5440,12 +5443,12 @@ msgstr "Contiene tutti gli argomenti richiesti"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_hash_integrity
 msgid "Hash Integrity Result -"
-msgstr ""
+msgstr "Risultato integrità hash -"
 
 #. module: account
 #: model:ir.actions.report,name:account.action_report_account_hash_integrity
 msgid "Hash integrity result PDF"
-msgstr ""
+msgstr "PDF risultato integrità hash"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_payment__hide_payment_method
@@ -6072,7 +6075,7 @@ msgstr "Data fattura"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move__invoice_filter_type_domain
 msgid "Invoice Filter Type Domain"
-msgstr ""
+msgstr "Dominio tipo di filtro fattura"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move__invoice_has_matching_suspense_amount
@@ -6371,6 +6374,8 @@ msgid ""
 "It seems that the taxes have been modified since the creation of the journal"
 " entry. You should create the credit note manually instead."
 msgstr ""
+"Sembra che, dalla creazione della registrazione contabile, le imposte siano "
+"state modificate. La nota di credito deve invece essere creata manualmente."
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
@@ -6545,6 +6550,8 @@ msgstr "Movimenti con numero abbinato non impostato"
 #: model:ir.model.fields,help:account.field_res_company__accrual_default_journal_id
 msgid "Journal used by default for moving the period of an entry"
 msgstr ""
+"Registro usato in modo predefinito per spostare il periodo di una "
+"registrazione"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_res_company__account_opening_journal_id
@@ -7643,7 +7650,7 @@ msgstr "Novembre"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_setup_bank_manual_config__num_journals_without_account
 msgid "Num Journals Without Account"
-msgstr ""
+msgstr "Numero registri senza conto"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_full_reconcile__name
@@ -7935,6 +7942,7 @@ msgstr "Etichette opzionali per eventuali rendicontazioni personalizzate"
 #: model:ir.model.fields,help:account.field_account_tax_report_line__code
 msgid "Optional unique code to refer to this line in total formulas"
 msgstr ""
+"Codice univoco facoltativo di riferimento alla riga nelle formule dei totali"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_payment_term_line__option
@@ -9352,7 +9360,7 @@ msgstr "Recensire"
 #: model:ir.model.fields,field_description:account.field_account_account__root_id
 #: model:ir.model.fields,field_description:account.field_account_account_template__root_id
 msgid "Root"
-msgstr ""
+msgstr "Radice"
 
 #. module: account
 #: model:ir.model.fields.selection,name:account.selection__res_company__tax_calculation_rounding_method__round_globally
@@ -10637,7 +10645,7 @@ msgstr "Mappatura imposte"
 #. module: account
 #: model:ir.model.fields,help:account.field_account_move_line__tax_ids
 msgid "Taxes that apply on the base amount"
-msgstr ""
+msgstr "Imposte che si applicano all'importo imponibile"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_tax_template_search
@@ -13436,6 +13444,15 @@ msgstr "azienda madre"
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
 msgid "to check"
 msgstr "da controllare"
+
+#. module: account
+#: code:addons/account/models/account_move.py:0
+#, python-format
+msgid ""
+"The chosen journal has a type that is not compatible with your invoice type."
+" Sales operations should go to 'sale' journals, and purchase operations to "
+"'purchase' ones."
+msgstr ""
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_move_form
