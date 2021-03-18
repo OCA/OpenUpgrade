@@ -7,6 +7,8 @@ renamed_modules = {
     # odoo
     "account_facturx": "account_edi_facturx",
     "website_rating": "portal_rating",
+    # OCA/manufacture
+    "mrp_production_request": "mrp_request",
     # OCA/...
 }
 
@@ -32,7 +34,13 @@ merged_modules = {
 }
 
 # only used here for upgrade_analysis
-renamed_models = {}
+renamed_models = {
+    # odoo
+    # OCA/manufacture
+    "mrp.production.request": "mrp.request",
+    "mrp.production.request.create.mo": "mrp.request.create.mo",
+    "mrp.production.request.create.mo.line": "mrp.request.create.mo.line",
+}
 
 # only used here for upgrade_analysis
 merged_models = {}
