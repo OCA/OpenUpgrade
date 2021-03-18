@@ -99,7 +99,7 @@ class SaleOrder(models.Model):
 
         reward_qty = min(int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity), reward_product_qty)
         # Take the default taxes on the reward product, mapped with the fiscal position
-        taxes = program.reward_product_id.taxes_id
+        taxes = program.reward_product_id.taxes_id.filtered(lambda t: t.company_id.id == self.company_id.id)
         if self.fiscal_position_id:
             taxes = self.fiscal_position_id.map_tax(taxes)
         return {
@@ -141,6 +141,9 @@ class SaleOrder(models.Model):
 
     def _get_reward_values_discount(self, program):
         if program.discount_type == 'fixed_amount':
+            taxes = program.discount_line_product_id.taxes_id
+            if self.fiscal_position_id:
+                taxes = self.fiscal_position_id.map_tax(taxes)
             return [{
                 'name': _("Discount: ") + program.name,
                 'product_id': program.discount_line_product_id.id,
@@ -148,7 +151,7 @@ class SaleOrder(models.Model):
                 'product_uom_qty': 1.0,
                 'product_uom': program.discount_line_product_id.uom_id.id,
                 'is_reward_line': True,
-                'tax_id': [(4, tax.id, False) for tax in program.discount_line_product_id.taxes_id],
+                'tax_id': [(4, tax.id, False) for tax in taxes],
             }]
         reward_dict = {}
         lines = self._get_paid_order_lines()

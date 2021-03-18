@@ -640,10 +640,13 @@ class SaleOrder(models.Model):
             invoice_vals = order._prepare_invoice()
             invoiceable_lines = order._get_invoiceable_lines(final)
 
-            if not invoiceable_lines:
+            if not invoiceable_lines and not invoice_vals['invoice_line_ids']:
                 raise UserError(_('There is no invoiceable line. If a product has a Delivered quantities invoicing policy, please make sure that a quantity has been delivered.'))
 
-            invoice_vals['invoice_line_ids'] = [
+            # there is a chance the invoice_vals['invoice_line_ids'] already contains data when
+            # another module extends the method `_prepare_invoice()`. Therefore, instead of
+            # replacing the invoice_vals['invoice_line_ids'], we append invoiceable lines into it
+            invoice_vals['invoice_line_ids'] += [
                 (0, 0, line._prepare_invoice_line())
                 for line in invoiceable_lines
             ]
@@ -1452,18 +1455,16 @@ class SaleOrderLine(models.Model):
                 # amount and not zero. Since we compute untaxed amount, we can use directly the price
                 # reduce (to include discount) without using `compute_all()` method on taxes.
                 price_subtotal = 0.0
-                if line.product_id.invoice_policy == 'delivery':
-                    price_subtotal = line.price_reduce * line.qty_delivered
-                else:
-                    price_subtotal = line.price_reduce * line.product_uom_qty
+                umo_qty_to_consider = line.qty_delivered if line.product_id.invoice_policy == 'delivery' else line.product_uom_qty
+                price_subtotal = line.price_reduce * umo_qty_to_consider
                 if len(line.tax_id.filtered(lambda tax: tax.price_include)) > 0:
                     # As included taxes are not excluded from the computed subtotal, `compute_all()` method
                     # has to be called to retrieve the subtotal without them.
                     # `price_reduce_taxexcl` cannot be used as it is computed from `price_subtotal` field. (see upper Note)
                     price_subtotal = line.tax_id.compute_all(
-                        price_subtotal,
+                        line.price_reduce,
                         currency=line.order_id.currency_id,
-                        quantity=line.product_uom_qty,
+                        quantity=umo_qty_to_consider,
                         product=line.product_id,
                         partner=line.order_id.partner_shipping_id)['total_excluded']
 

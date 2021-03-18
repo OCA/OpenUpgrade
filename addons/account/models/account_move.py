@@ -121,10 +121,11 @@ class AccountMove(models.Model):
         domain="[('company_id', '=', company_id)]",
         default=_get_default_journal)
     user_id = fields.Many2one(related='invoice_user_id', string='User')
-    company_id = fields.Many2one(string='Company', store=True, readonly=True,
-        related='journal_id.company_id', change_default=True)
+    company_id = fields.Many2one(comodel_name='res.company', string='Company',
+                                 store=True, readonly=True,
+                                 compute='_compute_company_id')
     company_currency_id = fields.Many2one(string='Company Currency', readonly=True,
-        related='journal_id.company_id.currency_id')
+        related='company_id.currency_id')
     currency_id = fields.Many2one('res.currency', store=True, readonly=True, tracking=True, required=True,
         states={'draft': [('readonly', False)]},
         string='Currency',
@@ -1008,6 +1009,11 @@ class AccountMove(models.Model):
                 if invoice != invoice._origin:
                     invoice.invoice_line_ids = invoice.line_ids.filtered(lambda line: not line.exclude_from_invoice_tab)
 
+    @api.depends('journal_id')
+    def _compute_company_id(self):
+        for move in self:
+            move.company_id = move.journal_id.company_id or move.company_id or self.env.company
+
     def _get_lines_onchange_currency(self):
         # Override needed for COGS
         return self.line_ids
@@ -1574,6 +1580,14 @@ class AccountMove(models.Model):
                 raise UserError(message)
         return True
 
+    @api.constrains('type', 'journal_id')
+    def _check_journal_type(self):
+        for record in self:
+            journal_type = record.journal_id.type
+
+            if record.is_sale_document() and journal_type != 'sale' or record.is_purchase_document() and journal_type != 'purchase':
+                raise ValidationError(_("The chosen journal has a type that is not compatible with your invoice type. Sales operations should go to 'sale' journals, and purchase operations to 'purchase' ones."))
+
     # -------------------------------------------------------------------------
     # LOW-LEVEL METHODS
     # -------------------------------------------------------------------------
@@ -1635,28 +1649,15 @@ class AccountMove(models.Model):
         '''
         new_vals_list = []
         for vals in vals_list:
-            if not vals.get('invoice_line_ids'):
-                new_vals_list.append(vals)
-                continue
-            if vals.get('line_ids'):
-                vals.pop('invoice_line_ids', None)
-                new_vals_list.append(vals)
-                continue
-            if not vals.get('type') and not self._context.get('default_type'):
-                vals.pop('invoice_line_ids', None)
-                new_vals_list.append(vals)
-                continue
-            vals['type'] = vals.get('type', self._context.get('default_type', 'entry'))
-            if not vals['type'] in self.get_invoice_types(include_receipts=True):
-                new_vals_list.append(vals)
-                continue
-
-            vals['line_ids'] = vals.pop('invoice_line_ids')
+            vals = dict(vals)
 
             if vals.get('invoice_date') and not vals.get('date'):
                 vals['date'] = vals['invoice_date']
 
-            ctx_vals = {'default_type': vals.get('type') or self._context.get('default_type')}
+            default_type = vals.get('type') or self._context.get('default_type')
+            ctx_vals = {}
+            if default_type:
+                ctx_vals['default_type'] = default_type
             if vals.get('journal_id'):
                 ctx_vals['default_journal_id'] = vals['journal_id']
                 # reorder the companies in the context so that the company of the journal
@@ -1667,9 +1668,21 @@ class AccountMove(models.Model):
                 reordered_companies = sorted(allowed_companies, key=lambda cid: cid != journal_company.id)
                 ctx_vals['allowed_company_ids'] = reordered_companies
             self_ctx = self.with_context(**ctx_vals)
-            new_vals = self_ctx._add_missing_default_values(vals)
+            vals = self_ctx._add_missing_default_values(vals)
 
-            move = self_ctx.new(new_vals)
+            is_invoice = vals.get('type') in self.get_invoice_types(include_receipts=True)
+
+            if 'line_ids' in vals:
+                vals.pop('invoice_line_ids', None)
+                new_vals_list.append(vals)
+                continue
+
+            if is_invoice and 'invoice_line_ids' in vals:
+                vals['line_ids'] = vals['invoice_line_ids']
+
+            vals.pop('invoice_line_ids', None)
+
+            move = self_ctx.new(vals)
             new_vals_list.append(move._move_autocomplete_invoice_lines_values())
 
         return new_vals_list
@@ -2629,7 +2642,11 @@ class AccountMoveLine(models.Model):
         help="The bank statement used for bank reconciliation")
 
     # ==== Tax fields ====
-    tax_ids = fields.Many2many('account.tax', string='Taxes', help="Taxes that apply on the base amount")
+    tax_ids = fields.Many2many(
+        comodel_name='account.tax',
+        string='Taxes',
+        context={'active_test': False},
+        help="Taxes that apply on the base amount")
     tax_line_id = fields.Many2one('account.tax', string='Originator Tax', ondelete='restrict', store=True,
         compute='_compute_tax_line_id', help="Indicates that this journal item is a tax line")
     tax_group_id = fields.Many2one(related='tax_line_id.tax_group_id', string='Originator tax group',
@@ -2835,7 +2852,7 @@ class AccountMoveLine(models.Model):
         # adapt the price_unit to the new tax.
         # E.g. mapping a 10% price-included tax to a 20% price-included tax for a price_unit of 110 should preserve
         # 100 as balance but set 120 as price_unit.
-        if self.tax_ids and self.move_id.fiscal_position_id:
+        if self.tax_ids and self.move_id.fiscal_position_id and self.move_id.fiscal_position_id.tax_ids:
             price_subtotal = self._get_price_total_and_subtotal()['price_subtotal']
             self.tax_ids = self.move_id.fiscal_position_id.map_tax(
                 self.tax_ids._origin,
