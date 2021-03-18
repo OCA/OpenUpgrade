@@ -42,10 +42,22 @@ General Tips
 * When installing the openupgradelib make sure you check out the latest version
   from github to get the latest updates and fixes::
 
-    $ pip install git+git://github.com/OCA/openupgradelib.git
+    pip install git+git://github.com/OCA/openupgradelib.git
 
-Configuration options (obsolete)
-++++++++++++++++++++++++++++++++
+Configuration options
++++++++++++++++++++++
+
+* When migrating across several versions of Odoo, setting the target version
+  as an environment variable allows OpenUpgrade to skip methods that are called
+  in every version but really only need to run in the target version. Make the
+  target version available to OpenUpgrade with::
+
+    export OPENUPGRADE_TARGET_VERSION=13.0
+
+  (when migrating up to 13.0)
+
+Obsolete options in the Odoo configuration file
+-----------------------------------------------
 
 Versions of OpenUpgrade earlier than 14.0 allow for the following configuration
 options. Add these options to a separate stanza in the server configuration
