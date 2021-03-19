@@ -110,3 +110,5 @@ def migrate(env, version):
         ],
         True,
     )
+    fill_mailing_subject(env)
+
