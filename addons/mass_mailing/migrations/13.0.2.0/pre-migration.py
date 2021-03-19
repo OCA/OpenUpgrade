@@ -73,7 +73,7 @@ _xmlid_renames = [
 
 
 def fill_mailing_subject(env):
-    openupgrade.logged_query(env.cr, "ALTER TABLE mailing_mailing ADD name VARCHAR")
+    openupgrade.logged_query(env.cr, "ALTER TABLE mailing_mailing ADD subject VARCHAR")
     openupgrade.logged_query(
         env.cr, """
         UPDATE mailing_mailing mm
