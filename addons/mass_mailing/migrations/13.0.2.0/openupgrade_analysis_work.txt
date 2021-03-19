@@ -101,11 +101,13 @@ mass_mailing / mailing.mailing          / mailing_type (selection)      : NEW re
 mass_mailing / mailing.mailing          / message_follower_ids (one2many): NEW relation: mail.followers
 mass_mailing / mailing.mailing          / message_ids (one2many)        : NEW relation: mail.message
 mass_mailing / mailing.mailing          / message_main_attachment_id (many2one): NEW relation: ir.attachment
-mass_mailing / mailing.mailing          / subject (char)                : NEW required
 mass_mailing / mailing.mailing          / unique_ab_testing (boolean)   : NEW hasdefault
 mass_mailing / mailing.trace            / failure_type (selection)      : NEW selection_keys: ['BOUNCE', 'RECIPIENT', 'SMTP', 'UNKNOWN']
 mass_mailing / mailing.trace            / trace_type (selection)        : NEW required, selection_keys: ['mail'], req_default: function, hasdefault
 # NOTHING TO DO: New features
+
+mass_mailing / mailing.mailing          / subject (char)                : NEW required
+# DONE: pre-migration: Put utm.source.name content and copy translations
 
 mass_mailing / mail.mass_mailing.campaign / _inherits (False)             : DEL
 mass_mailing / mail.mass_mailing.campaign / campaign_id (many2one)        : DEL relation: utm.campaign, required

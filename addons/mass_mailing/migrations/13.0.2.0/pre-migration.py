@@ -72,6 +72,29 @@ _xmlid_renames = [
 ]
 
 
+def fill_mailing_subject(env):
+    openupgrade.logged_query(env.cr, "ALTER TABLE mailing_mailing ADD name VARCHAR")
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE mailing_mailing mm
+        SET subject = us.name
+        FROM utm_source us
+        WHERE us.id = mm.source_id"""
+    )
+    # Translations
+    openupgrade.logged_query(
+        env.cr, """
+        INSERT INTO ir_translation
+        (lang, src, name, res_id, state, comments, value, type)
+        SELECT it.lang, it.src, 'mailing.mailing,subject', mm.id,
+        it.state, it.comments, it.value, it.type
+        FROM ir_translation it
+        JOIN utm_source us ON us.id = it.res_id
+        JOIN mailing_mailing mm ON mm.source_id = us.id
+        WHERE it.name='utm.source,name' AND it.module IS NULL"""
+    )
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     openupgrade.rename_columns(env.cr, _column_renames)
