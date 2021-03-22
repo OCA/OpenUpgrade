@@ -45,11 +45,11 @@ def populate_stock_move_lots(cr):
           sm.restrict_lot_id,
           TRUE AS done_move,
           sm2.restrict_lot_id AS lot_produced_id
-        FROM 
+        FROM
           stock_move AS sm
         INNER JOIN
           stock_move AS sm2 ON sm.%s = sm2.id
-        WHERE 
+        WHERE
           sm.restrict_lot_id IS NOT NULL
           AND sm.raw_material_production_id IS NOT NULL
           AND sm.state = 'done'
@@ -80,13 +80,13 @@ def populate_stock_move_lots(cr):
           restrict_lot_id,
           TRUE as done_move
         FROM stock_move
-        WHERE 
+        WHERE
           restrict_lot_id IS NOT NULL
           AND production_id IS NOT NULL
           AND state = 'done'
         """
     )
-    
+
 
 def archive_mrp_bom_date_stop(cr):
     cr.execute(
