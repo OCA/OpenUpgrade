@@ -63,6 +63,8 @@ merged_modules = {
     # OCA/social
     'mail_history': 'mail',
     'mass_mailing_unique': 'mass_mailing',
+    # OCA/stock-logistics-reporting
+    'stock_picking_report_custom_description': 'stock',
     # OCA/stock-logistics-warehouse
     'sale_stock_info_popup': 'sale_stock',
     # OCA/timesheet
