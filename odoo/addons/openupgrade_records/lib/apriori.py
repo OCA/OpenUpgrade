@@ -46,6 +46,7 @@ merged_modules = {
     'account_move_chatter': 'account',
     # OCA/account-reconcile
     'account_set_reconcilable': 'account',
+    'bank_statement_foreign_currency': 'account',
     # OCA/e-commerce
     'website_sale_category_description': 'website_sale',
     # OCA/event
