@@ -1,4 +1,4 @@
-* call your odoo instance with the option ``--load=web,openupgrade_framework``
+* call your odoo instance with the option ``--load=base,web,openupgrade_framework``
 
 or
 
