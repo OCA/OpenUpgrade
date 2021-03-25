@@ -10,7 +10,7 @@ coupon       / coupon.coupon            / code (char)                   : NEW re
 coupon       / coupon.coupon            / partner_id (many2one)         : NEW relation: res.partner
 coupon       / coupon.coupon            / program_id (many2one)         : NEW relation: coupon.program
 coupon       / coupon.coupon            / state (selection)             : NEW required, selection_keys: ['cancel', 'expired', 'new', 'reserved', 'sent', 'used'], req_default: function, hasdefault
-coupon       / coupon.program           / _inherits (False)             : NEW
+coupon       / coupon.program           / _inherits                     : NEW _inherits: {'coupon.rule': 'rule_id', 'coupon.reward': 'reward_id'}
 coupon       / coupon.program           / active (boolean)              : NEW hasdefault
 coupon       / coupon.program           / company_id (many2one)         : NEW relation: res.company, hasdefault
 coupon       / coupon.program           / coupon_ids (one2many)         : NEW relation: coupon.coupon

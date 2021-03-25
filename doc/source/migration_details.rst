@@ -25,7 +25,7 @@ developing migration scripts for uncovered modules.
 
 4. Edit the configuration files and command line parameters to point to the
    database you are going to upgrade. Run Odoo with the *--update all
-   --stop-after-init --load=web,openupgrade_framework* flags.
+   --stop-after-init --load=base,web,openupgrade_framework* flags.
 
    For versions earlier than 14.0 that are running the OpenUpgrade fork rather
    than Odoo itself, you do not pass the `load` parameter.

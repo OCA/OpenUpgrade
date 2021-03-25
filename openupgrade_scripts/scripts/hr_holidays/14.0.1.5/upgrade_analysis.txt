@@ -43,7 +43,6 @@ hr_holidays  / hr.leave.type            / allocation_validation_type (selection)
 hr_holidays  / hr.leave.type            / leave_validation_type (selection): NEW selection_keys: ['both', 'hr', 'manager', 'no_validation'], hasdefault
 hr_holidays  / hr.leave.type            / validation_type (selection)   : DEL selection_keys: ['both', 'hr', 'manager', 'no_validation']
 ---XML records in module 'hr_holidays'---
-DEL ir.actions.act_window: hr_holidays.action_hr_holidays_dashboard
 DEL ir.actions.act_window: hr_holidays.hr_leave_action_all
 DEL ir.actions.act_window: hr_holidays.hr_leave_action_payroll
 NEW ir.actions.act_window.view: hr_holidays.action_view_activity_manager_approve

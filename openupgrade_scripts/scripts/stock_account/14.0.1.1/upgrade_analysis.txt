@@ -9,6 +9,7 @@ NEW ir.model.access: stock_account.access_account_journal_stock_manager
 NEW ir.model.access: stock_account.access_stock_move_invoicing_payments_readonly
 NEW ir.model.access: stock_account.access_stock_picking_invoicing_payments_readonly
 NEW ir.model.access: stock_account.access_stock_valuation_layer_revaluation
+DEL ir.model.access: stock_account.access_account_tag_stock_user
 ir.rule: stock_account.stock_valuation_layer_company_rule (noupdate) (noupdate switched)
 NEW ir.ui.view: stock_account.stock_account_report_product_product_replenishment
 NEW ir.ui.view: stock_account.stock_valuation_layer_revaluation_form_view
@@ -17,4 +18,3 @@ DEL ir.ui.view: stock_account.product_variant_easy_edit_view_inherit
 DEL ir.ui.view: stock_account.stock_valuation_layer_search
 DEL ir.ui.view: stock_account.view_change_standard_price
 DEL ir.ui.view: stock_account.view_template_property_form
-DEL res.groups: stock.group_stock_manager

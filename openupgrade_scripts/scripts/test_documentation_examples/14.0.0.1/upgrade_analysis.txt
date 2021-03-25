@@ -1,0 +1,26 @@
+---Models in module 'test_documentation_examples'---
+new model delegation.keyboard
+new model delegation.laptop
+new model delegation.screen
+new model extension.0
+new model inheritance.0
+new model inheritance.1
+---Fields in module 'test_documentation_examples'---
+test_documentation_examples / delegation.keyboard      / layout (char)                 : NEW
+test_documentation_examples / delegation.laptop        / _inherits                     : NEW _inherits: {'delegation.screen': 'screen_id', 'delegation.keyboard': 'keyboard_id'}
+test_documentation_examples / delegation.laptop        / keyboard_id (many2one)        : NEW relation: delegation.keyboard, required
+test_documentation_examples / delegation.laptop        / maker (char)                  : NEW
+test_documentation_examples / delegation.laptop        / name (char)                   : NEW
+test_documentation_examples / delegation.laptop        / screen_id (many2one)          : NEW relation: delegation.screen, required
+test_documentation_examples / delegation.screen        / size (float)                  : NEW
+test_documentation_examples / extension.0              / description (char)            : NEW hasdefault
+test_documentation_examples / extension.0              / name (char)                   : NEW hasdefault
+test_documentation_examples / inheritance.0            / name (char)                   : NEW
+test_documentation_examples / inheritance.1            / name (char)                   : NEW
+---XML records in module 'test_documentation_examples'---
+NEW ir.model.access: test_documentation_examples.access_delegation_keyboard
+NEW ir.model.access: test_documentation_examples.access_delegation_laptop
+NEW ir.model.access: test_documentation_examples.access_delegation_screen
+NEW ir.model.access: test_documentation_examples.access_extension_0
+NEW ir.model.access: test_documentation_examples.access_inheritance_0
+NEW ir.model.access: test_documentation_examples.access_inheritance_1

@@ -23,6 +23,7 @@ stock        / stock.move               / priority (selection)          : now a 
 stock        / stock.move               / priority (selection)          : selection_keys is now '['0', '1']' ('['0', '1', '2', '3']')
 stock        / stock.move               / propagate_date (boolean)      : DEL
 stock        / stock.move               / propagate_date_minimum_delta (integer): DEL
+stock        / stock.picking            / _order                        : _order is now 'priority desc, scheduled_date asc, id desc' ('priority desc, date asc, id desc')
 stock        / stock.picking            / date_deadline (datetime)      : NEW isfunction: function, stored
 stock        / stock.picking            / has_deadline_issue (boolean)  : NEW hasdefault, isfunction: function, stored
 stock        / stock.picking            / priority (selection)          : not a function anymore
@@ -31,6 +32,7 @@ stock        / stock.picking            / signature (binary)            : NEW at
 stock        / stock.rule               / delay_alert (boolean)         : DEL
 stock        / stock.rule               / propagate_date (boolean)      : DEL
 stock        / stock.rule               / propagate_date_minimum_delta (integer): DEL
+stock        / stock.warehouse.orderpoint / _order                        : _order is now 'location_id,company_id,id' ('id')
 stock        / stock.warehouse.orderpoint / lead_days (integer)           : DEL
 stock        / stock.warehouse.orderpoint / lead_type (selection)         : DEL required, selection_keys: ['net', 'supplier'], req_default: function
 stock        / stock.warehouse.orderpoint / product_category_id (many2one): NEW relation: product.category, isrelated: related, stored
@@ -86,8 +88,6 @@ DEL ir.model.access: stock.access_stock_picking_type_portal
 DEL ir.model.access: stock.access_stock_rule
 DEL ir.model.access: stock.access_stock_rule_manager
 DEL ir.model.access: stock.access_stock_warehouse_orderpoint_portal
-NEW ir.module.category: base.module_category_inventory_inventory (noupdate)
-DEL ir.module.category: base.module_category_operations_inventory (noupdate)
 NEW ir.ui.menu: stock.menu_reordering_rules_replenish
 NEW ir.ui.view: stock.assets_common_replenishment_report
 NEW ir.ui.view: stock.package_level_form_edit_view

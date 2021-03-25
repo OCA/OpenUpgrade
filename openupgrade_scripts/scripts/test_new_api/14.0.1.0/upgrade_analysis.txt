@@ -1,0 +1,406 @@
+---Models in module 'test_new_api'---
+new model decimal.precision.test
+new model domain.bool
+new model test_new_api.attachment
+new model test_new_api.attachment.host
+new model test_new_api.bar
+new model test_new_api.binary_svg
+new model test_new_api.cascade
+new model test_new_api.category
+new model test_new_api.city
+new model test_new_api.company
+new model test_new_api.company.attr
+new model test_new_api.compute.container
+new model test_new_api.compute.dynamic.depends
+new model test_new_api.compute_editable
+new model test_new_api.compute_editable.line
+new model test_new_api.compute.inverse
+new model test_new_api.compute.member
+new model test_new_api.compute.onchange
+new model test_new_api.compute.onchange.line
+new model test_new_api.compute.readonly
+new model test_new_api.compute.readwrite
+new model test_new_api.compute.unassigned
+new model test_new_api.country
+new model test_new_api.creativework.book
+new model test_new_api.creativework.edition
+new model test_new_api.creativework.movie
+new model test_new_api.discussion
+new model test_new_api.display
+new model test_new_api.emailmessage
+new model test_new_api.field_with_caps
+new model test_new_api.foo
+new model test_new_api.inverse_m2o_ref
+new model test_new_api.message
+new model test_new_api.mixed
+new model test_new_api.mixin [abstract]
+new model test_new_api.model_a
+new model test_new_api.model_active_field
+new model test_new_api.model_b
+new model test_new_api.model_binary
+new model test_new_api.model_child
+new model test_new_api.model_child_m2o
+new model test_new_api.model_child_nocheck
+new model test_new_api.model_image
+new model test_new_api.model_many2one_reference
+new model test_new_api.model_parent
+new model test_new_api.model_parent_m2o
+new model test_new_api.model_private_address_onchange
+new model test_new_api.model_selection_base
+new model test_new_api.model_selection_non_stored
+new model test_new_api.model_selection_required
+new model test_new_api.model_selection_required_for_write_override
+new model test_new_api.model_shared_cache_compute_line
+new model test_new_api.model_shared_cache_compute_parent
+new model test_new_api.monetary_base
+new model test_new_api.monetary_custom
+new model test_new_api.monetary_inherits
+new model test_new_api.monetary_order
+new model test_new_api.monetary_order_line
+new model test_new_api.monetary_related
+new model test_new_api.move
+new model test_new_api.move_line
+new model test_new_api.multi
+new model test_new_api.multi_compute_inverse
+new model test_new_api.multi.line
+new model test_new_api.multi.line2
+new model test_new_api.multi.tag
+new model test_new_api.recursive
+new model test_new_api.recursive.tree
+new model test_new_api.related
+new model test_new_api.req_m2o
+new model test_new_api.req_m2o_transient [transient]
+new model test_new_api.selection
+new model test_new_api.state_mixin [abstract]
+new model test_new_api.trigger.left
+new model test_new_api.trigger.middle
+new model test_new_api.trigger.right
+---Fields in module 'test_new_api'---
+test_new_api / decimal.precision.test   / float (float)                 : NEW
+test_new_api / decimal.precision.test   / float_2 (float)               : NEW
+test_new_api / decimal.precision.test   / float_4 (float)               : NEW
+test_new_api / domain.bool              / bool_false (boolean)          : NEW hasdefault
+test_new_api / domain.bool              / bool_true (boolean)           : NEW hasdefault
+test_new_api / domain.bool              / bool_undefined (boolean)      : NEW
+test_new_api / test_new_api.attachment  / name (char)                   : NEW isfunction: function, stored
+test_new_api / test_new_api.attachment  / res_id (integer)              : NEW required
+test_new_api / test_new_api.attachment  / res_model (char)              : NEW required
+test_new_api / test_new_api.attachment.host / attachment_ids (one2many)     : NEW relation: test_new_api.attachment
+test_new_api / test_new_api.bar         / name (char)                   : NEW
+test_new_api / test_new_api.binary_svg  / image_attachment (binary)     : NEW attachment: True
+test_new_api / test_new_api.binary_svg  / image_wo_attachment (binary)  : NEW attachment: False
+test_new_api / test_new_api.binary_svg  / name (char)                   : NEW required
+test_new_api / test_new_api.cascade     / baz (char)                    : NEW isfunction: function, stored
+test_new_api / test_new_api.cascade     / foo (char)                    : NEW
+test_new_api / test_new_api.category    / color (integer)               : NEW
+test_new_api / test_new_api.category    / discussions (many2many)       : NEW relation: test_new_api.discussion
+test_new_api / test_new_api.category    / dummy (char)                  : NEW
+test_new_api / test_new_api.category    / name (char)                   : NEW required
+test_new_api / test_new_api.category    / parent (many2one)             : NEW relation: test_new_api.category
+test_new_api / test_new_api.category    / parent_path (char)            : NEW
+test_new_api / test_new_api.city        / country_id (many2one)         : NEW relation: test_new_api.country
+test_new_api / test_new_api.city        / name (char)                   : NEW
+test_new_api / test_new_api.company     / date (date)                   : NEW hasdefault
+test_new_api / test_new_api.company     / foo (char)                    : NEW hasdefault
+test_new_api / test_new_api.company     / moment (datetime)             : NEW hasdefault
+test_new_api / test_new_api.company     / tag_id (many2one)             : NEW relation: test_new_api.multi.tag, hasdefault
+test_new_api / test_new_api.company.attr / bar (char)                    : NEW isfunction: function, stored
+test_new_api / test_new_api.company.attr / company (many2one)            : NEW relation: test_new_api.company
+test_new_api / test_new_api.company.attr / quantity (integer)            : NEW
+test_new_api / test_new_api.compute.container / member_ids (one2many)         : NEW relation: test_new_api.compute.member
+test_new_api / test_new_api.compute.container / name (char)                   : NEW
+test_new_api / test_new_api.compute.dynamic.depends / name1 (char)                  : NEW
+test_new_api / test_new_api.compute.dynamic.depends / name2 (char)                  : NEW
+test_new_api / test_new_api.compute.dynamic.depends / name3 (char)                  : NEW
+test_new_api / test_new_api.compute.inverse / bar (char)                    : NEW isfunction: function, stored
+test_new_api / test_new_api.compute.inverse / baz (char)                    : NEW
+test_new_api / test_new_api.compute.inverse / foo (char)                    : NEW
+test_new_api / test_new_api.compute.member / container_id (many2one)       : NEW relation: test_new_api.compute.container, isfunction: function, stored
+test_new_api / test_new_api.compute.member / name (char)                   : NEW
+test_new_api / test_new_api.compute.onchange / active (boolean)              : NEW
+test_new_api / test_new_api.compute.onchange / bar (char)                    : NEW isfunction: function, stored
+test_new_api / test_new_api.compute.onchange / baz (char)                    : NEW isfunction: function, stored
+test_new_api / test_new_api.compute.onchange / count (integer)               : NEW hasdefault
+test_new_api / test_new_api.compute.onchange / foo (char)                    : NEW
+test_new_api / test_new_api.compute.onchange / line_ids (one2many)           : NEW relation: test_new_api.compute.onchange.line, isfunction: function, stored
+test_new_api / test_new_api.compute.onchange / tag_ids (many2many)           : NEW relation: test_new_api.multi.tag, isfunction: function, stored
+test_new_api / test_new_api.compute.onchange.line / foo (char)                    : NEW
+test_new_api / test_new_api.compute.onchange.line / record_id (many2one)          : NEW relation: test_new_api.compute.onchange
+test_new_api / test_new_api.compute.readonly / bar (char)                    : NEW isfunction: function, stored
+test_new_api / test_new_api.compute.readonly / foo (char)                    : NEW hasdefault
+test_new_api / test_new_api.compute.readwrite / bar (char)                    : NEW isfunction: function, stored
+test_new_api / test_new_api.compute.readwrite / foo (char)                    : NEW
+test_new_api / test_new_api.compute.unassigned / bares (char)                  : NEW isfunction: function, stored
+test_new_api / test_new_api.compute.unassigned / bars (char)                   : NEW isfunction: function, stored
+test_new_api / test_new_api.compute.unassigned / foo (char)                    : NEW
+test_new_api / test_new_api.compute_editable / line_ids (one2many)           : NEW relation: test_new_api.compute_editable.line
+test_new_api / test_new_api.compute_editable.line / count (integer)               : NEW
+test_new_api / test_new_api.compute_editable.line / edit (integer)                : NEW isfunction: function, stored
+test_new_api / test_new_api.compute_editable.line / parent_id (many2one)          : NEW relation: test_new_api.compute_editable
+test_new_api / test_new_api.compute_editable.line / same (integer)                : NEW isfunction: function, stored
+test_new_api / test_new_api.compute_editable.line / value (integer)               : NEW
+test_new_api / test_new_api.country     / name (char)                   : NEW
+test_new_api / test_new_api.creativework.book / editions (one2many)           : NEW relation: test_new_api.creativework.edition
+test_new_api / test_new_api.creativework.book / name (char)                   : NEW
+test_new_api / test_new_api.creativework.edition / name (char)                   : NEW
+test_new_api / test_new_api.creativework.edition / res_id (integer)              : NEW required
+test_new_api / test_new_api.creativework.edition / res_model (char)              : NEW isrelated: related, stored
+test_new_api / test_new_api.creativework.edition / res_model_id (many2one)       : NEW relation: ir.model, required
+test_new_api / test_new_api.creativework.movie / editions (one2many)           : NEW relation: test_new_api.creativework.edition
+test_new_api / test_new_api.creativework.movie / name (char)                   : NEW
+test_new_api / test_new_api.discussion  / categories (many2many)        : NEW relation: test_new_api.category
+test_new_api / test_new_api.discussion  / emails (one2many)             : NEW relation: test_new_api.emailmessage
+test_new_api / test_new_api.discussion  / important_emails (one2many)   : NEW relation: test_new_api.emailmessage
+test_new_api / test_new_api.discussion  / important_messages (one2many) : NEW relation: test_new_api.message
+test_new_api / test_new_api.discussion  / message_concat (text)         : NEW
+test_new_api / test_new_api.discussion  / messages (one2many)           : NEW relation: test_new_api.message
+test_new_api / test_new_api.discussion  / moderator (many2one)          : NEW relation: res.users
+test_new_api / test_new_api.discussion  / name (char)                   : NEW required
+test_new_api / test_new_api.discussion  / participants (many2many)      : NEW relation: res.users
+test_new_api / test_new_api.discussion  / very_important_messages (one2many): NEW relation: test_new_api.message
+test_new_api / test_new_api.display     / display_name (char)           : NEW isfunction: function, stored
+test_new_api / test_new_api.emailmessage / _inherits                     : NEW _inherits: {'test_new_api.message': 'message'}
+test_new_api / test_new_api.emailmessage / email_to (char)               : NEW
+test_new_api / test_new_api.emailmessage / message (many2one)            : NEW relation: test_new_api.message, required
+test_new_api / test_new_api.field_with_caps / pArTneR_321_id (many2one)     : NEW relation: res.partner
+test_new_api / test_new_api.foo         / name (char)                   : NEW
+test_new_api / test_new_api.foo         / value1 (integer)              : NEW
+test_new_api / test_new_api.foo         / value2 (integer)              : NEW
+test_new_api / test_new_api.inverse_m2o_ref / model_ids (one2many)          : NEW relation: test_new_api.model_many2one_reference
+test_new_api / test_new_api.message     / author (many2one)             : NEW relation: res.users, hasdefault
+test_new_api / test_new_api.message     / body (text)                   : NEW
+test_new_api / test_new_api.message     / discussion (many2one)         : NEW relation: test_new_api.discussion
+test_new_api / test_new_api.message     / important (boolean)           : NEW
+test_new_api / test_new_api.message     / label (char)                  : NEW
+test_new_api / test_new_api.message     / name (char)                   : NEW isfunction: function, stored
+test_new_api / test_new_api.message     / priority (integer)            : NEW
+test_new_api / test_new_api.mixed       / amount (float)                : NEW
+test_new_api / test_new_api.mixed       / comment1 (html)               : NEW
+test_new_api / test_new_api.mixed       / comment2 (html)               : NEW
+test_new_api / test_new_api.mixed       / comment3 (html)               : NEW
+test_new_api / test_new_api.mixed       / comment4 (html)               : NEW
+test_new_api / test_new_api.mixed       / currency_id (many2one)        : NEW relation: res.currency, hasdefault
+test_new_api / test_new_api.mixed       / date (date)                   : NEW
+test_new_api / test_new_api.mixed       / lang (selection)              : NEW selection_keys: function
+test_new_api / test_new_api.mixed       / moment (datetime)             : NEW
+test_new_api / test_new_api.mixed       / number (float)                : NEW hasdefault
+test_new_api / test_new_api.mixed       / number2 (float)               : NEW
+test_new_api / test_new_api.mixed       / reference (reference)         : NEW
+test_new_api / test_new_api.model_a     / a_restricted_b_ids (many2many): NEW relation: test_new_api.model_b
+test_new_api / test_new_api.model_a     / b_restricted_b_ids (many2many): NEW relation: test_new_api.model_b
+test_new_api / test_new_api.model_a     / name (char)                   : NEW
+test_new_api / test_new_api.model_active_field / active (boolean)              : NEW hasdefault
+test_new_api / test_new_api.model_active_field / active_children_ids (one2many): NEW relation: test_new_api.model_active_field
+test_new_api / test_new_api.model_active_field / all_children_ids (one2many)   : NEW relation: test_new_api.model_active_field
+test_new_api / test_new_api.model_active_field / children_ids (one2many)       : NEW relation: test_new_api.model_active_field
+test_new_api / test_new_api.model_active_field / name (char)                   : NEW
+test_new_api / test_new_api.model_active_field / parent_active (boolean)       : NEW isrelated: related, stored
+test_new_api / test_new_api.model_active_field / parent_id (many2one)          : NEW relation: test_new_api.model_active_field
+test_new_api / test_new_api.model_b     / a_restricted_a_ids (many2many): NEW relation: test_new_api.model_a
+test_new_api / test_new_api.model_b     / b_restricted_a_ids (many2many): NEW relation: test_new_api.model_a
+test_new_api / test_new_api.model_b     / name (char)                   : NEW
+test_new_api / test_new_api.model_binary / binary (binary)               : NEW attachment: True
+test_new_api / test_new_api.model_binary / binary_related_store (binary) : NEW attachment: True, isrelated: related, stored
+test_new_api / test_new_api.model_child / company_id (many2one)         : NEW relation: res.company, required
+test_new_api / test_new_api.model_child / name (char)                   : NEW
+test_new_api / test_new_api.model_child / parent_id (many2one)          : NEW relation: test_new_api.model_parent
+test_new_api / test_new_api.model_child_m2o / cost (integer)                : NEW isfunction: function, stored
+test_new_api / test_new_api.model_child_m2o / name (char)                   : NEW
+test_new_api / test_new_api.model_child_m2o / parent_id (many2one)          : NEW relation: test_new_api.model_parent_m2o
+test_new_api / test_new_api.model_child_m2o / size1 (integer)               : NEW isfunction: function, stored
+test_new_api / test_new_api.model_child_m2o / size2 (integer)               : NEW isfunction: function, stored
+test_new_api / test_new_api.model_child_nocheck / company_id (many2one)         : NEW relation: res.company, required
+test_new_api / test_new_api.model_child_nocheck / name (char)                   : NEW
+test_new_api / test_new_api.model_child_nocheck / parent_id (many2one)          : NEW relation: test_new_api.model_parent
+test_new_api / test_new_api.model_image / image (binary)                : NEW attachment: True
+test_new_api / test_new_api.model_image / image_128 (binary)            : NEW attachment: True
+test_new_api / test_new_api.model_image / image_512 (binary)            : NEW attachment: True, isrelated: related, stored
+test_new_api / test_new_api.model_image / name (char)                   : NEW required
+test_new_api / test_new_api.model_many2one_reference / res_id (many2one_reference)   : NEW relation: res_model
+test_new_api / test_new_api.model_many2one_reference / res_model (char)              : NEW
+test_new_api / test_new_api.model_parent / company_id (many2one)         : NEW relation: res.company, required
+test_new_api / test_new_api.model_parent / name (char)                   : NEW
+test_new_api / test_new_api.model_parent_m2o / child_ids (one2many)          : NEW relation: test_new_api.model_child_m2o
+test_new_api / test_new_api.model_parent_m2o / cost (integer)                : NEW isfunction: function, stored
+test_new_api / test_new_api.model_parent_m2o / name (char)                   : NEW
+test_new_api / test_new_api.model_private_address_onchange / address_id (many2one)         : NEW relation: res.partner
+test_new_api / test_new_api.model_private_address_onchange / company_id (many2one)         : NEW relation: res.company, required
+test_new_api / test_new_api.model_private_address_onchange / name (char)                   : NEW
+test_new_api / test_new_api.model_selection_base / my_selection (selection)      : NEW selection_keys: ['bar', 'foo', 'ham', 'quux']
+test_new_api / test_new_api.model_selection_non_stored / my_selection (selection)      : NEW selection_keys: ['bar', 'foo']
+test_new_api / test_new_api.model_selection_required / active (boolean)              : NEW hasdefault
+test_new_api / test_new_api.model_selection_required / my_selection (selection)      : NEW required, selection_keys: ['bacon', 'bar', 'baz', 'eevee', 'eggs', 'foo', 'knickers', 'pikachu'], req_default: function, hasdefault
+test_new_api / test_new_api.model_selection_required_for_write_override / my_selection (selection)      : NEW required, selection_keys: ['bar', 'divinity', 'foo'], req_default: function, hasdefault
+test_new_api / test_new_api.model_shared_cache_compute_line / amount (integer)              : NEW
+test_new_api / test_new_api.model_shared_cache_compute_line / parent_id (many2one)          : NEW relation: test_new_api.model_shared_cache_compute_parent
+test_new_api / test_new_api.model_shared_cache_compute_line / user_id (many2one)            : NEW relation: res.users, hasdefault
+test_new_api / test_new_api.model_shared_cache_compute_parent / line_ids (one2many)           : NEW relation: test_new_api.model_shared_cache_compute_line
+test_new_api / test_new_api.model_shared_cache_compute_parent / name (char)                   : NEW
+test_new_api / test_new_api.model_shared_cache_compute_parent / total_amount (integer)        : NEW isfunction: function, stored
+test_new_api / test_new_api.monetary_base / amount (float)                : NEW
+test_new_api / test_new_api.monetary_base / base_currency_id (many2one)   : NEW relation: res.currency
+test_new_api / test_new_api.monetary_custom / monetary_id (many2one)        : NEW relation: test_new_api.monetary_base
+test_new_api / test_new_api.monetary_inherits / _inherits                     : NEW _inherits: {'test_new_api.monetary_base': 'monetary_id'}
+test_new_api / test_new_api.monetary_inherits / currency_id (many2one)        : NEW relation: res.currency
+test_new_api / test_new_api.monetary_inherits / monetary_id (many2one)        : NEW relation: test_new_api.monetary_base, required
+test_new_api / test_new_api.monetary_order / currency_id (many2one)        : NEW relation: res.currency
+test_new_api / test_new_api.monetary_order / line_ids (one2many)           : NEW relation: test_new_api.monetary_order_line
+test_new_api / test_new_api.monetary_order / total (float)                 : NEW isfunction: function, stored
+test_new_api / test_new_api.monetary_order_line / order_id (many2one)           : NEW relation: test_new_api.monetary_order, required
+test_new_api / test_new_api.monetary_order_line / subtotal (float)              : NEW
+test_new_api / test_new_api.monetary_related / monetary_id (many2one)        : NEW relation: test_new_api.monetary_base
+test_new_api / test_new_api.move        / line_ids (one2many)           : NEW relation: test_new_api.move_line
+test_new_api / test_new_api.move        / quantity (integer)            : NEW isfunction: function, stored
+test_new_api / test_new_api.move_line   / move_id (many2one)            : NEW relation: test_new_api.move, required
+test_new_api / test_new_api.move_line   / quantity (integer)            : NEW
+test_new_api / test_new_api.move_line   / visible (boolean)             : NEW hasdefault
+test_new_api / test_new_api.multi       / lines (one2many)              : NEW relation: test_new_api.multi.line
+test_new_api / test_new_api.multi       / partner (many2one)            : NEW relation: res.partner
+test_new_api / test_new_api.multi.line  / multi (many2one)              : NEW relation: test_new_api.multi
+test_new_api / test_new_api.multi.line  / name (char)                   : NEW
+test_new_api / test_new_api.multi.line  / partner (many2one)            : NEW relation: res.partner, isrelated: related, stored
+test_new_api / test_new_api.multi.line  / tags (many2many)              : NEW relation: test_new_api.multi.tag
+test_new_api / test_new_api.multi.line2 / multi (many2one)              : NEW relation: test_new_api.multi
+test_new_api / test_new_api.multi.line2 / name (char)                   : NEW
+test_new_api / test_new_api.multi.line2 / partner (many2one)            : NEW relation: res.partner, isrelated: related, stored
+test_new_api / test_new_api.multi.line2 / tags (many2many)              : NEW relation: test_new_api.multi.tag
+test_new_api / test_new_api.multi.tag   / name (char)                   : NEW
+test_new_api / test_new_api.multi_compute_inverse / bar1 (char)                   : NEW isfunction: function, stored
+test_new_api / test_new_api.multi_compute_inverse / bar2 (char)                   : NEW isfunction: function, stored
+test_new_api / test_new_api.multi_compute_inverse / bar3 (char)                   : NEW isfunction: function, stored
+test_new_api / test_new_api.multi_compute_inverse / foo (char)                    : NEW required, req_default: function, hasdefault
+test_new_api / test_new_api.recursive   / display_name (char)           : NEW isfunction: function, stored
+test_new_api / test_new_api.recursive   / name (char)                   : NEW required
+test_new_api / test_new_api.recursive   / parent (many2one)             : NEW relation: test_new_api.recursive
+test_new_api / test_new_api.recursive.tree / children_ids (one2many)       : NEW relation: test_new_api.recursive.tree
+test_new_api / test_new_api.recursive.tree / display_name (char)           : NEW isfunction: function, stored
+test_new_api / test_new_api.recursive.tree / name (char)                   : NEW required
+test_new_api / test_new_api.recursive.tree / parent_id (many2one)          : NEW relation: test_new_api.recursive.tree
+test_new_api / test_new_api.related     / message (many2one)            : NEW relation: test_new_api.message
+test_new_api / test_new_api.related     / name (char)                   : NEW
+test_new_api / test_new_api.req_m2o     / bar (many2one)                : NEW relation: res.country, required
+test_new_api / test_new_api.req_m2o     / foo (many2one)                : NEW relation: res.currency, required
+test_new_api / test_new_api.selection   / other (selection)             : NEW selection_keys: ['bar', 'foo']
+test_new_api / test_new_api.selection   / state (selection)             : NEW selection_keys: ['bar', 'foo']
+test_new_api / test_new_api.trigger.left / middle_ids (one2many)         : NEW relation: test_new_api.trigger.middle
+test_new_api / test_new_api.trigger.left / right_id (many2one)           : NEW relation: test_new_api.trigger.right, isrelated: related, stored
+test_new_api / test_new_api.trigger.middle / left_id (many2one)            : NEW relation: test_new_api.trigger.left, required
+test_new_api / test_new_api.trigger.middle / right_id (many2one)           : NEW relation: test_new_api.trigger.right, required
+test_new_api / test_new_api.trigger.right / left_ids (one2many)           : NEW relation: test_new_api.trigger.left
+test_new_api / test_new_api.trigger.right / left_size (integer)           : NEW isfunction: function, stored
+---XML records in module 'test_new_api'---
+NEW decimal.precision: test_new_api.decimal_new_api_number
+NEW domain.bool: test_new_api.bool_1
+NEW domain.bool: test_new_api.bool_2
+NEW domain.bool: test_new_api.bool_3
+NEW domain.bool: test_new_api.bool_4
+NEW ir.actions.act_window: test_new_api.action_categories
+NEW ir.actions.act_window: test_new_api.action_discussions
+NEW ir.actions.act_window: test_new_api.action_discussions_2
+NEW ir.actions.act_window: test_new_api.action_discussions_3
+NEW ir.actions.act_window: test_new_api.action_messages
+NEW ir.actions.act_window: test_new_api.action_multi
+NEW ir.model.access: test_new_api.access_category
+NEW ir.model.access: test_new_api.access_creativework_book
+NEW ir.model.access: test_new_api.access_creativework_edition
+NEW ir.model.access: test_new_api.access_creativework_movie
+NEW ir.model.access: test_new_api.access_decimal_precision_test_all
+NEW ir.model.access: test_new_api.access_discussion
+NEW ir.model.access: test_new_api.access_domain_bool
+NEW ir.model.access: test_new_api.access_emailmessage
+NEW ir.model.access: test_new_api.access_message
+NEW ir.model.access: test_new_api.access_mixed
+NEW ir.model.access: test_new_api.access_multi
+NEW ir.model.access: test_new_api.access_multi_line
+NEW ir.model.access: test_new_api.access_multi_line2
+NEW ir.model.access: test_new_api.access_multi_tag
+NEW ir.model.access: test_new_api.access_test_new_api_attachment
+NEW ir.model.access: test_new_api.access_test_new_api_attachment_host
+NEW ir.model.access: test_new_api.access_test_new_api_bar
+NEW ir.model.access: test_new_api.access_test_new_api_binary_svg
+NEW ir.model.access: test_new_api.access_test_new_api_cascade
+NEW ir.model.access: test_new_api.access_test_new_api_city
+NEW ir.model.access: test_new_api.access_test_new_api_company
+NEW ir.model.access: test_new_api.access_test_new_api_company_attr
+NEW ir.model.access: test_new_api.access_test_new_api_compute_container
+NEW ir.model.access: test_new_api.access_test_new_api_compute_dynamic_depends
+NEW ir.model.access: test_new_api.access_test_new_api_compute_editable
+NEW ir.model.access: test_new_api.access_test_new_api_compute_editable_line
+NEW ir.model.access: test_new_api.access_test_new_api_compute_inverse
+NEW ir.model.access: test_new_api.access_test_new_api_compute_member
+NEW ir.model.access: test_new_api.access_test_new_api_compute_onchange
+NEW ir.model.access: test_new_api.access_test_new_api_compute_onchange_line
+NEW ir.model.access: test_new_api.access_test_new_api_compute_readonly
+NEW ir.model.access: test_new_api.access_test_new_api_compute_readwrite
+NEW ir.model.access: test_new_api.access_test_new_api_compute_unassigned
+NEW ir.model.access: test_new_api.access_test_new_api_country
+NEW ir.model.access: test_new_api.access_test_new_api_display
+NEW ir.model.access: test_new_api.access_test_new_api_field_with_caps
+NEW ir.model.access: test_new_api.access_test_new_api_foo
+NEW ir.model.access: test_new_api.access_test_new_api_inverse_m2o_ref
+NEW ir.model.access: test_new_api.access_test_new_api_model_a
+NEW ir.model.access: test_new_api.access_test_new_api_model_active_field
+NEW ir.model.access: test_new_api.access_test_new_api_model_b
+NEW ir.model.access: test_new_api.access_test_new_api_model_binary
+NEW ir.model.access: test_new_api.access_test_new_api_model_child
+NEW ir.model.access: test_new_api.access_test_new_api_model_child_m2o
+NEW ir.model.access: test_new_api.access_test_new_api_model_child_nocheck
+NEW ir.model.access: test_new_api.access_test_new_api_model_image
+NEW ir.model.access: test_new_api.access_test_new_api_model_many2one_reference
+NEW ir.model.access: test_new_api.access_test_new_api_model_parent
+NEW ir.model.access: test_new_api.access_test_new_api_model_parent_m2o
+NEW ir.model.access: test_new_api.access_test_new_api_model_private_address_onchange
+NEW ir.model.access: test_new_api.access_test_new_api_model_selection_base
+NEW ir.model.access: test_new_api.access_test_new_api_model_selection_non_stored
+NEW ir.model.access: test_new_api.access_test_new_api_model_selection_required
+NEW ir.model.access: test_new_api.access_test_new_api_model_selection_required_for_write_override
+NEW ir.model.access: test_new_api.access_test_new_api_model_shared_cache_compute_line
+NEW ir.model.access: test_new_api.access_test_new_api_model_shared_cache_compute_parent
+NEW ir.model.access: test_new_api.access_test_new_api_monetary_base
+NEW ir.model.access: test_new_api.access_test_new_api_monetary_custom
+NEW ir.model.access: test_new_api.access_test_new_api_monetary_inherits
+NEW ir.model.access: test_new_api.access_test_new_api_monetary_order
+NEW ir.model.access: test_new_api.access_test_new_api_monetary_order_line
+NEW ir.model.access: test_new_api.access_test_new_api_monetary_related
+NEW ir.model.access: test_new_api.access_test_new_api_move
+NEW ir.model.access: test_new_api.access_test_new_api_move_line
+NEW ir.model.access: test_new_api.access_test_new_api_multi_compute_inverse
+NEW ir.model.access: test_new_api.access_test_new_api_recursive
+NEW ir.model.access: test_new_api.access_test_new_api_recursive_tree
+NEW ir.model.access: test_new_api.access_test_new_api_related
+NEW ir.model.access: test_new_api.access_test_new_api_req_m2o
+NEW ir.model.access: test_new_api.access_test_new_api_req_m2o_transient
+NEW ir.model.access: test_new_api.access_test_new_api_selection
+NEW ir.model.access: test_new_api.access_test_new_api_trigger_left
+NEW ir.model.access: test_new_api.access_test_new_api_trigger_middle
+NEW ir.model.access: test_new_api.access_test_new_api_trigger_right
+NEW ir.rule: test_new_api.ir_rule_test_new_api_model_shared_cache_compute_line (noupdate)
+NEW ir.ui.menu: test_new_api.menu_categories
+NEW ir.ui.menu: test_new_api.menu_config
+NEW ir.ui.menu: test_new_api.menu_discussions
+NEW ir.ui.menu: test_new_api.menu_discussions_2
+NEW ir.ui.menu: test_new_api.menu_discussions_3
+NEW ir.ui.menu: test_new_api.menu_main
+NEW ir.ui.menu: test_new_api.menu_messages
+NEW ir.ui.menu: test_new_api.menu_multi
+NEW ir.ui.menu: test_new_api.menu_sub
+NEW ir.ui.view: test_new_api.assets_tests
+NEW ir.ui.view: test_new_api.category_form
+NEW ir.ui.view: test_new_api.category_tree
+NEW ir.ui.view: test_new_api.compute_editable_form
+NEW ir.ui.view: test_new_api.discussion_form
+NEW ir.ui.view: test_new_api.discussion_form_2
+NEW ir.ui.view: test_new_api.discussion_form_3
+NEW ir.ui.view: test_new_api.message_form
+NEW ir.ui.view: test_new_api.message_tree
+NEW ir.ui.view: test_new_api.model_parent_form
+NEW ir.ui.view: test_new_api.model_shared_cache_compute_parent_view_form
+NEW ir.ui.view: test_new_api.multi_form
+NEW ir.ui.view: test_new_api.multi_tree
+NEW test_new_api.category: test_new_api.category_0
+NEW test_new_api.category: test_new_api.category_0_0
+NEW test_new_api.discussion: test_new_api.discussion_0
+NEW test_new_api.emailmessage: test_new_api.emailmessage_0_0
+NEW test_new_api.message: test_new_api.message_0_0
+NEW test_new_api.message: test_new_api.message_0_1
+NEW test_new_api.message: test_new_api.message_0_2

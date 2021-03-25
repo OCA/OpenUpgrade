@@ -1,0 +1,10 @@
+---Models in module 'test_convert'---
+new model test_convert.test_model
+new model test_convert.usered
+---Fields in module 'test_convert'---
+test_convert / test_convert.usered      / name (char)                   : NEW
+test_convert / test_convert.usered      / tz (char)                     : NEW hasdefault
+test_convert / test_convert.usered      / user_id (many2one)            : NEW relation: res.users, hasdefault
+---XML records in module 'test_convert'---
+NEW ir.model.access: test_convert.access_test_convert_test_model
+NEW ir.model.access: test_convert.access_test_convert_usered

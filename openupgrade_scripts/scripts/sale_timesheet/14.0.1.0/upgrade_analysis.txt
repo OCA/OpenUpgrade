@@ -15,7 +15,7 @@ sale_timesheet / project.project          / billable_type (selection)     : DEL 
 sale_timesheet / project.project          / pricing_type (selection)      : NEW selection_keys: ['employee_rate', 'fixed_rate'], hasdefault
 sale_timesheet / project.project          / sale_line_id (many2one)       : module is now 'sale_project' ('sale_timesheet')
 sale_timesheet / project.project          / sale_order_id (many2one)      : module is now 'sale_project' ('sale_timesheet')
-sale_timesheet / project.project          / timesheet_product_id (many2one): NEW relation: product.product, hasdefault
+sale_timesheet / project.project          / timesheet_product_id (many2one): NEW relation: product.product, hasdefault, isfunction: function, stored
 sale_timesheet / project.sale.line.employee.map / currency_id (many2one)        : NEW relation: res.currency, isfunction: function, stored
 sale_timesheet / project.sale.line.employee.map / price_unit (float)            : is now stored
 sale_timesheet / project.sale.line.employee.map / price_unit (float)            : not related anymore
@@ -49,12 +49,15 @@ NEW ir.model.access: sale_timesheet.access_project_create_sale_order_line
 NEW ir.model.access: sale_timesheet.access_project_task_create_sale_order
 DEL ir.model.access: sale_timesheet.access_sale_order_line_project_manager [renamed to sale_project module]
 DEL ir.model.access: sale_timesheet.access_sale_order_project_manager [renamed to sale_project module]
-NEW ir.rule: account.account_analytic_line_rule_billing_user (noupdate)
 DEL ir.rule: sale_timesheet.sale_order_line_rule_project_manager [renamed to sale_project module] (noupdate)
+NEW ir.ui.view: sale_timesheet.portal_my_timesheets_inherit
+NEW ir.ui.view: sale_timesheet.project_project_view_form_salesman
 NEW ir.ui.view: sale_timesheet.project_project_view_form_simplified_inherit
 NEW ir.ui.view: sale_timesheet.project_task_create_sale_order_view_form
 NEW ir.ui.view: sale_timesheet.quick_create_task_form_sale_timesheet
+NEW ir.ui.view: sale_timesheet.report_invoice_document
 NEW ir.ui.view: sale_timesheet.sale_advance_payment_inv_timesheet_view_form
+NEW ir.ui.view: sale_timesheet.sale_order_portal_content_inherit
 NEW ir.ui.view: sale_timesheet.sale_order_portal_template_inherit
 NEW ir.ui.view: sale_timesheet.timesheet_view_tree_sale
 NEW ir.ui.view: sale_timesheet.view_hr_timesheet_line_pivot_billing_rate

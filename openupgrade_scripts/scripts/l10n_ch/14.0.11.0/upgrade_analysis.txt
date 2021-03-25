@@ -1,0 +1,7 @@
+---Models in module 'l10n_ch'---
+new model report.l10n_ch.qr_report_main [abstract]
+---Fields in module 'l10n_ch'---
+l10n_ch      / account.journal          / invoice_reference_model (False): selection_keys is now '['be', 'ch', 'euro', 'odoo']' ('['ch', 'euro', 'odoo']')
+l10n_ch      / res.partner.bank         / l10n_ch_postal (char)         : now a function
+---XML records in module 'l10n_ch'---
+NEW account.tax.report: l10n_ch.tax_report

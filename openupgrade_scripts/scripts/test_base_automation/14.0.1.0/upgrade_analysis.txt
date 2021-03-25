@@ -1,0 +1,35 @@
+---Models in module 'test_base_automation'---
+model base.automation.lead.test (moved from base_automation)
+model base.automation.line.test (moved from base_automation)
+new model base.automation.link.test
+new model base.automation.linked.test
+---Fields in module 'test_base_automation'---
+test_base_automation / base.automation.lead.test / __last_update (datetime)      : previously in module base_automation
+test_base_automation / base.automation.lead.test / _order                        : previously in module base_automation
+test_base_automation / base.automation.lead.test / active (boolean)              : previously in module base_automation
+test_base_automation / base.automation.lead.test / date_action_last (datetime)   : previously in module base_automation
+test_base_automation / base.automation.lead.test / deadline (boolean)            : previously in module base_automation
+test_base_automation / base.automation.lead.test / display_name (char)           : previously in module base_automation
+test_base_automation / base.automation.lead.test / employee (boolean)            : previously in module base_automation
+test_base_automation / base.automation.lead.test / is_assigned_to_admin (boolean): previously in module base_automation
+test_base_automation / base.automation.lead.test / line_ids (one2many)           : previously in module base_automation
+test_base_automation / base.automation.lead.test / name (char)                   : previously in module base_automation
+test_base_automation / base.automation.lead.test / partner_id (many2one)         : previously in module base_automation
+test_base_automation / base.automation.lead.test / priority (boolean)            : previously in module base_automation
+test_base_automation / base.automation.lead.test / state (selection)             : previously in module base_automation
+test_base_automation / base.automation.lead.test / user_id (many2one)            : previously in module base_automation
+test_base_automation / base.automation.line.test / __last_update (datetime)      : previously in module base_automation
+test_base_automation / base.automation.line.test / _order                        : previously in module base_automation
+test_base_automation / base.automation.line.test / display_name (char)           : previously in module base_automation
+test_base_automation / base.automation.line.test / lead_id (many2one)            : previously in module base_automation
+test_base_automation / base.automation.line.test / name (char)                   : previously in module base_automation
+test_base_automation / base.automation.line.test / user_id (many2one)            : previously in module base_automation
+test_base_automation / base.automation.link.test / linked_id (many2one)          : NEW relation: base.automation.linked.test
+test_base_automation / base.automation.link.test / name (char)                   : NEW
+test_base_automation / base.automation.linked.test / another_field (char)          : NEW
+test_base_automation / base.automation.linked.test / name (char)                   : NEW
+---XML records in module 'test_base_automation'---
+NEW ir.model.access: test_base_automation.access_base_automation_lead_test [renamed from base_automation module]
+NEW ir.model.access: test_base_automation.access_base_automation_line_test [renamed from base_automation module]
+NEW ir.model.access: test_base_automation.access_base_automation_link_test
+NEW ir.model.access: test_base_automation.access_base_automation_linked_test

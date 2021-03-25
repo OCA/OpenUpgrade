@@ -15,11 +15,13 @@ new model account.tour.upload.bill.email.confirm [transient]
 new model report.account.report_invoice [abstract]
 new model sequence.mixin [abstract]
 ---Fields in module 'account'---
+account      / account.account          / _order                        : _order is now 'is_off_balance, code, company_id' ('code')
 account      / account.account          / allowed_journal_ids (many2many): NEW relation: account.journal
 account      / account.account          / group_id (many2one)           : now a function
 account      / account.account          / is_off_balance (boolean)      : NEW hasdefault, isfunction: function, stored
 account      / account.account.template / group_id (many2one)           : DEL relation: account.group
 account      / account.account.template / root_id (many2one)            : DEL relation: account.root
+account      / account.bank.statement   / _order                        : _order is now 'date desc, name desc, id desc' ('date desc, id desc')
 account      / account.bank.statement   / accounting_date (date)        : DEL
 account      / account.bank.statement   / balance_end_real (float)      : now a function
 account      / account.bank.statement   / balance_start (float)         : now a function
@@ -28,7 +30,7 @@ account      / account.bank.statement   / previous_statement_id (many2one): NEW 
 account      / account.bank.statement   / sequence_number (integer)     : NEW isfunction: function, stored
 account      / account.bank.statement   / sequence_prefix (char)        : NEW isfunction: function, stored
 account      / account.bank.statement   / state (selection)             : selection_keys is now '['confirm', 'open', 'posted']' ('['confirm', 'open']')
-account      / account.bank.statement.line / _inherits (False)             : NEW
+account      / account.bank.statement.line / _inherits                     : NEW _inherits: {'account.move': 'move_id'}
 account      / account.bank.statement.line / account_id (many2one)         : DEL relation: account.account
 account      / account.bank.statement.line / amount_residual (float)       : NEW isfunction: function, stored
 account      / account.bank.statement.line / bank_account_id (many2one)    : DEL relation: res.partner.bank
@@ -60,6 +62,7 @@ account      / account.fiscal.year      / company_id (many2one)         : DEL re
 account      / account.fiscal.year      / date_from (date)              : DEL required
 account      / account.fiscal.year      / date_to (date)                : DEL required
 account      / account.fiscal.year      / name (char)                   : DEL required
+account      / account.group            / _order                        : _order is now 'code_prefix_start' ('code_prefix')
 account      / account.group            / code_prefix (char)            : DEL
 account      / account.group            / code_prefix_end (char)        : NEW
 account      / account.group            / code_prefix_start (char)      : NEW
@@ -86,6 +89,7 @@ account      / account.journal          / sequence_id (many2one)        : DEL re
 account      / account.journal          / sequence_override_regex (text): NEW
 account      / account.journal          / suspense_account_id (many2one): NEW relation: account.account, isfunction: function, stored
 account      / account.journal          / type_control_ids (many2many)  : table is now 'journal_account_type_control_rel' ('account_journal_type_rel')
+account      / account.move             / country_code (char)           : previously in module l10n_id_efaktur
 account      / account.move             / invoice_partner_bank_id (many2one): DEL relation: res.partner.bank
 account      / account.move             / invoice_payment_ref (char)    : DEL
 account      / account.move             / invoice_payment_state (selection): DEL selection_keys: ['in_payment', 'not_paid', 'paid']
@@ -120,7 +124,8 @@ account      / account.partial.reconcile / credit_currency_id (many2one) : NEW r
 account      / account.partial.reconcile / currency_id (many2one)        : DEL relation: res.currency
 account      / account.partial.reconcile / debit_amount_currency (float) : NEW
 account      / account.partial.reconcile / debit_currency_id (many2one)  : NEW relation: res.currency, isfunction: function, stored
-account      / account.payment          / _inherits (False)             : NEW
+account      / account.payment          / _inherits                     : NEW _inherits: {'account.move': 'move_id'}
+account      / account.payment          / _order                        : _order is now 'date desc, name desc' ('payment_date desc, name desc')
 account      / account.payment          / communication (char)          : DEL
 account      / account.payment          / currency_id (many2one)        : now a function
 account      / account.payment          / destination_account_id (many2one): is now stored
@@ -150,6 +155,7 @@ account      / account.payment          / state (selection)             : now re
 account      / account.payment          / state (selection)             : selection_keys is now 'function' ('['cancelled', 'draft', 'posted', 'reconciled', 'sent']')
 account      / account.payment          / writeoff_account_id (many2one): DEL relation: account.account
 account      / account.payment          / writeoff_label (char)         : DEL
+account      / account.payment.method   / _order                        : _order is now 'sequence' ('id')
 account      / account.payment.method   / sequence (integer)            : NEW hasdefault
 account      / account.reconcile.model  / account_id (many2one)         : DEL relation: account.account
 account      / account.reconcile.model  / active (boolean)              : NEW hasdefault
@@ -254,6 +260,8 @@ account      / res.company              / expense_currency_exchange_account_id (
 account      / res.company              / expense_currency_exchange_account_id (many2one): not related anymore
 account      / res.company              / income_currency_exchange_account_id (many2one): is now stored
 account      / res.company              / income_currency_exchange_account_id (many2one): not related anymore
+account      / res.partner              / currency_id (many2one)        : module is now 'test_access_rights' ('account')
+account      / res.users                / currency_id (many2one)        : module is now 'test_access_rights' ('account')
 ---XML records in module 'account'---
 NEW account.incoterms: account.incoterm_DPU
 DEL account.incoterms: account.incoterm_DAF
@@ -356,6 +364,7 @@ DEL ir.model.access: account_analytic_default.access_account_analytic_default_an
 DEL ir.model.access: account_analytic_default.access_account_analytic_default_invoice [renamed to account module]
 ir.rule: account.account_analytic_line_rule_billing_user (noupdate) (noupdate switched)
 NEW ir.rule: account.account_group_comp_rule (noupdate)
+NEW ir.rule: account.account_invoice_send_rule_group_invoice (noupdate)
 NEW ir.rule: account.account_move_line_rule_group_invoice (noupdate)
 NEW ir.rule: account.account_move_line_rule_group_readonly (noupdate)
 NEW ir.rule: account.account_move_rule_group_invoice (noupdate)

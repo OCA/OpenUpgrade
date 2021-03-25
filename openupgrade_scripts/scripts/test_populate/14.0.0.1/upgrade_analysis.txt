@@ -1,0 +1,31 @@
+---Models in module 'test_populate'---
+new model test.no.populate
+new model test.populate
+new model test.populate.category
+new model test.populate.inherit
+---Fields in module 'test_populate'---
+test_populate / test.no.populate         / name (char)                   : NEW required
+test_populate / test.populate            / active (boolean)              : NEW hasdefault
+test_populate / test.populate            / category_id (many2one)        : NEW relation: test.populate.category
+test_populate / test.populate            / dependant_field_1 (char)      : NEW
+test_populate / test.populate            / dependant_field_2 (char)      : NEW
+test_populate / test.populate            / name (char)                   : NEW hasdefault
+test_populate / test.populate            / sequence (integer)            : NEW
+test_populate / test.populate            / some_ref (integer)            : NEW
+test_populate / test.populate            / state (selection)             : NEW selection_keys: ['a', 'b'], hasdefault
+test_populate / test.populate.category   / active (boolean)              : NEW hasdefault
+test_populate / test.populate.category   / name (char)                   : NEW required, req_default: function, hasdefault
+test_populate / test.populate.inherit    / active (boolean)              : NEW hasdefault
+test_populate / test.populate.inherit    / additionnal_field (char)      : NEW required
+test_populate / test.populate.inherit    / category_id (many2one)        : NEW relation: test.populate.category
+test_populate / test.populate.inherit    / dependant_field_1 (char)      : NEW
+test_populate / test.populate.inherit    / dependant_field_2 (char)      : NEW
+test_populate / test.populate.inherit    / name (char)                   : NEW hasdefault
+test_populate / test.populate.inherit    / sequence (integer)            : NEW
+test_populate / test.populate.inherit    / some_ref (integer)            : NEW
+test_populate / test.populate.inherit    / state (selection)             : NEW selection_keys: ['a', 'b'], hasdefault
+---XML records in module 'test_populate'---
+NEW ir.model.access: test_populate.access_test_no_populat
+NEW ir.model.access: test_populate.access_test_populate
+NEW ir.model.access: test_populate.access_test_populate_category
+NEW ir.model.access: test_populate.access_test_populate_inherit

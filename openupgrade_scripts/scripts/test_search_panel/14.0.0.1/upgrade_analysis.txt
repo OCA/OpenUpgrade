@@ -1,0 +1,24 @@
+---Models in module 'test_search_panel'---
+new model test_search_panel.category_target_model
+new model test_search_panel.category_target_model_no_parent_name
+new model test_search_panel.filter_target_model
+new model test_search_panel.source_model
+---Fields in module 'test_search_panel'---
+test_search_panel / test_search_panel.category_target_model / name (char)                   : NEW required
+test_search_panel / test_search_panel.category_target_model / parent_name_id (many2one)     : NEW relation: test_search_panel.category_target_model
+test_search_panel / test_search_panel.category_target_model_no_parent_name / name (char)                   : NEW required
+test_search_panel / test_search_panel.filter_target_model / color (char)                  : NEW
+test_search_panel / test_search_panel.filter_target_model / folder_id (many2one)          : NEW relation: test_search_panel.category_target_model
+test_search_panel / test_search_panel.filter_target_model / name (char)                   : NEW required
+test_search_panel / test_search_panel.filter_target_model / status (selection)            : NEW selection_keys: ['cool', 'unknown']
+test_search_panel / test_search_panel.source_model / categ_id (many2one)           : NEW relation: test_search_panel.category_target_model_no_parent_name
+test_search_panel / test_search_panel.source_model / folder_id (many2one)          : NEW relation: test_search_panel.category_target_model
+test_search_panel / test_search_panel.source_model / name (char)                   : NEW required
+test_search_panel / test_search_panel.source_model / state (selection)             : NEW selection_keys: ['a', 'b']
+test_search_panel / test_search_panel.source_model / tag_id (many2one)             : NEW relation: test_search_panel.filter_target_model
+test_search_panel / test_search_panel.source_model / tag_ids (many2many)           : NEW relation: test_search_panel.filter_target_model
+---XML records in module 'test_search_panel'---
+NEW ir.model.access: test_search_panel.access_test_search_panel_category_target_model
+NEW ir.model.access: test_search_panel.access_test_search_panel_category_target_model_no_parent_name
+NEW ir.model.access: test_search_panel.access_test_search_panel_filter_target_model
+NEW ir.model.access: test_search_panel.access_test_search_panel_source_model

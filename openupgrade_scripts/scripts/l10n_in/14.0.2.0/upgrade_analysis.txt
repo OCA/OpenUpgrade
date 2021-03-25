@@ -1,0 +1,57 @@
+---Models in module 'l10n_in'---
+---Fields in module 'l10n_in'---
+l10n_in      / account.journal          / l10n_in_import_export (boolean): DEL
+l10n_in      / account.move             / l10n_in_export_type (selection): DEL required, selection_keys: ['deemed', 'export_with_igst', 'regular', 'sale_from_bonded_wh', 'sez_with_igst', 'sez_without_igst'], req_default: function
+l10n_in      / account.move             / l10n_in_gst_treatment (selection): NEW selection_keys: ['composition', 'consumer', 'deemed_export', 'overseas', 'regular', 'special_economic_zone', 'unregistered']
+l10n_in      / account.move             / l10n_in_gstin (char)          : NEW
+l10n_in      / account.move             / l10n_in_state_id (many2one)   : NEW relation: res.country.state
+l10n_in      / res.partner              / l10n_in_gst_treatment (selection): NEW selection_keys: ['composition', 'consumer', 'deemed_export', 'overseas', 'regular', 'special_economic_zone', 'unregistered']
+---XML records in module 'l10n_in'---
+NEW account.account.template: l10n_in.p10057
+NEW account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_12_intra_rc
+NEW account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_12_rc_inter_rc
+NEW account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_18_intra_rc
+NEW account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_18_rc_inter_rc
+NEW account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_1_intra_rc
+NEW account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_1_rc_inter_rc
+NEW account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_28_intra_rc
+NEW account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_28_rc_inter_rc
+NEW account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_2_intra_rc
+NEW account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_2_rc_inter_rc
+NEW account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_5_intra_rc
+NEW account.fiscal.position.tax.template: l10n_in.account_fiscal_position_tax_in_purchase_5_rc_inter_rc
+NEW account.fiscal.position.template: l10n_in.fiscal_position_in_reverse_charge_inter
+NEW account.fiscal.position.template: l10n_in.fiscal_position_in_reverse_charge_intra
+NEW account.tax.report: l10n_in.tax_report
+NEW account.tax.report.line: l10n_in.tax_report_line_cess_rc
+NEW account.tax.report.line: l10n_in.tax_report_line_cgst_rc
+NEW account.tax.report.line: l10n_in.tax_report_line_igst_rc
+NEW account.tax.report.line: l10n_in.tax_report_line_sgst_rc
+NEW account.tax.template: l10n_in.cess_21_4170_higer_purchase_rc
+NEW account.tax.template: l10n_in.cess_5_plus_1591_purchase_rc
+NEW account.tax.template: l10n_in.cess_purchase_1591_rc
+NEW account.tax.template: l10n_in.cess_purchase_5_rc
+NEW account.tax.template: l10n_in.cgst_purchase_0_5_rc
+NEW account.tax.template: l10n_in.cgst_purchase_14_rc
+NEW account.tax.template: l10n_in.cgst_purchase_1_2_rc
+NEW account.tax.template: l10n_in.cgst_purchase_2_5_rc
+NEW account.tax.template: l10n_in.cgst_purchase_6_rc
+NEW account.tax.template: l10n_in.cgst_purchase_9_rc
+NEW account.tax.template: l10n_in.igst_purchase_12_rc
+NEW account.tax.template: l10n_in.igst_purchase_18_rc
+NEW account.tax.template: l10n_in.igst_purchase_1_rc
+NEW account.tax.template: l10n_in.igst_purchase_28_rc
+NEW account.tax.template: l10n_in.igst_purchase_2_rc
+NEW account.tax.template: l10n_in.igst_purchase_5_rc
+NEW account.tax.template: l10n_in.sgst_purchase_0_5_rc
+NEW account.tax.template: l10n_in.sgst_purchase_12_rc
+NEW account.tax.template: l10n_in.sgst_purchase_14_rc
+NEW account.tax.template: l10n_in.sgst_purchase_18_rc
+NEW account.tax.template: l10n_in.sgst_purchase_1_2_rc
+NEW account.tax.template: l10n_in.sgst_purchase_1_rc
+NEW account.tax.template: l10n_in.sgst_purchase_28_rc
+NEW account.tax.template: l10n_in.sgst_purchase_2_5_rc
+NEW account.tax.template: l10n_in.sgst_purchase_2_rc
+NEW account.tax.template: l10n_in.sgst_purchase_5_rc
+NEW account.tax.template: l10n_in.sgst_purchase_6_rc
+NEW account.tax.template: l10n_in.sgst_purchase_9_rc

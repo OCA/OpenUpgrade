@@ -5,6 +5,7 @@ event_sale   / event.event              / event_ticket_ids (one2many)   : module
 event_sale   / event.event              / event_ticket_ids (one2many)   : now a function
 event_sale   / event.event              / sale_order_lines_ids (one2many): NEW relation: sale.order.line
 event_sale   / event.event.ticket       / __last_update (datetime)      : module is now 'event' ('event_sale')
+event_sale   / event.event.ticket       / _order                        : module is now 'event' ('event_sale')
 event_sale   / event.event.ticket       / company_id (many2one)         : module is now 'event' ('event_sale')
 event_sale   / event.event.ticket       / deadline (date)               : DEL
 event_sale   / event.event.ticket       / display_name (char)           : module is now 'event' ('event_sale')

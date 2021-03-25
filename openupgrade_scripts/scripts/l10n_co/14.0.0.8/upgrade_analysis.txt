@@ -1,0 +1,14 @@
+---Models in module 'l10n_co'---
+---Fields in module 'l10n_co'---
+l10n_co      / l10n_latam.identification.type / l10n_co_document_code (char)  : NEW
+l10n_co      / res.partner              / l10n_co_document_type (selection): DEL selection_keys: ['civil_registration', 'diplomatic_card', 'external_id', 'foreign_id_card', 'id_card', 'id_document', 'national_citizen_id', 'passport', 'residence_document', 'rut']
+---XML records in module 'l10n_co'---
+DEL ir.ui.view: l10n_co.view_partner_form_inherit_l10n_co
+NEW l10n_latam.identification.type: l10n_co.civil_registration
+NEW l10n_latam.identification.type: l10n_co.diplomatic_card
+NEW l10n_latam.identification.type: l10n_co.external_id
+NEW l10n_latam.identification.type: l10n_co.id_card
+NEW l10n_latam.identification.type: l10n_co.id_document
+NEW l10n_latam.identification.type: l10n_co.national_citizen_id
+NEW l10n_latam.identification.type: l10n_co.residence_document
+NEW l10n_latam.identification.type: l10n_co.rut

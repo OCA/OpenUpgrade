@@ -3,6 +3,7 @@
 website_crm_partner_assign / crm.lead                 / date_assign (date)            : DEL
 website_crm_partner_assign / crm.lead                 / date_partner_assign (date)    : NEW isfunction: function, stored
 website_crm_partner_assign / res.partner              / partner_weight (integer)      : now a function
+website_crm_partner_assign / res.partner.grade        / _order                        : _order is now 'sequence' ('id')
 ---XML records in module 'website_crm_partner_assign'---
 DEL crm.lead.tag: website_crm_partner_assign.tag_portal_lead_is_spam
 DEL crm.lead.tag: website_crm_partner_assign.tag_portal_lead_own_opp

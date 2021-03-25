@@ -1,5 +1,6 @@
 ---Models in module 'purchase'---
 ---Fields in module 'purchase'---
+purchase     / purchase.order           / _order                        : _order is now 'priority desc, id desc' ('date_order desc, id desc')
 purchase     / purchase.order           / date_calendar_start (datetime): NEW isfunction: function, stored
 purchase     / purchase.order           / date_planned (datetime)       : now a function
 purchase     / purchase.order           / mail_reception_confirmed (boolean): NEW hasdefault
@@ -25,14 +26,13 @@ DEL ir.filters: purchase.filter_purchase_order_monthly_purchases
 DEL ir.filters: purchase.filter_purchase_order_price_per_supplier
 NEW ir.model.access: purchase.access_account_move
 NEW ir.model.access: purchase.access_account_move_line_manager
+NEW ir.model.access: purchase.access_account_tag_purchase_user
 NEW ir.model.access: purchase.access_purchase_order_invoicing_payments_readonly
 NEW ir.model.access: purchase.access_purchase_order_line_invoicing_payments_readonly
 DEL ir.model.access: purchase.access_account_journal_purchase_manager
 DEL ir.model.access: purchase.access_account_move_purchase
 DEL ir.model.access: purchase.access_account_move_purchase_manager
 DEL ir.model.access: purchase.access_product_group_res_partner_purchase_manager
-NEW ir.module.category: base.module_category_inventory_purchase (noupdate)
-DEL ir.module.category: base.module_category_operations_purchase (noupdate)
 NEW ir.property: purchase.receipt_reminder_email (noupdate)
 NEW ir.property: purchase.reminder_date_before_receipt (noupdate)
 NEW ir.ui.menu: purchase.menu_product_attribute_action
@@ -46,5 +46,4 @@ NEW ir.ui.view: purchase.product_supplierinfo_tree_view2
 NEW ir.ui.view: purchase.purchase_order_kpis_tree
 NEW ir.ui.view: purchase.track_po_line_qty_received_template
 NEW mail.template: purchase.email_template_edi_purchase_reminder (noupdate)
-NEW res.groups: base.group_user (noupdate)
 NEW res.groups: purchase.group_send_reminder

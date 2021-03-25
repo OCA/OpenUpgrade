@@ -1,0 +1,7 @@
+---Models in module 'l10n_fi'---
+---Fields in module 'l10n_fi'---
+l10n_fi      / account.journal          / invoice_reference_model (False): selection_keys is now '['be', 'ch', 'euro', 'fi', 'fi_rf', 'odoo']' ('['ch', 'euro', 'fi', 'fi_rf', 'odoo']')
+---XML records in module 'l10n_fi'---
+NEW account.tax.report: l10n_fi.vat_report
+NEW account.tax.report.line: l10n_fi.vat_report_relief
+DEL account.tax.report.line: l10n_fi.tax_report_vat_relief

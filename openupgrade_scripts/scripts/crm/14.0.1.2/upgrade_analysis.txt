@@ -47,7 +47,6 @@ NEW crm.recurring.plan: crm.crm_recurring_plan_monthly (noupdate)
 NEW crm.recurring.plan: crm.crm_recurring_plan_over_3_years (noupdate)
 NEW crm.recurring.plan: crm.crm_recurring_plan_over_5_years (noupdate)
 NEW crm.recurring.plan: crm.crm_recurring_plan_yearly (noupdate)
-NEW crm.team: sales_team.team_sales_department (noupdate)
 NEW digest.tip: crm.digest_tip_crm_1
 NEW digest.tip: crm.digest_tip_crm_2
 NEW digest.tip: crm.digest_tip_crm_3
@@ -72,6 +71,7 @@ NEW ir.model.access: crm.crm_recurring_plan_access_salesman
 DEL ir.model.access: crm.access_crm_lead_tag
 DEL ir.model.access: crm.access_crm_lead_tag_manager
 DEL ir.model.access: crm.access_crm_lead_tag_salesman
+DEL ir.rule: crm.calendar_event_global (noupdate)
 NEW ir.ui.menu: crm.crm_lead_menu_my_activities
 NEW ir.ui.menu: crm.crm_recurring_plan_menu_config
 NEW ir.ui.view: crm.crm_lead_view_list_activities

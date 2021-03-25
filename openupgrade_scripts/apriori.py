@@ -7,6 +7,8 @@ renamed_modules = {
     # odoo
     "account_facturx": "account_edi_facturx",
     "website_rating": "portal_rating",
+    # OCA/server-tools
+    "openupgrade_records": "upgrade_analysis",
     # OCA/...
 }
 
@@ -32,7 +34,20 @@ merged_modules = {
 }
 
 # only used here for upgrade_analysis
-renamed_models = {}
+renamed_models = {
+    # odoo
+    "email_template.preview": "mail.template.preview",
+    "event.answer": "event.question.answer",
+    "product.style": "product.ribbon",
+    "survey.user_input_line": "survey.user_input.line",
+    # OCA/server-tools
+    "openupgrade.analysis.wizard": "upgrade.analysis",
+    "openupgrade.attribute": "upgrade.attribute",
+    "openupgrade.comparison.config": "upgrade.comparison.config",
+    "openupgrade.record": "upgrade.record",
+    "openupgrade.generate.records.wizard": "upgrade.generate.record.wizard",
+    "openupgrade.install.all.wizard": "upgrade.install.wizard",
+}
 
 # only used here for upgrade_analysis
 merged_models = {}

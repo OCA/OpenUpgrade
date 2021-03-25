@@ -1,8 +1,8 @@
 ---Models in module 'survey'---
 obsolete model survey.label
-obsolete model survey.user_input_line
+obsolete model survey.user_input_line (renamed to survey.user_input.line)
 new model survey.question.answer
-new model survey.user_input.line
+new model survey.user_input.line (renamed from survey.user_input_line)
 ---Fields in module 'survey'---
 survey       / gamification.challenge   / category (False)              : DEL selection_keys: ['certification', 'hr', 'other'], mode: modify
 survey       / gamification.challenge   / challenge_category (False)    : NEW selection_keys: ['certification', 'hr', 'other'], mode: modify
@@ -72,30 +72,15 @@ survey       / survey.user_input        / scoring_total (float)         : NEW is
 survey       / survey.user_input        / state (selection)             : selection_keys is now '['done', 'in_progress', 'new']' ('['done', 'new', 'skip']')
 survey       / survey.user_input        / token (char)                  : DEL required, req_default: function
 survey       / survey.user_input        / user_input_line_ids (one2many): relation is now 'survey.user_input.line' ('survey.user_input_line') [nothing to do]
-survey       / survey.user_input.line   / answer_is_correct (boolean)   : NEW
-survey       / survey.user_input.line   / answer_score (float)          : NEW
-survey       / survey.user_input.line   / answer_type (selection)       : NEW selection_keys: ['char_box', 'date', 'datetime', 'numerical_box', 'suggestion', 'text_box']
 survey       / survey.user_input.line   / matrix_row_id (many2one)      : NEW relation: survey.question.answer
-survey       / survey.user_input.line   / question_id (many2one)        : NEW relation: survey.question, required
-survey       / survey.user_input.line   / question_sequence (integer)   : NEW isrelated: related, stored
-survey       / survey.user_input.line   / skipped (boolean)             : NEW
 survey       / survey.user_input.line   / suggested_answer_id (many2one): NEW relation: survey.question.answer
-survey       / survey.user_input.line   / survey_id (many2one)          : NEW relation: survey.survey, isrelated: related, stored
-survey       / survey.user_input.line   / user_input_id (many2one)      : NEW relation: survey.user_input, required
 survey       / survey.user_input.line   / value_char_box (char)         : NEW
-survey       / survey.user_input.line   / value_date (date)             : NEW
-survey       / survey.user_input.line   / value_datetime (datetime)     : NEW
 survey       / survey.user_input.line   / value_numerical_box (float)   : NEW
 survey       / survey.user_input.line   / value_text_box (text)         : NEW
-survey       / survey.user_input_line   / answer_score (float)          : DEL
-survey       / survey.user_input_line   / answer_type (selection)       : DEL selection_keys: ['date', 'datetime', 'free_text', 'number', 'suggestion', 'text']
-survey       / survey.user_input_line   / question_id (many2one)        : DEL relation: survey.question, required
-survey       / survey.user_input_line   / question_sequence (integer)   : DEL
-survey       / survey.user_input_line   / skipped (boolean)             : DEL
-survey       / survey.user_input_line   / survey_id (many2one)          : DEL relation: survey.survey
-survey       / survey.user_input_line   / user_input_id (many2one)      : DEL relation: survey.user_input, required
-survey       / survey.user_input_line   / value_date (date)             : DEL
-survey       / survey.user_input_line   / value_datetime (datetime)     : DEL
+survey       / survey.user_input_line   / _order                        : _order is now 'question_sequence, id' ('question_sequence,id')
+survey       / survey.user_input_line   / answer_is_correct (boolean)   : is now stored
+survey       / survey.user_input_line   / answer_is_correct (boolean)   : not a function anymore
+survey       / survey.user_input_line   / answer_type (selection)       : selection_keys is now '['char_box', 'date', 'datetime', 'numerical_box', 'suggestion', 'text_box']' ('['date', 'datetime', 'free_text', 'number', 'suggestion', 'text']')
 survey       / survey.user_input_line   / value_free_text (text)        : DEL
 survey       / survey.user_input_line   / value_number (float)          : DEL
 survey       / survey.user_input_line   / value_suggested (many2one)    : DEL relation: survey.label
@@ -115,8 +100,6 @@ DEL ir.model.access: survey.access_survey_label_all
 DEL ir.model.access: survey.access_survey_label_survey_manager
 DEL ir.model.access: survey.access_survey_label_survey_user
 DEL ir.model.access: survey.access_survey_label_user
-NEW ir.module.category: base.module_category_marketing_surveys (noupdate)
-DEL ir.module.category: base.module_category_marketing_survey (noupdate)
 NEW ir.rule: survey.survey_question_answer_rule_survey_manager (noupdate)
 NEW ir.rule: survey.survey_question_answer_rule_survey_user_cw (noupdate)
 NEW ir.rule: survey.survey_question_answer_rule_survey_user_read (noupdate)

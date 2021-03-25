@@ -1,9 +1,9 @@
 ---Models in module 'mail'---
-obsolete model email_template.preview [transient]
+obsolete model email_template.preview (renamed to mail.template.preview) [transient]
 obsolete model mail.address.mixin [abstract]
 new model mail.blacklist.remove [transient]
 new model mail.render.mixin [abstract]
-new model mail.template.preview [transient]
+new model mail.template.preview (renamed from email_template.preview) [transient]
 ---Fields in module 'mail'---
 mail         / ir.ui.view               / type (False)                  : selection_keys is now '['activity', 'calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']' ('['activity', 'calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']')
 mail         / mail.activity            / request_partner_id (many2one) : NEW relation: res.partner
@@ -43,7 +43,6 @@ NEW ir.rule: mail.ir_rule_mail_channel_partner_group_user (noupdate)
 ir.rule: mail.mail_channel_rule (noupdate) (noupdate switched)
 NEW ir.rule: mail.mail_compose_message_rule (noupdate)
 DEL ir.rule: mail.mail_followers_read_write_own (noupdate)
-NEW ir.ui.menu: base.menu_email
 NEW ir.ui.menu: mail.mail_menu_technical
 NEW ir.ui.menu: mail.mail_notification_menu
 NEW ir.ui.view: mail.assets_backend_prod_only
@@ -62,4 +61,4 @@ DEL ir.ui.view: mail.email_template_preview_form
 DEL ir.ui.view: mail.js_test_assets
 DEL ir.ui.view: mail.res_partner_view_form_short
 DEL ir.ui.view: mail.view_message_form
-NEW res.partner: base.partner_root [potentially moved from mail_bot module] (noupdate)
+NEW mail.channel.partner: mail.channel_partner_general_channel_for_admin (noupdate)

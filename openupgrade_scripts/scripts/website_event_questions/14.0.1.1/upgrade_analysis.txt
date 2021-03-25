@@ -1,19 +1,13 @@
 ---Models in module 'website_event_questions'---
-obsolete model event.answer
+obsolete model event.answer (renamed to event.question.answer)
 obsolete model event.question.report [sql_view]
-new model event.question.answer
+new model event.question.answer (renamed from event.answer)
 ---Fields in module 'website_event_questions'---
-website_event_questions / event.answer             / name (char)                   : DEL required
-website_event_questions / event.answer             / question_id (many2one)        : DEL relation: event.question, required
-website_event_questions / event.answer             / sequence (integer)            : DEL
 website_event_questions / event.event              / question_ids (one2many)       : now a function
 website_event_questions / event.question           / answer_ids (one2many)         : relation is now 'event.question.answer' ('event.answer') [nothing to do]
 website_event_questions / event.question           / is_individual (boolean)       : DEL
 website_event_questions / event.question           / once_per_order (boolean)      : NEW
 website_event_questions / event.question           / question_type (selection)     : NEW required, selection_keys: ['simple_choice', 'text_box'], req_default: function, hasdefault
-website_event_questions / event.question.answer    / name (char)                   : NEW required
-website_event_questions / event.question.answer    / question_id (many2one)        : NEW relation: event.question, required
-website_event_questions / event.question.answer    / sequence (integer)            : NEW hasdefault
 website_event_questions / event.registration       / answer_ids (many2many)        : DEL relation: event.answer
 website_event_questions / event.registration       / registration_answer_ids (one2many): NEW relation: event.registration.answer
 website_event_questions / event.registration.answer / event_answer_id (many2one)    : DEL relation: event.answer, required

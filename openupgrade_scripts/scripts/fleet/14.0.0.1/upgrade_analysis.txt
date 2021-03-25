@@ -21,7 +21,7 @@ fleet        / fleet.vehicle.cost       / name (char)                   : DEL
 fleet        / fleet.vehicle.cost       / odometer_id (many2one)        : DEL relation: fleet.vehicle.odometer
 fleet        / fleet.vehicle.cost       / parent_id (many2one)          : DEL relation: fleet.vehicle.cost
 fleet        / fleet.vehicle.cost       / vehicle_id (many2one)         : DEL relation: fleet.vehicle, required
-fleet        / fleet.vehicle.log.contract / _inherits (False)             : DEL
+fleet        / fleet.vehicle.log.contract / _inherits                     : DEL _inherits: {'fleet.vehicle.cost': 'cost_id'}
 fleet        / fleet.vehicle.log.contract / amount (float)                : is now stored
 fleet        / fleet.vehicle.log.contract / amount (float)                : not related anymore
 fleet        / fleet.vehicle.log.contract / company_id (many2one)         : is now stored
@@ -41,7 +41,7 @@ fleet        / fleet.vehicle.log.contract / service_ids (many2many)       : NEW 
 fleet        / fleet.vehicle.log.contract / state (selection)             : selection_keys is now '['closed', 'expired', 'futur', 'open']' ('['closed', 'diesoon', 'expired', 'futur', 'open']')
 fleet        / fleet.vehicle.log.contract / vehicle_id (many2one)         : is now stored
 fleet        / fleet.vehicle.log.contract / vehicle_id (many2one)         : not related anymore
-fleet        / fleet.vehicle.log.fuel   / _inherits (False)             : DEL
+fleet        / fleet.vehicle.log.fuel   / _inherits                     : DEL _inherits: {'fleet.vehicle.cost': 'cost_id'}
 fleet        / fleet.vehicle.log.fuel   / cost_amount (float)           : DEL
 fleet        / fleet.vehicle.log.fuel   / cost_id (many2one)            : DEL relation: fleet.vehicle.cost, required
 fleet        / fleet.vehicle.log.fuel   / inv_ref (char)                : DEL
@@ -50,7 +50,7 @@ fleet        / fleet.vehicle.log.fuel   / notes (text)                  : DEL
 fleet        / fleet.vehicle.log.fuel   / price_per_liter (float)       : DEL
 fleet        / fleet.vehicle.log.fuel   / purchaser_id (many2one)       : DEL relation: res.partner
 fleet        / fleet.vehicle.log.fuel   / vendor_id (many2one)          : DEL relation: res.partner
-fleet        / fleet.vehicle.log.services / _inherits (False)             : DEL
+fleet        / fleet.vehicle.log.services / _inherits                     : DEL _inherits: {'fleet.vehicle.cost': 'cost_id'}
 fleet        / fleet.vehicle.log.services / active (boolean)              : NEW hasdefault
 fleet        / fleet.vehicle.log.services / activity_ids (one2many)       : NEW relation: mail.activity
 fleet        / fleet.vehicle.log.services / amount (float)                : is now stored
@@ -77,6 +77,7 @@ fleet        / fleet.vehicle.log.services / vehicle_id (many2one)         : is n
 fleet        / fleet.vehicle.log.services / vehicle_id (many2one)         : not related anymore
 fleet        / fleet.vehicle.model      / active (boolean)              : NEW hasdefault
 fleet        / fleet.vehicle.model      / vehicle_type (selection)      : NEW required, selection_keys: ['bike', 'car'], req_default: function, hasdefault
+fleet        / fleet.vehicle.model.brand / _order                        : _order is now 'model_count desc, name asc' ('name asc')
 fleet        / fleet.vehicle.model.brand / model_count (integer)         : NEW isfunction: function, stored
 fleet        / fleet.vehicle.model.brand / model_ids (one2many)          : NEW relation: fleet.vehicle.model
 ---XML records in module 'fleet'---

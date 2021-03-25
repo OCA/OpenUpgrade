@@ -1,0 +1,14 @@
+---Models in module 'test_website'---
+new model test.model
+---Fields in module 'test_website'---
+test_website / test.model               / is_published (boolean)        : NEW hasdefault
+test_website / test.model               / name (char)                   : NEW required
+test_website / test.model               / seo_name (char)               : NEW
+test_website / test.model               / website_meta_description (text): NEW
+test_website / test.model               / website_meta_keywords (char)  : NEW
+test_website / test.model               / website_meta_og_img (char)    : NEW
+test_website / test.model               / website_meta_title (char)     : NEW
+---XML records in module 'test_website'---
+NEW ir.model.access: test_website.access_test_model
+NEW ir.rule: test_website.test_model_publish (noupdate)
+NEW ir.ui.view: test_website.test_redirect_view (noupdate)

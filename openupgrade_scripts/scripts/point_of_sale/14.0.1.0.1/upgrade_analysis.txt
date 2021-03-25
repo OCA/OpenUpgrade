@@ -6,6 +6,7 @@ point_of_sale / pos.config               / manual_discount (boolean)     : NEW h
 point_of_sale / pos.config               / module_pos_reprint (boolean)  : DEL
 point_of_sale / pos.config               / picking_type_id (many2one)    : now required, req_default: function
 point_of_sale / pos.config               / product_configurator (boolean): NEW
+point_of_sale / pos.order                / _order                        : _order is now 'date_order desc, name desc, id desc' ('id desc')
 point_of_sale / pos.order                / is_tipped (boolean)           : NEW
 point_of_sale / pos.order                / location_id (many2one)        : DEL relation: stock.location
 point_of_sale / pos.order                / picking_id (many2one)         : DEL relation: stock.picking
@@ -31,6 +32,7 @@ point_of_sale / stock.picking            / pos_session_id (many2one)     : NEW r
 pos_cash_rounding / account.cash.rounding    / loss_account_id (many2one)    : module is now 'account' ('pos_cash_rounding')
 pos_cash_rounding / account.cash.rounding    / loss_account_id (many2one)    : not stored anymore
 ---XML records in module 'point_of_sale'---
+NEW ir.model.access: point_of_sale.access_account_cash_rounding_pos_user
 NEW ir.model.access: point_of_sale.access_closing_balance_confirm_wizard
 NEW ir.model.access: point_of_sale.access_money_in_out_wizard
 NEW ir.model.access: point_of_sale.access_pos_details_wizard
