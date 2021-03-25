@@ -5,6 +5,7 @@ new model event.track.visitor
 ---Fields in module 'website_event_track'---
 website_event_track / event.event              / website_track (boolean)       : now a function
 website_event_track / event.event              / website_track_proposal (boolean): now a function
+website_event_track / event.sponsor            / _order                        : _order is now 'sequence, sponsor_type_id' ('sequence')
 website_event_track / event.sponsor            / active (boolean)              : NEW hasdefault
 website_event_track / event.sponsor            / activity_ids (one2many)       : NEW relation: mail.activity
 website_event_track / event.sponsor            / email (char)                  : NEW isfunction: function, stored
@@ -37,6 +38,7 @@ website_event_track / event.track              / wishlisted_by_default (boolean)
 website_event_track / event.track.location     / name (char)                   : now required
 website_event_track / event.track.stage        / color (integer)               : NEW
 website_event_track / event.track.stage        / is_accepted (boolean)         : NEW
+website_event_track / event.track.tag          / _order                        : _order is now 'category_id, sequence, name' ('name')
 website_event_track / event.track.tag          / category_id (many2one)        : NEW relation: event.track.tag.category
 website_event_track / event.track.tag          / sequence (integer)            : NEW hasdefault
 website_event_track / event.track.tag.category / name (char)                   : NEW required
@@ -52,6 +54,7 @@ website_event_track / event.type               / website_track_proposal (boolean
 website_event_track / website                  / app_icon (binary)             : NEW attachment: True, isfunction: function, stored
 website_event_track / website                  / events_app_name (char)        : NEW isfunction: function, stored
 website_event_track / website.event.menu       / __last_update (datetime)      : module is now 'website_event' ('website_event_track')
+website_event_track / website.event.menu       / _order                        : module is now 'website_event' ('website_event_track')
 website_event_track / website.event.menu       / display_name (char)           : module is now 'website_event' ('website_event_track')
 website_event_track / website.event.menu       / event_id (many2one)           : module is now 'website_event' ('website_event_track')
 website_event_track / website.event.menu       / menu_id (many2one)            : module is now 'website_event' ('website_event_track')
@@ -61,7 +64,6 @@ website_event_track / website.event.menu       / menu_type (selection)         :
 website_event_track / website.event.menu       / menu_type (selection)         : selection_keys is now '['community']' ('['track', 'track_proposal']')
 website_event_track / website.visitor          / event_track_visitor_ids (one2many): NEW relation: event.track.visitor
 ---XML records in module 'website_event_track'---
-NEW event.type: event.event_type_data_conference (noupdate)
 DEL event.type: website_event_track.event_type_data_tracks (noupdate)
 NEW ir.actions.act_window: website_event_track.event_sponsor_action_from_event
 NEW ir.actions.act_window: website_event_track.event_sponsor_type_action

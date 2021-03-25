@@ -1,0 +1,11 @@
+---Models in module 'test_rpc'---
+new model test_rpc.model_a
+new model test_rpc.model_b
+---Fields in module 'test_rpc'---
+test_rpc     / test_rpc.model_a         / field_b1 (many2one)           : NEW relation: test_rpc.model_b, required
+test_rpc     / test_rpc.model_a         / field_b2 (many2one)           : NEW relation: test_rpc.model_b
+test_rpc     / test_rpc.model_a         / name (char)                   : NEW required
+test_rpc     / test_rpc.model_b         / name (char)                   : NEW required
+---XML records in module 'test_rpc'---
+NEW ir.model.access: test_rpc.access_test_rpc_model_a
+NEW ir.model.access: test_rpc.access_test_rpc_model_b

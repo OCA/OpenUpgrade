@@ -1,0 +1,28 @@
+---Models in module 'test_inherit'---
+new model test.inherit.child [abstract]
+new model test.inherit.daughter
+new model test.inherit.mother
+new model test.inherit.parent [abstract]
+new model test.inherit.property
+---Fields in module 'test_inherit'---
+test_inherit / res.partner              / daughter_ids (one2many)       : NEW relation: test.inherit.daughter
+test_inherit / test.inherit.daughter    / _inherits                     : NEW _inherits: {'test.inherit.mother': 'template_id'}
+test_inherit / test.inherit.daughter    / field_in_daughter (char)      : NEW
+test_inherit / test.inherit.daughter    / name (char)                   : NEW hasdefault
+test_inherit / test.inherit.daughter    / template_id (many2one)        : NEW relation: test.inherit.mother, required
+test_inherit / test.inherit.mother      / field_in_mother (char)        : NEW
+test_inherit / test.inherit.mother      / name (char)                   : NEW required, req_default: function, hasdefault
+test_inherit / test.inherit.mother      / partner_id (many2one)         : NEW relation: res.partner
+test_inherit / test.inherit.mother      / state (selection)             : NEW selection_keys: ['a', 'b', 'c', 'd']
+test_inherit / test.inherit.property    / name (char)                   : NEW required
+test_inherit / test.inherit.property    / property_foo (integer)        : NEW
+test_inherit / test_new_api.selection   / other (False)                 : NEW selection_keys: function, mode: modify
+test_inherit / test_new_api.selection   / state (False)                 : NEW selection_keys: ['bar', 'baz', 'foo'], mode: modify
+---XML records in module 'test_inherit'---
+NEW ir.model.access: test_inherit.access_test_inherit_daughter
+NEW ir.model.access: test_inherit.access_test_inherit_mother
+NEW ir.model.access: test_inherit.access_test_inherit_property
+NEW test.inherit.mother: test_inherit.mother_a
+NEW test.inherit.mother: test_inherit.mother_b
+NEW test.inherit.mother: test_inherit.mother_c
+NEW test.inherit.mother: test_inherit.mother_d

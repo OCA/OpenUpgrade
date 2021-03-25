@@ -10,6 +10,7 @@ website_event / event.registration       / visitor_id (many2one)         : NEW r
 website_event / event.type               / community_menu (boolean)      : NEW isfunction: function, stored
 website_event / event.type               / menu_register_cta (boolean)   : NEW isfunction: function, stored
 website_event / website.event.menu       / __last_update (datetime)      : previously in module website_event_track
+website_event / website.event.menu       / _order                        : previously in module website_event_track
 website_event / website.event.menu       / display_name (char)           : previously in module website_event_track
 website_event / website.event.menu       / event_id (many2one)           : previously in module website_event_track
 website_event / website.event.menu       / menu_id (many2one)            : previously in module website_event_track

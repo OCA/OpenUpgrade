@@ -1,0 +1,22 @@
+---Models in module 'test_converter'---
+new model test_converter.monetary
+new model test_converter.test_model
+new model test_converter.test_model.sub
+---Fields in module 'test_converter'---
+test_converter / test_converter.monetary  / value (float)                 : NEW
+test_converter / test_converter.test_model / binary (binary)               : NEW attachment: False
+test_converter / test_converter.test_model / char (char)                   : NEW
+test_converter / test_converter.test_model / date (date)                   : NEW
+test_converter / test_converter.test_model / datetime (datetime)           : NEW
+test_converter / test_converter.test_model / float (float)                 : NEW
+test_converter / test_converter.test_model / html (html)                   : NEW
+test_converter / test_converter.test_model / integer (integer)             : NEW
+test_converter / test_converter.test_model / many2one (many2one)           : NEW relation: test_converter.test_model.sub
+test_converter / test_converter.test_model / numeric (float)               : NEW
+test_converter / test_converter.test_model / selection_str (selection)     : NEW selection_keys: ['A', 'B', 'C', 'D']
+test_converter / test_converter.test_model / text (text)                   : NEW
+test_converter / test_converter.test_model.sub / name (char)                   : NEW
+---XML records in module 'test_converter'---
+NEW ir.model.access: test_converter.access_converter_model
+NEW ir.model.access: test_converter.access_test_converter_monetary
+NEW ir.model.access: test_converter.access_test_converter_test_model_sub

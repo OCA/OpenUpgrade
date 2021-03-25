@@ -4,6 +4,7 @@ model product.attribute.custom.value (moved from sale)
 ---Fields in module 'product'---
 product      / product.attribute        / display_type (selection)      : previously in module sale
 product      / product.attribute.custom.value / __last_update (datetime)      : previously in module sale
+product      / product.attribute.custom.value / _order                        : previously in module sale
 product      / product.attribute.custom.value / custom_product_template_attribute_value_id (many2one): previously in module sale
 product      / product.attribute.custom.value / custom_value (char)           : previously in module sale
 product      / product.attribute.custom.value / display_name (char)           : previously in module sale

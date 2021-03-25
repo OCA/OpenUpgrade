@@ -1,0 +1,146 @@
+---Models in module 'test_testing_utilities'---
+new model o2m_changes_children
+new model o2m_changes_children.lines
+new model o2m_changes_parent
+new model o2m_readonly_subfield_child
+new model o2m_readonly_subfield_parent
+new model test_testing_utilities.a
+new model test_testing_utilities.c
+new model test_testing_utilities.d
+new model test_testing_utilities.default
+new model test_testing_utilities.e
+new model test_testing_utilities.f
+new model test_testing_utilities.g
+new model test_testing_utilities.m2o
+new model test_testing_utilities.onchange_count
+new model test_testing_utilities.onchange_count_sub
+new model test_testing_utilities.onchange_line
+new model test_testing_utilities.onchange_parent
+new model test_testing_utilities.parent
+new model test_testing_utilities.readonly
+new model test_testing_utilities.recursive
+new model test_testing_utilities.req_bool
+new model test_testing_utilities.sub
+new model test_testing_utilities.sub2
+new model test_testing_utilities.sub3
+new model ttu.child
+new model ttu.grandchild
+new model ttu.product
+new model ttu.root
+---Fields in module 'test_testing_utilities'---
+test_testing_utilities / o2m_changes_children     / line_ids (one2many)           : NEW relation: o2m_changes_children.lines
+test_testing_utilities / o2m_changes_children     / name (char)                   : NEW
+test_testing_utilities / o2m_changes_children     / parent_id (many2one)          : NEW relation: o2m_changes_parent
+test_testing_utilities / o2m_changes_children     / v (integer)                   : NEW
+test_testing_utilities / o2m_changes_children.lines / parent_id (many2one)          : NEW relation: o2m_changes_children
+test_testing_utilities / o2m_changes_children.lines / v (integer)                   : NEW
+test_testing_utilities / o2m_changes_children.lines / vv (integer)                  : NEW
+test_testing_utilities / o2m_changes_parent       / line_ids (one2many)           : NEW relation: o2m_changes_children
+test_testing_utilities / o2m_changes_parent       / name (char)                   : NEW
+test_testing_utilities / o2m_readonly_subfield_child / name (char)                   : NEW
+test_testing_utilities / o2m_readonly_subfield_child / parent_id (many2one)          : NEW relation: o2m_readonly_subfield_parent
+test_testing_utilities / o2m_readonly_subfield_parent / line_ids (one2many)           : NEW relation: o2m_readonly_subfield_child
+test_testing_utilities / test_testing_utilities.a / f1 (char)                     : NEW required
+test_testing_utilities / test_testing_utilities.a / f2 (integer)                  : NEW hasdefault
+test_testing_utilities / test_testing_utilities.a / f3 (integer)                  : NEW
+test_testing_utilities / test_testing_utilities.a / f5 (integer)                  : NEW
+test_testing_utilities / test_testing_utilities.a / f6 (integer)                  : NEW
+test_testing_utilities / test_testing_utilities.c / f2 (many2one)                 : NEW relation: test_testing_utilities.m2o
+test_testing_utilities / test_testing_utilities.c / name (char)                   : NEW required
+test_testing_utilities / test_testing_utilities.d / f (many2one)                  : NEW relation: test_testing_utilities.m2o, required, req_default: function, hasdefault
+test_testing_utilities / test_testing_utilities.d / f2 (char)                     : NEW
+test_testing_utilities / test_testing_utilities.default / subs (one2many)               : NEW relation: test_testing_utilities.sub3, hasdefault
+test_testing_utilities / test_testing_utilities.default / v (integer)                   : NEW
+test_testing_utilities / test_testing_utilities.default / value (integer)               : NEW hasdefault
+test_testing_utilities / test_testing_utilities.e / m2m (many2many)               : NEW relation: test_testing_utilities.sub2
+test_testing_utilities / test_testing_utilities.f / m2m (many2many)               : NEW relation: test_testing_utilities.sub2, hasdefault
+test_testing_utilities / test_testing_utilities.f / m2o (many2one)                : NEW relation: test_testing_utilities.sub2
+test_testing_utilities / test_testing_utilities.g / m2m (many2many)               : NEW relation: test_testing_utilities.sub3
+test_testing_utilities / test_testing_utilities.m2o / name (char)                   : NEW required
+test_testing_utilities / test_testing_utilities.onchange_count / count (integer)               : NEW
+test_testing_utilities / test_testing_utilities.onchange_count / line_ids (one2many)           : NEW relation: test_testing_utilities.onchange_count_sub
+test_testing_utilities / test_testing_utilities.onchange_count_sub / name (char)                   : NEW
+test_testing_utilities / test_testing_utilities.onchange_count_sub / parent (many2one)             : NEW relation: test_testing_utilities.onchange_count
+test_testing_utilities / test_testing_utilities.onchange_line / dummy (float)                 : NEW
+test_testing_utilities / test_testing_utilities.onchange_line / flag (boolean)                : NEW
+test_testing_utilities / test_testing_utilities.onchange_line / parent (many2one)             : NEW relation: test_testing_utilities.onchange_parent
+test_testing_utilities / test_testing_utilities.onchange_parent / line_ids (one2many)           : NEW relation: test_testing_utilities.onchange_line
+test_testing_utilities / test_testing_utilities.parent / subs (one2many)               : NEW relation: test_testing_utilities.sub
+test_testing_utilities / test_testing_utilities.parent / v (integer)                   : NEW
+test_testing_utilities / test_testing_utilities.parent / value (integer)               : NEW hasdefault
+test_testing_utilities / test_testing_utilities.readonly / f1 (integer)                  : NEW hasdefault
+test_testing_utilities / test_testing_utilities.recursive / many_to_one_ids (one2many)    : NEW relation: test_testing_utilities.recursive
+test_testing_utilities / test_testing_utilities.recursive / one_to_many_id (many2one)     : NEW relation: test_testing_utilities.recursive
+test_testing_utilities / test_testing_utilities.req_bool / f_bool (boolean)              : NEW required
+test_testing_utilities / test_testing_utilities.sub / has_parent (boolean)          : NEW
+test_testing_utilities / test_testing_utilities.sub / parent_id (many2one)          : NEW relation: test_testing_utilities.parent
+test_testing_utilities / test_testing_utilities.sub / v (integer)                   : NEW
+test_testing_utilities / test_testing_utilities.sub / value (integer)               : NEW hasdefault
+test_testing_utilities / test_testing_utilities.sub2 / m2o_ids (many2many)           : NEW relation: test_testing_utilities.m2o
+test_testing_utilities / test_testing_utilities.sub2 / name (char)                   : NEW
+test_testing_utilities / test_testing_utilities.sub3 / parent_id (many2one)          : NEW relation: test_testing_utilities.default
+test_testing_utilities / test_testing_utilities.sub3 / v (integer)                   : NEW hasdefault
+test_testing_utilities / test_testing_utilities.sub3 / value (integer)               : NEW hasdefault
+test_testing_utilities / ttu.child                / move_line_ids (one2many)      : NEW relation: ttu.grandchild
+test_testing_utilities / ttu.child                / product_id (many2one)         : NEW relation: ttu.product
+test_testing_utilities / ttu.child                / root_id (many2one)            : NEW relation: ttu.root
+test_testing_utilities / ttu.child                / root_raw_id (many2one)        : NEW relation: ttu.root
+test_testing_utilities / ttu.child                / unit_factor (integer)         : NEW required, req_default: function, hasdefault
+test_testing_utilities / ttu.grandchild           / move_id (many2one)            : NEW relation: ttu.child
+test_testing_utilities / ttu.grandchild           / product_id (many2one)         : NEW relation: ttu.product
+test_testing_utilities / ttu.grandchild           / product_uom_qty (integer)     : NEW
+test_testing_utilities / ttu.grandchild           / qty_done (integer)            : NEW
+test_testing_utilities / ttu.root                 / move_finished_ids (one2many)  : NEW relation: ttu.child
+test_testing_utilities / ttu.root                 / move_raw_ids (one2many)       : NEW relation: ttu.child
+test_testing_utilities / ttu.root                 / product_id (many2one)         : NEW relation: ttu.product
+test_testing_utilities / ttu.root                 / product_qty (integer)         : NEW
+test_testing_utilities / ttu.root                 / qty_producing (integer)       : NEW
+---XML records in module 'test_testing_utilities'---
+NEW ir.actions.act_window: test_testing_utilities.action_test_m2o_onchange
+NEW ir.actions.act_window: test_testing_utilities.action_test_o2m_count
+NEW ir.actions.act_window: test_testing_utilities.action_test_o2m_onchange
+NEW ir.model.access: test_testing_utilities.access_model_test_testing_utilities_onchange_count
+NEW ir.model.access: test_testing_utilities.access_o2m_changes_children
+NEW ir.model.access: test_testing_utilities.access_o2m_changes_children_lines
+NEW ir.model.access: test_testing_utilities.access_o2m_changes_parent
+NEW ir.model.access: test_testing_utilities.access_o2m_readonly_subfield_child
+NEW ir.model.access: test_testing_utilities.access_o2m_readonly_subfield_parent
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_a
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_c
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_d
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_default
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_e
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_f
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_g
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_m2o
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_onchange_count_sub
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_onchange_line
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_onchange_parent
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_parent
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_readonly
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_recursive
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_req_bool
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_sub
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_sub2
+NEW ir.model.access: test_testing_utilities.access_test_testing_utilities_sub3
+NEW ir.model.access: test_testing_utilities.access_ttu_child
+NEW ir.model.access: test_testing_utilities.access_ttu_grandchild
+NEW ir.model.access: test_testing_utilities.access_ttu_product
+NEW ir.model.access: test_testing_utilities.access_ttu_root
+NEW ir.ui.menu: test_testing_utilities.menu_m2o
+NEW ir.ui.menu: test_testing_utilities.menu_o2m
+NEW ir.ui.menu: test_testing_utilities.menu_o2m_count
+NEW ir.ui.menu: test_testing_utilities.menu_ssf
+NEW ir.ui.view: test_testing_utilities.attrs_using_m2m
+NEW ir.ui.view: test_testing_utilities.editable_external
+NEW ir.ui.view: test_testing_utilities.m2m_change_view
+NEW ir.ui.view: test_testing_utilities.m2o_onchange_view
+NEW ir.ui.view: test_testing_utilities.non_normalized_attrs
+NEW ir.ui.view: test_testing_utilities.o2m_modifier
+NEW ir.ui.view: test_testing_utilities.o2m_parent
+NEW ir.ui.view: test_testing_utilities.o2m_parent_ed
+NEW ir.ui.view: test_testing_utilities.o2m_parent_inline
+NEW ir.ui.view: test_testing_utilities.o2m_parent_readonly
+NEW ir.ui.view: test_testing_utilities.o2m_recursive_relation_view
+NEW ir.ui.view: test_testing_utilities.o2m_tree
+NEW ir.ui.view: test_testing_utilities.o2m_widget_m2m

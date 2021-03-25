@@ -1,0 +1,34 @@
+---Models in module 'test_read_group'---
+new model test_read_group.aggregate
+new model test_read_group.aggregate.boolean
+new model test_read_group.fill_temporal
+new model test_read_group.on_date
+new model test_read_group.on_selection
+new model test_read_group.order
+new model test_read_group.order.line
+---Fields in module 'test_read_group'---
+test_read_group / test_read_group.aggregate / key (integer)                 : NEW
+test_read_group / test_read_group.aggregate / partner_id (many2one)         : NEW relation: res.partner
+test_read_group / test_read_group.aggregate / value (integer)               : NEW
+test_read_group / test_read_group.aggregate.boolean / bool_and (boolean)            : NEW hasdefault
+test_read_group / test_read_group.aggregate.boolean / bool_array (boolean)          : NEW hasdefault
+test_read_group / test_read_group.aggregate.boolean / bool_or (boolean)             : NEW hasdefault
+test_read_group / test_read_group.aggregate.boolean / key (integer)                 : NEW
+test_read_group / test_read_group.fill_temporal / date (date)                   : NEW
+test_read_group / test_read_group.fill_temporal / datetime (datetime)           : NEW
+test_read_group / test_read_group.fill_temporal / value (integer)               : NEW
+test_read_group / test_read_group.on_date  / date (date)                   : NEW
+test_read_group / test_read_group.on_date  / value (integer)               : NEW
+test_read_group / test_read_group.on_selection / state (selection)             : NEW selection_keys: ['a', 'b']
+test_read_group / test_read_group.on_selection / value (integer)               : NEW
+test_read_group / test_read_group.order    / line_ids (one2many)           : NEW relation: test_read_group.order.line
+test_read_group / test_read_group.order.line / order_id (many2one)           : NEW relation: test_read_group.order
+test_read_group / test_read_group.order.line / value (integer)               : NEW
+---XML records in module 'test_read_group'---
+NEW ir.model.access: test_read_group.access_test_read_group_aggregate
+NEW ir.model.access: test_read_group.access_test_read_group_aggregate_boolean
+NEW ir.model.access: test_read_group.access_test_read_group_fill_temporal
+NEW ir.model.access: test_read_group.access_test_read_group_on_date
+NEW ir.model.access: test_read_group.access_test_read_group_on_selection
+NEW ir.model.access: test_read_group.access_test_read_group_order
+NEW ir.model.access: test_read_group.access_test_read_group_order_line

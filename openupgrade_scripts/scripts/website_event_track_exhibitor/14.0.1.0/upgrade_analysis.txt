@@ -12,7 +12,6 @@ website_event_track_exhibitor / event.sponsor            / website_description (
 website_event_track_exhibitor / event.type               / exhibitor_menu (boolean)      : NEW isfunction: function, stored
 website_event_track_exhibitor / website.event.menu       / menu_type (False)             : NEW selection_keys: ['community', 'exhibitor', 'meeting_room', 'track', 'track_proposal'], mode: modify
 ---XML records in module 'website_event_track_exhibitor'---
-NEW ir.actions.act_window: website_event_track.event_sponsor_action_from_event
 NEW ir.actions.act_window: website_event_track_exhibitor.event_sponsor_action
 NEW ir.model.access: website_event_track_exhibitor.chat_room_access_event_manager
 NEW ir.rule: website_event_track_exhibitor.event_sponsor_rule_share (noupdate)

@@ -1,0 +1,36 @@
+---Models in module 'test_inherits'---
+new model test.another_box
+new model test.another_unit
+new model test.box
+new model test.pallet
+new model test.unit
+new model test.unit.line
+---Fields in module 'test_inherits'---
+test_inherits / test.another_box         / _inherits                     : NEW _inherits: {'test.another_unit': 'another_unit_id'}
+test_inherits / test.another_box         / another_unit_id (many2one)    : NEW relation: test.another_unit, required
+test_inherits / test.another_box         / val2 (integer)                : NEW required
+test_inherits / test.another_unit        / val1 (integer)                : NEW required
+test_inherits / test.box                 / _inherits                     : NEW _inherits: {'test.unit': 'unit_id'}
+test_inherits / test.box                 / field_in_box (char)           : NEW
+test_inherits / test.box                 / size (integer)                : NEW
+test_inherits / test.box                 / unit_id (many2one)            : NEW relation: test.unit, required
+test_inherits / test.pallet              / _inherits                     : NEW _inherits: {'test.box': 'box_id'}
+test_inherits / test.pallet              / box_id (many2one)             : NEW relation: test.box, required
+test_inherits / test.pallet              / field_in_pallet (char)        : NEW
+test_inherits / test.unit                / line_ids (one2many)           : NEW relation: test.unit.line
+test_inherits / test.unit                / name (char)                   : NEW required
+test_inherits / test.unit                / readonly_name (char)          : NEW
+test_inherits / test.unit                / size (integer)                : NEW
+test_inherits / test.unit                / state (selection)             : NEW selection_keys: ['a', 'b']
+test_inherits / test.unit.line           / name (char)                   : NEW required
+test_inherits / test.unit.line           / unit_id (many2one)            : NEW relation: test.unit, required
+---XML records in module 'test_inherits'---
+NEW ir.model.access: test_inherits.access_test_another_box
+NEW ir.model.access: test_inherits.access_test_another_unit
+NEW ir.model.access: test_inherits.access_test_box
+NEW ir.model.access: test_inherits.access_test_pallet
+NEW ir.model.access: test_inherits.access_test_unit
+NEW ir.model.access: test_inherits.access_test_unit_line
+NEW test.box: test_inherits.box_a
+NEW test.pallet: test_inherits.pallet_a
+NEW test.unit: test_inherits.unit_a

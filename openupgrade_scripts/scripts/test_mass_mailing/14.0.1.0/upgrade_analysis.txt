@@ -1,0 +1,95 @@
+---Models in module 'test_mass_mailing'---
+obsolete model mass.mail.test
+obsolete model mass.mail.test.bl
+new model mailing.performance
+new model mailing.performance.blacklist
+new model mailing.test.blacklist
+new model mailing.test.optout
+new model mailing.test.simple
+new model mailing.test.utm
+---Fields in module 'test_mass_mailing'---
+test_mass_mailing / mailing.performance      / email_from (char)             : NEW
+test_mass_mailing / mailing.performance      / message_follower_ids (one2many): NEW relation: mail.followers
+test_mass_mailing / mailing.performance      / message_ids (one2many)        : NEW relation: mail.message
+test_mass_mailing / mailing.performance      / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mass_mailing / mailing.performance      / name (char)                   : NEW
+test_mass_mailing / mailing.performance      / website_message_ids (one2many): NEW relation: mail.message
+test_mass_mailing / mailing.performance.blacklist / container_id (many2one)       : NEW relation: mail.test.container
+test_mass_mailing / mailing.performance.blacklist / email_from (char)             : NEW
+test_mass_mailing / mailing.performance.blacklist / email_normalized (char)       : NEW isfunction: function, stored
+test_mass_mailing / mailing.performance.blacklist / message_bounce (integer)      : NEW hasdefault
+test_mass_mailing / mailing.performance.blacklist / message_follower_ids (one2many): NEW relation: mail.followers
+test_mass_mailing / mailing.performance.blacklist / message_ids (one2many)        : NEW relation: mail.message
+test_mass_mailing / mailing.performance.blacklist / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mass_mailing / mailing.performance.blacklist / name (char)                   : NEW
+test_mass_mailing / mailing.performance.blacklist / user_id (many2one)            : NEW relation: res.users
+test_mass_mailing / mailing.performance.blacklist / website_message_ids (one2many): NEW relation: mail.message
+test_mass_mailing / mailing.test.blacklist   / customer_id (many2one)        : NEW relation: res.partner
+test_mass_mailing / mailing.test.blacklist   / email_from (char)             : NEW
+test_mass_mailing / mailing.test.blacklist   / email_normalized (char)       : NEW isfunction: function, stored
+test_mass_mailing / mailing.test.blacklist   / message_bounce (integer)      : NEW hasdefault
+test_mass_mailing / mailing.test.blacklist   / message_follower_ids (one2many): NEW relation: mail.followers
+test_mass_mailing / mailing.test.blacklist   / message_ids (one2many)        : NEW relation: mail.message
+test_mass_mailing / mailing.test.blacklist   / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mass_mailing / mailing.test.blacklist   / name (char)                   : NEW
+test_mass_mailing / mailing.test.blacklist   / user_id (many2one)            : NEW relation: res.users
+test_mass_mailing / mailing.test.blacklist   / website_message_ids (one2many): NEW relation: mail.message
+test_mass_mailing / mailing.test.optout      / customer_id (many2one)        : NEW relation: res.partner
+test_mass_mailing / mailing.test.optout      / email_from (char)             : NEW
+test_mass_mailing / mailing.test.optout      / email_normalized (char)       : NEW isfunction: function, stored
+test_mass_mailing / mailing.test.optout      / message_bounce (integer)      : NEW hasdefault
+test_mass_mailing / mailing.test.optout      / message_follower_ids (one2many): NEW relation: mail.followers
+test_mass_mailing / mailing.test.optout      / message_ids (one2many)        : NEW relation: mail.message
+test_mass_mailing / mailing.test.optout      / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mass_mailing / mailing.test.optout      / name (char)                   : NEW
+test_mass_mailing / mailing.test.optout      / opt_out (boolean)             : NEW
+test_mass_mailing / mailing.test.optout      / user_id (many2one)            : NEW relation: res.users
+test_mass_mailing / mailing.test.optout      / website_message_ids (one2many): NEW relation: mail.message
+test_mass_mailing / mailing.test.simple      / email_from (char)             : NEW
+test_mass_mailing / mailing.test.simple      / message_follower_ids (one2many): NEW relation: mail.followers
+test_mass_mailing / mailing.test.simple      / message_ids (one2many)        : NEW relation: mail.message
+test_mass_mailing / mailing.test.simple      / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mass_mailing / mailing.test.simple      / name (char)                   : NEW
+test_mass_mailing / mailing.test.simple      / website_message_ids (one2many): NEW relation: mail.message
+test_mass_mailing / mailing.test.utm         / campaign_id (many2one)        : NEW relation: utm.campaign
+test_mass_mailing / mailing.test.utm         / medium_id (many2one)          : NEW relation: utm.medium
+test_mass_mailing / mailing.test.utm         / message_follower_ids (one2many): NEW relation: mail.followers
+test_mass_mailing / mailing.test.utm         / message_ids (one2many)        : NEW relation: mail.message
+test_mass_mailing / mailing.test.utm         / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mass_mailing / mailing.test.utm         / name (char)                   : NEW
+test_mass_mailing / mailing.test.utm         / source_id (many2one)          : NEW relation: utm.source
+test_mass_mailing / mailing.test.utm         / website_message_ids (one2many): NEW relation: mail.message
+test_mass_mailing / mass.mail.test           / email_from (char)             : DEL
+test_mass_mailing / mass.mail.test           / email_normalized (char)       : DEL
+test_mass_mailing / mass.mail.test           / message_follower_ids (one2many): DEL relation: mail.followers
+test_mass_mailing / mass.mail.test           / message_ids (one2many)        : DEL relation: mail.message
+test_mass_mailing / mass.mail.test           / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mass_mailing / mass.mail.test           / name (char)                   : DEL
+test_mass_mailing / mass.mail.test           / website_message_ids (one2many): DEL relation: mail.message
+test_mass_mailing / mass.mail.test.bl        / email_from (char)             : DEL
+test_mass_mailing / mass.mail.test.bl        / email_normalized (char)       : DEL
+test_mass_mailing / mass.mail.test.bl        / message_bounce (integer)      : DEL
+test_mass_mailing / mass.mail.test.bl        / message_follower_ids (one2many): DEL relation: mail.followers
+test_mass_mailing / mass.mail.test.bl        / message_ids (one2many)        : DEL relation: mail.message
+test_mass_mailing / mass.mail.test.bl        / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mass_mailing / mass.mail.test.bl        / name (char)                   : DEL
+test_mass_mailing / mass.mail.test.bl        / umbrella_id (many2one)        : DEL relation: mail.test
+test_mass_mailing / mass.mail.test.bl        / user_id (many2one)            : DEL relation: res.users
+test_mass_mailing / mass.mail.test.bl        / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'test_mass_mailing'---
+NEW ir.model.access: test_mass_mailing.access_mailing_performance_all
+NEW ir.model.access: test_mass_mailing.access_mailing_performance_blacklist_all
+NEW ir.model.access: test_mass_mailing.access_mailing_performance_blacklist_user
+NEW ir.model.access: test_mass_mailing.access_mailing_performance_user
+NEW ir.model.access: test_mass_mailing.access_mailing_test_blacklist_all
+NEW ir.model.access: test_mass_mailing.access_mailing_test_blacklist_user
+NEW ir.model.access: test_mass_mailing.access_mailing_test_optout_all
+NEW ir.model.access: test_mass_mailing.access_mailing_test_optout_user
+NEW ir.model.access: test_mass_mailing.access_mailing_test_simple_all
+NEW ir.model.access: test_mass_mailing.access_mailing_test_simple_user
+NEW ir.model.access: test_mass_mailing.access_mailing_test_utm_all
+NEW ir.model.access: test_mass_mailing.access_mailing_test_utm_user
+DEL ir.model.access: test_mass_mailing.access_mass_mail_test_all
+DEL ir.model.access: test_mass_mailing.access_mass_mail_test_bl_all
+DEL ir.model.access: test_mass_mailing.access_mass_mail_test_bl_user
+DEL ir.model.access: test_mass_mailing.access_mass_mail_test_user

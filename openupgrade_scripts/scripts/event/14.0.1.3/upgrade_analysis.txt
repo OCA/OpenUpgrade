@@ -24,6 +24,7 @@ event        / event.event              / state (selection)             : DEL re
 event        / event.event              / tag_ids (many2many)           : NEW relation: event.tag, isfunction: function, stored
 event        / event.event              / twitter_hashtag (char)        : DEL
 event        / event.event.ticket       / __last_update (datetime)      : previously in module event_sale
+event        / event.event.ticket       / _order                        : previously in module event_sale
 event        / event.event.ticket       / company_id (many2one)         : previously in module event_sale
 event        / event.event.ticket       / description (text)            : NEW
 event        / event.event.ticket       / display_name (char)           : previously in module event_sale
@@ -40,6 +41,7 @@ event        / event.event.ticket       / seats_reserved (integer)      : previo
 event        / event.event.ticket       / seats_unconfirmed (integer)   : previously in module event_sale
 event        / event.event.ticket       / seats_used (integer)          : previously in module event_sale
 event        / event.event.ticket       / start_sale_date (date)        : NEW
+event        / event.registration       / _order                        : _order is now 'id desc' ('name, create_date desc')
 event        / event.registration       / date_closed (datetime)        : now a function
 event        / event.registration       / email (char)                  : now a function
 event        / event.registration       / event_ticket_id (many2one)    : previously in module event_sale

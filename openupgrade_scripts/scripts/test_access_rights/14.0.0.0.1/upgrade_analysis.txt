@@ -1,0 +1,31 @@
+---Models in module 'test_access_rights'---
+new model test_access_right.container
+new model test_access_right.obj_categ
+new model test_access_right.parent
+new model test_access_right.some_obj
+new model test_access_right.ticket
+---Fields in module 'test_access_rights'---
+test_access_rights / res.partner              / currency_id (many2one)        : previously in module account
+test_access_rights / res.partner              / monetary (float)              : NEW
+test_access_rights / res.users                / currency_id (many2one)        : previously in module account
+test_access_rights / test_access_right.container / some_ids (many2many)          : NEW relation: test_access_right.some_obj
+test_access_rights / test_access_right.obj_categ / name (char)                   : NEW required
+test_access_rights / test_access_right.parent / _inherits                     : NEW _inherits: {'test_access_right.some_obj': 'obj_id'}
+test_access_rights / test_access_right.parent / obj_id (many2one)             : NEW relation: test_access_right.some_obj, required
+test_access_rights / test_access_right.some_obj / categ_id (many2one)           : NEW relation: test_access_right.obj_categ
+test_access_rights / test_access_right.some_obj / company_id (many2one)         : NEW relation: res.company
+test_access_rights / test_access_right.some_obj / forbidden (integer)           : NEW hasdefault
+test_access_rights / test_access_right.some_obj / forbidden2 (integer)          : NEW
+test_access_rights / test_access_right.some_obj / forbidden3 (integer)          : NEW
+test_access_rights / test_access_right.some_obj / val (integer)                 : NEW
+test_access_rights / test_access_right.ticket / message_partner_ids (many2many): NEW relation: res.partner
+test_access_rights / test_access_right.ticket / name (char)                   : NEW
+---XML records in module 'test_access_rights'---
+NEW ir.model.access: test_access_rights.access_test_access_right_container
+NEW ir.model.access: test_access_rights.access_test_access_right_obj_categ
+NEW ir.model.access: test_access_rights.access_test_access_right_parent
+NEW ir.model.access: test_access_rights.access_test_access_right_some_obj
+NEW ir.model.access: test_access_rights.access_test_ticket_portal
+NEW ir.model.access: test_access_rights.access_test_ticket_user
+NEW ir.rule: test_access_rights.test_access_right_fake_ticket (noupdate)
+NEW res.groups: test_access_rights.test_group

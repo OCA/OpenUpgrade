@@ -14,7 +14,7 @@ sale_coupon  / sale.coupon              / partner_id (many2one)         : DEL re
 sale_coupon  / sale.coupon              / program_id (many2one)         : DEL relation: sale.coupon.program, required
 sale_coupon  / sale.coupon              / sales_order_id (many2one)     : DEL relation: sale.order
 sale_coupon  / sale.coupon              / state (selection)             : DEL required, selection_keys: ['expired', 'new', 'reserved', 'used'], req_default: function
-sale_coupon  / sale.coupon.program      / _inherits (False)             : DEL
+sale_coupon  / sale.coupon.program      / _inherits                     : DEL _inherits: {'sale.coupon.rule': 'rule_id', 'sale.coupon.reward': 'reward_id'}
 sale_coupon  / sale.coupon.program      / active (boolean)              : DEL
 sale_coupon  / sale.coupon.program      / company_id (many2one)         : DEL relation: res.company
 sale_coupon  / sale.coupon.program      / coupon_ids (one2many)         : DEL relation: sale.coupon
@@ -49,6 +49,7 @@ sale_coupon  / sale.coupon.rule         / rule_products_domain (char)   : DEL
 sale_coupon  / sale.order               / applied_coupon_ids (one2many) : relation is now 'coupon.coupon' ('sale.coupon') [nothing to do]
 sale_coupon  / sale.order               / code_promo_program_id (many2one): relation is now 'coupon.program' ('sale.coupon.program') [nothing to do]
 sale_coupon  / sale.order               / generated_coupon_ids (one2many): relation is now 'coupon.coupon' ('sale.coupon') [nothing to do]
+sale_coupon  / sale.order               / no_code_promo_program_ids (many2many): column2 is now 'coupon_program_id' ('sale_coupon_program_id') [sale_coupon_program_sale_order_rel]
 sale_coupon  / sale.order               / no_code_promo_program_ids (many2many): relation is now 'coupon.program' ('sale.coupon.program') [nothing to do]
 sale_coupon  / sale.order               / no_code_promo_program_ids (many2many): table is now 'coupon_program_sale_order_rel' ('sale_coupon_program_sale_order_rel')
 ---XML records in module 'sale_coupon'---

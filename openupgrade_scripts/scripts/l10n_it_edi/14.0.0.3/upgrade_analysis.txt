@@ -1,0 +1,8 @@
+---Models in module 'l10n_it_edi'---
+---Fields in module 'l10n_it_edi'---
+l10n_it_edi  / account.move             / l10n_it_einvoice_id (many2one): not stored anymore
+l10n_it_edi  / account.move             / l10n_it_einvoice_id (many2one): now a function
+l10n_it_edi  / account.move             / l10n_it_einvoice_name (char)  : not stored anymore
+l10n_it_edi  / account.move             / l10n_it_einvoice_name (char)  : now a function
+---XML records in module 'l10n_it_edi'---
+NEW account.edi.format: l10n_it_edi.edi_fatturaPA

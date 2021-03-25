@@ -7,6 +7,7 @@ sale         / crm.team                 / invoiced_target (integer)     : type i
 sale         / crm.team                 / quotations_amount (integer)   : type is now 'float' ('integer')
 sale         / product.attribute        / display_type (selection)      : module is now 'product' ('sale')
 sale         / product.attribute.custom.value / __last_update (datetime)      : module is now 'product' ('sale')
+sale         / product.attribute.custom.value / _order                        : module is now 'product' ('sale')
 sale         / product.attribute.custom.value / custom_product_template_attribute_value_id (many2one): module is now 'product' ('sale')
 sale         / product.attribute.custom.value / custom_value (char)           : module is now 'product' ('sale')
 sale         / product.attribute.custom.value / display_name (char)           : module is now 'product' ('sale')
@@ -22,6 +23,7 @@ sale         / sale.order               / show_update_pricelist (boolean): NEW
 sale         / sale.order               / tag_ids (many2many)           : previously in module sale_crm
 ---XML records in module 'sale'---
 DEL ir.actions.act_window: sale.action_open_sale_onboarding_sample_quotation
+NEW ir.model.access: sale.access_account_invoice_send_salesman
 NEW ir.model.access: sale.access_payment_link_wizard_sale
 NEW ir.model.access: sale.access_product_product_attribute_custom_value_sale_manager
 NEW ir.model.access: sale.access_sale_advance_payment_inv
@@ -36,6 +38,8 @@ NEW ir.rule: sale.account_invoice_line_rule_see_all (noupdate)
 NEW ir.rule: sale.account_invoice_line_rule_see_personal (noupdate)
 NEW ir.rule: sale.account_invoice_rule_see_all (noupdate)
 NEW ir.rule: sale.account_invoice_rule_see_personal (noupdate)
+NEW ir.rule: sale.account_invoice_send_rule_see_all (noupdate)
+NEW ir.rule: sale.account_invoice_send_rule_see_personal (noupdate)
 NEW ir.rule: sale.sale_advance_payment_inv_rule (noupdate)
 NEW ir.rule: sale.sale_order_cancel_rule (noupdate)
 NEW ir.rule: sale.sale_payment_acquirer_onboarding_wizard_rule (noupdate)

@@ -13,8 +13,10 @@ base         / ir.model.data            / res_id (integer)              : relati
 base         / ir.model.data            / res_id (integer)              : type is now 'many2one_reference' ('integer')
 base         / ir.model.fields          / copied (boolean)              : now a function
 base         / ir.model.fields          / group_expand (boolean)        : NEW
+base         / ir.module.module         / _order                        : _order is now 'application desc,sequence,name' ('sequence,name')
 base         / ir.ui.view               / model_ids (one2many)          : DEL relation: ir.model.data
 base         / ir.ui.view               / type (selection)              : selection_keys is now '['calendar', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']' ('['calendar', 'diagram', 'form', 'gantt', 'graph', 'kanban', 'pivot', 'qweb', 'search', 'tree']')
+base         / report.layout            / _order                        : _order is now 'sequence' ('id')
 base         / report.layout            / sequence (integer)            : NEW hasdefault
 base         / res.company              / account_no (char)             : DEL
 base         / res.country              / image (binary)                : DEL attachment: True

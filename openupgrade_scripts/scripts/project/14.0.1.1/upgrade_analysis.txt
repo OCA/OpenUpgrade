@@ -79,8 +79,6 @@ NEW ir.model.access: project.access_project_task_recurrence
 NEW ir.model.access: project.access_project_task_type_delete_wizard
 DEL ir.model.access: project.access_mail_alias
 DEL ir.model.access: project.access_partner_task user
-NEW ir.module.category: base.module_category_services_project (noupdate)
-DEL ir.module.category: base.module_category_operations_project (noupdate)
 NEW ir.ui.view: project.project_delete_wizard_form
 NEW ir.ui.view: project.rating_rating_view_form_project
 NEW ir.ui.view: project.rating_rating_view_graph

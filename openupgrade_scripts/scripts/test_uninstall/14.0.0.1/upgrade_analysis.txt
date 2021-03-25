@@ -1,0 +1,8 @@
+---Models in module 'test_uninstall'---
+new model test_uninstall.model
+---Fields in module 'test_uninstall'---
+test_uninstall / test_uninstall.model     / name (char)                   : NEW
+test_uninstall / test_uninstall.model     / ref (many2one)                : NEW relation: res.users
+test_uninstall / test_uninstall.model     / rel (many2many)               : NEW relation: res.users
+---XML records in module 'test_uninstall'---
+NEW ir.model.access: test_uninstall.access_test_uninstall_model

@@ -1,0 +1,115 @@
+---Models in module 'test_mail'---
+obsolete model mail.test
+obsolete model mail.test.full
+obsolete model test_performance.mail
+new model mail.performance.thread
+new model mail.performance.tracking
+new model mail.test.container
+new model mail.test.ticket
+new model mail.test.track.compute
+---Fields in module 'test_mail'---
+test_mail    / mail.performance.thread  / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.performance.thread  / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.performance.thread  / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.performance.thread  / name (char)                   : NEW
+test_mail    / mail.performance.thread  / partner_id (many2one)         : NEW relation: res.partner
+test_mail    / mail.performance.thread  / track (char)                  : NEW hasdefault
+test_mail    / mail.performance.thread  / value (integer)               : NEW
+test_mail    / mail.performance.thread  / value_pc (float)              : NEW isfunction: function, stored
+test_mail    / mail.performance.tracking / field_0 (char)                : NEW
+test_mail    / mail.performance.tracking / field_1 (char)                : NEW
+test_mail    / mail.performance.tracking / field_2 (char)                : NEW
+test_mail    / mail.performance.tracking / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.performance.tracking / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.performance.tracking / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.performance.tracking / name (char)                   : NEW required
+test_mail    / mail.test                / _inherits                     : DEL _inherits: {'mail.alias': 'alias_id'}
+test_mail    / mail.test                / alias_id (many2one)           : DEL relation: mail.alias, required
+test_mail    / mail.test                / customer_id (many2one)        : DEL relation: res.partner
+test_mail    / mail.test                / description (text)            : DEL
+test_mail    / mail.test                / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail    / mail.test                / message_ids (one2many)        : DEL relation: mail.message
+test_mail    / mail.test                / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail    / mail.test                / name (char)                   : DEL
+test_mail    / mail.test                / website_message_ids (one2many): DEL relation: mail.message
+test_mail    / mail.test.activity       / message_has_sms_error (boolean): module is now 'sms' ('test_mail')
+test_mail    / mail.test.activity       / website_message_ids (one2many): module is now 'portal' ('test_mail')
+test_mail    / mail.test.cc             / message_has_sms_error (boolean): module is now 'sms' ('test_mail')
+test_mail    / mail.test.cc             / website_message_ids (one2many): module is now 'portal' ('test_mail')
+test_mail    / mail.test.container      / _inherits                     : NEW _inherits: {'mail.alias': 'alias_id'}
+test_mail    / mail.test.container      / alias_id (many2one)           : NEW relation: mail.alias, required
+test_mail    / mail.test.container      / customer_id (many2one)        : NEW relation: res.partner
+test_mail    / mail.test.container      / description (text)            : NEW
+test_mail    / mail.test.container      / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.test.container      / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.test.container      / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.container      / name (char)                   : NEW
+test_mail    / mail.test.full           / count (integer)               : DEL
+test_mail    / mail.test.full           / customer_id (many2one)        : DEL relation: res.partner
+test_mail    / mail.test.full           / datetime (datetime)           : DEL
+test_mail    / mail.test.full           / email_from (char)             : DEL
+test_mail    / mail.test.full           / mail_template (many2one)      : DEL relation: mail.template
+test_mail    / mail.test.full           / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail    / mail.test.full           / message_ids (one2many)        : DEL relation: mail.message
+test_mail    / mail.test.full           / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail    / mail.test.full           / name (char)                   : DEL
+test_mail    / mail.test.full           / umbrella_id (many2one)        : DEL relation: mail.test
+test_mail    / mail.test.full           / user_id (many2one)            : DEL relation: res.users
+test_mail    / mail.test.full           / website_message_ids (one2many): DEL relation: mail.message
+test_mail    / mail.test.gateway        / message_has_sms_error (boolean): module is now 'sms' ('test_mail')
+test_mail    / mail.test.gateway        / website_message_ids (one2many): module is now 'portal' ('test_mail')
+test_mail    / mail.test.multi.company  / message_has_sms_error (boolean): module is now 'sms' ('test_mail')
+test_mail    / mail.test.multi.company  / website_message_ids (one2many): module is now 'portal' ('test_mail')
+test_mail    / mail.test.simple         / message_has_sms_error (boolean): module is now 'sms' ('test_mail')
+test_mail    / mail.test.simple         / website_message_ids (one2many): module is now 'portal' ('test_mail')
+test_mail    / mail.test.ticket         / container_id (many2one)       : NEW relation: mail.test.container
+test_mail    / mail.test.ticket         / count (integer)               : NEW hasdefault
+test_mail    / mail.test.ticket         / customer_id (many2one)        : NEW relation: res.partner
+test_mail    / mail.test.ticket         / datetime (datetime)           : NEW hasdefault
+test_mail    / mail.test.ticket         / email_from (char)             : NEW
+test_mail    / mail.test.ticket         / mail_template (many2one)      : NEW relation: mail.template
+test_mail    / mail.test.ticket         / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.test.ticket         / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.test.ticket         / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.ticket         / name (char)                   : NEW
+test_mail    / mail.test.ticket         / user_id (many2one)            : NEW relation: res.users
+test_mail    / mail.test.track          / container_id (many2one)       : NEW relation: mail.test.container
+test_mail    / mail.test.track          / message_has_sms_error (boolean): module is now 'sms' ('test_mail')
+test_mail    / mail.test.track          / umbrella_id (many2one)        : DEL relation: mail.test
+test_mail    / mail.test.track          / website_message_ids (one2many): module is now 'portal' ('test_mail')
+test_mail    / mail.test.track.compute  / message_follower_ids (one2many): NEW relation: mail.followers
+test_mail    / mail.test.track.compute  / message_ids (one2many)        : NEW relation: mail.message
+test_mail    / mail.test.track.compute  / message_main_attachment_id (many2one): NEW relation: ir.attachment
+test_mail    / mail.test.track.compute  / partner_email (char)          : NEW isrelated: related, stored
+test_mail    / mail.test.track.compute  / partner_id (many2one)         : NEW relation: res.partner
+test_mail    / mail.test.track.compute  / partner_name (char)           : NEW isrelated: related, stored
+test_mail    / test_performance.mail    / message_follower_ids (one2many): DEL relation: mail.followers
+test_mail    / test_performance.mail    / message_ids (one2many)        : DEL relation: mail.message
+test_mail    / test_performance.mail    / message_main_attachment_id (many2one): DEL relation: ir.attachment
+test_mail    / test_performance.mail    / name (char)                   : DEL
+test_mail    / test_performance.mail    / partner_id (many2one)         : DEL relation: res.partner
+test_mail    / test_performance.mail    / track (char)                  : DEL
+test_mail    / test_performance.mail    / value (integer)               : DEL
+test_mail    / test_performance.mail    / value_pc (float)              : DEL
+test_mail    / test_performance.mail    / website_message_ids (one2many): DEL relation: mail.message
+---XML records in module 'test_mail'---
+NEW ir.model.access: test_mail.access_mail_performance_thread
+NEW ir.model.access: test_mail.access_mail_performance_tracking_user
+NEW ir.model.access: test_mail.access_mail_test_container_portal
+NEW ir.model.access: test_mail.access_mail_test_container_user
+NEW ir.model.access: test_mail.access_mail_test_ticket_portal
+NEW ir.model.access: test_mail.access_mail_test_ticket_user
+NEW ir.model.access: test_mail.access_mail_test_track_compute
+DEL ir.model.access: test_mail.access_mail_test_full_portal
+DEL ir.model.access: test_mail.access_mail_test_full_user
+DEL ir.model.access: test_mail.access_mail_test_portal
+DEL ir.model.access: test_mail.access_mail_test_user
+DEL ir.model.access: test_mail.access_test_performance_mail
+NEW ir.ui.view: test_mail.mail_test_ticket_test_template
+NEW ir.ui.view: test_mail.mail_test_ticket_tracking_view
+NEW mail.message.subtype: test_mail.st_mail_test_container_child_full
+NEW mail.message.subtype: test_mail.st_mail_test_container_default
+NEW mail.message.subtype: test_mail.st_mail_test_simple_external
+NEW mail.message.subtype: test_mail.st_mail_test_ticket_container_upd
+NEW mail.template: test_mail.mail_test_container_tpl
+NEW mail.template: test_mail.mail_test_ticket_tracking_tpl

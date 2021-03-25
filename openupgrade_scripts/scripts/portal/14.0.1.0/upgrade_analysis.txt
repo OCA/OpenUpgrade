@@ -6,6 +6,17 @@ portal       / hr.contract              / website_message_ids (one2many): previo
 portal       / hr.leave                 / website_message_ids (one2many): previously in module hr_holidays
 portal       / hr.leave.allocation      / website_message_ids (one2many): previously in module hr_holidays
 portal       / ir.ui.view               / customize_show (boolean)      : previously in module website
+portal       / mail.performance.thread  / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.performance.tracking / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.test.activity       / website_message_ids (one2many): previously in module test_mail
+portal       / mail.test.cc             / website_message_ids (one2many): previously in module test_mail
+portal       / mail.test.container      / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.test.gateway        / website_message_ids (one2many): previously in module test_mail
+portal       / mail.test.multi.company  / website_message_ids (one2many): previously in module test_mail
+portal       / mail.test.simple         / website_message_ids (one2many): previously in module test_mail
+portal       / mail.test.ticket         / website_message_ids (one2many): NEW relation: mail.message
+portal       / mail.test.track          / website_message_ids (one2many): previously in module test_mail
+portal       / mail.test.track.compute  / website_message_ids (one2many): NEW relation: mail.message
 portal       / mailing.contact          / website_message_ids (one2many): module is now 'mass_mailing' ('portal')
 portal       / mailing.mailing          / website_message_ids (one2many): module is now 'mass_mailing' ('portal')
 ---XML records in module 'portal'---

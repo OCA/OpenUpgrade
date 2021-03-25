@@ -22,6 +22,7 @@ mrp          / mrp.document             / key (char)                    : previo
 mrp          / mrp.document             / theme_template_id (many2one)  : previously in module website_theme_install
 mrp          / mrp.document             / website_id (many2one)         : previously in module website
 mrp          / mrp.document             / website_url (char)            : previously in module website
+mrp          / mrp.production           / _order                        : _order is now 'priority desc, date_planned_start asc,id' ('date_planned_start asc,id')
 mrp          / mrp.production           / backorder_sequence (integer)  : NEW hasdefault
 mrp          / mrp.production           / consumption (selection)       : NEW required, selection_keys: ['flexible', 'strict', 'warning'], req_default: function, hasdefault
 mrp          / mrp.production           / date_deadline (datetime)      : now a function

@@ -5,6 +5,7 @@ calendar     / calendar.attendee        / email (char)                  : not st
 calendar     / calendar.attendee        / email (char)                  : now related
 calendar     / calendar.attendee        / event_id (many2one)           : now required
 calendar     / calendar.attendee        / partner_id (many2one)         : now required
+calendar     / calendar.event           / _order                        : _order is now 'start desc' ('id desc')
 calendar     / calendar.event           / byday (selection)             : not stored anymore
 calendar     / calendar.event           / byday (selection)             : now a function
 calendar     / calendar.event           / byday (selection)             : selection_keys is now '['-1', '1', '2', '3', '4']' ('['-1', '1', '2', '3', '4', '5']')
