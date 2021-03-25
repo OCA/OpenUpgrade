@@ -14,7 +14,7 @@ try:
 except ImportError:
     renamed_modules = {}
     merged_modules = {}
-    _logger.warn(
+    _logger.warning(
         "You are using openupgrade_framework without having"
         " openupgrade_scripts module available."
         " The upgrade process will not work properly."
