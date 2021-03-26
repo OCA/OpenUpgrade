@@ -17,6 +17,7 @@
         'security/ir.model.access.csv',
     ],
     'installable': True,
+    'depends': ['base'],
     'external_dependencies': {
         'python': ['odoorpc', 'openupgradelib'],
     },

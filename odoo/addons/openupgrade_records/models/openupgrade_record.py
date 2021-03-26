@@ -3,7 +3,13 @@
 # Copyright 2016 Opener B.V. <https://opener.am>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import ast
+import os
+
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
+from odoo.modules.module import MANIFEST_NAMES, get_module_path
+from odoo.tools.translate import _
 
 
 class Attribute(models.Model):
@@ -119,3 +125,43 @@ class Record(models.Model):
                 })
             data.append(repre)
         return data
+
+    # backward compatibility from upgrade_analysis (v14)
+    @api.model
+    def list_modules(self):
+        """ Return the set of covered modules """
+        self.env.cr.execute(
+            """SELECT DISTINCT(module) FROM openupgrade_record
+            ORDER BY module"""
+        )
+        return [module for module, in self.env.cr.fetchall()]
+
+    # backward compatibility from upgrade_analysis (v14)
+    @staticmethod
+    def _read_manifest(addon_dir):
+        for manifest_name in MANIFEST_NAMES:
+            if os.access(os.path.join(addon_dir, manifest_name), os.R_OK):
+                with open(os.path.join(addon_dir, manifest_name), "r") as f:
+                    manifest_string = f.read()
+                    return ast.literal_eval(manifest_string)
+        raise ValidationError(_("No manifest found in %s" % addon_dir))
+
+    # backward compatibility from upgrade_analysis (v14)
+    @api.model
+    def get_xml_records(self, module):
+        """ Return all XML records from the given module """
+        addon_dir = get_module_path(module)
+        manifest = self._read_manifest(addon_dir)
+        # The order of the keys are important.
+        # Load files in the same order as in
+        # module/loading.py:load_module_graph
+        paths = []
+        for key in ["init_xml", "update_xml", "data"]:
+            if not manifest.get(key):
+                continue
+            for xml_file in manifest[key]:
+                if not xml_file.lower().endswith(".xml"):
+                    continue
+                parts = xml_file.split("/")
+                paths.append(os.path.join(addon_dir, *parts))
+        return paths
