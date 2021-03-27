@@ -345,7 +345,6 @@ NEW ir.module.module: base.module_payment_sepa_direct_debit (noupdate)
 # NOTHING TO DO: New noupdate=1 records
 
 DEL ir.module.module: base.module_website_form_editor (noupdate)
-DEL ir.rule: base.res_partner_rule (noupdate)
 DEL res.currency: base.SDD (noupdate)
 # DONE: post-migration: Try to delete records
 

@@ -88,8 +88,7 @@ def fill_arch_prev(env):
 
 def delete_noupdate_records(env):
     openupgrade.delete_records_safely_by_xml_id(
-        env, ["base.res_partner_rule", "base.module_website_form_editor",
-              "base.SDD"]
+        env, ["base.module_website_form_editor", "base.SDD"]
     )
 
 
