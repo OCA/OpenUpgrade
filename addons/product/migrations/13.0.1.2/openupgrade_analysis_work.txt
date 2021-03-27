@@ -73,9 +73,10 @@ product      / product.template         / has_configurable_attributes (boolean):
 
 product      / product.template.attribute.line / active (boolean)              : NEW hasdefault
 product      / product.template.attribute.value / ptav_active (boolean)         : NEW hasdefault
-# NOTHING TO DO: New field that has default, will be automatically filled
+# DONE: pre-migration: Insert missing records for variants with attributes that currently are not on the template definition
 
 product      / product.template.attribute.value / attribute_id (many2one)       : is now stored
+# DONE: pre-migration: added SQL column for avoiding the ORM computation
 # DONE: post-migration: filled field (done in post-migration because it's a related to a new field)
 
 product      / product.template.attribute.line / product_template_value_ids (many2many): is now stored
