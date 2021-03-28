@@ -572,7 +572,8 @@ def migration_voucher_moves(env):
     )
 
 
-def _move_model_in_data(env, ids_map, old_model, new_model):
+@openupgrade.progress()
+def _move_model_in_data(env, id_map, old_model, new_model):
     renames = [
         ('mail_message', 'model', 'res_id'),
         ('mail_followers', 'res_model', 'res_id'),
@@ -580,27 +581,27 @@ def _move_model_in_data(env, ids_map, old_model, new_model):
         ('mail_activity', 'res_model', 'res_id'),
         ('ir_model_data', 'model', 'res_id'),
     ]
-    for old_id, new_id in ids_map:
-        for rename in renames:
-            query = """
-                UPDATE {table}
-                SET {field1} = %(new_value1)s, {field2} = %(new_value2)s
-                WHERE {field1} = %(old_value1)s AND {field2} = %(old_value2)s"""
-            if rename[0] == 'mail_followers':
-                query += """ AND partner_id NOT IN (
-                    SELECT partner_id FROM mail_followers
-                    WHERE res_model = 'account.move' AND res_id = %(new_value2)s
-                )"""
-            env.cr.execute(sql.SQL(query).format(
-                table=sql.Identifier(rename[0]),
-                field1=sql.Identifier(rename[1]),
-                field2=sql.Identifier(rename[2])
-            ), {
-                "old_value1": old_model,
-                "new_value1": new_model,
-                "old_value2": old_id,
-                "new_value2": new_id,
-            })
+    old_id, new_id = id_map
+    for rename in renames:
+        query = """
+            UPDATE {table}
+            SET {field1} = %(new_value1)s, {field2} = %(new_value2)s
+            WHERE {field1} = %(old_value1)s AND {field2} = %(old_value2)s"""
+        if rename[0] == 'mail_followers':
+            query += """ AND partner_id NOT IN (
+                SELECT partner_id FROM mail_followers
+                WHERE res_model = 'account.move' AND res_id = %(new_value2)s
+            )"""
+        env.cr.execute(sql.SQL(query).format(
+            table=sql.Identifier(rename[0]),
+            field1=sql.Identifier(rename[1]),
+            field2=sql.Identifier(rename[2])
+        ), {
+            "old_value1": old_model,
+            "new_value1": new_model,
+            "old_value2": old_id,
+            "new_value2": new_id,
+        })
 
 
 def fill_account_move_type(env):
