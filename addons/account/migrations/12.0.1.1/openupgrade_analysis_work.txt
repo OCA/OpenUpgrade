@@ -33,7 +33,7 @@ account      / account.fiscal.year      / date_from (date)              : NEW re
 account      / account.fiscal.year      / date_to (date)                : NEW required: required
 account      / account.fiscal.year      / name (char)                   : NEW required: required
 # Done: post-migration: populate with old account.fiscalyear model
-# if we come from a 8.0 database.
+# if we come from a 8.0 database or use date_range and account_fiscal_year from OCA/account-financial-tools
 
 account      / account.group            / parent_left (integer)         : DEL
 account      / account.group            / parent_path (char)            : NEW
