@@ -373,8 +373,7 @@ account      / account.move.line        / exclude_from_invoice_tab (boolean): NE
 # DONE: post-migration: marked old moves unlinked to invoice lines (also grouped invoice lines) with exclude_from_invoice_tab = TRUE
 
 account      / account.move.line        / move_name (char)              : NEW isrelated: related, stored
-# DONE: pre-migration: filled (existing cases)
-# DONE: post-migration: filled (new cases)
+# DONE: post-migration: filled for new records inside INSERT query, and pre-computed by ORM in an optimized way for the existing ones
 
 account      / account.move.line        / tax_repartition_line_id (many2one): NEW relation: account.tax.repartition.line
 # DONE: post-migration: filled for old invoice taxes
