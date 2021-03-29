@@ -9,9 +9,6 @@ _column_copies = {
     'res_company': [
         ('fiscalyear_last_month', None, None),
     ],
-    'account_move_line': [
-        ('tax_line_id', None, None),
-    ],
 }
 
 _column_renames = {
