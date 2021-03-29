@@ -451,9 +451,10 @@ def migration_invoice_moves(env):
 
 def compute_balance_for_draft_invoice_lines(env):
     # Compute balance for Draft Invoice Lines
-    draft_invoices = env['account.move'].search(
-        [('state', 'in', ('draft', 'cancel'))]).with_context(
-        check_move_validity=False)
+    draft_invoices = env['account.move'].search([
+        ('state', 'in', ('draft', 'cancel')),
+        ('type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')),
+    ]).with_context(check_move_validity=False)
     draft_invoices.line_ids.read()
     draft_invoices.line_ids._onchange_price_subtotal()
     draft_invoices._recompute_dynamic_lines(recompute_all_taxes=True)
