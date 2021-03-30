@@ -41,8 +41,91 @@ def fill_product_pricelist_item_active_default(env):
     )
 
 
+def insert_missing_product_template_attribute_line(env):
+    """Given this situation in v12:
+
+    - Template T with attribute A and values A1, and A2, and attribute B with value B1.
+    - Generated variants V1 and V2 for attribute values A1/B1 and A2/B2 respectively.
+    - Generated product.template.attribute.line records for T/A and T/B.
+    - V2 is used in a quotation.
+    - Remove B attribute from the template. Result:
+      * V2 is archived
+      * product.template.attribute.line T/B is removed.
+
+    On v13, the record is not removed, but marked with active = False.
+
+    From the current data status we find on v12 for these cases, we need to
+    reintroduce missing product.template.attribute.line records with
+    active = False needed later on next steps for DB integrity.
+    """
+    openupgrade.logged_query(
+        env.cr, "ALTER TABLE product_template_attribute_line ADD COLUMN active BOOLEAN",
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        INSERT INTO product_template_attribute_line
+            (active, product_tmpl_id, attribute_id)
+        SELECT False, pp.product_tmpl_id, pav.attribute_id
+        FROM product_attribute_value_product_product_rel pavppr
+        JOIN product_product pp ON pp.id = pavppr.product_product_id
+        JOIN product_attribute_value pav ON pav.id = pavppr.product_attribute_value_id
+        LEFT JOIN product_template_attribute_line ptal
+            ON ptal.product_tmpl_id = pp.product_tmpl_id
+                AND ptal.attribute_id = pav.attribute_id
+        WHERE ptal.id IS NULL
+        GROUP BY pav.attribute_id, pp.product_tmpl_id""",
+    )
+
+
+def insert_missing_product_template_attribute_value(env):
+    """Given this situation in v12:
+
+    - Template T with attribute A and values A1, and A2.
+    - Generated variants V1 and V2 for attribute values A1 and A2 respectively.
+    - Generated product.template.attribute.value for T/A1 and T/A2.
+    - V2 is used in a quotation.
+    - Remove A2 attribute value from the template. Result:
+      * V2 is archived
+      * product.template.attribute.value T/A2 is removed.
+
+    On v13, the record is not removed, but marked with ptav_active = False. That's
+    because there's a field in product.product called combination_indices that
+    stores the ID of such line and serves for quick search/indexing on it.
+
+    From the current data status we find on v12 for these cases, we need to
+    reintroduce missing product.template.attribute.value records with
+    ptav_active = False for not having later unique constraint errors and
+    proper DB integrity.
+
+    This is also the second step for amending the situation described in
+    ``insert_missing_product_template_attribute_line`` method.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        "ALTER TABLE product_template_attribute_value ADD COLUMN ptav_active BOOLEAN",
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        INSERT INTO product_template_attribute_value
+            (ptav_active, product_attribute_value_id, product_tmpl_id)
+        SELECT
+            False, pavppr.product_attribute_value_id, pp.product_tmpl_id
+        FROM product_attribute_value_product_product_rel pavppr
+        JOIN product_product pp ON pp.id = pavppr.product_product_id
+        LEFT JOIN product_template_attribute_value ptav
+            ON ptav.product_attribute_value_id = pavppr.product_attribute_value_id
+            AND ptav.product_tmpl_id = pp.product_tmpl_id
+        WHERE ptav.id IS NULL
+        GROUP BY pavppr.product_attribute_value_id, pp.product_tmpl_id""",
+    )
+
+
 def calculate_product_product_combination_indices(env):
-    """Avoid product_product_combination_unique constrain"""
+    """Avoid product_product_combination_unique constraint + pre-compute
+    combination_indices field.
+    """
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE product_product
@@ -90,5 +173,7 @@ def migrate(env, version):
     openupgrade.rename_xmlids(cr, _xmlid_renames)
     fill_product_pricelist_item_prices(env)
     fill_product_pricelist_item_active_default(env)
+    insert_missing_product_template_attribute_line(env)
+    insert_missing_product_template_attribute_value(env)
     calculate_product_product_combination_indices(env)
     add_product_template_attribute_value__attribute_id_column(env)
