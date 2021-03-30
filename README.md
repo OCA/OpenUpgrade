@@ -5,9 +5,22 @@
 
 <!-- /!\ do not modify above this line -->
 
+![OpenUpgrade logo](/doc/source/images/OpenUpgrade.png?raw=true)
 # Tools to upgrade Odoo instances from a major version to another
 
-None
+This <a href="https://odoo-community.org">OCA</a> project aims to provide an
+Open Source upgrade path for <a href="https://github.com/odoo/odoo">Odoo</a> from one
+major Odoo version to the next one.
+
+It is hosted at <a href="https://github.com/oca/openupgrade">GitHub</a>.
+
+For documentation, see <a href="https://doc.therp.nl/openupgrade">here</a> including:
+
+- [introduction](doc/source/intro.rst)
+- [migration process](doc/source/migration_details.rst)
+- [module coverage](doc/source/status.rst)
+- [development](doc/source/development.rst)
+- and much more ...
 
 <!-- /!\ do not modify below this line -->
 
