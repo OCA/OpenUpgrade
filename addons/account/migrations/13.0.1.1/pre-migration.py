@@ -199,6 +199,15 @@ def create_res_partner_ranks(env):
     )
 
 
+def delete_fk_constraints(env):
+    """Avoid errors on automatic data removal after updating due to dangling
+    references on these old columns.
+    """
+    openupgrade.lift_constraints(env.cr, "account_tax_template", "account_id")
+    openupgrade.lift_constraints(env.cr, "account_tax_template", "cash_basis_account")
+    openupgrade.lift_constraints(env.cr, "account_tax_template", "refund_account_id")
+
+
 def add_helper_invoice_move_rel(env):
     openupgrade.logged_query(
         env.cr, """
@@ -293,6 +302,7 @@ def migrate(env, version):
     fill_account_move_line_parent_state(env)
     fill_account_move_line_account_internal_type(env)
     create_res_partner_ranks(env)
+    delete_fk_constraints(env)
     add_helper_invoice_move_rel(env)
     if openupgrade.table_exists(cr, 'account_voucher'):
         add_helper_voucher_move_rel(env)

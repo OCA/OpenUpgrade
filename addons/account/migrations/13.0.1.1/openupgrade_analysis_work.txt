@@ -504,6 +504,7 @@ account      / account.tax.template     / cash_basis_account_id (many2one): DEL 
 account      / account.tax.template     / cash_basis_transition_account_id (many2one): NEW relation: account.account.template
 account      / account.tax.template     / invoice_repartition_line_ids (one2many): NEW relation: account.tax.repartition.line.template
 account      / account.tax.template     / refund_repartition_line_ids (one2many): NEW relation: account.tax.repartition.line.template
+# DONE: pre-migration: remove FK constraints for DEL fields
 # DONE: post-migration: apply similar changes done for account.tax
 
 account      / res.company              / account_default_pos_receivable_account_id (many2one): NEW relation: account.account
