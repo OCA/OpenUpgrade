@@ -208,6 +208,21 @@ def delete_fk_constraints(env):
     openupgrade.lift_constraints(env.cr, "account_tax_template", "refund_account_id")
 
 
+def fill_account_move_commercial_partner_id(env):
+    """Avoid this heavy ORM computation doing it by SQL.
+
+    Why this is not a related field by the way?
+    """
+    openupgrade.logged_query(env.cr, "ALTER TABLE account_move ADD commercial_partner_id int4")
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE account_move am
+        SET commercial_partner_id = rp.commercial_partner_id
+        FROM res_partner rp
+        WHERE am.partner_id = rp.id"""
+    )
+
+
 def add_helper_invoice_move_rel(env):
     openupgrade.logged_query(
         env.cr, """
@@ -303,6 +318,7 @@ def migrate(env, version):
     fill_account_move_line_account_internal_type(env)
     create_res_partner_ranks(env)
     delete_fk_constraints(env)
+    fill_account_move_commercial_partner_id(env)
     add_helper_invoice_move_rel(env)
     if openupgrade.table_exists(cr, 'account_voucher'):
         add_helper_voucher_move_rel(env)

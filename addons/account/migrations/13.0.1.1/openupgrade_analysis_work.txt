@@ -334,6 +334,8 @@ account      / account.move             / tax_type_domain (char)        : DEL
 # NOTHING TO DO: renamed to invoice_filter_type_domain, but still is non stored
 
 account      / account.move             / commercial_partner_id (many2one): NEW relation: res.partner, isfunction: function, stored
+# DONE: pre-migration: pre-create and fill column for avoiding the ORM computation
+
 account      / account.move             / fiscal_position_id (many2one) : NEW relation: account.fiscal.position
 account      / account.move             / inalterable_hash (char)       : NEW
 account      / account.move             / invoice_line_ids (one2many)   : NEW relation: account.move.line
