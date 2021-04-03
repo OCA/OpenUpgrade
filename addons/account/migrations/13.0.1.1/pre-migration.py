@@ -127,6 +127,7 @@ def create_account_move_new_columns(env):
             ('amount_untaxed_signed', 'numeric'),
             ('amount_tax', 'numeric'),
             ('amount_tax_signed', 'numeric'),
+            ('amount_residual', 'numeric'),
             ('amount_residual_signed', 'numeric'),
             ('invoice_payment_state', 'character varying'),
         ],

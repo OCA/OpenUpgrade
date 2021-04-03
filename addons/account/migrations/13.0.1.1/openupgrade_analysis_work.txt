@@ -103,6 +103,7 @@ account      / account.move             / amount_untaxed_signed (float) : NEW is
 
 account      / account.invoice          / residual (float)              : DEL
 account      / account.move             / amount_residual (float)       : NEW isfunction: function, stored
+# DONE: pre-migration: pre-created
 # DONE: post-migration: mapped to account.move amount_residual field.
 
 account      / account.invoice          / residual_company_signed (float): DEL
