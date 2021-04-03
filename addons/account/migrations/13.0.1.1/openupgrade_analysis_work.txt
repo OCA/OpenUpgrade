@@ -187,7 +187,8 @@ account      / account.move             / invoice_vendor_bill_id (many2one): NEW
 
 account      / account.invoice          / vendor_display_name (char)    : DEL
 account      / account.move             / invoice_partner_display_name (char): NEW isfunction: function, stored
-# DONE: post-migration: mapped to account.move invoice_partner_display_name field.
+# DONE: pre-migration: Pre-create column for avoiding ORM computation
+# DONE: post-migration: mapped from account.invoice to account.move
 
 account      / account.invoice          / access_token (char)           : DEL
 account      / account.move             / access_token (char)           : NEW

@@ -130,6 +130,7 @@ def create_account_move_new_columns(env):
             ('amount_residual', 'numeric'),
             ('amount_residual_signed', 'numeric'),
             ('invoice_payment_state', 'character varying'),
+            ('invoice_partner_display_name', 'character varying'),
         ],
     }
     for table, column_spec_list in data.items():
