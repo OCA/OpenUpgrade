@@ -132,6 +132,9 @@ def create_account_move_new_columns(env):
             ('invoice_payment_state', 'character varying'),
             ('invoice_partner_display_name', 'character varying'),
         ],
+        'account_move_line': [
+            ('tax_audit', 'character varying'),
+        ]
     }
     for table, column_spec_list in data.items():
         for column, column_type in column_spec_list:

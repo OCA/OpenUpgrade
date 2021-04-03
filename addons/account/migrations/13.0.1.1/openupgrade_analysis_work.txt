@@ -383,14 +383,20 @@ account      / account.move.line        / tax_repartition_line_id (many2one): NE
 # DONE: post-migration: filled for old invoice taxes
 
 account      / account.move.line        / account_root_id (many2one)    : NEW relation: account.root, isrelated: related, stored
+account      / account.move.line        / tax_group_id (many2one)       : NEW relation: account.tax.group, isrelated: related, stored
+# NOTHING TO DO: new related stored fill method (by SQL) is efficient enough
+
+account      / account.move.line        / tax_audit (char)              : NEW isfunction: function, stored
+# DONE: pre-migration (tentative): Pre-created for avoiding expensive ORM computation, but not filled for now as it's not used in any place (CE or EE) and no easy computation by SQL
+
 account      / account.move.line        / discount (float)              : NEW hasdefault
-account      / account.move.line        / is_rounding_line (boolean)    : NEW
 account      / account.move.line        / price_subtotal (float)        : NEW
 account      / account.move.line        / price_total (float)           : NEW
-account      / account.move.line        / reconcile_model_id (many2one) : NEW relation: account.reconcile.model
 account      / account.move.line        / sequence (integer)            : NEW hasdefault
-account      / account.move.line        / tax_audit (char)              : NEW isfunction: function, stored
-account      / account.move.line        / tax_group_id (many2one)       : NEW relation: account.tax.group, isrelated: related, stored
+# DONE: post-migration: Filled for converted invoice lines
+
+account      / account.move.line        / is_rounding_line (boolean)    : NEW
+account      / account.move.line        / reconcile_model_id (many2one) : NEW relation: account.reconcile.model
 # NOTHING TO DO: (tentative)
 
 account      / account.payment          / activity_ids (one2many)       : NEW relation: mail.activity
