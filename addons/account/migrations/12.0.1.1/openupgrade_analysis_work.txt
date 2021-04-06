@@ -291,9 +291,8 @@ DEL ir.model.access: account.access_account_financial_report_invoice
 # NOTHING TO DO
 
 NEW ir.rule: account.account_payment_term_comp_rule (noupdate)
-# DONE: post-migration: Disabled (active=False) this rule, or when migrating
-# we will get missing payment terms in a multi-company environment
-# (as previously there wasn't a record rule).
+# TODO: There's no payment term company consistency check across documents, so not easy to determine how to act here,
+# so let's not do anything for now
 
 NEW ir.ui.menu: account.account_analytic_group_menu
 NEW ir.ui.menu: account.action_account_reconcile_model_menu
