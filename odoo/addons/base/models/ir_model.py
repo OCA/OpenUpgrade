@@ -1962,6 +1962,10 @@ class IrModelData(models.Model):
 
         # remove non-model records first, grouped by batches of the same model
         for model, items in itertools.groupby(records_items, itemgetter(0)):
+            # OpenUpgrade: don't fail on missing models
+            if not self.env.get(model):
+                continue
+            # End OpenUpgrade
             delete(self.env[model].browse(item[1] for item in items))
 
         # Remove copied views. This must happen after removing all records from
