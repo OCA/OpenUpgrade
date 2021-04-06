@@ -14,10 +14,11 @@ purchase     / purchase.order.line      / invoice_lines (one2many)      : relati
 # DONE: post-migration: mapping
 
 purchase     / purchase.order           / currency_rate (float)         : NEW isfunction: function, stored
-# NOTHING TO DO: new field to compute every PO in the company currency
+# NOTHING TO DO: new field to compute every PO in the company currency. Performance is not bad on this computed, so we keep it for now.
 
 purchase     / purchase.order           / date_approve (date)           : type is now 'datetime' ('date')
-# DONE: handled the change of type from 'date' to 'datetime'
+# DONE: pre-migration: Rename column for preserving data
+# DONE: post-migration: Take the value from the mail.tracking.value that adds the chatter
 
 purchase     / purchase.order           / date_planned (datetime)       : not a function anymore
 # NOTHING TO DO: Previously, "date_planned" was computed and set while the creation of PO, now field will be empty until user fills it
@@ -32,7 +33,9 @@ purchase     / purchase.order.line      / display_type (selection)      : NEW se
 purchase     / purchase.order.line      / qty_received (float)          : now a function
 purchase     / purchase.order.line      / qty_received_manual (float)   : NEW
 purchase     / purchase.order.line      / qty_received_method (selection): NEW selection_keys: ['manual'], isfunction: function, stored
-# DONE: pre/post/end-migration: done the same as done in v12 sale module for qty_delivered*
+# Done the same as done in v12 sale module for qty_delivered
+# DONE: pre-migration: Copy column qty_received > qty_received_manual
+# DONE: post-migration: Adjust method to manual according current compute method
 
 ---XML records in module 'purchase'---
 DEL ir.actions.act_window: purchase.action_invoice_pending

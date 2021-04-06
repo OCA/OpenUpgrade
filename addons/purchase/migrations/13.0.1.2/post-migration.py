@@ -17,47 +17,40 @@ def move_fields_from_invoice_to_moves(env):
 def change_type_purchase_order_date_approve(env):
     openupgrade.logged_query(
         env.cr, """
-        UPDATE purchase_order
-        SET date_approve = {date}::TIMESTAMP AT TIME ZONE 'UTC'
-        WHERE {date} IS NOT NULL
-        """.format(date=openupgrade.get_legacy_name('date_approve'))
+        UPDATE purchase_order po
+        SET date_approve = mm.date
+        FROM mail_message mm
+        WHERE mm.subtype_id = %s
+            AND mm.model = 'purchase.order'
+            AND mm.res_id = po.id""",
+        (env.ref('purchase.mt_rfq_approved').id, ),
     )
 
 
 def fill_account_move_purchase_order_rel_table(env):
+    # Remove temp table and re-create m2m table through ORM method
+    openupgrade.logged_query(env.cr, "DROP TABLE account_move_purchase_order_rel")
+    Move = env["purchase.order"]
+    Move._fields["invoice_ids"].update_db(Move, False)
     openupgrade.logged_query(
         env.cr, """
         INSERT INTO account_move_purchase_order_rel (
             purchase_order_id, account_move_id)
         SELECT rel.purchase_order_id, am.id
         FROM account_invoice_purchase_order_rel rel
-        JOIN account_invoice ai ON rel.account_invoice_id = ai.id
-        JOIN account_move am ON am.old_invoice_id = ai.id
+        JOIN account_move am ON am.old_invoice_id = rel.account_invoice_id
         ON CONFLICT DO NOTHING"""
     )
 
 
 def fill_purchase_order_line_qty_received_method(cr):
-    if openupgrade.column_exists(cr, 'purchase_order', 'picking_type_id'):
-        # purchase_stock is installed
-        # set qty_delivered_method = 'stock_moves'
-        openupgrade.logged_query(
-            cr, """
-            UPDATE purchase_order_line pol
-            SET qty_received_method = 'stock_moves', qty_received_manual = NULL
-            FROM product_product pp
-            LEFT JOIN product_template pt ON pp.product_tmpl_id = pt.id
-            WHERE pol.product_id = pp.id AND pol.display_type IS NULL
-                AND pt.type IN ('consu', 'product')"""
-        )
-    # set qty_received_method = 'manual'
     openupgrade.logged_query(
         cr, """
         UPDATE purchase_order_line pol
         SET qty_received_method = 'manual'
         FROM product_product pp
         LEFT JOIN product_template pt ON pp.product_tmpl_id = pt.id
-        WHERE pol.qty_received_method IS NULL AND pol.product_id = pp.id
+        WHERE pol.product_id = pp.id
             AND pt.type IN ('consu', 'service')"""
     )
 
