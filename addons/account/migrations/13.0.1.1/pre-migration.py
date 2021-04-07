@@ -9,9 +9,6 @@ _column_copies = {
     'res_company': [
         ('fiscalyear_last_month', None, None),
     ],
-    'account_move_line': [
-        ('tax_line_id', None, None),
-    ],
 }
 
 _column_renames = {
@@ -130,9 +127,14 @@ def create_account_move_new_columns(env):
             ('amount_untaxed_signed', 'numeric'),
             ('amount_tax', 'numeric'),
             ('amount_tax_signed', 'numeric'),
+            ('amount_residual', 'numeric'),
             ('amount_residual_signed', 'numeric'),
             ('invoice_payment_state', 'character varying'),
+            ('invoice_partner_display_name', 'character varying'),
         ],
+        'account_move_line': [
+            ('tax_audit', 'character varying'),
+        ]
     }
     for table, column_spec_list in data.items():
         for column, column_type in column_spec_list:
@@ -174,8 +176,7 @@ def fill_account_move_line_account_internal_type(env):
         SET account_internal_type = aat.type
         FROM account_account aa
         JOIN account_account_type aat ON aa.user_type_id = aat.id
-        WHERE aml.account_id = aa.id
-            AND aml.account_internal_type IS DISTINCT FROM aat.type""",
+        WHERE aml.account_id = aa.id""",
     )
 
 
@@ -200,6 +201,30 @@ def create_res_partner_ranks(env):
     openupgrade.logged_query(
         env.cr, """
         ALTER TABLE res_partner ALTER COLUMN supplier_rank DROP DEFAULT""",
+    )
+
+
+def delete_fk_constraints(env):
+    """Avoid errors on automatic data removal after updating due to dangling
+    references on these old columns.
+    """
+    openupgrade.lift_constraints(env.cr, "account_tax_template", "account_id")
+    openupgrade.lift_constraints(env.cr, "account_tax_template", "cash_basis_account")
+    openupgrade.lift_constraints(env.cr, "account_tax_template", "refund_account_id")
+
+
+def fill_account_move_commercial_partner_id(env):
+    """Avoid this heavy ORM computation doing it by SQL.
+
+    Why this is not a related field by the way?
+    """
+    openupgrade.logged_query(env.cr, "ALTER TABLE account_move ADD commercial_partner_id int4")
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE account_move am
+        SET commercial_partner_id = rp.commercial_partner_id
+        FROM res_partner rp
+        WHERE am.partner_id = rp.id"""
     )
 
 
@@ -297,6 +322,8 @@ def migrate(env, version):
     fill_account_move_line_parent_state(env)
     fill_account_move_line_account_internal_type(env)
     create_res_partner_ranks(env)
+    delete_fk_constraints(env)
+    fill_account_move_commercial_partner_id(env)
     add_helper_invoice_move_rel(env)
     if openupgrade.table_exists(cr, 'account_voucher'):
         add_helper_voucher_move_rel(env)

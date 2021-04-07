@@ -103,6 +103,7 @@ account      / account.move             / amount_untaxed_signed (float) : NEW is
 
 account      / account.invoice          / residual (float)              : DEL
 account      / account.move             / amount_residual (float)       : NEW isfunction: function, stored
+# DONE: pre-migration: pre-created
 # DONE: post-migration: mapped to account.move amount_residual field.
 
 account      / account.invoice          / residual_company_signed (float): DEL
@@ -186,7 +187,8 @@ account      / account.move             / invoice_vendor_bill_id (many2one): NEW
 
 account      / account.invoice          / vendor_display_name (char)    : DEL
 account      / account.move             / invoice_partner_display_name (char): NEW isfunction: function, stored
-# DONE: post-migration: mapped to account.move invoice_partner_display_name field.
+# DONE: pre-migration: Pre-create column for avoiding ORM computation
+# DONE: post-migration: mapped from account.invoice to account.move
 
 account      / account.invoice          / access_token (char)           : DEL
 account      / account.move             / access_token (char)           : NEW
@@ -334,6 +336,8 @@ account      / account.move             / tax_type_domain (char)        : DEL
 # NOTHING TO DO: renamed to invoice_filter_type_domain, but still is non stored
 
 account      / account.move             / commercial_partner_id (many2one): NEW relation: res.partner, isfunction: function, stored
+# DONE: pre-migration: pre-create and fill column for avoiding the ORM computation
+
 account      / account.move             / fiscal_position_id (many2one) : NEW relation: account.fiscal.position
 account      / account.move             / inalterable_hash (char)       : NEW
 account      / account.move             / invoice_line_ids (one2many)   : NEW relation: account.move.line
@@ -373,21 +377,26 @@ account      / account.move.line        / exclude_from_invoice_tab (boolean): NE
 # DONE: post-migration: marked old moves unlinked to invoice lines (also grouped invoice lines) with exclude_from_invoice_tab = TRUE
 
 account      / account.move.line        / move_name (char)              : NEW isrelated: related, stored
-# DONE: pre-migration: filled (existing cases)
-# DONE: post-migration: filled (new cases)
+# DONE: post-migration: filled for new records inside INSERT query, and pre-computed by ORM in an optimized way for the existing ones
 
 account      / account.move.line        / tax_repartition_line_id (many2one): NEW relation: account.tax.repartition.line
 # DONE: post-migration: filled for old invoice taxes
 
 account      / account.move.line        / account_root_id (many2one)    : NEW relation: account.root, isrelated: related, stored
+account      / account.move.line        / tax_group_id (many2one)       : NEW relation: account.tax.group, isrelated: related, stored
+# NOTHING TO DO: new related stored fill method (by SQL) is efficient enough
+
+account      / account.move.line        / tax_audit (char)              : NEW isfunction: function, stored
+# DONE: pre-migration (tentative): Pre-created for avoiding expensive ORM computation, but not filled for now as it's not used in any place (CE or EE) and no easy computation by SQL
+
 account      / account.move.line        / discount (float)              : NEW hasdefault
-account      / account.move.line        / is_rounding_line (boolean)    : NEW
 account      / account.move.line        / price_subtotal (float)        : NEW
 account      / account.move.line        / price_total (float)           : NEW
-account      / account.move.line        / reconcile_model_id (many2one) : NEW relation: account.reconcile.model
 account      / account.move.line        / sequence (integer)            : NEW hasdefault
-account      / account.move.line        / tax_audit (char)              : NEW isfunction: function, stored
-account      / account.move.line        / tax_group_id (many2one)       : NEW relation: account.tax.group, isrelated: related, stored
+# DONE: post-migration: Filled for converted invoice lines
+
+account      / account.move.line        / is_rounding_line (boolean)    : NEW
+account      / account.move.line        / reconcile_model_id (many2one) : NEW relation: account.reconcile.model
 # NOTHING TO DO: (tentative)
 
 account      / account.payment          / activity_ids (one2many)       : NEW relation: mail.activity
@@ -505,6 +514,7 @@ account      / account.tax.template     / cash_basis_account_id (many2one): DEL 
 account      / account.tax.template     / cash_basis_transition_account_id (many2one): NEW relation: account.account.template
 account      / account.tax.template     / invoice_repartition_line_ids (one2many): NEW relation: account.tax.repartition.line.template
 account      / account.tax.template     / refund_repartition_line_ids (one2many): NEW relation: account.tax.repartition.line.template
+# DONE: pre-migration: remove FK constraints for DEL fields
 # DONE: post-migration: apply similar changes done for account.tax
 
 account      / res.company              / account_default_pos_receivable_account_id (many2one): NEW relation: account.account

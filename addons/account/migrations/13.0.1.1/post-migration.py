@@ -303,14 +303,14 @@ def migration_invoice_moves(env):
                 price_subtotal, price_total, company_currency_id, currency_id, partner_id, product_uom_id,
                 product_id, analytic_account_id, display_type, is_rounding_line,
                 move_id, old_invoice_line_id, date, create_uid, create_date, write_uid,
-                write_date)
+                write_date, parent_state, move_name)
                 SELECT ail.company_id, am.journal_id, ail.account_id, FALSE, ail.sequence, ail.name,
                 ail.quantity, ail.price_unit, ail.discount, ail.price_subtotal,
                 ail.price_total, rc.currency_id, CASE WHEN rc.currency_id != ail.currency_id
                 THEN ail.currency_id ELSE NULL END, ail.partner_id, ail.uom_id,
                 ail.product_id, ail.account_analytic_id, ail.display_type,
                 ail.is_rounding_line, COALESCE(ai.move_id, am.id), ail.id, COALESCE(ai.date, ai.date_invoice),
-                ail.create_uid, ail.create_date, ail.write_uid, ail.write_date
+                ail.create_uid, ail.create_date, ail.write_uid, ail.write_date, am.state, am.name
                 FROM account_invoice_line ail
                     JOIN account_invoice ai ON ail.invoice_id = ai.id
                     JOIN account_move am ON am.old_invoice_id = ai.id
@@ -335,14 +335,14 @@ def migration_invoice_moves(env):
         price_subtotal, price_total, company_currency_id, currency_id, partner_id, product_uom_id,
         product_id, analytic_account_id, display_type, is_rounding_line,
         move_id, old_invoice_line_id, date, create_uid, create_date, write_uid,
-        write_date)
+        write_date, parent_state, move_name)
         SELECT ail.company_id, am.journal_id, ail.account_id, FALSE, ail.sequence, ail.name,
         ail.quantity, ail.price_unit, ail.discount, ail.price_subtotal,
         ail.price_total, rc.currency_id, CASE WHEN rc.currency_id != ail.currency_id
         THEN ail.currency_id ELSE NULL END, ail.partner_id, ail.uom_id,
         ail.product_id, ail.account_analytic_id, ail.display_type,
         ail.is_rounding_line, COALESCE(ai.move_id, am.id), ail.id, COALESCE(ai.date, ai.date_invoice),
-        ail.create_uid, ail.create_date, ail.write_uid, ail.write_date
+        ail.create_uid, ail.create_date, ail.write_uid, ail.write_date, am.state, am.name
         FROM account_invoice_line ail
             JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state IN ('draft', 'cancel')
             LEFT JOIN res_company rc ON ail.company_id = rc.id
@@ -373,12 +373,12 @@ def migration_invoice_moves(env):
         sequence, name, price_unit, currency_id, tax_base_amount,
         tax_line_id, analytic_account_id, move_id, old_invoice_tax_id,
         exclude_from_invoice_tab, parent_state, quantity, partner_id, date,
-        create_uid, create_date, write_uid, write_date)
+        create_uid, create_date, write_uid, write_date, move_name)
         SELECT ait.company_id, am.journal_id, ait.account_id, ait.sequence, ait.name,
         ait.amount, ait.currency_id, ait.base, ait.tax_id,
         ait.account_analytic_id, COALESCE(ai.move_id, am.id),
-        ait.id, TRUE, am.state, 1.0, ai.commercial_partner_id, COALESCE(ai.date, ai.date_invoice),
-        ait.create_uid, ait.create_date, ait.write_uid, ait.write_date
+        ait.id, TRUE, COALESCE(am.state, ai.state), 1.0, ai.commercial_partner_id, COALESCE(ai.date, ai.date_invoice),
+        ait.create_uid, ait.create_date, ait.write_uid, ait.write_date, am.name
         FROM account_invoice_tax ait
         JOIN account_invoice ai ON ait.invoice_id = ai.id AND ai.state IN ('draft', 'cancel')
         LEFT JOIN account_move am ON am.old_invoice_id = ai.id
@@ -451,9 +451,10 @@ def migration_invoice_moves(env):
 
 def compute_balance_for_draft_invoice_lines(env):
     # Compute balance for Draft Invoice Lines
-    draft_invoices = env['account.move'].search(
-        [('state', 'in', ('draft', 'cancel'))]).with_context(
-        check_move_validity=False)
+    draft_invoices = env['account.move'].search([
+        ('state', 'in', ('draft', 'cancel')),
+        ('type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')),
+    ]).with_context(check_move_validity=False)
     draft_invoices.line_ids.read()
     draft_invoices.line_ids._onchange_price_subtotal()
     draft_invoices._recompute_dynamic_lines(recompute_all_taxes=True)
@@ -540,11 +541,11 @@ def migration_voucher_moves(env):
         INSERT INTO account_move_line (company_id, journal_id, account_id,
         exclude_from_invoice_tab, sequence, name, quantity, price_unit, price_subtotal,
         product_id, analytic_account_id, move_id, old_voucher_line_id,
-        date, create_uid, create_date, write_uid, write_date)
+        date, create_uid, create_date, write_uid, write_date, parent_state, move_name)
         SELECT avl.company_id, am.journal_id, avl.account_id, FALSE, avl.sequence, avl.name,
         avl.quantity, avl.price_unit, avl.price_subtotal, avl.product_id,
-        avl.account_analytic_id, COALESCE(av.move_id, am.id), avl.id,
-        COALESCE(am.date, avl.create_date), avl.create_uid, avl.create_date, avl.write_uid, avl.write_date
+        avl.account_analytic_id, COALESCE(av.move_id, am.id), avl.id, COALESCE(am.date, avl.create_date),
+        avl.create_uid, avl.create_date, avl.write_uid, avl.write_date, am.state, am.name
         FROM account_voucher_line avl
         JOIN account_voucher av ON avl.voucher_id = av.id AND av.state in ('draft', 'cancel', 'proforma')
         LEFT JOIN account_move am ON am.old_voucher_id = av.id
@@ -633,27 +634,6 @@ def fill_account_move_currency_id(env):
           LEFT JOIN res_company rc ON rc.id = aj.company_id) am_rel
         WHERE am.id = am_rel.id AND am.currency_id IS NULL
         """,
-    )
-
-
-def fill_account_move_line_parent_state(env):
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE account_move_line aml
-        SET parent_state = am.state
-        FROM account_move am
-        WHERE am.id = aml.move_id AND
-        (aml.exclude_from_invoice_tab IS NOT TRUE OR am.state = 'cancel')""",
-    )
-
-
-def fill_account_move_line_move_name(env):
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE account_move_line aml
-        SET move_name = am.name
-        FROM account_move am
-        WHERE am.id = aml.move_id AND aml.move_name != am.name""",
     )
 
 
@@ -996,8 +976,6 @@ def migrate(env, version):
         migration_voucher_moves(env)
     fill_account_move_type(env)
     fill_account_move_currency_id(env)
-    fill_account_move_line_parent_state(env)
-    fill_account_move_line_move_name(env)
     fill_res_partner_ranks(env)
     try_to_fill_account_account_tag_country_id(env)
     create_account_tax_repartition_lines(env)
