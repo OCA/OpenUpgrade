@@ -128,7 +128,7 @@ def fill_propagate_date_minimum_delta(env):
         FROM ir_config_parameter icp
         WHERE sm.propagate_date IS NULL
             AND icp.key = 'stock.use_propagation_minimum_delta'
-            AND icp.value = 'True'"""
+            AND icp.value::boolean"""
     )
     # stock rule
     openupgrade.logged_query(
@@ -146,7 +146,7 @@ def fill_propagate_date_minimum_delta(env):
         FROM ir_config_parameter icp
         WHERE sr.propagate_date IS NULL
             AND icp.key = 'stock.use_propagation_minimum_delta'
-            AND icp.value != 'True'"""
+            AND NOT icp.value::boolean"""
     )
 
 
