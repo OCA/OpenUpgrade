@@ -391,6 +391,8 @@ class BaseModel(object):
                 cr.execute("INSERT INTO ir_model_data (name,date_init,date_update,module,model,res_id) VALUES (%s, (now() at time zone 'UTC'), (now() at time zone 'UTC'), %s, %s, %s)", \
                     (name_id, context['module'], 'ir.model', model_id)
                 )
+            # OpenUpgrade: register the xmlid of the model as loaded
+            self.pool.model_data_reference_ids[(context['module'], name_id)] = ('ir.model', model_id)
 
         # OpenUpgrade edit start: In rare cases, an old module defined a field
         # on a model that is not defined in another module earlier in the
@@ -404,7 +406,7 @@ class BaseModel(object):
         # if the field's xmlid belongs to a module already loaded, and if not,
         # update the record with the correct module name.
         cr.execute(
-            "SELECT f.*, d.module, d.id as xmlid_id "
+            "SELECT f.*, d.module, d.id as xmlid_id, d.name as xmlid_name "
             "FROM ir_model_fields f LEFT JOIN ir_model_data d "
             "ON f.id=d.res_id and d.model='ir.model.fields' WHERE f.model=%s",
             (self._name,))
@@ -414,7 +416,7 @@ class BaseModel(object):
             # OpenUpgrade start:
             if 'module' in context and\
                     rec['module'] and\
-                    rec['name'] in self._columns.keys() and\
+                    rec['name'] in self._fields.keys() and\
                     rec['module'] != context.get('module') and\
                     rec['module'] not in self.pool._init_modules:
                 _logger.info(
@@ -425,6 +427,13 @@ class BaseModel(object):
                     "UPDATE ir_model_data SET module=%(module)s "
                     "WHERE id=%(xmlid_id)s",
                     dict(rec, module=context['module']))
+            if ('module' in context and
+                rec['module'] and
+                rec['name'] in self._fields.keys() and
+                (rec['module'] == context['module'] or
+                 rec['module'] not in self.pool._init_modules)):
+                # Register the xmlid of the field as loaded
+                self.pool.model_data_reference_ids[(context['module'], rec['xmlid_name'])] = ('ir.model.fields', rec['id'])
             # OpenUpgrade end
             cols[rec['name']] = rec
 
@@ -478,6 +487,8 @@ class BaseModel(object):
                     cr.execute("INSERT INTO ir_model_data (name,date_init,date_update,module,model,res_id) VALUES (%s, (now() at time zone 'UTC'), (now() at time zone 'UTC'), %s, %s, %s)", \
                         (name1, context['module'], 'ir.model.fields', id)
                     )
+                    # OpenUpgrade: register the xmlid of the model as loaded
+                    self.pool.model_data_reference_ids[(context['module'], name1)] = ('ir.model.fields', id)
             else:
                 for key, val in vals.items():
                     if cols[k][key] != vals[key]:
