@@ -439,6 +439,13 @@ def create_stock_move_line_from_inventory_moves(env):
     )
 
 
+def fill_config_parameter_use_propagation_minimum_delta(env):
+    """This method sets to True the new parameter use_propagation_minimum_delta
+    to maintain same behavior of v10"""
+    env["ir.config_parameter"].set_param(
+        'stock.use_propagation_minimum_delta', 'True')
+
+
 def recompute_stock_move_line_qty_different_uom(env):
     """Re-compute product_qty for those lines where product UoM != line UoM."""
     env.cr.execute(
@@ -482,6 +489,7 @@ def migrate(env, version):
     create_stock_move_line_incoming(env)
     create_stock_move_line_reserved(env)
     create_stock_move_line_from_inventory_moves(env)
+    fill_config_parameter_use_propagation_minimum_delta(env)
     recompute_stock_move_line_qty_different_uom(env)
     openupgrade.load_data(
         env.cr, 'stock', 'migrations/11.0.1.1/noupdate_changes.xml',
