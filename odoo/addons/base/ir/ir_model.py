@@ -149,6 +149,9 @@ class IrModel(models.Model):
 
         imc = self.env['ir.model.constraint'].search([('model', 'in', self.ids)])
         imc.unlink()
+        # OpenUpgrade: also prevent other IntegrityErrors when deleting models
+        self.env['ir.model.relation'].search([('model', 'in', self.ids)]).unlink()
+        # /OpenUpgrade
 
         self._drop_table()
         res = super(IrModel, self).unlink()
@@ -1425,13 +1428,27 @@ class IrModelData(models.Model):
         bad_imd_ids = []
         self = self.with_context({MODULE_UNINSTALL_FLAG: True})
 
+        # OpenUpgrade: also purge models and fields (with noupdate set to NULL, not FALSE)
+        # (which Odoo SA themselves delete explicitely in their migration scripts)
         query = """ SELECT id, name, model, res_id, module FROM ir_model_data
-                    WHERE module IN %s AND res_id IS NOT NULL AND noupdate=%s ORDER BY id DESC
+                    WHERE module IN %s AND res_id IS NOT NULL AND (noupdate=%s OR
+                    (noupdate IS NULL AND model IN ('ir.model', 'ir.model.fields')))
+                    ORDER BY id DESC
                 """
         self._cr.execute(query, (tuple(modules), False))
         for (id, name, model, res_id, module) in self._cr.fetchall():
             if (module, name) not in self.loads:
                 if model in self.env:
+                    # OpenUpgrade: backport reference count from Odoo 12.0
+                    if self.search([
+                            ("model", "=", model),
+                            ("res_id", "=", res_id),
+                            ("id", "!=", id),
+                            ("id", "not in", bad_imd_ids),
+                    ]):
+                        # another external id is still linked to the same record, only deleting the old imd
+                        bad_imd_ids.append(id)
+                        continue
                     # OpenUpgrade: never break on unlink of obsolete records
                     _logger.info('Deleting %s@%s (%s.%s)', res_id, model, module, name)
                     try:
@@ -1443,7 +1460,7 @@ class IrModelData(models.Model):
                         _logger.warning(
                             'Could not delete obsolete record with id: %d of model %s\n'
                             'Please refer to the log message right above',
-                            res_id, model)
+                            res_id, model, exc_info=True)
                         bad_imd_ids.append(id)
                     # /OpenUpgrade
         if bad_imd_ids:
