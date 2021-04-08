@@ -295,8 +295,15 @@ def load_module_graph(cr, graph, status=None, perform_checks=True,
                     module = env['ir.module.module'].browse(module_id)
 
             # OpenUpgrade: run tests
-            if package.name is not None:
-                openupgrade_loading.run_tests(package, report)
+            if os.environ.get('OPENUPGRADE_TESTS') and package.name is not None:
+                # Load tests in <module>/migrations/tests and enable standard tags if necessary
+                prefix = '.migrations'
+                test_tags = tools.config['test_tags']
+                if not test_tags:
+                    tools.config['test_tags'] = '+standard'
+                report.record_result(odoo.modules.module.run_unit_tests(
+                    module_name, cr.dbname, openupgrade_prefix=prefix))
+                tools.config['test_tags'] = test_tags
 
             processed_modules.append(package.name)
 
@@ -603,11 +610,6 @@ def load_modules(db, force_demo=False, status=None, update_module=False):
 
         # STEP 9: save installed/updated modules for post-install tests
         registry.updated_modules += processed_modules
-
-        # OpenUpgrade: run deferred tests
-        cr.commit()
-        openupgrade_loading.run_tests('_deferred', report)
-
 
 
 def reset_modules_state(db_name):
