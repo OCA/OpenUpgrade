@@ -73,6 +73,7 @@ def create_specific_procurement_rules_from_globals(env):
             "warehouse_ids": [(6, 0, warehouses.ids)],
             "pull_ids": [(6, 0, rules.ids)],
             "push_ids": [(6, 0, paths.ids)],
+            "sequence": 999999999,
         })
 
 
