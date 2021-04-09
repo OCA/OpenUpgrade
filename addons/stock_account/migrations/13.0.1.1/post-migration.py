@@ -33,6 +33,7 @@ def _prepare_common_svl_vals(move, product):
         "remaining_value": 0.0,
         "quantity": 0.0,
         "old_product_price_history_id": None,
+        "account_move_id": move["account_move_id"],
     }
 
 
@@ -82,24 +83,45 @@ def _prepare_man_svl_vals(price_history_rec, previous_price, quantity, company, 
         "remaining_value": 0.0,
         "quantity": 0.0,
         "old_product_price_history_id": price_history_rec["id"],
+        "account_move_id": price_history_rec["account_move_id"],
     }
     return svl_vals
 
 
 def get_product_price_history(env, company_id, product_id):
     env.cr.execute("""
-        SELECT id, company_id, product_id, datetime, cost, create_uid, write_uid, write_date
-        FROM product_price_history
-        WHERE company_id = %s AND product_id = %s
-        ORDER BY datetime, id
+        WITH account_move_rel AS (
+            SELECT id, create_date
+            FROM (
+                SELECT id, create_date, COUNT(*) OVER(PARTITION BY create_date) AS qty
+                FROM account_move
+                WHERE stock_move_id IS NULL
+            ) foo
+            WHERE qty = 1
+        )
+        SELECT pph.id, pph.company_id, pph.product_id, pph.datetime, pph.cost, rel.id AS account_move_id,
+            pph.create_uid, pph.create_date, pph.write_uid, pph.write_date
+        FROM product_price_history pph
+        LEFT JOIN account_move_rel rel ON rel.create_date = pph.create_date
+        WHERE pph.company_id = %s AND pph.product_id = %s
+        ORDER BY pph.datetime, pph.id
     """, (company_id, product_id))
     return env.cr.dictfetchall()
 
 
 def get_stock_moves(env, company_id, product_id):
     env.cr.execute("""
+        WITH account_move_rel AS (
+            SELECT id, stock_move_id
+            FROM (
+                SELECT id, stock_move_id, COUNT(*) OVER(PARTITION BY stock_move_id) AS qty
+                FROM account_move
+                WHERE stock_move_id IS NOT NULL
+            ) foo
+            WHERE qty = 1
+        )
         SELECT sm.id, sm.company_id, sm.product_id, sm.date, sm.product_qty, sm.reference,
-            COALESCE(sm.price_unit, 0.0) AS price_unit,
+            COALESCE(sm.price_unit, 0.0) AS price_unit, rel.id AS account_move_id,
             sm.create_uid, sm.create_date, sm.write_uid, sm.write_date,
             CASE WHEN (sl.usage <> 'internal' AND (sl.usage <> 'transit' OR sl.company_id <> sm.company_id))
                    AND (sld.usage = 'internal' OR (sld.usage = 'transit' AND sld.company_id = sm.company_id))
@@ -111,10 +133,11 @@ def get_stock_moves(env, company_id, product_id):
                  WHEN sl.usage = 'customer' AND sld.usage = 'supplier' THEN 'dropship_return'
                  ELSE 'other'
             END AS move_type
-        FROM stock_move sm LEFT JOIN stock_location sl ON sl.id = sm.location_id
-            LEFT JOIN stock_location sld ON sld.id = sm.location_dest_id
-        WHERE sm.company_id = %s AND sm.product_id = %s
-            AND state = 'done'
+        FROM stock_move sm
+        LEFT JOIN stock_location sl ON sl.id = sm.location_id
+        LEFT JOIN stock_location sld ON sld.id = sm.location_dest_id
+        LEFT JOIN account_move_rel rel ON rel.stock_move_id = sm.id
+        WHERE sm.company_id = %s AND sm.product_id = %s AND state = 'done'
         ORDER BY sm.date, sm.id
     """, (company_id, product_id))
     return env.cr.dictfetchall()
