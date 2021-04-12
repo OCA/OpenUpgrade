@@ -5,7 +5,12 @@ from openupgradelib import openupgrade
 from odoo import api, models
 from odoo.tools import mute_logger
 
-from odoo.addons.base.models.ir_model import IrModel, IrModelData, IrModelRelation
+from odoo.addons.base.models.ir_model import (
+    IrModel,
+    IrModelData,
+    IrModelFields,
+    IrModelRelation,
+)
 
 
 def _drop_table(self):
@@ -20,6 +25,9 @@ def _drop_table(self):
                 "Not dropping the table or view of model %s",
                 model.model,
             )
+
+
+IrModel._drop_table = _drop_table
 
 
 def _drop_column(self):
@@ -39,8 +47,7 @@ def _drop_column(self):
         continue
 
 
-IrModel._drop_column = _drop_column
-IrModel._drop_table = _drop_table
+IrModelFields._drop_column = _drop_column
 
 
 @api.model
