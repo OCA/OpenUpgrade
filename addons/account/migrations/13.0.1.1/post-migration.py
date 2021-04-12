@@ -348,10 +348,9 @@ def migration_invoice_moves(env):
         FROM account_invoice_line ail
             JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state IN ('draft', 'cancel')
             LEFT JOIN res_company rc ON ail.company_id = rc.id
-        LEFT JOIN account_move am ON am.old_invoice_id = ai.id
-        LEFT JOIN account_account aa ON ai.account_id = aa.id
-        WHERE am.id IS NOT NULL AND
-            aa.internal_type in ('receivable', 'payable')""",
+        JOIN account_move am ON am.old_invoice_id = ai.id
+        JOIN account_account aa ON ai.account_id = aa.id
+        WHERE aa.internal_type in ('receivable', 'payable')""",
     )
     # Not Draft or Cancel Invoice Taxes
     openupgrade.logged_query(
