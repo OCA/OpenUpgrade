@@ -58,9 +58,10 @@ def insert_missing_product_template_attribute_line(env):
     reintroduce missing product.template.attribute.line records with
     active = False needed later on next steps for DB integrity.
     """
-    openupgrade.logged_query(
-        env.cr, "ALTER TABLE product_template_attribute_line ADD COLUMN active BOOLEAN",
-    )
+    openupgrade.add_fields(env, [(
+        "active", "product.template.attribute.line",
+        "product_template_attribute_line", "boolean", False, "product", True,
+    )])
     openupgrade.logged_query(
         env.cr,
         """
@@ -101,10 +102,10 @@ def insert_missing_product_template_attribute_value(env):
     This is also the second step for amending the situation described in
     ``insert_missing_product_template_attribute_line`` method.
     """
-    openupgrade.logged_query(
-        env.cr,
-        "ALTER TABLE product_template_attribute_value ADD COLUMN ptav_active BOOLEAN",
-    )
+    openupgrade.add_fields(env, [(
+        "ptav_active", "product.template.attribute.value",
+        "product_template_attribute_value", "boolean", False, "product", True,
+    )])
     openupgrade.logged_query(
         env.cr,
         """
