@@ -5,7 +5,12 @@ from openupgradelib import openupgrade
 from odoo import api, models
 from odoo.tools import mute_logger
 
-from odoo.addons.base.models.ir_model import IrModel, IrModelData, IrModelRelation
+from odoo.addons.base.models.ir_model import (
+    IrModel,
+    IrModelData,
+    IrModelFields,
+    IrModelRelation,
+)
 
 
 def _drop_table(self):
@@ -20,6 +25,9 @@ def _drop_table(self):
                 "Not dropping the table or view of model %s",
                 model.model,
             )
+
+
+IrModel._drop_table = _drop_table
 
 
 def _drop_column(self):
@@ -39,14 +47,26 @@ def _drop_column(self):
         continue
 
 
-IrModel._drop_column = _drop_column
-IrModel._drop_table = _drop_table
+IrModelFields._drop_column = _drop_column
+
+
+@api.model
+def _module_data_uninstall(self, modules_to_remove):
+    """To pass context, that the patch in __getitem__ of api.Environment uses"""
+    patched_self = self.with_context(**{"missing_model": True})
+    return IrModelData._module_data_uninstall._original_method(
+        patched_self, modules_to_remove
+    )
+
+
+_module_data_uninstall._original_method = IrModelData._module_data_uninstall
+IrModelData._module_data_uninstall = _module_data_uninstall
 
 
 @api.model
 def _process_end(self, modules):
     """Don't warn about upgrade conventions from Odoo
-    ('fields should be explicitely removed by an upgrade script')
+    ('fields should be explicitly removed by an upgrade script')
     """
     with mute_logger("odoo.addons.base.models.ir_model"):
         return IrModelData._process_end._original_method(self, modules)
