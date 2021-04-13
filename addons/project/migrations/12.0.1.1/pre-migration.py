@@ -59,3 +59,6 @@ def migrate(env, version):
     openupgrade.set_xml_ids_noupdate_value(
         env, 'project', ['ir_cron_rating_project',
                          'rating_project_request_email_template'], True)
+    openupgrade.delete_records_safely_by_xml_id(
+        env, ['project.duplicate_field_xmlid'],
+    )
