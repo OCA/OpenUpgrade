@@ -81,6 +81,9 @@ NEW ir.cron: project.ir_cron_rating_project (noupdate)
 DEL ir.cron: rating_project.ir_cron_rating_project
 # DONE: post-migration: put as noupdate
 
+DEL ir.model.data: project.duplicate_field_xmlid (noupdate)
+# DOME: pre-migration: deleted xmlid
+
 NEW ir.model.access: project.access_mail_activity_type_project_manager
 DEL ir.model.access: project.access_account_analytic_account_manager
 DEL ir.model.access: project.access_account_analytic_account_portal
