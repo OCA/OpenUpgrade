@@ -36,36 +36,6 @@ def fill_stock_warehouse_picking_types(env):
             warehouse._create_or_update_sequences_and_picking_types())
 
 
-def force_set_products_consumable(env):
-    """Set products are only allowed to be consumable
-    as per https://github.com/odoo/odoo/commit/3d34d5838.
-    Also delete any quants.
-    """
-    openupgrade.logged_query(
-        env.cr,
-        """
-        DELETE FROM stock_quant WHERE product_id IN (
-            SELECT pp.id FROM product_product pp
-            JOIN product_template pt ON pt.id = pp.product_tmpl_id
-            WHERE pt.type = 'product' AND EXISTS(
-                SELECT * FROM mrp_bom mb
-                WHERE mb.type = 'phantom' AND mb.active
-                    AND (mb.product_tmpl_id = pt.id OR pp.id = mb.product_id)))
-        """)
-    openupgrade.logged_query(
-        env.cr,
-        """
-        UPDATE product_template SET type = 'consu'
-        WHERE id IN (
-            SELECT pt.id FROM product_product pp
-            JOIN product_template pt ON pt.id = pp.product_tmpl_id
-            WHERE pt.type = 'product' AND EXISTS(
-                SELECT * FROM mrp_bom mb
-                WHERE mb.type = 'phantom' AND mb.active
-                    AND (mb.product_tmpl_id = pt.id OR pp.id = mb.product_id)))
-        """)
-
-
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
@@ -74,7 +44,6 @@ def migrate(env, version):
         cr, 'mrp', 'migrations/12.0.2.0/noupdate_changes.xml')
     fill_mrp_workcenter_productivity_loss_loss_id(cr)
     fill_stock_warehouse_picking_types(env)
-    force_set_products_consumable(env)
     _create_warehouse_data(cr, env.registry)
     openupgrade.delete_records_safely_by_xml_id(
         env, [
