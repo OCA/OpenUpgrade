@@ -127,6 +127,7 @@ merged_modules = [
     ('sale_documents_comments', 'sale_comment_propagation'),
     # from OCA/bank-payment
     ('account_payment_sale_stock', 'account_payment_sale'),
+    ('account_banking_payment_transfer', 'account_payment_order'),
     # from OCA/website
     ('website_event_register_free', 'website_event'),
     ('website_event_register_free_with_sale', 'website_event_sale'),
