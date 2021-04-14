@@ -14,9 +14,9 @@
 # Martin Aavastik <martin@avalah.ee>, 2020
 # Helen Sulaoja <helen@avalah.ee>, 2020
 # Algo Kärp <algokarp@gmail.com>, 2020
-# Eneli Õigus <enelioigus@gmail.com>, 2021
-# atriine <triine@avalah.ee>, 2021
+# Triine Aavik <triine@avalah.ee>, 2021
 # Andre Roomet <andreroomet@gmail.com>, 2021
+# Eneli Õigus <enelioigus@gmail.com>, 2021
 # Piia Paurson <piia@avalah.ee>, 2021
 # 
 msgid ""
@@ -266,7 +266,7 @@ msgstr ""
 
 #. module: mail
 #. openerp-web
-#: code:addons/mail/static/src/js/tours/mail.js:26
+#: code:addons/mail/static/src/js/tours/mail.js:0
 #, python-format
 msgid "<p>Create a public or private channel.</p>"
 msgstr ""
@@ -914,7 +914,7 @@ msgstr "Automaane kustutamine"
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_channel_view_form
 msgid "Auto Subscribe Groups"
-msgstr ""
+msgstr "Automaatne tellimine gruppidele"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_channel__group_ids
@@ -2346,7 +2346,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/chatter.xml:0
 #, python-format
 msgid "Followers of"
-msgstr ""
+msgstr "Jälgijad dokumendil "
 
 #. module: mail
 #: model:ir.model.fields.selection,name:mail.selection__mail_alias__alias_contact__followers
@@ -2361,7 +2361,7 @@ msgid "Following"
 msgstr "Jälgin"
 
 #. module: mail
-#: code:addons/mail/models/mail_channel.py:778
+#: code:addons/mail/models/mail_channel.py:0
 #, python-format
 msgid "Following invites are invalid as user groups do not match: %s"
 msgstr ""
@@ -4124,6 +4124,18 @@ msgid "Online"
 msgstr "Online"
 
 #. module: mail
+#: code:addons/mail/models/mail_message.py:0
+#, python-format
+msgid "Only administrators are allowed to export mail message"
+msgstr ""
+
+#. module: mail
+#: code:addons/mail/models/mail_message.py:0
+#, python-format
+msgid "Only administrators are allowed to use grouped read on message model"
+msgstr ""
+
+#. module: mail
 #: code:addons/mail/models/mail_channel.py:0
 #, python-format
 msgid ""
@@ -4438,7 +4450,7 @@ msgstr ""
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_bounce_catchall
 msgid "Please contact us instead using"
-msgstr ""
+msgstr "Palun kontakteeruge meiega selle asemel, et kasutada"
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_channel_send_guidelines
@@ -6234,19 +6246,19 @@ msgid ""
 msgstr ""
 
 #. module: mail
+#: code:addons/mail/models/mail_alias.py:0
+#, python-format
+msgid ""
+"You cannot use anything else than unaccented latin characters in the alias "
+"address."
+msgstr ""
+
+#. module: mail
 #: code:addons/mail/models/mail_channel.py:0
 #, python-format
 msgid ""
 "You do not have the rights to modify fields related to moderation on one of "
 "the channels you are modifying."
-msgstr ""
-
-#. module: mail
-#: code:addons/mail/models/mail_alias.py:89
-#, python-format
-msgid ""
-"You cannot use anything else than unaccented latin characters in the alias "
-"address."
 msgstr ""
 
 #. module: mail
