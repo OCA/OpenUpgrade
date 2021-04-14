@@ -149,6 +149,13 @@ class MrpBom(models.Model):
     def name_get(self):
         return [(bom.id, '%s%s' % (bom.code and '%s: ' % bom.code or '', bom.product_tmpl_id.display_name)) for bom in self]
 
+    @api.constrains('product_tmpl_id', 'product_id', 'type')
+    def check_kit_has_not_orderpoint(self):
+        product_ids = [pid for bom in self.filtered(lambda bom: bom.type == "phantom")
+                           for pid in (bom.product_id.ids or bom.product_tmpl_id.product_variant_ids.ids)]
+        if self.env['stock.warehouse.orderpoint'].search([('product_id', 'in', product_ids)], count=True):
+            raise ValidationError(_("You can not create a kit-type bill of materials for products that have at least one reordering rule."))
+
     def unlink(self):
         if self.env['mrp.production'].search([('bom_id', 'in', self.ids), ('state', 'not in', ['done', 'cancel'])], limit=1):
             raise UserError(_('You can not delete a Bill of Material with running manufacturing orders.\nPlease close or cancel it first.'))
@@ -183,6 +190,37 @@ class MrpBom(models.Model):
         if domain is False:
             return domain
         return self.search(domain, order='sequence, product_id', limit=1)
+
+    @api.model
+    def _get_product2bom(self, products, bom_type=False):
+        """Optimized variant of _bom_find to work with recordset"""
+        products = products.filtered(lambda product: product.type != 'service')
+        if not products:
+            return {}
+        product_templates = products.mapped('product_tmpl_id')
+        domain = ['|', ('product_id', 'in', products.ids), '&', ('product_id', '=', False), ('product_tmpl_id', 'in', product_templates.ids)]
+        if self.env.context.get('company_id'):
+            domain = domain + ['|', ('company_id', '=', False), ('company_id', '=', self.env.context.get('company_id'))]
+        if bom_type:
+            domain += [('type', '=', bom_type)]
+
+        boms = self.search(domain, order='sequence, product_id')
+        template2bom = {}
+        variant2bom = {}
+        for bom in boms:
+            # Use "setdefault" to take only first bom if we have few ones for
+            # the same product
+            if bom.product_id:
+                variant2bom.setdefault(bom.product_id, bom)
+            else:
+                template2bom.setdefault(bom.product_tmpl_id, bom)
+
+        result = {}
+        for p in products:
+            bom = variant2bom.get(p) or template2bom.get(p.product_tmpl_id)
+            if bom:
+                result[p] = bom
+        return result
 
     def explode(self, product, quantity, picking_type=False):
         """
