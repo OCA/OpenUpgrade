@@ -1568,7 +1568,7 @@ msgstr "Zadnja posodobitev stopnje"
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_task__write_date
 msgid "Last Updated On"
-msgstr ""
+msgstr "Zadnjič posodobljeno"
 
 #. module: project
 #: model:ir.model.fields,field_description:project.field_project_project__write_uid
@@ -3202,6 +3202,12 @@ msgstr ""
 msgid ""
 "You cannot delete a project containing tasks. You can either archive it or "
 "first delete all of its tasks."
+msgstr ""
+
+#. module: project
+#: code:addons/project/models/project.py:628
+#, python-format
+msgid "Your task must be in the same company as its project."
 msgstr ""
 
 #. module: project

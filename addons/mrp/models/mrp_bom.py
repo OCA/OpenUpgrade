@@ -79,13 +79,6 @@ class MrpBom(models.Model):
                 if bom.bom_line_ids.filtered(lambda x: x.product_id.product_tmpl_id == bom.product_tmpl_id):
                     raise ValidationError(_('BoM line product %s should not be same as BoM product.') % bom.display_name)
 
-    @api.constrains('product_tmpl_id', 'product_id', 'type')
-    def _check_kit_is_consumable(self):
-        for bom in self.filtered(lambda b: b.type == 'phantom'):
-            if (bom.product_id and bom.product_id.type or bom.product_tmpl_id.type) != "consu":
-                raise ValidationError(_("For %s to be a kit, its product type must be 'Consumable'."
-                                        % (bom.product_id and bom.product_id.display_name or bom.product_tmpl_id.display_name)))
-
     @api.onchange('product_uom_id')
     def onchange_product_uom_id(self):
         res = {}
@@ -120,6 +113,13 @@ class MrpBom(models.Model):
     @api.multi
     def name_get(self):
         return [(bom.id, '%s%s' % (bom.code and '%s: ' % bom.code or '', bom.product_tmpl_id.display_name)) for bom in self]
+
+    @api.constrains('product_tmpl_id', 'product_id', 'type')
+    def check_kit_has_not_orderpoint(self):
+        product_ids = [pid for bom in self.filtered(lambda bom: bom.type == "phantom")
+                           for pid in (bom.product_id.ids or bom.product_tmpl_id.product_variant_ids.ids)]
+        if self.env['stock.warehouse.orderpoint'].search([('product_id', 'in', product_ids)], count=True):
+            raise ValidationError(_("You can not create a kit-type bill of materials for products that have at least one reordering rule."))
 
     @api.multi
     def unlink(self):
