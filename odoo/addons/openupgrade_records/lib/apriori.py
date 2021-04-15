@@ -79,6 +79,7 @@ merged_modules = {
     'website_canonical_url': 'website',
     'website_form_builder': 'website_form',
     'website_logo': 'website',
+    'website_megamenu': 'website',
     'website_snippet_anchor': 'website',
 }
 
