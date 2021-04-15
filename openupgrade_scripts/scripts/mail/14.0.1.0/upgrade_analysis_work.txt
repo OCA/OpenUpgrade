@@ -40,7 +40,8 @@ mail         / mail.template            / user_signature (boolean)      : DEL
 
 mail         / mail.tracking.value      / field (char)                  : relation is now 'ir.model.fields' ('False') [nothing to do]
 mail         / mail.tracking.value      / field (char)                  : type is now 'many2one' ('char')
-(transformar on estigui emplenat)
+# TO DO: pre-migration: copy column
+# post-migration: fill the column with integer values (m2o relation)
 
 mail         / res.users                / alias_id (many2one)           : DEL relation: mail.alias
 mail         / res.users                / out_of_office_message (char)  : DEL
