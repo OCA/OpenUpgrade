@@ -40,8 +40,8 @@ mail         / mail.template            / user_signature (boolean)      : DEL
 
 mail         / mail.tracking.value      / field (char)                  : relation is now 'ir.model.fields' ('False') [nothing to do]
 mail         / mail.tracking.value      / field (char)                  : type is now 'many2one' ('char')
-# TO DO: pre-migration: copy column
-# post-migration: fill the column with integer values (m2o relation)
+# DONE: pre-migration: rename field column
+# post-migration: fill the column with the id of the fields form the original column
 
 mail         / res.users                / alias_id (many2one)           : DEL relation: mail.alias
 mail         / res.users                / out_of_office_message (char)  : DEL
@@ -89,9 +89,8 @@ ir.rule: mail.mail_channel_rule (noupdate) (noupdate switched)
 
 NEW ir.rule: mail.ir_rule_mail_channel_partner_group_user (noupdate)
 NEW ir.rule: mail.mail_compose_message_rule (noupdate)
-DEL ir.rule: mail.mail_followers_read_write_own (noupdate)
 NEW mail.channel.partner: mail.channel_partner_general_channel_for_admin (noupdate)
 # NOTHING TO DO: noupdate="1" records
 
-
-
+DEL ir.rule: mail.mail_followers_read_write_own (noupdate)
+# DONE: post-migration: try to delete
