@@ -220,8 +220,12 @@ def generate_stock_valuation_layer(env):
                                 svl_in_vals_list[svl_in_index]["remaining_qty"] = 0.0
                                 svl_in_vals_list[svl_in_index]["remaining_value"] = 0.0
                                 svl_in_index += 1
-                    svl_vals = _prepare_out_svl_vals(
-                        move, move["product_qty"], previous_price, product)
+                    if product.cost_method == 'fifo':
+                        svl_vals = _prepare_out_svl_vals(
+                            move, move["product_qty"], move["price_unit"], product)
+                    else:
+                        svl_vals = _prepare_out_svl_vals(
+                            move, move["product_qty"], previous_price, product)
                     svl_out_vals_list.append(svl_vals)
                     previous_qty -= move["product_qty"]
             # Add manual adjusts after last move
