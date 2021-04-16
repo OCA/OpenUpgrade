@@ -7,3 +7,4 @@ wget https://github.com/OCA/OpenUpgrade/raw/10.0/odoo/openupgrade/doc/source/mod
 wget https://github.com/OCA/OpenUpgrade/raw/11.0/odoo/openupgrade/doc/source/modules100-110.rst -O source/modules100-110.rst
 wget https://github.com/OCA/OpenUpgrade/raw/12.0/odoo/openupgrade/doc/source/modules110-120.rst -O source/modules110-120.rst
 wget https://github.com/OCA/OpenUpgrade/raw/13.0/odoo/openupgrade/doc/source/modules120-130.rst -O source/modules120-130.rst
+wget https://github.com/OCA/OpenUpgrade/raw/14.0/openupgrade_scripts/readme/ROADMAP.rst -O source/modules130-140.rst
