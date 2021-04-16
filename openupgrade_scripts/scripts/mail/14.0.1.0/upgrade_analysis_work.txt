@@ -33,7 +33,7 @@ mail         / mail.template            / model_object_field (many2one) : not st
 mail         / mail.template            / null_value (char)             : not stored anymore
 mail         / mail.template            / sub_model_object_field (many2one): not stored anymore
 mail         / mail.template            / sub_object (many2one)         : not stored anymore
-# NOTHING TO DO: fields don't neet to be stored any more. They are now variables used to create expressions in advanced tab in mail templates
+# NOTHING TO DO: fields don't need to be stored any more. They are now variables used to create expressions in advanced tab in mail templates
 
 mail         / mail.template            / user_signature (boolean)      : DEL
 # NOTHING TO DO: User signature not a feature anymore. Not deleted to preserve data
@@ -41,7 +41,7 @@ mail         / mail.template            / user_signature (boolean)      : DEL
 mail         / mail.tracking.value      / field (char)                  : relation is now 'ir.model.fields' ('False') [nothing to do]
 mail         / mail.tracking.value      / field (char)                  : type is now 'many2one' ('char')
 # DONE: pre-migration: rename field column
-# post-migration: fill the column with the id of the fields form the original column
+# DONE: post-migration: filled the column with the id of the fields form the original column
 
 mail         / res.users                / alias_id (many2one)           : DEL relation: mail.alias
 mail         / res.users                / out_of_office_message (char)  : DEL
