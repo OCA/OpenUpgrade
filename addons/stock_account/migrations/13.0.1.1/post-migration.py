@@ -222,7 +222,7 @@ def generate_stock_valuation_layer(env):
                                 svl_in_index += 1
                     if product.cost_method == 'fifo':
                         svl_vals = _prepare_out_svl_vals(
-                            move, move["product_qty"], move["price_unit"], product)
+                            move, move["product_qty"], abs(move["price_unit"]), product)
                     else:
                         svl_vals = _prepare_out_svl_vals(
                             move, move["product_qty"], previous_price, product)
