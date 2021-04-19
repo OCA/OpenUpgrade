@@ -24,14 +24,18 @@ def migrate(env, version):
         """ UPDATE mail_message_res_partner_needaction_rel
         SET notification_type = 'email'
         WHERE is_email; """)
-    # Populate missing message_type values in mail_message following
+    # Populate different message_type in mail_message following
+    # https://github.com/OCA/OpenUpgrade/blob/d76498/addons/mail/models/mail_thread.py#L2188
     # https://github.com/OCA/OpenUpgrade/blob/d76498/addons/mail/models/mail_thread.py#L2192
     # to https://github.com/OCA/OpenUpgrade/blob/d76498/odoo/tools/mail.py#L442
     openupgrade.logged_query(
         env.cr,
         """ UPDATE mail_message
         SET message_type = 'user_notification'
-        WHERE message_type = 'notification' and message_id like '%openerp-message-notify%'""")
+        WHERE message_type = 'notification'
+            AND model IS NULL
+            AND res_id = 0
+            AND message_id like '%openerp-message-notify%'""")
     # Populate missing read_date values mail.notification
     openupgrade.logged_query(
         env.cr, """
