@@ -1,0 +1,13 @@
+---Models in module 'uom'---
+---Fields in module 'uom'---
+uom          / uom.category             / measure_type (selection)      : DEL selection_keys: ['length', 'unit', 'volume', 'weight', 'working_time']
+# NOTHING TO DO: not used anymore, error when filled in v13.
+
+uom          / uom.uom                  / measure_type (selection)      : DEL selection_keys: function
+# NOTHING TO DO: It stored the measure type from uom.category, but not needed anymore.
+
+---XML records in module 'uom'---
+NEW uom.uom: uom.product_uom_cubic_foot (noupdate)
+NEW uom.uom: uom.product_uom_cubic_inch (noupdate)
+NEW uom.uom: uom.product_uom_cubic_meter (noupdate)
+# NOTHING TO DO: (noupdate="1") Adds new imperial system volume units
