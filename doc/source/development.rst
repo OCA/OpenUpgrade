@@ -126,3 +126,5 @@ You can also refer to the following:
 - `OpenUpgrade API <https://doc.therp.nl/openupgrade/API.html>`_
 - the code of OpenUpgrade API
   `openupgrade.py <https://github.com/OCA/openupgradelib/blob/master/openupgradelib/openupgrade.py>`_
+- Dangerous Tips for developments: :doc:`dangerous_tips`
+  (can be helpful, but at your own risk)
