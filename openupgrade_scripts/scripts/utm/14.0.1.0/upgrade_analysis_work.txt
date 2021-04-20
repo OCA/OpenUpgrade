@@ -1,0 +1,20 @@
+---Models in module 'utm'---
+---Fields in module 'utm'---
+---XML records in module 'utm'---
+NEW ir.ui.view: utm.utm_campaign_view_form_quick_create
+# NOTHING TO DO: noupdate="0" record. New form for easier creation of a new campaign just with the requiered fields.
+
+NEW utm.source: utm.utm_source_craigslist
+NEW utm.source: utm.utm_source_glassdoor
+NEW utm.source: utm.utm_source_linkedin
+NEW utm.source: utm.utm_source_monster
+# NOTHING TO DO: noupdate="0" records. Added new sources
+
+DEL utm.campaign: utm.utm_campaign_christmas_special
+DEL utm.campaign: utm.utm_campaign_email_campaign_products
+DEL utm.campaign: utm.utm_campaign_email_campaign_services
+DEL utm.campaign: utm.utm_campaign_fall_drive
+DEL utm.stage: utm.campaign_stage_1
+DEL utm.stage: utm.campaign_stage_2
+DEL utm.stage: utm.campaign_stage_3
+# NOTHING TO DO: noupdate = "0" records. Sample campaigns are now in utm_demo.xml
