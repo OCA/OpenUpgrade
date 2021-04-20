@@ -149,6 +149,19 @@ def update_mail_channel_uuid(env):
         channel.write({'uuid': uuid.uuid4()})
 
 
+def delete_mail_group_menu(env):
+    """Clean up menus and actions from deprecated model mail.group"""
+    env.cr.execute(
+        """SELECT id FROM ir_ui_menu
+        WHERE mail_group_id IS NOT NULL
+        """)
+    menu_ids = [menu_id for menu_id, in env.cr.fetchall()]
+    for menu in env['ir.ui.menu'].browse(menu_ids):
+        if menu.action:
+            openupgrade.safe_unlink(menu.action)
+        openupgrade.safe_unlink(menu)
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -220,6 +233,7 @@ def migrate(env, version):
     )
     # update uuids because in the model rename they got the same default uuid
     update_mail_channel_uuid(env)
+    delete_mail_group_menu(env)
     openupgrade.load_data(
         cr, 'mail', 'migrations/9.0.1.0/noupdate_changes.xml',
     )
