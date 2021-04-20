@@ -44,6 +44,16 @@ def add_default_account_data(env):
             company[company_field] = account.id
 
 
+def update_mail_alias_for_moves(env):
+    # Done here just in case alias customizations exist
+    journals = env["account.journal"].with_context(
+        active_test=False).search([("alias_id", "!=", False)])
+    for journal in journals:
+        journal.alias_id.unlink()
+        journal._update_mail_alias({"alias_name": journal.alias_name})
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     add_default_account_data(env)
+    update_mail_alias_for_moves(env)
