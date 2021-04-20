@@ -148,6 +148,9 @@ class Record(models.Model):
                 if not xml_file.lower().endswith('.xml'):
                     continue
                 parts = xml_file.split('/')
-                with open(os.path.join(addon_dir, *parts), 'r') as xml_handle:
-                    files.append(xml_handle.read())
+                try:
+                    with open(os.path.join(addon_dir, *parts), 'r') as xml_handle:
+                        files.append(xml_handle.read())
+                except UnicodeDecodeError:
+                    continue
         return files
