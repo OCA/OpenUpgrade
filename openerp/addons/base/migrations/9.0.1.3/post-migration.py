@@ -68,6 +68,25 @@ def assign_view_keys(env):
         view.key = view.xml_id
 
 
+def populate_menu_action(env):
+    """
+    Populate the menu's action reference that was previously stored in
+    ir_values. This fixes noupdate and manually created menu items for which
+    the action is not (re)set when loading their data definition.
+    """
+    openupgrade.logged_query(
+        env.cr,
+        """UPDATE ir_ui_menu ium
+        SET action = iv.value
+        FROM ir_values iv
+        WHERE iv.model = 'ir.ui.menu'
+            AND iv.key = 'action'
+            AND iv.key2 = 'tree_but_open'
+            AND iv.res_id = ium.id
+            AND ium.action IS NULL
+        """)
+
+
 def publish_attachments(env):
     """
     Attachments are only shown to anonymous users if the public flag is set
@@ -100,5 +119,6 @@ def migrate(env, version):
         env.cr, 'base', 'migrations/9.0.1.3/noupdate_changes.xml',
     )
     assign_view_keys(env)
+    populate_menu_action(env)
     publish_attachments(env)
     cleanup_modules_post(env)
