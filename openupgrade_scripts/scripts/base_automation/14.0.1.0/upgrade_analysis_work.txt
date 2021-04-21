@@ -1,0 +1,38 @@
+---Models in module 'base_automation'---
+model base.automation.lead.test (moved to test_base_automation)
+model base.automation.line.test (moved to test_base_automation)
+# NOTHING TO DO: Lead test and line test moved to new module test_base_automation to define the models
+
+---Fields in module 'base_automation'---
+base_automation / base.automation          / on_change_fields (char)       : DEL
+base_automation / base.automation          / on_change_field_ids (many2many): NEW relation: ir.model.fields
+# DONE: post-migration: filled m2m relation table
+# Field name changed as now uses a m2m relation instead of char with the list of fields that trigger on_change
+
+base_automation / base.automation.lead.test / __last_update (datetime)      : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.lead.test / _order                        : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.lead.test / active (boolean)              : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.lead.test / date_action_last (datetime)   : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.lead.test / deadline (boolean)            : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.lead.test / display_name (char)           : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.lead.test / employee (boolean)            : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.lead.test / is_assigned_to_admin (boolean): module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.lead.test / line_ids (one2many)           : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.lead.test / name (char)                   : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.lead.test / partner_id (many2one)         : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.lead.test / priority (boolean)            : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.lead.test / state (selection)             : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.lead.test / user_id (many2one)            : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.line.test / __last_update (datetime)      : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.line.test / _order                        : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.line.test / display_name (char)           : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.line.test / lead_id (many2one)            : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.line.test / name (char)                   : module is now 'test_base_automation' ('base_automation')
+base_automation / base.automation.line.test / user_id (many2one)            : module is now 'test_base_automation' ('base_automation')
+# NOTHING TO DO
+
+---XML records in module 'base_automation'---
+DEL ir.model.access: base_automation.access_base_automation
+DEL ir.model.access: base_automation.access_base_automation_lead_test [renamed to test_base_automation module]
+DEL ir.model.access: base_automation.access_base_automation_line_test [renamed to test_base_automation module]
+# NOTHING TO DO
