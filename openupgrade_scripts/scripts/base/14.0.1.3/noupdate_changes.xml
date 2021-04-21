@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+  <record id="PEN" model="res.currency">
+    <field name="currency_subunit_label">Centimos</field>
+    <field name="currency_unit_label">Soles</field>
+  </record>
   <record id="ao" model="res.country">
     <field name="zip_required">0</field>
   </record>
