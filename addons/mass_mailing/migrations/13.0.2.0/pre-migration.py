@@ -41,7 +41,6 @@ _table_renames = [
 
 _field_renames = [
     ('link.tracker.click', 'link_tracker_click', 'mail_stat_id', 'mailing_trace_id'),
-    ('mailing.trace', 'mailing_trace', 'mass_mailing_campaign_id', 'campaign_id'),
     ('mail.mail', 'mail_mail', 'statistics_ids', 'mailing_trace_ids'),
     ('utm.campaign', 'utm_campaign', 'mass_mailing_ids', 'mailing_mail_ids'),
     ('mailing.mailing', 'mailing_mailing', 'statistics_ids', 'mailing_trace_ids'),
