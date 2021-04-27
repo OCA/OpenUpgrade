@@ -2,6 +2,7 @@
 # Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+from odoo.tools import sql
 
 
 def fill_product_template_attribute_value_attribute_line_id(env):
@@ -95,3 +96,6 @@ def migrate(env, version):
         env.cr, "product", "migrations/13.0.1.2/noupdate_changes.xml")
     convert_image_attachments(env)
     empty_template_pricelist_company(env)
+    sql.drop_index(
+        env.cr, 'product_template_attribute_value_ou_migration_idx',
+        "product_template_attribute_value")

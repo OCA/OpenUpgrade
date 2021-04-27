@@ -2,6 +2,7 @@
 # Copyright 2020 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
+from odoo.tools import sql
 
 _xmlid_renames = [
     ('sale.group_discount_per_so_line', 'product.group_discount_per_so_line'),
@@ -174,6 +175,10 @@ def migrate(env, version):
     openupgrade.rename_xmlids(cr, _xmlid_renames)
     fill_product_pricelist_item_prices(env)
     fill_product_pricelist_item_active_default(env)
+    sql.create_index(
+        env.cr, 'product_template_attribute_value_ou_migration_idx',
+        "product_template_attribute_value",
+        ['product_attribute_value_id', 'product_tmpl_id'])
     insert_missing_product_template_attribute_line(env)
     insert_missing_product_template_attribute_value(env)
     calculate_product_product_combination_indices(env)
