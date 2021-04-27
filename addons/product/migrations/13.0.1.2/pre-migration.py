@@ -30,16 +30,10 @@ def fill_product_pricelist_item_prices(env):
 
 def fill_product_pricelist_item_active_default(env):
     """Faster way to fill this new field"""
-    openupgrade.logged_query(
-        env.cr, """
-        ALTER TABLE product_pricelist_item
-        ADD COLUMN active boolean
-        DEFAULT TRUE""",
-    )
-    openupgrade.logged_query(
-        env.cr, """
-        ALTER TABLE product_pricelist_item ALTER COLUMN active DROP DEFAULT""",
-    )
+    openupgrade.add_fields(env, [(
+        "active", "product.pricelist.item",
+        "product_pricelist_item", "boolean", False, "product", True,
+    )])
 
 
 def insert_missing_product_template_attribute_line(env):
