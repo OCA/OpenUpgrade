@@ -18,9 +18,11 @@ def populate_stock_move_quantity_done_store(cr):
         """
     )
 
+
 def populate_stock_move_lots(cr):
     # Raw materials with tracking:
-    openupgrade.logged_query(cr,
+    openupgrade.logged_query(
+        cr,
         """
         INSERT INTO
           stock_move_lots (
@@ -56,7 +58,8 @@ def populate_stock_move_lots(cr):
         """ % openupgrade.get_legacy_name("consumed_for")
     )
     # Finished products with tracking:
-    openupgrade.logged_query(cr,
+    openupgrade.logged_query(
+        cr,
         """
         INSERT INTO
           stock_move_lots (

@@ -67,9 +67,13 @@ def set_expense_sheet_accounting_date(env):
 @openupgrade.migrate()
 def migrate(env, version):
     cr = env.cr
-    # Create new expense sheet for each expense registered
-    # grouped by name and creation date
-    cr.execute(
+    # Create new expense sheet for each expense registered grouped by name
+    # and creation date. An existing sheet_id means that the expense sheet
+    # was rescued by restoring the table from 8.0 that was preserved as a
+    # legacy table in OpenUpgrade 9.0 and restored in this module's pre
+    # script. No new sheet is created in that case.
+    openupgrade.logged_query(
+        cr,
         '''INSERT INTO hr_expense_sheet
         (account_move_id, bank_journal_id, company_id, create_date,
         create_uid, currency_id, department_id, employee_id, journal_id,
@@ -78,16 +82,18 @@ def migrate(env, version):
             account_move_id, bank_journal_id, company_id, create_date,
             create_uid, currency_id, department_id, employee_id, journal_id,
             message_last_post, name, state, write_date, write_uid
-        FROM hr_expense WHERE state != 'draft'
+        FROM hr_expense WHERE state != 'draft' AND sheet_id IS NULL
         ''')
     # Set sheet_id for each expense_id
-    cr.execute(
+    openupgrade.logged_query(
+        cr,
         '''UPDATE hr_expense
         SET sheet_id = subquery.sheet_id
         FROM (
             SELECT hes.id AS sheet_id, he.id AS expense_id
             FROM hr_expense he, hr_expense_sheet hes
             WHERE he.name=hes.name and he.create_date=hes.create_date
+                AND he.sheet_id IS NULL
         ) AS subquery
         WHERE id=subquery.expense_id
         ''')
