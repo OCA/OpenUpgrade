@@ -111,16 +111,21 @@ def insert_missing_product_template_attribute_value(env):
         env.cr,
         """
         INSERT INTO product_template_attribute_value
-            (ptav_active, product_attribute_value_id, product_tmpl_id)
+            (ptav_active, product_attribute_value_id, product_tmpl_id, attribute_line_id)
         SELECT
-            False, pavppr.product_attribute_value_id, pp.product_tmpl_id
+            False, pavppr.product_attribute_value_id, pp.product_tmpl_id, ptal.id
         FROM product_attribute_value_product_product_rel pavppr
         JOIN product_product pp ON pp.id = pavppr.product_product_id
+        JOIN product_attribute_value pav ON pav.id = pavppr.product_attribute_value_id
+        JOIN product_template_attribute_line ptal
+            ON ptal.product_tmpl_id = pp.product_tmpl_id
+            AND pav.attribute_id = ptal.attribute_id
         LEFT JOIN product_template_attribute_value ptav
             ON ptav.product_attribute_value_id = pavppr.product_attribute_value_id
             AND ptav.product_tmpl_id = pp.product_tmpl_id
+            AND ptav.attribute_line_id = ptal.id
         WHERE ptav.id IS NULL
-        GROUP BY pavppr.product_attribute_value_id, pp.product_tmpl_id""",
+        GROUP BY pavppr.product_attribute_value_id, pp.product_tmpl_id, ptal.id""",
     )
 
 
