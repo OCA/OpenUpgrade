@@ -61,6 +61,21 @@ def convert_image_attachments(env):
             Model.browse(attachment.res_id).image_1920 = attachment.datas
 
 
+def empty_product_company(env):
+    """In V12 the company_id field in product template had the user's company
+    as default value. This causes that in the pricelist items user can not filter
+    by product.
+    In V13 this field has not a default value, so the value would be a null
+    value for instances with one company only.
+    """
+    companies = env["res.company"].search([])
+    if len(companies) == 1:
+        openupgrade.logged_query(env.cr, """
+        UPDATE product_template SET company_id = null
+        WHERE company_id IS NOT NULL;
+        """)
+
+
 @openupgrade.migrate()
 def migrate(env, version):
     fill_product_template_attribute_value_attribute_line_id(env)
@@ -69,3 +84,4 @@ def migrate(env, version):
     openupgrade.load_data(
         env.cr, "product", "migrations/13.0.1.2/noupdate_changes.xml")
     convert_image_attachments(env)
+    empty_product_company(env)
