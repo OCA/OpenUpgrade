@@ -163,7 +163,9 @@ def generate_stock_valuation_layer(env):
     all_svl_list = []
     for product in products:
         for company in companies:
-            history_lines = get_product_price_history(env, company.id, product.id)
+            history_lines = []
+            if product.cost_method != "fifo":
+                history_lines = get_product_price_history(env, company.id, product.id)
             moves = get_stock_moves(env, company.id, product.id)
             svl_in_vals_list = []
             svl_out_vals_list = []
