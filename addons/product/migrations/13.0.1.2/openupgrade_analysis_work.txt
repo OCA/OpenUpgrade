@@ -83,7 +83,7 @@ product      / product.template.attribute.line / product_template_value_ids (man
 product      / product.template.attribute.line / product_template_value_ids (many2many): not a function anymore
 product      / product.template.attribute.line / product_template_value_ids (many2many): type is now 'one2many' ('many2many')
 product      / product.template.attribute.value / attribute_line_id (many2one)  : NEW relation: product.template.attribute.line, required
-# DONE: post-migration: filled field (using the same approach than in OU v12)
+# DONE: pre-migration: filled required field (using the same approach than in OU v12)
 
 ---XML records in module 'product'---
 NEW decimal.precision: product.decimal_volume (noupdate)
