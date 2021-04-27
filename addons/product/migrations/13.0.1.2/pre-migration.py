@@ -176,12 +176,22 @@ def fill_product_template_attribute_value_attribute_line_id(env):
     )
 
 
-def add_product_template_attribute_value__attribute_id_column(env):
-    """For avoiding that ORM fills it. We fill it later on post-migration."""
+def fill_product_template_attribute_value__attribute_id_related(env):
+    """We fill the attribute_id of ptavs in pre-migration for a reason:
+     When the module is loading, the new product_attribute_product_template_rel
+     table will be automatically created and filled (it's an stored computed m2m),
+     thus the attribute_id of ptavs is needed in the compute."""
     openupgrade.logged_query(
         env.cr,
         "ALTER TABLE product_template_attribute_value "
         "ADD COLUMN attribute_id INT4",
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE product_template_attribute_value ptav
+        SET attribute_id = ptal.attribute_id
+        FROM product_template_attribute_line ptal
+        WHERE ptav.attribute_line_id = ptal.id""",
     )
 
 
@@ -199,4 +209,4 @@ def migrate(env, version):
     fill_product_template_attribute_value_attribute_line_id(env)
     insert_missing_product_template_attribute_value(env)
     calculate_product_product_combination_indices(env)
-    add_product_template_attribute_value__attribute_id_column(env)
+    fill_product_template_attribute_value__attribute_id_related(env)

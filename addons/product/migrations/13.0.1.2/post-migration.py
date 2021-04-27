@@ -5,16 +5,6 @@ from openupgradelib import openupgrade
 from odoo.tools import sql
 
 
-def fill_product_template_attribute_value__attribute_id_related(env):
-    openupgrade.logged_query(
-        env.cr, """
-        UPDATE product_template_attribute_value ptav
-        SET attribute_id = ptal.attribute_id
-        FROM product_template_attribute_line ptal
-        WHERE ptav.attribute_line_id = ptal.id""",
-    )
-
-
 def fill_product_variant_combination_table(env):
     openupgrade.logged_query(
         env.cr, """
@@ -74,7 +64,6 @@ def empty_template_pricelist_company(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    fill_product_template_attribute_value__attribute_id_related(env)
     fill_product_variant_combination_table(env)
     openupgrade.load_data(
         env.cr, "product", "migrations/13.0.1.2/noupdate_changes.xml")
