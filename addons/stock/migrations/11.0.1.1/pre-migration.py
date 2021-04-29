@@ -40,10 +40,52 @@ def fix_act_window(env):
     )
 
 
+def set_price_unit_on_stock_move_for_inventory_adjustments(cr):
+    """
+    In v10 when there is an inventory adjustment adding qty the price unit in
+    the stock_move is null and the cost in the quant is the standard price.
+    Here we align the unit_price in the stock_move to the value in the quant
+    """
+    openupgrade.logged_query(
+        cr, """
+            UPDATE stock_move sm0 SET price_unit = sq1.correct_price_unit FROM  (
+
+		            WITH RECURSIVE next_quant(quant_id, move_id) AS (
+		                SELECT quant_id, move_id FROM stock_quant_move_rel rel
+		                UNION
+		                SELECT rel.quant_id, nxt.move_id FROM stock_quant_move_rel rel
+				    JOIN stock_quant sq ON rel.quant_id = sq.id
+				    JOIN stock_move sm ON rel.move_id = sm.id
+		                    JOIN next_quant nxt ON (nxt.move_id = rel.move_id)
+
+		            ) SELECT origin_sm.id as origin_move_id,
+		                           sq.cost, sq.qty,
+		                           origin_sm.price_unit,
+		                           sq.cost AS correct_price_unit,
+		                           sl.name AS start_location, slq.name AS current_location
+				    FROM next_quant rel
+				    JOIN stock_quant sq ON rel.quant_id = sq.id
+				    JOIN stock_move origin_sm ON rel.move_id = origin_sm.id
+				    JOIN stock_location sl ON origin_sm.location_id = sl.id
+				    JOIN stock_location slq ON sq.location_id = slq.id
+				    WHERE origin_sm.state = 'done' AND origin_sm.location_id = sq.location_id AND
+					origin_sm.state = 'done' AND
+		                        sq.qty <> 0 AND
+		                        sq.qty IS NOT NULL AND
+					origin_sm.location_dest_id = sq.location_id AND
+		                        sl.usage = 'inventory' AND
+		                        (origin_sm.price_unit IS NULL OR origin_sm.price_unit = 0.0)
+            ) AS SQ1 WHERE sm0.id = SQ1.origin_move_id
+
+        """,
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     delete_quants_for_consumable(env)
     fix_act_window(env)
+    set_price_unit_on_stock_move_for_inventory_adjustments(env.cr)
     openupgrade.update_module_moved_fields(
         env.cr, 'stock.move', ['has_tracking'], 'mrp', 'stock',
     )
