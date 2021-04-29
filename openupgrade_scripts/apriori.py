@@ -7,6 +7,8 @@ renamed_modules = {
     # odoo
     "account_facturx": "account_edi_facturx",
     "website_rating": "portal_rating",
+    # OCA/account-invoice-reporting
+    "account_invoice_comment_template": "account_comment_template",
     # OCA/server-tools
     "openupgrade_records": "upgrade_analysis",
     # OCA/...
