@@ -1,0 +1,10 @@
+---Models in module 'resource'---
+---Fields in module 'resource'---
+resource     / resource.calendar        / active (boolean)              : NEW hasdefault
+# NOTHING TO DO: new feature that allows the user to hide working time without removing it when active is False. Default value (True) is OK.
+
+resource     / resource.calendar        / attendance_ids (one2many)     : now a function
+resource     / resource.calendar        / global_leave_ids (one2many)   : now a function
+# NOTHING TO DO: Computed writable field (acting as an onchange). Now when changing the company on a calendar, the hours/week are computed based on the settings of the selected company.
+
+---XML records in module 'resource'---
