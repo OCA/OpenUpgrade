@@ -217,10 +217,12 @@ def generate_stock_valuation_layer(env):
                                     candidate_cost * svl_in_vals_list[svl_in_index]["remaining_qty"],
                                     precision_digits=precision_price)
                                 qty = 0
-                            else:
+                            elif svl_in_vals_list[svl_in_index]["remaining_qty"]:
                                 qty -= svl_in_vals_list[svl_in_index]["remaining_qty"]
                                 svl_in_vals_list[svl_in_index]["remaining_qty"] = 0.0
                                 svl_in_vals_list[svl_in_index]["remaining_value"] = 0.0
+                                svl_in_index += 1
+                            else:
                                 svl_in_index += 1
                     if product.cost_method == 'fifo':
                         svl_vals = _prepare_out_svl_vals(
