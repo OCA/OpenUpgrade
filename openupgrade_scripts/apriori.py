@@ -30,6 +30,8 @@ merged_modules = {
     "website_theme_install": "website",
     # OCA/partner-contact
     "partner_bank_active": "base",
+    # OCA/stock-logistics-warehouse
+    "stock_inventory_include_exhausted": "stock",
     # OCA/...
 }
 
