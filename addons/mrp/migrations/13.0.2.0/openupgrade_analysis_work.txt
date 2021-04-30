@@ -20,7 +20,7 @@ mrp          / mrp.bom.line             / company_id (many2one)         : NEW re
 
 mrp          / mrp.bom.line             / attribute_value_ids (many2many): DEL relation: product.attribute.value
 mrp          / mrp.bom.line             / bom_product_template_attribute_value_ids (many2many): NEW relation: product.template.attribute.value
-# DONE: pre-migration: relation table renamed and mapped value
+# DONE: post-migration: filled relation table
 
 mrp          / mrp.document             / key (char)                    : module is now 'website' ('mrp')
 mrp          / mrp.document             / res_id (integer)              : relation is now 'res_model' ('False') [nothing to do]

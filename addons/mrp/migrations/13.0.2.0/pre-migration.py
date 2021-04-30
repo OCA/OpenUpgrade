@@ -7,10 +7,6 @@ _model_renames = [
     ('mrp.subproduct', 'mrp.bom.byproduct'),
 ]
 
-_table_renames = [
-    ('mrp_bom_line_product_attribute_value_rel', 'mrp_bom_line_product_template_attribute_value_rel'),
-]
-
 _mrp_subproduct_table_renames = [
     ('mrp_subproduct', 'mrp_bom_byproduct'),
 ]
@@ -32,9 +28,6 @@ _column_renames = {
 _column_copies = {
     'mrp_production': [
         ('availability', 'reservation_state', None),
-    ],
-    'mrp_bom_line_product_template_attribute_value_rel': [
-        ('product_attribute_value_id', 'product_template_attribute_value_id', None),
     ],
 }
 
@@ -81,25 +74,6 @@ def fast_precreation_and_fill_mrp_bom_line(env):
     )
 
 
-def fill_bom_product_template_attribute_value(env):
-    """ Convert product.attribute.value ids to product.template.attribute.value ids"""
-    openupgrade.logged_query(env.cr, """
-    UPDATE mrp_bom_line_product_template_attribute_value_rel mbl_ptav_rel
-    SET product_template_attribute_value_id = (
-        SELECT id
-        FROM product_template_attribute_value ptav
-        WHERE mb.product_tmpl_id = ptav.product_tmpl_id
-            AND mbl_ptav_rel.product_attribute_value_id = ptav.product_attribute_value_id
-        LIMIT 1
-    )
-    FROM mrp_bom_line mbl
-    JOIN mrp_bom mb ON mbl.bom_id = mb.id
-    WHERE mbl.id = mbl_ptav_rel.mrp_bom_line_id
-    """)
-    openupgrade.drop_columns(env.cr, [
-        ("mrp_bom_line_product_template_attribute_value_rel", "product_attribute_value_id")])
-
-
 def mapped_reservation_state(env):
     openupgrade.logged_query(
         env.cr, """
@@ -116,7 +90,6 @@ def mapped_reservation_state(env):
 def migrate(env, version):
     openupgrade.remove_tables_fks(env.cr, 'mrp_bom_line_product_attribute_value_rel')
     openupgrade.rename_models(env.cr, _model_renames)
-    openupgrade.rename_tables(env.cr, _table_renames)
     if openupgrade.table_exists(env.cr, 'mrp_subproduct'):
         openupgrade.rename_tables(env.cr, _mrp_subproduct_table_renames)
         fast_precreation_and_fill_mrp_bom_byproduct(env)
@@ -125,5 +98,4 @@ def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
     openupgrade.copy_columns(env.cr, _column_copies)
     openupgrade.rename_columns(env.cr, _column_renames)
-    fill_bom_product_template_attribute_value(env)
     mapped_reservation_state(env)

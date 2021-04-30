@@ -8,6 +8,22 @@ _unlink_by_xmlid = [
 ]
 
 
+def fill_bom_product_template_attribute_value(env):
+    openupgrade.logged_query(env.cr, """
+    INSERT INTO mrp_bom_line_product_template_attribute_value_rel
+        (mrp_bom_line_id, product_template_attribute_value_id)
+    SELECT mbl_pav_rel.mrp_bom_line_id, ptav.id
+    FROM mrp_bom_line_product_attribute_value_rel mbl_pav_rel
+    JOIN mrp_bom_line mbl ON mbl.id = mbl_pav_rel.mrp_bom_line_id
+    JOIN mrp_bom mb ON mbl.bom_id = mb.id
+    JOIN product_template pt ON mb.product_tmpl_id = pt.id
+    JOIN product_template_attribute_value ptav ON (
+            pt.id = ptav.product_tmpl_id
+            AND mbl_pav_rel.product_attribute_value_id = ptav.product_attribute_value_id)
+    GROUP BY mbl_pav_rel.mrp_bom_line_id, ptav.id
+    """)
+
+
 def fill_propagate_date_minimum_delta(env):
     # mrp production
     openupgrade.logged_query(
@@ -258,6 +274,7 @@ def fill_planned_datetime(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
+    fill_bom_product_template_attribute_value(env)
     fill_propagate_date_minimum_delta(env)
     mapped_reservation_state(env)
     convert_many2one_field(env)
