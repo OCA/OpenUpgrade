@@ -56,6 +56,8 @@ merged_modules = {
     # OCA/l10n-spain
     'l10n_es_account_invoice_sequence': 'l10n_es',
     'l10n_es_aeat_sii': 'l10n_es_aeat_sii_oca',
+    # OCA/multi-company
+    'stock_production_lot_multi_company': 'stock',
     # OCA/partner-contact
     'base_vat_sanitized': 'base_vat',
     'partner_group': 'partner_company_group',
