@@ -68,11 +68,16 @@ calendar     / calendar.recurrence      / su (boolean)                  : NEW
 calendar     / calendar.recurrence      / th (boolean)                  : NEW
 calendar     / calendar.recurrence      / tu (boolean)                  : NEW
 calendar     / calendar.recurrence      / until (date)                  : NEW
+calendar     / calendar.event           / final_date (date)             : DEL
 calendar     / calendar.recurrence      / we (boolean)                  : NEW
 calendar     / calendar.recurrence      / weekday (selection)           : NEW selection_keys: ['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']
+calendar     / calendar.event           / week_list (selection)         : DEL selection_keys: ['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']
 calendar     / calendar.event           / recurrence_id (many2one)      : NEW relation: calendar.recurrence
 calendar     / calendar.recurrence      / base_event_id (many2one)      : NEW relation: calendar.event
-# TO DO: Move this fields from event to recurrence and set relation from event to recurrence (recurrence_id)
+# DONE: Moved these fields from event to recurrence and set relation from event to recurrence (recurrence_id)
+
+calendar     / calendar.event           / recurrent_id (integer)        : DEL
+# DONE: post-migration: used recurrent_id to map to others recurrences
 
 calendar     / calendar.event           / follow_recurrence (boolean)   : NEW hasdefault
 # DONE: post-migration: Set true all recurrent events (default=False)
@@ -82,13 +87,10 @@ calendar     / calendar.event           / show_as (selection)           : now re
 # DONE: pre-migration: Checking fields not empty and filling them with default ('public' and 'busy') if they are, in fact, empty
 
 calendar     / calendar.event           / display_start (char)          : DEL
-calendar     / calendar.event           / final_date (date)             : DEL
-calendar     / calendar.event           / recurrent_id (integer)        : DEL
 calendar     / calendar.event           / recurrent_id_date (datetime)  : DEL
 calendar     / calendar.event           / start_datetime (datetime)     : DEL
 calendar     / calendar.event           / state (selection)             : DEL selection_keys: ['draft', 'open']
 calendar     / calendar.event           / stop_datetime (datetime)      : DEL
-calendar     / calendar.event           / week_list (selection)         : DEL selection_keys: ['FR', 'MO', 'SA', 'SU', 'TH', 'TU', 'WE']
 # NOTHING TO DO
 
 calendar     / calendar.event           / end_type (selection)          : selection_keys is now '['count', 'end_date', 'forever']' ('['count', 'end_date']')
