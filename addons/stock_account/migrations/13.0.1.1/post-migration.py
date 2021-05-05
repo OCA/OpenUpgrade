@@ -161,8 +161,9 @@ def generate_stock_valuation_layer(env):
     companies = company_obj.search([])
     products = product_obj.with_context(active_test=False).search([("type", "in", ("product", "consu"))])
     all_svl_list = []
-    for product in products:
-        for company in companies:
+    for company in companies:
+        _logger.info("Doing svl for company_id {}".format(company.id))
+        for product in products:
             history_lines = []
             if product.cost_method != "fifo":
                 history_lines = get_product_price_history(env, company.id, product.id)
