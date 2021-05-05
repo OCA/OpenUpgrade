@@ -9,6 +9,13 @@ renamed_modules = {
     "website_rating": "portal_rating",
     # OCA/account-invoice-reporting
     "account_invoice_comment_template": "account_comment_template",
+    # OCA/edi
+    "edi": "edi_oca",
+    "edi_account": "edi_account_oca",
+    "edi_exchange_template": "edi_exchange_template_oca",
+    "edi_storage": "edi_storage_oca",
+    "edi_webservice": "edi_webservice_oca",
+    "edi_xml": "edi_xml_oca",
     # OCA/server-tools
     "openupgrade_records": "upgrade_analysis",
     # OCA/...
