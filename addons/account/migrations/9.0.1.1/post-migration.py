@@ -1314,6 +1314,23 @@ def migrate(env, version):
     cr.execute('UPDATE account_tax set amount=amount*100 '
                "WHERE amount_type='percent'")
 
+    # In base noupdate data, most currencies are disabled, re-enable used ones
+    env.cr.execute(
+        """
+        with currencies as (
+            select currency_id from res_company
+            union
+            select currency_id from account_account
+                where currency_id is not null
+            union
+            select currency_id from account_invoice
+        )
+        update res_currency set active=true
+        from currencies
+        where currencies.currency_id=res_currency.id
+        """
+    )
+
     registry = RegistryManager.get(cr.dbname)
     openupgrade.m2o_to_x2m(
         cr, registry['account.bank.statement.line'],
