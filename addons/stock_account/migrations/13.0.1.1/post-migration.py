@@ -123,11 +123,11 @@ def get_stock_moves(env, company_id, product_id):
         SELECT sm.id, sm.company_id, sm.product_id, sm.date, sm.product_qty, sm.reference,
             COALESCE(sm.price_unit, 0.0) AS price_unit, rel.id AS account_move_id,
             sm.create_uid, sm.create_date, sm.write_uid, sm.write_date,
-            CASE WHEN (sl.usage <> 'internal' AND (sl.usage <> 'transit' OR sl.company_id <> sm.company_id))
-                   AND (sld.usage = 'internal' OR (sld.usage = 'transit' AND sld.company_id = sm.company_id))
+            CASE WHEN (sl.usage <> 'internal' AND sl.company_id <> sm.company_id)
+                   AND (sld.usage = 'internal' AND sld.company_id = sm.company_id)
                    THEN 'in'
-                 WHEN (sl.usage = 'internal' OR (sl.usage = 'transit' AND sl.company_id = sm.company_id))
-                   AND (sld.usage <> 'internal' AND (sld.usage <> 'transit' OR sld.company_id <> sm.company_id))
+                 WHEN (sl.usage = 'internal' AND sl.company_id = sm.company_id)
+                   AND (sld.usage <> 'internal' AND sld.company_id <> sm.company_id)
                    THEN 'out'
                  WHEN sl.usage = 'supplier' AND sld.usage = 'customer' THEN 'dropship'
                  WHEN sl.usage = 'customer' AND sld.usage = 'supplier' THEN 'dropship_return'
