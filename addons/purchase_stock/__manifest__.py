@@ -26,6 +26,6 @@
         'data/purchase_stock_demo.xml',
     ],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
     'post_init_hook': '_create_buy_rules',
 }
