@@ -8,7 +8,7 @@ purchase_stock / purchase.order.line      / propagate_date_minimum_delta (intege
 # DONE: post-migration: done similar as done in stock module
 
 purchase_stock / purchase.order.line      / qty_received_method (False)   : NEW selection_keys: ['manual', 'stock_moves'], mode: modify
-# NOTHING TO DO: handled in purchase module
+# DONE: post-migration: filled proper lines with the new method
 
 ---XML records in module 'purchase_stock'---
 DEL ir.ui.menu: purchase_stock.menu_action_picking_tree_in_move
