@@ -8,16 +8,14 @@ delivery     / delivery.carrier         / return_label_on_delivery (boolean): NE
 # NOTHING TO DO: New feature for allowing to print the return label. Default False value is OK for preserving previous behavior (no return label).
 
 delivery     / delivery.carrier         / invoice_policy (selection)    : NEW required, selection_keys: ['estimated', 'real'], req_default: function, hasdefault
-# DONE: post-migration: Fill all delivery.carrier records to have `real` value in invoice_policy, as this is the most similar one to the v12 behavior
+delivery     / sale.order               / invoice_shipping_on_delivery (boolean): DEL
+# DONE: post-migration: Set delivery.carrier.invoice_policy to 'real' only if invoice_shipping_on_delivery was True. Records by default should have `estimated` value in invoice_policy, as this is the most similar one to the v12 behavior (just compare _create_delivery_line method)
 
 delivery     / delivery.carrier         / margin (integer)              : type is now 'float' ('integer')
 # NOTHING TO DO: ORM/PG does the switch automatically
 
 delivery     / sale.order               / delivery_price (float)        : DEL
 # NOTHING TO DO: There's no carrier selection now in sale.order, only via wizard, so no computed price is shown in header
-
-delivery     / sale.order               / invoice_shipping_on_delivery (boolean): DEL
-# NOTHING TO DO: The control for adding delivery line on picking is done with delivery.carrier.invoice_policy
 
 delivery     / sale.order               / recompute_delivery_price (boolean): NEW
 # DONE: post-migration: marked as True if it has carrier and still quotation, for having the button "Update shipping cost" as highlighted
