@@ -18,8 +18,8 @@
 # Indrek Linnas <indrek@estpos.ee>, 2019
 # Algo Kärp <algokarp@gmail.com>, 2020
 # Eneli Õigus <enelioigus@gmail.com>, 2020
+# Triine Aavik <triine@avalah.ee>, 2021
 # Piia Paurson <piia@avalah.ee>, 2021
-# atriine <triine@avalah.ee>, 2021
 # Andre Roomet <andreroomet@gmail.com>, 2021
 # 
 msgid ""
@@ -10105,7 +10105,7 @@ msgstr ""
 #: code:addons/account/models/account_move.py:1059
 #, python-format
 msgid "The account %s (%s) is deprecated."
-msgstr ""
+msgstr "Konto %s (%s) on aegunud."
 
 #. module: account
 #: code:addons/account/models/account_invoice.py:521
@@ -10161,6 +10161,7 @@ msgid ""
 "The application scope of taxes in a group must be either the same as the "
 "group or left empty."
 msgstr ""
+"Rakenduse maksude määr grupis peab olema kas grupiga sama suur või tühi."
 
 #. module: account
 #: code:addons/account/models/account.py:551
@@ -11719,7 +11720,7 @@ msgstr ""
 #: code:addons/account/models/account_move.py:944
 #, python-format
 msgid "You are trying to reconcile some entries that are already reconciled."
-msgstr ""
+msgstr "Te üritate sobitada kirjeid, mis on juba omavahel ühendatud."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_move_line__blocked
