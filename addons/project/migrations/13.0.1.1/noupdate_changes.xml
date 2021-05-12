@@ -12,7 +12,7 @@
                                         '|','|',
                                             ('message_partner_ids', 'in', [user.partner_id.id]),
                                             ('message_channel_ids', 'in', user.partner_id.channel_ids.ids),
-                                            ('task_ids.message_partner_ids', 'in', [user.partner_id.id]),
+                                            ('tasks.message_partner_ids', 'in', [user.partner_id.id]),
                                     ]</field>
   </record>
   <record id="project_tag_data" model="project.tags" forcecreate="False">
