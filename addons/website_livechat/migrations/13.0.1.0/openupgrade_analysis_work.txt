@@ -17,10 +17,12 @@ NEW ir.model.access: website_livechat.access_website_track_livechat_users
 NEW ir.model.access: website_livechat.access_website_visitor_livechat_users
 NEW ir.ui.menu: website_livechat.website_livechat_visitor_menu
 NEW ir.ui.view: website_livechat.assets_backend
-NEW ir.ui.view: website_livechat.user_navbar_inherit_website_livechat
 NEW ir.ui.view: website_livechat.website_visitor_view_form
 NEW ir.ui.view: website_livechat.website_visitor_view_kanban
 NEW ir.ui.view: website_livechat.website_visitor_view_search
 NEW ir.ui.view: website_livechat.website_visitor_view_tree
-DEL ir.ui.view: website_livechat.user_navbar_inherit_website_livecaht
 # Nothing to do
+
+NEW ir.ui.view: website_livechat.user_navbar_inherit_website_livechat
+DEL ir.ui.view: website_livechat.user_navbar_inherit_website_livecaht
+# DONE: pre-migration: renamed xmlid to avoid dangling inherits
