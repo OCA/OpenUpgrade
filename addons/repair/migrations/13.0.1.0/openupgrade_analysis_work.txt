@@ -1,16 +1,22 @@
 ---Models in module 'repair'---
 new model repair.tags
+# NOTHING TO DO
 ---Fields in module 'repair'---
 repair       / account.move             / repair_ids (one2many)         : NEW relation: repair.order
 repair       / account.move.line        / repair_fee_ids (one2many)     : NEW relation: repair.fee
 repair       / account.move.line        / repair_line_ids (one2many)    : NEW relation: repair.line
+# NOTHING TO DO
 repair       / repair.fee               / invoice_line_id (many2one)    : relation is now 'account.move.line' ('account.invoice.line') [nothing to do]
 repair       / repair.line              / invoice_line_id (many2one)    : relation is now 'account.move.line' ('account.invoice.line') [nothing to do]
 repair       / repair.order             / invoice_id (many2one)         : relation is now 'account.move' ('account.invoice') [nothing to do]
+# DONE: post-migration: refilled many2one tables
 repair       / repair.order             / tag_ids (many2many)           : NEW relation: repair.tags
+# NOTHING TO DO
 repair       / repair.order             / user_id (many2one)            : NEW relation: res.users, hasdefault
+# DONE: Set all records with create_uid
 repair       / repair.tags              / color (integer)               : NEW
 repair       / repair.tags              / name (char)                   : NEW required
+# NOTHING TO DO
 ---XML records in module 'repair'---
 NEW ir.actions.act_window: repair.action_repair_order_graph
 NEW ir.actions.act_window: repair.action_repair_order_tag
@@ -24,3 +30,4 @@ NEW ir.ui.view: repair.view_repair_pivot
 NEW ir.ui.view: repair.view_repair_tag_form
 NEW ir.ui.view: repair.view_repair_tag_search
 NEW ir.ui.view: repair.view_repair_tag_tree
+# NOTHING TO DO
