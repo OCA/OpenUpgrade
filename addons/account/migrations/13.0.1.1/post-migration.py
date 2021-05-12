@@ -592,6 +592,18 @@ def _move_model_in_data(env, ids_map, old_model, new_model):
             })
 
 
+def fill_account_move_reversed_entry_id(env):
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move am
+        SET reversed_entry_id = am2.id
+        FROM account_invoice ai
+        JOIN account_invoice ai2 ON ai.refund_invoice_id = ai2.id
+        JOIN account_move am2 ON am2.old_invoice_id = ai2.id
+        WHERE am.reversed_entry_id IS NULL AND am.old_invoice_id = ai.id"""
+    )
+
+
 def fill_account_move_type(env):
     openupgrade.logged_query(
         env.cr, """
@@ -962,6 +974,7 @@ def migrate(env, version):
     migration_invoice_moves(env)
     if openupgrade.table_exists(env.cr, 'account_voucher'):
         migration_voucher_moves(env)
+    fill_account_move_reversed_entry_id(env)
     fill_account_move_type(env)
     fill_account_move_currency_id(env)
     fill_res_partner_ranks(env)

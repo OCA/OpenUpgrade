@@ -212,7 +212,6 @@ account      / account.invoice          / partner_id (many2one)         : DEL re
 account      / account.invoice          / payment_ids (many2many)       : DEL relation: account.payment
 account      / account.invoice          / payment_move_line_ids (many2many): DEL relation: account.move.line
 account      / account.invoice          / reconciled (boolean)          : DEL
-account      / account.invoice          / refund_invoice_id (many2one)  : DEL relation: account.invoice
 account      / account.invoice          / refund_invoice_ids (one2many) : DEL relation: account.invoice
 
 account      / account.invoice          / tax_line_ids (one2many)       : DEL relation: account.invoice.tax
@@ -330,7 +329,9 @@ account      / account.move             / matched_percentage (float)    : DEL
 
 account      / account.move             / reverse_entry_id (many2one)   : DEL relation: account.move
 account      / account.move             / reversed_entry_id (many2one)  : NEW relation: account.move
+account      / account.invoice          / refund_invoice_id (many2one)  : DEL relation: account.invoice
 # DONE: pre-migration: renamed fields
+# DONE: post-migration: used refund_invoice_id to fill reversed_entry_id in case is empty
 
 account      / account.move             / tax_type_domain (char)        : DEL
 # NOTHING TO DO: renamed to invoice_filter_type_domain, but still is non stored
