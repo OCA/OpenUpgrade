@@ -7749,7 +7749,7 @@ msgstr "Algsed arved"
 #: model_terms:ir.ui.view,arch_db:account.view_move_line_tree
 #: model_terms:ir.ui.view,arch_db:account.view_move_line_tree_grouped
 msgid "Original Currency"
-msgstr ""
+msgstr "Algne valuuta"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line__payment_id
@@ -10709,7 +10709,7 @@ msgstr ""
 #: code:addons/account/models/account_move.py:0
 #, python-format
 msgid "The account %s (%s) is deprecated."
-msgstr ""
+msgstr "Konto %s (%s) on aegunud."
 
 #. module: account
 #: code:addons/account/models/account.py:0
@@ -10718,6 +10718,8 @@ msgid ""
 "The account is already in use in a 'sale' or 'purchase' journal. This means "
 "that the account's type couldn't be 'receivable' or 'payable'."
 msgstr ""
+"Konto on juba kasutusel 'müügi' või 'ostude' registris. Tähendab, konto tüüp"
+" ei või olla 'laekumine' või 'maksmine'."
 
 #. module: account
 #: code:addons/account/models/account_move.py:0
@@ -10726,6 +10728,8 @@ msgid ""
 "The account selected on your journal entry forces to provide a secondary "
 "currency. You should remove the secondary currency on the account."
 msgstr ""
+"Sinu registris valitud konto sunnib määrama teisejärgulise valuuta. Peksid "
+"teisejärgulise valuuta eemaldama oma kontolt."
 
 #. module: account
 #: code:addons/account/models/account_move.py:0
@@ -10787,6 +10791,7 @@ msgid ""
 "The application scope of taxes in a group must be either the same as the "
 "group or left empty."
 msgstr ""
+"Rakenduse maksude määr grupis peab olema kas grupiga sama suur või tühi."
 
 #. module: account
 #: code:addons/account/models/account.py:0
@@ -11836,7 +11841,7 @@ msgstr "Tüübi nimi"
 #: model:ir.model.fields,help:account.field_account_move__activity_exception_decoration
 #: model:ir.model.fields,help:account.field_account_payment__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Kirjel oleva erandtegevuse tüüp."
 
 #. module: account
 #: model:ir.model.fields.selection,name:account.selection__account_cash_rounding__rounding_method__up
@@ -12356,7 +12361,7 @@ msgstr "Vale kreedit- või deebetväärtus raamatupidamiskirjendil!"
 #: code:addons/account/models/account_move.py:0
 #, python-format
 msgid "You are trying to reconcile some entries that are already reconciled."
-msgstr ""
+msgstr "Te üritate sobitada kirjeid, mis on juba omavahel ühendatud."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_move_line__blocked
@@ -12437,7 +12442,7 @@ msgstr "Saate registreerida ainult avatud arvete makseid"
 #: code:addons/account/wizard/account_invoice_send.py:0
 #, python-format
 msgid "You can only send invoices."
-msgstr ""
+msgstr "Te saate ainult saata arveid."
 
 #. module: account
 #: code:addons/account/wizard/account_payment_send.py:0
