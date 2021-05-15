@@ -33,6 +33,10 @@ renamed_modules = {
     'stock_pack_operation_auto_fill': 'stock_move_line_auto_fill',
     # OCA/web
     'web_advanced_filters': 'web_advanced_filter',
+    # OCA/l10n-brazil
+    'l10n_br_account_payment': 'l10n_br_account_payment_order',
+    'l10n_br_account_product': 'l10n_br_fiscal',
+    'l10n_br_data_account_product': 'l10n_br_nfe_account'
 }
 
 merged_modules = {
@@ -90,6 +94,13 @@ merged_modules = {
     'web_sheet_full_width': 'web_responsive',
     # OCA/website
     'website_form_metadata': 'website_form',
+    # OCA/l10n-brazil
+    'l10n_br_account_banking_payment': 'l10n_br_account_payment_order',
+    'l10n_br_account_product_service': 'l10n_br_fiscal',
+    'l10n_br_data_account': 'l10n_br_fiscal',
+    'l10n_br_sale_product': 'l10n_br_sale',
+    'l10n_br_data_account_service': 'l10n_br_fiscal',
+    'l10n_br_zip_correios': 'l10n_br_zip',
 }
 
 # only used here for openupgrade_records analysis:
