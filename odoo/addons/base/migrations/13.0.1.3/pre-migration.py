@@ -760,6 +760,15 @@ def rename_ir_module_category(env):
         old_row = env.cr.fetchone()
         if old_row:
             if new_row:
+                query = "SELECT parent_id FROM ir_module_category WHERE id = %s"
+                env.cr.execute(query, (new_row[0], ))
+                new_parent_row = env.cr.fetchone()
+                if new_parent_row and new_parent_row[0] == old_row[0]:
+                    # When we already have recursive categories with same name
+                    # (example: Manufacturing/Manufacturing), doing a merge let
+                    # the akward situation where the parent points to itself,
+                    # so we avoid it checking this condition
+                    continue
                 openupgrade_merge_records.merge_records(
                     env, "ir.module.category", [old_row[0]], new_row[0],
                     method="sql", model_table="ir_module_category")
