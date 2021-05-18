@@ -650,6 +650,13 @@ def fill_res_partner_ranks(env):
             GROUP BY am.partner_id) rel
         WHERE rel.partner_id = rp.id""",
     )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE res_partner rp
+        SET customer_rank = 1
+        WHERE rp.customer_rank = 0 AND rp.{}""".format(
+            openupgrade.get_legacy_name("customer")),
+    )
     # supplier_rank
     openupgrade.logged_query(
         env.cr, """
@@ -662,6 +669,13 @@ def fill_res_partner_ranks(env):
                 am.partner_id IS NOT NULL
             GROUP BY am.partner_id) rel
         WHERE rel.partner_id = rp.id""",
+    )
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE res_partner rp
+        SET supplier_rank = 1
+        WHERE rp.supplier_rank = 0 AND rp.{}""".format(
+            openupgrade.get_legacy_name("supplier")),
     )
 
 
