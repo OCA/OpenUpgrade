@@ -49,8 +49,9 @@ def update_mail_alias_for_moves(env):
     journals = env["account.journal"].with_context(
         active_test=False).search([("alias_id", "!=", False)])
     for journal in journals:
+        alias_name = journal.alias_name
         journal.alias_id.unlink()
-        journal._update_mail_alias({"alias_name": journal.alias_name})
+        journal._update_mail_alias({"alias_name": alias_name})
 
 
 @openupgrade.migrate()
