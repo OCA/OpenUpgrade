@@ -382,6 +382,23 @@ def fast_create(env, settings):
         env.cr.execute(sql_request)
 
 
+def fix_configurable_chart_template(env):
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_chart_template
+        SET currency_id = (
+            select res_id
+            FROM ir_model_data
+            WHERE module='base' AND name='USD'
+        )
+        WHERE id in (
+            SELECT res_id
+            FROM ir_model_data
+            WHERE module='account' AND name='configurable_chart_template'
+        );"""
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -436,3 +453,4 @@ def migrate(env, version):
              'monetary', False, 'account'),
         ]
     )
+    fix_configurable_chart_template(env)
