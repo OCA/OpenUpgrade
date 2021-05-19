@@ -550,7 +550,7 @@ account      / res.users                / invoice_ids (one2many)        : relati
 account      / res.partner              / customer_rank (integer)       : NEW hasdefault
 account      / res.partner              / supplier_rank (integer)       : NEW hasdefault
 # DONE: pre-migration: precreated columns with default
-# DONE: post-migration: refilled
+# DONE: post-migration: refilled using heuristic and also using old customer/supplier fields
 
 account_voucher / account.voucher          / account_date (date)           : DEL
 account_voucher / account.voucher          / account_id (many2one)         : DEL relation: account.account, required
