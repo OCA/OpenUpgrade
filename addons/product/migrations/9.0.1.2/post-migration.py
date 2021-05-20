@@ -276,6 +276,89 @@ def update_product_supplierinfo(env):
             AND rc.currency_id != pp.currency_id """)
 
 
+def migrate_purchase_pricelists(env):
+    """ Create product.supplierinfo records for "simple" pricelist items,
+    those are items based on a field (not other pricelist or supplier items)"""
+    openupgrade.logged_query(
+        env.cr,
+        """
+        with partner2pricelist_id as (
+            select
+                split_part(res_id, ',', 2)::int partner_id,
+                split_part(value_reference, ',', 2)::int pricelist_id,
+                company_id
+            from ir_property p
+            join ir_model_fields f on p.fields_id=f.id
+            where
+            f.model='res.partner' and
+            f.name='property_product_pricelist_purchase' and
+            res_id is not null and value_reference is not null
+        ),
+        partner2pricelist as (
+            select
+                partner_id, pp.id pricelist_id, p2p.company_id, currency_id
+            from partner2pricelist_id p2p
+            join product_pricelist pp on p2p.pricelist_id=pp.id
+        ),
+        partner2version as (
+            select
+                partner_id, ppv.id version_id, p2p.company_id,
+                p2p.currency_id, date_start, date_end
+            from partner2pricelist p2p
+            join product_pricelist_version ppv
+                on ppv.pricelist_id=p2p.pricelist_id and active
+        ),
+        partner2item as (
+            select
+                partner_id, ppi.id item_id, p2v.company_id, p2v.currency_id,
+                p2v.date_start, p2v.date_end, price_discount, price_surcharge,
+                product_id, product_tmpl_id, min_quantity
+            from partner2version p2v
+            join product_pricelist_item ppi
+                on ppi.openupgrade_legacy_9_0_price_version_id=p2v.version_id
+            where openupgrade_legacy_9_0_base in (
+                select id from product_price_type where field='standard_price'
+            ) and (
+                product_id is not null or product_tmpl_id is not null
+            )
+        ),
+        product2price as (
+            select
+            split_part(p.res_id, ',', 2)::int product_id,
+            p.value_float amount,
+            p.company_id
+            from ir_property p
+            join ir_model_fields f
+            on p.fields_id=f.id
+            where
+            f.model='product.product' and f.name='standard_price'
+            and res_id is not null and value_float is not null
+        )
+        insert into product_supplierinfo
+        (
+            name, min_qty, currency_id, date_start, date_end,
+            company_id, product_id, product_tmpl_id, price, delay
+        )
+        select
+        partner_id, min_quantity, currency_id, p2i.date_start, p2i.date_end,
+        p2i.company_id, p2i.product_id, p2i.product_tmpl_id,
+        coalesce(p2p1.amount, p2p2.amount) *
+        (1 + price_discount) + price_surcharge, 0
+        from partner2item p2i
+        join res_partner p on p.id=p2i.partner_id
+        left join product2price p2p1 on
+            p2i.product_id=p2p1.product_id and
+            p2p1.company_id=p2i.company_id
+        left join product_product pp on
+            p2i.product_id is null and
+            pp.product_tmpl_id=p2i.product_tmpl_id
+        left join product2price p2p2 on
+            p2p2.product_id=pp.id
+        where p.active and coalesce(p2p1.amount, p2p2.amount) is not null
+        """,
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     map_base(env.cr)
@@ -284,6 +367,7 @@ def migrate(env, version):
     update_product_product(env.cr)
     update_product_template(env.cr)
     map_product_template_type(env.cr)
+    migrate_purchase_pricelists(env)
     # this field's semantics was updated to its name
     env.cr.execute(
         'update product_pricelist_item set price_discount=-price_discount*100'
