@@ -71,8 +71,7 @@ def type_change_account_fiscal_position_zips(env):
             env.cr,
             "UPDATE %(table)s "
             "SET zip_from = NULL, zip_to = NULL "
-            "WHERE country_id IS NOT NULL AND zip_from = '0' "
-            "AND zip_to = '0'" % {
+            "WHERE zip_from = '0' AND zip_to = '0'" % {
                 'table': table,
             })
 
