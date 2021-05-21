@@ -198,11 +198,37 @@ def migrate_properties(cr):
 
 
 def remove_account_moves_from_special_periods(cr):
-    """We first search for journal entries in a special period, in the
+    """ We first add the balance of lines on the centralization account of each
+    opening entry and entity. Those balance lines use a temporary year earnings
+    account that will be converted to the standard 9999 account in post-migration.
+    Then we search for journal entries in a special period, in the
     first reported fiscal year of the company, and we take them out of the
     special period, into a normal period, because we assume that this is
     the starting balance of the company, and should be maintained.
     Then we delete all the moves associated to special periods."""
+
+    # Get all the move lines regarding year opening balance
+    cr.execute("""
+        SELECT aml.id
+        FROM account_journal aj
+          JOIN account_account aa ON aa.id = aj.default_debit_account_id
+          JOIN account_move_line aml ON aml.account_id = aj.default_debit_account_id
+          JOIN account_move am ON am.id = aml.move_id
+          JOIN account_period ap ON ap.id = aml.period_id
+        WHERE aj.type = 'situation' AND ap.special = true AND aml.centralisation IS NOT NULL
+          AND (aml.debit <> 0.0 OR aml.credit <> 0.0) AND am.journal_id = aj.id
+    """)
+    year_opening_move_line_ids = [i for i, in cr.fetchall()]
+
+    # Create new "unaffected earnings" move lines
+    openupgrade.logged_query(cr, """
+        INSERT INTO account_move_line (company_id, account_id, credit, debit, date, journal_id, move_id, name, period_id, reconcile_id, reconcile_ref)
+        SELECT aml.company_id, aml.account_id, CASE WHEN SUM(aml.debit - aml.credit)<0 THEN 0 ELSE SUM(aml.debit - aml.credit) END as debit, CASE WHEN SUM(aml.credit - aml.debit)<0 THEN 0 ELSE SUM(aml.credit - aml.debit) END as credit, aml.date, aml.journal_id, aml.move_id, 'Year opening entry' as name, aml.period_id, aml.reconcile_id, aml.reconcile_ref
+        FROM account_move_line aml
+        WHERE id IN %s
+        GROUP BY aml.company_id, aml.account_id, aml.date, aml.journal_id, aml.move_id, aml.period_id, aml.reconcile_id, aml.reconcile_ref
+    """, (tuple(year_opening_move_line_ids), ))
+
     cr.execute("""
         SELECT id FROM account_move
         WHERE period_id in (SELECT id FROM account_period WHERE special = True
@@ -225,6 +251,17 @@ def remove_account_moves_from_special_periods(cr):
             SET period_id = %s
             where id in %s
             """, (first_nsp_id, tuple(move_ids)))
+        # Change period of year opening lines (avoid deletion)
+        openupgrade.logged_query(cr, """
+            UPDATE account_move_line
+            SET period_id = %s
+            where id in %s
+            """, (first_nsp_id, tuple(year_opening_move_line_ids)))
+        openupgrade.logged_query(cr, """
+            UPDATE account_move_line
+            SET period_id = %s
+            where name = 'Year opening entry'
+            """, (first_nsp_id, ))
 
     openupgrade.logged_query(cr, """
         DELETE FROM account_move_line l
@@ -237,7 +274,11 @@ def remove_account_moves_from_special_periods(cr):
         DELETE FROM account_move m
         USING account_period p, account_journal j
         WHERE m.period_id=p.id AND m.journal_id=j.id
-        AND p.special AND j.centralisation
+        AND p.special AND j.centralisation AND m.id NOT IN  (
+            SELECT move_id
+            FROM account_move_line
+            WHERE name = 'Year opening entry'
+        )
     """)
 
 

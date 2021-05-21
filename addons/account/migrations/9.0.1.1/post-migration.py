@@ -675,6 +675,47 @@ def fill_account_invoice_tax_taxes(env, manual_tax_code_mapping=None):
         )
 
 
+def update_year_opening_entries(env):
+    env.cr.execute('select distinct company_id from account_account where active')
+    for company in env['res.company'].browse([i for i, in env.cr.fetchall()]):
+        # Create unaffected earnings account if not existing
+        unaffected_earnings_xml = env.ref("account.data_unaffected_earnings")
+        unaffected_earnings_account = env['account.account'].search([
+            ('company_id', '=', company.id),
+            ('user_type_id', '=', unaffected_earnings_xml.id)], limit=1)
+        if not unaffected_earnings_account:
+            unaffected_earnings_account = env['account.account'].create({
+                'code': '999999',
+                'name': 'Undistributed Profits/Losses',
+                'user_type_id': unaffected_earnings_xml.id,
+                'company_id': company.id, })
+        openupgrade.logged_query(
+            """
+            UPDATE account_move_line aml
+            SET account_id = %s
+            WHERE name = 'Year opening entry' AND company_id = %s
+            """, (unaffected_earnings_account.id, company.id, )
+        )
+
+        # Check that the balance of Year Opening moves was not
+        # broken while adding/deleting move lines during pre-migration
+        env.cr.execute("""
+            SELECT DISTINCT(am.id)
+            FROM account_move am
+              JOIN account_move_line aml ON aml.move_id = am.id
+            WHERE aml.name = 'Year opening entry' AND am.company_id = %s
+            """, (company.id, ))
+        year_opening_move_ids = [i for i, in env.cr.fetchall()]
+        year_opening_moves = env["account.move"].browse(year_opening_move_ids)
+        _logger.info("Year opening moves: %s", year_opening_moves.mapped("name"))
+        for sm in year_opening_moves:
+            _logger.info("stock.move#%s - %s - %s", sm.id, sm.name, sm.date)
+            for line in sm.line_ids:
+                _logger.info("stock.move.line#%s - %s - %s - %s",
+                             line.id, line.debit, line.credit, line.account_id.code)
+            sm.assert_balanced()
+
+
 def _fill_account_invoice_tax_taxes_recursive(env, base_code_id, tax_code_id,
                                               original_base_code_id=0,
                                               original_tax_code_id=0,
@@ -1332,6 +1373,7 @@ def migrate(env, version):
     migrate_account_auto_fy_sequence(env)
     fill_move_taxes(env)
     fill_account_invoice_tax_taxes(env)
+    update_year_opening_entries(env)
     fill_blacklisted_fields(cr)
     fast_compute_cash_basis(env)
     reset_blacklist_field_recomputation()
